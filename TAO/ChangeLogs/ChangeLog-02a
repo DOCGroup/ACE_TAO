@@ -1,3 +1,16 @@
+Tue Mar 27 19:37:58 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * rules.tao.GNU:
+          Add macros to customize the default extensions for the IDL
+          compiler:  IDL_CLIENT_SRC_EXT, IDL_CLIENT_HDR_EXT and similar
+          macros for the other files.
+          Likewise setting tao_dont_use_idl_make_rule=1 disables the
+          default IDL compiler rules altogether, letting application
+          developers define their own.
+
+	  Thanks to Jody Hagins <jody@atdesk.com> for all these
+	  improvements. 
+
 Tue Mar 27 19:33:57 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * Makefile:
