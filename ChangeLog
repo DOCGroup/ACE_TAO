@@ -1,3 +1,9 @@
+Fri Oct 10 10:05:14 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/compiler.bor:
+          Instead of obj use $(OBJEXT) and instead of lib use $(LIBEXT) to
+          handle the new extensions for the CBX Preview compiler.
+
 Fri Oct 10 08:14:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/compiler.bor:
