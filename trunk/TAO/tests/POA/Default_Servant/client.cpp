@@ -1,3 +1,20 @@
+// $Id$
+//
+//===================================================================
+//  = LIBRARY
+//      client
+//
+//  = FILENAME
+//     client.cpp
+//
+//  = DESCRIPTION
+//      A client program for the File IDL module
+//
+//  = AUTHOR
+//     Irfan Pyarali
+//
+//====================================================================
+
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
 #include "FileC.h"
@@ -47,6 +64,7 @@ main (int argc, char **argv)
 {
   CORBA::Environment env;
 
+  // Initialize the ORB
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, env);
   if (env.exception () != 0)
     {
@@ -54,15 +72,18 @@ main (int argc, char **argv)
       return -1;
     }
 
+  // Parse the command-line arguments to get the IOR 
   parse_args (argc, argv);
 
+  // Get the object reference with the IOR
   CORBA::Object_var object = orb->string_to_object (ior, env);
   if (env.exception () != 0)
     {
       env.print_exception ("CORBA::ORB::string_to_object");
       return -1;
     }
-
+  
+  // Narrow the object reference to a File::System
   File::System_var file_system = File::System::_narrow (object.in (), env);
   if (env.exception () != 0)
     {
@@ -70,6 +91,7 @@ main (int argc, char **argv)
       return -1;
     }
 
+  // Creat the file filename i.e "test"
   File::Descriptor_var fd = file_system->open (filename, O_CREAT | O_RDWR, env);
   if (env.exception () != 0)
     {
@@ -82,6 +104,7 @@ main (int argc, char **argv)
   ACE_OS::strcpy ((char *) buffer, message);
   File::Descriptor::DataBuffer data_sent (message_length, message_length, buffer, CORBA::B_TRUE);
 
+  // write the message to the file
   fd->write (data_sent, env);
   if (env.exception () != 0)
     {
@@ -89,6 +112,7 @@ main (int argc, char **argv)
       return -1;
     }
 
+  //seek to the beginning of the file
   fd->lseek (0, SEEK_SET, env);
   if (env.exception () != 0)
     {
@@ -96,6 +120,7 @@ main (int argc, char **argv)
       return -1;
     }
 
+  // Read back the written message
   File::Descriptor::DataBuffer_var data_received = fd->read (message_length, env);
   if (env.exception () != 0)
     {
@@ -104,8 +129,12 @@ main (int argc, char **argv)
     }
 
   char *result = (char *) &data_received[0];
-  cout << result << endl;
 
+  // print the read message
+  ACE_DEBUG((LM_DEBUG,"%s\n",
+	     result));
+
+  // close the file 
   fd->destroy (env);
   if (env.exception () != 0)
     {
