@@ -888,6 +888,9 @@ public:
   T *next (void) const;
 
   /// Removes the current item (i.e., <next>) from the list.
+  /// Note that DLList iterators do not support <advance_and_remove>
+  /// directly (defined in its base class) and you will need to
+  /// release the element returned by it.
   int remove (void);
 
   /// Delegates to ACE_Double_Linked_List_Iterator.
@@ -943,6 +946,9 @@ public:
   T *next (void) const;
 
   /// Removes the current item (i.e., <next>) from the list.
+  /// Note that DLList iterators do not support <advance_and_remove>
+  /// directly (defined in its base class) and you will need to
+  /// release the element returned by it.
   int remove (void);
 
   /// Delegates to ACE_Double_Linked_List_Iterator.
