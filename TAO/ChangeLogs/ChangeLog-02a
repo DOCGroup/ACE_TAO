@@ -1,3 +1,9 @@
+Fri Jul  6 06:56:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Makefile.bor:
+	* tao/Strategies/Makefile.bor: Fixed the makefiles. Thanks to
+	  Johnny Willemsen for alerting me on this.
+
 Thu Jul  6 01:06:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/DIOP_Connection_Handler.h: Fixed a link error
@@ -1058,6 +1064,7 @@ Fri Jun 29 16:57:47 2001  Jeff Parsons <parsons@cs.wustl.edu>
           second for the (unsuccessful) attempt, and the perl scripts
           were timing out the client.
 
+>>>>>>> 1.3910
 Fri Jun 29 11:41:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Big_Reply/client.cpp:
