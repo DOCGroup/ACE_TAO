@@ -1,55 +1,54 @@
 //$Id$
 
+#include "ace/High_Res_Timer.h"
+
+ACE_INLINE double
+Task_Stats::diff_sec (ACE_hrtime_t& before, ACE_hrtime_t& after)
+{
+  double seconds =
+#if defined ACE_LACKS_LONGLONG_T
+    (after - before) / gsf_;
+#else  /* ! ACE_LACKS_LONGLONG_T */
+    ACE_static_cast (double,
+                     ACE_UINT64_DBLCAST_ADAPTER((after - before) / gsf_));
+#endif /* ! ACE_LACKS_LONGLONG_T */
+  seconds /= ACE_HR_SCALE_CONVERSION;
+
+  return seconds;
+}
+
+ACE_INLINE ACE_UINT32
+Task_Stats::diff_usec (ACE_hrtime_t& before, ACE_hrtime_t& after)
+{
+  // convert to microseconds
+  #if !defined ACE_LACKS_LONGLONG_T
+   ACE_UINT32 elapsed_microseconds = ACE_UINT32((after - before) / gsf_);
+  #else  /* ! ACE_LACKS_LONGLONG_T */
+
+  ACE_UINT32 elapsed_microseconds = (after - before) / gsf_;
+
+  #endif /* ! ACE_LACKS_LONGLONG_T */
+
+  #if defined (ACE_WIN32)
+    elapsed_microseconds*=1000; // convert to uSec on Win32
+  #endif /* ACE_WIN32 */
+
+  return elapsed_microseconds;
+}
+
 ACE_INLINE int
-Task_Stats::sample (ACE_UINT64 inv_start_time, ACE_UINT64 inv_end_time)
+Task_Stats::sample (ACE_UINT64& inv_start_time, ACE_UINT64& inv_end_time)
 {
   if (this->samples_count_ >= this->max_samples_)
   {
     ACE_DEBUG ((LM_DEBUG, "Task_Stats::sample ret -1\n"));
     return -1;
    }
-  ACE_UINT64 inv_value, exec_value;
 
-  inv_value = inv_start_time - base_time_;
-  exec_value  = inv_end_time - inv_start_time;
-
-  this->time_inv_[this->samples_count_] = inv_value;
-  this->time_exec_[this->samples_count_] = exec_value;
+  this->time_inv_[this->samples_count_] = inv_start_time;
+  this->time_exec_[this->samples_count_] = inv_end_time;
 
   this->samples_count_++;
 
-  if (this->samples_count_ == 1u)
-    {
-      this->exec_time_min_ = exec_value;
-      this->exec_time_min_at_ = this->samples_count_;
-      this->exec_time_max_ = exec_value;
-      this->exec_time_max_at_ = this->samples_count_;
-      this->sum_ = exec_value;
-#if defined ACE_LACKS_LONGLONG_T
-      this->sum2_ = exec_value * ACE_U64_TO_U32 (exec_value);
-#else  /* ! ACE_LACKS_LONGLONG_T */
-      this->sum2_ = exec_value * exec_value;
-#endif /* ! ACE_LACKS_LONGLONG_T */
-    }
-  else
-    {
-      if (this->exec_time_min_ > exec_value)
-        {
-          this->exec_time_min_ = exec_value;
-          this->exec_time_min_at_ = this->samples_count_;
-        }
-      if (this->exec_time_max_ < exec_value)
-        {
-          this->exec_time_max_ = exec_value;
-          this->exec_time_max_at_ = this->samples_count_;
-        }
-
-      this->sum_  += exec_value;
-#if defined ACE_LACKS_LONGLONG_T
-      this->sum2_ += exec_value * ACE_U64_TO_U32 (exec_value);
-#else  /* ! ACE_LACKS_LONGLONG_T */
-      this->sum2_ += exec_value * exec_value;
-#endif /* ! ACE_LACKS_LONGLONG_T */
- }
-    return 0;
+  return 0;
 }

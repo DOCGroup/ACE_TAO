@@ -7,12 +7,12 @@ ACE_RCSID(lib, TAO_Periodic_Supplier_Command, "$id$")
 #include "LookupManager.h"
 #include "Name.h"
 #include "Periodic_Supplier.h"
+#include "Direct_Supplier.h"
 #include "Activation_Manager.h"
 #include "Options_Parser.h"
 #include "orbsvcs/NotifyExtC.h"
 
 TAO_NS_Periodic_Supplier_Command::TAO_NS_Periodic_Supplier_Command (void)
-: poa_ (TAO_NS_Name::root_poa), ifgop_ (CosNotifyChannelAdmin::OR_OP), id_ (0)
 {
 }
 
@@ -47,38 +47,39 @@ TAO_NS_Periodic_Supplier_Command::init (ACE_Arg_Shifter& arg_shifter)
           this->name_ = arg_shifter.get_current ();
           arg_shifter.consume_arg ();
 
-          this->admin_ = arg_shifter.get_current ();
-          arg_shifter.consume_arg ();
+          int is_direct = 0;
+          ACE_CString direct_target;
 
-          // Is a POA name specified?
-         if (arg_shifter.cur_arg_strncasecmp ("-POA") == 0)
-           {
-             arg_shifter.consume_arg ();
+          if (arg_shifter.cur_arg_strncasecmp ("-Direct") == 0)
+            {
+              is_direct = 1;
 
-             this->name_ = arg_shifter.get_current ();
-             arg_shifter.consume_arg ();
-           }
+              arg_shifter.consume_arg ();
 
-         if (arg_shifter.cur_arg_strncasecmp ("-Set_QoS") == 0) // -Set_QoS [Qos Options]
-           {
-             arg_shifter.consume_arg ();
+              direct_target = arg_shifter.get_current ();
+              arg_shifter.consume_arg ();
+            }
 
-             TAO_NS_Options_Parser qos_parser;
-             qos_parser.execute (this->qos_, arg_shifter);
-           }
+          TAO_NS_Periodic_Supplier* supplier = 0;
 
-         // create the supplier
-         TAO_NS_Periodic_Supplier* supplier = new TAO_NS_Periodic_Supplier ();
+          // create the supplier
+          if (is_direct == 1)
+            supplier = new TAO_NS_Direct_Supplier (direct_target);
+          else
+            supplier = new TAO_NS_Periodic_Supplier ();
 
-         supplier->init_state (arg_shifter);
-         supplier->TAO_Notify_StructuredPushSupplier::name (this->name_);
+          supplier->set_name (this->name_);
 
          TAO_NS_Activation_Manager* act_mgr = 0;
          LOOKUP_MANAGER->resolve (act_mgr);
 
-         ACE_DECLARE_NEW_CORBA_ENV;
-         act_mgr->_register (supplier, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
-         ACE_CHECK;
+         {
+           ACE_DECLARE_NEW_CORBA_ENV;
+           act_mgr->_register (supplier, this->name_.c_str () ACE_ENV_ARG_PARAMETER);
+           ACE_CHECK;
+         }
+
+         supplier->init_state (arg_shifter);
         } /* -Create */
       else if (arg_shifter.cur_arg_strncasecmp ("-Offer") == 0) // -Offer supplier_name +added_type1 +-added_type2 ... -added_type3 -added_type4..
         {
@@ -161,44 +162,7 @@ TAO_NS_Periodic_Supplier_Command::handle_create (ACE_ENV_SINGLE_ARG_DECL)
   if (supplier == 0)
     return;
 
-  // Get the POA
-  PortableServer::POA_var poa;
-  LOOKUP_MANAGER->resolve (poa);
-
-  // set the POA
-  supplier->TAO_Notify_StructuredPushSupplier::init (poa.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // Resolve the supplier admin
-  CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin;
-
-  LOOKUP_MANAGER->resolve (supplier_admin, this->admin_.c_str () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  NotifyExt::SupplierAdmin_var supplier_admin_ext;
-  supplier_admin_ext = NotifyExt::SupplierAdmin::_narrow (supplier_admin.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // create the proxy consumer
-  CosNotifyChannelAdmin::ProxyConsumer_var proxy_consumer =
-    supplier_admin_ext->obtain_notification_push_consumer_with_qos (CosNotifyChannelAdmin::STRUCTURED_EVENT
-                                                                , this->id_, this->qos_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  ACE_ASSERT (!CORBA::is_nil (proxy_consumer.in ()));
-
-  CosNotifyChannelAdmin::StructuredProxyPushConsumer_var s_proxy_consumer =
-    CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (proxy_consumer.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  ACE_ASSERT (!CORBA::is_nil (s_proxy_consumer.in ()));
-
-      // connect supplier to proxy, also activates the Supplier as CORBA object in the POA specified.
-  supplier->connect (s_proxy_consumer.in (),this->id_  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-      // Register the proxy consumer.
-  LOOKUP_MANAGER->_register (s_proxy_consumer.in (), supplier->proxy_name () ACE_ENV_ARG_PARAMETER);
+  supplier->connect (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG, "Supplier %s is connected\n", this->name_.c_str ()));
@@ -240,49 +204,23 @@ TAO_NS_Periodic_Supplier_Command::handle_deactivate (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_NS_Periodic_Supplier_Command::handle_status (ACE_ENV_SINGLE_ARG_DECL)
 {
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
   TAO_NS_Periodic_Supplier* supplier = this->supplier ();
 
   if (supplier == 0)
     return;
 
-  ACE_TRY
-    {
-      CORBA::Boolean not_exist = supplier->get_proxy_consumer ()->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (not_exist == 1)
-        {
-          ACE_DEBUG ((LM_DEBUG, "Supplier %s, Proxy does not exist\n",this->name_.c_str ()));
-        }
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG, "Supplier %s, Proxy exists\n",this->name_.c_str ()));
-        }
-    }
-  ACE_CATCH(CORBA::TRANSIENT, ex)
-    {
-      ACE_PRINT_EXCEPTION (ex, "");
-      ACE_DEBUG ((LM_DEBUG, "Supplier %s is_equivanent transient exception.", this->name_.c_str ()));
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "");
-      ACE_DEBUG ((LM_DEBUG, "Supplieris_equivanent other exception.", this->name_.c_str ()));
-    }
-  ACE_ENDTRY;
-#else
-  return;
-#endif /* TAO_HAS_MINIMUM_CORBA */
+  supplier->status (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
 TAO_NS_Periodic_Supplier_Command::handle_set_qos (ACE_ENV_SINGLE_ARG_DECL)
 {
-  CosNotifyChannelAdmin::StructuredProxyPushConsumer_ptr proxy = this->supplier ()->get_proxy_consumer ();
-  proxy->set_qos (this->qos_ ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  TAO_NS_Periodic_Supplier* supplier = this->supplier ();
+
+  if (supplier == 0)
+    return;
+
+  supplier->set_qos (this->qos_ ACE_ENV_ARG_PARAMETER);
 }
 
 void

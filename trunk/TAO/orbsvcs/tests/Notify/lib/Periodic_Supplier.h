@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  @file Periodic_Supplier.h
+ *  @file NS_Periodic_Supplier.h
  *
  *  $Id$
  *
@@ -52,27 +52,25 @@ public:
   /// Activate this task, synch on the given barrier.
   virtual int activate_task (ACE_Barrier* barrier);
 
-  /// Connect.
-  void connect (CosNotifyChannelAdmin::StructuredProxyPushConsumer_ptr proxy, CosNotifyChannelAdmin::ProxyID proxy_id ACE_ENV_ARG_DECL);
-
-  /// Connect.
-  virtual void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin ACE_ENV_ARG_DECL);
-
   /// task svc
   virtual int svc (void);
 
   /// Dump stats.
-  void dump_stats (ACE_TCHAR* msg);
-
-  /// Offer change.
-  void offer_change (CosNotification::EventTypeSeq &added, CosNotification::EventTypeSeq& removed ACE_ENV_ARG_DECL);
+  void dump_stats (ACE_TCHAR* msg, int dump_samples);
 
   /// Get the name of the proxy
   const char* proxy_name (void);
 
 protected:
-  /// The name of the proxy we connect to.
-  ACE_CString proxy_name_;
+
+  /// svc method.
+  void handle_svc (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Send a few events before the actual measurements.
+  void send_warmup_events (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Send Prologue
+  void send_prologue (ACE_ENV_SINGLE_ARG_DECL);
 
   /// All tasks synch at this barrier.
   ACE_Barrier* barrier_;
@@ -80,11 +78,19 @@ protected:
   /// The event to send.
   TAO_NS_StructuredEvent event_;
 
+  TAO_NS_StructuredEvent zeroth_event;
+
   /// The priority of this task.
   CORBA::Short priority_;
 
   /// Period
   long period_;
+
+  /// Counts the total number of deadlines missed.
+  int total_deadlines_missed_;
+
+  /// RunTime - The Max. time to run the supplier.
+  long run_time_;
 
   /// Worst case exec. time.
   unsigned long exec_time_;
@@ -96,7 +102,7 @@ protected:
   int iter_;
 
   /// A load factor supplied to each Job.
-  int load_;
+  CORBA::ULong load_;
 
   /// Stats house keeping
   Task_Stats stats_;

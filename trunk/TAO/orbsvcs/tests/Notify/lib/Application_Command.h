@@ -65,6 +65,10 @@ protected:
     WAIT_TO_START
   };
 
+  /// Flag used with the DUMP_STATE command that asks for all samples to be put into the
+  /// output data file.
+  int dump_samples_;
+
   ///= Handlers
   virtual void handle_init (ACE_ENV_SINGLE_ARG_DECL);
   void handle_run (ACE_ENV_SINGLE_ARG_DECL);

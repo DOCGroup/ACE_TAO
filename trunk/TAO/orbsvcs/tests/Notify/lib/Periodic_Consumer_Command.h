@@ -39,6 +39,7 @@ public:
 
   /// Destructor
   ~TAO_NS_Periodic_Consumer_Command ();
+
   /// Parse args and populate options.
   virtual void init (ACE_Arg_Shifter& arg_shifter);
 
@@ -67,16 +68,10 @@ protected:
     DUMP_STATE
   };
 
+  /// My name.
   ACE_CString name_;
 
-  ACE_CString admin_;
-
-  ACE_CString poa_;
-
-  CosNotifyChannelAdmin::InterFilterGroupOperator ifgop_;
-
-  CosNotifyChannelAdmin::ProxyID id_;
-
+  /// QoS
   CosNotification::QoSProperties qos_;
 
   // Subscription change

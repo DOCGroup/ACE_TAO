@@ -8,8 +8,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "../../../../../bin";
 use PerlACE::Run_Test;
 
-$experiment_timeout = 60;
-$startup_timeout = 60;
+$experiment_timeout = 120;
+$startup_timeout = 120;
 $notify_conf = PerlACE::LocalFile ("notify.conf");
 $notify_ior = PerlACE::LocalFile ("notify.ior");
 $naming_ior = PerlACE::LocalFile ("naming.ior");
@@ -32,6 +32,7 @@ $Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $supplie
 $Consumer = new PerlACE::Process ("../Driver/Notify_Tests_Driver");
 
 $Consumer_Args = "-ORBInitRef NameService=file://$naming_ior -IORinput file://$supplier_ior -ORBSvcConf $consumer_conf";
+#$Consumer_Args = "-ORBInitRef NameService=file://$naming_ior -IORinput file://$supplier_ior -ORBSvcConf $consumer_conf -ORBDebugLevel 1";
 
 unlink $naming_ior;
 $Naming->Spawn ();
@@ -83,7 +84,7 @@ if ($status != 0)
     exit 1;
   }
 
-$Supplier->Kill ();
+$Supplier->Wait ();
 unlink $supplier_ior;
 
 $Notification->Kill ();

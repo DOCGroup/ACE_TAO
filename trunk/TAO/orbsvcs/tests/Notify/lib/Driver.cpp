@@ -30,12 +30,23 @@ TAO_NS_Worker::command_builder (TAO_NS_Command_Builder* cmd_builder)
 int
 TAO_NS_Worker::svc (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "Running Commands... \n"));
+  ACE_hthread_t current;
+  ACE_Thread::self (current);
+
+  int priority;
+  if (ACE_Thread::getprio (current, priority) == -1)
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Failed to get Worker thread priority\n")));
+      return -1;
+    }
+
+  ACE_DEBUG ((LM_ERROR, "Activated Worker Thread for commands @ priority:%d \n", priority));
 
   ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
+      ACE_DEBUG ((LM_DEBUG, "Running Commands... \n"));
       this->cmd_builder_->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -48,6 +59,56 @@ TAO_NS_Worker::svc (void)
 
   ACE_DEBUG ((LM_DEBUG, "Finished executing commands\n"));
 
+  return 0;
+}
+
+/*****************************************************************/
+
+TAO_NS_ORB_Run_Worker::TAO_NS_ORB_Run_Worker (void)
+{
+}
+
+void
+TAO_NS_ORB_Run_Worker::orb (CORBA::ORB_ptr orb)
+{
+  orb_ = CORBA::ORB::_duplicate (orb);
+}
+
+void
+TAO_NS_ORB_Run_Worker::run_period (ACE_Time_Value run_period)
+{
+  this->run_period_ = run_period;
+}
+
+int
+TAO_NS_ORB_Run_Worker::svc (void)
+{
+  ACE_hthread_t current;
+  ACE_Thread::self (current);
+
+  int priority;
+  if (ACE_Thread::getprio (current, priority) == -1)
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Failed to get Worker thread priority\n")));
+      return -1;
+    }
+
+
+  ACE_DEBUG ((LM_ERROR, "Activated ORB Run Worker Thread to run the ORB @ priority:%d \n", priority));
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      ACE_DEBUG ((LM_ERROR, "Running ORB, timeout in %d sec\n", this->run_period_.sec ()));
+
+      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+    }
+  ACE_CATCHANY
+    {
+    }
+  ACE_ENDTRY;
   return 0;
 }
 
@@ -134,45 +195,31 @@ TAO_NS_Driver::init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 
   worker_.command_builder (this->cmd_builder_);
 
+  // Set the run period.
+  if (this->run_period_ != ACE_Time_Value::zero)
+    this->orb_run_worker_.run_period (this->run_period_);
+
+  // Set the ORB
+  this->orb_run_worker_.orb (this->orb_.in ());
+
   return 0;
 }
 
 void
 TAO_NS_Driver::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
-  long flags = THR_NEW_LWP | THR_JOINABLE;
-
-  flags |=
-    this->orb_->orb_core ()->orb_params ()->sched_policy () |
-    this->orb_->orb_core ()->orb_params ()->scope_policy ();
-
-  ACE_Sched_Params::Policy sched_policy;
-
-  long thr_sched_policy = this->orb_->orb_core ()->orb_params ()->sched_policy ();
-
-  //long thr_scope_policy = this->orb_->orb_core ()->orb_params ()->scope_policy ();
-
-  if (thr_sched_policy == THR_SCHED_FIFO)
-    {
-      sched_policy = ACE_SCHED_FIFO;
-    }
-  else if (thr_sched_policy == THR_SCHED_RR)
-    {
-      sched_policy = ACE_SCHED_RR;
-    }
-  else
-    {
-      sched_policy = ACE_SCHED_OTHER;
-    }
-
-  /// Check sched.
-  int min_priority = ACE_Sched_Params::priority_min (sched_policy);
+  // Task activation flags.
+  long flags =
+    THR_NEW_LWP |
+    THR_JOINABLE |
+    this->orb_->orb_core ()->orb_params ()->thread_creation_flags ();
 
   // Become an active object.
-  if (this->worker_.activate (flags,
-                              1,
-                              0,
-                              min_priority) == -1) //ACE_DEFAULT_THREAD_PRIORITY) == -1)
+  int priority = ACE_Sched_Params::priority_min (this->orb_->orb_core ()->orb_params ()->sched_policy ()
+                                                 , this->orb_->orb_core ()->orb_params ()->scope_policy ());
+
+  // Become an active object.
+  if (this->worker_.activate (flags, 1, 0, priority) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
         ACE_ERROR ((LM_ERROR,
@@ -185,14 +232,23 @@ TAO_NS_Driver::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                     -1));
     }
 
-  ACE_DEBUG ((LM_ERROR, "Activated Worker Thread for commands at priority %d\n", min_priority));
 
-  ACE_DEBUG ((LM_ERROR, "Running ORB, timeout in %d sec\n", this->run_period_.sec ()));
+  // Activate the ORB run worker.
+  if (this->orb_run_worker_.activate (flags, 1, 0, priority) == -1)
+    {
+      if (ACE_OS::last_error () == EPERM)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Insufficient privilege to activate ACE_Task.\n")));
+      else
+        ACE_DEBUG ((LM_ERROR,
+                    ACE_TEXT ("(%t) Task activation at priority %d failed, ")
+                    ACE_TEXT ("exiting!\n%a"),
+                    ACE_DEFAULT_THREAD_PRIORITY,
+                    -1));
+    }
 
-  if (this->run_period_ == ACE_Time_Value::zero)
-    this->orb_->run (0);
-  else
-    this->orb_->run (this->run_period_);
+  // Wait till we're done.
+  this->orb_run_worker_.thr_mgr ()->wait ();
 }
 
 void
@@ -200,6 +256,7 @@ TAO_NS_Driver::shutdown (void)
 {
   this->orb_->shutdown ();
 }
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -19,8 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Notify_StructuredPushConsumer.h"
 #include "Task_Stats.h"
+#include "Notify_StructuredPushConsumer.h"
 
 class TAO_NS_Task_Callback;
 class ACE_Barrier;
@@ -45,22 +45,10 @@ public:
   void task_callback(TAO_NS_Task_Callback* client);
 
   /// Init the state of this object.
-  int init_state (ACE_Arg_Shifter& arg_shifter);
-
-  /// Connect.
-  void connect (CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr proxy, CosNotifyChannelAdmin::ProxyID proxy_id ACE_ENV_ARG_DECL);
-
-  /// connect
-  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin ACE_ENV_ARG_DECL);
-
-  /// Subscription change.
-  void subscription_change (CosNotification::EventTypeSeq &added, CosNotification::EventTypeSeq& removed ACE_ENV_ARG_DECL);
+  virtual int init_state (ACE_Arg_Shifter& arg_shifter);
 
   /// dump stats
-  void dump_stats (ACE_TCHAR* msg);
-
-    /// Get the name of the proxy
-  const char* proxy_name (void);
+  void dump_stats (ACE_TCHAR* msg, int dump_samples);
 
 protected:
 
@@ -73,18 +61,26 @@ protected:
         CosEventComm::Disconnected
        ));
 
-  /// = Data members.
+  void handle_start_event (const CosNotification::PropertySeq& prop_seq);
+  void check_priority (const CosNotification::PropertySeq& prop_seq);
 
-  /// The name of the proxy we connect to.
-  ACE_CString proxy_name_;
+  /// = Data members.
+  /// Serialize state.
+  TAO_SYNCH_MUTEX lock_;
 
   /// count of events received.
   int count_;
+
+  /// We need to count down these initial events.
+  int warmup_countdown_;
 
   /// max events expected.
   /// Sometimes max count may not be the number of events that the supplier will send.
   /// A filter might not allow some events to through. we can tell the consumer what to expect.
   int max_count_;
+
+  /// The Load
+  CORBA::ULong load_;
 
   /// Stats house keeping
   Task_Stats stats_;
@@ -94,6 +90,9 @@ protected:
 
   /// Flag to indicate if we want to check the expected priority.
   int check_priority_;
+
+  /// This Flag is set if we received an event asking us to "Stop".
+  int stop_received_;
 };
 
 #include "ace/post.h"
