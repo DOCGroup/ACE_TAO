@@ -84,7 +84,8 @@ TAO_ClientRequestInfo::received_exception (CORBA::Environment &ACE_TRY_ENV)
   if (this->reply_status_ != PortableInterceptor::SYSTEM_EXCEPTION
       && this->reply_status_ != PortableInterceptor::USER_EXCEPTION)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (10, CORBA::COMPLETED_NO), 0);
+      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
+                                              CORBA::COMPLETED_NO), 0);
     }
 
   // The spec says that if it is a user exception which can't be
@@ -127,7 +128,7 @@ TAO_ClientRequestInfo::received_exception_id (
   if (this->reply_status_ != PortableInterceptor::SYSTEM_EXCEPTION
       && this->reply_status_ != PortableInterceptor::USER_EXCEPTION)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (10,
+      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
                                               CORBA::COMPLETED_NO),
                         0);
     }
@@ -175,7 +176,8 @@ TAO_ClientRequestInfo::get_effective_component (
 
   // No tagged component was found that matched the given
   // IOP::ComponentId.
-  ACE_THROW_RETURN (CORBA::BAD_PARAM (25, CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::BAD_PARAM (TAO_OMG_VMCID | 25,
+                                      CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -226,7 +228,8 @@ TAO_ClientRequestInfo::get_effective_components (
       // No tagged component sequence was allocated, meaning no tagged
       // components were found that matched the given
       // IOP::ComponentId.
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (25, CORBA::COMPLETED_NO),
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (TAO_OMG_VMCID | 25,
+                                          CORBA::COMPLETED_NO),
                         0);
     }
 
@@ -280,7 +283,8 @@ TAO_ClientRequestInfo::add_request_service_context (
               return;
             }
           else
-            ACE_THROW (CORBA::BAD_INV_ORDER (11, CORBA::COMPLETED_NO));
+            ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 11,
+                                             CORBA::COMPLETED_NO));
         }
     }
 
@@ -308,7 +312,8 @@ Dynamic::ParameterList *
 TAO_ClientRequestInfo::arguments (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (10, CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
+                                          CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -316,7 +321,8 @@ Dynamic::ExceptionList *
 TAO_ClientRequestInfo::exceptions (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (10, CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
+                                          CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -324,7 +330,8 @@ Dynamic::ContextList *
 TAO_ClientRequestInfo::contexts (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (10, CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
+                                          CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -332,7 +339,8 @@ Dynamic::RequestContext *
 TAO_ClientRequestInfo::operation_context (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (10, CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
+                                          CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -340,7 +348,8 @@ CORBA::Any *
 TAO_ClientRequestInfo::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (10, CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
+                                          CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -369,7 +378,8 @@ TAO_ClientRequestInfo::sync_scope (CORBA::Environment &ACE_TRY_ENV)
   if (inv != 0 && this->response_expected_ == 0)
     return inv->sync_scope ();
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (10, CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
+                                          CORBA::COMPLETED_NO),
                     -1);
 }
 #endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
@@ -380,7 +390,9 @@ TAO_ClientRequestInfo::reply_status (CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->reply_status_ == -1)
     // A reply hasn't been received yet.
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (10, CORBA::COMPLETED_NO), -1);
+    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
+                                            CORBA::COMPLETED_NO),
+                      -1);
 
   return this->reply_status_;
 }
@@ -390,7 +402,8 @@ TAO_ClientRequestInfo::forward_reference (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->reply_status_ != PortableInterceptor::LOCATION_FORWARD)
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (10, CORBA::COMPLETED_NO),
+    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 10,
+                                            CORBA::COMPLETED_NO),
                       CORBA::Object::_nil ());
 
   // TAO_GIOP_Invocation::forward_reference() already duplicates the
@@ -443,7 +456,8 @@ TAO_ClientRequestInfo::get_request_service_context (
         return safe_service_context._retn ();
       }
 
-  ACE_THROW_RETURN (CORBA::BAD_PARAM (23, CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::BAD_PARAM (TAO_OMG_VMCID | 23,
+                                      CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -477,7 +491,8 @@ TAO_ClientRequestInfo::get_reply_service_context (
         return safe_service_context._retn ();
       }
 
-  ACE_THROW_RETURN (CORBA::BAD_PARAM (23, CORBA::COMPLETED_NO),
+  ACE_THROW_RETURN (CORBA::BAD_PARAM (TAO_OMG_VMCID | 23,
+                                      CORBA::COMPLETED_NO),
                     0);
 }
 

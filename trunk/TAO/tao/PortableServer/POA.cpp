@@ -1121,7 +1121,8 @@ TAO_POA::check_for_valid_wait_for_completions (const TAO_ORB_Core &orb_core,
                 {
                   // CORBA 2.3 specifies which minor code corresponds
                   // to this particular problem.
-                  ACE_THROW (CORBA::BAD_INV_ORDER (3, CORBA::COMPLETED_NO));
+                  ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 3,
+                                                   CORBA::COMPLETED_NO));
                 }
             }
           else

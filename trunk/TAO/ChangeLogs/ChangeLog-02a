@@ -1,3 +1,14 @@
+Tue Mar 13 15:21:32 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB.cpp (ORB_init):
+	* tao/ClientRequestInfo.cpp:
+	* tao/PortableServer/ServerRequestInfo.cpp:
+	* tao/PortableServer/POA.cpp
+	  (check_for_valid_wait_for_completions):
+
+	  The OMG assigned exception minor code should be bitwise-ORed
+	  with TAO_OMG_VMCID.
+	
 Tue Mar 13 14:57:47 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp: 
