@@ -112,7 +112,7 @@ class FT_POA_Updateable_tie;
 #endif /*if 0 */
 #endif /* ACE_HAS_USING_KEYWORD */
 
-TAO_NAMESPACE FT_POA
+TAO_NAMESPACE POA_FT
 {
  typedef FT_POA_RequestDurationPolicy RequestDurationPolicy;
  typedef RequestDurationPolicy *RequestDurationPolicy_ptr;
