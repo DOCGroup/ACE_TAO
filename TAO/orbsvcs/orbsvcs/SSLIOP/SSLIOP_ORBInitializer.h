@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/SecurityC.h"
+#include "orbsvcs/orbsvcs/SecurityC.h"
 
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
