@@ -191,7 +191,7 @@ TAO_EC_Basic_ObserverStrategy::disconnected (TAO_EC_ProxyPushSupplier*,
 {
   RtecEventChannelAdmin::SupplierQOS s_qos;
   this->fill_qos (s_qos, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK;
 
   for (Observer_Map_Iterator i  = this->observers_.begin ();
        i != this->observers_.end ();
