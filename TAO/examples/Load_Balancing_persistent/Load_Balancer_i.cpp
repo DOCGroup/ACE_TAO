@@ -359,6 +359,7 @@ Object_Group_Factory_i::resolve (const char * id,
       this->mem_pool_->find (flags_name_bind,
                              (void *&)this->flags_);
       this->update_objects (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (Load_Balancer::Object_Group::_nil ());
     }
 
   char *ior = 0;
@@ -590,10 +591,9 @@ Object_Group_i::_default_POA (CORBA::Environment &)
 
 
 char *
-Object_Group_i::id (CORBA::Environment &ACE_TRY_ENV)
+Object_Group_i::id (CORBA::Environment & /*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return CORBA::string_dup (id_.c_str ());
 }
 
@@ -666,7 +666,7 @@ Object_Group_i::bind (const Load_Balancer::Member & member,
 
   ACE_CString id = dll_name_bind;
   id += this->id (ACE_TRY_ENV);
-
+  ACE_CHECK;
 
 
   if (this->allocator_->find (id.c_str (),
@@ -707,6 +707,8 @@ Object_Group_i::unbind (const char * id,
   if (this->members_ == 0)
     {
       ACE_CString id = this->id (ACE_TRY_ENV);
+      ACE_CHECK;
+
       id += server_id_name_bind;
 
       if (this->allocator_->find (id.c_str (),
@@ -728,6 +730,7 @@ Object_Group_i::unbind (const char * id,
     {
       ACE_CString id = dll_name_bind;
       id += this->id (ACE_TRY_ENV);
+      ACE_CHECK;
 
       if (this->allocator_->find (id.c_str (),
                                   (void *&)this->member_id_list_)
@@ -846,6 +849,7 @@ Object_Group_i::read_from_memory (CORBA::Environment &ACE_TRY_ENV)
     {
       id = dll_name_bind;
       id += this->id (ACE_TRY_ENV);
+      ACE_CHECK;
 
       if (this->allocator_->find (id.c_str (),
                                   (void *&)this->member_id_list_) == -1)
@@ -953,6 +957,8 @@ RR_Object_Group::unbind (const char *id,
   if (this->members_ == 0)
     {
       ACE_CString id = this->id (ACE_TRY_ENV);
+      ACE_CHECK;
+
       id += server_id_name_bind;
 
       if (this->allocator_->find (id.c_str (),
@@ -977,6 +983,7 @@ RR_Object_Group::unbind (const char *id,
     {
       ACE_CString id = dll_name_bind;
       id += this->id (ACE_TRY_ENV);
+      ACE_CHECK;
 
       if (this->allocator_->find (id.c_str (),
                                   (void *&)this->member_id_list_)
