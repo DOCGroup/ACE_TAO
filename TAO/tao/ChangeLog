@@ -1,3 +1,10 @@
+Mon Mar 24 09:16:11 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Object.cpp: The return value from the call to
+	  initialize_object () is voided since not much can be done at
+	  that point if failures occur. We will do error checking later to
+	  throw the right exceptions. 
+
 Fri Mar 21 17:07:11 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Adapter.h:

@@ -673,6 +673,7 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
   if (obj->is_evaluated_)
     return;
 
+
   CORBA::ULong profile_count =
     obj->ior_->profiles.length ();
 
@@ -766,11 +767,12 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
 
   TAO_Stub_Auto_Ptr safe_objdata (objdata);
 
-  int retval =
-    orb_core->initialize_object (safe_objdata.get (),
-                                 obj);
-  if (retval == 0)
-    obj->protocol_proxy_ = objdata;
+  // No hope. What happens if this fails or returns an error? No
+  // chance to initialize the object again. Just give up. We will throw
+  // an exception when someone tries to access something..
+  (void) orb_core->initialize_object (safe_objdata.get (),
+                                      obj);
+  obj->protocol_proxy_ = objdata;
 
   // If the object is collocated then set the broker using the
   // factory otherwise use the remote proxy broker.
