@@ -1,3 +1,8 @@
+Thu Apr 19 07:09:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/RTCORBA/Thread_Pool/server.cpp: Fixed a typo that was
+	  giving a warning.
+
 Wed Apr 18 23:00:07 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Collocation/Collocation.bor: Changed main.obj to
