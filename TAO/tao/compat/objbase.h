@@ -109,6 +109,8 @@ TAO_ResultFromScode(TAO_SCODE scode)
 // supported at this writing.
 
 typedef u_short         TAO_VARTYPE;
+
+#if 0
 enum TAO_VARENUM
 {                  // only types suitable for VARIANTs
   VT_EMPTY    = 0,            // nothing
@@ -129,6 +131,7 @@ enum TAO_VARENUM
   VT_ARRAY    = 0x2000,       // SAFEARRAY * of more primitive type
   VT_BYREF    = 0x4000        // pointer to more primitive type
 };
+#endif /* 0 */
 
 struct TAO_CY
   // = TITLE
