@@ -3,8 +3,8 @@ Sun Aug 17 23:41:22 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/Scheduler_Factory.cpp:
 	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
 	* orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.h:
-	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h: 
-	* orbsvcs/orbsvcs/Log/LogRecordStore.h: 
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
+	* orbsvcs/orbsvcs/Log/LogRecordStore.h:
 	* orbsvcs/orbsvcs/Notify/PropertySeq.h:
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
 	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.h:
@@ -128,7 +128,7 @@ Sun Aug 17 13:28:40 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Thanks to Anand <anand@iCMGworld.com> for reporting
 	  the problem.
-	 
+
 	  Jeff Parsons <j.parsons@vanderbilt.edu> made a fix
 	  for the problem. Please refer to the changelog entry
 	  dated:
