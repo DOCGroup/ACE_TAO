@@ -35,7 +35,7 @@
 #include	"cubit.hh"		// for stubs ...
 #include	<corba/toa.hh>		// ... and skeletons
 
-#include	"../lib/runtime/debug.hh"		// ... and debugging
+#include	<corba/debug.hh>		// ... and debugging
 
 
 //

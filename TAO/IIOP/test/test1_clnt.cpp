@@ -11,17 +11,17 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <ace/Get_Opt.h>
 
 #if	unix
 #	include	<unistd.h>
 
 #else	// windows
-#include "ace/Get_Opt.h"
 
 #endif	// unix
 
 #include "test1.hh"
-#include "../lib/runtime/debug.hh"
+#include <corba/debug.hh>
 
 
 #if !defined (_WIN32)
@@ -71,7 +71,7 @@ print_exception (const CORBA_Exception *, const char *, FILE *f=stdout);
 	} else if (!COMPARE (CORBA_ ## type, v1, value1) \
 		|| !COMPARE (CORBA_ ## type, v2, value1) \
 		|| !COMPARE (CORBA_ ## type, v3, value2) ) { \
-	    fprintf (stderr, "bad comparison, test_" #name "\n"); \
+	    ACE_OS::fprintf (stderr, "bad comparison, test_" #name "\n"); \
 	    BAD_COMPARE_VALUES(type,v1,v2,v3,value1,value2) \
 	    error_count++; \
 	} \
@@ -401,7 +401,7 @@ do_tests (
 		if (strcmp ((char *)xp->id (),
 			(char *) _tc_test1_x1->id (env2)) != 0) {
 		    error_count++;
-		    fprintf (stderr, "test_throw case 1, "
+		    ACE_OS::fprintf (stderr, "test_throw case 1, "
 			    "wrong exception thrown (id = '%s')\n",
 			    xp->id ());
 		} else {
@@ -409,7 +409,7 @@ do_tests (
 
 		    if (xp2->case_num != -5) {
 			error_count++;
-			fprintf (stderr, "test_throw case 1, "
+			ACE_OS::fprintf (stderr, "test_throw case 1, "
 				"wrong value (case_num = '%ld')\n",
 				xp2->case_num);
 		    }
@@ -418,7 +418,7 @@ do_tests (
 		}
 	    } else {
 		error_count++;
-		fprintf (stderr, "test_throw case 1, "
+		ACE_OS::fprintf (stderr, "test_throw case 1, "
 			"no exception thrown !!\n");
 	    }
 
@@ -437,7 +437,7 @@ do_tests (
 		if (strcmp ((char *)xp->id (),
 			(char *) _tc_test1_x2->id (env2)) != 0) {
 		    error_count++;
-		    fprintf (stderr, "test_throw case 2, "
+		    ACE_OS::fprintf (stderr, "test_throw case 2, "
 			    "wrong exception thrown (id = '%s')\n",
 			    xp->id ());
 		} else {
@@ -445,14 +445,14 @@ do_tests (
 
 		    if (xp2->case_num != 101) {
 			error_count++;
-			fprintf (stderr, "test_throw case 2, "
+			ACE_OS::fprintf (stderr, "test_throw case 2, "
 				"wrong value (case_num = '%ld')\n",
 				xp2->case_num);
 		    }
 
 		    if (!CORBA_is_nil (xp2->obj)) {
 			error_count++;
-			fprintf (stderr, "test_throw case 2, "
+			ACE_OS::fprintf (stderr, "test_throw case 2, "
 				"non-null objref thrown\n");
 		    }
 		    
@@ -460,7 +460,7 @@ do_tests (
 		}
 	    } else {
 		error_count++;
-		fprintf (stderr, "test_throw case 2, "
+		ACE_OS::fprintf (stderr, "test_throw case 2, "
 			"no exception thrown !!\n");
 	    }
 
@@ -485,7 +485,7 @@ do_tests (
 		if (strcmp ((char *)xp->id (),
 			(char *) _tc_test1_x2->id (env2)) != 0) {
 		    error_count++;
-		    fprintf (stderr, "test_throw case 3, "
+		    ACE_OS::fprintf (stderr, "test_throw case 3, "
 			    "wrong exception thrown (id = '%s')\n",
 			    xp->id ());
 		} else {
@@ -493,7 +493,7 @@ do_tests (
 
 		    if (xp2->case_num != 42) {
 			error_count++;
-			fprintf (stderr, "test_throw case 3, "
+			ACE_OS::fprintf (stderr, "test_throw case 3, "
 				"wrong value (case_num = '%ld')\n",
 				xp2->case_num);
 		    }
@@ -508,7 +508,7 @@ do_tests (
 				"test_throw/3 call to is_equivalent");
 		    } else if (status != CORBA_B_TRUE) {
 			error_count++;
-			fprintf (stderr, "test_throw case 3, "
+			ACE_OS::fprintf (stderr, "test_throw case 3, "
 				"non-equivalent objref thrown\n");
 		    }
 		    
@@ -516,7 +516,7 @@ do_tests (
 		}
 	    } else {
 		error_count++;
-		fprintf (stderr, "test_throw case 3, "
+		ACE_OS::fprintf (stderr, "test_throw case 3, "
 			"no exception thrown !!\n");
 	    }
 
@@ -532,9 +532,9 @@ do_tests (
 	test_count++;
 	test_illegal (target, env);
 	if (env.exception () == 0
-		|| strcmp ((char *) env.exception()->id(),
+		|| ACE_OS::strcmp ((char *) env.exception()->id(),
 			(char *) _tc_CORBA_BAD_OPERATION->id (env2)) != 0) { 
-	    fprintf (stderr, "couldn't generate BAD_OPERATION exception\n");
+	    ACE_OS::fprintf (stderr, "couldn't generate BAD_OPERATION exception\n");
 	    error_count++;
 	}
     }
@@ -574,7 +574,7 @@ main (int    argc, char   *argv[])
 	    continue;
 
 	  case 'n':			// loop count
-	    loop_count = (unsigned) atoi (get_opt.optarg);
+	    loop_count = (unsigned) ACE_OS::atoi (get_opt.optarg);
 	    continue;
 
 	  case 'O':			// stringified objref
@@ -594,7 +594,7 @@ main (int    argc, char   *argv[])
 
 	  case '?':
 	  default:
-	    fprintf (stderr, "usage:  %s"
+	    ACE_OS::fprintf (stderr, "usage:  %s"
 			    " [-d]"
 			    " [-l]"
 			    " [-n loopcount]"
@@ -606,7 +606,7 @@ main (int    argc, char   *argv[])
         }
     
     if (CORBA_is_nil (objref) == CORBA_B_TRUE) {
-	fprintf (stderr, "%s:  must identify non-null target objref\n",
+	ACE_OS::fprintf (stderr, "%s:  must identify non-null target objref\n",
 		argv [0]);
 	return 1;
     }
@@ -614,14 +614,14 @@ main (int    argc, char   *argv[])
 
     do_tests (objref, loop_count, tests, errors);
 
-    char		*progname = strrchr (argv [0], '/');
+    char		*progname = ACE_OS::strrchr (argv [0], '/');
 
     if (progname != 0)
 	progname += 1;
     else
 	progname = argv [0];
 
-    fprintf (stderr, "%s:  %d loops, %d tests (%d errors)\n",
+    ACE_OS::fprintf (stderr, "%s:  %d loops, %d tests (%d errors)\n",
 	progname, loop_count, tests, errors);
 
     if (exit_later) {

@@ -10,12 +10,12 @@
 
 #include	<stdio.h>
 #include	<string.h>
+#include <ace/Get_Opt.h>
 
 #if	unix
 #	include	<unistd.h>		// for getopt on some systems
 
 #else	// windows
-#include "ace/Get_Opt.h"
 
 #endif
 
@@ -26,14 +26,14 @@
 //
 // XXX a general debug/trace facility would be handy
 //
-#include	"../lib/runtime/debug.hh"
+#include	<corba/debug.hh>
 
 //
 // XXX this stuff is ugly but needed, since this exposes features
 // (IIOP forwarding) that TOA doesn't provide.
 //
-#include	"../lib/bridge/connmgr.hh"
-#include	"../lib/bridge/tcpoa.hh"
+#include	<connmgr.hh>
+#include	<tcpoa.hh>
 
 
 // extern char 	*optarg;	// missing on some platforms
@@ -61,9 +61,8 @@ is_a_skel (
 	return;
     }
 
-    CORBA_Boolean		*retval;
-    CORBA_String		value = *(CORBA_String *)
-				    nv->value ()->value ();
+    CORBA_Boolean *retval;
+    CORBA_String value = *(CORBA_String *) nv->value()->value();
 
     //
     // This object's type "is_a" conformant subtype of the type whose
@@ -80,14 +79,13 @@ is_a_skel (
     // XXX "env" should be checked to see if TypeCode::id() reported
     // an exception ...
     //
-    if (strcmp ((char *)value, (char *)Cubit__id) == 0
-	    || strcmp ((char *)value, _tc_CORBA_Object->id (env)) == 0)
+    if (ACE_OS::strcmp ((char*)value, Cubit__id) == 0
+	|| ACE_OS::strcmp ((char *)value, _tc_CORBA_Object->id (env)) == 0)
 	retval = new CORBA_Boolean (CORBA_B_TRUE);
     else
 	retval = new CORBA_Boolean (CORBA_B_FALSE);
 
-    CORBA_Any  		*any =
-	    new CORBA_Any (_tc_CORBA_Boolean, retval, CORBA_B_TRUE);
+    CORBA_Any *any = new CORBA_Any (_tc_CORBA_Boolean, retval, CORBA_B_TRUE);
 
     req.result (any, env);
     dexc (env, "_is_a, result");
@@ -118,8 +116,8 @@ tcpoa_dispatch (
     obj_key = (CORBA_OctetSeq *) context;
 
     if (obj_key->length != key.length
-	    || memcmp (obj_key->buffer, key.buffer,
-		    obj_key->length) != 0) {
+	    || ACE_OS::memcmp (obj_key->buffer, key.buffer,
+			       obj_key->length) != 0) {
 	env.exception (new CORBA_OBJECT_NOT_EXIST (COMPLETED_NO));
 #ifdef	DEBUG
 	if (debug_level)
@@ -140,7 +138,7 @@ tcpoa_dispatch (
     opname = req.op_name ();
 
     for (entry = &Cubit_operations [0]; entry->op_descriptor; entry++) {
-	if (strcmp ((char *)opname, entry->op_descriptor->opname) == 0) {
+	if (ACE_OS::strcmp ((char *)opname, entry->op_descriptor->opname) == 0) {
 	    entry->impl_skeleton (req, env);
 	    return;
 	}
@@ -154,7 +152,7 @@ tcpoa_dispatch (
     // objref's type), and _get_implementation (needs an implementation
     // repository).
     //
-    if (strcmp ((char *)opname, "_is_a") == 0) {
+    if (ACE_OS::strcmp ((char *)opname, "_is_a") == 0) {
 	is_a_skel (req, env);
 	return;
     }
@@ -179,15 +177,15 @@ tcpoa_forwarder (
     CORBA_Environment	&env
 )
 {
-    CORBA_OctetSeq		*obj_key;
+  CORBA_OctetSeq		*obj_key;
 
-    obj_key = (CORBA_OctetSeq *) context;
+  obj_key = (CORBA_OctetSeq *) context;
 
-    if (obj_key->length == key.length
-	    && memcmp (obj_key->buffer, key.buffer, key.length) == 0) {
-	the_ref = fwd_ref->_duplicate (fwd_ref);
-    } else
-	env.exception (new CORBA_OBJECT_NOT_EXIST (COMPLETED_NO));
+  if (obj_key->length == key.length
+      && ACE_OS::memcmp (obj_key->buffer, key.buffer, key.length) == 0) {
+    the_ref = fwd_ref->_duplicate (fwd_ref);
+  } else
+    env.exception (new CORBA_OBJECT_NOT_EXIST (COMPLETED_NO));
 }
 
 
@@ -204,126 +202,126 @@ OA_listen (
     CORBA_Boolean	do_threads
 )
 {
-    //
-    // Create the object we'll be implementing.
-    //
-    CORBA_OctetSeq	obj_key;
-    CORBA_Object_ptr	obj;
-    CORBA_Environment	env;
+  //
+  // Create the object we'll be implementing.
+  //
+  CORBA_OctetSeq	obj_key;
+  CORBA_Object_ptr	obj;
+  CORBA_Environment	env;
 
-    obj_key.buffer = (CORBA_Octet *) key;
-    obj_key.length = obj_key.maximum = strlen ((char *)key);
+  obj_key.buffer = (CORBA_Octet *) key;
+  obj_key.length = obj_key.maximum = ACE_OS::strlen ((char *)key);
 
-    obj = oa_ptr->create (obj_key, (CORBA_String) "", env);
-    if (env.exception () != 0) {
-	print_exception (env.exception (), "TCP_OA::create");
-	return 1;
-    }
+  obj = oa_ptr->create (obj_key, (CORBA_String) "", env);
+  if (env.exception () != 0) {
+    print_exception (env.exception (), "TCP_OA::create");
+    return 1;
+  }
 
-    //
-    // Stringify the objref we'll be implementing, and
-    // print it to stdout.  Someone will take that string
-    // and give it to some client.  Then release the object.
-    //
-    CORBA_String	str;
+  //
+  // Stringify the objref we'll be implementing, and
+  // print it to stdout.  Someone will take that string
+  // and give it to some client.  Then release the object.
+  //
+  CORBA_String	str;
 
-    str = orb_ptr->object_to_string (obj, env);
-    if (env.exception () != 0) {
-	print_exception (env.exception (), "object2string");
-	 return 1;
-    }
-    puts ((char *)str);
-    fflush (stdout);
-    dmsg1 ("listening as object '%s'", str);
-    CORBA_release (obj);
-    obj = 0;
+  str = orb_ptr->object_to_string (obj, env);
+  if (env.exception () != 0) {
+    print_exception (env.exception (), "object2string");
+    return 1;
+  }
+  ACE_OS::puts ((char *)str);
+  ACE_OS::fflush (stdout);
+  dmsg1 ("listening as object '%s'", str);
+  CORBA_release (obj);
+  obj = 0;
 
-    //
-    // If we're forking a child server, do so -- read the objref
-    // it'll use, and prepare to forward all requests to it.  That
-    // objref has a dynamically assigned port. 
-    //
-    if (do_fork) {
+  //
+  // If we're forking a child server, do so -- read the objref
+  // it'll use, and prepare to forward all requests to it.  That
+  // objref has a dynamically assigned port. 
+  //
+  if (do_fork) {
 #if	defined (HAVE_POPEN)
-	FILE		*f = popen ("exec ./svr -i120 -kbaskerville", "r");
-	char		buffer [BUFSIZ];
+    FILE		*f = popen ("exec ./svr -i120 -kbaskerville", "r");
+    char		buffer [BUFSIZ];
 
-	if (fgets (buffer, sizeof buffer, f) != buffer) {
-	    fprintf (stderr, "error: can't read from child\n");
-	    return 1;
-	}
-	fwd_ref = orb_ptr->string_to_object ((CORBA_String) buffer, env);
-	if (env.exception () != 0) {
-	    print_exception (env.exception (), "string2object");
-	    return 1;
-	}
+    if (ACE_OS::fgets (buffer, sizeof buffer, f) != buffer) {
+      ACE_OS::fprintf (stderr, "error: can't read from child\n");
+      return 1;
+    }
+    fwd_ref = orb_ptr->string_to_object ((CORBA_String) buffer, env);
+    if (env.exception () != 0) {
+      print_exception (env.exception (), "string2object");
+      return 1;
+    }
 
-	//
-	// NOTE:  don't fclose("f") since some systems make that the
-	// same as pclose("f").  Pclose waits for the child to exit,
-	// causing a deadlock since the child won't exit until it's
-	// told to do so by a client, but no client can be redirected 
-	// to the child until the pclose returns ...
-	//
+    //
+    // NOTE:  don't fclose("f") since some systems make that the
+    // same as pclose("f").  Pclose waits for the child to exit,
+    // causing a deadlock since the child won't exit until it's
+    // told to do so by a client, but no client can be redirected 
+    // to the child until the pclose returns ...
+    //
 #else
-	fprintf (stderr, "error:  no popen(), can't create child\n");
-//	env.exception (new CORBA_IMP_LIMIT);
-	return 1;
+    ACE_OS::fprintf (stderr, "error:  no popen(), can't create child\n");
+    env.exception (new CORBA_IMP_LIMIT(COMPLETED_NO));
+    return 1;
 #endif	// !defined (HAVE_POPEN)
+  }
+
+  //
+  // Handle requests for this object until we're killed, or one of
+  // the methods asks us to exit.
+  //
+  // NOTE:  for multithreaded environments (e.g. POSIX threads) also
+  // want to use threads.  The current notion is to dedicate a thread
+  // to a "read" on each client file descriptor, and then when that
+  // successfully gets a Request message, to start another thread
+  // reading that descriptor while the first one creates the Reply.
+  //
+  // This will accentuate the need for server-side policies to address
+  // resource management, such as shutting down connections that have
+  // no requests in progress after they've been idle for some time
+  // period (e.g. 10 minutes), and reclaiming the thread used by that
+  // connection. 
+  //
+  while (oa_ptr->shutting_down () != CORBA_B_TRUE) {
+    if (idle == -1)
+      oa_ptr->get_request (tcpoa_dispatch,
+			   fwd_ref ? tcpoa_forwarder : 0,
+			   do_threads, &obj_key, 0, env);
+    else {
+      timeval		tv;
+
+      tv.tv_sec = idle;
+      tv.tv_usec = 0;
+      oa_ptr->get_request (tcpoa_dispatch,
+			   fwd_ref ? tcpoa_forwarder : 0,
+			   do_threads, &obj_key, &tv, env);
     }
 
     //
-    // Handle requests for this object until we're killed, or one of
-    // the methods asks us to exit.
+    // XXX "env2" should be checked to see if TypeCode::id() reported
+    // an exception ...
     //
-    // NOTE:  for multithreaded environments (e.g. POSIX threads) also
-    // want to use threads.  The current notion is to dedicate a thread
-    // to a "read" on each client file descriptor, and then when that
-    // successfully gets a Request message, to start another thread
-    // reading that descriptor while the first one creates the Reply.
-    //
-    // This will accentuate the need for server-side policies to address
-    // resource management, such as shutting down connections that have
-    // no requests in progress after they've been idle for some time
-    // period (e.g. 10 minutes), and reclaiming the thread used by that
-    // connection. 
-    //
-    while (oa_ptr->shutting_down () != CORBA_B_TRUE) {
-	if (idle == -1)
-	    oa_ptr->get_request (tcpoa_dispatch,
-		    fwd_ref ? tcpoa_forwarder : 0,
-		    do_threads, &obj_key, 0, env);
-	else {
-	    timeval		tv;
+    CORBA_Environment	env2;
 
-	    tv.tv_sec = idle;
-	    tv.tv_usec = 0;
-	    oa_ptr->get_request (tcpoa_dispatch,
-		    fwd_ref ? tcpoa_forwarder : 0,
-		    do_threads, &obj_key, &tv, env);
-	}         
-
-	//
-	// XXX "env2" should be checked to see if TypeCode::id() reported
-	// an exception ...
-	//
-	CORBA_Environment	env2;
-
-	if (env.exception () != 0
-		&& strcmp ((char *)env.exception ()->id (),
-			_tc_CORBA_INITIALIZE->id (env2)) == 0) {
-	    print_exception (env.exception (), "TCP_OA::get_request");
-	    return 1;
-	}
-	env.clear ();
+    if (env.exception () != 0
+	&& ACE_OS::strcmp ((char *)env.exception ()->id (),
+			   _tc_CORBA_INITIALIZE->id (env2)) == 0) {
+      print_exception (env.exception (), "TCP_OA::get_request");
+      return 1;
     }
+    env.clear ();
+  }
 
-    //
-    // Shut down the OA -- recycles all underlying resources (e.g. file
-    // descriptors, etc).
-    //
-    oa_ptr->clean_shutdown (env);
-    return 0;
+  //
+  // Shut down the OA -- recycles all underlying resources (e.g. file
+  // descriptors, etc).
+  //
+  oa_ptr->clean_shutdown (env);
+  return 0;
 }
 
 
@@ -336,90 +334,88 @@ main (
     char   *argv[]
 )
 {
-    CORBA_Environment	env;
-    CORBA_ORB_ptr	orb_ptr;
-    TCP_OA_ptr		oa_ptr;
-    CORBA_Boolean	do_fork = CORBA_B_FALSE;
-    CORBA_Boolean	do_threads = CORBA_B_FALSE;
-    CORBA_String	key = (CORBA_String) "key0";
-    char		*oa_name = 0;
-    char		*orb_name = "internet";
-    int			idle = -1;
+  CORBA_Environment	env;
+  CORBA_ORB_ptr	orb_ptr;
+  TCP_OA_ptr		oa_ptr;
+  CORBA_Boolean	do_fork = CORBA_B_FALSE;
+  CORBA_Boolean	do_threads = CORBA_B_FALSE;
+  CORBA_String	key = (CORBA_String) "key0";
+  char		*oa_name = 0;
+  char		*orb_name = "internet";
+  int			idle = -1;
 
-    //
-    // Parse the command line, get options
-    //
-	ACE_Get_Opt get_opt (argc, argv, "di:fk:o:p:t");
+  //
+  // Parse the command line, get options
+  //
+  ACE_Get_Opt opts (argc, argv, "di:fk:o:p:t");
+  int			c;
 
-	int c; 
+  while ((c = opts()) != -1)
+    switch (c) {
+    case 'd':			// more debug noise
+      debug_level++;
+      continue;
+
+    case 'i':			// idle seconds b4 exit
+      idle = ACE_OS::atoi (opts.optarg);
+      continue;
+
+    case 'f':			// fork child server
+      do_fork = CORBA_B_TRUE;
+      continue;
+
+    case 'k':			// key (str)
+      key = (CORBA_String) opts.optarg;
+      continue;
+
+    case 'o':			// orb name
+      orb_name = opts.optarg;
+      continue;
+
+    case 'p':			// portnum
+      oa_name = opts.optarg;
+      continue;
 	
-	while ((c = get_opt ()) != -1)
-	switch (c) {
-	  case 'd':			// more debug noise
-	    debug_level++;
-	    continue;
+    case 't':			// create thread-per-request
+      do_threads = CORBA_B_TRUE;
+      continue;
 
-	  case 'i':			// idle seconds b4 exit
-	    idle = atoi (get_opt.optarg);
-	    continue;
+      // XXX set debug filters ...
 
-	  case 'f':			// fork child server
-	    do_fork = CORBA_B_TRUE;
-	    continue;
+      //
+      // XXX ignore OMG-specified options ... hope nobody ever tries
+      // to use that "-ORB* param" and "-OA* param" syntax, it flies
+      // in the face of standard command parsing algorithms which
+      // require single-character option specifiers.
+      //
 
-	  case 'k':			// key (str)
-	    key = (CORBA_String) get_opt.optarg;;
-	    continue;
-
-	  case 'o':			// orb name
-	    orb_name = get_opt.optarg;;
-	    continue;
-
-	  case 'p':			// portnum
-	    oa_name = get_opt.optarg;;
-	    continue;
-	
-	  case 't':			// create thread-per-request
-	    do_threads = CORBA_B_TRUE;
-	    continue;
-
-	  // XXX set debug filters ...
-
-	  //
-	  // XXX ignore OMG-specified options ... hope nobody ever tries
-	  // to use that "-ORB* param" and "-OA* param" syntax, it flies
-	  // in the face of standard command parsing algorithms which
-	  // require single-character option specifiers.
-	  //
-
-	  case '?':
-	  default:
-	    fprintf (stderr, "usage:  %s"
-			" [-d]"
-			" [-f]"
-			" [-i idle_seconds]"
-			" [-k]"
-			" [-k object_key=key0]"
-			" [-o orb_name=internet]"
-			" [-p portnum=5555]"
-			" [-t]"
-			"\n", argv [0]
-			);
-	    return 1;
-	}
-
-    orb_ptr = CORBA_ORB_init (argc, argv, orb_name, env);
-    if (env.exception () != 0) {
-	   print_exception (env.exception (), "ORB init");
-	   return 1;
+    case '?':
+    default:
+      ACE_OS::fprintf (stderr, "usage:  %s"
+		       " [-d]"
+		       " [-f]"
+		       " [-i idle_seconds]"
+		       " [-k]"
+		       " [-k object_key=key0]"
+		       " [-o orb_name=internet]"
+		       " [-p portnum=5555]"
+		       " [-t]"
+		       "\n", argv [0]
+		       );
+      return 1;
     }
 
-    oa_ptr = TCP_OA::init (orb_ptr, oa_name, env);
-    if (env.exception () != 0) {
-	   print_exception (env.exception (), "OA init");
-	   return 1;
-    }
+  orb_ptr = CORBA_ORB_init (argc, argv, orb_name, env);
+  if (env.exception () != 0) {
+    print_exception (env.exception (), "ORB init");
+    return 1;
+  }
 
-    return OA_listen (orb_ptr, oa_ptr, key, idle, do_fork, do_threads);
+  oa_ptr = TCP_OA::init (orb_ptr, oa_name, env);
+  if (env.exception () != 0) {
+    print_exception (env.exception (), "OA init");
+    return 1;
+  }
+
+  return OA_listen (orb_ptr, oa_ptr, key, idle, do_fork, do_threads);
 }
-

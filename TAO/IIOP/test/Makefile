@@ -1,26 +1,61 @@
-# @(#)Makefile	1.12 95/09/30
-# Makefile for sanity checks
+#----------------------------------------------------------------------------
+#	$Id$
+#
+#	Top-level Makefile for the ACE-ified Sun Ref. implementation
+#	of IIOP ORB
+#----------------------------------------------------------------------------
 
-ROOT =		..
+#----------------------------------------------------------------------------
+#	Local macros
+#----------------------------------------------------------------------------
 
-include		$(ROOT)/Makefile.conf
-
-CPPFLAGS +=	-I$(ROOT)/proto/include
-
-LDLIBS =	-Qoption ld -R$(ROOT)/proto/lib -L$(ROOT)/proto/lib -lcorba
+LDLIBS     =  -lcorba
 
 PROG_SRCS =	svr.cpp clnt.cpp cubit.cpp \
 		test1.cpp test1_clnt.cpp test1_svr.cpp \
 		echo_clnt.cpp echo_svr.cpp
 
-TESTS =		svr clnt test1_svr test1_clnt
-# TESTS =		svr clnt test1_svr test1_clnt echo_svr echo_clnt
+LSRC = $(PROG_SRCS)
 
+CUBIT_SVR_OBJS = svr.o cubit.o
+CUBIT_CLT_OBJS = clnt.o cubit.o
 
-########
-default:	$(TESTS)
-all:		default
+BASIC_SVR_OBJS = test1.o test1_svr.o
+BASIC_CLT_OBJS = test1.o test1_clnt.o
 
+ECHO_SVR_OBJS = test1.o echo_svr.o
+ECHO_CLT_OBJS = test1.o echo_clnt.o
+
+BIN = svr clnt test1_svr test1_clnt
+BUILD = $(BIN)
+VLDLIBS = $(LDLIBS:%=%$(VAR))
+
+#----------------------------------------------------------------------------
+#	Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(WRAPPER_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(WRAPPER_ROOT)/include/makeinclude/macros.GNU
+include $(WRAPPER_ROOT)/include/makeinclude/rules.common.GNU
+include $(WRAPPER_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(WRAPPER_ROOT)/include/makeinclude/rules.bin.GNU
+include $(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
+
+# Local modifications to variables imported by includes above.
+LDFLAGS    += -L../proto/lib
+CPPFLAGS   += -I../proto/include
+
+svr:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+
+clnt:	$(addprefix $(VDIR),$(CUBIT_CLT_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+
+test1_svr:	$(addprefix $(VDIR),$(BASIC_SVR_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+
+test1_clnt:	$(addprefix $(VDIR),$(BASIC_CLT_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
 
 ########
 # Sanity check builds by running basic functionality tests.
@@ -50,6 +85,7 @@ check:	$(TESTS)
 	@./clnt -n250 -O `cat obj.5` -x
 	@echo ''
 
+ifdef LOCALRULES
 ########
 # CUBIT test
 svr:		svr.o cubit.o
@@ -71,10 +107,15 @@ echo_clnt:	test1.o echo_clnt.o
 	$(LINK.cc) -o echo_clnt echo_clnt.o test1.o $(LDLIBS)
 echo_svr:	test1.o echo_svr.o
 	$(LINK.cc) -o echo_svr echo_svr.o test1.o $(LDLIBS)
+endif
 
 clean:
-	-rm -rf *.o Log $(TESTS) obj.* core Templates.DB .make.state
+	-rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
 
 install:
 	-@echo "Nothing to install, these are tests!"
+
+
+
+
 

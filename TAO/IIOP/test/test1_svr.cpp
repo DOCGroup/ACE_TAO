@@ -10,19 +10,19 @@
 
 #include	<stdio.h>
 #include	<string.h>
+#include <ace/Get_Opt.h>
 
 #if	unix
 #	include	<unistd.h>		// for getopt on some systems
 
 #else	// windows
-#include "ace/Get_Opt.h"
 
 #endif
 
 #include	"test1.hh"
 #include	<corba/toa.hh>
 
-#include	"../lib/runtime/debug.hh"
+#include	<corba/debug.hh>
 
 
 
@@ -106,10 +106,10 @@ extern char 	*optarg;	// missing on some platforms
 	    return; \
 	} \
     } \
-    calldata test1_ ## name ## _calldata;
+    extern calldata test1_ ## name ## _calldata;
 
 
-const calldata test1_void_calldata;
+extern const calldata test1_void_calldata;
 
 static void
 _test1_test_void (
@@ -227,7 +227,7 @@ DEFINE_SKEL3 (wstring, WString, WString)
 // void test_throw (in long case_num) raises (x1, x2);
 //
 
-const calldata test1_test_throw_calldata;
+extern const calldata test1_test_throw_calldata;
 
 static void
 _test1_test_throw (
@@ -371,7 +371,7 @@ level1_skeleton (
 
     obj_key = (CORBA_OctetSeq *) context;
     if (obj_key->length != key.length
-	    || memcmp (obj_key->buffer, key.buffer,
+	    || ACE_OS::memcmp (obj_key->buffer, key.buffer,
 		    obj_key->length) != 0) {
 	env.exception (new CORBA_OBJECT_NOT_EXIST (COMPLETED_NO));
 #ifdef	DEBUG
@@ -463,7 +463,7 @@ OA_listen (
     CORBA_Environment	env;
 
     obj_key.buffer = (CORBA_Octet *) key;
-    obj_key.length = obj_key.maximum = strlen (key);
+    obj_key.length = obj_key.maximum = ACE_OS::strlen (key);
 
     obj = oa_ptr->create (obj_key, (CORBA_String) "", env);
     if (env.exception () != 0) {
@@ -483,8 +483,8 @@ OA_listen (
 	print_exception (env.exception (), "object2string");
 	return 1;
     }
-    puts ((char *)str);
-    fflush (stdout);
+    ACE_OS::puts ((char *)str);
+    ACE_OS::fflush (stdout);
     dmsg1 ("listening as object '%s'", str);
 
     //
@@ -580,26 +580,27 @@ main (int    argc, char   *argv[])
     int			c;
 
     while ((c = get_opt ()) != -1)
-	switch (c) {
-	  case 'd':			// more debug noise
-	    debug_level++;
-	    continue;
+      switch (c)
+	{
+	case 'd':			// more debug noise
+	  debug_level++;
+	  continue;
 
-	  case 'i':			// idle seconds b4 exit
-	    idle = atoi (get_opt.optarg);
-	    continue;
+	case 'i':			// idle seconds b4 exit
+	  idle = ACE_OS::atoi (get_opt.optarg);
+	  continue;
 
-	  case 'k':			// key (str)
-	    key = (CORBA_String) get_opt.optarg;
-	    continue;
+	case 'k':			// key (str)
+	  key = (CORBA_String) get_opt.optarg;
+	  continue;
 
-	  case 'o':			// orb name
-	    orb_name = get_opt.optarg;
-	    continue;
+	case 'o':			// orb name
+	  orb_name = get_opt.optarg;
+	  continue;
 
-	  case 'p':			// portnum
-	    oa_name = get_opt.optarg;
-	    continue;
+	case 'p':			// portnum
+	  oa_name = get_opt.optarg;
+	  continue;
 
 	  // XXX set debug filters ...
 
@@ -611,17 +612,17 @@ main (int    argc, char   *argv[])
 	  //
 
 
-	  case '?':
-	  default:
-	    fprintf (stderr, "usage:  %s"
-			" [-d]"
-			" [-i idle_seconds]"
-			" [-k object_key=elvis]"
-			" [-o orbname=internet]"
-			" [-p oa_name]"
-			"\n", argv [0]
-			);
-	    return 1;
+	case '?':
+	default:
+	  ACE_OS::fprintf (stderr, "usage:  %s"
+			   " [-d]"
+			   " [-i idle_seconds]"
+			   " [-k object_key=elvis]"
+			   " [-o orbname=internet]"
+			   " [-p oa_name]"
+			   "\n", argv [0]
+			   );
+	  return 1;
 	}
 
     orb_ptr = CORBA_ORB_init (argc, argv, orb_name, env);
