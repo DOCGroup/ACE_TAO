@@ -30,6 +30,8 @@ Logger_Factory_i::~Logger_Factory_i (void)
 Logger_ptr
 Logger_Factory_i::make_logger (const char *name,
                                CORBA::Environment &_env)
+  TAO_THROW_SPEC ((CORBA::SystemException,
+		   Logger_Factory::MAKE_FAILURE))
 {
   Logger_i *result;
   // If name is already in the map, <find> will assign <result> to the
@@ -40,27 +42,36 @@ Logger_Factory_i::make_logger (const char *name,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "\nMaking a new logger"));
-      ACE_NEW_RETURN (result,
-                      Logger_i (name),
-                      0);
-      // @@ Matt, please make sure you check the result of this bind()
-      // call.  If it fails, you need to set the _env exception
-      // appropriately to indicate a failure back to the client.
-      hash_map_.bind (name, result);
+
+      // This attempts to create a new Logger_i and throws an
+      // exception and returns a null value if it fails
+      ACE_NEW_THROW_RETURN (result,
+			    Logger_i(name),
+			    Logger_Factory::MAKE_FAILURE(),
+			    Logger::_nil());
+    } 
+
+  // Enter the new logger into the hash map. Check if the bind
+  // fails and if so, throw a MAKE_FAILURE. <result> may be valid, 
+  // but since it would not be properly bound, its behavior my be
+  // off, so delete it to be safe. 
+  if (hash_map_.bind (name, result) < 0)
+    {
+      delete (result);
+      TAO_THROW_RETURN (Logger_Factory::MAKE_FAILURE,
+			Logger::_nil ());  
     }
   else
     {
+      // Logger of name <name> already bound. <result> is set
+      // appropriatly by find (). So do nothing.
       ACE_DEBUG ((LM_DEBUG,
                   "\nLogger name already bound"));
     }
-
-  // @@ Matt, there are some nasty bugs here...  If you find a
-  // "result" that's already registered, then you're registering it
-  // AGAIN with the object adapter.  I believe that this is a BAD
-  // THING to do...  What you need to do instead is to simple return
-  // the object reference to the previously registered Logger_i,
-  // rather than calling _this()...
-
+  
+  // _this is an performance hit here, but apparently if the
+  // object is already registered with the POA, it will ignore the 
+  // second registration attempt
   return result->_this (_env);
 }
 

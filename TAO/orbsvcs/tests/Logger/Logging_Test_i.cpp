@@ -134,10 +134,15 @@ Logger_Client::init_loggers (CORBA::Environment &env)
   // Retrieve the Logger obj ref corresponding to key1 and
   // key2.
   this->logger_1_ = factory_->make_logger ("key1",
-                                           env);
+					   env);
+  if (env.exception () != 0)
+    return -1;
+  
   this->logger_2_ = factory_->make_logger ("key2",
                                            env);
-
+  if (env.exception () != 0)
+    return -1;
+  
   if (CORBA::is_nil (this->logger_1_.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "nil logger1"),
