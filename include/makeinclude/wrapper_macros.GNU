@@ -192,14 +192,22 @@ ifeq ($(findstring g++,$(CXX)),g++)
         $(shell \
           if $(CXX) --version | egrep '^(cygnus-)?2\.[0-7]' > /dev/null; then \
           echo 1; else echo 0; fi)
-    else  # ! plain g++
+    else
+    ifeq ($(CXX),eg++)
+      # Assume that eg++ is egcs.
+      ACE_HAS_GNUG_PRE_2_8 := 0
+    else  # ! plain g++ or eg++
       # CXX is something like g++386.  Assume, for now, that it's an old g++.
-      ACE_HAS_GNUG_PRE_2_8 = 1
-    endif # ! plain g++
+      ACE_HAS_GNUG_PRE_2_8 := 1
+    endif # eg++
+    endif # ! plain g++ or eg++
   endif # ! ACE_HAS_GNUG_PRE_2_8
 else
   ACE_HAS_GNUG_PRE_2_8 =
 endif # g++
+
+default:
+	echo $(ACE_HAS_GNUG_PRE_2_8)
 
 #----------------------------------------------------------------------------
 #      make flags
