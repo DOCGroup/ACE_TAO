@@ -1,3 +1,10 @@
+Thu Oct 21 18:37:12 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+        * DAnCE/Config_Handlers/Config_Handlers.mpc
+
+          Put the xerces-c library into "lib +=" to avoid
+          linking to the wrong library.
+
 Wed Oct 13 06:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/RTCCM/Priority_Test/Workers/Worker.mpc
