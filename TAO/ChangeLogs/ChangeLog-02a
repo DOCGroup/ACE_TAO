@@ -1,3 +1,17 @@
+Tue Apr 30 20:50:06 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
+
+          Carlos modified the enum values in AST_Argument::Direction
+          to have power-of-two values so sets of directions could be
+          used in a bit mask for AMH. This means that the argument node
+          direction can no longer be assigned directly to the 
+          CORBA::ParameterMode enum value in the CORBA::ParDescription
+          struct used to describe a parameter when creating an operation
+          definition in the Interface Repository. Thanks to Priyanka
+          Gontla <pgontla@doc.ece.uci.edu> and Craig Rodrigues 
+          <crodrigu@bbn.com> for discovering this bug.
+
 Tue Apr 30 09:31:42 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/Makefile:
