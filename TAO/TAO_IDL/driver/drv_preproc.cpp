@@ -97,7 +97,7 @@ DRV_cpp_new_location (const char *new_loc)
 void
 DRV_cpp_putarg (const char *str)
 {
-  if (argcount >= MAX_ARGLIST) 
+  if (argcount >= MAX_ARGLIST)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s%s %d %s\n",
@@ -184,7 +184,7 @@ DRV_cpp_init (void)
           // platform specific flags here.
           char option[BUFSIZ];
 //          char* option = 0;
-//          ACE_NEW (option, 
+//          ACE_NEW (option,
 //                   char[BUFSIZ]);
 
 #if defined (TAO_IDL_PREPROCESSOR_ARGS)
@@ -253,8 +253,8 @@ static  char    drv_line[LINEBUF_SIZE + 1];
 static long
 DRV_get_line (FILE *f)
 {
-    char *l = fgets (drv_line, 
-                     LINEBUF_SIZE, 
+    char *l = fgets (drv_line,
+                     LINEBUF_SIZE,
                      f);
     long i = 0;
 
@@ -285,13 +285,13 @@ DRV_get_line (FILE *f)
 
 // Copy from stdin to a file
 static void
-DRV_copy_input (FILE *fin, 
-                char *fn, 
+DRV_copy_input (FILE *fin,
+                char *fn,
                 const char *orig_filename)
 {
   FILE  *f = ACE_OS::fopen (fn, "w");
 
-  if (f == NULL) 
+  if (f == NULL)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT (idl_global->prog_name ()),
@@ -302,7 +302,7 @@ DRV_copy_input (FILE *fin,
       ACE_OS::exit (99);
     }
 
-  if (fin == NULL) 
+  if (fin == NULL)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT (idl_global->prog_name ()),
@@ -312,8 +312,8 @@ DRV_copy_input (FILE *fin,
     }
 
 #if !defined (ACE_WIN32)
-  fprintf (f, 
-           "#line 1 \"%s\"\n", 
+  fprintf (f,
+           "#line 1 \"%s\"\n",
            orig_filename);
 #else
   // Convert single \ into double \ otherwise MSVC++ pre-processor
@@ -334,8 +334,8 @@ DRV_copy_input (FILE *fin,
     }
 
   *d = 0;
-  ACE_OS::fprintf (f, 
-                   "#line 1 \"%s\"\n", 
+  ACE_OS::fprintf (f,
+                   "#line 1 \"%s\"\n",
                    buf);
 #endif /* ! ACE_WIN32 */
 
@@ -348,8 +348,8 @@ DRV_copy_input (FILE *fin,
       DRV_check_for_include (drv_line);
 
       // Print the line to the temp file.
-      ACE_OS::fprintf (f, 
-                       "%s\n", 
+      ACE_OS::fprintf (f,
+                       "%s\n",
                        drv_line);
     }
 
@@ -357,7 +357,7 @@ DRV_copy_input (FILE *fin,
   ACE_OS::fclose (f);
 }
 
-// Strip down a name to the last component, 
+// Strip down a name to the last component,
 // i.e. everything after the last '/' or '\' character
 static char *
 DRV_stripped_name (char *fn)
@@ -380,7 +380,7 @@ DRV_stripped_name (char *fn)
 
     n += 1;
 
-    if (slash_found) 
+    if (slash_found)
       {
         n += 1;
       }
@@ -433,8 +433,8 @@ DRV_pre_proc (const char *myfile)
                UTL_String (tmp_ifile));
       idl_global->set_real_filename (tmp);
 
-      DRV_copy_input (stdin, 
-                      tmp_ifile, 
+      DRV_copy_input (stdin,
+                      tmp_ifile,
                       "standard input");
 
       idl_global->set_read_from_stdin (I_TRUE);
@@ -442,8 +442,8 @@ DRV_pre_proc (const char *myfile)
   else
     {
       FILE *fd = fopen (myfile, "r");
-      DRV_copy_input (fd, 
-                      tmp_ifile, 
+      DRV_copy_input (fd,
+                      tmp_ifile,
                       myfile);
       fclose (fd);
 
@@ -480,10 +480,9 @@ DRV_pre_proc (const char *myfile)
   DRV_cpp_putarg (0); // Null terminate the arglist.
 
   cpp_options.command_line (arglist);
-  
-  ACE_HANDLE fd = ACE_OS::open (tmp_file, 
-                                O_WRONLY | O_CREAT | O_TRUNC, 
-                                0777);
+
+  ACE_HANDLE fd = ACE_OS::open (tmp_file,
+                                O_WRONLY | O_CREAT | O_TRUNC);
 
   if (fd == ACE_INVALID_HANDLE)
     {
@@ -570,7 +569,7 @@ DRV_pre_proc (const char *myfile)
 
   FILE *yyin = ACE_OS::fopen (tmp_file, "r");
 
-  if (yyin == NULL) 
+  if (yyin == NULL)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s%s %s\n",
@@ -589,7 +588,7 @@ DRV_pre_proc (const char *myfile)
     system(catbuf);
   }
 
-  if (ACE_OS::unlink (tmp_ifile) == -1) 
+  if (ACE_OS::unlink (tmp_ifile) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s%s %s\n",
@@ -601,7 +600,7 @@ DRV_pre_proc (const char *myfile)
     }
 
 #if !defined (ACE_WIN32) || defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
-  if (ACE_OS::unlink (tmp_file) == -1) 
+  if (ACE_OS::unlink (tmp_file) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "%s%s %s\n",
@@ -654,8 +653,8 @@ DRV_check_for_include (const char* buf)
   // Check whether this word is `include` or no.
   const char* include_str = "include";
 
-  for (size_t ii = 0; 
-       ii < strlen ("include") && *r != '\0' && *r != ' ' && *r != '\t'; 
+  for (size_t ii = 0;
+       ii < strlen ("include") && *r != '\0' && *r != ' ' && *r != '\t';
        r++, ii++)
     {
       // Return if it doesn't match.
