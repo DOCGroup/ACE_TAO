@@ -46,8 +46,8 @@ namespace Deployment
 
       if (desc_map_.find(std::string(caption)) != desc_map_.end())
         {
-          ACE_DEBUG ((LM_DEBUG, "DnC_Dump.cpp:Dump_Obj - 
-                      The item with name %s is already in 
+          ACE_DEBUG ((LM_DEBUG, "DnC_Dump.cpp:Dump_Obj - \
+                      The item with name %s is already in \
                       the node map.\n", caption));
           throw Node_Exist();
         }
@@ -71,7 +71,7 @@ namespace Deployment
             }
           else
             {
-              ACE_DEBUG ((LM_DEBUG, "DnC_Dump.cpp:Dump_Obj - 
+              ACE_DEBUG ((LM_DEBUG, "DnC_Dump.cpp:Dump_Obj - \
                           The item with name %s is not in the node map.\n",
                           desc_.c_str()));
               throw Node_Not_Exist();

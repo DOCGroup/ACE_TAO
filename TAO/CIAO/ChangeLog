@@ -1,3 +1,18 @@
+Fri Jun 11 15:44:00 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/CAD_Handler.cpp:
+        * DnC/Config_Handlers/CEPE_Handler.cpp:
+        * DnC/Config_Handlers/Cap_Handler.cpp:
+        * DnC/Config_Handlers/CompImplDesc_Handler.cpp:
+        * DnC/Config_Handlers/CompIntrDesc_Handler.cpp:
+        * DnC/Config_Handlers/CompPkgDesc_Handler.cpp:
+        * DnC/Config_Handlers/Config_Error_Handler.cpp:
+        * DnC/Config_Handlers/DnC_Dump.cpp:
+        * DnC/Config_Handlers/MID_Handler.h:
+        * DnC/Config_Handlers/Process_Element.tpp:
+
+          Made some more coding standards compliance changes.
+
 Fri Jun 11 14:50:42 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/RepositoryManager/Repository_Manager.cpp:

@@ -25,11 +25,18 @@ namespace CIAO
     {
       this->errors_ = true;
       if (domError.getSeverity() == DOMError::DOM_SEVERITY_WARNING)
-        ACE_ERROR ((LM_ERROR, "Warning "));
+        {
+          ACE_ERROR ((LM_ERROR, "Warning "));
+        }
       else if (domError.getSeverity() == DOMError::DOM_SEVERITY_ERROR)
-        ACE_ERROR ((LM_ERROR, "Error "));
+        {
+          ACE_ERROR ((LM_ERROR, "Error "));
+        }
       else
-        ACE_ERROR ((LM_ERROR, "FatalError "));
+        {
+          ACE_ERROR ((LM_ERROR, "FatalError "));
+        }
+
       char *msg = XMLString::transcode(domError.getMessage());
       ACE_Auto_Basic_Array_Ptr<char> cleanup_msg (msg);
       ACE_ERROR ((LM_ERROR, "while processing resource '%s', "

@@ -9,7 +9,8 @@ using CIAO::Config_Handler::Utils;
 void
 CIAO::Config_Handler::CEPE_Handler::
 process_ComponentExternalPortEndpoint (DOMNodeIterator * iter,
-                                       Deployment::ComponentExternalPortEndpoint &ret_struct)
+                                       Deployment::ComponentExternalPortEndpoint
+                                       &ret_struct)
 {
   //Check if the Schema IDs for both the elements match
   DOMNode * node = iter->nextNode ();
@@ -18,7 +19,8 @@ process_ComponentExternalPortEndpoint (DOMNodeIterator * iter,
   if (name != XStr (ACE_TEXT ("portName")))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Config_Handlers::CEPE_Handler::process_ComponentExtPortEndPoint \
+                  "Config_Handlers:: \
+                   CEPE_Handler::process_ComponentExtPortEndPoint \
                    element mismatch expected <portName>"));
       ACE_THROW (CORBA::INTERNAL ());
     }
