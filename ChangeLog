@@ -1,3 +1,14 @@
+Tue Jun 18 14:29:26 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/SOCK_Dgram_Mcast.cpp: Reverted the file to the previous version
+	  since somehow things got messed up...
+
+Tue Jun 18 12:44:54 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/OS.{h,i}: Added a new method called stopped() that
+	  returns 1 if the timer has already been stopped.  Thanks to
+	  Giovanni Zito <g.zito@acsys.it> for this suggestion.
+
 Tue Jun 18 12:17:58 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* ace/QoS/SOCK_Dgram_Mcast_QoS.cpp:

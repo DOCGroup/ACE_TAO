@@ -684,6 +684,9 @@ public:
   /// call to stop.
   int update (void);
 
+  /// Returns 1 if we've already been stopped, else 0.
+  int stopped (void) const;
+
 private:
   /// Maximum time we were willing to wait.
   ACE_Time_Value *max_wait_time_;
