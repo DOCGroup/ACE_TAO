@@ -1,3 +1,9 @@
+Thu Jun 24 22:42:44 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/SOCK_Dgram_Mcast.cpp (subscribe): fixed UNICOS
+          preprocessor usage so that it's not in the middle
+          of the ACE_reintepret_cast.
+
 Thu Jun 24 22:18:52 1999  Doug Anderson  <doug@clark.net>
 
         * ace/CDR_Stream.*,ace/SOCK_Dgram_Mcast.cpp,ace/config-cray.h:
