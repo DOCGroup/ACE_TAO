@@ -1,9 +1,15 @@
+Wed Feb 11 13:14:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* tests/INET_Addr_Test_IPV6.cpp: Cast INADDR_ANY to ACE_UINT32 to
+	  disambiguate it from a 0 char*. Fixes compile error on Windows.
+
 Wed Feb 11 15:39:29 GMT 2004  Paul Morrison  <epm@prismtechnologies.com>
         * examples/APG/Signals/SigAction.cpp
 
           Added a reinterpret_cast to fix a build error with LynxOS.
 
 Wed Feb 11 15:31:06 GMT 2004  Paul Morrison  <epm@prismtechnologies.com>
+
         * TAO/orbsvcs/Logging_Service/Basic_Logging_Service/Makefile
         * TAO/orbsvcs/Logging_Service/Event_Logging_Service/Makefile
         * TAO/orbsvcs/Logging_Service/Notify_Logging_Service/Makefile
