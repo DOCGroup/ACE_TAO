@@ -51,7 +51,8 @@ Tue Jan 18 20:56:58 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/config-linux-common.h:
 
-	  Define ACE_HAS_ALT_CUSERID on glibc 2.1.x.
+	  Define ACE_HAS_ALT_CUSERID on glibc 2.1.x since the use of the
+	  system cuserid() is discouraged.
 
 	* m4/acinclude.m4:
 
