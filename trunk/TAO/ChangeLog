@@ -1,3 +1,9 @@
+Wed Mar 12 10:02:55 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/corba.h:
+
+	  Corrected typo.  "ObjectIdListC.h" instead of "ObjectIDListC.h"
+
 Wed Mar 12 11:43:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Makefile.tao:
