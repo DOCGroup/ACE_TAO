@@ -57,6 +57,8 @@ private:
   int port_;
   int threads_;
   int strategy_;
+  int backlog_;
+  int throttle_;
   ACE_Thread_Manager tm_;
   HTTP_Acceptor acceptor_;
 };
