@@ -76,7 +76,10 @@ ifneq (,$(findstring AV,$(TAO_ORBSVCS)))
         AV/Endpoint_Strategy_T\
 	AV/Transport\
 	AV/sfp\
-	AV/MCast
+	AV/MCast\
+	AV/RTP\
+	AV/Policy\
+	AV/Nil
 endif # AV
 
 ifneq (,$(findstring Event2,$(TAO_ORBSVCS)))
