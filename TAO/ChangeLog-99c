@@ -1,3 +1,20 @@
+Thu Jun 10 12:12:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/default_resource.cpp (init): Removed the -ORBPOA option.
+	  Code for parsing this option was still there but this option has
+	  not been used in a long time.  Thanks to Phil Mesnier
+	  <mesnier_p@ociweb.com> for reporting this.
+
+	* tao/default_server.cpp (TAO_Default_Server_Strategy_Factory):
+	  Removed <poa_mgr_lock_type_>.  It is no longer used.  Also, in
+	  parse_args(), changed -ORBEventLock to -ORBEventLoopLock and
+	  fixed the code associated with its parsing (previously it was
+	  setting <poa_mgr_lock_type_>, yikes!).
+
+	  Note that -ORBEventLoopLock should probably remain undocumented
+	  for now since its utility is still in question and the default
+	  of null lock seems reasonable in many cases.
+
 Thu Jun 10 11:07:30 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Param_Test/tmplinst.cpp: Fixed #pragma instantiations.
@@ -10,7 +27,7 @@ Thu Jun 10 09:41:06 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 
 	* tao/Sequence_T.{i, cpp}:
 
-	  Fixed incorrect number of parameters passed to templates. 
+	  Fixed incorrect number of parameters passed to templates.
 
 Thu Jun 10 08:12:14 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
