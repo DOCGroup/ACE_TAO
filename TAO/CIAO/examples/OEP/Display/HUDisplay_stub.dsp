@@ -37,7 +37,7 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release\HUDisplay_stub"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD CPP /nologo /MD /W3 /GR /GX /Zi /O2 /I "$(CIAO_ROOT)" /I "$(CIAO_ROOT)\ciao" /I "$(TAO_ROOT)" /I "$(TAO_ROOT)\tao" /I "..\..\..\..\.." /D NDEBUG=1 /D WIN32=1 /D _WINDOWS=1 /D HUDISPLAY_STUB_BUILD_DLL=1 /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /Zi /O2 /I "..\..\.." /I "..\..\..\ciao" /I "..\..\..\.." /I "..\..\..\..\orbsvcs\orbsvcs" /I "..\..\..\..\tao" /I "..\..\..\..\.." /D NDEBUG=1 /D WIN32=1 /D _WINDOWS=1 /D HUDISPLAY_STUB_BUILD_DLL=1 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409 /i "$(CIAO_ROOT)" /i "$(CIAO_ROOT)\ciao" /i "$(TAO_ROOT)" /i "$(TAO_ROOT)\tao" /i "..\..\..\..\.." /d NDEBUG=1
@@ -45,7 +45,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 TAO.lib TAO_Security.lib TAO_IFR_Client.lib TAO_Valuetype.lib CIAO_Client.lib ACE.lib /nologo /subsystem:windows /dll /pdb:"..\..\..\..\..\bin\HUDisplay_stub.pdb" /machine:I386 /out:"..\..\..\..\..\bin\HUDisplay_stub.dll" /libpath:"$(TAO_ROOT)\tao\IFR_Client" /libpath:"$(TAO_ROOT)\tao\Valuetype" /libpath:"$(CIAO_ROOT)\ciao" /libpath:"$(TAO_ROOT)\orbsvcs\orbsvcs" /libpath:"$(TAO_ROOT)\tao" /libpath:"..\..\..\..\..\ace" /version:1.3.1
+# ADD LINK32 TAO.lib TAO_Security.lib TAO_IFR_Client.lib TAO_Valuetype.lib CIAO_Client.lib ACE.lib /nologo /subsystem:windows /dll /pdb:"..\..\..\..\..\bin\HUDisplay_stub.pdb" /machine:I386 /out:"..\..\..\..\..\bin\HUDisplay_stub.dll" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\IORInterceptor" /libpath:"..\..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\..\tao\Valuetype" /libpath:"..\..\..\ciao" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /version:1.3.1
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "HUDisplay_stub DLL - Win32 Debug"
@@ -56,7 +56,7 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug\HUDisplay_stub"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /Gy /I "$(CIAO_ROOT)" /I "$(CIAO_ROOT)\ciao" /I "$(TAO_ROOT)" /I "$(TAO_ROOT)\orbsvcs\orbsvcs" /I "$(TAO_ROOT)\tao" /I "..\..\..\..\.." /D _DEBUG=1 /D WIN32=1 /D _WINDOWS=1 /D HUDISPLAY_STUB_BUILD_DLL=1 /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /Gy /I "..\..\.." /I "..\..\..\ciao" /I "..\..\..\.." /I "..\..\..\..\orbsvcs\orbsvcs" /I "..\..\..\..\tao" /I "..\..\..\..\.." /D _DEBUG=1 /D WIN32=1 /D _WINDOWS=1 /D HUDISPLAY_STUB_BUILD_DLL=1 /FD /c
 # SUBTRACT CPP /Fr /YX
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409 /i "$(CIAO_ROOT)" /i "$(CIAO_ROOT)\ciao" /i "$(TAO_ROOT)" /i "$(TAO_ROOT)\tao" /i "..\..\..\..\.." /d _DEBUG=1
@@ -64,7 +64,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /machine:IX86
-# ADD LINK32 TAOd.lib TAO_Securityd.lib TAO_IFR_Clientd.lib TAO_Valuetyped.lib CIAO_Clientd.lib ACEd.lib /nologo /subsystem:windows /dll /incremental:no /pdb:"..\..\..\..\..\bin\HUDisplay_stubd.pdb" /debug /machine:I386 /out:"..\..\..\..\..\bin\HUDisplay_stubd.dll" /libpath:"$(TAO_ROOT)\tao\IFR_Client" /libpath:"$(TAO_ROOT)\tao\Valuetype" /libpath:"$(CIAO_ROOT)\ciao" /libpath:"$(TAO_ROOT)\orbsvcs\orbsvcs" /libpath:"$(TAO_ROOT)\tao" /libpath:"..\..\..\..\..\ace" /version:1.3.1
+# ADD LINK32 TAOd.lib TAO_Securityd.lib TAO_IFR_Clientd.lib TAO_Valuetyped.lib CIAO_Clientd.lib ACEd.lib /nologo /subsystem:windows /dll /incremental:no /pdb:"..\..\..\..\..\bin\HUDisplay_stubd.pdb" /debug /machine:I386 /out:"..\..\..\..\..\bin\HUDisplay_stubd.dll" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\IORInterceptor" /libpath:"..\..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\..\tao\IFR_Client" /libpath:"..\..\..\..\tao\Valuetype" /libpath:"..\..\..\ciao" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace" /version:1.3.1
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
@@ -120,7 +120,7 @@ InputPath=.\HUDisplay.idl
 InputName=HUDisplay
 
 BuildCmds= \
-	..\..\..\..\..\bin\tao_idl -o . -Wb,stub_export_macro=HUDISPLAY_STUB_Export -Wb,stub_export_include=HUDisplay_stub_export.h -Wb,skel_export_macro=HUDISPLAY_SVNT_Export -Wb,skel_export_include=HUDisplay_svnt_export.h -Wb,pre_include="ace\pre.h" -Wb,post_include="ace\post.h" -I $(CIAO_ROOT) -I $(TAO_ROOT) -I $(TAO_ROOT)\orbsvcs\orbsvcs -Ge 1 -Sc $(InputPath)
+	..\..\..\..\..\bin\tao_idl -o . -Wb,stub_export_macro=HUDISPLAY_STUB_Export -Wb,stub_export_include=HUDisplay_stub_export.h -Wb,skel_export_macro=HUDISPLAY_SVNT_Export -Wb,skel_export_include=HUDisplay_svnt_export.h -Wb,pre_include="ace\pre.h" -Wb,post_include="ace\post.h" -I ..\..\..\ -I ..\..\..\ciao -I ..\..\..\.. -I ..\..\..\..\orbsvcs\orbsvcs -Ge 1 -Sc $(InputPath)
 
 ".\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -149,7 +149,7 @@ InputPath=.\HUDisplay.idl
 InputName=HUDisplay
 
 BuildCmds= \
-	..\..\..\..\..\bin\tao_idl -o . -Wb,stub_export_macro=HUDISPLAY_STUB_Export -Wb,stub_export_include=HUDisplay_stub_export.h -Wb,skel_export_macro=HUDISPLAY_SVNT_Export -Wb,skel_export_include=HUDisplay_svnt_export.h -Wb,pre_include="ace\pre.h" -Wb,post_include="ace\post.h" -I $(CIAO_ROOT) -I $(CIAO_ROOT)\ciao -I $(TAO_ROOT) -I $(TAO_ROOT)\orbsvcs\orbsvcs -Ge 1 -Sc $(InputPath)
+	..\..\..\..\..\bin\tao_idl -o . -Wb,stub_export_macro=HUDISPLAY_STUB_Export -Wb,stub_export_include=HUDisplay_stub_export.h -Wb,skel_export_macro=HUDISPLAY_SVNT_Export -Wb,skel_export_include=HUDisplay_svnt_export.h -Wb,pre_include="ace\pre.h" -Wb,post_include="ace\post.h" -I..\..\.. -I..\..\..\ciao -I..\..\..\..\ -I..\..\..\..\orbsvcs\orbsvcs -Ge 1 -Sc $(InputPath)
 
 ".\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

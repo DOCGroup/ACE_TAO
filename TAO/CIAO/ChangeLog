@@ -1,3 +1,9 @@
+Fri Jun 20 21:06:23 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * examples/OEP/Display/HUDisplay_stub.dsp:
+        * examples/OEP/Display/HUDisplay_svnt.dsp: Fixed incorrect usages
+	  of environment variables in project files.
+
 Fri Jun 20 11:41:50 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/ServerActivator_Impl.cpp (create_component_server):
