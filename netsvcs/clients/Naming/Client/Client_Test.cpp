@@ -113,7 +113,8 @@ Client_Test::Client_Test (void)
 }
 
 int
-Client_Test::init (int /* argc */, char * /* argv */ [])
+Client_Test::init (int /* argc */,
+                   char * /* argv */ [])
 {
   ACE_DEBUG ((LM_DEBUG, "Client_Test::init\n"));
 

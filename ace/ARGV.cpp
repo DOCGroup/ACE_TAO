@@ -215,7 +215,10 @@ ACE_ARGV::add (const ASYS_TCHAR *next_arg)
   // Only allow this to work in the "iterative" verion -- the
   // ACE_ARGVs created with the one argument constructor.
   if (this->state_ != ITERATIVE)
-    return -1;
+    {
+      errno = EINVAL;
+      return -1;
+    }
 
   // Put the new argument at the end of the queue.
   if (this->queue_.enqueue_tail ((ASYS_TCHAR *) next_arg) == -1)
@@ -240,6 +243,16 @@ ACE_ARGV::add (const ASYS_TCHAR *next_arg)
 
   delete [] this->buf_;
   this->buf_ = 0;
+
+  return 0;
+}
+
+int
+ACE_ARGV::add (ASYS_TCHAR *argv[])
+{
+  for (int i = 0; argv[i] != 0; i++)
+    if (this->add (argv[i]) == -1)
+      return -1;
 
   return 0;
 }
