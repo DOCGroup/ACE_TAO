@@ -1,3 +1,23 @@
+Thu Aug 27 12:23:37 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Makefile: 
+	* utils/Makefile: 
+	  Added a Makefile for the utils directory.
+
+	* utils/catior/catior.cpp: 
+	  Fixed some problems with EGCS and the new scope rules in for()
+	  loops.
+
+	* utils/IorParser/ior-handler.h: 
+	* utils/IorParser/ior-handler.cpp: 
+	  Removed a hardcoded ASCII code (yikes!) and moved some buffers
+	  to the class, so we don't return local variables (re-yikes!),
+	  using a fixed size buffer looks like a bad idea also; but I'm
+	  not going there yet.
+
+	* tao/Environment.cpp: 
+	  Fixed the initialization for the first default environment.
+
 Thu Aug 27 11:55:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* utils/IOR-parser/ior-handler.cpp (hexChar2int): Added a return 0

@@ -361,7 +361,8 @@ catior (CORBA::String str,
       
         short counter = -1;
 
-        for (u_int i = 0; i < objKeyLength; i++)
+	u_int i = 0;
+        for (; i < objKeyLength; i++)
           {
             if (++counter == 8) 
               { 

@@ -94,6 +94,11 @@ private:
   u_long getOctet2Field (char *readPtr, int *hexCharsRead);
   void skipNullOctets (char *readPtr, int *hexCharsRead);
   char *getString (char *readPtr, int givenLen);
+
+private:
+  // Just buffers, to avoid memory alloc.
+  char parsedStr[MAX_IOR_FIELD_LEN];
+  char idlInterface[MAX_TYPE_ID_LEN];
 };
 
 #endif /* __IORPARSER_H__ */

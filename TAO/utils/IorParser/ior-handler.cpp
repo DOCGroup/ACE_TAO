@@ -114,7 +114,6 @@ IorHandler::skipNullOctets (char *readPtr, int *hexCharsRead)
 char *
 IorHandler::getString (char *readPtr, int givenLen)
 {
-  char parsedStr[MAX_IOR_FIELD_LEN];
   char octetPair[2];
   char parsedOctetPair[2];
   int intEquiv;
@@ -175,7 +174,6 @@ void
 IorHandler::interpretIor (char *thisIor, struct IOR *thisIorInfo)
 {
   int numCharsToSkip;
-  char nullOctet[2];
 
   // Skip the prefix "IOR:" 
   int numHexCharsRead = 4;
@@ -371,16 +369,13 @@ IorHandler::interpretIor (char *thisIor, struct IOR *thisIorInfo)
 char *
 IorHandler::getIdlInterface (char *typeId)
 {
-  char idlInterface[MAX_TYPE_ID_LEN];
   int lenInterface;
 
-  // @@ Priya, can you please avoid the use of "magic constants" like
-  // 58.
-  char *readStart = strchr (typeId, 58);
+  char *readStart = strchr (typeId, ':');
 
   // A sample type_id for an IDL interface name "EchoTests" is
   // IDL:EchoTests:1.0 => the trick is to isolate the parts between
-  // the two colons. The ASCII equivalent of ":" is 58.
+  // the two colons.
 
   if (readStart == NULL)
     {
@@ -389,7 +384,7 @@ IorHandler::getIdlInterface (char *typeId)
       ACE_OS::exit (1);
     }
 
-  char *readEnd = strrchr (typeId, 58);
+  char *readEnd = strrchr (typeId, ':');
 
   if (readEnd == NULL)
     {
