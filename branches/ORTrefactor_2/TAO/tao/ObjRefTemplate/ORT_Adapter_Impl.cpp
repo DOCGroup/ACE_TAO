@@ -88,7 +88,7 @@ namespace TAO
   ORT_Adapter_Impl::activate (const char *server_id,
                               const char *orb_id,
                               PortableInterceptor::AdapterName *adapter_name,
-                              TAO_POA *poa
+                              PortableServer::POA_ptr poa
                               ACE_ENV_ARG_DECL)
   {
     // No need to lock here, there is one instance for each POA and when the POA
@@ -111,12 +111,5 @@ namespace TAO
     this->ort_factory_ = this->ort_template_;
 
     return 0;
-  }
-
-  void
-  ORT_Adapter_Impl::poa (TAO_POA * poa)
-  {
-    // @@Johnny, why isn't the POA  duplicated here?
-    this->tao_ort_template_->poa (poa);
   }
 }

@@ -33,8 +33,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_POA;
-
 namespace TAO
 {
   /**
@@ -52,7 +50,7 @@ namespace TAO
     virtual int activate (const char *server_id,
                           const char *orb_id,
                           PortableInterceptor::AdapterName *adapter_name,
-                          TAO_POA *poa
+                          PortableServer::POA_ptr poa
                           ACE_ENV_ARG_DECL);
 
     /// Set a different ort_factory to be used.
@@ -95,16 +93,6 @@ namespace TAO
         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
     //@}
-
-    /// Set the underlying POA pointer.
-    /**
-     * Upon destruction of the POA that this ObjectReferenceTemplate is
-     * associated with, the underlying POA pointer will be set to zero
-     * to forcibly break all ties with the POA.  This is necessary to
-     * prevent this ObjectReferenceTemplate from invoking the POA after
-     * it has been destroyed.
-     */
-    void poa (TAO_POA * poa);
 
   protected:
 

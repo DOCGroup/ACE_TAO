@@ -844,11 +844,6 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
                                    this->adapter_state_
                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-
-      // Break all ties between the ObjectReferenceTemplate and this
-      // POA.
-      if (this->ort_adapter_ != 0)
-        this->ort_adapter_->poa (0);
     }
   else
     {

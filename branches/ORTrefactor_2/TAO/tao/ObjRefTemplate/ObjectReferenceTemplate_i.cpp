@@ -18,11 +18,11 @@ namespace TAO
   const char *server_id,
   const char *orb_id,
   PortableInterceptor::AdapterName *adapter_name,
-  TAO_POA * poa)
+  PortableServer::POA_ptr poa)
   : server_id_ (server_id),
     orb_id_ (orb_id),
     adapter_name_ (adapter_name),
-    poa_ (poa)
+    poa_ (PortableServer::POA::_duplicate (poa))
   {
   }
 
@@ -70,17 +70,11 @@ namespace TAO
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    if (this->poa_ == 0)
+    if (CORBA::is_nil(poa_))
       ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), CORBA::Object::_nil ());
 
-    return this->poa_->invoke_key_to_object (ACE_ENV_SINGLE_ARG_PARAMETER);
-  }
+    TAO_POA* tao_poa = poa_->_tao_poa_downcast ();
 
-  void
-  ObjectReferenceTemplate::poa (TAO_POA * poa)
-  {
-    // @@Johnny, Why aren't we duplicating this?
-    this->poa_ = poa;
+    return tao_poa->invoke_key_to_object (ACE_ENV_SINGLE_ARG_PARAMETER);
   }
-
 }

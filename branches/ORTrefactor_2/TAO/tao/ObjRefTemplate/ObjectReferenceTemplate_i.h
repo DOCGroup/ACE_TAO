@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Default_ORTC.h"
+#include "tao/PortableServer/PortableServerC.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -32,8 +33,6 @@
 #endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
-class TAO_POA;
 
 namespace TAO
 {
@@ -51,9 +50,9 @@ namespace TAO
   public:
     /// Constructor
     ObjectReferenceTemplate (const char *server_id,
-                                 const char *orb_id,
-                                 PortableInterceptor::AdapterName *adapter_name,
-                                 TAO_POA *poa);
+                             const char *orb_id,
+                             PortableInterceptor::AdapterName *adapter_name,
+                             PortableServer::POA_ptr poa);
 
     /**
      * @name PortableInterceptor::ObjectReferenceTemplate Methods
@@ -69,7 +68,7 @@ namespace TAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual PortableInterceptor::AdapterName * adapter_name (
-                                                             ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
     //@}
 
@@ -81,23 +80,13 @@ namespace TAO
      */
     //@{
     virtual CORBA::Object_ptr make_object (
-                                           const char * repository_id,
-                                           const PortableInterceptor::ObjectId & id
-                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      const char * repository_id,
+      const PortableInterceptor::ObjectId & id
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((
                        CORBA::SystemException
                        ));
     //@}
-
-    /// Set the underlying POA pointer.
-    /**
-     * Upon destruction of the POA that this ObjectReferenceTemplate is
-     * associated with, the underlying POA pointer will be set to zero
-     * to forcibly break all ties with the POA.  This is necessary to
-     * prevent this ObjectReferenceTemplate from invoking the POA after
-     * it has been destroyed.
-     */
-    void poa (TAO_POA * poa);
 
   protected:
 
@@ -112,8 +101,7 @@ namespace TAO
     const char *server_id_;
     const char *orb_id_;
     PortableInterceptor::AdapterName_var adapter_name_;
-    TAO_POA *poa_;
-
+    PortableServer::POA_var poa_;
   };
 }
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

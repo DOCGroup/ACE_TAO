@@ -39,6 +39,11 @@ namespace PortableInterceptor
   class ObjectReferenceFactory;
 }
 
+namespace PortableServer
+{
+  class POA;
+  typedef POA* POA_ptr;
+}
 
 namespace TAO
 {
@@ -62,7 +67,7 @@ namespace TAO
     virtual int activate (const char *server_id,
                           const char *orb_id,
                           PortableInterceptor::AdapterName *,
-                          TAO_POA *poa
+                          PortableServer::POA_ptr poa
                           ACE_ENV_ARG_DECL) = 0;
 
     /// Set a different ort_factory to be used.
@@ -70,23 +75,13 @@ namespace TAO
       PortableInterceptor::ObjectReferenceFactory *current_factory
       ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 
-    /// Set the underlying POA pointer.
-    /**
-     * Upon destruction of the POA that this ObjectReferenceTemplate is
-     * associated with, the underlying POA pointer will be set to zero
-     * to forcibly break all ties with the POA.  This is necessary to
-     * prevent this ObjectReferenceTemplate from invoking the POA after
-     * it has been destroyed.
-     */
-    virtual void poa (TAO_POA * poa) = 0;
-
     /// Accessor methods to ObjectReferenceTemplate template
     virtual PortableInterceptor::ObjectReferenceTemplate *
-    get_adapter_template (void) = 0;
+      get_adapter_template (void) = 0;
 
     /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
     virtual PortableInterceptor::ObjectReferenceFactory *
-    get_obj_ref_factory (void) = 0;
+      get_obj_ref_factory (void) = 0;
 
     /**
      * @name PortableInterceptor::ObjectReferenceFactory Methods

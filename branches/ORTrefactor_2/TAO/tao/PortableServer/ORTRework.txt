@@ -1,3 +1,17 @@
+Tue Aug 24 13:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ObjRefTemplate/ORT_Adapter_Impl.{h,cpp}
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_i.{h,cpp}
+        * tao/PortableServer/ORT_Adapter.h:
+        * tao/PortableServer/POA.cpp:
+          Instead of passing and storing a TAO_POA*, pass a
+          PortableServer::POA_ptr, duplicate that and store it in a
+          PortableServer::POA_var. At the moment the ORT adapter is then
+          destructed we automatically drop the refcount on the POA and we
+          don't have the risk the POA is destructed before the ORT adapter is
+          destructed. There is no need anymore then for the poa() method to
+          set the TAO_POA* to zero.
+
 Tue Aug 24 12:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.cpp:
