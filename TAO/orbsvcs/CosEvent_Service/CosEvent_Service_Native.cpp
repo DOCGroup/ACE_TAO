@@ -31,7 +31,7 @@ class EventChannel : public TAO_CEC_EventChannel
   //   an application controled event loop.
   //   We don't use ORB::shutdown() because that leaves the ORB is a
   //   state where it is hard to cleanup the system.
-  //   
+  //
 public:
   EventChannel (const TAO_CEC_EventChannel_Attributes &attr,
                 int *terminate_flag);
@@ -56,24 +56,24 @@ main (int argc, char* argv[])
       int result;
 
       // Intialize the ORB
-      CORBA::ORB_var orb = 
+      CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Call TAO_Event_Loader::init (argc, argv) from here.
-      TAO_Event_Loader event_service;
+      // Call TAO_CEC_Event_Loader::init (argc, argv) from here.
+      TAO_CEC_Event_Loader event_service;
 
       // To intialise the service
       result = event_service.init (argc, argv);
-      
+
       if (result == -1)
         return 1;
-      
+
       orb->run();
-      
+
       // Destroy the ORB
       orb->destroy();
-      
+
     }
   ACE_CATCHANY
     {
