@@ -16,6 +16,10 @@ Tue Apr 29 19:57:52 1997    <irfan@TWOSTEP>
 
 	* netsvcs/lib/TS_Server_Handler.cpp (init): Same as above.
 
+	* netsvcs/lib/Client_Logging_Handler.cpp (open): Removed the
+ 	  registration of SIGPIPE for Win32. Win32 does not support
+ 	  SIGPIPE.
+
 	* tests/Process_Strategy_Test.cpp (server): The new thread must
  	  become owner before it can call Reactor::handle_events. Also
 	  fixed #define typo.
