@@ -1,3 +1,9 @@
+Fri Jan  9 11:33:27 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/FT_App/FT_App.mpc:
+          Added missing after so that the consumer is build after the
+          TAO_ReplicationManagerLib.
+
 Fri Jan  9 11:01:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
