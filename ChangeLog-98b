@@ -1,6 +1,7 @@
 Sat Sep 12 19:18:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (qsort): Fixed a typo.
+	* ace/OS.i (qsort): Fixed a typo.  And removed "return" for this
+	  is a void function.
 
 Sat Sep 12 16:30:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
