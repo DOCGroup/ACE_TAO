@@ -116,6 +116,11 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -193,16 +198,9 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
- $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
- $(TAO_ROOT)/tao/InterceptorC.h \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/InterceptorC.i \
- $(TAO_ROOT)/tao/Interceptor.i \
- $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -223,11 +221,6 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -279,6 +272,8 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
@@ -329,9 +324,7 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i
+ $(TAO_ROOT)/tao/WrongTransactionC.h
 .obj/tc.o .obj/tc.so .shobj/tc.o .shobj/tc.so: tc.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -381,6 +374,11 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -458,16 +456,9 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
- $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
- $(TAO_ROOT)/tao/InterceptorC.h \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/InterceptorC.i \
- $(TAO_ROOT)/tao/Interceptor.i \
- $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -488,11 +479,6 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -544,6 +530,8 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
@@ -594,9 +582,7 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i
+ $(TAO_ROOT)/tao/WrongTransactionC.h
 .obj/growth.o .obj/growth.so .shobj/growth.o .shobj/growth.so: growth.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -650,6 +636,11 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -727,16 +718,9 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
- $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
- $(TAO_ROOT)/tao/InterceptorC.h \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/InterceptorC.i \
- $(TAO_ROOT)/tao/Interceptor.i \
- $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -757,11 +741,6 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -813,6 +792,8 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
@@ -863,9 +844,7 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i
+ $(TAO_ROOT)/tao/WrongTransactionC.h
 .obj/octet_sequence.o .obj/octet_sequence.so .shobj/octet_sequence.o .shobj/octet_sequence.so: octet_sequence.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -915,6 +894,11 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -992,16 +976,9 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
- $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
- $(TAO_ROOT)/tao/InterceptorC.h \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/InterceptorC.i \
- $(TAO_ROOT)/tao/Interceptor.i \
- $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1022,11 +999,6 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -1078,6 +1050,8 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
@@ -1128,9 +1102,7 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i
+ $(TAO_ROOT)/tao/WrongTransactionC.h
 .obj/allocator.o .obj/allocator.so .shobj/allocator.o .shobj/allocator.so: allocator.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1184,6 +1156,11 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -1261,16 +1238,9 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
- $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
- $(TAO_ROOT)/tao/InterceptorC.h \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/InterceptorC.i \
- $(TAO_ROOT)/tao/Interceptor.i \
- $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1291,11 +1261,6 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -1347,6 +1312,8 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
@@ -1397,8 +1364,6 @@ allocator: $(addprefix $(VDIR),$(ALLOCATOR_OBJS))
  $(TAO_ROOT)/tao/ValueFactory.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
- $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i
+ $(TAO_ROOT)/tao/WrongTransactionC.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

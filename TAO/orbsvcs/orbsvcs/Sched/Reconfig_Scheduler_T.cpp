@@ -147,7 +147,7 @@ init (int config_count,
       ACE_CHECK_RETURN (-1);
 
       // Make sure the new config info is cleaned up if we exit abruptly.
-      ACE_AUTO_PTR_RESET (new_config_info_ptr, new_config_info, RtecScheduler::Config_Info);
+      ACE_AUTO_PTR_RESET (new_config_info_ptr, new_config_info);
 
       result = config_info_map_.bind (config_info [config_info_count_].preemption_priority,
                                       new_config_info);
@@ -1340,7 +1340,7 @@ assign_priorities_i (CORBA::Environment &ACE_TRY_ENV)
           ACE_CHECK;
 
           // Make sure the new config info is cleaned up if we exit abruptly.
-          ACE_AUTO_PTR_RESET (new_config_info_ptr, new_config_info, RtecScheduler::Config_Info);
+          ACE_AUTO_PTR_RESET (new_config_info_ptr, new_config_info);
 
           // Have the strategy fill in the new config info for that
           // priority level, using the representative scheduling entry.
@@ -1416,7 +1416,7 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::init_rt_info (RtecSch
   rt_info.worst_case_execution_time = 0;
   rt_info.typical_execution_time = 0;
   rt_info.cached_execution_time = 0;
-  rt_info.period = 1;
+  rt_info.period = 0;
   rt_info.importance = RtecScheduler::VERY_LOW_IMPORTANCE;
   rt_info.quantum = 0;
   rt_info.threads = 0;

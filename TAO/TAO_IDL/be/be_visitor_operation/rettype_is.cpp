@@ -121,7 +121,7 @@ be_visitor_operation_rettype_is::visit_sequence (be_sequence *)
 }
 
 int
-be_visitor_operation_rettype_is::visit_string (be_string *)
+be_visitor_operation_rettype_is::visit_string (be_string * /* node*/)
 {
 
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream

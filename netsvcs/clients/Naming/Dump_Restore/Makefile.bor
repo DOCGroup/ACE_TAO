@@ -1,8 +1,0 @@
-
-NAME = main
-OBJFILES = \
-        $(OBJDIR)\main.obj \
-        $(OBJDIR)\Dump_Restore.obj
-
-!include <$(ACE_ROOT)\netsvcs\build.bor>
-

@@ -22,7 +22,7 @@
 
 #include "tao/PollableC.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_HAS_AMI_POLLER)
+#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_POLLER)
 
 #include "tao/POA_CORBA.h"
 
@@ -233,6 +233,6 @@ TAO_NAMESPACE_CLOSE
 #pragma warning(default:4250)
 #endif /* _MSC_VER */
 
-#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_AMI_POLLER */
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */
 
 #endif /* ifndef */

@@ -46,12 +46,6 @@ TAO_Protocol_Factory::prefix (void) const
   return ::prefix_;
 }
 
-char
-TAO_Protocol_Factory::options_delimiter (void) const
-{
-  return '\0';
-}
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -158,6 +158,11 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -235,16 +240,9 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
- $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
- $(TAO_ROOT)/tao/InterceptorC.h \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/InterceptorC.i \
- $(TAO_ROOT)/tao/Interceptor.i \
- $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -265,11 +263,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -321,6 +314,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
@@ -372,11 +367,16 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- CosLifeCycleC.h CosNamingC.h CosNamingC.i CosLifeCycleC.i QuoterC.i
-.obj/QuoterS.o .obj/QuoterS.so .shobj/QuoterS.o .shobj/QuoterS.so: QuoterS.cpp QuoterS.h CosLifeCycleS.h CosNamingS.h \
- CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
+ QuoterC.i
+.obj/QuoterS.o .obj/QuoterS.so .shobj/QuoterS.o .shobj/QuoterS.so: QuoterS.cpp QuoterS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -425,6 +425,11 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -502,16 +507,9 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
- $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
- $(TAO_ROOT)/tao/InterceptorC.h \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/InterceptorC.i \
- $(TAO_ROOT)/tao/Interceptor.i \
- $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -532,11 +530,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -588,6 +581,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
@@ -639,12 +634,19 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- CosNamingC.i CosNamingS_T.h CosNamingS_T.i CosNamingS_T.cpp \
- CosNamingS.i CosLifeCycleC.h CosLifeCycleC.i CosLifeCycleS_T.h \
- CosLifeCycleS_T.i CosLifeCycleS_T.cpp CosLifeCycleS.i QuoterC.h \
- QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.i \
+ QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/Read_Buffer.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -691,6 +693,11 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -774,16 +781,9 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
- $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
- $(TAO_ROOT)/tao/InterceptorC.h \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/InterceptorC.i \
- $(TAO_ROOT)/tao/Interceptor.i \
- $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -804,11 +804,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -860,6 +855,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
@@ -911,8 +908,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  client.h \
@@ -929,8 +924,10 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.i \
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
- QuoterC.h CosLifeCycleC.h CosNamingC.h CosLifeCycleC.i QuoterC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h
+ QuoterC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
+ QuoterC.i
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp server.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -983,6 +980,11 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -1060,16 +1062,9 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
- $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
- $(TAO_ROOT)/tao/InterceptorC.h \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/InterceptorC.i \
- $(TAO_ROOT)/tao/Interceptor.i \
- $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1090,11 +1085,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -1146,6 +1136,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
@@ -1197,8 +1189,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
@@ -1222,10 +1212,15 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/tao/TAO.h \
- Quoter_i.h QuoterS.h CosLifeCycleS.h CosNamingS.h CosLifeCycleC.h \
- CosNamingC.h CosLifeCycleC.i CosLifeCycleS_T.h CosLifeCycleS_T.i \
- CosLifeCycleS_T.cpp CosLifeCycleS.i QuoterC.h QuoterC.i QuoterS_T.h \
- QuoterS_T.i QuoterS_T.cpp QuoterS.i
+ Quoter_i.h QuoterS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.i \
+ QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 .obj/Quoter_i.o .obj/Quoter_i.so .shobj/Quoter_i.o .shobj/Quoter_i.so: Quoter_i.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1275,6 +1270,11 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -1352,16 +1352,9 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
- $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
- $(TAO_ROOT)/tao/InterceptorC.h \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/InterceptorC.i \
- $(TAO_ROOT)/tao/Interceptor.i \
- $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1382,11 +1375,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -1438,6 +1426,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
@@ -1489,13 +1479,23 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- Quoter_i.h QuoterS.h CosLifeCycleS.h CosNamingS.h CosNamingC.h \
- CosNamingC.i CosNamingS_T.h CosNamingS_T.i CosNamingS_T.cpp \
- CosNamingS.i CosLifeCycleC.h CosLifeCycleC.i CosLifeCycleS_T.h \
- CosLifeCycleS_T.i CosLifeCycleS_T.cpp CosLifeCycleS.i QuoterC.h \
- QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
+ Quoter_i.h QuoterS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.i \
+ QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 .obj/Factory_Finder.o .obj/Factory_Finder.so .shobj/Factory_Finder.o .shobj/Factory_Finder.so: Factory_Finder.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1545,6 +1545,11 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -1622,16 +1627,9 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
- $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
- $(TAO_ROOT)/tao/InterceptorC.h \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/InterceptorC.i \
- $(TAO_ROOT)/tao/Interceptor.i \
- $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1652,11 +1650,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -1708,6 +1701,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
@@ -1759,18 +1754,27 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
  Factory_Finder.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(TAO_ROOT)/tao/TAO.h \
- Factory_Finder_i.h QuoterS.h CosLifeCycleS.h CosNamingS.h \
- CosNamingC.h CosNamingC.i CosNamingS_T.h CosNamingS_T.i \
- CosNamingS_T.cpp CosNamingS.i CosLifeCycleC.h CosLifeCycleC.i \
- CosLifeCycleS_T.h CosLifeCycleS_T.i CosLifeCycleS_T.cpp \
- CosLifeCycleS.i QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i \
- QuoterS_T.cpp QuoterS.i
+ Factory_Finder_i.h QuoterS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.i \
+ QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 .obj/Factory_Finder_i.o .obj/Factory_Finder_i.so .shobj/Factory_Finder_i.o .shobj/Factory_Finder_i.so: Factory_Finder_i.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1822,6 +1826,11 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -1899,16 +1908,9 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
- $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
- $(TAO_ROOT)/tao/InterceptorC.h \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/InterceptorC.i \
- $(TAO_ROOT)/tao/Interceptor.i \
- $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1929,11 +1931,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -1985,6 +1982,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
@@ -2036,14 +2035,23 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- Factory_Finder_i.h QuoterS.h CosLifeCycleS.h CosNamingS.h \
- CosNamingC.h CosNamingC.i CosNamingS_T.h CosNamingS_T.i \
- CosNamingS_T.cpp CosNamingS.i CosLifeCycleC.h CosLifeCycleC.i \
- CosLifeCycleS_T.h CosLifeCycleS_T.i CosLifeCycleS_T.cpp \
- CosLifeCycleS.i QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i \
- QuoterS_T.cpp QuoterS.i
+ Factory_Finder_i.h QuoterS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.i \
+ QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 .obj/Generic_Factory.o .obj/Generic_Factory.so .shobj/Generic_Factory.o .shobj/Generic_Factory.so: Generic_Factory.cpp \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2093,6 +2101,11 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -2170,16 +2183,9 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
- $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
- $(TAO_ROOT)/tao/InterceptorC.h \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/InterceptorC.i \
- $(TAO_ROOT)/tao/Interceptor.i \
- $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -2200,11 +2206,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -2256,6 +2257,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
@@ -2307,8 +2310,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycleServiceC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
@@ -2320,11 +2321,18 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(TAO_ROOT)/tao/TAO.h \
- Generic_Factory_i.h QuoterS.h CosLifeCycleS.h CosNamingS.h \
- CosNamingC.h CosNamingS_T.h CosNamingS_T.i CosNamingS_T.cpp \
- CosNamingS.i CosLifeCycleC.h CosLifeCycleS_T.h CosLifeCycleS_T.i \
- CosLifeCycleS_T.cpp CosLifeCycleS.i QuoterC.h QuoterC.i QuoterS_T.h \
- QuoterS_T.i QuoterS_T.cpp QuoterS.i
+ Generic_Factory_i.h QuoterS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.i \
+ QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 .obj/Generic_Factory_i.o .obj/Generic_Factory_i.so .shobj/Generic_Factory_i.o .shobj/Generic_Factory_i.so: Generic_Factory_i.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -2376,6 +2384,11 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -2453,16 +2466,9 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
- $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
- $(TAO_ROOT)/tao/InterceptorC.h \
- $(TAO_ROOT)/tao/IOPC.h \
- $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/InterceptorC.i \
- $(TAO_ROOT)/tao/Interceptor.i \
- $(TAO_ROOT)/tao/ORB.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -2483,11 +2489,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(TAO_ROOT)/tao/POA.h \
  $(TAO_ROOT)/tao/Object_Adapter.h \
  $(TAO_ROOT)/tao/Key_Adapters.h \
@@ -2539,6 +2540,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
  $(TAO_ROOT)/tao/TimeBaseS.i \
  $(TAO_ROOT)/tao/MessagingC.h \
+ $(TAO_ROOT)/tao/IOPC.h \
+ $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
@@ -2590,13 +2593,22 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
- $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- Generic_Factory_i.h QuoterS.h CosLifeCycleS.h CosNamingS.h \
- CosNamingC.h CosNamingC.i CosNamingS_T.h CosNamingS_T.i \
- CosNamingS_T.cpp CosNamingS.i CosLifeCycleC.h CosLifeCycleC.i \
- CosLifeCycleS_T.h CosLifeCycleS_T.i CosLifeCycleS_T.cpp \
- CosLifeCycleS.i QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i \
- QuoterS_T.cpp QuoterS.i
+ Generic_Factory_i.h QuoterS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.i \
+ QuoterC.h QuoterC.i QuoterS_T.h QuoterS_T.i QuoterS_T.cpp QuoterS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -29,7 +29,7 @@
 
 class TAO_Object_Adapter;
 
-class TAO_Export TAO_Default_Resource_Factory : public TAO_Resource_Factory
+class TAO_Default_Resource_Factory : public TAO_Resource_Factory
 {
   // = TITLE
   //   TAO's default resource factory
@@ -73,20 +73,12 @@ public:
     TAO_REACTOR_TP
   };
 
-  // = Reactor mappings strategy
-  enum
-  {
-    TAO_SINGLE_REACTOR,
-    TAO_REACTOR_PER_PRIORITY
-  };
-
   int cdr_allocator_source (void);
   // Modify and get the source for the CDR allocators
 
   // = Resource Retrieval
   virtual int use_tss_resources (void) const;
   virtual int use_locked_data_blocks (void) const;
-  virtual TAO_Reactor_Registry *get_reactor_registry (void);
   virtual ACE_Reactor *get_reactor (void);
   virtual TAO_Acceptor_Registry  *get_acceptor_registry (void);
   virtual TAO_Connector_Registry *get_connector_registry (void);
@@ -99,7 +91,6 @@ public:
 
   virtual TAO_Resource_Factory::Caching_Strategy connection_caching_strategy_type (void) const;
   virtual double purge_percentage (void) const;
-  virtual TAO_Priority_Mapping *get_priority_mapping (void);
 
 protected:
   virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
@@ -112,9 +103,6 @@ protected:
 
   int use_locked_data_blocks_;
   // The type of data blocks that the ORB should use
-
-  int reactor_registry_type_;
-  // The type of reactor registry.
 
   int reactor_type_;
   // Flag indicating which kind of reactor we should use.
@@ -132,12 +120,6 @@ protected:
   double purge_percentage_;
   // Specifies the percentage of entries which should get purged on
   // demand.
-
-  int reactor_mask_signals_;
-  // If <0> then we create reactors with signal handling disabled.
-
-  int sched_policy_;
-  // The scheduling policy used for the priority mapping class
 };
 
 #if defined (__ACE_INLINE__)

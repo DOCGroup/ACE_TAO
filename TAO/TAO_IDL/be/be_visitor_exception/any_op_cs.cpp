@@ -56,9 +56,9 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
   *os << "void operator<<= (CORBA::Any &_tao_any, const "
       << node->name () << " &_tao_elem) // copying" << be_nl
       << "{" << be_idt_nl
-      << node->name () << " *_tao_any_val = 0;" << be_nl
-      << "ACE_NEW (_tao_any_val, " << node->name ()
-      << " (_tao_elem));" << be_nl
+      << node->name () << " *_tao_any_val = new " << node->name ()
+      << " (_tao_elem);" << be_nl
+      << "if (!_tao_any_val) return;" << be_nl
       << "ACE_TRY_NEW_ENV" << be_nl
       << "{" << be_idt_nl
       << "_tao_any.replace (" << node->tc_name () << ", _tao_any_val, "

@@ -90,7 +90,6 @@ can_be_redefined(AST_Decl *d)
   case AST_Decl::NT_argument:
   case AST_Decl::NT_enum_val:
   case AST_Decl::NT_string:
-  case AST_Decl::NT_wstring:
   case AST_Decl::NT_array:
   case AST_Decl::NT_sequence:
   case AST_Decl::NT_union:

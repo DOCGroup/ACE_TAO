@@ -48,5 +48,10 @@
 #include "be_visitor_interface/ami_handler_stub_ch.h"
 #include "be_visitor_interface/ami_handler_stub_cs.h"
 
+#if 0 /* We are using normal servant code */
+#include "be_visitor_interface/collocated_ami_handler_ch.h"
+#include "be_visitor_interface/ami_handler_servant_ch.h"
+#include "be_visitor_interface/ami_handler_servant_cs.h"
+#endif /* 0 */
 
 #endif /* _BE_VISITOR_INTERFACE_H */

@@ -3,7 +3,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "testC.h"
-#include "testS.h"
 
 ACE_RCSID(MT_Client, client, "$Id$")
 
@@ -59,24 +58,24 @@ class Client : public ACE_Task_Base
   //   Use the ACE_Task_Base class to run the client threads.
   //
 public:
-  Client (A::Simple_Server_ptr server, int niterations);
+  Client (Simple_Server_ptr server, int niterations);
   // ctor
 
   virtual int svc (void);
   // The thread entry point.
 
   // private:
-  A::Simple_Server_var server_;
+  Simple_Server_var server_;
   // The server.
 
   int niterations_;
   // The number of iterations on each client thread.
 
-  A::AMI_Simple_Server_Handler_var the_handler_;
+  AMI_Simple_Server_Handler_var the_handler_;
   // Var for ReplyHandler object.
 };
 
-class Handler : public POA_A::AMI_Simple_Server_Handler
+class Handler : public POA_AMI_Simple_Server_Handler
 {
 public:
   Handler (void) {};
@@ -118,8 +117,8 @@ main (int argc, char *argv[])
         orb->string_to_object (ior, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      A::Simple_Server_var server =
-        A::Simple_Server::_narrow (object.in (), ACE_TRY_ENV);
+      Simple_Server_var server =
+        Simple_Server::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -201,9 +200,9 @@ main (int argc, char *argv[])
 
 // ****************************************************************
 
-Client::Client (A::Simple_Server_ptr server,
+Client::Client (Simple_Server_ptr server,
                 int niterations)
-                :  server_ (A::Simple_Server::_duplicate (server)),
+  :  server_ (Simple_Server::_duplicate (server)),
      niterations_ (niterations)
 {
   the_handler_ = handler._this (/* ACE_TRY_ENV */);

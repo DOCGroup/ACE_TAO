@@ -44,17 +44,8 @@ else  # ! minimum_corba
   override minimum_corba =
 endif # ! minimum_corba
 
-ifeq ($(rt_corba),0)
-  CPPFLAGS += -DTAO_DISABLE_RT_CORBA
-else  # ! rt_corba
-  override rt_corba =
-endif # ! rt_corba
-
-ifeq (1,$(CROSS-COMPILE))
-else
-ifeq (1,$(ACE_HAS_GNUG_PRE_2_8))
-endif # ! ACE_HAS_GNUG_PRE_2_8
-endif # ! CROSS-COMPILE
+### Enable the interface repository by default
+interface_repo=1
 
 ifeq ($(interface_repo),1)
   CPPFLAGS += -DTAO_HAS_INTERFACE_REPOSITORY

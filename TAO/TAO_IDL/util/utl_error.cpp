@@ -515,43 +515,6 @@ UTL_Error::error3(UTL_Error::ErrorCode c,
   idl_global->set_err_count(idl_global->err_count() + 1);
 }
 
-void
-UTL_Error::warning0 (UTL_Error::ErrorCode c)
-{
-  idl_error_header(c, idl_global->lineno(), idl_global->filename());
-  cerr << "\n";
-}
-
-void
-UTL_Error::warning1 (UTL_Error::ErrorCode c, 
-                     AST_Decl *d)
-{
-  idl_error_header(c, d->line(), d->file_name());
-  d->name()->dump(cerr); cerr << "\n";
-}
-
-void
-UTL_Error::warning2 (UTL_Error::ErrorCode c, 
-                     AST_Decl *d1, 
-                     AST_Decl *d2)
-{
-  idl_error_header(c, d1->line(), d1->file_name());
-  d1->name()->dump(cerr); cerr << ", ";
-  d2->name()->dump(cerr); cerr << "\n";
-}
-
-void
-UTL_Error::warning3 (UTL_Error::ErrorCode c,
-                     AST_Decl *d1,
-                     AST_Decl *d2,
-                     AST_Decl *d3)
-{
-  idl_error_header(c, d1->line(), d1->file_name());
-  d1->name()->dump(cerr); cerr << ", ";
-  d2->name()->dump(cerr); cerr << ", ";
-  d3->name()->dump(cerr); cerr << "\n";
-}
-
 // Report a failed coercion attempt
 void
 UTL_Error::coercion_error(AST_Expression *v, AST_Expression::ExprType t)

@@ -12,13 +12,15 @@ ACE_RCSID(Latency, client, "$Id$")
 const char *ior = "file://test.ior";
 int nthreads = 5;
 int niterations = 5;
-int period = -1;
-int do_shutdown = 1;
+
+int sleep_flag = 0;
+
+ACE_Time_Value sleep_time (0, 10000);
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:n:i:p:x");
+  ACE_Get_Opt get_opts (argc, argv, "k:n:i:s");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -33,11 +35,8 @@ parse_args (int argc, char *argv[])
       case 'i':
         niterations = ACE_OS::atoi (get_opts.optarg);
         break;
-      case 'p':
-        period = ACE_OS::atoi (get_opts.optarg);
-        break;
-      case 'x':
-        do_shutdown = 0;
+      case 's':
+        sleep_flag = 1;
         break;
       case '?':
       default:
@@ -46,8 +45,6 @@ parse_args (int argc, char *argv[])
                            "-k <ior> "
                            "-n <nthreads> "
                            "-i <niterations> "
-                           "-p <period> "
-                           "-x (disable shutdown) "
                            "\n",
                            argv [0]),
                           -1);
@@ -171,11 +168,8 @@ main (int argc, char *argv[])
         }
       throughput.dump_results ("Aggregated", gsf);
 
-      if (do_shutdown)
-        {
-          server->shutdown (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
+      server->shutdown (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -209,7 +203,7 @@ Client::svc (void)
       // @@ We should use "validate_connection" for this
       for (int j = 0; j < 100; ++j)
         {
-          server_->_non_existent (ACE_TRY_ENV);
+          server_->_is_a ("IDL:Test:1.0", ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
 
@@ -233,13 +227,13 @@ Client::svc (void)
 
           ACE_TRY_CHECK;
 
+          // Sleep for 10 msecs.
+          if (sleep_flag)
+            ACE_OS::sleep (sleep_time);
+
+
           if (TAO_debug_level > 0 && i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
-	  if (period != -1)
-	    {
-	      ACE_Time_Value tv (0, period * 1000);
-	      ACE_OS::sleep (tv);
-	    }
         }
     }
   ACE_CATCHANY

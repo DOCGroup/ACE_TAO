@@ -523,7 +523,7 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
 
 // visit string type
 int
-be_visitor_valuetype_field_ch::visit_string (be_string *node)
+be_visitor_valuetype_field_ch::visit_string (be_string *)
 {
   TAO_OutStream *os; // output stream
   be_decl *ub = this->ctx_->node (); // get state member
@@ -541,39 +541,19 @@ be_visitor_valuetype_field_ch::visit_string (be_string *node)
   os = this->ctx_->stream ();
 
   os->indent ();
-
   // three methods to set the string value
-  if (node->width () == sizeof (char))
-    {
-      *os << pre_op()
-          << "void " << ub->local_name () << " (char *)"
-          << post_op() << "     // set" << be_nl;
-      *os << pre_op()
-          << "void " << ub->local_name () << " (const char *)"
-          << post_op() << "     // set" << be_nl;
-      *os << pre_op()
-          << "void " << ub->local_name () << " (const CORBA::String_var&)"
-          << post_op() << "     // set" << be_nl;
-      //get method
-      *os << pre_op() << "const char *" << ub->local_name ()
-          << " (void) const" << post_op() << "     // get method\n\n";
-    }
-  else
-    {
-      *os << pre_op()
-          << "void " << ub->local_name () << " (CORBA::WChar *)"
-          << post_op() << "     // set" << be_nl;
-      *os << pre_op()
-          << "void " << ub->local_name () << " (const CORBA::WChar *)"
-          << post_op() << "     // set" << be_nl;
-      *os << pre_op()
-          << "void " << ub->local_name () << " (const CORBA::WString_var&)"
-          << post_op() << "     // set" << be_nl;
-      //get method
-      *os << pre_op() << "const CORBA::WChar *" << ub->local_name ()
-          << " (void) const" << post_op() << "     // get method\n\n";
-    }
-
+  *os << pre_op()
+      << "void " << ub->local_name () << " (char *)"
+      << post_op() << "     // set" << be_nl;
+  *os << pre_op()
+      << "void " << ub->local_name () << " (const char *)"
+      << post_op() << "     // set" << be_nl;
+  *os << pre_op()
+      << "void " << ub->local_name () << " (const CORBA::String_var&)"
+      << post_op() << "     // set" << be_nl;
+  //get method
+  *os << pre_op() << "const char *" << ub->local_name ()
+      << " (void) const" << post_op() << "     // get method\n\n";
   return 0;
 }
 
@@ -637,10 +617,10 @@ be_visitor_valuetype_field_ch::visit_structure (be_structure *node)
   // set method
   *os << pre_op() << "void " << ub->local_name () << " (const "
       << bt->nested_type_name (bu) << " &)"
-      << post_op() << "    // set" << be_nl;
+      << post_op() << "    // set" << be_nl
     // read-only
-  *os << pre_op() << "const " << bt->nested_type_name (bu) << " &";
-  *os << ub->local_name  () << " (void) const"
+      << pre_op() << "const " << bt->nested_type_name (bu) << " &"
+      << ub->local_name  () << " (void) const"
       << post_op() << "     // get method (read only)" << be_nl
     // read/write
       << pre_op() << bt->nested_type_name (bu) << " &" << ub->local_name ()
@@ -735,14 +715,14 @@ be_visitor_valuetype_field_ch::visit_union (be_union *node)
   // set method
   *os << pre_op() << "void " << ub->local_name () << " (const "
       << bt->nested_type_name (bu) << " &)"
-      << post_op() << "    // set" << be_nl;
+      << post_op() << "    // set" << be_nl
     // read-only
-  *os << pre_op() << "const " << bt->nested_type_name (bu) << " &"
+      << pre_op() << "const " << bt->nested_type_name (bu) << " &"
       << ub->local_name  () << " (void) const"
       << post_op() << "     // get method (read only)"
-      << be_nl;
+      << be_nl
     // read/write
-  *os << pre_op() << bt->nested_type_name (bu) << " &" << ub->local_name ()
+      << pre_op() << bt->nested_type_name (bu) << " &" << ub->local_name ()
       << " (void)" << post_op() << "     // get method (read/write only)\n\n";
 
   return 0;

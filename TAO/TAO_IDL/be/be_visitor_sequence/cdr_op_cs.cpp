@@ -45,9 +45,6 @@ be_visitor_sequence_cdr_op_cs::~be_visitor_sequence_cdr_op_cs (void)
 int
 be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
 {
-  if (idl_global->gen_locality_constraint ())
-    return 0;
-
   if (this->ctx_->alias ())
     {
       // we are here because the base type of the sequence node is
@@ -513,7 +510,6 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
       switch (bt->node_type ())
         {
         case AST_Decl::NT_string:
-        case AST_Decl::NT_wstring:
           {
             be_string *str = be_string::narrow_from_decl (bt);
 
@@ -532,15 +528,8 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
               }
             else
               {
-                if (str->width () == sizeof (char))
-                  {
-                    *os << "CORBA::Any::to_string (_tao_sequence[i].out (), ";
-                  }
-                else
-                  {
-                    *os << "CORBA::Any::to_wstring (_tao_sequence[i].out (), ";
-                  }
-                *os << str->max_size ()->ev ()->u.ulval << ")";
+                *os << "CORBA::Any::to_string (_tao_sequence[i].out (), "
+                    << str->max_size ()->ev ()->u.ulval << ")";
               }
           }
           break;
@@ -581,7 +570,6 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
       switch (bt->node_type ())
         {
         case AST_Decl::NT_string:
-        case AST_Decl::NT_wstring:
         case AST_Decl::NT_interface:
         case AST_Decl::NT_interface_fwd:
           *os << ".in ()";

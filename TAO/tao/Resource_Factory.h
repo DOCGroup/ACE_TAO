@@ -33,8 +33,6 @@
 
 class TAO_Acceptor_Registry;
 class TAO_Connector_Registry;
-class TAO_Reactor_Registry;
-class TAO_Priority_Mapping;
 
 // ****************************************************************
 
@@ -125,10 +123,6 @@ public:
   // @@ Backwards compatibility, return 1 if the ORB core should use
   //    Locked_Data_Blocks
 
-  virtual TAO_Reactor_Registry *get_reactor_registry (void);
-  // Create the reactor holder, an strategy to control the number of
-  // reactors in the ORB
-
   virtual ACE_Reactor *get_reactor (void);
   // Return an <ACE_Reactor> to be utilized.
 
@@ -167,9 +161,6 @@ public:
   virtual double purge_percentage (void) const;
   // This denotes the amount of entries to remove from the connection
   // cache.
-
-  virtual TAO_Priority_Mapping *get_priority_mapping (void);
-  // Configure the priority mapping for the ORB
 };
 
 #endif /* TAO_RESOURCE_FACTORY_H */

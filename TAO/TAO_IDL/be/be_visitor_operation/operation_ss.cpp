@@ -33,14 +33,12 @@ ACE_RCSID(be_visitor_operation, operation_ss, "$Id$")
 // ************************************************************
 
 be_visitor_operation_ss::be_visitor_operation_ss (be_visitor_context *ctx)
-  : be_visitor_operation (ctx),
-    operation_name_ (0)
+  : be_visitor_operation (ctx)
 {
 }
 
 be_visitor_operation_ss::~be_visitor_operation_ss (void)
 {
-  delete[] this->operation_name_;
 }
 
 // processing to be done after every element in the scope is processed
@@ -97,11 +95,6 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  // Skip the generation of static skeloton if the interface is
-  // locality constraint.
-  if (idl_global->gen_locality_constraint ())
-    return 0;
-
   // generate the signature of the static skeleton
   os->indent ();
   *os << "void " << intf->full_skel_name () << "::";
@@ -115,9 +108,19 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
         *os << "_get_";
     }
   *os << node->local_name ()
-      << "_skel (" << be_idt << be_idt_nl
-      << "CORBA::ServerRequest &_tao_server_request," << be_nl
-      << "void *_tao_object_reference, " << be_nl
+      << "_skel (" << be_idt << be_idt_nl;
+
+  if (node->flags () == AST_Operation::OP_oneway
+      && !this->has_param_type (node, AST_Argument::dir_IN))
+    {
+      *os << "CORBA::ServerRequest &/* _tao_server_request */, " << be_nl;
+    }
+  else
+    {
+      *os << "CORBA::ServerRequest &_tao_server_request, " << be_nl;
+    }
+
+  *os << "void *_tao_object_reference, " << be_nl
       << "void * /* context */, " << be_nl
       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt << be_uidt_nl
       << ")" << be_nl;
@@ -180,35 +183,6 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  // Fish out the interceptor and do preinvoke
-  *os << "#if defined (TAO_HAS_INTERCEPTORS)" << be_nl
-      << "TAO_ServerRequestInterceptor_Adapter" << be_idt_nl
-      << "_tao_vfr (_tao_server_request.orb ()->_get_server_interceptor (ACE_TRY_ENV));" << be_uidt_nl
-      << "ACE_CHECK;" << be_nl
-      << "PortableInterceptor::Cookies _tao_cookies;" << be_nl
-      << "CORBA::NVList_var _tao_interceptor_args;" << be_nl
-      << "_tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);\n"
-      << be_nl << "ACE_CHECK;\n" << be_nl
-      << "ACE_TRY" << be_idt_nl
-      << "{" << be_idt_nl
-      << "_tao_vfr.preinvoke (_tao_server_request.request_id (), ";
-  if (node->flags () == AST_Operation::OP_oneway)
-    *os << "0";
-  else
-    *os << "1";
-  *os << ", 0, " << this->compute_operation_name (node)
-      << ", _tao_server_request.service_info (), _tao_interceptor_args.inout (), "
-      << "_tao_cookies, ACE_TRY_ENV);" << be_nl
-      << "TAO_INTERCEPTOR_CHECK;\n";
-  if (node->flags () == AST_Operation::OP_oneway
-      && !this->has_param_type (node, AST_Argument::dir_IN))
-    {
-      *os << "#else" << be_nl
-          << "ACE_UNUSED_ARG (_tao_server_request);\n";
-    }
-
-  *os << "#endif /* TAO_HAS_INTERCEPTORS */\n\n";
-
   // do pre upcall processing if any
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_PRE_UPCALL_SS);
@@ -252,36 +226,13 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   // end the upcall
-  *os << be_uidt_nl << ");\n" << be_nl
-      << "TAO_INTERCEPTOR_CHECK;\n\n";
+  *os << be_uidt_nl << ");\n";
 
-  // do postinvoke, and check for exception.
-  *os << "#if defined (TAO_HAS_INTERCEPTORS)" << be_nl
-      << "_tao_vfr.postinvoke (_tao_server_request.request_id (), ";
-  if (node->flags () == AST_Operation::OP_oneway)
-    *os << "0";
-  else
-    *os << "1";
-  *os << ", 0, " << this->compute_operation_name (node)
-      << ", _tao_server_request.service_info (), _tao_interceptor_args.inout (), "
-      << "_tao_cookies, ACE_TRY_ENV);" << be_nl
-      << "TAO_INTERCEPTOR_CHECK;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "ACE_CATCHANY" << be_idt_nl
-      << "{" << be_idt_nl
-      << "_tao_vfr.exception_occurred (_tao_server_request.request_id (), ";
-  if (node->flags () == AST_Operation::OP_oneway)
-    *os << "0";
-  else
-    *os << "1";
-  *os << ", 0, " << this->compute_operation_name (node)
-      << ", "// _tao_server_request.service_info (), "
-      << "_tao_cookies, ACE_TRY_ENV);" << be_nl
-      << "ACE_RETHROW;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "ACE_ENDTRY;" << be_nl
-      << "ACE_CHECK;\n"
-      << "#endif /* TAO_HAS_INTERCEPTORS */\n\n";
+  if (node->flags () != AST_Operation::OP_oneway)
+    {
+      os->indent ();
+      *os << "ACE_CHECK;\n";
+    }
 
   // do any post processing for the arguments
   ctx = *this->ctx_;
@@ -415,48 +366,6 @@ be_visitor_operation_ss::gen_check_exception (be_type *, const char * /* env */)
   return 0;
 }
 
-int
-be_visitor_operation_ss::gen_check_interceptor_exception (be_type *, const char * /* env */)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  os->indent ();
-  // check if there is an exception
-  *os << "TAO_INTERCEPTOR_CHECK;\n";
-  // << env << ");\n";
-
-  return 0;
-}
-
-const char *
-be_visitor_operation_ss::compute_operation_name (be_operation *node)
-{
-  if (this->operation_name_ == 0)
-    {
-      size_t len = 3;           // the null termination char.
-      if (this->ctx_->attribute ())
-        len += 5;               // "Added length for "_set_" or "_get_".
-
-      len += ACE_OS::strlen (node->local_name ()->get_string ());
-
-      ACE_NEW_RETURN (this->operation_name_,
-                      char [len],
-                      0);
-
-      ACE_OS::strcpy (this->operation_name_, "\"");
-      if (this->ctx_->attribute ())
-        {
-          if (node->nmembers () == 1)
-            ACE_OS::strcat (this->operation_name_, "_set_");
-          else
-            ACE_OS::strcat (this->operation_name_, "_get_");
-        }
-      ACE_OS::strcat (this->operation_name_,
-                      node->local_name ()->get_string ());
-      ACE_OS::strcat (this->operation_name_, "\"");
-    }
-  return this->operation_name_;
-}
 
 // *********************************************************************
 // Operation visitor for server skeletons using interpretive marshaling

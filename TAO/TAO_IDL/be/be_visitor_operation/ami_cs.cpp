@@ -93,7 +93,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   // Generate the argument list with the appropriate mapping (same as
   // in the header file)
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_AMI_OPERATION_ARGLIST_CS);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CS);
   visitor = tao_cg->make_visitor (&ctx);
   if ((!visitor) || (node->accept (visitor) == -1))
     {
@@ -772,6 +772,8 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
   *os << be_nl
       << "if (_invoke_status == TAO_INVOKE_RESTART)" << be_idt_nl
       << "continue;" << be_uidt_nl
+      << "// if (_invoke_status == TAO_INVOKE_EXCEPTION)" << be_idt_nl
+      << "// cannot happen" << be_uidt_nl
       << "if (_invoke_status != TAO_INVOKE_OK)" << be_nl
       << "{" << be_idt_nl;
 

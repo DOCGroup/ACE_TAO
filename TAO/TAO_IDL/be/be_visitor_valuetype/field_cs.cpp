@@ -524,17 +524,17 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
       switch (node->pt ())
         {
         case AST_PredefinedType::PT_pseudo:
-          *os << "this->" << bu->field_pd_prefix() << ub->local_name () 
-              << bu->field_pd_postfix() << " = "
+          *os << "this->"
+      << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
+              << " = "
               << bt->name () << "::_duplicate (val);" << be_uidt_nl;
           break;
 
         case AST_PredefinedType::PT_any:
-          *os << "ACE_NEW (" << be_idt << be_idt_nl
-              << "this->" << bu->field_pd_prefix() << ub->local_name ()
-              << bu->field_pd_postfix() << "," << be_nl
-              << bt->name () << " (val)" << be_uidt_nl
-              << ");" << be_uidt << be_uidt_nl;
+          *os << "this->"
+      << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
+              << " = new "
+              << bt->name () << " (val);" << be_uidt_nl;
           break;
 
         case AST_PredefinedType::PT_void:
@@ -542,8 +542,8 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
 
         default:
           *os << "// set the value" << be_nl
-              << "this->" << bu->field_pd_prefix () << ub->local_name () 
-              << bu->field_pd_postfix ()
+              << "this->"
+      << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
               << " = val;" << be_uidt_nl;
         }
   *os << "}" << be_nl;
@@ -558,7 +558,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
       *os << "::" << ub->local_name ()
           << " (void) const" << be_nl
           << "{" << be_idt_nl
-          << "return this->"
+          << "return this->u"
       << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
           << ";" << be_uidt_nl
           << "}\n\n";
@@ -671,17 +671,10 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
       << " (const " << bt->name () << " &val)" << be_nl
       << "{" << be_idt_nl;
 
-  *os << "ACE_NEW (" << be_idt << be_idt_nl
-      << "this->" << bu->field_pd_prefix() << ub->local_name ()
-      << bu->field_pd_postfix() << "," << be_nl
-      << bt->name () << " (val)" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl;
-
-// This was replaced by the above output statement, but this doesn't work
-//      *os << "this->"
-//      << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
-//          << " = new "
-//          << bt->name () << " (val);" << be_uidt_nl;
+      *os << "this->"
+      << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
+          << " = new "
+          << bt->name () << " (val);" << be_uidt_nl;
 
   *os << "}" << be_nl;
 
@@ -712,7 +705,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
 }
 
 int
-be_visitor_valuetype_field_cs::visit_string (be_string *node)
+be_visitor_valuetype_field_cs::visit_string (be_string *)
 {
   be_decl *ub =
     this->ctx_->node (); // get field node
@@ -731,23 +724,13 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
 
   // three methods to set the string value
 
-  // (1) set method from char* or wchar*
+  // (1) set method from char*
   os->indent (); // start from current indentation
   *os << "// accessor to set the member" << be_nl
-      << this->pre_op () << "void" << be_nl;
-  this->op_name (bu, 
-                 os);
-
-  if (node->width () == sizeof (char))
-    {
-      *os << "::" << ub->local_name () << " (char *val)";
-    }
-  else
-    {
-      *os << "::" << ub->local_name () << " (CORBA::WChar *val)";
-    }
-
-  *os << be_nl
+      << this->pre_op() << "void" << be_nl;
+  this->op_name(bu,os);
+  *os << "::" << ub->local_name () << " (char *val)"
+      << be_nl
       << "{" << be_idt_nl;
 
       *os << "// set the value" << be_nl
@@ -756,96 +739,50 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
           << " = val;" << be_uidt_nl
       << "}" << be_nl;
 
-  // (2) set method from const char * or const wchar*
+  // (2) set method from const char *
   *os << "// accessor to set the member" << be_nl
-      << this->pre_op () << "void" << be_nl;
-  this->op_name (bu,
-                 os);
-  *os << "::" << ub->local_name ();
-
-  if (node->width () == sizeof (char))
-    {
-      *os << " (const char *val)" << be_nl;
-    }
-  else
-    {
-      *os << " (const CORBA::WChar *val)" << be_nl;
-    }
-
-  *os << "{\n";
+      << this->pre_op() << "void" << be_nl;
+  this->op_name(bu,os);
+  *os << "::" << ub->local_name ()
+      << " (const char *val)" << be_nl
+      << "{\n";
   os->incr_indent ();
 
-  *os << "// set the value" << be_nl
-      << "this->"
-      << bu->field_pd_prefix () << ub->local_name () << bu->field_pd_postfix ()
-      << " = ";
-
-  if (node->width () == sizeof (char))
-    {
-      *os << "CORBA::string_dup (val);" << be_uidt_nl;
-    }
-  else
-    {
-      *os << "CORBA::wstring_dup (val);" << be_uidt_nl;
-    }
+      *os << "// set the value" << be_nl
+          << "this->"
+      << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
+          << " = "
+          << "CORBA::string_dup (val);" << be_uidt_nl;
 
   *os << "}" << be_nl;
 
   // (3) set from const String_var&
   *os << "// accessor to set the member" << be_nl
-      << this->pre_op () << "void" << be_nl;
-  this->op_name (bu,
-                 os);
-  *os << "::" << ub->local_name ();
+      << this->pre_op() << "void" << be_nl;
+  this->op_name(bu,os);
+  *os << "::" << ub->local_name ()
+      << " (const CORBA::String_var &val)" << be_nl
+      << "{" << be_idt_nl;
+      *os << ";" << be_nl;
 
-  if (node->width () == sizeof (char))
-    {
-      *os << " (const CORBA::String_var &val)" << be_nl;
-    }
-  else
-    {
-      *os << " (const CORBA::WString_var &val)" << be_nl;
-    }
-
-  *os << "{" << be_idt_nl;
-  *os << ";" << be_nl;
-
-  *os << "// set the value" << be_nl;
-
-  if (node->width () == sizeof (char))
-    {
-      *os << "CORBA::String_var " << ub->local_name ();
-    }
-  else
-    {
-      *os << "CORBA::WString_var " << ub->local_name ();
-    }
-
-  *os << "_var = val;" << be_nl
-      << "this->"
-      << bu->field_pd_prefix () << ub->local_name () << bu->field_pd_postfix ()
-      << " = "
-      << ub->local_name () << "_var._retn ();" << be_uidt_nl;
+      *os << "// set the value" << be_nl
+          << "CORBA::String_var " << ub->local_name ()
+          << "_var = val;" << be_nl
+          << "this->"
+      << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
+          << " = "
+          << ub->local_name () << "_var._retn ();" << be_uidt_nl;
 
   *os << "}" << be_nl;
 
   // get method
-  if (node->width () == sizeof (char))
-    {
-      *os << this->pre_op () << "const char *" << be_nl;
-    }
-  else
-    {
-      *os << this->pre_op () << "const CORBA::WChar *" << be_nl;
-    }
-
-  this->op_name (bu,
-                 os);
+  *os << this->pre_op() << "const char *" << be_nl;
+  this->op_name(bu,os);
   *os << "::" << ub->local_name ()
       << " (void) const // get method" << be_nl
       << "{" << be_idt_nl
       << "return this->"
-      << bu->field_pd_prefix () << ub->local_name () << bu->field_pd_postfix ()
+      << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
       << ";" << be_uidt_nl
       << "}\n\n";
   return 0;
@@ -919,21 +856,12 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
   if (0) // %! (bt->size_type () == be_type::VARIABLE)
     { cerr <<"!t VARIABLE struct in field_cs\n";
       *os << "delete this->"
-          << bu->field_pd_prefix() << ub->local_name () 
-          << bu->field_pd_postfix()
+     << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
           << ";" << be_nl;
-
-      *os << "ACE_NEW (" << be_idt << be_idt_nl
-          << "this->" << bu->field_pd_prefix() << ub->local_name ()
-          << bu->field_pd_postfix() << "," << be_nl
-          << bt->name () << " (val)" << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl;
-
-// This was replaced by the above output statement, but this doesn't work
-//      *os << "this->"
-//     << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
-//          << " = new "
-//          << bt->name () << " (val);" << be_uidt_nl;
+      *os << "this->"
+     << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
+          << " = new "
+          << bt->name () << " (val);" << be_uidt_nl;
     }
   else
     {
@@ -1066,17 +994,10 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
       << " (const " << bt->name () << " &val)" << be_nl
       << "{" << be_idt_nl;
 
-  *os << "ACE_NEW (" << be_idt << be_idt_nl
-      << "this->" << bu->field_pd_prefix() << ub->local_name ()
-      << bu->field_pd_postfix() << "_var," << be_nl
-      << bt->name () << " (val)" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl;
-
-// This was replaced by the above output statement, but this doesn't work
-//      *os << "this->"
-//     << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
-//          << "_var = new " << bt->name ()
-//          << " (val);" << be_uidt_nl;
+      *os << "this->"
+     << bu->field_pd_prefix() << ub->local_name () << bu->field_pd_postfix()
+          << "_var = new " << bt->name ()
+          << " (val);" << be_nl;
 
   *os << "}" << be_nl;
 

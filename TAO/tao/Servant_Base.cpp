@@ -310,6 +310,29 @@ TAO_ServantBase_var::_retn (void)
   return retval;
 }
 
+TAO_Stub *
+TAO_Local_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
+{
+  PortableServer::ObjectId_var invalid_oid =
+    PortableServer::string_to_ObjectId ("invalid");
+
+  TAO_ObjectKey tmp_key (invalid_oid->length (),
+                         invalid_oid->length (),
+                         invalid_oid->get_buffer (),
+                         0);
+
+  // It is ok to use TAO_ORB_Core_instance here since the locality
+  // constrained servant does not really register with a POA or get
+  // exported remotely.
+  //
+  // The correct thing to do is to probably use ORB of the default
+  // POA. The unfortunate part is that calling default_POA() requires
+  // the creation of a local stub, hence causing a infinite loop.
+  return TAO_ORB_Core_instance ()->orb ()->create_stub_object (tmp_key,
+                                                               this->_interface_repository_id (),
+                                                               ACE_TRY_ENV);
+}
+
 void
 TAO_Local_ServantBase::_dispatch (CORBA::ServerRequest &request,
                                   void *context,

@@ -2,14 +2,12 @@
 
 #include "tao/Asynch_Invocation.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
-#if defined (TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
+#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_POLLER)
 
 #include "tao/Timeprobe.h"
 #include "tao/Stub.h"
 #include "tao/Principal.h"
 #include "tao/Object_KeyC.h"
-#include "tao/Transport_Mux_Strategy.h"
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
@@ -62,31 +60,37 @@ TAO_GIOP_Twoway_Asynch_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
                                    this->profile_,
                                    this->opname_,
                                    this->request_id_,
-                                   this->service_info_,
+                                   this->request_service_info_,
                                    1,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
 }
 
 int
-TAO_GIOP_Twoway_Asynch_Invocation::invoke (CORBA::ExceptionList & /*exceptions*/,
+TAO_GIOP_Twoway_Asynch_Invocation::invoke (CORBA::ExceptionList &exceptions,
                                            CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,CORBA::UnknownUserException))
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_ASYNCH_INVOCATION_INVOKE_START);
 
-  return this->invoke_i (ACE_TRY_ENV);
+  int retval = this->invoke_i (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (retval);
+
+  return retval;
 }
 
 int
-TAO_GIOP_Twoway_Asynch_Invocation::invoke (TAO_Exception_Data * /*excepts*/,
-                                           CORBA::ULong /*except_count*/,
+TAO_GIOP_Twoway_Asynch_Invocation::invoke (TAO_Exception_Data *excepts,
+                                           CORBA::ULong except_count,
                                            CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::Exception))
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_GIOP_ASYNCH_INVOCATION_INVOKE_START);
 
-  return this->invoke_i (ACE_TRY_ENV);
+  int retval = this->invoke_i (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (retval);
+
+  return retval;
 }
 
 int
@@ -96,9 +100,8 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   // Register a reply dispatcher for this Asynch_Invocation. Use the
   // heap allocated reply dispatcher.
 
-  int retval =
-    this->transport_->tms ()->bind_dispatcher (this->request_id_,
-                                               this->rd_);
+  int retval = this->transport_->bind_reply_dispatcher (this->request_id_,
+                                                        this->rd_);
   if (retval == -1)
     {
       // @@ What is the right way to handle this error?
@@ -124,5 +127,4 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */

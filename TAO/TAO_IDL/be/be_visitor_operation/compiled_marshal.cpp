@@ -120,11 +120,22 @@ int be_visitor_operation_rettype_compiled_marshal::visit_array (be_array *)
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
+#if 0
+      *os << node->name () << "_forany (";
+      if (node->size_type () == be_decl::VARIABLE)
+        *os << "(" << node->name () << "_slice *)"
+            << "_tao_retval.in ()" << ")";
+      else
+        *os << "_tao_retval" << ")";
+#else
       *os << "_tao_retval_forany";
+#endif
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
       *os << "_tao_retval_forany";
+      // *os << node->name () << "_forany ("
+      // << "_tao_retval" << ")";
     }
   else
     {
@@ -170,7 +181,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_interface (be_interface
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
-      *os << "_tao_retval.inout ()";
+      *os << "_tao_retval";
     }
   else
     {
@@ -193,7 +204,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_interface_fwd (be_inter
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
-      *os << "_tao_retval.inout ()";
+      *os << "_tao_retval";
     }
   else
     {
@@ -218,7 +229,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_valuetype (be_valuetype
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
-      *os << "_tao_retval.inout ()";
+      *os << "_tao_retval";
     }
   else
     {
@@ -241,7 +252,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_valuetype_fwd (be_value
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
-      *os << "_tao_retval.inout ()";
+      *os << "_tao_retval";
     }
   else
     {
@@ -296,7 +307,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_predefined_type (be_pre
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_operation_rettype_compiled_marshal::"
-                             "visit_predefined_type - "
+                             "visit_array - "
                              "Bad predefined type\n"),
                             -1);
         }
@@ -306,10 +317,10 @@ int be_visitor_operation_rettype_compiled_marshal::visit_predefined_type (be_pre
       switch (node->pt ())
         {
         case AST_PredefinedType::PT_pseudo:
-          *os << "_tao_retval.inout ()";
+          *os << "_tao_retval";
           break;
         case AST_PredefinedType::PT_any:
-          *os << "_tao_retval.inout ()";
+          *os << "*_tao_retval";
           break;
         case AST_PredefinedType::PT_long:
         case AST_PredefinedType::PT_ulong:
@@ -337,7 +348,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_predefined_type (be_pre
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_operation_rettype_compiled_marshal::"
-                             "visit_predefined_type - "
+                             "visit_array - "
                              "Bad predefined type\n"),
                             -1);
         }
@@ -346,7 +357,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_predefined_type (be_pre
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_operation_rettype_compiled_marshal::"
-                         "visit_predefined_type - "
+                         "visit_array - "
                          "Bad substate\n"),
                         -1);
     }
@@ -363,13 +374,13 @@ int be_visitor_operation_rettype_compiled_marshal::visit_sequence (be_sequence *
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
-      *os << "_tao_retval.inout ()";
+      *os << "*_tao_retval";
     }
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_operation_rettype_compiled_marshal::"
-                         "visit_sequence - "
+                         "visit_interface - "
                          "Bad substate\n"),
                         -1);
     }
@@ -389,45 +400,25 @@ int be_visitor_operation_rettype_compiled_marshal::visit_string (be_string *node
         }
       else
         {
-          if (node->width () == sizeof (char))
-            {
-              *os << "CORBA::Any::from_string ((char *)_tao_retval.in (), ";
-            }
-          else
-            {
-              *os << "CORBA::Any::from_wstring ((CORBA::WChar *)_tao_retval.in (), ";
-            }
-
-          *os << node->max_size ()->ev ()->u.ulval - 1 << ")";
+          *os << "CORBA::Any::from_string ((char *)_tao_retval.in (), "
+              << node->max_size ()->ev ()->u.ulval - 1 << ")";
         }
     }
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
       // differentiate between bounded and unbounded
       if (node->max_size ()->ev ()->u.ulval == 0)
-        {
-          // unbounded
-          *os << "_tao_retval.inout ()";
-        }
+        // unbounded
+        *os << "_tao_retval";
       else
-        {
-          if (node->width () == sizeof (char))
-            {
-              *os << "CORBA::Any::to_string (_tao_retval.inout (), ";
-            }
-          else
-            {
-              *os << "CORBA::Any::to_wstring (_tao_retval.inout (), ";
-            }
-
-          *os << node->max_size ()->ev ()->u.ulval - 1 << ")";
-        }
+        *os << "CORBA::Any::to_string (_tao_retval, "
+            << node->max_size ()->ev ()->u.ulval - 1 << ")";
     }
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_operation_rettype_compiled_marshal::"
-                         "visit_string - "
+                         "visit_interface - "
                          "Bad substate\n"),
                         -1);
     }
@@ -448,7 +439,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_structure (be_structure
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
       if (node->size_type () == be_decl::VARIABLE)
-        *os << "_tao_retval.inout ()";
+        *os << "*_tao_retval";
       else
         *os << "_tao_retval";
     }
@@ -456,7 +447,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_structure (be_structure
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_operation_rettype_compiled_marshal::"
-                         "visit_structure - "
+                         "visit_interface - "
                          "Bad substate\n"),
                         -1);
     }
@@ -477,7 +468,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_union (be_union *node)
   else if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
     {
       if (node->size_type () == be_decl::VARIABLE)
-        *os << "_tao_retval.inout ()";
+        *os << "*_tao_retval";
       else
         *os << "_tao_retval";
     }
@@ -485,7 +476,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_union (be_union *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_operation_rettype_compiled_marshal::"
-                         "visit_union - "
+                         "visit_interface - "
                          "Bad substate\n"),
                         -1);
     }

@@ -95,34 +95,34 @@ extern int yyleng;
  */
 
 %union {
-  AST_Decl			*dcval;		/* Decl value		*/
-  UTL_StrList			*slval;		/* String list		*/
-  UTL_NameList			*nlval;		/* Name list		*/
-  UTL_ExprList			*elval;		/* Expression list	*/
-  UTL_LabelList			*llval;		/* Label list		*/
-  UTL_DeclList			*dlval;		/* Declaration list	*/
-  FE_InterfaceHeader		*ihval;		/* Interface header	*/
-  FE_obv_header         	*vhval;         /* Valuetype header     */
-  AST_Expression		*exval;		/* Expression value	*/
-  AST_UnionLabel		*ulval;		/* Union label		*/
-  AST_Field			*ffval;		/* Field value		*/
-  AST_Field::Visibility  	vival;         	/* N/A, pub or priv     */
-  AST_Expression::ExprType 	etval;		/* Expression type	*/
-  AST_Argument::Direction 	dival;		/* Argument direction	*/
-  AST_Operation::Flags		ofval;		/* Operation flags	*/
-  FE_Declarator			*deval;		/* Declarator value	*/
-  idl_bool			bval;		/* Boolean value	*/
-  long				ival;		/* Long value		*/
-  unsigned long			uival;		/* Unsigned long value	*/
-  double			dval;		/* Double value		*/
-  float				fval;		/* Float value		*/
-  char				cval;		/* Char value		*/
-  ACE_CDR::WChar		wcval;		/* WChar value		*/
-  UTL_String			*sval;		/* String value		*/
-  char				*wsval;		/* WString value	*/
-  char				*strval;	/* char * value		*/
-  Identifier			*idval;		/* Identifier		*/
-  UTL_IdList			*idlist;	/* Identifier list	*/
+  AST_Decl		*dcval;		/* Decl value		*/
+  UTL_StrList		*slval;		/* String list		*/
+  UTL_NameList		*nlval;		/* Name list		*/
+  UTL_ExprList		*elval;		/* Expression list	*/
+  UTL_LabelList		*llval;		/* Label list		*/
+  UTL_DeclList		*dlval;		/* Declaration list	*/
+  FE_InterfaceHeader	*ihval;		/* Interface header	*/
+  FE_obv_header         *vhval;         /* Valuetype header     */
+  AST_Expression	*exval;		/* Expression value	*/
+  AST_UnionLabel	*ulval;		/* Union label		*/
+  AST_Field		*ffval;		/* Field value		*/
+  AST_Field::Visibility  vival;         /* N/A, pub or priv     */
+  AST_Expression::ExprType etval;	/* Expression type	*/
+  AST_Argument::Direction dival;	/* Argument direction	*/
+  AST_Operation::Flags	ofval;		/* Operation flags	*/
+  FE_Declarator		*deval;		/* Declarator value	*/
+  idl_bool		bval;		/* Boolean value	*/
+  long			ival;		/* Long value		*/
+  unsigned long		uival;		/* Unsigned long value	*/
+  double		dval;		/* Double value		*/
+  float			fval;		/* Float value		*/
+  char			cval;		/* Char value		*/
+  ACE_CDR::WChar	wcval;		/* WChar value		*/
+
+  UTL_String		*sval;		/* String value		*/
+  char			*strval;	/* char * value		*/
+  Identifier		*idval;		/* Identifier		*/
+  UTL_IdList		*idlist;	/* Identifier list	*/
 }
 
 /*
@@ -188,7 +188,7 @@ extern int yyleng;
 %token		IDL_LEFT_SHIFT
 %token		IDL_RIGHT_SHIFT
 %token <wcval>	IDL_WCHAR_LITERAL
-%token <wsval>	IDL_WSTRING_LITERAL
+%token		IDL_WSTRING_LITERAL
 
 /*
  * These are production names:
@@ -411,7 +411,6 @@ interface :
 	   */
 	  UTL_Scope* s = idl_global->scopes()->top();
 	  AST_Interface* m = AST_Interface::narrow_from_scope (s);
-	  m->inherited_name_clash ();
 	  UTL_StrList *p = m->pragmas ();
 	  if (p != 0)
 		p = (UTL_StrList*)p->copy ();
@@ -518,7 +517,6 @@ value_concrete_decl :
 	   */
 	  UTL_Scope* s = idl_global->scopes()->top();
 	  AST_Interface* m = AST_Interface::narrow_from_scope (s);
-	  m->inherited_name_clash ();
 	  UTL_StrList *p = m->pragmas ();
 	  if (p != 0) p = (UTL_StrList*)p->copy ();
 	  idl_global->set_pragmas (p);
@@ -572,7 +570,6 @@ value_abs_decl :
 	   */
 	  UTL_Scope* s = idl_global->scopes()->top();
 	  AST_Interface* m = AST_Interface::narrow_from_scope (s);
-	  m->inherited_name_clash ();
 	  UTL_StrList *p = m->pragmas ();
 	  if (p != 0) p = (UTL_StrList*)p->copy ();
 	  idl_global->set_pragmas (p);
@@ -946,8 +943,8 @@ const_type
 	      }
 	    } else if (d->node_type () == AST_Decl::NT_string) {
                 $$ = AST_Expression::EV_string;
-            } else if (d->node_type () == AST_Decl::NT_wstring) {
-		$$ = AST_Expression::EV_wstring;
+            /* @ASG@ we will need a similar one for wstring after it
+                is implemented */
             } else            
 	      $$ = AST_Expression::EV_any;
 	  } else
@@ -1074,10 +1071,6 @@ literal
 	{
 	  $$ = idl_global->gen()->create_expr($1);
 	}
-	| IDL_WSTRING_LITERAL
-	{
-	  $$ = idl_global->gen()->create_expr($1);
-	}
 	| IDL_CHARACTER_LITERAL
 	{
 	  $$ = idl_global->gen()->create_expr($1);
@@ -1094,12 +1087,12 @@ literal
 	| IDL_TRUETOK
 	{
 	  $$ = idl_global->gen()->create_expr((idl_bool) I_TRUE,
-					      AST_Expression::EV_bool);
+					    AST_Expression::EV_bool);
 	}
 	| IDL_FALSETOK
 	{
 	  $$ = idl_global->gen()->create_expr((idl_bool) I_FALSE,
-					      AST_Expression::EV_bool);
+					    AST_Expression::EV_bool);
 	}
 	;
 
@@ -2450,7 +2443,6 @@ param_type_spec
 	  $$ = idl_global->scopes()->bottom()->lookup_primitive_type($1);
 	}
         | string_type_spec
-	| wstring_type_spec
         | scoped_name
 	{
 	  UTL_Scope	*s = idl_global->scopes()->top_non_null();

@@ -79,17 +79,14 @@ public:
                            const char *suffix);
   // compute the collocation names
 
-  virtual TAO_OutStream *get_out_stream ();
+  virtual TAO_OutStream *get_out_stream () = 0;
   // return the out stream depending on the strategy
-  // @@ Michael: Right now every strategy behaves 
-  // the same way, but it might be in the future that we
-  // have to differentiate. 
+  // -> the client stub (e.g. AMI)  or server skeleton
+  // outstream is returned.
 
-  virtual const char *get_out_stream_fname ();
+  virtual const char *get_out_stream_fname () = 0;
   // return the file name of the output stream.
-  // @@ Michael: Right now every strategy behaves the 
-  // same way.
- 
+
 protected:
 
   char *local_name_;
@@ -147,6 +144,13 @@ public:
   virtual const char *local_coll_name (int);
   // retrieve the fully qualified collocated class name.
 
+  virtual TAO_OutStream *get_out_stream ();
+  // return the out stream depending on the strategy
+  // return the client stub
+
+  virtual const char *get_out_stream_fname ();
+  // return the file name of the output stream.
+
   // end of overridden methods
 private:
 
@@ -187,6 +191,13 @@ public:
 
   virtual const char *local_coll_name (int);
   // retrieve the fully qualified collocated class name.
+
+  virtual TAO_OutStream *get_out_stream ();
+  // return the out stream depending on the strategy
+  // return the server skeleton
+
+  virtual const char *get_out_stream_fname ();
+  // return the file name of the output stream.
 
   // end of overridden methods
 };

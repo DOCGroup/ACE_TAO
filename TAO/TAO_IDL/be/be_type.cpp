@@ -164,15 +164,10 @@ be_type::tc_name (const char *prefix, const char *suffix)
   return this->tc_name_;
 }
 
-// This code works. However, whether we should generate the
+// XXXASG - This code works. However, whether we should generate the
 // ACE_NESTED_CLASS macro or not should be based on an option to the
-// compiler. The previous version generated a relative path.
-// This version always generates ACE_NESTED_CLASS, (leave ace/ACE.h and friends
-// do the porting)
-//
-// caution: returns the same buffer pointer even if the contents may change
-// in the next call.  (return std::string anyone?)
-//
+// compiler. In this version, we choose to generate a relative path.
+
 // return the type name using the ACE_NESTED_CLASS macro
 const char *
 be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *prefix)
@@ -231,20 +226,6 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *p
       def_next = ACE_OS::strstr (def_curr, "::");
       use_next = ACE_OS::strstr (use_curr, "::");
 
-      // If the scopes are identical, don't supply them.
-      if(!ACE_OS::strcmp (def_name, use_name))
-        {
-          if (prefix)
-            ACE_OS::strcat (this->nested_type_name_, prefix);
-
-          ACE_OS::strcat (this->nested_type_name_, 
-                          this->local_name ()->get_string ());
-          if (suffix)
-            ACE_OS::strcat (this->nested_type_name_, suffix);
- 
-          return this->nested_type_name_;
-        }
-       
       if (def_next)
         len_to_match = ACE_OS::strlen (def_curr) 
           - ACE_OS::strlen (def_next);
@@ -270,10 +251,9 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *p
           // initial prefix matches i.e., they have a common root
           // start by initializing the macro
 
-          ACE_OS::sprintf (this->nested_type_name_, "ACE_NESTED_CLASS (");
-          ACE_OS::strncat (this->nested_type_name_, 
-                           def_curr, 
-                           len_to_match); // initialize the first argument 
+          //@@          ACE_OS::sprintf (this->nested_type_name_, "ACE_NESTED_CLASS (");
+          //@@          ACE_OS::strcat (this->nested_type_name_, def_curr,
+          //len_to_match); // initialize the first argument 
 
           // shift the curr scopes to the next level
           def_curr = (def_next ? (def_next + 2) : 0); // skip the ::
@@ -308,10 +288,9 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *p
               if (!ACE_OS::strncmp (def_curr, use_curr, len_to_match))
                 {
                   // they have same prefix, append to arg1
-                  ACE_OS::strcat (this->nested_type_name_, "::");
-                  ACE_OS::strncat (this->nested_type_name_, 
-                                   def_curr, 
-                                   len_to_match); 
+                  //@@    ACE_OS::strcat (this->nested_type_name_, "::");
+                  //@@ ACE_OS::strncat (this->nested_type_name_, def_curr,
+                  //len_to_match); 
                   def_curr = (def_next ? (def_next + 2) : 0); // skip the ::
                   use_curr = (use_next ? (use_next + 2) : 0); // skip the ::
                 }
@@ -324,7 +303,7 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *p
             }
 
           // start the 2nd argument of the macro
-          ACE_OS::strcat (this->nested_type_name_, ", ");
+          //@@          ACE_OS::strcat (this->nested_type_name_, ", ");
 
           // copy the remaining def_name (if any left)
           if (def_curr)
@@ -339,7 +318,7 @@ be_type::nested_type_name (be_decl *use_scope, const char *suffix, const char *p
           ACE_OS::strcat (this->nested_type_name_, this->local_name ()->get_string ());
           if (suffix)
             ACE_OS::strcat (this->nested_type_name_, suffix);
-          ACE_OS::strcat (this->nested_type_name_, ")");
+          //@@          ACE_OS::strcat (this->nested_type_name_, ")");
           return this->nested_type_name_;
         } // end of if the root prefixes match
     }

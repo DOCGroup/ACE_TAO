@@ -98,11 +98,7 @@ DRV_init()
 
   idl_global->set_prog_name(NULL);
 
-#if defined (ACE_WIN32)
-  idl_global->set_cpp_location(ACE_CC_COMPILER);
-#else
   idl_global->set_cpp_location(CPP_LOCATION);
-#endif
 
   idl_global->set_be("");
 

@@ -324,7 +324,7 @@ be_visitor_typedef_ch::visit_predefined_type (be_predefined_type *node)
 }
 
 int
-be_visitor_typedef_ch::visit_string (be_string *node)
+be_visitor_typedef_ch::visit_string (be_string *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // output stream
   be_typedef *tdef = this->ctx_->tdef (); // typedef node
@@ -332,28 +332,14 @@ be_visitor_typedef_ch::visit_string (be_string *node)
 
   // now generate the typedefs
   os->indent ();
-
-  if (node->width () == sizeof (char))
-    {
-      *os << "typedef char *"
-          << " " << tdef->nested_type_name (scope) << ";" << be_nl;
-      // typedef the _var, _out, and _forany types
-      *os << "typedef CORBA::String_var"
-          << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
-      *os << "typedef CORBA::String_out"
-          << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
-    }
-  else
-    {
-      *os << "typedef CORBA::WChar *"
-          << " " << tdef->nested_type_name (scope) << ";" << be_nl;
-      // typedef the _var, _out, and _forany types
-      *os << "typedef CORBA::WString_var"
-          << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
-      *os << "typedef CORBA::WString_out"
-          << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
-    }
-
+  // typedef the type and the _slice type
+  *os << "typedef char *"
+      << " " << tdef->nested_type_name (scope) << ";" << be_nl;
+  // typedef the _var, _out, and _forany types
+  *os << "typedef CORBA::String_var"
+      << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
+  *os << "typedef CORBA::String_out"
+      << " " << tdef->nested_type_name (scope, "_out") << ";" << be_nl;
   return 0;
 }
 

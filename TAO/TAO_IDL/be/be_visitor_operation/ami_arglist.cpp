@@ -96,7 +96,7 @@ be_visitor_operation_ami_arglist::visit_operation (be_operation *node)
 
   *os << "CORBA::Environment &ACE_TRY_ENV";
 
-  if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_OPERATION_ARGLIST_CH)
+  if (this->ctx_->state () == TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CH)
     {
       *os << " = " << be_idt_nl
           << "TAO_default_environment ()"
@@ -106,7 +106,7 @@ be_visitor_operation_ami_arglist::visit_operation (be_operation *node)
   // Done with the argument list.
   *os << be_uidt_nl << ")" << be_uidt;
   
-  if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_OPERATION_ARGLIST_CH)
+  if (this->ctx_->state () == TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CH)
     *os << ";";
   
   *os << "\n";
@@ -155,12 +155,12 @@ be_visitor_operation_ami_arglist::visit_argument (be_argument *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_AMI_OPERATION_ARGLIST_CH:
-      ctx.state (TAO_CodeGen::TAO_AMI_ARGUMENT_ARGLIST_CH);
+    case TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CH:
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_AMI_ARGLIST_CH);
       break;
 
-    case TAO_CodeGen::TAO_AMI_OPERATION_ARGLIST_CS:
-      ctx.state (TAO_CodeGen::TAO_AMI_ARGUMENT_ARGLIST_CS);
+    case TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CS:
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_AMI_ARGLIST_CS);
       break;
 
     default:

@@ -21,6 +21,8 @@
 
 #include "included.idl"
 
+// includes module A and sequence typedef.
+
 enum choice 
 {
   dog
@@ -28,15 +30,6 @@ enum choice
 
 union myUnion switch (choice) 
 {
-  // Typedef is in included file
-  case dog: Aok::Seq1Type cat;
-};
-
-// Enum discriminator is in included file
-union Bog switch (Agog)
-{
-  case Agog1: long bog1;
-  case Agog2: long bog2;
-  case Agog3: long bog3;
+  case dog: A::Seq1Type cat;
 };
 

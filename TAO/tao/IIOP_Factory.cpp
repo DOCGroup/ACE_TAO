@@ -32,12 +32,6 @@ TAO_IIOP_Protocol_Factory::prefix (void) const
   return ::prefix_;
 }
 
-char
-TAO_IIOP_Protocol_Factory::options_delimiter (void) const
-{
-  return '/';
-}
-
 TAO_Acceptor *
 TAO_IIOP_Protocol_Factory::make_acceptor (void)
 {

@@ -39,9 +39,9 @@
 #include "tao/DynAnyC.h"
 #include "tao/DomainC.h"
 #include "tao/Servant_Base.h"
-#if defined(TAO_HAS_AMI_POLLER)
+#if defined(TAO_POLLER)
 #include "tao/PollableC.h"
-#endif /* TAO_HAS_AMI_POLLER */
+#endif /* TAO_POLLER */
 
 #if defined(_MSC_VER)
 #pragma warning(disable:4250)
@@ -100,12 +100,7 @@ public:
   class Policy;
   typedef Policy *Policy_ptr;
 
-  class TAO_Export  Policy
-#if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-    :  public virtual TAO_Local_ServantBase
-#else
-    :  public virtual TAO_ServantBase
-#endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
+  class TAO_Export  Policy :  public virtual TAO_ServantBase
   {
   protected:
     Policy (void);
@@ -170,6 +165,7 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
@@ -177,7 +173,6 @@ public:
         CORBA_Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
     CORBA_Policy_ptr _this (
         CORBA_Environment &ACE_TRY_ENV =
@@ -421,8 +416,7 @@ public:
 
   // ****************************************************************
 
-#if defined (TAO_HAS_AMI_POLLER)
-
+#if defined (TAO_POLLER)
   class Pollable;
   typedef Pollable *Pollable_ptr;
   class TAO_Export Pollable :  public virtual PortableServer::ServantBase
@@ -760,7 +754,7 @@ public:
   private:
     PollableSet_ptr servant_;
   };
-#endif /* TAO_HAS_AMI_POLLER */
+#endif /* 0 */
 
   // ****************************************************************
 

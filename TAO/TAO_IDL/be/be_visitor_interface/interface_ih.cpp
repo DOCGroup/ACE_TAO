@@ -41,6 +41,7 @@ int
 be_visitor_interface_ih::visit_interface (be_interface *node)
 {
   TAO_OutStream *os; // output stream
+  long i; // loop index
   static char namebuf [NAMEBUFSIZE]; // holds the class name
 
 
@@ -61,8 +62,35 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
   // now generate the class definition
   *os << "class " << idl_global->stub_export_macro ()
       << " " <<idl_global->impl_class_prefix () << namebuf << idl_global->impl_class_suffix () << " : ";
-  //inherit from the base skeleton file
-  *os<<"public virtual "<<node->full_skel_name ();
+  /*
+  if (node->n_inherits () > 0)
+    {
+      // this interface inherits from other interfaces
+      be_interface *intf; // inherited interface
+
+
+      *os << "public virtual ";
+
+      intf = be_interface::narrow_from_decl (node->inherits ()[0]);
+      *os << idl_global->impl_class_prefix () << intf->flat_name () << idl_global->impl_class_suffix ();//intf->relative_skel_name (node->full_skel_name ());
+      for (i = 1; i < node->n_inherits (); i++)
+        {
+          *os << ", public virtual ";
+          intf = be_interface::narrow_from_decl (node->inherits ()[i]);
+          *os << idl_global->impl_class_prefix () <<intf->flat_name () << idl_global->impl_class_suffix ();//intf->relative_skel_name (node->full_skel_name ());
+        }  // end of for loop
+
+      //inherit from the base skeleton file
+      *os<<", public virtual "<<node->full_skel_name ();
+    }
+
+  else
+    {
+  */
+      //inherit from the base skeleton file
+      *os<<"public virtual "<<node->full_skel_name ();
+      //  }
+
 
   *os << be_nl
       << "{" << be_nl
@@ -99,7 +127,6 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
                         -1);
     }
 
-  /*
  if (node->n_inherits () > 0)
     {
       // this interface inherits from other interfaces
@@ -120,47 +147,7 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
 	}
 
     }
-  */
-  
-  //Generate the code for the members of the derived classes
-  if (node->traverse_inheritance_graph (be_visitor_interface_ih::method_helper, os) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_tie_sh_ss::"
-                         "visit_interface - "
-                         "traversal of inhertance graph failed\n"),
-                        -1);
-    }
-  
 
   *os << "};" << be_nl <<be_nl;
-  return 0;
-}
-
-
-//Helper method to generate members within the scope of the base classes
-int
-be_visitor_interface_ih::method_helper (be_interface *derived,
-					    be_interface *node,
-					    TAO_OutStream *os)
-{
-
-  if (strcmp (derived->flat_name (), node->flat_name ()) != 0)
-    {
-      be_visitor_context ctx;
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_IH);
-      ctx.interface (derived);
-      ctx.stream (os);
-      
-      be_visitor* visitor = tao_cg->make_visitor (&ctx);
-      if (visitor == 0 || visitor->visit_scope (node) == -1)
-        {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_interface_is::"
-                             "method_helper\n"), -1);
-        }
-      delete visitor;
-    }
   return 0;
 }

@@ -105,13 +105,10 @@ be_visitor_sequence_ci::gen_unbounded_sequence (be_sequence *node)
   *os << " *" << be_nl
       << full_class_name << "::allocbuf (CORBA::ULong size)" << be_nl
       << "// Allocate storage for the sequence." << be_nl
-      << "{" << be_idt_nl;
-  pt->accept (visitor);
-  *os << " *retval = 0;" << be_nl
-      << "ACE_NEW_RETURN (retval, ";
+      << "{" << be_idt_nl
+      << "return new "; 
   pt->accept (visitor); 
-  *os << "[size], 0);" << be_nl
-      << "return retval;" << be_uidt_nl
+  *os << "[size];" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
 
@@ -161,8 +158,6 @@ be_visitor_sequence_ci::gen_unbounded_sequence (be_sequence *node)
       << full_class_name << " &rhs)" << be_nl
       << "// Copy constructor." << be_idt_nl;
   *os << ": TAO_Unbounded_Base_Sequence (rhs)" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "if (rhs.buffer_ != 0)" << be_nl
       << "{" << be_idt_nl;
   pt->accept(visitor);
   *os <<" *tmp1 = " << full_class_name << "::allocbuf (this->maximum_);" << be_nl;
@@ -175,11 +170,6 @@ be_visitor_sequence_ci::gen_unbounded_sequence (be_sequence *node)
       << "tmp1[i] = tmp2[i];" << be_uidt_nl
       << be_nl
       << "this->buffer_ = tmp1;" << be_uidt_nl
-      << "}" << be_nl
-      << "else" << be_nl
-      << "{" << be_idt_nl
-      << "this->buffer_ = 0;" << be_uidt_nl
-      << "}" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
   

@@ -39,11 +39,6 @@ public:
 
   virtual int visit_interface (be_interface *node);
   // set the right context and make a visitor
-  
-
-  static int method_helper (be_interface *derived,
-                            be_interface *node,
-                            TAO_OutStream *os);
 
 };
 

@@ -218,7 +218,7 @@ be_visitor_args_ami_arglist::visit_sequence (be_sequence *node)
 }
 
 int
-be_visitor_args_ami_arglist::visit_string (be_string *node)
+be_visitor_args_ami_arglist::visit_string (be_string *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
 
@@ -226,14 +226,7 @@ be_visitor_args_ami_arglist::visit_string (be_string *node)
     {
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
-      if (node->width () == sizeof (char))
-        {
-          *os << "const char *";
-        }
-      else
-        {
-          *os << "const CORBA::WChar *";
-        }
+      *os << "const char *";
       return 1;
       /* NOT REACHED */
     }

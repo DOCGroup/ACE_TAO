@@ -249,7 +249,7 @@ int be_visitor_exception_ctor_assign::visit_sequence (be_sequence *)
   return 0;
 }
 
-int be_visitor_exception_ctor_assign::visit_string (be_string *node)
+int be_visitor_exception_ctor_assign::visit_string (be_string *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
   be_decl *bd = this->ctx_->node ();
@@ -257,33 +257,14 @@ int be_visitor_exception_ctor_assign::visit_string (be_string *node)
   os->indent ();
   if (this->ctx_->exception ()) // special ctor
     {
-      if (node->width () == sizeof (char))
-        {
-          *os << "this->" << bd->local_name () 
-              << " = CORBA::string_dup (_tao_"
-              << bd->local_name () << ");\n";
-        }
-      else
-        {
-          *os << "this->" << bd->local_name () 
-              << " = CORBA::wstring_dup (_tao_"
-              << bd->local_name () << ");\n";
-        }
+      *os << "this->" << bd->local_name () << " = CORBA::string_dup (_tao_"
+          << bd->local_name () << ");\n";
     }
   else
     {
-      if (node->width () == sizeof (char))
-        {
-          *os << "this->" << bd->local_name ()
-              << " = CORBA::string_dup (_tao_excp." 
-              << bd->local_name () << ".in ());\n";
-        }
-      else
-        {
-          *os << "this->" << bd->local_name ()
-              << " = CORBA::wstring_dup (_tao_excp." 
-              << bd->local_name () << ".in ());\n";
-        }
+      *os << "this->" << bd->local_name ()
+          << " = CORBA::string_dup (_tao_excp." << bd->local_name ()
+          << ".in ());\n";
     }
   return 0;
 }

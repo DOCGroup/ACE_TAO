@@ -93,8 +93,17 @@ be_visitor_operation_ami_handler_operation_cs::visit_operation (be_operation *no
   // Here we do not have our overridden be_interface methods,
   // so the interface type strategy does not work here. 
   // We have to go by foot.
- // Genereate scope name.
- *os << parent->compute_name ("AMI_", "_Handler");
+  {
+    char *full_name = 0;
+    
+    parent->compute_full_name ("AMI_", 
+                               "_Handler",
+                               full_name);
+    // Genereate scope name.
+    *os << full_name;
+
+    delete full_name;
+  }
 
   // Generate the operation name.
   *os << "::" << node->local_name ();
@@ -700,36 +709,34 @@ gen_marshal_and_invoke (be_operation *node,
           << be_nl
           << "if (!(\n" << be_idt << be_idt << be_idt;
 
-      if (!this->void_return_type (bt))
-        {
-          // demarshal
-          be_visitor_context ctx (*this->ctx_);
-          ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_RETVAL_DEMARSHAL_CS);
-          ctx.sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
-          be_visitor *visitor = tao_cg->make_visitor (&ctx);
-          if (!visitor || (node->accept (visitor) == -1))
-            {
-              delete visitor;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_compiled_visitor_operation_ami_handler_operation_cs::"
-                                 "gen_demarshal_params - "
-                                 "codegen for demarshal failed\n"),
-                                -1);
-            }
-          delete visitor;
-
-          // Print the && if there are OUT or INOUT arguements in the
-          // signature.
-          if (this->has_param_type (node, AST_Argument::dir_OUT) ||
-              this->has_param_type (node, AST_Argument::dir_INOUT))
-            *os << " &&\n";
-        }
-
-      // Marshal each out and inout argument.
+      // demarshal
       be_visitor_context ctx (*this->ctx_);
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_MARSHAL_CS);
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_RETVAL_DEMARSHAL_CS);
       ctx.sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (node->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_compiled_visitor_operation_ami_handler_operation_cs::"
+                             "gen_demarshal_params - "
+                             "codegen for demarshal failed\n"),
+                            -1);
+        }
+      delete visitor;
+
+      // Print the && if there are OUT or INOUT arguements in the
+      // signature.
+      if (this->has_param_type (node, AST_Argument::dir_OUT) ||
+          this->has_param_type (node, AST_Argument::dir_INOUT))
+        *os << " &&\n";
+
+
+      // Marshal each out and inout argument.
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_MARSHAL_CS);
+      ctx.sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
+      visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (node->accept (visitor) == -1))
         {
           delete visitor;
@@ -781,6 +788,8 @@ gen_marshal_and_invoke (be_operation *node,
   *os << be_nl
       << "if (_invoke_status == TAO_INVOKE_RESTART)" << be_idt_nl
       << "continue;" << be_uidt_nl
+      << "// if (_invoke_status == TAO_INVOKE_EXCEPTION)" << be_idt_nl
+      << "// cannot happen" << be_uidt_nl
       << "if (_invoke_status != TAO_INVOKE_OK)" << be_nl
       << "{" << be_idt_nl;
 

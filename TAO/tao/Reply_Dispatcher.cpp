@@ -1,9 +1,8 @@
 // $Id$
 
 #include "tao/Reply_Dispatcher.h"
-#include "tao/ORB_Core.h"
-#include "tao/Leader_Follower.h"
 #include "tao/debug.h"
+#include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Reply_Dispatcher.i"
@@ -11,6 +10,7 @@
 
 // Constructor.
 TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (void)
+  : reply_service_info_ ()
   //  : reply_received_ (0)
 {
 }
@@ -21,7 +21,7 @@ TAO_Reply_Dispatcher::~TAO_Reply_Dispatcher (void)
 }
 
 TAO_GIOP_Message_State *
-TAO_Reply_Dispatcher::message_state (void)
+TAO_Reply_Dispatcher::message_state (void) const
 {
   return 0;
 }
@@ -36,10 +36,11 @@ TAO_Reply_Dispatcher::leader_follower_condition_variable (TAO_Transport *)
 // *********************************************************************
 
 // Constructor.
-TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core,
-                                                        IOP::ServiceContextList &sc)
-  : reply_service_info_ (sc),
-    message_state_ (orb_core),
+TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core)
+  : message_state_ (0),
+    reply_cdr_ (orb_core->create_input_cdr_data_block (ACE_CDR::DEFAULT_BUFSIZE),
+                TAO_ENCAP_BYTE_ORDER,
+                orb_core),
     reply_received_ (0),
     leader_follower_condition_variable_ (0),
     orb_core_ (orb_core)
@@ -62,6 +63,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
 
   this->reply_status_ = reply_status;
   this->version_ = version;
+  this->message_state_ = message_state;
 
   // Steal the buffer, that way we don't do any unnecesary copies of
   // this data.
@@ -70,21 +72,8 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
   IOP::ServiceContext* context_list = reply_ctx.get_buffer (1);
   this->reply_service_info_.replace (max, len, context_list, 1);
 
-  // Must reset the message state, it is possible that the same reply
-  // dispatcher is used because the request must be re-sent.
-  this->message_state_.reset (0);
-
-  if (&this->message_state_ != message_state)
-    {
-      // The Transport Mux Strategy did not use our Message_State to
-      // receive the event, possibly because it is muxing multiple
-      // requests over the same connection.
-
-      // Steal the buffer so that no copying is done.
-      this->message_state_.cdr.steal_from (message_state->cdr);
-
-      // There is no need to copy the other fields!
-    }
+  // Steal the buffer so that no copying is done.
+  this->reply_cdr_.steal_from (message_state->cdr);
 
   // If condition variable is present, then we are doing leader
   // follower model. Do all the nessary things.
@@ -109,21 +98,21 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
 }
 
 TAO_GIOP_Message_State *
-TAO_Synch_Reply_Dispatcher::message_state (void)
+TAO_Synch_Reply_Dispatcher::message_state (void) const
 {
-  return &this->message_state_;
+  return this->message_state_;
 }
 
 TAO_InputCDR &
 TAO_Synch_Reply_Dispatcher::reply_cdr (void)
 {
-  return this->message_state_.cdr;
+  return this->reply_cdr_;
 }
 
 int &
 TAO_Synch_Reply_Dispatcher::reply_received (void)
 {
-  return this->reply_received_;
+  return reply_received_;
 }
 
 int
@@ -135,16 +124,11 @@ TAO_Synch_Reply_Dispatcher::leader_follower_condition_variable (TAO_Transport *t
 }
 
 // *********************************************************************
-#if defined (TAO_HAS_CORBA_MESSAGING)
-
-#if defined (TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
-
+#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_POLLER)
 // Constructor.
 TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (const TAO_Reply_Handler_Skeleton &reply_handler_skel,
-                                                          Messaging::ReplyHandler_ptr reply_handler_ptr,
-                                                          IOP::ServiceContextList &sc)
-  : reply_service_info_ (sc),
-    reply_handler_skel_ (reply_handler_skel),
+                                                          Messaging::ReplyHandler_ptr reply_handler_ptr)
+  : reply_handler_skel_ (reply_handler_skel),
     reply_handler_ (reply_handler_ptr)
 {
 }
@@ -204,11 +188,8 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
 }
 
 TAO_GIOP_Message_State *
-TAO_Asynch_Reply_Dispatcher::message_state (void)
+TAO_Asynch_Reply_Dispatcher::message_state (void) const
 {
   return this->message_state_;
 }
-
-#endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
-
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */

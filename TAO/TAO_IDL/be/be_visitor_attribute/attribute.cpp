@@ -74,7 +74,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   op = new be_operation (node->field_type (), AST_Operation::OP_noflags,
                          node->name (), 0);
   op->set_name (node->name ());
-  op->set_defined_in (node->defined_in ());
   be_visitor_context ctx (*this->ctx_);
 
   // this switch statement eliminates the need for different classes that have
@@ -116,34 +115,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       break;
     case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SI:
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SI);
-      break;
-    // AMI Reply Handler code generation
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_CH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CH);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_CS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_SH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_SH);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_SS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_SS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_THRU_POA_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_THRU_POA_COLLOCATED_SH);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_THRU_POA_COLLOCATED_SS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_THRU_POA_COLLOCATED_SS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_DIRECT_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_DIRECT_COLLOCATED_SH);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_DIRECT_COLLOCATED_SS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_DIRECT_COLLOCATED_SS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_TIE_SH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_TIE_SH);
       break;
     default:
       // error
@@ -187,7 +158,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   op = new be_operation (rt, AST_Operation::OP_noflags,
                          node->name (), 0);
   op->set_name (node->name ());
-  op->set_defined_in (node->defined_in ());
   op->add_argument_to_scope (arg);
 
   ctx = *this->ctx_;
@@ -230,34 +200,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       break;
     case TAO_CodeGen::TAO_ATTRIBUTE_TIE_SI:
       ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SI);
-      break;
-    // AMI Reply Handler code generation
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_CH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CH);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_CS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_SH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_SH);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_SS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_SS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_THRU_POA_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_THRU_POA_COLLOCATED_SH);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_THRU_POA_COLLOCATED_SS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_THRU_POA_COLLOCATED_SS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_DIRECT_COLLOCATED_SH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_DIRECT_COLLOCATED_SH);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_DIRECT_COLLOCATED_SS:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_DIRECT_COLLOCATED_SS);
-      break;
-    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_TIE_SH:
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_TIE_SH);
       break;
     default:
       // error

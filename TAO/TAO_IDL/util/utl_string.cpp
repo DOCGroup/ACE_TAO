@@ -194,24 +194,6 @@ UTL_String::compare (UTL_String *s)
   return result;
 }
 
-long
-UTL_String::compare_quiet (UTL_String *s)
-{
-  char	*s_c_str;
-  long	result;
-
-  if (c_str == NULL || s == NULL || (s_c_str = s->get_canonical_rep ()) == NULL)
-    result = I_FALSE;
-  else if (ACE_OS::strcmp (c_str, s_c_str) != 0)
-    result = I_FALSE;
-  else if (ACE_OS::strcmp (p_str, s->get_string ()) != 0)
-    result = I_TRUE;
-  else
-    result = I_FALSE;
-
-  return result;
-}
-
 // Get the char * from a String
 char *
 UTL_String::get_string (void)

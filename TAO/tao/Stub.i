@@ -132,15 +132,9 @@ TAO_Stub::use_locate_requests (CORBA::Boolean use_it)
 }
 
 ACE_INLINE TAO_MProfile *
-TAO_Stub::make_profiles (void)
+TAO_Stub::get_profiles (void)
 {
-  TAO_MProfile *mp = 0;
-
-  ACE_NEW_RETURN (mp,
-                  TAO_MProfile (base_profiles_),
-                  0);
-
-  return mp;
+  return new TAO_MProfile (base_profiles_);
 }
 
 ACE_INLINE TAO_Profile *
@@ -209,7 +203,7 @@ TAO_Stub::valid_profile (void)
 }
 
 ACE_INLINE TAO_Profile *
-TAO_Stub::base_profiles (const TAO_MProfile &mprofiles)
+TAO_Stub::set_base_profiles (const TAO_MProfile &mprofiles)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                             guard,
@@ -249,7 +243,7 @@ TAO_Stub::next_profile_retry (void)
 }
 
 ACE_INLINE const TAO_MProfile&
-TAO_Stub::base_profiles (void) const
+TAO_Stub::get_base_profiles (void) const
 {
   return this->base_profiles_;
 }

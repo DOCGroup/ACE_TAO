@@ -331,12 +331,12 @@ public:
   // returns a pointer to the profile_in_use object.  This object
   // retains ownership of this profile.
 
-  TAO_MProfile *make_profiles (void);
+  TAO_MProfile *get_profiles (void);
   // Copy of the profile list, user must free memory when done.
-  // although the user can call make_profiles() then reorder
+  // although the user can call get_profiles then reorder
   // the list and give it back to TAO_Stub.
 
-  const TAO_MProfile& base_profiles (void) const;
+  const TAO_MProfile& get_base_profiles (void) const;
   // Obtain a reference to the basic profile set.
 
   // manage forward and base profiles.
@@ -375,7 +375,7 @@ public:
    // returns TRUE if a connection was successful with at least
    // one profile.
 
-   TAO_Profile *base_profiles (const TAO_MProfile& mprofiles);
+   TAO_Profile *set_base_profiles (const TAO_MProfile& mprofiles);
    // Initialize the base_profiles_ and set profile_in_use_ to
    // reference the first profile.
 

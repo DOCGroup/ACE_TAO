@@ -241,41 +241,22 @@ int be_visitor_args_arglist::visit_sequence (be_sequence *node)
   return 0;
 }
 
-int be_visitor_args_arglist::visit_string (be_string *node)
+int be_visitor_args_arglist::visit_string (be_string *)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
 
-  if (node->width () == sizeof (char))
+  switch (this->direction ())
     {
-      switch (this->direction ())
-        {
-        case AST_Argument::dir_IN:
-          *os << "const char *";
-          break;
-        case AST_Argument::dir_INOUT:
-          *os << "char *&";
-          break;
-        case AST_Argument::dir_OUT:
-          *os << "CORBA::String_out";
-          break;
-        }
+    case AST_Argument::dir_IN:
+      *os << "const char *";
+      break;
+    case AST_Argument::dir_INOUT:
+      *os << "char *&";
+      break;
+    case AST_Argument::dir_OUT:
+      *os << "CORBA::String_out";
+      break;
     }
-  else
-    {
-      switch (this->direction ())
-        {
-        case AST_Argument::dir_IN:
-          *os << "const CORBA::WChar *";
-          break;
-        case AST_Argument::dir_INOUT:
-          *os << "CORBA::WChar *&";
-          break;
-        case AST_Argument::dir_OUT:
-          *os << "CORBA::WString_out";
-          break;
-        }
-    }
-
   return 0;
 }
 

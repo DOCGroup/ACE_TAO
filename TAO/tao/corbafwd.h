@@ -606,9 +606,6 @@ class CORBA_EnumMemberSeq_var;
 typedef CORBA_EnumMemberSeq *CORBA_EnumMemberSeq_ptr;
 #endif /* TAO_HAS_INTERFACE_REPOSITORY*/
 
-class CORBA_Bounds;
-typedef CORBA_Bounds *CORBA_Bounds_ptr;
-
 // enum values defined in tao/NVList.h, bitwise ORed.
 typedef u_int CORBA_Flags;
 
@@ -700,7 +697,7 @@ TAO_NAMESPACE CORBA
 
   typedef ACE_CDR::WChar WChar;
   typedef WChar &WChar_out;
-  typedef WChar *WString;
+  // Out type for WChar.
 
   // = String memory management routines.
   TAO_NAMESPACE_INLINE_FUNCTION WChar* wstring_alloc (ULong len);
@@ -1069,8 +1066,6 @@ TAO_NAMESPACE CORBA
   typedef CORBA_EnumMemberSeq_var EnumMemberSeq_var;
 #endif /* TAO_HAS_INTERFACE_REPOSITORY */
 
-  typedef CORBA_Bounds Bounds;
-  typedef CORBA_Bounds *Bounds_ptr;
 #ifdef TAO_HAS_VALUETYPE
   typedef CORBA_ValueBase ValueBase;
   typedef CORBA_ValueFactoryBase ValueFactoryBase;
@@ -1232,7 +1227,6 @@ TAO_NAMESPACE CORBA
 
   TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_UnknownUserException;
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Bounds;
   TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_Current;
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -1673,11 +1667,9 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 // We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
 // define our own profile tagged components in TAO.
 
-// Store the priority of the thread (pool) that services this
-// endpoint, using that information the client can select the right
-// endpoint providing very low priority inversion (basically only in
-// the I/O subsystem).
-#define TAO_TAG_PRIORITY 0x54414f00U
+// Store the priority range in the *server* so the client can choose
+// the right endpoint
+#define TAO_TAG_PRIORITY_RANGE 0x54414f00U
 // #define TAO_TAG_ANOTHER_COMPONENT 0x54414f01U
 
 // We reserved the range 0x54414f00 - 0x54414f0f with the OMG to

@@ -271,9 +271,6 @@ AST_Expression::AST_Expression(char cv)
   pd_ev->u.cval = cv;
 }
 
-/*
- * An AST_Expression denoting a wide character
- */
 AST_Expression::AST_Expression(ACE_OutputCDR::from_wchar wcv)
 	      : pd_ec(EC_none),
 		pd_ev(NULL),
@@ -306,7 +303,7 @@ AST_Expression::AST_Expression(unsigned char ov)
 }
 
 /*
- * An AST_Expression denoting a string (char * encapsulated as a String)
+ * An AST_Expression denotign a string (char * encapsulated as a String)
  */
 AST_Expression::AST_Expression(UTL_String *sv)
 	      : pd_ec(EC_none),
@@ -320,23 +317,6 @@ AST_Expression::AST_Expression(UTL_String *sv)
   pd_ev = new AST_ExprValue;
   pd_ev->et = EV_string;
   pd_ev->u.strval = sv;
-}
-
-/*
- * An AST_Expression denoting a wide string
- */
-AST_Expression::AST_Expression(char *sv)
-	      : pd_ec(EC_none),
-		pd_ev(NULL),
-		pd_v1(NULL),
-		pd_v2(NULL),
-		pd_n(NULL)
-{
-  fill_definition_details();
-
-  pd_ev = new AST_ExprValue;
-  pd_ev->et = EV_wstring;
-  pd_ev->u.wstrval = sv;
 }
 
 /*

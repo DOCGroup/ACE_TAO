@@ -190,9 +190,6 @@ be_sequence::managed_type (void)
         case AST_Decl::NT_string:
           this->mt_ = be_sequence::MNG_STRING;
           break;
-        case AST_Decl::NT_wstring:
-          this->mt_ = be_sequence::MNG_WSTRING;
-          break;
         case AST_Decl::NT_pre_defined:
           {
             be_predefined_type *bpd = be_predefined_type::narrow_from_decl
@@ -297,15 +294,6 @@ be_sequence::instance_name ()
       else
         ACE_OS::sprintf (namebuf,
                          "_TAO_Bounded_String_Sequence_%s",
-                         this->flat_name());
-      break;
-    case be_sequence::MNG_WSTRING: // sequence of wstrings
-      if (this->unbounded ())
-        ACE_OS::sprintf (namebuf,
-                         "TAO_Unbounded_WString_Sequence");
-      else
-        ACE_OS::sprintf (namebuf,
-                         "_TAO_Bounded_WString_Sequence_%s",
                          this->flat_name());
       break;
     default: // not a managed type

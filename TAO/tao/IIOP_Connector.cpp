@@ -1,6 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+#include "ace/Auto_Ptr.h"
 #include "tao/IIOP_Connector.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/GIOP.h"
@@ -8,7 +9,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Environment.h"
-#include "ace/Auto_Ptr.h"
 
 ACE_RCSID(tao, IIOP_Connector, "$Id$")
 
@@ -40,23 +40,12 @@ TAO_IIOP_Connect_Creation_Strategy::make_svc_handler (
 
 // ****************************************************************
 
-#if !defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-typedef ACE_Cached_Connect_Strategy<TAO_IIOP_Client_Connection_Handler,
-                                    ACE_SOCK_CONNECTOR,
-                                    TAO_Cached_Connector_Lock>
-        TAO_CACHED_CONNECT_STRATEGY;
-#endif /* ! TAO_USES_ROBUST_CONNECTION_MGMT */
-
-
 TAO_IIOP_Connector::TAO_IIOP_Connector (void)
   : TAO_Connector (TAO_IOP_TAG_INTERNET_IOP),
     base_connector_ (),
-    orb_core_ (0)
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-    ,
+    orb_core_ (0),
     cached_connect_strategy_ (0),
     caching_strategy_ (0)
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 {
 }
 
@@ -65,67 +54,47 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
   this->orb_core_ = orb_core;
 
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   if (this->make_caching_strategy () == -1)
     return -1;
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
   TAO_IIOP_Connect_Creation_Strategy *connect_creation_strategy = 0;
-
+  
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_IIOP_Connect_Creation_Strategy (
                                              this->orb_core_->thr_mgr (),
                                              this->orb_core_),
                   -1);
 
-  auto_ptr<TAO_IIOP_Connect_Creation_Strategy>
-    new_connect_creation_strategy (connect_creation_strategy);
+  auto_ptr<TAO_IIOP_Connect_Creation_Strategy> new_connect_creation_strategy (connect_creation_strategy);
 
   TAO_Cached_Connector_Lock *connector_lock = 0;
   ACE_NEW_RETURN (connector_lock,
                   TAO_Cached_Connector_Lock (this->orb_core_),
                   -1);
-
+  
   auto_ptr<TAO_Cached_Connector_Lock> new_connector_lock (connector_lock);
 
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   ACE_NEW_RETURN (this->cached_connect_strategy_,
-                  TAO_CACHED_CONNECT_STRATEGY (*this->caching_strategy_,
-                                               new_connect_creation_strategy.get (),
-                                               0,
-                                               0,
-                                               new_connector_lock.get (),
-                                               1),
+                  CACHED_CONNECT_STRATEGY (*this->caching_strategy_,
+                                           new_connect_creation_strategy.get (),
+                                           0,
+                                           0,
+                                           new_connector_lock.get (),
+                                           1),
                   -1);
-#else /* TAO_USES_ROBUST_CONNECTION_MGMT */
-  TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy = 0;
-  ACE_NEW_RETURN (cached_connect_strategy,
-                  TAO_CACHED_CONNECT_STRATEGY (
-                                               new_connect_creation_strategy.get (),
-                                               0,
-                                               0,
-                                               new_connector_lock.get (),
-                                               1),
-                  -1);
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
   
+  auto_ptr<CACHED_CONNECT_STRATEGY> new_cached_connect_strategy (this->cached_connect_strategy_);
+
   // Finally everything is fine.  Make sure to take ownership away
   // from the auto pointer.
   connect_creation_strategy = new_connect_creation_strategy.release ();
-  connector_lock = new_connector_lock.release ();
+  connector_lock = new_connector_lock.release (); 
+  this->cached_connect_strategy_ = new_cached_connect_strategy.release ();
 
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   return this->base_connector_.open (this->orb_core_->reactor (),
                                      &this->null_creation_strategy_,
                                      this->cached_connect_strategy_,
                                      &this->null_activation_strategy_);
-#else /* TAO_USES_ROBUST_CONNECTION_MGMT */
-  return this->base_connector_.open (this->orb_core_->reactor (),
-                                     &this->null_creation_strategy_,
-                                     cached_connect_strategy,
-                                     &this->null_activation_strategy_);
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
-
 }
 
 int
@@ -134,18 +103,9 @@ TAO_IIOP_Connector::close (void)
   this->base_connector_.close ();
 
   // Zap the creation strategy that we created earlier
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   delete this->cached_connect_strategy_->creation_strategy ();
   delete this->cached_connect_strategy_;
   delete this->caching_strategy_;
-#else /* TAO_USES_ROBUST_CONNECTION_MGMT */
-  TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy =
-    ACE_dynamic_cast (TAO_CACHED_CONNECT_STRATEGY *,
-                      this->base_connector_.connect_strategy ());
-  
-  delete cached_connect_strategy->creation_strategy ();
-  delete cached_connect_strategy;
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
   return 0;
 }
@@ -204,7 +164,7 @@ TAO_IIOP_Connector::connect (TAO_Profile *profile,
       //    connector?  We (Fred and Carlos) thought about just
       //    setting the hint to 0, but that would not be thread-safe
       //    (other threads may be touching the same profile).
-      //    At this point (the day before 1.0) i'm reluctant to change
+      //    At this point (the day before 1.0) i'm reluctant to change 
       //    ACE, and this fix passes all the TAO tests (including the
       //    new ping/pong test in the tests/Faults directory).
       iiop_profile->reset_hint ();
@@ -298,23 +258,12 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
       ACE_NEW_RETURN (remote_addrs,
                       ACE_INET_Addr[num_connections],
                       -1);
-
-      ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_remote_addrs (remote_addrs);
-
       ACE_NEW_RETURN (handlers,
                       TAO_IIOP_Client_Connection_Handler *[num_connections],
                       -1);
-
-      ACE_Auto_Basic_Array_Ptr<TAO_IIOP_Client_Connection_Handler*>
-        safe_handlers (handlers);
-
       ACE_NEW_RETURN (failures,
                       char[num_connections],
                       -1);
-
-      // No longer need to worry about exception safety at this point.
-      remote_addrs = safe_remote_addrs.release ();
-      handlers = safe_handlers.release ();
 
       size_t slot = 0;
 
@@ -453,7 +402,6 @@ TAO_IIOP_Connector::object_key_delimiter (void) const
   return TAO_IIOP_Profile::object_key_delimiter;
 }
 
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
 int
 TAO_IIOP_Connector::purge_connections (void)
 {
@@ -462,17 +410,17 @@ TAO_IIOP_Connector::purge_connections (void)
 
 #define TAO_HANDLER TAO_IIOP_Client_Connection_Handler
 #define TAO_SVC_TUPLE ACE_Svc_Tuple<TAO_HANDLER>
-#define TAO_ADDR TAO_IIOP_Connector::TAO_IADDR
-#define TAO_HASH_KEY TAO_IIOP_Connector::TAO_HASH_KEY
-#define TAO_COMPARE_KEYS TAO_IIOP_Connector::TAO_COMPARE_KEYS
-#define TAO_ATTRIBUTES TAO_IIOP_Connector::TAO_ATTRIBUTES
-#define TAO_CACHED_HANDLER TAO_IIOP_Connector::TAO_CACHED_HANDLER
-#define TAO_HASH_MAP TAO_IIOP_Connector::TAO_HASH_MAP
-#define TAO_HASH_MAP_ITERATOR TAO_IIOP_Connector::TAO_HASH_MAP_ITERATOR
-#define TAO_HASH_MAP_REVERSE_ITERATOR TAO_IIOP_Connector::TAO_HASH_MAP_REVERSE_ITERATOR
-#define TAO_CACHING_UTILITY TAO_IIOP_Connector::TAO_CACHING_UTILITY
-#define TAO_CACHING_STRATEGY TAO_IIOP_Connector::TAO_CACHING_STRATEGY
-#define TAO_CACHED_CONNECT_STRATEGY TAO_IIOP_Connector::TAO_CACHED_CONNECT_STRATEGY
+#define TAO_ADDR TAO_IIOP_Connector::ADDR
+#define TAO_HASH_KEY TAO_IIOP_Connector::HASH_KEY
+#define TAO_COMPARE_KEYS TAO_IIOP_Connector::COMPARE_KEYS
+#define TAO_ATTRIBUTES TAO_IIOP_Connector::ATTRIBUTES
+#define TAO_CACHED_HANDLER TAO_IIOP_Connector::CACHED_HANDLER
+#define TAO_HASH_MAP TAO_IIOP_Connector::HASH_MAP
+#define TAO_HASH_MAP_ITERATOR TAO_IIOP_Connector::HASH_MAP_ITERATOR
+#define TAO_HASH_MAP_REVERSE_ITERATOR TAO_IIOP_Connector::HASH_MAP_REVERSE_ITERATOR
+#define TAO_CACHING_UTILITY TAO_IIOP_Connector::CACHING_UTILITY
+#define TAO_CACHING_STRATEGY TAO_IIOP_Connector::CACHING_STRATEGY
+#define TAO_CACHED_CONNECT_STRATEGY TAO_IIOP_Connector::CACHED_CONNECT_STRATEGY
 
 typedef ACE_LRU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
         TAO_IIOP_LRU_CACHING_STRATEGY;
@@ -502,6 +450,7 @@ typedef ACE_Caching_Strategy_Adapter<TAO_ATTRIBUTES, TAO_CACHING_UTILITY, TAO_II
 int
 TAO_IIOP_Connector::make_caching_strategy (void)
 {
+
   TAO_Resource_Factory *resource_factory =
     this->orb_core_->resource_factory ();
 
@@ -546,37 +495,24 @@ TAO_IIOP_Connector::make_caching_strategy (void)
   this->caching_strategy_->purge_percent (resource_factory->purge_percentage ());
   return 0;
 }
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 //
 // The TAO_Cached_Connector_Lock template instantiations are in
 // Resource_Factory.cpp.
 //
 
-#if !defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-#define TAO_SVC_TUPLE ACE_Svc_Tuple<TAO_IIOP_Client_Connection_Handler>
-#define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_IIOP_Client_Connection_Handler, ACE_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>
-#define TAO_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
-#define TAO_HANDLER TAO_IIOP_Client_Connection_Handler
-#define TAO_HASH_KEY ACE_Hash<TAO_ADDR>
-#define TAO_COMPARE_KEYS ACE_Equal_To<TAO_ADDR>
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>;
-template class ACE_Auto_Basic_Array_Ptr<TAO_IIOP_Client_Connection_Handler*>;
 template class auto_ptr<TAO_IIOP_Connect_Creation_Strategy>;
+template class auto_ptr<TAO_Cached_Connector_Lock>;
+template class auto_ptr<TAO_CACHED_CONNECT_STRATEGY>;
 template class ACE_Auto_Basic_Ptr<TAO_IIOP_Connect_Creation_Strategy>;
+template class ACE_Auto_Basic_Ptr<TAO_Cached_Connector_Lock>;
+template class ACE_Auto_Basic_Ptr<TAO_CACHED_CONNECT_STRATEGY>;
 
 template class ACE_Node<ACE_INET_Addr>;
 template class ACE_Unbounded_Stack<ACE_INET_Addr>;
 template class ACE_Unbounded_Stack_Iterator<ACE_INET_Addr>;
-
-#if !defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-template class CACHED_CONNECT_STRATEGY;
-template class TAO_ADDR;
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>;
@@ -598,6 +534,10 @@ template class ACE_Recycling_Strategy<TAO_HANDLER>;
 template class ACE_Strategy_Connector<TAO_HANDLER, ACE_SOCK_CONNECTOR>;
 template class TAO_SVC_TUPLE;
 
+template class ACE_Pair<TAO_HANDLER *, TAO_ATTRIBUTES>;
+template class ACE_Reference_Pair<TAO_ADDR, TAO_HANDLER *>;
+template class ACE_Hash_Map_Entry<TAO_ADDR, TAO_CACHED_HANDLER>;
+
 template class ACE_Hash_Map_Manager<TAO_ADDR, TAO_HANDLER *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<TAO_ADDR, TAO_HANDLER *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<TAO_ADDR, TAO_HANDLER *, ACE_Null_Mutex>;
@@ -605,12 +545,6 @@ template class ACE_Hash_Map_Manager_Ex<TAO_ADDR, TAO_HANDLER *, TAO_HASH_KEY, TA
 template class ACE_Hash_Map_Iterator_Ex<TAO_ADDR, TAO_HANDLER *, TAO_HASH_KEY, TAO_COMPARE_KEYS, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_ADDR, TAO_HANDLER *, TAO_HASH_KEY, TAO_COMPARE_KEYS, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<TAO_ADDR, TAO_HANDLER *, TAO_HASH_KEY, TAO_COMPARE_KEYS, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Bucket_Iterator<TAO_ADDR, TAO_HANDLER *, TAO_HASH_KEY, TAO_COMPARE_KEYS, ACE_Null_Mutex>;
-
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-template class ACE_Pair<TAO_HANDLER *, TAO_ATTRIBUTES>;
-template class ACE_Reference_Pair<TAO_ADDR, TAO_HANDLER *>;
-template class ACE_Hash_Map_Entry<TAO_ADDR, TAO_CACHED_HANDLER>;
 
 template class ACE_Hash_Map_Manager<TAO_ADDR, TAO_CACHED_HANDLER, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<TAO_ADDR, TAO_CACHED_HANDLER, ACE_Null_Mutex>;
@@ -620,6 +554,7 @@ template class ACE_Hash_Map_Iterator_Ex<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_K
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_KEY, TAO_COMPARE_KEYS, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_KEY, TAO_COMPARE_KEYS, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Bucket_Iterator<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_KEY, TAO_COMPARE_KEYS, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Bucket_Iterator<TAO_ADDR, TAO_HANDLER *, TAO_HASH_KEY, TAO_COMPARE_KEYS, ACE_Null_Mutex>;
 
 // = Caching_Strategy
 template class ACE_Hash_Cache_Map_Manager<TAO_ADDR, TAO_HANDLER *, TAO_HASH_KEY, TAO_COMPARE_KEYS, TAO_CACHING_STRATEGY, TAO_ATTRIBUTES>;
@@ -654,23 +589,19 @@ template class ACE_Cached_Connect_Strategy<TAO_HANDLER, ACE_SOCK_CONNECTOR, TAO_
 template class ACE_Cleanup_Strategy<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_MAP>;
 template class ACE_Refcounted_Recyclable_Handler_Cleanup_Strategy<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_MAP>;
 template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_MAP, TAO_HASH_MAP_ITERATOR, TAO_ATTRIBUTES>;
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<TAO_IIOP_Client_Connection_Handler*>
 #pragma instantiate auto_ptr<TAO_IIOP_Connect_Creation_Strategy>
+#pragma instantiate auto_ptr<TAO_Cached_Connector_Lock>
+#pragma instantiate auto_ptr<TAO_CACHED_CONNECT_STRATEGY>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_IIOP_Connect_Creation_Strategy>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Cached_Connector_Lock>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_CACHED_CONNECT_STRATEGY>
 
 #pragma instantiate ACE_Node<ACE_INET_Addr>
 #pragma instantiate ACE_Unbounded_Stack<ACE_INET_Addr>
 #pragma instantiate ACE_Unbounded_Stack_Iterator<ACE_INET_Addr>
-
-#if !defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-#pragma instantiate CACHED_CONNECT_STRATEGY;
-#pragma instantiate TAO_ADDR;
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
@@ -692,6 +623,10 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 #pragma instantiate ACE_Strategy_Connector<TAO_HANDLER, ACE_SOCK_CONNECTOR>
 #pragma instantiate TAO_SVC_TUPLE
 
+#pragma instantiate ACE_Pair<TAO_HANDLER *, TAO_ATTRIBUTES>
+#pragma instantiate ACE_Reference_Pair<TAO_ADDR, TAO_HANDLER *>
+#pragma instantiate ACE_Hash_Map_Entry<TAO_ADDR, TAO_CACHED_HANDLER>
+
 #pragma instantiate ACE_Hash_Map_Manager<TAO_ADDR, TAO_HANDLER *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator<TAO_ADDR, TAO_HANDLER *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_ADDR, TAO_HANDLER *, ACE_Null_Mutex>
@@ -699,12 +634,6 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_ADDR, TAO_HANDLER *, TAO_HASH_KEY, TAO_COMPARE_KEYS, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_ADDR, TAO_HANDLER *, TAO_HASH_KEY, TAO_COMPARE_KEYS, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_ADDR, TAO_HANDLER *, TAO_HASH_KEY, TAO_COMPARE_KEYS, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Bucket_Iterator<TAO_ADDR, TAO_HANDLER *, TAO_HASH_KEY, TAO_COMPARE_KEYS, ACE_Null_Mutex>
-
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-#pragma instantiate ACE_Pair<TAO_HANDLER *, TAO_ATTRIBUTES>
-#pragma instantiate ACE_Reference_Pair<TAO_ADDR, TAO_HANDLER *>
-#pragma instantiate ACE_Hash_Map_Entry<TAO_ADDR, TAO_CACHED_HANDLER>
 
 #pragma instantiate ACE_Hash_Map_Manager<TAO_ADDR, TAO_CACHED_HANDLER, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator<TAO_ADDR, TAO_CACHED_HANDLER, ACE_Null_Mutex>
@@ -714,6 +643,7 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_KEY, TAO_COMPARE_KEYS, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_KEY, TAO_COMPARE_KEYS, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Bucket_Iterator<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_KEY, TAO_COMPARE_KEYS, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Bucket_Iterator<TAO_ADDR, TAO_HANDLER *, TAO_HASH_KEY, TAO_COMPARE_KEYS, ACE_Null_Mutex>
 
 // = Caching_Strategy
 #pragma instantiate ACE_Hash_Cache_Map_Manager<TAO_ADDR, TAO_HANDLER *, TAO_HASH_KEY, TAO_COMPARE_KEYS, TAO_CACHING_STRATEGY, TAO_ATTRIBUTES>
@@ -748,6 +678,5 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 #pragma instantiate ACE_Cleanup_Strategy<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_MAP>
 #pragma instantiate ACE_Refcounted_Recyclable_Handler_Cleanup_Strategy<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_MAP>
 #pragma instantiate ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_CACHED_HANDLER, TAO_HASH_MAP, TAO_HASH_MAP_ITERATOR, TAO_ATTRIBUTES>
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -12,15 +12,9 @@ TAO_GIOP_Invocation::put_param (CORBA::TypeCode_ptr tc,
 }
 
 ACE_INLINE IOP::ServiceContextList &
-TAO_GIOP_Invocation::service_info (void)
+TAO_GIOP_Invocation::request_service_info (void)
 {
-  return this->service_info_;
-}
-
-ACE_INLINE CORBA::ULong
-TAO_GIOP_Invocation::request_id (void)
-{
-  return this->request_id_;
+  return this->request_service_info_;
 }
 
 ACE_INLINE TAO_OutputCDR &
@@ -37,8 +31,14 @@ TAO_GIOP_Twoway_Invocation (TAO_Stub *stub,
                             const char *operation,
                             TAO_ORB_Core *orb_core)
   : TAO_GIOP_Invocation (stub, operation, orb_core),
-    rd_ (orb_core, this->service_info_)
+    rd_ (orb_core)
 {
+}
+
+ACE_INLINE const IOP::ServiceContextList &
+TAO_GIOP_Twoway_Invocation::reply_service_info (void) const
+{
+  return this->rd_.reply_service_info ();
 }
 
 ACE_INLINE TAO_InputCDR &
@@ -80,12 +80,12 @@ TAO_GIOP_Locate_Request_Invocation::
 TAO_GIOP_Locate_Request_Invocation (TAO_Stub *stub,
                                     TAO_ORB_Core *orb_core)
   : TAO_GIOP_Invocation (stub, 0, orb_core),
-    rd_ (orb_core, this->service_info_)
+    rd_ (orb_core)
 {
 }
 
 ACE_INLINE TAO_InputCDR &
 TAO_GIOP_Locate_Request_Invocation::inp_stream (void)
 {
-  return this->rd_.reply_cdr ();
+  return this->rd_. reply_cdr ();
 }

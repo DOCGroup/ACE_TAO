@@ -61,7 +61,7 @@ main (int argc, char *argv[])
 
       Simple_Server_i server_impl (orb.in ());
 
-      A::Simple_Server_var server =
+      Simple_Server_var server =
         server_impl._this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

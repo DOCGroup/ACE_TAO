@@ -239,8 +239,7 @@ ACE_INLINE
 TAO_IOP::TAO_IOR_Manipulation::IORList_var::IORList_var (const TAO_IOP::TAO_IOR_Manipulation::IORList_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             TAO_IOP::TAO_IOR_Manipulation::IORList(*p.ptr_));
+    this->ptr_ = new TAO_IOP::TAO_IOR_Manipulation::IORList(*p.ptr_);
   else
     this->ptr_ = 0;
 }
@@ -265,9 +264,7 @@ TAO_IOP::TAO_IOR_Manipulation::IORList_var::operator= (const TAO_IOP::TAO_IOR_Ma
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    TAO_IOP::TAO_IOR_Manipulation::IORList (*p.ptr_), 
-		    *this);
+    this->ptr_ = new TAO_IOP::TAO_IOR_Manipulation::IORList (*p.ptr_);
   }
   return *this;
 }

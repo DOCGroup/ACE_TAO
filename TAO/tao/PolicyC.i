@@ -241,8 +241,7 @@ ACE_INLINE
 CORBA_PolicyList_var::CORBA_PolicyList_var (const CORBA_PolicyList_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_PolicyList (*p.ptr_));
+    this->ptr_ = new CORBA_PolicyList(*p.ptr_);
   else
     this->ptr_ = 0;
 }
@@ -267,9 +266,7 @@ CORBA_PolicyList_var::operator= (const CORBA_PolicyList_var &p) // deep copy
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_PolicyList (*p.ptr_), 
-		    *this);
+    this->ptr_ = new CORBA_PolicyList (*p.ptr_);
   }
   return *this;
 }
@@ -425,8 +422,7 @@ ACE_INLINE
 CORBA_PolicyTypeSeq_var::CORBA_PolicyTypeSeq_var (const CORBA_PolicyTypeSeq_var &p)
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, 
-             CORBA_PolicyTypeSeq (*p.ptr_));
+    this->ptr_ = new CORBA_PolicyTypeSeq(*p.ptr_);
   else
     this->ptr_ = 0;
 }
@@ -451,9 +447,7 @@ CORBA_PolicyTypeSeq_var::operator= (const CORBA_PolicyTypeSeq_var &p) // deep co
   if (this != &p)
   {
     delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, 
-                    CORBA_PolicyTypeSeq (*p.ptr_), 
-		    *this);
+    this->ptr_ = new CORBA_PolicyTypeSeq (*p.ptr_);
   }
   return *this;
 }

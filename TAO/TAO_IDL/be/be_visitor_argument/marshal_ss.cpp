@@ -166,6 +166,7 @@ int be_visitor_args_marshal_ss::visit_predefined_type (be_predefined_type *node)
           break;
         case AST_Argument::dir_OUT:
           os->indent ();
+          //          *os << "_tao_ptr_" << arg->local_name ();
           *os << "&" << arg->local_name () << ".inout ()";
           break;
         } // end switch direction
@@ -178,6 +179,7 @@ int be_visitor_args_marshal_ss::visit_predefined_type (be_predefined_type *node)
         case AST_Argument::dir_INOUT:
         case AST_Argument::dir_OUT:
           os->indent ();
+          //          *os << "&_tao_ptr_" << arg->local_name ();
           *os << "&" << arg->local_name () << ".inout ()";
           break;
         } // end switch direction
@@ -213,6 +215,7 @@ int be_visitor_args_marshal_ss::visit_sequence (be_sequence *)
       break;
     case AST_Argument::dir_OUT:
       os->indent ();
+      //      *os << "_tao_ptr_" << arg->local_name ();
       *os << "&" << arg->local_name () << ".inout ()";
       break;
     }
@@ -234,6 +237,7 @@ int be_visitor_args_marshal_ss::visit_string (be_string *)
       break;
     case AST_Argument::dir_OUT:
       os->indent ();
+      //      *os << "&_tao_ptr_" << arg->local_name ();
       *os << "&" << arg->local_name () << ".inout ()";
       break;
     }
@@ -256,6 +260,7 @@ int be_visitor_args_marshal_ss::visit_structure (be_structure *node)
     case AST_Argument::dir_OUT:
       os->indent ();
       if (node->size_type () == be_type::VARIABLE)
+        //        *os << "_tao_ptr_" << arg->local_name ();
         *os << "&" << arg->local_name () << ".inout ()";
       else
         *os << "&" << arg->local_name ();
@@ -280,6 +285,7 @@ int be_visitor_args_marshal_ss::visit_union (be_union *node)
     case AST_Argument::dir_OUT:
       os->indent ();
       if (node->size_type () == be_type::VARIABLE)
+        //        *os << "_tao_ptr_" << arg->local_name ();
         *os << "&" << arg->local_name () << ".inout ()";
       else
         *os << "&" << arg->local_name ();

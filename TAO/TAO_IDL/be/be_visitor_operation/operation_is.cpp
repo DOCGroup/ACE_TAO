@@ -46,16 +46,11 @@ be_visitor_operation_is::visit_operation (be_operation *node)
 
   //cout<<"Within visit_operation "<<endl;
   os = this->ctx_->stream ();
-  be_interface *intf =
-    this->ctx_->interface ();
-  
-  
-  
   this->ctx_->node (node); // save the node
 
   os->indent (); // start with the current indentation level
 
-  
+
 
 
   // STEP I: generate the return type
@@ -94,26 +89,16 @@ be_visitor_operation_is::visit_operation (be_operation *node)
     }
   delete visitor;
 
-  const char *classname = 0;
 
-  if (intf)
-    {
-      //If derived class
-      classname = intf->flat_name ();
-      
-    }
+  ACE_CString str(node->flat_name ());
 
-  else
-    {
-      ACE_CString str(node->flat_name ());
-      
-      int lnmlength = ACE_OS::strlen (node->local_name ()->get_string ());
-            
-      int fnmlength = ACE_OS::strlen (node->flat_name ());
-      fnmlength--;
 
-      classname = str.substr (0,(fnmlength-lnmlength) ).rep ();
-    }
+  int lnmlength = ACE_OS::strlen (node->local_name ()->get_string ());
+
+  int fnmlength = ACE_OS::strlen (node->flat_name ());
+  fnmlength--;
+
+  char * classname =  str.substr (0,(fnmlength-lnmlength) ).rep ();
   
   // STEP 2: generate the operation name
   *os << " " << idl_global->impl_class_prefix () << classname << idl_global->impl_class_suffix () << "::" << node->local_name ();

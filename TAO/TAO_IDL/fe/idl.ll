@@ -72,7 +72,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_private.h"
 #include "y.tab.h"
 
-static char *		idl_wstring_escape_reader(char *);
 static ACE_CDR::WChar	idl_wchar_escape_reader(char *);
 static char		idl_escape_reader(char *);
 static double		idl_atof(char *);
@@ -238,13 +237,6 @@ oneway		return IDL_ONEWAY;
 		  yylval.sval = new UTL_String(tmp + 1);
 		  return IDL_STRING_LITERAL;
 	      	}
-L\"([^\\\"]*|\\u([0-9a-fA-F]{1,4}))*\"	{
-		  /* Skip the bookends */
-		  char *tmp = ACE_OS::strdup (ace_yytext);
-		  tmp[strlen (tmp) - 1] = '\0';
-		  yylval.wsval = idl_wstring_escape_reader(tmp + 2);
-		  return IDL_WSTRING_LITERAL;
-		}
 "'"."'"		{
 		  yylval.cval = ace_yytext [1];
 		  return IDL_CHARACTER_LITERAL;
@@ -657,13 +649,4 @@ idl_wchar_escape_reader (char *str)
   ACE_CDR::WChar out = (ACE_CDR::WChar) idl_atoui (&str[2], 16);
   str[i] = save;
   return out;
-}
-
-/*
- * Checks wstring for validity
- */
-static char *
-idl_wstring_escape_reader (char *str)
-{
-  return str;
 }

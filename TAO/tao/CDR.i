@@ -83,15 +83,6 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs)
 }
 
 ACE_INLINE
-TAO_InputCDR::TAO_InputCDR (ACE_InputCDR::Transfer_Contents rhs,
-                            TAO_ORB_Core* orb_core)
-  : ACE_InputCDR (rhs),
-    orb_core_ (orb_core)
-{
-  this->init_translators ();
-}
-
-ACE_INLINE
 TAO_InputCDR::~TAO_InputCDR (void)
 {
 }

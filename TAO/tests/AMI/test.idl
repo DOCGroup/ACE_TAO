@@ -2,8 +2,6 @@
  * $Id$
  */
 
-module A {
-
 interface Simple_Server
 {
   long get_put_number (out long out_l, in long in_l);
@@ -11,6 +9,4 @@ interface Simple_Server
   // also puts the value.  
   
   oneway void shutdown ();
-};
-
 };

@@ -56,7 +56,6 @@
 #include "tao/POA.h"
 
 // TAO specific files, avoid them as much as possible.
-#include "tao/Interceptor.h"
 #include "tao/Stub.h"
 #include "tao/params.h"
 #include "tao/ORB_Core.h"
@@ -89,8 +88,6 @@
 #include "tao/InterfaceC.h"
 
 #endif /*TAO_HAS_INTERFACE_REPOSITORY */
-
-#include "tao/BoundsC.h"
 
 #if !defined (ACE_NESTED_CLASS)
 #if defined (ACE_WIN32)

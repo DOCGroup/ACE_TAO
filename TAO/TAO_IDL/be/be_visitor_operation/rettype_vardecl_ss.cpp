@@ -88,7 +88,10 @@ be_visitor_operation_rettype_vardecl_ss::visit_interface (be_interface *)
   // CORBA::Object_ptr as the type for the return value even though the actual
   // return type may be some derived class
   *os << "CORBA::Object_var _tao_retval = CORBA::Object::_nil ();\n";
-
+#if 0 /* ASG */
+  *os << "CORBA::Object_var _tao_retval = CORBA::Object::_nil ();\n";
+  *os << "CORBA::Object_ptr &_tao_ptr_retval = _tao_retval.out ();\n";
+#endif
   return 0;
 }
 
@@ -103,6 +106,10 @@ visit_interface_fwd (be_interface_fwd *)
   // address of the objref to the marshaling routine, we use the base
   // CORBA::Object_ptr as the type for the return value even though the actual
   // return type may be some derived class
+#if 0 /* ASG */
+  *os << "CORBA::Object_var _tao_retval = CORBA::Object::_nil ();\n";
+  *os << "CORBA::Object_ptr &_tao_ptr_retval = _tao_retval.out ();\n";
+#endif
   *os << "CORBA::Object_var _tao_retval = CORBA::Object::_nil ();\n";
   return 0;
 }
@@ -148,10 +155,18 @@ visit_predefined_type (be_predefined_type *node)
     {
     case AST_PredefinedType::PT_pseudo:
       os->indent ();
+#if 0 /* ASG */
+      *os << bt->name () << "_var _tao_retval;\n";
+      *os << bt->name () << "_ptr &_tao_ptr_retval = _tao_retval.out ();\n";
+#endif
       *os << bt->name () << "_var _tao_retval;\n";
       break;
     case AST_PredefinedType::PT_any:
       os->indent ();
+#if 0 /* ASG */
+      *os << bt->name () << "_var _tao_retval;\n";
+      *os << bt->name () << "_ptr &_tao_ptr_retval = _tao_retval.out ();\n";
+#endif
       *os << bt->name () << "_var _tao_retval;\n";
       break;
     case AST_PredefinedType::PT_void:
@@ -178,26 +193,25 @@ be_visitor_operation_rettype_vardecl_ss::visit_sequence (be_sequence *node)
     bt = node;
 
   os->indent ();
+#if 0 /* ASg */
+  *os << bt->name () << "_var _tao_retval;\n";
+  *os << bt->name () << " *&_tao_ptr_retval = _tao_retval.out ();\n";
+#endif
   *os << bt->name () << "_var _tao_retval;\n";
   return 0;
 }
 
 int
-be_visitor_operation_rettype_vardecl_ss::visit_string (be_string *node)
+be_visitor_operation_rettype_vardecl_ss::visit_string (be_string * /* node*/)
 {
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
 
   os->indent ();
-
-  if (node->width () == sizeof (char))
-    {
-      *os << "CORBA::String_var _tao_retval;\n";
-    }
-  else
-    {
-      *os << "CORBA::WString_var _tao_retval;\n";
-    }
-
+#if 0 /* ASG */
+  *os << "CORBA::String_var _tao_retval;\n";
+  *os << "char *&_tao_ptr_retval = _tao_retval.out ();\n";
+#endif
+  *os << "CORBA::String_var _tao_retval;\n";
   return 0;
 }
 
@@ -217,6 +231,10 @@ be_visitor_operation_rettype_vardecl_ss::visit_structure (be_structure *node)
   // aggregate type
   if (node->size_type () == be_decl::VARIABLE)
     {
+#if 0 /* ASG */
+      *os << bt->name () << "_var _tao_retval;\n";
+      *os << bt->name () << " *&_tao_ptr_retval = _tao_retval.out ();\n";
+#endif
       *os << bt->name () << "_var _tao_retval;\n";
     }
   else
@@ -256,6 +274,10 @@ be_visitor_operation_rettype_vardecl_ss::visit_union (be_union *node)
   // aggregate type
   if (node->size_type () == be_decl::VARIABLE)
     {
+#if 0 /* ASG */
+      *os << bt->name () << "_var _tao_retval;\n";
+      *os << bt->name () << " *&_tao_ptr_retval = _tao_retval.out ();\n";
+#endif
       *os << bt->name () << "_var _tao_retval;\n";
     }
   else

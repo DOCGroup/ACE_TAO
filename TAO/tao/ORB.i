@@ -108,13 +108,6 @@ CORBA_String_out::operator= (char *s)
   return *this;
 }
 
-ACE_INLINE CORBA_String_out &
-CORBA_String_out::operator= (const char *s)
-{
-  this->ptr_ = CORBA::string_dup (s);
-  return *this;
-}
-
 ACE_INLINE
 CORBA_String_out::operator char *&()
 {
@@ -291,6 +284,12 @@ CORBA_ORB::_nil (void)
   return 0;
 }
 
+ACE_INLINE CORBA::Boolean
+CORBA_ORB::orb_free_resources (void)
+{
+  return !CORBA_ORB::orb_init_count_;
+}
+
 ACE_INLINE void
 CORBA_ORB::_use_omg_ior_format (CORBA::Boolean ior)
 {
@@ -308,56 +307,6 @@ CORBA_ORB::orb_core (void) const
 {
   return this->orb_core_;
 }
-
-#if defined (TAO_HAS_INTERCEPTORS)
-ACE_INLINE PortableInterceptor::ClientRequestInterceptor_ptr
-CORBA_ORB::_register_client_interceptor
-  (PortableInterceptor::ClientRequestInterceptor_ptr ci,
-   CORBA_Environment &ACE_TRY_ENV)
-{
-  if (ci == 0 ||
-      ci->_is_a ("IDL:TAO/PortableInterceptor/ClientRequestInterceptor:1.0"))
-      {
-        PortableInterceptor::ClientRequestInterceptor_var oci =
-          PortableInterceptor::ClientRequestInterceptor::_duplicate (this->client_interceptor_.in ());
-        this->client_interceptor_ = ci;
-        return oci._retn ();
-      }
-  else
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);
-}
-
-ACE_INLINE PortableInterceptor::ServerRequestInterceptor_ptr
-CORBA_ORB::_register_server_interceptor
-  (PortableInterceptor::ServerRequestInterceptor_ptr si,
-   CORBA_Environment &ACE_TRY_ENV)
-{
-  if (si == 0 ||
-      si->_is_a ("IDL:TAO/PortableInterceptor/ServerRequestInterceptor:1.0"))
-      {
-        PortableInterceptor::ServerRequestInterceptor_var oci =
-          PortableInterceptor::ServerRequestInterceptor::_duplicate (this->server_interceptor_.in ());
-        this->server_interceptor_ = si;
-        return oci._retn ();
-      }
-  else
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);
-}
-
-ACE_INLINE PortableInterceptor::ClientRequestInterceptor_ptr
-CORBA_ORB::_get_client_interceptor (CORBA_Environment &)
-{
-  return
-    PortableInterceptor::ClientRequestInterceptor::_duplicate (this->client_interceptor_.in ());
-}
-
-ACE_INLINE PortableInterceptor::ServerRequestInterceptor_ptr
-CORBA_ORB::_get_server_interceptor (CORBA_Environment &)
-{
-  return
-    PortableInterceptor::ServerRequestInterceptor::_duplicate (this->server_interceptor_.in ());
-}
-#endif /* TAO_HAS_INTERCEPTORS */
 
 // ************************************************************
 // These are in CORBA namespace

@@ -225,15 +225,7 @@ POA_CORBA::DomainManager::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
-  CORBA::DomainManager *retval = CORBA_DomainManager::_nil ();
-
-  ACE_NEW_RETURN (retval,
-                  POA_CORBA::_tao_collocated_DomainManager (this, 
-                                                            stub),
-                  CORBA_DomainManager::_nil ());
-
-  return retval;
+  return new POA_CORBA::_tao_collocated_DomainManager (this, stub);
 }
 
 POA_CORBA::_tao_collocated_DomainManager::_tao_collocated_DomainManager (
@@ -488,16 +480,7 @@ POA_CORBA::ConstructionPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-
-  CORBA::ConstructionPolicy *retval = 
-    CORBA_ConstructionPolicy::_nil ();
-
-  ACE_NEW_RETURN (retval,
-                  POA_CORBA::_tao_collocated_ConstructionPolicy (this, 
-                                                                 stub),
-                  CORBA_ConstructionPolicy::_nil ());
-
-  return retval;
+  return new POA_CORBA::_tao_collocated_ConstructionPolicy (this, stub);
 }
 
 POA_CORBA::_tao_collocated_ConstructionPolicy::_tao_collocated_ConstructionPolicy (

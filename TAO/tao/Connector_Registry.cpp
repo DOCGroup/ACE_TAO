@@ -401,7 +401,6 @@ TAO_Connector_Registry::object_key_delimiter (const char *ior)
   return 0;
 }
 
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
 int
 TAO_Connector_Registry::purge_connections (void)
 {
@@ -421,7 +420,6 @@ TAO_Connector_Registry::purge_connections (void)
 
   return 0;
 }
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

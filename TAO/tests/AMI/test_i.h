@@ -18,7 +18,7 @@
 
 #include "testS.h"
 
-class Simple_Server_i : public POA_A::Simple_Server
+class Simple_Server_i : public POA_Simple_Server
 {
   // = TITLE
   //   Simpler Server implementation

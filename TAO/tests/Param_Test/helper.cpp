@@ -65,34 +65,6 @@ Generator::gen_string (int max_length)
           i++;
         }
     }
-
-  buf[i] = 0;
-  return buf;
-}
-
-CORBA::WChar *
-Generator::gen_wstring (void)
-{
-  return gen_wstring (TEST_BUFSIZE);
-}
-
-CORBA::WChar *
-Generator::gen_wstring (int max_length)
-{
-  CORBA::ULong len = (CORBA::ULong) (::ACE_OS::rand () % max_length);
-  CORBA::WChar *buf = CORBA::wstring_alloc (len);
-  CORBA::ULong i = 0;
-
-  while (i < len)
-    {
-      CORBA::WChar wc = ACE_OS::rand () % ACE_WCHAR_MAX;
-      if (wc)
-        {
-          buf[i] = wc;
-          i++;
-        }
-    }
-
   buf[i] = 0;
   return buf;
 }

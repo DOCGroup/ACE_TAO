@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 ACE_INLINE const ACE_INET_Addr&

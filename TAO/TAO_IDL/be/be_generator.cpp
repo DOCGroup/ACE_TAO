@@ -381,15 +381,6 @@ be_generator::create_expr(ACE_OutputCDR::from_wchar wc)
 }
 
 /*
- * Create a BE_Expression node denoting a wide string
- */
-AST_Expression *
-be_generator::create_expr (char *s)
-{
-  return (AST_Expression *) new be_expression (s);
-}
-
-/*
  * Create a BE_Expression node denoting a 64-bit floating point number
  */
 AST_Expression *
@@ -435,7 +426,7 @@ be_generator::create_sequence(AST_Expression *v, AST_Type *bt)
 AST_String *
 be_generator::create_string(AST_Expression *v)
 {
-  return (AST_String *) new be_string (v);
+  return (AST_String *) new be_string(v);
 }
 
 /*
@@ -444,8 +435,7 @@ be_generator::create_string(AST_Expression *v)
 AST_String *
 be_generator::create_wstring(AST_Expression *v)
 {
-  return (AST_String *) new be_string (v, 
-                                       sizeof (ACE_CDR::WChar));
+  return (AST_String *) new be_string(v, sizeof(ACE_OS::WChar));
 }
 
 /*

@@ -1537,7 +1537,7 @@ int
 be_interface::gen_gperf_lookup_methods (void)
 {
   // Using ACE_Process.
-  ACE_Process process;
+  ACE_Process process_manager;
   ACE_Process_Options process_options;
 
   // Codegen's singleton.
@@ -1666,16 +1666,16 @@ be_interface::gen_gperf_lookup_methods (void)
 
 
   // Spawn a process for gperf.
-  if (process.spawn (process_options) == -1)
+  if (process_manager.spawn (process_options) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:%p:Couldnt spawn a process for gperf program\n"),
                       -1);
 
   // Wait for gperf to complete.
-  if (process.wait () == -1)
+  if (process_manager.wait () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error:%p:Error on wait'ing for completion of gperf program.\n",
-                       "process.wait"),
+                       "process_manager.wait"),
                       -1);
 
   // Adjust the file offset to the EOF for the server skeleton file.
@@ -2216,23 +2216,6 @@ be_interface_type_strategy::compute_names (const char *name,
                            ACE_OS::strlen(suffix)],suffix);
 }
 
-
-TAO_OutStream *
-be_interface_type_strategy::get_out_stream ()
-{
-  // Codegen singleton.
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-
-  // Outstream.
-  return cg->server_skeletons ();
-}
-
-const char *
-be_interface_type_strategy::get_out_stream_fname ()
-{
-  return idl_global->be_get_server_skeleton_fname ();
-}
-
 // ****************************************************************
 // AMI Hander Strategy
 
@@ -2337,6 +2320,21 @@ be_interface_ami_handler_strategy::local_coll_name (int type)
   return this->local_coll_name_;
 }
 
+TAO_OutStream *
+be_interface_ami_handler_strategy::get_out_stream ()
+{
+  // Codegen singleton.
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  // Outstream.
+  return cg->client_stubs ();
+}
+
+const char *
+be_interface_ami_handler_strategy::get_out_stream_fname ()
+{
+  return idl_global->be_get_client_stub_fname ();
+}
 
 // ****************************************************************
 // Default Strategy
@@ -2457,6 +2455,21 @@ be_interface_default_strategy::local_coll_name (int type)
   return this->local_coll_name_;
 }
 
+TAO_OutStream *
+be_interface_default_strategy::get_out_stream ()
+{
+  // Codegen singleton.
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  // Outstream.
+  return cg->server_skeletons ();
+}
+
+const char *
+be_interface_default_strategy::get_out_stream_fname ()
+{
+  return idl_global->be_get_server_skeleton_fname ();
+}
 
 // Narrowing
 IMPL_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type)

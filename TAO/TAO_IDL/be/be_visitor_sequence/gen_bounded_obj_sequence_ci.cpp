@@ -170,8 +170,6 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << full_class_name << " &rhs)" << be_nl
       << "// Copy constructor." << be_idt_nl
       << ": TAO_Bounded_Base_Sequence (rhs)" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "if (rhs.buffer_ != 0)" << be_nl
       << "{" << be_idt_nl;
   pt->accept(visitor);
   *os <<" **tmp1 = allocbuf (" << node->max_size () << ");" << be_nl;
@@ -182,11 +180,6 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << "for (CORBA::ULong i = 0; i < rhs.length_; i++)" << be_idt_nl
       << "tmp1[i] = "; pt->accept (visitor); *os << "::_duplicate (tmp2[i]);" << be_uidt_nl
       << "this->buffer_ = tmp1;" << be_uidt_nl
-      << "}" << be_nl
-      << "else" << be_nl
-      << "{" << be_idt_nl
-      << "this->buffer_ = 0;" << be_uidt_nl
-      << "}" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
 
