@@ -1,3 +1,20 @@
+Wed Apr 16 000:14:10 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be_include/be_sequence.h:
+        * TAO_IDL/be_include/be_type.h:
+        * tao/Array_VarOut_T.inl:
+        * tao/Seq_VarOut_T.inl:
+
+	  Changes to remove compile errors in Param_Test and IDL_Test.
+
+        * tests/Param_Test/recursive_union.cpp:
+
+	  Changed use of TAO-specific recursive member names to
+	  spec-defined and generated recursive member names.
+
 Mon Apr 14 17:10:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TAO.dsp:

@@ -104,6 +104,10 @@ protected:
   // Helper to create_name.
 
 private:
+  const char *smart_fwd_helper_name (AST_Decl *elem_scope,
+                                     be_type *elem);
+
+private:
   MANAGED_TYPE mt_;
   // Our managed type.
 

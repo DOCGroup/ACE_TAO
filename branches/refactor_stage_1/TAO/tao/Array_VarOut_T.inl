@@ -64,7 +64,10 @@ ACE_INLINE
 const T_slice *
 TAO_Array_Var_Base_T<T_slice,T_life>::in (void) const
 {
-  return this->ptr_;
+  // @@@ (JP) This looks scary I know but it helps MSVC understand
+  // things better when the array is multi-dimensional.
+  return ACE_const_cast (const T_slice *,
+                         this->ptr_);
 }
 
 template<typename T_slice, typename T_life>
@@ -134,7 +137,7 @@ TAO_VarArray_Var_T<T_slice,T_life>::TAO_VarArray_Var_T (void)
 template<typename T_slice, typename T_life>
 ACE_INLINE
 TAO_VarArray_Var_T<T_slice,T_life>::TAO_VarArray_Var_T (T_slice * p)
-  : TAO_VarArray_Var_T<T_slice,T_life> (p)
+  : TAO_Array_Var_Base_T<T_slice,T_life> (p)
 {}
 
 template<typename T_slice, typename T_life>
@@ -316,7 +319,10 @@ ACE_INLINE
 const T_slice *
 TAO_Array_Forany_T<T_slice,T_life>::in (void) const
 {
-  return this->ptr_;
+  // @@@ (JP) This looks scary I know but it helps MSVC understand
+  // things better when the array is multi-dimensional.
+  return ACE_const_cast (const T_slice *,
+                         this->ptr_);
 }
 
 template<typename T_slice, typename T_life>
