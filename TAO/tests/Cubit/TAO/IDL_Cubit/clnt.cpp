@@ -94,7 +94,7 @@ Cubit_Client::parse_args (void)
                            "usage:  %s"
                            " [-d]"
                            " [-n loopcount]"
-                           " [-f cubit_factory-obj-ref-key_file]"
+                           " [-f cubit_factory-obj-ref-key-file]"
                            " [-k cubit-obj-ref-key]"
                            " [-x]"
                            "\n",
