@@ -2606,6 +2606,12 @@ ACE_OS::strdup (const char *s)
 #endif /* VXWORKS */
 }
 
+ACE_INLINE int 
+ACE_OS::vsprintf (char *buffer, const char *format, va_list argptr)
+{
+  return ::vsprintf (buffer, format, argptr);
+}
+
 ACE_INLINE size_t 
 ACE_OS::strlen (const char *s)
 {
@@ -6549,6 +6555,12 @@ ACE_OS::strdup (const wchar_t *s)
 {
   // ACE_TRACE ("ACE_OS::strdup");
   return ::wcsdup (s);
+}
+
+ACE_INLINE int 
+ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
+{
+  return ::vswprintf (buffer, format, argptr);
 }
 
 ACE_INLINE int 
