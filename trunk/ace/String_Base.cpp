@@ -88,30 +88,23 @@ template <class CHAR> ACE_String_Base<CHAR>
 ACE_String_Base<CHAR>::substring (size_t offset,
                                   ssize_t length) const
 {
-  ACE_String_Base<CHAR> nil;
+  ACE_String_Base<CHAR> nill;
   size_t count = length;
 
   // case 1. empty string
   if (this->len_ == 0)
-  {
-    return nil;
-  }
+    return nill;
   
   // case 2. start pos past our end
   if (offset >= this->len_)
-  {
-    return nil;
-  }
+    return nill;
   // No length == empty string.
   else if (length == 0)
-  {
-    return nil;
-  }
+    return nill;
   // Get all remaining bytes.
   else if (length == -1 || count > (this->len_ - offset))
-  {
     count = this->len_ - offset;
-  }
+
   return ACE_String_Base<CHAR> (&this->rep_[offset],
                                 count,
                                 this->allocator_);

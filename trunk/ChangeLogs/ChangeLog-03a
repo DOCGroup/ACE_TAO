@@ -1,3 +1,9 @@
+Mon Jul 15 18:56:47 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/String_Base.cpp (substring): Changed "nil" to "nill" to
+	  avoid conflicts with a Mac OS X macro.  Thanks to Ruslan
+ 	  Zasukhin <sunshine@public.kherson.ua> for reporting this.
+
 Mon Jul 15 15:18:33 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Configuration.{h cpp}: Changed ACE_Configuration_Value_IntId
