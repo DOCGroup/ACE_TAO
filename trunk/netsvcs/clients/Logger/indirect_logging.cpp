@@ -31,5 +31,17 @@ main (int argc, char *argv[])
     }
 
   ACE_DEBUG ((LM_SHUTDOWN, "closing down the test\n"));
+
+#if defined (ACE_WIN32)
+  // !!Important, Winsock is broken in that if you don't close
+  // down the connection before exiting main, you'll lose data.
+  // More over, your server might get "Access Violation" from
+  // within Winsock functions.
+
+  // Here we close down the connection to Logger by redirecting
+  // the logging destination back to stderr.
+  ACE_LOG_MSG->open (0, ACE_Log_Msg::STDERR, 0);
+#endif /* ACE_WIN32 */
+
   return 0;
 }
