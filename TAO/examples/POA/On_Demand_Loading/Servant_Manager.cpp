@@ -63,24 +63,21 @@ ServantManager_i::obtain_servant (const char *str,
   // object associated with it together.
    if (this->servant_map_.bind (oid.in (), 
                                 dll) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,                      
-                       "%p\n", 
-                       "Bind failed"),
-                      0);
-   ACE_DEBUG ((LM_DEBUG,
-               "bind succeded\n"));
-  // Now that the DLL name is available we open the DLL.
-  if (dll->open (dllname_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p",
-                       dll->error ()),
-                      0);
+     ACE_ERROR_RETURN ((LM_ERROR,                      
+                        "%p\n", 
+                        "Bind failed"),
+                       0);
+   // Now that the dll name is available we open the dll.
+   if (dll->open (dllname_.c_str ()) == -1)
+     ACE_ERROR_RETURN ((LM_ERROR,
+                        "%p",
+                        dll->error ()),
+                       0);
 
-  // The next step is to obtain the symbol for the function that will
+   // The next step is to obtain the symbol for the function that will
   // create the servant object and return it.
-  SERVANT_FACTORY servant_creator =
-    ACE_reinterpret_cast (SERVANT_FACTORY,
-                          dll->symbol (create_symbol_.in ()));
+  SERVANT_FACTORY servant_creator = ACE_reinterpret_cast
+    (SERVANT_FACTORY, dll->symbol (create_symbol_.c_str ()));
 
   // Checking whether it is possible to create the servant.
   if (servant_creator == 0)
@@ -101,33 +98,30 @@ ServantManager_i::obtain_servant (const char *str,
 void 
 ServantManager_i::parse_string (const char *s)
 {
-  // The format of the objectid is <dllname:factory_function>.  This
-  // string is parsed to obtain the DLL name and the function name
-  // which will create trhe servant and return it to us.
+  // The format of the objectid is <dll:factory_function>.  This string is
+  // parsed to obtain the dll name and the function name which will
+  // create trhe servant and return it to us.
 
-  // @@ Kirthika, please make sure to always check for failed strnew()
-  // calls by using the ACE_ALLOCATOR macro here...
-  char *str = ACE::strnew (s);
-  char *func = ACE_OS::strchr (str, ':');
+  ACE_CString str (s);
 
-  if (func != 0)
-    *func = '\0';
-
-  // Assign the value until '\0' to dllname_.
-  // @@ Kirthika, please make sure to always check for failed string_dup()
-  // calls by using the ACE_ALLOCATOR macro here...
-  this->dllname_ = CORBA::string_dup (str);
-   
-  // Assign the value after ':' to create_symbol_.
-  // @@ Kirthika, please make sure to always check for failed string_dup()
-  // calls by using the ACE_ALLOCATOR macro here...
-  this->create_symbol_ = CORBA::string_dup (func + 1);
+  size_t index = str.find (':');
+  // On error, npos is returned.
+  if (index == str.length () + 1)
+    ACE_ERROR ((LM_ERROR,
+                "Required character absent!\n"));
+  
+  // The index gives us the location which is equivalent to the size
+  // of the dllname_ string.
+  this->dllname_.set (str.c_str (), (index));
+  
+  // Obtain the substring from the offset which is one greater than the 
+  // location of ':'. 
+  this->create_symbol_ = str.substring (index + 1, str.length ());
   
   ACE_DEBUG ((LM_DEBUG,
               "the servant dll:%s\n the factory_function:%s\n ",
-              this->dllname_.in (),
-              this->create_symbol_.in ()));
-  delete [] str;
+              this->dllname_.c_str (),
+              this->create_symbol_.c_str ()));
 }
 
 // This method returns an ObjectId when given a DLL name and the
@@ -138,33 +132,18 @@ PortableServer::ObjectId_var
 ServantManager_i::create_dll_object_id (const char *libname,
                                         const char *factory_function)
 {
-  char *format_string; 
-
-  ACE_DEBUG ((LM_DEBUG,
-              "format-string is getting allocated\n"));
-
-  ACE_NEW_RETURN (format_string,
-                  char [ACE_OS::strlen (libname) + 
-                       ACE_OS::strlen (factory_function) +
-                       sizeof (':') +
-                       1], // For the trailing 0.
-                  0);
-
-  char *end = ACE::strecpy (format_string,
-                            libname);
-  end = ACE::strecpy (end - 1,
-                      ":");
-  ACE::strecpy (end - 1,
-                factory_function);
+  ACE_CString format_string = libname;
+  format_string += ":";
+  format_string += factory_function;
 
   ACE_DEBUG ((LM_DEBUG,
               "format-string is %s\n",
-              format_string));
+              format_string.c_str ()));
 
   // The object ID is created.
   PortableServer::ObjectId_var oid =
-    PortableServer::string_to_ObjectId (format_string);
-  delete [] format_string;
+    PortableServer::string_to_ObjectId (format_string.c_str ());
+
   return oid;
 }
 

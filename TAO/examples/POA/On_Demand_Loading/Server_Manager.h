@@ -29,7 +29,14 @@ class Server_i
   //   This class provides the server application with helper methods
   //
   // = DESCRIPTION
-  //   @@ Kirthika, can you please give a very concise synopsis
+  //   The various methods required by the server application for
+  //   utilizing the ServantActivator and ServantLocator interfaces
+  //   of the Servant Manager are implemented by this class.
+  //   These include initialisation procedures of the ServantActivator
+  //   and ServantLocator, and creation of POAs with emphasis on the
+  //   servant retention policy.
+  
+  //   @@ *done*Kirthika, can you please give a very concise synopsis
   //   of what this class does?
 public:
   // = Initialization and termination methods.
@@ -73,7 +80,7 @@ private:
   CORBA::ORB_var orb_;
   // The orb pointer.
 
-  CORBA::PolicyList policies_; // (4); 
+  CORBA::PolicyList policies_; 
   // The poa policicies.
 
   PortableServer::POA_var root_poa_;
