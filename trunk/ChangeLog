@@ -1,3 +1,8 @@
+Mon Nov  4 18:01:25 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* tests/Makefile.bor:  Added new Multicast_Test.  Thanks to
+	  Johnny Willemsen <jwillemsen@remedy.nl> for noticing this.
+
 Mon Nov  4 16:14:21 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* tests/Multicast_Test.cpp (get_handle): Made return type of 
