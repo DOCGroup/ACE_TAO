@@ -1,5 +1,9 @@
 /* $Id$ */
-inline Object_Counter::object_id
+
+namespace Kokyu {
+
+ACE_INLINE
+Object_Counter::object_id
 Object_Counter::increment(void)
 {
   Object_Counter::object_id oid;
@@ -8,3 +12,4 @@ Object_Counter::increment(void)
   return oid;
 }
 
+} //namespace Kokyu
