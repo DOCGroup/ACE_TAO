@@ -131,8 +131,7 @@ module Deployment {
 
   struct Requirement {
     string resourceType;
-    // property is not in model
-    //    Properties property;
+    Properties property;
     string name;
   };
 
