@@ -5,6 +5,8 @@ Tue Jun  8 14:15:31 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
           Tested it and it could split plan well and also contact
           NodeDaemon without problem.
 
+          Fixed a bug caused by not using a reference.
+
 
 Tue Jun  8 17:18:28 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
