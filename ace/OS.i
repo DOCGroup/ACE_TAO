@@ -2002,9 +2002,10 @@ ACE_OS::sema_wait (ACE_sema_t *s)
 
       // Wait until the semaphore count is > 0.
       while (s->count_ == 0)
-	if (ACE_OS::cond_wait (&s->count_nonzero_, &s->lock_) == -1)
+	if (ACE_OS::cond_wait (&s->count_nonzero_,
+			       &s->lock_) == -1)
 	  {
-	    result = -2;
+	    result = -2; // -2 means that we need to release the mutex.
 	    break;
 	  }
 
@@ -2017,7 +2018,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
   if (result != -1)
     ACE_OS::mutex_unlock (&s->lock_);
   ACE_PTHREAD_CLEANUP_POP (1);
-  return result;
+  return result < 0 ? -1 : result;
 
 #elif defined (ACE_HAS_WTHREADS)
   switch (::WaitForSingleObject (*s, INFINITE))
@@ -2056,9 +2057,41 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   ACE_UNUSED_ARG (tv);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  ACE_UNUSED_ARG (s);
-  ACE_UNUSED_ARG (tv);
-  ACE_NOTSUP_RETURN (-1);
+  int result = 0;
+  int error = 0;
+
+  ACE_PTHREAD_CLEANUP_PUSH (&s->lock_);
+
+  if (ACE_OS::mutex_lock (&s->lock_) != 0)
+    result = -1;
+  else
+    {
+      // Keep track of the number of waiters so that we can signal
+      // them properly in <ACE_OS::sema_post>.
+      s->waiters_++;
+
+      // Wait until the semaphore count is > 0 or until we time out.
+      while (s->count_ == 0)
+	if (ACE_OS::cond_timedwait (&s->count_nonzero_,
+				    &s->lock_,
+				    *tv) == -1)
+	  {
+	    error = errno;
+	    result = -2; // -2 means that we need to release the mutex.
+	    break;
+	  }
+
+      --s->waiters_;
+    }
+
+  if (result == 0)
+    --s->count_;
+
+  if (result != -1)
+    ACE_OS::mutex_unlock (&s->lock_);
+  ACE_PTHREAD_CLEANUP_POP (1);
+  errno = error;
+  return result < 0 ? -1 : result;
 #elif defined (ACE_HAS_WTHREADS)
   switch (::WaitForSingleObject (*s, tv.sec () * 1000 + tv.usec () / 1000))
     {
@@ -2085,10 +2118,6 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_POSIX_SEM */
 }
-
-
-
-
 
 #if defined (ACE_WIN32) || defined (VXWORKS)
 //
@@ -2592,7 +2621,8 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
       while (rw->ref_count_ < 0 || rw->num_waiting_writers_ > 0)
 	{
 	  rw->num_waiting_readers_++;
-	  if (ACE_OS::cond_wait (&rw->waiting_readers_, &rw->lock_) == -1)
+	  if (ACE_OS::cond_wait (&rw->waiting_readers_,
+				 &rw->lock_) == -1)
 	    {
 	      result = -2; // -2 means that we need to release the mutex.
 	      break;
@@ -2607,7 +2637,7 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_POP (0);
 #endif
-  return 0;
+  return result < 0 ? -1 : result;
 #endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (rw);
@@ -2768,7 +2798,7 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_POP (0);
 #endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
-  return 0;
+  return result < 0 ? -1 : result;
 #endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (rw);
