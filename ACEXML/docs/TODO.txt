@@ -12,8 +12,6 @@
       already in place.  The parser itself, however, does not take
       advantage of them to differentiate the different namespace.
 
-  <li>Add DTD parsing ability.  (almost done.)
-
   <li>Add Schema paring ability.  It is not clear to me, however, how
       to specify which schema a document is associated with.
 
