@@ -106,7 +106,7 @@ Notification_Receiver_i.o: Notification_Receiver_i.cpp \
   ${ACE_ROOT}ace/Reactor.i \
   ${ACE_ROOT}ace/Service_Object.h \
   ${ACE_ROOT}ace/Shared_Object.h \
-  ${ACE_ROOT}ace/Service_Record.h \
+  ${ACE_ROOT}ace/Service_Types.h \
   ${ACE_ROOT}ace/Thread_Manager.h \
   Notification_Receiver_i.h
 

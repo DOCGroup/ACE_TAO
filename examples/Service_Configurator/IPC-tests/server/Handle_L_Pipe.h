@@ -8,7 +8,7 @@
 #define _HANDLE_L_PIPE_H
 
 #include "ace/Service_Config.h"
-#include "ace/Service_Record.h"
+#include "ace/Service_Types.h"
 #include "ace/UNIX_Addr.h"
 #include "ace/LSOCK_Acceptor.h"
 

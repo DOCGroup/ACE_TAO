@@ -27,12 +27,16 @@ typedef ACE_Task<ACE_SYNCH> MT_Task;
 
 class ACE_Export ACE_Service_Type_Impl
   // = TITLE
-  //     Provide the class hierarchy that defines the contents of
-  //     the Service Repository search structure.
+  //     The abstract base class of the hierarchy that defines the
+  //     contents of the <ACE_Service_Repository>.  The subclasses of
+  //     this class allow the configuration of <ACE_Service_Objects>,
+  //     <ACE_Modules>, and <ACE_Streams>.
   //
   // = DESCRIPTION
-  //     Provide the class hierarchy that defines the contents of
-  //     the Service Repository search structure.
+  //     This class provides the root of the implementation hierarchy
+  //     of the "Bridge" pattern.  It maintains a pointer to the
+  //     appropriate type of service implementation, i.e.,
+  //     <ACE_Service_Object>, <ACE_Module>, or <ACE_Stream>.
 {
 public:
   // = Initialization and termination methods.
