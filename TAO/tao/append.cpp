@@ -532,16 +532,12 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
           {
             CORBA::ULong d;
 
-#if 0
             // Create an special Any to handle this case.
             CORBA::Any tmp;
             tmp._tao_replace (CORBA::_tc_ulong,
                               any->_tao_byte_order (),
                               any->_tao_get_cdr ());
             if ((tmp >>= d) && d == enum_v)
-#else
-            if ((*any >>= d) && d == enum_v)
-#endif 0
               current_member = i;
           }
           break;
