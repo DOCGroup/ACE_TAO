@@ -151,9 +151,6 @@ int be_visitor_args_post_upcall_ss::visit_interface_fwd (be_interface_fwd *node)
 
 int be_visitor_args_post_upcall_ss::visit_predefined_type (be_predefined_type *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
   // check if the type is an any
   if (node->pt () == AST_PredefinedType::PT_any)
     {
@@ -176,9 +173,6 @@ int be_visitor_args_post_upcall_ss::visit_predefined_type (be_predefined_type *n
 	case AST_Argument::dir_INOUT:
 	  break;
 	case AST_Argument::dir_OUT:
-          os->indent ();
-	  *os << "_tao_ptr_" << arg->local_name () << " = " 
-              << arg->local_name () << ".ptr ();\n";
 	  break;
 	} // end switch direction
     } // end else if
