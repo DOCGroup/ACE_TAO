@@ -461,7 +461,13 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   FT::TypeId object_type = 0;
   if (! ::TAO_PG::find (decoder, ::FT::FT_TYPE_ID, object_type) )
   {
+    object_type = "unknown";
     // Not required: missingParameter = 1;
+    ACE_DEBUG ((LM_DEBUG, "Object type not given.\n"));
+  }
+  else
+  {
+    ACE_DEBUG ((LM_DEBUG, "Object type: %s\n", object_type));
   }
 
   FT::ObjectGroupId group_id = 0;

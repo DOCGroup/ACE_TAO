@@ -52,6 +52,9 @@ TAO::Fault_Detector_i::Fault_Detector_i (
 {
   this->notifier_ = FT::FaultNotifier::_duplicate(notifier);
   this->monitorable_ = FT::PullMonitorable::_duplicate(monitorable);
+  ACE_DEBUG ((LM_DEBUG,
+    "Object type %s\n", object_type
+    ));
 }
 
 TAO::Fault_Detector_i::~Fault_Detector_i ()

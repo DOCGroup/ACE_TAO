@@ -46,12 +46,17 @@ namespace TAO
    */
   class TAO_PortableGroup_Export PG_FactoryRegistry : public virtual POA_PortableGroup::FactoryRegistry
   {
-    /* <DESIGN> originally I used FactoryInfos_vars rather than FactoryInfos *,
-        but it actually made memory management harder. DLW </DESIGN> */
+    struct RoleInfo
+    {
+      ACE_CString type_id_;
+      PortableGroup::FactoryInfos infos_;
+
+      RoleInfo(size_t estimated_number_entries = 5);
+    };
     typedef ACE_Null_Mutex MapMutex;
-    typedef ACE_Hash_Map_Manager <ACE_CString, PortableGroup::FactoryInfos *, MapMutex>  RegistryType;
-    typedef ACE_Hash_Map_Entry <ACE_CString, PortableGroup::FactoryInfos *> RegistryType_Entry;
-    typedef ACE_Hash_Map_Iterator <ACE_CString, PortableGroup::FactoryInfos *, MapMutex> RegistryType_Iterator;
+    typedef ACE_Hash_Map_Manager <ACE_CString, RoleInfo *, MapMutex>  RegistryType;
+    typedef ACE_Hash_Map_Entry <ACE_CString, RoleInfo *> RegistryType_Entry;
+    typedef ACE_Hash_Map_Iterator <ACE_CString, RoleInfo *, MapMutex> RegistryType_Iterator;
 
     //////////////////////
     // non-CORBA interface
@@ -111,24 +116,29 @@ namespace TAO
     // See IDL for documentation
 
     virtual void register_factory (
+        const char * role,
         const char * type_id,
         const PortableGroup::FactoryInfo & factory_info
         ACE_ENV_ARG_DECL
       )
-      ACE_THROW_SPEC ((CORBA::SystemException, PortableGroup::MemberAlreadyPresent));
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , PortableGroup::MemberAlreadyPresent
+        , PortableGroup::TypeConflict));
 
     virtual void unregister_factory (
-      const char * type_id,
-      const PortableGroup::Location & location
+        const char * role,
+        const PortableGroup::Location & location
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException, PortableGroup::MemberNotFound));
 
-    virtual void unregister_factory_by_type (
-      const char * type_id
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual void unregister_factory_by_role (
+        const char * role
+        ACE_ENV_ARG_DECL
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
 
     virtual void unregister_factory_by_location (
       const PortableGroup::Location & location
@@ -136,11 +146,12 @@ namespace TAO
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual ::PortableGroup::FactoryInfos * list_factories_by_type (
-      const char * type_id
-      ACE_ENV_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual ::PortableGroup::FactoryInfos * list_factories_by_role (
+        const char * role,
+        CORBA::String_out type_id
+        ACE_ENV_ARG_DECL
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual ::PortableGroup::FactoryInfos * list_factories_by_location (
       const PortableGroup::Location & location

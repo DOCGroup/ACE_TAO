@@ -185,7 +185,7 @@ int StubFaultAnalyzer::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
         value <<= object_location;
         encoder.add(::FT::FT_LOCATION, value);
 
-        FT::TypeId object_type = 0;
+        FT::TypeId object_type = CORBA::string_dup("dummy_type");
         value <<= object_type;
         encoder.add(::FT::FT_TYPE_ID, value);
 
@@ -209,6 +209,9 @@ int StubFaultAnalyzer::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
           encoder.encode(criteria);
           FT::GenericFactory::FactoryCreationId_var factory_creation_id;
 
+          ACE_DEBUG((LM_DEBUG,
+            "Call create_object with type: %s\n", type_id.in()
+            ));
           this->factory_->create_object (
             type_id.in(),
             criteria.in(),

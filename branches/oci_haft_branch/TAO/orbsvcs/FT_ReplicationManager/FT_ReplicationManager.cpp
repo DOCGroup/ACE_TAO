@@ -44,6 +44,7 @@ TAO::FT_ReplicationManager::FT_ReplicationManager ()
   , fault_notifier_(FT::FaultNotifier::_nil())
   , fault_notifier_ior_(0)
   , fault_consumer_()
+  , factory_registry_("ReplicationManager::FactoryRegistry")
   , quit_(0)
 {
   //@@Note: this->init() is not called here (in the constructor)
@@ -135,6 +136,11 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
         "Could not create Property Validator.\n")),
       -1);
   }
+
+
+  // initialize the FactoryRegistry
+  this->factory_registry_.init(orb_ ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN(-1);
 
   // Get the RootPOA.
   CORBA::Object_var poa_obj = this->orb_->resolve_initial_references (
@@ -425,9 +431,7 @@ TAO::FT_ReplicationManager::get_factory_registry (
   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ::PortableGroup::FactoryRegistry_var registry = ::PortableGroup::FactoryRegistry::_nil();
-  int todo_implement_factory_registry;
-  return registry;
+  return this->factory_registry_.reference();
 }
 
 /// TAO-specific shutdown operation.
@@ -753,130 +757,4 @@ TAO::FT_ReplicationManager::delete_object (
                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
-
-#if 0
-// Returns a dummy IOGR for unit tests
-CORBA::Object_ptr
-TAO::FT_ReplicationManager::create_test_iogr (ACE_ENV_SINGLE_ARG_DECL)
-{
-  ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
-  ACE_DEBUG ((LM_DEBUG, "Creating an IOGR for the Unit Tests.\n"));
-
-  ACE_TRY_NEW_ENV
-  {
-    // Domain id
-    const char * domain_id = "TestFTDomains";
-
-    // Object group id
-    this->test_iogr_group_id_ = (CORBA::ULongLong) 10;
-
-    // create a property set
-    TAO_PG::Properties_Encoder encoder;
-    PortableGroup::Value value;
-
-    value <<= 99;
-    encoder.add(::FT::FT_MINIMUM_NUMBER_REPLICAS, value);
-
-    // allocate and populate the criteria
-    FT::Properties * props_in;
-    FT::Properties_var props;
-    ACE_NEW_NORETURN (props_in, FT::Properties);
-    if (props_in == 0)
-    {
-      ACE_ERROR((LM_ERROR, "Error cannot allocate properties.\n"));
-    }
-    else
-    {
-      props = props_in;
-      encoder.encode(props);
-    }
-
-    // Create a few fictitious IORs
-    CORBA::Object_var name1 =
-      this->orb_->string_to_object (
-        "corbaloc:iiop:acme.cs.wustl.edu:6060/xyz" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-    CORBA::Object_var name2 =
-      this->orb_->string_to_object (
-        "corbaloc::iiop:tango.cs.wustl.edu:7070/xyz" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-
-    // Create IOR list for use with merge_iors.
-    TAO_IOP::TAO_IOR_Manipulation::IORList iors (3);
-    iors.length (3);
-    iors [0] = this->object_group_manager_.create_object_group (
-      this->test_iogr_group_id_,
-      "my-dummy-type-id",
-      domain_id,
-      props.in()
-      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-    iors [1] = name1;
-    iors [2] = name2;
-
-    this->test_iogr_ = this->iorm_->merge_iors (iors ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-
-    // We only need this so we can call IORManipulation's set_primary.
-    FT::TagFTGroupTaggedComponent ft_tag_component;
-    TAO_FT_IOGR_Property ft_prop (ft_tag_component);
-
-    // set primary
-    CORBA::Boolean retval =
-      this->iorm_->set_primary (
-        &ft_prop, name2.in (),
-        this->test_iogr_.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-
-    if (retval != 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\tThe primary has been set\n")));
-    }
-    else
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\tError in setting primary\n")));
-    }
-  }
-  ACE_CATCHANY
-  {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception!\n");
-  }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
-
-  return this->test_iogr_._retn();
-}
-#endif
-
-#if 0
-int TAO::FT_ReplicationManager::readIORFile (
-  const char * filename,
-  CORBA::String_var & ior)
-{
-  int result = 0;
-  FILE *in = ACE_OS::fopen (filename, "r");
-  ACE_OS::fseek(in, 0, SEEK_END);
-  size_t fileSize = ACE_OS::ftell(in);
-  ACE_OS::fseek(in, 0, SEEK_SET);
-  char * buffer;
-  ACE_NEW_NORETURN (buffer,
-    char[fileSize+1]);
-  if (buffer != 0)
-  {
-    if( fileSize == ACE_OS::fread(buffer, 1, fileSize, in))
-    {
-      buffer[fileSize] = '\0';
-      ior = CORBA::string_dup(buffer);
-      ACE_TRY_CHECK;
-      result = 1; // success
-    }
-    delete[] buffer;
-  }
-  return result;
-}
-#endif
 

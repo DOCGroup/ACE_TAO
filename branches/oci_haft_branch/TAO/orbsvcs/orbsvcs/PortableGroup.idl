@@ -86,6 +86,8 @@ module PortableGroup
   exception MemberAlreadyPresent {};
   exception ObjectNotCreated {};
   exception ObjectNotAdded {};
+  /// TAO Specific: TypeConfict exception
+  exception TypeConflict {};
   exception UnsupportedProperty {
     Name nam;
     Value val;
@@ -208,9 +210,22 @@ module PortableGroup
   // The following FactoryRegistry interface is not included in the OMG PortableGroup IDL.
   // It's an extension needed as part of implementing the FT CORBA specification.
 
+
+  /**
+   * a name for the role the object will play
+   * This allows multiple objects that implement the same interface (TypeId)
+   * to exist at a location as long as they play different roles.
+   */
+  typedef CORBA::Identifier RoleName;
+
+  /**
+   * Reserved criteria name for specifing role.
+   */
+  const string role_criteron = "org.omg.portablegroup.Role";
+
   /**
    * Interface to allow generic factories for replicas to register themselves.
-   * Factories are distinguished by the type of object created (TypeId) and the
+   * Factories are distinguished by the role to be played by the created-object (role) and the
    * location at which they create the object (FactoryInfo.the_location)
    */
   interface FactoryRegistry
@@ -218,21 +233,25 @@ module PortableGroup
     /**
      * register a factory to create objects of the given type
      * at the location given in the FactoryInfo.
-     * @param type_id the type of object to be created.
+     *
+     * @param role the role the object-to-be-created plays.
+     * @param type_id type id of the object-to-be-created.
      * @param factory_info information about the factory including its location.
      * @throws MemberAlreadyPresent if there is already a factory for this type of object
      *         at this location.
+     * @throws TypeConflict if the specified type_id is different from the type_id previously
+     *         registered for this role.
      */
-    void register_factory(in _TypeId type_id, in FactoryInfo factory_info)
-      raises (MemberAlreadyPresent);
+    void register_factory(in RoleName role, in _TypeId type_id, in FactoryInfo factory_info)
+      raises (MemberAlreadyPresent, TypeConflict);
 
     /**
      * Remove the registration of a factory.
-     * @param type_id the type of object formerly created by this factory.
+     * @param role the role played by the object formerly created by this factory.
      * @param location where the factory formerly created objects.
-     * @throws MemberNotPresent if no factory is available for the given type at this location.
+     * @throws MemberNotPresent if no factory is available for the given role at this location.
      */
-    void unregister_factory(in _TypeId type_id, in Location location)
+    void unregister_factory(in RoleName role, in Location location)
       raises (MemberNotFound);
 
     /**
@@ -241,7 +260,7 @@ module PortableGroup
      * This is not an error.
      * @param type_id the type of object formerly created by the factories to be unregistered.
      */
-    void unregister_factory_by_type(in _TypeId type_id);
+    void unregister_factory_by_role(in RoleName role);
 
     /**
      * Remove the registration of all factories that create objects at a particular location.
@@ -252,11 +271,12 @@ module PortableGroup
     void unregister_factory_by_location(in Location location);
 
     /**
-     * List all the factories that create a given type of object.
-     * If the type is unknown, an empty list is returned.  This is not an error.
-     * @param type_id the type of object the factories create.
+     * List all the factories that create objects that fill a given role
+     * If the role is unknown, an empty list is returned.  This is not an error.
+     * @param role the type of object the factories create.
+     * @param type_id what type of object is created to fill this role.
      */
-    FactoryInfos list_factories_by_type(in _TypeId type_id);
+    FactoryInfos list_factories_by_role(in RoleName role, out _TypeId type_id);
 
     /**
      * List all the factories that create a objects at a given location.

@@ -30,9 +30,11 @@
 #include "orbsvcs/PortableGroup/PG_PropertyManager.h"
 #include "orbsvcs/PortableGroup/PG_GenericFactory.h"
 #include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
+#include <orbsvcs/PortableGroup/PG_FactoryRegistry.h>
 #include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
 #include "orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h"
 #include "orbsvcs/CosNamingC.h"
+
 
 namespace TAO
 {
@@ -472,12 +474,18 @@ namespace TAO
     /// The GenericFactory responsible for creating all object groups.
     TAO_PG_GenericFactory generic_factory_;
 
+
+
+
     /// The fault notifier.
     FT::FaultNotifier_var fault_notifier_;
     const char * fault_notifier_ior_;
 
     /// The fault consumer.
     TAO::FT_FaultConsumer fault_consumer_;
+
+    /// The factory registry
+    TAO::PG_FactoryRegistry factory_registry_;
 
     /// Quit flag.
     int quit_;

@@ -104,6 +104,14 @@ module FT_TEST
     oneway void shutdown();
   };
 
+  ///////////////////////
+  // roles for unit tests
+  // A TestReplica can act as a...
+
+//  typedef TestReplica Hobbit;
+//  typedef TestReplica Elf;
+//  typedef TestReplica Human;
+
 };
 
 #endif // for #ifndef FT_TESTREPLICA_IDL

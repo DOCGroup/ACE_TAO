@@ -19,11 +19,14 @@
 
 #include <ace/Get_Opt.h>
 
+
 TAO::Object_Group_Creator::Object_Group_Creator ()
   : registry_filename_(0)
   , registry_(0)
   , replication_manager_(0)
   , have_replication_manager_(0)
+  , make_iogr_(0)
+  , write_iors_(1)
   , iogr_seq_(0)
 {
 }
@@ -37,26 +40,38 @@ TAO::Object_Group_Creator::parse_args (int argc, char *argv[])
 {
   int result = 0;
 
-  ACE_Get_Opt get_opts (argc, argv, "t:f:k:");
+  ACE_Get_Opt get_opts (argc, argv, "r:f:u:gi");
   int c;
 
   while (result == 0 && (c = get_opts ()) != -1)
   {
     switch (c)
     {
-      case 't':
+      case 'r':
       {
-        this->create_types_.push_back (get_opts.opt_arg ());
+        this->create_roles_.push_back (get_opts.opt_arg ());
         break;
       }
-      case 'k':
+      case 'u':
       {
-        this->kill_types_.push_back (get_opts.opt_arg ());
+        this->unregister_roles_.push_back (get_opts.opt_arg ());
         break;
       }
       case 'f':
       {
         this->registry_filename_ = get_opts.opt_arg ();
+        break;
+      }
+
+      case 'g':
+      {
+        make_iogr_ = !make_iogr_;
+        break;
+      }
+
+      case 'i':
+      {
+        write_iors_ = ! write_iors_;
         break;
       }
 
@@ -76,7 +91,7 @@ TAO::Object_Group_Creator::parse_args (int argc, char *argv[])
     }
   }
 
-  if ( this->create_types_.size() == 0 && this->kill_types_.size())
+  if ( this->create_roles_.size() == 0 && this->unregister_roles_.size())
   {
     std::cerr << "Creator: neither create (-t) nor kill (-k) specified.  Nothing to do." << std::endl;
     usage (std::cerr);
@@ -89,8 +104,11 @@ TAO::Object_Group_Creator::parse_args (int argc, char *argv[])
 void TAO::Object_Group_Creator::usage(ostream & out)const
 {
   out << "usage"
-      << " -t <type_id for objects to be created>"
-      << " -f <factory ior file>"
+      << " -r <role for objects to be created>"
+      << " -f <factory registry ior file> (if not specified, ReplicationManager is used.)"
+      << " -u <role to be unregistered (for testing factory registry)>"
+      << " -g (toggle write iogr for each group (default is not to write iogrs))"
+      << " -i (toggle write ior for each object (default is to write iors))"
       << std::endl;
 }
 
@@ -129,7 +147,6 @@ int TAO::Object_Group_Creator::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
     // Find the ReplicationManager
     ACE_TRY_NEW_ENV
     {
-std::cout << "RIR(ReplicationManager)" << std::endl;
       CORBA::Object_var rm_obj = orb->resolve_initial_references("ReplicationManager" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -137,7 +154,6 @@ std::cout << "RIR(ReplicationManager)" << std::endl;
       ACE_TRY_CHECK;
       if (!CORBA::is_nil (replication_manager_))
       {
-std::cout << "Found a _real_ ReplicationManager.  Ask it for a factory registry." << std::cout;
         have_replication_manager_ = 1;
         // empty criteria
         ::PortableGroup::Criteria criteria;
@@ -155,12 +171,11 @@ std::cout << "Found a _real_ ReplicationManager.  Ask it for a factory registry.
       else
       {
 
-std::cout << "did we get a FactoryRegistry instead?" << std::endl;
         registry_ =  ::PortableGroup::FactoryRegistry::_narrow(rm_obj.in()  ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
         if (!CORBA::is_nil(registry_))
         {
-std::cout << "Found a FactoryRegistry DBA ReplicationManager" << std::endl;
+          std::cout << "Found a FactoryRegistry DBA ReplicationManager" << std::endl;
           result = 0; // success
         }
         else
@@ -185,44 +200,46 @@ std::cout << "Found a FactoryRegistry DBA ReplicationManager" << std::endl;
 int TAO::Object_Group_Creator::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   int result = 0;
-  size_t typeCount = this->create_types_.size();
+  size_t typeCount = this->create_roles_.size();
   for ( size_t nType = 0; result == 0 && nType < typeCount; ++nType)
   {
-    const char * type = this->create_types_[nType].c_str();
-    result = create_group (type);
+    const char * role = this->create_roles_[nType].c_str();
+    result = create_group (role);
   }
 
-  typeCount = this->kill_types_.size();
+  typeCount = this->unregister_roles_.size();
   for ( nType = 0; result == 0 && nType < typeCount; ++nType)
   {
-    const char * type = this->kill_types_[nType].c_str();
-    result = kill_type (type);
+    const char * role = this->unregister_roles_[nType].c_str();
+    result = unregister_role (role);
   }
 
   return result;
 }
 
-int TAO::Object_Group_Creator::kill_type(const char * type ACE_ENV_ARG_DECL)
+int TAO::Object_Group_Creator::unregister_role(const char * role ACE_ENV_ARG_DECL)
 {
   int result = 0;
-  std::cout << std::endl << "Creator: Unregistering all factories for " << type << std::endl;
-  this->registry_->unregister_factory_by_type (type ACE_ENV_ARG_PARAMETER);
+  std::cout << std::endl << "Creator: Unregistering all factories for " << role << std::endl;
+  this->registry_->unregister_factory_by_role (role ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   return result;
 }
 
-int TAO::Object_Group_Creator::create_group(const char * type ACE_ENV_ARG_DECL)
+int TAO::Object_Group_Creator::create_group(const char * role ACE_ENV_ARG_DECL)
 {
   int result = 0;
 
-  std::cout << std::endl << "Creator: Creating group of " << type << std::endl;
+  std::cout << std::endl << "Creator: Creating group of " << role << std::endl;
 
-  ::PortableGroup::FactoryInfos_var infos = this->registry_->list_factories_by_type (type
+  CORBA::String_var type_id;
+  ::PortableGroup::FactoryInfos_var infos = this->registry_->list_factories_by_role (role, type_id
       ACE_ENV_ARG_PARAMETER)
   ACE_CHECK;
 
   CORBA::ULong count = infos->length();
-  std::cout << "Creator: found " << count << " factories for " << type << std::endl;
+  std::cout << "Creator: found " << count << " factories for "
+            << role << "(" << ACE_static_cast(const char *, type_id) << ")"<< std::endl;
 
   if (count > 0)
   {
@@ -230,11 +247,16 @@ int TAO::Object_Group_Creator::create_group(const char * type ACE_ENV_ARG_DECL)
     // Begin with an empty IOGR
     ::PortableGroup::GenericFactory::FactoryCreationId_var creation_id;
     CORBA::Object_var iogr;
-    if (0 && this->have_replication_manager_)
+    if (make_iogr_ && this->have_replication_manager_)
     {
-      PortableGroup::Criteria criteria;
+      PortableGroup::Criteria criteria(1);
+      criteria.length(1);
+      criteria[0].nam.length(1);
+      criteria[0].nam[0].id = PortableGroup::PG_MEMBERSHIP_STYLE;
+      criteria[0].val <<= PortableGroup::MEMB_APP_CTRL;
+
       iogr = this->replication_manager_->create_object(
-        type,
+        type_id.in(),
         criteria,
         creation_id
         ACE_ENV_ARG_PARAMETER
@@ -253,11 +275,11 @@ int TAO::Object_Group_Creator::create_group(const char * type ACE_ENV_ARG_DECL)
       };
   */
       const char * loc_name = info.the_location[0].id;
-      std::cout << "Creator: Creating " << type << " at " << loc_name << std::endl;
+      std::cout << "Creator: Creating " << role << " at " << loc_name << std::endl;
 
       PortableGroup::GenericFactory::FactoryCreationId_var factory_creation_id;
       CORBA::Object_var created_obj = info.the_factory->create_object (
-        type,
+        type_id.in(),
         info.the_criteria,
         factory_creation_id
         ACE_ENV_ARG_PARAMETER);
@@ -267,41 +289,45 @@ int TAO::Object_Group_Creator::create_group(const char * type ACE_ENV_ARG_DECL)
         const char * replica_ior = orb_->object_to_string (created_obj ACE_ENV_ARG_PARAMETER );
         ACE_CHECK;
 
-        ////////////////////////////////////
-        // Somewhat of a hack
-        // guess at type of factory creation id
-        CORBA::ULong ulong_id = 0;
-        CORBA::Long long_id = 0;
-        if (factory_creation_id >>= ulong_id)
+
+        if (write_iors_)
         {
-          // ok
+          ////////////////////////////////////
+          // Somewhat of a hack
+          // guess at role of factory creation id
+          CORBA::ULong ulong_id = 0;
+          CORBA::Long long_id = 0;
+          if (factory_creation_id >>= ulong_id)
+          {
+            // ok
+          }
+          else if (factory_creation_id >>= long_id)
+          {
+            ulong_id = ACE_static_cast(CORBA::ULong, long_id);
+          }
+          else
+          {
+            std::cerr << "Can't decypher factory creation id." << std::endl;
+            // Guessed wrong.  Just use default value
+          }
+
+          char replica_ior_filename[200]; // "${role}_$(location)_${factory_id}.ior"
+
+          ACE_OS::snprintf(replica_ior_filename, sizeof(replica_ior_filename)-1, "%s_%s_%lu.ior",
+            role,
+            loc_name,
+            ACE_static_cast(unsigned long, ulong_id));
+          replica_ior_filename[sizeof(replica_ior_filename)-1] = '\0';
+
+          std::cout << "Creator: Writing ior for created object to " << replica_ior_filename << std::endl;
+
+          if (write_ior_file(replica_ior_filename, replica_ior) != 0)
+          {
+            std::cerr << "Creator: Error writing ior [" << replica_ior << "] to " << replica_ior_filename << std::endl;
+          }
         }
-        else if (factory_creation_id >>= long_id)
-        {
-          ulong_id = ACE_static_cast(CORBA::ULong, long_id);
-        }
-        else
-        {
-          std::cerr << "Can't decypher factory creation id." << std::endl;
-          // Guessed wrong.  Just use default value
-        }
 
-        char replica_ior_filename[200]; // "${type}_$(location)_${factory_id}.ior"
-
-        ACE_OS::snprintf(replica_ior_filename, sizeof(replica_ior_filename)-1, "%s_%s_%lu.ior",
-          type,
-          loc_name,
-          ACE_static_cast(unsigned long, ulong_id));
-        replica_ior_filename[sizeof(replica_ior_filename)-1] = '\0';
-
-        std::cout << "Creator: Writing ior for created object to " << replica_ior_filename << std::endl;
-
-        if (write_ior_file(replica_ior_filename, replica_ior) != 0)
-        {
-          std::cerr << "Creator: Error writing ior [" << replica_ior << "] to " << replica_ior_filename << std::endl;
-        }
-
-        if (0 && this->have_replication_manager_)
+        if (make_iogr_ && this->have_replication_manager_)
         {
           iogr = this->replication_manager_->add_member (iogr,
                             info.the_location,
@@ -321,16 +347,16 @@ int TAO::Object_Group_Creator::create_group(const char * type ACE_ENV_ARG_DECL)
       }
     }
 
-    std::cout << "Creator:  Successfully created group of " << type << std::endl;
+    std::cout << "Creator:  Successfully created group of " << role << std::endl;
 
-    if(0 && have_replication_manager_)
+    if(make_iogr_ && have_replication_manager_)
     {
       const char * replica_iogr = orb_->object_to_string (iogr ACE_ENV_ARG_PARAMETER );
       ACE_CHECK;
       char replica_iogr_filename[200];
 
       ACE_OS::snprintf(replica_iogr_filename, sizeof(replica_iogr_filename)-1, "%s_%lu.iogr",
-        type,
+        role,
         this->iogr_seq_);
       replica_iogr_filename[sizeof(replica_iogr_filename)-1] = '\0';
 

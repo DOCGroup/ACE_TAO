@@ -20,7 +20,7 @@
 #ifndef TEST_FT_IOGR_CLIENT_I_H
 #define TEST_FT_IOGR_CLIENT_I_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -41,5 +41,5 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TEST_FT_IOGR_CLIENT_I_H*/
