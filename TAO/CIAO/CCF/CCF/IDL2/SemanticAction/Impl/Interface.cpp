@@ -200,7 +200,7 @@ namespace CCF
             cerr << "no interface with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
-          catch (WrongType const& e)
+          catch (WrongType const&)
           {
             cerr << "incompatible type in inheritance specification" << endl;
           }

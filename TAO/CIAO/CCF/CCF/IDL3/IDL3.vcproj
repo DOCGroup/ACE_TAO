@@ -128,7 +128,7 @@
 				RelativePath=".\SemanticAction.hpp">
 			</File>
 			<File
-				RelativePath=".\SyntaxTree.hpp">
+				RelativePath=".\SemanticGraph.hpp">
 			</File>
 			<File
 				RelativePath=".\Token.hpp">
@@ -189,168 +189,36 @@
 					Filter="">
 					<File
 						RelativePath=".\SemanticAction\Impl\Component.cpp">
-						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\Consumes.cpp">
-						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\Emits.cpp">
-						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\EventType.cpp">
-						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\Factory.cpp">
-						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\Home.cpp">
-						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\HomeFactory.cpp">
-						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\Include.cpp">
-						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\Provides.cpp">
-						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\Publishes.cpp">
-						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\Uses.cpp">
-						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
 					</File>
 				</Filter>
 				<Filter
@@ -396,13 +264,13 @@
 			</Filter>
 		</Filter>
 		<Filter
-			Name="SyntaxTree"
+			Name="SemanticGraph"
 			Filter="">
 			<Filter
 				Name="Source Files"
 				Filter="">
 				<File
-					RelativePath=".\SyntaxTree\Component.cpp">
+					RelativePath=".\SemanticGraph\Component.cpp">
 					<FileConfiguration
 						Name="Debug|Win32">
 						<Tool
@@ -417,7 +285,10 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\SyntaxTree\EventType.cpp">
+					RelativePath=".\SemanticGraph\Elements.cpp">
+				</File>
+				<File
+					RelativePath=".\SemanticGraph\EventType.cpp">
 					<FileConfiguration
 						Name="Debug|Win32">
 						<Tool
@@ -432,7 +303,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\SyntaxTree\Home.cpp">
+					RelativePath=".\SemanticGraph\Home.cpp">
 					<FileConfiguration
 						Name="Debug|Win32">
 						<Tool
@@ -445,25 +316,22 @@
 							Name="VCCLCompilerTool"
 							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\SyntaxTree\Operation.cpp">
 				</File>
 			</Filter>
 			<Filter
 				Name="Header Files"
 				Filter="">
 				<File
-					RelativePath=".\SyntaxTree\Component.hpp">
+					RelativePath=".\SemanticGraph\Component.hpp">
 				</File>
 				<File
-					RelativePath=".\SyntaxTree\EventType.hpp">
+					RelativePath=".\SemanticGraph\Elements.hpp">
 				</File>
 				<File
-					RelativePath=".\SyntaxTree\Home.hpp">
+					RelativePath=".\SemanticGraph\EventType.hpp">
 				</File>
 				<File
-					RelativePath=".\SyntaxTree\Operation.hpp">
+					RelativePath=".\SemanticGraph\Home.hpp">
 				</File>
 			</Filter>
 		</Filter>
@@ -518,21 +386,6 @@
 							ObjectFile="$(IntDir)/$(InputName)2.obj"/>
 					</FileConfiguration>
 				</File>
-				<File
-					RelativePath=".\Traversal\Operation.cpp">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-					</FileConfiguration>
-				</File>
 			</Filter>
 			<Filter
 				Name="Header Files"
@@ -541,13 +394,23 @@
 					RelativePath=".\Traversal\Component.hpp">
 				</File>
 				<File
+					RelativePath=".\Traversal\Elements.hpp">
+				</File>
+				<File
 					RelativePath=".\Traversal\EventType.hpp">
 				</File>
 				<File
 					RelativePath=".\Traversal\Home.hpp">
 				</File>
+			</Filter>
+			<Filter
+				Name="Template Files"
+				Filter="">
 				<File
-					RelativePath=".\Traversal\Operation.hpp">
+					RelativePath=".\Traversal\Component.tpp">
+				</File>
+				<File
+					RelativePath=".\Traversal\EventType.tpp">
 				</File>
 			</Filter>
 		</Filter>

@@ -58,7 +58,7 @@ namespace CCF
             cerr << "no eventtype with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
-          catch (WrongType const& e)
+          catch (WrongType const&)
           {
             cerr << "declaration with name \'" << name
                  << "\' visible from scope \'" << from

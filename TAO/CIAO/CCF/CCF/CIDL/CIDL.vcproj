@@ -128,7 +128,7 @@
 				RelativePath=".\SemanticAction.hpp">
 			</File>
 			<File
-				RelativePath=".\SyntaxTree.hpp">
+				RelativePath=".\SemanticGraph.hpp">
 			</File>
 			<File
 				RelativePath=".\Token.hpp">
@@ -172,15 +172,13 @@
 					<File
 						RelativePath=".\SemanticAction\Impl\Composition.cpp">
 						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="TRUE">
+							Name="Debug|Win32">
 							<Tool
 								Name="VCCLCompilerTool"
 								ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 						</FileConfiguration>
 						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="TRUE">
+							Name="Release|Win32">
 							<Tool
 								Name="VCCLCompilerTool"
 								ObjectFile="$(IntDir)/$(InputName)1.obj"/>
@@ -188,33 +186,9 @@
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\Factory.cpp">
-						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\HomeExecutor.cpp">
-						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="TRUE">
-							<Tool
-								Name="VCCLCompilerTool"/>
-						</FileConfiguration>
 					</File>
 				</Filter>
 				<Filter
@@ -236,13 +210,13 @@
 			</Filter>
 		</Filter>
 		<Filter
-			Name="SyntaxTree"
+			Name="SemanticGraph"
 			Filter="">
 			<Filter
 				Name="Source Files"
 				Filter="">
 				<File
-					RelativePath=".\SyntaxTree\Composition.cpp">
+					RelativePath=".\SemanticGraph\Composition.cpp">
 					<FileConfiguration
 						Name="Debug|Win32">
 						<Tool
@@ -257,29 +231,23 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\SyntaxTree\HomeExecutor.cpp">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-					</FileConfiguration>
+					RelativePath=".\SemanticGraph\Elements.cpp">
+				</File>
+				<File
+					RelativePath=".\SemanticGraph\Executor.cpp">
 				</File>
 			</Filter>
 			<Filter
 				Name="Header Files"
 				Filter="">
 				<File
-					RelativePath=".\SyntaxTree\Composition.hpp">
+					RelativePath=".\SemanticGraph\Composition.hpp">
 				</File>
 				<File
-					RelativePath=".\SyntaxTree\HomeExecutor.hpp">
+					RelativePath=".\SemanticGraph\Elements.hpp">
+				</File>
+				<File
+					RelativePath=".\SemanticGraph\Executor.hpp">
 				</File>
 			</Filter>
 		</Filter>
@@ -290,33 +258,33 @@
 				Name="Source Files"
 				Filter="">
 				<File
-					RelativePath=".\Traversal\Composition.cpp">
+					RelativePath=".\Traversal\Elements.cpp">
 					<FileConfiguration
 						Name="Debug|Win32">
 						<Tool
 							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)/$(InputName)3.obj"/>
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32">
 						<Tool
 							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)/$(InputName)3.obj"/>
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\Traversal\HomeExecutor.cpp">
+					RelativePath=".\Traversal\Executor.cpp">
 					<FileConfiguration
 						Name="Debug|Win32">
 						<Tool
 							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)/$(InputName)2.obj"/>
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32">
 						<Tool
 							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)/$(InputName)2.obj"/>
+							ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 					</FileConfiguration>
 				</File>
 			</Filter>
@@ -327,7 +295,17 @@
 					RelativePath=".\Traversal\Composition.hpp">
 				</File>
 				<File
-					RelativePath=".\Traversal\HomeExecutor.hpp">
+					RelativePath=".\Traversal\Elements.hpp">
+				</File>
+				<File
+					RelativePath=".\Traversal\Executor.hpp">
+				</File>
+			</Filter>
+			<Filter
+				Name="Template Files"
+				Filter="">
+				<File
+					RelativePath=".\Traversal\Composition.tpp">
 				</File>
 			</Filter>
 		</Filter>

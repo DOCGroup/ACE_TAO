@@ -1,3 +1,36 @@
+Tue Dec 23 11:34:56 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/CIDL/CIDL.vcproj:
+	* CCF/CCF/IDL2/IDL2.vcproj:
+	* CCF/CCF/IDL3/IDL3.vcproj:
+	* CCF/CCF/CodeGenerationKit/CodeGenerationKit.vcproj:
+	* CCF/CCF/CompilerElements/CompilerElements.vcproj:
+
+	  Updated VC7.1 projects.
+
+	
+	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+	* CCF/CCF/IDL2/Parser.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Attribute.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Interface.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Member.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Operation.cpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
+	* CCF/CCF/IDL2/SemanticGraph/Graph.hpp:
+	* CCF/CCF/IDL2/SemanticGraph/Graph.tpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Component.cpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Consumes.cpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Emits.cpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Home.cpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/HomeFactory.cpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Provides.cpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Publishes.cpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Uses.cpp:
+	* CCF/CCF/CIDL/SemanticAction/Impl/HomeExecutor.cpp:
+
+	  Got rid of some warnings.
+
 Tue Dec 23 10:03:38 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
