@@ -1,3 +1,9 @@
+Thu Feb 17 08:10:08 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Service_Config.cpp (close_singletons): Don't bother calling
+	  ACE_Proactor::close_singleton() on WinCE, Win95/98, or if
+	  these's no support for AIO calls.  Thanks to Sangwoo Jin <swjinjin@sei.co.kr> for reporting this.
+
 Wed Feb 16 17:03:31 2000  Steve Huston  <shuston@riverace.com>
 
         * tests/version_tests/version_tests.dsw: Add Capabilities_Test.dsp.
