@@ -1,3 +1,18 @@
+Sat Mar 20 14:28:59 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Makefile: 
+	* tests/MT_Client/Makefile:
+	* tests/MT_Client/client.cpp:
+	* tests/MT_Client/server.conf:
+	* tests/MT_Client/server.cpp:
+	* tests/MT_Client/test.idl:
+	* tests/MT_Client/test_i.cpp:
+	* tests/MT_Client/test_i.h:
+	* tests/MT_Client/test_i.i:
+	  New test that runs a MT client using the same object reference
+	  is all threads. Notice that this may be a bad idea
+	  performance-wise, but it must work correctly.
+
 Sat Mar 20 13:38:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Timeprobe.h:
