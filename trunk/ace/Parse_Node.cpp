@@ -428,8 +428,10 @@ ACE_Object_Node::symbol (void)
 	  else
 	    ACE_ERROR_RETURN ((LM_ERROR, "\n"), 0);
 	}
+      return this->symbol_;
     }
-  return this->symbol_;
+
+  return 0;
 }
 
 ACE_Object_Node::~ACE_Object_Node (void)
