@@ -1,3 +1,9 @@
+Wed Jan 30 16:00:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process_Manager.cpp (register_handler): Replaced ECHILD with
+          EINVAL if the pid is not found. Probably a more accurate
+          assessment of the situation, and should compile clean on WinCE.
+
 Wed Jan 30 13:50:17 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* docs/index.html: Fixed the ACE-inheritance.pdf document so
