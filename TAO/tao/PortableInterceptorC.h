@@ -31,6 +31,8 @@
 
 #include "DynamicC.h"
 #include "MessagingC.h"
+#include "CurrentC.h"
+#include "IOPC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
