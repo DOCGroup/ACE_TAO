@@ -43,7 +43,7 @@ be_visitor_interface_any_op_cs::~be_visitor_interface_any_op_cs (void)
 int
 be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 {
-  if (node->cli_stub_any_op_gen () 
+  if (node->cli_stub_any_op_gen ()
       || node->imported ())
     {
       return 0;
@@ -55,7 +55,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 
   // Generate the Any <<= and >>= operator declarations.
 
-  *os << be_nl 
+  *os << be_nl
       << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
@@ -92,7 +92,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       *os << be_nl << be_nl
           << "_tao_any.contains_local (1);";
     }
- 
+
   *os << be_uidt_nl;
 
   if (!node->is_local ())
@@ -135,7 +135,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       *os << be_nl << be_nl
           << "_tao_any.contains_local (1);";
     }
- 
+
   *os << be_uidt_nl;
 
   if (!node->is_local ())
@@ -163,7 +163,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "ACE_TRY_CHECK;" << be_nl << be_nl
       << "if (!result)" << be_idt_nl
       << "{" << be_idt_nl
-      << "return 0; // not equivalent" << be_uidt_nl 
+      << "return 0; // not equivalent" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
   if (!node->is_local ())
@@ -195,24 +195,19 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
 
   *os << "}" << be_nl
       << "ACE_CATCHANY" << be_nl
-      << "{" << be_idt_nl
-      << "_tao_elem = " << node->full_name () << "::_nil ();" << be_nl
-      << "return 0;" << be_uidt_nl
+      << "{" << be_nl
       << "}" << be_nl
       << "ACE_ENDTRY;";
 
-  if (!node->is_local ())
-    {
-      *os << be_nl << be_nl
-          << "_tao_elem = " << node->full_name () << "::_nil ();" << be_nl
-          << "return 0;";
-    }
+  *os << be_nl << be_nl
+      << "_tao_elem = " << node->full_name () << "::_nil ();" << be_nl
+      << "return 0;";
 
   *os << be_uidt_nl
       << "}\n\n";
 
   *os << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \\"
-      << be_idt << be_idt_nl 
+      << be_idt << be_idt_nl
       << "defined (ACE_HAS_GNU_REPO)" << be_uidt_nl
       << "template class TAO_Object_Manager<"
       << node->full_name () << ","
@@ -228,7 +223,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface::visit_interface - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
