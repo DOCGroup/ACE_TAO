@@ -1,6 +1,7 @@
 //$Id$
-#include "tao/operation_details.h"
-#include "tao/Stub.h"
+#include "operation_details.h"
+#include "Stub.h"
+#include "Argument.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/operation_details.i"
@@ -38,4 +39,57 @@ TAO_Operation_Details::corba_exception (const char *id
   ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
                                     CORBA::COMPLETED_YES),
                     0);
+}
+
+
+bool
+TAO_Operation_Details::marshal_args (TAO_OutputCDR &cdr)
+{
+  for (int i = 0; i != this->num_args_; ++i)
+    {
+      if (!((*this->args_[i]).marshal (cdr)))
+        return false;
+    }
+
+  return true;
+}
+
+bool
+TAO_Operation_Details::demarshal_args (TAO_InputCDR &cdr)
+{
+  for (int i = 0; i != this->num_args_; ++i)
+    {
+      if (!((*this->args_[i]).demarshal (cdr)))
+        return false;
+    }
+
+  return true;
+}
+
+bool
+TAO_Operation_Details::parameter_list (Dynamic::ParameterList &list)
+{
+  list.length (this->num_args_);
+
+   for (int i = 0; i != this->num_args_; ++i)
+     (*this->args_[i]).interceptor_param (list[i]);
+
+   return true;
+}
+
+
+bool
+TAO_Operation_Details::exception_list (Dynamic::ExceptionList &list)
+{
+  /*if (this->ex_count_)
+    {
+      list.length (this->ex_count_);
+
+      for (int i = 0; i != this->ex_count_; ++i)
+        {
+          if (!((*this->args_[i]).interceptor_param (list[i])))
+            return false;
+        }
+        }*/
+  return true;
 }

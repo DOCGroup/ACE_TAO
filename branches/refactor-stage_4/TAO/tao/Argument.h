@@ -54,7 +54,8 @@ namespace TAO
     virtual void interceptor_result (CORBA::Any *);
     virtual CORBA::Boolean interceptor_replace (CORBA::Any &);
   };
-};
+
+}
 
 #include "ace/post.h"
 

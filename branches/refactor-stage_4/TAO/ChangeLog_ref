@@ -1,3 +1,74 @@
+Sun Jul 20 07:56:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Collocated_Invocation.cpp:
+	* tao/Collocated_Invocation.h: New files which provide the actual
+	  implementation for making collocated calls on the servant. This
+	  class should deal with everything related to collocation like
+	  forwarding, interceptors, special ways for AMI etc. 
+	
+	* tao/Collocation_Proxy_Broker.h: A abstract base class which will
+	  be implemented in the generated code for the client side calls
+	  to be converted as upcalls in the skeleton code. 
+
+	* tao/Invocation_Adapter.cpp:
+	* tao/Invocation_Adapter.h: The original implementation of
+	  Invocation_Base is now renamed to be TAO::Invocation_Adapter
+	  since this sounded more correct. The invocation adapter has a
+	  wide range of responsibilities including making the right type
+	  of invocation object (like oneways, twoays, collocated etc.) and 
+	  delegating further responsibilities to those classes. 
+	  
+	* tao/Argument.h: Cosmetic fix. 
+
+	* tao/ClientRequestInfo_i.cpp:
+	* tao/ClientRequestInfo_i.h: This class uses the TAO::Invocation_Base
+	  object instead of the age old TAO_GIOP_Invocation class. 
+	
+	* tao/Invocation.cpp: Changed the usage of int to bool in the
+	  calls to the ORB_Core that fetches the timeout.
+
+	* tao/Invocation_Base.cpp:
+	* tao/Invocation_Base.h: New class that serves as a base class for
+	  Remote and colloctaed invocations. This base class provides the
+	  right implementations for interceptors. 
+
+	* tao/Invocation_Endpoint_Selectors.cpp: 
+	* tao/Invocation_Endpoint_Selectors.h: Added timeout to the
+	  select_endpoint () call. 
+	
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h: Changed the calls, connection_timeout () and
+	  timeout () to take a boolean. This is just a simple
+	  C++'ification our code. Added a call collocation_strategy_new ()
+	  whose implementation is exactly the same as collocation_strategy
+	  () but returns a TAO::Collocation_Strategy instead of an
+	  int. The old call will be retired and the _new () call will
+	  replace the original call. The _new is provided as a backward
+	  compatibility measure to get our workspace compiling. 
+
+	* tao/Remote_Invocation.cpp:
+	* tao/Remote_Invocation.h: 
+	* tao/Profile_Transport_Resolver.cpp:
+	* tao/Profile_Transport_Resolver.h: Added support for connection
+	  and roundtrip timeouts.
+
+	* tao/Stub.h: The struct TAO_Exception_Data will now take a
+	  typecode pointer to the exception. 
+	
+	* tao/Synch_Invocation.cpp:
+	* tao/Synch_Invocation.h: Lots of refactoring to support timeouts
+	  in the code. 
+	
+	* tao/corbafwd.h: A new enum is now added and the old enum within
+	  namepsace TAO_Collocation_Strategy needs to be retired. Infact
+	  the namepscae itself needs to go. 
+	
+	* tao/operation_details.cpp:
+	* tao/operation_details.h:
+	* tao/operation_details.i: More or less all the details of the
+	  operation are now stored here. This makes it easier for
+	  accessing the information for interceptors. 
+
 Thu Jul 17 20:59:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Abstract_Servant_Base.h:

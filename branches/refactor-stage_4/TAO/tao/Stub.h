@@ -67,6 +67,9 @@ struct TAO_Exception_Data
 
   /// The allocator for this exception.
   TAO_Exception_Alloc alloc;
+
+  /// The typecode pointer for this exception.
+  CORBA::TypeCode_ptr tc_ptr;
 };
 
 /**

@@ -8,6 +8,29 @@
 
 . Test Location forwards
 
+. Test location forwards with collocated servants for remote servants
+  AND collcoated servants for collcoated servants.
+
 . test user exceptions
 
 . Move TAO_Exception_Data elsewhere
+
+. Remove extraneous calls and enums for collocation from
+corbafwd.h. and _new form ORB_Core.h
+
+. Test case for forwarded objects in collocated mode being remote
+. Messaging is broken
+
+
+. Work on connection timeout
+
+. Work on exception list for interceptoss in operation_details.cpp
+
+. Remove tao_queryinterface
+
+. Recursive location forwards is broken still.
+
+. Oneways and location forwards
+
+. 
+

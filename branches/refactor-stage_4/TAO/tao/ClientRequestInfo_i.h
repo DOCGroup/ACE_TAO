@@ -30,10 +30,11 @@
 #include "tao/PortableInterceptorC.h"
 #include "tao/StringSeqC.h"
 #include "tao/PICurrent.h"
+#include "tao/Invocation_Base.h"
 
-
-class TAO_GIOP_Invocation;
 class TAO_Service_Context;
+class TAO_GIOP_Invocation;
+
 
 /**
  * @class TAO_ClientRequestInfo_i
@@ -46,11 +47,15 @@ class TAO_Export TAO_ClientRequestInfo_i
 public:
 
   /// Constructor from concrete interface.
-  TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *invocation,
+  TAO_ClientRequestInfo_i (TAO::Invocation_Base *invocation,
                            CORBA::Object_ptr target);
 
+  //// @@ NEED TO GO.... For backward compatibility
+  TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *,
+                           CORBA::Object_ptr ) {};
+
   /// Constructor from abstract interface.
-  TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *invocation,
+  TAO_ClientRequestInfo_i (TAO::Invocation_Base *invocation,
                            CORBA::AbstractBase_ptr abstract_target);
 
   /// Destructor.
@@ -213,7 +218,10 @@ public:
   void response_expected (CORBA::Boolean flag);
 
   /// Set the status of the received reply.
-  void reply_status (int invoke_status);
+  void reply_status (TAO::Invocation_Status s);
+
+  // @@@@ NEEd to go
+  void reply_status (int s);
 
   /// Extract the forward object reference from the
   /// PortableInterceptor::ForwardRequest exception, and set the reply
@@ -237,7 +245,7 @@ protected:
 protected:
 
   /// Pointer to the GIOP invocation object.
-  TAO_GIOP_Invocation *invocation_;
+  TAO::Invocation_Base *invocation_;
 
   /// Reference to the target object.
   CORBA::Object_ptr target_;

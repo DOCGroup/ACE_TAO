@@ -71,8 +71,30 @@
 #endif /* _MSC_VER */
 
 /// Define symbolic names for the ORB collocation strategies.
-namespace TAO_Collocation_Strategies
+namespace TAO
 {
+  enum Collocation_Strategy {
+    /// i.e no collocation.
+    TAO_CS_REMOTE_STRATEGY,
+
+    /// Calls to the collocated object are forwarded by the POA.
+    TAO_CS_THRU_POA_STRATEGY,
+
+    /// Calls to the collocated object are made directly to its
+    /// servant.
+    TAO_CS_DIRECT_STRATEGY,
+
+    /// This value should always be the last value in the enumeration.
+    /// It provides the count for the number of collocation
+    /// strategies.
+    TAO_CS_LAST
+  };
+}
+
+/// Define symbolic names for the ORB collocation strategies.
+/// @@Backward compatibililty to get things compiling.Needs removal.
+namespace TAO_Collocation_Strategies {
+
   enum {
     /// i.e no collocation.
     CS_REMOTE_STRATEGY,
