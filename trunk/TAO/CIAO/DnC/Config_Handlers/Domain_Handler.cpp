@@ -4,6 +4,8 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 #include "Domain_Handler.h"
+#include "Property_Handler.h"
+#include "SP_Handler.h"
 
 #include <iostream>
 #include "string.h"
@@ -16,10 +18,6 @@ namespace CIAO
 {
   namespace Config_Handler
   {
-    typedef ACE_Hash_Map_Iterator<ACE_TString, int, ACE_SYNCH_RW_MUTEX> 
-            REF_ITER;
-    typedef ACE_Hash_Map_Entry<ACE_TString, int> REF_ENTRY;
-
     Domain_Handler::Domain_Handler (DOMDocument* doc, unsigned long filter)
       : traverse_ (doc),
         doc_ (doc),
@@ -46,16 +44,6 @@ namespace CIAO
       this->dump_ics (domain);
       this->dump_bridges (domain);
       this->dump_srs (domain);
-/*
-      REF_ITER end = id_map_.end ();
-
-      for (REF_ITER iter = id_map_.begin ();
-           iter != end;
-           ++iter)
-        {
-          REF_ENTRY &entry = *iter;
-        }
-*/
     }
 
     Domain_Handler::~Domain_Handler()
@@ -103,81 +91,11 @@ namespace CIAO
                     }
                   else if (length > 1)
                     {
-                      for (int j = 0; j < length; j++)
-                        {
-                          DOMNode* attribute_node = named_node_map->item (j);
-                          XStr strattrnodename 
-                             (attribute_node->getNodeName ());
-                          ACE_TString aceattrnodevalue =  XMLString::transcode
-                             (attribute_node->getNodeValue ());
-                          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-                            {
-                              CORBA::ULong i (domain.sharedResource.length ());
-                              domain.sharedResource.length (i + 1);
-                              this->process_domain_sr 
-                                    (this->doc_, this->iter_,
-                                     domain.sharedResource[i]);
-                              id_map_.bind (aceattrnodevalue, i);
-                            }
-                          else if (strattrnodename == XStr (ACE_TEXT ("href")))
-                            {
-                              CORBA::ULong i (domain.sharedResource.length ());
-                              domain.sharedResource.length (i + 1);
-                              XMLURL xml_url (aceattrnodevalue.c_str ());
-                              XMLURL result (aceattrnodevalue.c_str ());
-                              ACE_TString doc_path = 
-                               XMLString::transcode ( doc_->getDocumentURI ());
-                              result.makeRelativeTo 
-                                 (XMLString::transcode (doc_path.c_str ()));
-                              ACE_TString final_url = 
-                               XMLString::transcode (result.getURLText ());
-
-                              if (xml_url.isRelative ())
-                                {
-
-                                  DOMDocument* href_doc = 
-                                    this->create_document (final_url.c_str ());
-                                  DOMDocumentTraversal* traverse (href_doc);
-                                  DOMNode* root = 
-                                    (href_doc->getDocumentElement ());
-                                  unsigned long filter =
-                                    DOMNodeFilter::SHOW_ELEMENT |
-                                    DOMNodeFilter::SHOW_TEXT;
-                                  DOMNodeIterator* iter = 
-                                    traverse->createNodeIterator (root,
-                                                                  filter,
-                                                                  0,
-                                                                  true);
-                                  iter->nextNode ();
-                                  this->process_domain_sr 
-                                    (href_doc, iter, domain.sharedResource[i]);
-                                }
-                              else
-                                {
-                                  std::string url_string = 
-                                    aceattrnodevalue.c_str ();
-                                  DOMDocument* href_doc = 
-                                    this->create_document (url_string.c_str ());
-                                  DOMDocumentTraversal* traverse (href_doc);
-                                  DOMNode* root = 
-                                    (href_doc->getDocumentElement ());
-                                  unsigned long filter =
-                                    DOMNodeFilter::SHOW_ELEMENT |
-                                    DOMNodeFilter::SHOW_TEXT;
-                                  DOMNodeIterator* iter = 
-                                    traverse->createNodeIterator (root,
-                                                                  filter,
-                                                                  0,
-                                                                  true);
-                                  iter->nextNode ();
-                                  this->process_domain_sr 
-                                    (href_doc, iter, domain.sharedResource[i]);
-                                }
-                            }
-                          else
-                            {
-                            }
-                        }
+                      CORBA::ULong i (domain.sharedResource.length ());
+                      domain.sharedResource.length (i + 1);
+                      this->process_attributes_for_sr
+                        (named_node_map, this->doc_,
+                         this->iter_, domain.sharedResource[i]);
                     }
                 }
             }
@@ -197,85 +115,12 @@ namespace CIAO
                     }
                   else if (length > 1)
                     {
-                      for (int j = 0; j < length; j++)
-                        {
-                          DOMNode* attribute_node = named_node_map->item (j);
-                          XStr strattrnodename 
-                             (attribute_node->getNodeName ());
-                          ACE_TString aceattrnodevalue =  XMLString::transcode
-                             (attribute_node->getNodeValue ());
-                          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
-                            {
-                              CORBA::ULong i (domain.node.length ());
-                              domain.node.length (i + 1);
-                              this->process_domain_node (this->doc_,
-                                                         this->iter_,
-                                                         domain.node[i]);
-                              id_map_.bind (aceattrnodevalue, i);
-                            }
-                          else if (strattrnodename == XStr (ACE_TEXT ("href")))
-                            {
-                              CORBA::ULong i (domain.node.length ());
-                              domain.node.length (i + 1);
-                              XMLURL xml_url (aceattrnodevalue.c_str ());
-                              XMLURL result (aceattrnodevalue.c_str ());
-                              ACE_TString doc_path = 
-                               XMLString::transcode ( doc_->getDocumentURI ());
-                              result.makeRelativeTo 
-                                 (XMLString::transcode (doc_path.c_str ()));
-                              ACE_TString final_url = 
-                               XMLString::transcode (result.getURLText ());
-                              if (xml_url.isRelative ())
-                                {
-                                  DOMDocument* href_doc = 
-                                    this->create_document (final_url.c_str ());
-                                  DOMDocumentTraversal* traverse (href_doc);
-                                  DOMNode* root = 
-                                    (href_doc->getDocumentElement ());
-                                  unsigned long filter =
-                                    DOMNodeFilter::SHOW_ELEMENT |
-                                    DOMNodeFilter::SHOW_TEXT;
-                                  DOMNodeIterator* iter = 
-                                    traverse->createNodeIterator (root,
-                                                                  filter,
-                                                                  0,
-                                                                  true);
-                                  iter->nextNode ();
-                                  this->process_domain_node (href_doc,
-                                                             iter,
-                                                             domain.node[i]);
-                                }
-                              else
-                                {
-                                  std::string url_string = 
-                                    aceattrnodevalue.c_str ();
-                                  DOMDocument* href_doc = 
-                                    this->create_document (url_string.c_str ());
-                                  DOMDocumentTraversal* traverse (href_doc);
-                                  DOMNode* root = 
-                                    (href_doc->getDocumentElement ());
-                                  unsigned long filter =
-                                    DOMNodeFilter::SHOW_ELEMENT |
-                                    DOMNodeFilter::SHOW_TEXT;
-                                  DOMNodeIterator* iter = 
-                                    traverse->createNodeIterator (root,
-                                                                  filter,
-                                                                  0,
-                                                                  true);
-                                  iter->nextNode ();
-                                  this->process_domain_node (href_doc,
-                                                             iter,
-                                                             domain.node[i]);
-                                }
-                            }
-                          else
-                            {
-                            }
-                        }
+                      CORBA::ULong i (domain.node.length ());
+                      domain.node.length (i + 1);
+                      this->process_attributes_for_node
+                        (named_node_map, this->doc_,
+                         this->iter_, domain.node[i]);
                     }
-                }
-              else
-                {
                 }
             }
           else if (node_name == XStr (ACE_TEXT ("interconnect")))
@@ -2324,6 +2169,138 @@ namespace CIAO
                           domain.node[value].name.in ()));
             }
         }
+    }
+
+    void Domain_Handler::process_attributes_for_sr 
+         (DOMNamedNodeMap* named_node_map,
+          DOMDocument* doc,
+          DOMNodeIterator* iter,
+          Deployment::SharedResource& domain_sr)
+    {
+      int length = named_node_map->getLength ();
+
+      for (int j = 0; j < length; j++)
+        {
+          DOMNode* attribute_node = named_node_map->item (j);
+          XStr strattrnodename
+             (attribute_node->getNodeName ());
+          ACE_TString aceattrnodevalue =  XMLString::transcode
+             (attribute_node->getNodeValue ());
+
+          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
+            {
+              this->process_domain_sr (doc,
+                                       iter,
+                                       domain_sr);
+            }
+          else if (strattrnodename == XStr (ACE_TEXT ("href")))
+            {
+              XMLURL xml_url (aceattrnodevalue.c_str ());
+              XMLURL result (aceattrnodevalue.c_str ());
+              std::string url_string = aceattrnodevalue.c_str ();
+              ACE_TString doc_path =
+               XMLString::transcode ( doc->getDocumentURI ());
+              result.makeRelativeTo
+                 (XMLString::transcode (doc_path.c_str ()));
+              ACE_TString final_url =
+               XMLString::transcode (result.getURLText ());
+
+              DOMDocument* href_doc;
+
+              if (xml_url.isRelative ())
+                {
+                  href_doc = this->create_document 
+                       (final_url.c_str ());
+                }
+              else
+                {
+                  href_doc = this->create_document 
+                       (url_string.c_str ());
+                }
+
+              DOMDocumentTraversal* traverse (href_doc);
+              DOMNode* root = (href_doc->getDocumentElement ());
+              unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
+                                     DOMNodeFilter::SHOW_TEXT;
+              DOMNodeIterator* href_iter = traverse->createNodeIterator
+                                              (root,
+                                               filter,
+                                               0,
+                                               true);
+              href_iter->nextNode ();
+              this->process_domain_sr (href_doc,
+                                       href_iter,
+                                       domain_sr);
+            }
+        }
+
+      return;
+    }
+
+    void Domain_Handler::process_attributes_for_node 
+         (DOMNamedNodeMap* named_node_map,
+          DOMDocument* doc,
+          DOMNodeIterator* iter,
+          Deployment::Node& domain_node)
+    {
+      int length = named_node_map->getLength ();
+
+      for (int j = 0; j < length; j++)
+        {
+          DOMNode* attribute_node = named_node_map->item (j);
+          XStr strattrnodename
+             (attribute_node->getNodeName ());
+          ACE_TString aceattrnodevalue =  XMLString::transcode
+             (attribute_node->getNodeValue ());
+
+          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
+            {
+              this->process_domain_node (doc,
+                                         iter,
+                                         domain_node);
+            }
+          else if (strattrnodename == XStr (ACE_TEXT ("href")))
+            {
+              XMLURL xml_url (aceattrnodevalue.c_str ());
+              XMLURL result (aceattrnodevalue.c_str ());
+              std::string url_string = aceattrnodevalue.c_str ();
+              ACE_TString doc_path =
+               XMLString::transcode ( doc->getDocumentURI ());
+              result.makeRelativeTo
+                 (XMLString::transcode (doc_path.c_str ()));
+              ACE_TString final_url =
+               XMLString::transcode (result.getURLText ());
+
+              DOMDocument* href_doc;
+
+              if (xml_url.isRelative ())
+                {
+                  href_doc = this->create_document 
+                       (final_url.c_str ());
+                }
+              else
+                {
+                  href_doc = this->create_document 
+                       (url_string.c_str ());
+                }
+
+              DOMDocumentTraversal* traverse (href_doc);
+              DOMNode* root = (href_doc->getDocumentElement ());
+              unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
+                                     DOMNodeFilter::SHOW_TEXT;
+              DOMNodeIterator* href_iter = traverse->createNodeIterator
+                                              (root,
+                                               filter,
+                                               0,
+                                               true);
+              href_iter->nextNode ();
+              this->process_domain_node (href_doc,
+                                         href_iter,
+                                         domain_node);
+            }
+        }
+
+      return;
     }
 
   }
