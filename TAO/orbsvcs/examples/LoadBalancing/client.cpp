@@ -76,7 +76,7 @@ main (int argc, char *argv[])
                             1);
         }
 
-      cout << "Starting Client " << number << endl;
+      ACE_DEBUG ((LM_DEBUG, "Starting Client %d\n", number));
 
       for (int i = 0; i < niterations; ++i)
         {
@@ -87,9 +87,9 @@ main (int argc, char *argv[])
 
           CORBA::Double price = stock->price ();
 
-          cout << "The price of a stock in \""
-               << full_name.in () << "\" is $"
-               << price << endl;
+          ACE_DEBUG ((LM_DEBUG, "The price of a stock in \"%s\" is $%f\n",
+                      full_name.in (),
+                      price));
         }
 
       //stockfactory->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
