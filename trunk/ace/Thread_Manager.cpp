@@ -416,11 +416,6 @@ ace_thread_manager_adapter (void *args)
   // Invoke the user-supplied function with the args.
   void *status = thread_args->invoke ();
 
-#if defined (ACE_HAS_TSS_EMULATION)
-  // Lastly, close the thread's local TS storage.
-  ACE_TSS_Emulation::tss_close (ts_storage);
-#endif /* ACE_HAS_TSS_EMULATION */
-
   return status;
 }
 
