@@ -120,7 +120,8 @@ FE_Declarator::compose (AST_Decl *d)
       char *current_prefix = 0;
       idl_global->pragma_prefixes ().top (current_prefix);
 
-      if (ACE_OS::strcmp (current_prefix, d->prefix ()) != 0)
+      if (current_prefix != 0 
+          && ACE_OS::strcmp (current_prefix, d->prefix ()) != 0)
         {
           idl_global->err ()->error1 (UTL_Error::EIDL_PREFIX_CONFLICT,
                                       d);
