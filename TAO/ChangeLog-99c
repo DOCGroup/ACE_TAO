@@ -1,3 +1,54 @@
+Fri Oct  1 19:02:37 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/ORB_Core.cpp:
+
+	  Made service configurator argument vector in init() a member of
+	  the TAO_ORB_Core class so that it is properly deallocated when
+	  an error occurs in init().  This makes the allocation of the
+	  argument vector exception safe.  [Bug 330]
+
+	  Added a TAO_ORB_Core_Auto_Ptr class that properly calls
+	  TAO_ORB_Core::fini() upon destruction.
+
+	  Made allocation of TAO_POA_Manager in create_and_set_root_poa()
+	  exception safe by using an auto_ptr.
+
+	  Updated init() method to accept a CORBA::Environment variable,
+	  and updated returned error conditions to throw the appropriate
+	  exception.  [Bug 14]
+
+	  Removed owns_resources_ member from TAO_ORB_Core_TSS_Resources
+	  class since it wasn't used, nor should it be used.  The amount
+	  of control it provided over what gets owned by TSS was too
+	  coarse grained.
+
+	* tao/ORB.cpp (ORB_init);
+
+	  Made allocation of TAO_ORB_Core exception safe by using the
+	  newly added TAO_ORB_Core_Auto_Ptr. 
+	
+	* tao/IIOP_Acceptor.cpp (open):
+
+	  Fixed endpoint parsing code so that it works as users expect.
+	  Specifically, the following -ORBEndpoint use cases will work as
+	  expected:
+	  
+	    -ORBEndpoint iiop://my_host
+	    -ORBEndpoint iiop://:my_port   (note colon ':' before
+	                                    my_port)
+	  [Bug 311]
+
+	* tao/Stub.i (reset):
+
+	  Do not call _decr_refcnt() in TAO_Stub_Auto_Ptr::reset() if the
+	  underlying pointer is zero.
+
+	* docs/Options.html:
+
+	  Spelling corrections.
+
 Fri Oct  1 15:00:40 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
