@@ -82,6 +82,12 @@ Test_DynEnum::run_test (void)
       CORBA::ULong ul_out1 = de1->get_as_ulong (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      analyzer.analyze(de1.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CORBA::Any_var out_any2 = de1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       if (ul_out1 == 1)
         {
           ACE_DEBUG ((LM_DEBUG,
