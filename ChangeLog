@@ -1,3 +1,9 @@
+Fri Aug 25 15:43:28 2000  Steve Huston  <shuston@riverace.com>
+
+        * docs/ACE-guidelines.html: Add the "use this->member" rule when
+          referring to member functions or variables. Thanks to Edan Ayal
+          <edanayal@yahoo.com> for the reminder to add this rule.
+
 Fri Aug 25 12:12:40 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/OS.h:
