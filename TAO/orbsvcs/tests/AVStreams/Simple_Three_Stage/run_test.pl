@@ -15,7 +15,7 @@ $status = 0;
 
 $nsior = PerlACE::LocalFile ("ns.ior");
 $testfile = PerlACE::LocalFile ("test");
-$makefile = PerlACE::LocalFile ("Makefile");
+$makefile = PerlACE::LocalFile ("input");
 
 unlink $nsior;
 
@@ -55,14 +55,14 @@ if ($distributer != 0) {
     $status = 1;
 }
 
-$sender = $SV->TerminateWaitKill (5);
+$sender = $SV->TerminateWaitKill (60);
 
 if ($sender != 0) {
     print STDERR "ERROR: sender returned $sender\n";
     $status = 1;
 }
 
-$receiver = $RE->TerminateWaitKill (5);
+$receiver = $RE->TerminateWaitKill (60);
 
 if ($receiver != 0) {
     print STDERR "ERROR: sender returned $sender\n";
@@ -70,7 +70,7 @@ if ($receiver != 0) {
 }
 
 
-$nserver = $NS->TerminateWaitKill (5);
+$nserver = $NS->TerminateWaitKill (60);
 
 if ($nserver != 0) {
     print STDERR "ERROR: Naming Service returned $nserver\n";

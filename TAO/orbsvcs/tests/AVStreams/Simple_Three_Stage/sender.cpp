@@ -358,6 +358,8 @@ main (int argc,
       SENDER::instance ()->pace_data (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      ACE_Time_Value tv (20);
+      orb->run (tv);
       // Hack for now....
       ACE_OS::sleep (1);
     }
