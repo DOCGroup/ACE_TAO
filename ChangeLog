@@ -1,3 +1,20 @@
+Fri Nov  5 18:11:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/OS_NS_Thread.cpp (thr_create):
+
+	  Fixed memory leak that were caused due to allocated
+	  <thread_args> not being deleted whenever there is an error. Got
+	  around this problem by using an auto_ptr, and releasing the
+	  pointer when thr_create () is successful. Thanks to Gary Maxey
+	  for reporting the problem.
+	  
+	* ace/Base_Thread_Adapter.h (ACE_Base_Thread_Adapter): 
+
+	  Moved the destructor to be public and the constructor to be
+	  private. Making the destructor seems to have more downsides like
+	  the one above (which basically prevented us from using
+	  auto_ptr's).
+
 Fri Nov  5 16:14:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_stdlib.cpp:
@@ -17,10 +34,11 @@ Fri Nov  5 15:36:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
 	* include/makeinclude/rules.bin.GNU:
-	  Changes to support VxWorks 5.5.1 linking (both DIAB and GNU toolchains).
-	  With VxWorks 5.5.1 linking is done based on rules/targets defined in the
-          makefile configuration provided with the VxWorks toolset which is embedded
-          in the ACE/TAO structure through the platform_macros.
+	  Changes to support VxWorks 5.5.1 linking (both DIAB and GNU
+	  toolchains). With VxWorks 5.5.1 linking is done based on
+	  rules/targets defined in the makefile configuration provided
+	  with the VxWorks toolset which is embedded in the ACE/TAO
+	  structure through the platform_macros. 
 
 Fri Nov  5 15:30:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 

@@ -18,6 +18,7 @@ ACE_RCSID (ace,
 #include "ace/OS_NS_ctype.h"
 #include "ace/Log_Msg.h" // for ACE_ASSERT
 // This is necessary to work around nasty problems with MVS C++.
+#include "ace/Auto_Ptr.h"
 
 extern "C" void
 ace_mutex_lock_cleanup_adapter (void *args)
@@ -2238,7 +2239,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   ACE_Base_Thread_Adapter *thread_args;
   if (thread_adapter == 0)
-
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
     ACE_NEW_RETURN (thread_args,
                     ACE_OS_Thread_Adapter (func, args,
@@ -2255,6 +2255,13 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
   else
     thread_args = thread_adapter;
+
+  auto_ptr <ACE_Base_Thread_Adapter> auto_thread_args;
+
+  if (thread_adapter == 0)
+    ACE_AUTO_PTR_RESET (auto_thread_args,
+                        thread_args,
+                        ACE_Base_Thread_Adapter);
 
 #if defined (ACE_HAS_THREADS)
 
@@ -2768,6 +2775,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #     endif /* ACE_NEEDS_LWP_PRIO_SET */
 
 #   endif /* sun && ACE_HAS_ONLY_SCHED_OTHER */
+  auto_thread_args.release ();
   return result;
 # elif defined (ACE_HAS_STHREADS)
   int result;
@@ -2810,6 +2818,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
             }
         }
     }
+  auto_thread_args.release ();
   return result;
 # elif defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG (stack);
@@ -2885,7 +2894,10 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     ::CloseHandle (tmp_handle);
 
   if (*thr_handle != 0)
-    return 0;
+    {
+      auto_thread_args.release ();
+      return 0;
+    }
   else
     ACE_FAIL_RETURN (-1);
   /* NOTREACHED */
@@ -2952,6 +2964,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   // store the task id in the handle and return success
   *thr_handle = tid;
+  auto_thread_args.release ();
   return 0;
 
 # elif defined (VXWORKS)
@@ -3049,6 +3062,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       if (thr_handle)
         *thr_handle = tid;
 
+      auto_thread_args.release ();
       return 0;
     }
 
