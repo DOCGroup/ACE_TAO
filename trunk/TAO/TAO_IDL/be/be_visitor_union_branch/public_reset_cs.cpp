@@ -193,6 +193,7 @@ be_visitor_union_branch_public_reset_cs::visit_interface (be_interface *node)
     }
   TAO_OutStream *os = this->ctx_->stream ();
   *os << "delete this->u_." << ub->local_name () << "_;" << be_nl;
+  *os << "ACE_OS::memset ((void *) &this->u_, 0, sizeof (this->u_));" << be_nl;
   *os << "break;" << be_uidt_nl;
 
   return 0;
@@ -216,6 +217,7 @@ be_visitor_union_branch_public_reset_cs::visit_interface_fwd (be_interface_fwd *
     }
   TAO_OutStream *os = this->ctx_->stream ();
   *os << "delete this->u_." << ub->local_name () << "_;" << be_nl;
+  *os << "ACE_OS::memset ((void *) &this->u_, 0, sizeof (this->u_));" << be_nl;
   *os << "break;" << be_uidt_nl;
 
   return 0;
