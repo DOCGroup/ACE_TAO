@@ -51,7 +51,6 @@ TAO/orbsvcs/Naming_Service/Naming_Service.dsw, Naming_Service:
 TAO/orbsvcs/Scheduling_Service/Scheduling_Service.dsw, Scheduling_Service:
 TAO/orbsvcs/Event_Service/Event_Service.dsw, Event_Service:
 TAO/orbsvcs/Dump_Schedule/Dump_Schedule.dsw, Dump_Schedule:
-TAO/orbsvcs/Concurrency_Service/Concurrency_Service.dsw, Concurrency_Service:
 TAO/orbsvcs/LifeCycle_Service/LifeCycle_Service.dsw, LifeCycle_Service:
 TAO/orbsvcs/Trading_Service/Trading_Service.dsw, Trading_Service:
 TAO/orbsvcs/Time_Service/Time_Service.dsw, Time_Service_Server:
@@ -74,7 +73,6 @@ TAO/orbsvcs/Naming_Service/Naming_Service.dsw, Naming_Service:
 TAO/orbsvcs/Scheduling_Service/Scheduling_Service.dsw, Scheduling_Service:
 TAO/orbsvcs/Event_Service/Event_Service.dsw, Event_Service:
 TAO/orbsvcs/Dump_Schedule/Dump_Schedule.dsw, Dump_Schedule:
-TAO/orbsvcs/Concurrency_Service/Concurrency_Service.dsw, Concurrency_Service:
 TAO/orbsvcs/LifeCycle_Service/LifeCycle_Service.dsw, LifeCycle_Service:
 TAO/orbsvcs/Trading_Service/Trading_Service.dsw, Trading_Service:
 TAO/orbsvcs/Time_Service/Time_Service.dsw, Time_Service_Server:
