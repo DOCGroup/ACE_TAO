@@ -194,6 +194,13 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_find (const EXT_ID &ext_id,
   return -1;
 }
 
+template <class EXT_ID, class INT_ID, class LOCK> int
+ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::equal (const EXT_ID &id1,
+					      const EXT_ID &id2)
+{
+  return id1 == id2;
+}
+
 // Find the <int_id> corresponding to the <ext_id>.
 
 template <class EXT_ID, class INT_ID, class LOCK> int 
@@ -206,7 +213,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_find (const EXT_ID &ext_id)
       const ACE_Map_Entry<EXT_ID, INT_ID> &ss 
         = this->search_structure_[i];
 
-      if (ss.is_free_ == 0 && ss.ext_id_ == ext_id)
+      if (ss.is_free_ == 0 && this->equal (ss.ext_id_, ext_id))
         // We found it!
         return i;
     }
@@ -227,8 +234,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_bind (const EXT_ID &ext_id,
 
       ACE_Map_Entry<EXT_ID, INT_ID> &ss = this->search_structure_[first_free];
 
-      ss.ext_id_  = ext_id;
-      ss.int_id_  = int_id;
+      ss.ext_id_ = ext_id;
+      ss.int_id_ = int_id;
       ss.is_free_ = 0;
       this->allocator_->sync ((void *) &this->search_structure_[first_free], sizeof ss);
       return 0;
@@ -244,8 +251,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_bind (const EXT_ID &ext_id,
   
   ACE_Map_Entry<EXT_ID, INT_ID> &ss = this->search_structure_[this->cur_size_];
   
-  ss.int_id_  = int_id;
-  ss.ext_id_  = ext_id;
+  ss.int_id_ = int_id;
+  ss.ext_id_ = ext_id;
   ss.is_free_ = 0;
   this->allocator_->sync ((void *) &this->search_structure_[this->cur_size_], sizeof ss);
   this->cur_size_++;
@@ -426,7 +433,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_unbind (const EXT_ID &ext_id)
     {
       ACE_Map_Entry<EXT_ID, INT_ID> &ss = this->search_structure_[i];
 
-      if (ss.is_free_ == 0 && ss.ext_id_ == ext_id)
+      if (ss.is_free_ == 0 && this->equal (ss.ext_id_, ext_id))
         {
           size_t index = i;
 

@@ -59,15 +59,17 @@ class ACE_Hash_Map_Iterator;
 template <class EXT_ID, class INT_ID, class LOCK>
 class ACE_Hash_Map_Manager 
   // = TITLE
-  //     Define a map abstraction (useful for managing connections and
-  //     sessions).
+  //     Define a map abstraction that associates <EXT_ID>s with
+  //     <INT_ID>s.  
   //     
   // = DESCRIPTION
   //     This implementation of a map uses a hash table.  Therefore,
   //     this class expects that the <EXT_ID> contains a method called
-  //     <hash>.  This class uses an ACE_Allocator to allocate memory
-  //     The user can make this a persistant class by providing an
-  //     ACE_Allocator with a persistable memory pool
+  //     <hash>.  In addition, the <EXT_ID> must support <operator==>
+  //     (both of these constraints can be alleviated via template
+  //     specialization).  This class uses an ACE_Allocator to
+  //     allocate memory The user can make this a persistant class by
+  //     providing an ACE_Allocator with a persistable memory pool
 {
   friend class ACE_Hash_Map_Iterator<EXT_ID, INT_ID, LOCK>;
 public:
@@ -153,8 +155,13 @@ public:
 protected:
   // = The following methods do the actual work.
 
+  int equal (const EXT_ID &id1, const EXT_ID &id2);
+  // Returns 1 if <id1> == <id2>, else 0.  This is defined as a
+  // separate method to facilitate template specialization.
+
   size_t hash (const EXT_ID &ext_id);
-  // Compute the hash value of the <ext_id>.
+  // Compute the hash value of the <ext_id>.  This is defined as a
+  // separate method to facilitate template specialization.
 
   // = These methods assume locks are held by private methods.
   

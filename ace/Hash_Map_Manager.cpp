@@ -148,7 +148,8 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::close_i (void)
       for (size_t i = 0; i < this->total_size_; i++)
 	{
 	  for (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp_ptr = this->table_[i]; 
-	       temp_ptr != sentinel_;)
+	       temp_ptr != sentinel_;
+	       )
 	    {
 	      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *hold_ptr = temp_ptr;
 	      temp_ptr = temp_ptr->next_;
@@ -197,6 +198,13 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::hash (const EXT_ID &ext_id)
   return ext_id.hash ();
 }
 
+template <class EXT_ID, class INT_ID, class LOCK> int
+ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::equal (const EXT_ID &id1,
+						   const EXT_ID &id2)
+{
+  return id1 == id2;
+}
+
 template <class EXT_ID, class INT_ID, class LOCK> int 
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::bind_i (const EXT_ID &ext_id,
 						    const INT_ID &int_id)
@@ -206,7 +214,7 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::bind_i (const EXT_ID &ext_id,
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc];
 
   for (this->sentinel_->ext_id_ = ext_id;
-       temp->ext_id_ != ext_id;
+       this->equal (temp->ext_id_, ext_id) == 0;
        temp = temp->next_)
     continue;
 
@@ -246,7 +254,7 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::trybind_i (const EXT_ID &ext_id,
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc];
 
   for (this->sentinel_->ext_id_ = ext_id;
-       temp->ext_id_ != ext_id;
+       this->equal (temp->ext_id_, ext_id) == 0;
        temp = temp->next_)
     continue;
 
@@ -291,7 +299,7 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind_i (const EXT_ID &ext_id,
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev = 0;
 
   for (this->sentinel_->ext_id_ = ext_id;
-       temp->ext_id_ != ext_id;
+       this->equal (temp->ext_id_, ext_id) == 0;
        temp = temp->next_)
     prev = temp;
 
@@ -345,7 +353,7 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_find (const EXT_ID &ext_id,
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc];
 
   for (this->sentinel_->ext_id_ = ext_id;
-       temp->ext_id_ != ext_id;
+       this->equal (temp->ext_id_, ext_id) == 0;
        temp = temp->next_)
     continue;
 
