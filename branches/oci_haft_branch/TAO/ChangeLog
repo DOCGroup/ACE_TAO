@@ -1,22 +1,28 @@
-Mon Sep 25 04:15:55 2003  Curt Hibbs  <hibbs_c@ociweb.com>
+Mon Sep 29 18:19:51 2003  Steve Totten  <totten_s@ociweb.com>
 
-        * TAO/orbsvcs/FT_ReplicationManager/FT_Property_Validator.cpp
-        * TAO/orbsvcs/FT_ReplicationManager/FT_Property_Validator.h
-        * TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp
-        * TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h
-        * TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager_Main.cpp
-        * TAO/orbsvcs/orbsvcs/FTORB.mpc
-        * TAO/orbsvcs/orbsvcs/FT_CORBA.idl
-        * TAO/orbsvcs/orbsvcs/FT_CORBA_ORB.idl
-        * TAO/orbsvcs/orbsvcs/FT_ReplicationManager.idl
-        * TAO/orbsvcs/orbsvcs/FaultTolerance.mpc
-        * TAO/orbsvcs/orbsvcs/PortableGroup.idl
-        * TAO/orbsvcs/orbsvcs/PortableGroup.mpc
-        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.h
-        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
-        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h
-        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp
-        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_conf.h
+        * orbsvcs/orbsvcs/PortableGroup/PG_Utils.cpp:
+          Fixed compilation error in VC++ 6.0 involving re-use 
+          of 'i' as a for loop control variable.
+
+Mon Sep 29 16:15:55 2003  Curt Hibbs  <hibbs_c@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_Property_Validator.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_Property_Validator.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager_Main.cpp:
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FT_CORBA.idl:
+        * orbsvcs/orbsvcs/FT_CORBA_ORB.idl:
+        * orbsvcs/orbsvcs/FT_ReplicationManager.idl:
+        * orbsvcs/orbsvcs/FaultTolerance.mpc:
+        * orbsvcs/orbsvcs/PortableGroup.idl:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_conf.h:
           TagFTGroupTaggedComponent was previously moved to Portablegroups
           as  TagGroupTaggedComponent, but was never removed from
           FT_CORBA_ORB.idl.   Consequently, some code was using the
@@ -24,19 +30,19 @@ Mon Sep 25 04:15:55 2003  Curt Hibbs  <hibbs_c@ociweb.com>
           version. This removes the FT version and changes all code that
           referenced it to now use the PortableGroup version.
 
-        * TAO/orbsvcs/tests/FT_App/FT_App.mpc
-        * TAO/orbsvcs/tests/FT_App/FT_Client_Unit.cpp
-        * TAO/orbsvcs/tests/FT_App/FT_UnitTests.cpp
-        The Replication Manager's unit tests were removed from the FT test
-        App and moved into its own module.
+        * orbsvcs/tests/FT_App/FT_App.mpc:
+        * orbsvcs/tests/FT_App/FT_Client_Unit.cpp:
+        * orbsvcs/tests/FT_App/FT_UnitTests.cpp:
+          The Replication Manager's unit tests were removed from the FT test
+          App and moved into its own module.
 
-Mon Sep 25 07:22:35 2003  Curt Hibbs  <hibbs_c@ociweb.com>
+Mon Sep 29 07:22:35 2003  Curt Hibbs  <hibbs_c@ociweb.com>
 
-        * CIAO/CIDLC/cidlc.vcproj
-        * CIAO/CIDLC/parser_examples/cidl/cidl.vcproj
-        * CIAO/CIDLC/parser_examples/cidl/idl2.vcproj
-        * CIAO/CIDLC/parser_examples/cidl/idl3.vcproj
-        Removed generated files that should not have been checked in.
+        * CIAO/CIDLC/cidlc.vcproj:
+        * CIAO/CIDLC/parser_examples/cidl/cidl.vcproj:
+        * CIAO/CIDLC/parser_examples/cidl/idl2.vcproj:
+        * CIAO/CIDLC/parser_examples/cidl/idl3.vcproj:
+          Removed generated files that should not have been checked in.
 
 Fri Sep 26 19:31:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
