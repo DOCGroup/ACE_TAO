@@ -85,22 +85,22 @@ Sender_QoS_Event_Handler::handle_qos (ACE_HANDLE)
               "\tService Type = %d\t\t\tService Type = %d\n"
               "\tMax SDU Size = %d\t\t\tMax SDU Size = %d\n"
               "\tMinimum Policed Size = %d\t\tMinimum Policed Size = %d\n\n",
-              ace_get_qos.receiving_flowspec ().token_rate (),
-              ace_get_qos.sending_flowspec ().token_rate (),
-              ace_get_qos.receiving_flowspec ().token_bucket_size (),
-              ace_get_qos.sending_flowspec ().token_bucket_size (),
-              ace_get_qos.receiving_flowspec ().peak_bandwidth (),
-              ace_get_qos.sending_flowspec ().peak_bandwidth (),
-              ace_get_qos.receiving_flowspec ().latency (),
-              ace_get_qos.sending_flowspec ().latency (),
-              ace_get_qos.receiving_flowspec ().delay_variation (),
-              ace_get_qos.sending_flowspec ().delay_variation (),
-              ace_get_qos.receiving_flowspec ().service_type (),
-              ace_get_qos.sending_flowspec ().service_type (),
-              ace_get_qos.receiving_flowspec ().max_sdu_size (),
-              ace_get_qos.sending_flowspec ().max_sdu_size (),
-              ace_get_qos.receiving_flowspec ().minimum_policed_size (),
-              ace_get_qos.sending_flowspec ().minimum_policed_size ()));
+              ace_get_qos.receiving_flowspec ()->token_rate (),
+              ace_get_qos.sending_flowspec ()->token_rate (),
+              ace_get_qos.receiving_flowspec ()->token_bucket_size (),
+              ace_get_qos.sending_flowspec ()->token_bucket_size (),
+              ace_get_qos.receiving_flowspec ()->peak_bandwidth (),
+              ace_get_qos.sending_flowspec ()->peak_bandwidth (),
+              ace_get_qos.receiving_flowspec ()->latency (),
+              ace_get_qos.sending_flowspec ()->latency (),
+              ace_get_qos.receiving_flowspec ()->delay_variation (),
+              ace_get_qos.sending_flowspec ()->delay_variation (),
+              ace_get_qos.receiving_flowspec ()->service_type (),
+              ace_get_qos.sending_flowspec ()->service_type (),
+              ace_get_qos.receiving_flowspec ()->max_sdu_size (),
+              ace_get_qos.sending_flowspec ()->max_sdu_size (),
+              ace_get_qos.receiving_flowspec ()->minimum_policed_size (),
+              ace_get_qos.sending_flowspec ()->minimum_policed_size ()));
 
   // This is SPECIFIC TO WIN2K and should be done in the qos_update function.
 
