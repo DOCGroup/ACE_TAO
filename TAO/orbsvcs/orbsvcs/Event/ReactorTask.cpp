@@ -117,7 +117,6 @@ int ACE_ES_Reactor_Task::svc_one()
 
 void ACE_ES_Reactor_Task::threads_closed()
 {
-  delete this;
 }
 
 void ACE_ES_Reactor_Task::shutdown_task()

@@ -197,32 +197,28 @@ ACE_ES_Dispatching_Base::dispatch_event (ACE_ES_Dispatch_Request *request,
   return 0;
 }
 
-ACE_INLINE void
-ACE_ES_Dispatching_Base::shutdown (void)
-{
-  ACE_DEBUG ((LM_DEBUG, "(%t) ACE_ES_Dispatching_Base module shutting down.\n"));
-}
-
 // ************************************************************
 
 #if defined (ACE_WIN32)
 ACE_INLINE
-ACE_ES_ReactorEx_NS::ACE_ES_ReactorEx_NS (ACE_Event_Handler *eh)
-  : ACE_Notification_Strategy (eh, ACE_Event_Handler::NULL_MASK)
+ACE_ES_ReactorEx_NS::ACE_ES_ReactorEx_NS (ACE_Event_Handler *eh,
+					  ACE_Task_Manager* tm)
+  : ACE_Notification_Strategy (eh, ACE_Event_Handler::NULL_MASK),
+    task_manager_ (tm)
 {
 }
 
 ACE_INLINE int
 ACE_ES_ReactorEx_NS::open (void)
 {
-  return ACE_Task_Manager::instance ()->
-    GetReactorTask (0)->get_reactor ().register_handler (eh_, event_.handle ());
+  return this->task_manager_->GetReactorTask (0)->
+    get_reactor ().register_handler (eh_, event_.handle ());
 }
 
 ACE_INLINE void
 ACE_ES_ReactorEx_NS::shutdown (void)
 {
-  ACE_Task_Manager::instance ()->GetReactorTask (0)->
+  this->task_manager_->GetReactorTask (0)->
     get_reactor ().remove_handler (eh_, ACE_Event_Handler::DONT_CALL);
 }
 
@@ -242,9 +238,9 @@ ACE_ES_ReactorEx_NS::notify (ACE_Event_Handler *eh,
 #else /* !defined (ACE_WIN32) */
 // This class is only necessary on non-win32 platforms.
 ACE_INLINE
-ACE_ES_Reactor_NS::ACE_ES_Reactor_NS (ACE_Event_Handler *eh)
-  : ACE_Reactor_Notification_Strategy (&(ACE_Task_Manager::instance ()->
-				       GetReactorTask (0)->get_reactor ()),
+ACE_ES_Reactor_NS::ACE_ES_Reactor_NS (ACE_Event_Handler *eh,
+				      ACE_Task_Manager *tm)
+  : ACE_Reactor_Notification_Strategy (&tm->GetReactorTask (0)->get_reactor (),
 				       eh, ACE_Event_Handler::READ_MASK)
 {
 }

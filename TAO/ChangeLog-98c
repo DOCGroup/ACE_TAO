@@ -1,3 +1,47 @@
+Tue Jun 23 12:18:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/Task_Manager.h: 
+	* orbsvcs/orbsvcs/Event/Task_Manager.i: 
+	* orbsvcs/orbsvcs/Event/Task_Manager.cpp: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.i: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
+	* orbsvcs/orbsvcs/Event/RT_Task.cpp: 
+	* orbsvcs/orbsvcs/Event/ReactorTask.cpp: 
+	  The Event Channel can be shutdown cleanly using the destroy()
+	  method. The problem was that two components (the Dispatching
+	  Module and the TaskManager or the handler for Timer threads)
+	  were not waiting for their threads to shutdown.
+	  The modules keep their own Thread_Manager to wait for shutdown.
+	  Startup was also changed: the event channel constructor
+	  receives a new argument to control the creation of the internal
+	  threads; if the argument is FALSE the user must call the
+	  activate() method to start the threads.
+
+	* orbsvcs/orbsvcs/RtecEventComm.idl: 
+	* orbsvcs/orbsvcs/RtecEventChannelAdmin.idl: 
+	  Many operations were oneways because early releases of TAO did
+	  not support nested upcalls.
+
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	  use the activate method to start the threads.
+
+	* orbsvcs/Event_Service/Event_Service.cpp: 
+	  Added support for a collocated Scheduling Service; this is the
+	  common use case that we wish to implement, improves performance
+	  and works around some nested upcall problems in the ORB.
+	  The user can select the old behavior using the <-s global>
+	  flag.
+
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
+	  Only shutdown the EC once our event loop exits
+
+	* orbsvcs/tests/EC_Multiple/histo.pl: 
+	  Fixed typo in a comment.
+
 Tue Jun 23 11:59:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Cubit/TAO/IDL_Cubit/Makefile,tests/Thruput/TAO/Makefile,

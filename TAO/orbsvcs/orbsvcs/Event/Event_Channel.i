@@ -112,6 +112,12 @@ ACE_EventChannel::timer (void)
   return timer_;
 }
 
+ACE_INLINE ACE_Task_Manager*
+ACE_EventChannel::task_manager (void) const
+{
+  return this->task_manager_;
+}
+
 // ************************************************************
 
 // Makes a temporary Event_var and appends it to the <dest>.
@@ -383,12 +389,20 @@ ACE_RTU_Manager::should_preempt (void)
     return 0;
   else
     {
+#if 0
       // Expire any timers.  Am I evil for putting this here?
       ACE_Time_Value tv;
-      if (ACE_Task_Manager::instance ()->
-	  GetReactorTask (0)->get_reactor ().handle_events (&tv) == -1)
+      if (this->task_manager_->GetReactorTask (0)->
+	    get_reactor ().handle_events (&tv) == -1)
 	ACE_ERROR ((LM_ERROR, "%p.\n",
 		    "ACE_RTU_Manager::should_preempt"));
+#else
+      // This routine was dead-code, but I'll leave it here until I
+      // find out what it is supposed to do.
+      ACE_ERROR ((LM_WARNING,
+		  "EC (%t) RTU_Manager::should_preempt - obsolete\n"));
+		 
+#endif
 
       int should_preempt = should_preempt_;
       should_preempt_ = 0;

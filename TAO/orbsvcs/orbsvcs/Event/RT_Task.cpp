@@ -303,10 +303,6 @@ ACE_RT_Task::synch_threads (size_t threads)
                       threads - this->thr_count (),
                       thread_priority));
 
-          // This is here so that the constructor does not call it.  The
-          // ORB has an instance of one of these.
-          this->thr_mgr (ACE_Task_Manager::instance ()->ThrMgr ());
-
           // Add the difference.
           // First try real-time scheduling with specified priority.
           long flags = THR_BOUND | THR_SCHED_FIFO;
