@@ -12,6 +12,9 @@
 
 #include "ace/config-sunos5.6.h"
 
+// Sun began distributing <sys/loadavg.h> with SunOS 5.7
+#define ACE_HAS_SYS_LOADAVG_H
+
 #if defined (__GNUG__)
 # if __GNUC__ <= 2  &&  __GNUC_MINOR__ < 8
     // Assume that later g++ were built on SunOS 5.7, so they don't
