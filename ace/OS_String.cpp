@@ -419,9 +419,10 @@ ACE_OS_String::strtok_r_emulation (char *s, const char *tokens, char **lasts)
   if (s == 0)
     return 0;
   int l_sub = ACE_OS_String::strlen (s);
-  *lasts = s + l_sub;
-  if (l_sub != l_org)
-    *lasts += 1;
+  if (s + l_sub < *lasts + l_org)
+    *lasts = s + l_sub + 1;
+  else
+    *lasts = s + l_sub;
   return s ;
 }
 #endif /* !ACE_HAS_REENTRANT_FUNCTIONS */
@@ -441,9 +442,10 @@ ACE_OS_String::strtok_r_emulation (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, AC
   if (s == 0)
     return 0;
   int l_sub = ACE_OS_String::strlen (s);
-  *lasts = s + l_sub;
-  if (l_sub != l_org)
-    *lasts += 1;
+  if (s + l_sub < *lasts + l_org)
+    *lasts = s + l_sub + 1;
+  else
+    *lasts = s + l_sub;
   return s ;
 }
 # endif  /* ACE_HAS_WCHAR && ACE_LACKS_WCSTOK */
