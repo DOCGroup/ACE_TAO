@@ -2,7 +2,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# $Id$
+# $Id$ 
 # -*- perl -*-
 
 use lib "../../../../../bin";
@@ -29,7 +29,7 @@ $SV = new PerlACE::Process ("$CIAO_ROOT/DnC/NodeApplication/NodeApplication",
                             "-n -o $iorfile");
 
 $CL = new PerlACE::Process ("client",
-                            "-k file://$iorfile -n 4");
+                            "-k file://$iorfile ");
 
 $SV->Spawn ();
 

@@ -105,7 +105,7 @@ install (const ::Deployment::ImplementationInfos & impl_infos
 
   for (CORBA::ULong i = 0; i < len; ++i)
   {
-    home = install_home (impl_infos [len]);
+    home = install_home (impl_infos[i]);
     ACE_CHECK;
 
     Components::KeylessCCMHome_var kh =
@@ -144,7 +144,6 @@ install_home (const ::Deployment::ImplementationInfo & impl_info
 		   Deployment::InstallationFailure,
 		   Components::InvalidConfiguration))
 {
-
  Components::CCMHome_var newhome =
    this->container_->ciao_install_home
    (impl_info.executor_dll.in (),
@@ -178,7 +177,9 @@ remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
   // Remove all components first.
   remove_components ();
+
   ACE_CHECK;
+
 
   // Even if above op failed we should still remove homes.
   for (;
