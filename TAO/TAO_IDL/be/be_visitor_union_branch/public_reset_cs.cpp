@@ -242,14 +242,6 @@ be_visitor_union_branch_public_reset_cs::visit_interface_fwd (be_interface_fwd *
 int
 be_visitor_union_branch_public_reset_cs::visit_predefined_type (be_predefined_type *node)
 {
-  be_type *bt;
-
-  // check if we are visiting this node via a visit to a typedef node
-  if (this->ctx_->alias ())
-    bt = this->ctx_->alias ();
-  else
-    bt = node;
-
   be_union_branch *ub =
     this->ctx_->be_node_as_union_branch (); // get union branch
   be_union *bu =
