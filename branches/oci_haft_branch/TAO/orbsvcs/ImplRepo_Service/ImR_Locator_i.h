@@ -2,12 +2,15 @@
 
 #ifndef IMR_LOCATOR_I_H
 #define IMR_LOCATOR_I_H
+#include /**/ "ace/pre.h"
 
 #include "tao/PortableServer/ImR_LocatorS.h"
 
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Null_Mutex.h"
+#include "ace/SString.h"
 
-#include "ace/pre.h"
+class ACE_Reactor;
 
 typedef ACE_Hash_Map_Manager_Ex <ACE_CString,
                                  CORBA::Object_ptr,
@@ -222,5 +225,5 @@ class ImR_Locator_i : public virtual POA_ImplementationRepository::Locator
   ImR_Adapter_Activator *activator_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* IMR_LOCATOR_I_H */

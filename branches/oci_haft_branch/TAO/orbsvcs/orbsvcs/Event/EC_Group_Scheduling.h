@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_GROUP_SCHEDULING_H
 #define TAO_EC_GROUP_SCHEDULING_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "EC_Scheduling_Strategy.h"
 
@@ -54,5 +54,5 @@ private:
 #include "EC_Group_Scheduling.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_GROUP_SCHEDULING_H */

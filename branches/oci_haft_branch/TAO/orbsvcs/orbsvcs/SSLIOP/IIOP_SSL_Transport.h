@@ -14,7 +14,7 @@
 #ifndef TAO_IIOP_SSL_TRANSPORT_H
 #define TAO_IIOP_SSL_TRANSPORT_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "SSLIOP_Export.h"
 
@@ -82,5 +82,5 @@ protected:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_IIOP_SSL_TRANSPORT_H*/

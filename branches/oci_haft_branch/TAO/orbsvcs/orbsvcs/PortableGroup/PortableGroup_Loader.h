@@ -14,7 +14,7 @@
 
 #ifndef TAO_PORTABLEGROUP_LOADER_H
 #define TAO_PORTABLEGROUP_LOADER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "portablegroup_export.h"
 #include "tao/corbafwd.h"
@@ -68,5 +68,5 @@ TAO_Requires_PortableGroup_Initializer = TAO_PortableGroup_Loader::Initializer (
 
 #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PORTABLEGROUP_LOADER_H */

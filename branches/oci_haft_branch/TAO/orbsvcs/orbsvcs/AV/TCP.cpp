@@ -691,10 +691,12 @@ TAO_AV_TCP_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Acceptor<TAO_AV_TCP_Flow_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Connector_Base<TAO_AV_TCP_Flow_Handler>;
 template class ACE_Connector<TAO_AV_TCP_Flow_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_NonBlocking_Connect_Handler<TAO_AV_TCP_Flow_Handler>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Acceptor<TAO_AV_TCP_Flow_Handler, ACE_SOCK_Acceptor, ACE_INET_Addr>
+#pragma instantiate ACE_Connector_Base<TAO_AV_TCP_Flow_Handler>
 #pragma instantiate ACE_Connector<TAO_AV_TCP_Flow_Handler, ACE_SOCK_Connector, ACE_INET_Addr>
 #pragma instantiate ACE_NonBlocking_Connect_Handler<TAO_AV_TCP_Flow_Handler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -6,7 +6,7 @@
 #include "Timer_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_Timer_Queue, "$id$")
+ACE_RCSID (Notify, TAO_Notify_Timer_Queue, "$Id$")
 
 TAO_Notify_Timer_Queue::TAO_Notify_Timer_Queue (void)
 {

@@ -10,7 +10,6 @@
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
-#include "ace/pre.h"
 #include "FT_FaultDetectorFactory_i.h"
 #include "Fault_Detector_i.h"
 #include "ace/Get_Opt.h"
@@ -65,7 +64,7 @@ FT_FaultDetectorFactory_i::~FT_FaultDetectorFactory_i ()
     shutdown_i ();
   }
   ACE_DECLARE_NEW_ENV;
-  self_unregister (ACE_ENV_SINGLE_ARG_PARAMETER);
+  fini (ACE_ENV_SINGLE_ARG_PARAMETER);
   threadManager_.close ();
 }
 
@@ -147,7 +146,29 @@ const char * FT_FaultDetectorFactory_i::identity () const
   return identity_.c_str();
 }
 
-int FT_FaultDetectorFactory_i::self_unregister (ACE_ENV_SINGLE_ARG_DECL)
+int FT_FaultDetectorFactory_i::idle (int & result)
+{
+  ACE_UNUSED_ARG (result);
+  int quit = 0;
+  if (detectors_.size() == removed_)
+  {
+    ACE_ERROR (( LM_ERROR,
+      "FaultDetectorFactory is idle.\n"
+      ));
+    if (quitOnIdle_)
+    {
+      ACE_ERROR (( LM_ERROR,
+        "FaultDetectorFactory exits due to quit on idle option.\n"
+        ));
+      quit = 1;
+    }
+  }
+
+  return quit;
+}
+
+
+int FT_FaultDetectorFactory_i::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (ior_output_file_ != 0)
   {
@@ -163,7 +184,7 @@ int FT_FaultDetectorFactory_i::self_unregister (ACE_ENV_SINGLE_ARG_DECL)
   return 0;
 }
 
-int FT_FaultDetectorFactory_i::self_register (TAO_ORB_Manager & orbManager
+int FT_FaultDetectorFactory_i::init (TAO_ORB_Manager & orbManager
   ACE_ENV_ARG_DECL)
 {
   int result = 0;
@@ -227,19 +248,6 @@ void FT_FaultDetectorFactory_i::removeDetector(CORBA::ULong id, Fault_Detector_i
       delete detectors_[id];
       detectors_[id] = 0;
       removed_ += 1;
-      if (detectors_.size() == removed_)
-      {
-        ACE_ERROR (( LM_ERROR,
-          "FaultDetectorFactory is idle.\n"
-          ));
-        if (quitOnIdle_)
-        {
-          ACE_ERROR (( LM_ERROR,
-            "FaultDetectorFactory exits due to quit on idle option.\n"
-            ));
-          orb_->shutdown (0);
-        }
-      }
     }
     else
     {
@@ -341,10 +349,7 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
   CORBA::ULong detectorId = detectors_.size();
 
   FT::FaultNotifier_ptr notifier;
-  if (! ::TAO_PG::find (
-    decoder,
-    ::FT::FT_NOTIFIER,
-    notifier) )
+  if (! ::TAO_PG::find (decoder, ::FT::FT_NOTIFIER, notifier) )
   {
     ACE_ERROR ((LM_ERROR,
       "FaultDetectorFactory::create_object: Missing parameter %s\n",
@@ -355,10 +360,7 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
   }
 
   FT::PullMonitorable_ptr monitorable;
-  if (! ::TAO_PG::find (
-    decoder,
-    ::FT::FT_MONITORABLE,
-    monitorable) )
+  if (! ::TAO_PG::find (decoder, ::FT::FT_MONITORABLE, monitorable) )
   {
     ACE_ERROR ((LM_ERROR,
       "FaultDetectorFactory::create_object: Missing parameter %s\n",
@@ -369,10 +371,7 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
   }
 
   FT::FTDomainId domain_id = 0;
-  if (! ::TAO_PG::find (
-    decoder,
-    ::FT::FT_DOMAIN_ID,
-    domain_id) )
+  if (! ::TAO_PG::find (decoder, ::FT::FT_DOMAIN_ID, domain_id) )
   {
     ACE_ERROR ((LM_ERROR,
       "FaultDetectorFactory::create_object: Missing parameter %s\n",
@@ -383,10 +382,7 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
   }
 
   FT::Location * object_location;
-  if (! ::TAO_PG::find (
-    decoder,
-    ::FT::FT_LOCATION,
-    object_location) )
+  if (! ::TAO_PG::find (decoder, ::FT::FT_LOCATION, object_location) )
   {
     ACE_ERROR ((LM_ERROR,
       "FaultDetectorFactory::create_object: Missing parameter %s\n",
@@ -397,19 +393,13 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
   }
 
   FT::TypeId object_type = 0;
-  if (! ::TAO_PG::find (
-    decoder,
-    ::FT::FT_TYPE_ID,
-    object_type) )
+  if (! ::TAO_PG::find (decoder, ::FT::FT_TYPE_ID, object_type) )
   {
     // Not required: missingParameter = 1;
   }
 
   FT::ObjectGroupId group_id = 0;
-  if (! ::TAO_PG::find (
-    decoder,
-    ::FT::FT_GROUP_ID,
-    group_id) )
+  if (! ::TAO_PG::find (decoder, ::FT::FT_GROUP_ID, group_id) )
   {
     // Not required: missingParameter = 1;
   }
@@ -460,7 +450,6 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
   (*detector).start(threadManager_);
 
   detectors_.push_back(detector.release());
-
 
   // since FaultDetector is not a CORBA object (it does not implement
   // an interface.) we always return NIL;
@@ -520,4 +509,3 @@ CORBA::Boolean FT_FaultDetectorFactory_i::is_alive (ACE_ENV_SINGLE_ARG_DECL)
 # pragma ACE_Guard<ACE_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#include "ace/post.h"

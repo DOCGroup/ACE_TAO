@@ -73,24 +73,6 @@ TAO_UIPMC_Acceptor::is_collocated (const TAO_Endpoint *)
 int
 TAO_UIPMC_Acceptor::close (void)
 {
-  // @@ Frank: Commented out since it seems like the reactor always is the one to
-  //    remove the connection handler.
-//  if (this->connection_handler_)
-//    {
-//      // Remove the connection handler from the reactor in the case
-//      // of a valid handle, or close it yourself, if the handle is invalid.
-//      // Either way it will cause the connection handler to be destructed.
-//      if (this->connection_handler_->get_handle () != ACE_INVALID_HANDLE)
-//        {
-//          this->orb_core_->reactor ()->remove_handler (this->connection_handler_,
-//                                                       ACE_Event_Handler::READ_MASK);
-//        }
-//      else
-//        {
-//          this->connection_handler_->handle_close ();
-//        }
-//      this->connection_handler_ = 0;
-//    }
   return 0;
 }
 
@@ -193,19 +175,20 @@ TAO_UIPMC_Acceptor::open_i (const ACE_INET_Addr& addr,
 {
   ACE_NEW_RETURN (this->connection_handler_,
                   TAO_UIPMC_Connection_Handler (this->orb_core_,
-                                               0 /* TAO_UIPMC_Properties */),
+                                                0 /* TAO_UIPMC_Properties */),
                   -1);
 
   this->connection_handler_->local_addr (addr);
   this->connection_handler_->open_server ();
 
+  int result =
+    reactor->register_handler (this->connection_handler_,
+                               ACE_Event_Handler::READ_MASK);
+  if (result == -1)
+    return result;
 
-  // Register only with a valid handle
-  if (this->connection_handler_->get_handle () != ACE_INVALID_HANDLE)
-    {
-      reactor->register_handler (this->connection_handler_,
-                                 ACE_Event_Handler::READ_MASK);
-    }
+  // Connection handler ownership now belongs to the Reactor.
+  this->connection_handler_->remove_reference ();
 
   // Set the port for each addr.  If there is more than one network
   // interface then the endpoint created on each interface will be on

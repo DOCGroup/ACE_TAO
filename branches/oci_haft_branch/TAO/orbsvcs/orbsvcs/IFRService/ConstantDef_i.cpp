@@ -214,10 +214,9 @@ TAO_ConstantDef_i::value_i (ACE_ENV_SINGLE_ARG_DECL)
 
   TAO::Unknown_IDL_Type *impl = 0;
   ACE_NEW_THROW_EX (impl,
-                    TAO::Unknown_IDL_Type (tc._retn (),
+                    TAO::Unknown_IDL_Type (tc.in (),
                                            &mb,
-                                           TAO_ENCAP_BYTE_ORDER,
-                                           1),
+                                           TAO_ENCAP_BYTE_ORDER),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 

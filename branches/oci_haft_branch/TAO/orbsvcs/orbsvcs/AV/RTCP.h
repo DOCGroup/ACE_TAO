@@ -46,7 +46,7 @@
 
 #ifndef TAO_AV_RTCP_H
 #define TAO_AV_RTCP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // FUZZ: disable check_for_math_include
 #include "ace/OS.h"
@@ -249,5 +249,5 @@ private:
 ACE_STATIC_SVC_DECLARE (TAO_AV_RTCP_Flow_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_RTCP_Flow_Factory)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_AV_RTCP_H */

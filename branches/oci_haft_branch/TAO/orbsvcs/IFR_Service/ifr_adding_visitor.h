@@ -162,6 +162,9 @@ protected:
                         ACE_ENV_ARG_DECL);
   // Code encapsulated out of visit_eventtype().
 
+  int create_value_member (AST_Field *node);
+  // Conditional call from visit_field().
+
   void get_referenced_type (AST_Type *node
                             ACE_ENV_ARG_DECL);
   // Utility method to update ir_current_ for struct members, union

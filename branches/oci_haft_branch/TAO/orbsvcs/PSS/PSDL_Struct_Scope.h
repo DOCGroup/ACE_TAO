@@ -17,7 +17,7 @@
 #ifndef TAO_PSDL_STRUCT_SCOPE_H
 #define TAO_PSDL_STRUCT_SCOPE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "PSDL_Scope.h"
 
@@ -68,6 +68,6 @@ private:
   ACE_CString interface_name_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_PSDL_STRUCT_SCOPE_H */

@@ -14,7 +14,7 @@
 #ifndef TAO_LB_MONITOR_MAP_H
 #define TAO_LB_MONITOR_MAP_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosLoadBalancingC.h"
 
@@ -37,6 +37,6 @@ typedef ACE_Hash_Map_Manager_Ex<
   ACE_Null_Mutex> TAO_LB_MonitorMap;
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_LB_MONITOR_MAP_H */

@@ -34,6 +34,14 @@ TAO_CEC_SupplierControl::supplier_not_exist (TAO_CEC_ProxyPushConsumer *
 {
 }
 
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+void
+TAO_CEC_SupplierControl::supplier_not_exist (TAO_CEC_TypedProxyPushConsumer *
+                                             ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
 void
 TAO_CEC_SupplierControl::supplier_not_exist (TAO_CEC_ProxyPullConsumer *
                                              ACE_ENV_ARG_DECL_NOT_USED)

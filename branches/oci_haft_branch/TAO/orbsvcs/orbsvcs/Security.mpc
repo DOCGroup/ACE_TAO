@@ -3,7 +3,7 @@ project(Security) : orbsvcslib, corba_messaging, core, portableserver {
   sharedname   = TAO_Security
   idlflags    += -Wb,export_macro=TAO_Security_Export -Wb,export_include=Security/security_export.h
   dynamicflags = TAO_SECURITY_BUILD_DLL
-  tagchecks    = Security
+  tagchecks   += Security
 
   IDL_Files {
     Security.idl

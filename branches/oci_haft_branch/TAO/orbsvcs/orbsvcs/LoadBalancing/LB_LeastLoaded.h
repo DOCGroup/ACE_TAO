@@ -14,7 +14,7 @@
 #ifndef LB_LEAST_LOADED_H
 #define LB_LEAST_LOADED_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "LB_LoadMap.h"
 
@@ -198,6 +198,6 @@ private:
 #include "LB_LeastLoaded.inl"
 #endif /* defined INLINE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* LB_LEAST_LOADED_H */

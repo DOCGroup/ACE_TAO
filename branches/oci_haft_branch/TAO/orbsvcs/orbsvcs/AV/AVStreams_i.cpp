@@ -460,17 +460,6 @@ TAO_StreamCtrl::TAO_StreamCtrl (void)
   ACE_CHECK;
 }
 
-TAO_StreamCtrl::TAO_StreamCtrl (TAO_StreamCtrl const &)
-{
-  //no-op
-}
-
-void
-TAO_StreamCtrl::operator= (TAO_StreamCtrl const &)
-{
-  //no-op
-}
-
 TAO_StreamCtrl::~TAO_StreamCtrl (void)
 {
   delete this->mcastconfigif_;

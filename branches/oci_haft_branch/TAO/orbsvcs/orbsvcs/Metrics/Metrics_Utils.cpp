@@ -3,8 +3,17 @@
 #ifndef METRICS_UTILS_CPP
 #define METRICS_UTILS_CPP
 
+#if defined (ACE_METRICS_COLLECTION)
+
+#if defined (ACE_ENABLE_TIMEPROBES) && defined (ACE_COMPILE_TIMEPROBES)
+
+
+#include "ace/Metrics_Cache.h"
 #include "Metrics_Utils.h"
 #include "Metrics_LocalCache.h"
+
+
+
 
 /////////////////////////////
 // Class TAO_Metrics_Utils //
@@ -523,5 +532,10 @@ template class ACE_Singleton<WSOA_Metrics_Handles, ACE_Thread_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<WSOA_Metrics_Handles, ACE_Thread_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#else
+#error ACE_COMPILE_TIMEPROBES must be defined in order to collect metrics
+#endif /* ACE_ENABLE_TIMEPROBES & ACE_COMPILE_TIMEPROBES */
+#endif /* ACE_METRICS_COLLECTION */
 
 #endif /* METRICS_UTILS_CPP */

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Interpreter_Utils.h"
+#include "ace/ACE.h"
 
 // = Methods to deal with ACE_Hash_Map_Manager.
 

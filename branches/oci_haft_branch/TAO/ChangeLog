@@ -1,3 +1,27 @@
+Thu Sep 18 12:20:48 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+	Continue merge HEAD->oci_haft_branch, and
+
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector_Main.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector_i.h:
+        * orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
+
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.h:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+        * orbsvcs/Fault_Notifier/Fault_Notifier_Main.cpp:
+
+        * orbsvcs/orbsvcs/FT_FaultDetectorFactory.idl:
+
+        * tao/Utils/ServantMain.cpp
+        * tao/Utils/ServantMain.h
+
+          Change fault detector and fault notifier to use ServantMain
+
+        These changes were made in the oci_haft branch.
+
+
 Wed Sep 18 11:30:00 2003  Curt Hibbs  <hibbs_c@ociweb.com>
 
         * orbsvcs\FT_ReplicationManager\FT_Property_Validator.cpp
@@ -39,7 +63,6 @@ Wed Sep 18 11:30:00 2003  Curt Hibbs  <hibbs_c@ociweb.com>
 
 
         These changes were made in the oci_haft branch.
-
 
 
 Wed Sep  3 13:35:32 2003  Dale Wilson  <wilson_d@ociweb.com>

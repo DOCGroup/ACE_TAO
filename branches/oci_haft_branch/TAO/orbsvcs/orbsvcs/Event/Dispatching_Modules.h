@@ -19,7 +19,7 @@
 
 #ifndef ACE_DISPATCHING_MODULES_H
 #define ACE_DISPATCHING_MODULES_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Reactor_Notification_Strategy.h"
 #include "tao/Timeprobe.h"
@@ -534,5 +534,5 @@ public:
 #include "Dispatching_Modules.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_DISPATCHING_MODULES_H */

@@ -15,7 +15,7 @@
 
 #ifndef TAO_STORABLE_NAMING_CONTEXT_ACTIVATOR_H
 #define TAO_STORABLE_NAMING_CONTEXT_ACTIVATOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/PortableServer/PortableServer.h"
 
@@ -79,5 +79,5 @@ private:
 
 #endif /* TAO_HAS_MINIMUM_POA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif

@@ -14,103 +14,24 @@
  */
 //=============================================================================
 
-#include "ace/pre.h"
+#include <tao/Utils/ServantMain.h>
 #include "FT_FaultDetectorFactory_i.h"
-
-#include "ace/Argv_Type_Converter.h"
-#include "tao/PortableServer/ORB_Manager.h"
-
-#ifdef PG_PS_UNIT_TEST
-# include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
-# include "orbsvcs/PortableGroup/PG_Properties_Decoder.h"
-#endif //  PG_PS_UNIT_TEST
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  // Copy command line parameter.
-  // and hide it's unicodeness.
-  ACE_Argv_Type_Converter command_line(argc, argv);
-
-  char ** asciiArgv = command_line.get_ASCII_argv();
-
-  // create an instance of the factory and give it the first
-  // chance at the arguments.
-  FT_FaultDetectorFactory_i factory;
-  int result = factory.parse_args (argc, asciiArgv);
-  if (result == 0)
-  {
-    ACE_TRY_NEW_ENV
-    {
-
-      // Create an object that manages all the
-      // details of being a server.  It, too, gets to see the command line.
-      TAO_ORB_Manager orbManager;
-
-      result = orbManager.init (argc, asciiArgv
-          ACE_ENV_ARG_PARAMETER);
-      if(result == 0)
-      {
-        ACE_CHECK_RETURN (-1);
-
-// property set helper test
-#ifdef PG_PS_UNIT_TEST
-        if ( Portable_Group::Properties::test_encode_decode () )
-        {
-          ACE_ERROR ((LM_ERROR,
-            "%n\n%T: Passed property set self-test.\n "
-            ));
-        }
-#endif
-        //////////////////////////////////
-        // let the factory register itself
-        result = factory.self_register(orbManager);
-        if (result == 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-            "%n\n%T: FaultDetectorFactory Ready %s\n", factory.identity()
-            ));
-
-          //////////////////////////////////
-          // Run the main event loop for the ORB.
-          result = orbManager.run (ACE_ENV_SINGLE_ARG_PARAMETER);
-          if (result == -1)
-          {
-            ACE_ERROR_RETURN (
-              (LM_ERROR, "%n\n%T: FT_Replica_i::run error"),
-              -1);
-          }
-          ACE_TRY_CHECK;
-          ACE_ERROR ((LM_ERROR,
-            "%n\n%T: Terminated normally. %s\n", factory.identity()
-            ));
-        }
-        else
-        {
-          ACE_ERROR ((LM_ERROR,
-            "%n\n%T: FaultDetectorFactory registration failed: %p\n"
-            ));
-          result = -1;
-        }
-      }
-      else
-      {
-        ACE_ERROR ((LM_ERROR,
-          "%n\n%T: ORB manager init failed\n"
-        ));
-        result = -1;
-      }
-    }
-    ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-        "Fault Detector Factory::main\t\n");
-      result = -1;
-    }
-    ACE_ENDTRY;
-  }
-  return result;
+  TAO::Utils::ServantMain<FT_FaultDetectorFactory_i> servantMain("FaultDetectorFactory");
+  return servantMain.Main(argc, argv);
 }
 
-#include "ace/post.h"
+///////////////////////////////////
+// Template instantiation for
+// inept compilers.
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template TAO::Utils::ServantMain<FT_FaultDetectorFactory_i>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Utils::ServantMain<FT_FaultDetectorFactory_i>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 

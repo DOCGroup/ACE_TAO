@@ -6,7 +6,7 @@
 #include "AdminProperties.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_AdminProperties, "$id$")
+ACE_RCSID (Notify, TAO_Notify_AdminProperties, "$Id$")
 
 #include "orbsvcs/CosNotificationC.h"
 

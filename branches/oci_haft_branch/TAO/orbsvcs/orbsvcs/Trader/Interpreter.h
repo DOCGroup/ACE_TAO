@@ -13,7 +13,7 @@
 
 #ifndef TAO_TCL_INTERPRETER_H
 #define TAO_TCL_INTERPRETER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Constraint_Nodes.h"
 #include "Constraint_Visitors.h"
@@ -100,5 +100,5 @@ typedef union
 extern YYSTYPE yylval;
 extern YYSTYPE yyval;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_TCL_INTERPRETER_H */

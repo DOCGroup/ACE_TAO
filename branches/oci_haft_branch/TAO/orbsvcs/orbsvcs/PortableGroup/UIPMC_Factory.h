@@ -12,7 +12,7 @@
 
 #ifndef TAO_UIPMC_FACTORY_H
 #define TAO_UIPMC_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -62,5 +62,5 @@ private:
 ACE_STATIC_SVC_DECLARE (TAO_UIPMC_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_PortableGroup, TAO_UIPMC_Protocol_Factory)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_UIPMC_FACTORY_H */

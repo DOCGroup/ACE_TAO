@@ -3,7 +3,7 @@ project(CosLoadBalancing) : orbsvcslib, core, naming, portablegroup, messaging {
   requires    += ami
   idlflags    += -GC -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=LoadBalancing/LoadBalancing_export.h
   dynamicflags = TAO_LOADBALANCING_BUILD_DLL
-  tagchecks    = CosLoadBalancing
+  tagchecks   += CosLoadBalancing
   // Add this include path for precompiled headers
   includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
 

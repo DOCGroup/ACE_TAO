@@ -22,7 +22,7 @@
 
 #ifndef TAO_MODULE_FACTORY_H
 #define TAO_MODULE_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "old_event_export.h"
 
@@ -168,5 +168,5 @@ public:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_EVENT_CHANNEL_H */

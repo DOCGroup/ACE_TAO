@@ -20,7 +20,7 @@
 #ifndef TIMER_HELPER_H
 #define	TIMER_HELPER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 
 #include "ace/Event_Handler.h"
@@ -71,6 +71,6 @@ protected:
   typedef ACE_Array_Base<CosTime::TimeService_var> IORS;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TIMER_HELPER_H */

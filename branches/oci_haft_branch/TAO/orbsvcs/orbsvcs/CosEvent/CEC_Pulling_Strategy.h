@@ -12,7 +12,7 @@
 
 #ifndef TAO_CEC_PULLING_STRATEGY_H
 #define TAO_CEC_PULLING_STRATEGY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosEvent/event_export.h"
 
@@ -63,5 +63,5 @@ public:
 #include "CEC_Pulling_Strategy.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_CEC_PULLING_STRATEGY_H */

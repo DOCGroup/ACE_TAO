@@ -3,7 +3,7 @@
 //
 #ifndef FAST_REACTOR_H
 #define FAST_REACTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if defined (ACE_OLD_STYLE_REACTOR)
 # if defined (ACE_WIN32)
@@ -58,5 +58,5 @@ public:
   }
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* FAST_REACTOR_H */

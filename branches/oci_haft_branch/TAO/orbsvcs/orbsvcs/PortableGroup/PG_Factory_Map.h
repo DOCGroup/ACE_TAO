@@ -14,7 +14,7 @@
 #ifndef TAO_PG_FACTORY_MAP_H
 #define TAO_PG_FACTORY_MAP_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -37,6 +37,6 @@ typedef ACE_Hash_Map_Manager_Ex<
   ACE_Equal_To<ACE_UINT32>,
   ACE_Null_Mutex> TAO_PG_Factory_Map;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_PG_FACTORY_MAP_H */

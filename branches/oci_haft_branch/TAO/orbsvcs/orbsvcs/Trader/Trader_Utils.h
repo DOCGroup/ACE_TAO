@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,7 +13,8 @@
 
 #ifndef TAO_TRADER_UTILS_H
 #define TAO_TRADER_UTILS_H
-#include "ace/pre.h"
+
+#include /**/ "ace/pre.h"
 
 #include "Trader.h"
 
@@ -181,13 +182,13 @@ private:
  * @brief Little helper class that you can extend to have your dynamic
  * property handler construct CosTradingDynamic::DynamicProp structs.
  */
-class TAO_Trading_Export TAO_Dynamic_Property : public virtual POA_CosTradingDynamic::DynamicPropEval, public virtual PortableServer::RefCountServantBase
+class TAO_Trading_Export TAO_Dynamic_Property
+  : public virtual POA_CosTradingDynamic::DynamicPropEval,
+    public virtual PortableServer::RefCountServantBase
 {
 public:
 
   TAO_Dynamic_Property (void) {}
-  TAO_Dynamic_Property (const TAO_Dynamic_Property &) {}
-  void operator= (const TAO_Dynamic_Property &) {}
   virtual ~TAO_Dynamic_Property (void);
 
   void destroy (void);
@@ -774,5 +775,6 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
+
 #endif /* TAO_TRADER_UTILS_H */

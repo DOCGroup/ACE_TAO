@@ -11,7 +11,7 @@
 
 #ifndef NOTIFY_EVENTCHANNELFACTORY_I_H
 #define NOTIFY_EVENTCHANNELFACTORY_I_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "notify_export.h"
@@ -34,5 +34,5 @@ public:
   static CosNotifyChannelAdmin::EventChannelFactory_ptr create (PortableServer::POA_ptr default_POA ACE_ENV_ARG_DECL);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* NOTIFY_EVENTCHANNELFACTORY_I_H */

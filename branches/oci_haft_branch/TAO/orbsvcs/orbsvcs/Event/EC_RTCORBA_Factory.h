@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_RTCORBA_FACTORY_H
 #define TAO_EC_RTCORBA_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "rtcorba_event_export.h"
 #include "EC_Factory.h"
@@ -119,5 +119,5 @@ protected:
 #include "EC_RTCORBA_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_RTCORBA_FACTORY_H */

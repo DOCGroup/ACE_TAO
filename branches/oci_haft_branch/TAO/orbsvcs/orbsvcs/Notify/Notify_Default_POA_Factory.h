@@ -13,7 +13,7 @@
 #ifndef TAO_NOTIFY_DEFAULT_POA_FACTORY_H
 #define TAO_NOTIFY_DEFAULT_POA_FACTORY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -33,5 +33,5 @@ public:
   static int init_svc (void);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_NOTIFY_DEFAULT_POA_FACTORY_H */

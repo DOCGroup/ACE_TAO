@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_EVENT_H
 #define TAO_Notify_EVENT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_export.h"
 
@@ -136,5 +136,5 @@ typedef ACE_Unbounded_Queue<TAO_Notify_Event_var> TAO_Notify_Event_Collection;
 #include "Event.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_EVENT_H */

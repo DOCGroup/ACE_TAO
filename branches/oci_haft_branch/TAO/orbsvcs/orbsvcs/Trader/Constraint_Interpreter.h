@@ -13,7 +13,7 @@
 
 #ifndef TAO_CONSTRAINT_INTERPRETER_H
 #define TAO_CONSTRAINT_INTERPRETER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Constraint_Nodes.h"
 #include "Constraint_Visitors.h"
@@ -158,5 +158,5 @@ private:
   Ordered_Offers offers_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_CONSTRAINT_INTERPRETER_H */

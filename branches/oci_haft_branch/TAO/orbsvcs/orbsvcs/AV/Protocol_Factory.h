@@ -13,7 +13,7 @@
 
 #ifndef TAO_AV_PROTOCOL_FACTORY_T_H
 #define TAO_AV_PROTOCOL_FACTORY_T_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Service_Object.h"
 #include "Policy.h"
@@ -94,5 +94,5 @@ public:
   int ref_count;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_AV_PROTOCOL_FACTORY_T_H */

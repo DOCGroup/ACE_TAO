@@ -44,17 +44,17 @@ public:
   int parse_args (int argc, char * argv[]);
 
   /**
-   * Publish this objects IOR, and otherwise start things rolling.
+   * Initialize this object.
    * @param orbManager our ORB -- we keep var to it.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int self_register (TAO_ORB_Manager & orbManager ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  int init (TAO_ORB_Manager & orbManager ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
-   * Revoke the publication of this objects IOR.
+   * Prepare to exit
    * @return zero for success; nonzero is process return code for failure.
    */
-  int self_unregister (ACE_ENV_SINGLE_ARG_DECL);
+  int fini (ACE_ENV_SINGLE_ARG_DECL);
 
   /**
    * Identify this fault notifier.

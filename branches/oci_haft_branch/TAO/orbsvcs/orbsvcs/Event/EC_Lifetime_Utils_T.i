@@ -1,19 +1,5 @@
 // $Id$
 
-// Helper.
-template <typename T>
-ACE_INLINE typename T::_var_type
-my_narrow_until_carlos_gets_jeff_to_fix_the_idl_compiler (
-                                       T *,
-                                       CORBA::Object_ptr obj
-                                       ACE_ENV_ARG_DECL)
-{
-  return T::_narrow (obj ACE_ENV_ARG_PARAMETER);
-}
-
-
-//***************************************************************************
-
 template <class T>
 ACE_INLINE
 TAO_EC_Auto_Command<T>::TAO_EC_Auto_Command (void)

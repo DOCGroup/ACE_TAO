@@ -11,7 +11,7 @@
 
 #ifndef ACE_GPlot_File_H
 #define ACE_GPlot_File_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Map_Manager.h"
 #include "old_event_export.h"
@@ -104,5 +104,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ACE_GPlot_File_H */

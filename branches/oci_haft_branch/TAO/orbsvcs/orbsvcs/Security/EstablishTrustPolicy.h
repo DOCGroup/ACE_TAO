@@ -14,7 +14,7 @@
 #ifndef TAO_ESTABLISH_TRUST_POLICY_H
 #define TAO_ESTABLISH_TRUST_POLICY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "security_export.h"
 
@@ -88,6 +88,6 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_ESTABLISH_TRUST_POLICY_H */

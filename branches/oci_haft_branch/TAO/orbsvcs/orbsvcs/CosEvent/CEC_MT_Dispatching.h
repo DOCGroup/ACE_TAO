@@ -12,7 +12,7 @@
 
 #ifndef TAO_CEC_MT_DISPATCHING_H
 #define TAO_CEC_MT_DISPATCHING_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "CEC_Dispatching.h"
 
@@ -52,6 +52,14 @@ public:
   virtual void push_nocopy (TAO_CEC_ProxyPushSupplier* proxy,
                             CORBA::Any& event
                             ACE_ENV_ARG_DECL);
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  virtual void invoke (TAO_CEC_ProxyPushSupplier *proxy,
+                       const TAO_CEC_TypedEvent & typed_event
+                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual void invoke_nocopy (TAO_CEC_ProxyPushSupplier *proxy,
+                              TAO_CEC_TypedEvent & typed_event
+                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 private:
   /// Use our own thread manager.
@@ -85,5 +93,5 @@ private:
 #include "CEC_MT_Dispatching.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_CEC_MT_DISPATCHING_H */

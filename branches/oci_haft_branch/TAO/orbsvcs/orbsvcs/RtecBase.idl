@@ -1,9 +1,10 @@
+// $Id$
 /**
  * @file RtecBase.idl
  *
  * @brief Define the RtecBase module
  *
- * $Id$
+ * RtecBase.idl,v 1.2 2001/09/17 20:50:34 coryan Exp
  *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
@@ -23,10 +24,12 @@
  */
 module RtecBase
 {
-  /// Specify one-way or two-way call.
+  /// Specify type of call.
   enum Dependency_Type_t
   {
+    /// One-way call.
     ONE_WAY_CALL,
+    /// Two-way call.
     TWO_WAY_CALL
   };
 
@@ -49,6 +52,15 @@ module RtecBase
    */
   typedef long handle_t;
 
+  enum Dependency_Enabled_Type_t
+  // Specify whether a dependency is enabled, disabled, or
+  // non-volatile (enabled + cannot be disabled automatically).
+  {
+    DEPENDENCY_DISABLED,
+    DEPENDENCY_ENABLED,
+    DEPENDENCY_NON_VOLATILE
+  };
+
   /// Define dependencies between two RT_Infos
   struct Dependency_Info
   {
@@ -60,6 +72,11 @@ module RtecBase
 
     /// Dependency
     handle_t rt_info;
+
+    handle_t rt_info_depended_on;
+    Dependency_Enabled_Type_t enabled;
+    // Notice the reference to the RT_Info we
+    // depend on.
   };
 
   /// Helper typedef to define the OS priority.

@@ -24,27 +24,10 @@ TAO_Notify_PropertyBase_T<TYPE>::operator!= (const TYPE &rhs) const
   return (this->value_ != rhs);
 }
 
-template <class TYPE> ACE_INLINE TAO_Notify_PropertyBase_T<TYPE>&
-TAO_Notify_PropertyBase_T<TYPE>::operator=(const TYPE& value)
-{
-  this->value_ = value;
-
-  return *this;
-}
-
 template <class TYPE> ACE_INLINE void
 TAO_Notify_PropertyBase_T<TYPE>:: invalidate (void)
 {
   this->valid_ = 0;
-}
-
-/******************************************************************************/
-
-template <class TYPE> ACE_INLINE TAO_Notify_Property_T<TYPE>&
-TAO_Notify_Property_T<TYPE>::operator=(const TYPE& value)
-{
-  this->TAO_Notify_PropertyBase_T<TYPE>::operator= (value);
-  return *this;
 }
 
 /******************************************************************************/

@@ -28,6 +28,9 @@ TAO_FlowSpec_Entry::parse_flow_protocol_string (const char *flow_string)
   if (flow_string == 0)
     return 0;
 
+  if (ACE_OS::strcmp (flow_string,"") == 0)
+	return 0;
+
   this->use_flow_protocol_ = 1;
   // do some flow protocol processing.
   this->flow_protocol_ = flow_string;

@@ -3,11 +3,127 @@
 #include "concrete_classes.h"
 #include "IFR_Service_Utils_T.h"
 #include "ComponentRepository_i.h"
+#include "OperationDef_i.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (IFRService,
            tmplinst,
            "$Id$")
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
+    || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<TAO_AttributeDef_i>::set_initializers (
+    const TAO_AttributeDef_i &,
+    ACE_Configuration *,
+    ACE_Configuration_Section_Key &
+  )
+{
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<TAO_OperationDef_i>::set_initializers (
+    const TAO_OperationDef_i &,
+    ACE_Configuration *,
+    ACE_Configuration_Section_Key &
+  )
+{
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<TAO_ProvidesDef_i>::set_initializers (
+    const TAO_ProvidesDef_i &,
+    ACE_Configuration *,
+    ACE_Configuration_Section_Key &
+  )
+{
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<TAO_UsesDef_i>::set_initializers (
+    const TAO_UsesDef_i &,
+    ACE_Configuration *,
+    ACE_Configuration_Section_Key &
+  )
+{
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<TAO_EmitsDef_i>::set_initializers (
+    const TAO_EmitsDef_i &,
+    ACE_Configuration *,
+    ACE_Configuration_Section_Key &
+  )
+{
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<TAO_PublishesDef_i>::set_initializers (
+    const TAO_PublishesDef_i &,
+    ACE_Configuration *,
+    ACE_Configuration_Section_Key &
+  )
+{
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<TAO_ConsumesDef_i>::set_initializers (
+    const TAO_ConsumesDef_i &,
+    ACE_Configuration *,
+    ACE_Configuration_Section_Key &
+  )
+{
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<TAO_FinderDef_i>::set_initializers (
+    const TAO_FinderDef_i &,
+    ACE_Configuration *,
+    ACE_Configuration_Section_Key &
+  )
+{
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<TAO_FactoryDef_i>::set_initializers (
+    const TAO_FactoryDef_i &,
+    ACE_Configuration *,
+    ACE_Configuration_Section_Key &
+  )
+{
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<CORBA::InitializerSeq>::destroy_special (
+    const char *,
+    TAO_Repository_i *,
+    ACE_Configuration_Section_Key &
+    ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+void
+TAO_IFR_Generic_Utils<CORBA::ExtInitializerSeq>::destroy_special (
+    const char *,
+    TAO_Repository_i *,
+    ACE_Configuration_Section_Key &
+    ACE_ENV_ARG_DECL_NOT_USED)
+{
+}
+
+#endif
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -52,6 +168,8 @@ template class POA_CORBA::OperationDef_tie<TAO_OperationDef_i>;
 template class POA_CORBA::InterfaceDef_tie<TAO_InterfaceDef_i>;
 template class POA_CORBA::AbstractInterfaceDef_tie<TAO_AbstractInterfaceDef_i>;
 template class POA_CORBA::LocalInterfaceDef_tie<TAO_LocalInterfaceDef_i>;
+template class POA_CORBA::ExtValueDef_tie<TAO_ExtValueDef_i>;
+template class POA_CORBA::ComponentIR::ModuleDef_tie<TAO_ModuleDef_i>;
 
 template class auto_ptr<TAO_Repository_i>;
 template class ACE_Auto_Basic_Ptr<TAO_Repository_i>;
@@ -139,6 +257,8 @@ template class TAO_IFR_Generic_Utils<TAO_PublishesDef_i>;
 template class TAO_IFR_Generic_Utils<TAO_ConsumesDef_i>;
 template class TAO_IFR_Generic_Utils<TAO_FinderDef_i>;
 template class TAO_IFR_Generic_Utils<TAO_FactoryDef_i>;
+template class TAO_IFR_Generic_Utils<CORBA::ExtInitializerSeq>;
+template class TAO_IFR_Generic_Utils<CORBA::InitializerSeq>;
 template class TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::ProvidesDescriptionSeq>;
 template class TAO_Port_Utils<CORBA::ComponentIR::ProvidesDef>;
 template class TAO_Port_Utils<CORBA::ComponentIR::EmitsDef>;
@@ -199,6 +319,8 @@ template class TAO_IFR_Desc_Utils<CORBA::OperationDescription, TAO_OperationDef_
 #pragma instantiate POA_CORBA::InterfaceDef_tie<TAO_>
 #pragma instantiate POA_CORBA::AbstractInterfaceDef_tie<TAO_AbstractInterfaceDef_i>
 #pragma instantiate POA_CORBA::LocalInterfaceDef_tie<TAO_LocalInterfaceDef_i>
+#pragma instantiate POA_CORBA::ExtValueDef_tie<TAO_ExtValueDef_i>
+#pragma instantiate POA_CORBA::ComponentIR::ModuleDef_tie<TAO_ModuleDef_i>
 
 #pragma instantiate auto_ptr<TAO_Repository_i>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Repository_i>
@@ -286,6 +408,8 @@ template class TAO_IFR_Desc_Utils<CORBA::OperationDescription, TAO_OperationDef_
 #pragma instantiate TAO_IFR_Generic_Utils<TAO_ConsumesDef_i>
 #pragma instantiate TAO_IFR_Generic_Utils<TAO_FinderDef_i>
 #pragma instantiate TAO_IFR_Generic_Utils<TAO_FactoryDef_i>
+#pragma instantiate TAO_IFR_Generic_Utils<CORBA::ExtInitializerSeq>
+#pragma instantiate TAO_IFR_Generic_Utils<CORBA::InitializerSeq>
 #pragma instantiate TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::ProvidesDescriptionSeq>
 #pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::ProvidesDef>
 #pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::EmitsDef>

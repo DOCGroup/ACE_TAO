@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Kokyu_Dispatching.h
  *
@@ -15,7 +16,7 @@
 
 #ifndef TAO_EC_KOKYU_DISPATCHING_H
 #define TAO_EC_KOKYU_DISPATCHING_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "EC_Dispatching.h"
 #include "EC_ProxySupplier.h"
@@ -71,11 +72,15 @@ public:
                             ACE_ENV_ARG_DECL);
 
 private:
+  void setup_lanes (void);
+
   /// The dispatcher
-  Kokyu::Dispatcher* dispatcher_;
+  Kokyu::Dispatcher_Auto_Ptr dispatcher_;
 
   /// The scheduler
   RtecScheduler::Scheduler_var scheduler_;
+
+  int lanes_setup_;
 };
 
 // ****************************************************************
@@ -126,5 +131,5 @@ private:
 #include "EC_Kokyu_Dispatching.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_KOKYU_DISPATCHING_H */

@@ -14,10 +14,10 @@
 
 #ifndef TAO_EC_UDP_ADMIN_H
 #define TAO_EC_UDP_ADMIN_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecUDPAdminS.h"
-#include "orbsvcs/Event/event_export.h"
+#include /**/ "event_export.h"
 
 /**
  * @class TAO_EC_Simple_AddrServer
@@ -29,7 +29,7 @@
  * (type,source) pair and the (ipaddr,port) pair using a
  * AddrServer.
  * This class implements a very simple server that simply maps the
- * <type> component to the <ipaddr> and uses a fixed <port>,
+ * type component to the ipaddr and uses a fixed port,
  * provided at initialization time.
  */
 class TAO_RTEvent_Export TAO_EC_Simple_AddrServer : public POA_RtecUDPAdmin::AddrServer
@@ -51,5 +51,5 @@ private:
   CORBA::UShort port_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_UDP_ADMIN_H */

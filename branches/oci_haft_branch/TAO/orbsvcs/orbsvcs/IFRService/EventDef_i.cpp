@@ -10,8 +10,8 @@ ACE_RCSID (IFRService,
 
 TAO_EventDef_i::TAO_EventDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
-    TAO_Contained_i (repo),
     TAO_Container_i (repo),
+    TAO_Contained_i (repo),
     TAO_IDLType_i (repo),
     TAO_ValueDef_i (repo),
     TAO_ExtValueDef_i (repo)

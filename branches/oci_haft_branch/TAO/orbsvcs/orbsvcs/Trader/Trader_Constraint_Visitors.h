@@ -12,7 +12,7 @@
 
 #ifndef TAO_TRADER_CONSTRAINT_VISITOR_H
 #define TAO_TRADER_CONSTRAINT_VISITOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Constraint_Visitors.h"
 #include "Trader.h"
@@ -53,5 +53,5 @@ class TAO_Trading_Export TAO_Trader_Constraint_Evaluator : public TAO_Constraint
   TAO_Property_Evaluator prop_eval_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_TRADER_CONSTRAINT_VISITOR_H */

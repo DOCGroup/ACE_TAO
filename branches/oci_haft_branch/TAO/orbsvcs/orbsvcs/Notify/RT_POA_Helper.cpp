@@ -5,6 +5,7 @@
 #include "tao/debug.h"
 #include "orbsvcs/NotifyExtC.h"
 #include "RT_Properties.h"
+#include "ace/SString.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "RT_POA_Helper.inl"

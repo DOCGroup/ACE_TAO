@@ -16,12 +16,14 @@
 
 #ifndef NOTIFY_SERVICE_H
 #define NOTIFY_SERVICE_H
+#include /**/ "ace/pre.h"
 
 #include "ace/Task.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "../orbsvcs/Notify/CosNotify_Initializer.h"
+#include "ace/SString.h"
 
 class TAO_Notify_Service;
 
@@ -142,4 +144,6 @@ protected:
   int nthreads_;
   // Number of worker threads.
 };
+
+#include /**/ "ace/post.h"
 #endif /* NOTIFY_SERVICE_H */

@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_Dispatching_Task.h
  *
@@ -14,7 +15,8 @@
 
 #ifndef TAO_EC_DISPATCHING_TASK_H
 #define TAO_EC_DISPATCHING_TASK_H
-#include "ace/pre.h"
+
+#include /**/ "ace/pre.h"
 
 #include "EC_ProxySupplier.h"
 
@@ -23,9 +25,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecEventCommC.h"
-#include "event_export.h"
+#include /**/ "event_export.h"
 #include "ace/Task.h"
 #include "ace/Message_Block.h"
+#include "ace/Lock_Adapter_T.h"
 
 class TAO_RTEvent_Export TAO_EC_Queue : public ACE_Message_Queue<ACE_SYNCH>
 {
@@ -136,5 +139,6 @@ private:
 #include "EC_Dispatching_Task.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
-#endif /* TAO_EC_DISPATCHING_TASK_H */
+#include /**/ "ace/post.h"
+
+#endif  /* TAO_EC_DISPATCHING_TASK_H */

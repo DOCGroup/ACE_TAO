@@ -14,7 +14,9 @@
 
 #ifndef TAO_EC_SCHEDULING_STRATEGY_H
 #define TAO_EC_SCHEDULING_STRATEGY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
+
+#include /**/ "event_export.h"
 
 #include "orbsvcs/RtecBaseC.h"
 #include "orbsvcs/RtecEventCommC.h"
@@ -45,7 +47,7 @@ public:
   /// Destructor
   virtual ~TAO_EC_Scheduling_Strategy (void);
 
-  /// Add all the dependencies between <supplier> and <consumer>
+  /// Add all the dependencies between @a supplier and @a consumer
   virtual void add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
       TAO_EC_ProxyPushConsumer *consumer
@@ -64,5 +66,5 @@ public:
 #include "EC_Scheduling_Strategy.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_SCHEDULING_STRATEGY_H */

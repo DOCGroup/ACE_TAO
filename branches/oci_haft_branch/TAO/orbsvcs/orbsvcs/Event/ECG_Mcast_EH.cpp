@@ -4,6 +4,7 @@
 #include "orbsvcs/Event/ECG_UDP_Receiver.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
+#include "ace/Unbounded_Set.h"
 
 #include "ace/Reactor.h"
 

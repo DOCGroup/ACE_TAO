@@ -4,8 +4,12 @@
 #include "CEC_EventChannel.h"
 #include "CEC_SupplierAdmin.h"
 #include "CEC_ProxyPushConsumer.h"
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+#include "CEC_TypedEventChannel.h"
+#include "CEC_TypedSupplierAdmin.h"
+#include "CEC_TypedProxyPushConsumer.h"
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 #include "CEC_ProxyPullConsumer.h"
-
 #include "tao/Messaging/Messaging.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
@@ -37,6 +41,29 @@ TAO_CEC_Reactive_SupplierControl::
 #endif /* TAO_HAS_CORBA_MESSAGING */
 }
 
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+TAO_CEC_Reactive_SupplierControl::
+     TAO_CEC_Reactive_SupplierControl (const ACE_Time_Value &rate,
+                                       const ACE_Time_Value &timeout,
+                                       TAO_CEC_TypedEventChannel *ec,
+                                       CORBA::ORB_ptr orb)
+  : rate_ (rate),
+    timeout_ (timeout),
+    adapter_ (this),
+    typed_event_channel_ (ec),
+    orb_ (CORBA::ORB::_duplicate (orb))
+{
+  this->reactor_ =
+    this->orb_->orb_core ()->reactor ();
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+   // Initialise timer_id_ to an invalid timer id, so that in case we don't
+   // schedule a timer, we don't cancel a random timer at shutdown
+   timer_id_ = -1;
+#endif /* TAO_HAS_CORBA_MESSAGING */
+}
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
 TAO_CEC_Reactive_SupplierControl::~TAO_CEC_Reactive_SupplierControl (void)
 {
 }
@@ -45,6 +72,19 @@ void
 TAO_CEC_Reactive_SupplierControl::query_suppliers (
       ACE_ENV_SINGLE_ARG_DECL)
 {
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+  if (this->typed_event_channel_)
+    {
+      TAO_CEC_Ping_Typed_Push_Supplier push_worker (this);
+      
+      this->typed_event_channel_->typed_supplier_admin ()->for_each (&push_worker
+                                                                     ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+  else
+    {
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
   TAO_CEC_Ping_Push_Supplier push_worker (this);
   this->event_channel_->supplier_admin ()->for_each (&push_worker
                                                      ACE_ENV_ARG_PARAMETER);
@@ -54,6 +94,10 @@ TAO_CEC_Reactive_SupplierControl::query_suppliers (
   this->event_channel_->supplier_admin ()->for_each (&pull_worker
                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+    }
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 }
 
 void
@@ -181,6 +225,25 @@ TAO_CEC_Reactive_SupplierControl::supplier_not_exist (
   ACE_ENDTRY;
 }
 
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+void
+TAO_CEC_Reactive_SupplierControl::supplier_not_exist (
+      TAO_CEC_TypedProxyPushConsumer *proxy
+      ACE_ENV_ARG_DECL)
+{
+  ACE_TRY
+    {
+      proxy->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Ignore all exceptions..
+    }
+  ACE_ENDTRY;
+}
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+
 void
 TAO_CEC_Reactive_SupplierControl::supplier_not_exist (
       TAO_CEC_ProxyPullConsumer *proxy
@@ -288,6 +351,54 @@ TAO_CEC_Ping_Push_Supplier::work (TAO_CEC_ProxyPushConsumer *consumer
     }
   ACE_ENDTRY;
 }
+
+// ****************************************************************
+
+#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
+void
+TAO_CEC_Ping_Typed_Push_Supplier::work (TAO_CEC_TypedProxyPushConsumer *consumer
+                                        ACE_ENV_ARG_DECL)
+{
+  ACE_TRY
+    {
+      CORBA::Boolean disconnected;
+      CORBA::Boolean non_existent =
+        consumer->supplier_non_existent (disconnected
+                                         ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      if (non_existent && !disconnected)
+        {
+          this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+    {
+      this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::TRANSIENT, transient)
+    {
+      // The current implementation is very strict, and kicks out a
+      // client on the first system exception. We may
+      // want to be more lenient in the future, for example,
+      // this is TAO's minor code for a failed connection.
+      //
+      // if (CORBA::TRANSIENT::_narrow (&exception) != 0
+      //     && exception->minor () == 0x54410085)
+      //   return;
+
+      // Anything else is serious, including timeouts...
+      this->control_->supplier_not_exist (consumer ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Ignore all exceptions
+    }
+  ACE_ENDTRY;
+}
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 // ****************************************************************
 

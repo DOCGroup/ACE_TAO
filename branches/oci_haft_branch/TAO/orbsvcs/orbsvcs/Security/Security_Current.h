@@ -13,7 +13,7 @@
 #ifndef TAO_SECURITY_CURRENT_H
 #define TAO_SECURITY_CURRENT_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "security_export.h"
 
@@ -142,6 +142,6 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_SECURITY_CURRENT_H */

@@ -3,7 +3,7 @@
 
 #ifndef TAO_IFR_MACROS_H
 #define TAO_IFR_MACROS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -42,5 +42,5 @@
                              CORBA::COMPLETED_NO)); \
   ACE_CHECK_RETURN (RETURN)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_IFR_MACROS_H */

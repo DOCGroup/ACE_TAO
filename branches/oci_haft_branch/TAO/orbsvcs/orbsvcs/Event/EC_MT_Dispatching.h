@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_MT_DISPATCHING_H
 #define TAO_EC_MT_DISPATCHING_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "EC_Dispatching.h"
 
@@ -37,7 +37,7 @@ class TAO_RTEvent_Export TAO_EC_MT_Dispatching : public TAO_EC_Dispatching
 {
 public:
   /// Constructor
-  /// It will create <nthreads> servicing threads...
+  /// It will create @a nthreads servicing threads...
   TAO_EC_MT_Dispatching (int nthreads,
                          int thread_creation_flags,
                          int thread_priority,
@@ -89,5 +89,5 @@ private:
 #include "EC_MT_Dispatching.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_MT_DISPATCHING_H */

@@ -13,7 +13,7 @@
 
 #ifndef TAO_AV_TCP_H
 #define TAO_AV_TCP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/OS.h"
 #include "Protocol_Factory.h"
@@ -273,5 +273,5 @@ ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_TCP_Flow_Factory)
 ACE_STATIC_SVC_DECLARE (TAO_AV_TCP_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_TCP_Factory)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_AV_TCP_H */

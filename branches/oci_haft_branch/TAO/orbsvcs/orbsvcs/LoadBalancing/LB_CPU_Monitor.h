@@ -14,7 +14,7 @@
 #ifndef TAO_LB_CPU_MONITOR_H
 #define TAO_LB_CPU_MONITOR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "LoadBalancing_export.h"
 
@@ -96,6 +96,6 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_LB_CPU_MONITOR_H */

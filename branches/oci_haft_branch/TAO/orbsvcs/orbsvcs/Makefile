@@ -29,7 +29,7 @@ ifndef TAO_ORBSVCS
   TAO_ORBSVCS = Naming \
                 Time \
                 Property \
-                Sched
+                RTSched
 
   ifeq ($(corba_messaging),1)
     TAO_ORBSVCS += RTEvent \
@@ -37,7 +37,8 @@ ifndef TAO_ORBSVCS
                    CosEvent \
                    RTOLDEvent \
                    RTSchedEvent \
-                   EventLog \
+		   RTKokyuEvent \
+                   CosEventLog \
                    RTEventLog \
                    NotifyLog
   endif #corba_messaging
@@ -142,18 +143,9 @@ ifneq (,$(findstring  RTEvent, $(TAO_ORBSVCS)))
     MKLIST += Makefile.RTEvent
   endif
 endif
-ifneq (,$(findstring  Sched, $(TAO_ORBSVCS)))
-  MKLIST += Makefile.RTSched
-endif
-ifneq (,$(findstring  Event, $(TAO_ORBSVCS)))
-  ifeq (,$(findstring Makefile.RTEvent, $(MKLIST)))
-    MKLIST += Makefile.RTEvent
-  endif
+ifneq (,$(findstring  RTSched, $(TAO_ORBSVCS)))
   ifeq (,$(findstring Makefile.RTSched, $(MKLIST)))
     MKLIST += Makefile.RTSched
-  endif
-  ifeq (,$(findstring Makefile.RTOLDEvent, $(MKLIST)))
-    MKLIST += Makefile.RTOLDEvent
   endif
 endif
 ifneq (,$(findstring  RTOLDEvent, $(TAO_ORBSVCS)))
@@ -162,21 +154,29 @@ ifneq (,$(findstring  RTOLDEvent, $(TAO_ORBSVCS)))
   endif
 endif
 ifneq (,$(findstring  RTSchedEvent, $(TAO_ORBSVCS)))
-  MKLIST += Makefile.RTSchedEvent
+  ifeq (,$(findstring Makefile.RTSchedEvent, $(MKLIST)))
+    MKLIST += Makefile.RTSchedEvent
+  endif
+endif
+ifneq (,$(findstring  RTKokyuEvent, $(TAO_ORBSVCS)))
+  ifeq (,$(findstring Makefile.RTKokyuEvent, $(MKLIST)))
+    MKLIST += Makefile.RTKokyuEvent
+  endif
 endif
 ifneq (,$(findstring  RTCORBAEvent, $(TAO_ORBSVCS)))
-  MKLIST += Makefile.RTCORBAEvent
+  ifeq (,$(findstring Makefile.RTCORBAEvent, $(MKLIST)))
+    MKLIST += Makefile.RTCORBAEvent
+  endif
 endif
 ifneq (,$(findstring  CosEvent, $(TAO_ORBSVCS)))
-  MKLIST += Makefile.CosEvent
-endif
-ifneq (,$(findstring  NativeCosEvent, $(TAO_ORBSVCS)))
   ifeq (,$(findstring Makefile.CosEvent, $(MKLIST)))
     MKLIST += Makefile.CosEvent
   endif
 endif
 ifneq (,$(findstring  Trader, $(TAO_ORBSVCS)))
-  MKLIST += Makefile.CosTrading
+  ifeq (,$(findstring Makefile.CosTrading, $(MKLIST)))
+    MKLIST += Makefile.CosTrading
+  endif
 endif
 ifneq (,$(findstring  Notify, $(TAO_ORBSVCS)))
   MKLIST += Makefile.ETCL Makefile.CosNotification
@@ -184,8 +184,8 @@ endif
 ifneq (,$(findstring  Log, $(TAO_ORBSVCS)))
   MKLIST += Makefile.ETCL Makefile.Svc_Utils Makefile.DsLogAdmin
 endif
-ifneq (,$(findstring  EventLog, $(TAO_ORBSVCS)))
-  # The EventLog service depends on the CosEvent service.
+ifneq (,$(findstring  CosEventLog, $(TAO_ORBSVCS)))
+  # The CosEventLog service depends on the CosEvent service.
   ifeq (,$(findstring  CosEvent, $(TAO_ORBSVCS)))
     MKLIST += Makefile.CosEvent Makefile.DsLogAdmin
   endif

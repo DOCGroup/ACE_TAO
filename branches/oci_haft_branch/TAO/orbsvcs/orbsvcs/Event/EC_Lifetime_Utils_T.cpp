@@ -25,16 +25,17 @@ activate (T & obj_ref,
 
   suggested_object_deactivator.set_values (poa, obj_id.in ());
 
-
   // Get the object reference of the activated object.
   CORBA::Object_var obj =
     poa->id_to_reference (obj_id.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+  // Don't try to use T::_obj_type::_narrow, some compilers don't like it so
+  // do this in two steps
+  typedef typename T::_obj_type my_object_type;
+
   obj_ref =
-    my_narrow_until_carlos_gets_jeff_to_fix_the_idl_compiler (obj_ref.ptr (),
-                                                              obj.in ()
-                                                              ACE_ENV_ARG_PARAMETER);
+    my_object_type::_narrow (obj.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (obj_ref.in ()))

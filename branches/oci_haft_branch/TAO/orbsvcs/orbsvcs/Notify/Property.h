@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_PROPERTY_H
 #define TAO_Notify_PROPERTY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_export.h"
 
@@ -35,5 +35,5 @@ typedef TAO_Notify_Property_T<TimeBase::TimeT> TAO_Notify_Property_Time;
 typedef TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolParams> TAO_Notify_Property_ThreadPool;
 typedef TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolLanesParams> TAO_Notify_Property_ThreadPoolLanes;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_PROPERTY_H */

@@ -12,7 +12,7 @@ TAO_EC_Queue::
 }
 
 /// @todo The high water mark and low water mark shouldn't be
-/// hardcoded, check http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=565
+/// hardcoded, check http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=565
 ACE_INLINE
 TAO_EC_Dispatching_Task::
 TAO_EC_Dispatching_Task (ACE_Thread_Manager* thr_manager)

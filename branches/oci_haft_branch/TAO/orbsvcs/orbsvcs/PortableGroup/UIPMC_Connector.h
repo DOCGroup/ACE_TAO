@@ -14,7 +14,7 @@
 
 #ifndef TAO_UIPMC_CONNECTOR_H
 #define TAO_UIPMC_CONNECTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -95,5 +95,5 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_UIPMC_CONNECTOR_H */

@@ -14,7 +14,7 @@
 #ifndef TAO_LB_CLIENT_ORB_INITIALIZER_H
 #define TAO_LB_CLIENT_ORB_INITIALIZER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/LocalObject.h"
 
@@ -73,6 +73,6 @@ public:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_LB_CLIENT_ORB_INITIALIZER_H */

@@ -13,7 +13,7 @@
 
 #ifndef NS_CONTAINER_H
 #define NS_CONTAINER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/ACE.h"
 
@@ -230,5 +230,5 @@ private:
 #pragma implementation ("Naming_Service_Container.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* NS_CONTAINERS_T_H */

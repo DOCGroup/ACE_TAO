@@ -14,7 +14,7 @@
 #ifndef LB_ROUND_ROBIN_H
 #define LB_ROUND_ROBIN_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/Synch.h"
 
@@ -118,6 +118,6 @@ private:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* LB_ROUND_ROBIN_H */

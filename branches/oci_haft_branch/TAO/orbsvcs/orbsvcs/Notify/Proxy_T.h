@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_PROXY_T_H
 #define TAO_Notify_PROXY_T_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "notify_export.h"
 
@@ -154,5 +154,5 @@ TAO_Notify_Proxy_T<POA_CosEventChannelAdmin::ProxyPushConsumer>;
 #pragma implementation ("Proxy_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_PROXY_T_H */

@@ -4,11 +4,14 @@
 
 #include "FT_ORBInitializer.h"
 #include "FT_PolicyFactory.h"
+#include "FT_ClientRequest_Interceptor.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/Exception.h"
 
 
-ACE_RCSID (FaultTolerance, FT_ORBInitializer, "$Id$")
+ACE_RCSID (FaultTolerance,
+           FT_ORBInitializer,
+           "$Id$")
 void
 TAO_FT_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr
@@ -27,12 +30,24 @@ TAO_FT_ORBInitializer::post_init (
   this->register_policy_factories (info
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
+  this->register_server_request_interceptors (info
+                                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->register_client_request_interceptors (info
+                                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+
+
 }
 
 void
 TAO_FT_ORBInitializer::register_policy_factories (
   PortableInterceptor::ORBInitInfo_ptr info
   ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Register the FTCORBA policy factories.
 
@@ -77,4 +92,34 @@ TAO_FT_ORBInitializer::register_policy_factories (
 
   // Transfer ownership of the policy factory to the registry.
   (void) policy_factory._retn ();
+}
+
+void
+TAO_FT_ORBInitializer::register_server_request_interceptors (
+    PortableInterceptor::ORBInitInfo_ptr
+    ACE_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+}
+
+
+void
+TAO_FT_ORBInitializer::register_client_request_interceptors (
+    PortableInterceptor::ORBInitInfo_ptr info
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  PortableInterceptor::ClientRequestInterceptor_ptr cri =
+    PortableInterceptor::ClientRequestInterceptor::_nil ();
+
+  ACE_NEW_THROW_EX (cri,
+                    TAO_FT_ClientRequest_Interceptor,
+                    CORBA::NO_MEMORY ());
+
+  PortableInterceptor::ClientRequestInterceptor_var
+    client_interceptor = cri;
+
+  info->add_client_request_interceptor (client_interceptor.in ()
+                                        ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }

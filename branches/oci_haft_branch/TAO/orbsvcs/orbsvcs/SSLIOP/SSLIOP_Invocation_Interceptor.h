@@ -13,7 +13,7 @@
 #ifndef TAO_SSLIOP_INVOCATION_INTERCEPTOR_H
 #define TAO_SSLIOP_INVOCATION_INTERCEPTOR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "SSLIOP_Export.h"
 
@@ -134,6 +134,6 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_SSLIOP_INVOCATION_INTERCEPTOR_H */

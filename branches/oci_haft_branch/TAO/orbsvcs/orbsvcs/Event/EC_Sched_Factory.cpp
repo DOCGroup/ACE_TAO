@@ -132,7 +132,7 @@ TAO_EC_Sched_Factory::init (int argc, ACE_TCHAR* argv[])
                 {
                   this->scheduling_ = 0;
                 }
-              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("priority")) == 0)
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("group")) == 0)
                 {
                   this->scheduling_ = 1;
                 }

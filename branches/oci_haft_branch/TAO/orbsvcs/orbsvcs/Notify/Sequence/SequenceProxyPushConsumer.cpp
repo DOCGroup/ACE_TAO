@@ -6,7 +6,7 @@
 #include "SequenceProxyPushConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_SequenceProxyPushConsumer, "$id$")
+ACE_RCSID (Notify, TAO_Notify_SequenceProxyPushConsumer, "$Id$")
 
 #include "tao/debug.h"
 #include "SequencePushSupplier.h"

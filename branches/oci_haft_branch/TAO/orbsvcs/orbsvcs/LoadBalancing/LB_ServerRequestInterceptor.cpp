@@ -34,13 +34,14 @@ TAO_LB_ServerRequestInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr ri
+    PortableInterceptor::ServerRequestInfo_ptr /* ri */
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
   if (this->load_alert_.alerted ())
     {
+#if 0
       ACE_TRY
         {
           IOP::ServiceContext_var service_context =
@@ -99,6 +100,14 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
         }
       ACE_ENDTRY;
       ACE_CHECK;
+#else
+      // Force the client to try another profile since this location
+      // is currently overloaded.
+      //
+      // NOTE: This applies to both load balanced and non-load
+      // balanced targets.
+      ACE_THROW (CORBA::TRANSIENT ());
+#endif  /* 0 */
     }
 }
 

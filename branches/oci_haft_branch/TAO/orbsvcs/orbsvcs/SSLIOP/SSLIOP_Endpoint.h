@@ -16,7 +16,7 @@
 #ifndef TAO_SSLIOP_ENDPOINT_H
 #define TAO_SSLIOP_ENDPOINT_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "SSLIOP_Export.h"
 
@@ -171,6 +171,6 @@ private:
 #include "SSLIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_SSLIOP_ENDPOINT_H */

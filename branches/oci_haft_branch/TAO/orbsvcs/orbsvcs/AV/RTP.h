@@ -48,7 +48,7 @@
 
 #ifndef TAO_AV_RTP_H
 #define TAO_AV_RTP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/AV/AV_export.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
@@ -412,5 +412,5 @@ public:
 ACE_STATIC_SVC_DECLARE (TAO_AV_RTP_Flow_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_RTP_Flow_Factory)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_AV_RTP_H */

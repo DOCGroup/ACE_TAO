@@ -14,7 +14,7 @@
 #ifndef NOTIFY_DEFAULT_CO_FACTORY_H
 #define NOTIFY_DEFAULT_CO_FACTORY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -37,6 +37,6 @@ public:
 
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* NOTIFY_DEFAULT_CO_FACTORY_H */

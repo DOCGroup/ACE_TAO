@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_RT_FACTORY_H
 #define TAO_Notify_RT_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "rt_notify_export.h"
 
@@ -97,5 +97,5 @@ ACE_FACTORY_DECLARE (TAO_RT_Notify, TAO_Notify_RT_Factory)
 #include "RT_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Notify_RT_FACTORY_H */

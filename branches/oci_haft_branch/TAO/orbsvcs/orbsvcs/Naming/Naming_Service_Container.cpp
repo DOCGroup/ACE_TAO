@@ -16,7 +16,7 @@
 #ifndef NS_CONTAINER_C
 #define NS_CONTAINER_C
 
-#include "ace/Malloc.h"
+#include "ace/Malloc_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

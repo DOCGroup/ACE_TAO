@@ -9,14 +9,14 @@
  * Strategies for selecting profile/endpoint from an IOR for making an
  * invocation.
  *
- *  @author Bala Natarajan <bala@cs.wustl.edu>
+ *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
 
 
 #ifndef TAO_FT_INVOCATION_ENDPOINT_SELECTOR_H
 #define TAO_FT_INVOCATION_ENDPOINT_SELECTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "fault_tol_export.h"
 
@@ -91,5 +91,5 @@ private:
 # include "FT_Invocation_Endpoint_Selectors.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* FT_TAO_INVOCATION_ENDPOINT_SELECTOR_H */

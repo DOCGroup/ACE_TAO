@@ -24,9 +24,9 @@
 
 /**
  * @brief Helper for activating objects.
- * Activates <servant> with <poa> and returns the object reference via
- * <obj_ref>.  If <object_deactivator> != 0, it is populated with info
- * necessary to deactivate the <servant> from <poa>
+ * Activates @a servant with @a poa and returns the object reference via
+ * @a obj_ref.  If @a object_deactivator != 0, it is populated with info
+ * necessary to deactivate the @a servant from @a poa.
  */
 template <typename T>
 void activate (T & obj_ref,

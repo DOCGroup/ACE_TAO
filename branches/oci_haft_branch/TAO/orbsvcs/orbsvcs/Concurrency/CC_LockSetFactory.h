@@ -17,7 +17,7 @@
 
 #ifndef _CC_LOCKSETFACTORY_H
 #define _CC_LOCKSETFACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 // #include "tao/corba.h"
 #include "orbsvcs/CosConcurrencyControlS.h"
@@ -58,5 +58,5 @@ private:
   TAO_SYNCH_MUTEX lock_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* _CC_LOCKSETFACTORY_H */

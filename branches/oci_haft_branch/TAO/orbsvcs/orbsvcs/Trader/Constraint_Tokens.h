@@ -2,7 +2,7 @@
 
 #ifndef CONSTRAINT_TOKEN_H
 #define CONSTRAINT_TOKEN_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 # define TAO_GT 257
 # define TAO_GE 258
@@ -40,7 +40,7 @@
 # define TAO_RANDOM 290
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif //CONSTRAINT_TOKEN_H
 
 

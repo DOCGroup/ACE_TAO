@@ -6,7 +6,7 @@
 #include "PushSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_PushSupplier, "$id$")
+ACE_RCSID (Notify, TAO_Notify_PushSupplier, "$Id$")
 
 TAO_Notify_PushSupplier::TAO_Notify_PushSupplier (TAO_Notify_ProxyConsumer* proxy)
   :TAO_Notify_Supplier (proxy)

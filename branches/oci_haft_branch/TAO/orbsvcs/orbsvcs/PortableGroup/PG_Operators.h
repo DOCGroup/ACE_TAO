@@ -15,7 +15,7 @@
 #ifndef TAO_PG_OPERATORS_H
 #define TAO_PG_OPERATORS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "portablegroup_export.h"
 
@@ -42,6 +42,6 @@ int  TAO_PortableGroup_Export operator!= (const CosNaming::Name & lhs,
                                           const CosNaming::Name & rhs);
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_PG_OPERATORS_H */

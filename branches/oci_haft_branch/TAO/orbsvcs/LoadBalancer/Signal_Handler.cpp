@@ -1,7 +1,7 @@
 #include "Signal_Handler.h"
 
 #include "tao/ORB_Core.h"
-
+#include "ace/Reactor.h"
 
 ACE_RCSID (LoadBalancer,
            Signal_Handler,

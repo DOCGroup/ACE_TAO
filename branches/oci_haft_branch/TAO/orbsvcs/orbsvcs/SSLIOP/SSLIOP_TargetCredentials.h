@@ -13,7 +13,7 @@
 #ifndef TAO_SSLIOP_TARGET_CREDENTIALS_H
 #define TAO_SSLIOP_TARGET_CREDENTIALS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "SSLIOP_Export.h"
 
@@ -106,6 +106,6 @@ public:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_SSLIOP_TARGET_CREDENTIALS_H */

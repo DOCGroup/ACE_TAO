@@ -53,7 +53,7 @@ FT_FaultNotifier_i::FT_FaultNotifier_i ()
 // Implementation skeleton destructor
 FT_FaultNotifier_i::~FT_FaultNotifier_i ()
 {
-  self_unregister (ACE_ENV_SINGLE_ARG_PARAMETER);
+  fini (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 
@@ -123,6 +123,11 @@ int FT_FaultNotifier_i::parse_args (int argc, char * argv[])
         quitOnIdle_ = 1;
         break;
       }
+      case 'v':
+      {
+        verbose_ = 1;
+        break;
+      }
       case '?':
         // fall thru
       default:
@@ -146,7 +151,7 @@ const char * FT_FaultNotifier_i::identity () const
   return identity_.c_str();
 }
 
-int FT_FaultNotifier_i::self_unregister (ACE_ENV_SINGLE_ARG_DECL)
+int FT_FaultNotifier_i::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (ior_output_file_ != 0)
   {
@@ -165,7 +170,7 @@ int FT_FaultNotifier_i::self_unregister (ACE_ENV_SINGLE_ARG_DECL)
   return 0;
 }
 
-int FT_FaultNotifier_i::self_register (TAO_ORB_Manager & orbManager
+int FT_FaultNotifier_i::init (TAO_ORB_Manager & orbManager
   ACE_ENV_ARG_DECL)
 {
   int result = 0;

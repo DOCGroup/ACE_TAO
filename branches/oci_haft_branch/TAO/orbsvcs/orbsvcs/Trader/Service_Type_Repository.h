@@ -14,10 +14,11 @@
 
 #ifndef TAO_SERVICE_TYPE_REPOSITORY_H
 #define TAO_SERVICE_TYPE_REPOSITORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "Trader.h"
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Null_Mutex.h"
 
 /**
  * @class TAO_Service_Type_Repository
@@ -317,5 +318,5 @@ private:
   CosTradingRepos::ServiceTypeRepository::IncarnationNumber incarnation_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_SERVICE_TYPE_REPOSITORY_H */

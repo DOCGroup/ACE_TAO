@@ -112,11 +112,6 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  // Utility function used to help create a new TAO_ExtAttributeDef_i
-  // (called from TAO_InterfaceAttrExtension_i::create_ext_attribute_i)
-  void exceptions (const char *sub_section,
-                   const CORBA::ExceptionDefSeq &exceptions);
-
 private:
   /// Common code for the set and get varieties.
 

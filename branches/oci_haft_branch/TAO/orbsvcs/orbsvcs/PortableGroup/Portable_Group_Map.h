@@ -12,7 +12,7 @@
 
 #ifndef TAO_PORTABLE_GROUP_MAP_H
 #define TAO_PORTABLE_GROUP_MAP_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -23,7 +23,7 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "orbsvcs/PortableGroupC.h"
 #include "tao/Object_KeyC.h"
-
+#include "ace/Null_Mutex.h"
 
 class TAO_ServerRequest;
 
@@ -130,5 +130,5 @@ protected:
 //# include "Portable_Group_Map.i"
 //#endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PORTABLE_GROUP_MAP_H */
