@@ -13,60 +13,43 @@
 
 #include "allocation_traits.hpp"
 #include "testing_exception.hpp"
+#include "testing_counters.hpp"
 
 template<typename T, class base>
 struct testing_allocation_traits : public base
 {
-  static long allocbuf_calls;
-  static long freebuf_calls;
-  static long calls_until_failure_in_allocbuf;
-
-  static long default_buffer_allocation_calls;
-  static long calls_until_failure_in_default_buffer_allocation;
-
   typedef typename base::value_type value_type;
 
+  static call_counter default_buffer_allocation_calls;
   inline static value_type * default_buffer_allocation()
   {
-    ++default_buffer_allocation_calls;
-    if (--calls_until_failure_in_default_buffer_allocation == 0)
-    {
-      throw testing_exception();
-    }
+    default_buffer_allocation_calls();
     return base::default_buffer_allocation();
   }
 
+  static call_counter allocbuf_calls;
   inline static value_type * allocbuf(CORBA::ULong maximum)
   {
-    ++allocbuf_calls;
-    if (--calls_until_failure_in_allocbuf == 0)
-    {
-      throw testing_exception();
-    }
+    allocbuf_calls();
     return base::allocbuf(maximum);
   }
 
+  static call_counter freebuf_calls;
   inline static void freebuf(value_type * buffer)
   {
-    ++freebuf_calls;
+    freebuf_calls();
     base::freebuf(buffer);
   }
 };
 
-template<typename T, class base>
-long testing_allocation_traits<T,base>::allocbuf_calls = 0;
+template<typename T, class base> call_counter
+testing_allocation_traits<T,base>::allocbuf_calls;
 
-template<typename T, class base>
-long testing_allocation_traits<T,base>::freebuf_calls = 0;
+template<typename T, class base> call_counter
+testing_allocation_traits<T,base>::freebuf_calls;
 
-template<typename T, class base>
-long testing_allocation_traits<T,base>::calls_until_failure_in_allocbuf = 0;
-
-template<typename T, class base>
-long testing_allocation_traits<T,base>::default_buffer_allocation_calls = 0;
-
-template<typename T, class base>
-long testing_allocation_traits<T,base>::calls_until_failure_in_default_buffer_allocation = 0;
+template<typename T, class base> call_counter
+testing_allocation_traits<T,base>::default_buffer_allocation_calls;
 
 namespace TAO
 {
