@@ -74,7 +74,7 @@ namespace CCF
         }
       }
 
-      void Dispatcher::
+      bool Dispatcher::
       dispatch (SyntaxTree::NodePtr const& n)
       {
         LevelMap levels;
@@ -133,8 +133,10 @@ namespace CCF
 
           SyntaxTree::NodePtr v (n->virtual_type ());
 
-          if (v != 0) dispatch (v);
+          if (v != 0) match = dispatch (v);
         }
+
+        return match;
       }
 
       // Scope

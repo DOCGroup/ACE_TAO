@@ -1,3 +1,10 @@
+Wed Oct 29 13:36:47 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/IDL2/Traversal/Elements.cpp:
+	* CCF/CCF/IDL2/Traversal/Elements.hpp:
+	* CCF/CCF/IDL2/Traversal/Typedef.hpp: fixed bug in typedef
+	  traversal scheme.
+
 Fri Oct 24 19:16:21 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/IDL2/Traversal/Elements.hpp:
