@@ -1,3 +1,12 @@
+Tue Sep 28 12:48:37 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/wrapper_macros.GNU:
+
+          My change from Mon Sep 27 14:10:15 2004 was causing problems with
+          cygwin builds.  A better solution is to not set INSBIN at all and
+          allow it to be set in the generated makefile or by the user on the
+          make command line.
+
 Tue Sep 28 15:25:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_fcntl.h:
