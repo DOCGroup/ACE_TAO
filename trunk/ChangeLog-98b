@@ -1,5 +1,13 @@
 Sat NOv 28 20:02:08 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
+	* examples/DLL/Today.cpp:
+	* examples/DLL/Newsweek.cpp:
+
+	  Added the #ifdef directive needed to seperate out the
+	  functionality on NT and UNIX platforms.
+
+Sat NOv 28 20:02:08 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
 	* examples/DLL/Dll.dsw:
 	* examples/DLL/Test_dll.dsp:
 	* examples/DLL/Today.dsp:
