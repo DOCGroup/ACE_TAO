@@ -1,0 +1,194 @@
+//
+// $Id$
+//
+// ================================================================
+//
+// = LIBRARY
+//   TAO_IFR_Client
+//
+// = FILENAME
+//   IFR_Extended.pidl
+//
+// = DESCRIPTION
+//   This file was used to generate the code in IFR_ExtendedC.{h,i,cpp}.
+//   The original file Interface.idl was split into four pieces, to
+//   keep the generated files to a manageable size and reduce build
+//   time. This IDL file contains all the interfaces and other data
+//   types related to fixed types and valuetypes.
+//
+//   1. Patch this pidl file with
+//
+//      patch < diffs/IFR_Extended.pidl.diff
+//
+//   This will remove the CORBA module, rename most types foo
+//   declared in it as CORBA_foo, unalias the simple typedefs
+//   which don't have a CORBA_ analog in corbafwd.h.
+//
+//   2. Generate the code. The command used to generate code from this 
+//   IDL file is:
+//
+//     tao_idl -o orig -Ge 1 -I.. \
+//          -Wb,export_macro=TAO_IFR_Client_Export \
+//          -Wb,export_include=ifr_client_export.h \
+//          -Wb,pre_include="ace/pre.h" \
+//          -Wb,post_include="ace/post.h" \
+//          IFR_Extended.pidl
+//
+//   3. Copy the generated files to the current directory.
+//
+//   4. Patch the generated files, using
+//      
+//      patch < diffs/IFR_ExtendedC.h.diff
+//      patch < diffs/IFR_ExtendedC.i.diff
+//      patch < diffs/IFR_ExtendedC.cpp.diff
+//
+//   If this fails for some reason, the files must be patched
+//   by hand, and the diff files regenerated with
+//
+//      diff -wbu orig/IFR_ExtendedC.h IFR_ExtendedC.h > diffs/IFR_ExtendedC.h.diff
+//      diff -wbu orig/IFR_ExtendedC.i IFR_ExtendedC.i > diffs/IFR_ExtendedC.i.diff
+//      diff -wbu orig/IFR_ExtendedC.cpp IFR_ExtendedC.cpp > diffs/IFR_ExtendedC.cpp.diff
+//
+//   5. Restore IFR_Extended.pidl.
+//
+//   To regenerate the skeleton files IFR_ExtendedS.{h,i,cpp} and 
+//   IFR_ExtendedS_T.{h,i.cpp} in ACE_ROOT/TAO/orbsvcs/IFR_Service,
+//   use the command
+//
+//     tao_idl -o ../../orbsvcs/IFR_Service/orig -Ge 1 \
+//          -Wb,pre_include="ace/pre.h" \
+//          -Wb,post_include="ace/post.h" \
+//          IFR_Extended.pidl
+//
+// ================================================================
+
+#ifndef _IFR_EXTENDED_IDL_
+#define _IFR_EXTENDED_IDL_
+
+#include "IFR_Basic.pidl"
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  typedef short ValueModifier; // PIDL
+  const ValueModifier VM_NONE = 0;
+  const ValueModifier VM_CUSTOM = 1;
+  const ValueModifier VM_ABSTRACT = 2;
+  const ValueModifier VM_TRUNCATABLE = 3;
+
+  typedef short Visibility;
+  const Visibility PRIVATE_MEMBER = 0;
+  const Visibility PUBLIC_MEMBER = 1;
+
+  interface FixedDef : IDLType 
+  {
+    attribute unsigned short digits;
+    attribute short scale;
+  };
+
+  struct ValueMember 
+  {
+    Identifier name;
+    RepositoryId id;
+    RepositoryId defined_in;
+    VersionSpec version;
+    TypeCode type;
+    IDLType type_def;
+    Visibility access;
+  };
+
+  typedef sequence <ValueMember> ValueMemberSeq;
+
+  interface ValueMemberDef : Contained 
+  {
+    readonly attribute TypeCode type;
+    attribute IDLType type_def;
+    attribute Visibility access;
+  };
+
+  interface ValueDef : Container, Contained, IDLType 
+  {
+    // read/write interface
+    attribute InterfaceDefSeq supported_interfaces;
+    attribute InitializerSeq initializers;
+    attribute ValueDef base_value;
+    attribute ValueDefSeq abstract_base_values;
+    // read interface
+    attribute boolean is_abstract;
+    attribute boolean is_custom;
+    attribute boolean is_truncatable;
+    boolean is_a (
+        in RepositoryId id
+      );
+
+    struct FullValueDescription 
+    {
+      Identifier name;
+      RepositoryId id;
+      boolean is_abstract;
+      boolean is_custom;
+      RepositoryId defined_in;
+      VersionSpec version;
+      OpDescriptionSeq operations;
+      AttrDescriptionSeq attributes;
+      ValueMemberSeq members;
+      InitializerSeq initializers;
+      RepositoryIdSeq supported_interfaces;
+      RepositoryIdSeq abstract_base_values;
+      boolean is_truncatable;
+      RepositoryId base_value;
+      TypeCode type;
+    };
+
+    FullValueDescription describe_value ();
+      
+    ValueMemberDef create_value_member  (
+        in RepositoryId id,
+        in Identifier name,
+        in VersionSpec version,
+        in IDLType type,
+        in Visibility access
+      );
+    AttributeDef create_attribute (
+        in RepositoryId id,
+        in Identifier name,
+        in VersionSpec version,
+        in IDLType type,
+        in AttributeMode mode
+      );
+    OperationDef create_operation (
+        in RepositoryId id,
+        in Identifier name,
+        in VersionSpec version,
+        in IDLType result,
+        in OperationMode mode,
+        in ParDescriptionSeq params,
+        in ExceptionDefSeq exceptions,
+        in ContextIdSeq contexts
+      );
+  };
+
+  struct ValueDescription 
+  {
+    Identifier name;
+    RepositoryId id;
+    boolean is_abstract;
+    boolean is_custom;
+    RepositoryId defined_in;
+    VersionSpec version;
+    RepositoryIdSeq supported_interfaces;
+    RepositoryIdSeq abstract_base_values;
+    boolean is_truncatable;
+    RepositoryId base_value;
+  };
+
+  interface ValueBoxDef : TypedefDef 
+  {
+    attribute IDLType original_type_def;
+  };
+};
+
+#pragma prefix ""
+
+#endif /* _IFR_EXTENDED_IDL_ */

@@ -1,0 +1,242 @@
+/* -*- C++ -*- */
+// $Id$
+
+#include "idl.h"
+#include "global_extern.h"
+#include "fe_extern.h"
+#include "drv_private_ifr.h"
+#include "drv_extern_ifr.h"
+#include "be_extern.h"
+#include "ace/Process.h"
+
+ACE_RCSID(IFR_Service, tao_ifr, "$Id$")
+
+// Initialize the node generator. The IfR administration BE visitors
+// will visit the AST nodes, so be_generator is not required here.
+AST_Generator *
+gen_init (void)
+{
+  AST_Generator *g = 0;
+  ACE_NEW_RETURN (g,
+                  AST_Generator,
+                  0);
+
+  return g;
+}
+
+// Fork off a process, wait for it to die.
+void
+DRV_fork (void)
+{
+  // This will not work on NT, but I can hardly think of some way to
+  // make it work.  The idea is to make it compile, and always use the
+  // compiler with just one file. That works because then there is no
+  // fork involved.
+  for (DRV_file_index = 0;
+       DRV_file_index < DRV_nfiles;
+       ++DRV_file_index)
+    {
+      ACE_Process_Options options;
+      options.creation_flags (ACE_Process_Options::NO_EXEC);
+      ACE_Process manager;
+      pid_t child_pid = manager.spawn (options);
+
+      if (child_pid == 0)
+        {
+          // OK, do it to this file (in the child).
+          DRV_drive (DRV_files[DRV_file_index]);
+          ACE_OS::exit (0);
+        }
+
+      if (child_pid == ACE_INVALID_PID)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("IDL: spawn failed\n")));
+
+          ACE_OS::exit (99);
+        }
+
+      // child_pid is the process id of something at this point.
+      if (manager.wait () == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("IDL: wait failed\n")));
+
+          ACE_OS::exit (99);
+        }
+    }
+  // Now the parent process can exit.
+  ACE_OS::exit (0);
+}
+
+// DRV_drive LOGIC:
+
+// 1. Initialize the CFE, stage 1. This builds the scope stack
+// 2. Initialize the BE. This builds an instance of the generator
+// 3. Initialize the CFE, stage 2. This builds the global scope
+//    and populates it with the predefined types
+// 4. Invoke FE_yyparse
+// 5. Check for errors from FE_yyparse. If any, exit now
+// 6. Check if asked to dump AST. If so, do.
+// 7. Invoke BE.
+
+void
+DRV_drive (const char *s)
+{
+  // Set the name of the IDL file we are parsing. This is useful to
+  // the backend when it generates C++ headers and files.
+  UTL_String *src_file = 0;
+  ACE_NEW (src_file,
+           UTL_String (s));
+
+  idl_global->idl_src_file (src_file);
+
+  // Pass through CPP.
+  if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s%s %s\n",
+                  ACE_TEXT (idl_global->prog_name ()),
+                  ACE_TEXT (": preprocessing"),
+                  ACE_TEXT (s)));
+    }
+
+  DRV_pre_proc (s);
+
+  // Initialize FE stage 1.
+  FE_init_stage1 ();
+
+  // Initialize BE.
+  AST_Generator *gen = gen_init ();
+
+  if (gen == 0)
+    {
+      ACE_ERROR ((
+          LM_ERROR,
+          ACE_TEXT ("IDL: BE init failed to create generator, exiting\n")
+        ));
+
+      ACE_OS::exit (99);
+    }
+  else
+    {
+      idl_global->set_gen (gen);
+    }
+
+  // Initialize FE stage 2.
+  FE_init_stage2 ();
+
+  // Parse.
+  if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s%s %s\n",
+                  ACE_TEXT (idl_global->prog_name()),
+                  ACE_TEXT (": parsing"),
+                  ACE_TEXT (s)));
+    }
+
+  FE_yyparse ();
+
+  // If there were any errors, stop.
+  if (idl_global->err_count () > 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%s%s %s%s %d %s%s\n",
+                  ACE_TEXT (idl_global->prog_name ()),
+                  ACE_TEXT (":"),
+                  ACE_TEXT (s),
+                  ACE_TEXT (": found"),
+                  idl_global->err_count (),
+                  ACE_TEXT ("error"),
+                  ACE_TEXT ((idl_global->err_count () > 1 ? "s" : ""))));
+
+      // Call BE_abort to allow a BE to clean up after itself.
+      BE_abort ();
+
+      ACE_OS::exit (ACE_static_cast (int, idl_global->err_count ()));
+    }
+
+  // Dump the code.
+  if ((idl_global->compile_flags () & IDL_CF_INFORMATIVE)
+      && (idl_global->compile_flags () & IDL_CF_DUMP_AST))
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s%s %s\n",
+                  ACE_TEXT (idl_global->prog_name ()),
+                  ACE_TEXT (": dump"),
+                  ACE_TEXT (s)));
+    }
+
+  if (idl_global->compile_flags () & IDL_CF_DUMP_AST)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Dump of AST:\n")));
+
+      idl_global->root ()->dump (*ACE_DEFAULT_LOG_STREAM);
+    }
+
+  // Call the main entry point for the BE.
+  if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s%s %s\n",
+                  ACE_TEXT (idl_global->prog_name ()),
+                  ACE_TEXT (": BE processing on"),
+                  ACE_TEXT (s)));
+    }
+
+  BE_produce ();
+
+  // Exit cleanly.
+  ACE_OS::exit (0);
+}
+
+// main LOGIC:
+
+// 1. Initialize compiler driver
+// 2. Parse command line args
+// 3. If more than one file to parse, fork
+// 4. Otherwise, for the single file, invoke DRV_drive
+
+int
+main (int argc, char *argv[])
+{
+  // Initialize driver and global variables.
+  DRV_init ();
+
+  // Parse arguments.
+  DRV_parse_args (argc, argv);
+
+  // If a usage message is requested, give it and exit.
+  if (idl_global->compile_flags () & IDL_CF_ONLY_USAGE)
+    {
+      DRV_usage ();
+      ACE_OS::exit (0);
+    }
+
+  // Fork off a process for each file to process. Fork only if
+  // there is more than one file to process.
+  if (DRV_nfiles > 1)
+    {
+      // DRV_fork never returns.
+      DRV_fork ();
+    }
+  else
+    {
+      // Do the one file we have to parse.
+      // Check if stdin and handle file name appropriately.
+      if (DRV_nfiles == 0)
+        {
+          DRV_files[0] = "standard input";
+        }
+
+      DRV_file_index = 0;
+      DRV_drive (DRV_files[DRV_file_index]);
+    }
+
+  ACE_OS::exit (0);
+
+  // NOT REACHED.
+  return 0;
+}
