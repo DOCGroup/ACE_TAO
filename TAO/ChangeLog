@@ -1,3 +1,8 @@
+Fri May 23 08:14:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IORInterceptor_Adapter.h: #included Exception.h. This should
+	  fix compilation errors with g++.
+
 Fri May 23 07:28:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IORInterceptor/IORInterceptor_List.h: 
