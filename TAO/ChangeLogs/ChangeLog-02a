@@ -1,7 +1,44 @@
+Thu May 10 09:50:53 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/AMI_Latency/AMI_Latency.dsw:
+        * performance-tests/AMI_Latency/client.dsp:
+        * performance-tests/AMI_Latency/server.dsp:
+        * performance-tests/DII_Latency/DII_Latency.dsw:
+        * performance-tests/DII_Latency/client.dsp:
+        * performance-tests/DII_Latency/server.dsp:
+        * performance-tests/DSI_Latency/DSI_Latency.dsw:
+        * performance-tests/DSI_Latency/client.dsp:
+        * performance-tests/DSI_Latency/server.dsp:
+        * performance-tests/Deferred_Latency/Deferred_Latency.dsw:
+        * performance-tests/Deferred_Latency/client.dsp:
+        * performance-tests/Deferred_Latency/server.dsp:
+        * performance-tests/POA/Create_Reference/Create_Reference.dsw:
+        * performance-tests/POA/Create_Reference/create_reference.dsp:
+        * performance-tests/POA/Implicit_Activation/Implicit_Activation.dsw:
+        * performance-tests/POA/Implicit_Activation/client.dsp:
+        * performance-tests/POA/Implicit_Activation/collocated.dsp:
+        * performance-tests/POA/Implicit_Activation/server.dsp:
+        * performance-tests/Single_Threaded_Latency/Single_Threaded_Latency.dsw:
+        * performance-tests/Single_Threaded_Latency/client.dsp:
+        * performance-tests/Single_Threaded_Latency/server.dsp:
+        * performance-tests/Thread_Per_Connection_Latency/Thread_Per_Connection_Latency.dsw:
+        * performance-tests/Thread_Per_Connection_Latency/client.dsp:
+        * performance-tests/Thread_Per_Connection_Latency/server.dsp:
+        * performance-tests/Thread_Pool_Latency/Thread_Pool_Latency.dsw:
+        * performance-tests/Thread_Pool_Latency/client.dsp:
+        * performance-tests/Thread_Pool_Latency/server.dsp:
+        * performance-tests/Throughput/Throughput.dsw:
+        * performance-tests/Throughput/client.dsp:
+        * performance-tests/Throughput/server.dsp:
+          Add DSP and DSW files for MSVC
+
+        * performance-tests/AMI_Latency/server.bor:
+          Add missing file.
+
 Thu May 10 11:39:17 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp
-	  (child_poa_testing): Changed %d to %ul to prevent a warning.
+        * performance-tests/POA/Object_Creation_And_Registration/registration.cpp
+          (child_poa_testing): Changed %d to %ul to prevent a warning.
 
 Thu May 10 09:19:24 2001  Carlos O'Ryan  <coryan@uci.edu>
 
