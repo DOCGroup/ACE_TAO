@@ -1,3 +1,10 @@
+Tue Jul  9 08:42:12 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/tao_idl.mpc:
+
+          Update the mpc file to reflect the current state of the idl
+          compiler source.
+
 Tue Jul  9 07:16:10 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * */*.mpc:
