@@ -35,11 +35,13 @@
 // following:
 // 1. Define a class Exception. You can name it as you please. This class
 //    should be at the root of the inheritance hierarchy of all the
-//    exceptions used in your application. It should support at a minimum
-//    the following methods:
+//    exceptions used in your application. It should define at a minimum
+//    the following pure virtual methods:
 //    a) _downcast () - Which allows narrowing of the base exception type to a
 //       derived type.
-//    b) _raise() - Which does what ???? XXX: FIXME
+//    b) _raise() - Which throws an exception of type Exception.
+//
+//    Classes which derive from these should implement these operations.
 //
 // 2. Define a class Environment. You can name it as you please. This class
 //    is an exception holder. This class is always on the stack. It should

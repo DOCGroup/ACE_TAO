@@ -18,10 +18,13 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-// Needed to make some prototypes visible.
-// #if ! defined (_GNU_SOURCE)
-// #define _GNU_SOURCE
-// #endif /* ! _GNU_SOURCE */
+#ifndef _XOPEN_SOURCE
+#define _XOPEN_SOURCE 600
+#endif /* _XOPEN_SOURCE */
+
+#if (defined _XOPEN_SOURCE &&  _XOPEN_SOURCE - 0 >= 500)
+#define ACE_HAS_PTHREADS_UNIX98_EXT
+#endif /* _XOPEN_SOURCE - 0 >= 500 */
 
 // Needed to differentiate between libc 5 and libc 6 (aka glibc).
 // It's there on all libc 5 systems I checked.
