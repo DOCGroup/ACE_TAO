@@ -338,7 +338,9 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
 
   if (info->is_roundtrip)
     {
-      TAO_GIOP_Twoway_Invocation call (this, info->opname,
+      TAO_GIOP_Twoway_Invocation call (this, 
+                                       info->opname,
+                                       ACE_OS::strlen (info->opname),
                                        this->orb_core_);
 
       ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR);
@@ -483,7 +485,9 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
     } // if (two way)
   else
     {
-      TAO_GIOP_Oneway_Invocation call (this, info->opname,
+      TAO_GIOP_Oneway_Invocation call (this, 
+                                       info->opname,
+                                       ACE_OS::strlen (info->opname),
                                        this->orb_core_);
 
       ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR);
@@ -615,6 +619,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
     {
       TAO_GIOP_Twoway_Invocation call (this,
                                        opname,
+                                       ACE_OS::strlen (opname),
                                        this->orb_core_);
 
       // Loop as needed for forwarding; see above.
@@ -681,6 +686,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
     {
       TAO_GIOP_Oneway_Invocation call (this,
                                        opname,
+                                       ACE_OS::strlen (opname),
                                        this->orb_core_);
 
       for (;;)

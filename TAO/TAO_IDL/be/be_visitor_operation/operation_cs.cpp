@@ -744,9 +744,15 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
     default:
       *os << "TAO_GIOP_Twoway_Invocation _tao_call ";
     }
+
+  // Do we have "_set_" or "_get_" prepended?
+  size_t ext = this->ctx_->attribute () ? 5 : 0;
+
   *os << "(" << be_idt << be_idt_nl
       << "istub," << be_nl
       << this->compute_operation_name (node)
+      << "," << be_nl
+      << ACE_OS::strlen (node->original_local_name ()->get_string ()) + ext
       << "," << be_nl
       << "istub->orb_core ()" << be_uidt_nl
       << ");\n";
@@ -754,7 +760,8 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
   // fish out the interceptor from the ORB
   *os << "\n#if defined (TAO_HAS_INTERCEPTORS)" << be_nl
       << "TAO_ClientRequestInterceptor_Adapter" << be_idt_nl
-      << "_tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));\n" << be_uidt;;
+      << "_tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));\n" 
+      << be_uidt;
   if (this->gen_check_exception (bt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

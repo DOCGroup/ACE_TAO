@@ -70,9 +70,11 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Invocation_Timeprobe_Description,
 
 TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
                                           const char *operation,
+                                          CORBA::ULong opname_len,
                                           TAO_ORB_Core* orb_core)
   : stub_ (stub),
     opname_ (operation),
+    opname_len_ (opname_len),
     request_id_ (0),
     out_stream_ (buffer, sizeof buffer, /* ACE_CDR::DEFAULT_BUFSIZE */
                  TAO_ENCAP_BYTE_ORDER,
@@ -324,6 +326,7 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
                                       response_flags,
                                       this->profile_->object_key (),
                                       this->opname_,
+                                      this->opname_len_,
                                       principal,
                                       this->out_stream_,
                                       this->orb_core_) == 0)
@@ -906,8 +909,9 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 TAO_GIOP_Oneway_Invocation::
 TAO_GIOP_Oneway_Invocation (TAO_Stub *stub,
                             const char *operation,
+                            CORBA::ULong opname_len,
                             TAO_ORB_Core *orb_core)
-  : TAO_GIOP_Invocation (stub, operation, orb_core),
+  : TAO_GIOP_Invocation (stub, operation, opname_len, orb_core),
     sync_scope_ (TAO::SYNC_WITH_TRANSPORT)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)

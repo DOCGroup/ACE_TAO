@@ -240,6 +240,7 @@ CORBA::PolicyType CORBA_Policy::policy_type (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""policy_type",
+      16,
       istub->orb_core ()
     );
 
@@ -293,6 +294,7 @@ CORBA_Policy_ptr CORBA_Policy::copy (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "copy",
+      4,
       istub->orb_core ()
     );
 
@@ -345,6 +347,7 @@ void CORBA_Policy::destroy (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "destroy",
+      7,
       istub->orb_core ()
     );
 

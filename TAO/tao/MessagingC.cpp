@@ -1669,6 +1669,7 @@ CORBA::Object_ptr Messaging::Poller::operation_target (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""operation_target",
+      21,
       istub->orb_core ()
     );
 
@@ -1723,6 +1724,7 @@ char * Messaging::Poller::operation_name (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""operation_name",
+      19,
       istub->orb_core ()
     );
 
@@ -1777,6 +1779,7 @@ Messaging::ReplyHandler_ptr Messaging::Poller::associated_handler (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""associated_handler",
+      23,
       istub->orb_core ()
     );
 
@@ -1831,6 +1834,7 @@ void Messaging::Poller::associated_handler (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_set_""associated_handler",
+      23,
       istub->orb_core ()
     );
 
@@ -1886,6 +1890,7 @@ CORBA::Boolean Messaging::Poller::is_from_poller (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""is_from_poller",
+      19,
       istub->orb_core ()
     );
 
@@ -1940,6 +1945,7 @@ CORBA::Object_ptr Messaging::Poller::target (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""target",
+      11,
       istub->orb_core ()
     );
 
@@ -1994,6 +2000,7 @@ char * Messaging::Poller::op_name (
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_""op_name",
+      12,
       istub->orb_core ()
     );
 

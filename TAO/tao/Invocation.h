@@ -74,6 +74,7 @@ class TAO_Export TAO_GIOP_Invocation
 public:
   TAO_GIOP_Invocation (TAO_Stub *data,
                        const char *operation,
+                       CORBA::ULong opname_len,
                        TAO_ORB_Core* orb_core);
   // Constructor.
 
@@ -150,6 +151,9 @@ protected:
   const char *opname_;
   // Name of the operation being invoked.
 
+  CORBA::ULong opname_len_;
+  // Precalculated length of opname_.
+
   CORBA::ULong request_id_;
   // Request ID of this operation.
 
@@ -195,6 +199,7 @@ class TAO_Export TAO_GIOP_Twoway_Invocation : public TAO_GIOP_Invocation
 public:
   TAO_GIOP_Twoway_Invocation (TAO_Stub *data,
                               const char *operation,
+                              CORBA::ULong opname_len,
                               TAO_ORB_Core* orb_core);
   // Constructor.
 
@@ -245,6 +250,7 @@ class TAO_Export TAO_GIOP_Oneway_Invocation : public TAO_GIOP_Invocation
 public:
   TAO_GIOP_Oneway_Invocation (TAO_Stub *data,
                               const char *operation,
+                              CORBA::ULong opname_len,
                               TAO_ORB_Core* orb_core);
   // Constructor.
 
