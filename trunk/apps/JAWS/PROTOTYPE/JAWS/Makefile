@@ -31,7 +31,7 @@ MYFILES  	= \
 LSRC	= $(addsuffix .cpp,$(MYFILES))
 LOBJ	= $(addsuffix .o,$(MYFILES))
 
-CPPFLAGS += -I.. -DJAWS_NTRACE=0
+CPPFLAGS += -I.. -DJAWS_HAS_THREAD_SAFE_ACCEPT -DJAWS_NTRACE=0 -DACE_NLOGGING
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
@@ -70,8 +70,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/Headers.o .obj/Headers.so .shobj/Headers.o .shobj/Headers.so: Headers.cpp ../JAWS/Headers.h \
- $(ACE_ROOT)/ace/Containers.h \
+.obj/Headers.o .obj/Headers.so .shobj/Headers.o .shobj/Headers.so: Headers.cpp ../JAWS/Headers.h ../JAWS/Export.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
@@ -88,6 +87,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
  $(ACE_ROOT)/ace/Containers_T.i \
@@ -127,10 +127,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i
 .obj/Parse_Headers.o .obj/Parse_Headers.so .shobj/Parse_Headers.o .shobj/Parse_Headers.so: Parse_Headers.cpp ../JAWS/Parse_Headers.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
+ ../JAWS/Export.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
@@ -142,9 +139,12 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
@@ -445,7 +445,17 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/SOCK_Stream.i
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ ../JAWS/IO_Acceptor.h \
+ $(ACE_ROOT)/ace/Asynch_Acceptor.h \
+ $(ACE_ROOT)/ace/Asynch_Acceptor.i \
+ $(ACE_ROOT)/ace/Asynch_Acceptor.cpp \
+ $(ACE_ROOT)/ace/LOCK_SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/LOCK_SOCK_Acceptor.cpp \
+ ../JAWS/IO_Handler.h
 .obj/Pipeline.o .obj/Pipeline.so .shobj/Pipeline.o .shobj/Pipeline.so: Pipeline.cpp ../JAWS/Pipeline.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
