@@ -64,8 +64,11 @@ namespace TAO
     };
 }
 
-// Used only by TAO_Marshal_Object::append().
-extern TAO_Export CORBA::TypeCode_ptr TC_opaque;
+namespace TAO
+{
+  // Used only by TAO_Marshal_Object::append().
+  extern TAO_Export CORBA::TypeCode_ptr TC_opaque;
+}
 
 /**
  * @class TAO_Marshal_Object

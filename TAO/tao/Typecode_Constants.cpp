@@ -43,139 +43,71 @@ ACE_RCSID (tao,
 // Declare all the standard typecodes owned by the ORB
 
 // Null and void
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_null, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_void, 0)
-TAO_NAMESPACE_END
+namespace CORBA
+{
+  TypeCode_ptr  _tc_null = 0;
+  TypeCode_ptr  _tc_void = 0;
 
-// Basic numeric types:  short, long, longlong, and unsigned variants
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_short, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_long, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_longlong, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ushort, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ulong, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ulonglong, 0)
-TAO_NAMESPACE_END
+  // Basic numeric types:  short, long, longlong, and unsigned
+  // variants
 
-// Floating point types: single, double, quad precision
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_float, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_double, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_longdouble, 0)
-TAO_NAMESPACE_END
+  TypeCode_ptr  _tc_short = 0;
+  TypeCode_ptr  _tc_long = 0;
+  TypeCode_ptr  _tc_longlong = 0;
+  TypeCode_ptr  _tc_ushort = 0;
+  TypeCode_ptr  _tc_ulong = 0;
+  TypeCode_ptr  _tc_ulonglong = 0;
 
-// Various simple quantities.
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_boolean, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_octet, 0)
-TAO_NAMESPACE_END
+  // Floating point types: single, double, quad precision
+  TypeCode_ptr  _tc_float = 0;
+  TypeCode_ptr  _tc_double = 0;
+  TypeCode_ptr  _tc_longdouble = 0;
 
-// Internationalization-related data types: ISO Latin/1 and "wide"
-// characters, and strings of each.  "wchar" is probably Unicode 1.1,
-// "wstring" being null-terminated sets thereof.
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_char, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_wchar, 0)
-TAO_NAMESPACE_END
+  // Various simple quantities.
+  TypeCode_ptr  _tc_boolean = 0;
+  TypeCode_ptr  _tc_octet = 0;
 
-// a string/wstring have a simple parameter list that indicates the length
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_string, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_wstring, 0)
-TAO_NAMESPACE_END
+  // Internationalization-related data types: ISO Latin/1 and "wide"
+  // characters, and strings of each.  "wchar" is probably Unicode 1.1,
+  // "wstring" being null-terminated sets thereof.
+  TypeCode_ptr  _tc_char = 0;
+  TypeCode_ptr  _tc_wchar = 0;
 
-//
-// Various things that can be passed as "general" parameters:
-// Any, TypeCode_ptr, Principal_ptr, Object_ptr
-//
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_any, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_TypeCode, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Principal, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Object, 0)
-TAO_NAMESPACE_END
-// Two typecodes for exceptions
-CORBA::TypeCode_ptr CORBA::TypeCode::_tc_Bounds = 0;
-CORBA::TypeCode_ptr CORBA::TypeCode::_tc_BadKind = 0;
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_exception_type, 0)
-TAO_NAMESPACE_END
+  // a string/wstring have a simple parameter list that indicates the
+  // length
+  TypeCode_ptr  _tc_string = 0;
+  TypeCode_ptr  _tc_wstring = 0;
 
+  //
+  // Various things that can be passed as "general" parameters:
+  // Any, TypeCode_ptr  Principal_ptr, Object_ptr
+  //
+  TypeCode_ptr  _tc_any = 0;
+  TypeCode_ptr  _tc_TypeCode = 0;
+  TypeCode_ptr  _tc_Principal = 0;
+  TypeCode_ptr  _tc_Object = 0;
 
-// Some more typecodes in the CORBA namespace. We keep adding
-// to this list as we find more and more things being introduced
-// to the CORBA namespace.
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ORBid, 0)
-TAO_NAMESPACE_END
+  // Two typecodes for exceptions
+  TypeCode_ptr CORBA::TypeCode::_tc_Bounds = 0;
+  TypeCode_ptr CORBA::TypeCode::_tc_BadKind = 0;
+  TypeCode_ptr  _tc_exception_type = 0;
+
+  // Some more typecodes in the CORBA namespace. We keep adding
+  // to this list as we find more and more things being introduced
+  // to the CORBA namespace.
+  TypeCode_ptr  _tc_ORBid = 0;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_NamedValue, 0)
-TAO_NAMESPACE_END
-
+     TypeCode_ptr  _tc_NamedValue = 0;
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-// Internal to TAO ORB
-CORBA::TypeCode_ptr TC_opaque = 0;
-CORBA::TypeCode_ptr TC_completion_status = 0;
+} // End namespace CORBA
 
 namespace TAO
 {
+  // Internal to TAO ORB
+  CORBA::TypeCode_ptr TC_opaque = 0;
+  CORBA::TypeCode_ptr TC_completion_status = 0;
+
   // Flag that denotes that the TAO TypeCode constants have been
   // initialized.
   int TypeCode_Constants::initialized_ = 0;
