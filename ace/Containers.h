@@ -18,6 +18,7 @@
 #define ACE_CONTAINERS_H
 
 #include "ace/ACE.h"
+#include "ace/Malloc_T.h"
 
 template <class T>
 class ACE_Bounded_Stack 
@@ -206,8 +207,9 @@ class ACE_Unbounded_Stack
   friend class ACE_Unbounded_Stack_Iterator<T>;
 public:
   // = Initialization, assignemnt, and termination methods.
-  ACE_Unbounded_Stack (void);
-  // Initialize a new stack so that it is empty. 
+  ACE_Unbounded_Stack (ACE_Allocator *alloc = 0);
+  // Initialize a new stack so that it is empty.  Use user defined
+  // allocation strategy if specified.
 
   ACE_Unbounded_Stack (const ACE_Unbounded_Stack<T> &s);
   // The copy constructor (performs initialization). 
@@ -278,6 +280,9 @@ private:
 
   size_t cur_size_;
   // Current size of the stack.
+
+  ACE_Allocator *allocator_;
+  // Allocation strategy of the stack.
 };
 
 template <class T>
@@ -367,8 +372,9 @@ class ACE_Unbounded_Queue
   friend class ACE_Unbounded_Queue_Iterator<T>;
 public:
   // = Initialization and termination methods.
-  ACE_Unbounded_Queue (void);
-  // construction.
+  ACE_Unbounded_Queue (ACE_Allocator *alloc = 0);
+  // construction.  Use user specified allocation strategy
+  // if specified.
 
   ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &);
   // Copy constructor. 
@@ -437,6 +443,9 @@ protected:
 
   size_t cur_size_;
   // Current size of the queue.
+
+  ACE_Allocator *allocator_;
+  // Allocation Strategy of the queue.
 };
 
 template <class T>
@@ -488,8 +497,9 @@ class ACE_Unbounded_Set
 friend class ACE_Unbounded_Set_Iterator<T>;
 public:
   // = Initialization and termination methods.
-  ACE_Unbounded_Set (void);
-  // Constructor.
+  ACE_Unbounded_Set (ACE_Allocator *alloc = 0);
+  // Constructor.  Use user specified allocation strategy
+  // if specified.
 
   ACE_Unbounded_Set (const ACE_Unbounded_Set<T> &);
   // Copy constructor. 
@@ -549,6 +559,9 @@ private:
 
   size_t cur_size_;
   // Current size of the set.
+
+  ACE_Allocator *allocator_;
+  // Allocation strategy of the set.
 };
 
 // Forward declaration.
