@@ -15,6 +15,7 @@ namespace {
 
   typedef TAO_Reconfig_Scheduler<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_RMS_SCHED_TYPE;
   typedef TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_MUF_SCHED_TYPE;
+  typedef TAO_Reconfig_Scheduler<TAO_EDF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_EDF_SCHED_TYPE;
 
   POA_RtecScheduler::Scheduler*
     create_scheduler(const char* schedule_discipline)
@@ -34,6 +35,16 @@ namespace {
         RECONFIG_MUF_SCHED_TYPE,
         0);
     }
+    else if (ACE_OS::strcasecmp(schedule_discipline, "edf") == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Creating EDF scheduler\n"));
+      ACE_NEW_RETURN (sched_impl,
+        RECONFIG_EDF_SCHED_TYPE,
+        0);
+    }
+
+    //@BT: Decided on which kind of scheduling to do, same as DT SCHEDULE SETUP
+    //DSUI_EVENT_LOG (MAIN_GROUP_FAM, SCHEDULE_SETUP, 1, strlen (policy), policy);
     return sched_impl;
   }
 }
@@ -210,6 +221,9 @@ void Kokyu_EC::start (ACE_ENV_SINGLE_ARG_DECL)
       ACE_TRY_CHECK;
       ec_impl_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      //@BT: EC activated is roughly equivalent to having the DT scheduler ready to run
+      //DSUI_EVENT_LOG (MAIN_GROUP_FAM, SCHEDULER_STARTED, 1, 0, NULL);
 }
 
 ::RtecEventChannelAdmin::EventChannel_ptr

@@ -49,9 +49,6 @@ TEMPINCDIR := $(TEMPINCDIR)/Supplier_EC
 
 all: $(TEMPINCDIR)
 
-$(TEMPINCDIR):
-	@-test -d $(TEMPINCDIR) || mkdir -p $(TEMPINCDIR) $(ACE_NUL_STDERR)
-
 endif
 OUTPUT_DIRECTORY = .
 all: $(OUTPUT_DIRECTORY)
@@ -59,24 +56,11 @@ all: $(OUTPUT_DIRECTORY)
 $(OUTPUT_DIRECTORY):
 	-@mkdir -p "$(OUTPUT_DIRECTORY)"
 
-
-CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (RTSchedEvent, $(findstring RTSchedEvent, $(CURRENT_COMPONENTS)))
-ifeq (Sched, $(findstring Sched, $(CURRENT_COMPONENTS)))
-ifeq (Naming, $(findstring Naming, $(CURRENT_COMPONENTS)))
-ifeq (RTEvent, $(findstring RTEvent, $(CURRENT_COMPONENTS)))
+LIBCHECK = $(shell for lib in TAO_RTKokyuEvent Kokyu dsui TAO_RTSchedEvent TAO_RTSched TAO_CosNaming TAO_IORTable TAO_RTEvent TAO_Svc_Utils TAO_Messaging TAO_PortableServer TAO_IORInterceptor TAO_ObjRefTemplate TAO_Valuetype TAO ACE; do for libpath in ../../../../../lib $(DATASTREAM_ROOT)/lib; do full="`echo $$libpath/lib$$lib.* $$libpath/$$lib.lib | tr ' ' '\012' | grep -v \* | head -1`"; if [ -r "$$full" ]; then break; else full=; fi; done; if [ -z "$$full" ]; then echo $$lib; exit; fi; done; echo 1)
+ifeq ($(LIBCHECK), 1)
 BIN    = $(BIN_UNCHECKED)
 else
-  all: comp_warning
-endif
-else
-  all: comp_warning
-endif
-else
-  all: comp_warning
-endif
-else
-  all: comp_warning
+  all: lib_warning
 endif
 
 OBJS   = $(addsuffix .o, $(notdir $(FILES)))
@@ -91,7 +75,7 @@ all: idl_stubs
 
 # This rule forces make to run the idl_stubs
 # target before building any of the source files.
-RtSchedEventChannelC.cpp RtSchedEventChannelS.cpp Consumer.cpp Kokyu_EC.cpp Supplier_EC.cpp Supplier.cpp: idl_stubs
+FORCED_IDL_STUBS = RtSchedEventChannelC.cpp RtSchedEventChannelS.cpp Consumer.cpp Kokyu_EC.cpp Supplier_EC.cpp Supplier.cpp
 endif
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
@@ -101,30 +85,33 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-CPPFLAGS     += -I../../../../../Kokyu -I$(DATASTREAM_ROOT)/include -I../../../../orbsvcs -I../../../.. -I../../../../tao -I../../../../..
+CPPFLAGS     += -I../../../../.. -I../../../.. -I../../../../tao -I../../../../orbsvcs -I../../../../../Kokyu -I$(DATASTREAM_ROOT)/include
 ifeq ($(static_libs),1)
   ifneq ($(LIB),)
-    CPPFLAGS += -DTAO_AS_STATIC_LIBS -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
+    CPPFLAGS += -DACE_AS_STATIC_LIBS -DTAO_AS_STATIC_LIBS
   endif
 endif
 
 
-LDFLAGS      += -L$(DATASTREAM_ROOT)/lib -L../../../../../lib
+LDFLAGS      += -L../../../../../lib -L$(DATASTREAM_ROOT)/lib
 
-TAO_IDLFLAGS += -I../../../.. -I../../../../orbsvcs -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
+TAO_IDLFLAGS += -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h  -I../../../.. -I../../../../tao -I../../../../orbsvcs -Gv -I../../../.. -I../../../../orbsvcs/orbsvcs -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
-comp_warning:
-	@echo This project will not be built due to one of the following missing components:
-	@echo RTSchedEvent Sched Naming RTEvent
+lib_warning:
+	@echo This project will not be built due to the following missing library:
+	@echo $(LIBCHECK)
 
 
-ADDITIONAL_IDL_TARGETS =
 # IDL File Directory: .
 
 ifneq ($(ADDITIONAL_IDL_TARGETS),)
 idl_stubs: $(ADDITIONAL_IDL_TARGETS)
+endif
+
+ifneq ($(FORCED_IDL_STUBS),)
+$(FORCED_IDL_STUBS): idl_stubs
 endif
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
@@ -137,7 +124,7 @@ $(BIN): $(addprefix $(VDIR), $(OBJS))
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $(VLDLIBS) $(BORINITEXEOBJ) $(POSTLINK) $^, $@,,
 endif
 
-realclean: clean 
+realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
 ifneq ($(GENERATED_DIRTY),)
 	-$(RM) -r $(GENERATED_DIRTY)

@@ -225,6 +225,9 @@ main (int argc, char* argv[])
   TAO_EC_Kokyu_Factory::init_svcs ();
   TAO_EC_Gateway_IIOP_Factory::init_svcs ();
 
+  //@BT
+  //DSUI_EVENT_LOG(MAIN_GROUP_FAM, START,1,0,NULL);
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
@@ -284,15 +287,27 @@ main (int argc, char* argv[])
       supplier_ec.start(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      //@BT: Timeouts start when orb starts, similar to starting the DT worker thread
+      //DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
+      //DSUI_EVENT_LOG (WORKER_GROUP_FAM, WORKER_STARTED, m_id, 0, NULL);
 
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
 
+      //@BT: ORB shutting down; currently, this isn't expected to happen
+      //DSUI_EVENT_LOG (MAIN_GROUP_FAM, CALL_SERVER_SHUTDOWN, 1, 0, NULL);
+
+      //@BT: Scheduler shuts down with the EC and ORB
+      //DSUI_EVENT_LOG (MAIN_GROUP_FAM, SCHEDULER_SHUTDOWN, 1, 0, NULL);
+
       // We should do a lot of cleanup (disconnect from the EC,
       // deactivate all the objects with the POA, etc.) but this is
       // just a simple demo so we are going to be lazy.
+
+      //@BT: Done clean up
+      //DSUI_EVENT_LOG (MAIN_GROUP_FAM, AFTER_SERVER_SHUTDOWN, 1, 0, NULL);
 
     }
   ACE_CATCHANY
@@ -301,6 +316,10 @@ main (int argc, char* argv[])
       return 1;
     }
   ACE_ENDTRY;
+
+  //@BT
+  //DSUI_EVENT_LOG(MAIN_GROUP_FAM, STOP, 1, 0, NULL);
+
   return 0;
 }
 
@@ -328,7 +347,7 @@ int parse_args (int argc, char *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s -s <rms|muf>"
+                           "usage:  %s -s <rms|muf|edf>"
                            "\n",
                            argv [0]),
                           -1);

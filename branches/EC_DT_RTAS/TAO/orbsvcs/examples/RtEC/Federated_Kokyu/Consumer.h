@@ -50,6 +50,9 @@ public:
   virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
+
+private:
+  int deadline_missed_;
 };
 
 #endif /* CONSUMER_H */

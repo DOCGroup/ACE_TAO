@@ -34,6 +34,8 @@ main (int argc, char* argv[])
 
   TAO_EC_Kokyu_Factory::init_svcs ();
 
+  //@BT
+  //DSUI_EVENT_LOG(MAIN_GROUP_FAM, START,1,0,NULL);
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -151,7 +153,8 @@ main (int argc, char* argv[])
       int prio = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO);
       ACE_OS::thr_setprio (thr_handle, prio);
 
-
+      //@BT: Timeouts start when orb starts, similar to starting the DT worker thread
+      //DSUI_EVENT_LOG (MAIN_GROUP_FAM, WORKER_ACTIVATED, 1, 0, NULL);
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       // ****************************************************************
@@ -194,7 +197,7 @@ int parse_args (int argc, char *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s -s <rms|muf>"
+                           "usage:  %s -s <rms|muf|edf>"
                            "\n",
                            argv [0]),
                           -1);
