@@ -1,3 +1,30 @@
+Fri Mar 26 17:58:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Makefile:
+	* tao/IIOP_ORB.h:
+	* tao/IIOP_ORB.i:
+	* tao/IIOP_ORB.cpp:
+	* tao/IOR_LookupTable.h:
+	* tao/IOR_LookupTable.cpp:
+	* tao/ORB.h:
+	* tao/ORB.i:
+	* tao/ORB.cpp:
+	* tao/ORB_Core.cpp:
+	  Removed the IIOP_ORB class, it was not needed, it was confusing
+	  the pluggable protocols work and it added more layering than was 
+	  desirable.
+	  Also added a pointer from the ORB to the ORB_Core that created
+	  it, that way we don't need to rely on the
+	  TAO_ORB_Core_instance() method.
+	  The more I think about it the more the ORB_Core looks like an
+	  implementation class for the ORB interface.
+	  
+	* examples/Makefile: 
+	  Added Event_Comm to the list.
+
+	* docs/releasenotes/TODO.html:
+	  Updated with the new tasks ahead.
+
 Fri Mar 26 15:38:00 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input): 
