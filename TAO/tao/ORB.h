@@ -983,7 +983,8 @@ private:
   // Resolve the trading object reference.
 
   CORBA_Object_ptr multicast_to_service (TAO_Service_ID service_id,
-                                         u_short port);
+                                         u_short port,
+                                         ACE_Time_Value *timeout);
   // Resolve the refernce of a service of type <name>.
 
   ACE_SYNCH_MUTEX lock_;
