@@ -102,7 +102,10 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
               // divide by 3 to get the actual buffer length
               u_int length = string_length / 3;
               u_int remaining = length;
-              u_char* data = new u_char[length];
+              u_char* data = 0;
+              ACE_NEW_RETURN (data,
+                              u_char[length],
+                              -1);
               u_char* out = data;
               ACE_TCHAR* inb = end + 4;
               ACE_TCHAR* endptr = 0;

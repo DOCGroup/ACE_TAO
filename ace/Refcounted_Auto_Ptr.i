@@ -24,7 +24,11 @@ template <class X, class ACE_LOCK> inline ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOC
 ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::create (X *p)
 {
   // Yes set ref count to zero.
-  return new ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> (p);
+  ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  (ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>) (p),
+                  0);
+  return temp;
 }
 
 template <class X, class ACE_LOCK> inline ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *

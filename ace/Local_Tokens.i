@@ -321,15 +321,23 @@ ACE_Token_Name::name (void) const
 ACE_INLINE ACE_Token_Proxy *
 ACE_Local_Mutex::clone (void) const
 {
-  return new ACE_Local_Mutex (token_->name (),
-                              ignore_deadlock_,
-                              debug_);
+  ACE_Token_Proxy *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  ACE_Local_Mutex (token_->name (),
+                                   ignore_deadlock_,
+                                   debug_),
+                  0);
+  return temp;
 }
 
 ACE_INLINE ACE_Tokens *
 ACE_Local_Mutex::create_token (const ACE_TCHAR *name)
 {
-  return new ACE_Mutex_Token (name);
+  ACE_Tokens *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  ACE_Mutex_Token (name),
+                  0);
+  return temp;
 }
 
 ACE_INLINE
@@ -356,7 +364,11 @@ ACE_Local_RLock::~ACE_Local_RLock (void)
 ACE_INLINE ACE_Tokens *
 ACE_Local_RLock::create_token (const ACE_TCHAR *name)
 {
-  return new ACE_RW_Token (name);
+  ACE_Tokens *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  ACE_RW_Token (name),
+                  0);
+  return temp;
 }
 
 ACE_INLINE int
@@ -368,9 +380,13 @@ ACE_Local_RLock::type (void) const
 ACE_INLINE ACE_Token_Proxy *
 ACE_Local_RLock::clone (void) const
 {
-  return new ACE_Local_RLock (token_->name (),
-                              ignore_deadlock_,
-                              debug_);
+  ACE_Token_Proxy *temp = 0; 
+  ACE_NEW_RETURN (temp,
+                  ACE_Local_RLock (token_->name (),
+                                   ignore_deadlock_,
+                                   debug_),
+                  0);
+  return temp;
 }
 
 // ************************************************************
@@ -392,7 +408,11 @@ ACE_Local_WLock::~ACE_Local_WLock (void)
 ACE_INLINE ACE_Tokens *
 ACE_Local_WLock::create_token (const ACE_TCHAR *name)
 {
-  return new ACE_RW_Token (name);
+  ACE_Tokens *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  ACE_RW_Token (name),
+                  0);
+  return temp;
 }
 
 ACE_INLINE int
@@ -404,9 +424,13 @@ ACE_Local_WLock::type (void) const
 ACE_INLINE ACE_Token_Proxy *
 ACE_Local_WLock::clone (void) const
 {
-  return new ACE_Local_WLock (token_->name (),
-                              ignore_deadlock_,
-                              debug_);
+  ACE_Token_Proxy *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  ACE_Local_WLock (token_->name (),
+                                   ignore_deadlock_,
+                                   debug_),
+                  0);
+  return temp;
 }
 
 // ************************************************************

@@ -45,14 +45,14 @@ ACE_MEM_SAP::acquire_buffer (const ssize_t size)
   if (this->shm_malloc_ == 0)
     return 0;                  // not initialized.
 
-  ACE_MEM_SAP_Node *buf =
-    ACE_reinterpret_cast (ACE_MEM_SAP_Node *,
-                          this->shm_malloc_->malloc (sizeof (ACE_MEM_SAP_Node)
-                                                     + size));
-  if (buf != 0)
-    return new (buf) ACE_MEM_SAP_Node (size);
+  ACE_MEM_SAP_Node *buf = 0;
 
-  return 0;
+  ACE_NEW_MALLOC_RETURN (buf,
+                         ACE_static_cast (ACE_MEM_SAP_Node *,
+                           this->shm_malloc_->malloc (sizeof (ACE_MEM_SAP_Node) + size)),
+                         ACE_MEM_SAP_Node (size),
+                         0);
+  return buf;
 }
 
 ASYS_INLINE int

@@ -37,7 +37,8 @@ ACE_Unbounded_Set<T>::insert_tail (const T &item)
 
   // Create a new dummy node.
   ACE_NEW_MALLOC_RETURN (temp,
-                         (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
+                         ACE_static_cast(ACE_Node<T>*,
+                           this->allocator_->malloc (sizeof (ACE_Node<T>))),
                          ACE_Node<T> (this->head_->next_),
                          -1);
   // Link this pointer into the list.

@@ -762,7 +762,12 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
   if (type != REG_SZ)
     return -3;
 
-  ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> buffer (new ACE_TCHAR[buffer_length]);
+  ACE_TCHAR *temp = 0;
+  ACE_NEW_RETURN (temp,
+                  ACE_TCHAR[buffer_length], 
+                  0);
+
+  ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> buffer (temp);
 
   if (ACE_TEXT_RegQueryValueEx (base_key,
                                 name,
@@ -935,7 +940,11 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
     return 0;
 
   // recurse through the path
-  ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> pData (new ACE_TCHAR[ACE_OS::strlen (path) + 1]);
+  ACE_TCHAR *temp_path = 0;
+  ACE_NEW_RETURN (temp_path,
+                  ACE_TCHAR[ACE_OS::strlen (path) + 1],
+                  0);
+  ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> pData (temp_path);
   ACE_OS::strcpy (pData.get (), path);
   ACE_Tokenizer parser (pData.get ());
   parser.delimiter_replace ('\\', '\0');

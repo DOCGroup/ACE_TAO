@@ -96,11 +96,14 @@ ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
                                                this->svc_name_),
                       -1);
 
-      ACE_Service_Type *srp =
-        new ACE_Service_Type (this->svc_name_,
-                              stp,
-                              handle,
-                              1);
+      ACE_Service_Type *srp = 0;
+
+      ACE_NEW_RETURN (srp,
+                      ACE_Service_Type (this->svc_name_,
+                                        stp,
+                                        handle,
+                                        1),
+                      -1);
       if (srp == 0)
         {
           delete stp;

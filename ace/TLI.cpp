@@ -35,7 +35,8 @@ ACE_TLI::ACE_TLI (void)
            char[this->so_opt_req.opt.maxlen]);
 
   this->so_opt_ret.opt.maxlen = sizeof (opthdr) + sizeof (long);
-  this->so_opt_ret.opt.buf = new char[this->so_opt_ret.opt.maxlen];
+  ACE_NEW (this->so_opt_ret.opt.buf,
+           char[this->so_opt_ret.opt.maxlen]);
 
   if (this->so_opt_ret.opt.buf == 0)
     {
