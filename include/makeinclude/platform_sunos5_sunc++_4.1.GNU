@@ -1,7 +1,19 @@
 # SunOS 5.x (Solaris 2.x) with SunC++ 4.1
 # *not* using Orbix
+#
+# Note:  with the +w option, some ACE files might generate warnings of
+# one of these types:
+# 1) "Warning: Could not find source for " one of the following:
+#    default constructor, copy constructor, destructor, or assignment
+#    operator.  It appears that with +w, Sun C++ 4.x issues this warning
+#    whenever it has to generate one of these functions (because it wasn't
+#    defined by the user).  This isn't really a problem.
+# 2) "Warning: <foo> hides the function " or "hides the same name in an
+#    outer scope".  A useful warning, perhaps, but not really a problem.
+# There should be no other warnings from Sun C++ when building ACE.
+#
 CC              = cc
-CXX             = CC -mt -noex
+CXX             = CC +w -mt -noex
 DLD             = $(CXX) 
 LD		= $(CXX)
 LDFLAGS         += -R $(WRAPPER_ROOT)/ace 
