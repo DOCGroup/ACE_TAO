@@ -214,7 +214,7 @@ single_thread_performance_test (int queue_type = 0)
 
   // Create the messages.  Allocate off the heap in case messages
   // is large relative to the amount of stack space available.
-  ACE_Message_Block **send_block;
+  ACE_Message_Block **send_block = 0;
   ACE_NEW_RETURN (send_block,
                   ACE_Message_Block *[max_messages],
                   -1);
@@ -225,7 +225,7 @@ single_thread_performance_test (int queue_type = 0)
                                        MAX_MESSAGE_SIZE),
                     -1);
 
-  ACE_Message_Block **receive_block_p;
+  ACE_Message_Block **receive_block_p = 0x;
   ACE_NEW_RETURN (receive_block_p,
                   ACE_Message_Block *[max_messages],
                   -1);
@@ -300,7 +300,7 @@ receiver (void *arg)
                           arg);
   int i;
 
-  ACE_Message_Block **receive_block_p;
+  ACE_Message_Block **receive_block_p = 0;
   ACE_NEW_RETURN (receive_block_p,
                   ACE_Message_Block *[max_messages],
                   (void *) -1);

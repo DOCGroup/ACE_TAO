@@ -1,10 +1,22 @@
+Fri Jul  2 11:49:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * Initialized some variables to zero to avoid some silly warnings
+	  from egcs (with exceptions):
+
+  	  - ace/Free_List.cpp
+  	  - ace/Malloc.i
+  	  - tests/DLL_Test.cpp
+  	  - tests/Mem_Map_Test.cpp
+  	  - tests/Message_Queue_Test.cpp
+  	  - tests/Reactor_Notify_Test.cpp
+
 Fri Jul  2 11:49:12 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-  
-  	* tests/Cached_Conn_Test.cpp: This is a test which shows how the 
+
+  	* tests/Cached_Conn_Test.cpp: This is a test which shows how the
 	  Strategy Connector can automagically as well as explicitly cache
  	  and purge connection from its connection cache using different
  	  caching strategies.
-	
+
 	* ace/Cached_Connect_Strategy_T.{h, cpp}: Added a method
 	  "purge_connections ()" which allows explicit purging of
  	  connnections from the connection cache.
@@ -12,18 +24,18 @@ Fri Jul  2 11:49:12 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 Fri Jul  2 11:49:12 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Service_Config.cpp (open_i): It appears that
-	  
+
 	  if (ACE::debug ())
 	    ACE_Log_Msg::disable_debug_messages ();
-	
+
           should really be
 
 	  if (ACE::debug () == 0)
 	    ACE_Log_Msg::disable_debug_messages ();
-  
-          Thanks to Jonathan Reis <reis@minniemouse.cemax.com> for 
+
+          Thanks to Jonathan Reis <reis@minniemouse.cemax.com> for
 	  reporting this.
-  
+
 	* tests/Future_Test.cpp   (main): Make sure to use absolute time
 	  rather than relative time for the timeouts.  Thanks to Peter
  	  Brandstrom <peter.brandstrom@ericsson.com> for reporting this.
@@ -50,9 +62,9 @@ Fri Jul 01 11:50:21 1999  Steve Huston  <shuston@riverace.com>
              interfaces and learn their addresses.
           ACE::terminate_process: Unsupported on PharLap.
           ACE::handle_timed_open: If the open times out, set errno to
-             ETIMEDOUT, not ETIME. 
+             ETIMEDOUT, not ETIME.
           ACE::handle_timed_accept: If the select times out, set errno to
-             ETIMEDOUT, not ETIME. 
+             ETIMEDOUT, not ETIME.
           ACE::sock_error: If not a known error, format a message with the
              error number in it - this is the only chance for a PharLap
              system error to indicate the error number.
@@ -180,14 +192,14 @@ Thu Jul  1 21:49:39 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
 	* ace/Containers_T.i,h,cpp
 	  Added reset () methods to the derived classes of
-	  ACE_Double_Linked_List_Iterator because the behavior of the base 
+	  ACE_Double_Linked_List_Iterator because the behavior of the base
 	  class's version was not sufficient (and would cause way fun
-	  segfaults when used). 
-	
-	* tests/Map_Manager_Test.cpp 
+	  segfaults when used).
+
+	* tests/Map_Manager_Test.cpp
 	* tests/DLList_Test.cpp
 	  ACE_const_cast'ed some string literals to char *'s to appease
-	  the evil monstrosity that is SC 5.0. 
+	  the evil monstrosity that is SC 5.0.
 
 Wed Jun 30 18:11:41 1999  Ossama Othman  <othman@cs.wustl.edu>
 
