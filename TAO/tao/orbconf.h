@@ -171,7 +171,7 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 # define TAO_MAXIMUM_NATIVE_TYPE_SIZE 128
 #endif /* TAO_MAXIMUM_NATIVE_TYPE_SIZE */
 
-// @@todo: The connection caching strategy definition should probably
+// @todo The connection caching strategy definition should probably
 // go.
 #if !defined (TAO_CONNECTION_CACHING_STRATEGY)
 # define TAO_CONNECTION_CACHING_STRATEGY TAO_Resource_Factory::LRU
