@@ -20,6 +20,8 @@
 
 #include "ace/Asynch_IO.h"
 
+#include "JAWS/Export.h"
+
 // #include "JAWS/IO.h"
 class JAWS_IO;
 class JAWS_Synch_IO;

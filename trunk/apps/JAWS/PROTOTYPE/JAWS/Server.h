@@ -4,6 +4,7 @@
 #if !defined (JAWS_SERVER_H)
 #define JAWS_SERVER_H
 
+#include "JAWS/Export.h"
 #include "JAWS/Data_Block.h"
 #include "JAWS/Policy.h"
 

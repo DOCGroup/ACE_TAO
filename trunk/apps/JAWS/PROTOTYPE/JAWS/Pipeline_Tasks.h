@@ -6,6 +6,7 @@
 
 #include "ace/Singleton.h"
 
+#include "JAWS/Export.h"
 #include "JAWS/Pipeline.h"
 #include "JAWS/Data_Block.h"
 

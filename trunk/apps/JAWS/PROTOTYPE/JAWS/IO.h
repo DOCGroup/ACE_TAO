@@ -27,6 +27,8 @@ class JAWS_IO_Acceptor;
 #include "ace/SOCK_Stream.h"
 #include "ace/Singleton.h"
 
+#include "JAWS/Export.h"
+
 class JAWS_IO
   // = TITLE
   //

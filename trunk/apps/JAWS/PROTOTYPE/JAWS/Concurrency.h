@@ -8,6 +8,7 @@
 #include "ace/Synch.h"
 #include "ace/Task.h"
 
+#include "JAWS/Export.h"
 #include "JAWS/IO.h"
 
 class JAWS_Data_Block;

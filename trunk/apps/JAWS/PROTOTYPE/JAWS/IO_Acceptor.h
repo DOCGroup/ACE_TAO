@@ -11,6 +11,7 @@
 #include "ace/LOCK_SOCK_Acceptor.h"
 #include "ace/Singleton.h"
 
+#include "JAWS/Export.h"
 #include "JAWS/IO.h"
 
 // Forward declaration.
