@@ -31,14 +31,6 @@ ACEXML_Exception::~ACEXML_Exception (void)
 
 }
 
-ACEXML_Exception&
-ACEXML_Exception::operator= (const ACEXML_Exception& src)
-{
-  this->exception_name_ = src.exception_name_;
-  ACE_ASSERT (this->exception_name_ != 0);
-  return *this;
-}
-
 int
 ACEXML_Exception::is_a (const ACEXML_Char *name)
 {

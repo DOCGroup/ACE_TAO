@@ -17,6 +17,7 @@ ACEXML_InputSource::ACEXML_InputSource (ACEXML_CharStream *stm)
     charStream_ (stm),
     encoding_ (0)
 {
+  this->setEncoding (stm->getEncoding());
 }
 
   /*
@@ -77,8 +78,7 @@ ACEXML_InputSource::setCharStream (ACEXML_CharStream *stm)
 
   /*
    * Set the character stream for this input source.
-   * /
-   virtual void setCharacterStream (Reader *characterStream);
+   *
   */
 
 void

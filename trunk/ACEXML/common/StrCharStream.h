@@ -55,6 +55,11 @@ public:
   virtual int close (void);
 
   /**
+   *  Determine the encoding of the file.
+   */
+  virtual int determine_encoding (void);
+
+  /**
    * Read the next ACEXML_Char.  Return -1 if we are not able to
    * return an ACEXML_Char, 0 if EOS is reached, or 1 if succeed.
    */
@@ -72,14 +77,23 @@ public:
    */
   virtual int peek (void);
 
+  /*
+   * Get the character encoding for a byte stream or URI.
+   */
+  virtual const ACEXML_Char *getEncoding (void);
+
+  /**
+   *  Resets the pointer to the beginning of the stream.
+   */
+  virtual void rewind (void);
+
 private:
   ACEXML_Char *start_;
-
   ACEXML_Char *ptr_;
-
   ACEXML_Char *end_;
-};
+  ACEXML_Char* encoding_;
 
+};
 
 #include "ace/post.h"
 

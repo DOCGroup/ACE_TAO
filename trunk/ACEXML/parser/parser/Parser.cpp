@@ -294,9 +294,22 @@ ACEXML_Parser::parse_xml_prolog (ACEXML_ENV_SINGLE_ARG_DECL)
                       return;
                     }
                   else
+                    {
                     seen_encoding = 1;
-                  // @@ Handle encoding here.  We don't handle
-                  // various encodings for this parser.
+                      if (ACE_OS::strcmp (astring,
+                                          this->instream_->getEncoding()) != 0)
+                        {
+                          if (ACE_OS::strstr (astring,
+                                              this->instream_->getEncoding()) != 0)
+                            {
+                              ACE_ERROR ((LM_ERROR,
+                                          ACE_TEXT ("Detected Encoding is %s : Declared Encoding is %s"),
+                                          this->instream_->getEncoding(), astring));
+                              this->report_fatal_error (ACE_TEXT ("Encoding declaration doesn't match detected encoding") ACEXML_ENV_ARG_PARAMETER);
+                              return;
+                            }
+                        }
+                    }
                   continue;
                 }
               else
@@ -1815,8 +1828,11 @@ ACEXML_Parser::parse_token (const ACEXML_Char* keyword)
   if (keyword == 0)
     return -1;
   const ACEXML_Char* ptr = keyword;
-  for (; *ptr != 0 && this->get() == *ptr; ++ptr)
-    ;
+  ACEXML_Char ch;
+  for (; *ptr != 0 && ((ch = this->get()) == *ptr); ++ptr)
+    {
+      // ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ch = %c : ptr = %c"), ch, *ptr));
+    }
   if (*ptr == 0)
     return 0;
   else

@@ -115,7 +115,7 @@ public:
    *  This works since all the data has been cached in the memory-mapped
    *  backing store.
    */
-  virtual int rewind (void);
+  virtual void rewind (void);
 
   /**
    *  Returns the nth character <offset> from the <get> position in the

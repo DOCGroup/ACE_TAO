@@ -49,6 +49,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ACEXML/common/ContentHandler.h \
   $(ACE_ROOT)/ACEXML/common/Env.h \
   $(ACE_ROOT)/ACEXML/common/XML_Macros.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ACEXML/common/Exception.h \
   $(ACE_ROOT)/ACEXML/common/XML_Types.h \
   $(ACE_ROOT)/ace/OS.h \
@@ -157,7 +158,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   $(ACE_ROOT)/ace/DLL.h \
   $(ACE_ROOT)/ace/Service_Object.i \
-  $(ACE_ROOT)/ace/Service_Types.i \
+  $(ACE_ROOT)/ace/Service_Types.i Svcconf_Handler.i \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.inl \
@@ -240,6 +241,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   $(ACE_ROOT)/ACEXML/common/ContentHandler.h \
   $(ACE_ROOT)/ACEXML/common/Env.h \
   $(ACE_ROOT)/ACEXML/common/XML_Macros.h \
+  $(ACE_ROOT)/ace/Exception_Macros.h \
   $(ACE_ROOT)/ACEXML/common/Exception.h \
   $(ACE_ROOT)/ACEXML/common/XML_Types.h \
   $(ACE_ROOT)/ace/OS.h \
@@ -397,7 +399,9 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
   Svcconf_Handler.h \
   $(ACE_ROOT)/ACEXML/common/DefaultHandler.h \
   $(ACE_ROOT)/ACEXML/common/DefaultHandler.i \
+  Svcconf_Handler.i \
   $(ACE_ROOT)/ACEXML/common/FileCharStream.h \
+  $(ACE_ROOT)/ACEXML/common/Encoding.h \
   $(ACE_ROOT)/ACEXML/common/StrCharStream.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
