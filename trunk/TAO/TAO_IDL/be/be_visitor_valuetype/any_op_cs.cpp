@@ -54,7 +54,7 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
   // Generate the Any <<= and >>= operator declarations
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__;
 
   // All template specializations must be generated before the instantiations
   // in the operators.
