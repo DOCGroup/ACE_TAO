@@ -18,8 +18,8 @@
 #        executing the script.
 #
 #  @bug The sed program used in this script may loop indefinitely on
-#       casts split across multiple lines containing patterns it
-#       doesn't recognize.
+#       ACE casts with arguments split across multiple lines
+#       containing patterns it doesn't recognize.
 #
 #  @author Ossama Othman
 #
