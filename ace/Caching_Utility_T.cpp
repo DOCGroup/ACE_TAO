@@ -1,4 +1,4 @@
-//$Id$
+// $Id$
 
 #ifndef CACHING_UTILITY_T_C
 #define CACHING_UTILITY_T_C
@@ -10,10 +10,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // #include "ace/Strategies.h"
+#include "ace/Recyclable.h"
 
 ACE_RCSID(ace, Caching_Utility_T, "$Id$")
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
 ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::ACE_Pair_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy,
