@@ -16,6 +16,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(EC_Examples, Service, "$Id$")
 
