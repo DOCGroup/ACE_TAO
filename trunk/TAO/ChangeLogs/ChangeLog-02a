@@ -1,3 +1,12 @@
+Wed Jan 30 16:07:33 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Makefile.bor:
+          Added Structured_Filter and Structured_Multi_Filter
+
+        * orbsvcs/tests/Notify/Structured_Filter/*.bor:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/*.bor:
+          Added BCB makefiles for these tests
+
 Wed Jan 30 11:19:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/orbconf.h:
