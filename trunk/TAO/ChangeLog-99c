@@ -26,7 +26,7 @@ Mon Jun 14 19:38:47 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h: 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
-	Fixed the problems with the ACE_THROW_SPEC.		
+	  Fixed the problems with the ACE_THROW_SPEC.		
 
 Mon Jun 14 19:36:32 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
