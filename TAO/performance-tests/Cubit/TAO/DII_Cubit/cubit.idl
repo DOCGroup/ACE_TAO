@@ -17,24 +17,28 @@ interface Cubit
   void cube_void ();
   // Test the basic latency of a nil operation.
 
-  octet	cube_octet (in octet o);
+  octet cube_octet (in octet o);
   // cube an octet
 
-  short	cube_short (in short s);
+  short cube_short (in short s);
   // cube a short
 
-  long	cube_long (in long l);
+  long  cube_long (in long l);
   // cube a long
 
   struct Many
   {
-    octet o;		// + 3 bytes padding (normally) ...
+    octet o;            // + 3 bytes padding (normally) ...
     long l;
-    short s;		// + 2 bytes padding (normally) ...
+    short s;            // + 2 bytes padding (normally) ...
   };
 
   Many cube_struct (in Many values);
   // Cube a struct
+
+  any cube_any(in any value);
+
+  any cube_any_struct(in any value);
 
   enum discrim
   {
@@ -63,25 +67,28 @@ interface Cubit
     };
   // Union of different types.
 
-  oneof	cube_union (in oneof values);
+  oneof cube_union (in oneof values);
   // cube a union.
 
   typedef sequence<long> long_seq;
-
   void cube_long_sequence (in long_seq input,
-			   out long_seq output);
+                           out long_seq output);
   // Cube several longs.
-
 
   typedef sequence<octet> octet_seq;
   void cube_octet_sequence (in octet_seq input, out octet_seq output);
   // Cube an octet sequence.
 
+  typedef sequence<Many> many_seq;
+  void cube_many_sequence (in many_seq input,
+                           out many_seq output);
+  // Cube several manys.
+
   oneway void shutdown ();
   // shutdown the application.
 
   // = The following types provide a torture-test for structs.
-  struct RtiPacketHeader 
+  struct RtiPacketHeader
   {
     unsigned long packetLength; // this is probably redundant
     unsigned short federationHandle;
@@ -89,13 +96,13 @@ interface Cubit
     unsigned long packetColor;
   };
 
-  struct HandleValuePair 
+  struct HandleValuePair
   {
     unsigned short handle;
     octet_seq data;
   };
 
-  enum MessageHeaderTypes 
+  enum MessageHeaderTypes
   {
     objectUpdate,
     interaction
@@ -103,7 +110,7 @@ interface Cubit
   };
 
   typedef sequence<HandleValuePair> HandleValuePairSeq;
-  struct RtiObjectUpdateMessageHeader 
+  struct RtiObjectUpdateMessageHeader
   {
     unsigned long updateLength; // probably redundant
     unsigned long updateTag;
@@ -119,13 +126,13 @@ interface Cubit
     HandleValuePairSeq messagePayload;
   };
 
-  struct RtiInteractionMessageHeader 
+  struct RtiInteractionMessageHeader
   {
     unsigned long updateLength;
     // similar to object update
   };
 
-  union MessageUnion switch(MessageHeaderTypes) 
+  union MessageUnion switch(MessageHeaderTypes)
     {
     case objectUpdate:
       RtiObjectUpdateMessageHeader oumh;
@@ -134,14 +141,18 @@ interface Cubit
     };
 
   typedef sequence <MessageUnion> MessageUnionSeq;
-  struct RtiPacket 
+  struct RtiPacket
   {
     RtiPacketHeader packetHeader;
     MessageUnionSeq msgs;
   };
 
   void cube_rti_data (in RtiPacket input,
-		      out RtiPacket output);
+                      out RtiPacket output);
+  
+  // A work around for problems with SHMIOP since this test uses
+  // this. 
+  void ping ();
 };
 
 interface Cubit_Factory
