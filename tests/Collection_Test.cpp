@@ -66,11 +66,9 @@ void iterate_const(const UNBOUNDED_SET& set)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%x,%x\n"),
                   data->alloc_, data->dfunc_));
 
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d\n"),
-                  (*data)));
       DATA data_second = *iterator;
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d\n"),
-                  (data_second)));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%x,%x\n"),
+                  data_second.alloc_, data_second.dfunc_));
 
       iterator.advance ();
     }
