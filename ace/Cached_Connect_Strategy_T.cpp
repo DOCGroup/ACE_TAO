@@ -395,7 +395,7 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::caching_strategy (void)
 }
 
 template <ACE_T1> int
-ACE_Cached_Connect_Strategy_Ex<ACE_T2>::find (REFCOUNTED_HASH_RECYCLABLE_ADDRESS &search_addr,
+ACE_Cached_Connect_Strategy_Ex<ACE_T2>::find (ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR> &search_addr,
                                               ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, ACE_Pair<SVC_HANDLER *, ATTRIBUTES> > *&entry)
 {
   typedef ACE_Hash_Map_Bucket_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,

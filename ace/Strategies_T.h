@@ -786,7 +786,7 @@ public:
 
 protected:
 
-  int find (REFCOUNTED_HASH_RECYCLABLE_ADDRESS &search_addr,
+  int find (ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR> &search_addr,
             ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry);
   // Find an idle handle.
 
