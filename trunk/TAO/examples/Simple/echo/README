@@ -7,7 +7,7 @@ shuts down the server.
 server:
 -------
 
-server [-d] [-o <ior_output_file>] [-s]
+server [-d] [-o <ior_output_file>] [-n]
 
 Options:
 -------
@@ -34,7 +34,7 @@ options are ignored.
 client:
 -------
 
-client [-d] [-x] [-f <Server_ior_file>] [-n iterations] [-k ior] [-s]
+client [-d] [-x] [-f <Server_ior_file>] [-k ior] [-n naming service]
 
 Options:
 -------
@@ -49,7 +49,7 @@ Options:
 You can either cut and paste the IOR from the server to the client
 (with the -k option), have the client read the IOR from a file using
 the -f option (this file is produced using the -o option of the
-server), or use the naming service (with the -s option).
+server), or use the naming service (with the -n option).
 
 run_test.pl:
 ------------
