@@ -1,0 +1,140 @@
+--- lex.yy.cpp	Sat Jul 27 17:02:23 2002
++++ lex.yy.cpp.new	Sat Jul 27 17:02:00 2002
+@@ -31,5 +28,5 @@
+ #else	/* ! __cplusplus */
+ 
+-#if __STDC__
++#ifdef __STDC__
+ 
+ #define TAO_YY_USE_PROTOS
+@@ -968,5 +965,5 @@
+ #endif
+ 
+-#if TAO_YY_STACK_USED
++#ifdef TAO_YY_STACK_USED
+ static int tao_yy_start_stack_ptr = 0;
+ static int tao_yy_start_stack_depth = 0;
+@@ -991,5 +988,5 @@
+ TAO_YY_MALLOC_DECL
+ #else
+-#if __STDC__
++#ifdef __STDC__
+ #ifndef __cplusplus
+ #endif
+@@ -1072,5 +1069,5 @@
+ /* Code executed at the end of each rule. */
+ #ifndef TAO_YY_BREAK
+-#define TAO_YY_BREAK break;
++#define TAO_YY_BREAK ACE_NOTREACHED (break;)
+ #endif
+ 
+@@ -1084,5 +1081,5 @@
+ 	{
+ 	register tao_yy_state_type tao_yy_current_state;
+-	register char *tao_yy_cp, *tao_yy_bp;
++	register char *tao_yy_cp = 0, *tao_yy_bp = 0;
+ 	register int tao_yy_act;
+ 
+@@ -1598,5 +1595,5 @@
+ 		  idl_store_pragma(ace_tao_yytext);
+ 		}
+-	TAO_YY_BREAK
++        break;
+ case 87:
+ case 88:
+@@ -1605,5 +1602,5 @@
+   		  idl_global->set_lineno(idl_global->lineno() + 1);
+ 		}
+-	TAO_YY_BREAK
++	break;
+ case 89:
+ case 90:
+@@ -1612,5 +1609,5 @@
+ 		  idl_parse_line_and_file(ace_tao_yytext);
+ 		}
+-	TAO_YY_BREAK
++	break;
+ case 91:
+ case 92:
+@@ -1619,5 +1616,5 @@
+ 		  idl_parse_line_and_file(ace_tao_yytext);
+ 		}
+-	TAO_YY_BREAK
++	break;
+ case 93:
+ case 94:
+@@ -1626,5 +1623,5 @@
+ 		  idl_parse_line_and_file(ace_tao_yytext);
+ 		}
+-	TAO_YY_BREAK
++	break;
+ case 95:
+ case 96:
+@@ -1633,5 +1630,5 @@
+ 		  idl_parse_line_and_file(ace_tao_yytext);
+ 	        }
+-	TAO_YY_BREAK
++	break;
+ case 97:
+ case 98:
+@@ -1641,5 +1638,5 @@
+   		  idl_global->set_lineno(idl_global->lineno() + 1);
+ 		}
+-	TAO_YY_BREAK
++	break;
+ case 99:
+ TAO_YY_RULE_SETUP
+@@ -1648,5 +1645,5 @@
+   		  idl_global->set_lineno(idl_global->lineno() + 1);
+ 		}
+-	TAO_YY_BREAK
++        break;
+ case 100:
+ TAO_YY_RULE_SETUP
+@@ -1665,9 +1662,9 @@
+ 	          }
+ 	        }
+-	TAO_YY_BREAK
++	break;
+ case 101:
+ TAO_YY_RULE_SETUP
+ ;
+-	TAO_YY_BREAK
++	break;
+ case 102:
+ TAO_YY_RULE_SETUP
+@@ -1675,13 +1672,13 @@
+   		  idl_global->set_lineno(idl_global->lineno() + 1);
+ 		}
+-	TAO_YY_BREAK
++	break;
+ case 103:
+ TAO_YY_RULE_SETUP
+ return ace_tao_yytext [0];
+-	TAO_YY_BREAK
++	break;
+ case 104:
+ TAO_YY_RULE_SETUP
+ TAO_YY_ECHO;
+-	TAO_YY_BREAK
++	break;
+ case TAO_YY_STATE_EOF(INITIAL):
+ 	tao_yyterminate();
+@@ -2270,8 +2262,8 @@
+ 	b->tao_yy_fill_buffer = 1;
+ 
+-#if TAO_YY_ALWAYS_INTERACTIVE
++#ifdef TAO_YY_ALWAYS_INTERACTIVE
+ 	b->tao_yy_is_interactive = 1;
+ #else
+-#if TAO_YY_NEVER_INTERACTIVE
++#ifdef TAO_YY_NEVER_INTERACTIVE
+ 	b->tao_yy_is_interactive = 0;
+ #else
+@@ -2564,5 +2541,5 @@
+ 	}
+ 
+-#if TAO_YY_MAIN
++#ifdef TAO_YY_MAIN
+ int main()
+ 	{

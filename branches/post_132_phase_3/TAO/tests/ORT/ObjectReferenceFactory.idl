@@ -1,0 +1,27 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ * @file   ObjectReferenceFactory.idl
+ *
+ * $Id$
+ *
+ * @author Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
+
+
+#ifndef OBJECT_REFERENCE_FACTORY_IDL
+#define OBJECT_REFERENCE_FACTORY_IDL
+
+#include "tao/ObjectReferenceTemplate.pidl"
+
+module ORT_Test
+{
+
+  valuetype ObjectReferenceFactory
+    : PortableInterceptor::ObjectReferenceFactory {};
+
+};
+
+#endif  /* OBJECT_REFERENCE_FACTORY_IDL */
