@@ -10,7 +10,7 @@
 # NOTE: This file contains examples and other service level test  for
 # TAO's. Please do not include regular tests here.
 TAO/performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: !MINIMUM !ST
-TAO/performance-tests/Cubit/TAO/IDL_Cubit/run_test_lite.pl: !MINIMUM !ST !STATIC
+#TAO/performance-tests/Cubit/TAO/IDL_Cubit/run_test_lite.pl: !MINIMUM !ST !STATIC
 TAO/performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: !ST !OpenBSD
 TAO/performance-tests/Latency/Single_Threaded/run_test.pl
 TAO/performance-tests/Latency/Thread_Pool/run_test.pl: !ST
