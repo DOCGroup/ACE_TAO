@@ -1,4 +1,6 @@
-Sun Feb 02 20:53:25 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+Sun Feb 02 21:05:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Cookies.cpp (insert): Fixed a warning.
 
 	* ciao/CCM_Base.idl: Changed to include <orb.idl> instead of <corba.pidl>.
 
