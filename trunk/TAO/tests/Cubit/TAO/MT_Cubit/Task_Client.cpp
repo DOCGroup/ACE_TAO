@@ -127,27 +127,43 @@ Task_State::Task_State (int argc, char **argv)
 }
 
 Client::Client (Task_State *ts)
-  : ACE_Task<ACE_MT_SYNCH> (ACE_Thread_Manager::instance ()),
-    ts_ (ts)
+  :
+#if defined (ACE_HAS_THREADS)
+  ACE_Task<ACE_MT_SYNCH> (ACE_Thread_Manager::instance ()),
+#endif /* ACE_HAS_THREADS */
+  ts_ (ts)
 {
 
 }
 
 void
-Client::put_ave_latency (int ave_latency, u_int thread_id) {
+Client::put_ave_latency (int ave_latency, u_int thread_id) 
+{
+#if defined (ACE_HAS_THREADS)
   ts_->lock_.acquire ();
+#endif /* ACE_HAS_THREADS */
+  
   ts_->ave_latency_[thread_id] = ave_latency;
+
+#if defined (ACE_HAS_THREADS)
   ts_->lock_.release ();
+#endif /* ACE_HAS_THREADS */
 }
 
 void
 Client::put_latency (double *jitter, double latency, u_int thread_id)
 {
+#if defined (ACE_HAS_THREADS)
   ts_->lock_.acquire ();
+#endif /* ACE_HAS_THREADS */
+
   ts_->latency_[thread_id] = latency;
   ACE_DEBUG ((LM_DEBUG, "(%t) My latency was %f\n", latency));
   ts_->global_jitter_array_ [thread_id] = jitter;
+
+#if defined (ACE_HAS_THREADS)
   ts_->lock_.release ();
+#endif /* ACE_HAS_THREADS */
 }
 
 double
@@ -248,7 +264,9 @@ Client::svc (void)
     }
 
   {
+#if defined (ACE_HAS_THREADS)
     ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ts_->lock_, -1);
+#endif /* ACE_HAS_THREADS */
 
     thread_id = ts_->start_count_;
     ts_->start_count_++;

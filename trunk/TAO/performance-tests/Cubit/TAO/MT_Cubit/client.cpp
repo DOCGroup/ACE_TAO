@@ -58,7 +58,6 @@ do_priority_inversion_test (Task_State &ts)
                         0,
                         priority);
   
-  
   // Now activate the high priority client.
 
   // @@ The ifdef here is temporarily placed here until
@@ -205,6 +204,8 @@ do_thread_per_rate_test (Task_State &ts)
 int
 main (int argc, char *argv [])
 {
+#if defined (ACE_HAS_THREADS)
+
 #if defined (FORCE_ARGS)
     int argc = 7;
     char *argv[] = {"main",
@@ -223,5 +224,9 @@ main (int argc, char *argv [])
       do_priority_inversion_test (ts);
     else
       do_thread_per_rate_test (ts);
+#else
+    ACE_DEBUG ((LM_DEBUG, "Test not run.  This platform doesn't seem to have threads.\n"));
+#endif /* ACE_HAS_THREADS */
+
     return 0;
 }

@@ -4,7 +4,10 @@
 
 Util_Thread::Util_Thread (Task_State *ts,
                           ACE_Thread_Manager *thr_mgr)
-  : ACE_Task<ACE_MT_SYNCH> (thr_mgr),
+  : 
+#if defined (ACE_HAS_THREADS)
+  ACE_Task<ACE_MT_SYNCH> (thr_mgr),
+#endif /* ACE_HAS_THREADS */
     done_ (0),
     number_of_computations_ (0),
     ts_ (ts)

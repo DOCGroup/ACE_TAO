@@ -17,7 +17,7 @@
 
 const int CUBIT_ARBIT_NUMBER = 2064885;
 
-class Util_Thread : public ACE_Task<ACE_MT_SYNCH>
+class Util_Thread : public ACE_Task<ACE_SYNCH>
   // = TITLE
   //     The thread that computes utilization.
 {

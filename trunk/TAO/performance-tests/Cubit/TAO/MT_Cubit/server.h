@@ -41,18 +41,28 @@ static CORBA::String key = CORBA::String ("Cubit");
 // TAO somewhere?
 const u_int OBJECT_STRING_SIZE = 30;
 
+#if !defined (ACE_HAS_THREADS)
+class NOOP_ACE_Barrier
+{
+public:
+  NOOP_ACE_Barrier (int ) {}
+  void wait (void) {}
+};
+#define ACE_Barrier NOOP_ACE_Barrier
+#endif /* ACE_HAS_THREADS */
+
 class Cubit_Task : public ACE_Task<ACE_NULL_SYNCH>
   // = TITLE
   //    Encapsulates an ORB for the Cubit application.
 {
-public:
+ public:
   Cubit_Task (const char *args,
               const char* orbname,
               u_int num_of_objs,
 	      ACE_Barrier *barrier,
 	      u_int task_id);
   // Constructor.
-
+  
   virtual int svc (void);
   // Active Object entry point.
 

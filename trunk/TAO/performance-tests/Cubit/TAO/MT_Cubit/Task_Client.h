@@ -26,6 +26,15 @@
 #include "orbsvcs/CosNamingC.h"
 #include "cubitC.h"
 
+#if !defined (ACE_HAS_THREADS)
+class NOOP_ACE_Barrier
+{
+public:
+  NOOP_ACE_Barrier (int ) {}
+  void wait (void) {}
+};
+#define ACE_Barrier NOOP_ACE_Barrier
+#endif /* ACE_HAS_THREADS */
 
 static CORBA::String key = CORBA::String ("Cubit");
 
@@ -104,8 +113,10 @@ public:
   Cubit_Datatypes datatype_;
   // Which datatype to use to make the calls
 
+#if defined (ACE_HAS_THREADS)
   ACE_Thread_Mutex lock_;
   // lock to protect access to this object
+#endif /* ACE_HAS_THREADS */
 
   int argc_;
   char **argv_;
@@ -128,7 +139,7 @@ public:
   // flag that indicates if we are going to use oneway calls instead of two-way
 };
 
-class Client : public ACE_Task<ACE_MT_SYNCH>
+class Client : public ACE_Task<ACE_SYNCH>
   // = TITLE
   //     The Cubit client. 
 {
