@@ -12,7 +12,6 @@
 //
 // ============================================================================
 
-#include "ace/streams.h" 
 #include "ace/ACE.h"
 #include "ace/Get_Opt.h"
 
@@ -25,35 +24,35 @@ Common options:\n\
 -v      verbose: print more statistics\n\
 -d ##   set debug level \n\
 -f X    format for rate: k,K = kilo{bit,byte}; m,M = mega; g,G = giga\n\
--L ##	Output file name for the data type used\n\n\
+-L ##   Output file name for the data type used\n\n\
 ";
 
 CORBA::Long trans = 0;            // we are the receiver
-CORBA::Long buflen = 8 * 1024;	  // length of buffer
-CORBA::Char *buf;		          // ptr to dynamic buffer
-CORBA::Long nbuf;		          // number of buffers to send in sinkmode
-CORBA::Long verbose = 0;	  // 0=print basic info, 1=print cpu rate, proc
+CORBA::Long buflen = 8 * 1024;    // length of buffer
+CORBA::Char *buf;                         // ptr to dynamic buffer
+CORBA::Long nbuf;                         // number of buffers to send in sinkmode
+CORBA::Long verbose = 0;          // 0=print basic info, 1=print cpu rate, proc
                                   // resource usage.
-CORBA::Char fmt = 'K';		  // output format:k=kilobits,K=kilobytes, m =
+CORBA::Char fmt = 'K';            // output format:k=kilobits,K=kilobytes, m =
                                   // megabits, M = megabytes, g = gigabits, G =
                                   // gigabytes
 
 CORBA::Char *title = 0;           // results filename
 
 CORBA::Char stats[128];       // gathering the statistics
-CORBA::ULong srcDataSize;	  // Total amount of source data
-CORBA::ULong nbytes;		  // bytes on net
-CORBA::ULong numCalls;		  // # of I/O system calls
-CORBA::Double cput, realt;	  // user, real time (seconds)
+CORBA::ULong srcDataSize;         // Total amount of source data
+CORBA::ULong nbytes;              // bytes on net
+CORBA::ULong numCalls;            // # of I/O system calls
+CORBA::Double cput, realt;        // user, real time (seconds)
 CORBA::ULong dt;              // data type
 
 /* declare struct variables for various message types */
-ttcp_sequence::ShortSeq		*sseq;
-ttcp_sequence::LongSeq		*lseq;
-ttcp_sequence::OctetSeq		*oseq;
-ttcp_sequence::DoubleSeq	*dseq;
-ttcp_sequence::CharSeq		*cseq;
-ttcp_sequence::StructSeq	*Sseq;
+ttcp_sequence::ShortSeq         *sseq;
+ttcp_sequence::LongSeq          *lseq;
+ttcp_sequence::OctetSeq         *oseq;
+ttcp_sequence::DoubleSeq        *dseq;
+ttcp_sequence::CharSeq          *cseq;
+ttcp_sequence::StructSeq        *Sseq;
 
 ttcp_sequence_i *my_ttcp;  // instance of the target object
 
@@ -87,8 +86,8 @@ main (int argc, char **argv)
 
   if (CORBA::is_nil(obj_var.in()))
     ACE_ERROR_RETURN ((LM_ERROR,
-		       " (%P|%t) Unable to initialize the POA.\n"),
-		      -1);
+                       " (%P|%t) Unable to initialize the POA.\n"),
+                      -1);
   
   root_poa = PortableServer::POA::_narrow (obj_var.in (), env);
 
@@ -111,18 +110,18 @@ main (int argc, char **argv)
   policies.length (2);  
   policies[0] =
     root_poa->create_id_assignment_policy (PortableServer::USER_ID,
-					   env);
+                                           env);
   policies[1] =
     root_poa->create_lifespan_policy (PortableServer::PERSISTENT,
-				      env);
+                                      env);
 
   // We use a different POA, otherwise the user would have to
   // change the object key each time it invokes the server.
   PortableServer::POA_var good_poa =
     root_poa->create_POA ("RootPOA_is_BAD",
-			  poa_manager.in (),
-			  policies,
-			  env);  
+                          poa_manager.in (),
+                          policies,
+                          env);  
 
   if (env.exception () != 0)
     {
@@ -165,8 +164,8 @@ main (int argc, char **argv)
   PortableServer::ObjectId_var id = 
     PortableServer::string_to_ObjectId ("TTCP_IIOP_test");
   good_poa->activate_object_with_id (id.in (),
-				     my_ttcp,
-				     env);
+                                     my_ttcp,
+                                     env);
   if (env.exception () != 0)
     {
       env.print_exception ("string_to_ObjectId");
@@ -193,12 +192,12 @@ main (int argc, char **argv)
     {
       // get a stringified representation of the object reference created above
       str = orb_var->object_to_string (obj_var.in (),
-				       env);
+                                       env);
       if (env.exception () != 0)
-	{
-	  env.print_exception ("object_to_string");
-	  return 1;
-	}
+        {
+          env.print_exception ("object_to_string");
+          return 1;
+        }
        
       ACE_DEBUG ((LM_DEBUG, "stringified obj reference = %s\n", str));
     }
