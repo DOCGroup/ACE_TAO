@@ -86,16 +86,14 @@ TAO_DIOP_Connector::close (void)
   // @@ Michael: UDP Addition ------------------------------------
 
   // The list of service handlers cleans itself??
-  /*
   SvcHandlerIterator iter (svc_handler_table_);
 
   while (!iter.done ())
     {
-      // Delete the addr
-      delete (*iter).ext_id_;
+      // Delete the connection handler
+      delete (*iter).int_id_;
       iter++;
     }
-  */
   // -----------------------------------------------------------------
 
   // @@ Michael: We do not use traditional connection management.
