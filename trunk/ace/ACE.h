@@ -26,15 +26,6 @@ class ACE_Reactor;
 class ACE_Event_Handler;
 class ACE_INET_Addr;
 
-class ACE_Export ACE_Stdin_Args
-{
-  // = TITLE
-  //     Contains values necessary for the sdtin adapter
-public:
-  ACE_Thread_Manager *thr_mgr_;
-  ACE_Event_Handler *handler_;
-};
-
 class ACE_Export ACE
 {
   // = TITLE
