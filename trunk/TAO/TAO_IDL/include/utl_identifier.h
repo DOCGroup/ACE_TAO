@@ -115,7 +115,7 @@ public:
   idl_bool escaped (void) const;
   // Accessor for the member.
 
-  virtual void  dump (ostream &o);
+  virtual void  dump (ACE_OSTREAM_TYPE &o);
   // Dump to an ostream.
 
   virtual void destroy (void);

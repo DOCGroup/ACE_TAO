@@ -86,7 +86,7 @@ public:
   virtual ~UTL_StrList() {}
 
   // AST Dumping
-  virtual void          dump(ostream &o);
+  virtual void          dump(ACE_OSTREAM_TYPE &o);
 
   // Other Operations
 

@@ -42,8 +42,8 @@
  *INDIRECT AND CONSEQUENTIAL DAMAGES, EVEN IF SUN HAS BEEN ADVISED OF THE
  *POSSIBILITY OF SUCH DAMAGES.
  *
- *SunSoft, Inc.  
- *2550 Garcia Avenue 
+ *SunSoft, Inc.
+ *2550 Garcia Avenue
  *Mountain View, California  94043
  *
  *
@@ -56,8 +56,8 @@
 //
 // Implementation of a list of utl_string nodes
 
-#include	<idl.hh>
-#include	<idl_extern.hh>
+#include        <idl.hh>
+#include        <idl_extern.hh>
 
 ACE_RCSID(utl_tmpl, utl_strlist, "$Id$")
 
@@ -66,7 +66,7 @@ ACE_RCSID(utl_tmpl, utl_strlist, "$Id$")
  */
 
 UTL_StrList::UTL_StrList(String *s, UTL_StrList *cdr)
-	   : UTL_List<UTL_StrList, String>(s, cdr)
+           : UTL_List<UTL_StrList, String>(s, cdr)
 {
 }
 
@@ -89,12 +89,12 @@ UTL_StrList::last_component()
 
 // AST Dumping
 void
-UTL_StrList::dump(ostream &o)
+UTL_StrList::dump(ACE_OSTREAM_TYPE &o)
 {
-  char			      *s;
+  char                        *s;
   UTL_StrlistActiveIterator *i = new UTL_StrlistActiveIterator(this);
-  long			       first = I_TRUE;
-  long			       second = I_FALSE;
+  long                         first = I_TRUE;
+  long                         second = I_FALSE;
 
   while (!(i->is_done())) {
     if (!first)
@@ -105,9 +105,9 @@ UTL_StrList::dump(ostream &o)
     o << s;
     if (first) {
       if (strcmp(s, "::") != 0)
-	first = I_FALSE;
+        first = I_FALSE;
       else
-	second = I_TRUE;
+        second = I_TRUE;
     }
     i->next();
   }
@@ -124,7 +124,7 @@ UTL_StrList::dump(ostream &o)
  */
 
 UTL_StrlistActiveIterator::UTL_StrlistActiveIterator(UTL_StrList *s)
-			   : UTL_ListActiveIterator<UTL_StrList, String>(s)
+                           : UTL_ListActiveIterator<UTL_StrList, String>(s)
 {
 }
 
