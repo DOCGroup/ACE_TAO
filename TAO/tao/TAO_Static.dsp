@@ -415,6 +415,10 @@ SOURCE=.\ObjectIDList.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\OctetSeqC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Operation_Table.h
 # End Source File
 # Begin Source File
@@ -644,6 +648,10 @@ SOURCE=.\singletons.h
 # Begin Source File
 
 SOURCE=.\Smart_Proxies.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\StringSeq.h
 # End Source File
 # Begin Source File
 
@@ -1016,6 +1024,10 @@ SOURCE=.\Object_Loader.i
 # Begin Source File
 
 SOURCE=.\ObjectIDList.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\OctetSeqC.i
 # End Source File
 # Begin Source File
 
@@ -1587,6 +1599,10 @@ SOURCE=.\ObjectIDList.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\OctetSeqC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\operation_details.cpp
 # End Source File
 # Begin Source File
@@ -1799,6 +1815,10 @@ SOURCE=.\Smart_Proxies.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\StringSeq.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Stub.cpp
 # End Source File
 # Begin Source File
@@ -1930,5 +1950,9 @@ SOURCE=.\Wait_Strategy.cpp
 SOURCE=.\WrongTransactionC.cpp
 # End Source File
 # End Group
+# Begin Source File
+
+SOURCE=.\StringSeq.inl
+# End Source File
 # End Target
 # End Project
