@@ -106,14 +106,18 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
                     const char *key)
 {
   // Set up an IIOP object to hold the host name.
-  char tempname[MAXHOSTNAMELEN + 1];
-
+#if 0
+  const size_t ADDRLEN = 4*3 /* octets */ + 3*1 /* dots */ + 1 /* nul */;
+  char tempaddr[ADDRLEN];
+#else
+  const char* tempaddr = 0;
+#endif
+  
   // Retrieve the host name.
-  if (addr.get_host_name (tempname,
-                          MAXHOSTNAMELEN) == -1)
+  if ((tempaddr = addr.get_host_addr ()) == 0)
     return -1;
   else
-    return this->set (tempname,
+    return this->set (tempaddr,
                       addr.get_port_number (),
                       key,
                       &addr);
@@ -124,14 +128,18 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
                     const TAO_opaque &key)
 {
   // Set up an IIOP object to hold the host name.
-  char tempname[MAXHOSTNAMELEN + 1];
+#if 0
+  const size_t ADDRLEN = 4*3 /* octets */ + 3*1 /* dots */ + 1 /* nul */;
+  char tempaddr[ADDRLEN];
+#else
+  const char* tempaddr = 0;
+#endif
 
   // Retrieve the host name.
-  if (addr.get_host_name (tempname,
-                          MAXHOSTNAMELEN) == -1)
+  if ((tempaddr = addr.get_host_addr ()) == 0)
     return -1;
   else
-    return this->set (tempname,
+    return this->set (tempaddr,
                       addr.get_port_number (),
                       key,
                       &addr);
