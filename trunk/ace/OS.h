@@ -4961,10 +4961,15 @@ typedef int (*ACE_QOS_CONDITION_FUNC) (iovec *caller_id,
 
 // Callback function that's used by the QoS-enabled <ACE_OS::ioctl>
 // method.
+#if defined(ACE_HAS_WINSOCK2) && ACE_HAS_WINSOCK2 != 0
+typedef LPWSAOVERLAPPED_COMPLETION_ROUTINE ACE_OVERLAPPED_COMPLETION_FUNC;
+#else
 typedef void (*ACE_OVERLAPPED_COMPLETION_FUNC) (u_long error,
                                                 u_long bytes_transferred,
                                                 ACE_OVERLAPPED *overlapped,
                                                 u_long flags);
+#endif /* ACE_HAS_WINSOCK2 != 0 */
+
 class ACE_Export ACE_Accept_QoS_Params
 {
   // = TITLE
@@ -5852,8 +5857,8 @@ public:
   static int recvfrom (ACE_HANDLE handle,
                        iovec *buffers,
                        int buffer_count,
-                       int *number_of_bytes_recvd,
-                       int flags,
+                       size_t &number_of_bytes_recvd,
+                       int &flags,
                        struct sockaddr *addr,
                        int *addrlen,
                        ACE_OVERLAPPED *overlapped,
@@ -5874,7 +5879,7 @@ public:
   static int sendto (ACE_HANDLE handle,
                      const iovec *buffers,
                      int buffer_count,
-                     int *number_of_bytes_sent,
+                     size_t &number_of_bytes_sent,
                      int flags,
                      const struct sockaddr *addr,
                      int addrlen,
