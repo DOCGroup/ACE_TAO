@@ -324,8 +324,17 @@ TAO_UIOP_Profile::decode (TAO_InputCDR& cdr)
       ACE_DEBUG ((LM_DEBUG, "error decoding UIOP rendezvous_point"));
       return -1;
     }
-
-  this->object_addr_.set (rendezvous);
+  
+  if (this->object_addr_.set (rendezvous) == -1)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("TAO (%P|%t) UIOP_Profile::decode - \n")
+                      ASYS_TEXT ("TAO (%P|%t) ACE_UNIX_Addr::set () failed")));
+        }
+      return -1;
+    }
 
   // Clean up
   delete [] rendezvous;
