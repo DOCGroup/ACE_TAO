@@ -14,17 +14,24 @@ ACE_RCSID(TAO, BiDir_Policy_i, "$Id$")
 
 TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (
     const BiDirPolicy::BidirectionalPolicyValue  val)
-  : value_ (val)
+  : ACE_NESTED_CLASS (CORBA, Object) ()
+  , ACE_NESTED_CLASS (CORBA, Policy) ()
+  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  , BiDirPolicy::BidirectionalPolicy ()
+  , TAO_Local_RefCounted_Object ()
+  , value_ (val)
 {
 }
 
 TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (const TAO_BidirectionalPolicy &rhs)
-  : BiDirPolicy::BidirectionalPolicy (),
-    TAO_Local_RefCounted_Object (),
-    value_ (rhs.value_)
+  : ACE_NESTED_CLASS (CORBA, Object) ()
+  , ACE_NESTED_CLASS (CORBA, Policy) ()
+  , ACE_NESTED_CLASS (CORBA, LocalObject) ()
+  , BiDirPolicy::BidirectionalPolicy ()
+  , TAO_Local_RefCounted_Object ()
+  , value_ (rhs.value_)
 {
 }
-
 
 
 CORBA::PolicyType

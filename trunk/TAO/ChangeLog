@@ -1,3 +1,22 @@
+Wed Jun 11 11:44:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Buffering_Constraint_Policy.cpp:
+	* tao/BiDir_GIOP/BiDir_Policy_i.cpp:
+	* tao/BiDir_GIOP/BiDir_Policy_i.h:
+	* tao/Messaging/Connection_Timeout_Policy_i.cpp:
+	* tao/Messaging/Messaging_Policy_i.cpp:
+	* tao/PortableServer/Servant_Base.cpp:
+	* tao/RTCORBA/RT_Policy_i.cpp: First set of fixes for gcc
+	  3.3. These are all related to the order of base class
+	  construction which has virtual inheritance. gcc 3.3 is
+	  particularly picky about this emitting up lots of warnings. What
+	  makes this particularly tricky is that gcc 3.3 is a bit
+	  inconsistent emitting warnings for only copy constructors. But
+	  that is besides the point.  
+
+	  The fixes made are also for regular constructors and so they
+	  should just work fine.   
+
 Wed Jun 11 11:45:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp(set_is_multiple):
@@ -38,12 +57,12 @@ Tue Jun 10 10:05:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Jun 10 09:33:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
-        * orbsvcs\orbsvcs\IFRService\ComponentDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
 
           Cosmetic changes.
 
-        * orbsvcs\orbsvcs\IFRService\HomeDef_i.cpp:
-        * orbsvcs\orbsvcs\IFRService\tmplinst.cpp:
+        * orbsvcs/orbsvcs/IFRService/HomeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
 
           Added a specialization for the 
           TAO_IFR_Desc_Utils<>::fill_desc_begin_ex() method when the
