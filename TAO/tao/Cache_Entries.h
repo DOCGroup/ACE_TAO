@@ -94,21 +94,12 @@ public:
    */
   TAO_Transport *relinquish_transport (void);
 
-  /// Return the order for the purging strategy
-  unsigned long purging_order (void) const;
-
-  /// Allow the purging strategy to set the order
-  void purging_order(unsigned long value);
-
 private:
   /// The transport that needs to be cached.
   TAO_Transport *transport_;
 
   /// The state of the handle
   ACE_Recyclable_State recycle_state_;
-
-  /// Used by the LRU, LFU and FIFO Connection Purging Strategies
-  unsigned long purging_order_;
 };
 
 

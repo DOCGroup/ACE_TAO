@@ -1,7 +1,7 @@
 // $Id$
 
 #include "NULL_Connection_Purging_Strategy.h"
-#include "tao/Cache_Entries.h"
+#include "tao/Transport.h"
 
 ACE_RCSID(tao, NULL_Connection_Purging_Strategy, "$Id$")
 
@@ -18,9 +18,9 @@ TAO_NULL_Connection_Purging_Strategy::~TAO_NULL_Connection_Purging_Strategy (voi
 
 
 void
-TAO_NULL_Connection_Purging_Strategy::update_item (TAO_Cache_IntId& int_id)
+TAO_NULL_Connection_Purging_Strategy::update_item (TAO_Transport* transport)
 {
-  ACE_UNUSED_ARG (int_id);
+  ACE_UNUSED_ARG (transport);
 }
 
 

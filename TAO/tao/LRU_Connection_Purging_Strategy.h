@@ -41,7 +41,7 @@ public:
   virtual ~TAO_LRU_Connection_Purging_Strategy (void);
 
   /// Called when accessing an item from the cache
-  virtual void update_item (TAO_Cache_IntId& int_id);
+  virtual void update_item (TAO_Transport* transport);
 
 private:
   /// The ordering information for each transport in the cache

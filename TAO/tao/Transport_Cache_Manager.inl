@@ -24,24 +24,24 @@ TAO_Transport_Cache_Manager::find (const TAO_Cache_ExtId &key,
                              *this->cache_lock_,
                              -1));
 
-  return this->find_i (key,
-                       value);
+  int status =  this->find_i (key,
+                              value);
+
+  if (status == 0)
+    {
+      // Update the purging strategy information while we
+      // are holding our lock
+      this->purging_strategy_->update_item (value.transport ());
+    }
+  return status;
 }
 
 
 ACE_INLINE int
 TAO_Transport_Cache_Manager::cache_transport (
-                     TAO_Transport_Descriptor_Interface *prop,
-                     TAO_Transport *transport)
+    TAO_Transport_Descriptor_Interface *prop,
+    TAO_Transport *transport)
 {
-  if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - ")
-                            ACE_TEXT ("TAO_Transport_Cache_Manager")
-                            ACE_TEXT ("::cache_transport (0x%x, 0x%x)\n"),
-                            prop, transport));
-    }
-
   // Compose the ExternId & Intid
   TAO_Cache_ExtId ext_id (prop);
   TAO_Cache_IntId int_id (transport);
@@ -53,7 +53,7 @@ TAO_Transport_Cache_Manager::cache_transport (
 
 ACE_INLINE int
 TAO_Transport_Cache_Manager::rebind (const TAO_Cache_ExtId &key,
-                                      const TAO_Cache_IntId &value)
+                                     const TAO_Cache_IntId &value)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                             guard,
@@ -92,22 +92,17 @@ TAO_Transport_Cache_Manager::unbind (const TAO_Cache_ExtId &key,
 ACE_INLINE int
 TAO_Transport_Cache_Manager::purge (void)
 {
-  int need_to_purge = 0;
-  DESCRIPTOR_SET sorted_set;
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->cache_lock_, 0));
 
-  // We must use a small scope, since we can't call close_entries()
-  // if we are holding the lock.
-  {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->cache_lock_, 0));
-    need_to_purge = this->fill_set_i (sorted_set);
-  }
-   
-  // Only call close_entries () if need_to_purge.  It takes control of
-  // sorted_set and cleans up any allocated memory.  If !need_to_purge,
+  DESCRIPTOR_SET sorted_set = 0;
+  int size = this->fill_set_i (sorted_set);
+
+  // Only call close_entries () if sorted_set != 0.  It takes control of
+  // sorted_set and cleans up any allocated memory.  If sorted_set == 0,
   // then there is nothing to de-allocate.
-  if (need_to_purge)
+  if (sorted_set != 0)
     {
-      this->close_entries (sorted_set);
+      this->close_entries (sorted_set, size);
     }
 
   return 0;

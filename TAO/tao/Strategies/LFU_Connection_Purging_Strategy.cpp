@@ -1,7 +1,7 @@
 // $Id$
 
 #include "LFU_Connection_Purging_Strategy.h"
-#include "tao/Cache_Entries.h"
+#include "tao/Transport.h"
 
 ACE_RCSID(tao, LFU_Connection_Purging_Strategy, "$Id$")
 
@@ -18,8 +18,8 @@ TAO_LFU_Connection_Purging_Strategy::~TAO_LFU_Connection_Purging_Strategy (void)
 
 
 void
-TAO_LFU_Connection_Purging_Strategy::update_item (TAO_Cache_IntId& int_id)
+TAO_LFU_Connection_Purging_Strategy::update_item (TAO_Transport* transport)
 {
-  int_id.purging_order (int_id.purging_order () + 1);
+  transport->purging_order (transport->purging_order () + 1);
 }
 

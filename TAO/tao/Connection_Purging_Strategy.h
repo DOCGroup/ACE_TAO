@@ -12,14 +12,14 @@
 #define TAO_PURGING_STRATEGY_H
 #include "ace/pre.h"
 
-#include "corbafwd.h"
+#include "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-class TAO_Cache_IntId;
+class TAO_Transport;
 
 // ****************************************************************
 
@@ -45,7 +45,7 @@ public:
   virtual int cache_maximum (void) const;
 
   /// Sub-classes must implement these methods
-  virtual void update_item (TAO_Cache_IntId& int_id) = 0;
+  virtual void update_item (TAO_Transport* transport) = 0;
 
 private:
   /// The maximum number of cach entries

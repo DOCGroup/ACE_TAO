@@ -16,7 +16,6 @@
 #include "ace/pre.h"
 
 #include "ace/Hash_Map_Manager_T.h"
-#include "ace/Array_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
@@ -24,7 +23,8 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/Cache_Entries.h"
-#include "tao/debug.h"
+
+#include "tao/Connection_Purging_Strategy.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -36,7 +36,7 @@
 class TAO_ORB_Core;
 class ACE_Handle_Set;
 class TAO_Resource_Factory;
-class TAO_Connection_Purging_Strategy;
+
 
 typedef ACE_Unbounded_Set<ACE_Event_Handler*> TAO_EventHandlerSet;
 typedef ACE_Unbounded_Set_Iterator<ACE_Event_Handler*>
@@ -220,19 +220,18 @@ private:
   static int cpscmp(const void* a, const void* b);
 #endif
 
-  typedef ACE_Array_Base<TAO_Transport_Descriptor_Interface*>
-          DESCRIPTOR_SET;
+  typedef HASH_MAP_ENTRY** DESCRIPTOR_SET;
 
   /// Sort the list of entries
-  void sort_set (HASH_MAP_ENTRY**& entries, int size);
+  void sort_set (DESCRIPTOR_SET& entries, int size);
 
   /// Fill sorted_set in with the TAO_Transport_Descriptor_Interface's in
   /// a sorted order.
-  virtual int fill_set_i (DESCRIPTOR_SET& sorted_set);
+  int fill_set_i (DESCRIPTOR_SET& sorted_set);
 
   /// Look through the sorted set and close the connection on
   /// the required number of items in the set.
-  void close_entries (DESCRIPTOR_SET& sorted_set);
+  void close_entries (DESCRIPTOR_SET& sorted_set, int size);
 
 private:
   /// The percentage of the cache to purge at one time
