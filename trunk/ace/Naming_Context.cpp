@@ -342,13 +342,13 @@ ACE_Naming_Context::fini (void)
 ACE_Name_Options::ACE_Name_Options (void)
   : debugging_ (0),
     verbosity_ (0),
+    use_registry_ (0),
     nameserver_port_ (ACE_DEFAULT_SERVER_PORT),
     nameserver_host_ (ACE_OS::strdup (ACE_DEFAULT_SERVER_HOST)),
     namespace_dir_  (ACE_OS::strdup (ACE_DEFAULT_NAMESPACE_DIR)),
     process_name_ (0),
     database_ (0),
-    base_address_ (ACE_DEFAULT_BASE_ADDR),
-    use_registry_ (0)
+    base_address_ (ACE_DEFAULT_BASE_ADDR)
 {
   ACE_TRACE ("ACE_Name_Options::ACE_Name_Options");
 }
