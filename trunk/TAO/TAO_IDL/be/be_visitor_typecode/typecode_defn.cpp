@@ -2854,10 +2854,14 @@ be_visitor_typecode_defn::gen_repoID (be_decl *node)
         }
     }
 
-  // XXXASG -- there is still some doubts in my mind about whether repoID
-  // *must* be supplied or not as per spec 2.3a. So I am not going to allow
-  // optimizations here.
-  //  flag = 0;
+  // @@@JP CORBA 2.3.1 states that the Repository ID must be present
+  // for interfaces, valuetypes and exceptions, as Andy has implemented
+  // above. It also states that it must be present in structs, unions,
+  // enumerations and aliases for typecodes crom an interface repository
+  // or created by the ORB. We've also had requests to leave the repo
+  // ID in even in optimized typecodes, so I'll disable the
+  // optimization of this field for now.
+  flag = 0;
 
   if (flag)
     {
