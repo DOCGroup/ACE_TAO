@@ -1,3 +1,10 @@
+Mon May 31 14:50:07 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/default_resource.cpp (init_protocol_factories): This routine
+	  needs to provide default protocol factories for both IIOP and
+	  UIOP if it cannot get ones from Service_Config.  Otherwise,
+	  programs that skip TAO_Internal::open_services() won't work.
+
 Mon May 31 13:49:17 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
