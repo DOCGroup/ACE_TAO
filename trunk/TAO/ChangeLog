@@ -1,3 +1,9 @@
+Sun Nov 17 12:05:20 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/Makefile.bor: Added AMI test to the
+	  list of tests that needs compilation. Thanks to Johnny for
+	  pointing this out.
+
 Sun Nov 17 09:37:08 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile*: Updated dependencies again.
