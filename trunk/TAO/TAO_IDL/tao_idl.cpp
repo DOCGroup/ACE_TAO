@@ -74,6 +74,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_identifier.h"
 #include "drv_extern.h"
 #include "../tao/Version.h"
+#include "ace/UUID.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // FUZZ: disable check_for_streams_include
@@ -338,10 +339,9 @@ main (int argc, char *argv[])
   // For the IFR loader, it does nothing.
   BE_post_init ();
 
-  // Seed the random number generator used for creating unique
-  // temporary filenames.
-  srand ((unsigned int) time (0));
-  
+  ///Initialise the UUID Generator
+  ACE_Utils::UUID_GENERATOR::instance ()->init ();
+
   for (DRV_file_index = 0;
        DRV_file_index < DRV_nfiles;
        ++DRV_file_index)
