@@ -99,7 +99,8 @@ DIRS  = CDR \
         ORB_shutdown \
 	Two_Objects \
 	Nested_Upcall_Crash \
-	RTScheduling
+	RTScheduling \
+	UNKNOWN_Exception
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

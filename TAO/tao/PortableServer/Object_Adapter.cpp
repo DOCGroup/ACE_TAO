@@ -1716,7 +1716,7 @@ TAO_Object_Adapter::Servant_Upcall::servant_cleanup (void)
 
               ACE_TRY_CHECK;
             }
-          ACE_CATCHANY
+          ACE_CATCHALL
             {
               // Ignore errors from servant cleanup ....
             }

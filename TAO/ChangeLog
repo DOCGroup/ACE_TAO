@@ -1,3 +1,64 @@
+Thu Sep 25 16:08:50 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\PortableServer\Object_Adapter.cpp (servant_cleanup): 
+
+	  Changed ACE_CATCHANY to ACE_CATCHALL.  This will ensure that all
+	  exceptions will be caught properly.  This means that unknown
+	  exceptions and structural exceptions on Windows will also be
+	  caught and handled rather than only CORBA exceptions.  Thus, if
+	  an application servant throws a non-CORBA exception while being
+	  cleaned up from a call to POA::cleanup_servant(), a multithread
+	  ORB will no longer deadlock itself.  This fixes bug 1524.
+	  Thanks to Bruce Mcintosh <bruce.mcintosh@boeing.com> and later
+	  Russell Noseworthy <j.russell.noseworthy@objectsciences.com> for
+	  reporting this problem.
+
+	* tao\PortableServer\POA.cpp: 
+
+	  Made the following POA accessors public:
+
+	  - outstanding_requests
+	  - active_object_map
+	  - waiting_destruction
+
+	* tests\UNKNOWN_Exception:
+
+	  Added test for ensuring that UNKNOWN exceptions raised by the
+	  server are handling correctly by the ORB.  There are two places
+	  where this example tests for UNKNOWN exceptions: (a) UNKNOWN
+	  exception raised in an upcall and (b) UNKNOWN exception raised
+	  while a servant is being cleaned up after deactivation.  The
+	  number of outstanding requests in the POA are checked after each
+	  unit of work performed by the server.  The assumption is that if
+	  the number of outstanding requests are correct, then the server
+	  correctly handled the UNKNOWN exceptions.
+
+          The following files were added:
+
+	  - tests/UNKNOWN_Exception/README
+	  - tests/UNKNOWN_Exception/UNKNOWN_Exception.dsw
+	  - tests/UNKNOWN_Exception/UNKNOWN_Exception.mpc
+	  - tests/UNKNOWN_Exception/client.cpp
+	  - tests/UNKNOWN_Exception/client.dsp
+	  - tests/UNKNOWN_Exception/run_test.pl
+	  - tests/UNKNOWN_Exception/server.cpp
+	  - tests/UNKNOWN_Exception/server.dsp
+	  - tests/UNKNOWN_Exception/test.idl
+	  - tests/UNKNOWN_Exception/Makefile
+	  - tests/UNKNOWN_Exception/Makefile.bor
+	  - tests/UNKNOWN_Exception/Makefile.UNKNOWN_Exception_Client
+	  - tests/UNKNOWN_Exception/Makefile.UNKNOWN_Exception_Server
+	  - tests/UNKNOWN_Exception/UNKNOWN_Exception_Client.bor
+	  - tests/UNKNOWN_Exception/UNKNOWN_Exception_Server.bor
+        
+          The following files were modified:
+
+          - tests/TAO_Tests.dsw
+          - tests/Makefile
+          - tests/Makefile.bor
+          - tests/README
+          - $ACE_ROOT/bin/tao_orb_tests.lst	
+
 Thu Sep 25 11:54:42 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/examples/Notify/ThreadPool/Consumer_Client.h:
