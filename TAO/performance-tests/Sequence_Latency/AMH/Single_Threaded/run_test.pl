@@ -11,7 +11,7 @@ use PerlACE::Run_Test;
 $status = 0;
 $iorfile = PerlACE::LocalFile ("test.ior");
 
-print STDERR "================ DII Sequence Latency Test -- octet sequence\n";
+print STDERR "================ AMH Sequence Latency Test -- octet sequence\n";
 
 unlink $iorfile;
 
