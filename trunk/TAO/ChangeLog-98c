@@ -2,6 +2,12 @@ Wed Mar 18 07:18:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * release.pl: uncommented unlink of .del files.
 
+        * tao/encode.cpp (TAO_Marshal_String::encode): #if 0'd unused
+          local "continue_encoding".
+
+        * tao/sequence{,_T}.cpp: removed some more "meaningless" const
+          modifiers from casts.
+
 Wed Mar 18 02:08:55 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Param_Test/client.cpp (~Param_Test_Client): Removed
