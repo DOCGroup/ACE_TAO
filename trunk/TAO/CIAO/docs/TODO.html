@@ -18,11 +18,11 @@ accomplishment) :
   container. Components can use this feature to communicate using
   <CODE>eventtype</CODE>s a pub-sub mode. The code is available in a
   branch and it needs to be integrated in to the main-trunk. (ETA -
-  2004/08) 
-  </li>
+  2004/08)
+  </li> <p>
 
   <li> Allow components (i.e., assemblies) to be connected using the
-  NameService (ETA - 2004/08) </li> p>
+  NameService (ETA - 2004/08) </li> <p>
 
   <li> Allow non-component enabled clients to access reference to a
   component or an assembly using NameService (ETA - 2004/08) </li> <p>
@@ -33,7 +33,7 @@ accomplishment) :
   <CODE> StandardConfigurator</CODE> interface should be implemented
   and activated by the servant for the component. DAnCE can extract
   the reference from the servant and use it to set attributes  (ETA -
-  2004/08)</li><p> 
+  2004/08)</li><p>
 
 <li>Now that we have supports for ccm_{activate,passivate,remove}, we
     need to rethink how a container manages the lifecycle of all the
@@ -78,7 +78,7 @@ accomplishment) :
 
   <li> Add support for creating a thread pool within the the component
   server. We don't have support for this, which has made our users
-  resort to spawning threads within the components, which breaks 
+  resort to spawning threads within the components, which breaks
   portability of the executor code. (ETA - 2004/09)  </li> <p>
 
   <li> At present components in an assembly have no way of knowing
@@ -102,9 +102,9 @@ accomplishment) :
  implementations which could be overridden by the executor code if so
  desired. This would make the executor code more portable. Obviously
  we also should retain executor IDL generation using some command line
- options. (ETA - 2004/09) </li> <p>.
+ options. (ETA - 2004/09). </li> <p>
 
-<li> Need to develop tools that would allow components to be added  
+<li> Need to develop tools that would allow components to be added
   dynamically to an existing assembly and remove components
   dynamically from an existing assembly (ETA - 2004/12) <li> <p>.
 
@@ -119,7 +119,7 @@ accomplishment) :
 <li>HomeRegistrar related files from the CCM_Core  projects have
     been removed.  We need to move them into a new directory when we
     get to a new HomeFinder/HomeRegistrar implementation.  Notice
-    that the deployment framework will need to use the HomeRegistrar 
+    that the deployment framework will need to use the HomeRegistrar
     interface to register components/homes. (ETA - 2004/12)<p>
 
 <li>We should add support for the unclassified container and use the
@@ -141,7 +141,7 @@ accomplishment) :
   <li>We need a ConfigValues parser for extracting common name-value
       info out of a ConfigValues sequence. This would be needed if
       components have to set complex user defined types as attributes.
-      (ETA - not known). </li><p> 
+      (ETA - not known). </li><p>
 
   <li><b>Container Factory</b>: We need to provide a container factory
       interface to decide what kind of container we need to use.  Hmm,
@@ -190,7 +190,7 @@ accomplishment) :
 	  and the ComponentServer. We need to seperate the two
           entities so we can hook any Container with the
           ComponentServer. This change is essential to the RT
-          configuration and for the future of CIAO.<p> 
+          configuration and for the future of CIAO.<p>
 
       <li>Bala added ciao_[pre|post]_activate to the Session Component to
           force the order of actions upon start-up, but this will not
@@ -199,11 +199,11 @@ accomplishment) :
 
       <li>We need to work on the Resource Management process in
           DAnCE. Right now this part of the DnC spec is omitted in our
-          implementation.<p> 
+          implementation.<p>
 
       <li>We need to work on the packaging process more so we can ship
           binaries around when the dll/so is not available in the
-          local node.<p> 
+          local node.<p>
   </ul>
 
 </ul>
