@@ -32,7 +32,7 @@
 #include "ORB.h"
 #include "tao/Object.h"
 
-#if (TAO_HAS_AMI_POLLER == 1)
+#if defined (TAO_HAS_AMI_POLLER) && (TAO_HAS_AMI_POLLER == 1)
 #include "tao/PollableC.h"
 #endif /* TAO_HAS_AMI_POLLER == 1 */
 
@@ -249,7 +249,7 @@ namespace TAO
     ACE_NEW (CORBA::_tc_wchar,
              CORBA::TypeCode (CORBA::tk_wchar));
 
-    // A string/wstring have a simple parameter list that 
+    // A string/wstring have a simple parameter list that
     // indicates the length.
     static const CORBA::Long _oc_string [] =
     {
@@ -319,7 +319,7 @@ namespace TAO
                               (char *) &_oc_CORBA_Object,
                               1,
                               sizeof (CORBA::Object)));
- 
+
     // Static initialization of the two user-defined exceptions that
     // are part of the ORB.
 
@@ -537,7 +537,7 @@ namespace TAO
 
     CORBA::release (CORBA::_tc_wchar);
 
-    // A string/wstring have a simple parameter list that 
+    // A string/wstring have a simple parameter list that
     // indicates the length.
     CORBA::release (CORBA::_tc_string);
 
