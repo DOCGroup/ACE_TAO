@@ -1,3 +1,9 @@
+Tue Jul 14 11:18:35 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Message_Queue_T.cpp (refresh_{late,pending}_queue): removed some
+          breaks following ACE_ERROR_RETURNs, to avoid compiler warnings about
+          unreachable statements.
+
 Tue Jul 14 09:27:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile: added STL back in, because TAO's AVStreams still uses it.
