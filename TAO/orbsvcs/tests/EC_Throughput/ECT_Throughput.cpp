@@ -136,7 +136,7 @@ ECT_Throughput::run (int argc, char* argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to get the Naming Service.\n"),
                           1);
-      
+
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -230,7 +230,7 @@ ECT_Throughput::run (int argc, char* argv[])
 
       {
         // Deactivate the EC
-        PortableServer::POA_var poa = 
+        PortableServer::POA_var poa =
           ec_impl._default_POA (TAO_TRY_ENV);
         TAO_CHECK_ENV;
         PortableServer::ObjectId_var id =
@@ -242,7 +242,7 @@ ECT_Throughput::run (int argc, char* argv[])
 
       {
         // Deactivate the Scheduler
-        PortableServer::POA_var poa = 
+        PortableServer::POA_var poa =
           scheduler_impl._default_POA (TAO_TRY_ENV);
         TAO_CHECK_ENV;
         PortableServer::ObjectId_var id =
@@ -261,11 +261,11 @@ ECT_Throughput::run (int argc, char* argv[])
       channel->destroy (TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
-  TAO_CATCH (CORBA::Exception, ex)
+  TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("ECT_Throughput::run");
     }
-  TAO_CATCHANY
+  TAO_CATCHALL
     {
       ACE_ERROR ((LM_ERROR, "non-corba exception raised\n"));
     }
