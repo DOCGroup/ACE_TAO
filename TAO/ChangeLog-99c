@@ -1,3 +1,52 @@
+Mon May 31 16:44:22 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/Acceptor_Registry.{h,cpp} (close_all):
+
+	  Added an Acceptor_Registry::close_all() method that closes all
+	  registered open acceptors.
+
+	* tao/Acceptor_Registry.{h,cpp} (open, open_default):
+
+	  Updated to accept "empty string" endpoints. If an endpoint is
+	  specified with only the protocol, e.g. `uiop://', then open an
+	  Acceptor with a default endpoint. This conforms to the "iioploc"
+	  syntax.  All TAO pluggable protocols will be expected to have
+	  the ability to create a default endpoint.
+
+	  Minor cosmetic changes.
+
+	* tao/Connector_Registry.cpp (close_all):
+
+	  Minor cosmetic changes.
+
+	* tao/ORB_Core.cpp (fini): 
+
+	  Added calls to Connector_Registry::close_all() and
+	  Acceptor_Registry::close_all() to make sure all connectors and
+	  acceptors are shutdown properly.
+	
+	* tao/IIOP_Profile.cpp (set):
+
+	  Added a comment about passing in TAO_ORB_Core as a parameter,
+	  instead of using the TAO_ORB_Core singleton.
+	
+	* tao/UIOP_Connector.cpp: 
+
+	  Fixed pragma template instantiation that was split between two
+	  lines without a backslash.
+
+	* tao/UIOP_Profile.cpp (parse_string):
+
+	  Corrected memory allocation/deallocation mismatch.  Memory was
+	  being allocated using CORBA::string_alloc() but deallocated by
+	  delete [].
+
+	* tao/params.cpp:
+
+	  ACE_Unbounded_Set_Iterator<ACE_CString> template was being
+	  incorrectly instantiated with a second template argument.  In
+	  addition, ACE_CString was mispelled "ACE_Cstring."  
+
 Mon May 31 15:55:07 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 	Fixed a warning on VxWorks. Replaces long int * ACE_UINT64
 	with ACE_UINT64 * ACE_UINT64. Changed the following files :
