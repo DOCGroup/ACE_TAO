@@ -35,7 +35,7 @@ inline ssize_t
 ACE_SOCK_Stream::recv_n (void *buf, size_t len, int flags, 
 			 const ACE_Time_Value *timeout)
 {
-  ACE_TRACE ("ACE_SOCK_Stream::send_n");
+  ACE_TRACE ("ACE_SOCK_Stream::recv_n");
   return ACE::recv_n (this->get_handle (), buf, len, flags, timeout);
 }
 

@@ -5882,7 +5882,7 @@ ACE_OS::ioctl (ACE_HANDLE handle, int cmd, void *val)
   ACE_SOCKET sock = (ACE_SOCKET) handle;
   ACE_SOCKCALL_RETURN (::ioctlsocket (sock, cmd, (u_long *) val), int, -1);
 #elif defined (VXWORKS)
-  // this may not work very well...
+  // This may not work very well...
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::ioctl (handle, cmd, (int) val), ace_result_),
                      int, -1);
 #else

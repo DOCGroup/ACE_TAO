@@ -187,14 +187,14 @@ ACE_ReactorEx_Handler_Repository::bind (ACE_HANDLE handle,
 }
 
 int
-ACE_ReactorEx_Handler_Repository::changes_required ()
+ACE_ReactorEx_Handler_Repository::changes_required (void)
 {
   // Check if handles have be scheduled for additions or removal
   return (this->handles_to_be_added_ > 0) || (this->handles_to_be_deleted_ > 0);
 }
 
 int
-ACE_ReactorEx_Handler_Repository::make_changes ()
+ACE_ReactorEx_Handler_Repository::make_changes (void)
 {
   // This method must ONLY be called by the
   // <ReactorEx->change_state_thread_>. We therefore assume that there
@@ -211,7 +211,7 @@ ACE_ReactorEx_Handler_Repository::make_changes ()
 }
 
 int
-ACE_ReactorEx_Handler_Repository::handle_deletions ()
+ACE_ReactorEx_Handler_Repository::handle_deletions (void)
 {
   // This will help us in keeping track of the last valid index in the
   // handle arrays
@@ -250,7 +250,7 @@ ACE_ReactorEx_Handler_Repository::handle_deletions ()
 }
 
 int
-ACE_ReactorEx_Handler_Repository::handle_additions ()
+ACE_ReactorEx_Handler_Repository::handle_additions (void)
 {
   // Go through the <to_be_added_*> arrays
   for (int i = 0; i < this->handles_to_be_added_; i++)
@@ -388,7 +388,7 @@ ACE_ReactorEx::~ACE_ReactorEx (void)
 }
 
 void
-ACE_ReactorEx::wakeup_all_threads ()
+ACE_ReactorEx::wakeup_all_threads (void)
 {
   this->wakeup_all_threads_.signal ();
 }
@@ -513,8 +513,160 @@ ACE_ReactorEx::ok_to_wait (ACE_Time_Value *max_wait_time,
   return 1;
 }
 
+ACE_HANDLE
+ACE_ReactorEx_Notify::get_handle (void) const
+{
+  return this->wakeup_one_thread_.handle ();
+}
+
+// Handle all pending notifications.
+
+int
+ACE_ReactorEx_Notify::handle_signal (int signum, 
+				     siginfo_t *siginfo, 
+				     ucontext_t *)
+{
+  ACE_UNUSED_ARG (signum);
+
+  // Just check for sanity...
+  if (siginfo->si_handle_ != this->wakeup_one_thread_.handle ())
+    return -1;
+
+  for (int i = 1; ; i++)
+    {
+      ACE_Message_Block *mb = 0;
+  
+      if (this->message_queue_.dequeue_head 
+	  (mb, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
+	{
+	  if (errno == EWOULDBLOCK)
+	    // We've reached the end of the processing, return
+	    // normally.
+	    return 0;
+	  else
+	    return -1; // Something weird happened...
+	}
+      else
+	{
+	  ACE_Notification_Buffer *buffer = 
+	    (ACE_Notification_Buffer *) mb->base ();
+
+	  // If eh == 0 then we've got major problems!  Otherwise, we
+	  // need to dispatch the appropriate handle_* method on the
+	  // ACE_Event_Handler pointer we've been passed.
+
+	  if (buffer->eh_ != 0)
+	    {
+	      int result = 0;
+
+	      switch (buffer->mask_)
+		{
+		case ACE_Event_Handler::READ_MASK:
+		  result = buffer->eh_->handle_input (ACE_INVALID_HANDLE);
+		  break;
+		case ACE_Event_Handler::WRITE_MASK:
+		  result = buffer->eh_->handle_output (ACE_INVALID_HANDLE);
+		  break;
+		case ACE_Event_Handler::EXCEPT_MASK:
+		  result = buffer->eh_->handle_exception (ACE_INVALID_HANDLE);
+		  break;
+		default:
+		  ACE_ERROR ((LM_ERROR, "invalid mask = %d\n", buffer->mask_));
+		  break;
+		}
+	      if (result == -1)
+		buffer->eh_->handle_close (ACE_INVALID_HANDLE, 
+					   ACE_Event_Handler::EXCEPT_MASK);
+	    }
+
+	  // Make sure to delete the memory regardless of success or
+	  // failure!
+	  mb->release ();
+
+	  // Bail out if we've reached the <notify_threshold_>.  Note
+	  // that by default <notify_threshold_> is -1, so we'll loop
+	  // until we're done.
+	  if (i == this->max_notify_iterations_)
+	    break;
+	}
+    }
+}
+
+// Notify the ReactorEx, potentially enqueueing the
+// <ACE_Event_Handler> for subsequent processing in the ReactorEx
+// thread of control.
+
 int 
-ACE_ReactorEx::update_state ()
+ACE_ReactorEx_Notify::notify (ACE_Event_Handler *eh, 
+			      ACE_Reactor_Mask mask,
+			      ACE_Time_Value *timeout)
+{
+  if (eh != 0)
+    {
+      ACE_Message_Block *mb = 0;
+      ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof ACE_Notification_Buffer), -1);
+
+      ACE_Notification_Buffer *buffer = 
+	(ACE_Notification_Buffer *) mb->base ();
+      buffer->eh_ = eh;
+      buffer->mask_ = mask;
+
+      // Convert from relative time to absolute time by adding the
+      // current time of day.  This is what <ACE_Message_Queue>
+      // expects.
+      if (timeout != 0)
+	*timeout += ACE_OS::gettimeofday ();
+
+      if (this->message_queue_.enqueue_tail 
+	  (mb, timeout) == -1)
+	{
+	  mb->release ();
+	  return -1;
+	}
+    }
+
+  return this->wakeup_one_thread_.signal ();
+}
+
+void 
+ACE_ReactorEx_Notify::max_notify_iterations (int iterations)
+{
+  ACE_TRACE ("ACE_ReactorEx_Notify::max_notify_iterations");
+  // Must always be > 0 or < 0 to optimize the loop exit condition.
+  if (iterations == 0)
+    iterations = 1;
+
+  this->max_notify_iterations_ = iterations;
+}
+
+int 
+ACE_ReactorEx_Notify::max_notify_iterations (void)
+{
+  ACE_TRACE ("ACE_ReactorEx_Notify::max_notify_iterations");
+  return this->max_notify_iterations_;
+}
+
+void 
+ACE_ReactorEx::max_notify_iterations (int iterations)
+{
+  ACE_TRACE ("ACE_ReactorEx::max_notify_iterations");
+  ACE_GUARD_RETURN (ACE_Process_Mutex, monitor, this->lock_, -1);
+
+  // Must always be > 0 or < 0 to optimize the loop exit condition.
+  this->notify_handler_.max_notify_iterations (iterations);
+}
+
+int 
+ACE_ReactorEx::max_notify_iterations (void)
+{
+  ACE_TRACE ("ACE_ReactorEx::max_notify_iterations");
+  ACE_GUARD_RETURN (ACE_Process_Mutex, monitor, this->lock_, -1);
+
+  return this->notify_handler_.max_notify_iterations ();
+}
+
+int 
+ACE_ReactorEx::update_state (void)
 {
   // This GUARD is necessary since we are updating shared state.
   ACE_GUARD_RETURN (ACE_Process_Mutex, monitor, this->lock_, -1);
@@ -684,7 +836,8 @@ ACE_ReactorEx::dispatch_handler (int index)
 
 // ************************************************************
 
-ACE_ReactorEx_Notify::ACE_ReactorEx_Notify () 
+ACE_ReactorEx_Notify::ACE_ReactorEx_Notify (void)
+  : max_notify_iterations (-1)
 {
 }
 
@@ -692,114 +845,6 @@ int
 ACE_ReactorEx_Notify::open (ACE_ReactorEx &reactorEx)
 {
   return reactorEx.register_handler (this);
-}
-
-ACE_HANDLE
-ACE_ReactorEx_Notify::get_handle (void) const
-{
-  return this->wakeup_one_thread_.handle ();
-}
-
-// Handle all pending notifications.
-
-int
-ACE_ReactorEx_Notify::handle_signal (int signum, 
-				     siginfo_t *siginfo, 
-				     ucontext_t *)
-{
-  ACE_UNUSED_ARG (signum);
-
-  // Just check for sanity...
-  if (siginfo->si_handle_ != this->wakeup_one_thread_.handle ())
-    return -1;
-
-  for (;;)
-    {
-      ACE_Message_Block *mb = 0;
-  
-      if (this->message_queue_.dequeue_head 
-	  (mb, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
-	{
-	  if (errno == EWOULDBLOCK)
-	    // We've reached the end of the processing, return
-	    // normally.
-	    return 0;
-	  else
-	    return -1; // Something weird happened...
-	}
-      else
-	{
-	  ACE_Notification_Buffer *buffer = 
-	    (ACE_Notification_Buffer *) mb->base ();
-
-	  // If eh == 0 then we've got major problems!  Otherwise, we
-	  // need to dispatch the appropriate handle_* method on the
-	  // ACE_Event_Handler pointer we've been passed.
-
-	  if (buffer->eh_ != 0)
-	    {
-	      int result = 0;
-
-	      switch (buffer->mask_)
-		{
-		case ACE_Event_Handler::READ_MASK:
-		  result = buffer->eh_->handle_input (ACE_INVALID_HANDLE);
-		  break;
-		case ACE_Event_Handler::WRITE_MASK:
-		  result = buffer->eh_->handle_output (ACE_INVALID_HANDLE);
-		  break;
-		case ACE_Event_Handler::EXCEPT_MASK:
-		  result = buffer->eh_->handle_exception (ACE_INVALID_HANDLE);
-		  break;
-		default:
-		  ACE_ERROR ((LM_ERROR, "invalid mask = %d\n", buffer->mask_));
-		  break;
-		}
-	      if (result == -1)
-		buffer->eh_->handle_close (ACE_INVALID_HANDLE, 
-					   ACE_Event_Handler::EXCEPT_MASK);
-	    }
-	  // Make sure to delete the memory regardless of success or
-	  // failure!
-	  mb->release ();
-	}
-    }
-}
-
-// Notify the ReactorEx, potentially enqueueing the
-// <ACE_Event_Handler> for subsequent processing in the ReactorEx
-// thread of control.
-
-int 
-ACE_ReactorEx_Notify::notify (ACE_Event_Handler *eh, 
-			      ACE_Reactor_Mask mask,
-			      ACE_Time_Value *timeout)
-{
-  if (eh != 0)
-    {
-      ACE_Message_Block *mb = 0;
-      ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof ACE_Notification_Buffer), -1);
-
-      ACE_Notification_Buffer *buffer = 
-	(ACE_Notification_Buffer *) mb->base ();
-      buffer->eh_ = eh;
-      buffer->mask_ = mask;
-
-      // Convert from relative time to absolute time by adding the
-      // current time of day.  This is what <ACE_Message_Queue>
-      // expects.
-      if (timeout != 0)
-	*timeout += ACE_OS::gettimeofday ();
-
-      if (this->message_queue_.enqueue_tail 
-	  (mb, timeout) == -1)
-	{
-	  mb->release ();
-	  return -1;
-	}
-    }
-
-  return this->wakeup_one_thread_.signal ();
 }
 
 #endif /* ACE_WIN32 */

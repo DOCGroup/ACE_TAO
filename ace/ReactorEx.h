@@ -86,10 +86,10 @@ public:
   // Pointer to the beginning of the current array of
   // <ACE_Event_Handler> *'s.
 
-  virtual int changes_required ();
+  virtual int changes_required (void);
   // Check if changes to the handle set are required.
 
-  virtual int make_changes ();
+  virtual int make_changes (void);
   // Make changes to the handle set
 
   void dump (void) const;
@@ -99,10 +99,10 @@ private:
   ACE_ReactorEx &reactorEx_;
   // Reference to our <ReactorEx>.
   
-  int handle_deletions ();
+  int handle_deletions (void);
   // Add handles to the handle set
 
-  int handle_additions ();
+  int handle_additions (void);
   // Remove handles from the handle set
 
   int remove_handler_i (size_t index,
@@ -177,6 +177,24 @@ public:
   virtual ACE_HANDLE get_handle (void) const;
   // Returns a handle to the <ACE_Auto_Event>.
 
+  void max_notify_iterations (int);
+  // Set the maximum number of times that the
+  // <ACE_ReactorEx_Notify::handle_input> method will iterate and
+  // dispatch the <ACE_Event_Handlers> that are passed in via the
+  // notify queue before breaking out of its
+  // <ACE_Message_Queue::dequeue> loop.  By default, this is set to
+  // -1, which means "iterate until the queue is empty."  Setting this
+  // to a value like "1 or 2" will increase "fairness" (and thus
+  // prevent starvation) at the expense of slightly higher dispatching
+  // overhead.
+
+  int max_notify_iterations (void);
+  // Get the maximum number of times that the
+  // <ACE_ReactorEx_Notify::handle_input> method will iterate and
+  // dispatch the <ACE_Event_Handlers> that are passed in via the
+  // notify queue before breaking out of its
+  // <ACE_Message_Queue::dequeue> loop.
+
 private:
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   // Called when the notification event waited on by <ACE_ReactorEx>
@@ -193,6 +211,14 @@ private:
   // Message queue that keeps track of pending <ACE_Event_Handlers>.
   // This queue must be thread-safe because it can be called by
   // multiple threads of control.
+
+  int max_notify_iterations_;
+  // Keeps track of the maximum number of times that the
+  // <ACE_ReactorEx_Notify::handle_input> method will iterate and
+  // dispatch the <ACE_Event_Handlers> that are passed in via the
+  // notify queue before breaking out of its
+  // <ACE_Message_Queue::dequeue> loop.  By default, this is set to
+  // -1, which means "iterate until the queue is empty."
 };
 
 #if defined (ACE_WIN32)
@@ -345,6 +371,24 @@ public:
   // 0, the caller will block until action is possible, else will wait
   // until the relative time specified in <timeout> elapses).
 
+  void max_notify_iterations (int);
+  // Set the maximum number of times that the
+  // <ACE_ReactorEx_Notify::handle_input> method will iterate and
+  // dispatch the <ACE_Event_Handlers> that are passed in via the
+  // notify queue before breaking out of its
+  // <ACE_Message_Queue::dequeue> loop.  By default, this is set to
+  // -1, which means "iterate until the queue is empty."  Setting this
+  // to a value like "1 or 2" will increase "fairness" (and thus
+  // prevent starvation) at the expense of slightly higher dispatching
+  // overhead.
+
+  int max_notify_iterations (void);
+  // Get the maximum number of times that the
+  // <ACE_ReactorEx_Notify::handle_input> method will iterate and
+  // dispatch the <ACE_Event_Handlers> that are passed in via the
+  // notify queue before breaking out of its
+  // <ACE_Message_Queue::dequeue> loop.
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -360,7 +404,7 @@ public:
 protected:
   virtual int ok_to_wait (ACE_Time_Value *max_wait_time,
 			  int alertable);
-  // Check to see if it is ok to enter ::WaitForMultipleObjects()
+  // Check to see if it is ok to enter ::WaitForMultipleObjects().
   
   virtual int wait_for_multiple_events (ACE_Time_Value *max_wait_time,
 					int alertable);
@@ -386,10 +430,10 @@ private:
   int calculate_timeout (ACE_Time_Value *time);
   // Used to caluculate the next timeout
 
-  int update_state ();
+  int update_state (void);
   // Update the state of the handler repository
 
-  void wakeup_all_threads ();
+  void wakeup_all_threads (void);
   // Wake up all threads in WaitForMultipleObjects so that they can
   // reconsult the handle set
 

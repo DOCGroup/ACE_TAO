@@ -144,10 +144,6 @@ writer (void *)
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
-
 #endif /* ACE_HAS_THREADS */
 
 // Spawn off threads.

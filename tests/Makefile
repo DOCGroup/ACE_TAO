@@ -26,6 +26,7 @@ BIN = 	Barrier_Test \
 	Pipe_Test \
 	Reactors_Test \
 	Reactor_Exceptions_Test \
+	Reactor_Notify_Test \
 	Reactor_Timer_Test \
 	Reader_Writer_Test \
 	Recursive_Mutex_Test \

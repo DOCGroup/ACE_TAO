@@ -1,4 +1,12 @@
+// This simple program illustrates the difference between handling
+// signals via the Reactor (which doesn't cause the event loop to
+// terminate) and signals that aren't handled via the Reactor (which
+// do).
+
 #include "ace/Service_Config.h"
+
+// Number of times to allow signal to execute until we quit.
+static size_t count = 10;
 
 static void 
 my_signal_function (int sig)
@@ -13,7 +21,14 @@ public:
 			     siginfo_t *,
 			     ucontext_t *)
   {
-    ACE_DEBUG ((LM_DEBUG, "Executed ACE signal handler for sig %S\n", sig));
+    ACE_DEBUG ((LM_DEBUG, "Executed ACE signal handler for sig %S, count = %d\n", 
+		sig, count));
+
+    count--;
+
+    if (count == 0)
+      ACE_Service_Config::end_reactor_event_loop ();
+
     return 0;
   }
 
@@ -54,10 +69,10 @@ main (int, char *argv[])
 
   // This just executes the reactor events until my_handler tells us
   // we are finished.
-  ACE_DEBUG ((LM_DEBUG, "starting event loop\n"));
+  ACE_DEBUG ((LM_DEBUG, "starting event loop that runs until you've typed ^C a total of 10 times or ^\\ once.\n"));
 
-  int result = my_config.run_reactor_event_loop ();
+  while (my_config.reactor_event_loop_done () == 0)
+    my_config.run_reactor_event_loop ();
 
-  ACE_DEBUG ((LM_DEBUG, "result = %d\n", result));
   return 0;
 }
