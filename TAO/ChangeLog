@@ -1,3 +1,10 @@
+Thu Oct  7 11:25:51 2004  john_c  <john_c@ociweb>
+
+        * TAO\tao\Object_KeyC.cpp:
+          Extended 'decode_string_to_sequence' to successfully parse
+          URL style IOR's generated from pre 1.4 TAO releases. Earlier
+          the escape charecter was '\\' (currently '%').
+
 Tue Oct  5 20:01:17 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Sequence_Unit_Tests/string_traits_base.hpp:

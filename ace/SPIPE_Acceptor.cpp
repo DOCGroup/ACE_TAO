@@ -94,6 +94,7 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
                             this->local_addr_.get_path_name ()) == -1)
     return -1;
 
+  this->set_duplex_handle (spipe[0]);
   this->set_handle (spipe[1]);
   return 0;
 

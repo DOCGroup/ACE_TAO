@@ -48,6 +48,9 @@ ACE_SPIPE::close (void)
   if (this->get_handle () != ACE_INVALID_HANDLE)
     {
       result = ACE_OS::close (this->get_handle ());
+#if defined (ACE_HAS_STREAM_PIPES)
+      result = (ACE_OS::close (duplex_pipe_handle_) || result);
+#endif /* ACE_HAS_STREAM_PIPES */
       this->set_handle (ACE_INVALID_HANDLE);
     }
   return result;
@@ -64,3 +67,12 @@ ACE_SPIPE::remove (void)
   return ACE_OS::unlink (this->local_addr_.get_path_name ()) == -1 || result == -1 ? -1 : 0;
 }
 
+#if defined (ACE_HAS_STREAM_PIPES)
+/// Temporary store of duplex pipe handle.
+void
+ACE_SPIPE::set_duplex_handle (ACE_HANDLE handle)
+{
+  ACE_TRACE ("ACE_SPIPE::set_duplex_handle");
+  this->duplex_pipe_handle_ = handle;
+}
+#endif /* ACE_HAS_STREAM_PIPES */
