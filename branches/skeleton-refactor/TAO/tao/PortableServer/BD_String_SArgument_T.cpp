@@ -14,10 +14,10 @@ ACE_RCSID (tao,
            BD_String_SArgument_T,
            "$Id$")
 
-template<typename S, 
-         typename S_var, 
-         typename to_S, 
-         typename from_S, 
+template<typename S,
+         typename S_var,
+         typename to_S,
+         typename from_S,
          size_t BOUND>
 CORBA::Boolean
 TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::demarshal (
@@ -29,10 +29,10 @@ TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::demarshal (
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S, 
-         typename S_var, 
-         typename to_S, 
-         typename from_S, 
+template<typename S,
+         typename S_var,
+         typename to_S,
+         typename from_S,
          size_t BOUND>
 void
 TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::interceptor_param (
@@ -47,10 +47,10 @@ TAO::In_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::interceptor_param (
 
 // ===========================================================
 
-template<typename S, 
-         typename S_var, 
-         typename to_S, 
-         typename from_S, 
+template<typename S,
+         typename S_var,
+         typename to_S,
+         typename from_S,
          size_t BOUND>
 CORBA::Boolean
 TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::marshal (
@@ -60,10 +60,10 @@ TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::marshal (
   return cdr << from_S (this->x_.in (), BOUND);
 }
 
-template<typename S, 
-         typename S_var, 
-         typename to_S, 
-         typename from_S, 
+template<typename S,
+         typename S_var,
+         typename to_S,
+         typename from_S,
          size_t BOUND>
 CORBA::Boolean
 TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::demarshal (
@@ -75,10 +75,10 @@ TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::demarshal (
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S, 
-         typename S_var, 
-         typename to_S, 
-         typename from_S, 
+template<typename S,
+         typename S_var,
+         typename to_S,
+         typename from_S,
          size_t BOUND>
 void
 TAO::Inout_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::
@@ -92,11 +92,11 @@ interceptor_param (Dynamic::Parameter & p)
 
 // ==============================================================
 
-template<typename S, 
+template<typename S,
          typename S_var,
          typename S_out,
-         typename to_S, 
-         typename from_S, 
+         typename to_S,
+         typename from_S,
          size_t BOUND>
 CORBA::Boolean
 TAO::Out_BD_String_SArgument_T<S,S_var,S_out,to_S,from_S,BOUND>::marshal (
@@ -108,11 +108,11 @@ TAO::Out_BD_String_SArgument_T<S,S_var,S_out,to_S,from_S,BOUND>::marshal (
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S, 
-         typename S_var, 
+template<typename S,
+         typename S_var,
          typename S_out,
-         typename to_S, 
-         typename from_S, 
+         typename to_S,
+         typename from_S,
          size_t BOUND>
 void
 TAO::Out_BD_String_SArgument_T<S,S_var,S_out,to_S,from_S,BOUND>::
@@ -126,10 +126,10 @@ interceptor_param (Dynamic::Parameter & p)
 
 // ============================================================
 
-template<typename S, 
-         typename S_var, 
-         typename to_S, 
-         typename from_S, 
+template<typename S,
+         typename S_var,
+         typename to_S,
+         typename from_S,
          size_t BOUND>
 CORBA::Boolean
 TAO::Ret_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::marshal (
@@ -141,10 +141,10 @@ TAO::Ret_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::marshal (
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-template<typename S, 
-         typename S_var, 
-         typename to_S, 
-         typename from_S, 
+template<typename S,
+         typename S_var,
+         typename to_S,
+         typename from_S,
          size_t BOUND>
 void
 TAO::Ret_BD_String_SArgument_T<S,S_var,to_S,from_S,BOUND>::

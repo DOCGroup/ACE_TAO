@@ -123,4 +123,3 @@ TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::interceptor_result (
 #endif /* TAO_HAS_INTERCEPTORS */
 
 #endif /* TAO_SPECIAL_BASIC_SARGUMENT_T_C */
-
