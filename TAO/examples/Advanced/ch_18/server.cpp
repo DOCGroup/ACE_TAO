@@ -22,7 +22,7 @@
 #include "server.h"
 #include <algorithm>
 #include "icp.h"
-#include <orbsvcs/CosNamingC.h>
+#include "orbsvcs/orbsvcs/CosNamingC.h"
 #include <strstream>
 #include <iostream>
 #include <fstream>
