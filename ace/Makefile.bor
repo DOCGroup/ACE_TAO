@@ -100,6 +100,7 @@ OBJFILES = \
 	$(OBJDIR)\Process.obj \
 	$(OBJDIR)\Process_Manager.obj \
 	$(OBJDIR)\Profile_Timer.obj \
+	$(OBJDIR)\QoS_Manager.obj \
 	$(OBJDIR)\QoS_Session_Factory.obj \
 	$(OBJDIR)\QoS_Session_Impl.obj \
 	$(OBJDIR)\Reactor.obj \
