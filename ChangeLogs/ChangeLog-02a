@@ -1,3 +1,18 @@
+Sun May  5 22:23:00 2002  Edan Ayal <edanayal@yahoo.com>
+
+	* tests/Proactor_Test.cpp (Sender):
+	  - Totally removed the message content mem-copies by having the
+	  message blocks assume ownership without copying, by
+	  pre-allocating space for the ending '\0' (needed for the
+	  printouts), and by using an additional complete message content
+	  string for the non-scatter/gather case.
+	
+	  - Added missing message blocks releases when the write
+	  operations fail.
+	
+	  - Added a missing message block rd_ptr adjustment at the message
+	  content printout in the non-scatter/gather case.
+
 Fri May 03 20:29:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/wrapper_macros.GNU:
