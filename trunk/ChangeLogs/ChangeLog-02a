@@ -1,3 +1,8 @@
+Tue Mar 28 13:03:07 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/make_pretty.pl:
+          Modification to recognize HP's future errors as warnings.
+
 Wed Mar 28 11:34:54 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
 
         * ace/CDR_Base.inl:
