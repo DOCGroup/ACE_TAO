@@ -1,3 +1,16 @@
+Fri Oct 09 11:59:26 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/wrapper_macros.GNU: removed RM override
+          because it's not necessary.  Thanks to
+          Tres Seaver <tseaver@palladion.com> for this suggestion.
+
+        * include/makeinclude/platform_chorus_ghs.GNU,
+          platform_irix6.x-sgic++.GNU,platform_osf1_3.2.GNU,
+          platform_osf1_4.0.GNU,platform_osf1_4.0_rcc.GNU,
+          platform_sunos5_sunc++.GNU:
+          replaced hard-coded /bin/rm -f with $(RM).  Thanks to
+          Tres Seaver <tseaver@palladion.com> for this suggestion.
+
 Fri Oct 09 00:44:21 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/OS.i (mmap): CreateFileMapping must be created with a length
