@@ -1,3 +1,10 @@
+Sat Feb 24 19:28:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS.i:
+
+          Fixed my recent changes to ACE_OS::dlsym () to work on 
+          Windows CE.
+
 Sat Feb 24 17:50:38 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/DLL_Test.cpp:

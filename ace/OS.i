@@ -9100,7 +9100,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
 #   endif /* ACE_LACKS_POSIX_PROTOTYPES */
 
-# elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+# elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR) && !defined (ACE_HAS_WINCE)
 
   ACE_WIN32CALL_RETURN (::GetProcAddress (handle, ACE_TEXT_ALWAYS_CHAR (sname)), void *, 0);
 
