@@ -1258,6 +1258,16 @@ protected:
 };
 #    endif /* !ACE_HAS_POSIX_SEM */
 
+#if defined (ACE_LACKS_PTHREAD_YIELD) && defined (ACE_HAS_THR_YIELD)
+#if defined (USYNC_THREAD)
+#undef USYNC_THREAD
+#endif /* USYNC_THREAD */
+#if defined (USYNC_PROCESS)
+#undef USYNC_PROCESS
+#endif /* USYNC_PROCESS */
+#    include /**/ <thread.h>
+#endif /* defined (ACE_LACKS_PTHREAD_YIELD) && defined (ACE_HAS_THR_YIELD) */
+
 #  else
 // If we are on Solaris we can just reuse the existing implementations
 // of these synchronization types.
@@ -1446,6 +1456,9 @@ protected:
   // Value is -1 if writer has the lock, else this keeps track of the
   // number of readers holding the lock.
 };
+#elif !defined (ACE_HAS_STHREADS)
+#include <synch.h>
+typedef rwlock_t ACE_rwlock_t;
 #endif /* ACE_LACKS_RWLOCK_T */
 
 #else /* !ACE_HAS_THREADS, i.e., the OS/platform doesn't support threading. */
