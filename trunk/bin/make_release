@@ -123,7 +123,7 @@ while ($#ARGV >= $[  &&  $ARGV[0] =~ /^-/) {
   if ($ARGV[0] eq '-i') {
     $install = 1;
   } elsif ($ARGV[0] eq '-g') {
-    $generate_man_pages = 1;
+    $generate_man_pages = 0;
   } elsif ($ARGV[0] eq '-k') {
     if ($ARGV[1] =~ /^[^-]+/  &&
         ($ARGV[1] eq 'ace' || $ARGV[1] eq 'tao' || $ARGV[1] eq 'ace+tao')) {
