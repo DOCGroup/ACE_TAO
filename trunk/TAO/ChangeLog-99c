@@ -1,15 +1,19 @@
+Thu Feb 11 15:12:08 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Forwarding_Servant.cpp (_primary_interface): Fixed the g++
+	  unused arg warnings.
+
 Thu Feb 11 15:02:44 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * TAO/performance-tests/Cubit/tao/idl_cubit/Cubit_Client.cpp
-          Fixed the g++ unused arg warnings.
-
+        * TAO/performance-tests/Cubit/tao/idl_cubit/Cubit_Client.cpp:
+	  Fixed the g++ unused arg warnings.
 
 Thu Feb 11 14:59:52 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* orbsvcs/tests/Property/client.cpp:
 	* orbsvcs/orbsvcs/CosPropertyService.idl:
-	* orbsvcs/orbsvcs/AVStreams.idl: 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp : 
+	* orbsvcs/orbsvcs/AVStreams.idl:
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp :
 	Fixed the problem with marshalling/demarshalling multiple
 	exceptions. Also changed PropertyException from exception to struct
 	the CosPropertyService.idl file, as suggested by OMG. But, AVStreams
@@ -18,7 +22,7 @@ Thu Feb 11 14:59:52 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	changed to "raises AVStreams::PropertyException". Thanks to Carlos for
 	the great help in debugging exception marshalling problem. Thanks to
 	Ulf  <jaehrig@desys.com> for the bug report.
-	
+
 Thu Feb 11 14:40:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/DynanyC.cpp:
