@@ -1,0 +1,19 @@
+This directory contains two examples: <Async_Timer_Queue_Test> and
+<Reactor_Timer_Queue_Test>.  They show how you can use various
+mechanisms to schedule and handle time events.  Both programs are
+interactive.  You can schedule or cancel time events and list all the
+timers that are waiting to be triggered.  
+
+Async_Timer_Queue_Test:
+-----------------------
+
+This example shows how to use singals as the mechanism to generate
+time events.  (Notice that this example doesn't work on NT because of
+NT's limited signal mechanism.)
+
+
+Reactor_Timer_Queue_Test:
+-------------------------
+
+This example shows how to use ACE_Reactor as the time events
+generating mechanism.  
