@@ -4528,10 +4528,10 @@ public:
   static u_int ualarm (const ACE_Time_Value &tv,
                        const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
   static ACE_hrtime_t gethrtime (const ACE_HRTimer_Op = ACE_HRTIMER_GETTIME);
-# if defined (ghs) && defined (ACE_HAS_POWERPC_TIMER)
+# if defined (ACE_HAS_POWERPC_TIMER) && (defined (ghs) || defined (__GNUG__))
   static void readPPCTimeBase (u_long &most,
                                u_long &least);
-# endif /* ghs && ACE_HAS_POWERPC_TIMER */
+# endif /* ACE_HAS_POWERPC_TIMER  &&  (ghs or __GNUG__) */
   static int clock_gettime (clockid_t,
                             struct timespec *);
   static ACE_Time_Value gettimeofday (void);
