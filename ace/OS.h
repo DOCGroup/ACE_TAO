@@ -4859,7 +4859,7 @@ struct ACE_Protocol_Info
 #define ACE_QOS_NOT_SPECIFIED            0xFFFFFFFF
 #define ACE_SERVICETYPE_NOTRAFFIC        0x00000000  /* No data in this */
                                                      /* direction. */
-#define ACE_SERVICETYPE_CONTROLLEDLOAD   0x00000002  /* Controlled Load. */
+#define ACE_SERVICETYPE_CONTROLLEDLOAD   0x00000001  /* Controlled Load. */
 #define ACE_SERVICETYPE_GUARANTEED       0x00000003  /* Guaranteed. */
 
 #define ACE_JL_SENDER_ONLY    0x01
