@@ -50,7 +50,7 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::send_request from \"%s\" on object: %s\n",
-              ri->operation (),
+              ri->operation (ACE_TRY_ENV),
               this->orb_->object_to_string (ri->target ())));
   
   // Populate target member of the ClientRequestInfo.
@@ -72,11 +72,11 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
  
   if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
     {
-      Dynamic::ParameterList_var paramlist = ri->arguments ();
+      /*      Dynamic::ParameterList_var paramlist = ri->arguments ();
       CORBA::Long param;
       (*paramlist)[0].argument >>= param;
       
-      cout << "the arg is " << param <<endl;
+      cout << "the arg is " << param <<endl;*/
       }
 }
 
@@ -104,12 +104,12 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
               buf));
    if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
     {
-      Dynamic::ParameterList_var paramlist = ri->arguments ();
+      /*Dynamic::ParameterList_var paramlist = ri->arguments ();
       CORBA::Long param;
       (*paramlist)[0].argument >>= param;
       
       cout << "the arg is " << param <<endl;
-      }
+      */ }
 
 }
 
@@ -124,7 +124,7 @@ Echo_Client_Request_Interceptor::receive_exception (PortableInterceptor::ClientR
               "Echo_Client_Request_Interceptor::received_exception from \"%s\" on object: %s\n",
               ri->operation (ACE_TRY_ENV),
               this->orb_->object_to_string (ri->target ())));
-  ACE_CHECK;
+  //  ACE_CHECK;
 
 }
 
@@ -202,13 +202,13 @@ Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerReq
   
   
   if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
-    {
+    {/*
       Dynamic::ParameterList_var paramlist = ri->arguments ();
       CORBA::Long param;
       (*paramlist)[0].argument >>= param;
       
       cout << "the arg is " << param <<endl;
-      }
+     */ }
    
 }
 
@@ -238,12 +238,12 @@ Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestI
  
   if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
     {
-      Dynamic::ParameterList_var paramlist = ri->arguments ();
+      /* Dynamic::ParameterList_var paramlist = ri->arguments ();
       CORBA::Long param;
       (*paramlist)[0].argument >>= param;
       
       cout << "the arg is " << param <<endl;
-      }
+      */  }
 }
 
 void 
