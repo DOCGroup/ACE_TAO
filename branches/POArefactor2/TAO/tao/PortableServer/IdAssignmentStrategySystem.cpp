@@ -20,6 +20,11 @@ namespace TAO
       return 'S';
     }
 
+    bool
+    System_Id_Assignment_Strategy::has_system_id (void) const
+    {
+      return false;
+    }
   }
 }
 

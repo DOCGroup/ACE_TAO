@@ -495,6 +495,7 @@ public:
 
   CORBA::Short server_priority (void) const;
 
+  bool has_system_id (void) const;
 protected:
 
   /// Template method for creating new POA's of this type.

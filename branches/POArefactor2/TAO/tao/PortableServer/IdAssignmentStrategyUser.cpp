@@ -19,6 +19,12 @@ namespace TAO
     {
       return 'U';
     }
+
+    bool
+    User_Id_Assignment_Strategy::has_system_id (void) const
+    {
+      return false;
+    }
   }
 }
 

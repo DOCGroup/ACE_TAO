@@ -34,6 +34,7 @@ namespace TAO
 
       virtual char id_assignment_key_type (void) const;
 
+      virtual bool has_system_id (void) const;
     private:
     };
   }

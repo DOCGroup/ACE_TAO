@@ -54,6 +54,8 @@ namespace TAO
       char key_type_length (void) const;
 
       void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at);
+
+      virtual bool has_system_id (void) const = 0;
     };
   }
 }

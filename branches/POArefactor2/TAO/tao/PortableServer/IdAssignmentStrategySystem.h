@@ -33,6 +33,8 @@ namespace TAO
       virtual ~System_Id_Assignment_Strategy (void);
 
       virtual char id_assignment_key_type (void) const;
+
+      virtual bool has_system_id (void) const;
     };
   }
 }

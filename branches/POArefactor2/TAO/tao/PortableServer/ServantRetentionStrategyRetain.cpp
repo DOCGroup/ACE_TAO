@@ -814,7 +814,7 @@ namespace TAO
                          PortableServer::POA::ServantAlreadyActive,
                          PortableServer::POA::WrongPolicy))
     {
-      if (this->poa_->cached_policies().id_assignment () != PortableServer::SYSTEM_ID)
+      if (!this->poa_->has_system_id ())
         {
           ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
                             0);
@@ -888,7 +888,7 @@ namespace TAO
       // policy with an Object Id value that was not previously generated
       // by the system for that POA, or, if the POA also has the
       // PERSISTENT policy, for a previous instantiation of the same POA.
-      if (this->poa_->cached_policies().id_assignment () == PortableServer::SYSTEM_ID &&
+      if (this->poa_->has_system_id () &&
           !this->poa_->is_poa_generated_id (id))
         {
           ACE_THROW (CORBA::BAD_PARAM ());
