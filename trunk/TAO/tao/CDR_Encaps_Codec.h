@@ -57,7 +57,9 @@ class TAO_Export TAO_CDR_Encaps_Codec
 public:
 
   /// Constructor.
-  TAO_CDR_Encaps_Codec (CORBA::Octet major, CORBA::Octet minor);
+  TAO_CDR_Encaps_Codec (CORBA::Octet major,
+                        CORBA::Octet minor,
+                        TAO_ORB_Core * orb_core);
 
   /// Encode the given data, including the TypeCode, into an octet
   /// sequence.
@@ -124,6 +126,10 @@ private:
   /// The minor GIOP version associated with this Codec.
   CORBA::Octet minor_;
 
+  /// The ORB Core to be used when decoding values from a CDR
+  /// encapsulation.
+  TAO_ORB_Core * orb_core_;
+
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
@@ -133,4 +139,3 @@ private:
 #include "ace/post.h"
 
 #endif  /* TAO_CDR_ENCAPS_CODEC_H */
-

@@ -49,7 +49,7 @@ class TAO_Export TAO_CodecFactory
 public:
 
   /// Constructor
-  TAO_CodecFactory (void);
+  TAO_CodecFactory (TAO_ORB_Core * orb_core);
 
   /// Create a Coder/Decoder for the given type of encoding.
   virtual IOP::Codec_ptr create_codec (const IOP::Encoding & enc
@@ -64,6 +64,15 @@ private:
   ACE_UNIMPLEMENTED_FUNC (
     TAO_CodecFactory (const TAO_CodecFactory &))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_CodecFactory &))
+
+private:
+
+  /// Pointer to the ORB Core.
+  /**
+   * Some Codec implementations may need access to the ORB Core with
+   * which they are associated.
+   */
+  TAO_ORB_Core * orb_core_;
 
 };
 

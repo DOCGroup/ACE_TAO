@@ -58,15 +58,6 @@ public:
                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-private:
-
-  /// Instance of the IOP::CodecFactory.
-  /**
-   * The CodecFactory is stateless and reentrant, so share a single
-   * instance between all ORBs.
-   */
-  IOP::CodecFactory_var codec_factory_;
-
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

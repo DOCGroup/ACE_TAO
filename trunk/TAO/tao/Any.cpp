@@ -105,9 +105,9 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr type,
     value_ (0),
     destructor_ (0)
 {
-  ACE_NEW (this->cdr_, 
+  ACE_NEW (this->cdr_,
            ACE_Message_Block);
-  ACE_CDR::consolidate (this->cdr_, 
+  ACE_CDR::consolidate (this->cdr_,
                         mb);
 }
 
@@ -134,9 +134,9 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
 
   if (src.cdr_ != 0)
     {
-      ACE_NEW (this->cdr_, 
+      ACE_NEW (this->cdr_,
                ACE_Message_Block);
-      ACE_CDR::consolidate (this->cdr_, 
+      ACE_CDR::consolidate (this->cdr_,
                             src.cdr_);
     }
 
@@ -549,7 +549,7 @@ CORBA_Any::operator<<= (const CORBA_Exception &exception)
   ACE_TRY
     {
       TAO_OutputCDR stream;
-      exception._tao_encode (stream 
+      exception._tao_encode (stream
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -576,7 +576,7 @@ CORBA_Any::operator<<= (CORBA_Exception *exception)
   ACE_TRY
     {
       TAO_OutputCDR stream;
-      exception->_tao_encode (stream 
+      exception->_tao_encode (stream
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -1485,7 +1485,7 @@ CORBA_Any::operator>>= (to_string s) const
           return 0;
         }
 
-      CORBA::Any *non_const_this = ACE_const_cast (CORBA::Any*, 
+      CORBA::Any *non_const_this = ACE_const_cast (CORBA::Any*,
                                                    this);
       non_const_this->_tao_replace (CORBA::_tc_string,
                                     1,
@@ -1556,7 +1556,7 @@ CORBA_Any::operator>>= (to_wstring ws) const
           return 0;
         }
 
-      CORBA::Any *non_const_this = ACE_const_cast (CORBA::Any*, 
+      CORBA::Any *non_const_this = ACE_const_cast (CORBA::Any*,
                                                    this);
       non_const_this->_tao_replace (CORBA::_tc_string,
                                     1,
