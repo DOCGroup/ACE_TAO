@@ -288,8 +288,4 @@ private:
 // This are temporary functions, until the format of the incarnation number
 // will be changed in the spec.
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Service_Type_Repository.cpp"
-#endif  /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
 #endif /* TAO_SERVICE_TYPE_REPOSITORY_H */

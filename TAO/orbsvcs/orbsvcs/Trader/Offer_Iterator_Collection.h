@@ -73,7 +73,7 @@ private:
     // Cached value of the number of elements left in this iterator. 
   };
   
-  typedef deque<Iter_Info> OFFER_ITERS;
+  typedef list<Iter_Info> OFFER_ITERS;
 
   OFFER_ITERS iters_;
   // The iterator collection.
