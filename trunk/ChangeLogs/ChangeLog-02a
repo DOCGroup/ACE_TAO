@@ -1,3 +1,9 @@
+Wed Feb  2 11:08:33 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Thread.h: Clarified that cancel() is only portable
+	  on platforms that support cancellation.  Thanks to Jason
+ 	  Czavislak <jczavislak@osprey.smcm.edu> for motivating this.
+
 Wed Feb  2 08:43:29 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* include/makeinclude/platform_linux_lxpthread.GNU:
