@@ -405,7 +405,7 @@ performance_test (int queue_type = 0)
       ACE_NEW_RETURN (queue_wrapper.q_,
                       ACE_Message_Queue_NT,
                       -1);
-      message = "ACE_Message_Queue_NT";
+      message = ASYS_TEXT ("ACE_Message_Queue_NT");
     }
 #endif /* VXWORKS */
 
@@ -428,9 +428,8 @@ performance_test (int queue_type = 0)
   ACE_Thread_Manager::instance ()->wait ();
   ACE_Time_Value tv;
   timer->elapsed_time (tv);
-  ACE_DEBUG ((LM_INFO,
-              ASYS_TEXT ("%s: %u messages took %u msec (%f msec/message)\n"),
-              ASYS_WIDE_STRING (message),
+  ACE_DEBUG ((LM_INFO, ASYS_TEXT ("%s: %u messages took %u msec (%f msec/message)\n"),
+              message,
               messages,
               tv.msec (),
               (double) tv.msec () / messages));
