@@ -52,6 +52,9 @@ namespace TAO
                           TAO_INVOKE_FAILURE);
       }
 
+    // Do not unbind duringdestruction. We need the entry to be
+    // there in the map
+    dispatch_guard.status (TAO_Bind_Dispatcher_Guard::NO_UNBIND);
 
     TAO_Target_Specification tspec;
     this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
