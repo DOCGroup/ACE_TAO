@@ -71,8 +71,6 @@ class ACE_Hash_Map_Manager
 {
   friend class ACE_Hash_Map_Iterator<EXT_ID, INT_ID, LOCK>;
 public:
-  enum {DEFAULT_SIZE = ACE_DEFAULT_MAP_SIZE};
-
   typedef ACE_Hash_Map_Entry<EXT_ID, INT_ID> ENTRY;
   typedef ACE_Hash_Map_Iterator<EXT_ID, INT_ID, LOCK> ITERATOR;
 
@@ -85,7 +83,7 @@ public:
   ACE_Hash_Map_Manager (ACE_Allocator *allocator = 0);
   // Initialize a <Hash_Map_Manager> with default size.
 
-  int open (size_t length = DEFAULT_SIZE, 
+  int open (size_t length = ACE_DEFAULT_MAP_SIZE, 
 	    ACE_Allocator *allocator = 0);
   // Initialize a <Hash_Map_Manager> with size <length>.
 
