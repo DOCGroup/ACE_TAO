@@ -1,4 +1,6 @@
-Sun Mar 22 23:19:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Mar 23 00:49:24 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Request.cpp: Include Request.i conditionally.
 
 	* tao/Object.h: Added macro TAO_Export to class CORBA_Object_var
  	  and class CORBA_Object_ptr.
