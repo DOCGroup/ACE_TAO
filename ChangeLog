@@ -1,3 +1,9 @@
+Fri Feb 18 20:05:53 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Signal.{h,inl}: Make the destructor of ACE_Sig_Handler virtual
+	  to silence warnings.  Thanks to Lothar <lothar@xcerla.com> for
+ 	  reporting this.
+
 Fri Feb 18 19:54:33 2005  Martin Corino  <mcorino@remedy.nl>
 
 	* tests/Max_Default_Port_Test.cpp:
