@@ -1,6 +1,33 @@
+Thu Apr  9 14:22:44 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/{be_visitor_args, be_visitor_array, be_visitor_field,
+	be_visitor_exception, be_visitor_operation, be_visitor_typedef,
+	be_visitor_union, be_visitor_union_branch}.cpp: The visit_typedef
+	operation on all the classes in these files was setting the
+	TAO_Visitor_Context's alias state to the typedef node being
+	visited. However, we were not resetting this context alias state
+	after the action has been taken. This broke code for a scenario
+	shown in a dummy IDL below:
+
+	       typedef X Y;
+	       struct foo { ... };
+	       struct bar {
+		 Y y_field;
+		 long long_field;
+	       };
+	In the code generation for the struct "bar" (for that matter for
+	unions, exceptions, sequences, and others), when we are generating
+	the code for the field whose type is "Y", we set the alias
+	context, it gets set to Y and we use its primitive type which is X
+	to do the "accept". However, we do not reset the alias context. As
+	a result, when we are generating the code for the long_field, the
+	alias context is still "Y" which leads our IDL compiler to
+	generate code that says "Y long_field;" rather than "long
+	long_field;". This is now fixed.
+
 Thu Apr  9 10:07:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Time_Utilities.i: 
+	* orbsvcs/orbsvcs/Time_Utilities.i:
 	  Fixed warnings in convertion from 64 bit ints to 32 bit
 	  ints. This is a classical example of a "good" cast, we know the
 	  numbers will be in range (unless something *really* bad happens,

@@ -358,7 +358,16 @@ int be_visitor_args_arglist::visit_union (be_union *node)
 int be_visitor_args_arglist::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
-  return node->primitive_base_type ()->accept (this);
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_args_arglist::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+  this->ctx_->alias (0);
+  return 0;
 }
 
 // *************************************************************************
@@ -714,7 +723,16 @@ int
 be_visitor_args_pre_docall_cs::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
-  return node->primitive_base_type ()->accept (this);
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_args_pre_docall_cs::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+  this->ctx_->alias (0);
+  return 0;
 }
 
 // ****************************************************************************
@@ -987,7 +1005,16 @@ int be_visitor_args_docall_cs::visit_union (be_union *node)
 int be_visitor_args_docall_cs::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
-  return node->primitive_base_type ()->accept (this);
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_args_docall_cs::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+  this->ctx_->alias (0);
+  return 0;
 }
 
 // *************************************************************************
@@ -1094,7 +1121,16 @@ int
 be_visitor_args_post_docall_cs::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
-  return node->primitive_base_type ()->accept (this);
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_args_post_docall_cs::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+  this->ctx_->alias (0);
+  return 0;
 }
 
 // ************************************************************************
@@ -1449,7 +1485,16 @@ int be_visitor_args_vardecl_ss::visit_union (be_union *node)
 int be_visitor_args_vardecl_ss::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
-  return node->primitive_base_type ()->accept (this);
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_args_vardecl_ss::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+  this->ctx_->alias (0);
+  return 0;
 }
 
 // ************************************************************************
@@ -1714,7 +1759,16 @@ int be_visitor_args_marshal_ss::visit_union (be_union *node)
 int be_visitor_args_marshal_ss::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
-  return node->primitive_base_type ()->accept (this);
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_args_marshal_ss::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+  this->ctx_->alias (0);
+  return 0;
 }
 
 // ************************************************************************
@@ -1947,7 +2001,16 @@ int be_visitor_args_pre_upcall_ss::visit_union (be_union *node)
 int be_visitor_args_pre_upcall_ss::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
-  return node->primitive_base_type ()->accept (this);
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_args_pre_upcall_ss::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+  this->ctx_->alias (0);
+  return 0;
 }
 
 // ************************************************************************
@@ -2219,7 +2282,16 @@ int be_visitor_args_post_upcall_ss::visit_union (be_union *node)
 int be_visitor_args_post_upcall_ss::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
-  return node->primitive_base_type ()->accept (this);
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_args_post_upcall_ss::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+  this->ctx_->alias (0);
+  return 0;
 }
 
 // ************************************************************************
@@ -2446,5 +2518,14 @@ int be_visitor_args_post_marshal_ss::visit_union (be_union *node)
 int be_visitor_args_post_marshal_ss::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
-  return node->primitive_base_type ()->accept (this);
+  if (node->primitive_base_type ()->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_args_post_marshal_ss::"
+                         "visit_typedef - "
+                         "accept on primitive type failed\n"),
+                        -1);
+    }
+  this->ctx_->alias (0);
+  return 0;
 }
