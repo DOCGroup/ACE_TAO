@@ -1,3 +1,22 @@
+Fri Aug 27 17:24:43 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/Tagged_Components.cpp (set_tao_priority):
+
+	  Removed inadvertent stream insertion of orb_type variable.
+	  Thanks to Carlos for pointing this out.
+
+	* tao/IIOP_Acceptor.cpp (parse_options):
+	* tao/UIOP_Acceptor.cpp (parse_options):
+
+	  Fixed valid endpoint priority range.
+
+	* tao/UIOP_Acceptor.h:
+	* tao/UIOP_Acceptor.cpp:
+
+	  Forgot to remove inclusion of non-existent UIOP_Acceptor.i
+	  file.  UIOP_Acceptor.i was created temporarily but wasn't
+	  needed.
+
 Fri Aug 27 17:06:54 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/Protocol_Factory.h:
