@@ -1,3 +1,8 @@
+Mon Nov  2 18:18:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* Added a "site map" for ACE.  Thanks to Rainer Blome
+ 	  <rainer_blome@de.ibm.com> for contributing this.
+
 Mon Nov 02 11:22:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Thread_Pool_Reactor_Test.{h,cpp}: Renamed Acceptor_Handler to
