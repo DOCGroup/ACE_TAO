@@ -75,7 +75,6 @@ main (int argc, char *argv[])
   CORBA::Object_ptr     objref = CORBA::Object::_nil(); // object reference
   ttcp_sequence_ptr     ttcp_seq = 0;  // obj reference to TTCP object
   CORBA::Environment	env;       // environment
-  CORBA::String str;               // holds the IOR
 
   fstream iorfile;
 
