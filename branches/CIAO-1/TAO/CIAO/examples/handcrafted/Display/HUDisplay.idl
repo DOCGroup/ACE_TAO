@@ -8,7 +8,7 @@
  * @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 
-#include "CCM_Component.idl"
+#include "ciao/CCM_Component.idl"
 
 module HUDisplay
 {
