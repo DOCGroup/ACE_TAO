@@ -49,7 +49,7 @@ static unsigned long ul = ULONG_MAX, def = 0;
 static int i = INT_MAX, ni = INT_MIN;
 static unsigned int ui = UINT_MAX;
 static unsigned short us = 10;
-static short si = 32768;
+static unsigned short si = 32768;
 
 /*
      SnmpInt32( void);

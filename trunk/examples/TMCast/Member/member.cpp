@@ -51,8 +51,10 @@ main (int argc, char* argv[])
       {
         // Sleep some random time around 1 sec.
 
-		ACE_UINT64 tmpl = 1000000U;
-        unsigned long t = (tmpl * ACE_OS::rand ()) / RAND_MAX;
+        ACE_UINT64 tmpl = 1000000U;
+        unsigned long t =
+          ACE_static_cast (unsigned long,
+                           ((tmpl * ACE_OS::rand ()) / RAND_MAX));
 
         // ACE_DEBUG ((LM_DEBUG, "sleeping for %u\n", t));
 
