@@ -1,3 +1,10 @@
+Wed Mar 24 10:37:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/compiler.html:
+
+	  Added documentation for how -Ge option behaves by default. Thanks to
+	  Dr. Schmidt and Don Hinton for pointing this out.
+
 Wed Mar 24 07:36:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp:
