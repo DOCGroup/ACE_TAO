@@ -1,3 +1,8 @@
+Thu Feb 15 17:53:31 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* ace/Thread_Manager.i: Simplified casting in
+	  ACE_Thread_Descriptor::get_next per suggestion from Carlos.
+
 Thu Feb 15 14:57:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* ace/Thread_Manager.i: Fixed typo in ACE_Thread_Descriptor::get_next.
