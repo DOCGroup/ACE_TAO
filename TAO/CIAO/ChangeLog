@@ -1,3 +1,9 @@
+Wed Jun  2 19:22:29 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* ChangeLog:
+
+	  Forgot to add change description for the previous change.
+
 Wed Jun  2 19:07:01 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* ciao/CIAO_Client_Export.h:
@@ -21,6 +27,9 @@ Wed Jun  2 19:07:01 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 	* tools/Segment_Timer/Segment_Timer_Export.h:
 	* tools/Simple_Component_Server/Simple_Server_Stub_Export.h:
 	* tools/XML_Helpers/XML_Helpers_Export.h:
+
+	  Regenerated these files with -s option to take care of static
+	  builds on Windows.
 
 Wed Jun  2 18:57:29 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
