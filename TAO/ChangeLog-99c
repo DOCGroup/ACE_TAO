@@ -1,4 +1,18 @@
-Wed Jun 16 23:12:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Wed Jun 16 23:59:17 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/default_resource.cpp (get_reactor): Must instruct Reactor to
+	  delete implementation.
+
+	* tao/TAO.cpp (~TAO_ORB_Manager): Fixed reversed logic in if
+	  statement.
+
+	* tao/ORB_Core.cpp (init): Must setup flags before creating the
+	  reactor.  In ~TAO_ORB_Core_TSS_Resources(), must remove()
+	  allocators in addition to deleting them.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp (init):
+	  ORB Manager duplicates before returning. Must assign return
+	  value to PortableServer::POA_var.
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp
 	  (_default_POA): Must duplicate before return poa.
