@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  Front End of the Telecom Log Service 
+ *  Front End of the Telecom Log Service
  *  Notify_Logging_Service
  *
  *
@@ -62,7 +62,7 @@ protected:
                 ACE_ENV_ARG_DECL);
   // initialize the ORB.
 
-  TAO_NS_Service* notify_service_;
+  TAO_Notify_Service* notify_service_;
 
   void resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
   // Resolve the naming service.
