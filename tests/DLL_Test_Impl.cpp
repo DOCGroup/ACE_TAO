@@ -71,14 +71,12 @@ Hello_Impl::operator new (size_t bytes, const ACE_nothrow_t &nt)
 }
 #endif /* ACE_HAS_NEW_NOTHROW */
 
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
 void
 Hello_Impl::operator delete (void *ptr)
 {
   ACE_DEBUG ((LM_INFO, "Hello_Impl::delete\n"));
   delete [] ((char *) ptr);
 }
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 
 extern "C" ACE_Svc_Export Hello *
 get_hello (void)
