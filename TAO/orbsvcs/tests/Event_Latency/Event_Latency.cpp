@@ -1,8 +1,8 @@
 // $Id$
 
-#if defined (quantify)
+#if defined (ACE_HAS_QUANTIFY)
 # include <quantify.h>
-#endif /* quantify */
+#endif /* ACE_HAS_QUANTIFY */
 
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
@@ -179,13 +179,13 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
     }
   // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
 
-#if defined (quantify)
+#if defined (ACE_HAS_QUANTIFY)
   // If measuring jitter, just Quantify the supplier-consumer path.
   if (measure_jitter_)
     {
       quantify_stop_recording_data ();
     }
-#endif /* quantify */
+#endif /* ACE_HAS_QUANTIFY */
 
   for (CORBA::ULong i = 0; i < events.length (); ++i)
     {
@@ -571,7 +571,7 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
             {
               ACE_hrtime_t now = ACE_OS::gethrtime ();
               ORBSVCS_Time::hrtime_to_TimeT (event.header.creation_time,
-					     now);
+                                             now);
             }
 
           // @@ ACE_TIMEPROBE_RESET;
@@ -590,14 +590,14 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
                 }
               else
                 {
-#if defined (quantify)
+#if defined (ACE_HAS_QUANTIFY)
                   // If measuring jitter, just Quantify the
                   // supplier-consumer path.
                   if (measure_jitter)
                     {
                       quantify_start_recording_data ();
                     }
-#endif /* quantify */
+#endif /* ACE_HAS_QUANTIFY */
 
                   ACE_TIMEPROBE (EVENT_LATENCY_SUPPLIER_STARTS_PUSHING_EVENT);
 
@@ -637,7 +637,7 @@ Latency_Supplier::shutdown (void)
 {
   shutting_down = 1;
 
-#if defined (quantify)
+#if defined (ACE_HAS_QUANTIFY)
     // Need to stop recording here even if testing for jitter, because
     // recording is still probably enabled.
     quantify_stop_recording_data ();
@@ -645,7 +645,7 @@ Latency_Supplier::shutdown (void)
       {
         ACE_DEBUG ((LM_DEBUG, "(%t) stopped Quantify recording\n"));
       }
-#endif /* quantify */
+#endif /* ACE_HAS_QUANTIFY */
 
   const ACE_hrtime_t now = ACE_OS::gethrtime ();
   test_stop_time_.set (ACE_static_cast (long, now / ACE_ONE_SECOND_IN_NSECS),
@@ -935,13 +935,13 @@ main (int argc, char *argv [])
                               -1);
         }
 
-#if defined (quantify)
+#if defined (ACE_HAS_QUANTIFY)
       if (! measure_jitter)
         {
           ACE_DEBUG ((LM_DEBUG, "(%t) start Quantify recording\n"));
           quantify_start_recording_data ();
         }
-#endif /* quantify */
+#endif /* ACE_HAS_QUANTIFY */
 
       // Tell supplier(s) to generate events.
       for (i = 0; i < suppliers; ++i)
