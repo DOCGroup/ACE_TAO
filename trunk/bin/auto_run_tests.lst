@@ -140,7 +140,7 @@ TAO/examples/Simple/bank/run_test.pl
 TAO/examples/Simple/grid/run_test.pl
 TAO/examples/Simple/time-date/run_test.pl: !ST !STATIC
 TAO/examples/Simple/time/run_test.pl
-TAO/examples/Quoter/run_test.pl
+TAO/examples/Quoter/run_test.pl: !MINIMUM
 TAO/examples/Load_Balancing/run_test.pl: !MINIMUM !SUNCC5_1
 TAO/examples/PluggableUDP/tests/Basic/run_test.pl: !STATIC !ST
 TAO/examples/PluggableUDP/tests/SimplePerformance/run_test.pl
