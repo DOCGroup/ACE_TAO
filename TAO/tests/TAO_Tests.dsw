@@ -51,6 +51,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Faults Client"=.\Faults\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Faults Server"=.\Faults\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "InterOp Naming Client"=".\InterOp-Naming\client.dsp" - Package Owner=<4>
 
 Package=<5>
