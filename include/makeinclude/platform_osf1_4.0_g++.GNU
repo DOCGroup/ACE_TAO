@@ -3,8 +3,15 @@
 # This platform macros file is intended to work with Digital UNIX 4.0
 # (OSF/1 4.0) and GCC in version 2.7.2.1 (or newer).
 
-debug = 1
-optimize = 1
+ifeq (,$(debug))
+  debug = 1
+endif
+ifeq (,$(exceptions))
+  exceptions = 1
+endif
+ifeq (,$(optimize))
+  optimize = 1
+endif
 
 CC              = gcc
 CXX             = g++
