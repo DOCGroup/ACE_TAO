@@ -322,7 +322,7 @@ If this is done, TAO_HAS_AMI_CALLBACK will automatically be defined to
 
 <li>
 The rule that forward declared interfaces must be defined in the same
-file has been recently relaxed by CORBA 2.3.1 (99-10-07). This relaxation 
+file has been recently relaxed by CORBA 2.3.1 (99-10-07). This relaxation
 has been added to the TAO IDL compiler. The forward declared interface
 in question must be fully defined in some generated .cpp file included
 in the build, or there will be a C++ link error.
@@ -703,7 +703,7 @@ Policy from the Messaging Specification is used to specify the level of
 reliability required.  The policy is set on the client side and uses a
 new flags field in the GIOP 1.2 header.  The server checks this flag to
 determine if a reply is required for the oneway invocation.  Four
-different levels synchronization are defined in the RT specification: 
+different levels synchronization are defined in the RT specification:
 
         <p>
         <ul>
@@ -766,7 +766,8 @@ oneway requests according to the current Buffering Constraint
 Policy. </li>
 
 <li> Buffering Constraint Policy is completely supported by TAO
-providing flexible levels of flushing and queueing in the ORB.  </li>
+providing flexible levels of flushing and queueing in the ORB.  This
+includes eager and delayed buffering and timed invocations.</li>
 
 <li> ClientPriorityPolicy has been implemented.  This TAO-specific
 policy allows clients to specify priority to be used as a
@@ -897,8 +898,10 @@ removed from the list of system exceptions.</li> <P>
 exceptions, memory allocation failures, and constructor failures.</li>
 <P>
 
-<li> We now support a minimal POA for the minimal CORBA
-specification.</li> <P>
+<li> We now support a minimum POA for the minimum CORBA specification.
+Recently, this feature was enchanced such that the minimum CORBA
+footprint was further reduced.  In addition, minimum POA can be
+enabled/disable irrespective of the minimum CORBA setting.</li> <P>
 
 <li> We have decided not to support active demuxing for method name
 lookup. The benefit of this optimization was questionable since the
@@ -1368,7 +1371,7 @@ Point of contact: <a href="mailto:pradeep@cs.wustl.edu">Pradeep Gore</a>
 
 <h4> Last updated: Fri Feb 4 00:19:08 CST 2000</h4>
 Point of contact: <a href="mailto:pradeep@cs.wustl.edu">Pradeep Gore</a>
-<p>Work is in progress to implement the CORBA <a href="ftp://ftp.omg.org/pub/docs/telecom/99-07-01.pdf"> 
+<p>Work is in progress to implement the CORBA <a href="ftp://ftp.omg.org/pub/docs/telecom/99-07-01.pdf">
 Notification Service </a>.
 The current implementation consists of the following (see the associated README's for more
 information):
@@ -1409,7 +1412,7 @@ information):
   </li>
 
   <li>
-   Support for Filters.The EventChannel's default Filter Factory can be used to create 
+   Support for Filters.The EventChannel's default Filter Factory can be used to create
    filters. Note that for now we support "TCL" grammer from the Trading Service.
   </li>
 </ul>
@@ -1418,14 +1421,14 @@ information):
 <ul>
 	<li>
 	Finish the remainder of the implementation of the Notification Service for the
-	TAO 1.1 release.This will include all administrative methods in all interfaces, 
+	TAO 1.1 release.This will include all administrative methods in all interfaces,
 	suspend/resume connections, Mapping Filters, Notify Publish,Subscribe interfaces.
-	This implementation will be backward compatible with the <a href="#ec">CORBA Event 
+	This implementation will be backward compatible with the <a href="#ec">CORBA Event
 	Service</a>.
 	</li>
 
 	<li>
-	Address concurrency issues in the service - isolate the patterns identified in the 
+	Address concurrency issues in the service - isolate the patterns identified in the
 	implementation of the <a href="ec.html"> RTEC </a> and reuse them. We hope to come up
 	with a collection of C++ template classes that capture these patterns so that they might
 	be used in other similar event communication senarios.
@@ -1438,8 +1441,8 @@ information):
 	<li>
 	Implement the parser engine for the <tt>Extended TCL</tt> grammer.
 	</li>
-	
-	<li>   
+
+	<li>
 	Implement the QoS features, especially the <i>Reliability</i> QoS property that requires
 	persistent events.
 	</li>
@@ -1448,9 +1451,9 @@ information):
 	Implement event communication via reliable multicast.
 	</li>
 </ul>
- 
+
 Note that we do not plan to support the following, anytime in the near future - Pull style and Typed
-event style communication. 
+event style communication.
 <P><HR><P>
 
 <!--#include virtual="ec.html" -->
@@ -1742,6 +1745,9 @@ the AbstractSyntaxTree and generate the implied-IDL code in memory.
 This reduced the amount of AMI specific IDL compiler code dramatically.</li>
 <li>Support for exceptions</li>
 <li>Support for attributes</li>
+<li>Support for buffering and batching AMI calls. See <a
+href="../../examples/Buffered_AMI">Buffered AMI</a> example for
+details.</li>
 <li>Support for deferred synchronous invocations.
 <a href="mailto:parsons@cs.wustl.edu">Jeff Parsons</a></li>
 </ul>
