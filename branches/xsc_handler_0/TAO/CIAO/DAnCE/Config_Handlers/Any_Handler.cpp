@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ANY_Handler.h"
+#include "Any_Handler.h"
 #include "tao/Any.h"
 
 namespace CIAO
@@ -8,17 +8,17 @@ namespace CIAO
   namespace Config_Handlers
   {
 
-    ANY_Handler::ANY_Handler (void)
+    Any_Handler::Any_Handler (void)
     {
     }
 
-    ANY_Handler::~ANY_Handler (void)
+    Any_Handler::~Any_Handler (void)
     {
     }
 
 
     void
-    ANY_Handler::get_Any (CORBA::Any& toconfig,
+    Any_Handler::get_Any (CORBA::Any& toconfig,
                           Any& desc)
     {
 
@@ -26,12 +26,8 @@ namespace CIAO
       DataValue value =
         desc.value ();
 
-      // @@ Jules, you may want to align your coding standards to ACE
-      // coding standards. Else, Dr. Schmidt is going to come down on
-      // you heavily in CS291 :-)
       if (value.short_p ())
         {
-          // @@ Jules, please try using regular C++ casts
           toconfig <<=
             static_cast <CORBA::Short> (value.short_ ());
         }

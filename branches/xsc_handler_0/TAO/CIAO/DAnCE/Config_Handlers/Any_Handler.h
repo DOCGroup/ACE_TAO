@@ -1,6 +1,6 @@
 //==============================================================
 /**
- *  @file  ANY_Handler.h
+ *  @file  Any_Handler.h
  *
  *  $Id$
  *
@@ -12,13 +12,16 @@
 #define CIAO_CONFIG_HANDLERS_ANY_HANDLER_H
 #include /**/ "ace/pre.h"
 
+
+#include "Basic_Deployment_Data.hpp"
+#include "Config_Handlers_export.h"
 #include "ace/config-lite.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Basic_Deployment_Data.hpp"
+
 
 namespace CORBA
 {
@@ -32,7 +35,7 @@ namespace CIAO
   namespace Config_Handlers
   {
    /*
-    * @class ANY_Handler
+    * @class Any_Handler
     *
     * @brief Handler class for <ComponentInterfaceDescription> types.
     *
@@ -41,13 +44,13 @@ namespace CIAO
     * corresponding CORBA IDL Any type.
     *
     */
-
-    class ANY_Handler{
-
+    
+    class Config_Handlers_Export Any_Handler{
+     
       public:
 
-        ANY_Handler (void);
-        virtual ~ANY_Handler (void);
+        Any_Handler (void);
+        virtual ~Any_Handler (void);
 
         static void get_Any (CORBA::Any& toconfig, Any& desc);
 
