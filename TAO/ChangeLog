@@ -1,3 +1,11 @@
+Wed Dec 31 15:12:42 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/lib/Supplier_T.h:
+        * orbsvcs/tests/Notify/lib/Peer_T.h:
+        * orbsvcs/tests/Notify/lib/Consumer_T.h:
+        * orbsvcs/tests/Notify/lib/Command_Factory_T.h:
+          Don't use export macros with templates.
+
 Wed Dec 31 12:50:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/TAO_Strategies_Static.dsp:
