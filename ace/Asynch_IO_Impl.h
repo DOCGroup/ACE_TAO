@@ -522,7 +522,7 @@ public:
   /// Recv <buffer_count> worth of <buffers> from <addr> using
   /// overlapped I/O (uses <WSARecvFrom>).  Returns 0 on success.
   virtual ssize_t recv (ACE_Message_Block *message_block,
-                        size_t &number_of_bytes_recvd,
+                        u_long num_bytes_to_read,
                         int flags,
                         int protocol_family,
                         const void *act,
