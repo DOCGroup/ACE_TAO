@@ -1,3 +1,35 @@
+Wed Sep  6 20:15:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/bevisitor_exception/exception_cs.cpp:
+
+	  Removed generation of extra string_dup of repository id
+	  when passed to the base class constructor of a user
+	  exception. The base class constructory duplicates the
+	  string.
+
+	* TAO_IDL/driver/drv_preproc.cpp:
+
+	  Increased the length of the tao_idl command line buffer
+	  from the ACE default of 1024 to 4096. Some complex
+	  applications were exceeding the default length.
+
+	  Thanks to Jeff Butler <jeff@panasas.com> for reporting
+	  the above bugs.
+
+	* TAO_IDL/tao_idl.cpp:
+
+	  If the -d (AST dump) option was used with the IDl compiler,
+	  a null ostream was being passed to the dump function. Thanks
+	  to Roland Rüdenauer <roland.ruedenauer@freenet.de> for reporting
+	  this bug.
+
+	* TAO_IDL/ast/ast_field.cpp:
+
+	  The dump function was reporting an error if the visibility
+	  value was vis_NA (not applicable). This is incorrect - that
+	  value is legitimate if the field does not belong to a 
+	  valuetype, so the error output was removed.
+
 Wed Sep  6 20:02:25 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/RTCORBA/Client_Propagated/run_test.pl:
