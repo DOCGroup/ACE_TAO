@@ -1,0 +1,54 @@
+#----------------------------------------------------------------------------
+#       GNU Makefile
+#----------------------------------------------------------------------------
+MAKEFILE        = Makefile.NamespaceSupport_Test
+DEPENDENCY_FILE = .depend.Makefile.NamespaceSupport_Test
+BIN_UNCHECKED   = NamespaceSupport_Test
+
+
+
+FILES = \
+  NamespaceSupport_Test
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+ACE_SHLIBS = -lACE
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+BIN    = $(BIN_UNCHECKED)
+
+OBJS   = $(addsuffix .o, $(notdir $(FILES)))
+SRC    = $(addsuffix .cpp, $(FILES))
+
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
+CPPFLAGS     += -I../..
+ifeq ($(static_libs),1)
+  ifneq ($(LIB),)
+    CPPFLAGS += -DACE_AS_STATIC_LIBS
+  endif
+endif
+
+
+LDFLAGS      += -L../../ACEXML/common -L../../ACEXML/parser/parser -L../../ace
+
+
+
+LDLIBS  = -lACEXML_Parser -lACEXML
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
+$(BIN): $(addprefix $(VDIR), $(OBJS))
+	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
+
+realclean: clean 
+ifneq ($(GENERATED_DIRTY),)
+	-$(RM) -r $(GENERATED_DIRTY)
+endif
+

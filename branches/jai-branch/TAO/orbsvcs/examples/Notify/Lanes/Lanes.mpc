@@ -1,0 +1,19 @@
+project(Supplier): notify, rtcorba, rtnotify {
+  exename = Supplier
+  Source_Files {
+    Supplier.cpp
+    Supplier_Client.cpp
+    ORB_Objects.cpp
+    ORB_Run_Task.cpp
+  }
+}
+
+project(Consumer): notifytest, rtcorba, rtnotify {
+  exename = Consumer
+  Source_Files {
+    Consumer.cpp
+    Consumer_Client.cpp
+    ORB_Objects.cpp
+    ORB_Run_Task.cpp
+  }
+}

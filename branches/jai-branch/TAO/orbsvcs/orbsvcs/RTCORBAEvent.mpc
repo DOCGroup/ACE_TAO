@@ -1,0 +1,17 @@
+project(RTCORBAEvent) : orbsvcslib, core, rtevent, naming, svc_utils, iortable, rtportableserver, rtcorba {
+  sharedname   = TAO_RTCORBAEvent
+  idlflags    += -Wb,export_macro=TAO_Naming_Export -Wb,export_include=naming_export.h
+  dynamicflags = TAO_RTCORBAEVENT_BUILD_DLL
+  tagchecks    = RTCORBAEvent
+  includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
+
+  IDL_Files {
+  }
+
+  Source_Files(ORBSVCS_COMPONENTS) {
+    RTCORBAEvent {
+      Event/EC_RTCORBA_Dispatching.cpp
+      Event/EC_RTCORBA_Factory.cpp
+    }
+  }
+}

@@ -1,0 +1,158 @@
+<!-- $Id$ -->
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 019</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 019</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Sharing your Memories</FONT></B></CENTER>
+
+<P>
+<HR WIDTH="100%">
+We'll first take a look at the server side.  As usual with
+co-operating applications, you need the server up and running first.
+In the case of shared memory applications, the server will create the
+shared memory segment.  In this example, it will also remove the
+segment when done.  It is important to realize though that the segment
+can be created external to your application and can persist beyond
+it's lifetime.  In fact, you can use shared memory to create a layer
+of persistence between application instances (at least, until the
+machine comes down.)
+<HR>
+<PRE>
+<font color=red>// $Id$</font>
+
+<font color=red>/*
+  The client and server both need to know the shared memory key and
+  size.  To prevent headaches, I've put those into a header they both
+  can share.
+ */</font>
+<font color=blue>#include</font> "<font color=green>shmem.h</font>"
+
+<font color=blue>#include</font> "<A HREF="../../../ace/Log_Msg.h">ace/Log_Msg.h</A>"
+
+<font color=blue>#if defined</font> (<font color=purple>ACE_LACKS_SYSV_SHMEM</font>)
+int
+main (int, char *[])
+{
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "<font color=green>System V Shared Memory not available on this platform\n</font>"),
+                    100);
+}
+#else <font color=red>// ACE_LACKS_SYSV_SHMEM</font>
+int
+main (int, char *argv[])
+{
+  <font color=red>/*
+    You can use the ACE_Malloc template to create memory pools
+    from various shared memory strategies.  It's really cool.
+    We're not going to use it.
+
+    Instead, I want to get to the roots of it all and directly
+    use ACE_Shared_Memory_SV.  Like many ACE objects, this is a
+    wrapper around OS services.
+
+    With this constructor we create a shared memory area to
+    use.  The ACE_CREATE flag will cause it to be created if it
+    doesn't already exist.  The SHM_KEY value (from shmem.h)
+    uniquely identifies the segment and allows other apps to
+    attach to the same segment. Execute 'ipcs -m' before and
+    after starting this app to see that the segment is created.
+    (I can't for the life of me correlate the SHM_KEY value back
+    to the key/id reported by ipcs though.)
+    */</font>
+  ACE_Shared_Memory_SV shm_server (SHM_KEY, SHMSZ,
+                                   <font color=#008888>ACE_Shared_Memory_SV::ACE_CREATE</font>);
+
+  <font color=red>/*
+    The constructor created the segment for us but we still need
+    to map the segment into our address space.  (Note that you
+    can pass a value to malloc() but it will be silently
+    igored.)  The void* (cast to char*) that is returned will
+    point to the beginning of the shared segment.
+    */</font>
+  char *shm = (char *) shm_server.malloc ();
+
+  <font color=red>/*
+    Since we're asking to create the segment, we will fail if it
+    already exists.  We could fall back and simply attach to it
+    like the client but I'd rather not assume it was a previous
+    instance of this app that left the segment around.
+    */</font>
+  if (shm == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "<font color=green>%p\n\t(%P|%t) Cannot create shared memory segment.\n</font>"
+                       "<font color=green>\tUse 'ipcs' to see if it already exists\n</font>",
+                       argv[0]),
+                      100);
+
+  <font color=red>/*
+    This second pointer will be used to walk through the block
+    of memory...
+    */</font>
+  char *s = shm;
+
+  <font color=red>/*
+    Out of curiosity, I added this output message.  The tests
+    I've done so far show me the same address for client and
+    server.  What does your OS tell you?
+    */</font>
+  ACE_DEBUG ((LM_INFO,
+              "<font color=green>(%P|%t) Shared Memory is at 0x%x\n</font>",
+              shm ));
+
+  <font color=red>/*
+    At this point, our application can use the pointer just like
+    any other given to us by new or malloc.  For our purposes,
+    we'll copy in the alpabet as a null-terminated string.
+    */</font>
+  for (char c = 'a'; c &lt;= 'z'; c++)
+    *s++ = c;
+
+  *s = '\0';
+
+  <font color=red>/*
+    Using a simple not-too-busy loop, we'll wait for the client
+    (or anyone else) to change the first byte in the shared area
+    to a '*' character.  This is where you would rather use
+    semaphores or some similar "<font color=green>resource light</font>" approach.
+    */</font>
+  while (*shm != '*')
+    <font color=#008888>ACE_OS::sleep</font> (1);
+
+  <font color=red>/*
+    Let's see what the client did to the segment...
+    */</font>
+  for (s = shm; *s != '\0'; s++)
+    putchar (*s);
+
+  putchar ('\n');
+
+  <font color=red>/*
+    If you're done with the segment and ready for it to be
+    removed from the system, use the remove() method.  Once the
+    program exits, do 'ipcs -m' again and you'll see that the
+    segment is gone.  If you just want to terminate your use of
+    the segment but leave it around for other apps, use the
+    close() method instead.
+
+    The free() method may be tempting but it doesn't actually do
+    anything.  If your app is *really* done with the shared
+    memory then use either close() or remove().
+    */</font>
+  if (shm_server.remove () &lt; 0)
+    ACE_ERROR ((LM_ERROR,
+                "<font color=green>%p\n</font>",
+                "<font color=green>remove</font>"));
+  return 0;
+}
+
+<font color=blue>#endif</font> <font color=red>/* ACE_LACKS_SYSV_SHMEM */</font>
+</PRE>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page03.html">Continue This Tutorial</A>]</CENTER>
+

@@ -1,0 +1,4 @@
+project : taolib {
+  after   += Strategies
+  libs    += TAO_Strategies
+}

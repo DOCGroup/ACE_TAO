@@ -1,0 +1,7 @@
+#
+# Makefile for building the Load_Balancing example
+#
+
+MAKEFILES = Load_Balancing.bor server.bor client.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
