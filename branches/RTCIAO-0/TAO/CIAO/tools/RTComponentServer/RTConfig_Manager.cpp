@@ -1,6 +1,5 @@
 // $Id$
 
-#include "tao/RTCORBA/RTCORBA.h"
 #include "RTConfig_Manager.h"
 #include "ace/SString.h"
 
@@ -152,6 +151,8 @@ CIAO::RTPolicy_Set_Manager::init (const CIAO::RTConfiguration::Policy_Sets &sets
                                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_DEBUG ((LM_DEBUG, "RTPolicy_Set_Manager::init\n"));
+
   for (CORBA::ULong i = 0; i < sets.length (); ++i)
     {
       CORBA::ULong np = sets[i].configs.length ();
@@ -225,6 +226,8 @@ CIAO::RTPolicy_Set_Manager::create_single_policy
  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_DEBUG ((LM_DEBUG, "RTPolicy_Set_Manager::create_single_policy\n"));
+
   CORBA::Policy_var retv;
 
   switch (policy_config.type)
@@ -248,10 +251,33 @@ CIAO::RTPolicy_Set_Manager::create_single_policy
       break;
 
     case RTCORBA::THREADPOOL_POLICY_TYPE:
-      retv = this->orb_->create_policy (RTCORBA::THREADPOOL_POLICY_TYPE,
-                                        policy_config.configuration
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      {
+        char *idref;
+        policy_config.configuration >>= idref;
+        RTCORBA::ThreadpoolId tpid =
+          this->resource_manager_.find_threadpool_by_name (idref
+                                                           ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (0);
+
+        retv = this->rtorb_->create_threadpool_policy (tpid
+                                                       ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (0);
+      }
+      break;
+
+    case RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE:
+      {
+        char *idref;
+        policy_config.configuration >>= idref;
+        RTCORBA::PriorityBands_var bands =
+          this->resource_manager_.find_priority_bands_by_name (idref
+                                                           ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (0);
+
+        retv = this->rtorb_->create_priority_banded_connection_policy (bands
+                                                                       ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (0);
+      }
       break;
 
     default:

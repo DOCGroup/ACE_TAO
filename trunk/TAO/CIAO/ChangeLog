@@ -1,3 +1,25 @@
+Sun Aug 24 21:38:24 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Container_Base.cpp:
+	* ciao/Container_Base.h: Added an extra argument of type
+	  CORBA::PolicyList to the init method which we can use to pass
+	  extra RTCORBA policies into the RT Container.
+
+	* ciao/Container_Impl.cpp:
+	* ciao/Container_Impl.h: Fixed memory management of cached
+	  ConfigValue valuetype.
+
+	* ciao/ServerActivator_Impl.h:
+	* ciao/ServerActivator_Impl.cpp: Extended the server activator to
+	  specify RTCAD filename when instantiating a RTComponentServer.
+
+	* examples/OEP/Display/descriptors/HUDisplay-rtcad.cad:
+	* examples/OEP/Display/descriptors/NOTE-win.txt:
+	* examples/OEP/Display/descriptors/RTsvc.conf:
+	* examples/OEP/Display/descriptors/test.rtd:
+	* examples/OEP/Display/descriptors/svcmap.dat: Added an RTCCM
+	  example.
+
 Wed Aug 20 17:44:29 2003  Diego Sevilla  <dsevilla@ditec.um.es>
 
 	* CIDLC/DescriptorGenerator.cpp: Small fix to make it compile

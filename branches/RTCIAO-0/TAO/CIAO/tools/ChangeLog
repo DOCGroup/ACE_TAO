@@ -1,3 +1,44 @@
+Sun Aug 24 21:45:33 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/Assembly_Deployer/Assembly_Deployer.mpc:
+	* tools/Daemon/Daemon.mpc: Both CIAO_Daemon and Assembly_Manager
+	  depend on RTCORBA  library now because they both required to
+	  handle RTCORBA related types.
+
+	* tools/Assembly_Deployer/Assembly_Visitors.cpp:
+	* tools/Assembly_Deployer/Assembly_Visitors.h: Decoupled the
+	  container creation functionality from the creation of
+	  ComponentServer into a separate method.  This allows us to
+	  better manage the type of container and the associating policy
+	  sets.
+
+	* tools/Assembly_Deployer/Deployment_Configuration.cpp:
+	* tools/Assembly_Deployer/Deployment_Configuration.h: Changed the
+	  get_activator[_ior] functions to return default activator where
+	  there's no valid activator id available instead of throwing an
+	  exception.
+
+	* tools/ComponentServer/ComponentServer.cpp: Invoke the init
+	  method of ComponentServer servant.  This function is now
+	  supported.
+
+	* tools/RTComponentServer/ComponentServer_Task.cpp:
+	* tools/RTComponentServer/ComponentServer_Task.h:
+	* tools/RTComponentServer/RTComponentServer.cpp:
+	* tools/RTComponentServer/RTComponentServer.mpc:
+	* tools/RTComponentServer/RTConfig_Manager.cpp:
+	* tools/RTComponentServer/RTConfig_Manager.h:
+	* tools/RTComponentServer/RTServer_Impl.cpp:
+	* tools/RTComponentServer/RTServer_Impl.h:
+	* tools/RTComponentServer/RTServer_Impl.inl: Added/Changed to
+	  properly support the real-time ComponentServer implementation.
+
+	* tools/ServerActivator/ServerActivator.cpp: Fixed a fuzz error.
+
+	* tools/XML_Helpers/Assembly_Spec.inl: Changed to return 0 if
+	  rtcad_filename and rtpolicyset_name is not specified in the
+	  original XML file.
+
 Thu Aug 14 16:27:52 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tools/XML_Helpers/RTCAD-example.rtd:

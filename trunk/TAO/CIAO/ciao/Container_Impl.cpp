@@ -22,12 +22,7 @@ CIAO::Container_Impl::init (const ::Components::ConfigValues &options,
                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_NEW_THROW_EX (this->config_,
-                    Components::ConfigValues (),
-                    CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (-1);
-
-  *this->config_ = options;
+  this->config_ = options;
   this->installation_ =
     Components::Deployment::ComponentInstallation::_duplicate (inst);
 
@@ -61,7 +56,7 @@ CIAO::Container_Impl::configuration (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                     CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
 
-  *retval = this->config_.inout ();
+  *retval = this->config_;
 
   return retval;
 }

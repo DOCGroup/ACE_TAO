@@ -13,7 +13,7 @@ parse_args (int argc,
             char *argv[],
             CIAO::ComponentServer_Task::Options &opts)
 {
-  ACE_Get_Opt get_opts (argc, argv, "nk:o:");
+  ACE_Get_Opt get_opts (argc, argv, "nk:o:r:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -30,6 +30,10 @@ parse_args (int argc,
       case 'k':  // get the activator callback IOR
        opts.callback_ior_ = get_opts.opt_arg ();
       break;
+
+      case 'r':  // get the filename of RTCAD extension file
+        opts.rtcad_filename_ = get_opts.opt_arg ();
+        break;
 
       case '?':  // display help for use of the server.
       default:
@@ -116,6 +120,7 @@ main (int argc, char **argv)
 
       int result =
         parse_args (argc, argv, options);
+
       if (result != 0)
         return result;
 
