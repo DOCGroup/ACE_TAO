@@ -145,6 +145,9 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           TAO_Naming_Context *c = 0;
           TAO_Hash_Naming_Context *c_impl = 0;
 
+          // To keep compilers warnings away.
+          ACE_UNUSED_ARG (c_impl);
+
           ACE_NEW_RETURN (c,
                           TAO_Naming_Context,
                           -1);
