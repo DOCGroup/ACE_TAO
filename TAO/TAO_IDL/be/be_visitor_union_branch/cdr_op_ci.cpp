@@ -765,8 +765,12 @@ be_visitor_union_branch_cdr_op_ci::visit_union (be_union *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "result = strm >> _tao_union."
-          << f->local_name () << " ();";
+      *os << node->name () << " _tao_union_tmp"
+          << ";" << be_nl
+          << "result = strm >> _tao_union_tmp;" << be_nl
+          << "if (result)" << be_idt_nl
+          << "_tao_union." << f->local_name () << " ("
+          << "_tao_union_tmp);" << be_uidt;
       return 0;
 
     case TAO_CodeGen::TAO_CDR_OUTPUT:
