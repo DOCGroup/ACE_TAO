@@ -1,3 +1,36 @@
+Tue Dec 30 13:02:09 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/ace.mpc:
+
+          Added the os_include, os_include/arpa, os_include/net,
+          os_include/netinet and os_include/sys directories to the
+          Header_Files section.
+
+        * bin/MakeProjectCreator/modules/Parser.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          Added code to get allow templates to get the current working
+          directory and the directory relative to the current working
+          directory with the relative definitions.
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+
+          Updated the Borland template to put the executables and libraries
+          in locations consistent with all other MPC generated projects.
+
+        * include/makeinclude/build_dll.bor:
+        * include/makeinclude/build_example.bor:
+        * include/makeinclude/build_exe.bor:
+        * include/makeinclude/build_lib.bor:
+        * include/makeinclude/install.bor:
+        * include/makeinclude/outputdir.bor:
+
+          Modified these to work with the new Borland template.  The
+          defaults have not been changed and the changes that were made
+          should be backward compatibile with the existing Borland
+          makefiles.
+
 Tue Dec 30 15:16:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * *.mpb:
@@ -8,7 +41,7 @@ Tue Dec 30 08:38:59 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/ace.mpc:
 
-          Removed Refcounted_Auto_Ptr.cpp from the Template_Files. 
+          Removed Refcounted_Auto_Ptr.cpp from the Template_Files.
           Apparently there was never a Refcounted_Auto_Ptr.cpp.
 
 Mon Dec 29 17:09:29 2003  Steve Huston  <shuston@riverace.com>

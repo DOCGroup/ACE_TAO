@@ -34,6 +34,8 @@ lib_install: $(TARGET:.dll=.lib)
 	@$(MAKE_INSTALL_LIBDIR)
 	-&copy "$**" $(INSTALL_LIBDIR) 1> NUL
 
+!ifndef INCLUDES_INSTALL
 includes_install: $(INCLUDES)
 	@$(MAKE_INSTALL_INCDIR)
 	-&copy "$**" $(INSTALL_INCDIR) 1> NUL
+!endif

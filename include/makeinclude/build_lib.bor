@@ -15,13 +15,13 @@
 # UNICODE - if defined when building a unicode lib
 #
 
-# Check if the BASE_BINDIR variable was explicitly specified.
-!ifdef BASE_BINDIR
-EXPLICIT_BASE_BINDIR = 1
+# Check if the output location was explicitly specified.
+!if $d(BASE_BINDIR) || $d(BINDIR)
+EXPLICIT_BINDIR = 1
 !endif
 
 !ifdef INSTALL_THIS_TARGET
-!ifndef EXPLICIT_BASE_BINDIR
+!ifndef EXPLICIT_BINDIR
 BINDIR = $(CORE_BINDIR)
 !endif
 !endif

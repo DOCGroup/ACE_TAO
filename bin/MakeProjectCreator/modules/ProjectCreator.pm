@@ -99,7 +99,7 @@ my(@specialComponents) = ('header_files', 'inline_files');
 ## Valid component names within a project along with the valid file extensions
 my(%vc) = ('source_files'        => [ "\\.cpp", "\\.cxx", "\\.cc", "\\.c", "\\.C", ],
            'template_files'      => [ "_T\\.cpp", "_T\\.cxx", "_T\\.cc", "_T\\.c", "_T\\.C", ],
-           'header_files'        => [ "\\.h", "\\.hxx", "\\.hh", ],
+           'header_files'        => [ "\\.h", "\\.hpp", "\\.hxx", "\\.hh", ],
            'inline_files'        => [ "\\.i", "\\.inl", ],
            'idl_files'           => [ "\\.idl", ],
            'documentation_files' => [ "README", "readme", "\\.doc", "\\.txt", ],
@@ -2260,7 +2260,6 @@ sub relative {
   my($value) = shift;
   my($rel)   = $self->get_relative();
   my(@keys)  = keys %$rel;
-  my($win32) = ($^O eq 'MSWin32' || $^O eq 'cygwin');
 
   if (defined $value && defined $keys[0]) {
     if (UNIVERSAL::isa($value, 'ARRAY')) {
@@ -2273,12 +2272,6 @@ sub relative {
     elsif ($value =~ /\$/) {
       my($cwd)   = $self->getcwd();
       my($start) = 0;
-      my($fixed) = 0;
-
-      ## Fix up the value for Windows switch the \\'s to /
-      if ($win32) {
-        $cwd =~ s/\\/\//g;
-      }
 
       while(substr($value, $start) =~ /(\$\(([^)]+)\))/) {
         my($whole)  = $1;
@@ -2286,24 +2279,14 @@ sub relative {
         my($val)    = $$rel{$name};
 
         if (defined $val) {
-          if ($^O eq 'cygwin' && !$fixed &&
-              $cwd !~ /[A-Za-z]:/ && $val =~ /[A-Za-z]:/) {
-            my($cyg) = `cygpath -w $cwd`;
-            if (defined $cyg) {
-              $cyg =~ s/\\/\//g;
-              chop($cwd = $cyg);
-              $fixed = 1;
-            }
-          }
-
           ## Fix up the value for Windows switch the \\'s to /
-          if ($win32) {
+          if ($self->{'convert_slashes'}) {
             $val =~ s/\\/\//g;
           }
 
           ## Lowercase everything if we are running on Windows
-          my($icwd) = ($win32 ? lc($cwd) : $cwd);
-          my($ival) = ($win32 ? lc($val) : $val);
+          my($icwd) = ($self->{'convert_slashes'} ? lc($cwd) : $cwd);
+          my($ival) = ($self->{'convert_slashes'} ? lc($val) : $val);
           if (index($icwd, $ival) == 0) {
             my($count)   = 0;
             my($current) = $icwd;
@@ -2319,7 +2302,7 @@ sub relative {
             }
             $ival = '../' x $count;
             $ival =~ s/\/$//;
-            if ($self->convert_slashes()) {
+            if ($self->{'convert_slashes'}) {
               $ival = $self->slash_to_backslash($ival);
             }
             substr($value, $start) =~ s/\$\([^)]+\)/$ival/;
@@ -2331,6 +2314,39 @@ sub relative {
     }
   }
 
+  return $value;
+}
+
+
+sub reverse_relative {
+  my($self)  = shift;
+  my($value) = shift;
+
+  if (defined $value) {
+    if (UNIVERSAL::isa($value, 'ARRAY')) {
+      my(@built) = ();
+      foreach my $val (@$value) {
+        push(@built, $self->reverse_relative($val));
+      }
+      $value = \@built;
+    }
+    else {
+      my($rel) = $self->get_relative();
+
+      foreach my $key (keys %$rel) {
+        my($val) = $$rel{$key};
+        $val  =~ s/\\/\//g;
+
+        my($lval) = ($self->{'convert_slashes'} ?
+                              lc(substr($value, 0, length($val))) :
+                              substr($value, 0, length($val)));
+        if ($lval eq ($self->{'convert_slashes'} ? lc($val) : $val)) {
+          substr($value, 0, length($val)) = "\$($key)";
+          last;
+        }
+      }
+    }
+  }
   return $value;
 }
 

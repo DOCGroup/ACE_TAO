@@ -1,5 +1,6 @@
 # Makefile for building the <%if(exename)%><%exename%> exe<%endif%><%if(sharedname)%><%sharedname%> library<%else%><%if(staticname)%><%staticname%> library<%endif%><%endif%> with Borland C++ Builder
 
+NO_FULL_PATH=1
 <%if(exename)%>
 NAME = <%exename%>
 <%else%>
@@ -9,7 +10,7 @@ NAME = <%if(sharedname)%><%sharedname%><%else%><%staticname%><%endif%>
 <%endif%>
 
 <%if(idl_files)%>
-TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe
+TAO_IDL = <%idl_compiler%>
 <%endif%>
 
 <%if(exename || sharedname || staticname)%>
@@ -23,11 +24,11 @@ OBJFILES = \
 
 LFLAGS = \
 <%foreach(libpaths)%>
-	-j<%libpath%>\$(CONFIG_SUBDIR) -j<%libpath%> \
-	-L<%libpath%>\$(CONFIG_SUBDIR) -L<%libpath%> \
+	-j"<%libpath%>\$(CONFIG_SUBDIR)" -j"<%libpath%>" \
+	-L"<%libpath%>\$(CONFIG_SUBDIR)" -L"<%libpath%>" \
 <%endfor%>
-  -j$(CORE_BINDIR) \
-  -L$(CORE_BINDIR)
+	-j$(CORE_BINDIR) \
+	-L$(CORE_BINDIR)
 
 LIBFILES = \
 <%foreach(libs defaultlibs)%>
@@ -58,43 +59,77 @@ DLL_FLAGS =<%foreach(dynamicflags)%> -D<%dynamicflag%><%endfor%>
 !endif
 
 CFLAGS = \
+<%if(pch_header)%>
+<%foreach(pch_defines)%>
+# Borland precompiled headers choke on several tao header files.
+# For example, any place that uses ACE_LIB_TEXT().
+#	-D<%pch_define%> \
+<%endfor%>
+<%endif%>
 <%foreach(macros)%>
 	-D<%macro%> \
 <%endfor%>
 <%foreach(includes)%>
-	-I<%include%> \
+	-I"<%include%>" \
 <%endfor%>
 	$(LIB_FLAGS) \
 	$(DLL_FLAGS)
 <%if(pch_header)%>
 
-PCH_HEADER=<%pch_header%>
+# Borland precompiled headers choke on several tao header files. 
+# For example, any place that uses ACE_LIB_TEXT().
+#PCH_HEADER=<%pch_header%>
 <%endif%>
 
 CPPDIR = <%cppdir%>
+CDIR   = <%cppdir%>
 <%if(idl_files)%>
-
 IDLDIR = .
 <%endif%>
-<%if(header_files)%>
+<%if(header_files || template_files || inline_files || idl_files)%>
 
 INCLUDES = \
 <%foreach(header_files template_files inline_files idl_files)%>
 	<%header_file%><%fornotlast(" \\")%>
 <%endfor%>
-<%if(include_dir)%>
 
-INCDIR_NAME = <%include_dir%>
-<%endif%>
+INCDIR_NAME = <%relwd%>
+
 <%endif%>
 <%if(idl_files)%>
 
 all: idl_src_files
+
 <%endif%>
+#
+# Override defaults in outputdir.bor
+#
+!ifndef STATIC
+STATIC_DIR=.
+!endif
+!ifdef DEBUG
+DEBUG_DIR=.
+!endif
+INSTALL_DLLDIR=$(INSTALL_DIR)\lib
+INCLUDES_INSTALL=1
+<%if(header_files || template_files || inline_files || idl_files)%>
+includes_install: $(INCLUDES)
+<%foreach(header_files template_files inline_files idl_files)%>
+	-@mkdir $(INSTALL_DIR)\include\$(INCDIR_NAME)\<%dirname(header_file)%> 2> NUL
+	-&copy /Y <%header_file%> $(INSTALL_DIR)\include\$(INCDIR_NAME)\<%header_file%> > NUL
+<%endfor%>
+<%else%>
+includes_install:
+	@echo Nothing to install.
+<%endif%>
+
 <%if(exename)%>
 <%if(install)%>
-
-BASE_BINDIR = <%install%>
+# We use BINDIR for install instead of BASE_BINDIR, because
+# this is the location for all scripts too. 
+BINDIR = <%install%>
+<%else%>
+BASE_BINDIR = .
 <%endif%>
 <%if(core)%>
 
@@ -105,12 +140,10 @@ BASE_BINDIR = <%install%>
 <%endif%>
 <%else%>
 <%if(dllout)%>
-
-BASE_BINDIR = <%dllout%>
+BINDIR = <%dllout%>
 <%else%>
 <%if(libout)%>
-
-BASE_BINDIR = <%libout%>
+BINDIR = <%libout%>
 <%endif%>
 <%endif%>
 <%if(core)%>
@@ -121,6 +154,7 @@ BASE_BINDIR = <%libout%>
 !include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
 <%endif%>
 <%endif%>
+
 <%if(idl_files)%>
 
 #
@@ -161,10 +195,19 @@ PATH := $(PATH);<%custom_type->libpath%>
 
 <%endif%>
 <%foreach(custom_type->input_files)%>
-<%foreach(custom_type->input_file->output_files)%>
-<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%>: <%custom_type->input_file%>
-	<%custom_type->command%> <%if(pch_header)%><%if(custom_type->pch_option)%><%custom_type->pch_option%><%pch_header%> <%endif%><%endif%><%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> $** <%if(custom_type->output_option)%><%custom_type->output_option%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endif%>
+<%if(custom_type->input_file->output_files)%>
 
-<%endfor%>
+<%custom_type%>_<%forcount(custom_type->input_files)%>=<%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%>
+$(<%custom_type%>_<%forcount(custom_type->input_files)%>): <%custom_type->input_file%>
+	<%custom_type->command%> <%if(pch_header)%><%if(custom_type->pch_option)%><%custom_type->pch_option%><%pch_header%> <%endif%><%endif%><%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> $@<%endif%>
+
+all: $(<%custom_type%>_<%forcount(custom_type->input_files)%>)
+
+customclean_<%custom_type%>_<%forcount(custom_type->input_files)%>:
+	@del $(<%custom_type%>_<%forcount(custom_type->input_files)%>) 2>nul
+
+clean: customclean_<%custom_type%>_<%forcount(custom_type->input_files)%>
+
+<%endif%>
 <%endfor%>
 <%endfor%>

@@ -23,6 +23,13 @@ use vars qw(@ISA);
 # ************************************************************
 
 my($cwd) = Cwd::getcwd();
+if ($^O eq 'cygwin' && $cwd !~ /[A-Za-z]:/) {
+   my($cyg) = `cygpath -w $cwd`;
+   if (defined $cyg) {
+     $cyg =~ s/\\/\//g;
+     chop($cwd = $cyg);
+   }
+ }
 
 # ************************************************************
 # Subroutine Section
@@ -55,6 +62,13 @@ sub cd {
     ## then we just get the real working directory
     if ($dir =~ /\.\./) {
       $cwd = Cwd::getcwd();
+      if ($^O eq 'cygwin' && $cwd !~ /[A-Za-z]:/) {
+         my($cyg) = `cygpath -w $cwd`;
+         if (defined $cyg) {
+           $cyg =~ s/\\/\//g;
+           chop($cwd = $cyg);
+         }
+       }
     }
     else {
       if ($dir =~ /^\// || $dir =~ /^[A-Za-z]:/) {
