@@ -47,11 +47,9 @@ consumer (void *args)
   ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue = (ACE_Message_Queue<ACE_MT_SYNCH> *) args;
 
   u_long cur_priority = 27;
-#if 0
-  // This doesn't look useful at all...
   if (! cur_priority) /* null */;  // To suppress ghs warning about unused
                                    // local variable "cur_priority".
-#endif
+
   int local_count = 0;
 
   // Keep looping, reading a message out of the queue, until we
