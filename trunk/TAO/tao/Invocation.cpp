@@ -377,7 +377,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   CORBA::Object_ptr object_ptr = 0;
   TAO_Transport *transport = this->data_->profile_in_use ()->transport ();
 
-  if ( (inp_stream >> object_ptr) != 0)
+  if ( (inp_stream >> object_ptr) == 0)
     {
       transport->close_connection ();
       ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO),
