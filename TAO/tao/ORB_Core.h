@@ -92,6 +92,7 @@ class TAO_Delayed_Buffering_Sync_Strategy;
 
 class TAO_Transport_Sync_Strategy;
 class TAO_Sync_Strategy;
+class TAO_Policy_Validator;
 
 // ****************************************************************
 
@@ -848,10 +849,6 @@ public:
   /// Return the underlying transport cache
   TAO_Transport_Cache_Manager *transport_cache (void);
 
-  /// Call the bidir_giop library to parse the policy.
-  int parse_bidir_policy (CORBA::Policy_ptr policy
-                          TAO_ENV_ARG_DECL);
-
   /// Set and Get methods to indicate whether a BiDir IIOP policy has
   /// been set in the POA.
   /// @note At present, the value will be true even if one of the POA's
@@ -871,6 +868,10 @@ public:
   /// of the request dispatcher once it gets it.  Currently, this only
   /// gets called at initialization.
   void request_dispatcher (TAO_Request_Dispatcher *rd);
+
+  /// Call the libraries to handover the validators if they havent
+  /// registered yet with the list of validators.
+  void load_policy_validators (TAO_Policy_Validator &validator);
 
   /// Return the flushing strategy
   /**
@@ -1017,7 +1018,7 @@ protected:
   ///   CORBA::ORB::resolve_initial_references ("RootPOA").
   CORBA::Object_var root_poa_;
 
-  // Hold a pointer for the POA if it needs to use any of the Portable 
+  // Hold a pointer for the POA if it needs to use any of the Portable
   // group hooks.
   TAO_POA_PortableGroup_Hooks *portable_group_poa_hooks_;
 

@@ -283,7 +283,7 @@ public:
   static CORBA::ULong transient_poa_name_size (void);
 
   /// Return the validator.
-  TAO_POA_Policy_Validator &validator (void);
+  TAO_Policy_Validator &validator (void);
 
   /// Return the set of default policies.
   TAO_POA_Policy_Set &default_poa_policies (void);

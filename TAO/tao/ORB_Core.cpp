@@ -1331,21 +1331,6 @@ TAO_ORB_Core::bidirectional_giop_init (TAO_ENV_SINGLE_ARG_DECL)
     return 0;
 }
 
-int
-TAO_ORB_Core::parse_bidir_policy (CORBA::Policy_ptr policy
-                                  TAO_ENV_ARG_DECL)
-{
-  if (this->bidir_adapter_)
-    return this->bidir_adapter_->parse_policy (this,
-                                               policy
-                                               TAO_ENV_ARG_PARAMETER);
-  else
-    // @@ The BiDirectional library hasn't been loaded. What do we do?
-    // We are just returning an error which will be processd by the
-    // POA who requested us to parse the policy.
-    return 0;
-}
-
 void
 TAO_ORB_Core::services_callbacks_init (void)
 {
@@ -1561,6 +1546,14 @@ TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
   stub->base_profiles ().policy_list (policy_list);
 
   return stub;
+}
+
+void
+TAO_ORB_Core::load_policy_validators (TAO_Policy_Validator &validator)
+{
+  // Call the BiDir library if it has been loaded
+  if (this->bidir_adapter_)
+    this->bidir_adapter_->load_policy_validators (validator);
 }
 
 CORBA::Object_ptr

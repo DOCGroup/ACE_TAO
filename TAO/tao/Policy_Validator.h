@@ -12,12 +12,11 @@
  */
 //=============================================================================
 
-#ifndef TAO_POLICY_VALIDATOR_H_
-#define TAO_POLICY_VALIDATOR_H_
-
+#ifndef TAO_POLICY_VALIDATOR_H
+#define TAO_POLICY_VALIDATOR_H
 #include "ace/pre.h"
 #include "tao/corbafwd.h"
-#include "portableserver_export.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,14 +27,26 @@
 class TAO_Policy_Set;
 class TAO_ORB_Core;
 
-class TAO_PortableServer_Export TAO_POA_Policy_Validator
+/**
+ * @class TAO_Policy_Validator
+ *
+ * @brief An abstract class for plugging in different Policy Validator
+ *  mechanisms.
+ *
+ *  This class was moved form the PortableServer library. The Portable
+ *  Serever library used this abstraction to add policy validators to
+ *  for the policies in the POA. This class seems so much useful for
+ *  passing policy information between different loaded libraries.
+ */
+
+class TAO_Export TAO_Policy_Validator
 {
 public:
   /// Constructor.
-  TAO_POA_Policy_Validator (TAO_ORB_Core &orb_core);
+  TAO_Policy_Validator (TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  virtual ~TAO_POA_Policy_Validator (void);
+  virtual ~TAO_Policy_Validator (void);
 
   /**
    * Validate that the policies in the specified set
@@ -66,7 +77,7 @@ public:
    * chain have the responsability of validating a given set of
    * policies.
    */
-  void add_validator (TAO_POA_Policy_Validator *validator);
+  void add_validator (TAO_Policy_Validator *validator);
 
 
 protected:
@@ -81,8 +92,8 @@ protected:
   TAO_ORB_Core &orb_core_;
 
 private:
-  TAO_POA_Policy_Validator *next_;
-  static TAO_POA_Policy_Validator *last_;
+  TAO_Policy_Validator *next_;
+  static TAO_Policy_Validator *last_;
 };
 
 #include "ace/post.h"

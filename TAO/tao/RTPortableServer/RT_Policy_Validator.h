@@ -22,14 +22,14 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "rtportableserver_export.h"
-#include "tao/PortableServer/Policy_Validator.h"
+#include "tao/Policy_Validator.h"
 
 class TAO_ORB_Core;
 class TAO_Acceptor_Registry;
 class TAO_Thread_Pool;
 
 class TAO_RTPortableServer_Export TAO_POA_RT_Policy_Validator
-  : public TAO_POA_Policy_Validator
+  : public TAO_Policy_Validator
 {
 public:
   /// Constructor.

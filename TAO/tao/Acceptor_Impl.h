@@ -103,11 +103,6 @@ public:
   int accept_svc_handler (SVC_HANDLER *svc_handler);
 
 protected:
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-  /// Handler which deals with purging "old" connections.
-  int out_of_sockets_handler (void);
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
-
   /// Base class.
   typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> ACCEPT_STRATEGY_BASE;
 

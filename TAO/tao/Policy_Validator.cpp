@@ -1,27 +1,27 @@
 // @(#) $Id$
 
 #include "Policy_Validator.h"
-#include "tao/Environment.h"
-#include "tao/ORB_Core.h"
+#include "Environment.h"
+#include "ORB_Core.h"
 
-ACE_RCSID(tao, POA, "$Id$")
+ACE_RCSID(tao, Policy_Validator, "$Id$")
 
-TAO_POA_Policy_Validator *TAO_POA_Policy_Validator::last_ = 0;
+TAO_Policy_Validator *TAO_Policy_Validator::last_ = 0;
 
-TAO_POA_Policy_Validator::TAO_POA_Policy_Validator (TAO_ORB_Core &orb_core)
+TAO_Policy_Validator::TAO_Policy_Validator (TAO_ORB_Core &orb_core)
   : orb_core_ (orb_core),
     next_ (0)
 {
   // No-Op.
 }
 
-TAO_POA_Policy_Validator::~TAO_POA_Policy_Validator (void)
+TAO_Policy_Validator::~TAO_Policy_Validator (void)
 {
   delete this->next_;
 }
 
 void
-TAO_POA_Policy_Validator::add_validator (TAO_POA_Policy_Validator *validator)
+TAO_Policy_Validator::add_validator (TAO_Policy_Validator *validator)
 {
   if (this->last_ == 0)
     this->last_ = this->next_ = validator;
@@ -31,7 +31,7 @@ TAO_POA_Policy_Validator::add_validator (TAO_POA_Policy_Validator *validator)
 
 
 void
-TAO_POA_Policy_Validator::validate (TAO_Policy_Set &policies
+TAO_Policy_Validator::validate (TAO_Policy_Set &policies
                                     TAO_ENV_ARG_DECL)
 {
   this->validate_impl (policies TAO_ENV_ARG_PARAMETER);
@@ -45,8 +45,8 @@ TAO_POA_Policy_Validator::validate (TAO_Policy_Set &policies
 }
 
 void
-TAO_POA_Policy_Validator::merge_policies (TAO_Policy_Set &policies
-                                          TAO_ENV_ARG_DECL)
+TAO_Policy_Validator::merge_policies (TAO_Policy_Set &policies
+                                      TAO_ENV_ARG_DECL)
 {
   this->merge_policies_impl (policies TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -59,7 +59,7 @@ TAO_POA_Policy_Validator::merge_policies (TAO_Policy_Set &policies
 }
 
 CORBA::Boolean
-TAO_POA_Policy_Validator::legal_policy (CORBA::PolicyType type)
+TAO_Policy_Validator::legal_policy (CORBA::PolicyType type)
 {
   return (this->legal_policy_impl (type) ||
           ((this->next_ != 0) && this->next_->legal_policy_impl (type)));

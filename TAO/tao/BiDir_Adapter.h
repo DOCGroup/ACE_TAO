@@ -22,7 +22,7 @@
 #include "ace/Service_Object.h"
 
 class TAO_ORB_Core;
-
+class TAO_Policy_Validator;
 /**
  * @class TAO_BiDir_Adapter
  *
@@ -46,10 +46,9 @@ public:
                         TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
-  virtual int parse_policy (TAO_ORB_Core *orb_core,
-                            CORBA::Policy_ptr policy
-                            TAO_ENV_ARG_DECL)
+  virtual void load_policy_validators (TAO_Policy_Validator &validator)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+
 };
 
 #include "ace/post.h"
