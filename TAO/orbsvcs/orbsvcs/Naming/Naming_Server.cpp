@@ -29,7 +29,7 @@ TAO_Naming_Server::TAO_Naming_Server (void)
     ior_multicast_ (0),
     naming_service_ior_ (),
     context_index_ (0),
-    ior_output_file_ (0),
+    ior_file_name_ (0),
     pid_file_name_ (0),
     context_size_ (ACE_DEFAULT_MAP_SIZE),
     persistence_file_name_ (0),
@@ -59,7 +59,7 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
     ior_multicast_ (0),
     naming_service_ior_ (),
     context_index_ (0),
-    ior_output_file_ (0),
+    ior_file_name_ (0),
     pid_file_name_ (0),
     context_size_ (ACE_DEFAULT_MAP_SIZE),
     persistence_file_name_ (0),
@@ -190,13 +190,7 @@ TAO_Naming_Server::parse_args (int argc,
         TAO_debug_level++;
         break;
       case 'o': // outputs the naming service ior to a file.
-        this->ior_output_file_ =
-          ACE_OS::fopen (get_opts.opt_arg (), ACE_LIB_TEXT("w"));
-
-        if (this->ior_output_file_ == 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-            ACE_LIB_TEXT("Unable to open %s for writing:(%u) %p\n"),
-            get_opts.opt_arg(), errno, ACE_LIB_TEXT("TAO_Naming_Server::parse_args()")), -1);
+        this->ior_file_name_ = get_opts.opt_arg ();
         break;
       case 'p':
         this->pid_file_name_ = get_opts.opt_arg ();
@@ -400,14 +394,23 @@ TAO_Naming_Server::init_with_orb (int argc,
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
 
-  if (this->ior_output_file_ != 0)
+  if (this->ior_file_name_ != 0)
     {
-      CORBA::String_var str =
-        this->naming_service_ior ();
-      ACE_OS::fprintf (this->ior_output_file_,
-                       "%s",
-                       str.in ());
-      ACE_OS::fclose (this->ior_output_file_);
+      FILE *iorf = ACE_OS::fopen (this->ior_file_name_, ACE_LIB_TEXT("w"));
+      if (iorf == 0) 
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+			     ACE_LIB_TEXT("Unable to open %s for writing:(%u) %p\n"),
+			     this->ior_file_name_,
+			     errno,
+			     ACE_LIB_TEXT("TAO_Naming_Server::init_with_orb")),
+			    -1);
+	}
+
+      CORBA::String_var str = this->naming_service_ior ();
+
+      ACE_OS::fprintf (iorf, "%s\n", str.in ());
+      ACE_OS::fclose (iorf);
     }
 
   if (this->pid_file_name_ != 0)
@@ -421,6 +424,7 @@ TAO_Naming_Server::init_with_orb (int argc,
           ACE_OS::fclose (pidf);
         }
     }
+
   return 0;
 }
 
