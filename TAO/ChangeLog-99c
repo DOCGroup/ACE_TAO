@@ -1,3 +1,8 @@
+Wed Aug 25 18:18:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
+	  Added missing parenthesis
+
 Wed Aug 25 16:47:22 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
