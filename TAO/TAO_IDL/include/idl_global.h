@@ -282,6 +282,7 @@ public:
     ACE_UINT64 string_seen_;
     ACE_UINT64 array_seen_;
     ACE_UINT64 aggregate_seen_;
+    ACE_UINT64 non_local_op_seen_;
 
     ACE_UINT64 seq_seen_;
     ACE_UINT64 iface_seq_seen_;

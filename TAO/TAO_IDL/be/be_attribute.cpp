@@ -77,10 +77,14 @@ be_attribute::be_attribute (idl_bool ro,
            be_operation_default_strategy (0));
   this->set_strategy_ = bods;
 
-  // For the return types of the two operations generated from this attribute.
-  this->set_arg_seen_bit (be_type::narrow_from_decl (ft));
-  ACE_SET_BITS (idl_global->decls_seen_info_,
-                idl_global->decls_seen_masks.basic_arg_seen_);
+  if (!this->imported () && !this->is_local ())
+    {
+      // For the return types of the two operations 
+      // generated from this attribute.
+      this->set_arg_seen_bit (be_type::narrow_from_decl (ft));
+      ACE_SET_BITS (idl_global->decls_seen_info_,
+                    idl_global->decls_seen_masks.basic_arg_seen_);
+    }
 }
 
 

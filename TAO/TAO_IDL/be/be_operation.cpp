@@ -24,6 +24,7 @@
 #include "be_predefined_type.h"
 #include "be_argument.h"
 #include "be_visitor.h"
+#include "global_extern.h"
 
 ACE_RCSID (be,
            be_operation,
@@ -63,11 +64,13 @@ be_operation::be_operation (AST_Type *rt,
   ACE_NEW (this->strategy_,
            be_operation_default_strategy (this));
 
-  if (!this->imported ())
+  if (!this->imported () && !this->is_local ())
     {
       be_type *bt = be_type::narrow_from_decl (rt);
       bt->seen_in_operation (I_TRUE);
       this->set_arg_seen_bit (bt);
+      ACE_SET_BITS (idl_global->decls_seen_info_,
+                    idl_global->decls_seen_masks.non_local_op_seen_);
     }
 }
 

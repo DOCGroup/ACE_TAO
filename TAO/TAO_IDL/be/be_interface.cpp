@@ -98,7 +98,7 @@ be_interface::be_interface (UTL_ScopedName *n,
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
 
-  if (this->is_defined ())
+  if (this->is_defined () && !this->imported ())
     {
       // Set the flag that says we have a interface in this IDL file.
       ACE_SET_BITS (idl_global->decls_seen_info_,
