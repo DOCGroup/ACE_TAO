@@ -1,3 +1,9 @@
+Mon Jul 06 15:13:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/compat/initguid.h: Reordered some stuff.
+
+	* tao/corba.h: Don't include in "compat/initguid.h" anymore.  
+	  
 Mon Jul  6 15:10:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/Naming_Service/Makefile: 
