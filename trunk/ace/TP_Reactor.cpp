@@ -59,7 +59,8 @@ ACE_TP_Reactor::notify_handle (ACE_EH_Dispatch_Info &dispatch_info)
 
   // assert (status >= 0);
   // resume in Reactor
-  return this->resume_handler (handle);
+  return (event_handler != this->notify_handler_ ?
+          this->resume_handler (handle) : 0);
 }
 
 // Overwrites ACE_Select_Reactor::dispatch_io_set() to *not* dispatch
@@ -151,14 +152,20 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
       // Reset dispatch_info_ so that we don't trip over it again.
       this->dispatch_info_.reset ();
 
-      // Suspend the handler so that other thread don't start
-      // dispatching it.
-      result = this->suspend_i (dispatch_info.handle_);
-      if (result == -1)
+      if (dispatch_info.event_handler_ == this->notify_handler_)
         {
+          // Make sure we never suspend the notify_handler_ without holding the
+          // lock.
+          // @@ Actually, we don't even need to suspend the notify_handler_
+          //    here.  But let me get it to work first.
+          int retv = this->notify_handle (dispatch_info);
           ACE_MT (this->token_.release ());
-          return -1;
+          return retv;
         }
+      else
+        // Suspend the handler so that other thread don't start
+        // dispatching it.
+        result = this->suspend_i (dispatch_info.handle_);
     }
 
   // Release the lock.  Others threads can start waiting.
