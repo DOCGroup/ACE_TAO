@@ -1,4 +1,5 @@
 // $Id$
+
 //=============================================================================
 //
 // = FILENAME
@@ -26,12 +27,14 @@ Dir_Service_i::Dir_Service_i (CORBA::ORB_ptr orb,
                               PortableServer::POA_ptr poa)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa))
-   {}
+   {
+   }
 
 // Wrapping up, cleaning up if any.
 
 Dir_Service_i::~Dir_Service_i (void)
-{}
+{
+}
 
 // Return the Default POA of this Servant
 
@@ -55,7 +58,7 @@ Dir_Service_i::tele_number (const char *name,
               "Providing required information...\n"));
 
   // The telephone number corresponding to the name is returned.
-   return 9354215;
+  return 9354215;
 }
 
 // Ending the session with a word of thanks.
@@ -79,7 +82,6 @@ Dir_Service_i::area_codes_info (CORBA::Environment &env)
               "Indianapolis  812\n"
               "St.Louis  314\n"
               "Sunnyvale  408\n"));
-
 }
 
 // Shuts down the servant.
@@ -96,8 +98,8 @@ Dir_Service_i::shutdown (CORBA::Environment &env)
 extern "C" ACE_Svc_Export PortableServer::Servant create_dir_service (CORBA::ORB_ptr orb,
                                                                        PortableServer::POA_ptr poa);
 
-// The servant pointer is returned which will be of Base class type. The binding to Dir_Service 
-//servant will happen at run-time.
+// The servant pointer is returned which will be of Base class
+// type. The binding to Dir_Service servant will happen at run-time.
 
 PortableServer::Servant
 create_dir_service (CORBA::ORB_ptr orb,

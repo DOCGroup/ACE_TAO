@@ -1,4 +1,5 @@
 // $Id$
+
 //=================================================================================
 //
 // = LIBRARY
@@ -8,8 +9,9 @@
 //     Servant_Activator.h
 //
 // = DESCRIPTION
-//     Defines a Dir_Service_Activator class which is an Servant_Manager interface which
-//     activates a servant by loading it and associates it with an object on demand.
+//     Defines a Dir_Service_Activator class which is an
+//     Servant_Manager interface which activates a servant by loading
+//     it and associates it with an object on demand.
 //
 // = AUTHOR
 //     Kirthika Parameswaran <kirthika@cs.wustl.edu>
@@ -26,12 +28,14 @@ class Dir_Service_Activator : public POA_PortableServer::ServantActivator
   //   Servant Activator for the directory service servant.
   //
   //= DESCRIPTION
-  //   This class associates an unassociated servant with an object in the POA Active Object Map.
+  //   This class associates an unassociated servant with an object in
+  //   the POA Active Object Map.
 
 public:
 
   typedef PortableServer::Servant (*Servant_Creator_Prototype) (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
-  // This typedef is used to typecast the void* obtained on finding a symbol in the library.
+  // This typedef is used to typecast the void* obtained on finding a
+  // symbol in the library.
 
   Dir_Service_Activator (CORBA::ORB_ptr orb);
   // Initialization.
@@ -56,15 +60,16 @@ private:
 
    PortableServer::Servant activate_servant (const char *str,
                                              PortableServer::POA_ptr poa);
-  // Gets the servant on activation by loading the appropriate library and
-  // getting the servant object.
+  // Gets the servant on activation by loading the appropriate library
+  // and getting the servant object.
 
   void deactivate_servant (PortableServer::Servant servant);
-  // The servant is killed and take is taken to close the library loaded.
+  // The servant is killed and take is taken to close the library
+  // loaded.
 
   void parse_string (const char* s);
-  // Parse the string to obtain the library name and the symbol which will
-  // get us the servant pointer.
+  // Parse the string to obtain the library name and the symbol which
+  // will get us the servant pointer.
 
   CORBA::ORB_var orb_;
   // A reference to the ORB.
@@ -73,9 +78,9 @@ private:
   // the name of the library containing the servant.
 
   CORBA::String_var create_symbol_;
-  // The symbol which on getting invoked will give us the servant pointer.
+  // The symbol which on getting invoked will give us the servant
+  // pointer.
 
   ACE_DLL dll_;
   // the library object.
-
 };

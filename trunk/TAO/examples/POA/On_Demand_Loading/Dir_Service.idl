@@ -1,4 +1,5 @@
 // $Id$
+
 // ================================================================
 //
 // = FILENAME
@@ -21,11 +22,12 @@ interface Dir_Service
   //   This interface can be used for any directory assistance.
   
   long tele_number (in string name);
-  // A simple twoway operation, the idea is to verify that the telephone number
-  // can be located.
+  // A simple twoway operation, the idea is to verify that the
+  // telephone number can be located.
 
   oneway void end_note ();
-  // A simple oneway operation, which can be used before ending the session.
+  // A simple oneway operation, which can be used before ending the
+  // session.
 
   oneway void area_codes_info ();
   // A oneway operation which describes the area codes.

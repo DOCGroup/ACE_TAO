@@ -1,4 +1,5 @@
 // $Id$
+
 // ================================================================
 //
 // = FILENAME
@@ -166,6 +167,7 @@ main (int argc, char **argv)
               ior.in ()));
 
   long result = 0;
+
   for (int i = 0; i < iterations && env.exception () == 0; i++)
     {
       if (oneway)
@@ -184,7 +186,6 @@ main (int argc, char **argv)
       my_dir_service->end_note (env);
     }
 
-  
   if (shutdown_server && env.exception () == 0)
     my_dir_service->shutdown (env);
 
