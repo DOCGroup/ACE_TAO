@@ -1,3 +1,8 @@
+Mon May  4 09:35:07 1998  Torben Worm  <tworm@cumbia.cs.wustl.edu>
+
+	* Comitted the files for the concurrency service
+	* Updated release notes
+
 Mon May 04 09:05:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp,Util_Thread.cpp,server.cpp:
