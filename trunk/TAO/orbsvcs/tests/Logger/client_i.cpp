@@ -161,10 +161,6 @@ Logger_Client::run (void)
 {
   TAO_TRY
     {
-      // @@ Matt, for fun, you might try having an array of
-      // Log_Records (e.g., of size 2 to start out with) and then put
-      // the following code in a loop.
-
       // Create 2 Log_Records for the test
       Logger::Log_Record rec1;
       Logger::Log_Record rec2;
