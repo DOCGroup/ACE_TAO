@@ -4,6 +4,10 @@ Mon May 10 22:59:46 1999  David L. Levine  <levine@cs.wustl.edu>
           to .shobj/ for VxWorks, because it uses the same .o files
           for static and shared libs.
 
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+          disable RTTI for egcs, because the Tornado 1.0.x libs
+          don't support it.  No harm in disabling for old g++.
+
 Mon May 10 15:33:56 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/INET_Addr.cpp (string_to_addr): Fixed a mistake that
