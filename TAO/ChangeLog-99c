@@ -1,11 +1,16 @@
+Tue May 11 13:25:40 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/{server.dsp,client.dsp}:
+          fixed path for static release builds.  Actually, Nanbor fixed it.
+
 Tue May 11 12:30:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/AST_Expression.cpp:
-	* TAO_IDL/include/AST_Expression.h:
-	  Backed out the change I made yesterday. Not an 
-	  important change by itself, but one day we'll have
-	  to overhaul all the basic type stuff in the IDl
-	  compiler.
+        * TAO_IDL/ast/AST_Expression.cpp:
+        * TAO_IDL/include/AST_Expression.h:
+          Backed out the change I made yesterday. Not an
+          important change by itself, but one day we'll have
+          to overhaul all the basic type stuff in the IDl
+          compiler.
 
 Tue May 11 11:03:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
