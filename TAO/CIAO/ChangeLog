@@ -1,3 +1,13 @@
+Fri Jun  4 11:42:18 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.h:
+        * DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+
+          Added functions to handle connections. Get rid of the <Connections>
+          field from the hash map table since they don't need to be maintained
+          any more.
+
+
 Fri Jun  4 11:37:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:
