@@ -1496,7 +1496,7 @@ Kevin Heifner <heifner_k@ociweb.com>
 James Haiar <haiar@ll.mit.edu>
 Pavel Repin <pavel@repin.com>
 Whitney Kew <Whitney.Kew@Invensys.com>
-Jaroslaw Nozderko <jareknz@polbox.com>
+Jaroslaw Nozderko <jarek@eko.net.pl>
 Tom Phan <tomp@telhub.com>
 Andrew Guy <andrew.guy@monis.com>
 Bharathi Kangatharan <bharathi.kangatharan@baesystems.com>
@@ -1650,6 +1650,7 @@ Andrew Marlow <apm35@student.open.ac.uk>
 Michael F"olsl <michael.foelsl@gmx.net>
 Vincent Chau <vincent.chau@fr.thalesgroup.com>
 Theo Landman <tlandman@justcroft.com>
+Dima Scub <dima_scub@sniip.ru>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
