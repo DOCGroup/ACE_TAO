@@ -976,7 +976,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find (ACE
           addr.state () != ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE)
         continue;
 
-      if (addr != search_addr)
+      if (addr.subject () != search_addr.subject ())
         continue;
 
       entry = &(*iterator);
