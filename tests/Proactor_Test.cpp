@@ -89,17 +89,17 @@ static const size_t MAX_TIME = 3600; // max 1 hour
 static size_t seconds = 2;  // default time to run - 2 seconds
 
 static ACE_TCHAR request_line[] =
-  "GET / HTTP/1.1\r\n";
+  ACE_TEXT ("GET / HTTP/1.1\r\n");
 
 static ACE_TCHAR headers[] =
-  "Accept: */*\r\n"
-  "Accept-Language: C++\r\n"
-  "Accept-Encoding: gzip, deflate\r\n"
-  "User-Agent: Proactor_Test/1.0 (non-compatible)\r\n"
-  "Connection: Keep-Alive\r\n";
+  ACE_TEXT ("Accept: */*\r\n")
+  ACE_TEXT ("Accept-Language: C++\r\n")
+  ACE_TEXT ("Accept-Encoding: gzip, deflate\r\n")
+  ACE_TEXT ("User-Agent: Proactor_Test/1.0 (non-compatible)\r\n")
+  ACE_TEXT ("Connection: Keep-Alive\r\n");
 
 static ACE_TCHAR end_of_request_header[] =
-  "\r\n";
+  ACE_TEXT ("\r\n");
 
 class LogLocker 
 {
