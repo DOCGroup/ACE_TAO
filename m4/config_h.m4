@@ -975,6 +975,9 @@ AH_TEMPLATE([ACE_LACKS_ACE_SVCCONF],
 AH_TEMPLATE([ACE_LACKS_ACE_TOKEN],
 [Do not compile support for the ACE Token feature.])
 
+AH_TEMPLATE([ACE_LACKS_ACE_UUID],
+[Do not compile support for the ACE UUID feature.])
+
 AH_TEMPLATE([ACE_LACKS_COND_T],
 [Platform lacks condition variables (e.g., Win32 and VxWorks)])
 
@@ -1343,6 +1346,9 @@ AH_TEMPLATE([ACE_LACKS_WCSTOD],
 
 AH_TEMPLATE([ACE_LACKS_WCSTOK],
 [Platform lacks wcstok()])
+
+AH_TEMPLATE([ACE_HAS_3_PARAM_WCSTOK],
+[Platform's wcstok() takes 3 arguments])
 
 AH_TEMPLATE([ACE_LACKS_WCSTOL],
 [Platform lacks wcstol()])

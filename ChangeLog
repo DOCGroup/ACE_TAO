@@ -1,3 +1,20 @@
+Mon Jun 28 16:34:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* configure.ac: If wcstok() is detected, added a check for whether it
+	  has 2 or 3 parameters; set ACE_HAS_3_PARAM_WCSTOK if it's 3.
+
+	* m4/subsets.m4: Added the Filecache, Metrics, and UUID components
+	  to the selectable subsets of ACE.
+
+	* m4/confg_h.m4: Added a template for ACE_LACKS_ACE_UUID and
+	  ACE_HAS_3_PARAM_WCSTOK.
+
+	Note that I also removed the subset-building support from the MPC
+	template for automake files. So, these subset-selecting options are
+	still here as a placeholder for now, but will likely be removed in
+	the future. If subset building is required, then more effort will
+	need to be put into the automake support in MPC.
+
 Mon Jun 28 17:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SOCK_Acceptor.h:
