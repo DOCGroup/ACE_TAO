@@ -741,7 +741,7 @@ protected:
 
   void set_folded_name (TAO_Root_POA *parent);
 
-  void set_id (void);
+  void set_id (TAO_Root_POA *parent);
 
   TAO::ObjectKey *create_object_key (const PortableServer::ObjectId &id);
 

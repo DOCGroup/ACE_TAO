@@ -52,7 +52,7 @@ TAO_Regular_POA::remove_from_parent_i (ACE_ENV_SINGLE_ARG_DECL)
 CORBA::Boolean
 TAO_Regular_POA::root (void) const
 {
-  return (parent_ != 0);
+  return (parent_ == 0);
 }
 
 char

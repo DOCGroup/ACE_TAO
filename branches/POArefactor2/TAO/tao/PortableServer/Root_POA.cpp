@@ -291,7 +291,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
     }
 
   // Set the id for this POA.
-  this->set_id ();
+  this->set_id (parent);
 
   // Notify the Lifespan strategy of our startup
   ACE_TRY
@@ -1767,7 +1767,7 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
       starting_at += sizeof (poa_name_size);
     }
 
-  // For non-root POAs, grab their name.
+  // Grep the name if there is aname
   if (!is_root)
     {
       poa_system_name.replace (poa_name_size,
@@ -1826,7 +1826,7 @@ TAO_Root_POA::create_object_key (const PortableServer::ObjectId &id)
 }
 
 void
-TAO_Root_POA::set_id (void)
+TAO_Root_POA::set_id (TAO_Root_POA *parent)
 {
   // Calculate the prefix size.
   CORBA::ULong prefix_size = 0;
@@ -1845,7 +1845,7 @@ TAO_Root_POA::set_id (void)
 
   // Calculate the space required for the POA name.
   CORBA::ULong poa_name_length = this->system_name_->length ();
-  if (!this->root ())
+  if (parent != 0)
     {
       poa_name += poa_name_length;
     }
@@ -1887,7 +1887,14 @@ TAO_Root_POA::set_id (void)
   starting_at += TAO_OBJECTKEY_PREFIX_SIZE;
 
   // Copy the root byte.
-  buffer[starting_at] = (CORBA::Octet) this->root_key_type ();
+  if (parent != 0)
+    {
+      buffer[starting_at] = (CORBA::Octet) TAO_Root_POA::non_root_key_char ();
+    }
+  else
+    {
+      buffer[starting_at] = (CORBA::Octet) TAO_Root_POA::root_key_char ();
+    }
   starting_at += this->root_key_type_length ();
 
   // Add the id_assignment part
@@ -1907,7 +1914,7 @@ TAO_Root_POA::set_id (void)
     }
 
   // Put the POA name into the key (for non-root POAs).
-  if (!this->root ())
+  if (parent != 0)
     {
       ACE_OS::memcpy (&buffer[starting_at],
                       this->system_name_->get_buffer (),
