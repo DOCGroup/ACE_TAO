@@ -134,7 +134,7 @@ InputPath=.\BMClosedED.cidl
 InputName=BMClosedED
 
 BuildCmds= \
-	..\..\..\..\..\..\bin\cidlc --lem-file-suffix "E.idl" -- $(InputName).cidl
+	..\..\..\..\bin\cidlc --lem-file-suffix "E.idl" -- $(InputName).cidl
 
 "$(InputName)E.idl" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
