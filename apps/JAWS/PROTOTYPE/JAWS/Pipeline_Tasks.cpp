@@ -183,7 +183,7 @@ JAWS_Pipeline_Done_Task::put (ACE_Message_Block *mb, ACE_Time_Value *)
   JAWS_Dispatch_Policy *policy = this->policy ();
   if (policy == 0) policy = data->policy ();
 
-  JAWS_IO *io = policy->io ();
+  // JAWS_IO *io = policy->io ();
 
   data->task (0);
   data->io_handler (0);
@@ -204,7 +204,9 @@ JAWS_Pipeline_Done_Task::handle_put (JAWS_Data_Block *, ACE_Time_Value *)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class JAWS_Pipeline_Abstract_Handler<JAWS_Data_Block>;
 template class ACE_Singleton<JAWS_Pipeline_Accept_Task, ACE_SYNCH_MUTEX>;
+template class ACE_Singleton<JAWS_Pipeline_Done_Task, ACE_SYNCH_NULL_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate JAWS_Pipeline_Abstract_Handler<JAWS_Data_Block>
 #pragma instantiate ACE_Singleton<JAWS_Pipeline_Accept_Task, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Singleton<JAWS_Pipeline_Done_Task, ACE_SYNCH_NULL_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
