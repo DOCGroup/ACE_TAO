@@ -132,6 +132,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -416,8 +422,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- cubitC.i
+ $(TAO_ROOT)/tao/MessagingS.i cubitC.i
 
 .obj/cubitS.o .obj/cubitS.so .shobj/cubitS.o .shobj/cubitS.so: cubitS.cpp cubitS.h cubitC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -448,6 +453,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -732,8 +743,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- cubitC.i cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i
+ $(TAO_ROOT)/tao/MessagingS.i cubitC.i \
+ cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
  $(ACE_ROOT)/ace/pre.h \
@@ -763,6 +774,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
@@ -1055,10 +1072,9 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- $(TAO_ROOT)/tao/TAO.h cubit_i.h \
- cubitS.h cubitC.h cubitC.i cubitS_T.h cubitS_T.i cubitS_T.cpp \
- cubitS.i Task_Client.h \
- $(ACE_ROOT)/ace/Task.h \
+ $(TAO_ROOT)/tao/TAO.h cubit_i.h cubitS.h \
+ cubitC.h cubitC.i cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i \
+ Task_Client.h $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \
@@ -1072,8 +1088,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/Profile_Timer.i \
- Globals.h Timer.h Util_Thread.h Cubit_Task.h
+ $(ACE_ROOT)/ace/Profile_Timer.i Globals.h \
+ Timer.h Util_Thread.h Cubit_Task.h
 
 .obj/cubit_i.o .obj/cubit_i.so .shobj/cubit_i.o .shobj/cubit_i.so: cubit_i.cpp \
  $(TAO_ROOT)/tao/corba.h \
@@ -1104,6 +1120,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -1388,10 +1410,9 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- cubit_i.h cubitS.h cubitC.h cubitC.i cubitS_T.h cubitS_T.i \
- cubitS_T.cpp cubitS.i Task_Client.h \
- $(ACE_ROOT)/ace/Task.h \
+ $(TAO_ROOT)/tao/MessagingS.i cubit_i.h \
+ cubitS.h cubitC.h cubitC.i cubitS_T.h cubitS_T.i cubitS_T.cpp \
+ cubitS.i Task_Client.h $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \
@@ -1411,8 +1432,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/Sched_Params.i \
- Globals.h Timer.h
+ $(ACE_ROOT)/ace/Sched_Params.i Globals.h \
+ Timer.h
 
 .obj/Task_Client.o .obj/Task_Client.so .shobj/Task_Client.o .shobj/Task_Client.so: Task_Client.cpp Task_Client.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -1444,6 +1465,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -1563,8 +1590,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/Sched_Params.i \
- cubitC.h $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/Sched_Params.i cubitC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -1748,10 +1775,9 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- cubitC.i cubit_i.h cubitS.h cubitS_T.h cubitS_T.i cubitS_T.cpp \
- cubitS.i Globals.h Timer.h \
- $(ACE_ROOT)/ace/Stats.h \
+ $(TAO_ROOT)/tao/MessagingS.i cubitC.i \
+ cubit_i.h cubitS.h cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i \
+ Globals.h Timer.h $(ACE_ROOT)/ace/Stats.h \
  $(ACE_ROOT)/ace/Stats.i \
  $(TAO_ROOT)/tao/TAO_Internal.h
 
@@ -1784,8 +1810,14 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Sched_Params.i \
- server.h $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
+ $(ACE_ROOT)/ace/Sched_Params.i server.h \
+ $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Get_Opt.i \
@@ -2075,10 +2107,9 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- $(TAO_ROOT)/tao/TAO.h cubit_i.h \
- cubitS.h cubitC.h cubitC.i cubitS_T.h cubitS_T.i cubitS_T.cpp \
- cubitS.i Task_Client.h \
- $(ACE_ROOT)/ace/Task.h \
+ $(TAO_ROOT)/tao/TAO.h cubit_i.h cubitS.h \
+ cubitC.h cubitC.i cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i \
+ Task_Client.h $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Task_T.i \
@@ -2092,8 +2123,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/Profile_Timer.i \
- Globals.h Timer.h Util_Thread.h Cubit_Task.h client.h
+ $(ACE_ROOT)/ace/Profile_Timer.i Globals.h \
+ Timer.h Util_Thread.h Cubit_Task.h client.h
 
 .obj/Util_Thread.o .obj/Util_Thread.so .shobj/Util_Thread.o .shobj/Util_Thread.so: Util_Thread.cpp Util_Thread.h Task_Client.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -2125,6 +2156,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -2244,8 +2281,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/Sched_Params.i \
- cubitC.h $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/Sched_Params.i cubitC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -2429,9 +2466,9 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- cubitC.i cubit_i.h cubitS.h cubitS_T.h cubitS_T.i cubitS_T.cpp \
- cubitS.i Globals.h Timer.h
+ $(TAO_ROOT)/tao/MessagingS.i cubitC.i \
+ cubit_i.h cubitS.h cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i \
+ Globals.h Timer.h
 
 .obj/tmplinst.o .obj/tmplinst.so .shobj/tmplinst.o .shobj/tmplinst.so: tmplinst.cpp cubitC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -2462,6 +2499,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -2746,8 +2789,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- cubitC.i
+ $(TAO_ROOT)/tao/MessagingS.i cubitC.i
 
 .obj/Cubit_Task.o .obj/Cubit_Task.so .shobj/Cubit_Task.o .shobj/Cubit_Task.so: Cubit_Task.cpp \
  $(ACE_ROOT)/ace/Sched_Params.h \
@@ -2778,8 +2820,14 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Sched_Params.i \
- Globals.h $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
+ $(ACE_ROOT)/ace/Sched_Params.i Globals.h \
+ $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Get_Opt.i \
@@ -2804,8 +2852,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- Cubit_Task.h $(ACE_ROOT)/ace/Task.h \
+ $(ACE_ROOT)/ace/Managed_Object.cpp Cubit_Task.h \
+ $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
@@ -2960,9 +3008,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
- $(TAO_ROOT)/tao/ORB.i cubit_i.h \
- cubitS.h cubitC.h \
- $(TAO_ROOT)/tao/corba.h \
+ $(TAO_ROOT)/tao/ORB.i cubit_i.h cubitS.h \
+ cubitC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -3080,8 +3127,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- cubitC.i cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i \
+ $(TAO_ROOT)/tao/MessagingS.i cubitC.i \
+ cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i \
  $(TAO_ROOT)/tao/TAO_Internal.h
 
 .obj/Globals.o .obj/Globals.so .shobj/Globals.o .shobj/Globals.so: Globals.cpp Globals.h \
@@ -3112,6 +3159,12 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
@@ -3141,8 +3194,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp
 
-.obj/Timer.o .obj/Timer.so .shobj/Timer.o .shobj/Timer.so: Timer.cpp Timer.h \
- $(ACE_ROOT)/ace/OS.h \
+.obj/Timer.o .obj/Timer.so .shobj/Timer.o .shobj/Timer.so: Timer.cpp Timer.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
@@ -3169,11 +3221,17 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Thread_Hook.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
- Task_Client.h $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/High_Res_Timer.i Task_Client.h \
+ $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
@@ -3290,8 +3348,8 @@ realclean: clean
  $(ACE_ROOT)/ace/ARGV.h \
  $(ACE_ROOT)/ace/ARGV.i \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/Sched_Params.i \
- cubitC.h $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/Sched_Params.i cubitC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -3475,8 +3533,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- cubitC.i cubit_i.h cubitS.h cubitS_T.h cubitS_T.i cubitS_T.cpp \
- cubitS.i Globals.h
+ $(TAO_ROOT)/tao/MessagingS.i cubitC.i \
+ cubit_i.h cubitS.h cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i \
+ Globals.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
