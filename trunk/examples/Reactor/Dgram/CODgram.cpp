@@ -7,6 +7,7 @@
 #include "ace/Reactor.h"
 #include "ace/SOCK_CODgram.h"
 #include "ace/INET_Addr.h"
+#include "ace/Process.h"
 
 // Port used to receive for dgrams.
 static u_short port1;
@@ -162,23 +163,40 @@ main (int argc, char *argv[])
   const char *remotehost = argc > 2 ? argv[2] : ACE_DEFAULT_SERVER_HOST;
   const u_short port2 = argc > 3 ? ACE_OS::atoi (argv[3]) : port1 + 1;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) local port = %d, remote host = %s, remote port = %d\n",
-              port1, remotehost, port2));
-
-  switch (ACE_OS::fork (argv[0]))
-    {
-    case -1:
-      return -1;
-
-    case 0:
+  if (argc > 4)                 // Providing the fourth command line argument
+    {                           // indicate we don't want to spawn a new process.
+                                // On Win32, we use this to exec the new program.
       run_test (port1, remotehost, port2);
-      break;
-
-    default:
-      run_test (port2, remotehost, port1);
-      break;
     }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) local port = %d, remote host = %s, remote port = %d\n",
+                  port1, remotehost, port2));
 
+      ACE_Process_Options options;
+      options.command_line ("%s %d %s %d %c", argv[0], port1, remotehost, port2, 'c');
+      options.creation_flags (ACE_Process_Options::NO_EXEC); // This has no effect on
+                                                             // NT and will spawn a
+                                                             // process that exec
+                                                             // the above run_test
+                                                             // function.
+
+      ACE_Process new_process;
+      switch (new_process.spawn (options))
+        {
+        case -1:
+          return -1;
+
+        case 0:
+          run_test (port1, remotehost, port2);
+          break;
+
+        default:
+          run_test (port2, remotehost, port1);
+          new_process.wait ();
+          break;
+        }
+    }
   return 0;
 }
