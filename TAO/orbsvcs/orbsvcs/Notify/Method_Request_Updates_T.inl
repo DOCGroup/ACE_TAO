@@ -1,5 +1,6 @@
 // $Id$
 
+#include "tao/debug.h"
 #include "Peer.h"
 
 template <class SEQ, class PROXY, class SEQ_PARAM, class PROXY_PARAM> ACE_INLINE int
