@@ -1,3 +1,9 @@
+Sun Feb  7 11:44:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_args.cpp: 
+	  Fixed the -Gi parsing code, it was setting compiled marshaling
+	  to 1, it must be 0.
+
 Sun Feb 07 11:19:13 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/be/be_codegen.cpp: changed #include protection
@@ -23,8 +29,8 @@ Sat Feb  6 23:16:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * TAO_IDL/util/utl_global.cpp:
           Activated compiled marshaling by default. IRIX/MIPSpro and
           Linux/EGCS are happy, and so seems Solaris/CC; the old behavior
-          can be invoked using the -Ge IDL compiler option, or by setting
-          the TAO_IDLFLAGS environment variable to "-Ge".
+          can be invoked using the -Gi IDL compiler option, or by setting
+          the TAO_IDLFLAGS environment variable to "-Gi".
 
         * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
           A ACE_static_cast was used to remove constness, it should be
