@@ -1,3 +1,37 @@
+Fri Jun 25 20:59:08 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/Param_Test/any.cpp:
+	* TAO/tests/Param_Test/bd_long_seq.cpp:
+	* TAO/tests/Param_Test/bd_short_seq.cpp:
+	* TAO/tests/Param_Test/bd_str_seq.cpp:
+	* TAO/tests/Param_Test/bd_string.cpp:
+	* TAO/tests/Param_Test/bd_long_seq.cpp:
+	* TAO/tests/Param_Test/bd_struct_seq.cpp:
+	* TAO/tests/Param_Test/complex_any.cpp:
+	* TAO/tests/Param_Test/except.cpp:
+	* TAO/tests/Param_Test/fixed_array.cpp:
+	* TAO/tests/Param_Test/fixed_struct.cpp:
+	* TAO/tests/Param_Test/nested_struct.cpp:
+	* TAO/tests/Param_Test/objref.cpp:
+	* TAO/tests/Param_Test/nested_struct.cpp:
+	* TAO/tests/Param_Test/big_union.cpp:
+	* TAO/tests/Param_Test/ub_string.cpp:
+	* TAO/tests/Param_Test/objref_struct.cpp:
+	* TAO/tests/Param_Test/short.cpp:
+	* TAO/tests/Param_Test/ulonglong.cpp:
+	* TAO/tests/Param_Test/typecode.cpp:
+	* TAO/tests/Param_Test/ub_any_seq.cpp:
+	* TAO/tests/Param_Test/ub_long_seq.cpp:
+	* TAO/tests/Param_Test/ub_objref_seq.cpp:
+	* TAO/tests/Param_Test/ub_short_seq.cpp:
+	* TAO/tests/Param_Test/ub_str_seq.cpp:
+	* TAO/tests/Param_Test/var_struct.cpp:
+	* TAO/tests/Param_Test/var_array.cpp:
+	* TAO/tests/Param_Test/recursive_struct.cpp:
+	  Changed ACE_CHECK_RETURN to ACE_NOTREACHED when
+	  it comes after ACE_ENDTRY in a non-void function.
+	  We'll see if this make everybody happy.
+
 Fri Jun 25 20:31:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.cpp:
