@@ -86,29 +86,6 @@ TAO_Bounded_Sequence<T,MAX>::TAO_Bounded_Sequence (CORBA::ULong length,
 {
 }
 
-template <class T, CORBA::ULong MAX> ACE_INLINE
-TAO_Bounded_Sequence<T,MAX>::TAO_Bounded_Sequence (const TAO_Bounded_Sequence<T,MAX> &rhs)
-  : TAO_Bounded_Base_Sequence (rhs)
-{
-  this->buffer_ = TAO_Bounded_Sequence<T,MAX>::allocbuf (MAX);
-  T* tmp = ACE_reinterpret_cast(T*,this->buffer_);
-  for (CORBA::ULong i = 0; i < this->length_; ++i)
-    tmp[i] = rhs[i];
-}
-
-template <class T, CORBA::ULong MAX> ACE_INLINE TAO_Bounded_Sequence<T,MAX> &
-TAO_Bounded_Sequence<T,MAX>::operator= (const TAO_Bounded_Sequence<T,MAX> &rhs)
-{
-  if (this != &rhs)
-    {
-      this->TAO_Base_Sequence::operator= (rhs);
-      T* tmp = ACE_reinterpret_cast(T*,this->buffer_);
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-	tmp[i] = seq[i];
-    }
-  return *this;
-}
-
 template <class T, CORBA::ULong MAX> ACE_INLINE T &
 TAO_Bounded_Sequence<T,MAX>::operator[] (CORBA::ULong i)
 {

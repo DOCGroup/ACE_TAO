@@ -66,7 +66,7 @@ CORBA_POA::~CORBA_POA (void)
 // Create an objref
 
 CORBA::Object_ptr
-CORBA_POA::create (CORBA::OctetSeq &key,
+CORBA_POA::create (TAO_opaque &key,
                    CORBA::String type_id,
                    CORBA::Environment &env)
 {
@@ -82,7 +82,7 @@ CORBA_POA::create (CORBA::OctetSeq &key,
 
   data = new IIOP_Object (id,
                           IIOP::Profile (TAO_ORB_Core_instance ()->orb_params ()->addr (),
-                                         ACE_static_cast(TAO_opaque&,key)));
+                                         key));
   if (data != 0)
     env.clear ();
   else
@@ -254,7 +254,7 @@ CORBA_POA::get_poa (CORBA::ORB_ptr orb,
   return 0;
 }
 
-void CORBA_POA::dispatch (CORBA::OctetSeq &key,
+void CORBA_POA::dispatch (TAO_opaque &key,
                           CORBA::ServerRequest &req,
                           void *context,
                           CORBA::Environment &env)
@@ -308,14 +308,14 @@ void CORBA_POA::dispatch (CORBA::OctetSeq &key,
 }
 
 int
-CORBA_POA::find (const CORBA::OctetSeq &key,
+CORBA_POA::find (const TAO_opaque &key,
 		 CORBA::Object_ptr &obj)
 {
   return objtable_->find (key, obj);
 }
 
 int
-CORBA_POA::bind (const CORBA::OctetSeq &key,
+CORBA_POA::bind (const TAO_opaque &key,
 		 CORBA::Object_ptr obj)
 {
   return objtable_->bind (key, obj);

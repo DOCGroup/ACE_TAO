@@ -622,7 +622,7 @@ int be_interface::gen_server_skeletons (void)
   //  *ss << "this->sub_ = this; // set the most derived type to be us" << nl;
   *ss << "// @@ TODO this cast is while we still have sequences " << nl
       << "// implemented using the old CORBA_SEQUENCE template " << nl;
-  *ss << "if (oa) oa->bind (ACE_static_cast(CORBA::OctetSeq&,data->profile.object_key), this); " <<
+  *ss << "if (oa) oa->bind (data->profile.object_key, this); " <<
     "// register ourselves\n";
   ss->decr_indent ();
   *ss << "}\n\n";

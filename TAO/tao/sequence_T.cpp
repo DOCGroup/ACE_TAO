@@ -14,8 +14,8 @@
 #endif /* __ACE_INLINE__ */
 
 template <class T>
-TAO_Unbounded_Sequence<T>::TAO_Unbounded_Sequence
-(const TAO_Unbounded_Sequence<T> &rhs)
+TAO_Unbounded_Sequence<T>::
+TAO_Unbounded_Sequence (const TAO_Unbounded_Sequence<T> &rhs)
   : TAO_Unbounded_Base_Sequence (rhs)
 {
   this->buffer_ = TAO_Unbounded_Sequence<T>::allocbuf (this->maximum_);
@@ -38,11 +38,23 @@ TAO_Unbounded_Sequence<T>::operator=
         }
 
       this->TAO_Base_Sequence::operator= (rhs);
+      this->buffer_ = TAO_Unbounded_Sequence<T>::allocbuf (this->maximum_);
+      this->release_ = 1;
       T* tmp = ACE_reinterpret_cast(T*,this->buffer_);
       for (CORBA::ULong i = 0; i < this->length_; ++i)
 	tmp[i] = rhs[i];
     }
   return *this;
+}
+
+template<class T>
+TAO_Unbounded_Sequence<T>::~TAO_Unbounded_Sequence (void)
+{
+  if (this->buffer_ == 0 || this->release_ == 0)
+    return;
+  T* tmp = ACE_reinterpret_cast (T*,this->buffer_);
+  delete[] tmp;
+  this->buffer_ = 0;
 }
 
 template<class T>
@@ -63,8 +75,38 @@ void TAO_Unbounded_Sequence<T>::_allocate_buffer (CORBA::ULong length)
   this->buffer_ = tmp;
 }
 
-template<class T>
-TAO_Unbounded_Sequence<T>::~TAO_Unbounded_Sequence (void)
+// ****************************************************************
+// Bounded_Sequence
+// ****************************************************************
+
+template <class T, CORBA::ULong MAX>
+TAO_Bounded_Sequence<T,MAX>::
+TAO_Bounded_Sequence (const TAO_Bounded_Sequence<T,MAX> &rhs)
+  : TAO_Bounded_Base_Sequence (rhs)
+{
+  this->buffer_ = TAO_Bounded_Sequence<T,MAX>::allocbuf (MAX);
+  T* tmp = ACE_reinterpret_cast(T*,this->buffer_);
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    tmp[i] = rhs[i];
+}
+
+template <class T, CORBA::ULong MAX> TAO_Bounded_Sequence<T,MAX> &
+TAO_Bounded_Sequence<T,MAX>::operator= (const TAO_Bounded_Sequence<T,MAX> &rhs)
+{
+  if (this != &rhs)
+    {
+      this->TAO_Base_Sequence::operator= (rhs);
+      this->buffer_ = TAO_Unbounded_Sequence<T>::allocbuf (this->maximum_);
+      this->release_ = 1;
+      T* tmp = ACE_reinterpret_cast(T*,this->buffer_);
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+	tmp[i] = seq[i];
+    }
+  return *this;
+}
+
+template<class T, CORBA::ULong MAX>
+TAO_Bounded_Sequence<T,MAX>::~TAO_Bounded_Sequence (void)
 {
   if (this->buffer_ == 0 || this->release_ == 0)
     return;
@@ -80,16 +122,6 @@ void TAO_Bounded_Sequence<T,MAX>::_allocate_buffer (CORBA::ULong)
   // is *really* simple.
   ACE_NEW (this->buffer_, T[MAX]);
   this->maximum_ = MAX;
-}
-
-template<class T, CORBA::ULong MAX>
-TAO_Bounded_Sequence<T,MAX>::~TAO_Bounded_Sequence (void)
-{
-  if (this->buffer_ == 0 || this->release_ == 0)
-    return;
-  T* tmp = ACE_reinterpret_cast (T*,this->buffer_);
-  delete[] tmp;
-  this->buffer_ = 0;
 }
 
 // *************************************************************
