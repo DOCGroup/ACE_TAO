@@ -44,12 +44,12 @@ public:
 
   virtual void set (RtecScheduler::handle_t handle,
                     RtecScheduler::Criticality criticality,
-                    const RtecScheduler::Time &time,
-                    const RtecScheduler::Time &typical_time,
-                    const RtecScheduler::Time &cached_time,
+		    RtecScheduler::Time time,
+		    RtecScheduler::Time typical_time,
+		    RtecScheduler::Time cached_time,
                     RtecScheduler::Period period,
                     RtecScheduler::Importance importance,
-                    const RtecScheduler::Quantum &quantum,
+                    RtecScheduler::Quantum quantum,
                     CORBA::Long threads,
                     RtecScheduler::Info_Type info_type,
                     CORBA::Environment &_env)

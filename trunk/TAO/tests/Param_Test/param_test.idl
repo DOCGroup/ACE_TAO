@@ -40,6 +40,10 @@ interface Param_Test
                     inout short s2,
                     out short s3);
 
+  long long test_longlong (in long long s1,
+			   inout long long s2,
+			   out long long s3);
+  
   // strings unbounded
   string test_unbounded_string (in string s1,
                                 inout string s2,

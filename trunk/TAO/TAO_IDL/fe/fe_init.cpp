@@ -156,7 +156,7 @@ fe_populate(AST_Module *m)
   pdt =
     idl_global->gen()
 	->create_predefined_type(AST_PredefinedType::PT_wchar,
-				 create_scoped_name("wchar_t"),
+				 create_scoped_name("wchar"),
 				 NULL);
   m->fe_add_predefined_type(pdt);
   pdt = idl_global->gen()->create_predefined_type(AST_PredefinedType::PT_octet,
@@ -278,7 +278,7 @@ fe_populate(AST_Module *m)
   m->fe_add_predefined_type(pdt);
   pdt = idl_global->gen()
   		->create_predefined_type(AST_PredefinedType::PT_pseudo,
-					 create_scoped_name("wstring_t"),
+					 create_scoped_name("wstring"),
 					 NULL);
   m->fe_add_predefined_type(pdt);
   pdt = idl_global->gen()

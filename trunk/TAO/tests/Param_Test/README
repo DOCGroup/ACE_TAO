@@ -51,24 +51,25 @@ To run the client, type
        Data types supported in this version are:
 
        short                for shorts
+       short                for long long
        ubstring             for unbounded string
        bdstring             for bounded string
        fixed_struct         for fixed sized structs
-       strseq         	    for sequences of strings
-       bounded_strseq       for bounded sequences of strings
+       ub_strseq            for sequences of strings
+       bd_strseq            for bounded sequences of strings
        var_struct           for variable structs
        nested_struct        for nested structs
-       struct_seq           for sequences of structs
-       bounded_struct_seq   for bounded sequences of structs
+       ub_struct_seq        for sequences of structs
+       bd_struct_seq        for bounded sequences of structs
        any                  for Any
        objref               for object references
        objref_sequence      for sequences object references
        any_sequence         for sequences of Any
-       short_sequence       for sequences of shorts
-       long_sequence        for sequences of shorts
-       bounded_short_sequence for bounded sequences of shorts
-       bounded_long_sequence  for bounded sequences of shorts
-       fixed_array            for arrays of fixed sized types (longs)
+       ub_short_sequence    for sequences of shorts
+       ub_long_sequence     for sequences of shorts
+       bd_short_sequence    for bounded sequences of shorts
+       bd_long_sequence     for bounded sequences of shorts
+       fixed_array          for arrays of fixed sized types (longs)
        var_array            for arrays of var sized types (strings)
 
 

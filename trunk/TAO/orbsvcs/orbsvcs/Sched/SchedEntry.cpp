@@ -398,12 +398,8 @@ Task_Entry::conjunctive_merge (
     }
 
     Dispatch_Entry *entry_ptr;
-    // The following two statements should be removed when
-    // CosTimeBase.idl is finalized.
-    const TimeBase::ulonglong arrival_tb = {arrival, 0};
-    const TimeBase::ulonglong deadline_tb = {deadline, 0};
     ACE_NEW_RETURN (entry_ptr,
-                    Dispatch_Entry (arrival_tb, deadline_tb, priority, OS_priority, *this),
+                    Dispatch_Entry (arrival, deadline, priority, OS_priority, *this),
                     -1);
 
     // if even one new dispatch was inserted, result is "something happened".
@@ -543,16 +539,12 @@ Task_Entry::merge_frames (
     //         class.
 
     Dispatch_Entry *entry_ptr;
-    // The following two statements should be removed when
-    // CosTimeBase.idl is finalized.
-    const TimeBase::ulonglong arrival_tb = {src_iter.arrival (), 0};
-    const TimeBase::ulonglong deadline_tb = {src_iter.deadline (), 0};
     ACE_NEW_RETURN (entry_ptr,
-                    Dispatch_Entry (arrival_tb,
-                                    deadline_tb,
+                    Dispatch_Entry (src_iter.arrival (),
+                                    src_iter.deadline (),
                                     src_iter.priority (), 
-									src_iter.OS_priority (),
-									owner),
+				    src_iter.OS_priority (),
+				    owner),
                     -1);
 
     // if even one new dispatch was inserted, status is "something happened".
@@ -659,10 +651,10 @@ Dispatch_Entry::operator < (const Dispatch_Entry &d) const
   // lowest laxity (highest dynamic sub-priority) third
   // Just use low 32 bits of worst_case_execution_time.  This will
   // have to change when CosTimeBase.idl is finalized.
-  ACE_INT32 /* Time */ this_laxity = deadline_.low -
-                     task_entry ().rt_info ()->worst_case_execution_time.low;
-  ACE_INT32 /* Time */ that_laxity = d.deadline_.low -
-                     d.task_entry ().rt_info ()->worst_case_execution_time.low;
+  ACE_INT32 /* Time */ this_laxity = deadline_ -
+                     task_entry ().rt_info ()->worst_case_execution_time;
+  ACE_INT32 /* Time */ that_laxity = d.deadline_ -
+                     d.task_entry ().rt_info ()->worst_case_execution_time;
   if (this_laxity != that_laxity)
   {
     return (this_laxity < that_laxity) ? 1 : 0;
@@ -852,7 +844,7 @@ Dispatch_Proxy_Iterator::arrival () const
 
   // Just use low 32 bits of arrival.  This will
   // have to change when CosTimeBase.idl is finalized.
-  return link->dispatch_entry ().arrival ().low + current_frame_offset_;
+  return link->dispatch_entry ().arrival () + current_frame_offset_;
 }
   // returns the adjusted arrival time of the virtual entry
 
@@ -867,7 +859,7 @@ Dispatch_Proxy_Iterator::deadline () const
 
   // Just use low 32 bits of deadline.  This will
   // have to change when CosTimeBase.idl is finalized.
-  return link->dispatch_entry ().deadline ().low + current_frame_offset_;
+  return link->dispatch_entry ().deadline () + current_frame_offset_;
 }
   // returns the adjusted deadline time of the virtual entry
 

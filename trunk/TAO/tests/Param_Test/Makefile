@@ -46,6 +46,7 @@ CLI_FILES =	param_testC	\
 		nested_struct	\
 		objref		\
 		short		\
+		longlong	\
 		typecode	\
 		ub_any_seq	\
 		ub_long_seq	\

@@ -395,21 +395,18 @@ void ACE_DynScheduler::export(RT_Info* info, FILE* file)
 
 void ACE_DynScheduler::export(RT_Info& info, FILE* file)
 {
-  // The .low selection is for CosTimeBase::ulonglong support.  It
-  // should change after that is finalized to support 64 bit integers
-  // on all platforms.
   (void) ACE_OS::fprintf (file,
                           "%s\n%d\n%ld\n%ld\n%ld\n%ld\n%d\n%d\n%ld\n%u\n"
                           "# begin calls\n%d\n",
                           info.entry_point.in (),
                           info.handle,
-                          info.worst_case_execution_time.low,
-                          info.typical_execution_time.low,
-                          info.cached_execution_time.low,
+                          info.worst_case_execution_time,
+                          info.typical_execution_time,
+                          info.cached_execution_time,
                           info.period,
                           info.criticality,
                           info.importance,
-                          info.quantum.low,
+                          info.quantum,
                           info.threads,
                           number_of_dependencies(info));
 
@@ -824,7 +821,7 @@ ACE_DynScheduler::calculate_utilization_params (void)
         ACE_static_cast(double,
                         ordered_dispatch_entries_ [i]->
                                                   task_entry ().rt_info ()->
-                                                    worst_case_execution_time.low) /
+                                                    worst_case_execution_time) /
         ACE_static_cast(double,
                         ordered_dispatch_entries_ [i]->
                           task_entry ().effective_period ());
@@ -1045,12 +1042,12 @@ ACE_DynScheduler::identify_threads (void)
                              ? task_entries_ [i].rt_info ()->threads : 1;
         // Just use low 32 bits of effective_period.  This will
         // have to change when CosTimeBase.idl is finalized.
-        const TimeBase::ulonglong zero = {0, 0};
+        const TimeBase::TimeT zero = 0;
         for (j = 0; j < thread_count; j++)
         {
           Dispatch_Entry *dispatch_ptr;
-          const TimeBase::ulonglong effective_period =
-            {task_entries_ [i].effective_period (), 0};
+          const TimeBase::TimeT effective_period =
+	    task_entries_ [i].effective_period ();
           ACE_NEW_RETURN(dispatch_ptr,
                          Dispatch_Entry (zero,
                                          effective_period,
@@ -1365,12 +1362,10 @@ ACE_DynScheduler::create_timeline ()
       // create a new dispatch entry at the current sub-frame offset
       // Just use low 32 bits of arrival and deadline.  This will
       // have to change when CosTimeBase.idl is finalized.
-      const TimeBase::ulonglong arrival =
-        {ordered_dispatch_entries_[i]->arrival ().low + current_frame_offset,
-         0};
-      const TimeBase::ulonglong deadline=
-        {ordered_dispatch_entries_[i]->deadline ().low + current_frame_offset,
-         0};
+      const TimeBase::TimeT arrival =
+	ordered_dispatch_entries_[i]->arrival () + current_frame_offset;
+      const TimeBase::TimeT deadline=
+	ordered_dispatch_entries_[i]->deadline () + current_frame_offset;
 
       ACE_NEW_RETURN (
         new_dispatch_entry,
@@ -1554,7 +1549,7 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
       const ACE_UINT32 tmp =
         last_entry->stop () - link->entry ().arrival () -
           link->entry ().dispatch_entry ().task_entry ().rt_info ()->
-            worst_case_execution_time.low;
+            worst_case_execution_time;
       if (link->entry ().dispatch_entry ().original_dispatch ())
       {
         if (ACE_OS::fprintf (

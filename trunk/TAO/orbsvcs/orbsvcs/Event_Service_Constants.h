@@ -47,11 +47,11 @@ const long ACE_ES_EVENT_UNDEFINED = 16;
 const long ACE_Scheduler_MAX_PRIORITIES = 5;
 
 const TimeBase::TimeT ACE_Scheduler_Rates[ACE_Scheduler_MAX_PRIORITIES] = {
-  {   250000, 0}, // 40 Hz
-  {   500000, 0}, // 20 Hz
-  {  1000000, 0}, // 10 Hz
-  {  2000000, 0}, // 5 Hz
-  { 10000000, 0}  // 1 Hz
+     250000, // 40 Hz
+     500000, // 20 Hz
+    1000000, // 10 Hz
+    2000000, // 5 Hz
+   10000000  // 1 Hz
 };
 
 // The minimum preemption priority.

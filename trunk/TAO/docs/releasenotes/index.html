@@ -81,6 +81,11 @@ Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Aniruddha Gokhale</A>
 
 <P>Current status: (As of July 31st, 1998.)
 <UL>
+      <LI>Verified support for the "long long" and "unsigned long long"
+	datatypes. On platforms that do not support 64 bit longs we
+	provided <EM>partial</EM> emulation through ACE_U_LongLong.
+      </LI>
+
 <LI>
 Anonymous arrays inside structs are supported. However, they are not yet
 supported inside unions.</LI>

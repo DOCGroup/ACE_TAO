@@ -71,9 +71,20 @@ CORBA::Short
 Param_Test_i::test_short (CORBA::Short s1,
                           CORBA::Short &s2,
                           CORBA::Short_out s3,
-                          CORBA::Environment &env)
+                          CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (env);
+  s2 = s1 * 2;
+  s3 = s1 * 3;
+  return s1 * 4;
+}
+
+// test long long
+CORBA::LongLong
+Param_Test_i::test_longlong (CORBA::LongLong s1,
+			     CORBA::LongLong &s2,
+			     CORBA::LongLong_out s3,
+			     CORBA::Environment &)
+{
   s2 = s1 * 2;
   s3 = s1 * 3;
   return s1 * 4;
