@@ -323,7 +323,7 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                 ASYS_TEXT ("ACE_INET_Addr::ACE_INET_Addr: %p\n"),
                 ((host_name == 0) ?
                  (ASYS_TEXT ("<unknown>")) :
-                 (ASYS_WIDE_STRING (host_name)))));
+                 host_name)));
 #endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
 }
 
