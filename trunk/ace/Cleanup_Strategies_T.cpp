@@ -29,6 +29,8 @@ ACE_Default_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (CONTAINER &contain
                                                               KEY *key, 
                                                               VALUE *value)
 {
+  ACE_UNUSED_ARG (value);
+
   return container.unbind (*key);
 }
 
@@ -58,16 +60,11 @@ ACE_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (CONTAINER &contain
   // Remove the item from cache only if the handler isnt in use.
   if ((*value)->active () == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "handle %d\n",
-                  (*value)->get_handle ()));
       (*value)->close ();
 
-      ACE_DEBUG ((LM_DEBUG, "LRU: before unbind: current_size %d\n", container.current_size ()));
-   
       if (container.unbind (*key) == -1)
         return -1;
 
-      ACE_DEBUG ((LM_DEBUG, "LRU:after unbind: current_size %d\n", container.current_size ()));
     }
 
   return 0;
@@ -80,6 +77,11 @@ ACE_Null_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (CONTAINER &container,
                                                            KEY *key, 
                                                            VALUE *value)
 {
+
+  ACE_UNUSED_ARG (container);
+  ACE_UNUSED_ARG (key);
+  ACE_UNUSED_ARG (value);
+
   return 0;
 }
 
