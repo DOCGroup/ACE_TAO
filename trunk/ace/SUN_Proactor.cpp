@@ -367,11 +367,4 @@ ACE_SUN_Proactor::cancel_aio (ACE_HANDLE handle)
   return 2; // NOT CANCELLED
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Condition<ACE_Thread_Mutex>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-// These are only instantiated with ACE_HAS_THREADS.
-#pragma instantiate ACE_Condition<ACE_Thread_Mutex>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 #endif /* ACE_HAS_AIO_CALLS && sun */
