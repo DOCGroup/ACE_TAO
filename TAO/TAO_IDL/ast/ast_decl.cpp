@@ -587,6 +587,7 @@ AST_Decl::repoID (char *value)
       // Forces version to be set to the last id component.
       delete [] this->version_;
       this->version_ = 0;
+      const char *dummy = this->version ();
     }
   else if (ACE_OS::strcmp (this->repoID_, value) != 0)
     {
@@ -643,7 +644,8 @@ void
 AST_Decl::version (char *value)
 {
   // Previous #pragma version or #pragma id make this illegal.
-  if (this->version_ == 0 && this->repoID_ == 0)
+  if (this->version_ == 0 && this->repoID_ == 0
+      || ACE_OS::strcmp (this->version_, value) == 0)
     {
       this->version_ = value;
     }
