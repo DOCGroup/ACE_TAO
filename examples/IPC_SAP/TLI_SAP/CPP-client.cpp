@@ -13,7 +13,7 @@ ACE_RCSID(TLI_SAP, CPP_client, "$Id$")
 
 /* ACE_TLI Client */
 
-int main (int argc, char *argv[])                       
+int main (int argc, char *argv[])
 {
   const char *host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
   u_short r_port = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_SERVER_PORT;
@@ -32,10 +32,10 @@ int main (int argc, char *argv[])
 
   // Initiate timed, non-blocking connection with server.
   ACE_TLI_Connector con;
-                                                        
+
   if (con.connect (cli_stream,
-                   remote_addr, 
-                   (ACE_Time_Value *) &ACE_Time_Value::zero, 
+                   remote_addr,
+                   (ACE_Time_Value *) &ACE_Time_Value::zero,
                    local_addr,
                    1) == -1)
     {
@@ -61,14 +61,14 @@ int main (int argc, char *argv[])
                           1);
       else
 	ACE_DEBUG ((LM_DEBUG,
-                    "connected to %s\n", 
+                    "connected to %s\n",
 		    remote_addr.get_host_name ()));
     }
 
   // Send data to server (correctly handles "incomplete writes").
-  
+
   for (int r_bytes;
-       (r_bytes = ACE_OS::read (ACE_STDIN, buf, sizeof buf)) > 0; 
+       (r_bytes = ACE_OS::read (ACE_STDIN, buf, sizeof buf)) > 0;
        )
     if (cli_stream.send_n (buf,
                            r_bytes,
@@ -79,17 +79,17 @@ int main (int argc, char *argv[])
                         1);
 
   // Explicitly close the connection.
-  if (cli_stream.close () == -1) 
+  if (cli_stream.close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "close"),
                       -1);
   return 0;
-}                                                       
+}
 #else
-int main (int, char *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, 
+  ACE_ERROR_RETURN ((LM_ERROR,
 		     "your platform isn't configured to support TLI\n"),
                     1);
 }
