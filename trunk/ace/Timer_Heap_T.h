@@ -28,7 +28,7 @@ class ACE_Timer_Heap_T;
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Heap_Iterator_T : public ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> 
   // = TITLE
-  //     Iterates over an <ACE_Timer_Hash_T>.
+  //     Iterates over an <ACE_Timer_Heap_T>.
   //
   // = DESCRIPTION
   //     This is a generic iterator that can be used to visit every
