@@ -16,7 +16,7 @@ int
 TAO_Dynamic_Hash_ObjTable::bind (const CORBA_OctetSeq &key,
 				 CORBA_Object_ptr obj)
 {
-  ACE_CString objkey ((char *)key.buffer);
+  ACE_CString objkey ((char *) key.buffer);
   return this->hash_.bind (objkey, obj);
 }
 
@@ -24,7 +24,7 @@ int
 TAO_Dynamic_Hash_ObjTable::find (const CORBA_OctetSeq &key,
 				 CORBA_Object_ptr &obj)
 {
-  ACE_CString objkey ((char *)key.buffer);
+  ACE_CString objkey ((char *) key.buffer);
   return this->hash_.find (objkey, obj);
 }
 
@@ -74,13 +74,12 @@ TAO_Linear_ObjTable::find (const CORBA_OctetSeq &key,
   for (CORBA_ULong i = 0;
        i < this->next_;
        i++)
-    {
-      if (!ACE_OS::memcmp (key.buffer, this->tbl_[i].key.buffer, key.length))
-	{
-	  obj = this->tbl_[i].obj;
-          return 1;
-	}
-    }
+    if (!ACE_OS::memcmp (key.buffer, this->tbl_[i].key.buffer, key.length))
+      {
+	obj = this->tbl_[i].obj;
+	return 1;
+      }
+
   return -1;  // not found
 }
 
