@@ -47,13 +47,12 @@ public:
   // set the next ACE_Cached_Mem_Pool_Node.
 
 private:
-  union
-  {
-    T obj_;
-    ACE_Cached_Mem_Pool_Node<T> *next_;
-  };
+  ACE_Cached_Mem_Pool_Node<T> *next_;
   // Since memory is not used when placed in a free list, 
   // we can use it to maintain the structure of  free list.
+  // I was using union to hide the fact of overlapping memory
+  // usage.  However, that cause problem on MSVC.  So, I now turn
+  // back to hack this with casting.
 };
 
 template <class T, class LOCK>

@@ -6,7 +6,7 @@
 template <class T> T *
 ACE_Cached_Mem_Pool_Node<T>::addr (void)
 {
-  return &this->obj_; 
+  return (T*) this;
 }
 
 template <class T> ACE_Cached_Mem_Pool_Node<T> *
