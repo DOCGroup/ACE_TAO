@@ -34,6 +34,7 @@
 class TAO_Connection_Handler;
 class Tao_Base_Connection_Property;
 
+
 class TAO_Export TAO_Cache_IntId
 {
   // = TITLE
@@ -76,10 +77,18 @@ public:
   const TAO_Connection_Handler *handler (void) const;
   // Return the underlying handler
 
+  void recycle_state (ACE_Recyclable_State new_state);
+
+  ACE_Recyclable_State recycle_state (void);
+  // Get/Set <recycle_state>.
+
 private:
 
   TAO_Connection_Handler *handler_;
   // The connection handler that needs to be cached.
+
+  ACE_Recyclable_State recycle_state_;
+  // The state of the handle
 };
 
 
@@ -137,10 +146,6 @@ public:
   TAO_Base_Connection_Property *property (void) const;
   // Get the underlying the property pointer
 
-  void recycle_state (ACE_Recyclable_State new_state);
-
-  ACE_Recyclable_State recycle_state (void);
-  // Get/Set <recycle_state>.
 private:
   // = Data members.
 
@@ -155,9 +160,6 @@ private:
   // default. Would be altered by the Connection_Cache of TAO. Please
   // see the documentation of TAO_Connection_Cache_Manager for
   // details.
-
-  ACE_Recyclable_State recycle_state_;
-  // The state of the handle
 };
 
 
