@@ -14,6 +14,15 @@ Sat Mar 20 20:27:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
 	  Added a debug message when orb->shutdown() is called.
 
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+	  Removed one method from the Profile classes that was only used
+	  here.  Used the constructor instead, which is more efficient,
+	  anyway.
+
+	* orbsvcs/tests/ImplRepo/Makefile:
+	  Removed call to upper level Makefile, that's not the style we
+	  use.
+
 Sat Mar 20 19:10:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/IIOP_Connector.h:
