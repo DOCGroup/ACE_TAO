@@ -5,52 +5,62 @@ Thu Nov 19 15:12:06 1998  David L. Levine  <levine@cs.wustl.edu>
           underscores confuse rsh/bash, so the output file couldn't be
           closed.
 
+        * performance-tests/Cubit/TAO/MT_Cubit/client.cpp
+          (print_latency_stats): fixed printout on VxWorks, it was printing
+          usecs but said that the units were msecs.  Also, changed summary
+          output to be in usecs in Unix, for consistency with VxWorks and
+          Chorus.  And, it gets rid of the insidious conversion from
+          usec to msec using ACE_ONE_SECOND_IN_MSEC.  It works, but it's BAD!
+
         * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (svc):
           on VxWorks, instead of calling ACE_OS::thr_exit (), call
           the client Thread_Manager's exit ().  That will allow the
           main thread to determine when all the clients have finished,
           because it calls wait () on the client Thread_Manager.
 
+        * performance-tests/Cubit/TAO/MT_Cubit/summarize:
+          added support for output in either usec or msec.
+
 Thu Nov 19 14:51:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
-	  The CDR insertion and extraction operators for interfaces must
-	  be declared inline before we emit the code for the members of
-	  the interface. Otherwise code like this:
-	  // IDL
-	  interface Foo {
-	    exception Bar {Foo where_it_failed;};
-	  };
-	  fails on some platforms.
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+          The CDR insertion and extraction operators for interfaces must
+          be declared inline before we emit the code for the members of
+          the interface. Otherwise code like this:
+          // IDL
+          interface Foo {
+            exception Bar {Foo where_it_failed;};
+          };
+          fails on some platforms.
 
 Thu Nov 19 10:15:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Timer_Module.h:
-	* orbsvcs/orbsvcs/Event/Timer_Module.i:
-	* orbsvcs/orbsvcs/Event/Timer_Module.cpp:
-	* orbsvcs/orbsvcs/Event/Event_Channel.h:
-	* orbsvcs/orbsvcs/Event/Event_Channel.i:
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
-	  If the event channel was configured with a reactive Timer_Module
-	  the Event_Handler used for timeouts was destroyed with the EC,
-	  but could still be registered with the Reactor dispatching the
-	  timeouts.
-	  The solution was to make the Timer_Module responsible for
-	  mapping the Reactor timeouts Event dispatching, in this way the
-	  Timer_Module::shutdown() method is able to cancel any timers
-	  from the Reactor before getting destroyed.
-	  Thanks to Dave Meyer <dmeyer@std.saic.com> and Russ
+        * orbsvcs/orbsvcs/Event/Timer_Module.h:
+        * orbsvcs/orbsvcs/Event/Timer_Module.i:
+        * orbsvcs/orbsvcs/Event/Timer_Module.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+          If the event channel was configured with a reactive Timer_Module
+          the Event_Handler used for timeouts was destroyed with the EC,
+          but could still be registered with the Reactor dispatching the
+          timeouts.
+          The solution was to make the Timer_Module responsible for
+          mapping the Reactor timeouts Event dispatching, in this way the
+          Timer_Module::shutdown() method is able to cancel any timers
+          from the Reactor before getting destroyed.
+          Thanks to Dave Meyer <dmeyer@std.saic.com> and Russ
           Noseworthy <rnosewor@objectsciences.com> for pointing this out.
 
-	* orbsvcs/orbsvcs/Event/Module_Factory.h:
-	  Fixed typo in forward declaration.
+        * orbsvcs/orbsvcs/Event/Module_Factory.h:
+          Fixed typo in forward declaration.
 
-	* orbsvcs/Event_Service/Event_Service.cpp:
-	  Added an option so we can choose a reactive event service from
-	  the command line.
+        * orbsvcs/Event_Service/Event_Service.cpp:
+          Added an option so we can choose a reactive event service from
+          the command line.
 
-	* docs/releasenotes/TODO.html:
-	  Updated.
+        * docs/releasenotes/TODO.html:
+          Updated.
 
 Wed Nov 18 15:49:52 1998  David L. Levine  <levine@cs.wustl.edu>
 
