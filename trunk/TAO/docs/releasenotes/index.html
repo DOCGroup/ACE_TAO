@@ -1533,11 +1533,16 @@ Point of contact: <a href="mailto:krish@cs.wustl.edu">Krishnakumar Elakkara Path
 <hr WIDTH="100%">
 <h3><a NAME="notify"></a>CORBA Notification Service </h3>
 
-<h4> Last updated:Mon Dec 20 06:38:42 CDT 2001 </h4>
+<h4> Last updated:Sat Jul 27 07:24:51 CDT 2002 </h4>
 Point of contact: <a href="mailto:pradeep@cs.wustl.edu">Pradeep Gore</a>
 <p>
-Work is in progress to implement the CORBA <a href="ftp://ftp.omg.org/pub/docs/telecom/99-07-01.pdf"> Notification Service </a>.
-The implementation released in TAO 1.2.2 consists of the following
+Work is underway to implement the TAO Real-Time Notification
+Service. This is an extension to TAO's CORBA Notification Service with
+Real-Time CORBA support.
+  
+The current <a href="ftp://ftp.omg.org/pub/docs/telecom/99-07-01.pdf">
+Notification Service </a> implementation (first released in TAO 1.2.2
+) consists of the following
 (see the associated README's for more information):
 <ul>
         <li>
@@ -1561,9 +1566,7 @@ The implementation released in TAO 1.2.2 consists of the following
         </li>
 
         <li>
-            There is on-going work to add tests in
-            <tt>$TAO_ROOT/orbsvcs/tests/Notify/
-            </tt>
+            Feature tests are under <tt>$TAO_ROOT/orbsvcs/tests/Notify/</tt>
         </li>
 </ul>
 
@@ -1614,9 +1617,8 @@ The implementation released in TAO 1.2.2 consists of the following
   <li>
       A runnning theme in this project is to isolate the patterns identified
       in the implementation of the <a href="ec.html"> RTEC </a> and reuse them.
-      We hope to come up with a collection of C++ template classes that
-      capture these patterns so that they might be used in other similar
-      event communication senarios.
+      A  collection of C++ template classes that capture these patterns is being used in this
+      implementation. These templates are the Event Service Framework <tt>TAO/orbsvcs/orbsvcs/ESF</tt>.
   </li>
 
   <li>
