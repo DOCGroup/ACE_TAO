@@ -235,6 +235,7 @@ AC_CONFIG_FILES([
   orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile
   orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile
   orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile
+  orbsvcs/tests/BiDir_CORBALOC/Makefile
   orbsvcs/tests/Bug_1334_Regression/Makefile
   orbsvcs/tests/Bug_1393_Regression/Makefile
   orbsvcs/tests/Bug_1395_Regression/Makefile

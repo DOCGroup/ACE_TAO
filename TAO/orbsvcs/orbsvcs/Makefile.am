@@ -3,7 +3,7 @@
 ## $Id$
 ##
 
-includedir = @includedir@/orbsvcs/orbsvcs
+includedir = @includedir@/orbsvcs
 pkgconfigdir = @libdir@/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)/..
@@ -292,7 +292,6 @@ libTAO_AV_la_CPPFLAGS = \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
   -I$(TAO_BUILDDIR)/orbsvcs \
-  -DACE_HAS_QOS \
   -DTAO_AV_BUILD_DLL
 
 libTAO_AV_la_SOURCES = \
@@ -302,7 +301,6 @@ libTAO_AV_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_AV_la_LIBADD = \
-  -lACE_QoS \
   libTAO_CosNaming.la \
   libTAO_CosProperty.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
