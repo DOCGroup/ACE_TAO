@@ -117,11 +117,12 @@ LD		= $(CXX)
 OCCFLAGS	= -O
 PIC		= +Z
 
-AR		= $(COMPILE.cc) +inst_close $^; /bin/ar
+PRELIB          = $(COMPILE.cc) +inst_close +inst_auto $^
+AR              = /usr/ccs/bin/ar
 ARFLAGS		= ruv
 RANLIB		= echo
 LDFLAGS		= -Wl,+s -z
-SOFLAGS		+= -b
+SOFLAGS		+= -b +inst_none
 
 ifeq ($(distrib),1)
 
