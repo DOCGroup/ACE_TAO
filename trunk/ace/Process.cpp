@@ -146,8 +146,9 @@ ACE_Process::wait (const ACE_Time_Value &tv)
 
 ACE_Process_Options::ACE_Process_Options (int ie,
                                           int cobl)
+  :
 #if !defined (ACE_HAS_WINCE)
-  : inherit_environment_ (ie),
+    inherit_environment_ (ie),
 #endif
     creation_flags_ (0),
 #if !defined (ACE_HAS_WINCE)
@@ -164,8 +165,6 @@ ACE_Process_Options::ACE_Process_Options (int ie,
     set_handles_called_ (0),
     environment_buf_index_ (0),
     environment_argv_index_ (0),
-#else
-  :
 #endif /* !ACE_HAS_WINCE */
     command_line_argv_calculated_ (0),
     command_line_buf_ (0)
