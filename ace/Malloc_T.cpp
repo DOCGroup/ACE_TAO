@@ -13,7 +13,8 @@
 
 template <class T, class LOCK>
 ACE_Cached_Allocator<T, LOCK>::ACE_Cached_Allocator (size_t n_chunks)
-  : pool_ (0)
+  : pool_ (0),
+    free_list_ (ACE_PURE_FREE_LIST)
 {
   ACE_NEW (this->pool_, T[n_chunks]);
   // ERRNO could be lost because this is within ctor
