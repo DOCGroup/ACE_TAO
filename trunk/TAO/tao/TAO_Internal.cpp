@@ -9,6 +9,7 @@
 #include "tao/default_resource.h"
 #include "tao/IIOP_Factory.h"
 #include "tao/UIOP_Factory.h"
+#include "tao/SHMIOP_Factory.h"
 
 ACE_RCSID(tao, TAO_Internal, "$Id$")
 
@@ -67,6 +68,10 @@ TAO_Internal::open_services (int &argc,
 #if TAO_HAS_UIOP == 1
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_UIOP_Protocol_Factory);
+#endif /* TAO_HAS_UIOP == 1 */
+#if TAO_HAS_SHMIOP == 1
+      ACE_Service_Config::static_svcs ()->
+        insert (&ace_svc_desc_TAO_SHMIOP_Protocol_Factory);
 #endif /* TAO_HAS_UIOP == 1 */
       // add descriptor to list of static objects.
 

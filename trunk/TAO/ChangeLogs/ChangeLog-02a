@@ -1,3 +1,10 @@
+Fri Feb 11 14:56:58 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/TAO_Internal.cpp: I forgot to add the initialization for
+	  SHMIOP_Protocol_Factory's static service.  And it was causing
+	  the tests/ORB_init test to fail. Thanks to Bala for reporting
+	  this.
+
 Fri Feb 11 13:48:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/idl.yy:
@@ -5,7 +12,7 @@ Fri Feb 11 13:48:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/fe/y.tab.cpp:
 	* TAO_IDL/ast/ast_module.cpp:
 	  Changes to prevent modules, interrfaces, structs,
-	  unions, valuetypes and exeptions from being 
+	  unions, valuetypes and exeptions from being
 	  redefined immediately inside their own scope. This
 	  closes out Bugzilla bug #417.
 
@@ -39,8 +46,8 @@ Thu Feb 10 22:04:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/ast/ast_decl.cpp:
 	* TAO_IDL/be/be_visitor_attribute/attribute.cpp:
 	  Changes to enable call to 'delete' on the
-	  scoped name member in the destructor of all instances 
-	  of AST_Decl.Specifically, code generation for arguments 
+	  scoped name member in the destructor of all instances
+	  of AST_Decl.Specifically, code generation for arguments
 	  and attributes had to be modified to avoid double
 	  deletion in those cases. An IDL file with a large number
 	  of enums was causing the IDL comiler to run out of heap
@@ -71,14 +78,14 @@ Thu Feb 10 15:14:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/be/be_generator.cpp:
 	* TAO_IDL/util/utl_scope.cpp:
 	  Change in approach to handling reopened modules
-	  in IDL files. The front end used to create a new node 
+	  in IDL files. The front end used to create a new node
 	  each time a module was reopened, resulting in several
 	  brittle additions to the lookup functions. Now, when a
 	  module is reopened, the original node is returned for
 	  additions to its scope, and the lookup functions have
-	  been simplified. Thanks to Andreas Terstegge 
+	  been simplified. Thanks to Andreas Terstegge
 	  <Andreas.Terstegge@nokia.com> for sending in an example
-	  IDl file that pointed out this bug. This closes out 
+	  IDl file that pointed out this bug. This closes out
 	  Bugzilla bug #400
 
 	* TAO_IDL/util/utl_string.cpp:
