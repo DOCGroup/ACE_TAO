@@ -1,8 +1,8 @@
 // -*- MPC -*-
 // $Id$
 
-project(Kokyu_DSRT_Schedulers) : orbsvcslib, kokyu, rtscheduling, rtcorba {
-  sharedname  = Kokyu_DSRT_Schedulers
+project(Kokyu_DSRT_EDF_Scheduler) : orbsvcslib, kokyu, rtscheduling, rtcorba {
+  sharedname  = Kokyu_DSRT_EDF_Scheduler
   dynamicflags = KOKYU_DSRT_SCHEDULERS_BUILD_DLL KOKYU_HAS_RELEASE_GUARD
   idlflags += -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h
 
@@ -16,6 +16,63 @@ project(Kokyu_DSRT_Schedulers) : orbsvcslib, kokyu, rtscheduling, rtcorba {
   }
   
   Header_Files {
-		Kokyu_dsrt_schedulers_export.h
+      Kokyu_dsrt_schedulers_export.h
+  }
+}
+
+project(Kokyu_DSRT_MUF_Scheduler) : orbsvcslib, kokyu, rtscheduling, rtcorba {
+  sharedname  = Kokyu_DSRT_MUF_Scheduler
+  dynamicflags = KOKYU_DSRT_SCHEDULERS_BUILD_DLL KOKYU_HAS_RELEASE_GUARD
+  idlflags += -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h
+
+  Source_Files {
+        MUF_Scheduler.cpp
+        Task_Stats.cpp
+        utils.cpp
+        Kokyu_qosC.cpp
+	MUF_SchedulingC.cpp
+	kokyu_dsrt_dsui_vars.cpp
+  }
+  
+  Header_Files {
+      Kokyu_dsrt_schedulers_export.h
+  }
+}
+
+project(Kokyu_DSRT_FP_Scheduler) : orbsvcslib, kokyu, rtscheduling, rtcorba {
+  sharedname  = Kokyu_DSRT_FP_Scheduler
+  dynamicflags = KOKYU_DSRT_SCHEDULERS_BUILD_DLL KOKYU_HAS_RELEASE_GUARD
+  idlflags += -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h
+
+  Source_Files {
+        FP_Scheduler.cpp
+        Task_Stats.cpp
+        utils.cpp
+        Kokyu_qosC.cpp
+	FP_SchedulingC.cpp
+	kokyu_dsrt_dsui_vars.cpp
+  }
+  
+  Header_Files {
+      Kokyu_dsrt_schedulers_export.h
+  }
+}
+
+project(Kokyu_DSRT_MIF_Scheduler) : orbsvcslib, kokyu, rtscheduling, rtcorba {
+  sharedname  = Kokyu_DSRT_MIF_Scheduler
+  dynamicflags = KOKYU_DSRT_SCHEDULERS_BUILD_DLL KOKYU_HAS_RELEASE_GUARD
+  idlflags += -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h
+
+  Source_Files {
+        MIF_Scheduler.cpp
+        Task_Stats.cpp
+        utils.cpp
+        Kokyu_qosC.cpp
+	MIF_SchedulingC.cpp
+	kokyu_dsrt_dsui_vars.cpp
+  }
+  
+  Header_Files {
+      Kokyu_dsrt_schedulers_export.h
   }
 }
