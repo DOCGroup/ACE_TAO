@@ -1,3 +1,11 @@
+Thu Nov 11 19:55:52 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * ace/Configuration.h:
+        * ace/Configuration.cpp:
+        * examples/Configuration/config_test.cpp:
+          MSVC doesn't like _export and _import so changed them to
+          export_config and import_config.  
+
 Thu Nov 11 18:41:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/Configuration.h:
