@@ -1,3 +1,15 @@
+Wed Jun  5 09:04:05 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_sh.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_si.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_sh.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_si.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_ss.h:
+
+          New files - new visitors to generate the skeleton class
+          for a valuetype that supports a concrete interface.
+
 Tue Jun  4 11:08:40 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_array.cpp:
