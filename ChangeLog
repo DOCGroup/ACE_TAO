@@ -1,3 +1,8 @@
+Sat Nov 23 20:01:36 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* apps/*/Makefile: Updated dependecies. Thanks to Erwin Rol for
+	  pointing out the problem.
+
 Sat Nov 23 18:12:37 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/SString.cpp: Add explicit instantiation of
