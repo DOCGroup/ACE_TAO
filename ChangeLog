@@ -1,3 +1,10 @@
+Sat Apr 19 02:53:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * bin/generate_compile_stats.sh:
+
+          Fixed a problem with sorting, modified html and graph output
+          to make it a little easier to read.
+
 Fri Apr 18 13:35:51 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/OS.i:
