@@ -34,7 +34,7 @@ ACE_RCSID(tests, MEM_Stream_Test, "$Id$")
 #if (defined (ACE_HAS_THREADS) || !defined (ACE_LACKS_FORK)) && \
     (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
-#if defined (ACE_LACKS_FORK)     // Win32, et al
+#if defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS)   // Win32, et al
 #  define _TEST_USES_THREADS
 #else
 #  define _TEST_USES_PROCESSES
@@ -70,8 +70,8 @@ static const int opt_wfmo_reactor = 1;
 static int opt_select_reactor = 1;
 static ACE_MEM_IO::Signal_Strategy client_strategy = ACE_MEM_IO::Reactive;
 
-typedef ACE_Atomic_Op <ACE_Thread_Mutex, u_short> WaitingCounter;
-typedef ACE_Singleton <WaitingCounter, ACE_Thread_Mutex> Waiting;
+typedef ACE_Atomic_Op <ACE_SYNCH::MUTEX, u_short> WaitingCounter;
+typedef ACE_Singleton <WaitingCounter, ACE_SYNCH::RECURSIVE_MUTEX> Waiting;
 
 // Number of connections that are currently open
 static u_short connection_count = 0;
@@ -94,7 +94,7 @@ Echo_Handler::open (void *)
 }
 
 Echo_Handler::Echo_Handler (ACE_Thread_Manager *thr_mgr)
-  : ACE_Svc_Handler<ACE_MEM_STREAM, ACE_MT_SYNCH> (thr_mgr),
+  : ACE_Svc_Handler<ACE_MEM_STREAM, ACE_SYNCH> (thr_mgr),
     connection_ (++connection_count)
 {
   ACE_OS::sprintf (this->name_, ACE_TEXT ("Connection %d --> "),
@@ -326,7 +326,11 @@ int test_multithreaded (const ACE_TCHAR *prog, ACE_MEM_Addr &server_addr)
 
   ACE_Accept_Strategy<Echo_Handler, ACE_MEM_ACCEPTOR> accept_strategy;
   ACE_Creation_Strategy<Echo_Handler> create_strategy;
-  ACE_Thread_Strategy<Echo_Handler> thr_strategy;
+#if defined (ACE_HAS_THREADS)
+  ACE_Thread_Strategy<Echo_Handler> act_strategy;
+#else
+  ACE_Reactive_Strategy<Echo_Handler> act_strategy (ACE_Reactor::instance ());
+#endif /* ACE_HAS_THREADS */
   S_ACCEPTOR acceptor;
 
 
@@ -334,7 +338,7 @@ int test_multithreaded (const ACE_TCHAR *prog, ACE_MEM_Addr &server_addr)
                      ACE_Reactor::instance (),
                      &create_strategy,
                      &accept_strategy,
-                     &thr_strategy) == -1)
+                     &act_strategy) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("MEM_Acceptor::accept\n")), 1);
 
@@ -359,8 +363,8 @@ int test_multithreaded (const ACE_TCHAR *prog, ACE_MEM_Addr &server_addr)
 #else
   ACE_Process_Options opts;
   opts.command_line (ACE_TEXT ("%s -p%d -m"), prog, sport);
-  if (-1==ACE_Process_Manager::instance ()->spawn_n (NO_OF_MT_CONNECTION,
-                                                     opts))
+  if (-1 == ACE_Process_Manager::instance ()->spawn_n (NO_OF_MT_CONNECTION,
+                                                       opts))
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")));
 #endif
 
@@ -467,29 +471,33 @@ main (int argc, ACE_TCHAR *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Svc_Handler <ACE_MEM_STREAM, ACE_MT_SYNCH>;
+template class ACE_Svc_Handler <ACE_MEM_STREAM, ACE_SYNCH>;
 template class ACE_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR>;
-template class ACE_Atomic_Op<ACE_Thread_Mutex, u_short>;
-template class ACE_Singleton<ACE_Atomic_Op<ACE_Thread_Mutex, u_short>,ACE_Thread_Mutex>;
+template class ACE_Atomic_Op<ACE_SYNCH::MUTEX, u_short>;
+template class ACE_Singleton<ACE_Atomic_Op<ACE_SYNCH::MUTEX, u_short>, ACE_SYNCH::RECURSIVE_MUTEX>;
 template class ACE_Accept_Strategy<Echo_Handler, ACE_MEM_ACCEPTOR>;
 template class ACE_Creation_Strategy<Echo_Handler>;
 template class ACE_Reactive_Strategy<Echo_Handler>;
 template class ACE_Strategy_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR>;
 template class ACE_Concurrency_Strategy<Echo_Handler>;
 template class ACE_Scheduling_Strategy<Echo_Handler>;
+#  if defined (ACE_HAS_THREADS)
 template class ACE_Thread_Strategy<Echo_Handler>;
+#  endif /* ACE_HAS_THREADS */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Svc_Handler <ACE_MEM_STREAM, ACE_MT_SYNCH>
+#pragma instantiate ACE_Svc_Handler <ACE_MEM_STREAM, ACE_SYNCH>
 #pragma instantiate ACE_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR>
-#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, u_short>
-#pragma instantiate ACE_Singleton<ACE_Atomic_Op<ACE_Thread_Mutex, u_short>,ACE_Thread_Mutex>
+#pragma instantiate ACE_Atomic_Op<ACE_SYNCH::MUTEX, u_short>
+#pragma instantiate ACE_Singleton<ACE_Atomic_Op<ACE_SYNCH::MUTEX, u_short>, ACE_SYNCH::RECURSIVE_MUTEX>
 #pragma instantiate ACE_Accept_Strategy<Echo_Handler, ACE_MEM_ACCEPTOR>
 #pragma instantiate ACE_Creation_Strategy<Echo_Handler>
 #pragma instantiate ACE_Reactive_Strategy<Echo_Handler>
 #pragma instantiate ACE_Strategy_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR>
 #pragma instantiate ACE_Concurrency_Strategy<Echo_Handler>
 #pragma instantiate ACE_Scheduling_Strategy<Echo_Handler>
+#  if defined (ACE_HAS_THREADS)
 #pragma instantiate ACE_Thread_Strategy<Echo_Handler>
+#  endif /* ACE_HAS_THREADS */
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #else

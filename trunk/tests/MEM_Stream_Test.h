@@ -34,7 +34,7 @@
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
-class Echo_Handler : public ACE_Svc_Handler<ACE_MEM_STREAM, ACE_MT_SYNCH>
+class Echo_Handler : public ACE_Svc_Handler<ACE_MEM_STREAM, ACE_SYNCH>
 {
   // = TITLE
   //   Simple class for reading in the data and then sending it back
