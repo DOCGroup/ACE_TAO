@@ -1,3 +1,0 @@
-project(POA Excessive Object Deactivations): server {
-  exename = Excessive_Object_Deactivations
-}

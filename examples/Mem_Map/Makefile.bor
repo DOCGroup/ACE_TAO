@@ -1,8 +1,0 @@
-#
-# Makefile for building the ACE Mem_Map examples
-#
-
-DIRS = \
-        file-reverse
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
