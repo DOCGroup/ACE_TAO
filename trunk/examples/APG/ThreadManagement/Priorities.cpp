@@ -1,11 +1,12 @@
 // $Id$
 
 #include "ace/config-lite.h"
-#if defined (ACE_AS_THREADS)
 
-#include "ace/OS.h"
+#if defined (ACE_HAS_THREADS)
+
 #include "ace/Task.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_unistd.h"
 
 // Listing 2 code/ch13
 class HA_CommandHandler : public ACE_Task<ACE_MT_SYNCH>
@@ -20,7 +21,7 @@ public:
                 name_));
 
     ACE_OS::sleep (2);
-    ACE_Message_Block *mb;    
+    ACE_Message_Block *mb;
     while (this->getq (mb) != -1)
       process_message (mb);
     return 0;
@@ -28,7 +29,7 @@ public:
 
   void process_message (ACE_Message_Block *)
   {
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Processing message %C\n"),
                 name_));
     // Simulate compute bound task.
