@@ -611,12 +611,6 @@ public:
   /// Cache management
   int make_idle (void);
 
-  /// Schedule handle_output() callbacks
-  int schedule_output (void);
-
-  /// Cancel handle_output() callbacks
-  int cancel_output (void);
-
   /// The timeout callback, invoked when any of the timers related to
   /// this transport expire.
   /**
@@ -651,6 +645,11 @@ private:
   /// Implement drain_queue() assuming the lock is held
   int drain_queue_i (void);
 
+  /// This class needs priviledged access to
+  /// - queue_is_empty_i()
+  /// - drain_queue_i()
+  friend class TAO_Block_Flushing_Strategy;
+
   /// Check if there are messages pending in the queue
   /**
    * This version assumes that the lock is already held.  Use with
@@ -660,12 +659,19 @@ private:
    */
   int queue_is_empty_i (void);
 
-  /// This class needs special access to drain_queue_i() and
-  /// queue_is_empty_i()
-  friend class TAO_Block_Flushing_Strategy;
-
   /// A helper routine used in drain_queue_i()
   int drain_queue_helper (int &iovcnt, iovec iov[]);
+
+  /// This class needs privileged access to:
+  /// - schedule_output_i()
+  /// - cancel_output_i()
+  friend class TAO_Reactive_Flushing_Strategy;
+
+  /// Schedule handle_output() callbacks
+  int schedule_output_i (void);
+
+  /// Cancel handle_output() callbacks
+  int cancel_output_i (void);
 
   /// Cleanup the queue.
   /**

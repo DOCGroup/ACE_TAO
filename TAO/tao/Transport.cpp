@@ -138,15 +138,12 @@ TAO_Transport::handle_output ()
       TAO_Flushing_Strategy *flushing_strategy =
         this->orb_core ()->flushing_strategy ();
 
+      ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->handler_lock_, -1));
+
       flushing_strategy->cancel_output (this);
 
       if (this->flush_timer_id_ != -1)
         {
-          ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                                    guard,
-                                    *this->handler_lock_,
-                                    -1));
-
           ACE_Event_Handler *eh = this->event_handler_i ();
           if (eh != 0)
             {
@@ -802,13 +799,8 @@ TAO_Transport::id (int id)
 }
 
 int
-TAO_Transport::schedule_output (void)
+TAO_Transport::schedule_output_i (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                            guard,
-                            *this->handler_lock_,
-                            -1));
-
   ACE_Event_Handler *eh = this->event_handler_i ();
   if (eh == 0)
     return -1;
@@ -828,13 +820,8 @@ TAO_Transport::schedule_output (void)
 }
 
 int
-TAO_Transport::cancel_output (void)
+TAO_Transport::cancel_output_i (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                            guard,
-                            *this->handler_lock_,
-                            -1));
-
   ACE_Event_Handler *eh = this->event_handler_i ();
   if (eh == 0)
     return -1;
@@ -1119,3 +1106,15 @@ TAO_Transport::report_invalid_event_handler (const char *caller)
                   caller));
     }
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Reverse_Lock<ACE_Lock>;
+template class ACE_Guard<ACE_Reverse_Lock<ACE_Lock> >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Reverse_Lock<ACE_Lock>
+#pragma instantiate ACE_Guard<ACE_Reverse_Lock<ACE_Lock> >
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

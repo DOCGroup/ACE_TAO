@@ -1,3 +1,27 @@
+Mon Apr 23 16:40:07 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+        * tao/Reactive_Flushing_Strategy.cpp:
+          The schedule_output() and cancel_output() methods are invoked
+          while the handle_mutex_ is held, so there is no need to grab it
+          again.
+          The methods are renamed schedule_output_i() and
+          cancel_output_i() and they are made private, because only the
+          Reactive_Flushing_Strategy should invoke them.
+
+        * tao/Transport.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+          Move the instantiation of ACE_Reverse_Lock<ACE_Lock> to the
+          Transport.cpp file.
+
+        * tests/AMI/muxed.conf:
+        * tests/AMI/exclusive.conf:
+          Fixed use of obsolete options
+
+        * tests/AMI/run_test.pl:
+          Cosmetic fixes
+
 Mon Apr 23 11:54:23 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/AMI_Buffering/AMI_Buffering.dsw:
