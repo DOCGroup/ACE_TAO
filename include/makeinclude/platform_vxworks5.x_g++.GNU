@@ -91,7 +91,7 @@ ifeq ($(CPU),SIMNT)
   CFLAGS += -U__WINNT -UWIN32 -U__WINNT__ -UWINNT -U__MINGW32__ -U_WIN32 \
             -U__WIN32 -U__WIN32__ -U__WIN32 -B$(GCCLIB_DIR) -DCPU=SIMNT
   CCFLAGS += -fno-implicit-templates
-  GCCLIB_DIR =
+  GCCLIB_DIR = \
     $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
   TOOLENV = simpc
 else
@@ -108,6 +108,14 @@ ifeq ($(CPU),I80386)
   CFLAGS += -DCPU=I80386
   TOOLENV = 386
 else
+ifeq ($(CPU),SIMSPARCSOLARIS)
+  BINXSYM_NAME = xsym
+  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SIMSPARCSOLARIS
+  CCFLAGS += -fno-implicit-templates
+  GCCLIB_DIR = \
+    $(HOST_DIR)/lib/gcc-lib/sparc-sun-solaris2.5.1/cygnus-2.7.2-960126
+  TOOLENV = simso
+else
 ifeq ($(CPU),SPARC)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SPARC
@@ -118,6 +126,7 @@ else
   BINXSYM_NAME = xsym
   CCFLAGS += -fno-implicit-templates
 endif # SPARC
+endif # SIMSPARCSOLARIS
 endif # I80386
 endif # I80486
 endif # SIMNT
@@ -130,10 +139,15 @@ endif # PPC604
 #### Set up Win32 vs. Unix host specific macros.
 ifeq ($(WIND_HOST_TYPE),x86-win32)
   CXX      = cc$(TOOLENV)
-else  # ! x86-win32
+else
+ifeq ($(TOOLENV),simso)
+  #### vxsim needs to use ccsimso, not g++simso.
+  CXX      = cc$(TOOLENV)
+else
   CXX      = g++$(TOOLENV)
   PIPE_OPT = -pipe
-endif # ! x86-win32
+endif # simso
+endif # x86-win32
 
 ifeq ($(shared_libs),1)
   SHARED_LIBS = 1
