@@ -1,75 +1,75 @@
 Tue Sep 12 15:41:48 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/IIOP_Profile.cpp (parse_string): 
-	  
+	* tao/IIOP_Profile.cpp (parse_string):
+
 	  The default port number for IIOP is 683 and that of corbaloc is
 	  2809. Modified files to reflect and implement this.
-		
-	* tao/ORB_Core.cpp (init): 	  
-	  
+
+	* tao/ORB_Core.cpp (init):
+
 	  Modified the place where the TAO_Parser_Registry::open () is
 	  called. This should be called only after the
 	  TAO_default_resource_factory::init () is called.
 
-	* tao/Makefile: 	  
-	  
+	* tao/Makefile:
+
 	  Modified the Makefile to reflect the move of the files listed
 	  below.
-	
-	* tao/Object_Loader.i: 
-	* tao/Object_Loader.h: 
-	* tao/Object_Loader.cpp: 
-		
-	* tao/FILE_Parser.i: 
-	* tao/FILE_Parser.h: 
-	* tao/FILE_Parser.cpp: 
-	* tao/ior_file_export.h: 
-	
-	* tao/DLL_Parser.i: 
-	* tao/DLL_Parser.h: 
-	* tao/DLL_Parser.cpp : 
-	* tao/ior_dll_export.h: 
-	  
+
+	* tao/Object_Loader.i:
+	* tao/Object_Loader.h:
+	* tao/Object_Loader.cpp:
+
+	* tao/FILE_Parser.i:
+	* tao/FILE_Parser.h:
+	* tao/FILE_Parser.cpp:
+	* tao/ior_file_export.h:
+
+	* tao/DLL_Parser.i:
+	* tao/DLL_Parser.h:
+	* tao/DLL_Parser.cpp :
+	* tao/ior_dll_export.h:
+
 	  Removed these files from tao/ior_file and added them in
-	  tao/. 
+	  tao/.
 	  Added ACE_STATIC_SVC_DEFINE and ACE_STATIC_SVC_DECLARE macros to
-	  *_Parser.{cpp,h}. 
-	
-	* tao/ior_file/Makefile: 
-	* tao/ior_dll/Makefile : 
-          
+	  *_Parser.{cpp,h}.
+
+	* tao/ior_file/Makefile:
+	* tao/ior_dll/Makefile :
+
 	  Removed these files as they are no longer needed.
-	
-	* tao/TAO_Internal.cpp (open_services): 
-	  
+
+	* tao/TAO_Internal.cpp (open_services):
+
 	  Added the FILE and DLL Parsers to the list of static objects.
 
-	* tao/Parser_Registry.h (TAO_Parser_Registry): 
-	* tao/Parser_Registry.cpp (open): 
+	* tao/Parser_Registry.h (TAO_Parser_Registry):
+	* tao/Parser_Registry.cpp (open):
 
-	* tao/default_resource.h (TAO_Default_Resource_Factory): 
-	* tao/default_resource.cpp (get_parser_names): 
+	* tao/default_resource.h (TAO_Default_Resource_Factory):
+	* tao/default_resource.cpp (get_parser_names):
 
-	* tao/Resource_Factory.h (TAO_Resource_Factory): 
-	* tao/Resource_Factory.cpp (get_parser_names): 
-	  
+	* tao/Resource_Factory.h (TAO_Resource_Factory):
+	* tao/Resource_Factory.cpp (get_parser_names):
+
 	  Fixed the way in which the default list of parsers are
 	  initialized. Added new methods in default_resource.* and
-	  Resource_Factory.* to fix this. 
-	  
+	  Resource_Factory.* to fix this.
+
 	  Modified the signature of <open> in Parser_Registry so that a
 	  pointer to the ORB_Core is provided.
 
 	  Added code to check for '-ORBIORParser' in
 	  TAO_Default_Resource_Factory::init () method.
 
-	* tao/ior_corbaloc/CORBALOC_Parser.h : 
-	* tao/ior_corbaloc/CORBALOC_Parser.cpp : 
+	* tao/ior_corbaloc/CORBALOC_Parser.h :
+	* tao/ior_corbaloc/CORBALOC_Parser.cpp :
 
 	  Modified the method of verifying the validity of the object
 	  reference obtained by using <_is_a> instead of narrowing it
 	  down.
-	
+
 Thu Jul 20 19:53:37 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ior_corbaloc/CORBALOC_Parser.h:
@@ -77,7 +77,7 @@ Thu Jul 20 19:53:37 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	  The default port number for IIOP is 683 and that of corbaloc is
 	  2809. Modified files to reflect and implement this.
-	
+
 Mon Jul 17 17:21:45 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/ior_corbaloc/run_test.pl: Added the perl script to run the
@@ -86,12 +86,12 @@ Mon Jul 17 17:21:45 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 Mon Jul 17 10:41:08 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/IIOP_Profile.cpp: Updated the default port number to '2809'.
-	
+
 Fri Jul 14 15:11:19 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ior_corbaloc/CORBALOC_Parser.cpp:
-	  The implementation now supports multiple endpoints correctly.  
-	
+	  The implementation now supports multiple endpoints correctly.
+
 Fri Jul 14 10:57:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/IIOP_Profile.cpp: Made some format changes and added some
@@ -102,59 +102,59 @@ Thu Jul 13 16:25:25 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	* tao/IIOP_Profile.cpp:
 	  Modified so that the default port is <683> and the default host
 	  is the local host instead of raising an exception when an empty
-	  host or port is passed.	
+	  host or port is passed.
 
 Tue Jul 11 14:16:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/ior_corbaloc/corbaloc.idl: 
+	* tests/ior_corbaloc/corbaloc.idl:
 
-	* tests/ior_corbaloc/status_i.h: 
-	* tests/ior_corbaloc/status_i.cpp: 
-	* tests/ior_corbaloc/ior_corbaloc_client_i.cpp: 
+	* tests/ior_corbaloc/status_i.h:
+	* tests/ior_corbaloc/status_i.cpp:
+	* tests/ior_corbaloc/ior_corbaloc_client_i.cpp:
 	  Changed the test so that the server returns a boolean on
  	  receiving a request from the client.
 
 	* tests/ior_corbaname/README:
-	* tests/ior_corbaname/corbaname.idl: 
+	* tests/ior_corbaname/corbaname.idl:
 	* tests/ior_corbaname/Makefile:
-	
-	* tests/ior_corbaname/status_i.h: 
-	* tests/ior_corbaname/status_i.cpp: 
-	* tests/ior_corbaname/server.cpp: 
-	
-	* tests/ior_corbaname/ior_corbaname_client_i.h: 
-	* tests/ior_corbaname/ior_corbaname_client_i.cpp: 
-	* tests/ior_corbaname/client.cpp: 
+
+	* tests/ior_corbaname/status_i.h:
+	* tests/ior_corbaname/status_i.cpp:
+	* tests/ior_corbaname/server.cpp:
+
+	* tests/ior_corbaname/ior_corbaname_client_i.h:
+	* tests/ior_corbaname/ior_corbaname_client_i.cpp:
+	* tests/ior_corbaname/client.cpp:
 	  Added to example to test the corbaname: style URL. When the
 	  server receives a request from the client, returns a  boolean
 	  :true=0 value.
-	
-	* tao/ior_corbaname/CORBANAME_Parser.h: 
+
+	* tao/ior_corbaname/CORBANAME_Parser.h:
 	* tao/ior_corbaname/CORBANAME_Parser.cpp:
 	  Implemented the corbaname: style URL.
-	
+
 	* tao/ior_corbaloc/CORBALOC_Parser.h
-	* tao/ior_corbaloc/CORBALOC_Parser.cpp: 
-	  Changed the value of a const iiop_prefix from <iiop://> to 
+	* tao/ior_corbaloc/CORBALOC_Parser.cpp:
+	  Changed the value of a const iiop_prefix from <iiop://> to
 	  <iiop:>
-	
+
 Thu Jul  6 18:48:06 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ior_corbaname/Makefile: 
-	* tao/ior_corbaname/ior_corbaname_export.h: 
+	* tao/ior_corbaname/Makefile:
+	* tao/ior_corbaname/ior_corbaname_export.h:
 
-	* tao/ior_corbaname/CORBANAME_Parser.i: 
+	* tao/ior_corbaname/CORBANAME_Parser.i:
 	* tao/ior_corbaname/CORBANAME_Parser.h:
-	* tao/ior_corbaname/CORBANAME_Parser.cpp: 
+	* tao/ior_corbaname/CORBANAME_Parser.cpp:
 	  Implemented part of the corbaname: style IOR parser. Done till
 	  obtaining a reference to the naming context.
-	
+
 Thu Jul  6 12:38:36 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ior_corbaloc/CORBALOC_Parser.h:
-	* tao/ior_corbaloc/CORBALOC_Parser.cpp: 
+	* tao/ior_corbaloc/CORBALOC_Parser.cpp:
 	  Further split the TAO_CORBALOC_Parser::parse_string function.
-		
+
 Thu Jun 29 18:19:16 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ior_corbaloc/CORBALOC_Parser.h:
@@ -169,37 +169,37 @@ Thu Jun 29 15:13:50 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ior_corbaloc/CORBALOC_Parser.cpp:
 	  Got the basic functionality of corbaloc: running.
-	  		
-	* tests/ior_corbaloc/ior_corbaloc_client_i.cpp: 
+
+	* tests/ior_corbaloc/ior_corbaloc_client_i.cpp:
 	  Made the argument to string_to_object as a command line
 	  parameter.
 
 Tue Jun 27 17:45:47 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ior_corbaloc/CORBALOC_Parser.h: 
-	* tao/ior_corbaloc/CORBALOC_Parser.cpp : 
+	* tao/ior_corbaloc/CORBALOC_Parser.h:
+	* tao/ior_corbaloc/CORBALOC_Parser.cpp :
 
 	  Implemented part of <corbaloc:iiop:>. Seperated the <obj_addr>
-	  from <obj_addr_list>. Used 
+	  from <obj_addr_list>. Used
 	  connector_registry ()->make_mprofile () to create an
 	  TAO_MProfile for the array of <obj_addr>.
 
-	* tests/ior_corbaloc/corbaloc.idl: 
-	* tests/ior_corbaloc/Makefile: 
+	* tests/ior_corbaloc/corbaloc.idl:
+	* tests/ior_corbaloc/Makefile:
 
 	* tests/ior_corbaloc/client.cpp:
-	* tests/ior_corbaloc/ior_corbaloc_client_i.h: 
-	* tests/ior_corbaloc/ior_corbaloc_client_i.cpp : 
-	
-	* tests/ior_corbaloc/server.cpp: 
-	* tests/ior_corbaloc/status_i.h: 
-	* tests/ior_corbaloc/status_i.cpp: 
+	* tests/ior_corbaloc/ior_corbaloc_client_i.h:
+	* tests/ior_corbaloc/ior_corbaloc_client_i.cpp :
+
+	* tests/ior_corbaloc/server.cpp:
+	* tests/ior_corbaloc/status_i.h:
+	* tests/ior_corbaloc/status_i.cpp:
 
 	  Added an example to test the corbaloc: style IOR. When the
 	  client invokes a request on the server, the server prints that
 	  the connection between the client and server is set.
 	  Tested <corbaloc:rir:>.
-	
+
 Thu Jun 29 11:47:48 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Stub.h:
@@ -221,16 +221,16 @@ Thu Jun 29 11:47:48 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Tue Jun 27 10:45:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ior_corbaloc/Makefile: 
-	* tao/ior_corbaloc/ior_corbaloc_export.h: 
-	* tao/ior_corbaloc/CORBALOC_Parser.i : 
-	* tao/ior_corbaloc/CORBALOC_Parser.h: 
-	* tao/ior_corbaloc/CORBALOC_Parser.cpp : 
+	* tao/ior_corbaloc/Makefile:
+	* tao/ior_corbaloc/ior_corbaloc_export.h:
+	* tao/ior_corbaloc/CORBALOC_Parser.i :
+	* tao/ior_corbaloc/CORBALOC_Parser.h:
+	* tao/ior_corbaloc/CORBALOC_Parser.cpp :
 	  Implemented part of  the corbaloc: style parser. Able to support
 	  <corbaloc:rir:/>. Done with seperating the <obj_addr> from the
 	  <obj_addr_list>
 
-	* tao/ORB.cpp : 
+	* tao/ORB.cpp :
 	  Removed the file_string_to_object function as it is no longer
 	  needed.
 
