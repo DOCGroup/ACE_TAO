@@ -28,13 +28,8 @@ ACE_TTY_IO::control (Control_Mode cmd,
 
   // Get default device parameters.
  
-    // Get default device parameters.
-#if defined (M_UNIX)
-  return -1;
-#else
     if (this->ACE_IO_SAP::control (TCGETS, (void *) &devpar) == -1)
       return -1;
-#endif /* M_UNIX */
 
   switch (cmd)
     {
@@ -122,11 +117,7 @@ ACE_TTY_IO::control (Control_Mode cmd,
       devpar.c_cc[4] = ivmin_cc4;
       devpar.c_cc[5] = ivtime_cc5;
       
-#if defined (M_UNIX)
-      return -1;
-#else      
       return this->ACE_IO_SAP::control (TCSETS, (void *) &devpar);
-#endif /* M_UNIX */
 
     case GETPARAMS:
       return -1; // Not yet implemented.
