@@ -82,18 +82,6 @@ pace_execv (const char * path,
   /* if successful, this operation does NOT return */
 }
 
-PACE_BROKEN_INLINE
-int
-pace_execl (const char* path, const char* arg, ...)
-{
-  int result = 0;
-  va_list ap;
-  va_start (ap, arg);
-  result = pace_execv (path, (char*const*)ap);
-  va_end (ap);
-  return result;
-}
-
 PACE_INLINE
 int
 pace_execve (const char * path,
@@ -104,18 +92,6 @@ pace_execve (const char * path,
   /* if successful, this operation does NOT return */
 }
 
-PACE_BROKEN_INLINE
-int
-pace_execle (const char* path, const char* arg, ...)
-{
-  int result = 0;
-  va_list ap;
-  va_start (ap, arg);
-  result = pace_execve (path, (char*const*)ap, 0);
-  va_end (ap);
-  return result;
-}
-
 PACE_INLINE
 int
 pace_execvp (const char * file,
@@ -123,18 +99,6 @@ pace_execvp (const char * file,
 {
   return execvp (file, argv);
   /* if successful, this operation does NOT return */
-}
-
-PACE_BROKEN_INLINE
-int
-pace_execlp (const char* file, const char* arg,  ...)
-{
-  int result = 0;
-  va_list ap;
-  va_start (ap, arg);
-  result = pace_execvp (file, (char*const*)ap);
-  va_end (ap);
-  return result;
 }
 
 PACE_INLINE
