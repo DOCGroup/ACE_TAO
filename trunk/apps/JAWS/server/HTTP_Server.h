@@ -146,5 +146,13 @@ private:
 
 ACE_STATIC_SVC_DECLARE (HTTP_Server)
 
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "JAWS/server/HTTP_Server.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("HTTP_Server.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
 #endif /* HTTP_SERVER_H */
 
