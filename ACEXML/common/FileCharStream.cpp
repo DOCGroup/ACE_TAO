@@ -96,9 +96,14 @@ int
 ACEXML_FileCharStream::close (void)
 {
   if (this->infile_ != NULL)
-  ACE_OS::fclose (this->infile_);
+    {
+      ACE_OS::fclose (this->infile_);
+      this->infile_ = NULL;
+    }
   delete[] this->filename_;
+  this->filename_ = 0;
   delete[] this->encoding_;
+  this->encoding_ = 0;
   this->size_ = 0;
   this->peek_ = 0;
   return 0;
