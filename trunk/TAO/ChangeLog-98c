@@ -1,26 +1,26 @@
 Tue Jul 28 16:54:00 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-      * TAO/tests/Param_Test/bd_struct_seq.cpp: Sequence length          
+      * TAO/tests/Param_Test/bd_struct_seq.cpp: Sequence length
         initialization didn't work, so zero-length sequence always
-        returned "correct" results in sii call. Fixed it so the 
+        returned "correct" results in sii call. Fixed it so the
         sequence length is actually initialized, gets correct results
         in sii test, correct with dii as well, but request crashes on
         release, same as for var_struct. Still looking into that.
 
 Tue Jul 28 16:43:22 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/Event_Latency/run_test.pl: 
-	* orbsvcs/tests/EC_Multiple/run_test.pl: 
-	* orbsvcs/tests/EC_Throughput/run_test.pl: 
-	* orbsvcs/tests/Simple_Naming/run_test.pl: 
-	  Added and updated the one-button tests for this directories.
+        * orbsvcs/tests/Event_Latency/run_test.pl:
+        * orbsvcs/tests/EC_Multiple/run_test.pl:
+        * orbsvcs/tests/EC_Throughput/run_test.pl:
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+          Added and updated the one-button tests for this directories.
 
-	* tests/Param_Test/bd_string.cpp: 
-	  The name of the test was wrong.
+        * tests/Param_Test/bd_string.cpp:
+          The name of the test was wrong.
 
 Tue Jul 28 16:25:11 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-      * tao/Sequence_T.i : Reversed the order of 2 args in 
+      * tao/Sequence_T.i : Reversed the order of 2 args in
         the base class call of one of the
         constructors for TAO_Bounded_Sequence<T,MAX> and added a line to
         this and to the default constructor for TAO_Bounded_Sequence<T,MAX>
@@ -43,6 +43,9 @@ Tue Jul 28 16:22:28 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_Scheduler_Factory::use_runtime () calls, when in
           runtime mode only.  Also, added printouts just before
           registering each supplier and consumer, to help debugging.
+
+        * tests/NestedUpcall/MT_Client_Test/client.cpp (init): use of
+          ACE_thread_t as an unsigned long requires a reinterpret_cast.
 
 Tue Jul 28 15:07:32 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
