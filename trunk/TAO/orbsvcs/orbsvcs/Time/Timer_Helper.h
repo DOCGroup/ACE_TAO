@@ -35,7 +35,7 @@
 
 class TAO_Time_Service_Clerk;
 
-class Timer_Helper : public ACE_Event_Handler
+class TAO_ORBSVCS_Export Timer_Helper : public ACE_Event_Handler
 {
   // = TITLE
   //    Timer Helper for the clerk.
