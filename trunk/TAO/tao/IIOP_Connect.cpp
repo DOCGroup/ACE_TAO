@@ -427,8 +427,8 @@ TAO_IIOP_Client_Connection_Handler::handle_input (ACE_HANDLE)
 }
 
 int
-TAO_IIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &tv,
-                                                    const void *arg)
+TAO_IIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
+                                                    const void *)
 {
   // Called when buffering timer expires.
   this->transport ()->flush_buffered_messages ();
