@@ -199,6 +199,10 @@ typedef int key_t;
 #endif /* ACE_LACKS_KEY_T */
 
 #if defined (VXWORKS)
+// GreenHills 1.8.8 needs the stdarg.h #include before #include of vxWorks.h.
+// Also, be sure that these #includes come _after_ the key_t typedef, and
+// before the #include of time.h.
+#include /**/ <stdarg.h>
 #include /**/ <vxWorks.h>
 #endif /* VXWORKS */
 
@@ -1956,9 +1960,16 @@ typedef short ACE_pri_t;
   typedef hrtime_t ACE_hrtime_t;
 #else
   #if defined (ACE_HAS_LONGLONG_T)
-    typedef long long ACE_hrtime_t;
+    #if defined (__GNUC__)
+      // Need to use {u_}longlong_t with g++ 2.7.2, because its
+      // long {unsigned} long types are only 4 bytes.
+      typedef u_longlong_t ACE_hrtime_t;
+    #else
+      // Sun C++ 4.1 won't accept "long u_long" or "u_long long".
+      typedef unsigned long long ACE_hrtime_t;
+    #endif /* __GNUC__ */
   #else
-    typedef long ACE_hrtime_t;
+    typedef u_long ACE_hrtime_t;
   #endif /* ACE_HAS_LONGLONG_T */
 #endif /* ACE_HAS_HI_RES_TIMER */
 
@@ -2381,6 +2392,9 @@ typedef int ACE_Sched_Priority;
 class ACE_Sched_Params;
 
 #if defined (ACE_LACKS_FILELOCKS)
+#if ! defined (VXWORKS)
+// VxWorks defines struct flock in sys/fcntlcom.h.  But it doesn't
+// appear to support flock ().
 struct flock 
 {
   short	l_type;
@@ -2391,6 +2405,7 @@ struct flock
   pid_t	l_pid;
   long	l_pad[4];		/* reserve area */
 };
+#endif /* ! VXWORKS */
 #endif /* ACE_LACKS_FILELOCKS */
 
 #if !defined (ACE_HAS_IP_MULTICAST)
@@ -2556,6 +2571,9 @@ public:
   // = A set of wrappers for timers and resource stats.
   static u_int alarm (u_int delay);
   static ACE_hrtime_t gethrtime (void);
+#if defined (ACE_HAS_POWERPC) && defined (ghs)
+  static void ACE_OS::readPPCTimeBase (u_long &most, u_long &least);
+#endif /* ACE_HAS_POWERPC && ghs */
   static int clock_gettime (clockid_t, struct timespec *);
   static ACE_Time_Value gettimeofday (void);
   static int getrusage (int who, struct rusage *rusage);
