@@ -116,8 +116,11 @@ public:
 
   // = TAO-specific methods.
   TAO_Client_Strategy_Factory *client_factory (void);
+  // Returns pointer to the client factory.
   TAO_Server_Strategy_Factory *server_factory (void);
+  // Returns pointer to the server factory.
   TAO_ORB_Parameters *params (void);
+  // Returns pointer to ORB parameters.
 
   int open (void);
   // Set up the internal acceptor to listen on the
