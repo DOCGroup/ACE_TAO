@@ -1,3 +1,7 @@
+Tue May  2 09:34:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/SOCK_Send_Recv_Test.cpp: Fix signed/unsigned warnings.
+
 Mon May  1 16:51:07 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/msvc_auto_compile.pl: 
