@@ -70,10 +70,23 @@ $(LOBJS): $(LHDRS)
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/utl_scope.o .shobj/utl_scope.so: utl_scope.cpp ../include/idl.h ../include/intlmacros.h \
- ../include/idl_narrow.h ../include/idl_defines.h ../include/idl_fwd.h \
- ../include/idl_bool.h ../include/utl_string.h \
- ../include/utl_identifier.h ../include/ast.h \
+.obj/utl_scope.o .shobj/utl_scope.so: utl_scope.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
+ ../include/intlmacros.h ../include/idl_narrow.h \
+ ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
+ ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
  ../include/utl_scoped_name.h ../include/ast_decl.h \
  ../include/ast_expression.h ../include/utl_scope.h \
  ../include/ast_type.h ../include/ast_concrete_type.h \
@@ -97,10 +110,23 @@ $(LOBJS): $(LHDRS)
  ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h
-.obj/utl_stack.o .shobj/utl_stack.so: utl_stack.cpp ../include/idl.h ../include/intlmacros.h \
- ../include/idl_narrow.h ../include/idl_defines.h ../include/idl_fwd.h \
- ../include/idl_bool.h ../include/utl_string.h \
- ../include/utl_identifier.h ../include/ast.h \
+.obj/utl_stack.o .shobj/utl_stack.so: utl_stack.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
+ ../include/intlmacros.h ../include/idl_narrow.h \
+ ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
+ ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
  ../include/utl_scoped_name.h ../include/ast_decl.h \
  ../include/ast_expression.h ../include/utl_scope.h \
  ../include/ast_type.h ../include/ast_concrete_type.h \
@@ -124,10 +150,23 @@ $(LOBJS): $(LHDRS)
  ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h
-.obj/utl_string.o .shobj/utl_string.so: utl_string.cpp ../include/idl.h ../include/intlmacros.h \
- ../include/idl_narrow.h ../include/idl_defines.h ../include/idl_fwd.h \
- ../include/idl_bool.h ../include/utl_string.h \
- ../include/utl_identifier.h ../include/ast.h \
+.obj/utl_string.o .shobj/utl_string.so: utl_string.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
+ ../include/intlmacros.h ../include/idl_narrow.h \
+ ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
+ ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
  ../include/utl_scoped_name.h ../include/ast_decl.h \
  ../include/ast_expression.h ../include/utl_scope.h \
  ../include/ast_type.h ../include/ast_concrete_type.h \
@@ -152,6 +191,19 @@ $(LOBJS): $(LHDRS)
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h
 .obj/utl_decllist.o .shobj/utl_decllist.so: utl_decllist.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -179,6 +231,19 @@ $(LOBJS): $(LHDRS)
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h
 .obj/utl_labellist.o .shobj/utl_labellist.so: utl_labellist.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -206,6 +271,19 @@ $(LOBJS): $(LHDRS)
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h
 .obj/utl_namelist.o .shobj/utl_namelist.so: utl_namelist.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -233,6 +311,19 @@ $(LOBJS): $(LHDRS)
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h
 .obj/utl_exceptlist.o .shobj/utl_exceptlist.so: utl_exceptlist.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -260,6 +351,19 @@ $(LOBJS): $(LHDRS)
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h
 .obj/utl_strlist.o .shobj/utl_strlist.so: utl_strlist.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -286,10 +390,23 @@ $(LOBJS): $(LHDRS)
  ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h
-.obj/utl_list.o .shobj/utl_list.so: utl_list.cpp ../include/idl.h ../include/intlmacros.h \
- ../include/idl_narrow.h ../include/idl_defines.h ../include/idl_fwd.h \
- ../include/idl_bool.h ../include/utl_string.h \
- ../include/utl_identifier.h ../include/ast.h \
+.obj/utl_list.o .shobj/utl_list.so: utl_list.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
+ ../include/intlmacros.h ../include/idl_narrow.h \
+ ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
+ ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
  ../include/utl_scoped_name.h ../include/ast_decl.h \
  ../include/ast_expression.h ../include/utl_scope.h \
  ../include/ast_type.h ../include/ast_concrete_type.h \
@@ -314,6 +431,19 @@ $(LOBJS): $(LHDRS)
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h
 .obj/utl_exprlist.o .shobj/utl_exprlist.so: utl_exprlist.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -340,10 +470,23 @@ $(LOBJS): $(LHDRS)
  ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h
-.obj/utl_error.o .shobj/utl_error.so: utl_error.cpp ../include/idl.h ../include/intlmacros.h \
- ../include/idl_narrow.h ../include/idl_defines.h ../include/idl_fwd.h \
- ../include/idl_bool.h ../include/utl_string.h \
- ../include/utl_identifier.h ../include/ast.h \
+.obj/utl_error.o .shobj/utl_error.so: utl_error.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
+ ../include/intlmacros.h ../include/idl_narrow.h \
+ ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
+ ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
  ../include/utl_scoped_name.h ../include/ast_decl.h \
  ../include/ast_expression.h ../include/utl_scope.h \
  ../include/ast_type.h ../include/ast_concrete_type.h \
@@ -368,6 +511,19 @@ $(LOBJS): $(LHDRS)
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h
 .obj/utl_indenter.o .shobj/utl_indenter.so: utl_indenter.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -395,6 +551,19 @@ $(LOBJS): $(LHDRS)
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h
 .obj/utl_identifier.o .shobj/utl_identifier.so: utl_identifier.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -421,10 +590,23 @@ $(LOBJS): $(LHDRS)
  ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h
-.obj/utl_idlist.o .shobj/utl_idlist.so: utl_idlist.cpp ../include/idl.h ../include/intlmacros.h \
- ../include/idl_narrow.h ../include/idl_defines.h ../include/idl_fwd.h \
- ../include/idl_bool.h ../include/utl_string.h \
- ../include/utl_identifier.h ../include/ast.h \
+.obj/utl_idlist.o .shobj/utl_idlist.so: utl_idlist.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
+ ../include/intlmacros.h ../include/idl_narrow.h \
+ ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
+ ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
  ../include/utl_scoped_name.h ../include/ast_decl.h \
  ../include/ast_expression.h ../include/utl_scope.h \
  ../include/ast_type.h ../include/ast_concrete_type.h \
@@ -448,10 +630,23 @@ $(LOBJS): $(LHDRS)
  ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
  ../include/drv_extern.h ../include/ast_extern.h \
  ../include/nr_extern.h ../include/global_extern.h
-.obj/utl_global.o .shobj/utl_global.so: utl_global.cpp ../include/idl.h ../include/intlmacros.h \
- ../include/idl_narrow.h ../include/idl_defines.h ../include/idl_fwd.h \
- ../include/idl_bool.h ../include/utl_string.h \
- ../include/utl_identifier.h ../include/ast.h \
+.obj/utl_global.o .shobj/utl_global.so: utl_global.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
+ ../include/intlmacros.h ../include/idl_narrow.h \
+ ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
+ ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
  ../include/utl_scoped_name.h ../include/ast_decl.h \
  ../include/ast_expression.h ../include/utl_scope.h \
  ../include/ast_type.h ../include/ast_concrete_type.h \
