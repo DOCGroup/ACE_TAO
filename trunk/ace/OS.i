@@ -5389,7 +5389,7 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 #   if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
       return ::pthread_getspecific (key, data);
 #   else /* this is Draft 7 or STD */
-      *data = ::pthread_getspecific (key);
+      *data = pthread_getspecific (key);
 #   endif       /*  ACE_HAS_PTHREADS_DRAFT4, 6 */
       return 0;
 # elif defined (ACE_HAS_WTHREADS)
