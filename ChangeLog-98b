@@ -179,6 +179,7 @@ Wed Nov 18 20:56:38 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
           feature in the constructor of the ACE_DLL class.
 
 Wed Nov 18 15:51:42 1998  David L. Levine  <levine@cs.wustl.edu>
+
         * ace/Basic_Types.h (ACE_UINT64_DBLCAST_ADAPTER): on other
           than Win32 and without ACE_LACKS_LONGLONG_T, wrapped the
           "n" macro definition with parenthesis, to avoid insidious
