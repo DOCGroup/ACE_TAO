@@ -94,8 +94,8 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
 
   // Check <length_request>
   if (length_request == -1)
-    // Set length to file_request
-    this->length_ = current_file_length;
+    // Set length to file_request.
+    this->length_ = current_file_length - offset;
   else
     {
       // File length implicitly requested by user
