@@ -23,7 +23,7 @@
 #define ACE_BLOB_HANDLER_H
 
 #include "ace/OS.h"
-#include "ace/INET_Addr.h"
+#include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Message_Block.h"
 
