@@ -15,9 +15,11 @@
 
 
 #include "orbsvcs/CosPropertyService_i.h"
-#include "tao/corbacom.h"  // to know the type codes
-#include "tao/any.h"       // I am using Any type.
+#include "tao/corbacom.h" 
+#include "tao/any.h"      
 
+// Prototypes
+void printAny (CORBA::Any_var anyval);
 
 int 
 main (int argc, char *argv []) 
@@ -30,44 +32,53 @@ main (int argc, char *argv [])
       CORBA::Any testval;
       
       // Number of properties in the PropertyaSet
-      ACE_DEBUG ( (LM_DEBUG, "Test : Number of props : %d \n", propSet.get_number_of_properties (TAO_TRY_ENV)) );
+      ACE_DEBUG ( (LM_DEBUG, "Main : Number of props : %d \n", propSet.get_number_of_properties (TAO_TRY_ENV)) );
       
       // prepare a Short and  "define" that in the PropertySet 
       CORBA::Short s = 3;
-      testval.replace ( CORBA::_tc_short, &s, CORBA::B_FALSE, TAO_TRY_ENV);
-      ACE_DEBUG ( (LM_DEBUG, "Short s = %d \n", ( *(short *)testval.value ())) );
+      testval.replace ( CORBA::_tc_short,
+                        &s,
+                        CORBA::B_FALSE,
+                        TAO_TRY_ENV);
+      ACE_DEBUG ( (LM_DEBUG, "Main : Short s = %d \n", ( *(short *)testval.value ())) );
       
       propSet.define_property ("short_property", testval, TAO_TRY_ENV);
       
       // prepare a Long and  "define" that in the PropertySet 
       CORBA::Long l = 931232;
-      testval.replace (CORBA::_tc_long, &l, CORBA::B_FALSE, TAO_TRY_ENV);
-      ACE_DEBUG ( (LM_DEBUG, "Long l = %d \n", (*(long *)testval.value ())) );
+      testval.replace (CORBA::_tc_long,
+                       &l,
+                       CORBA::B_FALSE,
+                       TAO_TRY_ENV);
+      ACE_DEBUG ( (LM_DEBUG, "Main : Long l = %d \n", (*(long *)testval.value ())) );
       
       propSet.define_property ("long_property", testval, TAO_TRY_ENV);
       
-      // prepare a Long and  "define" that in the PropertySet 
-      float f = 3.14;
-      testval.replace (CORBA::_tc_float, &f, CORBA::B_FALSE, TAO_TRY_ENV);
+      // prepare a Float and  "define" that in the PropertySet 
+      CORBA::Float f = 3.14;
+      testval.replace (CORBA::_tc_float,
+                       &f,
+                       CORBA::B_FALSE,
+                       TAO_TRY_ENV);
       f =   (*((float *)testval.value ()));
-      ACE_DEBUG ( (LM_DEBUG, "Float f = %f \n", f));
+      ACE_DEBUG ( (LM_DEBUG, "Main : Float f = %f \n", f));
       
       propSet.define_property ("float_property", testval, TAO_TRY_ENV);
       
       // Let us test the number of properties now
-      ACE_DEBUG ( (LM_DEBUG, "Number of props : %d \n", propSet.get_number_of_properties (TAO_TRY_ENV)) );
+      ACE_DEBUG ( (LM_DEBUG, "Main : Number of props : %d \n", propSet.get_number_of_properties (TAO_TRY_ENV)) );
       
       // delete a few properties
       propSet.delete_property ("short_property", TAO_TRY_ENV);
-      ACE_DEBUG ( (LM_DEBUG, "\nshort_property deleted !!") );
       
       // Let us test the number of properties now
-      ACE_DEBUG ( (LM_DEBUG, "\n Number of props : %d \n", propSet.get_number_of_properties (TAO_TRY_ENV)) );
-      
+      ACE_DEBUG ( (LM_DEBUG, "\n Main :  Number of props : %d \n", propSet.get_number_of_properties (TAO_TRY_ENV)) );
       
       // Let us try to "get" back those values
-      testval =  * propSet.get_property_value ("float_property", TAO_TRY_ENV);
-      testval =  * propSet.get_property_value ("short_property", TAO_TRY_ENV);
+      //CORBA::Any_ptr anyptr;
+      //anyptr = propSet.get_property_value ("float_property", TAO_TRY_ENV);
+      //CORBA::Any_var anyvar (anyptr);
+      //printAny (anyvar.in ());
     }
   TAO_CATCH (CORBA::SystemException, sysex)
     {
@@ -84,32 +95,37 @@ main (int argc, char *argv [])
   return 0;
 }  
 
-/*
-  static TypeCode_ptr          _tc_short;
-  static TypeCode_ptr          _tc_long;
-  static TypeCode_ptr          _tc_ushort;
-  static TypeCode_ptr          _tc_ulong;
-  static TypeCode_ptr          _tc_float;
-  static TypeCode_ptr          _tc_double;
-  static TypeCode_ptr          _tc_boolean;
-  static TypeCode_ptr          _tc_char;
-  static TypeCode_ptr          _tc_octet;
-  static TypeCode_ptr          _tc_any;
-  static TypeCode_ptr          _tc_TypeCode;
-  static TypeCode_ptr          _tc_Principal;
-  static TypeCode_ptr          _tc_Object;
-  static TypeCode_ptr          _tc_struct;
-  static TypeCode_ptr          _tc_union;
-  static TypeCode_ptr          _tc_enum;
-  static TypeCode_ptr          _tc_string;
-  static TypeCode_ptr          _tc_sequence;
-  static TypeCode_ptr          _tc_array;
-  static TypeCode_ptr          _tc_alias;
-  static TypeCode_ptr          _tc_except;
-  static TypeCode_ptr          _tc_longlong;
-  static TypeCode_ptr          _tc_ulonglong;
-  static TypeCode_ptr          _tc_longdouble;
-  static TypeCode_ptr          _tc_wchar;
-  static TypeCode_ptr          _tc_wstring;
-  */
+void
+printAny (CORBA::Any_var anyval)
+{
+  /*
+  switch (anyval->type ())
+    {
+    case _tc_short :
+      ACE_DEBUG ( (LM_DEBUG, "Main : Short = %d \n", ( *(short *)anyval->value ())) );
+      break;
+    
+    case _tc_long :      
+      ACE_DEBUG ( (LM_DEBUG, "Main : Long = %d \n", (*(long *)anyval->value ())) );
+      break;
+      
+    case _tc_float : 
+      ACE_DEBUG ( (LM_DEBUG, "Main : Float = %f \n", (*(long *)anyval->value ())) );
+      break;
+   
+    default:
+      ACE_DEBUG ((LM_DEBUG, "I don't know this typecode"));
+    }
+    */
+
+  if (anyval->type () == CORBA::_tc_short) 
+    {
+      ACE_DEBUG ( (LM_DEBUG, "Main : Short = %d \n", ( *(short *)anyval->value ())) );
+    }
+}
+
+
+
+
+
 

@@ -159,6 +159,8 @@ TAO_PropertySet::get_property_value (const char *property_name,  CORBA::Environm
     {
       ACE_ERROR ((LM_ERROR, "Find failed: \n"));
     }
+  ACE_DEBUG ( (LM_DEBUG, "find fn over \n") );
+  
   return (&int_id.pvalue_);
 }
   
@@ -184,7 +186,8 @@ TAO_PropertySet::delete_property (const char *property_name,  CORBA::Environment
 {
   EXT_ID ext_id ( (CosPropertyService::PropertyName) property_name);
   
-  ACE_DEBUG ( (LM_DEBUG, "delete_property : property_name %s, ext_id.pname_.in() %s \n", property_name, ext_id.pname_.in()) );
+  ACE_DEBUG ( (LM_DEBUG, "delete_property : property_name %s, ext_id.pname_.in() %s \n", property_name,
+               ext_id.pname_.in()) );
   
   // alex: Doing unbinding.. Not getting INT_ID back... Problem if dynamic allocation is done
   if (this->hash_table_.unbind (ext_id) != 0)
