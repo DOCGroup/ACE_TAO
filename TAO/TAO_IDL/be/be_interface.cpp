@@ -501,7 +501,7 @@ int be_interface::gen_server_header (void)
       << "_ptr;" << nl;
 
   // now generate the class definition
-  *sh << "class " << namebuf << " : public virtual " << name ();
+  *sh << "class " << namebuf << " : public virtual " << this->name ();
   if (n_inherits () > 0)  // this interface inherits from other interfaces
     {
       be_interface *intf;
@@ -510,7 +510,10 @@ int be_interface::gen_server_header (void)
         {
           *sh << ", public virtual ";
           intf = be_interface::narrow_from_decl (inherits ()[i]);
-          *sh << intf->full_skel_name ();  // dump the scoped name
+          *sh << intf->relative_skel_name (this->full_skel_name ());  // dump
+                                                                      // the
+                                                                      // scoped
+                                                                      // name
         }  // end of for loop
     }
   *sh << nl;
@@ -1745,6 +1748,84 @@ be_interface::gen_skel_helper (be_interface *derived,
     }
   return 0;
 }
+
+// return the relative skeleton name (needed due to NT compiler insanity)
+char *
+be_interface::relative_skel_name (const char *skelname)
+{
+  // some compilers do not like generating a fully scoped name for a type that
+  // was defined in the same enclosing scope in which it was defined. For such,
+  // we emit a macro defined in the ACE library.
+  //
+
+  // The tricky part here is that it is not enough to check if the
+  // typename we are using was defined in the current scope. But we
+  // need to ensure that it was not defined in any of our ancestor
+  // scopes as well. If that is the case, then we can generate a fully
+  // scoped name for that type, else we use the ACE_NESTED_CLASS macro
+
+  // thus we need some sort of relative name to be generated
+
+  static char macro [NAMEBUFSIZE];
+  be_decl *def_scope = 0;  // our defining scope
+  char // hold the fully scoped name
+    def_name [NAMEBUFSIZE],
+    use_name [NAMEBUFSIZE];
+  char // these point to the curr and next component in the scope
+    *def_curr = def_name,
+    *def_next,
+    *use_curr = use_name,
+    *use_next;
+
+  ACE_OS::memset (macro, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (def_name, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (use_name, '\0', NAMEBUFSIZE);
+
+  // traverse every component of the def_scope and use_scope beginning at the
+  // root and proceeding towards the leaf trying to see if the components
+  // match. Continue until there is a match and keep accumulating the path
+  // traversed. This forms the first argument to the ACE_NESTED_CLASS
+  // macro. Whenever there is no match, the remaining components of the
+  // def_scope form the second argument
+
+  ACE_OS::strcpy (def_name, this->full_skel_name ());
+  ACE_OS::strcpy (use_name, skelname);
+
+  while (def_curr && use_curr)
+    {
+      // find the first occurrence of a :: and advance the next pointers accordingly
+      def_next = ACE_OS::strstr (def_curr, "::");
+      use_next = ACE_OS::strstr (use_curr, "::");
+
+      if (def_next)
+        *def_next = 0;
+
+      if (use_next)
+        *use_next = 0;
+
+      if (!ACE_OS::strcmp (def_curr, use_curr))
+        {
+          // they have same prefix, append to arg1
+          def_curr = (def_next ? (def_next+2) : 0); // skip the ::
+          use_curr = (use_next ? (use_next+2) : 0); // skip the ::
+        }
+      else
+        {
+          // no match. This is the end of the first argument. Get out
+          // of the loop as no more comparisons are necessary
+          break;
+        }
+    }
+
+  // start the 2nd argument of the macro
+
+  // copy the remaining def_name (if any left)
+  if (def_curr)
+    ACE_OS::strcat (macro, def_curr);
+
+  return macro;
+}
+
 
 // Narrowing
 IMPL_NARROW_METHODS3 (be_interface, AST_Interface, be_scope, be_type)
