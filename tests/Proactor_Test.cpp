@@ -156,7 +156,10 @@ disable_signal (int sigmin, int sigmax)
 class MyTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  MyTask (void): lock_ (), sem_ (0), proactor_(0) {}
+  MyTask (void):
+    lock_ (),
+    sem_ ((unsigned int) 0),
+    proactor_(0) {}
 
   virtual ~MyTask()
     {
