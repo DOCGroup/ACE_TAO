@@ -42,7 +42,8 @@ int be_visitor_args::visit_argument (be_argument *)
 // files) or as a fully scoped name. In addition, we make sure that if the type
 // is an alias, we use that name
 const char *
-be_visitor_args::type_name (be_type *node, const char *suffix)
+be_visitor_args::type_name (be_type *node, 
+                            const char *suffix)
 {
   static char namebuf [NAMEBUFSIZE];
   ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
@@ -55,19 +56,13 @@ be_visitor_args::type_name (be_type *node, const char *suffix)
   else
     bt = node;
 
-  // generate the NESTED_CLASS macro i.e., a relative path name to satisfy the
-  // MSVC++ compiler
-  switch (this->ctx_->stream ()->stream_type ())
-    {
-    case TAO_OutStream::TAO_CLI_HDR:
-      ACE_OS::sprintf (namebuf, "%s", bt->nested_type_name
-                       (this->ctx_->scope (), suffix));
-      break;
-    default: // fullname for all other cases
-      ACE_OS::sprintf (namebuf, "%s", bt->full_name ());
-      if (suffix)
-        ACE_OS::strcat (namebuf, suffix);
-    }
+  ACE_OS::sprintf (namebuf, 
+                   "%s", 
+                   bt->full_name ());
+
+  if (suffix)
+    ACE_OS::strcat (namebuf, 
+                    suffix);
 
   return namebuf;
 }
