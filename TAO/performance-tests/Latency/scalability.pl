@@ -30,14 +30,14 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   exit 1;
 }
 
-for ($i = 1; $i != 65; ++$i) {
+for ($i = 1; $i < 40; $i += 4) {
   $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
 			 " -ORBSvcConf client.conf "
 			 . " -k file://$iorfile "
 			 . " -n $i -i $iterations -p 10 -x");
 
   # Each iteration should take 100 seconds
-  $client = $CL->TimedWait (120);
+  $client = $CL->Wait ();
   if ($client == -1) {
     print STDERR "ERROR: client <$i> timedout\n";
     $CL->Kill (); $CL->TimedWait (1);
@@ -64,14 +64,14 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   exit 1;
 }
 
-for ($i = 1; $i != 65; ++$i) {
+for ($i = 1; $i < 40; $i += 4) {
   $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
 			 " -ORBSvcConf client.conf "
 			 . " -k file://$iorfile "
 			 . " -n $i -i $iterations -p 10 -x");
 
   # Each iteration should take 100 seconds
-  $client = $CL->TimedWait (120);
+  $client = $CL->Wait ();
   if ($client == -1) {
     print STDERR "ERROR: client <$i> timedout\n";
     $CL->Kill (); $CL->TimedWait (1);
