@@ -140,6 +140,9 @@ public:
   // Close down a <Hash_Map_Manager_Ex> and release dynamically allocated
   // resources.
 
+  int unbind_all (void);
+  // Removes all the entries in <Map_Manager_Ex>.
+
   ~ACE_Hash_Map_Manager_Ex (void);
   // Initialize a <Hash_Map_Manager_Ex> with size <length>.
 
@@ -373,6 +376,10 @@ protected:
 
   int close_i (void);
   // Close down a <Map_Manager_Ex>.  Must be called with
+  // locks held.
+
+  int unbind_all_i (void);
+  // Removes all the entries in <Map_Manager_Ex>.  Must be called with
   // locks held.
 
   ACE_Allocator *allocator_;
