@@ -313,8 +313,6 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
       temp2.release ();
     }
 }
-//@@ need intantiation for TAO_Bindings_Iterator
-//@@ and transient naming context auto pointer.
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Iterator_Base_Ex<TAO_ExtId, TAO_IntId, ACE_Hash<TAO_ExtId>, ACE_Equal_To<TAO_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<TAO_ExtId, TAO_IntId, ACE_Null_Mutex>;
@@ -325,7 +323,9 @@ template class ACE_Hash_Map_Manager_Ex<TAO_ExtId, TAO_IntId, ACE_Hash<TAO_ExtId>
 template class ACE_Hash_Map_Manager<TAO_ExtId, TAO_IntId, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<TAO_ExtId, TAO_IntId>;
 template class TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_ExtId, TAO_IntId, ACE_Hash<TAO_ExtId>, ACE_Equal_To<TAO_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_ExtId, TAO_IntId> >;
-
+template class ACE_Auto_Basic_Ptr<TAO_Transient_Naming_Context>;
+template class ACE_Auto_Basic_Ptr<TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_ExtId, TAO_IntId, ACE_Hash<TAO_ExtId>, ACE_Equal_To<TAO_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_ExtId, TAO_IntId> > >;
+template class ACE_Auto_Basic_Ptr<ACE_Hash_Map_Iterator_Ex<TAO_ExtId, TAO_IntId, ACE_Hash<TAO_ExtId>, ACE_Equal_To<TAO_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_ExtId, TAO_IntId> >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_ExtId, TAO_IntId, ACE_Hash<TAO_ExtId>, ACE_Equal_To<TAO_ExtId>, ACE_Null_Mutex>
@@ -338,5 +338,7 @@ template class TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_ExtId, TAO_Int
 #pragma instantiate ACE_Hash_Map_Manager<TAO_ExtId, TAO_IntId, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<TAO_ExtId, TAO_IntId>
 #pragma instantiate TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_ExtId, TAO_IntId, ACE_Hash<TAO_ExtId>, ACE_Equal_To<TAO_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_ExtId, TAO_IntId> >
-
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Transient_Naming_Context>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Bindings_Iterator<ACE_Hash_Map_Iterator_Ex<TAO_ExtId, TAO_IntId, ACE_Hash<TAO_ExtId>, ACE_Equal_To<TAO_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_ExtId, TAO_IntId> > >
+#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Hash_Map_Iterator_Ex<TAO_ExtId, TAO_IntId, ACE_Hash<TAO_ExtId>, ACE_Equal_To<TAO_ExtId>, ACE_Null_Mutex>, ACE_Hash_Map_Entry<TAO_ExtId, TAO_IntId> >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
