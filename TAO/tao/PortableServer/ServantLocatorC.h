@@ -47,6 +47,7 @@
 #include "tao/Object.h"
 #include "tao/Objref_VarOut_T.h"
 
+#include "tao/orb_typesC.h"
 #include "tao/PortableServer/PS_ForwardC.h"
 #include "tao/PortableServer/ServantManagerC.h"
 #include "tao/PortableServer/ForwardRequestC.h"

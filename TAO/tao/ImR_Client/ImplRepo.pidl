@@ -15,6 +15,7 @@
  */
 //=============================================================================
 
+///FUZZ: disable check_for_include/
 #include <tao/ImR_Client/ServerObject.pidl>
 
 module ImplementationRepository

@@ -265,7 +265,7 @@ ImplementationRepository::ServerObject::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -324,7 +324,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1629
+// be\be_visitor_root/root.cpp:1509
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

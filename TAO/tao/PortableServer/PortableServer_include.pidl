@@ -34,6 +34,7 @@
 #ifndef _PORTABLESERVER_INCLUDE_IDL_
 #define _PORTABLESERVER_INCLUDE_IDL_
 
-#include "tao/PortableServer/PortableServer.pidl"
+///FUZZ: disable check_for_include/
+#include <tao/PortableServer/PortableServer.pidl>
 
 #endif /* _PORTABLESERVER_INCLUDE_IDL_ */

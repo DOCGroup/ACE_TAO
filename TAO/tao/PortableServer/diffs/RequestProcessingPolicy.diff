@@ -1,5 +1,5 @@
---- orig/RequestProcessingPolicyC.h	2004-11-17 09:22:03.380739200 +0100
-+++ RequestProcessingPolicyC.h	2004-11-17 09:22:12.363656000 +0100
+--- orig/RequestProcessingPolicyC.h	2005-02-18 11:19:46.359486400 +0100
++++ RequestProcessingPolicyC.h	2005-02-18 11:19:48.843057600 +0100
 @@ -97,6 +97,7 @@
      USE_SERVANT_MANAGER
    };
@@ -29,28 +29,28 @@
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 +
  // TAO_IDL - Generated from
- // be\be_codegen.cpp:958
+ // be\be_codegen.cpp:961
  
---- orig/RequestProcessingPolicyC.cpp	2004-11-17 09:22:03.380739200 +0100
-+++ RequestProcessingPolicyC.cpp	2004-11-17 09:22:12.433756800 +0100
-@@ -45,6 +45,8 @@
+--- orig/RequestProcessingPolicyC.cpp	2005-02-18 11:19:46.359486400 +0100
++++ RequestProcessingPolicyC.cpp	2005-02-18 11:19:48.853072000 +0100
+@@ -44,6 +44,8 @@
  // TAO_IDL - Generated from
- // be\be_visitor_arg_traits.cpp:64
+ // be\be_visitor_arg_traits.cpp:66
  
 +#if (TAO_HAS_MINIMUM_POA == 0)
 +
  // Arg traits specializations.
  namespace TAO
  {
-@@ -260,3 +262,5 @@
+@@ -253,3 +255,5 @@
        >
  
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 +
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
---- orig/RequestProcessingPolicyA.cpp	2004-11-17 09:22:03.400768000 +0100
-+++ RequestProcessingPolicyA.cpp	2004-11-17 09:22:12.483828800 +0100
-@@ -101,6 +101,8 @@
+--- orig/RequestProcessingPolicyA.cpp	2005-02-18 11:19:46.359486400 +0100
++++ RequestProcessingPolicyA.cpp	2005-02-18 11:19:48.863086400 +0100
+@@ -103,6 +103,8 @@
  // TAO_IDL - Generated from
  // be\be_visitor_typecode/typecode_defn.cpp:295
  
@@ -59,7 +59,7 @@
  static const CORBA::Long _oc_PortableServer_RequestProcessingPolicy[] =
  {
      TAO_ENCAP_BYTE_ORDER, // byte order
-@@ -264,3 +266,5 @@
+@@ -266,3 +268,5 @@
        >
  
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

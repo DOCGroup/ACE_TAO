@@ -20,6 +20,7 @@
 #ifndef _PORTABLESERVER_SERVANT_ACTIVATOR_IDL_
 #define _PORTABLESERVER_SERVANT_ACTIVATOR_IDL_
 
+///FUZZ: disable check_for_include/
 #include <tao/PortableServer/PS_Forward.pidl>
 #include <tao/PortableServer/ServantManager.pidl>
 #include <tao/PortableServer/ForwardRequest.pidl>
