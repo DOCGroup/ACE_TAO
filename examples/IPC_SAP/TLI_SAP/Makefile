@@ -50,12 +50,15 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/ftp-client.o .obj/ftp-client.so .shobj/ftp-client.o .shobj/ftp-client.so: ftp-client.cpp \
  $(ACE_ROOT)/ace/TLI_Connector.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/TLI_Stream.h \
  $(ACE_ROOT)/ace/TLI.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -70,18 +73,18 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/TLI.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/TLI_Stream.i \
- $(ACE_ROOT)/ace/TLI_Connector.i
+ $(ACE_ROOT)/ace/INET_Addr.i
 
 .obj/ftp-server.o .obj/ftp-server.so .shobj/ftp-server.o .shobj/ftp-server.so: ftp-server.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -145,22 +148,22 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/TLI.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/TLI_Stream.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/TLI_Stream.i \
- $(ACE_ROOT)/ace/TLI_Acceptor.i
+ $(ACE_ROOT)/ace/INET_Addr.i
 
 .obj/db-client.o .obj/db-client.so .shobj/db-client.o .shobj/db-client.so: db-client.cpp \
  $(ACE_ROOT)/ace/TLI_Connector.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/TLI_Stream.h \
  $(ACE_ROOT)/ace/TLI.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -175,19 +178,19 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/TLI.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/TLI_Stream.i \
- $(ACE_ROOT)/ace/TLI_Connector.i
+ $(ACE_ROOT)/ace/INET_Addr.i
 
 .obj/db-server.o .obj/db-server.so .shobj/db-server.o .shobj/db-server.so: db-server.cpp \
  $(ACE_ROOT)/ace/TLI_Acceptor.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/TLI.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -202,13 +205,10 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/TLI.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/TLI_Stream.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/TLI_Stream.i \
- $(ACE_ROOT)/ace/TLI_Acceptor.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
@@ -260,12 +260,15 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/CPP-client.o .obj/CPP-client.so .shobj/CPP-client.o .shobj/CPP-client.so: CPP-client.cpp \
  $(ACE_ROOT)/ace/TLI_Connector.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/TLI_Stream.h \
  $(ACE_ROOT)/ace/TLI.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -280,19 +283,19 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/TLI.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/TLI_Stream.i \
- $(ACE_ROOT)/ace/TLI_Connector.i
+ $(ACE_ROOT)/ace/INET_Addr.i
 
 .obj/CPP-server.o .obj/CPP-server.so .shobj/CPP-server.o .shobj/CPP-server.so: CPP-server.cpp \
  $(ACE_ROOT)/ace/TLI_Acceptor.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/TLI.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -307,22 +310,22 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/TLI.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/TLI_Stream.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/TLI_Stream.i \
- $(ACE_ROOT)/ace/TLI_Acceptor.i
+ $(ACE_ROOT)/ace/INET_Addr.i
 
 .obj/CPP-ATM-client.o .obj/CPP-ATM-client.so .shobj/CPP-ATM-client.o .shobj/CPP-ATM-client.so: CPP-ATM-client.cpp \
  $(ACE_ROOT)/ace/TLI_Connector.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/TLI_Stream.h \
  $(ACE_ROOT)/ace/TLI.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -337,22 +340,22 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/TLI.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/TLI_Stream.i \
- $(ACE_ROOT)/ace/TLI_Connector.i \
  $(ACE_ROOT)/ace/ATM_QoS.h \
  $(ACE_ROOT)/ace/ATM_Addr.h \
  $(ACE_ROOT)/ace/ATM_Addr.i
 
 .obj/CPP-ATM-server.o .obj/CPP-ATM-server.so .shobj/CPP-ATM-server.o .shobj/CPP-ATM-server.so: CPP-ATM-server.cpp \
  $(ACE_ROOT)/ace/TLI_Acceptor.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/TLI.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -367,13 +370,10 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/TLI.i \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/TLI_Stream.h \
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/TLI_Stream.i \
- $(ACE_ROOT)/ace/TLI_Acceptor.i \
  $(ACE_ROOT)/ace/ATM_Addr.h \
  $(ACE_ROOT)/ace/ATM_Addr.i
 

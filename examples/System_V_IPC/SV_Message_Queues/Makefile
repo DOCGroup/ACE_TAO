@@ -46,10 +46,13 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/MQ_Server.o .obj/MQ_Server.so .shobj/MQ_Server.o .shobj/MQ_Server.so: MQ_Server.cpp \
  $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -113,9 +116,12 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/MQ_Client.o .obj/MQ_Client.so .shobj/MQ_Client.o .shobj/MQ_Client.so: MQ_Client.cpp \
  $(ACE_ROOT)/ace/SV_Message_Queue.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -134,10 +140,13 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/TMQ_Server.o .obj/TMQ_Server.so .shobj/TMQ_Server.o .shobj/TMQ_Server.so: TMQ_Server.cpp \
  $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -207,10 +216,13 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/TMQ_Client.o .obj/TMQ_Client.so .shobj/TMQ_Client.o .shobj/TMQ_Client.so: TMQ_Client.cpp \
  $(ACE_ROOT)/ace/Typed_SV_Message_Queue.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/SV_Message_Queue.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \

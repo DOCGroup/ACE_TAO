@@ -54,10 +54,13 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Async_Timer_Queue_Test.o .obj/Async_Timer_Queue_Test.so .shobj/Async_Timer_Queue_Test.o .shobj/Async_Timer_Queue_Test.so: Async_Timer_Queue_Test.cpp \
  $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -191,10 +194,13 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Reactor_Timer_Queue_Test.o .obj/Reactor_Timer_Queue_Test.so .shobj/Reactor_Timer_Queue_Test.o .shobj/Reactor_Timer_Queue_Test.so: Reactor_Timer_Queue_Test.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -341,11 +347,14 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Thread_Timer_Queue_Test.o .obj/Thread_Timer_Queue_Test.so .shobj/Thread_Timer_Queue_Test.o .shobj/Thread_Timer_Queue_Test.so: Thread_Timer_Queue_Test.cpp \
  $(ACE_ROOT)/ace/Task.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -477,9 +486,12 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Driver.o .obj/Driver.so .shobj/Driver.o .shobj/Driver.so: Driver.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -614,9 +626,12 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/main_async.o .obj/main_async.so .shobj/main_async.o .shobj/main_async.so: main_async.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -752,9 +767,12 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/main_reactor.o .obj/main_reactor.so .shobj/main_reactor.o .shobj/main_reactor.so: main_reactor.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -890,9 +908,12 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/main_thread.o .obj/main_thread.so .shobj/main_thread.o .shobj/main_thread.so: main_thread.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \

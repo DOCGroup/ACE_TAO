@@ -46,9 +46,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Options.o .obj/Options.so .shobj/Options.o .shobj/Options.so: Options.cpp Options.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -65,7 +68,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Iterator.o .obj/Iterator.so .shobj/Iterator.o .shobj/Iterator.so: Iterator.cpp Iterator.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -80,9 +86,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Gen_Perf.o .obj/Gen_Perf.so .shobj/Gen_Perf.o .shobj/Gen_Perf.so: Gen_Perf.cpp Gen_Perf.h Options.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -95,9 +104,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Key_List.o .obj/Key_List.so .shobj/Key_List.o .shobj/Key_List.so: Key_List.cpp Key_List.h Options.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -161,7 +173,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/List_Node.o .obj/List_Node.so .shobj/List_Node.o .shobj/List_Node.so: List_Node.cpp List_Node.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -176,7 +191,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Hash_Table.o .obj/Hash_Table.so .shobj/Hash_Table.o .shobj/Hash_Table.so: Hash_Table.cpp Hash_Table.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -193,7 +211,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Bool_Array.o .obj/Bool_Array.so .shobj/Bool_Array.o .shobj/Bool_Array.so: Bool_Array.cpp Bool_Array.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -208,7 +229,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Vectors.o .obj/Vectors.so .shobj/Vectors.o .shobj/Vectors.so: Vectors.cpp Vectors.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -222,8 +246,11 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Version.o .obj/Version.so .shobj/Version.o .shobj/Version.so: Version.cpp \
  $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \

@@ -43,7 +43,10 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/test_log_msg.o .obj/test_log_msg.so .shobj/test_log_msg.o .shobj/test_log_msg.so: test_log_msg.cpp \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -57,7 +60,10 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/test_ostream.o .obj/test_ostream.so .shobj/test_ostream.o .shobj/test_ostream.so: test_ostream.cpp \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -71,7 +77,10 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/test_callback.o .obj/test_callback.so .shobj/test_callback.o .shobj/test_callback.so: test_callback.cpp \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \

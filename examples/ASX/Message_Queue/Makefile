@@ -40,9 +40,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/buffer_stream.o .obj/buffer_stream.so .shobj/buffer_stream.o .shobj/buffer_stream.so: buffer_stream.cpp \
  $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -171,10 +174,13 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/bounded_buffer.o .obj/bounded_buffer.so .shobj/bounded_buffer.o .shobj/bounded_buffer.so: bounded_buffer.cpp \
  $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -287,10 +293,13 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/priority_buffer.o .obj/priority_buffer.so .shobj/priority_buffer.o .shobj/priority_buffer.so: priority_buffer.cpp \
  $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \

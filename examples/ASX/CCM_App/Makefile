@@ -49,9 +49,12 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/CCM_App.o .obj/CCM_App.so .shobj/CCM_App.o .shobj/CCM_App.so: CCM_App.cpp \
  $(ACE_ROOT)/ace/Stream.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \

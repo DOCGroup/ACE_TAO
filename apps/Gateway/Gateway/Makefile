@@ -57,12 +57,15 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/Concrete_Connection_Handlers.o .obj/Concrete_Connection_Handlers.so .shobj/Concrete_Connection_Handlers.o .shobj/Concrete_Connection_Handlers.so: Concrete_Connection_Handlers.cpp \
  Event_Channel.h Connection_Handler_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -220,7 +223,10 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Config_Files.o .obj/Config_Files.so .shobj/Config_Files.o .shobj/Config_Files.so: Config_Files.cpp Config_Files.h File_Parser.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -251,7 +257,10 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/File_Parser.o .obj/File_Parser.so .shobj/File_Parser.o .shobj/File_Parser.so: File_Parser.cpp \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -266,11 +275,14 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Gateway.o .obj/Gateway.so .shobj/Gateway.o .shobj/Gateway.so: Gateway.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -429,12 +441,15 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Event_Channel.o .obj/Event_Channel.so .shobj/Event_Channel.o .shobj/Event_Channel.so: Event_Channel.cpp Connection_Handler_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -592,8 +607,11 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/Event_Forwarding_Discriminator.o .obj/Event_Forwarding_Discriminator.so .shobj/Event_Forwarding_Discriminator.o .shobj/Event_Forwarding_Discriminator.so: Event_Forwarding_Discriminator.cpp \
  Event_Forwarding_Discriminator.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -676,9 +694,12 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Options.o .obj/Options.so .shobj/Options.o .shobj/Options.so: Options.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -710,12 +731,15 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/Connection_Handler.o .obj/Connection_Handler.so .shobj/Connection_Handler.o .shobj/Connection_Handler.so: Connection_Handler.cpp Event_Channel.h \
  Connection_Handler_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -874,12 +898,15 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/Connection_Handler_Acceptor.o .obj/Connection_Handler_Acceptor.so .shobj/Connection_Handler_Acceptor.o .shobj/Connection_Handler_Acceptor.so: Connection_Handler_Acceptor.cpp \
  Event_Channel.h Connection_Handler_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1037,12 +1064,15 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/Connection_Handler_Connector.o .obj/Connection_Handler_Connector.so .shobj/Connection_Handler_Connector.o .shobj/Connection_Handler_Connector.so: Connection_Handler_Connector.cpp \
  Connection_Handler_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \

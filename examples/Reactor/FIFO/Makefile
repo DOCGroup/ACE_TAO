@@ -42,12 +42,15 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/FIFO_Send_Msg.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/FIFO_Send.h \
  $(ACE_ROOT)/ace/FIFO.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -66,11 +69,14 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \

@@ -46,12 +46,15 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/writer.o .obj/writer.so .shobj/writer.o .shobj/writer.so: writer.cpp \
  $(ACE_ROOT)/ace/DEV_Connector.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/DEV_IO.h \
  $(ACE_ROOT)/ace/DEV.h \
  $(ACE_ROOT)/ace/IO_SAP.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \

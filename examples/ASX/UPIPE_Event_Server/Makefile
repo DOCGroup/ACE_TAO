@@ -46,9 +46,12 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Options.o .obj/Options.so .shobj/Options.o .shobj/Options.so: Options.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -85,7 +88,10 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Supplier_Router.o .obj/Supplier_Router.so .shobj/Supplier_Router.o .shobj/Supplier_Router.so: Supplier_Router.cpp Options.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -252,9 +258,12 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Event_Analyzer.o .obj/Event_Analyzer.so .shobj/Event_Analyzer.o .shobj/Event_Analyzer.so: Event_Analyzer.cpp Event_Analyzer.h \
  $(ACE_ROOT)/ace/Stream.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -383,10 +392,13 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Consumer_Router.o .obj/Consumer_Router.so .shobj/Consumer_Router.o .shobj/Consumer_Router.so: Consumer_Router.cpp Consumer_Router.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -551,9 +563,12 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Peer_Router.o .obj/Peer_Router.so .shobj/Peer_Router.o .shobj/Peer_Router.so: Peer_Router.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \

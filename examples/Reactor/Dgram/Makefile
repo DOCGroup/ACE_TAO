@@ -44,10 +44,13 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/CODgram.o .obj/CODgram.so .shobj/CODgram.o .shobj/CODgram.so: CODgram.cpp \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -132,10 +135,13 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 .obj/Dgram.o .obj/Dgram.so .shobj/Dgram.o .shobj/Dgram.so: Dgram.cpp \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
