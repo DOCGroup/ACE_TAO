@@ -1,6 +1,12 @@
+Tue Mar 21 21:43:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/InterfaceC.cpp:
+	  Fixed some cut and paste mistakes in the hand-crafted
+	  _tao_any_destructor functions.
+
 Tue Mar 21 21:16:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao.PollableC.cpp:
+	* tao/PollableC.cpp:
 	  Fixed typo.
 
 Tue Mar 21 20:31:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
