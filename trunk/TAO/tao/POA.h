@@ -349,6 +349,13 @@ class TAO_Export TAO_POA : public POA_PortableServer::POA
 {
 public:
 
+  enum 
+  {
+    TAO_OBJECTKEY_PREFIX_SIZE = 4
+  };
+  
+  static CORBA::Octet objectkey_prefix [TAO_OBJECTKEY_PREFIX_SIZE];
+  
   typedef ACE_CString String;
 
   virtual PortableServer::POA_ptr create_POA (const char *adapter_name,

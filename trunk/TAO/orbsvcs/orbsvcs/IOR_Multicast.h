@@ -32,6 +32,8 @@
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/Reactor.h"
 
+#include "tao/IOR_LookupTable.h"
+
 class TAO_ORBSVCS_Export TAO_IOR_Multicast : public ACE_Event_Handler
 {
   // = TITLE
@@ -92,10 +94,11 @@ private:
 
   ACE_SOCK_Dgram response_;
   // socket for response to the multicast
+
+  TAO_IOR_LookupTable ior_lookup_table_;
+  // Lookup Table for the IORs which are not resolved otherwise.
+
 };
 
 #endif /* TAO_IOR_MULTICAST_H */
-
-
-
 

@@ -15,7 +15,6 @@
 
 #include "tao/Object.h"
 #include "tao/Typecode.h"
-#include "tao/Marshal.h"
 #include "tao/InconsistentTypeCodeC.h"
 #include "tao/NVList.h"
 #include "tao/Stub.h"
@@ -27,6 +26,8 @@
 #include "tao/debug.h"
 #include "tao/TAO_Internal.h"
 #include "tao/CDR.h"
+#include "tao/Marshal.h"
+#include "tao/IOR_LookupTable.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/ORB.i"
@@ -39,17 +40,17 @@ ACE_RCSID(tao, ORB, "$Id$")
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *TAO_ORB_Timeprobe_Description[] =
-  {
-    "CORBA_ORB::run - start",
-    "CORBA_ORB::run - end",
-  };
+{
+  "CORBA_ORB::run - start",
+  "CORBA_ORB::run - end",
+};
 
 enum
-  {
-    // Timeprobe description table start key
-    TAO_CORBA_ORB_RUN_START = 0,
-    TAO_CORBA_ORB_RUN_END
-  };
+{
+  // Timeprobe description table start key
+  TAO_CORBA_ORB_RUN_START = 0,
+  TAO_CORBA_ORB_RUN_END
+};
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description,
@@ -59,8 +60,8 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description,
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-  // Typecode stuff for the InconsistentTypeCode exception
-  static const CORBA::Long _oc_CORBA_ORB_InconsistentTypeCode[] =
+// Typecode stuff for the InconsistentTypeCode exception
+static const CORBA::Long _oc_CORBA_ORB_InconsistentTypeCode[] =
 {
   TAO_ENCAP_BYTE_ORDER,   // byte order
   47,
@@ -529,7 +530,7 @@ CORBA_ORB::resolve_name_service (ACE_Time_Value *timeout)
         {
           this->name_service_ =
             this->string_to_object (name_service_ior.c_str (), env);
-
+	  
           // check for errors
           if (env.exception () != 0)
             this->name_service_ = CORBA_Object::_nil ();
@@ -539,24 +540,23 @@ CORBA_ORB::resolve_name_service (ACE_Time_Value *timeout)
           // First, determine if the port was supplied on the command line
           u_short port =
             TAO_ORB_Core_instance ()->orb_params ()->name_service_port ();
-
+	  
           if (port == 0)
             {
               // Look for the port among our environment variables.
               const char *port_number =
                 ACE_OS::getenv ("NameServicePort");
-
+	      
               if (port_number != 0)
                 port = ACE_OS::atoi (port_number);
               else
                 port = TAO_DEFAULT_NAME_SERVER_REQUEST_PORT;
             }
-
+	  
           this->name_service_ =
-            this->multicast_to_service (TAO_SERVICEID_NAMESERVICE,
-                                        port,
-                                        timeout,
-                                        TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS);
+            this->multicast_to_service("NameService",
+                                       port,
+                                       timeout);
         }
     }
 
@@ -608,152 +608,149 @@ CORBA_ORB::resolve_trading_service (ACE_Time_Value *timeout)
             {
               // Look for the port among our environment variables.
               const char *port_number = ACE_OS::getenv ("TradingServicePort");
-
+	      
               if (port_number != 0)
                 port = ACE_OS::atoi (port_number);
               else
                 port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
             }
-
+	  
           this->trading_service_ =
-            this->multicast_to_service (TAO_SERVICEID_TRADINGSERVICE,
+            this->multicast_to_service ("TradingService",
                                         port,
-                                        timeout,
-                                        TAO_DEFAULT_MULTICAST_SEND_ATTEMPTS);
+                                        timeout);
         }
     }
-
+  
   return_value = this->trading_service_;
   return CORBA_Object::_duplicate (return_value);
 }
 
-// This method implements the multicast ORB service locator.
-
 int
 CORBA_ORB::multicast_query (char *buf,
-                            TAO_Service_ID service_id,
+			    const char *service_name,
                             u_short port,
-                            ACE_Time_Value *timeout,
-                            u_short attempts)
+                            ACE_Time_Value *timeout)
 {
-  // Dgram to wait for ORB service to reply with its IOR.
-  ACE_SOCK_Dgram response;
-  ACE_INET_Addr response_addr;
-
-  // Dgram for multicasting to ORB service locator.
-  ACE_SOCK_Dgram_Mcast multicast;
+  ACE_INET_Addr my_addr;
+  ACE_SOCK_Acceptor acceptor;
+  ACE_SOCK_Stream stream;
+  
+  int result = 0;
+  
+  // Bind listener to any port and then find out what the port was.
+  if (acceptor.open (ACE_Addr::sap_any) == -1
+      || acceptor.get_local_addr (my_addr) == -1)
+    ACE_ERROR_RETURN ((LM_DEBUG,
+		       "acceptor.open () || "
+		       "acceptor.get_local_addr () failed"),
+		      -1);
+  
+  // Send a Multicast with service name and a port no.
+  ACE_SOCK_Dgram dgram;
+  
+  // This starts out initialized to all zeros!
   ACE_INET_Addr multicast_addr (port,
-                                   ACE_DEFAULT_MULTICAST_ADDR);
-
-  // Subscribe to multicast address.
-  if (multicast.subscribe (multicast_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to iniialize ORB multicast endpoint!\n"),
-                      -1);
-  // Choose any local port, we don't really care.
-  else if (response.open (ACE_Addr::sap_any) == -1)
+				ACE_DEFAULT_MULTICAST_ADDR);
+  
+  // Open the datagram.
+  if (dgram.open (ACE_Addr::sap_any) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+		       "Unable to open the Datagram!\n"),
+		      -1);
+    
+  ACE_DEBUG ((LM_DEBUG,
+	      "\nPort sent |%u|\n",
+	      my_addr.get_port_number ()));
+  
+  // Convert the port that we are listening at to Network Byte Order.
+  ACE_UINT16 response_port = ACE_HTONS (my_addr.get_port_number ());
+  
+  // Length of data to be sent. This is sent as a header. 
+  CORBA::Short data_len = 
+    sizeof (ACE_UINT16) + ACE_OS::strlen (service_name);
+  
+  // Vector to be sent.
+  const int iovcnt = 3;
+  iovec iovp[iovcnt];
+  
+  // The length of data to be sent.
+  iovp[0].iov_base = (char *) &data_len;
+  iovp[0].iov_len  = sizeof (CORBA::Short);
+  
+  // The port at which we are listening.
+  iovp[1].iov_base = (char *) &response_port;
+  iovp[1].iov_len  = sizeof (ACE_UINT16);
+  
+  // The service name string.
+  iovp[2].iov_base = (char *) service_name;
+  iovp[2].iov_len  = ACE_OS::strlen (service_name);
+  
+  // Send the multicast.
+  ssize_t n_bytes = dgram.send (iovp,
+				iovcnt,
+				multicast_addr);
+  
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "\nsent multicast request."));
+  
+  // Check for errors.
+  if (n_bytes == -1)
     {
-      multicast.close ();
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "ORB multicast open failed.\n"),
-                        -1);
+      dgram.close ();
+      ACE_ERROR_RETURN((LM_ERROR, 
+			"Error sending IIOP Multicast!\n"), 
+		       -1);
     }
-  else if (response.get_local_addr (response_addr) == -1)
-    {
-      multicast.close ();
-      response.close ();
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "ORB get_local_addr failed.\n"),
-                        -1);
-    }
-
-  // @@ Vishal, please update this code and the server-side code in
-  // $TAO_ROOT/orbsvcs/Naming_Service/ so that it (1) sends a string
-  // rather than a u_short (the string should contain the name passed
-  // in by the user to resolve_initial_references()) and (2) the
-  // client doesn't explicitly send the port number, but instead the
-  // Naming_Service implementation will use the ACE_SOCK_Dgram::recv()
-  // method that returns the port number of the client, so we can use
-  // that to reply.
-
-  ACE_UINT16 mcast_info[2];
-
-  // Figure out what port to listen on for server replies, and convert
-  // to network byte order.
-  mcast_info[0] = ACE_HTONS (response_addr.get_port_number ());
-  mcast_info[1] = ACE_HTONS (service_id);
-
-  // Set how long we wait for a reply.  Wait for response until
-  // TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT.
+  
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"\n%s; Sent multicast."
+		"# of bytes sent is %d.\n",
+		__FILE__,
+		n_bytes));
+  
+  // Wait for response until TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT.
   ACE_Time_Value tv (timeout == 0
-                     ? ACE_Time_Value (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
-                     : *timeout);
-  ssize_t result = 0;
+		     ? ACE_Time_Value (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
+		     : *timeout);
+  
+  // We dont need the Dgram anymore.
+  dgram.close ();
 
-  // Now try several "attempts" to get the reply.  We do this since
-  // UDP is unreliable...
-
-  for (int i = 0;
-       i < attempts;
-       i++)
+  // Start listening.
+  if (acceptor.accept (stream, 0, &tv) == -1)
+    ACE_ERROR_RETURN ((LM_DEBUG,
+		       "multicast_query : Unable to accept\n"),
+		      0);
+  
+  // receive the IOR.  
+  n_bytes = stream.recv (buf, BUFSIZ, 0, timeout);
+  
+  // close socket now.
+  int retval = stream.close ();
+  
+  // Check for errors.
+  if (n_bytes == -1 || retval == -1)
     {
-      ACE_INET_Addr remote_addr;
-
-      // Send multicast info to the server.
-      result = multicast.send (mcast_info,
-                               sizeof (mcast_info));
-
-      // Check for errors.
-      if (result == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "Error sending IIOP Multicast!\n"));
-          break;
-        }
-      else if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Sent multicast.  Reply port is %u."
-                    "# of bytes sent is %d.\n",
-                    response_addr.get_port_number (),
-                    result));
-
-      // Receive response message.
-      result = response.recv (buf,
-                              ACE_MAX_DGRAM_SIZE,
-                              remote_addr,
-                              0,
-                              &tv);
-      // Check for errors.
-      if (result == -1)
-        {
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
-                        "%p\n",
-                        "error reading IIOP multicast response"));
-          break;
-        }
-      // Success!
-      else if (result > 0)
-        {
-          // Null terminate message.
-          buf[result] = 0;
-
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "Reply to multicast received from %s on attempt number %d\n",
-                        "Service resolved to ior: '%s'\n",
-                        remote_addr.get_host_name (),
-                        i,
-                        buf));
-          break;
-        }
-  }
-
-  // Close endpoint for response.
-  multicast.close ();
-  response.close ();
-
-  return result >= 0 ? 0 : -1;
+      if (TAO_debug_level > 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "Error reading IIOP multicast response!\n"),
+			  -1);
+      return -1;
+    }
+  
+  // Null terminate message.
+  buf[n_bytes] = 0;
+  
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"%s; Service resolved to ior: '%s'\n",
+		__FILE__,
+		buf));
+  
+  return 0;
+  
 }
 
 // @@ This will have to be sanitized of transport specific calls
@@ -765,37 +762,36 @@ CORBA_ORB::multicast_query (char *buf,
 //    and we return NULL.
 
 CORBA_Object_ptr
-CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
+CORBA_ORB::multicast_to_service (const char * service_name,
                                  u_short port,
-                                 ACE_Time_Value *timeout,
-                                 u_short attempts)
+                                 ACE_Time_Value *timeout)
 {
-  char buf[ACE_MAX_DGRAM_SIZE + 1]; // add char for '\0'
+  char buf[BUFSIZ];
+  
   // Use UDP multicast to locate the  service.
+  
   CORBA_Object_ptr return_value = CORBA_Object::_nil ();
-
+  
   if (this->multicast_query (buf,
-                             service_id,
-                             port,
-                             timeout,
-                             attempts) == 0)
+			     service_name, 
+			     port, 
+			     timeout) == 0)
     {
       CORBA::Environment env;
-
+        
       // Convert IOR to an object reference.
-      CORBA_Object_ptr objectified_ior =
-        this->string_to_object ((CORBA::String) buf,
-                                env);
-
+      CORBA_Object_ptr objectified_ior = 
+	this->string_to_object ((CORBA::String) buf, env);
+      
       // Check for errors.
       if (env.exception () == 0)
         return_value = objectified_ior;
     }
-
+  
   // Return ior.
   return return_value;
+  
 }
-
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_initial_references (CORBA::String name,
@@ -811,18 +807,57 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
                                        ACE_Time_Value *timeout,
                                        CORBA_Environment &TAO_IN_ENV)
 {
-  const char *init_ref = TAO_ORB_Core_instance ()->orb_params ()->init_ref ();
-
-  if (ACE_OS::strcmp (init_ref, "") != 0)
+  // Get the table of initial references specified through -ORBInitRef.
+  TAO_IOR_LookupTable *table = 
+    TAO_ORB_Core_instance ()->orb_params ()->ior_lookup_table ();
+  
+  // Get the list of initial reference prefixes specified through
+  // -ORBDefaultInitRef.
+  char * default_init_ref = 
+    TAO_ORB_Core_instance ()->orb_params ()->default_init_ref ();
+  
+  ACE_CString ior;
+  ACE_CString object_id ((const char *) name);
+  
+  // Resolved Object reference.
+  CORBA_Object_ptr return_value = CORBA_Object::_nil ();
+  
+  if (table->find_ior (object_id, ior) == 0)
     {
-      // A mapping <ObjectID>:<IOR> was specified through -ORBInitRef
-      // parameter.  Are we looking for the same ObjectID.
-      if (ACE_OS::strncmp ((const char *) name,
-                           init_ref,
-                           ACE_OS::strcspn (init_ref, "=")) == 0)
-        return this->resolve_commandline_ref (init_ref);
+      // Name found in the IOR Table.
+      return_value = this->string_to_object (ior.c_str (), TAO_IN_ENV);
+      return CORBA_Object::_duplicate (return_value);
     }
-
+  else
+    {
+      // Check if a DefaultInitRef was specified.
+      if (ACE_OS::strlen (default_init_ref) != 0)
+	{
+	  ACE_CString list_of_profiles;
+	  
+	  // Used by the strtok_r.
+	  char *lasts[BUFSIZ];
+	  
+	  // Append the given object ID to all the end-points of Default Init Ref.
+	  for (char *str = ACE_OS::strtok_r (default_init_ref, ",",lasts);
+	       str != 0 ;
+	       str = ACE_OS::strtok_r (0, ",",lasts))   
+	    {
+	      list_of_profiles += ACE_CString (str);
+	      list_of_profiles += ACE_CString ("/");
+	      list_of_profiles += object_id;
+	      list_of_profiles += ACE_CString (",");
+	    }
+	  
+	  // Replace the last extra comma with a null.
+	  list_of_profiles[list_of_profiles.length () - 1] = '\0';
+	  
+	  return_value = this->string_to_object (list_of_profiles.rep (), TAO_IN_ENV);
+	  return CORBA_Object::_duplicate (return_value);
+	  
+	}
+    }
+  
   if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
     return this->resolve_name_service (timeout);
   else if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
@@ -833,15 +868,8 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
     return this->resolve_poa_current ();
   else
     TAO_THROW_RETURN (CORBA_ORB::InvalidName (), CORBA_Object::_nil ());
+
 }
-
-// Now defined in IIOP_Connector and Connector_Registry
-// int
-// CORBA_ORB::preconnect (CORBA::String connections)
-// {
-//   return TAO_ORB_Core_instance ()->preconnect (connections);
-// }
-
 
 STUB_Object *
 CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
@@ -862,7 +890,7 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
     id = 0;
 
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
-
+  
   // First we create a profile list, well actually a list of one!
   // @@ should go to the acceptor for this, the orb delegates to the acceptor
   // to create Profiles!
@@ -874,9 +902,11 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
                           orb_core->orb_params ()->addr ().get_port_number (),
                           key,
                           TAO_ORB_Core_instance ()->orb_params ()->addr ());
-
-  STUB_Object *data =0;
-
+  
+  STUB_Object *data = 0;
+  // @@ replace IIOP::Profile with something more appropriate!!
+  data = new STUB_Object (id, pfile);
+  
   if (pfile == 0)
     {
       env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
@@ -1123,6 +1153,14 @@ CORBA::ORB_init (int &argc,
   // from being called within a static object CTOR.
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
                             *ACE_Static_Object_Lock::instance (), 0));
+  env.clear ();
+
+  // Make sure initialization of TAO globals only occurs once.
+  CORBA_ORB::init_orb_globals (env);
+
+  if (env.exception () != 0)
+    return 0;
+
   // Verify some of the basic implementation requirements.  This test
   // gets optimized away by a decent compiler (or else the rest of the
   // routine does).
@@ -1161,14 +1199,6 @@ CORBA::ORB_init (int &argc,
 
   // Initialize the ORB Core instance.
   int result = oc->init (argc, (char **) argv);
-
-  env.clear ();
-
-  // Make sure initialization of TAO globals only occurs once.
-  CORBA_ORB::init_orb_globals (env);
-
-  if (env.exception () != 0)
-    return 0;
 
   // Check for errors and return 0 if error.
   if (result == -1)

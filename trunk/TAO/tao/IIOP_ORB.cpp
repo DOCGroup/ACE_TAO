@@ -19,6 +19,7 @@
 #include "tao/Object.h"
 #include "tao/Stub.h"
 #include "tao/IIOP_Profile.h"
+#include "tao/MProfile.h"
 #include "tao/GIOP.h"
 #include "tao/POA.h"
 #include "tao/ORB_Core.h"
@@ -30,6 +31,7 @@
 ACE_RCSID(tao, IIOP_ORB, "$Id$")
 
 static const char ior_prefix [] = "IOR:";
+static const char iioploc_prefix [] = "iioploc:";
 static const char file_prefix[] = "file://";
 
 // Objref stringification.
@@ -177,7 +179,7 @@ iiop_string_to_object (const char *string,
 {
   // NIL objref encodes as just "iiop:" ... which has already been
   // removed, so we see it as an empty string.
-
+  
   if (!string || !*string)
     return CORBA::Object::_nil ();
 
@@ -185,27 +187,34 @@ iiop_string_to_object (const char *string,
   // expensive, though it does ensure that type-safe narrowing code
   // gets thoroughly excercised/debugged!  Without a typeID, the
   // _narrow will be required to make an expensive remote "is_a" call.
-
+  
+  ACE_DEBUG ((LM_DEBUG,
+	      "string = %s\n",
+	      string));
+  
   TAO_IIOP_Profile *pfile;
-
+  
   ACE_NEW_RETURN (pfile,
                   TAO_IIOP_Profile (string,
                                     env),
                   CORBA::Object::_nil ());
   // pfile refcount == 1
-
+  
   // Now make the STUB_Object ...
   STUB_Object *data;
-  ACE_NEW_RETURN (data,
+  ACE_NEW_RETURN (data, 
                   STUB_Object ((char *) 0,
-                               pfile),
+                               pfile), 
                   CORBA::Object::_nil ());
-  // pfile is given to STUB_Object so refcount still = 1
-
+  // pfile refcount == 2
+  
+  pfile->_decr_refcnt ();
+  // pfile refcount == 1
+  
   // Create the CORBA level proxy.
   TAO_ServantBase *servant =
     TAO_ORB_Core_instance ()->orb ()->_get_collocated_servant (data);
-
+  
   // This will increase the ref_count on data by one
   CORBA_Object *obj;
   ACE_NEW_RETURN (obj,
@@ -213,11 +222,91 @@ iiop_string_to_object (const char *string,
                                 servant,
                                 servant != 0),
                   CORBA::Object::_nil ());
-
+  
   // Set the ref_count on data to 1, which is correct, because only
   // obj has now a reference to it.
   // data->_decr_refcnt ();
+  
+  return obj;
+}
 
+// DeStringifies the iioploc style IORs. This function creates a Stub 
+// object with multiple profiles and then the object reference.
+static CORBA::Object_ptr
+iioploc_string_to_object (const char *string,
+			  CORBA::Environment &env)
+{
+  // NIL objref encodes as just "iioploc:" ... which has already been
+  // removed, so we see it as an empty string.
+  
+  if (!string || !*string)
+    return CORBA::Object::_nil ();
+
+  // type ID not encoded in this string ... makes narrowing rather
+  // expensive, though it does ensure that type-safe narrowing code
+  // gets thoroughly excercised/debugged!  Without a typeID, the
+  // _narrow will be required to make an expensive remote "is_a" call.
+  
+  ACE_CString list_of_profiles (string);
+  
+  // Count the No. of profiles in the given list.
+  int profile_count = 1;
+  
+  for (int i = 0;
+       i < list_of_profiles.length ();
+       i++)
+    {
+      if (list_of_profiles[i] == ',')
+	profile_count++;
+    }
+
+  // Allocate a Multiple Profile with the given no. of profiles.  
+  TAO_MProfile *mp;
+  ACE_NEW_RETURN (mp,
+		  TAO_MProfile (profile_count),
+		  CORBA::Object::_nil ());
+
+  // Extract the comma separated profiles in the list and
+  // populate the Multiple Profile.  
+  TAO_IIOP_Profile *pfile;
+  char *lasts[BUFSIZ];
+  
+  for (char *str = ACE_OS::strtok_r (list_of_profiles.rep (), ",",lasts);
+       str != 0 ;
+       str = ACE_OS::strtok_r (0, ",",lasts))   
+    
+    {
+      ACE_NEW_RETURN (pfile,
+		      TAO_IIOP_Profile (CORBA::string_dup (str),
+   					env),
+   		      CORBA::Object::_nil ());
+
+      // Give up ownership of the profile.
+      mp->give_profile (pfile);
+    }
+  
+  // Now make the STUB_Object ...
+  STUB_Object *data;
+  ACE_NEW_RETURN (data,
+                  STUB_Object ((char *) 0,
+                               mp),
+                  CORBA::Object::_nil ());
+  
+  // Create the CORBA level proxy.
+  TAO_ServantBase *servant =
+    TAO_ORB_Core_instance ()->orb ()->_get_collocated_servant (data);
+  
+  // This will increase the ref_count on data by one
+  CORBA_Object *obj;
+  ACE_NEW_RETURN (obj,
+                  CORBA_Object (data,
+                                servant,
+                                servant != 0),
+                  CORBA::Object::_nil ());
+  
+  // Clean up.  
+  delete mp;
+  
   return obj;
 }
 
@@ -228,9 +317,9 @@ IIOP_ORB::string_to_object (const char *str,
                             CORBA::Environment &env)
 {
   env.clear ();
-
+  
   CORBA::Object_ptr obj = 0;
-
+  
   // Use the prefix code to choose which destringify algorithm to use.
   const size_t iiop_prefix_len =
     ACE_OS::strlen (TAO_IIOP_Profile::prefix ());
@@ -238,17 +327,22 @@ IIOP_ORB::string_to_object (const char *str,
                        TAO_IIOP_Profile::prefix (),
                        iiop_prefix_len) == 0)
     obj = iiop_string_to_object (str + iiop_prefix_len, env);
-
+  
   else if (ACE_OS::strncmp (str,
                             file_prefix,
                             sizeof file_prefix - 1) == 0)
     obj = this->file_string_to_object (str + sizeof file_prefix -1, env);
-
+  
   else if (ACE_OS::strncmp (str,
                             ior_prefix,
                             sizeof ior_prefix - 1) == 0)
     obj = ior_string_to_object (str + sizeof ior_prefix - 1, env);
-
+  
+  else if (ACE_OS::strncmp (str,
+			    iioploc_prefix,
+			    sizeof iioploc_prefix - 1) == 0)
+    obj = iioploc_string_to_object (str + sizeof iioploc_prefix - 1, env);
+  
   // Return the object.
   return obj;
 }
@@ -257,12 +351,12 @@ TAO_ServantBase *
 IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
 {
   // ACE_DEBUG ((LM_DEBUG, "IIOP_ORB: get_collocated_servant\n"));
-
+  
   if (this->optimize_collocation_objects_ && sobj != 0)
     {
-
+      
       TAO_Profile *pfile = sobj->profile_in_use ();
-
+      
       // Make sure users passed in a valid STUB_Object otherwise, we
       // don't know what to do next.
       if (pfile == 0)
@@ -339,6 +433,47 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
 	      "IIOP_ORB: collocation failed for \n"));
 #endif
 
+  return 0;
+}
+
+// Add a mapping ObjectID->IOR to the table.
+int 
+IIOP_ORB::_tao_add_to_IOR_table (ACE_CString object_id, CORBA::Object_ptr obj)
+{
+  if (CORBA::is_nil (obj))
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "Unable to add IOR to table\n"),
+		      -1);
+  
+  CORBA::String_var string =
+    this->object_to_string (obj);
+  
+  if (string.in () == 0 || string[0] == '\0')
+    return -1;
+
+  ACE_CString ior (string.in ());
+  
+  if (this->lookup_table_.add_ior (object_id, ior) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "Unable to add IOR to table\n"),
+		      -1);
+  
+  return 0;
+}
+
+// Find an IOR in the table for the given ObjectID.
+int
+IIOP_ORB::_tao_find_in_IOR_table (ACE_CString object_id, CORBA::Object_ptr &obj)
+{
+  ACE_CString ior;
+  
+  if (this->lookup_table_.find_ior (object_id, ior) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "No match for the given ObjectID\n"),
+		      -1);
+  
+  obj = this->string_to_object (ior.c_str ());
+  
   return 0;
 }
 
