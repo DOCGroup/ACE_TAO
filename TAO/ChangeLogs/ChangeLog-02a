@@ -1,6 +1,13 @@
+Tue Dec 11 20:10:32 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* examples/Logging/Logging.dsw:
+	* examples/Logging/Logging_Test.dsp:
+	* examples/Logging/Logging_Service.dsp:
+	  Add project files and workspace for this directory.
+
 Tue Dec 11 18:40:33 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* TAO/orbsvcs/tests/Interoperable_Naming/client.cpp (main):
+	* orbsvcs/tests/Interoperable_Naming/client.cpp (main):
 	  Fixed a bug that was causing a core dump if there was no
  	  reachable Name Server.  Thanks to Charles Meidinger
  	  <Charles.Meidinger@MSFC.NASA.GOV> for reporting this.
@@ -25,13 +32,13 @@ Tue Dec 11 09:54:04 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Tue Dec 11 10:12:02 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* TAO/tests/DLL_ORB/Test_Client_Module.h
+	* tests/DLL_ORB/Test_Client_Module.h
 
 	fixed compiler errors
 
 Tue Dec 11 09:13:19 2001  Justin Michel  <michel_j@ociweb.com>
 
-        * TAO/tests/ORB_init/Portspan/server.cpp
+        * tests/ORB_init/Portspan/server.cpp
 
         Updated activate method to use TAO_ENV_SINGLE_ARG_PARAMETER
 
@@ -91,11 +98,11 @@ Mon Dec 10 17:57:59 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Dec 10 16:33:39 2001  Justin Michel  <michel_j@ociweb.com>
 
-        * TAO/tests/TAO_Tests.dsw
-        * TAO/tests/ORB_init/Portspan/portspan.dsp
-        * TAO/tests/ORB_init/Portspan/run_test.pl
-        * TAO/tests/ORB_init/Portspan/simpleI.cpp
-        * TAO/tests/ORB_init/Portspan/simpleI.h
+        * tests/TAO_Tests.dsw
+        * tests/ORB_init/Portspan/portspan.dsp
+        * tests/ORB_init/Portspan/run_test.pl
+        * tests/ORB_init/Portspan/simpleI.cpp
+        * tests/ORB_init/Portspan/simpleI.h
 
         The server.exe was returning 1 on error, but perl
         SpawnWaitKill() returned -1. Updated to check == 0.
@@ -196,7 +203,7 @@ Sun Dec 09 13:52:46 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Sun Dec  9 20:53:01 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* TAO/tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.h
+	* tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.h
 
 	  Fixed a compile error
 
@@ -219,7 +226,7 @@ Sat Dec  8 11:47:37 2001  Ossama Othman  <ossama@uci.edu>
 
 Thu Dec  7 17:39:14 2001  Justin Michel <michel_j@ociweb.com>
 
-        * TAO/tests/ORB_init/Portspan/portspan.dsp
+        * tests/ORB_init/Portspan/portspan.dsp
 
         Fixed the Release configuration.
 
@@ -292,7 +299,7 @@ Fri Dec  7 12:05:49 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Fri Dec  7 09:00:00 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* TAO/TAO_IDL/fe/lex.yy.cpp
+	* TAO_IDL/fe/lex.yy.cpp
 	  fixed warnings for unreachable statement
 
 Thu Dec  6 15:34:45 2001  Carlos O'Ryan  <coryan@uci.edu>
@@ -311,16 +318,16 @@ Thu Dec  6 16:35:04 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 Thu Dec  6 14:56:14 2001  Justin Michel  <michel_j@ociweb.com>
 
-        * TAO/tests/TAO_Tests.dsw
-        * TAO/tests/ORB_init/makefile.bor
-        * TAO/tests/ORB_init/Portspan/README
-        * TAO/tests/ORB_init/Portspan/run_test.pl
-        * TAO/tests/ior_corbaloc/IOR CorbaLoc Client.dsp
-        * TAO/tests/ior_corbaloc/IOR CorbaLoc Server.dsp
-        * TAO/tests/ior_corbaloc/IOR CorbaName Client.dsp
-        * TAO/tests/ior_corbaloc/ior_corbaloc_client.dsp
-        * TAO/tests/ior_corbaloc/ior_corbaloc_server.dsp
-        * TAO/tests/ior_corbaloc/ior_corbaname_client.dsp
+        * tests/TAO_Tests.dsw
+        * tests/ORB_init/makefile.bor
+        * tests/ORB_init/Portspan/README
+        * tests/ORB_init/Portspan/run_test.pl
+        * tests/ior_corbaloc/IOR CorbaLoc Client.dsp
+        * tests/ior_corbaloc/IOR CorbaLoc Server.dsp
+        * tests/ior_corbaloc/IOR CorbaName Client.dsp
+        * tests/ior_corbaloc/ior_corbaloc_client.dsp
+        * tests/ior_corbaloc/ior_corbaloc_server.dsp
+        * tests/ior_corbaloc/ior_corbaname_client.dsp
 
         Removed spaces from the filenames for the corbaloc tests.
         Updated the readme file and fixed a few typos in the
@@ -332,20 +339,20 @@ Thu Dec  6 14:56:14 2001  Justin Michel  <michel_j@ociweb.com>
 
 Thu Dec  6 11:05:14 2001  Justin Michel  <michel_j@ociweb.com>
 
-        * TAO/tests/TAO_Tests.dsw
-        * TAO/tests/ORB_init/Makefile
-        * TAO/tests/ORB_init/ORB_init.dsw
-        * TAO/tests/ORB_init/makefile.bor
-        * TAO/tests/ORB_init/Portspan/Makefile
-        * TAO/tests/ORB_init/Portspan/README
-        * TAO/tests/ORB_init/Portspan/portspan.dsp
-        * TAO/tests/ORB_init/Portspan/portspan.dsw
-        * TAO/tests/ORB_init/Portspan/run_test.pl
-        * TAO/tests/ORB_init/Portspan/server.cpp
-        * TAO/tests/ORB_init/Portspan/simple.idl
-        * TAO/tests/ior_corbaloc/IOR CorbaLoc Client.dsp
-        * TAO/tests/ior_corbaloc/IOR CorbaLoc Server.dsp
-        * TAO/tests/ior_corbaloc/IOR CorbaName Client.dsp
+        * tests/TAO_Tests.dsw
+        * tests/ORB_init/Makefile
+        * tests/ORB_init/ORB_init.dsw
+        * tests/ORB_init/makefile.bor
+        * tests/ORB_init/Portspan/Makefile
+        * tests/ORB_init/Portspan/README
+        * tests/ORB_init/Portspan/portspan.dsp
+        * tests/ORB_init/Portspan/portspan.dsw
+        * tests/ORB_init/Portspan/run_test.pl
+        * tests/ORB_init/Portspan/server.cpp
+        * tests/ORB_init/Portspan/simple.idl
+        * tests/ior_corbaloc/IOR CorbaLoc Client.dsp
+        * tests/ior_corbaloc/IOR CorbaLoc Server.dsp
+        * tests/ior_corbaloc/IOR CorbaName Client.dsp
 
           Added the Portspan test that was originally added to 1.1a.
           Added Visual C++ project files for the tao ior_corbaloc test.
@@ -5935,9 +5942,9 @@ Sun Aug 05 15:03:31 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
 Fri Aug 04 3:33:31 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-        * TAO/orbsvcs/orbsvcs/AV/QoS_UDP.h:
-        * TAO/orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
-        * TAO/orbsvcs/orbsvcs/AV/QoS_UDP.i:
+        * orbsvcs/orbsvcs/AV/QoS_UDP.h:
+        * orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
+        * orbsvcs/orbsvcs/AV/QoS_UDP.i:
 
           Added a helper class to create qos sessions, activate qos
           handlers and set qos on a session. Fixed a bug in translation
