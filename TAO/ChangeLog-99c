@@ -1,3 +1,10 @@
+Wed Sep 29 12:10:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+	  The POA was activated too late, producing the infamous "POA in
+	  holding state" exceptions. Thanks to Harald Finster
+	  <finster@ave.ac.agit.de> for reporting the problem.
+
 Wed Sep 29 11:55:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
