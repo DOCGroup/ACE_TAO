@@ -271,10 +271,10 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
                             -1);
         break;
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%c is not a ACE_Service_Config option\n"),
-                           c),
-                          -1);
+        if (ACE::debug () > 0)
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("%c is not a ACE_Service_Config option\n"),
+                      c));
       }
 
   return 0;
