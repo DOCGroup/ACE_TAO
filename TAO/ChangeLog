@@ -1,3 +1,23 @@
+Mon Feb 28 13:29:36 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/CORBALOC_Parser.cpp:
+        * tao/CORBALOC_Parser.h:
+        * tao/CORBALOC_Parser.i:
+
+          Fixed a memory leak resulting from incorrect reference count
+          management in the corbaloc parser. The bad code was using
+          mprofile::add_profile to assign the profile, then releasing its
+          reference without decrementing the count. Since add_profile
+          increments, this caused the failure. Replacing add_profile with
+          give_profile is the best fix, since give_profile is what we
+          really want to do.
+
+          Changes in CORBALOC_Parser.[h,i] move inlined ctor/dtor code out
+          of the header proper and into the inline file. The dtor also
+          does the right thing of explicitly decrementing the reference
+          count of any profile not given away to the mprofile.
+
+
 Mon Feb 28 19:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/PluggableTopology/PlugTop.mpc:
