@@ -36,6 +36,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)
 
+NOTIFY_OBJS = Notify_Service.o Notify_Server.o
+
 Notify_Service: $(addprefix $(VDIR),$(NOTIFY_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 

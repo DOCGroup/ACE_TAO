@@ -1,3 +1,8 @@
+Sat Dec 29 19:51:55 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/Notify_Service/Makefile: 
+	  Fixes in addition to Doug's fixes. Defined $NOTIFY_OBJS. 
+
 Sat Dec 29 18:32:03 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* orbsvcs/Notify_Service/Notify_Server.cpp (main): Cleaned up the
