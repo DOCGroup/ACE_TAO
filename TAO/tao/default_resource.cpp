@@ -4,6 +4,8 @@
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
+#include "tao/IIOP_Factory.h"
+#include "tao/UIOP_Factory.h"
 
 #include "ace/Select_Reactor.h"
 #include "ace/XtReactor.h"
@@ -209,12 +211,33 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
   TAO_ProtocolFactorySetItor end = protocol_factories_.end ();
   TAO_ProtocolFactorySetItor factory = protocol_factories_.begin ();
 
+  // @@ Ossama, if you want to be very paranoid, you could get memory leak
+  // if insert operations failed.
+
   if (factory == end)
     {
-      TAO_Protocol_Item *item =
-        new TAO_Protocol_Item ("IIOP_Factory");
-      item->factory (
-          ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("IIOP_Factory"));
+      TAO_Protocol_Factory *protocol_factory = 0;
+      TAO_Protocol_Item *item = 0;
+
+      protocol_factory =
+        ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("IIOP_Factory");
+
+      if (protocol_factory == 0)
+        {
+          if (TAO_orbdebug)
+            ACE_ERROR ((LM_WARNING,
+                        "(%P|%t) WARNING - No %s found in Service Repository."
+                        "  Using default instance.\n",
+                        "IIOP Protocol Factory"));
+
+          ACE_NEW_RETURN (protocol_factory,
+                          TAO_IIOP_Protocol_Factory,
+                          -1);
+        }
+
+      ACE_NEW_RETURN (item, TAO_Protocol_Item ("IIOP_Factory"), -1);
+      item->factory (protocol_factory);
+
       this->protocol_factories_.insert (item);
       if (TAO_debug_level > 0)
         {
@@ -223,10 +246,25 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
         }
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
-      item =
-        new TAO_Protocol_Item ("UIOP_Factory");
-      item->factory (
-          ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("UIOP_Factory"));
+      protocol_factory =
+        ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("UIOP_Factory");
+
+      if (protocol_factory == 0)
+        {
+          if (TAO_orbdebug)
+            ACE_ERROR ((LM_WARNING,
+                        "(%P|%t) WARNING - No %s found in Service Repository."
+                        "  Using default instance.\n",
+                        "UIOP Protocol Factory"));
+
+          ACE_NEW_RETURN (protocol_factory,
+                          TAO_UIOP_Protocol_Factory,
+                          -1);
+        }
+
+      ACE_NEW_RETURN (item, TAO_Protocol_Item ("UIOP_Factory"), -1);
+      item->factory (protocol_factory);
+
       this->protocol_factories_.insert (item);
       if (TAO_debug_level > 0)
         {
