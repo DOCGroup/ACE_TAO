@@ -46,6 +46,7 @@ class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
 
 class TAO_Pluggable_Message_Factory;
+class TAO_Target_Specification;
 
 typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Transport_Buffering_Queue;
 
@@ -109,7 +110,7 @@ public:
 
 
   virtual void start_request (TAO_ORB_Core *orb_core,
-                              TAO_Stub *stub,
+                              TAO_Target_Specification &spec,
                               TAO_OutputCDR &output,
                               CORBA::Environment &ACE_TRY_ENV =
                               TAO_default_environment ())
@@ -117,8 +118,7 @@ public:
   // Fill into <output> the right headers to make a request.
 
   virtual void start_locate (TAO_ORB_Core *orb_core,
-                             TAO_Stub *stub,
-                             const short address_disposition,
+                             TAO_Target_Specification &spec,
                              CORBA::ULong request_id,
                              TAO_OutputCDR &output,
                              CORBA::Environment &ACE_TRY_ENV =
@@ -141,8 +141,7 @@ public:
   send_request_header (const IOP::ServiceContextList &svc_ctx,  
                        CORBA::ULong request_id,
                        CORBA::Octet response_flags,
-                       TAO_Stub *stub,
-                       const short address_disposition,
+                       TAO_Target_Specification &spec,
                        const char* opname,
                        TAO_OutputCDR &msg) = 0;
   // This is a request for the transport object to write a request

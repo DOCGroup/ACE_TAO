@@ -14,6 +14,7 @@
 
 #include "tao/Messaging_Policy_i.h"
 #include "tao/Client_Priority_Policy.h"
+#include "tao/target_identifier.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation.i"
@@ -331,11 +332,13 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
   // unverified user ID, and then verifying the message (i.e. a dummy
   // service context entry is set up to hold a digital signature for
   // this message, then patched shortly before it's sent).
+  TAO_Target_Specification spec;
+  spec.target_specifier (this->profile_->object_key ());
+
   if (this->transport_->send_request_header (this->service_info_,
                                              this->request_id_,
                                              response_flags,
-                                             this->stub_,
-                                             TAO_GIOP_Invocation::Key_Addr,
+                                             spec,
                                              this->opname_,   
                                              this->out_stream_) == 0)
     ACE_THROW (CORBA::MARSHAL ());
@@ -550,8 +553,10 @@ TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
+  TAO_Target_Specification spec;
+  spec.target_specifier (this->profile_->object_key ());
   this->transport_->start_request (this->orb_core_,
-                                   this->stub_,
+                                   spec,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
 }
@@ -943,8 +948,11 @@ TAO_GIOP_Oneway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
+  TAO_Target_Specification spec;
+  spec.target_specifier (this->profile_->object_key ());
+  
   this->transport_->start_request (this->orb_core_,
-                                   this->stub_,
+                                   spec,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
 }
@@ -1144,9 +1152,10 @@ TAO_GIOP_Locate_Request_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
+  TAO_Target_Specification spec;
+  spec.target_specifier (this->profile_->object_key ());
   this->transport_->start_locate (this->orb_core_,
-                                  this->stub_,
-                                  TAO_GIOP_Invocation::Key_Addr,
+                                  spec,
                                   this->request_id_,
                                   this->out_stream_,
                                   ACE_TRY_ENV);

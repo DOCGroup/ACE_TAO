@@ -85,8 +85,8 @@ GIOP_Message_Invocation \
 GIOP_Utils \
 GIOP_Acceptors \
 GIOP_Assorted_Headers \
-GIOP_Server_Request
-
+GIOP_Server_Request \
+target_identifier
 DEFAULT_RESOURCES_FILES = \
   default_client \
   default_server \

@@ -51,15 +51,13 @@ class TAO_Export TAO_GIOP_Client_Message_Factory :
   virtual CORBA::Boolean write_request_header (const IOP::ServiceContextList& svc_ctx,
                                                CORBA::ULong request_id,
                                                CORBA::Octet response_flags,
-                                               TAO_Stub *stub,
-                                               const CORBA::Short address_disposition,
+                                               TAO_Target_Specification &spec,
                                                const char* opname,
                                                TAO_OutputCDR &msg);
   // Write the GIOP request header.
 
   virtual CORBA::Boolean write_locate_request_header (CORBA::ULong request_id,
-                                                      TAO_Stub *stub,
-                                                      const CORBA::Short address_disposition,
+                                                      TAO_Target_Specification &spec,
                                                       TAO_OutputCDR &msg) = 0;
   // Write the GIOP locate request header.
 

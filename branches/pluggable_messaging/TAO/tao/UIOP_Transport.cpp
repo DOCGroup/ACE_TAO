@@ -140,7 +140,7 @@ TAO_UIOP_Client_Transport::client_handler (void)
 
 void
 TAO_UIOP_Client_Transport::start_request (TAO_ORB_Core */*orb_core*/,
-                                          const TAO_Profile* /*pfile*/,
+                                          TAO_Target_Specification & /*spec*/,
                                           TAO_OutputCDR &output,
                                           CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -159,8 +159,7 @@ TAO_UIOP_Client_Transport::start_request (TAO_ORB_Core */*orb_core*/,
 
 void
 TAO_UIOP_Client_Transport::start_locate (TAO_ORB_Core * /*orb_core*/,
-                                         TAO_Stub *stub,
-                                         const short add_dis, 
+                                         TAO_Target_Specification &spec,
                                          CORBA::ULong request_id,
                                          TAO_OutputCDR &output,
                                          CORBA::Environment &ACE_TRY_ENV)
@@ -180,11 +179,11 @@ TAO_UIOP_Client_Transport::start_locate (TAO_ORB_Core * /*orb_core*/,
 
 
   if (this->client_mesg_factory_->write_locate_request_header (request_id,
-                                                               stub,
-                                                               add_dis,
+                                                               spec,
                                                                output) == 0)
     ACE_THROW (CORBA::MARSHAL ());
 }
+
 
 int
 TAO_UIOP_Client_Transport::send_request (TAO_Stub *stub,
@@ -323,8 +322,7 @@ CORBA::Boolean
 TAO_UIOP_Client_Transport::send_request_header (const IOP::ServiceContextList & svc_ctx,  
                                                 CORBA::ULong request_id,
                                                 CORBA::Octet response_flags,
-                                                TAO_Stub *stub,
-                                                const CORBA::Short address_disposition,
+                                                TAO_Target_Specification &spec,
                                                 const char* opname,
                                                 TAO_OutputCDR & msg)
 {
@@ -334,8 +332,7 @@ TAO_UIOP_Client_Transport::send_request_header (const IOP::ServiceContextList & 
     this->client_mesg_factory_->write_request_header (svc_ctx,
                                                       request_id,
                                                       response_flags,
-                                                      stub,
-                                                      address_disposition,
+                                                      spec,
                                                       opname,
                                                       msg);
   return retval;
@@ -414,8 +411,7 @@ CORBA::Boolean
 TAO_UIOP_Transport::send_request_header (const IOP::ServiceContextList & /*svc_ctx*/,  
                                          CORBA::ULong /*request_id*/,
                                          CORBA::Octet /*response_flags*/,
-                                         TAO_Stub * /*stub*/,
-                                         const CORBA::Short /*address_disposition*/,
+                                         TAO_Target_Specification & /*spec*/,
                                          const char* /*opname*/,
                                          TAO_OutputCDR & /*msg*/)
 {

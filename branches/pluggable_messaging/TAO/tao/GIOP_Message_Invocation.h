@@ -46,15 +46,13 @@ public:
   write_request_header (const IOP::ServiceContextList& svc_ctx,
                         CORBA::ULong request_id,
                         CORBA::Octet response_flags,
-                        TAO_Stub *stub,
-                        const CORBA::Short address_disposition,
+                        TAO_Target_Specification &spec,
                         const char *opname,
                         TAO_OutputCDR &msg);
   // Writes the rquest header.
 
   CORBA::Boolean write_locate_request_header (CORBA::ULong request_id,
-                                              TAO_Stub *stub,
-                                              const CORBA::Short address_disposition,
+                                              TAO_Target_Specification &spec,
                                               TAO_OutputCDR &msg);
   // Write the locate request header
 

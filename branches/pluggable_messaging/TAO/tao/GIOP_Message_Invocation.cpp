@@ -96,36 +96,29 @@ CORBA::Boolean
 TAO_GIOP_Client_Message_1_1::write_request_header (const IOP::ServiceContextList& svc_ctx,
                                                    CORBA::ULong request_id,
                                                    CORBA::Octet response_flags,
-                                                   TAO_Stub *stub,
-                                                   const CORBA::Short address_disposition,
+                                                   TAO_Target_Specification &spec,
                                                    const char *opname,
                                                    TAO_OutputCDR &msg)
 {
   // This i sepecific to GIOP 1.1. So put them here
   msg << svc_ctx;
-  
+
   // Let us  call our parent class to check what he can do for
   // us. 
   TAO_GIOP_Client_Message_Factory::write_request_header (svc_ctx,
                                                          request_id,
                                                          response_flags,
-                                                         stub,
-                                                         address_disposition,
+                                                         spec,
                                                          opname,
                                                          msg);
   
   // In this case we cannot recognise anything other than the Object
   // key as the address disposition variable. But we do a sanity check
-  // anyway. 
-  if (address_disposition == GIOP::KeyAddr)
+  // anyway.
+  const TAO_ObjectKey *key = spec.object_key ();
+  if (key)
     {
       // Put in the object key
-      // Not the right way.. Will blow if Messaging is defined.. 
-      TAO_Profile *profile = 
-        stub->profile_in_use ();
-      
-      TAO_ObjectKey *key = profile->_key ();
-      
       msg << *key;
     }
   else
@@ -151,8 +144,7 @@ TAO_GIOP_Client_Message_1_1::write_request_header (const IOP::ServiceContextList
 CORBA::Boolean
 TAO_GIOP_Client_Message_1_1::
 write_locate_request_header (CORBA::ULong request_id,
-                             TAO_Stub *stub,
-                             const CORBA::Short address_disposition,
+                             TAO_Target_Specification &spec,
                              TAO_OutputCDR &msg)
 {
   msg << request_id;
@@ -160,15 +152,9 @@ write_locate_request_header (CORBA::ULong request_id,
   // In this case we cannot recognise anything other than the Object
   // key as the address disposition variable. But we do a sanity check
   // anyway. 
-  if (address_disposition == GIOP::KeyAddr)
+  const TAO_ObjectKey *key = spec.object_key ();
+  if (key)
     {
-      // Put in the object key
-      // Not the right way.. Will blow if Messaging is defined.. 
-      TAO_Profile *profile = 
-        stub->profile_in_use ();
-      
-      TAO_ObjectKey *key = profile->_key ();
-
       // Everything is fine
       msg << *key;
     }
