@@ -1,3 +1,12 @@
+Sat Apr 24 13:09:27 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Containers_T.h: Added allocator support to ACE_Array.
+  	  Thakns to Paul Francis <pfrancis@dkl.com> for contributing this.
+
+	* ace/Future.h (class ACE_Future): Make sure to mention that
+ 	  get()'s ACE_Time_Value must be in absolute, not relative, time.
+  	  Thanks to Ian MacDonald <ianmacd@bg.com> for reporting this.
+
 Sat Apr 24 07:24:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Reverse_Lock_Test.cpp: removed ACE_Guard<ACE_SYNCH_MUTEX>

@@ -73,7 +73,8 @@ private:
 
   int get (T &value,
            ACE_Time_Value *tv);
-  // Wait up to <tv> time to get the <value>.
+  // Wait up to <tv> time to get the <value>.  Note that <tv> must be
+  // specified in absolute time rather than relative time.
 
   operator T ();
   // Type conversion. will block forever until the result is
@@ -160,7 +161,8 @@ public:
 
   int get (T &value,
            ACE_Time_Value *tv = 0);
-  // Wait up to <tv> time to get the <value>.
+  // Wait up to <tv> time to get the <value>.  Note that <tv> must be
+  // specified in absolute time rather than relative time.
 
   operator T ();
   // Type conversion, which obtains the result of the asynchronous
