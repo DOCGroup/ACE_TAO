@@ -425,8 +425,10 @@ main (int argc, char *argv[])
 template class ACE_Singleton<Globals,ACE_Null_Mutex>;
 template class ACE_Unbounded_Set<ACE_timer_t>;
 template class ACE_Unbounded_Set_Iterator<ACE_timer_t>;
+template class ACE_Node<ACE_timer_t>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<Globals,ACE_Null_Mutex>
 #pragma instantiate ACE_Unbounded_Set<ACE_timer_t>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_timer_t>
+#pragma instantiate ACE_Node<ACE_timer_t>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -2,7 +2,8 @@ Sun Sep 13 00:44:07 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server.cpp: 	
 	* tests/Cubit/TAO/MT_Cubit/client.cpp: Added some template
- 	instantiations.
+ 	instantiations. Fixed bug related to the task name when creating
+ 	the active object.
 
 	* tests/Cubit/TAO/MT_Cubit/Makefile (CUBIT_SVR_OBJS): Deleted some
  	unnecessary object files.
