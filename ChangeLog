@@ -1,3 +1,10 @@
+Tue Jun 24 15:15:03 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/os_include/sys/os_socket.h:
+          Removed ACE_HAS_CYGWIN32_SOCKET_H ifdef that included
+          cygwin32/socket.h, which is no longer needed.  Thanks to "Johnny
+          Willemsen" <jwillemsen@remedy.nl> for reporting this.
+
 Tue Jun 24 14:40:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/String_Base.i:

@@ -26,13 +26,6 @@
 
 #include "ace/os_include/sys/os_uio.h"
 
-// todo: check to see if this can be removed
-#if defined (ACE_HAS_CYGWIN32_SOCKET_H)
-   extern "C" {
-#  include /**/ <cygwin32/socket.h>
-   }
-#endif /* ACE_HAS_CYGWIN32_SOCKET_H */
-
 #if !defined (ACE_LACKS_SYS_SOCKET_H)
 #  if defined (ACE_HAS_AIX_BROKEN_SOCKET_HEADER)
 #    undef __cplusplus
