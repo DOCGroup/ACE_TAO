@@ -1,3 +1,8 @@
+Mon Feb 25 15:53:56 2002 UTC Don Hinton <dhinton@ieee.org>
+
+	* ace/Synch.i (queueing_strategy): Added ACE_UNUSED_ARG for unused
+	  queueing_strategy parameter.
+
 Mon Feb 25 09:17:39 2002  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* ace/SSL/SSL_Context.cpp (dh_params): Wrapped the second argument
