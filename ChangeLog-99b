@@ -1,7 +1,13 @@
+Sat Nov 13 19:55:17 1999  Luther J Baker  <ljb1@cs.wustl.edu>
+
+	* ace/SString.cpp (next):
+	  Removed a buggy line for Tokenizer.
+	  Thanks to Sangwoo Jin <swjinjin@sei.co.kr> for reporting this.
+
 Sat Nov 13 18:38:21 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/Configuration.cpp: Fixed some compiler problems with the
-          ACE_Malloc template instantiations and pointer casting.  
+          ACE_Malloc template instantiations and pointer casting.
 
 Sat Nov 13 11:29:20 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
