@@ -1,4 +1,6 @@
-// @(#)svrrqst.hh	1.5 95/09/25
+// This may look like C, but it's really -*- C++ -*-
+//
+// @(#) $Id$
 //
 // Header file for Win32 C/C++/COM interface to CORBA's Dynamic
 // Server Skeleton Interface's "Server Request" type.

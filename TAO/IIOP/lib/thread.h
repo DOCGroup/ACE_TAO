@@ -1,4 +1,6 @@
-// @(#)thread.hh	1.3 95/09/29
+// This may look like C, but it's really -*- C++ -*-
+//
+// @(#) $Id$
 // Copyright 1995 by Sun Microsystems, Inc
 // All Rights Reserved
 //

@@ -1,4 +1,6 @@
-// @(#)debug.hh	1.1 95/08/31
+// This may look like C, but it's really -*- C++ -*-
+//
+// @(#) $Id$
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //

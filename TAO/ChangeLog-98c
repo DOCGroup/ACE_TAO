@@ -1,3 +1,25 @@
+Mon May 12 17:02:29 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* IIOP/lib/roa.*: Moved short method into an inline file.
+  	Miscellaneous reformatting.  Adjustment to new type names
+ 	(prefaced by TAO_ for namespace protection).
+	
+	* IIOP/lib/object.*: Moved short methods into an inline file.
+  	Changed lookup()/register_op() to find()/bind() for consistency
+ 	with established ACE APIs.  Miscellaneous reformatting.
+
+	* IIOP/lib/iiopobj.*: Moved short methods into an inline file.
+  	Added CTOR for IIOP::Version and IIOP::ProfileBody.  Added
+ 	convenience CTOR for IIOP_Object where the profile can be
+ 	supplied.  Miscellaneous reformatting.
+
+	* IIOP/lib/boa.*: Moved short methods into an inline file.  Changed
+ 	lookup()/register_obj() to find()/bind() for consistency with
+ 	established ACE APIs.
+
+	* headers: Added comments to force C++ mode in emacs for header
+	files, and changed SCCS version tag info to RCS version tag info.
+
 Wed May  7 14:49:46 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* IIOP/lib/corbacom.cpp: Some bugs from the CORBA_String_var class

@@ -1,3 +1,5 @@
+// This may look like C, but it's really -*- C++ -*-
+//
 //
 // Header file for Win32 C/C++/COM interface to a CORBA ORB.
 //

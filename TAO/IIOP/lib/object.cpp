@@ -1,4 +1,5 @@
-// @(#)object.cpp	1.9 95/09/19
+// @(#) $Id$
+//
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
@@ -15,98 +16,6 @@
 
 #include	<initguid.h>
 
-TAO_Operation_Table::~TAO_Operation_Table()
-{
-}
-
-//
-// Constructor and destructor are accessible to subclasses
-//
-CORBA_Object::CORBA_Object (IUnknown *_jan)
-: parent (_jan)
-{
-  //    assert (parent != 0);
-  // we removed this as it doesn't fit in our schema of things
-}
-
-void CORBA_Object::set_parent(IUnknown *p)
-{
-  this->parent = p;
-  assert (this->parent != 0);
-}
-
-CORBA_Object::~CORBA_Object ()
-{
-}
-
-//
-// CORBA dup/release build on top of COM's (why not).
-//
-void
-CORBA_release (
-    CORBA_Object_ptr	obj
-)
-{
-    if (obj)
-	obj->Release ();
-}
-
-CORBA_Object_ptr
-CORBA_Object::_duplicate (CORBA_Object_ptr obj)
-{
-    if (obj)
-	obj->AddRef ();
-    return obj;
-}
-
-//
-// Null pointers represent nil objects.
-//
-CORBA_Object_ptr
-CORBA_Object::_nil ()
-{
-    return 0;
-}
-
-CORBA_Boolean
-CORBA_is_nil (CORBA_Object_ptr	obj)
-{
-    return (CORBA_Boolean) (obj == 0);
-}
-
-
-//
-// DII hook to objref
-//
-// The mapping for create_request is split into two forms, corresponding to
-// the two usage styles described in CORBA section 6.2.1.
-//
-void
-__stdcall
-CORBA_Object::_create_request (
-    const CORBA_Char        *operation,
-    CORBA_NVList_ptr        arg_list,
-    CORBA_NamedValue_ptr    result,
-    CORBA_Request_ptr       &request,
-    CORBA_Flags             req_flags,
-    CORBA_Environment       &env
-)
-{
-    env.clear ();
-    request = new CORBA_Request (this, operation, arg_list, result, req_flags);
-}
-
-
-CORBA_Request_ptr
-__stdcall
-CORBA_Object::_request (
-    const CORBA_Char		*operation,
-    CORBA_Environment		&env
-)
-{
-    env.clear ();
-    return new CORBA_Request (this, operation);
-}
 
 
 //
@@ -126,38 +35,37 @@ static const calldata Object_get_interface_calldata = {
 
 CORBA_InterfaceDef_ptr
 __stdcall
-CORBA_Object::_get_interface (
-    CORBA_Environment		&env
-)
+CORBA_Object::_get_interface (CORBA_Environment &env)
 {
-    CORBA_InterfaceDef_ptr	retval = 0;
+  CORBA_InterfaceDef_ptr	retval = 0;
 
-    //
-    // At this time, we only have a single generic way to find the
-    // CORBA interface def for an object.
-    //
-    STUB_Object			*istub;
+  //
+  // At this time, we only have a single generic way to find the
+  // CORBA interface def for an object.
+  //
+  STUB_Object			*istub;
 
-    if (QueryInterface (IID_STUB_Object, (void **) &istub) != NOERROR) {
-	env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
-	return retval;
+  if (QueryInterface (IID_STUB_Object, (void **) &istub) != NOERROR)
+    {
+      env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
+      return retval;
     }
-    Release ();
+  Release ();
 
-    //
-    // NOTE:  If istub->type_id is nonzero, we could try asking a
-    // "local" interface repository and avoid costly network I/O.
-    // (It's wrong to have different data associated with the same
-    // interface ID in different repositories; the interface is
-    // the interface, it doesn't change!)
-    //
-    // We need to be prepared to ask the object itself for this
-    // information though, since there's no guarantee that any
-    // local interface repository will really have records of this
-    // particular interface.
-    //
-    istub->do_call (env, &Object_get_interface_calldata, &retval);
-    return retval;
+  //
+  // NOTE:  If istub->type_id is nonzero, we could try asking a
+  // "local" interface repository and avoid costly network I/O.
+  // (It's wrong to have different data associated with the same
+  // interface ID in different repositories; the interface is
+  // the interface, it doesn't change!)
+  //
+  // We need to be prepared to ask the object itself for this
+  // information though, since there's no guarantee that any
+  // local interface repository will really have records of this
+  // particular interface.
+  //
+  istub->do_call (env, &Object_get_interface_calldata, &retval);
+  return retval;
 }
 
 
@@ -178,54 +86,53 @@ static const calldata Object_is_a_calldata = {
 
 CORBA_Boolean
 __stdcall
-CORBA_Object::_is_a (
-    const CORBA_Char		*type_id,
-    CORBA_Environment		&env
-)
+CORBA_Object::_is_a (const CORBA_Char *type_id,
+                     CORBA_Environment &env)
 {
-    //
-    // At this time, we only have a single generic way to check the
-    // type of an object.
-    //
-    STUB_Object			*istub;
+  //
+  // At this time, we only have a single generic way to check the
+  // type of an object.
+  //
+  STUB_Object			*istub;
 
-    if (QueryInterface (IID_STUB_Object, (void **) &istub) != NOERROR) {
-	env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
-	return CORBA_B_FALSE;
+  if (QueryInterface (IID_STUB_Object, (void **) &istub) != NOERROR)
+    {
+      env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
+      return CORBA_B_FALSE;
     }
-    Release ();
+  Release ();
 
-    //
-    // NOTE: if istub->type_id is nonzero and we have local knowledge
-    // of it, we can answer this question without a costly remote call.
-    //
-    // That "local knowledge" could come from stubs or skeletons linked
-    // into this process in the best case, or a "near" repository in a
-    // slightly worse case.  Or in a trivial case, if the ID being asked
-    // about is the ID we have recorded, we don't need to ask about the
-    // inheritance relationships at all!
-    //
-    // In real systems having local knowledge will be common, though as the
-    // systems built atop ORBs become richer it'll also become common to
-    // have the "real type ID" not be directly understood because it's
-    // more deeply derived than any locally known types.
-    //
-    // XXX if type_id is that of CORBA::Object, "yes, we comply" :-)
-    //
-    if (istub->type_id != 0
-	&& ACE_OS::strcmp ((char *)type_id, (char *)istub->type_id) == 0)
-	return CORBA_B_TRUE;
+  //
+  // NOTE: if istub->type_id is nonzero and we have local knowledge
+  // of it, we can answer this question without a costly remote call.
+  //
+  // That "local knowledge" could come from stubs or skeletons linked
+  // into this process in the best case, or a "near" repository in a
+  // slightly worse case.  Or in a trivial case, if the ID being asked
+  // about is the ID we have recorded, we don't need to ask about the
+  // inheritance relationships at all!
+  //
+  // In real systems having local knowledge will be common, though as the
+  // systems built atop ORBs become richer it'll also become common to
+  // have the "real type ID" not be directly understood because it's
+  // more deeply derived than any locally known types.
+  //
+  // XXX if type_id is that of CORBA::Object, "yes, we comply" :-)
+  //
+  if (istub->type_id != 0
+      && ACE_OS::strcmp ((char *)type_id, (char *)istub->type_id) == 0)
+    return CORBA_B_TRUE;
 
-    //
-    // Our local knowledge about this type is insufficient to say whether
-    // this reference is to an object of a type which "is_a" subtype of
-    // the type whose ID is passed as a parameter.  The implementation
-    // always knows the answer to that question, however!
-    //
-    CORBA_Boolean		retval = CORBA_B_FALSE;
+  //
+  // Our local knowledge about this type is insufficient to say whether
+  // this reference is to an object of a type which "is_a" subtype of
+  // the type whose ID is passed as a parameter.  The implementation
+  // always knows the answer to that question, however!
+  //
+  CORBA_Boolean		retval = CORBA_B_FALSE;
 
-    istub->do_call (env, &Object_is_a_calldata, &retval, &type_id);
-    return retval;
+  istub->do_call (env, &Object_is_a_calldata, &retval, &type_id);
+  return retval;
 }
 
 
@@ -246,21 +153,20 @@ static const calldata Object_get_implementation_calldata = {
 
 CORBA_ImplementationDef_ptr
 __stdcall
-CORBA_Object::_get_implementation (
-    CORBA_Environment		&env
-)
+CORBA_Object::_get_implementation (CORBA_Environment &env)
 {
-    STUB_Object			*istub;
-    CORBA_ImplementationDef_ptr	retval = 0;
+  STUB_Object			*istub;
+  CORBA_ImplementationDef_ptr	retval = 0;
 
-    if (QueryInterface (IID_STUB_Object, (void **) &istub) != NOERROR) {
-	env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
-	return retval;
+  if (QueryInterface (IID_STUB_Object, (void **) &istub) != NOERROR)
+    {
+      env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
+      return retval;
     }
-    Release ();
+  Release ();
 
-    istub->do_call (env, &Object_get_implementation_calldata, &retval);
-    return retval;
+  istub->do_call (env, &Object_get_implementation_calldata, &retval);
+  return retval;
 }
 
 
@@ -281,38 +187,41 @@ static const calldata Object_non_existent_calldata = {
 
 CORBA_Boolean
 __stdcall
-CORBA_Object::_non_existent (
-    CORBA_Environment		&env
-)
+CORBA_Object::_non_existent (CORBA_Environment &env)
 {
-    CORBA_Boolean		retval = CORBA_B_FALSE;
-    CORBA_Exception		*x;
-    STUB_Object			*istub;
+  CORBA_Boolean		retval = CORBA_B_FALSE;
+  CORBA_Exception		*x;
+  STUB_Object			*istub;
 
-    if (QueryInterface (IID_STUB_Object, (void **) &istub) != NOERROR) {
-	env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
-	return CORBA_B_FALSE;
+  if (QueryInterface (IID_STUB_Object, (void **) &istub) != NOERROR)
+    {
+      env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
+      return CORBA_B_FALSE;
     }
-    Release ();
+  Release ();
 
-    istub->do_call (env, &Object_non_existent_calldata, &retval);
+  istub->do_call (env, &Object_non_existent_calldata, &retval);
 
-    if ((x = env.exception ()) != 0) {
-	char		*id;
+  if ((x = env.exception ()) != 0)
+    {
+      char		*id;
 
-	id = _tc_CORBA_OBJECT_NOT_EXIST->id (env);
-	if (env.exception () == 0
-	    && ACE_OS::strcmp (id, x->id ()) == 0) {
-	    env.clear ();
-	    return CORBA_B_TRUE;
-	}
-	//
-	// reporting a "real" exception ...
-	//
-	return CORBA_B_FALSE;
-    } else {
-	env.clear ();
-	return CORBA_B_FALSE;
+      id = _tc_CORBA_OBJECT_NOT_EXIST->id (env);
+      if (env.exception () == 0
+          && ACE_OS::strcmp (id, x->id ()) == 0)
+        {
+          env.clear ();
+          return CORBA_B_TRUE;
+        }
+      //
+      // reporting a "real" exception ...
+      //
+      return CORBA_B_FALSE;
+    }
+  else
+    {
+      env.clear ();
+      return CORBA_B_FALSE;
     }
 }
 
@@ -323,20 +232,19 @@ CORBA_Object::_non_existent (
 //
 CORBA_ULong
 __stdcall
-CORBA_Object::_hash (
-    CORBA_ULong			maximum,
-    CORBA_Environment		&env
-)
+CORBA_Object::_hash (CORBA_ULong maximum,
+                     CORBA_Environment &env)
 {
-    STUB_Object			*istub;
+  STUB_Object			*istub;
 
-    if (QueryInterface (IID_STUB_Object, (void **) &istub) != NOERROR) {
-	env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
-	return CORBA_B_FALSE;
+  if (QueryInterface (IID_STUB_Object, (void **) &istub) != NOERROR)
+    {
+      env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
+      return CORBA_B_FALSE;
     }
-    Release ();
+  Release ();
 
-    return istub->hash (maximum, env);
+  return istub->hash (maximum, env);
 }
 
 
@@ -349,46 +257,45 @@ CORBA_Object::_hash (
 //
 CORBA_Boolean
 __stdcall
-CORBA_Object::_is_equivalent (
-    CORBA_Object_ptr		other_obj,
-    CORBA_Environment		&env
-)
+CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj,
+                              CORBA_Environment &env)
 {
-    STUB_Object			*istub;
+  STUB_Object			*istub;
 
-    if (other_obj == this) {
-	env.clear ();
-	return CORBA_B_TRUE;
+  if (other_obj == this)
+    {
+      env.clear ();
+      return CORBA_B_TRUE;
     }
 
-    if (QueryInterface (IID_STUB_Object, (void **) &istub) != NOERROR) {
-	env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
-	return CORBA_B_FALSE;
+  if (QueryInterface (IID_STUB_Object, (void **) &istub) != NOERROR)
+    {
+      env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
+      return CORBA_B_FALSE;
     }
-    Release ();
+  Release ();
 
-    return istub->is_equivalent (other_obj, env);
+  return istub->is_equivalent (other_obj, env);
 }
 
 
 // TAO's extension
 CORBA_String
-CORBA_Object::_get_name(
-    CORBA_Environment		&env
-)
+CORBA_Object::_get_name(CORBA_Environment &env)
 {
-    STUB_Object			*istub;
+  STUB_Object			*istub;
 
-    if (QueryInterface (IID_STUB_Object, (void **) &istub) != NOERROR) {
-	env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
-	return 0;
+  if (QueryInterface (IID_STUB_Object, (void **) &istub) != NOERROR)
+    {
+      env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
+      return 0;
     }
-    Release ();
+  Release ();
 
-    if (istub)
-      return istub->_get_name(env);
+  if (istub)
+    return istub->_get_name(env);
 
-    return 0; //otherwise
+  return 0; //otherwise
 }
 
 
@@ -412,28 +319,6 @@ DEFINE_GUID (IID_CORBA_Object,
 0xa201e4c2, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 #endif
 
-
-ULONG
-__stdcall
-CORBA_Object::AddRef ()
-{
-    return parent->AddRef ();
-}
-
-ULONG
-__stdcall
-CORBA_Object::Release ()
-{
-    return parent->Release ();
-}
-
-HRESULT
-__stdcall
-CORBA_Object::QueryInterface (
-    REFIID	riid,
-    void	**ppv
-)
-{
-    return parent->QueryInterface (riid, ppv);
-}
-
+#if !defined(__ACE_INLINE__)
+#  include "object.i"
+#endif
