@@ -42,6 +42,7 @@ DLL_FLAGS =
 CFLAGS = \
 	-I..\..\..\orbsvcs \
 	-I..\..\.. \
+   -I..\..\..\.. \
 	-I..\..\..\tao \
 	-I..\..\.. \
 	$(LIB_FLAGS) \
