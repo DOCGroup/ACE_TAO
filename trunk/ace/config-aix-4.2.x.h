@@ -151,7 +151,7 @@
 // Threads related definitions.
 //
 // The threads on AIX are generally POSIX P1003.1c (ACE_HAS_PTHREADS).
-// However, there is also a kernel thread ID (tid_t) that is used in 
+// However, there is also a kernel thread ID (tid_t) that is used in
 // ACE_Log_Msg (printing the thread ID).  The tid_t is not the same as
 // pthread_t, and can't derive one from the other - thread_self() gets
 // the tid_t (kernel thread ID) if called from a thread.
