@@ -13,6 +13,7 @@
 #define TAO_OBJECTREFERENCETEMPLATE_ADAPTER_H
 
 #include /**/ "ace/pre.h"
+#include "ace/Array_Base.h"
 #include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -36,7 +37,6 @@ namespace PortableInterceptor
 {
   class ObjectReferenceTemplate;
   class ObjectReferenceFactory;
-
 }
 
 /**
@@ -76,10 +76,10 @@ public:
   virtual void poa (TAO_POA * poa) = 0;
 
   /// Accessor methods to ObjectReferenceTemplate template
-  virtual PortableInterceptor::ObjectReferenceTemplate * get_adapter_template (void) = 0;
+  virtual PortableInterceptor::ObjectReferenceTemplate *get_adapter_template (void) = 0;
 
   /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
-  virtual PortableInterceptor::ObjectReferenceFactory * get_obj_ref_factory (void) = 0;
+  virtual PortableInterceptor::ObjectReferenceFactory *get_obj_ref_factory (void) = 0;
 
   /**
    * @name PortableInterceptor::ObjectReferenceFactory Methods
@@ -97,6 +97,9 @@ public:
     )) = 0;
   //@}
 };
+
+typedef
+ACE_Array_Base<PortableInterceptor::ObjectReferenceTemplate*> TAO_ObjectReferenceTemplate_Array;
 
 #include /**/ "ace/post.h"
 #endif /* TAO_OBJECTREFERENCETEMPLATE_ADAPTER_H */
