@@ -1,3 +1,12 @@
+Mon Jun 28 06:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.{h,cpp}:
+          Changed COMMAND to MYCOMMAND to fix compile errors wit HPUX 11i and
+          GCC, COMMAND seems to be a define there.
+
+        * bin/footprint_stats.sh:
+          Fixed path of ValueType library
+
 Sun Jun 27 21:42:47 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/Misc/test_XtReactor1.cpp:
