@@ -16,7 +16,7 @@
 
 #include "ace/pre.h"
 
-#include "LF_CH_Event.h"
+#include "LF_Event.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,7 +41,7 @@ class ACE_Event_Handler;
  * right protocol. This way, most of the common code for the
  * different protocols would be in this implementation.
  */
-class TAO_Export TAO_Connection_Handler : public TAO_LF_CH_Event
+class TAO_Export TAO_Connection_Handler : public TAO_LF_Event
 {
 public:
 
@@ -104,16 +104,15 @@ protected:
   /// Object.
   int svc_i (void);
 
-  /****
-   * Not sure where they are defined and used.. Looks legacy.
-   *
-   * Increment and decrement the number of upcalls that have gone
-   * this handler. Returns the upcall count. The calls are
-   * safe..
-   * int incr_pending_upcalls (void);
-   * int decr_pending_upcalls (void);
-   * int pending_upcalls (void) const;
-   */
+  /// Increment and decrement the number of upcalls that have gone
+  /// through this handler. Returns the upcall count. The calls are
+  /// thread safe..
+  int incr_pending_upcalls (void);
+
+  int decr_pending_upcalls (void);
+
+  /// Query the upcall count
+  int pending_upcalls (void) const;
 
   //@{
   /**
