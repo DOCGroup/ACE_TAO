@@ -1,3 +1,8 @@
+Mon Oct  1 20:04:14 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* THANKS: 
+	  Added Tushar Nair to the THANKS file.
+
 Mon Oct  1 18:06:48 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* ace/Object_Manager.cpp (ACE_UnhandledExceptionFilter):
