@@ -57,6 +57,11 @@ test (ACE_Configuration *config)
 
   else if (config->set_integer_value (testsection,
                                       ACE_TEXT ("intvalue"),
+                                      77))
+    return -4;
+  // Reset to the value we test for below
+  else if (config->set_integer_value (testsection,
+                                      ACE_TEXT ("intvalue"),
                                       42))
     return -4;
 
