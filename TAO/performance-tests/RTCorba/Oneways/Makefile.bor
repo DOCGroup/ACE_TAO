@@ -1,9 +1,0 @@
-
-#
-# Makefile for building the TAO RTCorba Oneways performance-tests
-#
-
-DIRS = \
-        Reliable
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
