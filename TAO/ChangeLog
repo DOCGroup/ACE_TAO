@@ -4,8 +4,6 @@ Mon Jul 19 01:09:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/Security/CSI_Utils.h:
 	* orbsvcs/orbsvcs/Security/SL3_ContextEstablishmentPolicy.cpp:
 	* orbsvcs/orbsvcs/Security/SL3_ContextEstablishmentPolicy.h:
-	* orbsvcs/orbsvcs/Security/SL3_ORBInitializer.cpp:
-	* orbsvcs/orbsvcs/Security/SL3_ORBInitializer.h:
 	* orbsvcs/orbsvcs/Security/SL3_ObjectCredentialsPolicy.cpp:
 	* orbsvcs/orbsvcs/Security/SL3_ObjectCredentialsPolicy.h:
 	* orbsvcs/orbsvcs/Security/SL3_PolicyFactory.cpp:
@@ -14,6 +12,10 @@ Mon Jul 19 01:09:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/Security/SL3_SecurityManager.h:
 
 	  New CSIv2 source files.
+
+	* orbsvcs/orbsvcs/Security.mpc:
+
+	  Added new CSIv2 source files to the Security project.
 
 Mon Jul 19 00:57:23 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
