@@ -1814,6 +1814,7 @@ operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
   cdr.read_octet_array (x.get_buffer (), length);
 #else
   x.replace (length, cdr.start ());
+  x.mb ()->wr_ptr (x.mb ()->rd_ptr () + length);
   cdr.skip_bytes (length);
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
   return cdr.good_bit ();

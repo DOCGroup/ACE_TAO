@@ -200,6 +200,11 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
   if ((cdr >> this->object_key_) == 0)
     return -1;
 
+  if (this->version_.major > 1
+      || this->version_.minor > 0)
+    if (this->tagged_components_.decode (cdr) == 0)
+      return -1;
+
   if (cdr.length () != 0 && TAO_debug_level)
     {
       // If there is extra data in the profile we are supposed to
@@ -209,6 +214,7 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
                   cdr.length (),
                   encap_len));
     }
+
   if (cdr.good_bit ())
     return 1;
 
@@ -469,41 +475,37 @@ TAO_IIOP_Profile::encode (TAO_OutputCDR &stream) const
   // UNSIGNED LONG, protocol tag
   stream.write_ulong (this->tag ());
 
-  // UNSIGNED LONG, number of succeeding bytes in the
-  // encapsulation.  We don't actually need to make the
-  // encapsulation, as nothing needs stronger alignment than
-  // this longword; it guarantees the rest is aligned for us.
+  // Create the encapsulation....
+  TAO_OutputCDR encap (ACE_CDR::DEFAULT_BUFSIZE,
+                       TAO_ENCAP_BYTE_ORDER,
+                       this->orb_core_->output_cdr_buffer_allocator (),
+                       this->orb_core_->output_cdr_dblock_allocator (),
+                       this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
+                       this->orb_core_->to_iso8859 (),
+                       this->orb_core_->to_unicode ());
 
-  CORBA::ULong hostlen = ACE_OS::strlen ((char *) this->host_);
-  CORBA::ULong encap_len =
-    1                              // byte order
-    + 1                            // version major
-    + 1                            // version minor
-    + 1                            // pad byte
-    + 4                            // sizeof (strlen)
-    + hostlen + 1                  // strlen + null
-    + (~hostlen & 01)              // optional pad byte
-    + 2                            // port
-    + ( hostlen & 02)              // optional pad short
-    + 4                            // sizeof (key length)
-    + this->object_key_.length (); // key length.
-  stream.write_ulong (encap_len);
-
-  // CHAR describing byte order, starting the encapsulation
-  stream.write_octet (TAO_ENCAP_BYTE_ORDER);
+  encap.write_octet (TAO_ENCAP_BYTE_ORDER);
 
   // The GIOP version
-  stream.write_char (this->version_.major);
-  stream.write_char (this->version_.minor);
+  encap.write_octet (this->version_.major);
+  encap.write_octet (this->version_.minor);
 
   // STRING hostname from profile
-  stream.write_string (this->host_);
+  encap.write_string (this->host_);
 
   // UNSIGNED SHORT port number
-  stream.write_ushort (this->port_);
+  encap.write_ushort (this->port_);
 
   // OCTET SEQUENCE for object key
-  stream << this->object_key_;
+  encap << this->object_key_;
+
+  if (this->version_.major > 1
+      || this->version_.minor > 0)
+    this->tagged_components_.encode (encap);
+
+  // write the encapsulation as an octet sequence...
+  stream << CORBA::ULong (encap.total_length ());
+  stream.write_octet_array_mb (encap.begin ());
 
   return 1;
 }

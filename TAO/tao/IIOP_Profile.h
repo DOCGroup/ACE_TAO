@@ -23,6 +23,7 @@
 #include "tao/Pluggable.h"
 #include "tao/Object_KeyC.h"
 #include "tao/GIOP.h"
+#include "tao/Tagged_Components.h"
 
 #include "ace/Synch.h"
 #include "ace/INET_Addr.h"
@@ -69,6 +70,9 @@ public:
 
   TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile);
   // Profile copy constructor
+
+  TAO_IIOP_Profile &operator= (const TAO_IIOP_Profile &src);
+  // Copy operator.
 
   TAO_IIOP_Profile (TAO_ORB_Core *orb_core);
   // Profile constructor, default.
@@ -139,11 +143,10 @@ public:
   void reset_hint (void);
   //  Reset the hint's value.
 
-  TAO_Profile *_nil (void);
-  // Return a null object pointer.
-
-  TAO_IIOP_Profile &operator= (const TAO_IIOP_Profile &src);
-  // Copy operator.
+  const TAO_Tagged_Components& tagged_components (void) const;
+  TAO_Tagged_Components& tagged_components (void);
+  // Access the tagged components, notice that they are empty and
+  // ignored for GIOP 1.0
 
 private:
   int set (const ACE_INET_Addr &addr);
@@ -173,6 +176,9 @@ private:
 
   TAO_ORB_Core *orb_core_;
   // ORB Core.
+
+  TAO_Tagged_Components tagged_components_;
+  // The tagged components
 };
 
 #if defined (__ACE_INLINE__)

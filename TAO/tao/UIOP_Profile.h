@@ -21,15 +21,16 @@
 #ifndef TAO_UIOP_PROFILE_H
 #define TAO_UIOP_PROFILE_H
 
-#include "ace/Synch.h"
+#include "tao/Pluggable.h"
 
 # if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-#include "ace/UNIX_Addr.h"
-
-#include "tao/Pluggable.h"
 #include "tao/Object_KeyC.h"
 #include "tao/UIOP_Connect.h"
+#include "tao/Tagged_Components.h"
+
+#include "ace/UNIX_Addr.h"
+#include "ace/Synch.h"
 
 //class TAO_UIOP_Client_Connection_Handler;
 
@@ -73,6 +74,9 @@ public:
 
   TAO_UIOP_Profile (TAO_ORB_Core *orb_core);
   // Profile constructor, default.
+
+  TAO_UIOP_Profile & operator= (const TAO_UIOP_Profile &src);
+  // Assignment operator
 
   ~TAO_UIOP_Profile (void);
   // Destructor is to be called only through <_decr_refcnt>.
@@ -136,11 +140,10 @@ public:
   void reset_hint (void);
   // Reset the hint's value.
 
-  TAO_Profile *_nil (void);
-  // Return a null object pointer.
-
-  TAO_UIOP_Profile & operator= (const TAO_UIOP_Profile &src);
-  // Assignment operator
+  const TAO_Tagged_Components& tagged_components (void) const;
+  TAO_Tagged_Components& tagged_components (void);
+  // Access the tagged components, notice that they are empty and
+  // ignored for GIOP 1.0
 
 private:
   int set (const ACE_UNIX_Addr &addr);
@@ -170,6 +173,9 @@ private:
 
   TAO_ORB_Core *orb_core_;
   // ORB Core.
+
+  TAO_Tagged_Components tagged_components_;
+  // The tagged components
 };
 
 #if defined (__ACE_INLINE__)

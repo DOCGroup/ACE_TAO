@@ -228,6 +228,12 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   int dotted_decimal_addresses = 0;
 #endif /* TAO_USE_DOTTED_DECIMAL_ADDRESSES */
 
+#if defined (TAO_STD_PROFILE_COMPONENTS)
+  int std_profile_components = 1;
+#else
+  int std_profile_components = 0;
+#endif /* TAO_STD_PROFILE_COMPONENTS */
+
   while (arg_shifter.is_anything_left ())
     {
       char *current_arg = arg_shifter.get_current ();
@@ -247,6 +253,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg();
             }
         }
+
       else if (ACE_OS::strcasecmp (current_arg,
                                    "-ORBDaemon") == 0)
         {
@@ -255,6 +262,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
             CORBA::string_dup ("-b");
           arg_shifter.consume_arg ();
         }
+
       else if (ACE_OS::strcasecmp (current_arg,
                                    "-ORBDottedDecimalAddresses") == 0)
         {
@@ -267,6 +275,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
+
       else if (ACE_OS::strcasecmp (current_arg,
                                    "-ORBDebug") == 0)
         {
@@ -513,7 +522,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
             }
         }
 
-      else if (ACE_OS::strcmp (current_arg, "-ORBcollocationstrategy") == 0)
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBCollocationStrategy") == 0)
         // Specify which collocation policy we want to use.
         {
           arg_shifter.consume_arg ();
@@ -618,6 +628,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
+
        else if (ACE_OS::strcasecmp (current_arg,
                                     "-ORBSvcConfDirective") == 0)
          {
@@ -637,6 +648,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
                arg_shifter.consume_arg ();
              }
          }
+
       else if (ACE_OS::strcasecmp (current_arg,
                                    "-ORBGIOPlite") == 0)
         {
@@ -664,6 +676,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
+
       else if (ACE_OS::strcasecmp (current_arg,
                                    "-ORBDefaultInitRef") == 0)
         {
@@ -674,12 +687,26 @@ TAO_ORB_Core::init (int &argc, char *argv[])
               arg_shifter.consume_arg ();
             }
         }
+
       else if (ACE_OS::strcasecmp (current_arg,
                                    "-ORBSkipServiceConfigOpen") == 0)
         {
           arg_shifter.consume_arg ();
           skip_service_config_open = 1;
         }
+
+      else if (ACE_OS::strcasecmp (current_arg,
+                                   "-ORBStdProfileComponents") == 0)
+        {
+          arg_shifter.consume_arg ();
+          if (arg_shifter.is_parameter_next ())
+            {
+              std_profile_components =
+                ACE_OS::atoi (arg_shifter.get_current ());
+              arg_shifter.consume_arg ();
+           }
+        }
+
       else if (ACE_OS::strncasecmp (current_arg,
                                     "-ORB",
                                     4) == 0)
@@ -830,7 +857,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   this->orb_params ()->use_lite_protocol (giop_lite);
 
-  this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
+  this->orb_params ()->std_profile_components (std_profile_components);
 
   // ** Set up the pluggable protocol infrastructure.  First get a
   // pointer to the protocol factories set, then obtain pointers to

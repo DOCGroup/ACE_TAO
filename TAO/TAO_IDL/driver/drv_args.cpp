@@ -741,7 +741,7 @@ DRV_parse_args (long ac, char **av)
       if (ACE_OS::access (tmpdir, F_OK | R_OK | W_OK) == -1)
 #endif /* ACE_MVS */
         {
-          cerr << GTDEVEL ("Warning: Can't access temporary directory (")
+          cerr << GTDEVEL ("Error: Can't access temporary directory (")
                << tmpdir
                << GTDEVEL ("), using current directory for temp files.\n");
           tmpdir = ".";
@@ -753,7 +753,7 @@ DRV_parse_args (long ac, char **av)
           if (ACE_OS::access (tmpdir, F_OK | R_OK | W_OK) == -1)
 #endif /* ACE_MVS */
             {
-              cerr << GTDEVEL ("Warning: Can't access temporary directory (")
+              cerr << GTDEVEL ("Error: Can't access temporary directory (")
                    << tmpdir
                    << "\n";
               ACE_OS::exit (99);

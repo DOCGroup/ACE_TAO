@@ -1140,7 +1140,6 @@ TAO_GIOP::process_server_locate (TAO_Transport *transport,
   TAO_GIOP_LocateStatusType status = TAO_GIOP_UNKNOWN_OBJECT;
   CORBA::Object_var forward_location_var;
 
-  CORBA::ULong request_id;
   CORBA::Boolean response_required = 1;
 
   CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ();
@@ -1148,8 +1147,6 @@ TAO_GIOP::process_server_locate (TAO_Transport *transport,
     {
       locateRequestHeader.init (input, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      request_id = locateRequestHeader.request_id;
 
 #if !defined (TAO_NO_IOR_TABLE)
 
