@@ -274,7 +274,7 @@ typedef unsigned __int64 ACE_UINT64;
 #endif /* NOMINMAX */
 
 #if defined (ACE_HAS_MOSTLY_UNICODE_APIS) && !defined (UNICODE)
-#defined UNICODE
+#define UNICODE
 #endif /* ACE_HAS_MOSTLY_UNICODE_APIS && !UNICODE */
 
 #if defined (_UNICODE)
