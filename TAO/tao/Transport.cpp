@@ -1928,6 +1928,17 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
   else if (t == TAO_PLUGGABLE_MESSAGE_REQUEST ||
            t == TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST)
     {
+      // Ready to process a request. Increment the refcount of <this
+      // transport>. Theoretically, after handler resumption another
+      // thread can access this very same transport and can even close
+      // this. To have a valid Transport object for further processing
+      // we should increment the refcount. Please see Bug 1382 for
+      // more details.
+      // REFCNT: Matched by the release before returning.
+
+      // This generic class takes care of everything.
+      TAO_Transport_Refcount_Guard (this);
+
       // Let us resume the handle before we go ahead to process the
       // request. This will open up the handle for other threads.
       rh.resume_handle ();
@@ -1938,6 +1949,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
         {
           this->send_connection_closed_notifications ();
 
+
           // Return a "-1" so that the next stage can take care of
           // closing connection and the necessary memory management.
           return -1;
@@ -1946,6 +1958,8 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
   else if (t == TAO_PLUGGABLE_MESSAGE_REPLY ||
            t == TAO_PLUGGABLE_MESSAGE_LOCATEREPLY)
     {
+      // Please see ..else if (XXX_REQUEST) for whys and whats..
+      TAO_Transport_Refcount_Guard (this);
       rh.resume_handle ();
 
       // @@todo: Maybe the input_cdr can be constructed from the

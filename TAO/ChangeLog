@@ -1,3 +1,28 @@
+Tue Dec  3 18:13:42 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	Fix for BUG 1382. Please see 
+
+	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1382
+
+	for details. The problem is basically that we didnt know when and
+        how to do reference counting. The following fix addresses that.
+
+	* tao/Transport.h:
+	* tao/Transport.inl (TAO_Transport_Refcount_Guard): A new helper
+	  guard class which increments the refcount when constructed and
+	  decrements the refcount on destruction.
+
+	* tao/Transport.cpp (process_parsed_messages): Just before
+	  resuming the handle, increment the refcount of TAO_Transport and
+	  decrement it when exiting the scope where request and reply
+	  processing is done. 
+
+	* tao/TAO_Server_Request.cpp: Removed incrementing and
+	  decrementing the TAO_Transport. It has now been moved to
+	  TAO_Transport::process_parsed_messages () which is a safer and
+	  the right place to do refcounting.
+	
+
 Mon Dec  2 18:42:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Borland/ChatClient.cpp:
