@@ -1,0 +1,15 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoserver, amh {
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(*Client): taoserver, amh {
+  exename = client
+  Source_Files {
+    client.cpp
+  }
+}

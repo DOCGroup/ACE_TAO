@@ -1,0 +1,73 @@
+/*
+   --------------------- results -------------------------------------
+   t0arg 0x40 (THR_DETACHED, Not Bound, No New_LWP)
+   t1arg 0x40 (THR_DETACHED, Not Bound, No New_LWP)
+   count[0] 2222061 count[1] 2222061
+   ncorr_orig 1 ncorr_set 0 ncorr_end 2 rate 22070.520 per_cxt 45.31 usec
+
+   ------------------------------------------------------------------------
+   t0arg 0x40 (THR_DETACHED, Not Bound, No New_LWP)
+   t1arg 0x40 (THR_DETACHED, Not Bound, No New_LWP)
+   count[0] 3979311 count[1] 3824273
+   ncorr_orig 1 ncorr_set 2 ncorr_end 2 rate 38975.535 per_cxt 25.66 usec
+
+   ------------------------------------------------------------------------
+   t0arg 0x40 (THR_DETACHED, Not Bound, No New_LWP)
+   t1arg 0x40 (THR_DETACHED, Not Bound, No New_LWP)
+   count[0] 4173290 count[1] 3690153
+   ncorr_orig 1 ncorr_set 3 ncorr_end 3 rate 39134.219 per_cxt 25.55 usec
+
+   ------------------------------------------------------------------------
+   t0arg 0x41 (THR_DETACHED, THR_BOUND, No New_LWP)
+   t1arg 0x41 (THR_DETACHED, THR_BOUND, No New_LWP)
+   count[0] 1376594 count[1] 1404050
+   ncorr_orig 1 ncorr_set 0 ncorr_end 1 rate 13902.920 per_cxt 71.93 usec
+
+   ------------------------------------------------------------------------
+   t0arg 0x41 (THR_DETACHED, THR_BOUND, No New_LWP)
+   t1arg 0x41 (THR_DETACHED, THR_BOUND, No New_LWP)
+   count[0] 1522495 count[1] 1550889
+   ncorr_orig 1 ncorr_set 2 ncorr_end 2 rate 15366.580 per_cxt 65.08 usec
+
+   ------------------------------------------------------------------------
+   t0arg 0x41 (THR_DETACHED, THR_BOUND, No New_LWP)
+   t1arg 0x41 (THR_DETACHED, THR_BOUND, No New_LWP)
+   count[0] 1282030 count[1] 1265453
+   ncorr_orig 1 ncorr_set 3 ncorr_end 3 rate 12737.125 per_cxt 78.51 usec
+
+   ------------------------------------------------------------------------
+   t0arg 0x42 (THR_DETACHED, Not Bound, THR_NEW_LWP)
+   t1arg 0x42 (THR_DETACHED, Not Bound, THR_NEW_LWP)
+   count[0] 3892994 count[1] 3981143
+   ncorr_orig 3 ncorr_set 0 ncorr_end 3 rate 39273.352 per_cxt 25.46 usec
+
+   ------------------------------------------------------------------------
+   t0arg 0x42 (THR_DETACHED, Not Bound, THR_NEW_LWP)
+   t1arg 0x42 (THR_DETACHED, Not Bound, THR_NEW_LWP)
+   count[0] 4008638 count[1] 3882986
+   ncorr_orig 3 ncorr_set 2 ncorr_end 2 rate 39415.660 per_cxt 25.37 usec
+
+   ------------------------------------------------------------------------
+   t0arg 0x42 (THR_DETACHED, Not Bound, THR_NEW_LWP)
+   t1arg 0x42 (THR_DETACHED, Not Bound, THR_NEW_LWP)
+   count[0] 3859767 count[1] 3998157
+   ncorr_orig 3 ncorr_set 3 ncorr_end 3 rate 39145.160 per_cxt 25.55 usec
+
+   ------------------------------------------------------------------------
+   t0arg 0x43 (THR_DETACHED, THR_BOUND, THR_NEW_LWP)
+   t1arg 0x43 (THR_DETACHED, THR_BOUND, THR_NEW_LWP)
+   count[0] 1557142 count[1] 1588775
+   ncorr_orig 3 ncorr_set 0 ncorr_end 3 rate 15729.235 per_cxt 63.58 usec
+
+   ------------------------------------------------------------------------
+   t0arg 0x43 (THR_DETACHED, THR_BOUND, THR_NEW_LWP)
+   t1arg 0x43 (THR_DETACHED, THR_BOUND, THR_NEW_LWP)
+   count[0] 1570636 count[1] 1579111
+   ncorr_orig 3 ncorr_set 2 ncorr_end 3 rate 15748.395 per_cxt 63.50 usec
+
+   ------------------------------------------------------------------------
+   t0arg 0x43 (THR_DETACHED, THR_BOUND, THR_NEW_LWP)
+   t1arg 0x43 (THR_DETACHED, THR_BOUND, THR_NEW_LWP)
+   count[0] 1414198 count[1] 1371431
+   ncorr_orig 3 ncorr_set 3 ncorr_end 3 rate 13927.800 per_cxt 71.80 usec
+ */
