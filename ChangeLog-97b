@@ -22,6 +22,12 @@ Fri Oct 31 14:35:37 1997  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform-linux.GNU: added -pipe and
           bumped optimization level up to -O3.
 
+        * ace/Thread_Manager.cpp (wait_task): no-op is thr_list_
+          size is 0.  wait_task () can be called under that condition
+          (after Thread_Manager::wait () has returned) from an
+          ACE_Stream destructor, through ACE_Module::close () and
+          ACE_Task_Base.wait ().
+
 Fri Oct 31 00:53:52 1997    <irfan@TWOSTEP>
 
 	* The following five changes were suggested by Stephen Coy
