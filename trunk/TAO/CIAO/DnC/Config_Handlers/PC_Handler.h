@@ -85,7 +85,7 @@ namespace CIAO
 
       /// Process the specializedConfig attribute
       void process_specializedConfig
-        (const XMLCh* specializedConfig, ::Deployment::PackageConfiguratio &pc);
+        (const XMLCh* specializedConfig, ::Deployment::PackageConfiguration &pc);
 
     private:
 
