@@ -28,6 +28,7 @@
 // Platform has no implementation of pthread_condattr_setpshared(),
 // even though it supports pthreads! (like Irix 6.2)
 #define ACE_LACKS_CONDATTR_PSHARED
+#define ACE_LACKS_MUTEXATTR_PSHARED
 
 // IRIX 6.2 supports a variant of POSIX Pthreads, supposedly POSIX 1c
 #define ACE_HAS_PTHREADS

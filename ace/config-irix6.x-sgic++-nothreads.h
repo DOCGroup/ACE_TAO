@@ -91,6 +91,7 @@
 // Platform has no implementation of pthread_condattr_setpshared(),
 // even though it supports pthreads! (like Irix 6.2)
 #define ACE_LACKS_CONDATTR_PSHARED
+#define ACE_LACKS_MUTEXATTR_PSHARED
 
 #define ACE_LACKS_RWLOCK_T
 
