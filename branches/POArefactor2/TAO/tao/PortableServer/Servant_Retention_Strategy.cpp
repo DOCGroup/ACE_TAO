@@ -701,14 +701,53 @@ namespace TAO
        * and the Interface Id associated with the servant, and that Object Id
        * is returned.
        *
+       */
+      // todo
+
+      /**
        * If the POA has the USE_DEFAULT_SERVANT policy, the servant specified
        * is the default servant, and the operation is being invoked in the
        * context of executing a request on the default servant, then the
        * ObjectId associated with the current invocation is returned.
-       *
-       * Otherwise, the ServantNotActive exception is raised.
        */
-      // todo
+      PortableServer::Servant default_servant = 0;
+      default_servant = this->poa_->active_policy_strategies().request_processing_strategy()->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      if (default_servant != 0)
+        {
+          if (default_servant == servant)
+            {
+              // If they are the same servant, then check if we are in an
+              // upcall.
+              TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
+                static_cast <TAO::Portable_Server::POA_Current_Impl *>
+                            (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
+              // If we are in an upcall on the default servant, return the
+              // ObjectId associated with the current invocation.
+              if (poa_current_impl != 0 &&
+                  servant == poa_current_impl->servant ())
+                {
+                  return poa_current_impl->get_object_id (ACE_ENV_SINGLE_ARG_PARAMETER);
+                }
+            }
+        }
+      else
+        {
+          /*
+           * If no default servant is available, the POA will raise the
+            * OBJ_ADAPTER system exception.
+            */
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            0);
+        }
+
+       /*
+        * Otherwise, the ServantNotActive exception is raised.
+        */
+       CE_THROW_RETURN (PortableServer::POA::ServantNotActive (),
+                        0);
+
     }
 
     CORBA::Object_ptr
