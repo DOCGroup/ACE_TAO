@@ -1,5 +1,5 @@
 // $Id$
-//
+
 // ============================================================================
 //
 // = LIBRARY
@@ -15,34 +15,34 @@
 //    a producer generates messages and enqueues them, and a consumer
 //    dequeues them and checks their ordering.
 //
-//    In these tests, every effort is made to ensure that there is plenty
-//    of time for the messages to be enqueued and dequeued, with messages
-//    that *should* meet their deadlines actually meeting them,
-//    while messages that should miss their deadlines are delayed
-//    so that they actually miss them.  It is, however, remotely
-//    possible that this test could yield a false negative:
+//    In these tests, every effort is made to ensure that there is
+//    plenty of time for the messages to be enqueued and dequeued,
+//    with messages that *should* meet their deadlines actually
+//    meeting them, while messages that should miss their deadlines
+//    are delayed so that they actually miss them.  It is, however,
+//    remotely possible that this test could yield a false negative:
 //    the dynamic queues could work correctly but due to timing
 //    variations the test could indicate failure.
 //
-//    Three message queues are obtained from the message queue factory,
-//    one static, two dynamic (one deadline based, and one laxity based)
-//    and the same supplier behavior is used each time: the messages
-//    are preallocated and their static information valued, the current
-//    time is obtained and deadlines are set, with half of the messages
-//    given late deadlines, and the other half of the messages given
-//    reachable deadlines.  The producer then immediately enqueues all
-//    messages.
+//    Three message queues are obtained from the message queue
+//    factory, one static, two dynamic (one deadline based, and one
+//    laxity based) and the same supplier behavior is used each time:
+//    the messages are preallocated and their static information
+//    valued, the current time is obtained and deadlines are set, with
+//    half of the messages given late deadlines, and the other half of
+//    the messages given reachable deadlines.  The producer then
+//    immediately enqueues all messages.
 //
-//    Two separate tests are run, one which verifies messages are correctly
-//    ordered my the given queues, and one which generates performance
-//    numbers for the various queues under increasing numbers of messages.
-//    In the first test, the consumer is passed the filled queue and a string
-//    with the expected order in which the messages should dequeue.  In the
-//    second test, measurements are made as non-intrusive as possible, with
-//    no ordering checks.
+//    Two separate tests are run, one which verifies messages are
+//    correctly ordered my the given queues, and one which generates
+//    performance numbers for the various queues under increasing
+//    numbers of messages.  In the first test, the consumer is passed
+//    the filled queue and a string with the expected order in which
+//    the messages should dequeue.  In the second test, measurements
+//    are made as non-intrusive as possible, with no ordering checks.
 //
 // = AUTHOR
-//    Chris Gill
+//    Chris Gill <cdgill@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -62,34 +62,38 @@ USELIB("..\ace\aced.lib");
 
 enum Test_Type {BEST, WORST, RANDOM};
 
-// structure used to pass arguments to test functions
-struct ArgStruct
+class ArgStruct
 {
+  // = TITLE
+  //   Structure used to pass arguments to test functions.
+public:
+  // @@ Chris, can you please document these fields?
+
   ACE_Message_Queue<ACE_SYNCH> *queue_;
   const char *order_string_;
   ACE_Message_Block **array_;
   u_int expected_count_;
 };
 
-// order in which messages are sent
+// Order in which messages are sent.
 static const char send_order [] = "abcdefghijklmnop";
 
-// order in which messages are received with "FIFO prioritization" (i.e., none)
+// Order in which messages are received with "FIFO prioritization"
+// (i.e., none)
 // Unused:  static const char FIFO_receipt_order [] = "abcdefghijklmnop";
 
-// order in which messages are received with static prioritization
+// Order in which messages are received with static prioritization.
 static const char static_receipt_order [] = "ponmlkjihgfedcba";
 
-// order in which messages are received with deadline prioritization
+// Order in which messages are received with deadline prioritization.
 static const char deadline_receipt_order [] = "hgfedcbaponmlkji";
 
-// order in which messages are received with laxity prioritization
+// Order in which messages are received with laxity prioritization.
 static const char laxity_receipt_order [] = "hfgedbcapnomljki";
 
-// fast and slow execution time values (sec, usec),
-// kept very small to allow comparison of deadline,
-// laxity, and static strategies across a very wide
-// range of message counts.
+// Fast and slow execution time values (sec, usec), kept very small to
+// allow comparison of deadline, laxity, and static strategies across
+// a very wide range of message counts.
 static const ACE_Time_Value fast_execution (0, 1);
 static const ACE_Time_Value slow_execution (0, 2);
 
@@ -97,36 +101,41 @@ static const ACE_Time_Value slow_execution (0, 2);
 static const long max_queue = LONG_MAX;
 
 #if defined (VXWORKS)
-// VxWorks Message Queue parameters
+// VxWorks Message Queue parameters.
 const int vx_max_queue = INT_MAX;
 const int vx_msg_size = 32;
 #endif /* defined (VXWORKS) */
 
-// loading parameters (number of messages to push through queues)
-// for performance tests
+// Loading parameters (number of messages to push through queues) for
+// performance tests.
 static int MIN_LOAD = 20;
 static int MAX_LOAD = 1000;
 static int LOAD_STEP = 20;
 
-// time offsets for a minute in the past (for the best case test) and
-// two seconds in the future (for the worst case and randomized tests)
+// Time offsets for a minute in the past (for the best case test) and
+// two seconds in the future (for the worst case and randomized
+// tests).
 static const ACE_Time_Value far_past_offset (-60, 0);
 static const ACE_Time_Value near_future_offset (2, 0);
 static const ACE_Time_Value offset_step (0, 5);
 
-// The order consumer dequeues a message from the passed Message_Queue,
-// and checks its data character against the passed string of characters
-// which has the expected ordering.   Suppliers and consumers do not
-// allocate or deallocate messages, to avoid timing delays and timing
-// jitter in the test: the main function is responsible for all
-// initialization allocation and cleanup before, between, and after
-// (but not during) the transfer of messages from a supplier to the
-// corresponding consumer.
+// The order consumer dequeues a message from the passed
+// Message_Queue, and checks its data character against the passed
+// string of characters which has the expected ordering.  Suppliers
+// and consumers do not allocate or deallocate messages, to avoid
+// timing delays and timing jitter in the test: the main function is
+// responsible for all initialization allocation and cleanup before,
+// between, and after (but not during) the transfer of messages from a
+// supplier to the corresponding consumer.
 
 static void *
-order_consumer (void * args)
+order_consumer (void *args)
 {
   ACE_ASSERT (args != 0);
+
+  // @@ Chris, can you please use the appropriate
+  // ACE_reinterpret_cast() macro here, rather than using the
+  // old-style C casts?
 
   ACE_Message_Queue<ACE_SYNCH> *msg_queue = ((ArgStruct *) args)->queue_;
   const char *receipt_order = ((ArgStruct *) args)->order_string_;
@@ -137,18 +146,19 @@ order_consumer (void * args)
 
   u_int local_count = 0;
 
-  // Keep looping, reading a message out of the queue, until we
-  // reach the end of the receipt order string, which signals us to quit.
-  for (const char *expected = receipt_order; *expected != '\0'; ++expected)
+  // Keep looping, reading a message out of the queue, until we reach
+  // the end of the receipt order string, which signals us to quit.
+
+  for (const char *expected = receipt_order;
+       *expected != '\0';
+       ++expected)
   {
     ACE_Message_Block *mb = 0;
 
     int result = msg_queue->dequeue_head (mb);
 
     if (result == -1)
-    {
       break;
-        }
 
     local_count++;
 
@@ -156,16 +166,14 @@ order_consumer (void * args)
   }
 
   ACE_ASSERT (local_count == ACE_OS::strlen (receipt_order));
-
   ACE_ASSERT (local_count == expected_count);
-
   return 0;
 }
 
-// The order producer runs through the passed send string,  setting the read
-// pointer of the current message to the current character position in
-// the string, and then queueing the message in the message list, where
-// it is removed by the order consumer.
+// The order producer runs through the passed send string, setting the
+// read pointer of the current message to the current character
+// position in the string, and then queueing the message in the
+// message list, where it is removed by the order consumer.
 
 static void *
 order_producer (void *args)
