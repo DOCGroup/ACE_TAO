@@ -1,5 +1,6 @@
 Basic_Types_Test
 chorus/Env_Value_Test
+Capabilities_Test
 Atomic_Op_Test
 Object_Manager_Test
 CDR_File_Test
