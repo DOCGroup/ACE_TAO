@@ -66,7 +66,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
   int status;
   do
     {
-      // These handle sets are used to set up for whatever SSL_accept
+      // These handle sets are used to set up for whatever SSL_connect
       // says it wants next. They're reset on each pass around the loop.
       ACE_Handle_Set rd_handle;
       ACE_Handle_Set wr_handle;
@@ -103,7 +103,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           //
           // Explicitly check for EWOULDBLOCK since it doesn't get
           // converted to an SSL_ERROR_WANT_{READ,WRITE} on some
-          // platforms. If SSL_accept failed outright, though, don't
+          // platforms. If SSL_connect failed outright, though, don't
           // bother checking more. This can happen if the socket gets
           // closed during the handshake.
           if (ACE_OS::set_errno_to_last_error () == EWOULDBLOCK &&
@@ -181,16 +181,32 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
       countdown.start ();
     }
 
-  if (this->connector_.connect (new_stream.peer (),
-                                remote_sap,
-                                timeout,
-                                local_sap,
-                                reuse_addr,
-                                flags,
-                                perms) == -1)
-    return -1;
-  else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
+  int result =
+    this->connector_.connect (new_stream.peer (),
+                              remote_sap,
+                              timeout,
+                              local_sap,
+                              reuse_addr,
+                              flags,
+                              perms);
+
+  int error = 0;
+  if (result == -1)
+    error = errno;  // Save us some TSS accesses.
+
+  // Obtain the handle from the underlying SOCK_Stream and set it in
+  // the SSL_SOCK_Stream.  Note that the case where a connection is in
+  // progress is also handled.  In that case, the handle must also be
+  // set in the SSL_SOCK_Stream so that the correct handle is returned
+  // when performing non-blocking connect()s.
+  if (new_stream.get_handle () == ACE_INVALID_HANDLE
+      && (result == 0
+          || (result == -1 && (error == EWOULDBLOCK
+                               || error == EINPROGRESS))))
     new_stream.set_handle (new_stream.peer ().get_handle ());
+
+  if (result == -1)
+    return result;
 
   // If using a timeout, update the countdown timer to reflect the time
   // spent on the connect itself, then pass the remaining time to
@@ -201,14 +217,12 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
       timeout = &time_copy;
     }
 
-  if (this->ssl_connect (new_stream, timeout) == -1)
-    {
-      new_stream.close ();
-      return -1;
-    }
+  result = this->ssl_connect (new_stream, timeout);
 
-  return 0;
+  if (result == -1)
+    new_stream.close ();
 
+  return result;
 }
 
 int
@@ -235,19 +249,34 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
       countdown.start ();
     }
 
-  if (this->connector_.connect (new_stream.peer (),
-                                remote_sap,
-                                qos_params,
-                                timeout,
-                                local_sap,
-                                protocolinfo,
-                                g,
-                                flags,
-                                reuse_addr,
-                                perms) == -1)
-    return -1;
-  else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
+  int result = this->connector_.connect (new_stream.peer (),
+                                         remote_sap,
+                                         qos_params,
+                                         timeout,
+                                         local_sap,
+                                         protocolinfo,
+                                         g,
+                                         flags,
+                                         reuse_addr,
+                                         perms);
+
+  int error = 0;
+  if (result == -1)
+    error = errno;  // Save us some TSS accesses.
+
+  // Obtain the handle from the underlying SOCK_Stream and set it in
+  // the SSL_SOCK_Stream.  Note that the case where a connection is in
+  // progress is also handled.  In that case, the handle must also be
+  // set in the SSL_SOCK_Stream so that the correct handle is returned
+  // when performing non-blocking connect()s.
+  if (new_stream.get_handle () == ACE_INVALID_HANDLE
+      && (result == 0
+          || (result == -1 && (error == EWOULDBLOCK
+                               || error == EINPROGRESS))))
     new_stream.set_handle (new_stream.peer ().get_handle ());
+
+  if (result == -1)
+    return result;
 
   // If using a timeout, update the countdown timer to reflect the time
   // spent on the connect itself, then pass the remaining time to
@@ -258,14 +287,12 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
       timeout = &time_copy;
     }
 
-  if (this->ssl_connect (new_stream, timeout) == -1)
-    {
-      new_stream.close ();
-      return -1;
-    }
+  result = this->ssl_connect (new_stream, timeout);
 
-  return 0;
+  if (result == -1)
+    new_stream.close ();
 
+  return result;
 }
 
 // Try to complete a non-blocking connection.
@@ -287,12 +314,17 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
       countdown.start ();
     }
 
-  if (this->connector_.complete (new_stream.peer (),
-                                 remote_sap,
-                                 tv) == -1)
+  // Only attempt to complete the TCP connection if it that hasn't
+  // already been done.
+  ACE_INET_Addr raddr;
+  if (new_stream.peer ().get_remote_addr (raddr) != 0
+      && this->connector_.complete (new_stream.peer (),
+                                    remote_sap,
+                                    tv) == -1)
     return -1;
-  else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
-    new_stream.set_handle (new_stream.peer ().get_handle ());
+
+  // The handle in the SSL_SOCK_Stream should have already been set in
+  // the connect() method.
 
   // If using a timeout, update the countdown timer to reflect the time
   // spent on the connect itself, then pass the remaining time to

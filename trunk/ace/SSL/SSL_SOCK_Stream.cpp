@@ -542,3 +542,19 @@ ACE_SSL_SOCK_Stream::recvv_n (iovec iov[], size_t iovcnt) const
 
   return bytes_read;
 }
+
+int
+ACE_SSL_SOCK_Stream::get_remote_addr (ACE_Addr &addr) const
+{
+  // Some applications use get_remote_addr() as a way of determining
+  // whether or not a connection has been established.  In SSL's case,
+  // the remote addr will be available once the TCP handshake has been
+  // complete.  Despite that fact, the SSL connection may not have
+  // been completed.  In such a case, a successful return from
+  // get_remote_addr() would be misleading.
+
+  if (SSL_is_init_finished (this->ssl_))
+    return this->ACE_SOCK::get_remote_addr (addr);
+
+  return -1;
+}
