@@ -1,3 +1,8 @@
+Thu Feb 24 10:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+          Fixed warnings in the Tru64 build
+
 Thu Feb 24 09:37:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/IFRService/*S.{h,cpp,inl}:
