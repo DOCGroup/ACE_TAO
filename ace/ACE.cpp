@@ -29,7 +29,7 @@ size_t ACE::allocation_granularity_ = 0;
 
 // If on Win32 and using non-static Object Manager, compile in a DllMain
 // which will init the ACE library upon loading and tear it down on unloading.
-#if defined (ACE_WIN32) && defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
+#if defined (ACE_WIN32) && defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && (0)
 BOOL APIENTRY DllMain(HANDLE hModule, 
                       DWORD  ul_reason_for_call, 
                       LPVOID lpReserved)
