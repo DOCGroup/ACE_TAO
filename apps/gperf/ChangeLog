@@ -1,13 +1,18 @@
+Fri Sep 25 08:54:41 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * src/Key_List.cpp (Key_List ctor): reordered initializers to
+          match declaration order.
+
 Thu Sep 24 18:20:36 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* src/Key_List: Changed char_set field to keysig to be consistent
-	  with the paper.
+        * src/Key_List: Changed char_set field to keysig to be consistent
+          with the paper.
 
-	* src/Hash_Table: Renamed operator() to find().  What the heck was
- 	  I thinking in '92?!
+        * src/Hash_Table: Renamed operator() to find().  What the heck was
+          I thinking in '92?!
 
-	* src/gperf.cpp (main): Removed the LARGE_STACK_ARRAYS option.
-	  This was annoying...
+        * src/gperf.cpp (main): Removed the LARGE_STACK_ARRAYS option.
+          This was annoying...
 
 Tue Sep 22 21:30:59 1998  David L. Levine  <levine@cs.wustl.edu>
 
