@@ -8,7 +8,7 @@
 #include "wxNamingViewerFrame.h"
 
 #include "wx/clipbrd.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/Naming/Naming_Server.h"
 #include "wxNamingViewer.h"
 #include "wxSelectNSDialog.h"
 #include "ace/SString.h"

@@ -6,7 +6,7 @@
 
 #include "ace/Get_Opt.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Flows_T.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"

@@ -8,7 +8,8 @@
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Scheduler_Factory.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/Naming/Naming_Client.h"
+#include "orbsvcs/Naming/Naming_Server.h"
 
 ACE_RCSID (Sched_Conf, 
            Sched_Conf, 

@@ -20,7 +20,8 @@
 #define TAO_UTIL_H
 
 #include "tao/PortableServer/ORB_Manager.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/Naming/Naming_Client.h"
+#include "orbsvcs/Naming/Naming_Server.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 

@@ -165,9 +165,10 @@ Naming = \
   Naming/Entries.cpp \
   Naming/Flat_File_Persistence.cpp \
   Naming/Hash_Naming_Context.cpp \
+  Naming/Naming_Client.cpp \
   Naming/Naming_Context_Interface.cpp \
   Naming/Naming_Loader.cpp \
-  Naming/Naming_Utils.cpp \
+  Naming/Naming_Server.cpp \
   Naming/Persistent_Context_Index.cpp \
   Naming/Persistent_Entries.cpp \
   Naming/Persistent_Naming_Context.cpp \
@@ -212,9 +213,10 @@ nobase_include_HEADERS += \
   Naming/Entries.h \
   Naming/Flat_File_Persistence.h \
   Naming/Hash_Naming_Context.h \
+  Naming/Naming_Client.h \
   Naming/Naming_Context_Interface.h \
   Naming/Naming_Loader.h \
-  Naming/Naming_Utils.h \
+  Naming/Naming_Server.h \
   Naming/Persistent_Context_Index.h \
   Naming/Persistent_Entries.h \
   Naming/Persistent_Naming_Context.h \

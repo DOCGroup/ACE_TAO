@@ -31,7 +31,7 @@
 #include "ace/Get_Opt.h"
 #include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/Naming/Naming_Client.h"
 
 class Client
 {

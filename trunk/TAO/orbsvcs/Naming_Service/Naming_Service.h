@@ -21,7 +21,7 @@
 #define TAO_NAMING_SERVICE_H
 
 #include "tao/PortableServer/ORB_Manager.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/Naming/Naming_Server.h"
 
 class TAO_Naming_Service
 {

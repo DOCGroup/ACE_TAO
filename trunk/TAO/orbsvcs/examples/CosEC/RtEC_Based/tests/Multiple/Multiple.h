@@ -17,7 +17,8 @@
 #ifndef COSECMULTIPLE_H
 #define COSECMULTIPLE_H
 
-#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/Naming/Naming_Client.h"
+#include "orbsvcs/Naming/Naming_Server.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/CosEventChannelAdminC.h"
 

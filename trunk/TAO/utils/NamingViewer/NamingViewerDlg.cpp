@@ -4,7 +4,7 @@
 #include "NamingViewer.h"
 #include "NamingViewerDlg.h"
 #include "ViewIORDialog.h"
-#include "orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/Naming/Naming_Server.h"
 #include "SelectNSDialog.h"
 
 #ifdef _DEBUG

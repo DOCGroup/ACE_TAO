@@ -1,3 +1,114 @@
+Fri Aug 27 00:03:51 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/AV/Makefile.am:
+	* orbsvcs/orbsvcs/Concurrency/Makefile.am:
+	* orbsvcs/orbsvcs/CosEvent/Makefile.am:
+	* orbsvcs/orbsvcs/Event/Makefile.am:
+	* orbsvcs/orbsvcs/Naming/Makefile.am:
+	* orbsvcs/orbsvcs/Property/Makefile.am:
+	* orbsvcs/orbsvcs/Sched/Makefile.am:
+	* orbsvcs/orbsvcs/Time/Makefile.am:
+	* orbsvcs/orbsvcs/Trader/Makefile.am:
+
+	  Removed.
+
+	* orbsvcs/tests/Concurrency/CC_naming_service.cpp:
+	* orbsvcs/tests/Concurrency/CC_test_utils.cpp:
+	* orbsvcs/tests/Concurrency/CC_tests.cpp:
+	* orbsvcs/tests/Time/client.cpp:
+
+	  Changed to #include "ace/Log_Msg.h"
+
+	* examples/RTScheduling/Starter.h:
+	* examples/Simple/Simple_util.h:
+	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Multiple.h:
+	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp:
+
+	  Changed #include "orbsvcs/Naming/Naming_Utils.h" to #include
+	  "orbsvcs/Naming/Naming_Client.h" and
+	  "orbsvcs/Naming/Naming_Server.h".
+
+	* examples/Callback_Quoter/Notifier_Input_Handler.h:
+	* examples/Event_Comm/Notifier_Server.h:
+	* examples/Logging/Logging_Service_i.h:
+	* examples/Quoter/server.h:
+	* orbsvcs/Concurrency_Service/Concurrency_Service.h:
+	* orbsvcs/Naming_Service/Naming_Service.h:
+	* orbsvcs/Time_Service/Clerk_i.h:
+	* orbsvcs/Time_Service/Server_i.h:
+	* orbsvcs/orbsvcs/Naming/Naming_Loader.h:
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.h:
+	* orbsvcs/tests/Redundant_Naming/client.cpp:
+	* orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp:
+	* orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp:
+	* utils/NamingViewer/NamingViewerDlg.cpp:
+	* utils/wxNamingViewer/wxNamingViewerFrame.cpp:
+
+	  Changed #include "orbsvcs/Naming/Naming_Utils.h" to #include
+	  "orbsvcs/Naming/Naming_Server.h".
+
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.h:
+	* orbsvcs/examples/Callback_Quoter/Consumer_Handler.h:
+	* orbsvcs/examples/Callback_Quoter/Supplier_i.h:
+	* orbsvcs/examples/CosEC/Factory/FactoryDriver.h:
+	* orbsvcs/examples/Event_Comm/Consumer_Handler.h:
+	* orbsvcs/examples/Event_Comm/Notifier_Handler.h:
+	* orbsvcs/tests/AVstreams/Asynch_Three_Stage/Connection_Manager.h:
+	* orbsvcs/tests/AVstreams/Bidirectional_Flows/receiver.h:
+	* orbsvcs/tests/AVstreams/Bidirectional_Flows/sender.h:
+	* orbsvcs/tests/AVstreams/Component_Switching/Connection_Manager.h:
+	* orbsvcs/tests/AVstreams/Full_Profile/server.h:
+	* orbsvcs/tests/AVstreams/Modify_QoS/receiver.h:
+	* orbsvcs/tests/AVstreams/Modify_QoS/sender.h:
+	* orbsvcs/tests/AVstreams/Multicast/ftp.h:
+	* orbsvcs/tests/AVstreams/Multicast/server.h:
+	* orbsvcs/tests/AVstreams/Multicast_Full_Profile/ftp.h:
+	* orbsvcs/tests/AVstreams/Multicast_Full_Profile/server.h:
+	* orbsvcs/tests/AVstreams/Multiple_Flows/receiver.h:
+	* orbsvcs/tests/AVstreams/Multiple_Flows/sender.h:
+	* orbsvcs/tests/AVstreams/Pluggable/ftp.h:
+	* orbsvcs/tests/AVstreams/Pluggable/server.h:
+	* orbsvcs/tests/AVstreams/Pluggable_Flow_Protocol/receiver.h:
+	* orbsvcs/tests/AVstreams/Pluggable_Flow_Protocol/sender.h:
+	* orbsvcs/tests/AVstreams/Simple_Three_Stage/distributer.h:
+	* orbsvcs/tests/AVstreams/Simple_Three_Stage/receiver.h:
+	* orbsvcs/tests/AVstreams/Simple_Three_Stage/sender.h:
+	* orbsvcs/tests/AVstreams/Simple_Two_Stage/receiver.h:
+	* orbsvcs/tests/AVstreams/Simple_Two_Stage/sender.h:
+	* orbsvcs/tests/AVstreams/Simple_Two_Stage_With_QoS/receiver.h:
+	* orbsvcs/tests/AVstreams/Simple_Two_Stage_With_QoS/sender.h:
+	* orbsvcs/tests/Concurrency/CC_naming_service.h:
+	* orbsvcs/tests/Property/client.h:
+	* orbsvcs/tests/Property/server.h:
+	* orbsvcs/tests/Simple_Naming/client.h:
+	* orbsvcs/tests/Time/Client_i.h:
+	* examples/Logging/Logging_Test_i.h:
+	* performance-tests/POA/Demux/demux_test_server.h:
+
+	  Changed #include "orbsvcs/Naming/Naming_Utils.h" to #include
+	  "orbsvcs/Naming/Naming_Client.h".
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Updated.
+
+	* orbsvcs/orbsvcs/CosNaming.mpc:
+
+	  Changed Naming_Utils.{cpp,h} to Naming_{Client,Server}.{cpp,h}.
+
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.h:
+
+	  Removed files.
+
+	* orbsvcs/orbsvcs/Naming/Naming_Client.cpp:
+	* orbsvcs/orbsvcs/Naming/Naming_Client.h:
+	* orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+	* orbsvcs/orbsvcs/Naming/Naming_Server.h:
+
+	  New files, split out from Naming_Utils.cpp and Naming_Utils.h so
+	  that it is possible to have client and server side libraries.
+
 Thu Aug 26 22:54:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Current.pidl:
