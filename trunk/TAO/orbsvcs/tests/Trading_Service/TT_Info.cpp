@@ -239,54 +239,6 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq)
 
       if (tc == 0)
 	continue;
-      else if (tc->equal (CORBA::_tc_float, env))
-	{
-	  CORBA::Float f;
-	  (*value) >>= f;
-	  ACE_DEBUG ((LM_DEBUG, "%f\n", f));
-	}
-      else if (tc->equal (CORBA::_tc_double, env))
-	{
-	  CORBA::Double d;
-	  (*value) >>= d;
-	  ACE_DEBUG ((LM_DEBUG, "%f\n", d));
-	}
-      else if (tc->equal (CORBA::_tc_boolean, env))
-	{
-	  CORBA::Boolean b = 0;
-	  (*value) >>= CORBA::Any::to_boolean(b);
-	  ACE_DEBUG ((LM_DEBUG, "%s\n", b ? "TRUE" : "FALSE"));
-	}
-      else if (tc->equal (CORBA::_tc_short, env))
-	{
-	  CORBA::Short s;
-	  (*value) >>= s;
-	  ACE_DEBUG ((LM_DEBUG, "%d\n", s));
-	}
-      else if (tc->equal (CORBA::_tc_ushort, env))
-	{
-	  CORBA::UShort u;
-	  (*value) >>= u;
-	  ACE_DEBUG ((LM_DEBUG, "%d\n", u));
-	}
-      else if (tc->equal (CORBA::_tc_ulong, env))
-	{
-	  CORBA::ULong ulong;
-	  (*value) >>= ulong;
-	  ACE_DEBUG ((LM_DEBUG, "%d\n", ulong));
-	}
-      else if (tc->equal (CORBA::_tc_long, env))
-	{
-	  CORBA::Long clong;
-	  (*value) >>= clong;
-	  ACE_DEBUG ((LM_DEBUG, "%d\n", clong));
-	}      
-      else if (tc->equal (CORBA::_tc_string, env))
-	{
-	  CORBA::String_var s;
-	  (*value) >>= s.out ();
-	  ACE_DEBUG ((LM_DEBUG, "%s\n", s.in ()));
-	}      
       else if (tc->equal (TAO_Sequences::_tc_StringSeq, env))
 	{
 	  TAO_Sequences::StringSeq str_seq;
@@ -307,6 +259,8 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq)
 
 	  ACE_DEBUG ((LM_DEBUG, "\n"));
 	}
+      else
+	CORBA::Any::dump (*value);
     }
 }
 

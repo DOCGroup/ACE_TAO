@@ -73,7 +73,7 @@ DP_Adapter::evalDP (const CORBA::Any& extra_info,
 // *************************************************************
 
 TAO_Property_Exporter::
-TAO_Property_Exporter (CosTrading::Lookup_ptr lookup_if,
+TAO_Property_Exporter (CosTrading::Lookup_var lookup_if,
 		       CosPropertyService::PropertySet_ptr prop_set,
 		       CORBA::ULong initial_size)
   : increment_ (initial_size),
@@ -270,7 +270,7 @@ TAO_Property_Exporter::export (const CORBA::Object_ptr object_ref,
 // *************************************************************
 
 TAO_Property_Modifier::
-TAO_Property_Modifier (CosTrading::Lookup_ptr lookup_if,
+TAO_Property_Modifier (CosTrading::Lookup_var lookup_if,
 		       CosPropertyService::PropertySet_ptr prop_set,
 		       CORBA::ULong initial_size)
   : increment_ (initial_size),

@@ -9,6 +9,7 @@ public:
   Simple_DP_Evaluation_Handler (T dp);
   
   virtual CORBA::Any* evalDP (const CORBA::Any& extra_info,
+			      CORBA::TypeCode_ptr returned_type,
 			      CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
 
@@ -26,6 +27,7 @@ Simple_DP_Evaluation_Handler<T>::Simple_DP_Evaluation_Handler (T dp)
 
 template <class T> CORBA::Any*
 Simple_DP_Evaluation_Handler<T>::evalDP (const CORBA::Any& extra_info,
+					 CORBA::TypeCode_ptr returned_type,
 					 CORBA::Environment& _env)
   TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
@@ -38,39 +40,37 @@ Simple_DP_Evaluation_Handler<T>::evalDP (const CORBA::Any& extra_info,
 }
 
 TAO_Offer_Exporter::
-TAO_Offer_Exporter (CosTrading::Register_ptr register_if,
+TAO_Offer_Exporter (PortableServer::POA_ptr poa_object,
+		    CosTrading::Register_ptr register_if,
 		    CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
-  : register_ (register_if)
+    : register_ (register_if)
 {
   this->create_offers ();
   this->admin_ = register_if->admin_if (_env);
   TAO_CHECK_ENV_RETURN (_env,);
+
+  for (int i = 0; i < NUM_OFFERS; i++)
+    {      
+      poa_object->activate_object (&dp_plotters_[i], _env);
+      TAO_CHECK_ENV_RETURN (_env,);
+      
+      poa_object->activate_object (&dp_printers_[i], _env);
+      TAO_CHECK_ENV_RETURN (_env,);
+      
+      poa_object->activate_object (&dp_fs_[i], _env);
+      TAO_CHECK_ENV_RETURN (_env,);
+    }
 }
 
 TAO_Offer_Exporter::~TAO_Offer_Exporter (void)
 {
-  for (int i = 0; i < NUM_OFFERS; i++)
-    {
-      /*
-      delete dp_plotters_[i].remove_handler
-	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE]);
-      delete dp_plotters_[i].remove_handler
-	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING]);
-      delete dp_printers_[i].remove_handler
-	(TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_USER_QUEUE]);
-      delete dp_printers_[i].remove_handler
-	(TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PRINTER_FILE_SIZES_PENDING]);
-      delete dp_fs_[i].remove_handler
-	(TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::SPACE_REMAINING]);
-	*/
-    }
 }
 
 void
 TAO_Offer_Exporter::export_offers (CORBA::Environment& _env)
 {
-  ACE_DEBUG ((LM_DEBUG, "Exporting offers.\n"));
+  ACE_DEBUG ((LM_DEBUG, "TAO_Offer_Exporter::Exporting offers.\n"));
   
   TAO_TRY
     {
@@ -110,7 +110,7 @@ TAO_Offer_Exporter::withdraw_offers (CORBA::Environment& _env)
 		   CosTrading::UnknownOfferId, 
 		   CosTrading::Register::ProxyOfferId))
 {
-  ACE_DEBUG ((LM_DEBUG, "Withdrawing all offers.\n"));
+  ACE_DEBUG ((LM_DEBUG, "TAO_Offer_Exporter::Withdrawing all offers.\n"));
   
   TAO_TRY
     {
@@ -132,7 +132,7 @@ TAO_Offer_Exporter::withdraw_offers (CORBA::Environment& _env)
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("TAO_Offer_Exporter::export_offers");
+      TAO_TRY_ENV.print_exception ("TAO_Offer_Exporter::withdraw_offers");
       TAO_RETHROW;
     }
   TAO_ENDTRY;
@@ -145,7 +145,7 @@ TAO_Offer_Exporter::describe_offers (CORBA::Environment& _env)
 		   CosTrading::UnknownOfferId, 
 		   CosTrading::Register::ProxyOfferId))
 {
-  ACE_DEBUG ((LM_DEBUG, "Describing all offers.\n"));
+  ACE_DEBUG ((LM_DEBUG, "TAO_Offer_Exporter::Describing all offers.\n"));
   
   TAO_TRY
     {
@@ -173,7 +173,7 @@ TAO_Offer_Exporter::describe_offers (CORBA::Environment& _env)
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("TAO_Offer_Exporter::export_offers");
+      TAO_TRY_ENV.print_exception ("TAO_Offer_Exporter::describe_offers");
       TAO_RETHROW;
     }
   TAO_ENDTRY;
@@ -213,7 +213,7 @@ TAO_Offer_Exporter::grab_offerids (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException,
 		   CosTrading::NotImplemented))
 {
-  ACE_DEBUG ((LM_DEBUG, "Grabbing all offer ids.\n"));
+  ACE_DEBUG ((LM_DEBUG, "\tTAO_Offer_Exporter::Grabbing all offer ids.\n"));
 
   CosTrading::OfferIdSeq_ptr offer_id_seq;
   TAO_TRY
@@ -269,16 +269,20 @@ TAO_Offer_Exporter::grab_offerids (CORBA::Environment& _env)
 void
 TAO_Offer_Exporter::create_offers (void)
 {
+  const int QUEUE_SIZE = 4;
+  
   int counter = 0;
   char name[BUFSIZ];
   char description[BUFSIZ];
   CORBA::Any extra_info;
-  TAO_Sequences::StringSeq string_seq (4);
-  TAO_Sequences::ULongSeq ulong_seq (4);
-  CosTradingDynamic::DynamicProp_var dp_user_queue;
-  CosTradingDynamic::DynamicProp_var dp_file_queue;
+  TAO_Sequences::StringSeq string_seq (QUEUE_SIZE);
+  TAO_Sequences::ULongSeq ulong_seq (QUEUE_SIZE);
+  CosTradingDynamic::DynamicProp* dp_user_queue;
+  CosTradingDynamic::DynamicProp* dp_file_queue;
 
   // Initialize plotters
+  string_seq.length (QUEUE_SIZE);
+  ulong_seq.length (QUEUE_SIZE);
   for (int i = 0; i < NUM_OFFERS; i++)
     {      
       ACE_OS::sprintf (name, "Plotter #%d", i);
@@ -286,27 +290,33 @@ TAO_Offer_Exporter::create_offers (void)
 		       "%s is a plotter. It plots stuff. Like charts.",
 		       name);
 
-      for (int j = 0; j < 4; j++, counter = (counter + 1) % NUM_OFFERS)
+      for (int j = 0; j < QUEUE_SIZE; j++, counter = (counter + 1) % NUM_OFFERS)
 	{
 	  string_seq[j] = TT_Info::USERS [counter];
 	  ulong_seq[j] = counter * 10000;
 	}
-      /*
-      dp_user_queue =
-	this->dp_plotters_[i].register_handler
+      
+      dp_user_queue = this->dp_plotters_[i].construct_dynamic_prop
 	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE],
-	TT_Info::PLOTTER_PROPERTY_TYPES[TT_Info::PLOTTER_USER_QUEUE],
-	 extra_info,
-	 new Simple_DP_Evaluation_Handler<TAO_Sequences::StringSeq> (string_seq));
+	 TT_Info::PLOTTER_PROPERTY_TYPES[TT_Info::PLOTTER_USER_QUEUE],
+	 extra_info);
+		       
+      this->dp_plotters_[i].register_handler
+	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE],
+	 new Simple_DP_Evaluation_Handler<TAO_Sequences::StringSeq> (string_seq),
+	 CORBA::B_TRUE);
 
-      dp_file_queue =
-	this->dp_plotters_[i].register_handler
+      dp_file_queue = this->dp_plotters_[i].construct_dynamic_prop
 	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING],
 	 TT_Info::PLOTTER_PROPERTY_TYPES[TT_Info::PLOTTER_FILE_SIZES_PENDING],
-	 extra_info,
-	 new Simple_DP_Evaluation_Handler<TAO_Sequences::ULongSeq> (ulong_seq));
-      */      
-      this->props_plotters_[i].length (7);
+	 extra_info);
+
+      this->dp_plotters_[i].register_handler
+	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING],
+	 new Simple_DP_Evaluation_Handler<TAO_Sequences::ULongSeq> (ulong_seq),
+	 CORBA::B_TRUE);
+
+      this->props_plotters_[i].length (9);
       this->props_plotters_[i][0].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::NAME]);
       this->props_plotters_[i][0].value <<= CORBA::string_dup (name);
       this->props_plotters_[i][1].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::LOCATION]);
@@ -321,10 +331,10 @@ TAO_Offer_Exporter::create_offers (void)
       this->props_plotters_[i][5].value <<= (CORBA::Float) i;
       this->props_plotters_[i][6].name = CORBA::string_dup (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_MODEL_NUMBER]);
       this->props_plotters_[i][6].value <<= CORBA::string_dup (TT_Info::MODEL_NUMBERS[i]);
-      //      this->props_plotters_[i][7].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE];
-      //      this->props_plotters_[i][7].value <<= dp_user_queue.in ();
-      //      this->props_plotters_[i][8].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING];
-      //      this->props_plotters_[i][8].value <<= dp_file_queue.in ();
+      this->props_plotters_[i][7].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE];
+      this->props_plotters_[i][7].value <<= *dp_user_queue;
+      this->props_plotters_[i][8].name = TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING];
+      this->props_plotters_[i][8].value <<= *dp_file_queue;
     }
 
   // Initialize printers
@@ -335,7 +345,7 @@ TAO_Offer_Exporter::create_offers (void)
 		       "%s is a printer. It prints stuff. Like reports.",
 		       name);
 
-      for (int j = 0; j < 4; j++, counter = (counter + 1) % NUM_OFFERS)
+      for (int j = 0; j < QUEUE_SIZE; j++, counter = (counter + 1) % NUM_OFFERS)
 	{
 	  string_seq[j] = TT_Info::USERS [counter];
 	  ulong_seq[j] = counter * 10000;

@@ -23,7 +23,8 @@ class TAO_Offer_Exporter
 {
 public:
 
-  TAO_Offer_Exporter (CosTrading::Register_ptr register_if,
+  TAO_Offer_Exporter (PortableServer::POA_ptr poa,
+		      CosTrading::Register_ptr register_if,
 		      CORBA::Environment& env)
     TAO_THROW_SPEC ((CORBA::SystemException));
 
@@ -89,9 +90,9 @@ private:
   TT_Info::Plotter plotter_[NUM_OFFERS];
   TT_Info::File_System fs_[NUM_OFFERS];
   
-  TAO_Dynamic_Property dp_plotters_[NUM_OFFERS];
-  TAO_Dynamic_Property dp_printers_[NUM_OFFERS];
-  TAO_Dynamic_Property dp_fs_[NUM_OFFERS];
+  TAO_DP_Dispatcher dp_plotters_[NUM_OFFERS];
+  TAO_DP_Dispatcher dp_printers_[NUM_OFFERS];
+  TAO_DP_Dispatcher dp_fs_[NUM_OFFERS];
   
   CosTrading::PropertySeq props_plotters_[NUM_OFFERS];
   CosTrading::PropertySeq props_printers_[NUM_OFFERS];

@@ -32,32 +32,6 @@ main (int argc, char** argv)
       PortableServer::POAManager_var poa_manager =
 	root_poa->the_POAManager (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
-      // Bootstrap to the Lookup interface.
-      /*
-      ACE_DEBUG ((LM_ERROR, "Bootstrap to the Lookup interface.\n"));
-      CORBA::Object_var trading_obj =
-      	orb->resolve_initial_references ("TradingService");
-      
-      if (CORBA::is_nil (trading_obj.in ()))
-      	ACE_ERROR_RETURN ((LM_ERROR,
-      			   " (%P|%t) Unable to initialize the POA.\n"),
-			   -1);
-
-      
-      // Narrow the lookup interface.
-      ACE_DEBUG ((LM_DEBUG, "Narrowing the lookup interface.\n"));
-      CosTrading::Lookup_var lookup_if = 
-      	CosTrading::Lookup::_narrow (trading_obj.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      
-      // Obtain the register interface
-      ACE_DEBUG ((LM_DEBUG, "Obtaining the register interface.\n"));
-      CosTrading::Register_var register_if =
-      	lookup_if->register_if (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      
-      */
       
       // Create a Service Type Repository and a Trader Object.
       TAO_Service_Type_Repository type_repos;
@@ -103,9 +77,9 @@ main (int argc, char** argv)
 
       // Run the Offer Exporter tests
       ACE_DEBUG ((LM_DEBUG, "Running the Offer Exporter tests.\n"));
-      //   TAO_Offer_Exporter offer_exporter (register_if.in (), TAO_TRY_ENV);
       TAO_Offer_Exporter offer_exporter
-	(CosTrading::Register::_duplicate (trd_comp.register_if ()),
+	(root_poa.ptr (),
+	 CosTrading::Register::_duplicate (trd_comp.register_if ()),
 	 TAO_TRY_ENV);
       TAO_CHECK_ENV;
 	    
