@@ -1,6 +1,7 @@
 // $Id$
 
 #include "concrete_classes.h"
+#include "IFR_Service_Utils_T.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (IFRService, 
@@ -17,7 +18,7 @@ template class ACE_Unbounded_Queue<ACE_Configuration_Section_Key>;
 template class ACE_Unbounded_Queue_Iterator<ACE_Configuration_Section_Key>;
 
 template class POA_CORBA::Repository_tie<TAO_Repository_i>;
-template class POA_IR::ComponentRepository_tie<TAO_ComponentRepository_i>;
+template class POA_CORBA::Component_IR::Repository_tie<TAO_ComponentRepository_i>;
 template class POA_CORBA::PrimitiveDef_tie<TAO_PrimitiveDef_i>;
 template class POA_CORBA::StringDef_tie<TAO_StringDef_i>;
 template class POA_CORBA::WstringDef_tie<TAO_WstringDef_i>;
@@ -30,19 +31,19 @@ template class POA_CORBA::NativeDef_tie<TAO_NativeDef_i>;
 template class POA_CORBA::ValueBoxDef_tie<TAO_ValueBoxDef_i>;
 template class POA_CORBA::UnionDef_tie<TAO_UnionDef_i>;
 template class POA_CORBA::StructDef_tie<TAO_StructDef_i>;
-template class POA_IR::ConsumesDef_tie<TAO_ConsumesDef_i>;
-template class POA_IR::PublishesDef_tie<TAO_PublishesDef_i>;
-template class POA_IR::EmitsDef_tie<TAO_EmitsDef_i>;
-template class POA_IR::EventDef_tie<TAO_EventDef_i>;
-template class POA_IR::ProvidesDef_tie<TAO_ProvidesDef_i>;
-template class POA_IR::UsesDef_tie<TAO_UsesDef_i>;
+template class POA_CORBA::Component_IR::ConsumesDef_tie<TAO_ConsumesDef_i>;
+template class POA_CORBA::Component_IR::PublishesDef_tie<TAO_PublishesDef_i>;
+template class POA_CORBA::Component_IR::EmitsDef_tie<TAO_EmitsDef_i>;
+template class POA_CORBA::Component_IR::EventDef_tie<TAO_EventDef_i>;
+template class POA_CORBA::Component_IR::ProvidesDef_tie<TAO_ProvidesDef_i>;
+template class POA_CORBA::Component_IR::UsesDef_tie<TAO_UsesDef_i>;
 template class POA_CORBA::ValueMemberDef_tie<TAO_ValueMemberDef_i>;
-template class POA_IR::FactoryDef_tie<TAO_FactoryDef_i>;
-template class POA_IR::FinderDef_tie<TAO_FinderDef_i>;
+template class POA_CORBA::Component_IR::FactoryDef_tie<TAO_FactoryDef_i>;
+template class POA_CORBA::Component_IR::FinderDef_tie<TAO_FinderDef_i>;
 template class POA_CORBA::AttributeDef_tie<TAO_AttributeDef_i>;
 template class POA_CORBA::ConstantDef_tie<TAO_ConstantDef_i>;
-template class POA_IR::ComponentDef_tie<TAO_ComponentDef_i>;
-template class POA_IR::HomeDef_tie<TAO_HomeDef_i>;
+template class POA_CORBA::Component_IR::ComponentDef_tie<TAO_ComponentDef_i>;
+template class POA_CORBA::Component_IR::HomeDef_tie<TAO_HomeDef_i>;
 template class POA_CORBA::ValueDef_tie<TAO_ValueDef_i>;
 template class POA_CORBA::ExceptionDef_tie<TAO_ExceptionDef_i>;
 template class POA_CORBA::ModuleDef_tie<TAO_ModuleDef_i>;
@@ -128,6 +129,24 @@ template class ACE_Auto_Basic_Ptr<TAO_IDLType_i>;
 
 template class ACE_Auto_Basic_Ptr<char>;
 
+template class TAO_IFR_Generic_Utils<TAO_AttributeDef_i>;
+template class TAO_IFR_Generic_Utils<TAO_OperationDef_i>;
+template class TAO_IFR_Generic_Utils<TAO_ProvidesDef_i>;
+template class TAO_IFR_Generic_Utils<TAO_UsesDef_i>;
+template class TAO_IFR_Generic_Utils<TAO_EmitsDef_i>;
+template class TAO_IFR_Generic_Utils<TAO_PublishesDef_i>;
+template class TAO_IFR_Generic_Utils<TAO_ConsumesDef_i>;
+template class TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::ProvidesDescriptionSeq>;
+template class TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::UsesDescriptionSeq>;
+template class TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::EventPortDescriptionSeq>;
+template class TAO_Port_Utils<CORBA::ComponentIR::ProvidesDef>;
+template class TAO_Port_Utils<CORBA::ComponentIR::UsesDef>;
+template class TAO_Port_Utils<CORBA::ComponentIR::EmitsDef>;
+template class TAO_Port_Utils<CORBA::ComponentIR::PublishesDef>;
+template class TAO_Port_Utils<CORBA::ComponentIR::ConsumesDef>;
+template class TAO_IFR_Strseq_Utils<CORBA::RepositoryIdSeq>;
+template class TAO_IFR_Strseq_Utils<CORBA::ContextIdSeq>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Node<CORBA::DefinitionKind>
@@ -138,7 +157,7 @@ template class ACE_Auto_Basic_Ptr<char>;
 #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_Configuration_Section_Key>
 
 #pragma instantiate POA_CORBA::Repository_tie<TAO_Repository_i>
-#pragma instantiate POA_IR::ComponentRepository_tie<TAO_ComponentRepository_i>
+#pragma instantiate POA_CORBA::Component_IR::Repository_tie<TAO_ComponentRepository_i>
 #pragma instantiate POA_CORBA::PrimitiveDef_tie<TAO_PrimitiveDef_i>
 #pragma instantiate POA_CORBA::StringDef_tie<TAO_StringDef_i>
 #pragma instantiate POA_CORBA::WstringDef_tie<TAO_WstringDef_i>
@@ -151,19 +170,19 @@ template class ACE_Auto_Basic_Ptr<char>;
 #pragma instantiate POA_CORBA::ValueBoxDef_tie<TAO_ValueBoxDef_i>
 #pragma instantiate POA_CORBA::UnionDef_tie<TAO_UnionDef_i>
 #pragma instantiate POA_CORBA::StructDef_tie<TAO_StructDef_i>
-#pragma instantiate POA_IR::ConsumesDef_tie<TAO_ConsumesDef_i>
-#pragma instantiate POA_IR::PublishesDef_tie<TAO_PublishesDef_i>
-#pragma instantiate POA_IR::EmitsDef_tie<TAO_EmitsDef_i>
-#pragma instantiate POA_IR::EventDef_tie<TAO_PrimaryKeyDef_i>
-#pragma instantiate POA_IR::ProvidesDef_tie<TAO_ProvidesDef_i>
-#pragma instantiate POA_IR::UsesDef_tie<TAO_UsesDef_i>
+#pragma instantiate POA_CORBA::Component_IR::ConsumesDef_tie<TAO_ConsumesDef_i>
+#pragma instantiate POA_CORBA::Component_IR::PublishesDef_tie<TAO_PublishesDef_i>
+#pragma instantiate POA_CORBA::Component_IR::EmitsDef_tie<TAO_EmitsDef_i>
+#pragma instantiate POA_CORBA::Component_IR::EventDef_tie<TAO_PrimaryKeyDef_i>
+#pragma instantiate POA_CORBA::Component_IR::ProvidesDef_tie<TAO_ProvidesDef_i>
+#pragma instantiate POA_CORBA::Component_IR::UsesDef_tie<TAO_UsesDef_i>
 #pragma instantiate POA_CORBA::ValueMemberDef_tie<TAO_ValueMemberDef_i>
-#pragma instantiate POA_IR::FactoryDef_tie<TAO_FactoryDef_i>
-#pragma instantiate POA_IR::FinderDef_tie<TAO_FinderDef_i>
+#pragma instantiate POA_CORBA::Component_IR::FactoryDef_tie<TAO_FactoryDef_i>
+#pragma instantiate POA_CORBA::Component_IR::FinderDef_tie<TAO_FinderDef_i>
 #pragma instantiate POA_CORBA::AttributeDef_tie<TAO_AttributeDef_i>
 #pragma instantiate POA_CORBA::ConstantDef_tie<TAO_ConstantDef_i>
-#pragma instantiate POA_IR::ComponentDef_tie<TAO_ComponentDef_i>
-#pragma instantiate POA_IR::HomeDef_tie<TAO_HomeDef_i>
+#pragma instantiate POA_CORBA::Component_IR::ComponentDef_tie<TAO_ComponentDef_i>
+#pragma instantiate POA_CORBA::Component_IR::HomeDef_tie<TAO_HomeDef_i>
 #pragma instantiate POA_CORBA::ValueDef_tie<TAO_ValueDef_i>
 #pragma instantiate POA_CORBA::ExceptionDef_tie<TAO_ExceptionDef_i>
 #pragma instantiate POA_CORBA::ModuleDef_tie<TAO_ModuleDef_i>
@@ -248,5 +267,23 @@ template class ACE_Auto_Basic_Ptr<char>;
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_IDLType_i>
 
 #pragma instantiate ACE_Auto_Basic_Ptr<char>
+
+#pragma instantiate TAO_IFR_Generic_Utils<TAO_AttributeDef_i>
+#pragma instantiate TAO_IFR_Generic_Utils<TAO_OperationDef_i>
+#pragma instantiate TAO_IFR_Generic_Utils<TAO_ProvidesDef_i>
+#pragma instantiate TAO_IFR_Generic_Utils<TAO_UsesDef_i>
+#pragma instantiate TAO_IFR_Generic_Utils<TAO_EmitsDef_i>
+#pragma instantiate TAO_IFR_Generic_Utils<TAO_PublishesDef_i>
+#pragma instantiate TAO_IFR_Generic_Utils<TAO_ConsumesDef_i>
+#pragma instantiate TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::ProvidesDescriptionSeq>
+#pragma instantiate TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::UsesDescriptionSeq>
+#pragma instantiate TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::EventPortDescriptionSeq>
+#pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::ProvidesDef>
+#pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::UsesDef>
+#pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::EmitsDef>
+#pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::PublishesDef>
+#pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::ConsumesDef>
+#pragma instantiate TAO_IFR_Strseq_Utils<CORBA::RepositoryIdSeq>
+#pragma instantiate TAO_IFR_Strseq_Utils<CORBA::ContextIdSeq>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
