@@ -4,7 +4,7 @@ Mon Jul 12 09:00:47 1999  David L. Levine  <levine@cs.wustl.edu>
           the ENOSYS case only if ENOSYS != EFAULT, to allow
           building on BCB4, for example.  Thanks to
           Eugene Surovegin <Surovegin@SoftLab.RU> for reporting
-          this problem and providing the fix.
+          this problem and providing the fix. [Bug 60]
 
 Mon Jul 12 08:04:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
