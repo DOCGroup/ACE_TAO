@@ -1,3 +1,7 @@
+Fri Mar 30 14:23:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/*/Makefile: Updated dependencies
+
 Fri Mar 30 14:08:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/*/Makefile: Updated dependencies
