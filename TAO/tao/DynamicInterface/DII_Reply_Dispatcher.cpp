@@ -55,6 +55,17 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
   ACE_Data_Block *db =
     this->reply_cdr_.clone_from (params.input_cdr_);
 
+
+  if (db == 0)
+    {
+      if (TAO_debug_level > 2)
+        ACE_ERROR ((
+          LM_ERROR,
+          "TAO (%P|%t) - DII_Deferred_Reply_Dispatcher::dispatch_reply ",
+          "clone_from failed \n"));
+      return -1;
+    }
+
   // See whether we need to delete the data block by checking the
   // flags. We cannot be happy that we initally allocated the
   // datablocks of the stack. If this method is called twice, as is in

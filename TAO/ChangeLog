@@ -1,3 +1,31 @@
+Wed Nov  5 19:19:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/PollableC.cpp:
+	* tao/PollableC.h:
+	* tao/PollableC.i:
+
+	  Regenerated the code. 
+
+	* tao/Synch_Reply_Dispatcher.cpp:
+	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+
+	  Added debugging statements to indicate failure of clone_from ()
+	  when debugging level is cranked up.
+
+	* tao/Remote_Invocation.cpp:
+	* tao/Synch_Invocation.cpp:
+	* tao/Messaging/Asynch_Reply_Dispatcher.cpp (handle_timeout):
+
+	  Changed the completion status of the CORBA::TIMEOUT exception
+	  thrown. For example returning a completion status of
+	  COMPLETED_NO while timing out waiting for the reply seems brain
+	  dead. Further fixed the minor code to return the SEND_MINOR_CODE
+	  or RECV_MINOR_CODE as the case maybe.
+
+	  This fixes a problem reported by Torsten Kuepper
+	  <torsten.kuepper@nokia.com> [BUG 1600].
+
 Wed Nov 5 16:03:08 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* orbsvcs/orbsvcs/AV/SCTP_SEQ.h: 	
