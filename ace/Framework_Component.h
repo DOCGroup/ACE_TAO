@@ -5,18 +5,18 @@
  *
  *  $Id$
  *
- * A prototype mechanism that allows framework components, singletons 
- * such as ACE_Reactor, ACE_Proactor, etc, to be registered with a 
- * central repository managed by the <ACE_Object_Manager> or 
- * <ACE_Service_Config> that will handle destruction.  
+ * A prototype mechanism that allows framework components, singletons
+ * such as ACE_Reactor, ACE_Proactor, etc, to be registered with a
+ * central repository managed by the <ACE_Object_Manager> or
+ * <ACE_Service_Config> that will handle destruction.
  *
- * This technique obviates changing <ACE_Object_Manager> and 
- * <ACE_Service_Config> everytime a new framework is added.  Which also
- * means that unused framework components don't need to linked into 
- * the final application which is important for applications with 
+ * This technique obviates changing ACE_Object_Manager and
+ * ACE_Service_Config everytime a new framework is added.  Which also
+ * means that unused framework components don't need to linked into
+ * the final application which is important for applications with
  * stringent footprint requirements.
  *
- * Framework components need only provide a static method, 
+ * Framework components need only provide a static method,
  * close_singleton() and add the ACE_REGISTER_FRAMEWORK_COMPONENT macro
  * call to their instance() methods in order to participate.  Components
  * that don't have a close_singleton() method can also participate via
@@ -56,7 +56,7 @@ public:
   friend class ACE_Framework_Repository;
 
   /// Constructor.
-  ACE_Framework_Component (void *_this, 
+  ACE_Framework_Component (void *_this,
                            const ACE_TCHAR *dll_name = 0,
                            const ACE_TCHAR *name = 0);
 
@@ -81,9 +81,9 @@ private:
 /**
  * @class ACE_Framework_Repository
  *
- * @brief Contains all framework components used by an application. 
+ * @brief Contains all framework components used by an application.
  *
- * This class contains a vector of <ACE_Framework_Component> *'s.  On
+ * This class contains a vector of ACE_Framework_Component *'s.  On
  * destruction, framework components are destroyed in the reverse order
  * that they were added originally.
  */
@@ -110,7 +110,7 @@ public:
   int close (void);
 
   /// Get pointer to a process-wide <ACE_Framework_Repository>.
-  static ACE_Framework_Repository *instance 
+  static ACE_Framework_Repository *instance
     (int size = ACE_Framework_Repository::DEFAULT_SIZE);
 
   /// Delete the dynamically allocated Singleton.
@@ -163,12 +163,12 @@ private:
   /// Maximum number of components.
   int total_size_;
 
-  /// Pointer to a process-wide <ACE_Framework_Repository>.
+  /// Pointer to a process-wide ACE_Framework_Repository.
   static ACE_Framework_Repository *repository_;
 
   /// Flag set when repository is the process of shutting down.  This
   /// is necessary to keep from self-deadlocking since some of
-  /// the components might make calls back to the repository to 
+  /// the components might make calls back to the repository to
   /// unload their components, e.g., ACE_DLL_Manager.
   static sig_atomic_t shutting_down_;
 
