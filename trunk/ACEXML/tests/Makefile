@@ -8,10 +8,11 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-LDLIBS  = -lACEXML
+LDLIBS  = -lACEXML_Parser -lACEXML
 BIN   	= Transcoder_Test \
 	  NamespaceSupport_Test \
-	  HttpCharStream_Test
+	  HttpCharStream_Test \
+	  ContentHandler_Test
 
 LSRC   	= $(addsuffix .cpp,$(BIN))
 LOBJ   	= $(LSRC:%.cpp=$(VDIR)%.o)
