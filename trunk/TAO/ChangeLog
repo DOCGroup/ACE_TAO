@@ -1,19 +1,19 @@
 Sat Nov 27 14:34:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 	* utils/examples/mfc/client.cpp:
-	  Fixed problems with use of iostreams for ACE_LACKS_IOSTREAM_TOTALLY builds
-	  (VxWorks DIAB).
+	  Fixed problems with use of iostreams for
+	  ACE_LACKS_IOSTREAM_TOTALLY builds (VxWorks DIAB).
 
 Sat Nov 27 14:26:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 	* utils/performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
-	  Fixed problems with use of iostreams for ACE_LACKS_IOSTREAM_TOTALLY builds
-	  (VxWorks DIAB).
+	  Fixed problems with use of iostreams for
+	  ACE_LACKS_IOSTREAM_TOTALLY builds (VxWorks DIAB).
 
 Sat Nov 27 14:19:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 	* utils/catior/catior.cpp:
-	  Fixed incompatibility with ACE_LACKS_IOSTREAM_TOTALLY builds
+	  Fixed incompatibility with ACE_LACKS_IOSTREAM_TOTALLY builds 
 	  (VxWorks DIAB).
 
 Fri Nov 26 17:49:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
