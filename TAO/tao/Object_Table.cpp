@@ -63,31 +63,6 @@ TAO_Object_Table_Impl::find (const PortableServer::Servant servant)
   return 0;
 }
 
-// Template specialization....
-u_long
-ACE_Hash_Map_Manager<PortableServer::ObjectId, PortableServer::Servant, ACE_SYNCH_NULL_MUTEX>::hash (const PortableServer::ObjectId &id)
-{
-  // Based on hash_pjw function on the ACE library.
-  u_long hash = 0;
-
-  for (CORBA::ULong i = 0;
-       i < id.length ();
-       ++i)
-    {
-      hash = (hash << 4) + (id[i] * 13);
-
-      u_long g = hash & 0xf0000000;
-
-      if (g)
-        {
-          hash ^= (g >> 24);
-          hash ^= g;
-        }
-    }
-
-  return hash;
-}
-
 TAO_Dynamic_Hash_ObjTable::TAO_Dynamic_Hash_ObjTable (CORBA::ULong size)
   :  hash_map_ (size == 0 ? TAO_Object_Table_Impl::DEFAULT_TABLE_SIZE : size)
 {
@@ -272,19 +247,27 @@ TAO_Active_Demux_ObjTable::create_object_id (PortableServer::Servant servant,
                                              CORBA::Environment &env)
 {
   // This method assumes that locks are held when it is called
-  char buffer[TAO_POA::MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX + 1];
-  CORBA::ULong index = this->next_free ();
+  CORBA::ULong id_data[2];
+  CORBA::ULong index;
+
+  id_data[TAO_Active_Demux_ObjTable::INDEX_FIELD] = index = this->next_free ();
 
   // Increment generation count
-  this->table_[index].generation_++;
+  id_data[TAO_Active_Demux_ObjTable::GENERATION_FIELD] = ++this->table_[index].generation_;
 
+#if 0
   ACE_OS::sprintf (buffer,
                    "%08.8x%08.8x",
                    index,
                    this->table_[index].generation_);
-
-  // Create the sequence
-  PortableServer::ObjectId &id = *TAO_POA::string_to_ObjectId (buffer);
+#else
+  PortableServer::ObjectId &id = 
+    *(new PortableServer::ObjectId (TAO_POA::MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX));
+  id.length (TAO_POA::MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX);
+  ACE_OS::memcpy (id.get_buffer (), 
+                  &id_data, 
+                  TAO_POA::MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX);
+#endif
 
   // Set the new values
   this->table_[index].id_ = id;
@@ -309,40 +292,6 @@ TAO_Active_Demux_ObjTable::next_free (void)
 
       this->resize ();
     }
-}
-
-int
-TAO_Active_Demux_ObjTable::parse_object_id (const PortableServer::ObjectId &id,
-                                            CORBA::ULong &index,
-                                            CORBA::ULong &generation)
-{
-  const char *buffer = (const char *) &id[0];
-#if 0
-  ::sscanf (buffer,
-            "%8x%8x",
-            &index,
-            &generation);
-#else
-  index =
-    ((CORBA::ULong)ACE::hex2byte (id[0]) << 28) +
-    ((CORBA::ULong)ACE::hex2byte (id[1]) << 24) +
-    ((CORBA::ULong)ACE::hex2byte (id[2]) << 20) +
-    ((CORBA::ULong)ACE::hex2byte (id[3]) << 16) +
-    ((CORBA::ULong)ACE::hex2byte (id[4]) << 12) +
-    ((CORBA::ULong)ACE::hex2byte (id[5]) <<  8) +
-    ((CORBA::ULong)ACE::hex2byte (id[6]) <<  4) +
-    ((CORBA::ULong)ACE::hex2byte (id[7]));
-  generation =
-    ((CORBA::ULong)ACE::hex2byte (id[8])  << 28) +
-    ((CORBA::ULong)ACE::hex2byte (id[9])  << 24) +
-    ((CORBA::ULong)ACE::hex2byte (id[10]) << 20) +
-    ((CORBA::ULong)ACE::hex2byte (id[11]) << 16) +
-    ((CORBA::ULong)ACE::hex2byte (id[12]) << 12) +
-    ((CORBA::ULong)ACE::hex2byte (id[13]) <<  8) +
-    ((CORBA::ULong)ACE::hex2byte (id[14]) <<  4) +
-    ((CORBA::ULong)ACE::hex2byte (id[15]));
-#endif
-  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
