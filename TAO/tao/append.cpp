@@ -559,7 +559,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
                            TAO_OutputCDR *dest,
                            CORBA::Environment &env)
 {
-  CORBA::Boolean continue_append = CORBA::B_TRUE;
+  // unused:  CORBA::Boolean continue_append = CORBA::B_TRUE;
 
   // Return status.
   CORBA::TypeCode::traverse_status retval =
