@@ -49,18 +49,6 @@ TAO_Offer_Exporter (PortableServer::POA_ptr poa_object,
   this->create_offers ();
   this->admin_ = register_if->admin_if (_env);
   TAO_CHECK_ENV_RETURN (_env,);
-
-  for (int i = 0; i < NUM_OFFERS; i++)
-    {      
-      poa_object->activate_object (&dp_plotters_[i], _env);
-      TAO_CHECK_ENV_RETURN (_env,);
-      
-      poa_object->activate_object (&dp_printers_[i], _env);
-      TAO_CHECK_ENV_RETURN (_env,);
-      
-      poa_object->activate_object (&dp_fs_[i], _env);
-      TAO_CHECK_ENV_RETURN (_env,);
-    }    
 }
 
 TAO_Offer_Exporter::~TAO_Offer_Exporter (void)
