@@ -1,3 +1,8 @@
+Sat Dec  5 16:06:27 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * ace/Local_Name_Space_T.cpp: Protected some of the ACE_DEBUG
+          statements with a ACE::debug () check.
+
 Fri Dec 04 13:46:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Stats.cpp (std_dev): fixed difference calculation so
