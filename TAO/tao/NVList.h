@@ -24,7 +24,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Unbounded_Queue.h"
+#include "ace/Synch.h"
 #include "tao/Any.h"
+
 
 class TAO_InputCDR;
 
@@ -171,7 +173,7 @@ namespace CORBA
    * @class NVList
    *
    * @brief CORBA::NVList implementation.
-   
+
    * This is used in the (client side) DII (Dynamic Invocation
    * Interface) to hold parameters, except for the return
    * parameter. It's used in the same role in the (server side) DSI

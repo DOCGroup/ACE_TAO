@@ -78,7 +78,7 @@ Any_Dual_Impl_T<CORBA::Exception>::marshal_value (TAO_OutputCDR &cdr)
     {
     }
   ACE_ENDTRY;
-  
+
   return 0;
 }
 
@@ -98,7 +98,7 @@ Any_Dual_Impl_T<CORBA::Exception>::demarshal_value (TAO_InputCDR &cdr)
     {
     }
   ACE_ENDTRY;
-  
+
   return 0;
 }
 
@@ -188,7 +188,7 @@ CORBA::Any::replace (CORBA::TypeCode_ptr,
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
-void 
+void
 CORBA::Any::replace (TAO::Any_Impl *new_impl)
 {
   if (this->impl_ != 0)
@@ -197,6 +197,8 @@ CORBA::Any::replace (TAO::Any_Impl *new_impl)
     }
 
   this->impl_ = new_impl;
+
+  ACE_ASSERT (this->impl_ != 0);
 }
 
 CORBA::TypeCode_ptr
@@ -251,7 +253,7 @@ CORBA::Any::type (CORBA::TypeCode_ptr tc
 
   if (this->impl_ != 0)
     {
-      equiv = 
+      equiv =
         this->impl_->_tao_get_typecode ()->equivalent (tc
                                                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -392,7 +394,7 @@ TAO::Any_Impl::_remove_ref (void)
   delete this;
 }
 
-void 
+void
 TAO::Any_Impl::_tao_decode (TAO_InputCDR &
                             ACE_ENV_ARG_DECL_NOT_USED)
 {
@@ -501,11 +503,11 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR &cdr
   // this by including 2 * ACE_CDR::MAX_ALIGNMENT bytes of additional
   // space in the message block.
   size_t size = end - begin;
-  
+
   ACE_Message_Block::release (this->cdr_);
   ACE_NEW (this->cdr_,
            ACE_Message_Block (size + 2 * ACE_CDR::MAX_ALIGNMENT));
-           
+
   ACE_CDR::mb_align (this->cdr_);
   ptr_arith_t offset = ptr_arith_t (begin) % ACE_CDR::MAX_ALIGNMENT;
   this->cdr_->rd_ptr (offset);
@@ -569,7 +571,7 @@ CORBA::Any_var::operator= (const CORBA::Any_var &r)
 
 // ***********************************************************************
 
-CORBA::Boolean 
+CORBA::Boolean
 operator<< (TAO_OutputCDR &cdr, const CORBA::Any &any)
 {
   TAO::Any_Impl *impl = any.impl ();
@@ -623,7 +625,7 @@ void
 CORBA::Any::operator<<= (CORBA::Any::from_boolean b)
 {
   TAO::Any_Special_Basic_Impl_T<
-      CORBA::Boolean, 
+      CORBA::Boolean,
       CORBA::Any::from_boolean,
       CORBA::Any::to_boolean
     >::insert (*this,
@@ -635,7 +637,7 @@ void
 CORBA::Any::operator<<= (CORBA::Any::from_octet o)
 {
   TAO::Any_Special_Basic_Impl_T<
-      CORBA::Octet, 
+      CORBA::Octet,
       CORBA::Any::from_octet,
       CORBA::Any::to_octet
     >::insert (*this,
@@ -647,7 +649,7 @@ void
 CORBA::Any::operator<<= (CORBA::Any::from_char c)
 {
   TAO::Any_Special_Basic_Impl_T<
-      char, 
+      char,
       CORBA::Any::from_char,
       CORBA::Any::to_char
     >::insert (*this,
@@ -659,7 +661,7 @@ void
 CORBA::Any::operator<<= (CORBA::Any::from_wchar wc)
 {
   TAO::Any_Special_Basic_Impl_T<
-      CORBA::WChar, 
+      CORBA::WChar,
       CORBA::Any::from_wchar,
       CORBA::Any::to_wchar
     >::insert (*this,
@@ -676,7 +678,7 @@ CORBA::Any::operator<<= (CORBA::Any::from_string s)
     }
 
   TAO::Any_Special_Impl_T<
-      char, 
+      char,
       CORBA::Any::from_string,
       CORBA::Any::to_string
     >::insert (*this,
@@ -695,7 +697,7 @@ CORBA::Any::operator<<= (CORBA::Any::from_wstring ws)
     }
 
   TAO::Any_Special_Impl_T<
-      CORBA::WChar, 
+      CORBA::WChar,
       CORBA::Any::from_wstring,
       CORBA::Any::to_wstring
     >::insert (*this,
@@ -896,7 +898,7 @@ CORBA::Boolean
 CORBA::Any::operator>>= (CORBA::Any::to_boolean b) const
 {
   return TAO::Any_Special_Basic_Impl_T<
-      CORBA::Boolean, 
+      CORBA::Boolean,
       CORBA::Any::from_boolean,
       CORBA::Any::to_boolean
     >::extract (*this,
@@ -908,7 +910,7 @@ CORBA::Boolean
 CORBA::Any::operator>>= (CORBA::Any::to_octet o) const
 {
   return TAO::Any_Special_Basic_Impl_T<
-      CORBA::Octet, 
+      CORBA::Octet,
       CORBA::Any::from_octet,
       CORBA::Any::to_octet
     >::extract (*this,
@@ -920,7 +922,7 @@ CORBA::Boolean
 CORBA::Any::operator>>= (CORBA::Any::to_char c) const
 {
   return TAO::Any_Special_Basic_Impl_T<
-      char, 
+      char,
       CORBA::Any::from_char,
       CORBA::Any::to_char
     >::extract (*this,
@@ -932,7 +934,7 @@ CORBA::Boolean
 CORBA::Any::operator>>= (CORBA::Any::to_wchar wc) const
 {
   return TAO::Any_Special_Basic_Impl_T<
-      CORBA::WChar, 
+      CORBA::WChar,
       CORBA::Any::from_wchar,
       CORBA::Any::to_wchar
     >::extract (*this,
@@ -943,9 +945,9 @@ CORBA::Any::operator>>= (CORBA::Any::to_wchar wc) const
 CORBA::Boolean
 CORBA::Any::operator>>= (CORBA::Any::to_string s) const
 {
-  return 
+  return
     TAO::Any_Special_Impl_T<
-        char, 
+        char,
         CORBA::Any::from_string,
         CORBA::Any::to_string
       >::extract (*this,
@@ -958,9 +960,9 @@ CORBA::Any::operator>>= (CORBA::Any::to_string s) const
 CORBA::Boolean
 CORBA::Any::operator>>= (CORBA::Any::to_wstring ws) const
 {
-  return 
+  return
     TAO::Any_Special_Impl_T<
-        CORBA::WChar, 
+        CORBA::WChar,
         CORBA::Any::from_wstring,
         CORBA::Any::to_wstring
       >::extract (*this,
@@ -1025,7 +1027,7 @@ operator>>= (const CORBA::Any &any, CORBA::ULong &ul)
 CORBA::Boolean
 operator>>= (const CORBA::Any &any, CORBA::LongLong &ll)
 {
-  return 
+  return
     TAO::Any_Basic_Impl_T<CORBA::LongLong>::extract (any,
                                                      CORBA::_tc_longlong,
                                                      ll);
@@ -1034,7 +1036,7 @@ operator>>= (const CORBA::Any &any, CORBA::LongLong &ll)
 CORBA::Boolean
 operator>>= (const CORBA::Any &any, CORBA::ULongLong &ull)
 {
-  return 
+  return
     TAO::Any_Basic_Impl_T<CORBA::ULongLong>::extract (any,
                                                       CORBA::_tc_ulonglong,
                                                       ull);
@@ -1059,7 +1061,7 @@ operator>>= (const CORBA::Any &any, CORBA::Double &d)
 CORBA::Boolean
 operator>>= (const CORBA::Any &any, CORBA::LongDouble &ld)
 {
-  return 
+  return
     TAO::Any_Basic_Impl_T<CORBA::LongDouble>::extract (any,
                                                        CORBA::_tc_longdouble,
                                                        ld);
@@ -1112,37 +1114,37 @@ operator>>= (const CORBA::Any &any, CORBA::TypeCode_ptr &tc)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class TAO::Any_Special_Basic_Impl_T<
-      CORBA::Boolean, 
+      CORBA::Boolean,
       CORBA::Any::from_boolean,
       CORBA::Any::to_boolean
     >;
 
 template class TAO::Any_Special_Basic_Impl_T<
-      CORBA::Octet, 
+      CORBA::Octet,
       CORBA::Any::from_octet,
       CORBA::Any::to_octet
     >;
 
 template class TAO::Any_Special_Basic_Impl_T<
-      char, 
+      char,
       CORBA::Any::from_char,
       CORBA::Any::to_char
     >;
 
 template class TAO::Any_Special_Basic_Impl_T<
-      CORBA::WChar, 
+      CORBA::WChar,
       CORBA::Any::from_wchar,
       CORBA::Any::to_wchar
     >;
 
 template class TAO::Any_Special_Impl_T<
-      char, 
+      char,
       CORBA::Any::from_string,
       CORBA::Any::to_string
     >;
 
 template class TAO::Any_Special_Impl_T<
-      CORBA::WChar, 
+      CORBA::WChar,
       CORBA::Any::from_wstring,
       CORBA::Any::to_wstring
     >;
@@ -1168,37 +1170,37 @@ template class TAO::Any_Impl_T<CORBA::ValueBase>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO::Any_Special_Basic_Impl_T<
-      CORBA::Boolean, 
+      CORBA::Boolean,
       CORBA::Any::from_boolean,
       CORBA::Any::to_boolean
     >
 
 #pragma instantiate TAO::Any_Special_Basic_Impl_T<
-      CORBA::Octet, 
+      CORBA::Octet,
       CORBA::Any::from_octet,
       CORBA::Any::to_octet
     >
 
 #pragma instantiate TAO::Any_Special_Basic_Impl_T<
-      char, 
+      char,
       CORBA::Any::from_char,
       CORBA::Any::to_char
     >
 
 #pragma instantiate TAO::Any_Special_Basic_Impl_T<
-      CORBA::WChar, 
+      CORBA::WChar,
       CORBA::Any::from_wchar,
       CORBA::Any::to_wchar
     >
 
 #pragma instantiate TAO::Any_Special_Impl_T<
-      char, 
+      char,
       CORBA::Any::from_string,
       CORBA::Any::to_string
     >
 
 #pragma instantiate TAO::Any_Special_Impl_T<
-      CORBA::WChar, 
+      CORBA::WChar,
       CORBA::Any::from_wstring,
       CORBA::Any::to_wstring
     >

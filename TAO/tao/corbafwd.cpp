@@ -6,10 +6,13 @@
 # include "tao/corbafwd.i"
 #endif /* ! __ACE_INLINE__ */
 
+#include "ace/OS.h"
 
-ACE_RCSID (tao, 
-           corbafwd, 
+
+ACE_RCSID (tao,
+           corbafwd,
            "$Id$")
+
 
 char *
 CORBA::string_dup (const char *str)
@@ -25,14 +28,14 @@ CORBA::string_dup (const char *str)
   // This allocates an extra byte for the '\0';
   char * copy = CORBA::string_alloc (len);
 
-  // The memcpy() below assumes that the destination is a valid buffer.  
+  // The memcpy() below assumes that the destination is a valid buffer.
   if (copy == 0)
     {
       return 0;
     }
 
-  ACE_OS::memcpy (copy, 
-                  str, 
+  ACE_OS::memcpy (copy,
+                  str,
                   len + 1);
   return copy;
 }
@@ -58,7 +61,7 @@ CORBA::wstring_dup (const WChar *const str)
       return 0;
     }
 
-  return ACE_OS::wscpy (retval, 
+  return ACE_OS::wscpy (retval,
                         str);
 }
 

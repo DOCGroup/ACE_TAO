@@ -61,16 +61,19 @@ public:
   Parser_Iterator end (void) const;
 
 private:
+
   // The parser registry should not be copied.
-  ACE_UNIMPLEMENTED_FUNC (TAO_Parser_Registry (const TAO_Parser_Registry&))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Parser_Registry&))
+  TAO_Parser_Registry (const TAO_Parser_Registry&);
+  void operator= (const TAO_Parser_Registry&);
 
 private:
+
   /// List of parsers
   TAO_IOR_Parser **parsers_;
 
   /// Number of parsers
   size_t size_;
+
 };
 
 #if defined(__ACE_INLINE__)

@@ -60,15 +60,18 @@ public:
 private:
 
   // Descriptor should not be copied, except using the <duplicate> method.
-  ACE_UNIMPLEMENTED_FUNC (TAO_Private_Transport_Descriptor (const TAO_Private_Transport_Descriptor&))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Private_Transport_Descriptor&))
+  TAO_Private_Transport_Descriptor (const TAO_Private_Transport_Descriptor&);
+  void operator= (const TAO_Private_Transport_Descriptor&);
+
+private:
 
   /**
    * Unique identifier of the object to which private connection
    * identified with this descriptor belongs.  The value of
-   * <object_id_> is the TAO_Stub* of the object.
+   * @c object_id_ is the @c TAO_Stub* of the object.
    */
   long object_id_;
+
 };
 
 #if defined (__ACE_INLINE__)

@@ -105,7 +105,7 @@ protected:
 
 };
 
-// 
+//
 /**
  * @class TAO_Temporary_Creation_Time
  *
@@ -892,11 +892,11 @@ protected:
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
+  /// Implementation Repository Server Object
   ServerObject_i *server_object_;
-  // Implementation Repository Server Object
 
+  /// Flag for whether the ImR should be used or not.
   int use_imr_;
-  // Flag for whether the IR should be used or not.
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 

@@ -38,9 +38,10 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
 }
 
 
-TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                                                          CORBA::Boolean flag,
-                                                          void *arg)
+TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
+  TAO_ORB_Core *orb_core,
+  CORBA::Boolean flag,
+  void *arg)
   : TAO_IIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
     tcp_properties_ (*(ACE_static_cast
@@ -48,8 +49,8 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core
     dscp_codepoint_ (0)
 {
   TAO_IIOP_Transport* specific_transport = 0;
-  ACE_NEW(specific_transport,
-          TAO_IIOP_Transport (this, orb_core, flag));
+  ACE_NEW (specific_transport,
+           TAO_IIOP_Transport (this, orb_core, flag));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
@@ -359,7 +360,7 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (void)
               CORBA::Long codepoint =
                 tph->get_dscp_codepoint ();
 
-              tos = (int)(codepoint ) << 2;
+              tos = (int)(codepoint) << 2;
             }
         }
       ACE_CATCHANY

@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 ACE_INLINE char *

@@ -4,6 +4,8 @@
 # include "tao/CORBA_String.inl"
 #endif /* ! __ACE_INLINE__ */
 
+#include "ace/OS.h"
+
 
 ACE_RCSID (tao,
            CORBA_String,

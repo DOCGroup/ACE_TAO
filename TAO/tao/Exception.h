@@ -32,7 +32,10 @@
 #endif /* TAO_HAS_EXCEPTIONS */
 
 #include "ace/CORBA_macros.h"
-#include "ace/SString.h"
+#include "ace/SStringfwd.h"
+#include "ace/iosfwd.h"
+
+class ACE_Allocator;
 
 class TAO_OutputCDR;
 class TAO_InputCDR;

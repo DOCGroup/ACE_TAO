@@ -870,8 +870,8 @@ public:
   // details.
   virtual TAO_Adapter *create (TAO_ORB_Core *orb_core);
 
-  int init (int argc,
-            ACE_TCHAR* argv[]);
+  virtual int init (int argc,
+                    ACE_TCHAR* argv[]);
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_Object_Adapter_Factory)

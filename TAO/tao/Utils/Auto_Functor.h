@@ -19,6 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Environment.h"
+#include "ace/Global_Macros.h"
 
 
 namespace TAO
