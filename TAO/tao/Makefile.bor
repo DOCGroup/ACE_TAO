@@ -10,6 +10,7 @@ OBJFILES = \
 	$(OBJDIR)\Any.obj \
 	$(OBJDIR)\append.obj \
 	$(OBJDIR)\Asynch_Invocation.obj \
+	$(OBJDIR)\DII_Invocation.obj \
 	$(OBJDIR)\BoundsC.obj \
 	$(OBJDIR)\Buffering_Constraint_Policy.obj \
 	$(OBJDIR)\CDR.obj \
@@ -112,6 +113,9 @@ OBJFILES = \
 	$(OBJDIR)\Reactor_Per_Priority.obj \
 	$(OBJDIR)\Reactor_Registry.obj \
 	$(OBJDIR)\Reply_Dispatcher.obj \
+	$(OBJDIR)\Synch_Reply_Dispatcher.obj \
+	$(OBJDIR)\Asynch_Reply_Dispatcher.obj \
+	$(OBJDIR)\DII_Reply_Dispatcher.obj \
 	$(OBJDIR)\Request.obj \
 	$(OBJDIR)\Resource_Factory.obj \
 	$(OBJDIR)\RT_Current.obj \
@@ -146,6 +150,8 @@ OBJFILES = \
 	$(OBJDIR)\TimeBaseC.obj \
 	$(OBJDIR)\TimeBaseS.obj \
 	$(OBJDIR)\Transport_Mux_Strategy.obj \
+	$(OBJDIR)\Muxed_TMS.obj \
+	$(OBJDIR)\Exclusive_TMS.obj \
 	$(OBJDIR)\Typecode.obj \
 	$(OBJDIR)\Typecode_Constants.obj \
 	$(OBJDIR)\UIOP_Acceptor.obj \
@@ -159,6 +165,9 @@ OBJFILES = \
 	$(OBJDIR)\ValueFactory.obj \
 	$(OBJDIR)\ValueFactory_Map.obj \
 	$(OBJDIR)\Wait_Strategy.obj \
+	$(OBJDIR)\Wait_On_Read.obj \
+	$(OBJDIR)\Wait_On_Reactor.obj \
+	$(OBJDIR)\Wait_On_Leader_Follower.obj \
 	$(OBJDIR)\WrongTransactionC.obj
 
 RESOURCE = $(OBJDIR)\tao.res

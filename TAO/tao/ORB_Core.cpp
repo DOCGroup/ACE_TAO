@@ -1667,27 +1667,6 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - start of run/perform_work\n")));
 
-  TAO_Leader_Follower &leader_follower = this->leader_follower ();
-  TAO_LF_Event_Loop_Thread_Helper event_loop_thread_helper (leader_follower);
-
-  int result = event_loop_thread_helper.set_event_loop_thread (tv);
-  if (result != 0)
-    {
-      if (errno == ETIME)
-        return 0;
-      else
-        return result;
-    }
-
-  ACE_Reactor *r = this->reactor ();
-
-  // @@ Do we really need to do this?
-  // Set the owning thread of the Reactor to the one which we're
-  // currently in.  This is necessary b/c it's possible that the
-  // application is calling us from a thread other than that in which
-  // the Reactor's CTOR (which sets the owner) was called.
-  r->owner (ACE_Thread::self ());
-
   // This method should only be called by servers, so now we set up
   // for listening!
 
@@ -1697,50 +1676,74 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
   if (ret == -1)
     return -1;
 
-  result = 1;
+  int result = 1;
   // 1 to detect that nothing went wrong
 
   // Loop handling client requests until the ORB is shutdown.
 
-  // @@ We could use the leader-follower lock to check for the state
-  //    of this variable or use the lock <create_event_loop_lock> in
-  //    the server strategy factory.
-  //    We don't need to do this because we use the Reactor
-  //    mechanisms to shutdown in a thread-safe way.
+  // We could use the leader-follower lock to check for the state
+  // if this variable or use the lock <create_event_loop_lock> in
+  // the server strategy factory.
+  // We don't need to do this because we use the Reactor
+  // mechanisms to shutdown in a thread-safe way.
   while (this->has_shutdown () == 0)
     {
+      // Every time we perform an interation we have to become the
+      // leader again, because it is possible that a client has
+      // acquired the leader role...
+
+      TAO_Leader_Follower &leader_follower =
+        this->leader_follower ();
+      TAO_LF_Event_Loop_Thread_Helper helper (leader_follower);
+
+      result = helper.set_event_loop_thread (tv);
+      if (result != 0)
+        {
+          if (errno == ETIME)
+            return 0;
+          else
+            return result;
+        }
+
+      ACE_Reactor *r = this->reactor ();
+
+      // Set the owning thread of the Reactor to the one which we're
+      // currently in.  This is necessary b/c it's possible that the
+      // application is calling us from a thread other than that in which
+      // the Reactor's CTOR (which sets the owner) was called.
+      r->owner (ACE_Thread::self ());
+
       if (TAO_debug_level >= 3)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - blocking on handle events\n")));
-      switch (r->handle_events (tv))
-        {
-        case 0:
-          // Make sure that a timed out occured.  If so, we return to
-          // caller.
-          if (tv != 0 && *tv == ACE_Time_Value::zero)
-            result = 0;
-          break;
-          /* NOTREACHED */
-        case -1: // Something else has gone wrong, so return to caller.
-          result = -1;
-          break;
-          /* NOTREACHED */
-        default:
-          // Some handlers were dispatched, so keep on processing
-          // requests until we're told to shutdown .
-          break;
-          /* NOTREACHED */
-        }
-      if (result == 0 || result == -1)
-        break;
+      result = r->handle_events (tv);
 
-      // In perform_work, we only run the loop once.
+      if (result == -1)
+        {
+          // An error, terminate the loop
+          break;
+        }
+      if (result == 0
+          && tv != 0
+          && *tv == ACE_Time_Value::zero)
+        {
+          // A timeout, terminate the loop...
+          break;
+        }
       if (perform_work)
-        break;
+        {
+          // This is running on behalf of a perform_work() call,
+          // The loop should run only once.
+          break;
+        }
+      // Otherwise just continue..
     }
 
   if (TAO_debug_level >= 3)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - end of run/perform_work %d\n"), result));
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) - "
+                          "end of run/perform_work %d\n"),
+                result));
 
   return result;
 }

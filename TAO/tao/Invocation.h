@@ -38,7 +38,7 @@
 
 #include "tao/ORB_Core.h"
 #include "tao/Any.h"
-#include "tao/Reply_Dispatcher.h"
+#include "tao/Synch_Reply_Dispatcher.h"
 #include "tao/TAOC.h"
 #include "tao/operation_details.h"
 #include "tao/target_specification.h"

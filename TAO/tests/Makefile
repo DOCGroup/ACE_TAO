@@ -40,7 +40,8 @@ DIRS  = CDR \
 	Endpoint_Per_Priority \
 	Explicit_Event_Loop \
 	DynAny_Test \
-	Policies
+	Policies \
+	LongUpcalls
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

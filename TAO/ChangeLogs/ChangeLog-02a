@@ -1,3 +1,199 @@
+Fri Jun 16 12:07:39 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* The following changes fix the [BUGID:175] and [BUGID:266] bugs.
+
+        * tao/Makefile:
+        * tao/Makefile.am:
+        * tao/Makefile.bor:
+	  Add new files to the Makefiles
+
+        * tao/Reply_Dispatcher.h:
+        * tao/Reply_Dispatcher.i:
+        * tao/Reply_Dispatcher.cpp:
+	  Moved each one of the reply dispatcher implementations to a
+	  separate file.
+	  Removed the leader_follower_condition_variable method because it
+	  only make sense for synchronous reply dispatchers.
+	  Add new methods to:
+	    + get a callback when the dispatcher is bound to the transport
+	      muxing strategy: this simplifies the interactions with other
+	      components in the pluggable protocol framework.
+            + get a callback is the connection is closed: this is the main
+	      change to fix [BUGID:266]
+
+        * tao/Asynch_Reply_Dispatcher.h:
+        * tao/Asynch_Reply_Dispatcher.i:
+        * tao/Asynch_Reply_Dispatcher.cpp:
+	  The asynchronous reply dispatchers.
+	  When the connection_closed() method is invoked a COMM_FAILURE
+	  exception is raised.
+
+        * tao/Synch_Reply_Dispatcher.h:
+        * tao/Synch_Reply_Dispatcher.i:
+        * tao/Synch_Reply_Dispatcher.cpp:
+	  The synchornous reply dispatchers.
+	  The connection_closed() method simply sets the reply_received
+	  flag and signals the waiting thread (throught the
+	  Waiting_Strategy).
+	  Then the dispatcher is bound to the waiting thread the right
+	  condition variable is fetched.
+
+        * tao/DII_Reply_Dispatcher.h:
+        * tao/DII_Reply_Dispatcher.i:
+        * tao/DII_Reply_Dispatcher.cpp:
+	  Very similar to the asynchornous reply dispatchers, but using
+	  DII under the hood.
+
+        * tao/Leader_Follower.h:
+        * tao/Leader_Follower.i:
+	  Add new set_upcall_thread.  If the leader thread is invoking a
+	  possibly long running upcall (such as a Request, LocateRequest
+	  or AMI Reply) the method should be invoked to elect a new leader
+	  thread and avoid dead-locks.
+	  Refactor the reset_event_loop_thread() to a separate method.
+	  Moved some of the inline methods around so they are defined in
+	  the right order.
+
+        * tao/GIOP_Message_Acceptors.cpp:
+	  Whenever an upcall is received the set_upcall_thread() method is
+	  invoked on the leader follower set.
+	  That give us an opportunity to wake up another thread to become
+	  the leader.
+	  This is part of the fixes for [BUGID:175]
+
+        * tao/Invocation.h:
+	  This file needs to include Synch_Reply_Dispatcher now.
+
+	* tao/Asynch_Invocation.h:
+        * tao/Asynch_Invocation.i:
+        * tao/Asynch_Invocation.cpp:
+	  Move the DII Invocation to its own file.
+
+        * tao/DII_Invocation.h:
+        * tao/DII_Invocation.i:
+        * tao/DII_Invocation.cpp:
+	  New file for the DII (deferred) invocations.  This decouples
+	  other components in the ORB from the DII support.
+
+        * tao/Transport_Mux_Strategy.cpp:
+        * tao/Transport_Mux_Strategy.h:
+
+        * tao/Wait_Strategy.h:
+        * tao/Wait_Strategy.cpp:
+        * tao/Wait_On_Read.h:
+        * tao/Wait_On_Read.cpp:
+        * tao/Wait_On_Reactor.h:
+        * tao/Wait_On_Reactor.cpp:
+        * tao/Wait_On_Leader_Follower.h:
+        * tao/Wait_On_Leader_Follower.cpp:
+	  Move the waiting strategies to separate files.
+	  Remove the handle_input() method.
+	  The Event_Handlers for each protocol call the Transport's
+	  handle_client_input directly.
+	  In the old days the handle_input method ensured that the leader
+	  follower mutex was acquired during the event processing, so when
+	  signaling a Synch_Reply_Dispatcher the changes were protected by
+	  the right mutex.  Now we just acquire the mutex when needed, 
+	  the Reply_Dispatcher invokes the new <reply_dispatched> method
+	  to let us change the state and signal the condition variables in
+	  a thread safe way.
+
+	  So in the old days we had the following control flow:
+		Reactor -> Event_Handler
+			-> Wait_Strategy (acquire lock)
+			-> Transport (read data)
+			-> Reply_Dispatcher
+	  now we have
+		Reactor -> Event_Handler
+			-> Transport
+			-> Reply_Dispatcher
+			-> Wait_Strategy (lock and signal)
+			<- return to Reply Dispatcher
+
+	  the new path is easier to analyze and understand.  It could be
+	  simplified even further, but that would require more classes and
+	  a better understanding of how we will implement pluggable
+	  messaging.
+	  Add a new connection_closed() method to wake up any threads when
+	  the connection is suddenly closed, in the old days we did this
+	  by detecting that the handle_client_input() method returned an
+	  error.
+
+        * tao/ORB_Core.cpp:
+	  The event loop thread can loose its leader role as part of
+	  making an upcall (see the new set_upcall_thread) method.
+	  We need to acquire the event loop thread role after each return
+	  from handle_events().
+	  This is part of the fixes for [BUGID:175]
+
+        * tao/IIOP_Connect.cpp:
+        * tao/SHMIOP_Connect.cpp:
+        * tao/UIOP_Connect.cpp:
+	  Must invoke the transport's handle_client_input directly.
+
+        * tao/IIOP_Transport.cpp:
+        * tao/SHMIOP_Transport.cpp:
+        * tao/UIOP_Transport.cpp:
+	  If the connection is closed invoke the connection_closed()
+	  callback on the transport muxing strategy.
+
+        * tao/default_client.cpp:
+	  This is the only place where the new header files for all the
+	  strategies (Wait, Muxing, etc.) are needed.
+
+        * tao/Stub.cpp:
+	  Neeeds the new DII_Invocation header file.
+
+        * tao/GIOP_Message_Lite.h:
+        * tao/IIOP_Profile.cpp:
+        * tao/Pluggable.h:
+        * tao/Pluggable.cpp:
+        * tao/UIOP_Transport.h:
+        * tao/SHMIOP_Transport.h:
+        * tests/Connection_Purging/Connection_Purging.cpp:
+	  Cosmetic fixes, mostly white space at the end of lines.
+
+        * tao/InterfaceC.cpp:
+	  After cleaning up some header files this #include was missing.
+
+        * tests/Makefile:
+        * tests/LongUpcalls/Makefile:
+        * tests/LongUpcalls/Test.idl:
+        * tests/LongUpcalls/run_test.pl:
+        * tests/LongUpcalls/svc.conf:
+        * tests/LongUpcalls/LongUpcalls.dsw:
+        * tests/LongUpcalls/AMI_Manager.h:
+        * tests/LongUpcalls/AMI_Manager.cpp:
+        * tests/LongUpcalls/Controller.h:
+        * tests/LongUpcalls/Controller.cpp:
+        * tests/LongUpcalls/Manager.h:
+        * tests/LongUpcalls/Manager.cpp:
+        * tests/LongUpcalls/Manager_Handler.h:
+        * tests/LongUpcalls/Manager_Handler.cpp:
+        * tests/LongUpcalls/ami_client.cpp:
+        * tests/LongUpcalls/ami_client.dsp:
+        * tests/LongUpcalls/ami_server.cpp:
+        * tests/LongUpcalls/ami_server.dsp:
+        * tests/LongUpcalls/blocking_client.cpp:
+        * tests/LongUpcalls/blocking_client.dsp:
+        * tests/LongUpcalls/blocking_server.cpp:
+        * tests/LongUpcalls/blocking_server.dsp:
+	  New test to check that there are no dead-locks during long
+	  callbaks.
+	  One of the tests (ami_client) is not working, but is not part of
+	  the bugs that I tried to fix.  We need something like
+	  [BUGID:575] to get this one right.
+
+        * tests/InterOp-Naming/Makefile:
+	  Update dependencies
+
+        * tests/Endpoint_Per_Priority/client.cpp:
+        * tests/Endpoint_Per_Priority/server.cpp:
+	  Fixed comments and debug messages.
+
+        * tests/MT_Client/client.conf:
+	  Using a null lock is not a good idea here.
+
 Fri Jun 16 13:16:49 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/RT_Policy_i.cpp: 

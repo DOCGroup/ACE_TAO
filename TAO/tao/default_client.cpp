@@ -2,8 +2,11 @@
 
 #include "tao/default_client.h"
 #include "tao/ORB_Core.h"
-#include "tao/Wait_Strategy.h"
-#include "tao/Transport_Mux_Strategy.h"
+#include "tao/Wait_On_Read.h"
+#include "tao/Wait_On_Reactor.h"
+#include "tao/Wait_On_Leader_Follower.h"
+#include "tao/Exclusive_TMS.h"
+#include "tao/Muxed_TMS.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/default_client.i"
@@ -27,14 +30,6 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
 #else
   this->transport_mux_strategy_ = TAO_EXCLUSIVE_TMS;
 #endif /* TAO_USE_MUXED_TRANSPORT_MUX_STRATEGY */
-
-// #if defined (TAO_USE_WAIT_ON_READ)
-//   this->wait_strategy_ = TAO_WAIT_ON_LEADER_FOLLOWER;
-// #elif defined (TAO_USE_WAIT_ON_REACTOR)
-//   this->wait_strategy_ = TAO_WAIT_ON_REACTOR;
-// #else
-//   this->wait_strategy_ = TAO_WAIT_ON_READ;
-// #endif /* TAO_USE_WAIT_ON_LEADER_FOLLOWER */
 }
 
 TAO_Default_Client_Strategy_Factory::~TAO_Default_Client_Strategy_Factory (void)
@@ -208,14 +203,9 @@ TAO_Default_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *transp
     {
       // = Leader follower model.
       
-      if (this->transport_mux_strategy_ == TAO_EXCLUSIVE_TMS)
-        ACE_NEW_RETURN (ws,
-                        TAO_Exclusive_Wait_On_Leader_Follower (transport),
-                        0);
-      else
-        ACE_NEW_RETURN (ws,
-                        TAO_Muxed_Wait_On_Leader_Follower (transport),
-                        0);
+      ACE_NEW_RETURN (ws,
+                      TAO_Wait_On_Leader_Follower (transport),
+                      0);
     }
       
   return ws;
