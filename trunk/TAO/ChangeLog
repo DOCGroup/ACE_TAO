@@ -1,3 +1,14 @@
+Tue Aug 13 08:22:33 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/LoadBalancer/Makefile:
+	* orbsvcs/LoadBalancer/Makefile.LoadManager:
+	* orbsvcs/LoadBalancer/Makefile.LoadMonitor:
+	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing:
+
+	  Do not build the Load Balancer related binaries if
+	  PortableInterceptor support is disabled.  Interceptor support is
+	  required.
+
 Tue Aug 13 07:54:39 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/CosLoadBalancing.bor:
