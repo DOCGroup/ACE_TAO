@@ -13,6 +13,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Basic_Deployment_Data.hpp"
+#include "Config_Handlers_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -39,17 +40,17 @@ namespace CIAO
     *
     */
     
-    class Requirement_Handler{
+    class Config_Handlers_Export Req_Handler{
      
       public:
        
-        Requirement_Handler (void);
-        virtual ~Requirement_Handler (void);
+        Req_Handler (void);
+        virtual ~Req_Handler (void);
   
         ///This method takes a <Deployment::Requirement>
         ///and maps the values from the passed in XSC 
         ///Requirement to its members.
-        static void get_Requirement (
+        void get_Requirement (
                     Deployment::Requirement& toconfig,
                     Requirement& desc);          
 
