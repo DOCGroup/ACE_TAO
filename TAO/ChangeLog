@@ -1,138 +1,154 @@
+Fri Nov  7 21:44:59 UTC 2003  Edward R. Mulholland  <emulholl@atl.lmco.com>
+
+        * tao/Strategies/SCIOP_Connector.h:
+        * tao/Strategies/SCIOP_Connector.cpp:
+
+          If an SCIOP_Connector fails to bind to an endpoint, it will try
+          a different endpoint in the same profile before it tries a
+          different profile.
+
+        * tao/Strategies/SCIOP_Endpoint.h:
+        * TAO/tao/Strategies/SCIOP_Factory.cpp:
+        * TAO/tao/Strategies/SCIOP_Lite_Factory.cpp:
+
+          Minor changes to accommodate recent refactorings elsewhere in
+	  TAO.
+
 Fri Nov 7 14:33:37 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/README: 	
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp: 	
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/README:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp:
 
-	  Recorded the rate at which frames are received for every sec
-	  after the first frame is received in the Stats.dat file.
-	
+          Recorded the rate at which frames are received for every sec
+          after the first frame is received in the Stats.dat file.
+
 Fri Nov  7 11:23:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Any_Unknown_IDL_Type.cpp:
+        * tao/Any_Unknown_IDL_Type.cpp:
 
-	  The constructor tried to duplicate the message block
-	  irresepctive of where it came from. To make the long story
-	  short, it is quite possible that the message block that this
-	  class gets could be from the stack and blind duplicate () would
-	  lead to crashes. If you don't believe me, please see the failure
-	  of the DII test in the daily builds.
+          The constructor tried to duplicate the message block
+          irresepctive of where it came from. To make the long story
+          short, it is quite possible that the message block that this
+          class gets could be from the stack and blind duplicate () would
+          lead to crashes. If you don't believe me, please see the failure
+          of the DII test in the daily builds.
 
-	  This started showing up after the optimizations to the critical
-	  path outlined in 
+          This started showing up after the optimizations to the critical
+          path outlined in
 
-	  "Thu Nov  6 22:32:19 2003  Balachandran Natarajan
-	  <bala@dre.vanderbilt.edu>" 
-	  
-	* tao/Synch_Reply_Dispatcher.cpp:
+          "Thu Nov  6 22:32:19 2003  Balachandran Natarajan
+          <bala@dre.vanderbilt.edu>"
 
-	  Removed a debug statement which was a waste. 
-	
-	* tao/DynamicInterface/DII_Invocation.cpp:
+        * tao/Synch_Reply_Dispatcher.cpp:
 
-	  Cosmetic changes.
+          Removed a debug statement which was a waste.
 
-	* ChangeLog: 
+        * tao/DynamicInterface/DII_Invocation.cpp:
 
-	  Removed a long listing of Makefile whose dependencies were
-	  updated. They have served no purpose AFAIK other than blowing up
-	  the size of ChangeLogs. Just a regexp indicating that the
-	  Makefile's dependencies were updated should be sufficient.
+          Cosmetic changes.
+
+        * ChangeLog:
+
+          Removed a long listing of Makefile whose dependencies were
+          updated. They have served no purpose AFAIK other than blowing up
+          the size of ChangeLogs. Just a regexp indicating that the
+          Makefile's dependencies were updated should be sufficient.
 
 Fri Nov  7 07:06:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Makefile*:
-	* tests/Exposed_Policies/Makefile:
-	* orbsvcs/tests/Notify/Makefile*:
+        * orbsvcs/orbsvcs/Makefile*:
+        * tests/Exposed_Policies/Makefile:
+        * orbsvcs/tests/Notify/Makefile*:
 
-	  Updated dependencies since the last dependencies left them
-	  broken. 
+          Updated dependencies since the last dependencies left them
+          broken.
 
 Fri Nov  7 06:50:49 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * */Makefile*:
-	
+
           Updated dependencies.
 
 Thu Nov  6 22:32:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	This checkin is about an optimization and definitely not for the
-	weak hearted :-)! All this jugglery is for getting rid of one
+        This checkin is about an optimization and definitely not for the
+        weak hearted :-)! All this jugglery is for getting rid of one
         allocation along the critical path. Not sure how much would this
-	fetch us, but nevertheless an useful optimization. 
+        fetch us, but nevertheless an useful optimization.
 
-	A quick brief. In older versions of TAO, the client thread used to
+        A quick brief. In older versions of TAO, the client thread used to
         create a output CDR on the TSS and use that for marshalling data
         and sending data which was neat. But during the reply, we used to
         create an InputCDR on the global memory since the thread reading
         the reply message could be different from the thread to whom the
         reply belongs to. If you want to know why, look for documentation
         of TAO's LF. After we worked on BUG 1369, we got a few advantages
-        and this  optimization cashed in on that. 
+        and this  optimization cashed in on that.
 
-	Refactoring the generated code allowed us to move the CDR stream
+        Refactoring the generated code allowed us to move the CDR stream
         inside the transport, to be more specific inside the GIOP
         objects. This was also right, since the CDR's are tied to
         GIOP. But this gave rise to a problem. We could not use the TSS
         anymore since multiple threads could share the same transport (one
         after another). Hence we used the global memory pool (different
-	from the global heap) to allocate the CDR and this is a one time
-	activity cached inside the transport. All threads can infact use
-	the same chunk of memory. That was done when we merged the branch
+        from the global heap) to allocate the CDR and this is a one time
+        activity cached inside the transport. All threads can infact use
+        the same chunk of memory. That was done when we merged the branch
         for fixes from 1369. Since the transports are anyway on a per-lane
         basis RTCORBA wouldn't be affected at all.
 
-	This checkin broke another barrier, ie. the allocation required
+        This checkin broke another barrier, ie. the allocation required
         while getting the replies. The thread collecting the reply can
         read the messages on its stack and copy the messages to the stack
         of another thread which is expecting a reply. Therefore we now
-        require no allocations but for a copy. 
+        require no allocations but for a copy.
 
-	All the above are valid for messages of decent size. If the
+        All the above are valid for messages of decent size. If the
         messages are big we have to hit the global memory. What are the
         end results?
 
-	- TAO now does not do any allocation along the outgoing request
-	  path. 
+        - TAO now does not do any allocation along the outgoing request
+          path.
 
-	- It doesn't do any allocation along the reply collection path
-	  even in MT scenarios for decent sized messages and when the
-	  network is behaving well (ie. when there is no IP
-	  fragmentation).  
+        - It doesn't do any allocation along the reply collection path
+          even in MT scenarios for decent sized messages and when the
+          network is behaving well (ie. when there is no IP
+          fragmentation).
 
-	We were also helped by an optimization that was added in ACE
+        We were also helped by an optimization that was added in ACE
         yesterday to the CDR streams. We have to wait and see how much
-        does this checkin buys us in terms of performance. Anyway, this 
+        does this checkin buys us in terms of performance. Anyway, this
         documentation should be useful for others.
-	
-	* tao/GIOP_Message_Lite.cpp:
-	* tao/GIOP_Message_Base.cpp (process_reply_message):
 
-	  Construct the CDR stream and use that CDR to dispatch the
-	  reply. Now the reply dispatch is done by the GIOP objects. 
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_Base.cpp (process_reply_message):
 
-	* tao/GIOP_Message_Generator_Parser.cpp:
-	* tao/GIOP_Message_Generator_Parser_10.cpp:
-	* tao/GIOP_Message_Generator_Parser_12.cpp:
+          Construct the CDR stream and use that CDR to dispatch the
+          reply. Now the reply dispatch is done by the GIOP objects.
 
-	  No need to do any exchange CDR blocks since things are being
-	  taken care elsewhere. 
+        * tao/GIOP_Message_Generator_Parser.cpp:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
 
-	* tao/Pluggable_Messaging_Utils.cpp:
-	* tao/Pluggable_Messaging_Utils.h:
+          No need to do any exchange CDR blocks since things are being
+          taken care elsewhere.
 
-	  Added a transport pointer to the Reply_Params object. It is
-	  used by the GIOP layer to dispatch the reply. Removed the
-	  temporary CDR that was created here. 
+        * tao/Pluggable_Messaging_Utils.cpp:
+        * tao/Pluggable_Messaging_Utils.h:
 
-	* tao/Synch_Reply_Dispatcher.cpp:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
-	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+          Added a transport pointer to the Reply_Params object. It is
+          used by the GIOP layer to dispatch the reply. Removed the
+          temporary CDR that was created here.
 
-	  Added a check for null CDR's in the Reply_Param's object. 
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
 
-	* tao/Transport.cpp: Construct the Reply_Params using the
-	  transport instead of the ORB_Core. 
-	
+          Added a check for null CDR's in the Reply_Param's object.
+
+        * tao/Transport.cpp: Construct the Reply_Params using the
+          transport instead of the ORB_Core.
+
 Fri Nov  7 02:08:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/ImplRepo_Service/Server_Repository.cpp:
@@ -159,37 +175,37 @@ Thu Nov  6 17:58:21 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
 Thu Nov  6 14:13:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
 
           Fixed some ACE_CHECK_RETURN's that were trying to return -1 from
-	  functions that were suppoed to return pointers.
+          functions that were suppoed to return pointers.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
 
           #included "ace/OS_NS_string.h"
 
 Thu Nov 6 14:54:42 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/README:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.h:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/README:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.h:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp:
 
-	  Added command line arguments to specify local and peer
-	  addresses. In case of SCTP_SEQ protocol added command line
-	  arguments to specify secondary addresses.
+          Added command line arguments to specify local and peer
+          addresses. In case of SCTP_SEQ protocol added command line
+          arguments to specify secondary addresses.
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/README:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/README:
 
-	  Updated to include info about command line arguments to specify
-	  local and peer addresses.
+          Updated to include info about command line arguments to specify
+          local and peer addresses.
 
 Thu Nov  6 13:17:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Synch_Invocation.cpp:
+        * tao/Synch_Invocation.cpp:
 
-	  If the ORB prepares to throw a COMM_FAILURE exception with
-	  completed_maybe, just delegate to the ORB_Core to take the right
-	  decision. This is required to for FT_CORBA.
+          If the ORB prepares to throw a COMM_FAILURE exception with
+          completed_maybe, just delegate to the ORB_Core to take the right
+          decision. This is required to for FT_CORBA.
 
 Thu Nov  6 12:53:46 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
@@ -203,60 +219,60 @@ Thu Nov  6 07:04:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Nov  5 19:19:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/PollableC.cpp:
-	* tao/PollableC.h:
-	* tao/PollableC.i:
+        * tao/PollableC.cpp:
+        * tao/PollableC.h:
+        * tao/PollableC.i:
 
-	  Regenerated the code.
+          Regenerated the code.
 
-	* tao/Synch_Reply_Dispatcher.cpp:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
-	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
 
-	  Added debugging statements to indicate failure of clone_from ()
-	  when debugging level is cranked up.
+          Added debugging statements to indicate failure of clone_from ()
+          when debugging level is cranked up.
 
-	* tao/Remote_Invocation.cpp:
-	* tao/Synch_Invocation.cpp:
-	* tao/Messaging/Asynch_Reply_Dispatcher.cpp (handle_timeout):
+        * tao/Remote_Invocation.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp (handle_timeout):
 
-	  Changed the completion status of the CORBA::TIMEOUT exception
-	  thrown. For example returning a completion status of
-	  COMPLETED_NO while timing out waiting for the reply seems brain
-	  dead. Further fixed the minor code to return the SEND_MINOR_CODE
-	  or RECV_MINOR_CODE as the case maybe.
+          Changed the completion status of the CORBA::TIMEOUT exception
+          thrown. For example returning a completion status of
+          COMPLETED_NO while timing out waiting for the reply seems brain
+          dead. Further fixed the minor code to return the SEND_MINOR_CODE
+          or RECV_MINOR_CODE as the case maybe.
 
-	  This fixes a problem reported by Torsten Kuepper
-	  <torsten.kuepper@nokia.com> [BUG 1600].
+          This fixes a problem reported by Torsten Kuepper
+          <torsten.kuepper@nokia.com> [BUG 1600].
 
 Wed Nov 5 16:03:08 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/orbsvcs/AV/SCTP_SEQ.h:
-	* orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp:
+        * orbsvcs/orbsvcs/AV/SCTP_SEQ.h:
+        * orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp:
 
-	  Added the change_qos (...) method to
-	  TAO_AV_SCTP_SEQ_Flow_Handler in order to set the specified
-	  Diffserv Codepoint on the data packets sent.
+          Added the change_qos (...) method to
+          TAO_AV_SCTP_SEQ_Flow_Handler in order to set the specified
+          Diffserv Codepoint on the data packets sent.
 
 Wed Nov  5 09:56:26 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tao/ORB_Core.cpp (run): Removed 'int' declaration to prevent
-	  obscuring the 'result' variable.  The reason this is important
-	  is because, by obscuring the 'result' variable, the true return
-	  value of Reactor::handle_events() never got returned, and the
-	  caller (typically ORB_Core::run) couldn't tell why handle_events
-	  exited even though it wants to.
+        * tao/ORB_Core.cpp (run): Removed 'int' declaration to prevent
+          obscuring the 'result' variable.  The reason this is important
+          is because, by obscuring the 'result' variable, the true return
+          value of Reactor::handle_events() never got returned, and the
+          caller (typically ORB_Core::run) couldn't tell why handle_events
+          exited even though it wants to.
 
-	* tao/ORB_Core.cpp (init): Added new option, -ORBVerboseLogging,
-	  to turn on the VERBOSE or VERBOSE_LITE flag in ACE_Log_Msg.
-	  Range of values are 0, 1, or 2 for no verbose, VERBOSE_LITE, and
-	  VERBOSE, respectively.
+        * tao/ORB_Core.cpp (init): Added new option, -ORBVerboseLogging,
+          to turn on the VERBOSE or VERBOSE_LITE flag in ACE_Log_Msg.
+          Range of values are 0, 1, or 2 for no verbose, VERBOSE_LITE, and
+          VERBOSE, respectively.
 
 Wed Nov  5 09:21:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_union.cpp:
 
-	  Set the aggregate_seen_ bit inaddition to the union_seen_ bit.
+          Set the aggregate_seen_ bit inaddition to the union_seen_ bit.
 
 Wed Nov  5 05:33:44 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -269,18 +285,18 @@ Wed Nov  5 05:33:44 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Nov  4 22:14:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/include/idl_global.h:
-	* TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
 
-	  Added a new bit union_seen_ to keep track of unions.
+          Added a new bit union_seen_ to keep track of unions.
 
-	* TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
 
-	  Generate OS_NS_string.h even when you see a union.
+          Generate OS_NS_string.h even when you see a union.
 
-	* TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_union.cpp:
 
-	  Set the union_seen_ bit within the visitor's constructor.
+          Set the union_seen_ bit within the visitor's constructor.
 
 Wed Nov  5 04:08:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -313,46 +329,46 @@ Wed Nov  5 04:08:36 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Nov  4 21:08:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_argument.cpp:
+        * TAO_IDL/be/be_argument.cpp:
 
-	  Removed the check for !dcl->imported () in the constructor
-	  before setting the bits. This was required to get the right
-	  Valuetype includes within the generated code. The inclusion is
-	  necessary for eventtype {} declarations to work.
+          Removed the check for !dcl->imported () in the constructor
+          before setting the bits. This was required to get the right
+          Valuetype includes within the generated code. The inclusion is
+          necessary for eventtype {} declarations to work.
 
-	* TAO_IDL/be/be_home.cpp:
+        * TAO_IDL/be/be_home.cpp:
 
-	  Within the constructor narrow the AST_Component to a
-	  be_component and call seen_in_operation (), and ACE_SET_BITS for
-	  further processing. This is required to generate the
-	  Object_Argument_T.h includes in the stub cpp file.
+          Within the constructor narrow the AST_Component to a
+          be_component and call seen_in_operation (), and ACE_SET_BITS for
+          further processing. This is required to generate the
+          Object_Argument_T.h includes in the stub cpp file.
 
-	* TAO_IDL/be/be_visitor_arg_traits.cpp:
-	* TAO_IDL/be_include/be_visitor_arg_traits.h:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be_include/be_visitor_arg_traits.h:
 
-	  Added two new methods visit_component () and visit_component_fwd
-	  () that delegates to the visit_interface () and
-	  visit_interface_fwd () call.
+          Added two new methods visit_component () and visit_component_fwd
+          () that delegates to the visit_interface () and
+          visit_interface_fwd () call.
 
-	* TAO_IDL/be/be_visitor_component/component_ch.cpp:
-	* TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
 
-	  Bunch of changes to these files. The changes include
+          Bunch of changes to these files. The changes include
 
-	  - Generating and initializing the right collocated factory
-	    function pointer
-	  - Generating the right implementation for the setup_collocation
-	    () call
-	  - Generating the right implementation for the _narrow () call.
-	  - Removal of the old _unchecked_narrow () generation.
-	  - Removal of the tao_QueryInterface () call
+          - Generating and initializing the right collocated factory
+            function pointer
+          - Generating the right implementation for the setup_collocation
+            () call
+          - Generating the right implementation for the _narrow () call.
+          - Removal of the old _unchecked_narrow () generation.
+          - Removal of the tao_QueryInterface () call
 
-	  With the above changes CIAO examples seem to compile fine.
+          With the above changes CIAO examples seem to compile fine.
 
 Tue Nov 04 19:36:46 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* COPYING: Modified to include CIAO in the Copyright disclaimer.
-	  Thanks to Roland Schimmack <SC@ProCom.de> for motivating the change.
+        * COPYING: Modified to include CIAO in the Copyright disclaimer.
+          Thanks to Roland Schimmack <SC@ProCom.de> for motivating the change.
 
 Wed Nov  5 01:00:31 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -363,11 +379,11 @@ Wed Nov  5 01:00:31 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Nov  4 17:02:39 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
 
-	  Corrected system exception minor codes.  In particular, they
-	  have to be logically ORed with the standard CORBA::OMGVMCID
-	  constant.
+          Corrected system exception minor codes.  In particular, they
+          have to be logically ORed with the standard CORBA::OMGVMCID
+          constant.
 
 Wed Nov  5 00:28:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -383,48 +399,48 @@ Wed Nov  5 00:28:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Nov  4 15:57:09 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/IIOP_Transport.cpp (get_listen_point):
+        * tao/IIOP_Transport.cpp (get_listen_point):
 
-	  Verify that dynamically casted TAO_IIOP_Acceptor pointer is
-	  non-zero before use.  Addresses potential run-time errors.
+          Verify that dynamically casted TAO_IIOP_Acceptor pointer is
+          non-zero before use.  Addresses potential run-time errors.
 
-	  Improved const-correctness.
+          Improved const-correctness.
 
-	* tao/Object_Proxy_Impl.h:
+        * tao/Object_Proxy_Impl.h:
 
-	  Include "tao/orbconf.h" to pull in TAO_HAS_MINIMUM_CORBA macro
-	  definition.  Fixes a g++ warning exhibited when "-Wundef"
-	  compiler flag is set.
+          Include "tao/orbconf.h" to pull in TAO_HAS_MINIMUM_CORBA macro
+          definition.  Fixes a g++ warning exhibited when "-Wundef"
+          compiler flag is set.
 
-	* tao/Typecode_Constants.cpp:
+        * tao/Typecode_Constants.cpp:
 
-	  Check if TAO_HAS_AMI_POLLER is defined before checking its
-	  value.  Fixes a g++ warning exhibited when "-Wundef" compiler
-	  flag is set.
+          Check if TAO_HAS_AMI_POLLER is defined before checking its
+          value.  Fixes a g++ warning exhibited when "-Wundef" compiler
+          flag is set.
 
-	* tao/NVList.i:
+        * tao/NVList.i:
 
-	  Nuked trailing whitespace.
+          Nuked trailing whitespace.
 
 Tue Nov  4 16:23:35 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/corbafwd.h:
+        * tao/corbafwd.h:
 
-	  #included the files where the contents of this file have been
-	  moved. This is necessary for backward compatibility. Lots of
-	  application code might still be using this.
+          #included the files where the contents of this file have been
+          moved. This is necessary for backward compatibility. Lots of
+          application code might still be using this.
 
-	* tao/corbafwd.cpp (ACE_RCSID):
+        * tao/corbafwd.cpp (ACE_RCSID):
 
-	  Emptied the contents since they are no longer needed. They are
-	  just around for backward compatibility.
+          Emptied the contents since they are no longer needed. They are
+          just around for backward compatibility.
 
 Tue Nov  4 16:22:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
 
-	  Added missing includes to get them compiling.
+          Added missing includes to get them compiling.
 
 Tue Nov  4 20:40:26 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -835,96 +851,96 @@ Mon Nov  3 22:46:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Nov  3 21:36:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/diffs/Current.diff:
+        * tao/diffs/Current.diff:
 
-	  Added a new diff file for tao/CurrentC.*
+          Added a new diff file for tao/CurrentC.*
 
-	* tao/diffs/CurrentC.cpp.diff:
-	* tao/diffs/CurrentC.h.diff:
-	* tao/diffs/CurrentC.i.diff:
+        * tao/diffs/CurrentC.cpp.diff:
+        * tao/diffs/CurrentC.h.diff:
+        * tao/diffs/CurrentC.i.diff:
 
-	  Three files are maddening. Replace them with one file (above)
-	  that serve the same purpose.
+          Three files are maddening. Replace them with one file (above)
+          that serve the same purpose.
 
 Mon Nov  3 21:33:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/BiDir_GIOP/diffs/BiDirPolicy.diff:
+        * tao/BiDir_GIOP/diffs/BiDirPolicy.diff:
 
-	  Added a new diff file for BiDirPolicy generated code.
+          Added a new diff file for BiDirPolicy generated code.
 
-	* tao/BiDir_GIOP/diffs/BiDirPolicyC.cpp.diff:
-	* tao/BiDir_GIOP/diffs/BiDirPolicyC.h.diff:
-	* tao/BiDir_GIOP/diffs/BiDirPolicyC.i.diff:
+        * tao/BiDir_GIOP/diffs/BiDirPolicyC.cpp.diff:
+        * tao/BiDir_GIOP/diffs/BiDirPolicyC.h.diff:
+        * tao/BiDir_GIOP/diffs/BiDirPolicyC.i.diff:
 
-	  Three different files are maddening. Just removed them and added
-	  a new file (above) to serve the same purpose.
+          Three different files are maddening. Just removed them and added
+          a new file (above) to serve the same purpose.
 
 Mon Nov  3 21:28:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/CurrentC.cpp: Cosmetic fix.
+        * tao/CurrentC.cpp: Cosmetic fix.
 
-	* tao/Domain.pidl: Fixed the comments in the pidl file.
+        * tao/Domain.pidl: Fixed the comments in the pidl file.
 
-	* tao/DomainC.cpp:
-	* tao/DomainC.h:
-	* tao/DomainC.i:
-	* tao/BiDir_GIOP/BiDirPolicyC.cpp:
-	* tao/BiDir_GIOP/BiDirPolicyC.h:
-	* tao/BiDir_GIOP/BiDirPolicyC.i:
-	* tao/Messaging/Messaging_No_ImplC.cpp:
-	* tao/Messaging/Messaging_No_ImplC.h:
-	* tao/Messaging/Messaging_No_ImplC.i:
-	* tao/Messaging/Messaging_RT_PolicyC.cpp:
-	* tao/Messaging/Messaging_RT_PolicyC.h:
-	* tao/Messaging/Messaging_RT_PolicyC.i:
-	* tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
-	* tao/Messaging/Messaging_SyncScope_PolicyC.h:
-	* tao/Messaging/Messaging_SyncScope_PolicyC.i:
-	* tao/PortableServer/Default_ORTC.cpp:
-	* tao/PortableServer/Default_ORTC.h:
-	* tao/PortableServer/Default_ORTC.i:
-	* tao/Messaging/TAO_ExtC.cpp:
-	* tao/Messaging/TAO_ExtC.h:
-	* tao/Messaging/TAO_ExtC.i: Regenerated code to get the new IDL
-	  compiler change.
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/DomainC.i:
+        * tao/BiDir_GIOP/BiDirPolicyC.cpp:
+        * tao/BiDir_GIOP/BiDirPolicyC.h:
+        * tao/BiDir_GIOP/BiDirPolicyC.i:
+        * tao/Messaging/Messaging_No_ImplC.cpp:
+        * tao/Messaging/Messaging_No_ImplC.h:
+        * tao/Messaging/Messaging_No_ImplC.i:
+        * tao/Messaging/Messaging_RT_PolicyC.cpp:
+        * tao/Messaging/Messaging_RT_PolicyC.h:
+        * tao/Messaging/Messaging_RT_PolicyC.i:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.h:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.i:
+        * tao/PortableServer/Default_ORTC.cpp:
+        * tao/PortableServer/Default_ORTC.h:
+        * tao/PortableServer/Default_ORTC.i:
+        * tao/Messaging/TAO_ExtC.cpp:
+        * tao/Messaging/TAO_ExtC.h:
+        * tao/Messaging/TAO_ExtC.i: Regenerated code to get the new IDL
+          compiler change.
 
-	* tao/Messaging/diffs/Messaging_No_Impl.diff:
-	* tao/Messaging/diffs/Messaging_RT_Policy.diff:
-	* tao/Messaging/diffs/Messaging_SyncScope_Policy.diff:
-	* tao/Messaging/diffs/TAO_ExtC.diff:
-	* tao/PortableServer/diffs/Default_ORT.diff:
-	* tao/diffs/Domain.diff: Updated diffs with new stuff. This should
-	  now be minimal.
+        * tao/Messaging/diffs/Messaging_No_Impl.diff:
+        * tao/Messaging/diffs/Messaging_RT_Policy.diff:
+        * tao/Messaging/diffs/Messaging_SyncScope_Policy.diff:
+        * tao/Messaging/diffs/TAO_ExtC.diff:
+        * tao/PortableServer/diffs/Default_ORT.diff:
+        * tao/diffs/Domain.diff: Updated diffs with new stuff. This should
+          now be minimal.
 
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp;
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp;
 
-	  Cosmetic fix.
+          Cosmetic fix.
 
 Mon Nov  3 19:42:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
 
-	  Generate ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION for
-	  Objref_Traits<> member specializations.
+          Generate ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION for
+          Objref_Traits<> member specializations.
 
-	* tao/CurrentC.cpp:
-	* tao/CurrentC.h:
-	* tao/CurrentC.i:
+        * tao/CurrentC.cpp:
+        * tao/CurrentC.h:
+        * tao/CurrentC.i:
 
-	  Regenerated the code for a start with the above macro.
+          Regenerated the code for a start with the above macro.
 
-	* tao/Current.pidl:
+        * tao/Current.pidl:
 
-	  Fixed commment about including corbafwd.h, since it is not
-	  required.
+          Fixed commment about including corbafwd.h, since it is not
+          required.
 
 Mon Nov  3 19:20:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
 
-	  Fixed a typo from the last checkin.
+          Fixed a typo from the last checkin.
 
 Mon Nov  3 18:40:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1085,94 +1101,94 @@ Sun Nov  2 23:28:26 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sun Nov  2 16:33:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/orbconf.h:
+        * tao/orbconf.h:
 
-	  Removed a couple of macros for namespaces that are no longer
-	  used and absolete. We can now use the keyword namespace
-	  directly.
+          Removed a couple of macros for namespaces that are no longer
+          used and absolete. We can now use the keyword namespace
+          directly.
 
-	  There are few more macros that can go. But that is the next
-	  step.
+          There are few more macros that can go. But that is the next
+          step.
 
-	* tao/CONV_FRAMES.h:
-	* tao/Exception.cpp:
-	* tao/IOPS.h:
-	* tao/IOPS_T.h:
-	* tao/TAOS.h:
-	* tao/Messaging/MessagingS_T.h:
+        * tao/CONV_FRAMES.h:
+        * tao/Exception.cpp:
+        * tao/IOPS.h:
+        * tao/IOPS_T.h:
+        * tao/TAOS.h:
+        * tao/Messaging/MessagingS_T.h:
 
-	  Removal of the macro forced us to fudge these files where it was
-	  used.
+          Removal of the macro forced us to fudge these files where it was
+          used.
 
 Sun Nov  2 16:23:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp:
-	* orbsvcs/orbsvcs/Event/RT_Task.cpp:
-	* orbsvcs/orbsvcs/Log/LogNotification.cpp:
-	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
-	* orbsvcs/orbsvcs/Log/PersistStore.cpp:
-	* orbsvcs/orbsvcs/Notify/Method_Request.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp:
+        * orbsvcs/orbsvcs/Event/RT_Task.cpp:
+        * orbsvcs/orbsvcs/Log/LogNotification.cpp:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/PersistStore.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request.h:
 
-	  Added missing includes.
+          Added missing includes.
 
 Sun Nov  2 15:45:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Collocated_Invocation.h:
-	* tao/Invocation_Adapter.cpp:
-	* tao/Invocation_Adapter.h:
-	* tao/Invocation_Base.h:
-	* tao/LocateRequest_Invocation.h:
-	* tao/LocateRequest_Invocation_Adapter.cpp:
-	* tao/LocateRequest_Invocation_Adapter.h:
-	* tao/Remote_Invocation.cpp:
-	* tao/Remote_Invocation.h:
-	* tao/Synch_Invocation.h:
+        * tao/Collocated_Invocation.h:
+        * tao/Invocation_Adapter.cpp:
+        * tao/Invocation_Adapter.h:
+        * tao/Invocation_Base.h:
+        * tao/LocateRequest_Invocation.h:
+        * tao/LocateRequest_Invocation_Adapter.cpp:
+        * tao/LocateRequest_Invocation_Adapter.h:
+        * tao/Remote_Invocation.cpp:
+        * tao/Remote_Invocation.h:
+        * tao/Synch_Invocation.h:
 
-	  Added and improved doxygen documentation.
+          Added and improved doxygen documentation.
 
 Sat Nov  1 14:58:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Sync_Strategies.cpp:
-	* tao/TAO_Singleton.h:
-	* tao/Transport.h:
-	* tao/RTCORBA/RT_Mutex.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
-	* orbsvcs/orbsvcs/Event/GPlot_File.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
-	* orbsvcs/orbsvcs/IFRService/Options.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
-	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
-	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp:
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * tao/Sync_Strategies.cpp:
+        * tao/TAO_Singleton.h:
+        * tao/Transport.h:
+        * tao/RTCORBA/RT_Mutex.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+        * orbsvcs/orbsvcs/Event/GPlot_File.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/IFRService/Options.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.cpp:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
 
-	  #included a bunch of OS_NS_sys_* files to get the right methods
-	  that are used from the ACE_OS namespace.
+          #included a bunch of OS_NS_sys_* files to get the right methods
+          that are used from the ACE_OS namespace.
 
 Sat Nov  1 12:13:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Security/MechanismPolicy.cpp:
-	* orbsvcs/orbsvcs/Security/MechanismPolicy.h:
+        * orbsvcs/orbsvcs/Security/MechanismPolicy.cpp:
+        * orbsvcs/orbsvcs/Security/MechanismPolicy.h:
 
-	  Added the required #includes to get them compiling.
+          Added the required #includes to get them compiling.
 
 Sat Nov  1 11:30:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests/Cubit/TAO/DII_Cubit/Makefile
-	* performance-tests/Latency/DII/Makefile:
-	* performance-tests/Latency/DSI/Makefile:
-	* performance-tests/Sequence_Latency/DII/Makefile:
-	* performance-tests/Sequence_Latency/DSI/Makefile:
-	* performance-tests/Sequence_Latency/Deferred/Makefile:
-	* orbsvcs/examples/ORT/Makefile:
-	* orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
+        * performance-tests/Cubit/TAO/DII_Cubit/Makefile
+        * performance-tests/Latency/DII/Makefile:
+        * performance-tests/Latency/DSI/Makefile:
+        * performance-tests/Sequence_Latency/DII/Makefile:
+        * performance-tests/Sequence_Latency/DSI/Makefile:
+        * performance-tests/Sequence_Latency/Deferred/Makefile:
+        * orbsvcs/examples/ORT/Makefile:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
 
-	  Do not compile if corba_messaging is turned off.
+          Do not compile if corba_messaging is turned off.
 
 Sat Nov  1 09:56:10 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/examples/RtEC/Kokyu/Service.cpp: Added fixes to get rid
-	  of link errors in Debian_NoInterceptor build.
+        * orbsvcs/examples/RtEC/Kokyu/Service.cpp: Added fixes to get rid
+          of link errors in Debian_NoInterceptor build.
 
 Sat Nov  1 05:40:21 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 

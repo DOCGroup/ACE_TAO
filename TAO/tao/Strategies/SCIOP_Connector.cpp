@@ -15,6 +15,7 @@
 #include "tao/Transport.h"
 #include "tao/Wait_Strategy.h"
 
+#include "ace/OS_NS_strings.h"
 #include "ace/Strategies_T.h"
 
 
@@ -155,20 +156,39 @@ TAO_SCIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                       TAO_Transport_Descriptor_Interface &desc,
                                       ACE_Time_Value *max_wait_time)
 {
-  TAO_SCIOP_Endpoint *sciop_endpoint =
-    this->remote_endpoint (desc.endpoint ());
+  TAO_Endpoint *tao_endpoint = desc.endpoint ();
 
-  if (sciop_endpoint == 0)
-    return 0;
+  TAO_Transport *transport = 0;
 
+  while (tao_endpoint != 0) {
+    TAO_SCIOP_Endpoint *sciop_endpoint = this->remote_endpoint (tao_endpoint);
+    if (sciop_endpoint != 0) {
+      transport = make_connection_i (desc, max_wait_time, sciop_endpoint);
+      if (transport) {
+        break;
+      }
+    }
+    tao_endpoint = tao_endpoint->next();
+  }
+
+  return transport;
+}
+
+
+TAO_Transport *
+TAO_SCIOP_Connector::make_connection_i (TAO_Transport_Descriptor_Interface &desc,
+                                        ACE_Time_Value *max_wait_time,
+                                        TAO_SCIOP_Endpoint *sciop_endpoint)
+{
   const ACE_INET_Addr &remote_address =
     sciop_endpoint->object_addr ();
 
-  if (TAO_debug_level > 2)
+  if (TAO_debug_level > 2) {
     ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - SCIOP_Connector::make_connection, "
+                "TAO (%P|%t) - SCIOP_Connector::make_connection_i, "
                 "to <%s:%d>\n",
                 sciop_endpoint->host(), sciop_endpoint->port()));
+  }
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
