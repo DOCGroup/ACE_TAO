@@ -1,3 +1,8 @@
+Mon Aug 24 21:24:55 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (TAO_ORB_Core): Added code to clean up memory
+ 	  pools.
+
 Mon Aug 24 20:58:36 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tao/ORB.h: Changed CORBA_Boolean for CHORUS platforms to
