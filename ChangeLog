@@ -1,3 +1,11 @@
+Sat Aug 28 11:15:02 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Message_Queue_T.inl: Changed the implementation of
+	  is_full_i() so the comparision operator is >= rather than >,
+ 	  which makes it possible to use a 0 high water mark to disable
+ 	  the enqueue side of the queue.  Thanks to Rick Robinson
+ 	  <rick@oyarsa.com> for reporting this.
+
 Fri Aug 27 11:40:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/ftrtevent.mpb:

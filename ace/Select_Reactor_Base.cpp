@@ -957,8 +957,8 @@ ACE_Select_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
   // If eh == 0 then another thread is unblocking the
   // <ACE_Select_Reactor> to update the <ACE_Select_Reactor>'s
   // internal structures.  Otherwise, we need to dispatch the
-  // appropriate handle_* method on the <ACE_Event_Handler>
-  // pointer we've been passed.
+  // appropriate handle_* method on the <ACE_Event_Handler> pointer
+  // we've been passed.
   if (buffer.eh_ != 0)
     {
       ACE_Event_Handler *event_handler =
