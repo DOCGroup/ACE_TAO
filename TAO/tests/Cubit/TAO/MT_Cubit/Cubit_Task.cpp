@@ -27,7 +27,7 @@ Cubit_Task::Cubit_Task (const char *args,
                         u_int num_of_objs,
                         ACE_Thread_Manager *thr_mgr,
                         u_int task_id)
-  : ACE_MT (ACE_Task<ACE_MT_SYNCH> (thr_mgr)),
+  : ACE_Task<ACE_MT_SYNCH> (thr_mgr),
     key_ ("Cubit"),
     orbname_ ((char *) orbname),
     orbargs_ ((char *) args),
@@ -46,22 +46,22 @@ Cubit_Task::svc (void)
   int prio;
 
   // thr_getprio () on the current thread should never fail.
-  ACE_OS::thr_getprio (thr_handle, prio);
+
+  if (ACE_OS::thr_getprio (thr_handle, prio) == -1)
+    return -1;
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Beginning Cubit task with args = '%s' and priority %d\n",
               orbargs_,
               prio));
+  int result = this->initialize_orb ();
 
-  int rc = this->initialize_orb ();
-
-  if (rc == -1)
+  if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ORB initialization failed.\n"),
                       -1);
-
-  rc = this->create_servants ();
-  if (rc == -1)
+  result = this->create_servants ();
+  if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Create Servants failed.\n"),
                       -1);
@@ -110,6 +110,7 @@ Cubit_Task::initialize_orb (void)
         return -1;
 
       this->orb_ = this->orb_manager_.orb ();
+
       // Do the argument parsing.
       if (this->task_id_ == 0)
         {
@@ -122,7 +123,12 @@ Cubit_Task::initialize_orb (void)
           ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ready_mon, GLOBALS::instance ()->ready_mtx_, 1));
           GLOBALS::instance ()->ready_ = 1;
           GLOBALS::instance ()->ready_cnd_.broadcast ();
+
+          // @@ Naga, why don't we just wait until the end of this
+          // block to automatically release the guard?  Using
+          // release() here seems "ugly!"
           ready_mon.release ();
+
           if (GLOBALS::instance ()->barrier_ == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "(%t)Unable to create barrier\n"),
@@ -131,9 +137,10 @@ Cubit_Task::initialize_orb (void)
 
       if (GLOBALS::instance ()->use_name_service == 0)
         return 0;
-      // Initialize the naming services.  Init should be able to be
+      // Initialize the naming services.  <init> should be able to be
       // passed the command line arguments, but it isn't possible
-      // here, so use dummy values.
+      // here, so use default values.
+      // @@ Naga, can you please explain why this isn't possible?!
       if (my_name_client_.init (orb_.in ()) != 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to initialize "
@@ -143,10 +150,10 @@ Cubit_Task::initialize_orb (void)
       // Register the servant with the Naming Context....
       CosNaming::Name cubit_context_name (1);
       cubit_context_name.length (1);
-      cubit_context_name[0].id =
-        CORBA::string_dup ("MT_Cubit");
+      cubit_context_name[0].id = CORBA::string_dup ("MT_Cubit");
 
       TAO_TRY_ENV.clear ();
+
       CORBA::Object_var objref =
         this->my_name_client_->bind_new_context (cubit_context_name,
                                                  TAO_TRY_ENV);
@@ -154,16 +161,19 @@ Cubit_Task::initialize_orb (void)
       if (TAO_TRY_ENV.exception() != 0)
         {
           CosNaming::NamingContext::AlreadyBound_ptr ex =
-            CosNaming::NamingContext::AlreadyBound::_narrow (TAO_TRY_ENV.exception());
+            CosNaming::NamingContext::AlreadyBound::_narrow 
+            (TAO_TRY_ENV.exception());
           if (ex != 0)
             {
               TAO_TRY_ENV.clear ();
-              objref = this->my_name_client_->resolve (cubit_context_name,
-                                                       TAO_TRY_ENV);
-              printf("NamingContext::AlreadyBound\n");
+              objref = this->my_name_client_->resolve 
+                (cubit_context_name, TAO_TRY_ENV);
+              ACE_DEBUG ((LM_DEBUG,
+                          "NamingContext::AlreadyBound\n"));
             }
           else
-            TAO_TRY_ENV.print_exception ("bind() Cubit context object\n");
+            TAO_TRY_ENV.print_exception 
+              ("bind() Cubit context object\n");
         }
       TAO_CHECK_ENV;
 
@@ -187,8 +197,8 @@ Cubit_Task::get_servant_ior (u_int index)
 {
   if (index >= num_of_objs_)
     return 0;
-
-  return ACE_OS::strdup (this->servants_iors_[index]);
+  else
+    return ACE_OS::strdup (this->servants_iors_[index]);
 }
 
 int
@@ -207,8 +217,8 @@ Cubit_Task::create_servants (void)
                       -1);
 
       char *buffer;
-      // Length of the string is the length of the key + 2 char 
-      // id of the servant + null space.
+      // Length of the string is the length of the key + 2 char id of
+      // the servant + null space.
       int len = ACE_OS::strlen (this->key_) + 3;
 
       ACE_NEW_RETURN (buffer,
@@ -237,9 +247,8 @@ Cubit_Task::create_servants (void)
                                i),
                               2);
 
-          this->orb_manager_.activate_under_child_poa (buffer,
-                                                       this->servants_[i],
-                                                       TAO_TRY_ENV);
+          this->orb_manager_.activate_under_child_poa 
+            (buffer, this->servants_[i], TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
           // Stringify the objref we'll be implementing, and print it
@@ -260,8 +269,7 @@ Cubit_Task::create_servants (void)
           // Register the servant with the Naming Context....
           CosNaming::Name cubit_name (1);
           cubit_name.length (1);
-          cubit_name[0].id =
-            CORBA::string_dup (buffer);
+          cubit_name[0].id = CORBA::string_dup (buffer);
 
           if (CORBA::is_nil (this->mt_cubit_context_.in ()) == 0)
             {
@@ -269,7 +277,8 @@ Cubit_Task::create_servants (void)
                                              cubit.in (),
                                              TAO_TRY_ENV);
               if (TAO_TRY_ENV.exception () != 0)
-                TAO_TRY_ENV.print_exception ("Attempt to bind() a cubit object to the name service Failed!\n");
+                TAO_TRY_ENV.print_exception 
+                  ("Attempt to bind() a cubit object to the name service Failed!\n");
               else
                 ACE_DEBUG ((LM_DEBUG,
                             " (%t) Cubit object bound to the name \"%s\".\n",

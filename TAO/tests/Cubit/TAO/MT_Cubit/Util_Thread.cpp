@@ -6,7 +6,7 @@ ACE_RCSID(MT_Cubit, Util_Thread, "$Id$")
 
 Util_Thread::Util_Thread (Task_State *ts,
                           ACE_Thread_Manager *thr_mgr)
-  : ACE_MT (ACE_Task<ACE_NULL_SYNCH> (thr_mgr)),
+  : ACE_Task<ACE_NULL_SYNCH> (thr_mgr),
     done_ (0),
     number_of_computations_ (0),
     ts_ (ts)
@@ -20,8 +20,8 @@ Util_Thread::svc (void)
   ACE_Thread::self (thr_handle);
   int prio;
 
-  // thr_getprio () on the current thread should never fail.
-  ACE_OS::thr_getprio (thr_handle, prio);
+  if (ACE_OS::thr_getprio (thr_handle, prio) == -1)
+    return -1;
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Utilization Thread created with priority %d, "
@@ -39,15 +39,12 @@ Util_Thread::svc (void)
               "utilization test STARTED at %D\n"));
 
   this->ts_->timer_.start ();
-
   this->run_computations ();
-
   this->ts_->timer_.stop ();
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) (((((((( " 
 	      "utilization test ENDED at %D\n"));
-
   return 0;
 }
 
@@ -91,10 +88,14 @@ Util_Thread::run_computations (void)
 		      "\t(%t) utilization test breaking loop so machine won't block.\n"));
 	  break;
 	}
+
       this->computation ();
       this->number_of_computations_ ++;
-      //            ACE_OS::thr_yield (); // Shouldn't need this.  And I'm not sure
-                            // if it really helps.
+
+#if 0
+      // Shouldn't need this.  And I'm not sure if it really helps.
+      ACE_OS::thr_yield (); 
+#endif /* 0 */
     }
 
   return 0;
