@@ -246,7 +246,7 @@ sub run {
       $relative{'TAO_ROOT'} = $ENV{TAO_ROOT};
     }
     else {
-      $relative{'TAO_ROOT'} = "$relative{TAO_ROOT}/TAO";
+      $relative{'TAO_ROOT'} = "$relative{ACE_ROOT}/TAO";
     }
   }
 
