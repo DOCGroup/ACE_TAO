@@ -129,6 +129,34 @@ private:
   // The reactor
 };
 
+class TAO_Export TAO_LF_Client_Thread_Helper
+{
+public:
+  TAO_LF_Client_Thread_Helper (TAO_Leader_Follower &leader_follower);
+  // Constructor
+
+  ~TAO_LF_Client_Thread_Helper (void);
+  // Destructor
+
+private:
+  TAO_Leader_Follower &leader_follower_;
+  // Reference to leader/followers object.
+};
+
+class TAO_Export TAO_LF_Leader_Thread_Helper
+{
+public:
+  TAO_LF_Leader_Thread_Helper (TAO_Leader_Follower &leader_follower);
+  // Constructor
+
+  ~TAO_LF_Leader_Thread_Helper (void);
+  // Destructor
+
+private:
+  TAO_Leader_Follower &leader_follower_;
+  // Reference to leader/followers object.
+};
+
 #if defined (__ACE_INLINE__)
 # include "tao/Leader_Follower.i"
 #endif /* __ACE_INLINE__ */

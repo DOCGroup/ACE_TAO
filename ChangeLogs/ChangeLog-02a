@@ -1,3 +1,9 @@
+Tue Jan 25 14:05:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Connector.cpp (connect_i): In addition to checking <sh_copy>
+	  for a zero value, <*sh_copy> should also be checked for a zero
+	  value.
+
 Mon Jan 24 12:09:14 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Connector.cpp (connect_i):

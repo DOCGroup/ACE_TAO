@@ -161,3 +161,25 @@ TAO_Leader_Follower::has_clients (void) const
 {
   return this->clients_;
 }
+
+TAO_LF_Client_Thread_Helper::TAO_LF_Client_Thread_Helper (TAO_Leader_Follower &leader_follower)
+  : leader_follower_ (leader_follower)
+{
+  this->leader_follower_.set_client_thread ();
+}
+
+TAO_LF_Client_Thread_Helper::~TAO_LF_Client_Thread_Helper (void)
+{
+  this->leader_follower_.reset_client_thread ();
+}
+
+TAO_LF_Leader_Thread_Helper::TAO_LF_Leader_Thread_Helper (TAO_Leader_Follower &leader_follower)
+  : leader_follower_ (leader_follower)
+{
+  this->leader_follower_.set_leader_thread ();
+}
+
+TAO_LF_Leader_Thread_Helper::~TAO_LF_Leader_Thread_Helper (void)
+{
+  this->leader_follower_.reset_leader_thread ();
+}
