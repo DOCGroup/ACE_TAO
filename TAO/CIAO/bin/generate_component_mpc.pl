@@ -66,7 +66,8 @@ if (defined $opt_c) {
 '
 project ('."$com_name".'_client) : ciao_client {
   exename = client
-  depends += '."$client_depend".'
+  depends += '."$client_depend
+  $lib_paths".'
 
   IDL_Files {
   }
