@@ -1,7 +1,9 @@
-Tue May 20 14:32:00 1997  Brian Mendel  <bmendel@mdc.com>
+Tue May 20 14:39:00 1997  Brian Mendel  <bmendel@mdc.com>
 
 	* IIOP/test/*: Commited changes to Cubit Example as a current snapshot
           of required changes.
+        * IIOP/lib/*: Changes required for header file includes.  Added 
+          conditionals around _IIOP_BUILD_
 
 Tue May 20 13:55:58 1997  Chris Cleeland  <cleeland@merengue.cs.wustl.edu>
 
