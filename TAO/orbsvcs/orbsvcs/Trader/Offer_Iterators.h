@@ -100,9 +100,6 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
  protected:
 
-  /// To satisfy g++'s insane lust for copy constructors...
-  TAO_Offer_Iterator (TAO_Offer_Iterator &) {}
-
   TAO_Offer_Iterator& operator=(const TAO_Offer_Iterator&);
 
   /// The filter through which each returned offer must pass. Used to

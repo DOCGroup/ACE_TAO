@@ -203,7 +203,8 @@ protected:
   // valuetype, with our supported interface and our parents'
   // supported interfaces.
 
-  int insert_non_dup (AST_Interface *t);
+  int insert_non_dup (AST_Interface *t,
+                      idl_bool abstract_paths_only = I_FALSE);
   // Do non-duplicating insert of bi, by searching both the
   // insert queue and the delete queue.
 };

@@ -352,6 +352,7 @@ SOURCE=.\PortableGroupS.cpp
 # Begin Source File
 
 SOURCE=.\PortableGroupS_T.cpp
+# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 
