@@ -18,6 +18,7 @@
 #define TAO_PG_PROPERTIES_SUPPORT_H
 
 #include "PG_Property_Set.h"
+#include "portablegroup_export.h"
 
 namespace TAO
 {
