@@ -613,20 +613,20 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
                             u_short port,
                             ACE_Time_Value *timeout)
 {
-    // This is the code that implements the multicast
+  // This is the code that implements the multicast
   // Naming Service locator.
   ACE_SOCK_Dgram_Mcast multicast;
   ACE_INET_Addr remote_addr;
+
   // This starts out initialized to all zeros!
   ACE_INET_Addr multicast_addr (port,
                                 ACE_DEFAULT_MULTICAST_ADDR);
 
   // Subscribe to multicast address.
   if (multicast.subscribe (multicast_addr) == -1)
-  {
-    ACE_ERROR ((LM_ERROR, "Unable to perform IIOP multicast!\n"));
-    return 0;
-  }
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to perform IIOP multicast!\n"),
+                      0);
 
   // Prepare connection for the reply.
   ACE_INET_Addr response_addr;
@@ -634,18 +634,21 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
 
   // Choose any local port, we don't really care.
   if (response.open (ACE_Addr::sap_any) == -1)
-  {
-    multicast.close ();
-    ACE_ERROR_RETURN ((LM_ERROR, "IIOP Multicast open failed.\n"), 0);
-  }
+    {
+      multicast.close ();
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "IIOP Multicast open failed.\n"),
+                        0);
+    }
 
   if (response.get_local_addr (response_addr) == -1)
-  {
-    multicast.close ();
-    response.close ();
-    ACE_ERROR_RETURN ((LM_ERROR,
-                      "IIOP get_local_addr failed.\n"), 0);
-  }
+    {
+      multicast.close ();
+      response.close ();
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "IIOP get_local_addr failed.\n"),
+                        0);
+    }
 
   // @@ Vishal, please update this code and the server-side code in
   // $TAO_ROOT/orbsvcs/Naming_Service/ so that it (1) sends a string
@@ -662,8 +665,8 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
     CORBA::Short service_id;
   } mcast_info;
 
-  // Figure out what port to listen on for server replies,
-  // and convert to network byte order.
+  // Figure out what port to listen on for server replies, and convert
+  // to network byte order.
   mcast_info.reply_port =
     ACE_HTONS (response_addr.get_port_number ());
   mcast_info.service_id =
@@ -672,19 +675,21 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
   // Send multicast of one byte, enough to wake up server.
   ssize_t n_bytes = multicast.send (&mcast_info,
                                     sizeof (mcast_info));
-
-  // close multicast socket now.
+  // Close multicast socket now.
   multicast.close ();
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "sent multicast request."));
+    ACE_DEBUG ((LM_DEBUG,
+                "sent multicast request."));
 
   // Check for errors.
   if (n_bytes == -1)
-  {
-    response.close ();
-    ACE_ERROR_RETURN((LM_ERROR, "Error sending IIOP Multicast!\n"), 0);
-  }
+    {
+      response.close ();
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error sending IIOP Multicast!\n"),
+                        0);
+    }
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -694,29 +699,35 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
                 response_addr.get_port_number (),
                 n_bytes));
 
-  // Wait for response until
-  // TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT.
+  // Wait for response until TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT.
   ACE_Time_Value tv (timeout == 0
                      ? ACE_Time_Value (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
                      : *timeout);
 
-  // receive response message
+  // Receive response message
+
+  // @@ Why on earth are we allocating this memory dynamically?  It's
+  // a fixed size, so it should be passed in
   char *buf = new char[ACE_MAX_DGRAM_SIZE + 1]; // add char for '\0'
 
-  n_bytes = response.recv (buf, BUFSIZ, remote_addr, 0, &tv);
+  n_bytes = response.recv (buf,
+                           ACE_MAX_DGRAM_SIZE,
+                           remote_addr,
+                           0,
+                           &tv);
 
   // Close endpoint for response.
   int retval = response.close ();
 
   // Check for errors.
   if (n_bytes == -1 || retval == -1)
-  {
-    delete [] buf;
-    if (TAO_debug_level > 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Error reading IIOP multicast response!\n"),
-                        0);
-  }
+    {
+      delete [] buf;
+      if (TAO_debug_level > 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Error reading IIOP multicast response!\n"),
+                          0);
+    }
 
   // Null terminate message.
   buf[n_bytes] = 0;
@@ -737,6 +748,7 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
 // @@ FRED: Should define a flag, something like Protocol_Has_Multicast
 //    If there is no multicast, then this functionality is not available
 //    and we return NULL.
+
 CORBA_Object_ptr
 CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
                                  u_short port,
@@ -746,17 +758,20 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
   // Use UDP multicast to locate the  service.
   CORBA_Object_ptr return_value = CORBA_Object::_nil ();
 
-  char *buf = multicast_query (service_id, port, timeout);
-
+  char *buf = this->multicast_query (service_id,
+                                     port,
+                                     timeout);
   if (buf)
-  {
-    // Convert ior to an object reference.
-    CORBA_Object_ptr objectified_ior = this->string_to_object ((CORBA::String) buf, env);
+    {
+      // Convert ior to an object reference.
+      CORBA_Object_ptr objectified_ior =
+        this->string_to_object ((CORBA::String) buf, env);
 
-    // Check for errors.
-    if (env.exception () == 0)
-      return_value = objectified_ior;
-  }
+      // Check for errors.
+      if (env.exception () == 0)
+        return_value = objectified_ior;
+    }
+
   // Return ior.
   return return_value;
 }
