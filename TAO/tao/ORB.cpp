@@ -1689,6 +1689,9 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
                     oa->find_servant (objkey.in (), ACE_TRY_ENV);
                   ACE_TRY_CHECK;
 
+                  // Found collocated object.  Perhaps we can get around by simply
+                  // setting the servant_orb, but let get this to work first.
+                  sobj->servant_orb (CORBA::ORB::_duplicate ((*i).int_id_->orb ()));
                   return servant;
                 }
               ACE_CATCHANY
@@ -1725,6 +1728,11 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
                 oa->find_servant (objkey.in (), ACE_TRY_ENV);
               ACE_TRY_CHECK_EX(LOCAL_ORB);
 
+              // Found collocated object.  Perhaps we can get around by simply
+              // setting the servant_orb, but let get this to work first.
+
+              // There could only be one ORB which is us.
+              sobj->servant_orb (CORBA::ORB::_duplicate (this));
               return servant;
             }
           ACE_CATCHANY

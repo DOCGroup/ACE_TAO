@@ -558,7 +558,7 @@ public:
 
   friend class Non_Servant_Upcall;
 
-  class Servant_Upcall
+  class TAO_Export Servant_Upcall
   {
     // = TITLE
     //     This class finds out the POA and the servant to perform an
@@ -610,6 +610,10 @@ public:
     PortableServer::ObjectId id_;
 
     TAO_POA_Current_Impl current_context_;
+
+  private:
+    Servant_Upcall (const Servant_Upcall &);
+    void operator= (const Servant_Upcall &);
   };
 
   friend class Servant_Upcall;

@@ -72,6 +72,8 @@ Cubit_Server::init (int argc,
   // Now create the implementations
   this->factory_impl_ = new Cubit_Factory_i (orb.in ());
 
+  this->factory_impl_->set_default_poa (this->orb_manager_.root_poa ());
+
   this->factory_id_ =
     this->orb_manager_.activate_under_child_poa ("factory",
                                                  this->factory_impl_,

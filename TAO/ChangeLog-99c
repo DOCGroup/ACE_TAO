@@ -1,10 +1,97 @@
+Mon Jun 14 03:57:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_visitor_operation/collocated_ss.h:
+	* TAO_IDL/be/be_visitor_operation/collocated_ss.cpp
+	  (visit_operation): Added code to generate the implementation
+	  that supports Thru_POA collocation strategy.  The implementtion
+	  for Direct collocation strategy is still here.  The generated
+	  code query the calling thread's ORB Core to determine the
+	  collocation strategy to use.  Currently, we don't handle the
+	  case in Thru_POA implementation when _downcast fails, i.e., if
+	  the servant is a DSI, we'll die a horrible death.  That need to
+	  be fixed to at least, throw an exception, we may add support for
+	  collocated DII/DSI call later.
+
+	  (gen_invoke):
+	  (gen_check_exception): Added two helper methods to generate
+	  collocated forwarding code and the "ACE_CHECK" macro if the
+	  native c++ exception is not supported.
+
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+	  (visit_interface): Added code to generate the declaration and
+	  the default implementation of <_create_collocated_objref>
+	  method.  The default implementation only returns a
+	  _tao_collocated_* object because I didn't separate the
+	  implementation of Thru_POA and Direct collocated object
+	  implementation.  Users are allowed to overwrite this method to
+	  provide more nifty collocated objects.  However, this method is
+	  not CORBA compliant.
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+	  (visit_interface): First attemp to decouple stubs from skeleton
+	  files.  Since we still need to reinterpret the servant pointer
+	  returned by the _create_collocated_objref, we still need the
+	  skeleton files for now.  But it should be fixed real soon.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.{h,cpp}
+	  (_default_POA): We need to overwrite the <_default_POA> method
+	  because we use two different ORBs in collocation_test.
+
+	  (set_default_poa): Added the method to both Cubit_Factory and
+	  Cubit to propage and set the default POA down to Cubit.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp (init):
+	  Default_POA must be set correctly for collocation to work.
+
+	* tao/Servant_Base.{h,cpp} (_create_collocated_objref): This
+	  method was intended to decouple the dependency of generated
+	  skeletons in stubs.  But it is not fully functional yet.
+	  Therefore, we still need to include skeletons in client side.
+
+	* tao/Servant_Base.cpp (_create_stub): We must record the
+	  servant_orb when creating a new stub.  Stub objects now alway
+	  carry a pointer to servant_orb.
+
+	  *Very important*: If it is possible for a servant to be
+	  collocated with clients and the clients are using a different
+	  ORB from the servant, it is necessary for the servant to
+	  *overwrite* the _default_POA method.
+
+	* tao/Object_Adapter.h (Servant_Upcall): Added TAO_Export to this
+	  class.  Also added not-implemented copy ctor and operator=.
+
+	* tao/Object.cpp (_object_key): Added a TAO extension to support
+	  Thru_POA collocation strategy.  This function returns a
+	  reference of object key of the object reference without copying.
+	  Since the use of an object key during a collocated upcall never
+	  outlives the object reference' lifetime, we don't need to copy
+	  the object key.  Thanks to Irfan for helping this out.
+
+	* tao/ORB.cpp (_get_collocated_servant): Set the servant_orb once
+	  a collocated servant is found.  Notice that at this moment, the
+	  method doesn't consider the collocation strategy being used by
+	  the orb and record both servant_orb and servant in the stub
+	  objects.  The consequence of this is, only object that already
+	  has a servant available at the time _get_collocated_servant is
+	  called will be treated as collocated object.  The advantage of
+	  this is, we can switch collocation strategy at run-time, but
+	  there doesn't seem to be a use case for this.  AT any rate.
+	  this will be fixed in the future so that if Thru-POA collocation
+	  strategy is used, only servant_orb is recorded.  Otherwise, only
+	  servant is carried by the stub object of the collocated
+	  objects.
+
+	* tao/GIOP.h (TAO_GIOP_Message_State): Added TAO_Export to the
+	  class TAO_GIOP_Message_State.
+
 Sun Jun 13 23:38:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	Quest for TAO try macros free TAO:
 
 	* tao/deep_copy.cpp:
 	* tao/decode.cpp:
-	* tao/Typecode.{i,cpp}: 
+	* tao/Typecode.{i,cpp}:
 	* tao/Object.cpp: Commented out calls to ACE_TRY_ENV.clear ().  We
 	  shouldn't depend on them for correct execution of programs.
 	  Changed the use of env to ACE try macros.

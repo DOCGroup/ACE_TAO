@@ -15,14 +15,14 @@ svr_worker (void *arg)
 {
   Cubit_Server cubit_server;
   ACE_Barrier *barrier = (ACE_Barrier *) arg;
-  const char *fake[] = {"server", "-o", THE_IOR_FILE };
+  char *fake[] = {"server", "-o", THE_IOR_FILE};//, "-ORBcollocationstrategy", "direct" };
 
   ACE_TRY_NEW_ENV
     {
-      if (cubit_server.init (3, 
-                             ACE_const_cast (char **, 
-                                             fake), 
-                             ACE_TRY_ENV) 
+      if (cubit_server.init (3,
+                             ACE_const_cast (char **,
+                                             fake),
+                             ACE_TRY_ENV)
           == -1)
         return (void *) 1;
       else
@@ -75,7 +75,6 @@ main (int argc, char **argv)
   barrier.wait ();
   ACE_OS::sleep (1);
 
-  {
     Cubit_Client cubit_client (test_collocation, 1);
     // We want to test collocation, so create
     // cubit_client with parameter 1 set.  Make sure
@@ -85,7 +84,6 @@ main (int argc, char **argv)
       return 1;
     else
       retv = cubit_client.run ();
-  }
 
   ACE_THREAD_MANAGER->wait ();
   return retv;
