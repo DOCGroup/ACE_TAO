@@ -35,6 +35,13 @@ ifndef minimum_corba
 
 endif # minimum_corba
 
+ifdef corba_messaging
+
+# No Buffered Oneways without CORBA Messaging
+  DIRS += Buffered_Oneways
+
+endif # corba_messaging
+
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU

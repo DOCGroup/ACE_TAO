@@ -63,6 +63,9 @@ public:
   virtual void close_connection (void);
   virtual int idle (void);
   virtual ACE_HANDLE handle (void);
+  virtual ssize_t send (TAO_Stub *stub,
+                        const ACE_Message_Block *mblk,
+                        ACE_Time_Value *s = 0);
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         ACE_Time_Value *s = 0);
   virtual ssize_t send (const u_char *buf,
@@ -71,7 +74,8 @@ public:
   virtual ssize_t recv (char *buf,
                         size_t len,
                         ACE_Time_Value *s = 0);
-  virtual int send_request (TAO_ORB_Core *orb_core,
+  virtual int send_request (TAO_Stub *stub,
+                            TAO_ORB_Core *orb_core ,
                             TAO_OutputCDR &stream,
                             int twoway,
                             ACE_Time_Value *max_wait_time);
@@ -118,7 +122,8 @@ public:
                              TAO_OutputCDR &output,
                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual int send_request (TAO_ORB_Core *orb_core,
+  virtual int send_request (TAO_Stub *stub,
+                            TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
                             int twoway,
                             ACE_Time_Value *max_wait_time);

@@ -115,10 +115,10 @@ TAO_ORB_Core::to_unicode (void) const
 }
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
-ACE_INLINE TAO_Policy_Manager*
+ACE_INLINE TAO_Policy_Manager *
 TAO_ORB_Core::policy_manager (void)
 {
-  return &this->policy_manager_;
+  return this->policy_manager_;
 }
 
 ACE_INLINE CORBA::Policy_ptr
@@ -126,19 +126,31 @@ TAO_ORB_Core::get_default_policy (
       CORBA::PolicyType policy,
       CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->default_policies_.get_policy (policy, ACE_TRY_ENV);
+  return this->default_policies_->get_policy (policy, ACE_TRY_ENV);
 }
 
-ACE_INLINE POA_TAO::ClientPriorityPolicy*
-TAO_ORB_Core::default_client_priority (void) const
-{
-  return this->default_policies_.client_priority ();
-}
-
-ACE_INLINE POA_Messaging::RelativeRoundtripTimeoutPolicy*
+ACE_INLINE POA_Messaging::RelativeRoundtripTimeoutPolicy *
 TAO_ORB_Core::default_relative_roundtrip_timeout (void) const
 {
-  return this->default_policies_.relative_roundtrip_timeout ();
+  return this->default_policies_->relative_roundtrip_timeout ();
+}
+
+ACE_INLINE POA_TAO::ClientPriorityPolicy *
+TAO_ORB_Core::default_client_priority (void) const
+{
+  return this->default_policies_->client_priority ();
+}
+
+ACE_INLINE POA_Messaging::SyncScopePolicy *
+TAO_ORB_Core::default_sync_scope (void) const
+{
+  return this->default_policies_->sync_scope ();
+}
+
+ACE_INLINE POA_TAO::BufferingConstraintPolicy *
+TAO_ORB_Core::default_buffering_constraint (void) const
+{
+  return this->default_policies_->buffering_constraint ();
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING */

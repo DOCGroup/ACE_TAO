@@ -26,6 +26,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Message_Queue.h"
 #include "tao/Sequence.h"
 #include "tao/Typecode.h"
 #include "tao/IOPC.h"
@@ -43,6 +44,8 @@ class TAO_Resource_Factory;
 class TAO_Reply_Dispatcher;
 class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
+
+typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Transport_Buffering_Queue;
 
 class TAO_Export TAO_Transport
 {
@@ -75,6 +78,9 @@ public:
   // This method provides a way to gain access to the underlying
   // file handle used by the reactor.
 
+  virtual ssize_t send (TAO_Stub *stub,
+                        const ACE_Message_Block *mblk,
+                        ACE_Time_Value *s = 0) = 0;
   virtual ssize_t send (const ACE_Message_Block *mblk,
                         ACE_Time_Value *s = 0) = 0;
   // Write the complete Message_Block chain to the connection.
@@ -112,7 +118,8 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Fill into <output> the right headers to make a locate request.
 
-  virtual int send_request (TAO_ORB_Core *orb_core,
+  virtual int send_request (TAO_Stub *stub,
+                            TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
                             int twoway,
                             ACE_Time_Value *max_time_wait) = 0;
@@ -156,6 +163,12 @@ public:
   // Wait Strategy. Muxed Leader Follower implementation returns a
   // valid condition variable, others return 0.
 
+  virtual TAO_Transport_Buffering_Queue &buffering_queue (void);
+  // Queue for buffering transport messages.
+
+  void flush_buffered_messages (void);
+  // Flush any messages that have been buffered.
+
 protected:
   CORBA::ULong tag_;
   // IOP protocol tag.
@@ -169,6 +182,9 @@ protected:
 
   TAO_Wait_Strategy *ws_;
   // Strategy for waiting for the reply after sending the request.
+
+  TAO_Transport_Buffering_Queue *buffering_queue_;
+  // Queue for buffering transport messages.
 };
 
 // ****************************************************************

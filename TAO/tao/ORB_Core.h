@@ -53,6 +53,15 @@ class TAO_Reactor_Registry;
 class TAO_Leader_Follower;
 class TAO_Priority_Mapping;
 
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
+class TAO_None_Sync_Strategy;
+class TAO_Flush_Sync_Strategy;
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
+class TAO_Transport_Sync_Strategy;
+
 // ****************************************************************
 
 class TAO_Export TAO_ORB_Core_TSS_Resources
@@ -177,7 +186,7 @@ public:
       const TAO_POA_Policies *policies = 0);
 
   // = Collocation strategies.
-  enum 
+  enum
   {
     ORB_CONTROL,  // Indicate object should refer to ORB for either
                   // one of the following strategies.
@@ -314,15 +323,31 @@ public:
   // type.
   // If there is no default policy it returns CORBA::Policy::_nil ()
 
-  POA_Messaging::RelativeRoundtripTimeoutPolicy*
-      default_relative_roundtrip_timeout (void) const;
+  POA_Messaging::RelativeRoundtripTimeoutPolicy *default_relative_roundtrip_timeout (void) const;
 
-  POA_TAO::ClientPriorityPolicy*
-      default_client_priority (void) const;
+  POA_TAO::ClientPriorityPolicy *default_client_priority (void) const;
+
+  POA_Messaging::SyncScopePolicy *default_sync_scope (void) const;
+
+  POA_TAO::BufferingConstraintPolicy *default_buffering_constraint (void) const;
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
+  TAO_None_Sync_Strategy &none_sync_strategy (void);
+  // This strategy will buffer messages.
+
+  TAO_Flush_Sync_Strategy &flush_sync_strategy (void);
+  // This strategy will flush any buffered messages.
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
+  TAO_Transport_Sync_Strategy &transport_sync_strategy (void);
+  // This strategy will sync with the transport.
+
 #if defined (TAO_HAS_RT_CORBA)
+
   TAO_Priority_Mapping *priority_mapping (void);
   // Access the priority mapping class, this is a TAO extension but
   // there is no standard way to get to it either.
@@ -495,13 +520,13 @@ protected:
   // Default collocation policy.  This should never be ORB_CONTROL.
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
-  TAO_Policy_Manager policy_manager_;
+  TAO_Policy_Manager *policy_manager_;
   // The Policy_Manager for this ORB.
 
-  TAO_Policy_Manager_Impl default_policies_;
+  TAO_Policy_Manager_Impl *default_policies_;
   // The default policies.
 
-  TAO_Policy_Current policy_current_;
+  TAO_Policy_Current *policy_current_;
   // Policy current.
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
@@ -559,6 +584,19 @@ protected:
 
   TAO_Priority_Mapping *priority_mapping_;
   // The priority mapping.
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
+  TAO_None_Sync_Strategy *none_sync_strategy_;
+  // This strategy will buffer messages.
+
+  TAO_Flush_Sync_Strategy *flush_sync_strategy_;
+  // This strategy will flush any buffered messages.
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
+  TAO_Transport_Sync_Strategy *transport_sync_strategy_;
+  // This strategy will sync with the transport.
 
   int svc_config_argc_;
   // The number of arguments in the service configurator argument vector.

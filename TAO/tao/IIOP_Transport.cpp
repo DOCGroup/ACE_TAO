@@ -1,8 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
-
 #include "tao/IIOP_Transport.h"
 #include "tao/IIOP_Connect.h"
 #include "tao/IIOP_Profile.h"
@@ -10,6 +8,8 @@
 #include "tao/CDR.h"
 #include "tao/Transport_Mux_Strategy.h"
 #include "tao/Wait_Strategy.h"
+#include "tao/Sync_Strategies.h"
+#include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
@@ -56,6 +56,7 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Handler_Base *handler,
 
 TAO_IIOP_Transport::~TAO_IIOP_Transport (void)
 {
+  this->flush_buffered_messages ();
 }
 
 TAO_IIOP_Handler_Base *&
@@ -169,7 +170,8 @@ TAO_IIOP_Client_Transport::start_locate (TAO_ORB_Core *orb_core,
 }
 
 int
-TAO_IIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
+TAO_IIOP_Client_Transport::send_request (TAO_Stub *stub,
+                                         TAO_ORB_Core *orb_core,
                                          TAO_OutputCDR &stream,
                                          int two_way,
                                          ACE_Time_Value *max_wait_time)
@@ -181,7 +183,8 @@ TAO_IIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
   if (TAO_GIOP::send_message (this,
                               stream,
                               orb_core,
-                              max_wait_time) == -1)
+                              max_wait_time,
+                              stub) == -1)
     return -1;
 
   return this->idle_after_send ();
@@ -296,7 +299,28 @@ TAO_IIOP_Client_Transport::register_handler (void)
 // *********************************************************************
 
 ssize_t
-TAO_IIOP_Transport::send (const ACE_Message_Block *mblk,
+TAO_IIOP_Transport::send (TAO_Stub *stub,
+                          const ACE_Message_Block *message_block,
+                          ACE_Time_Value *max_wait_time)
+{
+  if (stub == 0)
+    {
+      return this->send (message_block,
+                         max_wait_time);
+    }
+  else
+    {
+      TAO_Sync_Strategy &sync_strategy = stub->sync_strategy ();
+
+      return sync_strategy.send (*this,
+                                 *stub,
+                                 message_block,
+                                 max_wait_time);
+    }
+}
+
+ssize_t
+TAO_IIOP_Transport::send (const ACE_Message_Block *message_block,
                           ACE_Time_Value *max_wait_time)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_SEND_START);
@@ -312,7 +336,7 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk,
   ssize_t n = 0;
   ssize_t nbytes = 0;
 
-  for (const ACE_Message_Block *i = mblk;
+  for (const ACE_Message_Block *i = message_block;
        i != 0;
        i = i->cont ())
     {
@@ -336,7 +360,7 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk,
                                                      iovcnt);
               else
                 n = ACE::writev (this->handler_->peer ().get_handle (),
-                                 (const iovec*)iov,
+                                 (const iovec*) iov,
                                  iovcnt,
                                  max_wait_time);
 
@@ -368,7 +392,7 @@ TAO_IIOP_Transport::send (const u_char *buf,
                           size_t len,
                           ACE_Time_Value *)
 {
-  TAO_FUNCTION_PP_TIMEPROBE (TAO_BIOP_TRANSPORT_SEND_START);
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_SEND_START);
 
   return this->handler_->peer ().send_n (buf, len);
 }
@@ -388,7 +412,8 @@ TAO_IIOP_Transport::recv (char *buf,
 
 // Default action to be taken for send request.
 int
-TAO_IIOP_Transport::send_request (TAO_ORB_Core *  /* orb_core */,
+TAO_IIOP_Transport::send_request (TAO_Stub *,
+                                  TAO_ORB_Core *  /* orb_core */,
                                   TAO_OutputCDR & /* stream   */,
                                   int             /* twoway   */,
                                   ACE_Time_Value * /* max_wait_time */)

@@ -11,6 +11,8 @@
 // Inline operations for class TAO::PrioritySpecification_var
 // *************************************************************
 
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
 ACE_INLINE
 TAO::PrioritySpecification_var::PrioritySpecification_var (void) // default constructor
   : ptr_ (0)
@@ -67,20 +69,20 @@ TAO::PrioritySpecification_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO::PrioritySpecification_var::operator const TAO::PrioritySpecification &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-TAO::PrioritySpecification_var::operator TAO::PrioritySpecification &() // cast 
+ACE_INLINE
+TAO::PrioritySpecification_var::operator TAO::PrioritySpecification &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-TAO::PrioritySpecification_var::operator TAO::PrioritySpecification &() const// cast 
+ACE_INLINE
+TAO::PrioritySpecification_var::operator TAO::PrioritySpecification &() const// cast
 {
   return *this->ptr_;
 }
@@ -97,7 +99,7 @@ TAO::PrioritySpecification_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for fixed size 
+// mapping for fixed size
 ACE_INLINE TAO::PrioritySpecification &
 TAO::PrioritySpecification_var::out (void)
 {
@@ -147,7 +149,7 @@ TAO::ClientPriorityPolicy_var::ClientPriorityPolicy_var (TAO::ClientPriorityPoli
   : ptr_ (p)
 {}
 
-ACE_INLINE TAO::ClientPriorityPolicy_ptr 
+ACE_INLINE TAO::ClientPriorityPolicy_ptr
 TAO::ClientPriorityPolicy_var::ptr (void) const
 {
   return this->ptr_;
@@ -183,19 +185,19 @@ TAO::ClientPriorityPolicy_var::operator= (const TAO::ClientPriorityPolicy_var &p
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO::ClientPriorityPolicy_var::operator const TAO::ClientPriorityPolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-TAO::ClientPriorityPolicy_var::operator TAO::ClientPriorityPolicy_ptr &() // cast 
+ACE_INLINE
+TAO::ClientPriorityPolicy_var::operator TAO::ClientPriorityPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE TAO::ClientPriorityPolicy_ptr 
+ACE_INLINE TAO::ClientPriorityPolicy_ptr
 TAO::ClientPriorityPolicy_var::operator-> (void) const
 {
   return this->ptr_;
@@ -221,7 +223,7 @@ TAO::ClientPriorityPolicy_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE TAO::ClientPriorityPolicy_ptr 
+ACE_INLINE TAO::ClientPriorityPolicy_ptr
 TAO::ClientPriorityPolicy_var::_retn (void)
 {
   // yield ownership of managed obj reference
@@ -282,7 +284,7 @@ TAO::ClientPriorityPolicy_out::operator= (TAO::ClientPriorityPolicy_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO::ClientPriorityPolicy_out::operator TAO::ClientPriorityPolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -294,7 +296,7 @@ TAO::ClientPriorityPolicy_out::ptr (void) // ptr
   return this->ptr_;
 }
 
-ACE_INLINE TAO::ClientPriorityPolicy_ptr 
+ACE_INLINE TAO::ClientPriorityPolicy_ptr
 TAO::ClientPriorityPolicy_out::operator-> (void)
 {
   return this->ptr_;
@@ -313,7 +315,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO::PrioritySp
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TAO::PrioritySpecification &_tao_aggregate)
@@ -326,6 +328,331 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TAO::PrioritySpecifica
     return 1;
   else
     return 0;
-  
+
 }
 
+// *************************************************************
+// Inline operations for class TAO::BufferingConstraint_var
+// *************************************************************
+
+ACE_INLINE
+TAO::BufferingConstraint_var::BufferingConstraint_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+TAO::BufferingConstraint_var::BufferingConstraint_var (TAO::BufferingConstraint *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+TAO::BufferingConstraint_var::BufferingConstraint_var (const TAO::BufferingConstraint_var &p) // copy constructor
+{
+  if (p.ptr_)
+    ACE_NEW (this->ptr_, TAO::BufferingConstraint (*p.ptr_));
+  else
+    this->ptr_ = 0;
+}
+
+ACE_INLINE
+TAO::BufferingConstraint_var::~BufferingConstraint_var (void) // destructor
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE TAO::BufferingConstraint_var &
+TAO::BufferingConstraint_var::operator= (TAO::BufferingConstraint *p)
+{
+  delete this->ptr_;
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE TAO::BufferingConstraint_var &
+TAO::BufferingConstraint_var::operator= (const TAO::BufferingConstraint_var &p)
+{
+  if (this != &p)
+  {
+    delete this->ptr_;
+    ACE_NEW_RETURN (this->ptr_, TAO::BufferingConstraint (*p.ptr_), *this);
+  }
+  return *this;
+}
+
+ACE_INLINE const TAO::BufferingConstraint *
+TAO::BufferingConstraint_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO::BufferingConstraint *
+TAO::BufferingConstraint_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+TAO::BufferingConstraint_var::operator const TAO::BufferingConstraint &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+TAO::BufferingConstraint_var::operator TAO::BufferingConstraint &() // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+TAO::BufferingConstraint_var::operator TAO::BufferingConstraint &() const// cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE const TAO::BufferingConstraint &
+TAO::BufferingConstraint_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE TAO::BufferingConstraint &
+TAO::BufferingConstraint_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// mapping for fixed size
+ACE_INLINE TAO::BufferingConstraint &
+TAO::BufferingConstraint_var::out (void)
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE TAO::BufferingConstraint
+TAO::BufferingConstraint_var::_retn (void)
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE TAO::BufferingConstraint *
+TAO::BufferingConstraint_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+TAO::BufferingConstraintPolicy::BufferingConstraintPolicy (void) // default constructor
+{}
+
+ACE_INLINE
+TAO::BufferingConstraintPolicy::BufferingConstraintPolicy (TAO_Stub *objref, TAO_ServantBase *_tao_servant, CORBA::Boolean _tao_collocated) // constructor
+  : CORBA_Object (objref, _tao_servant, _tao_collocated)
+{}
+
+ACE_INLINE
+TAO::BufferingConstraintPolicy::~BufferingConstraintPolicy (void) // destructor
+{}
+
+
+#if !defined (_TAO_BUFFERINGCONSTRAINTPOLICY___VAR_CI_)
+#define _TAO_BUFFERINGCONSTRAINTPOLICY___VAR_CI_
+
+// *************************************************************
+// Inline operations for class TAO::BufferingConstraintPolicy_var
+// *************************************************************
+
+ACE_INLINE
+TAO::BufferingConstraintPolicy_var::BufferingConstraintPolicy_var (void) // default constructor
+  : ptr_ (TAO::BufferingConstraintPolicy::_nil ())
+{}
+
+ACE_INLINE
+TAO::BufferingConstraintPolicy_var::BufferingConstraintPolicy_var (TAO::BufferingConstraintPolicy_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE TAO::BufferingConstraintPolicy_ptr
+TAO::BufferingConstraintPolicy_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+TAO::BufferingConstraintPolicy_var::BufferingConstraintPolicy_var (const TAO::BufferingConstraintPolicy_var &p) // copy constructor
+  : ptr_ (TAO::BufferingConstraintPolicy::_duplicate (p.ptr ()))
+{}
+
+ACE_INLINE
+TAO::BufferingConstraintPolicy_var::~BufferingConstraintPolicy_var (void) // destructor
+{
+  CORBA::release (this->ptr_);
+}
+
+ACE_INLINE TAO::BufferingConstraintPolicy_var &
+TAO::BufferingConstraintPolicy_var::operator= (TAO::BufferingConstraintPolicy_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE TAO::BufferingConstraintPolicy_var &
+TAO::BufferingConstraintPolicy_var::operator= (const TAO::BufferingConstraintPolicy_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = TAO::BufferingConstraintPolicy::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+ACE_INLINE
+TAO::BufferingConstraintPolicy_var::operator const TAO::BufferingConstraintPolicy_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+TAO::BufferingConstraintPolicy_var::operator TAO::BufferingConstraintPolicy_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO::BufferingConstraintPolicy_ptr
+TAO::BufferingConstraintPolicy_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO::BufferingConstraintPolicy_ptr
+TAO::BufferingConstraintPolicy_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO::BufferingConstraintPolicy_ptr &
+TAO::BufferingConstraintPolicy_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO::BufferingConstraintPolicy_ptr &
+TAO::BufferingConstraintPolicy_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = TAO::BufferingConstraintPolicy::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE TAO::BufferingConstraintPolicy_ptr
+TAO::BufferingConstraintPolicy_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  TAO::BufferingConstraintPolicy_ptr val = this->ptr_;
+  this->ptr_ = TAO::BufferingConstraintPolicy::_nil ();
+  return val;
+}
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_TAO_BUFFERINGCONSTRAINTPOLICY___OUT_CI_)
+#define _TAO_BUFFERINGCONSTRAINTPOLICY___OUT_CI_
+
+// *************************************************************
+// Inline operations for class TAO::BufferingConstraintPolicy_out
+// *************************************************************
+
+ACE_INLINE
+TAO::BufferingConstraintPolicy_out::BufferingConstraintPolicy_out (TAO::BufferingConstraintPolicy_ptr &p)
+  : ptr_ (p)
+{
+  this->ptr_ = TAO::BufferingConstraintPolicy::_nil ();
+}
+
+ACE_INLINE
+TAO::BufferingConstraintPolicy_out::BufferingConstraintPolicy_out (TAO::BufferingConstraintPolicy_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = TAO::BufferingConstraintPolicy::_nil ();
+}
+
+ACE_INLINE
+TAO::BufferingConstraintPolicy_out::BufferingConstraintPolicy_out (const TAO::BufferingConstraintPolicy_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (TAO::BufferingConstraintPolicy_out&,p).ptr_)
+{}
+
+ACE_INLINE TAO::BufferingConstraintPolicy_out &
+TAO::BufferingConstraintPolicy_out::operator= (const TAO::BufferingConstraintPolicy_out &p)
+{
+  this->ptr_ = ACE_const_cast (TAO::BufferingConstraintPolicy_out&,p).ptr_;
+  return *this;
+}
+
+ACE_INLINE TAO::BufferingConstraintPolicy_out &
+TAO::BufferingConstraintPolicy_out::operator= (const TAO::BufferingConstraintPolicy_var &p)
+{
+  this->ptr_ = TAO::BufferingConstraintPolicy::_duplicate (p.ptr ());
+  return *this;
+}
+
+ACE_INLINE TAO::BufferingConstraintPolicy_out &
+TAO::BufferingConstraintPolicy_out::operator= (TAO::BufferingConstraintPolicy_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE
+TAO::BufferingConstraintPolicy_out::operator TAO::BufferingConstraintPolicy_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO::BufferingConstraintPolicy_ptr &
+TAO::BufferingConstraintPolicy_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE TAO::BufferingConstraintPolicy_ptr
+TAO::BufferingConstraintPolicy_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+
+#endif /* end #if !defined */
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO::BufferingConstraint &_tao_aggregate)
+{
+  if (
+    (strm << _tao_aggregate.mode) &&
+    (strm << _tao_aggregate.timeout) &&
+    (strm << _tao_aggregate.message_count) &&
+    (strm << _tao_aggregate.message_bytes)
+  )
+    return 1;
+  else
+    return 0;
+
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TAO::BufferingConstraint &_tao_aggregate)
+{
+  if (
+    (strm >> _tao_aggregate.mode) &&
+    (strm >> _tao_aggregate.timeout) &&
+    (strm >> _tao_aggregate.message_count) &&
+    (strm >> _tao_aggregate.message_bytes)
+  )
+    return 1;
+  else
+    return 0;
+
+}
+
+#endif /* TAO_HAS_CORBA_MESSAGING */

@@ -64,8 +64,8 @@ parse_args (int argc, char **argv)
         break;
 
       case 'x':
-	shutdown_server = 1;
-	break;
+        shutdown_server = 1;
+        break;
 
       case '?':
       default:
@@ -76,6 +76,8 @@ parse_args (int argc, char **argv)
                            "-o oneway "
                            "-t timed operations "
                            "-T timeout for timed operations "
+                           "-i iterations "
+                           "-x shutdown server "
                            "\n",
                            argv [0]),
                           -1);
@@ -106,20 +108,20 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time,
       double tmp = 1000 / elapsed_time.real_time;
 
       ACE_DEBUG ((LM_DEBUG,
-		  "\titerations\t = %d, \n"
-		  "\treal_time\t = %0.06f ms, \n"
-		  "\tuser_time\t = %0.06f ms, \n"
-		  "\tsystem_time\t = %0.06f ms, \n"
-		  "\t%0.00f calls/second\n",
+                  "\titerations\t = %d, \n"
+                  "\treal_time\t = %0.06f ms, \n"
+                  "\tuser_time\t = %0.06f ms, \n"
+                  "\tsystem_time\t = %0.06f ms, \n"
+                  "\t%0.00f calls/second\n",
                   iterations,
-		  elapsed_time.real_time   < 0.0 ? 0.0 : elapsed_time.real_time,
-		  elapsed_time.user_time   < 0.0 ? 0.0 : elapsed_time.user_time,
-		  elapsed_time.system_time < 0.0 ? 0.0 : elapsed_time.system_time,
-		  tmp < 0.0 ? 0.0 : tmp));
+                  elapsed_time.real_time   < 0.0 ? 0.0 : elapsed_time.real_time,
+                  elapsed_time.user_time   < 0.0 ? 0.0 : elapsed_time.user_time,
+                  elapsed_time.system_time < 0.0 ? 0.0 : elapsed_time.system_time,
+                  tmp < 0.0 ? 0.0 : tmp));
     }
   else
     ACE_ERROR ((LM_ERROR,
-		"\tNo time stats printed.  Zero iterations or error ocurred.\n"));
+                "\tNo time stats printed.  Zero iterations or error ocurred.\n"));
 }
 
 int

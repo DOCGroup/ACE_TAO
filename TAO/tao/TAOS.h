@@ -7,12 +7,16 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL__PROJECT_DOC_MARINA_ACE_WRAPPERS_TAO_TAO_TAOS_H_
-#define _TAO_IDL__PROJECT_DOC_MARINA_ACE_WRAPPERS_TAO_TAO_TAOS_H_
+#ifndef _TAO_IDL_TAOS_H_
+#define _TAO_IDL_TAOS_H_
 
-#include "tao/POA_CORBA.h"
 #include "TAOC.h"
 
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
+#include "tao/POA_CORBA.h"
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,6 +28,9 @@
 
 TAO_NAMESPACE  POA_TAO
 {
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
   class ClientPriorityPolicy;
   typedef ClientPriorityPolicy *ClientPriorityPolicy_ptr;
   class TAO_Export ClientPriorityPolicy : public virtual POA_CORBA::Policy
@@ -96,6 +103,81 @@ TAO_NAMESPACE  POA_TAO
 
 #endif /* end #if !defined */
 
+
+  class BufferingConstraintPolicy;
+  typedef BufferingConstraintPolicy *BufferingConstraintPolicy_ptr;
+  class TAO_Export BufferingConstraintPolicy : public virtual POA_CORBA::Policy
+  {
+  protected:
+    BufferingConstraintPolicy (void);
+
+  public:
+    virtual ~BufferingConstraintPolicy (void);
+
+
+    virtual CORBA::Boolean _is_a (
+        const char* logical_type_id,
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    virtual void* _downcast (
+        const char* logical_type_id
+      );
+
+    TAO::BufferingConstraintPolicy *_this (
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+    virtual const char* _interface_repository_id (void) const;
+
+    virtual TAO::BufferingConstraint buffering_constraint (
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
+
+
+  };
+
+
+#if !defined (_TAO_BUFFERINGCONSTRAINTPOLICY___DIRECT_COLLOCATED_SH_)
+#define _TAO_BUFFERINGCONSTRAINTPOLICY___DIRECT_COLLOCATED_SH_
+
+  class TAO_Export _tao_direct_collocated_BufferingConstraintPolicy     : public virtual TAO::BufferingConstraintPolicy,
+      public virtual POA_CORBA::_tao_collocated_Policy
+  {
+  public:
+    _tao_direct_collocated_BufferingConstraintPolicy (
+        BufferingConstraintPolicy_ptr  servant,
+        TAO_Stub *stub
+      );
+    virtual CORBA::Boolean _is_a(
+        const CORBA::Char *logical_type_id,
+        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+      );
+
+    BufferingConstraintPolicy_ptr _get_servant (void) const;
+
+    virtual CORBA::Boolean _non_existent(
+        CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
+      );
+
+        virtual TAO::BufferingConstraint buffering_constraint (
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      );
+
+
+  private:
+    BufferingConstraintPolicy_ptr servant_;
+  };
+
+
+#endif /* end #if !defined */
+
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 }
 TAO_NAMESPACE_CLOSE

@@ -1,3 +1,77 @@
+Fri Oct 08 12:05:03 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Messaging_Policy_i.h (SyncScopePolicy): Added
+	  TAO_Sync_Scope_Policy, an implementation for the Messaging
+	  SyncScopePolicy.
+
+	* tao/Messaging.pidl: Added TAO specific SYNC_FLUSH option to the
+	  SyncScope policy defined in the Messaging specification.  This
+	  allows the user to flush any queue messages on this connection.
+
+	* tao/TAO.pidl (BufferingConstraintPolicy): Added new policy for
+	  selecting parameters for buffering.  This includes buffering
+	  constraints based on timeouts, message counts, and/or message
+	  bytes.  This policy comes into effect with the selection of the
+	  SYNC_NONE option for the SyncScope policy defined in the
+	  Messaging specification.
+
+	  Also added the respective stubs and skeletons.
+
+	  The stub and skeleton files were missing TAO_HAS_CORBA_MESSAGING
+	  guards.  Those files and Client_Priority_Policy.* should be
+	  fixed now.
+
+	  Buffering_Constraint_Policy.* contain code for the servant
+	  implementation for this policy.
+
+	* tao/orbconf.h (TAO_BUFFERING_CONSTRAINT_POLICY_TYPE): Added
+	  policy type constant for new (TAO specific) buffer constraint
+	  policy.
+
+	* tao: Added support the SyncScope and the BufferingContraint
+	  policies to the following Stub, ORB, and ORB_Core.
+
+	* tao/Sync_Strategies: This new files contains three strategies
+	  for dealing with oneway invocations.
+	  TAO_Transport_Sync_Strategy synchronizes with the transport
+	  layer. TAO_None_Sync_Strategy buffers oneways till some
+	  buffering constraints are met. TAO_Flush_Sync_Strategy flushes
+	  any queued message to the transport layer.
+
+	* tao/{U,I}IOP_Transport.cpp (send): If we have a valid stub, use
+	  the sync strategy to send the data.  Only clients have valid
+	  stubs; server don't.
+
+	* tao/Invocation.cpp (invoke): Invocation class now provides the
+	  stub to the transport.  This can be used to find the correct
+	  Sync Strategy to use.
+
+	* tao/GIOP.cpp (send_message): This message now takes an
+	  additional <stub> parameter.
+
+	* tao/Pluggable.h (TAO_Transport): Added a message queue pointer
+	  to the base class.  This queue is created on demand. Also added
+	  new <send> and <send_request> methods that take a stub pointer
+	  as an additional parameter.
+
+	* examples/Buffered_Oneways: This is a simple test for buffered
+	  oneways.  It invokes multiple oneway calls.  Due to buffering in
+	  the ORB, the calls are automatically bunched together instead of
+	  being delivered to the server upon every invocation.
+
+	* tao/Typecode.i (equal): If the two pointers <this> and <tc> are
+	  the same, immediately return true.  Thanks to Carlos for helping
+	  with this.
+
+	* tao/Policy_Manager.cpp: Added code for the two new policies,
+	  BufferingConstraintPolicy and SyncScope. Also code for the
+	  Client Priority policy was missing from <copy_from>.  This was
+	  fixed.
+
+	* tao/TimeBase.pidl: Added missing #pragma prefix "" at the end of
+	  the file.  Otherwise, any file including TimeBase.pidl got the
+	  "omg.org" prefix.
+
 Fri Oct  8 11:28:54 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/orbsvcs.dsp:

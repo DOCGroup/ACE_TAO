@@ -29,6 +29,8 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/INET_Addr.h"
 
+#include "tao/Sync_Strategies.h"
+
 #if defined(ACE_MVS)
 #include "ace/Codeset_IBM1047.h"
 #endif /* ACE_MVS */
@@ -75,9 +77,9 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     use_global_collocation_ (1),
     collocation_strategy_ (THRU_POA),
 #if defined (TAO_HAS_CORBA_MESSAGING)
-    policy_manager_ (),
-    default_policies_ (),
-    policy_current_ (),
+    policy_manager_ (0),
+    default_policies_ (0),
+    policy_current_ (0),
 #endif /* TAO_HAS_CORBA_MESSAGING */
     poa_current_ (0),
     object_adapter_ (0),
@@ -100,6 +102,11 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     open_lock_ (),
     open_called_ (0),
     priority_mapping_ (0),
+#if defined (TAO_HAS_CORBA_MESSAGING)
+    none_sync_strategy_ (0),
+    flush_sync_strategy_ (0),
+#endif /* TAO_HAS_CORBA_MESSAGING */
+    transport_sync_strategy_ (0),
     svc_config_argc_ (0),
     svc_config_argv_ (0)
 {
@@ -110,6 +117,29 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->from_iso8859_, ACE_IBM1047_ISO8859);
   ACE_NEW (this->to_iso8859_,   ACE_IBM1047_ISO8859);
 #endif /* ACE_MVS */
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
+  ACE_NEW (this->none_sync_strategy_,
+           TAO_None_Sync_Strategy);
+
+  ACE_NEW (this->flush_sync_strategy_,
+           TAO_Flush_Sync_Strategy);
+
+  ACE_NEW (this->policy_manager_,
+           TAO_Policy_Manager);
+
+  ACE_NEW (this->default_policies_,
+           TAO_Policy_Manager_Impl);
+
+  ACE_NEW (this->policy_current_,
+           TAO_Policy_Current);
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
+  ACE_NEW (this->transport_sync_strategy_,
+           TAO_Transport_Sync_Strategy);
+
 }
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
@@ -122,6 +152,19 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
   delete this->from_iso8859_;
   delete this->to_iso8859_;
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
+  delete this->none_sync_strategy_;
+  delete this->flush_sync_strategy_;
+
+  delete this->policy_manager_;
+  delete this->default_policies_;
+  delete this->policy_current_;
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
+  delete this->transport_sync_strategy_;
 
   // This is deleted in init() so we should only get here if the
   // ORB_Core is destroyed prematurely.
@@ -1658,6 +1701,30 @@ TAO_ORB_Core::open (CORBA::Environment &ACE_TRY_ENV)
 
 // ****************************************************************
 
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
+TAO_None_Sync_Strategy &
+TAO_ORB_Core::none_sync_strategy (void)
+{
+  return *this->none_sync_strategy_;
+}
+
+TAO_Flush_Sync_Strategy &
+TAO_ORB_Core::flush_sync_strategy (void)
+{
+  return *this->flush_sync_strategy_;
+}
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
+TAO_Transport_Sync_Strategy &
+TAO_ORB_Core::transport_sync_strategy (void)
+{
+  return *this->transport_sync_strategy_;
+}
+
+// ****************************************************************
+
 ACE_Allocator*
 TAO_ORB_Core::input_cdr_dblock_allocator_i (TAO_ORB_Core_TSS_Resources *tss)
 {
@@ -1916,7 +1983,7 @@ TAO_ORB_Core::default_environment (CORBA_Environment *env)
 TAO_Policy_Current &
 TAO_ORB_Core::policy_current (void)
 {
-  return this->policy_current_;
+  return *this->policy_current_;
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
