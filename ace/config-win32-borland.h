@@ -107,7 +107,5 @@
 
 # define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 
-# define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION 1
-
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_BORLAND_H */
