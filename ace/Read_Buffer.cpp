@@ -29,7 +29,7 @@ ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,
     this->allocator_ = ACE_Allocator::instance ();
 }
 
-ACE_Read_Buffer::ACE_Read_Buffer (int handle,
+ACE_Read_Buffer::ACE_Read_Buffer (ACE_HANDLE handle,
 				  int close_on_delete,
 				  ACE_Allocator *alloc)
   : stream_ (::fdopen (handle, "r")),
