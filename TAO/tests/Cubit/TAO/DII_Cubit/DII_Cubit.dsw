@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 5.00
 
 ###############################################################################
 
-Project: "client"=.\client.dsp - Package Owner=<4>
+Project: "DII_Cubit_Test"=.\DII_Cubit_Test\DII_Cubit_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,7 +15,19 @@ Package=<4>
 
 ###############################################################################
 
-Project: "server"=.\server.dsp - Package Owner=<4>
+Project: "IDL_Cubit"=.\DII_Cubit.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "client"=.\client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
