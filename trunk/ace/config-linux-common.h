@@ -117,6 +117,8 @@
 # include "ace/config-g++-common.h"
 #elif defined (__KCC)
 # define ACE_HAS_STRING_CLASS
+# undef ACE_HAS_LLSEEK
+# undef ACE_HAS_LSEEK64
 # include "ace/config-kcc-common.h"
 #elif defined (__DECCXX)
 # define ACE_CONFIG_INCLUDE_CXX_COMMON
