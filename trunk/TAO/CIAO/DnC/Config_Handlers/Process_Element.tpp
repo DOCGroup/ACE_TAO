@@ -9,7 +9,9 @@
 //=====================================================================
 
 #include "Process_Element.h"
+#include "Utils.h"
 #include <iostream>
+#include <memory>
 
 template <typename VALUE, typename DATA>
 void process_element_attributes(DOMNamedNodeMap* named_node_map,
@@ -58,13 +60,18 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
 
           DOMDocument* href_doc;
 
+          std::auto_ptr<DOMBuilder> parser;
           if (xml_url.isRelative ())
             {
-              href_doc = create_document(final_url.c_str ());
+              parser.reset (CIAO::Config_Handler::Utils::create_parser ());
+              href_doc = parser->parseURI (final_url.c_str ());
+//              href_doc = CIAO::Config_Handler::Utils::create_document(final_url.c_str ());
             }
           else
             {
-              href_doc = create_document (url_string.c_str ());
+              parser.reset (CIAO::Config_Handler::Utils::create_parser ());
+              href_doc = parser->parseURI (url_string.c_str ());
+//              href_doc = CIAO::Config_Handler::Utils::create_document (url_string.c_str ());
             }
 
           DOMDocumentTraversal* traverse (href_doc);

@@ -60,7 +60,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       DOMBuilder* parser = CIAO::Config_Handler::Utils::
-                           create_parser (plan_url);
+                           create_parser ();
       DOMDocument* dup_doc = parser->parseURI (plan_url);
       auto_ptr<DOMBuilder> cleanup_parser (parser);
       CIAO::Config_Handler::Plan_Handler plan_handler (dup_doc,
@@ -144,11 +144,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (CORBA::Exception& ex)
     {
       ACE_PRINT_EXCEPTION (ex, "Caught CORBA Exception: ");
+	while (true);
       return 1;
     }
   catch (...)
     {
       ACE_ERROR ((LM_ERROR, "Caught unknown exception\n"));
+	while (true);
       return 1;
     }
 
