@@ -340,7 +340,7 @@ IIOP_Object::key (CORBA::Environment &e)
 
   // Create a new instance and transfer ownership and responsibility
   // to the caller
-  return new TAO_ObjectKey (len, len, buf, CORBA::B_TRUE);
+  return new TAO::ObjectKey (len, len, buf, CORBA::B_TRUE);
 }
 
 // It will usually be used by the _bind call.

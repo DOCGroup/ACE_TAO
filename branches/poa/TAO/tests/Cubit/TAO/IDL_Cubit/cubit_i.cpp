@@ -55,7 +55,7 @@ Cubit_Factory_i::make_cubit (const char *key, CORBA::Environment &env)
 {
   for (size_t i = 0; i < this->numobjs_; i++)
     {
-      const char *obj_str = (char *)this->my_cubit_[i]->key (env)->buffer;
+      const char *obj_str = (char *) &this->my_cubit_[i]->key (env)[0];
 
       // Keys matched.
       if (!ACE_OS::strcmp (obj_str, key))
