@@ -153,7 +153,7 @@ public:
 
   virtual CORBA::Boolean stop (CORBA::Long cmdsn);
 
-  virtual CORBA::Boolean speed (Video_Control::SPEEDpara &para);
+  virtual CORBA::Boolean speed (const Video_Control::SPEEDpara &para);
 };
 
 class Video_Control_Fast_Forward_State : public virtual Video_Control_State
