@@ -10,7 +10,6 @@ TAO_CosEventChannelFactory_i::TAO_CosEventChannelFactory_i (void)
   :poa_ (PortableServer::POA::_nil ()),
    naming_ (CosNaming::NamingContext::_nil ())
 {
-  // No-Op.
 }
 
 TAO_CosEventChannelFactory_i::~TAO_CosEventChannelFactory_i (void)
@@ -126,7 +125,7 @@ TAO_CosEventChannelFactory_i::create (const char * channel_id,
       CORBA::Object_var obj =
         this->poa_->id_to_reference (oid.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       if (store_in_naming_service &&
           !CORBA::is_nil (this->naming_.in ()))
         {
