@@ -1,5 +1,5 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -l .. -p HUDisplay NavDisplay"
+// This file is generated with "generate_component_mpc.pl -l .. -p HUDisplay -c -i NavDisplay"
 
 project(NavDisplay_stub): ciao_client {
   depends += HUDisplay_stub
@@ -19,7 +19,7 @@ project(NavDisplay_stub): ciao_client {
 project(NavDisplay_svnt) : ciao_server {
   depends += HUDisplay_svnt NavDisplay_stub
   sharedname  = NavDisplay_svnt
-  libs    += NavDisplay_stub HUDisplay_stub
+  libs    += NavDisplay_stub HUDisplay_stub HUDisplay_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=NAVDISPLAY_SVNT_Export -Wb,export_include=NavDisplay_svnt_export.h
   dllflags = NAVDISPLAY_SVNT_BUILD_DLL
@@ -39,18 +39,32 @@ project(NavDisplay_svnt) : ciao_server {
 project(NavDisplay_exec) : ciao_server {
   depends   += NavDisplay_svnt
   sharedname = NavDisplay_exec
-  libs      += NavDisplay_stub HUDisplay_stub NavDisplay_svnt
+  libs      += NavDisplay_stub NavDisplay_svnt HUDisplay_stub HUDisplay_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=NAVDISPLAY_EXEC_Export -Wb,export_include=NavDisplay_exec_export.h
   dllflags   = NAVDISPLAY_EXEC_BUILD_DLL
 
   IDL_Files {
+    NavDisplayEI.idl
   }
 
   Source_Files {
+    NavDisplayEIC.cpp
     NavDisplay_exec.cpp
   }
 }
 
 
+
+project (NavDisplay_client) : ciao_client {
+  exename = client
+  depends += NavDisplay_stub
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    client.cpp
+  }
+}
 

@@ -12,7 +12,7 @@
 #ifndef RATEGEN_EXEC_H
 #define RATEGEN_EXEC_H
 
-#include "RateGen_ImplC.h"
+#include "RateGenEIC.h"
 #include "tao/LocalObject.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Event_Handler.h"
