@@ -1,3 +1,22 @@
+Thu Jun 06 13:25:37 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.h:
+
+	  No need to include "Protocols_Hooks.h".  A forward declaration
+	  is enough.
+
+	  (InitRefMap):
+
+          Changed underlying hash map from ACE_Hash_Map_Manager to
+          ACE_Hash_Map_Manager_Ex.  The former requires three additional
+          template instantiations and used the latter under the hood
+          anyway.  This reduces TAO's footprint.
+
+	* tao/ORB_Core.cpp (ACE_Hash_Map_Manager):
+
+          Removed all explicit template instantiations related to this
+          template.  They are no longer used or needed.
+
 Thu Jun 06 13:11:57 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.cpp (TAO_ORB_Core):
