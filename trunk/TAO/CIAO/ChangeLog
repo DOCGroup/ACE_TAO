@@ -1,9 +1,18 @@
+Sun May  9 14:07:10 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Deployment.idl:
+        * DnC/Config_Handlers/Domain_Handler.cpp:
+        * DnC/Config_Handlers/Domain_Handler.h:
+
+          Made changes to the IDL and supported the same in my
+          XML handlers.
+
 Sun May  9 13:06:48 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/Deployment.mpc:
 	* DnC/Config_Handlers/Config_Handlers.mpc:
-	  Added requries += dnc to avoid unintentional build of DnC 
-          directory. 
+	  Added requries += dnc to avoid unintentional build of DnC
+          directory.
 
 Sun May  9 09:08:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
