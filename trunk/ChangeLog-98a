@@ -1,3 +1,8 @@
+Tue Jan 20 12:49:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Hash_Map_Manager.cpp (ACE_Hash_Map_Manager): Member table_
+ 	  needs to be initialized to prevent deleting invalid memories.
+
 Tue Jan 20 11:57:24 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* bin/auto_compile: 
