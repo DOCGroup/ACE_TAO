@@ -1,3 +1,10 @@
+Fri Jun 20 08:54:29 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Added code to process type specific assignments that may be
+          defined within a feature.
+
 Fri Jun 20 08:10:11 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:
