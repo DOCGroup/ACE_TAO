@@ -1,3 +1,16 @@
+Tue May 07 15:37:38 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/No_Server_MT_Connect_Test/client.cpp: The test used
+	  multiple therads with reactive connect strategy. This caused the
+	  test to behave in a crazy manner since a race condition was
+	  getting introduced when multiple threads went in to the
+	  reactor. Added a command line option for the number of threads
+	  to be spawned.
+	
+	* tests/No_Server_MT_Connect_Test/run_test.pl: Use a single thread
+	  for the test with reactive connect strategy. Thanks to Ru for
+	  pinting out the problem on some platforms.
+
 Tue May  7 15:00:16 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Messaging/messaging_export.h: Regenerated the export file
