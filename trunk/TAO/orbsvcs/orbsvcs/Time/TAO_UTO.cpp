@@ -5,7 +5,11 @@
 #include "TAO_TIO.h"
 #include "ace/OS.h"
 
-// Constructor.
+
+ACE_RCSID (Time,
+           TAO_UTO,
+           "$Id$")
+
 
 TAO_UTO::TAO_UTO (TimeBase::TimeT time,
                   TimeBase::InaccuracyT inaccuracy,
@@ -88,7 +92,7 @@ CosTime::UTO_ptr
 TAO_UTO::absolute_time (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return 0;
+  return CosTime::UTO::_nil ();
 }
 
 // Compares the time contained in the object with the time in the
@@ -100,66 +104,54 @@ TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_TRY
+  TimeBase::TimeT uto_time = uto->time (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CosTime::TCIndeterminate);
+
+  TimeBase::InaccuracyT this_inaccuracy =
+    this->inaccuracy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CosTime::TCIndeterminate);
+
+  TimeBase::InaccuracyT uto_inaccuracy =
+    uto->inaccuracy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CosTime::TCIndeterminate);
+
+  if (comparison_type == CosTime::MidC)
     {
-      TimeBase::TimeT uto_time = uto->time (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-       TimeBase::InaccuracyT this_inaccuracy =
-         this->inaccuracy (ACE_ENV_SINGLE_ARG_PARAMETER);
-       ACE_TRY_CHECK;
-
-       TimeBase::InaccuracyT uto_inaccuracy =
-         uto->inaccuracy (ACE_ENV_SINGLE_ARG_PARAMETER);
-       ACE_TRY_CHECK;
-
-      if (comparison_type == CosTime::MidC)
+      if (this->time () == uto_time)
         {
-          if ( this->time () ==  uto_time)
-            {
-              return CosTime::TCEqualTo;
-            }
-          else if (this->time () > uto_time)
+          return CosTime::TCEqualTo;
+        }
+      else if (this->time () > uto_time)
+        {
+          return CosTime::TCGreaterThan;
+        }
+      else
+        return CosTime::TCLessThan;
+    }
+  else if (this->time () == uto_time)
+    {
+      if (this_inaccuracy == 0U
+          && uto_inaccuracy  == 0U)
+        {
+          return CosTime::TCEqualTo;
+        }
+    }
+  else
+    {
+      if (this->time () > uto_time)
+        {
+          if (this->time () - this_inaccuracy
+              > uto_time  - uto_inaccuracy)
             {
               return CosTime::TCGreaterThan;
             }
-          else
-            return CosTime::TCLessThan;
         }
-      else if (this->time () == uto_time)
+      else if (this->time () + this_inaccuracy
+               < uto_time - uto_inaccuracy)
         {
-          if ( this_inaccuracy == 0U
-               && uto_inaccuracy  == 0U)
-            {
-              return CosTime::TCEqualTo;
-            }
+          return CosTime::TCLessThan;
         }
-      else
-        {
-          if (this->time () > uto_time)
-            {
-
-              if (this->time () - this_inaccuracy
-                  > uto_time  - uto_inaccuracy)
-                {
-                  return CosTime::TCGreaterThan;
-                }
-            }
-          else if (this->time () + this_inaccuracy
-                   < uto_time - uto_inaccuracy)
-
-            {
-              return CosTime::TCLessThan;
-            }
-        }
-
     }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception:");
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (CosTime::TCIndeterminate);
 
   return CosTime::TCIndeterminate;
 }
@@ -209,7 +201,7 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto
   ACE_ENDTRY;
   ACE_CHECK_RETURN (CosTime::TIO::_nil ());
 
-  return tio->_this ();
+  return tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // Returns a TIO object representing the error interval around the
@@ -247,5 +239,5 @@ TAO_UTO::interval (ACE_ENV_SINGLE_ARG_DECL)
   ACE_ENDTRY;
   ACE_CHECK_RETURN (CosTime::TIO::_nil ());
 
-  return tio->_this ();
+  return tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
