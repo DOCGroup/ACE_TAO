@@ -30,6 +30,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#define LOG_DEFAULT_MAX_REC_LIST_LEN 30
+
 class LogRecordStore
 {
   // = TITLE
@@ -44,7 +46,9 @@ class LogRecordStore
  public:
   // = Initialization and termination methods
 
-  LogRecordStore (CORBA::ULongLong max_size = 0);
+  LogRecordStore (CORBA::ULongLong max_size = 0,
+                  CORBA::ULong max_rec_list_len
+                  = LOG_DEFAULT_MAX_REC_LIST_LEN);
   // Constructor
 
   ~LogRecordStore (void);
@@ -89,7 +93,13 @@ class LogRecordStore
 
   int purge_old_records (void);
   // Deletes "old" records from the store.
- protected:
+
+  DsLogAdmin::RecordList_ptr query (const char *constraint,
+                                    DsLogAdmin::Iterator_out& i,
+                                    CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidConstraint));
+  // Do the query operation.
 
   typedef ACE_Hash_Map_Manager <DsLogAdmin::LogId,
     DsLogAdmin::LogRecord, ACE_Null_Mutex> LOG_RECORD_HASH_MAP;
@@ -99,6 +109,23 @@ class LogRecordStore
     DsLogAdmin::LogRecord> LOG_RECORD_HASH_MAP_ENTRY;
   // Defines macros to represent the hash that maps ids to
   // DsLogAdmin::LogRecords.
+
+  typedef LOG_RECORD_HASH_MAP_ITER LOG_RECORD_STORE_ITER;
+  typedef LOG_RECORD_HASH_MAP LOG_RECORD_STORE;
+  // Don't want to be tied to hash maps!.
+
+  /*
+  const LOG_RECORD_STORE_ITER& get_record_iter_start (void);
+  // Returns the record has map start iterator.
+
+  const LOG_RECORD_STORE_ITER& get_record_iter_end (void);
+  // Returns the record has map end iterator.
+  */
+
+  LOG_RECORD_STORE& get_storage (void);
+  // Get the underlying storage.
+  // @@ return a const ref? we don't want anyone to modify the storage.
+ protected:
 
   LOG_RECORD_HASH_MAP rec_hash_;
   // The hash of LogRecord ids to LogRecord 's
@@ -116,6 +143,9 @@ class LogRecordStore
 
   CORBA::ULongLong num_records_;
   // The current number of records in the log
+
+  CORBA::ULong max_rec_list_len_;
+  // The max size of the record list returned in a query.
 };
 
 #endif /*LOG_RECORD_STORE_H*/

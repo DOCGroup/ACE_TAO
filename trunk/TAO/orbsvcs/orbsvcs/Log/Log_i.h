@@ -349,7 +349,21 @@ public:
 
  protected:
   // = Helper methods
-  void check_threshold_list (void);
+
+  DsLogAdmin::RecordList_ptr query_i (const char *constraint,
+                                      DsLogAdmin::Iterator_out &iter_out,
+                                      CORBA::ULong how_many,
+                                      CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidConstraint));
+
+  CORBA::ULong match_i (const char *constraint,
+                        CORBA::Boolean delete_rec,
+                        CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     DsLogAdmin::InvalidConstraint));
+
+    void check_threshold_list (void);
   // This method checks to see if any threshold limit is reached.
 
   CORBA::Boolean scheduled (void);
@@ -398,5 +412,8 @@ public:
 
   LogRecordStore recordstore_;
   // The storage for all the records
+
+  CORBA::ULong max_rec_list_len_;
+  // Max count to return in queries.
 };
 #endif /* TLS_LOG_I_H */
