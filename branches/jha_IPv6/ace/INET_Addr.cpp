@@ -701,13 +701,11 @@ const char *
 ACE_INET_Addr::get_host_addr (char *dst, int size) const
 {
 #if defined (ACE_HAS_IPV6)
-  /*
   if(IN6_IS_ADDR_V4MAPPED(&this->inet_addr_.sin6_addr)) {
     ACE_UINT32 addr;
     addr = this->get_ip_address();
     return ACE_OS::inet_ntop (AF_INET, (const void*)&addr,dst,size);
   }
-  */
   dst[0] = '[';
   const char *ch = ACE_OS::inet_ntop (AF_INET6, (const void*)&this->inet_addr_.sin6_addr,dst+1,size-1);
   if(ch == 0) {
@@ -747,7 +745,7 @@ ACE_INET_Addr::get_ip_address (void) const
     ACE_UINT32 addr;
     // Return the last 32 bits of the address
     char *thisaddrptr = (char*)this->addr_pointer();
-    thisaddrptr += 128 - 32;
+    thisaddrptr += 128/8 - 32/8;
     memcpy((void*)&addr,(void*)(thisaddrptr),sizeof(addr));
     return addr;
   } else {
