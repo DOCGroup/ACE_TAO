@@ -12,11 +12,6 @@
 #include "ace/Synch.h"
 #include "ace/Singleton.h"
 
-#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
-# include <iostream.h>
-#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
-
-
 // ----------------------------------------
 
 class Options
