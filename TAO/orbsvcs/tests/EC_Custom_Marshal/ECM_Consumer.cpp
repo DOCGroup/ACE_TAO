@@ -356,7 +356,7 @@ Driver::parse_args (int argc, char *argv [])
 
   if (this->n_consumers_ <= 0)
     {
-      ACE_ERROR_RETURN ((LM_DEBUG,
+      ACE_ERROR_RETURN ((LM_ERROR,
                          "%s: number of consumers or "
                          "suppliers out of range\n", argv[0]), -1);
     }

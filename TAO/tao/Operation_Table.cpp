@@ -12,16 +12,16 @@ static const char *TAO_Operation_Table_Timeprobe_Description[] =
   {
     "TAO_Dynamic_Hash_OpTable::find - start",
     "TAO_Dynamic_Hash_OpTable::find - end",
-  
+
     "TAO_Linear_Search_OpTable::find - start",
     "TAO_Linear_Search_OpTable::find - end",
-  
+
     "TAO_Active_Demux_OpTable::find - start",
     "TAO_Active_Demux_OpTable::find - end",
-  
+
     "TAO_Perfect_Hash_OpTable::find - start",
     "TAO_Perfect_Hash_OpTable::find - end",
-  
+
     "TAO_Binary_Search_OpTable::find - start",
     "TAO_Binary_Search_OpTable::find - end"
   };
@@ -31,16 +31,16 @@ enum
     // Timeprobe description table start key
     TAO_DYNAMIC_HASH_OPTABLE_FIND_START = 600,
     TAO_DYNAMIC_HASH_OPTABLE_FIND_END,
-  
+
     TAO_LINEAR_SEARCH_OPTABLE_FIND_START,
     TAO_LINEAR_SEARCH_OPTABLE_FIND_END,
-  
+
     TAO_ACTIVE_DEMUX_OPTABLE_FIND_START,
     TAO_ACTIVE_DEMUX_OPTABLE_FIND_END,
-  
+
     TAO_PERFECT_HASH_OPTABLE_FIND_START,
     TAO_PERFECT_HASH_OPTABLE_FIND_END,
-  
+
     TAO_BINARY_SEARCH_OPTABLE_FIND_START,
     TAO_BINARY_SEARCH_OPTABLE_FIND_END
   };
@@ -69,7 +69,7 @@ TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry
   for (CORBA::ULong i = 0; i < dbsize; i++)
     // @@ (ASG): what happens if bind fails ???
     if (this->bind (db[i].opname_, db[i].skel_ptr_) == -1)
-      ACE_ERROR ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   "(%P|%t) %p\n",
                   "bind failed"));
 }
@@ -242,7 +242,7 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
                                 const unsigned int length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_PERFECT_HASH_OPTABLE_FIND_START);
-  
+
   const TAO_operation_db_entry *entry = lookup (opname,
                                                 length);
   if (entry == 0)

@@ -408,7 +408,7 @@ ECMS_Driver::parse_args (int argc, char *argv [])
   if (this->n_suppliers_ <= 0)
     {
       this->n_suppliers_ = 1;
-      ACE_ERROR_RETURN ((LM_DEBUG,
+      ACE_ERROR_RETURN ((LM_ERROR,
                          "%s: number of suppliers out of range, "
                          "reset to default (%d)\n",
                          argv[0], 1), -1);

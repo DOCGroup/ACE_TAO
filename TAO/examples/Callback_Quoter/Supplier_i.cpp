@@ -38,7 +38,7 @@ Supplier::~Supplier (void)
 {
   // Release the memory allocated for ior_.
   ACE_OS::free (this->ior_);
-  
+
   // Close the stream.
   ACE_OS::fclose (f_ptr_);
 
@@ -175,9 +175,9 @@ Supplier::send_market_status (const char *stock_name,
 int
 Supplier::run (void)
 {
-  
+
   long timer_id = 0;
- 
+
   ACE_DEBUG ((LM_DEBUG,
               "Market Status Supplier Daemon is running...\n "));
 
@@ -185,16 +185,16 @@ Supplier::run (void)
   ACE_Time_Value period (period_value_);
 
   // "Your time starts now!" ;) the timer is scheduled to begin work.
-  timer_id = reactor_used ()->schedule_timer (supplier_timer_handler_, 
+  timer_id = reactor_used ()->schedule_timer (supplier_timer_handler_,
                                               "Periodic stockfeed",
                                               period,
                                               period);
   if ( timer_id== -1)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "%p\n", 
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
                            "schedule_timer"),
                           -1);
-                                            
+
    // ACE_DEBUG ((LM_DEBUG,
    //               "cancelling timer\n"));
    //  this->reactor_used ()->cancel_timer (timer_id);
@@ -202,7 +202,7 @@ Supplier::run (void)
 
   // The reactor starts executing in a loop.
    this->reactor_used ()->run_event_loop ();
-  
+
    return 0;
 }
 

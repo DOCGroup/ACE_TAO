@@ -595,7 +595,7 @@ main (int argc, char *argv[])
                 b = catpoop (str, env);
               }
             else
-              ACE_ERROR_RETURN ((LM_DEBUG,
+              ACE_ERROR_RETURN ((LM_ERROR,
                                  "Don't know how to decode this IOR\n"),
                                 -1);
             if (b == 1)

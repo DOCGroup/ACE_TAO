@@ -195,7 +195,7 @@ TAO_EC_RPT_Timer_Module::shutdown (void)
     }
 
   if (this->ThrMgr ()->wait () == -1)
-    ACE_ERROR ((LM_DEBUG, "%p\n", "EC (%t) Timer_Module wait"));
+    ACE_ERROR ((LM_ERROR, "%p\n", "EC (%t) Timer_Module wait"));
 }
 
 RtecScheduler::handle_t

@@ -76,7 +76,7 @@ main (int argc, char *argv[])
 	{
 	  FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
 	  if (output_file == 0)
-	    ACE_ERROR_RETURN ((LM_DEBUG,
+	    ACE_ERROR_RETURN ((LM_ERROR,
 			       "Cannot open output file for writing IOR: %s",
 			       ior_output_file),
 			      1);

@@ -71,7 +71,7 @@ main (int argc, char **argv)
 {
   CORBA::Environment env;
 
-  // Parse the command-line arguments to get the IOR 
+  // Parse the command-line arguments to get the IOR
   parse_args (argc, argv);
 
   // Initialize the ORB
@@ -83,13 +83,13 @@ main (int argc, char **argv)
     }
 
   // If ior_input_file exists, Read the file, and get the IOR
-  // else, it must have been specified on the command line 
+  // else, it must have been specified on the command line
   if (ior_input_file != 0)
     {
       ACE_HANDLE input_file = ACE_OS::open (ior_input_file, 0);
       if (input_file == ACE_INVALID_HANDLE)
-	ACE_ERROR_RETURN ((LM_DEBUG,
-			   "Cannot open input file for reading IOR: %s\n", 
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "Cannot open input file for reading IOR: %s\n",
 			   ior_input_file),
 			  -1);
       ACE_Read_Buffer ior_buffer (input_file);
@@ -110,7 +110,7 @@ main (int argc, char **argv)
       env.print_exception ("CORBA::ORB::string_to_object");
       return -1;
     }
-  
+
   CORBA::String_var string;
 
   // Narrow the object reference

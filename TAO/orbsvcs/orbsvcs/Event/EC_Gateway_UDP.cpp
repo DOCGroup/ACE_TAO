@@ -1107,7 +1107,7 @@ TAO_ECG_Mcast_EH::update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub
 
       ACE_INET_Addr inet_addr (addr.port, addr.ipaddr);
       if (this->subscribe (inet_addr) == -1)
-        ACE_ERROR ((LM_DEBUG,
+        ACE_ERROR ((LM_ERROR,
                     "cannot subscribe to %s:%d\n",
                     inet_addr.get_host_addr (),
                     inet_addr.get_port_number ()));
