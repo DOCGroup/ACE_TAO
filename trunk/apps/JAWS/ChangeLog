@@ -1,3 +1,11 @@
+Wed Dec 26 09:35:35 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* clients/Blobby/Options.cpp
+	  server/HTTP_Server.cpp
+	  stress_testing/benchd.cpp
+	  JAWS2/JAWS/Server.cpp: Replaced all uses of getopt.optarg
+	  with getopt.opt_arg().
+
 Thu Dec  6 09:00:31 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* clients/Caching/http_client.cpp (main): Make sure to remove the

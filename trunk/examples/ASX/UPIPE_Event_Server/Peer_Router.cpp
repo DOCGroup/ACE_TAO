@@ -33,7 +33,7 @@ Acceptor_Factory<PH, PK>::init (int argc, char *argv[])
      switch (c)
        {
        case 'f': 
-	 addr.set (get_opt.optarg);
+	 addr.set (get_opt.opt_arg ());
 	 break;
        case 'd':
 	 break;

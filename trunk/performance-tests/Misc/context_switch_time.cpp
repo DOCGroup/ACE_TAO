@@ -1088,9 +1088,9 @@ get_options (int argc, ACE_TCHAR *argv[])
   while ((opt = get_opt ()) != EOF) {
     switch (opt) {
     case 'c':
-      if (ACE_OS::atoi (get_opt.optarg) >= 0)
+      if (ACE_OS::atoi (get_opt.opt_arg ()) >= 0)
         {
-          count = ACE_OS::atoi (get_opt.optarg);
+          count = ACE_OS::atoi (get_opt.opt_arg ());
         }
       else
         {
@@ -1113,15 +1113,13 @@ get_options (int argc, ACE_TCHAR *argv[])
     }
   }
 
-  switch (argc - get_opt.optind) {
+  switch (argc - get_opt.opt_ind ()) {
   case 0:
     // use default number of iterations
     break;
   case 1:
-    if (ACE_OS::atoi (argv [get_opt.optind]) > 0)
-      {
-        num_iterations = ACE_OS::atoi (argv [get_opt.optind]);
-      }
+    if (ACE_OS::atoi (argv [get_opt.opt_ind ()]) > 0)
+      num_iterations = ACE_OS::atoi (argv [get_opt.opt_ind ()]);
     else
       {
         ACE_DEBUG ((LM_ERROR, "%n: iterations must be > 0\n"));

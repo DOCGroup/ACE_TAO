@@ -122,28 +122,28 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->oneway_ = 0;
         break;
       case 'h':
-        this->host_ = getopt.optarg;
+        this->host_ = getopt.opt_arg ();
         break;
       case 'i':
-        this->iterations_ = ACE_OS::atoi (getopt.optarg);
+        this->iterations_ = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'm':
-        this->message_len_ = ACE_OS::atoi (getopt.optarg);
+        this->message_len_ = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'p':
-        this->port_ = ACE_OS::atoi (getopt.optarg);
+        this->port_ = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'q':
-        this->quit_string_ = getopt.optarg;
+        this->quit_string_ = getopt.opt_arg ();
         break;
       case 's':
         this->io_source_ = ACE_STDIN;
         break;
       case 't':
-        this->threads_ = (size_t) ACE_OS::atoi (getopt.optarg);
+        this->threads_ = (size_t) ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'T':
-        this->sleep_time_.set (0, ACE_OS::atoi (getopt.optarg));
+        this->sleep_time_.set (0, ACE_OS::atoi (getopt.opt_arg ()));
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,

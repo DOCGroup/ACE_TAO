@@ -131,13 +131,13 @@ IPC_Server::parse_args (int argc, char *argv[])
 	{
 	case 'r':
 	  ACE_OS::strncpy (rendezvous_,
-			   ACE_TEXT_CHAR_TO_TCHAR (get_opt.optarg),
+			   ACE_TEXT_CHAR_TO_TCHAR (get_opt.opt_arg ()),
 			   sizeof rendezvous_ / sizeof ACE_TCHAR);
 	  break;
 	case 't':
-	  n_threads_ = ACE_OS::atoi (get_opt.optarg);
+	  n_threads_ = ACE_OS::atoi (get_opt.opt_arg ());
 	  ACE_DEBUG ((LM_DEBUG, "%s == %d.\n",
-		      get_opt.optarg,
+		      get_opt.opt_arg (),
 		      n_threads_));
 	  ACE_Proactor::instance (2 * n_threads_);
 	  // This is a lame way to tell the proactor how many threads

@@ -536,7 +536,7 @@ main (int argc, char *argv[])
           break;
 
         case 'm':
-          bufsz = ACE_OS::atoi (getopt.optarg);
+          bufsz = ACE_OS::atoi (getopt.opt_arg ());
 
           if (bufsz <= 0)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -549,7 +549,7 @@ main (int argc, char *argv[])
                               1);
 
         case 'i':
-          nsamples = ACE_OS::atoi (getopt.optarg);
+          nsamples = ACE_OS::atoi (getopt.opt_arg ());
           if (nsamples <= 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "\nIterations must be greater than 0!\n\n"),
@@ -573,7 +573,7 @@ main (int argc, char *argv[])
 #endif /* ACE_WIN32 */
 
         case 'b':
-          so_bufsz = ACE_OS::atoi (getopt.optarg);
+          so_bufsz = ACE_OS::atoi (getopt.opt_arg ());
 
           if (so_bufsz <= 0)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -582,7 +582,7 @@ main (int argc, char *argv[])
           break;
 
         case 'I':
-          usdelay = ACE_OS::atoi (getopt.optarg);
+          usdelay = ACE_OS::atoi (getopt.opt_arg ());
 
           if (usdelay < 0)
             {
@@ -590,20 +590,20 @@ main (int argc, char *argv[])
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "%s: bad usdelay: %s\n",
                                  argv[0],
-                                 getopt.optarg),
+                                 getopt.opt_arg ()),
                                 1);
             }
           break;
 
         case 'p':
-          dstport = ACE_OS::atoi (getopt.optarg);
+          dstport = ACE_OS::atoi (getopt.opt_arg ());
           if (dstport <= 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "\nInvalid port number!\n\n"),
                               1);
           break;
         case 't':
-          svr_thrno = ACE_OS::atoi (getopt.optarg);
+          svr_thrno = ACE_OS::atoi (getopt.opt_arg ());
 
           if (svr_thrno <= 0)
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -625,7 +625,7 @@ main (int argc, char *argv[])
         }
     }
 
-  if (getopt.optind >= argc && client || argc == 1)
+  if (getopt.opt_ind () >= argc && client || argc == 1)
     {
       usage ();
       return 1;
@@ -644,25 +644,25 @@ main (int argc, char *argv[])
 
   ACE_INET_Addr remote_addr;
 
-  if (isdigit(argv[getopt.optind][0]))
+  if (isdigit(argv[getopt.opt_ind ()][0]))
     {
       if (remote_addr.set (dstport,
                            (ACE_UINT32) ACE_OS::inet_addr
-                           (argv[getopt.optind])) == -1)
+                           (argv[getopt.opt_ind ()])) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "invalid IP address: %s\n",
-                           argv[getopt.optind]),
+                           argv[getopt.opt_ind ()]),
                           1);
     }
   else
     {
-      if (remote_addr.set (dstport, argv[getopt.optind]) == -1)
+      if (remote_addr.set (dstport, argv[getopt.opt_ind ()]) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "invalid IP address: %s\n",
-                           argv[getopt.optind]),
+                           argv[getopt.opt_ind ()]),
                           1);
     }
-  getopt.optind++;
+  getopt.opt_ind ()++;
 
   ACE_DEBUG ((LM_DEBUG, "Connecting to %s:%d\n",
               remote_addr.get_host_name (),

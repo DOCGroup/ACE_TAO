@@ -42,13 +42,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'f':
-	file_name = get_opt.optarg;
+	file_name = get_opt.opt_arg ();
 	break;
       case 'h':
-	host_name = get_opt.optarg;
+	host_name = get_opt.opt_arg ();
 	break;
       case 'p':
-	port_number = ACE_OS::atoi (get_opt.optarg);
+	port_number = ACE_OS::atoi (get_opt.opt_arg ());
 	break;
       default:
 	print_usage_and_die ();

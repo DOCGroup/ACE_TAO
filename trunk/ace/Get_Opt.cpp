@@ -91,15 +91,15 @@ ACE_Get_Opt::ACE_Get_Opt (int argc,
   : argc_ (argc),
     argv_ (argv),
     optstring_ (optstring),
-    opt_ind_ (skip),
-    opt_err_ (report_errors),
+    optind (skip),
+    opterr (report_errors),
     long_only_ (long_only),
     has_colon_ (0),
-    opt_arg_ (0),
+    optarg (0),
     nextchar_ (0),
     ordering_ (ordering),
-    nonopt_start_ (opt_ind_),
-    nonopt_end_ (opt_ind_),
+    nonopt_start_ (optind),
+    nonopt_end_ (optind),
     long_option_ (0)
 {
   ACE_TRACE ("ACE_Get_Opt::ACE_Get_Opt");
@@ -171,13 +171,13 @@ ACE_Get_Opt::nextchar_i (void)
       return EOF;
 
   // Update scanning pointer.
-  if (this->opt_ind_ >= this->argc_)
+  if (this->optind >= this->argc_)
     {
       // We're done...
       this->nextchar_ = 0;
       return EOF;
     }
-  else if (*(this->nextchar_ = this->argv_[this->opt_ind_]) != '-' 
+  else if (*(this->nextchar_ = this->argv_[this->optind]) != '-' 
             || this->nextchar_[1] == '\0')
     {
       // We didn't get an option.
@@ -188,7 +188,7 @@ ACE_Get_Opt::nextchar_i (void)
         return EOF;
 
       // It must be RETURN_IN_ORDER...
-      this->opt_arg_ = this->argv_[this->opt_ind_++];
+      this->optarg = this->argv_[this->optind++];
       this->nextchar_ = 0;
       return 1;
     }
@@ -197,7 +197,7 @@ ACE_Get_Opt::nextchar_i (void)
            && this->nextchar_[1] == 0)
     {
       // Found "--" so we're done...
-      ++this->opt_ind_;
+      ++this->optind;
       this->nextchar_ = 0;
       return EOF;
     }
@@ -253,12 +253,12 @@ ACE_Get_Opt::long_option_i (void)
     {
       // Great, we found a match, but unfortunately we found more than
       // one and it wasn't exact. 
-      if (this->opt_err_)
+      if (this->opterr)
 	ACE_ERROR ((LM_ERROR,
                     ACE_LIB_TEXT ("%s: option `%s' is ambiguous\n"),
-		    this->argv_[0], this->argv_[this->opt_ind_]));
+		    this->argv_[0], this->argv_[this->optind]));
       this->nextchar_ = 0;
-      this->opt_ind_++;
+      this->optind++;
       return '?';
     }
   
@@ -266,17 +266,17 @@ ACE_Get_Opt::long_option_i (void)
     {
       // Okay, we found a good one (either a single hit or an exact match).
       option_index = indfound;
-      this->opt_ind_++;
+      this->optind++;
       if (*s)
         {
           // s must point to '=' which means there's an argument (well close enougth).
           if (pfound->has_arg_ != NO_ARG)
             // Good, we want an argument and here it is.
-            this->opt_arg_ = ++s;
+            this->optarg = ++s;
           else
             {
               // Whoops, we've got what looks like an argument, but we don't want one.
-              if (this->opt_err_)
+              if (this->opterr)
                   ACE_ERROR ((LM_ERROR,
                               ACE_LIB_TEXT ("%s: long option `--%s' doesn't allow an argument\n"),
                               this->argv_[0], pfound->name_.c_str ()));
@@ -289,13 +289,13 @@ ACE_Get_Opt::long_option_i (void)
           // s didn't help us, but we need an argument. Note that optional arguments
           // for long options must use the "=" syntax, so we won't get here
           // in that case.
-          if (this->opt_ind_ < this->argc_)
+          if (this->optind < this->argc_)
             // We still have some elements left, so use the next one.
-            this->opt_arg_ = this->argv_[this->opt_ind_++];
+            this->optarg = this->argv_[this->optind++];
           else
             {
               // All out of elements, so we have to punt...
-              if (this->opt_err_)
+              if (this->opterr)
                 ACE_ERROR ((LM_ERROR,
                             ACE_LIB_TEXT ("%s: long option '--%s' requires an argument\n"),
                             this->argv_[0], pfound->name_.c_str ()));
@@ -309,19 +309,19 @@ ACE_Get_Opt::long_option_i (void)
       // great.  If the user really wants to know if a long option was passed.
       return pfound->val_;
     }
-  if (!this->long_only_ || this->argv_[this->opt_ind_][1] == '-'
+  if (!this->long_only_ || this->argv_[this->optind][1] == '-'
       || this->optstring_.find (*this->nextchar_) == ACE_TString::npos)
     {
       // Okay, we couldn't find a long option.  If it isn't long_only (which
       // means try the long first, and if not found try the short) or a long
       // signature was passed, e.g. "--", or it's not a short (not sure when
       // this could happen) it's an error.
-      if (this->opt_err_)
+      if (this->opterr)
         ACE_ERROR ((LM_ERROR,
                     ACE_LIB_TEXT ("%s: illegal long option '--%s'\n"),
                     this->argv_[0], this->nextchar_));
       this->nextchar_ = 0;
-      this->opt_ind_++;
+      this->optind++;
       return '?';
     }
   return this->short_option_i ();
@@ -339,11 +339,11 @@ ACE_Get_Opt::short_option_i (void)
   
   /* Increment `optind' when we start to process its last character.  */
   if (*this->nextchar_ == '\0')
-    ++this->opt_ind_;
+    ++this->optind;
   
   if (oli == 0 || opt == ':')
     {
-      if (this->opt_err_)
+      if (this->opterr)
         ACE_ERROR ((LM_ERROR,
                     ACE_LIB_TEXT ("%s: illegal short option -- %c\n"),
                     this->argv_[0], opt));
@@ -352,7 +352,7 @@ ACE_Get_Opt::short_option_i (void)
   if (opt == 'W' && oli[1] == ';')
     {
       if (this->nextchar_[0] == 0)
-        this->nextchar_ = this->argv_[this->opt_ind_];
+        this->nextchar_ = this->argv_[this->optind];
       return long_option_i ();
     }
   if (oli[1] == ':')
@@ -364,11 +364,11 @@ ACE_Get_Opt::short_option_i (void)
           // means we didn't get one.
           if (*this->nextchar_ != '\0')
             {
-              this->opt_arg_ = this->nextchar_;
-              this->opt_ind_++;
+              this->optarg = this->nextchar_;
+              this->optind++;
             }
           else
-            this->opt_arg_ = 0;
+            this->optarg = 0;
           this->nextchar_ = 0;
         }
       else
@@ -377,13 +377,13 @@ ACE_Get_Opt::short_option_i (void)
           if (*this->nextchar_ != '\0')
             {
               // Found argument in same argv-element.
-              this->opt_arg_ = this->nextchar_;
-              this->opt_ind_++;
+              this->optarg = this->nextchar_;
+              this->optind++;
             }
-          else if (this->opt_ind_ == this->argc_)
+          else if (this->optind == this->argc_)
             {
               // Ran out of arguments before finding required argument.
-              if (this->opt_err_)
+              if (this->opterr)
                 ACE_ERROR ((LM_ERROR,
                             ACE_LIB_TEXT ("%s: short option requires an argument -- %c\n"),
                             this->argv_[0], opt));
@@ -391,7 +391,7 @@ ACE_Get_Opt::short_option_i (void)
             }
           else
             // Use the next argv-element as the argument.
-            this->opt_arg_ = this->argv_[this->opt_ind_++];
+            this->optarg = this->argv_[this->optind++];
           this->nextchar_ = 0;
         }
     }
@@ -404,14 +404,14 @@ ACE_Get_Opt::operator () (void)
   ACE_TRACE ("ACE_Get_Opt_Long::operator");
 
   // First of all, make sure we reinitialize any pointers..
-  this->opt_arg_ = 0;
+  this->optarg = 0;
   this->long_option_ = 0;
 
-  this->opt_arg_ = 0;
+  this->optarg = 0;
   if (this->argv_ == 0)
     {
       // It can happen, e.g., on VxWorks.
-      this->opt_ind_ = 0;
+      this->optind = 0;
       return -1;
     }
 
@@ -424,8 +424,8 @@ ACE_Get_Opt::operator () (void)
         return retval;
     }
 
-  if (((this->argv_[this->opt_ind_][0] == '-')
-       && (this->argv_[this->opt_ind_][1] == '-')) || this->long_only_)
+  if (((this->argv_[this->optind][0] == '-')
+       && (this->argv_[this->optind][1] == '-')) || this->long_only_)
     return this->long_option_i ();
 
   return this->short_option_i ();
@@ -538,14 +538,14 @@ ACE_Get_Opt::permute_args (void)
 
   int cstart, cyclelen, i, j, ncycle, nnonopts, nopts, pos;
   ACE_TCHAR *swap;
-  int opt_end = this->opt_ind_;
+  int opt_end = this->optind;
 
   nnonopts = this->nonopt_end_ - this->nonopt_start_;
   nopts = opt_end - this->nonopt_end_;
   ncycle = ACE::gcd (nnonopts, nopts);
   cyclelen = (opt_end - this->nonopt_start_) / ncycle;
 
-  this->opt_ind_ = this->opt_ind_ - nnonopts;
+  this->optind = this->optind - nnonopts;
 
   for (i = 0; i < ncycle; i++) 
     {
@@ -572,35 +572,35 @@ ACE_Get_Opt::permute (void)
   ACE_TRACE ("ACE_Get_Opt::permute");
 
   if (this->nonopt_start_ != this->nonopt_end_
-      && this->nonopt_start_ != this->opt_ind_)
+      && this->nonopt_start_ != this->optind)
     this->permute_args ();
 
-  this->nonopt_start_ = this->opt_ind_;
+  this->nonopt_start_ = this->optind;
 
   // Skip over args untill we find the next option.
-  while (this->opt_ind_ < this->argc_
-         && (this->argv_[this->opt_ind_][0] != '-' 
-             || this->argv_[this->opt_ind_][1] == '\0'))
-    this->opt_ind_++;
+  while (this->optind < this->argc_
+         && (this->argv_[this->optind][0] != '-' 
+             || this->argv_[this->optind][1] == '\0'))
+    this->optind++;
 
   // Got an option, so mark this as the end of the non options.
-  this->nonopt_end_ = this->opt_ind_;
+  this->nonopt_end_ = this->optind;
 
-  if (this->opt_ind_ != this->argc_ 
-      && ACE_OS::strcmp (this->argv_[this->opt_ind_], "--") == 0)
+  if (this->optind != this->argc_ 
+      && ACE_OS::strcmp (this->argv_[this->optind], "--") == 0)
     {
       // We found the marker for the end of the options.
-      this->opt_ind_++;
+      this->optind++;
 
       if (this->nonopt_start_ != this->nonopt_end_ 
-          && this->nonopt_end_ != this->opt_ind_)
+          && this->nonopt_end_ != this->optind)
         this->permute_args ();
     }
   
-  if (this->opt_ind_ == this->argc_)
+  if (this->optind == this->argc_)
     {
       if (this->nonopt_start_ != this->nonopt_end_)
-        this->opt_ind_ = this->nonopt_start_;
+        this->optind = this->nonopt_start_;
       return EOF;
     }
   return 0;

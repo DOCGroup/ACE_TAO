@@ -40,7 +40,7 @@ Options::parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'p':
-        this->port_ = ACE_OS::atoi (get_opt.optarg);
+        this->port_ = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       default:
         break;

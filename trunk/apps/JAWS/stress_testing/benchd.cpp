@@ -184,7 +184,7 @@ parse_args (int argc, char *argv[])
       case 'q':
         QUIET = 1;
       case 'i':
-	INTERFACE = get_opt.optarg;
+	INTERFACE = get_opt.opt_arg ();
 	break;
       case 'u':
 	// Usage fallthrough.

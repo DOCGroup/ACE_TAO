@@ -45,7 +45,7 @@ Handle_L_FIFO::init (int argc, char *argv[])
      switch (c)
        {
        case 'r': 
-	 rendezvous_fifo = get_opt.optarg;
+	 rendezvous_fifo = get_opt.opt_arg ();
 	 break;
        default:
 	 break;

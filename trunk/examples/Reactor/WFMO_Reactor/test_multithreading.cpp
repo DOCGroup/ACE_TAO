@@ -60,19 +60,19 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 't':
-        concurrent_threads = atoi (get_opt.optarg);
+        concurrent_threads = atoi (get_opt.opt_arg ());
         break;
       case 'e':
-        iterations = atoi (get_opt.optarg);
+        iterations = atoi (get_opt.opt_arg ());
         break;
       case 'h':
-        number_of_handles = atoi (get_opt.optarg);
+        number_of_handles = atoi (get_opt.opt_arg ());
         break;
       case 'i':
-        interval = atoi (get_opt.optarg);
+        interval = atoi (get_opt.opt_arg ());
         break;
       case 's':
-        number_of_handles_to_signal = atoi (get_opt.optarg);
+        number_of_handles_to_signal = atoi (get_opt.opt_arg ());
         break;
       default:
         print_usage_and_die ();

@@ -160,13 +160,13 @@ Options::parse_args (int argc, char *argv[])
 	  this->use_sbrk_ = 0;
 	  break;
 	case 'L':
-	  this->max_msg_size_ = ACE_OS::atoi (get_opt.optarg);
+	  this->max_msg_size_ = ACE_OS::atoi (get_opt.opt_arg ());
 	  break;
 	case 'm':
 	  this->use_mmap_ = 1;
 	  break;
 	case 'n':
-	  this->iteration_count_ = ACE_OS::atoi (get_opt.optarg);
+	  this->iteration_count_ = ACE_OS::atoi (get_opt.opt_arg ());
 	  break;
 	case 'p': // Spawn processes rather than threads
 	  this->spawn_threads_ = 0;
@@ -176,7 +176,7 @@ Options::parse_args (int argc, char *argv[])
 	  this->use_shmem_ = 1;
 	  break;
 	case 't':
-	  this->spawn_count_ = ACE_OS::atoi (get_opt.optarg);
+	  this->spawn_count_ = ACE_OS::atoi (get_opt.opt_arg ());
 	  break;
 	case 'T':
           ACE_Trace::start_tracing ();

@@ -43,7 +43,7 @@ ACE_Token_Acceptor::parse_args (int argc, char *argv[])
       switch (c)
 	{
 	case 'p':
-	  this->service_port_ = ACE_OS::atoi (get_opt.optarg);
+	  this->service_port_ = ACE_OS::atoi (get_opt.opt_arg ());
 	  break;
 	default:
 	  ACE_ERROR_RETURN ((LM_ERROR,

@@ -560,7 +560,7 @@ ACE_TS_Clerk_Processor::parse_args (int argc, char *argv[])
 	{
 	case 'h':
 	  // Get the hostname:port and create an ADDR
-	  server_addr.set (get_opt.optarg);
+	  server_addr.set (get_opt.opt_arg ());
 
 	  // Create a new handler
 	  ACE_NEW_RETURN (handler,
@@ -572,12 +572,12 @@ ACE_TS_Clerk_Processor::parse_args (int argc, char *argv[])
 	  break;
 	case 't':
 	  // Get the timeout value
-	  this->timeout_ = ACE_OS::atoi (get_opt.optarg);
+	  this->timeout_ = ACE_OS::atoi (get_opt.opt_arg ());
 	  break;
 	case 'p':
 	  // Get the poolname
 	  ACE_OS::strncpy (this->poolname_,
-			   ACE_TEXT_CHAR_TO_TCHAR (get_opt.optarg),
+			   ACE_TEXT_CHAR_TO_TCHAR (get_opt.opt_arg ()),
 			   sizeof this->poolname_ / sizeof (ACE_TCHAR));
 	  break;
 	case 'b':

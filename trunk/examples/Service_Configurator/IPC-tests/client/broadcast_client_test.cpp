@@ -33,7 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'p':
-	broadcast_port_number = ACE_OS::atoi (get_opt.optarg);
+	broadcast_port_number = ACE_OS::atoi (get_opt.opt_arg ());
 	break;
       default:
 	print_usage_and_die ();

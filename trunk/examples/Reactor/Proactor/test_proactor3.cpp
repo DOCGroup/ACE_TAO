@@ -674,27 +674,27 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'd':		// duplex
-        duplex = ACE_OS::atoi (get_opt.optarg);
+        duplex = ACE_OS::atoi (get_opt.opt_arg ());
 		break;
       case 'h':		// host for sender
-        host = get_opt.optarg;
+        host = get_opt.opt_arg ();
 		break;
       case 'p':		// port number
-        port = ACE_OS::atoi (get_opt.optarg);
+        port = ACE_OS::atoi (get_opt.opt_arg ());
 		break;
       case 'n':		// thread pool size
-        threads = ACE_OS::atoi (get_opt.optarg);
+        threads = ACE_OS::atoi (get_opt.opt_arg ());
 		break;
       case 's':     // number of senders
-        senders = ACE_OS::atoi (get_opt.optarg);
+        senders = ACE_OS::atoi (get_opt.opt_arg ());
 	if (senders > MaxSenders)
 	  senders = MaxSenders;
 	break;
       case 'o':     // max number of aio for proactor 
-        max_aio_operations = ACE_OS::atoi (get_opt.optarg);
+        max_aio_operations = ACE_OS::atoi (get_opt.opt_arg ());
 	break;
       case 't':    //  Proactor Type
-	if (set_proactor_type (get_opt.optarg))
+	if (set_proactor_type (get_opt.opt_arg ()))
           break;
       case 'u':
       default:

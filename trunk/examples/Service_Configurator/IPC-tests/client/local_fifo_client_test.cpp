@@ -45,7 +45,7 @@ parse_arguments (int argc, ACE_TCHAR *argv[])
       debug = 1;
       break;
     case 'f':
-      rendezvous_fifo = get_opt.optarg;
+      rendezvous_fifo = get_opt.opt_arg ();
       break;
     default:
       print_usage_and_die ();

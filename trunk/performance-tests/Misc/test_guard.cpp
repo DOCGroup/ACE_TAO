@@ -72,7 +72,7 @@ main (int argc, char *argv[])
         test_function = guard;
         break;
       case 'n':
-        iterations = ACE_OS::atoi (getopt.optarg);
+        iterations = ACE_OS::atoi (getopt.opt_arg ());
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,

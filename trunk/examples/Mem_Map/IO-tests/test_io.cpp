@@ -61,13 +61,13 @@ parse_args (int argc, char *argv[])
     switch (c)
     {
     case 'i':
-      input_filename = get_opt.optarg;
+      input_filename = get_opt.opt_arg ();
       break;
     case 'n':
-      iteration_count = ACE_OS::atoi (get_opt.optarg);
+      iteration_count = ACE_OS::atoi (get_opt.opt_arg ());
       break;
     case 'o':
-      output_filename = get_opt.optarg;
+      output_filename = get_opt.opt_arg ();
       break;
     case 'r':
       remove_output = 0;

@@ -74,13 +74,13 @@ parse_args (int argc, char **argv)
         run_ls = 1;
         break;
       case 'x':
-        executable = get_opt.optarg;
+        executable = get_opt.opt_arg ();
         break;
       case 'p':
-        print_file = get_opt.optarg;
+        print_file = get_opt.opt_arg ();
         break;
       case 'e':
-        environment_string = get_opt.optarg;
+        environment_string = get_opt.opt_arg ();
         break;
       case 'g':
         get_env = 1;

@@ -50,7 +50,7 @@ Handle_L_SPIPE::init (int argc, char *argv[])
      switch (c)
        {
        case 'r': 
-	 rendezvous = get_opt.optarg;
+	 rendezvous = get_opt.opt_arg ();
 	 break;
        default:
 	 break;
