@@ -18,13 +18,15 @@
 #include "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "tao/Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_ServantBase;
+
+#include "tao/Object.h"
+#include "Servant_Base.h"
+
 
 class TAO_PortableServer_Export TAO_Collocated_Object : public virtual CORBA_Object
 {
@@ -69,7 +71,7 @@ private:
 private:
   TAO_ServantBase *servant_;
   // Servant pointer.  It is 0 except for collocated objects.
-  
+
   */
 };
 

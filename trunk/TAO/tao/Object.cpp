@@ -44,7 +44,7 @@ CORBA_Object::CORBA_Object (TAO_Stub *protocol_proxy,
   // the semantics of CORBA Objects are such that obtaining one
   // implicitly takes a reference.
 
-  // By default the proxy broker is set to the one 
+  // By default the proxy broker is set to the one
   // that always goes remote.
   this->proxy_broker_ = the_tao_remote_object_proxy_broker ();
 }
@@ -78,7 +78,7 @@ CORBA_Object::_servant (void) const
 // logical type ID is passed as a parameter.
 
 CORBA::Boolean
-CORBA_Object::_is_a (const CORBA::Char *type_id,
+CORBA_Object::_is_a (const char *type_id,
                      CORBA::Environment &ACE_TRY_ENV)
 {
   // NOTE: if istub->type_id is nonzero and we have local knowledge of
@@ -99,18 +99,18 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
 
   if (this->is_local_)
     ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
-  
+
   CORBA::Boolean _tao_retval = 0;
-  
+
   // Get the right Proxy Implementation.
-  TAO_Object_Proxy_Impl &the_proxy = 
+  TAO_Object_Proxy_Impl &the_proxy =
     this->proxy_broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (0);
 
   // Preform the Call.
   _tao_retval = the_proxy._is_a (this, type_id, ACE_TRY_ENV);
-  ACE_TRY_CHECK;
-  
+  ACE_CHECK_RETURN (0);
+
   return _tao_retval;
 }
 
@@ -211,7 +211,7 @@ CORBA::Object::_tao_QueryInterface (ptr_arith_t type)
   return 0;
 }
 
-void 
+void
 CORBA::Object::_proxy_broker (TAO_Object_Proxy_Broker *proxy_broker)
 {
   this->proxy_broker_ = proxy_broker;
@@ -258,20 +258,20 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
   CORBA::Boolean _tao_retval = 0;
 
   // Get the right Proxy.
-  TAO_Object_Proxy_Impl &the_proxy = 
+  TAO_Object_Proxy_Impl &the_proxy =
     this->proxy_broker_->select_proxy (this, ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (0);
 
   // Perform the Call.
   _tao_retval = the_proxy._non_existent (this, ACE_TRY_ENV);
-  ACE_TRY_CHECK;
-  
+  ACE_CHECK_RETURN (0);
+
   return _tao_retval;
 }
 
 void
 CORBA_Object::_create_request (CORBA::Context_ptr ctx,
-                               const CORBA::Char *operation,
+                               const char *operation,
                                CORBA::NVList_ptr arg_list,
                                CORBA::NamedValue_ptr result,
                                CORBA::Request_ptr &request,
@@ -303,7 +303,7 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
 
 void
 CORBA_Object::_create_request (CORBA::Context_ptr ctx,
-                               const CORBA::Char *operation,
+                               const char *operation,
                                CORBA::NVList_ptr arg_list,
                                CORBA::NamedValue_ptr result,
                                CORBA::ExceptionList_ptr exceptions,
@@ -336,7 +336,7 @@ CORBA_Object::_create_request (CORBA::Context_ptr ctx,
 }
 
 CORBA::Request_ptr
-CORBA_Object::_request (const CORBA::Char *operation,
+CORBA_Object::_request (const char *operation,
                         CORBA::Environment &ACE_TRY_ENV)
 {
   //  ACE_TRY_ENV.clear ();

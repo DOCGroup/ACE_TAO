@@ -215,23 +215,23 @@ public:
 
   enum TAO_Collocation_Strategies
   {
-    REMOTE_STRATEGY = 0,    // i.e. no collocation.
+    REMOTE_STRATEGY,    // i.e. no collocation.
 
-    THRU_POA_STRATEGY = 1,  // Calls to the collocated object are 
-                            // forwarded by the POA. 
+    THRU_POA_STRATEGY,  // Calls to the collocated object are
+                            // forwarded by the POA.
 
-    DIRECT_STRATEGY = 2     // Calls to the collocated object are 
-                            // made directly to its servant.
-  };
-  
-  enum 
-  {
-    COLLOCATION_STRATEGIES_NUM = 3
+    DIRECT_STRATEGY,     // Calls to the collocated object are
+                             // made directly to its servant.
+
+    COLLOCATION_STRATEGIES_NUM  // This value should always be the
+                                // last value in the enumeration.  It
+                                // provides the count for the number
+                                // of collocation strategies.  
   };
 
   static TAO_Collocation_Strategies collocation_strategy (CORBA::Object_ptr object);
-  // This methods give the right collocation strategy, if any,  
-  // to be used to perform a method invokation on the given object. 
+  // This methods give the right collocation strategy, if any,
+  // to be used to perform a method invokation on the given object.
   // (Note that No-Collocation is a special case of collocation).
 
 

@@ -36,14 +36,14 @@ TAO_Object_Proxy_Impl &
 TAO_Strategized_Object_Proxy_Broker::select_proxy (CORBA::Object_ptr object,
                                                    CORBA::Environment &ACE_TRY_ENV)
 {
-        TAO_ORB_Core::TAO_Collocation_Strategies strategy =
+  TAO_ORB_Core::TAO_Collocation_Strategies strategy =
     TAO_ORB_Core::collocation_strategy (object);
 
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
 
   this->create_proxy (strategy, ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
 
   return *this->proxy_cache_[strategy];
 }
@@ -74,6 +74,7 @@ TAO_Strategized_Object_Proxy_Broker::create_proxy (TAO_ORB_Core::TAO_Collocation
             ACE_CHECK;
             break;
           }
+        default:
         case TAO_ORB_Core::REMOTE_STRATEGY:
           {
             ACE_NEW_THROW_EX (this->proxy_cache_[strategy],
@@ -82,11 +83,7 @@ TAO_Strategized_Object_Proxy_Broker::create_proxy (TAO_ORB_Core::TAO_Collocation
             ACE_CHECK;
             break;
           }
+          
         }
     }
 }
-
-
-
-
-

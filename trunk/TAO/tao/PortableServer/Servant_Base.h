@@ -27,7 +27,7 @@
 
 class TAO_Operation_Table;
 
-class TAO_PortableServer_Export TAO_ServantBase : public TAO_Abstract_ServantBase
+class TAO_PortableServer_Export TAO_ServantBase : public virtual TAO_Abstract_ServantBase
 {
   // = TITLE
   //     Base class for skeletons and servants.
@@ -53,10 +53,6 @@ public:
 
   virtual CORBA::Boolean _non_existent (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Default <_non_existent>: always returns false.
-
-  // = Reference counting hooks: no-ops by default.
-  virtual void _add_ref (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  virtual void _remove_ref (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
   virtual void *_downcast (const char *repository_id) = 0;
   // Get the correct vtable.

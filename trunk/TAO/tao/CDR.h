@@ -51,6 +51,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/CDR_Stream.h"
+
 class TAO_ORB_Core;
 
 class TAO_Export TAO_OutputCDR : public ACE_OutputCDR

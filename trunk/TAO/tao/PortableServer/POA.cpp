@@ -547,7 +547,8 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
           root_poa->deactivate_object_i (id.in (), ACE_TRY_ENV);
           ACE_CHECK;
 
-          this->server_object_->_remove_ref ();
+          this->server_object_->_remove_ref (ACE_TRY_ENV);
+          ACE_CHECK;
         }
     }
 #endif /* TAO_HAS_MINIMUM_CORBA */

@@ -72,16 +72,6 @@ TAO_ServantBase::_default_POA (CORBA::Environment &ACE_TRY_ENV)
   return PortableServer::POA::_narrow (object.in (), ACE_TRY_ENV);
 }
 
-void
-TAO_ServantBase::_add_ref (CORBA::Environment &)
-{
-}
-
-void
-TAO_ServantBase::_remove_ref (CORBA::Environment &)
-{
-}
-
 CORBA::Boolean
 TAO_ServantBase::_is_a (const char* logical_type_id,
                         CORBA::Environment &ACE_TRY_ENV)

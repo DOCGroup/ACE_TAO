@@ -25,6 +25,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/SString.h"
+
 // Forward decls.
 
 class TAO_Active_Object_Map_Impl;
