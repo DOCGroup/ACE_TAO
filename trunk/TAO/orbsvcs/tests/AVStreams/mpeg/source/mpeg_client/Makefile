@@ -15,7 +15,6 @@ FILES= 24bit            \
        2x2              \
        ab               \
        audio            \
-       ctr              \
        decoders         \
        file             \
        fs2              \
@@ -117,25 +116,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i newproto.h \
  ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h global.h
-.obj/ctr.o .obj/ctr.so .shobj/ctr.o .shobj/ctr.so: ctr.cpp ../include/common.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Version.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i newproto.h \
- ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h global.h \
- ../mpeg_shared/sendpt.h ../mpeg_shared/filters.h \
- ../mpeg_shared/fileio.h ../mpeg_shared/com.h
 .obj/decoders.o .obj/decoders.so .shobj/decoders.o .shobj/decoders.so: decoders.cpp decoders.h util.h video.h proto.h
 .obj/file.o .obj/file.so .shobj/file.o .shobj/file.so: file.cpp video.h ../include/common.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -233,12 +213,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- interface/fb.xbm interface/play.xbm interface/step.xbm \
- interface/stop.xbm interface/loop.xbm interface/ff.xbm \
- interface/MainWindow.mib interface/Info.mib video.h \
- ../include/common.h newproto.h ../mpeg_shared/routine.h \
- ../mpeg_shared/../include/common.h global.h
+ $(ACE_ROOT)/ace/Log_Record.i interface/fb.xbm \
+ interface/play.xbm interface/step.xbm interface/stop.xbm \
+ interface/loop.xbm interface/ff.xbm interface/MainWindow.mib \
+ interface/Info.mib video.h ../include/common.h newproto.h \
+ ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h global.h
 .obj/util.o .obj/util.so .shobj/util.o .shobj/util.so: util.cpp video.h proto.h util.h
 .obj/util32.o .obj/util32.so .shobj/util32.o .shobj/util32.so: util32.cpp video.h proto.h ui.h
 .obj/vb.o .obj/vb.so .shobj/vb.o .shobj/vb.so: vb.cpp ../include/common.h \
@@ -292,8 +271,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i decoders.h \
- util.h video.h proto.h global.h ui.h
+ $(ACE_ROOT)/ace/Log_Record.i decoders.h util.h \
+ video.h proto.h global.h ui.h
 .obj/vp.o .obj/vp.so .shobj/vp.o .shobj/vp.so: vp.cpp ../include/common.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -312,5 +291,55 @@ realclean: clean
  $(ACE_ROOT)/ace/Log_Record.i newproto.h \
  ../mpeg_shared/routine.h ../mpeg_shared/../include/common.h global.h \
  dither.h video.h proto.h ui.h
+.obj/Command_Handler.o .obj/Command_Handler.so .shobj/Command_Handler.o .shobj/Command_Handler.so: Command_Handler.cpp Command_Handler.h \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h ctr.cpp \
+ ../include/common.h newproto.h ../mpeg_shared/routine.h \
+ ../mpeg_shared/../include/common.h global.h ../mpeg_shared/sendpt.h \
+ ../mpeg_shared/filters.h ../mpeg_shared/fileio.h ../mpeg_shared/com.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
