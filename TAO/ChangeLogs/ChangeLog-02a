@@ -5,6 +5,19 @@ Thu Jul  5 09:22:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
         * orbsvcs/tests/AVStreams/Asynch_Three_Stage/*.bor
           Added BCB makefiles
 
+Thu Jul  5 04:53:00 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+        * orbsvcs/tests/AVStreams/Component_Switching/Makefile
+          Add missing link flag -lTAO_Strategies, needed
+          for Advanced_Resource_Factory in svc.conf.
+
+        * orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp
+          Fix typo 
+
+        * orbsvcs/tests/AVStreams/Component_Switching/run_test.pl
+          Add -ORBSkipServiceConfigOpen to startup of Naming_Service,
+          it did not like the svc.conf file in this directory.
+
 Wed Jul  4 09:53:01 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/Strategies/TAO_Strategies_Static.dsp:

@@ -21,7 +21,7 @@ $makefile = PerlACE::LocalFile ("input");
 
 unlink $nsior;
 
-$NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
+$NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-ORBSkipServiceConfigOpen -o $nsior");
 $SV1  = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -s sender -r 1");
 $SV2  = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -s sender -r 1");
 $SV3  = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -s sender -r 1");
