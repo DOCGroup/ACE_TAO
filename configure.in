@@ -7376,6 +7376,9 @@ the \`config.log' file and the following information:
     Build:  $build
     Host:   $host
     Target: $target
+
+In the meantime, please use the stock ACE build procedure detailed in
+the file \`ACE-INSTALL.html'.
      ])
   ])
 
