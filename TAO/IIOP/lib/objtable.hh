@@ -23,7 +23,7 @@
 
 // Dynamic Hashing scheme
 typedef ACE_Hash_Map_Manager<ACE_CString, CORBA_Object_ptr, ACE_RW_Mutex>
-                                              MAP_MANAGER;
+                                              OBJ_MAP_MANAGER;
 
 class TAO_Dynamic_Hash_ObjTable: public virtual TAO_Object_Table
 {
@@ -35,11 +35,11 @@ public:
   virtual CORBA_Object_ptr lookup(const CORBA_OctetSeq &key);
   // CORBA Object key lookup strategy
 
-  virtual void register_obj(const CORBA_OctetSeq &key, const CORBA_Object_ptr &obj);
+  virtual int register_obj(const CORBA_OctetSeq &key, const CORBA_Object_ptr &obj);
   // registers a CORBA_Object into the object table and associates the key with
   // it
 private:
-  MAP_MANAGER  hash_;
+  OBJ_MAP_MANAGER  hash_;
 };
 
 // Linear strategy
@@ -53,7 +53,7 @@ public:
   virtual CORBA_Object_ptr lookup(const CORBA_OctetSeq &key);
   // CORBA Object key lookup strategy
 
-  virtual void register_obj(const CORBA_OctetSeq &key, const CORBA_Object_ptr &obj);
+  virtual int register_obj(const CORBA_OctetSeq &key, const CORBA_Object_ptr &obj);
   // registers a CORBA_Object into the object table and associates the key with
   // it
 
@@ -82,7 +82,7 @@ public:
   virtual CORBA_Object_ptr lookup(const CORBA_OctetSeq &key);
   // CORBA Object key lookup strategy
 
-  virtual void register_obj(const CORBA_OctetSeq &key, const CORBA_Object_ptr &obj);
+  virtual int register_obj(const CORBA_OctetSeq &key, const CORBA_Object_ptr &obj);
   // registers a CORBA_Object into the object table and associates the key with
   // it
 
