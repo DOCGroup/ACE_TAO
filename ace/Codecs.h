@@ -81,8 +81,8 @@ private:
   static void init();
 
   // Prevent construction in any form
-  ACE_UNIMPLEMENTED_FUNC (ACE_Base64 ());
-  ACE_UNIMPLEMENTED_FUNC (ACE_Base64 (const ACE_Base64&));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Base64 ())
+  ACE_UNIMPLEMENTED_FUNC (ACE_Base64 (const ACE_Base64&))
 
   /// Symbols which form the Base64 alphabet (Defined as per RFC 2045)
   static const ACE_Byte alphabet_[];
