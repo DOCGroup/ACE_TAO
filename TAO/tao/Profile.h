@@ -23,6 +23,8 @@
 #include "tao/Object_KeyC.h"
 
 
+#include "ace/Synch.h"
+
 class TAO_MProfile;
 class TAO_Stub;
 class TAO_Endpoint;

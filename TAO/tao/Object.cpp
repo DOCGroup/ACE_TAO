@@ -17,6 +17,7 @@
 #include "tao/Dynamic_Adapter.h"
 #include "tao/IFR_Client_Adapter.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Synch.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Object.i"

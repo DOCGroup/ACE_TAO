@@ -64,6 +64,14 @@ CORBA::AbstractBase::~AbstractBase (void)
     }
 }
 
+CORBA::Boolean
+CORBA::AbstractBase::_is_a (const char *type_id
+                            ACE_ENV_ARG_DECL_NOT_USED)
+{
+  return ! ACE_OS::strcmp (type_id,
+                           "IDL:omg.org/CORBA/AbstractBase:1.0");
+}
+
 void *
 CORBA::AbstractBase::_tao_QueryInterface (ptr_arith_t type)
 {
@@ -341,4 +349,3 @@ CORBA::AbstractBase::_tao_to_value (void)
 {
   return 0;
 }
-

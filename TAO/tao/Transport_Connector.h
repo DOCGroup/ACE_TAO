@@ -25,6 +25,7 @@
 #include "ace/CORBA_macros.h"
 
 
+class ACE_Time_Value;
 class TAO_Transport_Descriptor_Interface;
 class TAO_InputCDR;
 class TAO_Endpoint;
