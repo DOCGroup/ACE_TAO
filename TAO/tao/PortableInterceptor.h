@@ -121,11 +121,11 @@ public:
 private:
   PortableInterceptor::ServerRequestInterceptor_var interceptor_;
 };
-#endif /* TAO_HAS_INTERCEPTORS */
 
 #if defined (__ACE_INLINE__)
 #include "tao/PortableInterceptor.i"
 #endif /* defined INLINE */
+#endif /* TAO_HAS_INTERCEPTORS */
 
 #include "ace/post.h"
 
