@@ -33,7 +33,7 @@
 #include "ace/INET_Addr.h"
 
 
-class TAO_IIOP_Client_Connection_Handler;
+class TAO_IIOP_Connection_Handler;
 
 class TAO_Export TAO_IIOP_Endpoint : public TAO_Endpoint
 {
@@ -109,7 +109,7 @@ public:
   CORBA::UShort port (CORBA::UShort p);
   // Set the port number.
 
-  TAO_IIOP_Client_Connection_Handler *&hint (void);
+  //TAO_IIOP_Connection_Handler *&hint (void);
   // Access to our <hint_>.
 
 private:
@@ -128,7 +128,7 @@ private:
   // Cached instance of <ACE_INET_Addr> for use in making
   // invocations, etc.
 
-  TAO_IIOP_Client_Connection_Handler *hint_;
+  // TAO_IIOP_Client_Connection_Handler *hint_;
   // Hint indicating the last successfully used connection handler for
   // a connection established through this endpoint's acceptor.
 
