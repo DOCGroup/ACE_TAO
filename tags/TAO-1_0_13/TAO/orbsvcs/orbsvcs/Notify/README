@@ -1,0 +1,28 @@
+$Id$
+README for the Notification Service
+-----------------------------------
+
+Features implemented so far:
+---------------------------
+1. Creating Event Channels. however the Channel Factory does not assign ids
+   as yet.
+2. Creating ConsumerAdmins and Supplier Admins.
+3. Creating ProxyConsumers and ProxySuppliers for "Any" events and Structured
+   events.
+4. Helper classes TAO_Notify_StructuredPushConsumer and
+   TAO_Notify_StructuredPushSupplier to write consumers and suppliers for
+   Structured Events.
+5. Support for Filters.The EventChannel's default Filter Factory can be used to
+   create filters. The "TCL" grammer is supported.
+
+Usage:
+-----
+Use the $TAO_ROOT/orbsvcs/Notify_Service to register a ChannelFactory with the
+Naming Service.See the README for more details.
+
+Examples:
+--------
+The $TAO_ROOT/orbsvcs/examples/Notify/Filter example shows how to use the
+features implemented so far.
+
+send comments/suggestions to Pradeep Gore <pradeep@cs.wustl.edu>
