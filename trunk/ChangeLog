@@ -8,7 +8,9 @@ Fri Aug  1 17:23:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* ace/RB_Tree.i:
 	* ace/String_Base.cpp: Changed all the includes of OS.h and
 	  Malloc.h to OS_String.h and Malloc_Base.h, since that is
-	  sufficient. Thanks to Carlos O'Ryan for providing the patches. 
+	  sufficient. Thanks to Carlos O'Ryan for providing the
+	  patches. This helps to improve the compilation time of ACE and
+	  its applications that use the above features.
 
 Fri Aug  1 14:55:00 2003  Dan Troesser  <troesser_d@ociweb.com>
 
