@@ -118,7 +118,7 @@ run Time_Value_Test                     # tests Time_Value
 run High_Res_Timer_Test                 # tests High_Res_Timer
 run SString_Test                        # tests ACE_CString and ACE_SString
 run Collection_Test                     # tests ACE Collection classes
-run DLL_Test                            # tests ACE_DLL class
+test $chorus || test $LynxOS || test $Unicos || run DLL_Test # tests ACE_DLL class
 # Naming_Test: UNICOS fails due to feature not supported
 test $chorus || test $LynxOS || test $Unicos || run Naming_Test # tests ACE_Naming_Context, ACE_WString
 
