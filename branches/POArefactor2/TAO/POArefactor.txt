@@ -1,3 +1,17 @@
+Mon Nov 29 15:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ImplRepo.pidl:
+        * tao/PortableServer/ServerObject.pidl:
+          Moved the ServerObject interface to its own pidl file, we deliver a
+          servant for this interface, the remaining of ImplRepo we just use as
+          client. This way we only link ServerObjectS, not ImplRepoS
+
+        * tao/PortableServer/ImplRepo{A,S,C}.{h,cpp,inl}:
+          Regenerated
+
+        * tao/PortableServer/ServerObject{A,S,C}.{h,cpp,inl}
+          New files
+
 Mon Nov 29 11:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.cpp:
