@@ -1,3 +1,10 @@
+Tue Jun 12 16:11:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * tao/RTCORBA/RTCORBAC.cpp:
+        * tao/RTCORBA/RTCORBAC.h:
+        * tao/RTCORBA/RTCORBAC.i:
+          Added some files that were missed in previous check in.
+
 Fri Jun  8 06:09:48 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* docs/tutorials/Quoter/RT_Event_Service/Stock_i.cpp: Changed the
