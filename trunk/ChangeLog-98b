@@ -2,6 +2,9 @@ Thu Dec 10 09:08:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-chorus.h: added ACE_LACKS_FSYNC.
 
+        * ACE-INSTALL.html: ACE/TAO build on Linux RedHat 5.2
+          as well as 5.1.
+
 Wed Dec 09 22:59:38 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.6.7 released.
