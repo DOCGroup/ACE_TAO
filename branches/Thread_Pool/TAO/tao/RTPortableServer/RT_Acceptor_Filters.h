@@ -79,57 +79,6 @@ private:
   // selection.
 };
 
-class TAO_RTPortableServer_Export TAO_Priority_Acceptor_Filter :
-  public TAO_Server_Protocol_Acceptor_Filter
-{
-  // = TITLE
-  //   RTCORBA::ServerProtocolPolicy & RTCORBA::SERVER_DECLARED
-  //   priority model Acceptor_Filter.
-  //
-  // = DESCRIPTION
-  //   Populates mprofile with endpoints that match
-  //   RTCORBA::SERVER_DECLARED priority and
-  //   RTCORBA::ServerProtocolPolicy of the POA.
-  //
-public:
-  TAO_Priority_Acceptor_Filter (RTCORBA::ProtocolList &protocols,
-                                CORBA::Short priority);
-  // Constructor.
-
-  virtual int validate_acceptor (TAO_Acceptor *acceptor);
-  // Returns true if <acceptor>'s priority equals to <priority_>.
-
-private:
-  CORBA::Short priority_;
-  // SERVER_DECLARED priority of the object.
-};
-
-class TAO_RTPortableServer_Export TAO_Bands_Acceptor_Filter :
-  public TAO_Server_Protocol_Acceptor_Filter
-{
-  // = TITLE
-  //   RTCORBA::PriorityBandedConnectionPolicy &
-  //   RTCORBA::ServerProtocolPolicy Acceptor_Filter.
-  //
-  // = DESCRIPTION
-  //   Populates mprofile with endpoints that match
-  //   RTCORBA::PriorityBandedConnectionPolicy and
-  //   RTCORBA::ServerProtocolPolicy of the POA.
-  //
-public:
-  TAO_Bands_Acceptor_Filter (RTCORBA::ProtocolList &protocols,
-                             RTCORBA::PriorityBands &bands);
-  // Constructor.
-
-  virtual int validate_acceptor (TAO_Acceptor *acceptor);
-  // Returns true if <acceptor>'s priority falls into the range of any
-  // of the <priority_bands_>.
-
-private:
-  RTCORBA::PriorityBands &priority_bands_;
-  // The value of POA's PriorityBandedConnectionPolicy.
-};
-
 #if defined (__ACE_INLINE__)
 #include "RT_Acceptor_Filters.i"
 #endif /* __ACE_INLINE__ */

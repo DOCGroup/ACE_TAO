@@ -148,20 +148,19 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
                       priority_bands.in ());
 
   // If priority banded connections are set, make sure that:
-  //  0. There is at least one band.
-  //  1. Priority model is also set.
+  //  1. There is at least one band.
   //  2. If priority model is SERVER_DECLARED, server_priority must
-  //     match one of the bands.
-  //  3. For each band, there must be at least one endpoint that can
-  //     service it, i.e., whose priority falls into the band's range.
+  //  match one of the bands.
+  //  3. If this POA has a thread pool with lanes, then for each band,
+  //  there must be at least one thread lane that can service it,
+  //  i.e., whose priority falls into the band's range.
   if (bands_policy != 0)
     {
       RTCORBA::PriorityBands &bands =
         bands_policy->priority_bands_rep ();
 
-      // Checks 0 and 1.
-      if (bands.length () == 0
-          || priority == TAO_INVALID_PRIORITY)
+      // Checks 1.
+      if (bands.length () == 0)
         ACE_THROW (PortableServer::POA::InvalidPolicy ());
 
       // Check 2.
@@ -170,8 +169,8 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
           int match = 0;
           for (CORBA::ULong i = 0; i < bands.length (); ++i)
             {
-              if (priority <= bands[i].high
-                  && priority >= bands[i].low)
+              if (priority <= bands[i].high &&
+                  priority >= bands[i].low)
                 {
                   match = 1;
                   break;
@@ -182,23 +181,38 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
             ACE_THROW (PortableServer::POA::InvalidPolicy ());
         }
 
+      //
       // Check 3.
-      TAO_Acceptor_Registry *ar =
-        this->acceptor_registry ();
+      //
 
-      for (CORBA::ULong i = 0; i < bands.length (); ++i)
+      // If this POA is using the default thread pool (which doesn't
+      // have lanes) or a thread pool without lanes, we are done with
+      // the checks.
+      if (this->thread_pool_ == 0 ||
+          !this->thread_pool_->with_lanes ())
+        return;
+
+      // If this POA is using a thread pool with lanes, make sure we
+      // have at least one thread lane that corresponds to these
+      // each band.
+      TAO_Thread_Lane **lanes =
+        this->thread_pool_->lanes ();
+
+      for (CORBA::ULong band = 0;
+           band < bands.length ();
+           ++band)
         {
           int match = 0;
-          for (TAO_AcceptorSetIterator a = ar->begin ();
-               a != ar->end ();
-               ++a)
+          for (CORBA::ULong lane = 0;
+               lane != this->thread_pool_->number_of_lanes () && !match;
+               ++lane)
             {
-              if ((*a)->priority () <= bands[i].high
-                  && (*a)->priority () >= bands[i].low)
-                {
-                  match = 1;
-                  break;
-                }
+              CORBA::Short lane_priority =
+                lanes[lane]->lane_priority ();
+
+              if (lane_priority <= bands[band].high &&
+                  lane_priority >= bands[band].low)
+                match = 1;
             }
           if (!match)
             ACE_THROW (PortableServer::POA::InvalidPolicy ());
@@ -214,17 +228,38 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
   // priority.
   if (rt_priority_model == RTCORBA::SERVER_DECLARED)
     {
-      TAO_Acceptor_Registry *ar =
-        this->acceptor_registry ();
+      // If this POA is using the default thread pool (which doesn't
+      // have lanes) or a thread pool without lanes, we are done with
+      // the checks.
+      if (this->thread_pool_ == 0 ||
+          !this->thread_pool_->with_lanes ())
+        return;
 
-      for (TAO_AcceptorSetIterator a = ar->begin (); a != ar->end (); ++a)
+      // If this POA is using a thread pool with lanes, make sure we
+      // have at least one thread lane that corresponds to these
+      // each band.
+      TAO_Thread_Lane **lanes =
+        this->thread_pool_->lanes ();
+
+      int match = 0;
+      for (CORBA::ULong lane = 0;
+           lane != this->thread_pool_->number_of_lanes () && !match;
+           ++lane)
         {
-          if ((*a)->priority () == priority)
-            return;
-        }
+          CORBA::Short lane_priority =
+            lanes[lane]->lane_priority ();
 
-      ACE_THROW (CORBA::BAD_PARAM ());
+          if (lane_priority <= priority &&
+              lane_priority >= priority)
+            match = 1;
+        }
+      if (!match)
+        ACE_THROW (PortableServer::POA::InvalidPolicy ());
+
+      // Done with checks.
+      return;
     }
+
 }
 
 void

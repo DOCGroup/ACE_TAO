@@ -216,7 +216,8 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
     max_buffered_requests_ (max_buffered_requests),
     max_request_buffer_size_ (max_request_buffer_size),
     lanes_ (0),
-    number_of_lanes_ (1)
+    number_of_lanes_ (1),
+    with_lanes_ (0)
 {
   this->lanes_ = new TAO_Thread_Lane *[this->number_of_lanes_];
   this->lanes_[0] = new TAO_Thread_Lane (*this,
@@ -244,7 +245,8 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
     max_buffered_requests_ (max_buffered_requests),
     max_request_buffer_size_ (max_request_buffer_size),
     lanes_ (0),
-    number_of_lanes_ (lanes.length ())
+    number_of_lanes_ (lanes.length ()),
+    with_lanes_ (1)
 {
   this->lanes_ = new TAO_Thread_Lane *[this->number_of_lanes_];
   for (CORBA::ULong i = 0;
@@ -306,6 +308,12 @@ TAO_Thread_Pool::create_static_threads (void)
 
   // Success.
   return 0;
+}
+
+int
+TAO_Thread_Pool::with_lanes (void) const
+{
+  return this->with_lanes_;
 }
 
 TAO_Thread_Pool_Manager &

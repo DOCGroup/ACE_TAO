@@ -175,6 +175,9 @@ public:
   /// Create the static threads - only called once.
   int create_static_threads (void);
 
+  /// Check if this thread pool has (explicit) lanes.
+  int with_lanes (void) const;
+
   /// @name Accessors
   // @{
 
@@ -205,6 +208,7 @@ private:
 
   TAO_Thread_Lane **lanes_;
   CORBA::ULong number_of_lanes_;
+  int with_lanes_;
 };
 
 class TAO_ORB_Core;
