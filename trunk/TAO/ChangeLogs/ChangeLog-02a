@@ -1,7 +1,16 @@
-Fri Mar 01 07:40:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Mar 01 09:10:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicInterface/Makefile.bor:
         * orbsvcs/orbsvcs/RTEvent.bor:
+        * orbsvcs/orbsvcs/CosEvent.bor:
+        * tests/AMI/client.bor:
+        * tests/AMI/server.bor:
+        * tests/AMI/simple_server.bor:
+        * tests/AMI_Buffering/admin.bor:
+        * tests/AMI_Buffering/client.bor:
+        * tests/AMI_Buffering/server.bor:
+        * tests/AMI_Timeouts/client.bor:
+        * tests/AMI_Timeouts/server.bor:
           Added TAO_Messaging library
 
 Thu Feb 28 20:25:00 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
