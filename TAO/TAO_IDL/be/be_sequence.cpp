@@ -225,6 +225,12 @@ be_sequence::managed_type (void)
             be_interface *bf = be_interface::narrow_from_decl (prim_type);
             if (bf != 0)
               is_valuetype = bf->is_valuetype ();
+            else
+              {
+                be_interface_fwd *bff = be_interface_fwd::narrow_from_decl (prim_type);
+                if (bff != 0)
+                  is_valuetype = bff->is_valuetype ();
+              }
             if (is_valuetype)
               {
                 this->mt_ = be_sequence::MNG_VALUE;
