@@ -71,7 +71,8 @@ protected:
   // <request>.
 
   virtual int _find (const char *opname,
-                     TAO_Skeleton &skelfunc);
+                     TAO_Skeleton &skelfunc,
+                     const unsigned int length = 0);
   // Find an operation in the operation table.
 
   virtual int _bind (const char *opname,

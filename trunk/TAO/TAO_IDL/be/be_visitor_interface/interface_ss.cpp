@@ -280,7 +280,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "const char *opname = req.operation (); // retrieve operation name"
       << be_nl;
   *os << "// find the skeleton corresponding to this opname" << be_nl;
-  *os << "if (this->_find (opname, skel) == -1)" << be_nl;
+  *os << "if (this->_find (opname, skel, req.operation_length ()) == -1)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "ACE_ERROR ((LM_ERROR, \"Bad operation <%s>\\n\", opname));" << be_nl;
   *os << "ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));"

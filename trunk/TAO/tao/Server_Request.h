@@ -151,6 +151,9 @@ public:
   virtual const char *operation (void) const = 0;
   // get the operation name
 
+  virtual unsigned int operation_length (void) const = 0;
+  // get the length of the operation name
+
   virtual void init_reply (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
   // Start a Reply message.
 
@@ -206,7 +209,7 @@ public:
   IIOP_ServerRequest (CORBA::ULong &request_id,
                       CORBA::Boolean &response_expected,
                       TAO_ObjectKey &object_key,
-                      char* operation,
+                      const ACE_CString &operation,
                       TAO_OutputCDR &output,
                       TAO_ORB_Core *orb_core,
                       CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
@@ -236,6 +239,9 @@ public:
 
   const char *operation (void) const;
   // return the operation name
+
+  unsigned int operation_length (void) const;
+  // return the legnth of the operation
 
   //  CORBA::Context_ptr ctx (void);
   // return the context pointer
@@ -313,7 +319,7 @@ private:
   // store the result on this object.
 
 private:
-  char* operation_;
+  ACE_CString operation_;
   // Operation name.
 
   CORBA::Object_var forward_location_;
