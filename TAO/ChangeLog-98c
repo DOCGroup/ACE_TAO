@@ -1,3 +1,17 @@
+Sun Dec  6 03:23:21 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AVStreams.idl: Added the idl code for the
+	  Audio/Video full profile implementation.
+		
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: Added code for the full
+	  profile implementation of the Audio/Video Streaming service. The
+	  Audio/Video Streaming service now supports flows.
+	  Defined new classes TAO_FlowConnection, TAO_FlowEndPoint,
+	  TAO_FlowProducer, TAO_FlowConsumer, TAO_FlowConnection, TAO_FDev.		
+	  
+	  Also added code to the existing A/V classes so that they now
+	  behave according to the full profile. 
+	
 Sun Dec  6 00:43:46 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/POA/On_Demand_Loading/Dir_Service.idl:
