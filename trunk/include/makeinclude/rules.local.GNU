@@ -162,12 +162,18 @@ realclean.local: clean.local
 #----------------------------------------------------------------------------
 
 ifndef MAKEFILE
-MAKEFILE=Makefile
-endif
+  MAKEFILE=Makefile
+endif # MAKEFILE
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # TAO_ROOT
+
+# If no libraries are build in the current directory (actually, if
+# rules.lib.GNU isn't included), then SOEXT might not be set.
+ifndef SOEXT
+  SOEXT=so
+endif # SOEXT
 
 depend.local: $(MAKEFILE)
 	@$(RM) -f $(MAKEFILE).old
@@ -186,6 +192,7 @@ depend.local: $(MAKEFILE)
 		echo "Makefile dependencies updated." ;\
 	fi ;\
 	$(RM) -f $(MAKEFILE).old ;
+
 #----------------------------------------------------------------------------
 #	RCS info target
 #----------------------------------------------------------------------------
