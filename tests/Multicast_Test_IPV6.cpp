@@ -556,7 +556,7 @@ MCT_Event_Handler::leave (const ACE_INET_Addr &mcast_addr,
   if (this->mcast_.leave (mcast_addr, net_if) == 0)
     {
       char buf[MAX_STRING_SIZE];
-      size_t size = 0;
+      size_t size = this->address_vec_.size ();
       for (size_t i = 0; i < size; ++i)
         {
           ACE_OS::sprintf (buf, "%s/%d",
