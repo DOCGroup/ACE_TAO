@@ -70,7 +70,7 @@ class be_visitor
 public:
   virtual ~be_visitor (void);
 
-  virtual visit_decl (be_decl *d);
+  virtual int visit_decl (be_decl *d);
   // visit a decl node
 
   virtual int visit_scope (be_scope *node);
