@@ -7,7 +7,7 @@
 //     TAO
 //
 // = FILENAME
-//     default_server.h
+//     orbconf.h
 //
 // = DESCRIPTION
 //     Build configuration file for the Inter-ORB Engine, and application
