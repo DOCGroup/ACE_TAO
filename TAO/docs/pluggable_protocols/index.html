@@ -2871,11 +2871,16 @@ ORB option.
 
 
 <P>
-Note that the FOOIOP protocol resides in a library other than the TAO library,
-called ``<TT>libTAO_FOO.so</TT>'' on UNIX platforms, and ``<TT>TAO_FOO.dll</TT>''
-on Win32 platforms. This ability to dynamically load pluggable protocols in
-libraries that are completely separate libraries from the TAO library truly
-makes TAO's pluggable protocol framework ``pluggable.''
+Note that the FOOIOP protocol resides in a library other than the TAO
+library, called ``<TT>libTAO_FOO.so</TT>'' on UNIX platforms, and
+``<TT>TAO_FOO.dll</TT>'' on Win32 platforms. This ability to
+dynamically load pluggable protocols in libraries that are completely
+separate libraries from the TAO library truly makes TAO's pluggable
+protocol framework ``pluggable.''  Make sure the directory your
+pluggable protocol library is located in is also in your library
+search path, typically <TT>LD_LIBRARY_PATH</TT> on UNIX systems and/or
+the ``<TT>/etc/ld.so.conf</TT>'' file on some UNIX systems.  Remember
+to run <TT>ldconfig</TT> if you modify ``<TT>/etc/ld.so.conf</TT>.''
 
 <P>
 Creating an endpoint specific to a given pluggable protocol is simply a matter
@@ -2975,7 +2980,7 @@ examples of the Layers architecture.
     <ADDRESS><a href="mailto:ossama@uci.edu">Ossama Othman</a></ADDRESS>
 <!-- Created: Tue Dec 14 16:53:58 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Wed Feb  2 17:52:32 PST 2000
+Last modified: Wed Feb 16 08:34:42 PST 2000
 <!-- hhmts end -->
 </BODY>
 </HTML>
