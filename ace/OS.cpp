@@ -277,14 +277,14 @@ ACE_OS::readPPCTimeBase (u_long &most, u_long &least)
   // aclock.  If there are multiple calls to the function in a
   // compilation unit, then that symbol would be multiply defined if
   // the function was inline.
-  asm volatile ("aclock:
-                 mftbu 5        /* upper time base register */
-                 mftb 6         /* lower time base register */
-                 mftbu 7        /* upper time base register */
-                 cmpw 5,7    /* check for rollover of upper */
-                 bne aclock
-                 stw 5,%0                           /* most */
-                 stw 6,%1"                         /* least */
+  asm volatile ("aclock:\n"
+                "mftbu 5\n"     /* upper time base register */
+                "mftb 6\n"      /* lower time base register */
+                "mftbu 7\n"     /* upper time base register */
+                "cmpw 5,7\n" /* check for rollover of upper */
+                "bne aclock\n"
+                "stw 5,%0\n"                        /* most */
+                "stw 6,%1"                         /* least */
                 : "=m" (most), "=m" (least)      /* outputs */
                 :                              /* no inputs */
                 : "5", "6", "7", "memory"    /* constraints */);
