@@ -1,3 +1,11 @@
+Sun Mar 21 17:59:22 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/CDR_Stream.cpp: 
+          Fixed a problem with ACE_OutputCDR::write_octet_array_mb, thanks
+          to Dave Meyer <dmeyer@std.saic.com> for isolating and reporting
+	  this bug again [it was fixed in TAO and somehow it crept to the
+	  ACE version of the CDR classes].
+
 Sun Mar 21 17:42:08 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record): 
@@ -4246,132 +4254,4 @@ Sun Jan  3 14:39:49 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
         * ace/ACE: Added a simple dirname() wrapper method.
 
         * ace/SString: The set(const char *, size_t, int = 1) and
-          set(const char *, size_t) methods were inherently ambiguous.
-          I've fixed this by changing removing the default parameters.
-          Thanks to Irfan for suggesting this fix.
-
-        * ace/Mem_Map.cpp: mmap() will fail if the length of the file
-          mapping is 0, which will be the case if we've just created the
-          file.  Therefore, don't even bother trying to mmap() in this
-          case and return a successful result.
-
-        * ace/FILE: Moved the get_remote_addr() and get_local_addr()
-          methods from the FILE_IO class to the FILE class since that's
-          more properly where they belong.  Also added a new remove()
-          method that unlinks the file.
-
-        * tests/Priority_Reactor_Test.cpp,
-          tests/Conn_Test.cpp,
-          tests/Notify_Performance_Test.cpp,
-          Priority_Reactor_Test.cpp,
-          Reactor_Performance_Test.cpp: Since the default is to skip argv0
-          there's no sense explicitly saying this in the constructor of
-          ACE_Get_Opt.
-
-        * ace/FILE_Connector.h: Updated the comments to reflect recent
-          changes.
-
-        * ace/FILE.h: Added a new get_info() method that takes a reference
-          to an ACE_FILE_Info rather than a pointer.  This is a cleaner
-          API, IMHO.
-
-        * ace/FILE_Connector.cpp (connect): When the <remote_sap> argument
-          is ACE_Addr::sap_any, then connect will select a temporary
-          filename using the new feature of ACE_FILE_Addr described below.
-
-        * ace/FILE_Addr.cpp (set): When the address is ACE_Addr::sap_any,
-          then we'll select a new temporary filename using the new
-          ACE_DEFAULT_TEMP_FILE macro and ACE_OS::mktemp().
-
-        * ace/OS.h: Added a new ACE_DEFAULT_TEMP_FILE macro that defaults
-          to "/tmp/ace-file-XXXXXX" and is used by the ACE_FILE_Connector
-          to create a temporary file when it's given an ACE_Addr::sap_any.
-
-        * ace/FILE_Addr.h: The <set> accessor should return an int to be
-          consistent.
-
-        * ace/OS.h: Added a new ACE_sap_any_cast macro, which makes it
-          much easier to cast the ACE_Addr::sap_any to the right subclass.
-
-        * tests/Reactor_Performance_Test.cpp,
-          tests/Reactor_Exceptions_Test.cpp,
-          tests/Process_Strategy_Test.cpp,
-          tests/Priority_Reactor_Test.cpp,
-          tests/IOStream_Test.cpp,
-          tests/Conn_Test.cpp: Replaced all the C-style casts for
-          ACE_Addr::sap_any with the new ACE_sap_any_cast macro.
-
-Sun Jan 03 21:48:37 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-        * ace/Asynch_Acceptor.cpp: Since this is a template file, I
-          removed it from the ace library build on NT.
-
-        * ace/Asynch_Acceptor.cpp (open): Changed C-style cast to use the
-          new ACE_sap_any_cast macro from Dr. Schmidt.
-
-Sun Jan 03 09:12:23 1999  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/config-sunos5.5.h: with GreenHills, added
-          ACE_LACKS_LINEBUFFERED_STREAMBUF and ACE_LACKS_SIGNED_CHAR.
-
-        * ace/Basic_Types.* (ACE_U_LongLong): unioned the data members
-          with a double, to ensure alignment on 8-byte boundaries.  It
-          could matter when an ACE_U_LongLong is used as a true 8-byte
-          quantity, such as in a call to Solaris ::gethrtime ().
-
-        * tests/Time_Value_Test.cpp: replaced remaining #ifdef
-          ACE_HAS_STHREADS with #ifdef sun.
-
-Sat Jan  2 23:48:44 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
-
-        * docs/ACE-tutorials.html
-        * docs/tutorials/guide-tutorials.html
-        * docs/tutorials/new-tutorials.html
-        * docs/tutorials/online-tutorials.html
-        Converted some of the absolute URLs to relative.  I only have the
-        docs/tutorials tree here at home so I couldn't do any more than
-        these.
-
-        * docs/tutorials/021/*
-        New tutorial on ACE_Malloc<>.  I haven't begun the documentation
-        yet but wanted to get the code commited so it doesn't get lost.
-
-Sat Jan 02 08:34:27 1999  David L. Levine  <levine@cs.wustl.edu>
-
-        * examples/ASX/Event_Server/Event_Server/event_server.cpp
-          (handle_input),
-          examples/Reactor/Misc/test_early_timeouts.cpp (main):
-          added ACE_UNUSED_ARG (n), to avoid compile warning with ACE_NDEBUG.
-
-        * performance-tests/Misc/test_naming.cpp (find): moved function
-          call w/side effect out of ACE_ASSERT.  Thanks to DU 4.0 cxx
-          for noticiing it, with ACE_NDEBUG.
-
-Fri Jan 01 18:57:22 1999  David L. Levine  <levine@cs.wustl.edu>
-
-        * ace/Containers_T.i (ACE_Array,ACE_Array::operator=):
-          added missing ACE_INLINE's.
-
-        * ace/OS.{h,cpp} (ACE_TSS_Info::operator{==,!=}): added
-          constness.  It's necessary with the ACE_Array changes,
-          with ACE_HAS_TSS_EMULATION.
-
-Fri Jan  1 12:22:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
-
-        * ace/Containers_T.h:
-        * ace/Containers_T.i:
-        * ace/Containers_T.cpp:
-        * bin/Array_Helper:
-        * bin/Array.pl:
-          Moved most of the implementation of ACE_Array into
-          ACE_Array_Base this class does not require == or != operators
-          defined for the template parameter.
-          I also added methods to access and manipulate the capacity of
-          the array (max_size) as opposed to always changing its size (the
-          portion actually used).
-
-        * ace/Object_Manager.cpp:
-        * ace/Template_Instantiations.cpp:
-        * ace/OS.cpp:
-        * apps/JAWS/clients/Caching/URL_Properties.cpp:
-          Fixed ACE_Array instantiations.
+          set(const c
