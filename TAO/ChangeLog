@@ -1,3 +1,9 @@
+Thu Jul 11 09:23:12 2002   Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/client.bor:
+        * tests/RTCORBA/Profile_And_Endpoint_Selection/server.bor:
+          Added missing TAO_Strategies library to fix BCB compile errors.
+
 Wed Jul 10 17:54:14 2002   Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Utils/Servant_Var.cpp:
