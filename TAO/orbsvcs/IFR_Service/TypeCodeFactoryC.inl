@@ -1,3 +1,6 @@
+/* -*- C++ -*- */
+//$Id$
+
 #if !defined (_CORBA_TYPECODEFACTORY___VAR_CI_)
 #define _CORBA_TYPECODEFACTORY___VAR_CI_
 
