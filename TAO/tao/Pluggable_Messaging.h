@@ -48,7 +48,8 @@ public:
   virtual int send_message (TAO_Transport *transport,
                             TAO_OutputCDR &stream,
                             ACE_Time_Value *max_wait_time = 0,
-                            TAO_Stub *stub = 0) = 0;
+                            TAO_Stub *stub = 0,
+                            int two_way = 1) = 0;
   // This is a complement of the previous method. This method sends
   // the CDR through the transport layer
   

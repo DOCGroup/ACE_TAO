@@ -1,6 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -143,9 +144,9 @@ private:
 
 // *********************************************************************
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
-#  if defined (TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
+#  if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
 class TAO_Export TAO_Asynch_Reply_Dispatcher : public TAO_Reply_Dispatcher
 {
@@ -209,9 +210,9 @@ private:
   // Reply Handler passed in the Asynchronous Invocation.
 };
 
-#  endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
+#  endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
-#endif /* TAO_HAS_CORBA_MESSAGING  */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 // *********************************************************************
 

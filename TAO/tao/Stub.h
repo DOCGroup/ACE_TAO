@@ -40,13 +40,13 @@
 #include "tao/MProfile.h"
 #include "tao/ORB.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 // Forward declarations.
-class TAO_RelativeRoundtripTimeoutPolicy_i;
+class TAO_RelativeRoundtripTimeoutPolicy;
 class TAO_Client_Priority_Policy;
 class TAO_Sync_Scope_Policy;
 class TAO_Buffering_Constraint_Policy;
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 class TAO_Sync_Strategy;
 class TAO_GIOP_Invocation;
@@ -278,14 +278,14 @@ public:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
   CORBA::Policy_ptr get_policy (
       CORBA::PolicyType type,
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 
-  TAO_RelativeRoundtripTimeoutPolicy_i *relative_roundtrip_timeout (void);
+  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void);
 
   TAO_Client_Priority_Policy *client_priority (void);
 
@@ -314,7 +314,7 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   TAO_Sync_Strategy &sync_strategy (void);
   // Return the sync strategy to be used in by the transport.
@@ -512,11 +512,11 @@ private:
   //   2. we can search for the servant/POA's status starting from
   //      the ORB's RootPOA.
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
   TAO_Policy_Manager_Impl *policies_;
   // The policy overrides in this object, if nil then use the default
   // policies.
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   // = Disallow copy constructor and assignment operator
   ACE_UNIMPLEMENTED_FUNC (TAO_Stub (const TAO_Stub &))

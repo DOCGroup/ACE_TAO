@@ -1,6 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // @ (#) $Id$
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -356,23 +357,171 @@ enum MCAST_SERVICEID
 // OBV is in experimental stage
 #define TAO_HAS_VALUETYPE
 
-// UIOP support (GIOP over UNIX domain sockets)
-// #define TAO_HAS_UIOP
-
 // Minimum CORBA
 // #define TAO_HAS_MINIMUM_CORBA
 
-// INTERFACE_REPOSITORY
-//#define TAO_HAS_INTERFACE_REPOSITORY
-// Without Minimum CORBA, the user will get regular (no locality
-// constraints) policies by default.  With Minimum CORBA, the user
-// will get locality constraint policies by default.
-//
-// If #define TAO_HAS_REMOTE_POLICIES 0, then the user will always get
-// locality constraint policies (regardless of Minimum CORBA).
-//
-// If #define TAO_HAS_REMOTE_POLICIES 1, then the user will always get
-// regular policies (regardless of Minimum CORBA).
+// UIOP support is enabled by default if the platform supports UNIX
+// domain sockets, and TAO is not configured for minimum CORBA.
+// If TAO is configured for minimum CORBA, then UIOP will be disabled
+// by default.
+// To explicitly enable UIOP support uncomment the following
+// #define TAO_HAS_UIOP 1
+// To explicitly disable UIOP support uncomment the following
+// #define TAO_HAS_UIOP 0
+
+// Default UIOP settings
+#if !defined (TAO_HAS_UIOP)
+#  if defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+#    define TAO_HAS_UIOP 0
+#  elif defined (TAO_HAS_MINIMUM_CORBA)
+#    define TAO_HAS_UIOP 0
+#  else
+#    define TAO_HAS_UIOP 1
+#  endif  /* TAO_HAS_MINIMUM_CORBA */
+#endif  /* !TAO_HAS_UIOP */
+
+// RT_CORBA support is enabled by default if TAO is not configured for
+// minimum CORBA.  If TAO is configured for minimum CORBA, then
+// RT_CORBA will be disabled by default.
+// To explicitly enable RT_CORBA support uncomment the following
+// #define TAO_HAS_RT_CORBA 1
+// To explicitly disable RT_CORBA support uncomment the following
+// #define TAO_HAS_RT_CORBA 0
+
+// Default RT_CORBA settings
+#if !defined (TAO_HAS_RT_CORBA)
+#  if defined (TAO_HAS_MINIMUM_CORBA)
+#    define TAO_HAS_RT_CORBA 0
+#  else
+#    define TAO_HAS_RT_CORBA 1
+#  endif  /* TAO_HAS_MINIMUM_CORBA */
+#endif  /* !TAO_HAS_RT_CORBA */
+
+// MINIMUM_POA support is disabled by default if TAO is not
+// configured for minimum CORBA.  If TAO is configured for minimum
+// CORBA, then MINIMUM_POA will be enabled by default.
+// To explicitly enable MINIMUM_POA support uncomment the following
+// #define TAO_HAS_MINIMUM_POA 1
+// To explicitly disable MINIMUM_POA support uncomment the following
+// #define TAO_HAS_MINIMUM_POA 0
+
+// Default MINIMUM_POA settings
+#if !defined (TAO_HAS_MINIMUM_POA)
+#  if defined (TAO_HAS_MINIMUM_CORBA)
+#    define TAO_HAS_MINIMUM_POA 1
+#  else
+#    define TAO_HAS_MINIMUM_POA 0
+#  endif  /* TAO_HAS_MINIMUM_CORBA */
+#endif  /* !TAO_HAS_MINIMUM_POA */
+
+// MINIMUM_POA_MAPS support is disabled by default if TAO is not
+// configured for minimum POA.  If TAO is configured for minimum
+// POA, then MINIMUM_POA_MAPS will be enabled by default.
+// To explicitly enable MINIMUM_POA_MAPS support uncomment the following
+// #define TAO_HAS_MINIMUM_POA_MAPS 1
+// To explicitly disable MINIMUM_POA_MAPS support uncomment the following
+// #define TAO_HAS_MINIMUM_POA_MAPS 0
+
+// Default MINIMUM_POA_MAPS settings
+#if !defined (TAO_HAS_MINIMUM_POA_MAPS)
+#  if (TAO_HAS_MINIMUM_POA == 1)
+#    define TAO_HAS_MINIMUM_POA_MAPS 1
+#  else
+#    define TAO_HAS_MINIMUM_POA_MAPS 0
+#  endif  /* TAO_HAS_MINIMUM_POA */
+#endif  /* !TAO_HAS_MINIMUM_POA_MAPS */
+
+// CORBA_MESSAGING support is enabled by default if TAO is not
+// configured for minimum CORBA.  If TAO is configured for minimum
+// CORBA, then CORBA_MESSAGING will be disabled by default.
+// To explicitly enable CORBA_MESSAGING support uncomment the following
+// #define TAO_HAS_CORBA_MESSAGING 1
+// To explicitly disable CORBA_MESSAGING support uncomment the following
+// #define TAO_HAS_CORBA_MESSAGING 0
+
+// Default CORBA_MESSAGING settings
+#if !defined (TAO_HAS_CORBA_MESSAGING)
+#  if defined (TAO_HAS_MINIMUM_CORBA)
+#    define TAO_HAS_CORBA_MESSAGING 0
+#  else
+#    define TAO_HAS_CORBA_MESSAGING 1
+#  endif  /* TAO_HAS_MINIMUM_CORBA */
+#endif  /* !TAO_HAS_CORBA_MESSAGING */
+
+// AMI support is disabled by default, irrespective of whether TAO is
+// configured for minimum CORBA.
+// To explicitly enable AMI support uncomment the following
+// #define TAO_HAS_AMI 1
+// To explicitly disable AMI support uncomment the following
+// #define TAO_HAS_AMI 0
+
+// Default AMI settings
+#if !defined (TAO_HAS_AMI)
+#  define TAO_HAS_AMI 0
+#endif  /* !TAO_HAS_AMI */
+
+// AMI_POLLER support is disabled by default if TAO is not configured
+// for AMI.  If TAO is configured for AMI, then AMI_POLLER will be
+// enabled by default.
+// To explicitly enable AMI_POLLER support uncomment the following
+// #define TAO_HAS_AMI_POLLER 1
+// To explicitly disable AMI_POLLER support uncomment the following
+// #define TAO_HAS_AMI_POLLER 0
+
+// Default AMI_POLLER settings
+#if !defined (TAO_HAS_AMI_POLLER)
+#  if (TAO_HAS_AMI == 1)
+#    define TAO_HAS_AMI_POLLER 1
+#  else
+#    define TAO_HAS_AMI_POLLER 0
+#  endif  /* TAO_HAS_AMI == 1 */
+#endif  /* !TAO_HAS_AMI_POLLER */
+
+// AMI_CALLBACK support is disabled by default if TAO is not configured
+// for AMI.  If TAO is configured for AMI, then AMI_CALLBACK will be
+// enabled by default.
+// To explicitly enable AMI_CALLBACK support uncomment the following
+// #define TAO_HAS_AMI_CALLBACK 1
+// To explicitly disable AMI_CALLBACK support uncomment the following
+// #define TAO_HAS_AMI_CALLBACK 0
+
+// Default AMI_CALLBACK settings
+#if !defined (TAO_HAS_AMI_CALLBACK)
+#  if (TAO_HAS_AMI == 1)
+#    define TAO_HAS_AMI_CALLBACK 1
+#  else
+#    define TAO_HAS_AMI_CALLBACK 0
+#  endif  /* TAO_HAS_AMI == 1 */
+#endif  /* !TAO_HAS_AMI_CALLBACK */
+
+// INTERFACE_REPOSITORY support is disabled by default, irrespective
+// of whether TAO is configured for minimum CORBA.
+// To explicitly enable INTERFACE_REPOSITORY support uncomment the following
+// #define TAO_HAS_INTERFACE_REPOSITORY 1
+// To explicitly disable INTERFACE_REPOSITORY support uncomment the following
+// #define TAO_HAS_INTERFACE_REPOSITORY 0
+
+// Default INTERFACE_REPOSITORY settings
+#if !defined (TAO_HAS_INTERFACE_REPOSITORY)
+#  define TAO_HAS_INTERFACE_REPOSITORY 0
+#endif  /* !TAO_HAS_INTERFACE_REPOSITORY */
+
+// REMOTE_POLICIES support is enabled by default if TAO is not
+// configured for minimum CORBA.  If TAO is configured for minimum
+// CORBA, then REMOTE_POLICIES will be disabled by default.
+// To explicitly enable REMOTE_POLICIES support uncomment the following
+// #define TAO_HAS_REMOTE_POLICIES 1
+// To explicitly disable REMOTE_POLICIES support uncomment the following
+// #define TAO_HAS_REMOTE_POLICIES 0
+
+// Default REMOTE_POLICIES settings
+#if !defined (TAO_HAS_REMOTE_POLICIES)
+#  if defined (TAO_HAS_MINIMUM_CORBA)
+#    define TAO_HAS_REMOTE_POLICIES 0
+#  else
+#    define TAO_HAS_REMOTE_POLICIES 1
+#  endif  /* TAO_HAS_MINIMUM_CORBA */
+#endif  /* !TAO_HAS_REMOTE_POLICIES */
 
 // TAO_HAS_LOCALITY_CONSTRAINT_POLICIES is an internal macro and
 // should not be set by the user.
@@ -382,56 +531,21 @@ enum MCAST_SERVICEID
 and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
-#if defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_REMOTE_POLICIES == 0)
+# define TAO_HAS_LOCALITY_CONSTRAINT_POLICIES
+#endif /* TAO_HAS_REMOTE_POLICIES */
 
+#if defined (TAO_HAS_MINIMUM_CORBA)
 // With minimum CORBA, we don't have the ForwardRequest exception.
 // Therefore, we can't support the INS forwarding agent.
 # if !defined (TAO_NO_IOR_TABLE)
 #  define TAO_NO_IOR_TABLE
 # endif /* TAO_NO_IOR_TABLE */
-
-# if !defined (TAO_HAS_REMOTE_POLICIES)
-#  define TAO_HAS_REMOTE_POLICIES 0
-# endif /* TAO_HAS_REMOTE_POLICIES */
-
 #else
-
-// Interceptors is supported by default if we are not building
-// for MinimumCORBA.
-#define TAO_HAS_INTERCEPTORS
-
+// Interceptors is supported by default if we are not building for
+// MinimumCORBA.
+# define TAO_HAS_INTERCEPTORS
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-#if !defined (TAO_DISABLE_RT_CORBA) && !defined (TAO_HAS_MINIMUM_CORBA)
-#  define TAO_HAS_RT_CORBA
-#endif /* !TAO_HAS_RT_CORBA && !TAO_HAS_MINIMUM_CORBA */
-
-// If the user has not already specified TAO_HAS_UIOP, and the
-// platform supports UNIX domain sockets, and minimum CORBA is not
-// defined, we turn on TAO_HAS_UIOP by default.  Note that even with
-// minimum CORBA, the user can still get UIOP support simply be
-// defining TAO_HAS_UIOP before reaching this code.
-#if !defined (TAO_HAS_UIOP) && \
-    !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS) && \
-    !defined (TAO_HAS_MINIMUM_CORBA)
-#    define TAO_HAS_UIOP
-#endif /* !TAO_HAS_UIOP &&
-          !ACE_LACKS_UNIX_DOMAIN_SOCKETS &&
-          !TAO_HAS_MINIMUM_CORBA */
-
-// Policies are not locality constraint by default.
-#if !defined (TAO_HAS_REMOTE_POLICIES)
-# define TAO_HAS_REMOTE_POLICIES 1
-#endif /* TAO_HAS_REMOTE_POLICIES */
-
-#if (TAO_HAS_REMOTE_POLICIES == 0)
-# define TAO_HAS_LOCALITY_CONSTRAINT_POLICIES
-#endif /* TAO_HAS_REMOTE_POLICIES */
-
-// CORBA Messaging
-#if !defined (TAO_HAS_CORBA_MESSAGING)
-# define TAO_HAS_CORBA_MESSAGING
-#endif /* TAO_HAS_CORBA_MESSAGING */
 
 // Define the policy types as literals, so they can be used in switch
 // statements

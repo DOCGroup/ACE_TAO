@@ -38,56 +38,16 @@ class TAO_IOR_LookupTable;
 // #define TAO_LOCAL_INLINE ACE_INLINE
 // #endif /* ! __ACE_INLINE__ */
 
-typedef ACE_Unbounded_Set<ACE_CString> TAO_EndpointSet;
-typedef ACE_Unbounded_Set_Iterator<ACE_CString> TAO_EndpointSetIterator;
 
-// @@ Using an ACE_Unbounded_Queue to contain the preconnects may not
-//    be the best container to use.  However, it will only be used
-//    during client side initialization.  Also, a template
+// @@ Using an ACE_Unbounded_Queue to contain the endpoints and
+//    preconnects may not be the best container to use.  However, it
+//    will only be used during ORB bootstrapping.  Also, a template
 //    instantiation of ACE_Unbounded_Queue<ACE_CString> already exists
 //    in ACE so we do not have to worry about increasing TAO's
 //    footprint by using this container.
-typedef ACE_Unbounded_Queue<ACE_CString> TAO_PreconnectSet;
-typedef ACE_Unbounded_Queue_Iterator<ACE_CString> TAO_PreconnectSetIterator;
+typedef ACE_Unbounded_Queue<ACE_CString> TAO_EndpointSet;
+typedef ACE_Unbounded_Queue_Iterator<ACE_CString> TAO_EndpointSetIterator;
 
-// -------------------------------------------------------------------
-// The following utility classes are used to insert endpoints and
-// preconnects into their corresponding containers, but at the same
-// time allow the same parsing code to be used for endpoints and
-// preconnects.
-
-// Base class that provides interface for insertion of
-class TAO_Base_Endpoint_Insertion_Strategy
-{
-public:
-  virtual int insert (const ACE_CString &endpoint) = 0;
-};
-
-// Utility class to insert endpoints into endpoint container.
-class TAO_Endpoint_Insertion_Strategy
-  : public TAO_Base_Endpoint_Insertion_Strategy
-{
-public:
-  TAO_Endpoint_Insertion_Strategy (TAO_EndpointSet &endpoint_set);
-
-  virtual int insert (const ACE_CString &endpoint);
-
-private:
-  TAO_EndpointSet &endpoints_;
-};
-
-// Utility class to insert preconnects into preconnect container.
-class TAO_Preconnect_Insertion_Strategy
-  : public TAO_Base_Endpoint_Insertion_Strategy
-{
-public:
-  TAO_Preconnect_Insertion_Strategy (TAO_PreconnectSet &preconnect_set);
-
-  virtual int insert (const ACE_CString &preconnect);
-
-private:
-  TAO_PreconnectSet &preconnects_;
-};
 // -------------------------------------------------------------------
 
 class TAO_Export TAO_ORB_Parameters
@@ -110,7 +70,7 @@ public:
   // Destructor.
 
   int preconnects (ACE_CString &preconnects);
-  TAO_PreconnectSet &preconnects (void);
+  TAO_EndpointSet &preconnects (void);
   void add_preconnect (ACE_CString &preconnect);
   // Specifies the endpoints to pre-establish connections on.
 
@@ -194,20 +154,14 @@ private:
   // All preconnect or endpoint strings should be of the above form(s).
 
   int parse_endpoints (ACE_CString &endpoints,
-                       TAO_Base_Endpoint_Insertion_Strategy &endpoints_list);
+                       TAO_EndpointSet &endpoints_list);
 
-  TAO_PreconnectSet preconnects_list_;
+  TAO_EndpointSet preconnects_list_;
   // List of endpoints used to pre-establish connections.
-
-  TAO_Preconnect_Insertion_Strategy preconnect_insertion_strategy_;
-  // Strategy used to insert endpoints into the endpoint container.
 
   TAO_EndpointSet endpoints_list_;
   // List of endpoints this server is willing to accept requests
   // on.
-
-  TAO_Endpoint_Insertion_Strategy endpoint_insertion_strategy_;
-  // Strategy used to insert endpoints into the endpoint container.
 
   CORBA::UShort service_port_[NO_OF_MCAST_SERVICES];
   // Port numbers of the configured services.

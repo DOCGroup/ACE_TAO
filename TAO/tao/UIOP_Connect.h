@@ -1,6 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -19,7 +20,7 @@
 
 #include "tao/UIOP_Transport.h"
 
-#if defined (TAO_HAS_UIOP)
+#if TAO_HAS_UIOP == 1
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -189,6 +190,6 @@ protected:
 #include "tao/UIOP_Connect.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_HAS_UIOP */
+#endif /* TAO_HAS_UIOP == 1 */
 
 #endif /* TAO_UIOP_CONNECT_H */

@@ -1,6 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -62,14 +63,11 @@
 // configure fixed one-byte alignment policy, since some fixed policy
 // needs to apply throughout an ORB.
 
-#if defined (_MSC_VER)
-//# pragma  pack (push, 1)          // VC++, stack 1-byte alignment policy
+#if defined (_MSC_VER) || defined (__BORLANDC__)
 # ifdef   _DEBUG                  // convert from VC++ convention ...
 #   define  TAO_DEBUG             // ... to normal convention
 # endif
-#elif defined (__BORLANDC__)
-# pragma option -a                // BC++, use 1 byte alignment
-#endif  /* _MSC_VER */
+#endif  /* _MSC_VER || __BORLANDC__ */
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -1106,7 +1104,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA_EnumMemberSeq *EnumMemberSeq_ptr;
   typedef CORBA_EnumMemberSeq_out EnumMemberSeq_out;
   typedef CORBA_EnumMemberSeq_var EnumMemberSeq_var;
-#endif /* TAO_HAS_INTERFACE_REPOSITORY */
+#endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
   typedef CORBA_Bounds Bounds;
   typedef CORBA_Bounds *Bounds_ptr;

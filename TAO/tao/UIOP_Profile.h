@@ -27,7 +27,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-# if defined (TAO_HAS_UIOP)
+# if TAO_HAS_UIOP == 1
 
 #include "tao/Object_KeyC.h"
 #include "tao/UIOP_Connect.h"
@@ -47,7 +47,8 @@ class TAO_Export TAO_UIOP_Profile : public TAO_Profile
   // = DESCRIPTION
   //   This class defines the UIOP profile.
 public:
-  static const char object_key_delimiter;
+  static const char object_key_delimiter_;
+  virtual char object_key_delimiter (void) const;
   // The object key delimiter that UIOP uses or expects.
 
   static const char *prefix (void);
@@ -163,6 +164,6 @@ private:
 # include "tao/UIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
-# endif  /* TAO_HAS_UIOP */
+# endif  /* TAO_HAS_UIOP == 1 */
 
 #endif  /* TAO_UIOP_PROFILE_H */
