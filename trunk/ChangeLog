@@ -1,3 +1,16 @@
+Mon Aug  4 21:02:12 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/TSS_T.{h,cpp}:
+          Removed ACE_HAS_THREADS #ifdef around ACE_TSS* classes that
+          shouldn't have been there, and was erroneously added when the
+          code was moved.  Although ACE_TSS probably should be ifdef'd and
+          the ACE_TSS_TYPE macros used, that wasn't the purpose of the
+          move, so it was set back to the way it was.
+
+        * ace/Free_List.h:
+          Added #include os_stddef.h to pick up size_t.  Thanks to John
+          Michael Zorko <j.zorko@att.net> for submitting this patch.
+
 Mon Aug  4 17:03:55 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Bound_Ptr.i:
