@@ -1,3 +1,25 @@
+Sun Sep  5 01:42:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Stub.h (create_ior_info, get_profile_ior_info):
+
+	  Removed exception specifications from these methods.  They
+	  aren't needed and force an unecessary include of the heavy
+	  weight tao/SystemException.h header.
+
+	* tao/Stub.cpp:
+
+	  Likewise.
+
+	* tao/IOP_CodecC.h:
+	* tao/PollableC.h:
+	* tao/PortableInterceptorC.h:
+	* tao/IFR_Client/IFR_BaseC.h:
+	* tao/PortableServer/ImplRepoC.h:
+	* tao/PortableServer/ORT_Adapter.h:
+
+	  Added missing header #includes now made necessary by header
+	  dependency reductions in tao/ORB.h.
+
 Sun Sep  5 01:21:45 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/RTScheduling/MIF_SchedulingC.h:
@@ -13,7 +35,7 @@ Sun Sep  5 01:13:12 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Removed exception specifications from CORBA::ORB methods.  The
 	  C++ mapping no longer requires them.  This also allows for the
-	  removal ofthe "tao/SystemException.h" include which should
+	  removal of the "tao/SystemException.h" include which will
 	  improve TAO library compile times, in addition to compile times
 	  for TAO_IDL generated stubs for IDL that contain no operations
 	  (e.g. anything except for non-empty interfaces).
