@@ -227,7 +227,7 @@ search based operation demuxing strategy.  Note that this option is for testing 
 <TD><TT>-in</TT></TD>
 <TD> To generate #include statements with <>'s for the standard
     include files (e.g. tao/corba.h) indicating them as non-changing
-    files</TD> 
+    files</TD>
 </TR>
 
 
@@ -325,12 +325,12 @@ spelling only by case (default for now).</td>
 <tr NAME="Ce">
 <td><tt>-Ce</tt></td>
 
-<td>Output an error if two indentifiers in the same scope differ in 
+<td>Output an error if two indentifiers in the same scope differ in
 spelling only by case. Default output is warning (for now).</td>
 
 <td>Since there is at least one OMG IDL file (sfp.idl, part of the
 AVStreams specification) that is inconsistent with its own spelling
-rule, we have made a warning the default output until the issue 
+rule, we have made a warning the default output until the issue
 is resolved.</td>
 </tr>
 
@@ -354,6 +354,18 @@ for now)&nbsp;</td>
     will use native C++ exceptions. If the value of the flag is 1,
     tao_idl will generate code that will use environment variable for
     passing exceptions </td>
+</tr>
+
+<tr NAME="Gp">
+<td><tt>-Gp </tt></td>
+
+<td>Generated collocated stubs that use <code>Thru_POA</code> collocation strategy (default)</td>
+</tr>
+
+<tr NAME="Gd">
+<td><tt>-Gd </tt></td>
+
+<td>Generated collocated stubs that use <code>Direct</code> collocation strategy</td>
 </tr>
 
 <tr NAME="Gt">
@@ -408,6 +420,18 @@ for now)&nbsp;</td>
 <td><tt>-Sa</tt></td>
 
 <td>Suppress generation of the Any operators</td>
+</tr>
+
+<tr NAME="Sp">
+<td><tt>-Sa</tt></td>
+
+<td>Suppress generation of collocated stubs that use <code>Thru_POA</code> collocation strategy</td>
+</tr>
+
+<tr NAME="Sd">
+<td><tt>-Sd</tt></td>
+
+<td>Suppress generation of collocated stubs that use <code>Direct</code> collocation strategy (default)</td>
 </tr>
 
 <tr NAME="St">
