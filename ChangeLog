@@ -2,7 +2,7 @@ Wed Mar 19 11:29:25 2003  Ossama Othman  <ossama@uci.edu>
 
 	* configure.ac (ACE_HAS_POSIX_GETPWNAM_R):
 
-	  Only define this macro if the user hasn't disable reentrant
+	  Only define this macro if the user hasn't disabled reentrant
 	  function support.
 
 Wed Mar 19 11:10:50 2003  Ossama Othman  <ossama@uci.edu>
