@@ -136,7 +136,11 @@ run Reverse_Lock_Test                   # uses ACE_Reverse_Lock
 #Tokens_Test: threads not supported on this platform
 #run Tokens_Test
 
-# run Map_Manager_Test                    # uses Map Manager and Hash Map Manager + Forward and Reverse Map Iterators.
+run Map_Manager_Test                    # uses Map Manager and Hash Map Manager + Forward and Reverse Map Iterators.
+
+run Cache_Map_Manager_Test              # uses Cache Map Manager and Hash Cache Map Manager + Forward and Reverse Map Iterators.
+
+run Cached_Conn_Test                    # uses Cached connection management
 
 run Map_Test                            # uses Map + Forward and Reverse Map Iterators.
 
@@ -167,12 +171,11 @@ run Service_Config_Test                 # uses Service_Config
 run IOStream_Test                       # uses ACE_IOStream and ACE_SOCK_Stream
 run Enum_Interfaces_Test                # uses ACE::get_ip_interfaces()
 
-#Conn_Test: requires either fork or threads
-#run Conn_Test                           # uses Thread_Manager, Acceptor/Connector, SOCK_SAP
+run Conn_Test                           # uses Thread_Manager, Acceptor/Connector, SOCK_SAP
 
 run Upgradable_RW_Test                  # uses RW locks
 
-run Svc_Handler_Test			    
+run Svc_Handler_Test
 
 echo "Tests complete..."
 
