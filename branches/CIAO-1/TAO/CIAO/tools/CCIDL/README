@@ -15,8 +15,10 @@ A place holder for CIAO's CIDL (CCIDL) compiler.
 
   <flatname>.ccd
 
+  How to import this information into GME 2000?
+
 * I think it may be a good thing to do to be able to represent IDL
   definition in XML format and be able to exchange (import/export) IDL
-  definitions via XML documents.
+  definitions via XML documents.  What is the spec. for this?
 
 * Need to fix the collocated valuetype passed by reference bug.
