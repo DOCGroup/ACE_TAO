@@ -1,3 +1,10 @@
+Wed Nov  8 18:47:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/Param_Test/anyop.dsp:
+
+	  Put back the project settings for anyop.idl in this project.
+	  They got lost somehow.
+
 Wed Nov  8 16:15:39 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/ORB.cpp:
