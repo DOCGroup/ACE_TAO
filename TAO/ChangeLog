@@ -1,3 +1,16 @@
+Tue Jan  4 11:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ULongLongSeqC.{h,cpp,inl}:
+        * tao/ULongLongSeqS.h:
+        * tao/StringSeqS.h:
+          Regenerated with the latest version of the TAO_IDL compiler
+
+        * tao/StringSeq.pidl:
+          No need to apply patches anymore
+
+        * tao/diffs/StringSeq.diff:
+          Removed this file, not needed anymore
+
 Tue Jan  4 11:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/WrongTransaction.pidl:
