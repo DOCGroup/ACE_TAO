@@ -94,7 +94,9 @@
 // Platform/compiler has the sigwait(2) prototype
 #define ACE_HAS_SIGWAIT
 
+#if !defined (ACE_DEFAULT_BASE_ADDR)
 # define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
+#endif /* ! ACE_DEFAULT_BASE_ADDR */
 
 // Compiler/platform supports alloca().
 #define ACE_HAS_ALLOCA

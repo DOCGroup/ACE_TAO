@@ -7,11 +7,8 @@
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
-#include "ace/config-linux-common.h"
+#define ACE_DEFAULT_BASE_ADDR ((char *) 0x40000000)
 
-#define ACE_HAS_SVR4_DYNAMIC_LINKING
-#define ACE_HAS_AUTOMATIC_INIT_FINI
-
-// Not needed with glibc 2.1.1:  #define __USE_XOPEN
+#include "ace/config-linux-lxpthreads.h"
 
 #endif /* ACE_CONFIG_H */
