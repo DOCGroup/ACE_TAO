@@ -117,6 +117,7 @@ CCFLAGS += -mstrict-align                       \
            -mno-sdata
 endif
 
+CPPFLAGS += -DCHORUS_4
 CCFLAGS  += -D__CHORUS__=400                    \
             -DCHORUS_VERSION_MAJOR=4            \
             -DCHORUS_VERSION_MINOR=0            \
@@ -129,7 +130,7 @@ else  # ! exceptions
   CCFLAGS += -fno-exceptions
 endif # ! exceptions     
 
-OCFLAGS         += -O
+OCFLAGS        += -O
 PIC             = -fPIC
 ARFLAGS         = srv
 #

@@ -152,7 +152,16 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
 #endif /* ! _UNICOS */
     }
 
-  for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0; n--, ifr++)
+  for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0;
+#if !defined(CHORUS_4)
+       n--, ifr++)
+#else
+       n--,
+           ((ifr->ifr_addr.sa_len <= sizeof (struct sockaddr)) ?
+             ifr++ :
+             ifr = (struct ifreq *) 
+             (ifr->ifr_addr.sa_len + (caddr_t) &ifr->ifr_addr)))
+#endif /* CHORUS_4 */
     {
       // Compare host ip address with interface ip address.
       if (host_name)
