@@ -258,7 +258,7 @@ TAO_PICurrent_Guard::TAO_PICurrent_Guard (TAO_ServerRequest &server_request,
 
   // If the slot count is zero, then there is nothing to copy.
   // Prevent any copying (and hence TSS accesses) from occurring.
-  if (pi_current->slot_count () != 0)
+  if (pi_current != 0 && pi_current->slot_count () != 0)
     {
       // Retrieve the request scope current.
       TAO_PICurrent_Impl *rsc = &server_request.rs_pi_current ();

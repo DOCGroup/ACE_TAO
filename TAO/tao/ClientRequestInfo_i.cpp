@@ -32,7 +32,7 @@ TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *inv,
 
   // If the slot count is zero, then there is nothing to copy.
   // Prevent any copying (and hence TSS accesses) from occurring.
-  if (pi_current->slot_count () != 0)
+  if (pi_current != 0 && pi_current->slot_count () != 0)
     {
       // Retrieve the thread scope current.
       TAO_PICurrent_Impl *tsc = pi_current->tsc ();
