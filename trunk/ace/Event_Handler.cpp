@@ -4,6 +4,8 @@
 #define ACE_BUILD_DLL
 #include "ace/Event_Handler.h"
 #include "ace/Message_Block.h"
+#include "ace/Reactor.h"
+#include "ace/Thread_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Event_Handler.i"
@@ -143,6 +145,74 @@ ACE_Event_Handler::reactor (void) const
   ACE_TRACE ("ACE_Event_Handler::reactor");
   return this->reactor_;
 }
+
+#if !defined (ACE_HAS_WINCE)
+
+// Used to read from non-socket ACE_HANDLEs in our own thread to work
+// around Win32 limitations that don't allow us to select() on
+// non-sockets (such as ACE_STDIN).  This is commonly used in
+// situations where the Reactor is used to demultiplex read events on
+// ACE_STDIN on UNIX.  Note that <event_handler> must be a subclass of
+// <ACE_Event_Handler>.  If the <get_handle> method of this event
+// handler returns <ACE_INVALID_HANDLE> we default to reading from
+// ACE_STDIN.
+
+void *
+ACE_Event_Handler::read_adapter (void *args)
+{
+  ACE_Event_Handler *this_ptr = (ACE_Event_Handler *) args;
+  ACE_HANDLE handle = ACE_STDIN;
+
+  while (this_ptr->handle_input (handle) != -1)
+    continue;
+
+  this_ptr->handle_close (handle,
+                          ACE_Event_Handler::READ_MASK);
+  this_ptr->reactor ()->notify ();
+
+  return 0;
+}
+
+int
+ACE_Event_Handler::register_stdin_handler (ACE_Event_Handler *eh,
+					   ACE_Reactor *reactor,
+					   ACE_Thread_Manager *thr_mgr,
+					   int flags)
+{
+#if defined (ACE_WIN32)
+  ACE_UNUSED_ARG (reactor);
+
+  eh->reactor (reactor);
+  return thr_mgr->spawn (&read_adapter, (void *) eh, flags);
+#else
+  // Keep compilers happy.
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (thr_mgr);
+  return reactor->register_handler (ACE_STDIN,
+                                    eh,
+                                    ACE_Event_Handler::READ_MASK);
+#endif /* ACE_WIN32 */
+}
+
+int
+ACE_Event_Handler::remove_stdin_handler (ACE_Reactor *reactor,
+					 ACE_Thread_Manager *thr_mgr)
+{
+#if defined (ACE_WIN32)
+  ACE_UNUSED_ARG (reactor);
+  ACE_UNUSED_ARG (thr_mgr);
+
+  // What should we do here?
+  ACE_NOTSUP_RETURN (-1);
+#else
+  // Keep compilers happy.
+  ACE_UNUSED_ARG (thr_mgr);
+  return reactor->remove_handler (ACE_STDIN,
+                                  ACE_Event_Handler::READ_MASK);
+#endif /* ACE_WIN32 */
+}
+
+#endif /* ACE_HAS_WINCE */
 
 ACE_Notification_Buffer::ACE_Notification_Buffer (void) 
 {

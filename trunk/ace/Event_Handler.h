@@ -22,6 +22,7 @@
 // Forward declaration.
 class ACE_Message_Block;
 class ACE_Reactor;
+class ACE_Thread_Manager;
 
 typedef u_long ACE_Reactor_Mask;
 
@@ -114,6 +115,30 @@ public:
   // = Accessors to set/get the various event demultiplexors.
   virtual void reactor (ACE_Reactor *reactor);
   virtual ACE_Reactor *reactor (void) const;
+
+#if !defined (ACE_HAS_WINCE)
+  static void *read_adapter (void *event_handler);
+  // Used to read from non-socket ACE_HANDLEs in our own thread to
+  // work around Win32 limitations that don't allow us to select() on
+  // non-sockets (such as ACE_STDIN).  This is commonly used in
+  // situations where the Reactor is used to demultiplex read events
+  // on ACE_STDIN on UNIX.  Note that <event_handler> must be a
+  // subclass of <ACE_Event_Handler>.  If the <get_handle> method of
+  // this event handler returns <ACE_INVALID_HANDLE> we default to
+  // reading from ACE_STDIN.
+
+  static int register_stdin_handler (ACE_Event_Handler *eh,
+                                     ACE_Reactor *reactor,
+                                     ACE_Thread_Manager *thr_mgr,
+                                     int flags = THR_DETACHED);
+  // Abstracts away from the differences between Win32 and ACE with
+  // respect to reading from ACE_STDIN (which is non-select()'able on
+  // Win32.
+
+  static int remove_stdin_handler (ACE_Reactor *reactor,
+                                   ACE_Thread_Manager *thr_mgr);
+  // Performs the inverse of the <register_stdin_handler> method.
+#endif /* ACE_HAS_WINCE */
 
 protected:
   ACE_Event_Handler (void);

@@ -85,7 +85,11 @@ LINK32=link.exe
 # Name "Reactor_Timer_Queue_Test - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\Reactor_Timer_Queue.cpp
+SOURCE=.\main_reactor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Reactor_Timer_Queue_Test.cpp
 # End Source File
 # End Target
 # End Project

@@ -4862,7 +4862,8 @@ public:
   static const char *strnstr (const char *s,
                               const char *t,
                               size_t len);
-  static char *strdup (const char *s);
+  static char *strdup (const char *s); // Uses malloc
+  static char *strnew (const char *s); // Uses new
   static size_t strlen (const char *s);
   static char *strncpy (char *s,
                         const char *t,
@@ -4956,7 +4957,8 @@ public:
   static const wchar_t *strnstr (const wchar_t *s,
                                  const wchar_t *t,
                                  size_t len);
-  static wchar_t *strdup (const wchar_t *s);
+  static wchar_t *strdup (const wchar_t *s); // Uses malloc
+  static wchar_t *strnew (const wchar_t *s); // Uses new
   static int sprintf (wchar_t *buf,
                       const wchar_t *format,
                       ...);

@@ -164,9 +164,9 @@ public:
 
 STDIN_Handler::STDIN_Handler (void)
 {
-  if (ACE::register_stdin_handler (this,
-				   ACE_Reactor::instance (),
-				   ACE_Thread_Manager::instance ()) == -1)
+  if (ACE_Event_Handler::register_stdin_handler (this,
+						 ACE_Reactor::instance (),
+						 ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "register_stdin_handler"));

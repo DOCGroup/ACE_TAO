@@ -94,9 +94,9 @@ Thread_Handler::Thread_Handler (int delay,
   interval_.set (interval);
   this->id_ = 0;
 
-  if (ACE::register_stdin_handler (this,
-				   ACE_Reactor::instance (),
-				   ACE_Thread_Manager::instance ()) == -1)
+  if (ACE_Event_Handler::register_stdin_handler (this,
+						 ACE_Reactor::instance (),
+						 ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
   else if (ACE_Reactor::instance ()->register_handler (sig_set, this) == -1)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n", "register_handler"));
