@@ -9,6 +9,16 @@ Wed Jun 24 11:52:12 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
  	TAO_CHECK_ENV_PRINT_RETURN(ENV, PRINT_STRING, RETURN) and
 	TAO_CHECK_ENV_PRINT_RETURN_VOID(ENV, PRINT_STRING).
 
+Wed Jun 24 11:38:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/Strategy_Scheduler.{cpp, h}:
+          Removed runtime dynamic dispatch strategy classes,
+          as these are now provided by the ACE dynamic message
+          strategy classes for the dynamic message queue.  For
+          performance and architectural reasons, it is better to
+          strategize the dispatch queue itself, rather than have
+          the *ACE* dispatch queue call out to a *TAO* strategy.
+
 Wed Jun 24 11:13:32 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_codegen.h: Added a new state for resetting
@@ -108,6 +118,7 @@ Wed Jun 24 11:13:32 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	* tao/decode.cpp: Released the IIOP_Object that is created during
 	the ObjRef::decode method. This was necessary to overcome a
 	memory leak. Thanks to Irfan and Jeff.
+
 
 Wed Jun 24 09:56:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
