@@ -1,13 +1,17 @@
 Fri Feb  8 14:02:06 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* THANKS: Added Marco Kranawetter <Marco.Kranawetter@icn.siemens.de> to the hall of fame. 
+	* THANKS: Added Marco Kranawetter
+	  <Marco.Kranawetter@icn.siemens.de> to the hall of fame.
 
 Fri Feb 08 11:24:36 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/String_Base.h:
-	* ace/Task_T.h:  Removed the ACE_Export decl from ACE_Task and
+	* ace/Task_T.h: Removed the ACE_Export decl from ACE_Task and
 	  ACE_String_Base.  They were added as work-aronds for a VC7's
 	  internal compiler bug but didn't seem to solve the problem.
+	  Thanks to Patrick Bennett <patrickb@inin.com>, Johnny, and
+	  Christian Veleba <christian.veleba@porsche.co.at> for reporting
+	  this.
 
 Thu Feb  7 16:19:39 2002  Steve Huston  <shuston@riverace.com>
 
