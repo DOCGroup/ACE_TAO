@@ -282,6 +282,15 @@ ACE_Process_Options::command_line_buf (void)
   return command_line_buf_;
 }
 
+ACE_INLINE LPCTSTR
+ACE_Process_Options::process_name (void)
+{
+  if (process_name_[0] == '\0')
+    this->process_name (this->command_line_argv ()[0]);
+  
+  return this->process_name_;
+}
+
 ACE_INLINE LPTSTR
 ACE_Process_Options::working_directory (void)
 {
@@ -305,6 +314,12 @@ ACE_Process_Options::working_directory (LPCTSTR wd)
 #endif /* !ACE_HAS_WINCE */
 }
 
+ACE_INLINE void
+ACE_Process_Options::process_name (LPCTSTR p)
+{
+  ACE_OS::strcpy (this->process_name_, p);
+}
+
 #if defined (ACE_HAS_WINCE)
 // Here is a collection of inline functions which are defined only
 // under CE.  They are not empty on most other platforms.
@@ -324,7 +339,8 @@ ACE_Process_Options::setenv (LPCTSTR format, ...)
 
 ACE_INLINE int
 ACE_Process_Options::setenv (LPCTSTR variable_name,
-                             LPCTSTR format, ...)
+                             LPCTSTR format,
+                             ...)
 {
   return -1;
 }

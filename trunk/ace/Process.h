@@ -123,6 +123,19 @@ public:
   int command_line (LPCTSTR const argv[]);
   // Same as above in argv format.  <argv> must be null terminated.
 
+  // = Set/get the pathname used to name the process.
+  void process_name (LPCTSTR name);
+  // Specify the full path or relative path, or just the executable
+  // name for the process. If this is set, then <name> will be used to
+  // create the process instead of argv[0] set in the command
+  // line. This is here so that you can supply something other than
+  // executable name as argv[0].
+
+  LPCTSTR process_name (void);
+  // Return the process_name.  If the <process_name(LPCTSTR name)> set
+  // method is not called, this method will return argv[0].
+
+  // = Set/get creation flags.
   u_long creation_flags (void) const;
   // Get the creation flags.
   void creation_flags (u_long);
@@ -303,6 +316,10 @@ protected:
 
   pid_t process_group_;
   // Process-group on Unix; unused on Win32.
+
+  TCHAR process_name_[MAXPATHLEN + 1];
+  // Pathname for the process. Relative path or absolute path or just
+  // the program name.
 };
 
 class ACE_Export ACE_Process
