@@ -1,0 +1,12 @@
+This directory contains a code generator that will generate stubs and
+skeletons for an interface called "tao_demux". The number of
+operations in this interface is controlled by the -m option to the
+executable "tao".
+
+Usage:
+
+tao -o <num of objs> -m < num of operations>
+
+The stubs and skeletons are for 2-way calls. The operation names and
+object keys are automatically generated and have arbitrary string
+names. 
