@@ -29,6 +29,12 @@ Tue Apr 20 11:09:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/MessagingC.cpp:
 	  Fixed warnings about unitialized variables.
 
+	* tests/MT_Client/Makefile:
+	  Updated dependencies
+
+	* tests/MT_Client/run_test.pl:
+	  Added support for the orb_creation test.
+
 Tue Apr 20 02:47:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Param_Test/param_test_i.cpp (test_exception): It was still
