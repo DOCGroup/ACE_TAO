@@ -275,7 +275,8 @@ CORBA::Request::get_response (ACE_ENV_SINGLE_ARG_DECL)
 {
   while (!this->response_received_)
     {
-      (void) this->orb_->perform_work ();
+      (void) this->orb_->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
 
   if (this->lazy_evaluation_)
@@ -293,7 +294,17 @@ CORBA::Request::poll_response (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                     this->lock_,
                     0);
 
-  return this->orb_->work_pending ();
+  if (!this->response_received_)
+    {
+      // If we're single-threaded, the application could starve the ORB,
+      // and the response never gets received, so let the ORB do an 
+      // atom of work, if necessary, each time we poll.
+      ACE_Time_Value tv (0, 0);
+      (void) this->orb_->perform_work (&tv ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+    }
+
+  return this->response_received_;
 }
 
 void
