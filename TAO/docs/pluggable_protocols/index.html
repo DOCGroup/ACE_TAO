@@ -2379,10 +2379,11 @@ Notes From a ``Real World'' Pluggable Protocol Implementation</A>
 By Bruce Task &lt;<A
 HREF="mailto:btrask@contactsystems.com">btrask@contactsystems.com</A>&gt;
 
-<P>This paper is some notes on the steps I took to add a different transport layer to
-the TAO ORB.  I was given some initial guidelines on adding an additional protocol
-and these proved very helpful.  Beyond that there was not much more documentation
-and so I hope the information in this paper will serve to further assist anybody whose
+<P>This section is based on notes I took when adding a different
+transport layer to the TAO ORB.  I was given some initial guidelines
+on adding an additional protocol and these proved very helpful.
+Beyond that there was not much more documentation and so I hope the
+information in this paper will serve to further assist anybody whose
 is adding a pluggable protocol to the TAO ORB.
 
 <P>I found that in order to successfully add the new protocol capabilities, one had to
@@ -2425,30 +2426,30 @@ Acc-Con (
 <A HREF="http://www.cs.wustl.edu/~schmidt/Acc-Con.ps.gz">PostScript</A>
 )
 </BLOCKQUOTE>
-<BR>
 <P>These are all readily available from the TAO and ACE website.
-<BR>
-<P>My starting point for understanding how to add a pluggable protocol to the TAO ORB came
-from mailing list entry from <A HREF="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</A>.   One can find it in
-the archives of the comp.soft-sys.ace newsgroup.  It is dated 1999/06/02 RE: [ace-users] TAO: ATM pluggable
-protocol.  I will repeat the section of that email that was particularly useful to me. (In the email,
-he is responding to someone who had inquired about adding the ATM protocol).
-<BR>
+<P>My starting point for understanding how to add a pluggable protocol
+to the TAO ORB came from mailing list entry from <A
+HREF="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</A>.  One can find it
+in the archives of the comp.soft-sys.ace newsgroup.  It is dated
+1999/06/02 RE: [ace-users] TAO: ATM pluggable protocol.  I will repeat
+the section of that email that was particularly useful to me. (In the
+email, he is responding to someone who had inquired about adding the
+ATM protocol).  <p>
 
-	<BLOCKQUOTE>Basically, you need to look at the following files:
-<BR>
-	IIOP_Profile.{h,i,cpp}
-	IIOP_Connector.{h,i,cpp}
-	IIOP_Acceptor.{h,i,cpp}
-	IIOP_Factory.{h,i,cpp}
-	IIOP_Transport.{h,i,cpp}
-	Connect.{h,i,cpp} [probably will be renamed IIOP_Connect VSN] 
-<BR>
-<P>	The profile class handles the addressing format for your transport.  It would
-basically be a wrapper around the ACE_ATM_Addr() class.
-The Connector and Acceptor classes are simply wrappers around 
-ACE_Acceptor&lt;ACE_ATM_ACCEPTOR&gt; and 
-ACE_Connector&lt;ACE_ATM_ACCEPTOR&gt;, again no big deal (I think). 
+Basically, you need to look at the following files:
+
+IIOP_Profile.{h,i,cpp}<BR>
+IIOP_Connector.{h,i,cpp}<BR>
+IIOP_Acceptor.{h,i,cpp}<BR>
+IIOP_Factory.{h,i,cpp}<BR>
+IIOP_Transport.{h,i,cpp}<BR>
+Connect.{h,i,cpp} [probably will be renamed IIOP_Connect VSN]<P>
+
+The profile class handles the addressing format for your transport.
+It would basically be a wrapper around the ACE_ATM_Addr() class.  The
+Connector and Acceptor classes are simply wrappers around
+ACE_Acceptor&lt;ACE_ATM_ACCEPTOR&gt; and
+ACE_Connector&lt;ACE_ATM_ACCEPTOR&gt;, again no big deal (I think).
 The factory is even simpler.
 
 <P>Things get really interesting in the Transport and Connect classes.  Transport
@@ -2458,12 +2459,9 @@ simply ACE_Svc_Handler&lt;ACE_ATM_Stream&gt;, but they don't do much work, they
 just delegate on the Transport classes.  This somewhat strange design is easy to
 understand once you realize that all the ACE_Svc_Handler&lt;&gt; classes are not type
 compatible (except in their most basic ACE_Event_Handler form).  So they must
-be wrapped using the TAO_Transport class.
+be wrapped using the TAO_Transport class.<P>
 
-</BLOCKQUOTE>
-
-<BR>
-<P>Review also the
+<P>Make sure to review the
 ``<A HREF="../releasenotes/index.html#pp">Pluggable Protocols</A>''
 in the
 ``<A HREF="../releasenotes/index.html">Release Information for the ACE
@@ -2499,19 +2497,18 @@ Connector, Stream, Addr} implementations, for example, to ACE since
 TAO's existing pluggable protocols use those ACE classes/interfaces.
 <BR>
 
-As long as you use
-the same interface for your protocol as the interface for ace/ACE_SOCK*
-and tao/IIOP* then you shouldn't have much of a problem.</BLOCKQUOTE>
-<BR>
-<P>Here are some links that describe the pluggable protocols framework but
-not how to implement one:
-<BLOCKQUOTE>
-<A HREF="../releasenotes/index.html#pp">http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/releasenotes/index.html#pp</A><BR>
+As long as you use the same interface for your protocol as the
+interface for ace/ACE_SOCK* and tao/IIOP* then you shouldn't have much
+of a problem.</BLOCKQUOTE> <P>Here are some links that describe
+the pluggable protocols framework, though not how to implement one:
+<BLOCKQUOTE> <A
+HREF="../releasenotes/index.html#pp">http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/releasenotes/index.html#pp</A><BR>
 
 <A HREF="http://www.cs.wustl.edu/~schmidt/PfHSN.ps.gz">http://www.cs.wustl.edu/~schmidt/PfHSN.ps.gz</A>
+<A
+HREF="http://www.cs.wustl.edu/~schmidt/pluggable_protocols.ps.gz">http://www.cs.wustl.edu/~schmidt/pluggable_protocols.ps.gz</A>
 </BLOCKQUOTE>
 
-<BR>
 <P>Note also that the TAO files pluggable.* are important to review and understand as they contain
 the abstract classes that form the common inteface for TAO's pluggable protocol framework.
 <BR>
@@ -2539,36 +2536,39 @@ TAO_SCRAMNet_Acceptor (Derived from TAO_Acceptor in <A HREF="../../tao/Pluggable
 TAO_SCRAMNet_Connector  (Derived from TAO_Connector in <A HREF="../../tao/Pluggable.h">Pluggable.h</A>)<BR>
 TAO_SCRAMNet_Transport  (Derived from TAO_Transport in <A HREF="../../tao/Pluggable.h">Pluggable.h</A>)
 	<BLOCKQUOTE>TAO_SCRAMNet_Server_Transport<BR>
-	TAO_SCRAMNet_Client_Transport</BLOCKQUOTE><BR>
+	TAO_SCRAMNet_Client_Transport</BLOCKQUOTE>
 TAO_SCRAMNet_Protocol_Factory (Derived from TAO_Protocol Factory in <A HREF="../../tao/Protocol_Factory.h">Protocol_Factory.h</A>)<BR>
 TAO_SCRAMNet_Handler_Base (as in <A HREF="../../tao/IIOP_Connect.h">IIOP_Connect.h</A>)
 	<BLOCKQUOTE>TAO_SCRAMNet_Client_Connection_Handler<BR>
-	TAO_SCRAMNet_Server_Connection_Handler</BLOCKQUOTE></BLOCKQUOTE><BR>
-
-
+	TAO_SCRAMNet_Server_Connection_Handler</BLOCKQUOTE></BLOCKQUOTE>
 <BLOCKQUOTE>ACE_SCRAMNet_Addr<BR>
 ACE_SCRAMNet_Acceptor<BR>
 ACE_SCRAMNet_Connector<BR>
-ACE_SCRAMNet_Stream</BLOCKQUOTE><BR>
-<BR>
+ACE_SCRAMNet_Stream</BLOCKQUOTE>
 <P>I closely followed the way that IIOP and UIOP were defined and implemented in the definition and
 implementation of the SCRAMNet classes.  Following the existing protocol implementation was
 the largest source of help for me.  Being able to step through the operation of the ORB for
 the IIOP protocol and then transposing that over to my protocol made the process relatively painless
 and quite the learning experience.
 <BR><P>
-I am using TAO under Phar Lap's Embedded Tool Suite Real-Time Operating System which is an RTOS which supports a subset of the Win32 API and Winsock 1.1.  Because of the new SCRAMNet transport hardware I needed to change the ORBs core reactor to a WFMO_Reactor.  Any instance
-of the TAO ORB can only have one reactor type or it won't work.  In my case I am using
-an ORB in one thread that uses the WFMO_Reactor and the SCRAMNet transport, and an ORB
-in another thread that uses a Select Reactor and the IIOP protocol.
-I won't go into much of the SCRAMNet specific stuff as I assume most people are interested in
-adding a pluggable protocol in general. 
-<BR><P>
 
-Some specifics:<BR>  For completeness,  I show the whole function in some instances even though I only needed to add or change a few lines.
-<BR>
-1. One of the first additions I made was to GIOP.h 
-<BR>
+I am using TAO under Phar Lap's Embedded Tool Suite Real-Time
+Operating System which is an RTOS which supports a subset of the Win32
+API and Winsock 1.1.  Because of the new SCRAMNet transport hardware I
+needed to change the ORBs core reactor to a WFMO_Reactor.  Any
+instance of the TAO ORB can only have one reactor type or it won't
+work.  In my case I am using an ORB in one thread that uses the
+WFMO_Reactor and the SCRAMNet transport, and an ORB in another thread
+that uses a Select Reactor and the IIOP protocol.  I won't go into
+much of the SCRAMNet specific stuff as I assume most people are
+interested in adding a pluggable protocol in general.  <BR><P>
+
+For completeness, I show the whole function in some instances even
+though I only needed to add or change a few lines. <P>
+
+<OL>
+<LI> One of the first additions I made was to GIOP.h 
+<P>
 // namespace TAO_IOP
 <BR>
 // Assigned Protocol/Profile tag values.  ORB protcols may be uniquely<BR>
@@ -2592,16 +2592,18 @@ enum
 
 I arbitrarily set the TAO_IOP_TAG_SCRAMNET = 3.  Note that this value was NOT allocated to me by OMG.  I used it just to get things working with the new protocol.
 Adding the new tag was needed (as it says) so that the server and client could interchange IORs (which contain protocol specific information).  
-<BR><P>
+<P>
 
-2. I added the following line to orbconf.h:
+<LI> I added the following line to orbconf.h:
+
 <BR>
 // SCRAMNet support (GIOP over the SCRAMNet replicated memory transport)<BR>
 #define TAO_HAS_SCRAMNET
 <BR>
 as I use #ifdefs in other places in the code.
-<BR><P>
-3. Specifically,  in the file TAO_Internal.cpp:
+<P>
+
+<LI> Specifically,  in the file TAO_Internal.cpp:
 <BR><P>
 int
 TAO_Internal::open_services (int &argc,
@@ -2654,9 +2656,9 @@ TAO_Internal::open_services (int &argc,
 <BR><P>
 I added the SCRAMNet lines to insert the SCRAMNet protocol factory into the service
 configurator.
-<BR><P>
-4. Also, in default resource.cpp:
-<BR>
+<P>
+<LI> Also, in default resource.cpp:
+
 int<BR>
 TAO_Default_Resource_Factory::init_protocol_factories (void)<BR>
 {<BR>
@@ -2805,9 +2807,8 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)<BR>
                       name.c_str ()));</BLOCKQUOTE>
         }</BLOCKQUOTE>
     }<BR>
-  return 0;</BLOCKQUOTE><BR>
-<BR>
-<BR><P>
+  return 0;</BLOCKQUOTE><P>
+
 I added the SCRAMNet lines so that the protocol is initialized correctly.  Note here,
 that following how IIOP and UIOP were implemented helped out.
 <BR><P>
@@ -2910,10 +2911,9 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open<BR>
 }<BR>
 <BR><P>
 I needed to associate the acceptor with a Win32 event.  
+<P>
 
-<BR><P>
-
-5. In OS.h include the following lines:
+<LI> In OS.h include the following lines:
 <BR><P>
 // Handle ACE_SCRAMNet*<BR>
 #   define ACE_SCRAMNET_ACCEPTOR ACE_SCRAMNet_Acceptor, ACE_SCRAMNet_Addr<BR>
@@ -2936,6 +2936,8 @@ svc.conf file with the the following options
 <A HREF="../Options.html#-ORBReactorType">-ORBReactorType</A> wfmo
 <A HREF="../Options.html#-ORBProtocolFactory">-ORBProtocolFactory</A> SCRAMNet_Factory
 <BR><P>
+
+</OL>
 
 Beyond the above, I just traced through the operation of the IIOP
 protocol in action to see exactly where I needed to just graft on the
@@ -3078,7 +3080,7 @@ examples of the Layers architecture.
     <ADDRESS><a href="mailto:othman@cs.wustl.edu">Ossama Othman</a></ADDRESS>
 <!-- Created: Tue Dec 14 16:53:58 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Thu Dec 16 20:36:48 CST 1999
+Last modified: Thu Dec 16 20:57:50 CST 1999
 <!-- hhmts end -->
 </BODY>
 </HTML>
