@@ -1,4 +1,3 @@
-
 // $Id$
 
 
@@ -6,13 +5,10 @@
 #include "Basic_Deployment_Data.hpp"
 #include "ciao/Deployment_DataC.h"
 
-
-
 namespace CIAO
 {
   namespace Config_Handlers
   {
-
     ID_Handler::ID_Handler (void)
     {
     }
@@ -24,24 +20,26 @@ namespace CIAO
 
     void
     ID_Handler::get_ImplementationDependency (
-                    Deployment::ImplementationDependency& toconfig, 
+                    Deployment::ImplementationDependency& toconfig,
                     ImplementationDependency& desc)
     {
 
 
-      
+
       toconfig.requiredType=
            CORBA::string_dup (desc.requiredType ().c_str ());
 
-      
+
     }
 
     ImplementationDependency
     ID_Handler::impl_dependency (
-      const Deployment::ImplementationDependency& src)
+        const ::Deployment::ImplementationDependency& src)
     {
       XMLSchema::string< char > reqtype ((src.requiredType));
+
       ImplementationDependency id (reqtype);
+
       return id;
     }
 

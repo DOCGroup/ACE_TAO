@@ -1,3 +1,19 @@
+Wed Dec 22 16:50:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* Config_Handlers/Basic_Deployment_Data.cpp:
+	* Config_Handlers/Basic_Deployment_Data.hpp:
+	* Config_Handlers/cdp.cpp:
+	* Config_Handlers/cdp.hpp:
+
+	  Generated code from XSC. 
+	
+	* Config_Handlers/IDD_Handler.cpp:
+	* Config_Handlers/IDD_Handler.h:
+	* Config_Handlers/ID_Handler.cpp:
+	* Config_Handlers/ID_Handler.h:
+	  
+	  Some cosmetic changes. 
+
 Tue Oct 26 21:00:13 2004  Jules White  <Jules@dre.vanderbilt.edu>
 
  	* Config_Handlers/Property_Handler.cpp:

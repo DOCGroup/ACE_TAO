@@ -22,6 +22,7 @@ namespace Deployment
 {
   struct InstanceDeploymentDescription;
   struct InstanceDeploymentDescriptions;
+  struct InstanceResourceDeploymentDescription;
 }
 
 namespace CIAO
@@ -30,6 +31,8 @@ namespace CIAO
   {
     class DeploymentPlan;
     class InstanceDeploymentDescription;
+    class InstanceResourceDeploymentDescription;
+
    /*
     * @class IDD_Handler
     *
@@ -51,7 +54,11 @@ namespace CIAO
     private:
       static bool instance_deployment_descr (
           const InstanceDeploymentDescription &src,
-          ::Deployment::InstanceDeploymentDescription& dest);
+          ::Deployment::InstanceDeploymentDescription &dest);
+
+      static void instance_resource_depl_descr (
+        const InstanceResourceDeploymentDescription &src,
+        Deployment::InstanceResourceDeploymentDescription &dest);
     };
   }
 }

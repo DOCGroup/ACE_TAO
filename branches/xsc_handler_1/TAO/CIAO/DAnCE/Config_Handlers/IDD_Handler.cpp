@@ -61,7 +61,7 @@ namespace CIAO
       InstanceDeploymentDescription::configProperty_const_iterator pend =
         src.end_configProperty ();
 
-      for (ComponentInterfaceDescription::configProperty_const_iterator pstart =
+      for (InstanceDeploymentDescription::configProperty_const_iterator pstart =
              src.begin_configProperty ();
            pstart != pend;
            ++pstart)
@@ -76,18 +76,27 @@ namespace CIAO
                                           dest.configProperty[len]);
         }
 
-#if 0
-     // @@ MAJO: Need to handle this in the next round
-      if (desc.deployedResource_p ())
-        {
-          CORBA::ULong length = toconfig.deployedResource.length ();
-          toconfig.deployedResource.length (length + 1);
+      InstanceDeploymentDescription::deployedResource_const_iterator drend =
+        src.end_deployedResource ();
 
-          this->get_InstanceResourceDeploymentDescription
-            (toconfig.deployedResource[length - 1],
-             desc.deployedResource ());
+      for (InstanceDeploymentDescription::deployedResource_const_iterator drstart =
+             src.begin_deployedResource ();
+           drstart != drend;
+           ++drstart)
+        {
+          const CORBA::ULong len =
+            dest.deployedResource.length ();
+
+          dest.deployedResource.length (len + 1);
+
+          IDD_Handler::instance_resource_depl_descr (
+            (*drstart),
+            dest.deployedResource[len]);
+
         }
 
+#if 0
+     // @@ MAJO: Need to handle this in the next round
       if (desc.deployedSharedResource_p ())
         {
           CORBA::ULong length = toconfig.deployedSharedResource.length ();
@@ -102,48 +111,46 @@ namespace CIAO
       // Done!
     }
 
-#if 0
     void
-    IDD_Handler::get_InstanceResourceDeploymentDescription (
-            Deployment::InstanceResourceDeploymentDescription &toconfig,
-            InstanceResourceDeploymentDescription &desc)
+    IDD_Handler::instance_resource_depl_descr (
+        const InstanceResourceDeploymentDescription &src,
+        ::Deployment::InstanceResourceDeploymentDescription &dest)
     {
       // resourceUsage is an enumerated type
-      switch (desc.resourceUsage ().integral ())
+      switch (src.resourceUsage ().integral ())
         {
         case ResourceUsageKind::None_l:
-          toconfig.resourceUsage = Deployment::None;
+          dest.resourceUsage = Deployment::None;
           break;
 
         case ResourceUsageKind::InstanceUsesResource_l:
-          toconfig.resourceUsage = Deployment::InstanceUsesResource;
+          dest.resourceUsage = Deployment::InstanceUsesResource;
           break;
 
         case ResourceUsageKind::ResourceUsesInstance_l:
-          toconfig.resourceUsage = Deployment::ResourceUsesInstance;
+          dest.resourceUsage = Deployment::ResourceUsesInstance;
           break;
 
         case ResourceUsageKind::PortUsesResource_l:
-          toconfig.resourceUsage = Deployment::PortUsesResource;
+          dest.resourceUsage = Deployment::PortUsesResource;
           break;
 
         case ResourceUsageKind::ResourceUsesPort_l:
-          toconfig.resourceUsage = Deployment::ResourceUsesPort;
+          dest.resourceUsage = Deployment::ResourceUsesPort;
           break;
         }
 
       // requirementName and resourceName are strings
-      toconfig.requirementName =
-        CORBA::string_dup (desc.requirementName ().c_str ());
-      toconfig.resourceName =
-        CORBA::string_dup (desc.resourceName ().c_str ());
+      dest.requirementName =
+        src.requirementName ().c_str ();
 
-      ANY_Handler::get_Any (toconfig.resourceValue,
-                            desc.resourceValue ());
+      dest.resourceName =
+        src.resourceName ().c_str ();
 
-      // Done!
+      Any_Handler::extract_into_any (src.resourceValue (),
+                                     dest.resourceValue);
+
     }
-#endif /*if 0*/
 
   }
 }

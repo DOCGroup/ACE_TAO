@@ -1167,13 +1167,16 @@ namespace CIAO
       // deployedResource
       // 
       public:
-      bool deployedResource_p () const;
-      ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& deployedResource () const;
-      ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription& deployedResource ();
-      void deployedResource (::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& );
+      typedef ::std::vector< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription >::iterator deployedResource_iterator;
+      typedef ::std::vector< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription >::const_iterator deployedResource_const_iterator;
+      deployedResource_iterator begin_deployedResource ();
+      deployedResource_iterator end_deployedResource ();
+      deployedResource_const_iterator begin_deployedResource () const;
+      deployedResource_const_iterator end_deployedResource () const;
+      void add_deployedResource (::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& );
 
       protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > deployedResource_;
+      ::std::vector< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > deployedResource_;
 
       // deployedSharedResource
       // 
@@ -3027,6 +3030,24 @@ namespace CIAO
         deployedResource (Type const&);
 
         virtual void
+        deployedResource_pre (Type&);
+
+        virtual void
+        deployedResource_pre (Type const&);
+
+        virtual void
+        deployedResource_next (Type&);
+
+        virtual void
+        deployedResource_next (Type const&);
+
+        virtual void
+        deployedResource_post (Type&);
+
+        virtual void
+        deployedResource_post (Type const&);
+
+        virtual void
         deployedResource_none (Type&);
 
         virtual void
@@ -4304,7 +4325,13 @@ namespace CIAO
         configProperty_post (Type const&);
 
         virtual void
-        deployedResource (Type const&);
+        deployedResource_pre (Type const&);
+
+        virtual void
+        deployedResource_next (Type const&);
+
+        virtual void
+        deployedResource_post (Type const&);
 
         virtual void
         deployedSharedResource (Type const&);
