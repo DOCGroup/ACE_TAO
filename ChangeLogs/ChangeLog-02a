@@ -1,3 +1,13 @@
+Thu Dec  6 07:39:07 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * Added two new static functions for VxWorks only.  spae() and
+          spaef() which are similar to spa(), but allow more than 10
+          arguments with the help of double quoted strings.  spaef() is
+          similar to spae() except that a new task is not spawned to run
+          the main function of the program.  Thanks to Albert Wijnja
+          <Albert.Wijnja@meco.nl> for the idea and supplying the original
+          code.
+
 Thu Dec 06 00:06:52 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Misc/test_naming.cpp: Replaced the use of
