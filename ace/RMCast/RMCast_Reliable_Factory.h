@@ -36,14 +36,14 @@ class ACE_RMCast_Export ACE_RMCast_Reliable_Factory : public ACE_RMCast_Module_F
 {
 public:
   /// Constructor
-  /**
-   * The create() method will return always \param reliable.
-   */
   ACE_RMCast_Reliable_Factory (ACE_RMCast_Module_Factory *factory);
 
   //! Destructor
   virtual ~ACE_RMCast_Reliable_Factory (void);
 
+  /**
+   * The create() method will return always \param reliable.
+   */
   virtual ACE_RMCast_Module *create (void);
   virtual void destroy (ACE_RMCast_Module *);
 

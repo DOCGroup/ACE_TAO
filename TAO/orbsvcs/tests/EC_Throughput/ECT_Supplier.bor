@@ -16,6 +16,7 @@ CFLAGS = \
 	$(TAO_SVC_UTILS_CFLAGS) \
 	$(TAO_IORTABLE_CFLAGS) \
 	$(TAO_PORTABLESERVER_CFLAGS) \
+        $(TAO_MESSAGING_CFLAGS) \
 	$(TAO_CFLAGS) \
 	$(ACE_CFLAGS)
 
@@ -26,6 +27,7 @@ LIBFILES = \
         $(TAO_SVC_UTILS_LIB) \
 	$(TAO_IORTABLE_LIB) \
         $(TAO_PORTABLESERVER_LIB) \
+        $(TAO_MESSAGING_LIB) \
         $(TAO_LIB) \
         $(ACE_LIB)
 

@@ -99,7 +99,7 @@ ACE_Fixed_Stack<T, ACE_SIZE>::ACE_Fixed_Stack (void)
 template<class T, size_t ACE_SIZE>
 ACE_Fixed_Stack<T, ACE_SIZE>::ACE_Fixed_Stack (const ACE_Fixed_Stack<T, ACE_SIZE> &s)
   : size_ (s.size_),
-    top_ (s.top_)    
+    top_ (s.top_)
 {
   ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::ACE_Fixed_Stack");
   for (size_t i = 0; i < this->top_; i++)
@@ -1519,12 +1519,12 @@ ACE_Ordered_MultiSet<T>::insert (const T &item)
 }
 
 template <class T> int
-ACE_Ordered_MultiSet<T>::insert (const T &item,
+ACE_Ordered_MultiSet<T>::insert (const T &new_item,
                                  ACE_Ordered_MultiSet_Iterator<T> &iter)
 {
   // ACE_TRACE ("ACE_Ordered_MultiSet<T>::insert using iterator");
 
-  return  this->insert_from (item, iter.current_, &iter.current_);
+  return  this->insert_from (new_item, iter.current_, &iter.current_);
 }
 
 template <class T> int

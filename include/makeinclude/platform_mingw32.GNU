@@ -1,7 +1,7 @@
 # $Id$
 
 # This file should allow to build ACE for mingw32 with mingw tools.
-# Edit to change TCPU and M32_BASE below.
+# Edit to change TCPU and MINGW_BASE below.
 #
 # Don't forget to define the ACE_ROOT environment variable!
 
@@ -50,6 +50,10 @@ ifndef MINGW_BASE
   MINGW_BASE = c:/live/local/mingw32
 endif
 
-mingw32 = 1
+# MingW doesn't allow to add the version number of ACE to the dll name
+# because fe ace.dll.5.2.3 isn't a valid dll name
+SONAME=
+SOVERSION=
 
+mingw32 = 1
 include $(ACE_ROOT)/include/makeinclude/platform_gnuwin32_common.GNU

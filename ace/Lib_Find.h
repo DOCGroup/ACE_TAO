@@ -36,9 +36,9 @@ class ACE_Export ACE_Lib_Find
    * prefix (e.g., "lib" on UNIX and "" on Win32) if the <filename>
    * doesn't match directly.
    */
-  static int ldfind (const ACE_TCHAR *filename,
-                     ACE_TCHAR *pathname,
-                     size_t maxlen);
+  static int ldfind (const ACE_TCHAR* filename,
+                     ACE_TCHAR pathname[],
+                     size_t maxpathnamelen);
 
   /**
    * Uses <ldfind> to locate and open the appropriate <filename> and
