@@ -12,6 +12,7 @@
 #define SCO
 #endif /* SCO */
 
+#define ACE_DEFAULT_CLOSE_ALL_HANDLES 0
 #define ACE_HAS_SIG_MACROS
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT

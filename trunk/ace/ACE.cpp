@@ -1425,8 +1425,12 @@ ACE::bind_port (ACE_HANDLE handle)
 // Make the current process a UNIX daemon.  This is based on Stevens
 // code from APUE.
 
+// Make the current process a UNIX daemon.  This is based on Stevens
+// code from APUE.
+
 int
-ACE::daemonize (const char pathname[])
+ACE::daemonize (const char pathname[],
+                int close_all_handles)
 {
   ACE_TRACE ("ACE::daemonize");
 #if !defined (ACE_LACKS_FORK)
@@ -1454,8 +1458,10 @@ ACE::daemonize (const char pathname[])
   ACE_OS::umask (0); // clear our file mode creation mask.
 
   // Close down the files.
-  for (int i = ACE::max_handles () - 1; i >= 0; i--)
-    ACE_OS::close (i);
+  if (close_all_handles)
+    for (int i = ACE::max_handles () - 1; i >= 0; i--)
+      ACE_OS::close (i);
+
   return 0;
 #else
   ACE_UNUSED_ARG (pathname);
