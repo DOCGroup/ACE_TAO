@@ -14,7 +14,7 @@
 
 #ifndef TAO_CORBALOC_PARSER_H
 #define TAO_CORBALOC_PARSER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/IOR_Parser.h"
 
@@ -27,7 +27,6 @@
 #include "tao/Profile.h"
 
 class TAO_MProfile;
-
 
 /**
  * @class TAO_CORBALOC_Parser
@@ -98,5 +97,5 @@ private:
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_CORBALOC_Parser)
 ACE_FACTORY_DECLARE (TAO, TAO_CORBALOC_Parser)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_CORBALOC_PARSER_H */
