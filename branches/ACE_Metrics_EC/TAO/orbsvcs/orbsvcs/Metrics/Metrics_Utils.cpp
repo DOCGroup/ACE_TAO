@@ -52,7 +52,7 @@ TAO_Metrics_Utils::set_mission_state (int i, Metrics::QoSLogger_ptr logger)
 
   ACE_TRY_NEW_ENV
     {
-      logger->send_banner (banner, ACE_TRY_ENV);
+      logger->send_banner (banner);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -398,7 +398,7 @@ WSOA_Metrics_Handles::WSOA_Metrics_Handles ()
                                    TAO_Metrics_Utils::QUO,
                                    this->tile_received_first_metrics_handle_);
 
-     RtecScheduler::handle_t temp_metrics_handle;
+     //RtecScheduler::handle_t temp_metrics_handle;
      for (i = 1; i <= WSOA_METRICS_MAX_TILING_FACTOR; ++i)
      {
              ::sprintf (registration_name, "tile_received_%d", i);

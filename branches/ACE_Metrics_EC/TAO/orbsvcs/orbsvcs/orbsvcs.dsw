@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "AV"=.\AV.dsp - Package Owner=<4>
+Project: "AV"=".\AV.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -24,7 +24,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosConcurrency"=.\CosConcurrency.dsp - Package Owner=<4>
+Project: "CosConcurrency"=".\CosConcurrency.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -36,7 +36,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosEvent"=.\CosEvent.dsp - Package Owner=<4>
+Project: "CosEvent"=".\CosEvent.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -54,7 +54,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosLifeCycle"=.\CosLifeCycle.dsp - Package Owner=<4>
+Project: "CosLifeCycle"=".\CosLifeCycle.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -69,7 +69,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosLoadBalancing"=.\CosLoadBalancing.dsp - Package Owner=<4>
+Project: "CosLoadBalancing"=".\CosLoadBalancing.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -84,7 +84,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosNaming"=.\CosNaming.dsp - Package Owner=<4>
+Project: "CosNaming"=".\CosNaming.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -99,7 +99,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosNotification"=.\CosNotification.dsp - Package Owner=<4>
+Project: "CosNotification"=".\CosNotification.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -117,7 +117,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosProperty"=.\CosProperty.dsp - Package Owner=<4>
+Project: "CosProperty"=".\CosProperty.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -129,7 +129,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosTime"=.\CosTime.dsp - Package Owner=<4>
+Project: "CosTime"=".\CosTime.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -144,7 +144,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosTrading"=.\CosTrading.dsp - Package Owner=<4>
+Project: "CosTrading"=".\CosTrading.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -156,7 +156,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DsEventLogAdmin"=.\DsEventLogAdmin.dsp - Package Owner=<4>
+Project: "DsEventLogAdmin"=".\DsEventLogAdmin.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -168,7 +168,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DsLogAdmin"=.\DsLogAdmin.dsp - Package Owner=<4>
+Project: "DsLogAdmin"=".\DsLogAdmin.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -186,7 +186,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DsNotifyLogAdmin"=.\DsNotifyLogAdmin.dsp - Package Owner=<4>
+Project: "DsNotifyLogAdmin"=".\DsNotifyLogAdmin.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -198,7 +198,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ETCL DLL"=.\ETCL\ETCL.dsp - Package Owner=<4>
+Project: "ETCL DLL"=".\ETCL\ETCL.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -210,7 +210,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FT ORB"=.\FT_ORB.dsp - Package Owner=<4>
+Project: "FT ORB"=".\FT_ORB.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -222,7 +222,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Fault Tolerance"=.\Fault_Tolerance.dsp - Package Owner=<4>
+Project: "Fault Tolerance"=".\Fault_Tolerance.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -249,7 +249,25 @@ Package=<4>
 
 ###############################################################################
 
-Project: "PortableGroup"=.\PortableGroup.dsp - Package Owner=<4>
+Project: "Metrics"=".\Metrics.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name CosNaming
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTSched
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "PortableGroup"=".\PortableGroup.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -264,7 +282,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RTCORBAEvent"=.\RTCORBAEvent.dsp - Package Owner=<4>
+Project: "RTCORBAEvent"=".\RTCORBAEvent.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -279,7 +297,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RTEvent"=.\RTEvent.dsp - Package Owner=<4>
+Project: "RTEvent"=".\RTEvent.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -300,7 +318,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RTEventLog"=.\RTEventLog.dsp - Package Owner=<4>
+Project: "RTEventLog"=".\RTEventLog.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -312,7 +330,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RTOLDEvent"=.\RTOLDEvent.dsp - Package Owner=<4>
+Project: "RTOLDEvent"=".\RTOLDEvent.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -330,7 +348,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RTSched"=.\RTSched.dsp - Package Owner=<4>
+Project: "RTSched"=".\RTSched.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -348,7 +366,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RTSchedEvent"=.\RTSchedEvent.dsp - Package Owner=<4>
+Project: "RTSchedEvent"=".\RTSchedEvent.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -366,7 +384,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "SSLIOP"=.\SSLIOP.dsp - Package Owner=<4>
+Project: "SSLIOP"=".\SSLIOP.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -378,7 +396,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Security"=.\Security.dsp - Package Owner=<4>
+Project: "Security"=".\Security.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -390,7 +408,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Svc Utils"=.\Svc_Utils.dsp - Package Owner=<4>
+Project: "Svc Utils"=".\Svc_Utils.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{

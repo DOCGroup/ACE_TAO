@@ -60,6 +60,15 @@ public:
   ~TAO_Metrics_UpcallMonitor ();
   // Destructor.
 
+    virtual void report_made_deadline (
+        RtecScheduler::handle_t handle
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , Metrics::INTERNAL_0
+      ));
+/*
   virtual void
   report_made_deadline (RtecScheduler::handle_t handle,
                         CORBA::Environment &ACE_TRY_ENV
@@ -68,7 +77,17 @@ public:
                      Metrics::INTERNAL_0));
   // Reports a successful upcall.
 
-  virtual void
+*/
+    virtual void report_missed_deadline (
+        RtecScheduler::handle_t handle
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , Metrics::INTERNAL_1
+      ));
+/*
+	virtual void
   report_missed_deadline (RtecScheduler::handle_t handle,
                           CORBA::Environment &ACE_TRY_ENV
                             = CORBA::Environment::default_environment ())
@@ -105,6 +124,48 @@ public:
                      Metrics::INTERNAL_7,
                      Metrics::INTERNAL_8));
   // Resets the aggregate QoS information for the given operation.
+*/
+
+    virtual void reset_statistics (
+        RtecScheduler::handle_t handle
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , Metrics::INTERNAL_7
+        , Metrics::INTERNAL_8
+      ));
+
+
+    // TAO_IDL - Generated from
+    // C:\ACE+TAO\ACE_Metrics_EC\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
+
+    virtual void get_aggregate_QoS (
+        RtecScheduler::handle_t handle,
+        Metrics::QoSParameter_t_out qos
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , Metrics::INTERNAL_2
+        , Metrics::INTERNAL_3
+      ));
+
+
+    // TAO_IDL - Generated from
+    // C:\ACE+TAO\ACE_Metrics_EC\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
+
+    virtual void get_aggregate_QoS_set (
+        const Metrics::Handle_Set_t & handle_set,
+        Metrics::QoSParameter_Set_out qos_set
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , Metrics::INTERNAL_4
+        , Metrics::INTERNAL_5
+      ));
+
 
   MONITOR_MAP &missed_map ();
   // Accessor for map of operation handle to a count of deadlines missed.
@@ -124,6 +185,10 @@ private:
 
 };
 
+
+#if defined (__ACE_INLINE__)
+#include "Metrics_UpcallMonitor.i"
+#endif /* __ACE_INLINE__ */
 
 class TAO_Metrics_Export TAO_Metrics_ReportingUpcallMonitor
   : public POA_Metrics::ReportingQoSMonitor
@@ -226,10 +291,6 @@ private:
   // The monitor we're wrapping.
 };
 
-
-#if defined (__ACE_INLINE__)
-#include "Metrics_UpcallMonitor.i"
-#endif /* __ACE_INLINE__ */
 
 #include "orbsvcs/Metrics/Metrics_UpcallMonitor_T.h"
 

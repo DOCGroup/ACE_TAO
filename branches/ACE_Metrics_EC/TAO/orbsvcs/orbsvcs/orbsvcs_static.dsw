@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "AV_Static"=.\AV_Static.dsp - Package Owner=<4>
+Project: "AV_Static"=".\AV_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosConcurrency_Static"=.\CosConcurrency_Static.dsp - Package Owner=<4>
+Project: "CosConcurrency_Static"=".\CosConcurrency_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -27,7 +27,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosEvent_Static"=.\CosEvent_Static.dsp - Package Owner=<4>
+Project: "CosEvent_Static"=".\CosEvent_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -39,7 +39,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosLifeCycle_Static"=.\CosLifeCycle_Static.dsp - Package Owner=<4>
+Project: "CosLifeCycle_Static"=".\CosLifeCycle_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -51,7 +51,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosLoadBalancing_Static"=.\CosLoadBalancing_Static.dsp - Package Owner=<4>
+Project: "CosLoadBalancing_Static"=".\CosLoadBalancing_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -66,7 +66,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosNaming_Static"=.\CosNaming_Static.dsp - Package Owner=<4>
+Project: "CosNaming_Static"=".\CosNaming_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -78,7 +78,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosNotification_Static"=.\CosNotification_Static.dsp - Package Owner=<4>
+Project: "CosNotification LIB"=".\CosNotification_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -90,7 +90,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosProperty_Static"=.\CosProperty_Static.dsp - Package Owner=<4>
+Project: "CosProperty_Static"=".\CosProperty_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -102,7 +102,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosTime_Static"=.\CosTime_Static.dsp - Package Owner=<4>
+Project: "CosTime_Static"=".\CosTime_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -114,7 +114,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosTrading_Static"=.\CosTrading_Static.dsp - Package Owner=<4>
+Project: "CosTrading_Static"=".\CosTrading_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -126,7 +126,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DsLogAdmin_Static"=.\DsLogAdmin_Static.dsp - Package Owner=<4>
+Project: "DsLogAdmin_Static"=".\DsLogAdmin_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -138,7 +138,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "FT ORB"=.\FT_ORB.dsp - Package Owner=<4>
+Project: "FT ORB"=".\FT_ORB.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -150,7 +150,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Fault Tolerance"=.\Fault_Tolerance.dsp - Package Owner=<4>
+Project: "Fault Tolerance"=".\Fault_Tolerance.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -162,7 +162,19 @@ Package=<4>
 
 ###############################################################################
 
-Project: "PortableGroup_Static"=.\PortableGroup_Static.dsp - Package Owner=<4>
+Project: "Metrics"=".\Metrics\Metrics.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "PortableGroup_Static"=".\PortableGroup_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -177,7 +189,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RTCORBAEvent_Static"=.\RTCORBAEvent_Static.dsp - Package Owner=<4>
+Project: "RTCORBAEvent_Static"=".\RTCORBAEvent_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -189,7 +201,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RTEvent_Static"=.\RTEvent_Static.dsp - Package Owner=<4>
+Project: "RTEvent_Static"=".\RTEvent_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -204,7 +216,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RTOLDEvent_Static"=.\RTOLDEvent_Static.dsp - Package Owner=<4>
+Project: "RTOLDEvent_Static"=".\RTOLDEvent_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -216,7 +228,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RTSchedEvent_Static"=.\RTSchedEvent_Static.dsp - Package Owner=<4>
+Project: "RTSchedEvent_Static"=".\RTSchedEvent_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -228,7 +240,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RTSched_Static"=.\RTSched_Static.dsp - Package Owner=<4>
+Project: "RTSched_Static"=".\RTSched_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -240,7 +252,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "SSLIOP_Static"=.\SSLIOP_Static.dsp - Package Owner=<4>
+Project: "SSLIOP_Static"=".\SSLIOP_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -252,7 +264,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Security_Static"=.\Security_Static.dsp - Package Owner=<4>
+Project: "Security_Static"=".\Security_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -264,7 +276,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Svc_Utils_Static"=.\Svc_Utils_Static.dsp - Package Owner=<4>
+Project: "Svc_Utils_Static"=".\Svc_Utils_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
