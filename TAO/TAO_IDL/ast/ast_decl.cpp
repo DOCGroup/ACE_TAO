@@ -94,6 +94,7 @@ AST_Decl::AST_Decl()
     pd_file_name(NULL),
     pd_name(NULL),
     pd_local_name(NULL),
+    pd_original_local_name (NULL),
     pd_pragmas(NULL),
     pd_added(I_FALSE)
 {
@@ -113,6 +114,12 @@ AST_Decl::AST_Decl(NodeType nt, UTL_ScopedName *n, UTL_StrList *p)
     pd_added(I_FALSE)
 {
   compute_full_name (n);
+
+  // Keep the name _cxx_ removed, if any.
+  if (n != 0)
+    {
+      this->original_local_name (n->last_component ());
+    }
 }
 
 /*
@@ -278,13 +285,54 @@ AST_Decl::set_name(UTL_ScopedName *n)
 {
   pd_name = n;
   if (n != NULL)
-    pd_local_name = n->last_component();
+    {
+      pd_local_name = n->last_component();
+
+      // The name without _cxx_ prefix removed, if there was any. 
+      original_local_name (n->last_component ());
+    }
 }
 
 Identifier *
 AST_Decl::local_name()
 {
   return pd_local_name;
+}
+
+// If there is _cxx_ in the beginning, we will remove that and keep
+// a copy of the original name. TAO IDL's front end adds _cxx_
+// prefix to the all the reserved keywords. But when we invoke the
+// operation remotely, we should be sending only the name with out
+// "_cxx_" prefix.
+
+void
+AST_Decl::original_local_name (Identifier *local_name)
+{
+  // Remove _cxx_ if it is present.
+  if (ACE_OS::strstr (local_name->get_string (), "_cxx_") == local_name->get_string ())
+    {
+      // CSting class is good to do this stuff.
+      ACE_CString name_str (local_name->get_string ());
+      
+      // Remove _cxx_.
+      name_str = name_str.substr (ACE_OS::strlen ("_cxx_"));
+
+      // Assign to the Identifier variable.
+      this->pd_original_local_name = new Identifier (name_str.c_str (),
+                                                     1,
+                                                     0,
+                                                     I_FALSE);
+    }
+  else
+    {
+      this->pd_original_local_name = local_name;
+    }
+}
+
+Identifier *
+AST_Decl::original_local_name ()
+{
+  return pd_original_local_name;
 }
 
 void

@@ -1061,22 +1061,29 @@ be_interface::gen_optable_entries (be_interface *derived)
               d = si->item ();
               if (d->node_type () == AST_Decl::NT_op)
                 {
-                  ss->indent (); // start from current indentation level
+                  // Start from current indentation level
+                  ss->indent ();
+
                   // we are an operation node
-                  *ss << "{\"" << d->local_name () << "\", &"
+                  *ss << "{\"" << d->original_local_name () << "\", &"
                       << derived->full_skel_name () << "::"
-                      << d->local_name () << "_skel},\n";
+                      << d->original_local_name () << "_skel},\n";
+
                   derived->skel_count_++;
                 }
               else if (d->node_type () == AST_Decl::NT_attr)
                 {
                   AST_Attribute *attr;
 
-                  ss->indent (); // start from current indentation level
-                  // generate only the "get" entry if we are readonly
-                  *ss << "{\"_get_" << d->local_name () << "\", &" <<
-                    derived->full_skel_name () << "::_get_" << d->local_name () <<
+                  // Start from current indentation level.
+                  ss->indent ();
+                  
+                  // Generate only the "get" entry if we are
+                  // readonly. 
+                  *ss << "{\"_get_" << d->original_local_name () << "\", &" <<
+                    derived->full_skel_name () << "::_get_" << d->original_local_name () <<
                     "_skel},\n";
+
                   derived->skel_count_++;
 
                   attr = AST_Attribute::narrow_from_decl (d);
@@ -1087,8 +1094,8 @@ be_interface::gen_optable_entries (be_interface *derived)
                     {
                       // the set method
                       ss->indent (); // start from current indentation level
-                      *ss << "{\"_set_" << d->local_name () << "\", &" <<
-                        derived->full_skel_name () << "::_set_" << d->local_name
+                      *ss << "{\"_set_" << d->original_local_name () << "\", &" <<
+                        derived->full_skel_name () << "::_set_" << d->original_local_name
                         () << "_skel},\n";
                       derived->skel_count_++;
                     }
@@ -1119,24 +1126,35 @@ be_interface::gen_optable_entries (be_interface *derived)
             {
               // Get the next AST decl node.
               d = si->item ();
+
               if (d->node_type () == AST_Decl::NT_op)
                 {
-                  ss->indent (); // start from current indentation level
-                  // we are an operation node
-                  *ss << d->local_name () << ",\t&"
+                  //
+                  // Generate operation name.
+                  // 
+
+                  // Start from current indentation level
+                  ss->indent ();
+                  
+                  // We are an operation node. We use the original
+                  // operation name, not the one with _cxx_ in it.
+                  *ss << d->original_local_name () << ",\t&"
                       << derived->full_skel_name () << "::"
-                      << d->local_name () << "_skel" << "\n";
+                      << d->original_local_name () << "_skel" << "\n";
+                  
                   derived->skel_count_++;
                 }
               else if (d->node_type () == AST_Decl::NT_attr)
                 {
                   AST_Attribute *attr;
 
-                  ss->indent (); // start from current indentation level
-                  // generate only the "get" entry if we are readonly
-                  *ss << "_get_" << d->local_name () << ",\t&"
+                  // Start from current indentation level
+                  ss->indent ();
+
+                  // Generate only the "get" entry if we are readonly
+                  *ss << "_get_" << d->original_local_name () << ",\t&"
                       << derived->full_skel_name () << "::_get_"
-                      << d->local_name () << "_skel\n";
+                      << d->original_local_name () << "_skel\n";
                   derived->skel_count_++;
 
                   attr = AST_Attribute::narrow_from_decl (d);
@@ -1147,9 +1165,9 @@ be_interface::gen_optable_entries (be_interface *derived)
                     {
                       // the set method
                       ss->indent (); // start from current indentation level
-                      *ss << "_set_" << d->local_name () << ",\t&"
+                      *ss << "_set_" << d->original_local_name () << ",\t&"
                           << derived->full_skel_name () << "::_set_"
-                          << d->local_name () << "_skel\n";
+                          << d->original_local_name () << "_skel\n";
                       derived->skel_count_++;
                     }
                 }
@@ -1538,6 +1556,8 @@ be_interface::gen_gperf_lookup_methods (void)
                                     " "
                                     "-D -E -T -f 0"
                                     " "
+                                    "-F 0"
+                                    " "
                                     "-a -o -t -p -K"
                                     " "
                                     "opname_ -L C++"
@@ -1559,6 +1579,8 @@ be_interface::gen_gperf_lookup_methods (void)
                                     " "
                                     "-D -E -T -f 0"
                                     " "
+                                    "-F 0"
+                                    " "
                                     "-a -o -t -p -K"
                                     " "
                                     "opname_ -L C++"
@@ -1579,6 +1601,8 @@ be_interface::gen_gperf_lookup_methods (void)
                                     "-m -M -J -c -C"
                                     " "
                                     "-D -E -T -f 0"
+                                    " "
+                                    "-F 0"
                                     " "
                                     "-a -o -t -p -K"
                                     " "
