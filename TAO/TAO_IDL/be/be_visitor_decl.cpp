@@ -20,6 +20,7 @@
 // ============================================================================
 
 #include "be_visitor_decl.h"
+#include "be_visitor_sequence.h"
 #include "be_visitor_context.h"
 #include "be_typedef.h"
 #include "be_type.h"
@@ -53,28 +54,51 @@ be_visitor_decl::gen_anonymous_base_type (be_type *bt,
 
       // In case our container was typedef'd.
       ctx.tdef (0);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
-      if (!visitor)
-        {
+      int status = 0;
+
+      switch (cg_state)
+      {
+        case TAO_CodeGen::TAO_SEQUENCE_CH:
+          {
+            be_visitor_sequence_ch visitor (&ctx);
+            status = bt->accept (&visitor);
+            break;
+          }
+        case TAO_CodeGen::TAO_SEQUENCE_CI:
+          {
+            be_visitor_sequence_ci visitor (&ctx);
+            status = bt->accept (&visitor);
+            break;
+          }
+        case TAO_CodeGen::TAO_SEQUENCE_CS:
+          {
+            be_visitor_sequence_cs visitor (&ctx);
+            status = bt->accept (&visitor);
+            break;
+          }
+        case TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CS:
+          {
+            be_visitor_sequence_cdr_op_cs visitor (&ctx);
+            status = bt->accept (&visitor);
+            break;
+          }
+        default:
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_decl::"
                              "gen_anonymous_base_type - "
-                             "bad visitor to anonymous abase type\n"),
+                             "bad context state\n"),
                             -1);
-        }
+      }
 
-      if (bt->accept (visitor) == -1)
+      if (status == -1)
         {
-          delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_decl::"
                              "gen_anonymous_base_type - "
                              "anonymous base type codegen failed\n"),
                             -1);
         }
-
-      delete visitor;
     }
 
   return 0;

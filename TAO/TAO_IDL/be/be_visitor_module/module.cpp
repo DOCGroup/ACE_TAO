@@ -510,7 +510,7 @@ be_visitor_module::visit_interface_fwd (be_interface_fwd *node)
     case TAO_CodeGen::TAO_MODULE_ANY_OP_CH:
       {
         ctx.state (TAO_CodeGen::TAO_INTERFACE_FWD_ANY_OP_CH);
-        be_visitor_interface_fwd_cdr_op_ch visitor (&ctx);
+        be_visitor_interface_fwd_any_op_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
@@ -848,7 +848,7 @@ be_visitor_module::visit_structure_fwd (be_structure_fwd *node)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_module::"
-                           "visit_interface_fwd - "
+                           "visit_structure_fwd - "
                            "Bad context state\n"), 
                           -1);
       }
@@ -858,7 +858,7 @@ be_visitor_module::visit_structure_fwd (be_structure_fwd *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_module::"
-                         "visit_interface_fwd - "
+                         "visit_structure_fwd - "
                          "failed to accept visitor\n"),  
                         -1);
     }
@@ -894,7 +894,7 @@ be_visitor_module::visit_union (be_union *node)
     case TAO_CodeGen::TAO_MODULE_CS:
       {
         ctx.state (TAO_CodeGen::TAO_UNION_CS);
-        be_visitor_union_ci visitor (&ctx);
+        be_visitor_union_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
@@ -996,7 +996,7 @@ be_visitor_module::visit_union_fwd (be_union_fwd *node)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%N:%l) be_visitor_module::"
-                           "visit_interface_fwd - "
+                           "visit_union_fwd - "
                            "Bad context state\n"), 
                           -1);
       }
@@ -1006,7 +1006,7 @@ be_visitor_module::visit_union_fwd (be_union_fwd *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_module::"
-                         "visit_interface_fwd - "
+                         "visit_union_fwd - "
                          "failed to accept visitor\n"),  
                         -1);
     }

@@ -407,8 +407,10 @@ UTL_Scope::redef_clash (AST_Decl::NodeType new_nt,
     case AST_Decl::NT_union_fwd:
       return scope_elem_nt != AST_Decl::NT_union_fwd;
     case AST_Decl::NT_interface:
-    case AST_Decl::NT_interface_fwd:
       return scope_elem_nt != AST_Decl::NT_interface_fwd;
+    case AST_Decl::NT_interface_fwd:
+      return (scope_elem_nt != AST_Decl::NT_interface_fwd
+              && scope_elem_nt != AST_Decl::NT_interface);
     default:
       return I_TRUE;
   }
@@ -1743,8 +1745,8 @@ UTL_Scope::add_to_scope (AST_Decl *e,
       return;
     }
 
-  AST_Decl **tmp = this->pd_referenced;
-  long i = this->pd_referenced_used;
+  AST_Decl **tmp = this->pd_decls;
+  long i = this->pd_decls_used;
 
   Identifier *decl_name = e->local_name ();
   char *decl_string = decl_name->get_string ();
@@ -1757,34 +1759,11 @@ UTL_Scope::add_to_scope (AST_Decl *e,
   // in this scope.
   for (; i > 0; i--, tmp++)
     {
-      if ((*tmp)->defined_in () == this)
-        {
-          // A local declaration doesn't use a scoped name.
-          ref_name = (*tmp)->local_name ();
-          ref_string = ref_name->get_string ();
-        }
-      else
-        {
-          // If this item is merely referenced in this scope,
-          // then only the top level of whatever scoped name
-          // is used may clash with a local declaration.
-          UTL_ScopedName *s = (*tmp)->name ();
-          UTL_IdListActiveIterator iter (s);
-          ref_name = iter.item ();
-          ref_string = ref_name->get_string ();
+      // A local declaration doesn't use a scoped name.
+      ref_name = (*tmp)->local_name ();
+      ref_string = ref_name->get_string ();
 
-          // Get the first non-null component of the scoped
-          // nane that's not the global double colon.
-          while (!ACE_OS::strcmp (ref_string, "")
-                 || !ACE_OS::strcmp (ref_string, "::"))
-            {
-              iter.next ();
-              ref_name = iter.item ();
-              ref_string = ref_name->get_string ();
-            }
-        }
-
-      // If the names compare exactly, it's a redefinition
+      // If the names compare exactly, it's a redefini8tion
       // error, unless they're both modules (which can be
       // reopened) or we have a belated definition of a
       // forward-declared interface.

@@ -127,7 +127,7 @@ be_visitor_field_cs::visit_sequence (be_sequence *node)
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
       ctx.state (TAO_CodeGen::TAO_SEQUENCE_CS);
-      be_visitor_structure_cs visitor (&ctx);
+      be_visitor_sequence_cs visitor (&ctx);
 
       if (node->accept (&visitor) == -1)
         {

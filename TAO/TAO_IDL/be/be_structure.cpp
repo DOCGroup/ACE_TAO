@@ -665,16 +665,17 @@ be_structure::compute_size_type (void)
     {
       // Get the next AST decl node.
       AST_Decl *d = si.item ();
-      AST_Field *f = AST_Field::narrow_from_decl (d);
 
-      if (f != 0)
+      if (d->node_type () == AST_Decl::NT_enum_val)
         {
-          AST_Type *t = f->field_type ();
-          // Our sizetype depends on the sizetype of our
-          // members. Although previous value of sizetype may get
-          // overwritten, we are guaranteed by the "size_type" call
-          // that once the value reached be_decl::VARIABLE, nothing
-          // else can overwrite it.
+          continue;
+        }
+
+      AST_Field *f = AST_Field::narrow_from_decl (d);
+      AST_Type *t = f->field_type ();
+
+      if (t != 0)
+        {
           this->size_type (t->size_type ());
 
           // While we're iterating, we might as well do this one too.

@@ -2943,8 +2943,10 @@ case 194:
 /* complex_declarator : array_declarator*/
           UTL_ScopedName *sn = 0;
           ACE_NEW_RETURN (sn,
-                          UTL_ScopedName (tao_yyvsp[0].dcval->local_name (),
-                                          0),
+                          UTL_ScopedName (
+                              tao_yyvsp[0].dcval->local_name ()->copy (),
+                              0
+                            ),
                           1);
           ACE_NEW_RETURN (tao_yyval.deval,
                           FE_Declarator (sn,
