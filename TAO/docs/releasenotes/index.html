@@ -71,8 +71,24 @@ A complete list of all modifications to TAO is available in the <A HREF="http://
 <A NAME="idl"></A>IDL Compiler</H3>
 Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Aniruddha Gokhale</A>
 
-<P>Current status: (As of June 24th, 1998.)
+<P>Current status: (As of July 20th, 1998.)
 <UL>
+
+  <LI>
+      Perfect Hashed Operation Lookup Strategy has been added to the IDL
+      Compiler.  -P flag to the <tao_idl> enables the perfect hased
+      lookup strategy.
+      
+      This strategy uses
+      <A HREF="http://www.cs.wustl.edu/~schmidt/gperf.ps.gz"> GPERF</A>,
+      the GNU's Perfect Hash Function Generator written by Dr.Douglas
+      C. Schmidt.
+      
+      Right now, GPERF works only on Solaris. Any work on porting GPERF
+      to other platforms will be highly appreciated.
+      </L1>
+
+ 
 <LI>
 Support for Arrays is refined in terms of the code generated for
     parameters inside stubs and skeletons.
