@@ -108,7 +108,7 @@ public:
                         ACE_hthread_t thread_handles[] = 0,
                         void *stack[] = 0,
                         size_t stack_size[] = 0,
-                        ACE_thread_t  thread_names[] = 0);
+                        ACE_thread_t thread_ids[] = 0);
   // Turn the task into an active object, i.e., having <n_threads> of
   // control, all running at the <priority> level (see below) with the
   // same <grp_id>, all of which invoke <Task::svc>.  Returns -1 if
