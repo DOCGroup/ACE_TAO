@@ -66,37 +66,33 @@ ACE_ReactorEx_Handler_Repository::~ACE_ReactorEx_Handler_Repository (void)
   delete[] this->to_be_added_info_;
 }
 
-long
-ACE_ReactorEx_Handler_Repository::remove_network_events_i (long existing_masks,
+void
+ACE_ReactorEx_Handler_Repository::remove_network_events_i (long &existing_masks,
 							   ACE_Reactor_Mask to_be_removed_masks)
 {
-  long result = existing_masks;
-  
   if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::READ_MASK))
-    ACE_CLR_BITS (result, FD_READ);
+    ACE_CLR_BITS (existing_masks, FD_READ);
   
   if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::WRITE_MASK))
-    ACE_CLR_BITS (result, FD_WRITE);
+    ACE_CLR_BITS (existing_masks, FD_WRITE);
   
   if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::EXCEPT_MASK))
-    ACE_CLR_BITS (result, FD_OOB);
+    ACE_CLR_BITS (existing_masks, FD_OOB);
   
   if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::ACCEPT_MASK))
-    ACE_CLR_BITS (result, FD_ACCEPT);
+    ACE_CLR_BITS (existing_masks, FD_ACCEPT);
   
   if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::CONNECT_MASK))
-    ACE_CLR_BITS (result, FD_CONNECT);
+    ACE_CLR_BITS (existing_masks, FD_CONNECT);
   
   if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::QOS_MASK))
-    ACE_CLR_BITS (result, FD_QOS);
+    ACE_CLR_BITS (existing_masks, FD_QOS);
   
   if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::GROUP_QOS_MASK))
-    ACE_CLR_BITS (result, FD_GROUP_QOS);
+    ACE_CLR_BITS (existing_masks, FD_GROUP_QOS);
   
   if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::CLOSE_MASK))
-    ACE_CLR_BITS (result, FD_CLOSE);
-  
-  return result;
+    ACE_CLR_BITS (existing_masks, FD_CLOSE);
 }
 
 int
@@ -155,28 +151,28 @@ int
 ACE_ReactorEx_Handler_Repository::remove_handler_i (size_t index,
 						    ACE_Reactor_Mask to_be_removed_masks)
 {
-  long result = 0;
-
   // I/O entries
   if (this->current_info_[index].io_entry_)
     {
       // See if there are other events that the <Event_Handler> is
       // interested in
-      result = this->remove_network_events_i (this->current_info_[index].network_events_,
-					      to_be_removed_masks);
+      this->remove_network_events_i (this->current_info_[index].network_events_,
+				     to_be_removed_masks);
       
-      // Disassociate/Reassociate the event from the I/O handle. This
-      // will depend on the value of <result>. I don't think we can do
-      // anything about errors here, so I will not check this.
+      // Disassociate/Reassociate the event from/with the I/O handle.
+      // This will depend on the value of remaining set of network
+      // events that the <event_handler> is interested in. I don't
+      // think we can do anything about errors here, so I will not
+      // check this.
       ::WSAEventSelect ((SOCKET) this->current_info_[index].io_handle_,
 			this->current_handles_[index],
-			result);
+			this->current_info_[index].network_events_);
     }
   
   // If there are no more events that the <Event_Handler> is
   // interested in, or this is a non-I/O entry, schedule the
   // <Event_Handler> for removal
-  if (result == 0)
+  if (this->current_info_[index].network_events_ == 0)
     {
       // Mark to be deleted
       this->current_info_[index].delete_entry_ = 1;
@@ -193,28 +189,28 @@ int
 ACE_ReactorEx_Handler_Repository::remove_suspended_handler_i (size_t index,
 							      ACE_Reactor_Mask to_be_removed_masks)
 {
-  long result = 0;
-
   // I/O entries
   if (this->current_suspended_info_[index].io_entry_)
     {
       // See if there are other events that the <Event_Handler> is
       // interested in
-      result = this->remove_network_events_i (this->current_suspended_info_[index].network_events_,
-					      to_be_removed_masks);
+      this->remove_network_events_i (this->current_suspended_info_[index].network_events_,
+				     to_be_removed_masks);
       
-      // Disassociate/Reassociate the event from the I/O handle. This
-      // will depend on the value of <result>. I don't think we can do
-      // anything about errors here, so I will not check this.
+      // Disassociate/Reassociate the event from/with the I/O handle.
+      // This will depend on the value of remaining set of network
+      // events that the <event_handler> is interested in. I don't
+      // think we can do anything about errors here, so I will not
+      // check this.
       ::WSAEventSelect ((SOCKET) this->current_suspended_info_[index].io_handle_,
 			this->current_suspended_info_[index].event_handle_,
-			result);
+			this->current_suspended_info_[index].network_events_);
     }
 
   // If there are no more events that the <Event_Handler> is
   // interested in, or this is a non-I/O entry, schedule the
   // <Event_Handler> for removal
-  if (result == 0)
+  if (this->current_suspended_info_[index].network_events_ == 0)
     {
       // Mark to be deleted
       this->current_suspended_info_[index].delete_entry_ = 1;
@@ -871,15 +867,46 @@ ACE_ReactorEx::register_handler_i (ACE_HANDLE event_handle,
     }
 }
 
+int 
+ACE_ReactorEx::schedule_wakeup_i (ACE_HANDLE io_handle,
+				  ACE_Reactor_Mask masks_to_be_added)
+{
+  // Make sure that the <handle> is valid
+  if (this->handler_rep_.invalid_handle (io_handle))
+    return -1;
+  
+  long new_network_events = 0;
+  int delete_event = 0;
+  ACE_HANDLE event_handle = ACE_INVALID_HANDLE;
+
+  // Look up the repository to see if the <Event_Handler> is already
+  // there.
+  int found = this->handler_rep_.add_network_events_i (masks_to_be_added, 
+						       io_handle, 
+						       new_network_events,
+						       event_handle,
+						       delete_event);
+  
+  if (found)
+    return ::WSAEventSelect ((SOCKET) io_handle, 
+			     event_handle, 
+			     new_network_events);
+  else
+    return -1;
+}
+
+
 int
 ACE_ReactorEx_Handler_Repository::add_network_events_i (ACE_Reactor_Mask mask,
 							ACE_HANDLE io_handle,
-							long &new_mask,
+							long &new_masks,
 							ACE_HANDLE &event_handle,
 							int &delete_event)
 {
   int found = 0;
   size_t i;
+
+  long *modified_masks = &new_masks;
 
   // First go through the current entries
   size_t total_entries = this->max_handlep1_;
@@ -888,7 +915,7 @@ ACE_ReactorEx_Handler_Repository::add_network_events_i (ACE_Reactor_Mask mask,
     if (io_handle == this->current_info_[i].io_handle_)
       {
 	found = 1;
-	new_mask = this->current_info_[i].network_events_;
+	modified_masks = &this->current_info_[i].network_events_;
 	delete_event = this->current_info_[i].delete_event_;
 	event_handle = this->current_handles_[i];
       }
@@ -900,34 +927,36 @@ ACE_ReactorEx_Handler_Repository::add_network_events_i (ACE_Reactor_Mask mask,
     if (io_handle == this->current_suspended_info_[i].io_handle_)
       {
 	found = 1;
-	new_mask = this->current_suspended_info_[i].network_events_;
+	modified_masks = &this->current_suspended_info_[i].network_events_;
 	delete_event = this->current_suspended_info_[i].delete_event_;
 	event_handle = this->current_suspended_info_[i].event_handle_;
       }
 
   if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::READ_MASK))
-    ACE_SET_BITS (new_mask, FD_READ);
+    ACE_SET_BITS (*modified_masks, FD_READ);
   
   if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
-    ACE_SET_BITS (new_mask, FD_WRITE);
+    ACE_SET_BITS (*modified_masks, FD_WRITE);
   
   if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
-    ACE_SET_BITS (new_mask, FD_OOB);
+    ACE_SET_BITS (*modified_masks, FD_OOB);
 
   if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
-    ACE_SET_BITS (new_mask, FD_ACCEPT);
+    ACE_SET_BITS (*modified_masks, FD_ACCEPT);
 
   if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK))
-    ACE_SET_BITS (new_mask, FD_CONNECT);
+    ACE_SET_BITS (*modified_masks, FD_CONNECT);
 
   if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::QOS_MASK))
-    ACE_SET_BITS (new_mask, FD_QOS);
+    ACE_SET_BITS (*modified_masks, FD_QOS);
 
   if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::GROUP_QOS_MASK))
-    ACE_SET_BITS (new_mask, FD_GROUP_QOS);
+    ACE_SET_BITS (*modified_masks, FD_GROUP_QOS);
 
   if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::CLOSE_MASK))
-    ACE_SET_BITS (new_mask, FD_CLOSE);
+    ACE_SET_BITS (*modified_masks, FD_CLOSE);
+
+  new_masks = *modified_masks;
 
   return found;
 }

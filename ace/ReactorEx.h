@@ -273,9 +273,9 @@ public:
   // <Event_Handler> may already be in the handler repository, we may
   // have to find the old event and the old network events
   
-  long remove_network_events_i (long existing_masks,
+  void remove_network_events_i (long &existing_masks,
 				ACE_Reactor_Mask to_be_removed_masks);
-  // This method is used to calculate the network mask left (if any)
+  // This method is used to change the network mask left (if any)
   // after a remove request to <ReactorEx>
 
   int suspend_handler_i (ACE_HANDLE handle,
@@ -366,11 +366,11 @@ public:
 	    ACE_Timer_Queue *timer_queue);
   // Initialization.  <timer_queue> is stored to call gettimeofday.
 
-  int notify (ACE_Event_Handler *eh = 0,
+  int notify (ACE_Event_Handler *event_handler = 0,
 	      ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK,
 	      ACE_Time_Value *timeout = 0);
   // Special trick to unblock WaitForMultipleObjects() when updates
-  // occur.  All we do is enqueue <eh> and <mask> onto the
+  // occur.  All we do is enqueue <event_handler> and <mask> onto the
   // <ACE_Message_Queue> and wakeup the ReactorEx by signaling its
   // <ACE_Event> handle.  The <ACE_Time_Value> indicates how long to
   // blocking trying to notify the <Reactor>.  If <timeout> == 0, the
@@ -546,37 +546,37 @@ public:
 
   // = Register and remove Handlers. 
 
-  virtual int register_handler (ACE_Event_Handler *eh, 
+  virtual int register_handler (ACE_Event_Handler *event_handler, 
 				ACE_HANDLE event_handle = ACE_INVALID_HANDLE);
-  // Register an <ACE_Event_Handler> <eh>.  Since no Event Mask is
+  // Register an <ACE_Event_Handler> <event_handler>.  Since no Event Mask is
   // passed through this interface, it is assumed that the <handle>
   // being passed in is an event handle and when the event becomes
-  // signaled, <ReactorEx> will call handle_signal on <eh>.  If
+  // signaled, <ReactorEx> will call handle_signal on <event_handler>.  If
   // <handle> == <ACE_INVALID_HANDLE> the <ACE_ReactorEx> will call
-  // the <get_handle> method of <eh> to extract the underlying event
+  // the <get_handle> method of <event_handler> to extract the underlying event
   // handle.
  
   virtual int register_handler (ACE_HANDLE event_handle,
 				ACE_HANDLE io_handle,
-				ACE_Event_Handler *eh, 
+				ACE_Event_Handler *event_handler, 
 				ACE_Reactor_Mask mask);
-  // Register an <ACE_Event_Handler> <eh>.  <mask> specifies the
-  // network events that the <eh> is interested in.  If <io_handle> ==
-  // <ACE_INVALID_HANDLE> the <ACE_ReactorEx> will call the
-  // <get_handle> method of <eh> to extract the underlying I/O
+  // Register an <ACE_Event_Handler> <event_handle>.  <mask> specifies
+  // the network events that the <event_handler> is interested in.  If
+  // <io_handle> == <ACE_INVALID_HANDLE> the <ACE_ReactorEx> will call
+  // the <get_handle> method of <event_handler> to extract the underlying I/O
   // handle. If the <event_handle> == <ACE_INVALID_HANDLE>, ReactorEx
   // will create an event for associating it with the I/O handle. When
   // the <event_handle> is signalled, the appropriate <handle_*>
   // callback will be invoked on the <Event_Handler>
 
   virtual int register_handler (ACE_HANDLE io_handle, 
-				ACE_Event_Handler *eh,
+				ACE_Event_Handler *event_handler,
 				ACE_Reactor_Mask mask); 
   // This is a simple version of the above <register_handler> method
   // where the I/O handle is passed in and the event handle will
   // always be created by <ReactorEx>
 
-  virtual int register_handler (ACE_Event_Handler *eh,
+  virtual int register_handler (ACE_Event_Handler *event_handler,
 				ACE_Reactor_Mask mask);
   // This is a simple version of the above <register_handler> method
   // where the I/O handle will always come from <get_handle> on the
@@ -584,29 +584,29 @@ public:
   // <ReactorEx>
  
   virtual int register_handler (const ACE_Handle_Set &handles,
-				ACE_Event_Handler *eh,
+				ACE_Event_Handler *event_handler,
 				ACE_Reactor_Mask mask); 
-  // Register <eh> with all the <handles> in the <Handle_Set>.
+  // Register <event_handler> with all the <handles> in the <Handle_Set>.
 
-  virtual int remove_handler (ACE_Event_Handler *eh,
+  virtual int remove_handler (ACE_Event_Handler *event_handler,
 			      ACE_Reactor_Mask mask = 0);
-  // Removes <eh> from the <ACE_ReactorEx>.  Note that the
-  // <ACE_ReactorEx> will call the <get_handle> method of <eh> to
+  // Removes <event_handler> from the <ACE_ReactorEx>.  Note that the
+  // <ACE_ReactorEx> will call the <get_handle> method of <event_handler> to
   // extract the underlying handle.  If <mask> ==
   // <ACE_Event_Handler::DONT_CALL> then the <handle_close> method of
-  // the <eh> is not invoked. Note that the <handle> can either be the
+  // the <event_handler> is not invoked. Note that the <handle> can either be the
   // <event_handle> or the <io_handle>
 
   virtual int remove_handler (ACE_HANDLE handle, 
 			      ACE_Reactor_Mask mask = 0);
   // Removes <handle> from the <ACE_ReactorEx>.  If <mask> ==
   // <ACE_Event_Handler::DONT_CALL> then the <handle_close> method of
-  // the <eh> is not invoked. Note that the <handle> can either be the
+  // the <event_handler> is not invoked. Note that the <handle> can either be the
   // <event_handle> or the <io_handle>
   // 
   // For the case of I/O entries, this removes the <mask> binding of
   // <Event_Handler> whose handle is <handle> from <ReactorEx>.  If
-  // there are no more bindings for this <eh> then it is removed from
+  // there are no more bindings for this <event_handler> then it is removed from
   // the Reactor.  For simple event entries, mask is mostly ignored
   // and the <Event_Handler> is always removed from <ReactorEx> =
 
@@ -614,10 +614,10 @@ public:
 			      ACE_Reactor_Mask);
   // Removes all the <mask> bindings for handles in the <handle_set>
   // bind of <Event_Handler>.  If there are no more bindings for any
-  // of these handlers then they are removed from ReactorEx.
+  // of these handles then they are removed from ReactorEx.
 
-  virtual int suspend_handler (ACE_Event_Handler *eh);
-  // Suspend <eh> temporarily. Use <eh->get_handle()> to get the handle.
+  virtual int suspend_handler (ACE_Event_Handler *event_handler);
+  // Suspend <event_handler> temporarily. Use <event_handler->get_handle()> to get the handle.
 
   virtual int suspend_handler (ACE_HANDLE handle);
   // Suspend <handle> temporarily. 
@@ -628,8 +628,8 @@ public:
   virtual int suspend_all (void);
   // Suspend all <handles> temporarily. 
 
-  virtual int resume_handler (ACE_Event_Handler *eh);
-  // Resume <eh>. Use <eh->get_handle()> to get the handle.
+  virtual int resume_handler (ACE_Event_Handler *event_handler);
+  // Resume <event_handler>. Use <event_handler->get_handle()> to get the handle.
 
   virtual int resume_handler (ACE_HANDLE handle);
   // Resume <handle>. 
@@ -642,7 +642,7 @@ public:
 
   // Timer management.
 
-  virtual int schedule_timer (ACE_Event_Handler *eh,
+  virtual int schedule_timer (ACE_Event_Handler *event_handler,
 			      const void *arg,
 			      const ACE_Time_Value &delta,
 			      const ACE_Time_Value &interval = ACE_Time_Value::zero);  
@@ -675,6 +675,29 @@ public:
   // makes it possible to free up the memory and avoid memory leaks.
   // Returns 1 if cancellation succeeded and 0 if the <timer_id>
   // wasn't found.
+
+  // = High-level Event_Handler scheduling operations
+  
+  virtual int schedule_wakeup (ACE_Event_Handler *event_handler,
+			       ACE_Reactor_Mask masks_to_be_added);
+  // Add <masks_to_be_added> to the <event_handler>'s entry in
+  // ReactorEx.  <event_handler> must already have been registered
+  // with ReactorEx.
+  
+  virtual int schedule_wakeup (ACE_HANDLE handle,
+			       ACE_Reactor_Mask masks_to_be_added);
+  // Add <masks_to_be_added> to the <handle>'s entry in ReactorEx.
+  // The Event_Handler associated with <handle> must already have been
+  // registered with ReactorEx.
+
+  virtual int cancel_wakeup (ACE_Event_Handler *event_handler,
+			     ACE_Reactor_Mask mask);
+  // This method is identical to the <remove_handler> method.
+
+  virtual int cancel_wakeup (ACE_HANDLE handle,
+			     ACE_Reactor_Mask mask);
+  // This method is identical to the <remove_handler> method.
+
 
   // = Notification methods.
 
@@ -724,6 +747,10 @@ public:
   // Dump the state of an object.
 
 protected:
+  virtual int schedule_wakeup_i (ACE_HANDLE handle,
+				 ACE_Reactor_Mask masks_to_be_added);
+  // Scheduling workhorse
+
   virtual int register_handler_i (ACE_HANDLE event_handle,
 				  ACE_HANDLE io_handle,
 				  ACE_Event_Handler *event_handler,
