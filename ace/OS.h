@@ -2875,7 +2875,7 @@ typedef unsigned int size_t;
   // from compiler supplied stdlib.h
   extern int putenv (char *);
 
-  int isatty (ACE_HANDLE h);
+  int isatty (int h);
 
 # endif /* ACE_PSOS_SNARFS_HEADER_INFO */
 
@@ -6060,7 +6060,10 @@ public:
   // QoS-enabled <ioctl> when the I/O control code is either SIO_SET_QOS
   // or SIO_GET_QOS.
   static int isastream (ACE_HANDLE handle);
+  static int isatty (int handle);
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   static int isatty (ACE_HANDLE handle);
+#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
   static off_t lseek (ACE_HANDLE handle,
                       off_t offset,
                       int whence);
@@ -7177,8 +7180,8 @@ size_t fwrite (void *buf, size_t sz, size_t count, FILE *fp);
 size_t fread (void *buf, size_t sz, size_t count, FILE *fp);
 int getc (FILE *fp);
 int ferror (FILE *fp);
-int isatty (ACE_HANDLE h);
-ACE_HANDLE fileno (FILE *fp);
+int isatty (int h);
+int fileno (FILE *fp);
 int fflush (FILE *fp);
 #   if defined (UNDER_CE) && (UNDER_CE < 211)
 void exit (int status);

@@ -1,3 +1,17 @@
+Mon Jan 17 14:20:17 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h:
+	* ace/OS.i: Changed the signature of isatty to (int) and added a
+	  (ACE_HANDLE) version for Win32.
+
+	* ace/Makefile:
+	* ace/Svc_Conf_l.cpp: Removed the explicit casting of fileno()
+	  from int to ACE_HANDLE.
+
+	* ace/config-WinCE.h: Added ACE_LACKS_ISATTY.
+
+	* ace/OS.i (isatty): Removed WinCE specific section.
+
 Mon Jan 17 00:53:37 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.h: Added a cast to (long) for ACE_THR_PRI_FIFO_MIN,
@@ -82,14 +96,14 @@ Sat Jan 15 15:49:28 2000  Darrell Brunsch <brunsch@uci.edu>
           Readded the ACE_LACKS_FCNTL macro, since it seems to have been
           missed in the latest changes to the config-win32 files.
 
-        * ace/Makefile: 
+        * ace/Makefile:
           With Doug's help, added a couple of new commands to the generation
           of the Svc_Conf_l.cpp, because the generated files were causing
           a warning on NT.
 
 Sat Jan 15 00:41:12 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/ARGV: Added a new add() method that adds an entire argv 
+	* ace/ARGV: Added a new add() method that adds an entire argv
 	  array in one fell swoop.
 
 	* netsvcs/clients/Naming/Client/main.cpp (main): Replaced
@@ -110,15 +124,15 @@ Sat Jan 15 00:41:12 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  use advanced features of <ACE_ARGV>.  Thanks to Suresh Kannan
  	  <kannan@uav.ae.gatech.edu> for contributing this.
 
-	* ace/config-win32-common.h: Added 
-	
+	* ace/config-win32-common.h: Added
+
 	  #define ACE_LACKS_SETREGID
 	  #define ACE_LACKS_SETREUID
-  
+
           Thanks to Christopher Kohlhoff <chris@kohlhoff.com> for
  	  reporting this.
 
-	* ace/Task.h: Added a comment to the suspend() and resume() methods 
+	* ace/Task.h: Added a comment to the suspend() and resume() methods
 	  encouraging developers not to use these methods unless
  	  absolutely necessary.  Thanks to Mark C. Barnes <marcus@muse3d.com>
 	  for motivating this.
@@ -126,7 +140,7 @@ Sat Jan 15 00:41:12 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* ace: Reorganized the config-win32*.h files
 	  to insulate the different compiler configurations from each
 	  other.  The changes are as follows:
-  
+
           * Concatenated config-win32.h and config-win32-common.h to form
 	    the new config-win32-common.h.
 
@@ -135,10 +149,10 @@ Sat Jan 15 00:41:12 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	  * Updated the other compilers' files to add required language
 	    defines originally in config-win32-common.h.
-  
+
           Thanks to Christopher Kohlhoff <chris@kohlhoff.com> for
  	  contributing this.
-	
+
 Fri Jan 14 15:42:28 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Select_Reactor_T.cpp (work_pending): Made the code more

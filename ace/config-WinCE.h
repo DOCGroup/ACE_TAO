@@ -142,6 +142,7 @@
 #define ACE_LACKS_STRRCHR
 #define ACE_LACKS_BSEARCH
 #define ACE_LACKS_SOCKET_BUFSIZ
+#define ACE_LACKS_ISATTY
 
 // @@ Followings are used to keep existing programs happy.
 
