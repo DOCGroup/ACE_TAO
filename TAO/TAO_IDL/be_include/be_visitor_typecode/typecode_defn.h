@@ -30,6 +30,7 @@
 const int TAO_BE_VISITOR_TYPECODE_DEFN_MAX_STACK_SIZE = 1024;
 
 class AST_Structure;
+class be_interface_fwd;
 
 class be_visitor_typecode_defn : public be_visitor_scope
 {
@@ -68,10 +69,10 @@ public:
 //   virtual int visit_exception (be_exception *node);
   // visit an exception
 
-//   virtual int visit_interface (be_interface *node);
+  virtual int visit_interface (be_interface *node);
   // visit interface
 
-//   virtual int visit_interface_fwd (be_interface_fwd *node);
+  virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit interface
 
 //   virtual int visit_component (be_component *node);
@@ -242,9 +243,9 @@ public:
 
   // helpers to generate encap len of the repoID and name
 
-  ACE_CDR::ULong repoID_encap_len (be_decl *node);
+//   ACE_CDR::ULong repoID_encap_len (be_decl *node);
 
-  ACE_CDR::ULong name_encap_len (be_decl *node);
+//   ACE_CDR::ULong name_encap_len (be_decl *node);
 
   // helper to get an array of long from a name
 

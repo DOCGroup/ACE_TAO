@@ -1,3 +1,26 @@
+Wed Mar 30 11:41:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+
+	  Generate an "extern" declaration for forward declared
+	  interfaces.  Addresses cases where another TypeCode (e.g. for a
+	  sequence) needs access to the interface TypeCode_ptr before it's
+	  definition is generated.
+
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.h
+	  (visit_interface, visit_interface_fwd):
+
+	  Uncommented.
+
+	* tao/TypeCode.h:
+
+	  Added missing TypeCode-specific Arg_Traits<> template
+	  specializations that were inadvertently lost during merge.
+
+	* tao/IFR_Client/IFR_BaseA.cpp:
+
+	  Regenerated.
+
 Wed Mar 30 19:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO_IDL/be/be_codegen.cpp:

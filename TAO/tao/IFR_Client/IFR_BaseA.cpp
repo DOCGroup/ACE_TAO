@@ -159,7 +159,7 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CORBA_Contained_Description[] =
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_Contained_Description[] =
   {
     { "kind", &CORBA::_tc_DefinitionKind },
     { "value", &CORBA::_tc_any }
@@ -202,7 +202,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be/be_visitor_typecode/typecode_defn.cpp:808
+
+namespace CORBA
+{
+  extern ::CORBA::TypeCode_ptr const _tc_InterfaceDef;
+}
 
 namespace TAO
 {
@@ -241,7 +246,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be/be_visitor_typecode/typecode_defn.cpp:808
+
+namespace CORBA
+{
+  extern ::CORBA::TypeCode_ptr const _tc_ValueDef;
+}
 
 namespace TAO
 {
@@ -280,7 +290,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be/be_visitor_typecode/typecode_defn.cpp:808
+
+namespace CORBA
+{
+  extern ::CORBA::TypeCode_ptr const _tc_AbstractInterfaceDef;
+}
 
 namespace TAO
 {
@@ -319,7 +334,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be/be_visitor_typecode/typecode_defn.cpp:808
+
+namespace CORBA
+{
+  extern ::CORBA::TypeCode_ptr const _tc_LocalInterfaceDef;
+}
 
 namespace TAO
 {
@@ -358,7 +378,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be/be_visitor_typecode/typecode_defn.cpp:808
+
+namespace CORBA
+{
+  extern ::CORBA::TypeCode_ptr const _tc_ExtInterfaceDef;
+}
 
 namespace TAO
 {
@@ -397,7 +422,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be/be_visitor_typecode/typecode_defn.cpp:808
+
+namespace CORBA
+{
+  extern ::CORBA::TypeCode_ptr const _tc_ExtValueDef;
+}
 
 namespace TAO
 {
@@ -436,7 +466,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be/be_visitor_typecode/typecode_defn.cpp:808
+
+namespace CORBA
+{
+  extern ::CORBA::TypeCode_ptr const _tc_ExtAbstractInterfaceDef;
+}
 
 namespace TAO
 {
@@ -475,7 +510,12 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be/be_visitor_typecode/typecode_defn.cpp:808
+
+namespace CORBA
+{
+  extern ::CORBA::TypeCode_ptr const _tc_ExtLocalInterfaceDef;
+}
 
 namespace TAO
 {
@@ -514,7 +554,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be/be_visitor_typecode/typecode_defn.cpp:808
 
 namespace TAO
 {
@@ -550,7 +590,7 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CORBA_StructMember[] =
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_StructMember[] =
   {
     { "name", &CORBA::_tc_Identifier },
     { "type", &CORBA::_tc_TypeCode },
@@ -581,7 +621,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be/be_visitor_typecode/typecode_defn.cpp:808
 
 namespace TAO
 {
@@ -617,7 +657,7 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CORBA_Initializer[] =
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_Initializer[] =
   {
     { "members", &CORBA::_tc_StructMemberSeq },
     { "name", &CORBA::_tc_Identifier }
@@ -647,7 +687,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be/be_visitor_typecode/typecode_defn.cpp:808
 
 namespace TAO
 {
@@ -683,7 +723,7 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CORBA_ExceptionDescription[] =
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_ExceptionDescription[] =
   {
     { "name", &CORBA::_tc_Identifier },
     { "id", &CORBA::_tc_RepositoryId },
@@ -716,7 +756,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be/be_visitor_typecode/typecode_defn.cpp:808
 
 namespace TAO
 {
@@ -752,7 +792,7 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CORBA_ExtInitializer[] =
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_ExtInitializer[] =
   {
     { "members", &CORBA::_tc_StructMemberSeq },
     { "exceptions", &CORBA::_tc_ExcDescriptionSeq },
@@ -783,7 +823,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be/be_visitor_typecode/typecode_defn.cpp:808
 
 namespace TAO
 {
@@ -819,7 +859,7 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CORBA_UnionMember[] =
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_UnionMember[] =
   {
     { "name", &CORBA::_tc_Identifier },
     { "label", &CORBA::_tc_any },
@@ -851,7 +891,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be/be_visitor_typecode/typecode_defn.cpp:808
 
 namespace TAO
 {
@@ -890,7 +930,7 @@ namespace CORBA
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be/be_visitor_typecode/typecode_defn.cpp:808
 
 namespace TAO
 {
@@ -926,7 +966,7 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CORBA_Container_Description[] =
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_Container_Description[] =
   {
     { "contained_object", &CORBA::_tc_Contained },
     { "kind", &CORBA::_tc_DefinitionKind },
@@ -952,7 +992,7 @@ static TAO::TypeCode::Struct<char const *,
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:743
+// be/be_visitor_typecode/typecode_defn.cpp:808
 
 namespace TAO
 {
@@ -1037,7 +1077,7 @@ namespace CORBA
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/struct_typecode.cpp:34
 
-static TAO::TypeCode::Struct_Field<char const *> _tao_fields_CORBA_TypeDescription[] =
+static TAO::TypeCode::Struct_Field<char const *> const _tao_fields_CORBA_TypeDescription[] =
   {
     { "name", &CORBA::_tc_Identifier },
     { "id", &CORBA::_tc_RepositoryId },

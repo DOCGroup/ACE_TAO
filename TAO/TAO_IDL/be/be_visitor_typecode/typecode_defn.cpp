@@ -23,6 +23,8 @@ ACE_RCSID (be_visitor_typecode,
            "$Id$")
 
 
+#include "be_interface_fwd.h"
+
 // This is an implementation of C++ "scoped lock" idiom in order to
 // avoid repetitive code.
 class Scoped_Compute_Queue_Guard
@@ -441,7 +443,7 @@ be_visitor_typecode_defn::gen_typecode_ptr (be_type * node)
       if (this->gen_nested_namespace_end (module) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_typecode_defn::visit_type - "
+                             "be_visitor_typecode_defn::gen_typecode_ptr - "
                              "Error parsing nested name\n"),
                             -1);
         }
@@ -658,34 +660,57 @@ be_visitor_typecode_defn::visit_array (be_array *node)
 //                     -1);
 // }
 
-// int
-// be_visitor_typecode_defn::visit_interface (be_interface *node)
-// {
-//   switch (this->ctx_->sub_state ())
-//     {
-//     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE:
-//       return this->visit_type (node);
-//     case TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED:
-//       return this->gen_typecode (node);
-//     case TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION:
-//       return this->gen_encapsulation (node);
-//     case TAO_CodeGen::TAO_TC_DEFN_TC_SIZE:
-//       this->computed_tc_size_ = this->compute_tc_size (node);
-//       return ((this->computed_tc_size_ > 0) ? 0 : -1);
-//     case TAO_CodeGen::TAO_TC_DEFN_ENCAP_LEN:
-//       this->computed_encap_len_ = this->compute_encap_length (node);
-//       return ((this->computed_encap_len_ > 0) ? 0 : -1);
-//     default:
-//       // error
-//       break;
-//     }
+int
+be_visitor_typecode_defn::visit_interface (be_interface * node)
+{
+  // Only handle forward declared interfaces here.  Defined interfaces
+  // have their own TypeCode visitor.
+  if (node->is_defined ())
+    return 0;
 
-//   ACE_ERROR_RETURN ((LM_ERROR,
-//                      ACE_TEXT ("(%N:%l) be_visitor_typecode_defn::")
-//                      ACE_TEXT ("visit - bad sub state ")
-//                      ACE_TEXT ("in visitor context\n")),
-//                     -1);
-// }
+  TAO_OutStream & os = *this->ctx_->stream ();
+
+  // Generate an extern TypeCode declaration to make sure TypeCodes
+  // that refer to the corresponding TypeCode for the forward declared
+  // interface have a valid reference to it.
+
+  // Is our enclosing scope a module? We need this check because for
+  // platforms that support namespaces, the typecode must be declared
+  // extern.
+  if (node->is_nested () &&
+      node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+    {
+      be_module * const module =
+        be_module::narrow_from_scope (node->defined_in ());
+
+      if (!module || (this->gen_nested_namespace_begin (module) == -1))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_typecode_defn::visit_interface_fwd - "
+                             "Error parsing nested name\n"),
+                            -1);
+        }
+
+      os << "extern ::CORBA::TypeCode_ptr const _tc_"
+         << node->local_name () << ";";
+
+      if (this->gen_nested_namespace_end (module) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_typecode_defn::visit_interface_fwd - "
+                             "Error parsing nested name\n"),
+                            -1);
+        }
+    }
+  else
+    {
+      // outermost scope.
+      os << "extern ::CORBA::TypeCode_ptr const "
+         << node->tc_name () << ";" << be_uidt;
+    }
+
+  return 0;
+}
 
 // int
 // be_visitor_typecode_defn::visit_component (be_component *node)
@@ -693,12 +718,52 @@ be_visitor_typecode_defn::visit_array (be_array *node)
 //   return this->visit_interface (node);
 // }
 
-// int
-// be_visitor_typecode_defn::visit_interface_fwd (be_interface_fwd *)
-// {
-//   // nothing to do
-//   return 0;
-// }
+int
+be_visitor_typecode_defn::visit_interface_fwd (be_interface_fwd * node)
+{
+  TAO_OutStream & os = *this->ctx_->stream ();
+
+  // Generate an extern TypeCode declaration to make sure TypeCodes
+  // that refer to the corresponding TypeCode for the forward declared
+  // interface have a valid reference to it.
+
+  // Is our enclosing scope a module? We need this check because for
+  // platforms that support namespaces, the typecode must be declared
+  // extern.
+  if (node->is_nested () &&
+      node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+    {
+      be_module * const module =
+        be_module::narrow_from_scope (node->defined_in ());
+
+      if (!module || (this->gen_nested_namespace_begin (module) == -1))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_typecode_defn::visit_interface_fwd - "
+                             "Error parsing nested name\n"),
+                            -1);
+        }
+
+      os << "extern ::CORBA::TypeCode_ptr const _tc_"
+         << node->local_name ();
+
+      if (this->gen_nested_namespace_end (module) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_typecode_defn::visit_interface_fwd - "
+                             "Error parsing nested name\n"),
+                            -1);
+        }
+    }
+  else
+    {
+      // outermost scope.
+      os << "extern ::CORBA::TypeCode_ptr const "
+         << node->tc_name () << ";" << be_uidt;
+    }
+
+  return 0;
+}
 
 // int
 // be_visitor_typecode_defn::visit_predefined_type (be_predefined_type *node)
@@ -3708,83 +3773,83 @@ be_visitor_typecode_defn::gen_name (be_decl *node)
 // return the length in bytes to hold the repoID inside a typecode. This
 // comprises 4 bytes indicating the length of the string followed by the actual
 // string represented as longs.
-ACE_CDR::ULong
-be_visitor_typecode_defn::repoID_encap_len (be_decl *node)
-{
-  int flag = 0;
+// ACE_CDR::ULong
+// be_visitor_typecode_defn::repoID_encap_len (be_decl *node)
+// {
+//   int flag = 0;
 
-  // check if we want to generate optimized typecodes. In such a case, there is
-  // no need to generate the repoID (unless we are an object reference or an
-  // exception in which case it is mandatory to have the repository ID)
-  // generate repoID
+//   // check if we want to generate optimized typecodes. In such a case, there is
+//   // no need to generate the repoID (unless we are an object reference or an
+//   // exception in which case it is mandatory to have the repository ID)
+//   // generate repoID
 
-  if (be_global->opt_tc ())
-    {
-      switch (node->node_type ())
-        {
-        case AST_Decl::NT_interface:
-        case AST_Decl::NT_interface_fwd:
-        case AST_Decl::NT_except:
-          flag = 0;
-          break;
-        case AST_Decl::NT_pre_defined:
-          if (!ACE_OS::strcmp (node->local_name ()->get_string (),
-                               "Object"))
-            flag = 0;
-          else
-            flag = 1;
-          break;
-        default:
-          flag = 1;
-        }
-    }
+//   if (be_global->opt_tc ())
+//     {
+//       switch (node->node_type ())
+//         {
+//         case AST_Decl::NT_interface:
+//         case AST_Decl::NT_interface_fwd:
+//         case AST_Decl::NT_except:
+//           flag = 0;
+//           break;
+//         case AST_Decl::NT_pre_defined:
+//           if (!ACE_OS::strcmp (node->local_name ()->get_string (),
+//                                "Object"))
+//             flag = 0;
+//           else
+//             flag = 1;
+//           break;
+//         default:
+//           flag = 1;
+//         }
+//     }
 
-  // @@@JP CORBA 2.3.1 states that the Repository ID must be present
-  // for interfaces, valuetypes and exceptions, as Andy has implemented
-  // above. It also states that it must be present in structs, unions,
-  // enumerations and aliases for typecodes from an interface repository
-  // or created by the ORB. We've also had requests to leave the repo
-  // ID in even in optimized typecodes, so I'll disable the
-  // optimization of this field for now.
-  flag = 0;
+//   // @@@JP CORBA 2.3.1 states that the Repository ID must be present
+//   // for interfaces, valuetypes and exceptions, as Andy has implemented
+//   // above. It also states that it must be present in structs, unions,
+//   // enumerations and aliases for typecodes from an interface repository
+//   // or created by the ORB. We've also had requests to leave the repo
+//   // ID in even in optimized typecodes, so I'll disable the
+//   // optimization of this field for now.
+//   flag = 0;
 
-  if (flag)
-    {
-      return 4 + 4;
-    }
-  else
-    {
-      const size_t slen = ACE_OS::strlen (node->repoID ()) + 1;
-      // + 1 for NULL terminating char
+//   if (flag)
+//     {
+//       return 4 + 4;
+//     }
+//   else
+//     {
+//       const size_t slen = ACE_OS::strlen (node->repoID ()) + 1;
+//       // + 1 for NULL terminating char
 
-      // The number of bytes to hold the string must be a multiple of
-      // 4 since this will be represented as an array of longs.
-      return
-        static_cast<ACE_CDR::ULong> (4 + 4 * (slen / 4 + (slen % 4 ? 1 : 0)));
-    }
-}
+//       // The number of bytes to hold the string must be a multiple of
+//       // 4 since this will be represented as an array of longs.
+//       return
+//         static_cast<ACE_CDR::ULong> (4 + 4 * (slen / 4 + (slen % 4 ? 1 : 0)));
+//     }
+// }
 
-// return the length in bytes to hold the name inside a typecode. This
-// comprises 4 bytes indicating the length of the string followed by the actual
-// string represented as longs.
-ACE_CDR::ULong
-be_visitor_typecode_defn::name_encap_len (be_decl *node)
-{
-  if (be_global->opt_tc ())
-    {
-      return 4 + 4;
-    }
-  else
-    {
-      const size_t slen =
-        ACE_OS::strlen (node->original_local_name ()->get_string ()) + 1;
+// // return the length in bytes to hold the name inside a typecode. This
+// // comprises 4 bytes indicating the length of the string followed by the actual
+// // string represented as longs.
+// ACE_CDR::ULong
+// be_visitor_typecode_defn::name_encap_len (be_decl *node)
+// {
+//   if (be_global->opt_tc ())
+//     {
+//       return 4 + 4;
+//     }
+//   else
+//     {
+//       const size_t slen =
+//         ACE_OS::strlen (node->original_local_name ()->get_string ()) + 1;
 
-      // The number of bytes to hold the string must be a multiple of
-      // 4 since this will be represented as an array of longs.
-      return
-        static_cast<ACE_CDR::ULong> (4 + 4 * (slen / 4 + (slen % 4 ? 1 : 0)));
-    }
-}
+//       // The number of bytes to hold the string must be a multiple of
+//       // 4 since this will be represented as an array of longs.
+//       return
+//         static_cast<ACE_CDR::ULong> (4 + 4 * (slen / 4 + (slen % 4 ? 1 : 0)));
+//     }
+// }
 
 // converts a string name into an array of 4 byte longs
 int
