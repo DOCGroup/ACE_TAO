@@ -65,16 +65,11 @@ namespace
 }
 
 // Macros to simplify suicide.
-#define KEVORKIAN(value, method)                                  \
-  if (death_pending_ == (FT_TEST::TestReplica::value)){           \
-    suicide (#value " in method " #method);                       \
-    return;                                                       \
-    } else ;
-
-#define KEVORKIAN_R(value, method, result)                        \
-  if (death_pending_ == (FT_TEST::TestReplica::value)){           \
-    suicide (#value " in method " #method);                       \
-    return result;                                                       \
+#define KEVORKIAN(value, method)                                   \
+  if (death_pending_ == (FT_TEST::TestReplica::value)){            \
+    suicide (#value " in method " #method);                        \
+    CORBA::OBJECT_NOT_EXIST ex;                                    \
+    ACE_THROW(ex);                                                 \
     } else ;
 
 #define KEVORKIAN_DURING(method)                                   \
@@ -82,15 +77,8 @@ namespace
     || death_pending_ == FT_TEST::TestReplica::BEFORE_REPLICATION  \
     || death_pending_ == FT_TEST::TestReplica::BEFORE_REPLY ){     \
     suicide ("read-only method " #method);                         \
-    return;                                                        \
-    } else ;
-
-#define KEVORKIAN_R_DURING(method, result)                         \
-  if (death_pending_ == FT_TEST::TestReplica::BEFORE_STATE_CHANGE  \
-    || death_pending_ == FT_TEST::TestReplica::BEFORE_REPLICATION  \
-    || death_pending_ == FT_TEST::TestReplica::BEFORE_REPLY ){     \
-    suicide ("read-only method " #method);                         \
-    return result;                                                        \
+    CORBA::OBJECT_NOT_EXIST ex;                                    \
+    ACE_THROW(ex);                                                 \
     } else ;
 
 
@@ -112,7 +100,7 @@ FT_TestReplica_i::~FT_TestReplica_i ()
 
 void FT_TestReplica_i::suicide(const char * note)
 {
-  std::cout << "Replica # Simulate fault: " << factoryId_ << ": " << note << std::endl;
+  std::cout << factory_->identity() << '#' << factoryId_ << " Simulate fault: " << note << std::endl;
   ////////////////////////////////////////
   // WARNING: The following call deletes this object and
   // deactivates the servant!  With luck it'll zap the replica
@@ -140,28 +128,15 @@ long FT_TestReplica_i::factoryId()const
   return factoryId_;
 }
 
-::FT_TEST::TestReplica_ptr FT_TestReplica_i::objectReference()
+::PortableServer::POA_ptr FT_TestReplica_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
-  PortableServer::POA_var poa = orbManager_->root_poa();
-  ::CORBA::Object_ptr obj = poa->servant_to_reference(this);
-  return ::FT_TEST::TestReplica::_narrow(obj);
+  return ::PortableServer::POA::_duplicate(poa_ ACE_ENV_ARG_PARAMETER);
 }
 
-::PortableServer::ObjectId * FT_TestReplica_i::objectId()
+PortableServer::ObjectId FT_TestReplica_i::objectId()const
 {
-  PortableServer::POA_var poa = orbManager_->root_poa();
-  ::PortableServer::ObjectId * oid = poa->servant_to_id(this);
-  return oid;
+  return objectId_.in();
 }
-
-char * FT_TestReplica_i::IOR()
-{
-  PortableServer::POA_var poa = orbManager_->root_poa();
-  ::CORBA::Object_var obj = poa->servant_to_reference(this);
-  ::CORBA::ORB_var orb = orbManager_->orb();
-  return orb->object_to_string(obj);
-}
-
 
 
 /**
@@ -172,23 +147,16 @@ char * FT_TestReplica_i::IOR()
 int FT_TestReplica_i::init (TAO_ORB_Manager & orbManager ACE_ENV_ARG_DECL)
 {
   orbManager_ = & orbManager;
-  objectId_ = orbManager.activate (this ACE_ENV_ARG_PARAMETER);
+  poa_ = orbManager_->root_poa();
+  objectId_ = poa_->activate_object (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-
-/*
-  CORBA::Object_var obj =
-    this->poa_->id_to_reference (id.in ()
-                                 ACE_ENV_ARG_PARAMETER);
-
-  ACE_CHECK_RETURN (-1);
-*/
-
   return 0;
 }
 
 int FT_TestReplica_i::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
-  orbManager_->deactivate(objectId_ ACE_ENV_ARG_PARAMETER);
+  poa_->deactivate_object (objectId_.in ()
+                 ACE_ENV_ARG_PARAMETER);
   return 0;
 }
 
@@ -199,9 +167,10 @@ int FT_TestReplica_i::fini (ACE_ENV_SINGLE_ARG_DECL)
 CORBA::Boolean FT_TestReplica_i::is_alive ()
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  KEVORKIAN_R(DURING_IS_ALIVE, is_alive, 0)
+  KEVORKIAN(DURING_IS_ALIVE, is_alive)
   ACE_ERROR ((LM_ERROR,
-    "FT Replica%d: is_alive: %d\n",
+    "%s#%d: is_alive: %d\n",
+    factory_->identity(),
     factoryId_,
     (death_pending_ != FT_TEST::TestReplica::DENY_IS_ALIVE)
     ));
@@ -214,7 +183,7 @@ CORBA::Boolean FT_TestReplica_i::is_alive ()
 FT::State * FT_TestReplica_i::get_update ()
   ACE_THROW_SPEC ((CORBA::SystemException, FT::NoUpdateAvailable))
 {
-  KEVORKIAN_R(DURING_GET_UPDATE, get_update, new ::FT::State)
+  KEVORKIAN(DURING_GET_UPDATE, get_update)
   long counter = load();
   ::FT::State_var vState = new ::FT::State;
   vState->length(sizeof(counter));
@@ -243,7 +212,7 @@ void FT_TestReplica_i::set_update (const FT::State & s)
 #if defined(FT_TEST_LACKS_STATE)
   ACE_THROW( FT::NoStateAvailable () );
 #else // FT_TEST_LACKS_STATE
-  KEVORKIAN_R(DURING_GET_STATE, get_state, new ::FT::State)
+  KEVORKIAN(DURING_GET_STATE, get_state)
   long counter = load();
   ::FT::State_var vState = new ::FT::State;
   vState->length(sizeof(counter));
@@ -282,18 +251,18 @@ CORBA::Long FT_TestReplica_i::increment (CORBA::Long delta
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  KEVORKIAN_R(BEFORE_STATE_CHANGE, increment, 0)
+  KEVORKIAN(BEFORE_STATE_CHANGE, increment)
   long counter = load ();
   counter += delta;
   store (counter);
-  KEVORKIAN_R(BEFORE_REPLY, increment, 0)
+  KEVORKIAN(BEFORE_REPLY, increment)
   return counter;
 }
 
 CORBA::Long FT_TestReplica_i::get (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  KEVORKIAN_R_DURING(get, 0)
+  KEVORKIAN_DURING(get)
   long counter = load ();
   return counter;
 }
@@ -301,7 +270,7 @@ CORBA::Long FT_TestReplica_i::get (ACE_ENV_SINGLE_ARG_DECL)
 CORBA::Long FT_TestReplica_i::counter (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  KEVORKIAN_R_DURING([get]counter, 0)
+  KEVORKIAN_DURING([get]counter)
   long counter = load ();
   return counter;
 }
@@ -319,6 +288,8 @@ void FT_TestReplica_i::die (FT_TEST::TestReplica::Bane  when
       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  std::cout << factory_->identity() << '#' << factoryId_ << " Received death threat: " << when << std::endl;
+
   death_pending_ = when;
   KEVORKIAN(RIGHT_NOW, die)
 }
@@ -326,7 +297,8 @@ void FT_TestReplica_i::die (FT_TEST::TestReplica::Bane  when
 void FT_TestReplica_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  death_pending_ = FT_TEST::TestReplica::CLEAN_EXIT;
+  factory_->removeReplica(factoryId_, this);
+//  death_pending_ = FT_TEST::TestReplica::CLEAN_EXIT;
 }
 
 //////////////////////////////////////////////
@@ -337,7 +309,8 @@ int FT_TestReplica_i::idle (int & result)
   if (death_pending_ == FT_TEST::TestReplica::WHILE_IDLE)
   {
     ACE_ERROR ((LM_ERROR,
-      "FT Replica%d: Simulated fault WHILE_IDLE",
+      "%s#%d: Simulated fault WHILE_IDLE",
+      factory_->identity(),
       ACE_static_cast(int, factoryId_ )
       ));
     result = 0;
@@ -345,6 +318,11 @@ int FT_TestReplica_i::idle (int & result)
   }
   else if (death_pending_ == FT_TEST::TestReplica::CLEAN_EXIT)
   {
+    ACE_ERROR ((LM_ERROR,
+      "%s#%d: Simulated fault CLEAN_EXIT",
+      factory_->identity(),
+      ACE_static_cast(int, factoryId_ )
+      ));
     result = 0;
     quit = 1;
   }
@@ -368,10 +346,9 @@ void FT_TestReplica_i::store(long counter)
     ACE_OS::fclose(f);
     if (verbose_)
     {
-      std::cout << "FT Replica" << factoryId_ << ": " << counter << std::endl;
+      std::cout << factory_->identity() << '#' << factoryId_ << ": " << counter << std::endl;
     }
   }
-
 }
 
 long FT_TestReplica_i::load ()

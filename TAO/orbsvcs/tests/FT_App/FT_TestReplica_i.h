@@ -76,11 +76,13 @@ public:
 
   void requestQuit();
 
+  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+
   long factoryId()const;
 
   ::FT_TEST::TestReplica_ptr objectReference();
-  ::PortableServer::ObjectId * objectId();
-  char * IOR();
+  PortableServer::ObjectId objectId()const;
+//  char * IOR();
 
 
 
@@ -89,7 +91,7 @@ private:
   // override Replica methods
   virtual void set (CORBA::Long value
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      ACE_THROW_SPEC (( CORBA::SystemException));
 
   virtual CORBA::Long increment (CORBA::Long delta
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -163,7 +165,7 @@ private:
   int verbose_;
 
   /**
-   * a replica number to distinguish between multiple replicas in trace messages.
+   * The ID number assigned by the factory
    */
   long factoryId_;
 
@@ -178,9 +180,14 @@ private:
   TAO_ORB_Manager * orbManager_;
 
   /**
+   * The POA used to activate this object.
+   */
+  PortableServer::POA_var poa_;
+
+  /**
    * The CORBA object id assigned to this object.
    */
-  CORBA::String_var objectId_;
+  PortableServer::ObjectId_var objectId_;
 
 };
 

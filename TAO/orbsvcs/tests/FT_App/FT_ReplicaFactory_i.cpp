@@ -75,6 +75,7 @@ FT_ReplicaFactory_i::~FT_ReplicaFactory_i ()
 
 CORBA::ULong FT_ReplicaFactory_i::allocateId()
 {
+  // assume mutex is locked
   CORBA::ULong id = replicas_.size();
   if (emptySlots_ != 0)
   {
@@ -145,9 +146,7 @@ int FT_ReplicaFactory_i::parse_args (int argc, char * argv[])
       }
       case 'r':
       {
-        const char * id = get_opts.opt_arg ();
-        identity_ = "ReplicaFactory ";
-        identity_ += id;
+        identity_ = get_opts.opt_arg ();
         break;
       }
       case 'q':
@@ -159,7 +158,7 @@ int FT_ReplicaFactory_i::parse_args (int argc, char * argv[])
       case 't':
       {
         testOutputFile_ = get_opts.opt_arg ();
-
+        break;
       }
 
       case '?':
@@ -167,7 +166,8 @@ int FT_ReplicaFactory_i::parse_args (int argc, char * argv[])
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
-                           " -o <iorfile>"
+                           " -o <factory ior file>"
+                           " -t <test replica ior file>"
                            " -q{uit on idle}"
                            "\n",
                            argv [0]),
@@ -186,14 +186,30 @@ const char * FT_ReplicaFactory_i::identity () const
 
 int FT_ReplicaFactory_i::idle (int & result)
 {
-  ACE_UNUSED_ARG (result);
-  int quit = quitRequested_;
-  if (!quitRequested_ && replicas_.size() == emptySlots_)
+  result = 0;
+  size_t replicaCount = replicas_.size();
+  if (replicaCount != emptySlots_)
+  {
+    for (size_t nReplica = 0; result == 0 && nReplica < replicaCount; ++nReplica)
+    {
+      FT_TestReplica_i * replica = replicas_[nReplica];
+      if (replica != 0)
+      {
+        if (replica->idle(result))
+        {
+          removeReplica(nReplica, replica);
+        }
+      }
+    }
+  }
+
+  int quit = (quitRequested_ || result != 0);
+  if (!quit && replicas_.size() == emptySlots_)
   {
     ACE_ERROR (( LM_ERROR,
       "ReplicaFactory is idle.\n"
       ));
-    if (quitOnIdle_)
+    if (quitOnIdle_ && emptySlots_ != 0)
     {
       ACE_ERROR (( LM_ERROR,
         "ReplicaFactory exits due to quit on idle option.\n"
@@ -226,6 +242,7 @@ int FT_ReplicaFactory_i::init (TAO_ORB_Manager & orbManager
   ACE_ENV_ARG_DECL)
 {
   int result = 0;
+
   orbManager_ = & orbManager;
   orb_ = orbManager.orb();
 
@@ -233,14 +250,6 @@ int FT_ReplicaFactory_i::init (TAO_ORB_Manager & orbManager
   ior_ = orbManager.activate (this
       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-
-
-  if (testOutputFile_ != 0)
-  {
-    FT_TestReplica_i * replica = createReplica ();
-    CORBA::String_var replicaIOR = replica->IOR ();
-    writeIOR (testOutputFile_, replicaIOR);
-  }
 
   if (iorOutputFile != 0)
   {
@@ -280,6 +289,21 @@ int FT_ReplicaFactory_i::init (TAO_ORB_Manager & orbManager
     naming_context_->rebind (this_name_, _this()
                             ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
+  }
+
+  // if we're testing.  Create a replica at startup time
+  if (testOutputFile_ != 0)
+  {
+    // shouldn't be necessary, but createReplica assumes this
+    InternalGuard guard (internals_);
+    FT_TestReplica_i * replica = createReplica ();
+
+    PortableServer::POA_var poa = replica->_default_POA (ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
+    ::CORBA::Object_var obj = poa->servant_to_reference(replica);
+    ::CORBA::ORB_var orb = orbManager_->orb();
+    ::CORBA::String_var replicaIOR = orb->object_to_string(obj);
+    writeIOR (testOutputFile_, replicaIOR);
   }
 
   return result;
@@ -368,7 +392,6 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
     ACE_THROW ( PortableGroup::ObjectNotCreated() );
   }
 
-
   ACE_NEW_NORETURN ( factory_creation_id,
     PortableGroup::GenericFactory::FactoryCreationId);
   if (factory_creation_id.ptr() == 0)
@@ -381,26 +404,24 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
   }
   (*factory_creation_id) <<= replica->factoryId();
 
-  ::FT_TEST::TestReplica_var obj = replica->objectReference();
-  METHOD_RETURN(FT_ReplicaFactory_i::create_object) obj._retn();
+  ::CORBA::Object_ptr obj = replica->_default_POA()->servant_to_reference(replica);
+  METHOD_RETURN(FT_ReplicaFactory_i::create_object) obj->_duplicate(obj ACE_ENV_ARG_PARAMETER);
 }
 
 FT_TestReplica_i * FT_ReplicaFactory_i::createReplica()
 {
-  CORBA::ULong replicaId = allocateId();
+  // assume mutex is locked
+  CORBA::ULong factoryId = allocateId();
 
-  // NOTE: ACE_NEW is incompatable with auto_ptr
-  // so create a bare pointer first.  The auto_ptr
-  // is for exception safeness during the init call.
   FT_TestReplica_i * pFTReplica = 0;
   ACE_NEW_NORETURN(pFTReplica, FT_TestReplica_i(
     this,
-    replicaId    
+    factoryId
     ));
-  auto_ptr<FT_TestReplica_i> replica(pFTReplica);
+  replicas_[factoryId] = pFTReplica;
+  emptySlots_ -= 1;
 
-  replica->init (*orbManager_ ACE_ENV_ARG_PARAMETER);
-  replicas_.push_back(replica.release());  // transfer ownership to container
+  pFTReplica->init (*orbManager_ ACE_ENV_ARG_PARAMETER);
   return pFTReplica;
 }
 
@@ -417,13 +438,13 @@ void FT_ReplicaFactory_i::delete_object (
 
   InternalGuard guard (internals_);
 
-  CORBA::ULong replicaId;
-  factory_creation_id >>= replicaId;
-  if (replicaId < replicas_.size())
+  CORBA::ULong factoryId;
+  factory_creation_id >>= factoryId;
+  if (factoryId < replicas_.size())
   {
-    if(replicas_[replicaId] != 0)
+    if(replicas_[factoryId] != 0)
     {
-      replicas_[replicaId]->requestQuit();
+      replicas_[factoryId]->requestQuit();
     }
     else
     {

@@ -112,6 +112,8 @@ if ( $verbose > 1) {
 
 
 #define temp files
+my($factory1_ior) = PerlACE::LocalFile ("factory1.ior");
+my($factory2_ior) = PerlACE::LocalFile ("factory2.ior");
 my($replica1_ior) = PerlACE::LocalFile ("replica1.ior");
 my($replica2_ior) = PerlACE::LocalFile ("replica2.ior");
 my($detector_ior) = PerlACE::LocalFile ("detector.ior");
@@ -120,6 +122,8 @@ my($ready_file) = PerlACE::LocalFile ("ready.file");
 my($client_data) = PerlACE::LocalFile ("persistent.dat");
 
 #discard junk from previous tests
+unlink $factory1_ior;
+unlink $factory2_ior;
 unlink $replica1_ior;
 unlink $replica2_ior;
 unlink $detector_ior;
@@ -129,8 +133,8 @@ unlink $client_data;
 
 my($status) = 0;
 
-my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $replica1_ior -r 1");
-my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $replica2_ior -r 2");
+my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_ior -t $replica1_ior -r 1 -q");
+my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -t $replica2_ior -r 2 -q");
 my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "-o $detector_ior -q");
 my($NOT) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Notifier$build_directory/Fault_Notifier", "-o $notifier_ior -v -q");
 my($ANA) = new PerlACE::Process (".$build_directory/ft_analyzer", "-o $ready_file -n $notifier_ior -q -d $detector_ior -r $replica1_ior,$replica2_ior");
@@ -143,7 +147,7 @@ if (simulated) {
   $CL = new PerlACE::Process (".$build_directory/ft_client", "-f $replica1_iogr -c testscript");
 }
 
-print "TEST: starting replica1" . $REP1->CommandLine . "\n" if ($verbose);
+print "TEST: starting replica1 " . $REP1->CommandLine . "\n" if ($verbose);
 $REP1->Spawn ();
 
 print "TEST: waiting for replica 1's IOR\n" if ($verbose);
@@ -153,7 +157,7 @@ if (PerlACE::waitforfile_timed ($replica1_ior, 5) == -1) {
     exit 1;
 }
 
-print "\nTEST: starting replica2" . $REP2->CommandLine . "\n" if ($verbose);
+print "\nTEST: starting replica2 " . $REP2->CommandLine . "\n" if ($verbose);
 $REP2->Spawn ();
 
 print "TEST: waiting for replica 2's IOR\n" if ($verbose);
@@ -164,7 +168,7 @@ if (PerlACE::waitforfile_timed ($replica2_ior, 5) == -1) {
     exit 1;
 }
 
-print "\nTEST: starting detector factory" . $DET->CommandLine . "\n" if ($verbose);
+print "\nTEST: starting detector factory " . $DET->CommandLine . "\n" if ($verbose);
 $DET->Spawn ();
 
 print "TEST: waiting for detector's IOR\n" if ($verbose);
@@ -176,7 +180,7 @@ if (PerlACE::waitforfile_timed ($detector_ior, 5) == -1) {
     exit 1;
 }
 
-print "\nTEST: starting notifier" . $NOT->CommandLine . "\n" if ($verbose);
+print "\nTEST: starting notifier " . $NOT->CommandLine . "\n" if ($verbose);
 $NOT->Spawn ();
 
 print "TEST: waiting for notifier's IOR\n" if ($verbose);
@@ -189,7 +193,7 @@ if (PerlACE::waitforfile_timed ($notifier_ior, 5) == -1) {
     exit 1;
 }
 
-print "\nTEST: starting analyzer" . $ANA->CommandLine . "\n" if ($verbose);
+print "\nTEST: starting analyzer " . $ANA->CommandLine . "\n" if ($verbose);
 $ANA->Spawn ();
 
 print "TEST: waiting for READY.FILE from analyzer\n" if ($verbose);
@@ -203,7 +207,7 @@ if (PerlACE::waitforfile_timed ($ready_file, 5) == -1) {
     exit 1;
 }
 
-print "\nTEST: starting client." . $CL->CommandLine . "\n" if ($verbose);
+print "\nTEST: starting client " . $CL->CommandLine . "\n" if ($verbose);
 $client = $CL->SpawnWaitKill (60);
 
 if ($client != 0) {

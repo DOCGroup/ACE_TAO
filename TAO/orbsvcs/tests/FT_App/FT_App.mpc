@@ -1,4 +1,4 @@
-project(*Server): taoserver, fault_tolerance, orbsvcsexe, minimum_corba {
+project(*Server): taoserver, fault_tolerance, orbsvcsexe{
   exename = ft_replica
   Source_Files {
     FT_Replica.cpp
@@ -11,15 +11,15 @@ project(*Server): taoserver, fault_tolerance, orbsvcsexe, minimum_corba {
   }
 }
 
-project(*Client): taoclient, fault_tolerance, iormanip, ftorb  {
+project(*Client): taoclient, fault_tolerance, iormanip, ftorb, orbsvcsexe {
   exename = ft_client
+  includes += $(TAO_ROOT)
   Source_Files {
     FT_Client.cpp
-    FT_UnitTests.cpp
   }
 }
 
-project(*Notifier): taoserver, fault_tolerance, orbsvcsexe, minimum_corba {
+project(*Notifier): taoserver, fault_tolerance, orbsvcsexe {
   exename = ft_notifier
   Source_Files {
     FTAPP_Notifier_Main.cpp
@@ -48,7 +48,7 @@ project(*Notifier): taoserver, fault_tolerance, orbsvcsexe, minimum_corba {
   }
 }
 
-project(*Analyzer): taoclient, fault_tolerance, orbsvcsexe, minimum_corba {
+project(*Analyzer): taoclient, fault_tolerance, orbsvcsexe {
   exename = ft_analyzer
 
   Source_Files {

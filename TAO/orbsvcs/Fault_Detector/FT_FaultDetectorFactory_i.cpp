@@ -153,12 +153,10 @@ int FT_FaultDetectorFactory_i::idle (int & result)
   int quit = quitRequested_;
   if (quit == 0 && detectors_.size() == emptySlots_)
   {
-    ACE_ERROR (( LM_ERROR,
-      "FaultDetectorFactory is idle.\n"
-      ));
-    if (quitOnIdle_)
+    // don't quitOnIdle until something has happened
+    if (quitOnIdle_ && emptySlots_ != 0)
     {
-      ACE_ERROR (( LM_ERROR,
+      ACE_ERROR (( LM_INFO,
         "FaultDetectorFactory exits due to quit on idle option.\n"
         ));
       quit = 1;
@@ -270,6 +268,12 @@ void FT_FaultDetectorFactory_i::removeDetector(CORBA::ULong id, Fault_Detector_i
       delete detectors_[id];
       detectors_[id] = 0;
       emptySlots_ += 1;
+      if (emptySlots_ == detectors_.size())
+      {
+        ACE_ERROR (( LM_INFO,
+          "FaultDetectorFactory is idle.\n"
+          ));
+      }
     }
     else
     {
