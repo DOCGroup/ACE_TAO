@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu> 
+ *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *          Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
@@ -23,7 +23,7 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosLoadBalancingS.h"
+#include "orbsvcs/orbsvcs/CosLoadBalancingS.h"
 
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
