@@ -24,6 +24,7 @@ DIRS  = CDR \
         Connection_Purging \
         ORB_init \
         Smart_Proxies \
+        Nested_Event_Loop \
         Leader_Followers
 
 ifndef TAO_ROOT

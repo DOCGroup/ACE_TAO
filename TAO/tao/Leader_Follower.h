@@ -33,11 +33,11 @@ public:
   ~TAO_Leader_Follower (void);
   // Destructor
 
-  int set_server_thread (ACE_Time_Value *max_wait_time);
+  int set_event_loop_thread (ACE_Time_Value *max_wait_time);
   // The current thread has become a server thread (i.e. called
   // ORB::run), update any flags and counters.
 
-  void reset_server_thread (void);
+  void reset_event_loop_thread (void);
   // The current thread is not a server thread anymore, reset any
   // flags and counters.
 
@@ -50,19 +50,19 @@ public:
   void reset_client_thread (void);
   // A server thread has finished is making a request.
 
-  void set_leader_thread (void) ;
+  void set_client_leader_thread (void) ;
   // The current thread has become the leader thread in the
   // client side leader-follower set.
 
-  void reset_leader_thread (void) ;
+  void reset_client_leader_thread (void) ;
   // The current thread is no longer the leader thread in the client
   // side leader-follower set.
 
-  void set_leader_thread (ACE_thread_t thread_ID);
+  void set_client_leader_thread (ACE_thread_t thread_ID);
   // sets the thread ID of the leader thread in the leader-follower
   // model
 
-  int is_leader_thread (void) const;
+  int is_client_leader_thread (void) const;
   // checks if we are a leader thread
 
   int elect_new_leader (void);
@@ -134,10 +134,10 @@ private:
   int client_thread_is_leader_;
   // Is a client thread the current leader?
 
-  int server_threads_waiting_;
+  int event_loop_threads_waiting_;
   // Are server threads waiting for the client leader to complete?
 
-  ACE_SYNCH_CONDITION server_threads_condition_;
+  ACE_SYNCH_CONDITION event_loop_threads_condition_;
   // Condition variable for server threads waiting for the client
   // leader to complete.
 };
@@ -156,13 +156,13 @@ private:
   // Reference to leader/followers object.
 };
 
-class TAO_Export TAO_LF_Leader_Thread_Helper
+class TAO_Export TAO_LF_Client_Leader_Thread_Helper
 {
 public:
-  TAO_LF_Leader_Thread_Helper (TAO_Leader_Follower &leader_follower);
+  TAO_LF_Client_Leader_Thread_Helper (TAO_Leader_Follower &leader_follower);
   // Constructor
 
-  ~TAO_LF_Leader_Thread_Helper (void);
+  ~TAO_LF_Client_Leader_Thread_Helper (void);
   // Destructor
 
 private:
@@ -170,17 +170,17 @@ private:
   // Reference to leader/followers object.
 };
 
-class TAO_Export TAO_LF_Server_Thread_Helper
+class TAO_Export TAO_LF_Event_Loop_Thread_Helper
 {
 public:
-  TAO_LF_Server_Thread_Helper (TAO_Leader_Follower &leader_follower);
+  TAO_LF_Event_Loop_Thread_Helper (TAO_Leader_Follower &leader_follower);
   // Constructor
 
-  ~TAO_LF_Server_Thread_Helper (void);
+  ~TAO_LF_Event_Loop_Thread_Helper (void);
   // Destructor
 
-  int set_server_thread (ACE_Time_Value *max_wait_time);
-  // Calls <set_server_thread> on the leader/followers object.
+  int set_event_loop_thread (ACE_Time_Value *max_wait_time);
+  // Calls <set_event_loop_thread> on the leader/followers object.
 
 private:
   TAO_Leader_Follower &leader_follower_;

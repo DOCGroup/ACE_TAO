@@ -1646,9 +1646,9 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
                 ASYS_TEXT ("TAO (%P|%t) - start of run/perform_work\n")));
 
   TAO_Leader_Follower &leader_follower = this->leader_follower ();
-  TAO_LF_Server_Thread_Helper server_thread_helper (leader_follower);
+  TAO_LF_Event_Loop_Thread_Helper event_loop_thread_helper (leader_follower);
 
-  int result = server_thread_helper.set_server_thread (tv);
+  int result = event_loop_thread_helper.set_event_loop_thread (tv);
   if (result != 0)
     {
       if (errno == ETIME)
@@ -2177,8 +2177,8 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
      input_cdr_dblock_allocator_ (0),
      input_cdr_buffer_allocator_ (0),
      connection_cache_ (0),
-     is_server_thread_ (0),
-     is_leader_thread_ (0),
+     event_loop_thread_ (0),
+     client_leader_thread_ (0),
      leader_follower_condition_variable_ (0),
      reactor_registry_ (0),
      reactor_registry_cookie_ (0)

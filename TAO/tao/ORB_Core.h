@@ -99,11 +99,13 @@ public:
   // cache will be separated from the connectors and it will be a
   // (potentially) TSS object.
 
-  int is_server_thread_;
-  // Is this thread a server for this ORB?
+  int event_loop_thread_;
+  // Counter for how (nested) calls this thread has made to run the
+  // event loop.
 
-  int is_leader_thread_;
-  // Is this thread a leader for this ORB?
+  int client_leader_thread_;
+  // Counter for how many times this thread has become a client
+  // leader.
 
   ACE_SYNCH_CONDITION* leader_follower_condition_variable_;
   // Condition variable for the leader follower model.
