@@ -1,3 +1,14 @@
+Wed Apr  1 11:27:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/CORBA_Handler.cpp (ACE_CORBA_Handler): The reference_count_
+ 	  data member wasn't being initialized correctly.  Thanks to
+ 	  Mahesh Chandwani <chandwani@lucent.com> for reporting this.
+
+	* ace: Renamed config-sunos5.5-sunc++-4.x-orbix.h to
+ 	  config-sunos5.x-sunc++-4.x-orbix.h since this config file works
+ 	  with SunOS 5.5 and 5.6.  Thanks to Mahesh Chandwani
+ 	  <chandwani@lucent.com> for reporting this.
+
 Wed Apr 01 09:32:27 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Msg_WFMO_Reactor.cpp (wait_for_multiple_events): Should not

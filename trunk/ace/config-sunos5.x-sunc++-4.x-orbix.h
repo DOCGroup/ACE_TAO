@@ -1,9 +1,9 @@
 /* -*- C++ -*- */
 // $Id$
 
-// The following configuration file is designed to work for SunOS 5.5
-// platforms using the SunC++ 4.x compiler. This works with the
-// Orbix 2.0 CORBA IDL compiler.
+// The following configuration file is designed to work for SunOS
+// 5.[56] platforms using the SunC++ 4.x compiler. This works with the
+// Orbix 2.x CORBA IDL compiler.
 
 #include "ace/config-sunos5.5-sunc++-4.x.h"
 

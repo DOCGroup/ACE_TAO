@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -73,9 +72,9 @@ protected:
   virtual int register_service (const char *service_name,
                                 const char *marker_name,
                                 const char *service_location);
-  // Register <service_name> by doing a "putit" to register
-  // the <service_name> using the <marker_name> at <service_location>
-  // with orbixd.
+  // Register <service_name> by doing a "putit" to register the
+  // <service_name> using the <marker_name> at <service_location> with
+  // orbixd.
 
   virtual int remove_service (const char *service_name,
                               const char *marker_name = 0);
