@@ -217,21 +217,10 @@ TAO_DIOP_Profile::parse_string_i (const char *ior
 }
 
 CORBA::Boolean
-TAO_DIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
+TAO_DIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 {
-
-  if (other_profile->tag () != TAO_TAG_UDP_PROFILE)
-    return 0;
-
   const TAO_DIOP_Profile *op =
     ACE_dynamic_cast (const TAO_DIOP_Profile *, other_profile);
-
-
-  if (!(this->ref_object_key_->object_key () ==
-        op->ref_object_key_->object_key ()
-        && this->version_ == op->version_
-        && this->count_ == op->count_))
-    return 0;
 
   // Check endpoints equivalence.
   const TAO_DIOP_Endpoint *other_endp = &op->endpoint_;
@@ -244,9 +233,6 @@ TAO_DIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
       else
         return 0;
     }
-
-  if (!this->is_profile_equivalent_i (other_profile))
-    return 0;
 
   return 1;
 }
@@ -288,7 +274,7 @@ TAO_DIOP_Profile::endpoint (void)
 }
 
 CORBA::ULong
-TAO_DIOP_Profile::endpoint_count (void)
+TAO_DIOP_Profile::endpoint_count (void) const
 {
   return this->count_;
 }

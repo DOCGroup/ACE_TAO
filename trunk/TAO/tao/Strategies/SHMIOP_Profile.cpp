@@ -1,5 +1,5 @@
-// This may look like C, but it's really -*- C++ -*-
 // $Id$
+
 #include "SHMIOP_Profile.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
@@ -89,7 +89,7 @@ TAO_SHMIOP_Profile::endpoint (void)
 }
 
 CORBA::ULong
-TAO_SHMIOP_Profile::endpoint_count (void)
+TAO_SHMIOP_Profile::endpoint_count (void) const
 {
   return this->count_;
 }
@@ -265,19 +265,12 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
 }
 
 CORBA::Boolean
-TAO_SHMIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
+TAO_SHMIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 {
-
-  if (other_profile->tag () != TAO_TAG_SHMEM_PROFILE)
-    return 0;
-
   const TAO_SHMIOP_Profile *op =
     ACE_dynamic_cast (const TAO_SHMIOP_Profile *, other_profile);
 
-  if (!(this->ref_object_key_->object_key () ==
-        op->ref_object_key_->object_key ()
-        && this->version_ == op->version_
-        && this->count_ == op->count_))
+  if (op == 0)
     return 0;
 
   // Check endpoints equivalence.
@@ -291,9 +284,6 @@ TAO_SHMIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
       else
         return 0;
     }
-
-  if (!this->is_profile_equivalent_i (other_profile))
-    return 0;
 
   return 1;
 }
