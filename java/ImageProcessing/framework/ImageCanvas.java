@@ -2,6 +2,7 @@ package imaging.framework;
 
 import java.awt.*;
 import java.awt.image.*;
+import gjt.Util;
 
 class ImageCanvas extends Canvas
 {
