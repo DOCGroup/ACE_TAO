@@ -1,3 +1,15 @@
+Tue Apr 13 11:01:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DomainC.{h,cpp,i}:
+        * tao/DomainA.cpp:
+          Regenerated
+
+        * tao/DomainA.h:
+          Removed
+
+        * tao/Makefile.tao:
+          Removed DomainA.h from dependencies
+
 Tue Apr 13 10:35:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Pollable.pidl:
