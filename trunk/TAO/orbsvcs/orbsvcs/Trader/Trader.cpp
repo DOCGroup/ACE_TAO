@@ -124,6 +124,14 @@ TAO_String_Hash_Key::operator == (const TAO_String_Hash_Key &hash_key) const
   return ACE_OS::strcmp (this->in (), hash_key.in ()) == 0;
 }
 
+int
+operator < (const TAO_String_Hash_Key &left,
+	    const TAO_String_Hash_Key &right)
+{
+  return ACE_OS::strcmp (left.in (), right.in ()) < 0;
+}
+
+
 u_long
 TAO_String_Hash_Key::hash (void) const
 {

@@ -132,6 +132,10 @@ public:
   int operator == (const TAO_String_Hash_Key &hash_key) const; 
   // The operator for hash binding and "find"ing. 
 
+  friend int operator < (const TAO_String_Hash_Key &left,
+			 const TAO_String_Hash_Key &right); 
+  // The operator for hash binding and "find"ing. 
+
   u_long hash (void) const; 
   // The function that computes a hash value. 
 };
