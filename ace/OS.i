@@ -5268,18 +5268,18 @@ ACE_OS::ioctl (ACE_HANDLE socket,
                ACE_OVERLAPPED_COMPLETION_FUNC func)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-
+  
   QOS qos;
   DWORD qos_len = sizeof (QOS);
-
+  
   if (io_control_code == SIO_SET_QOS)
     {
       qos.SendingFlowspec = ace_qos.sending_flowspec ();
       qos.ReceivingFlowspec = ace_qos.receiving_flowspec ();
       qos.ProviderSpecific = (WSABUF) ace_qos.provider_specific ();
-
+      
       qos_len += ace_qos.provider_specific ().iov_len;
-
+      
       ACE_SOCKCALL_RETURN (::WSAIoctl ((ACE_SOCKET) socket,
                                        io_control_code,
                                        &qos,
@@ -5294,18 +5294,39 @@ ACE_OS::ioctl (ACE_HANDLE socket,
     }
   else
     {
+      qos.ProviderSpecific.len = 0xFFFFFFFF;
+	  qos.ProviderSpecific.buf = NULL;
 
-      ACE_SOCKCALL_RETURN (::WSAIoctl ((ACE_SOCKET) socket,
-                                       io_control_code,
-                                       buffer_p,
-                                       buffer,
-                                       &qos,
-                                       qos_len,
-                                       bytes_returned,
-                                       (WSAOVERLAPPED *) overlapped,
-                                       func),
-                           int,
-                           SOCKET_ERROR);
+	  // Query for the buffer size. 
+	  int result = ::WSAIoctl ((ACE_SOCKET) socket,
+                                io_control_code,
+                                buffer_p,
+                                buffer,
+                                &qos,
+                                qos_len,
+                                bytes_returned,
+                                (WSAOVERLAPPED *) overlapped,
+                                func);
+	  
+	  if (result == SOCKET_ERROR)
+	    errno = ::WSAGetLastError ();
+	  else
+	  {
+	    // Allocate a buffer if the Provider Specific info is present.
+		if (qos.ProviderSpecific.len > 0)
+			ACE_NEW_RETURN (qos.ProviderSpecific.buf,
+						    char [qos.ProviderSpecific.len],
+							-1);
+	
+	    result = ::WSAIoctl ((ACE_SOCKET) socket,
+                              io_control_code,
+                              buffer_p,
+                              buffer,
+                              &qos,
+                              qos_len,
+                              bytes_returned,
+                              (WSAOVERLAPPED *) overlapped,
+                              func);
 
       ACE_Flow_Spec sending_flowspec (qos.SendingFlowspec.TokenRate,
                                       qos.SendingFlowspec.TokenBucketSize,
@@ -5323,7 +5344,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 #endif /* ACE_HAS_WINSOCK2_GQOS */
                                       0,
                                       0);
-
+      
       ACE_Flow_Spec receiving_flowspec (qos.ReceivingFlowspec.TokenRate,
                                         qos.ReceivingFlowspec.TokenBucketSize,
                                         qos.ReceivingFlowspec.PeakBandwidth,
@@ -5340,12 +5361,15 @@ ACE_OS::ioctl (ACE_HANDLE socket,
 #endif /* ACE_HAS_WINSOCK2_GQOS */
                                         0,
                                         0);
-
+      
       ace_qos.sending_flowspec (sending_flowspec);
       ace_qos.receiving_flowspec (receiving_flowspec);
       ace_qos.provider_specific (*((struct iovec *) (&qos.ProviderSpecific)));
-    }
+	}
 
+  return result;
+}
+  
 #else
   ACE_UNUSED_ARG (socket);
   ACE_UNUSED_ARG (io_control_code);
