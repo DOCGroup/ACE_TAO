@@ -35,4 +35,17 @@ TAO_EC_Disconnected_Command<Target,Object>::execute (void* arg)
   return 0;
 }
 
+// ****************************************************************
+
+template<class Target> int
+TAO_EC_Shutdown_Command<Target>::execute (void* arg)
+{
+  CORBA::Environment *env = &CORBA::default_environment ();
+  if (arg != 0)
+    env = ACE_static_cast(CORBA::Environment*, arg);
+
+  this->target_->shutdown_i (*env);
+  return 0;
+}
+
 #endif /* TAO_EC_COMMAND_CPP */

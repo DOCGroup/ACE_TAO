@@ -74,7 +74,10 @@ TAO_EC_ProxyPushConsumer::shutdown (CORBA::Environment &ACE_TRY_ENV)
       return;
 
     supplier = this->supplier_._retn ();
-    
+
+    this->filter_->shutdown (ACE_TRY_ENV);
+    ACE_CHECK;
+
     this->cleanup_i ();
   }
 

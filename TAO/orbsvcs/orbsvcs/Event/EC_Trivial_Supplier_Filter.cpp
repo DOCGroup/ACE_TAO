@@ -43,6 +43,11 @@ TAO_EC_Trivial_Supplier_Filter::disconnected (TAO_EC_ProxyPushSupplier*,
 }
 
 void
+TAO_EC_Trivial_Supplier_Filter::shutdown (CORBA::Environment &)
+{
+}
+
+void
 TAO_EC_Trivial_Supplier_Filter::push (const RtecEventComm::EventSet& event,
                                       CORBA::Environment &ACE_TRY_ENV)
 {
