@@ -85,7 +85,7 @@ public:
   virtual void connected (TAO_EC_ProxyPushConsumer *consumer,
                           CORBA::Environment &env = TAO_default_environment ());
   virtual void disconnected (TAO_EC_ProxyPushConsumer *consumer,
-                             CORBA::Environment &env = TAO_default_environment ());
+                            CORBA::Environment &env = TAO_default_environment ());
   // Concrete implementations can use this methods to keep track of
   // the suppliers that publish its events.
 
@@ -105,6 +105,12 @@ public:
                                   CORBA::Environment &env = TAO_default_environment ());
   // Pushes to the consumer, verifies that it is connected and that it
   // is not suspended.
+
+  CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected,
+                                        CORBA::Environment &ACE_TRY_ENV);
+  // Invoke the _non_existent() pseudo-operation on the consumer. If
+  // it is disconnected then it returns true and sets the
+  // <disconnected> flag.
 
   // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
   virtual void connect_push_consumer (

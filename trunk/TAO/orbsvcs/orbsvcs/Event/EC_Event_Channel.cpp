@@ -7,6 +7,8 @@
 #include "EC_SupplierAdmin.h"
 #include "EC_Timeout_Generator.h"
 #include "EC_ObserverStrategy.h"
+#include "EC_ConsumerControl.h"
+#include "EC_SupplierControl.h"
 #include "ace/Dynamic_Service.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -63,6 +65,11 @@ TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attr,
 
   this->scheduling_strategy_ =
     this->factory_->create_scheduling_strategy (this);
+
+  this->consumer_control_ =
+    this->factory_->create_consumer_control (this);
+  this->supplier_control_ =
+    this->factory_->create_supplier_control (this);
 }
 
 TAO_EC_Event_Channel::~TAO_EC_Event_Channel (void)
@@ -71,6 +78,11 @@ TAO_EC_Event_Channel::~TAO_EC_Event_Channel (void)
     this->dispatching_->shutdown ();
   if (this->timeout_generator_ != 0)
     this->timeout_generator_->shutdown ();
+
+  if (this->supplier_control_ != 0)
+    this->supplier_control_->shutdown ();
+  if (this->consumer_control_ != 0)
+    this->consumer_control_->shutdown ();
 
   this->factory_->destroy_dispatching (this->dispatching_);
   this->dispatching_ = 0;
@@ -87,6 +99,14 @@ TAO_EC_Event_Channel::~TAO_EC_Event_Channel (void)
   this->factory_->destroy_observer_strategy (this->observer_strategy_);
   this->observer_strategy_ = 0;
 
+  this->factory_->destroy_scheduling_strategy (this->scheduling_strategy_);
+  this->scheduling_strategy_ = 0;
+
+  this->factory_->destroy_consumer_control (this->consumer_control_);
+  this->consumer_control_ = 0;
+  this->factory_->destroy_supplier_control (this->supplier_control_);
+  this->supplier_control_ = 0;
+
   if (this->own_factory_)
     delete this->factory_;
 }
@@ -96,6 +116,8 @@ TAO_EC_Event_Channel::activate (CORBA::Environment&)
 {
   this->dispatching_->activate ();
   this->timeout_generator_->activate ();
+  this->consumer_control_->activate ();
+  this->supplier_control_->activate ();
 }
 
 void

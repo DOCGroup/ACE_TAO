@@ -240,7 +240,7 @@ protected:
   // acquired by the base class.
 
   typedef TAO_EC_Connected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier> Connected_Command;
-  typedef TAO_EC_Connected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier> Disconnected_Command;
+  typedef TAO_EC_Disconnected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier> Disconnected_Command;
   typedef TAO_EC_Shutdown_Command_T<TAO_EC_ProxyPushSupplier_Set> Shutdown_Command;
 
   friend class TAO_EC_Connected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier>;

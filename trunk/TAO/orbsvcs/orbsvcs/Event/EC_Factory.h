@@ -49,6 +49,8 @@ class TAO_EC_ObserverStrategy;
 class TAO_EC_ProxyPushSupplier_Set;
 class TAO_EC_Timeout_Generator;
 class TAO_EC_Scheduling_Strategy;
+class TAO_EC_ConsumerControl;
+class TAO_EC_SupplierControl;
 
 class TAO_ORBSVCS_Export TAO_EC_Factory : public ACE_Service_Object
 {
@@ -147,6 +149,17 @@ public:
   virtual void destroy_supplier_admin_lock (ACE_Lock*) = 0;
   // Create and destroy the locking strategies for both
   // ConsumerAdmin and SupplierAdmin classes.
+
+  virtual TAO_EC_ConsumerControl*
+      create_consumer_control (TAO_EC_Event_Channel*) = 0;
+  virtual void
+      destroy_consumer_control (TAO_EC_ConsumerControl*) = 0;
+  virtual TAO_EC_SupplierControl*
+      create_supplier_control (TAO_EC_Event_Channel*) = 0;
+  virtual void
+      destroy_supplier_control (TAO_EC_SupplierControl*) = 0;
+  // The ConsumerControl and SupplierControl strategies are used to
+  // discard non-existent consumers and suppliers
 };
 
 #if defined (__ACE_INLINE__)
