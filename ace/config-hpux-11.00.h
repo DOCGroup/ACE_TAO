@@ -407,6 +407,10 @@
 #  define ACE_LD_SEARCH_PATH "SHLIB_PATH"
 #endif  /* __LP64__ */
 
+#if defined (_INCLUDE__STDC_A1_SOURCE)
+#  define ACE_HAS_3_PARAM_WCSTOK
+#endif
+
 //////////////////////////////////////////////////////////////////////////
 //
 // STREAMS information
