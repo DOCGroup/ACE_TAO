@@ -202,7 +202,6 @@ DEP_CPP_CLIEN=\
 	"..\..\..\..\ace\Handle_Set.i"\
 	"..\..\..\..\ace\Hash_Map_Manager.cpp"\
 	"..\..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\..\ace\inc_user_config.h"\
 	"..\..\..\..\ace\INET_Addr.h"\
 	"..\..\..\..\ace\INET_Addr.i"\
 	"..\..\..\..\ace\IO_Cntl_Msg.h"\
@@ -385,6 +384,7 @@ DEP_CPP_CLIEN=\
 	"..\..\..\tao\varout.i"\
 	
 NODEP_CPP_CLIEN=\
+	"..\..\..\..\ace\inc_user_config.h"\
 	"..\..\..\..\ace\sys_conf.h"\
 	"..\..\..\tao\Align.h"\
 	"..\..\..\tao\Connect.h"\
@@ -473,7 +473,6 @@ DEP_CPP_TIMEC=\
 	"..\..\..\..\ace\Handle_Set.i"\
 	"..\..\..\..\ace\Hash_Map_Manager.cpp"\
 	"..\..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\..\ace\inc_user_config.h"\
 	"..\..\..\..\ace\INET_Addr.h"\
 	"..\..\..\..\ace\INET_Addr.i"\
 	"..\..\..\..\ace\IO_Cntl_Msg.h"\
@@ -656,6 +655,7 @@ DEP_CPP_TIMEC=\
 	"..\..\..\tao\varout.i"\
 	
 NODEP_CPP_TIMEC=\
+	"..\..\..\..\ace\inc_user_config.h"\
 	"..\..\..\..\ace\sys_conf.h"\
 	"..\..\..\tao\Align.h"\
 	"..\..\..\tao\Connect.h"\
@@ -734,7 +734,6 @@ DEP_CPP_TIMES=\
 	"..\..\..\..\ace\Handle_Set.i"\
 	"..\..\..\..\ace\Hash_Map_Manager.cpp"\
 	"..\..\..\..\ace\Hash_Map_Manager.h"\
-	"..\..\..\..\ace\inc_user_config.h"\
 	"..\..\..\..\ace\INET_Addr.h"\
 	"..\..\..\..\ace\INET_Addr.i"\
 	"..\..\..\..\ace\IO_Cntl_Msg.h"\
@@ -917,6 +916,7 @@ DEP_CPP_TIMES=\
 	"..\..\..\tao\varout.i"\
 	
 NODEP_CPP_TIMES=\
+	"..\..\..\..\ace\inc_user_config.h"\
 	"..\..\..\..\ace\sys_conf.h"\
 	"..\..\..\tao\Align.h"\
 	"..\..\..\tao\Connect.h"\
