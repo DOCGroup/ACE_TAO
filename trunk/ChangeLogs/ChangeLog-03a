@@ -1,3 +1,7 @@
+Mon Jan 20 15:48:35 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/auto_run_tests.lst: Added a TAO test to the daily builds.  
+
 Mon Jan 20 13:58:25 2003  Rich Seibel <seibel_r@ociweb.com>
 
         * ace/config-macosx.h: Added ACE_HAS_SNPRINTF as well as
