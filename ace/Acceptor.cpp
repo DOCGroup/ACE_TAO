@@ -709,8 +709,9 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE
       // Note that if we aren't actually registered with the
       // ACE_Reactor then it's ok for this call to fail...
 
-      this->reactor () && this->reactor ()->remove_handler 
-	(this, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
+      if (this->reactor ())
+	this->reactor ()->remove_handler 
+	  (this, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
 
       if (this->peer_acceptor_.close () == -1)
 	ACE_ERROR ((LM_ERROR, "close\n"));
@@ -729,8 +730,8 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_timeout
 
   // Since we aren't necessarily registered with the Reactor, don't
   // bother to check the return value here...
-  this->reactor () && this->reactor ()->remove_handler 
-    (this, ACE_Event_Handler::READ_MASK);
+  if (this->reactor ())
+	this->reactor ()->remove_handler (this, ACE_Event_Handler::READ_MASK);
   return 0;
 }
 
