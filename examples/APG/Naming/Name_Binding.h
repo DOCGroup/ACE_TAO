@@ -4,6 +4,8 @@
 #ifndef NAME_BINDING_H
 #define NAME_BINDING_H
 
+#include "ace/OS_NS_stdlib.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Name_Space.h"
 
