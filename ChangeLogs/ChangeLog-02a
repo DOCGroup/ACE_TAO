@@ -1,3 +1,10 @@
+Fri May  3 06:47:23 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/Dev_Poll_Reactor_Test.cpp:
+
+          Add a conditional main for when ACE_HAS_DEV_POLL and
+          ACE_HAS_EVENT_POLL are not defined.
+
 Fri May  3 06:41:10 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Token.h:
