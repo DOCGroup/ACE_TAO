@@ -19,6 +19,7 @@ TAO_Client_Priority_Policy::TAO_Client_Priority_Policy (
 
 TAO_Client_Priority_Policy::TAO_Client_Priority_Policy (const TAO_Client_Priority_Policy &rhs)
   : TAO::ClientPriorityPolicy (),
+    CORBA::LocalObject (),
     priority_spec_ (rhs.priority_spec_)
 {
 }

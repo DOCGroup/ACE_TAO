@@ -18,6 +18,7 @@ TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO::Buf
 
 TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO_Buffering_Constraint_Policy &rhs)
   : TAO::BufferingConstraintPolicy (),
+    CORBA::LocalObject (),
     buffering_constraint_ (rhs.buffering_constraint_)
 {
 }
