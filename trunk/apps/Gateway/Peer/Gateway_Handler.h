@@ -32,7 +32,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/INET_Addr.h"
 #include "ace/Map_Manager.h"
-#include "Event.h"
+#include "Peer_Message.h"
 
 // Forward declaration.
 class Gateway_Handler;
