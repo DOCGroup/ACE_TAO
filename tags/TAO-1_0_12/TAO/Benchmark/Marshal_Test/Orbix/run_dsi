@@ -1,0 +1,4 @@
+echo "********* Static Invocation Interface **********"
+client -i 1 -h mambo -R s -P S -n marshalDSI -T s
+echo "********* Dynamic Invocation Interface **********"
+client -i 1 -h mambo -R s -P D -n marshalDSI -T s

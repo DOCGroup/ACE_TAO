@@ -1,0 +1,1 @@
+putit marshalSSI "${TAO_ROOT}/Benchmark/Marshal_Test/Orbix/server -R r -P S -I V -o ssi_marshal -n marshalSSI"
