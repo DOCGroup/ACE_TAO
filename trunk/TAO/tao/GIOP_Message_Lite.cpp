@@ -15,6 +15,26 @@
 #endif /* __ACE_INLINE__ */
 
 
+TAO_GIOP_Message_Lite::TAO_GIOP_Message_Lite (TAO_ORB_Core *orb_core)
+    :cdr_buffer_alloc_ (orb_core->resource_factory ()->output_cdr_buffer_allocator ()),
+     cdr_dblock_alloc_ (orb_core->resource_factory ()->output_cdr_dblock_allocator ())
+{
+#if defined (ACE_HAS_PURIFY)
+  (void) ACE_OS::memset (this->repbuf_,
+                         '\0',
+                         sizeof this->repbuf_);
+#endif /* ACE_HAS_PURIFY */
+  ACE_NEW (this->output_,
+           TAO_OutputCDR (this->repbuf_,
+                          sizeof this->repbuf_,
+                          TAO_ENCAP_BYTE_ORDER,
+                          this->cdr_buffer_alloc_,
+                          this->cdr_dblock_alloc_,
+                          orb_core->orb_params ()->cdr_memcpy_tradeoff (),
+                          orb_core->to_iso8859 (),
+                          orb_core->to_unicode ()));
+}
+
 
 CORBA::Boolean
 TAO_GIOP_Message_Lite::

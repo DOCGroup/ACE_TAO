@@ -122,27 +122,6 @@ TAO_Adapter_Registry::dispatch (TAO_ObjectKey &key,
         return;
     }
 
-#if (TAO_NO_IOR_TABLE == 0)
-  // @@ This should go into its own Adapter, making the IOR table
-  //    completely pluggable too!
-
-  ACE_CString object_id (ACE_reinterpret_cast (const char *,
-                                               key.get_buffer ()),
-                         key.length (),
-                         0,
-                         0);
-
-  // Do the Table Lookup.
-  int status =
-    this->orb_core_->orb ()->_tao_find_in_IOR_table (object_id,
-                                                     forward_to);
-
-  // If ObjectID not in table or reference is nil raise
-  // OBJECT_NOT_EXIST.
-
-  if (status == -1)
-    ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
-#endif /* TAO_NO_IOR_TABLE */
   if (CORBA::is_nil (forward_to))
     ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
 }

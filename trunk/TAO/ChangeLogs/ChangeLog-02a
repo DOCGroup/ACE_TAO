@@ -1,98 +1,175 @@
+Mon Sep 11 12:56:11 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Makefile:
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+        * tao/IOR_LookupTable.h:
+        * tao/IOR_LookupTable.cpp:
+          Removed the IOR_LookupTable to a separate pluggable adapter.
+          That one it is only linked by applications that truly need it.
+
+        * docs/tutorials/Quoter/Simple/Impl-Repo/server.cpp:
+        * examples/OBV/Simple_util.h:
+        * examples/OBV/Simple_util.cpp:
+        * examples/Simple/Simple_util.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/Notify_Service/Notify_Service.h:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/orbsvcs/IOR_Multicast.h:
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
+        * tests/InterOp-Naming/Server_i.cpp:
+          Use the new IORTable interface to access the ORB IOR Table.
+
+        * orbsvcs/orbsvcs/Notify/Notify_AdminProperties.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.h:
+        * orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.cpp:
+          Fixed compilation problems.
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
+          Add missing #include
+
+        * tao/Acceptor_Filter.h:
+        * tao/Acceptor_Registry.cpp:
+        * tao/Acceptor_Registry.h:
+        * tao/Adapter.cpp:
+        * tao/Client_Strategy_Factory.h:
+        * tao/Connector_Registry.h:
+        * tao/Connector_Registry.cpp:
+        * tao/DomainC.cpp:
+        * tao/GIOP_Message_Acceptors.h:
+        * tao/GIOP_Message_Acceptors.i:
+        * tao/GIOP_Message_Acceptors.cpp:
+        * tao/GIOP_Message_Lite.h:
+        * tao/GIOP_Message_Lite.i:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Server_Request.h:
+        * tao/GIOP_Server_Request.cpp:
+        * tao/IIOP_Connect.h:
+        * tao/IIOP_Factory.h:
+        * tao/IIOP_Lite_Factory.h:
+        * tao/Invocation.h:
+        * tao/Invocation.i:
+        * tao/Invocation.cpp:
+        * tao/Object.cpp:
+        * tao/Pluggable.h:
+        * tao/Protocol_Factory.h:
+        * tao/Resource_Factory.h:
+        * tao/SHMIOP_Factory.h:
+        * tao/Server_Request.h:
+        * tao/UIOP_Factory.h:
+        * tao/UIOP_Lite_Factory.h:
+        * tao/orbconf.h:
+        * tao/params.h:
+        * tao/params.i:
+        * tao/params.cpp:
+
+
+        * */Makefile:
+          Update dependencies
+
 Mon Sep 11 12:53:03 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Exception.i (CORBA_ExceptionList):
+        * tao/Exception.i (CORBA_ExceptionList):
 
-	  Initialize ref_count_ member to one.  This fixes an off-by-one
-	  reference count error since the reference count value is
-	  initialized to zero by default since it is an ACE_Atomic_Op
-	  variable.
+          Initialize ref_count_ member to one.  This fixes an off-by-one
+          reference count error since the reference count value is
+          initialized to zero by default since it is an ACE_Atomic_Op
+          variable.
 
-	* tao/Exception.cpp (fini):
+        * tao/Exception.cpp (fini):
 
-	  Invoke CORBA::ExceptionList::_destroy() instead of invoking the
-	  delete operator on the system exceptions list since a
-	  CORBA::ExceptionList is reference counted.
+          Invoke CORBA::ExceptionList::_destroy() instead of invoking the
+          delete operator on the system exceptions list since a
+          CORBA::ExceptionList is reference counted.
 
-	  Similarly, invoke CORBA::release() on the
-	  CORBA::_tc_UnknownUserException variable since it is also
-	  reference counted.
-	  
-	* tao/Resource_Factory.h (reclaim_reactor):
-	* tao/Resource_Factory.cpp (reclaim_reactor):
-	* tao/default_resource.h (reclaim_reactor)
-	* tao/default_resource.cpp (reclaim_reactor):
+          Similarly, invoke CORBA::release() on the
+          CORBA::_tc_UnknownUserException variable since it is also
+          reference counted.
 
-	  New method used to deallocate, if necessary, a reactor obtained
-	  from the resource factory.
+        * tao/Resource_Factory.h (reclaim_reactor):
+        * tao/Resource_Factory.cpp (reclaim_reactor):
+        * tao/default_resource.h (reclaim_reactor)
+        * tao/default_resource.cpp (reclaim_reactor):
 
-	  (get_reactor, dynamically_allocated_reactor_):
+          New method used to deallocate, if necessary, a reactor obtained
+          from the resource factory.
 
-	  Set newly added dynamically_allocated_reactor_ member to 1 to
-	  make sure that a reactor not allocated by the default resource
-	  factory is not reclaimed by the default resource factory.  Such
-	  a situation can occur when a resource factory derived from the
-	  default one overrides the get_reactor() method but does not
-	  override the reclaim_reactor() method.
+          (get_reactor, dynamically_allocated_reactor_):
 
-	* tao/Leader_Follower.cpp (~TAO_Leader_Follower):
-	* tao/ORB_Core.cpp (fini):
+          Set newly added dynamically_allocated_reactor_ member to 1 to
+          make sure that a reactor not allocated by the default resource
+          factory is not reclaimed by the default resource factory.  Such
+          a situation can occur when a resource factory derived from the
+          default one overrides the get_reactor() method but does not
+          override the reclaim_reactor() method.
 
-	  Pass the reactor back to the resource factory.  The resource
-	  factory is now responsible for reclaiming any resources held by
-	  the reactor.  This typically entails deleting the reactor, which
-	  is the default behavior.  [Bug 386]
+        * tao/Leader_Follower.cpp (~TAO_Leader_Follower):
+        * tao/ORB_Core.cpp (fini):
+
+          Pass the reactor back to the resource factory.  The resource
+          factory is now responsible for reclaiming any resources held by
+          the reactor.  This typically entails deleting the reactor, which
+          is the default behavior.  [Bug 386]
 
 Mon Sep 11 14:24:22 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/PortableServer/Makefile:
+        * tao/PortableServer/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Mon Sep 11 11:33:14 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/PortableServer/POA.cpp:
-	* tao/PortableServer/PortableServer.dsp:
-	* tao/PortableServer/PortableServer_Static.dsp:
-	* tao/PortableServer/Makefile:
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/PortableServer.dsp:
+        * tao/PortableServer/PortableServer_Static.dsp:
+        * tao/PortableServer/Makefile:
 
-	  New files:
+          New files:
 
-	* tao/PortableServer/Default_Acceptor_Filter.cpp:
-	* tao/PortableServer/Default_Acceptor_Filter.h:
+        * tao/PortableServer/Default_Acceptor_Filter.cpp:
+        * tao/PortableServer/Default_Acceptor_Filter.h:
 
-	  Removed the class TAO_Default_Acceptor_Filter from
-	  POA.cpp and put it in its own files. There is a call
-	  to TAO_Acceptor_Registry::make_mprofile in 
-	  ImplRepo_i::server_is_running that needs this class
-	  for the last argument in the call.
+          Removed the class TAO_Default_Acceptor_Filter from
+          POA.cpp and put it in its own files. There is a call
+          to TAO_Acceptor_Registry::make_mprofile in
+          ImplRepo_i::server_is_running that needs this class
+          for the last argument in the call.
 
 Mon Sep 11 11:09:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/Makefile.dependencies:
+        * TAO_IDL/Makefile.dependencies:
 
-	  Added no-op clean and realclean targets. Thanks to 
-	  Bala for reporting this oversight.
+          Added no-op clean and realclean targets. Thanks to
+          Bala for reporting this oversight.
 
 Mon Sep 11 09:18:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* Updated dependencies to Makefiles in orbsvcs/orbsvcs to take
-	  care of the compile errors in these directories.
+        * Updated dependencies to Makefiles in orbsvcs/orbsvcs to take
+          care of the compile errors in these directories.
 
 Mon Sep 11 08:51:50 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Makefile:
-	* tao/Synch_Reply_Dispatcher.cpp:
-	* tao/PortableServer/POA.cpp: Fixed warnings in g++.
+        * tao/Makefile:
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/PortableServer/POA.cpp: Fixed warnings in g++.
 
 Mon Sep 11 08:45:07 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbvcs/Makefile.CosConcurrency:Updated dependencies.
+        * orbsvcs/orbvcs/Makefile.CosConcurrency:Updated dependencies.
 
 Mon Sep 11 08:10:21 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* performance-tests: Added some Borland-specific makefiles for
-	  some of the TAO performance tests.  Thanks to Johnny Willemsen
- 	  <Johnny.Willemsen@meco.nl> for contributing this.
+        * performance-tests: Added some Borland-specific makefiles for
+          some of the TAO performance tests.  Thanks to Johnny Willemsen
+          <Johnny.Willemsen@meco.nl> for contributing this.
 
 Mon Sep 11 01:02:17 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -194,51 +271,51 @@ Fri Sep  8 16:18:33 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Fri Sep  8 15:51:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IORManipulation/IORManipulation.h (LocalObject): Fixed
-	  compile errors in Win32
+        * tao/IORManipulation/IORManipulation.h (LocalObject): Fixed
+          compile errors in Win32
 
 Fri Sep  8 14:27:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/MProfile/client.cpp:
-	* tests/MProfile/Makefile:
-	* tests/MProfile_Forwarding/Manager.cpp:
-	* tests/MProfile_Forwarding/Makefile
-	* tests/IORManipulation/IORTest.cpp:
-	* tests/IORManipulation/Makefile: Modifications to accomodate
-	  changes that were made to load the IORManipulation library
-	  pluggably loadable.
+        * tests/MProfile/client.cpp:
+        * tests/MProfile/Makefile:
+        * tests/MProfile_Forwarding/Manager.cpp:
+        * tests/MProfile_Forwarding/Makefile
+        * tests/IORManipulation/IORTest.cpp:
+        * tests/IORManipulation/Makefile: Modifications to accomodate
+          changes that were made to load the IORManipulation library
+          pluggably loadable.
 
 Fri Sep  8 14:02:26 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IORManipulation: A new pluggable library along the lines of
-	  DynAny and PortableServer. As this is proprietary to TAO, it is
-	  moved to a seperate library and should help footprint a bit.
+        * tao/IORManipulation: A new pluggable library along the lines of
+          DynAny and PortableServer. As this is proprietary to TAO, it is
+          moved to a seperate library and should help footprint a bit.
 
-	* tao/IORManipulation/IORC.h:
-	* tao/IORManipulation/IORC.cpp:
-	* tao/IORManipulation/IORC.i:
-	* tao/IORManipulation/IORManipulation.h:
-	* tao/IORManipulation/IORManipulation.cpp: Moved these files from
-	  tao to this directory. Moreover new operations have been added
-	  for FT support. They are also proprietary to TAO. The details of
-	  the operations can be seen in IOR.pidl
+        * tao/IORManipulation/IORC.h:
+        * tao/IORManipulation/IORC.cpp:
+        * tao/IORManipulation/IORC.i:
+        * tao/IORManipulation/IORManipulation.h:
+        * tao/IORManipulation/IORManipulation.cpp: Moved these files from
+          tao to this directory. Moreover new operations have been added
+          for FT support. They are also proprietary to TAO. The details of
+          the operations can be seen in IOR.pidl
 
-	* tao/IORManipulation/ior_manip_export.h: New file for export
-	  definitions.
+        * tao/IORManipulation/ior_manip_export.h: New file for export
+          definitions.
 
-	* tao/IORManipulation/Makefile: Makefile for this.
+        * tao/IORManipulation/Makefile: Makefile for this.
 
-	* tao/ORB_Core.cpp:
-	* tao/ORB_Core.i:
-	* tao/ORB_Core.h:
-	* tao/ORB.h:
-	* tao/ORB.i:
-	* tao/ORB.cpp: Changes to load the library. Changes closely follow
-	  the way DynAny library is loaded in to the ORB.
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.h:
+        * tao/ORB.h:
+        * tao/ORB.i:
+        * tao/ORB.cpp: Changes to load the library. Changes closely follow
+          the way DynAny library is loaded in to the ORB.
 
-	* tao/IOR.pidl: Added new operations for FT support
-	* tao/Makefile: Removed the file IORC.* and IORManipulation.cpp
-	  from the compilation list.
+        * tao/IOR.pidl: Added new operations for FT support
+        * tao/Makefile: Removed the file IORC.* and IORManipulation.cpp
+          from the compilation list.
 
 Fri Sep  8 11:34:59 2000  Christopher Kohlhoff <chris@kohlhoff.com>
 

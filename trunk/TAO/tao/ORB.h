@@ -29,19 +29,13 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Exception.h"
-#include "tao/IOR_LookupTable.h"
 #include "tao/Services.h"
-
 
 // Interceptor definitions.
 #include "tao/PortableInterceptor.h"
 
 // IRIX needs this for the throw specs
 #include "tao/PolicyC.h"
-
-// -- Containers --
-#include "ace/Containers_T.h"
-
 
 // For the (W)String_var and (W)String_out iostream operators.
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
@@ -63,24 +57,13 @@ class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
 class TAO_InputCDR;
 class TAO_OutputCDR;
-class CORBA_ORB_InconsistentTypeCode;
 class TAO_Stub;
-
-#if 0 // PPOA
-class TAO_POA_Manager;
-class TAO_POA_Policies;
-class TAO_ServantBase;
-class TAO_POA;
-#endif /* 0 */
 
 class TAO_Acceptor_Filter;
 
 #ifdef TAO_HAS_VALUETYPE
 class TAO_ValueFactory_Map;
 #endif /* TAO_HAS_VALUETYPE */
-
-typedef CORBA_ORB_InconsistentTypeCode InconsistentTypeCode;
-typedef CORBA_ORB_InconsistentTypeCode *InconsistentTypeCode_ptr;
 
 class TAO_Export CORBA_String_var
 {
@@ -576,28 +559,7 @@ public:
   // = TAO-specific extensions to the CORBA specification.
   // ----------------------------------------------------------------
 
-  int _tao_add_to_IOR_table (const ACE_CString &object_id,
-                             CORBA::Object_ptr obj);
-  // Add a mapping ObjectID->IOR to the table.
-
-  int _tao_del_from_IOR_table (const ACE_CString &object_id);
-  // Remove <object_id> from the table
-
-  int _tao_find_in_IOR_table (const ACE_CString &object_id,
-                              CORBA::Object_ptr &obj);
-  // Find the given ObjectID in the table.
-
-  void _tao_register_IOR_table_callback (TAO_IOR_LookupTable_Callback *callback,
-                                         int delete_callback);
-  // Registers a new callback class with the table
-
   CORBA_Object_ptr resolve_root_poa (CORBA_Environment &ACE_TRY_ENV);
-#if 0 // PPOA
-                                     const char *adapter_name =
-                                         TAO_DEFAULT_ROOTPOA_NAME,
-                                     TAO_POA_Manager *poa_manager = 0,
-                                     const TAO_POA_Policies *policies = 0);
-#endif /* 0 */
   // Resolve the POA.
 
   TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
@@ -606,39 +568,6 @@ public:
                                 TAO_Acceptor_Filter *acceptor_filter,
                                 CORBA_Environment &ACE_TRY_ENV);
   // Delegates on the ORB_Core to create a TAO_Stub.
-
-
-#if 0 // PPOA
-  CORBA_Object_ptr key_to_object (const TAO_ObjectKey &key,
-                                  const char *type_id,
-                                  CORBA::PolicyList *policy_list,
-                                  TAO_ServantBase *servant,
-                                  CORBA::Boolean collocated,
-                                  TAO_POA *poa,
-                                  CORBA_Environment &ACE_TRY_ENV);
-
-  // Convert key into an object reference.  Return Object_ptr as out
-  // parameter.  Errors will come through the environment.
-  //
-  // Object IDs are assigned and used by servers to identify objects.
-  //
-  // Type IDs are repository IDs, assigned as part of OMG-IDL
-  // interface definition to identify specific interfaces and their
-  // relationships to other OMG-IDL interfaces.  It's OK to provide a
-  // null type ID.  Providing a null object key will result in an
-  // INV_OBJREF exception.
-  //
-  // <servant> and <collocated> are used to created collocated object
-  // references.  All object references created by this function should
-  // be collocated object.
-  //
-  // Clients which invoke operations using one of these references
-  // when the server is not active (or after the last reference to the
-  // POA is released) will normally see an OBJECT_NOT_EXIST exception
-  // reported by the ORB.  If the POA is a "Named POA" the client's
-  // ORB will not normally return OBJECT_NOT_EXIST unless the POA
-  // reports that fault.
-#endif /* 0 */
 
   static void init_orb_globals (CORBA_Environment &ACE_TRY_ENV =
                                     TAO_default_environment ());
@@ -763,9 +692,6 @@ private:
   PortableInterceptor::ServerRequestInterceptor_var server_interceptor_;
   // Interceptor registries.
 #endif /* TAO_HAS_INTERCEPTORS */
-
-  TAO_IOR_LookupTable lookup_table_;
-  // Table of ObjectID->IOR mappings.
 
   CORBA::Boolean use_omg_ior_format_;
   // Decides whether to use the URL notation or to use IOR notation.

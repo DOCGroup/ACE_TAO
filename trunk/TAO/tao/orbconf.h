@@ -337,13 +337,14 @@
 #define TAO_OBJID_POLICYMANAGER       "ORBPolicyManager"
 #define TAO_OBJID_POLICYCURRENT       "PolicyCurrent"
 #define TAO_OBJID_IORMANIPULATION     "IORManipulation"
-#define TAO_OBJID_SECURITYCURRENT     "SecurityCurrent"
-#define TAO_OBJID_TRANSACTIONCURRENT  "TransactionCurrent"
+#define TAO_OBJID_IORTABLE            "IORTable"
 #define TAO_OBJID_DYNANYFACTORY       "DynAnyFactory"
 #define TAO_OBJID_TYPECODEFACTORY     "TypeCodeFactory"
 #define TAO_OBJID_RTORB               "RTORB"
 #define TAO_OBJID_RTCURRENT               "RTCurrent"
 #define TAO_OBJID_PRIORITYMAPPINGMANAGER  "PriorityMappingManager"
+#define TAO_OBJID_SECURITYCURRENT     "SecurityCurrent"
+#define TAO_OBJID_TRANSACTIONCURRENT  "TransactionCurrent"
 
 // Comma separated list of the above ObjectIDs.
 // DO NOT include unimplemented services!
@@ -353,13 +354,18 @@
         TAO_OBJID_NAMESERVICE, \
         TAO_OBJID_TRADINGSERVICE, \
         TAO_OBJID_IMPLREPOSERVICE, \
-        TAO_OBJID_INTERFACEREP, \
-        TAO_OBJID_TYPECODEFACTORY, \
         TAO_OBJID_ROOTPOA, \
         TAO_OBJID_POACURRENT, \
+        TAO_OBJID_INTERFACEREP, \
         TAO_OBJID_POLICYMANAGER, \
         TAO_OBJID_POLICYCURRENT, \
-        TAO_OBJID_IORMANIPULATION
+        TAO_OBJID_IORMANIPULATION, \
+        TAO_OBJID_IORTABLE, \
+        TAO_OBJID_DYNANYFACTORY, \
+        TAO_OBJID_TYPECODEFACTORY, \
+        TAO_OBJID_RTORB, \
+        TAO_OBJID_RTCURRENT, \
+        TAO_OBJID_PRIORITYMAPPINGMANAGER
 
 // Service IDs for the services that are located through Multicast.
 enum MCAST_SERVICEID

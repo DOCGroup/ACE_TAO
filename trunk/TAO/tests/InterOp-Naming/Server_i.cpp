@@ -1,6 +1,7 @@
 //$Id$
 
-# include "Server_i.h"
+#include "Server_i.h"
+#include "tao/IORTable/IORTable.h"
 
 // Constructor.
 
@@ -65,24 +66,30 @@ Server_i::parse_args (void)
 int
 Server_i::add_IOR_to_table (CORBA::String_var ior)
 {
+  ACE_TRY_NEW_ENV
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "Adding (KEY:IOR) %s:%s\n",
+                    this->ins_,
+                    ior.in ()));
 
-  CORBA::Object_ptr object =
-    this->orb_manager_.orb ()->string_to_object (ior.in ());
-
-  // Add a KEY:IOR mapping to the ORB table.
-  ACE_CString ins (this->ins_);
-
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Adding (KEY:IOR) %s:%s\n",
-                ins.c_str (),
-                ior.in ()));
-
-  if (this->orb_manager_.orb ()->_tao_add_to_IOR_table (ins,
-                                                        object) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Simple_Util : Unable to add IOR to table\n"),
-                      -1);
+      CORBA::Object_var table_object =
+        this->orb_manager_.orb ()->resolve_initial_references (
+            "IORTable",
+            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
+      IORTable::Table_var adapter =
+        IORTable::Table::_narrow (table_object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      adapter->bind (this->ins_, ior.in (), ACE_TRY_ENV);
+    }
+  ACE_CATCH (CORBA::SystemException, ex)
+    {
+      ACE_PRINT_EXCEPTION (ex, "Exception caugh in add_IOR_to_table");
+    }
+  ACE_ENDTRY;
 
   return 0;
 }

@@ -12,6 +12,7 @@
 #include "Invocation.h"
 #include "Exception.h"
 #include "InterfaceC.h"
+#include "ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 #include "DomainC.i"

@@ -27,6 +27,8 @@
 
 #include "tao/Protocol_Factory.h"
 
+#include "ace/Service_Config.h"
+
 class TAO_Acceptor;
 class TAO_Connector;
 

@@ -1,4 +1,4 @@
-//$Id$
+// $Id$
 
 // This version of Simple_Util doesn't need to link against orbsvcs
 // On the other hand it has no naming service.
@@ -12,9 +12,7 @@
 
 template <class Servant>
 Server<Servant>::Server (void)
-    : ior_output_file_ (0),
-      naming_ (0),
-      ins_ (0)
+    : ior_output_file_ (0)
 {
   // no-op.
 }
@@ -48,9 +46,6 @@ Server<Servant>::parse_args (void)
                              get_opts.optarg), -1);
         break;
 
-      case 'i': // For Testing the InterOperable Naming Service.
-        this->ins_ = CORBA::string_dup (get_opts.optarg);
-        break;
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -63,35 +58,6 @@ Server<Servant>::parse_args (void)
       }
 
   // Indicates successful parsing of command line.
-  return 0;
-}
-
-// Add the ObjectID:IOR mapping to the IOR table of
-// the ORB. Ignore this method if you are not testing for
-// the InterOperable Naming Service.
-
-template <class Servant> int
-Server<Servant>::test_for_ins (CORBA::String_var ior)
-{
-
-  CORBA::Object_ptr bank_servant =
-    this->orb_manager_.orb ()->string_to_object (ior.in());
-
-  // Add a KEY:IOR mapping to the ORB table.
-  ACE_CString object_id (this->ins_);
-
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Adding (KEY:IOR) %s:%s\n",
-                object_id.c_str (),
-                ior.in ()));
-
-  if (this->orb_manager_.orb ()->_tao_add_to_IOR_table (object_id,
-                                                        bank_servant) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Simple_Util : Unable to add IOR to table\n"),
-                      -1);
-
   return 0;
 }
 
@@ -144,12 +110,6 @@ Server<Servant>::init (const char *servant_name,
                   "The IOR is: <%s>\n",
                   str.in ()));
 
-      if (this->ins_)
-        if (this->test_for_ins (str) != 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "test_for_ins (): failed\n"),
-                            -1);
-
       if (this->ior_output_file_)
         {
           ACE_OS::fprintf (this->ior_output_file_,
@@ -161,7 +121,7 @@ Server<Servant>::init (const char *servant_name,
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Exception in activation of POA");
       return -1;
     }

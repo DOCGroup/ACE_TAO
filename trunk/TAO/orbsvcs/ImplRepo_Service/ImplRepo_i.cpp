@@ -64,15 +64,18 @@ const char *convert_str (ImplementationRepository::ActivationMode mode)
 // Constructor
 
 ImplRepo_i::ImplRepo_i (void)
-  : forwarder_impl_ (0),
+  : locator_ (0),
+    forwarder_impl_ (0),
     activator_ (0),
     ior_multicast_ (0)
 {
-  // Nothing
+  this->locator_ = new IMR_Locator (this);
 }
 
-int
-ImplRepo_i::find_ior (const ACE_CString &object_name, ACE_CString &ior)
+char *
+ImplRepo_i::find_ior (const ACE_CString &object_name,
+                      CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound))
 {
   ACE_TString endpoint;
   ACE_TString poa_name;
@@ -90,27 +93,30 @@ ImplRepo_i::find_ior (const ACE_CString &object_name, ACE_CString &ior)
   if (OPTIONS::instance()->debug () >= 2)
     ACE_DEBUG ((LM_DEBUG, "find_ior: poa name <%s>, %d\n", poa_name.c_str (), pos));
 
-  ACE_TRY_NEW_ENV
+  ACE_TRY
     {
-      endpoint = this->activate_server_i (poa_name.c_str (), 1, ACE_TRY_ENV);
+      endpoint = this->activate_server_i (poa_name.c_str (), 1,
+                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
-      return -1;
+      ACE_THROW (IORTable::NotFound ());
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
 
   // Have to do this so it is null terminated
-  ACE_TString object_name2 (object_name.fast_rep (), object_name.length ());
+  ACE_TString object_name2 (object_name.fast_rep (),
+                            object_name.length ());
 
-  ior = endpoint;
+  ACE_CString ior = endpoint;
   ior += object_name2;
 
   if (OPTIONS::instance()->debug () >= 2)
     ACE_DEBUG ((LM_DEBUG, "find_ior: new ior is <%s>\n", endpoint.c_str ()));
 
-  return 0;
+  return CORBA::string_dup (ior.c_str ());
 }
 
 
@@ -721,7 +727,23 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
       this->orb_ = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      this->orb_->_tao_register_IOR_table_callback (this, 0);
+      CORBA::Object_var table_object =
+        this->orb_->resolve_initial_references ("IORTable",
+                                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      IORTable::Table_var adapter =
+        IORTable::Table::_narrow (table_object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (CORBA::is_nil (adapter.in ()))
+        {
+          ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
+        }
+      else
+        {
+          adapter->set_locator (this->locator_.in (), ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
 
       CORBA::Object_var root_poa_object =
         this->orb_->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
@@ -803,14 +825,15 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
         this->imr_poa_->id_to_reference (imr_id.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Register with INS.
-      this->orb_->_tao_add_to_IOR_table ("ImplRepoService", imr_obj.in ());
-
       // And its string
 
       this->imr_ior_ =
         this->orb_->object_to_string (imr_obj.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
+      // Register with INS.
+      adapter->bind ("ImplRepoService", this->imr_ior_.in (),
+                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (OPTIONS::instance ()->debug () >= 2)
@@ -923,16 +946,27 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
 int
 ImplRepo_i::fini (CORBA::Environment &ACE_TRY_ENV)
 {
-  // Unregister ourself with the orb by replacing with a regular
-  // callback
-  TAO_IOR_LookupTable_Callback *regular;
-
-  ACE_NEW_RETURN (regular, TAO_IOR_LookupTable_Callback, -1);
-
-  this->orb_->_tao_register_IOR_table_callback (regular, 1);
-
   ACE_TRY
     {
+      CORBA::Object_var table_object =
+        this->orb_->resolve_initial_references ("IORTable",
+                                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      IORTable::Table_var adapter =
+        IORTable::Table::_narrow (table_object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (CORBA::is_nil (adapter.in ()))
+        {
+          ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
+        }
+      else
+        {
+          adapter->set_locator (IORTable::Locator::_nil (),
+                                ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+
       this->imr_poa_->destroy (1, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -1243,6 +1277,23 @@ ImplRepo_i::shutdown_server (const char *server,
     }
 }
 
+// ****************************************************************
+
+IMR_Locator::IMR_Locator (ImplRepo_i *repo)
+  :  repo_ (repo)
+{
+}
+
+char *
+IMR_Locator::locate (const char *object_key,
+                     CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound))
+{
+  ACE_CString key (object_key);
+  return this->repo_->find_ior (key, ACE_TRY_ENV);
+}
+
+// ****************************************************************
 
 IMR_Adapter_Activator::IMR_Adapter_Activator (IMR_Forwarder *servant)
   : servant_ (servant)

@@ -22,24 +22,22 @@
 #define TAO_IOR_MULTICAST_H
 #include "ace/pre.h"
 
-#include "tao/corba.h"
 #include "orbsvcs/svc_utils_export.h"
-#include "ace/INET_Addr.h"
+#include "tao/corba.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/Reactor.h"
-
-#include "tao/IOR_LookupTable.h"
 
 class TAO_Svc_Utils_Export TAO_IOR_Multicast : public ACE_Event_Handler
 {
   // = TITLE
   //     Event Handler that services multicast requests for IOR of a
-  //     bootstrappable service. 
+  //     bootstrappable service.
   //
   // = DESCRIPTION
   //     This class uses the ACE_SOCK_Dgram_Mcast class and should be
@@ -64,8 +62,8 @@ public:
   int init (const char *ior,
             const char *mcast_addr,
             TAO_Service_ID service_id);
-  // Initialization method. Takes in "address:port" string as a 
-  // parameter. 
+  // Initialization method. Takes in "address:port" string as a
+  // parameter.
 
   ~TAO_IOR_Multicast (void);
   // Destructor.
@@ -105,12 +103,7 @@ private:
 
   ACE_SOCK_Dgram response_;
   // socket for response to the multicast
-
-  TAO_IOR_LookupTable ior_lookup_table_;
-  // Lookup Table for the IORs which are not resolved otherwise.
-
 };
 
 #include "ace/post.h"
 #endif /* TAO_IOR_MULTICAST_H */
-

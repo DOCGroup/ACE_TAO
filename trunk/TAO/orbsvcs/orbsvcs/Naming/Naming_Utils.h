@@ -104,8 +104,8 @@ public:
   // If <enable_multicast> is not zero then the service will respond
   // to multicast location queries.
 
-  int init_with_orb (int argc, 
-                     char *argv [], 
+  int init_with_orb (int argc,
+                     char *argv [],
                      CORBA::ORB_ptr orb);
   // Initialize the Naming Service with the command line arguments and
   // the ORB.

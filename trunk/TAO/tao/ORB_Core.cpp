@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "tao/ORB_Core.h"
 
 #include "ace/Env_Value_T.h"
@@ -25,14 +24,16 @@
 #include "tao/RT_Current.h"
 #include "tao/RT_Policy_i.h"
 
+#include "tao/Sync_Strategies.h"
+
+#include "tao/Object_Loader.h"
+
+#include "tao/ObjectIDList.h"
+
 #include "ace/Object_Manager.h"
 #include "ace/Env_Value_T.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
-
-#include "tao/Sync_Strategies.h"
-
-#include "tao/Object_Loader.h"
 
 #if defined(ACE_MVS)
 #include "ace/Codeset_IBM1047.h"
@@ -64,8 +65,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     typecode_factory_ (CORBA::Object::_nil ()),
     dynany_factory_ (CORBA::Object::_nil ()),
     ior_manip_factory_ (CORBA::Object::_nil ()),
+    ior_table_ (CORBA::Object::_nil ()),
     orb_ (),
-    // PPOA root_poa_ (0),
     orb_params_ (),
     orbid_ (ACE_OS::strdup (orbid ? orbid : "")),
     resource_factory_ (0),
@@ -93,9 +94,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
     poa_current_ (0),
-    // PPOA: object_adapter_ (0),
-    adapter_registry_ (this), // PPOA
-    poa_adapter_ (0), // PPOA
+    adapter_registry_ (this),
+    poa_adapter_ (0),
     tm_ (),
     from_iso8859_ (0),
     to_iso8859_ (0),
@@ -129,9 +129,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     refcount_ (1),
     handle_set_ ()
 {
-  // @@ PPOA ACE_NEW (this->poa_current_,
-  //                  TAO_POA_Current);
-
 #if defined(ACE_MVS)
   ACE_NEW (this->from_iso8859_, ACE_IBM1047_ISO8859);
   ACE_NEW (this->to_iso8859_,   ACE_IBM1047_ISO8859);
@@ -220,35 +217,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
       this->svc_config_argc_ = 0;
       delete [] this->svc_config_argv_;
     }
-
-#if 0  // PPOA
-  // Make sure these two objects are deleted last (other objects may
-  // depend on this).
-#if !defined (__Lynx__)  ||  !defined (__powerpc__)
-  // This statement causes a seg fault on ORB shutdown, on LynxOS
-  // 3.0.0/ppc only.
-  delete this->poa_current_;
-#endif /* ! __Lynx__  ||  ! __powerpc__ */
-
-  ACE_TRY_NEW_ENV
-    {
-      CORBA::Boolean wait_for_completion = 1;
-
-      this->destroy_root_poa (wait_for_completion,
-                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      // Ignore exceptions
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_ORB_Core::~TAO_ORB_Core");
-    }
-  ACE_ENDTRY;
-
-  delete this->object_adapter_;
-#else
-  // @@ this->adapter_registry_.close ();
-#endif /* 0 */
 }
 
 int
@@ -507,17 +475,13 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                       ACE_TEXT ("is obsolete.\n")
                       ACE_TEXT ("Please use the `-ORBInitRef ' option instead.\n")));
 
-          // Construct an argument that would be equivalent to
-          // "-ORBInitRef NameService=....."
-          ACE_CString init_ref =
-            ACE_CString (TAO_OBJID_NAMESERVICE) +
-            ACE_CString ('=') +
-            ACE_CString (current_arg);
-          if (this->orb_params ()->add_to_ior_table (init_ref) != 0)
+          ACE_CString object_id (TAO_OBJID_NAMESERVICE);
+          ACE_CString IOR (current_arg);
+          if (this->init_ref_map_.bind (object_id, IOR) != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("TAO (%P|%t) Unable to add the Name ")
-                          ACE_TEXT ("Service IOR <%s> to the lookup table.\n"),
+                          ACE_TEXT ("Cannot store NameServiceIOR ")
+                          ACE_TEXT ("argument '%s'\n"),
                           current_arg));
               ACE_THROW_RETURN (CORBA::INTERNAL (
                           CORBA_SystemException::_tao_minor_code (
@@ -571,16 +535,13 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           // Construct an argument that would be equivalent to
           // "-ORBInitRef TradingService=....."
 
-          ACE_CString init_ref =
-            ACE_CString (TAO_OBJID_TRADINGSERVICE) +
-            ACE_CString ('=') +
-            ACE_CString (current_arg);
-
-          if (this->orb_params ()->add_to_ior_table (init_ref) != 0)
+          ACE_CString object_id (TAO_OBJID_TRADINGSERVICE);
+          ACE_CString IOR (current_arg);
+          if (this->init_ref_map_.bind (object_id, IOR) != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("TAO (%P|%t) Unable to add the Trading ")
-                          ACE_TEXT ("Service IOR <%s> to the lookup table.\n"),
+                          ACE_TEXT ("Cannot store TradingServiceIOR ")
+                          ACE_TEXT ("argument '%s'\n"),
                           current_arg));
               ACE_THROW_RETURN (CORBA::INTERNAL (
                           CORBA_SystemException::_tao_minor_code (
@@ -615,17 +576,13 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           // Construct an argument that would be equivalent to
           // "-ORBInitRef ImplRepoService=....."
 
-          ACE_CString init_ref =
-            ACE_CString (TAO_OBJID_IMPLREPOSERVICE) +
-            ACE_CString ('=') +
-            ACE_CString (current_arg);
-
-          if (this->orb_params ()->add_to_ior_table (init_ref) != 0)
+          ACE_CString object_id (TAO_OBJID_IMPLREPOSERVICE);
+          ACE_CString IOR (current_arg);
+          if (this->init_ref_map_.bind (object_id, IOR) != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("TAO (%P|%t) Unable to add the ")
-                          ACE_TEXT ("Implementation Repository IOR <%s> to ")
-                          ACE_TEXT ("the lookup table.\n"),
+                          ACE_TEXT ("Cannot store ImplRepoServiceIOR ")
+                          ACE_TEXT ("argument '%s'\n"),
                           current_arg));
               ACE_THROW_RETURN (CORBA::INTERNAL (
                           CORBA_SystemException::_tao_minor_code (
@@ -822,12 +779,12 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                 ("-ORBInitRef")))
         {
           ACE_CString init_ref (current_arg);
-          if (this->orb_params ()->add_to_ior_table (init_ref) != 0)
+          char * pos = ACE_OS::strchr (current_arg, '=');
+          if (pos == 0)
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("Unable to add initial reference:\n")
-                          ACE_TEXT ("%s\n")
-                          ACE_TEXT ("to the initial reference lookup table.\n"),
+                          ACE_TEXT ("Invalid ORBInitRef argument '%s'")
+                          ACE_TEXT ("format is ObjectID=IOR\n"),
                           current_arg));
               ACE_THROW_RETURN (CORBA::INTERNAL (
                           CORBA_SystemException::_tao_minor_code (
@@ -835,7 +792,21 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                             0),
                           CORBA::COMPLETED_NO), -1);
             }
-
+          ACE_CString object_id (current_arg,
+                                 pos - current_arg);
+          ACE_CString IOR (pos + 1);
+          if (this->init_ref_map_.bind (object_id, IOR) != 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Cannot store ORBInitRef ")
+                          ACE_TEXT ("argument '%s'\n"),
+                          current_arg));
+              ACE_THROW_RETURN (CORBA::INTERNAL (
+                          CORBA_SystemException::_tao_minor_code (
+                            TAO_ORB_CORE_INIT_LOCATION_CODE,
+                            0),
+                          CORBA::COMPLETED_NO), -1);
+            }
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
@@ -1281,6 +1252,8 @@ TAO_ORB_Core::fini (void)
 
   CORBA::release (this->ior_manip_factory_);
 
+  CORBA::release (this->ior_table_);
+
   if (TAO_debug_level >= 3)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -1509,110 +1482,6 @@ TAO_ORB_Core::inherit_from_parent_thread (
   return 0;
 }
 
-#if 0 // PPOA
-PortableServer::POA_ptr
-TAO_ORB_Core::root_poa_reference (CORBA::Environment &ACE_TRY_ENV,
-                                  const char *adapter_name,
-                                  TAO_POA_Manager *poa_manager,
-                                  const TAO_POA_Policies *policies)
-{
-  return PortableServer::POA::_duplicate (this->root_poa (ACE_TRY_ENV,
-                                                          adapter_name,
-                                                          poa_manager,
-                                                          policies));
-}
-
-void
-TAO_ORB_Core::create_and_set_root_poa (const char *adapter_name,
-                                       TAO_POA_Manager *poa_manager,
-                                       const TAO_POA_Policies *policies,
-                                       CORBA::Environment &ACE_TRY_ENV)
-{
-  if (this->root_poa_ == 0)
-    {
-      // Double checked locking
-      ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
-      if (this->root_poa_ == 0)
-        {
-          // Only set the auto_ptr if poa_manager is allocated here.
-          auto_ptr<TAO_POA_Manager> safe_poa_manager;
-          if (poa_manager == 0)
-            {
-              ACE_NEW_THROW_EX (poa_manager,
-                                TAO_POA_Manager (*this->object_adapter_i ()),
-                                CORBA::NO_MEMORY ());
-              ACE_CHECK;
-
-              ACE_AUTO_PTR_RESET (safe_poa_manager,
-                                  poa_manager,
-                                  TAO_POA_Manager);
-            }
-
-          TAO_POA_Policies root_poa_policies (*this,
-                                              ACE_TRY_ENV);
-          ACE_CHECK;
-
-          if (policies == 0)
-            {
-              // RootPOA policies defined in spec
-              root_poa_policies.implicit_activation (
-                  PortableServer::IMPLICIT_ACTIVATION);
-
-              policies = &root_poa_policies;
-            }
-
-          // Construct a new POA
-          ACE_NEW_THROW_EX (this->root_poa_,
-                            TAO_POA (adapter_name,
-                                     *poa_manager,
-                                     *policies,
-                                     0,
-                                     this->object_adapter_i ()->lock (),
-                                     this->object_adapter_i ()->thread_lock (),
-                                     *this,
-                                     ACE_TRY_ENV),
-                            CORBA::NO_MEMORY ());
-          ACE_CHECK;
-
-          // ORB Core will keep a reference to the Root POA so that on
-          // its destruction, it can check whether the Root POA has
-          // been destroyed yet or not.
-          this->root_poa_->_add_ref ();
-
-          // Release the auto_ptr since we got here without error.
-          poa_manager = safe_poa_manager.release ();
-        }
-    }
-}
-
-TAO_Object_Adapter *
-TAO_ORB_Core::object_adapter (void)
-{
-  if (this->object_adapter_ == 0)
-    {
-      // Double checked locking
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-      (void) this->object_adapter_i ();
-    }
-
-  return this->object_adapter_;
-}
-
-TAO_Object_Adapter *
-TAO_ORB_Core::object_adapter_i (void)
-{
-  if (this->object_adapter_ == 0)
-    {
-      ACE_NEW_RETURN (this->object_adapter_,
-                      TAO_Object_Adapter (this->server_factory ()->
-                                    active_object_map_creation_parameters (),
-                                          *this),
-                      0);
-    }
-  return this->object_adapter_;
-}
-#else
-
 CORBA::Object_ptr
 TAO_ORB_Core::root_poa (CORBA::Environment &ACE_TRY_ENV)
 {
@@ -1664,7 +1533,6 @@ TAO_ORB_Core::poa_adapter (void)
     }
   return this->poa_adapter_;
 }
-#endif /* 0 PPOA */
 
 ACE_SYNCH_CONDITION *
 TAO_ORB_Core::leader_follower_condition_variable (void)
@@ -1935,55 +1803,14 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
   return result;
 }
 
-#if 0 // PPOA
-void
-TAO_ORB_Core::destroy_root_poa (CORBA::Boolean wait_for_completion,
-                                CORBA::Environment &ACE_TRY_ENV)
-{
-  // Shutting down the ORB causes all object adapters to be destroyed,
-  // since they cannot exist in the absence of an ORB. Shut down is
-  // complete when all ORB processing (including request processing
-  // and object deactivation or other operations associated with
-  // object adapters) has completed and the object adapters have been
-  // destroyed. In the case of the POA, this means that all object
-  // etherealizations have finished and root POA has been destroyed
-  // (implying that all descendent POAs have also been destroyed).
-  CORBA::Boolean etherealize_objects = 1;
-  if (this->root_poa_)
-    {
-      if (!this->root_poa_->cleanup_in_progress ())
-        {
-          this->root_poa_->destroy (etherealize_objects,
-                                    wait_for_completion,
-                                    ACE_TRY_ENV);
-          ACE_CHECK;
-        }
-
-      CORBA::release (this->root_poa_);
-      this->root_poa_ = 0;
-    }
-}
-#endif /* 0 PPOA */
-
 void
 TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
                         CORBA::Environment &ACE_TRY_ENV)
 {
-#if 0 // PPOA
-  // Is the <wait_for_completion> semantics for this thread correct?
-  TAO_POA::check_for_valid_wait_for_completions (wait_for_completion,
-                                                 ACE_TRY_ENV);
-  ACE_CHECK;
-
-  this->destroy_root_poa (wait_for_completion,
-                          ACE_TRY_ENV);
-  ACE_CHECK;
-#else
   this->adapter_registry_.check_close (wait_for_completion,
                                        ACE_TRY_ENV);
   this->adapter_registry_.close (wait_for_completion,
                                  ACE_TRY_ENV);
-#endif /* 0 PPOA */
 
   // Set the shutdown flag
   this->has_shutdown_ = 1;
@@ -2126,6 +1953,26 @@ TAO_ORB_Core::set_default_policies (void)
 }
 
 void
+TAO_ORB_Core::resolve_typecodefactory_i (CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Object_Loader *loader =
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TypeCodeFactory");
+  if (loader == 0)
+    {
+      ACE_Service_Config::process_directive (
+          "dynamic TypeCodeFactory Service_Object *"
+          "TypeCodeFactory_DLL:_make_TCF_Loader()"
+        );
+      loader =
+        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TypeCodeFactory");
+      if (loader == 0)
+        ACE_THROW (CORBA::ORB::InvalidName ());
+    }
+  this->typecode_factory_ =
+    loader->create_object (this->orb_.in (), 0, 0, ACE_TRY_ENV);
+}
+
+void
 TAO_ORB_Core::resolve_dynanyfactory_i (CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Object_Loader *loader =
@@ -2170,6 +2017,128 @@ TAO_ORB_Core::resolve_iormanipulation_i (CORBA::Environment &ACE_TRY_ENV)
     }
   this->ior_manip_factory_ =
     loader->create_object (this->orb_.in (), 0, 0, ACE_TRY_ENV);
+}
+
+void
+TAO_ORB_Core::resolve_ior_table_i (CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Adapter_Factory *factory =
+    ACE_Dynamic_Service<TAO_Adapter_Factory>::instance ("TAO_IORTable");
+  if (factory == 0)
+    {
+      // The Loader has not been statically configured, try to
+      // dynamically load it...
+      ACE_Service_Config::process_directive (
+        "dynamic TAO_IORTable Service_Object *"
+        "TAO_IORTable:_make_TAO_IORTable_Factory()"
+      );
+
+      factory =
+        ACE_Dynamic_Service<TAO_Adapter_Factory>::instance ("TAO_IORTable");
+    }
+  if (factory == 0)
+    ACE_THROW (CORBA::ORB::InvalidName ());
+
+  // @@ Not exception safe
+  TAO_Adapter *iortable_adapter = factory->create (this);
+  this->adapter_registry_.insert (iortable_adapter, ACE_TRY_ENV);
+  iortable_adapter->open (ACE_TRY_ENV);
+
+  this->ior_table_ = iortable_adapter->root ();
+}
+
+CORBA::Object_ptr
+TAO_ORB_Core::resolve_rir (const char *name,
+                           CORBA::Environment &ACE_TRY_ENV)
+{
+  // Get the table of initial references specified through
+  // -ORBInitRef.
+  ACE_CString ior;
+  ACE_CString object_id ((const char *) name);
+
+  // Is the service name in the IOR Table.
+  if (this->init_ref_map_.find (object_id, ior) == 0)
+    return this->orb ()->string_to_object (ior.c_str (), ACE_TRY_ENV);
+
+  // Get the list of initial reference prefixes specified through
+  // -ORBDefaultInitRef.
+  char * default_init_ref =
+    this->orb_params ()->default_init_ref ();
+
+  // Check if a DefaultInitRef was specified.
+  if (ACE_OS::strlen (default_init_ref) != 0)
+    {
+      ACE_CString list_of_profiles (default_init_ref);
+
+      // Clean up.
+      delete [] default_init_ref;
+
+      // Obtain the appropriate object key delimiter for the
+      // specified protocol.
+      const char object_key_delimiter =
+        this->connector_registry ()->object_key_delimiter (
+            list_of_profiles.c_str ());
+
+      // Make sure that the default initial reference doesn't end
+      // with the object key delimiter character.
+      if (list_of_profiles[list_of_profiles.length() - 1] !=
+          object_key_delimiter)
+        list_of_profiles += ACE_CString (object_key_delimiter);
+
+      list_of_profiles += object_id;
+
+      return this->orb ()->string_to_object (list_of_profiles.c_str (),
+                                             ACE_TRY_ENV);
+    }
+  else
+    {
+      // Clean up.
+      delete [] default_init_ref;
+    }
+  return CORBA::Object::_nil ();
+}
+
+CORBA_ORB_ObjectIdList_ptr
+TAO_ORB_Core::list_initial_references (CORBA::Environment &ACE_TRY_ENV)
+{
+  // Unsupported initial services should NOT be included in the below list!
+  const char *initial_services[] = { TAO_LIST_OF_INITIAL_SERVICES };
+  // Make sure the "terminating" zero is the last array element so
+  // that there is a stop condition when iterating through the list.
+
+  const size_t initial_services_size =
+    sizeof (initial_services) / sizeof (initial_services[0]);
+
+  const size_t total_size =
+    initial_services_size + this->init_ref_map_.current_size ();
+
+  CORBA_ORB_ObjectIdList_ptr tmp = 0;
+
+  ACE_NEW_THROW_EX (tmp,
+                    CORBA_ORB_ObjectIdList (total_size),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  CORBA_ORB_ObjectIdList_var list = tmp;
+  list->length (total_size);
+
+  CORBA::ULong index = 0;
+  // Index for ObjectIdList members.
+
+  // Iterate over TAO's "built-in" initial references.
+  for (index = 0; index < initial_services_size; ++index)
+    list[index] = initial_services[index];
+
+  // Now iterate over the initial references created by the user and
+  // add them to the sequence.
+  InitRefMap::iterator end  = this->init_ref_map_.end ();
+
+  for (InitRefMap::iterator i =this-> init_ref_map_.begin ();
+       i != end;
+       ++i, ++index)
+      list[index] = (*i).int_id_.c_str ();
+
+  return list._retn ();
 }
 
 // ****************************************************************
@@ -2820,6 +2789,15 @@ template class ACE_Map_Iterator_Base<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>;
 template class ACE_Map_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>;
 template class ACE_Map_Reverse_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>;
 
+template class ACE_Hash_Map_Manager<ACE_CString, ACE_CString, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator<ACE_CString,ACE_CString,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<ACE_CString, ACE_CString>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, ACE_CString, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Lock_Adapter<ACE_Null_Mutex>
@@ -2844,5 +2822,14 @@ template class ACE_Map_Reverse_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex
 #pragma instantiate ACE_Map_Iterator_Base<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Reverse_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>
+
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString,ACE_CString,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString,ACE_CString,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, ACE_CString>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, ACE_CString, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

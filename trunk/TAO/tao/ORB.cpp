@@ -22,7 +22,6 @@
 #include "tao/debug.h"
 #include "tao/TAO_Internal.h"
 #include "tao/CDR.h"
-#include "tao/IOR_LookupTable.h"
 #include "tao/Request.h"
 #include "tao/MProfile.h"
 #include "tao/Object_Loader.h"
@@ -163,7 +162,6 @@ CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
     client_interceptor_ (),
     server_interceptor_ (),
 # endif /* TAO_HAS_INTERCEPTORS */
-    lookup_table_ (),
     use_omg_ior_format_ (1)
 {
 }
@@ -448,28 +446,14 @@ CORBA_ORB::poll_next_response (CORBA_Environment &ACE_TRY_ENV)
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_root_poa (CORBA::Environment &ACE_TRY_ENV
-#if 0 // PPOA
-,
-                             const char *adapter_name,
-                             TAO_POA_Manager *poa_manager,
-                             const TAO_POA_Policies *policies
-#endif /* 0 PPOA */
                              )
 {
   return this->orb_core_->root_poa (ACE_TRY_ENV);
-
-#if 0 // PPOA
-  return this->orb_core_->root_poa_reference (ACE_TRY_ENV,
-                                              adapter_name,
-                                              poa_manager,
-                                              policies);
-#endif /* 0 PPOA */
 }
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_poa_current (CORBA::Environment &)
 {
-  // @@ PPOA return CORBA_Object::_duplicate (&this->orb_core_->poa_current ());
   return this->orb_core_->poa_current ();
 }
 
@@ -904,29 +888,14 @@ CORBA_ORB::resolve_initial_references (const char *name,
   else if (ACE_OS::strcmp (name, TAO_OBJID_IORMANIPULATION) == 0)
     return this->orb_core ()->resolve_ior_manipulation (ACE_TRY_ENV);
 
+  else if (ACE_OS::strcmp (name, TAO_OBJID_IORTABLE) == 0)
+    return this->orb_core ()->resolve_ior_table (ACE_TRY_ENV);
+
   else if (ACE_OS::strcmp (name, TAO_OBJID_DYNANYFACTORY) == 0)
     return this->orb_core ()->resolve_dynanyfactory (ACE_TRY_ENV);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_TYPECODEFACTORY) == 0)
-    {
-      CORBA::Object_var obj =
-        this->orb_core ()->typecode_factory ();
-      if (CORBA::is_nil (obj.in ()))
-        {
-          ACE_Service_Config::process_directive (
-              "dynamic TypeCodeFactory Service_Object * TypeCodeFactory_DLL:_make_TCF_Loader()"
-            );
-
-          CORBA::Object_var tf =
-            this->dll_string_to_object (name, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-          obj = CORBA::Object::_duplicate (tf.in ());
-          this->orb_core ()->typecode_factory (tf._retn ());
-        }
-
-      return obj._retn ();
-    }
+    return this->orb_core ()->resolve_typecodefactory (ACE_TRY_ENV);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_RTORB) == 0)
     return this->resolve_rt_orb (ACE_TRY_ENV);
@@ -937,60 +906,14 @@ CORBA_ORB::resolve_initial_references (const char *name,
   else if (ACE_OS::strcmp (name, TAO_OBJID_RTCURRENT) == 0)
     return this->resolve_rt_current (ACE_TRY_ENV);
 
+  CORBA::Object_var result =
+    this->orb_core ()->resolve_rir (name, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
   // Is not one of the well known services, try to find it in the
   // InitRef table....
-
-  // Get the table of initial references specified through
-  // -ORBInitRef.
-  TAO_IOR_LookupTable *table =
-    this->orb_core ()->orb_params ()->ior_lookup_table ();
-
-  ACE_CString ior;
-  ACE_CString object_id ((const char *) name);
-
-  // Is the service name in the IOR Table.
-  if (table->find_ior (object_id, ior) == 0)
-    return this->string_to_object (ior.c_str (), ACE_TRY_ENV);
-  if (this->lookup_table_.find_ior (object_id, ior) == 0)
-    return this->string_to_object (ior.c_str (), ACE_TRY_ENV);
-  else
-    {
-      // Get the list of initial reference prefixes specified through
-      // -ORBDefaultInitRef.
-      char * default_init_ref =
-        this->orb_core ()->orb_params ()->default_init_ref ();
-
-      // Check if a DefaultInitRef was specified.
-      if (ACE_OS::strlen (default_init_ref) != 0)
-        {
-          ACE_CString list_of_profiles (default_init_ref);
-
-          // Clean up.
-          delete [] default_init_ref;
-
-          // Obtain the appropriate object key delimiter for the
-          // specified protocol.
-          const char object_key_delimiter =
-            this->orb_core ()->connector_registry ()->object_key_delimiter (
-                                                  list_of_profiles.c_str ());
-
-          // Make sure that the default initial reference doesn't end
-          // with the object key delimiter character.
-          if (list_of_profiles[list_of_profiles.length() - 1] !=
-              object_key_delimiter)
-            list_of_profiles += ACE_CString (object_key_delimiter);
-
-          list_of_profiles += object_id;
-
-          return this->string_to_object (list_of_profiles.c_str (),
-                                         ACE_TRY_ENV);
-        }
-      else
-        {
-          // Clean up.
-          delete [] default_init_ref;
-        }
-    }
+  if (!CORBA::is_nil (result.in ()))
+    return result._retn ();
 
   // Did not find it in the InitRef table, or in the DefaultInitRef
   // entry.... Try the hard-coded ways to find the basic services...
@@ -1018,10 +941,7 @@ CORBA_ORB::list_initial_services (CORBA::Environment &ACE_TRY_ENV)
   this->check_shutdown (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  TAO_IOR_LookupTable *table =
-    this->orb_core ()->orb_params ()->ior_lookup_table ();
-
-  return table->list_initial_services (ACE_TRY_ENV);
+  return this->orb_core ()->list_initial_references (ACE_TRY_ENV);
 }
 
 TAO_Stub *
@@ -1040,51 +960,6 @@ CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
                                               filter,
                                               ACE_TRY_ENV);
 }
-
-#if 0 // PPOA
-// Create an objref
-
-CORBA::Object_ptr
-CORBA_ORB::key_to_object (const TAO_ObjectKey &key,
-                          const char *type_id,
-                          CORBA::PolicyList *policy_list,
-                          TAO_ServantBase *servant,
-                          CORBA::Boolean collocated,
-                          TAO_Acceptor_Filter *filter,
-                          CORBA::Environment &ACE_TRY_ENV)
-{
-  this->check_shutdown (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  TAO_Stub *data = this->create_stub_object (key,
-                                             type_id,
-                                             policy_list,
-                                             filter,
-                                             ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  TAO_Stub_Auto_Ptr safe_data (data);
-
-  // Create the CORBA level proxy
-  CORBA::Object_var new_obj =
-    this->orb_core_->optimize_collocation_objects () ?
-    new CORBA::Object (safe_data.get (), servant, collocated) :
-    new CORBA::Object (safe_data.get (), 0, 0);
-
-  // Clean up in case of errors.
-  if (CORBA::is_nil (new_obj.in ()))
-    ACE_THROW_RETURN (CORBA::INTERNAL (), CORBA::Object::_nil ());
-
-  // @@ Do not duplicate the ORB here!  TAO_Stub::servant_orb()
-  //    duplicates it.
-  //       -Ossama
-  safe_data.get ()->servant_orb (this);
-
-  data = safe_data.release ();
-
-  return new_obj._retn ();
-}
-#endif /* 0 PPOA */
 
 void
 CORBA_ORB::check_shutdown (CORBA_Environment &ACE_TRY_ENV)
@@ -1857,85 +1732,6 @@ CORBA_ORB::_optimize_collocation_objects (void) const
 }
 
 // ****************************************************************
-
-// Add a mapping ObjectID->IOR to the table.
-int
-CORBA_ORB::_tao_add_to_IOR_table (const ACE_CString &object_id,
-                                  CORBA::Object_ptr obj)
-{
-  if (CORBA::is_nil (obj))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("TAO (%P|%t): Cannot add nil object to table <%s>\n"),
-                       object_id.c_str ()),
-                      -1);
-
-  CORBA::String_var string =
-    this->object_to_string (obj);
-
-  if (string.in () == 0 || string[0u] == '\0')
-    return -1;
-
-  ACE_CString ior (string.in ());
-
-  if (this->lookup_table_.add_ior (object_id, ior) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("TAO (%P|%t): Unable to add IOR to table <%s>\n"),
-                       object_id.c_str ()),
-                      -1);
-
-  return 0;
-}
-
-// Remove a mapping ObjectID->IOR from the table.
-int
-CORBA_ORB::_tao_del_from_IOR_table (const ACE_CString &object_id)
-{
-  return this->lookup_table_.del_ior (object_id);
-}
-
-// Find an IOR in the table for the given ObjectID.
-int
-CORBA_ORB::_tao_find_in_IOR_table (const ACE_CString &object_id,
-                                   CORBA::Object_ptr &obj)
-{
-  // @@ This debugging output should *NOT* be used since the
-  //    object key string is not null terminated, nor can it
-  //    be null terminated without copying.  No copying should
-  //    be done since performance is somewhat important here.
-  //    So, just remove the debugging output entirely.
-  //
-  //   if (TAO_debug_level > 0)
-  //     ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t): lookup service ID <%s>\n",
-  //                 object_id.c_str ()));
-
-  ACE_CString ior;
-
-  if (this->lookup_table_.find_ior (object_id, ior) != 0)
-    {
-      // @@ This debugging output should *NOT* be used since the
-      //    object key string is not null terminated, nor can it
-      //    be null terminated without copying.  No copying should
-      //    be done since performance is somewhat important here.
-      //    So, just remove the debugging output entirely.
-      //
-      //       ACE_ERROR_RETURN ((LM_ERROR,
-      //                          "TAO (%P|%t) cannot find IOR for <%s>\n",
-      //                          object_id.c_str ()),
-      //                         -1);
-      return -1;
-    }
-
-  obj = this->string_to_object (ior.c_str ());
-
-  return 0;
-}
-
-void
-CORBA_ORB::_tao_register_IOR_table_callback (TAO_IOR_LookupTable_Callback *callback,
-                                             int delete_callback)
-{
-  this->lookup_table_.register_callback (callback, delete_callback);
-}
 
 // *************************************************************
 // Inline operators for TAO_opaque encoding and decoding

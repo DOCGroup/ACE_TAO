@@ -464,13 +464,3 @@ TAO_GIOP_ServerRequest::tao_send_reply_exception(CORBA::Exception& ex)
    }
 
 }
-
-#if 0 // PPOA
-CORBA::Object_ptr
-TAO_GIOP_ServerRequest::objref (CORBA_Environment &ACE_TRY_ENV)
-{
-  TAO_POA_Current_Impl *pci = TAO_TSS_RESOURCES::instance ()->poa_current_impl_;
-
-  return pci->poa ()->id_to_reference (pci->object_id (), ACE_TRY_ENV);
-}
-#endif /* 0 PPOA */

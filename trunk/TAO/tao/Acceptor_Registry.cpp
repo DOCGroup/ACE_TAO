@@ -12,6 +12,7 @@
 #include "tao/Acceptor_Filter.h"
 
 #include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Acceptor_Registry.i"

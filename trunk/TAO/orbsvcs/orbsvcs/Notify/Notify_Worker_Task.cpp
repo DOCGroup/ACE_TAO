@@ -14,13 +14,13 @@ TAO_Notify_Worker_Task::~TAO_Notify_Worker_Task ()
 }
 
 int
-TAO_Notify_Worker_Task::init_task (TAO_Notify_AdminProperties* const admin_properties)
+TAO_Notify_Worker_Task::init_task (TAO_Notify_AdminProperties* const)
 {
   return 0;
 }
 
 void
-TAO_Notify_Worker_Task::shutdown (CORBA::Environment& ACE_TRY_ENV)
+TAO_Notify_Worker_Task::shutdown (CORBA::Environment&)
 {
 }
 
