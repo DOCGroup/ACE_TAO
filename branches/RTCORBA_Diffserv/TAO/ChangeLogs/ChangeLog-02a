@@ -1,3 +1,95 @@
+Wed June 26  2:09:00 2002 Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/RTCORBA/Network_Priority_Mapping_Manager.h: 
+	* tao/RTCORBA/Network_Priority_Mapping_Manager.cpp: 	
+	* tao/RTCORBA/Network_Priority_Mapping_Manager.i: 
+	* tao/RTCORBA/Network_Priority_Mapping.h: 
+	* tao/RTCORBA/Network_Priority_Mapping.cpp: 	
+	* tao/RTCORBA/Network_Priority_Mapping.i: 	
+	* tao/RTCORBA/Linear_Network_Priority_Mapping.h: 	
+	* tao/RTCORBA/Linear_Network_Priority_Mapping.cpp: 	
+	* tao/RTCORBA/Linear_Network_Priority_Mapping.i: 		
+
+	  Added a Network Priority Mapping framework and a default implmentation of the Linear mapping.
+	
+	* tao/RTPortableServer/RT_POA.h: 
+	* tao/RTPortableServer/RT_POA.cpp: 	
+	
+	  Added the server_protocol method to get the current protocol policy.
+
+	* tao/RTPortableServer/RT_Servant_Dispatcher.h: 
+	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp: 	
+
+	  Modified the pre_invoke_remote_request to iniate the updation of the tcp protocol properties and set the dscp in the replies sent.
+	
+	* tao/RTCORBA/Makefile: 
+	* tao/RTCORBA/RTCORBA.pidl: 
+	* tao/RTCORBA/RTCORBAC.h: 
+	* tao/RTCORBA/RTCORBAC.cpp: 
+	* tao/RTCORBA/RTCORBAC.i: 	
+	* tao/RTCORBA/RT_ORB.h: 		
+	* tao/RTCORBA/RT_ORB.cpp: 			
+	* tao/RTCORBA/RT_ORBInitializer.h: 
+	* tao/RTCORBA/RT_ORBInitializer.cpp: 	
+	* tao/RTCORBA/RT_ORB_Loader.h: 			
+	* tao/RTCORBA/RT_ORB_Loader.cpp: 		
+	  
+	  Added an additional field enable_network_priority to the TCP_Protocol_Properties. This is a flag which when set enables the setting of diffserv codepoints in the IIOP packets sent.
+
+	  Also added Network_Priority_Mapping native interfaces to provide a mapping from CORBA priority to network priority.
+
+
+	* tao/RTCORBA/RT_Policy_i.h: 
+	* tao/RTCORBA/RT_Policy_i.cpp: 
+	* tao/RTCORBA/RT_Policy_i.i: 	
+	  
+	* tao/PortableServer/Servant_Dispatcher.h: 	
+	* tao/PortableServer/Default_Servant_Dispatcher.h: 
+	* tao/PortableServer/Default_Servant_Dispatcher.cpp: 
+
+	  Changed the parameters of the TAO_Default_Servant_Dispatcher::pre_invoke_remote_request method.
+	
+	* tao/objectid.h: 
+
+	Defined TAO_OBJID_NETWORKPRIORITYMAPPINGMANAGER 
+	
+	* tao/Connection_Handler.h: 
+	* tao/Connection_Handler.cpp:
+
+	  Added:
+	  update_protocol_properties - to update the tcp protocol properties.
+
+	* tao/IIOP_Connection_Handler.h:
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/IIOP_Connection_Handler.i:	   
+	
+	  Added:
+	  set_dscp_codepoint - to set the dscp codepoint.
+
+	* tao/Protocols_Hooks.h: 
+	* tao/Protocols_Hooks.cpp: 
+	* tao/RTCORBA/RT_Protocols_Hooks.h: 	
+	* tao/RTCORBA/RT_Protocols_Hooks.cpp: 		
+	* tao/RTCORBA/RT_Protocols_Hooks.i: 		
+	* tao/Default_Protocols_Hooks.h: 
+	* tao/Default_Protocols_Hooks.cpp: 
+
+	   update_client_protocol_properties - to update the client tcp protocol properties
+	   update_server_protocol_properties - to update the server tcp protocol properties
+	   get_dscp_codepoint - to calculate and return the dscp corresponding corresponding to the mapping used.
+	
+	* tao/IIOP_Acceptor.cpp: 
+	* tao/IIOP_Connector.cpp: 	 	   
+	* tao/Strategies/UIOP_Acceptor.cpp: 
+	* tao/Strategies/UIOP_Connector.cpp: 	
+	
+	* tao/IIOP_Transport.h:		   
+	* tao/IIOP_Transport.cpp:		   
+	
+	  Added:
+	  connection_handler - accessor method for the underlying connection handler.
+
+
 Wed May 22 23:18:59 2002  Priyanka  <oci@cs.wustl.edu>
 
         * TAO version 1.2.3 released.
