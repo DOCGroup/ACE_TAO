@@ -24,7 +24,7 @@ ifndef optimize
   optimize = 1
 endif # ! optimize
 ifndef rtti
-  rtti =
+  rtti = 0
 endif # ! rtti
 
 shared_libs =
@@ -129,7 +129,7 @@ CXX             = $(CC)
 CFLAGS          += -Xsmall-data=0 -Xsmall-const=0 -Xno-implicit-templates \
                    -Xstrings-in-text=0 -tPPC750EN:tornado
 CCFLAGS         += $(CFLAGS) -Xenum-is-int -Xbool-is-int
-ifeq (,$(rtti))
+ifeq (0,$(rtti))
   #### Don't use RTTI, because Tornado 1.0.x libraries don't support it.
   CCFLAGS += -DACE_LACKS_RTTI
 endif # rtti

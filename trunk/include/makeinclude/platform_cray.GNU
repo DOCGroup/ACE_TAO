@@ -28,11 +28,11 @@ DCCFLAGS        += $(DCFLAGS)
 OCFLAGS         += -O2
 OCCFLAGS        += $(OCFLAGS)
 
-ifndef exceptions
-  CCFLAGS += -h noexceptions
-else
+ifeq (1,$(exceptions))
   CCFLAGS += -h exceptions
-endif # ! exceptions
+else
+  CCFLAGS += -h noexceptions
+endif # exceptions
 
 DLD             = $(CXX)
 LD              = $(CXX)

@@ -76,7 +76,7 @@ ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
   #### RTTI can coexist with ACE, but it doesn't use it.  To enable,
   #### add rtti=1 to your make invocation.  Sun C++ 4.2, only, supports
   #### this option.
-  ifdef rtti
+  ifeq (1,$(rtti))
     CCFLAGS += -features=rtti
   else  # ! rtti
     #### ACE_LACKS_RTTI is necessary with -features=castop, but
@@ -126,7 +126,7 @@ DLD             = $(CXX)
 #### performance penalty of exception handling, then use the default
 #### of no exceptions.  If you want to enable exception handling,
 #### add "exceptions=1" to your "make" invocation.
-ifndef exceptions
+ifeq (0,$(exceptions))
   CCFLAGS += -noex
 endif # ! exceptions
 
@@ -196,7 +196,7 @@ endif # BIN
 #### -g is incompatible with -fast.  If you need -g, you can
 #### use "-fast -O3".
 ####
-ifdef fast
+ifeq (1,$(fast))
   CFLAGS += -fast
   DCFLAGS =
   LDFLAGS += -fast

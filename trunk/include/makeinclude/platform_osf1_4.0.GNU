@@ -37,7 +37,7 @@ ifneq ($(CXX_VER),CXX_5)
 endif # 6.0 or later
 
 CCFLAGS         += $(CFLAGS) $(WARNING_FLAGS)
-ifeq ($(rtti),)
+ifeq ($(rtti),0)
   CCFLAGS += -nortti
 endif # rtti
 DCFLAGS         += -g -O0
@@ -60,7 +60,7 @@ LIBS            := $(LIBS) -hidden /usr/lib/cmplrs/cxx/libcxxstd.a -non_hidden
 SOBUILD         = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                   ln $(VSHDIR)$*.o $@
 
-ifndef exceptions
+ifeq (0,$(exceptions))
   #### Disable the default exception handling of cxx >= 6.0.
   #### This is untested.  exceptions=1 is the default, so it's not used
   #### by default.
