@@ -56,7 +56,7 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug\Kokyu_DSRT_Schedulers"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Gy /I "..\.." /I "..\..\.." /I "..\..\tao\RTScheduling" /I "..\..\tao\RTCORBA" /I "..\..\..\Kokyu" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "KOKYU_DSRT_SCHEDULERS_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Gy /I "..\.." /I "..\..\.." /I "..\..\tao\RTScheduling" /I "..\..\tao\RTCORBA" /I "..\..\..\Kokyu" /I "..\..\tao" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "KOKYU_DSRT_SCHEDULERS_BUILD_DLL" /FD /c
 # SUBTRACT CPP /Fr /YX
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409 /i "..\.." /i "..\..\.." /i "..\..\tao\RTScheduling" /i "..\..\tao\RTCORBA" /i "..\..\..\Kokyu" /d "_DEBUG"
@@ -227,7 +227,7 @@ InputPath=.\FP_Scheduling.idl
 InputName=FP_Scheduling
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1  -I..\..\  $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1  -I..\..\  -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -354,7 +354,7 @@ InputPath=.\MIF_Scheduling.idl
 InputName=MIF_Scheduling
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I..\..\ $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I..\..\ -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -417,7 +417,7 @@ InputPath=.\MUF_Scheduling.idl
 InputName=MUF_Scheduling
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I..\..\ $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 -I..\..\  -Wb,export_macro=Kokyu_DSRT_Schedulers_Export -Wb,export_include=Kokyu_dsrt_schedulers_export.h $(InputName).idl
 
 "(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
