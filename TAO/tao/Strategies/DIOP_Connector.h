@@ -8,9 +8,7 @@
  *
  *  DIOP specific connector processing
  *
- *
- *  @author Fred Kuhns <fredk@cs.wustl.edu>
- *  @author Balachandran Natarajan <bala@cs.wustl.edu>
+ *  @author  Michael Kircher
  */
 //=============================================================================
 
@@ -18,9 +16,12 @@
 #define TAO_DIOP_CONNECTOR_H
 #include "ace/pre.h"
 
+#include "tao/corbafwd.h"
+
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
+
 #include "tao/Pluggable.h"
 #include "DIOP_Connection_Handler.h"
-#include "diop_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,7 +38,7 @@
  * for establishing a connection with a server and is called from the
  * Connector_Registory.
  */
-class TAO_DIOP_Export TAO_DIOP_Connector : public TAO_Connector
+class TAO_Strategies_Export TAO_DIOP_Connector : public TAO_Connector
 {
 public:
   // = Initialization and termination methods.
@@ -95,6 +96,8 @@ private:
                                      ACE_Equal_To < ACE_INET_Addr >,
                                      ACE_Null_Mutex > SvcHandlerIterator;
 };
+
+#endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 
 #include "ace/post.h"
 #endif  /* TAO_DIOP_CONNECTOR_H */

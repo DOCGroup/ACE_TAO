@@ -10,8 +10,7 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = DIOP \
-	tests
+DIRS  = tests
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

@@ -9,8 +9,7 @@
  *
  *   DIOP implementation of PP Framework Endpoint interface.
  *
- *
- *  @author  Marina Spivak <marina@cs.wustl.edu>
+ *  @author  Michael Kircher
  */
 //=============================================================================
 
@@ -19,6 +18,10 @@
 #define TAO_DIOP_ENDPOINT_H
 #include "ace/pre.h"
 
+#include "tao/corbafwd.h"
+
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
+
 #include "tao/Endpoint.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -26,9 +29,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/ORB.h"
-
 #include "ace/INET_Addr.h"
-#include "diop_export.h"
+#include "strategies_export.h"
 
 
 class TAO_DIOP_Connection_Handler;
@@ -40,7 +42,7 @@ class TAO_DIOP_Connection_Handler;
  *
  * DIOP-specific implementation of PP Framework Endpoint interface.
  */
-class TAO_DIOP_Export TAO_DIOP_Endpoint : public TAO_Endpoint
+class TAO_Strategies_Export TAO_DIOP_Endpoint : public TAO_Endpoint
 {
 public:
 
@@ -135,6 +137,8 @@ private:
 #if defined (__ACE_INLINE__)
 # include "DIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 
 #include "ace/post.h"
 #endif  /* TAO_DIOP_PROFILE_H */

@@ -1,3 +1,84 @@
+Tue Jul  3 18:25:41 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * examples/PluggableUDP/DIOP/*:
+
+          Moved DIOP source files from PluggableUDP to Strategies.
+
+        * examples/PluggableUDP/README:
+        * examples/PluggableUDP/DIOP/README:
+
+          Updated README files to note file location change.
+
+        * examples/PluggableUDP/Makefile:
+        * examples/PluggableUDP/Makefile.bor:
+
+          Removed DIOP directory from build.
+
+        * examples/PluggableUDP/tests/Basic/Makefile:
+        * examples/PluggableUDP/tests/Basic/client.bor:
+        * examples/PluggableUDP/tests/Basic/client.cpp:
+        * examples/PluggableUDP/tests/Basic/client.dsp:
+        * examples/PluggableUDP/tests/Basic/server.bor:
+        * examples/PluggableUDP/tests/Basic/server.cpp:
+        * examples/PluggableUDP/tests/Basic/server.dsp:
+        * examples/PluggableUDP/tests/Basic/svc.conf:
+        * examples/PluggableUDP/tests/Performance/Makefile:
+        * examples/PluggableUDP/tests/Performance/client.bor:
+        * examples/PluggableUDP/tests/Performance/client.cpp:
+        * examples/PluggableUDP/tests/Performance/client.dsp:
+        * examples/PluggableUDP/tests/Performance/server.bor:
+        * examples/PluggableUDP/tests/Performance/server.cpp:
+        * examples/PluggableUDP/tests/Performance/server.dsp:
+        * examples/PluggableUDP/tests/Performance/svc.conf:
+        * examples/PluggableUDP/tests/SimplePerformance/Makefile:
+        * examples/PluggableUDP/tests/SimplePerformance/client.bor:
+        * examples/PluggableUDP/tests/SimplePerformance/client.cpp:
+        * examples/PluggableUDP/tests/SimplePerformance/client.dsp:
+        * examples/PluggableUDP/tests/SimplePerformance/server.bor:
+        * examples/PluggableUDP/tests/SimplePerformance/server.cpp:
+        * examples/PluggableUDP/tests/SimplePerformance/server.dsp:
+        * examples/PluggableUDP/tests/SimplePerformance/svc.conf:
+
+          Updated source files and Makefiles to look for the DIOP
+          code in the Strategies library rather than in the DIOP library.
+
+        * tao/orbconf.h:
+
+          Added #define to control whether DIOP is compiled in or not.
+
+        * tao/Strategies/DIOP_Acceptor.cpp:
+        * tao/Strategies/DIOP_Acceptor.h:
+        * tao/Strategies/DIOP_Acceptor.i:
+        * tao/Strategies/DIOP_Connection_Handler.cpp:
+        * tao/Strategies/DIOP_Connection_Handler.h:
+        * tao/Strategies/DIOP_Connection_Handler.i:
+        * tao/Strategies/DIOP_Connector.cpp:
+        * tao/Strategies/DIOP_Connector.h:
+        * tao/Strategies/DIOP_Endpoint.cpp:
+        * tao/Strategies/DIOP_Endpoint.h:
+        * tao/Strategies/DIOP_Endpoint.i:
+        * tao/Strategies/DIOP_Factory.cpp:
+        * tao/Strategies/DIOP_Factory.h:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/DIOP_Profile.h:
+        * tao/Strategies/DIOP_Profile.i:
+        * tao/Strategies/DIOP_Transport.cpp:
+        * tao/Strategies/DIOP_Transport.h:
+        * tao/Strategies/DIOP_Transport.i:
+
+          Moved DIOP files to Strategies.  Updated linking specifiers and
+          include files to reflect change.
+
+        * tao/Strategies/Makefile:
+        * tao/Strategies/Makefile.bor:
+
+          Added DIOP files.
+
+        * tao/Strategies/TAO_Strategies_Internal.cpp:
+        * tao/Strategies/advanced_resource.cpp:          
+
+          Added service configurator hooks for DIOP.
+
 Tue Jul  3 14:53:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * orbsvcs/orbsvcs/AV/AV_Core.h

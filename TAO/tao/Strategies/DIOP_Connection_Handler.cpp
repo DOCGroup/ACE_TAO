@@ -1,6 +1,10 @@
 // $Id$
 
 
+#include "DIOP_Connection_Handler.h"
+
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
+
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -11,7 +15,6 @@
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Base_Transport_Property.h"
 
-#include "DIOP_Connection_Handler.h"
 #include "DIOP_Transport.h"
 #include "DIOP_Endpoint.h"
 
@@ -395,3 +398,5 @@ template class ACE_Creation_Strategy<TAO_DIOP_Connection_Handler>;
 #pragma instantiate ACE_Creation_Strategy<TAO_DIOP_Connection_Handler>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

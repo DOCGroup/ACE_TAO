@@ -1,10 +1,13 @@
 // $Id$
 
 #include "DIOP_Factory.h"
+
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
+
 #include "DIOP_Acceptor.h"
 #include "DIOP_Connector.h"
 
-ACE_RCSID(TAO_DIOP, DIOP_Factory, "$Id$")
+ACE_RCSID(TAO_Strategies, DIOP_Factory, "$Id$")
 
 static const char prefix_[] = "diop";
 
@@ -82,4 +85,6 @@ ACE_STATIC_SVC_DEFINE (TAO_DIOP_Protocol_Factory,
                                   ACE_Service_Type::DELETE_OBJ,
                        0)
 
-ACE_FACTORY_DEFINE (TAO_DIOP, TAO_DIOP_Protocol_Factory)
+ACE_FACTORY_DEFINE (TAO_Strategies, TAO_DIOP_Protocol_Factory)
+
+#endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

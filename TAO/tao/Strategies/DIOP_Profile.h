@@ -19,6 +19,10 @@
 #define TAO_DIOP_PROFILE_H
 #include "ace/pre.h"
 
+#include "tao/corbafwd.h"
+
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
+
 #include "tao/Profile.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,7 +32,6 @@
 #include "DIOP_Endpoint.h"
 
 #include "ace/Synch.h"
-#include "diop_export.h"
 
 
 // TAO DIOP_Profile concrete Profile definitions
@@ -41,7 +44,7 @@
  * This class defines the DIOP profile as specified in the CORBA
  * specification.
  */
-class TAO_DIOP_Export TAO_DIOP_Profile : public TAO_Profile
+class TAO_Strategies_Export TAO_DIOP_Profile : public TAO_Profile
 {
 public:
   /// The object key delimiter that DIOP uses or expects.
@@ -196,6 +199,8 @@ private:
 #if defined (__ACE_INLINE__)
 # include "DIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 
 #include "ace/post.h"
 #endif  /* TAO_DIOP_PROFILE_H */
