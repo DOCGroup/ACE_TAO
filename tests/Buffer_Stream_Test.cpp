@@ -190,7 +190,9 @@ Consumer::svc (void)
         break;
     }
 
+#if !defined (ACE_HAS_WINCE)
   ACE_ASSERT (result == 0 || errno == EWOULDBLOCK);
+#endif /* ! ACE_HAS_WINCE */
   return 0;
 }
 
