@@ -1,3 +1,16 @@
+Wed Sep 15 08:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Adapter.{h,cpp}:
+        * tao/Adapter_Registry.{h,cpp}:
+          Moved the TAO_Adapter_Registry class to its own file
+
+        * tao/Adapter.i:
+          Zapped, was empty
+
+        * tao/ORB_Core.{h,cpp}:
+        * tao/TAO_Internal.cpp:
+          Updated includes/forward declarations because of file split
+
 Wed Sep 15 07:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/orb_typesS.h:
