@@ -1,3 +1,8 @@
+Mon Oct 26 01:49:44 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Env_Value_Test.cpp (main): Changed argv and envp to type
+	  LPTSTR[].
+
 Sun Oct 25 23:52:40 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.64 released.
