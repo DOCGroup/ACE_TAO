@@ -74,7 +74,12 @@ namespace ACE_OS {
 #endif /* ACE_LACKS_CHDIR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int rmdir (const ACE_TCHAR * path);
+  int rmdir (const char *path);
+
+#if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int rmdir (const wchar_t *path);
+#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int close (ACE_HANDLE handle);
@@ -134,7 +139,12 @@ namespace ACE_OS {
                  off_t);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_TCHAR *getcwd (ACE_TCHAR *, size_t);
+  char *getcwd (char *, size_t);
+
+#if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
+  wchar_t *getcwd (wchar_t *, size_t);
+#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   gid_t getgid (void);

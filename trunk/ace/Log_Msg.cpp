@@ -1174,8 +1174,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   break;
 
                 case 'N':             // Source file name
-                  // @@ UNICODE
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
+#else
                   ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+#endif
                   if (can_check)
                     this_len = ACE_OS::snprintf (bp, bspace, format,
                                                  this->file () ?
@@ -1190,8 +1193,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   break;
 
                 case 'n':             // Program name
-                  // @@ UNICODE
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
+#else /* ACE_WIN32 && ACE_USES_WCHAR */
                   ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+#endif
                   if (can_check)
                     this_len = ACE_OS::snprintf (bp, bspace, format,
                                                  ACE_Log_Msg::program_name_ ?
@@ -1228,7 +1234,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #  endif  /* !__GLIBC__ */
                         )
                       {
+#  if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+                        ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls: %ls"));
+#  else
                         ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s: %s"));
+#  endif
                         if (can_check)
                           this_len = ACE_OS::snprintf
                             (bp, bspace, format, va_arg (argp, ACE_TCHAR *),
@@ -1321,7 +1331,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   }
 
                 case 'M': // Print the name of the priority of the message.
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+                  ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
+#else
                   ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+#endif
                   if (can_check)
                     this_len = ACE_OS::snprintf
                       (bp, bspace, format,
@@ -1344,7 +1358,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #  endif  /* !__GLIBC__ */
                         )
                       {
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+                        ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
+#else /* ACE_WIN32 && ACE_USES_WCHAR */
                         ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+#endif
                         if (can_check)
                           this_len = ACE_OS::snprintf
                             (bp, bspace, format,
@@ -1543,7 +1561,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     ACE_TCHAR day_and_time[35];
                     ACE::timestamp (day_and_time,
                                     sizeof day_and_time);
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("ls"));
+#else
                     ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s"));
+#endif
                     if (can_check)
                       this_len = ACE_OS::snprintf
                         (bp, bspace, format, day_and_time);
@@ -2221,11 +2243,11 @@ ACE_Log_Msg::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("status_ = %d\n"), this->status_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nerrnum_ = %d\n"), this->errnum_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nlinenum_ = %d\n"), this->linenum_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nfile_ = %s\n"), this->file_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nfile_ = %C\n"), this->file_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_ = %s\n"), this->msg_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nrestart_ = %d\n"), this->restart_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nostream_ = %x\n"), this->ostream_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_callback_ = %x\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nostream_ = %@\n"), this->ostream_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_callback_ = %@\n"),
               this->msg_callback_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nprogram_name_ = %s\n"),
               this->program_name_ ? this->program_name_
@@ -2234,14 +2256,14 @@ ACE_Log_Msg::dump (void) const
               this->local_host_ ? this->local_host_
                                 : ACE_LIB_TEXT ("<unknown>")));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\npid_ = %d\n"), this->getpid ()));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nflags_ = %x\n"), this->flags_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nflags_ = 0x%x\n"), this->flags_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntrace_depth_ = %d\n"),
               this->trace_depth_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntrace_active_ = %d\n"),
               this->trace_active_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntracing_enabled_ = %d\n"),
               this->tracing_enabled_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\npriority_mask_ = %x\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\npriority_mask_ = 0x%x\n"),
               this->priority_mask_));
   if (this->thr_desc_ != 0 && this->thr_desc_->state () != 0)
     ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nthr_state_ = %d\n"),

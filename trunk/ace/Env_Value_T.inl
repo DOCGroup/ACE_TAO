@@ -33,10 +33,15 @@ ACE_Env_Value<T>::open (const ACE_TCHAR *varname,
 template <class T> ACE_INLINE void
 ACE_Env_Value<T>::fetch_value (void)
 {
-  const ACE_TCHAR *env = ACE_OS::getenv (varname_);
-
+#if defined (ACE_WIN32)
+  const ACE_TCHAR *env = ACE_OS::getenv (this->varname_);
   if (env != 0)
     ACE_Convert (env, value_);
+#else
+  char *nenv = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (this->varname_));
+  if (nenv != 0)
+    ACE_Convert (ACE_TEXT_CHAR_TO_TCHAR (nenv), value_);
+#endif
 }
 
 template <class T> ACE_INLINE const ACE_TCHAR*

@@ -177,7 +177,12 @@ namespace ACE_OS {
   int fgetpos (FILE* fp, fpos_t* pos);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_TCHAR *fgets (ACE_TCHAR *buf, int size, FILE *fp);
+  char *fgets (char *buf, int size, FILE *fp);
+
+# if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
+  wchar_t *fgets (wchar_t *buf, int size, FILE *fp);
+# endif /* ACE_HAS_WCHAR */
 
   //@{ @name A set of wrappers for file locks.
 
@@ -294,8 +299,14 @@ namespace ACE_OS {
 # endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int fputs (const ACE_TCHAR *s,
+  int fputs (const char *s,
              FILE *stream);
+
+# if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int fputs (const wchar_t *s,
+             FILE *stream);
+#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   size_t fread (void *ptr,
@@ -338,13 +349,23 @@ namespace ACE_OS {
   char *gets (char *str, int n = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void perror (const ACE_TCHAR *s);
+  void perror (const char *s);
+
+#if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
+  void perror (const wchar_t *s);
+#endif /* ACE_HAS_WCHAR */
 
   extern ACE_Export
   int printf (const char *format, ...);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int puts (const ACE_TCHAR *s);
+  int puts (const char *s);
+
+#if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int puts (const wchar_t *s);
+#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int rename (const char *old_name,

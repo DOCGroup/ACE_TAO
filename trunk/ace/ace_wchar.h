@@ -50,6 +50,9 @@
 #endif /* ACE_LEGACY_MODE */
 
 #if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+#  if !defined (ACE_HAS_WCHAR)
+#    define ACE_HAS_WCHAR
+#  endif
 #  include /**/ <wchar.h>
 #endif /* ACE_HAS_XPG4_MULTIBYPTE_CHAR */
 

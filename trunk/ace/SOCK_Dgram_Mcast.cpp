@@ -975,7 +975,7 @@ ACE_SOCK_Dgram_Mcast::make_multicast_ifaddr (ip_mreq *ret_mreq,
       // Look up the interface by number, not name.
       if_address.ifr_ifno = ACE_OS::atoi (net_if);
 #else
-      ACE_OS::strcpy (if_address.ifr_name, net_if);
+      ACE_OS::strcpy (if_address.ifr_name, ACE_TEXT_ALWAYS_CHAR (net_if));
 #endif /* defined (ACE_PSOS) */
 
       if (ACE_OS::ioctl (this->get_handle (),

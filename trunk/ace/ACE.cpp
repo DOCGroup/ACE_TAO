@@ -2698,16 +2698,20 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
   ACE_OS::strsncpy (date_and_time,
                     timebuf,
                     date_and_timelen);
-  char yeartmp[5];
+  ACE_TCHAR yeartmp[5];
   ACE_OS::strsncpy (yeartmp,
                     &date_and_time[20],
                     5);
-  char timetmp[9];
+  ACE_TCHAR timetmp[9];
   ACE_OS::strsncpy (timetmp,
                     &date_and_time[11],
                     9);
   ACE_OS::sprintf (&date_and_time[11],
-                   "%s %s.%06ld",
+#  if defined (ACE_USES_WCHAR)
+                   ACE_LIB_TEXT ("%ls %ls.%06ld"),
+#  else
+                   ACE_LIB_TEXT ("%s %s.%06ld"),
+#  endif /* ACE_USES_WCHAR */
                    yeartmp,
                    timetmp,
                    cur_time.usec ());

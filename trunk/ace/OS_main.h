@@ -36,7 +36,20 @@
 # if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
 #   define ACE_TMAIN wmain
 # else
-#   define ACE_TMAIN main
+#   if defined (ACE_USES_WCHAR)    /* Not Win32, but uses wchar */
+      // Replace main() with a version that converts the char** argv to
+      // ACE_TCHAR and calls the ACE_TMAIN entrypoint.
+#     include "ace/Argv_Type_Converter.h"
+#     define ACE_TMAIN \
+        ace_main_i (int, ACE_TCHAR *[]); /* forward declaration */ \
+        int main (int argc, char *argv[]) { \
+          ACE_Argv_Type_Converter wide_argv (argc, argv); \
+          return ace_main_i (argc, wide_argv.get_TCHAR_argv ()); \
+        } \
+        int ace_main_i
+#   else
+#     define ACE_TMAIN main
+#   endif /* ACE_USES_WCHAR */
 # endif
 
 # if defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)

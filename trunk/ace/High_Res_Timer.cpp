@@ -75,11 +75,12 @@ ACE_High_Res_Timer::get_cpuinfo (void)
   int supported = 0;
 #endif /* __alpha__ */
 
-  FILE *cpuinfo = ACE_OS::fopen ("/proc/cpuinfo", "r");
+  FILE *cpuinfo = ACE_OS::fopen (ACE_LIB_TEXT ("/proc/cpuinfo"),
+                                 ACE_LIB_TEXT ("r"));
 
   if (cpuinfo != 0)
     {
-      ACE_TCHAR buf[128];
+      char buf[128];
 
       // ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nReading /proc/cpuinfo...")));
 
@@ -103,7 +104,7 @@ ACE_High_Res_Timer::get_cpuinfo (void)
 #else
           double mhertz = 1;
           double bmips = 1;
-          ACE_TCHAR arg[128];
+          char arg[128];
 
           // CPU type?
           if (::sscanf (buf, "cpu : %s\n", arg) == 1)
@@ -513,7 +514,7 @@ ACE_High_Res_Timer::get_env_global_scale_factor (const ACE_TCHAR *env)
 #if !defined (ACE_HAS_WINCE)
   if (env != 0)
     {
-      const ACE_TCHAR *env_value = ACE_OS::getenv (env);
+      const char *env_value = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (env));
       if (env_value != 0)
         {
           int value = ACE_OS::atoi (env_value);

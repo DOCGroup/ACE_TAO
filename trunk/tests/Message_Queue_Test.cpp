@@ -87,11 +87,11 @@ iterator_test (void)
 {
   const int ITERATIONS = 5;
   ACE_TCHAR buffer[ITERATIONS][BUFSIZ];
-  // Use queue size from of 32 Kb, instead of the default of 16 Kb
-  // (defined by ACE_Message_Queue_Base::DEFAULT_HWM), so that the
-  // test runs on machines with 8Kb pagesizes.
+  // Use queue size from of 32 Kb (more if using wide-char), instead of the
+  // default of 16 Kb (defined by ACE_Message_Queue_Base::DEFAULT_HWM),
+  // so that the test runs on machines with 8Kb pagesizes.
 #if !defined(_UNICOS)
-  QUEUE queue (32 * 1024);
+  QUEUE queue (32 * 1024 * sizeof (ACE_TCHAR));
 #else
   // this works on the Cray, where BUFSIZ is defined as 32Kb
   QUEUE queue (ITERATIONS * BUFSIZ - 1);

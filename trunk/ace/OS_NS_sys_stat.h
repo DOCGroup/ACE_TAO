@@ -63,8 +63,14 @@ namespace ACE_OS {
              ACE_stat *);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int lstat (const ACE_TCHAR *,
+  int lstat (const char *,
              ACE_stat *);
+
+#if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int lstat (const wchar_t *,
+             ACE_stat *);
+#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int mkdir (const char *path,

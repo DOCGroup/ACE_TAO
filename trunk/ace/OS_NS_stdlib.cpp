@@ -260,13 +260,13 @@ ACE_OS::realloc (void *ptr, size_t nbytes)
 }
 
 #if defined (ACE_LACKS_REALPATH)
-ACE_TCHAR *
-ACE_OS::realpath (const ACE_TCHAR *file_name,
-		  ACE_TCHAR *resolved_name)
+char *
+ACE_OS::realpath (const char *file_name,
+		  char *resolved_name)
 {
   ACE_OS_TRACE ("ACE_OS::realpath");
-
-  if(file_name == 0)
+  
+  if (file_name == 0)
     {
       // Single Unix Specification V3:
       //   Return an error if parameter is a null pointer.

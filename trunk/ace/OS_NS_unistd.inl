@@ -145,7 +145,7 @@ ACE_OS::chdir (const wchar_t *path)
 #endif /* ACE_LACKS_CHDIR */
 
 ACE_INLINE int
-ACE_OS::rmdir (const ACE_TCHAR * path)
+ACE_OS::rmdir (const char *path)
 {
 #if defined (ACE_PSOS_LACKS_PHILE)
   ACE_UNUSED_ARG (path);
@@ -198,6 +198,23 @@ ACE_OS::rmdir (const ACE_TCHAR * path)
   ACE_OSCALL_RETURN (::rmdir (path), int, -1);
 #endif /* ACE_HAS_PACE */
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE int
+ACE_OS::rmdir (const wchar_t *path)
+{
+#if defined (ACE_HAS_WINCE)
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectory (path, NULL),
+                                          ace_result_),
+                        int, -1);
+#elif defined (ACE_WIN32)
+  ACE_OSCALL_RETURN (::_wrmdir (path), int, -1);
+#else
+  ACE_Wide_To_Ascii n_path (path);
+  return ACE_OS::rmdir (n_path.char_rep ());
+#endif /* ACE_HAS_WINCE */
+}
+#endif /* ACE_HAS_WCHAR */
 
 // @todo: which 4 and why???  dhinton
 // NOTE: The following four function definitions must appear before
@@ -400,8 +417,8 @@ ACE_OS::ftruncate (ACE_HANDLE handle, off_t offset)
 #endif /* ACE_WIN32 */
 }
 
-ACE_INLINE ACE_TCHAR *
-ACE_OS::getcwd (ACE_TCHAR *buf, size_t size)
+ACE_INLINE char *
+ACE_OS::getcwd (char *buf, size_t size)
 {
   ACE_OS_TRACE ("ACE_OS::getcwd");
 #if defined (ACE_PSOS_LACKS_PHILE)
@@ -493,15 +510,30 @@ ACE_OS::getcwd (ACE_TCHAR *buf, size_t size)
   ACE_UNUSED_ARG (size);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32)
-#  if defined (ACE_USES_WCHAR)
-  return ::_wgetcwd (buf, static_cast<int> (size));
-#  else
   return ::getcwd (buf, static_cast<int> (size));
-#  endif /* ACE_USES_WCHAR */
 #else
   ACE_OSCALL_RETURN (::getcwd (buf, size), char *, 0);
 #endif /* ACE_PSOS_LACKS_PHILE */
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE wchar_t *
+ACE_OS::getcwd (wchar_t *buf, size_t size)
+{
+#  if defined (ACE_WIN32)
+  return ::_wgetcwd (buf, ACE_static_cast (int, size));
+#  else
+  char *narrow_buf = new char[size];
+  char *result = 0;
+  result = ACE_OS::getcwd (narrow_buf, size);
+  ACE_Ascii_To_Wide wide_buf (result);
+  delete [] narrow_buf;
+  if (result != 0)
+    ACE_OS::strsncpy (buf, wide_buf.wchar_rep (), size);
+  return result == 0 ? 0 : buf;
+#  endif /* ACE_WIN32 */
+}
+#endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE gid_t
 ACE_OS::getgid (void)
@@ -1194,7 +1226,8 @@ ACE_OS::truncate (const ACE_TCHAR *filename,
     }
   /* NOTREACHED */
 #elif !defined (ACE_LACKS_TRUNCATE)
-  ACE_OSCALL_RETURN (::truncate (filename, offset), int, -1);
+  ACE_OSCALL_RETURN
+    (::truncate (ACE_TEXT_ALWAYS_CHAR (filename), offset), int, -1);
 #else
   ACE_UNUSED_ARG (filename);
   ACE_UNUSED_ARG (offset);

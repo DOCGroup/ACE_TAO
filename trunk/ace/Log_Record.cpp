@@ -174,6 +174,18 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
   /* Oct 18 14:25:36.000 1989<nul> */
   ACE_TCHAR timestamp[26]; // Only used by VERBOSE and VERBOSE_LITE.
 
+  // The sprintf format needs to be different for Windows and POSIX
+  // in the wide-char case.
+#if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
+  const ACE_TCHAR *time_fmt =         ACE_LIB_TEXT ("%s.%03ld %s");
+  const ACE_TCHAR *verbose_fmt =      ACE_LIB_TEXT ("%s@%s@%u@%s@%s");
+  const ACE_TCHAR *verbose_lite_fmt = ACE_LIB_TEXT ("%s@%s@%s");
+#else
+  const ACE_TCHAR *time_fmt = ACE_LIB_TEXT ("%ls.%03ld %ls");
+  const ACE_TCHAR *verbose_fmt = ACE_LIB_TEXT ("%ls@%ls@%u@%ls@%ls");
+  const ACE_TCHAR *verbose_lite_fmt = ACE_LIB_TEXT ("%ls@%ls@%ls");
+#endif
+
   if (ACE_BIT_ENABLED (verbose_flag,
                        ACE_Log_Msg::VERBOSE)
       || ACE_BIT_ENABLED (verbose_flag,
@@ -192,7 +204,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
       ctp[24] = '\0'; // NUL-terminate after the date.
 
       ACE_OS::sprintf (timestamp,
-                       ACE_LIB_TEXT ("%s.%03ld %s"),
+                       time_fmt,
                        ctp + 4,
                        ((long) this->usecs_) / 1000,
                        ctp + 20);
@@ -211,7 +223,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
                                       : host_name);
 # endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
       ACE_OS::sprintf (verbose_msg,
-                       ACE_LIB_TEXT ("%s@%s@%u@%s@%s"),
+                       verbose_fmt,
                        timestamp,
                        lhost_name,
                        this->pid_,
@@ -220,14 +232,12 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
     }
   else if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE_LITE))
     ACE_OS::sprintf (verbose_msg,
-                     ACE_LIB_TEXT ("%s@%s@%s"),
+                     verbose_lite_fmt,
                      timestamp,
                      ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
                      this->msg_data_);
   else
-    ACE_OS::sprintf (verbose_msg,
-                     ACE_LIB_TEXT ("%s"),
-                     this->msg_data_);
+    ACE_OS::strcpy (verbose_msg, this->msg_data_);
   return 0;
 }
 

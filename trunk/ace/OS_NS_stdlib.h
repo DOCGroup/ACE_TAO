@@ -146,17 +146,26 @@ namespace ACE_OS {
 
 #if !defined (ACE_LACKS_MKSTEMP)
   ACE_NAMESPACE_INLINE_FUNCTION
-#else
-  extern ACE_Export
+  ACE_HANDLE mkstemp (char *t);
+
+#  if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
+  ACE_HANDLE mkstemp (wchar_t *t);
+#  endif /* ACE_HAS_WCHAR */
 #endif /* !ACE_LACKS_MKSTEMP */
-  ACE_HANDLE mkstemp (ACE_TCHAR *t);
 
 #if !defined (ACE_LACKS_MKTEMP)
   ACE_NAMESPACE_INLINE_FUNCTION
+  char *mktemp (char *t);
+
+#  if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
+  wchar_t *mktemp (wchar_t *t);
+#  endif /* ACE_HAS_WCHAR */
 #else
   extern ACE_Export
-#endif /* !ACE_LACKS_MSTEMP */
   ACE_TCHAR *mktemp (ACE_TCHAR *t);
+#endif /* !ACE_LACKS_MSTEMP */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int putenv (const char *string);
@@ -190,7 +199,12 @@ namespace ACE_OS {
 #else
   extern ACE_Export
 #endif /* !ACE_LACKS_REALPATH */
-  ACE_TCHAR *realpath (const ACE_TCHAR *file_name, ACE_TCHAR *resolved_name);
+  char *realpath (const char *file_name, char *resolved_name);
+
+#if defined (ACE_HAS_WCHAR)
+  ACE_NAMESPACE_INLINE_FUNCTION
+  wchar_t *realpath (const wchar_t *file_name, wchar_t *resolved_name);
+#endif /* ACE_HAS_WCHAR */
 
   // exit_hook and set_exit_hook not in spec
   /// Function that is called by <ACE_OS::exit>, if non-null.
