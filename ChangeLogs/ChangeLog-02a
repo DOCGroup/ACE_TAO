@@ -1,3 +1,8 @@
+Tue Jan 22 21:27:25 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/ace_dll.vcp: Add Frameork_Component.* to the builds. Thanks
+	  to Venkita for pointing it out.
+
 Tue Jan 22 15:19:29 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/DLL.cpp:  Changed to invoke this->open() in the
