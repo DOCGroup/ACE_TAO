@@ -470,6 +470,8 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
+        case AST_Expression::EV_any:
+        case AST_Expression::EV_object:
           return 0;
         }
     case AST_Expression::EV_ushort:
@@ -579,6 +581,8 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
+        case AST_Expression::EV_any:
+        case AST_Expression::EV_object:
           return 0;
         }
     case AST_Expression::EV_long:
@@ -671,6 +675,8 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
+        case AST_Expression::EV_any:
+        case AST_Expression::EV_object:
           return 0;
         }
     case AST_Expression::EV_ulong:
@@ -773,6 +779,8 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
+        case AST_Expression::EV_any:
+        case AST_Expression::EV_object:
           return 0;
         }
     case AST_Expression::EV_longlong:
@@ -848,6 +856,8 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
+        case AST_Expression::EV_any:
+        case AST_Expression::EV_object:
           return 0;
         }
 #else /* ! defined (ACE_LACKS_LONGLONG_T) */
@@ -941,6 +951,8 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
+        case AST_Expression::EV_any:
+        case AST_Expression::EV_object:
           return 0;
         }
 #else /* ! defined (ACE_LACKS_LONGLONG_T) */
@@ -1009,7 +1021,9 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
-          return 0;
+        case AST_Expression::EV_any:
+        case AST_Expression::EV_object:
+         return 0;
         }
     case AST_Expression::EV_float:
       switch (ev->et)
@@ -1093,6 +1107,8 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
+        case AST_Expression::EV_any:
+        case AST_Expression::EV_object:
           return 0;
         }
     case AST_Expression::EV_double:
@@ -1165,6 +1181,8 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
+        case AST_Expression::EV_any:
+        case AST_Expression::EV_object:
           return 0;
         }
     case AST_Expression::EV_char:
@@ -1285,6 +1303,8 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
+        case AST_Expression::EV_any:
+        case AST_Expression::EV_object:
           return 0;
         }
     case AST_Expression::EV_wchar:
@@ -1514,6 +1534,8 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_enum:
         case AST_Expression::EV_void:
         case AST_Expression::EV_none:
+        case AST_Expression::EV_any:
+        case AST_Expression::EV_object:
           return 0;
         }
     case AST_Expression::EV_enum:
