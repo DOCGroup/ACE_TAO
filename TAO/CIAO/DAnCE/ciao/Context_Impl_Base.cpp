@@ -64,7 +64,7 @@ namespace CIAO
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), FALSE);
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), false);
   }
 
   void
