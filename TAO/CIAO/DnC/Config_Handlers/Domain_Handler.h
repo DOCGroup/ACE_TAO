@@ -15,6 +15,7 @@
 #include "Config_Handler_export.h"
 #include "ace/SString.h"
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Null_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -54,18 +55,14 @@ using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 using xercesc::DOMNamedNodeMap;
 
-typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_SYNCH_RW_MUTEX> REF_MAP;
-typedef ACE_Hash_Map_Iterator<ACE_TString, int, ACE_SYNCH_RW_MUTEX> REF_ITER;
-typedef ACE_Hash_Map_Manager<int, ACE_TString, ACE_SYNCH_RW_MUTEX> IDREF_MAP;
-
-namespace CIAO 
+namespace CIAO
 {
   namespace Config_Handler
   {
     /**
      * @class Domain_Handler
      *
-     * @brief Handler class for <Domain> type 
+     * @brief Handler class for <Domain> type
      *
      * This class is within the Target Data Model subpackage of the
      * Deployment & Configuration package.
@@ -254,6 +251,10 @@ namespace CIAO
       void process_refs (DOMNamedNodeMap* named_node_map);
 
     private:
+
+      typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REF_MAP;
+      typedef ACE_Hash_Map_Iterator<ACE_TString, int, ACE_Null_Mutex> REF_ITER;
+      typedef ACE_Hash_Map_Manager<int, ACE_TString, ACE_Null_Mutex> IDREF_MAP;
 
       DOMDocumentTraversal* traverse_;
 
