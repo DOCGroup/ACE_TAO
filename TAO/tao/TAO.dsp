@@ -1592,10 +1592,6 @@ SOURCE=.\Object_Argument_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\PortableServer\Object_Argument_T.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Object_KeyC.h
 # End Source File
 # Begin Source File
@@ -1797,10 +1793,6 @@ SOURCE=.\Resume_Handle.h
 # Begin Source File
 
 SOURCE=.\SArgument.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SArgument_T.h
 # End Source File
 # Begin Source File
 

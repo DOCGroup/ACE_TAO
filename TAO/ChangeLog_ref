@@ -1,3 +1,23 @@
+Fri Jun 27 14:42:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+
+          Changed logic for generation of declarations for Objref_Traits,
+          Value_Traits, and Array_Traits specializations. These may
+          not need to be generated in all cases.
+
+        * tao/Arg_Traits_T.h:
+
+          Cosmetic changes.
+
+        * tao/Basic_Arguments.cpp:
+
+          Added missing explicit template instantiation.
+
+        * tao/TAO.dsp:
+
+          Added missing header file to project.
+
 Fri Jun 27 11:16:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_traits.cpp:
