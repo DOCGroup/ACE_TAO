@@ -174,11 +174,11 @@ TAO_NAMESPACE  Messaging
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static RebindPolicy_ptr duplicate (RebindPolicy_ptr);
-    static void release (RebindPolicy_ptr);
-    static RebindPolicy_ptr nil (void);
-    static RebindPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static RebindPolicy_ptr tao_duplicate (RebindPolicy_ptr);
+    static void tao_release (RebindPolicy_ptr);
+    static RebindPolicy_ptr tao_nil (void);
+    static RebindPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     RebindPolicy_ptr ptr_;
@@ -225,6 +225,8 @@ TAO_NAMESPACE  Messaging
     typedef RebindPolicy_ptr _ptr_type;
     typedef RebindPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static RebindPolicy_ptr _duplicate (RebindPolicy_ptr obj);
@@ -309,11 +311,11 @@ TAO_NAMESPACE  Messaging
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static SyncScopePolicy_ptr duplicate (SyncScopePolicy_ptr);
-    static void release (SyncScopePolicy_ptr);
-    static SyncScopePolicy_ptr nil (void);
-    static SyncScopePolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static SyncScopePolicy_ptr tao_duplicate (SyncScopePolicy_ptr);
+    static void tao_release (SyncScopePolicy_ptr);
+    static SyncScopePolicy_ptr tao_nil (void);
+    static SyncScopePolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     SyncScopePolicy_ptr ptr_;
@@ -360,6 +362,8 @@ TAO_NAMESPACE  Messaging
     typedef SyncScopePolicy_ptr _ptr_type;
     typedef SyncScopePolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static SyncScopePolicy_ptr _duplicate (SyncScopePolicy_ptr obj);
@@ -494,11 +498,11 @@ TAO_NAMESPACE  Messaging
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static RequestPriorityPolicy_ptr duplicate (RequestPriorityPolicy_ptr);
-    static void release (RequestPriorityPolicy_ptr);
-    static RequestPriorityPolicy_ptr nil (void);
-    static RequestPriorityPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static RequestPriorityPolicy_ptr tao_duplicate (RequestPriorityPolicy_ptr);
+    static void tao_release (RequestPriorityPolicy_ptr);
+    static RequestPriorityPolicy_ptr tao_nil (void);
+    static RequestPriorityPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     RequestPriorityPolicy_ptr ptr_;
@@ -545,6 +549,8 @@ TAO_NAMESPACE  Messaging
     typedef RequestPriorityPolicy_ptr _ptr_type;
     typedef RequestPriorityPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static RequestPriorityPolicy_ptr _duplicate (RequestPriorityPolicy_ptr obj);
@@ -625,11 +631,11 @@ TAO_NAMESPACE  Messaging
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ReplyPriorityPolicy_ptr duplicate (ReplyPriorityPolicy_ptr);
-    static void release (ReplyPriorityPolicy_ptr);
-    static ReplyPriorityPolicy_ptr nil (void);
-    static ReplyPriorityPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static ReplyPriorityPolicy_ptr tao_duplicate (ReplyPriorityPolicy_ptr);
+    static void tao_release (ReplyPriorityPolicy_ptr);
+    static ReplyPriorityPolicy_ptr tao_nil (void);
+    static ReplyPriorityPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     ReplyPriorityPolicy_ptr ptr_;
@@ -676,6 +682,8 @@ TAO_NAMESPACE  Messaging
     typedef ReplyPriorityPolicy_ptr _ptr_type;
     typedef ReplyPriorityPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static ReplyPriorityPolicy_ptr _duplicate (ReplyPriorityPolicy_ptr obj);
@@ -760,11 +768,11 @@ TAO_NAMESPACE  Messaging
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static RequestStartTimePolicy_ptr duplicate (RequestStartTimePolicy_ptr);
-    static void release (RequestStartTimePolicy_ptr);
-    static RequestStartTimePolicy_ptr nil (void);
-    static RequestStartTimePolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static RequestStartTimePolicy_ptr tao_duplicate (RequestStartTimePolicy_ptr);
+    static void tao_release (RequestStartTimePolicy_ptr);
+    static RequestStartTimePolicy_ptr tao_nil (void);
+    static RequestStartTimePolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     RequestStartTimePolicy_ptr ptr_;
@@ -811,6 +819,8 @@ TAO_NAMESPACE  Messaging
     typedef RequestStartTimePolicy_ptr _ptr_type;
     typedef RequestStartTimePolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static RequestStartTimePolicy_ptr _duplicate (RequestStartTimePolicy_ptr obj);
@@ -895,11 +905,11 @@ TAO_NAMESPACE  Messaging
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static RequestEndTimePolicy_ptr duplicate (RequestEndTimePolicy_ptr);
-    static void release (RequestEndTimePolicy_ptr);
-    static RequestEndTimePolicy_ptr nil (void);
-    static RequestEndTimePolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static RequestEndTimePolicy_ptr tao_duplicate (RequestEndTimePolicy_ptr);
+    static void tao_release (RequestEndTimePolicy_ptr);
+    static RequestEndTimePolicy_ptr tao_nil (void);
+    static RequestEndTimePolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     RequestEndTimePolicy_ptr ptr_;
@@ -946,6 +956,8 @@ TAO_NAMESPACE  Messaging
     typedef RequestEndTimePolicy_ptr _ptr_type;
     typedef RequestEndTimePolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static RequestEndTimePolicy_ptr _duplicate (RequestEndTimePolicy_ptr obj);
@@ -1030,11 +1042,11 @@ TAO_NAMESPACE  Messaging
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ReplyStartTimePolicy_ptr duplicate (ReplyStartTimePolicy_ptr);
-    static void release (ReplyStartTimePolicy_ptr);
-    static ReplyStartTimePolicy_ptr nil (void);
-    static ReplyStartTimePolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static ReplyStartTimePolicy_ptr tao_duplicate (ReplyStartTimePolicy_ptr);
+    static void tao_release (ReplyStartTimePolicy_ptr);
+    static ReplyStartTimePolicy_ptr tao_nil (void);
+    static ReplyStartTimePolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     ReplyStartTimePolicy_ptr ptr_;
@@ -1081,6 +1093,8 @@ TAO_NAMESPACE  Messaging
     typedef ReplyStartTimePolicy_ptr _ptr_type;
     typedef ReplyStartTimePolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static ReplyStartTimePolicy_ptr _duplicate (ReplyStartTimePolicy_ptr obj);
@@ -1165,11 +1179,11 @@ TAO_NAMESPACE  Messaging
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ReplyEndTimePolicy_ptr duplicate (ReplyEndTimePolicy_ptr);
-    static void release (ReplyEndTimePolicy_ptr);
-    static ReplyEndTimePolicy_ptr nil (void);
-    static ReplyEndTimePolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static ReplyEndTimePolicy_ptr tao_duplicate (ReplyEndTimePolicy_ptr);
+    static void tao_release (ReplyEndTimePolicy_ptr);
+    static ReplyEndTimePolicy_ptr tao_nil (void);
+    static ReplyEndTimePolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     ReplyEndTimePolicy_ptr ptr_;
@@ -1216,6 +1230,8 @@ TAO_NAMESPACE  Messaging
     typedef ReplyEndTimePolicy_ptr _ptr_type;
     typedef ReplyEndTimePolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static ReplyEndTimePolicy_ptr _duplicate (ReplyEndTimePolicy_ptr obj);
@@ -1300,11 +1316,11 @@ TAO_NAMESPACE  Messaging
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static RelativeRequestTimeoutPolicy_ptr duplicate (RelativeRequestTimeoutPolicy_ptr);
-    static void release (RelativeRequestTimeoutPolicy_ptr);
-    static RelativeRequestTimeoutPolicy_ptr nil (void);
-    static RelativeRequestTimeoutPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static RelativeRequestTimeoutPolicy_ptr tao_duplicate (RelativeRequestTimeoutPolicy_ptr);
+    static void tao_release (RelativeRequestTimeoutPolicy_ptr);
+    static RelativeRequestTimeoutPolicy_ptr tao_nil (void);
+    static RelativeRequestTimeoutPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     RelativeRequestTimeoutPolicy_ptr ptr_;
@@ -1351,6 +1367,8 @@ TAO_NAMESPACE  Messaging
     typedef RelativeRequestTimeoutPolicy_ptr _ptr_type;
     typedef RelativeRequestTimeoutPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static RelativeRequestTimeoutPolicy_ptr _duplicate (RelativeRequestTimeoutPolicy_ptr obj);
@@ -1435,11 +1453,11 @@ TAO_NAMESPACE  Messaging
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static RelativeRoundtripTimeoutPolicy_ptr duplicate (RelativeRoundtripTimeoutPolicy_ptr);
-    static void release (RelativeRoundtripTimeoutPolicy_ptr);
-    static RelativeRoundtripTimeoutPolicy_ptr nil (void);
-    static RelativeRoundtripTimeoutPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static RelativeRoundtripTimeoutPolicy_ptr tao_duplicate (RelativeRoundtripTimeoutPolicy_ptr);
+    static void tao_release (RelativeRoundtripTimeoutPolicy_ptr);
+    static RelativeRoundtripTimeoutPolicy_ptr tao_nil (void);
+    static RelativeRoundtripTimeoutPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     RelativeRoundtripTimeoutPolicy_ptr ptr_;
@@ -1486,6 +1504,8 @@ TAO_NAMESPACE  Messaging
     typedef RelativeRoundtripTimeoutPolicy_ptr _ptr_type;
     typedef RelativeRoundtripTimeoutPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static RelativeRoundtripTimeoutPolicy_ptr _duplicate (RelativeRoundtripTimeoutPolicy_ptr obj);
@@ -1620,11 +1640,11 @@ TAO_NAMESPACE  Messaging
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static RoutingPolicy_ptr duplicate (RoutingPolicy_ptr);
-    static void release (RoutingPolicy_ptr);
-    static RoutingPolicy_ptr nil (void);
-    static RoutingPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static RoutingPolicy_ptr tao_duplicate (RoutingPolicy_ptr);
+    static void tao_release (RoutingPolicy_ptr);
+    static RoutingPolicy_ptr tao_nil (void);
+    static RoutingPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     RoutingPolicy_ptr ptr_;
@@ -1671,6 +1691,8 @@ TAO_NAMESPACE  Messaging
     typedef RoutingPolicy_ptr _ptr_type;
     typedef RoutingPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static RoutingPolicy_ptr _duplicate (RoutingPolicy_ptr obj);
@@ -1755,11 +1777,11 @@ TAO_NAMESPACE  Messaging
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static MaxHopsPolicy_ptr duplicate (MaxHopsPolicy_ptr);
-    static void release (MaxHopsPolicy_ptr);
-    static MaxHopsPolicy_ptr nil (void);
-    static MaxHopsPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static MaxHopsPolicy_ptr tao_duplicate (MaxHopsPolicy_ptr);
+    static void tao_release (MaxHopsPolicy_ptr);
+    static MaxHopsPolicy_ptr tao_nil (void);
+    static MaxHopsPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     MaxHopsPolicy_ptr ptr_;
@@ -1806,6 +1828,8 @@ TAO_NAMESPACE  Messaging
     typedef MaxHopsPolicy_ptr _ptr_type;
     typedef MaxHopsPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static MaxHopsPolicy_ptr _duplicate (MaxHopsPolicy_ptr obj);
@@ -1890,11 +1914,11 @@ TAO_NAMESPACE  Messaging
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static QueueOrderPolicy_ptr duplicate (QueueOrderPolicy_ptr);
-    static void release (QueueOrderPolicy_ptr);
-    static QueueOrderPolicy_ptr nil (void);
-    static QueueOrderPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static QueueOrderPolicy_ptr tao_duplicate (QueueOrderPolicy_ptr);
+    static void tao_release (QueueOrderPolicy_ptr);
+    static QueueOrderPolicy_ptr tao_nil (void);
+    static QueueOrderPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     QueueOrderPolicy_ptr ptr_;
@@ -1941,6 +1965,8 @@ TAO_NAMESPACE  Messaging
     typedef QueueOrderPolicy_ptr _ptr_type;
     typedef QueueOrderPolicy_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static QueueOrderPolicy_ptr _duplicate (QueueOrderPolicy_ptr obj);
@@ -2476,11 +2502,11 @@ TAO_NAMESPACE  Messaging
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ReplyHandler_ptr duplicate (ReplyHandler_ptr);
-    static void release (ReplyHandler_ptr);
-    static ReplyHandler_ptr nil (void);
-    static ReplyHandler_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static ReplyHandler_ptr tao_duplicate (ReplyHandler_ptr);
+    static void tao_release (ReplyHandler_ptr);
+    static ReplyHandler_ptr tao_nil (void);
+    static ReplyHandler_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     ReplyHandler_ptr ptr_;
@@ -2533,6 +2559,8 @@ TAO_NAMESPACE  Messaging
     typedef ReplyHandler_ptr _ptr_type;
     typedef ReplyHandler_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static ReplyHandler_ptr _duplicate (ReplyHandler_ptr obj);

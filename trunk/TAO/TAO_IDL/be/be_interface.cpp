@@ -588,18 +588,19 @@ be_interface::gen_var_defn (char *interface_name)
       << be_nl
       << "// for non-defined forward declared interfaces." << be_nl
       << "static " << interface_name 
-      << "_ptr duplicate ("
+      << "_ptr tao_duplicate ("
       << interface_name << "_ptr);" << be_nl
-      << "static void release (" << interface_name
+      << "static void tao_release (" << interface_name
       << "_ptr);" << be_nl
       << "static " << interface_name 
-      << "_ptr nil (void);" << be_nl
+      << "_ptr tao_nil (void);" << be_nl
       << "static " << interface_name 
-      << "_ptr narrow (" << be_idt << be_idt_nl
+      << "_ptr tao_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object *," << be_nl
       << "CORBA::Environment &" << be_uidt_nl
       << ");" << be_uidt_nl
-      << "static CORBA::Object * upcast (void *);" << be_uidt_nl << be_nl;
+      << "static CORBA::Object * tao_upcast (void *);" 
+      << be_uidt_nl << be_nl;
 
   // Private.
   *ch << "private:" << be_idt_nl;
@@ -783,7 +784,7 @@ be_interface::gen_var_impl (char *interface_local_name,
   // Hooks for the global static functions used by non-defined interfaces.
   *cs << "::" << interface_full_name 
       << "_ptr" << be_nl
-      << fname << "::duplicate ("
+      << fname << "::tao_duplicate ("
       << interface_local_name << "_ptr p)" << be_nl
       << "{" << be_idt_nl
       << "return ::" << interface_full_name 
@@ -792,21 +793,21 @@ be_interface::gen_var_impl (char *interface_local_name,
       << "}" << be_nl << be_nl;
 
   *cs << "void" << be_nl
-      << fname << "::release (" << interface_local_name 
+      << fname << "::tao_release (" << interface_local_name 
       << "_ptr p)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::release (p);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   *cs << "::" << interface_full_name << "_ptr" << be_nl
-      << fname << "::nil (void)" << be_nl
+      << fname << "::tao_nil (void)" << be_nl
       << "{" << be_idt_nl
       << "return ::" << interface_full_name 
       << "::_nil ();" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   *cs << "::" << interface_full_name << "_ptr" << be_nl
-      << fname << "::narrow (" << be_idt << be_idt_nl
+      << fname << "::tao_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object *p," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
       << ")" << be_uidt_nl
@@ -817,7 +818,7 @@ be_interface::gen_var_impl (char *interface_local_name,
       << "}" << be_nl << be_nl;
 
   *cs << "CORBA::Object *" << be_nl
-      << fname << "::upcast (void *src)" << be_nl
+      << fname << "::tao_upcast (void *src)" << be_nl
       << "{" << be_idt_nl
       << interface_local_name << " **tmp =" << be_idt_nl
       << "ACE_static_cast (" << interface_local_name 

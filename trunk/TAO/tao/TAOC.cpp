@@ -189,6 +189,8 @@ TAO_NAMESPACE_BEGIN (TAO)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, BUFFERING_CONSTRAINT_POLICY_TYPE, 1413545985U)
 TAO_NAMESPACE_END
 
+int TAO::BufferingConstraintPolicy::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class TAO::BufferingConstraintPolicy_var
 // *************************************************************
@@ -278,25 +280,25 @@ TAO::BufferingConstraintPolicy_var::_retn (void)
 }
 
 ::TAO::BufferingConstraintPolicy_ptr
-TAO::BufferingConstraintPolicy_var::duplicate (BufferingConstraintPolicy_ptr p)
+TAO::BufferingConstraintPolicy_var::tao_duplicate (BufferingConstraintPolicy_ptr p)
 {
   return ::TAO::BufferingConstraintPolicy::_duplicate (p);
 }
 
 void
-TAO::BufferingConstraintPolicy_var::release (BufferingConstraintPolicy_ptr p)
+TAO::BufferingConstraintPolicy_var::tao_release (BufferingConstraintPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::TAO::BufferingConstraintPolicy_ptr
-TAO::BufferingConstraintPolicy_var::nil (void)
+TAO::BufferingConstraintPolicy_var::tao_nil (void)
 {
   return ::TAO::BufferingConstraintPolicy::_nil ();
 }
 
 ::TAO::BufferingConstraintPolicy_ptr
-TAO::BufferingConstraintPolicy_var::narrow (
+TAO::BufferingConstraintPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -305,7 +307,7 @@ TAO::BufferingConstraintPolicy_var::narrow (
 }
 
 CORBA::Object *
-TAO::BufferingConstraintPolicy_var::upcast (void *src)
+TAO::BufferingConstraintPolicy_var::tao_upcast (void *src)
 {
   BufferingConstraintPolicy **tmp =
     ACE_static_cast (BufferingConstraintPolicy **, src);
@@ -404,7 +406,7 @@ TAO::BufferingConstraintPolicy_ptr TAO::BufferingConstraintPolicy::_unchecked_na
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &BufferingConstraintPolicy::_narrow
+                    &BufferingConstraintPolicy::_tao_class_id
                   )
               )
         );
@@ -423,11 +425,11 @@ void *TAO::BufferingConstraintPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &BufferingConstraintPolicy::_narrow))
+      &BufferingConstraintPolicy::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA::Policy::_narrow))
+      &CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -437,7 +439,7 @@ void *TAO::BufferingConstraintPolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 

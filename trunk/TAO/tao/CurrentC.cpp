@@ -1,4 +1,4 @@
-// -*- C++ -*- $Id$ */
+// -*- C++ -*-
 //
 // $Id$
 
@@ -22,9 +22,58 @@
 #include "tao/CurrentC.h"
 #include "tao/Sequence_T.h"
 
+#if defined (__BORLANDC__)
+#pragma option -w-rvl -w-rch -w-ccc -w-aus
+#endif /* __BORLANDC__ */
+
 #if !defined (__ACE_INLINE__)
 #include "tao/CurrentC.i"
 #endif /* !defined INLINE */
+
+int CORBA_Current::_tao_class_id = 0;
+
+CORBA::Current_ptr
+tao_CORBA_Current_duplicate (
+    CORBA::Current_ptr p
+  )
+{
+  return CORBA::Current::_duplicate (p);
+}
+
+void
+tao_CORBA_Current_release (
+    CORBA::Current_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+CORBA_Current_ptr
+tao_CORBA_Current_nil (
+    void
+  )
+{
+  return CORBA_Current::_nil ();
+}
+
+CORBA_Current_ptr
+tao_CORBA_Current_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return CORBA_Current::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_CORBA_Current_upcast (
+    void *src
+  )
+{
+  CORBA_Current **tmp =
+    ACE_static_cast (CORBA_Current **, src);
+  return *tmp;
+}
 
 // *************************************************************
 // Operations for class CORBA_Current_var
@@ -115,25 +164,25 @@ CORBA_Current_var::_retn (void)
 }
 
 ::CORBA_Current_ptr
-CORBA_Current_var::duplicate (CORBA_Current_ptr p)
+CORBA_Current_var::tao_duplicate (CORBA_Current_ptr p)
 {
   return ::CORBA_Current::_duplicate (p);
 }
 
 void
-CORBA_Current_var::release (CORBA_Current_ptr p)
+CORBA_Current_var::tao_release (CORBA_Current_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_Current_ptr
-CORBA_Current_var::nil (void)
+CORBA_Current_var::tao_nil (void)
 {
   return ::CORBA_Current::_nil ();
 }
 
 ::CORBA_Current_ptr
-CORBA_Current_var::narrow (
+CORBA_Current_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -142,12 +191,13 @@ CORBA_Current_var::narrow (
 }
 
 CORBA::Object *
-CORBA_Current_var::upcast (void *src)
+CORBA_Current_var::tao_upcast (void *src)
 {
   CORBA_Current **tmp =
     ACE_static_cast (CORBA_Current **, src);
   return *tmp;
 }
+
 // *************************************************************
 // Operations for class CORBA_Current_out
 // *************************************************************
@@ -212,38 +262,38 @@ CORBA_Current_out::operator-> (void)
 CORBA_Current::CORBA_Current (void)
 {}
 
-// destructor
-CORBA_Current::~CORBA_Current (void)
-{}
-
-CORBA_Current_ptr CORBA_Current::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return CORBA_Current::_unchecked_narrow (obj, ACE_TRY_ENV);
-}
-
-CORBA_Current_ptr CORBA_Current::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
-  )
-{
-  if (CORBA::is_nil (obj))
-    return CORBA_Current::_nil ();
-  return
-      ACE_reinterpret_cast
-        (
-          CORBA_Current_ptr,
-            obj->_tao_QueryInterface
-              (
-                ACE_reinterpret_cast
-                  (
-                    ptr_arith_t,
-                    &CORBA_Current::_narrow
-                  )
-              )
-        );
+  // destructor
+  CORBA_Current::~CORBA_Current (void)
+  {}
+  
+  CORBA_Current_ptr CORBA_Current::_narrow (
+      CORBA::Object_ptr obj,
+      CORBA::Environment &ACE_TRY_ENV
+    )
+  {
+    return CORBA_Current::_unchecked_narrow (obj, ACE_TRY_ENV);
+  }
+  
+  CORBA_Current_ptr CORBA_Current::_unchecked_narrow (
+      CORBA::Object_ptr obj,
+      CORBA::Environment &
+    )
+  {
+    if (CORBA::is_nil (obj))
+      return CORBA_Current::_nil ();
+    return
+        ACE_reinterpret_cast
+          (
+            CORBA_Current_ptr,
+              obj->_tao_QueryInterface
+                (
+                  ACE_reinterpret_cast
+                    (
+                      ptr_arith_t,
+                      &CORBA_Current::_tao_class_id
+                    )
+                )
+          );
 }
 
 CORBA_Current_ptr
@@ -259,12 +309,12 @@ void *CORBA_Current::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Current::_narrow))
+      &CORBA_Current::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-
+    
   if (retv)
     this->_add_ref ();
   return retv;

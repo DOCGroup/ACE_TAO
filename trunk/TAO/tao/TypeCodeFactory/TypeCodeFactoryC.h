@@ -94,11 +94,11 @@ public:
   
   // Hooks used by template sequence and object manager classes
   // for non-defined forward declared interfaces.
-  static CORBA_TypeCodeFactory_ptr duplicate (CORBA_TypeCodeFactory_ptr);
-  static void release (CORBA_TypeCodeFactory_ptr);
-  static CORBA_TypeCodeFactory_ptr nil (void);
-  static CORBA_TypeCodeFactory_ptr narrow (CORBA::Object *, CORBA::Environment &);
-  static CORBA::Object * upcast (void *);
+  static CORBA_TypeCodeFactory_ptr tao_duplicate (CORBA_TypeCodeFactory_ptr);
+  static void tao_release (CORBA_TypeCodeFactory_ptr);
+  static CORBA_TypeCodeFactory_ptr tao_nil (void);
+  static CORBA_TypeCodeFactory_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * tao_upcast (void *);
 
 private:
   CORBA_TypeCodeFactory_ptr ptr_;
@@ -145,6 +145,8 @@ public:
   typedef CORBA_TypeCodeFactory_ptr _ptr_type;
   typedef CORBA_TypeCodeFactory_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
   // the static operations
   static CORBA_TypeCodeFactory_ptr _duplicate (CORBA_TypeCodeFactory_ptr obj);

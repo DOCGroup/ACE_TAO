@@ -222,14 +222,14 @@ TAO_NAMESPACE  IR
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ComponentDef_ptr duplicate (ComponentDef_ptr);
-    static void release (ComponentDef_ptr);
-    static ComponentDef_ptr nil (void);
-    static ComponentDef_ptr narrow (
+    static ComponentDef_ptr tao_duplicate (ComponentDef_ptr);
+    static void tao_release (ComponentDef_ptr);
+    static ComponentDef_ptr tao_nil (void);
+    static ComponentDef_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     ComponentDef_ptr ptr_;
@@ -468,14 +468,14 @@ TAO_NAMESPACE  IR
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ProvidesDef_ptr duplicate (ProvidesDef_ptr);
-    static void release (ProvidesDef_ptr);
-    static ProvidesDef_ptr nil (void);
-    static ProvidesDef_ptr narrow (
+    static ProvidesDef_ptr tao_duplicate (ProvidesDef_ptr);
+    static void tao_release (ProvidesDef_ptr);
+    static ProvidesDef_ptr tao_nil (void);
+    static ProvidesDef_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     ProvidesDef_ptr ptr_;
@@ -714,14 +714,14 @@ TAO_NAMESPACE  IR
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static UsesDef_ptr duplicate (UsesDef_ptr);
-    static void release (UsesDef_ptr);
-    static UsesDef_ptr nil (void);
-    static UsesDef_ptr narrow (
+    static UsesDef_ptr tao_duplicate (UsesDef_ptr);
+    static void tao_release (UsesDef_ptr);
+    static UsesDef_ptr tao_nil (void);
+    static UsesDef_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     UsesDef_ptr ptr_;
@@ -960,14 +960,14 @@ TAO_NAMESPACE  IR
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static HomeDef_ptr duplicate (HomeDef_ptr);
-    static void release (HomeDef_ptr);
-    static HomeDef_ptr nil (void);
-    static HomeDef_ptr narrow (
+    static HomeDef_ptr tao_duplicate (HomeDef_ptr);
+    static void tao_release (HomeDef_ptr);
+    static HomeDef_ptr tao_nil (void);
+    static HomeDef_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     HomeDef_ptr ptr_;
@@ -1206,14 +1206,14 @@ TAO_NAMESPACE  IR
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static EventDef_ptr duplicate (EventDef_ptr);
-    static void release (EventDef_ptr);
-    static EventDef_ptr nil (void);
-    static EventDef_ptr narrow (
+    static EventDef_ptr tao_duplicate (EventDef_ptr);
+    static void tao_release (EventDef_ptr);
+    static EventDef_ptr tao_nil (void);
+    static EventDef_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     EventDef_ptr ptr_;
@@ -1285,14 +1285,14 @@ TAO_NAMESPACE  IR
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static EmitsDef_ptr duplicate (EmitsDef_ptr);
-    static void release (EmitsDef_ptr);
-    static EmitsDef_ptr nil (void);
-    static EmitsDef_ptr narrow (
+    static EmitsDef_ptr tao_duplicate (EmitsDef_ptr);
+    static void tao_release (EmitsDef_ptr);
+    static EmitsDef_ptr tao_nil (void);
+    static EmitsDef_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     EmitsDef_ptr ptr_;
@@ -1531,14 +1531,14 @@ TAO_NAMESPACE  IR
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static PublishesDef_ptr duplicate (PublishesDef_ptr);
-    static void release (PublishesDef_ptr);
-    static PublishesDef_ptr nil (void);
-    static PublishesDef_ptr narrow (
+    static PublishesDef_ptr tao_duplicate (PublishesDef_ptr);
+    static void tao_release (PublishesDef_ptr);
+    static PublishesDef_ptr tao_nil (void);
+    static PublishesDef_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     PublishesDef_ptr ptr_;
@@ -1777,14 +1777,14 @@ TAO_NAMESPACE  IR
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ConsumesDef_ptr duplicate (ConsumesDef_ptr);
-    static void release (ConsumesDef_ptr);
-    static ConsumesDef_ptr nil (void);
-    static ConsumesDef_ptr narrow (
+    static ConsumesDef_ptr tao_duplicate (ConsumesDef_ptr);
+    static void tao_release (ConsumesDef_ptr);
+    static ConsumesDef_ptr tao_nil (void);
+    static ConsumesDef_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     ConsumesDef_ptr ptr_;
@@ -2023,14 +2023,14 @@ TAO_NAMESPACE  IR
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static FactoryDef_ptr duplicate (FactoryDef_ptr);
-    static void release (FactoryDef_ptr);
-    static FactoryDef_ptr nil (void);
-    static FactoryDef_ptr narrow (
+    static FactoryDef_ptr tao_duplicate (FactoryDef_ptr);
+    static void tao_release (FactoryDef_ptr);
+    static FactoryDef_ptr tao_nil (void);
+    static FactoryDef_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     FactoryDef_ptr ptr_;
@@ -2269,14 +2269,14 @@ TAO_NAMESPACE  IR
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static FinderDef_ptr duplicate (FinderDef_ptr);
-    static void release (FinderDef_ptr);
-    static FinderDef_ptr nil (void);
-    static FinderDef_ptr narrow (
+    static FinderDef_ptr tao_duplicate (FinderDef_ptr);
+    static void tao_release (FinderDef_ptr);
+    static FinderDef_ptr tao_nil (void);
+    static FinderDef_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     FinderDef_ptr ptr_;
@@ -2515,14 +2515,14 @@ TAO_NAMESPACE  IR
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static PrimaryKeyDef_ptr duplicate (PrimaryKeyDef_ptr);
-    static void release (PrimaryKeyDef_ptr);
-    static PrimaryKeyDef_ptr nil (void);
-    static PrimaryKeyDef_ptr narrow (
+    static PrimaryKeyDef_ptr tao_duplicate (PrimaryKeyDef_ptr);
+    static void tao_release (PrimaryKeyDef_ptr);
+    static PrimaryKeyDef_ptr tao_nil (void);
+    static PrimaryKeyDef_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     PrimaryKeyDef_ptr ptr_;
@@ -2594,14 +2594,14 @@ TAO_NAMESPACE  IR
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static ComponentRepository_ptr duplicate (ComponentRepository_ptr);
-    static void release (ComponentRepository_ptr);
-    static ComponentRepository_ptr nil (void);
-    static ComponentRepository_ptr narrow (
+    static ComponentRepository_ptr tao_duplicate (ComponentRepository_ptr);
+    static void tao_release (ComponentRepository_ptr);
+    static ComponentRepository_ptr tao_nil (void);
+    static ComponentRepository_ptr tao_narrow (
         CORBA::Object *,
         CORBA::Environment &
       );
-    static CORBA::Object * upcast (void *);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     ComponentRepository_ptr ptr_;
@@ -2655,6 +2655,8 @@ TAO_NAMESPACE  IR
     typedef ComponentRepository_ptr _ptr_type;
     typedef ComponentRepository_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static ComponentRepository_ptr _duplicate (ComponentRepository_ptr obj);
@@ -2923,6 +2925,8 @@ TAO_NAMESPACE  IR
       typedef ProvidesDef_ptr _ptr_type;
       typedef ProvidesDef_var _var_type;
     #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
       // the static operations
       static ProvidesDef_ptr _duplicate (ProvidesDef_ptr obj);
@@ -3204,6 +3208,8 @@ TAO_NAMESPACE  IR
         typedef UsesDef_ptr _ptr_type;
         typedef UsesDef_var _var_type;
       #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
         // the static operations
         static UsesDef_ptr _duplicate (UsesDef_ptr obj);
@@ -3837,6 +3843,8 @@ TAO_NAMESPACE  IR
           typedef EventDef_var _var_type;
         #endif /* ! __GNUC__ || g++ >= 2.8 */
 
+  static int _tao_class_id;
+
           // the static operations
           static EventDef_ptr _duplicate (EventDef_ptr obj);
           
@@ -4145,6 +4153,8 @@ TAO_NAMESPACE  IR
             typedef EmitsDef_var _var_type;
           #endif /* ! __GNUC__ || g++ >= 2.8 */
 
+  static int _tao_class_id;
+
             // the static operations
             static EmitsDef_ptr _duplicate (EmitsDef_ptr obj);
             
@@ -4331,6 +4341,8 @@ TAO_NAMESPACE  IR
               typedef PublishesDef_ptr _ptr_type;
               typedef PublishesDef_var _var_type;
             #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
               // the static operations
               static PublishesDef_ptr _duplicate (PublishesDef_ptr obj);
@@ -4519,6 +4531,8 @@ TAO_NAMESPACE  IR
                 typedef ConsumesDef_var _var_type;
               #endif /* ! __GNUC__ || g++ >= 2.8 */
 
+  static int _tao_class_id;
+
                 // the static operations
                 static ConsumesDef_ptr _duplicate (ConsumesDef_ptr obj);
                 
@@ -4705,6 +4719,8 @@ TAO_NAMESPACE  IR
                   typedef ComponentDef_ptr _ptr_type;
                   typedef ComponentDef_var _var_type;
                 #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
                   // the static operations
                   static ComponentDef_ptr _duplicate (ComponentDef_ptr obj);
@@ -5373,6 +5389,8 @@ TAO_NAMESPACE  IR
                     typedef PrimaryKeyDef_var _var_type;
                   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
+  static int _tao_class_id;
+
                     // the static operations
                     static PrimaryKeyDef_ptr _duplicate (PrimaryKeyDef_ptr obj);
                     
@@ -5681,6 +5699,8 @@ TAO_NAMESPACE  IR
                       typedef FactoryDef_var _var_type;
                     #endif /* ! __GNUC__ || g++ >= 2.8 */
 
+  static int _tao_class_id;
+
                       // the static operations
                       static FactoryDef_ptr _duplicate (FactoryDef_ptr obj);
                       
@@ -5868,6 +5888,8 @@ TAO_NAMESPACE  IR
                         typedef FinderDef_var _var_type;
                       #endif /* ! __GNUC__ || g++ >= 2.8 */
 
+  static int _tao_class_id;
+
                         // the static operations
                         static FinderDef_ptr _duplicate (FinderDef_ptr obj);
                         
@@ -6054,6 +6076,8 @@ TAO_NAMESPACE  IR
                           typedef HomeDef_ptr _ptr_type;
                           typedef HomeDef_var _var_type;
                         #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
                           // the static operations
                           static HomeDef_ptr _duplicate (HomeDef_ptr obj);

@@ -1567,6 +1567,51 @@ TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (IOP)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, FT_REQUEST, 13U)
 TAO_NAMESPACE_END
+
+int IOP::Codec::_tao_class_id = 0;
+
+IOP::Codec_ptr
+tao_IOP_Codec_duplicate (
+    IOP::Codec_ptr p
+  )
+{
+  return IOP::Codec::_duplicate (p);
+}
+
+void
+tao_IOP_Codec_release (
+    IOP::Codec_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+IOP::Codec_ptr
+tao_IOP_Codec_nil (
+    void
+  )
+{
+  return IOP::Codec::_nil ();
+}
+
+IOP::Codec_ptr
+tao_IOP_Codec_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return IOP::Codec::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_IOP_Codec_upcast (
+    void *src
+  )
+{
+  IOP::Codec **tmp =
+    ACE_static_cast (IOP::Codec **, src);
+  return *tmp;
+}
 // *************************************************************
 // Operations for class IOP::Codec_var
 // *************************************************************
@@ -1656,25 +1701,25 @@ IOP::Codec_var::_retn (void)
 }
 
 ::IOP::Codec_ptr
-IOP::Codec_var::duplicate (Codec_ptr p)
+IOP::Codec_var::tao_duplicate (Codec_ptr p)
 {
   return ::IOP::Codec::_duplicate (p);
 }
 
 void
-IOP::Codec_var::release (Codec_ptr p)
+IOP::Codec_var::tao_release (Codec_ptr p)
 {
   CORBA::release (p);
 }
 
 ::IOP::Codec_ptr
-IOP::Codec_var::nil (void)
+IOP::Codec_var::tao_nil (void)
 {
   return ::IOP::Codec::_nil ();
 }
 
 ::IOP::Codec_ptr
-IOP::Codec_var::narrow (
+IOP::Codec_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1683,7 +1728,7 @@ IOP::Codec_var::narrow (
 }
 
 CORBA::Object *
-IOP::Codec_var::upcast (void *src)
+IOP::Codec_var::tao_upcast (void *src)
 {
   Codec **tmp =
     ACE_static_cast (Codec **, src);
@@ -1783,7 +1828,7 @@ IOP::Codec_ptr IOP::Codec::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &Codec::_narrow
+                    &Codec::_tao_class_id
                   )
               )
         );
@@ -1802,9 +1847,9 @@ void *IOP::Codec::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IOP, Codec)::_narrow))
+      &ACE_NESTED_CLASS (::IOP, Codec)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -2137,6 +2182,52 @@ void IOP::Encoding::_tao_any_destructor (void *x)
   delete tmp;
 }
 
+int IOP::CodecFactory::_tao_class_id = 0;
+
+IOP::CodecFactory_ptr
+tao_IOP_CodecFactory_duplicate (
+    IOP::CodecFactory_ptr p
+  )
+{
+  return IOP::CodecFactory::_duplicate (p);
+}
+
+void
+tao_IOP_CodecFactory_release (
+    IOP::CodecFactory_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+IOP::CodecFactory_ptr
+tao_IOP_CodecFactory_nil (
+    void
+  )
+{
+  return IOP::CodecFactory::_nil ();
+}
+
+IOP::CodecFactory_ptr
+tao_IOP_CodecFactory_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return IOP::CodecFactory::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_IOP_CodecFactory_upcast (
+    void *src
+  )
+{
+  IOP::CodecFactory **tmp =
+    ACE_static_cast (IOP::CodecFactory **, src);
+  return *tmp;
+}
+
+
 // *************************************************************
 // Operations for class IOP::CodecFactory_var
 // *************************************************************
@@ -2226,25 +2317,25 @@ IOP::CodecFactory_var::_retn (void)
 }
 
 ::IOP::CodecFactory_ptr
-IOP::CodecFactory_var::duplicate (CodecFactory_ptr p)
+IOP::CodecFactory_var::tao_duplicate (CodecFactory_ptr p)
 {
   return ::IOP::CodecFactory::_duplicate (p);
 }
 
 void
-IOP::CodecFactory_var::release (CodecFactory_ptr p)
+IOP::CodecFactory_var::tao_release (CodecFactory_ptr p)
 {
   CORBA::release (p);
 }
 
 ::IOP::CodecFactory_ptr
-IOP::CodecFactory_var::nil (void)
+IOP::CodecFactory_var::tao_nil (void)
 {
   return ::IOP::CodecFactory::_nil ();
 }
 
 ::IOP::CodecFactory_ptr
-IOP::CodecFactory_var::narrow (
+IOP::CodecFactory_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2253,7 +2344,7 @@ IOP::CodecFactory_var::narrow (
 }
 
 CORBA::Object *
-IOP::CodecFactory_var::upcast (void *src)
+IOP::CodecFactory_var::tao_upcast (void *src)
 {
   CodecFactory **tmp =
     ACE_static_cast (CodecFactory **, src);
@@ -2353,7 +2444,7 @@ IOP::CodecFactory_ptr IOP::CodecFactory::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &CodecFactory::_narrow
+                    &CodecFactory::_tao_class_id
                   )
               )
         );
@@ -2372,9 +2463,9 @@ void *IOP::CodecFactory::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IOP, CodecFactory)::_narrow))
+      &ACE_NESTED_CLASS (::IOP, CodecFactory)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 

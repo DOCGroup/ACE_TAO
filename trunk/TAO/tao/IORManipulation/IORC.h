@@ -331,11 +331,11 @@ TAO_NAMESPACE  TAO_IOP
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static TAO_IOR_Property_ptr duplicate (TAO_IOR_Property_ptr);
-    static void release (TAO_IOR_Property_ptr);
-    static TAO_IOR_Property_ptr nil (void);
-    static TAO_IOR_Property_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static TAO_IOR_Property_ptr tao_duplicate (TAO_IOR_Property_ptr);
+    static void tao_release (TAO_IOR_Property_ptr);
+    static TAO_IOR_Property_ptr tao_nil (void);
+    static TAO_IOR_Property_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     TAO_IOR_Property_ptr ptr_;
@@ -382,6 +382,8 @@ class TAO_IORManip_Export TAO_IOR_Property : public virtual CORBA_Object
     typedef TAO_IOR_Property_ptr _ptr_type;
     typedef TAO_IOR_Property_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static TAO_IOR_Property_ptr _duplicate (TAO_IOR_Property_ptr obj);
@@ -493,11 +495,11 @@ class TAO_IORManip_Export TAO_IOR_Property : public virtual CORBA_Object
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static TAO_IOR_Manipulation_ptr duplicate (TAO_IOR_Manipulation_ptr);
-    static void release (TAO_IOR_Manipulation_ptr);
-    static TAO_IOR_Manipulation_ptr nil (void);
-    static TAO_IOR_Manipulation_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static TAO_IOR_Manipulation_ptr tao_duplicate (TAO_IOR_Manipulation_ptr);
+    static void tao_release (TAO_IOR_Manipulation_ptr);
+    static TAO_IOR_Manipulation_ptr tao_nil (void);
+    static TAO_IOR_Manipulation_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     TAO_IOR_Manipulation_ptr ptr_;
@@ -544,6 +546,8 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
     typedef TAO_IOR_Manipulation_ptr _ptr_type;
     typedef TAO_IOR_Manipulation_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
     // the static operations
     static TAO_IOR_Manipulation_ptr _duplicate (TAO_IOR_Manipulation_ptr obj);

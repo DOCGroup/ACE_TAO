@@ -130,25 +130,25 @@ ImplementationRepository::ServerObject_var::_retn (void)
 }
 
 ::ImplementationRepository::ServerObject_ptr
-ImplementationRepository::ServerObject_var::duplicate (ServerObject_ptr p)
+ImplementationRepository::ServerObject_var::tao_duplicate (ServerObject_ptr p)
 {
   return ::ImplementationRepository::ServerObject::_duplicate (p);
 }
 
 void
-ImplementationRepository::ServerObject_var::release (ServerObject_ptr p)
+ImplementationRepository::ServerObject_var::tao_release (ServerObject_ptr p)
 {
   CORBA::release (p);
 }
 
 ::ImplementationRepository::ServerObject_ptr
-ImplementationRepository::ServerObject_var::nil (void)
+ImplementationRepository::ServerObject_var::tao_nil (void)
 {
   return ::ImplementationRepository::ServerObject::_nil ();
 }
 
 ::ImplementationRepository::ServerObject_ptr
-ImplementationRepository::ServerObject_var::narrow (
+ImplementationRepository::ServerObject_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -157,7 +157,7 @@ ImplementationRepository::ServerObject_var::narrow (
 }
 
 CORBA::Object *
-ImplementationRepository::ServerObject_var::upcast (void *src)
+ImplementationRepository::ServerObject_var::tao_upcast (void *src)
 {
   ServerObject **tmp =
     ACE_static_cast (ServerObject **, src);
@@ -2132,25 +2132,25 @@ ImplementationRepository::Administration_var::_retn (void)
 }
 
 ::ImplementationRepository::Administration_ptr
-ImplementationRepository::Administration_var::duplicate (Administration_ptr p)
+ImplementationRepository::Administration_var::tao_duplicate (Administration_ptr p)
 {
   return ::ImplementationRepository::Administration::_duplicate (p);
 }
 
 void
-ImplementationRepository::Administration_var::release (Administration_ptr p)
+ImplementationRepository::Administration_var::tao_release (Administration_ptr p)
 {
   CORBA::release (p);
 }
 
 ::ImplementationRepository::Administration_ptr
-ImplementationRepository::Administration_var::nil (void)
+ImplementationRepository::Administration_var::tao_nil (void)
 {
   return ::ImplementationRepository::Administration::_nil ();
 }
 
 ::ImplementationRepository::Administration_ptr
-ImplementationRepository::Administration_var::narrow (
+ImplementationRepository::Administration_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2159,7 +2159,7 @@ ImplementationRepository::Administration_var::narrow (
 }
 
 CORBA::Object *
-ImplementationRepository::Administration_var::upcast (void *src)
+ImplementationRepository::Administration_var::tao_upcast (void *src)
 {
   Administration **tmp =
     ACE_static_cast (Administration **, src);
@@ -5750,25 +5750,25 @@ ImplementationRepository::ServerInformationIterator_var::_retn (void)
 }
 
 ::ImplementationRepository::ServerInformationIterator_ptr
-ImplementationRepository::ServerInformationIterator_var::duplicate (ServerInformationIterator_ptr p)
+ImplementationRepository::ServerInformationIterator_var::tao_duplicate (ServerInformationIterator_ptr p)
 {
   return ::ImplementationRepository::ServerInformationIterator::_duplicate (p);
 }
 
 void
-ImplementationRepository::ServerInformationIterator_var::release (ServerInformationIterator_ptr p)
+ImplementationRepository::ServerInformationIterator_var::tao_release (ServerInformationIterator_ptr p)
 {
   CORBA::release (p);
 }
 
 ::ImplementationRepository::ServerInformationIterator_ptr
-ImplementationRepository::ServerInformationIterator_var::nil (void)
+ImplementationRepository::ServerInformationIterator_var::tao_nil (void)
 {
   return ::ImplementationRepository::ServerInformationIterator::_nil ();
 }
 
 ::ImplementationRepository::ServerInformationIterator_ptr
-ImplementationRepository::ServerInformationIterator_var::narrow (
+ImplementationRepository::ServerInformationIterator_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -5777,7 +5777,7 @@ ImplementationRepository::ServerInformationIterator_var::narrow (
 }
 
 CORBA::Object *
-ImplementationRepository::ServerInformationIterator_var::upcast (void *src)
+ImplementationRepository::ServerInformationIterator_var::tao_upcast (void *src)
 {
   ServerInformationIterator **tmp =
     ACE_static_cast (ServerInformationIterator **, src);

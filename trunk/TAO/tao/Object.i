@@ -201,25 +201,25 @@ CORBA_Object_var::_retn (void)
 }
 
 ACE_INLINE CORBA_Object_ptr
-CORBA_Object_var::duplicate (CORBA_Object_ptr p)
+CORBA_Object_var::tao_duplicate (CORBA_Object_ptr p)
 {
   return CORBA_Object::_duplicate (p);
 }
 
 ACE_INLINE void
-CORBA_Object_var::release (CORBA_Object_ptr p)
+CORBA_Object_var::tao_release (CORBA_Object_ptr p)
 {
   CORBA::release (p);
 }
 
 ACE_INLINE CORBA_Object_ptr
-CORBA_Object_var::nil (void)
+CORBA_Object_var::tao_nil (void)
 {
   return CORBA_Object::_nil ();
 }
 
 ACE_INLINE CORBA_Object_ptr
-CORBA_Object_var::narrow (
+CORBA_Object_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &
   )
@@ -228,7 +228,7 @@ CORBA_Object_var::narrow (
 }
 
 ACE_INLINE CORBA::Object *
-CORBA_Object_var::upcast (void *src)
+CORBA_Object_var::tao_upcast (void *src)
 {
   CORBA_Object **tmp =
     ACE_static_cast (CORBA_Object **, src);

@@ -2073,6 +2073,8 @@ tao_IR_ComponentRepository_upcast (
   return *tmp;
 }
 
+int IR::ComponentRepository::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class IR::ComponentRepository_var
 // *************************************************************
@@ -2162,25 +2164,25 @@ IR::ComponentRepository_var::_retn (void)
 }
 
 ::IR::ComponentRepository_ptr
-IR::ComponentRepository_var::duplicate (ComponentRepository_ptr p)
+IR::ComponentRepository_var::tao_duplicate (ComponentRepository_ptr p)
 {
   return ::IR::ComponentRepository::_duplicate (p);
 }
 
 void
-IR::ComponentRepository_var::release (ComponentRepository_ptr p)
+IR::ComponentRepository_var::tao_release (ComponentRepository_ptr p)
 {
   CORBA::release (p);
 }
 
 ::IR::ComponentRepository_ptr
-IR::ComponentRepository_var::nil (void)
+IR::ComponentRepository_var::tao_nil (void)
 {
   return ::IR::ComponentRepository::_nil ();
 }
 
 ::IR::ComponentRepository_ptr
-IR::ComponentRepository_var::narrow (
+IR::ComponentRepository_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2189,7 +2191,7 @@ IR::ComponentRepository_var::narrow (
 }
 
 CORBA::Object *
-IR::ComponentRepository_var::upcast (void *src)
+IR::ComponentRepository_var::tao_upcast (void *src)
 {
   ComponentRepository **tmp =
     ACE_static_cast (ComponentRepository **, src);
@@ -3073,7 +3075,7 @@ IR::ComponentRepository_ptr IR::ComponentRepository::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &ComponentRepository::_narrow
+                      &ComponentRepository::_tao_class_id
                     )
                 )
           );
@@ -3105,11 +3107,11 @@ void *IR::ComponentRepository::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IR, ComponentRepository)::_narrow))
+      &ACE_NESTED_CLASS (::IR, ComponentRepository)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Repository::_narrow))
+      &CORBA_Repository::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -3121,7 +3123,7 @@ void *IR::ComponentRepository::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Container::_narrow))
+      &CORBA_Container::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -3133,7 +3135,7 @@ void *IR::ComponentRepository::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -3143,7 +3145,7 @@ void *IR::ComponentRepository::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -3291,6 +3293,8 @@ tao_IR_ProvidesDef_upcast (
   return *tmp;
 }
 
+int IR::ProvidesDef::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class IR::ProvidesDef_var
 // *************************************************************
@@ -3380,25 +3384,25 @@ IR::ProvidesDef_var::_retn (void)
 }
 
 ::IR::ProvidesDef_ptr
-IR::ProvidesDef_var::duplicate (ProvidesDef_ptr p)
+IR::ProvidesDef_var::tao_duplicate (ProvidesDef_ptr p)
 {
   return ::IR::ProvidesDef::_duplicate (p);
 }
 
 void
-IR::ProvidesDef_var::release (ProvidesDef_ptr p)
+IR::ProvidesDef_var::tao_release (ProvidesDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::IR::ProvidesDef_ptr
-IR::ProvidesDef_var::nil (void)
+IR::ProvidesDef_var::tao_nil (void)
 {
   return ::IR::ProvidesDef::_nil ();
 }
 
 ::IR::ProvidesDef_ptr
-IR::ProvidesDef_var::narrow (
+IR::ProvidesDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3407,7 +3411,7 @@ IR::ProvidesDef_var::narrow (
 }
 
 CORBA::Object *
-IR::ProvidesDef_var::upcast (void *src)
+IR::ProvidesDef_var::tao_upcast (void *src)
 {
   ProvidesDef **tmp =
     ACE_static_cast (ProvidesDef **, src);
@@ -3892,7 +3896,7 @@ IR::ProvidesDef_ptr IR::ProvidesDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &ProvidesDef::_narrow
+                      &ProvidesDef::_tao_class_id
                     )
                 )
           );
@@ -3923,11 +3927,11 @@ void *IR::ProvidesDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IR, ProvidesDef)::_narrow))
+      &ACE_NESTED_CLASS (::IR, ProvidesDef)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -3939,7 +3943,7 @@ void *IR::ProvidesDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -3949,7 +3953,7 @@ void *IR::ProvidesDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -4210,6 +4214,8 @@ tao_IR_UsesDef_upcast (
   return *tmp;
 }
 
+int IR::UsesDef::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class IR::UsesDef_var
 // *************************************************************
@@ -4299,25 +4305,25 @@ IR::UsesDef_var::_retn (void)
 }
 
 ::IR::UsesDef_ptr
-IR::UsesDef_var::duplicate (UsesDef_ptr p)
+IR::UsesDef_var::tao_duplicate (UsesDef_ptr p)
 {
   return ::IR::UsesDef::_duplicate (p);
 }
 
 void
-IR::UsesDef_var::release (UsesDef_ptr p)
+IR::UsesDef_var::tao_release (UsesDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::IR::UsesDef_ptr
-IR::UsesDef_var::nil (void)
+IR::UsesDef_var::tao_nil (void)
 {
   return ::IR::UsesDef::_nil ();
 }
 
 ::IR::UsesDef_ptr
-IR::UsesDef_var::narrow (
+IR::UsesDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -4326,7 +4332,7 @@ IR::UsesDef_var::narrow (
 }
 
 CORBA::Object *
-IR::UsesDef_var::upcast (void *src)
+IR::UsesDef_var::tao_upcast (void *src)
 {
   UsesDef **tmp =
     ACE_static_cast (UsesDef **, src);
@@ -5070,7 +5076,7 @@ IR::UsesDef_ptr IR::UsesDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &UsesDef::_narrow
+                      &UsesDef::_tao_class_id
                     )
                 )
           );
@@ -5101,11 +5107,11 @@ void *IR::UsesDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IR, UsesDef)::_narrow))
+      &ACE_NESTED_CLASS (::IR, UsesDef)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -5117,7 +5123,7 @@ void *IR::UsesDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -5127,7 +5133,7 @@ void *IR::UsesDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -5949,6 +5955,8 @@ tao_IR_EventDef_upcast (
   return *tmp;
 }
 
+int IR::EventDef::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class IR::EventDef_var
 // *************************************************************
@@ -6038,25 +6046,25 @@ IR::EventDef_var::_retn (void)
 }
 
 ::IR::EventDef_ptr
-IR::EventDef_var::duplicate (EventDef_ptr p)
+IR::EventDef_var::tao_duplicate (EventDef_ptr p)
 {
   return ::IR::EventDef::_duplicate (p);
 }
 
 void
-IR::EventDef_var::release (EventDef_ptr p)
+IR::EventDef_var::tao_release (EventDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::IR::EventDef_ptr
-IR::EventDef_var::nil (void)
+IR::EventDef_var::tao_nil (void)
 {
   return ::IR::EventDef::_nil ();
 }
 
 ::IR::EventDef_ptr
-IR::EventDef_var::narrow (
+IR::EventDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -6065,7 +6073,7 @@ IR::EventDef_var::narrow (
 }
 
 CORBA::Object *
-IR::EventDef_var::upcast (void *src)
+IR::EventDef_var::tao_upcast (void *src)
 {
   EventDef **tmp =
     ACE_static_cast (EventDef **, src);
@@ -6833,7 +6841,7 @@ IR::EventDef_ptr IR::EventDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &EventDef::_narrow
+                      &EventDef::_tao_class_id
                     )
                 )
           );
@@ -6864,11 +6872,11 @@ void *IR::EventDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IR, EventDef)::_narrow))
+      &ACE_NESTED_CLASS (::IR, EventDef)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -6880,7 +6888,7 @@ void *IR::EventDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -6890,7 +6898,7 @@ void *IR::EventDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -7164,6 +7172,8 @@ tao_IR_EmitsDef_upcast (
   return *tmp;
 }
 
+int IR::EmitsDef::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class IR::EmitsDef_var
 // *************************************************************
@@ -7253,25 +7263,25 @@ IR::EmitsDef_var::_retn (void)
 }
 
 ::IR::EmitsDef_ptr
-IR::EmitsDef_var::duplicate (EmitsDef_ptr p)
+IR::EmitsDef_var::tao_duplicate (EmitsDef_ptr p)
 {
   return ::IR::EmitsDef::_duplicate (p);
 }
 
 void
-IR::EmitsDef_var::release (EmitsDef_ptr p)
+IR::EmitsDef_var::tao_release (EmitsDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::IR::EmitsDef_ptr
-IR::EmitsDef_var::nil (void)
+IR::EmitsDef_var::tao_nil (void)
 {
   return ::IR::EmitsDef::_nil ();
 }
 
 ::IR::EmitsDef_ptr
-IR::EmitsDef_var::narrow (
+IR::EmitsDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -7280,7 +7290,7 @@ IR::EmitsDef_var::narrow (
 }
 
 CORBA::Object *
-IR::EmitsDef_var::upcast (void *src)
+IR::EmitsDef_var::tao_upcast (void *src)
 {
   EmitsDef **tmp =
     ACE_static_cast (EmitsDef **, src);
@@ -7504,7 +7514,7 @@ IR::EmitsDef_ptr IR::EmitsDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &EmitsDef::_narrow
+                      &EmitsDef::_tao_class_id
                     )
                 )
           );
@@ -7536,11 +7546,11 @@ void *IR::EmitsDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IR, EmitsDef)::_narrow))
+      &ACE_NESTED_CLASS (::IR, EmitsDef)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IR, EventDef)::_narrow))
+      &ACE_NESTED_CLASS (::IR, EventDef)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -7552,7 +7562,7 @@ void *IR::EmitsDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -7564,7 +7574,7 @@ void *IR::EmitsDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -7574,7 +7584,7 @@ void *IR::EmitsDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -7660,6 +7670,8 @@ tao_IR_PublishesDef_upcast (
     ACE_static_cast (IR::PublishesDef **, src);
   return *tmp;
 }
+
+int IR::PublishesDef::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class IR::PublishesDef_var
@@ -7750,25 +7762,25 @@ IR::PublishesDef_var::_retn (void)
 }
 
 ::IR::PublishesDef_ptr
-IR::PublishesDef_var::duplicate (PublishesDef_ptr p)
+IR::PublishesDef_var::tao_duplicate (PublishesDef_ptr p)
 {
   return ::IR::PublishesDef::_duplicate (p);
 }
 
 void
-IR::PublishesDef_var::release (PublishesDef_ptr p)
+IR::PublishesDef_var::tao_release (PublishesDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::IR::PublishesDef_ptr
-IR::PublishesDef_var::nil (void)
+IR::PublishesDef_var::tao_nil (void)
 {
   return ::IR::PublishesDef::_nil ();
 }
 
 ::IR::PublishesDef_ptr
-IR::PublishesDef_var::narrow (
+IR::PublishesDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -7777,7 +7789,7 @@ IR::PublishesDef_var::narrow (
 }
 
 CORBA::Object *
-IR::PublishesDef_var::upcast (void *src)
+IR::PublishesDef_var::tao_upcast (void *src)
 {
   PublishesDef **tmp =
     ACE_static_cast (PublishesDef **, src);
@@ -8001,7 +8013,7 @@ IR::PublishesDef_ptr IR::PublishesDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &PublishesDef::_narrow
+                      &PublishesDef::_tao_class_id
                     )
                 )
           );
@@ -8033,11 +8045,11 @@ void *IR::PublishesDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IR, PublishesDef)::_narrow))
+      &ACE_NESTED_CLASS (::IR, PublishesDef)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IR, EventDef)::_narrow))
+      &ACE_NESTED_CLASS (::IR, EventDef)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -8049,7 +8061,7 @@ void *IR::PublishesDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -8061,7 +8073,7 @@ void *IR::PublishesDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -8071,7 +8083,7 @@ void *IR::PublishesDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -8159,6 +8171,8 @@ tao_IR_ConsumesDef_upcast (
     ACE_static_cast (IR::ConsumesDef **, src);
   return *tmp;
 }
+
+int IR::ConsumesDef::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class IR::ConsumesDef_var
@@ -8249,25 +8263,25 @@ IR::ConsumesDef_var::_retn (void)
 }
 
 ::IR::ConsumesDef_ptr
-IR::ConsumesDef_var::duplicate (ConsumesDef_ptr p)
+IR::ConsumesDef_var::tao_duplicate (ConsumesDef_ptr p)
 {
   return ::IR::ConsumesDef::_duplicate (p);
 }
 
 void
-IR::ConsumesDef_var::release (ConsumesDef_ptr p)
+IR::ConsumesDef_var::tao_release (ConsumesDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::IR::ConsumesDef_ptr
-IR::ConsumesDef_var::nil (void)
+IR::ConsumesDef_var::tao_nil (void)
 {
   return ::IR::ConsumesDef::_nil ();
 }
 
 ::IR::ConsumesDef_ptr
-IR::ConsumesDef_var::narrow (
+IR::ConsumesDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -8276,7 +8290,7 @@ IR::ConsumesDef_var::narrow (
 }
 
 CORBA::Object *
-IR::ConsumesDef_var::upcast (void *src)
+IR::ConsumesDef_var::tao_upcast (void *src)
 {
   ConsumesDef **tmp =
     ACE_static_cast (ConsumesDef **, src);
@@ -8500,7 +8514,7 @@ IR::ConsumesDef_ptr IR::ConsumesDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &ConsumesDef::_narrow
+                      &ConsumesDef::_tao_class_id
                     )
                 )
           );
@@ -8532,11 +8546,11 @@ void *IR::ConsumesDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IR, ConsumesDef)::_narrow))
+      &ACE_NESTED_CLASS (::IR, ConsumesDef)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IR, EventDef)::_narrow))
+      &ACE_NESTED_CLASS (::IR, EventDef)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -8548,7 +8562,7 @@ void *IR::ConsumesDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -8560,7 +8574,7 @@ void *IR::ConsumesDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -8570,7 +8584,7 @@ void *IR::ConsumesDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -8657,6 +8671,8 @@ tao_IR_ComponentDef_upcast (
     ACE_static_cast (IR::ComponentDef **, src);
   return *tmp;
 }
+
+int IR::ComponentDef::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class IR::ComponentDef_var
@@ -8747,25 +8763,25 @@ IR::ComponentDef_var::_retn (void)
 }
 
 ::IR::ComponentDef_ptr
-IR::ComponentDef_var::duplicate (ComponentDef_ptr p)
+IR::ComponentDef_var::tao_duplicate (ComponentDef_ptr p)
 {
   return ::IR::ComponentDef::_duplicate (p);
 }
 
 void
-IR::ComponentDef_var::release (ComponentDef_ptr p)
+IR::ComponentDef_var::tao_release (ComponentDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::IR::ComponentDef_ptr
-IR::ComponentDef_var::nil (void)
+IR::ComponentDef_var::tao_nil (void)
 {
   return ::IR::ComponentDef::_nil ();
 }
 
 ::IR::ComponentDef_ptr
-IR::ComponentDef_var::narrow (
+IR::ComponentDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -8774,7 +8790,7 @@ IR::ComponentDef_var::narrow (
 }
 
 CORBA::Object *
-IR::ComponentDef_var::upcast (void *src)
+IR::ComponentDef_var::tao_upcast (void *src)
 {
   ComponentDef **tmp =
     ACE_static_cast (ComponentDef **, src);
@@ -12931,7 +12947,7 @@ IR::ComponentDef_ptr IR::ComponentDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &ComponentDef::_narrow
+                      &ComponentDef::_tao_class_id
                     )
                 )
           );
@@ -12965,11 +12981,11 @@ void *IR::ComponentDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IR, ComponentDef)::_narrow))
+      &ACE_NESTED_CLASS (::IR, ComponentDef)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_InterfaceDef::_narrow))
+      &CORBA_InterfaceDef::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -12981,7 +12997,7 @@ void *IR::ComponentDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Container::_narrow))
+      &CORBA_Container::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -12993,7 +13009,7 @@ void *IR::ComponentDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -13005,7 +13021,7 @@ void *IR::ComponentDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IDLType::_narrow))
+      &CORBA_IDLType::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -13017,7 +13033,7 @@ void *IR::ComponentDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -13027,7 +13043,7 @@ void *IR::ComponentDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -14332,6 +14348,8 @@ tao_IR_PrimaryKeyDef_upcast (
   return *tmp;
 }
 
+int IR::PrimaryKeyDef::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class IR::PrimaryKeyDef_var
 // *************************************************************
@@ -14421,25 +14439,25 @@ IR::PrimaryKeyDef_var::_retn (void)
 }
 
 ::IR::PrimaryKeyDef_ptr
-IR::PrimaryKeyDef_var::duplicate (PrimaryKeyDef_ptr p)
+IR::PrimaryKeyDef_var::tao_duplicate (PrimaryKeyDef_ptr p)
 {
   return ::IR::PrimaryKeyDef::_duplicate (p);
 }
 
 void
-IR::PrimaryKeyDef_var::release (PrimaryKeyDef_ptr p)
+IR::PrimaryKeyDef_var::tao_release (PrimaryKeyDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::IR::PrimaryKeyDef_ptr
-IR::PrimaryKeyDef_var::nil (void)
+IR::PrimaryKeyDef_var::tao_nil (void)
 {
   return ::IR::PrimaryKeyDef::_nil ();
 }
 
 ::IR::PrimaryKeyDef_ptr
-IR::PrimaryKeyDef_var::narrow (
+IR::PrimaryKeyDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -14448,7 +14466,7 @@ IR::PrimaryKeyDef_var::narrow (
 }
 
 CORBA::Object *
-IR::PrimaryKeyDef_var::upcast (void *src)
+IR::PrimaryKeyDef_var::tao_upcast (void *src)
 {
   PrimaryKeyDef **tmp =
     ACE_static_cast (PrimaryKeyDef **, src);
@@ -15216,7 +15234,7 @@ IR::PrimaryKeyDef_ptr IR::PrimaryKeyDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &PrimaryKeyDef::_narrow
+                      &PrimaryKeyDef::_tao_class_id
                     )
                 )
           );
@@ -15247,11 +15265,11 @@ void *IR::PrimaryKeyDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IR, PrimaryKeyDef)::_narrow))
+      &ACE_NESTED_CLASS (::IR, PrimaryKeyDef)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -15263,7 +15281,7 @@ void *IR::PrimaryKeyDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -15273,7 +15291,7 @@ void *IR::PrimaryKeyDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -15554,6 +15572,8 @@ tao_IR_FactoryDef_upcast (
   return *tmp;
 }
 
+int IR::FactoryDef::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class IR::FactoryDef_var
 // *************************************************************
@@ -15643,25 +15663,25 @@ IR::FactoryDef_var::_retn (void)
 }
 
 ::IR::FactoryDef_ptr
-IR::FactoryDef_var::duplicate (FactoryDef_ptr p)
+IR::FactoryDef_var::tao_duplicate (FactoryDef_ptr p)
 {
   return ::IR::FactoryDef::_duplicate (p);
 }
 
 void
-IR::FactoryDef_var::release (FactoryDef_ptr p)
+IR::FactoryDef_var::tao_release (FactoryDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::IR::FactoryDef_ptr
-IR::FactoryDef_var::nil (void)
+IR::FactoryDef_var::tao_nil (void)
 {
   return ::IR::FactoryDef::_nil ();
 }
 
 ::IR::FactoryDef_ptr
-IR::FactoryDef_var::narrow (
+IR::FactoryDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -15670,7 +15690,7 @@ IR::FactoryDef_var::narrow (
 }
 
 CORBA::Object *
-IR::FactoryDef_var::upcast (void *src)
+IR::FactoryDef_var::tao_upcast (void *src)
 {
   FactoryDef **tmp =
     ACE_static_cast (FactoryDef **, src);
@@ -15894,7 +15914,7 @@ IR::FactoryDef_ptr IR::FactoryDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &FactoryDef::_narrow
+                      &FactoryDef::_tao_class_id
                     )
                 )
           );
@@ -15926,11 +15946,11 @@ void *IR::FactoryDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IR, FactoryDef)::_narrow))
+      &ACE_NESTED_CLASS (::IR, FactoryDef)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_OperationDef::_narrow))
+      &CORBA_OperationDef::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -15942,7 +15962,7 @@ void *IR::FactoryDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -15954,7 +15974,7 @@ void *IR::FactoryDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -15964,7 +15984,7 @@ void *IR::FactoryDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -16051,6 +16071,8 @@ tao_IR_FinderDef_upcast (
     ACE_static_cast (IR::FinderDef **, src);
   return *tmp;
 }
+
+int IR::FinderDef::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class IR::FinderDef_var
@@ -16141,25 +16163,25 @@ IR::FinderDef_var::_retn (void)
 }
 
 ::IR::FinderDef_ptr
-IR::FinderDef_var::duplicate (FinderDef_ptr p)
+IR::FinderDef_var::tao_duplicate (FinderDef_ptr p)
 {
   return ::IR::FinderDef::_duplicate (p);
 }
 
 void
-IR::FinderDef_var::release (FinderDef_ptr p)
+IR::FinderDef_var::tao_release (FinderDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::IR::FinderDef_ptr
-IR::FinderDef_var::nil (void)
+IR::FinderDef_var::tao_nil (void)
 {
   return ::IR::FinderDef::_nil ();
 }
 
 ::IR::FinderDef_ptr
-IR::FinderDef_var::narrow (
+IR::FinderDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -16168,7 +16190,7 @@ IR::FinderDef_var::narrow (
 }
 
 CORBA::Object *
-IR::FinderDef_var::upcast (void *src)
+IR::FinderDef_var::tao_upcast (void *src)
 {
   FinderDef **tmp =
     ACE_static_cast (FinderDef **, src);
@@ -16392,7 +16414,7 @@ IR::FinderDef_ptr IR::FinderDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &FinderDef::_narrow
+                      &FinderDef::_tao_class_id
                     )
                 )
           );
@@ -16424,11 +16446,11 @@ void *IR::FinderDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IR, FinderDef)::_narrow))
+      &ACE_NESTED_CLASS (::IR, FinderDef)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_OperationDef::_narrow))
+      &CORBA_OperationDef::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -16440,7 +16462,7 @@ void *IR::FinderDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -16452,7 +16474,7 @@ void *IR::FinderDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -16462,7 +16484,7 @@ void *IR::FinderDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -16549,6 +16571,8 @@ tao_IR_HomeDef_upcast (
     ACE_static_cast (IR::HomeDef **, src);
   return *tmp;
 }
+
+int IR::HomeDef::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class IR::HomeDef_var
@@ -16639,25 +16663,25 @@ IR::HomeDef_var::_retn (void)
 }
 
 ::IR::HomeDef_ptr
-IR::HomeDef_var::duplicate (HomeDef_ptr p)
+IR::HomeDef_var::tao_duplicate (HomeDef_ptr p)
 {
   return ::IR::HomeDef::_duplicate (p);
 }
 
 void
-IR::HomeDef_var::release (HomeDef_ptr p)
+IR::HomeDef_var::tao_release (HomeDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::IR::HomeDef_ptr
-IR::HomeDef_var::nil (void)
+IR::HomeDef_var::tao_nil (void)
 {
   return ::IR::HomeDef::_nil ();
 }
 
 ::IR::HomeDef_ptr
-IR::HomeDef_var::narrow (
+IR::HomeDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -16666,7 +16690,7 @@ IR::HomeDef_var::narrow (
 }
 
 CORBA::Object *
-IR::HomeDef_var::upcast (void *src)
+IR::HomeDef_var::tao_upcast (void *src)
 {
   HomeDef **tmp =
     ACE_static_cast (HomeDef **, src);
@@ -19421,7 +19445,7 @@ IR::HomeDef_ptr IR::HomeDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &HomeDef::_narrow
+                      &HomeDef::_tao_class_id
                     )
                 )
           );
@@ -19455,11 +19479,11 @@ void *IR::HomeDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::IR, HomeDef)::_narrow))
+      &ACE_NESTED_CLASS (::IR, HomeDef)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_InterfaceDef::_narrow))
+      &CORBA_InterfaceDef::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -19471,7 +19495,7 @@ void *IR::HomeDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Container::_narrow))
+      &CORBA_Container::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -19483,7 +19507,7 @@ void *IR::HomeDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -19495,7 +19519,7 @@ void *IR::HomeDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IDLType::_narrow))
+      &CORBA_IDLType::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -19507,7 +19531,7 @@ void *IR::HomeDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -19517,7 +19541,7 @@ void *IR::HomeDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 

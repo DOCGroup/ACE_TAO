@@ -1273,11 +1273,11 @@ TAO_NAMESPACE  IOP
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static Codec_ptr duplicate (Codec_ptr);
-    static void release (Codec_ptr);
-    static Codec_ptr nil (void);
-    static Codec_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static Codec_ptr tao_duplicate (Codec_ptr);
+    static void tao_release (Codec_ptr);
+    static Codec_ptr tao_nil (void);
+    static Codec_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     Codec_ptr ptr_;
@@ -1325,22 +1325,24 @@ class TAO_Export Codec : public virtual CORBA_Object
     typedef Codec_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-    // the static operations
-    static Codec_ptr _duplicate (Codec_ptr obj);
-    static Codec_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-    static Codec_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-    static Codec_ptr _nil (void)
-      {
-        return (Codec_ptr)0;
-      }
+  static int _tao_class_id;
+
+  // the static operations
+  static Codec_ptr _duplicate (Codec_ptr obj);
+  static Codec_ptr _narrow (
+      CORBA::Object_ptr obj,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+  static Codec_ptr _unchecked_narrow (
+      CORBA::Object_ptr obj,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+  static Codec_ptr _nil (void)
+    {
+      return (Codec_ptr)0;
+    }
 
 
 #if !defined (_IOP_CODEC_INVALIDTYPEFORENCODING_CH_)
@@ -1616,11 +1618,11 @@ class TAO_Export Codec : public virtual CORBA_Object
     
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static CodecFactory_ptr duplicate (CodecFactory_ptr);
-    static void release (CodecFactory_ptr);
-    static CodecFactory_ptr nil (void);
-    static CodecFactory_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static CodecFactory_ptr tao_duplicate (CodecFactory_ptr);
+    static void tao_release (CodecFactory_ptr);
+    static CodecFactory_ptr tao_nil (void);
+    static CodecFactory_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
   
   private:
     CodecFactory_ptr ptr_;
@@ -1668,22 +1670,24 @@ class TAO_Export CodecFactory : public virtual CORBA_Object
     typedef CodecFactory_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-    // the static operations
-    static CodecFactory_ptr _duplicate (CodecFactory_ptr obj);
-    static CodecFactory_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-    static CodecFactory_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
-    static CodecFactory_ptr _nil (void)
-      {
-        return (CodecFactory_ptr)0;
-      }
+  static _tao_class_id;
+
+  // the static operations
+  static CodecFactory_ptr _duplicate (CodecFactory_ptr obj);
+  static CodecFactory_ptr _narrow (
+      CORBA::Object_ptr obj,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+  static CodecFactory_ptr _unchecked_narrow (
+      CORBA::Object_ptr obj,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    );
+  static CodecFactory_ptr _nil (void)
+    {
+      return (CodecFactory_ptr)0;
+    }
 
 
 #if !defined (_IOP_CODECFACTORY_UNKNOWNENCODING_CH_)

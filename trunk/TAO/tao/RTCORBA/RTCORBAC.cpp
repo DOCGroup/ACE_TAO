@@ -523,6 +523,8 @@ tao_RTCORBA_PriorityModelPolicy_upcast (
   return *tmp;
 }
 
+int RTCORBA::PriorityModelPolicy::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class RTCORBA::PriorityModelPolicy_var
 // *************************************************************
@@ -612,25 +614,25 @@ RTCORBA::PriorityModelPolicy_var::_retn (void)
 }
 
 ::RTCORBA::PriorityModelPolicy_ptr
-RTCORBA::PriorityModelPolicy_var::duplicate (PriorityModelPolicy_ptr p)
+RTCORBA::PriorityModelPolicy_var::tao_duplicate (PriorityModelPolicy_ptr p)
 {
   return ::RTCORBA::PriorityModelPolicy::_duplicate (p);
 }
 
 void
-RTCORBA::PriorityModelPolicy_var::release (PriorityModelPolicy_ptr p)
+RTCORBA::PriorityModelPolicy_var::tao_release (PriorityModelPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::RTCORBA::PriorityModelPolicy_ptr
-RTCORBA::PriorityModelPolicy_var::nil (void)
+RTCORBA::PriorityModelPolicy_var::tao_nil (void)
 {
   return ::RTCORBA::PriorityModelPolicy::_nil ();
 }
 
 ::RTCORBA::PriorityModelPolicy_ptr
-RTCORBA::PriorityModelPolicy_var::narrow (
+RTCORBA::PriorityModelPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -639,7 +641,7 @@ RTCORBA::PriorityModelPolicy_var::narrow (
 }
 
 CORBA::Object *
-RTCORBA::PriorityModelPolicy_var::upcast (void *src)
+RTCORBA::PriorityModelPolicy_var::tao_upcast (void *src)
 {
   PriorityModelPolicy **tmp =
     ACE_static_cast (PriorityModelPolicy **, src);
@@ -739,7 +741,7 @@ RTCORBA::PriorityModelPolicy_ptr RTCORBA::PriorityModelPolicy::_unchecked_narrow
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &PriorityModelPolicy::_narrow
+                    &PriorityModelPolicy::_tao_class_id
                   )
               )
         );
@@ -758,11 +760,11 @@ void *RTCORBA::PriorityModelPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::RTCORBA, PriorityModelPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::RTCORBA, PriorityModelPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -772,7 +774,7 @@ void *RTCORBA::PriorityModelPolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -832,6 +834,8 @@ tao_RTCORBA_ThreadpoolPolicy_upcast (
     ACE_static_cast (RTCORBA::ThreadpoolPolicy **, src);
   return *tmp;
 }
+
+int RTCORBA::ThreadpoolPolicy::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class RTCORBA::ThreadpoolPolicy_var
@@ -922,25 +926,25 @@ RTCORBA::ThreadpoolPolicy_var::_retn (void)
 }
 
 ::RTCORBA::ThreadpoolPolicy_ptr
-RTCORBA::ThreadpoolPolicy_var::duplicate (ThreadpoolPolicy_ptr p)
+RTCORBA::ThreadpoolPolicy_var::tao_duplicate (ThreadpoolPolicy_ptr p)
 {
   return ::RTCORBA::ThreadpoolPolicy::_duplicate (p);
 }
 
 void
-RTCORBA::ThreadpoolPolicy_var::release (ThreadpoolPolicy_ptr p)
+RTCORBA::ThreadpoolPolicy_var::tao_release (ThreadpoolPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::RTCORBA::ThreadpoolPolicy_ptr
-RTCORBA::ThreadpoolPolicy_var::nil (void)
+RTCORBA::ThreadpoolPolicy_var::tao_nil (void)
 {
   return ::RTCORBA::ThreadpoolPolicy::_nil ();
 }
 
 ::RTCORBA::ThreadpoolPolicy_ptr
-RTCORBA::ThreadpoolPolicy_var::narrow (
+RTCORBA::ThreadpoolPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -949,7 +953,7 @@ RTCORBA::ThreadpoolPolicy_var::narrow (
 }
 
 CORBA::Object *
-RTCORBA::ThreadpoolPolicy_var::upcast (void *src)
+RTCORBA::ThreadpoolPolicy_var::tao_upcast (void *src)
 {
   ThreadpoolPolicy **tmp =
     ACE_static_cast (ThreadpoolPolicy **, src);
@@ -1049,7 +1053,7 @@ RTCORBA::ThreadpoolPolicy_ptr RTCORBA::ThreadpoolPolicy::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &ThreadpoolPolicy::_narrow
+                    &ThreadpoolPolicy::_tao_class_id
                   )
               )
         );
@@ -1068,11 +1072,11 @@ void *RTCORBA::ThreadpoolPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::RTCORBA, ThreadpoolPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::RTCORBA, ThreadpoolPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -1082,7 +1086,7 @@ void *RTCORBA::ThreadpoolPolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -1138,6 +1142,8 @@ tao_RTCORBA_ProtocolProperties_upcast (
     ACE_static_cast (RTCORBA::ProtocolProperties **, src);
   return *tmp;
 }
+
+int RTCORBA::ProtocolProperties::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class RTCORBA::ProtocolProperties_var
@@ -1228,25 +1234,25 @@ RTCORBA::ProtocolProperties_var::_retn (void)
 }
 
 ::RTCORBA::ProtocolProperties_ptr
-RTCORBA::ProtocolProperties_var::duplicate (ProtocolProperties_ptr p)
+RTCORBA::ProtocolProperties_var::tao_duplicate (ProtocolProperties_ptr p)
 {
   return ::RTCORBA::ProtocolProperties::_duplicate (p);
 }
 
 void
-RTCORBA::ProtocolProperties_var::release (ProtocolProperties_ptr p)
+RTCORBA::ProtocolProperties_var::tao_release (ProtocolProperties_ptr p)
 {
   CORBA::release (p);
 }
 
 ::RTCORBA::ProtocolProperties_ptr
-RTCORBA::ProtocolProperties_var::nil (void)
+RTCORBA::ProtocolProperties_var::tao_nil (void)
 {
   return ::RTCORBA::ProtocolProperties::_nil ();
 }
 
 ::RTCORBA::ProtocolProperties_ptr
-RTCORBA::ProtocolProperties_var::narrow (
+RTCORBA::ProtocolProperties_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1255,7 +1261,7 @@ RTCORBA::ProtocolProperties_var::narrow (
 }
 
 CORBA::Object *
-RTCORBA::ProtocolProperties_var::upcast (void *src)
+RTCORBA::ProtocolProperties_var::tao_upcast (void *src)
 {
   ProtocolProperties **tmp =
     ACE_static_cast (ProtocolProperties **, src);
@@ -1355,7 +1361,7 @@ RTCORBA::ProtocolProperties_ptr RTCORBA::ProtocolProperties::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &ProtocolProperties::_narrow
+                    &ProtocolProperties::_tao_class_id
                   )
               )
         );
@@ -1374,9 +1380,9 @@ void *RTCORBA::ProtocolProperties::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::RTCORBA, ProtocolProperties)::_narrow))
+      &ACE_NESTED_CLASS (::RTCORBA, ProtocolProperties)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -1533,6 +1539,8 @@ tao_RTCORBA_ServerProtocolPolicy_upcast (
   return *tmp;
 }
 
+int RTCORBA::ServerProtocolPolicy::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class RTCORBA::ServerProtocolPolicy_var
 // *************************************************************
@@ -1622,25 +1630,25 @@ RTCORBA::ServerProtocolPolicy_var::_retn (void)
 }
 
 ::RTCORBA::ServerProtocolPolicy_ptr
-RTCORBA::ServerProtocolPolicy_var::duplicate (ServerProtocolPolicy_ptr p)
+RTCORBA::ServerProtocolPolicy_var::tao_duplicate (ServerProtocolPolicy_ptr p)
 {
   return ::RTCORBA::ServerProtocolPolicy::_duplicate (p);
 }
 
 void
-RTCORBA::ServerProtocolPolicy_var::release (ServerProtocolPolicy_ptr p)
+RTCORBA::ServerProtocolPolicy_var::tao_release (ServerProtocolPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::RTCORBA::ServerProtocolPolicy_ptr
-RTCORBA::ServerProtocolPolicy_var::nil (void)
+RTCORBA::ServerProtocolPolicy_var::tao_nil (void)
 {
   return ::RTCORBA::ServerProtocolPolicy::_nil ();
 }
 
 ::RTCORBA::ServerProtocolPolicy_ptr
-RTCORBA::ServerProtocolPolicy_var::narrow (
+RTCORBA::ServerProtocolPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1649,7 +1657,7 @@ RTCORBA::ServerProtocolPolicy_var::narrow (
 }
 
 CORBA::Object *
-RTCORBA::ServerProtocolPolicy_var::upcast (void *src)
+RTCORBA::ServerProtocolPolicy_var::tao_upcast (void *src)
 {
   ServerProtocolPolicy **tmp =
     ACE_static_cast (ServerProtocolPolicy **, src);
@@ -1749,7 +1757,7 @@ RTCORBA::ServerProtocolPolicy_ptr RTCORBA::ServerProtocolPolicy::_unchecked_narr
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &ServerProtocolPolicy::_narrow
+                    &ServerProtocolPolicy::_tao_class_id
                   )
               )
         );
@@ -1768,11 +1776,11 @@ void *RTCORBA::ServerProtocolPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::RTCORBA, ServerProtocolPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::RTCORBA, ServerProtocolPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -1782,7 +1790,7 @@ void *RTCORBA::ServerProtocolPolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -1842,6 +1850,8 @@ tao_RTCORBA_ClientProtocolPolicy_upcast (
     ACE_static_cast (RTCORBA::ClientProtocolPolicy **, src);
   return *tmp;
 }
+
+int RTCORBA::ClientProtocolPolicy::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class RTCORBA::ClientProtocolPolicy_var
@@ -1932,25 +1942,25 @@ RTCORBA::ClientProtocolPolicy_var::_retn (void)
 }
 
 ::RTCORBA::ClientProtocolPolicy_ptr
-RTCORBA::ClientProtocolPolicy_var::duplicate (ClientProtocolPolicy_ptr p)
+RTCORBA::ClientProtocolPolicy_var::tao_duplicate (ClientProtocolPolicy_ptr p)
 {
   return ::RTCORBA::ClientProtocolPolicy::_duplicate (p);
 }
 
 void
-RTCORBA::ClientProtocolPolicy_var::release (ClientProtocolPolicy_ptr p)
+RTCORBA::ClientProtocolPolicy_var::tao_release (ClientProtocolPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::RTCORBA::ClientProtocolPolicy_ptr
-RTCORBA::ClientProtocolPolicy_var::nil (void)
+RTCORBA::ClientProtocolPolicy_var::tao_nil (void)
 {
   return ::RTCORBA::ClientProtocolPolicy::_nil ();
 }
 
 ::RTCORBA::ClientProtocolPolicy_ptr
-RTCORBA::ClientProtocolPolicy_var::narrow (
+RTCORBA::ClientProtocolPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1959,7 +1969,7 @@ RTCORBA::ClientProtocolPolicy_var::narrow (
 }
 
 CORBA::Object *
-RTCORBA::ClientProtocolPolicy_var::upcast (void *src)
+RTCORBA::ClientProtocolPolicy_var::tao_upcast (void *src)
 {
   ClientProtocolPolicy **tmp =
     ACE_static_cast (ClientProtocolPolicy **, src);
@@ -2059,7 +2069,7 @@ RTCORBA::ClientProtocolPolicy_ptr RTCORBA::ClientProtocolPolicy::_unchecked_narr
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &ClientProtocolPolicy::_narrow
+                    &ClientProtocolPolicy::_tao_class_id
                   )
               )
         );
@@ -2078,11 +2088,11 @@ void *RTCORBA::ClientProtocolPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::RTCORBA, ClientProtocolPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::RTCORBA, ClientProtocolPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -2092,7 +2102,7 @@ void *RTCORBA::ClientProtocolPolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -2152,6 +2162,8 @@ tao_RTCORBA_PrivateConnectionPolicy_upcast (
     ACE_static_cast (RTCORBA::PrivateConnectionPolicy **, src);
   return *tmp;
 }
+
+int RTCORBA::PrivateConnectionPolicy::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class RTCORBA::PrivateConnectionPolicy_var
@@ -2242,25 +2254,25 @@ RTCORBA::PrivateConnectionPolicy_var::_retn (void)
 }
 
 ::RTCORBA::PrivateConnectionPolicy_ptr
-RTCORBA::PrivateConnectionPolicy_var::duplicate (PrivateConnectionPolicy_ptr p)
+RTCORBA::PrivateConnectionPolicy_var::tao_duplicate (PrivateConnectionPolicy_ptr p)
 {
   return ::RTCORBA::PrivateConnectionPolicy::_duplicate (p);
 }
 
 void
-RTCORBA::PrivateConnectionPolicy_var::release (PrivateConnectionPolicy_ptr p)
+RTCORBA::PrivateConnectionPolicy_var::tao_release (PrivateConnectionPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::RTCORBA::PrivateConnectionPolicy_ptr
-RTCORBA::PrivateConnectionPolicy_var::nil (void)
+RTCORBA::PrivateConnectionPolicy_var::tao_nil (void)
 {
   return ::RTCORBA::PrivateConnectionPolicy::_nil ();
 }
 
 ::RTCORBA::PrivateConnectionPolicy_ptr
-RTCORBA::PrivateConnectionPolicy_var::narrow (
+RTCORBA::PrivateConnectionPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2269,7 +2281,7 @@ RTCORBA::PrivateConnectionPolicy_var::narrow (
 }
 
 CORBA::Object *
-RTCORBA::PrivateConnectionPolicy_var::upcast (void *src)
+RTCORBA::PrivateConnectionPolicy_var::tao_upcast (void *src)
 {
   PrivateConnectionPolicy **tmp =
     ACE_static_cast (PrivateConnectionPolicy **, src);
@@ -2369,7 +2381,7 @@ RTCORBA::PrivateConnectionPolicy_ptr RTCORBA::PrivateConnectionPolicy::_unchecke
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &PrivateConnectionPolicy::_narrow
+                    &PrivateConnectionPolicy::_tao_class_id
                   )
               )
         );
@@ -2388,11 +2400,11 @@ void *RTCORBA::PrivateConnectionPolicy::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::RTCORBA, PrivateConnectionPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::RTCORBA, PrivateConnectionPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -2402,7 +2414,7 @@ void *RTCORBA::PrivateConnectionPolicy::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -2458,6 +2470,8 @@ tao_RTCORBA_TCPProtocolProperties_upcast (
     ACE_static_cast (RTCORBA::TCPProtocolProperties **, src);
   return *tmp;
 }
+
+int RTCORBA::TCPProtocolProperties::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class RTCORBA::TCPProtocolProperties_var
@@ -2548,25 +2562,25 @@ RTCORBA::TCPProtocolProperties_var::_retn (void)
 }
 
 ::RTCORBA::TCPProtocolProperties_ptr
-RTCORBA::TCPProtocolProperties_var::duplicate (TCPProtocolProperties_ptr p)
+RTCORBA::TCPProtocolProperties_var::tao_duplicate (TCPProtocolProperties_ptr p)
 {
   return ::RTCORBA::TCPProtocolProperties::_duplicate (p);
 }
 
 void
-RTCORBA::TCPProtocolProperties_var::release (TCPProtocolProperties_ptr p)
+RTCORBA::TCPProtocolProperties_var::tao_release (TCPProtocolProperties_ptr p)
 {
   CORBA::release (p);
 }
 
 ::RTCORBA::TCPProtocolProperties_ptr
-RTCORBA::TCPProtocolProperties_var::nil (void)
+RTCORBA::TCPProtocolProperties_var::tao_nil (void)
 {
   return ::RTCORBA::TCPProtocolProperties::_nil ();
 }
 
 ::RTCORBA::TCPProtocolProperties_ptr
-RTCORBA::TCPProtocolProperties_var::narrow (
+RTCORBA::TCPProtocolProperties_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2575,7 +2589,7 @@ RTCORBA::TCPProtocolProperties_var::narrow (
 }
 
 CORBA::Object *
-RTCORBA::TCPProtocolProperties_var::upcast (void *src)
+RTCORBA::TCPProtocolProperties_var::tao_upcast (void *src)
 {
   TCPProtocolProperties **tmp =
     ACE_static_cast (TCPProtocolProperties **, src);
@@ -2690,7 +2704,7 @@ RTCORBA::TCPProtocolProperties_ptr RTCORBA::TCPProtocolProperties::_unchecked_na
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &TCPProtocolProperties::_narrow
+                    &TCPProtocolProperties::_tao_class_id
                   )
               )
         );
@@ -2709,11 +2723,11 @@ void *RTCORBA::TCPProtocolProperties::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::RTCORBA, TCPProtocolProperties)::_narrow))
+      &ACE_NESTED_CLASS (::RTCORBA, TCPProtocolProperties)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::RTCORBA, ProtocolProperties)::_narrow))
+      &ACE_NESTED_CLASS (::RTCORBA, ProtocolProperties)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -2723,7 +2737,7 @@ void *RTCORBA::TCPProtocolProperties::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -2779,6 +2793,8 @@ tao_RTCORBA_GIOPProtocolProperties_upcast (
     ACE_static_cast (RTCORBA::GIOPProtocolProperties **, src);
   return *tmp;
 }
+
+int RTCORBA::GIOPProtocolProperties::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class RTCORBA::GIOPProtocolProperties_var
@@ -2869,25 +2885,25 @@ RTCORBA::GIOPProtocolProperties_var::_retn (void)
 }
 
 ::RTCORBA::GIOPProtocolProperties_ptr
-RTCORBA::GIOPProtocolProperties_var::duplicate (GIOPProtocolProperties_ptr p)
+RTCORBA::GIOPProtocolProperties_var::tao_duplicate (GIOPProtocolProperties_ptr p)
 {
   return ::RTCORBA::GIOPProtocolProperties::_duplicate (p);
 }
 
 void
-RTCORBA::GIOPProtocolProperties_var::release (GIOPProtocolProperties_ptr p)
+RTCORBA::GIOPProtocolProperties_var::tao_release (GIOPProtocolProperties_ptr p)
 {
   CORBA::release (p);
 }
 
 ::RTCORBA::GIOPProtocolProperties_ptr
-RTCORBA::GIOPProtocolProperties_var::nil (void)
+RTCORBA::GIOPProtocolProperties_var::tao_nil (void)
 {
   return ::RTCORBA::GIOPProtocolProperties::_nil ();
 }
 
 ::RTCORBA::GIOPProtocolProperties_ptr
-RTCORBA::GIOPProtocolProperties_var::narrow (
+RTCORBA::GIOPProtocolProperties_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -2896,7 +2912,7 @@ RTCORBA::GIOPProtocolProperties_var::narrow (
 }
 
 CORBA::Object *
-RTCORBA::GIOPProtocolProperties_var::upcast (void *src)
+RTCORBA::GIOPProtocolProperties_var::tao_upcast (void *src)
 {
   GIOPProtocolProperties **tmp =
     ACE_static_cast (GIOPProtocolProperties **, src);
@@ -2996,7 +3012,7 @@ RTCORBA::GIOPProtocolProperties_ptr RTCORBA::GIOPProtocolProperties::_unchecked_
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &GIOPProtocolProperties::_narrow
+                    &GIOPProtocolProperties::_tao_class_id
                   )
               )
         );
@@ -3015,11 +3031,11 @@ void *RTCORBA::GIOPProtocolProperties::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::RTCORBA, GIOPProtocolProperties)::_narrow))
+      &ACE_NESTED_CLASS (::RTCORBA, GIOPProtocolProperties)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::RTCORBA, ProtocolProperties)::_narrow))
+      &ACE_NESTED_CLASS (::RTCORBA, ProtocolProperties)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -3029,7 +3045,7 @@ void *RTCORBA::GIOPProtocolProperties::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -3085,6 +3101,8 @@ tao_RTCORBA_UnixDomainProtocolProperties_upcast (
     ACE_static_cast (RTCORBA::UnixDomainProtocolProperties **, src);
   return *tmp;
 }
+
+int RTCORBA::UnixDomainProtocolProperties::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class RTCORBA::UnixDomainProtocolProperties_var
@@ -3175,25 +3193,25 @@ RTCORBA::UnixDomainProtocolProperties_var::_retn (void)
 }
 
 ::RTCORBA::UnixDomainProtocolProperties_ptr
-RTCORBA::UnixDomainProtocolProperties_var::duplicate (UnixDomainProtocolProperties_ptr p)
+RTCORBA::UnixDomainProtocolProperties_var::tao_duplicate (UnixDomainProtocolProperties_ptr p)
 {
   return ::RTCORBA::UnixDomainProtocolProperties::_duplicate (p);
 }
 
 void
-RTCORBA::UnixDomainProtocolProperties_var::release (UnixDomainProtocolProperties_ptr p)
+RTCORBA::UnixDomainProtocolProperties_var::tao_release (UnixDomainProtocolProperties_ptr p)
 {
   CORBA::release (p);
 }
 
 ::RTCORBA::UnixDomainProtocolProperties_ptr
-RTCORBA::UnixDomainProtocolProperties_var::nil (void)
+RTCORBA::UnixDomainProtocolProperties_var::tao_nil (void)
 {
   return ::RTCORBA::UnixDomainProtocolProperties::_nil ();
 }
 
 ::RTCORBA::UnixDomainProtocolProperties_ptr
-RTCORBA::UnixDomainProtocolProperties_var::narrow (
+RTCORBA::UnixDomainProtocolProperties_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3202,7 +3220,7 @@ RTCORBA::UnixDomainProtocolProperties_var::narrow (
 }
 
 CORBA::Object *
-RTCORBA::UnixDomainProtocolProperties_var::upcast (void *src)
+RTCORBA::UnixDomainProtocolProperties_var::tao_upcast (void *src)
 {
   UnixDomainProtocolProperties **tmp =
     ACE_static_cast (UnixDomainProtocolProperties **, src);
@@ -3302,7 +3320,7 @@ RTCORBA::UnixDomainProtocolProperties_ptr RTCORBA::UnixDomainProtocolProperties:
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &UnixDomainProtocolProperties::_narrow
+                    &UnixDomainProtocolProperties::_tao_class_id
                   )
               )
         );
@@ -3321,11 +3339,11 @@ void *RTCORBA::UnixDomainProtocolProperties::_tao_QueryInterface (ptr_arith_t ty
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::RTCORBA, UnixDomainProtocolProperties)::_narrow))
+      &ACE_NESTED_CLASS (::RTCORBA, UnixDomainProtocolProperties)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::RTCORBA, ProtocolProperties)::_narrow))
+      &ACE_NESTED_CLASS (::RTCORBA, ProtocolProperties)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -3335,7 +3353,7 @@ void *RTCORBA::UnixDomainProtocolProperties::_tao_QueryInterface (ptr_arith_t ty
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -3391,6 +3409,8 @@ tao_RTCORBA_SharedMemoryProtocolProperties_upcast (
     ACE_static_cast (RTCORBA::SharedMemoryProtocolProperties **, src);
   return *tmp;
 }
+
+int RTCORBA::SharedMemoryProtocolProperties::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class RTCORBA::SharedMemoryProtocolProperties_var
@@ -3481,25 +3501,25 @@ RTCORBA::SharedMemoryProtocolProperties_var::_retn (void)
 }
 
 ::RTCORBA::SharedMemoryProtocolProperties_ptr
-RTCORBA::SharedMemoryProtocolProperties_var::duplicate (SharedMemoryProtocolProperties_ptr p)
+RTCORBA::SharedMemoryProtocolProperties_var::tao_duplicate (SharedMemoryProtocolProperties_ptr p)
 {
   return ::RTCORBA::SharedMemoryProtocolProperties::_duplicate (p);
 }
 
 void
-RTCORBA::SharedMemoryProtocolProperties_var::release (SharedMemoryProtocolProperties_ptr p)
+RTCORBA::SharedMemoryProtocolProperties_var::tao_release (SharedMemoryProtocolProperties_ptr p)
 {
   CORBA::release (p);
 }
 
 ::RTCORBA::SharedMemoryProtocolProperties_ptr
-RTCORBA::SharedMemoryProtocolProperties_var::nil (void)
+RTCORBA::SharedMemoryProtocolProperties_var::tao_nil (void)
 {
   return ::RTCORBA::SharedMemoryProtocolProperties::_nil ();
 }
 
 ::RTCORBA::SharedMemoryProtocolProperties_ptr
-RTCORBA::SharedMemoryProtocolProperties_var::narrow (
+RTCORBA::SharedMemoryProtocolProperties_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3508,7 +3528,7 @@ RTCORBA::SharedMemoryProtocolProperties_var::narrow (
 }
 
 CORBA::Object *
-RTCORBA::SharedMemoryProtocolProperties_var::upcast (void *src)
+RTCORBA::SharedMemoryProtocolProperties_var::tao_upcast (void *src)
 {
   SharedMemoryProtocolProperties **tmp =
     ACE_static_cast (SharedMemoryProtocolProperties **, src);
@@ -3608,7 +3628,7 @@ RTCORBA::SharedMemoryProtocolProperties_ptr RTCORBA::SharedMemoryProtocolPropert
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &SharedMemoryProtocolProperties::_narrow
+                    &SharedMemoryProtocolProperties::_tao_class_id
                   )
               )
         );
@@ -3627,11 +3647,11 @@ void *RTCORBA::SharedMemoryProtocolProperties::_tao_QueryInterface (ptr_arith_t 
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::RTCORBA, SharedMemoryProtocolProperties)::_narrow))
+      &ACE_NESTED_CLASS (::RTCORBA, SharedMemoryProtocolProperties)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::RTCORBA, ProtocolProperties)::_narrow))
+      &ACE_NESTED_CLASS (::RTCORBA, ProtocolProperties)::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -3641,7 +3661,7 @@ void *RTCORBA::SharedMemoryProtocolProperties::_tao_QueryInterface (ptr_arith_t 
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -3989,6 +4009,8 @@ tao_RTCORBA_PriorityBandedConnectionPolicy_upcast (
   return *tmp;
 }
 
+int RTCORBA::PriorityBandedConnectionPolicy::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class RTCORBA::PriorityBandedConnectionPolicy_var
 // *************************************************************
@@ -4078,25 +4100,25 @@ RTCORBA::PriorityBandedConnectionPolicy_var::_retn (void)
 }
 
 ::RTCORBA::PriorityBandedConnectionPolicy_ptr
-RTCORBA::PriorityBandedConnectionPolicy_var::duplicate (PriorityBandedConnectionPolicy_ptr p)
+RTCORBA::PriorityBandedConnectionPolicy_var::tao_duplicate (PriorityBandedConnectionPolicy_ptr p)
 {
   return ::RTCORBA::PriorityBandedConnectionPolicy::_duplicate (p);
 }
 
 void
-RTCORBA::PriorityBandedConnectionPolicy_var::release (PriorityBandedConnectionPolicy_ptr p)
+RTCORBA::PriorityBandedConnectionPolicy_var::tao_release (PriorityBandedConnectionPolicy_ptr p)
 {
   CORBA::release (p);
 }
 
 ::RTCORBA::PriorityBandedConnectionPolicy_ptr
-RTCORBA::PriorityBandedConnectionPolicy_var::nil (void)
+RTCORBA::PriorityBandedConnectionPolicy_var::tao_nil (void)
 {
   return ::RTCORBA::PriorityBandedConnectionPolicy::_nil ();
 }
 
 ::RTCORBA::PriorityBandedConnectionPolicy_ptr
-RTCORBA::PriorityBandedConnectionPolicy_var::narrow (
+RTCORBA::PriorityBandedConnectionPolicy_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -4105,7 +4127,7 @@ RTCORBA::PriorityBandedConnectionPolicy_var::narrow (
 }
 
 CORBA::Object *
-RTCORBA::PriorityBandedConnectionPolicy_var::upcast (void *src)
+RTCORBA::PriorityBandedConnectionPolicy_var::tao_upcast (void *src)
 {
   PriorityBandedConnectionPolicy **tmp =
     ACE_static_cast (PriorityBandedConnectionPolicy **, src);
@@ -4205,7 +4227,7 @@ RTCORBA::PriorityBandedConnectionPolicy_ptr RTCORBA::PriorityBandedConnectionPol
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &PriorityBandedConnectionPolicy::_narrow
+                    &PriorityBandedConnectionPolicy::_tao_class_id
                   )
               )
         );
@@ -4224,11 +4246,11 @@ void *RTCORBA::PriorityBandedConnectionPolicy::_tao_QueryInterface (ptr_arith_t 
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::RTCORBA, PriorityBandedConnectionPolicy)::_narrow))
+      &ACE_NESTED_CLASS (::RTCORBA, PriorityBandedConnectionPolicy)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Policy::_narrow))
+      &::CORBA::Policy::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -4238,7 +4260,7 @@ void *RTCORBA::PriorityBandedConnectionPolicy::_tao_QueryInterface (ptr_arith_t 
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -4294,6 +4316,8 @@ tao_RTCORBA_Current_upcast (
     ACE_static_cast (RTCORBA::Current **, src);
   return *tmp;
 }
+
+int RTCORBA::Current::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class RTCORBA::Current_var
@@ -4384,25 +4408,25 @@ RTCORBA::Current_var::_retn (void)
 }
 
 ::RTCORBA::Current_ptr
-RTCORBA::Current_var::duplicate (Current_ptr p)
+RTCORBA::Current_var::tao_duplicate (Current_ptr p)
 {
   return ::RTCORBA::Current::_duplicate (p);
 }
 
 void
-RTCORBA::Current_var::release (Current_ptr p)
+RTCORBA::Current_var::tao_release (Current_ptr p)
 {
   CORBA::release (p);
 }
 
 ::RTCORBA::Current_ptr
-RTCORBA::Current_var::nil (void)
+RTCORBA::Current_var::tao_nil (void)
 {
   return ::RTCORBA::Current::_nil ();
 }
 
 ::RTCORBA::Current_ptr
-RTCORBA::Current_var::narrow (
+RTCORBA::Current_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -4411,7 +4435,7 @@ RTCORBA::Current_var::narrow (
 }
 
 CORBA::Object *
-RTCORBA::Current_var::upcast (void *src)
+RTCORBA::Current_var::tao_upcast (void *src)
 {
   Current **tmp =
     ACE_static_cast (Current **, src);
@@ -4511,7 +4535,7 @@ RTCORBA::Current_ptr RTCORBA::Current::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &Current::_narrow
+                    &Current::_tao_class_id
                   )
               )
         );
@@ -4530,11 +4554,11 @@ void *RTCORBA::Current::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::RTCORBA, Current)::_narrow))
+      &ACE_NESTED_CLASS (::RTCORBA, Current)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &::CORBA::Current::_narrow))
+      &::CORBA::Current::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -4544,7 +4568,7 @@ void *RTCORBA::Current::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -4600,6 +4624,8 @@ tao_RTCORBA_Mutex_upcast (
     ACE_static_cast (RTCORBA::Mutex **, src);
   return *tmp;
 }
+
+int RTCORBA::Mutex::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class RTCORBA::Mutex_var
@@ -4690,25 +4716,25 @@ RTCORBA::Mutex_var::_retn (void)
 }
 
 ::RTCORBA::Mutex_ptr
-RTCORBA::Mutex_var::duplicate (Mutex_ptr p)
+RTCORBA::Mutex_var::tao_duplicate (Mutex_ptr p)
 {
   return ::RTCORBA::Mutex::_duplicate (p);
 }
 
 void
-RTCORBA::Mutex_var::release (Mutex_ptr p)
+RTCORBA::Mutex_var::tao_release (Mutex_ptr p)
 {
   CORBA::release (p);
 }
 
 ::RTCORBA::Mutex_ptr
-RTCORBA::Mutex_var::nil (void)
+RTCORBA::Mutex_var::tao_nil (void)
 {
   return ::RTCORBA::Mutex::_nil ();
 }
 
 ::RTCORBA::Mutex_ptr
-RTCORBA::Mutex_var::narrow (
+RTCORBA::Mutex_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -4717,7 +4743,7 @@ RTCORBA::Mutex_var::narrow (
 }
 
 CORBA::Object *
-RTCORBA::Mutex_var::upcast (void *src)
+RTCORBA::Mutex_var::tao_upcast (void *src)
 {
   Mutex **tmp =
     ACE_static_cast (Mutex **, src);
@@ -4817,7 +4843,7 @@ RTCORBA::Mutex_ptr RTCORBA::Mutex::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &Mutex::_narrow
+                    &Mutex::_tao_class_id
                   )
               )
         );
@@ -4836,9 +4862,9 @@ void *RTCORBA::Mutex::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::RTCORBA, Mutex)::_narrow))
+      &ACE_NESTED_CLASS (::RTCORBA, Mutex)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -4894,6 +4920,8 @@ tao_RTCORBA_RTORB_upcast (
     ACE_static_cast (RTCORBA::RTORB **, src);
   return *tmp;
 }
+
+int RTCORBA::RTORB::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class RTCORBA::RTORB_var
@@ -4984,25 +5012,25 @@ RTCORBA::RTORB_var::_retn (void)
 }
 
 ::RTCORBA::RTORB_ptr
-RTCORBA::RTORB_var::duplicate (RTORB_ptr p)
+RTCORBA::RTORB_var::tao_duplicate (RTORB_ptr p)
 {
   return ::RTCORBA::RTORB::_duplicate (p);
 }
 
 void
-RTCORBA::RTORB_var::release (RTORB_ptr p)
+RTCORBA::RTORB_var::tao_release (RTORB_ptr p)
 {
   CORBA::release (p);
 }
 
 ::RTCORBA::RTORB_ptr
-RTCORBA::RTORB_var::nil (void)
+RTCORBA::RTORB_var::tao_nil (void)
 {
   return ::RTCORBA::RTORB::_nil ();
 }
 
 ::RTCORBA::RTORB_ptr
-RTCORBA::RTORB_var::narrow (
+RTCORBA::RTORB_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -5011,7 +5039,7 @@ RTCORBA::RTORB_var::narrow (
 }
 
 CORBA::Object *
-RTCORBA::RTORB_var::upcast (void *src)
+RTCORBA::RTORB_var::tao_upcast (void *src)
 {
   RTORB **tmp =
     ACE_static_cast (RTORB **, src);
@@ -5111,7 +5139,7 @@ RTCORBA::RTORB_ptr RTCORBA::RTORB::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &RTORB::_narrow
+                    &RTORB::_tao_class_id
                   )
               )
         );
@@ -5130,9 +5158,9 @@ void *RTCORBA::RTORB::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::RTCORBA, RTORB)::_narrow))
+      &ACE_NESTED_CLASS (::RTCORBA, RTORB)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 

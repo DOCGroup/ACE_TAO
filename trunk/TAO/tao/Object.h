@@ -309,11 +309,11 @@ public:
   CORBA::Object_ptr _retn (void);
   CORBA::Object_ptr ptr (void) const;
 
-  static CORBA::Object_ptr duplicate (CORBA::Object_ptr);
-  static void release (CORBA::Object_ptr);
-  static CORBA::Object_ptr nil (void);
-  static CORBA::Object_ptr narrow (CORBA::Object *, CORBA::Environment &);
-  static CORBA::Object * upcast (void *);
+  static CORBA::Object_ptr tao_duplicate (CORBA::Object_ptr);
+  static void tao_release (CORBA::Object_ptr);
+  static CORBA::Object_ptr tao_nil (void);
+  static CORBA::Object_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * tao_upcast (void *);
 
 private:
   CORBA::Object_ptr ptr_;

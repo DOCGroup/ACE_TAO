@@ -650,6 +650,8 @@ CORBA::TypeCode_ptr TAO_IOP::MultiProfileList::_type (void) const
   return ::TAO_IOP::_tc_MultiProfileList;
 }
 
+int TAO_IOP::TAO_IOR_Property::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class TAO_IOP::TAO_IOR_Property_var
 // *************************************************************
@@ -739,25 +741,25 @@ TAO_IOP::TAO_IOR_Property_var::_retn (void)
 }
 
 ::TAO_IOP::TAO_IOR_Property_ptr
-TAO_IOP::TAO_IOR_Property_var::duplicate (TAO_IOR_Property_ptr p)
+TAO_IOP::TAO_IOR_Property_var::tao_duplicate (TAO_IOR_Property_ptr p)
 {
   return ::TAO_IOP::TAO_IOR_Property::_duplicate (p);
 }
 
 void
-TAO_IOP::TAO_IOR_Property_var::release (TAO_IOR_Property_ptr p)
+TAO_IOP::TAO_IOR_Property_var::tao_release (TAO_IOR_Property_ptr p)
 {
   CORBA::release (p);
 }
 
 ::TAO_IOP::TAO_IOR_Property_ptr
-TAO_IOP::TAO_IOR_Property_var::nil (void)
+TAO_IOP::TAO_IOR_Property_var::tao_nil (void)
 {
   return ::TAO_IOP::TAO_IOR_Property::_nil ();
 }
 
 ::TAO_IOP::TAO_IOR_Property_ptr
-TAO_IOP::TAO_IOR_Property_var::narrow (
+TAO_IOP::TAO_IOR_Property_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -766,7 +768,7 @@ TAO_IOP::TAO_IOR_Property_var::narrow (
 }
 
 CORBA::Object *
-TAO_IOP::TAO_IOR_Property_var::upcast (void *src)
+TAO_IOP::TAO_IOR_Property_var::tao_upcast (void *src)
 {
   TAO_IOR_Property **tmp =
     ACE_static_cast (TAO_IOR_Property **, src);
@@ -866,7 +868,7 @@ TAO_IOP::TAO_IOR_Property_ptr TAO_IOP::TAO_IOR_Property::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &TAO_IOR_Property::_narrow
+                    &TAO_IOR_Property::_tao_class_id
                   )
               )
         );
@@ -885,9 +887,9 @@ void *TAO_IOP::TAO_IOR_Property::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::TAO_IOP, TAO_IOR_Property)::_narrow))
+      &ACE_NESTED_CLASS (::TAO_IOP, TAO_IOR_Property)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
     
@@ -900,6 +902,8 @@ const char* TAO_IOP::TAO_IOR_Property::_interface_repository_id (void) const
 {
   return "IDL:TAO_IOP/TAO_IOR_Property:1.0";
 }
+
+int TAO_IOP::TAO_IOR_Manipulation::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class TAO_IOP::TAO_IOR_Manipulation_var
@@ -990,25 +994,25 @@ TAO_IOP::TAO_IOR_Manipulation_var::_retn (void)
 }
 
 ::TAO_IOP::TAO_IOR_Manipulation_ptr
-TAO_IOP::TAO_IOR_Manipulation_var::duplicate (TAO_IOR_Manipulation_ptr p)
+TAO_IOP::TAO_IOR_Manipulation_var::tao_duplicate (TAO_IOR_Manipulation_ptr p)
 {
   return ::TAO_IOP::TAO_IOR_Manipulation::_duplicate (p);
 }
 
 void
-TAO_IOP::TAO_IOR_Manipulation_var::release (TAO_IOR_Manipulation_ptr p)
+TAO_IOP::TAO_IOR_Manipulation_var::tao_release (TAO_IOR_Manipulation_ptr p)
 {
   CORBA::release (p);
 }
 
 ::TAO_IOP::TAO_IOR_Manipulation_ptr
-TAO_IOP::TAO_IOR_Manipulation_var::nil (void)
+TAO_IOP::TAO_IOR_Manipulation_var::tao_nil (void)
 {
   return ::TAO_IOP::TAO_IOR_Manipulation::_nil ();
 }
 
 ::TAO_IOP::TAO_IOR_Manipulation_ptr
-TAO_IOP::TAO_IOR_Manipulation_var::narrow (
+TAO_IOP::TAO_IOR_Manipulation_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -1017,7 +1021,7 @@ TAO_IOP::TAO_IOR_Manipulation_var::narrow (
 }
 
 CORBA::Object *
-TAO_IOP::TAO_IOR_Manipulation_var::upcast (void *src)
+TAO_IOP::TAO_IOR_Manipulation_var::tao_upcast (void *src)
 {
   TAO_IOR_Manipulation **tmp =
     ACE_static_cast (TAO_IOR_Manipulation **, src);
@@ -1117,7 +1121,7 @@ TAO_IOP::TAO_IOR_Manipulation_ptr TAO_IOP::TAO_IOR_Manipulation::_unchecked_narr
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &TAO_IOR_Manipulation::_narrow
+                    &TAO_IOR_Manipulation::_tao_class_id
                   )
               )
         );
@@ -1136,9 +1140,9 @@ void *TAO_IOP::TAO_IOR_Manipulation::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::TAO_IOP, TAO_IOR_Manipulation)::_narrow))
+      &ACE_NESTED_CLASS (::TAO_IOP, TAO_IOR_Manipulation)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
     

@@ -95,11 +95,11 @@ public:
 
   // Hooks used by template sequence and object manager classes
   // for non-defined forward declared interfaces.
-  static CORBA_PollableSet_ptr duplicate (CORBA_PollableSet_ptr);
-  static void release (CORBA_PollableSet_ptr);
-  static CORBA_PollableSet_ptr nil (void);
-  static CORBA_PollableSet_ptr narrow (CORBA::Object *, CORBA::Environment &);
-  static CORBA::Object * upcast (void *);
+  static CORBA_PollableSet_ptr tao_duplicate (CORBA_PollableSet_ptr);
+  static void tao_release (CORBA_PollableSet_ptr);
+  static CORBA_PollableSet_ptr tao_nil (void);
+  static CORBA_PollableSet_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * tao_upcast (void *);
 
 private:
   CORBA_PollableSet_ptr ptr_;
@@ -171,11 +171,11 @@ public:
 
   // Hooks used by template sequence and object manager classes
   // for non-defined forward declared interfaces.
-  static CORBA_Pollable_ptr duplicate (CORBA_Pollable_ptr);
-  static void release (CORBA_Pollable_ptr);
-  static CORBA_Pollable_ptr nil (void);
-  static CORBA_Pollable_ptr narrow (CORBA::Object *, CORBA::Environment &);
-  static CORBA::Object * upcast (void *);
+  static CORBA_Pollable_ptr tao_duplicate (CORBA_Pollable_ptr);
+  static void tao_release (CORBA_Pollable_ptr);
+  static CORBA_Pollable_ptr tao_nil (void);
+  static CORBA_Pollable_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * tao_upcast (void *);
 
 private:
   CORBA_Pollable_ptr ptr_;
@@ -222,6 +222,8 @@ public:
   typedef CORBA_Pollable_ptr _ptr_type;
   typedef CORBA_Pollable_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
   // the static operations
   static CORBA_Pollable_ptr _duplicate (CORBA_Pollable_ptr obj);
@@ -309,11 +311,11 @@ public:
 
   // Hooks used by template sequence and object manager classes
   // for non-defined forward declared interfaces.
-  static CORBA_DIIPollable_ptr duplicate (CORBA_DIIPollable_ptr);
-  static void release (CORBA_DIIPollable_ptr);
-  static CORBA_DIIPollable_ptr nil (void);
-  static CORBA_DIIPollable_ptr narrow (CORBA::Object *, CORBA::Environment &);
-  static CORBA::Object * upcast (void *);
+  static CORBA_DIIPollable_ptr tao_duplicate (CORBA_DIIPollable_ptr);
+  static void tao_release (CORBA_DIIPollable_ptr);
+  static CORBA_DIIPollable_ptr tao_nil (void);
+  static CORBA_DIIPollable_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object * tao_upcast (void *);
 
 private:
   CORBA_DIIPollable_ptr ptr_;
@@ -360,6 +362,8 @@ public:
   typedef CORBA_DIIPollable_ptr _ptr_type;
   typedef CORBA_DIIPollable_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
   // the static operations
   static CORBA_DIIPollable_ptr _duplicate (CORBA_DIIPollable_ptr obj);
@@ -414,6 +418,8 @@ public:
   typedef CORBA_PollableSet_ptr _ptr_type;
   typedef CORBA_PollableSet_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+  static int _tao_class_id;
 
   // the static operations
   static CORBA_PollableSet_ptr _duplicate (CORBA_PollableSet_ptr obj);

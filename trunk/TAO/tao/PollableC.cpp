@@ -33,6 +33,8 @@
 
 ACE_RCSID(tao, PollableC, "$Id$")
 
+int CORBA_Pollable::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class CORBA_Pollable_var
 // *************************************************************
@@ -122,25 +124,25 @@ CORBA_Pollable_var::_retn (void)
 }
 
 ::CORBA_Pollable_ptr
-CORBA_Pollable_var::duplicate (CORBA_Pollable_ptr p)
+CORBA_Pollable_var::tao_duplicate (CORBA_Pollable_ptr p)
 {
   return ::CORBA_Pollable::_duplicate (p);
 }
 
 void
-CORBA_Pollable_var::release (CORBA_Pollable_ptr p)
+CORBA_Pollable_var::tao_release (CORBA_Pollable_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_Pollable_ptr
-CORBA_Pollable_var::nil (void)
+CORBA_Pollable_var::tao_nil (void)
 {
   return ::CORBA_Pollable::_nil ();
 }
 
 ::CORBA_Pollable_ptr
-CORBA_Pollable_var::narrow (
+CORBA_Pollable_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -149,7 +151,7 @@ CORBA_Pollable_var::narrow (
 }
 
 CORBA::Object *
-CORBA_Pollable_var::upcast (void *src)
+CORBA_Pollable_var::tao_upcast (void *src)
 {
   CORBA_Pollable **tmp =
     ACE_static_cast (CORBA_Pollable **, src);
@@ -248,7 +250,7 @@ CORBA_Pollable_ptr CORBA_Pollable::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &CORBA_Pollable::_narrow
+                    &CORBA_Pollable::_tao_class_id
                   )
               )
         );
@@ -267,9 +269,9 @@ void *CORBA_Pollable::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Pollable::_narrow))
+      &CORBA_Pollable::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -282,6 +284,8 @@ const char* CORBA_Pollable::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/Pollable:1.0";
 }
+
+int CORBA_DIIPollable::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class CORBA_DIIPollable_var
@@ -372,25 +376,25 @@ CORBA_DIIPollable_var::_retn (void)
 }
 
 ::CORBA_DIIPollable_ptr
-CORBA_DIIPollable_var::duplicate (CORBA_DIIPollable_ptr p)
+CORBA_DIIPollable_var::tao_duplicate (CORBA_DIIPollable_ptr p)
 {
   return ::CORBA_DIIPollable::_duplicate (p);
 }
 
 void
-CORBA_DIIPollable_var::release (CORBA_DIIPollable_ptr p)
+CORBA_DIIPollable_var::tao_release (CORBA_DIIPollable_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_DIIPollable_ptr
-CORBA_DIIPollable_var::nil (void)
+CORBA_DIIPollable_var::tao_nil (void)
 {
   return ::CORBA_DIIPollable::_nil ();
 }
 
 ::CORBA_DIIPollable_ptr
-CORBA_DIIPollable_var::narrow (
+CORBA_DIIPollable_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -399,7 +403,7 @@ CORBA_DIIPollable_var::narrow (
 }
 
 CORBA::Object *
-CORBA_DIIPollable_var::upcast (void *src)
+CORBA_DIIPollable_var::tao_upcast (void *src)
 {
   CORBA_DIIPollable **tmp =
     ACE_static_cast (CORBA_DIIPollable **, src);
@@ -498,7 +502,7 @@ CORBA_DIIPollable_ptr CORBA_DIIPollable::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &CORBA_DIIPollable::_narrow
+                    &CORBA_DIIPollable::_tao_class_id
                   )
               )
         );
@@ -517,11 +521,11 @@ void *CORBA_DIIPollable::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_DIIPollable::_narrow))
+      &CORBA_DIIPollable::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Pollable::_narrow))
+      &CORBA_Pollable::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -531,7 +535,7 @@ void *CORBA_DIIPollable::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -544,6 +548,8 @@ const char* CORBA_DIIPollable::_interface_repository_id (void) const
 {
   return "IDL:omg.org/CORBA/DIIPollable:1.0";
 }
+
+int CORBA_PollableSet::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class CORBA_PollableSet_var
@@ -634,25 +640,25 @@ CORBA_PollableSet_var::_retn (void)
 }
 
 ::CORBA_PollableSet_ptr
-CORBA_PollableSet_var::duplicate (CORBA_PollableSet_ptr p)
+CORBA_PollableSet_var::tao_duplicate (CORBA_PollableSet_ptr p)
 {
   return ::CORBA_PollableSet::_duplicate (p);
 }
 
 void
-CORBA_PollableSet_var::release (CORBA_PollableSet_ptr p)
+CORBA_PollableSet_var::tao_release (CORBA_PollableSet_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_PollableSet_ptr
-CORBA_PollableSet_var::nil (void)
+CORBA_PollableSet_var::tao_nil (void)
 {
   return ::CORBA_PollableSet::_nil ();
 }
 
 ::CORBA_PollableSet_ptr
-CORBA_PollableSet_var::narrow (
+CORBA_PollableSet_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -661,7 +667,7 @@ CORBA_PollableSet_var::narrow (
 }
 
 CORBA::Object *
-CORBA_PollableSet_var::upcast (void *src)
+CORBA_PollableSet_var::tao_upcast (void *src)
 {
   CORBA_PollableSet **tmp =
     ACE_static_cast (CORBA_PollableSet **, src);
@@ -760,7 +766,7 @@ CORBA_PollableSet_ptr CORBA_PollableSet::_unchecked_narrow (
                 ACE_reinterpret_cast
                   (
                     ptr_arith_t,
-                    &CORBA_PollableSet::_narrow
+                    &CORBA_PollableSet::_tao_class_id
                   )
               )
         );
@@ -779,9 +785,9 @@ void *CORBA_PollableSet::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_PollableSet::_narrow))
+      &CORBA_PollableSet::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
     

@@ -83,6 +83,8 @@ tao_CORBA_Repository_upcast (
   return *tmp;
 }
 
+int CORBA_Repository::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class CORBA_Repository_var
 // *************************************************************
@@ -172,25 +174,25 @@ CORBA_Repository_var::_retn (void)
 }
 
 ::CORBA_Repository_ptr
-CORBA_Repository_var::duplicate (CORBA_Repository_ptr p)
+CORBA_Repository_var::tao_duplicate (CORBA_Repository_ptr p)
 {
   return ::CORBA_Repository::_duplicate (p);
 }
 
 void
-CORBA_Repository_var::release (CORBA_Repository_ptr p)
+CORBA_Repository_var::tao_release (CORBA_Repository_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_Repository_ptr
-CORBA_Repository_var::nil (void)
+CORBA_Repository_var::tao_nil (void)
 {
   return ::CORBA_Repository::_nil ();
 }
 
 ::CORBA_Repository_ptr
-CORBA_Repository_var::narrow (
+CORBA_Repository_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -199,7 +201,7 @@ CORBA_Repository_var::narrow (
 }
 
 CORBA::Object *
-CORBA_Repository_var::upcast (void *src)
+CORBA_Repository_var::tao_upcast (void *src)
 {
   CORBA_Repository **tmp =
     ACE_static_cast (CORBA_Repository **, src);
@@ -2733,7 +2735,7 @@ CORBA_Repository_ptr CORBA_Repository::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &CORBA_Repository::_narrow
+                      &CORBA_Repository::_tao_class_id
                     )
                 )
           );
@@ -2764,11 +2766,11 @@ void *CORBA_Repository::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Repository::_narrow))
+      &CORBA_Repository::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Container::_narrow))
+      &CORBA_Container::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -2780,7 +2782,7 @@ void *CORBA_Repository::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -2790,7 +2792,7 @@ void *CORBA_Repository::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -3005,6 +3007,8 @@ tao_CORBA_ModuleDef_upcast (
   return *tmp;
 }
 
+int CORBA_ModuleDef::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class CORBA_ModuleDef_var
 // *************************************************************
@@ -3094,25 +3098,25 @@ CORBA_ModuleDef_var::_retn (void)
 }
 
 ::CORBA_ModuleDef_ptr
-CORBA_ModuleDef_var::duplicate (CORBA_ModuleDef_ptr p)
+CORBA_ModuleDef_var::tao_duplicate (CORBA_ModuleDef_ptr p)
 {
   return ::CORBA_ModuleDef::_duplicate (p);
 }
 
 void
-CORBA_ModuleDef_var::release (CORBA_ModuleDef_ptr p)
+CORBA_ModuleDef_var::tao_release (CORBA_ModuleDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_ModuleDef_ptr
-CORBA_ModuleDef_var::nil (void)
+CORBA_ModuleDef_var::tao_nil (void)
 {
   return ::CORBA_ModuleDef::_nil ();
 }
 
 ::CORBA_ModuleDef_ptr
-CORBA_ModuleDef_var::narrow (
+CORBA_ModuleDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3121,7 +3125,7 @@ CORBA_ModuleDef_var::narrow (
 }
 
 CORBA::Object *
-CORBA_ModuleDef_var::upcast (void *src)
+CORBA_ModuleDef_var::tao_upcast (void *src)
 {
   CORBA_ModuleDef **tmp =
     ACE_static_cast (CORBA_ModuleDef **, src);
@@ -3347,7 +3351,7 @@ CORBA_ModuleDef_ptr CORBA_ModuleDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &CORBA_ModuleDef::_narrow
+                      &CORBA_ModuleDef::_tao_class_id
                     )
                 )
           );
@@ -3379,11 +3383,11 @@ void *CORBA_ModuleDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_ModuleDef::_narrow))
+      &CORBA_ModuleDef::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Container::_narrow))
+      &CORBA_Container::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -3395,7 +3399,7 @@ void *CORBA_ModuleDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -3407,7 +3411,7 @@ void *CORBA_ModuleDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -3417,7 +3421,7 @@ void *CORBA_ModuleDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -3479,6 +3483,8 @@ tao_CORBA_ConstantDef_upcast (
     ACE_static_cast (CORBA_ConstantDef **, src);
   return *tmp;
 }
+
+int CORBA_ConstantDef::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class CORBA_ConstantDef_var
@@ -3569,25 +3575,25 @@ CORBA_ConstantDef_var::_retn (void)
 }
 
 ::CORBA_ConstantDef_ptr
-CORBA_ConstantDef_var::duplicate (CORBA_ConstantDef_ptr p)
+CORBA_ConstantDef_var::tao_duplicate (CORBA_ConstantDef_ptr p)
 {
   return ::CORBA_ConstantDef::_duplicate (p);
 }
 
 void
-CORBA_ConstantDef_var::release (CORBA_ConstantDef_ptr p)
+CORBA_ConstantDef_var::tao_release (CORBA_ConstantDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_ConstantDef_ptr
-CORBA_ConstantDef_var::nil (void)
+CORBA_ConstantDef_var::tao_nil (void)
 {
   return ::CORBA_ConstantDef::_nil ();
 }
 
 ::CORBA_ConstantDef_ptr
-CORBA_ConstantDef_var::narrow (
+CORBA_ConstantDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -3596,7 +3602,7 @@ CORBA_ConstantDef_var::narrow (
 }
 
 CORBA::Object *
-CORBA_ConstantDef_var::upcast (void *src)
+CORBA_ConstantDef_var::tao_upcast (void *src)
 {
   CORBA_ConstantDef **tmp =
     ACE_static_cast (CORBA_ConstantDef **, src);
@@ -5116,7 +5122,7 @@ CORBA_ConstantDef_ptr CORBA_ConstantDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &CORBA_ConstantDef::_narrow
+                      &CORBA_ConstantDef::_tao_class_id
                     )
                 )
           );
@@ -5147,11 +5153,11 @@ void *CORBA_ConstantDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_ConstantDef::_narrow))
+      &CORBA_ConstantDef::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -5163,7 +5169,7 @@ void *CORBA_ConstantDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -5173,7 +5179,7 @@ void *CORBA_ConstantDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -5325,6 +5331,8 @@ tao_CORBA_StructDef_upcast (
   return *tmp;
 }
 
+int CORBA_StructDef::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class CORBA_StructDef_var
 // *************************************************************
@@ -5414,25 +5422,25 @@ CORBA_StructDef_var::_retn (void)
 }
 
 ::CORBA_StructDef_ptr
-CORBA_StructDef_var::duplicate (CORBA_StructDef_ptr p)
+CORBA_StructDef_var::tao_duplicate (CORBA_StructDef_ptr p)
 {
   return ::CORBA_StructDef::_duplicate (p);
 }
 
 void
-CORBA_StructDef_var::release (CORBA_StructDef_ptr p)
+CORBA_StructDef_var::tao_release (CORBA_StructDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_StructDef_ptr
-CORBA_StructDef_var::nil (void)
+CORBA_StructDef_var::tao_nil (void)
 {
   return ::CORBA_StructDef::_nil ();
 }
 
 ::CORBA_StructDef_ptr
-CORBA_StructDef_var::narrow (
+CORBA_StructDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -5441,7 +5449,7 @@ CORBA_StructDef_var::narrow (
 }
 
 CORBA::Object *
-CORBA_StructDef_var::upcast (void *src)
+CORBA_StructDef_var::tao_upcast (void *src)
 {
   CORBA_StructDef **tmp =
     ACE_static_cast (CORBA_StructDef **, src);
@@ -6185,7 +6193,7 @@ CORBA_StructDef_ptr CORBA_StructDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &CORBA_StructDef::_narrow
+                      &CORBA_StructDef::_tao_class_id
                     )
                 )
           );
@@ -6219,11 +6227,11 @@ void *CORBA_StructDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_StructDef::_narrow))
+      &CORBA_StructDef::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_TypedefDef::_narrow))
+      &CORBA_TypedefDef::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -6235,7 +6243,7 @@ void *CORBA_StructDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Container::_narrow))
+      &CORBA_Container::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -6247,7 +6255,7 @@ void *CORBA_StructDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -6259,7 +6267,7 @@ void *CORBA_StructDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IDLType::_narrow))
+      &CORBA_IDLType::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -6271,7 +6279,7 @@ void *CORBA_StructDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -6281,7 +6289,7 @@ void *CORBA_StructDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -6374,6 +6382,8 @@ tao_CORBA_UnionDef_upcast (
   return *tmp;
 }
 
+int CORBA_UnionDef::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class CORBA_UnionDef_var
 // *************************************************************
@@ -6463,25 +6473,25 @@ CORBA_UnionDef_var::_retn (void)
 }
 
 ::CORBA_UnionDef_ptr
-CORBA_UnionDef_var::duplicate (CORBA_UnionDef_ptr p)
+CORBA_UnionDef_var::tao_duplicate (CORBA_UnionDef_ptr p)
 {
   return ::CORBA_UnionDef::_duplicate (p);
 }
 
 void
-CORBA_UnionDef_var::release (CORBA_UnionDef_ptr p)
+CORBA_UnionDef_var::tao_release (CORBA_UnionDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_UnionDef_ptr
-CORBA_UnionDef_var::nil (void)
+CORBA_UnionDef_var::tao_nil (void)
 {
   return ::CORBA_UnionDef::_nil ();
 }
 
 ::CORBA_UnionDef_ptr
-CORBA_UnionDef_var::narrow (
+CORBA_UnionDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -6490,7 +6500,7 @@ CORBA_UnionDef_var::narrow (
 }
 
 CORBA::Object *
-CORBA_UnionDef_var::upcast (void *src)
+CORBA_UnionDef_var::tao_upcast (void *src)
 {
   CORBA_UnionDef **tmp =
     ACE_static_cast (CORBA_UnionDef **, src);
@@ -8012,7 +8022,7 @@ CORBA_UnionDef_ptr CORBA_UnionDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &CORBA_UnionDef::_narrow
+                      &CORBA_UnionDef::_tao_class_id
                     )
                 )
           );
@@ -8046,11 +8056,11 @@ void *CORBA_UnionDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_UnionDef::_narrow))
+      &CORBA_UnionDef::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_TypedefDef::_narrow))
+      &CORBA_TypedefDef::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -8062,7 +8072,7 @@ void *CORBA_UnionDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Container::_narrow))
+      &CORBA_Container::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -8074,7 +8084,7 @@ void *CORBA_UnionDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -8086,7 +8096,7 @@ void *CORBA_UnionDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IDLType::_narrow))
+      &CORBA_IDLType::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -8098,7 +8108,7 @@ void *CORBA_UnionDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -8108,7 +8118,7 @@ void *CORBA_UnionDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -8254,6 +8264,8 @@ tao_CORBA_EnumDef_upcast (
   return *tmp;
 }
 
+int CORBA_EnumDef::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class CORBA_EnumDef_var
 // *************************************************************
@@ -8343,25 +8355,25 @@ CORBA_EnumDef_var::_retn (void)
 }
 
 ::CORBA_EnumDef_ptr
-CORBA_EnumDef_var::duplicate (CORBA_EnumDef_ptr p)
+CORBA_EnumDef_var::tao_duplicate (CORBA_EnumDef_ptr p)
 {
   return ::CORBA_EnumDef::_duplicate (p);
 }
 
 void
-CORBA_EnumDef_var::release (CORBA_EnumDef_ptr p)
+CORBA_EnumDef_var::tao_release (CORBA_EnumDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_EnumDef_ptr
-CORBA_EnumDef_var::nil (void)
+CORBA_EnumDef_var::tao_nil (void)
 {
   return ::CORBA_EnumDef::_nil ();
 }
 
 ::CORBA_EnumDef_ptr
-CORBA_EnumDef_var::narrow (
+CORBA_EnumDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -8370,7 +8382,7 @@ CORBA_EnumDef_var::narrow (
 }
 
 CORBA::Object *
-CORBA_EnumDef_var::upcast (void *src)
+CORBA_EnumDef_var::tao_upcast (void *src)
 {
   CORBA_EnumDef **tmp =
     ACE_static_cast (CORBA_EnumDef **, src);
@@ -9112,7 +9124,7 @@ CORBA_EnumDef_ptr CORBA_EnumDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &CORBA_EnumDef::_narrow
+                      &CORBA_EnumDef::_tao_class_id
                     )
                 )
           );
@@ -9145,11 +9157,11 @@ void *CORBA_EnumDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_EnumDef::_narrow))
+      &CORBA_EnumDef::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_TypedefDef::_narrow))
+      &CORBA_TypedefDef::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -9161,7 +9173,7 @@ void *CORBA_EnumDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -9173,7 +9185,7 @@ void *CORBA_EnumDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IDLType::_narrow))
+      &CORBA_IDLType::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -9185,7 +9197,7 @@ void *CORBA_EnumDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -9195,7 +9207,7 @@ void *CORBA_EnumDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -9288,6 +9300,8 @@ tao_CORBA_AliasDef_upcast (
   return *tmp;
 }
 
+int CORBA_AliasDef::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class CORBA_AliasDef_var
 // *************************************************************
@@ -9377,25 +9391,25 @@ CORBA_AliasDef_var::_retn (void)
 }
 
 ::CORBA_AliasDef_ptr
-CORBA_AliasDef_var::duplicate (CORBA_AliasDef_ptr p)
+CORBA_AliasDef_var::tao_duplicate (CORBA_AliasDef_ptr p)
 {
   return ::CORBA_AliasDef::_duplicate (p);
 }
 
 void
-CORBA_AliasDef_var::release (CORBA_AliasDef_ptr p)
+CORBA_AliasDef_var::tao_release (CORBA_AliasDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_AliasDef_ptr
-CORBA_AliasDef_var::nil (void)
+CORBA_AliasDef_var::tao_nil (void)
 {
   return ::CORBA_AliasDef::_nil ();
 }
 
 ::CORBA_AliasDef_ptr
-CORBA_AliasDef_var::narrow (
+CORBA_AliasDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -9404,7 +9418,7 @@ CORBA_AliasDef_var::narrow (
 }
 
 CORBA::Object *
-CORBA_AliasDef_var::upcast (void *src)
+CORBA_AliasDef_var::tao_upcast (void *src)
 {
   CORBA_AliasDef **tmp =
     ACE_static_cast (CORBA_AliasDef **, src);
@@ -10145,7 +10159,7 @@ CORBA_AliasDef_ptr CORBA_AliasDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &CORBA_AliasDef::_narrow
+                      &CORBA_AliasDef::_tao_class_id
                     )
                 )
           );
@@ -10178,11 +10192,11 @@ void *CORBA_AliasDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_AliasDef::_narrow))
+      &CORBA_AliasDef::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_TypedefDef::_narrow))
+      &CORBA_TypedefDef::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -10194,7 +10208,7 @@ void *CORBA_AliasDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -10206,7 +10220,7 @@ void *CORBA_AliasDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IDLType::_narrow))
+      &CORBA_IDLType::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -10218,7 +10232,7 @@ void *CORBA_AliasDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -10228,7 +10242,7 @@ void *CORBA_AliasDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -10321,6 +10335,8 @@ tao_CORBA_NativeDef_upcast (
   return *tmp;
 }
 
+int CORBA_NativeDef::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class CORBA_NativeDef_var
 // *************************************************************
@@ -10410,25 +10426,25 @@ CORBA_NativeDef_var::_retn (void)
 }
 
 ::CORBA_NativeDef_ptr
-CORBA_NativeDef_var::duplicate (CORBA_NativeDef_ptr p)
+CORBA_NativeDef_var::tao_duplicate (CORBA_NativeDef_ptr p)
 {
   return ::CORBA_NativeDef::_duplicate (p);
 }
 
 void
-CORBA_NativeDef_var::release (CORBA_NativeDef_ptr p)
+CORBA_NativeDef_var::tao_release (CORBA_NativeDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_NativeDef_ptr
-CORBA_NativeDef_var::nil (void)
+CORBA_NativeDef_var::tao_nil (void)
 {
   return ::CORBA_NativeDef::_nil ();
 }
 
 ::CORBA_NativeDef_ptr
-CORBA_NativeDef_var::narrow (
+CORBA_NativeDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -10437,7 +10453,7 @@ CORBA_NativeDef_var::narrow (
 }
 
 CORBA::Object *
-CORBA_NativeDef_var::upcast (void *src)
+CORBA_NativeDef_var::tao_upcast (void *src)
 {
   CORBA_NativeDef **tmp =
     ACE_static_cast (CORBA_NativeDef **, src);
@@ -10661,7 +10677,7 @@ CORBA_NativeDef_ptr CORBA_NativeDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &CORBA_NativeDef::_narrow
+                      &CORBA_NativeDef::_tao_class_id
                     )
                 )
           );
@@ -10694,11 +10710,11 @@ void *CORBA_NativeDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_NativeDef::_narrow))
+      &CORBA_NativeDef::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_TypedefDef::_narrow))
+      &CORBA_TypedefDef::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -10710,7 +10726,7 @@ void *CORBA_NativeDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -10722,7 +10738,7 @@ void *CORBA_NativeDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IDLType::_narrow))
+      &CORBA_IDLType::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -10734,7 +10750,7 @@ void *CORBA_NativeDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -10744,7 +10760,7 @@ void *CORBA_NativeDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -10800,6 +10816,8 @@ tao_CORBA_PrimitiveDef_upcast (
     ACE_static_cast (CORBA_PrimitiveDef **, src);
   return *tmp;
 }
+
+int CORBA_PrimitiveDef::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class CORBA_PrimitiveDef_var
@@ -10890,25 +10908,25 @@ CORBA_PrimitiveDef_var::_retn (void)
 }
 
 ::CORBA_PrimitiveDef_ptr
-CORBA_PrimitiveDef_var::duplicate (CORBA_PrimitiveDef_ptr p)
+CORBA_PrimitiveDef_var::tao_duplicate (CORBA_PrimitiveDef_ptr p)
 {
   return ::CORBA_PrimitiveDef::_duplicate (p);
 }
 
 void
-CORBA_PrimitiveDef_var::release (CORBA_PrimitiveDef_ptr p)
+CORBA_PrimitiveDef_var::tao_release (CORBA_PrimitiveDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_PrimitiveDef_ptr
-CORBA_PrimitiveDef_var::nil (void)
+CORBA_PrimitiveDef_var::tao_nil (void)
 {
   return ::CORBA_PrimitiveDef::_nil ();
 }
 
 ::CORBA_PrimitiveDef_ptr
-CORBA_PrimitiveDef_var::narrow (
+CORBA_PrimitiveDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -10917,7 +10935,7 @@ CORBA_PrimitiveDef_var::narrow (
 }
 
 CORBA::Object *
-CORBA_PrimitiveDef_var::upcast (void *src)
+CORBA_PrimitiveDef_var::tao_upcast (void *src)
 {
   CORBA_PrimitiveDef **tmp =
     ACE_static_cast (CORBA_PrimitiveDef **, src);
@@ -11400,7 +11418,7 @@ CORBA_PrimitiveDef_ptr CORBA_PrimitiveDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &CORBA_PrimitiveDef::_narrow
+                      &CORBA_PrimitiveDef::_tao_class_id
                     )
                 )
           );
@@ -11431,11 +11449,11 @@ void *CORBA_PrimitiveDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_PrimitiveDef::_narrow))
+      &CORBA_PrimitiveDef::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IDLType::_narrow))
+      &CORBA_IDLType::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -11447,7 +11465,7 @@ void *CORBA_PrimitiveDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -11457,7 +11475,7 @@ void *CORBA_PrimitiveDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -11530,6 +11548,8 @@ tao_CORBA_StringDef_upcast (
     ACE_static_cast (CORBA_StringDef **, src);
   return *tmp;
 }
+
+int CORBA_StringDef::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class CORBA_StringDef_var
@@ -11620,25 +11640,25 @@ CORBA_StringDef_var::_retn (void)
 }
 
 ::CORBA_StringDef_ptr
-CORBA_StringDef_var::duplicate (CORBA_StringDef_ptr p)
+CORBA_StringDef_var::tao_duplicate (CORBA_StringDef_ptr p)
 {
   return ::CORBA_StringDef::_duplicate (p);
 }
 
 void
-CORBA_StringDef_var::release (CORBA_StringDef_ptr p)
+CORBA_StringDef_var::tao_release (CORBA_StringDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_StringDef_ptr
-CORBA_StringDef_var::nil (void)
+CORBA_StringDef_var::tao_nil (void)
 {
   return ::CORBA_StringDef::_nil ();
 }
 
 ::CORBA_StringDef_ptr
-CORBA_StringDef_var::narrow (
+CORBA_StringDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -11647,7 +11667,7 @@ CORBA_StringDef_var::narrow (
 }
 
 CORBA::Object *
-CORBA_StringDef_var::upcast (void *src)
+CORBA_StringDef_var::tao_upcast (void *src)
 {
   CORBA_StringDef **tmp =
     ACE_static_cast (CORBA_StringDef **, src);
@@ -12386,7 +12406,7 @@ CORBA_StringDef_ptr CORBA_StringDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &CORBA_StringDef::_narrow
+                      &CORBA_StringDef::_tao_class_id
                     )
                 )
           );
@@ -12417,11 +12437,11 @@ void *CORBA_StringDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_StringDef::_narrow))
+      &CORBA_StringDef::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IDLType::_narrow))
+      &CORBA_IDLType::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -12433,7 +12453,7 @@ void *CORBA_StringDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -12443,7 +12463,7 @@ void *CORBA_StringDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -12536,6 +12556,8 @@ tao_CORBA_WstringDef_upcast (
   return *tmp;
 }
 
+int CORBA_WstringDef::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class CORBA_WstringDef_var
 // *************************************************************
@@ -12625,25 +12647,25 @@ CORBA_WstringDef_var::_retn (void)
 }
 
 ::CORBA_WstringDef_ptr
-CORBA_WstringDef_var::duplicate (CORBA_WstringDef_ptr p)
+CORBA_WstringDef_var::tao_duplicate (CORBA_WstringDef_ptr p)
 {
   return ::CORBA_WstringDef::_duplicate (p);
 }
 
 void
-CORBA_WstringDef_var::release (CORBA_WstringDef_ptr p)
+CORBA_WstringDef_var::tao_release (CORBA_WstringDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_WstringDef_ptr
-CORBA_WstringDef_var::nil (void)
+CORBA_WstringDef_var::tao_nil (void)
 {
   return ::CORBA_WstringDef::_nil ();
 }
 
 ::CORBA_WstringDef_ptr
-CORBA_WstringDef_var::narrow (
+CORBA_WstringDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -12652,7 +12674,7 @@ CORBA_WstringDef_var::narrow (
 }
 
 CORBA::Object *
-CORBA_WstringDef_var::upcast (void *src)
+CORBA_WstringDef_var::tao_upcast (void *src)
 {
   CORBA_WstringDef **tmp =
     ACE_static_cast (CORBA_WstringDef **, src);
@@ -13391,7 +13413,7 @@ CORBA_WstringDef_ptr CORBA_WstringDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &CORBA_WstringDef::_narrow
+                      &CORBA_WstringDef::_tao_class_id
                     )
                 )
           );
@@ -13422,11 +13444,11 @@ void *CORBA_WstringDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_WstringDef::_narrow))
+      &CORBA_WstringDef::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IDLType::_narrow))
+      &CORBA_IDLType::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -13438,7 +13460,7 @@ void *CORBA_WstringDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -13448,7 +13470,7 @@ void *CORBA_WstringDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -13541,6 +13563,8 @@ tao_CORBA_SequenceDef_upcast (
   return *tmp;
 }
 
+int CORBA_SequenceDef::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class CORBA_SequenceDef_var
 // *************************************************************
@@ -13630,25 +13654,25 @@ CORBA_SequenceDef_var::_retn (void)
 }
 
 ::CORBA_SequenceDef_ptr
-CORBA_SequenceDef_var::duplicate (CORBA_SequenceDef_ptr p)
+CORBA_SequenceDef_var::tao_duplicate (CORBA_SequenceDef_ptr p)
 {
   return ::CORBA_SequenceDef::_duplicate (p);
 }
 
 void
-CORBA_SequenceDef_var::release (CORBA_SequenceDef_ptr p)
+CORBA_SequenceDef_var::tao_release (CORBA_SequenceDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_SequenceDef_ptr
-CORBA_SequenceDef_var::nil (void)
+CORBA_SequenceDef_var::tao_nil (void)
 {
   return ::CORBA_SequenceDef::_nil ();
 }
 
 ::CORBA_SequenceDef_ptr
-CORBA_SequenceDef_var::narrow (
+CORBA_SequenceDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -13657,7 +13681,7 @@ CORBA_SequenceDef_var::narrow (
 }
 
 CORBA::Object *
-CORBA_SequenceDef_var::upcast (void *src)
+CORBA_SequenceDef_var::tao_upcast (void *src)
 {
   CORBA_SequenceDef **tmp =
     ACE_static_cast (CORBA_SequenceDef **, src);
@@ -15174,7 +15198,7 @@ CORBA_SequenceDef_ptr CORBA_SequenceDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &CORBA_SequenceDef::_narrow
+                      &CORBA_SequenceDef::_tao_class_id
                     )
                 )
           );
@@ -15205,11 +15229,11 @@ void *CORBA_SequenceDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_SequenceDef::_narrow))
+      &CORBA_SequenceDef::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IDLType::_narrow))
+      &CORBA_IDLType::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -15221,7 +15245,7 @@ void *CORBA_SequenceDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -15231,7 +15255,7 @@ void *CORBA_SequenceDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -15377,6 +15401,8 @@ tao_CORBA_ArrayDef_upcast (
   return *tmp;
 }
 
+int CORBA_ArrayDef::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class CORBA_ArrayDef_var
 // *************************************************************
@@ -15466,25 +15492,25 @@ CORBA_ArrayDef_var::_retn (void)
 }
 
 ::CORBA_ArrayDef_ptr
-CORBA_ArrayDef_var::duplicate (CORBA_ArrayDef_ptr p)
+CORBA_ArrayDef_var::tao_duplicate (CORBA_ArrayDef_ptr p)
 {
   return ::CORBA_ArrayDef::_duplicate (p);
 }
 
 void
-CORBA_ArrayDef_var::release (CORBA_ArrayDef_ptr p)
+CORBA_ArrayDef_var::tao_release (CORBA_ArrayDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_ArrayDef_ptr
-CORBA_ArrayDef_var::nil (void)
+CORBA_ArrayDef_var::tao_nil (void)
 {
   return ::CORBA_ArrayDef::_nil ();
 }
 
 ::CORBA_ArrayDef_ptr
-CORBA_ArrayDef_var::narrow (
+CORBA_ArrayDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -15493,7 +15519,7 @@ CORBA_ArrayDef_var::narrow (
 }
 
 CORBA::Object *
-CORBA_ArrayDef_var::upcast (void *src)
+CORBA_ArrayDef_var::tao_upcast (void *src)
 {
   CORBA_ArrayDef **tmp =
     ACE_static_cast (CORBA_ArrayDef **, src);
@@ -17010,7 +17036,7 @@ CORBA_ArrayDef_ptr CORBA_ArrayDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &CORBA_ArrayDef::_narrow
+                      &CORBA_ArrayDef::_tao_class_id
                     )
                 )
           );
@@ -17041,11 +17067,11 @@ void *CORBA_ArrayDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_ArrayDef::_narrow))
+      &CORBA_ArrayDef::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IDLType::_narrow))
+      &CORBA_IDLType::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -17057,7 +17083,7 @@ void *CORBA_ArrayDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -17067,7 +17093,7 @@ void *CORBA_ArrayDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -17213,6 +17239,8 @@ tao_CORBA_ExceptionDef_upcast (
   return *tmp;
 }
 
+int CORBA_ExceptionDef::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class CORBA_ExceptionDef_var
 // *************************************************************
@@ -17302,25 +17330,25 @@ CORBA_ExceptionDef_var::_retn (void)
 }
 
 ::CORBA_ExceptionDef_ptr
-CORBA_ExceptionDef_var::duplicate (CORBA_ExceptionDef_ptr p)
+CORBA_ExceptionDef_var::tao_duplicate (CORBA_ExceptionDef_ptr p)
 {
   return ::CORBA_ExceptionDef::_duplicate (p);
 }
 
 void
-CORBA_ExceptionDef_var::release (CORBA_ExceptionDef_ptr p)
+CORBA_ExceptionDef_var::tao_release (CORBA_ExceptionDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_ExceptionDef_ptr
-CORBA_ExceptionDef_var::nil (void)
+CORBA_ExceptionDef_var::tao_nil (void)
 {
   return ::CORBA_ExceptionDef::_nil ();
 }
 
 ::CORBA_ExceptionDef_ptr
-CORBA_ExceptionDef_var::narrow (
+CORBA_ExceptionDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -17329,7 +17357,7 @@ CORBA_ExceptionDef_var::narrow (
 }
 
 CORBA::Object *
-CORBA_ExceptionDef_var::upcast (void *src)
+CORBA_ExceptionDef_var::tao_upcast (void *src)
 {
   CORBA_ExceptionDef **tmp =
     ACE_static_cast (CORBA_ExceptionDef **, src);
@@ -18334,7 +18362,7 @@ CORBA_ExceptionDef_ptr CORBA_ExceptionDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &CORBA_ExceptionDef::_narrow
+                      &CORBA_ExceptionDef::_tao_class_id
                     )
                 )
           );
@@ -18366,11 +18394,11 @@ void *CORBA_ExceptionDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_ExceptionDef::_narrow))
+      &CORBA_ExceptionDef::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -18382,7 +18410,7 @@ void *CORBA_ExceptionDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Container::_narrow))
+      &CORBA_Container::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -18394,7 +18422,7 @@ void *CORBA_ExceptionDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -18404,7 +18432,7 @@ void *CORBA_ExceptionDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -18756,6 +18784,8 @@ tao_CORBA_AttributeDef_upcast (
   return *tmp;
 }
 
+int CORBA_AttributeDef::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class CORBA_AttributeDef_var
 // *************************************************************
@@ -18845,25 +18875,25 @@ CORBA_AttributeDef_var::_retn (void)
 }
 
 ::CORBA_AttributeDef_ptr
-CORBA_AttributeDef_var::duplicate (CORBA_AttributeDef_ptr p)
+CORBA_AttributeDef_var::tao_duplicate (CORBA_AttributeDef_ptr p)
 {
   return ::CORBA_AttributeDef::_duplicate (p);
 }
 
 void
-CORBA_AttributeDef_var::release (CORBA_AttributeDef_ptr p)
+CORBA_AttributeDef_var::tao_release (CORBA_AttributeDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_AttributeDef_ptr
-CORBA_AttributeDef_var::nil (void)
+CORBA_AttributeDef_var::tao_nil (void)
 {
   return ::CORBA_AttributeDef::_nil ();
 }
 
 ::CORBA_AttributeDef_ptr
-CORBA_AttributeDef_var::narrow (
+CORBA_AttributeDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -18872,7 +18902,7 @@ CORBA_AttributeDef_var::narrow (
 }
 
 CORBA::Object *
-CORBA_AttributeDef_var::upcast (void *src)
+CORBA_AttributeDef_var::tao_upcast (void *src)
 {
   CORBA_AttributeDef **tmp =
     ACE_static_cast (CORBA_AttributeDef **, src);
@@ -20389,7 +20419,7 @@ CORBA_AttributeDef_ptr CORBA_AttributeDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &CORBA_AttributeDef::_narrow
+                      &CORBA_AttributeDef::_tao_class_id
                     )
                 )
           );
@@ -20420,11 +20450,11 @@ void *CORBA_AttributeDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_AttributeDef::_narrow))
+      &CORBA_AttributeDef::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -20436,7 +20466,7 @@ void *CORBA_AttributeDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -20446,7 +20476,7 @@ void *CORBA_AttributeDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -20748,6 +20778,8 @@ tao_CORBA_OperationDef_upcast (
   return *tmp;
 }
 
+int CORBA_OperationDef::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class CORBA_OperationDef_var
 // *************************************************************
@@ -20837,25 +20869,25 @@ CORBA_OperationDef_var::_retn (void)
 }
 
 ::CORBA_OperationDef_ptr
-CORBA_OperationDef_var::duplicate (CORBA_OperationDef_ptr p)
+CORBA_OperationDef_var::tao_duplicate (CORBA_OperationDef_ptr p)
 {
   return ::CORBA_OperationDef::_duplicate (p);
 }
 
 void
-CORBA_OperationDef_var::release (CORBA_OperationDef_ptr p)
+CORBA_OperationDef_var::tao_release (CORBA_OperationDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_OperationDef_ptr
-CORBA_OperationDef_var::nil (void)
+CORBA_OperationDef_var::tao_nil (void)
 {
   return ::CORBA_OperationDef::_nil ();
 }
 
 ::CORBA_OperationDef_ptr
-CORBA_OperationDef_var::narrow (
+CORBA_OperationDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -20864,7 +20896,7 @@ CORBA_OperationDef_var::narrow (
 }
 
 CORBA::Object *
-CORBA_OperationDef_var::upcast (void *src)
+CORBA_OperationDef_var::tao_upcast (void *src)
 {
   CORBA_OperationDef **tmp =
     ACE_static_cast (CORBA_OperationDef **, src);
@@ -23935,7 +23967,7 @@ CORBA_OperationDef_ptr CORBA_OperationDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &CORBA_OperationDef::_narrow
+                      &CORBA_OperationDef::_tao_class_id
                     )
                 )
           );
@@ -23966,11 +23998,11 @@ void *CORBA_OperationDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_OperationDef::_narrow))
+      &CORBA_OperationDef::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -23982,7 +24014,7 @@ void *CORBA_OperationDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -23992,7 +24024,7 @@ void *CORBA_OperationDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -24494,6 +24526,8 @@ tao_CORBA_InterfaceDef_upcast (
   return *tmp;
 }
 
+int CORBA_InterfaceDef::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class CORBA_InterfaceDef_var
 // *************************************************************
@@ -24583,25 +24617,25 @@ CORBA_InterfaceDef_var::_retn (void)
 }
 
 ::CORBA_InterfaceDef_ptr
-CORBA_InterfaceDef_var::duplicate (CORBA_InterfaceDef_ptr p)
+CORBA_InterfaceDef_var::tao_duplicate (CORBA_InterfaceDef_ptr p)
 {
   return ::CORBA_InterfaceDef::_duplicate (p);
 }
 
 void
-CORBA_InterfaceDef_var::release (CORBA_InterfaceDef_ptr p)
+CORBA_InterfaceDef_var::tao_release (CORBA_InterfaceDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_InterfaceDef_ptr
-CORBA_InterfaceDef_var::nil (void)
+CORBA_InterfaceDef_var::tao_nil (void)
 {
   return ::CORBA_InterfaceDef::_nil ();
 }
 
 ::CORBA_InterfaceDef_ptr
-CORBA_InterfaceDef_var::narrow (
+CORBA_InterfaceDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -24610,7 +24644,7 @@ CORBA_InterfaceDef_var::narrow (
 }
 
 CORBA::Object *
-CORBA_InterfaceDef_var::upcast (void *src)
+CORBA_InterfaceDef_var::tao_upcast (void *src)
 {
   CORBA_InterfaceDef **tmp =
     ACE_static_cast (CORBA_InterfaceDef **, src);
@@ -26580,7 +26614,7 @@ CORBA_InterfaceDef_ptr CORBA_InterfaceDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &CORBA_InterfaceDef::_narrow
+                      &CORBA_InterfaceDef::_tao_class_id
                     )
                 )
           );
@@ -26613,11 +26647,11 @@ void *CORBA_InterfaceDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_InterfaceDef::_narrow))
+      &CORBA_InterfaceDef::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Container::_narrow))
+      &CORBA_Container::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -26629,7 +26663,7 @@ void *CORBA_InterfaceDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -26641,7 +26675,7 @@ void *CORBA_InterfaceDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IDLType::_narrow))
+      &CORBA_IDLType::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -26653,7 +26687,7 @@ void *CORBA_InterfaceDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -26663,7 +26697,7 @@ void *CORBA_InterfaceDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -27784,6 +27818,8 @@ tao_CORBA_AbstractInterfaceDef_upcast (
   return *tmp;
 }
 
+int CORBA_AbstractInterfaceDef::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class CORBA_AbstractInterfaceDef_var
 // *************************************************************
@@ -27873,25 +27909,25 @@ CORBA_AbstractInterfaceDef_var::_retn (void)
 }
 
 ::CORBA_AbstractInterfaceDef_ptr
-CORBA_AbstractInterfaceDef_var::duplicate (CORBA_AbstractInterfaceDef_ptr p)
+CORBA_AbstractInterfaceDef_var::tao_duplicate (CORBA_AbstractInterfaceDef_ptr p)
 {
   return ::CORBA_AbstractInterfaceDef::_duplicate (p);
 }
 
 void
-CORBA_AbstractInterfaceDef_var::release (CORBA_AbstractInterfaceDef_ptr p)
+CORBA_AbstractInterfaceDef_var::tao_release (CORBA_AbstractInterfaceDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_AbstractInterfaceDef_ptr
-CORBA_AbstractInterfaceDef_var::nil (void)
+CORBA_AbstractInterfaceDef_var::tao_nil (void)
 {
   return ::CORBA_AbstractInterfaceDef::_nil ();
 }
 
 ::CORBA_AbstractInterfaceDef_ptr
-CORBA_AbstractInterfaceDef_var::narrow (
+CORBA_AbstractInterfaceDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -27900,7 +27936,7 @@ CORBA_AbstractInterfaceDef_var::narrow (
 }
 
 CORBA::Object *
-CORBA_AbstractInterfaceDef_var::upcast (void *src)
+CORBA_AbstractInterfaceDef_var::tao_upcast (void *src)
 {
   CORBA_AbstractInterfaceDef **tmp =
     ACE_static_cast (CORBA_AbstractInterfaceDef **, src);
@@ -28124,7 +28160,7 @@ CORBA_AbstractInterfaceDef_ptr CORBA_AbstractInterfaceDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &CORBA_AbstractInterfaceDef::_narrow
+                      &CORBA_AbstractInterfaceDef::_tao_class_id
                     )
                 )
           );
@@ -28158,11 +28194,11 @@ void *CORBA_AbstractInterfaceDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_AbstractInterfaceDef::_narrow))
+      &CORBA_AbstractInterfaceDef::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_InterfaceDef::_narrow))
+      &CORBA_InterfaceDef::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -28174,7 +28210,7 @@ void *CORBA_AbstractInterfaceDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Container::_narrow))
+      &CORBA_Container::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -28186,7 +28222,7 @@ void *CORBA_AbstractInterfaceDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -28198,7 +28234,7 @@ void *CORBA_AbstractInterfaceDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IDLType::_narrow))
+      &CORBA_IDLType::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -28210,7 +28246,7 @@ void *CORBA_AbstractInterfaceDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -28220,7 +28256,7 @@ void *CORBA_AbstractInterfaceDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
@@ -28276,6 +28312,8 @@ tao_CORBA_LocalInterfaceDef_upcast (
     ACE_static_cast (CORBA_LocalInterfaceDef **, src);
   return *tmp;
 }
+
+int CORBA_LocalInterfaceDef::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class CORBA_LocalInterfaceDef_var
@@ -28366,25 +28404,25 @@ CORBA_LocalInterfaceDef_var::_retn (void)
 }
 
 ::CORBA_LocalInterfaceDef_ptr
-CORBA_LocalInterfaceDef_var::duplicate (CORBA_LocalInterfaceDef_ptr p)
+CORBA_LocalInterfaceDef_var::tao_duplicate (CORBA_LocalInterfaceDef_ptr p)
 {
   return ::CORBA_LocalInterfaceDef::_duplicate (p);
 }
 
 void
-CORBA_LocalInterfaceDef_var::release (CORBA_LocalInterfaceDef_ptr p)
+CORBA_LocalInterfaceDef_var::tao_release (CORBA_LocalInterfaceDef_ptr p)
 {
   CORBA::release (p);
 }
 
 ::CORBA_LocalInterfaceDef_ptr
-CORBA_LocalInterfaceDef_var::nil (void)
+CORBA_LocalInterfaceDef_var::tao_nil (void)
 {
   return ::CORBA_LocalInterfaceDef::_nil ();
 }
 
 ::CORBA_LocalInterfaceDef_ptr
-CORBA_LocalInterfaceDef_var::narrow (
+CORBA_LocalInterfaceDef_var::tao_narrow (
     CORBA::Object *p,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -28393,7 +28431,7 @@ CORBA_LocalInterfaceDef_var::narrow (
 }
 
 CORBA::Object *
-CORBA_LocalInterfaceDef_var::upcast (void *src)
+CORBA_LocalInterfaceDef_var::tao_upcast (void *src)
 {
   CORBA_LocalInterfaceDef **tmp =
     ACE_static_cast (CORBA_LocalInterfaceDef **, src);
@@ -28617,7 +28655,7 @@ CORBA_LocalInterfaceDef_ptr CORBA_LocalInterfaceDef::_unchecked_narrow (
                   ACE_reinterpret_cast
                     (
                       ptr_arith_t,
-                      &CORBA_LocalInterfaceDef::_narrow
+                      &CORBA_LocalInterfaceDef::_tao_class_id
                     )
                 )
           );
@@ -28651,11 +28689,11 @@ void *CORBA_LocalInterfaceDef::_tao_QueryInterface (ptr_arith_t type)
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_LocalInterfaceDef::_narrow))
+      &CORBA_LocalInterfaceDef::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_InterfaceDef::_narrow))
+      &CORBA_InterfaceDef::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -28667,7 +28705,7 @@ void *CORBA_LocalInterfaceDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Container::_narrow))
+      &CORBA_Container::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -28679,7 +28717,7 @@ void *CORBA_LocalInterfaceDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_Contained::_narrow))
+      &CORBA_Contained::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -28691,7 +28729,7 @@ void *CORBA_LocalInterfaceDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IDLType::_narrow))
+      &CORBA_IDLType::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -28703,7 +28741,7 @@ void *CORBA_LocalInterfaceDef::_tao_QueryInterface (ptr_arith_t type)
       );
   else if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &CORBA_IRObject::_narrow))
+      &CORBA_IRObject::_tao_class_id))
     retv = ACE_reinterpret_cast
       (
         void *,
@@ -28713,7 +28751,7 @@ void *CORBA_LocalInterfaceDef::_tao_QueryInterface (ptr_arith_t type)
             this
           )
       );
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 
