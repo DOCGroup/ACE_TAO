@@ -174,7 +174,7 @@ public:
   char *ior_file_;
   // Name of the filename that the server used to store the iors.
 
-  u_int grain_;
+  u_int granularity_;
   // this is the granularity of the timing of the CORBA requests. A
   // value of 5 represents that we will take time every 5 requests,
   // instead of the default of every request (1).

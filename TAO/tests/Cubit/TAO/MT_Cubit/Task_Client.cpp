@@ -17,7 +17,7 @@ Task_State::Task_State (int argc, char **argv)
     oneway_ (0),
     use_name_service_ (1),
     ior_file_ (0),
-    grain_ (1),
+    granularity_ (1),
     use_utilization_test_ (0)
 {
   ACE_Get_Opt opts (argc, argv, "usn:t:d:rk:xof:g:");
@@ -27,9 +27,9 @@ Task_State::Task_State (int argc, char **argv)
   while ((c = opts ()) != -1)
     switch (c) {
     case 'g':
-      grain_ = ACE_OS::atoi (opts.optarg);
-      if (grain_ < 1)
-        grain_ = 1;
+      granularity_ = ACE_OS::atoi (opts.optarg);
+      if (granularity_ < 1)
+        granularity_ = 1;
       break;
     case 'u':
       use_utilization_test_ = 1;
@@ -197,31 +197,34 @@ Client::get_latency (u_int thread_id)
 double
 Client::get_high_priority_jitter (void)
 {
-  double jitter = 0;
+  double jitter = 0.0;
   double average = get_high_priority_latency ();
+  double number_of_samples = ts_->loop_count_ / ts_->granularity_;
 
   // Compute the standard deviation (i.e. jitter) from the values
   // stored in the global_jitter_array_.
 
   // we first compute the sum of the squares of the differences
   // each latency has from the average
-  for (u_int i = 0; i < ts_->loop_count_; i ++)
+  for (u_int i = 0; i < ts_->loop_count_ / ts_->granularity_; i ++)
     {
       double difference =
         ts_->global_jitter_array_ [0][i] - average;
       jitter += difference * difference;
     }
 
+fprintf(stderr, "jitter=%f, samples=%f\n", jitter,number_of_samples );
   // Return the square root of the sum of the differences computed
   // above, i.e. jitter.
-  return sqrt (jitter);
+  return sqrt (jitter / (number_of_samples - 1));
 }
 
 double
 Client::get_low_priority_jitter (void)
 {
-  double jitter = 0;
+  double jitter = 0.0;
   double average = get_low_priority_latency ();
+  double number_of_samples = (ts_->thread_count_ - 1) * (ts_->loop_count_ / ts_->granularity_);
 
   // Compute the standard deviation (i.e. jitter) from the values
   // stored in the global_jitter_array_.
@@ -229,15 +232,16 @@ Client::get_low_priority_jitter (void)
   // We first compute the sum of the squares of the differences each
   // latency has from the average.
   for (u_int j = 1; j < ts_->thread_count_; j ++)
-    for (u_int i = 0; i < ts_->loop_count_; i ++)
+    for (u_int i = 0; i < ts_->loop_count_ / ts_->granularity_; i ++)
       {
-        double difference = ts_->global_jitter_array_[j][i] - average;
+        double difference = 
+	  ts_->global_jitter_array_[j][i] - average;
         jitter += difference * difference;
       }
-
+fprintf(stderr, "jitter=%f, samples=%f\n", jitter,number_of_samples );
   // Return the square root of the sum of the differences computed
   // above, i.e. jitter.
-  return sqrt (jitter);
+  return sqrt (jitter / (number_of_samples - 1));
 }
 
 int
@@ -579,7 +583,7 @@ Client::run_tests (Cubit_ptr cb,
                   -1);
 
   double latency = 0;
-  double sleep_time = (1 / frequency) * (1000 * 1000);
+  double sleep_time = (1 / frequency) * (1000 * 1000) * ts_->granularity_;
   double delta = 0;
 
 #if defined (CHORUS)
@@ -595,23 +599,29 @@ Client::run_tests (Cubit_ptr cb,
 
   // Make the calls in a loop.
 
+  ACE_High_Res_Timer * timer_ = 0;
   for (i = 0; i < loop_count; i++)
     {
-      ACE_High_Res_Timer timer_;
-      ACE_Time_Value tv (0,
-                         (u_long) ((sleep_time - delta) < 0
-                                     ? 0
-                                     : (sleep_time - delta)));
-      ACE_OS::sleep (tv);
-
       // Elapsed time will be in microseconds.
       ACE_Time_Value delta_t;
 
+      if ( (i % ts_->granularity_) == 0)
+	{
+	  ACE_Time_Value tv (0,
+			     (u_long) ((sleep_time - delta) < 0
+				       ? 0
+				       : (sleep_time - delta)));
+	  ACE_OS::sleep (tv);
+	  
 #if defined (CHORUS)
-      pstartTime = pccTime1Get();
+	  pstartTime = pccTime1Get();
 #else /* CHORUS */
-      timer_.start ();
+	  ACE_NEW_RETURN (timer_,
+			  ACE_High_Res_Timer,
+			  -1);
+	  timer_->start ();
 #endif /* !CHORUS */
+	}
 
       if (ts_->oneway_ == 0)
         {
@@ -805,38 +815,41 @@ Client::run_tests (Cubit_ptr cb,
             }
         }
 
+      if ((i % ts_->granularity_) == (ts_->granularity_ - 1))
+	{
 #if defined (CHORUS)
-      if ( (loop_count % ts_->grain_) == 0)
           pstopTime = pccTime1Get();
 #else /* CHORUS */
-      // if CHORUS is not defined just use plain timer_.stop ().
-      timer_.stop ();
-      timer_.elapsed_time (delta_t);
+	  // if CHORUS is not defined just use plain timer_.stop ().
+	  timer_->stop ();
+	  timer_->elapsed_time (delta_t);
 #endif /* !CHORUS */
 
-      // Calculate time elapsed
+	  // Calculate time elapsed
 #if defined (ACE_LACKS_FLOATING_POINT)
 #   if defined (CHORUS)
-      real_time = pstopTime - pstartTime;
-      my_jitter_array [i/ts_->grain_] = real_time; // in units of microseconds.
-          // update the latency array, correcting the index using the granularity
+	  real_time = (pstopTime - pstartTime) / ts_->granularity_;
 #   else /* CHORUS */
-      // Store the time in usecs.
-      real_time = delta_t.sec () * ACE_ONE_SECOND_IN_USECS  +
-        delta_t.usec ();
-      my_jitter_array [i] = real_time; // in units of microseconds.
+	  // Store the time in usecs.
+	  real_time = (delta_t.sec () * ACE_ONE_SECOND_IN_USECS  +
+	    delta_t.usec ()) / ts_->granularity_;
 #   endif /* !CHORUS */
-      delta = ((40 * fabs (real_time) / 100) + (60 * delta / 100)); // pow(10,6)
-      latency += real_time;
+	  delta = ((40 * fabs (real_time) / 100) + (60 * delta / 100)); // pow(10,6)
+	  latency += real_time * ts_->granularity_;
+	  my_jitter_array [i/ts_->granularity_] = real_time; // in units of microseconds.
+          // update the latency array, correcting the index using the granularity
 #else /* ACE_LACKS_FLOATING_POINT */
-      // Store the time in secs.
-      real_time = delta_t.sec () + (double)delta_t.usec () / ACE_ONE_SECOND_IN_USECS;
-      delta = ((0.4 * fabs (real_time * (1000 * 1000))) + (0.6 * delta)); // pow(10,6)
-      latency += real_time;
-      my_jitter_array [i] = real_time * 1000;
+	  // Store the time in secs.
+	  real_time = (double)delta_t.sec () + (double)delta_t.usec () / (double)ACE_ONE_SECOND_IN_USECS;
+	  real_time /= ts_->granularity_;
+	  delta = ((0.4 * fabs (real_time * (1000 * 1000))) + (0.6 * delta)); // pow(10,6)
+	  latency += (real_time * ts_->granularity_);
+	  my_jitter_array [i/ts_->granularity_] = real_time * 1000;
+	  delete timer_;
 #endif /* !ACE_LACKS_FLOATING_POINT */
+	}
     }
-
+      
   if (call_count > 0)
     {
       if (error_count == 0)
