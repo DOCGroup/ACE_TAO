@@ -90,14 +90,17 @@ ACE_ReactorEx_Handler_Repository::remove_handler_i (size_t index,
       if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::DONT_CALL) == 0)
 	this->current_event_handlers_[index]->handle_close 
 	  (this->current_handles_[index], mask);
+      return 0;
     }
-  return 0;
+  else 
+    return -1;
 }
 
 int
 ACE_ReactorEx_Handler_Repository::unbind (ACE_HANDLE handle,
 					  ACE_Reactor_Mask mask)
 {
+  int error = 0;
   {
     ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->reactorEx_.lock_, -1);
     
@@ -106,10 +109,15 @@ ACE_ReactorEx_Handler_Repository::unbind (ACE_HANDLE handle,
     // appear multiple times. All handles are checked except the 0th one
     // and the 1st one (i.e., the "wakeup all" event and the notify
     // event).
-    for (size_t i = 2; i < this->max_handlep1_; i++)
+    int result = 0;
+    for (size_t i = 2; i < this->max_handlep1_ && error == 0; i++)
       {
 	if (this->current_handles_[i] == handle)
-	  this->remove_handler_i (i, mask);
+	  {
+	    result = this->remove_handler_i (i, mask);
+	    if (result == -1)
+	      error = 1;
+	  }
       }
   }
   // The guard is released here
@@ -118,7 +126,7 @@ ACE_ReactorEx_Handler_Repository::unbind (ACE_HANDLE handle,
   // reconsult the handle set
   this->reactorEx_.wakeup_all_threads ();
 
-  return 0;
+  return error == 0 ? 0 : -1;
 }
 
 void
@@ -340,8 +348,13 @@ ACE_ReactorEx::open (size_t size,
   // Since we have added two handles into the handler repository,
   // update the <handler_repository_>
   if (this->handler_rep_.changes_required ())    
-    // Make necessary changes to the handler repository
-    this->handler_rep_.make_changes ();
+    {
+      // Make necessary changes to the handler repository
+      this->handler_rep_.make_changes ();
+      // Turn off <wakeup_all_threads_> since all necessary changes
+      // have completed
+      this->wakeup_all_threads_.reset ();
+    }
 
   // Timer Queue 
   if (this->timer_queue_ == 0)
