@@ -67,7 +67,11 @@ template <class T> ACE_Future_Rep<T> *
 ACE_Future_Rep<T>::create (void)
 {
   // Yes set ref count to zero.
-  return new ACE_Future_Rep<T> ();
+  ACE_Future_Rep<T> *t = 0;
+  ACE_NEW_RETURN (t,
+                  ACE_Future_Rep<T>,
+                  0);
+  return t;
 }
 
 template <class T> ACE_Future_Rep<T> *

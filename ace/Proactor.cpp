@@ -250,15 +250,19 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
 #if defined (ACE_HAS_AIO_CALLS)
       // POSIX Proactor.
   #if defined (ACE_POSIX_AIOCB_PROACTOR)
-      ACE_NEW (implementation, ACE_POSIX_AIOCB_Proactor);
+      ACE_NEW (implementation,
+               ACE_POSIX_AIOCB_Proactor);
   #elif defined (ACE_POSIX_SIG_PROACTOR)
-      ACE_NEW (implementation, ACE_POSIX_SIG_Proactor);
+      ACE_NEW (implementation,
+               ACE_POSIX_SIG_Proactor);
   #else /* Default is to use the SIG one */
-      ACE_NEW (implementation, ACE_POSIX_SIG_Proactor);
+      ACE_NEW (implementation,
+               ACE_POSIX_SIG_Proactor);
   #endif
 #elif (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
       // WIN_Proactor.
-      ACE_NEW (implementation, ACE_WIN32_Proactor);
+      ACE_NEW (implementation,
+               ACE_WIN32_Proactor);
 #endif /* ACE_HAS_AIO_CALLS */
       this->implementation (implementation);
       this->delete_implementation_ = 1;
@@ -680,7 +684,8 @@ ACE_Proactor::timer_queue (TIMER_QUEUE *tq)
   // New timer queue.
   if (tq == 0)
     {
-      this->timer_queue_ = new TIMER_HEAP;
+      ACE_NEW (this->timer_queue_,
+               TIMER_HEAP);
       this->delete_timer_queue_ = 1;
     }
   else

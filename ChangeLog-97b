@@ -22,119 +22,119 @@ Sun Nov 23 13:32:02 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Sat Nov 22 19:16:35 1997    <irfan@TWOSTEP>
 
-	* tests/Process_Strategy_Test.cpp:
+        * tests/Process_Strategy_Test.cpp:
 
-	  main: Removed signal handling code.  It is unnecessary since we
- 	  do not use kill() anymore.
+          main: Removed signal handling code.  It is unnecessary since we
+          do not use kill() anymore.
 
-	  Process_Strategy: This subclass of ACE_Process_Strategy
- 	  overwrites the process creation method to include connection
- 	  counting.
+          Process_Strategy: This subclass of ACE_Process_Strategy
+          overwrites the process creation method to include connection
+          counting.
 
-	  connection_completed: Made sure that the Reactor is woken up
- 	  after all the connections have completed.
+          connection_completed: Made sure that the Reactor is woken up
+          after all the connections have completed.
 
-	* ace/Priority_Reactor.cpp (init_bucket): Removed extra code.
+        * ace/Priority_Reactor.cpp (init_bucket): Removed extra code.
 
-	* ace/Acceptor.cpp (activate_svc_handler): open svc_handler only
- 	  if result is 0.  Also removed extra tracing code.
+        * ace/Acceptor.cpp (activate_svc_handler): open svc_handler only
+          if result is 0.  Also removed extra tracing code.
 
-	* ace/Handle_Set.i (reset): Purify is reporting a UMR
- 	  (uninitialized memory copy) when copying a Handle_Set.  This
- 	  comes from the mask fd_set not being memset to 0 by FD_ZERO.
-  	  This is therefore a harmless error.
+        * ace/Handle_Set.i (reset): Purify is reporting a UMR
+          (uninitialized memory copy) when copying a Handle_Set.  This
+          comes from the mask fd_set not being memset to 0 by FD_ZERO.
+          This is therefore a harmless error.
 
-	* tests/Priority_Reactor_Test.cpp (main): The ordering of
- 	  auto_ptrs is very subtle....  "auto_ptr<ACE_Reactor> reactor"
- 	  should come before "auto_ptr<ACE_Select_Reactor> impl", i.e.,
- 	  the implementation should be destroyed *before* the forwarding
- 	  class.  This is apparent when the implementation class is
- 	  removing registered event handlers that hold a pointer to the
- 	  forwarding class.
+        * tests/Priority_Reactor_Test.cpp (main): The ordering of
+          auto_ptrs is very subtle....  "auto_ptr<ACE_Reactor> reactor"
+          should come before "auto_ptr<ACE_Select_Reactor> impl", i.e.,
+          the implementation should be destroyed *before* the forwarding
+          class.  This is apparent when the implementation class is
+          removing registered event handlers that hold a pointer to the
+          forwarding class.
 
 Sat Nov 22 16:04:07 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* ace/Message_Queue.cpp:
-	  Fixed some formating problems in the ACE_Message_Queue::dump
-	  method, thanks to Arturo Montes <mitosys@colomsat.net.co> for
-	  finding this one.
+        * ace/Message_Queue.cpp:
+          Fixed some formating problems in the ACE_Message_Queue::dump
+          method, thanks to Arturo Montes <mitosys@colomsat.net.co> for
+          finding this one.
 
 Sat Nov 22 14:38:22 1997  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-aix-4.2.x.h: Added ACE_TLI_TCP_DEVICE "/dev/xti/tcp".
-	  This fixes Riverace problem ID P32; AIX now joins HP-UX in
-	  supporting XTI/TLI, but not everything (problem P27).
+        * ace/config-aix-4.2.x.h: Added ACE_TLI_TCP_DEVICE "/dev/xti/tcp".
+          This fixes Riverace problem ID P32; AIX now joins HP-UX in
+          supporting XTI/TLI, but not everything (problem P27).
 
-	* ace/UPIPE_Connector.h:
-	* ace/TLI_Connector.h:	Added meta-type information PEER_ADDR and
-	  PEER_STREAM.  Fixes Riverace problem ID P37.
+        * ace/UPIPE_Connector.h:
+        * ace/TLI_Connector.h:  Added meta-type information PEER_ADDR and
+          PEER_STREAM.  Fixes Riverace problem ID P37.
 
-	* apps/JAWS/server/HTTP_Server.cpp: Added 'const' to "char *prog".
-	  Fixes Riverace problem P36.
+        * apps/JAWS/server/HTTP_Server.cpp: Added 'const' to "char *prog".
+          Fixes Riverace problem P36.
 
-	* examples/Connection/misc/test_upipe.cpp:
- 	* examples/Connection/non_blocking/CPP-connector.cpp:
-	* examples/Threads/process_mutex.cpp:
-	* examples/Threads/process_semaphore.cpp:
-	  Added 'const' to "char *" - can't initialize a char * with
-	  a const string.  Fixes Riverace problem ID P38, P40.
+        * examples/Connection/misc/test_upipe.cpp:
+        * examples/Connection/non_blocking/CPP-connector.cpp:
+        * examples/Threads/process_mutex.cpp:
+        * examples/Threads/process_semaphore.cpp:
+          Added 'const' to "char *" - can't initialize a char * with
+          a const string.  Fixes Riverace problem ID P38, P40.
 
-	* examples/Threads/thread_specific.cpp, tss1.cpp:  Moved the Errno
-	  class out to a new file, thread_specific.h.  AIX xlC needs to have
-	  the class in a .h file for template generation.  Fixes Riverace
-	  problem P42.
-	* examples/Threads/Makefile: Make sure that, on AIX, the tempinc
-	  directory is cleared before building each new program.
+        * examples/Threads/thread_specific.cpp, tss1.cpp:  Moved the Errno
+          class out to a new file, thread_specific.h.  AIX xlC needs to have
+          the class in a .h file for template generation.  Fixes Riverace
+          problem P42.
+        * examples/Threads/Makefile: Make sure that, on AIX, the tempinc
+          directory is cleared before building each new program.
 
-	* performance-tests/Synch-Benchmarks/Makefile: Changed SHLIB to use
-	  $(SOEXT) rather than .so.  Fixes Riverace problem ID P41.
+        * performance-tests/Synch-Benchmarks/Makefile: Changed SHLIB to use
+          $(SOEXT) rather than .so.  Fixes Riverace problem ID P41.
 
-	* tests/Thread_Pool_Test.cpp: Moved 'this->getq(mb)' out of an
-	  ACE_ASSERT.  Thanks to Arturo Montes <mitosys@colomsat.net.co>
-	  for finding this.
+        * tests/Thread_Pool_Test.cpp: Moved 'this->getq(mb)' out of an
+          ACE_ASSERT.  Thanks to Arturo Montes <mitosys@colomsat.net.co>
+          for finding this.
 
 Sat Nov 22 05:44:10 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
-	* tests/Process_Strategy_Test.cpp (main): Shuffled things around
-	  in fork() block.  This is fun.
+        * tests/Process_Strategy_Test.cpp (main): Shuffled things around
+          in fork() block.  This is fun.
 
-	* ace/Strategies_T.cpp (activate_svc_handler): Added an
-	  ACE_UNUSED_ARG macro to muffle g++.
+        * ace/Strategies_T.cpp (activate_svc_handler): Added an
+          ACE_UNUSED_ARG macro to muffle g++.
 
-	* tests/Process_Strategy_Test.cpp (handle_close): Added a return
-	  type specifier.  Without it, g++ laments.
+        * tests/Process_Strategy_Test.cpp (handle_close): Added a return
+          type specifier.  Without it, g++ laments.
 
-	* ace/Acceptor.cpp (activate_svc_handler): Should be if (open (...) ==
-	  -1) then error, not if (open (...) != -1) then error.
+        * ace/Acceptor.cpp (activate_svc_handler): Should be if (open (...) ==
+          -1) then error, not if (open (...) != -1) then error.
 
-	* ace/ACE.cpp (set_handle_limit): Removed a duplicated ACE_TRACE
-	  macro.
+        * ace/ACE.cpp (set_handle_limit): Removed a duplicated ACE_TRACE
+          macro.
 
 Sat Nov 22 00:26:11 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
-	* ace/Thread_Manager.cpp (close): Activated automatic wait on
-	  close functionality.  I think I get it right this time.
+        * ace/Thread_Manager.cpp (close): Activated automatic wait on
+          close functionality.  I think I get it right this time.
 
 Fri Nov 21 19:59:37 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* ace/IPC_SAP.cpp:
-	  Added a couple of ACE_NOTREACHED protections. Thanks to Brian
-	  Mendel <bmendel@mdc.com> for reporting this.
+        * ace/IPC_SAP.cpp:
+          Added a couple of ACE_NOTREACHED protections. Thanks to Brian
+          Mendel <bmendel@mdc.com> for reporting this.
 
 Fri Nov 21 17:12:48 1997    <nw1@CHA-CHA>
 
-	* ace/Thread_Manager.cpp (close): Deactivated automatic wait on
- 	  close for now.  It doesn't seem to work on Solaris.
+        * ace/Thread_Manager.cpp (close): Deactivated automatic wait on
+          close for now.  It doesn't seem to work on Solaris.
 
-	* ace/Thread_Manager.{h,cpp} (wait): Added codes to remove detached
- 	  threads.  This function can be activated selectively.  I added
- 	  this so we can ignore detached threads when closing down the
- 	  default thread manager.
+        * ace/Thread_Manager.{h,cpp} (wait): Added codes to remove detached
+          threads.  This function can be activated selectively.  I added
+          this so we can ignore detached threads when closing down the
+          default thread manager.
 
-	  (close): Activated the code to wait (join) all threads managed
- 	  by the thread manager.  It will ask wait function to remove all
- 	  detached thread first (and so they won't be counted into threads
- 	  we are waiting for.)
+          (close): Activated the code to wait (join) all threads managed
+          by the thread manager.  It will ask wait function to remove all
+          detached thread first (and so they won't be counted into threads
+          we are waiting for.)
 
 Fri Nov 21 13:22:25 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -142,139 +142,139 @@ Fri Nov 21 13:22:25 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Nov 21 12:18:28 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Acceptor.cpp,Strategy_T.cpp: Removed the use of gotos.  See
- 	  Dijkstra '67 for motivation...
+        * ace/Acceptor.cpp,Strategy_T.cpp: Removed the use of gotos.  See
+          Dijkstra '67 for motivation...
 
-	* tests/Process_Strategy_Test.cpp (open): Make sure that we set
- 	  the Reactor of the Svc_Handler to 0 if we're running the
- 	  threading test.
+        * tests/Process_Strategy_Test.cpp (open): Make sure that we set
+          the Reactor of the Svc_Handler to 0 if we're running the
+          threading test.
 
-	* tests/Reactor_Notify_Test.cpp: Added back THR_BOUND to
-	  make things work on Solaris.
+        * tests/Reactor_Notify_Test.cpp: Added back THR_BOUND to
+          make things work on Solaris.
 
 Fri Nov 21 02:23:47 1997    <irfan@TWOSTEP>
 
-	* tests/Process_Strategy_Test.cpp:
+        * tests/Process_Strategy_Test.cpp:
 
-	  - The event loop execution was based on a fragile timeout
- 	    mechanism.  This was changed to a more robust mechanism that
- 	    counts the connections.
+          - The event loop execution was based on a fragile timeout
+            mechanism.  This was changed to a more robust mechanism that
+            counts the connections.
 
-	  - The unlinking of the file was moved from the server to the
- 	    client.  This is necessary since there maybe multiple server
- 	    processes that cannot really coordinate when the file should
- 	    be removed.
+          - The unlinking of the file was moved from the server to the
+            client.  This is necessary since there maybe multiple server
+            processes that cannot really coordinate when the file should
+            be removed.
 
-	* ace/Strategies_T.cpp (ACE_Concurrency_Strategy):
- 	  ACE_Concurrency_Strategy and all three of the subclasses
- 	  (ACE_Reactive_Strategy, ACE_Process_Strategy, and
- 	  ACE_Thread_Strategy) were messed up.  Only ACE_Reactive_Strategy
- 	  was (trying) to set the correct blocking mode of the socket.
-  	  Therefore, moved the socket mode setting code to the base class,
- 	  ACE_Concurrency_Strategy, so that all the classes can share it.
+        * ace/Strategies_T.cpp (ACE_Concurrency_Strategy):
+          ACE_Concurrency_Strategy and all three of the subclasses
+          (ACE_Reactive_Strategy, ACE_Process_Strategy, and
+          ACE_Thread_Strategy) were messed up.  Only ACE_Reactive_Strategy
+          was (trying) to set the correct blocking mode of the socket.
+          Therefore, moved the socket mode setting code to the base class,
+          ACE_Concurrency_Strategy, so that all the classes can share it.
 
-	  This did create one problem though.  If the implementation of
- 	  the reactor uses event associations (i.e., WFMO_Reactor), we
- 	  cannot try to set the socket mode since the registration of the
- 	  svc_handler caused an event association to be created for the
- 	  socket and by default (thanks Microslush) the socket is set to
- 	  non-blocking mode.  If the user is excepting to have a socket in
- 	  blocking mode, he is in for a surprise.  Maybe we should return
- 	  a failure if the user is expecting a socket in blocking mode.
-  	  This is probably too harsh for now.
+          This did create one problem though.  If the implementation of
+          the reactor uses event associations (i.e., WFMO_Reactor), we
+          cannot try to set the socket mode since the registration of the
+          svc_handler caused an event association to be created for the
+          socket and by default (thanks Microslush) the socket is set to
+          non-blocking mode.  If the user is excepting to have a socket in
+          blocking mode, he is in for a surprise.  Maybe we should return
+          a failure if the user is expecting a socket in blocking mode.
+          This is probably too harsh for now.
 
-	* tests/Future_Test.cpp (open): Added THR_DETACHED since we don't
- 	  wait for this thread.
+        * tests/Future_Test.cpp (open): Added THR_DETACHED since we don't
+          wait for this thread.
 
-	* tests/Reactor_Notify_Test.cpp (open): Changed THR_BOUND to
- 	  THR_DETACHED since we don't wait for this thread.
+        * tests/Reactor_Notify_Test.cpp (open): Changed THR_BOUND to
+          THR_DETACHED since we don't wait for this thread.
 
-	* tests/IOStream_Test.cpp (server): Make sure to close the socket
- 	  in ACE_SOCK_Acceptor and ACE_SOCK_IOStream.
+        * tests/IOStream_Test.cpp (server): Make sure to close the socket
+          in ACE_SOCK_Acceptor and ACE_SOCK_IOStream.
 
-	* ace/WFMO_Reactor.cpp (open): When I changed open() last, I
- 	  ignored the order of the registeration of notify_handler_ and
- 	  wakeup_all_threads_handler_.  Unfortunately, the order of the
- 	  two registrations is very important since the optimization for
- 	  owner thread takes advantage of this ordering.  Therefore,
- 	  revert the order of registertion to notify_handler_ followed by
- 	  wakeup_all_threads_handler_.
+        * ace/WFMO_Reactor.cpp (open): When I changed open() last, I
+          ignored the order of the registeration of notify_handler_ and
+          wakeup_all_threads_handler_.  Unfortunately, the order of the
+          two registrations is very important since the optimization for
+          owner thread takes advantage of this ordering.  Therefore,
+          revert the order of registertion to notify_handler_ followed by
+          wakeup_all_threads_handler_.
 
-	* tests/version_tests/run_all_tests.bat: Added new bat file to
- 	  make the running of all the different configurations easier.
+        * tests/version_tests/run_all_tests.bat: Added new bat file to
+          make the running of all the different configurations easier.
 
-	* tests/version_tests/version_tests.{mak,mdp}: Added a mammoth
- 	  testing scheme that is used to test all 8 configurations of the
- 	  tests under Win32.  These 8 configurations are:
+        * tests/version_tests/version_tests.{mak,mdp}: Added a mammoth
+          testing scheme that is used to test all 8 configurations of the
+          tests under Win32.  These 8 configurations are:
 
-	  DLL Debug
-	  DLL Release
-	  DLL Unicode Debug
-	  DLL Unicode Release
-	  static Debug
-	  static Release
-	  static Unicode Debug
-	  static Unicode Release
+          DLL Debug
+          DLL Release
+          DLL Unicode Debug
+          DLL Unicode Release
+          static Debug
+          static Release
+          static Unicode Debug
+          static Unicode Release
 
-	  run_tests.bat from the test directory can then be used to run
- 	  these various configurations.  run_tests.bat was also extended
- 	  to allow the user to purify the tests.  Simply execute
- 	  run_tests.bat with the purify command line option.
+          run_tests.bat from the test directory can then be used to run
+          these various configurations.  run_tests.bat was also extended
+          to allow the user to purify the tests.  Simply execute
+          run_tests.bat with the purify command line option.
 
 Thu Nov 20 17:43:15 1997    <nw1@COYOTE>
 
-	* ace/Thread_Manager.cpp (kill_thr): Changed to prevent thread
- 	  manager from "discard" a thread when a certain operation is not
- 	  supported by the operation system.  Removed the mechanism that
- 	  preserves errno during "thread removal."  We no longer remove
- 	  thread right after an error occured.
+        * ace/Thread_Manager.cpp (kill_thr): Changed to prevent thread
+          manager from "discard" a thread when a certain operation is not
+          supported by the operation system.  Removed the mechanism that
+          preserves errno during "thread removal."  We no longer remove
+          thread right after an error occured.
 
 Thu Nov 20 17:53:35 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* examples/Shared_Malloc/test_multiple_mallocs.cpp (main): Make
- 	  sure make sure that the semaphores created by the program are
- 	  released as well as the storage files deleted.  Thanks to Tom
- 	  Arbuckle <arbuckle@uran.informatik.uni-bonn.de> for reporting
- 	  this.
+        * examples/Shared_Malloc/test_multiple_mallocs.cpp (main): Make
+          sure make sure that the semaphores created by the program are
+          released as well as the storage files deleted.  Thanks to Tom
+          Arbuckle <arbuckle@uran.informatik.uni-bonn.de> for reporting
+          this.
 
-	* ace: Added a new version of config-osf1-3.2.h.  Thanks to Dani
- 	  Flexer <danif@ivory-sw.com> for updating this.
+        * ace: Added a new version of config-osf1-3.2.h.  Thanks to Dani
+          Flexer <danif@ivory-sw.com> for updating this.
 
 Thu Nov 20 18:22:24 1997  Steve Huston  <shuston@riverace.com>
 
-	* ace/README
-	  ace/TLI.h
-	  ace/TLI_Acceptor.h
-	  ace/TLI_Connector.h
-	  Changed from using hardcoded "/dev/tcp" as the XTI device name to
-	  a new config-related define, ACE_TLI_TCP_DEVICE.  If the config
-	  doesn't set one, it defaults to "/dev/tcp".  Thanks to Steve Coy
-	  <stevec@magna.com.au> for zeroing in on this problem in HP-UX.
+        * ace/README
+          ace/TLI.h
+          ace/TLI_Acceptor.h
+          ace/TLI_Connector.h
+          Changed from using hardcoded "/dev/tcp" as the XTI device name to
+          a new config-related define, ACE_TLI_TCP_DEVICE.  If the config
+          doesn't set one, it defaults to "/dev/tcp".  Thanks to Steve Coy
+          <stevec@magna.com.au> for zeroing in on this problem in HP-UX.
 
-	  ace/config-hpux-10.x.h:  ACE_TLI_TCP_DEVICE is "/dev/inet_cots".
-	  Note that XTI won't work 100% well on HP still - this is Riverace
-	  problem ID P27.
+          ace/config-hpux-10.x.h:  ACE_TLI_TCP_DEVICE is "/dev/inet_cots".
+          Note that XTI won't work 100% well on HP still - this is Riverace
+          problem ID P27.
 
-	* netsvcs/lib/Server_Logging_Handler_T.h: Hardcoded to always use
-	  ACE_SOCK_Stream (and friends) rather than ACE_TLI_Stream and friends.
-	  XTI doesn't work real well on some platforms (particularly HP-UX
-	  and AIX).  When they're fixed, this can be undone (Riverace problem
-	  ID P28).
+        * netsvcs/lib/Server_Logging_Handler_T.h: Hardcoded to always use
+          ACE_SOCK_Stream (and friends) rather than ACE_TLI_Stream and friends.
+          XTI doesn't work real well on some platforms (particularly HP-UX
+          and AIX).  When they're fixed, this can be undone (Riverace problem
+          ID P28).
 
-	* examples/IPC_SAP/TLI_SAP/CPP-client.cpp: Changed 'char *host' to
-	  'const char *host' so it can be initialized from a const char string.
+        * examples/IPC_SAP/TLI_SAP/CPP-client.cpp: Changed 'char *host' to
+          'const char *host' so it can be initialized from a const char string.
 
 Thu Nov 20 14:19:57 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* tests/Priority_Reactor_Test.h:
-	* tests/Priority_Reactor_Test.cpp:
-	  The test has a limited execution time now, and only reports a
- 	  warning if runs out of time. This may be due to some failed
- 	  connections, but it is hard to avoid that.  On the other hand
- 	  the default time should be large enough, in our machines the
- 	  test only takes 14 seconds, so 60 seconds should be enough.
-  	  NOTE: this problem reveals a problem *only* in the test itself
- 	  not in ACE_Priority_Reactor.
+        * tests/Priority_Reactor_Test.h:
+        * tests/Priority_Reactor_Test.cpp:
+          The test has a limited execution time now, and only reports a
+          warning if runs out of time. This may be due to some failed
+          connections, but it is hard to avoid that.  On the other hand
+          the default time should be large enough, in our machines the
+          test only takes 14 seconds, so 60 seconds should be enough.
+          NOTE: this problem reveals a problem *only* in the test itself
+          not in ACE_Priority_Reactor.
 
 Thu Nov 20 11:29:51 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -288,27 +288,27 @@ Thu Nov 20 11:27:44 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Nov 20 10:45:08 1997    <irfan@TWOSTEP>
 
-	* tests/MT_SOCK_Test.cpp: Uncommented socket close call.
+        * tests/MT_SOCK_Test.cpp: Uncommented socket close call.
 
-	* ace/WFMO_Reactor.cpp (open): Open the notification handler
- 	  *after* the timer queue has been created.
+        * ace/WFMO_Reactor.cpp (open): Open the notification handler
+          *after* the timer queue has been created.
 
-	* ace/ACE.cpp (get_ip_interfaces): Changed rep() to fast_rep() to
- 	  prevent memory leak.
+        * ace/ACE.cpp (get_ip_interfaces): Changed rep() to fast_rep() to
+          prevent memory leak.
 
-	* ace/Reactor.cpp (ACE_Reactor): Fixed error of not creating any
- 	  Reactors on UNIX.
+        * ace/Reactor.cpp (ACE_Reactor): Fixed error of not creating any
+          Reactors on UNIX.
 
 Thu Nov 20 08:36:54 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
-	* ace/Thread_Manager.{h,cpp}:  Added a dummy argument to internal
-	  thread functions.  Without them, MSVC wrongly optimizes codes
-	  and the stack were all clobbered when entering these functions.
+        * ace/Thread_Manager.{h,cpp}:  Added a dummy argument to internal
+          thread functions.  Without them, MSVC wrongly optimizes codes
+          and the stack were all clobbered when entering these functions.
 
 Wed Nov 19 23:24:03 1997    <nw1@CHA-CHA>
 
-	* ace/Reactor.cpp: Rearragned macros so we use Select_Reactor as
- 	  default if we don't have Winsock2.  Irfan did it, not me.
+        * ace/Reactor.cpp: Rearragned macros so we use Select_Reactor as
+          default if we don't have Winsock2.  Irfan did it, not me.
 
 Wed Nov 19 22:11:20 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -316,48 +316,48 @@ Wed Nov 19 22:11:20 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Nov 19 15:55:52 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
-	* config-netbsd.h: NetBSD 1.3alpha has a better MSYNC. Commented out
-	ACE_HAS_BROKEN_NETBSD_MSYNC
+        * config-netbsd.h: NetBSD 1.3alpha has a better MSYNC. Commented out
+        ACE_HAS_BROKEN_NETBSD_MSYNC
 
 Wed Nov 19 14:26:36 1997  Nanbor Wang  <nw1@lindy.cs.wustl.edu>
 
-	* stdcpp.h, OS.h: Changed ACE_CONFIG_H to ACE_USER_CONFIG_H.  It
-	conflicts with the macro in various configuration files.
+        * stdcpp.h, OS.h: Changed ACE_CONFIG_H to ACE_USER_CONFIG_H.  It
+        conflicts with the macro in various configuration files.
 
 Wed Nov 19 15:55:45 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-sunos5.*.h: Replaced all uses of ACE_HAS_UNICODE with
- 	  ACE_HAS_XPG4_MULTIBYTE_CHAR.  At this point, I think only NT has
- 	  the UNICODE macro now.  Thanks to Steve Huston for validating
- 	  this.
+        * ace/config-sunos5.*.h: Replaced all uses of ACE_HAS_UNICODE with
+          ACE_HAS_XPG4_MULTIBYTE_CHAR.  At this point, I think only NT has
+          the UNICODE macro now.  Thanks to Steve Huston for validating
+          this.
 
-	* STL/bstring.h: Added a special-case for BorlandC++.  However, I
- 	  think this can be generalized for all compilers.  Thanks to
- 	  Valik Solorzano Barboza <valik@xs4all.nl> for reporting this.
+        * STL/bstring.h: Added a special-case for BorlandC++.  However, I
+          think this can be generalized for all compilers.  Thanks to
+          Valik Solorzano Barboza <valik@xs4all.nl> for reporting this.
 
-	* ace/OS: Fixed strpbrk() to handle the const char * and char *
- 	  cases of ANSI C++.  Thanks to Valik Solorzano Barboza
- 	  <valik@xs4all.nl> for reporting this.
+        * ace/OS: Fixed strpbrk() to handle the const char * and char *
+          cases of ANSI C++.  Thanks to Valik Solorzano Barboza
+          <valik@xs4all.nl> for reporting this.
 
-	* ace/OS.h: Added a special case for _MSC_VER since BC++ doesn't
- 	  have wchar.h!  Thanks to Valik Solorzano Barboza
- 	  <valik@xs4all.nl> for reporting this.
+        * ace/OS.h: Added a special case for _MSC_VER since BC++ doesn't
+          have wchar.h!  Thanks to Valik Solorzano Barboza
+          <valik@xs4all.nl> for reporting this.
 
 Wed Nov 19 13:43:33 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* Merged the purify testing into run_tests.  Just use
+        * Merged the purify testing into run_tests.  Just use
 
-	  "run_tests purify ..."
+          "run_tests purify ..."
 
-	  to purify instead of running the tests.  If you thought this
-	  batch file looked bad before....
+          to purify instead of running the tests.  If you thought this
+          batch file looked bad before....
 
 Wed Nov 19 12:17:50 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
-	* ace/{OS,stdcpp}.h (ACE_CONFIG_H): Added this macro to protect
-	  config.h from getting included multiple times.
+        * ace/{OS,stdcpp}.h (ACE_CONFIG_H): Added this macro to protect
+          config.h from getting included multiple times.
 
-	* ace/stdcpp.h:  Reverted include OS.h back to config.h.
+        * ace/stdcpp.h:  Reverted include OS.h back to config.h.
 
 Wed Nov 19 09:20:05 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -365,21 +365,21 @@ Wed Nov 19 09:20:05 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Nov 19 07:54:44 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/ACE.cpp (crc32): Reverted the COMPUTE macro back to its
- 	  original value.  For some reason, the version given by Valik was
- 	  failing.
+        * ace/ACE.cpp (crc32): Reverted the COMPUTE macro back to its
+          original value.  For some reason, the version given by Valik was
+          failing.
 
-	* ace/SV_Semaphore_Complex.cpp (open): Make sure initialize the
- 	  sem_number_ data member, though this isn't actually used for
- 	  anything.
+        * ace/SV_Semaphore_Complex.cpp (open): Make sure initialize the
+          sem_number_ data member, though this isn't actually used for
+          anything.
 
-	* ace/ACE.cpp: Added a #ifdef for __unix since this is the only
- 	  case where we'll actually have the ifreq autoptr.  Thanks to
- 	  Valik Solorzano Barboza <valik@xs4all.nl> for reporting this.
+        * ace/ACE.cpp: Added a #ifdef for __unix since this is the only
+          case where we'll actually have the ifreq autoptr.  Thanks to
+          Valik Solorzano Barboza <valik@xs4all.nl> for reporting this.
 
-	* ace/Log_Record.cpp (print): Added a work around for a really
- 	  lame bug with BORLANDC.  Thanks to Valik Solorzano Barboza
- 	  <valik@xs4all.nl> for reporting this.
+        * ace/Log_Record.cpp (print): Added a work around for a really
+          lame bug with BORLANDC.  Thanks to Valik Solorzano Barboza
+          <valik@xs4all.nl> for reporting this.
 
 Wed Nov 19 04:22:38 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -387,126 +387,126 @@ Wed Nov 19 04:22:38 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Nov 19 04:02:09 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* include/makeinclude/rules.local.GNU (show_uninit): It seems
- 	  there was a missing '@' at the beginning of the line.  Thanks to
- 	  Hans Rohnert for reporting this.
+        * include/makeinclude/rules.local.GNU (show_uninit): It seems
+          there was a missing '@' at the beginning of the line.  Thanks to
+          Hans Rohnert for reporting this.
 
-	* tests/Process_Strategy_Test.cpp (handle_input): Fixed Irfan's
- 	  code, which keeps breaking ACE ;-).
+        * tests/Process_Strategy_Test.cpp (handle_input): Fixed Irfan's
+          code, which keeps breaking ACE ;-).
 
 Wed Nov 19 01:55:06 1997    <irfan@TWOSTEP>
 
-	* ace/WFMO_Reactor.cpp (resume_handler_i, suspend_handler_i,
- 	  unbind_i): Since things don't happen immediately in the
- 	  WFMO_Reactor world, we must make sure that this request is not a
- 	  duplicate.  If so we must ignore it.
+        * ace/WFMO_Reactor.cpp (resume_handler_i, suspend_handler_i,
+          unbind_i): Since things don't happen immediately in the
+          WFMO_Reactor world, we must make sure that this request is not a
+          duplicate.  If so we must ignore it.
 
-	* ace/Asynch_Acceptor.cpp (open): Fixed addr type mismatch problem.
+        * ace/Asynch_Acceptor.cpp (open): Fixed addr type mismatch problem.
 
-	* tests/UPIPE_SAP_Test.cpp (main): Make sure to close the socket
- 	  in ACE_UPIPE_Acceptor.
+        * tests/UPIPE_SAP_Test.cpp (main): Make sure to close the socket
+          in ACE_UPIPE_Acceptor.
 
-	* tests/SPIPE_Test.cpp (server): Make sure to close the socket in
- 	  ACE_SPIPE_Acceptor.
+        * tests/SPIPE_Test.cpp (server): Make sure to close the socket in
+          ACE_SPIPE_Acceptor.
 
-	* tests/SOCK_Test.cpp (spawn): Make sure to close the socket in
- 	  ACE_SOCK_Acceptor.
+        * tests/SOCK_Test.cpp (spawn): Make sure to close the socket in
+          ACE_SOCK_Acceptor.
 
-	* tests/Reactor_Notify_Test.cpp (Supplier_Task): Make sure to
- 	  close the pipe down.
+        * tests/Reactor_Notify_Test.cpp (Supplier_Task): Make sure to
+          close the pipe down.
 
-	* tests/Process_Strategy_Test.cpp (handle_input): Fixed ACE_DEBUG
- 	  statement to pass the correct number of arguments.
+        * tests/Process_Strategy_Test.cpp (handle_input): Fixed ACE_DEBUG
+          statement to pass the correct number of arguments.
 
-	* tests/MT_SOCK_Test.cpp (spawn): Make sure to close the socket in
- 	  ACE_SOCK_Acceptor.
+        * tests/MT_SOCK_Test.cpp (spawn): Make sure to close the socket in
+          ACE_SOCK_Acceptor.
 
-	* tests/Reactor_Exceptions_Test.cpp (main): Make sure to close the
- 	  socket in ACE_SOCK_Dgram.
+        * tests/Reactor_Exceptions_Test.cpp (main): Make sure to close the
+          socket in ACE_SOCK_Dgram.
 
-	* tests/run_purify_tests.bat: Added "mkdir purify_results".
+        * tests/run_purify_tests.bat: Added "mkdir purify_results".
 
-	* tests/run_tests.bat, run_purify_tests.bat: Changed explicit name
- 	  of bat file (e.g., run_tests, run_purify_tests) to %0.  This
- 	  will allow the bat file to be used from other directories.
+        * tests/run_tests.bat, run_purify_tests.bat: Changed explicit name
+          of bat file (e.g., run_tests, run_purify_tests) to %0.  This
+          will allow the bat file to be used from other directories.
 
-	* ace/config-win32-common.h: Removed extraneous define of
- 	  ACE_HAS_TEMPLATE_INSTANTIATION.
+        * ace/config-win32-common.h: Removed extraneous define of
+          ACE_HAS_TEMPLATE_INSTANTIATION.
 
 Wed Nov 19 00:37:22 1997    <nw1@COYOTE>
 
-	* ace/stdcpp.h: Changed to use "ace/OS.h" instead of using
- 	  "ace/config.h" directly to avoid redefinition of user defined
- 	  macros.
+        * ace/stdcpp.h: Changed to use "ace/OS.h" instead of using
+          "ace/config.h" directly to avoid redefinition of user defined
+          macros.
 
-	* ace/Log_Msg.cpp (close): Disable Win32 to delete
- 	  ACE_Log_Msg::instance ().  On Win32, this should be done by
- 	  ACE_TSS_Cleanup.
+        * ace/Log_Msg.cpp (close): Disable Win32 to delete
+          ACE_Log_Msg::instance ().  On Win32, this should be done by
+          ACE_TSS_Cleanup.
 
-	* ace/OS.cpp (cleanup_tss): Enabled Win32 to call
- 	  ACE_Log_Msg::close.  This is required to properly release
- 	  resourses held by ACE_Log_Msg_Manager.
+        * ace/OS.cpp (cleanup_tss): Enabled Win32 to call
+          ACE_Log_Msg::close.  This is required to properly release
+          resourses held by ACE_Log_Msg_Manager.
 
 Tue Nov 18 19:28:36 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Select_Reactor.cpp (unbind),
-	  ace/WFMO_Reactor.cpp (handle_signal): Fixed a large number of
- 	  bugs with non-portable "scope of the for loop counter"...
-  	  Thanks to Valik Solorzano Barboza <valik@xs4all.nl> for
- 	  reporting this.
+        * ace/Select_Reactor.cpp (unbind),
+          ace/WFMO_Reactor.cpp (handle_signal): Fixed a large number of
+          bugs with non-portable "scope of the for loop counter"...
+          Thanks to Valik Solorzano Barboza <valik@xs4all.nl> for
+          reporting this.
 
-	* ace/Thread_Manager: Added == and != operators for
- 	  ACE_Thread_Descriptor to fix things with BORLANDC's template
- 	  mechanism.  Thanks to Valik Solorzano Barboza <valik@xs4all.nl>
- 	  for reporting this.
+        * ace/Thread_Manager: Added == and != operators for
+          ACE_Thread_Descriptor to fix things with BORLANDC's template
+          mechanism.  Thanks to Valik Solorzano Barboza <valik@xs4all.nl>
+          for reporting this.
 
-	* ace/Select_Reactor: Added == and != operators for
- 	  ACE_Event_Tuple to fix things with BORLANDC's template
- 	  mechanism.  Thanks to Valik Solorzano Barboza <valik@xs4all.nl>
- 	  for reporting this.
+        * ace/Select_Reactor: Added == and != operators for
+          ACE_Event_Tuple to fix things with BORLANDC's template
+          mechanism.  Thanks to Valik Solorzano Barboza <valik@xs4all.nl>
+          for reporting this.
 
-	* ace/OS.i (tempnam): Fixed a typo -- WIN32 should be ACE_WIN32.
-  	  Thanks to Valik Solorzano Barboza <valik@xs4all.nl> for
- 	  reporting this.
+        * ace/OS.i (tempnam): Fixed a typo -- WIN32 should be ACE_WIN32.
+          Thanks to Valik Solorzano Barboza <valik@xs4all.nl> for
+          reporting this.
 
-	* ace/OS.h: Reordered the ACE_SEH_* macros so they work correctly
- 	  with BORLANDC.  Thanks to Valik Solorzano Barboza
- 	  <valik@xs4all.nl> for reporting this.
+        * ace/OS.h: Reordered the ACE_SEH_* macros so they work correctly
+          with BORLANDC.  Thanks to Valik Solorzano Barboza
+          <valik@xs4all.nl> for reporting this.
 
-	* ace/OS: Added operator== and operator!= for ACE_Cleanup_Info so
- 	  that it will work correctly with BORLANDC's template mechanism.
-  	  Thanks to Valik Solorzano Barboza <valik@xs4all.nl> for
- 	  reporting this.
+        * ace/OS: Added operator== and operator!= for ACE_Cleanup_Info so
+          that it will work correctly with BORLANDC's template mechanism.
+          Thanks to Valik Solorzano Barboza <valik@xs4all.nl> for
+          reporting this.
 
-	* ace/config-win32-common.h: Added
- 	  ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION for BORLANDC.  Thanks to
- 	  Valik Solorzano Barboza <valik@xs4all.nl> for reporting this.
+        * ace/config-win32-common.h: Added
+          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION for BORLANDC.  Thanks to
+          Valik Solorzano Barboza <valik@xs4all.nl> for reporting this.
 
-	* ace/Filecache.cpp: Fixed a bug with BORLANDC.  Thanks to Valik
- 	  Solorzano Barboza <valik@xs4all.nl> for reporting this.
+        * ace/Filecache.cpp: Fixed a bug with BORLANDC.  Thanks to Valik
+          Solorzano Barboza <valik@xs4all.nl> for reporting this.
 
-	* ace/ACE.cpp (crc32): Added some parens to the COMPUTE macro to
- 	  make it easier to grok.  Thanks to Valik Solorzano Barboza
- 	  <valik@xs4all.nl> for reporting this.
+        * ace/ACE.cpp (crc32): Added some parens to the COMPUTE macro to
+          make it easier to grok.  Thanks to Valik Solorzano Barboza
+          <valik@xs4all.nl> for reporting this.
 
 Tue Nov 18 16:27:32 1997    <irfan@TWOSTEP>
 
-	* ace/Log_Msg.cpp (log): Added a %D option to Log_Msg for
- 	  "month/day/year hour:minute:second:microsecond". Thanks to John
- 	  Mulhern <9107@MN3.LAWSON.lawson.com> for suggesting this.
+        * ace/Log_Msg.cpp (log): Added a %D option to Log_Msg for
+          "month/day/year hour:minute:second:microsecond". Thanks to John
+          Mulhern <9107@MN3.LAWSON.lawson.com> for suggesting this.
 
-	* ace/config-win32-common.h: If __ACE_INLINE__ is defined to be 0,
- 	  we will undefine it.
+        * ace/config-win32-common.h: If __ACE_INLINE__ is defined to be 0,
+          we will undefine it.
 
 Tue Nov 18 15:59:37 1997  Steve Huston  <shuston@riverace.com>
 
-	* ace/IOStream.cpp: In underflow() and overflow(), use base() to
-	  check for buffer in use in every case - not just without
-	  ACE_HAS_STANDARD_CPP_LIBRARY==1.  Thanks to James CE Johnson
-	  (jcej@lads.com) for this fix.
+        * ace/IOStream.cpp: In underflow() and overflow(), use base() to
+          check for buffer in use in every case - not just without
+          ACE_HAS_STANDARD_CPP_LIBRARY==1.  Thanks to James CE Johnson
+          (jcej@lads.com) for this fix.
 
-	* tests/MT_SOCK_Test.cpp: Allow the test to run even if not all of
-	  the proceses can be forked.
+        * tests/MT_SOCK_Test.cpp: Allow the test to run even if not all of
+          the proceses can be forked.
 
 Tue Nov 18 15:27:37 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
@@ -973,7 +973,7 @@ Tue Nov 11 23:44:17 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 Tue Nov 11 21:26:36 1997  Douglas C. Schmidt  <schmidt@lindy.cs.wustl.edu>
 
         * platform_sunos5_sunc++.GNU, platform_irix6.x-sgic++.GNU, rules.local.GNU:
-	  Added some minor fixes.
+          Added some minor fixes.
 
 Tue Nov 11 20:18:27 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
@@ -6195,13 +6195,13 @@ Wed Sep  3 21:38:18 1997  Carlos O'Ryan  <coryan@polka.cs.wustl.edu>
         * ace/Timer_Queue_T.h:
         * ace/Timer_Wheel_T.cpp:
         * ace/Timer_Wheel_T.h:
-          In the word of its author: Modified the iterators kept in each
-          of these classes so that they are constructed dynamically on the
-          heap after the Queue has been properly initialized. Otherwise,
-          the iterators try to iterate over a non-initialized queue, and
-          fail miserably (usually dumping core).
-          Once more thanks to Gonzalo Diethelm (gonzo@ing.puc.cl) for this
-          changes.
+          In the word of its author: Modified the iterators kept in
+          each of these classes so that they are constructed
+          dynamically on the heap after the Queue has been properly
+          initialized. Otherwise, the iterators try to iterate over a
+          non-initialized queue, and fail miserably (usually dumping
+          core).  Once more thanks to Gonzalo Diethelm
+          (gonzo@ing.puc.cl) for this changes.
 
         * tests/UPIPE_SAP_Test.cpp:
           Gonzalo improved the error message.
@@ -7822,8 +7822,8 @@ Tue Aug 12 15:03:42 1997  Steve Huston <shuston@riverace.com>
 
         * ace/Timer_Hash_T.cpp, Timer_Wheel_T.cpp: Replaced references to
           ACE_High_Res_Timer::gettimeofday with ACE_OS::gettimeofday.
-          The High Res version is deprecated, and doesn't work correctly
-          on HP-UX.
+          The High Res version is deprecated, and doesn't work
+          correctly on HP-UX.
 
 Tue Aug 12 07:51:02 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 

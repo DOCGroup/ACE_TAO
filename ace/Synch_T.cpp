@@ -32,7 +32,8 @@ ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::ACE_Lock_Adapter (void)
   : lock_ (0),
     delete_lock_ (1)
 {
-  ACE_NEW (this->lock_, ACE_LOCKING_MECHANISM);
+  ACE_NEW (this->lock_,
+           ACE_LOCKING_MECHANISM);
 }
 
 template <class ACE_LOCKING_MECHANISM>
@@ -725,7 +726,9 @@ ACE_TSS_Guard<ACE_LOCK>::ACE_TSS_Guard (ACE_LOCK &lock, int block)
 
   this->init_key ();
   ACE_Guard<ACE_LOCK> *guard;
-  ACE_NEW (guard, ACE_Guard<ACE_LOCK> (lock, block));
+  ACE_NEW (guard,
+           ACE_Guard<ACE_LOCK> (lock,
+                                block));
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter;
@@ -788,7 +791,9 @@ ACE_TSS_Write_Guard<ACE_LOCK>::ACE_TSS_Write_Guard (ACE_LOCK &lock,
 
   this->init_key ();
   ACE_Guard<ACE_LOCK> *guard;
-  ACE_NEW (guard, ACE_Write_Guard<ACE_LOCK> (lock, block));
+  ACE_NEW (guard,
+           ACE_Write_Guard<ACE_LOCK> (lock,
+                                      block));
 
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter;
@@ -873,8 +878,9 @@ ACE_TSS_Read_Guard<ACE_LOCK>::ACE_TSS_Read_Guard (ACE_LOCK &lock, int block)
 
   this->init_key ();
   ACE_Guard<ACE_LOCK> *guard;
-  ACE_NEW (guard, ACE_Read_Guard<ACE_LOCK> (lock, block));
-
+  ACE_NEW (guard,
+           ACE_Read_Guard<ACE_LOCK> (lock,
+                                     block));
 #if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *tss_adapter;
   ACE_NEW (tss_adapter,

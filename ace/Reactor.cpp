@@ -35,15 +35,19 @@ ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *impl,
       || defined (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL) \
       || defined (ACE_USE_TP_REACTOR_FOR_REACTOR_IMPL)
   #if defined (ACE_USE_TP_REACTOR_FOR_REACTOR_IMPL)
-      ACE_NEW (impl, ACE_TP_Reactor);
+      ACE_NEW (impl,
+               ACE_TP_Reactor);
   #else  
-      ACE_NEW (impl, ACE_Select_Reactor);
+      ACE_NEW (impl,
+               ACE_Select_Reactor);
   #endif /* ACE_USE_TP_REACTOR_FOR_REACTOR_IMPL */
 #else /* We are on Win32 and we have winsock and ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL is not defined */
   #if defined (ACE_USE_MSG_WFMO_REACTOR_FOR_REACTOR_IMPL)
-      ACE_NEW (impl, ACE_Msg_WFMO_Reactor);
+      ACE_NEW (impl,
+               ACE_Msg_WFMO_Reactor);
   #else
-      ACE_NEW (impl, ACE_WFMO_Reactor);
+      ACE_NEW (impl,
+               ACE_WFMO_Reactor);
   #endif /* ACE_USE_MSG_WFMO_REACTOR_FOR_REACTOR_IMPL */
 #endif /* !defined (ACE_WIN32) || !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0) || defined (ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL) */
       this->implementation (impl);
@@ -80,7 +84,9 @@ ACE_Reactor::instance (void)
 
       if (ACE_Reactor::reactor_ == 0)
         {
-          ACE_NEW_RETURN (ACE_Reactor::reactor_, ACE_Reactor, 0);
+          ACE_NEW_RETURN (ACE_Reactor::reactor_,
+                          ACE_Reactor,
+                          0);
           ACE_Reactor::delete_reactor_ = 1;
         }
     }

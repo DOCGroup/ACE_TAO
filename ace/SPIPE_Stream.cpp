@@ -40,7 +40,9 @@ ACE_SPIPE_Stream::send (size_t n, ...) const
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else
-  ACE_NEW_RETURN (iovp, iovec[total_tuples], -1);
+  ACE_NEW_RETURN (iovp,
+                  iovec[total_tuples],
+                  -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   va_start (argp, n);
@@ -75,7 +77,9 @@ ACE_SPIPE_Stream::recv (size_t n, ...) const
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else
-  ACE_NEW_RETURN (iovp, iovec[total_tuples], -1);
+  ACE_NEW_RETURN (iovp,
+                  iovec[total_tuples],
+                  -1);
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   va_start (argp, n);
