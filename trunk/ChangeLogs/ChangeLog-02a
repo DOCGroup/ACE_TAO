@@ -1,3 +1,9 @@
+Sat Aug 26 15:23:54 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/OS.cpp:
+          Commented out another ACE_DEBUG statement, there should be no
+          printing from the ACE_OS layer.
+
 Sat Aug 26 12:00:18 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Service_Repository.cpp: Modify the remove() method so that
