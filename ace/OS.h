@@ -6890,18 +6890,20 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 } \
 int ace_main_i
 
-// Supporting legacy 'main' is A LOT easier for users than changing existing code on WinCE.
+// Supporting legacy 'main' is A LOT easier for users than changing existing
+// code on WinCE. Unfortunately, evc 3 can't grok a #include within the macro
+// expansion, so it needs to go out here.
+#     include "ace/Argv_Type_Converter.h"
 #     define main \
 ace_main_i (int, char *[]);  /* forward declaration */ \
-#include <ace/Argv_Type_Converter.h> \
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow) \
 { \
-  ACE_CE_ARGV ce_argv(lpCmdLine); \
-  ACE::init(); \
+  ACE_CE_ARGV ce_argv (lpCmdLine); \
+  ACE::init (); \
   ACE_MAIN_OBJECT_MANAGER \
-  ACE_Argv_Type_Converter command_line(ce_argv.argc(), ce_argv.argv()); \
-  int i = ace_main_i (command_line.get_argc(), command_line.get_ASCII_argv()); \
-  ACE::fini(); \
+  ACE_Argv_Type_Converter command_line (ce_argv.argc (), ce_argv.argv ()); \
+  int i = ace_main_i (command_line.get_argc(), command_line.get_ASCII_argv());\
+  ACE::fini (); \
   return i; \
 } \
 int ace_main_i
