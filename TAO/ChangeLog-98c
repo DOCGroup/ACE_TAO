@@ -1,10 +1,18 @@
-Wed Jul 15 12:45:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+Wed Jul 15 12:40:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* tao/Any.cpp: 
-	  Seth found more problems with the top-level memory stored inside
-	  an Any, sometimes the memory has to be deleted, sometme it
-	  doesn't. IMHO this code requires a big revision to understand
-	  what is going on.
+	* tao/Connect.{h,cpp}: Changed handle_input and send_request
+	  of the Client Connection Handler to support global
+	  resources and multiple threads. It is achieved through
+	  the leader follower model.
+
+	* tao/GIOP.cpp: The suspended Client Connection Handler
+	  from Connect.cpp get resumed (TAO_GIOP_Invocation::invoke).
+
+	* tao/ORB.cpp: The run method conforms to the rules
+	  of the leader follower model.
+
+	* tao/ORB_Core.{h,cpp}: The ORB Core now supports all
+	  the variables for the leader follower model.
 
 Wed Jul 15 12:07:15 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
