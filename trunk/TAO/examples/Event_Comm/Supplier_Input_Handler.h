@@ -30,7 +30,7 @@
 // Forward declaration.
 class Notifier_Handler;
 
-class Supplier_Input_Handler : public ACE_Event_Handler 
+class Supplier_Input_Handler : public ACE_Event_Handler
 {
   // = TITLE
   //   Handles input events generated from a keyboard.
@@ -47,13 +47,14 @@ public:
   ~Supplier_Input_Handler (void);
   // Destructor.
 
-  int initialize (Notifier_Handler *); 
-  // Initialization. 
+  int initialize (Notifier_Handler *);
+  // Initialization.
 
   virtual int handle_input (ACE_HANDLE);
   // Frame input events and notify <Consumers>.
 
-  virtual int handle_close (void); 
+  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
   // Close down the handler.
 
 protected:
