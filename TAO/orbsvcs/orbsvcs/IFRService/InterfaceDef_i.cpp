@@ -1318,23 +1318,29 @@ TAO_InterfaceDef_i::inherited_attributes (
 
       if (status == 0)
         {
-          this->repo_->config ()->open_section (base_key,
-                                                "attrs",
-                                                0,
-                                                attrs_key);
+          status =
+            this->repo_->config ()->open_section (base_key,
+                                                  "attrs",
+                                                  0,
+                                                  attrs_key);
 
-          this->repo_->config ()->get_integer_value (attrs_key,
-                                                     "count",
-                                                     count);
-
-          for (u_int j = 0; j < count; ++j)
+          if (status == 0)
             {
-              this->repo_->config ()->open_section (attrs_key,
-                                                    this->int_to_string (j),
-                                                    0,
-                                                    attr_key);
+              this->repo_->config ()->get_integer_value (attrs_key,
+                                                         "count",
+                                                         count);
 
-              key_queue.enqueue_tail (attr_key);
+              for (u_int j = 0; j < count; ++j)
+                {
+                  this->repo_->config ()->open_section (
+                                              attrs_key,
+                                              this->int_to_string (j),
+                                              0,
+                                              attr_key
+                                            );
+
+                  key_queue.enqueue_tail (attr_key);
+                }
             }
         }
     }
@@ -1369,23 +1375,29 @@ TAO_InterfaceDef_i::inherited_operations (
 
       if (status == 0)
         {
-          this->repo_->config ()->open_section (base_key,
-                                                "ops",
-                                                0,
-                                                ops_key);
+          status =
+            this->repo_->config ()->open_section (base_key,
+                                                  "ops",
+                                                  0,
+                                                  ops_key);
 
-          this->repo_->config ()->get_integer_value (ops_key,
-                                                     "count",
-                                                     count);
-
-          for (u_int j = 0; j < count; ++j)
+          if (status == 0)
             {
-              this->repo_->config ()->open_section (ops_key,
-                                                    this->int_to_string (j),
-                                                    0,
-                                                    op_key);
+              this->repo_->config ()->get_integer_value (ops_key,
+                                                         "count",
+                                                         count);
 
-              key_queue.enqueue_tail (op_key);
+              for (u_int j = 0; j < count; ++j)
+                {
+                  this->repo_->config ()->open_section (
+                                              ops_key,
+                                              this->int_to_string (j),
+                                              0,
+                                              op_key
+                                            );
+
+                  key_queue.enqueue_tail (op_key);
+                }
             }
         }
     }
