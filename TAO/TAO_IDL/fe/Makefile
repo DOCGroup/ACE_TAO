@@ -30,7 +30,7 @@ LOBJ    = $(addsuffix .o,$(FILES))
 SHOBJ   = $(addsuffix .so,$(FILES))
 
 
-LDLIBS	= -lfe
+LDLIBS	= -lACE
 LIBS = -lACE
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
@@ -56,7 +56,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 CPPFLAGS += -D_REENTRANT -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_CFE_VERSION)
 YACC   = yacc
 LEX	= flex
-YFLAGS	= -t -d 
+YFLAGS	= -t -d
 LFLAGS	= -t
 
 # Create the parser and lexer
