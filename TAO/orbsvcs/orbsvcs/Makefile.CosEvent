@@ -100,9 +100,9 @@ realclean: clean
 .obj/CEC_ConsumerAdmin.o .obj/CEC_ConsumerAdmin.so .shobj/CEC_ConsumerAdmin.o .shobj/CEC_ConsumerAdmin.so: CosEvent/CEC_ConsumerAdmin.cpp \
  CosEvent/CEC_ConsumerAdmin.h \
  $(ACE_ROOT)/ace/pre.h \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -190,6 +190,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -274,6 +275,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -356,9 +362,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -395,6 +398,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -407,30 +412,30 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- CosEvent/event_export.h \
- CosEventCommC.i \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
- ESF/ESF_Proxy_Admin.h \
- ESF/ESF_Proxy_Collection.h \
- ESF/ESF_Proxy_Collection.i \
- ESF/ESF_Proxy_Collection.cpp \
- ESF/ESF_Worker.h \
- ESF/ESF_Worker.i \
- ESF/ESF_Worker.cpp \
- ESF/ESF_Proxy_Admin.i \
- ESF/ESF_Proxy_Admin.cpp \
- ESF/ESF_Shutdown_Proxy.h \
- ESF/ESF_Shutdown_Proxy.i \
- ESF/ESF_Shutdown_Proxy.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp \
  CosEvent/CEC_ProxyPushSupplier.h CosEvent/event_export.h \
  CosEvent/CEC_ProxyPushSupplier.i CosEvent/CEC_ProxyPullSupplier.h \
  CosEvent/CEC_ProxyPullSupplier.i CosEvent/CEC_ConsumerAdmin.i \
@@ -442,7 +447,7 @@ realclean: clean
 .obj/CEC_ConsumerControl.o .obj/CEC_ConsumerControl.so .shobj/CEC_ConsumerControl.o .shobj/CEC_ConsumerControl.so: CosEvent/CEC_ConsumerControl.cpp \
  CosEvent/CEC_ConsumerControl.h \
  $(ACE_ROOT)/ace/pre.h \
- CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -530,6 +535,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -614,6 +620,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -696,9 +707,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -735,6 +743,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -752,7 +762,7 @@ realclean: clean
 .obj/CEC_Dispatching.o .obj/CEC_Dispatching.so .shobj/CEC_Dispatching.o .shobj/CEC_Dispatching.so: CosEvent/CEC_Dispatching.cpp \
  CosEvent/CEC_Dispatching.h \
  $(ACE_ROOT)/ace/pre.h \
- CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -840,6 +850,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -924,6 +935,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -1006,9 +1022,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -1045,6 +1058,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -1057,29 +1072,28 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- CosEvent/event_export.h \
- CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
  CosEvent/event_export.h CosEvent/CEC_Dispatching.i \
  CosEvent/CEC_ProxyPushSupplier.h \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
  CosEvent/CEC_ProxyPushSupplier.i
 
 .obj/CEC_EventChannel.o .obj/CEC_EventChannel.so .shobj/CEC_EventChannel.o .shobj/CEC_EventChannel.so: CosEvent/CEC_EventChannel.cpp \
  CosEvent/CEC_EventChannel.h \
- $(ACE_ROOT)/ace/pre.h \
- CosEvent/CEC_Factory.h CosEvent/event_export.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/pre.h CosEvent/CEC_Factory.h \
+ CosEvent/event_export.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1166,6 +1180,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -1250,6 +1265,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -1332,9 +1352,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -1371,6 +1388,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -1384,37 +1403,37 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
  CosEvent/CEC_Factory.i \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommC.h \
- CosEvent/event_export.h \
- CosEventCommC.i \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
  CosEvent/CEC_Defaults.h CosEvent/CEC_EventChannel.i \
  CosEvent/CEC_Dispatching.h CosEvent/CEC_Dispatching.i \
  CosEvent/CEC_Pulling_Strategy.h CosEvent/CEC_Pulling_Strategy.i \
  CosEvent/CEC_ConsumerAdmin.h \
- ESF/ESF_Proxy_Admin.h \
- ESF/ESF_Proxy_Collection.h \
- ESF/ESF_Proxy_Collection.i \
- ESF/ESF_Proxy_Collection.cpp \
- ESF/ESF_Worker.h \
- ESF/ESF_Worker.i \
- ESF/ESF_Worker.cpp \
- ESF/ESF_Proxy_Admin.i \
- ESF/ESF_Proxy_Admin.cpp \
- ESF/ESF_Shutdown_Proxy.h \
- ESF/ESF_Shutdown_Proxy.i \
- ESF/ESF_Shutdown_Proxy.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp \
  CosEvent/CEC_ProxyPushSupplier.h CosEvent/CEC_ProxyPushSupplier.i \
  CosEvent/CEC_ProxyPullSupplier.h CosEvent/CEC_ProxyPullSupplier.i \
  CosEvent/CEC_ConsumerAdmin.i CosEvent/CEC_SupplierAdmin.h \
@@ -1426,8 +1445,7 @@ realclean: clean
 
 .obj/CEC_Factory.o .obj/CEC_Factory.so .shobj/CEC_Factory.o .shobj/CEC_Factory.so: CosEvent/CEC_Factory.cpp CosEvent/CEC_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
- CosEvent/event_export.h \
- $(ACE_ROOT)/ace/OS.h \
+ CosEvent/event_export.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1514,6 +1532,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -1598,6 +1617,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -1680,9 +1704,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -1719,6 +1740,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -1736,9 +1759,9 @@ realclean: clean
 .obj/CEC_ProxyPushConsumer.o .obj/CEC_ProxyPushConsumer.so .shobj/CEC_ProxyPushConsumer.o .shobj/CEC_ProxyPushConsumer.so: CosEvent/CEC_ProxyPushConsumer.cpp \
  CosEvent/CEC_ProxyPushConsumer.h \
  $(ACE_ROOT)/ace/pre.h \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1826,6 +1849,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -1910,6 +1934,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -1992,9 +2021,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -2031,6 +2057,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -2043,34 +2071,34 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
  CosEvent/event_export.h \
- CosEventCommC.i \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
- CosEvent/event_export.h \
- ESF/ESF_Worker.h \
- ESF/ESF_Worker.i \
- ESF/ESF_Worker.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
  CosEvent/CEC_ProxyPushConsumer.i CosEvent/CEC_EventChannel.h \
  CosEvent/CEC_Factory.h CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
  CosEvent/CEC_EventChannel.i CosEvent/CEC_ConsumerAdmin.h \
- ESF/ESF_Proxy_Admin.h \
- ESF/ESF_Proxy_Collection.h \
- ESF/ESF_Proxy_Collection.i \
- ESF/ESF_Proxy_Collection.cpp \
- ESF/ESF_Proxy_Admin.i \
- ESF/ESF_Proxy_Admin.cpp \
- ESF/ESF_Shutdown_Proxy.h \
- ESF/ESF_Shutdown_Proxy.i \
- ESF/ESF_Shutdown_Proxy.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp \
  CosEvent/CEC_ProxyPushSupplier.h CosEvent/CEC_ProxyPushSupplier.i \
  CosEvent/CEC_ProxyPullSupplier.h CosEvent/CEC_ProxyPullSupplier.i \
  CosEvent/CEC_ConsumerAdmin.i
@@ -2078,9 +2106,9 @@ realclean: clean
 .obj/CEC_ProxyPullConsumer.o .obj/CEC_ProxyPullConsumer.so .shobj/CEC_ProxyPullConsumer.o .shobj/CEC_ProxyPullConsumer.so: CosEvent/CEC_ProxyPullConsumer.cpp \
  CosEvent/CEC_ProxyPullConsumer.h \
  $(ACE_ROOT)/ace/pre.h \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2168,6 +2196,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -2252,6 +2281,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -2334,9 +2368,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -2373,6 +2404,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -2385,34 +2418,34 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- CosEvent/event_export.h \
- CosEventCommC.i \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
- ESF/ESF_Worker.h \
- ESF/ESF_Worker.i \
- ESF/ESF_Worker.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
  CosEvent/event_export.h CosEvent/CEC_ProxyPullConsumer.i \
  CosEvent/CEC_EventChannel.h CosEvent/CEC_Factory.h \
  CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
  CosEvent/CEC_EventChannel.i CosEvent/CEC_ConsumerAdmin.h \
- ESF/ESF_Proxy_Admin.h \
- ESF/ESF_Proxy_Collection.h \
- ESF/ESF_Proxy_Collection.i \
- ESF/ESF_Proxy_Collection.cpp \
- ESF/ESF_Proxy_Admin.i \
- ESF/ESF_Proxy_Admin.cpp \
- ESF/ESF_Shutdown_Proxy.h \
- ESF/ESF_Shutdown_Proxy.i \
- ESF/ESF_Shutdown_Proxy.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp \
  CosEvent/CEC_ProxyPushSupplier.h CosEvent/CEC_ProxyPushSupplier.i \
  CosEvent/CEC_ProxyPullSupplier.h CosEvent/CEC_ProxyPullSupplier.i \
  CosEvent/CEC_ConsumerAdmin.i CosEvent/CEC_SupplierControl.h \
@@ -2421,9 +2454,9 @@ realclean: clean
 .obj/CEC_ProxyPushSupplier.o .obj/CEC_ProxyPushSupplier.so .shobj/CEC_ProxyPushSupplier.o .shobj/CEC_ProxyPushSupplier.so: CosEvent/CEC_ProxyPushSupplier.cpp \
  CosEvent/CEC_ProxyPushSupplier.h \
  $(ACE_ROOT)/ace/pre.h \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2511,6 +2544,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -2595,6 +2629,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -2677,9 +2716,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -2716,6 +2752,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -2728,37 +2766,37 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- CosEvent/event_export.h \
- CosEventCommC.i \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
  CosEvent/event_export.h CosEvent/CEC_ProxyPushSupplier.i \
  CosEvent/CEC_Dispatching.h CosEvent/CEC_Dispatching.i \
  CosEvent/CEC_EventChannel.h CosEvent/CEC_Factory.h \
  CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
  CosEvent/CEC_EventChannel.i CosEvent/CEC_ConsumerControl.h \
  CosEvent/CEC_ConsumerControl.i \
- ESF/ESF_RefCount_Guard.h \
- ESF/ESF_RefCount_Guard.i \
- ESF/ESF_RefCount_Guard.cpp \
- ESF/ESF_Proxy_RefCount_Guard.h \
- ESF/ESF_Proxy_RefCount_Guard.i \
- ESF/ESF_Proxy_RefCount_Guard.cpp
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_RefCount_Guard.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_RefCount_Guard.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_RefCount_Guard.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_RefCount_Guard.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_RefCount_Guard.cpp
 
 .obj/CEC_ProxyPullSupplier.o .obj/CEC_ProxyPullSupplier.so .shobj/CEC_ProxyPullSupplier.o .shobj/CEC_ProxyPullSupplier.so: CosEvent/CEC_ProxyPullSupplier.cpp \
  CosEvent/CEC_ProxyPullSupplier.h \
  $(ACE_ROOT)/ace/pre.h \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -2846,6 +2884,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -2930,6 +2969,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -3012,9 +3056,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -3051,6 +3092,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -3063,18 +3106,18 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- CosEvent/event_export.h \
- CosEventCommC.i \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
  CosEvent/event_export.h CosEvent/CEC_ProxyPullSupplier.i \
  CosEvent/CEC_Dispatching.h CosEvent/CEC_Dispatching.i \
  CosEvent/CEC_EventChannel.h CosEvent/CEC_Factory.h \
@@ -3084,9 +3127,9 @@ realclean: clean
 .obj/CEC_SupplierAdmin.o .obj/CEC_SupplierAdmin.so .shobj/CEC_SupplierAdmin.o .shobj/CEC_SupplierAdmin.so: CosEvent/CEC_SupplierAdmin.cpp \
  CosEvent/CEC_SupplierAdmin.h \
  $(ACE_ROOT)/ace/pre.h \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -3174,6 +3217,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -3258,6 +3302,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -3340,9 +3389,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -3379,6 +3425,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -3391,30 +3439,30 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- CosEvent/event_export.h \
- CosEventCommC.i \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
- ESF/ESF_Proxy_Admin.h \
- ESF/ESF_Proxy_Collection.h \
- ESF/ESF_Proxy_Collection.i \
- ESF/ESF_Proxy_Collection.cpp \
- ESF/ESF_Worker.h \
- ESF/ESF_Worker.i \
- ESF/ESF_Worker.cpp \
- ESF/ESF_Proxy_Admin.i \
- ESF/ESF_Proxy_Admin.cpp \
- ESF/ESF_Shutdown_Proxy.h \
- ESF/ESF_Shutdown_Proxy.i \
- ESF/ESF_Shutdown_Proxy.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp \
  CosEvent/CEC_ProxyPushConsumer.h CosEvent/event_export.h \
  CosEvent/CEC_ProxyPushConsumer.i CosEvent/CEC_ProxyPullConsumer.h \
  CosEvent/CEC_ProxyPullConsumer.i CosEvent/CEC_SupplierAdmin.i \
@@ -3425,7 +3473,7 @@ realclean: clean
 .obj/CEC_SupplierControl.o .obj/CEC_SupplierControl.so .shobj/CEC_SupplierControl.o .shobj/CEC_SupplierControl.so: CosEvent/CEC_SupplierControl.cpp \
  CosEvent/CEC_SupplierControl.h \
  $(ACE_ROOT)/ace/pre.h \
- CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -3513,6 +3561,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -3597,6 +3646,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -3679,9 +3733,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -3718,6 +3769,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -3870,11 +3923,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Module.cpp \
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
- CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
  CosEvent/CEC_ProxyPushSupplier.h \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -3883,6 +3936,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -3942,6 +3996,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -4003,9 +4062,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -4042,6 +4098,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -4054,17 +4112,17 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- CosEventCommC.i \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
  CosEvent/event_export.h CosEvent/CEC_ProxyPushSupplier.i \
  CosEvent/CEC_Dispatching_Task.i
 
@@ -4072,7 +4130,7 @@ realclean: clean
  CosEvent/CEC_MT_Dispatching.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEvent/CEC_Dispatching.h \
- CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -4160,6 +4218,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -4244,6 +4303,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -4326,9 +4390,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -4365,6 +4426,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -4377,8 +4440,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- CosEvent/event_export.h \
- CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
  CosEvent/event_export.h CosEvent/CEC_Dispatching.i \
  CosEvent/CEC_Dispatching_Task.h \
  $(ACE_ROOT)/ace/Task.h \
@@ -4392,18 +4455,18 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
  CosEvent/CEC_ProxyPushSupplier.h \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
  CosEvent/CEC_ProxyPushSupplier.i CosEvent/CEC_Dispatching_Task.i \
  CosEvent/CEC_MT_Dispatching.i
 
@@ -4412,7 +4475,7 @@ realclean: clean
  CosEvent/CEC_Reactive_ConsumerControl.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEvent/CEC_ConsumerControl.h \
- CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -4500,6 +4563,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -4584,6 +4648,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -4666,9 +4735,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -4705,6 +4771,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -4718,36 +4786,36 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
  CosEvent/CEC_ConsumerControl.i \
- ESF/ESF_Worker.h \
- ESF/ESF_Worker.i \
- ESF/ESF_Worker.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
  CosEvent/CEC_Reactive_ConsumerControl.i CosEvent/CEC_EventChannel.h \
  CosEvent/CEC_Factory.h CosEvent/event_export.h CosEvent/CEC_Factory.i \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommC.h \
- CosEventCommC.i \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
  CosEvent/CEC_Defaults.h CosEvent/CEC_EventChannel.i \
  CosEvent/CEC_ConsumerAdmin.h \
- ESF/ESF_Proxy_Admin.h \
- ESF/ESF_Proxy_Collection.h \
- ESF/ESF_Proxy_Collection.i \
- ESF/ESF_Proxy_Collection.cpp \
- ESF/ESF_Proxy_Admin.i \
- ESF/ESF_Proxy_Admin.cpp \
- ESF/ESF_Shutdown_Proxy.h \
- ESF/ESF_Shutdown_Proxy.i \
- ESF/ESF_Shutdown_Proxy.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp \
  CosEvent/CEC_ProxyPushSupplier.h CosEvent/CEC_ProxyPushSupplier.i \
  CosEvent/CEC_ProxyPullSupplier.h CosEvent/CEC_ProxyPullSupplier.i \
  CosEvent/CEC_ConsumerAdmin.i
@@ -4757,7 +4825,7 @@ realclean: clean
  CosEvent/CEC_Reactive_SupplierControl.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEvent/CEC_SupplierControl.h \
- CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -4845,6 +4913,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -4929,6 +4998,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -5011,9 +5085,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -5050,6 +5121,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -5063,36 +5136,36 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
  CosEvent/CEC_SupplierControl.i \
- ESF/ESF_Worker.h \
- ESF/ESF_Worker.i \
- ESF/ESF_Worker.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
  CosEvent/CEC_Reactive_SupplierControl.i CosEvent/CEC_EventChannel.h \
  CosEvent/CEC_Factory.h CosEvent/event_export.h CosEvent/CEC_Factory.i \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommC.h \
- CosEventCommC.i \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
  CosEvent/CEC_Defaults.h CosEvent/CEC_EventChannel.i \
  CosEvent/CEC_SupplierAdmin.h \
- ESF/ESF_Proxy_Admin.h \
- ESF/ESF_Proxy_Collection.h \
- ESF/ESF_Proxy_Collection.i \
- ESF/ESF_Proxy_Collection.cpp \
- ESF/ESF_Proxy_Admin.i \
- ESF/ESF_Proxy_Admin.cpp \
- ESF/ESF_Shutdown_Proxy.h \
- ESF/ESF_Shutdown_Proxy.i \
- ESF/ESF_Shutdown_Proxy.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp \
  CosEvent/CEC_ProxyPushConsumer.h CosEvent/CEC_ProxyPushConsumer.i \
  CosEvent/CEC_ProxyPullConsumer.h CosEvent/CEC_ProxyPullConsumer.i \
  CosEvent/CEC_SupplierAdmin.i
@@ -5100,7 +5173,7 @@ realclean: clean
 .obj/CEC_Pulling_Strategy.o .obj/CEC_Pulling_Strategy.so .shobj/CEC_Pulling_Strategy.o .shobj/CEC_Pulling_Strategy.so: CosEvent/CEC_Pulling_Strategy.cpp \
  CosEvent/CEC_Pulling_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
- CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -5128,7 +5201,7 @@ realclean: clean
  CosEvent/CEC_Reactive_Pulling_Strategy.h \
  $(ACE_ROOT)/ace/pre.h \
  CosEvent/CEC_Pulling_Strategy.h \
- CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -5150,7 +5223,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
  CosEvent/CEC_Pulling_Strategy.i \
- ESF/ESF_Worker.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -5218,6 +5291,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -5302,6 +5376,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -5384,9 +5463,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -5423,6 +5499,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -5435,37 +5513,37 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- ESF/ESF_Worker.i \
- ESF/ESF_Worker.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
  CosEvent/CEC_Reactive_Pulling_Strategy.i \
  CosEvent/CEC_ProxyPullConsumer.h \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommC.h \
- CosEventCommC.i \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
  CosEvent/event_export.h CosEvent/CEC_ProxyPullConsumer.i \
  CosEvent/CEC_EventChannel.h CosEvent/CEC_Factory.h \
  CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
  CosEvent/CEC_EventChannel.i CosEvent/CEC_SupplierAdmin.h \
- ESF/ESF_Proxy_Admin.h \
- ESF/ESF_Proxy_Collection.h \
- ESF/ESF_Proxy_Collection.i \
- ESF/ESF_Proxy_Collection.cpp \
- ESF/ESF_Proxy_Admin.i \
- ESF/ESF_Proxy_Admin.cpp \
- ESF/ESF_Shutdown_Proxy.h \
- ESF/ESF_Shutdown_Proxy.i \
- ESF/ESF_Shutdown_Proxy.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp \
  CosEvent/CEC_ProxyPushConsumer.h CosEvent/CEC_ProxyPushConsumer.i \
  CosEvent/CEC_SupplierAdmin.i CosEvent/CEC_ConsumerAdmin.h \
  CosEvent/CEC_ProxyPushSupplier.h CosEvent/CEC_ProxyPushSupplier.i \
@@ -5474,9 +5552,8 @@ realclean: clean
 
 .obj/CEC_Default_Factory.o .obj/CEC_Default_Factory.so .shobj/CEC_Default_Factory.o .shobj/CEC_Default_Factory.so: CosEvent/CEC_Default_Factory.cpp \
  CosEvent/CEC_Default_Factory.h \
- $(ACE_ROOT)/ace/pre.h \
- CosEvent/CEC_Factory.h CosEvent/event_export.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/pre.h CosEvent/CEC_Factory.h \
+ CosEvent/event_export.h $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -5563,6 +5640,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -5647,6 +5725,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -5729,9 +5812,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -5768,6 +5848,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -5783,9 +5865,9 @@ realclean: clean
  CosEvent/CEC_Factory.i CosEvent/CEC_Defaults.h \
  CosEvent/CEC_Default_Factory.i CosEvent/CEC_MT_Dispatching.h \
  CosEvent/CEC_Dispatching.h \
- CosEventCommC.h \
- CosEvent/event_export.h \
- CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
  CosEvent/CEC_Dispatching.i CosEvent/CEC_Dispatching_Task.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
@@ -5798,35 +5880,35 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
  CosEvent/CEC_ProxyPushSupplier.h \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
  CosEvent/CEC_ProxyPushSupplier.i CosEvent/CEC_Dispatching_Task.i \
  CosEvent/CEC_MT_Dispatching.i \
  CosEvent/CEC_Reactive_Pulling_Strategy.h \
  CosEvent/CEC_Pulling_Strategy.h CosEvent/CEC_Pulling_Strategy.i \
- ESF/ESF_Worker.h \
- ESF/ESF_Worker.i \
- ESF/ESF_Worker.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
  CosEvent/CEC_Reactive_Pulling_Strategy.i CosEvent/CEC_ConsumerAdmin.h \
- ESF/ESF_Proxy_Admin.h \
- ESF/ESF_Proxy_Collection.h \
- ESF/ESF_Proxy_Collection.i \
- ESF/ESF_Proxy_Collection.cpp \
- ESF/ESF_Proxy_Admin.i \
- ESF/ESF_Proxy_Admin.cpp \
- ESF/ESF_Shutdown_Proxy.h \
- ESF/ESF_Shutdown_Proxy.i \
- ESF/ESF_Shutdown_Proxy.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Shutdown_Proxy.cpp \
  CosEvent/CEC_ProxyPullSupplier.h CosEvent/CEC_ProxyPullSupplier.i \
  CosEvent/CEC_ConsumerAdmin.i CosEvent/CEC_SupplierAdmin.h \
  CosEvent/CEC_ProxyPushConsumer.h CosEvent/CEC_ProxyPushConsumer.i \
@@ -5838,34 +5920,34 @@ realclean: clean
  CosEvent/CEC_Reactive_SupplierControl.h \
  CosEvent/CEC_SupplierControl.h CosEvent/CEC_SupplierControl.i \
  CosEvent/CEC_Reactive_SupplierControl.i \
- ESF/ESF_Immediate_Changes.h \
- ESF/ESF_Immediate_Changes.i \
- ESF/ESF_Immediate_Changes.cpp \
- ESF/ESF_Delayed_Changes.h \
- ESF/ESF_Busy_Lock.h \
- ESF/ESF_Busy_Lock.i \
- ESF/ESF_Busy_Lock.cpp \
- ESF/ESF_Delayed_Changes.i \
- ESF/ESF_Delayed_Changes.cpp \
- ESF/ESF_Defaults.h \
- ESF/ESF_Delayed_Command.h \
- ESF/ESF_Delayed_Command.i \
- ESF/ESF_Delayed_Command.cpp \
- ESF/ESF_Copy_On_Write.h \
- ESF/ESF_Copy_On_Write.i \
- ESF/ESF_Copy_On_Write.cpp \
- ESF/ESF_Copy_On_Read.h \
- ESF/ESF_Copy_On_Read.i \
- ESF/ESF_Copy_On_Read.cpp \
- ESF/ESF_Proxy_List.h \
- ESF/ESF_Proxy_List.i \
- ESF/ESF_Proxy_List.cpp \
- ESF/ESF_Proxy_RB_Tree.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Busy_Lock.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Busy_Lock.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Busy_Lock.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Defaults.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_List.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_List.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_List.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.h \
  $(ACE_ROOT)/ace/RB_Tree.h \
  $(ACE_ROOT)/ace/RB_Tree.i \
  $(ACE_ROOT)/ace/RB_Tree.cpp \
- ESF/ESF_Proxy_RB_Tree.i \
- ESF/ESF_Proxy_RB_Tree.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.cpp \
  $(ACE_ROOT)/ace/Arg_Shifter.h \
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i
@@ -5873,7 +5955,7 @@ realclean: clean
 .obj/ConsumerAdmin_i.o .obj/ConsumerAdmin_i.so .shobj/ConsumerAdmin_i.o .shobj/ConsumerAdmin_i.so: CosEvent/ConsumerAdmin_i.cpp \
  CosEvent/ConsumerAdmin_i.h \
  $(ACE_ROOT)/ace/pre.h \
- RtecEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -5961,6 +6043,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -6045,6 +6128,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -6127,9 +6215,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -6166,6 +6251,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -6178,33 +6265,33 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- Event/event_export.h \
- RtecEventCommC.h \
- TimeBaseC.h \
- svc_utils_export.h \
- TimeBaseC.i \
- RtecDefaultEventDataC.h \
- RtecDefaultEventDataC.i \
- RtecEventCommC.i \
- RtecBaseC.h \
- RtecBaseC.i \
- RtecEventChannelAdminC.i \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommC.h \
- CosEvent/event_export.h \
- CosEventCommC.i \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
- CosEvent/ProxyPushSupplier_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
@@ -6212,7 +6299,7 @@ realclean: clean
 .obj/SupplierAdmin_i.o .obj/SupplierAdmin_i.so .shobj/SupplierAdmin_i.o .shobj/SupplierAdmin_i.so: CosEvent/SupplierAdmin_i.cpp \
  CosEvent/SupplierAdmin_i.h \
  $(ACE_ROOT)/ace/pre.h \
- RtecEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -6300,6 +6387,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -6384,6 +6472,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -6466,9 +6559,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -6505,6 +6595,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -6517,58 +6609,58 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- Event/event_export.h \
- RtecEventCommC.h \
- TimeBaseC.h \
- svc_utils_export.h \
- TimeBaseC.i \
- RtecDefaultEventDataC.h \
- RtecDefaultEventDataC.i \
- RtecEventCommC.i \
- RtecBaseC.h \
- RtecBaseC.i \
- RtecEventChannelAdminC.i \
- CosEventChannelAdminC.h \
- CosEvent/event_export.h \
- CosEventCommC.h \
- CosEventCommC.i \
- CosEventChannelAdminC.i \
- CosEvent/ProxyPushConsumer_i.h \
- RtecEventChannelAdminS.h \
- RtecEventCommS.h \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
- RtecDefaultEventDataS.h \
- RtecDefaultEventDataS_T.h \
- RtecDefaultEventDataS_T.i \
- RtecDefaultEventDataS_T.cpp \
- RtecDefaultEventDataS.i \
- RtecEventCommS_T.h \
- RtecEventCommS_T.i \
- RtecEventCommS_T.cpp \
- RtecEventCommS.i \
- RtecBaseS.h \
- RtecBaseS_T.h \
- RtecBaseS_T.i \
- RtecBaseS_T.cpp \
- RtecBaseS.i \
- RtecEventChannelAdminS_T.h \
- RtecEventChannelAdminS_T.i \
- RtecEventChannelAdminS_T.cpp \
- RtecEventChannelAdminS.i \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
@@ -6576,7 +6668,7 @@ realclean: clean
 .obj/EventChannel_i.o .obj/EventChannel_i.so .shobj/EventChannel_i.o .shobj/EventChannel_i.so: CosEvent/EventChannel_i.cpp \
  CosEvent/EventChannel_i.h \
  $(ACE_ROOT)/ace/pre.h \
- RtecEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -6664,6 +6756,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -6748,6 +6841,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -6830,9 +6928,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -6869,6 +6964,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -6881,69 +6978,69 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- Event/event_export.h \
- RtecEventCommC.h \
- TimeBaseC.h \
- svc_utils_export.h \
- TimeBaseC.i \
- RtecDefaultEventDataC.h \
- RtecDefaultEventDataC.i \
- RtecEventCommC.i \
- RtecBaseC.h \
- RtecBaseC.i \
- RtecEventChannelAdminC.i \
- CosEventChannelAdminC.h \
- CosEvent/event_export.h \
- CosEventCommC.h \
- CosEventCommC.i \
- CosEventChannelAdminC.i \
- CosEvent/ConsumerAdmin_i.h \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
- CosEvent/ProxyPushSupplier_i.h \
- CosEvent/SupplierAdmin_i.h \
- CosEvent/ProxyPushConsumer_i.h \
- RtecEventChannelAdminS.h \
- RtecEventCommS.h \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
- RtecDefaultEventDataS.h \
- RtecDefaultEventDataS_T.h \
- RtecDefaultEventDataS_T.i \
- RtecDefaultEventDataS_T.cpp \
- RtecDefaultEventDataS.i \
- RtecEventCommS_T.h \
- RtecEventCommS_T.i \
- RtecEventCommS_T.cpp \
- RtecEventCommS.i \
- RtecBaseS.h \
- RtecBaseS_T.h \
- RtecBaseS_T.i \
- RtecBaseS_T.cpp \
- RtecBaseS.i \
- RtecEventChannelAdminS_T.h \
- RtecEventChannelAdminS_T.i \
- RtecEventChannelAdminS_T.cpp \
- RtecEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
 .obj/ProxyPushConsumer_i.o .obj/ProxyPushConsumer_i.so .shobj/ProxyPushConsumer_i.o .shobj/ProxyPushConsumer_i.so: CosEvent/ProxyPushConsumer_i.cpp \
- Event_Utilities.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.h \
  $(ACE_ROOT)/ace/pre.h \
- RtecEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -7031,6 +7128,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -7115,6 +7213,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -7197,9 +7300,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -7236,6 +7336,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -7248,69 +7350,69 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- Event/event_export.h \
- RtecEventCommC.h \
- TimeBaseC.h \
- svc_utils_export.h \
- TimeBaseC.i \
- RtecDefaultEventDataC.h \
- RtecDefaultEventDataC.i \
- RtecEventCommC.i \
- RtecBaseC.h \
- RtecBaseC.i \
- RtecEventChannelAdminC.i \
- Event_Service_Constants.h \
- Time_Utilities.h \
- Time_Utilities.i \
- Event_Utilities.i \
- CosEventChannelAdminC.h \
- CosEvent/event_export.h \
- CosEventCommC.h \
- CosEventCommC.i \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
- RtecEventCommS.h \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
- RtecDefaultEventDataS.h \
- RtecDefaultEventDataS_T.h \
- RtecDefaultEventDataS_T.i \
- RtecDefaultEventDataS_T.cpp \
- RtecDefaultEventDataS.i \
- RtecEventCommS_T.h \
- RtecEventCommS_T.i \
- RtecEventCommS_T.cpp \
- RtecEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
  CosEvent/ProxyPushConsumer_i.h \
- RtecEventChannelAdminS.h \
- RtecBaseS.h \
- RtecBaseS_T.h \
- RtecBaseS_T.i \
- RtecBaseS_T.cpp \
- RtecBaseS.i \
- RtecEventChannelAdminS_T.h \
- RtecEventChannelAdminS_T.i \
- RtecEventChannelAdminS_T.cpp \
- RtecEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
  CosEvent/event_export.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
 .obj/ProxyPushSupplier_i.o .obj/ProxyPushSupplier_i.so .shobj/ProxyPushSupplier_i.o .shobj/ProxyPushSupplier_i.so: CosEvent/ProxyPushSupplier_i.cpp \
- RtecEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -7399,6 +7501,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -7483,6 +7586,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -7565,9 +7673,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -7604,6 +7709,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -7616,47 +7723,47 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- Event/event_export.h \
- RtecEventCommC.h \
- TimeBaseC.h \
- svc_utils_export.h \
- TimeBaseC.i \
- RtecDefaultEventDataC.h \
- RtecDefaultEventDataC.i \
- RtecEventCommC.i \
- RtecBaseC.h \
- RtecBaseC.i \
- RtecEventChannelAdminC.i \
- CosEventChannelAdminC.h \
- CosEvent/event_export.h \
- CosEventCommC.h \
- CosEventCommC.i \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
- RtecEventCommS.h \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
- RtecDefaultEventDataS.h \
- RtecDefaultEventDataS_T.h \
- RtecDefaultEventDataS_T.i \
- RtecDefaultEventDataS_T.cpp \
- RtecDefaultEventDataS.i \
- RtecEventCommS_T.h \
- RtecEventCommS_T.i \
- RtecEventCommS_T.cpp \
- RtecEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
  CosEvent/ProxyPushSupplier_i.h CosEvent/event_export.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
@@ -7664,7 +7771,7 @@ realclean: clean
 
 .obj/CosEvent_Utilities.o .obj/CosEvent_Utilities.so .shobj/CosEvent_Utilities.o .shobj/CosEvent_Utilities.so: CosEvent_Utilities.cpp CosEvent_Utilities.h \
  $(ACE_ROOT)/ace/pre.h \
- RtecSchedulerC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -7752,6 +7859,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -7836,6 +7944,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -7918,9 +8031,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -7957,6 +8067,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -7969,83 +8081,82 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
  $(TAO_ROOT)/tao/MessagingS.i \
- Sched/sched_export.h \
- TimeBaseC.h \
- svc_utils_export.h \
- TimeBaseC.i \
- RtecBaseC.h \
- RtecBaseC.i \
- RtecSchedulerC.i \
- RtecEventChannelAdminS.h \
- RtecEventCommS.h \
- TimeBaseS.h \
- TimeBaseS_T.h \
- TimeBaseS_T.i \
- TimeBaseS_T.cpp \
- TimeBaseS.i \
- RtecDefaultEventDataS.h \
- RtecDefaultEventDataC.h \
- Event/event_export.h \
- RtecDefaultEventDataC.i \
- RtecDefaultEventDataS_T.h \
- RtecDefaultEventDataS_T.i \
- RtecDefaultEventDataS_T.cpp \
- RtecDefaultEventDataS.i \
- RtecEventCommC.h \
- RtecEventCommC.i \
- RtecEventCommS_T.h \
- RtecEventCommS_T.i \
- RtecEventCommS_T.cpp \
- RtecEventCommS.i \
- RtecBaseS.h \
- RtecBaseS_T.h \
- RtecBaseS_T.i \
- RtecBaseS_T.cpp \
- RtecBaseS.i \
- RtecEventChannelAdminC.h \
- RtecEventChannelAdminC.i \
- RtecEventChannelAdminS_T.h \
- RtecEventChannelAdminS_T.i \
- RtecEventChannelAdminS_T.cpp \
- RtecEventChannelAdminS.i \
- CosEventChannelAdminS.h \
- CosEventCommS.h \
- CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/sched_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i \
  CosEvent/event_export.h \
- CosEventCommC.i \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosEventChannelAdminC.h \
- CosEventChannelAdminC.i \
- CosEventChannelAdminS_T.h \
- CosEventChannelAdminS_T.i \
- CosEventChannelAdminS_T.cpp \
- CosEventChannelAdminS.i \
- Event_Utilities.h \
- Event_Service_Constants.h \
- Time_Utilities.h \
- Time_Utilities.i \
- Event_Utilities.i \
- CosEvent/event_export.h \
- Event/EC_Event_Channel.h \
- Event/EC_Factory.h \
- Event/EC_Factory.i \
- Event/EC_Defaults.h \
- Event/EC_Event_Channel.i \
- CosEvent/EventChannel_i.h \
- CosEvent/ConsumerAdmin_i.h \
- CosEvent/ProxyPushSupplier_i.h \
- CosEvent/SupplierAdmin_i.h \
- CosEvent/ProxyPushConsumer_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/EventChannel_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
 .obj/CosEventCommS.o .obj/CosEventCommS.so .shobj/CosEventCommS.o .shobj/CosEventCommS.so: CosEventCommS.cpp CosEventCommS.h \
- $(ACE_ROOT)/ace/pre.h \
- CosEventCommC.h \
+ $(ACE_ROOT)/ace/pre.h CosEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -8133,6 +8244,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -8217,6 +8329,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -8299,9 +8416,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -8338,6 +8452,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -8355,9 +8471,8 @@ realclean: clean
 
 .obj/CosEventChannelAdminS.o .obj/CosEventChannelAdminS.so .shobj/CosEventChannelAdminS.o .shobj/CosEventChannelAdminS.so: CosEventChannelAdminS.cpp \
  CosEventChannelAdminS.h \
- $(ACE_ROOT)/ace/pre.h \
- CosEventCommS.h CosEventCommC.h \
- $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/pre.h CosEventCommS.h \
+ CosEventCommC.h $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -8444,6 +8559,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -8528,6 +8644,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -8610,9 +8731,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -8649,6 +8767,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -8756,6 +8876,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -8840,6 +8961,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -8922,9 +9048,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -8961,6 +9084,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
@@ -9065,6 +9190,7 @@ realclean: clean
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
+ $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -9149,6 +9275,11 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/Smart_Proxies.h \
  $(TAO_ROOT)/tao/Smart_Proxies.i \
+ $(TAO_ROOT)/tao/TAO_Singleton.h \
+ $(TAO_ROOT)/tao/TAO_Singleton.inl \
+ $(TAO_ROOT)/tao/TAO_Singleton.cpp \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
+ $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -9231,9 +9362,6 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
  $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/InterfaceC.h \
- $(TAO_ROOT)/tao/ifrfwd.h \
- $(TAO_ROOT)/tao/InterfaceC.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
  $(TAO_ROOT)/tao/Resource_Factory.h \
  $(TAO_ROOT)/tao/Protocol_Factory.h \
@@ -9270,6 +9398,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
+ $(TAO_ROOT)/tao/InterfaceC.h \
+ $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/tao/MessagingS.h \
