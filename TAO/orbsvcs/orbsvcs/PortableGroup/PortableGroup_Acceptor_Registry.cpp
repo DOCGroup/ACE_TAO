@@ -191,10 +191,12 @@ TAO_PortableGroup_Acceptor_Registry::find (const TAO_Profile* profile,
 
 template class ACE_Unbounded_Queue<TAO_PortableGroup_Acceptor_Registry::Entry>;
 template class ACE_Unbounded_Queue_Iterator<TAO_PortableGroup_Acceptor_Registry::Entry>;
+template class ACE_Node<TAO_PortableGroup_Acceptor_Registry::Entry>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Unbounded_Queue<TAO_PortableGroup_Acceptor_Registry::Entry>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_PortableGroup_Acceptor_Registry::Entry>
+#pragma instantiate ACE_Node<TAO_PortableGroup_Acceptor_Registry::Entry>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

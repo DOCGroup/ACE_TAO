@@ -1,3 +1,8 @@
+Sun Jan 27 12:02:37 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.cpp:
+	  Added missing explicit template instantiation.
+
 Sun Jan 27 15:04:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * Makefile.bor:
