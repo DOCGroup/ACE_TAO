@@ -1,3 +1,10 @@
+Sun Feb 14 12:47:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/CDR_Stream.h: 
+	* ace/CDR_Stream.i: 
+	* ace/CDR_Stream.cpp: 
+	  Minor cosmetic changes, mostly trailing spaces.
+
 Sat Feb 13 22:06:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	The following changes are based on the patch Eric Covington
@@ -248,7 +255,7 @@ Sun Feb  7 00:43:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 Sat Feb  6 22:38:40 1999  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ACE_wrappers/tests/CDR_Test.cpp:
-          Changed #include file name to ace/CDR_STream.h (the new
+          Changed #include file name to ace/CDR_Stream.h (the new
           source file name).
 
 Sat Feb  6 22:21:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
