@@ -104,8 +104,10 @@ OBJFILES = \
 	$(OBJDIR)\GIOP_Utils.obj \
 	$(OBJDIR)\IFR_Client_Adapter.obj \
 	$(OBJDIR)\IIOPC.obj \
-   $(OBJDIR)\IOP_CodecC.obj \
-   $(OBJDIR)\IOP_IORC.obj \
+	$(OBJDIR)\IOP_CodecC.obj \
+	$(OBJDIR)\IOP_CodecA.obj \
+	$(OBJDIR)\IOP_IORC.obj \
+   $(OBJDIR)\IOP_IORA.obj \
 	$(OBJDIR)\IIOP_Acceptor.obj \
 	$(OBJDIR)\IIOP_Connection_Handler.obj \
 	$(OBJDIR)\IIOP_Connector.obj \
@@ -173,12 +175,14 @@ OBJFILES = \
 	$(OBJDIR)\Pluggable_Messaging_Utils.obj \
 	$(OBJDIR)\Policy_ForwardC.obj \
 	$(OBJDIR)\PolicyC.obj \
+	$(OBJDIR)\PolicyA.obj \
 	$(OBJDIR)\PolicyFactory_Registry.obj \
 	$(OBJDIR)\Policy_Manager.obj \
 	$(OBJDIR)\Policy_Set.obj \
 	$(OBJDIR)\Policy_Validator.obj \
 	$(OBJDIR)\PollableC.obj \
 	$(OBJDIR)\PortableInterceptorC.obj \
+	$(OBJDIR)\PortableInterceptorA.obj \
 	$(OBJDIR)\PredefinedType_Seq_Tmplinst.obj \
 	$(OBJDIR)\Principal.obj \
 	$(OBJDIR)\Profile.obj \

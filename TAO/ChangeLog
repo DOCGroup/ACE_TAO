@@ -1,3 +1,10 @@
+Mon Nov 10 08:14:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/TAO.dsp:
+
+	  Added the new generated files into the project.
+
+
 Sun Nov  9 19:19:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/tao.mpc:
