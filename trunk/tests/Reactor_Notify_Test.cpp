@@ -174,7 +174,7 @@ Supplier_Task::perform_notifications (int notifications)
 {
   ACE_Reactor::instance ()->max_notify_iterations (notifications);
 
-  int iterations = ACE_MAX_ITERATIONS;
+  size_t iterations = ACE_MAX_ITERATIONS;
 
   if (this->long_timeout_)
     iterations *= (iterations * iterations * iterations);
