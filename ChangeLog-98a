@@ -1,3 +1,8 @@
+Fri Jan  2 17:25:05 1998  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* tests/Map_Manager_Test.cpp: Added codes to test STL-styled
+	  functions in ACE_Map_Manager.
+
 Fri Jan  2 17:02:36 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* tests/run_tests.sh: Added Env_Value_Test to the list of tests to
