@@ -1,3 +1,8 @@
+Fri Oct 02 09:02:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp: Removed an
+	  unused local variable, not the one Andy just added. ;)
+
 Fri Oct  2 08:18:28 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
         * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
