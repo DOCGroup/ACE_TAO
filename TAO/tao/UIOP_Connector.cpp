@@ -95,12 +95,8 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
 int
 TAO_UIOP_Connector::close (void)
 {
-  TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy =
-    ACE_dynamic_cast (TAO_CACHED_CONNECT_STRATEGY *,
-                      this->base_connector_.connect_strategy ());
-
   // Zap the creation strategy that we created earlier
-  delete cached_connect_strategy->creation_strategy ();
+  delete cached_connect_strategy_->creation_strategy ();
   delete cached_connect_strategy_;
   delete caching_strategy_;
 
