@@ -3,7 +3,8 @@ conditional_include "common"
 
 configurations = gcc
 soext          = so
-cppflags       = -O
+cppflags       =
+arflags        =
 
 // ***********************************************************************
 // Configuration Section
@@ -56,9 +57,9 @@ SGICC {
 // ***********************************************************************
 
 tru64 {
-  extraflags = -D__USE_STD_IOSTREAM
-  shflags    = -shared /usr/lib/libcxxstd.a
-  ldlibs     = -ltli -lrt
+  extracppflags = -D__USE_STD_IOSTREAM
+  shflags       = -shared /usr/lib/libcxxstd.a
+  ldlibs        = -ltli -lrt
 }
 
 linux {
@@ -88,7 +89,8 @@ irix {
 }
 
 lynxos {
-  soext =
+  soext         =
+  extracppflags = -D__NO_INCLUDE_WARN__
 }
 
 macos {
@@ -104,7 +106,7 @@ unixware {
 }
 
 qnx {
-  shflags    = -shared
-  ldlibs     = -lsocket
-  extraflags = -D__GCC_BUILTIN
+  shflags       = -shared
+  ldlibs        = -lsocket
+  extracppflags = -D__GCC_BUILTIN
 }
