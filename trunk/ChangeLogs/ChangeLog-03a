@@ -1,3 +1,9 @@
+Tue Apr 10 15:14:52 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+	* include/makeinclude/platform_vxworks5.x_g++.GNU:
+
+          Added missing else/endif from previous support addition.
+
 Tue Apr 10 11:48:51 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* include/makeinclude/platform_vxworks5.x_g++.GNU: Added support
