@@ -52,6 +52,7 @@ call %0 %dopure% Priority_Reactor_Test
 call %0 %dopure% Priority_Task_Test
 call %0 %dopure% Process_Mutex_Test
 call %0 %dopure% Process_Strategy_Test
+call %0 %dopure% RB_Tree_Test
 call %0 %dopure% Reactors_Test
 call %0 %dopure% Reactor_Exceptions_Test
 call %0 %dopure% Reactor_Notify_Test
