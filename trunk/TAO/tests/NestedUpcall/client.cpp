@@ -131,15 +131,14 @@ main (int argc, char *argv[])
       auto_ptr<EventHandler_i> eh_impl (new EventHandler_i);
       EventHandler_var eh = eh_impl->_this (TAO_TRY_ENV);
 
-      // @@ Chris, can you please replace this call to open () with a
-      // call to orb->run (&ACE_Time_Value::zero)?  This is "less
-      // non-standard" if you know what I mean!
-
-      // Make sure the ORB is listening...  Now I understand why Orbix
-      // has a nonstandard impl_is_ready () on servants...that lets
-      // the ORB Core know that it can listen for requests.  Woudl be
+      // Get into the event loop briefly...just to make sure that the
+      // ORB gets a chance to set things up for us to be a server.
+      // What this really means is that there's a listening port.
+      //
+      // The bad thing is that we have to do something non-standard
+      // such as call orb->run() with a zero timeout.  It would be
       // nice if the spec gave us a standard way to do this.
-      if (orb->open () == -1)
+      if (orb->run (&ACE_Time_Value::zero) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%s: %p\n",
                            argv[0], "unable to get the ORB Core to listen"),
