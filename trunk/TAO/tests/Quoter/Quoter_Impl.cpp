@@ -99,14 +99,13 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
       // The name of the Generic Factory
       CosLifeCycle::Key factoryKey (2);  // max = 2
       
-      // future enhancement
-      /* if (this->useLifeCycleService_ == 1)
+      if (this->useLifeCycleService_ == 1)
 	{
 	  // use the LifeCycle Service
 	  factoryKey.length(1);
 	  factoryKey[0].id = CORBA::string_dup ("Life_Cycle_Service");
 	}
-      else*/
+      else
 	{
 	  // use a Generic Factory
 	  factoryKey.length(2);
@@ -121,45 +120,49 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
       // Only a NoFactory exception might have occured, so if it
       // occured, then go immediately back.
       if (_env_there.exception() != 0)
-        {
-          // _env_there contains already the exception.
-          return CosLifeCycle::LifeCycleObject::_nil();
-        }
-
+	// _env_there contains already the exception.            
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "Quoter::copy: Exception occured while trying to find a factory.\n"),
+			  CosLifeCycle::LifeCycleObject::_nil());
+                          
       // Now it is known that there is at least one factory.
       Stock::Quoter_var quoter_var;
-
+      
       for (u_int i = 0; i < factories_ptr->length (); i++)
         {
           // Get the first object reference to a factory.
           CORBA::Object_ptr quoter_FactoryObj_ptr = (*factories_ptr)[i];
-
+	  
           // Narrow it to a Quoter Factory.
           Stock::Quoter_Factory_var quoter_Factory_var =
             Stock::Quoter_Factory::_narrow (quoter_FactoryObj_ptr,
                                             TAO_TRY_ENV);
           TAO_CHECK_ENV;
-
+	  
           if (CORBA::is_nil (quoter_Factory_var.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                        "Quoter::copy: Narrow failed. Factory is not valid.\n"),
-                        0);
-
+	    ACE_ERROR_RETURN ((LM_ERROR,
+			       "Quoter::copy: Narrow failed. Factory is not valid.\n"),
+			      CosLifeCycle::LifeCycleObject::_nil());
+	  
           // Try to get a Quoter created by this factory.
           // and duplicate the pointer to it
           quoter_var = Stock::Quoter::_duplicate (
-            quoter_Factory_var->create_quoter ("quoter_copied", TAO_TRY_ENV));
-
+						  quoter_Factory_var->create_quoter ("quoter_copied", 
+										     TAO_TRY_ENV));
+	  
           // @@ mk1: The create_quoter should return an exception
           TAO_CHECK_ENV;
-
+	  
           if (CORBA::is_nil (quoter_var.in ()))
             {
               // If we had already our last chance, then give up.
               if (i == factories_ptr->length ())
                 {
                   _env_there.exception (new CosLifeCycle::NoFactory (factoryKey));
-                  return CosLifeCycle::LifeCycleObject::_nil();
+		  ACE_ERROR_RETURN ((LM_ERROR,
+				     "Quoter::copy: Last factory did not work. \n"
+				     "No more factories are available. I give up.\n"),
+				    CosLifeCycle::LifeCycleObject::_nil());
                 }
               else
                 {
@@ -169,20 +172,21 @@ Quoter_Impl::copy (CosLifeCycle::FactoryFinder_ptr there,
                 }
             }
           else
-            break;
-            // if succeeded in creating a new Quoter over there, then stop trying
+	    // if succeeded in creating a new Quoter over there, then stop trying
+            break;	  
         }
-
+      
       // Return an object reference to the newly created Quoter.
       return (CosLifeCycle::LifeCycleObject_ptr) quoter_var.ptr();
     }
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("SYS_EX");
+      // Report a NoFactory exception back to the caller
+      _env_there.exception (new CosLifeCycle::NoFactory (factoryKey));
       return CosLifeCycle::LifeCycleObject::_nil();
     }
   TAO_ENDTRY;
-  return CosLifeCycle::LifeCycleObject::_nil();
 }
 
 
@@ -193,15 +197,80 @@ Quoter_Impl::move (CosLifeCycle::FactoryFinder_ptr there,
                    const CosLifeCycle::Criteria &the_criteria,
                    CORBA::Environment &_env_there)
 {
-  // for later
-  // this->copy (there, the_criteria, _env_there);
+  ACE_DEBUG ((LM_DEBUG,"Quoter_Impl::move: being called\n"));
+  
+  TAO_TRY
+    {
+      // Create a new Quoter over there
+      if (CORBA::is_nil (there))
+	{
+	  ACE_ERROR ((LM_ERROR,
+		      "Quoter::move: No Factory Finder, don't know how to go on.\n"));
+	  _env_there.exception (new CosLifeCycle::NoFactory ());
+	  return;	  
+	}
 
-  // the move operation is not implemented yet, because of the issue,
-  // that the object reference has to stay the same. But if it has
-  // to stay the same this object, the old object, has to forward
-  // further calls.
+      CosLifeCycle::LifeCycleObject_var lifeCycleObject_var =       
+	this->copy (there, the_criteria, _env_there);
 
-  _env_there.exception (new CosLifeCycle::NotMovable());
+      if (_env_there.exception () != 0)
+	{
+	  ACE_ERROR ((LM_ERROR,
+		      "Quoter::move: Exception while creating new Quoter.\n"));
+	  // The exception is already contained in the right environment
+	  return;
+	}
+
+      if (CORBA::is_nil (quoter_Factory_var.in ()))
+	{
+	  ACE_ERROR ((LM_ERROR,
+		      "Quoter::move: Created Quoter is not valid.\n"));
+	  _env_there.exception (new CosLifeCycle::NoFactory ());
+	  return;
+	}
+            
+      // Set the POA, so that the requests will be forwarded to the new location
+      
+      // new location
+      CORBA::Object_var forward_to_var = (CORBA::Object_var) quoter_var;
+      
+      if (!CORBA::is_nil (forward_to_var.in ()))
+	{
+	  PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this, TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	  
+	  PortableServer::Servant servant = this->poa_->_servant ();
+
+	  if (servant == 0)
+	    {
+	      ACE_ERROR ((LM_ERROR,"Quoter_Impl::move: Could not find servant.\n"));
+	      _env_there.exception (new CosLifeCycle::NotMovable());
+	      return;
+	    }
+	  
+	  void *ptr = servant->_downcast ("IDL:PortableServer/POA:1.0");
+	  POA_PortableServer::POA *poa = (POA_PortableServer::POA *) ptr;
+	  TAO_POA *tao_poa = ACE_dynamic_cast (TAO_POA *, poa);
+	  
+	  tao_poa->forward_object (oid.in (),
+				   forward_to_var.in (),
+				   TAO_TRY_ENV);
+	  TAO_CHECK_ENV;  
+	}
+      else
+	{
+	  ACE_ERROR ((LM_ERROR,"Quoter_Impl::move: forward_to refenence is nil.\n"));
+	  _env_there.exception (new CosLifeCycle::NotMovable());
+	  return;
+	}
+      
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("SYS_EX");
+      return;
+    }
+  TAO_ENDTRY;   
 }
 
 
