@@ -1,7 +1,7 @@
 1998-05-20  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
-	* orbsvcs/tests/Concurrency/CC_client.cpp
-	  Fixed errors causing compilation problems on VxWorks
+        * orbsvcs/tests/Concurrency/CC_client.cpp
+          Fixed errors causing compilation problems on VxWorks.
 
 Wed May 20 08:40:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -15,6 +15,11 @@ Wed May 20 08:40:51 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/POAC.cpp: initialized some retvals, of enum types, to -1
           to avoid GHS compile warnings.  The warnings were all in
           exception handling blocks, so performance isn't an issue here.
+
+        * tests/Cubit/TAO/IDL_Cubit/README: added instructions on how
+          to build the client without the ACE and TAO libraries for
+          VxWorks.  Thanks to Umar Syyid <usyyid@hns.com> for asking
+          about this.
 
 Tue May 19 12:19:42 1998  Carlos O'Ryan  <coryan@JIG>
 
@@ -654,7 +659,7 @@ Wed May  6 00:28:09 1998  Marina Igorevna Spivak  <marina@macarena.cs.wustl.edu>
 
         * orbsvcs/tests/Naming/ns_tree.cpp: made several minor
           modifications to the test program to make it work for compound
-	  names. 
+          names.
 
 Tue May  5 15:40:09 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
