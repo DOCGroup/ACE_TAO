@@ -282,6 +282,8 @@ extern TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
                                              CORBA::Float &x);
 extern TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is, 
                                              CORBA::Double &x);
+extern TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is, 
+                                             CORBA::Char* &x);
 
 #endif /* __ACE_INLINE */
 
