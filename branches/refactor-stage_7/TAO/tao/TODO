@@ -50,4 +50,11 @@
 
 . AMI -- exceptions interceptor test needs modifications.
 
-. Add CollocatedPI tests to the daily build
+. AMI -- exceptions interceptor test needs modifications.
+
+. Add CollocatedPI tests to the daily build.
+
+. Add comment to Bugzilla 1583, saying that our new option
+  TAO_USE_LOCAL_MEMORY_POOL will eliminate the problem, if
+  set to 0. Memory is not leaked, but cached in the ORB
+  until shutdown, which looks like the same thing to TaskManager.
