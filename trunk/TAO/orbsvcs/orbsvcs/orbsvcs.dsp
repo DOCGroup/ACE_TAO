@@ -55,8 +55,8 @@ LINK32=link.exe
 # ADD LINK32 ace.lib TAO.lib /nologo /subsystem:windows /dll /machine:I386 /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # Begin Special Build Tool
 SOURCE=$(InputPath)
-PostBuild_Desc=Moving DLL to $TAO_ROOT/tao
-PostBuild_Cmds=move orbsvcs.dll ..\..\tao
+PostBuild_Desc=Copying DLL to $TAO_ROOT/tao
+PostBuild_Cmds=copy orbsvcs.dll ..\..\tao
 # End Special Build Tool
 
 !ELSEIF  "$(CFG)" == "orbsvcs - Win32 Debug"
@@ -86,8 +86,8 @@ LINK32=link.exe
 # ADD LINK32 aced.lib TAO.lib /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # Begin Special Build Tool
 SOURCE=$(InputPath)
-PostBuild_Desc=Moving DLL to $TAO_ROOT/tao
-PostBuild_Cmds=move orbsvcs.dll ..\..\tao
+PostBuild_Desc=Copying DLL to $TAO_ROOT/tao
+PostBuild_Cmds=copy orbsvcs.dll ..\..\tao
 # End Special Build Tool
 
 !ENDIF 
