@@ -74,7 +74,7 @@ ACE_Async_Timer_Queue_Adapter<TQ>::schedule (ACE_Event_Handler *eh,
   ACE_UNUSED_ARG (sg);
 
   // @@ We still need to implement interval timers...
-  long tid = this->timer_queue_.schedule (eh, 0, delay);
+  long tid = this->timer_queue_.schedule (eh, act, delay);
 
   if (tid == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
