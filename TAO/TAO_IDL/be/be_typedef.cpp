@@ -269,7 +269,7 @@ be_typedef::gen_encapsulation  (void)
     {
       cs->print ("0x%x, ", arr[i]);
     }
-  *cs << " // name = " << this->local_name () << nl;
+  *cs << " // name = " << this->local_name () << "\n";
 
   // generate typecode for the base type
   bt = be_type::narrow_from_decl (this->base_type ());

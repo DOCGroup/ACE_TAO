@@ -128,7 +128,7 @@ be_string::gen_typecode (void)
   TAO_NL  nl;        // end line
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
-  cs = cg->outstream ();
+  cs = cg->client_stubs ();
   cs->indent (); // start from the current indentation level
   // emit the enumeration
   *cs << "CORBA::tk_string, " << nl;
