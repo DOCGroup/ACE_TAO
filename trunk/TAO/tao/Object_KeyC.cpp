@@ -233,7 +233,7 @@ TAO::ObjectKey::demarshal_key (TAO::ObjectKey &key,
       return strm.read_octet_array (key.get_buffer (),
                                     _tao_seq_len);
 #else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-      return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
+      return strm.read_octet_array (key.get_buffer (), key.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
 
     }
