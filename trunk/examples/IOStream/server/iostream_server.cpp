@@ -26,7 +26,7 @@ typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream;
 
 class Handler : public ACE_Svc_Handler<ACE_SOCK_IOSTREAM, ACE_NULL_SYNCH>
   // = TITLE
-  //     Extend the <ACE_Svc_Handler> template to do our bidding.  
+  //     Extend the <ACE_Svc_Handler> template to do our bidding.
   //
   // = DESCRIPTION
   //     Create an <ACE_Svc_Handler> object based on our
@@ -68,13 +68,11 @@ Handler::~Handler (void)
   ACE_Reactor::end_event_loop ();
 }
 
-int 
+int
 Handler::handle_input (ACE_HANDLE)
 {
   int i;
   float f;
-
-  ACE_INET_Addr addr;
 
   // Check to see if the socket is closed down.
   if (this->peer ().eof ())
@@ -82,7 +80,7 @@ Handler::handle_input (ACE_HANDLE)
 
 #if defined (ACE_HAS_STRING_CLASS)
   ACE_IOStream_String s;
-  
+
   if (!(this->peer () >> i >> f >> s))
     ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "error getting data"), -1);
 
@@ -147,7 +145,7 @@ main (int argc, char *argv [])
                       -1);
 
   else if (ACE_Reactor::instance ()->register_handler
-	   (&peer_acceptor,
+           (&peer_acceptor,
             ACE_Event_Handler::READ_MASK) == - 1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "registering service with ACE_Reactor\n"),
