@@ -32,6 +32,12 @@ my(@targets)  = ('all', 'debug', 'profile', 'optimize',
 # Subroutine Section
 # ************************************************************
 
+sub generate_implicit_project_dependencies {
+  #my($self) = shift;
+  return 1;
+}
+
+
 sub workspace_file_name {
   my($self) = shift;
   return $self->get_modified_workspace_name('Makefile', '');
