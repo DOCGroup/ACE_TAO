@@ -1,9 +1,14 @@
+Thu Jul 12 19:54:27 2001  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Registry/test_registry_update.cpp (main):
+
+	  Fixed unused argument warning.
+
 Thu Jul 12 19:57:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * bin/auto_run_tests.lst:
 
           Added TAO/tests/RTCORBA/ORB_init to the auto run list.
-          
 
 Thu Jul 12 17:11:35 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 

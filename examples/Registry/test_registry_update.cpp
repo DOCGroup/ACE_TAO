@@ -29,8 +29,8 @@ static int update_counter (HKEY predefined,
 			   u_long &current_counter);
 static void setup_names ();
 
-int 
-main(int argc, char *argv[])
+int
+main (int, char *[])
 {
   int result;
   u_long current_counter = 0;
