@@ -1,3 +1,23 @@
+Fri Jun 25 18:09:07 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/Param_Test/any.cpp:
+	* TAO/tests/Param_Test/bd_long_seq.cpp:
+	* TAO/tests/Param_Test/bd_short_seq.cpp:
+	* TAO/tests/Param_Test/bd_str_seq.cpp:
+	* TAO/tests/Param_Test/bd_string.cpp:
+	* TAO/tests/Param_Test/bd_long_seq.cpp:
+	* TAO/tests/Param_Test/bd_struct_seq.cpp:
+	* TAO/tests/Param_Test/complex_any.cpp:
+	* TAO/tests/Param_Test/except.cpp:
+	* TAO/tests/Param_Test/fixed_array.cpp:
+	* TAO/tests/Param_Test/fixed_struct.cpp:
+	* TAO/tests/Param_Test/nested_struct.cpp:
+	* TAO/tests/Param_Test/objref.cpp:
+	* TAO/tests?Param_Test/ub_struct_seq.cpp:
+	  Added ACE_TRY block to add_args(). This 
+	  was not causing a warning, but there 
+	  were many unchecked calls using ACE_TRY_ENV.
+
 Fri Jun 25 17:28:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/default_resource.cpp (get_reactor): Made sure the reactor
