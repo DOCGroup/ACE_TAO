@@ -1,3 +1,15 @@
+Mon Jul 09 02:43:38 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
+	* orbsvcs/tests/Security/Secure_Invocation/client.cpp:
+	* orbsvcs/tests/Security/Secure_Invocation/client.dsp:
+	* orbsvcs/tests/Security/Secure_Invocation/run_test.pl:
+
+	  Updated this test to take advantage of the newly added
+	  Security::QOPPolicy support.  The test is more self-contained
+	  now, i.e. it no longer depends so much on the "run_test.pl" Perl
+	  script to test all features.
+
 Mon Jul 09 02:21:32 2001  Ossama Othman  <ossama@uci.edu>
 
 	* docs/releasenotes/index.html:
