@@ -19,21 +19,6 @@ ACE_SV_Semaphore_Simple::control (int cmd,
     -1 : ACE_OS::semctl (this->internal_id_, semnum, cmd, arg);
 }
 
-// Remove all SV_Semaphores associated with a particular key.  This
-// call is intended to be called from a server, for example, when it
-// is being shut down, as we do an IPC_RMID on the ACE_SV_Semaphore,
-// regardless of whether other processes may be using it or not.  Most
-// other processes should use close() below.
-     
-inline int 
-ACE_SV_Semaphore_Simple::remove (void) const
-{
-  ACE_TRACE ("ACE_SV_Semaphore_Simple::remove");
-  int result = this->control (IPC_RMID);
-  ((ACE_SV_Semaphore_Simple *) this)->init ();
-  return result;
-}
-
 // Close a ACE_SV_Semaphore, marking it as invalid for subsequent
 // operations...
 
@@ -52,13 +37,6 @@ ACE_SV_Semaphore_Simple::op (sembuf op_vec[], int n) const
   ACE_TRACE ("ACE_SV_Semaphore_Simple::op");
   return this->internal_id_ == -1 
     ? -1 : ACE_OS::semop (this->internal_id_, op_vec, n);
-}
-
-inline
-ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (void)
-{
-  ACE_TRACE ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple");
-  this->init ();
 }
 
 // Wait until a ACE_SV_Semaphore's value is greater than 0, the

@@ -24,11 +24,10 @@ ACE_ReactorEx::~ACE_ReactorEx (void)
 }
 
 int 
-ACE_ReactorEx::notify (void)
+ACE_ReactorEx::notify (ACE_Event_Handler *eh,
+		       ACE_Reactor_Mask mask);
 {
-  ACE_GUARD_RETURN (ACE_ReactorEx_Token, ace_mon, this->token_, -1);
-
-  return notify_handler_.notify ();
+  return notify_handler_.notify (eh, mask);
 }
 
 int 
@@ -116,10 +115,20 @@ int
 ACE_ReactorEx::handle_events (ACE_Time_Value *how_long,
 			      int wait_all)
 {
+  ACE_TRACE ("ACE_ReactorEx::handle_events");
+
   // @@ Need to implement -wait_all-.
 
+  // Tim, is this the right place for the token lock?
+  ACE_GUARD_RETURN (ACE_ReactorEx_Token, ace_mon, this->token_, -1);
+
+  // Tim, this function is too long.  It should be broken up into
+  // another several methods (e.g., wait_for_multi_events() and
+  // dispatch(), just like the ACE_Reactor.
+  
   DWORD wait_status;
   int handles_skipped = 0;
+
   // These relative_things are moved through the handles_ each time
   // handle_events is called.  Set relative index = -1 so we can check
   // in case of timeouts.
@@ -260,33 +269,105 @@ ACE_ReactorEx_Token::sleep_hook (void)
 
 ACE_ReactorEx_Notify::ACE_ReactorEx_Notify (void)
 {
-  // Create an "auto-reset" event that is used to unblock the
-  // ReactorEx.
-  handle_ = ::CreateEvent (NULL, FALSE, FALSE, NULL);
 }
 
 ACE_ReactorEx_Notify::~ACE_ReactorEx_Notify (void)
 {
-  ACE_OS::close (handle_);
 }
 
 ACE_HANDLE
 ACE_ReactorEx_Notify::get_handle (void) const
 {
-  return this->handle_;
+  return this->notify_event_.handle ();
 }
+
+// Handle all pending notifications.
 
 int
-ACE_ReactorEx_Notify::handle_signal (int signum, siginfo_t *, ucontext_t *)
+ACE_ReactorEx_Notify::handle_signal (int signum, 
+				     siginfo_t *siginfo, 
+				     ucontext_t *)
 {
-  // Do nothing.
-  return 0;
+  // Just check for sanity...
+  if (siginfo->si_handle_ != this->notify_event_.handle ())
+    return -1;
+
+  for (;;)
+    {
+      ACE_Message_Block *mb = 0;
+  
+      if (this->message_queue_.dequeue_head (mb) == -1)
+	{
+	  if (errno == EWOULDBLOCK)
+	    // We've reached the end of the processing, return
+	    // normally.
+	    return 0;
+	  else
+	    return -1; // Something weird happened...
+	}
+      else
+	{
+	  ACE_Notification_Buffer *buffer = 
+	    (ACE_Notification_Buffer *) mb->base ();
+
+	  // If eh == 0 then we've got major problems!  Otherwise, we need
+	  // to dispatch the appropriate handle_* method on the
+	  // ACE_Event_Handler pointer we've been passed.
+	  if (buffer->eh_ != 0)
+	    {
+	      int result = 0;
+
+	      switch (buffer->mask_)
+		{
+		case ACE_Event_Handler::READ_MASK:
+		  result = buffer->eh_->handle_input (ACE_INVALID_HANDLE);
+		  break;
+		case ACE_Event_Handler::WRITE_MASK:
+		  result = buffer->eh_->handle_output (ACE_INVALID_HANDLE);
+		  break;
+		case ACE_Event_Handler::EXCEPT_MASK:
+		  result = buffer->eh_->handle_exception (ACE_INVALID_HANDLE);
+		  break;
+		default:
+		  ACE_ERROR ((LM_ERROR, "invalid mask = %d\n", buffer->mask_));
+		  break;
+		}
+	      if (result == -1)
+		buffer->eh_->handle_close (ACE_INVALID_HANDLE, 
+					   ACE_Event_Handler::EXCEPT_MASK);
+	    }
+	  // Make sure to delete the memory regardless of success or
+	  // failure!
+	  delete mb;
+	}
+    }
 }
 
+// Notify the ReactorEx, potentially enqueueing the
+// <ACE_Event_Handler> for subsequent processing in the ReactorEx
+// thread of control.
+
 int 
-ACE_ReactorEx_Notify::notify (void)
+ACE_ReactorEx_Notify::notify (ACE_Event_Handler *eh, 
+			      ACE_Reactor_Mask mask)
 {
-  return ::SetEvent (handle_) ? 0 : -1;
+  if (eh != 0)
+    {
+      ACE_Message_Block *mb = 0;
+      ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof ACE_Notification_Buffer), -1);
+
+      ACE_Notification_Buffer *buffer = (ACE_Notification_Buffer *) mb->base ();
+      buffer->eh_ = eh;
+      buffer->mask_ = mask;
+
+      if (this->message_queue_.enqueue_tail (mb) == -1)
+	{
+	  delete mb;
+	  return -1;
+	}
+    }
+
+  return this->notify_event_.signal ();
 }
 
 #endif /* ACE_WIN32 */

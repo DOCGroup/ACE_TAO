@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -34,7 +33,8 @@ class ACE_Export ACE_Sbrk_Memory_Pool_Options
   // = DESCRIPTION
   //     This should be a nested class, but that breaks too many 
   //     compilers.
-{};
+{
+};
 
 class ACE_Export ACE_Sbrk_Memory_Pool
   // = TITLE
@@ -43,7 +43,7 @@ class ACE_Export ACE_Sbrk_Memory_Pool
 public:
   typedef ACE_Sbrk_Memory_Pool_Options OPTIONS;
 
-  ACE_Sbrk_Memory_Pool (const char *pool_name = 0, 
+  ACE_Sbrk_Memory_Pool (const char *backing_store_name = 0, 
 			const OPTIONS *options = 0);
   // Initialize the pool.
 
@@ -101,7 +101,22 @@ class ACE_Export ACE_Shared_Memory_Pool_Options
   // = DESCRIPTION
   //     This should be a nested class, but that breaks too many 
   //     compilers.
-{};
+{
+public:
+  // = Initialization method.
+  ACE_Shared_Memory_Pool_Options (const char *base_addr = ACE_DEFAULT_BASE_ADDR,
+				  size_t max_segments = ACE_DEFAULT_MAX_SEGMENTS,
+				  size_t file_perms = ACE_DEFAULT_FILE_PERMS);
+
+  const char *base_addr_;
+  // Base address of the memory-mapped backing store.
+
+  size_t max_segments_;
+  // Number of shared memory segments to allocate.
+
+  size_t file_perms_;
+  // File permissions to use when creating/opening a segment.
+};
 
 class ACE_Export ACE_Shared_Memory_Pool : public ACE_Event_Handler
   // = TITLE
@@ -112,7 +127,7 @@ class ACE_Export ACE_Shared_Memory_Pool : public ACE_Event_Handler
 public:
   typedef ACE_Shared_Memory_Pool_Options OPTIONS;
 
-  ACE_Shared_Memory_Pool (const char *pool_name = ACE_ITOA (ACE_DEFAULT_SHM_KEY),
+  ACE_Shared_Memory_Pool (const char *backing_store_name = 0,
 			  const OPTIONS *options = 0);
   // Initialize the pool.
 
@@ -158,18 +173,39 @@ protected:
   // Implement the algorithm for rounding up the request to an
   // appropriate chunksize.
 
-  virtual int commit_backing_store (size_t rounded_bytes, 
+  virtual int commit_backing_store_name (size_t rounded_bytes, 
 				    off_t &offset);
   // Commits a new shared memory segment if necessary after an
   // acquire() or a signal.  <offset> is set to the new offset into
   // the backing store.
 
+  // = Keeps track of all the segments being used.
   struct SHM_TABLE 
   {
-    key_t key;
-    int shmid;
-    int used;
+    key_t key_;
+    // Shared memory segment key.
+
+    int shmid_;
+    // Shared memory segment internal id.
+
+    int used_;
+    // Is the segment currently used.;
   };
+
+  void *base_addr_;
+  // Base address of the shared memory segment.  If this has the value
+  // of 0 then the OS is free to select any address, otherwise this
+  // value is what the OS must try to use to map the shared memory
+  // segment.
+
+  size_t file_perms_;
+  // File permissions to use when creating/opening a segment.
+
+  size_t max_segments_;
+  // Number of shared memory segments in the <SHM_TABLE> table.
+
+  key_t base_shm_key_;
+  // Base shared memory key for the segment.
 
   virtual int in_use (off_t &offset, int &counter);
   // Determine how much memory is currently in use.
@@ -180,9 +216,6 @@ protected:
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
   // Handle SIGSEGV and SIGBUS signals to remap shared memory
   // properly.
-
-  ACE_SV_Semaphore_Complex init_finished_;
-  // Used to serialize initialization of the Memory_Pool and Malloc.
 };
 #endif /* !ACE_LACKS_SYSV_SHMEM */
 
@@ -204,7 +237,7 @@ class ACE_Export ACE_Local_Memory_Pool
 public:
   typedef ACE_Local_Memory_Pool_Options OPTIONS;
 
-  ACE_Local_Memory_Pool (const char *pool_name = 0,
+  ACE_Local_Memory_Pool (const char *backing_store_name = 0,
 			 const OPTIONS *options = 0);
   // Initialize the pool.
 
@@ -261,16 +294,20 @@ class ACE_Export ACE_MMAP_Memory_Pool_Options
   //     compilers.
 {
 public:
+  // = Initialization method.
   ACE_MMAP_Memory_Pool_Options (const char *base_addr = ACE_DEFAULT_BASE_ADDR,
 				int use_fixed_addr = 1,
-				int write_each_page = 1)
-    : base_addr_ (base_addr),
-      use_fixed_addr_ (use_fixed_addr),
-      write_each_page_ (write_each_page) {}
+				int write_each_page = 1);
 
   const char *base_addr_;
+  // Base address of the memory-mapped backing store.
+
   int use_fixed_addr_;
+  // Must we use the <base_addr_> or can we let mmap(2) select it?
+
   int write_each_page_;
+  // Should each page be written eagerly to avoid surprises later
+  // on?
 };
 
 class ACE_Export ACE_MMAP_Memory_Pool : public ACE_Event_Handler
@@ -283,7 +320,7 @@ public:
 
   // = Initialization and termination methods.
 
-  ACE_MMAP_Memory_Pool (const char *pool_name = 0,
+  ACE_MMAP_Memory_Pool (const char *backing_store_name = 0,
 			const OPTIONS *options = 0);
   // Initialize the pool.
 
@@ -340,7 +377,7 @@ protected:
 
   virtual size_t round_up (size_t nbytes);
 
-  virtual int commit_backing_store (size_t rounded_bytes, off_t &file_offset);
+  virtual int commit_backing_store_name (size_t rounded_bytes, off_t &file_offset);
   // Compute the new file_offset of the backing store and commit the
   // memory.
 
@@ -369,8 +406,8 @@ protected:
   // Should we write a byte to each page to forceably allocate memory
   // for this backing store?
 
-  char backing_store_[MAXPATHLEN];
-  // Name of the backing store where the shared memory is kept.
+  char backing_store_name_[MAXPATHLEN];
+  // Name of the backing store where the shared memory pool is kept.
 };
 
 class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
@@ -388,7 +425,7 @@ class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
 public:
   // = Initialization and termination methods.
 
-  ACE_Lite_MMAP_Memory_Pool (const char *pool_name = 0,
+  ACE_Lite_MMAP_Memory_Pool (const char *backing_store_name = 0,
 			     const OPTIONS *options = 0);
   // Initialize the pool.
 

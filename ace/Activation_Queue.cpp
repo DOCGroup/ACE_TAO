@@ -68,5 +68,5 @@ ACE_Activation_Queue::enqueue (ACE_Method_Object *mo,
 
   ACE_NEW_RETURN (mb, ACE_Message_Block ((char *) mo), -1);
 
-  return this->queue_->enqueue (mb, tv);
+  return this->queue_->enqueue_prio (mb, tv);
 }
