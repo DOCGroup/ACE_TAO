@@ -220,7 +220,7 @@ sub check_for_inline ()
                 if (/FUZZ\: enable check_for_inline/) {
                     $disable = 0;
                 }
-                if ($disable == 0 and /^\s*inline/) {
+                if ($disable == 0 and m/^\s*inline/) {
                     print_error ("inline found in $file on line $line");
                 }
             }
@@ -439,6 +439,40 @@ sub check_for_mismatched_filename ()
     }
 }
 
+# check for 
+sub check_for_old_run_test ()
+{
+    print "Running old run_test.pl test\n";
+    foreach $file (@files_pl) {
+        if (open (FILE, $file)) {
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                if (m/ACEutils/) {
+                    print_error ("ACEutils.pm still being used in $file");
+                }
+                
+                if (m/unshift \@INC/) {
+                    print_error ("Still unshifting \@INC, should \"use lib\""
+                                 ." instead in $file");
+                }
+                
+                if (m/ACE\:\:/ && !m/PerlACE\:\:/) {
+                    print_error ("Still using ACE::* in $file");
+                }
+
+                if (m/Process\:\:/ && !m/PerlACE\:\:Process\:\:/) {
+                    print_error ("Still using Process::* in $file");
+                }
+
+            }
+            close (FILE);
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
+
 ##############################################################################
 
 #our ($opt_c, $opt_d, $opt_h, $opt_l, $opt_m);
@@ -483,6 +517,7 @@ check_for_preprocessor_comments () if ($opt_l >= 7);
 check_for_tchar () if ($opt_l >= 4);
 check_for_pre_and_post () if ($opt_l >= 4);
 check_for_mismatched_filename () if ($opt_l >= 2);
+check_for_old_run_test () if ($opt_l >= 6);
 
 print "\nFuzz.pl - $errors error(s), $warnings warning(s)\n";
 

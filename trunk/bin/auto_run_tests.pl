@@ -7,10 +7,25 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # This file is for running the run_test.pl scripts listed in 
 # auto_run_tests.lst.
 
+if (!($ACE_ROOT = $ENV{ACE_ROOT})) {
+    my $cd = getcwd ();
+    chdir ('..');
+    $ACE_ROOT = getcwd ().$DIR_SEPARATOR;
+    chdir ($cd);
+    warn "ACE_ROOT not defined, defaulting to ACE_ROOT=$ACE_ROOT";
+}
+
+unshift @INC, "$ACE_ROOT/bin";
+require ACEutils;
+require PerlACE::ConfigList;
+
 use English;
 use Getopt::Std;
+use Cwd;
 
-if (!getopts ('ac:s:t') || $opt_h) {
+################################################################################
+
+if (!getopts ('ac:ds:t') || $opt_h) {
     print "run_test.pl [-a] [-c config] [-h] [-s sandbox] [-t]\n";
     print "\n";
     print "Runs the tests listed in auto_run_tests.lst\n";
@@ -26,61 +41,16 @@ if (!getopts ('ac:s:t') || $opt_h) {
     exit (1);
 }
 
-use Cwd;
+$config_list = new PerlACE::ConfigList;
 
-if (!($ACE_ROOT = $ENV{ACE_ROOT})) {
-    my $cd = getcwd ();
-    chdir ('..');
-    $ACE_ROOT = getcwd ().$DIR_SEPARATOR;
-    chdir ($cd);
-    warn "ACE_ROOT not defined, defaulting to ACE_ROOT=$ACE_ROOT";
+$config_list->load ($ACE_ROOT."/bin/auto_run_tests.lst");
+
+if ($#CONFIGS < 0) {
+    print "Warning: No configurations selected, defaulting to none.\n";
+    print "         Possible Configs: ", $config_list->list_configs (), "\n";
 }
 
-unshift @INC, "$ACE_ROOT/bin";
-require ACEutils;
-
-$config = 'DEFAULT';
-
-if ($opt_c) {
-    $config = $opt_c;
-}
-else {
-    print "Defaulting to configuration: $config\n";
-}
-
-
-################################################################################
-
-@tests = ();
-
-# Loads the list and runs it
-sub read_run_test_list ()
-{
-    my $line;
-    open (LIST, "<$ACE_ROOT/bin/auto_run_tests.lst") 
-        || die "Cannot open $ACE_ROOT/bin/auto_run_tests.lst";
-
-    while (<LIST>) {
-        next if (/^#/ || /^\s*$/);  # ignore comments and blank lines
-
-        chomp;
-        my @stuff = split ":";
-
-        if (!/$config/) {
-            my $program = shift @stuff;
-            $program =~ s/\s*//g;  #remove any extra whitepace
-            push @tests, $program;
-        }
-    }   
-
-    close (LIST);
-}
-
-################################################################################
-
-read_run_test_list ();
-
-foreach $test (@tests) {
+foreach $test ($config_list->valid_entries ()) {
     my $directory = ".";
     my $program = ".";
 
@@ -104,20 +74,34 @@ foreach $test (@tests) {
     chdir ($ACE_ROOT."/$directory")
         || die "Error: Cannot chdir to $ACE_ROOT/$directory";
 
-    $run_error = 0;
-
     if (! -e $program) {
         print STDERR "Error: $test does not exist\n";
         next;
     }
 
-    my $result = 0;
+    ### Genrate the -ExeSubDir and -Config options
+    my $inherited_options = " -ExeSubDir $EXEPREFIX ";
 
+    foreach my $config (@CONFIGS) {
+         $inherited_options .= " -Config $config ";
+    }
+
+    $cmd = '';
     if ($opt_s) {
-        $result = system ("$opt_s \"perl $program\"");
+        $cmd = "$opt_s \"perl $program $inherited_options\"";
     } 
     else { 
-        $result = system ($program);
+        $cmd = $program.$inherited_options;
+    }
+
+
+    my $result = 0;
+
+    if (defined $opt_d) {
+        print "Running: $cmd\n";
+    }
+    else {
+        $result = system ($cmd);
     }
 
     if ($result > 0) {
