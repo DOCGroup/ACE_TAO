@@ -20,8 +20,11 @@ along with GNU GPERF; see the file COPYING.  If not, write to the Free
 Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111,
 USA.  */
 
-#include "Vectors.h"
 #include "List_Node.h"
+
+#if defined (ACE_HAS_GPERF)
+
+#include "Vectors.h"
 
 // Defined as a macro in string.h on some systems, which causes
 // conflicts.
@@ -113,3 +116,5 @@ List_Node::List_Node (char *k, int len)
   // Sort the KEY_SET items alphabetically.
   set_sort (char_set, ptr - char_set);
 }
+
+#endif /* ACE_HAS_GPERF */

@@ -20,10 +20,13 @@ along with GNU GPERF; see the file COPYING.  If not, write to the Free
 Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111,
 USA.  */
 
+#include "Key_List.h"
+
+#if defined (ACE_HAS_GPERF)
+
 #include "ace/Read_Buffer.h"
 #include "Hash_Table.h"
 #include "Vectors.h"
-#include "Key_List.h"
 
 // Make the hash table 10 times larger than the number of keyword entries.
 static const int TABLE_MULTIPLE = 10;
@@ -1407,3 +1410,5 @@ Key_List::max_key_length (void)
 {
   return max_key_len;
 }
+
+#endif /* ACE_HAS_GPERF */

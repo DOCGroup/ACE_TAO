@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include <stdio.h>
-
 /* Copyright (C) 1989 Free Software Foundation, Inc.
    written by Douglas C. Schmidt (schmidt@ics.uci.edu)
 
@@ -26,6 +24,10 @@ USA.  */
 #if !defined (VECTORS_H)
 #define VECTORS_H
 
+#include "ace/OS.h"
+
+#if defined (ACE_HAS_GPERF)
+
 static const int ALPHA_SIZE = 128;
 
 class Vectors
@@ -41,4 +43,5 @@ public:
   // Value associated with each character.
 };
 
+#endif /* ACE_HAS_GPERF */
 #endif /* VECTORS_H */

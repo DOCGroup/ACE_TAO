@@ -22,6 +22,8 @@ USA.  */
 
 #include "Iterator.h"
 
+#if defined (ACE_HAS_GPERF)
+
 // Constructor for Iterator.
 
 Iterator::Iterator (char *s,
@@ -88,3 +90,5 @@ Iterator::operator() (void)
       return end;
     }
 }
+
+#endif /* ACE_HAS_GPERF */

@@ -24,8 +24,10 @@ USA.  */
 #if !defined (LIST_NODE_H)
 #define LIST_NODE_H
 
+#include "ace/OS.h"
 #include "Options.h"
 
+#if defined (ACE_HAS_GPERF)
 class List_Node 
 { 
   // = TITLE
@@ -63,4 +65,5 @@ public:
   // Position of this node relative to other nodes. 
 };
 
+#endif /* ACE_HAS_GPERF */
 #endif /* LIST_NODE_H */

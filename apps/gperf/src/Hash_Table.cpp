@@ -20,8 +20,11 @@ along with GNU GPERF; see the file COPYING.  If not, write to the Free
 Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111,
 USA.  */
 
-#include "ace/ACE.h"
 #include "Hash_Table.h"
+
+#if defined (ACE_HAS_GPERF)
+
+#include "ace/ACE.h"
 
 #define NIL(TYPE) (TYPE *)0
 
@@ -82,3 +85,5 @@ Hash_Table::operator() (List_Node *item, int ignore_length)
 
   return table[probe] ? table[probe] : (table[probe] = item, NIL (List_Node));
 }
+
+#endif /* ACE_HAS_GPERF */

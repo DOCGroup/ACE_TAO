@@ -23,7 +23,10 @@ along with GNU GPERF; see the file COPYING.  If not, write to the Free
 Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111,
 USA.  */
 
+#include "ace/OS.h"
 #include "Options.h"
+
+#if defined (ACE_HAS_GPERF)
 
 // Determine default alignment.  If your C++ compiler does not like
 // this then try something like #define DEFAULT_ALIGNMENT 8.
@@ -84,3 +87,5 @@ operator delete (void *ptr)
   // We cannot call free here, as it doesn't match the mallocs.  free
   // ((char *) ptr);
 }
+
+#endif /* ACE_HAS_GPERF */
