@@ -36,7 +36,6 @@ TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const ACE_MEM_Addr &addr,
     endpoint_ (addr,
                orb_core->orb_params ()->use_dotted_decimal_addresses ()),
     count_ (1),
-    endpoints_encoded_ (0),
     object_key_ (object_key),
     tagged_profile_ ()
 {
@@ -51,7 +50,6 @@ TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const char* host,
   : TAO_Profile (TAO_TAG_SHMEM_PROFILE, orb_core, version),
     endpoint_ (host, port, addr),
     count_ (1),
-    endpoints_encoded_ (0),
     object_key_ (object_key),
     tagged_profile_ ()
 {
@@ -65,7 +63,6 @@ TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const char *string,
                  TAO_GIOP_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
     count_ (1),
-    endpoints_encoded_ (0),
     object_key_ (),
     tagged_profile_ ()
 {
@@ -79,7 +76,6 @@ TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (TAO_ORB_Core *orb_core)
                  TAO_GIOP_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
     count_ (1),
-    endpoints_encoded_ (0),
     object_key_ (),
     tagged_profile_ ()
 {
@@ -277,7 +273,7 @@ TAO_SHMIOP_Profile::parse_string (const char *string,
   tmp[length] = '\0';
 
   this->endpoint_.host_ = tmp._retn ();
-  
+
   ACE_INET_Addr host_addr;
 
   if (ACE_OS::strcmp (this->endpoint_.host_.in (), "") == 0)
@@ -307,7 +303,7 @@ TAO_SHMIOP_Profile::parse_string (const char *string,
           this->endpoint_.host_ = (const char *) tmp_host;
         }
     }
-  
+
   if (this->endpoint_.object_addr_.set (this->endpoint_.port_,
                                         this->endpoint_.host_.in ()) == -1)
     {
@@ -318,7 +314,7 @@ TAO_SHMIOP_Profile::parse_string (const char *string,
                       ACE_TEXT ("TAO (%P|%t) ACE_INET_Addr::set () failed")));
         }
       return -1;
-      
+
     }
 
   start = ++okd;  // increment past the object key separator
@@ -524,18 +520,6 @@ TAO_SHMIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   // OCTET SEQUENCE for object key
   encap << this->object_key_;
 
-#if (TAO_HAS_RT_CORBA == 1)
-  // For now, use/transfer multiple endpoints per profile only with
-  // RTCORBA.
-
-  // Encode profile endpoints.
-  TAO_SHMIOP_Profile *p =
-    ACE_const_cast (TAO_SHMIOP_Profile *, this);
-  if (!endpoints_encoded_)
-    p->encode_endpoints ();
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
   if (this->version_.major > 1
       || this->version_.minor > 0)
     this->tagged_components ().encode (encap);
@@ -590,7 +574,6 @@ TAO_SHMIOP_Profile::encode_endpoints (void)
   // Add component with encoded endpoint data to this profile's
   // TaggedComponents.
   tagged_components_.set_component (tagged_component);
-  this->endpoints_encoded_ = 1;
 
   return  1;
 }
@@ -647,7 +630,6 @@ TAO_SHMIOP_Profile::decode_endpoints (void)
         }
     }
 
-  this->endpoints_encoded_ = 1;
   return 1;
 }
 

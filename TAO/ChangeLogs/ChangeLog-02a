@@ -1,3 +1,25 @@
+Wed Oct 11 18:05:15 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/IIOP_Profile.cpp
+	* tao/IIOP_Profile.h
+	* tao/Profile.cpp
+	* tao/Profile.h
+	* tao/SHMIOP_Profile.cpp
+	* tao/SHMIOP_Profile.h
+	* tao/UIOP_Profile.cpp
+	* tao/UIOP_Profile.h
+	* tao/PortableServer/POA.cpp
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+
+	  Changed the time of profile's endpoints encoding into a tagged
+	  component (<encode_endpoints> method in *_Profile) from
+	  profile encoding to mprofile creation, i.e., from
+	  *_Profile::encode to *_Acceptor_Filter::fill_mprofile.  In other
+	  words, removed 'lazy evaluation' of endpoints encoding.  This
+	  fixes multithreading issues with multiple threads attempting to
+	  encode one profile at the same time.
+
 Wed Oct 11 17:58:35 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* examples/Simple/time-date/svc.conf: Added the CORBA LOC

@@ -36,7 +36,6 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
     endpoint_ (addr,
                orb_core->orb_params ()->use_dotted_decimal_addresses ()),
     count_ (1),
-    endpoints_encoded_ (0),
     object_key_ (object_key),
     tagged_profile_ ()
 {
@@ -51,7 +50,6 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
   : TAO_Profile (TAO_TAG_IIOP_PROFILE, orb_core, version),
     endpoint_ (host, port, addr),
     count_ (1),
-    endpoints_encoded_ (0),
     object_key_ (object_key),
     tagged_profile_ ()
 {
@@ -65,7 +63,6 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string,
                  TAO_GIOP_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
     count_ (1),
-    endpoints_encoded_ (0),
     object_key_ (),
     tagged_profile_ ()
 {
@@ -79,7 +76,6 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
                  TAO_GIOP_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
     count_ (1),
-    endpoints_encoded_ (0),
     object_key_ (),
     tagged_profile_ ()
 {
@@ -561,18 +557,6 @@ TAO_IIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   // OCTET SEQUENCE for object key
   encap << this->object_key_;
 
-#if (TAO_HAS_RT_CORBA == 1)
-  // For now, use/transfer multiple endpoints per profile only with
-  // RTCORBA. 
-
-  // Encode profile endpoints.
-  TAO_IIOP_Profile *p =
-    ACE_const_cast (TAO_IIOP_Profile *, this);
-  if (!endpoints_encoded_)
-    p->encode_endpoints ();
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
   if (this->version_.major > 1
       || this->version_.minor > 0)
     this->tagged_components ().encode (encap);
@@ -582,7 +566,7 @@ int
 TAO_IIOP_Profile::encode_endpoints (void)
 {
   // Create a data structure and fill it with endpoint info for wire
-  // transfer. 
+  // transfer.
   // We include information for the head of the list
   // together with other endpoints because even though its addressing
   // info is transmitted using standard ProfileBody components, its
@@ -626,9 +610,8 @@ TAO_IIOP_Profile::encode_endpoints (void)
     }
 
   // Add component with encoded endpoint data to this profile's
-  // TaggedComponents. 
+  // TaggedComponents.
   tagged_components_.set_component (tagged_component);
-  this->endpoints_encoded_ = 1;
 
   return  1;
 }
@@ -685,7 +668,5 @@ TAO_IIOP_Profile::decode_endpoints (void)
         }
     }
 
-  this->endpoints_encoded_ = 1;
   return 1;
 }
-
