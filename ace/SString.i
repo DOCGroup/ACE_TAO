@@ -126,6 +126,12 @@ ACE_CString::set (const char *s, int release)
   this->set (s, length, release);
 }
 
+ACE_INLINE void
+ACE_CString::clear (int release)
+{
+   this->set(0, 0, release);
+}
+
 ACE_INLINE size_t
 ACE_CString::length (void) const
 {
@@ -506,6 +512,12 @@ operator+ (const ACE_WString &s,
   return temp;
 }
 
+ACE_INLINE void
+ACE_WString::clear()
+{
+   this->set (0,0);
+}
+
 ACE_INLINE ACE_WString
 ACE_WString::substr (size_t offset,
                      ssize_t length) const
@@ -521,11 +533,11 @@ ACE_WString::rep (void) const
   ACE_TRACE ("ACE_WString::rep");
 
   ACE_WSTRING_TYPE *t;
-  ACE_NEW_RETURN (t, 
-                  ACE_WSTRING_TYPE[this->len_ + 1], 
+  ACE_NEW_RETURN (t,
+                  ACE_WSTRING_TYPE[this->len_ + 1],
                   0);
-  ACE_OS::memcpy (t, 
-                  this->rep_, 
+  ACE_OS::memcpy (t,
+                  this->rep_,
                   this->len_ * sizeof (ACE_WSTRING_TYPE));
 
   // 0 terminate
@@ -694,9 +706,9 @@ ACE_WString::buffer_size(void) const
 ACE_INLINE u_long
 ACE_WString::hash (void) const
 {
-  return ACE::hash_pjw 
+  return ACE::hash_pjw
     (ACE_reinterpret_cast (char *, ACE_const_cast (ACE_WSTRING_TYPE *,
-                                                   this->rep_)), 
+                                                   this->rep_)),
      this->len_ * sizeof (ACE_WSTRING_TYPE));
 }
 

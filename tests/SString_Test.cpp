@@ -139,6 +139,10 @@ main (int, ACE_TCHAR *[])
     ACE_ASSERT (s4 == s6);
     s6 = s5;
     ACE_ASSERT (s6 == s5);
+
+    // Clear
+    s0.clear();
+    ACE_ASSERT (s0.length() == 0);
   }
 
   {
@@ -195,6 +199,10 @@ main (int, ACE_TCHAR *[])
     ACE_ASSERT (s4 == s6);
     s6 = s5;
     ACE_ASSERT (s6 == s5);
+
+    // Clear
+    s0.clear();
+    ACE_ASSERT (s0.length() == 0);
   }
 
   ACE_END_TEST;
