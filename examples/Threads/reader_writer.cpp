@@ -25,7 +25,7 @@ static int n_readers = 6;
 static int n_writers = 2;
 
 // Thread id of last writer.
-static volatile ACE_thread_t shared_thr_id;
+static ACE_thread_t shared_thr_id;
 
 // Lock for shared_thr_id.
 static ACE_RW_Mutex rw_mutex;
@@ -41,7 +41,7 @@ static void
 print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "usage: %n [-r n_readers] [-w n_writers] [-n iteration_count]\n"));
+              "usage: %n [-r n_readers] [-w n_writers] [-n iteration_count]\n"));
   ACE_OS::exit (1);
 }
 
@@ -96,12 +96,12 @@ reader (void *)
 
       for (int loop = 1; loop <= n_loops; loop++)
         {
-	  ACE_Thread::yield();
+          ACE_Thread::yield();
 
-	  if (ACE_OS::thr_equal (shared_thr_id, thr_id) == 0)
+          if (ACE_OS::thr_equal (shared_thr_id, thr_id) == 0)
             ACE_DEBUG ((LM_DEBUG,
-			"(%t) somebody changed %d to %d\n",
-			thr_id, shared_thr_id));
+                        "(%t) somebody changed %d to %d\n",
+                        thr_id, shared_thr_id));
         }
 
       --current_readers;
@@ -138,11 +138,11 @@ writer (void *)
 
       for (int loop = 1; loop <= n_loops; loop++)
         {
-	  ACE_Thread::yield();
+          ACE_Thread::yield();
 
-	  if (ACE_OS::thr_equal (shared_thr_id, self) == 0)
+          if (ACE_OS::thr_equal (shared_thr_id, self) == 0)
             ACE_DEBUG ((LM_DEBUG, "(%t) somebody wrote on my data %d\n",
-			shared_thr_id));
+                        shared_thr_id));
         }
 
       --current_writers;
@@ -195,4 +195,3 @@ main (int, char *[])
   return 0;
 }
 #endif /* ACE_HAS_THREADS */
-
