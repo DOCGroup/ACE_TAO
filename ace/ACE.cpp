@@ -1491,15 +1491,19 @@ ACE::set_handle_limit (int new_limit)
   ACE_TRACE ("ACE::set_handle_limit");
 #if defined (RLIMIT_NOFILE)
   struct rlimit rl;
+  
+  if (ACE_OS::getrlimit (RLIMIT_NOFILE, &rl) != -1)
+    {
+      int max_handles = rl.rlim_cur;
 
-  int max_handles = ACE::max_handles ();
-
-  if (new_limit < 0 || new_limit > max_handles)
-    rl.rlim_cur = max_handles;
+      if (new_limit < 0 || new_limit > max_handles)
+        rl.rlim_cur = max_handles;
+      else
+        rl.rlim_cur = new_limit;
+      return ACE_OS::setrlimit (RLIMIT_NOFILE, &rl);
+    }
   else
-    rl.rlim_cur = new_limit;
-
-  return ACE_OS::setrlimit (RLIMIT_NOFILE, &rl);
+     return -1;
 #else
   new_limit = new_limit;
   ACE_NOTSUP_RETURN (-1);
