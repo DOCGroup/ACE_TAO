@@ -1447,7 +1447,6 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_pending_queue (const ACE_Time_
                           ASYS_TEXT ("Unknown message priority status [%d]"),
                           (int) current_status),
                          -1);
-        break; // switch
     }
   }
 
@@ -1534,9 +1533,6 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_late_queue (const ACE_Time_Val
                                      "[%d] (expected LATE or BEYOND_LATE)"),
                           (int) current_status),
                          -1);
-
-        break; // switch
-
       default:
 
         // if we got here, something is *seriously* wrong with the queue
@@ -1544,8 +1540,6 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_late_queue (const ACE_Time_Val
                           ASYS_TEXT ("Unknown message priority status [%d]"),
                           (int) current_status),
                          -1);
-
-        break; // switch
     }
   }
 
