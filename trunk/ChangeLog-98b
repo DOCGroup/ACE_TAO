@@ -1,22 +1,22 @@
 Fri Nov  6 13:29:11 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.h (ACE_UINT64_FORMAT_SPECIFIER): Changed 
-	  #define ACE_UINT64_FORMAT_SPECIFIER "%I64d"
+        * ace/OS.h (ACE_UINT64_FORMAT_SPECIFIER): Changed
+          #define ACE_UINT64_FORMAT_SPECIFIER "%I64d"
 
-	  to:
+          to:
 
-	  #define ACE_UINT64_FORMAT_SPECIFIER "%I64u"
+          #define ACE_UINT64_FORMAT_SPECIFIER "%I64u"
 
-	  to handle the signed/unsigned stuff correctly.  Thanks Zoran!
+          to handle the signed/unsigned stuff correctly.  Thanks Zoran!
 
-	* ace/Process.cpp (spawn): Replaced the use of execve() with
- 	  execvp() by copying the environment variables manually first.
-	  Thanks to Avi Nash for this fix.
+        * ace/Process.cpp (spawn): Replaced the use of execve() with
+          execvp() by copying the environment variables manually first.
+          Thanks to Avi Nash for this fix.
 
-	* ace/Log_Msg.cpp (log): Added support for a `%Q' format specifier
- 	  to the log() method.  This prints out quad words, i.e.,
- 	  ACE_UINT64's.  Thanks to Zoran Ivanovic <zorani@pathcom.com> for
- 	  contributing this.
+        * ace/Log_Msg.cpp (log): Added support for a `%Q' format specifier
+          to the log() method.  This prints out quad words, i.e.,
+          ACE_UINT64's.  Thanks to Zoran Ivanovic <zorani@pathcom.com> for
+          contributing this.
 
         * Updated the "site map" for ACE so that it doesn't use absolute
           links.  Thanks to Rainer Blome <rainer_blome@de.ibm.com> for
@@ -69,6 +69,12 @@ Fri Nov 06 08:57:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/SOCK_Dgram_Mcast.cpp (unsubscribe): fixed ACE_TRACE
           string.
+
+        * ACE-INSTALL.html: added note on possibly having to change
+          -G to -shared in platform_macro.GNU's SOFLAGS with GNU linker.
+
+        * ACE-INSTALL.html: added note on how to enable IP multicast on
+          LynxOS.
 
 Thu Nov  5 23:10:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
