@@ -40,4 +40,5 @@ class Gateway_ObjRef_Factory
   PortableInterceptor::ObjectReferenceFactory_var old_factory_;
 };
 
+#include "ace/post.h"
 #endif /* GATEWAY_OBJREF_FACTORY_H */

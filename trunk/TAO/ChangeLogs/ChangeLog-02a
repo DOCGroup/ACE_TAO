@@ -1,3 +1,13 @@
+Wed Jan 16 11:38:21 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/ORT/server.cpp (main): 
+	* orbsvcs/examples/ORT/Object_Factory_i.cpp: 
+	* orbsvcs/examples/ORT/Gateway_ObjRef_Factory.h: 
+	* orbsvcs/examples/ORT/gateway_server.cpp : 
+	* orbsvcs/examples/ORT/server.cpp : 
+	* orbsvcs/examples/ORT/Server_IORInterceptor_ORBInitializer.cpp: 
+	  Fixed fuzz compile errors.
+
 Wed Jan 16 11:23:04 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/ior_corbaloc/README (ftp): 
