@@ -1,3 +1,9 @@
+Fri Feb  9 16:42:10 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* examples/QOS/client.dsp:
+	* examples/QOS/server.dsp:
+	  Updated the corrected project files. 
+
 Thu Feb  8 19:25:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* performance-tests/RPC/run_test.pl:
