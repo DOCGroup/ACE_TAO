@@ -4,6 +4,8 @@
 #include "HTIOP_Profile.h"
 #include "htiop_endpointsC.h"
 
+#include "ace/os_include/os_netdb.h"
+
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/ORB.h"
