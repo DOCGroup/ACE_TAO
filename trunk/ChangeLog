@@ -1,4 +1,11 @@
-Tue Nov  4 08:18:37 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+Wed Nov  4 08:34:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_netdb.cpp: (getmacaddress)
+          Always do an reinterpret_cast because the static_cast also doesn't
+          work when ansi casts is enabled. Thanks to Edan Ayal
+          <edanayal@yahoo.com> for reporting this.
+
+Wed Nov  4 08:18:37 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS_NS_signal.h:
           Removed include of OS_export and changed ACE_OS_Export to
