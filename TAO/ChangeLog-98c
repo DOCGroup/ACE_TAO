@@ -75,6 +75,9 @@ Tue Apr 14 12:23:04 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Param_Test/client.cpp (run_dii_test): removed second
           return statement at end.
 
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp},client.cpp
+          (get_latency): cast double latency_ to u_int.
+
 Tue Apr 14 10:23:32 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * tao/ORB_Core.h (TAO_ORB_Core): Moved a bunch of "set" methods
