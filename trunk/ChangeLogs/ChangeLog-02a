@@ -1,3 +1,16 @@
+Tue Jul 10 06:06:07 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Service_Repository.h: Updated the insert() comment to
+	  clarify the return values.  Thanks to Johnny Willemsen for
+ 	  suggesting this.
+
+	* ace/Service_Repository.{h,i}: Made the current_size() and
+	  total_size() methods const.  Thanks to Johnny Willemsen for
+ 	  suggesting this.
+
+	* ace/Service_Repository.h: Fixed a typo in the comments.  Thanks
+	  to Johnny Willemsen for reporting this.
+
 Tue Jul 10 08:39:04 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-vxworks5.x.h:

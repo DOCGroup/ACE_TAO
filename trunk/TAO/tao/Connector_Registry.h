@@ -51,7 +51,7 @@ typedef TAO_Connector** TAO_ConnectorSetIterator;
  * This class is able to dynamically load a set of
  * concrete protocol connectors which have registered with the service
  * configurator and added their Factory name to the Resource_Factory
- * line of the svc.comf file.
+ * line of the svc.conf file.
  */
 class TAO_Export TAO_Connector_Registry
 {
