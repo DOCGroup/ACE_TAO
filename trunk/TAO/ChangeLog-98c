@@ -1,3 +1,22 @@
+Wed Nov 25 20:50:55 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Invocation.cpp: The ORB was raising incorrect exceptions
+ 	  when the connection to the server was broken, or if the client
+ 	  was not able to create a new connection to the server.  The
+ 	  correct behavior in these (and some other) cases is to raise the
+ 	  TRANSIENT exception; and not raise the COMM_FAILURE exception.
+
+	  TRANSIENT exception indicates that some (all) resources that the
+ 	  client ORB requires to complete the remote method call are
+ 	  unavailable.  These resources includes the server ;)
+
+	  COMM_FAILURE exception indicates that a failure happened while
+ 	  the client and server were in the middle of some communication.
+ 	
+	  Thanks to Christa Schwanninger
+ 	  <christa.schwanninger@mchp.siemens.de> for pointing out this
+ 	  problem, and to Carlos for helping sort the exceptions.
+
 Mon Nov 23 17:45:16 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/IIOP_Object.cpp (do_static_call): <status> cannot be
