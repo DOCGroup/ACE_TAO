@@ -208,7 +208,7 @@ ACE_MMAP_Memory_Pool::map_file (off_t file_offset)
                        this->flags_, this->base_addr_, 0, this->sa_) == -1
       || this->base_addr_ != 0 && this->mmap_.addr () != this->base_addr_)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("(%P|%t) base_addr = %u, addr = %u, file_offset = %u, %p\n"),
+                       ASYS_TEXT ("(%P|%t) addr = %u, base_addr = %u, file_offset = %u, %p\n"),
                       this->mmap_.addr (), this->base_addr_,
                        file_offset, this->backing_store_name_), -1);
 
@@ -320,6 +320,11 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (void *base_addr,
     sa_ (sa)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options");
+// HP-UX 11, 64-bit bug workaround.
+#if defined (__hpux) && defined (__LP64__)
+long temp = ACE_DEFAULT_BASE_ADDRL;
+base_addr_ = (void *)temp;
+#endif
 }
 
 // Handle SIGSEGV and SIGBUS signals to remap memory properly.  When a
@@ -446,6 +451,11 @@ ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options (char *base_addr,
     file_perms_ (file_perms)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options");
+// HP-UX 11, 64-bit bug workaround
+#if defined (__hpux) && defined(__LP64__)
+long temp = ACE_DEFAULT_BASE_ADDRL;
+base_addr_ = (char *)temp;
+#endif
 }
 
 void

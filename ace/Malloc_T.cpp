@@ -157,15 +157,24 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::open (void)
       // initialize the name list to 0
       this->cb_ptr_->name_head_ = 0;
 
-
       if (rounded_bytes > (sizeof *this->cb_ptr_ + sizeof (ACE_Malloc_Header)))
 	{
 	  // If we've got any extra space at the end of the control
 	  // block, then skip past the dummy ACE_Malloc_Header to
 	  // point at the first free block.
 	  ACE_Malloc_Header *p = this->cb_ptr_->freep_ + 1;
+
+	  // Why aC++ in 64-bit mode can't grok this, I have no idea... but
+	  // it ends up with an extra bit set which makes size_ really big
+	  // without this hack.
+#if defined (__hpux) && defined (__LP64__)
+          size_t hpux11_hack = (rounded_bytes - sizeof *this->cb_ptr_)
+                               / sizeof(ACE_Malloc_Header);
+          p->s_.size_ = hpux11_hack;
+#else
 	  p->s_.size_ = (rounded_bytes - sizeof *this->cb_ptr_) 
 	    / sizeof (ACE_Malloc_Header);
+#endif
 
 	  AMS (++this->cb_ptr_->malloc_stats_.nchunks_);
 	  AMS (++this->cb_ptr_->malloc_stats_.nblocks_);
