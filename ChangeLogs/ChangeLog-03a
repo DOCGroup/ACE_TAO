@@ -1,3 +1,71 @@
+Fri Jun 16 16:18:21 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Makefile (DIRS):
+
+	  Descend into and build the newly added SSL directory if "make
+	  ssl=1" is issued.
+
+	* ace/SSL/ACE_SSL.dsp:
+	* ace/SSL/Makefile:
+	* ace/SSL/SSL_Context.cpp:
+	* ace/SSL/SSL_Context.h:
+	* ace/SSL/SSL_Export.h:
+	* ace/SSL/SSL_SOCK.cpp:
+	* ace/SSL/SSL_SOCK.h:
+	* ace/SSL/SSL_SOCK_Acceptor.cpp:
+	* ace/SSL/SSL_SOCK_Acceptor.h:
+	* ace/SSL/SSL_SOCK_Connector.cpp:
+	* ace/SSL/SSL_SOCK_Connector.h:
+	* ace/SSL/SSL_SOCK_Stream.cpp:
+	* ace/SSL/SSL_SOCK_Stream.h:
+
+	  Integrated the ACE SSL wrappers into the ACE mainline
+	  distribution.  Enable using "make ssl=1."  The library that is
+	  generated is called "libACE_SSL.so" on 
+
+	* examples/IPC_SAP/Makefile:
+
+	  Build SSL_SAP example if "make ssl=1" is issued.
+
+	* examples/IPC_SAP/SSL_SAP/SSL_SOCK_SAP.dsw:
+	* examples/IPC_SAP/SSL_SAP/Makefile:
+	* examples/IPC_SAP/SSL_SAP/README:
+	* examples/IPC_SAP/SSL_SAP/SSL-client.dsp:
+	* examples/IPC_SAP/SSL_SAP/SSL-server.dsp:
+	* examples/IPC_SAP/SSL_SAP/SSL-client-simple.cpp:
+	* examples/IPC_SAP/SSL_SAP/SSL-client-simple.h:
+	* examples/IPC_SAP/SSL_SAP/SSL-client.cpp:
+	* examples/IPC_SAP/SSL_SAP/SSL-client.h:
+	* examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp:
+	* examples/IPC_SAP/SSL_SAP/SSL-server-poll.cpp:
+	* examples/IPC_SAP/SSL_SAP/SSL-server-simple.cpp:
+	* examples/IPC_SAP/SSL_SAP/SSL-server.cpp:
+	* examples/IPC_SAP/SSL_SAP/dummy.pem:
+	* examples/IPC_SAP/SSL_SAP/key.pem
+	* examples/IPC_SAP/SSL_SAP/local_data:
+	* examples/IPC_SAP/SSL_SAP/summarize:
+
+	  Integrated example that demonstratres use of the ACE SSL
+	  wrappers.
+
+	* include/makeinclude/wrapper_macros.GNU (ssl):
+
+	  Added make flag to enable compilation of OpenSSL support in
+	  ACE.   (e.g. make ssl=1)
+
+Fri Jun 16 08:53:32 2000  Ossama Othman  <ossama@uci.edu>
+
+	* m4/platform.m4 (ACE_DEFAULT_SELECT_REACTOR_SIZE):
+
+          It is no longer necessary to hard-code the default reactor size
+          for older Linux kernels that had a file descriptor limit less
+          than FD_SETSIZE since the Select Reactor now falls back on the
+          run-time file descriptor limit for the given process.
+
+	  (ACE_HAS_IRIX62_THREADS):
+
+	  Removed redundant definition.
+
 Fri Jun 16 14:40:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/run_all_list.pm:
