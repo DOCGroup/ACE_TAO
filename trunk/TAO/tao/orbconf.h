@@ -843,5 +843,10 @@ enum TAO_Policy_Scope
 #  define TAO_DEFAULT_INIT_REFERENCE_INITIALIZER "mcast://:::"
 #endif /* TAO_DEFAULT_INIT_REFERENCE_INITIALIZER */
 
+/// By default we dont use lazy strategy
+#if !defined (TAO_USE_LAZY_RESOURCE_USAGE_STRATEGY)
+#  define TAO_USE_LAZY_RESOURCE_USAGE_STRATEGY 0
+#endif /* TAO_USE_LAZY_RESOURCE_USAGE_STRATEGY*/
+
 #include "ace/post.h"
 #endif  /* TAO_ORBCONF_H */
