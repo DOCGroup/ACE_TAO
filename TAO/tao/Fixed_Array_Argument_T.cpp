@@ -86,13 +86,17 @@ TAO::Out_Fixed_Array_Argument_T<S,S_slice,S_forany>::interceptor_param (
 
 // ============================================================
 
-template<typename S, typename S_slice, typename S_var, typename S_forany>
+template<typename S, 
+         typename S_slice, 
+         typename S_var, 
+         typename S_forany, 
+         typename S_tag>
 CORBA::Boolean
-TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany>::demarshal (
+TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::demarshal (
     TAO_InputCDR & cdr
   )
 {
-  typedef TAO::Array_Traits<S,S_slice> ARRAY_TRAITS;
+  typedef TAO::Array_Traits<S,S_slice,S_tag> ARRAY_TRAITS;
   S_slice * tmp_ptr = 0;
   ACE_ALLOCATOR_RETURN (tmp_ptr,
                         ARRAY_TRAITS::tao_alloc (),
@@ -102,9 +106,13 @@ TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany>::demarshal (
   return cdr >> tmp;
 }
 
-template<typename S, typename S_slice, typename S_var, typename S_forany>
+template<typename S, 
+         typename S_slice, 
+         typename S_var, 
+         typename S_forany, 
+         typename S_tag>
 void
-TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany>::
+TAO::Ret_Fixed_Array_Argument_T<S,S_slice,S_var,S_forany,S_tag>::
 interceptor_result (CORBA::Any * any)
 {
   (*any) <<= S_forany (this->x_.ptr ());
