@@ -20,6 +20,28 @@
 #define _HPUX_SOURCE
 #endif
 
+// Some things are different for 10.10 vs. 10.20 vs. 10.30
+// If the version number wasn't set up by the compiler command line,
+// set up as if it was 10.20.
+#if !defined (HPUX_VERS)
+#define HPUX_VERS 1020
+#endif
+
+#  if (HPUX_VERS < 1020)		// 10.10
+#    define ACE_LACKS_TIMESPEC_T
+#  elif (HPUX_VERS < 1030)		// 10.20
+
+     // Platform supports reentrant functions (all the POSIX *_r functions).
+#    define ACE_HAS_REENTRANT_FUNCTIONS
+     // But this one is not like other platforms
+#    define ACE_CTIME_R_RETURNS_INT
+
+#  else					// 10.30
+// Don't know yet... probably will be 10.20 but with some different thread
+// settings.
+#  endif /* HPUX_VERS tests */
+#endif /* defined HPUX_VERS */
+
 #include /**/ <sys/stdsyms.h>
 #include /**/ <sched.h>		/*  pthread.h doesn't include this */
 
@@ -159,11 +181,6 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 
 // Platform's sigwait() has one arg
 #  define ACE_HAS_ONEARG_SIGWAIT
-
-// Platform supports reentrant functions (i.e., all the POSIX *_r functions).
-#  define ACE_HAS_REENTRANT_FUNCTIONS
-// But this one is not like other platforms
-#  define ACE_CTIME_R_RETURNS_INT
 
 #  define ACE_HAS_THREAD_SPECIFIC_STORAGE
 // ... and it's looked up via an argument
