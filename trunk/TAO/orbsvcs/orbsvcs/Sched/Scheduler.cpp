@@ -259,8 +259,6 @@ template class ACE_Map_Iterator<ACE_CString, ACE_Scheduler::RT_Info **,
                                 ACE_SYNCH_MUTEX>;
 template class ACE_Map_Reverse_Iterator<ACE_CString, ACE_Scheduler::RT_Info **,
                                         ACE_SYNCH_MUTEX>;
-template class ACE_Read_Guard<ACE_SYNCH_MUTEX>;
-template class ACE_Write_Guard<ACE_SYNCH_MUTEX>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -271,8 +269,6 @@ template class ACE_Write_Guard<ACE_SYNCH_MUTEX>;
 #pragma instantiate ACE_Map_Iterator_Base<ACE_CString, ACE_Scheduler::RT_Info **, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Map_Iterator<ACE_CString, ACE_Scheduler::RT_Info **, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Map_Reverse_Iterator<ACE_CString, ACE_Scheduler::RT_Info **, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Read_Guard<ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Write_Guard<ACE_SYNCH_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
