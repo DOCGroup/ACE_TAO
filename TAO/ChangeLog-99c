@@ -1,3 +1,29 @@
+Mon Dec  6 22:20:59 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/Makefile.am (ORB_CORE_FILES, pkginclude_HEADERS):
+
+	  Added GIOPC related files to the appropriate MAKE variable.
+
+	* tao/Stub.cpp (~TAO_Stub):
+
+	  Instead of protecting all profile related calls with a nil ORB
+	  core check, only check for a nil ORB core when calling
+	  TAO_Profile::reset_hint() since it relies on connectors in an
+	  existing ORB core.  The call to TAO_Profile::_decr_refcnt(), on
+	  the other hand does not have to be protected.  It should always
+	  be called to perform any remaining profile clean up.  This fixes
+	  a memory leak.  Thanks to Irfan for reporting this leak.
+
+	* tests/ORB_init/ORB_init.cpp (main):
+
+	  Call CORBA::ORB::string_to_object() on a valid IOR, but don't
+	  narrow() the IOR, before calling CORBA::ORB::destroy().  This
+	  aids in verifying that the TAO_Stub internals work properly
+	  after a call to CORBA::ORB::destroy() has been made.  Thanks to
+	  Irfan for providing an example of this test case.
+
+	  Debugging output updates.
+
 Mon Dec 06 21:16:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/IIOP_Transport.cpp (send/recv):
