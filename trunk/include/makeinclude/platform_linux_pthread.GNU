@@ -7,8 +7,10 @@
 # to compile it yourself (no binaries included) -- 
 # Jan Rychter <jwr@icm.edu.pl>
 
-CC              = gcc -w
-CXX		= g++ -w -I. -fno-strict-prototypes -D_MIT_POSIX_THREADS -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS
+CC              = gcc
+CXX		= g++
+CFLAGS		+= -w -fno-strict-prototypes -D_MIT_POSIX_THREADS -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS
+CCFLAGS		+= $(CFLAGS)
 DLD             = $(CXX)
 LD		= $(CXX) 
 LIBS            += -lpthreads -lstdc++
