@@ -1095,6 +1095,9 @@ struct cancel_state
   // e.g., PTHREAD_CANCEL_DEFERRED and PTHREAD_CANCEL_ASYNCHRONOUS.
 };
 
+#include /**/ <sys/types.h>
+#include /**/ <sys/stat.h>
+
 #if defined (ACE_HAS_THREADS)
 
 #  if defined (ACE_HAS_STHREADS)
@@ -1542,9 +1545,6 @@ typedef rwlock_t ACE_rwlock_t;
 #endif /* ACE_LACKS_RWLOCK_T */
 
 #else /* !ACE_HAS_THREADS, i.e., the OS/platform doesn't support threading. */
-
-#include /**/ <sys/types.h>
-#include /**/ <sys/stat.h>
 
 // Give these things some reasonable value...
 #define ACE_SCOPE_PROCESS 0
