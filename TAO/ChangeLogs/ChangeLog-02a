@@ -1,3 +1,15 @@
+Thu Nov  1 12:27:28 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: The parens were
+	  messed up...  Thanks to Mark Laffoon
+ 	  <mark.laffoon@burning-glass.com> for reporting this.
+
+Tue Oct 30 17:40:06 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tao/IOPC.h: #undef the IOR symbol to protect against weird 
+	  clashes on HP/UX 11.11.  Thanks to Steve Osselton
+ 	  <steve@prismtechnologies.com> for reporting this.
+
 Thu Nov  1 14:01:40 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp:
@@ -317,12 +329,7 @@ Tue Oct  9 17:46:07 2001  Angelo Corsaro  <corsaro@doc.ece.uci.edu>
 	* orbsvcs/tests/AVStreams/Modify_QoS/receiver.cpp:
 	* orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:
 
-<<<<<<< ChangeLog
-	  Added missing RCS ID tag. This will fix the FUZZ build.
-
-=======
 	  Added missing $Id$. This will fix the FUZZ build.
->>>>>>> 1.4383
 
 Tue Oct 09 14:00:46 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
