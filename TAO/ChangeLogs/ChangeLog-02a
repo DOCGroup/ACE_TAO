@@ -1,3 +1,10 @@
+Fri Mar  3 11:15:06 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/SHMIOP_Profile.cpp (decode):
+
+	  Corrected "IIOP" to be "SHMIOP" in debugging output.  Minor
+	  cosmetic changes.
+
 Fri Mar  3 11:01:32 2000  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Log/Log_i.cpp (my_factory): fixed a bug. The
