@@ -77,7 +77,7 @@ int
 Gateway::handle_input (ACE_HANDLE h)
 {
   if (ACE_Service_Config::reactor ()->remove_handler 
-      (0, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL) == -1)
+      (ACE_STDIN, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "remove_handler"), -1);
 
   char buf[BUFSIZ];
@@ -85,7 +85,7 @@ Gateway::handle_input (ACE_HANDLE h)
   ACE_OS::read (h, buf, sizeof (buf));
 
   // Shut us down.
-  return this->handle_signal (h);
+  return this->handle_signal ((int) h);
 }
 
 // Parse the "command-line" arguments and set the corresponding flags.
@@ -185,9 +185,11 @@ Gateway::init (int argc, char *argv[])
       (sig_set, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
 
-  if (ACE_Service_Config::reactor ()->register_handler 
-      (0, this, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
+  // Register this handler to receive test events on stdin.
+  if (ACE::register_stdin_handler (this,
+				   ACE_Service_Config::reactor (),
+				   ACE_Service_Config::thr_mgr ()) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_stdin_handler"), -1);
 
   // If this->performance_window_ > 0 start a timer.
 

@@ -172,7 +172,7 @@ Peer_Handler::xmit_stdin (void)
 	  // Take stdin out of the ACE_Reactor so we stop trying to
 	  // send events.
 	  if (ACE_Service_Config::reactor ()->remove_handler 
-	      (0, ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK) == -1)
+	      (ACE_STDIN, ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK) == -1)
 	    ACE_ERROR ((LM_ERROR, "%p\n", "remove_handler"));
 	  mb->release ();
 	  break;
@@ -516,9 +516,11 @@ Peer_Handler::await_supplier_id (void)
   ACE_OS::rewind (stdin);
 
   // Register this handler to receive test events on stdin.
-  if (ACE_Service_Config::reactor ()->register_handler 
-      (ACE_STDIN, this, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
+
+  if (ACE::register_stdin_handler (this,
+				   ACE_Service_Config::reactor (),
+				   ACE_Service_Config::thr_mgr ()) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_stdin_handler"), -1);
   return 0;
 }
 
@@ -590,15 +592,14 @@ Peer_Handler::handle_close (ACE_HANDLE,
       ACE_DEBUG ((LM_DEBUG, "shutting down Peer on handle %d\n", 
 		 this->get_handle ()));
 
-      // Explicitly remove ourselves for handle 0 (the ACE_Reactor
-      // removes this->handle (), note that
+      // Explicitly remove ourselves for ACE_STDIN (the ACE_Reactor
+      // removes this->handle ().  Note that
       // ACE_Event_Handler::DONT_CALL instructs the ACE_Reactor *not*
       // to call this->handle_close(), which would otherwise lead to
       // recursion!).
       if (ACE_Service_Config::reactor ()->remove_handler 
-	  (0, ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK) == -1)
-	ACE_ERROR ((LM_ERROR, "handle = %d: %p\n", 
-		   0, "remove_handler"));
+	  (ACE_STDIN, ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK) == -1)
+	ACE_ERROR ((LM_ERROR, "handle = ACE_STDIN: %p\n", "remove_handler"));
 
       // Deregister this handler with the ACE_Reactor.
       if (ACE_Service_Config::reactor ()->remove_handler 

@@ -1,3 +1,31 @@
+Sun Mar  9 13:06:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* apps/Gateway: Updated the Peer and Gateway applications so that
+ 	  they don't try to register ACE_STDIN with the Reactor on Win32.
+
+	* apps/Gateway: Changed a bunch of calls to
+ 	  ACE_Reactor::remove_handler() so that it no longer tries to
+ 	  remove descriptor 0, but instead uses ACE_STDIN.  Naturally,
+ 	  this doesn't work due to the way that Win32 implements select()
+ 	  but at least it compiles...  Thanks to Elliot Lau
+ 	  <eeklau@post1.com> for reporting this.
+
+	* apps/Gateway/Gateway/File_Parser: Changed the enumerated type
+ 	  ERROR to PARSE_ERROR to avoid a name clash with a symbol
+ 	  reserved by Win32 (barf).  Thanks to Elliot Lau
+ 	  <eeklau@post1.com> for reporting this.
+
+Sat Mar  8 12:37:44 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Log_Msg.cpp: Changed the implementation of ACE_Log_Msg so
+ 	  that all accesses to the lock_ are now through a Singleton.
+  	  This makes it possible to define multiple instances of
+ 	  ACE_Log_Msg within the same thread.  Thanks to Jeff Morgan
+ 	  <jeff@audioactive.com> for helping track this down.
+
+	* Added support for SCO 5.0.  Thanks to Auturo
+ 	  <mitosys@colomsat.net.co> for these patches.
+
 Thu Mar 06 13:24:04 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.i (gettimeofday): moved declaration of "result" so
