@@ -1,3 +1,17 @@
+Fri Oct 10 19:52:26 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.{h,i}:
+          On some platforms clearerr is a macro. Because of this,
+          the name ACE_OS::clearerr will cause errors. So in order
+          to use the macro as it is defined but also keep the name
+          ACE_OS::clearerr, clearerr macro is used in inline function,
+          and then undefined.  This patch fixes the "fixes" committed by
+          Wed Sep 24 08:57:36 2003  Balachandran Natarajan
+          <bala@dre.vanderbilt.edu> and Tue Apr 15 16:06:24 2003  Douglas
+          C. Schmidt  <schmidt@ace.cs.wustl.edu>.  Thanks to Olli Savia
+          <ops@iki.fi> for submitting the patch and Bala for motivation me
+          to apply it...
+
 Fri Oct 10 10:05:14 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/compiler.bor:

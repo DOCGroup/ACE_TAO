@@ -10026,7 +10026,11 @@ ACE_OS::fgetc (FILE* fp)
 ACE_INLINE void
 ACE_OS::clearerr (FILE* fp)
 {
-  ::clearerr(fp);
+#if defined (__ace_clearerr_hack)
+  __ace_clearerr(fp);
+#else
+   ::clearerr(fp);
+#endif /* __ace_clearerr_hack */
 }
 #endif /* !ACE_LACKS_CLEARERR */
 
