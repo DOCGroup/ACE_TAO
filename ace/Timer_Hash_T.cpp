@@ -362,11 +362,6 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::reschedule (ACE_Timer_Node_T<
                           ACE_const_cast (void *,
                                           expired->get_act ()));
 
-  // Cancel the old timer.  Make sure not to call handle_close().
-  this->table_[h->pos_]->cancel (h->orig_id_,
-                                 0,
-                                 1);
-
   h->pos_ =
     expired->get_timer_value ().sec () % this->table_size_;
 
@@ -375,6 +370,15 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::reschedule (ACE_Timer_Node_T<
                                      h,
                                      expired->get_timer_value (),
                                      expired->get_interval ());
+  ACE_ASSERT (h->orig_id_ != -1);
+
+#if 0
+  ACE_DEBUG ((LM_DEBUG, "Hash::reschedule() resets %d in slot %d where it's id is %d and token is %x\n",
+              expired->get_timer_value ().msec (),
+              h->pos_,
+              h->orig_id_,
+              h));
+#endif
 
   if (this->table_[this->earliest_position_]->is_empty ()
       || this->table_[h->pos_]->earliest_time ()
@@ -405,10 +409,20 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::schedule_i (const TYPE &type,
                                     type),
                   -1);
 
-  h->orig_id_ = this->table_[position]->schedule (type,
-                                                  h,
-                                                  future_time,
-                                                  interval);
+  h->orig_id_ =
+    this->table_[position]->schedule (type,
+                                      h,
+                                      future_time,
+                                      interval);
+  ACE_ASSERT (h->orig_id_ != -1);
+
+#if 0
+  ACE_DEBUG ((LM_DEBUG, "Hash::schedule() placing %d in slot %d where it's id is %d and token is %x\n",
+              future_time.msec (),
+              position,
+              h->orig_id_,
+              h));
+#endif
 
   if (this->table_[this->earliest_position_]->is_empty ()
       || this->table_[position]->earliest_time ()
@@ -493,22 +507,25 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (long timer_id,
 #endif /* ACE_WIN64 */
 
   int result = this->table_[h->pos_]->cancel (h->orig_id_,
-                                              act,
+                                              0,
                                               dont_call);
 
-  this->upcall_functor ().cancellation (*this,
-                                        h->type_,
-                                        dont_call);
+  if (result == 1)
+    {
+      this->upcall_functor ().cancellation (*this,
+                                            h->type_,
+                                            dont_call);
 
-  if (h->pos_ == this->earliest_position_)
-    this->find_new_earliest ();
+      if (h->pos_ == this->earliest_position_)
+        this->find_new_earliest ();
 
-  if (act != 0)
-    *act = h->act_;
+      if (act != 0)
+        *act = h->act_;
 
-  delete h;
+      delete h;
 
-  --this->size_;
+      --this->size_;
+    }
 
   return result;
 }
@@ -556,9 +573,12 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (const TYPE &type,
 
   for (i = 0; i < pos; i++)
     {
-      this->table_[timer_ids[i]->pos_]->cancel (timer_ids[i]->orig_id_,
-                                                0,
-                                                dont_call);
+      int result =
+        this->table_[timer_ids[i]->pos_]->cancel (timer_ids[i]->orig_id_,
+                                                  0,
+                                                  dont_call);
+      ACE_ASSERT (result == 1);
+      ACE_UNUSED_ARG (result);
 
       this->upcall_functor ().cancellation (*this,
                                             timer_ids[i]->type_,
@@ -641,22 +661,6 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::dispatch_info_i (const ACE_Ti
   return result;
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET> void
-ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::free_node (ACE_Timer_Node_T<TYPE> *node)
-{
-  Hash_Token<TYPE> *h =
-    ACE_reinterpret_cast (Hash_Token<TYPE> *,
-                          ACE_const_cast (void *,
-                                          node->get_act ()));
-
-  // Now remove the timer from the original table...
-  this->table_[h->pos_]->cancel (node->get_timer_id (),
-                                 0,
-                                 1);
-
-  ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK>::free_node (node);
-}
-
 // Dummy version of expire to get rid of warnings in Sun CC 4.2
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET> int
@@ -686,10 +690,25 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
       while (!this->table_[i]->is_empty ()
              && this->table_[i]->earliest_time () <= cur_time)
         {
-          expired = this->table_[i]->get_first ();
+          expired = this->table_[i]->remove_first ();
           TYPE type = expired->get_type ();
           const void *act = expired->get_act ();
           int reclaim = 1;
+
+          Hash_Token<TYPE> *h =
+            ACE_reinterpret_cast (Hash_Token<TYPE> *,
+                                  ACE_const_cast (void *,
+                                                  act));
+
+          ACE_ASSERT (h->pos_ == i);
+
+#if 0
+          ACE_DEBUG ((LM_DEBUG, "Hash::expire() expiring %d in slot %d where it's id is %d and token is %x\n",
+                      expired->get_timer_value ().msec (),
+                      h->pos_,
+                      h->orig_id_,
+                      h));
+#endif
 
           // Check if this is an interval timer.
           if (expired->get_interval () > ACE_Time_Value::zero)
@@ -706,18 +725,6 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
               this->reschedule (expired);
               reclaim = 0;
             }
-          else
-            {
-              // Now remove the timer from the original table...
-              this->table_[i]->cancel (expired->get_timer_id (),
-                                       0,
-                                       1);
-            }
-
-          Hash_Token<TYPE> *h =
-            ACE_reinterpret_cast (Hash_Token<TYPE> *,
-                                  ACE_const_cast (void *,
-                                                  act));
 
           ACE_Timer_Node_Dispatch_Info_T<TYPE> info;
 
@@ -743,6 +750,9 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::expire (const ACE_Time_Value 
           number_of_timers_expired++;
          }
     }
+
+  if (number_of_timers_expired > 0)
+    this->find_new_earliest ();
 
   return number_of_timers_expired;
 }

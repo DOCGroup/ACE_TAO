@@ -123,10 +123,10 @@ int
 ACE_Select_Reactor_Handler_Repository::unbind_all (void)
 {
   // Unbind all of the <handle, ACE_Event_Handler>s.
-  for (int handle = 0;
-       handle < this->max_handlep1_;
-       handle++)
-    this->unbind (ACE_SELECT_REACTOR_HANDLE (handle),
+  for (int slot = 0;
+       slot < this->max_handlep1_;
+       slot++)
+    this->unbind (ACE_SELECT_REACTOR_HANDLE (slot),
                   ACE_Event_Handler::ALL_EVENTS_MASK);
 
   return 0;
@@ -266,12 +266,13 @@ ACE_Select_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
 #else
 
   // Check if this handle is already registered.
-  if (ACE_SELECT_REACTOR_HANDLE (this, handle) !=
-      ACE_INVALID_HANDLE)
+  ACE_Event_Handler *current_handler =
+    ACE_SELECT_REACTOR_EVENT_HANDLER (this, handle);
+
+  if (current_handler)
     {
       // Cannot use a different handler for an existing handle.
-      if (ACE_SELECT_REACTOR_EVENT_HANDLER (this, handle) !=
-          event_handler)
+      if (current_handler != event_handler)
         return -1;
 
       // Remember that this handle is already registered in the
@@ -372,10 +373,11 @@ ACE_Select_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
       // The handle has been completed removed.
       complete_removal = 1;
 
-      ACE_SELECT_REACTOR_HANDLE (slot) = ACE_INVALID_HANDLE;
       ACE_SELECT_REACTOR_EVENT_HANDLER (this, slot) = 0;
 
 #if defined (ACE_WIN32)
+
+      ACE_SELECT_REACTOR_HANDLE (slot) = ACE_INVALID_HANDLE;
 
       if (this->max_handlep1_ == (int) slot + 1)
         {
