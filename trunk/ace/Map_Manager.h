@@ -72,17 +72,15 @@ public:
   typedef ACE_Map_Iterator<EXT_ID, INT_ID, LOCK> ITERATOR;
   typedef ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK> REVERSE_ITERATOR;
 
-  enum {DEFAULT_SIZE = ACE_DEFAULT_MAP_SIZE};
-
   // = Initialization and termination methods.
   ACE_Map_Manager (ACE_Allocator *allocator = 0);
-  // Initialize a <Map_Manager> with the <DEFAULT_SIZE>.
+  // Initialize a <Map_Manager> with the <ACE_DEFAULT_MAP_SIZE>.
 
   ACE_Map_Manager (size_t size, 
 		   ACE_Allocator *allocator = 0);
   // Initialize a <Map_Manager> with <size> entries.
 
-  int open (size_t length = DEFAULT_SIZE, 
+  int open (size_t length = ACE_DEFAULT_MAP_SIZE, 
 	    ACE_Allocator *allocator = 0);
   // Initialize a <Map_Manager> with size <length>.
 

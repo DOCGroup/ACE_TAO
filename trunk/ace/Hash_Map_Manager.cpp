@@ -106,6 +106,12 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::open (size_t size,
 
   this->allocator_ = allocator;
 
+  // This assertion is here to help track a situation that shouldn't happen,
+  // but did with Sun C++ 4.1 (before a change to this class was made:
+  // it used to have an enum that was supposed to be defined to be
+  // ACE_DEFAULT_MAP_SIZE, but instead was defined to be 0.
+  ACE_ASSERT (size != 0);
+
   // If we need to grow buffer, then remove the existing buffer.
   if (this->total_size_ < size)
     return this->resize_i (size);
@@ -130,7 +136,7 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Hash_Map_Manager (ACE_Allocator 
     total_size_ (0),
     cur_size_ (0)
 {
-  if (this->open (DEFAULT_SIZE, allocator) == -1)
+  if (this->open (ACE_DEFAULT_MAP_SIZE, allocator) == -1)
     ACE_ERROR ((LM_ERROR, "ACE_Hash_Map_Manager\n"));
 }
 

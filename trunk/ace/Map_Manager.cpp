@@ -63,7 +63,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager (ACE_Allocator *alloc)
     cur_size_ (0)
 {
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::ACE_Map_Manager");
-  if (this->open (DEFAULT_SIZE, alloc) == -1)
+  if (this->open (ACE_DEFAULT_MAP_SIZE, alloc) == -1)
     ACE_ERROR ((LM_ERROR, "ACE_Map_Manager\n"));
 }
 
@@ -223,7 +223,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_bind (const EXT_ID &ext_id,
   // Check if we have reached total_size_
   else if (this->cur_size_ == this->total_size_)
     // We are out of room so grow the map
-    if (this->resize_i (this->total_size_ + DEFAULT_SIZE) == -1)
+    if (this->resize_i (this->total_size_ + ACE_DEFAULT_MAP_SIZE) == -1)
       return -1;
 
   // Insert at the end of the active portion. 
