@@ -1,3 +1,12 @@
+Fri Nov 21 12:13:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Service_Object.{h,cpp}:
+
+	  Reverted this change since it broke the builds. 
+ 	  "Thu Nov 20 18:11:32 2003  Douglas C. Schmidt
+	  <schmidt@ace.cs.wustl.edu>".  We will get a better patch soon
+	  from the user.
+
 Thu Nov 20 18:11:32 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Service_Object.{h,cpp}: Added a new constructor for
