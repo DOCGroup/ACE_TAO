@@ -1,9 +1,7 @@
-// Server.C
 // $Id$
 
-// 
-// listens to multicast address.  after first message received, will
-// listen for 5 more seconds.  prints Mbits/sec received from client
+// Listens to multicast address.  After first message received, will
+// listen for 5 more seconds.  Prints Mbits/sec received from client.
 
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
@@ -14,28 +12,32 @@
 #include "ace/streams.h"
 
 #if defined (ACE_HAS_IP_MULTICAST)
-// network interface to subscribe to
-//   this is hardware specific.
-//   use netstat(1M) to find whether your interface
-//   is le0 or ie0
+// Network interface to subscribe to.  This is hardware specific.  use
+// netstat(1M) to find whether your interface is le0 or ie0
 
 static const char *INTERFACE = 0;
 static const char *MCAST_ADDR = ACE_DEFAULT_MULTICAST_ADDR;
 static const u_short UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
 
-// Handle both multicast and stdin events.
-
 class Handler : public ACE_Event_Handler
 {
+  // = TITLE
+  //     Handle both multicast and stdin events.
 public:
+  // = Initialization and termination methods.
   Handler (u_short udp_port, 
 	   const char *ip_addr,
 	   const char *interface,
 	   ACE_Reactor &);
-  ~Handler (void);
+  // Constructor.
 
+  ~Handler (void);
+  // Destructor.
+
+  // Event demuxer.
   virtual int handle_input (ACE_HANDLE);
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  virtual int handle_close (ACE_HANDLE,
+                            ACE_Reactor_Mask);
 
 private:
   ACE_SOCK_Dgram_Mcast mcast_;
@@ -48,39 +50,51 @@ Handler::handle_input (ACE_HANDLE h)
 
   if (h == ACE_STDIN)
     {
-      int result = ACE_OS::read (h, buf, BUFSIZ);
+      ssize_t result = ACE_OS::read (h, buf, BUFSIZ);
+
       if (result > 0)
 	{
 	  if (this->mcast_.send (buf, result) != result)
-	    {
-	      ACE_OS::perror ("send error");
-	      return -1;
-	    }
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "%p\n",
+                               "send error"),
+                              -1);
 	  return 0;
 	}
       else if (result == -1)
-	::perror ("can't read from STDIN");
-
-      return -1;
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "%p\n",
+                               "can't read from STDIN"),
+                              -1);
+      else // result == 0
+        ACE_Reactor::end_event_loop ();
     }
   else
     {
       ACE_INET_Addr remote_addr;
 
-      // receive message from multicast group
-      int result = this->mcast_.recv (buf, sizeof buf, remote_addr);
+      // Receive message from multicast group.
+      ssize_t result = this->mcast_.recv (buf,
+                                          sizeof buf,
+                                          remote_addr);
+
       if (result != -1)
 	{
-	  cout << "received datagram from host " << remote_addr.get_host_name () 
-	       << " on port " << remote_addr.get_port_number () 
-	       << " bytes = " << result << endl;
-	  ACE_OS::write (ACE_STDOUT, buf, result);
-	  cout << endl;
+          ACE_DEBUG ((LM_DEBUG,
+                      "received datagram from host %s on port %d bytes = %d\n",
+                      remote_addr.get_host_name (),
+                      remote_addr.get_port_number (),
+                      result));
+	  ACE_OS::write (ACE_STDERR, buf, result);
+          ACE_DEBUG ((LM_DEBUG,
+                      "\n"));
 	  return 0;
 	}
 
-      ACE_OS::perror ("Something amiss.");
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "something amiss"),
+                              -1);
     }
 }
 
@@ -88,18 +102,20 @@ int
 Handler::handle_close (ACE_HANDLE h, ACE_Reactor_Mask)
 {
   if (h == ACE_STDIN)
-    cout << "STDIN_Events handle removed from reactor." << endl << flush;
+    ACE_DEBUG ((LM_DEBUG,
+                "STDIN_Events handle removed from reactor."));
   else
-    cout << "Mcast_Events handle removed from reactor." << endl << flush;
+    ACE_DEBUG ((LM_DEBUG,
+                "Mcast_Events handle removed from reactor."));
   return 0;
 }
 
 Handler::~Handler (void)
 {
-  // ACE_OS::exit on error (bogus)...
-
   if (this->mcast_.unsubscribe () == -1)
-    ACE_OS::perror ("unsubscribe fails"), ACE_OS::exit (1);
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                "unsubscribe fails"));
 }
 
 Handler::Handler (u_short udp_port, 
@@ -114,7 +130,9 @@ Handler::Handler (u_short udp_port,
   // subscribe to multicast group.
 
   if (this->mcast_.subscribe (sockmc_addr, 1, interface) == -1) 
-    ACE_OS::perror ("can't subscribe to multicast group"), ACE_OS::exit (1);
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                "can't subscribe to multicast group"));
 
   // Disable loopbacks.
   // if (this->mcast_.set_option (IP_MULTICAST_LOOP, 0) == -1 )
@@ -124,7 +142,9 @@ Handler::Handler (u_short udp_port,
   if (reactor.register_handler (this->mcast_.get_handle (),
 				this,
 				ACE_Event_Handler::READ_MASK) == -1)
-    ACE_OS::perror ("can't register events"), ACE_OS::exit (1);
+    ACE_ERROR ((LM_ERROR, 
+                "%p\n",
+                "can't register with Reactor\n"));
 }
 
 static void
@@ -143,7 +163,9 @@ parse_args (int argc, char *argv[])
       case 'u':
 	// Usage fallthrough.
       default:
-        ACE_DEBUG ((LM_DEBUG, "%s -i interface\n", argv[0]));
+        ACE_DEBUG ((LM_DEBUG,
+                    "%s -i interface\n",
+                    argv[0]));
 	ACE_OS::exit (1);
       }
 }
@@ -153,23 +175,40 @@ main (int argc, char *argv[])
 {
   parse_args (argc, argv);
 
-  Handler handler (UDP_PORT, MCAST_ADDR, INTERFACE, *ACE_Reactor::instance ());
+  Handler handler (UDP_PORT, 
+                   MCAST_ADDR,
+                   INTERFACE,
+                   *ACE_Reactor::instance ());
 
-  ACE::register_stdin_handler (&handler,
-			       ACE_Reactor::instance (),
-				   ACE_Thread_Manager::instance ());
+  // Register the STDIN handler.
+  if (ACE::register_stdin_handler (&handler,
+                                   ACE_Reactor::instance (),
+                                   ACE_Thread_Manager::instance () == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "register_stdin_handler"));
 
+  // Run the event loop.
   ACE_Reactor::run_event_loop ();
 
-  cout << "\ntalker Done.\n";
+  ACE_DEBUG ((LM_DEBUG,
+              "\ntalker Done.\n"));
+
+  // Cleanup the STDIN handler.
+  if (ACE::remove_stdin_handler (ACE_Reactor::instance (),
+                                 ACE_Thread_Manager::instance () == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "remove_stdin_handler"));
   return 0;
 }
 #else
 int 
 main (int, char *argv[])
 {
-  ACE_ERROR ((LM_ERROR, "error: %s must be run on a platform that support IP multicast\n",
-	    argv[0]));
-  return 0;
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "error: %s must be run on a platform that support IP multicast\n",
+                     argv[0]), 
+                    0);
 }
 #endif /* ACE_HAS_IP_MULTICAST */
