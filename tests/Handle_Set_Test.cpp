@@ -87,7 +87,7 @@ test_boundaries (void)
   handle_set.set_bit ((ACE_HANDLE) 129);
   handle_set.set_bit ((ACE_HANDLE) 255);
 
-  size_t count = 0;
+  int count = 0;
 
   ACE_Handle_Set_Iterator i2 (handle_set); 
 
