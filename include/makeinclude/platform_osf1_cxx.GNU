@@ -14,6 +14,10 @@ ifeq (4.,$(findstring 4.,$(ACE_DU_VERSION)))
   include $(ACE_ROOT)/include/makeinclude/platform_osf1_4.0.GNU
 
   CFLAGS += -DDIGITAL_UNIX=4
+  ifneq ($(CXX_VER),CXX_5)
+    # 9: nested comment not allowed.  But there's one in /usr/include/pdsc.h!
+    WARNING_FLAGS += -msg_disable 9
+  endif # 6.0 or later
 else # ! 4.x
 ifeq (5.,$(findstring 5.,$(ACE_DU_VERSION)))
   include $(ACE_ROOT)/include/makeinclude/platform_osf1_4.0.GNU
