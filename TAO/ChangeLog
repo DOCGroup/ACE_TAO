@@ -1,3 +1,10 @@
+Thu Jul  4 15:00:06 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/ifr_visitor.cpp:
+
+	  Added missing 'int' return type to visit_component() and
+	  visit_home().
+
 Thu Jul  4 12:58:57 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tests/AMH_Exceptions/Makefile:
