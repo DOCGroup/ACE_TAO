@@ -35,6 +35,10 @@ project(RTEC_Consumer):  orbsvcsexe, ftrtevent  {
   exename   = rtec_consumer
   macros   += NO_FTRTEC
 
+  verbatim(gnuace,circuit) {
+    VDIR = .rtec_obj/
+  }
+
   Source_Files {
     consumer.cpp
     FtRtEvent_Test.cpp
@@ -49,6 +53,10 @@ project(RTEC_Consumer):  orbsvcsexe, ftrtevent  {
 project(RTEC_Supplier):  orbsvcsexe, ftrtevent {
   exename   = rtec_supplier
   macros   += NO_FTRTEC
+
+  verbatim(gnuace,circuit) {
+    VDIR = .rtec_obj/
+  }
 
   Source_Files {
     supplier.cpp
