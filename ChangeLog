@@ -1,3 +1,8 @@
+Fri Jan  9 12:14:05 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/msvc_auto_compile.pl:
+          Build FTORB_Utils before PortableGroup
+
 Fri Jan  9 10:15:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/msvc_auto_compile.pl:
