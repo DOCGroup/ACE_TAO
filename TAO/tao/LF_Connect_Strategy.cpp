@@ -59,12 +59,15 @@ TAO_LF_Connect_Strategy::wait (TAO_Connection_Handler *ch,
       return -1;
     }
 
+  // Grab the id now, it may not be available later..
+  int t_id = transport->id ();
+
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - LF_Connect_Strategy::wait, "
                   "waiting for Transport[%d]\n",
-                  transport->id ()));
+                  t_id));
     }
 
   TAO_Leader_Follower &leader_follower =
@@ -84,7 +87,7 @@ TAO_LF_Connect_Strategy::wait (TAO_Connection_Handler *ch,
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - LF_Connect_Strategy::wait, "
                   "wait done for Transport[%d], result = %d\n",
-                  transport->id(), result));
+                  t_id, result));
     }
 
   // @@todo We need to use a auto_ptr<>-like object here!
