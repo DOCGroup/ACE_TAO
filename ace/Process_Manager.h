@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -14,7 +14,6 @@
 #define ACE_PROCESS_MANAGER_H
 #include /**/ "ace/pre.h"
 
-#include "ace/Reactor.h"
 #include "ace/Event_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -27,11 +26,14 @@
 #  include "ace/Recursive_Thread_Mutex.h"
 #endif /* ACE_HAS_THREADS */
 
+
+class ACE_Reactor;
+
 /**
  * @class ACE_Process_Descriptor
  *
  * @brief Information describing each process that's controlled by an
- * <ACE_Process_Manager>.
+ * \<ACE_Process_Manager\>.
  */
 class ACE_Export ACE_Process_Descriptor
 {
@@ -58,14 +60,14 @@ private:
  * @brief Manages a group of processes.
  *
  * This class allows applications to control groups of processes,
- * similar to how the <ACE_Thread_Manager> controls groups of
+ * similar to how the \<ACE_Thread_Manager\> controls groups of
  * threads.  Naturally, it doesn't work at all on platforms, such
  * as VxWorks or pSoS, that don't support process.
- * There are two (main) ways of using <ACE_Process_Manager>,
+ * There are two (main) ways of using \<ACE_Process_Manager\>,
  * depending on how involved you wish to be with the termination
  * of managed <ACE_Process>es.  If you just want <Process>es to
  * go away when they're finished, simply register the
- * <Process_Manager> with an <ACE_Reactor>:
+ * <Process_Manager> with an \<ACE_Reactor\>:
  * ACE_Process_Manager mgr( 100, some_reactor )
  * -or-
  * ACE_Process_Manager mgr;
@@ -99,7 +101,7 @@ private:
  * the <Process_Manager> whose <wait> you invoked.  It's best to
  * only use a single <Process_Manager>, and to create all
  * subprocesses by calling that <Process_Manager>'s <spawn>
- * method.  
+ * method.
  * Incidentally, when you register your <Process_Manager> with a
  * <Reactor> its notification pipe is used to help "reap" the
  * available exit statuses.  Therefore, you must not use a

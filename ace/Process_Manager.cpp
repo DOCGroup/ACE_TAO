@@ -12,10 +12,13 @@
 #include "ace/Signal.h"
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
+#include "ace/Reactor.h"
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/OS_NS_signal.h"
 
-ACE_RCSID(ace, Process_Manager, "$Id$")
+ACE_RCSID (ace,
+           Process_Manager,
+           "$Id$")
 
 #if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" void

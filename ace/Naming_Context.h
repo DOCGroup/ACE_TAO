@@ -22,15 +22,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
-#include "ace/Containers.h"
 #include "ace/Service_Object.h"
-#include "ace/Name_Proxy.h"
 #include "ace/Name_Space.h"
 #include "ace/os_include/os_netdb.h"
 
 // Forward decl
 class ACE_Name_Options;
+class ACE_Static_Svc_Descriptor;
 
 /**
  * @class ACE_Naming_Context
@@ -72,7 +70,7 @@ public:
   /**
    * Specifies the scope of this namespace, opens and memory-maps the
    * associated file (if accessible) or contacts the dedicated name
-   * server process for NET_LOCAL namespace. Note that <light>
+   * server process for NET_LOCAL namespace. Note that @a light
    * specifies whether or not we want to use
    * ACE_Lite_MMap_Memory_Pool. By default we use ACE_MMap_Memory_Pool.
    */
@@ -81,7 +79,7 @@ public:
   /**
    * Specifies the scope of this namespace, opens and memory-maps the
    * associated file (if accessible) or contacts the dedicated name
-   * server process for NET_LOCAL namespace. Note that <light>
+   * server process for NET_LOCAL namespace. Note that @a light
    * specifies whether or not we want to use
    * ACE_Lite_MMap_Memory_Pool. By default we use ACE_MMap_Memory_Pool.
    */
@@ -150,22 +148,22 @@ public:
   int unbind (const char *name_in);
 
   /// Get value and type of a given name binding (Wide chars).  The
-  /// caller is responsible for deleting both <value_out> and <type_out>!
+  /// caller is responsible for deleting both @a value_out> and @a type_out!
   int resolve (const ACE_NS_WString &name_in,
                ACE_NS_WString &value_out,
                char *&type_out);
 
   /**
    * Get value and type of a given name binding (Wide chars output).
-   * The caller is responsible for deleting both <value_out> and
-   * <type_out>!
+   * The caller is responsible for deleting both @a value_out and
+   * @a type_out!
    */
   int resolve (const char *name_in,
                ACE_NS_WString &value_out,
                char *&type_out);
 
   /// Get value and type of a given name binding ( chars ).  The caller
-  /// is responsible for deleting both <value_out> and <type_out>!
+  /// is responsible for deleting both @a value_out and @a type_out!
   int resolve (const char *name_in,
                char *&value_out,
                char *&type_out);
@@ -375,7 +373,7 @@ private:
 };
 
 ACE_FACTORY_DECLARE (ACE, ACE_Naming_Context)
-ACE_STATIC_SVC_DECLARE_EXPORT (ACE,ACE_Naming_Context)
+ACE_STATIC_SVC_DECLARE_EXPORT (ACE, ACE_Naming_Context)
 
 #include /**/ "ace/post.h"
 #endif /* ACE_NAMING_CONTEXT_H */
