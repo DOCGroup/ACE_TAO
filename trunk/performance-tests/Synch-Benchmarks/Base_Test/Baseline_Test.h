@@ -15,6 +15,12 @@ class ACE_Svc_Export Baseline_Test_Base : public Benchmark_Base
   // = TITLE
   //     This class identifies itself as Benmarking Performance Test class.
 public:
+  enum {
+    TEST_LOCK,
+    TEST_READLOCK,
+    TEST_WRITELOCK
+  };
+
   virtual int init (int argc, char *argv[]);
   // Standard initializing method for Baseline Test.
 
@@ -46,6 +52,9 @@ protected:
 
   size_t iteration_;
   // Total number of operations.  <iterations_>
+
+  int what_;
+  // What test should be performed?
 };
 
 class ACE_Svc_Export Baseline_Test_Options

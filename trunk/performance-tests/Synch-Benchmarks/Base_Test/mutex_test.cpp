@@ -25,7 +25,22 @@ private:
 template<class LOCK> int
 Baseline_Lock_Test<LOCK>::acquire ()
 {
-  return this->lock_.acquire ();
+  int retv = 0;
+  switch (this->what_)
+    {
+    case TEST_READLOCK:
+      retv = this->lock_.acquire_read ();
+      break;
+    case TEST_WRITELOCK:
+      retv = this->lock_.acquire_write ();
+      break;
+    case TEST_LOCK:
+    default:
+      retv = this->lock_.acquire ();
+      break;
+    }
+
+  return retv;
 }
 
 template<class LOCK> int
@@ -38,13 +53,34 @@ template<class LOCK> int
 Baseline_Lock_Test<LOCK>::test_acquire_release ()
 {
   baseline_options.start_inc_timer ();
-  for (; baseline_options.inc_loop_counter () ; )
+
+  switch (this->what_)
     {
-      this->lock_.acquire ();
-      this->lock_.release ();
+    case TEST_READLOCK:
+      for (; baseline_options.inc_loop_counter () ; )
+        {
+          this->lock_.acquire_read ();
+          this->lock_.release ();
+        }
+      break;
+    case TEST_WRITELOCK:
+      for (; baseline_options.inc_loop_counter () ; )
+        {
+          this->lock_.acquire_write ();
+          this->lock_.release ();
+        }
+      break;
+    case TEST_LOCK:
+    default:
+      for (; baseline_options.inc_loop_counter () ; )
+        {
+          this->lock_.acquire ();
+          this->lock_.release ();
+        }
+      break;
     }
 
-      baseline_options.stop_inc_timer ();
+  baseline_options.stop_inc_timer ();
 
   return 0;
 }

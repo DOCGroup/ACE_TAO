@@ -11,6 +11,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Synch_Lib
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -23,6 +26,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Synch_Lib
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -47,6 +53,12 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name Base_Test
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Perf_Test
+    End Project Dependency
 }}}
 
 ###############################################################################
