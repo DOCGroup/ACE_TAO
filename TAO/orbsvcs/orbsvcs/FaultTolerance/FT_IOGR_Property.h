@@ -1,21 +1,18 @@
 // -*- C++ -*-
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO_FaultTolerance
-//
-// = FILENAME
-//    FT_IOGR_Property.h
-//
-// = DESCRIPTION
-//    This class implements the IOGR properties for the FT service
-//
-// = AUTHOR
-//     Bala Natarajan <bala@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    FT_IOGR_Property.h
+ *
+ *  $Id$
+ *
+ *  This class implements the IOGR properties for the FT service
+ *
+ *
+ *  @author  Bala Natarajan <bala@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_FT_IOGR_PROPERTY_H
 #define TAO_FT_IOGR_PROPERTY_H
@@ -44,88 +41,85 @@
 
 class TAO_Profile;
 
+/**
+ * @class TAO_FT_IOGR_Property
+ *
+ * @brief TAO_FT_IOGR_Property
+ *
+ * This class serves as the callback class for setting the
+ * TaggedComponent properties in the profiles of the IOGR. The
+ * user can make an instance of this class with the right
+ * properties and use the helper methods in the IORManipulation
+ *
+ * NOTE: This class is NOT thread safe. The range of services that
+ * use this class (like the RM) should use them in a thread safe
+ * manner.
+ */
 class TAO_FT_Export TAO_FT_IOGR_Property
   : public virtual TAO_IOP::TAO_IOR_Property,
     public virtual TAO_Local_RefCounted_Object
 {
-  // = TITLE
-  //   TAO_FT_IOGR_Property
-  //
-  // = DESCRIPTION
-  //   This class serves as the callback class for setting the
-  //   TaggedComponent properties in the profiles of the IOGR. The
-  //   user can make an instance of this class with the right
-  //   properties and use the helper methods in the IORManipulation
-  //
-  //   NOTE: This class is NOT thread safe. The range of services that
-  //   use this class (like the RM) should use them in a thread safe
-  //   manner.
-
 public:
 
+  /// Our Constructor
   TAO_FT_IOGR_Property (FT::TagFTGroupTaggedComponent &ft_group);
-  // Our Constructor
 
+  /// Destructor
   ~TAO_FT_IOGR_Property (void);
-  // destructor
 
+  /// Set the property for the IOGR
   virtual CORBA::Boolean set_property (
       CORBA::Object_ptr ior
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       TAO_IOP::Invalid_IOR
     ));
-  // Set the property for the IOGR
 
+  /// Set <ior1> as  primary which is a part of <ior2>
   virtual CORBA::Boolean set_primary (
       CORBA::Object_ptr ior1,
       CORBA::Object_ptr ior2
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       TAO_IOP::NotFound,
       TAO_IOP::Duplicate
     ));
-  // Set <ior1> as  primary which is a part of <ior2>
 
+  /// Get the primary member from the IOGR <ior>
   virtual CORBA::Object_ptr get_primary (
       CORBA::Object_ptr ior
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::NotFound
       ));
-  // Get the primary member from the IOGR <ior>
 
+  /// Is there a primary available for <ior>
   virtual CORBA::Boolean is_primary_set (
       CORBA::Object_ptr ior
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-  // Is there a primary available for <ior>
 
+  /// Reset the underlying tagged components held by the class
   CORBA::Boolean reset_tagged_components (
       FT::TagFTGroupTaggedComponent &ft_group);
-  // Reset the underlying tagged components held by the class
 
 private:
 
+  /// An helper function that gets the primary profile from the <ior>
   TAO_Profile *get_primary_profile (CORBA::Object_ptr ior);
-  // An helper function that gets the primary profile from the <ior>
 
+  /// An helper method for encoding the proeprties
   CORBA::Boolean encode_properties (
       TAO_OutputCDR &cdr,
       IOP::TaggedComponent &tagged_components);
-  // An helper method for encoding the proeprties
 
+  /// Hold the reference to the Ft group tagged component
   FT::TagFTGroupTaggedComponent &ft_group_tagged_component_;
-  // Hold the reference to the Ft group tagged component
 };
 
 
