@@ -77,7 +77,7 @@ namespace ACE_RMCast
     Message_ptr m;
     if (queue_.dequeue_head (m) == -1) abort ();
 
-    Data const* d (static_cast<Data const*>(m->find (Data::id)));
+    Data const* d = static_cast<Data const*>(m->find (Data::id));
 
     size_t r (d->size () < s ? d->size () : s);
 

@@ -82,7 +82,7 @@ namespace ACE_RMCast
                i != e;
                ++i)
           {
-            Queue& q ((*i).int_id_);
+            Queue& q = (*i).int_id_;
 
             if (q.current_size () == 0) continue;
 
@@ -131,7 +131,7 @@ namespace ACE_RMCast
     for (Queue::iterator i (q.begin ()), e (q.end ()); i != e; ++i)
     {
       u64 sn ((*i).ext_id_);
-      Descr& d ((*i).int_id_);
+      Descr& d = (*i).int_id_;
 
       if (d.lost ())
       {
@@ -195,7 +195,7 @@ namespace ACE_RMCast
 
         if (sn != 0)
         {
-          Queue& q ((*i).int_id_);
+          Queue& q = (*i).int_id_;
 
           u64 old (q.max_sn ());
 
@@ -229,7 +229,7 @@ namespace ACE_RMCast
       }
       else
       {
-        Queue& q (e->int_id_);
+        Queue& q = e->int_id_;
 
         if (sn <= q.sn ())
         {
@@ -294,7 +294,7 @@ namespace ACE_RMCast
       for (Map::iterator i (hold_.begin ()), e (hold_.end ()); i != e; ++i)
       {
         Address addr ((*i).ext_id_);
-        Queue& q ((*i).int_id_);
+        Queue& q = (*i).int_id_;
 
         //@@ Should look for the highest known number.
         //
