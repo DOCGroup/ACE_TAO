@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/obchunk.h"
+#include "ace/Obchunk.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Obchunk.i"
