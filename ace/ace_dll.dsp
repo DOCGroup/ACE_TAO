@@ -2140,6 +2140,25 @@ SOURCE=.\Profile_Timer.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\QoS_Decorator.cpp
+
+!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\QoS_Manager.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
@@ -4332,6 +4351,10 @@ SOURCE=.\Process_Manager.h
 # Begin Source File
 
 SOURCE=.\Profile_Timer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\QoS_Decorator.h
 # End Source File
 # Begin Source File
 
