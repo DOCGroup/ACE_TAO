@@ -1,44 +1,63 @@
 Welcome to the alpha release of The ACE ORB (TAO).  TAO is an
-implementation of a CORBA2-compliant ORB that will support real-time
+implementation of a CORBA2-compliant ORB that supports real-time
 extensions.  Please see http://www.cs.wustl.edu/~schmidt/TAO.html for
 more information on TAO.
 
 The current alpha release of TAO contains the following:
 
-* An ORB Core based on ACE components and an optimized version of
-  the SunSoft IIOP protocol engine;
+     * An ORB Core based on ACE C++ components. This ORB Core provides 3
+       concurrency models: (1) Reactive, (2) Thread-per-Connection,
+       and (3) Thread-per-Rate (which is optimized for certain types
+       of deterministic real-time systems).
 
-* An implementation of a Basic Object Adapter (BOA);
+     * A highly optimized version of the SunSoft IIOP protocol
+       interpreter;
 
-* Various tests illustrating how to use TAO in its current state.
+     * An prototype implementation of the Portable Object Adapter
+       (POA) specification.
+
+     * A prototype IDL compiler, based on the SunSoft IDL compiler. This 
+       IDL compiler generates stubs and skeletons that utilize the
+       SunSoft IIOP protocol interpreter.
+
+     * Various tests illustrating how to use TAO.
+       
+The current version of TAO contains source code and tests that are
+around 0.4 Megabytes when compressed using GNU gzip.
 
 We've gotten TAO to interoperate with other ORBs (e.g., Orbix and
 Visigenic), so we're confident that the implementation of IIOP is
-robust.  However, this alpha release of TAO does not yet contain the
-following:
+robust. We're currently working on the following features for TAO:
+   
+     * A complete POA implementation.
 
-* An IDL compiler;
+     * An IDL compiler that generates optimized compiled stubs and
+       skeletons. For this, we're planning to use the Flick IDL
+       compiler from University of Utah.
 
-* An real-time version of the new Portable Object Adapter (POA);
+     * A highly extensible, highly optimized set of request
+       demultiplexing strategies that provide constant time lookup of
+       servants based on object keys and operation names contained in
+       CORBA requests.
 
-* The real-time scheduling service.
+     * A Real-time Scheduling Service that determines the priority at
+       which Client requests are dispatched by the ORB.
 
-We're currently working on these features and we plan to release them
-throughout the Fall of 1997.  Please note that no amount of proding
-will get them out any faster, unless you are willing to contribute
-time and/or $$$ to the effort.
+     * A Real-time Event Service that dispatches CORBA events in
+       real-time.
+
+     * Implementations of the CORBA COS Naming service and Trader
+       service.
+       
+We plan to release these features throughout the fall of 1997. You can
+keep track of our progress online.
 
 Please feel free to experiment with, dissect, repair, use, etc., TAO.
 We gratefully accept bug reports, appreciate bug fixes/enhancements,
-and will strive to integrate correct bug fixes quickly!  Just remember
-that TAO does not provide all the features of a commercial ORB at the
-moment.
+and will strive to integrate correct bug fixes quickly!
 
-Key components in TAO (e.g., the Object Adapter) will change
-substantially over the Fall.  Thus, any development performed in the
-interim will require additional effort (e.g., writing stubs and
-skeletons by hand), and applications may need to be re-written to work
-with new features in the forthcoming releases.
+If you have any questions, please post them to the ACE mailing list
+<ace-users@cs.wustl.edu> until we get a TAO mailing list established.
 
 A quick build note for users who have used ACE with other ORBs:
 linking TAO with a version of ACE that must also be linked against
