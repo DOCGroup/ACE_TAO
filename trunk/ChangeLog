@@ -1,3 +1,9 @@
+Thu Jan  8 12:03:22 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Timers/TimerDispatcher.cpp:
+	* examples/APG/Timers/PTimerDispatcher.cpp: Added missing template
+	  instantiations.
+
 Thu Jan  8 17:05:56 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* apps/JAWS/server/HTTP_Server.{h,cpp}:
