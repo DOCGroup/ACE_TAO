@@ -1,3 +1,17 @@
+Mon Jan 20 08:55:49 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* examples/Connection/misc/Connection_Handler.cpp (handle_timeout):
+	  added ACE_UNUSED_ARG (tv); also, added explicit int return type
+	  to definition of Connection_Handler::close (u_long).
+
+	* examples/Threads/task_four.cpp (Invoker_Task::svc):
+	  moved declaration of "task" out of for loop because it is
+	  also used after the for loop.
+
+	* netsvcs/lib/Name_Handler.cpp, Server_Logging_Handler.cpp,
+	  TS_Clerk_Handler.cpp, TS_Server_Handler.cpp, Token_Handler.cpp:
+	  added ACE_UNUSED_ARG (sig);.
+
 Sun Jan 19 11:10:49 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* include/makeinclude/platform_sunos5_sunc++.GNU,
@@ -62,11 +76,6 @@ Fri Jan 17 11:47:10 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  ACE_HAS_AUTOMATIC_INIT_FINI and ACE_HAS_SVR4_DYNAMIC_LINKING.
   	  Thanks to Marius for this.
 
-	* ace/OS.h: Added an equivalent set of
-	  ACE_LSOCK_{STREAM,ACCEPTOR,CONNECTOR} macros to complement the
- 	  ones for ACE_SOCK_*.  Thanks to Gonzalo Diethelm
- 	  <gonzo@ing.puc.cl> for suggesting this.
-
 	* ace/Malloc.h: Changed the typedef of ACE_Malloc_Align to a macro
  	  called ACE_MALLOC_ALIGN to allow users to override this value in
  	  their config.h file.  This is necessary for platforms that don't
@@ -100,7 +109,7 @@ Fri Jan 17 16:33:25 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* netsvcs/clients/Naming/Client/Client_Test.cpp: commented out
 	  unused parameters and wrapped combined assignments/conditional
-	  values to avoid compiler (g++) warnings
+	  values to avoid compiler (g++) warnings.
 
 	* tests/Priority_Task_Test.cpp: added check for successful thread
 	  spawn, and ACE_NEW_THREAD to svc () so that messages get logged.
