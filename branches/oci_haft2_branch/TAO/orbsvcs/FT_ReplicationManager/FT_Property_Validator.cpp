@@ -165,10 +165,10 @@ TAO::FT_Property_Validator::validate_criteria (
        if (property.nam == this->replication_style_)
         {
           if (  value != FT::STATELESS
-             && value != FT::COLD_PASSIVE 
-             && value != FT::WARM_PASSIVE 
-             && value != FT::ACTIVE 
-             && value != FT::ACTIVE_WITH_VOTING 
+             && value != FT::COLD_PASSIVE
+             && value != FT::WARM_PASSIVE
+             && value != FT::ACTIVE
+             && value != FT::ACTIVE_WITH_VOTING
              && value != FT::SEMI_ACTIVE  )
             invalid_criteria[p++] = property;
         }
@@ -187,14 +187,14 @@ TAO::FT_Property_Validator::validate_criteria (
         else if (property.nam == this->fault_monitoring_style_)
         {
           if (  value != FT::PULL
-             && value != FT::PUSH 
+             && value != FT::PUSH
              && value != FT::NOT_MONITORED  )
             invalid_criteria[p++] = property;
         }
         else if (property.nam == this->fault_monitoring_granularity_)
         {
           if (  value != FT::MEMB
-             && value != FT::LOC 
+             && value != FT::LOC
              && value != FT::LOC_AND_TYPE  )
             invalid_criteria[p++] = property;
         }

@@ -961,7 +961,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::location_failure (
   //   at that location for any of the affected object groups.)
   // - Determine all the object groups that had members at that
   //   location.
-  // - Handle each one of them as a single replica failure. 
+  // - Handle each one of them as a single replica failure.
 
   ACE_TRY_NEW_ENV
   {
@@ -1030,7 +1030,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::type_failure (
   //   with that factory for any of the affected object groups.)
   // - Determine all the object groups that had members at that
   //   location of that type.
-  // - Handle each one of them as a single replica failure. 
+  // - Handle each one of them as a single replica failure.
 
   ACE_TRY_NEW_ENV
   {
