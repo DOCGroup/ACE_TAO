@@ -178,10 +178,6 @@ ACE_Test_Output::set_output (const char *filename, int append)
   if (append)
     flags |= ios::app;
 
-  // VxWorks won't open the file if it already exists.  It
-  // shouldn't hurt to delete it on all platforms.
-  ACE_OS::unlink (temp);
-
   this->output_file_.open (temp, flags);
   if (this->output_file_.bad ())
     return -1;
