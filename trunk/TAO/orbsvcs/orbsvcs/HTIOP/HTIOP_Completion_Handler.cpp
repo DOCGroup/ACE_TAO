@@ -27,7 +27,7 @@ ACE_RCSID (HTIOP,
 
 
 TAO::HTIOP::Completion_Handler::Completion_Handler (ACE_Thread_Manager *t)
-  : TAO::HTIOP::COMPLETION_BASE(t,0,0),
+  : COMPLETION_BASE(t,0,0),
     orb_core_ (0),
     channel_(0),
     concurrency_strategy_ (0)
@@ -42,7 +42,7 @@ TAO::HTIOP::Completion_Handler::Completion_Handler (ACE_Thread_Manager *t)
 
 TAO::HTIOP::Completion_Handler::Completion_Handler (TAO_ORB_Core *orb_core,
                                                     CORBA::Boolean )
-  :  TAO::HTIOP::COMPLETION_BASE(orb_core->thr_mgr(),0,0),
+  :  COMPLETION_BASE(orb_core->thr_mgr(),0,0),
      orb_core_ (orb_core),
      channel_(0),
      concurrency_strategy_ (0)
