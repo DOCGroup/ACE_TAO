@@ -15,6 +15,7 @@
     // with Sun C++ 4.0.1 never completes.
 #    define ACE_NEEDS_DEV_IO_CONVERSION
 #  elif (__SUNPRO_CC >= 0x420)
+#  define ACE_HAS_ANSI_CASTS
 #  if 0 /* Explicit instantiation isn't useful without -instances=global,
            but that results in link collisions.  We need to figure out how
            to disable CC's implicit template instantiation. */
