@@ -18,8 +18,9 @@
 
 #include "tests/test_config.h"
 #include "ace/OS.h"
+#include "ace/Object_Manager.h"
 #include "ace/streams.h"
-#include "ace/Singleton.h"
+#include "ace/Framework_Component.h"
 #include "ace/Synch.h"
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
