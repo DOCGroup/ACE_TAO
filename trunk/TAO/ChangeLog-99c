@@ -1,5 +1,8 @@
 Fri Jun 11 19:26:30 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	* examples/POA/TIE/server.cpp (main): Fixed a small problem on
+	NT. It was not writing the IOR to a file. It was fixed.
+
 	* examples/POA/TIE/run_test.pl: Made a change to be on par with
 	Carlos's latest standard. 
 
