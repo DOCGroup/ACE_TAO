@@ -2,4 +2,18 @@ project : taolib, core, portableserver {
   sharedname   = TAO_DynamicInterface
   dynamicflags = TAO_DYNAMICINTERFACE_BUILD_DLL
   include_dir  = tao/DynamicInterface
+
+  Source_Files {
+    Context.cpp
+    DII_Arguments.cpp
+    DII_Invocation.cpp
+    DII_Invocation_Adapter.cpp
+    DII_Reply_Dispatcher.cpp
+    Dynamic_Adapter_Impl.cpp
+    Dynamic_Implementation.cpp
+    ExceptionList.cpp
+    Request.cpp
+    Server_Request.cpp
+    Unknown_User_Exception.cpp
+  }  
 }
