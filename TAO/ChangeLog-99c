@@ -1,3 +1,13 @@
+Thu Aug 26 10:29:42 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/Options.html:
+	* tao/default_server.cpp (TAO_Default_Server_Strategy_Factory):
+	  Added THR_DETACHED into the default thread creation flag for ORB
+	  spawned threads so the resources used by ORB spawned threads can
+	  be released after the threads have exited.  Thanks to
+	  dharani@sutmyn.com (Sreedharani) and Carlos for pointing out the
+	  problem.
+
 Thu Aug 26 09:49:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
