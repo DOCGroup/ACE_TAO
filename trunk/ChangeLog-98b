@@ -1,3 +1,8 @@
+Wed Sep 16 10:49:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/auto_compile: 
+	  Updated to the new directory hierarchy in TAO.
+
 Wed Sep 16 09:46:31 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-hpux-10.x.h: Added ACE_HAS_DIRENT.
