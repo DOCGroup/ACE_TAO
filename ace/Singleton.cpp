@@ -96,92 +96,55 @@ template <class TYPE, class LOCK> LOCK
 ACE_Singleton<TYPE, LOCK>::ace_singleton_lock_;
 #endif /* !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
 
-#if 0
-template <class TYPE, class LOCK, ACE_SingletonEx_Strategy MEMORY> void
-ACE_SingletonEx<TYPE, LOCK, MEMORY>::dump (void)
+template <class TYPE> void
+ACE_TSS_Singleton<TYPE>::dump (void)
 {
-  ACE_TRACE ("ACE_SingletonEx<TYPE, LOCK, MEMORY>::dump");
+  ACE_TRACE ("ACE_TSS_Singleton<TYPE>::dump");
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  ACE_DEBUG ((LM_DEBUG, "instance_ = %x", 
-	      ACE_SingletonEx<TYPE, LOCK, MEMORY>::instance_i ()));
-  ACE_SingletonEx<TYPE, LOCK, MEMORY>::singleton_lock_i ().dump ();
+  ACE_DEBUG ((LM_DEBUG, "instance_ = %x", tss_instance_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 }
 
-template <class TYPE, class LOCK, ACE_SingletonEx_Strategy MEMORY> TYPE *&
-ACE_SingletonEx<TYPE, LOCK, MEMORY>::instance_i (void)
+template <class TYPE> TYPE *
+ACE_TSS_Singleton<TYPE>::instance (void)
 {
+  ACE_TRACE ("ACE_TSS_Singleton::instance");
+
 #if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   // Pointer to the Singleton instance.  This works around a bug with
   // G++...
-  static TYPE *instance_ = 0;
+  static ACE_TSS<TYPE> *instance_ = 0;
 
-  return instance_;
-#else
-  return ACE_SingletonEx<TYPE, LOCK, MEMORY>::instance_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
-}
-
-template <class TYPE, class LOCK, ACE_SingletonEx_Strategy MEMORY> LOCK &
-ACE_SingletonEx<TYPE, LOCK, MEMORY>::singleton_lock_i (void)
-{
-#if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  // Lock the creation of the singleton.  This works around a
-  // "feature" of G++... ;-)
-  static LOCK ace_singletonex_lock_;
-
-  return ace_singletonex_lock_;
-#else
-  return ACE_SingletonEx<TYPE, LOCK, MEMORY>::ace_singletonex_lock_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
-}
-
-template <class TYPE, class LOCK, ACE_SingletonEx_Strategy MEMORY> TYPE *
-ACE_SingletonEx<TYPE, LOCK, MEMORY>::instance (void)
-{
-  ACE_TRACE ("ACE_SingletonEx<TYPE, LOCK, MEMORY>::instance");
-
-  TYPE *&singleton = ACE_SingletonEx<TYPE, LOCK, MEMORY>::instance_i ();
-
-  // Perform the Double-Check pattern...
-  if (singleton == 0)
+  if (instance_ == 0)
     {
-      ACE_GUARD_RETURN (LOCK, ace_mon, (ACE_SingletonEx<TYPE, LOCK, MEMORY>::singleton_lock_i ()), 0);
+      instance_ = new ACE_TSS<TYPE>;
 
-      if (singleton == 0)
-	ACE_NEW_RETURN (singleton, TYPE, 0);
+      if (instance_ == 0)
+	return 0;
     }
 
-  if (MEMORY == ACE_SINGLETON_HEAP)
-    return singleton;
-  else
-    return singleton->ts_object ();
-}
+  return ACE_TSS_GET (instance_, TYPE);
+#else
 
-template <class TYPE, class LOCK, ACE_SingletonEx_Strategy MEMORY> TYPE *
-ACE_Singleton<TYPE, LOCK, MEMORY>::instance (TYPE *new_instance)
-{
-  ACE_TRACE ("ACE_Singleton<TYPE, LOCK, MEMORY>::set_instance");
+  if (ACE_TSS_Singleton<TYPE>::tss_instance_ == 0)
+    {
+      ACE_TSS_Singleton<TYPE>::tss_instance_ = new ACE_TSS<TYPE>;
 
-  ACE_GUARD_RETURN (LOCK, ace_mon, (ACE_SingletonEx<TYPE, LOCK, MEMORY>::singleton_lock_i ()), 0);
+      if (ACE_TSS_Singleton<TYPE>::tss_instance_ == 0)
+	return 0;
+    }
 
-  TYPE *&singleton = ACE_Singleton<TYPE, LOCK, MEMORY>::instance_i ();
-  TYPE *old_instance = singleton;
-  singleton = new_instance;
+  return ACE_TSS_GET (ACE_TSS_Singleton<TYPE>::tss_instance_, TYPE);
 
-  return old_instance;
+#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 }
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
 // Pointer to the Singleton instance.
-template <class TYPE, class LOCK, ACE_SingletonEx_Strategy MEMORY> TYPE *
-ACE_SingletonEx<TYPE, LOCK, MEMORY>::instance_ = 0;
-
-// Lock the creation of the singleton.  
-template <class TYPE, class LOCK, ACE_SingletonEx_Strategy MEMORY> LOCK
-ACE_SingletonEx<TYPE, LOCK, MEMORY>::ace_singletonex_lock_;
+template <class TYPE> ACE_TSS<TYPE> *
+ACE_TSS_Singleton<TYPE>::tss_instance_ = 0;
 #endif /* !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
-#endif
+
 #endif /* ACE_SINGLETON_C */

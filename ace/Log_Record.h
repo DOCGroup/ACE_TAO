@@ -16,8 +16,8 @@
 
 // These need to go outside of the #ifdef to avoid problems with
 // circular dependencies...
-#include "ace/Log_Priority.h"
 #include "ace/ACE.h"
+#include "ace/Log_Priority.h"
 
 #if !defined (ACE_LOG_RECORD_H)
 #define ACE_LOG_RECORD_H
