@@ -1,3 +1,9 @@
+Thu Aug 30 11:40:39 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/run_test.pl (run_program): Fixed the 'unlink' to get
+          all of a test's log files; prevents seeing previous sub-logs
+          from a test such as MEM_Stream_Test and falsely reporting errors.
+
 Thu Aug 30 10:46:51 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/High_Res_Timer.cpp (global_scale_factor ()): When checking for

@@ -99,8 +99,7 @@ sub run_program ($)
 {
     my $program = shift;
 
-    local $all_logs = "log/".$program."*.log";
-    unlink $all_logs;
+    unlink <log/$program*.log>;
     unlink "core";
 
     my $P = new PerlACE::Process ($program);
