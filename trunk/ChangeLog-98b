@@ -1,16 +1,22 @@
+Sat May 16 03:23:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Misc/childbirth_time.cpp (main): Added a new
+	  function to test the performance of ACE_Thread_Mutex in single
+	  thread _without_ any contention.
+
 Fri May 15 22:55:51 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Recursive_Mutex_Test.cpp: Only iterate the test 50 times
 	  on CE as on Chorus.  Otherwise, as I'm using a CEdit to hold the
 	  test output, CEdit would overflow.
-	
+
 	* ace/OS.i (thr_getspecific): Don't check for return value of
 	  TlsGetValue on CE because CE doesn't seem to set the LastError
-	  correspondingly.  
+	  correspondingly.
 	  (strchr): Added implementation on CE.
 
 	* Added Activation_Queue.i and Strategies.i.
-	  
+
 	* Combed thru all these files and added difinitions for ctor/dtor
 	  for a bunch of classes explicitly.  CE needs them.
 
