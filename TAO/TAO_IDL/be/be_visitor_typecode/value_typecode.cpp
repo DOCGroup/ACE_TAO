@@ -74,11 +74,11 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
                                      + node->flat_name ());
 
       // Generate array containing value field characteristics.
-      os << "static TAO::TypeCode::Value_Field<char const *> ";
+      os << "static TAO::TypeCode::Value_Field<char const *> const ";
 
       if (count == 0)
         {
-          os << " * const " << fields_name.c_str () << " = 0;" << be_nl;
+          os << "* const " << fields_name.c_str () << " = 0;" << be_nl;
         }
       else
         {
