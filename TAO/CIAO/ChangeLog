@@ -2,6 +2,7 @@ Tue Sep  7 22:14:43 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
 	* CCF/CCF/IDL2/Traversal/Elements.hpp:
+	* CIDLC/ExecutorMappingGenerator.cpp:
 
 	  Fixed unused argument warnings.
 
