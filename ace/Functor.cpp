@@ -43,6 +43,3 @@ ACE_RCSID(ace, Functor, "$Id$")
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ACE_FUNCTOR_C */
-
-// EOF
-
