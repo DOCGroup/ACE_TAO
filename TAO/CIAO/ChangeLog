@@ -1,3 +1,12 @@
+Fri May  7 12:53:34 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* CCF/CCF/CIDL/CIDL.mpc:
+	* CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc:
+	* CCF/CCF/CompilerElements/CompilerElements.mpc:
+	* CCF/CCF/IDL2/IDL2.mpc:
+	* CCF/CCF/IDL3/IDL3.mpc:
+	Fixed a bug for using MPC to build CCF.
+
 Fri May  7 12:44:42 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/RS_Handler.cpp:

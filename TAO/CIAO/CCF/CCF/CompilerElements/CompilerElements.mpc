@@ -6,4 +6,12 @@ project(CompilerElements) {
   staticname = CompilerElements
   includes += ../..
   libout = ..
+  
+  specific(vc71) {
+    libs += boost_regex_debug boost_filesystem_debug
+  }
+
+  verbatim(gnuace, top) {
+    include ../../Config.rules
+  }
 }
