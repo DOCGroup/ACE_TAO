@@ -54,3 +54,11 @@ Sender::get_event_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                     0);
   return this->message_count_;
 }
+
+
+void
+Sender::ping (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return;
+}
