@@ -144,11 +144,11 @@ TAO_Marshal_WString::~TAO_Marshal_WString (void)
 // deep_free for Any
 ACE_INLINE CORBA::TypeCode::traverse_status
 TAO_Marshal_Any::deep_free (CORBA::TypeCode_ptr,
-                            const void * /* source */,
+                            const void *source,
                             const void *,
                             CORBA::Environment &)
 {
-  // ((CORBA::Any *) source)->~CORBA_Any ();
+  ((CORBA::Any *) source)->~CORBA_Any ();
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
