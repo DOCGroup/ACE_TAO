@@ -3374,6 +3374,39 @@ AC_CHECK_FUNC([poll],
      ],[AC_DEFINE([ACE_POLL_IS_BROKEN])],)
   ],)
 
+case "$host" in
+  *linux*)
+    dnl Linux Event Poll
+    ACE_CACHE_CHECK([for epoll_create],
+     [ace_cv_linux_event_poll],
+     [
+      AC_LINK_IFELSE([
+      AC_LANG_PROGRAM([
+#include <sys/epoll.h>
+       ],
+       [
+int const ACE_NUM_DESCRIPTORS = 10;
+(void) epoll_create (ACE_NUM_DESCRIPTORS);
+       ])
+      ],
+      [
+       ace_cv_linux_event_poll=yes
+      ],
+      [
+       ace_cv_linux_event_poll=no
+      ])
+     ],
+     [
+      AC_DEFINE([ACE_HAS_EVENT_POLL])
+     ],
+     [])
+    ;;
+  *)
+    dnl /dev/poll character device
+    dnl TODO add test
+    ;;
+esac
+
 AC_CHECK_FUNC([gethrtime],
   [
    ACE_CHECK_TYPE([hrtime_t],[sys/time.h],[AC_DEFINE([ACE_HAS_HI_RES_TIMER])],)
