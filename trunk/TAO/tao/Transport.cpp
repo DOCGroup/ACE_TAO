@@ -906,11 +906,9 @@ TAO_Transport::handle_input_i (TAO_Resume_Handle &rh,
       return this->consolidate_fragments (nqd, rh);
     }
 
-  // Resume before starting to process the request..
-  rh.resume_handle ();
-
   // Process the message
-  return this->process_parsed_messages (&qd);
+  return this->process_parsed_messages (&qd,
+                                        rh);
 }
 
 int
@@ -1100,12 +1098,10 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
       return this->consolidate_fragments (nqd, rh);
     }
 
-  // Resume the handle before processing the request
-  rh.resume_handle ();
-
   // Now we have a full message in our buffer. Just go ahead and
   // process that
-  return this->process_parsed_messages (&pqd);
+  return this->process_parsed_messages (&pqd,
+                                        rh);
 }
 
 int
@@ -1297,7 +1293,7 @@ TAO_Transport::consolidate_extra_messages (ACE_Message_Block
     {
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - TAO_Transport[%d]::consolidate_extra_messages \n"
-                  "..............extracting extra messages \n",
+                  ".............. extracting extra messages \n",
                   this->id ()));
     }
 
@@ -1334,7 +1330,8 @@ TAO_Transport::consolidate_extra_messages (ACE_Message_Block
 }
 
 int
-TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd)
+TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
+                                        TAO_Resume_Handle &rh)
 {
   // Get the <message_type> that we have received
   TAO_Pluggable_Message_Type t =  qd->msg_type_;
@@ -1357,6 +1354,9 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd)
   else if (t == TAO_PLUGGABLE_MESSAGE_REQUEST ||
            t == TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST)
     {
+      // Let us resume the handle before we go ahead to process the
+      // request. This will open up the handle for othe threads.
+      rh.resume_handle ();
       if (this->messaging_object ()->process_request_message (
             this,
             qd) == -1)
@@ -1392,35 +1392,6 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd)
 
       result = this->tms ()->dispatch_reply (params);
 
-      // @@ Somehow it seems dangerous to reset the state *after*
-      //    dispatching the request, what if another threads receives
-      //    another reply in the same connection?
-      //    My guess is that it works as follows:
-      //    - For the exclusive case there can be no such thread.
-      //    - The the muxed case each thread has its own message_state.
-      //    I'm pretty sure this comment is right.  Could somebody else
-      //    please look at it and confirm my guess?
-
-      // @@ The above comment was found in the older versions of the
-      //    code. The code was also written in such a way that, when
-      //    the client thread on a call from handle_input () from the
-      //    reactor a call would be made on the handle_client_input
-      //    (). The implementation of handle_client_input () looked so
-      //    flaky. It used to create a message state upon entry in to
-      //    the function using the TMS and destroy that on exit. All
-      //    this was fine _theoretically_ for multiple threads. But
-      //    the flakiness was originating in the implementation of
-      //    get_message_state () where we were creating message state
-      //    only once and dishing it out for every thread till one of
-      //    them destroy's it. So, it looked broken. That has been
-      //    changed. Why?. To my knowledge, the reactor does not call
-      //    handle_input () on two threads at the same time. So, IMHO
-      //    that defeats the purpose of creating a message state for
-      //    every thread. This is just my guess. If we run in to
-      //    problems this place needs to be revisited. If someone else
-      //    is going to take a look please contact bala@cs.wustl.edu
-      //    for details on this-- Bala
-
       if (result == -1)
         {
           // Something really critical happened, we will forget about
@@ -1436,26 +1407,13 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd)
           return -1;
         }
 
-      if (result == 0)
-        {
-
-          this->messaging_object ()->reset ();
-
-          // The reply dispatcher was no longer registered.
-          // This can happened when the request/reply
-          // times out.
-          // To throw away all registered reply handlers is
-          // not the right thing, as there might be just one
-          // old reply coming in and several valid new ones
-          // pending. If we would invoke <connection_closed>
-          // we would throw away also the valid ones.
-          //return 0;
-        }
-
-
-      // This is a NOOP for the Exclusive request case, but it actually
-      // destroys the stream in the muxed case.
-      //this->tms_->destroy_message_state (message_state);
+      // If we have received a reply, we resume after dispatching the
+      // reply. We know that dispatching a reply is bounded and will
+      // not affect the concurrency at any point.
+      // @@ todo: need to think what do we win by doing this
+      // here. Anyway, when the handle_input_i () returns we should be
+      // fine, right?
+      rh.resume_handle ();
     }
   else if (t == TAO_PLUGGABLE_MESSAGE_MESSAGERROR)
     {
@@ -1585,11 +1543,11 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
           // As we are ready to process the last message just resume
           // the handle. Set the flag incase someone had reset the flag..
           rh.set_flag (TAO_Resume_Handle::TAO_HANDLE_RESUMABLE);
-          rh.resume_handle ();
         }
 
       // Process the message...
-      if (this->process_parsed_messages (qd) == -1)
+      if (this->process_parsed_messages (qd,
+                                         rh) == -1)
         return -1;
 
       // Delete the Queued_Data..
