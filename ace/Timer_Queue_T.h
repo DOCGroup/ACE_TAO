@@ -20,9 +20,6 @@
 
 #include "ace/Free_List.h"
 
-// This should be nested within the ACE_Timer_Queue class but some C++
-// compilers still don't like this...
-
 template <class TYPE>
 class ACE_Timer_Node_T
 {
@@ -52,46 +49,46 @@ public:
   // = Accessors 
   
   TYPE &get_type (void);
-  // get the type
+  // Get the type.
   
   void set_type (TYPE &type);
-  // set the type
+  // Set the type.
 
   const void *get_act (void);
-  // get the act
+  // Get the asynchronous completion token.
 
   void set_act (void *act);
-  // set the act
+  // set the asynchronous completion token.
 
   ACE_Time_Value &get_timer_value (void);
-  // get the timer value
+  // get the timer value.
 
   void set_timer_value (ACE_Time_Value timer_value);
-  // set the timer value
+  // set the timer value.
 
   ACE_Time_Value &get_interval (void);
-  // get the timer interval
+  // get the timer interval.
 
   void set_interval (ACE_Time_Value interval);
-  // set the timer interval
+  // set the timer interval.
 
   ACE_Timer_Node_T<TYPE> *get_prev (void);
-  // get the previous pointer
+  // get the previous pointer.
 
   void set_prev (ACE_Timer_Node_T<TYPE> *prev);
-  // set the previous pointer
+  // set the previous pointer.
 
   ACE_Timer_Node_T<TYPE> *get_next (void);
-  // get the next pointer
+  // get the next pointer.
 
   void set_next (ACE_Timer_Node_T<TYPE> *next);
-  // set the next pointer
+  // set the next pointer.
   
   long get_timer_id (void);
-  // get the timer_id
+  // get the timer_id.
 
   void set_timer_id (long timer_id);
-  // set the timer_id
+  // set the timer_id.
 
   void dump (void) const;
   // Dump the state of an TYPE.
@@ -101,7 +98,7 @@ private:
   // Type of object stored in the Queue
   
   const void *act_;
-  // Act associated with the timer.
+  // Asynchronous completion token associated with the timer.
   
   ACE_Time_Value timer_value_;
   // Time until the timer expires.
@@ -130,9 +127,8 @@ class ACE_Timer_Queue_Iterator_T
   // = DESCRIPTION
   //     This is a generic iterator that can be used to visit every
   //     node of a timer queue.  Be aware that it isn't guaranteed
-  //     that the transversal will be in order of timeout values.  
+  //     that the transversal will be in order of timeout values.
 public:
-
   // = Initialization and termination methods.
   ACE_Timer_Queue_Iterator_T (void);
   // Constructor.
@@ -164,9 +160,8 @@ class ACE_Timer_Queue_T
   //      implementing specialized policies such as <ACE_Timer_List>
   //      and <ACE_Timer_Heap>.
 public: 
-
   typedef ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK> ITERATOR;
-  // Type of Iterator
+  // Type of Iterator.
 
   // = Initialization and termination methods.
   ACE_Timer_Queue_T (FUNCTOR *upcall_functor = 0, 
