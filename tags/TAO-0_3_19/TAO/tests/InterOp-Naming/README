@@ -1,0 +1,69 @@
+CORBA InterOperable Naming Service :
+-------------------------------------
+
+This service allows the ORB to be administratively configured to return
+object references from CORBA::ORB::resolve_initial_references () for
+non-locality constrained objects.
+
+For more information on the service please see :
+
+$(TAO_ROOT)/docs/releasenotes/#nservices
+$(TAO_ROOT)/docs/Options.html
+
+The InterOp_test :
+
+With minor changes to the Makefile the test can be run with any of the
+TAO simple examples $(TAO_ROOT)/examples/Simple/* . Here the test is 
+run with the bank example. The test calls resolve_initial_references 
+on argv[1].
+
+TEST 1: Single Profile iioplocs using -ORBInitRef
+
+Simple/bank> server -i bank -n  
+					// -i Adds the bank:IOR mapping to
+					// the ORB table.
+					// -n Use the Naming Service.
+
+InterOp-Naming> InterOp_test arbit_service \
+		-ORBInitRef "arbit_service=iioploc:1.0//<host-name>:<port>/bank"
+
+
+TEST 2: Multiple Profile iioplocs using -ORBInitRef
+
+Simple/bank> server -i bank -n
+
+					// -i Adds the bank:IOR mapping to
+					// the ORB table.
+					// -n Use the Naming Service.
+
+InterOp-Naming> InterOp_test arbit_service \
+		-ORBInitRef "arbit_service=iioploc:1.0//<host-name>:<port>/bank,
+					   1.0//<host-name2>:<port2>/key,
+					   ...
+					   1.0//<host-namen>:<portN>/key"
+
+TEST 3: Single Profile iioploc using -ORBDefautlInitRef
+
+Simple/bank> server -i bank -n
+
+					// -i Adds the bank:IOR mapping to
+					// the ORB table.
+					// -n Use the Naming Service.
+
+InterOp-Naming> InterOp_test bank \
+		-ORBDefaultInitRef "iioploc:1.0//<host-name>:<port>"
+
+TEST 4: Multiple Profile iioploc using -ORBDefaultInitRef
+
+Simple/bank> server -i bank -n
+
+					// -i Adds the bank:IOR mapping to
+					// the ORB table.
+					// -n Use the Naming Service.
+
+InterOp-Naming> InterOp_test bank \
+		-ORBDefaultInitRef "iioploc:1.0//<host-name>:<port>,
+					    1.0//<host-name2>:<port2>,
+					    ...
+					    1.0//<host-namen>:<portN>"
+

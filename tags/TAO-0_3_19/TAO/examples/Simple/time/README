@@ -1,0 +1,58 @@
+$Id$
+
+This is a simple CORBA example that has an object (Time) with only two
+methods, one that returns the current time of day and another that shuts 
+down the server.
+
+server:
+-------
+
+server [-d] [-o <ior_output_file>] 
+
+Options:
+-------
+-o    Outputs the server ior to the file
+
+When the server is started, you should see as the first line of output 
+something that looks like
+	iiop:1.0//danzon.cs.wustl.edu:10015/P35ad159600081a38/child_poa/server
+	(-ORBobjrefstyle url)
+or
+	IOR:000000000000001649444c3a43756269745...
+	(-ORBobjrefstyle ior)
+
+The -o option makes it easier to run from a script because the ior
+passing is done through the <ior_output_file>.
+
+-d    Debug flag 
+
+Using -d turns on debugging messages.  This option is additive, i.e.,
+the more -d options provided, the more debugging you can get.  At the
+moment, only 2 levels of debugging are implemented, and more than 2 -d
+options are ignored.
+
+client:
+-------
+
+client [-d] [-x] [-f <Server_ior_file>] [-n iterations] [-k ior]
+
+Options:
+-------
+-d    Debug flag
+-x    Tells the server to shutdown at the end of the test.
+-f    Reads the server ior from the file
+-n    number of iterations
+-k    IOR or The IOR can also be given in the format like file://[file.ior]
+      with the full path
+	
+You can either cut and paste the IOR from the server to the client
+(with the -k option), or have the client read the IOR from a file
+using the -f option. (This file is produced using the -o option with the
+server.)
+	
+run_test.pl:
+------------
+
+This is a perl script which runs both the server and client and shuts down
+the everything when it is done.
+
