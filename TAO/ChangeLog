@@ -1,3 +1,11 @@
+Tue Apr 20 12:46:59 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+
+          Made changes to accomodate the two new load balancing
+          strategies added.
+
 Tue Apr 20 12:40:14 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp:

@@ -490,6 +490,12 @@ private:
 
   /// The "LeastLoaded" load balancing strategy.
   CosLoadBalancing::Strategy_var least_loaded_;
+
+  /// The "LoadMinimum" load balancing strategy.
+  CosLoadBalancing::Strategy_var load_minimum_;
+
+  /// The "LoadAverage" load balancing strategy.
+  CosLoadBalancing::Strategy_var load_average_;
   //@}
 
   /// Cached instance of the Property name
