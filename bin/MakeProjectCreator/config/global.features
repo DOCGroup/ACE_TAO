@@ -1,6 +1,6 @@
 // The global features file contains the default feature settings.
 // By default, if a feature isn't listed here then it is enabled.
-// If it is listed, then the value assigned to the feature is enterpreted
+// If it is listed, then the value assigned to the feature is interpreted
 // as a boolean value.  You really shouldn't have to edit this file except
 // to change the defaults.  If you want to override these values you can do
 // one of two things.
@@ -31,3 +31,4 @@ sctp 	      = 0
 xt_reactor    = 0
 dummy_label   = 0
 cidl          = 0
+wince         = 0
