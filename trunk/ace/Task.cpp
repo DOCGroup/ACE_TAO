@@ -184,7 +184,7 @@ ACE_Task_Base::activate (long flags,
     this->thr_mgr_ = ACE_Service_Config::thr_mgr ();
 
   this->grp_id_ = this->thr_mgr_->spawn_n (n_threads, 
-					   ACE_THR_FUNC (&ACE_Task_Base::svc_run),
+					   &ACE_Task_Base::svc_run,
 					   (void *) this, 
 					   flags,
 					   priority,
@@ -213,9 +213,11 @@ ACE_Task_Base::activate (long flags,
 // is executing it will do an ACE_Thread::exit() first!
 
 void *
-ACE_Task_Base::svc_run (ACE_Task_Base *t)
+ACE_Task_Base::svc_run (void *args)
 {
-  ACE_TRACE ("ACE_Task_Base::svc_run");
+  ACE_TRACE ("ace_svc_run");
+
+  ACE_Task_Base *t = (ACE_Task_Base *) args;
 
   // Obtain our thread-specific exit hook and make sure that it knows
   // how to clean us up!

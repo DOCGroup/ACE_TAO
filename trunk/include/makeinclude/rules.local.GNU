@@ -36,9 +36,11 @@ build.local: $(BUILD)
 
 $(VDIR)%.o:	%.c
 	$(COMPILE.c) -o $@ $<
+	${MVCMD}
 
 $(VDIR)%.o:	%.cpp
 	$(COMPILE.cc) -o $@ $<
+	${MVCMD}
 
 #$(VDIR)%.o:	%.C
 #	$(COMPILE.cc) -o $@ $<

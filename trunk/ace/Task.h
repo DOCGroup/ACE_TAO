@@ -105,9 +105,6 @@ public:
   void thr_mgr (ACE_Thread_Manager *);
   // Set the thread manager associated with this Task.
 
-  static void *svc_run (ACE_Task_Base *); 
-  // Routine that runs the service routine as a daemon thread. 
-
   int is_reader (void);	
   // True if queue is a reader, else false.
 
@@ -121,6 +118,9 @@ public:
   void thr_count_dec (void);
   // Atomically decrement the thread count by 1.  This should only be
   // called by the <ACE_Task_Exit> class destructor.
+
+  // Routine that runs the service routine as a daemon thread.
+  void *svc_run (void *);
 
   // = Internal data (should be private...).
 // private:

@@ -38,8 +38,9 @@ static const long max_queue = LONG_MAX;
 // reading and exit.
 
 static void *
-consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
+consumer (void *args)
 {
+  ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue = (ACE_Message_Queue<ACE_MT_SYNCH>) args;
   u_long cur_priority = 27;
   int local_count = 0;
 
@@ -82,8 +83,10 @@ consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
 // know when to exit.
 
 static void *
-producer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
+producer (void *args)
 {
+  ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue = (ACE_Message_Queue<ACE_MT_SYNCH>) args;
+
   // Insert thread into thr_mgr.
   ACE_Thread_Control thread_control (ACE_Service_Config::thr_mgr ());
   ACE_NEW_THREAD;

@@ -216,7 +216,8 @@ mutex_test (void)
 {
   ACE_Thread_Manager thr_mgr;
 
-  Two_Tokens one (&thr_mgr), two (&thr_mgr);
+  Two_Tokens one (&thr_mgr);
+  Two_Tokens two (&thr_mgr);
 
   if (remote_mutexes == 0)
     {
@@ -252,7 +253,7 @@ mutex_test (void)
   return 0;
 }
 
-int
+static int
 rwlock_test (void)
 {
   ACE_Thread_Manager thr_mgr;

@@ -159,11 +159,11 @@ main (int, char *argv[])
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32))
   ACE_hthread_t thr_handle_acceptor;
   ACE_hthread_t thr_handle_connector;
-  ACE_UPIPE_Acceptor acceptor (addr);
+  ACE_UPIPE_Acceptor acc (addr);
 
   // Spawn a acceptor thread.
   if (ACE_Thread::spawn (ACE_THR_FUNC (acceptor), 
-			 (void *) &acceptor,
+			 (void *) &acc,
 			 THR_NEW_LWP | THR_DETACHED,
 			 0,
 			 &thr_handle_acceptor) == -1)

@@ -23,9 +23,10 @@
 #include "ace/Thread_Manager.h"
 #include "test_config.h"
 
-static void
-test (ACE_Process_Mutex *pm)
+static void *
+test (void *args)
 {
+  ACE_Process_Mutex *pm = (ACE_Process_Mutex *) args;
   ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
 
   ACE_OS::srand (ACE_OS::time (0));
