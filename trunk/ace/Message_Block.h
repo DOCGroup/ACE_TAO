@@ -181,6 +181,9 @@ public:
 
   virtual ~ACE_Message_Block (void);
   // Delete all the resources held in the message.
+  //
+  // Note that release() is designed to release the continuation
+  // chain; the destructor is not. See release() for details.
 
   // = Message Type accessors and mutators.
 
@@ -247,6 +250,24 @@ public:
   // ACE_Data_Block's reference count goes to 0, it is deleted.
   // In all cases, this ACE_Message_Block is deleted - it must have come
   // from the heap, or there will be trouble.
+  //
+  // release() is designed to release the continuation chain; the
+  // destructor is not.  If we make the destructor release the
+  // continuation chain by calling release() or delete on the message
+  // blocks in the continuation chain, the following code will not
+  // work since the message block in the continuation chain is not off
+  // the heap:
+  //
+  //  ACE_Message_Block mb1 (1024);
+  //  ACE_Message_Block mb2 (1024);
+  //
+  //  mb1.cont (&mb2);
+  //
+  // And hence, call release() on a dynamically allocated message
+  // block. This will release all the message blocks in the
+  // continuation chain.  If you call delete or let the message block
+  // fall off the stack, cleanup of the message blocks in the
+  // continuation chain becomes the responsibility of the user.
 
   static ACE_Message_Block *release (ACE_Message_Block *mb);
   // This behaves like the non-static method <release>, except that it
