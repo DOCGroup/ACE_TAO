@@ -1,3 +1,18 @@
+Tue Dec 17 10:37:45 1997  Brian Mendel  <brian.r.mendel@boeing.com>
+
+        * tao/TAO.dsp: Removed obsolete files from the VC++ project.  
+          Changed name of folder from Include Files to Inline Files.
+          Inserted new header files for classview.
+
+        * TAO_IDL/tao_idl.dsp: Added missing be_state_exception.cpp to the
+          the project to eliminate link error.
+
+        * tao/corbacom.cpp: Inserted wslen and wscpy back to handle wchar
+          problems with VxWOrks and GHS.
+
+        * tao/encode.cpp: Inserted wslen and wscpy back to handle wchar
+          problems with VxWOrks and GHS.
+       
 Tue Dec 16 18:29:42 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* orbsvcs/README: 
