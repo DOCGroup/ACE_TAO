@@ -11,7 +11,7 @@
 
 ACE_CString sched_policy_str = "fifo";
 
-int parse_args (int argc, char *argv[]);
+int parse_args (int argc, ACE_TCHAR *argv[]);
 
 class MyCommand : public Kokyu::Dispatch_Command
 {
@@ -48,12 +48,12 @@ int MyCommand::execute()
   }
 
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT (("(%t|prio=%d) | command %d executed\n")),
+                ACE_TEXT ("(%t|prio=%d) | command %d executed\n"),
                 prio, id_));
     return 0;
 }
 
-int main (int argc, char** argv)
+int ACE_TMAIN (int argc, ACE_TCHAR** argv)
 {
   Kokyu::ConfigInfoSet config_info(3);
 
@@ -135,9 +135,9 @@ int main (int argc, char** argv)
   return 0;
 }
 
-int parse_args (int argc, char *argv[])
+int parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "p:");
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:"));
   int c;
 
   while ((c = get_opts ()) != -1)
