@@ -44,6 +44,7 @@
 #include "tao/VarOut_T.h"
 #include "tao/Object.h"
 #include "tao/Exception.h"
+#include "tao/CDR.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
