@@ -1,3 +1,9 @@
+Thu Mar 09 17:01:23 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Naming_Context.cpp (ACE_Name_Options ctor): When allocating
+          space for the temp dir path, take the size of a char into account
+          to get enough for Unicode characters. Fixes Bugzilla #480.
+
 Thu Mar 09 15:30:41 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/ACE.h (init, fini): added comments that these methods
