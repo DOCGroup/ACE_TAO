@@ -1,11 +1,21 @@
+Fri Jul 16 09:20:42 1999  Arturo Montes <mitosys@colomsat.net.co>
+  
+        * ace/OS.i: Patch the dl* family to keep ACE
+	  compatible in SCO OpenServer 5.0.0, 5.0.2, 5.0.4 with 5.0.5
+
+	* ace/config-sco-5.0.0.h: Bring OpenServer up to date.
+  
+        * include/makeinclude/platform_sco5.0.0-fsu-pthread.GNU:
+	  Use gcc-2.95.
+  
 Fri Jul 16 11:50:24 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (log):
 	* tests/Basic_Types_Test.cpp (main): Reverted my previous
 	  change.  It was not a safe assumption.
-
-Fri Jul 16 09:20:42 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
+  
+Fri Jul 16 11:50:24 1999  Douglas C. Schmidt <schmidt@cs.wustl.edu>
+  
 	* ace/Memory_Pool.h: Added a way to set the segment_size in
  	  ACE_Shared_Memory_Pool_Options and ACE_Shared_Memory_Pool.
   	  Thanks to Serge Kolgan <skolgan@cisco.com> for this fix.  [This
