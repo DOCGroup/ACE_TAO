@@ -171,6 +171,7 @@
 #   endif /* (__BORLANDC__ == 0x0540) */
 
 # define ACE_HAS_EXPLICIT_KEYWORD
+# define ACE_HAS_MUTABLE_KEYWORD
 
 # endif /* defined(__BORLANDC__) */
 

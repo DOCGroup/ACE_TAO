@@ -1,3 +1,8 @@
+Wed Aug 11 13:53:20 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-win32.h,config-win32-borland.h: added
+          ACE_HAS_MUTABLE_KEYWORD.  Thanks to Jody for this request.
+
 Wed Aug 11 13:15:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-g++-common.h,config-win32.h,config-win32-borland.h:
