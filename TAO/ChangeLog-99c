@@ -1,7 +1,13 @@
+Thu Nov 18 20:37:25 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+	  Added some explicit template instantiations that were missing. Thanks
+	  to Marcelo Matus <mmatus@dinha.acms.arizona.edu> for reporting this.
+
 Thu Nov 18 19:47:11 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile:
-	 Removed Log from the build because of errors for VxWorks
+	  Removed Log from the build because of errors for VxWorks
 
 Thu Nov 18 10:16:23 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
