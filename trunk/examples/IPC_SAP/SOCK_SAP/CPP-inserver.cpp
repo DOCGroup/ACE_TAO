@@ -16,7 +16,7 @@ ACE_RCSID(SOCK_SAP, CPP_inserver, "$Id$")
 static int verbose = 0;
 
 static void
-run_server (ACE_THR_FUNC server,
+run_server (void * (*server) (void *),
             ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_THREADS)
@@ -352,7 +352,7 @@ run_event_loop (u_short port)
                             "(%P|%t) spawning twoway server\n"));
 
               // Run the twoway server.
-              run_server (ACE_static_cast (ACE_THR_FUNC, twoway_server),
+              run_server (twoway_server,
                           new_stream.get_handle ());
             }
           if (temp.is_set (oneway_acceptor.get_handle ()))
@@ -367,7 +367,7 @@ run_event_loop (u_short port)
                             "(%P|%t) spawning oneway server\n"));
 
               // Run the oneway server.
-              run_server (ACE_static_cast (ACE_THR_FUNC, oneway_server),
+              run_server (oneway_server,
                           new_stream.get_handle ());
             }
         }

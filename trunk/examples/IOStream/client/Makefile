@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------------
-#	$Id: Makefile	1.1	10/18/96
+#	$Id$
 #
 #	Makefile for IOStream test client 
 #----------------------------------------------------------------------------
@@ -47,6 +47,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/config-g++-common.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
@@ -72,6 +73,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/IOStream_T.h \
- $(ACE_ROOT)/ace/IOStream_T.i
+ $(ACE_ROOT)/ace/IOStream_T.i \
+ $(ACE_ROOT)/ace/IOStream_T.cpp
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
