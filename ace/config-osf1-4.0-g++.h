@@ -67,6 +67,9 @@
 // Platform supports POSIX 1.b clock_gettime ()
 #define ACE_HAS_CLOCK_GETTIME
 
+// Compiler/platform supports the "long long" datatype.
+#define ACE_HAS_LONGLONG_T
+
 // Platform supports System V IPC (most versions of UNIX, but not
 // Win32)
 #define ACE_HAS_SYSV_IPC			
