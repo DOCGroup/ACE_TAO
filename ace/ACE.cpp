@@ -1827,10 +1827,6 @@ int
 ACE::max_handles (void)
 {
   ACE_TRACE ("ACE::max_handles");
-int
-ACE::max_handles (void)
-{
-  ACE_TRACE ("ACE::max_handles");
 #if defined (RLIMIT_NOFILE) && !defined (ACE_LACKS_RLIMIT)
   rlimit rl;
   ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
