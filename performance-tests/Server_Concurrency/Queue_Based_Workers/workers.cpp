@@ -11,7 +11,15 @@ static size_t message_size = 100;
 static size_t number_of_workers = 10;
 static size_t burst_size = 10;
 static size_t timeout_between_bursts = 1;
-static size_t debug = 0;
+
+enum DEBUGGING_RANGE
+{
+  NONE = 0,
+  DEFAULT = 1,
+  PRINT_INDIVIDUAL_LATENCY = 2
+};
+
+static DEBUGGING_RANGE debug = NONE;
 
 static ACE_Data_Block *data_block = 0;
 
@@ -41,7 +49,8 @@ public:
 
   size_t messages_dequeued_;
 
-  Latency_Stats stats_;
+  Latency_Stats latency_stats_;
+  Throughput_Stats throughput_stats_;
 };
 
 class IO_Task : public TASK
@@ -92,8 +101,8 @@ Worker_Task::svc (void)
       Message_Block *message_block =
         ACE_dynamic_cast (Message_Block *, mb);
 
-      // Record arrival time.
-      this->stats_.sample (ACE_OS::gethrtime () - message_block->start_of_burst_);
+      ACE_hrtime_t start_of_burst_for_this_message_block =
+        message_block->start_of_burst_;
 
       mb->release ();
 
@@ -117,6 +126,22 @@ Worker_Task::svc (void)
           /* takes about 40.2 usecs on a 167 MHz Ultra2 */
           u_long n = 1279UL;
           ACE::is_prime (n, 2, n / 2);
+        }
+
+      //
+      // Record stats for this message.
+      //
+      ACE_hrtime_t latency_from_start_of_burst =
+        ACE_OS::gethrtime () - start_of_burst_for_this_message_block;
+      this->latency_stats_.sample (latency_from_start_of_burst);
+
+      this->throughput_stats_.sample ();
+
+      if (debug >= PRINT_INDIVIDUAL_LATENCY)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) latency from start of burst: %Q\n",
+                      latency_from_start_of_burst));
         }
     }
 
@@ -144,6 +169,15 @@ IO_Task::svc (void)
            i <= burst_size && number_of_messages > 0;
            ++i, --number_of_messages, ++messages_queued)
         {
+          if (debug)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%t) IO thread -> burst %d: message %d; overall message %d\n",
+                          burst,
+                          i,
+                          messages_queued));
+            }
+
           Message_Block *message_block = 0;
           ACE_NEW_RETURN (message_block,
                           Message_Block (data_block,
@@ -157,15 +191,6 @@ IO_Task::svc (void)
                                  "IO::svc (%t) -> %p\n",
                                  "putq error"),
                                 -1);
-            }
-
-          if (debug)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "(%t) IO thread -> burst %d: message %d; overall message %d\n",
-                          burst,
-                          i,
-                          messages_queued));
             }
         }
 
@@ -198,7 +223,7 @@ IO_Task::svc (void)
 static int
 parse_args (int argc, ASYS_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("m:s:w:b:t:d"));
+  ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("m:s:w:b:t:d:"));
   int c;
 
   while ((c = get_opt ()) != -1)
@@ -221,7 +246,7 @@ parse_args (int argc, ASYS_TCHAR *argv[])
           timeout_between_bursts = ACE_OS::atoi (get_opt.optarg);
           break;
         case 'd':
-          debug = 1;
+          debug = ACE_static_cast (DEBUGGING_RANGE, ACE_OS::atoi (get_opt.optarg));
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -243,14 +268,14 @@ parse_args (int argc, ASYS_TCHAR *argv[])
 int
 main (int argc, ASYS_TCHAR *argv[])
 {
-  move_to_rt_class ();
-  ACE_High_Res_Timer::calibrate ();
-
   int result = parse_args (argc, argv);
   if (result != 0)
     {
       return result;
     }
+
+  move_to_rt_class ();
+  ACE_High_Res_Timer::calibrate ();
 
   size_t i = 0;
 
@@ -320,13 +345,18 @@ main (int argc, ASYS_TCHAR *argv[])
   result = ACE_Thread_Manager::instance ()->wait ();
 
   Latency_Stats latency;
+  Throughput_Stats throughput;
   for (i = 0; i < number_of_workers; ++i)
     {
-      latency.accumulate (workers[i]->stats_);
+      latency.accumulate (workers[i]->latency_stats_);
+      throughput.accumulate (workers[i]->throughput_stats_);
     }
 
-  ACE_DEBUG ((LM_DEBUG, "\nTotals:\n"));
+  ACE_DEBUG ((LM_DEBUG, "\nTotals for latency:\n"));
   latency.dump_results (argv[0], "latency");
+
+  ACE_DEBUG ((LM_DEBUG, "\nTotals for throughput:\n"));
+  throughput.dump_results (argv[0], "throughput");
 
   for (i = 0; i < number_of_workers; ++i)
     {
