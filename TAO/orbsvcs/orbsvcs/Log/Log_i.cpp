@@ -59,11 +59,11 @@ Log_i::id (CORBA::Environment &ACE_TRY_ENV)
   return logid_;
 }
 
-DsLogAdmin::QoSList_ptr
+DsLogAdmin::QoSList*
 Log_i::get_qos (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  DsLogAdmin::QoSList_ptr ret_val;
+  DsLogAdmin::QoSList* ret_val;
   ACE_NEW_THROW_EX (ret_val,
                     DsLogAdmin::QoSList (this->qoslist_),
                     CORBA::NO_MEMORY ());
@@ -261,11 +261,11 @@ Log_i::get_availability_status (CORBA::Environment &ACE_TRY_ENV)
   return this->avail_status_;
 }
 
-DsLogAdmin::CapacityAlarmThresholdList_ptr
+DsLogAdmin::CapacityAlarmThresholdList*
 Log_i::get_capacity_alarm_thresholds (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  DsLogAdmin::CapacityAlarmThresholdList_ptr ret_val;
+  DsLogAdmin::CapacityAlarmThresholdList* ret_val;
   ACE_NEW_THROW_EX (ret_val,
                      DsLogAdmin::CapacityAlarmThresholdList (this->thresholds_),
                      CORBA::NO_MEMORY ());
@@ -290,11 +290,11 @@ Log_i::set_capacity_alarm_thresholds (const
   this->thresholds_ = threshs;
 }
 
-DsLogAdmin::WeekMask_ptr
+DsLogAdmin::WeekMask*
 Log_i::get_week_mask (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  DsLogAdmin::WeekMask_ptr ret_val;
+  DsLogAdmin::WeekMask* ret_val;
   ACE_NEW_THROW_EX (ret_val,
                     DsLogAdmin::WeekMask (this->weekmask_),
                     CORBA::NO_MEMORY ());
@@ -317,7 +317,7 @@ Log_i::set_week_mask (const DsLogAdmin::WeekMask &masks,
   this->weekmask_ = masks;
 }
 
-DsLogAdmin::RecordList_ptr
+DsLogAdmin::RecordList*
 Log_i::query_i (const char *constraint,
                 DsLogAdmin::Iterator_out &iter_out,
                 CORBA::ULong how_many,
@@ -346,7 +346,7 @@ Log_i::query_i (const char *constraint,
   // Iterate over and populate the list.
   LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry;
 
-  DsLogAdmin::RecordList_ptr rec_list;
+  DsLogAdmin::RecordList* rec_list;
   // Figure out the length of the list.
 
   // Allocate the list of <how_many> length.
@@ -419,7 +419,7 @@ Log_i::query_i (const char *constraint,
   return rec_list;
 }
 
-DsLogAdmin::RecordList_ptr
+DsLogAdmin::RecordList*
 Log_i::query (const char *grammar,
               const char *constraint,
               DsLogAdmin::Iterator_out iter_out,
@@ -431,7 +431,7 @@ Log_i::query (const char *grammar,
   this->check_grammar (grammar, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  DsLogAdmin::RecordList_ptr rec_list =
+  DsLogAdmin::RecordList* rec_list =
     this->query_i (constraint,
                    iter_out,
                    this->max_rec_list_len_,
@@ -441,7 +441,7 @@ Log_i::query (const char *grammar,
   return rec_list;
 }
 
-DsLogAdmin::RecordList_ptr
+DsLogAdmin::RecordList*
 Log_i::retrieve (DsLogAdmin::TimeT from_time,
                  CORBA::Long how_many,
                  DsLogAdmin::Iterator_out iter_out,
@@ -465,7 +465,7 @@ Log_i::retrieve (DsLogAdmin::TimeT from_time,
   else
     ACE_OS::sprintf (constraint, "time < %s", uint64_formating);
 
-  DsLogAdmin::RecordList_ptr rec_list =
+  DsLogAdmin::RecordList* rec_list =
     this->query_i (constraint,
                    iter_out,
                    how_many,
@@ -716,7 +716,7 @@ Log_i::set_records_attribute (const char *grammar,
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-DsLogAdmin::NVList_ptr
+DsLogAdmin::NVList*
 Log_i::get_record_attribute (DsLogAdmin::RecordId id,
                              CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -729,7 +729,7 @@ Log_i::get_record_attribute (DsLogAdmin::RecordId id,
                        0);
     }
 
-  DsLogAdmin::NVList_ptr nvlist;
+  DsLogAdmin::NVList* nvlist;
   ACE_NEW_THROW_EX (nvlist,
                     DsLogAdmin::NVList (rec.attr_list),
                     CORBA::NO_MEMORY ());

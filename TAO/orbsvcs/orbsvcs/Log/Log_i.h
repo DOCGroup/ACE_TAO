@@ -65,7 +65,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return the id of the log
 
-  DsLogAdmin::QoSList_ptr
+  DsLogAdmin::QoSList*
   get_qos (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -168,7 +168,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Get the availability status
 
-  DsLogAdmin::CapacityAlarmThresholdList_ptr
+  DsLogAdmin::CapacityAlarmThresholdList*
     get_capacity_alarm_thresholds (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Get the capacity alarm threshold
@@ -186,7 +186,7 @@ public:
   // between wraps (after a wrap, the percentage full resets to
   // 0).
 
-  DsLogAdmin::WeekMask_ptr
+  DsLogAdmin::WeekMask*
   get_week_mask (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Get the weekly scheduling parameters
@@ -200,7 +200,7 @@ public:
                      DsLogAdmin::InvalidMask));
   // Set the weekly scheduling parameters.
 
-  DsLogAdmin::RecordList_ptr
+  DsLogAdmin::RecordList*
   query (const char * grammar,
 	 const char * c,
 	 DsLogAdmin::Iterator_out i,
@@ -211,7 +211,7 @@ public:
   // Returns all records in the log that match the given constraint
   // <c>.
 
-  DsLogAdmin::RecordList_ptr
+  DsLogAdmin::RecordList*
   retrieve (DsLogAdmin::TimeT from_time,
 	    CORBA::Long how_many,
 	    DsLogAdmin::Iterator_out i,
@@ -283,7 +283,7 @@ public:
   // Set the attributes of all records that matches the
   // constraints with same attr_list.
 
-  DsLogAdmin::NVList_ptr
+  DsLogAdmin::NVList*
   get_record_attribute (DsLogAdmin::RecordId id,
 			CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -316,7 +316,7 @@ public:
 protected:
   // = Helper methods
 
-  DsLogAdmin::RecordList_ptr query_i (const char *constraint,
+  DsLogAdmin::RecordList* query_i (const char *constraint,
                                       DsLogAdmin::Iterator_out &iter_out,
                                       CORBA::ULong how_many,
                                       CORBA::Environment &ACE_TRY_ENV)
