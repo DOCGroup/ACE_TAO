@@ -120,8 +120,8 @@ worker (void *c)
         // Use the guard to serialize access to printf...
         ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, printf_lock, 0);
 
-        ACE_OS::printf ("(%lu) errno = %d, lineno = %d, flags = %d\n",
-                        ACE_reinterpret_cast(unsigned long,handle),
+        ACE_OS::printf ("(%u) errno = %d, lineno = %d, flags = %d\n",
+                        handle,
                         tss_error->error (),
                         tss_error->line (),
                         tss_error->flags ());
