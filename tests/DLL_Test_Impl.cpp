@@ -60,12 +60,25 @@ Hello_Impl::operator new (size_t bytes)
   ACE_DEBUG ((LM_INFO, "Hello_Impl::new\n"));
   return ::new char[bytes];
 }
+
+#if defined (ACE_HAS_NEW_NOTHROW)
+  /// Overloaded new operator, nothrow_t variant.
+void *
+Hello_Impl::operator new (size_t bytes, const ACE_nothrow_t &nt)
+{
+  ACE_DEBUG ((LM_INFO, "Hello_Impl::new\n"));
+  return ::new (nt) char[bytes];
+}
+#endif /* ACE_HAS_NEW_NOTHROW */
+
+#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
 void
 Hello_Impl::operator delete (void *ptr)
 {
   ACE_DEBUG ((LM_INFO, "Hello_Impl::delete\n"));
   delete [] ((char *) ptr);
 }
+#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 
 extern "C" ACE_Svc_Export Hello *
 get_hello (void)

@@ -1,3 +1,10 @@
+Wed May  1 15:49:33 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/DLL_Test_Impl.{h cpp}: Add a nothrow variant of operator new
+          for platforms with ACE_HAS_NEW_NOTHROW (like HP-UX, aC++). Also
+          made Hello_Impl's placement delete method conditional on
+          ACE_LACKS_PLACEMENT_OPERATOR_DELETE, also an HP aC++ attribute.
+
 Tue Apr 30 14:54:02 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Added $TAO_ROOT/tests/Connection_Timeout
