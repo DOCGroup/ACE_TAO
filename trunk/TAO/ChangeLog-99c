@@ -1,3 +1,10 @@
+Sat Dec 04 10:34:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/orbconf.h:
+	* tao/corbafwd.h:
+	* tao/POAC.h: Part of my previous change wrt export macros failed
+	  to consider comilers without namespace.
+
 Fri Dec  3 22:00:48 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
@@ -38,7 +45,7 @@ Fri Dec  3 12:37:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_union/cdr_op_ch.cpp:
 	* TAO_IDL/be/be_visitor_valuetype/cdr_op_ch.cpp:
 	  Reversed the order of generation of the stub export macro
-	  (if any) and the return type for the Any and CDR 
+	  (if any) and the return type for the Any and CDR
 	  insertion and extraction operators, and for the ostream
 	  operator for exceptions.
 
