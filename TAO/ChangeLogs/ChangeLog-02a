@@ -1,3 +1,7 @@
+Thu Jan 17 09:25:11 2002  Frank Hunleth   <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/tests/Miop/Makefile: Added.
+
 Thu Jan 17 09:25:11 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.cpp:
