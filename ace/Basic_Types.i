@@ -310,7 +310,7 @@ ACE_INLINE ACE_UINT32
 ACE_U_LongLong::operator/ (const ACE_UINT32 n) const
 {
   // This takes advantage of the fact that the return type has only 32
-  // bits.  Replace 0x100000000 with 0xffffffff + 1 because the latter
+  // bits.  Replace 0x100000000 with 0xffffffff + 1 because the former
   // has 33 bits.
   // Quotient = (0x100000000u * hi_ + lo_) / n
   //          = ((0x100000000u - n + n) * hi_ + lo_) / n
@@ -326,7 +326,7 @@ ACE_U_LongLong::operator% (const ACE_UINT32 n) const
 {
   // Because the argument is an ACE_UINT32, the result can never be
   // bigger than 32 bits.  Replace 0x100000000 with 0xffffffff + 1
-  // because the latter has 33 bits.
+  // because the former has 33 bits.
   // Mod = (0x100000000u * hi_ + lo_) % n
   //     = (0x100000000u % n * hi_  +  lo_ % n) % n
   //     = ((0x100000000u - n) % n * hi_  +  lo_ % n) % n
