@@ -60,7 +60,6 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
   // in the operators.
   *os << be_nl << be_nl
       << "template<>" << be_nl
-      << "ACE_INLINE" << be_nl
       << "CORBA::Boolean" << be_nl
       << "TAO::Any_Impl_T<" << node->name () << ">::to_value ("
       << be_idt <<  be_idt_nl
@@ -70,7 +69,7 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << "CORBA::add_ref (this->value_);" << be_nl
       << "_tao_elem = this->value_;" << be_nl
       << "return 1;" << be_uidt_nl
-      << "}";
+      << "}" << be_nl;
 
   *os << "// Copying insertion." << be_nl
       << "void" << be_nl
