@@ -73,8 +73,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
       *os << be_nl << be_nl
           << "ACE_INLINE" << be_nl
           << node->name () << "::" << node->local_name ()
-          << " (void)" << be_idt_nl
-          << ": CORBA::AbstractBase ()" << be_uidt_nl
+          << " (void)" << be_nl
           << "{}" << be_nl << be_nl;
 
       *os << "ACE_INLINE" << be_nl
@@ -88,10 +87,14 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
           << " (" << be_idt << be_idt_nl
           << "TAO_Stub *objref," << be_nl
           << "CORBA::Boolean _tao_collocated," << be_nl
-          << "TAO_Abstract_ServantBase *servant" << be_uidt_nl
+          << "TAO_Abstract_ServantBase *servant," << be_nl
+          << "TAO_ORB_Core *orb_core" << be_uidt_nl
           << ")" << be_nl
-          << ": ACE_NESTED_CLASS (CORBA, AbstractBase) (objref, _tao_collocated, servant)"
-          << be_uidt_nl
+          << ": ACE_NESTED_CLASS (CORBA, AbstractBase) (" << be_nl
+          << "      objref," << be_nl
+          << "      _tao_collocated," << be_nl
+          << "      servant" << be_nl
+          << "    )" << be_uidt_nl
           << "{}";
     }
   else
@@ -166,7 +169,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
         }
     }
 
-  if (!node->is_local ())
+  if (!node->is_local () && !node->is_abstract ())
     {
       *os << be_nl << be_nl
           << "ACE_INLINE" << be_nl;
@@ -175,11 +178,11 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
           << be_idt << be_idt_nl
           << "IOP::IOR *ior," << be_nl
           << "TAO_ORB_Core *oc" << be_uidt_nl
-          << ")"
-          << be_nl;
+          << ")" << be_nl;
       *os << ": ACE_NESTED_CLASS (CORBA, Object) (ior, oc)";
 
-      *os << be_nl << "{" << be_idt_nl
+      *os << be_uidt_nl 
+          << "{" << be_nl
           << "}" ;
     }
 

@@ -175,7 +175,10 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
           << "{" << be_idt_nl
           << "ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);" << be_nl
           << "this->" << intf->flat_name ()
-          << "_setup_collocation (this->_is_collocated ());" << be_uidt_nl
+          << "_setup_collocation (" << be_idt << be_idt_nl
+          << "this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()" 
+          << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl
           << "}" << be_uidt_nl << be_nl;
 
       // Generate code that retrieves the proper proxy implementation
