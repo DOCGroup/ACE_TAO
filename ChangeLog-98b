@@ -1,36 +1,41 @@
+Thu Aug 27 11:35:11 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * etc/ACE-guidelines.html: added rule to declare a loop index
+          before the loop, if it's used after the loop.
+
 Wed Aug 26 23:43:42 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.32 released.
 
 Wed Aug 26 19:11:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/count_lines: 
-	  A nice Perl script to count lines of code.
+        * bin/count_lines:
+          A nice Perl script to count lines of code.
 
 Wed Aug 26 17:35:43 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Reactors_Test.cpp (close): Oops, the ACE_ASSERT() was
- 	  incorrect.  It should be
-	  
-	  ACE_ASSERT (Test_Task::task_count_ >= 0);
+        * tests/Reactors_Test.cpp (close): Oops, the ACE_ASSERT() was
+          incorrect.  It should be
 
-	  Thanks to David Levine for reporting this.
+          ACE_ASSERT (Test_Task::task_count_ >= 0);
+
+          Thanks to David Levine for reporting this.
 
 Wed Aug 26 07:47:57 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Select_Reactor.h: Added template specialization for
-	  ACE_Guard<ACE_Select_Reactor_Token_T<ACE_Noop_Token>> to speed
-	  thing up when using lock-freed Select_Reactor.
+        * ace/Select_Reactor.h: Added template specialization for
+          ACE_Guard<ACE_Select_Reactor_Token_T<ACE_Noop_Token>> to speed
+          thing up when using lock-freed Select_Reactor.
 
-	* ace/Select_Reactor.cpp: Removed template instantiation for
-	  ACE_Guard<ACE_Select_Reactor_Token_T<ACE_Noop_Token>> because
-	  it's been specialized in .h file.
+        * ace/Select_Reactor.cpp: Removed template instantiation for
+          ACE_Guard<ACE_Select_Reactor_Token_T<ACE_Noop_Token>> because
+          it's been specialized in .h file.
 
 Wed Aug 26 08:51:23 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS.cpp (thr_keycreate): On pthreads draft 6, the call is
-	  pthread_key_create, not pthread_keycreate.  Thanks to Arturo
-	  Montes <mitosys@colomsat.com.co> for this fix.
+        * ace/OS.cpp (thr_keycreate): On pthreads draft 6, the call is
+          pthread_key_create, not pthread_keycreate.  Thanks to Arturo
+          Montes <mitosys@colomsat.com.co> for this fix.
 
 Wed Aug 26 08:32:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
