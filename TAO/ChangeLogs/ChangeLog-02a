@@ -1,3 +1,13 @@
+Sat Jun 09 19:25:06 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Security/Secure_Invocation/run_test.pl:
+
+	  Changed Service Configurator configuration files to use for the
+	  server and the client binaries.  For some reason, the "nopasswd"
+	  versions cause a seg fault in the OpenSSL libraries.  It's not
+	  yet clear what the true cause of the problem is.  In any case,
+	  the test is now working properly.
+
 Fri Jun  8 15:26:38 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
