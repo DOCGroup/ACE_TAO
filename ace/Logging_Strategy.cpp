@@ -382,9 +382,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
                                       const void *)
 {
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  if ((size_t) ACE_OS::fseek (this->log_msg_->msg_ostream (),
-                              0,
-                              SEEK_CUR) > this->max_size_)
+  if ((size_t) ACE_OS::ftell (this->log_msg_->msg_ostream ()) > this->max_size_)
 #else
   if ((size_t) this->log_msg_->msg_ostream ()->tellp () > this->max_size_)
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
