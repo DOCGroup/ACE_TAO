@@ -14,12 +14,12 @@ project(CosNaming) : orbsvcslib, core {
   Source_Files {
     CosNamingC.cpp
     Naming/Naming_Client.cpp
-    Naming/naming_export.h
   }
 
   Header_Files {
     CosNamingC.h
     Naming/Naming_Client.h
+    Naming/naming_export.h
   }
 
   Inline_Files {
