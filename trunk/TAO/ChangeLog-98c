@@ -1,3 +1,8 @@
+Tue Feb 17 07:40:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/any.cpp: Added a "return *this" to operator= to stop certain
+ 	  compilers from complaining.  Thanks to Andy for fixing this.
+
 Tue Feb 17 04:08:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init): Setting the
