@@ -845,7 +845,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e)
 
   UTL_ScopeActiveIterator *i = 
     new UTL_ScopeActiveIterator (this,
-                                 UTL_Scope::IK_decls);
+                                 UTL_Scope::IK_both);
   AST_Decl *d;
 
   // Iterate over this scope
