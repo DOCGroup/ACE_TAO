@@ -1,3 +1,25 @@
+Thu Dec 30 16:10:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be/be_visitor_array/array_ch.cpp:
+	* TAO_IDL/be/be_visitor_array/array_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+	  A bug reported by J. Scott Evans <evans@cpi.com>
+	  pointed out that the TAO IDL compiler was not 
+	  generating different code for the _var class of
+	  a struct, depending on whether the struct was
+	  fixed-size or variable-size (according to H & V
+	  section 6.19). The T_var code generation needed
+	  to be fixed also for unions, sequences and arrays
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_interface_fwd.cpp:
+	* TAO_IDL/be/be_valuetype.cpp:
+	* TAO_IDL/be/be_valuetype_fwd.cpp:
+	  Cosmetic changes.
+
 Thu Dec 30 14:30:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/POA/Makefile,orbsvcs/orbsvcs/Makefile,
