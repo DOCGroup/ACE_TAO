@@ -58,7 +58,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
       // Generate the TypeCode instantiation.
       os
         << "static TAO::TypeCode::Value_Box<char const *," << be_nl
-        << "                                TAO::Null_RefCount_Policy> const"
+        << "                                TAO::Null_RefCount_Policy>"
         << be_idt_nl
         << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
         << "\"" << node->repoID () << "\"," << be_nl
@@ -98,7 +98,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
          << "                            TAO::TypeCode::Value_Field<char const *> const *," << be_nl
          << "                            CORBA::tk_"
          << (dynamic_cast<be_eventtype *> (node) ? "event" : "value") << "," << be_nl
-         << "                            TAO::Null_RefCount_Policy> const"
+         << "                            TAO::Null_RefCount_Policy>"
          << be_idt_nl
          << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
          << "\"" << node->repoID () << "\"," << be_nl
@@ -127,7 +127,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
       else
         {
           // No concrete base.
-          os << "&CORBA::tk_null," << be_nl;
+          os << "&CORBA::_tc_null," << be_nl;
         }
 
       // Fields
@@ -170,6 +170,11 @@ TAO::be_visitor_value_typecode::visit_members (be_valuetype * node)
           continue;
         }
 
+      AST_Field::Visibility const vis = field->visibility ();
+
+      if (vis == AST_Field::vis_NA)
+        continue;
+
       be_decl * const member_decl =
         be_decl::narrow_from_decl (field);
 
@@ -179,8 +184,6 @@ TAO::be_visitor_value_typecode::visit_members (be_valuetype * node)
       os << "{ "
          << "\"" << member_decl->original_local_name () << "\", "
          << "&"  << member_type->tc_name () << ", ";
-
-      AST_Field::Visibility const vis = field->visibility ();
 
       switch (vis)
         {
@@ -195,7 +198,8 @@ TAO::be_visitor_value_typecode::visit_members (be_valuetype * node)
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_value_typecode::visit_members - "
-                             "Unknown valuetype member visibility.\n"),
+                             "Unknown valuetype member visibility: %d.\n",
+                             vis),
                             -1);
         };
 
