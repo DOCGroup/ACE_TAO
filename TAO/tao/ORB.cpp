@@ -521,15 +521,11 @@ CORBA_ORB::resolve_priority_mapping_manager (CORBA::Environment &/*ACE_TRY_ENV*/
 CORBA_Object_ptr
 CORBA_ORB::resolve_rt_orb (CORBA::Environment &ACE_TRY_ENV)
 {
-
 #if (TAO_HAS_RT_CORBA == 1)
-
   return this->orb_core_->rt_orb (ACE_TRY_ENV);
-
 #else
-
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return CORBA_Object::_nil ();
-
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
 }

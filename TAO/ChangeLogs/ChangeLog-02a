@@ -1,3 +1,15 @@
+Fri Dec 22 17:31:24 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/RT_ORB_Loader.cpp: 
+	* tao/RT_ORB_Loader.h: 
+	  Added and Committed missing files.
+	
+Fri Dec 22 15:26:58 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ORB.cpp (resolve_rt_orb):
+	  Added ACE_UNUSED_ARG (ACE_TRY_ENV) to remove a warning in the
+	  RT_CORBA==0 case.
+
 Fri Dec 22 16:45:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/client.dsp:
