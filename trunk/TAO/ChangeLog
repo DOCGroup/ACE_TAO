@@ -1,3 +1,11 @@
+Mon Sep  9 01:25:56 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* rules.tao.GNU:
+	* orbsvcs/tests/Event/Basic/Makefile:
+	* tests/Param_Test/Makefile:
+	  Remove references to obsolete ACE_HAS_GNUG_PRE_2_8 make 
+	  variable.
+
 Sun Sep  8 21:04:45 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Bug_1270_Regression/Makefile:

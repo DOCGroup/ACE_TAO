@@ -55,14 +55,6 @@ TAO_DYNAMIC_LIBS=-lTAO_DynamicInterface
 ####
 #### Macro customization.
 ####
-ifeq ($(findstring g++,$(CXX)),g++)
-  ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
-    #### g++ < 2.8 complains about unused parameters in generated code.
-    CCFLAGS += -Wno-unused
-    ami=0
-  endif # g++ < 2.8
-endif # g++
-
 ifeq ($(minimum_corba),1)
   ifndef rt_corba
     rt_corba = 0
@@ -143,8 +135,6 @@ endif # interceptors
 
 ifeq (1,$(CROSS-COMPILE))
 else
-ifeq (1,$(ACE_HAS_GNUG_PRE_2_8))
-endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # ! CROSS-COMPILE
 
 ####
