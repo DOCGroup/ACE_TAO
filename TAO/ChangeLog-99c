@@ -1,3 +1,8 @@
+Fri May 28 12:09:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Object.cpp:
+	  Added missing #include
+
 Fri May 28 09:56:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_root/root.cpp:
