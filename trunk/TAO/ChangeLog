@@ -1,3 +1,9 @@
+Wed Apr 14 06:49:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/tao_idl.mpc:
+          Made another optimize line valid again. This should fix the
+          crashing of the TAO_IDL compiler in the msvc release builds
+
 Wed Apr 14 06:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Any.h:
