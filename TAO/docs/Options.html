@@ -926,11 +926,21 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
               thread-pool reactor which is the default.</TD>
         </TR>
       </TABLE>
-</TD>
-</TR>
-<TR>
-  <TD><CODE>-ORBInputCDRAllocator</CODE> <EM>which</EM></TD>
-  <TD><a name="-ORBInputCDRAllocator"></a>
+    </TD>
+  </TR>
+  <TR>
+    <TD><CODE>-ORBReactorThreadQueue</CODE> <EM>which</EM></TD>
+    <TD><a name="-ORBReactorThreadQueue"></a>
+    Applies only to the ACE_TP_Reactor, i.e., when <CODE>-ORBReactorType</CODE> 
+    = <CODE>tp</CODE>, and specifies the order, last-in-first-out 
+    (<EM>which</EM> = <CODE>LIFO</CODE>), the default, or first-in-first-out 
+    (<EM>which</EM> = <CODE>FIFO</CODE>), in which waiting threads are selected 
+    to run by the ACE_Select_Reactor_Token.
+    </TD>
+  </TR>
+  <TR>
+    <TD><CODE>-ORBInputCDRAllocator</CODE> <EM>which</EM></TD>
+    <TD><a name="-ORBInputCDRAllocator"></a>
       Specify whether the ORB uses locked
       (<em>which</em> = <code>thread</code>)
       or lock-free (<em>which</em> = <code>null</code>)
@@ -944,11 +954,11 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
       Using locked allocators also allows the users to
       take advantage of the TAO octet sequence
       extensions to preserve the buffer after the upcall.
-  </TD>
-</TR>
-<TR>
-  <TD><CODE>-ORBReactorRegistry</CODE> <EM>registry_type</EM></TD>
-  <TD><a name="-ORBReactorRegistry"></a>
+    </TD>
+  </TR>
+  <TR>
+    <TD><CODE>-ORBReactorRegistry</CODE> <EM>registry_type</EM></TD>
+    <TD><a name="-ORBReactorRegistry"></a>
       Select the type of reactor registry.
       Currently two implementations are provided:
       <B>single</B> uses a single reactor per ORB, this is the default
@@ -958,8 +968,8 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
       different CORBA priorities are assigned different
       reactors.  This last option is usually used in conjunction with
       the endpoint-per-priority concurrency model.
-  </TD>
-</TR>
+    </TD>
+  </TR>
 </TABLE>
 </P>
 </blockquote>

@@ -22,6 +22,7 @@
 #include "tao/Leader_Follower.h"
 #include "tao/StringSeqC.h"
 
+#include "ace/Arg_Shifter.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Config.h"
@@ -55,6 +56,7 @@ TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
 
 TAO_Advanced_Resource_Factory::TAO_Advanced_Resource_Factory (void)
   : reactor_type_ (TAO_REACTOR_TP),
+    threadqueue_type_ (TAO_THREAD_QUEUE_NOT_SET),
     cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK)
 {
   // Constructor
@@ -93,143 +95,137 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
       default_resource_factory->disable_factory();
     }
 
-  int unused_argc = 0;
+  ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  // Before, CORBA::StringSeq was used for the unused_argv.  However, since it only supports
-  // 'char', it has been converted to use ACE_TCHAR.  Also, note that ACE_Argv_Type_Converter
-  // cannot be used here because unused_argv is dynamically set during the parsing.
-  ACE_TCHAR** unused_argv = 0;
-  ACE_NEW_RETURN(unused_argv, ACE_TCHAR*[argc + 1], -1);  // allocate maximum.
-  {
-    for (int i = 0; i <= argc; ++i)
+  //for (int curarg = 0; curarg < argc; ++curarg)
+  const ACE_TCHAR *current_arg = 0;
+  while (arg_shifter.is_anything_left ())
     {
-      unused_argv[i] = 0;
-    }
-  }
-
-  for (int curarg = 0; curarg < argc; ++curarg)
-    {
-      if (ACE_OS::strcasecmp (argv[curarg],
-                              ACE_LIB_TEXT("-ORBReactorRegistry")) == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-ORBReactorRegistry")) == 0)
         {
-          curarg++;
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_LIB_TEXT("TAO_Advanced_Resource_Factory::init - ")
                              ACE_LIB_TEXT("-ORBReactorRegistry no longer supported\n")),
                             -1);
+
+          arg_shifter.consume_arg ();
         }
-      else if (ACE_OS::strcasecmp (argv[curarg],
-                                   ACE_LIB_TEXT("-ORBReactorLock")) == 0)
+      else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_LIB_TEXT("-ORBReactorLock"))))
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_LIB_TEXT("TAO_Advanced_Resource_Factory - obsolete -ORBReactorLock ")
                       ACE_LIB_TEXT("option, please use -ORBReactorType\n")));
-          curarg++;
-          if (curarg < argc)
-            {
-              ACE_TCHAR *name = argv[curarg];
 
-              if (ACE_OS::strcasecmp (name, ACE_LIB_TEXT("null")) == 0)
-                this->reactor_type_ = TAO_REACTOR_SELECT_ST;
-              else if (ACE_OS::strcasecmp (name, ACE_LIB_TEXT("token")) == 0)
-                this->reactor_type_= TAO_REACTOR_SELECT_MT;
-            }
+          if (ACE_OS::strcasecmp (current_arg, ACE_LIB_TEXT("null")) == 0)
+            this->reactor_type_ = TAO_REACTOR_SELECT_ST;
+          else if (ACE_OS::strcasecmp (current_arg, ACE_LIB_TEXT("token")) == 0)
+            this->reactor_type_= TAO_REACTOR_SELECT_MT;
+
+          arg_shifter.consume_arg ();
         }
-      else if (ACE_OS::strcasecmp (argv[curarg],
-                                   ACE_LIB_TEXT("-ORBReactorType")) == 0)
+      else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_LIB_TEXT("-ORBReactorType"))))
         {
-          curarg++;
-          if (curarg < argc)
-            {
-              ACE_TCHAR *name = argv[curarg];
-
-              if (ACE_OS::strcasecmp (name,
-                                      ACE_LIB_TEXT("select_mt")) == 0)
-                this->reactor_type_ = TAO_REACTOR_SELECT_MT;
-              else if (ACE_OS::strcasecmp (name,
-                                           ACE_LIB_TEXT("select_st")) == 0)
-                this->reactor_type_ = TAO_REACTOR_SELECT_ST;
-              else if (ACE_OS::strcasecmp (name,
-                                           ACE_LIB_TEXT("fl")) == 0)
+          if (ACE_OS::strcasecmp (current_arg,
+                                  ACE_LIB_TEXT("select_mt")) == 0)
+            this->reactor_type_ = TAO_REACTOR_SELECT_MT;
+          else if (ACE_OS::strcasecmp (current_arg,
+                                       ACE_LIB_TEXT("select_st")) == 0)
+            this->reactor_type_ = TAO_REACTOR_SELECT_ST;
+          else if (ACE_OS::strcasecmp (current_arg,
+                                       ACE_LIB_TEXT("fl")) == 0)
 #if defined(ACE_HAS_FL)
-                this->reactor_type_ = TAO_REACTOR_FL;
+            this->reactor_type_ = TAO_REACTOR_FL;
 #else
-                this->report_unsupported_error (ACE_LIB_TEXT("FlReactor"));
+            this->report_unsupported_error (ACE_LIB_TEXT("FlReactor"));
 #endif /* ACE_HAS_FL */
-              else if (ACE_OS::strcasecmp (name, ACE_LIB_TEXT("tk_reactor")) == 0)
+          else if (ACE_OS::strcasecmp (current_arg, ACE_LIB_TEXT("tk_reactor")) == 0)
 #if defined(ACE_HAS_TK)
-                this->reactor_type_ = TAO_REACTOR_TK;
+            this->reactor_type_ = TAO_REACTOR_TK;
 #else
-                this->report_unsupported_error (ACE_LIB_TEXT("TkReactor"));
+            this->report_unsupported_error (ACE_LIB_TEXT("TkReactor"));
 #endif /* ACE_HAS_TK */
-              else if (ACE_OS::strcasecmp (name,
-                                           ACE_LIB_TEXT("wfmo")) == 0)
+          else if (ACE_OS::strcasecmp (current_arg,
+                                       ACE_LIB_TEXT("wfmo")) == 0)
 #if defined(ACE_WIN32)
-                this->reactor_type_ = TAO_REACTOR_WFMO;
+            this->reactor_type_ = TAO_REACTOR_WFMO;
 #else
-                this->report_unsupported_error (ACE_LIB_TEXT("WFMO Reactor"));
+            this->report_unsupported_error (ACE_LIB_TEXT("WFMO Reactor"));
 #endif /* ACE_WIN32 */
-              else if (ACE_OS::strcasecmp (name,
-                                           ACE_LIB_TEXT("msg_wfmo")) == 0)
+          else if (ACE_OS::strcasecmp (current_arg,
+                                       ACE_LIB_TEXT("msg_wfmo")) == 0)
 #if defined(ACE_WIN32)
-                this->reactor_type_ = TAO_REACTOR_MSGWFMO;
+            this->reactor_type_ = TAO_REACTOR_MSGWFMO;
 #else
-                this->report_unsupported_error (ACE_LIB_TEXT("MsgWFMO Reactor"));
+            this->report_unsupported_error (ACE_LIB_TEXT("MsgWFMO Reactor"));
 #endif /* ACE_WIN32 */
 
-              else if (ACE_OS::strcasecmp (name,
-                                           ACE_LIB_TEXT("tp")) == 0)
-                this->reactor_type_ = TAO_REACTOR_TP;
-              else
-                this->report_option_value_error (ACE_LIB_TEXT("-ORBReactorType"), name);
-            }
+          else if (ACE_OS::strcasecmp (current_arg,
+                                       ACE_LIB_TEXT("tp")) == 0)
+            this->reactor_type_ = TAO_REACTOR_TP;
+          else
+            this->report_option_value_error (ACE_LIB_TEXT("-ORBReactorType"), current_arg);
+
+          arg_shifter.consume_arg ();
         }
-
-      else if (ACE_OS::strcasecmp (argv[curarg],
-                                   ACE_LIB_TEXT("-ORBInputCDRAllocator")) == 0)
+      else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_LIB_TEXT("-ORBInputCDRAllocator"))))
         {
-          curarg++;
-          if (curarg < argc)
+          if (ACE_OS::strcasecmp (current_arg,
+                                  ACE_LIB_TEXT("null")) == 0)
             {
-              ACE_TCHAR *name = argv[curarg];
-
-              if (ACE_OS::strcasecmp (name,
-                                      ACE_LIB_TEXT("null")) == 0)
-                {
-                  this->cdr_allocator_type_ = TAO_ALLOCATOR_NULL_LOCK;
-                  this->use_locked_data_blocks_ = 0;
-                }
-              else if (ACE_OS::strcasecmp (name,
-                                           ACE_LIB_TEXT("thread")) == 0)
-                {
-                  this->cdr_allocator_type_ = TAO_ALLOCATOR_THREAD_LOCK;
-                  this->use_locked_data_blocks_ = 1;
-                }
-              else
-                {
-                  this->report_option_value_error (ACE_LIB_TEXT("-ORBInputCDRAllocator"), name);
-                }
+              this->cdr_allocator_type_ = TAO_ALLOCATOR_NULL_LOCK;
+              this->use_locked_data_blocks_ = 0;
             }
+          else if (ACE_OS::strcasecmp (current_arg,
+                                       ACE_LIB_TEXT("thread")) == 0)
+            {
+              this->cdr_allocator_type_ = TAO_ALLOCATOR_THREAD_LOCK;
+              this->use_locked_data_blocks_ = 1;
+            }
+          else
+            {
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBInputCDRAllocator"), current_arg);
+            }
+          
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_LIB_TEXT("-ORBReactorThreadQueue"))))
+        {
+          if (ACE_OS::strcasecmp (current_arg, 
+                                  ACE_LIB_TEXT ("LIFO")) == 0)
+            this->threadqueue_type_ = TAO_THREAD_QUEUE_LIFO;
+          else if (ACE_OS::strcasecmp (current_arg,
+                                       ACE_LIB_TEXT ("FIFO")) == 0)
+            this->threadqueue_type_ = TAO_THREAD_QUEUE_FIFO;
+          else
+            this->report_option_value_error (ACE_LIB_TEXT ("-ORBReactorThreadQueue"),
+                                             current_arg);
+
+          arg_shifter.consume_arg ();
         }
       else
-        {
-          unused_argv[unused_argc] = ACE_OS::strdup(argv[curarg]);
-          ++unused_argc;
-        }
+        // Any arguments that don't match are ignored so that they can
+        // be passed to the TAO_Default_Resource_Factory.
+        arg_shifter.ignore_arg ();
     }
 
-  this->TAO_Default_Resource_Factory::init (unused_argc, unused_argv);
+  // If -ORBReactorThreadQueue was passed, make sure it matches the
+  // correct reactor type.  Currently, only the tp reactor can take
+  // advantage of the LIFO strategy, select_mt hangs.
+  if (this->threadqueue_type_ != TAO_THREAD_QUEUE_NOT_SET &&
+      this->reactor_type_ != TAO_REACTOR_TP)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT ("TAO_Advanced_Resource_Factory: -ORBReactorThreadQueue ")
+                ACE_LIB_TEXT ("option can only be used with -ORBReactorType ")
+                ACE_LIB_TEXT ("tp (default).\n")));
+  // Explicitely set the default only if not set.
+  else if (this->threadqueue_type_ == TAO_THREAD_QUEUE_NOT_SET)
+    this->threadqueue_type_ = TAO_THREAD_QUEUE_LIFO;
 
-  // deallocate unused_argv.
-  {
-    for (int i = 0; i < unused_argc; ++i) {
-      delete [] unused_argv[i];
-    }
-  }
-
-  delete [] unused_argv;
-
-  return 0;
+  return this->TAO_Default_Resource_Factory::init (argc, argv);
 }
 
 int
@@ -518,8 +514,7 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
                                    (ACE_Timer_Queue*)0,
                                    0,
                                    (ACE_Reactor_Notify*)0,
-                                   this->reactor_mask_signals_,
-                                   ACE_Select_Reactor_Token::LIFO),
+                                   this->reactor_mask_signals_),
                       0);
       break;
 
@@ -562,7 +557,9 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
       ACE_NEW_RETURN (impl, ACE_TP_Reactor ((ACE_Sig_Handler*)0,
                                             (ACE_Timer_Queue*)0,
                                             this->reactor_mask_signals_,
-                                            ACE_Select_Reactor_Token::LIFO),
+                                            this->threadqueue_type_ == TAO_THREAD_QUEUE_FIFO ?
+                                              ACE_Select_Reactor_Token::FIFO :
+                                              ACE_Select_Reactor_Token::LIFO),
                       0);
       break;
     }

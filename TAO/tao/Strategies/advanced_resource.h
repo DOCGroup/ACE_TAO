@@ -64,6 +64,14 @@ public:
     TAO_REACTOR_TP
   };
 
+  // = Thread queueing Strategy
+  enum
+  {
+    TAO_THREAD_QUEUE_NOT_SET, // Not set, use LIFO.
+    TAO_THREAD_QUEUE_FIFO,    // FIFO, first-in-first-out.
+    TAO_THREAD_QUEUE_LIFO     // LIFO, last-in-first-out (default).
+  };
+
   // = Resource Retrieval
   virtual int init_protocol_factories (void);
   virtual ACE_Allocator* input_cdr_dblock_allocator (void);
@@ -93,6 +101,10 @@ protected:
 
   int reactor_type_;
   // Flag indicating which kind of reactor we should use.
+
+  int threadqueue_type_;
+  // The type of queueing strategy to use for multi-threaded
+  // select reactors, TAO_REACTOR_SELECT_MT and TAO_REACTOR_TP.
 
   int cdr_allocator_type_;
   // The type of CDR allocators.
