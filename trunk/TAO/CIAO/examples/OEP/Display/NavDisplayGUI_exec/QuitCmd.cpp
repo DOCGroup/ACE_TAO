@@ -12,14 +12,14 @@ QuitCmd::QuitCmd()
 QuitCmd *
 QuitCmd::create(RootPanel *form)
 {
-  QuitCmd *cmd = new QuitCmd();
+  QuitCmd *cmd = new QuitCmd ();
   cmd->form_ = form;
   return cmd;
 }
 
 
 int
-QuitCmd::execute(void *context)
+QuitCmd::execute (void * /* context */)
 {
-  return form_->close();
+  return form_->close ();
 }

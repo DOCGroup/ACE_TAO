@@ -70,12 +70,11 @@ Receiver_Impl::Receiver_exec_i::ciao_preactivate (ACE_ENV_SINGLE_ARG_DECL_NOT_US
 }
 
 void
-Receiver_Impl::Receiver_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
+Receiver_Impl::Receiver_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
   ACE_DEBUG ((LM_DEBUG, "Receiver_Impl::Receiver_exec_i::ccm_activate\n"));
-
 }
 
 void

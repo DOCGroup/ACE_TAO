@@ -1,3 +1,42 @@
+Wed Aug  4 16:43:43 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* DAnCE/tests/NodeApplicationTest/RoundTrip_exec.cpp:
+	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI_exec.cpp
+	  (push_Refresh):
+
+	  Fixed emulated exception usage.
+
+	  Fixed unused parameter warnings.
+
+	* examples/OEP/BasicSP/EC/EC_exec.cpp (pulse):
+
+	  Added missing ACE_TRY_CHECK emulated exception macro.  Fixes
+	  warning about unused "ACE_TRY_LABEL" label.
+
+	* examples/OEP/Display/RateGen/client.cpp:
+
+	  Include "ace/OS_NS_unistd.h" to pull in ACE_OS::sleep()
+	  declaration.
+
+	* examples/Hello/Receiver/Receiver_exec.cpp (ccm_activate):
+	* examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp
+	  (ccm_activate):
+	* examples/OEP/BasicSP/BMDevice/BMDevice_exec.cpp (ccm_activate):
+	* examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.cpp
+	  (ccm_activate):
+	* examples/OEP/Display/GPS/GPS_exec.cpp (get_MyLocation, posx):
+	  (posy, create):
+	* examples/OEP/Display/GPS/GPS_tracing_exec.cpp (get_MyLocation):
+	  (posx, posy, create):
+	* examples/OEP/Display/NavDisplay/NavDisplay_exec.cpp
+	  (ccm_activate):
+	* examples/OEP/Display/NavDisplayGUI_exec/AddNavUnitCmd.cpp
+	  (execute):
+	* examples/OEP/Display/NavDisplayGUI_exec/NodeItem.cpp (moveBy):
+	* examples/OEP/Display/NavDisplayGUI_exec/QuitCmd.cpp (execute):
+
+	  Fixed unused parameter warnings.
+
 Wed Aug  4 11:16:47 2004  Will Otte <wotte@dre.vanderbilt.edu>
 
 	* Components/ComplexComponent/Attributes/Attributes.idl:

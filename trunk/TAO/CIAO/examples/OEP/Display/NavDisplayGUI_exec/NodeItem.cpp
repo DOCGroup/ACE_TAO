@@ -19,9 +19,9 @@ NodeItem::NodeItem(QCanvas *canvas, NavUnit &unit)
 }
 
 
-void NodeItem::moveBy(double dx, double dy, double dz)
+void NodeItem::moveBy(double dx, double dy, double /* dz */)
 {
-  QCanvasEllipse::moveBy(dx, dy);
+  QCanvasEllipse::moveBy (dx, dy);
 }
 
 
