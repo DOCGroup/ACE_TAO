@@ -1467,7 +1467,7 @@ ssize_t
 ACE::t_rcv_n_i (ACE_HANDLE handle,
                 void *buf,
                 size_t len,
-                int flags,
+                int *flags,
                 const ACE_Time_Value *timeout,
                 int error_on_eof)
 {
