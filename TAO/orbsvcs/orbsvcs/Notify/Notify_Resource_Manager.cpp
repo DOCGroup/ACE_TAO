@@ -297,7 +297,7 @@ TAO_Notify_Resource_Manager::create_generic_childPOA_i (const char* child_poa_na
 
   // Create the child POA.
   PortableServer::POA_var poa_ret = poa->create_POA (child_poa_name,
-                                                     manager,
+                                                     manager.in (),
                                                      policy_list,
                                                      ACE_TRY_ENV);
   ACE_CHECK_RETURN (PortableServer::POA::_nil());

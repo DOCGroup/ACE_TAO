@@ -20,7 +20,7 @@ void TAO_Notify_PushConsumer::init (PortableServer::POA_ptr poa, CORBA::Environm
 PortableServer::POA_ptr
 TAO_Notify_PushConsumer::_default_POA (CORBA::Environment &/*env*/)
 {
-  return PortableServer::POA::_duplicate (this->default_POA_);
+  return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void

@@ -5,6 +5,12 @@ TAO_Notify_Constraint_Evaluator::
 TAO_Notify_Constraint_Evaluator (const CosNotification::StructuredEvent& s_event)
 {
   // Consider the filterable_data for now.
+
+  // @@ Pradeep: this whole class is *extremely* error prone:
+  //    - You are holding a pointer to a component of an object that
+  //    is possibly created on the stack (the event)
+  //    - You store that pointer as a const object and then use it in
+  //    a non-const object in the next method...
   for (u_int index = 0; index < s_event.filterable_data.length (); ++index)
     {
       ACE_CString name_str (s_event.filterable_data[index].name);
@@ -19,12 +25,26 @@ TAO_Notify_Constraint_Evaluator::
 visit_property (TAO_Property_Constraint* literal)
 {
   int return_value = -1;
-  CORBA::Any *cvalue = 0;
+  const CORBA::Any *cvalue = 0;
   ACE_CString name (literal->name ());
 
   if (this->property_lookup_.find (name, cvalue) == 0)
     {
-      this->queue_.enqueue_head (TAO_Literal_Constraint (cvalue));
+      // @@ Pradeep: now you are creating a copy of the Literal
+      //    object, but putting in in a queue, what is to say that the
+      //    literal will not survive the pointer to the value it
+      //    holds?
+      //    It seems like you are very sure that the
+      //    Constraint_Evaluator is created on the stack, otherwise
+      //    this whole thing makes no sense.  You should at least
+      //    include some comments clarifying the situation.
+      //    You must make sure that this code is const-correct, it is
+      //    not right now...
+
+      // @@ I added this cast to get the damn thing to compile,
+      // Pradeep will have to fix it later.
+      CORBA::Any *any = ACE_const_cast(CORBA::Any*,cvalue);
+      this->queue_.enqueue_head (TAO_Literal_Constraint (any));
       return_value = 0;
     }
   return return_value;

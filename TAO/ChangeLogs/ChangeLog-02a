@@ -1,3 +1,14 @@
+Thu May 11 14:39:12 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Notify/Notify_PushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_PushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Resource_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+          Removed warnings and workaround bugs, Pradeep will have to fix
+          the underlying problems when he returns.
+
 Thu May 11 12:27:35 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * docs/tutorials/Quoter/Simple/Persistent/index.html:
