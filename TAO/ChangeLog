@@ -245,7 +245,8 @@ Mon Mar 24 13:12:16 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  to change states from
 	  TAO_Connection_Handler::close_connection_eh () and
 	  TAO_Transport::close_connection_shared (). The lock within
-	  state_changed () is not sufficient to prevent the race.
+	  state_changed () is not sufficient to prevent the race. Thanks
+	  to Jia Wan <jiawan@huawei.com> for pointing this out.
 
 Mon Mar 24 13:07:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
