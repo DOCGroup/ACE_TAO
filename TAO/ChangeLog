@@ -1,3 +1,11 @@
+Fri Mar 11 18:12:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Direct_Collocation_Upcall_Wrapper.cpp:
+          Added missing includes
+
+        * TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+          Generate static_cast in one line
+
 Fri Mar 11 12:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/*.pidl:
