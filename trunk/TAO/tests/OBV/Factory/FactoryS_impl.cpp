@@ -12,7 +12,7 @@ Test_impl::Test_impl (CORBA::ORB_ptr orb)
 }
 
 OBV_FactoryTest::BaseValue * 
-Test_impl::get_base_value (CORBA::Environment&)
+Test_impl::get_base_value (TAO_ENV_ARG_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   OBV_FactoryTest::BaseValue* ret_val = 0;
@@ -24,7 +24,7 @@ Test_impl::get_base_value (CORBA::Environment&)
 }
 
 OBV_FactoryTest::Value1 * 
-Test_impl::get_value1 (CORBA::Environment&)
+Test_impl::get_value1 (TAO_ENV_ARG_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   OBV_FactoryTest::Value1* ret_val = 0;
@@ -36,7 +36,7 @@ Test_impl::get_value1 (CORBA::Environment&)
 }
 
 OBV_FactoryTest::Value2 * 
-Test_impl::get_value2 (CORBA::Environment&)
+Test_impl::get_value2 (TAO_ENV_ARG_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   OBV_FactoryTest::Value2* ret_val = 0;
@@ -48,8 +48,8 @@ Test_impl::get_value2 (CORBA::Environment&)
 }
 
 void
-Test_impl::shutdown (CORBA::Environment& ACE_TRY_ENV)
+Test_impl::shutdown (TAO_ENV_SINGLE_ARG_PARAMETER)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0, ACE_TRY_ENV);
+  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
 }

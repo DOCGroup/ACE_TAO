@@ -40,7 +40,7 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -54,8 +54,8 @@ main (int argc, char *argv[])
                       1); // supplied by mapping
 
       orb->register_value_factory (base_factory->tao_repository_id (),
-                                   base_factory, 
-                                   ACE_TRY_ENV);
+                                   base_factory 
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       base_factory->_remove_ref (); // release ownership
 
@@ -67,8 +67,8 @@ main (int argc, char *argv[])
                       1); // supplied by mapping
 
       orb->register_value_factory (value1_factory->tao_repository_id (),
-                                   value1_factory, 
-                                   ACE_TRY_ENV);
+                                   value1_factory
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       value1_factory->_remove_ref ();
       
@@ -80,19 +80,19 @@ main (int argc, char *argv[])
                       1); // custom implementation
 
       orb->register_value_factory (value2_factory->tao_repository_id (),
-                                   value2_factory, 
-                                   ACE_TRY_ENV);
+                                   value2_factory 
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       value2_factory->_remove_ref ();
 
 
       // Obtain reference to the object
       CORBA::Object_var tmp =
-        orb->string_to_object(ior, ACE_TRY_ENV);
+        orb->string_to_object(ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       OBV_FactoryTest::Test_var test =
-        OBV_FactoryTest::Test::_narrow(tmp.in (), ACE_TRY_ENV);
+        OBV_FactoryTest::Test::_narrow(tmp.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (test.in ()))
@@ -106,15 +106,15 @@ main (int argc, char *argv[])
       // Now perform the test. I don't check return values. 
       // I just hope to get MARSHAL.
       OBV_FactoryTest::BaseValue_var base_value = 
-        test->get_base_value (ACE_TRY_ENV);
+        test->get_base_value (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       OBV_FactoryTest::Value1_var value1 = 
-        test->get_value1 (ACE_TRY_ENV);
+        test->get_value1 (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       OBV_FactoryTest::Value2_var value2 = 
-        test->get_value2 (ACE_TRY_ENV);
+        test->get_value2 (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test factories.
@@ -128,10 +128,10 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test finished\n"));
 
-      test->shutdown (ACE_TRY_ENV);
+      test->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
