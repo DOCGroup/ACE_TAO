@@ -1,3 +1,31 @@
+Thu May  6 13:12:15 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp
+	  (write_ior):
+	* orbsvcs/Fault_Notifier/FT_Notifier_i.cpp (write_ior):
+	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp
+	  (create_operation_list):
+	* orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp
+	  (~TAO_CEC_TypedProxyPushConsumer):
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.cpp
+	  (activate, get_state):
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxySupplier.cpp
+	  (get_state):
+	* orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp (init):
+	* orbsvcs/tests/FT_App/FT_Creator.cpp (run):
+	* orbsvcs/tests/FT_App/TAO_Object_Group_Creator.cpp
+	  (create_group):
+	* orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.cpp
+	  (init):
+	* orbsvcs/tests/FT_App/StubFaultNotifier.cpp (write_ior_file):
+	* orbsvcs/tests/FT_App/FT_Client.cpp (pass):
+	* orbsvcs/tests/FtRtEvent/PushConsumer.cpp
+	  (disconnect_push_consumer):
+	* orbsvcs/tests/FtRtEvent/PushSupplier.cpp
+	  (disconnect_push_supplier):
+
+	  Fixed "better conversion sequence" g++ warning.
+
 Thu May  6 09:44:16 2004  Steve Totten  <totten_s@ociweb.com>
 
         * docs/releasenotes/FT_FaultAnalyzerFramework.jpg:

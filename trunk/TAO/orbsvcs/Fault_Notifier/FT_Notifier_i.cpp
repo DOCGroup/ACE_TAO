@@ -128,7 +128,7 @@ int TAO::FT_FaultNotifier_i::write_ior()
   FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
   if (out)
   {
-    ACE_OS::fprintf (out, "%s", ACE_static_cast(const char *, this->ior_));
+    ACE_OS::fprintf (out, "%s", this->ior_.in ());
     ACE_OS::fclose (out);
     result = 0;
   }

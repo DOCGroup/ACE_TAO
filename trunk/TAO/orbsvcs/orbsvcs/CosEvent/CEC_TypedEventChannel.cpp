@@ -507,9 +507,9 @@ TAO_CEC_TypedEventChannel::create_operation_list (TAO_CEC_Operation_Params *oper
     {
 
       CORBA::Any any_1;
-      any_1._tao_set_typecode(oper_params->parameters_[param].type_.in());
+      any_1._tao_set_typecode(oper_params->parameters_[param].type_.in ());
 
-      new_list->add_value (oper_params->parameters_[param].name_,
+      new_list->add_value (oper_params->parameters_[param].name_. in (),
                            any_1,
                            oper_params->parameters_[param].direction_
                            ACE_ENV_ARG_PARAMETER);

@@ -109,7 +109,8 @@ void  PushSupplier_impl::disconnect_push_supplier (
   PortableServer::ObjectId_var oid = current->get_object_id(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  poa->deactivate_object(oid ACE_ENV_ARG_PARAMETER);
+  poa->deactivate_object (oid.in ()
+                          ACE_ENV_ARG_PARAMETER);
 }
 
 int PushSupplier_impl::handle_timeout (const ACE_Time_Value &current_time,
