@@ -231,7 +231,7 @@ TAO_Unbounded_Object_Sequence (const TAO_Unbounded_Object_Sequence<T> &rhs)
   : TAO_Unbounded_Base_Sequence (rhs)
 {
   T **tmp1 = TAO_Unbounded_Object_Sequence<T>::allocbuf (this->maximum_);
-  T **tmp2 = ACE_reinterpret_cast (T ** const, rhs.buffer_);
+  T **tmp2 = ACE_reinterpret_cast (T **, rhs.buffer_);
 
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     tmp1[i] = T::_duplicate (tmp2[i]);
@@ -277,7 +277,7 @@ operator= (const TAO_Unbounded_Object_Sequence<T> &rhs)
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
   T **tmp1 = ACE_reinterpret_cast (T **, this->buffer_);
-  T **tmp2 = ACE_reinterpret_cast (T **const, rhs.buffer_);
+  T **tmp2 = ACE_reinterpret_cast (T **, rhs.buffer_);
 
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     tmp1[i] = T::_duplicate (tmp2[i]);
