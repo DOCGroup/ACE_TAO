@@ -15,6 +15,9 @@ module Test
      * This method is used to simplify the test shutdown process
      */
     oneway void shutdown ();
+
+    /// A method to remove the servant from the LoadManager Object Group.
+    oneway void remove_member ();
   };
 };
 
