@@ -22,8 +22,8 @@
 class ACE_Reactor;
 
 class PushSupplier_impl :
-public ACE_Event_Handler
-,public virtual POA_RtecEventComm::PushSupplier
+   public virtual ACE_Event_Handler
+ , public virtual POA_RtecEventComm::PushSupplier
 {
 public:
   PushSupplier_impl(CORBA::ORB_ptr orb);
