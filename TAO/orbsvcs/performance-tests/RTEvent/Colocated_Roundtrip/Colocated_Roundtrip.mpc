@@ -1,9 +1,8 @@
 // $Id$
-project: orbsvcsexe, rtcorbaevent, strategies {
+project: orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
   includes += ../lib $(TAO_ROOT)/orbsvcs
-  avoids   += minimum_corba
 
   Source_Files {
     driver.cpp

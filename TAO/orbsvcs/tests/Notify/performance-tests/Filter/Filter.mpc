@@ -1,14 +1,12 @@
 // $Id$
-project(*Ntf Perf Struct Supp): notifytest {
-  avoids += minimum_corba
+project(*Ntf Perf Struct Supp): notifytest, minimum_corba {
   exename = Structured_Supplier
   Source_Files {
     Structured_Supplier.cpp
   }
 }
 
-project(*Ntf Perf Struct Cons): notifytest {
-  avoids += minimum_corba
+project(*Ntf Perf Struct Cons): notifytest, minimum_corba {
   exename = Structured_Consumer
   Source_Files {
     goC.cpp
@@ -18,16 +16,14 @@ project(*Ntf Perf Struct Cons): notifytest {
   }
 }
 
-project(*Ntf Perf Seq Supp): notifytest {
-  avoids += minimum_corba
+project(*Ntf Perf Seq Supp): notifytest, minimum_corba {
   exename = Sequence_Supplier
   Source_Files {
     Sequence_Supplier.cpp
   }
 }
 
-project(*notify perf Sequence Consumer): notifytest {
-  avoids += minimum_corba
+project(*notify perf Sequence Consumer): notifytest, minimum_corba {
   exename = Sequence_Consumer
   Source_Files {
     goC.cpp

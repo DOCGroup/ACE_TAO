@@ -1,8 +1,7 @@
 // $Id$
 
-project (CosEvent) : ec_typed_events, orbsvcslib, messaging, core, naming {
+project (CosEvent) : ec_typed_events, orbsvcslib, messaging, core, naming, minimum_corba {
   sharedname   = TAO_CosEvent
-  avoids      += minimum_corba
 
   // Warning : The idlflags must match exactly those used in
   //           CosNotification, because we don't know which project

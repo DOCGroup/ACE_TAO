@@ -1,9 +1,8 @@
 // $Id$
-project(*server): orbsvcsexe, rtcorbaevent, strategies {
+project(*server): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
   includes += ../lib $(TAO_ROOT)/orbsvcs
-  avoids   += minimum_corba
 
   Source_Files {
     server.cpp
@@ -11,11 +10,10 @@ project(*server): orbsvcsexe, rtcorbaevent, strategies {
   }
 }
 
-project(*client): orbsvcsexe, rtcorbaevent, strategies {
+project(*client): orbsvcsexe, rtcorbaevent, strategies, minimum_corba {
   after    += RTEC_Perf
   libs     += TAO_RTEC_Perf
   includes += ../lib $(TAO_ROOT)/orbsvcs
-  avoids   += minimum_corba
 
   Source_Files {
     TestC.cpp
