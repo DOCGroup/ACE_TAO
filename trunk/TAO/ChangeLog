@@ -1,3 +1,9 @@
+Mon Mar 07 13:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Base.cpp:
+          Use ACE_CATCHANY instead of a catch of CORBA::Exception, this gives
+          the same result but gives the same setup as use elsewhere
+
 Mon Mar  7 06:04:18 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
@@ -16,13 +22,13 @@ Mon Mar 07 16:37:25 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu
 	  to shutdown when waiting for outstanding replies. The name of
 	  the resource factory option is "-ORBDropRepliesonShutdown",
 	  which when on would drop replies when the ORB is shutting down
-	  and wait for replies when turned off. 
+	  and wait for replies when turned off.
 
 	* tao/Leader_Follower.cpp:
 	* tao/Thread_Lane_Resources.cpp:
 
-	  Use the above strategy to wakeup threads if they are waiting for 
-	  replies. 
+	  Use the above strategy to wakeup threads if they are waiting for
+	  replies.
 
 	* tao/Transport_Connector.cpp:
 
@@ -34,14 +40,14 @@ Mon Mar 07 16:37:25 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu
 	  connection handler which might have been closed completely. To
 	  get around this problem, we do a check to see if a connection
 	  has been completed, and if not we clear the reactor of the
-	  dangling reference. 
+	  dangling reference.
 
 	* tao/Profile_Transport_Resolver.h (blocked_connect):
 	* tao/Profile_Transport_Resolver.inl:
 
 	  Changed the method name to be blocked_connect () instead of
-	  blocked (). 
-	
+	  blocked ().
+
 	* tao/IIOP_Connector.cpp:
 	* tao/Invocation_Endpoint_Selectors.cpp:
 
