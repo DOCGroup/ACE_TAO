@@ -41,9 +41,13 @@ ACE_Name_Binding::operator = (const ACE_Name_Binding &s)
 {
   ACE_TRACE ("ACE_Name_Binding::operator =");
 
-  this->name_ = s.name_;
-  this->value_ = s.value_;
-  this->type_ = ACE_OS::strdup (s.type_);
+  if (this != &s)
+    {
+      ACE_OS::free ((void *) this->type_);
+      this->name_ = s.name_;
+      this->value_ = s.value_;
+      this->type_ = ACE_OS::strdup (s.type_);
+    }
 }
 
 int
