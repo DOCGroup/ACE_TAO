@@ -1,3 +1,45 @@
+Fri Oct  8 11:25:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Request.h:
+	* tao/Request.cpp:
+	  Implementation of the DII send_deferred(), get_response(),
+	  and poll_response() methods. The Request passed its this
+	  pointer to a new method in the stub called do_deferred_call(),
+	  described below. get_response() blocks until the reply is
+	  received. poll_response() is used to minimize that blocking.
+	  New method called handle_response() gets the CDR from
+	  the reply dispatcher and does the appropriate thing. If the
+	  request's NVList has the lazy_evaluation flag set (a recent
+	  addition by Carlos), get_reponse() will decode the stream
+	  at the last moment.
+
+	* tao/Stub.h:
+	* tao/Stub.cpp:
+	  New method do_deferred_call() creates a new kind of
+	  invocation called TAO_GIOP_DII_Deferred_Invocation,
+	  described below, passes along the request pointer, calls 
+	  invoke() and returns without blocking.
+
+	* tao/Asynch_Invocation.h:
+	* tao/Asynch_Invocation.i:
+	* tao/Asynch_Invocation.cpp:
+	  TAO_GIOP_DII_Deferred_Invocation creates a new 
+	  kind of reply dispatcher, TAO_DII_Deferred_Reply_Dispatcher,
+	  described below, passing along the request pointer.
+
+	* tao/Reply_Dispatcher.h:
+	* tao/Reply_Dispatcher.i:
+	* tao/Reply_Dispatcher.cpp:
+ 	  TAO_DII_Deferred_Reply_Dispatcher uses the request
+	  pointer in place of a reply handler, and the handle_response()
+	  method in class CORBA_Request in place of the reply stub.
+
+	* Object.cpp:
+	  In order for get_response() to block, class CORBA_Request needs a
+	  pointer to its orb, which it never had before. The request
+	  creation methods in class CORBA_Object now grab and orb
+	  pointer and pass it to the request's constuctor.
+
 Fri Oct 08 10:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* TAO_IDL/Makefile: Updated dependencies.
