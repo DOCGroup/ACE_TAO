@@ -1,3 +1,10 @@
+Wed Feb 16 17:10:14 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/OS_NS_Thread.cpp (thr_key_detach, thr_keycreate):
+
+	  Removed "ACE_UNUSED_ARG" macro calls for non-existent "inst"
+	  parameter.
+
 Wed Feb 16 17:04:50 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* bin/MakeProjectCreator/config/rmcast.mpb:

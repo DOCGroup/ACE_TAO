@@ -3332,7 +3332,7 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
 #endif /* VXWORKS */
 
 int
-ACE_OS::thr_key_detach (ACE_thread_key_t key, void * )
+ACE_OS::thr_key_detach (ACE_thread_key_t key, void *)
 {
 #if defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
   TSS_Cleanup_Instance cleanup;
@@ -3346,7 +3346,6 @@ ACE_OS::thr_key_detach (ACE_thread_key_t key, void * )
     }
 #else
   ACE_UNUSED_ARG (key);
-  ACE_UNUSED_ARG (inst);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_WTHREADS || ACE_HAS_TSS_EMULATION */
 }
@@ -3483,7 +3482,6 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
       return -1;
       /* NOTREACHED */
 #   else /* ACE_HAS_TSS_EMULATION */
-    ACE_UNUSED_ARG (inst);
     return  ACE_OS::thr_keycreate_native (key, dest);
 #   endif /* ACE_HAS_TSS_EMULATION */
 # else /* ACE_HAS_THREADS */
