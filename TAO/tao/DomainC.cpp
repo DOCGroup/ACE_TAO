@@ -333,9 +333,11 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_DomainManager_ptr 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class TAO_Object_Field_T<CORBA_DomainManager>;
   template class TAO_Unbounded_Object_Sequence<CORBA_DomainManager>;
+  template class TAO_Object_Manager<CORBA_DomainManager>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate TAO_Object_Field_T<CORBA_DomainManager>
 # pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_DomainManager>
+# pragma instantiate TAO_Object_Manager<CORBA_DomainManager>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #if ! defined (TAO_HAS_MINIMUM_CORBA)

@@ -1,3 +1,8 @@
+Thu May 13 18:18:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/DomainC.cpp:
+	  Added instantiation for TAO_Object_Manager<CORBA_DomainManager>
+
 Thu May 13 14:48:22 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/corbafwd.h (CORBA): 
