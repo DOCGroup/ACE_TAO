@@ -1,3 +1,8 @@
+Wed May  6 00:15:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* performance-tests/Misc/context_switch_time.cpp (svc): An 'i'
+	  was being defined twice, gorp!  It's fixed now!
+
 Tue May  5 14:12:08 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* include/makeinclude/platform_sco5.0.0-fsu-pthread.GNU: Added a

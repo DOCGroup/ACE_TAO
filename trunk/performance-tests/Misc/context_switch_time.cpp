@@ -231,10 +231,8 @@ Suspend_Resume_Test::svc ()
     {
 #if DEBUG > 0
       if (i % (iterations_ >= 10  ?  iterations_ / 10  :  1) ==  0)
-        {
-          ACE_DEBUG ((LM_DEBUG, "Suspend_Resume_Test::svc (), iteration %u\n",
-                      i));
-        }
+        ACE_DEBUG ((LM_DEBUG, "Suspend_Resume_Test::svc (), iteration %u\n",
+                    i));
 #endif /* DEBUG */
 
       if (ACE_OS::thr_suspend (low_.thread_id ()) != 0)
@@ -450,7 +448,9 @@ Ping_Suspend_Resume_Test::svc ()
 
   timer_.start ();
 
-  for (ACE_UINT32 i = 0; i < iterations_; ++i)
+  ACE_UINT32 i;
+
+  for (i = 0; i < iterations_; ++i)
     {
 #if DEBUG > 0
       if (i % (iterations_ >= 10  ?  iterations_ / 10  :  1) ==  0)
@@ -481,17 +481,15 @@ Ping_Suspend_Resume_Test::svc ()
 
   // Resume the thread until thr_continue fails, indicating that it has
   // finished.
-  for (ACE_UINT32 i = 0; i < 10000  &&  ! ACE_OS::thr_continue (high_.thread_id ());
+  for (i = 0; i < 10000  &&  ! ACE_OS::thr_continue (high_.thread_id ());
        ++i) /* null */;
 
   // Don't count the one iteration that was used to allow the high-priority
   // thread to terminate.
   if (high_.iterations () < iterations_)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test: high priority task "
-                            "executed only %u iterations!\n",
-                  high_.iterations ()));
-    }
+    ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test: high priority task "
+                "executed only %u iterations!\n",
+                high_.iterations ()));
 
 #if DEBUG > 0
   ACE_DEBUG ((LM_DEBUG, "Ping_Suspend_Resume_Test::svc, finishing\n"));
