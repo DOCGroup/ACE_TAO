@@ -117,7 +117,7 @@ public class ClassReader
 	    ht.put(new Integer(i), new String(dis.readUTF()));
 	    break;
  	  default:
-	    System.err.println("Unknown type: " + type);
+	    ACE.DEBUG("Unknown type: " + type);
 	    break;
 
 	}
