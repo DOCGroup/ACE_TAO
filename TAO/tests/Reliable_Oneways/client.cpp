@@ -1,6 +1,7 @@
 // $Id$
 
 #include "TestC.h"
+#include "tao/MessagingC.h"
 #include "ace/Get_Opt.h"
 
 ACE_RCSID(Reliable_Oneways, client, "$Id$")
