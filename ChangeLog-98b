@@ -1,3 +1,8 @@
+Tue Jan 05 13:15:35 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Service_Config.i (open): Be sure to pass down the
+	  <ignore_static_svcs> argument down to the real open method.
+
 Tue Jan 05 08:08:06 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/MM_Shared_Memory_Test.cpp (spawn): fixed syntax error
