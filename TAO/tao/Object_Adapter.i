@@ -36,7 +36,7 @@ TAO_Object_Adapter::deactivate (CORBA::Boolean wait_for_completion,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
+  TAO_POA_GUARD (ACE_Lock, monitor, this->lock ());
 
   this->deactivate_i (wait_for_completion,
                       ACE_TRY_ENV);
@@ -47,7 +47,7 @@ TAO_Object_Adapter::locate_servant (const TAO_ObjectKey &key,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), -1, ACE_TRY_ENV);
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), -1);
 
   return this->locate_servant_i (key,
                                  ACE_TRY_ENV);
@@ -58,7 +58,7 @@ TAO_Object_Adapter::find_servant (const TAO_ObjectKey &key,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
 
   return this->find_servant_i (key,
                                ACE_TRY_ENV);
