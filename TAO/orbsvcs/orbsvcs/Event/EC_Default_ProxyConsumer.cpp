@@ -11,12 +11,12 @@
 #include "EC_Default_ProxyConsumer.i"
 #endif /* __ACE_INLINE__ */
 
-#if ! defined (ACE_WIN32) && defined (ACE_HAS_DSUI)
+#if defined (ACE_HAS_DSUI)
 #include "ec_dsui_config.h"
 #include "ec_dsui_families.h"
 #include <ace/Counter.h>
 #include <dsui.h>
-#endif /* ! ACE_WIN32 && ACE_HAS_DSUI */
+#endif /* ACE_HAS_DSUI */
 
 ACE_RCSID(Event, EC_Default_ProxyConsumer, "$Dd$")
 
@@ -110,12 +110,12 @@ TAO_EC_Default_ProxyPushConsumer::push (const RtecEventComm::EventSet& event
     return;
 
   RtecEventComm::EventSet &tmp_event = (RtecEventComm::EventSet&)event;
-  ACE_Object_Counter::object_id oid = ACE_OBJECT_COUNTER->increment();
+  Object_ID oid = ACE_OBJECT_COUNTER->increment();
   tmp_event[0].header.eid.id = oid.id;
   tmp_event[0].header.eid.tid = oid.tid;
   tmp_event[0].header.eid.queue_id = oid.queue_id;
 
-  DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_CONSUMER, 0, sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+  DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_CONSUMER, 0, sizeof(Object_ID), (char*)&oid);
 
   ace_mon.filter->push (event, this
                         ACE_ENV_ARG_PARAMETER);

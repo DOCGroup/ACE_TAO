@@ -294,12 +294,12 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
                         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
-    ACE_Object_Counter::object_id oid;
+    Object_ID oid;
     oid.id = event[0].header.eid.id;
     oid.tid = event[0].header.eid.tid;
     oid.queue_id = event[0].header.eid.queue_id;
 
-    DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+    DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(Object_ID), (char*)&oid);
 
     this->event_channel_->dispatching ()->push (this,
                                                 consumer.in (),
@@ -358,12 +358,12 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
                         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
-    ACE_Object_Counter::object_id oid;
+    Object_ID oid;
     oid.id = event[0].header.eid.id;
     oid.tid = event[0].header.eid.tid;
     oid.queue_id = event[0].header.eid.queue_id;
 
-    DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+    DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(Object_ID), (char*)&oid);
 
     this->event_channel_->dispatching ()->push_nocopy (this,
                                                        consumer.in (),
@@ -400,12 +400,12 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (
 
   ACE_TRY
     {
-      ACE_Object_Counter::object_id oid;
+      Object_ID oid;
       oid.id = event[0].header.eid.id;
       oid.tid = event[0].header.eid.tid;
       oid.queue_id = event[0].header.eid.queue_id;
 
-      DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+      DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(Object_ID), (char*)&oid);
 
       consumer->push (event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -463,12 +463,12 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
 {
   ACE_TRY
     {
-      ACE_Object_Counter::object_id oid;
+      Object_ID oid;
       oid.id = event[0].header.eid.id;
       oid.tid = event[0].header.eid.tid;
       oid.queue_id = event[0].header.eid.queue_id;
 
-      DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(ACE_Object_Counter::object_id), (char*)&oid);
+      DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(Object_ID), (char*)&oid);
 
       consumer->push (event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
