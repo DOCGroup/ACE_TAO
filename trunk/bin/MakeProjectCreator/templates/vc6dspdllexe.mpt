@@ -9,7 +9,7 @@ ssl_libs         = libeay32 ssleay32
 
 Release {
   use_debug_libraries   = 0
-  compile_flags         = /W3 /GX /O2 /MD
+  compile_flags         = /W3 /GX /O2 /MD /GR
   defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = Release
