@@ -1,3 +1,7 @@
+Sun Apr 27 17:50:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1482_Regression/Makefile: Updated dependencies.
+
 Sun Apr 27 17:45:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IOP_IORC.h:
