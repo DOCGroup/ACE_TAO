@@ -1,3 +1,13 @@
+Tue May  2 16:38:55 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp: Enabled explicit
+	  template instantiation for TAO_Object_Manager which is needed
+	  for sequences.
+
+	* tao/InterceptorC.cpp: Regenerated the file to solve the link
+	  error on SunCC 5.0.
+
+
 Tue May  2 12:05:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
