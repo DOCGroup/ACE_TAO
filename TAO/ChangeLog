@@ -1,3 +1,9 @@
+Mon Nov 17 21:35:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/Diffserv/client.cpp:
+        * tests/RTCORBA/Diffserv/Custom_Network_Priority_Mapping.cpp:
+          Fixed compile problems in MinGW build
+
 Mon Nov 17 17:00:03 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/Test_Filter/Makefile.bor:
