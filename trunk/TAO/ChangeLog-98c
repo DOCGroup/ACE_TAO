@@ -1,3 +1,8 @@
+Fri Sep 11 12:14:03 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/server.cpp : Fixed a memory allocation
+	  error where ior array was allocated before parsing the arguments.
+
 Thu Sep 10 15:22:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_predefined_type.h: 

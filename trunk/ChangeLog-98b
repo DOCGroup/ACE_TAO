@@ -1,3 +1,8 @@
+Fri Sep 11 12:30:37 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* ace/config-chorus.h: Uncommented ACE_LACKS_SYSV_SHMEM as ace
+	  didn't compile on Chorus with that commented out.
+
 Fri Sep 11 09:02:00 CDT 1998  Chris Gill <cdgill@cs.wustl.edu>
 
         * ace/OS.{h,i}
