@@ -255,7 +255,7 @@ spawn_test(bool ipv6_test)
 #else /* ! ACE_HAS_IPV6 */
                                        ACE_LOCALHOST
 #endif /* ! ACE_HAS_IPV6 */
-                                       )
+                                       );
 
   if (-1 == AcceptorSocket.open (ServerAddr,
                                  1,
@@ -308,7 +308,7 @@ spawn_test(bool ipv6_test)
 #elif defined (ACE_HAS_THREADS)
   if (-1 == ACE_Thread_Manager::instance ()->spawn
       (Server,
-       ACE_reinterpret_cast(void *, &ServerSocket),
+       ACE_reinterpret_cast(void *, &AcceptorSocket),
        THR_NEW_LWP | THR_DETACHED))
   {
     ACE_ERROR ((LM_ERROR,
@@ -354,7 +354,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
   
-  ACE_START_TEST (ACE_TEXT ("SOCK_SEQPACK_SCTP"));
+  ACE_START_TEST (ACE_TEXT ("SOCK_SEQPACK_SCTP_Test"));
   
   //
   // Check whether host OS has SCTP support before starting this test.
