@@ -787,6 +787,22 @@ ACE_InputCDR::read_array (void* x,
 }
 
 CDR::Boolean
+ACE_InputCDR::read_boolean_array (CDR::Boolean *x,
+                                  CDR::ULong length)
+{
+  // It is hard to optimize this, the spec requires that on the wire
+  // booleans be represented as a byte with value 0 or 1, but in
+  // memoery it is possible (though very unlikely) that a boolean has
+  // a non-zero value (different from 1).
+  // We resort to a simple loop.
+  for (CDR::ULong i = 0; i != length && this->good_bit_; ++i)
+    {
+      this->read_boolean (x[i]);
+    }
+  return this->good_bit_;
+}
+
+CDR::Boolean
 ACE_InputCDR::read_1 (CDR::Octet *x)
 {
   if (this->rd_ptr () < this->end ())
