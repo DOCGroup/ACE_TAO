@@ -50,7 +50,9 @@ Consumer::push (const RtecEventComm::EventSet& events
 
   if (this->handler_ != 0)
     {
+      ACE_DEBUG((LM_DEBUG,"Consumer (%P|%t) calling handle_service_start()\n"));
       this->handler_->handle_service_start(events ACE_ENV_ARG_PARAMETER);
+      ACE_DEBUG((LM_DEBUG,"Consumer (%P|%t) handle_service_start() DONE\n"));
     }
 
   //@BT INSTRUMENT with event ID: EVENT_WORK_START Measure time
@@ -149,7 +151,9 @@ Consumer::push (const RtecEventComm::EventSet& events
 
   if (this->handler_ != 0)
     {
+      ACE_DEBUG((LM_DEBUG,"Consumer (%P|%t) calling handle_service_stop()\n"));
       this->handler_->handle_service_stop(events ACE_ENV_ARG_PARAMETER);
+      ACE_DEBUG((LM_DEBUG,"Consumer (%P|%t) handle_service_stop() DONE\n"));
     }
 }
 

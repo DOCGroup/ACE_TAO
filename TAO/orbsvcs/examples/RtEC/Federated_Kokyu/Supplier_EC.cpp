@@ -247,6 +247,12 @@ main (int argc, char* argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      //We need to set the ACE_Reactor::instance() to be the ORB
+      //reactor so Kokyu's RG implementation can use it w/o creating
+      //an extra thread to run the reactor event loop. I hope this
+      //doesn't screw something else up!
+      //ACE_Reactor::instance(orb->orb_core()->reactor());
+
       // ****************************************************************
 
       Supplier_EC supplier_ec;
