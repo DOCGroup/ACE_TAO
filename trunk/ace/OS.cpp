@@ -2383,8 +2383,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   if (flags == 0) flags = VX_FP_TASK;
   if (stacksize == 0) stacksize = 20000;
 
-  const u_int thr_id_provided = thr_id && ACE_OS::strcmp (*thr_id,
-                                                          "==ace_t==");
+  const u_int thr_id_provided = thr_id && ACE_OS::strncmp (*thr_id,
+                                                           "==ace_t==",
+                                                           9);
 
   ACE_hthread_t tid;
 #if 0 /* Don't support setting of stack, because it doesn't seem to work. */
