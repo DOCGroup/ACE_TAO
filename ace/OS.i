@@ -4306,7 +4306,6 @@ ACE_OS::event_wait (ACE_event_t *event)
             {
               result = -1;
               error = errno;
-              break;
               // Something went wrong...
             }
 
