@@ -3,9 +3,9 @@ Thu Nov 13 03:32:14 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * bin/MakeProjectCreator/templates/gnu.mpd:
           Rolled back the part of Wed Nov 12 12:43:14 2003  Chad Elliott
           <elliott_c@ociweb.com> that added a line to realclean to remove
-          the *_UNCHECKED files.  This is unnecessary, see Wed Nov 12
-          07:40:27 UTC 2003  Don Hinton  <dhinton@dresystems.com> for
-          details.
+          the *_UNCHECKED files.  This is unnecessary and doesn't work
+          with specialized targets, see Wed Nov 12 07:40:27 UTC 2003  Don
+          Hinton  <dhinton@dresystems.com> for details.
  
 Wed Nov 12 16:55:00 2003  Justin Michel  <michel_j@ociweb.com>
 
