@@ -1,7 +1,13 @@
+Thu Aug 28 17:37:32 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+
+
 Thu Aug 28 17:34:51 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/performance-tests/RTEvent/lib/Auto_Functor.cpp
 	  (~Auto_Functor):
+	* orbsvcs/performance-tests/RTEvent/lib/ORB_Shutdown.inl
+	  (ORB_Shutdown):
 
 	  Fixed emulated exception macro.  "ACE_ENV_ARG_PARAMETER", not
 	  "ACE_ENV_SINGLE_ARG_PARAMETER" (in this case).
