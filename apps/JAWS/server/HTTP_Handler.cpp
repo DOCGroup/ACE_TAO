@@ -79,31 +79,32 @@ HTTP_Handler::parse_request (void)
 {
   request_.init (request_data_->rd_ptr (), request_data_->length ());
 
-  if (request_.status () != HTTP_Request::OK)
-    this->invalid_request (HTTP_Status_Code::STATUS_BAD_REQUEST);
-  else
-    {
-      switch (request_.type ())
-	{
-	case HTTP_Request::GET :
-	  this->io_.transmit_file (request_.filename (), 
-				   HTTP_HEADER, 
-				   HTTP_HEADER_LENGTH,
-				   HTTP_TRAILER, 
-				   HTTP_TRAILER_LENGTH);
-	  break;
+  switch (request_.status ()) {
+  case HTTP_Request::OK:
+    switch (request_.type ()) {
+    case HTTP_Request::GET :
+      this->io_.transmit_file (request_.filename (), 
+                               HTTP_HEADER, 
+                               HTTP_HEADER_LENGTH,
+                               HTTP_TRAILER, 
+                               HTTP_TRAILER_LENGTH);
+      break;
 
-	case HTTP_Request::PUT :
-	  this->io_.receive_file (request_.filename (),
-				  request_.data (),
-				  request_.data_length (),
-				  request_.content_length ());
-	  break;
+    case HTTP_Request::PUT :
+      this->io_.receive_file (request_.filename (),
+                              request_.data (),
+                              request_.data_length (),
+                              request_.content_length ());
+      break;
 
-	default :
-	  this->invalid_request (HTTP_Status_Code::STATUS_NOT_IMPLEMENTED);
-	}
+    default :
+      this->invalid_request (HTTP_Status_Code::STATUS_NOT_IMPLEMENTED);
     }
+    break;
+
+  default:
+    this->invalid_request (HTTP_Status_Code::STATUS_BAD_REQUEST);
+  }
 }
 
 void
@@ -136,7 +137,7 @@ void
 HTTP_Handler::serve_directory (void)
 {
   // We'll just forbid it for now.
-  this->serve_error(403);
+  this->serve_error(HTTP_Status_Code::STATUS_FORBIDDEN);
 }
 
 void 
