@@ -1,8 +1,17 @@
+Mon Jan 31 20:48:04 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Proactor_Test.cpp (TestData):
+	* tests/Proactor_Test_IPV6.cpp (TestData):
+
+	  Name the nested/local structure declared in this class to
+	  workaround MSVC++ complaints about required compiler generated
+	  default constructors for unnamed classes.
+
 Mon Jan 31 13:37:48 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Acceptor.cpp (handle_close): Fixed the code so that it
 	  closes down properly.  Thanks to Kobi Cohen-Arazi
- 	  <kobi.cohenarazi@gmail.com> for this fix.
+ 	  <kobi dot cohenarazi at gmail dot com> for this fix.
 
 Mon Jan 31 11:14:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
