@@ -273,14 +273,12 @@ IFR_DII_Client::create_dii_request (ACE_ENV_SINGLE_ARG_DECL)
           break;
         case CORBA::PARAM_OUT:
           {
-            // It doesn't matter for basic types, like float, but for
-            // cases where it does, this is an alternative method of
-            // adding an OUT argument without initializing it.
             if (params[i].type->kind () == CORBA::tk_float
                 && ACE_OS::strcmp (params[i].name.in (), "price") == 0)
               {
-                CORBA::Any any (CORBA::_tc_float,
-                                0);
+                CORBA::Float tmp = -1.0f;
+                CORBA::Any any;
+                any <<= tmp;
 
                 // The servant will return 0.0 if the title is not found.
                 this->req_->arguments ()->add_value (params[i].name.in (),

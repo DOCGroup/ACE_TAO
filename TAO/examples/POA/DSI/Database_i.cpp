@@ -75,8 +75,8 @@ DatabaseImpl::Entry::is_a (CORBA::ServerRequest_ptr request
   CORBA::NVList_ptr list;
   this->orb_->create_list (0, list);
 
-  CORBA::Any any_1 (CORBA::_tc_string,
-                    0);
+  CORBA::Any any_1;
+  any_1._tao_set_typecode (CORBA::_tc_string);
 
   list->add_value ("value",
                    any_1,
