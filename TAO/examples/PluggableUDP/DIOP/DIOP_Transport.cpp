@@ -91,7 +91,7 @@ TAO_DIOP_Transport::idle (void)
 
 ssize_t
 TAO_DIOP_Transport::send (const ACE_Message_Block *message_block,
-                          const ACE_Time_Value *max_wait_time,
+                          const ACE_Time_Value */*max_wait_time*/,
                           size_t *bt)
 {
   const ACE_INET_Addr &addr = this->connection_handler_->addr ();
@@ -129,10 +129,10 @@ TAO_DIOP_Transport::send (const ACE_Message_Block *message_block,
               // as 16.
               if (iovcnt == IOV_MAX)
                 {
-                  size_t current_transfer =
+                  ssize_t current_transfer =
                     this->connection_handler_->dgram ().send (iov,
-                                                   iovcnt,
-                                                   addr);
+                                                              iovcnt,
+                                                              addr);
                   // Errors.
                   if (current_transfer == -1 || current_transfer == 0)
                     return current_transfer;
@@ -157,7 +157,7 @@ TAO_DIOP_Transport::send (const ACE_Message_Block *message_block,
   // IOV_MAX is not a multiple of the number of message blocks.
   if (iovcnt != 0)
     {
-      size_t current_transfer =
+      ssize_t current_transfer =
         this->connection_handler_->dgram ().send (iov,
                                        iovcnt,
                                        addr);
@@ -182,7 +182,7 @@ TAO_DIOP_Transport::send (const ACE_Message_Block *message_block,
 ssize_t
 TAO_DIOP_Transport::recv (char *buf,
                           size_t len,
-                          const ACE_Time_Value *max_wait_time)
+                          const ACE_Time_Value */*max_wait_time*/)
 {
   ACE_INET_Addr from_addr;
 

@@ -1,3 +1,13 @@
+Sun Mar  4 21:39:03 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/corbafwd.h:
+	  Commented in TAO_TAG_UDP_PROFILE now that DIOP is being
+	  built regularly.
+
+	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
+	* examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
+	  Fixed compile warnings under Linux.
+
 Sun Mar  4 19:12:59 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/Callback_Quoter/Consumer.dsp:
