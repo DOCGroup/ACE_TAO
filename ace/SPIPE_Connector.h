@@ -76,6 +76,9 @@ public:
   // The <flags> and <perms> arguments are passed down to the open()
   // method.
 
+  int reset_new_handle (ACE_HANDLE handle);
+  // Resets any event associations on this handle
+
   // = Meta-type info
   typedef ACE_SPIPE_Addr PEER_ADDR;
   typedef ACE_SPIPE_Stream PEER_STREAM;

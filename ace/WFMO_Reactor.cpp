@@ -58,28 +58,28 @@ void
 ACE_WFMO_Reactor_Handler_Repository::remove_network_events_i (long &existing_masks,
 							      ACE_Reactor_Mask to_be_removed_masks)
 {
-  if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::READ_MASK))
+  if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::READ_MASK))
     ACE_CLR_BITS (existing_masks, FD_READ);
   
-  if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::WRITE_MASK))
+  if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::WRITE_MASK))
     ACE_CLR_BITS (existing_masks, FD_WRITE);
   
-  if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::EXCEPT_MASK))
+  if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::EXCEPT_MASK))
     ACE_CLR_BITS (existing_masks, FD_OOB);
   
-  if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::ACCEPT_MASK))
+  if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::ACCEPT_MASK))
     ACE_CLR_BITS (existing_masks, FD_ACCEPT);
   
-  if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::CONNECT_MASK))
+  if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::CONNECT_MASK))
     ACE_CLR_BITS (existing_masks, FD_CONNECT);
   
-  if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::QOS_MASK))
+  if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::QOS_MASK))
     ACE_CLR_BITS (existing_masks, FD_QOS);
   
-  if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::GROUP_QOS_MASK))
+  if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::GROUP_QOS_MASK))
     ACE_CLR_BITS (existing_masks, FD_GROUP_QOS);
   
-  if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::CLOSE_MASK))
+  if (ACE_BIT_ENABLED (to_be_removed_masks, ACE_Event_Handler::CLOSE_MASK))
     ACE_CLR_BITS (existing_masks, FD_CLOSE);
 }
 
@@ -818,8 +818,11 @@ ACE_WFMO_Reactor_Handler_Repository::add_network_events_i (ACE_Reactor_Mask mask
   // First go through the current entries
   size_t total_entries = this->max_handlep1_;
 
+  // Look for all entries in the current handles for matching handle
+  // (except those that have been scheduled for deletion)
   for (i = 0; i < total_entries && !found; i++)
-    if (io_handle == this->current_info_[i].io_handle_)
+    if (io_handle == this->current_info_[i].io_handle_ &&
+        !this->current_info_[i].delete_entry_)
       {
 	found = 1;
 	modified_masks = &this->current_info_[i].network_events_;
@@ -830,8 +833,11 @@ ACE_WFMO_Reactor_Handler_Repository::add_network_events_i (ACE_Reactor_Mask mask
   // Then pass through the suspended handles
   total_entries = this->suspended_handles_;
 
+  // Look for all entries in the suspended handles for matching handle
+  // (except those that have been scheduled for deletion)
   for (i = 0; i < total_entries && !found; i++)
-    if (io_handle == this->current_suspended_info_[i].io_handle_)
+    if (io_handle == this->current_suspended_info_[i].io_handle_ &&
+        !this->current_suspended_info_[i].delete_entry_)      
       {
 	found = 1;
 	modified_masks = &this->current_suspended_info_[i].network_events_;
@@ -839,28 +845,28 @@ ACE_WFMO_Reactor_Handler_Repository::add_network_events_i (ACE_Reactor_Mask mask
 	event_handle = this->current_suspended_info_[i].event_handle_;
       }
 
-  if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::READ_MASK))
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
     ACE_SET_BITS (*modified_masks, FD_READ);
   
-  if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
     ACE_SET_BITS (*modified_masks, FD_WRITE);
   
-  if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK))
     ACE_SET_BITS (*modified_masks, FD_OOB);
 
-  if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
     ACE_SET_BITS (*modified_masks, FD_ACCEPT);
 
-  if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK))
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK))
     ACE_SET_BITS (*modified_masks, FD_CONNECT);
 
-  if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::QOS_MASK))
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::QOS_MASK))
     ACE_SET_BITS (*modified_masks, FD_QOS);
 
-  if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::GROUP_QOS_MASK))
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::GROUP_QOS_MASK))
     ACE_SET_BITS (*modified_masks, FD_GROUP_QOS);
 
-  if (ACE_BIT_STRICTLY_ENABLED (mask, ACE_Event_Handler::CLOSE_MASK))
+  if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::CLOSE_MASK))
     ACE_SET_BITS (*modified_masks, FD_CLOSE);
 
   new_masks = *modified_masks;

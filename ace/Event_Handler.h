@@ -46,23 +46,29 @@ public:
     WRITE_MASK = POLLOUT,
     EXCEPT_MASK = POLLPRI,
 #else /* USE SELECT */
-    READ_MASK = 0x1,
-    WRITE_MASK = 0x4,
-    EXCEPT_MASK = 0x2,
+    READ_MASK = (1 << 0),
+    WRITE_MASK = (1 << 1),
+    EXCEPT_MASK = (1 << 2),
 #endif /* ACE_USE_POLL */
-    ACCEPT_MASK = 0x8,
-    CONNECT_MASK = READ_MASK | WRITE_MASK
-#if defined (ACE_WIN32)
-    | EXCEPT_MASK
-#endif /* ACE_WIN32 */
-    ,
-    TIMER_MASK = 0x10,
-    QOS_MASK = 0x20,
-    GROUP_QOS_MASK = 0x40,
-    CLOSE_MASK = 0x80,
-    ALL_EVENTS_MASK = READ_MASK | WRITE_MASK | EXCEPT_MASK | ACCEPT_MASK | QOS_MASK | GROUP_QOS_MASK | CLOSE_MASK,
-    RWE_MASK = READ_MASK | WRITE_MASK | EXCEPT_MASK,
-    DONT_CALL = 0x100
+    ACCEPT_MASK = (1 << 3),
+    CONNECT_MASK = (1 << 4),
+    TIMER_MASK = (1 << 5),
+    QOS_MASK = (1 << 6),
+    GROUP_QOS_MASK = (1 << 7),
+    CLOSE_MASK = (1 << 8),
+    ALL_EVENTS_MASK = READ_MASK | 
+                      WRITE_MASK | 
+                      EXCEPT_MASK | 
+                      ACCEPT_MASK | 
+                      CONNECT_MASK | 
+                      TIMER_MASK | 
+                      QOS_MASK | 
+                      GROUP_QOS_MASK | 
+                      CLOSE_MASK,
+    RWE_MASK = READ_MASK | 
+               WRITE_MASK | 
+               EXCEPT_MASK,
+    DONT_CALL = (1 << 9)
   };
 
   virtual ~ACE_Event_Handler (void);

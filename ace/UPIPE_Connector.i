@@ -22,7 +22,11 @@ ACE_UPIPE_Connector::ACE_UPIPE_Connector (ACE_UPIPE_Stream &new_stream,
 	       addr.get_path_name (), "ACE_UPIPE_Connector"));
 }
 
-
-
-
+inline int
+ACE_UPIPE_Connector::reset_new_handle (ACE_HANDLE handle)
+{
+  ACE_UNUSED_ARG (handle);
+  // Nothing to do here since the handle is not a socket
+  return 0;
+}
 
