@@ -141,30 +141,9 @@ main (int argc, char *argv[])
       CORBA::string_free (obj_str);  
     }
 
-//  Cubit_i_ptr  my_cubit = new Cubit_i (key);
-//  if (my_cubit1 == 0)
-//    ACE_ERROR_RETURN ((LM_ERROR, " (%P|%t) Unable to create implementation object\n"), 2);
-
   // Handle requests for this object until we're killed, or one of the
   // methods asks us to exit.
-
-  // @@ Do we need the HOMEBREW_EVENT_LOOP stuff?  If not, can we remove it please?
-#if !defined (USE_HOMEBREW_EVENT_LOOP)
-  ACE_Reactor::run_event_loop ();
-#else
-  int terminationStatus = 0;
-
-  while (1)
-    {
-      int result = params->reactor ()->handle_events ();
-
-      if (result == -1)
-	{
-	  terminationStatus = -1;
-	  break;
-	}
-    }
-#endif /* USE_HOMEBREW_EVENT_LOOP */
+  orb_ptr->run ();
 
   // Shut down the OA -- recycles all underlying resources (e.g. file
   // descriptors, etc).

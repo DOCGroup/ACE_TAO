@@ -1,3 +1,26 @@
+Sat Sep 27 09:31:42 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/Cubit/TAO/svr.cpp: Modified to use ORB::run() for event
+ 	loop and eliminated code cruft.
+
+	* tao/orbobj.cpp: Added stubs for 4 methods on the ORB from the
+ 	POA spec: work_pending, perform_work, run, and shutdown.  Of all
+ 	of these, only run is reasonably implemented, and there not even
+ 	according to the spec (because the way the spec works isn't really
+ 	good for our purposes...need to work on that).  See the docs for
+ 	information.
+
+	Moved the initialization of the Acceptor into its own method,
+ 	set_up_for_listening (which is a one-shot style method), and
+ 	placed a call to this within the aforementioned run method.
+
+	* tao/default_client.h: Miscellaneous comments added.
+
+	* tao/connect.cpp: Corrected an errant ACE_DEBUG () call.
+
+	* tao/Orb_Core.*: Added private methods to allow setting of the
+ 	orb and extended the laurel of friendship to CORBA::ORB_init().
+
 Fri Sep 26 10:20:06 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/orbobj.*: Added acceptor initialization code to CORBA_ORB

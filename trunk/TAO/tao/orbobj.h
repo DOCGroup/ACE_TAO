@@ -54,6 +54,50 @@ public:
   void create_list (CORBA::Long count,
                     CORBA::NVList_ptr &retval);
 
+  // = New Things from the POA Specification
+  //
+  // Of all of these operations, only <run> is currently implemented.
+  // Others require clarification of design or more implementation
+  // than is currently available.
+  
+  CORBA::Boolean work_pending (void);
+  // Returns an indication of whether the ORB needs the <{main thread}> to
+  // perform some work.
+  
+  void perform_work (void);
+  // If called by the <{main thread}>, this operation performs an
+  // implementation-defined unit of work. Otherwise, it does nothing.
+  //
+  // It is platform specific how the application and ORB arrange to
+  // use compatible threading primitives.
+  
+  void run (void);
+  // Instructs the ORB to run its event loop in the current thread,
+  // not returning until the ORB has shut down.  <{Note that this
+  // differs from the POA specification, which is reproduced below:}>
+  //
+  // Returns when the ORB has shut down. Different from the If called
+  // by the main thread, it enables the ORB to perform work using the
+  // main thread. Otherwise, it simply waits until the ORB has shut
+  // down.
+  //
+  // This operation can be used instead of perform_work() to give the
+  // main thread to the ORB if there are no other activities that need
+  // to share the main thread. Even in a pure multi-threaded server,
+  // calling run() in the main thread is useful to ensure that the
+  // process does not exit until the ORB has been shut down.
+
+  void shutdown (CORBA::Boolean wait_for_completion);
+  // This operation instructs the ORB to shut down. Shutting down the
+  // ORB causes all object adapters to be shut down. If the
+  // wait_for_completion parameter is TRUE, this operation blocks
+  // until all ORB processing (including request processing and object
+  // deactivation or other operations associated with object adapters)
+  // has completed.
+
+
+  // = <IUnknown> Support
+  //
   // Stuff required for COM IUnknown support ... this class is
   // intended to be inherited by others, which will provide some more
   // of the CORBA/COM support.  Implementations of this "CORBA::ORB"
@@ -68,6 +112,9 @@ public:
   TAO_Client_Strategy_Factory *client_factory (void);
   TAO_Server_Strategy_Factory *server_factory (void);
   TAO_ORB_Parameters *params (void);
+  void set_up_for_listening (void);
+  // Set up the internal acceptor to listen on the
+  // previously-specified port for requests.
 
 protected:
   CORBA_ORB (void);
@@ -76,7 +123,11 @@ protected:
 private:
   ACE_SYNCH_MUTEX lock_;
   u_int refcount_;
+  CORBA::Boolean set_up_for_listening_called_;
 
+  // @@ Quite possibly everything btw ORB_CORE_STUFF should go into
+  // the TAO_ORB_Core class...
+  // ORB_CORE_STUFF
   TAO_Client_Strategy_Factory *client_factory_;
 
   CORBA::Boolean client_factory_from_service_config_;
@@ -93,6 +144,7 @@ private:
 
   TAO_Acceptor client_acceptor_;
   // The acceptor listening for requests.
+  // ORB_CORE_STUFF
 
   // = NON-PROVIDED METHODS
   CORBA_ORB (const CORBA_ORB &);

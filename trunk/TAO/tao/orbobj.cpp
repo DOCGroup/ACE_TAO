@@ -48,22 +48,32 @@ DEFINE_GUID (IID_STUB_Object,
 	     0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
 CORBA_ORB::CORBA_ORB (void)
-  : client_factory_ (0),
+  : set_up_for_listening_called_(CORBA::B_FALSE),
+    client_factory_ (0),
     client_factory_from_service_config_ (CORBA::B_FALSE),
     server_factory_ (0),
     server_factory_from_service_config_ (CORBA::B_FALSE)
 {
-  refcount_ = 1;
+  this->refcount_ = 1;
+}
 
+void
+CORBA_ORB::set_up_for_listening (void)
+{
+  if (this->set_up_for_listening_called_)
+    return;
+
+  this->set_up_for_listening_called_ = CORBA::B_TRUE;
+  
   TAO_Server_Strategy_Factory *f = this->server_factory ();
 
   // Initialize the endpoint ... or try!
-  if (client_acceptor_.open (this->params()->addr (),
-			     TAO_ORB_CORE::instance()->reactor(),
-			     f->creation_strategy (),
-			     f->accept_strategy (),
-			     f->concurrency_strategy (),
-			     f->scheduling_strategy ()) == -1)
+  if (this->client_acceptor_.open (this->params()->addr (),
+                                   TAO_ORB_CORE::instance()->reactor(),
+                                   f->creation_strategy (),
+                                   f->accept_strategy (),
+                                   f->concurrency_strategy (),
+                                   f->scheduling_strategy ()) == -1)
     // @@ CJC Need to return an error somehow!!  Maybe set do_exit?
     ;
 
@@ -73,54 +83,54 @@ CORBA_ORB::CORBA_ORB (void)
 TAO_Client_Strategy_Factory *
 CORBA_ORB::client_factory (void)
 {
-  if (client_factory_ == 0)
+  if (this->client_factory_ == 0)
     {
       // Look in the service repository for an instance.
-      client_factory_ =
+      this->client_factory_ =
         ACE_Dynamic_Service<TAO_Client_Strategy_Factory>::instance ("Client_Strategy_Factory");
-      client_factory_from_service_config_ = CORBA::B_TRUE;
+      this->client_factory_from_service_config_ = CORBA::B_TRUE;
     }
 
-  if (client_factory_ == 0)
+  if (this->client_factory_ == 0)
     {
       // Still don't have one, so let's allocate the default.  This
       // will throw an exception if it fails on exception-throwing
       // platforms.  
-      ACE_NEW_RETURN (client_factory_, TAO_Default_Client_Strategy_Factory, 0);
+      ACE_NEW_RETURN (this->client_factory_, TAO_Default_Client_Strategy_Factory, 0);
 
-      client_factory_from_service_config_ = CORBA::B_FALSE;
+      this->client_factory_from_service_config_ = CORBA::B_FALSE;
       // @@ At this point we need to register this with the
       // Service_Repository in order to get it cleaned up properly.
       // But, for now we let it leak.
     }
-  return client_factory_;
+  return this->client_factory_;
 }
 
 TAO_Server_Strategy_Factory *
 CORBA_ORB::server_factory (void)
 {
-  if (server_factory_ == 0)
+  if (this->server_factory_ == 0)
     {
       // Look in the service repository for an instance.
-      server_factory_ =
+      this->server_factory_ =
         ACE_Dynamic_Service<TAO_Server_Strategy_Factory>::instance ("Server_Strategy_Factory");
 
-      server_factory_from_service_config_ = CORBA::B_TRUE;
+      this->server_factory_from_service_config_ = CORBA::B_TRUE;
     }
 
-  if (server_factory_ == 0)
+  if (this->server_factory_ == 0)
     {
       // Still don't have one, so let's allocate the default.  This
       // will throw an exception if it fails on exception-throwing
       // platforms.
-      ACE_NEW_RETURN (server_factory_, TAO_Default_Server_Strategy_Factory, 0);
+      ACE_NEW_RETURN (this->server_factory_, TAO_Default_Server_Strategy_Factory, 0);
 
-      server_factory_from_service_config_ = CORBA::B_FALSE;
+      this->server_factory_from_service_config_ = CORBA::B_FALSE;
       // @@ At this point we need to register this with the
       // Service_Repository in order to get it cleaned up properly.
       // But, for now we let it leak.
     }
-  return server_factory_;
+  return this->server_factory_;
 }
 
 ULONG __stdcall
@@ -132,7 +142,7 @@ CORBA_ORB::Release (void)
     ACE_ASSERT (this != 0);
 
     if (--refcount_ != 0)
-      return refcount_;
+      return this->refcount_;
   }
 
   delete this;
@@ -338,7 +348,7 @@ CORBA::ORB_init (int &argc,
 
   // Initialize the Service Configurator
   //#if !defined (VXWORKS)
-#if 0
+#if ! defined (VXWORKS)
   ACE_Service_Config::open (svc_config_argc, svc_config_argv);
 #else
   // Statically stick in the appropriate abstract factories for now.
@@ -392,11 +402,14 @@ CORBA::ORB_init (int &argc,
   ACE_Service_Repository *svc_rep = ACE_Service_Repository::instance();
   svc_rep->insert(service[0]);
   svc_rep->insert(service[1]);
-#endif
-#endif
+#endif /* 0 */
+#endif /* VXWORKS */
 
   // Inititalize the "ORB" pseudo-object now.
-  IIOP_ORB_ptr the_orb = (IIOP_ORB_ptr)TAO_ORB_CORE::instance()->orb();
+  IIOP_ORB_ptr the_orb = 0;
+  ACE_NEW_RETURN (the_orb, IIOP_ORB, 0);
+
+  TAO_ORB_CORE::instance()->orb(the_orb);
   // @@ Seems like the following should happen inside the ORB Core,
   // not at this level.  Do we really need this stuff?  What is the
   // alternative format (other than IOR)?  --cjc
@@ -524,6 +537,32 @@ CORBA_ORB::BOA_init (int &argc,
   oc->root_poa (rp);
 
   return rp;
+}
+
+void
+CORBA_ORB::perform_work (void)
+{
+  TAO_ORB_CORE::instance ()->reactor ()->handle_events ();
+}
+
+void
+CORBA_ORB::run (void)
+{
+  ACE_Reactor* r = TAO_ORB_CORE::instance ()->reactor ();
+
+  // This method should only be called by servers, so now we set up
+  // for listening!
+  this->set_up_for_listening ();
+  
+  while (1)
+    {
+      int result = r->handle_events ();
+
+      if (result == -1)
+        return;
+    }
+  /* NOTREACHED */
+  return;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -62,3 +62,18 @@ CORBA_ORB::params(void)
 {
   return &params_;
 }
+
+ACE_INLINE CORBA::Boolean
+CORBA_ORB::work_pending (void)
+{
+  // There's ALWAYS work to do ;-)
+  return CORBA::B_TRUE;
+}
+
+ACE_INLINE void
+CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion)
+{
+  return;
+}
+
+
