@@ -142,9 +142,9 @@ if test -n "$AWK"; then
 
 dnl Make sure all of the versions have a legitimate value, i.e. not an
 dnl empty string.
-  test -z $ACE_MAJOR && ACE_MAJOR=0
-  test -z $ACE_MINOR && ACE_MINOR=0
-  test -z $ACE_BETA && ACE_BETA=0
+  test -z "$ACE_MAJOR" && ACE_MAJOR=0
+  test -z "$ACE_MINOR" && ACE_MINOR=0
+  test -z "$ACE_BETA" && ACE_BETA=0
 
 dnl This is a terrible kludge to fool libtool into making it produce a shared
 dnl library with the "right" version information.
