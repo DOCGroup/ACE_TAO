@@ -8,14 +8,11 @@
 
 using CIAO::Config_Handler::Utils;
 
-Deployment::ExternalReferenceEndpoint *
-CIAO::Config_Handler::ERE_Handler::process_ExternalReferenceEndpoint (DOMNodeIterator * iter)
+void
+CIAO::Config_Handler::ERE_Handler::
+process_ExternalReferenceEndpoint (DOMNodeIterator * iter,
+                                   Deployment::ExternalReferenceEndpoint &ret_struct)
 {
-  Deployment::ExternalReferenceEndpoint_var ret_struct = 0;
-  ACE_NEW_THROW_EX (ret_struct,
-                    Deployment::ExternalReferenceEndpoint,
-                    CORBA::NO_MEMORY ());
-
   //Check if the Schema IDs for both the elements match
   DOMNode * node = iter->nextNode ();
   XStr name (node->getNodeName ());
@@ -29,11 +26,7 @@ CIAO::Config_Handler::ERE_Handler::process_ExternalReferenceEndpoint (DOMNodeIte
     }
 
   // Populate the structure
-  ret_struct->location = Utils::parse_string (iter);
-
-  // Return structure
-  return ret_struct._retn ();
-
+  ret_struct.location = Utils::parse_string (iter);
 }
 
 #endif /* ERE_HANDLER_C */

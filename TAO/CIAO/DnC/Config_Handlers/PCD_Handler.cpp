@@ -118,8 +118,9 @@ namespace CIAO
               // fetch the ExternalReferenceEndpoint handler and
               // delegate to it
               // @@ need to avoid this copy, possible memory leak @@
-              pcd.externalReference[i] =
-                *ERE_Handler::process_ExternalReferenceEndpoint (this->iter_);
+              // Arvind: Addressed the same.
+              ERE_Handler::process_ExternalReferenceEndpoint (this->iter_,
+                                                              pcd.externalReference[i]);
 
             }
           else if (node_name == XStr (ACE_TEXT ("externalEndpoint")))
