@@ -8,10 +8,6 @@
 #include "RTConfig_Handlers.h"
 #include "ace/OS_String.h"
 
-#if !defined (__ACE_INLINE__)
-# include "XML_Utils.inl"
-#endif /* __ACE_INLINE__ */
-
 int
 CIAO::XML_Utils::parse_softpkg (CIAO::Softpkg_Handler::Softpkg_Info *info)
 {
