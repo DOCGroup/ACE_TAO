@@ -83,6 +83,9 @@ private:
   char **argv_;
   // arguments from command line.
 
+  CORBA::ORB_var orb_;
+  // Remember our orb.
+
   char *factory_key_;
   // Key of factory obj ref.
 
@@ -100,9 +103,6 @@ private:
 
   Pluggable_Test_var objref_;
   // Pluggable_Test obj ref.
-
-  CORBA::ORB_var orb_;
-  // Remember our orb.
 
   u_int call_count_;
   // # of calls made to functions.
