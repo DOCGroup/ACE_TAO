@@ -1,3 +1,8 @@
+Tue Jun 30 18:21:04 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* tests/Quoter/Makefile:
+	Remove STL includes --- no longer needed for Trading Service.
+
 Tue Jun 30 16:50:12 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	First round of changes for GPERF + TAO_IDL integration. Execute
