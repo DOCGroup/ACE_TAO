@@ -1,3 +1,13 @@
+Wed Mar  7 16:17:16 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_cs/cpp:
+
+          Added to previous fix to handle case where the
+          return value is a struct or union of fixed size.
+          In these cases, the return value is not a pointer,
+          so ACE_CHECK_RETURN must return the result of a 
+          call to the default constructor.
+
 Wed Mar 07 11:35:03 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/Advanced/ch_21/Makefile (LDLIBS): Added missing
