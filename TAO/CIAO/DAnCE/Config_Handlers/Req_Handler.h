@@ -13,7 +13,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Basic_Deployment_Data.hpp"
-#include "Config_Handlers_export.h"
+#include "Config_Handlers_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
