@@ -1,3 +1,23 @@
+Wed Apr 28 19:03:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/corbafwd.h:
+	* tao/Context.{h,i,cpp}:
+	  Added an implementation of ContextList, based on TAO's
+	  implementation of ExceptionList, since the IDL definitions
+	  and the C++ mappings are very similar. Also added 
+	  ContextList_var and ContextList_out classes.
+
+	  Added the methods from the OMG C++ mapping for Context.
+	  Since our support for Context is intentionally minimal, 
+	  these methods just throw CORBA::NO_IMPLEMENT. Wherever
+	  a Context_ptr is used as an argument in TAO, the only
+	  value it may have is 0 (or the above exception is raised).
+
+	* Exception.h:
+	  Added the _var_type typedef to class Exception. It wouldn't
+	  compile before, because of a (just-discovered) typo in
+	  corbafwd.h.
+
 Wed Apr 28 18:52:49 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/Object_Adapter:
