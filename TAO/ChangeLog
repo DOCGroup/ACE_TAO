@@ -1,3 +1,45 @@
+Tue Mar 23 21:59:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/ORB_Core.cpp (shutdown, destroy):
+
+	  Reverted the portion of the change (Wed Mar 07 19:19:18 2001
+	  Irfan Pyarali  <irfan@cs.wustl.edu>) that moved the
+	  TAO_ORB_Core::destroy_interceptors() call from ORB::destroy() to
+	  ORB::shutdown().  Doing so broke compliance with the CORBA spec
+	  and also caused server side ending interception points to be
+	  called after the corresponding interceptor was destroyed.
+	  Addresses crashes appearing on some platforms.  Note that
+	  applications are required to call ORB::destroy() in order to
+	  prevent interceptors from being leaked.  Calling ORB::destroy()
+	  in order to cleanup interceptors is required by the CORBA spec.
+	  [Bug 1642]
+
+	* tests/Portable_Interceptors/Makefile:
+	* tests/Portable_Interceptors/Makefile.bor:
+	* tests/Portable_Interceptors/ORB_Shutdown/Makefile:
+	* tests/Portable_Interceptors/ORB_Shutdown/Makefile.bor:
+	* tests/Portable_Interceptors/ORB_Shutdown/ORB_Shutdown.dsw:
+	* tests/Portable_Interceptors/ORB_Shutdown/Portable_Interceptors_ORB_Shutdown.mpc:
+	* tests/Portable_Interceptors/ORB_Shutdown/README:
+	* tests/Portable_Interceptors/ORB_Shutdown/Server_ORBInitializer.cpp:
+	* tests/Portable_Interceptors/ORB_Shutdown/Server_ORBInitializer.h:
+	* tests/Portable_Interceptors/ORB_Shutdown/Server_Request_Interceptor.cpp:
+	* tests/Portable_Interceptors/ORB_Shutdown/Server_Request_Interceptor.h:
+	* tests/Portable_Interceptors/ORB_Shutdown/client.bor:
+	* tests/Portable_Interceptors/ORB_Shutdown/client.cpp:
+	* tests/Portable_Interceptors/ORB_Shutdown/client.dsp:
+	* tests/Portable_Interceptors/ORB_Shutdown/run_test.pl:
+	* tests/Portable_Interceptors/ORB_Shutdown/server.bor:
+	* tests/Portable_Interceptors/ORB_Shutdown/server.cpp:
+	* tests/Portable_Interceptors/ORB_Shutdown/server.dsp:
+	* tests/Portable_Interceptors/ORB_Shutdown/test.idl:
+	* tests/Portable_Interceptors/ORB_Shutdown/test_i.cpp:
+	* tests/Portable_Interceptors/ORB_Shutdown/test_i.h:
+
+	  New regression test that verifies
+	  ServerRequestInterceptor::destroy() is not prematurely called,
+	  e.g. before ending interception points have been called.
+
 Tue Mar 23 22:48:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Portable_Interceptors/AMI/Echo_Handler.cpp:

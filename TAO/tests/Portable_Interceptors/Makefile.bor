@@ -11,6 +11,7 @@ DIRS = \
 	ForwardRequest \
 	Request_Interceptor_Flow \
 	AMI \
-	PICurrent
+	PICurrent \
+	ORB_Shutdown
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
