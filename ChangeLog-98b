@@ -22,6 +22,10 @@ Tue Nov 17 09:37:32 1998  David L. Levine  <levine@cs.wustl.edu>
           with egcs >= 1.1 only.  Thanks to James Johnson for helping
           to sort this out.
 
+        * ace/config-osf1-4.0.h: moved ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR
+          from common area to DEC CXX area, because config-g++-common.h now
+          handles g++.
+
         * ace/IOStream_T.i (eof): fixed return value calculation
           logic.  Thanks to Arturo and James Johnson for providing
           and verifying the fix.
