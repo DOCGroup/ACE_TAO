@@ -115,9 +115,7 @@ DRV_version (void)
   BE_version ();
 }
 
-// Until we find the time to make this portable, we'll just
-// have to skip it. It's been left in place
-// for the day when it may be implemented portably.
+// Fork off a process, wait for it to die.
 void
 DRV_fork (void)
 {
@@ -125,8 +123,13 @@ DRV_fork (void)
        DRV_file_index < DRV_nfiles;
        ++DRV_file_index)
     {
-      ACE_Process_Options options;
+      ACE_Process_Options options (1, 
+                                   TAO_IDL_COMMAND_LINE_BUFFER_SIZE);
       options.creation_flags (ACE_Process_Options::NO_EXEC);
+      options.command_line ("%s %s %s", 
+                            idl_global->prog_name (), 
+                            idl_global->idl_flags (), 
+                            DRV_files[DRV_file_index]);
       ACE_Process manager;
       pid_t child_pid = manager.spawn (options);
 
@@ -319,29 +322,25 @@ main (int argc, char *argv[])
       ACE_OS::exit (0);
     }
 
-  // The original Sun frontend code included a fork if there
-  // was more than one filename in the command line. This is
-  // a long way from portable, so for now we output a warning
-  // if multiple filenames are passed in.
+  // Fork off a process for each file to process. Fork only if
+  // there is more than one file to process.
   if (DRV_nfiles > 1)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("warning: Multiple file processing")
-                  ACE_TEXT (" not implemented.\nAll filenames")
-                  ACE_TEXT (" after the first will be ignored.\n")));
-
-      // This isn't portable so we have to skip it for now.
-      // DRV_fork ();
+      // DRV_fork never returns.
+      DRV_fork ();
     }
-
-  // Do the one file we have to parse.
-  // Check if stdin and handle file name appropriately.
-  if (DRV_nfiles == 0)
+  else
     {
-      DRV_files[0] = "standard input";
-    }
+      // Do the one file we have to parse.
+      // Check if stdin and handle file name appropriately.
+      if (DRV_nfiles == 0)
+        {
+          DRV_files[0] = "standard input";
+        }
 
-  DRV_drive (DRV_files[0]);
+      DRV_file_index = 0;
+      DRV_drive (DRV_files[DRV_file_index]);
+    }
 
   ACE_OS::exit (0);
 
