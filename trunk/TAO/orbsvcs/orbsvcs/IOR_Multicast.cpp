@@ -45,15 +45,38 @@ TAO_IOR_Multicast::init (const char *ior,
                          const char *mcast_addr,
                          TAO_Service_ID service_id)
 {
-  this->service_id_ = service_id;
-  this->ior_ = ior;
   if (this->mcast_addr_.set (port,
                              mcast_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "set"),
                       -1);
-  else if (this->response_addr_.set ((u_short) 0) == -1)
+
+  return common_init (ior, service_id);
+}
+
+int 
+TAO_IOR_Multicast::init (const char *ior,
+                         const char *mcast_addr,
+                         TAO_Service_ID service_id)
+{
+  if (this->mcast_addr_.set (mcast_addr) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "set"),
+                      -1);
+
+  return common_init (ior, service_id);
+}
+      
+int 
+TAO_IOR_Multicast::common_init (const char *ior,
+                                TAO_Service_ID service_id)
+{
+  this->service_id_ = service_id;
+  this->ior_ = ior;
+  
+  if (this->response_addr_.set ((u_short) 0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "set"),

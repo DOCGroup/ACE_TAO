@@ -243,6 +243,9 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // Implementation Repository Service port #.
   u_short ir_port = 0;
 
+  // Mcast endpoint for the Naming Service discovery.
+  ACE_CString mde;
+
   // Buffer sizes for kernel socket buffers
   // @@ should be a default defined for each protocol implementation?
   //    since we may have protocols loaded which use shared memory of
@@ -466,6 +469,15 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
           ns_port = (CORBA::UShort) ACE_OS::atoi (current_arg);
 
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                ("-ORBMulticastDiscoveryEndpoint")))
+        {
+          // Specify mcast address:port for the Naming Service Multicast
+          // Discovery Protocol.
+          
+          mde = current_arg;
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
@@ -1006,6 +1018,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   this->orb_params ()->name_service_port (ns_port);
   this->orb_params ()->trading_service_port (ts_port);
   this->orb_params ()->implrepo_service_port (ir_port);
+  this->orb_params ()->mcast_discovery_endpoint (mde);
   this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
   this->orb_params ()->nodelay (nodelay);
   if (rcv_sock_size != 0)
