@@ -1,3 +1,9 @@
+Sat Jun  5 16:46:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Object_Adapter.cpp (~Servant_Upcall): Added missing
+	  case INITIAL_STAGE to keep compiler happy although it is not
+	  used anywhere.
+
 Sat Jun 05 16:23:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/corbafwd.h,Exception.cpp: added TAO_EPIPE_MINOR_CODE,
