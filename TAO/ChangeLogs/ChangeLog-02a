@@ -1,6 +1,12 @@
+Sun Mar  3 10:19:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Content_Server/SMI_Iterator/client.bor:
+        * examples/Content_Server/SMI_Iterator/server.bor:
+          Added TAO_Messaging library
+
 Sat Mar  2 17:08:47 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* docs/releasenotes/amh.html: 
+	* docs/releasenotes/amh.html:
 	  'Converted' the Word generated HTML document to 'plain'
 	  HTML.  Also added links to the two AMH papers.
 
@@ -17,12 +23,12 @@ Sat Mar  2 16:27:16 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 	* orbsvcs/tests/EC_Mcast/Makefile:
 	* orbsvcs/tests/EC_Throughput/Makefile:
 	  Made changes to include the Messaging library.
-	
+
 Sat Mar  2 14:53:44 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/performance-tests/EC_Scalability/Makefile:
-	* orbsvcs/tests/CosEvent/Basic/Makefile: 
-	* orbsvcs/tests/Event/Basic/Makefile: 
+	* orbsvcs/tests/CosEvent/Basic/Makefile:
+	* orbsvcs/tests/Event/Basic/Makefile:
 	* orbsvcs/examples/CosEC/RtEC_Based/bin/Makefile:
 
 	  Add -lTAO_Messaging
