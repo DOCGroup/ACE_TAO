@@ -1553,5 +1553,9 @@ ace_yywrap (void)
 void
 ace_yy_delete_parse_buffer (void)
 {
-  ace_yy_delete_buffer (ace_yy_current_buffer);
+  if (ace_yy_current_buffer)
+    {
+      ace_yy_delete_buffer (ace_yy_current_buffer);
+      ace_yy_current_buffer = 0;
+    }
 }
