@@ -1,3 +1,9 @@
+Mon Mar 28 17:32:30 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Process.h:
+
+	  Fix typo in comment.
+
 Fri Mar 25 16:41:56 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
