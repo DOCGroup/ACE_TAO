@@ -1,3 +1,12 @@
+Tue Jul 13 08:15:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.{cpp, h}: Added accessors
+          for maps and trees, various counts.  These are needed so the reconfig
+          scheduler can be extended by delegation (via a wrapper) as well as
+          by inheritance.  This is needed to avoid a multiple inheritance
+          "diamond of death[TM]" if it is being extended by a servant for
+          and interface that inherits from RtecScheduler::Scheduler.
+
 Tue Jul 13 07:47:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB.cpp (_tao_add_to_IOR_table): made the 0 string

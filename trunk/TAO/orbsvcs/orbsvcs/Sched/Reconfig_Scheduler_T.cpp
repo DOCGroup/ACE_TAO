@@ -1427,6 +1427,97 @@ TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::init_rt_info (RtecSch
   rt_info.volatile_token = 0;
 }
 
+
+// Accesses scheduling strategy for the reconfig scheduler.
+
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> RECONFIG_SCHED_STRATEGY &
+TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::sched_strategy ()
+{
+  return this->sched_strategy_;
+}
+
+
+// Accesses map for O(1) lookup of Config_Infos by priority level.
+
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
+ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::CONFIG_INFO_MAP &
+TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::config_info_map ()
+{
+  return this->config_info_map_;
+}
+
+
+// Returns the number of config infos, which is also the number of
+// assigned priority levels.
+
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> long
+TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::config_info_count ()
+{
+  return this->config_info_count_;
+}
+
+
+// Accesses map for O(1) lookup of RT_Infos by handle.
+
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
+ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP &
+TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::rt_info_map ()
+{
+  return this->rt_info_map_;
+}
+
+
+// Returns the number of registered RT_Infos.
+
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> long
+TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::rt_info_count ()
+{
+  return this->rt_info_count_;
+}
+
+
+// Accesses tree for O(log n) lookup of RT_Infos by name.
+
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
+ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_TREE &
+TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::rt_info_tree ()
+{
+  return this->rt_info_tree_;
+}
+
+
+// Accesses map for O(1) lookup of RT_Info dependency
+// set by the caller operation's handle.
+
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
+ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &
+TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::calling_dependency_set_map ()
+{
+  return this->calling_dependency_set_map_;
+}
+
+
+// Accesses map for O(1) lookup of RT_Info dependency
+// set by the called operation's handle.
+
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
+ACE_TYPENAME TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::DEPENDENCY_SET_MAP &
+TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::called_dependency_set_map ()
+{
+  return this->called_dependency_set_map_;
+}
+
+
+// Returns the number of dependencies in the dependency lists of all RT_Infos.
+// This is used when traversing the dependency graph.
+
+template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
+TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::dependency_count ()
+{
+  return this->dependency_count_;
+}
+
+
 #endif /* __GNUC__ */
 
 #endif /* TAO_RECONFIG_SCHEDULER_T_C */
