@@ -282,25 +282,25 @@ public:
    * interval, the client can shutdown the connection, in which case,
    * the <accept> call can hang.
    *
-   * @arg local_addr   The address to listen at.
-   * @arg reactor      Pointer to the ACE_Reactor instance to register
-   *                   this object with. The default is the singleton.
-   * @arg flags        Flags to control what mode an accepted socket
-   *                   will be put into after it is accepted. The only
-   *                   legal value for this argument is @c ACE_NONBLOCK,
-   *                   which enables non-blocking mode on the accepted
-   *                   peer stream object in @c SVC_HANDLER.  The default
-   *                   is 0.
-   * @arg use_select   Affects behavior when called back by the reactor
-   *                   when a connection can be accepted.  If non-zero,
-   *                   this object will accept all pending connections,
-   *                   intead of just the one that triggered the reactor
-   *                   callback.  Uses ACE_OS::select() internally to
-   *                   detect any remaining acceptable connections.
-   *                   The default is 1.
-   * @arg reuse_addr   Passed to the @c PEER_ACCEPTOR::open() method with
-   *                   @p local_addr.  Generally used to request that the
-   *                   OS allow reuse of the listen port.  The default is 1.
+   * @param local_addr   The address to listen at.
+   * @param reactor      Pointer to the ACE_Reactor instance to register
+   *                     this object with. The default is the singleton.
+   * @param flags        Flags to control what mode an accepted socket
+   *                     will be put into after it is accepted. The only
+   *                     legal value for this argument is @c ACE_NONBLOCK,
+   *                     which enables non-blocking mode on the accepted
+   *                     peer stream object in @c SVC_HANDLER.  The default
+   *                     is 0.
+   * @param use_select   Affects behavior when called back by the reactor
+   *                     when a connection can be accepted.  If non-zero,
+   *                     this object will accept all pending connections,
+   *                     intead of just the one that triggered the reactor
+   *                     callback.  Uses ACE_OS::select() internally to
+   *                     detect any remaining acceptable connections.
+   *                     The default is 1.
+   * @param reuse_addr   Passed to the @c PEER_ACCEPTOR::open() method with
+   *                     @p local_addr.  Generally used to request that the
+   *                     OS allow reuse of the listen port.  The default is 1.
    *
    * @retval 0  Success
    * @retval -1 Failure, @c errno contains an error code.

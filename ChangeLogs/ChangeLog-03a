@@ -1,6 +1,19 @@
+Mon Sep 16 07:35:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-doxygen.h:
+          Added define ACE_HAS_EVENT_POLL to generate Dev_Poll reactor
+          documentation
+
+        * ace/Acceptor.h:
+        * ace/Containers_T.{h,cpp}:
+        * ace/Dev_Poll_Reactor.h:
+        * ace/Sample_History.h:
+        * ace/Service_Config.h:
+          Improved doxygen documentation.
+
 Sat Sep 14 10:34:34 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/config-freebsd-pthread.h: Added 
+	* ace/config-freebsd-pthread.h: Added
 	  #undef ACE_LACKS_UCONTEXT_H if we're compiling for FreeBSD
  	  version > 4.  Thanks to Christophe Juniet
  	  <cjuniet@entreview.com> for reporting this.
@@ -23,7 +36,7 @@ Fri Sep 13 08:37:09 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Files to silence annoying CVS messages regarding generated files
 	  it doesn't know about.
-	  
+
 Fri Sep 13 08:57:03 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/USAGE:

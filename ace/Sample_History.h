@@ -55,7 +55,7 @@ public:
 
   /// Dump all the samples
   /**
-   * Prints out all the samples, using @param msg as a prefix for each
+   * Prints out all the samples, using @a msg as a prefix for each
    * message.
    */
   void dump_samples (const ACE_TCHAR *msg,
