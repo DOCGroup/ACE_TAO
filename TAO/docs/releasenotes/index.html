@@ -1297,14 +1297,13 @@ Implementation of the Concurrency Service with transactions</li>
 </ul><P>
 <hr WIDTH="100%">
 <h3><a NAME="av"></a>CORBA Audio/Video Streaming Service</h3>
-Point of contact: <a href="mailto:yamuna@cs.wustl.edu">Yamuna Krishnamurthy</a>
+Point of contact: <a href="mailto:yamuna@oomworks.com">Yamuna Krishnamurthy</a>
 <p>This is an implementation of the OMG spec addressing the <a
 href="http://www.omg.org/technology/documents/formal/audio.htm">Control
-and Management of Audio/Video Streams</a>.For more documentation on
-TAO's A/V Service please have a look <A
-HREF="http://www.cs.wustl.edu/~schmidt/av.html">here</A>.
+and Management of Audio/Video Streams</a>.  For more documentation on
+TAO's A/V Service please have a look <A HREF="http://www.cs.wustl.edu/~schmidt/av.html">here</A>.
 
-<p><h4>Current Status:</h4> (as of Sep 1st 1999)
+<p><h4>Current Status:</h4> (as of July 30 2002)
 <p>
 <ul>
   <li>
@@ -1325,36 +1324,21 @@ HREF="http://www.cs.wustl.edu/~schmidt/av.html">here</A>.
       </A> for more documentation about the implementation.
   </li>
   <li>
-      A Videoconferencing application based on Vic, a MBONE tool, has
-      been implemented using the AV components. Please contact <A
-      HREF="mailto:yamuna@cs.wustl.edu">Yamuna</a> or <A
-      HREF="mailto:naga@cs.wustl.edu">Naga</A> if you're interested.
+      QoS_UDP pluggable protocol added which implements RSVP QoS support
+      for UDP streams.
   </li>
   <li>
-      An MPEG-1 application which streams mpeg-1 video and mpeg-1 audio
-      separately has been developed using the service. The client side
-      of the mpeg player requires X windows support.Its available in
-      the release at $TAO_ROOT/orbsvcs/tests/AVStreams/mpeg/source.
+      Diffserv support added to the UDP pluggable protocol by <a href="mailto:crodrigu@bbn.com">Craig Rodrigues</a>.
   </li>
   <li>
-      An Integrated Video-on-demand application has been developed
-      using the Trading Service and the A/V Service. The demo uses a
-      Java FrontEnd and JNI to talk to the TAO C++ trader client. The
-      demo is available in the release at
-      $TAO_ROOT/orbsvcs/tests/AVStreams/server_discovery.
+      RTP/UDP support enhancements and RTCP control protocol support added by 
+      <a href="mailto:rruff@scires.com">Rob Ruff</a>.
   </li>
 </ul>
 <p>Work in progress:
 <ul>
   <li>
-      Adding more features to the VideoConferencing application
-      eg. porting vat, the audio counterpart of vic to use AV components.
-  </li>
-  <li>
-      Adding ATM AAL5 protocol support.
-  </li>
-  <li>
-      Adding QoS implementation.
+    Integration with <a href="http://www.dist-systems.bbn.com/projects/AIRES/UAV/">BBN UAV software.</a>
   </li>
 </ul>
 
