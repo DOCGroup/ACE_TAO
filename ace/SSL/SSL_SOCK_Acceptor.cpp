@@ -101,33 +101,22 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
           //
           // Explicitly check for EWOULDBLOCK since it doesn't get
           // converted to an SSL_ERROR_WANT_{READ,WRITE} on some
-          // platforms.
-          if (ACE_OS::set_errno_to_last_error () == EWOULDBLOCK)
+          // platforms. If SSL_accept failed outright, though, don't
+          // bother checking more. This can happen if the socket gets
+          // closed during the handshake.
+          if (status == -1 &&
+              ACE_OS::set_errno_to_last_error () == EWOULDBLOCK)
             {
-#if 1
               // Although the SSL_ERROR_WANT_READ/WRITE isn't getting
               // set correctly, the read/write state should be valid.
               // Use that to decide what to do.
-              if (SSL_want_write (ssl))
-                {
-                  // ACE_DEBUG ((LM_DEBUG, "accept wants write\n"));
-                  wr_handle.set_bit (handle);
-                }
-              else
-                {
-                  // ACE_DEBUG ((LM_DEBUG, "accept wants read\n"));
-                  rd_handle.set_bit (handle);
-                }
-#else
-              // Since we don't know whether this should have been
-              // SSL_ERROR_WANT_READ or WANT_WRITE, set up for both.
-              // This will potentially cause some busy-looping on
-              // platforms where it's not reported correctly, but
-              // the alternative is to deadlock.
-              rd_handle.set_bit (handle);
-              wr_handle.set_bit (handle);
-#endif
               status = 1;               // Wait for more activity
+              if (SSL_want_write (ssl))
+                wr_handle.set_bit (handle);
+              else if (SSL_want_read (ssl))
+                rd_handle.set_bit (handle);
+              else
+                status = -1;            // Doesn't want anything - bail out
             }
           else
             status = -1;
@@ -141,8 +130,6 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
 
       if (status == 1)
         {
-          // ACE_DEBUG ((LM_DEBUG, "selecting...\n"));
-
           // Must have at least one handle to wait for at this point.
           ACE_ASSERT (rd_handle.num_set() == 1 || wr_handle.num_set () == 1);
           status = ACE::select (int (handle) + 1,

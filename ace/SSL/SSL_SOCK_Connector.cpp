@@ -103,17 +103,22 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           //
           // Explicitly check for EWOULDBLOCK since it doesn't get
           // converted to an SSL_ERROR_WANT_{READ,WRITE} on some
-          // platforms, such as AIX.
-          if (ACE_OS::set_errno_to_last_error () == EWOULDBLOCK)
+          // platforms. If SSL_accept failed outright, though, don't
+          // bother checking more. This can happen if the socket gets
+          // closed during the handshake.
+          if (status == -1 &&
+              ACE_OS::set_errno_to_last_error () == EWOULDBLOCK)
             {
-              // Since we don't know whether this should have been
-              // SSL_ERROR_WANT_READ or WANT_WRITE, set up for both.
-              // This will potentially cause some busy-looping on
-              // platforms where it's not reported correctly, but
-              // the alternative is to deadlock.
-              rd_handle.set_bit (handle);
-              wr_handle.set_bit (handle);
+              // Although the SSL_ERROR_WANT_READ/WRITE isn't getting
+              // set correctly, the read/write state should be valid.
+              // Use that to decide what to do.
               status = 1;               // Wait for more activity
+              if (SSL_want_write (ssl))
+                wr_handle.set_bit (handle);
+              else if (SSL_want_read (ssl))
+                rd_handle.set_bit (handle);
+              else
+                status = -1;            // Doesn't want anything - bail out
             }
           else
             status = -1;
@@ -145,8 +150,6 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
 
     } while (status == 1 && !SSL_is_init_finished (ssl));
 
-  ACE_ASSERT (::SSL_pending (ssl) == 0);
-
   if (reset_blocking_mode)
     {
       ACE_Errno_Guard eguard (errno);
@@ -170,6 +173,11 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::connect");
 
+  // Take into account the time to complete the basic TCP handshake
+  // and the SSL handshake.
+  ACE_Time_Value timeout_copy (*timeout);  // Need a scribblable copy
+  ACE_Countdown_Time countdown (timeout_copy);
+
   if (this->connector_.connect (new_stream.peer (),
                                 remote_sap,
                                 timeout,
@@ -183,7 +191,9 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
   else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
     new_stream.set_handle (new_stream.peer ().get_handle ());
 
-  return this->ssl_connect (new_stream, timeout);
+  (void) countdown.update ();
+
+  return this->ssl_connect (new_stream, timeout_copy);
 }
 
 int
@@ -202,6 +212,11 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::connect");
 
+  // Take into account the time to complete the basic TCP handshake
+  // and the SSL handshake.
+  ACE_Time_Value timeout_copy (*timeout);  // Need a scribblable copy
+  ACE_Countdown_Time countdown (timeout_copy);
+
   if (this->connector_.connect (new_stream.peer (),
                                 remote_sap,
                                 qos_params,
@@ -218,7 +233,9 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
   else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
     new_stream.set_handle (new_stream.peer ().get_handle ());
 
-  return this->ssl_connect (new_stream, timeout);
+  (void) countdown.update ();
+
+  return this->ssl_connect (new_stream, timeout_copy);
 }
 
 // Try to complete a non-blocking connection.
@@ -230,6 +247,11 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::complete");
 
+  // Take into account the time to complete the basic TCP handshake
+  // and the SSL handshake.
+  ACE_Time_Value timeout_copy (*tv);  // Need a scribblable copy
+  ACE_Countdown_Time countdown (timeout_copy);
+
   if (this->connector_.complete (new_stream.peer (),
                                  remote_sap,
                                  tv) == -1)
@@ -237,7 +259,9 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
   else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
     new_stream.set_handle (new_stream.peer ().get_handle ());
 
-  return this->ssl_connect (new_stream, tv);
+  (void) countdown.update ();
+
+  return this->ssl_connect (new_stream, timeout_copy);
 }
 
 
