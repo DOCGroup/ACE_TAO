@@ -462,7 +462,7 @@ be_decl::cli_retarg_tmpl_class_gen (void)
 idl_bool
 be_decl::cli_retarg_pragma_inst_gen (void)
 {
-  return this->cli_retarg_tmpl_class_gen_;
+  return this->cli_retarg_pragma_inst_gen_;
 }
 
 idl_bool
