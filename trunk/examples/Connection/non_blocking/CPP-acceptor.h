@@ -10,6 +10,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Svc_Handler.h"
+
+
 template <ACE_PEER_STREAM_1>
 class Svc_Handler : public ACE_Svc_Handler <ACE_PEER_STREAM_2, ACE_NULL_SYNCH>
 {
