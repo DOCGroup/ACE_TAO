@@ -795,6 +795,10 @@ SOURCE=.\target_specification.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Thread_Lane_Resources.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\TimeBaseC.cpp
 # End Source File
 # Begin Source File
@@ -1595,6 +1599,10 @@ SOURCE=.\target_specification.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Thread_Lane_Resources.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\TimeBaseC.h
 # End Source File
 # Begin Source File
@@ -2176,6 +2184,10 @@ SOURCE=.\TAOS_T.i
 # Begin Source File
 
 SOURCE=.\target_specification.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Thread_Lane_Resources.i
 # End Source File
 # Begin Source File
 

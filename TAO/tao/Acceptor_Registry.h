@@ -64,6 +64,7 @@ public:
 
   /// Initialize all registered acceptors.  Return -1 on error.
   int open (TAO_ORB_Core *orb_core,
+            ACE_Reactor *reactor,
             CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -97,10 +98,12 @@ private:
 
   /// Create a default acceptor for all loaded protocols.
   int open_default (TAO_ORB_Core *orb_core,
+                    ACE_Reactor *reactor,
                     const char *options);
 
   /// Create a default acceptor using the specified protocol factory.
   int open_default (TAO_ORB_Core *orb_core,
+                    ACE_Reactor *reactor,
                     int major,
                     int minor,
                     TAO_ProtocolFactorySetItor &factory,
@@ -120,6 +123,7 @@ private:
   /// Iterator through addrs in the string <iop>, and create an
   /// acceptor for each one.
   int open_i (TAO_ORB_Core *orb_core,
+              ACE_Reactor *reactor,
               ACE_CString &address,
               TAO_ProtocolFactorySetItor &factory,
               CORBA::Environment &ACE_TRY_ENV);

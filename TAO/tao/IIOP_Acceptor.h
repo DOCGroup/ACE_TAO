@@ -67,11 +67,13 @@ public:
    * Pluggable.h for details.
    */
   virtual int open (TAO_ORB_Core *orb_core,
+                    ACE_Reactor *reactor,
                     int version_major,
                     int version_minor,
                     const char *address,
                     const char *options = 0);
   virtual int open_default (TAO_ORB_Core *orb_core,
+                            ACE_Reactor *reactor,
                             int version_major,
                             int version_minor,
                             const char *options = 0);
@@ -111,7 +113,8 @@ protected:
    * virtual to allow a derived class implementation to be invoked
    * instead.
    */
-  virtual int open_i (const ACE_INET_Addr &addr);
+  virtual int open_i (const ACE_INET_Addr &addr,
+                      ACE_Reactor *reactor);
 
   /**
    * Probe the system for available network interfaces, and initialize

@@ -127,6 +127,7 @@ TAO_Acceptor_Registry::get_acceptor (CORBA::ULong tag)
 
 int
 TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
+                             ACE_Reactor *reactor,
                              CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -141,7 +142,9 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 
       // All TAO pluggable protocols are expected to have the ability
       // to create a default endpoint.
-      if (this->open_default (orb_core, 0) == -1)
+      if (this->open_default (orb_core,
+                              reactor,
+                              0) == -1)
         ACE_THROW_RETURN (CORBA::INTERNAL (
                             CORBA_SystemException::_tao_minor_code (
                               TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
@@ -263,6 +266,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
               ACE_CString addrs = iop.substring (slot + 3);
 
               int result = this->open_i (orb_core,
+                                         reactor,
                                          addrs,
                                          factory,
                                          ACE_TRY_ENV);
@@ -304,6 +308,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 // Iterate through the loaded transport protocols and create a default
 // server for each protocol.
 int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
+                                         ACE_Reactor *reactor,
                                          const char *options)
 {
   TAO_ProtocolFactorySet *pfs = orb_core->protocol_factories ();
@@ -336,6 +341,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
       if (!(*i)->factory ()->requires_explicit_endpoint ())
         {
           if (this->open_default (orb_core,
+                                  reactor,
                                   TAO_DEF_GIOP_MAJOR,  // default major
                                   TAO_DEF_GIOP_MINOR,  // default minor
                                   i,
@@ -367,6 +373,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
 // the indicated protocol.
 int
 TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
+                                     ACE_Reactor *reactor,
                                      int major,
                                      int minor,
                                      TAO_ProtocolFactorySetItor &factory,
@@ -392,6 +399,7 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
 
   // Initialize the acceptor to listen on a default endpoint.
   if (acceptor->open_default (orb_core,
+                              reactor,
                               major,
                               minor,
                               options) == -1)
@@ -478,6 +486,7 @@ TAO_Acceptor_Registry::extract_endpoint_version (ACE_CString &address,
 
 int
 TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
+                               ACE_Reactor *reactor,
                                ACE_CString &addrs,
                                TAO_ProtocolFactorySetItor &factory,
                                CORBA::Environment &ACE_TRY_ENV)
@@ -527,6 +536,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
               // All TAO pluggable protocols are expected to have the
               // ability to create a default endpoint.
               if (this->open_default (orb_core,
+                                      reactor,
                                       major,
                                       minor,
                                       factory,
@@ -546,6 +556,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
 
           // An explicit endpoint was provided.
           else if (acceptor->open (orb_core,
+                                   reactor,
                                    major,
                                    minor,
                                    address.c_str (),

@@ -75,6 +75,7 @@ public:
 
   /// Method to initialize acceptor for address.
   virtual int open (TAO_ORB_Core *orb_core,
+                    ACE_Reactor *reactor,
                     int version_major,
                     int version_minor,
                     const char *address,
@@ -89,6 +90,7 @@ public:
    *    removed in the near future.
    */
   virtual int open_default (TAO_ORB_Core *,
+                            ACE_Reactor *reactor,
                             int version_major,
                             int version_minor,
                             const char *options = 0) = 0;

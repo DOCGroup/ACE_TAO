@@ -31,6 +31,7 @@
 #include "Invocation.h"
 #include "BiDir_Adapter.h"
 
+#include "tao/Thread_Lane_Resources.h"
 #include "Default_Stub_Factory.h"
 #include "Default_Endpoint_Selector_Factory.h"
 #include "Default_Protocols_Hooks.h"
@@ -69,6 +70,8 @@ TAO_ORB_Core::Sync_Scope_Hook TAO_ORB_Core::sync_scope_hook_ = 0;
 
 const char * TAO_ORB_Core::endpoint_selector_factory_name_ =
   "Default_Endpoint_Selector_Factory";
+const char * TAO_ORB_Core::thread_lane_resources_manager_name_ =
+  "Default_Thread_Lane_Resources_Manager";
 const char * TAO_ORB_Core::stub_factory_name_ =
   "Default_Stub_Factory";
 const char * TAO_ORB_Core::resource_factory_name_ =
@@ -91,7 +94,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     protocols_hooks_ (0),
     lock_ (),
     connector_registry_ (0),
-    acceptor_registry_ (0),
+    thread_lane_resources_manager_ (0),
     stub_factory_ (0),
     protocol_factories_ (0),
     implrepo_service_ (CORBA::Object::_nil ()),
@@ -152,8 +155,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     reactor_ (0),
     has_shutdown_ (1),
     thread_per_connection_use_timeout_ (1),
-    open_lock_ (),
-    open_called_ (0),
     endpoint_selector_factory_ (0),
     // Start the ORB in a  "shutdown" state.  Only after
     // CORBA::ORB_init() is called will the ORB no longer be shutdown.
@@ -1035,9 +1036,9 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   this->flushing_strategy_ = trf->create_flushing_strategy ();
 
   // Create the purging strategy
-  ACE_NEW_RETURN(this->transport_cache_,
-                 TAO_Transport_Cache_Manager(trf),
-                 -1);
+  ACE_NEW_RETURN (this->transport_cache_,
+                  TAO_Transport_Cache_Manager (*this),
+                  -1);
 
   // Now that we have a complete list of available protocols and their
   // related factory objects, set default policies and initialize the
@@ -1073,19 +1074,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
     this->connector_registry ()->preconnect (
             this,
             this->orb_params ()->preconnects ());
-
-  // Open the Transport Cache
-  // @@ This seems to be a nice place to configure the transport
-  // cache for the number of allowed entries
-  if (this->transport_cache_->open (this) == -1)
-    {
-      ACE_THROW_RETURN (CORBA::INITIALIZE (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_ORB_CORE_INIT_LOCATION_CODE,
-                            0),
-                          CORBA::COMPLETED_NO),
-                        -1);
-    }
 
   // Look for BiDirectional library here. If the user has svc.conf
   // file, load the library at this point.
@@ -1160,12 +1148,8 @@ TAO_ORB_Core::fini (void)
       delete this->connector_registry_;
     }
 
-  // Ask the registry to close all registered acceptors.
-  if (this->acceptor_registry_ != 0)
-    {
-      this->acceptor_registry_->close_all ();
-      delete this->acceptor_registry_;
-    }
+  // Finalize lane resources.
+  this->thread_lane_resources_manager ()->finalize ();
 
   // Set of file descriptors corresponding to open connections.  This
   // handle set is used to explicitly deregister the connection event
@@ -1272,11 +1256,16 @@ TAO_ORB_Core::corba_priority_normalizer (TAO_CORBA_Priority_Normalizer *new_norm
 }
 
 void
-TAO_ORB_Core::set_stub_factory(const char *stub_factory_name)
+TAO_ORB_Core::set_thread_lane_resources_manager (const char *thread_lane_resources_manager_name)
+{
+  TAO_ORB_Core::thread_lane_resources_manager_name_ = thread_lane_resources_manager_name;
+}
+
+void
+TAO_ORB_Core::set_stub_factory (const char *stub_factory_name)
 {
   TAO_ORB_Core::stub_factory_name_ = stub_factory_name;
 }
-
 
 void
 TAO_ORB_Core::set_resource_factory (const char *resource_factory_name)
@@ -1362,6 +1351,46 @@ TAO_ORB_Core::resource_factory (void)
     }
 
   return this->resource_factory_;
+}
+
+TAO_Thread_Lane_Resources_Manager *
+TAO_ORB_Core::thread_lane_resources_manager (void)
+{
+  // Check if there is a cached reference.
+  if (this->thread_lane_resources_manager_ != 0)
+    return this->thread_lane_resources_manager_;
+
+  // If not, look in the service repository for an instance.
+  this->thread_lane_resources_manager_ =
+    ACE_Dynamic_Service<TAO_Thread_Lane_Resources_Manager>::instance
+    (TAO_ORB_Core::thread_lane_resources_manager_name_);
+
+  // If there still isn't a reference, allocate the default.
+  if (this->thread_lane_resources_manager_ == 0)
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_WARNING,
+                    ACE_TEXT ("(%P|%t) WARNING - No Thread Lane Resources Manager found ")
+                    ACE_TEXT ("in Service Repository.\n")
+                    ACE_TEXT ("  Using default instance with GLOBAL resource ")
+                    ACE_TEXT ("source specifier.\n")));
+
+      // @@ RTCORBA Subsetting: The following comment probably should say
+      //    this if this doesn't work, a segmentation fault will be quickly
+      //    generated...
+
+      // This will throw an exception if it fails on exception-throwing
+      // platforms.
+      TAO_Thread_Lane_Resources_Manager *thread_lane_resources_manager;
+      ACE_NEW_RETURN (thread_lane_resources_manager,
+                      TAO_Default_Thread_Lane_Resources_Manager,
+                      0);
+
+      // Store a copy for later use.
+      this->thread_lane_resources_manager_ = thread_lane_resources_manager;
+    }
+
+  return this->thread_lane_resources_manager_;
 }
 
 TAO_Stub_Factory *
@@ -1818,15 +1847,14 @@ TAO_ORB_Core::leader_follower_condition_variable (void)
 }
 
 TAO_Stub *
-TAO_ORB_Core::create_stub(const char *repository_id,
-                          const TAO_MProfile &profiles,
-                          TAO_ORB_Core *orb_core,
-                          CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::create_stub (const char *repository_id,
+                           const TAO_MProfile &profiles,
+                           CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_Stub *retval =
     this->stub_factory ()->create_stub (repository_id,
                                         profiles,
-                                        orb_core,
+                                        this,
                                         ACE_TRY_ENV);
   ACE_CHECK_RETURN(0);
   return retval;
@@ -1834,60 +1862,31 @@ TAO_ORB_Core::create_stub(const char *repository_id,
 
 
 TAO_Stub *
-TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
+TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
                                   const char *type_id,
                                   CORBA::PolicyList *policy_list,
-                                  TAO_Acceptor_Filter *filter,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
   (void) this->open (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  TAO_Stub *stub = 0;
-
-  // Create a profile container and have Acceptor_Registry populate it
-  // with profiles as appropriate.
-  TAO_MProfile mp (0);
-  if (this->acceptor_registry ()->make_mprofile (key, mp, filter) == -1)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_MPROFILE_CREATION_ERROR,
-                            0),
-                          CORBA::COMPLETED_NO),
-                        0);
-    }
-
-  // Make sure we have at least one profile.  <mp> may end up being
-  // empty if none of the acceptor endpoints have the right priority
-  // for this object, for example.
-  if (mp.profile_count () == 0)
-    {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_MPROFILE_CREATION_ERROR,
-                            0 ),
-                          CORBA::COMPLETED_NO),
-                        0);
-    }
-
-  //  Add the Polices contained in "policy_list" to each profile
-  //  so that those policies will be exposed to the client in the IOR.
-  //  In particular each CORBA::Policy has to be converted in to
-  //  Messaging::PolicyValue, and then all the Messaging::PolicyValue
-  //  should be embedded inside a Messaging::PolicyValueSeq which became
-  //  in turns the "body" of the IOP::TaggedComponent. This conversion
-  //  is a responsability of the CORBA::Profile class.
-  //  (See orbos\98-05-05.pdf Section 5.4)
+  // Add the Polices contained in "policy_list" to each profile so
+  // that those policies will be exposed to the client in the IOR.  In
+  // particular each CORBA::Policy has to be converted in to
+  // Messaging::PolicyValue, and then all the Messaging::PolicyValue
+  // should be embedded inside a Messaging::PolicyValueSeq which
+  // became in turns the "body" of the IOP::TaggedComponent. This
+  // conversion is a responsability of the CORBA::Profile class.  (See
+  // orbos\98-05-05.pdf Section 5.4)
 
   if (policy_list->length () != 0)
     {
       TAO_Profile * profile;
 
-      for (CORBA::ULong i = 0; i < mp.profile_count (); ++i)
+      for (CORBA::ULong i = 0; i < mprofile.profile_count (); ++i)
         {
           // Get the ith profile
-          profile = mp.get_profile (i);
+          profile = mprofile.get_profile (i);
           profile->policies (policy_list, ACE_TRY_ENV);
           ACE_CHECK_RETURN (0);
         }
@@ -1896,11 +1895,11 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
   // Iterate over the registered IOR interceptors so that they may be
   // given the opportunity to add tagged components to the profiles
   // for this servant.
-  this->establish_components (mp, policy_list, ACE_TRY_ENV);
+  this->establish_components (mprofile, policy_list, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   // Done creating profiles.  Initialize a TAO_Stub object with them.
-  stub = this->create_stub (type_id, mp, this, ACE_TRY_ENV);
+  TAO_Stub *stub = this->create_stub (type_id, mprofile, ACE_TRY_ENV);
   ACE_CHECK_RETURN (stub);
 
   stub->base_profiles ().policy_list (policy_list);
@@ -2042,7 +2041,7 @@ TAO_ORB_Core::create_collocated_object (TAO_Stub *stub,
 int
 TAO_ORB_Core::is_collocated (const TAO_MProfile& mprofile)
 {
-  if (this->acceptor_registry_ == 0)
+  if (!this->lane_resources ().has_acceptor_registry_been_created ())
     return 0;
 
   // @@ Lots of issues arise when dealing with collocation.  What about
@@ -2056,7 +2055,7 @@ TAO_ORB_Core::is_collocated (const TAO_MProfile& mprofile)
   //    address (ORB Host) but not the object_key.  This should be checked
   //    also.
 
-  return this->acceptor_registry_->is_collocated (mprofile);
+  return this->lane_resources ().acceptor_registry ().is_collocated (mprofile);
 }
 
 // ****************************************************************
@@ -2293,27 +2292,14 @@ TAO_ORB_Core::destroy_interceptors (CORBA::Environment &ACE_TRY_ENV)
 int
 TAO_ORB_Core::open (CORBA::Environment &ACE_TRY_ENV)
 {
-  // Double check pattern
-  if (this->open_called_ == 1)
-    return 1;
+  // Open lane resources.
+  return this->thread_lane_resources_manager ()->open (ACE_TRY_ENV);
+}
 
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, tao_mon, this->open_lock_, -1);
-
-  if (this->open_called_ == 1)
-    return 1;
-
-  TAO_Acceptor_Registry *ar = this->acceptor_registry ();
-  // get a reference to the acceptor_registry!
-
-  int ret = ar->open (this, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
-  if (ret == -1)
-    return -1;
-
-  this->open_called_ = 1;
-
-  return 0;
+TAO_Thread_Lane_Resources &
+TAO_ORB_Core::lane_resources (void)
+{
+  return this->thread_lane_resources_manager ()->lane_resources ();
 }
 
 void
@@ -3177,7 +3163,6 @@ TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
     output_cdr_msgblock_allocator_ (0),
     input_cdr_dblock_allocator_ (0),
     input_cdr_buffer_allocator_ (0),
-    transport_cache_ (0),
     event_loop_thread_ (0),
     client_leader_thread_ (0),
     leader_follower_condition_variable_ (0),
@@ -3209,9 +3194,6 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
   if (this->input_cdr_buffer_allocator_ != 0)
     this->input_cdr_buffer_allocator_->remove ();
   delete this->input_cdr_buffer_allocator_;
-
-  // UNIMPLEMENTED delete this->transport_cache__;
-  this->transport_cache_ = 0;
 
   delete this->leader_follower_condition_variable_;
   this->leader_follower_condition_variable_ = 0;

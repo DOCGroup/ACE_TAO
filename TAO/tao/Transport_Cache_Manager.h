@@ -82,7 +82,7 @@ public:
   // == Public methods
 
   /// Constructor
-  TAO_Transport_Cache_Manager (TAO_Resource_Factory* rf);
+  TAO_Transport_Cache_Manager (TAO_ORB_Core &orb_core);
 
   /// Destructor
   virtual ~TAO_Transport_Cache_Manager (void);
@@ -97,10 +97,6 @@ public:
   /// in the Cache and return the connection
   int find_transport (TAO_Transport_Descriptor_Interface *prop,
                       TAO_Transport *&transport);
-
-  /// Initialize a <HASH_MAP> with <size> elements.
-  int open (TAO_ORB_Core *orb_core,
-            size_t size = ACE_DEFAULT_MAP_SIZE);
 
   /// Remove entries from the cache depending upon the strategy.
   int purge (void);
