@@ -288,7 +288,11 @@ TAO_SHMIOP_Connection_Handler::handle_input (ACE_HANDLE)
   if (upcalls == 0)
     {
       this->handle_close_i ();
-      retval = -1;
+
+      // As we have already performed the handle closing we dont want
+      // to return a  -1. Doing so would make the reactor call
+      // handle_close () which could be harmful.
+      retval = 0;
     }
 
   if (retval == -1)

@@ -1,3 +1,28 @@
+Mon Oct  1 07:10:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/DIOP_Connection_Handler.cpp: 
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
+	  One of the long standing race conditions that came to the fore
+	  recently. The problem was that we were returning a -1 to the
+	  reactor if the number of upcalls dropped to 0. This was wrong
+	  for many reasons with the latest set of changes for bug 575,
+	  which enhanced the concurrency on the server side. Imagine a
+	  thread being unblocked by notify () dispatching a
+	  request. During the process the thread could have resumed the
+	  handler. Another thread in the Reactor could come around and
+	  tried closing the connection. Before the thread from the Reactor 
+	  finishes with the cleanup job, the thread that was dispatching
+	  because of notify () could return dropping the upcall count. It
+	  would also return with a -1 to the reactor. At this stage we
+	  would have two threads trying to do a handle_close () which
+	  could be deleterious. We now return with a 0 to the reactor
+	  after we handle_close_i (). We are sure that with handle_close_i
+	  () the handlers are closed and returning a 0 would be harmless.
+
+
 Sun Sep 30 09:26:30 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/File_IO/server.cpp (main):
