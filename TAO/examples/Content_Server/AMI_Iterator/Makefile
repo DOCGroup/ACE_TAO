@@ -86,8 +86,6 @@ realclean: clean
  $(ACE_ROOT)/ace/IO_SAP.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -183,8 +181,8 @@ realclean: clean
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/FILE.i \
  $(ACE_ROOT)/ace/FILE_IO.i \
- $(ACE_ROOT)/ace/FILE_Connector.i \
- Content_Iterator_i.h Web_ServerS.h \
+ $(ACE_ROOT)/ace/FILE_Connector.i Content_Iterator_i.h \
+ Web_ServerS.h \
  $(TAO_ROOT)/tao/Messaging/MessagingS.h \
  $(TAO_ROOT)/tao/Messaging/messaging_export.h \
  $(TAO_ROOT)/tao/Messaging/Messaging.h \
@@ -336,14 +334,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Transport_Timer.h \
- $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.inl \
  $(TAO_ROOT)/tao/Transport.inl \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
@@ -367,8 +367,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Asynch_Invocation.i \
  $(TAO_ROOT)/tao/Messaging/Twoway_Asynch_Invocation.i \
- Web_ServerC.h \
- $(TAO_ROOT)/tao/corba.h \
+ Web_ServerC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/LocalObject.h \
@@ -410,8 +409,6 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -508,8 +505,7 @@ realclean: clean
  $(ACE_ROOT)/ace/IO_SAP.h \
  $(ACE_ROOT)/ace/IO_SAP.i \
  $(ACE_ROOT)/ace/FILE.i \
- $(ACE_ROOT)/ace/FILE_IO.i \
- Web_ServerS.h \
+ $(ACE_ROOT)/ace/FILE_IO.i Web_ServerS.h \
  $(TAO_ROOT)/tao/Messaging/MessagingS.h \
  $(TAO_ROOT)/tao/Messaging/messaging_export.h \
  $(TAO_ROOT)/tao/Messaging/Messaging.h \
@@ -661,14 +657,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Transport_Timer.h \
- $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.inl \
  $(TAO_ROOT)/tao/Transport.inl \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
@@ -692,8 +690,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Asynch_Invocation.i \
  $(TAO_ROOT)/tao/Messaging/Twoway_Asynch_Invocation.i \
- Web_ServerC.h \
- $(TAO_ROOT)/tao/corba.h \
+ Web_ServerC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/LocalObject.h \
@@ -734,8 +731,6 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1017,12 +1012,14 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Transport_Timer.h \
- $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.inl \
  $(TAO_ROOT)/tao/Transport.inl \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
@@ -1055,8 +1052,6 @@ realclean: clean
  $(ACE_ROOT)/ace/IO_SAP.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1168,8 +1163,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/Process.i \
- $(ACE_ROOT)/ace/Process_Manager.i \
- Iterator_Handler.h Web_ServerS.h \
+ $(ACE_ROOT)/ace/Process_Manager.i Iterator_Handler.h \
+ Web_ServerS.h \
  $(TAO_ROOT)/tao/Messaging/MessagingS.h \
  $(TAO_ROOT)/tao/Messaging/messaging_export.h \
  $(TAO_ROOT)/tao/Messaging/Messaging.h \
@@ -1309,14 +1304,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Service_Config.i \
  $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Transport_Timer.h \
- $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.inl \
  $(TAO_ROOT)/tao/Transport.inl \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
@@ -1340,8 +1337,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/Asynch_Invocation.i \
  $(TAO_ROOT)/tao/Messaging/Twoway_Asynch_Invocation.i \
- Web_ServerC.h \
- $(TAO_ROOT)/tao/corba.h \
+ Web_ServerC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/LocalObject.h \
@@ -1378,13 +1374,10 @@ realclean: clean
  Web_ServerC.i Web_ServerS_T.h Web_ServerS_T.i Web_ServerS_T.cpp \
  Web_ServerS.i
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
- $(ACE_ROOT)/ace/Process_Manager.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp $(ACE_ROOT)/ace/Process_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1640,12 +1633,14 @@ realclean: clean
  $(ACE_ROOT)/ace/Service_Config.i \
  $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
  $(TAO_ROOT)/tao/Transport_Timer.h \
- $(ACE_ROOT)/ace/Refcountable.h \
- $(ACE_ROOT)/ace/Refcountable.inl \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.h \
+ $(ACE_ROOT)/ace/Refcountable.inl \
+ $(TAO_ROOT)/tao/Synch_Refcountable.inl \
  $(TAO_ROOT)/tao/Transport.inl \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
@@ -1677,8 +1672,7 @@ realclean: clean
  $(ACE_ROOT)/ace/IO_SAP.h \
  $(ACE_ROOT)/ace/IO_SAP.i \
  $(ACE_ROOT)/ace/FILE.i \
- $(ACE_ROOT)/ace/FILE_IO.i \
- Web_ServerS.h \
+ $(ACE_ROOT)/ace/FILE_IO.i Web_ServerS.h \
  $(TAO_ROOT)/tao/Messaging/MessagingS.h \
  $(TAO_ROOT)/tao/PortableServer/PolicyS.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \

@@ -86,8 +86,6 @@ realclean: clean
  $(ACE_ROOT)/ace/IO_SAP.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -183,8 +181,8 @@ realclean: clean
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/FILE.i \
  $(ACE_ROOT)/ace/FILE_IO.i \
- $(ACE_ROOT)/ace/FILE_Connector.i \
- Content_Iterator_i.h Web_ServerS.h Web_ServerC.h \
+ $(ACE_ROOT)/ace/FILE_Connector.i Content_Iterator_i.h \
+ Web_ServerS.h Web_ServerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -297,8 +295,6 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -395,8 +391,7 @@ realclean: clean
  $(ACE_ROOT)/ace/IO_SAP.h \
  $(ACE_ROOT)/ace/IO_SAP.i \
  $(ACE_ROOT)/ace/FILE.i \
- $(ACE_ROOT)/ace/FILE_IO.i \
- Web_ServerS.h Web_ServerC.h \
+ $(ACE_ROOT)/ace/FILE_IO.i Web_ServerS.h Web_ServerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -509,8 +504,6 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -710,16 +703,13 @@ realclean: clean
  Web_ServerS_T.h Web_ServerS_T.i Web_ServerS_T.cpp Web_ServerS.i \
  Iterator_Factory_i.h
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
- $(ACE_ROOT)/ace/FILE_Connector.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp $(ACE_ROOT)/ace/FILE_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/FILE_IO.h \
  $(ACE_ROOT)/ace/FILE.h \
  $(ACE_ROOT)/ace/IO_SAP.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
