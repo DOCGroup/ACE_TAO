@@ -1,3 +1,9 @@
+Fri Nov 19 14:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp (locate_servant):
+          Just pass user_id with find_servant_using_system_id_and_user_id
+          instead of calling poa_current_impl again
+
 Fri Nov 19 14:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp}:
