@@ -5,25 +5,6 @@
 
 ACE_RCSID(Trading, import_test, "$Id$")
 
-void
-parse_args (int argc, char *argv[],
-            CORBA::Boolean& federated,
-            CORBA::Boolean& verbose)
-{
-  int opt;
-  ACE_Get_Opt get_opt (argc, argv, "fq");
-
-  verbose = 1;
-  federated = 0;
-  while ((opt = get_opt ()) != EOF)
-    {
-      if (opt == 'f')
-        federated = 1;
-      else if (opt == 'q')
-        verbose = 0;
-    }
-}
-
 int
 main (int argc, char** argv)
 {
@@ -34,15 +15,16 @@ main (int argc, char** argv)
       TAO_CHECK_ENV;
 
       // Command line argument interpretation.
-      CORBA::Boolean federated = 0,
-        verbose = 0;
-      ::parse_args (argc, argv, federated, verbose);
+      TT_Parse_Args parse_args (argc, argv);
       
       // Initialize the ORB and bootstrap to the Lookup interface.
       CORBA::ORB_var orb = orb_manager.orb ();
-      ACE_DEBUG ((LM_ERROR, "Bootstrap to the Lookup interface.\n"));
-      CORBA::Object_var trading_obj =
-	orb->resolve_initial_references ("TradingService");
+      ACE_DEBUG ((LM_ERROR, "*** Bootstrap to the Lookup interface.\n"));
+      char* ior = parse_args.ior ();
+      CORBA::Object_var trading_obj = (ior == 0) ?
+        orb->resolve_initial_references ("TradingService") :
+        orb->string_to_object (ior);
+
       
       if (CORBA::is_nil (trading_obj.in ()))
 	ACE_ERROR_RETURN ((LM_ERROR,
@@ -50,19 +32,19 @@ main (int argc, char** argv)
 			  -1);
       
       // Narrow the lookup interface.
-      ACE_DEBUG ((LM_DEBUG, "Narrowing the lookup interface.\n"));
+      ACE_DEBUG ((LM_DEBUG, "*** Narrowing the lookup interface.\n"));
       CosTrading::Lookup_var lookup_if = 
 	CosTrading::Lookup::_narrow (trading_obj.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
       // Run the Offer Importer tests
-      ACE_DEBUG ((LM_DEBUG, "Running the Offer Importer tests.\n"));
-      TAO_Offer_Importer offer_importer (lookup_if.in (), verbose);
+      ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Importer tests.\n"));
+      TAO_Offer_Importer offer_importer (lookup_if.in (), ! parse_args.quiet ());
       
       offer_importer.perform_queries (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      if (federated)
+      if (parse_args.federated ())
         {
           offer_importer.perform_directed_queries (TAO_TRY_ENV);
           TAO_CHECK_ENV;
