@@ -40,7 +40,7 @@ test_i::test_i (PortableServer::POA_ptr poa)
 }
 
 void
-test_i::method (ACE_ENV_SINGLE_ARG_DECL)
+test_i::method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -114,7 +114,7 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
                             PortableServer::POA_ptr,
                             const char *,
                             PortableServer::ServantLocator::Cookie &
-                            ACE_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -149,7 +149,7 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &oid,
                              const char *,
                              PortableServer::ServantLocator::Cookie,
                              PortableServer::Servant
-                             ACE_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::String_var name =
