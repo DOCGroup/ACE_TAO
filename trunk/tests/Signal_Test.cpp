@@ -25,7 +25,7 @@
 
 ACE_RCSID(tests, Signal_Test, "$Id$")
 
-#if !defined (ACE_LACKS_FORK)
+#if !defined (ACE_LACKS_FORK) && !defined (ACE_LACKS_UNIX_SIGNALS)
 
 // Global options.
 static size_t n_iterations = 100000;
@@ -71,7 +71,9 @@ handle_signal (int signum)
           // This method simply "reaps" the exit status of the child
           // without blocking.  Note that it also decrements the count
           // of waiting children by one.
-          pid_t pid = ACE_OS::wait (-1, &child_exit_status, WNOHANG);
+          pid_t pid = ACE_OS::wait (-1,
+                                    &child_exit_status,
+                                    WNOHANG);
           // Check to see if there are anymore children to reap.
           if (pid == -1) 
             break;
@@ -82,7 +84,8 @@ handle_signal (int signum)
                       child_exit_status));
         }
 
-      // Bail out.
+      // Shutdown and bail out.
+      shut_down = 1;
       return -1;
       /* NOTREACHED */
 
@@ -276,24 +279,23 @@ worker_parent (void *)
 
   ACE_ASSERT (child_pid != -1);
 
-  // Perform a barrier wait until our child process has exited.
-  int result = pm.wait ();
-
-  // Note that <result> should == -1 because our signal handler
-  // "reaped" the SIGCHLD.
+  // Perform a <wait> until our child process has exited.
+  int result;
+  
+  while (shut_down == 0)
+    {
+      ACE_OS::sigpause (SIGINT);
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("(%P|%t) got signal!\n")));
+    }
+  // Note that <result> should == -1 because our signal handler should
+  // have "reaped" the SIGCHLD already.
 
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%P|%t) child done, result = %d, %p\n"),
               result,
               ASYS_TEXT ("wait")));
   return 0;
-}
-
-extern "C" void
-exithook (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%P|%t) I'm outta here...\n")));
 }
 
 // Parse the command-line arguments and set options.
@@ -333,10 +335,6 @@ main (int argc, ASYS_TCHAR *argv[])
       ACE_APPEND_LOG (ASYS_TEXT ("Signal_Test-child"));
       parse_args (argc, argv);
 
-      // Register an exit hook so that we can tell when the child
-      // process exits.
-      ACE_OS::atexit (exithook);
-
       run_test (worker_child);
       ACE_END_LOG;
     }
@@ -370,4 +368,4 @@ main (int, ASYS_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
-#endif /* !ACE_LACKS_FORK */
+#endif /* !ACE_LACKS_FORK && !defined (ACE_LACKS_UNIX_SIGNALS) */
