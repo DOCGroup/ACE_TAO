@@ -95,11 +95,6 @@ $(VSHDIR)%.$(OBJEXT): %.cxx $(VSHDIR).creation_stamp
 $(VSHDIR)%.$(OBJEXT): %.c $(VSHDIR).creation_stamp
 	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG) $@ $<
 
-ifneq (,$(COMPILE.rc))
-$(VSHDIR)%.rc.$(OBJEXT): %.rc $(VSHDIR).creation_stamp
-	$(COMPILE.rc) $< $@
-endif
-
 $(VSHDIR)%.$(SOEXT): $(VSHDIR)%.$(OBJEXT)
 	$(SOLINK)
 endif
@@ -150,62 +145,11 @@ show_uninit:
 #       Installation targets
 #----------------------------------------------------------------------------
 
-# Set the cleanup targets
-ifeq ($(CLEAN_BIN),)
-  ifneq ($(BIN),)
-    CLEAN_BIN = $(BIN)
-  else
-    ifneq ($(BIN2),)
-      CLEAN_BIN = $(BIN2)
-    else
-      CLEAN_BIN = $(BIN_UNCHECKED)
-    endif
-  endif
-endif
-
-ifeq ($(CLEAN_LIB),)
-  ifneq ($(LIB),)
-    CLEAN_LIB = $(LIB)
-  else
-    ifneq ($(LIB2),)
-      CLEAN_LIB = $(LIB2)
-    else
-      CLEAN_LIB = $(LIB_UNCHECKED)
-    endif
-  endif
-endif
-
-ifeq ($(CLEAN_SHLIB),)
-  ifneq ($(SHLIB),)
-    CLEAN_SHLIB = $(SHLIB)
-  else
-    ifneq ($(SHLIB2),)
-      CLEAN_SHLIB = $(SHLIB2)
-    else
-      CLEAN_SHLIB = $(SHLIB_UNCHECKED)
-    endif
-  endif
-endif
-
-ifeq ($(CLEAN_SHLIBA),)
-  ifneq ($(SHLIBA),)
-    CLEAN_SHLIBA = $(SHLIBA)
-  else
-    ifneq ($(SHLIBA2),)
-      CLEAN_SHLIBA = $(SHLIBA2)
-    else
-      CLEAN_SHLIBA = $(SHLIBA2)
-    endif
-  endif
-endif
-
 install.local: $(INSTALL)
 
 deinstall.local:
-	$(RM) $(INSTALL) \
-$(CLEAN_LIB:%.$(LIBEXT)=$(INSLIB)/%.$(LIBEXT)) \
-$(CLEAN_SHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT)) \
-$(CLEAN_SHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT)$(SOVERSION))
+	$(RM) $(INSTALL) $(LIB:%.$(LIBEXT)=$(INSLIB)/%.$(LIBEXT)) \
+$(SHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT))
 
 
 #### To disable installs, just add "INSTALL=" to your "make" invocation.
@@ -281,7 +225,7 @@ ifneq ($(IDL_FILES),)
 endif
 
 realclean.local: clean.local deinstall.local clean_idl_stubs.local
-	-$(RM) $(CLEAN_BIN:%=%$(EXEEXT)) $(CLEAN_BIN:%=%_debug$(EXEEXT)) $(CLEAN_BIN:%=%_profile$(EXEEXT)) $(CLEAN_BIN:%=%_optimize$(EXEEXT)) $(CLEAN_LIB:%=%) $(CLEAN_LIB:%=%_debug) $(CLEAN_LIB:%=%_profile) $(CLEAN_LIB:%=%_optimize) $(CLEAN_SHLIB:%=%) $(CLEAN_SHLIB:%=%.*) $(CLEAN_SHLIB:%.so=%.a) $(CLEAN_SHLIB:%=%_debug) $(CLEAN_SHLIB:%=%_profile) $(CLEAN_SHLIB:%=%_optimize) $(CLEAN_SHLIBA:%=%)
+	-$(RM) $(BIN:%=%$(EXEEXT)) $(BIN:%=%_debug$(EXEEXT)) $(BIN:%=%_profile$(EXEEXT)) $(BIN:%=%_optimize$(EXEEXT)) $(LIB:%=%) $(LIB:%=%_debug) $(LIB:%=%_profile) $(LIB:%=%_optimize) $(SHLIB:%=%) $(SHLIB:%=%.*) $(SHLIB:%.so=%.a) $(SHLIB:%=%_debug) $(SHLIB:%=%_profile) $(SHLIB:%=%_optimize) $(SHLIBA:%=%) $(BIN2:%=%$(EXEEXT)) $(BIN2:%=%_debug$(EXEEXT)) $(BIN2:%=%_profile$(EXEEXT)) $(BIN2:%=%_optimize$(EXEEXT)) $(LIB2:%=%) $(LIB2:%=%_debug) $(LIB2:%=%_profile) $(LIB2:%=%_optimize) $(SHLIB2:%=%) $(SHLIB2:%=%_debug) $(SHLIB2:%=%_profile) $(SHLIB2:%=%_optimize) $(SHLIBA2:%=%)
 
 #----------------------------------------------------------------------------
 #       Dependency generation target

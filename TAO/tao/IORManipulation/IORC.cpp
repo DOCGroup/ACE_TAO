@@ -26,13 +26,20 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:302
+// be/be_codegen.cpp:351
 
 
-#include "IORManip_Loader.h"
-#include "tao/Typecode.h"
-#include "tao/Any_Impl_T.h"
-#include "tao/Any_Dual_Impl_T.h"
+#include "IORC.h"
+#include "tao/Stub.h"
+#include "tao/Invocation.h"
+#include "tao/PortableInterceptor.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
+#include "tao/RequestInfo_Util.h"
+#include "tao/ClientRequestInfo_i.h"
+#include "tao/ClientInterceptorAdapter.h"
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -41,14 +48,6 @@
 #if !defined (__ACE_INLINE__)
 #include "IORC.i"
 #endif /* !defined INLINE */
-
-// TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:60
-
-// Arg traits specializations.
-namespace TAO
-{
-};
 
 // TAO_IDL - Generated from
 // be/be_visitor_exception/exception_cs.cpp:63
@@ -82,9 +81,8 @@ TAO_IOP::EmptyProfileList::operator= (const ::TAO_IOP::EmptyProfileList &_tao_ex
 
 void TAO_IOP::EmptyProfileList::_tao_any_destructor (void *_tao_void_pointer)
 {
-  EmptyProfileList *_tao_tmp_pointer =
-    ACE_static_cast (EmptyProfileList*, _tao_void_pointer);
-  delete _tao_tmp_pointer;
+  EmptyProfileList *tmp = ACE_static_cast (EmptyProfileList*, _tao_void_pointer);
+  delete tmp;
 }
 
 TAO_IOP::EmptyProfileList *
@@ -189,11 +187,14 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_EmptyProfileList (
     sizeof (TAO_IOP::EmptyProfileList)
   );
 
-namespace TAO_IOP
-{
-  ::CORBA::TypeCode_ptr _tc_EmptyProfileList =
-    &_tc_TAO_tc_TAO_IOP_EmptyProfileList;
-}
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (TAO_IOP)
+TAO_NAMESPACE_DEFINE (
+    ::CORBA::TypeCode_ptr,
+    _tc_EmptyProfileList,
+    &_tc_TAO_tc_TAO_IOP_EmptyProfileList
+  )
+TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
 // be/be_visitor_exception/exception_cs.cpp:63
@@ -227,9 +228,8 @@ TAO_IOP::NotFound::operator= (const ::TAO_IOP::NotFound &_tao_excp)
 
 void TAO_IOP::NotFound::_tao_any_destructor (void *_tao_void_pointer)
 {
-  NotFound *_tao_tmp_pointer =
-    ACE_static_cast (NotFound*, _tao_void_pointer);
-  delete _tao_tmp_pointer;
+  NotFound *tmp = ACE_static_cast (NotFound*, _tao_void_pointer);
+  delete tmp;
 }
 
 TAO_IOP::NotFound *
@@ -330,11 +330,14 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_NotFound (
     sizeof (TAO_IOP::NotFound)
   );
 
-namespace TAO_IOP
-{
-  ::CORBA::TypeCode_ptr _tc_NotFound =
-    &_tc_TAO_tc_TAO_IOP_NotFound;
-}
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (TAO_IOP)
+TAO_NAMESPACE_DEFINE (
+    ::CORBA::TypeCode_ptr,
+    _tc_NotFound,
+    &_tc_TAO_tc_TAO_IOP_NotFound
+  )
+TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
 // be/be_visitor_exception/exception_cs.cpp:63
@@ -368,9 +371,8 @@ TAO_IOP::Duplicate::operator= (const ::TAO_IOP::Duplicate &_tao_excp)
 
 void TAO_IOP::Duplicate::_tao_any_destructor (void *_tao_void_pointer)
 {
-  Duplicate *_tao_tmp_pointer =
-    ACE_static_cast (Duplicate*, _tao_void_pointer);
-  delete _tao_tmp_pointer;
+  Duplicate *tmp = ACE_static_cast (Duplicate*, _tao_void_pointer);
+  delete tmp;
 }
 
 TAO_IOP::Duplicate *
@@ -471,11 +473,14 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_Duplicate (
     sizeof (TAO_IOP::Duplicate)
   );
 
-namespace TAO_IOP
-{
-  ::CORBA::TypeCode_ptr _tc_Duplicate =
-    &_tc_TAO_tc_TAO_IOP_Duplicate;
-}
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (TAO_IOP)
+TAO_NAMESPACE_DEFINE (
+    ::CORBA::TypeCode_ptr,
+    _tc_Duplicate,
+    &_tc_TAO_tc_TAO_IOP_Duplicate
+  )
+TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
 // be/be_visitor_exception/exception_cs.cpp:63
@@ -509,9 +514,8 @@ TAO_IOP::Invalid_IOR::operator= (const ::TAO_IOP::Invalid_IOR &_tao_excp)
 
 void TAO_IOP::Invalid_IOR::_tao_any_destructor (void *_tao_void_pointer)
 {
-  Invalid_IOR *_tao_tmp_pointer =
-    ACE_static_cast (Invalid_IOR*, _tao_void_pointer);
-  delete _tao_tmp_pointer;
+  Invalid_IOR *tmp = ACE_static_cast (Invalid_IOR*, _tao_void_pointer);
+  delete tmp;
 }
 
 TAO_IOP::Invalid_IOR *
@@ -612,11 +616,14 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_Invalid_IOR (
     sizeof (TAO_IOP::Invalid_IOR)
   );
 
-namespace TAO_IOP
-{
-  ::CORBA::TypeCode_ptr _tc_Invalid_IOR =
-    &_tc_TAO_tc_TAO_IOP_Invalid_IOR;
-}
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (TAO_IOP)
+TAO_NAMESPACE_DEFINE (
+    ::CORBA::TypeCode_ptr,
+    _tc_Invalid_IOR,
+    &_tc_TAO_tc_TAO_IOP_Invalid_IOR
+  )
+TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
 // be/be_visitor_exception/exception_cs.cpp:63
@@ -650,9 +657,8 @@ TAO_IOP::MultiProfileList::operator= (const ::TAO_IOP::MultiProfileList &_tao_ex
 
 void TAO_IOP::MultiProfileList::_tao_any_destructor (void *_tao_void_pointer)
 {
-  MultiProfileList *_tao_tmp_pointer =
-    ACE_static_cast (MultiProfileList*, _tao_void_pointer);
-  delete _tao_tmp_pointer;
+  MultiProfileList *tmp = ACE_static_cast (MultiProfileList*, _tao_void_pointer);
+  delete tmp;
 }
 
 TAO_IOP::MultiProfileList *
@@ -757,53 +763,98 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_MultiProfileList (
     sizeof (TAO_IOP::MultiProfileList)
   );
 
-namespace TAO_IOP
-{
-  ::CORBA::TypeCode_ptr _tc_MultiProfileList =
-    &_tc_TAO_tc_TAO_IOP_MultiProfileList;
-}
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (TAO_IOP)
+TAO_NAMESPACE_DEFINE (
+    ::CORBA::TypeCode_ptr,
+    _tc_MultiProfileList,
+    &_tc_TAO_tc_TAO_IOP_MultiProfileList
+  )
+TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:63
 
-// Traits specializations for TAO_IOP::TAO_IOR_Property.
+int TAO_IOP::TAO_IOR_Property::_tao_class_id = 0;
 
 TAO_IOP::TAO_IOR_Property_ptr
-TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::tao_duplicate (
-    TAO_IOP::TAO_IOR_Property_ptr p
+TAO_IOP::tao_TAO_IOR_Property_life::tao_duplicate (
+    TAO_IOR_Property_ptr p
   )
 {
-  return TAO_IOP::TAO_IOR_Property::_duplicate (p);
+  return TAO_IOR_Property::_duplicate (p);
 }
 
 void
-TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::tao_release (
-    TAO_IOP::TAO_IOR_Property_ptr p
+TAO_IOP::tao_TAO_IOR_Property_life::tao_release (
+    TAO_IOR_Property_ptr p
   )
 {
   CORBA::release (p);
 }
 
 TAO_IOP::TAO_IOR_Property_ptr
-TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::tao_nil (void)
+TAO_IOP::tao_TAO_IOR_Property_life::tao_nil (
+    void
+  )
 {
-  return TAO_IOP::TAO_IOR_Property::_nil ();
+  return TAO_IOR_Property::_nil ();
 }
 
 CORBA::Boolean
-TAO::Objref_Traits<TAO_IOP::TAO_IOR_Property>::tao_marshal (
-    TAO_IOP::TAO_IOR_Property_ptr p,
-    TAO_OutputCDR & cdr
+TAO_IOP::tao_TAO_IOR_Property_life::tao_marshal (
+    TAO_IOR_Property_ptr p,
+    TAO_OutputCDR &cdr
   )
 {
   return p->marshal (cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*TAO_IOP__TAO_TAO_IOR_Property_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
+TAO_IOP::TAO_IOR_Property_ptr
+TAO_IOP::tao_TAO_IOR_Property_cast::tao_narrow (
+    CORBA::Object *p
+    ACE_ENV_ARG_DECL
+  )
+{
+  return TAO_IOR_Property::_narrow (p ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::Object *
+TAO_IOP::tao_TAO_IOR_Property_cast::tao_upcast (
+    void *src
+  )
+{
+  TAO_IOR_Property **tmp =
+    ACE_static_cast (TAO_IOR_Property **, src);
+  return *tmp;
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        TAO_IOP::TAO_IOR_Property,
+        TAO_IOP::tao_TAO_IOR_Property_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        TAO_IOP::TAO_IOR_Property,
+        TAO_IOP::tao_TAO_IOR_Property_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        TAO_IOP::TAO_IOR_Property, \
+        TAO_IOP::tao_TAO_IOR_Property_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        TAO_IOP::TAO_IOR_Property, \
+        TAO_IOP::tao_TAO_IOR_Property_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+// TAO_IDL - Generated from
+// be/be_visitor_interface/interface_cs.cpp:245
 
 TAO_IOP::TAO_IOR_Property::TAO_IOR_Property (void)
 {}
@@ -814,26 +865,40 @@ TAO_IOP::TAO_IOR_Property::~TAO_IOR_Property (void)
 void
 TAO_IOP::TAO_IOR_Property::_tao_any_destructor (void *_tao_void_pointer)
 {
-  TAO_IOR_Property *_tao_tmp_pointer =
-    ACE_static_cast (TAO_IOR_Property *, _tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  TAO_IOR_Property *tmp = ACE_static_cast (TAO_IOR_Property *, _tao_void_pointer);
+  CORBA::release (tmp);
 }
 
 TAO_IOP::TAO_IOR_Property_ptr
 TAO_IOP::TAO_IOR_Property::_narrow (
-    CORBA::Object_ptr _tao_objref
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL
+  )
+{
+  return TAO_IOR_Property::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+}
+
+TAO_IOP::TAO_IOR_Property_ptr
+TAO_IOP::TAO_IOR_Property::_unchecked_narrow (
+    CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
+  if (CORBA::is_nil (obj))
     {
       return TAO_IOR_Property::_nil ();
     }
 
-  TAO_IOR_Property_ptr proxy =
-    dynamic_cast<TAO_IOR_Property_ptr> (_tao_objref);
-
-  return TAO_IOR_Property::_duplicate (proxy);
+  return
+      ACE_reinterpret_cast (
+          TAO_IOR_Property_ptr,
+          obj->_tao_QueryInterface (
+              ACE_reinterpret_cast (
+                  ptrdiff_t,
+                  &TAO_IOR_Property::_tao_class_id
+                )
+            )
+        );
 }
 
 TAO_IOP::TAO_IOR_Property_ptr
@@ -847,33 +912,35 @@ TAO_IOP::TAO_IOR_Property::_duplicate (TAO_IOR_Property_ptr obj)
   return obj;
 }
 
-CORBA::Boolean
-TAO_IOP::TAO_IOR_Property::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
+void *TAO_IOP::TAO_IOR_Property::_tao_QueryInterface (ptrdiff_t type)
 {
-  if (
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:TAO_IOP/TAO_IOR_Property:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-     )
+  void *retv = 0;
+
+  if (type == ACE_reinterpret_cast (
+              ptrdiff_t,
+              &ACE_NESTED_CLASS (::TAO_IOP, TAO_IOR_Property)::_tao_class_id)
+            )
     {
-      return 1; // success using local knowledge
+      retv = ACE_reinterpret_cast (void*, this);
     }
-  else
+  else if (type == ACE_reinterpret_cast (
+               ptrdiff_t,
+               &CORBA::Object::_tao_class_id)
+             )
     {
-      return 0;
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (CORBA::Object_ptr, this)
+          );
     }
+
+  if (retv != 0)
+    {
+      this->_add_ref ();
+    }
+
+  return retv;
 }
 
 const char* TAO_IOP::TAO_IOR_Property::_interface_repository_id (void) const
@@ -919,56 +986,199 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_TAO_IOR_Property (
     sizeof (TAO_IOP::TAO_IOR_Property)
   );
 
-namespace TAO_IOP
-{
-  ::CORBA::TypeCode_ptr _tc_TAO_IOR_Property =
-    &_tc_TAO_tc_TAO_IOP_TAO_IOR_Property;
-}
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (TAO_IOP)
+TAO_NAMESPACE_DEFINE (
+    ::CORBA::TypeCode_ptr,
+    _tc_TAO_IOR_Property,
+    &_tc_TAO_tc_TAO_IOP_TAO_IOR_Property
+  )
+TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:63
 
-// Traits specializations for TAO_IOP::TAO_IOR_Manipulation.
+int TAO_IOP::TAO_IOR_Manipulation::_tao_class_id = 0;
 
 TAO_IOP::TAO_IOR_Manipulation_ptr
-TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::tao_duplicate (
-    TAO_IOP::TAO_IOR_Manipulation_ptr p
+TAO_IOP::tao_TAO_IOR_Manipulation_life::tao_duplicate (
+    TAO_IOR_Manipulation_ptr p
   )
 {
-  return TAO_IOP::TAO_IOR_Manipulation::_duplicate (p);
+  return TAO_IOR_Manipulation::_duplicate (p);
 }
 
 void
-TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::tao_release (
-    TAO_IOP::TAO_IOR_Manipulation_ptr p
+TAO_IOP::tao_TAO_IOR_Manipulation_life::tao_release (
+    TAO_IOR_Manipulation_ptr p
   )
 {
   CORBA::release (p);
 }
 
 TAO_IOP::TAO_IOR_Manipulation_ptr
-TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::tao_nil (void)
+TAO_IOP::tao_TAO_IOR_Manipulation_life::tao_nil (
+    void
+  )
 {
-  return TAO_IOP::TAO_IOR_Manipulation::_nil ();
+  return TAO_IOR_Manipulation::_nil ();
 }
 
 CORBA::Boolean
-TAO::Objref_Traits<TAO_IOP::TAO_IOR_Manipulation>::tao_marshal (
-    TAO_IOP::TAO_IOR_Manipulation_ptr p,
-    TAO_OutputCDR & cdr
+TAO_IOP::tao_TAO_IOR_Manipulation_life::tao_marshal (
+    TAO_IOR_Manipulation_ptr p,
+    TAO_OutputCDR &cdr
   )
 {
   return p->marshal (cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*TAO_IOP__TAO_TAO_IOR_Manipulation_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
+TAO_IOP::TAO_IOR_Manipulation_ptr
+TAO_IOP::tao_TAO_IOR_Manipulation_cast::tao_narrow (
+    CORBA::Object *p
+    ACE_ENV_ARG_DECL
+  )
+{
+  return TAO_IOR_Manipulation::_narrow (p ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::Object *
+TAO_IOP::tao_TAO_IOR_Manipulation_cast::tao_upcast (
+    void *src
+  )
+{
+  TAO_IOR_Manipulation **tmp =
+    ACE_static_cast (TAO_IOR_Manipulation **, src);
+  return *tmp;
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        TAO_IOP::TAO_IOR_Manipulation,
+        TAO_IOP::tao_TAO_IOR_Manipulation_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        TAO_IOP::TAO_IOR_Manipulation,
+        TAO_IOP::tao_TAO_IOR_Manipulation_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        TAO_IOP::TAO_IOR_Manipulation, \
+        TAO_IOP::tao_TAO_IOR_Manipulation_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        TAO_IOP::TAO_IOR_Manipulation, \
+        TAO_IOP::tao_TAO_IOR_Manipulation_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/sequence_cs.cpp:65
+// be/be_visitor_interface/interface_cs.cpp:245
+
+TAO_IOP::TAO_IOR_Manipulation::TAO_IOR_Manipulation (void)
+{}
+
+TAO_IOP::TAO_IOR_Manipulation::~TAO_IOR_Manipulation (void)
+{}
+
+void
+TAO_IOP::TAO_IOR_Manipulation::_tao_any_destructor (void *_tao_void_pointer)
+{
+  TAO_IOR_Manipulation *tmp = ACE_static_cast (TAO_IOR_Manipulation *, _tao_void_pointer);
+  CORBA::release (tmp);
+}
+
+TAO_IOP::TAO_IOR_Manipulation_ptr
+TAO_IOP::TAO_IOR_Manipulation::_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL
+  )
+{
+  return TAO_IOR_Manipulation::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+}
+
+TAO_IOP::TAO_IOR_Manipulation_ptr
+TAO_IOP::TAO_IOR_Manipulation::_unchecked_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (obj))
+    {
+      return TAO_IOR_Manipulation::_nil ();
+    }
+
+  return
+      ACE_reinterpret_cast (
+          TAO_IOR_Manipulation_ptr,
+          obj->_tao_QueryInterface (
+              ACE_reinterpret_cast (
+                  ptrdiff_t,
+                  &TAO_IOR_Manipulation::_tao_class_id
+                )
+            )
+        );
+}
+
+TAO_IOP::TAO_IOR_Manipulation_ptr
+TAO_IOP::TAO_IOR_Manipulation::_duplicate (TAO_IOR_Manipulation_ptr obj)
+{
+  if (! CORBA::is_nil (obj))
+    {
+      obj->_add_ref ();
+    }
+
+  return obj;
+}
+
+void *TAO_IOP::TAO_IOR_Manipulation::_tao_QueryInterface (ptrdiff_t type)
+{
+  void *retv = 0;
+
+  if (type == ACE_reinterpret_cast (
+              ptrdiff_t,
+              &ACE_NESTED_CLASS (::TAO_IOP, TAO_IOR_Manipulation)::_tao_class_id)
+            )
+    {
+      retv = ACE_reinterpret_cast (void*, this);
+    }
+  else if (type == ACE_reinterpret_cast (
+               ptrdiff_t,
+               &CORBA::Object::_tao_class_id)
+             )
+    {
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (CORBA::Object_ptr, this)
+          );
+    }
+
+  if (retv != 0)
+    {
+      this->_add_ref ();
+    }
+
+  return retv;
+}
+
+const char* TAO_IOP::TAO_IOR_Manipulation::_interface_repository_id (void) const
+{
+  return "IDL:TAO_IOP/TAO_IOR_Manipulation:1.0";
+}
+
+CORBA::Boolean
+TAO_IOP::TAO_IOR_Manipulation::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+// TAO_IDL - Generated from
+// be/be_visitor_sequence/sequence_cs.cpp:72
 
 #if !defined (_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CS_)
 #define _TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CS_
@@ -980,7 +1190,8 @@ TAO_IOP::TAO_IOR_Manipulation::IORList::IORList (
     CORBA::ULong max
   )
   : TAO_Unbounded_Pseudo_Sequence<
-        CORBA::Object
+        CORBA::Object,
+        CORBA::Object_var
       >
     (max)
 {}
@@ -992,7 +1203,8 @@ TAO_IOP::TAO_IOR_Manipulation::IORList::IORList (
     CORBA::Boolean release
   )
   : TAO_Unbounded_Pseudo_Sequence<
-        CORBA::Object
+        CORBA::Object,
+        CORBA::Object_var
       >
     (max, length, buffer, release)
 {}
@@ -1001,7 +1213,8 @@ TAO_IOP::TAO_IOR_Manipulation::IORList::IORList (
     const IORList &seq
   )
   : TAO_Unbounded_Pseudo_Sequence<
-        CORBA::Object
+        CORBA::Object,
+        CORBA::Object_var
       >
     (seq)
 {}
@@ -1013,10 +1226,93 @@ void TAO_IOP::TAO_IOR_Manipulation::IORList::_tao_any_destructor (
     void * _tao_void_pointer
   )
 {
-  IORList * _tao_tmp_pointer =
-    ACE_static_cast (IORList *, _tao_void_pointer);
-  delete _tao_tmp_pointer;
+  IORList * tmp =
+    ACE_static_cast (
+        IORList *,
+        _tao_void_pointer
+      );
+  delete tmp;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class
+  TAO_Pseudo_Object_Manager<
+      CORBA::Object,
+      CORBA::Object_var
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+    TAO_Pseudo_Object_Manager< \
+        CORBA::Object, \
+        CORBA::Object_var \
+      >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class
+  TAO_MngSeq_Var_T<
+      TAO_IOP::TAO_IOR_Manipulation::IORList,
+      TAO_Pseudo_Object_Manager<
+          CORBA::Object,
+          CORBA::Object_var
+        >
+    >;
+
+template class
+  TAO_Seq_Var_Base_T<
+      TAO_IOP::TAO_IOR_Manipulation::IORList,
+      TAO_Pseudo_Object_Manager<
+          CORBA::Object,
+          CORBA::Object_var
+        >
+    >;
+
+template class
+  TAO_MngSeq_Out_T<
+      TAO_IOP::TAO_IOR_Manipulation::IORList,
+      TAO_IOP::TAO_IOR_Manipulation::IORList_var,
+      TAO_Pseudo_Object_Manager<
+          CORBA::Object,
+          CORBA::Object_var
+        >
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+  TAO_MngSeq_Var_T< \
+      TAO_IOP::TAO_IOR_Manipulation::IORList, \
+      TAO_Pseudo_Object_Manager< \
+          CORBA::Object, \
+          CORBA::Object_var \
+        > \
+    >
+
+# pragma instantiate \
+  TAO_Seq_Var_Base_T< \
+      TAO_IOP::TAO_IOR_Manipulation::IORList, \
+      TAO_Pseudo_Object_Manager< \
+          CORBA::Object, \
+          CORBA::Object_var \
+        > \
+    >
+
+# pragma instantiate \
+  TAO_MngSeq_Out_T< \
+      TAO_IOP::TAO_IOR_Manipulation::IORList, \
+      TAO_IOP::TAO_IOR_Manipulation::IORList_var, \
+      TAO_Pseudo_Object_Manager< \
+          CORBA::Object, \
+          CORBA::Object_var \
+        > \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* end #if !defined */
 
@@ -1076,88 +1372,6 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_TAO_IOR_Manipulation_IORList (
 ::CORBA::TypeCode_ptr TAO_IOP::TAO_IOR_Manipulation::_tc_IORList =
   &_tc_TAO_tc_TAO_IOP_TAO_IOR_Manipulation_IORList;
 
-TAO_IOP::TAO_IOR_Manipulation::TAO_IOR_Manipulation (void)
-{}
-
-TAO_IOP::TAO_IOR_Manipulation::~TAO_IOR_Manipulation (void)
-{}
-
-void
-TAO_IOP::TAO_IOR_Manipulation::_tao_any_destructor (void *_tao_void_pointer)
-{
-  TAO_IOR_Manipulation *_tao_tmp_pointer =
-    ACE_static_cast (TAO_IOR_Manipulation *, _tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
-}
-
-TAO_IOP::TAO_IOR_Manipulation_ptr
-TAO_IOP::TAO_IOR_Manipulation::_narrow (
-    CORBA::Object_ptr _tao_objref
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (CORBA::is_nil (_tao_objref))
-    {
-      return TAO_IOR_Manipulation::_nil ();
-    }
-
-  TAO_IOR_Manipulation_ptr proxy =
-    dynamic_cast<TAO_IOR_Manipulation_ptr> (_tao_objref);
-
-  return TAO_IOR_Manipulation::_duplicate (proxy);
-}
-
-TAO_IOP::TAO_IOR_Manipulation_ptr
-TAO_IOP::TAO_IOR_Manipulation::_duplicate (TAO_IOR_Manipulation_ptr obj)
-{
-  if (! CORBA::is_nil (obj))
-    {
-      obj->_add_ref ();
-    }
-
-  return obj;
-}
-
-CORBA::Boolean
-TAO_IOP::TAO_IOR_Manipulation::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
-{
-  if (
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:TAO_IOP/TAO_IOR_Manipulation:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-     )
-    {
-      return 1; // success using local knowledge
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-const char* TAO_IOP::TAO_IOR_Manipulation::_interface_repository_id (void) const
-{
-  return "IDL:TAO_IOP/TAO_IOR_Manipulation:1.0";
-}
-
-CORBA::Boolean
-TAO_IOP::TAO_IOR_Manipulation::marshal (TAO_OutputCDR &)
-{
-  return 0;
-}
-
 // TAO_IDL - Generated from
 // be/be_visitor_typecode/typecode_defn.cpp:284
 
@@ -1192,11 +1406,14 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_TAO_IOR_Manipulation (
     sizeof (TAO_IOP::TAO_IOR_Manipulation)
   );
 
-namespace TAO_IOP
-{
-  ::CORBA::TypeCode_ptr _tc_TAO_IOR_Manipulation =
-    &_tc_TAO_tc_TAO_IOP_TAO_IOR_Manipulation;
-}
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (TAO_IOP)
+TAO_NAMESPACE_DEFINE (
+    ::CORBA::TypeCode_ptr,
+    _tc_TAO_IOR_Manipulation,
+    &_tc_TAO_tc_TAO_IOP_TAO_IOR_Manipulation
+  )
+TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
 // be/be_visitor_exception/any_op_cs.cpp:50
@@ -1283,6 +1500,13 @@ CORBA::Boolean operator>>= (
       );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<TAO_IOP::EmptyProfileList>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<TAO_IOP::EmptyProfileList \>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from
 // be/be_visitor_exception/any_op_cs.cpp:50
 
@@ -1367,6 +1591,13 @@ CORBA::Boolean operator>>= (
         _tao_elem
       );
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<TAO_IOP::NotFound>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<TAO_IOP::NotFound \>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
 // be/be_visitor_exception/any_op_cs.cpp:50
@@ -1453,6 +1684,13 @@ CORBA::Boolean operator>>= (
       );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<TAO_IOP::Duplicate>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<TAO_IOP::Duplicate \>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from
 // be/be_visitor_exception/any_op_cs.cpp:50
 
@@ -1537,6 +1775,13 @@ CORBA::Boolean operator>>= (
         _tao_elem
       );
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<TAO_IOP::Invalid_IOR>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<TAO_IOP::Invalid_IOR \>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
 // be/be_visitor_exception/any_op_cs.cpp:50
@@ -1623,32 +1868,15 @@ CORBA::Boolean operator>>= (
       );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<TAO_IOP::MultiProfileList>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<TAO_IOP::MultiProfileList \>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_cs.cpp:50
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Property>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Property>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Property>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
 
 // Copying insertion.
 void
@@ -1692,32 +1920,15 @@ operator>>= (
       );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Property>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Property>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_cs.cpp:50
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Manipulation>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Manipulation>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Manipulation>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
 
 // Copying insertion.
 void
@@ -1761,278 +1972,9 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
-// be/be_visitor_sequence/any_op_cs.cpp:54
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
-// Copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    const TAO_IOP::TAO_IOR_Manipulation::IORList &_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::insert_copy (
-      _tao_any,
-      TAO_IOP::TAO_IOR_Manipulation::IORList::_tao_any_destructor,
-      TAO_IOP::TAO_IOR_Manipulation::_tc_IORList,
-      _tao_elem
-    );
-}
-
-// Non-copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    TAO_IOP::TAO_IOR_Manipulation::IORList *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::insert (
-      _tao_any,
-      TAO_IOP::TAO_IOR_Manipulation::IORList::_tao_any_destructor,
-      TAO_IOP::TAO_IOR_Manipulation::_tc_IORList,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    TAO_IOP::TAO_IOR_Manipulation::IORList *&_tao_elem
-  )
-{
-  return _tao_any >>= ACE_const_cast (
-      const TAO_IOP::TAO_IOR_Manipulation::IORList *&,
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    const TAO_IOP::TAO_IOR_Manipulation::IORList *&_tao_elem
-  )
-{
-  return
-    TAO::Any_Dual_Impl_T<TAO_IOP::TAO_IOR_Manipulation::IORList>::extract (
-        _tao_any,
-        TAO_IOP::TAO_IOR_Manipulation::IORList::_tao_any_destructor,
-        TAO_IOP::TAO_IOR_Manipulation::_tc_IORList,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1702
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        TAO_IOP::EmptyProfileList
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        TAO_IOP::NotFound
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        TAO_IOP::Duplicate
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        TAO_IOP::Invalid_IOR
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        TAO_IOP::MultiProfileList
-      >;
-
-  template class
-    TAO::Objref_Traits<
-        TAO_IOP::TAO_IOR_Property
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        TAO_IOP::TAO_IOR_Property
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        TAO_IOP::TAO_IOR_Property
-      >;
-
-  template class
-    TAO::Any_Impl_T<
-        TAO_IOP::TAO_IOR_Property
-      >;
-
-  template class
-    TAO_Pseudo_Object_Manager<
-        CORBA::Object
-      >;
-
-  template class
-    TAO_MngSeq_Var_T<
-        TAO_IOP::TAO_IOR_Manipulation::IORList,
-        TAO_Pseudo_Object_Manager<
-            CORBA::Object
-          >
-      >;
-
-  template class
-    TAO_Seq_Var_Base_T<
-        TAO_IOP::TAO_IOR_Manipulation::IORList,
-        TAO_Pseudo_Object_Manager<
-            CORBA::Object
-          >
-      >;
-
-  template class
-    TAO_MngSeq_Out_T<
-        TAO_IOP::TAO_IOR_Manipulation::IORList,
-        TAO_IOP::TAO_IOR_Manipulation::IORList_var,
-        TAO_Pseudo_Object_Manager<
-            CORBA::Object
-          >
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        TAO_IOP::TAO_IOR_Manipulation::IORList
-      >;
-
-  template class
-    TAO::Objref_Traits<
-        TAO_IOP::TAO_IOR_Manipulation
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        TAO_IOP::TAO_IOR_Manipulation
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        TAO_IOP::TAO_IOR_Manipulation
-      >;
-
-  template class
-    TAO::Any_Impl_T<
-        TAO_IOP::TAO_IOR_Manipulation
-      >;
-
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Manipulation>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        TAO_IOP::EmptyProfileList \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        TAO_IOP::NotFound \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        TAO_IOP::Duplicate \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        TAO_IOP::Invalid_IOR \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        TAO_IOP::MultiProfileList \
-      >
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        TAO_IOP::TAO_IOR_Property \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        TAO_IOP::TAO_IOR_Property
-      >
-
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        TAO_IOP::TAO_IOR_Property
-      >
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        TAO_IOP::TAO_IOR_Property \
-      >
-
-# pragma instantiate \
-    TAO_MngSeq_Var_T< \
-        TAO_IOP::TAO_IOR_Manipulation::IORList, \
-        TAO_Pseudo_Object_Manager< \
-            CORBA::Object \
-          > \
-      >
-
-# pragma instantiate \
-    TAO_Seq_Var_Base_T< \
-        TAO_IOP::TAO_IOR_Manipulation::IORList, \
-        TAO_Pseudo_Object_Manager< \
-            CORBA::Object \
-          > \
-      >
-
-# pragma instantiate \
-    TAO_MngSeq_Out_T< \
-        TAO_IOP::TAO_IOR_Manipulation::IORList, \
-        TAO_IOP::TAO_IOR_Manipulation::IORList_var, \
-        TAO_Pseudo_Object_Manager< \
-            CORBA::Object \
-          > \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        TAO_IOP::TAO_IOR_Manipulation::IORList \
-      >
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        TAO_IOP::TAO_IOR_Manipulation \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        TAO_IOP::TAO_IOR_Manipulation
-      >
-
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        TAO_IOP::TAO_IOR_Manipulation
-      >
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        TAO_IOP::TAO_IOR_Manipulation \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+# pragma instantiate TAO::Any_Impl_T<TAO_IOP::TAO_IOR_Manipulation>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

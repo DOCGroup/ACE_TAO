@@ -1,6 +1,5 @@
 //$Id$
 #include "Notify_Logging_Service.h"
-#include "ace/OS_main.h"
 
 ACE_RCSID (Notify_Logging_Service,
            Notify_Logging_Server,

@@ -76,7 +76,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_exprlist.h"
 #include "utl_identifier.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_Memory.h"
+#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_array, 
@@ -158,17 +158,17 @@ AST_Array::dump (ACE_OSTREAM_TYPE &o)
 {
   pd_base_type->dump (o);
 
-  this->dump_i (o, " ");
+  o << " ";
 
   this->local_name ()->dump (o);
 
   for (unsigned long i = 0; i < this->pd_n_dims; i++)
     {
-      this->dump_i (o, "[");
+      o << "[";
 
       pd_dims[i]->dump (o);
 
-      this->dump_i (o, "]");
+      o << "]";
     }
 }
 

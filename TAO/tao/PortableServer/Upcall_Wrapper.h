@@ -10,20 +10,19 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_UPCALL_WRAPPER_H
 #define TAO_UPCALL_WRAPPER_H
-
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
 #include "tao/PortableServer/ServerRequestInfo.h"
+#include "tao/PortableServer/ServerInterceptorAdapter.h"
+#include "tao/SArgument_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/PortableServer/ServerInterceptorAdapter.h"
-#include "tao/SArgument_T.h"
 
 /**
  * @class TAO_Upcall_Wrapper
@@ -65,5 +64,4 @@ private:
 };
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_UPCALL_WRAPPER_H */

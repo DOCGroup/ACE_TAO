@@ -4,7 +4,6 @@
 // integrated into ACE components like the SOCK_Acceptor and
 // SOCK_Stream.
 
-#include "ace/OS_main.h"
 #include "ace/Dump.h"
 #include "test_dump.h"
 

@@ -16,8 +16,6 @@
 // for outputting a specialized makefile build the reduce footprint library.
 
 #include "Obj_Module.h"
-
-// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
 // The Makefile generator class serves as the base class used to output the

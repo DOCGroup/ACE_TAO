@@ -21,6 +21,7 @@
 
 #if defined (ACE_HAS_WINCE)
 
+#include "ace/OS.h"
 #include "ace/Log_Msg_Callback.h"
 #include "ace/Log_Record.h"
 

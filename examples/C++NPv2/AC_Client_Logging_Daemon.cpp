@@ -4,6 +4,7 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
+#include "ace/OS.h"
 #include "ace/Acceptor.h"
 #include "ace/Connector.h"
 #include "ace/Get_Opt.h"
@@ -15,11 +16,11 @@
 #include "ace/Service_Object.h"
 #include "ace/Signal.h"
 #include "ace/Svc_Handler.h"
+#include "ace/Synch.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Thread_Manager.h"
-#include "ace/os_include/os_netdb.h"
 #include "Logging_Handler.h"
 #include "AC_CLD_export.h"
 #include <openssl/ssl.h>
@@ -398,7 +399,7 @@ int AC_Client_Logging_Daemon::init
   u_short cld_port = ACE_DEFAULT_SERVICE_PORT;
   u_short sld_port = ACE_DEFAULT_LOGGING_SERVER_PORT;
   ACE_TCHAR sld_host[MAXHOSTNAMELEN];
-  ACE_OS::strcpy (sld_host, ACE_LOCALHOST);
+  ACE_OS_String::strcpy (sld_host, ACE_LOCALHOST);
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:r:s:"), 0);
   get_opt.long_option (ACE_TEXT ("client_port"), 'p',
@@ -419,7 +420,7 @@ int AC_Client_Logging_Daemon::init
         (u_short, ACE_OS::atoi (get_opt.opt_arg ()));
       break;
     case 's': // Server logging daemon hostname.
-      ACE_OS::strsncpy
+      ACE_OS_String::strsncpy
         (sld_host, get_opt.opt_arg (), MAXHOSTNAMELEN);
       break;
     }

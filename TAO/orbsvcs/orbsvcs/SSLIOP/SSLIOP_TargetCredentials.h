@@ -90,11 +90,17 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
 
+  static TAO_SSLIOP_TargetCredentials_ptr _unchecked_narrow (
+      CORBA::Object_ptr obj
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    );
+
   static TAO_SSLIOP_TargetCredentials_ptr _nil (void)
     {
       return (TAO_SSLIOP_TargetCredentials_ptr)0;
     }
 
+  virtual void *_tao_QueryInterface (ptrdiff_t type);
   //@}
 
 };

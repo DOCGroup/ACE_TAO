@@ -23,13 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch_Traits.h"
-#include "ace/Guard_T.h"
-#if defined (ACE_HAS_THREADS)
-#  include "ace/Thread_Mutex.h"
-#else
-#  include "ace/Null_Mutex.h"
-#endif /* ACE_HAS_THREADS */
+#include "ace/Synch.h"
 
 // ==========================================================================//
 //------------- General Requirements on a Log Message Receiver --------------//

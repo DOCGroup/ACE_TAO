@@ -1,7 +1,6 @@
 #include "FOO_Client_ORBInitializer.h"
 #include "FOO_ClientRequestInterceptor.h"
 
-#include "tao/ORB_Constants.h"
 
 ACE_RCSID (IORInterceptor,
            FOO_Client_ORBInitializer,

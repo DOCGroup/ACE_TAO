@@ -16,7 +16,6 @@
 
 #ifndef TAO_ORBCONF_H
 #define TAO_ORBCONF_H
-
 #include /**/ "ace/pre.h"
 
 // "ace/OS.h" is overkill.  "ace/Basic_Types.h" is enough.  In
@@ -24,8 +23,6 @@
 #include "ace/Basic_Types.h"
 #include "ace/Global_Macros.h"
 #include "ace/Synch_Traits.h"
-
-#define TAO_INVALID_PRIORITY -1
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -174,6 +171,8 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 
 // This definition theoretically is not required. Just leaving it here
 // for backward compatibility
+#define TAO_NAMESPACE namespace
+#define TAO_NAMESPACE_CLOSE
 #define TAO_NAMESPACE_STORAGE_CLASS extern TAO_EXPORT_MACRO
 #define TAO_NAMESPACE_BEGIN(NS)  namespace NS {
 #define TAO_NAMESPACE_END  }
@@ -731,6 +730,7 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 //  #define TAO_RT_SERVER_PROTOCOL_POLICY_TYPE 0x54410004
 //  #define TAO_RT_CLIENT_PROTOCOL_POLICY_TYPE 0x54410005
 
+
 #define TAO_RT_PRIORITY_MODEL_POLICY_TYPE 40
 #define TAO_RT_THREADPOOL_POLICY_TYPE 41
 #define TAO_RT_SERVER_PROTOCOL_POLICY_TYPE 42
@@ -849,10 +849,5 @@ enum TAO_Policy_Scope
 #  define TAO_USE_LAZY_RESOURCE_USAGE_STRATEGY 0
 #endif /* TAO_USE_LAZY_RESOURCE_USAGE_STRATEGY*/
 
-#if !defined (TAO_USE_LOCAL_MEMORY_POOL)
-#  define TAO_USE_LOCAL_MEMORY_POOL 1
-#endif /* TAO_USE_LOCAL_MEMORY_POOL */
-
 #include /**/ "ace/post.h"
-
 #endif  /* TAO_ORBCONF_H */

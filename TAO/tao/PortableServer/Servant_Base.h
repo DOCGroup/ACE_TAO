@@ -12,18 +12,15 @@
 
 #ifndef TAO_SERVANT_BASE_H
 #define TAO_SERVANT_BASE_H
-
 #include /**/ "ace/pre.h"
 
 #include "PortableServerC.h"
+#include "tao/Abstract_Servant_Base.h"
+#include "ace/Atomic_Op.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/Abstract_Servant_Base.h"
-
-#include "ace/Atomic_Op.h"
 
 class TAO_Operation_Table;
 
@@ -87,16 +84,6 @@ public:
                           void *servant_upcall
                           ACE_ENV_ARG_DECL) = 0;
 
-  /// Please see documentation in tao/Abstract_Servant_Base.h for
-  /// details.
-  virtual int _find (const char *opname,
-                     TAO_Skeleton &skelfunc,
-                     const unsigned int length = 0);
-
-  virtual int _find (const char *opname,
-                     TAO_Collocated_Skeleton &skelfunc,
-                     TAO::Collocation_Strategy st,
-                     const unsigned int length = 0);
 protected:
 
   /// Default constructor, only derived classes can be created.
@@ -119,11 +106,15 @@ protected:
                                              void *derived_this
                                              ACE_ENV_ARG_DECL);
 
+  /// Find an operation in the operation table.
+  virtual int _find (const char *opname,
+                     TAO_Skeleton &skelfunc,
+                     const unsigned int length = 0);
 
   /// Register a CORBA IDL operation name.
-  /*virtual int _bind (const char *opname,
+  virtual int _bind (const char *opname,
                      const TAO_Skeleton skel_ptr);
-  */
+
   /// Get this interface's repository id (TAO specific).
   virtual const char *_interface_repository_id (void) const = 0;
 
@@ -169,16 +160,16 @@ public:
   ~TAO_RefCountServantBase (void);
 
   /// Increase reference count by one.
-  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Decreases reference count by one; if the resulting reference
    * count equals zero, _remove_ref invokes delete on its this pointer
    * in order to destroy the servant.
    */
-  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
-  /**
+  /** 
    * Returns the current reference count value.  This method is
    * non-standard and is only here to simplify debugging.
    */
@@ -282,5 +273,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_SERVANT_BASE_H */

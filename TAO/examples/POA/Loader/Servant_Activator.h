@@ -18,15 +18,14 @@
 //
 // ================================================================
 
+#include "ace/OS.h"
+
 #ifndef SERVANT_ACTIVATOR_H
 #define SERVANT_ACTIVATOR_H
 
+#include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
-
-#include "tao/ORB.h"
-
 #include "ace/DLL.h"
-#include "ace/Log_Msg.h"
 
 class ServantActivator : public PortableServer::ServantActivator
 {

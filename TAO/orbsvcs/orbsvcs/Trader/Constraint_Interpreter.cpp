@@ -3,15 +3,12 @@
 #include "Constraint_Interpreter.h"
 #include "Trader_Constraint_Visitors.h"
 
-ACE_RCSID (Trader, 
-           Constraint_Interpreter, 
-           "$Id$")
+ACE_RCSID(Trader, Constraint_Interpreter, "$Id$")
 
-TAO_Constraint_Interpreter::TAO_Constraint_Interpreter (
-    const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
-    const char* constraints
-    ACE_ENV_ARG_DECL
-  )
+TAO_Constraint_Interpreter::
+TAO_Constraint_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
+                            const char* constraints
+                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CosTrading::IllegalConstraint,
                    CORBA::NO_MEMORY))
   : TAO_Interpreter ()
@@ -79,11 +76,10 @@ TAO_Constraint_Interpreter::evaluate (TAO_Constraint_Evaluator& evaluator)
   return evaluator.evaluate_constraint (this->root_);
 }
 
-TAO_Preference_Interpreter::TAO_Preference_Interpreter (
-    const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
-    const char* preference
-    ACE_ENV_ARG_DECL
-  )
+TAO_Preference_Interpreter::
+TAO_Preference_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
+                           const char* preference
+                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CosTrading::Lookup::IllegalPreference,
                    CORBA::NO_MEMORY))
     : TAO_Interpreter ()

@@ -21,9 +21,7 @@
 
 #include "be_string.h"
 #include "be_visitor.h"
-
 #include "utl_identifier.h"
-#include "global_extern.h"
 
 ACE_RCSID (be, 
            be_string, 
@@ -60,8 +58,6 @@ be_string::be_string (AST_Decl::NodeType nt,
     be_type (nt,
              n)
 {
-  ACE_SET_BITS (idl_global->decls_seen_info_,
-                idl_global->decls_seen_masks.string_seen_);
 }
 
 // Overriden method.

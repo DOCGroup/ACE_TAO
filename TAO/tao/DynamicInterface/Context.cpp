@@ -9,7 +9,6 @@ ACE_RCSID (DynamicInterface,
 #include "tao/Typecode.h"
 #include "tao/NVList.h"
 #include "tao/Environment.h"
-#include "tao/CORBA_String.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Context.inl"

@@ -1,19 +1,21 @@
 // $Id$
 
-#include "Default_Thread_Lane_Resources_Manager.h"
-#include "Thread_Lane_Resources.h"
-#include "Exception.h"
-#include "Environment.h"
+#include "tao/Default_Thread_Lane_Resources_Manager.h"
+
 
 ACE_RCSID (tao,
            Default_Thread_Lane_Resources_Manager,
            "$Id$")
 
 
+#include "tao/Acceptor_Registry.h"
+#include "tao/Thread_Lane_Resources.h"
+#include "tao/Leader_Follower.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Default_Thread_Lane_Resources_Manager.i"
 #endif /* ! __ACE_INLINE__ */
+
 
 TAO_Default_Thread_Lane_Resources_Manager::TAO_Default_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core)
   : TAO_Thread_Lane_Resources_Manager (orb_core),
@@ -35,7 +37,7 @@ TAO_Default_Thread_Lane_Resources_Manager::open_default_resources (ACE_ENV_SINGL
 {
   int result =
     this->lane_resources_->open_acceptor_registry (0
-                                                   ACE_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return result;

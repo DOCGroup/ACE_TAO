@@ -10,7 +10,6 @@
 #include "orbsvcs/CosNamingC.h"
 #include "Notify_Structured_Push_Consumer.h"
 #include "goC.h"
-#include "ace/OS_NS_sys_time.h"
 
 #include "Notify_Test_Client.h"
 

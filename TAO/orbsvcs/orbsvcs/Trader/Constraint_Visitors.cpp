@@ -3,7 +3,6 @@
 #include "Constraint_Visitors.h"
 #include "Constraint_Nodes.h"
 #include "Interpreter_Utils_T.h"
-
 #include "tao/DynamicAny/DynSequence_i.h"
 
 ACE_RCSID(Trader, Constraint_Visitors, "$Id$")

@@ -1,5 +1,4 @@
 #include "TLS_Client.h"
-#include "ace/OS_main.h"
 
 ACE_RCSID (Basic,
            main,

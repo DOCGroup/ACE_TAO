@@ -9,9 +9,9 @@
 #include "ESF_Delayed_Command.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ESF, 
-           ESF_Delayed_Command, 
-           "$Id$")
+#include "tao/corba.h"
+
+ACE_RCSID(ESF, ESF_Delayed_Command, "$Id$")
 
 template<class Target, class Object> int
 TAO_ESF_Connected_Command<Target,Object>::execute (void* arg)

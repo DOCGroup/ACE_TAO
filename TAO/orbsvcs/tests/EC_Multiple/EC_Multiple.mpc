@@ -1,3 +1,3 @@
-project(EC_Multiple): rteventexe, rtoldevent, rtschedevent, naming, iortable, messaging {
+project(EC_Multiple): rteventexe, rtoldevent, rtschedevent, naming, iortable, messaging, corba_messaging {
   exename  = EC_Multiple
 }

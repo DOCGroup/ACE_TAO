@@ -2,9 +2,7 @@
 
 #include "tao/Default_Collocation_Resolver.h"
 
-ACE_RCSID (tao, 
-           Default_Collocation_Resolver, 
-           "$Id$")
+ACE_RCSID(tao, Default_Collocation_Resolver, "$Id$")
 
 #include "tao/Object.h"
 

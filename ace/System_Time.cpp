@@ -2,8 +2,6 @@
 // $Id$
 
 #include "ace/System_Time.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_time.h"
 
 ACE_RCSID(ace, System_Time, "$Id$")
 

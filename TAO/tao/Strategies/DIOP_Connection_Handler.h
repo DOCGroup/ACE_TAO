@@ -12,10 +12,9 @@
 
 #ifndef TAO_DIOP_CONNECTION_HANDLER_H
 #define TAO_DIOP_CONNECTION_HANDLER_H
-
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "tao/corbafwd.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
@@ -27,6 +26,7 @@
 
 #include "ace/Acceptor.h"
 
+#include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
 #include "DIOP_Transport.h"
@@ -188,5 +188,4 @@ private:
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_DIOP_CONNECTION_HANDLER_H */

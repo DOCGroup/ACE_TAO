@@ -1,8 +1,6 @@
 // -*- C++ -*-  $Id$
 
 #include "ace/Auto_Ptr.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
 #include "ACEXML/common/XML_Codecs.h"
 
 ACE_RCSID (common, XML_Codecs, "$Id$")

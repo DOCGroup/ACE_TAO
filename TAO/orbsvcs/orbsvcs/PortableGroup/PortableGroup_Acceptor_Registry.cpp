@@ -12,9 +12,7 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Leader_Follower.h"
 
-ACE_RCSID (PortableGroup, 
-           PortableGroup_Acceptor_Registry, 
-           "$Id$")
+ACE_RCSID(tao, PortableGroup, "$Id$")
 
 TAO_PortableGroup_Acceptor_Registry::TAO_PortableGroup_Acceptor_Registry (void)
 {

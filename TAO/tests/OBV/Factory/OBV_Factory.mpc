@@ -1,4 +1,4 @@
-project(*Server): taoexe, portableserver, valuetype {
+project(*Server): taoserver, valuetype {
   Source_Files {
     FactoryC_impl.cpp
     FactoryS_impl.cpp
@@ -6,7 +6,7 @@ project(*Server): taoexe, portableserver, valuetype {
   }
 }
 
-project(*Client): taoexe, valuetype {
+project(*Client): taoclient, valuetype {
   Source_Files {
     FactoryC.cpp
     FactoryC_impl.cpp

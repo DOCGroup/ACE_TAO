@@ -25,9 +25,6 @@
 #include "test_config.h"
 #include "ace/ACE.h"
 
-// FUZZ: disable check_for_streams_include
-#include "ace/streams.h"
-
 ACE_RCSID(tests, CDR_File_Test, "$Id$")
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY) | defined (ACE_HAS_WINCE)

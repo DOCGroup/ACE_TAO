@@ -17,10 +17,8 @@
 //
 //=========================================================================
 
-#include "tao/ORB.h"
+#include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
-
-#include "ace/Log_Msg.h"
 
 int
 main (int argc, char **argv)

@@ -24,7 +24,7 @@
 #include "RT_Properties.h"
 
 // -- TAO Include --
-#include "tao/ORB.h"
+#include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 

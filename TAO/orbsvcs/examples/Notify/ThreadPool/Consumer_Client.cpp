@@ -8,7 +8,6 @@
 #include "orbsvcs/orbsvcs/CosNamingC.h"
 #include "tao/ORB_Core.h"
 #include "ace/Sched_Params.h"
-#include "ace/OS_NS_errno.h"
 
 ACE_RCSID (Notify, TAO_Notify_ThreadPool_Consumer_Client, "$Id$")
 

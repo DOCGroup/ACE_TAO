@@ -88,6 +88,7 @@ static int quit = 0;
 void
 Quit (ClientData, XEvent *)
 {
+  cerr << "quit called";
   ACE_DEBUG ((LM_DEBUG,"Quit called\n"));
   quit = 1;
 }
@@ -262,6 +263,7 @@ run_main (int, ACE_TCHAR *[])
   tcl_interp   = Tcl_CreateInterp ();
 
   if (init (tcl_interp) != TCL_OK) {
+    cerr << "error: " << tcl_interp->result << "\n";
     exit (1);
   }
 
@@ -274,6 +276,7 @@ run_main (int, ACE_TCHAR *[])
 
   char tcl_cmd[] = "source TkReactor_Test.tcl";
   if (Tcl_Eval (tcl_interp, tcl_cmd) != TCL_OK) {
+    cerr << "error: " << tcl_interp->result << "\n";
     exit (1);
   }
   // set up callback

@@ -1,2 +1,2 @@
-project: orbsvcsexe, rtevent, portableserver {
+project: server, orbsvcsexe, rtevent {
 }

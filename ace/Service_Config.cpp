@@ -1,11 +1,5 @@
 // $Id$
 
-#include "ace/Service_Config.h"
-
-#if !defined (__ACE_INLINE__)
-#include "ace/Service_Config.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/Svc_Conf.h"
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
@@ -18,9 +12,13 @@
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/DLL.h"
-#include "ace/OS_NS_stdio.h"
+
+#include "ace/Service_Config.h"
 #include "ace/XML_Svc_Conf.h"
-#include "ace/OS_NS_time.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/Service_Config.i"
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID (ace,
            Service_Config,

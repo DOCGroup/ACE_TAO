@@ -1,6 +1,3 @@
-//  -*- MPC -*-
-// $Id$
-
 project(RMCast Fragment Test) : acetest, rmcast {
   exename  = RMCast_Fragment_Test
   Source_Files {

@@ -1,11 +1,20 @@
-project(*Server): messaging, taoexe, portableserver, ami {
+project(*Server): messaging, taoserver {
+  idlflags -= -Sc
+  idlflags += -GC
+  requires += ami
+
   Source_Files {
     AMI_Buffering.cpp
     server.cpp
   }  
 }
  
-project(*Client): messaging, taoexe, portableserver, ami {
+project(*Client): messaging, taoserver {
+  idlflags -= -Sc
+  idlflags += -GC
+  exename   = client
+  requires += ami
+
   Source_Files {
     Client_Task.cpp
     Reply_Handler.cpp
@@ -13,7 +22,12 @@ project(*Client): messaging, taoexe, portableserver, ami {
   }  
 }
 
-project(*Admin): messaging, taoexe, portableserver, ami {
+project(*Admin): messaging, taoserver {
+  idlflags -= -Sc
+  idlflags += -GC
+  exename   = admin
+  requires += ami
+
   Source_Files {
     AMI_Buffering_Admin.cpp
     admin.cpp

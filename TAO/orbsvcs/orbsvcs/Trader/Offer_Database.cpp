@@ -4,7 +4,6 @@
 #define TAO_OFFER_DATABASE_C
 
 #include "Offer_Database.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Trader, Offer_Database, "$Id$")
 

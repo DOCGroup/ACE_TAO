@@ -1,11 +1,18 @@
 // $Id$
 
 #include "TAO_Server_Request.h"
+#include "CDR.h"
+#include "Environment.h"
+#include "Principal.h"
 #include "ORB_Core.h"
 #include "Timeprobe.h"
 #include "debug.h"
+#include "Pluggable_Messaging_Utils.h"
 #include "Pluggable_Messaging.h"
+
+// @@ Should not be included. But, for the timebeing.
 #include "GIOP_Utils.h"
+
 #include "Transport.h"
 
 #if !defined (__ACE_INLINE__)
@@ -64,6 +71,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
 #if TAO_HAS_INTERCEPTORS == 1
   , interceptor_count_ (0)
   , rs_pi_current_ ()
+  , result_seq_ (0)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
@@ -102,6 +110,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
 #if TAO_HAS_INTERCEPTORS == 1
   , interceptor_count_ (0)
   , rs_pi_current_ ()
+  , result_seq_ (0)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 {
   this->profile_.object_key (object_key);
@@ -324,3 +333,77 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception &ex)
                   ACE_TEXT ("but client is not waiting a response\n")));
     }
 }
+
+#if TAO_HAS_INTERCEPTORS == 1
+void
+TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
+{
+  #if defined(ACE_HAS_PURIFY)
+      // Only inititialize the buffer if we're compiling with Purify.
+      // Otherwise, there is no real need to do so, especially since
+      // we can avoid the initialization overhead at run-time if we
+      // are not compiling with Purify support.
+      char repbuf[ACE_CDR::DEFAULT_BUFSIZE] = { 0 };
+#else
+      char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
+#endif /* ACE_HAS_PURIFY */
+
+  TAO_OutputCDR output (repbuf,
+                        sizeof repbuf,
+                        TAO_ENCAP_BYTE_ORDER,
+                        this->orb_core_->output_cdr_buffer_allocator (),
+                        this->orb_core_->output_cdr_dblock_allocator (),
+                        this->orb_core_->output_cdr_msgblock_allocator (),
+                        this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
+                        TAO_DEF_GIOP_MAJOR,
+                        TAO_DEF_GIOP_MINOR);
+
+  this->transport_->assign_translators(0,&output);
+
+  // A copy of the reply parameters
+  TAO_Pluggable_Reply_Params_Base reply_params;
+
+  reply_params.request_id_ = this->request_id_;
+
+  reply_params.svc_ctx_.length (0);
+
+  // Send back the empty reply service context.
+  reply_params.service_context_notowned (&this->reply_service_info ());
+
+  // We are going to send some data
+  reply_params.argument_flag_ = 1;
+
+  // Make a default reply status
+  reply_params.reply_status_ = TAO_GIOP_NO_EXCEPTION;
+
+  // Make the reply message
+  if (this->mesg_base_->generate_reply_header (*this->outgoing_,
+                                               reply_params) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TAO: (%P|%t|%N|%l): ")
+                  ACE_TEXT ("could not make cached reply\n")));
+
+    }
+
+  /// Append reply here....
+  this->outgoing_->write_octet_array (
+    s.get_buffer (),
+    s.length ());
+
+  if (!this->outgoing_->good_bit ())
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO: (%P|%t|%N|%l):  ")
+                ACE_TEXT ("could not marshal reply\n")));
+
+  // Send the message
+  if (this->transport_->send_message (*this->outgoing_,
+                                      0,
+                                      TAO_Transport::TAO_REPLY) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TAO: (%P|%t|%N|%l):  ")
+                  ACE_TEXT ("could not send cached reply\n")));
+    }
+}
+#endif /*TAO_HAS_INTERCEPTORS*/

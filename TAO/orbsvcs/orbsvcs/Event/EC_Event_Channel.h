@@ -16,7 +16,6 @@
 
 #ifndef TAO_EC_EVENT_CHANNEL_H
 #define TAO_EC_EVENT_CHANNEL_H
-
 #include /**/ "ace/pre.h"
 
 #include "EC_Event_Channel_Base.h"
@@ -57,5 +56,4 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_EC_EVENT_CHANNEL_H */

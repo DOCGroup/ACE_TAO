@@ -2,15 +2,10 @@
 
 #include "Consumer.h"
 
-ACE_RCSID (Notify,
-           TAO_Notify_ThreadPool_Consumer,
-           "$Id$")
-
-#include "tao/debug.h"
+ACE_RCSID (Notify, TAO_Notify_ThreadPool_Consumer, "$Id$")
 
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
-#include "ace/OS_NS_stdio.h"
 
 TAO_Notify_ThreadPool_Consumer::TAO_Notify_ThreadPool_Consumer (TAO_Notify_ORB_Objects& orb_objects)
   : orb_objects_ (orb_objects)

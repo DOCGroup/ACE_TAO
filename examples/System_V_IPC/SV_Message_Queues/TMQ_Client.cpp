@@ -1,14 +1,9 @@
 // $Id$
 
 #include "ace/Typed_SV_Message_Queue.h"
-
-// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
-
 #include "ace/Log_Msg.h"
 #include "test.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(SV_Message_Queues, TMQ_Client, "$Id$")
 

@@ -1,2 +1,3 @@
-project(POA*): taoexe, portableserver {
+project(POA Destruction): taoserver {
+  exename = POA_Destruction
 }

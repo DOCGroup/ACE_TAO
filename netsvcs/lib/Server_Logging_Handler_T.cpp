@@ -5,7 +5,7 @@
 
 #define ACE_BUILD_SVC_DLL
 
-#include "ace/config-all.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -14,7 +14,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Record.h"
 #include "Server_Logging_Handler_T.h"
-#include "ace/Signal.h"
 
 ACE_RCSID(lib, Server_Logging_Handler_T, "$Id$")
 

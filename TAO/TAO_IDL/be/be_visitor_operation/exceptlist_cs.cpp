@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation,
-           exceptlist_cs,
+ACE_RCSID (be_visitor_operation, 
+           exceptlist_cs, 
            "$Id$")
 
 // ****************************************************************************
@@ -46,13 +46,13 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
   // Don't do anything if the exception list is empty.
   if (node->exceptions ())
     {
-      *os << be_nl << be_nl
-          << "static TAO::Exception_Data" << be_nl
-          << "_tao_" << node->flat_name ()
-          << "_exceptiondata [] = " << be_idt_nl;
+      os->indent ();
+
+      *os << "static TAO_Exception_Data " << "_tao_" << node->flat_name ()
+          << "_exceptiondata [] = " << be_nl;
       *os << "{" << be_idt_nl;
 
-      be_exception *ex = 0;
+      AST_Decl *d = 0;
 
       // Initialize an iterator to iterate thru the exception list.
       // Continue until each element is visited.
@@ -60,23 +60,23 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
       for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
            !ei.is_done ();)
         {
-          ex = be_exception::narrow_from_decl (ei.item ());
+          d = ei.item ();
 
           *os << "{" << be_idt_nl
-              << "\"" << ex->repoID () << "\"," << be_nl
-              << ex->name () << "::_alloc," << be_nl
-              << ex->tc_name () << be_uidt_nl
+              << "\"" << d->repoID () << "\"," << be_nl;
+          // Allocator method.
+          *os << d->name () << "::_alloc" << be_uidt_nl
               << "}";
 
           ei.next ();
 
           if (!ei.is_done ())
             {
-              *os << "," << be_nl << be_nl;
+              *os << "," << be_nl;
             }
         }
 
-      *os << be_uidt_nl << "};" << be_uidt;
+      *os << be_uidt_nl << "};\n\n";
     }
 
   return 0;

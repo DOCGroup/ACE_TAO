@@ -1,9 +1,6 @@
 // $Id$
 
 #include "interceptors.h"
-#include "ace/Log_Msg.h"
-#include "tao/DynamicC.h"
-#include "tao/Typecode.h"
 
 ACE_RCSID (Dynamic,
            interceptors,
@@ -13,8 +10,6 @@ ACE_RCSID (Dynamic,
   //const CORBA::ULong reply_ctx_id = 0xbeef;
 const char *request_msg = "The Echo_Request_Interceptor request message";
 const char *reply_msg = "The Echo_Request_Interceptor reply message";
-CORBA::ULong Echo_Client_Request_Interceptor::client_interceptor_check_ = 0;
-CORBA::ULong Echo_Server_Request_Interceptor::server_interceptor_check_ = 0;
 
 Echo_Client_Request_Interceptor::Echo_Client_Request_Interceptor (void)
   : myname_ ("Echo_Client_Interceptor")
@@ -55,22 +50,14 @@ Echo_Client_Request_Interceptor::send_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  client_interceptor_check_++;
 
-  CORBA::String_var op =
-    ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-
-#if 0
-  ACE_DEBUG ((LM_DEBUG,
-              "Echo_Client_Request_Interceptor::send_request\n"));
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::send_request from "
               "\"%s\"\n",
               op.in ()));
-
-#endif /*if 0*/
 
   if (ACE_OS::strcmp (op.in (), "normal") == 0)
     {
@@ -83,11 +70,9 @@ Echo_Client_Request_Interceptor::send_request (
                            // overloaded operator ambiguity.
       paramlist[i].argument >>= param;
 
-#if 0
       ACE_DEBUG ((LM_DEBUG,
                   "The arg is %d\n",
                   param));
-#endif /*if 0*/
     }
 }
 
@@ -98,17 +83,14 @@ Echo_Client_Request_Interceptor::receive_other (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  client_interceptor_check_++;
 
   CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-#if 0
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::receive_other "
               "from \"%s\"\n",
               op.in ()));
-#endif /*if 0*/
 }
 
 void
@@ -117,17 +99,14 @@ Echo_Client_Request_Interceptor::receive_reply (
     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  client_interceptor_check_++;
 
   CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-#if 0
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::receive_reply "
               "from \"%s\"\n",
               op.in ()));
-#endif /*if 0*/
 
   if (ACE_OS::strcmp (op.in (), "normal") == 0)
     {
@@ -140,8 +119,11 @@ Echo_Client_Request_Interceptor::receive_reply (
                            // overloaded operator ambiguity.
       paramlist[i].argument >>= param;
 
+      ACE_DEBUG ((LM_DEBUG,
+                  "The arg is %d\n",
+                  param));
     }
-  else if (ACE_OS::strcmp (op.in (), "calculate") == 0)
+  if (ACE_OS::strcmp (op.in (), "calculate") == 0)
     {
       Dynamic::ParameterList_var paramlist =
         ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -158,13 +140,11 @@ Echo_Client_Request_Interceptor::receive_reply (
 
       (result_any.in ()) >>= result;
 
-#if 0
       ACE_DEBUG ((LM_DEBUG,
                   "The result of calculate is %d + %d = %d\n",
                   param1,
                   param2,
                   result));
-#endif /*if 0*/
     }
 }
 
@@ -175,27 +155,23 @@ Echo_Client_Request_Interceptor::receive_exception (
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
-  client_interceptor_check_++;
-  client_interceptor_check_++;
 
   CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::String_var exception_id =
-    ri->received_exception_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-#if 0
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::received_exception "
               "from \"%s\"\n",
               op.in ()));
 
+
+  CORBA::String_var exception_id =
+    ri->received_exception_id (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
   ACE_DEBUG ((LM_DEBUG,
               "Exception ID = %s\n",
               exception_id.in ()));
-
-#endif
 }
 
 Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (void)
@@ -236,7 +212,6 @@ Echo_Server_Request_Interceptor::receive_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  ++server_interceptor_check_;
 
   CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -277,7 +252,6 @@ Echo_Server_Request_Interceptor::send_reply (
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ++server_interceptor_check_;
 
   CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -333,8 +307,6 @@ Echo_Server_Request_Interceptor::send_exception (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  ++server_interceptor_check_;
-  ++server_interceptor_check_;
 
   CORBA::String_var op = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -366,7 +338,5 @@ Echo_Server_Request_Interceptor::send_other (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  ++server_interceptor_check_;
-
   // Do Nothing
 }

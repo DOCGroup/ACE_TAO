@@ -9,6 +9,7 @@
 #include "ast_structure.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
+#include "ace/streams.h"
 
 ACE_RCSID( ast, 
            ast_structure_fwd, 
@@ -43,7 +44,7 @@ AST_StructureFwd::~AST_StructureFwd (void)
 void
 AST_StructureFwd::dump (ACE_OSTREAM_TYPE &o)
 {
-  this->dump_i (o, "struct ");
+  o << "struct ";
   this->local_name ()->dump (o);
 }
 

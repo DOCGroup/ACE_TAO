@@ -12,6 +12,7 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_POA_CACHED_POLICIES_H
 #define TAO_POA_CACHED_POLICIES_H
 #include /**/ "ace/pre.h"

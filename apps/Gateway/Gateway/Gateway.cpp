@@ -6,7 +6,6 @@
 #include "Config_Files.h"
 #include "Event_Channel.h"
 #include "Gateway.h"
-#include "ace/Signal.h"
 
 ACE_RCSID(Gateway, Gateway, "$Id$")
 

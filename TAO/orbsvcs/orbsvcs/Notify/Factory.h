@@ -11,13 +11,13 @@
 
 #ifndef TAO_Notify_FACTORY_H
 #define TAO_Notify_FACTORY_H
-
 #include /**/ "ace/pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/corba.h"
 #include "ace/CORBA_macros.h"
 #include "ace/Service_Object.h"
 
@@ -43,11 +43,6 @@ class TAO_Notify_Proxy;
 class TAO_Notify_Consumer;
 class TAO_Notify_Supplier;
 class TAO_Notify_Peer;
-
-namespace CORBA
-{
-  class Environment;
-}
 
 template <class PROXY> class TAO_ESF_Proxy_Collection;
 
@@ -124,5 +119,4 @@ public:
 };
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_Notify_FACTORY_H */

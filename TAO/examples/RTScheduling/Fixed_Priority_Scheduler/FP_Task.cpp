@@ -4,7 +4,6 @@
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "tao/RTCORBA/Priority_Mapping.h"
 #include "ace/High_Res_Timer.h"
-#include "ace/OS_NS_errno.h"
 
 
 FP_Task::FP_Task (int importance,

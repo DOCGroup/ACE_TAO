@@ -15,6 +15,7 @@
 // 
 // ============================================================================
 
+#include "ace/OS.h"
 #include "ace/Get_Opt.h"
 #include "ace/Local_Tokens.h"
 #include "ace/Remote_Tokens.h"

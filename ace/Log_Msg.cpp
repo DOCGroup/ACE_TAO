@@ -11,20 +11,13 @@
 
 #include "ace/ACE.h"
 #include "ace/Thread_Manager.h"
-#include "ace/Guard_T.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_sys_time.h"
-#include "ace/OS_NS_wchar.h"
-#include "ace/OS_NS_signal.h"
+#include "ace/OS.h"
 
-#if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE != 0)
-# include "ace/Object_Manager_Base.h"
+#if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
+# include "ace/Object_Manager.h"
 #endif /* ! ACE_MT_SAFE */
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-// FUZZ: disable check_for_streams_include
 # include "ace/streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
@@ -39,14 +32,6 @@
 ACE_RCSID(ace, Log_Msg, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
-
-// only used here...  dhinton
-#if defined (ACE_HAS_SYS_SIGLIST)
-# if !defined (_sys_siglist)
-#   define _sys_siglist sys_siglist
-# endif /* !defined (sys_siglist) */
-//extern char **_sys_siglist;
-#endif /* ACE_HAS_SYS_SIGLIST */
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   int ACE_Log_Msg::key_created_ = 0;
@@ -1180,11 +1165,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         if (can_check)
                           this_len = ACE_OS::snprintf
                             (bp, bspace, format, va_arg (argp, ACE_TCHAR *),
-                             ACE_TEXT_CHAR_TO_TCHAR (ACE_OS::strerror (errno)));
+                             ACE_TEXT_CHAR_TO_TCHAR (ACE_OS_String::strerror (errno)));
                         else
                           this_len = ACE_OS::sprintf
                             (bp, format, va_arg (argp, ACE_TCHAR *),
-                             ACE_TEXT_CHAR_TO_TCHAR (ACE_OS::strerror (errno)));
+                             ACE_TEXT_CHAR_TO_TCHAR (ACE_OS_String::strerror (errno)));
                       }
                     else
 #endif /* !ACE_HAS_WINCE */
@@ -1290,10 +1275,10 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         if (can_check)
                           this_len = ACE_OS::snprintf
                             (bp, bspace, format,
-                             ACE_OS::strerror (errno));
+                             ACE_OS_String::strerror (errno));
                         else
                           this_len = ACE_OS::sprintf
-                            (bp, format, ACE_OS::strerror (errno));
+                            (bp, format, ACE_OS_String::strerror (errno));
                       }
                     else
                       {
@@ -2074,7 +2059,7 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
   // 58 for the HEXDUMP header;
 
   ACE_TCHAR *msg_buf;
-  const size_t text_sz = text ? ACE_OS::strlen(text) : 0;
+  const size_t text_sz = text ? ACE_OS_String::strlen(text) : 0;
   ACE_NEW_RETURN (msg_buf,
                   ACE_TCHAR[text_sz + 58],
                  -1);
@@ -2250,7 +2235,7 @@ ACE_Log_Msg::inc (void)
 int
 ACE_Log_Msg::dec (void)
 {
-  return this->trace_depth_ == 0 ? 0 : --this->trace_depth_;
+  return --this->trace_depth_;
 }
 
 int

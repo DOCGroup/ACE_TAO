@@ -2,14 +2,12 @@
 
 #include "ace/Get_Opt.h"
 #include "test_i.h"
-#include "ace/OS_NS_stdio.h"
 
 #if TAO_HAS_INTERCEPTORS
 
 #include "Server_ORBInitializer.h"
 #include "Server_Request_Interceptor.h"
 #include "tao/IORManipulation/IORManipulation.h"
-#include "tao/ORBInitializer_Registry.h"
 #include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"

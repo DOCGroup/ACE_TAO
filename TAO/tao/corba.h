@@ -36,6 +36,13 @@
 // in corbafwd.h
 #include "tao/Typecode.h"
 
+#include "tao/Any_Impl_T.h"
+#include "tao/Any_Basic_Impl_T.h"
+#include "tao/Any_Special_Impl_T.h"
+#include "tao/Any_Special_Basic_Impl_T.h"
+#include "tao/Any_Array_Impl_T.h"
+#include "tao/Any_Dual_Impl_T.h"
+
 #include "tao/Environment.h"
 #include "tao/Exception.h"
 
@@ -62,10 +69,19 @@
 
 #include "tao/CDR.h"
 
+#include "tao/Sequence.h"
 #include "tao/Managed_Types.h"
 #include "tao/Object_KeyC.h"
 
-//#include "tao/Remote_Object_Proxy_Impl.h"
+// Template _var and _out classes.
+#include "tao/Objref_VarOut_T.h"
+#include "tao/Pseudo_VarOut_T.h"
+#include "tao/Seq_Var_T.h"
+#include "tao/Seq_Out_T.h"
+#include "tao/Array_VarOut_T.h"
+#include "tao/VarOut_T.h"
+
+#include "tao/Remote_Object_Proxy_Impl.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/PortableInterceptorC.h"

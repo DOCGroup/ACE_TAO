@@ -242,12 +242,6 @@ TAO_Stub::destroy (void)
   delete this;
 }
 
-ACE_INLINE CORBA::Boolean
-TAO_Stub::optimize_collocation_objects (void) const
-{
-  return this->collocation_opt_;
-}
-
 // ---------------------------------------------------------------
 
 // Creator methods for TAO_Stub_Auto_Ptr (TAO_Stub Auto Pointer)

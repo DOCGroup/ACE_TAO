@@ -13,19 +13,18 @@
 
 #ifndef TAO_GIOP_MESSAGE_BASE_H
 #define TAO_GIOP_MESSAGE_BASE_H
-
 #include /**/ "ace/pre.h"
-
 #include "tao/Pluggable_Messaging.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/GIOP_Message_Generator_Parser_Impl.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Message_State.h"
+
 
 class TAO_Pluggable_Reply_Params;
 class TAO_Queued_Data;
@@ -143,7 +142,6 @@ public:
   /// Header length
   virtual size_t header_length (void) const;
 
-  virtual TAO_OutputCDR &out_stream (void);
 protected:
 
   /// Processes the <GIOP_REQUEST> messages
@@ -240,13 +238,10 @@ protected:
   /// The generator and parser state.
   // TAO_GIOP_Message_Generator_Parser *generator_parser_;
 
-  /// Buffer used for both the output and input CDR streams, this is
-  /// "safe" because we only one of the streams at a time.
-  char buffer_[ACE_CDR::DEFAULT_BUFSIZE];
-
-  /// Buffer where the request is placed.
-  TAO_OutputCDR out_stream_;
 };
+
+
+
 
 #if defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Base.i"

@@ -1,7 +1,6 @@
 // -*- C++ -*-
 
 #include "Server_ORBInitializer.h"
-#include "tao/ORB_Constants.h"
 
 ACE_RCSID (ForwardRequest,
            Server_ORBInitializer,

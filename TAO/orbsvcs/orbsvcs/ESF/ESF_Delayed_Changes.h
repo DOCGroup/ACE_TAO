@@ -19,7 +19,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ESF_Busy_Lock.h"
-
 #include "ace/Containers.h"
 
 class ACE_Command_Base;

@@ -11,16 +11,15 @@
 //=============================================================================
 
 #include "ace/OS_QoS.h"
-#include "ace/OS_NS_errno.h"
 
-ACE_Flow_Spec::ACE_Flow_Spec (unsigned long token_rate,
-                              unsigned long token_bucket_size,
-                              unsigned long peak_bandwidth,
-                              unsigned long latency,
-                              unsigned long delay_variation,
+ACE_Flow_Spec::ACE_Flow_Spec (u_long token_rate,
+                              u_long token_bucket_size,
+                              u_long peak_bandwidth,
+                              u_long latency,
+                              u_long delay_variation,
                               ACE_SERVICE_TYPE service_type,
-                              unsigned long max_sdu_size,
-                              unsigned long minimum_policed_size,
+                              u_long max_sdu_size,
+                              u_long minimum_policed_size,
                               int ttl,
                               int priority)
 {
@@ -87,7 +86,7 @@ ACE_Flow_Spec::ACE_Flow_Spec (void)
 #endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
 }
 
-unsigned long
+u_long
 ACE_Flow_Spec::token_rate (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
@@ -98,7 +97,7 @@ ACE_Flow_Spec::token_rate (void) const
 }
 
 void
-ACE_Flow_Spec::token_rate (unsigned long tr)
+ACE_Flow_Spec::token_rate (u_long tr)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->TokenRate = tr;
@@ -107,7 +106,7 @@ ACE_Flow_Spec::token_rate (unsigned long tr)
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
-unsigned long
+u_long
 ACE_Flow_Spec::token_bucket_size (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
@@ -118,7 +117,7 @@ ACE_Flow_Spec::token_bucket_size (void) const
 }
 
 void
-ACE_Flow_Spec::token_bucket_size (unsigned long tbs)
+ACE_Flow_Spec::token_bucket_size (u_long tbs)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->TokenBucketSize = tbs;
@@ -127,7 +126,7 @@ ACE_Flow_Spec::token_bucket_size (unsigned long tbs)
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
-unsigned long
+u_long
 ACE_Flow_Spec::peak_bandwidth (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
@@ -138,7 +137,7 @@ ACE_Flow_Spec::peak_bandwidth (void) const
 }
 
 void
-ACE_Flow_Spec::peak_bandwidth (unsigned long pb)
+ACE_Flow_Spec::peak_bandwidth (u_long pb)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->PeakBandwidth = pb;
@@ -147,7 +146,7 @@ ACE_Flow_Spec::peak_bandwidth (unsigned long pb)
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
-unsigned long
+u_long
 ACE_Flow_Spec::latency (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
@@ -158,7 +157,7 @@ ACE_Flow_Spec::latency (void) const
 }
 
 void
-ACE_Flow_Spec::latency (unsigned long l)
+ACE_Flow_Spec::latency (u_long l)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->Latency = l;
@@ -167,7 +166,7 @@ ACE_Flow_Spec::latency (unsigned long l)
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
-unsigned long
+u_long
 ACE_Flow_Spec::delay_variation (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
@@ -177,7 +176,7 @@ ACE_Flow_Spec::delay_variation (void) const
 #endif /* ACE_HAS_WINSOCK2 */
 }
 void
-ACE_Flow_Spec::delay_variation (unsigned long dv)
+ACE_Flow_Spec::delay_variation (u_long dv)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   this->DelayVariation = dv;
@@ -208,7 +207,7 @@ ACE_Flow_Spec::service_type (ACE_SERVICE_TYPE st)
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
-unsigned long
+u_long
 ACE_Flow_Spec::max_sdu_size (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
@@ -220,7 +219,7 @@ ACE_Flow_Spec::max_sdu_size (void) const
 }
 
 void
-ACE_Flow_Spec::max_sdu_size (unsigned long mss)
+ACE_Flow_Spec::max_sdu_size (u_long mss)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
     defined (ACE_HAS_WINSOCK2_GQOS)
@@ -230,7 +229,7 @@ ACE_Flow_Spec::max_sdu_size (unsigned long mss)
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
-unsigned long
+u_long
 ACE_Flow_Spec::minimum_policed_size (void) const
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
@@ -242,7 +241,7 @@ ACE_Flow_Spec::minimum_policed_size (void) const
 }
 
 void
-ACE_Flow_Spec::minimum_policed_size (unsigned long mps)
+ACE_Flow_Spec::minimum_policed_size (u_long mps)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
     defined (ACE_HAS_WINSOCK2_GQOS)
@@ -371,7 +370,7 @@ ACE_QoS_Params::ACE_QoS_Params (iovec *caller_data,
                                 iovec *callee_data,
                                 ACE_QoS *socket_qos,
                                 ACE_QoS *group_socket_qos,
-                                unsigned long flags)
+                                u_long flags)
   : caller_data_ (caller_data),
     callee_data_ (callee_data),
     socket_qos_ (socket_qos),
@@ -428,20 +427,20 @@ ACE_QoS_Params::group_socket_qos (ACE_QoS *gsq)
   this->group_socket_qos_ = gsq;
 }
 
-unsigned long
+u_long
 ACE_QoS_Params::flags (void) const
 {
   return this->flags_;
 }
 
 void
-ACE_QoS_Params::flags (unsigned long f)
+ACE_QoS_Params::flags (u_long f)
 {
   this->flags_ = f;
 }
 
 ACE_Accept_QoS_Params::ACE_Accept_QoS_Params (ACE_QOS_CONDITION_FUNC qos_condition_callback,
-                                              unsigned long callback_data)
+                                              u_long callback_data)
   : qos_condition_callback_ (qos_condition_callback),
     callback_data_ (callback_data)
 {
@@ -459,14 +458,14 @@ ACE_Accept_QoS_Params::qos_condition_callback (ACE_QOS_CONDITION_FUNC qcc)
   this->qos_condition_callback_ = qcc;
 }
 
-unsigned long
+u_long
 ACE_Accept_QoS_Params::callback_data (void) const
 {
   return this->callback_data_;
 }
 
 void
-ACE_Accept_QoS_Params::callback_data (unsigned long cd)
+ACE_Accept_QoS_Params::callback_data (u_long cd)
 {
   this->callback_data_ = cd;
 }

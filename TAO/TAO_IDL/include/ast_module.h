@@ -108,6 +108,10 @@ public:
   int be_add_interface (AST_Interface *i,
                         AST_Interface *ix = 0);
 
+  // The first time 'module CORBA' is seen, add predefined types
+  // TypeCode, TCKind and ValueBase to its scope.
+  void add_CORBA_members (void);
+
   // Add decls from previous opening of this module to the
   // 'previous' set of this module, along with the argument's
   // own 'previous' set.

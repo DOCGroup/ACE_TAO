@@ -367,8 +367,16 @@ be_visitor_union_branch_public_ci::visit_interface (be_interface *node)
         }
       else
         {
-          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
-              << "TAO::Objref_Traits<" << node->name () << ">::tao";
+          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl;
+
+          AST_Decl *parent = ScopeAsDecl (node->defined_in ());
+
+          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+            {
+              *os << parent->name () << "::";
+            }
+
+          *os << "tao_" << node->local_name () << "_life::tao";
         }
 
   *os << "_duplicate (val)" << be_uidt_nl << ")" << be_uidt << be_uidt_nl
@@ -464,8 +472,16 @@ be_visitor_union_branch_public_ci::visit_interface_fwd (be_interface_fwd *node)
         }
       else
         {
-          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl
-              << "TAO::Objref_Traits<" << node->name () << ">::tao";
+          *os << "OBJECT_FIELD (" << be_idt << be_idt_nl;
+
+          AST_Decl *parent = ScopeAsDecl (node->defined_in ());
+
+          if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+            {
+              *os << parent->name () << "::";
+            }
+
+          *os << "tao_" << node->local_name () << "_life::tao";
         }
 
   *os << "_duplicate (val)" << be_uidt_nl << ")" << be_uidt << be_uidt_nl

@@ -1,4 +1,4 @@
-project(*Server): taoexe, portableserver, minimum_corba {
+project(*Server): taoserver, minimum_corba {
   IDL_Files {
     test.idl
   }
@@ -11,7 +11,9 @@ project(*Server): taoexe, portableserver, minimum_corba {
   }
 }
 
-project(*Middle): taoexe, portableserver, minimum_corba {
+project(*Middle): taoserver, minimum_corba {
+  exename = middle
+
   IDL_Files {
     test.idl
   }
@@ -24,7 +26,9 @@ project(*Middle): taoexe, portableserver, minimum_corba {
   }
 }
 
-project(*Client): taoexe, portableserver, minimum_corba {
+project(*Client): taoserver, minimum_corba {
+  exename = client
+
   IDL_Files {
     test.idl
   }
@@ -37,7 +41,9 @@ project(*Client): taoexe, portableserver, minimum_corba {
   }
 }
 
-project(*Ping): taoexe, portableserver, minimum_corba {
+project(*Ping): taoserver, minimum_corba {
+  exename = ping
+
   IDL_Files {
     ping.idl
   }
@@ -50,7 +56,9 @@ project(*Ping): taoexe, portableserver, minimum_corba {
   }
 }
 
-project(*Pong): taoexe, portableserver, minimum_corba {
+project(*Pong): taoserver, minimum_corba {
+  exename = pong
+
   IDL_Files {
     ping.idl
   }

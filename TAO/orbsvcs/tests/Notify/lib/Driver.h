@@ -21,9 +21,7 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
-
-#include "tao/ORB.h"
-
+#include "tao/corba.h"
 #include "Driver_Base.h"
 
 class TAO_Notify_Tests_Command_Builder;

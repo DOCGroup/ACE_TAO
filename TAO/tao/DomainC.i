@@ -15,19 +15,13 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
-// and
-//       Institute for Software Integrated Systems
-//       Vanderbilt University
-//       Nashville, TN
-//       USA
-//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:70
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_CORBA_DOMAINMANAGER___CI_)
 #define _CORBA_DOMAINMANAGER___CI_
@@ -36,35 +30,17 @@ ACE_INLINE
 CORBA::DomainManager::DomainManager (
     TAO_Stub *objref,
     CORBA::Boolean _tao_collocated,
-    TAO_Abstract_ServantBase *servant,
-    TAO_ORB_Core *oc
+    TAO_Abstract_ServantBase *servant
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
-    the_TAO_DomainManager_Proxy_Broker_ (0)
+  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant)
 {
   this->CORBA_DomainManager_setup_collocation (_tao_collocated);
-  
-}
-
-ACE_INLINE
-CORBA::DomainManager::DomainManager (
-    IOP::IOR *ior,
-    TAO_ORB_Core *oc
-  )
-  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc),
-    the_TAO_DomainManager_Proxy_Broker_ (0)
-{
 }
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:70
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_CORBA_CONSTRUCTIONPOLICY___CI_)
 #define _CORBA_CONSTRUCTIONPOLICY___CI_
@@ -73,35 +49,31 @@ ACE_INLINE
 CORBA::ConstructionPolicy::ConstructionPolicy (
     TAO_Stub *objref,
     CORBA::Boolean _tao_collocated,
-    TAO_Abstract_ServantBase *servant,
-    TAO_ORB_Core *oc
+    TAO_Abstract_ServantBase *servant
   )
-  : ACE_NESTED_CLASS (CORBA, Object) (
-        objref,
-        _tao_collocated,
-        servant,
-        oc
-      ),
-    the_TAO_ConstructionPolicy_Proxy_Broker_ (0)
+  : ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant)
 {
   this->CORBA_ConstructionPolicy_setup_collocation (_tao_collocated);
-  
 }
 
+template<>
 ACE_INLINE
-CORBA::ConstructionPolicy::ConstructionPolicy (
-    IOP::IOR *ior,
-    TAO_ORB_Core *oc
-  )
-  : ACE_NESTED_CLASS (CORBA, Object) (ior, oc),
-    the_TAO_ConstructionPolicy_Proxy_Broker_ (0)
+CORBA::Boolean
+TAO::Any_Impl_T<CORBA::ConstructionPolicy>::to_object (
+    CORBA::Object_ptr &_tao_elem
+  ) const
 {
+  _tao_elem = CORBA::Object::_duplicate (this->value_);
+  return 1;
 }
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/cdr_op_ci.cpp:72
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -114,7 +86,7 @@ TAO_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/cdr_op_ci.cpp:72
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -127,7 +99,7 @@ TAO_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_ci.cpp:81
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
 
 #if !defined _TAO_CDR_OP_CORBA_DomainManagerList_I_
 #define _TAO_CDR_OP_CORBA_DomainManagerList_I_
@@ -143,4 +115,3 @@ CORBA::Boolean TAO_Export operator>> (
   );
 
 #endif /* _TAO_CDR_OP_CORBA_DomainManagerList_I_ */
-

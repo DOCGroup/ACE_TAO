@@ -8,7 +8,7 @@
 #include "ace/DEV.i"
 #endif
 
-#include "ace/OS_NS_unistd.h"
+#include "ace/OS.h"
 
 ACE_RCSID(ace, DEV, "$Id$")
 

@@ -12,7 +12,6 @@
 
 #ifndef TAO_LF_EVENT_H
 #define TAO_LF_EVENT_H
-
 #include /**/ "ace/pre.h"
 
 #include "TAO_Export.h"
@@ -142,5 +141,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif  /* TAO_LF_EVENT_H */

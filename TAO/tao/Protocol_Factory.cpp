@@ -1,11 +1,9 @@
 // $Id$
 
-#include "Protocol_Factory.h"
+#include "tao/Protocol_Factory.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID (tao, 
-           Protocol_Factory, 
-           "$Id$")
+ACE_RCSID(tao, Protocol_Factory, "$Id$")
 
 static const char prefix_[] = "\0";
 

@@ -1,13 +1,7 @@
-// -*- C++ -*-
-//
+/* -*- C++ -*- */
 // $Id$
 
-// Include ACE.h only if it hasn't already been included, e.g., if
-// ACE_TEMPLATES_REQUIRE_SOURCE, ACE.h won't have been pulled in by
-// String_Base.cpp.
-#ifndef ACE_ACE_H
-#  include "ace/ACE.h"
-#endif /* !ACE_ACE_H */
+#include "ace/Malloc_Base.h"
 
 ACE_INLINE
 ACE_NS_WString::ACE_NS_WString (ACE_Allocator *alloc)
@@ -55,8 +49,6 @@ operator+ (const ACE_NS_WString &s, const ACE_NS_WString &t)
   temp += t;
   return temp;
 }
-
-// -------------------------------------------------------
 
 ACE_INLINE
 ACE_SString::~ACE_SString (void)

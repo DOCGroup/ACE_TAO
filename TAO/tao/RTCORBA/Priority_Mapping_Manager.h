@@ -71,10 +71,16 @@ public:
       CORBA::Object_ptr obj
       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
+  static TAO_Priority_Mapping_Manager_ptr _unchecked_narrow (
+      CORBA::Object_ptr obj
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
   static TAO_Priority_Mapping_Manager_ptr _nil (void)
     {
       return (TAO_Priority_Mapping_Manager_ptr)0;
     }
+
+  virtual void *_tao_QueryInterface (ptrdiff_t type);
 
   virtual const char* _interface_repository_id (void) const;
 

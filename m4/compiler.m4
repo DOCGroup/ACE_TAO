@@ -1,11 +1,11 @@
 dnl -------------------------------------------------------------------------
 dnl       $Id$
-dnl
+dnl 
 dnl       compiler.m4
 dnl
 dnl       ACE M4 include file which contains ACE specific M4 macros
 dnl       that set/determine compiler configurations for ACE.
-dnl
+dnl 
 dnl -------------------------------------------------------------------------
 
 dnl  Copyright (C) 1998, 1999, 2003  Ossama Othman
@@ -14,7 +14,7 @@ dnl  All Rights Reserved
 dnl
 dnl This library is free software; you can redistribute it and/or
 dnl modify it under the current ACE distribution terms.
-dnl
+dnl 
 dnl This library is distributed in the hope that it will be useful,
 dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
 dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
@@ -27,7 +27,7 @@ dnl ACE_SET_COMPILER_FLAGS
 dnl Usage: ACE_SET_COMPILER_FLAGS
 AC_DEFUN([ACE_SET_COMPILER_FLAGS],
 [
-dnl  AC_BEFORE([$0], [AC_PROG_LIBTOOL])
+dnl  AC_BEFORE([$0], [AM_PROG_LIBTOOL])
 
  dnl Make sure we know what C++ compiler and preprocessor we have!
  AC_REQUIRE([AC_PROG_CXX])
@@ -171,7 +171,7 @@ changequote([, ])dnl
    *freebsd*)
      case "$CXX" in
        *)
-         if test "$GXX" = yes; then
+         if test "$GXX" = yes; then       
            CXXFLAGS="$CXXFLAGS"
            ACE_CXXFLAGS="$ACE_CXXFLAGS -w -fno-strict-prototypes"
            DCXXFLAGS=""
@@ -202,12 +202,7 @@ changequote([, ])dnl
          OCXXFLAGS=""
          ;;
        aCC)
-         CFLAGS = "$CFLAGS -Ae"
-         # -AA has been available since aC++ x.27 (2001?) - if using a
-         # compiler without this support, must --enable_stdcpplib=no.
-         if test "$ace_user_enable_stdcpplib" = yes; then
-           CXXFLAGS="$CXXFLAGS -AA"
-         fi
+         CXXFLAGS="$CXXFLAGS"
          # Warning 930 is spurious when new(std::nothrow) is
          # used. Reported to HP as support call 3201224717. (Steve
          # Huston, 23-Nov-2002)
@@ -231,7 +226,7 @@ changequote([, ])dnl
 
          # If exception support is explicitly disabled, tell the
          # compiler.  This is not recommended since the run-time
-         # library can throw exceptions.
+         # library can throw exceptions. 
          if test "$ace_user_enable_exceptions" != yes; then
            ACE_CXXFLAGS="$ACE_CXXFLAGS +noeh"
          fi
@@ -308,7 +303,7 @@ changequote([, ])dnl
            CXXFLAGS="$CXXFLAGS -features=castop"
            if test "$ace_user_enable_rtti" = yes; then
              CXXFLAGS="$CXXFLAGS -features=rtti"
-           fi
+           fi 
          fi
 
          dnl Sun C++ 5.0 weirdness

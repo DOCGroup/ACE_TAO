@@ -69,6 +69,8 @@ enum TAO_AMI_Reply_Status
 };
 
 
+#if (TAO_HAS_AMI_CALLBACK == 1)
+
 typedef void (*TAO_Reply_Handler_Skeleton)(
     TAO_InputCDR &,
     Messaging::ReplyHandler_ptr,
@@ -76,10 +78,7 @@ typedef void (*TAO_Reply_Handler_Skeleton)(
     ACE_ENV_ARG_DECL_NOT_USED
     );
 
-namespace TAO
-{
-  struct Exception_Data;
-}
+struct TAO_Exception_Data;
 
 /**
  * @namespace TAO_Messaging_Helper
@@ -92,7 +91,7 @@ namespace TAO_Messaging_Helper
   /// Implement the code shared by all the ExceptionHolder::raise_*()
   /// operations
   void TAO_Messaging_Export exception_holder_raise (
-           TAO::Exception_Data *exception_data,
+           TAO_Exception_Data *exception_data,
            CORBA::ULong exception_count,
            CORBA::Octet *marshaled_data,
            CORBA::ULong marshaled_data_length,
@@ -101,6 +100,7 @@ namespace TAO_Messaging_Helper
            ACE_ENV_ARG_DECL);
 }
 
+#endif /* TAO_HAS_AMI_CALLBACK */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_MESSAGING_H */

@@ -13,13 +13,11 @@
 // Note that this application will not work with remote registries
 // if used with the CURRENT_USER predefined registry.
 
-#include "ace/OS_main.h"
+#include "ace/OS.h"
 
 #if defined (ACE_WIN32)
 
 #include "ace/Registry.h"
-
-// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
 ACE_RCSID(Registry, test_registry_update, "$Id$")

@@ -41,8 +41,7 @@
 #include "md5.h"
 
 #include "RTCP_Packet.h"
-#include "ace/OS_NS_time.h"
-#include "ace/OS_NS_strings.h"
+
 
 int
 TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,

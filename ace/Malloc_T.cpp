@@ -15,7 +15,6 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID(ace, Malloc_T, "$Id$")
 

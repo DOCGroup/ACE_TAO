@@ -14,7 +14,6 @@
 // ============================================================================
 
 #include "Criteria_Evaluator.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID(LifeCycle_Service, Criteria_Evaluator, "$Id$")
 

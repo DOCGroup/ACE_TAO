@@ -4,13 +4,11 @@
 #define ACE_MALLOC_CPP
 
 #include "ace/Malloc.h"
+#include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Malloc.i"
 #endif /* __ACE_INLINE__ */
-
-#include "ace/Object_Manager.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID(ace, Malloc, "$Id$")
 

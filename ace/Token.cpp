@@ -5,17 +5,16 @@
 #include "ace/Log_Msg.h"
 
 #if defined (DEBUGGING)
-// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 #endif /* DEBUGGING */
 
 ACE_RCSID(ace, Token, "$Id$")
 
+#if defined (ACE_HAS_THREADS)
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Token.i"
 #endif /* __ACE_INLINE__ */
-
-#if defined (ACE_HAS_THREADS)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Token)
 

@@ -1,7 +1,6 @@
 #include "Basic_Logging_Service.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/Log/BasicLogFactory_i.h"
-#include "ace/OS_main.h"
 
 ACE_RCSID (Basic_Logging_Service,
            Basic_Logging_Service,

@@ -12,6 +12,8 @@
 #ifndef TAO_ESF_PROXY_RB_TREE_H
 #define TAO_ESF_PROXY_RB_TREE_H
 
+#include "tao/corba.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -23,11 +25,7 @@ template<class PROXY>
 class TAO_ESF_Proxy_RB_Tree_Iterator
 {
 public:
-  typedef ACE_RB_Tree_Iterator<PROXY *,
-                               int,
-                               ACE_Less_Than<PROXY*>,
-                               ACE_Null_Mutex> 
-    Implementation;
+  typedef ACE_RB_Tree_Iterator<PROXY*,int,ACE_Less_Than<PROXY*>,ACE_Null_Mutex> Implementation;
 
   TAO_ESF_Proxy_RB_Tree_Iterator (const Implementation &i);
 

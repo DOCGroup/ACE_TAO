@@ -15,6 +15,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/OS.h"
 #include "ace/Process.h"
 #include "ace/Env_Value_T.h"
 

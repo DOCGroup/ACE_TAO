@@ -5,8 +5,6 @@
 
 #include "Content_Iterator_i.h"
 #include "Iterator_Factory_i.h"
-#include "ace/OS_NS_time.h"
-#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (AMI_Iterator, Iterator_Factory_i, "$Id$")
 

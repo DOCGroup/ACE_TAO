@@ -11,8 +11,11 @@ ACE_RCSID (tao,
 # include "PICurrent.inl"
 #endif /* __ACE_INLINE__ */
 
+
 #include "ORB_Core.h"
 #include "TAO_Server_Request.h"
+#include "debug.h"
+
 
 TAO_PICurrent::TAO_PICurrent (void)
   : orb_core_ (0),
@@ -70,11 +73,8 @@ TAO_PICurrent::set_slot (PortableInterceptor::SlotId id,
   // contents of the TSC to the RSC before modifying the RSC.  The RSC
   // should not be altered by modifications to the TSC.
   TAO_PICurrent_Impl *rsc = impl->pi_peer ();
-
   if (rsc != 0)
-    {
-      rsc->copy (*impl, 1);  // Deep copy
-    }
+    rsc->copy (*impl, 1);  // Deep copy
   // -------------------------------------------
 
   impl->set_slot (id, data ACE_ENV_ARG_PARAMETER);
@@ -106,9 +106,7 @@ TAO_PICurrent_Impl::~TAO_PICurrent_Impl (void)
   // this TAO_PICurrent_Impl its peer since this object will no longer
   // exist once this destructor completes execution.
   if (this->pi_peer_ != 0 && this->pi_peer_->pi_peer () == this)
-    {
-      this->pi_peer_->pi_peer (0);
-    }
+    this->pi_peer_->pi_peer (0);
 }
 
 CORBA::Any *
@@ -171,21 +169,17 @@ TAO_PICurrent_Impl::set_slot (PortableInterceptor::SlotId id,
       // Deep copy
 
       const Table &table = *this->lc_slot_table_;
-      size_t new_size = table.size ();
 
+      size_t new_size = table.size ();
       if (this->slot_table_.size (id >= new_size ? id + 1 : new_size) != 0)
-        {
-          ACE_THROW (CORBA::INTERNAL ());
-        }
+        ACE_THROW (CORBA::INTERNAL ());
 
       // Note that the number of elements to copy is bounded by the
       // size of the source array, not the destination array.
       for (size_t i = 0; i < new_size; ++i)
         {
           if (i == id)
-            {
-              continue;  // Avoid copying data twice.
-            }
+            continue;  // Avoid copying data twice.
 
           this->slot_table_[i] = table[i];
         }
@@ -199,9 +193,7 @@ TAO_PICurrent_Impl::set_slot (PortableInterceptor::SlotId id,
   // slots for the reason stated above.
   if (id >= this->slot_table_.size ()
       && this->slot_table_.size (id + 1) != 0)
-    {
-      ACE_THROW (CORBA::INTERNAL ());
-    }
+    ACE_THROW (CORBA::INTERNAL ());
 
   this->slot_table_[id] = CORBA::Any (data);
 
@@ -213,20 +205,17 @@ void
 TAO_PICurrent_Impl::copy (TAO_PICurrent_Impl &rhs, CORBA::Boolean deep_copy)
 {
   if (!rhs.dirty ())
-    {
-      return;  // Nothing to copy
-    }
+    return;  // Nothing to copy
 
   if (deep_copy)
     {
       const Table &t = rhs.slot_table ();
       size_t new_size = t.size ();
+
       this->slot_table_.size (new_size);
 
       for (size_t i = 0; i < new_size; ++i)
-        {
-          this->slot_table_[i] = t[i];  // Deep copy
-        }
+        this->slot_table_[i] = t[i];  // Deep copy
 
       rhs.dirty (0);
 
@@ -237,7 +226,9 @@ TAO_PICurrent_Impl::copy (TAO_PICurrent_Impl &rhs, CORBA::Boolean deep_copy)
   else
     {
       this->lc_slot_table_ = &rhs.slot_table ();  // Shallow copy
+
       this->pi_peer_ = &rhs;
+
       this->dirty_ = 1;
     }
 }
@@ -304,9 +295,7 @@ TAO_PICurrent_Guard::~TAO_PICurrent_Guard (void)
       // source:      TSC
       // destination: RSC
       if (this->tsc_to_rsc_)
-        {
-          this->src_->pi_peer (this->dest_);
-        }
+        this->src_->pi_peer (this->dest_);
     }
 }
 

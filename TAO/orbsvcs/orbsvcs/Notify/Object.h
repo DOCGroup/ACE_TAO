@@ -11,7 +11,6 @@
 
 #ifndef TAO_Notify_OBJECT_H
 #define TAO_Notify_OBJECT_H
-
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -21,9 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/Servant_Base.h"
-
 #include "orbsvcs/NotifyExtC.h"
-
 #include "QoSProperties.h"
 #include "AdminProperties.h"
 #include "Refcountable.h"
@@ -167,5 +164,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_Notify_OBJECT_H */

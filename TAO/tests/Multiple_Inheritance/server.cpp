@@ -3,8 +3,6 @@
 #include "ace/Get_Opt.h"
 #include "Multiple_Inheritance_i.h"
 #include "tao/PortableServer/ORB_Manager.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID(Multiple_Inheritance, server, "$Id$")
 

@@ -1,4 +1,6 @@
-project(*client): messaging, taoexe, portableserver {
+project(*client): messaging, taoserver {
+  exename  = client
+
   Source_Files {
     TestC.cpp
     client.cpp

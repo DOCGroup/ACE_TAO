@@ -7,13 +7,12 @@
 #include "ace/ACE.h"
 #include "ace/Framework_Component.h"
 
+#include "ace/OS.h"
 #include "ace/Lib_Find.h"
 #include "ace/Object_Manager.h"
 #include "ace/SString.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Guard_T.h"
-#include "ace/OS_NS_dlfcn.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID (ace,
 	   DLL_Manager,
@@ -60,7 +59,7 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
   if (this->dll_name_)
     {
       // Once dll_name_ has been set, it can't be changed..
-      if (ACE_OS::strcmp (this->dll_name_, dll_name) != 0)
+      if (ACE_OS_String::strcmp (this->dll_name_, dll_name) != 0)
         {
           if (ACE::debug ())
             ACE_ERROR ((LM_ERROR,
@@ -107,9 +106,9 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
               // AIX often puts the shared library file (most often named shr.o)
               // inside an archive library. If this is an archive library
               // name, then try appending [shr.o] and retry.
-              if (0 != ACE_OS::strstr (dll_pathname, ACE_LIB_TEXT (".a")))
+              if (0 != ACE_OS_String::strstr (dll_pathname, ACE_LIB_TEXT (".a")))
                 {
-                  ACE_OS::strcat (dll_pathname, ACE_LIB_TEXT ("(shr.o)"));
+                  ACE_OS_String::strcat (dll_pathname, ACE_LIB_TEXT ("(shr.o)"));
                   open_mode |= RTLD_MEMBER;
                   this->handle_ = ACE_OS::dlopen (dll_pathname, open_mode);
                 }
@@ -472,7 +471,7 @@ ACE_DLL_Manager::find_dll (const ACE_TCHAR *dll_name) const
   int i;
   for (i = 0; i < this->current_size_; i++)
     if (this->handle_vector_[i] &&
-        ACE_OS::strcmp (this->handle_vector_[i]->dll_name (), dll_name) == 0)
+        ACE_OS_String::strcmp (this->handle_vector_[i]->dll_name (), dll_name) == 0)
       {
         return this->handle_vector_[i];
       }

@@ -13,19 +13,21 @@
 
 #ifndef TAO_IIOP_CONNECTION_HANDLER_H
 #define TAO_IIOP_CONNECTION_HANDLER_H
-
 #include /**/ "ace/pre.h"
 
-#include "ace/Svc_Handler.h"
+#include "ace/Reactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/corbafwd.h"
+#include "tao/Connection_Handler.h"
+#include "tao/IIOPC.h"
+
+#include "ace/Svc_Handler.h"
 #include "ace/SOCK_Stream.h"
 
-#include "tao/Connection_Handler.h"
-#include "tao/Basic_Types.h"
 
 // Service Handler for this transport
 typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
@@ -35,10 +37,6 @@ typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 template class TAO_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
-namespace IIOP
-{
-  class ListenPointList;
-}
 
 // Forward Decls
 class TAO_Pluggable_Messaging;

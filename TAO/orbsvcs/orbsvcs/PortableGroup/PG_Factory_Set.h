@@ -43,6 +43,9 @@ struct TAO_PG_Factory_Node
   /// Member factory information.
   PortableGroup::FactoryInfo factory_info;
 
+  /// The ObjectGroupId to which this member belongs
+  PortableGroup::ObjectGroupId object_group_id;
+
   /// FactoryCreationId assigned to the member.
   PortableGroup::GenericFactory::FactoryCreationId_var factory_creation_id;
 

@@ -22,7 +22,6 @@
 #define _CM_CLIENT_H
 
 #include "Comm_Manager.h"
-#include "ace/Time_Value.h"
 
 class CM_Client : public Comm_Manager
 {

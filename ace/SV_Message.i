@@ -3,8 +3,6 @@
 
 // SV_Message.i
 
-#include "ace/Global_Macros.h"
-
 ACE_INLINE
 ACE_SV_Message::ACE_SV_Message (long t)
   : type_ (t)

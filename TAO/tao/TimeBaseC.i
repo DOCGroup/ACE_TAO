@@ -15,19 +15,13 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
-// and
-//       Institute for Software Integrated Systems
-//       Vanderbilt University
-//       Nashville, TN
-//       USA
-//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -35,11 +29,19 @@ CORBA::Boolean operator<< (
     const TimeBase::UtcT &_tao_aggregate
   )
 {
-  return
+  if (
     (strm << _tao_aggregate.time) &&
     (strm << _tao_aggregate.inacclo) &&
     (strm << _tao_aggregate.inacchi) &&
-    (strm << _tao_aggregate.tdf);
+    (strm << _tao_aggregate.tdf)
+   )
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
 }
 
 ACE_INLINE
@@ -48,15 +50,23 @@ CORBA::Boolean operator>> (
     TimeBase::UtcT &_tao_aggregate
   )
 {
-  return
+  if (
     (strm >> _tao_aggregate.time) &&
     (strm >> _tao_aggregate.inacclo) &&
     (strm >> _tao_aggregate.inacchi) &&
-    (strm >> _tao_aggregate.tdf);
+    (strm >> _tao_aggregate.tdf)
+   )
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -64,9 +74,17 @@ CORBA::Boolean operator<< (
     const TimeBase::IntervalT &_tao_aggregate
   )
 {
-  return
+  if (
     (strm << _tao_aggregate.lower_bound) &&
-    (strm << _tao_aggregate.upper_bound);
+    (strm << _tao_aggregate.upper_bound)
+   )
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
 }
 
 ACE_INLINE
@@ -75,8 +93,16 @@ CORBA::Boolean operator>> (
     TimeBase::IntervalT &_tao_aggregate
   )
 {
-  return
+  if (
     (strm >> _tao_aggregate.lower_bound) &&
-    (strm >> _tao_aggregate.upper_bound);
+    (strm >> _tao_aggregate.upper_bound)
+   )
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
 }
 

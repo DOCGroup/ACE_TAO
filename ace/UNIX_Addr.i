@@ -1,10 +1,7 @@
-
 /* -*- C++ -*- */
 // $Id$
 
 // UNIX_Addr.i
-
-#include "ace/OS_NS_string.h"
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 

@@ -10,9 +10,9 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_TAGGED_PROFILE_H
 #define TAO_TAGGED_PROFILE_H
-
 #include /**/ "ace/pre.h"
 
 #include "tao/IOPC.h"
@@ -21,6 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/GIOPC.h"
 #include "tao/Object_KeyC.h"
 #include "ace/SString.h"
 
@@ -80,6 +81,7 @@ private:
   /// Unmarshalls the GIOP::IORAddressingInfo
   CORBA::Boolean unmarshall_ref_addr_i (TAO_InputCDR &cdr);
 
+
 private:
   /// Our ORB Core
   TAO_ORB_Core *orb_core_;
@@ -132,5 +134,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /*TAO_TAGGED_PROFILE_H*/

@@ -1,26 +1,18 @@
 // $Id$
 
 // Process_Manager.cpp
+#include "ace/ACE.h"
+#include "ace/Process.h"
+#include "ace/Signal.h"
 #include "ace/Process_Manager.h"
+#include "ace/Object_Manager.h"
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Process_Manager.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/ACE.h"
-#include "ace/Guard_T.h"
-#include "ace/Process.h"
-#include "ace/Signal.h"
-#include "ace/Object_Manager.h"
-#include "ace/Log_Msg.h"
-#include "ace/Reactor.h"
-#include "ace/OS_NS_sys_wait.h"
-#include "ace/OS_NS_signal.h"
-#include "ace/OS_NS_sys_time.h"
-
-ACE_RCSID (ace,
-           Process_Manager,
-           "$Id$")
+ACE_RCSID(ace, Process_Manager, "$Id$")
 
 #if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" void

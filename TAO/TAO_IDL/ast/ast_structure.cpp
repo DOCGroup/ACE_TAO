@@ -76,6 +76,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_visitor.h"
 #include "utl_err.h"
 #include "utl_indenter.h"
+#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_structure, 
@@ -542,15 +543,15 @@ AST_Structure::dump (ACE_OSTREAM_TYPE &o)
 {
   if (this->is_local ())
     {
-      this->dump_i (o, "(local) ");
+      o << "(local) ";
     }
 
-  this->dump_i (o, "struct ");
+  o << "struct ";
   AST_Decl::dump (o);
-  this->dump_i (o, " {\n");
+  o << " {\n";
   UTL_Scope::dump (o);
   idl_global->indent ()->skip_to (o);
-  this->dump_i (o, "}");
+  o << "}";
 }
 
 // This serves for structs and unions.

@@ -17,16 +17,13 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
-#include "ace/config-all.h"
+#include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/svc_export.h"
-#include "ace/Lock_Adapter_T.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Thread_Mutex.h"
 
 class ACE_Svc_Export Options
 {

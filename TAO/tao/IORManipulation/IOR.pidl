@@ -10,7 +10,7 @@
  * To regenerate the code use:
  *
  * tao_idl \
- *        -o orig -Gp -Gd -Ge 1 -GT \
+ *        -o orig -Gp -Gd -Ge 1 \
  *          -Wb,export_macro=TAO_IORManip_Export \
  *          -Wb,export_include="ior_manip_export.h" \
  *          -Wb,pre_include="ace/pre.h" \

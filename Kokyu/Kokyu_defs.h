@@ -90,8 +90,6 @@ namespace Kokyu
     ACE_Allocator *allocator_;
 
     Reordering_Queue_Attributes reordering_flags_;
-
-    ConfigInfo ();
   };
 
   typedef ACE_Array<ConfigInfo> ConfigInfoSet;

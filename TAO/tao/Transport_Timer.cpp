@@ -4,9 +4,7 @@
 #include "Transport_Timer.h"
 #include "Transport.h"
 
-ACE_RCSID (tao, 
-           Transport_Timer, 
-           "$Id$")
+ACE_RCSID(tao, Transport_Timer, "$Id$")
 
 TAO_Transport_Timer::TAO_Transport_Timer (TAO_Transport *transport)
   : transport_ (transport)

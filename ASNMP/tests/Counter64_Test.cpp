@@ -39,6 +39,7 @@ DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
 
+#include "ace/OS.h"
 #include "asnmp/ctr64.h"
 #include "test_config.h"
 

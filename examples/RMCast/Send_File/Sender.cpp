@@ -1,6 +1,5 @@
 // $Id$
 
-#include "ace/OS_main.h"
 #include "ace/RMCast/RMCast_UDP_Reliable_Sender.h"
 #include "ace/INET_Addr.h"
 #include "ace/FILE_IO.h"

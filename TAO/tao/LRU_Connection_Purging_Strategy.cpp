@@ -3,9 +3,7 @@
 #include "LRU_Connection_Purging_Strategy.h"
 #include "Transport.h"
 
-ACE_RCSID (tao, 
-           LRU_Connection_Purging_Strategy, 
-           "$Id$")
+ACE_RCSID(tao, LRU_Connection_Purging_Strategy, "$Id$")
 
 TAO_LRU_Connection_Purging_Strategy::TAO_LRU_Connection_Purging_Strategy (
                                                            int cache_maximum)

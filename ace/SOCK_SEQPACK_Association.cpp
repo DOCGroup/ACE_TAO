@@ -1,14 +1,12 @@
 // SOCK_SEQPACK_Association.cpp
 
-#include "ace/SOCK_SEQPACK_Association.h"
+#include /**/ "ace/SOCK_SEQPACK_Association.h"
+#include /**/ "ace/Auto_Ptr.h"
+#include /**/ "ace/Log_Msg.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_SEQPACK_Association.i"
+#include /**/ "ace/SOCK_SEQPACK_Association.i"
 #endif
-
-#include "ace/Auto_Ptr.h"
-#include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID(ace, SOCK_SEQPACK_Association, "$Id$")
 

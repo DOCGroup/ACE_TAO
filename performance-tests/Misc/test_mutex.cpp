@@ -49,8 +49,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/Profile_Timer.h"
-#include "ace/OS_main.h"
-#include "ace/OS_NS_Thread.h"
+#include "ace/OS.h"
 
 ACE_RCSID(Misc, test_mutex, "$Id$")
 

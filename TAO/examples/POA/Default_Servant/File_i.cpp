@@ -15,9 +15,6 @@
 //====================================================================
 
 #include "File_i.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_fcntl.h"
-#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Default_Servant, File_i, "$Id$")
 

@@ -25,8 +25,6 @@
 
 #if defined (ACE_HAS_TLI)
 
-class ACE_Time_Value;
-
 /**
  * @class ACE_TLI_Stream
  *

@@ -21,7 +21,6 @@
 #include "ace/Process.h"
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(tests, Pipe_Test, "$Id$")
 

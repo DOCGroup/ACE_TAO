@@ -11,20 +11,22 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_RESOURCE_FACTORY_H
 #define TAO_RESOURCE_FACTORY_H
 
 #include /**/ "ace/pre.h"
+
 #include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Unbounded_Set.h"
-#include "ace/SString.h"
-
 #include "tao/TAO_Export.h"
+#include "ace/Unbounded_Set.h"
+#include "CONV_FRAMEC.h"
+#include "ace/SString.h"
 
 class TAO_Protocol_Factory;
 class TAO_Acceptor_Registry;
@@ -224,9 +226,7 @@ public:
   virtual void disable_factory (void) = 0;
 
   /// Return the resource usage strategy.
-  virtual 
-  TAO_Resource_Factory::Resource_Usage 
-  resource_usage_strategy (void) const = 0;
+  virtual TAO_Resource_Factory::Resource_Usage resource_usage_strategy (void) const = 0;
 
 protected:
   /**

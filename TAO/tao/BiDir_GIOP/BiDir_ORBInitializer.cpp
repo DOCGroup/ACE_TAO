@@ -6,11 +6,7 @@
 #include "BiDir_PolicyFactory.h"
 #include "BiDirGIOP.h"
 
-#include "tao/ORB_Constants.h"
-
-ACE_RCSID (BiDir_GIOP, 
-           BiDir_ORBInitializer,
-           "$Id$")
+ACE_RCSID (BiDir_GIOP, BiDir_ORBInitializer, "$Id$")
 
 
 

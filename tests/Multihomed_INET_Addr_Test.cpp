@@ -18,11 +18,10 @@
 //
 // ============================================================================
 
-#include "test_config.h"
-#include "ace/OS_NS_string.h"
-#include "ace/Multihomed_INET_Addr.h"
-#include "ace/Log_Msg.h"
-#include "ace/OS_NS_arpa_inet.h"
+#include /**/ "test_config.h"
+#include /**/ "ace/OS.h"
+#include /**/ "ace/Multihomed_INET_Addr.h"
+#include /**/ "ace/Log_Msg.h"
 
 int run_main (int argc, ACE_TCHAR *argv[])
 {
@@ -180,7 +179,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
            j < num_secondaries + 1;
            ++j, ++pointer) {
 
-        if (ACE_OS::memcmp(pointer, stay_out[0].get_addr(), sizeof(sockaddr))) {
+        if (memcmp(pointer, stay_out[0].get_addr(), sizeof(sockaddr))) {
 
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Failed get_addresses check\n")));
@@ -272,7 +271,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
       // Check that the primary address in the in_out_sockaddr array
       // matches the primary address reported by the superclass
-      if (ACE_OS::memcmp(in_out_sockaddr, addr.get_addr(), sizeof(sockaddr))) {
+      if (memcmp(in_out_sockaddr, addr.get_addr(), sizeof(sockaddr))) {
 
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Failed second get_addresses check ")
@@ -288,7 +287,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
            j < i + 1;
            ++j, ++pointer) {
 
-        if (ACE_OS::memcmp(pointer, stay_out[j-1].get_addr(), sizeof(sockaddr))) {
+        if (memcmp(pointer, stay_out[j-1].get_addr(), sizeof(sockaddr))) {
 
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Failed second get_addresses check ")

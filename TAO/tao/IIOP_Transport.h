@@ -22,10 +22,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-namespace IIOP
-{
-  class ListenPointList;
-}
+#include "tao/IIOPC.h"
+#include "ace/SOCK_Stream.h"
+
 
 // Forward decls.
 class TAO_IIOP_Connection_Handler;

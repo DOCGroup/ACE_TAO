@@ -39,8 +39,6 @@ use Getopt::Std;
 @files_idl = ();
 @files_pl = ();
 @files_changelog = ();
-@files_makefile = ();
-@files_mpc = ();
 
 # To keep track of errors and warnings
 $errors = 0;
@@ -108,12 +106,6 @@ sub store_file ($)
     elsif ($name =~ /ChangeLog/i && -f $name) {
         push @files_changelog, ($name);
     }
-    elsif ($name =~ /Makefile/i) {
-        push @files_makefile, ($name);
-    }
-    elsif ($name =~ /\.(mpc|mwc|mpb|mpt)/i) {
-        push @files_mpc, ($name);
-    }
 }
 
 ##############################################################################
@@ -171,8 +163,8 @@ sub check_for_inline_in_cpp ()
 sub check_for_id_string ()
 {
     print "Running \$Id\$ string check\n";
-    foreach $file (@files_cpp, @files_inl, @files_h, @files_mpc,
-                   @files_html, @files_idl, @files_pl, @makefile_files) {
+    foreach $file (@files_cpp, @files_inl, @files_h,
+                   @files_html, @files_idl, @files_pl) {
         my $found = 0;
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;
@@ -273,110 +265,6 @@ sub check_for_math_include ()
                 if ($disable == 0
                     and /^\s*#\s*include\s*(\/\*\*\/){0,1}\s*\<math\.h\>/) {
                     print_error ("math.h included in $file on line $line");
-                }
-            }
-            close (FILE);
-        }
-        else {
-            print STDERR "Error: Could not open $file\n";
-        }
-    }
-}
-
-# This test checks for the inclusion of streams.h.
-# // FUZZ: disable check_for_streams_include
-sub check_for_streams_include ()
-{
-    print "Running ace/streams.h test\n";
-    foreach $file (@files_h, @files_cpp, @files_inl) {
-        my $line = 0;
-        if (open (FILE, $file)) {
-            my $disable = 0;
-            print "Looking at file $file\n" if $opt_d;
-            while (<FILE>) {
-                ++$line;
-                if (/FUZZ\: disable check_for_streams_include/) {
-                    $disable = 1;
-                }
-                if (/FUZZ\: enable check_for_streams_include/) {
-                    $disable = 0;
-                }
-                if ($disable == 0
-                    and /^\s*#\s*include\s*\"ace\/streams\.h\"/) {
-                    print_error ("ace/streams.h included in $file on line $line");
-                    print " ace/streams.h is very expensive in both ";
-                    print "compile-time and footprint. \n";
-                    print " Please consider including ace/iosfwd.h instead.\n\n";
-                }
-            }
-            close (FILE);
-        }
-        else {
-            print STDERR "Error: Could not open $file\n";
-        }
-    }
-}
-
-# This test checks for the inclusion of OS.h.
-sub check_for_OS_h_include ()
-{
-    print "Running ace/OS.h test\n";
-    foreach $file (@files_h, @files_cpp, @files_inl) {
-        my $line = 0;
-        if (open (FILE, $file)) {
-            my $disable = 0;
-            print "Looking at file $file\n" if $opt_d;
-            while (<FILE>) {
-                ++$line;
-                if (/FUZZ\: disable check_for_OS_h_include/) {
-                    $disable = 1;
-                }
-                if (/FUZZ\: enable check_for_OS_h_include/) {
-                    $disable = 0;
-                }
-                if ($disable == 0
-                    and /^\s*#\s*include\s*\"ace\/OS\.h\"/) {
-                    print_error ("ace/OS.h included in $file on line $line");
-                    print " OS.h is very expensive in both ";
-                    print "compile-time and footprint. \n";
-                    print " Please consider including one of the ";
-                    print "OS_NS_*.h files instead.\n\n";
-                }
-            }
-            close (FILE);
-        }
-        else {
-            print STDERR "Error: Could not open $file\n";
-        }
-    }
-}
-
-# This test checks for the inclusion of Synch*.h.
-sub check_for_synch_include ()
-{
-    print "Running ace/Synch*.h test\n";
-    foreach $file (@files_h, @files_cpp, @files_inl) {
-        my $line = 0;
-        if (open (FILE, $file)) {
-            my $disable = 0;
-            print "Looking at file $file\n" if $opt_d;
-            while (<FILE>) {
-                ++$line;
-                if (/FUZZ\: disable check_for_synch_include/) {
-                    $disable = 1;
-                }
-                if (/FUZZ\: enable check_for_synch_include/) {
-                    $disable = 0;
-                }
-                if ($disable == 0
-                    and (/^\s*#\s*include\s*\"(ace\/Synch\.h)\"/
-                         or /^\s*#\s*include\s*\"(ace\/Synch_T\.h)\"/)) {
-                    my $synch = $1;
-                    print_error ("$synch included in $file on line $line");
-                    print " $synch is very expensive in both ";
-                    print "compile-time and footprint. \n";
-                    print " Please consider including one of the ";
-                    print "individual synch files instead.\n\n";
                 }
             }
             close (FILE);
@@ -498,73 +386,6 @@ sub check_for_tchar
     }
 }
 
-# This checks to see if Makefiles define a DEPENDENCY_FILE, and if they do
-# whether or not it's in the cvs repo.
-sub check_for_dependency_file ()
-{
-    print "Running DEPENDENCY_FILE test\n";
-    foreach $file (@files_makefile) {
-        if (open (FILE, $file)) {
-            print "Looking at file $file\n" if $opt_d;
-            while (<FILE>) {
-                if (/^DEPENDENCY_FILE\s* =\s*(.*)/) {
-                    my $depend = $1;
-                    my $path = $file;
-                    $path =~ s/\/Makefile.*/\//;
-                    $depend = $path . $depend;
-                    unless (open (DFILE, $depend)) {
-                        print_error ("DEPENDENCY_FILE \"$depend\" not found");
-                        print " Either add \"$depend\" to cvs ";
-                        print "or remove DEPENDENCY_FILE variable\n";
-                        print " from $file\n\n";
-                    }
-                    close (DFILE);
-                }
-            }
-            close (FILE);
-        }
-        else {
-            print_error ("cannot open $file");
-        }
-    }
-}
-
-# This checks to see if Makefiles define a MAKEFILE, and if it matches the
-# name of the Makefile
-sub check_for_makefile_variable ()
-{
-    print "Running MAKEFILE variable test\n";
-    foreach $file (@files_makefile) {
-        if (!(substr($file,-4) eq ".bor")
-            and !(substr($file,-3) eq ".am")
-            and !(substr($file,-4) eq ".vac")
-            and !(substr($file,-4) eq ".alt")) {
-            if (open (FILE, $file)) {
-                print "Looking at file $file\n" if $opt_d;
-                my $makevarfound = 0;
-                my $filename = basename($file,"");
-                while (<FILE>) {
-                    if (/^MAKEFILE\s*=\s*(.*)/) {
-                        $makevarfound = 1;
-                        $makevar = $1;
-                        if (!($makevar eq $filename)) {
-                            print_error ("MAKEFILE variable $makevar != $filename in $file");
-                            print " Change MAKEFILE = $filename in $file.\n\n";
-                        }
-                    }
-                }
-                if ($makevarfound == 0 and !($filename eq "Makefile")) {
-                    print_error ("MAKEFILE variable missing in $file");
-                    print " Add MAKEFILE = $filename to the top of $file.\n\n";
-                }
-                close (FILE);
-            }
-            else {
-                print_error ("cannot open $file");
-            }
-        }
-    }
-}
 
 
 # This checks to make sure files include ace/post.h if ace/pre.h is included
@@ -663,14 +484,14 @@ sub check_for_mismatched_filename ()
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
                 if (m/\@file\s*([^\s]*)/){
-                    # $file includes complete path, $1 is the name after
-                    # @file. We must strip the complete path from $file.
-                    # we do that using the basename function from
-                    # File::BaseName
-                    $filename = basename($file,"");
-                    if (!($filename eq $1)){
-                        print_error ("\@file mismatch in $file, found $1");
-                    }
+					# $file includes complete path, $1 is the name after
+					# @file. We must strip the complete path from $file.
+					# we do that using the basename function from
+					# File::BaseName
+					$filename = basename($file,"");
+					if (!($filename eq $1)){
+                       print_error ("\@file mismatch in $file, found $1");
+					}
                 }
             }
             close (FILE);
@@ -1104,11 +925,6 @@ else {
 print "--------------------Configuration: Fuzz - Level ",$opt_l,
       "--------------------\n";
 
-check_for_synch_include () if ($opt_l >= 1);
-check_for_OS_h_include () if ($opt_l >= 1);
-check_for_streams_include () if ($opt_l >= 1);
-check_for_dependency_file () if ($opt_l >= 1);
-check_for_makefile_variable () if ($opt_l >= 1);
 check_for_inline_in_cpp () if ($opt_l >= 2);
 check_for_id_string () if ($opt_l >= 1);
 check_for_newline () if ($opt_l >= 1);

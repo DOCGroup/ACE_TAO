@@ -14,19 +14,16 @@
 
 #ifndef TAO_EC_REACTIVE_CONSUMERCONTROL_H
 #define TAO_EC_REACTIVE_CONSUMERCONTROL_H
-
 #include /**/ "ace/pre.h"
 
 #include "EC_ConsumerControl.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/ESF/ESF_Worker.h"
-
-#include "tao/ORB.h"
-
+#include "tao/corba.h"
 #include "ace/Event_Handler.h"
 
 class TAO_EC_Event_Channel_Base;
@@ -141,5 +138,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_EC_CONSUMERCONTROL_H */

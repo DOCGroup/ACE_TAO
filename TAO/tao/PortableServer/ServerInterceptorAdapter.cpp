@@ -22,9 +22,9 @@ TAO_ServerRequestInterceptor_Adapter::
 }
 
 void
-TAO_ServerRequestInterceptor_Adapter::
-receive_request_service_contexts (
-  TAO_ServerRequestInfo *ri
+TAO_ServerRequestInterceptor_Adapter::tao_ft_interception_point (
+    TAO_ServerRequestInfo *ri,
+    CORBA::OctetSeq_out oc
   ACE_ENV_ARG_DECL)
 {
   // This method implements one of the "starting" server side
@@ -39,16 +39,71 @@ receive_request_service_contexts (
       TAO_PICurrent_Guard pi_guard (ri->server_request (),
                                     0 /* Copy RSC to TSC */);
 
+      oc = 0;
+
       for (size_t i = 0 ; i < this->len_; ++i)
+        {
+          this->interceptors_[i]->tao_ft_interception_point (
+            ri,
+            oc
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          if (oc != 0)
+            {
+              (void) this->send_other (ri
+                                       ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+
+              return;
+            }
+
+          // The starting interception point completed successfully.
+          // Push the interceptor on to the flow stack.
+          ++this->stack_size_;
+        }
+    }
+  ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
+    {
+      ri->forward_reference (exc);
+      this->send_other (ri
+                        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      this->location_forwarded_ = 1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+void
+TAO_ServerRequestInterceptor_Adapter::
+receive_request_service_contexts (
+  TAO_ServerRequestInfo *ri
+  ACE_ENV_ARG_DECL)
+{
+  // This method implements one of the "intermediate" server side
+  // interception point.
+  if (this->len_ != this->stack_size_)
+    {
+      // This method (i.e. the receive_request() interception point)
+      // should only be invoked if all of the interceptors registered
+      // with the ORB were pushed on to the flow stack by one of the
+      // starting endpoints (such as
+      // receive_request_service_contexts()).  If the above condition
+      // evaluates to "true," then it is likely that a starting
+      // interception point was never invoked.  This is of course, an
+      // internal error that must be corrected.
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+  ACE_TRY
+    {
+      for (size_t i = 0 ; i < this->stack_size_; ++i)
         {
           this->interceptors_[i]->receive_request_service_contexts (
             ri
             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-
-          // The starting interception point completed successfully.
-          // Push the interceptor on to the flow stack.
-          ++this->stack_size_;
         }
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)

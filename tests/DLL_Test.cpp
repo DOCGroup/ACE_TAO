@@ -117,15 +117,13 @@ int basic_test (ACE_DLL &dll)
   // Allocate and free a string allocated via malloc in a different dll.
   ACE_TCHAR *malloc_str = my_hello->malloc_info ();
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Result for malloc_info(): %s\n"), malloc_str));
-  ACE_OS::free (malloc_str);
+  ACE_OS_Memory::free (malloc_str);
 
   return 0;
 }
 
 int dynamic_cast_test (ACE_DLL &dll)
 {
-
-#if !defined (ACE_LACKS_RTTI)
   Child child;
   child.test();
 
@@ -149,13 +147,9 @@ int dynamic_cast_test (ACE_DLL &dll)
 
   if (pfnAcquire( &child ) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("dyanmic_cast failed.\n")), -1);
-#else
-  ACE_UNUSED_ARG (dll);
-#endif /* !ACE_LACKS_RTTI */
 
   return 0;
 }
-
 
 int
 run_main (int, ACE_TCHAR *[])

@@ -15,7 +15,7 @@
 #if !defined (TEST_DYNENUM_H)
 #define TEST_DYNENUM_H
 
-#include "tao/ORB.h"
+#include "tao/corba.h"
 
 class Test_DynEnum
 {

@@ -14,8 +14,9 @@
 
 #ifndef TAO_UIPMC_ENDPOINT_H
 #define TAO_UIPMC_ENDPOINT_H
-
 #include /**/ "ace/pre.h"
+
+#include "tao/corbafwd.h"
 
 #include "tao/Endpoint.h"
 
@@ -24,7 +25,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/INET_Addr.h"
-
 #include "portablegroup_export.h"
 
 /**
@@ -121,5 +121,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif  /* TAO_UIPMC_PROFILE_H */

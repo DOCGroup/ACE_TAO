@@ -15,38 +15,30 @@
  * @author Carlos O'Ryan <coryan@cs.wustl.edu>
  */
 //=============================================================================
+
+
 #ifndef TAO_ENVIRONMENT_H
 #define TAO_ENVIRONMENT_H
-
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Basic_Types.h"
-#include "tao/CORBA_methods.h"
-#include "tao/orbconf.h"
+#include <stdarg.h> // LynxOS requires this before stdio.h
+#include <stdio.h>  // Pull in "stdout" definition.
+
 #include "tao/Pseudo_VarOut_T.h"
-#include "tao/default_environment.h"
 
 class TAO_ORB_Core;
 
 namespace CORBA
 {
-
-  class Exception;
-
   class Environment;
-  typedef Environment *Environment_ptr;
   typedef TAO_Pseudo_Var_T<Environment> Environment_var;
   typedef TAO_Pseudo_Out_T<Environment, Environment_var> Environment_out;
-
-  /// Obtain the thread-specific default environment.  This is
-  /// obsolete and only left here for backwards compatibility.
-  TAO_NAMESPACE_INLINE_FUNCTION Environment & default_environment (void);
 
   /**
    * @class Environment
@@ -152,7 +144,6 @@ namespace CORBA
     Environment *previous_;
   };
 } // End CORBA namespace
-
 
 #if defined (__ACE_INLINE__)
 # include "tao/Environment.i"

@@ -23,7 +23,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/SSLIOPC.h"
-#include "tao/LocalObject.h"
 
 #include <openssl/opensslconf.h>
 

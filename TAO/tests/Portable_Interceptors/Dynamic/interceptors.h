@@ -5,8 +5,7 @@
 #ifndef TAO_INTERCEPTORS_H
 #define TAO_INTERCEPTORS_H
 
-#include "tao/PortableInterceptorC.h"
-#include "tao/LocalObject.h"
+#include "tao/corba.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

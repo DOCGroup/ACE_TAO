@@ -7,7 +7,8 @@
 #include "tao/Profile.h"
 #include "tao/Tagged_Components.h"
 #include "tao/Stub.h"
-#include "tao/Invocation_Utils.h"
+
+#include "tao/Invocation.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
 
@@ -117,8 +118,8 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
       that_cdr >> that_group_component;
 
       // check if domain id and group id are the same
-      if ((ACE_OS::strcmp (this_group_component.ft_domain_id,
-                           that_group_component.ft_domain_id) == 0) &&
+      if ((ACE_OS::strcmp (this_group_component.group_domain_id,
+                           that_group_component.group_domain_id) == 0) &&
           (this_group_component.object_group_id ==
            that_group_component.object_group_id))
          {
@@ -171,36 +172,62 @@ TAO_FT_Service_Callbacks::hash_ft (TAO_Profile *p,
   return (CORBA::ULong) group_component.object_group_id % max;
 }
 
-TAO::Invocation_Status
+int
 TAO_FT_Service_Callbacks::raise_comm_failure (
-    IOP::ServiceContextList &context_list,
+    TAO_GIOP_Invocation *invoke,
     TAO_Profile *profile
     ACE_ENV_ARG_DECL)
 {
-  if (this->restart_policy_check (context_list,
-                                  profile))
-    return TAO::TAO_INVOKE_RESTART;
+  if (this->restart_policy_check (
+          invoke->request_service_context ().service_info (),
+          profile))
+    {
+      TAO_GIOP_Twoway_Invocation *invoc =
+        ACE_dynamic_cast (TAO_GIOP_Twoway_Invocation *,
+                          invoke);
+
+      if (invoc)
+        {
+          // Reset the states to start invocation on a different
+          // target
+          invoc->reset_states ();
+        }
+      return TAO_INVOKE_RESTART;
+    }
 
   // As the right tags are not found close the connection and throw an
   // exception
-  //   invoke->close_connection ();
+  invoke->close_connection ();
   ACE_THROW_RETURN (CORBA::COMM_FAILURE (
       CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
           errno),
       CORBA::COMPLETED_MAYBE),
-      TAO::TAO_INVOKE_SYSTEM_EXCEPTION);
+      TAO_INVOKE_EXCEPTION);
 }
 
-TAO::Invocation_Status
+int
 TAO_FT_Service_Callbacks::raise_transient_failure (
-    IOP::ServiceContextList &service,
+    TAO_GIOP_Invocation *invoke,
     TAO_Profile *profile
     ACE_ENV_ARG_DECL)
 {
-  if (this->restart_policy_check (service,
-                                  profile))
-    return TAO::TAO_INVOKE_RESTART;
+  if (restart_policy_check (
+        invoke->request_service_context ().service_info (),
+        profile))
+    {
+      TAO_GIOP_Twoway_Invocation *invoc =
+        ACE_dynamic_cast (TAO_GIOP_Twoway_Invocation *,
+                          invoke);
+
+      if (invoc)
+        {
+          // Reset the states to start invocation on a different
+          // target
+          invoc->reset_states ();
+        }
+      return TAO_INVOKE_RESTART;
+    }
 
   // As the right tags are not found close the connection and throw an
   // exception
@@ -209,7 +236,7 @@ TAO_FT_Service_Callbacks::raise_transient_failure (
           TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
           errno),
       CORBA::COMPLETED_MAYBE),
-      TAO::TAO_INVOKE_SYSTEM_EXCEPTION);
+      TAO_INVOKE_EXCEPTION);
 }
 
 CORBA::Boolean

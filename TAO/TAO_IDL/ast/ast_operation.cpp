@@ -86,6 +86,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_string.h"
 #include "utl_strlist.h"
 #include "global_extern.h"
+#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_operation, 
@@ -456,17 +457,17 @@ AST_Operation::dump (ACE_OSTREAM_TYPE &o)
 
   if (this->pd_flags == OP_oneway)
     {
-      this->dump_i (o, "oneway ");
+      o << "oneway ";
     }
   else if (this->pd_flags == OP_idempotent)
     {
-      this->dump_i (o, "idempotent ");
+      o << "idempotent ";
     }
 
   this->pd_return_type->name ()->dump (o);
-  this->dump_i (o, " ");
+  o << " ";
   this->local_name ()->dump (o);
-  this->dump_i (o, "(");
+  o << "(";
 
   // Must advance the iterator explicity inside the loop.
   for (UTL_ScopeActiveIterator i (this, IK_decls); !i.is_done ();)
@@ -477,15 +478,15 @@ AST_Operation::dump (ACE_OSTREAM_TYPE &o)
 
       if (!i.is_done())
         {
-          this->dump_i (o, ", ");
+          o << ", ";
         }
     }
 
-  this->dump_i (o, ")");
+  o << ")";
 
   if (this->pd_exceptions != 0)
     {
-      this->dump_i (o, " raises(");
+      o << " raises(";
 
       // Must advance the iterator explicity inside the loop.
       for (UTL_ExceptlistActiveIterator ei (this->pd_exceptions);
@@ -497,31 +498,31 @@ AST_Operation::dump (ACE_OSTREAM_TYPE &o)
 
           if (!ei.is_done())
             {
-             this->dump_i (o, ", ");
+             o << ", ";
             }
         }
 
-      this->dump_i (o, ")");
+      o << ")";
     }
 
   if (this->pd_context != 0)
     {
-      this->dump_i (o, " context(");
+      o << " context(";
 
       // Must advance the iterator explicity inside the loop.
       for (UTL_StrlistActiveIterator si (this->pd_context); !si.is_done();)
         {
           s = si.item ();
           si.next ();
-          this->dump_i (o, s->get_string ());
+          o << s->get_string ();
 
           if (!si.is_done())
             {
-              this->dump_i (o, ", ");
+              o << ", ";
             }
         }
 
-      this->dump_i (o, ")");
+      o << ")";
     }
 }
 

@@ -1,8 +1,4 @@
-// -*- C++ -*-
 // $Id$
-
-#include "ace/Guard_T.h"
-#include "ace/Null_Mutex.h"
 
 template<class COLLECTION, class ITERATOR> ACE_INLINE
 ACE_RMCast_Copy_On_Write_Collection<COLLECTION,ITERATOR>::

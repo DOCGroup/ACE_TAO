@@ -1,11 +1,11 @@
-project(*Server): messaging, taoexe, portableserver, minimum_corba {
+project(*Server): messaging, taoserver, minimum_corba {
   Source_Files {
     param_test_i.cpp
     server.cpp
   }
 }
 
-project(*Client): messaging, taoexe, portableserver, minimum_corba, dynamicinterface {
+project(*Client): messaging, taoserver, minimum_corba, dynamicinterface {
   exename  = client
 
   Source_Files {
@@ -54,7 +54,9 @@ project(*Client): messaging, taoexe, portableserver, minimum_corba, dynamicinter
   }
 }
 
-project(*Anyop): messaging, taoexe, portableserver, minimum_corba {
+project(*Anyop): messaging, taoserver, minimum_corba {
+  exename = anyop
+
   Source_Files {
     param_testC.cpp
     anyop.cpp

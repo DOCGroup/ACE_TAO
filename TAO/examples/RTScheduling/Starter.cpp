@@ -1,7 +1,6 @@
 //$Id$
 
 #include "Starter.h"
-#include "ace/OS_NS_sys_time.h"
 
 
 Starter::Starter (CORBA::ORB_ptr orb)

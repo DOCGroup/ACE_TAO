@@ -16,7 +16,6 @@
 #ifndef ANALYZER_H
 #define ANALYZER_H
 #include "tao/DynamicAny/DynamicAny.h"
-#include "tao/ORB.h"
 
 class DynAnyAnalyzer
 {

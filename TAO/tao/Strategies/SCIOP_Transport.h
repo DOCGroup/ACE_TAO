@@ -26,6 +26,7 @@
 #include "strategies_export.h"
 #include "tao/IIOPC.h"
 #include "ace/SOCK_SEQPACK_Association.h"
+#include "ace/Synch.h"
 
 // Forward decls.
 class TAO_SCIOP_Connection_Handler;

@@ -32,7 +32,6 @@
 #include "ace/Message_Block.h"
 #include "ace/Synch.h"
 #include "ace/SString.h"
-#include "ace/Unbounded_Set.h"
 
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Event_Service_Constants.h"

@@ -17,9 +17,8 @@
 #ifndef TAO_SCIOP_ACCEPTOR_H
 #define TAO_SCIOP_ACCEPTOR_H
 #include /**/ "ace/pre.h"
-#include "ace/Acceptor.h"
 
-#include "tao/orbconf.h"
+#include "tao/Transport_Acceptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,11 +26,11 @@
 
 #if TAO_HAS_SCIOP == 1
 
-#include "ace/SOCK_SEQPACK_Acceptor.h"
-
-#include "tao/Transport_Acceptor.h"
 #include "SCIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
+
+#include "ace/Acceptor.h"
+#include "ace/SOCK_SEQPACK_Acceptor.h"
 #include "tao/GIOP_Message_Version.h"
 
 // TAO SCIOP_Acceptor concrete call defination
@@ -115,7 +114,7 @@ protected:
    * virtual to allow a derived class implementation to be invoked
    * instead.
    */
-  virtual int open_i (const ACE_Multihomed_INET_Addr &addr,
+  virtual int open_i (const ACE_INET_Addr &addr,
                       ACE_Reactor *reactor);
 
   /**
@@ -126,13 +125,6 @@ protected:
    * no explicit hostname is provided in the specified endpoint.
    */
   int probe_interfaces (TAO_ORB_Core *orb_core);
-
-  /**
-   * Split the string into hostnames separated by the plus character
-   * ('+').
-   */
-  int parse_multiple_hostnames (const char *hostnames,
-                                ACE_Array<ACE_CString> &hostnames_out);
 
   /**
    * Parse protocol specific options.

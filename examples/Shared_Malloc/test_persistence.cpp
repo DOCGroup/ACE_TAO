@@ -7,10 +7,7 @@
 // sized buffers.  This may cause buffers to overrun.
 
 #include "ace/Malloc.h"
-
-// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
-
 #include "ace/Null_Mutex.h"
 
 ACE_RCSID(Shared_Malloc, test_persistence, "$Id$")

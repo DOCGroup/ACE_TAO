@@ -18,6 +18,7 @@
 // ============================================================================
 
 #include "Object_A_i.h"
+#include "tao/corba.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
@@ -41,6 +42,9 @@ Object_A_i::foo (Initiator_ptr theInitiator_ptr
                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) BEGIN Object_A_i::foo ()\n"));
+
   ACE_TRY
     {
       theInitiator_ptr->foo_object_B (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -55,12 +59,20 @@ Object_A_i::foo (Initiator_ptr theInitiator_ptr
     }
   ACE_ENDTRY;
 
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) END Object_A_i::foo ()\n"));
 }
 
 void
 Object_A_i::finish (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) BEGIN Object_A_i::finish ()\n"));
+
   this->finish_two_way_call_ = 1;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) END Object_A_i::finish ()\n"));
 
 }

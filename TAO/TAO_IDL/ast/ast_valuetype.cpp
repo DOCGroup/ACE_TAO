@@ -10,6 +10,7 @@
 #include "utl_indenter.h"
 #include "global_extern.h"
 #include "nr_extern.h"
+#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_valuetype, 
@@ -125,12 +126,6 @@ AST_ValueType::custom (void) const
   return this->pd_custom;
 }
 
-idl_bool
-AST_ValueType::will_have_factory (void)
-{
-  return I_FALSE;
-}
-
 void
 AST_ValueType::destroy (void)
 {
@@ -142,21 +137,21 @@ AST_ValueType::dump (ACE_OSTREAM_TYPE &o)
 {
   if (this->is_abstract ())
     {
-      this->dump_i (o, "abstract ");
+      o << "abstract ";
     }
   else if (this->pd_truncatable)
     {
-      this->dump_i (o, "truncatable ");
+      o << "truncatable ";
     }
 
-  this->dump_i (o, "valuetype ");
+  o << "valuetype ";
 
   this->local_name ()->dump (o);
-  this->dump_i (o, " ");
+  o << " ";
 
   if (this->pd_n_inherits > 0)
     {
-      this->dump_i (o, ": ");
+      o << ": ";
 
       for (long i = 0; i < this->pd_n_inherits; ++i)
         {
@@ -164,16 +159,16 @@ AST_ValueType::dump (ACE_OSTREAM_TYPE &o)
 
           if (i < this->pd_n_inherits - 1)
             {
-              this->dump_i (o, ", ");
+              o << ", ";
             }
         }
     }
 
-  this->dump_i (o, "\n\n");
+  o << "\n\n";
 
   if (this->pd_n_supports > 0)
     {
-      this->dump_i (o, "supports ");
+      o << "supports ";
 
       for (long i = 0; i < this->pd_n_supports; ++i)
         {
@@ -181,17 +176,17 @@ AST_ValueType::dump (ACE_OSTREAM_TYPE &o)
 
           if (i < this->pd_n_supports - 1)
             {
-              this->dump_i (o, ", ");
+              o << ", ";
             }
         }
     }
 
-  this->dump_i (o, " {\n");
+  o << " {\n";
 
   UTL_Scope::dump (o);
   idl_global->indent ()->skip_to (o);
 
-  this->dump_i (o, "}");
+  o << "}";
 }
 
 int

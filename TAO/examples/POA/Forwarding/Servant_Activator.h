@@ -21,7 +21,7 @@
 #ifndef SERVANT_ACTIVATOR_H
 #define SERVANT_ACTIVATOR_H
 
-#include "tao/ORB.h"
+#include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
 
 class ServantActivator : public PortableServer::ServantActivator

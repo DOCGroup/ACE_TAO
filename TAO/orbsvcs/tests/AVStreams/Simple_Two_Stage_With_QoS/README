@@ -26,7 +26,7 @@ receiver -f <output_filename>
 sender
 ------
 
-sender [-f <filename>] [-p <protocol>] [-r <frame rate>] [-l <local_address>] [-a <peer_address>] [-d]  
+sender [-f <filename>] [-p <protocol>] [-r <frame rate>] [-a <address>] [-d]  
 
 
 -f filename --> The file to be streamed to the receiver (defaults to
@@ -38,9 +38,7 @@ sender [-f <filename>] [-p <protocol>] [-r <frame rate>] [-l <local_address>] [-
 -r framerate--> The rate at which tha data frames need to be sent
                 (defaults to 30 frames per second).
 
--l address  --> Local address in the format host:port.
-
--a address  --> Destination address in the format host:port.
+-a address  --> Destination address.
 
 -d          --> Increament the TAO_debug_level for debug messages.
 

@@ -1,9 +1,10 @@
 #include "Object_Ref_Table.h"
+#include "Object.h"
 #include "ORB.h"
+#include "Exception.h"
 #include "Environment.h"
+#include "CORBA_String.h"
 #include "debug.h"
-#include "ORB_Constants.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID (tao,
            Object_Ref_Table,
@@ -29,28 +30,22 @@ TAO_Object_Ref_Table::register_initial_reference (
   CORBA::Object_ptr obj
   ACE_ENV_ARG_DECL)
 {
-  if (id == 0 || ACE_OS::strlen (id) == 0)
-    {
-      ACE_THROW (CORBA::ORB::InvalidName ());
-    }
+  if (id == 0 || ACE_OS_String::strlen (id) == 0)
+    ACE_THROW (CORBA::ORB::InvalidName ());
   else if (CORBA::is_nil (obj))
-    {
-      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 27,
-                                   CORBA::COMPLETED_NO));
-    }
+    ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 27,
+                                 CORBA::COMPLETED_NO));
 
   int result = this->bind (id, obj);
 
   if (result == 1)
     {
       if (TAO_debug_level > 1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) Object_Ref_Table::register_initial_reference:"
-                      "  Could not register duplicate object <%s> "
-                      "with the ORB\n",
-                      id));
-        }
+        ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) Object_Ref_Table::register_initial_reference:\n"
+                    "  Could not register duplicate object <%s> with "
+                    "the ORB\n",
+                    id));
 
       ACE_THROW (CORBA::ORB::InvalidName ());
     }
@@ -59,7 +54,7 @@ TAO_Object_Ref_Table::register_initial_reference (
     {
       if (TAO_debug_level > 1)
         ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) Object_Ref_Table::register_initial_reference:"
+                    "(%P|%t) Object_Ref_Table::register_initial_reference:\n"
                     "  Could not register object <%s> with "
                     "the ORB\n",
                     id));

@@ -1,6 +1,5 @@
 // $Id$
 
-#include "ace/OS_main.h"
 #include "ace/ATM_Connector.h"
 #include "ace/ATM_Addr.h"
 #include "ace/High_Res_Timer.h"

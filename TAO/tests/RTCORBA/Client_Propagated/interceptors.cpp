@@ -2,7 +2,6 @@
 
 #include "interceptors.h"
 #include "tao/OctetSeqC.h"
-#include "ace/Log_Msg.h"
 
 ACE_RCSID (Client_Propagated,
            interceptors,

@@ -27,6 +27,8 @@ AC_DEFUN([ACE_PREP_CONFIG_HEADER],
 [
 dnl Text to be placed at the top of the `ace/config.h' header.
 AH_TOP([
+// -*- C++ -*-
+
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
@@ -40,11 +42,6 @@ AH_BOTTOM([
 
 
 #endif  /* ACE_CONFIG_H */
-
-
-// Local Variables:
-// mode:C++
-// End:
 ])
 
 
@@ -1207,9 +1204,6 @@ AH_TEMPLATE([ACE_LACKS_STRCASECMP],
 AH_TEMPLATE([ACE_LACKS_STRRECVFD],[Platform doesn't define struct strrecvfd.])
 
 AH_TEMPLATE([ACE_LACKS_SYSCALL],[Platform doesn't have syscall() prototype])
-
-AH_TEMPLATE([ACE_LACKS_SYS_SELECT_H],
-[Platform lacks <sys/select.h> header file])
 
 AH_TEMPLATE([ACE_LACKS_SYS_TYPES_H],[Platform lacks <sys/types.h> header file])
 

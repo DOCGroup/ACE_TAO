@@ -1,2 +1,3 @@
-project(POA*): taoexe, portableserver {
+project(POA Current): taoserver {
+  exename = Current
 }

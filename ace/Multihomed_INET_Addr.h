@@ -14,8 +14,8 @@
 #define ACE_MULTIHOMED_INET_ADDR_H
 #include /**/ "ace/pre.h"
 
-#include "ace/INET_Addr.h"
-#include "ace/Containers_T.h"
+#include /**/ "ace/INET_Addr.h"
+#include /**/ "ace/Containers_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -110,17 +110,6 @@ public:
            const ACE_UINT32 *secondary_ip_addrs = 0,
            size_t size = 0);
 
-  /**
-   * Sets the port number without affecting the host name.  The port
-   * numbers of the primary address, and of any and all secondary
-   * addresses, are affected.  If <encode> is enabled, then
-   * <port_number> is converted into network byte order, otherwise it
-   * is assumed to be in network byte order already and is passed
-   * straight through.
-   */
-  void set_port_number (u_short,
-                        int encode = 1);
-
   // = Accessor methods.
 
   /**
@@ -149,7 +138,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#  include "ace/Multihomed_INET_Addr.i"
+#include /**/ "ace/Multihomed_INET_Addr.i"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

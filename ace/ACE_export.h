@@ -4,13 +4,10 @@
 // This file is generated automatically by
 // generate_export_file.pl
 // ------------------------------
-
-// This needs to be outside the ACE_EXPORT_H test due avoid circular include
-//  problems on Windows since config-all.h now includes OS_main.h
-#include "ace/config-all.h"
-
 #ifndef ACE_EXPORT_H
 #define ACE_EXPORT_H
+
+#include "ace/config-all.h"
 
 #if defined (ACE_AS_STATIC_LIBS)
 # if !defined (ACE_HAS_DLL)
@@ -43,15 +40,6 @@
 #  define ACE_SINGLETON_DECLARATION(T)
 #  define ACE_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
 #endif     /* ACE_HAS_DLL */
-
-// Added by hand to help with ACE_OS namespace
-#define ACE_NAMESPACE_STORAGE_CLASS extern ACE_EXPORT_MACRO
-
-#if defined (_MSC_VER) && defined (__ACE_INLINE__)
-#  define ACE_NAMESPACE_INLINE_FUNCTION inline
-#else
-#  define ACE_NAMESPACE_INLINE_FUNCTION ACE_NAMESPACE_STORAGE_CLASS
-#endif
 
 #endif     /* ACE_EXPORT_H */
 

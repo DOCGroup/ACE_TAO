@@ -4,11 +4,7 @@
 #include "Current.h"
 #include "Distributable_Thread.h"
 #include "tao/TSS_Resources.h"
-#include "tao/debug.h"
-#include "tao/Any.h"
-#include "tao/Typecode.h"
-#include "tao/ORB_Constants.h"
-#include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (RTScheduling,
            Request_Interceptor,
@@ -179,11 +175,11 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
   if (current != 0)
     {
       if (ri == 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "ri = 0\n"));
-          return;
-        }
+	{
+	  ACE_ERROR ((LM_ERROR,
+		      "ri = 0\n"));
+	  return;
+	}
 
       CORBA::Any_var ex =
         ri->received_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -191,11 +187,11 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
       CORBA::TypeCode_var type = ex->type ();
 
       if (CORBA::is_nil (type.in ()))
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "type = 0 \n"));
-          return;
-        }
+	{
+	  ACE_ERROR ((LM_ERROR,
+		      "type = 0 \n"));
+	  return;
+	}
       const char * id = type->id ();
 
       if (TAO_debug_level > 0)
@@ -207,7 +203,7 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
       // If the remote host threw a THREAD_CANCELLED
       // exception, make sure to take the appropriate
       // local action.
-      if (ACE_OS::strstr (id, "CORBA::THREAD_CANCELLED") == 0)
+      if (ACE_OS_String::strstr (id, "CORBA::THREAD_CANCELLED") == 0)
         {
           // Perform the necessary cleanup as the
           // thread was cancelled.
@@ -299,8 +295,8 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   ACE_CATCHANY
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Invalid Service Request\n"));
+	ACE_DEBUG ((LM_DEBUG,
+		    "Invalid Service Request\n"));
       return;
     }
   ACE_ENDTRY;
@@ -409,15 +405,15 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
           current->cancel_thread (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
-          return;
+	  return;
         }
       else ACE_DEBUG ((LM_DEBUG,
-                       "Thread Not Cancelled\n"));
+		       "Thread Not Cancelled\n"));
 
 
       // Inform scheduler that upcall is complete.
       current->scheduler ()->send_reply (ri
-                                         ACE_ENV_ARG_PARAMETER);
+					 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       current->cleanup_DT ();
@@ -435,7 +431,7 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
 
     }
   else ACE_DEBUG ((LM_DEBUG,
-                   "Send Reply Current is 0\n"));
+		   "Send Reply Current is 0\n"));
 }
 
 void

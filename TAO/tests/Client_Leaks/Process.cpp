@@ -2,7 +2,6 @@
 // $Id$
 //
 #include "Process.h"
-#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Client_Leaks, Process, "$Id$")
 

@@ -8,7 +8,6 @@
 #include "SHMIOP_Connector.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
-#include "ace/OS_NS_strings.h"
 
 ACE_RCSID(Strategies, SHMIOP_Factory, "$Id$")
 

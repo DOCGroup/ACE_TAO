@@ -5,11 +5,12 @@
 #include "ace/LSOCK_Connector.h"
 #include "ace/UNIX_Addr.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_main.h"
+#include "ace/OS.h"
 
 ACE_RCSID(SOCK_SAP, CPP_unclient, "$Id$")
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+
 int
 main (int argc, char *argv[])
 {
@@ -61,8 +62,7 @@ main (int argc, char *argv[])
   return 0;
 }
 #else
-int
-ACE_TMAIN (int, ACE_TCHAR *[])
+int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
 		     "this platform does not support UNIX-domain sockets\n"), -1);

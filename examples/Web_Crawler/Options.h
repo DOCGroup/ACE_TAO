@@ -18,7 +18,7 @@
 #define _OPTIONS_H
 
 #include "ace/Singleton.h"
-#include "ace/Time_Value.h"
+#include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

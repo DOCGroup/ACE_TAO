@@ -7,7 +7,7 @@
 #ifndef __TEST_SINGLETON_H
 #define __TEST_SINGLETON_H
 
-#include "ace/Synch_Traits.h"
+#include "ace/Synch.h"
 
 class DC_Singleton
 {

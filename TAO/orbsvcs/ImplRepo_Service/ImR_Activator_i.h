@@ -41,8 +41,9 @@ public:
   ~ImR_Activator_i (void);
 
   /// IOR_LookupTable_Callback method.  Will return an IOR
-  char *find_ior (const char* object_name  ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException, ImplementationRepository::NotFound));
+  char *find_ior (const ACE_CString &object_name
+                  ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound));
 
   // = Interface methods
 
@@ -64,8 +65,7 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC ((
           CORBA::SystemException,
-          ImplementationRepository::AlreadyRegistered,
-          ImplementationRepository::NotFound
+          ImplementationRepository::AlreadyRegistered
         ));
 
   /// Updates the startup information about the server <server>.
@@ -73,10 +73,7 @@ public:
       const char *server,
       const ImplementationRepository::StartupOptions &options
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    ) ACE_THROW_SPEC ((CORBA::SystemException,
-    ImplementationRepository::AlreadyRegistered,
-    ImplementationRepository::NotFound
-    ));
+    ) ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Removes the server <server> from the repository.
   virtual void remove_server (
@@ -94,9 +91,9 @@ public:
 
   /// Called by the server to update transient information such as current
   /// location of the <server> and its ServerObject.
-  virtual void server_is_running (
+  virtual char *server_is_running (
       const char *server,
-      const char * partial_ior,
+      const char *location,
       ImplementationRepository::ServerObject_ptr server_object
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     ) ACE_THROW_SPEC ((CORBA::SystemException,
@@ -148,13 +145,6 @@ public:
 
 private:
 
-  char* activate_server_i (const char *server,int check_startup 
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS) ACE_THROW_SPEC ((
-          CORBA::SystemException,
-          ImplementationRepository::NotFound,
-          ImplementationRepository::CannotActivate
-        ));
-
   /// This method starts the server process.
   void start_server_i (
       const char *server
@@ -171,6 +161,9 @@ private:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::NotFound));
 
+  /// The locator interface for the IORTable
+  IORTable::Locator_var locator_;
+
   /// The Process Manager.
   ACE_Process_Manager process_mgr_;
 
@@ -183,11 +176,26 @@ private:
   /// Implementation Repository's POA.
   PortableServer::POA_var imr_poa_;
 
-  /// We're given a token when registering with the locator, which
-  /// we must use when unregistering.
-  CORBA::Long registration_token_;
+  /// Key of the obj ref of the server.
+  char *server_key_;
 
-  ACE_CString name_;
+  /// Copy of the filename for the server output file.
+  char *server_input_file_;
+
+  /// The ior_multicast event handler.
+  TAO_IOR_Multicast *ior_multicast_;
+
+  /// Implementation Repository's IOR.  Why do we store it here?  Multicast
+  /// doesn't work otherwise.
+  CORBA::String_var imr_ior_;
+
+  /// Number of command line arguments.
+  int argc_;
+
+  /// The command line arguments.
+  char **argv_;
+
+  friend class ImR_Forwarder;
 };
 
 #endif /* IMR_ACTIVATOR_I_H */

@@ -1,7 +1,6 @@
 // $Id$
 
 #include "LookupManager.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID(lib, TAO_LookupManager, "$Id$")
 

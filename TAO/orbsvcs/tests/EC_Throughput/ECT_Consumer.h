@@ -23,7 +23,6 @@
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "ace/Task.h"
-#include "ace/OS_NS_time.h"
 
 class Test_Consumer : public POA_RtecEventComm::PushConsumer
 {

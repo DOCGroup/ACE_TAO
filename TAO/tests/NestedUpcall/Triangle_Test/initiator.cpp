@@ -20,8 +20,6 @@
 #include "initiator.h"
 #include "tao/debug.h"
 #include "ace/Read_Buffer.h"
-#include "ace/OS_NS_fcntl.h"
-#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Triangle_Test, initiator, "$Id$")
 
@@ -163,12 +161,9 @@ Initiator_Server::init (int argc,
                            object_A_key_),
                           -1);
 
-#if 0
       ACE_DEBUG ((LM_DEBUG,
                   "Object A IOR: %s\n",
                   this->object_A_key_));
-#endif /*if 0*/
-
       ACE_DEBUG ((LM_DEBUG, "Object A received OK\n"));
 
       // Get Object B
@@ -188,12 +183,9 @@ Initiator_Server::init (int argc,
                            object_B_key_),
                           -1);
 
-#if 0
       ACE_DEBUG ((LM_DEBUG,
-                  "Object B IOR: %s\n",
+                  "Object A IOR: %s\n",
                   this->object_A_key_));
-#endif /*if 0*/
-
       ACE_DEBUG ((LM_DEBUG, "Object B received OK\n"));
 
       this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -219,13 +211,10 @@ Initiator_Server::init (int argc,
   this->str_ =
     this->orb_manager_.activate (this->initiator_i_ptr_
                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-#if 0
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
               this->str_.in ()));
-#endif /*if 0*/
+
 
   return 0;
 }

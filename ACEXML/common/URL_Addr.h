@@ -19,7 +19,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Default_Constants.h"
 #include "ace/INET_Addr.h"
 #include "ACEXML/common/XML_Types.h"
 #include "ACEXML/common/ACEXML_Export.h"

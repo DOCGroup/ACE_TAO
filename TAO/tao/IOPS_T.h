@@ -35,17 +35,17 @@
 #endif /* _MSC_VER */
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_sth.cpp:116
 
 #if defined (ACE_HAS_USING_KEYWORD)
-namespace POA_IOP
+TAO_NAMESPACE  POA_IOP
 {
 }
-// end module IOP
+TAO_NAMESPACE_CLOSE // module IOP
 #endif /* ACE_HAS_USING_KEYWORD */
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1141
 
 #if defined (__ACE_INLINE__)

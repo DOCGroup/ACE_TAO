@@ -3,7 +3,8 @@
 #include "RedGreen_Test.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_unistd.h"
+#include "ace/Synch.h"
+#include "ace/OS.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "tao/debug.h"
 

@@ -29,9 +29,7 @@
 #include "ace/Null_Mutex.h"
 #include "ace/RB_Tree.h"
 #include "ace/Map_Manager.h"
-
 #include "orbsvcs/RtecEventChannelAdminC.h"
-
 #include /**/ "event_export.h"
 
 class ACE_Lock;
@@ -345,6 +343,8 @@ public:
 private:
   TAO_EC_Basic_ObserverStrategy::Headers &headers_;
 };
+
+
 
 #if defined (__ACE_INLINE__)
 #include "EC_ObserverStrategy.i"

@@ -4,9 +4,7 @@
 #include "ace/LSOCK_Stream.h"
 #include "ace/UNIX_Addr.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_main.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdio.h"
+#include "ace/OS.h"
 
 ACE_RCSID(SOCK_SAP, FD_unserver, "$Id$")
 

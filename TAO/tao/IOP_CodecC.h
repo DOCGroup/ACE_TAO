@@ -30,21 +30,17 @@
 
 #ifndef _TAO_IDL_ORIG_IOP_CODECC_H_
 #define _TAO_IDL_ORIG_IOP_CODECC_H_
-
 #include /**/ "ace/pre.h"
-
-#include "tao/Object.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/Sequence_T.h"
+#include "tao/TAO_Export.h"
 #include "tao/Objref_VarOut_T.h"
-#include "tao/Seq_Var_T.h"
-#include "tao/Seq_Out_T.h"
-#include "tao/VarOut_T.h"
-#include "tao/Exception.h"
+#include "tao/Any_Impl_T.h"
+#include "tao/Any_Dual_Impl_T.h"
+#include "tao/Object.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -70,46 +66,59 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root_ch.cpp:63
-
-namespace TAO
-{
-  class Collocation_Proxy_Broker;
-
-  template<typename T> class Narrow_Utils;
-}
-
-// TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:48
 
-namespace IOP
+TAO_NAMESPACE  IOP
 {
 
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:601
+  // be/be_interface.cpp:570
 
-#if !defined (_IOP_CODEC__VAR_OUT_CH_)
-#define _IOP_CODEC__VAR_OUT_CH_
+#if !defined (_IOP_CODEC__ODDS_N_ENDS_CH_)
+#define _IOP_CODEC__ODDS_N_ENDS_CH_
 
   class Codec;
   typedef Codec *Codec_ptr;
+  struct tao_Codec_life;
 
   typedef
     TAO_Objref_Var_T<
-        Codec
+        Codec,
+        tao_Codec_life
       >
     Codec_var;
 
   typedef
     TAO_Objref_Out_T<
-        Codec
+        Codec,
+        tao_Codec_life
       >
     Codec_out;
+
+  struct TAO_Export tao_Codec_life
+  {
+    static Codec_ptr tao_duplicate (Codec_ptr);
+    static void tao_release (Codec_ptr);
+    static Codec_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        Codec_ptr,
+        TAO_OutputCDR &
+      );
+  };
+
+  struct TAO_Export tao_Codec_cast
+  {
+    static Codec_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
+  };
 
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:53
+  // be/be_visitor_interface/interface_ch.cpp:50
 
 #if !defined (_IOP_CODEC_CH_)
 #define _IOP_CODEC_CH_
@@ -120,11 +129,17 @@ namespace IOP
   public:
     typedef Codec_ptr _ptr_type;
     typedef Codec_var _var_type;
+    static int _tao_class_id;
 
     // The static operations.
     static Codec_ptr _duplicate (Codec_ptr obj);
 
     static Codec_ptr _narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
+    static Codec_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
@@ -163,12 +178,12 @@ namespace IOP
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          ACE_ENV_ARG_DECL
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          ACE_ENV_ARG_DECL
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       // TAO_IDL - Generated from
@@ -211,12 +226,12 @@ namespace IOP
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          ACE_ENV_ARG_DECL
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          ACE_ENV_ARG_DECL
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       // TAO_IDL - Generated from
@@ -259,12 +274,12 @@ namespace IOP
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          ACE_ENV_ARG_DECL
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          ACE_ENV_ARG_DECL
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       // TAO_IDL - Generated from
@@ -331,12 +346,9 @@ namespace IOP
       )) = 0;
 
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:185
+    // be/be_visitor_interface/interface_ch.cpp:207
 
-    virtual CORBA::Boolean _is_a (
-        const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
+    virtual void *_tao_QueryInterface (ptrdiff_t type);
 
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
@@ -374,7 +386,7 @@ namespace IOP
   const IOP::EncodingFormat ENCODING_CDR_ENCAPS = 0;
 
   // TAO_IDL - Generated from
-  // be/be_type.cpp:258
+  // be/be_type.cpp:249
 
   struct Encoding;
 
@@ -407,30 +419,53 @@ namespace IOP
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Encoding;
 
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:601
+  // be/be_interface.cpp:570
 
-#if !defined (_IOP_CODECFACTORY__VAR_OUT_CH_)
-#define _IOP_CODECFACTORY__VAR_OUT_CH_
+#if !defined (_IOP_CODECFACTORY__ODDS_N_ENDS_CH_)
+#define _IOP_CODECFACTORY__ODDS_N_ENDS_CH_
 
   class CodecFactory;
   typedef CodecFactory *CodecFactory_ptr;
+  struct tao_CodecFactory_life;
 
   typedef
     TAO_Objref_Var_T<
-        CodecFactory
+        CodecFactory,
+        tao_CodecFactory_life
       >
     CodecFactory_var;
 
   typedef
     TAO_Objref_Out_T<
-        CodecFactory
+        CodecFactory,
+        tao_CodecFactory_life
       >
     CodecFactory_out;
+
+  struct TAO_Export tao_CodecFactory_life
+  {
+    static CodecFactory_ptr tao_duplicate (CodecFactory_ptr);
+    static void tao_release (CodecFactory_ptr);
+    static CodecFactory_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        CodecFactory_ptr,
+        TAO_OutputCDR &
+      );
+  };
+
+  struct TAO_Export tao_CodecFactory_cast
+  {
+    static CodecFactory_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
+  };
 
 #endif /* end #if !defined */
 
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:53
+  // be/be_visitor_interface/interface_ch.cpp:50
 
 #if !defined (_IOP_CODECFACTORY_CH_)
 #define _IOP_CODECFACTORY_CH_
@@ -441,11 +476,17 @@ namespace IOP
   public:
     typedef CodecFactory_ptr _ptr_type;
     typedef CodecFactory_var _var_type;
+    static int _tao_class_id;
 
     // The static operations.
     static CodecFactory_ptr _duplicate (CodecFactory_ptr obj);
 
     static CodecFactory_ptr _narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
+    static CodecFactory_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
@@ -484,12 +525,12 @@ namespace IOP
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          ACE_ENV_ARG_DECL
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
           TAO_InputCDR &
-          ACE_ENV_ARG_DECL
+          ACE_ENV_ARG_DECL_NOT_USED
         );
 
       // TAO_IDL - Generated from
@@ -518,12 +559,9 @@ namespace IOP
       )) = 0;
 
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:185
+    // be/be_visitor_interface/interface_ch.cpp:207
 
-    virtual CORBA::Boolean _is_a (
-        const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
+    virtual void *_tao_QueryInterface (ptrdiff_t type);
 
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
@@ -545,49 +583,10 @@ namespace IOP
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_CodecFactory;
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:66
+// be/be_visitor_module/module_ch.cpp:67
 
-} // module IOP
-
-// TAO_IDL - Generated from
-// be/be_visitor_traits.cpp:48
-
-// Traits specializations.
-namespace TAO
-{
-  // Hand crafted.
-  ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Export Objref_Traits<IOP::Codec>
-  {
-    static IOP::Codec_ptr tao_duplicate (
-        IOP::Codec_ptr
-      );
-    static void tao_release (
-        IOP::Codec_ptr
-      );
-    static IOP::Codec_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        IOP::Codec_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-  ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Export Objref_Traits<IOP::CodecFactory>
-  {
-    static IOP::CodecFactory_ptr tao_duplicate (
-        IOP::CodecFactory_ptr
-      );
-    static void tao_release (
-        IOP::CodecFactory_ptr
-      );
-    static IOP::CodecFactory_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        IOP::CodecFactory_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-};
+}
+TAO_NAMESPACE_CLOSE // module IOP
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_ch.cpp:52
@@ -660,7 +659,7 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, IOP::Encoding &);
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:969
+// be/be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "IOP_CodecC.i"

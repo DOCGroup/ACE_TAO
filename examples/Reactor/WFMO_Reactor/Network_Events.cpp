@@ -36,7 +36,6 @@
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/SOCK_Acceptor.h"
-#include "ace/OS_main.h"
 
 ACE_RCSID(WFMO_Reactor, Network_Events, "$Id$")
 

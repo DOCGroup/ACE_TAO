@@ -3,8 +3,6 @@
 
 // MEM_Addr.i
 
-#include "ace/Global_Macros.h"
-
 // Default dtor.
 ACE_INLINE
 ACE_MEM_Addr::~ACE_MEM_Addr (void)

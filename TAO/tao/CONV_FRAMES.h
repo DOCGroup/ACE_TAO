@@ -32,9 +32,10 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-namespace  POA_CONV_FRAME
+TAO_NAMESPACE  POA_CONV_FRAME
 {
 }
+TAO_NAMESPACE_CLOSE
 
 #include "tao/CONV_FRAMES_T.h"
 

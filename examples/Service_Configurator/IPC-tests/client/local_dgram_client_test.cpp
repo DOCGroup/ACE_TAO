@@ -2,13 +2,11 @@
 
 // Tests out the UNIX domain IPC-SAP abstraction.
 
-#include "ace/OS_main.h"
+#include "ace/OS.h"
 #include "ace/LSOCK_CODgram.h"
 #include "ace/LSOCK_Dgram.h"
 #include "ace/UNIX_Addr.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(client, local_dgram_client_test, "$Id$")
 

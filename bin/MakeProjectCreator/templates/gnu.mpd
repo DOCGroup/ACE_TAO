@@ -10,25 +10,16 @@
 #
 #----------------------------------------------------------------------------
 <%marker(top)%>
-MAKEFILE         = <%project_file%>
-DEPENDENCY_FILE  = .depend.<%project_file%>
+MAKEFILE        = <%project_file%>
+DEPENDENCY_FILE = .depend.<%project_file%>
 <%if(exename)%>
-BIN_UNCHECKED    = <%exename%>
+BIN_UNCHECKED   = <%exename%>
 <%endif%>
 <%if(staticname)%>
-
-## LIB may be set to empty later on in this file
-LIB_UNCHECKED    = lib<%staticname%>.a
-LIB              = $(LIB_UNCHECKED)
-<%if(!sharedname)%>
-static_libs_only = 1
-<%endif%>
+LIB             = lib<%staticname%>.a
 <%endif%>
 <%if(sharedname)%>
-
-## SHLIB may be set to empty later on in this file
-SHLIB_UNCHECKED  = lib<%sharedname%>.$(SOEXT)
-SHLIB            = $(SHLIB_UNCHECKED)
+SHLIB           = lib<%sharedname%>.$(SOEXT)
 <%endif%>
 <%if(tao)%>
 
@@ -74,13 +65,6 @@ FILES = \
 <%endfor%>
 
 <%endif%>
-<%if(resource_files)%>
-RESOURCES += \
-<%foreach(resource_files)%>
-  <%resource_file%><%fornotlast(" \\")%>
-<%endfor%>
-
-<%endif%>
 <%vpath%>
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -112,17 +96,8 @@ $(TEMPINCDIR):
 	@-test -d $(TEMPINCDIR) || mkdir -p $(TEMPINCDIR) $(ACE_NUL_STDERR)
 
 endif
-<%if(exename)%>
-OUTPUT_DIRECTORY = <%if(install)%><%install%><%else%>.<%endif%>
-<%else%>
-OUTPUT_DIRECTORY = <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
-<%endif%>
-all: $(OUTPUT_DIRECTORY)
-
-$(OUTPUT_DIRECTORY):
-	-@mkdir -p "$(OUTPUT_DIRECTORY)"
-
 <%if(!exename)%>
+
 <%if(compname)%>
 CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components <%compname%>)
 <%endif%>
@@ -265,14 +240,10 @@ else
 endif
 <%endfor%>
 
-OBJS   = $(addsuffix .o, $(notdir $(FILES)))
+OBJS   = $(addsuffix .o, <%notdirfiles%>)
 SRC    = $(addsuffix .cpp, $(FILES))
 <%endif%>
-ifneq (,$(RC))
-  FILES += $(RESOURCES)
-endif
-
-<%if(sharedname || staticname)%>
+<%if(sharedname)%>
 LSRC   = $(addsuffix .cpp, $(FILES))
 <%endif%>
 <%if(!comps)%>
@@ -367,9 +338,6 @@ endif
 
 INSTALL_CHECK = <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
 ifeq ($(INSTALL_CHECK),.)
-  ifeq ($(PWD),)
-    PWD=$(shell pwd)
-  endif
   INSLIB = $(PWD)
 else
   INSLIB  = $(INSTALL_CHECK)
@@ -377,7 +345,7 @@ endif
 <%endif%>
 
 <%endif%>
-<%if(sharedname || staticname)%>
+<%if(sharedname)%>
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 <%endif%>
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
@@ -472,6 +440,9 @@ all: $(GENERATED_DIRTY)
 endif
 
 <%endif%>
+<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>:
+	-@mkdir -p "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>"
+
 <%comptarget%>
 <%if(idl_files)%>
 

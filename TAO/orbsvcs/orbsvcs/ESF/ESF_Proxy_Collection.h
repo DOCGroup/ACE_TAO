@@ -11,9 +11,8 @@
 
 #ifndef TAO_ESF_PROXY_COLLECTION_H
 #define TAO_ESF_PROXY_COLLECTION_H
-#include /**/ "ace/pre.h"
 
-#include "ace/CORBA_macros.h"
+#include "tao/corba.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -169,5 +168,4 @@ public:
 #pragma implementation ("ESF_Proxy_Collection.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
 #endif /* TAO_ESF_PROXY_COLLECTION_H */

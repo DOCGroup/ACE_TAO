@@ -18,7 +18,6 @@
 //
 // ============================================================================
 
-#include "ace/OS_main.h"
 #include "ace/Service_Config.h"
 #include "ace/Proactor.h"
 #include "ace/Asynch_IO.h"
@@ -30,7 +29,7 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Message_Block.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_sys_stat.h"
+#include "ace/streams.h"
 
 ACE_RCSID(Proactor, test_proactor, "$Id$")
 

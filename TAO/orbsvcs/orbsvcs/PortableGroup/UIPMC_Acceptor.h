@@ -14,7 +14,6 @@
 
 #ifndef TAO_UIPMC_ACCEPTOR_H
 #define TAO_UIPMC_ACCEPTOR_H
-
 #include /**/ "ace/pre.h"
 
 #include "tao/Transport_Acceptor.h"
@@ -24,13 +23,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "UIPMC_Connection_Handler.h"
-
 #include "tao/Acceptor_Impl.h"
-#include "tao/GIOP_Message_State.h"
 
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
-
+#include "tao/GIOP_Message_State.h"
 #include "portablegroup_export.h"
 
 // TAO UIPMC_Acceptor concrete call defination
@@ -109,7 +106,7 @@ protected:
    * virtual to allow a derived class implementation to be invoked
    * instead.
    */
-  virtual int open_i (const ACE_INET_Addr &addr, 
+  virtual int open_i (const ACE_INET_Addr &addr,
                       ACE_Reactor *reactor);
 
   /// Parse protocol specific options.

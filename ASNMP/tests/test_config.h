@@ -16,12 +16,7 @@
 
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_main.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_time.h"
-#include "ace/OS_NS_sys_stat.h"
 
-// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
 #if !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)

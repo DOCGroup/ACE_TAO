@@ -2,9 +2,6 @@
 //
 // $Id$
 
-#include "ace/OS_NS_string.h"
-#include "ace/OS_Memory.h"
-
 // ****************************************************************
 
 // implementing the special types
@@ -252,7 +249,7 @@ ACE_OutputCDR::write_string (const ACE_CDR::Char *x)
   if (x != 0)
     {
       ACE_CDR::ULong len =
-        ACE_static_cast (ACE_CDR::ULong, ACE_OS::strlen (x));
+        ACE_static_cast (ACE_CDR::ULong, ACE_OS_String::strlen (x));
       return this->write_string (len, x);
     }
   return this->write_string (0, 0);
@@ -262,7 +259,7 @@ ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_wstring (const ACE_CDR::WChar *x)
 {
   if (x != 0)
-    return this->write_wstring (ACE_OS::strlen (x), x);
+    return this->write_wstring (ACE_OS_String::strlen (x), x);
   return this->write_wstring (0, 0);
 }
 
@@ -1127,30 +1124,20 @@ ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_string x)
 {
   ACE_CDR::ULong len = 0;
-
   if (x.val_ != 0)
-    {
-      len = ACE_static_cast (ACE_CDR::ULong, ACE_OS::strlen (x.val_));
-    }
-
+    len = ACE_static_cast (ACE_CDR::ULong, ACE_OS_String::strlen (x.val_));
   os.write_string (len, x.val_);
-  return 
-    (ACE_CDR::Boolean) (os.good_bit () && (!x.bound_ || len <= x.bound_));
+  return os.good_bit () && (!x.bound_ || len <= x.bound_);
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_wstring x)
 {
-  ACE_CDR::ULong len = 0;
-
+  ACE_CDR::ULong len = 0;;
   if (x.val_ != 0)
-    {
-        len = ACE_OS::strlen (x.val_);
-    }
-
+    len = ACE_OS_String::strlen (x.val_);
   os.write_wstring (len, x.val_);
-  return 
-    (ACE_CDR::Boolean) (os.good_bit () && (!x.bound_ || len <= x.bound_));
+  return os.good_bit () && (!x.bound_ || len <= x.bound_);
 }
 
 // ****************************************************************
@@ -1159,84 +1146,84 @@ ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR &is, ACE_CDR::Char &x)
 {
   is.read_char (x);
-  return (ACE_CDR::Boolean) is.good_bit ();
+  return is.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR &is, ACE_CDR::Short &x)
 {
   is.read_short (x);
-  return (ACE_CDR::Boolean) is.good_bit ();
+  return is.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR &is, ACE_CDR::UShort &x)
 {
   is.read_ushort (x);
-  return (ACE_CDR::Boolean) is.good_bit ();
+  return is.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator>>(ACE_InputCDR &is, ACE_CDR::Long &x)
 {
   is.read_long (x);
-  return (ACE_CDR::Boolean) is.good_bit ();
+  return is.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR &is, ACE_CDR::ULong &x)
 {
   is.read_ulong (x);
-  return (ACE_CDR::Boolean) is.good_bit ();
+  return is.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR& is, ACE_CDR::LongLong &x)
 {
   is.read_longlong (x);
-  return (ACE_CDR::Boolean) is.good_bit ();
+  return is.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR& is, ACE_CDR::ULongLong &x)
 {
   is.read_ulonglong (x);
-  return (ACE_CDR::Boolean) is.good_bit ();
+  return is.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR& is, ACE_CDR::LongDouble &x)
 {
   is.read_longdouble (x);
-  return (ACE_CDR::Boolean) is.good_bit ();
+  return is.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR &is, ACE_CDR::Float &x)
 {
   is.read_float (x);
-  return (ACE_CDR::Boolean) is.good_bit ();
+  return is.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR &is, ACE_CDR::Double &x)
 {
   is.read_double (x);
-  return (ACE_CDR::Boolean) is.good_bit ();
+  return is.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR &is, ACE_CDR::Char *&x)
 {
   is.read_string (x);
-  return (ACE_CDR::Boolean) is.good_bit ();
+  return is.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR &is, ACE_CDR::WChar *&x)
 {
   is.read_wstring (x);
-  return (ACE_CDR::Boolean) is.good_bit ();
+  return is.good_bit ();
 }
 
 // The following use the helper classes
@@ -1244,28 +1231,28 @@ ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR &is, ACE_InputCDR::to_boolean x)
 {
   is.read_boolean (x.ref_);
-  return (ACE_CDR::Boolean) is.good_bit ();
+  return is.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR &is, ACE_InputCDR::to_char x)
 {
   is.read_char (x.ref_);
-  return (ACE_CDR::Boolean) is.good_bit ();
+  return is.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR &is, ACE_InputCDR::to_wchar x)
 {
   is.read_wchar (x.ref_);
-  return (ACE_CDR::Boolean) is.good_bit ();
+  return is.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR &is, ACE_InputCDR::to_octet x)
 {
   is.read_octet (x.ref_);
-  return (ACE_CDR::Boolean) is.good_bit ();
+  return is.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -1273,10 +1260,8 @@ operator>> (ACE_InputCDR &is, ACE_InputCDR::to_string x)
 {
   is.read_string (ACE_const_cast (char *&, x.val_));
   // check if the bounds are satisfied
-  return 
-    (ACE_CDR::Boolean) (is.good_bit () 
-                        && (!x.bound_ 
-                            || ACE_OS::strlen (x.val_) <= x.bound_));
+  return (is.good_bit () 
+          && (!x.bound_ || ACE_OS_String::strlen (x.val_) <= x.bound_));
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -1284,10 +1269,8 @@ operator>> (ACE_InputCDR &is, ACE_InputCDR::to_wstring x)
 {
   is.read_wstring (ACE_const_cast (ACE_CDR::WChar *&, x.val_));
   // check if the bounds are satisfied
-  return 
-    (ACE_CDR::Boolean) (is.good_bit () 
-                        && (!x.bound_ 
-                            || ACE_OS::strlen (x.val_) <= x.bound_));
+  return (is.good_bit () 
+          && (!x.bound_ || ACE_OS_String::strlen (x.val_) <= x.bound_));
 }
 
 // ***************************************************************************

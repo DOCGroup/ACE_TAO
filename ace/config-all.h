@@ -23,13 +23,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// By default we perform no tracing on the OS layer, otherwise the
-// coupling between the OS layer and Log_Msg is too tight.  But the
-// application can override the default if they wish to.
-# if !defined(ACE_OS_TRACE)
-#  define ACE_OS_TRACE(X)
-# endif /* ACE_OS_TRACE */
-
 #define ACE_BITS_PER_ULONG (8 * sizeof (u_long))
 
 #if !defined (ACE_OSTREAM_TYPE)
@@ -90,12 +83,6 @@
 # else
 #   define ACE_TEMPLATE_METHOD_SPECIALIZATION
 # endif /* ACE_HAS_STD_TEMPLATE_SPECIALIZATION */
-
-# if defined (ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION)
-#   define ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-# else
-#   define ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION template<>
-# endif /* ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION */
 
 // =========================================================================
 // Perfect Multicast filting refers to RFC 3376, where a socket is only
@@ -603,7 +590,7 @@ typedef void (*ACE_THR_DEST)(void *);
     // vxWorks.h.
     // Also, be sure that these #includes come _after_ the key_t typedef, and
     // before the #include of time.h.
-#     include "ace/os_include/os_stdarg.h"
+#     include "ace/os_inlcude/os_stdarg.h"
 #   endif /* ghs */
 
 #   include /**/ <vxWorks.h>
@@ -704,30 +691,6 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 # define ACE_NOTSUP_RETURN(FAILVALUE) do { errno = ENOTSUP ; return FAILVALUE; } while (0)
 # define ACE_NOTSUP do { errno = ENOTSUP; return; } while (0)
 #endif /* ! ACE_HAS_VERBOSE_NOTSUP */
-
-#if defined (ACE_USES_EXPLICIT_STD_NAMESPACE)
-#  define ACE_STD_NAMESPACE std
-#else
-#  define ACE_STD_NAMESPACE
-#endif
-
-// empty ACE_OS namespace to help identify compiler errors more easily.
-namespace ACE_OS {}
-#if !defined (ACE_OS_String)
-#  define ACE_OS_String ACE_OS
-#endif /* ACE_OS_String */
-#if !defined (ACE_OS_Memory)
-#  define ACE_OS_Memory ACE_OS
-#endif /* ACE_OS_Memory */
-#if !defined (ACE_OS_Dirent)
-#  define ACE_OS_Dirent ACE_OS
-#endif /* ACE_OS_Dirent */
-#if !defined (ACE_OS_TLI)
-#  define ACE_OS_TLI ACE_OS
-#endif /* ACE_OS_TLI */
-
-// Keep this at the bottom of the file.  It contains the main macros.
-#include "ace/OS_main.h"
 
 #include /**/ "ace/post.h"
 

@@ -3,9 +3,7 @@
 #ifndef CONDITION_H
 #define CONDITION_H
 
-#include "ace/Thread_Mutex.h"
-#include "ace/Condition_Thread_Mutex.h"
-#include "ace/Guard_T.h"
+#include "ace/Synch.h"
 
 /** A wrapper for ACE_Condition<>.  When you're using an
     ACE_Condition<> you have to have three things: - Some variable

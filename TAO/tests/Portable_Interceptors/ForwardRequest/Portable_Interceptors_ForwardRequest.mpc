@@ -1,6 +1,6 @@
-project(*Server): taoexe, portableserver, valuetype {
+project(*Server): taoserver {
   requires += interceptors
-  idlflags += -DCORBA3 -I$(TAO_ROOT)
+  idlflags += -Gv -DCORBA3 -I$(TAO_ROOT)
 
   Source_Files {
     test_i.cpp
@@ -10,9 +10,9 @@ project(*Server): taoexe, portableserver, valuetype {
   }
 }
 
-project(*Client): taoexe, valuetype {
+project(*Client): taoclient {
   requires += interceptors
-  idlflags += -DCORBA3 -I$(TAO_ROOT)
+  idlflags += -Gv -DCORBA3 -I$(TAO_ROOT)
 
   Source_Files {
     testC.cpp

@@ -17,13 +17,11 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/Mutex.h"
+#include "ace/Synch.h"
 #include "ace/Process.h"
 #include "ace/Process_Mutex.h"
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/os_include/os_dirent.h"
 
 ACE_RCSID(tests, Process_Mutex_Test, "$Id$")
 

@@ -15,28 +15,25 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
-// and
-//       Institute for Software Integrated Systems
-//       Vanderbilt University
-//       Nashville, TN
-//       USA
-//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:301
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
 
 
 #include "IORTableC.h"
 #include "tao/Stub.h"
-#include "tao/Invocation_Adapter.h"
-#include "tao/Object_T.h"
-#include "tao/Basic_Arguments.h"
-#include "tao/Object_Argument_T.h"
-#include "tao/UB_String_Arguments.h"
-#include "ace/OS_NS_string.h"
+#include "tao/Invocation.h"
+#include "tao/PortableInterceptor.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
+#include "tao/RequestInfo_Util.h"
+#include "tao/ClientRequestInfo_i.h"
+#include "tao/ClientInterceptorAdapter.h"
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -47,49 +44,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:59
-
-// Arg traits specializations.
-namespace TAO
-{
-
-#if !defined (_IORTABLE_LOCATOR__ARG_TRAITS_CS_)
-#define _IORTABLE_LOCATOR__ARG_TRAITS_CS_
-
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_IORTable_Export Arg_Traits<IORTable::Locator>
-    : public
-        Object_Arg_Traits_T<
-            IORTable::Locator_ptr,
-            IORTable::Locator_var,
-            IORTable::Locator_out,
-            TAO::Objref_Traits<IORTable::Locator>
-          >
-  {
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_IORTABLE_LOCATOR__ARG_TRAITS_CS_)
-#define _IORTABLE_LOCATOR__ARG_TRAITS_CS_
-
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_IORTable_Export Arg_Traits<IORTable::Locator>
-    : public
-        Object_Arg_Traits_T<
-            IORTable::Locator_ptr,
-            IORTable::Locator_var,
-            IORTable::Locator_out,
-            TAO::Objref_Traits<IORTable::Locator>
-          >
-  {
-  };
-
-#endif /* end #if !defined */
-};
-
-// TAO_IDL - Generated from
-// be/be_visitor_exception/exception_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
 
 IORTable::AlreadyBound::AlreadyBound (void)
   : CORBA::UserException (
@@ -184,7 +139,7 @@ void IORTable::AlreadyBound::_tao_decode (
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/exception_cs.cpp:63
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
 
 IORTable::NotFound::NotFound (void)
   : CORBA::UserException (
@@ -279,12 +234,12 @@ void IORTable::NotFound::_tao_decode (
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
-// Traits specializations for IORTable::Table.
+int IORTable::Table::_tao_class_id = 0;
 
 IORTable::Table_ptr
-TAO::Objref_Traits<IORTable::Table>::tao_duplicate (
+IORTable::tao_Table_life::tao_duplicate (
     IORTable::Table_ptr p
   )
 {
@@ -292,7 +247,7 @@ TAO::Objref_Traits<IORTable::Table>::tao_duplicate (
 }
 
 void
-TAO::Objref_Traits<IORTable::Table>::tao_release (
+IORTable::tao_Table_life::tao_release (
     IORTable::Table_ptr p
   )
 {
@@ -300,25 +255,67 @@ TAO::Objref_Traits<IORTable::Table>::tao_release (
 }
 
 IORTable::Table_ptr
-TAO::Objref_Traits<IORTable::Table>::tao_nil (void)
+IORTable::tao_Table_life::tao_nil (
+    void
+  )
 {
   return IORTable::Table::_nil ();
 }
 
 CORBA::Boolean
-TAO::Objref_Traits<IORTable::Table>::tao_marshal (
+IORTable::tao_Table_life::tao_marshal (
     IORTable::Table_ptr p,
-    TAO_OutputCDR & cdr
+    TAO_OutputCDR &cdr
   )
 {
   return p->marshal (cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*IORTable__TAO_Table_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
+IORTable::Table_ptr
+IORTable::tao_Table_cast::tao_narrow (
+    CORBA::Object *p
+    ACE_ENV_ARG_DECL
+  )
+{
+  return IORTable::Table::_narrow (p ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::Object *
+IORTable::tao_Table_cast::tao_upcast (
+    void *src
+  )
+{
+  IORTable::Table **tmp =
+    ACE_static_cast (IORTable::Table **, src);
+  return *tmp;
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        IORTable::Table,
+        IORTable::tao_Table_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        IORTable::Table,
+        IORTable::tao_Table_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        IORTable::Table, \
+        IORTable::tao_Table_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        IORTable::Table, \
+        IORTable::tao_Table_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 IORTable::Table::Table (void)
 {}
@@ -328,14 +325,34 @@ IORTable::Table::~Table (void)
 
 IORTable::Table_ptr
 IORTable::Table::_narrow (
-    CORBA::Object_ptr _tao_objref
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL
+  )
+{
+  return Table::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+}
+
+IORTable::Table_ptr
+IORTable::Table::_unchecked_narrow (
+    CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  Table_ptr proxy =
-    dynamic_cast<Table_ptr> (_tao_objref);
-  proxy->_add_ref ();
-  return proxy;
+  if (CORBA::is_nil (obj))
+    {
+      return Table::_nil ();
+    }
+
+  return
+      ACE_reinterpret_cast (
+          Table_ptr,
+          obj->_tao_QueryInterface (
+              ACE_reinterpret_cast (
+                  ptrdiff_t,
+                  &Table::_tao_class_id
+                )
+            )
+        );
 }
 
 IORTable::Table_ptr
@@ -349,33 +366,35 @@ IORTable::Table::_duplicate (Table_ptr obj)
   return obj;
 }
 
-CORBA::Boolean
-IORTable::Table::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
+void *IORTable::Table::_tao_QueryInterface (ptrdiff_t type)
 {
-  if (
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:IORTable/Table:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-     )
+  void *retv = 0;
+
+  if (type == ACE_reinterpret_cast (
+              ptrdiff_t,
+              &ACE_NESTED_CLASS (::IORTable, Table)::_tao_class_id)
+            )
     {
-      return 1; // success using local knowledge
+      retv = ACE_reinterpret_cast (void*, this);
     }
-  else
+  else if (type == ACE_reinterpret_cast (
+               ptrdiff_t,
+               &CORBA::Object::_tao_class_id)
+             )
     {
-      return 0;
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (CORBA::Object_ptr, this)
+          );
     }
+
+  if (retv != 0)
+    {
+      this->_add_ref ();
+    }
+
+  return retv;
 }
 
 const char* IORTable::Table::_interface_repository_id (void) const
@@ -390,12 +409,12 @@ IORTable::Table::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
-// Traits specializations for IORTable::Locator.
+int IORTable::Locator::_tao_class_id = 0;
 
 IORTable::Locator_ptr
-TAO::Objref_Traits<IORTable::Locator>::tao_duplicate (
+IORTable::tao_Locator_life::tao_duplicate (
     IORTable::Locator_ptr p
   )
 {
@@ -403,7 +422,7 @@ TAO::Objref_Traits<IORTable::Locator>::tao_duplicate (
 }
 
 void
-TAO::Objref_Traits<IORTable::Locator>::tao_release (
+IORTable::tao_Locator_life::tao_release (
     IORTable::Locator_ptr p
   )
 {
@@ -411,25 +430,67 @@ TAO::Objref_Traits<IORTable::Locator>::tao_release (
 }
 
 IORTable::Locator_ptr
-TAO::Objref_Traits<IORTable::Locator>::tao_nil (void)
+IORTable::tao_Locator_life::tao_nil (
+    void
+  )
 {
   return IORTable::Locator::_nil ();
 }
 
 CORBA::Boolean
-TAO::Objref_Traits<IORTable::Locator>::tao_marshal (
+IORTable::tao_Locator_life::tao_marshal (
     IORTable::Locator_ptr p,
-    TAO_OutputCDR & cdr
+    TAO_OutputCDR &cdr
   )
 {
   return p->marshal (cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*IORTable__TAO_Locator_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
+IORTable::Locator_ptr
+IORTable::tao_Locator_cast::tao_narrow (
+    CORBA::Object *p
+    ACE_ENV_ARG_DECL
+  )
+{
+  return IORTable::Locator::_narrow (p ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::Object *
+IORTable::tao_Locator_cast::tao_upcast (
+    void *src
+  )
+{
+  IORTable::Locator **tmp =
+    ACE_static_cast (IORTable::Locator **, src);
+  return *tmp;
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        IORTable::Locator,
+        IORTable::tao_Locator_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        IORTable::Locator,
+        IORTable::tao_Locator_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        IORTable::Locator, \
+        IORTable::tao_Locator_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        IORTable::Locator, \
+        IORTable::tao_Locator_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 IORTable::Locator::Locator (void)
 {}
@@ -439,14 +500,34 @@ IORTable::Locator::~Locator (void)
 
 IORTable::Locator_ptr
 IORTable::Locator::_narrow (
-    CORBA::Object_ptr _tao_objref
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL
+  )
+{
+  return Locator::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+}
+
+IORTable::Locator_ptr
+IORTable::Locator::_unchecked_narrow (
+    CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  Locator_ptr proxy =
-    dynamic_cast<Locator_ptr> (_tao_objref);
-  proxy->_add_ref ();
-  return proxy;
+  if (CORBA::is_nil (obj))
+    {
+      return Locator::_nil ();
+    }
+
+  return
+      ACE_reinterpret_cast (
+          Locator_ptr,
+          obj->_tao_QueryInterface (
+              ACE_reinterpret_cast (
+                  ptrdiff_t,
+                  &Locator::_tao_class_id
+                )
+            )
+        );
 }
 
 IORTable::Locator_ptr
@@ -460,33 +541,35 @@ IORTable::Locator::_duplicate (Locator_ptr obj)
   return obj;
 }
 
-CORBA::Boolean
-IORTable::Locator::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
+void *IORTable::Locator::_tao_QueryInterface (ptrdiff_t type)
 {
-  if (
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:IORTable/Locator:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-     )
+  void *retv = 0;
+
+  if (type == ACE_reinterpret_cast (
+              ptrdiff_t,
+              &ACE_NESTED_CLASS (::IORTable, Locator)::_tao_class_id)
+            )
     {
-      return 1; // success using local knowledge
+      retv = ACE_reinterpret_cast (void*, this);
     }
-  else
+  else if (type == ACE_reinterpret_cast (
+               ptrdiff_t,
+               &CORBA::Object::_tao_class_id)
+             )
     {
-      return 0;
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (CORBA::Object_ptr, this)
+          );
     }
+
+  if (retv != 0)
+    {
+      this->_add_ref ();
+    }
+
+  return retv;
 }
 
 const char* IORTable::Locator::_interface_repository_id (void) const
@@ -499,72 +582,3 @@ IORTable::Locator::marshal (TAO_OutputCDR &)
 {
   return 0;
 }
-
-// TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1703
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Objref_Traits<
-        IORTable::Locator
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        IORTable::Locator
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        IORTable::Locator
-      >;
-
-  template class
-    TAO::Objref_Traits<
-        IORTable::Table
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        IORTable::Table
-      >;
-
-  template class
-    TAO_Objref_Out_T<
-        IORTable::Table
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        IORTable::Locator \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        IORTable::Locator
-      >
-
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        IORTable::Locator
-      >
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        IORTable::Table \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        IORTable::Table
-      >
-
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        IORTable::Table
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

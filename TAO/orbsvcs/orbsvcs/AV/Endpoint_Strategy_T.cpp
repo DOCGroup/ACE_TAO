@@ -24,49 +24,17 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_A
 template <class T_StreamEndpoint, class T_VDev, class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy (void)
 {
-  // Do not allow exceptions to escape from the destructor
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      if(this->stream_endpoint_a_servant_ )
-        {
-          stream_endpoint_a_servant_->_remove_ref (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
+  if( stream_endpoint_a_servant_ )
+    stream_endpoint_a_servant_->_remove_ref();
 
-      if(this->stream_endpoint_b_servant_)
-        {
-          stream_endpoint_b_servant_->_remove_ref (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
+  if( stream_endpoint_b_servant_ )
+    stream_endpoint_b_servant_->_remove_ref();
 
-      if(this->vdev_servant_)
-        {
-          vdev_servant_->_remove_ref (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
+  if( vdev_servant_ )
+    vdev_servant_->_remove_ref(); 
 
-      if(this->media_ctrl_servant_)
-        {
-          media_ctrl_servant_->_remove_ref (
-            ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-    }
-  ACE_CATCHANY
-    {
-    }
-# if defined (ACE_HAS_EXCEPTIONS) \
-     && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)
-  ACE_CATCHALL
-    {
-    }
-# endif  /* ACE_HAS_EXCEPTIONS && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */
-  ACE_ENDTRY;
-
+  if( media_ctrl_servant_ )
+    media_ctrl_servant_->_remove_ref();
 }
 
 // Create, activate the objects with the POA

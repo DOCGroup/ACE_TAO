@@ -1,5 +1,7 @@
 // $Id$
 
+#include "ace/streams.h"
+#include "ace/Get_Opt.h"
 #include "Coll_Tester.h"
 
 ACE_RCSID(Collocation, main, "$Id$")

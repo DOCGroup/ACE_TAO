@@ -32,8 +32,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (__APPLE_CC__)
-// Should this really be here?  dhinton
-// FUZZ: disable check_for_streams_include
 # include "ace/streams.h"
 #endif
 

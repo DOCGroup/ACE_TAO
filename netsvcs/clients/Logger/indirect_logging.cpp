@@ -5,8 +5,7 @@
 // them to the Server Logging Daemon.  If there is no Server Logging
 // Daemon, the logging records will be written to stderr.
 
-#include "ace/OS_NS_time.h"
-#include "ace/OS_NS_stdlib.h"
+#include "ace/OS.h"
 #include "ace/Log_Msg.h"
 
 ACE_RCSID(Logger, indirect_logging, "$Id$")

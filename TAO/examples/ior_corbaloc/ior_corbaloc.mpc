@@ -6,6 +6,8 @@ project(*server): namingexe {
 }
 
 project(*client): namingexe {
+  exename  = client
+
   Source_Files {
     ior_corbaloc_client_i.cpp
     client.cpp
@@ -13,6 +15,8 @@ project(*client): namingexe {
 }
 
 project(*corbaname client): namingexe {
+  exename = corbaname_client
+
   Source_Files {
     status_i.cpp
     corbaname_client.cpp

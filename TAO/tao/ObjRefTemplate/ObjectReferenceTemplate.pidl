@@ -11,8 +11,7 @@
  * using the following command:
  *
  *   tao_idl.exe
- *        -o orig -Gp -Gd -Ge 1 -GT
- *        -I$(TAO_ROOT)
+ *        -o orig -Gp -Gd -Ge 1
  *        -Wb,export_macro=TAO_ORT_Export
  *        -Wb,export_include=ort_export.h
  *        -Wb,pre_include="ace/pre.h"
@@ -34,7 +33,7 @@
 #define _OBJECT_REFERENCE_TEMPLATE_IDL_
 
 #include <orb.idl>
-#include "tao/PI_Forward.pidl"
+#include <PI_Forward.pidl>
 
 module PortableInterceptor
 {

@@ -1,4 +1,5 @@
-project(*Server): taoexe, portableserver, iortable {
+project(*Server): taoserver, iortable {
+  exename  = INS_test_server
   Source_Files {
     INS_i.cpp
     Server_i.cpp
@@ -6,7 +7,9 @@ project(*Server): taoexe, portableserver, iortable {
   }
 }
 
-project(*Client): taoexe {
+project(*Client): taoclient {
+  exename  = INS_test_client
+
   Source_Files {
     INSC.cpp
     INS_test_client.cpp

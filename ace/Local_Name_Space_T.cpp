@@ -9,9 +9,7 @@
 
 #include "ace/Local_Name_Space.h"
 #include "ace/Auto_Ptr.h"
-#include "ace/Guard_T.h"
-#include "ace/OS_NS_regex.h"
-#include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (ace,
            Local_Name_Space_T,

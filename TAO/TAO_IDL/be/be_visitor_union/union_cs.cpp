@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_union,
-           union_cs,
+ACE_RCSID (be_visitor_union, 
+           union_cs, 
            "$Id$")
 
 // ******************************************************
@@ -67,7 +67,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_cs::"
                          "visit union - "
-                         "codegen for discrminant failed\n"),
+                         "codegen for discrminant failed\n"), 
                         -1);
     }
 
@@ -80,7 +80,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_cs"
                          "visit_union - "
-                         "codegen for scope failed\n"),
+                         "codegen for scope failed\n"), 
                         -1);
     }
 
@@ -105,7 +105,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
   UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
   be_union_branch *ub = 0;
 
-  // In case we have some bogus enum values from an enum declared
+  // In case we have some bogus enum values from an enum declared 
   // in our scope.
   while (ub == 0)
     {
@@ -150,7 +150,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_cs"
                          "visit_union - "
-                         "codegen for copy ctor failed\n"),
+                         "codegen for copy ctor failed\n"), 
                         -1);
     }
 
@@ -182,11 +182,10 @@ int be_visitor_union_cs::visit_union (be_union *node)
           << node->name ()
           << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
           << "{" << be_idt_nl
-          << node->local_name () << " *tmp =" << be_idt_nl
-          << "ACE_static_cast ("
-          << node->local_name () << " *, _tao_void_pointer);" << be_uidt_nl
+          << node->local_name () << " *tmp = ACE_static_cast ("
+          << node->local_name () << "*, _tao_void_pointer);" << be_nl
           << "delete tmp;" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}\n" << be_nl;
     }
 
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_ASSIGN_CS);
@@ -216,7 +215,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_cs"
                          "visit_union - "
-                         "codegen for assign op failed\n"),
+                         "codegen for assign op failed\n"), 
                         -1);
     }
 
@@ -255,7 +254,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_cs"
                          "visit_union - "
-                         "codegen for reset failed\n"),
+                         "codegen for reset failed\n"), 
                         -1);
     }
 
@@ -288,10 +287,14 @@ int be_visitor_union_cs::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_cs::"
                              "visit_union - "
-                             "TypeCode definition failed\n"),
+                             "TypeCode definition failed\n"), 
                             -1);
         }
     }
+
+  // Generate conditional explicit template instantiations for our
+  // _var and/or _out classes.
+  node->gen_common_tmplinst (os);
 
   node->cli_stub_gen (I_TRUE);
   return 0;

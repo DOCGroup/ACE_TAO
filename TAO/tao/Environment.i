@@ -3,15 +3,6 @@
 // $Id$
 
 ACE_INLINE 
-CORBA::Environment &
-CORBA::default_environment (void)
-{
-  return TAO_default_environment ();
-}
-
-// ======================================================
-
-ACE_INLINE 
 CORBA::Boolean
 CORBA::is_nil (CORBA::Environment_ptr env)
 {

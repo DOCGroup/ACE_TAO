@@ -1,17 +1,23 @@
 #include "MCAST_Parser.h"
 #include "default_ports.h"
+#include "Object_Loader.h"
+#include "Object.h"
 #include "ORB_Core.h"
 #include "ORB.h"
+#include "Exception.h"
 #include "Environment.h"
 #include "debug.h"
 
+#include "ace/Read_Buffer.h"
+#include "ace/INET_Addr.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Dgram.h"
-#include "ace/OS_NS_strings.h"
+#include "ace/SOCK_Stream.h"
 
 #if !defined(__ACE_INLINE__)
 #include "MCAST_Parser.i"
 #endif /* __ACE_INLINE__ */
+
 
 ACE_RCSID (tao,
            MCAST_Parser,
@@ -395,7 +401,7 @@ TAO_MCAST_Parser::assign_to_variables (const char * &mcast_name)
         }
 
 
-      ACE_OS::itoa (trial_port, default_port, 10);
+      ACE_OS_String::itoa (trial_port, default_port, 10);
 
       this->mcast_port_ = (const char *) default_port;
     }

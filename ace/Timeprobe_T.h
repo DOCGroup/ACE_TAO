@@ -14,8 +14,7 @@
 #ifndef ACE_TIMEPROBE_T_H
 #define ACE_TIMEPROBE_T_H
 #include /**/ "ace/pre.h"
-
-#include "ace/config-all.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

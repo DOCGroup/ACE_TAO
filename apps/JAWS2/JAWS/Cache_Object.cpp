@@ -1,7 +1,6 @@
 // $Id$
 
 #include "JAWS/Cache_Object.h"
-#include "ace/OS_NS_time.h"
 
 JAWS_Cache_Object::JAWS_Cache_Object (const void *data, size_t size)
   : internal_ (0),

@@ -7,16 +7,12 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Log_Msg.h"
-#include "ace/Signal.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Select_Reactor_Base.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ace,
-           Select_Reactor_Base,
-           "$Id$")
-
+ACE_RCSID(ace, Select_Reactor_Base, "$Id$")
 
 #if defined (ACE_WIN32)
 #define ACE_SELECT_REACTOR_HANDLE(H) (this->event_handlers_[(H)].handle_)

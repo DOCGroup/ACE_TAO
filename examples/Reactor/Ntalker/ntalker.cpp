@@ -3,13 +3,13 @@
 // Listens to multicast address.  After first message received, will
 // listen for 5 more seconds.  Prints Mbits/sec received from client.
 
-#include "ace/OS_main.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/Reactor.h"
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Service_Config.h"
+#include "ace/streams.h"
 
 ACE_RCSID(Ntalker, ntalker, "$Id$")
 

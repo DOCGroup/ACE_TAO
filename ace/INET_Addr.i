@@ -3,8 +3,7 @@
 
 // INET_Addr.i
 
-#include "ace/OS_NS_string.h"
-#include "ace/Global_Macros.h"
+#include "ace/OS.h"
 
 // Default dtor.
 ACE_INLINE
@@ -178,10 +177,3 @@ ACE_INET_Addr::set (const wchar_t addr[])
 }
 
 #endif /* ACE_HAS_WCHAR */
-
-ACE_INLINE void
-ACE_INET_Addr::set_addr (void *addr, int len)
-{
-  this->set_addr (addr, len, 0);
-}
-

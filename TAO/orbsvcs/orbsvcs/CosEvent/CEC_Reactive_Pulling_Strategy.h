@@ -12,7 +12,6 @@
 
 #ifndef TAO_CEC_REACTIVE_PULLING_STRATEGY_H
 #define TAO_CEC_REACTIVE_PULLING_STRATEGY_H
-
 #include /**/ "ace/pre.h"
 
 #include "CEC_Pulling_Strategy.h"
@@ -22,9 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/ESF/ESF_Worker.h"
-
-#include "tao/ORB.h"
-
+#include "tao/corba.h"
 #include "ace/Event_Handler.h"
 
 class TAO_CEC_ProxyPullConsumer;
@@ -136,5 +133,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_CEC_REACTIVE_PULLING_STRATEGY_H */

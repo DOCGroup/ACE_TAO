@@ -2,7 +2,6 @@
 // $Id$
 
 #include "test_i.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Application_Test, server, "$Id$")
 

@@ -3,8 +3,6 @@
 
 // IPC_SAP.i
 
-#include "ace/OS_NS_stropts.h"
-
 // Used to return the underlying handle_. 
 
 ASYS_INLINE

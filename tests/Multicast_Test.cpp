@@ -39,12 +39,10 @@
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_strings.h"
+#include "ace/OS_String.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
 #include "ace/SString.h"
-#include "ace/Signal.h"
 
 ACE_RCSID(tests, Multicast_Test, "$Id$")
 
@@ -740,7 +738,7 @@ int send_dgram (ACE_SOCK_Dgram &socket, ACE_INET_Addr addr, int done = 0)
       else
         ACE_OS::sprintf (buf, "%s/%d", address, port);
       //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sending (%s)\n"), buf));
-      if (socket.send (buf, ACE_OS::strlen (buf),addr) == -1)
+      if (socket.send (buf, ACE_OS_String::strlen (buf),addr) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                            ACE_TEXT ("send_dgram - error calling send on ")
                            ACE_TEXT ("ACE_SOCK_Dgram.")), -1);

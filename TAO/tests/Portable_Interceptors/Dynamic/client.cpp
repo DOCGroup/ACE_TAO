@@ -1,12 +1,9 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
-
 #include "testC.h"
 #include "interceptors.h"
 #include "Echo_Client_ORBInitializer.h"
-
-#include "tao/ORBInitializer_Registry.h"
 
 ACE_RCSID (Dynamic,
            client,
@@ -44,10 +41,7 @@ void
 run_test (Test_Interceptors::Visual_ptr server
           ACE_ENV_ARG_DECL)
 {
-  CORBA::String_var msg;
-
-  server->normal (10,
-                  msg.out ()
+  server->normal (10
                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 

@@ -1,7 +1,6 @@
 //$Id$
 #include "../Scheduler.h"
 #include "tao/RTScheduling/RTScheduler_Manager.h"
-#include "tao/ORB.h"
 #include "Thread_Action.h"
 #include "ace/Thread_Manager.h"
 #include "ace/SString.h"

@@ -21,7 +21,6 @@
 #include "Options.h"
 #include "SML_Client.h"
 #include "SMR_Client.h"
-#include "ace/OS_Memory.h"
 
 // Factory function.
 

@@ -4,7 +4,6 @@
 
 #include "tao/Messaging/Messaging.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Crashed_Callback, server, "$Id$")
 

@@ -8,18 +8,13 @@
 
 #include "DIOP_Connection_Handler.h"
 #include "tao/debug.h"
-#include "tao/ORB_Constants.h"
 
-ACE_RCSID (tao, 
-           DIOP_Endpoint, 
-           "$Id$")
+ACE_RCSID(tao, DIOP_Endpoint, "$Id$")
 
 
 #if !defined (__ACE_INLINE__)
 # include "DIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
-
-#include "ace/os_include/os_netdb.h"
 
 TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const ACE_INET_Addr &addr,
                                       int use_dotted_decimal_addresses)

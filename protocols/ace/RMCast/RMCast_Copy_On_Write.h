@@ -6,9 +6,7 @@
 #include /**/ "ace/pre.h"
 
 #include "RMCast_Worker.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Basic_Types.h"
-#include "ace/Condition_Thread_Mutex.h"
+#include "ace/Synch.h"
 
 //! A wrapper to implement reference counted collections
 template<class COLLECTION, class ITERATOR>

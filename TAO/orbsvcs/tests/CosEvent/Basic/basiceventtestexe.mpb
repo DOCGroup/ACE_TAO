@@ -1,4 +1,4 @@
-project : orbsvcsexe, messaging, taoserver, event, naming, svc_utils, iortable {
+project : orbsvcsexe, messaging, taoserver, event, naming, svc_utils, iortable, corba_messaging {
   after    += CosEvent_Test_Lib
   libs     += CECTests
   includes += ../lib

@@ -7,6 +7,8 @@ project(*Server): namingexe {
 }
 
 project(*Client): namingexe {
+  exename = client
+
   Source_Files {
     Web_ServerC.cpp
     client.cpp

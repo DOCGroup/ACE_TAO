@@ -1,15 +1,14 @@
 #include "Asynch_Queued_Message.h"
 #include "debug.h"
-
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
-#include "ace/os_include/sys/os_uio.h"
+#include "ace/Malloc_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
+
 
 ACE_RCSID (tao,
            Asynch_Queued_Message,
            "$Id$")
+
 
 TAO_Asynch_Queued_Message::
     TAO_Asynch_Queued_Message (const ACE_Message_Block *contents,

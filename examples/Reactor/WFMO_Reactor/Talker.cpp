@@ -132,7 +132,7 @@
 //
 // ============================================================================
 
-#include "ace/OS_main.h"
+#include "ace/OS.h"
 
 #if defined (ACE_WIN32)
 
@@ -144,6 +144,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Get_Opt.h"
 #include "ace/Service_Config.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 
 ACE_RCSID(WFMO_Reactor, Talker, "$Id$")

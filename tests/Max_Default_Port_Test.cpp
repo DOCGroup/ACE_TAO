@@ -26,6 +26,8 @@
 //
 // ============================================================================
 
+#include "ace/OS.h"
+#include "ace/streams.h"
 #include "ace/Reactor.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Thread_Manager.h"

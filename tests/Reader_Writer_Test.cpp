@@ -19,12 +19,11 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/Synch.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
 #include "ace/Atomic_Op.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/Time_Value.h"
 
 ACE_RCSID(tests, Reader_Writer_Test, "$Id$")
 

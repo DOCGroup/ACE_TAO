@@ -17,16 +17,15 @@
 
 #ifndef TAO_IIOP_PROFILE_H
 #define TAO_IIOP_PROFILE_H
-
 #include /**/ "ace/pre.h"
 
 #include "tao/Profile.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/IIOP_Endpoint.h"
+
 
 // TAO IIOP_Profile concrete Profile definitions
 /**
@@ -74,7 +73,8 @@ public:
   virtual char * to_string (ACE_ENV_SINGLE_ARG_DECL);
   virtual int encode_endpoints (void);
   virtual TAO_Endpoint *endpoint (void);
-  virtual CORBA::ULong endpoint_count (void) const;
+  virtual CORBA::ULong endpoint_count (void);
+  virtual CORBA::Boolean is_equivalent (const TAO_Profile *other_profile);
   virtual CORBA::ULong hash (CORBA::ULong max
                              ACE_ENV_ARG_DECL);
   /**
@@ -92,7 +92,6 @@ protected:
   virtual void parse_string_i (const char *string
                                ACE_ENV_ARG_DECL);
   virtual void create_profile_body (TAO_OutputCDR &cdr) const;
-  virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);
 
 protected:
 

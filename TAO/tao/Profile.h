@@ -30,13 +30,16 @@ class TAO_Stub;
 class TAO_Endpoint;
 class TAO_ORB_Core;
 
+
 namespace CORBA
 {
   /// Forward declaration of PolicyList
   class PolicyList;
+}
 
-  class TypeCode;
-  typedef TypeCode *TypeCode_ptr;
+namespace TAO
+{
+  class Refcounted_ObjectKey;
 }
 
 /**
@@ -202,6 +205,8 @@ public:
    */
   virtual int encode_endpoints (void) = 0;
 
+
+
   /**
    * Return pointer to this profile's endpoint.  If the profile
    * contains more than one endpoint, i.e., a list, the method returns
@@ -210,19 +215,14 @@ public:
   virtual TAO_Endpoint *endpoint (void) = 0;
 
   /// Return how many endpoints this profile contains.
-  virtual CORBA::ULong endpoint_count (void) const = 0;
+  virtual CORBA::ULong endpoint_count (void) = 0;
 
-  /// Verify profile equivalance.
   /**
-   * Two profiles are equivalent @e iff their tag, object_key, version
-   * and all endpoints are the same.
-   *
-   * @see do_is_equivalent_i()
-   * @see is_equivalent_hook()
-   *
-   * @return @c true if this profile is equivalent to @c other_profile.  
+   * Return true if this profile is equivalent to other_profile.  Two
+   * profiles are equivalent iff their tag, object_key, version and
+   * all endpoints are the same.
    */
-  CORBA::Boolean is_equivalent (const TAO_Profile* other_profile);
+  virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile) = 0;
 
   /// Return a hash value for this object.
   virtual CORBA::ULong hash (CORBA::ULong max
@@ -230,11 +230,11 @@ public:
   //@}
 
 protected:
-
   /**
    * @name Protected template methods.
    */
-  //@{
+
+  //@@{
   /// Decode the protocol specific profile details.
   virtual int decode_profile (TAO_InputCDR &cdr) = 0;
 
@@ -265,20 +265,9 @@ protected:
   /// tagged_components.
   void set_tagged_components (TAO_OutputCDR &cdr);
 
-  /// Profile equivalence template method invoked on subclasses.
-  /**
-   * TAO_Profile subclasses must implement this template method so
-   * that they can apply their own definition of profile equivalence.
-   */
-  virtual CORBA::Boolean do_is_equivalent (const TAO_Profile * other) = 0;
-
-  /// Allow services to apply their own definition of "equivalence."
-  /**
-   * This method differs from the @c do_is_equivalent() template
-   * method in that it has a default implementation that may or not be
-   * applicable to all TAO_Profile subclasses.
-   */
-  virtual CORBA::Boolean is_equivalent_hook (const TAO_Profile * other);
+  /// Helper method that tries determining the equivalent profiles for
+  /// different services.
+  CORBA::Boolean is_profile_equivalent_i (const TAO_Profile *);
 
   CORBA::ULong hash_service_i (CORBA::ULong m);
 
@@ -352,17 +341,6 @@ private:
   CORBA::ULong refcount_;
 };
 
-// A helper class to handle the various kinds of octet sequences used
-// inside the ORB.
-
-typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;
-
-TAO_Export CORBA::Boolean
-operator<< (TAO_OutputCDR&, const TAO_opaque&);
-
-TAO_Export CORBA::Boolean
-operator>> (TAO_InputCDR&, TAO_opaque&);
-
 /**
  * @class TAO_Unknown_Profile
  *
@@ -394,18 +372,13 @@ public:
   virtual const TAO::ObjectKey &object_key (void) const;
   virtual TAO::ObjectKey *_key (void) const;
   virtual TAO_Endpoint *endpoint (void);
-  virtual CORBA::ULong endpoint_count (void) const;
+  virtual CORBA::ULong endpoint_count (void);
+  virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile);
   virtual CORBA::ULong hash (CORBA::ULong max
                              ACE_ENV_ARG_DECL);
 
   virtual int decode_profile (TAO_InputCDR &cdr);
   virtual int decode_endpoints (void);
-
-protected:
-
-  virtual CORBA::Boolean do_is_equivalent (const TAO_Profile* other_profile);
-  virtual CORBA::Boolean is_equivalent_hook (const TAO_Profile* other_profile);
-
 private:
   virtual void create_profile_body (TAO_OutputCDR &encap) const;
 

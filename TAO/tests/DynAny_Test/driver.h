@@ -16,7 +16,7 @@
 #if !defined (DRIVER_H)
 #define DRIVER_H
 
-#include "tao/ORB.h"
+#include "tao/corba.h"
 
 class Driver
 {

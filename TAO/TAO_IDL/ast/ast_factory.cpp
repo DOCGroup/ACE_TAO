@@ -77,6 +77,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_identifier.h"
 #include "utl_exceptlist.h"
 #include "utl_namelist.h"
+#include "ace/streams.h"
 
 ACE_RCSID (ast,
            ast_factory,
@@ -301,9 +302,9 @@ AST_Factory::dump (ACE_OSTREAM_TYPE &o)
 {
   AST_Decl *d = 0;
 
-  this->dump_i (o, "factory ");
+  o << "factory ";
   this->local_name ()->dump (o);
-  this->dump_i (o, "(");
+  o << "(";
 
   // Iterator must be explicitly advanced inside the loop.
   for (UTL_ScopeActiveIterator i (this, IK_decls);
@@ -315,11 +316,11 @@ AST_Factory::dump (ACE_OSTREAM_TYPE &o)
 
       if (!i.is_done())
         {
-          this->dump_i (o, ", ");
+          o << ", ";
         }
     }
 
-  this->dump_i (o, ")");
+  o << ")";
 
 }
 

@@ -4,12 +4,6 @@
 #include "Multicast_Manager.h"
 #include "CM_Client.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_sys_socket.h"
-#include "ace/OS_NS_sys_select.h"
-#include "ace/OS_NS_netdb.h"
-#include "ace/OS_NS_arpa_inet.h"
-#include "ace/os_include/os_string.h"
 
 // Creates and binds a UDP socket...
 
@@ -74,7 +68,7 @@ CM_Client::receive (int timeout)
                   ACE_DEBUG ((LM_DEBUG,
                               "receiving from server host %s (%s)\n",
                               np->h_name,
-                              ACE_OS::inet_ntoa (this->sin_.sin_addr)));
+                              inet_ntoa (this->sin_.sin_addr)));
                 }
 
               if (this->demux (this->recv_packet_, n) < 0)

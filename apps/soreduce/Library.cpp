@@ -11,9 +11,10 @@
 // library.
 
 
-#include "ace/OS_NS_dirent.h"
-#include "ace/Log_Msg.h"
-#include "ace/OS_NS_sys_stat.h"
+#include <ace/OS.h>
+#include <ace/OS_Dirent.h>
+#include <ace/Log_Msg.h>
+#include <ace/streams.h>
 
 #include "Library.h"
 
@@ -249,13 +250,13 @@ Library::has_modules () const
 static int
 selector (const dirent *d)
 {
-  return ACE_OS::strstr (d->d_name, ".o") != 0;
+  return ACE_OS_String::strstr (d->d_name, ".o") != 0;
 }
 
 static int
 comparator (const dirent **d1, const dirent **d2)
 {
-  return ACE_OS::strcmp ((*d1)->d_name, (*d2)->d_name);
+  return ACE_OS_String::strcmp ((*d1)->d_name, (*d2)->d_name);
 }
 
 void
@@ -264,7 +265,7 @@ Library::load_modules ()
   ACE_CString subdir = path_ + "/.shobj";
 
   struct dirent **dent;
-  num_modules_ = ACE_OS::scandir(subdir.c_str(),
+  num_modules_ = ACE_OS_Dirent::scandir(subdir.c_str(),
                                         &dent,selector,comparator);
 
   if (num_modules_ > 0) {
@@ -272,12 +273,12 @@ Library::load_modules ()
     for (int i = 0; i < num_modules_; i++) {
       modules_[i] = new Obj_Module(dent[i]->d_name);
       modules_[i]->add_source (ACE_CString(subdir + "/" + dent[i]->d_name).c_str());
-      ACE_OS::free(dent[i]);
+      ACE_OS_Memory::free(dent[i]);
     };
   }
 
   if (num_modules_ > -1)
-    ACE_OS::free(dent);
+    ACE_OS_Memory::free(dent);
 }
 
 void

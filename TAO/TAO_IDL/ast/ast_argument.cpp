@@ -72,6 +72,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_argument.h"
 #include "ast_visitor.h"
+#include "ace/streams.h"
 
 ACE_RCSID (ast,
            ast_argument,
@@ -125,8 +126,7 @@ AST_Argument::~AST_Argument (void)
 void
 AST_Argument::dump (ACE_OSTREAM_TYPE &o)
 {
-  this->dump_i (o, direction_to_string (pd_direction));
-  this->dump_i (o, " ");
+  o << direction_to_string (pd_direction) << " ";
   AST_Field::dump (o);
 }
 

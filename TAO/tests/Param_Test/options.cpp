@@ -20,8 +20,6 @@
 #include "tao/debug.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_fcntl.h"
 
 ACE_RCSID (Param_Test,
            options, 

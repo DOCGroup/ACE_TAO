@@ -30,16 +30,15 @@ sub new {
 
 
 sub process {
-  my($self)     = shift;
-  my($output)   = shift;
-  my($type)     = shift;
-  my($noinline) = shift;
-  my($macros)   = shift;
-  my($ipaths)   = shift;
-  my($replace)  = shift;
-  my($files)    = shift;
-  my($status)   = 0;
-  my(@options)  = ();
+  my($self)    = shift;
+  my($output)  = shift;
+  my($type)    = shift;
+  my($macros)  = shift;
+  my($ipaths)  = shift;
+  my($replace) = shift;
+  my($files)   = shift;
+  my($status)  = 0;
+  my(@options) = ();
 
   ## Back up the original file and receive the contents
   my(@contents) = ();
@@ -63,8 +62,8 @@ sub process {
     print $fh "# DO NOT DELETE THIS LINE -- " . basename($0) . " uses it.\n" .
               "# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.\n\n";
 
-    my($dep) = new DependencyGenerator($macros, \@options, $ipaths,
-                                       $replace, $type, $noinline);
+    my($dep) = new DependencyGenerator($macros, \@options,
+                                       $ipaths, $replace, $type);
     my($objgen) = ObjectGeneratorFactory::create($type);
     ## Sort the files so the dependencies are reproducible
     foreach my $file (sort @$files) {

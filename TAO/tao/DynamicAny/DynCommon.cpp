@@ -9,8 +9,6 @@
 #include "DynSequence_i.h"
 #include "DynStruct_i.h"
 #include "DynUnion_i.h"
-#include "tao/Any_Unknown_IDL_Type.h"
-#include "ace/OS_NS_wchar.h"
 
 ACE_RCSID (DynamicAny,
            DynCommon,
@@ -482,19 +480,7 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value
       if (good_type)
         {
           TAO_OutputCDR cdr;
-
-          if (CORBA::is_nil (value))
-            {
-              // Empty type hint, no profile.
-              cdr.write_ulong (1);
-              cdr.write_char ('\0');
-              cdr.write_ulong (0);
-            }
-          else
-            {
-              value->marshal (cdr);
-            }
-
+          value->marshal (cdr);
           TAO::Unknown_IDL_Type *unk = 0;
           ACE_NEW (unk,
                    TAO::Unknown_IDL_Type (this->type_.in (),
@@ -1281,7 +1267,7 @@ TAO_DynCommon::get_ulonglong (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc =
+      DynamicAny::DynAny_var cc = 
         this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (retval);
 
@@ -1634,6 +1620,7 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
+        tmp->_remove_ref ();
         break;
       }
     case CORBA::tk_enum:
@@ -1651,6 +1638,7 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
+        tmp->_remove_ref ();
         break;
       }
     case CORBA::tk_sequence:
@@ -1668,6 +1656,7 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
+        tmp->_remove_ref ();
         break;
       }
     case CORBA::tk_struct:
@@ -1685,6 +1674,7 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
+        tmp->_remove_ref ();
         break;
       }
     case CORBA::tk_union:
@@ -1702,6 +1692,7 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
+        tmp->_remove_ref ();
         break;
       }
     case CORBA::tk_fixed:
@@ -1723,6 +1714,7 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
+        tmp->_remove_ref ();
         break;
       }
   }

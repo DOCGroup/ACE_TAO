@@ -1,6 +1,3 @@
-//  -*- MPC -*-
-// $Id$
-
 project(RMCast) : acelib, core {
   requires    += rmcast
   sharedname   = ACE_RMCast

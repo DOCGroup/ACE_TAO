@@ -25,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/sys/os_types.h"
+#include "ace/os_include/sys/os_select.h"
 
 #if !defined (ACE_LACKS_SYS_TIME_H)
 #  include /**/ <sys/time.h>
@@ -35,18 +36,6 @@
 extern "C"
 {
 #endif /* __cplusplus */
-
-#if defined (ACE_HAS_SVR4_GETTIMEOFDAY)
-# if !defined (m88k) && !defined (SCO)
-  int gettimeofday (struct timeval *tp, void * = 0);
-# else
-  int gettimeofday (struct timeval *tp);
-# endif  /*  !m88k && !SCO */
-#elif defined (ACE_HAS_OSF1_GETTIMEOFDAY)
-  int gettimeofday (struct timeval *tp, struct timezone * = 0);
-#elif defined (ACE_HAS_SUNOS4_GETTIMEOFDAY)
-# define ACE_HAS_SVR4_GETTIMEOFDAY
-#endif /* ACE_HAS_SVR4_GETTIMEOFDAY */
 
 #ifdef __cplusplus
 }

@@ -8,7 +8,7 @@ extern "C" {
 
 #include "ace/Get_Opt.h"
 #include "ace/os_include/netinet/os_in.h"
-#include "ace/OS_NS_string.h"
+#include "ace/OS.h"
 
 // make sure that the code compiles cleanly even if SCTP is not
 // available. If SCTP is not installed, program will exit early in
@@ -24,12 +24,7 @@ extern "C" {
 #endif
 
 #include "Options_Manager.h"
-
-// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
-
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_arpa_inet.h"
 
 // Set default values
 ACE_CDR::ULong Options_Manager::test_iterations=1000000;
@@ -125,10 +120,10 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
             break;
           }
           case 'm':
-            histogram_min_bin      = ACE_OS::strtod(get_opt->opt_arg (), 0);
+            histogram_min_bin      = ACE_OS_String::strtod(get_opt->opt_arg (), 0);
             break;
           case 'M':
-            histogram_max_bin      = ACE_OS::strtod(get_opt->opt_arg (), 0);
+            histogram_max_bin      = ACE_OS_String::strtod(get_opt->opt_arg (), 0);
             break;
           case 'x':
             histogram_num_outliers = ACE_OS::atoi(get_opt->opt_arg ());
@@ -252,7 +247,7 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
             break;
           }
           case 'p':
-            server_port = ACE_OS::atoi(get_opt->opt_arg ());
+            server_port            = ACE_OS::atoi(get_opt->opt_arg ());
             break;
           case 'a':{
 

@@ -5,7 +5,6 @@
 
 #include "tao/RTScheduling/RTScheduler.h"
 #include "MIF_SchedulingC.h"
-#include "tao/LocalObject.h"
 #include "Kokyu_dsrt.h"
 #include "Kokyu_dsrt_schedulers_export.h"
 

@@ -2596,17 +2596,6 @@ tao_yyreduce:
 //      '}'
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeQsSeen);
 
-          AST_ValueType *vt = 
-            AST_ValueType::narrow_from_scope (
-                idl_global->scopes ().top_non_null ()
-              );
-
-          if (vt->will_have_factory ())
-            {
-              ACE_SET_BITS (idl_global->decls_seen_info_,
-                            idl_global->decls_seen_masks.valuefactory_seen_);
-            }
-
           /*
            * Done with this value type - pop it off the scopes stack
            */
@@ -3118,21 +3107,6 @@ tao_yyreduce:
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n (tao_yyvsp[0].idval,
                             0);
-
-          if (ACE_OS::strcmp (tao_yyvsp[0].idval->get_string (),
-                              "TypeCode") == 0
-              && !idl_global->in_main_file ())
-            {
-              AST_PredefinedType *pdt =
-                idl_global->gen ()->create_predefined_type (
-                                        AST_PredefinedType::PT_pseudo,
-                                        &n
-                                      );
-              (void) s->add_predefined_type (pdt);
-              s->add_to_scope (pdt);
-              break;
-            }
-
           AST_InterfaceFwd *f = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceForwardSeen);
 
@@ -4437,7 +4411,6 @@ tao_yyreduce:
               AST_Structure *st = AST_Structure::narrow_from_decl (u);
               AST_Structure::fwd_redefinition_helper (st,
                                                       s);
-              u = AST_Union::narrow_from_decl (st);
               (void) s->fe_add_union (u);
             }
 

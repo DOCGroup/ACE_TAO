@@ -47,15 +47,23 @@ endif
 ifeq (,$(pipes))
   pipes = 1
 endif
+
 ifeq ($(debug),0)
 CFLAGS += -DNDEBUG
 endif
 
 CC      = gcc
 CXX     = g++
-RC      = windres
 
 MODEL_FLAGS += -mcpu=$(TCPU)
+
+# If pipes is set to 1 then add the compiler flag -pipe. This uses pipe instead
+# of intermediate files. This can be disabled by setting pipes to 0 in the
+# platform_macros.GNU file.
+ifeq ($(pipes),1)
+   CFLAGS += -pipe
+endif # pipes
+
 
 CFLAGS  += -W -Wall -Wpointer-arith
 ifeq ($(threads),1)

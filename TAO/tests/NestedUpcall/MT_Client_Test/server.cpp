@@ -19,7 +19,6 @@
 
 #include "server.h"
 #include "tao/debug.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(MT_Client_Test, server, "$Id$")
 
@@ -87,11 +86,9 @@ MT_Object_Server::init (int argc,
                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-#if 0
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
               str.in ()));
-#endif /*if 0*/
 
   if (this->ior_output_file_)
     {

@@ -1,12 +1,12 @@
 #include "CRC.h"
-
-#include "tao/Basic_Types.h"
-
+#include "tao/corbafwd.h"
 #include "ace/Log_Msg.h"
 
 ACE_RCSID(Event,
           CRC,
           "$Id$")
+
+
 
 namespace TAO_Event_CRC
 {

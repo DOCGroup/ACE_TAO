@@ -83,10 +83,6 @@
 # error unsupported compiler on VxWorks
 #endif /* ! __GNUG__ && ! ghs */
 
-#if defined (ACE_VXWORKS) && ACE_VXWORKS <= 0x540
-#  define ACE_LACKS_ARPA_INET_H
-#endif /* ! (ACE_VXWORKS) && ACE_VXWORKS <= 0x540 */
-
 // OS-specific configuration
 
 #define ACE_LACKS_UNIX_SYSLOG
@@ -187,8 +183,6 @@
 #define ACE_LACKS_SYS_SEM_H
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_SYS_MSG_H
-#define ACE_LACKS_WCHAR_H
-#define ACE_LACKS_PWD_H
 
 // Not sure if these should always be defined.
 #define ACE_LACKS_SYS_UN_H

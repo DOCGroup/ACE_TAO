@@ -1,4 +1,4 @@
-project(*Server): messaging, taoexe, portableserver {
+project(*Server): messaging, taoserver, corba_messaging {
   Source_Files {
     Sleep_Service.cpp
     Server_Task.cpp
@@ -6,7 +6,9 @@ project(*Server): messaging, taoexe, portableserver {
   }
 }
 
-project(*Client): messaging, taoexe, portableserver {
+project(*Client): messaging, taoserver, corba_messaging {
+  exename  = client
+
   Source_Files {
     TestC.cpp
     Client_Task.cpp

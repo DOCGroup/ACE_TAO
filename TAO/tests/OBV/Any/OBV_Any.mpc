@@ -1,11 +1,11 @@
-project(*Server): taoexe, portableserver, valuetype {
+project(*Server): taoserver, valuetype {
   Source_Files {
     AnyS_impl.cpp
     server.cpp
   }
 }
 
-project(*Client): taoexe, valuetype {
+project(*Client): taoclient, valuetype {
   Source_Files {
     AnyC.cpp
     client.cpp

@@ -4,7 +4,6 @@
 #include "AVStreams_i.h"
 
 #include "tao/debug.h"
-#include "ace/OS_NS_strings.h"
 
 //------------------------------------------------------------
 // TAO_AV_TCP_Transport
@@ -636,9 +635,9 @@ int
 TAO_AV_TCP_Flow_Handler::open (void * /*arg*/)
 {
 
-#if defined (TCP_NODELAY)
   int nodelay = 1;
 
+#if defined (TCP_NODELAY)
   if (this->peer ().set_option (IPPROTO_TCP,
                                 TCP_NODELAY,
                                 (void *) &nodelay,

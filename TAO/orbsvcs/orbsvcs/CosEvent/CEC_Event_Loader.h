@@ -18,13 +18,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "CEC_EventChannel.h"
-
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 #include "CEC_TypedEventChannel.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-
 #include "orbsvcs/CosNamingC.h"
-
 #include "ace/Service_Config.h"
 
 /**

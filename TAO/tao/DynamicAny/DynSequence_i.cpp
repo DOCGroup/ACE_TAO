@@ -4,7 +4,6 @@
 #include "DynSequence_i.h"
 #include "DynAnyFactory.h"
 #include "tao/Marshal.h"
-#include "tao/Any_Unknown_IDL_Type.h"
 
 ACE_RCSID (DynamicAny,
            DynSequence_i,
@@ -129,15 +128,39 @@ TAO_DynSequence_i::init (CORBA::TypeCode_ptr tc
 // ****************************************************************
 
 TAO_DynSequence_i *
-TAO_DynSequence_i::_narrow (CORBA::Object_ptr _tao_objref
+TAO_DynSequence_i::_narrow (CORBA::Object_ptr obj
                             ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if (CORBA::is_nil (_tao_objref))
+  if (CORBA::is_nil (obj))
     {
       return 0;
     }
 
-  return dynamic_cast<TAO_DynSequence_i *> (_tao_objref);
+  return ACE_reinterpret_cast (
+             TAO_DynSequence_i*,
+             obj->_tao_QueryInterface (
+                      ACE_reinterpret_cast (
+                          ptrdiff_t,
+                          &TAO_DynSequence_i::_narrow
+                        )
+                    )
+           );
+}
+
+void*
+TAO_DynSequence_i::_tao_QueryInterface (ptrdiff_t type)
+{
+  ptrdiff_t mytype =
+    ACE_reinterpret_cast (ptrdiff_t,
+                          &TAO_DynSequence_i::_narrow);
+  if (type == mytype)
+    {
+      this->_add_ref ();
+      return this;
+    }
+
+  return
+    this->ACE_NESTED_CLASS (DynamicAny, DynSequence::_tao_QueryInterface) (type);
 }
 
 // ****************************************************************

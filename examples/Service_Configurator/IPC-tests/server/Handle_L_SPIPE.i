@@ -4,7 +4,6 @@
 
 #include "ace/SPIPE_Stream.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_stdio.h"
 
 #if defined (ACE_HAS_STREAM_PIPES)
 

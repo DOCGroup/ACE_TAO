@@ -16,7 +16,6 @@
 
 #ifndef TAO_ASYNCH_TIMEOUT_HANDLER_H
 #define TAO_ASYNCH_TIMEOUT_HANDLER_H
-
 #include /**/ "ace/pre.h"
 
 #include "messaging_export.h"
@@ -25,8 +24,9 @@
 #  pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
-#include "tao/Basic_Types.h"
+#include "tao/corbafwd.h"
+
+#if (TAO_HAS_AMI_CALLBACK == 1)
 
 #include "ace/Event_Handler.h"
 
@@ -73,6 +73,7 @@ public:
   ACE_Reactor *reactor_;
 };
 
-#include /**/ "ace/post.h"
+#endif /* (TAO_HAS_AMI_CALLBACK == 1)*/
 
+#include /**/ "ace/post.h"
 #endif /* TAO_ASYNCH_TIMEOUT_HANDLER_H */

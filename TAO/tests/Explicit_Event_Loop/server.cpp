@@ -22,8 +22,6 @@
 #include "server.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_unistd.h"
 
 const char *ior_output_file = "server.ior";
 int done = 0;

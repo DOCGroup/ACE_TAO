@@ -4,7 +4,6 @@
 
 #include "UIOP_Endpoint.h"
 #include "UIOP_Connection_Handler.h"
-#include "tao/ORB_Constants.h"
 
 #if TAO_HAS_UIOP == 1
 

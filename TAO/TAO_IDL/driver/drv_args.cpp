@@ -72,7 +72,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_global.h"
 #include "be_extern.h"
 #include "ace/Process.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (driver,
            drv_args,
@@ -313,8 +312,8 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
-      ACE_TEXT (" -GT\t\t\tgenerate explicit template instantiations")
-      ACE_TEXT (" (off by default)\n")
+      ACE_TEXT (" -Gv\t\t\tenable OBV (Valuetype) support")
+      ACE_TEXT (" (disabled by default)\n")
     ));
   ACE_DEBUG ((
       LM_DEBUG,
@@ -1169,12 +1168,6 @@ DRV_parse_args (long ac, char **av)
                   // AMH classes.
                   be_global->gen_amh_classes (I_TRUE);
                 }
-              else if (av[i][2] == 'A')
-                {
-                  // TAO-team-only, undocumented option to generate
-                  // Any operators into a separate set of files.
-                  be_global->gen_anyop_files (I_TRUE);
-                }
               else if (av[i][2] == 'e')
                 {
                   idl_global->append_idl_flag (av[i+1]);
@@ -1308,10 +1301,6 @@ DRV_parse_args (long ac, char **av)
                             );
                         }
                     }
-                }
-              else if (av[i][2] == 'T')
-                {
-                  be_global->gen_tmplinst (I_TRUE);
                 }
               else
                 {

@@ -4,15 +4,13 @@
 ** Copyright 2001 Addison Wesley. All Rights Reserved.
 */
 
-#include "ace/OS_NS_sys_time.h"
+#include "ace/OS.h"
 #include "ace/CDR_Stream.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Log_Msg.h"
 #include "ace/Log_Record.h"
-
-// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
 #if defined (ACE_WIN32) && (!defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \

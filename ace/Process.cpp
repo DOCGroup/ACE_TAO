@@ -1,19 +1,15 @@
 // $Id$
 
+#include "ace/OS.h"
 #include "ace/Process.h"
-
-#if !defined (__ACE_INLINE__)
-#include "ace/Process.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/ARGV.h"
 #include "ace/Signal.h"
 #include "ace/SString.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_sys_socket.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_string.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/Process.i"
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID (ace, Process, "$Id$")
 
@@ -582,7 +578,7 @@ ACE_Process_Options::setenv (ACE_TCHAR *envp[])
   while (envp[i])
     {
       if (this->setenv_i (envp[i],
-                          ACE_OS::strlen (envp[i])) == -1)
+                          ACE_OS_String::strlen (envp[i])) == -1)
         return -1;
       i++;
     }
@@ -613,7 +609,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *format, ...)
 
   // Append the string to are environment buffer.
   if (this->setenv_i (stack_buf,
-                      ACE_OS::strlen (stack_buf)) == -1)
+                      ACE_OS_String::strlen (stack_buf)) == -1)
     return -1;
 
 #if defined (ACE_WIN32)
@@ -650,7 +646,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
 
   // Append the string to our environment buffer.
   if (this->setenv_i (stack_buf,
-                      ACE_OS::strlen (stack_buf)) == -1)
+                      ACE_OS_String::strlen (stack_buf)) == -1)
     return -1;
 
 #if defined (ACE_WIN32)

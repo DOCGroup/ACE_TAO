@@ -13,23 +13,13 @@
 #ifndef ACE_TTY_IO_H
 #define ACE_TTY_IO_H
 
-#include "ace/DEV_IO.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (VMIN)
-#define ACE_VMIN 4
-#else
-#define ACE_VMIN VMIN
-#endif /* VMIN */
-
-#if !defined (VTIME)
-#define ACE_VTIME 5
-#else
-#define ACE_VTIME VTIME
-#endif /* VTIME */
+#include "ace/DEV_IO.h"
 
 /**
  * @class ACE_TTY_IO

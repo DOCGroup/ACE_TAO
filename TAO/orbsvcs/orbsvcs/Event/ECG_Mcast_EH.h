@@ -14,19 +14,17 @@
  */
 #ifndef TAO_ECG_MCAST_EH_H
 #define TAO_ECG_MCAST_EH_H
-
 #include /**/ "ace/pre.h"
-#include "ace/Event_Handler.h"
+
+#include "orbsvcs/RtecEventChannelAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Unbounded_Set.h"
+#include "ace/Event_Handler.h"
 #include "ace/Array_Base.h"
 #include "ace/SOCK_Dgram_Mcast.h"
-
-#include "orbsvcs/RtecEventChannelAdminS.h"
 
 #include /**/ "event_export.h"
 #include "ECG_Adapters.h"
@@ -286,5 +284,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_ECG_Mcast_EH_H */

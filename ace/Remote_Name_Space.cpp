@@ -1,7 +1,6 @@
 #include "ace/Remote_Name_Space.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID (ace,
            Remote_Name_Space,
@@ -50,7 +49,7 @@ ACE_Remote_Name_Space::bind (const ACE_NS_WString &name,
   ACE_UINT32 value_len =
     ACE_static_cast (ACE_UINT32, value.length () * sizeof (ACE_WCHAR_T));
   ACE_UINT32 type_len =
-    ACE_static_cast (ACE_UINT32, ACE_OS::strlen (type));
+    ACE_static_cast (ACE_UINT32, ACE_OS_String::strlen (type));
   ACE_Name_Request request (ACE_Name_Request::BIND,
                             name_urep.get (),
                             name_len,
@@ -74,7 +73,7 @@ ACE_Remote_Name_Space::rebind (const ACE_NS_WString &name,
   ACE_UINT32 value_len =
     ACE_static_cast (ACE_UINT32, value.length () * sizeof (ACE_WCHAR_T));
   ACE_UINT32 type_len =
-    ACE_static_cast (ACE_UINT32, ACE_OS::strlen (type));
+    ACE_static_cast (ACE_UINT32, ACE_OS_String::strlen (type));
   ACE_Name_Request request (ACE_Name_Request::REBIND,
                             name_urep.get (),
                             name_len,

@@ -78,6 +78,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 #include "utl_err.h"
 #include "global_extern.h"
+#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_attribute, 
@@ -122,8 +123,8 @@ AST_Attribute::~AST_Attribute (void)
 void
 AST_Attribute::dump (ACE_OSTREAM_TYPE &o)
 {
-  this->dump_i (o, (this->pd_readonly == I_TRUE ?
-                    "readonly attribute " : "attribute "));
+  o << (this->pd_readonly == I_TRUE ? "readonly" : "")
+    << " attribute ";
   AST_Field::dump (o);
 }
 

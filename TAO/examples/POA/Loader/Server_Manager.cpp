@@ -2,7 +2,6 @@
 
 #include "Server_Manager.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Loader, Server_Manager, "$Id$")
 

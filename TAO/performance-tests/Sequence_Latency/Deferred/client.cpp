@@ -5,7 +5,6 @@
 #include "tao/DynamicInterface/Request.h"
 
 #include "tao/Strategies/advanced_resource.h"
-#include "tao/TC_Constants_Forward.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
@@ -13,7 +12,6 @@
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
 #include "ace/Sample_History.h"
-#include "ace/OS_NS_errno.h"
 
 ACE_RCSID(Deferred_Latency, client, "$Id$")
 

@@ -1,4 +1,4 @@
-project(*Server): taoexe, portableserver {
+project(*Server): taoserver {
   Source_Files {
     Server_Task.cpp
     Sender_i.cpp
@@ -6,7 +6,9 @@ project(*Server): taoexe, portableserver {
   }
 }
 
-project(*Client): taoexe, portableserver {
+project(*Client): taoserver {
+  exename = client
+
   Source_Files {
     Client_Task.cpp
     Server_Task.cpp

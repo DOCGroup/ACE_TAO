@@ -3,7 +3,6 @@
 #include "Server_i.h"
 #include "tao/debug.h"
 #include "tao/IORTable/IORTable.h"
-#include "ace/OS_NS_stdio.h"
 
 // Constructor.
 

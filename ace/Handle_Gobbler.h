@@ -15,11 +15,13 @@
 #define ACE_HANDLE_GOBBLER_H
 #include /**/ "ace/pre.h"
 
-#include "ace/Unbounded_Set.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Unbounded_Set.h"
 
 /**
  * @class ACE_Handle_Gobbler

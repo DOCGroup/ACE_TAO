@@ -31,17 +31,6 @@
 #  include /**/ <time.h>
 #endif /* !ACE_LACKS_TIME_H */
 
-# if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
-             (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
-using std::tm;
-# if defined (ACE_WIN32)
-using std::_timezone;
-# else
-using std::timezone;
-# endif
-using std::difftime;
-# endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
-
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"
@@ -80,19 +69,6 @@ extern "C"
      } timespec_t;
 #  endif /* defined (ACE_PSOS_DIAB_PPC) */
 #endif /*  defined (ACE_PSOS) && !defined (USER_INCLUDE_SYS_TIME_TM) */
-
-#if defined (ACE_LACKS_CONST_TIMESPEC_PTR)
-typedef struct timespec * ACE_TIMESPEC_PTR;
-#else
-typedef const struct timespec * ACE_TIMESPEC_PTR;
-#endif /* HPUX */
-
-#if defined (DIGITAL_UNIX)
-  extern char *_Pctime_r (const time_t *, char *);
-  extern struct tm *_Plocaltime_r (const time_t *, struct tm *);
-  extern struct tm *_Pgmtime_r (const time_t *, struct tm *);
-  extern char *_Pasctime_r (const struct tm *, char *);
-#endif /* DIGITAL_UNIX */
 
 #ifdef __cplusplus
 }

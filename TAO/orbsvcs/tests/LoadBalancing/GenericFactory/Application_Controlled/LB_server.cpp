@@ -2,7 +2,6 @@
 #include "Basic.h"
 
 #include "TestC.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (Application_Controlled,
            LB_server,

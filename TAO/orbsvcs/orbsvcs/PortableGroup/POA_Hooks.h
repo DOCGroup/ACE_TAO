@@ -12,17 +12,16 @@
 
 #ifndef TAO_POA_HOOKS_H
 #define TAO_POA_HOOKS_H
-
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/PortableGroup_Hooks.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "portablegroup_export.h"
-
+#include "tao/PortableServer/PortableGroup_Hooks.h"
 #include "orbsvcs/PortableGroupC.h"
 
 // Forward references
@@ -100,17 +99,13 @@ protected:
   int find_group_component (const CORBA::Object_ptr the_ref,
                             PortableGroup::TagGroupTaggedComponent &group);
 
-  int find_group_component_in_profile (
-      const TAO_Profile* profile,
-      PortableGroup::TagGroupTaggedComponent &group
-    );
+  int find_group_component_in_profile (const TAO_Profile* profile,
+                                       PortableGroup::TagGroupTaggedComponent &group);
 
-  int create_group_acceptors (
-      CORBA::Object_ptr the_ref,
-      TAO_PortableGroup_Acceptor_Registry &acceptor_registry,
-      TAO_ORB_Core &orb_core
-      ACE_ENV_ARG_DECL
-    );
+  int create_group_acceptors (CORBA::Object_ptr the_ref,
+                              TAO_PortableGroup_Acceptor_Registry &acceptor_registry,
+                              TAO_ORB_Core &orb_core
+                              ACE_ENV_ARG_DECL);
 
   /// Helper function to associate group references with
   /// object references.
@@ -130,6 +125,6 @@ private:
 
 };
 
-#include /**/ "ace/post.h"
 
+#include /**/ "ace/post.h"
 #endif /* TAO_POA_HOOKS_H */

@@ -3,7 +3,6 @@
 #include "ping_i.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Faults, server, "$Id$")
 

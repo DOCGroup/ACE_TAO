@@ -12,7 +12,6 @@
 
 #ifndef TAO_GIOP_MESSAGE_GENERATOR_PARSER_IMPL_H
 #define TAO_GIOP_MESSAGE_GENERATOR_PARSER_IMPL_H
-
 #include /**/ "ace/pre.h"
 
 #include "tao/GIOP_Message_Generator_Parser_11.h"
@@ -22,7 +21,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/GIOP_Message_Generator_Parser_12.h"
-#include "tao/orbconf.h"
 
 /**
  * @class TAO_GIOP_Message_Generator_Parser_Impl

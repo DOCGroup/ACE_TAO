@@ -3,10 +3,8 @@
 
 // Date_Time.i
 
-#include "ace/Global_Macros.h"
+#include "ace/OS.h"
 #include "ace/Time_Value.h"
-#include "ace/OS_NS_sys_time.h"
-#include "ace/OS_NS_time.h"
 
 ASYS_INLINE void
 ACE_Date_Time::update (void)

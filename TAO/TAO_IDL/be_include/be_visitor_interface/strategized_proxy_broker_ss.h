@@ -21,8 +21,7 @@
 #ifndef BE_STRATEGIZED_PROXY_BROKER_SS_H_
 #define BE_STRATEGIZED_PROXY_BROKER_SS_H_
 
-class be_visitor_interface_strategized_proxy_broker_ss 
-  : public be_visitor_interface
+class be_visitor_interface_strategized_proxy_broker_ss : public be_visitor_interface
 {
   // = TITLE
   //   Generates the implementation  for the base proxy
@@ -40,13 +39,6 @@ public:
   virtual int visit_component (be_component *node);
   // This will just call the above method - no need to create
   // another set of visitors for this stuff.
-
-private:
-  void gen_thru_poa_operations (be_interface *node,
-                                TAO_OutStream *os);
-
-  void gen_direct_operations (be_interface *node,
-                              TAO_OutStream *os);
 };
 
 #endif /* BE_STRATEGIZED_PROXY_BROKER_SS_H_ */

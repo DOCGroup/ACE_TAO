@@ -75,8 +75,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
+#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_sequence, 
@@ -175,11 +174,11 @@ AST_Sequence::in_recursion (AST_Type *node)
 void
 AST_Sequence::dump (ACE_OSTREAM_TYPE &o)
 {
-  this->dump_i (o, "sequence <");
+  o << "sequence <";
   this->pd_base_type->dump (o);
-  this->dump_i (o, ", ");
+  o << ", ";
   this->pd_max_size->dump (o);
-  this->dump_i (o, ">");
+  o << ">";
 }
 
 int

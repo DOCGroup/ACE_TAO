@@ -4,7 +4,7 @@
 #ifndef JAWS_CONCURRENCY_H
 #define JAWS_CONCURRENCY_H
 
-#include "ace/config-all.h"
+#include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

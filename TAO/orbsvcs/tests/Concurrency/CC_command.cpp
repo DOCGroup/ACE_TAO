@@ -19,9 +19,10 @@
 #include "CC_test_utils.h"
 #include "CC_naming_service.h"
 #include "ace/ACE.h"
+#include "ace/OS.h"
 #include "ace/Process.h"
 #include "orbsvcs/CosConcurrencyControlC.h"
-#include "ace/OS_NS_stdio.h"
+#include <stdio.h>
 
 ACE_RCSID(Concurrency, CC_command, "$Id$")
 

@@ -1,7 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-//=============================================================================
+//=================================================================================
 //
 // = LIBRARY
 //     TAO/examples/POA/Loader
@@ -15,11 +15,12 @@
 // = AUTHOR
 //     Kirthika Parameswaran <kirthika@cs.wustl.edu>
 //
-//=============================================================================
+//==================================================================================
 
 #ifndef SERVER_MANAGER_H
 #define SERVER_MANAGER_H
 
+#include "ace/streams.h"
 #include "Servant_Activator.h"
 #include "Servant_Locator.h"
 

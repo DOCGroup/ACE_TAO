@@ -27,6 +27,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/corba.h"
 #include "PP_TestC.h"
 
 class PP_Test_Client

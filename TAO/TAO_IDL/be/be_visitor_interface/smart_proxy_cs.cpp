@@ -17,8 +17,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_interface,
-           smart_proxy_cs,
+ACE_RCSID (be_visitor_interface, 
+           smart_proxy_cs, 
            "$Id$")
 
 // ************************************************************
@@ -43,7 +43,9 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
   if (be_global->gen_smart_proxies ())
     {
+
       TAO_OutStream *os = this->ctx_->stream ();
+
       this->ctx_->node (node);
 
       os->indent ();
@@ -86,7 +88,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "{" << be_nl
           << "}";
 
-      *os << be_nl << be_nl
+      *os << be_nl << be_nl 
           << node->full_name () << "_ptr" << be_nl << be_uidt << be_uidt;
       *os << scope->full_name ();
 
@@ -104,7 +106,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "return proxy;" << be_uidt_nl
           << "}";
 
-      *os << be_nl << be_nl
+      *os << be_nl << be_nl 
           << scope->full_name ();
 
       // Only if there exists any nesting "::" is needed!
@@ -136,7 +138,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << node->flat_name () << "_Proxy_Factory_Adapter (void)" << be_nl
           << "{" << be_idt_nl
           << "// Making sure the factory which the adapter"
-          << " has is destroyed with it."
+          << " has is destroyed with it." 
           << be_nl
           << "if (this->proxy_factory_ != 0)" << be_idt_nl
           << "{" << be_idt_nl
@@ -185,7 +187,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
         *os << "::";
 
       *os << "TAO_"<< node->flat_name ()
-          << "_Proxy_Factory_Adapter::unregister_proxy_factory ("
+          << "_Proxy_Factory_Adapter::unregister_proxy_factory (" 
           << be_idt << be_idt_nl
           << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED" << be_uidt_nl
           << ")" << be_uidt_nl
@@ -199,10 +201,10 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << ");" <<be_uidt_nl << be_nl
           << "if (this->one_shot_factory_ == 1)" << be_idt_nl
           << "{" << be_idt_nl
-          << "this->disable_factory_ = 1;" << be_uidt_nl
+          << "this->disable_factory_ = 1;" << be_uidt_nl 
           << "}" << be_uidt_nl << be_nl
           << "if ("
-          << "this->one_shot_factory_ == 0 && this->proxy_factory_ != 0)"
+          << "this->one_shot_factory_ == 0 && this->proxy_factory_ != 0)" 
           << be_idt_nl
           << "{" << be_idt_nl
           << "delete "
@@ -336,11 +338,34 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "TAO_"<< node->flat_name ()
           <<"_PROXY_FACTORY_ADAPTER::instance ()->unregister_proxy_factory ();"
           << be_nl << "this->proxy_ = " << "::" << node->full_name ()
-          << "::_narrow (this->base_proxy_.in ());"
+          << "::_unchecked_narrow (this->base_proxy_.in ());"
           << be_uidt_nl
           << "}" << be_uidt_nl
           << "return this->proxy_.in ();" << be_uidt_nl
           << "}" << be_nl << be_nl;
+
+      os->indent ();
+      *os << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \\"
+          << be_idt_nl<<"defined (ACE_HAS_GNU_REPO)"<<be_uidt_nl
+          << "template class TAO_Singleton<";
+      *os << scope->full_name ();
+
+      // Only if there exists any nesting "::" is needed!
+      if (node->is_nested ())
+        *os << "::";
+      *os <<"TAO_" <<node->flat_name ()
+          << "_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX >;"<<be_nl
+          << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)"
+          << be_nl
+          << "#pragma instantiate TAO_Singleton<";
+      *os << scope->full_name ();
+
+      // Only if there exists any nesting "::" is needed!
+      if (node->is_nested ())
+        *os << "::";
+      *os << "TAO_"<<node->flat_name ()
+          << "_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>"<<be_nl
+          << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */"<<be_nl<<be_nl;
     }
   else
     {
@@ -356,3 +381,4 @@ int be_visitor_interface_smart_proxy_cs::visit_component (
 {
   return this->visit_interface (node);
 }
+

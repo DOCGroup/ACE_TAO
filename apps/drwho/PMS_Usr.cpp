@@ -5,7 +5,6 @@
 #include "PMS_Usr.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 
 // This function "encodes" a list of friends by putting the userid's in
 // a contiguous block.  This block can then be transmitted over to the

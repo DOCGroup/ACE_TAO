@@ -15,6 +15,7 @@
 // 
 // ============================================================================
 
+#include "ace/OS.h"
 #include "ace/Token_Manager.h"
 #include "ace/Remote_Tokens.h"
 #include "ace/Thread.h"

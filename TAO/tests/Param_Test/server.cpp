@@ -17,7 +17,6 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (Param_Test, 
            server, 

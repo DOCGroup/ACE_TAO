@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE_export.h"
+#include "ace/OS_Export.h"
 
 /**
  * @class ACE_Thread_Hook
@@ -29,7 +29,7 @@
  * hooks that are called before the thread entry point function
  * is invoked.
  */
-class ACE_Export ACE_Thread_Hook
+class ACE_OS_Export ACE_Thread_Hook
 {
 
 public:

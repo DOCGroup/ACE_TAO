@@ -14,11 +14,9 @@
 
 #ifndef TAO_EC_GATEWAY_H
 #define TAO_EC_GATEWAY_H
-
 #include /**/ "ace/pre.h"
 
 #include /**/ "event_export.h"
-
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecEventCommS.h"
 
@@ -38,8 +36,7 @@
  * strategies for EC distribution.
  *
  */
-class TAO_RTEvent_Export TAO_EC_Gateway 
-  : public POA_RtecEventChannelAdmin::Observer
+class TAO_RTEvent_Export TAO_EC_Gateway : public POA_RtecEventChannelAdmin::Observer
 {
 public:
   /// Default constructor.
@@ -61,5 +58,4 @@ private:
 };
 
 #include /**/ "ace/post.h"
-
 #endif /* ACE_EC_GATEWAY_H */

@@ -12,30 +12,30 @@
 // only mutual exclusion relates to reference counting and
 // construction.
 
-#include "Typecode.h"
-#include "Any.h"
-#include "Marshal.h"
-#include "CORBA_String.h"
-#include "CDR.h"
-#include "debug.h"
-#include "Any_Unknown_IDL_Type.h"
-#include "ORB_Constants.h"
-
+#include "tao/Typecode.h"
+#include "tao/Environment.h"
+#include "tao/Any.h"
+#include "tao/CDR.h"
+#include "tao/Exception.h"
+#include "tao/Marshal.h"
+#include "tao/CORBA_String.h"
+#include "tao/debug.h"
+#include "ace/Malloc_Base.h"
 #include "ace/Null_Mutex.h"
-#include "ace/OS_NS_string.h"
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
-    || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #  include "tao/Sequence_T.h"
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION || ACE_HAS_TEMPLATE_INSTANTIATION_PRAGM */
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Typecode.i"
 #endif /* ! __ACE_INLINE__ */
 
+
 ACE_RCSID (tao,
            Typecode,
            "$Id$")
+
 
 // Typecodes essentially consist of just the CDR octets that get
 // marshaled and unmarshaled, and this code knows how to parse those
@@ -51,10 +51,7 @@ CORBA::TypeCode::Bounds*
 CORBA::TypeCode::Bounds::_downcast (CORBA::Exception *ex)
 {
   if (ex->_is_a ("IDL:omg.org/CORBA/TypeCode/Bounds:1.0"))
-    {
-      return ACE_dynamic_cast (CORBA::TypeCode::Bounds*, ex);
-    }
-
+    return ACE_dynamic_cast (CORBA::TypeCode::Bounds*, ex);
   return 0;
 }
 
@@ -2220,13 +2217,13 @@ CORBA::TypeCode::private_member_type (CORBA::ULong slot
         // The ith entry will have the typecode of the ith guy.
         {
           // Skip member label.
-          TAO::traverse_status status =
+          CORBA::TypeCode::traverse_status status =
             TAO_Marshal_Object::perform_skip (disc_tc,
                                               &stream
                                               ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-          if (status != TAO::TRAVERSE_CONTINUE
+          if (status != CORBA::TypeCode::TRAVERSE_CONTINUE
               || !stream.skip_string ())  // skip the name
             {
               ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
@@ -2513,13 +2510,13 @@ CORBA::TypeCode::private_member_name (CORBA::ULong slot
             for (CORBA::ULong i = 0; i < mcount; ++i)
               {
                 // The ith entry will have the name of the ith member.
-                TAO::traverse_status status =
+                CORBA::TypeCode::traverse_status status =
                   TAO_Marshal_Object::perform_skip (disc_tc,
                                                     &stream
                                                     ACE_ENV_ARG_PARAMETER);
                 ACE_CHECK_RETURN (0);
 
-                if (status != TAO::TRAVERSE_CONTINUE)
+                if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
                   ACE_THROW_RETURN (CORBA::BAD_TYPECODE (), 0);
 
                 // skip typecode for member
@@ -2717,7 +2714,7 @@ CORBA::TypeCode::private_member_label (CORBA::ULong n
                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      if (retval != TAO::TRAVERSE_CONTINUE)
+      if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
         {
           return 0;
         }
@@ -2760,7 +2757,7 @@ CORBA::TypeCode::private_member_label (CORBA::ULong n
                                               ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
-          if (retval != TAO::TRAVERSE_CONTINUE)
+          if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
             {
               return 0;
             }
@@ -2776,7 +2773,7 @@ CORBA::TypeCode::private_member_label (CORBA::ULong n
                                                 ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
-          if (retval != TAO::TRAVERSE_CONTINUE)
+          if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
             {
               return 0;
             }
@@ -2784,9 +2781,11 @@ CORBA::TypeCode::private_member_label (CORBA::ULong n
 
       TAO::Unknown_IDL_Type *impl = 0;
       ACE_NEW_THROW_EX (impl,
-                        TAO::Unknown_IDL_Type (label_tc,
-                                               out.begin (),
-                                               ACE_CDR_BYTE_ORDER),
+                        TAO::Unknown_IDL_Type (
+                            CORBA::TypeCode::_duplicate (label_tc),
+                            out.begin (),
+                            ACE_CDR_BYTE_ORDER
+                          ),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
@@ -2801,12 +2800,10 @@ CORBA::TypeCode::private_member_label (CORBA::ULong n
           || this->skip_typecode (stream) == 0)
         {
           if (TAO_debug_level > 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("TypeCode::private_member_label ")
-                          ACE_TEXT ("error getting typecode for member %d\n"),
-                          i));
-            }
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("TypeCode::private_member_label ")
+                        ACE_TEXT ("error getting typecode for member %d\n"),
+                        i));
           ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                             0);
         }
@@ -3618,36 +3615,6 @@ CORBA::TypeCode::parameter (const CORBA::Long /* slot */
                     0);
 }
 
-// =========================================================
-// Traits specializations for CORBA::TypeCode.
-namespace TAO
-{
-  CORBA::TypeCode_ptr
-  Objref_Traits<CORBA::TypeCode>::tao_duplicate (CORBA::TypeCode_ptr p)
-  {
-    return CORBA::TypeCode::_duplicate (p);
-  }
-
-  void
-  Objref_Traits<CORBA::TypeCode>::tao_release (CORBA::TypeCode_ptr p)
-  {
-    CORBA::release (p);
-  }
-
-  CORBA::TypeCode_ptr
-  Objref_Traits<CORBA::TypeCode>::tao_nil (void)
-  {
-    return CORBA::TypeCode::_nil ();
-  }
-
-  CORBA::Boolean
-  Objref_Traits<CORBA::TypeCode>::tao_marshal (CORBA::TypeCode_ptr p,
-                                               TAO_OutputCDR & cdr)
-  {
-    return cdr << p;
-  }
-}
-
 // ****************************************************************
 
 CORBA::Boolean
@@ -3767,30 +3734,10 @@ operator>> (TAO_InputCDR& cdr, CORBA::TypeCode *&x)
   return 1;
 }
 
-CORBA::Boolean
-operator<< (TAO_OutputCDR &strm, const CORBA::TCKind &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = _tao_enumval;
-  return strm << _tao_temp;
-}
-
-CORBA::Boolean
-operator>> (TAO_InputCDR &strm, CORBA::TCKind &_tao_enumval)
-{
-  CORBA::ULong _tao_temp = 0;
-  CORBA::Boolean _tao_result = strm >> _tao_temp;
-
-  if (_tao_result == 1)
-    {
-      _tao_enumval = ACE_static_cast (CORBA::TCKind, _tao_temp);
-    }
-
-  return _tao_result;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_Pseudo_Object_Manager<CORBA::TypeCode>;
+template class TAO_Pseudo_Object_Manager<CORBA::TypeCode,
+                                         CORBA::TypeCode_var>;
 
 template class ACE_Hash_Map_Entry<const char *,
                                   ACE_Unbounded_Queue<CORBA::Long> *>;
@@ -3799,18 +3746,16 @@ template class ACE_Hash_Map_Manager_Ex<const char *,
                                        ACE_Hash<const char *>,
                                        ACE_Equal_To<const char *>,
                                        ACE_Null_Mutex>;
-template class
-  ACE_Hash_Map_Iterator_Base_Ex<const char *,
-                                ACE_Unbounded_Queue<CORBA::Long> *,
-                                ACE_Hash<const char *>,
-                                ACE_Equal_To<const char *>,
-                                ACE_Null_Mutex>;
-template class
-  ACE_Hash_Map_Reverse_Iterator_Ex<const char *,
-                                   ACE_Unbounded_Queue<CORBA::Long> *,
-                                   ACE_Hash<const char *>,
-                                   ACE_Equal_To<const char *>,
-                                   ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<const char *,
+                                             ACE_Unbounded_Queue<CORBA::Long> *,
+                                             ACE_Hash<const char *>,
+                                             ACE_Equal_To<const char *>,
+                                             ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *,
+                                                ACE_Unbounded_Queue<CORBA::Long> *,
+                                                ACE_Hash<const char *>,
+                                                ACE_Equal_To<const char *>,
+                                                ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<const char *,
                                         ACE_Unbounded_Queue<CORBA::Long> *,
                                         ACE_Hash<const char *>,
@@ -3820,115 +3765,17 @@ template class ACE_Hash_Map_Iterator_Ex<const char *,
 template class TAO_Pseudo_Var_T<CORBA::TypeCode>;
 template class TAO_Pseudo_Out_T<CORBA::TypeCode, CORBA::TypeCode_var>;
 
-template class TAO::Objref_Traits<CORBA::TypeCode>;
-
-template class TAO::Arg_Traits<CORBA::TypeCode>;
-template class TAO::Object_Arg_Traits_T<CORBA::TypeCode_ptr,
-                                        CORBA::TypeCode_var,
-                                        CORBA::TypeCode_out,
-                                        TAO::Objref_Traits<CORBA::TypeCode> >;
-
-template TAO::Ret_Object_Argument_T<CORBA::TypeCode*,
-                                    TAO_Pseudo_Var_T<CORBA::TypeCode> >;
-
-template TAO::In_Object_Argument_T<CORBA::TypeCode*>;
-
-template TAO::Inout_Object_Argument_T<CORBA::TypeCode*,
-    TAO::Objref_Traits<CORBA::TypeCode> >;
-
-template TAO::Out_Object_Argument_T<CORBA::TypeCode*,
-    TAO_Pseudo_Out_T<CORBA::TypeCode,
-                     TAO_Pseudo_Var_T<CORBA::TypeCode> > >;
-
-#if 0
-template class TAO::SArg_Traits<CORBA::TypeCode>;
-template class TAO::Object_SArg_Traits_T<CORBA::TypeCode_ptr,
-                                         CORBA::TypeCode_var,
-                                         CORBA::TypeCode_out>;
-template class TAO::In_Object_SArgument_T<CORBA::TypeCode_ptr,
-                                          CORBA::TypeCode_var>;
-template class TAO::Inout_Object_SArgument_T<CORBA::TypeCode_ptr,
-                                             CORBA::TypeCode_var>;
-template class TAO::Out_Object_SArgument_T<CORBA::TypeCode_ptr,
-                                           CORBA::TypeCode_var,
-                                           CORBA::TypeCode_out>;
-template class TAO::Ret_Object_SArgument_T<CORBA::TypeCode_ptr,
-                                           CORBA::TypeCode_var>;
-#endif /*if 0*/
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_Pseudo_Object_Manager<CORBA::TypeCode>
+#pragma instantiate TAO_Pseudo_Object_Manager<CORBA::TypeCode, CORBA::TypeCode_var>
 
-#pragma instantiate ACE_Hash_Map_Entry<const char *, \
-                                       ACE_Unbounded_Queue<CORBA::Long> *>
-#pragma instantiate \
-  ACE_Hash_Map_Manager_Ex<const char *, \
-                          ACE_Unbounded_Queue<CORBA::Long> *, \
-                          ACE_Hash<const char *>, \
-                          ACE_Equal_To<const char *>, \
-                          ACE_Null_Mutex>
-#pragma instantiate \
-  ACE_Hash_Map_Iterator_Base_Ex<const char *, \
-                                ACE_Unbounded_Queue<CORBA::Long> *, \
-                                ACE_Hash<const char *>, \
-                                ACE_Equal_To<const char *>, \
-                                ACE_Nullv_Mutex>
-#pragma instantiate \
-  ACE_Hash_Map_Reverse_Iterator_Ex<const char *, \
-                                   ACE_Unbounded_Queue<CORBA::Long> *, \
-                                   ACE_Hash<const char *>, \
-                                   ACE_Equal_To<const char *>, \
-                                   ACE_Null_Mutex>
-#pragma instantiate \
-  ACE_Hash_Map_Iterator_Ex<const char *, \
-                           ACE_Unbounded_Queue<CORBA::Long> *, \
-                           ACE_Hash<const char *>, \
-                           ACE_Equal_To<const char *>, \
-                           ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<const char *, ACE_Unbounded_Queue<CORBA::Long> *>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<const char *, ACE_Unbounded_Queue<CORBA::Long> *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const char *, ACE_Unbounded_Queue<CORBA::Long> *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Nullv_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const char *, ACE_Unbounded_Queue<CORBA::Long> *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<const char *, ACE_Unbounded_Queue<CORBA::Long> *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
 
 #pragma instantiate TAO_Pseudo_Var_T<CORBA::TypeCode>
 #pragma instantiate TAO_Pseudo_Out_T<CORBA::TypeCode, CORBA::TypeCode_var>
-
-#pragma instantiate TAO::Objref_Traits<CORBA::TypeCode>
-#pragma instantiate TAO::Arg_Traits<CORBA::TypeCode>
-#pragma instantiate \
-  TAO::Object_Arg_Traits_T<CORBA::TypeCode_ptr, \
-                           CORBA::TypeCode_var, \
-                           CORBA::TypeCode_out, \
-                           TAO::Objref_Traits<CORBA::TypeCode> >
-#pragma instantiate TAO::In_Object_Argument_T<CORBA::TypeCode_ptr>
-#pragma instantiate \
-  TAO::Inout_Object_Argument_T<CORBA::TypeCode_ptr, \
-                               TAO::Objref_Traits<CORBA::TypeCode> >
-#pragma instantiate TAO::Out_Object_Argument_T<CORBA::TypeCode_ptr, \
-                                               CORBA::TypeCode_out>
-#pragma instantiate TAO::Ret_Object_Argument_T<CORBA::TypeCode_ptr, \
-                                               CORBA::TypeCode_var>
-
-#pragma instantiate TAO::SArg_Traits<CORBA::TypeCode>
-#pragma instantiate TAO::Object_SArg_Traits_T<CORBA::TypeCode_ptr, \
-                                              CORBA::TypeCode_var, \
-                                              CORBA::TypeCode_out>
-#pragma instantiate TAO::In_Object_SArgument_T<CORBA::TypeCode_ptr, \
-                                               CORBA::TypeCode_var>
-#pragma instantiate TAO::Inout_Object_SArgument_T<CORBA::TypeCode_ptr, \
-                                                  CORBA::TypeCode_var>
-#pragma instantiate TAO::Out_Object_SArgument_T<CORBA::TypeCode_ptr, \
-                                                CORBA::TypeCode_var, \
-                                                CORBA::TypeCode_out>
-#pragma instantiate TAO::Ret_Object_SArgument_T<CORBA::TypeCode_ptr, \
-                                                CORBA::TypeCode_var>
-
-#pragma instantiate TAO::Ret_Object_Argument_T<CORBA::TypeCode*,
-     TAO_Pseudo_Var_T<CORBA::TypeCode> >
-
-#pragma instantiate TAO::In_Object_Argument_T<CORBA::TypeCode*>
-
-#pragma instantiate TAO::Inout_Object_Argument_T<CORBA::TypeCode*,
-    TAO::Objref_Traits<CORBA::TypeCode> >
-
-#pragma instantiate TAO::Out_Object_Argument_T<CORBA::TypeCode*,
-    TAO_Pseudo_Out_T<CORBA::TypeCode,
-                     TAO_Pseudo_Var_T<CORBA::TypeCode> > >
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -12,17 +12,16 @@
 
 #ifndef TAO_CEC_FACTORY_H
 #define TAO_CEC_FACTORY_H
-
 #include /**/ "ace/pre.h"
-#include "ace/Service_Object.h"
+
+#include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Objref_VarOut_T.h"
-
-#include "event_export.h"
+#include "tao/corba.h"
+#include "ace/Service_Object.h"
 
 class ACE_Lock;
 

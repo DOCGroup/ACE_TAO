@@ -3,13 +3,13 @@
 
 #include "ace/SOCK_SEQPACK_Acceptor.h"
 
+#include "ace/Log_Msg.h"
+
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK_SEQPACK_Acceptor.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/Auto_Ptr.h"
-#include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID(ace, SOCK_SEQPACK_Acceptor, "SOCK_SEQPACK_Acceptor.cpp,v 4.30 2002/03/08 23:18:09 spark Exp")
 
@@ -259,7 +259,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
                       0,
                       sizeof local_inet6_addr);
 
-      if (local_sap.ACE_Addr::operator== (ACE_Addr::sap_any))
+      if (local_sap == ACE_Addr::sap_any)
         {
           local_inet6_addr.sin6_family = AF_INET6;
           local_inet6_addr.sin6_port = 0;
@@ -295,44 +295,12 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
       else
         local_inet_addr = *ACE_reinterpret_cast (sockaddr_in *,
                                                  local_sap.get_addr ());
-
-//  A port number of 0 means that the user is requesting that the
-//  operating system choose an arbitrary, unused port.  Since some
-//  operating systems don't provide this service, ACE provides an
-//  emulation layer.  Therefore, the "ACE way" to bind an arbitrary,
-//  unused port is to call ACE:bind_port, which either
-//
-//    (1)  Calls ACE_OS::bind with port 0, if the operating system
-//         directly supports the automated selection, or
-//
-//    (2)  Performs more complicated logic to emulate this feature if
-//         it's missing from the OS.
-//
-//  The emulation logic in choice (2) is compiled if and only if
-//  ACE_LACKS_WILDCARD_BIND is defined at compile time.
-//
-//  Along these lines, the following block of code seems like it would
-//  be sufficient to support the wildcard bind operation:
-//
-//      if (local_inet_addr.sin_port == 0)
-//         {
-//           if (ACE::bind_port (this->get_handle (),
-//               ACE_NTOHL (ACE_UINT32 (local_inet_addr.sin_addr.s_addr))) == -1)
-//             error = 1;
-//
-//         }
-//      else
-//
-//  Unfortunately, this code is insufficient because it does not
-//  address the possibility of secondary addresses.
-//
-//  However, rather than writing the correct code now, I'm putting it
-//  off, because this class, ACE_SOCK_SEQPACK_Acceptor, is currently
-//  only used with SCTP, and ACE currently supports SCTP only through
-//  the OpenSS7 and LKSCTP implmentations, which are available only on
-//  Linux.  Linux has native support for the wildcard bind, so the
-//  following code works regardless of whether or not the port is 0.
-
+      if (local_inet_addr.sin_port == 0)
+        {
+          if (ACE::bind_port (this->get_handle ()) == -1)
+            error = 1;
+        }
+      else
         {
           // The total number of addresses is the number of secondary
           // addresses plus one.
@@ -355,10 +323,10 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
                                       num_addresses);
 
 #if defined (ACE_HAS_LKSCTP)
-
+      
               sockaddr_in *local_sockaddr = 0;
 
-              // bind the primary first
+	      // bind the primary first
               if (ACE_OS::bind (this->get_handle (),
                                 ACE_reinterpret_cast(sockaddr *,
                                 &(local_inet_addrs[0])),
@@ -366,7 +334,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
               {
                 error = 1;
               }
-
+              
               // do we need to bind multiple addresses?
               if (num_addresses > 1)
               {
@@ -378,21 +346,21 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
                 {
                   local_inet_addrs[i].sin_port = local_inet_addrs[0].sin_port;
                 }
-
-                // copy only the sockaddrs that we need to bindx
+		
+		// copy only the sockaddrs that we need to bindx
                 for (size_t i = 0; i < num_addresses - 1; i++)
                 {
                   ACE_OS::memcpy(&(local_sockaddr[i]),
                                  &(local_inet_addrs[i + 1]),
                                  sizeof(sockaddr_in));
                 }
-
-                // now call bindx
-                if (!error && sctp_bindx(this->get_handle (),
-                                         ACE_reinterpret_cast(sockaddr *,
-                                                              local_sockaddr),
-                                         num_addresses - 1,
-                                         SCTP_BINDX_ADD_ADDR))
+                
+                // now call bindx 
+                if (!error && sctp_bindx(this->get_handle (), 
+                                         ACE_reinterpret_cast(sockaddr *, 
+                                                              local_sockaddr), 
+                                         num_addresses - 1, 
+                                         SCTP_BINDX_ADD_ADDR)) 
                 {
                   error = 1;
                 }

@@ -2,9 +2,8 @@
 #include "Thread_Per_Connection_Handler.h"
 #include "Connection_Handler.h"
 #include "debug.h"
-#include "Transport.h"
-
 #include "ace/Flag_Manip.h"
+#include "Transport.h"
 
 ACE_RCSID (tao,
            Thread_Per_Connection_Handler,
@@ -35,14 +34,12 @@ TAO_Thread_Per_Connection_Handler::activate (long flags,
                                              ACE_thread_t  thread_names[])
 {
   if (TAO_debug_level)
-    {
-      ACE_DEBUG  ((LM_DEBUG,
-                   ACE_LIB_TEXT ("TAO (%P|%t) - IIOP_Connection_Handler::")
-                   ACE_LIB_TEXT ("activate %d threads, flags = %d\n"),
-                   n_threads,
-                   flags,
-                   THR_BOUND));
-    }
+    ACE_DEBUG  ((LM_DEBUG,
+                 ACE_LIB_TEXT ("TAO (%P|%t) - IIOP_Connection_Handler::")
+                 ACE_LIB_TEXT ("activate %d threads, flags = %d\n"),
+                 n_threads,
+                 flags,
+                 THR_BOUND));
 
   return TAO_TPC_BASE::activate (flags,
                                  n_threads,

@@ -3,8 +3,6 @@
 
 #include "ETCL_Interpreter.h"
 #include "ETCL_Constraint.h"
-#include "ace/Guard_T.h"
-#include "ace/Thread_Mutex.h"
 
 ACE_RCSID(ETCL, ETCL_Interpreter, "$Id$")
 

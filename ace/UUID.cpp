@@ -1,18 +1,11 @@
 //$Id$
-
+#include "ace/OS.h"
+#include "ace/Log_Msg.h"
 #include "ace/UUID.h"
-#include "ace/Guard_T.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/UUID.inl"
 #endif /* __ACE_INLINE__ */
-
-#include "ace/Log_Msg.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_sys_time.h"
-#include "ace/OS_NS_netdb.h"
-#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (ace,
            UUID,
@@ -481,7 +474,4 @@ namespace ACE_Utils
 template class ACE_Singleton <ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton <ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX>
-#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux))
-template ACE_Singleton<ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX> *
-  ACE_Singleton<ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -14,8 +14,6 @@
 
 #include "ESF_Proxy_Collection.h"
 
-#include "tao/Basic_Types.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

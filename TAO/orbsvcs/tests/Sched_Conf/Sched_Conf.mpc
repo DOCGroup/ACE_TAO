@@ -1,4 +1,5 @@
-project: namingexe, rtsched {
+project: taoserver, namingexe, rtsched {
+  exename  = Sched_Conf
   Source_Files {
     Sched_Conf.cpp
   }

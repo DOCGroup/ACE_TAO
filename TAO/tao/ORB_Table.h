@@ -16,15 +16,16 @@
 #define TAO_ORB_TABLE_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Null_Mutex.h"
+
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Null_Mutex.h"
 #include "ace/Hash_Map_Manager_T.h"
-
-#include "tao/TAO_Export.h"
+#include "ace/Functor.h"
 
 // Forward declarations.
 class TAO_ORB_Core;

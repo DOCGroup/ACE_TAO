@@ -11,16 +11,14 @@ OBJFILES = \
 	$(OBJDIR)\client.obj
 
 CFLAGS = \
-        $(ACE_CFLAGS) \
+	$(ACE_CFLAGS) \
         $(TAO_CFLAGS) \
-        $(TAO_MESSAGING_CFLAGS) \
-        $(TAO_VALUETYPE_CLAGS)
+        $(TAO_MESSAGING_CFLAGS)
 
 LIBFILES = \
-        $(ACE_LIB) \
+	$(ACE_LIB) \
         $(TAO_LIB) \
-        $(TAO_MESSAGING_LIB) \
-        $(TAO_VALUETYPE_LIB)
+        $(TAO_MESSAGING_LIB)
 
 IDLFILES = \
         $(IDLDIR)\Test.idl

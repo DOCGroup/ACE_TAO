@@ -2,7 +2,6 @@
 // $Id$
 //
 #include "Client_Task.h"
-#include "ace/OS_NS_time.h"
 
 ACE_RCSID(Thread_Pool_Latency, Client_Task, "$Id$")
 

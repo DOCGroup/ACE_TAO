@@ -6,9 +6,9 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
+#include "ace/OS.h"
 #include "ace/FILE_Addr.h"
 #include "ace/FILE_Connector.h"
-#include "ace/os_include/os_netdb.h"
 #include "Reactor_Logging_Server_Adapter.h"
 #include "TPC_Logging_Server.h"
 #include "TPCLS_export.h"
@@ -20,7 +20,7 @@ int TPC_Logging_Handler::open (void *) {
 
   peer ().get_remote_addr (logging_peer_addr);
   logging_peer_addr.get_host_name (filename, MAXHOSTNAMELEN);
-  ACE_OS::strcat (filename, LOGFILE_SUFFIX);
+  ACE_OS_String::strcat (filename, LOGFILE_SUFFIX);
 
   ACE_FILE_Connector connector;
   connector.connect (log_file_,

@@ -14,29 +14,23 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_ENDPOINT_SELECTOR_FACTORY_H
 #define TAO_ENDPOINT_SELECTOR_FACTORY_H
-
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Object.h"
+#include "ace/CORBA_macros.h"
 
-#include "tao/TAO_Export.h"
 
-namespace CORBA
-{
-  class Environment;
-
-  class Exception;
-}
-
+class TAO_GIOP_Invocation;
 class TAO_Invocation_Endpoint_Selector;
-
 
 // ****************************************************************
 
@@ -66,9 +60,8 @@ public:
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.
   virtual TAO_Invocation_Endpoint_Selector *get_selector (
-              ACE_ENV_SINGLE_ARG_DECL) = 0;
-
-
+                             TAO_GIOP_Invocation *invocation
+                             ACE_ENV_ARG_DECL) = 0;
 };
 
 #include /**/ "ace/post.h"

@@ -1,4 +1,4 @@
-project(*latency server): taoexe, portableserver, strategies {
+project(*latency server): taoserver, strategies {
   avoids += minimum_corba
 
   Source_Files {
@@ -7,7 +7,8 @@ project(*latency server): taoexe, portableserver, strategies {
   }
 }
 
-project(*latency client): taoexe, portableserver, strategies, dynamicinterface {
+project(*latency client): taoserver, strategies, dynamicinterface {
+  exename  = client
   avoids  += minimum_corba
 
   Source_Files {

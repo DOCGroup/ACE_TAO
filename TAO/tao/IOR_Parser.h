@@ -12,24 +12,16 @@
 
 #ifndef TAO_IOR_PARSER_H
 #define TAO_IOR_PARSER_H
-
 #include /**/ "ace/pre.h"
-#include "ace/Service_Object.h"
+
+#include "tao/corbafwd.h"
+#include "tao/Exception.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Exception.h"
-
-namespace CORBA
-{
-  class Object;
-  typedef Object *Object_ptr;
-
-  class ORB;
-  typedef ORB *ORB_ptr;
-}
+#include "ace/Service_Object.h"
 
 /**
  * @class TAO_IOR_Parser

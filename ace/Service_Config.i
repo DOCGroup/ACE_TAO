@@ -2,7 +2,6 @@
 //
 // $Id$
 
-#include "ace/OS_NS_string.h"
 
 // This is the primary entry point into the ACE_Service_Config (the
 // constructor just handles simple initializations).

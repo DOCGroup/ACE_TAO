@@ -1,19 +1,14 @@
 // $Id$
 
 #include "ace/TP_Reactor.h"
+#include "ace/Reactor.h"
 #include "ace/Thread.h"
-#include "ace/Timer_Queue.h"
-#include "ace/Signal.h"
-#include "ace/Log_Msg.h"
-#include "ace/OS_NS_sys_time.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/TP_Reactor.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (ace,
-           TP_Reactor,
-           "$Id$")
+ACE_RCSID(ace, TP_Reactor, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE (ACE_TP_Reactor)
 
@@ -94,6 +89,7 @@ ACE_TP_Token_Guard::acquire_token (ACE_Time_Value *max_wait_time)
 
   return result;
 }
+
 
 
 ACE_TP_Reactor::ACE_TP_Reactor (ACE_Sig_Handler *sh,

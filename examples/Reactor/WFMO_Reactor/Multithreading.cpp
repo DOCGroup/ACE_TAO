@@ -22,7 +22,7 @@
 //
 // ============================================================================
 
-#include "ace/OS_main.h"
+#include "ace/OS.h"
 
 #if defined (ACE_WIN32)
 
@@ -30,7 +30,6 @@
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_time.h"
 
 ACE_RCSID(WFMO_Reactor, Multithreading, "$Id$")
 

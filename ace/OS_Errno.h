@@ -14,7 +14,7 @@
 #define ACE_OS_ERRNO_H
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#include "ace/OS_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,7 +32,7 @@
  * allocate memory fromt the heap so there's no problem with cleanin
  * up the errno when a thread exit.
  */
-class ACE_Export ACE_CE_Errno
+class ACE_OS_Export ACE_CE_Errno
 {
 public:
   ACE_CE_Errno () {}
@@ -76,7 +76,7 @@ private:
  * avoids an unnecessary second access to thread-specific storage
  * by caching a pointer to the value of errno in TSS.
  */
-class ACE_Export ACE_Errno_Guard
+class ACE_OS_Export ACE_Errno_Guard
 {
 public:
   ///  Stash the value of <error> into <error_> and initialize the

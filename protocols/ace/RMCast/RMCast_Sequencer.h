@@ -16,8 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "RMCast_Module.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Thread_Mutex.h"
+#include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

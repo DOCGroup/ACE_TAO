@@ -20,7 +20,6 @@
 #include "ace/Get_Opt.h"
 #include "test_i.h"
 #include "Servant_Activator.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Forwarding, server, "$Id$")
 

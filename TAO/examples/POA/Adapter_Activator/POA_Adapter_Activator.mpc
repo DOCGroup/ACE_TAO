@@ -1,8 +1,0 @@
-project(*Server): taoexe, portableserver {
-   includes += ../Generic_Servant
-   libs += Generic_Servant
-   after += POA_Generic_Servant_Lib
-   Source_Files {
-    server.cpp
-  }
-}

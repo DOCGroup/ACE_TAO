@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS.h"
 #include "ace/FILE_Connector.h"
 
 #include "JAWS/Filecache.h"

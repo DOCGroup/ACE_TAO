@@ -22,13 +22,12 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/Synch_Traits.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Pipe.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
-#include "ace/Thread_Semaphore.h"
 
 ACE_RCSID(tests, Reactor_Notify_Test, "$Id$")
 

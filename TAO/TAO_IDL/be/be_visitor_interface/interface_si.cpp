@@ -76,26 +76,6 @@ be_visitor_interface_si::visit_interface (be_interface *node)
                         -1);
     }
 
-  if (be_global->gen_thru_poa_collocation () 
-      || be_global->gen_direct_collocation ())
-    {
-      status = 
-        node->traverse_inheritance_graph (
-            be_interface::gen_colloc_op_defn_helper,
-            os
-          );
-
-      if (status == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interface_si::"
-                             "visit_interface - "
-                             "codegen for collocated base class "
-                             "skeletons failed\n"),
-                            -1);
-        }
-    }
-
   if (be_global->gen_tie_classes ())
     {
       // Generate the TIE class.

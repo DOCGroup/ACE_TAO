@@ -15,23 +15,16 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
-// and
-//       Institute for Software Integrated Systems
-//       Vanderbilt University
-//       Nashville, TN
-//       USA
-//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:301
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
 
 
 #include "ObjectIdListC.h"
-#include "CDR.h"
-#include "Typecode.h"
+#include "tao/Stub.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -40,14 +33,6 @@
 #if !defined (__ACE_INLINE__)
 #include "ObjectIdListC.i"
 #endif /* !defined INLINE */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:59
-
-// Arg traits specializations.
-namespace TAO
-{
-};
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -82,24 +67,22 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ORB_ObjectId (
     sizeof (CORBA::ORB_ObjectId)
   );
 
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr _tc_ORB_ObjectId =
-    &_tc_TAO_tc_CORBA_ORB_ObjectId;
-}
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (
+    ::CORBA::TypeCode_ptr,
+    _tc_ORB_ObjectId,
+    &_tc_TAO_tc_CORBA_ORB_ObjectId
+  )
+TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:66
-
-#if !defined (_CORBA_ORB_OBJECTIDLIST_CS_)
-#define _CORBA_ORB_OBJECTIDLIST_CS_
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:50
 
 CORBA::ORB_ObjectIdList::ORB_ObjectIdList (void)
 {}
 
-CORBA::ORB_ObjectIdList::ORB_ObjectIdList (
-    CORBA::ULong max
-  )
+CORBA::ORB_ObjectIdList::ORB_ObjectIdList (CORBA::ULong max)
   : TAO_Unbounded_String_Sequence
     (max)
 {}
@@ -107,16 +90,14 @@ CORBA::ORB_ObjectIdList::ORB_ObjectIdList (
 CORBA::ORB_ObjectIdList::ORB_ObjectIdList (
     CORBA::ULong max,
     CORBA::ULong length,
-    char * * buffer,
+    char * *buffer,
     CORBA::Boolean release
   )
   : TAO_Unbounded_String_Sequence
     (max, length, buffer, release)
 {}
 
-CORBA::ORB_ObjectIdList::ORB_ObjectIdList (
-    const ORB_ObjectIdList &seq
-  )
+CORBA::ORB_ObjectIdList::ORB_ObjectIdList (const ORB_ObjectIdList &seq)
   : TAO_Unbounded_String_Sequence
     (seq)
 {}
@@ -124,7 +105,41 @@ CORBA::ORB_ObjectIdList::ORB_ObjectIdList (
 CORBA::ORB_ObjectIdList::~ORB_ObjectIdList (void)
 {}
 
-#endif /* end #if !defined */
+
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class
+  TAO_MngSeq_Var_T<
+      CORBA::ORB_ObjectIdList,
+      TAO_SeqElem_String_Manager
+    >;
+
+template class TAO_Seq_Var_Base_T<CORBA::ORB_ObjectIdList, TAO_SeqElem_String_Manager>;
+
+template class
+  TAO_MngSeq_Out_T<
+      CORBA::ORB_ObjectIdList,
+      CORBA::ORB_ObjectIdList_var,
+      TAO_SeqElem_String_Manager
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+  TAO_MngSeq_Var_T< \
+      CORBA::ORB_ObjectIdList, \
+      TAO_SeqElem_String_Manager \
+    >
+#pragms instantiate TAO_Seq_Var_Base_T<CORBA::ORB_ObjectIdList, TAO_SeqElem_String_Manager>
+# pragma instantiate \
+  TAO_Seq_Out_T< \
+      CORBA::ORB_ObjectIdList, \
+      CORBA::ORB_ObjectIdList_var, \
+      TAO_SeqElem_String_Manager \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -185,17 +200,17 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_ORB_ObjectIdList (
     sizeof (CORBA::ORB_ObjectIdList)
   );
 
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr _tc_ORB_ObjectIdList =
-    &_tc_TAO_tc_CORBA_ORB_ObjectIdList;
-}
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (
+    ::CORBA::TypeCode_ptr,
+    _tc_ORB_ObjectIdList,
+    &_tc_TAO_tc_CORBA_ORB_ObjectIdList
+  )
+TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:95
-
-#if !defined _TAO_CDR_OP_CORBA_ORB_ObjectIdList_CPP_
-#define _TAO_CDR_OP_CORBA_ORB_ObjectIdList_CPP_
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:93
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -252,61 +267,10 @@ CORBA::Boolean operator>> (
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm >> _tao_sequence[i].out ());
+        }
 
-      }
+      return _tao_marshal_flag;
+    }
 
-    return _tao_marshal_flag;
-
-  }
-
-return 0;
+  return 0;
 }
-
-#endif /* _TAO_CDR_OP_CORBA_ORB_ObjectIdList_CPP_ */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1703
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO_MngSeq_Var_T<
-        CORBA::ORB_ObjectIdList,
-        TAO_SeqElem_String_Manager
-      >;
-
-  template class
-    TAO_Seq_Var_Base_T<
-        CORBA::ORB_ObjectIdList,
-        TAO_SeqElem_String_Manager
-      >;
-
-  template class
-    TAO_MngSeq_Out_T<
-        CORBA::ORB_ObjectIdList,
-        CORBA::ORB_ObjectIdList_var,
-        TAO_SeqElem_String_Manager
-      >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO_MngSeq_Var_T< \
-        CORBA::ORB_ObjectIdList, \
-        TAO_SeqElem_String_Manager \
-      >
-
-# pragma instantiate \
-    TAO_Seq_Var_Base_T< \
-        CORBA::ORB_ObjectIdList, \
-        TAO_SeqElem_String_Manager \
-      >
-
-# pragma instantiate \
-    TAO_MngSeq_Out_T< \
-        CORBA::ORB_ObjectIdList, \
-        CORBA::ORB_ObjectIdList_var, \
-        TAO_SeqElem_String_Manager \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

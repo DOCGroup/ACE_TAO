@@ -24,18 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_PRIOCNTL)
-   // Need to #include thread.h before #defining THR_BOUND, etc.,
-   // when building without threads on SunOS 5.x.
-#  if defined (sun)
-#    include /**/ <thread.h>
-#  endif /* sun */
-
-   // Need to #include these before #defining USYNC_PROCESS on SunOS 5.x.
-#  include /**/ <sys/rtpriocntl.h>
-#  include /**/ <sys/tspriocntl.h>
-#endif /* ACE_HAS_PRIOCNTL */
-
 #include "ace/os_include/sys/os_types.h"
 
 // This needs to go here *first* to avoid problems with AIX.
@@ -364,7 +352,7 @@ extern "C" pthread_t pthread_self (void);
 #    if !defined (ACE_HAS_POSIX_SEM)
 
 // This needs to be moved out of here.
-#include "ace/ACE_export.h"
+#include "ace/OS_Export.h"
 /**
  * @class ACE_sema_t
  *
@@ -372,9 +360,10 @@ extern "C" pthread_t pthread_self (void);
  * POSIX pthreads, but do *not* support POSIX semaphores, i.e.,
  * it's a different type than the POSIX <sem_t>.
  */
-class ACE_Export ACE_sema_t
+class ACE_OS_Export ACE_sema_t
 {
-public:
+friend class ACE_OS;
+protected:
   /// Serialize access to internal state.
   ACE_mutex_t lock_;
 
@@ -412,14 +401,12 @@ public:
 #  if defined (__GLIBC__) && ((__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 2))
 
      // glibc 2.2.x or better has pthread_mutex_timedlock()
-#    ifndef ACE_HAS_MUTEX_TIMEOUTS
-#      define ACE_HAS_MUTEX_TIMEOUTS
-#    endif  /* ACE_HAS_MUTEX_TIMEOUTS */
+#    define ACE_HAS_MUTEX_TIMEOUTS
 
-     // Use new pthread_attr_setstack if XPG6 support is enabled.
-#    if defined (_XOPEN_SOURCE) && (_XOPEN_SOURCE - 0) >= 600
+     // Use new pthread_attr_setstack
+#    if defined (__USE_XOPEN2K)
 #      define ACE_HAS_PTHREAD_SETSTACK
-#    endif /* (_XOPEN_SOURCE - 0) >= 600 */
+#    endif /* __USE_XOPEN2K */
 
 #    if !defined (_XOPEN_SOURCE) \
      || (defined (_XOPEN_SOURCE) && (_XOPEN_SOURCE - 0) < 600)

@@ -1,11 +1,13 @@
-project(*Nested Upcall Server): taoexe, portableserver {
+project(*Nested Upcall Server): taoserver {
   Source_Files {
     server_i.cpp
     server.cpp
   }
 }
 
-project(*Nested Upcall Client): taoexe, portableserver {
+project(*Nested Upcall Client): taoserver {
+  exename = client
+
   Source_Files {
     client_i.cpp
     client.cpp

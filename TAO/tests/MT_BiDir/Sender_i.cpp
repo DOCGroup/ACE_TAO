@@ -1,4 +1,5 @@
 #include "Sender_i.h"
+#include "ace/streams.h"
 #include "ace/Manual_Event.h"
 
 
@@ -49,6 +50,8 @@ Sender_i::receiver_object (Receiver_ptr recv
 
   if (this->last_index_ == this->no_clients_)
     {
+      cout << "About to signal events " << this->last_index_ << endl;
+      cout << "About to signal events " << this->no_clients_ << endl;
       this->event_.signal ();
     }
 

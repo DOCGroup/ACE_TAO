@@ -1,7 +1,6 @@
 #include "Incoming_Message_Queue.h"
 #include "debug.h"
-
-#include "ace/Log_Msg.h"
+#include "ace/Malloc_T.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Incoming_Message_Queue.inl"
@@ -10,6 +9,7 @@
 ACE_RCSID (tao,
            Incoming_Message_Queue,
            "$Id$")
+
 
 TAO_Incoming_Message_Queue::TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core)
   : queued_data_ (0),

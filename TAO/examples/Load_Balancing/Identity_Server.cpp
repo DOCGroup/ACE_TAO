@@ -16,7 +16,6 @@
 #include "Identity_i.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_stdio.h"
 
 Identity_Server::Identity_Server (void)
   : group_factory_ior_ (0),

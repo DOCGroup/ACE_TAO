@@ -1,11 +1,15 @@
-project(*server): orbsvcsexe, portablegroup, portableserver {
+project(*server): server, orbsvcsexe {
+  comps += PortableGroup
+
   Source_Files {
     McastHello.cpp
     server.cpp
   }
 }
 
-project(*client): orbsvcsexe, portablegroup, portableserver {
+project(*client): client, orbsvcsexe {
+  comps += PortableGroup
+
   Source_Files {
     TestC.cpp
     client.cpp

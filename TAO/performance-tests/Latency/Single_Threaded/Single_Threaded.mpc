@@ -1,4 +1,4 @@
-project(*server): taoexe, portableserver, strategies {
+project(*server): taoserver, strategies {
   avoids += minimum_corba
 
   Source_Files {
@@ -7,7 +7,7 @@ project(*server): taoexe, portableserver, strategies {
   }
 }
 
-project(*client): taoexe, strategies {
+project(*client): taoclient, strategies {
   avoids += minimum_corba
 
   Source_Files {

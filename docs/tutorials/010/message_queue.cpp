@@ -5,7 +5,6 @@
    don't have memory leaks.  */
 #include "task.h"
 #include "block.h"
-#include "ace/OS_NS_unistd.h"
 
 int
 run_test (int iterations,

@@ -12,7 +12,6 @@
 
 DIRS  = CDR \
 	AMH_Exceptions \
-	Abstract_Interface \
 	Codec \
         BiDirectional \
 	BiDirectional_NestedUpcall \

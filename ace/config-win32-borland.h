@@ -44,19 +44,8 @@
 #define ACE_USES_STD_NAMESPACE_FOR_STDC_LIB 1
 #endif
 
-#define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-
 #define ACE_NEEDS_DL_UNDERSCORE
 
-#define ACE_LACKS_TERMIOS_H
-#define ACE_LACKS_NETINET_TCP_H
-#define ACE_LACKS_REGEX_H
-#define ACE_LACKS_SYS_MSG_H
-#define ACE_LACKS_PWD_H
-#define ACE_LACKS_POLL_H
-#define ACE_LACKS_SYS_SHM_H
-#define ACE_LACKS_STRINGS_H
-#define ACE_LACKS_SEMAPHORE_H
 #define ACE_LACKS_INTTYPES_H
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_LACKS_SYS_SELECT_H
@@ -82,10 +71,6 @@
 #if defined(__BORLANDC__) && (__BORLANDC__ >= 0x600)
 # define ACE_LACKS_PTRDIFF_T
 # define ACE_PTRDIFF_T_TYPE std::ptrdiff_t
-#endif
-
-#if defined(__BORLANDC__) && (__BORLANDC__ < 0x600)
-#define ACE_USES_EXPLICIT_STD_NAMESPACE
 #endif
 
 #include /**/ "ace/post.h"

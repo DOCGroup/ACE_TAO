@@ -10,7 +10,6 @@
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/debug.h"
-#include "ace/Copy_Disabled.h"
 
 TAO_AMH_Response_Handler::
 TAO_AMH_Response_Handler (TAO_ServerRequest &server_request)
@@ -28,8 +27,6 @@ TAO_AMH_Response_Handler (TAO_ServerRequest &server_request)
 
 TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
 {
-  this->transport_->remove_reference ();
-
   // Since we are destroying the object we put a huge lock around the
   // whole destruction process (just paranoid).
   {
@@ -37,38 +34,41 @@ TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
 
     if (this->response_expected_ == 0) //oneway ?
       {
+        // if client is not expecting anything, don't send anything
+        this->transport_->remove_reference ();
         return;
       }
 
     // If the ResponseHandler is being destroyed before a reply has
     // been sent to the client, we send a system exception
     // CORBA::NO_RESPONSE, with minor code to indicate the problem.
-    if (this->reply_status_ == TAO_RS_SENT)
+    if (this->reply_status_ != TAO_RS_SENT)
       {
-        return;
-      }
-    // It would be slightly more efficient to *NOT* release the lock
-    // before calling _tao_rh_send_exception(), but this code is way
-    // out of the critical path.
-  }
+        // Is sending the exception to the client fails, then we just
+        // give up, release the transport and return.
+        ACE_DECLARE_NEW_CORBA_ENV;
+        ACE_TRY
+          {
+            CORBA::NO_RESPONSE ex (CORBA::SystemException::_tao_minor_code
+                                                 (TAO_AMH_REPLY_LOCATION_CODE,
+                                                  EFAULT),
+                                            CORBA::COMPLETED_NO);
+            this->_tao_rh_send_exception (ex ACE_ENV_ARG_PARAMETER);
+            ACE_TRY_CHECK;
 
-  // Is sending the exception to the client fails, then we just
-  // give up, release the transport and return.
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      CORBA::NO_RESPONSE ex (CORBA::SystemException::_tao_minor_code
-                             (TAO_AMH_REPLY_LOCATION_CODE,
-                              EFAULT),
-                             CORBA::COMPLETED_NO);
-      this->_tao_rh_send_exception (ex ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHALL
-    {
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
+            this->transport_->remove_reference ();
+          }
+        ACE_CATCHALL
+          {
+            this->transport_->remove_reference ();
+          }
+        ACE_ENDTRY;
+      }
+    else
+      {
+        this->transport_->remove_reference ();
+      }
+  }
 }
 
 void

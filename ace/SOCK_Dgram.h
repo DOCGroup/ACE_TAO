@@ -24,8 +24,6 @@
 
 #include "ace/Addr.h"
 
-class ACE_Time_Value;
-
 /**
  * @class ACE_SOCK_Dgram
  *

@@ -2,9 +2,6 @@
 // $Id$
 
 #include "ace/SPIPE_Addr.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/os_include/sys/os_socket.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/SPIPE_Addr.i"
@@ -119,10 +116,10 @@ ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
       ACE_OS::strcat (temp, ACE_LIB_TEXT ("\\pipe\\"));
       ACE_OS::strcat (temp, colonp + 1);
     }
-  len += ACE_static_cast (int, ACE_OS::strlen (temp));
+  len += ACE_static_cast (int, ACE_OS_String::strlen (temp));
   this->ACE_Addr::base_set (AF_SPIPE, len);
 
-  ACE_OS::strcpy (this->SPIPE_addr_.rendezvous_, temp);
+  ACE_OS_String::strcpy (this->SPIPE_addr_.rendezvous_, temp);
 #else
   this->ACE_Addr::base_set (AF_SPIPE,
                             ACE_OS::strlen (addr) + 1 + len);

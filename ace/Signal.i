@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ace/OS_NS_signal.h"
-
 ACE_INLINE
 ACE_Sig_Set::ACE_Sig_Set (sigset_t *ss)
   // : sigset_ ()

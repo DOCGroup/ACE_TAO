@@ -15,7 +15,6 @@
 
 #ifndef TAO_GIOP_UTILS_H
 #define TAO_GIOP_UTILS_H
-
 #include /**/ "ace/pre.h"
 
 #include "tao/Object.h"

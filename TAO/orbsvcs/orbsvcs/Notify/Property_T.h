@@ -11,7 +11,6 @@
 
 #ifndef TAO_Notify_PROPERTY_T_H
 #define TAO_Notify_PROPERTY_T_H
-
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -21,7 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SString.h"
-
 #include "orbsvcs/CosNotificationC.h"
 
 class TAO_Notify_PropertySeq;

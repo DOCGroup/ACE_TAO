@@ -14,7 +14,7 @@
 #if !defined (TEST_DYNSTRUCT_H)
 #define TEST_DYNSTRUCT_H
 
-#include "tao/ORB.h"
+#include "tao/corba.h"
 
 class Test_DynStruct
 {

@@ -2,7 +2,6 @@
 
 #include "RMCast_UDP_Proxy.h"
 #include "RMCast_Module_Factory.h"
-#include "ace/OS_Memory.h"
 
 ACE_INLINE
 ACE_RMCast_IO_UDP::

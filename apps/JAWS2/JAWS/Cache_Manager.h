@@ -4,7 +4,9 @@
 #ifndef JAWS_CACHE_MANAGER_H
 #define JAWS_CACHE_MANAGER_H
 
+#include "ace/OS.h"
 #include "ace/ACE.h"
+#include "ace/Synch.h"
 
 #include "JAWS/Cache_Manager_T.h"
 

@@ -1,4 +1,5 @@
 // -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file    CORBA_String.h
@@ -16,43 +17,20 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
-#include "tao/Basic_Types.h"
+#include "tao/corbafwd.h"
+#include "tao/Managed_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
 // For the (W)String_var and (W)String_out iostream operators.
 #include "ace/iosfwd.h"
 
-class TAO_String_Manager;
-class TAO_WString_Manager;
 
 namespace CORBA
 {
-  /**
-   * @name CORBA String Memory Management
-   *
-   * CORBA string memory management functions.
-   */
-  //@{
-  TAO_Export char * string_alloc (ULong len);
-  TAO_Export char * string_dup (const char *);
-  TAO_Export void string_free (char *);
-  //@}
-
-  /**
-   * @name CORBA Wide String Memory Management
-   *
-   * CORBA wide string memory management functions.
-   */
-  //@{
-  TAO_Export WChar * wstring_alloc (ULong len);
-  TAO_Export WChar * wstring_dup (const WChar * const);
-  TAO_Export void wstring_free (WChar * const);
-  //@}
-
   /**
    * @class String_var
    *
@@ -115,9 +93,6 @@ namespace CORBA
     /// for string of return type.
     char *_retn (void);
 
-    /// TAO extension.
-    char *ptr (void);
-
   private:
     /// instance.
     char *ptr_;
@@ -142,7 +117,7 @@ namespace CORBA
     /// Construction from a var.
     String_out (CORBA::String_var &p);
 
-    /// Construction from a TAO_String_Manager.
+    /// Construction from a var.
     String_out (TAO_String_Manager &p);
 
     /// Copy constructor.
@@ -234,9 +209,6 @@ namespace CORBA
     /// for string of return type.
     CORBA::WChar *_retn (void);
 
-    /// TAO extension.
-    CORBA::WChar *ptr (void);
-
   private:
     /// instance.
     CORBA::WChar *ptr_;
@@ -260,9 +232,6 @@ namespace CORBA
 
     /// Construction from a var.
     WString_out (CORBA::WString_var &p);
-
-    /// Construction from a TAO_WString_Manager.
-    WString_out (TAO_WString_Manager &p);
 
     /// Copy constructor.
     WString_out (const WString_out &s);
@@ -312,6 +281,7 @@ operator>> (istream &, CORBA::WString_out &);
 #if defined (__ACE_INLINE__)
 # include "tao/CORBA_String.inl"
 #endif /* ! __ACE_INLINE__ */
+
 
 #include /**/ "ace/post.h"
 

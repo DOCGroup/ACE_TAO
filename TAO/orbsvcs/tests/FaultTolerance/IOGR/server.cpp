@@ -2,7 +2,6 @@
 
 #include "test_i.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_stdio.h"
 const char *ior_output_file = 0;
 
 int

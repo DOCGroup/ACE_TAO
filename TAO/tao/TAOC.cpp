@@ -15,65 +15,50 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
-// and
-//       Institute for Software Integrated Systems
-//       Vanderbilt University
-//       Nashville, TN
-//       USA
-//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:302
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
 
 
 #include "TAOC.h"
-#include "tao/Typecode.h"
-#include "tao/Any_Impl_T.h"
-#include "tao/Any_Dual_Impl_T.h"
-#include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
+
+#include "tao/Any_Impl_T.h"
+#include "tao/Any_Dual_Impl_T.h"
 
 #if !defined (__ACE_INLINE__)
 #include "TAOC.i"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:62
-
-// Arg traits specializations.
-namespace TAO
-{
-};
-
-// TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_TAO_BufferingConstraintMode[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   40,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x74616f2f), 
-  ACE_NTOHL (0x54414f2f), 
-  ACE_NTOHL (0x42756666), 
-  ACE_NTOHL (0x6572696e), 
-  ACE_NTOHL (0x67436f6e), 
-  ACE_NTOHL (0x73747261), 
-  ACE_NTOHL (0x696e744d), 
-  ACE_NTOHL (0x6f64653a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x74616f2f),
+  ACE_NTOHL (0x54414f2f),
+  ACE_NTOHL (0x42756666),
+  ACE_NTOHL (0x6572696e),
+  ACE_NTOHL (0x67436f6e),
+  ACE_NTOHL (0x73747261),
+  ACE_NTOHL (0x696e744d),
+  ACE_NTOHL (0x6f64653a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:tao/TAO/BufferingConstraintMode:1.0
     24,
-  ACE_NTOHL (0x42756666), 
-  ACE_NTOHL (0x6572696e), 
-  ACE_NTOHL (0x67436f6e), 
-  ACE_NTOHL (0x73747261), 
-  ACE_NTOHL (0x696e744d), 
+  ACE_NTOHL (0x42756666),
+  ACE_NTOHL (0x6572696e),
+  ACE_NTOHL (0x67436f6e),
+  ACE_NTOHL (0x73747261),
+  ACE_NTOHL (0x696e744d),
   ACE_NTOHL (0x6f646500),  // name = BufferingConstraintMode
     CORBA::tk_ushort,
 
@@ -87,94 +72,97 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_BufferingConstraintMode (
     sizeof (TAO::BufferingConstraintMode)
   );
 
-namespace TAO
-{
-  ::CORBA::TypeCode_ptr _tc_BufferingConstraintMode =
-    &_tc_TAO_tc_TAO_BufferingConstraintMode;
-}
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (TAO)
+TAO_NAMESPACE_DEFINE (
+    ::CORBA::TypeCode_ptr,
+    _tc_BufferingConstraintMode,
+    &_tc_TAO_tc_TAO_BufferingConstraintMode
+  )
+TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_TAO_BufferingConstraint[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   36,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x74616f2f), 
-  ACE_NTOHL (0x54414f2f), 
-  ACE_NTOHL (0x42756666), 
-  ACE_NTOHL (0x6572696e), 
-  ACE_NTOHL (0x67436f6e), 
-  ACE_NTOHL (0x73747261), 
-  ACE_NTOHL (0x696e743a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x74616f2f),
+  ACE_NTOHL (0x54414f2f),
+  ACE_NTOHL (0x42756666),
+  ACE_NTOHL (0x6572696e),
+  ACE_NTOHL (0x67436f6e),
+  ACE_NTOHL (0x73747261),
+  ACE_NTOHL (0x696e743a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:tao/TAO/BufferingConstraint:1.0
     20,
-  ACE_NTOHL (0x42756666), 
-  ACE_NTOHL (0x6572696e), 
-  ACE_NTOHL (0x67436f6e), 
-  ACE_NTOHL (0x73747261), 
+  ACE_NTOHL (0x42756666),
+  ACE_NTOHL (0x6572696e),
+  ACE_NTOHL (0x67436f6e),
+  ACE_NTOHL (0x73747261),
   ACE_NTOHL (0x696e7400),  // name = BufferingConstraint
   4, // member count
     5,
-  ACE_NTOHL (0x6d6f6465), 
+  ACE_NTOHL (0x6d6f6465),
   ACE_NTOHL (0x0),  // name = mode
     CORBA::tk_alias, // typecode kind for typedefs
   80, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     40,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x74616f2f), 
-    ACE_NTOHL (0x54414f2f), 
-    ACE_NTOHL (0x42756666), 
-    ACE_NTOHL (0x6572696e), 
-    ACE_NTOHL (0x67436f6e), 
-    ACE_NTOHL (0x73747261), 
-    ACE_NTOHL (0x696e744d), 
-    ACE_NTOHL (0x6f64653a), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x74616f2f),
+    ACE_NTOHL (0x54414f2f),
+    ACE_NTOHL (0x42756666),
+    ACE_NTOHL (0x6572696e),
+    ACE_NTOHL (0x67436f6e),
+    ACE_NTOHL (0x73747261),
+    ACE_NTOHL (0x696e744d),
+    ACE_NTOHL (0x6f64653a),
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:tao/TAO/BufferingConstraintMode:1.0
         24,
-    ACE_NTOHL (0x42756666), 
-    ACE_NTOHL (0x6572696e), 
-    ACE_NTOHL (0x67436f6e), 
-    ACE_NTOHL (0x73747261), 
-    ACE_NTOHL (0x696e744d), 
+    ACE_NTOHL (0x42756666),
+    ACE_NTOHL (0x6572696e),
+    ACE_NTOHL (0x67436f6e),
+    ACE_NTOHL (0x73747261),
+    ACE_NTOHL (0x696e744d),
     ACE_NTOHL (0x6f646500),  // name = BufferingConstraintMode
         CORBA::tk_ushort,
 
 
   8,
-  ACE_NTOHL (0x74696d65), 
+  ACE_NTOHL (0x74696d65),
   ACE_NTOHL (0x6f757400),  // name = timeout
     CORBA::tk_alias, // typecode kind for typedefs
   56, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x42617365), 
-    ACE_NTOHL (0x2f54696d), 
-    ACE_NTOHL (0x65543a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x54696d65),
+    ACE_NTOHL (0x42617365),
+    ACE_NTOHL (0x2f54696d),
+    ACE_NTOHL (0x65543a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
         6,
-    ACE_NTOHL (0x54696d65), 
+    ACE_NTOHL (0x54696d65),
     ACE_NTOHL (0x54000000),  // name = TimeT
         CORBA::tk_ulonglong,
 
 
   14,
-  ACE_NTOHL (0x6d657373), 
-  ACE_NTOHL (0x6167655f), 
-  ACE_NTOHL (0x636f756e), 
+  ACE_NTOHL (0x6d657373),
+  ACE_NTOHL (0x6167655f),
+  ACE_NTOHL (0x636f756e),
   ACE_NTOHL (0x74000000),  // name = message_count
     CORBA::tk_ulong,
 
   14,
-  ACE_NTOHL (0x6d657373), 
-  ACE_NTOHL (0x6167655f), 
-  ACE_NTOHL (0x62797465), 
+  ACE_NTOHL (0x6d657373),
+  ACE_NTOHL (0x6167655f),
+  ACE_NTOHL (0x62797465),
   ACE_NTOHL (0x73000000),  // name = message_bytes
     CORBA::tk_ulong,
 
@@ -188,70 +176,135 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_BufferingConstraint (
     sizeof (TAO::BufferingConstraint)
   );
 
-namespace TAO
-{
-  ::CORBA::TypeCode_ptr _tc_BufferingConstraint =
-    &_tc_TAO_tc_TAO_BufferingConstraint;
-}
-
-// TAO_IDL - Generated from 
-// be/be_visitor_structure/structure_cs.cpp:66
-
-void 
-TAO::BufferingConstraint::_tao_any_destructor (
-    void *_tao_void_pointer
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (TAO)
+TAO_NAMESPACE_DEFINE (
+    ::CORBA::TypeCode_ptr,
+    _tc_BufferingConstraint,
+    &_tc_TAO_tc_TAO_BufferingConstraint
   )
+TAO_NAMESPACE_END
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
+
+void TAO::BufferingConstraint::_tao_any_destructor (void *_tao_void_pointer)
 {
-  BufferingConstraint *_tao_tmp_pointer =
-    ACE_static_cast (BufferingConstraint *, _tao_void_pointer);
-  delete _tao_tmp_pointer;
+  BufferingConstraint *tmp = ACE_static_cast (BufferingConstraint*, _tao_void_pointer);
+  delete tmp;
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:274
 
-// Traits specializations for TAO::BufferingConstraintPolicy.
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+template class
+  TAO_Fixed_Var_T<
+      TAO::BufferingConstraint
+    >;
+template class
+  TAO_Var_Base_T<
+      TAO::BufferingConstraint
+    >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+  TAO_Fixed_Var_T< \
+      TAO::BufferingConstraint \
+    >
+
+# pragma instantiate \
+  TAO_Var_Base_T< \
+      TAO::BufferingConstraint \
+    >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
+
+int TAO::BufferingConstraintPolicy::_tao_class_id = 0;
+
 TAO::BufferingConstraintPolicy_ptr
-TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::tao_duplicate (
+TAO::tao_BufferingConstraintPolicy_life::tao_duplicate (
     TAO::BufferingConstraintPolicy_ptr p
   )
 {
   return TAO::BufferingConstraintPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
-TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::tao_release (
+TAO::tao_BufferingConstraintPolicy_life::tao_release (
     TAO::BufferingConstraintPolicy_ptr p
   )
 {
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 TAO::BufferingConstraintPolicy_ptr
-TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::tao_nil (void)
+TAO::tao_BufferingConstraintPolicy_life::tao_nil (
+    void
+  )
 {
   return TAO::BufferingConstraintPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
-TAO::Objref_Traits<TAO::BufferingConstraintPolicy>::tao_marshal (
+TAO::tao_BufferingConstraintPolicy_life::tao_marshal (
     TAO::BufferingConstraintPolicy_ptr p,
-    TAO_OutputCDR & cdr
+    TAO_OutputCDR &cdr
   )
 {
   return p->marshal (cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
-(*TAO__TAO_BufferingConstraintPolicy_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
+TAO::BufferingConstraintPolicy_ptr
+TAO::tao_BufferingConstraintPolicy_cast::tao_narrow (
+    CORBA::Object *p
+    ACE_ENV_ARG_DECL
+  )
+{
+  return TAO::BufferingConstraintPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::Object *
+TAO::tao_BufferingConstraintPolicy_cast::tao_upcast (
+    void *src
+  )
+{
+  TAO::BufferingConstraintPolicy **tmp =
+    ACE_static_cast (TAO::BufferingConstraintPolicy **, src);
+  return *tmp;
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        TAO::BufferingConstraintPolicy,
+        TAO::tao_BufferingConstraintPolicy_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        TAO::BufferingConstraintPolicy,
+        TAO::tao_BufferingConstraintPolicy_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        TAO::BufferingConstraintPolicy, \
+        TAO::tao_BufferingConstraintPolicy_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        TAO::BufferingConstraintPolicy, \
+        TAO::tao_BufferingConstraintPolicy_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 TAO::BufferingConstraintPolicy::BufferingConstraintPolicy (void)
 {}
@@ -259,29 +312,43 @@ TAO::BufferingConstraintPolicy::BufferingConstraintPolicy (void)
 TAO::BufferingConstraintPolicy::~BufferingConstraintPolicy (void)
 {}
 
-void 
+void
 TAO::BufferingConstraintPolicy::_tao_any_destructor (void *_tao_void_pointer)
 {
-  BufferingConstraintPolicy *_tao_tmp_pointer =
-    ACE_static_cast (BufferingConstraintPolicy *, _tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  BufferingConstraintPolicy *tmp = ACE_static_cast (BufferingConstraintPolicy *, _tao_void_pointer);
+  CORBA::release (tmp);
 }
 
 TAO::BufferingConstraintPolicy_ptr
 TAO::BufferingConstraintPolicy::_narrow (
-    CORBA::Object_ptr _tao_objref
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL
+  )
+{
+  return BufferingConstraintPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+}
+
+TAO::BufferingConstraintPolicy_ptr
+TAO::BufferingConstraintPolicy::_unchecked_narrow (
+    CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
+  if (CORBA::is_nil (obj))
     {
       return BufferingConstraintPolicy::_nil ();
     }
-  
-  BufferingConstraintPolicy_ptr proxy =
-    dynamic_cast<BufferingConstraintPolicy_ptr> (_tao_objref);
-  
-  return BufferingConstraintPolicy::_duplicate (proxy);
+
+  return
+      ACE_reinterpret_cast (
+          BufferingConstraintPolicy_ptr,
+          obj->_tao_QueryInterface (
+              ACE_reinterpret_cast (
+                  ptrdiff_t,
+                  &BufferingConstraintPolicy::_tao_class_id
+                )
+            )
+        );
 }
 
 TAO::BufferingConstraintPolicy_ptr
@@ -291,41 +358,53 @@ TAO::BufferingConstraintPolicy::_duplicate (BufferingConstraintPolicy_ptr obj)
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
-CORBA::Boolean
-TAO::BufferingConstraintPolicy::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
+void *TAO::BufferingConstraintPolicy::_tao_QueryInterface (ptrdiff_t type)
 {
-  if (
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Policy:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:tao/TAO/BufferingConstraintPolicy:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-     )
+  void *retv = 0;
+
+  if (type == ACE_reinterpret_cast (
+              ptrdiff_t,
+              &ACE_NESTED_CLASS (::TAO, BufferingConstraintPolicy)::_tao_class_id)
+            )
     {
-      return 1; // success using local knowledge
+      retv = ACE_reinterpret_cast (void*, this);
     }
-  else
+  else if (type == ACE_reinterpret_cast (
+              ptrdiff_t,
+              &::CORBA::Policy::_tao_class_id)
+            )
     {
-      return 0;
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (
+                CORBA::Policy_ptr,
+                this
+              )
+          );
     }
+  else if (type == ACE_reinterpret_cast (
+               ptrdiff_t,
+               &CORBA::Object::_tao_class_id)
+             )
+    {
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (CORBA::Object_ptr, this)
+          );
+    }
+
+  if (retv != 0)
+    {
+      this->_add_ref ();
+    }
+
+  return retv;
 }
 
 const char* TAO::BufferingConstraintPolicy::_interface_repository_id (void) const
@@ -340,30 +419,30 @@ TAO::BufferingConstraintPolicy::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_TAO_BufferingConstraintPolicy[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   42,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x74616f2f), 
-  ACE_NTOHL (0x54414f2f), 
-  ACE_NTOHL (0x42756666), 
-  ACE_NTOHL (0x6572696e), 
-  ACE_NTOHL (0x67436f6e), 
-  ACE_NTOHL (0x73747261), 
-  ACE_NTOHL (0x696e7450), 
-  ACE_NTOHL (0x6f6c6963), 
-  ACE_NTOHL (0x793a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x74616f2f),
+  ACE_NTOHL (0x54414f2f),
+  ACE_NTOHL (0x42756666),
+  ACE_NTOHL (0x6572696e),
+  ACE_NTOHL (0x67436f6e),
+  ACE_NTOHL (0x73747261),
+  ACE_NTOHL (0x696e7450),
+  ACE_NTOHL (0x6f6c6963),
+  ACE_NTOHL (0x793a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:tao/TAO/BufferingConstraintPolicy:1.0
     26,
-  ACE_NTOHL (0x42756666), 
-  ACE_NTOHL (0x6572696e), 
-  ACE_NTOHL (0x67436f6e), 
-  ACE_NTOHL (0x73747261), 
-  ACE_NTOHL (0x696e7450), 
-  ACE_NTOHL (0x6f6c6963), 
+  ACE_NTOHL (0x42756666),
+  ACE_NTOHL (0x6572696e),
+  ACE_NTOHL (0x67436f6e),
+  ACE_NTOHL (0x73747261),
+  ACE_NTOHL (0x696e7450),
+  ACE_NTOHL (0x6f6c6963),
   ACE_NTOHL (0x79000000),  // name = BufferingConstraintPolicy
   };
 
@@ -375,14 +454,17 @@ static CORBA::TypeCode _tc_TAO_tc_TAO_BufferingConstraintPolicy (
     sizeof (TAO::BufferingConstraintPolicy)
   );
 
-namespace TAO
-{
-  ::CORBA::TypeCode_ptr _tc_BufferingConstraintPolicy =
-    &_tc_TAO_tc_TAO_BufferingConstraintPolicy;
-}
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (TAO)
+TAO_NAMESPACE_DEFINE (
+    ::CORBA::TypeCode_ptr,
+    _tc_BufferingConstraintPolicy,
+    &_tc_TAO_tc_TAO_BufferingConstraintPolicy
+  )
+TAO_NAMESPACE_END
 
-// TAO_IDL - Generated from 
-// be/be_visitor_structure/any_op_cs.cpp:54
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -439,32 +521,15 @@ CORBA::Boolean operator>>= (
       );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<TAO::BufferingConstraint>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<TAO::BufferingConstraint>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<TAO::BufferingConstraintPolicy>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<TAO::BufferingConstraintPolicy>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<TAO::BufferingConstraintPolicy>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:52
 
 // Copying insertion.
 void
@@ -508,82 +573,11 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1702
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO_Fixed_Var_T<
-        TAO::BufferingConstraint
-      >;
-
-  template class
-    TAO_Var_Base_T<
-        TAO::BufferingConstraint
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        TAO::BufferingConstraint
-      >;
-
-  template class
-    TAO::Objref_Traits<
-        TAO::BufferingConstraintPolicy
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        TAO::BufferingConstraintPolicy
-      >;
-  
-  template class
-    TAO_Objref_Out_T<
-        TAO::BufferingConstraintPolicy
-      >;
-
-  template class
-    TAO::Any_Impl_T<
-        TAO::BufferingConstraintPolicy
-      >;
-
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO_Object_Manager<TAO::BufferingConstraintPolicy,TAO::BufferingConstraintPolicy_var,TAO::tao_BufferingConstraintPolicy_life>;
+  template class TAO::Any_Impl_T<TAO::BufferingConstraintPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO_Fixed_Var_T< \
-        TAO::BufferingConstraint \
-      >
-
-# pragma instantiate \
-    TAO_Var_Base_T< \
-        TAO::BufferingConstraint \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        TAO::BufferingConstraint \
-      >
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        TAO::BufferingConstraintPolicy \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        TAO::BufferingConstraintPolicy
-      >
-  
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        TAO::BufferingConstraintPolicy
-      >
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        TAO::BufferingConstraintPolicy \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+# pragma instantiate TAO_Object_Manager<TAO::BufferingConstraintPolicy, TAO::BufferingConstraintPolicy_var,TAO::tao_BufferingConstraintPolicy_life>
+# pragma instantiate TAO::Any_Impl_T<TAO::BufferingConstraintPolicy>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

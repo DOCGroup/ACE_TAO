@@ -1,6 +1,6 @@
 #include "ace/Log_Msg.h"
+#include "ace/streams.h"
 #include "server_i.h"
-#include "ace/OS_NS_stdio.h"
 
 
 ACE_RCSID (Callback,
@@ -61,14 +61,8 @@ main (int argc, char *argv[])
       //
       // Write the IOR to a file.
       //
-      // Output the IOR to the <ior_output_file>
-      FILE *output_file= ACE_OS::fopen ("server.ior", "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR\n"),
-                            -1);
-      ACE_OS::fprintf (output_file, "%s", server_IORString.in ());
-      ACE_OS::fclose (output_file);
+      ofstream server_IOR_file ("server.ior");
+      server_IOR_file << server_IORString.in () << endl;
 
       //
       // Activate the POA manager.

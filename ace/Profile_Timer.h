@@ -21,6 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/OS.h"
 #include "ace/High_Res_Timer.h"
 
 /**

@@ -1,10 +1,9 @@
 // $Id$
 
-#include "Reply_Dispatcher.h"
+#include "tao/Reply_Dispatcher.h"
+#include "ace/Synch_T.h"
 
-ACE_RCSID (tao, 
-           Reply_Dispatcher, 
-           "$Id$")
+ACE_RCSID(tao, Reply_Dispatcher, "$Id$")
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Reply_Dispatcher.i"

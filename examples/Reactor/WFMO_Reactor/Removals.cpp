@@ -20,13 +20,13 @@
 //
 // ============================================================================
 
-#include "ace/OS_main.h"
+#include "ace/OS.h"
 
 #if defined (ACE_WIN32)
 
 #include "ace/Reactor.h"
 #include "ace/Service_Config.h"
-#include "ace/Event.h"
+#include "ace/Synch.h"
 
 ACE_RCSID(WFMO_Reactor, Removals, "$Id$")
 

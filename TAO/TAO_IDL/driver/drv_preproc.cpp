@@ -77,11 +77,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/SString.h"
 #include "ace/Env_Value_T.h"
 #include "ace/ARGV.h"
-
-// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
-
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (driver, 
            drv_preproc, 
@@ -360,7 +356,6 @@ DRV_cpp_init (void)
 #endif  /* TAO_IDL_INCLUDE_DIR */
 
           DRV_cpp_putarg (option);
-          idl_global->add_include_path (ACE::strnew (option + 2));
         }
     }
 

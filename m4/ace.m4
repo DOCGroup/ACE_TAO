@@ -1,11 +1,11 @@
 dnl -------------------------------------------------------------------------
 dnl       $Id$
-dnl
+dnl 
 dnl       ace.m4
 dnl
 dnl       ACE M4 include file which contains ACE specific M4 macros
 dnl       for enabling/disabling certain ACE features.
-dnl
+dnl 
 dnl -------------------------------------------------------------------------
 
 dnl  Copyright (C) 1998, 1999, 2000, 2002  Ossama Othman
@@ -14,7 +14,7 @@ dnl  All Rights Reserved
 dnl
 dnl This library is free software; you can redistribute it and/or
 dnl modify it under the current ACE distribution terms.
-dnl
+dnl 
 dnl This library is distributed in the hope that it will be useful,
 dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
 dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
@@ -204,17 +204,15 @@ AC_DEFUN([ACE_CONFIGURATION_OPTIONS],
       AC_PATH_XTRA
 dnl Here, if X isn't found or the user sets "--without-x" on the command
 dnl line, then "no_x" is set to "yes."
-      AS_IF([test "$no_x" != yes],
-        [
-         ACE_XLIBS="-lX11 -lXt"
-         ace_user_enable_xt_reactor=yes
-        ],
-        [
-         ACE_XLIBS=""
-         ace_user_enable_xt_reactor=no
-         AC_MSG_WARN([X was not found or it was disabled.])
-         AC_MSG_WARN([ACE_XtReactor will not be enabled.])
-        ])
+      if test "$no_x" != yes; then
+        ACE_XLIBS="-lX11 -lXt"
+        ace_user_enable_xt_reactor=yes
+      else
+        ACE_XLIBS=""
+        ace_user_enable_xt_reactor=no
+        AC_MSG_WARN([X was not found or it was disabled.])
+        AC_MSG_WARN([ACE_XtReactor will not be enabled.])
+      fi
       ;;
     no)
       ACE_XLIBS=""
@@ -251,11 +249,10 @@ dnl line, then "no_x" is set to "yes."
     yes)
       ace_user_with_gperf=yes
       AC_DEFINE([ACE_HAS_GPERF])
-      AS_IF([test -n "$GPERF"],
-        [
-         AC_MSG_WARN([gperf program already exists])
-         AC_MSG_WARN([existing gperf may be overwritten during installation])
-        ],[])
+      if test -n "$GPERF"; then
+        AC_MSG_WARN([gperf program already exists])
+        AC_MSG_WARN([existing gperf may be overwritten during installation])
+      fi
       ;;
     no)
       ace_user_with_gperf=no
@@ -268,11 +265,10 @@ dnl line, then "no_x" is set to "yes."
   [
    ace_user_with_gperf=yes
    AC_DEFINE([ACE_HAS_GPERF])
-   AS_IF([test -n "$GPERF"],
-    [
+   if test -n "$GPERF"; then
      AC_MSG_WARN([gperf program already exists])
      AC_MSG_WARN([existing gperf may be overwritten during installation])
-    ],[])
+   fi
   ])
  AM_CONDITIONAL([COMPILE_GPERF], [test X$ace_user_with_gperf = Xyes])
 
@@ -657,24 +653,5 @@ dnl    fi
       ;;
    esac
   ],)
-
- AC_ARG_ENABLE([stdcpplib],
-  AC_HELP_STRING([--enable-stdcpplib],[enable standard C++ library [[yes]]]),
-  [
-   case "${enableval}" in
-    yes)
-      ace_user_enable_stdcpplib=yes
-      ;;
-    no)
-      ace_user_enable_stdcpplib=no
-      ;;
-    *)
-      AC_MSG_ERROR([bad value ${enableval} for --enable-stdcpplib])
-      ;;
-   esac
-  ],
-  [
-   ace_user_enable_stdcpplib=yes
-  ])
 
 ])

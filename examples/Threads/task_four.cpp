@@ -31,7 +31,6 @@
 //
 // test_task   [num_tasks] [num_threads] [num_iterations]
 
-#include "ace/OS_main.h"
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
 

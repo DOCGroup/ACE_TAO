@@ -6,12 +6,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/CDR_Stream.h"
 #include "ace/High_Res_Timer.h"
-
-// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
-
-#include "ace/os_include/netinet/os_tcp.h"
-#include "ace/os_include/arpa/os_inet.h"
 
 // make sure that the code compiles cleanly even if SCTP is not
 // available. If SCTP is not installed, program will exit early in
@@ -296,9 +291,9 @@ HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_Strea
 HIST runTest(ACE_SOCK_Stream & stream)
 {
 
-  size_t msgLen = 1;
-  for (int i=1; i <= Options_Manager::payload_size_power_of_2; i++)
-    msgLen *= 2;
+  size_t msgLen =
+    Options_Manager::payload_size_power_of_2 *
+    Options_Manager::payload_size_power_of_2;
 
   // send a header to the server that contains test parameters
   if (sendHeader(stream) < 0)

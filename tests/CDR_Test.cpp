@@ -24,7 +24,6 @@
 #include "ace/CDR_Stream.h"
 #include "ace/SString.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_wchar.h"
 
 ACE_RCSID(tests, CDR_Test, "$Id$")
 

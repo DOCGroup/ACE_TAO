@@ -11,7 +11,6 @@
 
 #ifndef TAO_Notify_METHOD_REQUEST_UPDATES_T_H
 #define TAO_Notify_METHOD_REQUEST_UPDATES_T_H
-
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -20,12 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
-
-namespace CORBA
-{
-  class Environment;
-}
+#include "tao/corba.h"
 
 /**
  * @class TAO_Notify_Method_Request_Updates_T
@@ -38,9 +32,7 @@ class TAO_Notify_Export TAO_Notify_Method_Request_Updates_T
 {
 public:
   /// Constuctor
-  TAO_Notify_Method_Request_Updates_T (SEQ_PARAM added, 
-                                       SEQ_PARAM removed, 
-                                       PROXY_PARAM proxy);
+  TAO_Notify_Method_Request_Updates_T (SEQ_PARAM added, SEQ_PARAM removed, PROXY_PARAM proxy);
 
   /// Destructor
   virtual ~TAO_Notify_Method_Request_Updates_T ();
@@ -72,5 +64,4 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_Notify_METHOD_REQUEST_UPDATES_T_H */

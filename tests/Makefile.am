@@ -326,12 +326,6 @@ MT_Reactor_Timer_Test_SOURCES = MT_Reactor_Timer_Test.cpp \
 
 MT_Reactor_Upcall_Test_SOURCES = MT_Reactor_Upcall_Test.cpp Main.cpp
 
-MT_Reference_Counted_Event_Handler_Test_SOURCES = \
-  MT_Reference_Counted_Event_Handler_Test.cpp
-
-MT_Reference_Counted_Notify_Test_SOURCES = \
-  MT_Reference_Counted_Notify_Test.cpp
-
 MT_SOCK_Test_SOURCES = MT_SOCK_Test.cpp Main.cpp
 
 Malloc_Test_SOURCES = Malloc_Test.cpp Malloc_Test.h Main.cpp
@@ -364,8 +358,6 @@ Multihomed_INET_Addr_Test_SOURCES = Multihomed_INET_Addr_Test.cpp \
                                     Main.cpp
 
 Naming_Test_SOURCES = Naming_Test.cpp Main.cpp
-
-NonBlocking_Conn_Test_SOURCES = NonBlocking_Conn_Test.cpp
 
 Notify_Performance_Test_SOURCES = Notify_Performance_Test.cpp Main.cpp
 
@@ -414,8 +406,6 @@ Reactor_Performance_Test_SOURCES = Reactor_Performance_Test.cpp \
                                    Reactor_Performance_Test.h \
                                    Main.cpp
 
-Reactor_Registration_Test_SOURCES = Reactor_Registration_Test.cpp
-
 Reactor_Timer_Test_SOURCES = Reactor_Timer_Test.cpp Main.cpp
 
 Reactors_Test_SOURCES = Reactors_Test.cpp Main.cpp
@@ -429,9 +419,6 @@ Recursive_Mutex_Test_SOURCES = Recursive_Mutex_Test.cpp Main.cpp
 Refcounted_Auto_Ptr_Test_SOURCES = Refcounted_Auto_Ptr_Test.cpp \
                                    Refcounted_Auto_Ptr_Test.h \
                                    Main.cpp
-
-Reference_Counted_Event_Handler_Test_SOURCES = \
-  Reference_Counted_Event_Handler_Test
 
 Reverse_Lock_Test_SOURCES = Reverse_Lock_Test.cpp Main.cpp
 
@@ -485,11 +472,6 @@ Time_Value_Test_SOURCES = Time_Value_Test.cpp Main.cpp
 
 Timeprobe_Test_SOURCES = Timeprobe_Test.cpp Main.cpp
 
-Timer_Cancellation_Test_SOURCES = Timer_Cancellation_Test.cpp
-
-Timer_Queue_Reference_Counting_Test_SOURCES = \
-  Timer_Queue_Reference_Counting_Test.cpp
-
 Timer_Queue_Test_SOURCES = Timer_Queue_Test.cpp Main.cpp
 
 TkReactor_Test_SOURCES = TkReactor_Test.cpp Main.cpp
@@ -507,8 +489,6 @@ Upgradable_RW_Test_SOURCES = Upgradable_RW_Test.cpp \
 Unbounded_Set_Test_Ex_SOURCES = Unbounded_Set_Test_Ex.cpp Main.cpp
 
 Vector_Test_SOURCES = Vector_Test.cpp Main.cpp
-
-WFMO_Reactor_Test_SOURCES = WFMO_Reactor_Test.cpp
 
 XtReactor_Test_SOURCES = XtReactor_Test.cpp Main.cpp
 XtReactor_Test_LDADD = $(top_builddir)/ace/libACE.la @XTREACTOR_TEST_XLIBS@

@@ -1,12 +1,13 @@
-project(*server): namingexe, property {
+project(*server): taoserver, namingexe, property {
   Source_Files {
     server.cpp
   }
 }
 
-project(*client): namingexe, property {
+project(*client): server, namingexe, property {
+  exename  = client
   Source_Files {
-    client.cpp
+    server.cpp
   }
 }
 

@@ -1,7 +1,6 @@
 // -*- C++ -*-  $Id$
 
 #include "ACEXML/common/Encoding.h"
-#include "ace/OS_NS_string.h"
 
 const ACEXML_Char* ACEXML_Encoding::encoding_names_[8] = {
   ACE_TEXT ("UCS-4BE"),

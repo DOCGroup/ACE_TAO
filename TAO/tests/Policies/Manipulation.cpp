@@ -4,10 +4,8 @@
 
 #include "tao/Messaging/Messaging.h"
 #include "tao/TAOC.h"
-#include "tao/Object_T.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
-#include "ace/OS_NS_time.h"
 
 ACE_RCSID(Policies, Manipulation, "$Id$")
 
@@ -96,9 +94,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       Test_var test =
-	TAO::Narrow_Utils<Test>::unchecked_narrow (
-	   object.in (),
-	   _TAO_Test_Proxy_Broker_Factory_function_pointer);
+        Test::_unchecked_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (test.in ()))

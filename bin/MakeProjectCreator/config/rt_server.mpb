@@ -1,2 +1,2 @@
-project : taoexe, rtportableserver, rtcorba {
+project : taoserver, rtportableserver, rtcorba {
 }

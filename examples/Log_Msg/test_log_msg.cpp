@@ -17,14 +17,9 @@
 //
 // ============================================================================
 
-#include "ace/OS_main.h"
-
-// FUZZ: disable check_for_streams_include
+#include "ace/OS.h"
 #include "ace/streams.h"
-
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_stdlib.h"
 
 ACE_RCSID(Log_Msg, test_log_msg, "$Id$")
 

@@ -5,8 +5,6 @@
 #include "ace/Filecache.h"
 
 #include "HTTP_Server.h"
-#include "ace/OS_main.h"
-#include "ace/OS_NS_signal.h"
 
 ACE_RCSID(server, main, "$Id$")
 

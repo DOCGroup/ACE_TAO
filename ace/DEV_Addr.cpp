@@ -2,12 +2,11 @@
 // $Id$
 
 #include "ace/DEV_Addr.h"
+#include "ace/Log_Msg.h"
+
 #if !defined (__ACE_INLINE__)
 #include "ace/DEV_Addr.i"
 #endif /* __ACE_INLINE__ */
-
-#include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID(ace, DEV_Addr, "$Id$")
 

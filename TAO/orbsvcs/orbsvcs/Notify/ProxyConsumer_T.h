@@ -11,7 +11,6 @@
 
 #ifndef TAO_Notify_PROXYCONSUMER_T_H
 #define TAO_Notify_PROXYCONSUMER_T_H
-
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -30,9 +29,7 @@
  *
  */
 template <class SERVANT_TYPE>
-class TAO_Notify_Export TAO_Notify_ProxyConsumer_T 
-  : public virtual TAO_Notify_Proxy_T <SERVANT_TYPE>, 
-    public virtual TAO_Notify_ProxyConsumer
+class TAO_Notify_Export TAO_Notify_ProxyConsumer_T : public virtual TAO_Notify_Proxy_T <SERVANT_TYPE>, public virtual TAO_Notify_ProxyConsumer
 {
 public:
   /// Constuctor

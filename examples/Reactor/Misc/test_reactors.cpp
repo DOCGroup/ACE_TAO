@@ -4,6 +4,7 @@
 // the same process...  Thanks to Detlef Becker for contributing this.
 
 #include "ace/Reactor.h"
+#include "ace/Synch.h"
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"

@@ -4,7 +4,6 @@
 // FILE_IO.i
 
 #include "ace/ACE.h"
-#include "ace/OS_NS_sys_uio.h"
 
 ASYS_INLINE ssize_t
 ACE_FILE_IO::sendv_n (const iovec iov[], int n) const

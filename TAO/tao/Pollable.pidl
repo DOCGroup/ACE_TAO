@@ -11,7 +11,7 @@
  * The command used to generate code from this file is:
  *
  *   tao_idl
- *     -o orig -St -Gp -Gd -Ge 1 -GT
+ *     -o orig -Gp -Gd -Ge 1
  *     -Wb,export_macro=TAO_Export
  *     -Wb,export_include="tao/corbafwd.h"
  *     -Wb,pre_include="ace/pre.h"
@@ -39,32 +39,28 @@ module CORBA
 {
   local interface PollableSet;
 
-  local interface Pollable 
-  {
-    boolean is_ready (in unsigned long timeout);
-    PollableSet create_pollable_set ();
+  local interface Pollable {
+    boolean is_ready(in unsigned long timeout);
+    PollableSet create_pollable_set( );
   };
 
-  local interface DIIPollable : Pollable
-  {
-  };
+  local interface DIIPollable : Pollable { };
 
-  local interface PollableSet 
-  {
-    exception NoPossiblePollable {};
-    exception UnknownPollable {};
+  local interface PollableSet {
+    exception NoPossiblePollable { };
+    exception UnknownPollable { };
 
-    DIIPollable create_dii_pollable ();
+    DIIPollable create_dii_pollable();
 
-    void add_pollable (in Pollable potential);
+    void add_pollable(in Pollable potential );
 
-    Pollable poll (in unsigned long timeout)
-      raises (NoPossiblePollable);
+    Pollable poll(in unsigned long timeout)
+      raises( NoPossiblePollable );
 
-    void remove (in Pollable potential)
-      raises (UnknownPollable);
+    void remove(in Pollable potential )
+      raises( UnknownPollable );
 
-    unsigned short number_left ();
+    unsigned short number_left( );
   };
 };
 

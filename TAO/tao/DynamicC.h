@@ -26,20 +26,26 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
+// be/be_codegen.cpp:151
 
 #ifndef _TAO_IDL_ORIG_DYNAMICC_H_
 #define _TAO_IDL_ORIG_DYNAMICC_H_
-
 #include /**/ "ace/pre.h"
+#include "tao/corbafwd.h"
 
-#include "Dynamic_ParameterC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "StringSeqC.h"
+#include "tao/Any_Dual_Impl_T.h"
+#include "tao/TAO_Export.h"
+#include "tao/Sequence.h"
+#include "tao/VarOut_T.h"
+#include "tao/Seq_Var_T.h"
+#include "tao/Seq_Out_T.h"
+#include "tao/CDR.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -65,26 +71,61 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
+// be/be_visitor_module/module_ch.cpp:48
 
-namespace Dynamic
+TAO_NAMESPACE  Dynamic
 {
-  
+
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
+  // be/be_type.cpp:249
+
+  struct Parameter;
+
+  typedef
+    TAO_Var_Var_T<
+        Parameter
+      >
+    Parameter_var;
+
+  typedef
+    TAO_Out_T<
+        Parameter,
+        Parameter_var
+      >
+    Parameter_out;
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_structure/structure_ch.cpp:52
+
+  struct TAO_Export Parameter
+  {
+    typedef Parameter_var _var_type;
+
+    static void _tao_any_destructor (void *);
+    CORBA::Any argument;
+    CORBA::ParameterMode mode;
+  };
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_typecode/typecode_decl.cpp:44
+
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Parameter;
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_sequence/sequence_ch.cpp:89
 
 #if !defined (_DYNAMIC_PARAMETERLIST_CH_)
 #define _DYNAMIC_PARAMETERLIST_CH_
-  
+
   class ParameterList;
-  
+
   typedef
     TAO_VarSeq_Var_T<
         ParameterList,
         Parameter
       >
     ParameterList_var;
-  
+
   typedef
     TAO_Seq_Out_T<
         ParameterList,
@@ -92,7 +133,7 @@ namespace Dynamic
         Parameter
       >
     ParameterList_out;
-  
+
   class TAO_Export ParameterList
     : public
         TAO_Unbounded_Sequence<
@@ -105,67 +146,83 @@ namespace Dynamic
     ParameterList (
         CORBA::ULong max,
         CORBA::ULong length,
-        Parameter* buffer, 
+        Parameter* buffer,
         CORBA::Boolean release = 0
       );
     ParameterList (const ParameterList &);
     ~ParameterList (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef ParameterList_var _var_type;
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+  // be/be_visitor_typecode/typecode_decl.cpp:44
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ParameterList;
-  
+
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:426
-  
+  // be/be_visitor_typedef/typedef_ch.cpp:426
+
   typedef CORBA::StringSeq ContextList;
   typedef CORBA::StringSeq_var ContextList_var;
   typedef CORBA::StringSeq_out ContextList_out;
-  
+
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+  // be/be_visitor_typecode/typecode_decl.cpp:44
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ContextList;
-  
+
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
+  // be/be_visitor_typedef/typedef_ch.cpp:333
+
+  typedef CORBA::TypeCode TypeCode;
+  typedef CORBA::TypeCode_ptr TypeCode_ptr;
+  typedef CORBA::TypeCode_var TypeCode_var;
+  typedef CORBA::TypeCode_out TypeCode_out;
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_typecode/typecode_decl.cpp:44
+
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TypeCode;
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_sequence/sequence_ch.cpp:89
 
 #if !defined (_DYNAMIC_EXCEPTIONLIST_CH_)
 #define _DYNAMIC_EXCEPTIONLIST_CH_
-  
+
   class ExceptionList;
-  
+
   typedef
     TAO_MngSeq_Var_T<
         ExceptionList,
         TAO_Pseudo_Object_Manager<
-            CORBA::TypeCode
+            TypeCode,
+            TypeCode_var
           >
       >
     ExceptionList_var;
-  
+
   typedef
     TAO_MngSeq_Out_T<
         ExceptionList,
         ExceptionList_var,
         TAO_Pseudo_Object_Manager<
-            CORBA::TypeCode
+            TypeCode,
+            TypeCode_var
           >
       >
     ExceptionList_out;
-  
+
   class TAO_Export ExceptionList
     : public
         TAO_Unbounded_Pseudo_Sequence<
-            CORBA::TypeCode
+            TypeCode,
+            Dynamic::TypeCode_var
           >
   {
   public:
@@ -174,51 +231,52 @@ namespace Dynamic
     ExceptionList (
         CORBA::ULong max,
         CORBA::ULong length,
-        CORBA::TypeCode_ptr* buffer, 
+        CORBA::TypeCode_ptr* buffer,
         CORBA::Boolean release = 0
       );
     ExceptionList (const ExceptionList &);
     ~ExceptionList (void);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     typedef ExceptionList_var _var_type;
   };
 
 #endif /* end #if !defined */
-  
+
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+  // be/be_visitor_typecode/typecode_decl.cpp:44
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ExceptionList;
-  
+
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:426
-  
+  // be/be_visitor_typedef/typedef_ch.cpp:426
+
   typedef CORBA::StringSeq RequestContext;
   typedef CORBA::StringSeq_var RequestContext_var;
   typedef CORBA::StringSeq_out RequestContext_out;
-  
+
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+  // be/be_visitor_typecode/typecode_decl.cpp:44
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RequestContext;
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:66
+// be/be_visitor_module/module_ch.cpp:67
 
-} // module Dynamic
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
-
-// Traits specializations.
-namespace TAO
-{
-};
+}
+TAO_NAMESPACE_CLOSE // module Dynamic
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_ch.cpp:52
+// be/be_visitor_structure/any_op_ch.cpp:52
+
+TAO_Export void operator<<= (CORBA::Any &, const Dynamic::Parameter &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, Dynamic::Parameter*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Dynamic::Parameter *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Dynamic::Parameter *&);
+
+// TAO_IDL - Generated from
+// be/be_visitor_sequence/any_op_ch.cpp:52
 
 TAO_Export void operator<<= (CORBA::Any &, const Dynamic::ParameterList &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, Dynamic::ParameterList*); // noncopying version
@@ -226,7 +284,7 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Dynamic::ParameterLis
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Dynamic::ParameterList *&);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_ch.cpp:52
+// be/be_visitor_sequence/any_op_ch.cpp:52
 
 TAO_Export void operator<<= (CORBA::Any &, const Dynamic::ExceptionList &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, Dynamic::ExceptionList*); // noncopying version
@@ -234,12 +292,18 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, Dynamic::ExceptionLis
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const Dynamic::ExceptionList *&);
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
+// be/be_visitor_root/cdr_op.cpp:48
 
 #ifndef __ACE_INLINE__
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:70
+// be/be_visitor_structure/cdr_op_ch.cpp:53
+
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const Dynamic::Parameter &);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, Dynamic::Parameter &);
+
+// TAO_IDL - Generated from
+// be/be_visitor_sequence/cdr_op_ch.cpp:70
 
 #if !defined _TAO_CDR_OP_Dynamic_ParameterList_H_
 #define _TAO_CDR_OP_Dynamic_ParameterList_H_
@@ -256,7 +320,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_Dynamic_ParameterList_H_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:70
+// be/be_visitor_sequence/cdr_op_ch.cpp:70
 
 #if !defined _TAO_CDR_OP_Dynamic_ExceptionList_H_
 #define _TAO_CDR_OP_Dynamic_ExceptionList_H_
@@ -273,12 +337,12 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_Dynamic_ExceptionList_H_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
+// be/be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:920
+// be/be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "DynamicC.i"
@@ -294,4 +358,3 @@ TAO_Export CORBA::Boolean operator>> (
 
 #include /**/ "ace/post.h"
 #endif /* ifndef */
-

@@ -18,7 +18,7 @@
 #ifndef PARSE_HEADERS_H
 #define PARSE_HEADERS_H
 
-#include "ace/config-all.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

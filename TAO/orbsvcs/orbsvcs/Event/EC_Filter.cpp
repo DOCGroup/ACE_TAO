@@ -3,15 +3,11 @@
 #include "EC_Filter.h"
 #include "EC_QOS_Info.h"
 
-#include "tao/ORB_Constants.h"
-
 #if ! defined (__ACE_INLINE__)
 #include "EC_Filter.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event, 
-           EC_Filter, 
-           "$Id$")
+ACE_RCSID(Event, EC_Filter, "$Id$")
 
 TAO_EC_Filter::~TAO_EC_Filter (void)
 {

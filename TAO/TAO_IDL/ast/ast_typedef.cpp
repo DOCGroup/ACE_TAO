@@ -75,6 +75,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_identifier.h"
 
 #include "ace/Log_Msg.h"
+#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_typedef, 
@@ -131,16 +132,16 @@ AST_Typedef::dump (ACE_OSTREAM_TYPE&o)
 {
   if (this->is_local ())
     {
-      this->dump_i (o, "(local) ");
+      o << "(local) ";
     }
   else
     {
-      this->dump_i (o, "(abstract) ");
+      o << "(abstract) ";
     }
 
-  this->dump_i (o, "typedef ");
+  o << "typedef ";
   this->pd_base_type->dump (o);
-  this->dump_i (o, " ");
+  o << " ";
   this->local_name ()->dump (o);
 }
 

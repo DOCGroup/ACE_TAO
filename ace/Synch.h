@@ -22,8 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (DO_NOT_INCLUDE_SYNCH_H)
-
 /* All the classes have been moved out into their own headers as part of
    the compile-time and footprint reduction effort. */
 
@@ -52,7 +50,6 @@
 #endif /* __ACE_INLINE__ */
 
 // Include the templates here.
-// FUZZ: disable check_for_synch_include
 #include "ace/Synch_T.h"
 
 #if defined (ACE_LEGACY_MODE)
@@ -62,8 +59,6 @@
 # include "ace/RW_Process_Mutex.h"
 # include "ace/Test_and_Set.h"
 #endif  /* ACE_LEGACY_MODE */
-
-#endif /* DO_NOT_INCLUDE_SYNCH_H */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_SYNCH_H */

@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// $Id$
+
 
 //=============================================================================
 /**
@@ -21,8 +21,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/LocalObject.h"
 
 #if defined (_MSC_VER)
 # if (_MSC_VER >= 1200)

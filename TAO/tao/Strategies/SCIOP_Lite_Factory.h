@@ -15,7 +15,7 @@
 #define TAO_SCIOP_LITE_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "tao/Protocol_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,8 +25,6 @@
 
 #include "strategies_export.h"
 #include "ace/Service_Config.h"
-#include "tao/Protocol_Factory.h"
-
 
 class TAO_Acceptor;
 class TAO_Connector;

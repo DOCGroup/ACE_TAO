@@ -10,8 +10,7 @@
 #include "ace/FILE.i"
 #endif
 
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_sys_stat.h"
+#include "ace/OS.h"
 
 ACE_RCSID(ace, FILE, "$Id$")
 

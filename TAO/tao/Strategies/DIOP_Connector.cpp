@@ -12,7 +12,7 @@
 #include "tao/Environment.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
-#include "ace/OS_NS_strings.h"
+#include "tao/Invocation.h"
 
 #include "DIOP_Profile.h"
 
@@ -112,16 +112,18 @@ TAO_DIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
   return 0;
 }
 
-TAO_Transport *
-TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
-                                     TAO_Transport_Descriptor_Interface &desc,
+int
+TAO_DIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
+                                     TAO_Transport_Descriptor_Interface *desc,
                                      ACE_Time_Value * /*max_wait_time*/)
 {
+  TAO_Transport *&transport = invocation->transport ();
+
   TAO_DIOP_Endpoint *diop_endpoint =
-    this->remote_endpoint (desc.endpoint ());
+    this->remote_endpoint (desc->endpoint ());
 
   if (diop_endpoint == 0)
-    return 0;
+    return -1;
 
   const ACE_INET_Addr &remote_address =
     diop_endpoint->object_addr ();
@@ -135,7 +137,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       TAO_DIOP_Connection_Handler (this->orb_core (),
                                                    this->lite_flag_,
                                                    0 /* TAO_DIOP_Properties */),
-                      0);
+                      -1);
 
       svc_handler_i->local_addr (ACE_sap_any_cast (ACE_INET_Addr &));
       svc_handler_i->addr (remote_address);
@@ -155,10 +157,9 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
   // @@ Michael: We do not use regular connection management.
   svc_handler->add_reference ();
-  TAO_Transport *transport =
-    svc_handler->transport ();
+  transport = svc_handler->transport ();
 
-  return transport;
+  return 0;
 }
 
 TAO_Profile *

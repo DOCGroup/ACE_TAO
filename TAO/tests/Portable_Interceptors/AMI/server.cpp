@@ -1,10 +1,6 @@
 #include "Echo.h"
 #include "Server_ORBInitializer.h"
-
-#include "tao/ORBInitializer_Registry.h"
-
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_stdio.h"
 
 
 ACE_RCSID (Portable_Interceptors,

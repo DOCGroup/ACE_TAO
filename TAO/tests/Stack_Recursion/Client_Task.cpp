@@ -32,12 +32,10 @@ Client_Task::svc (void)
 
       for (int i = 0; i != this->event_count_; ++i)
         {
-#if 0
           if (i%100 == 0)
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) In iteration [%d] ....\n",
                         i));
-#endif /*if 0*/
           Test::Payload_var pl = new Test::Payload;
           Test::Payload_out payload (pl.out ());
           this->sender_->get_data (this->event_size_,

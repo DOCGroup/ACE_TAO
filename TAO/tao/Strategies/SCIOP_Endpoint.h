@@ -1,12 +1,10 @@
-// -*- C++ -*-
-
+// $Id$
 //===========================================================================
 /**
  *  @file     SCIOP_Endpoint.h
  *
- *  SCIOP implementation of PP Framework Endpoint interface.
+ *   SCIOP implementation of PP Framework Endpoint interface.
  *
- *  $Id$
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
@@ -21,14 +19,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "tao/Endpoint.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if TAO_HAS_SCIOP == 1
-#include "tao/Endpoint.h"
+
 #include "strategies_export.h"
 #include "tao/CORBA_String.h"
 #include "ace/INET_Addr.h"

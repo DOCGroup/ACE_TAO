@@ -1,6 +1,5 @@
 // $Id$
 
-#include "ace/OS_main.h"
 #include "ace/SString.h"
 #include "ace/Log_Msg.h"
 

@@ -16,7 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "rtportableserver_export.h"
-#include "tao/orbconf.h"
+#include "tao/PortableServer/Servant_Dispatcher.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
@@ -27,8 +27,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/PortableServer/Servant_Dispatcher.h"
 
 /**
  * @class TAO_RT_Servant_Dispatcher
@@ -75,5 +73,4 @@ public:
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_RT_SERVANT_DISPATCHER_H */

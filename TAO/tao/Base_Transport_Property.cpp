@@ -3,13 +3,13 @@
 #include "tao/Base_Transport_Property.h"
 #include "ace/OS_Memory.h"
 
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Base_Transport_Property.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           Base_Transport_Property, 
-           "$Id$")
+ACE_RCSID(tao, Base_Transport_Property, "$Id$")
+
 
 TAO_Base_Transport_Property::~TAO_Base_Transport_Property (void)
 {

@@ -15,34 +15,26 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
-// and
-//       Institute for Software Integrated Systems
-//       Vanderbilt University
-//       Nashville, TN
-//       USA
-//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:150
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
 
 #ifndef _TAO_IDL_ORIG_POLLABLEC_H_
 #define _TAO_IDL_ORIG_POLLABLEC_H_
 
 #include /**/ "ace/pre.h"
+#include "Exception.h"
 
-#include "tao/ORB.h"
+#if (TAO_HAS_AMI_POLLER == 1)
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/CDR.h"
-#include "tao/Environment.h"
-#include "tao/Object.h"
-#include "tao/Objref_VarOut_T.h"
+#include "Object.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -67,71 +59,82 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from 
-// be/be_visitor_root/root_ch.cpp:63
-
-namespace TAO
-{
-  class Collocation_Proxy_Broker;
-  
-  template<typename T> class Narrow_Utils;
-  template<typename T> class AbstractBase_Narrow_Utils;
-}
-
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:48
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
 
-namespace CORBA
+TAO_NAMESPACE  CORBA
 {
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:612
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_CORBA_POLLABLESET__VAR_OUT_CH_)
-#define _CORBA_POLLABLESET__VAR_OUT_CH_
+#if !defined (_CORBA_POLLABLESET__ODDS_N_ENDS_CH_)
+#define _CORBA_POLLABLESET__ODDS_N_ENDS_CH_
   
   class PollableSet;
   typedef PollableSet *PollableSet_ptr;
+  struct tao_PollableSet_life;
+  typedef TAO_Objref_Var_T<PollableSet, tao_PollableSet_life> PollableSet_var;
+  typedef TAO_Objref_Out_T<PollableSet, tao_PollableSet_life> PollableSet_out;
   
-  typedef
-    TAO_Objref_Var_T<
-        PollableSet
-      >
-    PollableSet_var;
+  struct TAO_Export tao_PollableSet_life
+  {
+    static PollableSet_ptr tao_duplicate (PollableSet_ptr);
+    static void tao_release (PollableSet_ptr);
+    static PollableSet_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        PollableSet_ptr,
+        TAO_OutputCDR &
+      );
+  };
   
-  typedef
-    TAO_Objref_Out_T<
-        PollableSet
-      >
-    PollableSet_out;
+  struct TAO_Export tao_PollableSet_cast
+  {
+    static PollableSet_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
+  };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:612
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_CORBA_POLLABLE__VAR_OUT_CH_)
-#define _CORBA_POLLABLE__VAR_OUT_CH_
+#if !defined (_CORBA_POLLABLE__ODDS_N_ENDS_CH_)
+#define _CORBA_POLLABLE__ODDS_N_ENDS_CH_
   
   class Pollable;
   typedef Pollable *Pollable_ptr;
+  struct tao_Pollable_life;
+  typedef TAO_Objref_Var_T<Pollable, tao_Pollable_life> Pollable_var;
+  typedef TAO_Objref_Out_T<Pollable, tao_Pollable_life> Pollable_out;
   
-  typedef
-    TAO_Objref_Var_T<
-        Pollable
-      >
-    Pollable_var;
+  struct TAO_Export tao_Pollable_life
+  {
+    static Pollable_ptr tao_duplicate (Pollable_ptr);
+    static void tao_release (Pollable_ptr);
+    static Pollable_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        Pollable_ptr,
+        TAO_OutputCDR &
+      );
+  };
   
-  typedef
-    TAO_Objref_Out_T<
-        Pollable
-      >
-    Pollable_out;
+  struct TAO_Export tao_Pollable_cast
+  {
+    static Pollable_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
+  };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:54
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_POLLABLE_CH_)
 #define _CORBA_POLLABLE_CH_
@@ -142,6 +145,7 @@ namespace CORBA
   public:
     typedef Pollable_ptr _ptr_type;
     typedef Pollable_var _var_type;
+    static int _tao_class_id;
     
     // The static operations.
     static Pollable_ptr _duplicate (Pollable_ptr obj);
@@ -151,15 +155,20 @@ namespace CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
+    static Pollable_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static Pollable_ptr _nil (void)
-    {
-      return (Pollable_ptr)0;
-    }
+      {
+        return (Pollable_ptr)0;
+      }
     
     
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::Boolean is_ready (
         CORBA::ULong timeout
@@ -170,7 +179,7 @@ namespace CORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual ::CORBA::PollableSet_ptr create_pollable_set (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -180,56 +189,60 @@ namespace CORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:192
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
-    virtual CORBA::Boolean _is_a (
-        const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
+    virtual void *_tao_QueryInterface (ptrdiff_t type);
     
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   
   protected:
-    // Abstract or local interface only.
     Pollable (void);
-    
     virtual ~Pollable (void);
   
   private:
-    // Private and unimplemented for concrete interfaces.
     Pollable (const Pollable &);
-    
     void operator= (const Pollable &);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:612
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
 
-#if !defined (_CORBA_DIIPOLLABLE__VAR_OUT_CH_)
-#define _CORBA_DIIPOLLABLE__VAR_OUT_CH_
+#if !defined (_CORBA_DIIPOLLABLE__ODDS_N_ENDS_CH_)
+#define _CORBA_DIIPOLLABLE__ODDS_N_ENDS_CH_
   
   class DIIPollable;
   typedef DIIPollable *DIIPollable_ptr;
+  struct tao_DIIPollable_life;
+  typedef TAO_Objref_Var_T<DIIPollable, tao_DIIPollable_life> DIIPollable_var;
+  typedef TAO_Objref_Out_T<DIIPollable, tao_DIIPollable_life> DIIPollable_out;
   
-  typedef
-    TAO_Objref_Var_T<
-        DIIPollable
-      >
-    DIIPollable_var;
+  struct TAO_Export tao_DIIPollable_life
+  {
+    static DIIPollable_ptr tao_duplicate (DIIPollable_ptr);
+    static void tao_release (DIIPollable_ptr);
+    static DIIPollable_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        DIIPollable_ptr,
+        TAO_OutputCDR &
+      );
+  };
   
-  typedef
-    TAO_Objref_Out_T<
-        DIIPollable
-      >
-    DIIPollable_out;
+  struct TAO_Export tao_DIIPollable_cast
+  {
+    static DIIPollable_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
+  };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:54
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_DIIPOLLABLE_CH_)
 #define _CORBA_DIIPOLLABLE_CH_
@@ -240,6 +253,7 @@ namespace CORBA
   public:
     typedef DIIPollable_ptr _ptr_type;
     typedef DIIPollable_var _var_type;
+    static int _tao_class_id;
     
     // The static operations.
     static DIIPollable_ptr _duplicate (DIIPollable_ptr obj);
@@ -249,41 +263,39 @@ namespace CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
+    static DIIPollable_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static DIIPollable_ptr _nil (void)
-    {
-      return (DIIPollable_ptr)0;
-    }
+      {
+        return (DIIPollable_ptr)0;
+      }
     
     
     
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:192
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
-    virtual CORBA::Boolean _is_a (
-        const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
+    virtual void *_tao_QueryInterface (ptrdiff_t type);
     
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   
   protected:
-    // Abstract or local interface only.
     DIIPollable (void);
-    
     virtual ~DIIPollable (void);
   
   private:
-    // Private and unimplemented for concrete interfaces.
     DIIPollable (const DIIPollable &);
-    
     void operator= (const DIIPollable &);
   };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:54
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:54
 
 #if !defined (_CORBA_POLLABLESET_CH_)
 #define _CORBA_POLLABLESET_CH_
@@ -294,6 +306,7 @@ namespace CORBA
   public:
     typedef PollableSet_ptr _ptr_type;
     typedef PollableSet_var _var_type;
+    static int _tao_class_id;
     
     // The static operations.
     static PollableSet_ptr _duplicate (PollableSet_ptr obj);
@@ -303,15 +316,20 @@ namespace CORBA
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
+    static PollableSet_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static PollableSet_ptr _nil (void)
-    {
-      return (PollableSet_ptr)0;
-    }
+      {
+        return (PollableSet_ptr)0;
+      }
     
     
     
     // TAO_IDL - Generated from
-    // be/be_visitor_exception/exception_ch.cpp:51
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_CORBA_POLLABLESET_NOPOSSIBLEPOLLABLE_CH_)
 #define _CORBA_POLLABLESET_NOPOSSIBLEPOLLABLE_CH_
@@ -335,22 +353,22 @@ namespace CORBA
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          ACE_ENV_ARG_DECL
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
       
       virtual void _tao_decode (
           TAO_InputCDR &
-          ACE_ENV_ARG_DECL
+          ACE_ENV_ARG_DECL_NOT_USED
         );
       
       // TAO_IDL - Generated from
-      // be/be_visitor_exception/exception_ch.cpp:125
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:125
     };
 
 #endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // be/be_visitor_exception/exception_ch.cpp:51
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_CORBA_POLLABLESET_UNKNOWNPOLLABLE_CH_)
 #define _CORBA_POLLABLESET_UNKNOWNPOLLABLE_CH_
@@ -374,22 +392,22 @@ namespace CORBA
 
       virtual void _tao_encode (
           TAO_OutputCDR &
-          ACE_ENV_ARG_DECL
+          ACE_ENV_ARG_DECL_NOT_USED
         ) const;
       
       virtual void _tao_decode (
           TAO_InputCDR &
-          ACE_ENV_ARG_DECL
+          ACE_ENV_ARG_DECL_NOT_USED
         );
       
       // TAO_IDL - Generated from
-      // be/be_visitor_exception/exception_ch.cpp:125
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:125
     };
 
 #endif /* end #if !defined */
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual ::CORBA::DIIPollable_ptr create_dii_pollable (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -399,7 +417,7 @@ namespace CORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void add_pollable (
         CORBA::Pollable_ptr potential
@@ -410,7 +428,7 @@ namespace CORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual ::CORBA::Pollable_ptr poll (
         CORBA::ULong timeout
@@ -422,7 +440,7 @@ namespace CORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual void remove (
         CORBA::Pollable_ptr potential
@@ -434,7 +452,7 @@ namespace CORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::UShort number_left (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -444,119 +462,42 @@ namespace CORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:192
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
     
-    virtual CORBA::Boolean _is_a (
-        const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
+    virtual void *_tao_QueryInterface (ptrdiff_t type);
     
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   
   protected:
-    // Abstract or local interface only.
     PollableSet (void);
-    
     virtual ~PollableSet (void);
   
   private:
-    // Private and unimplemented for concrete interfaces.
     PollableSet (const PollableSet &);
-    
     void operator= (const PollableSet &);
   };
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:66
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
 
-} // module CORBA
-
-// TAO_IDL - Generated from
-// be/be_visitor_traits.cpp:50
-
-// Traits specializations.
-namespace TAO
-{
-
-#if !defined (_CORBA_POLLABLESET__TRAITS_CH_)
-#define _CORBA_POLLABLESET__TRAITS_CH_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Export Objref_Traits<CORBA::PollableSet>
-  {
-    static CORBA::PollableSet_ptr tao_duplicate (
-        CORBA::PollableSet_ptr
-      );
-    static void tao_release (
-        CORBA::PollableSet_ptr
-      );
-    static CORBA::PollableSet_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        CORBA::PollableSet_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_POLLABLE__TRAITS_CH_)
-#define _CORBA_POLLABLE__TRAITS_CH_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Export Objref_Traits<CORBA::Pollable>
-  {
-    static CORBA::Pollable_ptr tao_duplicate (
-        CORBA::Pollable_ptr
-      );
-    static void tao_release (
-        CORBA::Pollable_ptr
-      );
-    static CORBA::Pollable_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        CORBA::Pollable_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_CORBA_DIIPOLLABLE__TRAITS_CH_)
-#define _CORBA_DIIPOLLABLE__TRAITS_CH_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Export Objref_Traits<CORBA::DIIPollable>
-  {
-    static CORBA::DIIPollable_ptr tao_duplicate (
-        CORBA::DIIPollable_ptr
-      );
-    static void tao_release (
-        CORBA::DIIPollable_ptr
-      );
-    static CORBA::DIIPollable_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        CORBA::DIIPollable_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-};
+}
+TAO_NAMESPACE_CLOSE // module CORBA
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/cdr_op.cpp:48
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
 
 #ifndef __ACE_INLINE__
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/cdr_op.cpp:64
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:911
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
 
 #if defined (__ACE_INLINE__)
 #include "PollableC.i"
@@ -570,7 +511,8 @@ namespace TAO
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include /**/ "ace/post.h"
+#endif /* TAO_HAS_AMI_POLLER == 1 */
 
+#include /**/ "ace/post.h"
 #endif /* ifndef */
 

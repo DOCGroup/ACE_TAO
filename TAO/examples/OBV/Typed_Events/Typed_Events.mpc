@@ -1,4 +1,6 @@
-project(*server): taoexe, portableserver, valuetype {
+project(*server): taoserver {
+  idlflags += -Gv
+
   Source_Files {
     Server_i.cpp
     Event_Types_impl.cpp
@@ -7,7 +9,10 @@ project(*server): taoexe, portableserver, valuetype {
   }
 }
 
-project(*client): taoexe, portableserver, valuetype {
+project(*client): taoserver {
+  exename   = client
+  idlflags += -Gv
+
   Source_Files {
     Client_i.cpp
     Event_Types_impl.cpp

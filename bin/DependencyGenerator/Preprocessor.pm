@@ -26,7 +26,6 @@ sub new {
                         'options' => $options,
                         'ipaths'  => $ipaths,
                         'files'   => {},
-                        'recurse' => 0,
                        }, $class;
   return $self;
 }
@@ -60,14 +59,12 @@ sub getFiles {
 
 
 sub process {
-  my($self)     = shift;
-  my($file)     = shift;
-  my($noinline) = shift;
-  my($noincs)   = shift;
-  my($fh)       = new FileHandle();
-  my(@incs)     = ();
+  my($self)   = shift;
+  my($file)   = shift;
+  my($noincs) = shift;
+  my($fh)     = new FileHandle();
+  my(@incs)   = ();
 
-  ++$self->{'recurse'};
   if (open($fh, $file)) {
     my($ifcount) = 0;
     my(@zero)    = ();
@@ -94,13 +91,10 @@ sub process {
         my($inc) = $self->locateFile($2);
         if (defined $inc) {
           $inc =~ s/\\/\//g;
-          if (!$noinline ||
-              ($inc !~ /\.i(nl)?$/ || $self->{'recurse'} == 1)) {
-            push(@{$self->{'files'}->{$file}}, $inc);
-            if (!defined $self->{'files'}->{$inc}) {
-              ## Process this file, but do not return the include files
-              $self->process($inc, $noinline, 1);
-            }
+          push(@{$self->{'files'}->{$file}}, $inc);
+          if (!defined $self->{'files'}->{$inc}) {
+            ## Process this file, but do not return the include files
+            $self->process($inc, 1);
           }
         }
       }
@@ -113,7 +107,7 @@ sub process {
       @incs = keys %{$self->{'ifiles'}};
     }
   }
-  --$self->{'recurse'};
+
   return \@incs;
 }
 

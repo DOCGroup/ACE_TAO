@@ -3,7 +3,6 @@
 #define THREAD_TASK_H
 
 #include "tao/RTScheduling/RTScheduler.h"
-#include "tao/ORB.h"
 #include "ace/Task.h"
 
 

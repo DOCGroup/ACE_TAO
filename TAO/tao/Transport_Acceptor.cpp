@@ -3,10 +3,14 @@
 // $Id$
 
 #include "Transport_Acceptor.h"
+#include "IOP_IORC.h"
+#include "Object_KeyC.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "Transport_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
+
 
 ACE_RCSID (tao,
            Acceptor,

@@ -3,7 +3,6 @@
 #include "Factory.h"
 
 #include "TestC.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (Infrastructure_Controlled,
            LB_server,

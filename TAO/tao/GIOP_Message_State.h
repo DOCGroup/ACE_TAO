@@ -16,17 +16,18 @@
 //=============================================================================
 #ifndef TAO_GIOP_MESSAGE_STATE_H
 #define TAO_GIOP_MESSAGE_STATE_H
-
 #include /**/ "ace/pre.h"
-
 #include "tao/GIOP_Message_Version.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
 class TAO_ORB_Core;
 class TAO_GIOP_Message_Base;
+
 
 /**
  * @class TAO_GIOP_Message_State

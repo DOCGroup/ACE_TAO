@@ -9,6 +9,7 @@
 #include "ace/PI_Malloc.h"
 #include "ace/Based_Pointer_T.h"
 #include "ace/Get_Opt.h"
+#include "ace/Synch.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Process_Mutex.h"
 

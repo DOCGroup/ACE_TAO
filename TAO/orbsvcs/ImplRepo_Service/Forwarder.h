@@ -31,7 +31,9 @@ class ImR_Locator_i;
 class ImR_Forwarder: public PortableServer::ServantLocator
 {
 public:
-  ImR_Forwarder (ImR_Locator_i *ir_impl, CORBA::ORB_ptr orb);
+  /// Constructor
+  ImR_Forwarder (ImR_Locator_i *ir_impl,
+                 CORBA::ORB_ptr orb);
 
   /// Called before the invocation begins.
   virtual PortableServer::Servant preinvoke (

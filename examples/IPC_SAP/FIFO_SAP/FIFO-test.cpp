@@ -9,7 +9,6 @@
 #include "ace/FIFO_Recv.h"
 #include "ace/FIFO_Send.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_sys_wait.h"
 
 ACE_RCSID(FIFO_SAP, FIFO_test, "$Id$")
 

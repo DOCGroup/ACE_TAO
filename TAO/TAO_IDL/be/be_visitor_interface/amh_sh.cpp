@@ -110,22 +110,21 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   *os << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "protected:" << be_idt_nl
-      << class_name.c_str () << " (void);" << be_uidt_nl << be_nl
+      << class_name.c_str () << " (void);\n" << be_uidt_nl
       << "public:" << be_idt_nl;
 
   // No copy constructor for locality constraint interface.
-  *os << class_name.c_str () << " (const " << class_name.c_str () 
-      << "& rhs);" << be_nl
+  *os << class_name.c_str () << " (const " << class_name.c_str () << "& rhs);" << be_nl
       << "virtual ~" << class_name.c_str () << " (void);\n\n"
       << be_nl
       << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
       << "const char* logical_type_id" << be_nl
       << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << ");\n" << be_uidt_nl;
 
   *os << "virtual void* _downcast (" << be_idt << be_idt_nl
       << "const char* logical_type_id" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << ");\n" << be_uidt_nl;
 
   // Add a skeleton for our _is_a method.
   *os << "static void _is_a_skel (" << be_idt << be_idt_nl
@@ -133,7 +132,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
       << "void *obj," << be_nl
       << "void *servant_upcall" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << ");\n" << be_uidt_nl;
 
   // Add a skeleton for our _non_existent method.
   *os << "static void _non_existent_skel (" << be_idt << be_idt_nl
@@ -141,7 +140,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
       << "void *obj," << be_nl
       << "void *servant_upcall" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << ");\n" << be_uidt_nl;
 
   // Add a skeleton for our _interface method.
   *os << "static void _interface_skel (" << be_idt << be_idt_nl
@@ -149,7 +148,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
       << "void *obj," << be_nl
       << "void *servant_upcall" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << ");\n" << be_uidt_nl;
 
   // Add a skeleton for our _component method.
   *os << "static void _component_skel (" << be_idt << be_idt_nl
@@ -157,21 +156,21 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
       << "void *obj," << be_nl
       << "void *servant_upcall" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << ");\n" << be_uidt_nl;
 
   // Add the dispatch method.
   *os << "virtual void _dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *_servant_upcall" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << ");\n" << be_uidt_nl;
 
   this->this_method (node);
 
   // The _interface_repository_id method.
   *os << be_nl
       << "virtual const char* _interface_repository_id "
-      << "(void) const;";
+      << "(void) const;\n";
 
   if (this->visit_scope (node) ==  -1)
     {
@@ -194,9 +193,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << be_uidt_nl 
-      << "};";
-
+  *os << be_uidt_nl << "};\n\n";
   return 0;
 }
 
@@ -224,7 +221,7 @@ be_visitor_amh_interface_sh::add_original_members (be_interface *node,
     }
 
   this->elem_number_ = 0;
-  
+  // initialize an iterator to iterate thru our scope
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next ())

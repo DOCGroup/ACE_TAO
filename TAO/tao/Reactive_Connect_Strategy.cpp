@@ -1,13 +1,14 @@
 #include "Reactive_Connect_Strategy.h"
 #include "Connection_Handler.h"
+#include "Transport.h"
 #include "ORB_Core.h"
 #include "debug.h"
-
 #include "ace/Synch_Options.h"
 
 ACE_RCSID(tao,
           Reactive_Connect_Strategy,
           "$Id$")
+
 
 TAO_Reactive_Connect_Strategy::TAO_Reactive_Connect_Strategy (
     TAO_ORB_Core *orb_core)
@@ -35,6 +36,7 @@ TAO_Reactive_Connect_Strategy::synch_options (ACE_Time_Value *timeout,
                    ACE_Time_Value::zero);
     }
 }
+
 
 int
 TAO_Reactive_Connect_Strategy::wait (TAO_Connection_Handler *ch,
@@ -79,9 +81,7 @@ TAO_Reactive_Connect_Strategy::wait (TAO_Connection_Handler *ch,
 
   // Set the result.
   if (ch->error_detected () && result != -1)
-    {
-      result = -1;
-    }
+    result = -1;
 
   return result;
 }

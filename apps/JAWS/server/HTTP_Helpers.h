@@ -18,8 +18,7 @@
 #ifndef HTTP_HELPERS_H
 #define HTTP_HELPERS_H
 
-#include "ace/Synch_Traits.h"
-#include "ace/Thread_Mutex.h"
+#include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

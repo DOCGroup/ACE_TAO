@@ -1,4 +1,4 @@
-project : valuetype, messaging, portableserver {
+project : portableserver {
   after    += DynamicInterface
   libs     += TAO_DynamicInterface
 }

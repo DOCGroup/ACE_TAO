@@ -1,13 +1,11 @@
 #include "LB_Component.h"
 #include "LB_ORBInitializer.h"
 
-#include "tao/ORB_Constants.h"
-#include "tao/ORBInitializer_Registry.h"
-#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (LoadBalancing,
            LB_Component,
            "$Id$")
+
 
 int
 TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])

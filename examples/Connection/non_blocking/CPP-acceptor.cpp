@@ -6,7 +6,6 @@
 
 #include "ace/Service_Config.h"
 #include "CPP-acceptor.h"
-#include "ace/Signal.h"
 
 ACE_RCSID(non_blocking, CPP_acceptor, "$Id$")
 

@@ -11,10 +11,8 @@
 // ACE_Manual_Event is use to synch with other
 // threads. ACE_Manual_Event::signal() is used for broadcasting.
 
-#include "ace/OS_main.h"
 #include "ace/Service_Config.h"
-#include "ace/Thread_Mutex.h"
-#include "ace/Manual_Event.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Atomic_Op.h"
 

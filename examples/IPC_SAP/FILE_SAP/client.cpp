@@ -1,11 +1,9 @@
 // $Id$
 
-#include "ace/OS_main.h"
+#include "ace/OS.h"
 #include "ace/FILE_Addr.h"
 #include "ace/FILE_Connector.h"
 #include "ace/FILE_IO.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(FILE_SAP, client, "$Id$")
 

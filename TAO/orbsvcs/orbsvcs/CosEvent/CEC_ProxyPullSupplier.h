@@ -24,8 +24,6 @@
 
 #include "ace/Message_Queue.h"
 #include "ace/Condition_Thread_Mutex.h"
-#include "ace/Unbounded_Queue.h"
-
 #include "event_export.h"
 
 class TAO_CEC_EventChannel;

@@ -11,8 +11,6 @@
 #include "ifr_adding_visitor_union.h"
 #include "ifr_adding_visitor_structure.h"
 
-#include "tao/Any_Unknown_IDL_Type.h"
-
 ACE_RCSID (IFR_Service,
            ifr_adding_visitor_union,
            "$Id$")

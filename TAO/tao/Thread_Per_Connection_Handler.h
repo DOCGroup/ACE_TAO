@@ -15,15 +15,15 @@
 
 #ifndef TAO_THREAD_PER_CONNECTION_HANDLER_H
 #define TAO_THREAD_PER_CONNECTION_HANDLER_H
-
 #include /**/ "ace/pre.h"
-#include "ace/Task_T.h"
+
+#include "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TAO_Export.h"
+#include "ace/Task_T.h"
 
 class TAO_Connection_Handler;
 
@@ -73,5 +73,4 @@ private:
 };
 
 #include /**/ "ace/post.h"
-
 #endif /*TAO_THREAD_PER_CONNECTION_HANDLER_H*/

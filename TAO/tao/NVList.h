@@ -16,50 +16,27 @@
 #define TAO_NVLIST_H
 
 #include /**/ "ace/pre.h"
-#include "ace/CORBA_macros.h"
+
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Unbounded_Queue.h"
-#include "ace/Thread_Mutex.h"
-
-#include "tao/CORBA_methods.h"
 #include "tao/Any.h"
 #include "tao/Environment.h"
+
+#include "ace/Unbounded_Queue.h"
+#include "ace/Thread_Mutex.h"
 
 class TAO_ORB_Core;
 class TAO_InputCDR;
 
 namespace CORBA
 {
-  enum
-  {
-    // = Flags for NVList add methods
-    ARG_IN                  = 0x01,
-    ARG_OUT                 = 0x02,
-    ARG_INOUT               = 0x04,
-    IN_COPY_VALUE           = 0x08,
-    OUT_LIST_MEMORY         = 0x10,
-    DEPENDENT_LIST          = 0x20,
-
-    // = (Unused) flags for Context methods
-    CTX_RESTRICT_SCOPE      = 0x40,
-    CTX_DELETE_DESCENDENTS  = 0x80,
-
-    // = Flags for deferred synchronous methods
-    INV_NO_RESPONSE         = 0x100,
-    INV_TERM_ON_ERR         = 0x200,
-    RESP_NO_WAIT            = 0x400
-  };
-
   class NamedValue;
-  typedef NamedValue *NamedValue_ptr;
   typedef TAO_Pseudo_Var_T<NamedValue> NamedValue_var;
   typedef TAO_Pseudo_Out_T<NamedValue, NamedValue_var> NamedValue_out;
-
-  typedef ULong Flags;
 
   /**
    * @class NamedValue
@@ -76,27 +53,27 @@ namespace CORBA
    */
   class TAO_Export NamedValue
   {
-    friend class ORB;
-    friend class NVList;
-    friend class Request;
+    friend class CORBA::ORB;
+    friend class CORBA::NVList;
+    friend class CORBA::Request;
 
   public:
     /// optional name
     const char * name (void) const;
 
     /// return the value
-    Any_ptr value (void) const;
+    CORBA::Any_ptr value (void) const;
 
     /// return the parameter mode flag
-    Flags flags (void) const;
+    CORBA::Flags flags (void) const;
 
     // The pseudo object static methods..
     static NamedValue * _duplicate (NamedValue *);
     static NamedValue * _nil (void);
 
     // = Reference counting.
-    ULong _incr_refcnt (void);
-    ULong _decr_refcnt (void);
+    CORBA::ULong _incr_refcnt (void);
+    CORBA::ULong _decr_refcnt (void);
 
     // Useful for template programming.
     typedef NamedValue_ptr _ptr_type;
@@ -120,16 +97,16 @@ namespace CORBA
   private:
 
     /// maintains how many references exist to this object
-    ULong refcount_;
+    CORBA::ULong refcount_;
 
     /// Protects the reference count.
     TAO_SYNCH_MUTEX refcount_lock_;
 
     /// holds the value
-    Any any_;
+    CORBA::Any any_;
 
     /// parameter mode flags
-    Flags flags_;
+    CORBA::Flags flags_;
 
     /// optional IDL name of the parameter
     char * name_;
@@ -138,7 +115,6 @@ namespace CORBA
   // ****************************************************************
 
   class NVList;
-  typedef NVList *NVList_ptr;
   typedef TAO_Pseudo_Var_T<NVList> NVList_var;
   typedef TAO_Pseudo_Out_T<NVList, NVList_var> NVList_out;
 
@@ -160,49 +136,49 @@ namespace CORBA
    */
   class TAO_Export NVList
   {
-    friend class ORB;
-    friend class Request;
+    friend class CORBA::ORB;
+    friend class CORBA::Request;
 
   public:
 
     /// return the current number of elements in the list
-    ULong count (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
+    CORBA::ULong count (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
     /// add an element and just initialize the flags
-    NamedValue_ptr add (Flags
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::NamedValue_ptr add (CORBA::Flags
+                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /// add an element and initialize its name and flags
-    NamedValue_ptr add_item (const char *,
-                             Flags
-                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::NamedValue_ptr add_item (const char *,
+                                    CORBA::Flags
+                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /// initializes a value, name, and flags
-    NamedValue_ptr add_value (const char *,
-                              const Any &,
-                              Flags
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::NamedValue_ptr add_value (const char *,
+                                     const CORBA::Any &,
+                                     CORBA::Flags
+                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /// just like add_item. In addition, memory management of char *
     /// name is taken over by the NVList
-    NamedValue_ptr add_item_consume (char *,
-                                     Flags
-                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::NamedValue_ptr add_item_consume (char *,
+                                            CORBA::Flags
+                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /// just like add_value. In addition, the NVList controls the
     /// memory management of the char *name and Any *value parameter
-    NamedValue_ptr add_value_consume (char *,
-                                      Any_ptr,
-                                      Flags
-                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::NamedValue_ptr add_value_consume (char *,
+                                             CORBA::Any_ptr,
+                                             CORBA::Flags
+                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /// retrieve the item at the nth location. Raises Bounds
-    NamedValue_ptr item (ULong n
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::NamedValue_ptr item (CORBA::ULong n
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     //  CORBA::Status
     /// remove element at index n. Raises Bounds
-    void remove (ULong n
+    void remove (CORBA::ULong n
                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     // The pseudo object static methods..
@@ -210,8 +186,8 @@ namespace CORBA
     static NVList * _nil (void);
 
     // = Reference counting.
-    ULong _incr_refcnt (void);
-    ULong _decr_refcnt (void);
+    CORBA::ULong _incr_refcnt (void);
+    CORBA::ULong _decr_refcnt (void);
 
     // = TAO Extensions:
 
@@ -223,12 +199,13 @@ namespace CORBA
      */
     void _tao_incoming_cdr (TAO_InputCDR & cdr,
                             int flag,
-                            bool &lazy_evaluation
+                            int & lazy_evaluation
                             ACE_ENV_ARG_DECL);
 
     /// Encode the NVList into the CDR stream. <flag> masks the type of
     /// arguments (IN, OUT or INOUT) that are to be marshaled.
     void _tao_encode (TAO_OutputCDR & cdr,
+                      TAO_ORB_Core * orb_core,
                       int flag
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
@@ -249,7 +226,7 @@ namespace CORBA
      * our CDR stream contains any marshaled arguments (needed for
      * GIOP 1.2).
      */
-    Boolean _lazy_has_arguments (void) const;
+    CORBA::Boolean _lazy_has_arguments (void) const;
 
     // Useful for template programming.
     typedef NVList_ptr _ptr_type;
@@ -271,8 +248,8 @@ namespace CORBA
 
     /// helper to increase the list size. This is used by all the add_
     /// methods of the NVList class
-    NamedValue_ptr add_element (Flags
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    CORBA::NamedValue_ptr add_element (CORBA::Flags
+                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     /// Lazy evaluation routine to fill up the Anys in the NVList from
     /// the CDR stream.
@@ -280,13 +257,13 @@ namespace CORBA
 
   private:
     /// internal list of parameters stored as NamedValues
-    ACE_Unbounded_Queue<NamedValue_ptr> values_;
+    ACE_Unbounded_Queue<CORBA::NamedValue_ptr> values_;
 
     /// maximum length of list
-    ULong max_;
+    CORBA::ULong max_;
 
     /// maintains how many references exist to this object
-    ULong refcount_;
+    CORBA::ULong refcount_;
 
     /// Protects the reference count.
     TAO_SYNCH_MUTEX refcount_lock_;

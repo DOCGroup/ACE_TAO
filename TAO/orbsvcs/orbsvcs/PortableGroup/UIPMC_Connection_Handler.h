@@ -12,7 +12,6 @@
 
 #ifndef TAO_UIPMC_CONNECTION_HANDLER_H
 #define TAO_UIPMC_CONNECTION_HANDLER_H
-
 #include /**/ "ace/pre.h"
 
 #include "ace/Reactor.h"
@@ -23,9 +22,9 @@
 
 #include "ace/Acceptor.h"
 
+#include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
-
 #include "UIPMC_Transport.h"
 #include "portablegroup_export.h"
 

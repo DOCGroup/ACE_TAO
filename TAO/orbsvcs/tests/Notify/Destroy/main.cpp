@@ -2,7 +2,6 @@
 
 #include "../lib/Notify_Test_Client.h"
 #include "orbsvcs/orbsvcs/NotifyExtC.h"
-#include "ace/OS_main.h"
 
 int
 ACE_TMAIN (int argc, char *argv[])

@@ -37,8 +37,7 @@
 
 //----[ includes ]-----------------------------------------------------
 // ACE OS Adaption layer
-#include "ace/os_include/netinet/os_in.h"
-#include "ace/os_include/os_netdb.h"
+#include "ace/OS.h"
 #include "ace/Log_Msg.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

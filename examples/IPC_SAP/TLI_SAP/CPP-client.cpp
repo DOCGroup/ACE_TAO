@@ -3,9 +3,6 @@
 #include "ace/TLI_Connector.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/Time_Value.h"
 
 ACE_RCSID(TLI_SAP, CPP_client, "$Id$")
 

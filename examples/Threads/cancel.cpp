@@ -3,7 +3,6 @@
 // Test out the cooperative thread cancellation mechanisms provided by
 // the ACE_Thread_Manager.
 
-#include "ace/OS_main.h"
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
 

@@ -13,8 +13,8 @@
 //
 // ============================================================================
 
+#include "tao/corba.h"
 #include "tao/Timeprobe.h"
-#include "tao/ORB_Constants.h"
 #include "PP_Test_i.h"
 
 ACE_RCSID(IDL_Cubit, Cubit_Client, "$Id$")

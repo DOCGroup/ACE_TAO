@@ -18,7 +18,6 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/DsLogAdminS.h"
-#include "tao/Typecode.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

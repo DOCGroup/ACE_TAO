@@ -1,4 +1,3 @@
-//$Id$
 project : taolib, core {
   sharedname   = TAO_IFR_Client
   dynamicflags = TAO_IFR_CLIENT_BUILD_DLL

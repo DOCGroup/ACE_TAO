@@ -18,8 +18,6 @@
 #include "DIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/os_include/os_netdb.h"
-
 ACE_RCSID (tao,
            DIOP_Acceptor,
            "$Id$")

@@ -2,8 +2,6 @@
 
 #include "ace/Asynch_Pseudo_Task.h"
 
-#include "ace/OS_NS_signal.h"
-
 ACE_RCSID(ace, Asynch_Pseudo_Task, "$Id$")
 
 ACE_Asynch_Pseudo_Task::ACE_Asynch_Pseudo_Task()

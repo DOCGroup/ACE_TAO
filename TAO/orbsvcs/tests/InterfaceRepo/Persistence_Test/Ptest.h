@@ -23,6 +23,7 @@
 #define PTEST_H
 
 #include "tao/IFR_Client/IFR_BasicC.h"
+#include "tao/corba.h"
 
 class Ptest
 {

@@ -1,7 +1,6 @@
 // $Id$
 
 #include "Notify_Service.h"
-#include "ace/OS_main.h"
 
 TAO_Notify_Service_Driver notify_service;
 

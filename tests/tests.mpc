@@ -1,6 +1,3 @@
-//  -*- MPC -*-
-// $Id$
-
 project(Test_Output) : acelib {
   sharedname = Test_Output
   dynamicflags = TEST_OUTPUT_BUILD_DLL

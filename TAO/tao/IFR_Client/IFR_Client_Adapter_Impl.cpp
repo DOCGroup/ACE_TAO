@@ -3,27 +3,12 @@
 #include "IFR_Client_Adapter_Impl.h"
 #include "IFR_ExtendedC.h"
 #include "tao/ORB_Core.h"
-#include "tao/Invocation_Adapter.h"
+#include "tao/Invocation.h"
 #include "tao/Stub.h"
 
 ACE_RCSID (IFR_Client,
            IFR_Client_Adapter_Impl,
            "$Id$")
-
-namespace TAO
-{
-  ACE_TEMPLATE_SPECIALIZATION
-  class TAO_IFR_Client_Export Arg_Traits<CORBA::InterfaceDef>
-    : public
-        Object_Arg_Traits_T<
-            CORBA::InterfaceDef_ptr,
-            CORBA::InterfaceDef_var,
-            CORBA::InterfaceDef_out,
-            TAO::Objref_Traits<CORBA::InterfaceDef>
-          >
-  {
-  };
-}
 
 TAO_IFR_Client_Adapter_Impl::~TAO_IFR_Client_Adapter_Impl (void)
 {
@@ -101,30 +86,77 @@ TAO_IFR_Client_Adapter_Impl::get_interface (
 
 CORBA::InterfaceDef_ptr
 TAO_IFR_Client_Adapter_Impl::get_interface_remote (
-    CORBA::Object_ptr target
+    const CORBA::Object_ptr target
     ACE_ENV_ARG_DECL
   )
 {
-  TAO::Arg_Traits<CORBA::InterfaceDef>::ret_val _tao_retval;
-
-  TAO::Argument *_tao_signature [] =
-    {
-      &_tao_retval
-    };
-
-  TAO::Invocation_Adapter _tao_call (
-      target,
-      _tao_signature,
-      1,
-      "_interface",
-      10,
-      0
-    );
+  CORBA::InterfaceDef_ptr _tao_retval = CORBA::InterfaceDef::_nil ();
+  CORBA::InterfaceDef_var _tao_safe_retval (_tao_retval);
 
   ACE_TRY
     {
-      _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK (_tao_retval.excp ());
+      // Must catch exceptions, if the server raises a
+      // CORBA::OBJECT_NOT_EXIST then we must return 1, instead of
+      // propagating the exception.
+      TAO_Stub *istub = target->_stubobj ();
+
+      if (istub == 0)
+        {
+          ACE_THROW_RETURN (CORBA::INTERNAL (
+                              CORBA::SystemException::_tao_minor_code (
+                                TAO_DEFAULT_MINOR_CODE,
+                                EINVAL),
+                              CORBA::COMPLETED_NO),
+                            _tao_retval);
+        }
+
+      TAO_GIOP_Twoway_Invocation _tao_call (istub,
+                                            "_interface",
+                                            10,
+                                            1,
+                                            istub->orb_core ());
+
+      for (;;)
+        {
+          _tao_call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
+
+          _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag)
+                                    ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          int _invoke_status =
+            _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          if (_invoke_status == TAO_INVOKE_RESTART)
+            {
+              _tao_call.restart_flag (1);
+              continue;
+            }
+
+          ACE_ASSERT (_invoke_status != TAO_INVOKE_EXCEPTION);
+
+          if (_invoke_status != TAO_INVOKE_OK)
+            {
+              ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
+                                                CORBA::COMPLETED_YES),
+                                CORBA::InterfaceDef::_nil ());
+            }
+
+          break;
+        }
+      TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
+
+      if (!(
+            (_tao_in >> _tao_safe_retval.inout ())
+            ))
+        {
+          ACE_THROW_RETURN (CORBA::MARSHAL (), 
+                            CORBA::InterfaceDef::_nil ());
+        }
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
     {
@@ -136,7 +168,7 @@ TAO_IFR_Client_Adapter_Impl::get_interface_remote (
     }
   ACE_ENDTRY;
 
-  return _tao_retval.retn ();
+  return _tao_safe_retval._retn ();
 }
 
 // *********************************************************************
@@ -161,3 +193,4 @@ ACE_STATIC_SVC_DEFINE (
   )
 
 ACE_FACTORY_DEFINE (TAO_IFR_Client, TAO_IFR_Client_Adapter_Impl)
+

@@ -1,5 +1,4 @@
 // -*- IDL -*-
-// $Id$
 
 // ===================================================================
 /**
@@ -42,7 +41,7 @@ module Test_Interceptors
     };
 
     /// Normal operation.
-    void normal (in long arg, out string msg);
+    void normal (in long arg);
 
     /// Normal operation with a return val.
     long calculate (in long one, in long two);

@@ -4,7 +4,6 @@
 #define FIXED_PRIORITY_SCHEDULER_H
 
 #include "tao/RTScheduling/RTScheduler.h"
-#include "tao/LocalObject.h"
 #include "FP_SchedulingC.h"
 #include "Kokyu_dsrt.h"
 #include "Kokyu_dsrt_schedulers_export.h"

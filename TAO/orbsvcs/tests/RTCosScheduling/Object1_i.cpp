@@ -12,8 +12,6 @@
 
 #include "Object1_i.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 //#include "tao/RTCORBA/RTCORBA.h"
 ////##include "ace/Task.h"
 //
@@ -60,7 +58,7 @@ void Object1_impl::method1(const char* activity,
 
 
 
-  if (ACE_OS::strcmp(activity,"Client1") == 0)
+  if (strcmp(activity,"Client1") == 0)
     {
        ACE_OS::sleep(5);
     }
@@ -78,7 +76,7 @@ void Object1_impl::method1(const char* activity,
                   ACE::timestamp(date_and_time, time_size),
                   activity);
   ACE_DEBUG((LM_DEBUG,"%s",buf2));
-  ACE_OS::strcat(buf,buf2);
-  output = ACE_OS::strdup(buf);
+  ACE_OS_String::strcat(buf,buf2);
+  output = ACE_OS_String::strdup(buf);
 
 }

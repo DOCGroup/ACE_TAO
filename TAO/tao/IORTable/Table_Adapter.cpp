@@ -11,7 +11,6 @@
 #include "IOR_Table_Impl.h"
 #include "tao/ORB_Core.h"
 #include "tao/Object.h"
-#include "tao/ORB.h"
 
 ACE_RCSID (IORTable,
            Table_Adapter,

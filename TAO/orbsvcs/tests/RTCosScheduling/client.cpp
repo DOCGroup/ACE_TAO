@@ -14,8 +14,6 @@
 #include "testSchedC.h"
 #include <orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.h>
 #include "ace/Get_Opt.h"
-#include "tao/debug.h"
-#include "ace/OS_main.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -275,7 +273,7 @@ int svc(void) {
           ACE_DEBUG ((LM_DEBUG,
                       "%s",
                       buf));
-          ACE_OS::strcat(client_output_, buf);
+          ACE_OS_String::strcat(client_output_, buf);
 
           do_work(before_);
           ACE_TRY_CHECK;
@@ -289,11 +287,11 @@ int svc(void) {
           ACE_DEBUG ((LM_DEBUG,
                       "%s",
                       buf));
-          ACE_OS::strcat(client_output_, buf);
-      serv_output_ = ACE_OS::strdup("");
+          ACE_OS_String::strcat(client_output_, buf);
+      serv_output_ = ACE_OS_String::strdup("");
           object1->method1 (activity_, remote_, serv_output_.inout());
 
-          ACE_OS::strcat(client_output_, serv_output_.in());
+          ACE_OS_String::strcat(client_output_, serv_output_.in());
 
 
           ACE_OS::sprintf(buf,
@@ -304,7 +302,7 @@ int svc(void) {
           ACE_DEBUG ((LM_DEBUG,
                       "%s",
                       buf));
-          ACE_OS::strcat(client_output_, buf);
+          ACE_OS_String::strcat(client_output_, buf);
 
 
           do_work(after_);
@@ -317,7 +315,7 @@ int svc(void) {
           ACE_DEBUG ((LM_DEBUG,
                       "%s",
                       buf));
-          ACE_OS::strcat(client_output_, buf);
+          ACE_OS_String::strcat(client_output_, buf);
 
 
         }
@@ -333,7 +331,7 @@ int svc(void) {
                       activity_));
 
           object1->method1 (activity_, remote_, serv_output_.inout());
-          ACE_OS::strcat(client_output_,serv_output_.in());
+          ACE_OS_String::strcat(client_output_,serv_output_.in());
           /// Finished with remote call
           ACE_DEBUG ((LM_DEBUG,
                       "%T\t%s\tClient\tDone with method1\n",

@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE_export.h"
+#include "ace/OS_Export.h"
 
 /**
  * @class ACE_OS_Thread_Adapter
@@ -36,7 +36,7 @@
  * the thread that calls invoke() on this object.  Therefore,
  * the invoke() method is responsible for deleting itself.
  */
-class ACE_Export ACE_OS_Thread_Adapter : public ACE_Base_Thread_Adapter
+class ACE_OS_Export ACE_OS_Thread_Adapter : public ACE_Base_Thread_Adapter
 {
 public:
   /// Constructor.

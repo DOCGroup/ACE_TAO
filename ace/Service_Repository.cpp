@@ -1,14 +1,12 @@
 #include "ace/Service_Repository.h"
-
-#if !defined (__ACE_INLINE__)
-#include "ace/Service_Repository.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/Service_Types.h"
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/Service_Repository.i"
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID (ace,
            Service_Repository,

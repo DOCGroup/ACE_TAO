@@ -4,6 +4,7 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
+#include "ace/OS.h"
 #include "ace/Message_Block.h"
 #include "TP_Logging_Server.h"
 

@@ -12,7 +12,6 @@
 
 #ifndef TAO_LF_STRATEGY_H
 #define TAO_LF_STRATEGY_H
-
 #include /**/ "ace/pre.h"
 
 #include "tao/TAO_Export.h"
@@ -73,5 +72,4 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif  /* TAO_LF_STRATEGY_H */

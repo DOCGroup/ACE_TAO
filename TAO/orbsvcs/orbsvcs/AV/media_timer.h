@@ -39,7 +39,7 @@
 #define TAO_AV_MEDIA_TIMER_H
 #include /**/ "ace/pre.h"
 
-#include "ace/Basic_Types.h"
+#include "ace/OS.h"
 //long random (void);
 
 class MediaTimer

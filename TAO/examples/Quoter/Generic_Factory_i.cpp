@@ -15,14 +15,11 @@
 
 #include "Generic_Factory_i.h"
 #include "QuoterC.h"
-
+#include "tao/corba.h"
 #include "tao/ORB_Core.h"
-
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (Quoter, 
-           Generic_Factory_i, 
-           "$Id$")
+ACE_RCSID(Quoter, Generic_Factory_i, "$Id$")
 
 // Constructor
 Quoter_Generic_Factory_i::Quoter_Generic_Factory_i (int debug_level)

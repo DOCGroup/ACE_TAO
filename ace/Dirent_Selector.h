@@ -16,13 +16,11 @@
 #define ACE_DIRENT_SELECTOR_H
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_dirent.h"
+#include "ace/ACE_export.h"
 
 /**
  * @class ACE_Dirent_Selector

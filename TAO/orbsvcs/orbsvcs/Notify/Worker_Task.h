@@ -11,7 +11,6 @@
 
 #ifndef TAO_Notify_WORKER_TASK_H
 #define TAO_Notify_WORKER_TASK_H
-
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"

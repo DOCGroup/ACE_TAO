@@ -32,7 +32,6 @@
 #include "ace/SString.h"
 #include "Event_CommS.h"
 #include "ace/Reactor.h"
-#include "ace/Null_Mutex.h"
 
 class ShutdownCallback
 {

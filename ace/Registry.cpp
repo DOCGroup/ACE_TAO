@@ -6,8 +6,6 @@ ACE_RCSID(ace, Registry, "$Id$")
 
 #if defined (ACE_WIN32)
 
-#  include "ace/os_include/os_netdb.h"
-
 // Funky macro to deal with strange error passing semantics
 // of Win32 Reg*() functions
 #define ACE_REGISTRY_CALL_RETURN(X) \
@@ -652,7 +650,7 @@ ACE_Registry::make_name (const ACE_TString &string)
                                          new_position - last_position);
           // Skip past the seperator
           new_position +=
-            ACE_OS::strlen (ACE_Registry::STRING_SEPARATOR);
+            ACE_OS_String::strlen (ACE_Registry::STRING_SEPARATOR);
         }
       else
         {

@@ -34,6 +34,7 @@
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
 
+#include "ace/OS.h"
 #include "ace/Asynch_IO_Impl.h"
 #include "ace/Addr.h"
 #include "ace/Event_Handler.h"

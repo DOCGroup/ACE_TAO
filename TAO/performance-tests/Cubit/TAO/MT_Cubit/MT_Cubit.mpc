@@ -1,4 +1,4 @@
-project(*server): taoexe, portableserver, strategies {
+project(*server): taoserver, strategies {
   Source_Files {
     tmplinst.cpp
     Timer.cpp
@@ -9,7 +9,9 @@ project(*server): taoexe, portableserver, strategies {
   }
 }
 
-project(*client): taoexe, portableserver, strategies {
+project(*client): taoserver, strategies {
+  exename = client
+
   Source_Files {
     tmplinst.cpp
     Timer.cpp

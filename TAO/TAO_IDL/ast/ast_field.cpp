@@ -78,6 +78,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_type.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
+#include "ace/streams.h"
 
 ACE_RCSID (ast, ast_field, "$Id$")
 
@@ -106,8 +107,7 @@ AST_Field::AST_Field (AST_Decl::NodeType nt,
                       AST_Type *ft,
                       UTL_ScopedName *n,
                       Visibility vis)
-  : COMMON_Base (),
-    AST_Decl (nt,
+  : AST_Decl (nt,
               n),
     pd_field_type (ft),
     pd_visibility (vis)
@@ -125,11 +125,11 @@ AST_Field::dump (ACE_OSTREAM_TYPE &o)
   switch (this->pd_visibility)
     {
     case vis_PRIVATE:
-      this->dump_i (o, "private ");
+      o << "private ";
 
       break;
     case vis_PUBLIC:
-      this->dump_i (o, "public ");
+      o << "public ";
 
       break;
     case vis_NA:
@@ -138,7 +138,7 @@ AST_Field::dump (ACE_OSTREAM_TYPE &o)
 
   this->pd_field_type->local_name ()->dump (o);
 
-  this->dump_i (o, " ");
+  o << " ";
 
   this->local_name ()->dump (o);
 }

@@ -77,11 +77,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "drv_extern.h"
 #include "ace/Process.h"
 #include "../tao/Version.h"
-
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-// FUZZ: disable check_for_streams_include
-#  include "ace/streams.h"
-#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
+#include "ace/streams.h"
 
 ACE_RCSID (TAO_IDL,
            tao_idl,

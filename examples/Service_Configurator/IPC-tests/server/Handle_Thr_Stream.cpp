@@ -16,8 +16,6 @@ ACE_RCSID(server, Handle_Thr_Stream, "$Id$")
 #include "Handle_Thr_Stream.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS_NS_time.h"
-
 // Shorthand names.
 #define SVH SVC_HANDLER
 #define PR_AC_1 ACE_PEER_ACCEPTOR_1

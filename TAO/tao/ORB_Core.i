@@ -219,9 +219,7 @@ TAO_ORB_Core::orb_params(void)
 }
 
 #define TAO_OC_RETRIEVE(member) \
-((this->member##_ == 0) \
-  ? (this->member##_ = this->resource_factory ()->get_##member ()) \
-  : (this->member##_))
+  ((this->member##_ == 0) ? (this->member##_ = this->resource_factory ()->get_##member ()) : (this->member##_) )
 
 ACE_INLINE TAO_ProtocolFactorySet *
 TAO_ORB_Core::protocol_factories (void)

@@ -17,8 +17,6 @@
 #include "ace/RW_Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Msg.h"
-
 ACE_RCSID(ace, RW_Mutex, "$Id$")
 
 void

@@ -2254,7 +2254,6 @@ sub relative {
   my($value) = shift;
   my($rel)   = $self->get_relative();
   my(@keys)  = keys %$rel;
-  my($win32) = ($^O eq 'MSWin32' || $^O eq 'cygwin');
 
   if (defined $value && defined $keys[0]) {
     if (UNIVERSAL::isa($value, 'ARRAY')) {
@@ -2269,9 +2268,8 @@ sub relative {
       my($start) = 0;
       my($fixed) = 0;
 
-      ## Fix up the value for Windows switch the \\'s to /
-      if ($win32) {
-        $cwd =~ s/\\/\//g;
+      if ($cwd =~ /[a-z]:[\/\\]/) {
+        substr($cwd, 0, 1) = uc(substr($cwd, 0, 1));
       }
 
       while(substr($value, $start) =~ /(\$\(([^)]+)\))/) {
@@ -2291,13 +2289,11 @@ sub relative {
           }
 
           ## Fix up the value for Windows switch the \\'s to /
-          if ($win32) {
-            $val =~ s/\\/\//g;
-          }
+          $val =~ s/\\/\//g;
 
           ## Lowercase everything if we are running on Windows
-          my($icwd) = ($win32 ? lc($cwd) : $cwd);
-          my($ival) = ($win32 ? lc($val) : $val);
+          my($icwd) = ($^O eq 'MSWin32' || $^O eq 'cygwin' ? lc($cwd) : $cwd);
+          my($ival) = ($^O eq 'MSWin32' || $^O eq 'cygwin' ? lc($val) : $val);
           if (index($icwd, $ival) == 0) {
             my($count)   = 0;
             my($current) = $icwd;

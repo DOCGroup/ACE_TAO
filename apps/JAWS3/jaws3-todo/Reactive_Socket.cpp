@@ -1,6 +1,8 @@
 // $Id$
 
+#include "ace/OS.h"
 #include "ace/Addr.h"
+#include "ace/Synch.h"
 #include "ace/Acceptor.h"
 #include "ace/Singleton.h"
 #include "ace/SOCK_Stream.h"

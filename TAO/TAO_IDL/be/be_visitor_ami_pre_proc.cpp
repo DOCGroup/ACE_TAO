@@ -409,7 +409,6 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                   0);
 
   excep_holder->set_name (excep_holder_name);
-  excep_holder->seen_in_operation (I_TRUE);
 
   // Now our customized valuetype is created, we have to
   // add now the operations and attributes to the scope.

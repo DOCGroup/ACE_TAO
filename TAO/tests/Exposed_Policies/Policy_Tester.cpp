@@ -7,15 +7,12 @@
 
 // -- ACE Include --
 #include "ace/Arg_Shifter.h"
-#include "ace/OS_NS_stdio.h"
 
 // -- RTCORBA Include --
 #include "tao/RTCORBA/RT_Policy_i.h"
 
 // -- RTCORBA Include --
 #include "tao/RTCORBA/RT_ORB.h"
-
-#include "tao/ORB_Constants.h"
 
 ACE_RCSID (tao, Policy_Tester, "$Id$")
 

@@ -5,7 +5,6 @@
 #include "tao/Environment.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
-#include "tao/Pluggable_Messaging_Utils.h"
 
 
 ACE_RCSID(DynamicInterface,
@@ -49,25 +48,11 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
     TAO_Pluggable_Reply_Params &params
   )
 {
-  if (params.input_cdr_ == 0)
-    return -1;
-
   this->reply_status_ = params.reply_status_;
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
   ACE_Data_Block *db =
-    this->reply_cdr_.clone_from (*params.input_cdr_);
-
-
-  if (db == 0)
-    {
-      if (TAO_debug_level > 2)
-        ACE_ERROR ((
-          LM_ERROR,
-          "TAO (%P|%t) - DII_Deferred_Reply_Dispatcher::dispatch_reply ",
-          "clone_from failed \n"));
-      return -1;
-    }
+    this->reply_cdr_.clone_from (params.input_cdr_);
 
   // See whether we need to delete the data block by checking the
   // flags. We cannot be happy that we initally allocated the

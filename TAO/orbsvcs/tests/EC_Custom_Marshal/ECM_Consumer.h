@@ -19,7 +19,6 @@
 
 #include "orbsvcs/Channel_Clients_T.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
-#include "ace/OS_NS_time.h"
 
 class Driver;
 

@@ -15,9 +15,7 @@
 
 #include "CC_LockSet.h"
 
-ACE_RCSID (Concurrency, 
-           CC_LockSet, 
-           "$Id$")
+ACE_RCSID(Concurrency, CC_LockSet, "$Id$")
 
 // Default constructor.
 

@@ -185,15 +185,9 @@ ACE_Asynch_Connector<HANDLER>::parse_address (const ACE_Asynch_Connect::Result &
                                               ACE_INET_Addr &remote_address,
                                               ACE_INET_Addr &local_address)
 {
-#if defined (ACE_HAS_IPV6)
-  // Getting the addresses.
-  sockaddr_in6 local_addr;
-  sockaddr_in6 remote_addr;
-#else
   // Getting the addresses.
   sockaddr_in local_addr;
   sockaddr_in remote_addr;
-#endif /* ACE_HAS_IPV6 */
 
   // Get the length.
   int local_size = sizeof (local_addr);
@@ -218,8 +212,8 @@ ACE_Asynch_Connector<HANDLER>::parse_address (const ACE_Asynch_Connect::Result &
                 ACE_LIB_TEXT("ACE_Asynch_Connector::<getpeername> failed")));
 
   // Set the addresses.
-  local_address.set  ((const sockaddr_in *) &local_addr,  local_size);
-  remote_address.set ((const sockaddr_in *) &remote_addr, remote_size);
+  local_address.set  (&local_addr,  local_size);
+  remote_address.set (&remote_addr, remote_size);
 
 #if 0
   // @@ Just debugging.

@@ -6,6 +6,7 @@ ACE_RCSID(DynamicInterface, TAO_Dynamic_Adapter_Impl, "$Id$")
 
 #include "Request.h"
 #include "Server_Request.h"
+#include "tao/Invocation.h"
 #include "tao/ORB_Core.h"
 #include "tao/Exception.h"
 

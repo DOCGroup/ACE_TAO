@@ -7,8 +7,6 @@
 
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/Time_Value.h"
-
 ACE_INLINE int
 ACE_Token::queueing_strategy (void)
 {

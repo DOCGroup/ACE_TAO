@@ -15,8 +15,6 @@
    server, we need to declare our Acceptor_Service */
 #include "Acceptor_Service.h"
 
-#include "ace/Signal.h"
-
 extern "C" void handler (int)
 {
   ACE_Service_Config::reconfig_occurred (1);

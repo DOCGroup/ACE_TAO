@@ -20,8 +20,7 @@
  * The command used to generate code is:
  *
  *  tao_idl
- *     -o orig -Gp -Gd -Ge 1 -Sa -St -GT
- *          -I$(TAO_ROOT)
+ *     -o orig -Gp -Gd -Ge 1 -Sa -St
  *          -Wb,export_macro=TAO_IORInterceptor_Export
  *          -Wb,export_include="iorinterceptor_export.h"
  *          -Wb,pre_include="ace/pre.h"
@@ -36,8 +35,8 @@
 #ifndef _IOR_INTERCEPTOR_IDL_
 #define _IOR_INTERCEPTOR_IDL_
 
-#include "tao/PortableInterceptor.pidl"
-#include "tao/ObjRefTemplate/ObjectReferenceTemplate.pidl"
+#include <PortableInterceptor.pidl>
+#include <ObjectReferenceTemplate.pidl>
 
 module PortableInterceptor 
 {

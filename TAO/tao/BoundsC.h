@@ -15,12 +15,6 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
-// and
-//       Institute for Software Integrated Systems
-//       Vanderbilt University
-//       Nashville, TN
-//       USA
-//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
@@ -32,15 +26,15 @@
 #define _TAO_IDL_ORIG_BOUNDSC_H_
 
 #include /**/ "ace/pre.h"
-
-#include "tao/CDR.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Exception.h"
-#include "tao/VarOut_T.h"
+#include "TAO_Export.h"
+#include "Exception.h"
+#include "CDR.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -68,27 +62,27 @@
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
 
-namespace CORBA
+TAO_NAMESPACE  CORBA
 {
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_CORBA_BOUNDS_CH_)
 #define _CORBA_BOUNDS_CH_
-
+  
   class TAO_Export Bounds : public CORBA::UserException
   {
   public:
-
+    
     Bounds (void);
     Bounds (const Bounds &);
     ~Bounds (void);
 
     Bounds &operator= (const Bounds &);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     static Bounds *_downcast (CORBA::Exception *);
     static CORBA::Exception *_alloc (void);
 
@@ -98,39 +92,32 @@ namespace CORBA
 
     virtual void _tao_encode (
         TAO_OutputCDR &
-        ACE_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL_NOT_USED
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &
-        ACE_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL_NOT_USED
       );
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:125
-
+    
     virtual CORBA::TypeCode_ptr _type (void) const;
   };
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Bounds;
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:66
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
 
-} // module CORBA
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
-
-// Traits specializations.
-namespace TAO
-{
-};
+}
+TAO_NAMESPACE_CLOSE // module CORBA
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_ch.cpp:52
@@ -157,7 +144,7 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::Bounds &);
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:969
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
 
 #if defined (__ACE_INLINE__)
 #include "BoundsC.i"
@@ -173,3 +160,4 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::Bounds &);
 
 #include /**/ "ace/post.h"
 #endif /* ifndef */
+

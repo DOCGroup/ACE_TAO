@@ -9,6 +9,7 @@
 #if defined (ACE_WIN32)
 
 #include "ace/Reactor.h"
+#include "ace/Synch.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Thread_Manager.h"
 
@@ -47,7 +48,7 @@ public:
       return -1;
 
     user_input[count] = '\0';
-    if (ACE_OS::strncmp (user_input, "quit", 4) == 0)
+    if (ACE_OS_String::strncmp (user_input, "quit", 4) == 0)
       return -1;
     return 0;
   }

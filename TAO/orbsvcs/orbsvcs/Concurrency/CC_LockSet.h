@@ -31,7 +31,6 @@
 
 #ifndef _CC_LOCKSET_H
 #define _CC_LOCKSET_H
-
 #include /**/ "ace/pre.h"
 
 #include "ace/Synch.h"
@@ -41,8 +40,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Token.h"
-#include "ace/Unbounded_Queue.h"
-
 #include "orbsvcs/CosConcurrencyControlS.h"
 #include "concurrency_export.h"
 
@@ -190,5 +187,4 @@ private:
 };
 
 #include /**/ "ace/post.h"
-
 #endif /* _CC_LOCKSET_H */

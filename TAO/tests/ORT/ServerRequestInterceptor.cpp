@@ -2,9 +2,6 @@
 
 #include "ServerRequestInterceptor.h"
 
-#include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
-
 ACE_RCSID (ORT,
            ServerRequestInterceptor,
            "$Id$")

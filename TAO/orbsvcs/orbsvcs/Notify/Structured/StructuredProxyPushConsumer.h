@@ -11,7 +11,6 @@
 
 #ifndef TAO_Notify_STRUCTUREDPROXYPUSHCONSUMER_H
 #define TAO_Notify_STRUCTUREDPROXYPUSHCONSUMER_H
-
 #include /**/ "ace/pre.h"
 
 #include "../notify_export.h"
@@ -21,7 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
-
 #include "../ProxyConsumer_T.h"
 
 #if defined(_MSC_VER)
@@ -37,8 +35,7 @@
  * @brief CosNotifyChannelAdmin::StructuredProxyPushConsumer implementation.
  *
  */
-class TAO_Notify_Export TAO_Notify_StructuredProxyPushConsumer 
-  : public virtual TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>
+class TAO_Notify_Export TAO_Notify_StructuredProxyPushConsumer : public virtual TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>
 {
   friend class TAO_Notify_Builder;
 
@@ -98,5 +95,4 @@ virtual void push_structured_event (
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_Notify_STRUCTUREDPROXYPUSHCONSUMER_H */

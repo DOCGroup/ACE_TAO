@@ -25,10 +25,10 @@
 // =====================================================================
 
 #include "ace/Proactor.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/WIN32_Proactor.h"
 #include "ace/POSIX_Proactor.h"
-#include "ace/OS_main.h"
 
 #if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
      (defined (ACE_HAS_AIO_CALLS)) && !defined (ACE_POSIX_AIOCB_PROACTOR))

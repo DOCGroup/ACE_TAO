@@ -3,10 +3,6 @@
 #include "Client_Request_Interceptor.h"
 #include "testC.h"
 
-#include "tao/DynamicC.h"
-#include "tao/Typecode.h"
-#include "ace/OS_NS_string.h"
-
 ACE_RCSID (Request_Interceptor_Flow,
            Client_Request_Interceptor,
            "$Id$")
@@ -34,7 +30,7 @@ Client_Request_Interceptor::send_request (
               "%s.send_request",
               this->name_.in ()));
 
-  if (ACE_OS::strcmp ("CLIENT B", this->name_.in ()) == 0)
+  if (ACE_OS_String::strcmp ("CLIENT B", this->name_.in ()) == 0)
     {
       // Determine which test scenario we are in
       Dynamic::ParameterList_var paramlist =
@@ -116,7 +112,7 @@ Client_Request_Interceptor::receive_reply (
               "%s.receive_reply",
               this->name_.in ()));
 
-  if (ACE_OS::strcmp ("CLIENT B", this->name_.in ()) == 0)
+  if (ACE_OS_String::strcmp ("CLIENT B", this->name_.in ()) == 0)
     {
       // Determine which test scenario we are in
       Dynamic::ParameterList_var paramlist =
@@ -176,7 +172,7 @@ Client_Request_Interceptor::receive_exception (
               "%s.receive_exception",
               this->name_.in ()));
 
-  if (ACE_OS::strcmp ("CLIENT B", this->name_.in ()) == 0)
+  if (ACE_OS_String::strcmp ("CLIENT B", this->name_.in ()) == 0)
     {
       // Determine which test scenario we are in
       Dynamic::ParameterList_var paramlist =
@@ -203,7 +199,7 @@ Client_Request_Interceptor::receive_exception (
               id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK;
 
-              if (ACE_OS::strcmp (id, "IDL:Test/X:1.0") == 0)
+              if (ACE_OS_String::strcmp (id, "IDL:Test/X:1.0") == 0)
                 {
                   // We can only throw a CORBA::SystemException or a
                   // PortableInteceptor::ForwardRequest exception due
@@ -269,5 +265,5 @@ Client_Request_Interceptor::client_side_test (
   CORBA::String_var op = info->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return ACE_OS::strcmp (op.in (), "client_test") == 0 ? 1 : 0;
+  return ACE_OS_String::strcmp (op.in (), "client_test") == 0 ? 1 : 0;
 }

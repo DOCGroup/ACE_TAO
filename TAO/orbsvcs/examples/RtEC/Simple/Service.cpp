@@ -4,7 +4,6 @@
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/CosNamingC.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(EC_Examples, Service, "$Id$")
 

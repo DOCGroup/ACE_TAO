@@ -18,7 +18,7 @@
 #include /**/ "ace/pre.h"
 
 #include "rtscheduler_export.h"
-
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -39,3 +39,5 @@ static TAO_RTScheduler_Initializer TAO_RTScheduler_initializer;
 
 #include /**/ "ace/post.h"
 #endif /* TAO_RTSCHEDULER_H_ */
+
+

@@ -146,7 +146,7 @@ TAO_SSLIOP_Transport::send_request (TAO_Stub *stub,
 
     return -1;
 
-  return 0;
+  return this->idle_after_send ();
 }
 
 int

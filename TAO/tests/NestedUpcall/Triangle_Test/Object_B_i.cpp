@@ -17,9 +17,8 @@
 //
 // ============================================================================
 
-#include "tao/Exception.h"
+#include "tao/corba.h"
 #include "Object_B_i.h"
-#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Triangle_Test, Object_B_i, "$Id$")
 
@@ -40,6 +39,9 @@ Object_B_i::foo (Object_A_ptr theObject_A_ptr
                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) BEGIN Object_B_i::foo ()\n"));
+
   ACE_TRY
     {
 
@@ -63,4 +65,6 @@ Object_B_i::foo (Object_A_ptr theObject_A_ptr
     }
   ACE_ENDTRY;
 
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) END Object_B_i::foo ()\n"));
 }

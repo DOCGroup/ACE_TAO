@@ -15,15 +15,14 @@
 #define TAO_TYPECODEFACTORY_ADAPTER_IMPL_H
 #include /**/ "ace/pre.h"
 
-#include "typecodefactory_export.h"
+#include "tao/TypeCodeFactory_Adapter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TypeCodeFactory_Adapter.h"
+#include "typecodefactory_export.h"
 #include "ace/Service_Config.h"
-#include "tao/default_environment.h"
 
 /**
  * @class TAO_TypeCodeFactory_Adapter_Impl

@@ -1,4 +1,6 @@
 #include "LF_CH_Event.h"
+#include "ace/Log_Msg.h"
+
 
 ACE_RCSID(tao,
           LF_Invocation_Event,

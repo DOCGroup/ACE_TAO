@@ -5,8 +5,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "Options.h"
-#include "ace/OS_NS_strings.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID(Peer, Options, "$Id$")
 

@@ -1,11 +1,13 @@
-project(*Server): strategies, taoexe, portableserver {
+project(*Server): strategies, taoserver {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(*Client): strategies, taoexe, portableserver {
+project(*Client): strategies, taoserver {
+  exename  = client
+
   Source_Files {
     test_i.cpp
     client.cpp

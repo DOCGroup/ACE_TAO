@@ -15,7 +15,7 @@
 #if !defined (TEST_DYNANY_H)
 #define TEST_DYNANY_H
 
-#include "tao/ORB.h"
+#include "tao/corba.h"
 
 class Test_DynAny
 {

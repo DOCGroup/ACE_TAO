@@ -25,10 +25,8 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Connector.h"
 #include "ace/Malloc.h"
-#include "ace/Null_Mutex.h"
 #include "ace/Time_Request_Reply.h"
 #include "ace/svc_export.h"
-#include "ace/os_include/os_dirent.h"
 
 class ACE_Time_Info
 {

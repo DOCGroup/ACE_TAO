@@ -3,8 +3,6 @@
 
 // Pipe.i
 
-#include "ace/Global_Macros.h"
-
 ASYS_INLINE
 ACE_Pipe::~ACE_Pipe (void)
 {

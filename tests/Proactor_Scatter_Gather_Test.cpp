@@ -38,9 +38,6 @@
 #include "ace/Asynch_Acceptor.h"
 #include "ace/Asynch_Connector.h"
 #include "ace/Mem_Map.h"
-#include "ace/Min_Max.h"
-#include "ace/OS_NS_math.h"
-#include "ace/OS_NS_sys_stat.h"
 
 #include "ace/SOCK_Connector.h"
 

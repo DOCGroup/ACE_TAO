@@ -70,17 +70,18 @@ be_visitor_amh_rh_interface_ss::visit_interface (be_interface *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << rh_skel_full_scope_name.c_str ()
-      << "::" << rh_skel_class_name.c_str () << " (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest &sr" << be_uidt_nl
-      << ")" << be_nl
-      << ": TAO_AMH_Response_Handler (sr)," << be_idt_nl
-      << node->full_name () << " ()" << be_uidt << be_uidt_nl
+  *os << rh_skel_full_scope_name.c_str()
+      << "::" << be_nl
+      << "  " << rh_skel_class_name.c_str()
+      << " (TAO_ServerRequest &sr)" << be_nl
+      << "  : TAO_AMH_Response_Handler (sr)" << be_nl
+      << "  , " << node->full_name () << " ()" << be_nl
       << "{" << be_nl
       << "}" << be_nl << be_nl;
 
-  *os << rh_skel_full_scope_name.c_str ()
-      << "::~" << rh_skel_class_name.c_str ()
+  *os << rh_skel_full_scope_name.c_str()
+      << "::" << be_nl
+      << "  ~" << rh_skel_class_name.c_str()
       << " (void)" << be_nl;
   *os << "{" << be_nl;
   *os << "}";

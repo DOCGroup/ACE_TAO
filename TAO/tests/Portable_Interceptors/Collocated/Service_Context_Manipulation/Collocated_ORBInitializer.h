@@ -4,12 +4,13 @@
 #define SERVICE_CONTEXT_MANIPULATION_COLLOCATED_ORBINITIALIZER_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableInterceptorC.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.

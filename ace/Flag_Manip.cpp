@@ -6,15 +6,6 @@
 #include "ace/Flag_Manip.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#if defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_LACKS_FCNTL)
-#  include "ace/OS_NS_stropts.h"
-#  include "ace/OS_NS_errno.h"
-#endif /* ACE_WIN32 || VXWORKS || ACE_LACKS_FCNTL */
-
-#if defined (CYGWIN32)
-#  include "ace/os_include/os_termios.h"
-#endif /* CYGWIN32 */
-
 ACE_RCSID(ace, Flag_Manip, "$Id$")
 
 // Flags are file status flags to turn on.

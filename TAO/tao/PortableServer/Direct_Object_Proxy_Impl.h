@@ -14,8 +14,10 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_DIRECT_OBJECT_PROXY_IMPL_H_
 #define TAO_DIRECT_OBJECT_PROXY_IMPL_H_
+
 
 #include /**/ "ace/pre.h"
 

@@ -9,7 +9,6 @@
 #include "Compressor.h"
 
 #include "ace/Stream_Modules.h"
-#include "ace/OS_NS_string.h"
 
 /* You can choose at compile time to include/exclude the protocol
    pieces.
@@ -118,7 +117,7 @@ Protocol_Stream::open (bool isOriginator)
         neg.algorithmCount = 1;
         neg.algorithm[0] = acode;
 
-        ACE_OS::memcpy(message->wr_ptr(), &neg, sizeof(neg));
+        memcpy(message->wr_ptr(), &neg, sizeof(neg));
         message->wr_ptr(sizeof(neg));
 
         if (put(message, 0) < 0)
@@ -133,7 +132,7 @@ Protocol_Stream::open (bool isOriginator)
         }
 
         CompressionNegotiationReply negResponse;
-        ACE_OS::memcpy(&negResponse, response->rd_ptr(), sizeof(negResponse));
+        memcpy(&negResponse, response->rd_ptr(), sizeof(negResponse));
 
         response->release();
         if (negResponse.errorCode != NEGOTIATE_OK)
@@ -152,7 +151,7 @@ Protocol_Stream::open (bool isOriginator)
         }
 
         CompressionNegotiation neg;
-        ACE_OS::memcpy(&neg, message->rd_ptr(), sizeof(neg));
+        memcpy(&neg, message->rd_ptr(), sizeof(neg));
         message->release();
 
         // Reply to handshake message.
@@ -185,7 +184,7 @@ Protocol_Stream::open (bool isOriginator)
         }
 
         ACE_Message_Block* reply = new ACE_Message_Block( 1024 );
-        ACE_OS::memcpy(reply->wr_ptr(), &negResponse, sizeof(negResponse));
+        memcpy(reply->wr_ptr(), &negResponse, sizeof(negResponse));
         reply->wr_ptr(sizeof(neg));
 
         if (put(reply, 0) < 0)

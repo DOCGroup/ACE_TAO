@@ -12,6 +12,7 @@
 #include "ace/Singleton.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/Synch.h"
 
 
 ACE_RCSID(SOCK_SAP, CPP_inclient, "$Id$")

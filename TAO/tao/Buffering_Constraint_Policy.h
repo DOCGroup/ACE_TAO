@@ -12,10 +12,9 @@
 
 #ifndef TAO_BUFFERING_CONSTRAINT_POLICY_H
 #define TAO_BUFFERING_CONSTRAINT_POLICY_H
-
 #include /**/ "ace/pre.h"
 
-#include "tao/TAOC.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,6 +22,7 @@
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
+#include "tao/TAOC.h"
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)

@@ -107,10 +107,10 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   /// Add another argument.  This only works in the <ITERATIVE> state.
-  /// Note that this method does not copy <next_arg>, nor does it
+  /// Note that this method does not copy <next_arg>, nor does it 
   /// assume ownership of managing its memory, i.e., the caller is
   /// responsible for memory management.  Returns -1 on failure and 0
-  /// on success.
+  /// on success.  
   int add (const ACE_TCHAR *next_arg);
 
   /**
@@ -135,11 +135,6 @@ public:
   };
 
 private:
-  /// Copy Constructor not implemented
-  ACE_ARGV (const ACE_ARGV&);
-
-  /// Assignment '=' operator not implemented
-  ACE_ARGV operator= (const ACE_ARGV&);
 
   /// Creates buf_ from the queue, deletes previous buf_.
   int create_buf_from_queue (void);

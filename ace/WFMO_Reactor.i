@@ -3,7 +3,6 @@
 
 #include "ace/Handle_Set.h"
 #include "ace/Reactor.h"
-#include "ace/Thread.h"
 /************************************************************/
 
 ACE_INLINE int

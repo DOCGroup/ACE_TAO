@@ -21,20 +21,18 @@ use DependencyWriterFactory;
 # ************************************************************
 
 sub new {
-  my($class)    = shift;
-  my($macros)   = shift;
-  my($options)  = shift;
-  my($ipaths)   = shift;
-  my($replace)  = shift;
-  my($type)     = shift;
-  my($noinline) = shift;
-  my($self)     = bless {'pre'      => new Preprocessor($macros,
-                                                        $options, $ipaths),
-                         'replace'  => $replace,
-                         'dwrite'   => DependencyWriterFactory::create($type),
-                         'noinline' => $noinline,
-                         'cwd'      => undef,
-                        }, $class;
+  my($class)   = shift;
+  my($macros)  = shift;
+  my($options) = shift;
+  my($ipaths)  = shift;
+  my($replace) = shift;
+  my($type)    = shift;
+  my($self)    = bless {'pre'     => new Preprocessor($macros,
+                                                      $options, $ipaths),
+                        'replace' => $replace,
+                        'dwrite'  => DependencyWriterFactory::create($type),
+                        'cwd'     => undef,
+                       }, $class;
 
   ## Set the current working directory, but
   ## escape regular expression special characters
@@ -60,7 +58,7 @@ sub process {
   my($replace) = $self->{'replace'};
   my(@repkeys) = keys %$replace;
   my($cwd)     = $self->{'cwd'};
-  my(@files)   = @{$self->{'pre'}->process($file, $self->{'noinline'})};
+  my(@files)   = @{$self->{'pre'}->process($file)};
 
   ## Go through each file
   foreach my $finc (@files) {

@@ -5,12 +5,9 @@
 #include "marker.h"
 #include "Client_ORBInitializer.h"
 #include "Interceptor_Type.h"
-
 #include "tao/debug.h"
-#include "tao/ORBInitializer_Registry.h"
-
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_errno.h"
+#include "ace/OS.h"
 
 ACE_RCSID (Benchmark,
            client,

@@ -1,10 +1,12 @@
 project(*Sender) : aceexe, rmcast {
+  requires += rmcast
   exename = sender
   Source_Files {
     Sender.cpp
   }
 }
 project(*Receiver) : aceexe, rmcast {
+  requires += rmcast
   exename = receiver
   Source_Files {
     Receiver.cpp

@@ -114,19 +114,4 @@ private:
 
   TAO_AV_Protocol_Object *protocol_object_;
   // Protocol object corresponding to the transport protocol selected.
-
-  char* address_;
-  // Destination Address.
-  
-  char* peer_address_;
-  // Destination Address.
-
-  char** local_sec_addrs_;
-  // Local secondary addresses
-
-  char** peer_sec_addrs_;
-  // Peer secondary addresses
-
-  int num_local_sec_addrs_;
-  int num_peer_sec_addrs_;
 };

@@ -14,7 +14,7 @@ ACE_RCSID (ace,
 #define ACE_NTRACE 1
 
 #include "ace/Log_Msg.h"
-#include "ace/Object_Manager_Base.h"
+#include "ace/OS.h"
 
 // = Static initialization.
 

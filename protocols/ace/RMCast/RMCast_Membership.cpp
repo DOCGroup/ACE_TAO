@@ -3,13 +3,11 @@
 //
 
 #include "RMCast_Membership.h"
+#include "RMCast_Proxy.h"
 
 #if !defined (__ACE_INLINE__)
 # include "RMCast_Membership.i"
 #endif /* ! __ACE_INLINE__ */
-
-#include "RMCast_Proxy.h"
-#include "ace/Guard_T.h"
 
 ACE_RCSID(ace, RMCast_Membership, "$Id$")
 

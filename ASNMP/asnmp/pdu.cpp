@@ -34,8 +34,6 @@
 
 #include "asnmp/snmp.h"
 #include "asnmp/pdu.h"       // include Pdu class definition
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(asnmp, pdu, "$Id$")
 

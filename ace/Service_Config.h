@@ -16,7 +16,6 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
-#include "ace/Default_Constants.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

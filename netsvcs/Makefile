@@ -10,11 +10,13 @@
 
 INFO  = README
 
-# Always decend into the dirs to cleanup, and let those Makefiles decide
-# whether or not to build anything.
+# lib must come first!
+ACE_BUILD_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --ace)
+ifeq (Other,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
 DIRS  = lib \
         clients \
 	servers
+endif # ! Other
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

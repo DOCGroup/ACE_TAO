@@ -25,6 +25,7 @@
 //
 // ============================================================================
 
+#include "ace/Synch.h"
 #include "ace/Task.h"
 
 #include "ace/CLASSIX/CLASSIX_OS.h"

@@ -1,32 +1,40 @@
 #include "IIOP_Transport.h"
+#include "IIOP_Connection_Handler.h"
 #include "IIOP_Acceptor.h"
-#include "tao/IIOPC.h"
+#include "IIOP_Profile.h"
 #include "Acceptor_Registry.h"
+#include "Thread_Lane_Resources.h"
 #include "operation_details.h"
+#include "Timeprobe.h"
+#include "CDR.h"
+#include "Transport_Mux_Strategy.h"
 #include "Wait_Strategy.h"
+#include "Sync_Strategies.h"
+#include "ORB_Core.h"
 #include "debug.h"
 #include "GIOP_Message_Base.h"
-// #include "GIOP_Message_Lite.h"
+#include "GIOP_Message_Lite.h"
 #include "Protocols_Hooks.h"
+#include "Adapter.h"
 
 #if !defined (__ACE_INLINE__)
 # include "IIOP_Transport.i"
 #endif /* ! __ACE_INLINE__ */
 
+
 ACE_RCSID (tao,
            IIOP_Transport,
            "$Id$")
 
+
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
-                                        CORBA::Boolean )
+                                        CORBA::Boolean flag)
   : TAO_Transport (IOP::TAG_INTERNET_IOP,
                    orb_core)
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
-#if 0
-  // First step in deprecating this. No one seems using it.
   if (flag)
     {
       // Use the lite version of the protocol
@@ -34,7 +42,6 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                TAO_GIOP_Message_Lite (orb_core));
     }
   else
-#endif /*if 0*/
     {
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,
@@ -171,7 +178,7 @@ TAO_IIOP_Transport::send_request (TAO_Stub *stub,
 
   this->first_request_sent();
 
-  return 0;
+  return this->idle_after_send ();
 }
 
 int
@@ -351,17 +358,14 @@ TAO_IIOP_Transport::get_listen_point (
 {
   TAO_IIOP_Acceptor *iiop_acceptor =
     ACE_dynamic_cast (TAO_IIOP_Acceptor *,
-                      acceptor);
-
-  if (iiop_acceptor == 0)
-    return -1;
+                      acceptor );
 
   // Get the array of endpoints serviced by TAO_IIOP_Acceptor
   const ACE_INET_Addr *endpoint_addr =
     iiop_acceptor->endpoints ();
 
   // Get the endpoint count
-  const size_t count =
+  size_t count =
     iiop_acceptor->endpoint_count ();
 
   // Get the local address of the connection
@@ -398,17 +402,17 @@ TAO_IIOP_Transport::get_listen_point (
        index++)
     {
       if (local_addr.get_ip_address()
-          == endpoint_addr[index].get_ip_address ())
+          == endpoint_addr[index].get_ip_address())
         {
           // Get the count of the number of elements
-          const CORBA::ULong len = listen_point_list.length ();
+          CORBA::ULong len = listen_point_list.length ();
 
           // Increase the length by 1
           listen_point_list.length (len + 1);
 
           // We have the connection and the acceptor endpoint on the
           // same interface
-          IIOP::ListenPoint & point = listen_point_list[len];
+          IIOP::ListenPoint &point = listen_point_list[len];
           point.host = CORBA::string_dup (local_interface.in ());
           point.port = endpoint_addr[index].get_port_number ();
         }

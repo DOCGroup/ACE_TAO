@@ -27,12 +27,14 @@ ACE_RCSID (be_visitor_operation,
 // ************************************************************
 
 be_visitor_operation::be_visitor_operation (be_visitor_context *ctx)
-  : be_visitor_scope (ctx)
+  : be_visitor_scope (ctx),
+    operation_name_ (0)
 {
 }
 
 be_visitor_operation::~be_visitor_operation (void)
 {
+  delete [] operation_name_;
 }
 
 // Is the operation return type void?
@@ -218,6 +220,7 @@ be_visitor_operation::gen_environment_decl (int argument_emitted,
   TAO_CodeGen::CG_STATE cgs = this->ctx_->state ();
 
   if (node->argument_count () > 0
+      || cgs == TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH
       || cgs == TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH
       || cgs == TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS)
     {
@@ -378,23 +381,64 @@ be_visitor_operation::gen_stub_operation_body (
     be_type *return_type
   )
 {
-  be_interface *intf = this->ctx_->attribute ()
-    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-    : be_interface::narrow_from_scope (node->defined_in ());
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_visitor_context ctx;
+  const char *target = "_collocated_tao_target_";
 
-  if (!intf)
+  if (node->defined_in ()->is_abstract ())
+    {
+      target = "this";
+    }
+
+  *os << be_nl << "{" << be_idt_nl;
+
+  const char *env = this->gen_environment_var ();
+
+  if (ACE_OS::strcmp ("", env) != 0)
+    {
+      *os << env << be_nl;
+    }
+
+  // Generate the actual code for the stub. However, if any of the argument
+  // types is "native", we flag a MARSHAL exception.
+  // last argument - is always ACE_ENV_ARG_PARAMETER
+  if (!node->has_native ())
+    {
+      // native type does not exist.
+
+      // Generate any "pre" stub information such as tables or declarations
+      // This is a template method and the actual work will be done by the
+      // derived class
+      if (this->gen_pre_stub_info (node) == -1)
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
+              "visit_operation - "
+              "gen_pre_stub_info failed\n"
+            ),
+            -1
+          );
+        }
+    }
+
+  // Declare return type.
+  ctx = *this->ctx_;
+  be_visitor_operation_rettype_vardecl_cs rd_visitor (&ctx);
+
+  if (return_type->accept (&rd_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
+                         "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
                          "visit_operation - "
-                         "bad interface scope\n"),
+                         "codegen for return var decl failed\n"),
                         -1);
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
-  be_visitor_context ctx;
-
-  *os << be_nl << "{" << be_idt_nl;
+  if (node->void_return_type () == 0)
+    {
+      *os << be_nl;
+    }
 
   if (node->has_native ()) // native exists => no stub
     {
@@ -404,164 +448,112 @@ be_visitor_operation::gen_stub_operation_body (
         {
           ACE_ERROR_RETURN ((
               LM_ERROR,
-              "(%N:%l) be_visitor_operation_cs::"
+              "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
               "visit_operation - "
-              "codegen for native exception failed\n"
+              "codegen for return var failed\n"
+            ),
+            -1
+          );
+        }
+    }
+  else
+    {
+      // Generate code that retrieves the underlying stub object and then
+      // invokes do_static_call on it.
+      *os << "TAO_Stub *istub = " << target << "->_stubobj ();"
+          << be_nl << be_nl
+          << "if (istub == 0)" << be_idt_nl
+          << "{" << be_idt_nl;
+
+      // If the stub object was bad, then we raise a system exception.
+      if (this->gen_raise_exception (return_type, "CORBA::INTERNAL", "") == -1)
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
+              "visit_operation - "
+              "codegen for checking exception failed\n"
             ),
             -1
           );
         }
 
-      *os << be_uidt_nl << "}";
+      *os << be_uidt_nl << "}" << be_uidt_nl;
 
-      return 0;
-    }
+      // Do any pre marshal and invoke processing with return type. This
+      // includes allocating memory, initialization.
+      ctx = *this->ctx_;
+      be_visitor_operation_rettype_pre_invoke_cs rpi_visitor (&ctx);
 
-  if (!node->is_abstract ())
-    {
-      // If the object is lazily evaluated the proxy brker might well
-      // be null.  Initialize it now.
-      *os << "if (!this->is_evaluated ())" << be_idt_nl
-          << "{" << be_idt_nl
-          << "ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);"
-          << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-          << "if (this->the" << intf->base_proxy_broker_name () << "_ == 0)"
-          << be_idt_nl
-          << "{" << be_idt_nl
-          << intf->flat_name () << "_setup_collocation ("
-          << be_idt << be_idt_nl
-          << "this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()"
-          << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl;
-    }
-
-  const char *env = this->gen_environment_var ();
-
-  if (ACE_OS::strcmp ("", env) != 0)
-    {
-      *os << env << be_nl;
-    }
-
-  // Declare return type helper class.
-
-  *os << "TAO::Arg_Traits<";
-
-  this->gen_arg_template_param_name (return_type,
-                                     os);
-
-  *os << ">::ret_val _tao_retval;";
-
-  // Declare the argument helper classes.
-  this->gen_stub_body_arglist (node, os);
-
-  *os << be_nl << be_nl
-      << "TAO::Argument *_tao_signature [] =" << be_idt_nl
-      << "{" << be_idt_nl
-      << "&_tao_retval";
-
-  AST_Argument *arg = 0;
-
-  for (UTL_ScopeActiveIterator arg_list_iter (node, UTL_Scope::IK_decls);
-       ! arg_list_iter.is_done ();
-       arg_list_iter.next ())
-    {
-      arg = AST_Argument::narrow_from_decl (arg_list_iter.item ());
-
-      *os << "," << be_nl
-          << "&_tao_" << arg->local_name ();
-    }
-
-  *os << be_uidt_nl
-      << "};" << be_uidt;
-
-  if (this->gen_pre_stub_info (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_cs::"
-                         "visit_operation - "
-                         "codegen for exceptiondata failed\n"),
-                        -1);
-    }
-
-
-  long tmp_len =
-    ACE_OS::strlen (node->local_name ()->get_string ());
-
-  *os << be_nl << be_nl
-      << "TAO::" << (node->is_abstract () ? "AbstractBase_" : "" )
-      << "Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
-      << "this," << be_nl
-      << "_tao_signature," << be_nl
-      << node->argument_count () + 1 << "," << be_nl
-      << "\"";
-
-  // Check if we are an attribute node in disguise.
-  if (this->ctx_->attribute ())
-    {
-      // If we are a attribute node, add th elength of the operation
-      // name.
-      tmp_len += 5;
-
-      // Now check if we are a "get" or "set" operation.
-      if (node->nmembers () == 1)
+      if (return_type->accept (&rpi_visitor) == -1)
         {
-          *os << "_set_";
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
+              "visit_operation - "
+              "codegen for retval pre invoke failed\n"
+            ),
+            -1
+          );
         }
-      else
+
+      // Do any pre marshal and invoke stuff with arguments.
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_PRE_INVOKE_CS);
+      be_visitor_operation_argument api_visitor (&ctx);
+
+      if (node->accept (&api_visitor) == -1)
         {
-          *os << "_get_";
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
+              "visit_operation - "
+              "codegen for argument pre invoke failed\n"
+            ),
+            -1
+          );
         }
-    }
 
-  *os << node->local_name () << "\"," << be_nl
-      << tmp_len << "," << be_nl
-      << "this->the" << intf->base_proxy_broker_name () << "_";
+      // Generate the code for marshaling in the parameters and transmitting
+      // them.
+      if (this->gen_marshal_and_invoke (node, return_type) == -1)
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
+              "visit_operation - "
+              "codegen for marshal and invoke failed\n"
+            ),
+            -1
+          );
 
-  if (node->flags () == AST_Operation::OP_oneway)
-    {
-      *os << "," << be_nl
-          << "TAO::TAO_ONEWAY_INVOCATION";
-    }
+        }
 
-  *os << be_uidt_nl
-      << ");" << be_uidt;
+      if (!this->void_return_type (return_type))
+        {
+          AST_Decl::NodeType nt = return_type->node_type ();
 
-  *os << be_nl << be_nl;
+          if (nt == AST_Decl::NT_typedef)
+            {
+              AST_Typedef *td = AST_Typedef::narrow_from_decl (return_type);
+              AST_Type *t = td->primitive_base_type ();
+              nt = t->node_type ();
+            }
 
-  // Since oneways cannot raise user exceptions, we have that
-  // case covered as well.
-  if (node->exceptions ())
-    {
-      *os << "_tao_call.invoke (" << be_idt << be_idt_nl
-          << "_tao_" << node->flat_name ()
-          << "_exceptiondata," << be_nl
-          << node->exceptions ()->length () << be_nl
-          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-          << ");" << be_uidt;
-    }
-  else
-    {
-      *os << "_tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);";
-    }
+          *os << be_nl << be_nl;
 
-  *os << be_nl;
-
-  if (this->void_return_type (return_type))
-    {
-      *os << "ACE_CHECK;";
-    }
-  else
-    {
-      *os << "ACE_CHECK_RETURN (_tao_retval.excp ());";
-    }
-
-  if (!this->void_return_type (return_type))
-    {
-      *os << be_nl << be_nl
-          << "return _tao_retval.retn ();";
-    }
+          // Now generate the normal successful return statement.
+          if (return_type->size_type () == AST_Type::VARIABLE
+              || nt == AST_Decl::NT_array)
+            {
+              *os << "return _tao_retval._retn ();";
+            }
+          else
+            {
+              *os << "return _tao_retval;";
+            }
+        }
+    } // end of if (!native)
 
   *os << be_uidt_nl << "}";
 
@@ -585,6 +577,708 @@ be_visitor_operation::gen_pre_stub_info (
                          "Exceptionlist generation error\n"),
                         -1);
     }
+
+  return 0;
+}
+
+int
+be_visitor_operation::gen_marshal_and_invoke (
+    be_operation *node,
+    be_type *bt
+  )
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_visitor_context ctx;
+  const char *target = "_collocated_tao_target_";
+
+  if (node->defined_in ()->is_abstract ())
+    {
+      target = "this";
+    }
+
+
+  os->indent ();
+
+  *os << be_nl;
+
+  // Create the GIOP_Invocation and grab the outgoing CDR stream.
+  switch (node->flags ())
+    {
+    case AST_Operation::OP_oneway:
+      *os << "TAO_GIOP_Oneway_Invocation _tao_call ";
+      break;
+    default:
+      *os << "TAO_GIOP_Twoway_Invocation _tao_call ";
+    }
+
+  // Do we have "_set_" or "_get_" prepended?
+  size_t ext = this->ctx_->attribute () ? 5 : 0;
+
+  // Do we have any arguments in the operation that needs marshalling
+  int flag =
+    node->count_arguments_with_direction (AST_Argument::dir_IN
+                                          | AST_Argument::dir_INOUT);
+
+  *os << "(" << be_idt << be_idt_nl
+      << "istub," << be_nl
+      << this->compute_operation_name (node)
+      << "," << be_nl
+      << ACE_OS::strlen (node->original_local_name ()->get_string ()) + ext
+      << "," << be_nl
+      << flag
+      << "," <<be_nl
+      << "istub->orb_core ()" << be_uidt_nl
+      << ");" << be_uidt_nl;
+
+  *os << be_nl
+      << "int _invoke_status;" << be_nl;
+
+  // Generate code to obtain the client request interceptors from the
+  // ORB.
+  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
+  *os << "TAO_ClientRequestInterceptor_Adapter _tao_vfr ("
+      << be_idt << be_idt_nl
+      << "istub->orb_core ()->client_request_interceptors ()," << be_nl
+      << "&_tao_call," << be_nl
+      << "_invoke_status"
+      << be_uidt_nl
+      << ");" << be_uidt_nl;
+
+  *os << "\n#endif  /* TAO_HAS_INTERCEPTORS */" << be_nl;
+
+  // The connection retry loop.
+  *os << be_nl
+      << "for (;;)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "_invoke_status = TAO_INVOKE_EXCEPTION;" << be_nl;
+
+
+  *os << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl;
+
+  *os << "TAO_ClientRequestInfo_" << node->flat_name ();
+
+  // We need the interface node in which this operation was defined. However,
+  // if this operation node was an attribute node in disguise, we get this
+  // information from the context and add a "_get"/"_set" to the flat
+  // name to get around the problem of overloaded methods which are
+  // generated for attributes.
+  if (this->ctx_->attribute ())
+    {
+      bt = be_type::narrow_from_decl (node->return_type ());
+
+      if (!bt)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_interceptors_ch::"
+                             "visit_operation - "
+                             "Bad return type\n"),
+                            -1);
+        }
+
+      // Grab the right visitor to generate the return type if its not
+      // void it means it is not the accessor.
+      if (!this->void_return_type (bt))
+        {
+          *os << "_get";
+        }
+      else
+        {
+          *os << "_set";
+        }
+    }
+
+  *os << " _tao_ri (" << be_idt << be_idt_nl
+      << "&_tao_call," << be_nl
+      << target;
+
+  // Generate the formal argument fields which are passed
+  // to the RequestInfo object.
+  ctx = *this->ctx_;
+  ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS);
+  be_visitor_operation_interceptors_arglist iia_visitor (&ctx);
+
+  if (node->accept (&iia_visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
+                         "visit_operation - "
+                         "codegen for arglist failed\n"),
+                        -1);
+    }
+
+  *os << be_uidt_nl << ");" << be_uidt_nl;
+
+  if (this->gen_check_exception (bt) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
+                         "gen_marshal_and_invoke - "
+                         "codegen for checking exception failed\n"),
+                        -1);
+    }
+
+  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl;
+
+ // Prepare the request header.
+  *os << be_nl << "CORBA::Short _tao_response_flag = ";
+
+  switch (node->flags ())
+    {
+    case AST_Operation::OP_oneway:
+      *os << "_tao_call.sync_scope ();" << be_nl
+          << "TAO_INTERCEPTOR (_tao_ri.response_expected (0));" << be_nl;
+      break;
+    default:
+      *os << "TAO_TWOWAY_RESPONSE_FLAG;" << be_nl
+          << "TAO_INTERCEPTOR (_tao_ri.response_expected (1));" << be_nl;
+    }
+
+  *os << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl;
+
+  *os << be_nl << "ACE_TRY" << be_idt_nl
+      << "{" << be_idt_nl;
+
+  // Invoke send_request() interception point.
+  // This is done before the Invocation::start() call so that a
+  // connection can be avoided if send_request() throws an exception,
+  // i.e. this is an optimization.
+  *os << "_tao_vfr.send_request (" << be_idt << be_idt_nl
+      << "&_tao_ri" << be_nl
+      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_nl;
+
+  // _invoke_status is potentially set (via a reference) in
+  // TAO_ClientRequestInterceptor_Adapter::send_request() so check its
+  // value.  If a location forward or transport retry occured, then we
+  // need to restart the loop so that the ClientRequestInfo object is
+  // setup for the re-issued request.
+  //
+  // Note that since we're invoking the send_request() interception
+  // point before the Invocation::start() call, i.e. before a
+  // connection is ever made, we're actually able to forward requests
+  // for oneways via the PortableInterceptor::ForwardRequest exception
+  // too!
+  *os  << be_nl
+       << "if (_invoke_status == TAO_INVOKE_RESTART)" << be_idt_nl
+       << "{" << be_idt_nl
+       << "_tao_call.restart_flag (1);" << be_uidt_nl
+       << "}" << be_uidt_nl
+       << "else" << be_idt_nl
+       << "{" << be_idt_nl;
+
+  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl;
+
+
+  *os << be_nl
+      << "_tao_call.start (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_nl;
+
+  // Check if there is an exception.
+  if (this->gen_check_interceptor_exception (bt) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
+                         "gen_marshal_and_invoke - "
+                         "codegen for checking exception failed\n"),
+                        -1);
+    }
+
+ *os << be_nl
+      << "_tao_call.prepare_header (" << be_idt << be_idt_nl
+      << "ACE_static_cast (CORBA::Octet, _tao_response_flag)" << be_nl
+      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+      << ");" << be_uidt_nl;
+
+  // Check if there is an exception.
+  if (this->gen_check_interceptor_exception (bt) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
+                         "gen_marshal_and_invoke - "
+                         "codegen for checking exception failed\n"),
+                        -1);
+    }
+
+  // Now make sure that we have some in and inout parameters. Otherwise, there
+  // is nothing to be marshaled in.
+  if (this->has_param_type (node, AST_Argument::dir_IN) ||
+      this->has_param_type (node, AST_Argument::dir_INOUT))
+    {
+      *os << be_nl
+          << "TAO_OutputCDR &_tao_out = _tao_call.out_stream ();"
+          << be_nl << be_nl
+          << "if (!(" << be_idt << be_idt_nl;
+
+      // Marshal each in and inout argument.
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_INVOKE_CS);
+      ctx.sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
+      be_visitor_operation_argument_invoke oai_visitor (&ctx);
+
+      if (node->accept (&oai_visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "gen_marshal_and_invoke - "
+                             "codegen for return var in "
+                             "do_static_call failed\n"),
+                            -1);
+        }
+
+      *os << be_nl
+          << "))" << be_uidt_nl
+          << "{" << be_idt_nl;
+
+      // If marshaling fails, raise exception (codesetting has various minors)
+      *os << "TAO_OutputCDR::throw_stub_exception (errno "
+          << "ACE_ENV_ARG_PARAMETER); "
+          << be_nl;
+
+      if (this->gen_check_interceptor_exception (bt) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "gen_marshal_and_invoke - "
+                             "codegen for checking exception failed\n"),
+                            -1);
+        }
+
+      *os << be_uidt_nl;
+      *os << "}" << be_uidt_nl << be_nl;
+    }
+  else
+    {
+      *os << be_nl << be_nl;
+    }
+
+  *os << "_invoke_status =" << be_idt_nl;
+
+  if (node->flags () == AST_Operation::OP_oneway)
+    {
+      // Oneway operation.
+      *os << "_tao_call.invoke (ACE_ENV_SINGLE_ARG_PARAMETER);";
+    }
+  else
+    {
+      if (node->exceptions ())
+        {
+          *os << "_tao_call.invoke (_tao_" << node->flat_name ()
+              << "_exceptiondata, "
+              << node->exceptions ()->length ()
+              << " ACE_ENV_ARG_PARAMETER);";
+        }
+      else
+        {
+          *os << "_tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);";
+        }
+    }
+
+  *os << be_uidt_nl;
+
+  // Check if there is an exception.
+  if (this->gen_check_interceptor_exception (bt) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_cs::"
+                         "gen_marshal_and_invoke - "
+                         "codegen for checking exception failed\n"),
+                        -1);
+    }
+
+  *os << be_nl
+      << "if (_invoke_status == TAO_INVOKE_EXCEPTION)" << be_idt_nl
+      << "{" << be_idt_nl;
+
+  // Unlisted user exception received by client.
+  int status = this->gen_raise_interceptor_exception (
+                         bt,
+                         "CORBA::UNKNOWN",
+                         "CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES"
+                       );
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_cs::"
+                         "gen_marshal_and invoke - "
+                         "codegen for return var failed\n"),
+                        -1);
+    }
+
+  *os << be_uidt_nl << "}" << be_uidt_nl;
+
+  // Note that we no longer turn this code generation off if it's a
+  // one way operation since the sync scope policy may actually allow
+  // things such as LOCATION_FORWARD replies to be propagated back to
+  // the client (e.g. SYNC_WITH_TARGET).
+
+  *os << "else if (_invoke_status == TAO_INVOKE_RESTART)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "_tao_call.restart_flag (1);" << be_nl
+      << "TAO_INTERCEPTOR (" << be_idt << be_idt_nl
+      << "_tao_ri.reply_status (_invoke_status);" << be_nl
+      << "_tao_vfr.receive_other (" << be_idt << be_idt_nl
+      << "&_tao_ri" << be_nl
+      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_uidt_nl
+      << ")" << be_uidt << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "else" << be_idt_nl
+      << "{" << be_idt;
+
+  // If we reach here, we are ready to proceed.
+  // the code below this is for twoway operations only.
+
+  if (!this->void_return_type (bt)
+      || this->has_param_type (node, AST_Argument::dir_INOUT)
+      || this->has_param_type (node, AST_Argument::dir_OUT))
+
+    {
+      // Do any post_invoke stuff that might be necessary.
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_POST_INVOKE_CS);
+      ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
+      be_visitor_operation_argument oapi_visitor (&ctx);
+
+      if (node->accept (&oapi_visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "gen_marshal_and_invoke - "
+                             "codegen for args in post do_static_call\n"),
+                            -1);
+        }
+
+      // Generate any temporary variables to demarshal the arguments.
+      be_visitor_args_decl vis1 (&ctx);
+
+      if (node->accept (&vis1) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "gen_pre_stub_info - "
+                             "codegen for pre args failed\n"),
+                            -1);
+        }
+
+      if (!this->void_return_type (bt))
+        {
+          // Generate any temporary variables to demarshal the return value.
+          be_visitor_operation_rettype_post_invoke_cs vis2 (&ctx);
+
+          if (bt->accept (&vis2) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_operation_cs::"
+                                 "gen_pre_stub_info - "
+                                 "codegen rettype [post invoke] failed\n"),
+                                -1);
+            }
+        }
+
+      // Check if there was a user exception, else demarshal the
+      // return val (if any) and parameters (if any) that came with
+      // the response message.
+      *os << be_nl << be_nl
+          << "TAO_InputCDR &_tao_in = _tao_call.inp_stream ();"
+          << be_nl ;
+
+      //  Added so codeset translators may be used to decode reply
+      *os << "_tao_call.transport()->assign_translators (&_tao_in,0);"
+          << be_nl << be_nl;
+
+      // reply
+      *os << "if (!(" << be_idt << be_idt;
+
+      if (!this->void_return_type (bt))
+        {
+          // Demarshal the return value.
+          ctx = *this->ctx_;
+          ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
+          be_visitor_operation_rettype_marshal_ss ori_visitor (&ctx);
+
+          if (node->accept (&ori_visitor) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_operation_cs::"
+                                 "gen_marshal_and_invoke - "
+                                 "codegen for return var failed\n"),
+                                -1);
+            }
+        }
+
+      if (this->has_param_type (node, AST_Argument::dir_INOUT)
+          || this->has_param_type (node, AST_Argument::dir_OUT))
+        {
+          if (!this->void_return_type (bt))
+            {
+              *os << " &&" << be_nl;
+            }
+
+          // Demarshal each out and inout argument.
+          ctx = *this->ctx_;
+          ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_INVOKE_CS);
+          ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
+          be_visitor_operation_argument_invoke oai_visitor (&ctx);
+
+          if (node->accept (&oai_visitor) == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_operation_cs::"
+                                 "gen_marshal_and_invoke - "
+                                 "codegen for return var failed\n"),
+                                -1);
+            }
+        }
+
+      *os << be_nl
+          << "))" << be_uidt_nl
+          << "{" << be_idt_nl;
+
+      // If marshaling fails, raise exception (codesetting has various minors)
+      *os << "TAO_InputCDR::throw_stub_exception (errno "
+          << "ACE_ENV_ARG_PARAMETER); "
+          << be_nl;
+      if (this->gen_check_interceptor_exception (bt) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "gen_marshal_and_invoke - "
+                             "codegen for checking exception failed\n"),
+                            -1);
+        }
+
+      *os << be_nl;
+
+      if (status == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "gen_marshal_and invoke - "
+                             "codegen for return var failed\n"),
+                            -1);
+        }
+
+      *os << be_uidt_nl << "}" << be_uidt_nl;
+    }
+
+  *os << "\n#if TAO_HAS_INTERCEPTORS == 1"  << be_nl;
+
+  // Populate the ClientRequestInfo object with result, if any, of the
+  // invocation.
+  if (!this->void_return_type (bt))
+    {
+      // Here's what we are going to do to have a uniform way of getting the
+      // return value updated for the Request Info:
+      // declare a operation_retval type object and assign the
+      // _tao_retval._retn () to it.
+      // We pass this to the result updation method (note: it hasnt
+      // got destroyed)
+      // We then put it back into the original _tao_retval
+      // object.
+      // And finally the _retn () is returned from the operation w.o
+      // causing any problems.
+
+      // Generate the return type mapping (same as in the header file)
+      ctx = *this->ctx_;
+      be_visitor_operation_rettype oro_visitor (&ctx);
+
+      if (bt->accept (&oro_visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((
+              LM_ERROR,
+              "(%N:%l) be_visitor_operation_remote_proxy_impl_cs::"
+              "visit_operation - "
+              "codegen for return type failed\n"
+            ),
+            -1
+          );
+        }
+
+      if (bt->size_type () == AST_Type::VARIABLE
+          || bt->node_type () == AST_Decl::NT_array)
+        {
+          *os << " _tao_retval_info =" << be_idt_nl
+              << "_tao_retval._retn ();" << be_uidt_nl
+              << "_tao_ri.result (_tao_retval_info);" << be_nl
+              << "_tao_retval = _tao_retval_info;" << be_nl;
+        }
+      else
+        {
+          *os << " _tao_retval_info =" << be_idt_nl
+              << "_tao_retval;" << be_uidt_nl
+              << "_tao_ri.result (_tao_retval_info);" << be_nl;
+        }
+    }
+
+  // Oneway operations don't have receive_reply() interception since
+  // once the request goes over the wire, its the end of the story!
+  // However, we still need to call an ending interception point
+  // (receive_other()) to satisfy the General Flow Rules.
+  if (node->flags () != AST_Operation::OP_oneway)
+    {
+      // If we get this far (in the generated code) then we
+      // successfully completed the request, i.e. no connection retry
+      // will occur, nor will a LOCATION_FORWARD.
+      // Invoke receive_reply() interception point.
+      *os << be_nl
+          << "_tao_ri.reply_status (_invoke_status);" << be_nl
+          << "_tao_vfr.receive_reply (" << be_idt << be_idt_nl
+          << "&_tao_ri" << be_nl
+          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+          << ");" << be_uidt_nl;
+    }
+  else if (node->flags () == AST_Operation::OP_oneway)
+    {
+      // Invoke receive_other() interception point.
+      *os << be_nl
+          << "_tao_ri.reply_status (_invoke_status);" << be_nl
+          << "_tao_vfr.receive_other (" << be_idt_nl
+          << "&_tao_ri" << be_nl
+          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+          << ");" << be_nl;
+    }
+
+  *os << "ACE_TRY_CHECK;"
+      << be_uidt_nl;
+
+  *os << "\n#endif  /* TAO_HAS_INTERCEPTORS */" << be_nl;
+
+  *os << "}" << be_uidt << be_uidt_nl;  // End inner "else" block.
+
+  // Note that we do NOT catch the PortableInterceptor::ForwardRequest
+  // exception here.  It is caught in the
+  // TAO_ClientRequestInterceptor_Adapter class.  This is necessary to
+  // prevent applications from being able to throw the exception in an
+  // effort to get an easy (but illegal) way to forward a request.
+
+  *os << "\n#if TAO_HAS_INTERCEPTORS == 1"  << be_nl
+      << "}" << be_uidt << be_uidt_nl // End outer "else" block.
+      << "}" << be_uidt_nl
+      << "ACE_CATCHANY" << be_idt_nl
+      << "{" << be_idt_nl;
+
+  // Update the exception field of the ClientRequestInfo.
+  *os << "_tao_ri.exception (&ACE_ANY_EXCEPTION);"<< be_nl;
+
+  *os << "_tao_vfr.receive_exception (" << be_idt << be_idt_nl
+      << "&_tao_ri" << be_nl
+      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_nl;
+
+  // The receive_exception() interception point may have thrown a
+  // PortableInterceptor::ForwardRequest exception.  In that event,
+  // the connection retry loop must be restarted so do not rethrow the
+  // caught exception.
+  *os << be_nl
+      << "const PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
+      << "_tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_nl;
+
+  *os << be_nl
+      << "if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION" << be_nl
+      << "    || _tao_status == PortableInterceptor::USER_EXCEPTION)"
+      << be_idt_nl
+      << "{" << be_idt_nl;
+
+  if (be_global->use_raw_throw ())
+    {
+      *os << "throw;";
+    }
+  else
+    {
+      *os << "ACE_RE_THROW;";
+    }
+
+  *os << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl;
+
+  *os << "}" << be_uidt_nl;
+
+  // Convert non-CORBA C++ exceptions to CORBA::UNKNOWN.
+  *os << "\n# if defined (ACE_HAS_EXCEPTIONS) \\\n"
+      << "     && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)" << be_nl
+      << "ACE_CATCHALL" << be_idt_nl
+      << "{" << be_idt_nl
+      << "CORBA::UNKNOWN ex;" << be_nl
+      << be_nl
+      << "_tao_ri.exception (&ex);"<< be_nl
+      << "_tao_vfr.receive_exception (" << be_idt << be_idt_nl
+      << "&_tao_ri" << be_nl
+      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_nl;
+
+  // The receive_exception() interception point may have thrown a
+  // PortableInterceptor::ForwardRequest exception.  In that event,
+  // the connection retry loop must be restarted so do not throw the
+  // CORBA::UNKNOWN exception to convert the unhandled C++ exception.
+  *os << be_nl
+      << "const PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
+      << "_tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_nl;
+
+  *os << be_nl
+      << "if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION)"
+      << be_idt_nl;
+
+  if (be_global->use_raw_throw ())
+    {
+      *os << "throw ";
+    }
+  else
+    {
+      *os << "ACE_TRY_THROW ";
+    }
+
+  *os << "(ex);" << be_uidt << be_uidt_nl
+      << "}" << be_uidt
+      << "\n# endif  /* ACE_HAS_EXCEPTIONS"
+      << " && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */" << be_nl << be_nl;
+
+  *os << "ACE_ENDTRY;" << be_nl;
+
+  if (this->gen_check_exception (bt) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_cs::"
+                         "gen_marshal_and_invoke - "
+                         "codegen for checking exception failed\n"),
+                        -1);
+    }
+
+  // The receive_exception() or receive_other() interception point may
+  // have thrown a PortableInterceptor::ForwardRequest exception.  In
+  // that event, the connection retry loop must be restarted.  Note
+  // that the _invoke_status variable is not set by the interceptor
+  // support code, so we must explicitly check the status in the
+  // ClientRequestInfo object.
+  *os << be_nl
+      << "const PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
+      << "_tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl;
+
+  if (this->gen_check_exception (bt) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_cs::"
+                         "gen_marshal_and_invoke - "
+                         "codegen for checking exception failed\n"),
+                        -1);
+    }
+
+  *os << be_nl
+      << "if (_tao_status != PortableInterceptor::LOCATION_FORWARD" << be_nl
+      << "    && _tao_status != PortableInterceptor::TRANSPORT_RETRY)"
+      << be_idt_nl;
+  // Continue to below break statement."
+  *os << "\n#endif  /* TAO_HAS_INTERCEPTORS */" << be_nl;
+
+  *os << be_nl
+      << "if (_invoke_status != TAO_INVOKE_RESTART)" << be_idt_nl
+      << "break;" << be_uidt << be_uidt << be_uidt_nl
+      << "}" << be_uidt << be_uidt;
 
   return 0;
 }
@@ -639,96 +1333,47 @@ be_visitor_operation::gen_raise_interceptor_exception (
   return 0;
 }
 
-void
-be_visitor_operation::gen_stub_body_arglist (be_operation *node,
-                                             TAO_OutStream *os,
-                                             idl_bool ami)
+const char*
+be_visitor_operation::compute_operation_name (
+    be_operation *node
+  )
 {
-  AST_Argument *arg = 0;
-
-  for (UTL_ScopeActiveIterator arg_decl_iter (node, UTL_Scope::IK_decls);
-       ! arg_decl_iter.is_done ();
-       arg_decl_iter.next ())
+  if (this->operation_name_ == 0)
     {
-      arg = AST_Argument::narrow_from_decl (arg_decl_iter.item ());
+      // Length for two double quotes and the null termination char.
+      size_t len = 3;
 
-      if (ami && arg->direction () == AST_Argument::dir_OUT)
+      if (this->ctx_->attribute ())
         {
-          continue;
+          // "Added length for "_set_" or "_get_".
+          len += 5;
         }
 
-      *os << be_nl
-          << "TAO::Arg_Traits<";
+      len += ACE_OS::strlen (node->original_local_name ()->get_string ());
 
-      this->gen_arg_template_param_name (arg->field_type (),
-                                         os);
+      ACE_NEW_RETURN (this->operation_name_,
+                      char [len],
+                      0);
 
-      *os << ">::";
+      ACE_OS::strcpy (this->operation_name_, "\"");
 
-      switch (arg->direction ())
+      if (this->ctx_->attribute ())
         {
-          case AST_Argument::dir_IN:
-            *os << "in";
-            break;
-          case AST_Argument::dir_INOUT:
-            *os << "inout";
-            break;
-          case AST_Argument::dir_OUT:
-            *os << "out";
-          default:
-            break;
+          // Now check if we are a "get" or "set" operation.
+          if (node->nmembers () == 1)
+            {
+              ACE_OS::strcat (this->operation_name_, "_set_");
+            }
+          else
+            {
+              ACE_OS::strcat (this->operation_name_, "_get_");
+            }
         }
 
-      *os << "_arg_val _tao_" << arg->local_name () << " ("
-          << arg->local_name () << ");";
-    }
-}
-
-void
-be_visitor_operation::gen_arg_template_param_name (AST_Type *bt,
-                                                   TAO_OutStream *os)
-{
-  AST_Decl::NodeType nt = bt->node_type ();
-
-  // If we're here, we must have a bounded string, if unbounded, it
-  // would be a predefined type.
-  if (nt == AST_Decl::NT_string)
-    {
-      AST_String *s = AST_String::narrow_from_decl (bt);
-      unsigned long bound = s->max_size ()->ev ()->u.ulval;
-      AST_Typedef *alias = this->ctx_->alias ();
-
-      if (bound > 0)
-        {
-          *os << "TAO::" << alias->local_name () << "_" << bound;
-          return;
-        }
+      ACE_OS::strcat (this->operation_name_,
+                      node->original_local_name ()->get_string ());
+      ACE_OS::strcat (this->operation_name_, "\"");
     }
 
-  // For the four predefined types below, we use the helper struct
-  // type, in order to disambiguate the template parameter.
-  if (nt == AST_Decl::NT_pre_defined)
-    {
-      AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (bt);
-
-      switch (pdt->pt ())
-        {
-          case AST_PredefinedType::PT_boolean:
-            *os << "ACE_InputCDR::to_boolean";
-            return;
-          case AST_PredefinedType::PT_octet:
-            *os << "ACE_InputCDR::to_octet";
-            return;
-          case AST_PredefinedType::PT_char:
-            *os << "ACE_InputCDR::to_char";
-            return;
-          case AST_PredefinedType::PT_wchar:
-            *os << "ACE_InputCDR::to_wchar";
-            return;
-          default:
-            break;
-        }
-    }
-
-  *os << bt->name ();
+  return this->operation_name_;
 }

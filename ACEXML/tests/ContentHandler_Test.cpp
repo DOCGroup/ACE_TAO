@@ -12,8 +12,6 @@
 #include "ACEXML/common/InputSource.h"
 #include "ACEXML/common/StrCharStream.h"
 #include "ACEXML/parser/parser/Parser.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_main.h"
 
 class Basic_Content_Tester : public ACEXML_DefaultHandler
 {

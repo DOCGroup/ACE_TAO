@@ -4,6 +4,7 @@
 #if !defined BUG_1395_REGRESSION_TEST_I_H
  #define BUG_1395_REGRESSION_TEST_I_H
 
+#include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
 
 #include "TestS.h"

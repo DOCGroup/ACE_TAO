@@ -23,6 +23,7 @@
 #include "ACEXML/common/CharStream.h"
 #include "ACEXML/common/URL_Addr.h"
 #include "ACEXML/common/Mem_Map_Stream.h"
+#include "ace/streams.h"
 
 /**
  * @class ACEXML_HttpCharStream HttpCharStream.h "ACEXML/common/HttpCharStream.h"

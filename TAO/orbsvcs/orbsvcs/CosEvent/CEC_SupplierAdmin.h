@@ -16,7 +16,6 @@
 
 #ifndef TAO_CEC_SUPPLIERADMIN_H
 #define TAO_CEC_SUPPLIERADMIN_H
-
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosEventChannelAdminS.h"
@@ -26,7 +25,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/ESF/ESF_Proxy_Admin.h"
-
 #include "CEC_ProxyPushConsumer.h"
 #include "CEC_ProxyPullConsumer.h"
 #include "event_export.h"
@@ -49,8 +47,7 @@ class TAO_CEC_EventChannel;
  * externally.
  * = TODO
  */
-class TAO_Event_Export TAO_CEC_SupplierAdmin 
-  : public POA_CosEventChannelAdmin::SupplierAdmin
+class TAO_Event_Export TAO_CEC_SupplierAdmin : public POA_CosEventChannelAdmin::SupplierAdmin
 {
 public:
   /// constructor...
@@ -101,14 +98,8 @@ private:
   TAO_CEC_EventChannel *event_channel_;
 
   /// The push and pull aspects are implemented using these classes
-  TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,
-                      TAO_CEC_ProxyPushConsumer,
-                      CosEventChannelAdmin::ProxyPushConsumer> 
-    push_admin_;
-  TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,
-                      TAO_CEC_ProxyPullConsumer,
-                      CosEventChannelAdmin::ProxyPullConsumer> 
-    pull_admin_;
+  TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPushConsumer,CosEventChannelAdmin::ProxyPushConsumer> push_admin_;
+  TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPullConsumer,CosEventChannelAdmin::ProxyPullConsumer> pull_admin_;
 
   /// Store the default POA.
   PortableServer::POA_var default_POA_;
@@ -119,5 +110,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_CEC_SUPPLIERADMIN_H */

@@ -10,12 +10,12 @@
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Transport_Cache_Manager.h"
+#include "tao/Invocation.h"
 #include "tao/Connect_Strategy.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Transport.h"
 #include "tao/Wait_Strategy.h"
 
-#include "ace/OS_NS_strings.h"
 #include "ace/Strategies_T.h"
 
 
@@ -151,44 +151,25 @@ TAO_SCIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
    return 0;
 }
 
-TAO_Transport *
-TAO_SCIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
-                                      TAO_Transport_Descriptor_Interface &desc,
-                                      ACE_Time_Value *max_wait_time)
+int
+TAO_SCIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
+                                     TAO_Transport_Descriptor_Interface *desc,
+                                     ACE_Time_Value *max_wait_time)
 {
-  TAO_Endpoint *tao_endpoint = desc.endpoint ();
+  TAO_SCIOP_Endpoint *sciop_endpoint =
+    this->remote_endpoint (desc->endpoint ());
 
-  TAO_Transport *transport = 0;
+  if (sciop_endpoint == 0)
+    return -1;
 
-  while (tao_endpoint != 0) {
-    TAO_SCIOP_Endpoint *sciop_endpoint = this->remote_endpoint (tao_endpoint);
-    if (sciop_endpoint != 0) {
-      transport = make_connection_i (desc, max_wait_time, sciop_endpoint);
-      if (transport) {
-        break;
-      }
-    }
-    tao_endpoint = tao_endpoint->next();
-  }
-
-  return transport;
-}
-
-
-TAO_Transport *
-TAO_SCIOP_Connector::make_connection_i (TAO_Transport_Descriptor_Interface &desc,
-                                        ACE_Time_Value *max_wait_time,
-                                        TAO_SCIOP_Endpoint *sciop_endpoint)
-{
   const ACE_INET_Addr &remote_address =
     sciop_endpoint->object_addr ();
 
-  if (TAO_debug_level > 2) {
+  if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - SCIOP_Connector::make_connection_i, "
+                "TAO (%P|%t) - SCIOP_Connector::make_connection, "
                 "to <%s:%d>\n",
                 sciop_endpoint->host(), sciop_endpoint->port()));
-  }
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
@@ -199,13 +180,8 @@ TAO_SCIOP_Connector::make_connection_i (TAO_Transport_Descriptor_Interface &desc
   TAO_SCIOP_Connection_Handler *svc_handler = 0;
 
   // Connect.
-  ACE_Multihomed_INET_Addr multihomed;
-  if (multihomed.set(remote_address.get_port_number(),
-                     remote_address.get_ip_address()))
-    return 0;
-
   int result = this->base_connector_.connect (svc_handler,
-                                              multihomed,
+                                              remote_address,
                                               synch_options);
 
   // This call creates the service handler and bumps the #REFCOUNT# up
@@ -321,7 +297,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO_Transport_Descriptor_Interface &desc
                       "errno"));
         }
 
-      return 0;
+      return -1;
     }
 
   // At this point, the connection has be successfully connected.
@@ -338,7 +314,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO_Transport_Descriptor_Interface &desc
 
   // Add the handler to Cache
   int retval =
-    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&desc,
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
                                                                              transport);
 
   // Failure in adding to cache.
@@ -354,7 +330,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO_Transport_Descriptor_Interface &desc
                       "could not add the new connection to cache\n"));
         }
 
-      return 0;
+      return -1;
     }
 
   // Registration failures.
@@ -373,11 +349,18 @@ TAO_SCIOP_Connector::make_connection_i (TAO_Transport_Descriptor_Interface &desc
                       "could not register the new connection in the reactor\n"));
         }
 
-      return 0;
+      return -1;
     }
 
-  return transport;
+  // Handover the transport pointer to the Invocation class.
+  TAO_Transport *&invocation_transport =
+    invocation->transport ();
+  invocation_transport = transport;
+
+  return 0;
 }
+
+
 
 TAO_Profile *
 TAO_SCIOP_Connector::create_profile (TAO_InputCDR& cdr)

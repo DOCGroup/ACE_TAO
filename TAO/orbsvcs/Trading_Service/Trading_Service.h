@@ -18,7 +18,6 @@
 
 #include "tao/PortableServer/ORB_Manager.h"
 #include "ace/Auto_Ptr.h"
-#include "ace/Signal.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

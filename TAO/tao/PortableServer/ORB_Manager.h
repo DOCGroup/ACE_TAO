@@ -10,6 +10,7 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_ORB_MANAGER_H
 #define TAO_ORB_MANAGER_H
 #include /**/ "ace/pre.h"

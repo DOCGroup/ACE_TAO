@@ -15,15 +15,16 @@
 #define TAO_MUXED_TMS_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Hash_Map_Manager_T.h"
+
+#include "tao/Transport_Mux_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Functor.h"
+#include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
-
-#include "tao/Transport_Mux_Strategy.h"
 
 class TAO_ORB_Core;
 class TAO_Pluggable_Reply_Params;
@@ -61,8 +62,8 @@ public:
 
   virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
 
-  virtual bool idle_after_send (void);
-  virtual bool idle_after_reply (void);
+  virtual int idle_after_send (void);
+  virtual int idle_after_reply (void);
   virtual void connection_closed (void);
 
 protected:
@@ -78,14 +79,14 @@ protected:
                                    TAO_Reply_Dispatcher *,
                                    ACE_Hash <CORBA::ULong>,
                                    ACE_Equal_To <CORBA::ULong>,
-                                   ACE_Null_Mutex> 
-    REQUEST_DISPATCHER_TABLE;
+                                   ACE_Null_Mutex> REQUEST_DISPATCHER_TABLE;
 
   /// Table of <Request ID, Reply Dispatcher> pairs.
   REQUEST_DISPATCHER_TABLE dispatcher_table_;
 
 protected:
   int clear_cache (void);
+
 };
 
 #include /**/ "ace/post.h"

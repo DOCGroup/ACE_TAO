@@ -10,34 +10,18 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_VALUETYPE_ADAPTER_H
 #define TAO_VALUETYPE_ADAPTER_H
-
 #include /**/ "ace/pre.h"
+
 #include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
-#include "tao/Basic_Types.h"
-
-namespace CORBA
-{
-  class Object;
-  typedef Object *Object_ptr;
-
-  class AbstractBase;
-  typedef AbstractBase *AbstractBase_ptr;
-
-  class ValueBase;
-
-  class ValueFactoryBase;
-  typedef ValueFactoryBase *ValueFactory;
-}
-
-class TAO_InputCDR;
+#include "tao/corbafwd.h"
 
 /**
  * @class TAO_Valuetype_Adapter

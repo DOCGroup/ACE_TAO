@@ -8,14 +8,14 @@ ACE_RCSID (ImplRepo_Service,
 
 XML_ContentHandler::XML_ContentHandler (const char *server_name)
   : server_name_ (server_name),
-    found_server_entry_ (false),
-    command_line_entry_ (false),
-    working_dir_entry_ (false),
-    environment_vars_entry_ (false),
-    activation_entry_ (false),
-    server_object_ior_entry_ (false),
-    location_entry_ (false),
-    startup_value_ (false)
+    found_server_entry_ (0),
+    command_line_entry_ (0),
+    working_dir_entry_ (0),
+    environment_vars_entry_ (0),
+    activation_entry_ (0),
+    server_object_ior_entry_ (0),
+    location_entry_ (0),
+    startup_value_ (0)
 {
   // no-op
 }
@@ -34,38 +34,38 @@ XML_ContentHandler::characters (const ACEXML_Char *cdata,
 {
   if (ACE_OS::strcmp (cdata, this->server_name_.c_str ()) == 0)
     {
-      this->found_server_entry_ = true;
+      this->found_server_entry_ = 1;
     }
 
-  if (this->command_line_entry_ )
+  if (this->command_line_entry_ == 1)
     {
       this->command_line_ = cdata;
-      this->command_line_entry_ = false;
+      this->command_line_entry_ = 0;
     }
-  else if (this->working_dir_entry_ )
+  else if (this->working_dir_entry_ == 1)
     {
       this->working_dir_ = cdata;
-      this->working_dir_entry_ = false;
+      this->working_dir_entry_ = 0;
     }
-  else if (this->activation_entry_ )
+  else if (this->activation_entry_ == 1)
     {
       this->activation_ = cdata;
-      this->activation_entry_ = false;
+      this->activation_entry_ = 0;
     }
-  else if (this->environment_vars_entry_ )
+  else if (this->environment_vars_entry_ == 1)
     {
       this->environment_vars_ = cdata;
-      this->environment_vars_entry_ = false;
+      this->environment_vars_entry_ = 0;
     }
-  else if (this->location_entry_ )
+  else if (this->location_entry_ == 1)
     {
       this->location_ = cdata;
-      this->location_entry_ = false;
+      this->location_entry_ = 0;
     }
-  else if (this->server_object_ior_entry_ )
+  else if (this->server_object_ior_entry_ == 1)
     {
       this->server_object_ior_ = cdata;
-      this->server_object_ior_entry_ = false;
+      this->server_object_ior_entry_ = 0;
     }
 }
 
@@ -136,31 +136,31 @@ XML_ContentHandler::startElement (const ACEXML_Char *,
                                   ACEXML_Attributes * ACEXML_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  if (this->found_server_entry_ )
+  if (this->found_server_entry_ == 1)
     {
       if (ACE_OS::strcmp (qName, "Command_Line") == 0)
         {
-          this->command_line_entry_ = true;
+          this->command_line_entry_ = 1;
         }
       else if (ACE_OS::strcmp (qName, "WorkingDir") == 0)
         {
-          this->working_dir_entry_ = true;
+          this->working_dir_entry_ = 1;
         }
       else if (ACE_OS::strcmp (qName, "Activation") == 0)
         {
-          this->activation_entry_ = true;
+          this->activation_entry_ = 1;
         }
       else if (ACE_OS::strcmp (qName, "Command_Line") == 0)
         {
-          this->environment_vars_entry_ = true;
+          this->environment_vars_entry_ = 1;
         }
       else if (ACE_OS::strcmp (qName, "Location") == 0)
         {
-          this->location_entry_ = true;
+          this->location_entry_ = 1;
         }
       else if (ACE_OS::strcmp (qName, "Server_Object_IOR") == 0)
         {
-          this->server_object_ior_entry_ = true;
+          this->server_object_ior_entry_ = 1;
         }
     }
 }
@@ -269,14 +269,14 @@ XML_ContentHandler::set_startup_value (ACE_CString POA_name,
                                        int new_value)
 {
   this->server_name_ = POA_name;
-  this->startup_value_ = new_value != 0;
+  this->startup_value_ = new_value;
 }
 
 void
 XML_ContentHandler::get_startup_value (ACE_CString /* POA_name */,
                                        int &new_value)
 {
-  new_value = this->startup_value_ ? 1 : 0;
+  new_value = this->startup_value_;
 }
 
 void

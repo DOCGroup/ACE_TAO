@@ -4,15 +4,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Thread_Manager.h"
-
-// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"  /* Because dump () uses ofstream. */
-
 #include "Dump_Restore.h"
-#include "ace/OS_NS_signal.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Dump_Restore, Dump_Restore, "$Id$")
 

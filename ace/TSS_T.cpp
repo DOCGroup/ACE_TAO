@@ -18,7 +18,6 @@ ACE_RCSID(ace, TSS_T, "$Id$")
 #include "ace/Thread.h"
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"
-#include "ace/OS_NS_stdio.h"
 
 #if defined (ACE_HAS_THR_C_DEST)
 #  include "ace/TSS_Adapter.h"
@@ -73,7 +72,7 @@ ACE_TSS<TYPE>::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
+#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))  
 #if defined (ACE_HAS_THR_C_DEST)
 extern "C" void ACE_TSS_C_cleanup(void *); // defined in Synch.cpp
 #endif /* ACE_HAS_THR_C_DEST */
@@ -112,7 +111,7 @@ ACE_TSS<TYPE>::ts_init (void) const
         }
     }
 
-  return 0;
+  return -1;
 }
 
 template <class TYPE>
@@ -176,12 +175,8 @@ template <class TYPE> TYPE *
 ACE_TSS<TYPE>::ts_get (void) const
 {
   if (this->once_ == 0)
-    {
-      // Create and initialize thread-specific ts_obj.
-      if (this->ts_init () == -1)
-        // Seriously wrong..
-        return 0;
-    }
+    // Create and initialize thread-specific ts_obj.
+    this->ts_init ();
 
   TYPE *ts_obj = 0;
 
@@ -290,11 +285,8 @@ ACE_TSS<TYPE>::ts_object (TYPE *new_ts_obj)
   // <ts_init> does it for us and we'll end up with deadlock
   // otherwise...
   if (this->once_ == 0)
-    {
-      // Create and initialize thread-specific ts_obj.
-      if (this->ts_init () == -1)
-        return 0;
-    }
+    // Create and initialize thread-specific ts_obj.
+    this->ts_init ();
 
   // Ensure that we are serialized!
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->keylock_, 0);
@@ -689,6 +681,6 @@ ACE_TSS_Read_Guard<ACE_LOCK>::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-#endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) */
+#endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) */  
 
 #endif /* ACE_TSS_T_C */

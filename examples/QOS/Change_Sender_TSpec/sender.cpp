@@ -15,6 +15,7 @@
 // ============================================================================
 
 
+#include "ace/OS.h"
 #include "ace/QoS/QoS_Session.h"
 #include "ace/QoS/QoS_Session_Factory.h"
 #include "ace/QoS/QoS_Session_Impl.h"

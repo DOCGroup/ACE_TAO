@@ -15,7 +15,6 @@
 #include "ace/Message_Block.h"
 #include "ace/Task.h"
 #include "ace/RMCast/RMCast_Fragment.h"
-#include "ace/OS_NS_time.h"
 
 ACE_RCSID(tests, RMCast_Fragment_Test, "$Id$")
 

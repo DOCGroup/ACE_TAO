@@ -18,7 +18,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Profile_Timer.h"
 #include "testC.h"
-#include "ace/OS_NS_string.h"
 
 ACE_RCSID(TIE, client, "$Id$")
 

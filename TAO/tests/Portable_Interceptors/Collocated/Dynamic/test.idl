@@ -23,6 +23,12 @@ module Test_Interceptors
 
   interface Visual
   {
+    // = TITLE
+    //   A test idl for checking interceptor visually.
+    //
+    // = DESCRIPTION
+    //
+
     void normal (in long arg);
     // Normal operation.
 
@@ -38,5 +44,7 @@ module Test_Interceptors
 
    oneway void shutdown ();
     // shutdown the ORB
+
+
   };
 };

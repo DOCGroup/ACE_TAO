@@ -1,4 +1,4 @@
-project(*Test): taolib_with_idl, portableserver {
+project(*Test): taolib_with_idl, portableserver, minimum_corba {
   sharedname   = Test_DLL
   dynamicflags = OLT_BUILD_DLL
 
@@ -8,7 +8,9 @@ project(*Test): taolib_with_idl, portableserver {
   }
 }
 
-project(*Driver): taoexe, portableserver {
+project(*Driver): taoserver {
+  exename = driver
+
   Source_Files {
     TestC.cpp
     driver.cpp

@@ -1,4 +1,5 @@
-project(*client): taoexe, portableserver, strategies, dynamicinterface {
+project(*client): taoserver, strategies, dynamicinterface {
+  exename   = client
   after    += IDL_Cubit_Server
   idlflags += -Gd
   avoids   += minimum_corba

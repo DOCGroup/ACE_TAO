@@ -21,8 +21,6 @@
 
 #include "timeC.h"
 
-#include "ace/Log_Msg.h"
-
 // The following header is #included automatically by ACE+TAO.
 // Therefore, they don't need to be included explicitly.
 //#include <iostream.h>

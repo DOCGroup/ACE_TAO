@@ -1,12 +1,8 @@
 // $Id$
-
 #include "Default_Stub_Factory.h"
 #include "Stub.h"
-#include "ORB_Constants.h"
 
-ACE_RCSID (tao, 
-           TAO_Default_Stub_Factory, 
-           "$Id$")
+ACE_RCSID(tao, TAO_Default_Stub_Factory, "$Id$")
 
 TAO_Default_Stub_Factory::~TAO_Default_Stub_Factory (void)
 {
@@ -32,12 +28,10 @@ TAO_Default_Stub_Factory::create_stub (const char *repository_id,
 
 // ****************************************************************
 
-ACE_STATIC_SVC_DEFINE (
-    TAO_Default_Stub_Factory,
-    ACE_TEXT ("Default_Stub_Factory"),
-    ACE_SVC_OBJ_T,
-    &ACE_SVC_NAME (TAO_Default_Stub_Factory),
-    ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-    0
-  )
+ACE_STATIC_SVC_DEFINE (TAO_Default_Stub_Factory,
+                       ACE_TEXT ("Default_Stub_Factory"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (TAO_Default_Stub_Factory),
+                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+                       0)
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Stub_Factory)

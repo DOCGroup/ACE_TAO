@@ -3,13 +3,6 @@
 // Defines the member functions for the memory mapping facility.
 
 #include "ace/Mem_Map.h"
-#if !defined (__ACE_INLINE__)
-#include "ace/Mem_Map.i"
-#endif /* __ACE_INLINE__ */
-
-#include "ace/OS_NS_sys_stat.h"
-#include "ace/OS_NS_fcntl.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 
 #if defined (ACE_WIN32) \
@@ -20,6 +13,10 @@
 #if defined (ACE_USE_MAPPING_NAME)
 #include "ace/SString.h"
 #endif /* ACE_USE_MAPPING_NAME */
+
+#if !defined (__ACE_INLINE__)
+#include "ace/Mem_Map.i"
+#endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Mem_Map, "$Id$")
 

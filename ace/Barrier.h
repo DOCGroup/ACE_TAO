@@ -22,8 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_NS_errno.h"
-
 // ACE platform supports some form of threading.
 #if !defined (ACE_HAS_THREADS)
 /**

@@ -12,8 +12,6 @@
 
 #include "mld.h"
 
-class ACE_Barrier;
-
 /*
    This is much like the Task we've used in the past for implementing a  thread
    pool.  This time, however, I've made the Task an element in a  singly-linked

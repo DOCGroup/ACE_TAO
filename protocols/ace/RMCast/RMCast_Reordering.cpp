@@ -4,7 +4,6 @@
 
 #include "RMCast_Reordering.h"
 #include "RMCast_Proxy.h"
-#include "ace/Guard_T.h"
 #include "ace/Message_Block.h"
 
 #if !defined (__ACE_INLINE__)

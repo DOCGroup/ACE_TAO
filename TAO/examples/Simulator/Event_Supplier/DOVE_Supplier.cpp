@@ -17,9 +17,7 @@
 #include "DOVE_Supplier.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (Event_Supplier, 
-           DOVE_Supplier, 
-           "$Id$")
+ACE_RCSID(Event_Supplier, DOVE_Supplier, "$Id$")
 
 // Static pointer member initialization for Singleton.
 

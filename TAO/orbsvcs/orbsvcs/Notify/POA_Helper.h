@@ -11,7 +11,6 @@
 
 #ifndef TAO_Notify_POA_Helper_H
 #define TAO_Notify_POA_Helper_H
-
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -21,7 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Copy_Disabled.h"
-
 #include "tao/PortableServer/PortableServer.h"
 
 /**
@@ -82,5 +80,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_Notify_POA_Helper_H */

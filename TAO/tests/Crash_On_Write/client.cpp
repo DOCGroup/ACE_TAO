@@ -2,7 +2,6 @@
 
 #include "TestC.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Crash_On_Write, client, "$Id$")
 

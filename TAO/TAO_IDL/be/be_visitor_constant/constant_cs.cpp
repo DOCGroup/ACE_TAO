@@ -48,16 +48,10 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
       return 0;
     }
 
-  // Was the constant value already assigned in *C.h?
-  if (node->defined_in ()->scope_node_type () == AST_Decl::NT_module
-      && be_global->gen_inline_constants ())
-    {
-      return 0;
-    }
-
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (node->is_nested ())
+  if (node->is_nested ()
+      && node->defined_in ()->scope_node_type () != AST_Decl::NT_module)
     {
       // For those constants not defined in the outermost scope,
       // or in a module, they get assigned to their values in the source file.
@@ -100,8 +94,8 @@ be_visitor_constant_cs::gen_nested_namespace_begin (be_module *node)
       if (ACE_OS::strcmp (item_name, "") != 0)
         {
           // leave the outermost root scope.
-          *os << "namespace " << item_name << be_nl
-              << "{" << be_nl;
+          *os << "TAO_NAMESPACE_BEGIN (" << item_name
+              << ")" << be_nl;
         }
     }
 
@@ -120,7 +114,7 @@ be_visitor_constant_cs::gen_nested_namespace_end (be_module *node)
       if (ACE_OS::strcmp (i.item ()->get_string (), "") != 0)
         {
           // leave the outermost root scope.
-          *os << "}" << be_nl;
+          *os << "TAO_NAMESPACE_END" << be_nl;
         }
     }
 

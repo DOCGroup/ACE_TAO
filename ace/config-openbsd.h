@@ -94,7 +94,6 @@
 
 #define ACE_LACKS_STDINT_H
 #define ACE_LACKS_STROPTS_H
-#define ACE_LACKS_WCHAR_H
 
 #define ACE_LACKS_STRRECVFD
 

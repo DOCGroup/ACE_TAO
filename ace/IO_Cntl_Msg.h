@@ -17,11 +17,12 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
-#include "ace/os_include/os_stddef.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/OS.h"
 
 /**
  * @class ACE_IO_Cntl_Msg
@@ -44,10 +45,10 @@ public:
     /// Link modules
     MOD_LINK   = 5,
     /// Unlink modules
-    MOD_UNLINK = 6
+    MOD_UNLINK = 6 
   };
 
-  typedef unsigned short ACE_IO_Cntl_Cmds;
+  typedef u_short ACE_IO_Cntl_Cmds;
 
   // = Initialization method.
   /// Initialize the control message.

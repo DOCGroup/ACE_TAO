@@ -13,15 +13,7 @@
 //
 // ============================================================================
 
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_strings.h"
-#include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_sys_time.h"
-#include "ace/OS_NS_time.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_sys_stat.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_errno.h"
+#include "ace/OS.h"
 #include "test_config.h"
 
 ACE_RCSID(tests, OS_Test, "$Id$")
@@ -149,11 +141,11 @@ string_emulation_test (void)
 
     const char *memchr1 = "abcdefghijklmnopqrstuvwxyz";
 
-    ACE_ASSERT (ACE_OS::memchr (ACE_static_cast (const void *, NULL),
-                                'a',
-                                0) == NULL);
-    ACE_ASSERT (ACE_OS::memchr (memchr1, 'a', sizeof (memchr1)) != NULL);
-    ACE_ASSERT (ACE_OS::memchr (memchr1, '1', sizeof (memchr1)) == NULL);
+    ACE_ASSERT (ACE_OS_String::memchr (ACE_static_cast (const void *, NULL),
+                                       'a',
+                                       0) == NULL);
+    ACE_ASSERT (ACE_OS_String::memchr (memchr1, 'a', sizeof (memchr1)) != NULL);
+    ACE_ASSERT (ACE_OS_String::memchr (memchr1, '1', sizeof (memchr1)) == NULL);
 
     // ========================================================================
     // Test strchr
@@ -161,9 +153,9 @@ string_emulation_test (void)
 
     const char *strchr1 = "abcdefghijkabcdefghijk";
 
-    ACE_ASSERT (*ACE_OS::strchr (strchr1, 'h') == 'h');
-    ACE_ASSERT (ACE_OS::strchr (strchr1, 'h') == strchr1 + 7);
-    ACE_ASSERT (ACE_OS::strchr (strchr1, '1') == NULL);
+    ACE_ASSERT (*ACE_OS_String::strchr (strchr1, 'h') == 'h');
+    ACE_ASSERT (ACE_OS_String::strchr (strchr1, 'h') == strchr1 + 7);
+    ACE_ASSERT (ACE_OS_String::strchr (strchr1, '1') == NULL);
 
     // ========================================================================
     // Test strrchr
@@ -171,9 +163,9 @@ string_emulation_test (void)
 
     const char *strrchr1 = "abcdefghijkabcdefghijk";
 
-    ACE_ASSERT (*ACE_OS::strrchr (strrchr1, 'h') == 'h');
-    ACE_ASSERT (ACE_OS::strrchr (strrchr1, 'h') == strrchr1 + 18);
-    ACE_ASSERT (ACE_OS::strrchr (strrchr1, '1') == NULL);
+    ACE_ASSERT (*ACE_OS_String::strrchr (strrchr1, 'h') == 'h');
+    ACE_ASSERT (ACE_OS_String::strrchr (strrchr1, 'h') == strrchr1 + 18);
+    ACE_ASSERT (ACE_OS_String::strrchr (strrchr1, '1') == NULL);
 
     // ========================================================================
     // Test strcspn
@@ -181,8 +173,8 @@ string_emulation_test (void)
 
     const char *strcspn1 = "abcdefghijkabcdefghijk";
 
-    ACE_ASSERT (ACE_OS::strcspn (strcspn1, "d") == 3);
-    ACE_ASSERT (ACE_OS::strcspn (strcspn1, "abcdefghijk") == 0);
+    ACE_ASSERT (ACE_OS_String::strcspn (strcspn1, "d") == 3);
+    ACE_ASSERT (ACE_OS_String::strcspn (strcspn1, "abcdefghijk") == 0);
 
     // ========================================================================
     // Test strcasecmp
@@ -194,11 +186,11 @@ string_emulation_test (void)
     const char *strcasecmp4 = "STRINGF";   // Different case
     const char *strcasecmp5 = "stringe";   // The last letter is lower
 
-    ACE_ASSERT (ACE_OS::strcasecmp (strcasecmp1, strcasecmp1) == 0);
-    ACE_ASSERT (ACE_OS::strcasecmp (strcasecmp1, strcasecmp2) < 0);
-    ACE_ASSERT (ACE_OS::strcasecmp (strcasecmp1, strcasecmp3) < 0);
-    ACE_ASSERT (ACE_OS::strcasecmp (strcasecmp1, strcasecmp4) == 0);
-    ACE_ASSERT (ACE_OS::strcasecmp (strcasecmp1, strcasecmp5) > 0);
+    ACE_ASSERT (ACE_OS_String::strcasecmp (strcasecmp1, strcasecmp1) == 0);
+    ACE_ASSERT (ACE_OS_String::strcasecmp (strcasecmp1, strcasecmp2) < 0);
+    ACE_ASSERT (ACE_OS_String::strcasecmp (strcasecmp1, strcasecmp3) < 0);
+    ACE_ASSERT (ACE_OS_String::strcasecmp (strcasecmp1, strcasecmp4) == 0);
+    ACE_ASSERT (ACE_OS_String::strcasecmp (strcasecmp1, strcasecmp5) > 0);
 
     // ========================================================================
     // Test strtok_r
@@ -207,23 +199,23 @@ string_emulation_test (void)
     char strtok_r1[] = "A string of tokens";
     char *strtok_r2;
 
-    ACE_ASSERT (ACE_OS::strcmp (ACE_OS::strtok_r (strtok_r1,
-                                                  " ",
-                                                  &strtok_r2),
-                                "A") == 0);
-    ACE_ASSERT (ACE_OS::strcmp (ACE_OS::strtok_r (0,
-                                                  " ",
-                                                  &strtok_r2),
-                                "string") == 0);
-    ACE_ASSERT (ACE_OS::strcmp (ACE_OS::strtok_r (0,
-                                                  " ",
-                                                  &strtok_r2),
-                                "of") == 0);
-    ACE_ASSERT (ACE_OS::strcmp (ACE_OS::strtok_r (0,
-                                                  " ",
-                                                  &strtok_r2),
-                                "tokens") == 0);
-    ACE_ASSERT (ACE_OS::strtok_r (0, " ", &strtok_r2) == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok_r (strtok_r1,
+                                                                " ",
+                                                                &strtok_r2),
+                                       "A") == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok_r (0,
+                                                                " ",
+                                                                &strtok_r2),
+                                       "string") == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok_r (0,
+                                                                " ",
+                                                                &strtok_r2),
+                                       "of") == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok_r (0,
+                                                                " ",
+                                                                &strtok_r2),
+                                       "tokens") == 0);
+    ACE_ASSERT (ACE_OS_String::strtok_r (0, " ", &strtok_r2) == 0);
 
     // ========================================================================
     // Test itoa
@@ -231,32 +223,32 @@ string_emulation_test (void)
 
     char itoa1[33];
 
-    ACE_ASSERT (ACE_OS::strcmp (ACE_OS::itoa (42, itoa1, 2),
-                                "101010") == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::itoa (42, itoa1, 2),
+                                       "101010") == 0);
 
-    ACE_ASSERT (ACE_OS::strcmp (ACE_OS::itoa (42, itoa1, 3),
-                                "1120") == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::itoa (42, itoa1, 3),
+                                       "1120") == 0);
 
-    ACE_ASSERT (ACE_OS::strcmp (ACE_OS::itoa (42, itoa1, 16),
-                                "2a") == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::itoa (42, itoa1, 16),
+                                       "2a") == 0);
 
-    ACE_ASSERT (ACE_OS::strcmp (ACE_OS::itoa (8, itoa1, 10),
-                                "8") == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::itoa (8, itoa1, 10),
+                                       "8") == 0);
 
-    ACE_ASSERT (ACE_OS::strcmp (ACE_OS::itoa (-8, itoa1, 10),
-                                "-8") == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::itoa (-8, itoa1, 10),
+                                       "-8") == 0);
 
-    ACE_ASSERT (ACE_OS::strcmp (ACE_OS::itoa (20345, itoa1, 10),
-                                "20345") == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::itoa (20345, itoa1, 10),
+                                       "20345") == 0);
 
-    ACE_ASSERT (ACE_OS::strcmp (ACE_OS::itoa (-20345, itoa1, 10),
-                                "-20345") == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::itoa (-20345, itoa1, 10),
+                                       "-20345") == 0);
 
-    ACE_ASSERT (ACE_OS::strcmp (ACE_OS::itoa (4566733, itoa1, 10),
-                                "4566733") == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::itoa (4566733, itoa1, 10),
+                                       "4566733") == 0);
 
-    ACE_ASSERT (ACE_OS::strcmp (ACE_OS::itoa (-4566733, itoa1, 10),
-                                "-4566733") == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::itoa (-4566733, itoa1, 10),
+                                       "-4566733") == 0);
   }
 
 #if defined (ACE_HAS_WCHAR)
@@ -267,14 +259,14 @@ string_emulation_test (void)
 
     wchar_t itow1[33];
 
-    ACE_ASSERT (ACE_OS::strcmp (ACE_OS::itoa (42, itow1, 2),
-                                ACE_TEXT_WIDE ("101010")) == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::itoa (42, itow1, 2),
+                                       ACE_TEXT_WIDE ("101010")) == 0);
 
-    ACE_ASSERT (ACE_OS::strcmp (ACE_OS::itoa (42, itow1, 3),
-                                ACE_TEXT_WIDE ("1120")) == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::itoa (42, itow1, 3),
+                                       ACE_TEXT_WIDE ("1120")) == 0);
 
-    ACE_ASSERT (ACE_OS::strcmp (ACE_OS::itoa (42, itow1, 16),
-                                ACE_TEXT_WIDE ("2a")) == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::itoa (42, itow1, 16),
+                                       ACE_TEXT_WIDE ("2a")) == 0);
 
 
     // ========================================================================
@@ -287,11 +279,11 @@ string_emulation_test (void)
     const wchar_t *strcmp4 = ACE_TEXT_WIDE ("STRINGF");
     const wchar_t *strcmp5 = ACE_TEXT_WIDE ("stringe");
 
-    ACE_ASSERT (ACE_OS::strcmp (strcmp1, strcmp1) == 0);
-    ACE_ASSERT (ACE_OS::strcmp (strcmp1, strcmp2) < 0);
-    ACE_ASSERT (ACE_OS::strcmp (strcmp1, strcmp3) < 0);
-    ACE_ASSERT (ACE_OS::strcmp (strcmp1, strcmp4) != 0);
-    ACE_ASSERT (ACE_OS::strcmp (strcmp1, strcmp5) > 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (strcmp1, strcmp1) == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (strcmp1, strcmp2) < 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (strcmp1, strcmp3) < 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (strcmp1, strcmp4) != 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (strcmp1, strcmp5) > 0);
 
     // ========================================================================
     // Test strcpy (wchar_t version)
@@ -301,9 +293,9 @@ string_emulation_test (void)
     wchar_t strcpy2[27];
 
     ACE_ASSERT
-      (ACE_OS::strcmp (ACE_OS::strcpy (strcpy2, strcpy1),
-                       strcpy1) == 0);
-    ACE_ASSERT (ACE_OS::strcmp (strcpy2, strcpy1) == 0);
+      (ACE_OS_String::strcmp (ACE_OS_String::strcpy (strcpy2, strcpy1),
+                              strcpy1) == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (strcpy2, strcpy1) == 0);
 
     // ========================================================================
     // Test strcat (wchar_t version)
@@ -314,9 +306,9 @@ string_emulation_test (void)
     const wchar_t *strcat3 = ACE_TEXT_WIDE ("mnopqrstuvwxyz");
 
     ACE_ASSERT
-      (ACE_OS::strcmp (ACE_OS::strcat (strcat2, strcat3),
-                       strcat1) == 0);
-    ACE_ASSERT (ACE_OS::strcmp (strcat2, strcat1) == 0);
+      (ACE_OS_String::strcmp (ACE_OS_String::strcat (strcat2, strcat3),
+                              strcat1) == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (strcat2, strcat1) == 0);
 
     // ========================================================================
     // Test strncat (wchar_t version)
@@ -327,9 +319,9 @@ string_emulation_test (void)
     const wchar_t *strncat3 = ACE_TEXT_WIDE ("mnopqrstuvwxyzabc");
 
     ACE_ASSERT
-      (ACE_OS::strcmp (ACE_OS::strncat (strncat2, strncat3, 14),
-                       strncat1) == 0);
-    ACE_ASSERT (ACE_OS::strcmp (strncat2, strncat1) == 0);
+      (ACE_OS_String::strcmp (ACE_OS_String::strncat (strncat2, strncat3, 14),
+                              strncat1) == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (strncat2, strncat1) == 0);
 
     // ========================================================================
     // Test strspn (wchar_t version)
@@ -337,10 +329,10 @@ string_emulation_test (void)
 
     const wchar_t *strspn1 = ACE_TEXT_WIDE ("abcdefghijkabcdefghijk");
 
-    ACE_ASSERT (ACE_OS::strspn (strspn1,
-                                ACE_TEXT_WIDE ("abcdf")) == 4);
-    ACE_ASSERT (ACE_OS::strspn (strspn1,
-                                ACE_TEXT_WIDE ("mno")) == 0);
+    ACE_ASSERT (ACE_OS_String::strspn (strspn1,
+                                       ACE_TEXT_WIDE ("abcdf")) == 4);
+    ACE_ASSERT (ACE_OS_String::strspn (strspn1,
+                                       ACE_TEXT_WIDE ("mno")) == 0);
 
     // ========================================================================
     // Test strchr (wchar_t version)
@@ -348,11 +340,11 @@ string_emulation_test (void)
 
     const wchar_t *strchr1 = ACE_TEXT_WIDE ("abcdefghijkabcdefghijk");
 
-    ACE_ASSERT (*ACE_OS::strchr (strchr1, ACE_TEXT_WIDE ('h'))
-                == ACE_TEXT_WIDE ('h'));
-    ACE_ASSERT (ACE_OS::strchr (strchr1, ACE_TEXT_WIDE ('h'))
-                == strchr1 + 7);
-    ACE_ASSERT (ACE_OS::strchr (strchr1, ACE_TEXT_WIDE ('1')) == NULL);
+    ACE_ASSERT (*ACE_OS_String::strchr (strchr1, ACE_TEXT_WIDE ('h'))
+                  == ACE_TEXT_WIDE ('h'));
+    ACE_ASSERT (ACE_OS_String::strchr (strchr1, ACE_TEXT_WIDE ('h'))
+                  == strchr1 + 7);
+    ACE_ASSERT (ACE_OS_String::strchr (strchr1, ACE_TEXT_WIDE ('1')) == NULL);
 
     // ========================================================================
     // Test strstr (wchar_t version)
@@ -360,13 +352,13 @@ string_emulation_test (void)
 
     const wchar_t *strstr1 = ACE_TEXT_WIDE ("abcdefghijkabcdefghijk");
 
-    ACE_ASSERT (ACE_OS::strncmp (
-                  ACE_OS::strstr (strstr1, ACE_TEXT_WIDE ("def")),
+    ACE_ASSERT (ACE_OS_String::strncmp (
+                  ACE_OS_String::strstr (strstr1, ACE_TEXT_WIDE ("def")),
                   ACE_TEXT_WIDE ("def"),
                   3)
                   == 0);
-    ACE_ASSERT (ACE_OS::strstr (strstr1,
-                                ACE_TEXT_WIDE ("mno")) == 0);
+    ACE_ASSERT (ACE_OS_String::strstr (strstr1,
+                                       ACE_TEXT_WIDE ("mno")) == 0);
 
     // ========================================================================
     // Test strlen (wchar_t version)
@@ -375,8 +367,8 @@ string_emulation_test (void)
     const wchar_t *strlen1 = ACE_TEXT_WIDE ("");
     const wchar_t *strlen2 = ACE_TEXT_WIDE ("12345");
 
-    ACE_ASSERT (ACE_OS::strlen (strlen1) == 0);
-    ACE_ASSERT (ACE_OS::strlen (strlen2) == 5);
+    ACE_ASSERT (ACE_OS_String::strlen (strlen1) == 0);
+    ACE_ASSERT (ACE_OS_String::strlen (strlen2) == 5);
 
     // ========================================================================
     // Test strpbrk (wchar_t version)
@@ -384,9 +376,9 @@ string_emulation_test (void)
 
     const wchar_t *strpbrk1 = ACE_TEXT_WIDE ("abcdefghijkabcdefghijk");
 
-    ACE_ASSERT (ACE_OS::strpbrk (strpbrk1,  ACE_TEXT_WIDE ("ijkb"))
+    ACE_ASSERT (ACE_OS_String::strpbrk (strpbrk1,  ACE_TEXT_WIDE ("ijkb"))
                   == strpbrk1 + 1);
-    ACE_ASSERT (ACE_OS::strpbrk (strpbrk1,
+    ACE_ASSERT (ACE_OS_String::strpbrk (strpbrk1,
                                         ACE_TEXT_WIDE ("mno")) == 0);
 
     // ========================================================================
@@ -395,11 +387,11 @@ string_emulation_test (void)
 
     const wchar_t *strrchr1 = ACE_TEXT_WIDE ("abcdefghijkabcdefghijk");
 
-    ACE_ASSERT (*ACE_OS::strrchr (strrchr1, ACE_TEXT_WIDE ('h'))
+    ACE_ASSERT (*ACE_OS_String::strrchr (strrchr1, ACE_TEXT_WIDE ('h'))
                   == ACE_TEXT_WIDE ('h'));
-    ACE_ASSERT (ACE_OS::strrchr (strrchr1, ACE_TEXT_WIDE ('h'))
+    ACE_ASSERT (ACE_OS_String::strrchr (strrchr1, ACE_TEXT_WIDE ('h'))
                   == strrchr1 + 18);
-    ACE_ASSERT (ACE_OS::strrchr (strrchr1, ACE_TEXT_WIDE ('1'))
+    ACE_ASSERT (ACE_OS_String::strrchr (strrchr1, ACE_TEXT_WIDE ('1'))
                   == NULL);
 
     // ========================================================================
@@ -412,11 +404,11 @@ string_emulation_test (void)
     const wchar_t *strcasecmp4 = ACE_TEXT_WIDE ("STRINGF");
     const wchar_t *strcasecmp5 = ACE_TEXT_WIDE ("stringe");
 
-    ACE_ASSERT (ACE_OS::strcasecmp (strcasecmp1, strcasecmp1) == 0);
-    ACE_ASSERT (ACE_OS::strcasecmp (strcasecmp1, strcasecmp2) < 0);
-    ACE_ASSERT (ACE_OS::strcasecmp (strcasecmp1, strcasecmp3) < 0);
-    ACE_ASSERT (ACE_OS::strcasecmp (strcasecmp1, strcasecmp4) == 0);
-    ACE_ASSERT (ACE_OS::strcasecmp (strcasecmp1, strcasecmp5) > 0);
+    ACE_ASSERT (ACE_OS_String::strcasecmp (strcasecmp1, strcasecmp1) == 0);
+    ACE_ASSERT (ACE_OS_String::strcasecmp (strcasecmp1, strcasecmp2) < 0);
+    ACE_ASSERT (ACE_OS_String::strcasecmp (strcasecmp1, strcasecmp3) < 0);
+    ACE_ASSERT (ACE_OS_String::strcasecmp (strcasecmp1, strcasecmp4) == 0);
+    ACE_ASSERT (ACE_OS_String::strcasecmp (strcasecmp1, strcasecmp5) > 0);
 
     // ========================================================================
     // Test strncasecmp (wchar_t version)
@@ -429,15 +421,15 @@ string_emulation_test (void)
     const wchar_t *strncasecmp5 = ACE_TEXT_WIDE ("stringe");
 
     ACE_ASSERT
-      (ACE_OS::strncasecmp (strncasecmp1, strncasecmp2, 7) == 0);
+      (ACE_OS_String::strncasecmp (strncasecmp1, strncasecmp2, 7) == 0);
     ACE_ASSERT
-      (ACE_OS::strncasecmp (strncasecmp1, strncasecmp2, 8) < 0);
+      (ACE_OS_String::strncasecmp (strncasecmp1, strncasecmp2, 8) < 0);
     ACE_ASSERT
-      (ACE_OS::strncasecmp (strncasecmp1, strncasecmp3, 7) < 0);
+      (ACE_OS_String::strncasecmp (strncasecmp1, strncasecmp3, 7) < 0);
     ACE_ASSERT
-      (ACE_OS::strncasecmp (strncasecmp1, strncasecmp4, 7) == 0);
+      (ACE_OS_String::strncasecmp (strncasecmp1, strncasecmp4, 7) == 0);
     ACE_ASSERT
-      (ACE_OS::strncasecmp (strncasecmp1, strncasecmp5, 7) > 0);
+      (ACE_OS_String::strncasecmp (strncasecmp1, strncasecmp5, 7) > 0);
 
     // ========================================================================
     // Test strncmp (wchar_t version)
@@ -449,11 +441,11 @@ string_emulation_test (void)
     const wchar_t *strncmp4 = ACE_TEXT_WIDE ("STRINGF");
     const wchar_t *strncmp5 = ACE_TEXT_WIDE ("stringe");
 
-    ACE_ASSERT (ACE_OS::strncmp (strncmp1, strncmp2, 7) == 0);
-    ACE_ASSERT (ACE_OS::strncmp (strncmp1, strncmp2, 8) < 0);
-    ACE_ASSERT (ACE_OS::strncmp (strncmp1, strncmp3, 7) < 0);
-    ACE_ASSERT (ACE_OS::strncmp (strncmp1, strncmp4, 7) != 0);
-    ACE_ASSERT (ACE_OS::strncmp (strncmp1, strncmp5, 7) > 0);
+    ACE_ASSERT (ACE_OS_String::strncmp (strncmp1, strncmp2, 7) == 0);
+    ACE_ASSERT (ACE_OS_String::strncmp (strncmp1, strncmp2, 8) < 0);
+    ACE_ASSERT (ACE_OS_String::strncmp (strncmp1, strncmp3, 7) < 0);
+    ACE_ASSERT (ACE_OS_String::strncmp (strncmp1, strncmp4, 7) != 0);
+    ACE_ASSERT (ACE_OS_String::strncmp (strncmp1, strncmp5, 7) > 0);
 
     // ========================================================================
     // Test strncpy (wchar_t version)
@@ -463,34 +455,34 @@ string_emulation_test (void)
     wchar_t strncpy2[27];
 
     ACE_ASSERT
-      (ACE_OS::strncmp (ACE_OS::strncpy (strncpy2,
-                                         strncpy1,
-                                         26),
-                        strncpy1,
-                        26) == 0);
+      (ACE_OS_String::strncmp (ACE_OS_String::strncpy (strncpy2,
+                                                       strncpy1,
+                                                       26),
+                              strncpy1,
+                              26) == 0);
 
     strncpy1[26] = 0;
     strncpy2[26] = 0;
-    ACE_ASSERT (ACE_OS::strcmp (strncpy2, strncpy1) == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (strncpy2, strncpy1) == 0);
 
     // ========================================================================
     // Test strtok (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strtok (wchar_t version)\n")));
     wchar_t strtok_r1[] = ACE_TEXT_WIDE ("A string of tokens");
 
-    ACE_ASSERT (ACE_OS::strcmp (ACE_OS::strtok (strtok_r1,
-                                                ACE_TEXT_WIDE (" ")),
-                                ACE_TEXT_WIDE ("A")) == 0);
-    ACE_ASSERT (ACE_OS::strcmp (ACE_OS::strtok (0,
-                                                ACE_TEXT_WIDE (" ")),
-                                ACE_TEXT_WIDE ("string") ) == 0);
-    ACE_ASSERT (ACE_OS::strcmp (ACE_OS::strtok (0,
-                                                ACE_TEXT_WIDE (" ")),
-                                ACE_TEXT_WIDE ("of") ) == 0);
-    ACE_ASSERT (ACE_OS::strcmp (ACE_OS::strtok (0,
-                                                ACE_TEXT_WIDE (" ")),
-                                ACE_TEXT_WIDE ("tokens") ) == 0);
-    ACE_ASSERT (ACE_OS::strtok (0, ACE_TEXT_WIDE (" ")) == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok (strtok_r1,
+                                                                ACE_TEXT_WIDE (" ")),
+                                       ACE_TEXT_WIDE ("A")) == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok (0,
+                                                                ACE_TEXT_WIDE (" ")),
+                                       ACE_TEXT_WIDE ("string") ) == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok (0,
+                                                                ACE_TEXT_WIDE (" ")),
+                                       ACE_TEXT_WIDE ("of") ) == 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (ACE_OS_String::strtok (0,
+                                                                ACE_TEXT_WIDE (" ")),
+                                       ACE_TEXT_WIDE ("tokens") ) == 0);
+    ACE_ASSERT (ACE_OS_String::strtok (0, ACE_TEXT_WIDE (" ")) == 0);
 
 
   }
@@ -537,7 +529,7 @@ ctime_r_test (void)
   if (result == 0)
     {
       ACE_TCHAR bufcheck[27];
-      ACE_OS::strcpy (bufcheck, buf);
+      ACE_OS_String::strcpy (bufcheck, buf);
       if (ACE_OS::ctime_r (&secs, buf, 10) != 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -553,7 +545,7 @@ ctime_r_test (void)
           result = -1;
         }
       // Make sure it didn't scribble
-      else if (ACE_OS::strcmp (buf, bufcheck) != 0)
+      else if (ACE_OS_String::strcmp (buf, bufcheck) != 0)
       {
         result = -1;
         ACE_ERROR ((LM_ERROR,
@@ -579,60 +571,60 @@ string_strsncpy_test (void)
 
     // strsncpy() where the max. length doesn't matter
     ACE_ASSERT
-      (ACE_OS::strcmp (ACE_OS::strsncpy (strsncpy2,
-                                         strsncpy1,
-                                         36),
-                       strsncpy1) == 0);
+      (ACE_OS_String::strcmp (ACE_OS_String::strsncpy (strsncpy2,
+                                                       strsncpy1,
+                                                       36),
+                              strsncpy1) == 0);
 
     // strsncpy() where the max length does matter
     ACE_ASSERT
-      (ACE_OS::strncmp (ACE_OS::strsncpy (strsncpy2,
-                                          strsncpy1,
-                                          26),
-                        strsncpy1,
-                        25) == 0);
+      (ACE_OS_String::strncmp (ACE_OS_String::strsncpy (strsncpy2,
+                                                        strsncpy1,
+                                                        26),
+                               strsncpy1,
+                               25) == 0);
 
     // strsncpy1 and strsncpy2 are different size --> not equal
-    ACE_ASSERT (ACE_OS::strcmp (strsncpy2, strsncpy1) != 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (strsncpy2, strsncpy1) != 0);
 
     // max. length == 2 --> 1 char available
     ACE_ASSERT
-      (ACE_OS::strncmp (ACE_OS::strsncpy (strsncpy2,
-                                          strsncpy1,
-                                          2),
-                        strsncpy1,
-                        1) == 0);
+      (ACE_OS_String::strncmp (ACE_OS_String::strsncpy (strsncpy2,
+                                                        strsncpy1,
+                                                       2),
+                               strsncpy1,
+                               1) == 0);
 
     // max length == 1 --> empty string
     ACE_ASSERT
-      (ACE_OS::strlen (ACE_OS::strsncpy (strsncpy2,
-                                         strsncpy1,
-                                         1)) == 0);
+      (ACE_OS_String::strlen (ACE_OS_String::strsncpy (strsncpy2,
+                                                       strsncpy1,
+                                                       1)) == 0);
 
     // just preparation for the next assert
     ACE_ASSERT
-      (ACE_OS::strcmp (ACE_OS::strsncpy (strsncpy2,
-                                         strsncpy1,
-                                         36),
-                       strsncpy1) == 0);
+      (ACE_OS_String::strcmp (ACE_OS_String::strsncpy (strsncpy2,
+                                                       strsncpy1,
+                                                       36),
+                              strsncpy1) == 0);
 
     // A tricky one, if the max. length == 0 --> do nothing
     // so the strsncpy2 shouldn't change
     ACE_ASSERT
-      (ACE_OS::strcmp (ACE_OS::strsncpy (strsncpy2,
-                                         "test",
-                                         0),
-                       strsncpy1) == 0);
+      (ACE_OS_String::strcmp (ACE_OS_String::strsncpy (strsncpy2,
+                                                       "test",
+                                                       0),
+                              strsncpy1) == 0);
 
     // If src == dst --> truncate dst if needed!
     ACE_ASSERT
-      (ACE_OS::strncmp (ACE_OS::strsncpy (strsncpy2,
-                                          strsncpy2,
-                                          10),
-                        strsncpy1,
-                        9) == 0);
+      (ACE_OS_String::strncmp (ACE_OS_String::strsncpy (strsncpy2,
+                                                        strsncpy2,
+                                                       10),
+                              strsncpy1,
+                              9) == 0);
     // size should be 9 (+ '\0' char)
-    ACE_ASSERT(ACE_OS::strlen(strsncpy2) == 9);
+    ACE_ASSERT(ACE_OS_String::strlen(strsncpy2) == 9);
 
   }
 
@@ -647,61 +639,61 @@ string_strsncpy_test (void)
 
     // strsncpy() where the max. length doesn't matter
     ACE_ASSERT
-      (ACE_OS::strcmp (ACE_OS::strsncpy (strsncpy2,
-                                         strsncpy1,
-                                         36),
-                       strsncpy1) == 0);
+      (ACE_OS_String::strcmp (ACE_OS_String::strsncpy (strsncpy2,
+                                                       strsncpy1,
+                                                       36),
+                              strsncpy1) == 0);
 
     // strsncpy() where the max length does matter
     ACE_ASSERT
-      (ACE_OS::strncmp (ACE_OS::strsncpy (strsncpy2,
-                                          strsncpy1,
-                                          26),
-                        strsncpy1,
-                        25) == 0);
+      (ACE_OS_String::strncmp (ACE_OS_String::strsncpy (strsncpy2,
+                                                        strsncpy1,
+                                                        26),
+                              strsncpy1,
+                              25) == 0);
 
     // strsncpy1 and strsncpy2 are different size --> not equal
-    ACE_ASSERT (ACE_OS::strcmp (strsncpy2, strsncpy1) != 0);
+    ACE_ASSERT (ACE_OS_String::strcmp (strsncpy2, strsncpy1) != 0);
 
     // max. length == 2 --> 1 char available
     ACE_ASSERT
-      (ACE_OS::strncmp (ACE_OS::strsncpy (strsncpy2,
-                                          strsncpy1,
-                                          2),
-                        strsncpy1,
-                        1) == 0);
+      (ACE_OS_String::strncmp (ACE_OS_String::strsncpy (strsncpy2,
+                                                        strsncpy1,
+                                                       2),
+                              strsncpy1,
+                              1) == 0);
 
     // max length == 1 --> empty string
     ACE_ASSERT
-      (ACE_OS::strlen (ACE_OS::strsncpy (strsncpy2,
-                                         strsncpy1,
-                                         1)) == 0);
+      (ACE_OS_String::strlen (ACE_OS_String::strsncpy (strsncpy2,
+                                                       strsncpy1,
+                                                       1)) == 0);
 
     // just preparation for the next assert
     ACE_ASSERT
-      (ACE_OS::strcmp (ACE_OS::strsncpy (strsncpy2,
-                                         strsncpy1,
-                                         36),
-                       strsncpy1) == 0);
+      (ACE_OS_String::strcmp (ACE_OS_String::strsncpy (strsncpy2,
+                                                       strsncpy1,
+                                                       36),
+                              strsncpy1) == 0);
 
     // A tricky one, if the max. length == 0 --> do nothing
     // so the strsncpy2 shouldn't change
     ACE_ASSERT
-      (ACE_OS::strcmp (ACE_OS::strsncpy (strsncpy2,
-                                         ACE_TEXT_WIDE
-                                         ("test"),
-                                         0),
-                       strsncpy1) == 0);
+      (ACE_OS_String::strcmp (ACE_OS_String::strsncpy (strsncpy2,
+                                                       ACE_TEXT_WIDE
+("test"),
+                                                       0),
+                              strsncpy1) == 0);
 
     // If src == dst --> truncate dst if needed!
     ACE_ASSERT
-      (ACE_OS::strncmp (ACE_OS::strsncpy (strsncpy2,
-                                          strsncpy2,
-                                          10),
-                        strsncpy1,
-                        9) == 0);
+      (ACE_OS_String::strncmp (ACE_OS_String::strsncpy (strsncpy2,
+                                                        strsncpy2,
+                                                       10),
+                              strsncpy1,
+                              9) == 0);
     // size should be 9 (+ '\0' char)
-    ACE_ASSERT(ACE_OS::strlen(strsncpy2) == 9);
+    ACE_ASSERT(ACE_OS_String::strlen(strsncpy2) == 9);
   }
 #endif /* ACE_HAS_WCHAR */
 

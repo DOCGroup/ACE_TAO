@@ -33,12 +33,10 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Message_Block.h"
 #include "ace/Get_Opt.h"
-
-// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
 #include "ace/Task.h"
-#include "ace/OS_main.h"
+
 
 ACE_RCSID(Proactor, test_proactor2, "test_proactor2.cpp,v 1.27 2000/03/07 17:15:56 schmidt Exp")
 

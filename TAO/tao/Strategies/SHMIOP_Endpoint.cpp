@@ -8,17 +8,12 @@
 
 #include "SHMIOP_Connection_Handler.h"
 #include "tao/debug.h"
-#include "tao/ORB_Constants.h"
 
-ACE_RCSID (Strategies, 
-           SHMIOP_Endpoint, 
-           "$Id$")
+ACE_RCSID(Strategies, SHMIOP_Endpoint, "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "SHMIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
-
-#include "ace/os_include/os_netdb.h"
 
 TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const ACE_MEM_Addr &addr,
                                           int use_dotted_decimal_addresses)

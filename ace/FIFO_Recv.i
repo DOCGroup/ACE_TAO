@@ -3,6 +3,7 @@
 
 // FIFO_Recv.i
 
+#include "ace/OS.h"
 #include "ace/ACE.h"
 
 ASYS_INLINE ssize_t

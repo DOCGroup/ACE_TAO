@@ -6,9 +6,6 @@
 #include "ace/Semaphore.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Msg.h"
-#include "ace/ACE.h"
-
 ACE_RCSID (ace,
            Semaphore,
            "$Id$")

@@ -3,7 +3,6 @@
 
 
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_INLINE
 Handle_L_FIFO::Handle_L_FIFO (void)

@@ -1,2 +1,3 @@
-project(POA*): taoexe, portableserver, minimum_corba {
+project(POA Etherealization): taoserver, minimum_corba {
+  exename = Etherealization
 }

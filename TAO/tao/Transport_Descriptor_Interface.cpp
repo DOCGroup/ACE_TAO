@@ -10,11 +10,10 @@ ACE_RCSID (tao,
            Transport_Descriptor_Interface,
            "$Id$")
 
+
 TAO_Transport_Descriptor_Interface::
     ~TAO_Transport_Descriptor_Interface (void)
 {
   if (this->endpoint_from_heap_)
-    {
-      delete this->endpoint_;
-    }
+    delete this->endpoint_;
 }

@@ -7,8 +7,6 @@
 #include "ace/SPIPE.i"
 #endif
 
-#include "ace/OS_NS_unistd.h"
-
 ACE_RCSID(ace, SPIPE, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SPIPE)

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/config-all.h"
+#include "ace/OS.h"
 
 ACE_RCSID(ace, Timeprobe, "$Id$")
 

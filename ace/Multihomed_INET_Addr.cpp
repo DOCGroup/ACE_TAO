@@ -2,11 +2,11 @@
 
 // Extends ACE_INET_Addr with support for multi-homed addresses.
 
-#include "ace/Multihomed_INET_Addr.h"
-#include "ace/Log_Msg.h"
+#include /**/ "ace/Multihomed_INET_Addr.h"
+#include /**/ "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
-#  include "ace/Multihomed_INET_Addr.i"
+#include /**/ "ace/Multihomed_INET_Addr.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (ace,
@@ -138,16 +138,6 @@ ACE_Multihomed_INET_Addr::set (u_short port_number,
   }
 
   return ACE_INET_Addr::set(port_number, primary_ip_addr, encode);
-}
-
-void
-ACE_Multihomed_INET_Addr::set_port_number (u_short port_number, int encode)
-{
-  size_t i = 0;
-  while (i < secondaries.size())
-    secondaries[i++].set_port_number(port_number, encode);
-
-  this->ACE_INET_Addr::set_port_number(port_number, encode);
 }
 
 int

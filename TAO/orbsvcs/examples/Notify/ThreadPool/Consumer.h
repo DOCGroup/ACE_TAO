@@ -19,7 +19,6 @@
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/orbsvcs/CosNotifyCommC.h"
 #include "ace/SString.h"
-#include "ace/OS_NS_time.h"
 
 /**
  * @class TAO_Notify_ThreadPool_Consumer

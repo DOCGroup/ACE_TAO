@@ -25,8 +25,6 @@
 #include "ace/os_include/os_stdio.h"
 #include "ace/os_include/sys/os_uio.h"
 
-class ACE_Time_Value;
-
 /**
  * @class ACE_DEV_IO
  *

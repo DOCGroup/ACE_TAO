@@ -15,13 +15,11 @@
 #define ACE_ACTIVE_MAP_MANAGER_H
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+#include "ace/OS_String.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Basic_Types.h"
 
 /**
  * @class ACE_Active_Map_Manager_Key

@@ -35,10 +35,6 @@
 #  include /**/ <selectLib.h>
 #endif /* VXWORKS */
 
-#if defined (ACE_HAS_SELECT_H)
-#  include /**/ <select.h>
-#endif /* ACE_HAS_SELECT_H */
-
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"
@@ -48,10 +44,6 @@ extern "C"
 #if defined (ACE_WIN32)
    // This will help until we figure out everything:
 #  define NFDBITS 32 /* only used in unused functions... */
-#elif defined (__QNX__)
-#  if !defined (NFDBITS)
-#    define NFDBITS (sizeof(fd_mask) * NBBY)        /* bits per mask */
-#  endif /* ! NFDBITS */
 #endif /* ACE_WIN32 */
 
 #if defined (ACE_SELECT_USES_INT)
@@ -59,11 +51,6 @@ extern "C"
 #else
    typedef fd_set ACE_FD_SET_TYPE;
 #endif /* ACE_SELECT_USES_INT */
-
-#if defined (__rtems__)
-  int select (int n, fd_set *readfds, fd_set *writefds,
-              fd_set *exceptfds, const struct timeval *timeout);
-#endif /* __rtems__ */
 
 #ifdef __cplusplus
 }

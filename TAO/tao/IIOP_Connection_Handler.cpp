@@ -1,25 +1,28 @@
-#include "IIOP_Connection_Handler.h"
-#include "debug.h"
-#include "ORB_Core.h"
-#include "IIOP_Transport.h"
-#include "IIOP_Endpoint.h"
-#include "IIOPC.h"
-#include "Thread_Lane_Resources.h"
-#include "Base_Transport_Property.h"
-#include "Protocols_Hooks.h"
-#include "Wait_Strategy.h"
+#include "tao/IIOP_Connection_Handler.h"
+#include "tao/Timeprobe.h"
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
+#include "tao/ORB.h"
+#include "tao/CDR.h"
+#include "tao/Server_Strategy_Factory.h"
+#include "tao/IIOP_Transport.h"
+#include "tao/IIOP_Endpoint.h"
+#include "tao/Transport_Cache_Manager.h"
+#include "tao/Thread_Lane_Resources.h"
+#include "tao/Base_Transport_Property.h"
+#include "tao/Resume_Handle.h"
+#include "tao/Protocols_Hooks.h"
+#include "tao/Wait_Strategy.h"
 
 #if !defined (__ACE_INLINE__)
-# include "IIOP_Connection_Handler.i"
+# include "tao/IIOP_Connection_Handler.i"
 #endif /* ! __ACE_INLINE__ */
 
-#include "ace/os_include/netinet/os_tcp.h"
-#include "ace/os_include/os_netdb.h"
-#include "ace/os_include/netinet/os_tcp.h"
 
 ACE_RCSID (tao,
            IIOP_Connection_Handler,
            "$Id$")
+
 
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_SVC_HANDLER (t, 0 , 0),

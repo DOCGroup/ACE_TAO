@@ -16,16 +16,12 @@
 //    Balachandran Natarajan <bala@cs.wustl.edu>
 // ========================================================================
 
+#include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
-
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
-
 #include "tao/Any.h"
-#include "tao/ORB.h"
 
-ACE_RCSID (POA_BiDir, 
-           POA_BiDir, 
-           "$Id$")
+ACE_RCSID(POA_BiDir, POA_BiDir, "$Id$")
 
 void
 print_poa (PortableServer::POA_ptr poa

@@ -5,9 +5,8 @@
 #ifndef JAWS_CACHE_OBJECT_H
 #define JAWS_CACHE_OBJECT_H
 
-#include "ace/Lock_Adapter_T.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Thread_Mutex.h"
+#include "ace/OS.h"
+#include "ace/Synch.h"
 #include "ace/Malloc.h"
 
 // Cache bucket -- use Hash_Bucket to hold cacheable objects.

@@ -20,9 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Basic_Types.h"
-#include "ace/OS_NS_time.h"
-#include "ace/Time_Value.h"
+#include "ace/OS.h"
 
 /**
  * @class ACE_High_Res_Timer

@@ -1,7 +1,6 @@
 // $Id$
 
 #include "Thread_Task.h"
-#include "ace/OS_NS_errno.h"
 
 int
 Thread_Task::activate_task (CORBA::ORB_ptr orb,

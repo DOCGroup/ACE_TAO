@@ -20,11 +20,10 @@
 
 #ifndef TAO_IOR_MULTICAST_H
 #define TAO_IOR_MULTICAST_H
-
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/svc_utils_export.h"
-#include "tao/ORB.h"
+#include "tao/corba.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -109,5 +108,4 @@ private:
 };
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_IOR_MULTICAST_H */

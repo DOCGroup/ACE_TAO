@@ -1,7 +1,6 @@
 //$Id$
 
 #include "Distributable_Thread.h"
-#include "tao/ORB_Constants.h"
 
 TAO_DistributableThread::TAO_DistributableThread (void)
   :state_ (RTScheduling::DistributableThread::ACTIVE)
@@ -12,21 +11,21 @@ TAO_DistributableThread::~TAO_DistributableThread (void)
 {
 }
 
-void
+void 
 TAO_DistributableThread::cancel (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->state_ = RTScheduling::DistributableThread::CANCELLED;
 }
 
-RTScheduling::DistributableThread::DT_State
+RTScheduling::DistributableThread::DT_State 
 TAO_DistributableThread::state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->state_;
 }
 
-RTScheduling::DistributableThread_ptr
+RTScheduling::DistributableThread_ptr 
 TAO_DistributableThread_Factory::create_DT (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -40,10 +39,15 @@ TAO_DistributableThread_Factory::create_DT (void)
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
-
+  
   //RTScheduling::DistributableThread_var dt = RTScheduling::DistributableThread::_narrow (DT
-  //                                                                             ACE_ENV_ARG_PARAMETER);
-  //ACE_CHECK;
-
+  //										 ACE_ENV_ARG_PARAMETER);
+  //ACE_CHECK;	
+  
   return DT;
 }
+
+
+
+
+

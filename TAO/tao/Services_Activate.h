@@ -14,15 +14,17 @@
 
 #ifndef TAO_SERVICES_ACTIVATE_H
 #define TAO_SERVICES_ACTIVATE_H
-
 #include /**/ "ace/pre.h"
-#include "ace/Service_Object.h"
+
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Service_Object.h"
 #include "tao/Exception.h"
+
 
 class TAO_ORB_Core;
 class TAO_Service_Callbacks;
@@ -52,8 +54,9 @@ public:
    */
   virtual TAO_Service_Callbacks* activate_services (TAO_ORB_Core *orb)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+
 };
 
-#include /**/ "ace/post.h"
 
+#include /**/ "ace/post.h"
 #endif /*TAO_SERVICES_ACTIVATE_H*/

@@ -15,15 +15,15 @@
 #define ACE_MALLOC_T_H
 #include /**/ "ace/pre.h"
 
-#include "ace/Malloc.h"               /* Need ACE_Control_Block */
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Malloc.h"               /* Need ACE_Control_Block */
 #include "ace/Malloc_Allocator.h"
 #include "ace/Free_List.h"
-#include "ace/Guard_T.h"
 
 /**
  * @class ACE_Cached_Mem_Pool_Node

@@ -18,8 +18,7 @@
 #define TAO_RT_STUB_FACTORY_H_
 
 #include /**/ "ace/pre.h"
-
-#include "tao/orbconf.h"
+#include "tao/corbafwd.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
@@ -30,7 +29,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Stub_Factory.h"
-
 #include "ace/Service_Config.h"
 
 /**

@@ -12,19 +12,18 @@
 
 #ifndef TAO_PORTABLE_GROUP_MAP_H
 #define TAO_PORTABLE_GROUP_MAP_H
-
 #include /**/ "ace/pre.h"
-#include "ace/Null_Mutex.h"
+
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Hash_Map_Manager_T.h"
-
 #include "orbsvcs/PortableGroupC.h"
-
 #include "tao/Object_KeyC.h"
+#include "ace/Null_Mutex.h"
 
 class TAO_ServerRequest;
 
@@ -68,11 +67,11 @@ class TAO_PortableGroup_Export TAO_Portable_Group_Map
 {
 public:
 
-	/**
-	 * @struct Map_Entry
-	 *
-	 * @brief Value field of the portable group map.
-	 */
+  /**
+   * @struct Map_Entry
+   *
+   * @brief Value field of the portable group map.
+   */
   struct Map_Entry
   {
     /// The key.

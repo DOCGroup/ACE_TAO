@@ -19,8 +19,7 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/OS_NS_signal.h"
-#include "ace/OS_NS_errno.h"
+#include "ace/OS.h"
 
 ACE_RCSID(tests, Sigset_Ops_Test, "$Id$")
 

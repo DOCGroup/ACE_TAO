@@ -1,4 +1,4 @@
-project(*security server): orbsvcsexe, portableserver, ssl, ssliop {
+project(*security server): orbsvcsexe, portableserver, ssl {
   Source_Files {
     Server_Worker.cpp
     test_i.cpp

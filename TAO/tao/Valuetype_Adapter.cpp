@@ -1,7 +1,6 @@
 // @(#) $Id$
 
 #include "tao/Valuetype_Adapter.h"
-
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (tao, 

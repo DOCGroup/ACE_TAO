@@ -16,7 +16,6 @@
 
 #ifndef TAO_CEC_DEFAULTS_H
 #define TAO_CEC_DEFAULTS_H
-
 #include /**/ "ace/pre.h"
 
 #ifndef TAO_CEC_ENABLE_DEBUG_MESSAGES
@@ -119,5 +118,4 @@
 #endif /* TAO_CEC_DEFAULT_SUPPLIER_CONTROL_TIMEOUT */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_CEC_DEFAULTS_H */

@@ -13,16 +13,17 @@
 
 #ifndef TAO_MCAST_PARSER_H
 #define TAO_MCAST_PARSER_H
-
 #include /**/ "ace/pre.h"
-#include "ace/Service_Config.h"
+
+#include "tao/IOR_Parser.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/CORBA_String.h"
-#include "tao/IOR_Parser.h"
+
+#include "ace/Service_Config.h"
 
 /**
  * @class TAO_MCAST_Parser

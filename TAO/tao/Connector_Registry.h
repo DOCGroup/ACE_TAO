@@ -12,31 +12,33 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_CONNECTOR_REGISTRY_H
 #define TAO_CONNECTOR_REGISTRY_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/CORBA_macros.h"
-#include "tao/Basic_Types.h"
-#include "ace/Global_Macros.h"
 
 // Forward declarations.
+class ACE_Addr;
+class ACE_Reactor;
+
 class TAO_ORB_Core;
 class TAO_Connector;
+
+class TAO_Transport_Descriptor_Interface;
+class TAO_Stub;
 class TAO_MProfile;
 class TAO_Profile;
-class TAO_InputCDR;
-
-namespace CORBA
-{
-  class Environment;
-}
+class TAO_Resource_Factory;
+class TAO_GIOP_Invocation;
 
 typedef TAO_Connector** TAO_ConnectorSetIterator;
 
@@ -70,6 +72,20 @@ public:
 
   /// Close all open connectors.
   int close_all (void);
+
+
+  /**
+   * @@ todo: This method needs to be removed. There should be no need
+   * for the registry to establish connections.
+   *
+   * This is where the transport protocol is selected based on some
+   * policy.  This member will call the connect member of the
+   * TAO_Connector class which in turn will call the concrete
+   * connector.
+   */
+  int connect (TAO_GIOP_Invocation *invocation,
+               TAO_Transport_Descriptor_Interface *desc
+               ACE_ENV_ARG_DECL);
 
   /// Parse a string containing a URL style IOR and return an
   /// MProfile.

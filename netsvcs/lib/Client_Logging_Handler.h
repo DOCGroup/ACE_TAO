@@ -26,6 +26,7 @@
 
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
+#include "ace/Synch.h"
 #include "ace/svc_export.h"
 
 #if defined (ACE_HAS_STREAM_PIPES)

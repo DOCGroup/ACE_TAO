@@ -19,4 +19,3 @@ all:
 	@$(MAKE) -f Makefile.libs $@
 	@$(MAKE) -f Makefile.tests $@
 	@$(MAKE) -f Makefile.dirs SUBDIR_MAKEFILE=Makefile $@
-

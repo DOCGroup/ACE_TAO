@@ -1,12 +1,15 @@
 #include "GIOP_Message_Generator_Parser_12.h"
-#include "GIOPC.h"
 #include "GIOP_Utils.h"
+#include "GIOP_Message_State.h"
 #include "GIOP_Message_Locate_Header.h"
 #include "operation_details.h"
+#include "CDR.h"
+#include "Any.h"
 #include "debug.h"
 #include "Pluggable_Messaging_Utils.h"
 #include "TAO_Server_Request.h"
 #include "TAOC.h"
+#include "Service_Context.h"
 #include "ORB_Core.h"
 #include "Transport.h"
 
@@ -17,6 +20,7 @@
 ACE_RCSID (tao,
            GIOP_Message_Gen_Parser_12,
            "$Id$")
+
 
 // This is used by GIOP1.2. This is to align the message body on a
 // 8-octet boundary. This is declared static so that it is in file
@@ -366,7 +370,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_reply (
 
   if ((cdr >> params.svc_ctx_) == 0)
     {
-      // if (TAO_debug_level > 0)
+      if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) parse_reply, ")
                     ACE_TEXT ("extracting context\n")));
@@ -379,6 +383,13 @@ TAO_GIOP_Message_Generator_Parser_12::parse_reply (
       // Align the read pointer on an 8-byte boundary
       cdr.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);
     }
+
+
+
+
+  // Steal the contents in to the reply CDR and loose ownership of the
+  // data block.
+  params.input_cdr_.exchange_data_blocks (cdr);
 
   return 0;
 }
@@ -403,6 +414,10 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_reply (
       // Align the read pointer on an 8-byte boundary
       cdr.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);
       }*/
+
+  // Steal the contents in to the reply CDR and loose ownership of the
+  // data block.
+  params.input_cdr_.exchange_data_blocks (cdr);
 
   return 0;
 }

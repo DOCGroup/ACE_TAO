@@ -11,7 +11,6 @@ ACE_RCSID (ace,
 #include "ace/Service_Config.h"
 #include "ace/INET_Addr.h"
 #include "ace/Task_T.h"
-#include "ace/OS_NS_errno.h"
 
 size_t
 ACE_WIN32_Asynch_Result::bytes_transferred (void) const

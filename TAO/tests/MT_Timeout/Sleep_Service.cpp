@@ -2,7 +2,6 @@
 // $Id$
 //
 #include "Sleep_Service.h"
-#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(MT_Timeout, Sleep_Service, "$Id$")
 

@@ -54,8 +54,6 @@
 #  gtk_reactor      Build the GtkReactor.
 #  ssl              Build with OpenSSL support.
 #  rapi             Build with RAPI
-#  pipes            Build with pipe support, resulting in adding -pipe to the
-#                   compiler options.
 #  split            Build the library by first splitting up the ACE source
 #                   to several files, with one object code entity for each
 #                   source file. This allows an application that is linked
@@ -100,10 +98,8 @@
 #  ARFLAGS      Flags for the archive utility (ar)
 #  CC           C compiler command
 #  CXX          C++ compiler command
-#  RC           Resource compiler command
 #  COMPILE.c    Flags for compiling with C
 #  COMPILE.cc   Flags for compiling with C++
-#  COMPILE.rc   Flags for compiling with the resource compiler
 #  CPPFLAGS     C pre-processor flags
 #  CFLAGS       C compilation flags
 #  CCFLAGS      C++ compilation flags
@@ -709,17 +705,6 @@ ifdef repo
 #  ace_lib_prelink := 1
 endif # repo
 
-# If pipes is not set, we default to 0
-ifeq (,$(pipes))
-  pipes = 0
-endif
-
-# If pipes is set to 1 then add the compiler flag -pipe. This uses pipe instead
-# of intermediate files. This can be disabled by setting pipes to 0 in the
-# platform_macros.GNU file.
-ifeq ($(pipes),1)
-   CFLAGS += -pipe
-endif # pipes
 
 #----------------------------------------------------------------------------
 #      Conditional macro definitions
@@ -727,7 +712,6 @@ endif # pipes
 
 COMPILE.c       = $(CC) $(CFLAGS) $(CPPFLAGS) -c
 COMPILE.cc      = $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) -c
-COMPILE.rc      = $(RC)
 COMPILE-NO_DASH_G.cc = `echo $(COMPILE.cc) | sed 's/-g //'`
 # 960905 Marius Kjeldahl <marius@funcom.com>
 # Added the line below to be used for compiling executable shared objects

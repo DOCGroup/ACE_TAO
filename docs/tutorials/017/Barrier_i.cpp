@@ -2,7 +2,6 @@
 // $Id$
 
 #include "Barrier_i.h"
-#include "ace/Barrier.h"
 
 /* Initialize the threads_ count to zero and the barrier_ pointer to a
    safe value.  At the same time, we remember the thread that created

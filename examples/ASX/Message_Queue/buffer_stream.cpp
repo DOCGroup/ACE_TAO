@@ -8,11 +8,11 @@
 // the use of these reusable components reduces the reliance on global
 // variables, as compared with the bounded_buffer.C example.
 
+#include "ace/Synch.h"
 #include "ace/Service_Config.h"
 #include "ace/Stream.h"
 #include "ace/Module.h"
 #include "ace/Task.h"
-#include "ace/OS_NS_time.h"
 
 ACE_RCSID(Message_Queue, buffer_stream, "$Id$")
 

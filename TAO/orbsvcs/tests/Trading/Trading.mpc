@@ -1,7 +1,6 @@
 project(*Test Lib): orbsvcslib, trading, naming, svc_utils, iortable, dynamicany, portableserver {
   sharedname = TTest
   dynamicflags = TRADING_TEST_BUILD_DLL
-  idlflags    += -Wb,export_macro=Trading_Test_Export -Wb,export_include=ttest_export.h
 
   Source_Files {
     TT_Info.cpp
@@ -23,6 +22,7 @@ project(*Test Lib): orbsvcslib, trading, naming, svc_utils, iortable, dynamicany
 project(*export test): namingexe, trading, dynamicany {
   after   += Trading_Test_Lib 
   libs    += TTest
+  exename  = export_test
 
   IDL_Files {
   }
@@ -35,6 +35,7 @@ project(*export test): namingexe, trading, dynamicany {
 project(*import test): namingexe, trading, dynamicany {
   after   += Trading_Test_Lib 
   libs    += TTest 
+  exename  = import_test
 
   IDL_Files {
   }
@@ -47,6 +48,7 @@ project(*import test): namingexe, trading, dynamicany {
 project(*colocated test): namingexe, trading, dynamicany {
   after   += Trading_Test_Lib 
   libs    += TTest 
+  exename  = colocated_test
 
   IDL_Files {
   }

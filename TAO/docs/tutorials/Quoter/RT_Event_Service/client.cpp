@@ -6,7 +6,6 @@
 #include <orbsvcs/CosNamingC.h>
 #include <orbsvcs/Event_Utilities.h>
 #include "ace/streams.h"
-#include "ace/OS_NS_string.h"
 
 int main (int argc, char* argv[])
 {

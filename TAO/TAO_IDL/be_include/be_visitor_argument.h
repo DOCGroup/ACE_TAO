@@ -15,7 +15,7 @@
 //    interpretive styled stubs and skeletons
 //
 // = AUTHOR
-//    Aniruddha Gokhale and Carlos O'Ryan
+//    Aniruddha Gokhale and Carlos O' Ryan
 //
 // ============================================================================
 
@@ -31,7 +31,11 @@
 #include "be_visitor_argument/upcall_ss.h"
 #include "be_visitor_argument/post_upcall_ss.h"
 #include "be_visitor_argument/marshal_ss.h"
+#include "be_visitor_argument/pre_invoke_cs.h"
 #include "be_visitor_argument/invoke_cs.h"
+#include "be_visitor_argument/post_invoke_cs.h"
+#include "be_visitor_argument/request_info_ch.h"
+#include "be_visitor_argument/request_info_cs.h"
 #include "be_visitor_argument/paramlist.h"
 #include "be_visitor_argument/request_info_sh.h"
 #include "be_visitor_argument/request_info_ss.h"

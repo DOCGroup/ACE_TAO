@@ -3,14 +3,10 @@
 // $Id$
 
 #include "RequestInfo_Util.h"
-#include "Typecode.h"
-#include "ORB_Constants.h"
+#include "Any.h"
 #include "StringSeqC.h"
-#include "DynamicC.h"
 
-ACE_RCSID (tao, 
-           RequestInfo_Util, 
-           "$Id$")
+ACE_RCSID (tao, RequestInfo_Util, "$Id$")
 
 Dynamic::ParameterList *
 TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_DECL)

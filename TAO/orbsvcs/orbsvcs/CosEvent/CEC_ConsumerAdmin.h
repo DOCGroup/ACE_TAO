@@ -12,7 +12,6 @@
 
 #ifndef TAO_CEC_CONSUMERADMIN_H
 #define TAO_CEC_CONSUMERADMIN_H
-
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/CosEventChannelAdminS.h"
@@ -22,7 +21,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/ESF/ESF_Proxy_Admin.h"
-
 #include "CEC_ProxyPushSupplier.h"
 #include "CEC_ProxyPullSupplier.h"
 #include "event_export.h"
@@ -45,8 +43,7 @@ class TAO_CEC_EventChannel;
  * externally.
  * = TODO
  */
-class TAO_Event_Export TAO_CEC_ConsumerAdmin 
-  : public POA_CosEventChannelAdmin::ConsumerAdmin
+class TAO_Event_Export TAO_CEC_ConsumerAdmin : public POA_CosEventChannelAdmin::ConsumerAdmin
 {
 public:
   /**
@@ -149,5 +146,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_CEC_CONSUMERADMIN_H */

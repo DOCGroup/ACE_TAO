@@ -25,6 +25,7 @@
 #include "ace/Unbounded_Queue.h"
 #include "ace/Log_Msg.h"
 #include "ace/Basic_Stats.h"
+#include "ace/OS.h"
 
 /**
  * @class ACE_Stats_Value

@@ -2,8 +2,6 @@
 
 #include "ace/Read_Buffer.h"
 #include "ace/Array_Base.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_math.h"
 
 typedef ACE_Array_Base<CORBA::ULong> ULong_Array;
 

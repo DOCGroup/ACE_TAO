@@ -1,35 +1,47 @@
 project(*Notify ConnectDisconnect): notifytest {
+  exename = ConnectDisconnect
+
   Source_Files {
     ConnectDisconnect.cpp
   }
 }
 
 
-project(*Notify LifeCycle): notifytest, naming {
+project(*Notify LifeCycle): notifytest {
+  exename  = LifeCycle
+
   Source_Files {
     LifeCycle.cpp
   }
 }
 
-project(*Notify IdAssignment): notifytest, naming {
+project(*Notify IdAssignment): notifytest {
+  exename  = IdAssignment
+
   Source_Files {
     IdAssignment.cpp
   }
 }
 
 project(*Notify Events): notifytest {
+  exename  = Events
+
   Source_Files {
     Events.cpp
   }
 }
 
 project(*Notify AdminProperties): notifytest {
+  exename  = AdminProperties
+
   Source_Files {
     AdminProperties.cpp
   }
 }
 
 project(*Notify Simple): notifytest {
+  exename  = Simple
+
   Source_Files {
     Simple.cpp
   }

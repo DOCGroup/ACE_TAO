@@ -3,6 +3,7 @@
 #include "ace/XtReactor.h"
 #if defined (ACE_HAS_XT)
 
+#include "ace/Synch_T.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
 

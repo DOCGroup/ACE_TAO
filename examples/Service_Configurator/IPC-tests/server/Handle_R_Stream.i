@@ -3,8 +3,6 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/WFMO_Reactor.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_time.h"
 
 ACE_INLINE
 Handle_R_Stream::Handle_R_Stream (void)

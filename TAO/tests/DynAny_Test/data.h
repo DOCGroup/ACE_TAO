@@ -12,8 +12,7 @@
 //=============================================================================
 
 
-#include "tao/ORB.h"
-#include "tao/TC_Constants_Forward.h"
+#include "tao/corba.h"
 
 class Data
 {

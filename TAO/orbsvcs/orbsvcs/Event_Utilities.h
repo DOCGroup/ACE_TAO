@@ -13,12 +13,10 @@
 
 #ifndef ACE_EVENT_UTILITIES_H
 #define ACE_EVENT_UTILITIES_H
-
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"
-
 #include "Event/event_export.h"
 
 typedef void (*TAO_EC_Event_Initializer) (RtecEventComm::Event&);
@@ -248,5 +246,4 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
-
 #endif /* ACE_EVENT_UTILITIES_H */

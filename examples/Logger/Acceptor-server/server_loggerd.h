@@ -7,7 +7,8 @@
 
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
-#include "ace/os_include/os_netdb.h"
+#include "ace/Synch.h"
+
 
 class Options
 {

@@ -3,12 +3,6 @@
 #include "interceptors.h"
 #include "testC.h"
 
-#include "tao/DynamicC.h"
-#include "tao/Typecode.h"
-
-#include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
-
 ACE_RCSID (Dynamic,
            interceptors,
            "$Id$")
@@ -66,41 +60,20 @@ Echo_Client_Request_Interceptor::send_request (
               "\"%s\"\n",
               op.in ()));
 
-  // For the "normal" operation, get the argument list.
-  if (ACE_OS::strcmp (op.in (),
-                      "normal") == 0)
+  if (ACE_OS::strcmp (op.in (), "normal") == 0)
     {
       Dynamic::ParameterList_var paramlist =
         ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      if (paramlist->length () != 2)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) All parameters not available \n"));
+      CORBA::Long param;
+      CORBA::ULong i = 0;  // index -- explicitly used to avoid
+                           // overloaded operator ambiguity.
+      paramlist[i].argument >>= param;
 
-        }
-
-      CORBA::ULong first = 0, second = 1; // If you dont understand
-                                          // why this is  done, then
-                                          // try changing it.
-      if (paramlist[first].mode != CORBA::PARAM_IN ||
-          paramlist[second].mode != CORBA::PARAM_OUT)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) ERROR in the extracted argument list \n"));
-        }
-
-      CORBA::Long param = 0;
-      paramlist[first].argument >>= param;
-
-      if (param != 10)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) ERROR in send_request while checking ",
-                      "the value of the extracted ",
-                      "arguments \n"));
-        }
+      ACE_DEBUG ((LM_DEBUG,
+                  "The arg is %d\n",
+                  param));
     }
 }
 
@@ -136,56 +109,20 @@ Echo_Client_Request_Interceptor::receive_reply (
               "from \"%s\"\n",
               op.in ()));
 
-    // For the "normal" operation, get the argument list.
-  if (ACE_OS::strcmp (op.in (),
-                      "normal") == 0)
+  if (ACE_OS::strcmp (op.in (), "normal") == 0)
     {
       Dynamic::ParameterList_var paramlist =
         ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      if (paramlist->length () != 2)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) All parameters not available \n"));
+      CORBA::Long param;
+      CORBA::ULong i = 0;  // index -- explicitly used to avoid
+                           // overloaded operator ambiguity.
+      paramlist[i].argument >>= param;
 
-        }
-
-      CORBA::ULong first = 0, second = 1; // If you dont understand
-                                          // why this is  done, then
-                                          // try changing it.
-      if (paramlist[first].mode != CORBA::PARAM_IN ||
-          paramlist[second].mode != CORBA::PARAM_OUT)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) ERROR in the extracted argument list \n"));
-        }
-
-      CORBA::Long param = 0;
-      paramlist[first].argument >>= param;
-
-      if (param != 10)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) ERROR in send_request while checking ",
-                      "the value of the extracted ",
-                      "arguments \n"));
-        }
-
-      const char *str = 0;
-
-      paramlist[second].argument >>= str;
-
-      CORBA::String_var transfer (str);
-
-      if (ACE_OS::strcmp (str,
-                          "DO_NOT_INSULT_MY_INTELLIGENCE") != 0)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) ERROR in send_request while checking ",
-                      "the value of the extracted ",
-                      "out arguments \n"));
-        }
+      ACE_DEBUG ((LM_DEBUG,
+                  "The arg is %d\n",
+                  param));
     }
 
   if (ACE_OS::strcmp (op.in (), "calculate") == 0)

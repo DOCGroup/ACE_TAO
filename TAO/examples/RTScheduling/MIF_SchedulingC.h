@@ -26,24 +26,21 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:150
+// be/be_codegen.cpp:151
 
 #ifndef _TAO_IDL_MIF_SCHEDULINGC_H_
 #define _TAO_IDL_MIF_SCHEDULINGC_H_
 
-#include "tao/ORB.h"
+
+#include "tao/corba.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/CDR.h"
-#include "tao/Environment.h"
-#include "tao/Object.h"
-#include "tao/Objref_VarOut_T.h"
 
 #include "tao/RTScheduling/RTScheduler.h"
-#include "tao/RTCORBA/RTCORBA.h"
+#include "tao/RTCORBA/RTCORBAC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -68,48 +65,60 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-// TAO_IDL - Generated from 
-// be/be_visitor_root/root_ch.cpp:63
-
-namespace TAO
-{
-  class Collocation_Proxy_Broker;
-  
-  template<typename T> class Narrow_Utils;
-  template<typename T> class AbstractBase_Narrow_Utils;
-}
-
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:48
 
-namespace MIF_Scheduling
+TAO_NAMESPACE  MIF_Scheduling
 {
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:610
+  // be/be_interface.cpp:584
 
-#if !defined (_MIF_SCHEDULING_SEGMENTSCHEDULINGPARAMETERPOLICY__VAR_OUT_CH_)
-#define _MIF_SCHEDULING_SEGMENTSCHEDULINGPARAMETERPOLICY__VAR_OUT_CH_
+#if !defined (_MIF_SCHEDULING_SEGMENTSCHEDULINGPARAMETERPOLICY__ODDS_N_ENDS_CH_)
+#define _MIF_SCHEDULING_SEGMENTSCHEDULINGPARAMETERPOLICY__ODDS_N_ENDS_CH_
   
   class SegmentSchedulingParameterPolicy;
   typedef SegmentSchedulingParameterPolicy *SegmentSchedulingParameterPolicy_ptr;
+  struct tao_SegmentSchedulingParameterPolicy_life;
   
   typedef
     TAO_Objref_Var_T<
-        SegmentSchedulingParameterPolicy
+        SegmentSchedulingParameterPolicy,
+        tao_SegmentSchedulingParameterPolicy_life
       >
     SegmentSchedulingParameterPolicy_var;
   
   typedef
     TAO_Objref_Out_T<
-        SegmentSchedulingParameterPolicy
+        SegmentSchedulingParameterPolicy,
+        tao_SegmentSchedulingParameterPolicy_life
       >
     SegmentSchedulingParameterPolicy_out;
+  
+  struct  tao_SegmentSchedulingParameterPolicy_life
+  {
+    static SegmentSchedulingParameterPolicy_ptr tao_duplicate (SegmentSchedulingParameterPolicy_ptr);
+    static void tao_release (SegmentSchedulingParameterPolicy_ptr);
+    static SegmentSchedulingParameterPolicy_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        SegmentSchedulingParameterPolicy_ptr,
+        TAO_OutputCDR &
+      );
+  };
+  
+  struct  tao_SegmentSchedulingParameterPolicy_cast
+  {
+    static SegmentSchedulingParameterPolicy_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
+  };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:54
+  // be/be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_MIF_SCHEDULING_SEGMENTSCHEDULINGPARAMETERPOLICY_CH_)
 #define _MIF_SCHEDULING_SEGMENTSCHEDULINGPARAMETERPOLICY_CH_
@@ -120,6 +129,7 @@ namespace MIF_Scheduling
   public:
     typedef SegmentSchedulingParameterPolicy_ptr _ptr_type;
     typedef SegmentSchedulingParameterPolicy_var _var_type;
+    static int _tao_class_id;
     
     // The static operations.
     static SegmentSchedulingParameterPolicy_ptr _duplicate (SegmentSchedulingParameterPolicy_ptr obj);
@@ -129,10 +139,15 @@ namespace MIF_Scheduling
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
+    static SegmentSchedulingParameterPolicy_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static SegmentSchedulingParameterPolicy_ptr _nil (void)
-    {
-      return (SegmentSchedulingParameterPolicy_ptr)0;
-    }
+      {
+        return (SegmentSchedulingParameterPolicy_ptr)0;
+      }
     
     static void _tao_any_destructor (void *);
     
@@ -158,26 +173,19 @@ namespace MIF_Scheduling
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:192
+    // be/be_visitor_interface/interface_ch.cpp:210
     
-    virtual CORBA::Boolean _is_a (
-        const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
+    virtual void *_tao_QueryInterface (ptrdiff_t type);
     
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   
   protected:
-    // Abstract or local interface only.
     SegmentSchedulingParameterPolicy (void);
-    
     virtual ~SegmentSchedulingParameterPolicy (void);
   
   private:
-    // Private and unimplemented for concrete interfaces.
     SegmentSchedulingParameterPolicy (const SegmentSchedulingParameterPolicy &);
-    
     void operator= (const SegmentSchedulingParameterPolicy &);
   };
 
@@ -189,30 +197,53 @@ namespace MIF_Scheduling
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_SegmentSchedulingParameterPolicy;
   
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:610
+  // be/be_interface.cpp:584
 
-#if !defined (_MIF_SCHEDULING_MIF_SCHEDULER__VAR_OUT_CH_)
-#define _MIF_SCHEDULING_MIF_SCHEDULER__VAR_OUT_CH_
+#if !defined (_MIF_SCHEDULING_MIF_SCHEDULER__ODDS_N_ENDS_CH_)
+#define _MIF_SCHEDULING_MIF_SCHEDULER__ODDS_N_ENDS_CH_
   
   class MIF_Scheduler;
   typedef MIF_Scheduler *MIF_Scheduler_ptr;
+  struct tao_MIF_Scheduler_life;
   
   typedef
     TAO_Objref_Var_T<
-        MIF_Scheduler
+        MIF_Scheduler,
+        tao_MIF_Scheduler_life
       >
     MIF_Scheduler_var;
   
   typedef
     TAO_Objref_Out_T<
-        MIF_Scheduler
+        MIF_Scheduler,
+        tao_MIF_Scheduler_life
       >
     MIF_Scheduler_out;
+  
+  struct  tao_MIF_Scheduler_life
+  {
+    static MIF_Scheduler_ptr tao_duplicate (MIF_Scheduler_ptr);
+    static void tao_release (MIF_Scheduler_ptr);
+    static MIF_Scheduler_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        MIF_Scheduler_ptr,
+        TAO_OutputCDR &
+      );
+  };
+  
+  struct  tao_MIF_Scheduler_cast
+  {
+    static MIF_Scheduler_ptr tao_narrow (
+        CORBA::Object_ptr
+        ACE_ENV_ARG_DECL
+      );
+    static CORBA::Object_ptr tao_upcast (void *);
+  };
 
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:54
+  // be/be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_MIF_SCHEDULING_MIF_SCHEDULER_CH_)
 #define _MIF_SCHEDULING_MIF_SCHEDULER_CH_
@@ -223,6 +254,7 @@ namespace MIF_Scheduling
   public:
     typedef MIF_Scheduler_ptr _ptr_type;
     typedef MIF_Scheduler_var _var_type;
+    static int _tao_class_id;
     
     // The static operations.
     static MIF_Scheduler_ptr _duplicate (MIF_Scheduler_ptr obj);
@@ -232,10 +264,15 @@ namespace MIF_Scheduling
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
+    static MIF_Scheduler_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+    
     static MIF_Scheduler_ptr _nil (void)
-    {
-      return (MIF_Scheduler_ptr)0;
-    }
+      {
+        return (MIF_Scheduler_ptr)0;
+      }
     
     static void _tao_any_destructor (void *);
     
@@ -251,26 +288,19 @@ namespace MIF_Scheduling
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:192
+    // be/be_visitor_interface/interface_ch.cpp:210
     
-    virtual CORBA::Boolean _is_a (
-        const char *type_id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
+    virtual void *_tao_QueryInterface (ptrdiff_t type);
     
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   
   protected:
-    // Abstract or local interface only.
     MIF_Scheduler (void);
-    
     virtual ~MIF_Scheduler (void);
   
   private:
-    // Private and unimplemented for concrete interfaces.
     MIF_Scheduler (const MIF_Scheduler &);
-    
     void operator= (const MIF_Scheduler &);
   };
 
@@ -282,59 +312,10 @@ namespace MIF_Scheduling
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_MIF_Scheduler;
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:66
+// be/be_visitor_module/module_ch.cpp:67
 
-} // module MIF_Scheduling
-
-// TAO_IDL - Generated from
-// be/be_visitor_traits.cpp:48
-
-// Traits specializations.
-namespace TAO
-{
-
-#if !defined (_MIF_SCHEDULING_SEGMENTSCHEDULINGPARAMETERPOLICY__TRAITS_CH_)
-#define _MIF_SCHEDULING_SEGMENTSCHEDULINGPARAMETERPOLICY__TRAITS_CH_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  struct  Objref_Traits<MIF_Scheduling::SegmentSchedulingParameterPolicy>
-  {
-    static MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr tao_duplicate (
-        MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr
-      );
-    static void tao_release (
-        MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr
-      );
-    static MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-
-#if !defined (_MIF_SCHEDULING_MIF_SCHEDULER__TRAITS_CH_)
-#define _MIF_SCHEDULING_MIF_SCHEDULER__TRAITS_CH_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  struct  Objref_Traits<MIF_Scheduling::MIF_Scheduler>
-  {
-    static MIF_Scheduling::MIF_Scheduler_ptr tao_duplicate (
-        MIF_Scheduling::MIF_Scheduler_ptr
-      );
-    static void tao_release (
-        MIF_Scheduling::MIF_Scheduler_ptr
-      );
-    static MIF_Scheduling::MIF_Scheduler_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        MIF_Scheduling::MIF_Scheduler_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-};
+}
+TAO_NAMESPACE_CLOSE // module MIF_Scheduling
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_ch.cpp:52
@@ -361,7 +342,7 @@ namespace TAO
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:911
+// be/be_codegen.cpp:1055
 
 #if defined (__ACE_INLINE__)
 #include "MIF_SchedulingC.i"

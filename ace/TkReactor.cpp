@@ -1,6 +1,7 @@
 #include "ace/TkReactor.h"
 
 #if defined (ACE_HAS_TK)
+#include "ace/Synch_T.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
 

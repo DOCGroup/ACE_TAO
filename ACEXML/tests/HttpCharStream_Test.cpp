@@ -1,8 +1,6 @@
 // $Id$
 
 #include "ACEXML/common/HttpCharStream.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_main.h"
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {

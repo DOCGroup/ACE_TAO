@@ -37,8 +37,8 @@
 #ifndef TAO_MESSAGING_RT_POLICY_PIDL
 #define TAO_MESSAGING_RT_POLICY_PIDL
 
-#include "tao/TimeBase.pidl"
-#include "tao/Policy.pidl"
+#include <TimeBase.pidl>
+#include <Policy.pidl>
 
 #pragma prefix "omg.org"
 

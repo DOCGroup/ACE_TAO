@@ -1,11 +1,12 @@
-project(*server): portableserver, orbsvcsexe, iormanip, ftorb {
+project(*server): server, orbsvcsexe, iormanip, ftorb, messaging {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(*Manager): portableserver, orbsvcsexe, iormanip, ftorb {
+project(*Manager): taoserver, orbsvcsexe, iormanip, ftorb {
+  exename  = Manager
   Source_Files {
     testC.cpp
     Manager.cpp

@@ -9,11 +9,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
+#include "ace/Synch.h"
 #include "ace/Singleton.h"
-
-// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
-
 #include "ace/Log_Record.h"
 #include "ace/Test_and_Set.h"
 

@@ -479,9 +479,6 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name PortableServer
     End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name Messaging
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -526,9 +523,6 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name RTSchedEvent
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name BiDirGIOP
     End Project Dependency
 }}}
 
@@ -1002,18 +996,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RTCosScheduling"=.\orbsvcs\orbsvcs\RTCosScheduling.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "RTEvent"=.\orbsvcs\orbsvcs\RTEvent.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1317,6 +1299,7 @@ Package=<4>
 
 ###############################################################################
 
+
 Project: "TAO DLL"=.\tao\TAO.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1527,3 +1510,14 @@ Package=<3>
 
 ###############################################################################
 
+Project: "RTCosScheduling"=.\orbsvcs\orbsvcs\RTCosScheduling.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################

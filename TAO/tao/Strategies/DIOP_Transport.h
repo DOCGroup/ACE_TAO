@@ -12,10 +12,9 @@
 
 #ifndef TAO_DIOP_TRANSPORT_H
 #define TAO_DIOP_TRANSPORT_H
-
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "tao/corbafwd.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
@@ -26,6 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SOCK_Stream.h"
+#include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
 #include "strategies_export.h"
 
@@ -138,5 +138,4 @@ private:
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 
 #include /**/ "ace/post.h"
-
 #endif  /* TAO_DIOP_TRANSPORT_H */

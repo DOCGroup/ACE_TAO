@@ -3,16 +3,11 @@
 #include "EC_Dispatching_Task.h"
 #include "EC_ProxySupplier.h"
 
-#include "tao/ORB_Constants.h"
-#include "ace/OS_NS_errno.h"
-
 #if ! defined (__ACE_INLINE__)
 #include "EC_Dispatching_Task.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event, 
-           EC_Dispatching, 
-           "$Id$")
+ACE_RCSID(Event, EC_Dispatching, "$Id$")
 
 int
 TAO_EC_Queue::is_full_i (void)

@@ -14,17 +14,16 @@
 
 #ifndef TAO_PORTABLEGROUP_LOADER_H
 #define TAO_PORTABLEGROUP_LOADER_H
-
 #include /**/ "ace/pre.h"
+
+#include "portablegroup_export.h"
+#include "tao/corbafwd.h"
 #include "ace/Service_Config.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Service_Object.h"
-
-#include "portablegroup_export.h"
 
 /**
  * @class TAO_PortableGroup_Adapter
@@ -34,7 +33,7 @@
  * This class acts as a facade for the PortableGroup library to the
  * ORB.
  */
-class TAO_PortableGroup_Export TAO_PortableGroup_Loader 
+class TAO_PortableGroup_Export TAO_PortableGroup_Loader
   : public ACE_Service_Object
 {
   friend class TAO_POA_Hooks;
@@ -59,17 +58,15 @@ ACE_FACTORY_DECLARE (TAO_PortableGroup, TAO_PortableGroup_Loader)
 typedef int (*TAO_Module_Initializer) (void);
 
 static TAO_Module_Initializer
-TAO_Requires_PortableGroup_Initializer = 
+TAO_Requires_PortableGroup_Initializer =
   &TAO_PortableGroup_Loader::Initializer;
 
 #else
 
 static int
-TAO_Requires_PortableGroup_Initializer = 
-  TAO_PortableGroup_Loader::Initializer ();
+TAO_Requires_PortableGroup_Initializer = TAO_PortableGroup_Loader::Initializer ();
 
 #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_PORTABLEGROUP_LOADER_H */

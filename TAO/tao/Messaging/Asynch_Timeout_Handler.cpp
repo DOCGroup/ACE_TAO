@@ -9,6 +9,7 @@
 
 ACE_RCSID(tao, Asynch_Timeout_Handler, "$Id$")
 
+#if (TAO_HAS_AMI_CALLBACK == 1)
 
 TAO_Asynch_Timeout_Handler::TAO_Asynch_Timeout_Handler (
   TAO_Asynch_Reply_Dispatcher_Base *rd,
@@ -66,3 +67,4 @@ TAO_Asynch_Timeout_Handler::cancel ()
     }
 }
 
+#endif /* (TAO_HAS_AMI_CALLBACK == 1) */

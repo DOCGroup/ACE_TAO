@@ -1,5 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 
+
 //=============================================================================
 /**
  *  @file    Synch_Reply_Dispatcher.h
@@ -13,9 +14,9 @@
  */
 //=============================================================================
 
+
 #ifndef TAO_SYNCH_REPLY_DISPATCHER_H
 #define TAO_SYNCH_REPLY_DISPATCHER_H
-
 #include /**/ "ace/pre.h"
 
 #include "tao/Reply_Dispatcher.h"
@@ -25,6 +26,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LF_Invocation_Event.h"
+#include "tao/GIOP_Message_Version.h"
 #include "tao/CDR.h"
 
 class TAO_Pluggable_Reply_Params;
@@ -88,5 +90,4 @@ private:
 };
 
 #include /**/ "ace/post.h"
-
 #endif /* TAO_REPLY_DISPATCHER_H */

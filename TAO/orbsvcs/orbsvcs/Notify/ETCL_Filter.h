@@ -24,7 +24,6 @@
 #include "ace/Atomic_Op.h"
 #include "orbsvcs/CosNotifyFilterS.h"
 #include "Notify_Constraint_Interpreter.h"
-#include "ace/Null_Mutex.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

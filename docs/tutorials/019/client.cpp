@@ -4,7 +4,6 @@
 #include "shmem.h"
 
 #include "ace/Log_Msg.h"
-#include "ace/os_include/os_ctype.h"
 
 #if defined(ACE_LACKS_SYSV_SHMEM)
 int

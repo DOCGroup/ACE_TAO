@@ -22,7 +22,6 @@
 #include "ace/SString.h"
 #include "ace/Naming_Context.h"
 #include "ace/Profile_Timer.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(tests, Naming_Test, "$Id$")
 
@@ -199,7 +198,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       ACE_OS::strcpy (temp_file, ACE::basename (name_options->process_name (),
                                                 ACE_DIRECTORY_SEPARATOR_CHAR));
-      ACE_OS::strcat (temp_file, ACE_TEXT ("XXXXXX"));
+      ACE_OS_String::strcat (temp_file, ACE_TEXT ("XXXXXX"));
 
       // Set the database name using mktemp to generate a unique file name
       name_options->database (ACE_OS::mktemp (temp_file));

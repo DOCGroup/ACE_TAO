@@ -1,3 +1,4 @@
+
 // -*- C++ -*-
 // ===================================================================
 /**
@@ -11,15 +12,16 @@
 
 #ifndef TAO_CONNECTOR_IMPL_H
 #define TAO_CONNECTOR_IMPL_H
-
 #include /**/ "ace/pre.h"
-#include "ace/Strategies_T.h"
+#include "tao/corbafwd.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Basic_Types.h"
+
+#include "ace/Strategies_T.h"
 
 class TAO_ORB_Core;
 class ACE_Thread_Manager;

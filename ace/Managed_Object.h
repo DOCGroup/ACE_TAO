@@ -23,7 +23,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Object_Manager.h"
-#include "ace/Global_Macros.h"
 
 /**
  * @class ACE_Cleanup_Adapter

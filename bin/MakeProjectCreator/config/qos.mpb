@@ -1,7 +1,5 @@
-feature(qos) {
+project : acelib {
+  requires += qos
   after    += QoS
   libs     += ACE_QoS
-  specific(borland, nmake, em3, vc6, vc7, vc71) {
-    macros += ACE_HAS_WINSOCK2_GQOS
-  }
 }

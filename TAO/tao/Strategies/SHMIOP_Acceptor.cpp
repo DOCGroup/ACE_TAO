@@ -16,8 +16,6 @@
 #include "SHMIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/os_include/os_netdb.h"
-
 ACE_RCSID (Strategies,
            SHMIOP_Acceptor,
            "$Id$")

@@ -14,16 +14,15 @@
 
 #ifndef TAO_UIPMC_CONNECTOR_H
 #define TAO_UIPMC_CONNECTOR_H
-
 #include /**/ "ace/pre.h"
 
-#include "tao/Transport_Connector.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
+#include "tao/Transport_Connector.h"
 #include "UIPMC_Connection_Handler.h"
 #include "portablegroup_export.h"
 
@@ -63,9 +62,9 @@ protected:
   ///   Transport_Connector.h
   int set_validate_endpoint (TAO_Endpoint *endpoint);
 
-  TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
-                                  TAO_Transport_Descriptor_Interface &desc,
-                                  ACE_Time_Value *timeout = 0);
+  int make_connection (TAO_GIOP_Invocation *,
+                       TAO_Transport_Descriptor_Interface *,
+                       ACE_Time_Value *timeout);
 
   virtual TAO_Profile * make_profile (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -86,17 +85,15 @@ private:
                             TAO_UIPMC_Connection_Handler *,
                             ACE_Hash < ACE_INET_Addr >,
                             ACE_Equal_To < ACE_INET_Addr >,
-                            ACE_Null_Mutex > 
-    svc_handler_table_;
+                            ACE_Null_Mutex > svc_handler_table_;
 
   typedef ACE_Hash_Map_Iterator_Ex < ACE_INET_Addr,
                                      TAO_UIPMC_Connection_Handler *,
                                      ACE_Hash < ACE_INET_Addr >,
                                      ACE_Equal_To < ACE_INET_Addr >,
-                                     ACE_Null_Mutex > 
-    SvcHandlerIterator;
+                                     ACE_Null_Mutex > SvcHandlerIterator;
+
 };
 
 #include /**/ "ace/post.h"
-
 #endif  /* TAO_UIPMC_CONNECTOR_H */

@@ -20,7 +20,6 @@
 // ============================================================================
 
 #include "ace/Reactor.h"
-#include "ace/OS_main.h"
 
 ACE_RCSID(WFMO_Reactor, Prerun_State_Changes, "$Id$")
 

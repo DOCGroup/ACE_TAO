@@ -2,8 +2,6 @@
 
 #include "testC.h"
 
-#include "ace/Log_Msg.h"
-
 ACE_RCSID(Connection_Failure, client, "$Id$")
 
 const char *ior =

@@ -22,7 +22,6 @@
 #include "ace/Asynch_IO_Impl.h"
 #include "ace/Message_Block.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_main.h"
 
 ACE_RCSID(Proactor, test_proactor, "simple_test_proactor.cpp,v 1.1 1999/05/18 22:15:30 alex Exp")
 

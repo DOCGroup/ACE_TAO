@@ -1,7 +1,6 @@
-// $Id$
+// -*- C++ -*-
 
 #include "ace/Dev_Poll_Reactor.h"
-#include "ace/Signal.h"
 
 ACE_RCSID (ace,
            Dev_Poll_Reactor,
@@ -48,8 +47,7 @@ ACE_RCSID (ace,
 #include "ace/Reverse_Lock_T.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
-#include "ace/os_include/os_poll.h"
-#include "ace/OS_NS_sys_mman.h"
+
 
 ACE_Dev_Poll_Reactor_Notify::ACE_Dev_Poll_Reactor_Notify (void)
   : dp_reactor_ (0)

@@ -26,13 +26,20 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:302
+// be/be_codegen.cpp:351
 
 
 #include "testC.h"
-#include "tao/Typecode.h"
-#include "tao/Any_Impl_T.h"
-#include "ace/OS_NS_string.h"
+#include "tao/Stub.h"
+#include "tao/Invocation.h"
+#include "tao/PortableInterceptor.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
+#include "tao/RequestInfo_Util.h"
+#include "tao/ClientRequestInfo_i.h"
+#include "tao/ClientInterceptorAdapter.h"
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -43,20 +50,12 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:63
 
-// Arg traits specializations.
-namespace TAO
-{
-};
-
-// TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
-
-// Traits specializations for test.
+int test::_tao_class_id = 0;
 
 test_ptr
-TAO::Objref_Traits<test>::tao_duplicate (
+tao_test_life::tao_duplicate (
     test_ptr p
   )
 {
@@ -64,7 +63,7 @@ TAO::Objref_Traits<test>::tao_duplicate (
 }
 
 void
-TAO::Objref_Traits<test>::tao_release (
+tao_test_life::tao_release (
     test_ptr p
   )
 {
@@ -72,25 +71,67 @@ TAO::Objref_Traits<test>::tao_release (
 }
 
 test_ptr
-TAO::Objref_Traits<test>::tao_nil (void)
+tao_test_life::tao_nil (
+    void
+  )
 {
   return test::_nil ();
 }
 
 CORBA::Boolean
-TAO::Objref_Traits<test>::tao_marshal (
+tao_test_life::tao_marshal (
     test_ptr p,
-    TAO_OutputCDR & cdr
+    TAO_OutputCDR &cdr
   )
 {
   return p->marshal (cdr);
 }
 
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
-(*_TAO_test_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
+test_ptr
+tao_test_cast::tao_narrow (
+    CORBA::Object *p
+    ACE_ENV_ARG_DECL
+  )
+{
+  return test::_narrow (p ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::Object *
+tao_test_cast::tao_upcast (
+    void *src
+  )
+{
+  test **tmp =
+    ACE_static_cast (test **, src);
+  return *tmp;
+}
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+  template class
+    TAO_Objref_Var_T<
+        test,
+        tao_test_life
+      >;
+  template class
+    TAO_Objref_Out_T<
+        test,
+        tao_test_life
+      >;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate \
+    TAO_Objref_Var_T< \
+        test, \
+        tao_test_life \
+      >
+# pragma instantiate \
+    TAO_Objref_Out_T< \
+        test, \
+        tao_test_life \
+      >
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+// TAO_IDL - Generated from 
+// be/be_visitor_interface/interface_cs.cpp:245
 
 test::test (void)
 {}
@@ -101,26 +142,40 @@ test::~test (void)
 void 
 test::_tao_any_destructor (void *_tao_void_pointer)
 {
-  test *_tao_tmp_pointer =
-    ACE_static_cast (test *, _tao_void_pointer);
-  CORBA::release (_tao_tmp_pointer);
+  test *tmp = ACE_static_cast (test *, _tao_void_pointer);
+  CORBA::release (tmp);
 }
 
 test_ptr
 test::_narrow (
-    CORBA::Object_ptr _tao_objref
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL
+  )
+{
+  return test::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+}
+
+test_ptr 
+test::_unchecked_narrow (
+    CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
   )
 {
-  if (CORBA::is_nil (_tao_objref))
+  if (CORBA::is_nil (obj))
     {
       return test::_nil ();
     }
   
-  test_ptr proxy =
-    dynamic_cast<test_ptr> (_tao_objref);
-  
-  return test::_duplicate (proxy);
+  return
+      ACE_reinterpret_cast (
+          test_ptr,
+          obj->_tao_QueryInterface (
+              ACE_reinterpret_cast (
+                  ptrdiff_t,
+                  &test::_tao_class_id
+                )
+            )
+        );
 }
 
 test_ptr
@@ -134,33 +189,35 @@ test::_duplicate (test_ptr obj)
   return obj;
 }
 
-CORBA::Boolean
-test::_is_a (
-    const char *value
-    ACE_ENV_ARG_DECL_NOT_USED
-  )
+void *test::_tao_QueryInterface (ptrdiff_t type)
 {
-  if (
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:test:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          (char *)value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-     )
+  void *retv = 0;
+  
+  if (type == ACE_reinterpret_cast (
+              ptrdiff_t,
+              &test::_tao_class_id)
+            )
     {
-      return 1; // success using local knowledge
+      retv = ACE_reinterpret_cast (void*, this);
     }
-  else
+  else if (type == ACE_reinterpret_cast (
+               ptrdiff_t,
+               &CORBA::Object::_tao_class_id)
+             )
     {
-      return 0;
+      retv =
+        ACE_reinterpret_cast (
+            void *,
+            ACE_static_cast (CORBA::Object_ptr, this)
+          );
     }
+  
+  if (retv != 0)
+    {
+      this->_add_ref ();
+    }
+  
+  return retv;
 }
 
 const char* test::_interface_repository_id (void) const
@@ -204,30 +261,6 @@ static CORBA::TypeCode _tc_TAO_tc_test (
 // TAO_IDL - Generated from
 // be/be_visitor_interface/any_op_cs.cpp:50
 
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<test>::to_object (
-    CORBA::Object_ptr &_tao_elem
-  ) const
-{
-  _tao_elem = CORBA::Object::_duplicate (this->value_);
-  return 1;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<test>::marshal_value (TAO_OutputCDR &)
-{
-  return 0;
-}
-
-ACE_TEMPLATE_SPECIALIZATION
-CORBA::Boolean
-TAO::Any_Impl_T<test>::demarshal_value (TAO_InputCDR &)
-{
-  return 0;
-}
-
 // Copying insertion.
 void
 operator<<= (
@@ -270,52 +303,10 @@ operator>>= (
       );
 }
 
-// TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1702
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-  template class
-    TAO::Objref_Traits<
-        test
-      >;
-
-  template class
-    TAO_Objref_Var_T<
-        test
-      >;
-  
-  template class
-    TAO_Objref_Out_T<
-        test
-      >;
-
-  template class
-    TAO::Any_Impl_T<
-        test
-      >;
-
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Impl_T<test>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-    TAO::Objref_Traits< \
-        test \
-      >
-
-# pragma instantiate \
-    TAO_Objref_Var_T< \
-        test
-      >
-  
-# pragma instantiate \
-    TAO_Objref_Out_T< \
-        test
-      >
-
-# pragma instantiate \
-    TAO::Any_Impl_T< \
-        test \
-      >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+# pragma instantiate TAO::Any_Impl_T<test>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

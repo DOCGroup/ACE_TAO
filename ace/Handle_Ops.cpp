@@ -6,9 +6,7 @@
 #include "ace/Handle_Ops.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_fcntl.h"
-#include "ace/Time_Value.h"
+#include "ace/OS.h"
 
 ACE_RCSID(ace, Handle_Ops, "$Id$")
 
