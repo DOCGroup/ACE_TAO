@@ -28,7 +28,7 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
   Implementation_Repository::INET_Addr *new_addr;
   IIOP_Object *new_iiop_obj = 0;
 
-  if (this->debug_level_ >= 1) 
+  if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "Activating Object: %s\n",
                 this->orb_manager_.orb ()->object_to_string (obj)));
@@ -53,7 +53,7 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
                                         new_addr->port_,
                                         iiop_pfile->object_key ()),
                       0);
-                                   
+
       // over write and possibly change the value set from
       // that set by new_addr!
       new_pfile->object_addr (&iiop_pfile->object_addr ());
@@ -194,11 +194,11 @@ ImplRepo_i::activate_server (const char *server,
 
   if (this->repository_.get_hostport (server, host, port) != 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "ImplRepo_i::activate_server: "
-                         "cannot resolve server <%s>\n",
-                         server),
-                        address);
+      ACE_ERROR ((LM_ERROR,
+                  "ImplRepo_i::activate_server: "
+                  "cannot resolve server <%s>\n",
+                  server));
+      return address;
     }
 
   address->host_ = CORBA::string_dup (host);
