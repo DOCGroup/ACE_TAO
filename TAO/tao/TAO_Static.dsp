@@ -675,6 +675,10 @@ SOURCE=.\RT_ORB.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Thread_Pool.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RT_ORB_Loader.h
 # End Source File
 # Begin Source File
@@ -1316,6 +1320,10 @@ SOURCE=.\RT_Mutex.i
 # Begin Source File
 
 SOURCE=.\RT_ORB.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Thread_Pool.i
 # End Source File
 # Begin Source File
 
@@ -2012,6 +2020,10 @@ SOURCE=.\RT_Mutex.cpp
 # Begin Source File
 
 SOURCE=.\RT_ORB.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Thread_Pool.cpp
 # End Source File
 # Begin Source File
 

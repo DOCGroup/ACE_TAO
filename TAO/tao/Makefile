@@ -304,6 +304,7 @@ ORB_CORE_FILES += \
   RT_Mutex \
   RT_Policy_i \
   RT_ORB \
+  Thread_Pool \
   RT_ORB_Loader \
   RT_Protocols_Hooks \
   Pool_Per_Endpoint \
