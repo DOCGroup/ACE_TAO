@@ -385,7 +385,8 @@ template class ACE_Hash_Map_Iterator_Ex<TAO_Notify_EventType, EVENT_LISTENER_LIS
 template class ACE_Hash_Map_Iterator_Base_Ex<TAO_Notify_EventType, EVENT_LISTENER_LIST *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>;
 template class ACE_Hash_Map_Reverse_Iterator<TAO_Notify_EventType, EVENT_LISTENER_LIST *,ACE_SYNCH_MUTEX>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Notify_EventType, EVENT_LISTENER_LIST *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>;
-
+template class ACE_Hash<TAO_Notify_EventType>;
+template class ACE_Equal_To<TAO_Notify_EventType>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Hash_Map_Entry<TAO_Notify_EventType, EVENT_LISTENER_LIST *>
@@ -396,5 +397,6 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Notify_EventType, EVENT_LIST
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_Notify_EventType, EVENT_LISTENER_LIST *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_Notify_EventType, EVENT_LISTENER_LIST *,ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Notify_EventType, EVENT_LISTENER_LIST *,ACE_Hash<TAO_Notify_EventType>, ACE_Equal_To<TAO_Notify_EventType>,ACE_SYNCH_MUTEX>
-
+#pragma instantiate template ACE_Hash<TAO_Notify_EventType>
+#pragma instantiate template ACE_Equal_To<TAO_Notify_EventType>
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
