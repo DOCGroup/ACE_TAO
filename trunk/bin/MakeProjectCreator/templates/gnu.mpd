@@ -114,6 +114,10 @@ endif
 OUTPUT_DIRECTORY = $(INSLIB)
 <%endif%>
 
+<%if(version)%>
+SOVERSION = .<%version%>
+<%endif%>
+
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ## We don't need the ACELIB setting from wrapper_macros.GNU
 ACELIB =
