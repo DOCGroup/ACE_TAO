@@ -1,3 +1,8 @@
+Thu Nov 15 12:43:31 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/wchar.txt: Added a writeup for ACE_LIB_TEXT and ACE_TEXT
+	  from "the authority."
+
 Wed Nov 14 21:36:42 2001  Ossama Othman  <ossama@uci.edu>
 
 	* docs/usage-bugzilla.html:
@@ -20,7 +25,7 @@ Wed Nov 14 23:11:59 2001  Craig Rodrigues  <crodrigu@bbn.com>
 Wed Nov 14 06:38:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/ACE-bug-process.html (HREF): Changed references from ace.cs
-	  to  deuce.doc. Thanks to Johnny Willemsen for reporting this. 
+	  to  deuce.doc. Thanks to Johnny Willemsen for reporting this.
 
 Tue Nov 13 15:04:15 2001  Carlos O'Ryan  <coryan@uci.edu>
 
