@@ -58,7 +58,7 @@ Cubit_Factory_i::make_cubit (const char *key, CORBA::Environment &env)
 
   for (size_t i = 0; i < this->numobjs_; i++)
     {
-      obj_str = CORBA::string_copy (this->my_cubit_[i]->_get_name (env));
+      obj_str = this->my_cubit_[i]->_get_name (env);
       ACE_DEBUG ((LM_DEBUG, "obj_str = %s\n", obj_str));
 
       // Keys matched.
@@ -66,7 +66,7 @@ Cubit_Factory_i::make_cubit (const char *key, CORBA::Environment &env)
         {
           cubit = Cubit::_duplicate (this->my_cubit_ [i]);
         }
-      CORBA::string_free (obj_str);
+      CORBA::string_free (obj_str); // need to do this
     }
   return cubit;
 }
