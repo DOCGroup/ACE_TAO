@@ -285,6 +285,27 @@ TAO_Stub::servant_orb (CORBA::ORB_ptr orb)
   this->servant_orb_ = CORBA::ORB::_duplicate (orb);
 }
 
+ACE_INLINE TAO_SYNCH_MUTEX &
+TAO_Stub::refcount_lock (void)
+{
+  return this->refcount_lock_;
+}
+
+ACE_INLINE CORBA::ULong &
+TAO_Stub::refcount (void)
+{
+  return this->refcount_;
+}
+
+ACE_INLINE void
+TAO_Stub::destroy (void)
+{
+  // The reference count better be zero at this point!
+  delete this;
+}
+
+// ---------------------------------------------------------------
+
 // Creator methods for TAO_Stub_Auto_Ptr (TAO_Stub Auto Pointer)
 ACE_INLINE
 TAO_Stub_Auto_Ptr::TAO_Stub_Auto_Ptr (TAO_Stub *p)

@@ -286,8 +286,33 @@ public:
                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Return a reference to the reference count lock.
+  /**
+   * This method is meant to be used by the CORBA::Object
+   * implementation to allow it to directly manipulate the reference
+   * count.
+   */
+  TAO_SYNCH_MUTEX & refcount_lock (void);
+
+  /// Return number of outstanding references to this object.
+  /**
+   * This method is meant to be used by the CORBA::Object
+   * implementation to allow it to directly manipulate the reference
+   * count.
+   */
+  CORBA::ULong & refcount (void);
+
+  /// Deallocate the TAO_Stub object.
+  /**
+   * This method is intended to be used only by the CORBA::Object
+   * class.
+   */
+  void destroy (void);
+
 protected:
-  /// Destructor is to be called only through _decr_refcnt().
+
+  /// Destructor is to be called only through _decr_refcnt() to
+  /// enforce proper reference counting.
   virtual ~TAO_Stub (void);
 
 private:
