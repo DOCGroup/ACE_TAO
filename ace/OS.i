@@ -2415,66 +2415,68 @@ ACE_OS::sema_init (ACE_sema_t *s,
   ACE_UNUSED_ARG (max);
   ACE_UNUSED_ARG (sa);
 
-#   if !defined (ACE_LACKS_NAMED_POSIX_SEM)
+#   if defined (ACE_LACKS_NAMED_POSIX_SEM)
+  s->name_ = 0;
+  if (type == USYNC_PROCESS) 
+    {
+      // Let's see if it already exists.
+      ACE_HANDLE fd = ACE_OS::shm_open (name,
+                                        O_RDWR | O_CREAT | O_EXCL,
+                                        ACE_DEFAULT_FILE_PERMS);
+      if (fd == ACE_INVALID_HANDLE)
+        {
+          if (errno == EEXIST) 
+            fd = ACE_OS::shm_open (name,
+                                   O_RDWR | O_CREAT,
+                                   ACE_DEFAULT_FILE_PERMS);
+          else 
+            return -1;
+        } 
+      else 
+        {
+          // We own this shared memory object!  Let's set its
+          // size.
+          if (ACE_OS::ftruncate (fd,
+                                 sizeof (ACE_sema_t)) == -1)
+            return -1;
+          s->name_ = ACE_OS::strnew (name);
+          if (s->name_ == 0)
+            return -1;
+        }
+      if (fd == -1) 
+        return -1;
+
+      s->sema_ = (sem_t *)
+        ACE_OS::mmap (0, 
+                      sizeof (ACE_sema_t),
+                      PROT_RDWR,
+                      MAP_SHARED,
+                      fd,
+                      0);
+      ACE_OS::close (fd);
+      if (s->sema_ == MAP_FAILED) 
+        return -1;
+      if (s->name_ 
+          // Only initialize it if we're the one who created it
+          && if (::sem_init (s->sema_, USYNC_THREAD, count) != 0))
+        return -1;
+      return 0;
+    }
+#else
   if (name)
     {
-      ACE_ALLOCATOR_RETURN (s->name_, ACE_OS::strdup (name), -1);
+      ACE_ALLOCATOR_RETURN (s->name_,
+                            ACE_OS::strdup (name),
+                            -1);
       s->sema_ = ::sem_open (s->name_,
                              O_CREAT,
                              ACE_DEFAULT_FILE_PERMS,
                              count);
       return s->sema_ == (sem_t *) -1 ? -1 : 0;
     }
+#   endif /* ACE_LACKS_NAMED_POSIX_SEM */
   else
-#   endif /*ACE_LACKS_NAMED_POSIX_SEM */
-#  if defined(CHORUS)
     {
-      s->name_ = 0;
-      if (type == USYNC_PROCESS) 
-        {
-          // Let's see if it already exists.
-          ACE_HANDLE fd = ACE_OS::shm_open (name,
-                                            O_RDWR | O_CREAT | O_EXCL,
-                                            ACE_DEFAULT_FILE_PERMS);
-          if (fd == ACE_INVALID_HANDLE)
-            {
-              if (errno == EEXIST) 
-                fd = ACE_OS::shm_open (name,
-                                       O_RDWR | O_CREAT,
-                                       ACE_DEFAULT_FILE_PERMS);
-              else 
-                return -1;
-            } 
-          else 
-            {
-              // We own this shared memory object!  Let's set its
-              // size.
-              if (ACE_OS::ftruncate (fd,
-                                     sizeof (ACE_sema_t)) == -1)
-                return -1;
-              s->name_ = ACE_OS::strnew (name);
-              if (s->name_ == 0)
-                return -1;
-            }
-          if (fd == -1) 
-            return -1;
-
-          s->sema_ = (sem_t *)
-            ACE_OS::mmap (0, 
-                          sizeof (ACE_sema_t),
-                          PROT_RDWR,
-                          MAP_SHARED,
-                          fd,
-                          0);
-          ACE_OS::close (fd);
-          if (s->sema_ == MAP_FAILED) 
-            return -1;
-          if (s->name_ 
-              // Only initialize it if we're the one who created it
-              && if (::sem_init (s->sema_, USYNC_THREAD, count) != 0))
-            return -1;
-          return 0;
-        }
       ACE_NEW_RETURN (s->sema_,
                       sem_t,
                       -1);
@@ -2482,16 +2484,8 @@ ACE_OS::sema_init (ACE_sema_t *s,
                                                        type != USYNC_THREAD,
                                                        count),
                                            ace_result_),
- 			 int, -1);
-    }
-#else
-    {
-      s->name_ = 0;
-      ACE_NEW_RETURN (s->sema_, sem_t, -1);
-      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sem_init (s->sema_, type != USYNC_THREAD, count), ace_result_),
                          int, -1);
     }
-#endif /* CHORUS */
 # elif defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_STHREADS)
   ACE_UNUSED_ARG (name);
