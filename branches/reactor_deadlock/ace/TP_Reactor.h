@@ -214,6 +214,16 @@ protected:
   /// associated with <handle> that a particular event has occurred.
   virtual int notify_handle (ACE_EH_Dispatch_Info &dispatch_info);
 
+  /// Get the event that needs dispatching.It could be either a
+  /// signal, timer, notification handlers or return possibly 1 I/O
+  /// handler for dispatching. In the most common use case, this would
+  /// return 1 I/O handler for dispatching
+  int get_event_for_dispatching ();
+
+  /// A helper method that grabs the token for us, after which we can
+  /// do some actual work.
+  int grab_token (ACE_Time_Value *max_wait_time);
+
 private:
   /// Deny access since member-wise won't work...
   ACE_TP_Reactor (const ACE_TP_Reactor &);

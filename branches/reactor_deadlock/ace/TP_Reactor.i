@@ -14,14 +14,3 @@ ACE_TP_Reactor::mask_ops (ACE_Event_Handler *eh,
 {
   return this->mask_ops (eh->get_handle (), mask, ops);
 }
-
-ACE_INLINE void
-ACE_TP_Reactor::notify_handle (ACE_HANDLE,
-                               ACE_Reactor_Mask,
-                               ACE_Handle_Set &,
-                               ACE_Event_Handler *,
-                               ACE_EH_PTMF)
-{
-  ACE_ERROR ((LM_ERROR,
-              ACE_LIB_TEXT ("ACE_TP_Reactor::notify_handle: Wrong version of notify_handle() gets called")));
-}

@@ -66,25 +66,7 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
   // called.
   ACE_Countdown_Time countdown (max_wait_time);
 
-  // The order of these events is very subtle, modify with care.
-
-  // Try to grab the lock.  If someone if already there, don't wake
-  // them up, just queue up in the thread pool.
-  int result = 0;
-
-  if (max_wait_time)
-    {
-      ACE_Time_Value tv = ACE_OS::gettimeofday ();
-      tv += *max_wait_time;
-
-      ACE_MT (result = this->token_.acquire_read (&ACE_TP_Reactor::no_op_sleep_hook,
-                                                  0,
-                                                  &tv));
-    }
-  else
-    {
-      ACE_MT (result = this->token_.acquire_read (&ACE_TP_Reactor::no_op_sleep_hook));
-    }
+  int result = this->grab_token (max_wait_time);
 
   // Update the countdown to reflect time waiting for the token.
   countdown.update ();
@@ -107,9 +89,23 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
       return -1;
     }
 
-  // We got the lock, lets handle some events.  Note: this method will
+  // We got the lock, lets handle some events. We collect the events
+  // that we need to handle. We release the token and then handle
+  // those events that needs handling.
+  int event_count = this->get_event_for_dispatching (max_wait_time);
+
+
+  // @@ Look for signals that needs dispatching
+  // @@ Timeouts that need dispatching, if any timeouts, just return
+  // @@ after dispatching
+  // @@ Notify that needs dispatching, if any, just return after
+  // dispatching.
+  // @@ Socket events
+
+  //  Note: this method will
   // *not* dispatch any I/O handlers.  It will dispatch signals,
   // timeouts, and notifications.
+
   ACE_EH_Dispatch_Info dispatch_info;
   result = this->dispatch_i_protected (max_wait_time, dispatch_info);
   if (result == -1)
@@ -200,39 +196,6 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
   int result = -1;
 
   event.reset ();           // Nothing to dispatch yet
-
-  // If the reactor handler state has changed, clear any remembered
-  // ready bits and re-scan from the master wait_set.
-  if (this->state_changed_)
-    {
-      this->ready_set_.rd_mask_.reset ();
-      this->ready_set_.wr_mask_.reset ();
-      this->ready_set_.ex_mask_.reset ();
-      this->state_changed_ = 0;
-    }
-  else
-    {
-      // This is a hack... somewhere, under certain conditions (which
-      // I don't understand...) the mask will have all of its bits clear,
-      // yet have a size_ > 0. This is an attempt to remedy the affect,
-      // without knowing why it happens.
-
-      //# if !(defined (__SUNPRO_CC) && (__SUNPRO_CC > 0x500))
-      // SunCC seems to be having problems with this piece of code
-      // here. I am  not sure why though. This works fine with other
-      // compilers. As we dont seem to understand when this piece of
-      // code is needed and as it creates problems for SunCC we will
-      // not compile this. Most of the tests in TAO seem to be happy
-      // without this in SunCC.
-      this->ready_set_.rd_mask_.sync (this->ready_set_.rd_mask_.max_set ());
-      this->ready_set_.wr_mask_.sync (this->ready_set_.wr_mask_.max_set ());
-      this->ready_set_.ex_mask_.sync (this->ready_set_.ex_mask_.max_set ());
-      //# endif /* ! __SUNPRO_CC */
-
-    }
-
-  int active_handle_count = this->wait_for_multiple_events (this->ready_set_,
-                                                            max_wait_time);
 
   int handlers_dispatched = 0;
   int signal_occurred = 0;
@@ -436,11 +399,79 @@ ACE_TP_Reactor::notify_handle (ACE_EH_Dispatch_Info &dispatch_info)
 }
 
 int
+ACE_TP_Reactor::get_event_for_dispatching (ACE_Time_Value *max_wait_time)
+{
+  // If the reactor handler state has changed, clear any remembered
+  // ready bits and re-scan from the master wait_set.
+  if (this->state_changed_)
+    {
+      this->ready_set_.rd_mask_.reset ();
+      this->ready_set_.wr_mask_.reset ();
+      this->ready_set_.ex_mask_.reset ();
+      this->state_changed_ = 0;
+    }
+  else
+    {
+      // This is a hack... somewhere, under certain conditions (which
+      // I don't understand...) the mask will have all of its bits clear,
+      // yet have a size_ > 0. This is an attempt to remedy the affect,
+      // without knowing why it happens.
+      this->ready_set_.rd_mask_.sync (this->ready_set_.rd_mask_.max_set ());
+      this->ready_set_.wr_mask_.sync (this->ready_set_.wr_mask_.max_set ());
+      this->ready_set_.ex_mask_.sync (this->ready_set_.ex_mask_.max_set ());
+    }
+
+  return this->wait_for_multiple_events (this->ready_set_,
+                                         max_wait_time);
+}
+
+
+int
+ACE_TP_Reactor::grab_token (ACE_Time_Value *max_wait_time)
+{
+  ACE_TRACE ("ACE_TP_Reactor::grab_token");
+
+  // The order of these events is very subtle, modify with care.
+
+  // Try to grab the lock.  If someone if already there, don't wake
+  // them up, just queue up in the thread pool.
+  int result = 0;
+
+  if (max_wait_time)
+    {
+      ACE_Time_Value tv = ACE_OS::gettimeofday ();
+      tv += *max_wait_time;
+
+      ACE_MT (result = this->token_.acquire_read (&ACE_TP_Reactor::no_op_sleep_hook,
+                                                  0,
+                                                  &tv));
+    }
+  else
+    {
+      ACE_MT (result = this->token_.acquire_read (&ACE_TP_Reactor::no_op_sleep_hook));
+    }
+
+  return result;
+}
+
+
+int
 ACE_TP_Reactor::resumable_handler (void)
 {
   return 1;
 }
 
+
+void
+ACE_TP_Reactor::notify_handle (ACE_HANDLE,
+                               ACE_Reactor_Mask,
+                               ACE_Handle_Set &,
+                               ACE_Event_Handler *,
+                               ACE_EH_PTMF)
+{
+  ACE_ERROR ((LM_ERROR,
+              ACE_LIB_TEXT ("ACE_TP_Reactor::notify_handle: Wrong version of notify_handle() gets called")));
+}
 
 ACE_EH_Dispatch_Info::ACE_EH_Dispatch_Info (void)
 {
