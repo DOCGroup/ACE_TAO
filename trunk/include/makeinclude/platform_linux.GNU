@@ -130,7 +130,12 @@ ifeq ($(sctp),openss7)
   PLATFORM_SCTP_LIBS= 
 endif
 
-# Eventually Other SCTP implementations will go here
+# support for LKSCTP (Linux Kernel 2.5)
+ifeq ($(sctp),lksctp)
+  PLATFORM_SCTP_CPPFLAGS= -DACE_HAS_LKSCTP
+  PLATFORM_SCTP_LDFLAGS=
+  PLATFORM_SCTP_LIBS= /usr/local/lib/libsctp.a
+endif
 
 #### GNU gas has a string limit of 4096 characters.  On Alphas,
 #### builds will fail due to running over that limit.  There are

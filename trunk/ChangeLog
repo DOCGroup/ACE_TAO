@@ -1,3 +1,38 @@
+Wed Aug  6 14:50:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        Please send all comments/questions about this commit to
+        Jason Cohen, jcohen@atl.lmco.com
+
+        LKSCTP Support added for Linux 2.5/2.6 kernels with LKSCTP patch.
+
+        * ace/SOCK_SEQPACK_Acceptor.h:
+        * ace/SOCK_SEQPACK_Connector.h:
+          Changed default protocol from 0 to 132 (IPPROTO_SCTP).
+          This forces all current usage of SOCK_SEQPACK_* to use
+          SCTP.  This was done because LKSCTP support was added to
+          the SOCK_SEQPACK code, but overrides with SOCK_STREAM.
+          Currently, OpenSS7 and LKSCTP have different views on this.
+
+        * ace/SOCK_SEQPACK_Acceptor.cpp:
+        * ace/SOCK_SEQPACK_Association.cpp:
+        * ace/SOCK_SEQPACK_Connector.cpp:
+          Added #ifdef ACE_HAS_LKSCTP sections to SOCK_SEQPACK_* files
+          to support socket interface differences between LKSCTP and OpenSS7.
+
+        * ace/os_include/sys/os_socket.h:
+        * include/makeinclude/platform_linux.GNU:
+          To enable LKSCTP support on a patched Linux 2.5/2.6 kernel,
+          you must supply 'sctp=lksctp' to your make command line.
+
+        * performance-tests/SCTP/Options_Manager.cpp
+          Now allows automatic server selection of port.
+
+        * performance-tests/SCTP/README
+        * performance-tests/SCTP/README.LKSCTP:
+        * performance-tests/SCTP/README.SCTP:
+        * performance-tests/SCTP/README.SCTP_in_ACE:
+          Made additions for LKSCTP to the documentation.
+
 Wed Aug  6 14:13:25 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Null_Condition.h (vait):

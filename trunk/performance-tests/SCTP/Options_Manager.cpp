@@ -411,11 +411,11 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
         _error_message = "histogram_bin_count must be no less than 1";
       }
 
-    if (server_port < 1010 ||
-        server_port > 65000)
+    if ((server_port < 1010 ||
+        server_port > 65000) && server_port != 0)
       {
         _error = 1;
-        _error_message = "server_port must be between 1010 and 65000 inclusive";
+        _error_message = "server_port must be between 1010 and 65000 inclusive, or zero.";
       }
 
     if ((!ACE_OS::strcmp("client-opts", opts_set)) && payload_size_power_of_2 > 17)
