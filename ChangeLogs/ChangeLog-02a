@@ -1,3 +1,11 @@
+Mon Oct 29 16:59:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TP_Reactor.cpp (acquire_token): The acquire_token () called
+	  acquire with a sleep hook. It was wrong. It should just unblock
+	  the thread by sending notify. A bad cut and paste error
+	  :(. Thanks to Graeme Clark <gclark@opentext.com> for reporting
+	  this. This closes [BUGID 1077].
+
 Sun Oct 28 20:36:56 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Map_T.i (clone):
@@ -46,17 +54,16 @@ Sun Oct 28 13:15:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 	* ace/Unbounded_Queue.cpp:
 	* ace/Unbounded_Set.cpp:
 
-    Changed almost all direct usages of operator new in ACE to use
-    ACE_NEW_RETURN (Exceptions is Dump_T.h). 
-    In one case in Stream.cpp the semantics changed slightly if 
-    operator new would have been overloaded, see the "@@ Michael"
-    comment.
+	  Changed almost all direct usages of operator new in ACE to use
+	  ACE_NEW_RETURN (Exceptions is Dump_T.h).  In one case in
+	  Stream.cpp the semantics changed slightly if  operator new would
+	  have been overloaded, see the "@@ Michael" comment.
     
-    When new got used with placement most of the usages
-    got replaced with ACE_NEW_MALLOC_RETURN. In some cases as in 
-    Malloc_T.cpp, Map_Manager.cpp, PI_Malloc.i, Array_Base.cpp special
-    cases exist, where the macros would have incurred different semantics
-    and performance penalties.
+          When new got used with placement most of the usages  got
+	  replaced with ACE_NEW_MALLOC_RETURN. In some cases as in
+	  Malloc_T.cpp, Map_Manager.cpp, PI_Malloc.i, Array_Base.cpp
+	  special cases exist, where the macros would have incurred
+	  different semantics and performance penalties.
 
 Fri Oct 26 07:37:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
