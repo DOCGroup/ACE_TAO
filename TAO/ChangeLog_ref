@@ -1,3 +1,28 @@
+Fri Oct 24 15:47:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Sequence_T.cpp:
+
+          Cosmetic changes.
+
+        * tao/PortableServer/TAO_PortableServer.dsp:
+
+          Removed illegal preprocessor argument.
+
+        * tao/Valuetype/AbstractBase.cpp:
+        * tao/Valuetype/AbstractBase.h:
+
+          Removed _tao_QueryInterface() method - not used by _narrow()
+          or _unchecked_narrow() and removed from all other interface
+          implementations in TAO.
+
+        * TAO_IDL/be/be_visitor_tmplinst/arg_tmplinst.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_ss.cpp:
+        * TAO_IDL/be_include/be_visitor_tmplinst/tmplinst_ss.h:
+
+          Made small corrections in logic, and added full support for
+          explicit template instantiation on the skeleton side.
+
 Fri Oct 24 11:00:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_tmplinst/arg_tmplinst.cpp:

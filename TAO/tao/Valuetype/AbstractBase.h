@@ -98,7 +98,6 @@ namespace CORBA
     virtual const char* _interface_repository_id (void) const;
 
     /// TAO specific operation
-    virtual void *_tao_QueryInterface (ptrdiff_t type);
     virtual const char* _tao_obv_repository_id (void) const;
     virtual void *_tao_obv_narrow (ptrdiff_t type_id);
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &strm);

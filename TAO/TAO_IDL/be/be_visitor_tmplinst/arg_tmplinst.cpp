@@ -187,6 +187,7 @@ be_visitor_arg_tmplinst::visit_sequence (be_sequence *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+  be_typedef *alias = this->ctx_->alias ();
 
   *os << be_nl << be_nl
       << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
@@ -196,17 +197,17 @@ be_visitor_arg_tmplinst::visit_sequence (be_sequence *node)
 
   *os << "_Var_Size_" << this->S_ << "Argument_T<" << this->linebreak_
       << be_idt << be_idt_nl
-      << node->name ();
+      << alias->name ();
 
   switch (this->dir_)
     {
       case _tao_OUT:
         *os << "," << this->linebreak_ << be_nl
-            << node->name () << "_out";
+            << alias->name () << "_out";
         break;
       case _tao_RET:
         *os << "," << this->linebreak_ << be_nl
-            << node->name () << "_var";
+            << alias->name () << "_var";
         break;
       default:
         break;
