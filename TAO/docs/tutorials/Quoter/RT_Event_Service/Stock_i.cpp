@@ -8,7 +8,7 @@ class MyTieStock:public POA_RtecEventComm::PushSupplier_tie<Quoter_Stock_i>
 {
   friend Quoter_Stock_i::Quoter_Stock_i (const char *symbol,
                                          const char *full_name,
-                                         CORBA::Double price,CORBA::Boolean);
+                                         CORBA::Double price);
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> ref_count_;
 
 protected:
@@ -18,12 +18,12 @@ protected:
       ref_count_(0) {}
 
 public:
-  virtual void _add_ref (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+  virtual void _add_ref (CORBA_Environment & /*ACE_TRY_ENV*/ )
   {
     ++this->ref_count_;
   }
 
-  virtual void _remove_ref (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
+  virtual void _remove_ref (CORBA_Environment & /*ACE_TRY_ENV*/)
   {
     CORBA::ULong new_count = --this->ref_count_;
 
