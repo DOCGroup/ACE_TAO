@@ -17,7 +17,7 @@
 #include "ace/OS.h"
 
 #define QOSEVENT_MAIN
-#include "qosevent.h"
+#include "QosEvent.h"
 #include "Sender_QOS_Event_Handler.h"
     
 static u_short SERVER_PORT = MY_DEFPORT;
@@ -42,35 +42,6 @@ static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 // flowing from sender to receiver, different flowspecs are filled in
 // depending upon whether this application is acting as a sender or
 // receiver.
-
-static void 
-FillQosFlowspecDefault (QOS *pQos, 
-                        u_long *cbQosLen, 
-                        QOS_OPTIONS *pQosOptions)
-{
-  if (pQosOptions->bReceiver)
-    {
-      pQos->ReceivingFlowspec = default_g711;
-      pQos->SendingFlowspec   = default_notraffic;        
-    }
-  else
-    {
-      pQos->SendingFlowspec   = default_g711;     
-      pQos->ReceivingFlowspec = default_notraffic;
-    }
-
-  ACE_DEBUG ((LM_DEBUG,
-              "Enabling QOS Signalling for the sender.\n"));
-
-  // Enable the QOS signalling.
-  ACE_CLR_BITS (pQos->ReceivingFlowspec.ServiceType,
-                SERVICE_NO_QOS_SIGNALING);
-    
-  pQos->ProviderSpecific.len = 0;
-  pQos->ProviderSpecific.buf = 0;
-  *cbQosLen = sizeof (QOS) + pQos->ProviderSpecific.len;
-}
-
 
 static int
 fill_ace_qos_flowspec_default (ACE_QoS *pQos,
@@ -372,7 +343,9 @@ FindServiceProvider(int iProtocol,
                     int bMulticast,
                     ACE_Protocol_Info   *pProtocolInfo)
 {
+
   ACE_Protocol_Info *protocol_buffer = 0;
+
   u_long buffer_length = 0;
   u_long dwErr;
   int bProtocolFound = FALSE;
