@@ -54,6 +54,8 @@ const authenticationFailureOid authenticationFailure;
 const egpNeighborLossOid egpNeighborLoss;
 const snmpTrapEnterpriseOid snmpTrapEnterprise;
 
+char Snmp::host_name_[MAXHOSTNAMELEN] = "";
+
 Snmp::Snmp(unsigned short port): result_(0), construct_status_(SNMP_CLASS_ERROR), last_transaction_status_(0)
 {
   ACE_TRACE("Snmp::Snmp");
@@ -244,6 +246,38 @@ int Snmp::trap( Pdu &pdu, UdpTarget &target)
 
   last_transaction_status_ = SNMP_CLASS_INTERNAL_ERROR;
   return -1;
+}
+
+// Allow host name to be overriden. Supplying a null pointer or zero
+// length string removes the override.
+void Snmp::override_host_name(const char* name)
+{
+        if (name)
+        {
+                ACE_OS::strncpy(host_name_, name, MAXHOSTNAMELEN);
+                host_name_[MAXHOSTNAMELEN-1] = 0;
+        }
+        else {
+                host_name_[0] = 0;
+        }
+}
+
+// Returns the current host name in the supplied string.
+void Snmp::get_host_name(char* name, int len)
+{
+        if (name)
+        {
+                if (ACE_OS::strlen(host_name_) > 0)
+                {
+                        ACE_OS::strncpy(name, host_name_, len);
+                        name[len-1] = 0;
+                }
+                else
+                {
+                        if (ACE_OS::hostname(name, len-1) == -1)
+                                name[0] = 0;
+                }
+        }
 }
 
 Snmp_Result::~Snmp_Result() {}
