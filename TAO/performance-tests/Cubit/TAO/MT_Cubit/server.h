@@ -127,6 +127,7 @@ private:
 };
 
 class Server
+  :public virtual MT_Priority
 {
   // = TITLE
   //     A multithreaded cubit server class.
@@ -135,7 +136,9 @@ class Server
   //     cubit server. To use this ,call initialize and then
   //     start_servants method.
 public:
+  Server (void);
   // default constructor
+
   int initialize (int argc, char **argv);
   // initialize the server state.
 
@@ -145,9 +148,6 @@ public:
 private:
   void prelim_args_process (void);
   // preliminary argument processing code.
-
-  void init_high_priority (void);
-  // sets the priority of the high priority servant.
 
   void init_low_priority (void);
   // sets the priority to be used for the low priority servants.
@@ -181,7 +181,7 @@ private:
 
   ACE_Sched_Priority low_priority_;
   // priority used by the low priority servants.
-  
+
   u_int num_low_priority_;
   // number of low priority servants
 
@@ -201,6 +201,9 @@ private:
 
   ACE_ARGV *low_argv_;
   // argv passed to the low priority servants.
+
+  MT_Priority priority_;
+  // priority helper object.
 };
 
 #endif /* SERVER_H */

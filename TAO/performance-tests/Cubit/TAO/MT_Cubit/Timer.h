@@ -14,25 +14,27 @@ class MT_Cubit_Timer
   //     A class that encapsulates the pccTimer for chorus and uses
   //     ACE Timer for other platforms.
 public:
-  MT_Cubit_Timer (Task_State *ts);
+  MT_Cubit_Timer (u_int granularity);
   void start (void);
   void stop (void);
   ACE_timer_t get_elapsed (void);
 private:
-#if defined (CHORUS)
-  int pstartTime_;
-  int pstopTime_;
-  // variables for the pccTimer.
-#endif
-  
   ACE_High_Res_Timer timer_;
   // timer.
   
   ACE_Time_Value delta_;
   // Elapsed time in microseconds.
   
-  Task_State *ts_;
-  // task state.
+  u_int granularity_;
+  // this is the granularity of the timing of the CORBA requests. A
+  // value of 5 represents that we will take time every 5 requests,
+  // instead of the default of every request (1).
+
+#if defined (CHORUS)
+  int pstartTime_;
+  int pstopTime_;
+  // variables for the pccTimer.
+#endif
 };
 
 #endif

@@ -26,10 +26,12 @@
 #include "ace/Sched_Params.h"
 #include "ace/High_Res_Timer.h"
 
+
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "cubitC.h"
 #include "cubit_i.h"
+#include "Globals.h"
 
 #if defined (CHORUS)
 #include "pccTimer.h"
@@ -41,10 +43,7 @@
 //
 // I will integrate this, together with the sqrt() function when
 // the implementation is complete.  --Sergio.
-// @@ Sergio, can you please use the ACE_timer_t type for this instead
-// of #define'ing double?!
 #if defined (ACE_LACKS_FLOATING_POINT)
-#define double ACE_UINT32
 #define fabs(X) ((X) >= 0 ? (X) : -(X))
 // the following is just temporary, until we finish the sqrt()
 // implementation.
@@ -66,9 +65,12 @@ public:
 quantify_start_recording_data ();
 #define STOP_QUANTIFY \
 quantify_stop_recording_data();
+#define CLEAR_QUANTIFY \
+quantify_clear_data ();
 #else /*!NO_ACE_QUANTIFY */
 #define START_QUANTIFY 
 #define STOP_QUANTIFY 
+#define CLEAR_QUANTIFY
 #endif /* !NO_ACE_QUANTIFY */
 
 // Arbitrary generator used by the client to create the numbers to be
@@ -134,7 +136,7 @@ public:
   u_int thread_count_;
   // Number of concurrent clients to create.
 
-  double *latency_;
+  ACE_timer_t *latency_;
   // Array to store the latency for every client, indexed by
   // thread-id.
 
@@ -154,7 +156,7 @@ public:
   u_int thread_per_rate_;
   // Flag for the thread_per_rate test.
 
-  double **global_jitter_array_;
+  ACE_timer_t **global_jitter_array_;
   // This array stores the latency seen by each client for each
   // request, to be used later to compute jitter.
 
@@ -243,7 +245,7 @@ char *one_ior_;
   // flag to indicate whether we make remote versus local invocations
   // to calculate accurately the ORB overhead.
 
-  double util_test_time_;
+  ACE_timer_t util_test_time_;
   // holds the total time for the utilization test to complete.
 };
 
@@ -262,12 +264,12 @@ public:
   virtual int svc (void);
   // The thread function.
 
-  double get_high_priority_latency (void);
-  double get_low_priority_latency (void);
-  double get_high_priority_jitter (void);
-  double get_low_priority_jitter (void);
-  double get_latency (u_int thread_id);
-  double get_jitter (u_int id);
+  ACE_timer_t get_high_priority_latency (void);
+  ACE_timer_t get_low_priority_latency (void);
+  ACE_timer_t get_high_priority_jitter (void);
+  ACE_timer_t get_low_priority_jitter (void);
+  ACE_timer_t get_latency (u_int thread_id);
+  ACE_timer_t get_jitter (u_int id);
   // Accessors to get the various measured quantities.
 
 private:
@@ -275,7 +277,7 @@ private:
                  u_int,
                  u_int,
                  Cubit_Datatypes,
-                 double frequency);
+                 ACE_timer_t frequency);
   // run the various tests.
 
   int make_calls (void);
@@ -293,8 +295,8 @@ private:
   int cube_struct (void);
   // call cube struct on the cubit object.
 
-  void put_latency (double *jitter,
-                    double latency,
+  void put_latency (ACE_timer_t *jitter,
+                    ACE_timer_t latency,
                     u_int thread_id,
                     u_int count);
   // Records the latencies in the <Task_State>.
