@@ -1,6 +1,11 @@
+Mon Feb 25 13:44:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/tutorials/018/Test_T.h:
+          Added missing include of Atomic_Op.h
+
 Fri Feb 22 15:54:32 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* ace/Refcounted_Auto_Ptr.h: Fix comment, thanks to 
+	* ace/Refcounted_Auto_Ptr.h: Fix comment, thanks to
 	Serge Kolgan <skolgan@objectsciences.com>.
 
 Fri Feb 22 09:31:35 2002  Craig Rodrigues  <crodrigu@bbn.com>
