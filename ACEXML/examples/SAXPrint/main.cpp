@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ACEXML/common/FileCharStream.h"
+#include "ACEXML/common/StrCharStream.h"
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/parser/parser/Parser.h"
 #include "Print_Handler.h"
@@ -69,7 +70,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       {
         ACE_NEW_RETURN (stm,
                         ACEXML_StrCharStream (test_string),
-                        1);
+                        -1);
       }
 
     if (sax == 0)
