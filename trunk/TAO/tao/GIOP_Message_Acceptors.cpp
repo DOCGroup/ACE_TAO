@@ -89,6 +89,7 @@ TAO_GIOP_Message_Acceptors::
   TAO_GIOP_ServerRequest request (this,
                                   input,
                                   *this->output_,
+								  transport, //BRT
                                   orb_core,
                                   version);
 
@@ -199,6 +200,23 @@ TAO_GIOP_Message_Acceptors::
 
       // Flag for code below catch blocks.
       location_forward = 1;
+//BRT 
+      int result = this->send_message (transport,
+                                   *this->output_);
+
+      if (result == -1)
+      {
+         if (TAO_debug_level > 0)
+         {
+            // No exception but some kind of error, yet a response
+            // is required.
+            ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: cannot send reply\n"),
+                          ACE_TEXT ("TAO_GIOP::process_server_message")));
+         }
+      }
+      return result;
+
     }
 #else
   ACE_UNUSED_ARG (request_id);
@@ -295,24 +313,25 @@ TAO_GIOP_Message_Acceptors::
 
   // Do we have a twoway request, a oneway SYNC_WITH_TARGET,
   // or a oneway SYNC_WITH_SERVER with a location forward reply?
-  if ((response_required && !sync_with_server)
-      || (sync_with_server && location_forward))
-    {
-      result = this->send_message (transport,
-                                   *this->output_);
-
-      if (result == -1)
-        {
-          if (TAO_debug_level > 0)
-            {
-              // No exception but some kind of error, yet a response
-              // is required.
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: cannot send reply\n"),
-                          ACE_TEXT ("TAO_GIOP::process_server_message")));
-            }
-        }
-    }
+//BRT
+//  if ((response_required && !sync_with_server)
+//      || (sync_with_server && location_forward))
+//    {
+//      result = this->send_message (transport,
+//                                   *this->output_);
+//
+//      if (result == -1)
+//        {
+//          if (TAO_debug_level > 0)
+//            {
+//              // No exception but some kind of error, yet a response
+//              // is required.
+//              ACE_ERROR ((LM_ERROR,
+//                          ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: cannot send reply\n"),
+//                          ACE_TEXT ("TAO_GIOP::process_server_message")));
+//            }
+//        }
+//    }
 
   return result;
 }

@@ -84,6 +84,12 @@ protected:
   // results and out parameters (if any) or the exceptions thrown into
   // <request>.
 
+    //BRT CHANGE
+  virtual void synchronous_upcall_dispatch (CORBA::ServerRequest &req,
+                                            void *context,
+                                            void *derived_this,
+                                            CORBA::Environment &ACE_TRY_ENV);
+
   virtual int _find (const char *opname,
                      TAO_Skeleton &skelfunc,
                      const unsigned int length = 0);

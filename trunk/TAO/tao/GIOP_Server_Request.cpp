@@ -4,6 +4,9 @@
 
 #include "tao/GIOP_Server_Request.h"
 
+//BRT CHANGE
+#include "tao/GIOP_Message_Acceptors.h"
+
 #include "tao/CDR.h"
 #include "tao/POAC.h"
 #include "tao/Environment.h"
@@ -49,11 +52,13 @@ TAO_GIOP_ServerRequest::
     TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
                             TAO_InputCDR &input,
                             TAO_OutputCDR &output,
+                            TAO_Transport *transport,//BRT
                             TAO_ORB_Core *orb_core,
                             const TAO_GIOP_Version & /*version*/)
       :mesg_base_ (mesg_base),
        incoming_ (&input),
        outgoing_ (&output),
+	   transport_(transport),// BRT CHANGE
        response_expected_ (0),
        sync_with_server_ (0),
        lazy_evaluation_ (0),
@@ -376,8 +381,8 @@ TAO_GIOP_ServerRequest::exception_type (void)
   return this->exception_type_;
 }
 
-void
-TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
+void											//BRT
+TAO_GIOP_ServerRequest::send_no_exception_reply (/*TAO_Transport *transport*/)
 {
   // Construct our reply generator
   TAO_Pluggable_Reply_Params reply_params;
@@ -403,7 +408,7 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
                                         reply_params);
 
   // Send the message
-  int result = this->mesg_base_->send_message (transport,
+  int result = this->mesg_base_->send_message (transport_,//BRT
                                                *this->outgoing_);
 
   if (result == -1)
@@ -417,6 +422,68 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
                       ACE_TEXT ("TAO_GIOP_ServerRequest::send_no_exception_reply")));
         }
     }
+}
+
+// BRT CHANGE
+void 
+TAO_GIOP_ServerRequest::tao_send_reply()
+{
+
+
+  int result = mesg_base_->send_message(transport_,
+                                        *outgoing_);
+  if (result == -1)
+    {
+      if (TAO_debug_level > 0)
+        {
+          // No exception but some kind of error, yet a response
+          // is required.
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO: (%P|%t) %p: cannot send reply\n"),
+                      ACE_TEXT ("TAO_GIOP_ServerRequest::tao_send_reply")));
+
+      }
+    }
+}
+
+//BRT CHANGE
+void 
+TAO_GIOP_ServerRequest::tao_send_reply_exception(CORBA::Exception& ex)
+{
+  int result = 0;
+  if (response_expected_)
+  {
+    result = ACE_static_cast(TAO_GIOP_Message_Acceptors*,mesg_base_)->send_reply_exception (transport_,
+                                               orb_core_,
+                                               request_id_,
+											   &service_info(),//BRT
+                                               &ex);
+    if (result == -1)
+    {
+      if (TAO_debug_level > 0)
+         ACE_ERROR ((LM_ERROR,
+                     ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: cannot send exception reply\n"),
+                     ACE_TEXT ("tao_send_reply_exception()")));
+         ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                              "TAO: ");
+    }
+
+  }
+  else if (TAO_debug_level > 0)
+  {
+    // It is unfotunate that an exception (probably a system
+    // exception) was thrown by the upcall code (even by the
+    // user) when the client was not expecting a response.
+    // However, in this case, we cannot close the connection
+    // down, since it really isn't the client's fault.
+
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("(%P|%t) exception thrown ")
+                ACE_TEXT ("but client is not waiting a response\n")));
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "TAO: ");
+   }
+
 }
 
 CORBA::Object_ptr
