@@ -1,6 +1,7 @@
-Sat Sep  4 23:16:05 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+Sat Sep  4 23:30:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/IORTable/IORTableC.h:
+	* tao/PortableServer/ORT_Adapter_Factory.h:
 
 	  Added missing "tao/SystemException.h" include.
 
