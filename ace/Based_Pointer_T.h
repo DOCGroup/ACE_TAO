@@ -18,6 +18,8 @@
 #ifndef ACE_BASED_POINTER_T_H
 #define ACE_BASED_POINTER_T_H
 
+#include "ace/OS.h"              // Need ACE_Export
+
 #if defined (_MSC_VER)
 // Suppress warning e.g. "return type for
 // 'ACE_Based_Pointer<long>::operator ->' is 'long *' (i.e., not a UDT
