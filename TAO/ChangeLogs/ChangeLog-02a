@@ -1,3 +1,10 @@
+Thu Mar 29 06:15:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/tutorials/Quoter/Simple/Persistent/server.cpp:
+	* docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.cpp:
+
+	  Fixed warnings in g++. 
+
 Thu Mar 29 00:11:12 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/LifeCycle_Service/LifeCycle_Service.cpp:
