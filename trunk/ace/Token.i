@@ -5,6 +5,8 @@
 
 // Token.i
 
+#if defined (ACE_HAS_THREADS)
+
 ACE_INLINE int
 ACE_Token::queueing_strategy (void)
 {
@@ -136,6 +138,7 @@ ACE_Token::ACE_Token_Queue_Entry::signal (void)
 #endif /* ACE_TOKEN_USES_SEMAPHORE */
 }
 
+#endif /* ACE_HAS_THREADS */
 /******************************************************************************/
 
 ACE_INLINE int

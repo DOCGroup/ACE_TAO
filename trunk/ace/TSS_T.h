@@ -22,8 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Thread_Mutex.h"
-
 // This should probably go somewhere else, but it's only used here and in Thread_Manager.
 # if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
 #   define ACE_TSS_TYPE(T) ACE_TSS< T >
@@ -36,6 +34,9 @@
 #   define ACE_TSS_TYPE(T) T
 #   define ACE_TSS_GET(I, T) (I)
 # endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATIOND) */
+
+#if defined (ACE_HAS_THREADS)
+#include "ace/Thread_Mutex.h"
 
 /**
  * @class ACE_TSS
@@ -182,6 +183,8 @@ private:
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("TSS_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
+#endif
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TSS_T_H */
