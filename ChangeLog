@@ -1,3 +1,21 @@
+Thu Nov  5 09:40:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/IPC_SAP/SOCK_SAP/CPP-unclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-unserver.cpp:
+        * examples/NT_Service/main.cpp:
+        * examples/Reactor/Proactor/simple_test_proactor.cpp:
+        * examples/Reactor/Proactor/test_proactor2.cpp:
+        * examples/Reactor/Proactor/test_timeout_st.cpp:
+        * examples/Reactor/WFMO_Reactor/Console_Input.cpp:
+        * examples/Reactor/WFMO_Reactor/Handle_Close.cpp:
+        * examples/Reactor/WFMO_Reactor/Network_Events.cpp:
+        * examples/Reactor/WFMO_Reactor/Prerun_State_Changes.cpp:
+          Added #include of OS_main.h to get ACE_TMAIN macro
+
+        * examples/Threads/wfmo.cpp:
+          Added #include of OS_main.h to get ACE_TMAIN macro and
+          OS_NS_unistd.h to get ACE_OS::sleep.
+
 Thu Nov  5 07:53:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Dev_Poll_Reactor.cpp:
