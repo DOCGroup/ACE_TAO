@@ -1,5 +1,7 @@
 // $Id$
 
+#include "JAWS/JAWS.h"
+
 #include "JAWS/Pipeline_Tasks.h"
 #include "JAWS/Data_Block.h"
 #include "JAWS/IO_Handler.h"
@@ -51,23 +53,29 @@ JAWS_Pipeline_Accept_Task::handle_put (JAWS_Data_Block *data,
   switch (handler->status ())
     {
     case JAWS_IO_Handler::ACCEPT_OK:
+      {
       result = 0;
-      ACE_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_OK");
+      JAWS_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_OK");
       // At this point need to move to the next task in the pipeline!
       // The framework should automatically call the next stage.
       data->task (task);
       break;
+      }
     case JAWS_IO_Handler::ACCEPT_ERROR:
+      {
       result = -1;
-      ACE_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_ERROR");
+      JAWS_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_ERROR");
       // Should recycle the thread
       break;
+      }
     default:
+      {
       result = 1;
-      ACE_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_IDLE");
+      JAWS_TRACE ("JAWS_Pipeline_Accept_Task::handle_put ACCEPT_IDLE");
       // Should mean that the IO is asynchronous, and the word isn't out
       // yet.
       break;
+      }
     }
 
   // In asynchronous and synchronous models, we can --

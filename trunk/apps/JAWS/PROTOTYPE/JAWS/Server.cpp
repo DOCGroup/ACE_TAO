@@ -93,6 +93,8 @@ JAWS_Server::open (JAWS_Pipeline_Handler *protocol,
   db.task (JAWS_Pipeline_Accept_Task_Singleton::instance ());
   db.policy (policy);
 
+  db.task ()->next (protocol);
+
   // The message block should contain an INET_Addr, and call the
   // io->accept (INET_Addr) method!
 
@@ -148,9 +150,10 @@ JAWS_Server::parse_args (int argc, char *argv[])
         break;
       }
 
-#if (ACE_NTRACE != 1)
-  t ? ACE_Trace::start_tracing () : ACE_Trace::stop_tracing ();
-#endif /* (ACE_NTRACE != 1) */
+  if (t)
+    ACE_Trace::start_tracing ();
+  else
+    ACE_Trace::stop_tracing ();
 
   if (this->port_ == 0) this->port_ = 5432;
   if (this->nthreads_ == 0) this->nthreads_ = 5;

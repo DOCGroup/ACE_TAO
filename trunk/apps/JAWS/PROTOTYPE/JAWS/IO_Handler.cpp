@@ -30,12 +30,14 @@ JAWS_Synch_IO_Handler::accept_complete (ACE_HANDLE handle)
 {
   // callback into pipeline task, notify that the accept has completed
   this->handle_ = handle;
+  this->status_ = ACCEPT_OK;
 }
 
 void
 JAWS_Synch_IO_Handler::accept_error (void)
 {
   // callback into pipeline task, notify that the accept has failed
+  this->status_ = ACCEPT_ERROR;
 }
 
 void
@@ -44,18 +46,21 @@ JAWS_Synch_IO_Handler::read_complete (ACE_Message_Block &data)
   ACE_UNUSED_ARG (data);
   // We can call back into the pipeline task at this point
   // this->pipeline_->read_complete (data);
+  this->status_ = READ_OK;
 }
 
 void
 JAWS_Synch_IO_Handler::read_error (void)
 {
   // this->pipeline_->read_error ();
+  this->status_ = READ_ERROR;
 }
 
 void
 JAWS_Synch_IO_Handler::transmit_file_complete (void)
 {
   // this->pipeline_->transmit_file_complete ();
+  this->status_ = TRANSMIT_OK;
 }
 
 void
@@ -63,17 +68,20 @@ JAWS_Synch_IO_Handler::transmit_file_error (int result)
 {
   ACE_UNUSED_ARG (result);
   // this->pipeline_->transmit_file_complete (result);
+  this->status_ = TRANSMIT_ERROR;
 }
 
 void
 JAWS_Synch_IO_Handler::receive_file_complete (void)
 {
+  this->status_ = RECEIVE_OK;
 }
 
 void
 JAWS_Synch_IO_Handler::receive_file_error (int result)
 {
   ACE_UNUSED_ARG(result);
+  this->status_ = RECEIVE_ERROR;
 }
 
 void
@@ -81,17 +89,20 @@ JAWS_Synch_IO_Handler::write_error (void)
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) error in writing response\n"));
 
+  this->status_ = WRITE_ERROR;
   this->done ();
 }
 
 void
 JAWS_Synch_IO_Handler::confirmation_message_complete (void)
 {
+  this->status_ = WRITE_OK;
 }
 
 void
 JAWS_Synch_IO_Handler::error_message_complete (void)
 {
+  this->status_ = WRITE_OK;
 }
 
 JAWS_IO_Handler_Factory *

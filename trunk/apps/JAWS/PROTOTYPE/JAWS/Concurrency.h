@@ -24,9 +24,17 @@ class JAWS_Concurrency_Base : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   JAWS_Concurrency_Base (void);
+  ~JAWS_Concurrency_Base (void);
 
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
   virtual int svc (void);
+
+  virtual ACE_Message_Block *singleton_mb (void);
+
+protected:
+  int mb_acquired_;
+  ACE_Message_Block *mb_;
+  ACE_Thread_Mutex lock_;
 };
 
 class JAWS_Dispatcher
