@@ -20,10 +20,6 @@
 
 #include "Register_Offer_Iterator.h"
 
-#ifndef min
-#define        min(a, b)               ((a) > (b) ? (b) : (a))
-#endif
-
 template <class TRADER>
 TAO_Register_Offer_Iterator<TRADER>::
 TAO_Register_Offer_Iterator (TRADER &trader,
@@ -76,7 +72,7 @@ TAO_Register_Offer_Iterator<TRADER>::next_n (CORBA::ULong n,
     this->trader_.service_type_map ();
 
   CORBA::ULong max_possible_offers_in_sequence =
-    min(n, this->offer_ids_.size ());
+    (n <  this->offer_ids_.size ()) ? n : this->offer_ids_.size ();
   offers->length (max_possible_offers_in_sequence);  
   
   // While there are entries left and we haven't filled <offers>
