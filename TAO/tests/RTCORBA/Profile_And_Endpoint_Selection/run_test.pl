@@ -14,6 +14,8 @@ $client_debuglevel = 0;
 $server_debuglevel = 0;
 $client_debug = 0;
 $server_debug = 0;
+$iiop = 1;
+$shmiop = 1;
 
 $extra_client_args = "-k file://$iorfile -ORBdebuglevel $client_debuglevel -d $client_debug -x";
 $extra_server_args = "-ORBdebuglevel $server_debuglevel -d $server_debug";
@@ -50,10 +52,10 @@ sub setup_configurations_1
 }
 
 $server_config = -1;
-setup_configurations_1 (0, 0);
-setup_configurations_1 (1, 0);
-setup_configurations_1 (0, 1);
-setup_configurations_1 (1, 1);
+                        setup_configurations_1 (0, 0);
+if ($iiop)            { setup_configurations_1 (1, 0); }
+if ($shmiop)          { setup_configurations_1 (0, 1); }
+if ($iiop && $shmiop) { setup_configurations_1 (1, 1); }
 
 sub run_client
 {
