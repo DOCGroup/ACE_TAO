@@ -1,3 +1,7 @@
+Wed Feb 24 11:40:08 1999 Fred Kuhns <fredk@cs.wustl.edu>
+
+	* Stub.cpp - changed goto two_way to goto one_way
+
 Wed Feb 24 11:07:32 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
         * Updated how forwarding is performed so that multiple
