@@ -49,11 +49,6 @@ CORBA_ExceptionList::CORBA_ExceptionList (void)
 {
 }
 
-ACE_INLINE
-CORBA_ExceptionList::~CORBA_ExceptionList (void)
-{
-}
-
 ACE_INLINE CORBA::ULong
 CORBA_ExceptionList::count (void)
 {
