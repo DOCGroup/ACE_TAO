@@ -1,3 +1,9 @@
+Mon Aug 26 17:14:20 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/TkReactor_Test.cpp:
+
+	  Fixed a number of warnings.
+
 Mon Aug 26 18:21:34 UTC 2002  Justin Michel  <michel_j@ociweb.com>
         
         * ace/Timer_Wheel_T.cpp:
