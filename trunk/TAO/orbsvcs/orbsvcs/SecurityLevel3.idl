@@ -18,8 +18,9 @@
 
 #ifndef _SecurityLevel3_
 #define _SecurityLevel3_
-#include <orb.idl>
-#include <TimeBase.idl>
+
+#include <tao/Policy.pidl>
+#include <tao/TimeBase.pidl>
 
 #pragma prefix "adiron.com"
 
@@ -1601,8 +1602,6 @@ module SecurityLevel3 {
      */
     struct ContextEstablishmentPolicyArgument
     {
-      typeprefix "tao.sl3";
-
       CredsDirective      creds_directive;
       OwnCredentialsList  creds_list;
       FeatureDirective    use_client_auth;
