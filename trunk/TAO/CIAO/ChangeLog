@@ -1,25 +1,107 @@
+Mon Jun 28 11:58:01 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/tests/RobotAssembly/RobotAssembly.mpc:
+        * DnC/tests/RobotAssembly/RobotAssembly.mwc:
+        * DnC/tests/RobotAssembly/RobotAssembly_stub_export.h:
+        * DnC/tests/RobotAssembly/RobotAssembly_svnt_export.h:
+        * DnC/tests/RobotAssembly/Robot_Base.idl:
+        *
+          DnC/tests/RobotAssembly/HumanMachineInterface/HumanMachineInterface.cidl:
+        *
+          DnC/tests/RobotAssembly/HumanMachineInterface/HumanMachineInterface.idl:
+        *
+          DnC/tests/RobotAssembly/HumanMachineInterface/HumanMachineInterface.mpc:
+        *
+          DnC/tests/RobotAssembly/HumanMachineInterface/HumanMachineInterface_exec.cpp:
+        *
+          DnC/tests/RobotAssembly/HumanMachineInterface/HumanMachineInterface_exec.h:
+        *
+          DnC/tests/RobotAssembly/HumanMachineInterface/HumanMachineInterface_exec_export.h:
+        *
+          DnC/tests/RobotAssembly/HumanMachineInterface/HumanMachineInterface_stub_export.h:
+        *
+          DnC/tests/RobotAssembly/HumanMachineInterface/HumanMachineInterface_svnt_export.h:
+        *
+          DnC/tests/RobotAssembly/ManagementWorkInstructions/ManagementWorkInstructions.cidl:
+        *
+          DnC/tests/RobotAssembly/ManagementWorkInstructions/ManagementWorkInstructions.idl:
+        *
+          DnC/tests/RobotAssembly/ManagementWorkInstructions/ManagementWorkInstructions.mpc:
+        *
+          DnC/tests/RobotAssembly/ManagementWorkInstructions/ManagementWorkInstructions_exec.cpp:
+        *
+          DnC/tests/RobotAssembly/ManagementWorkInstructions/ManagementWorkInstructions_exec.h:
+        *
+          DnC/tests/RobotAssembly/ManagementWorkInstructions/ManagementWorkInstructions_exec_export.h:
+        *
+          DnC/tests/RobotAssembly/ManagementWorkInstructions/ManagementWorkInstructions_stub_export.h:
+        *
+          DnC/tests/RobotAssembly/ManagementWorkInstructions/ManagementWorkInstructions_svnt_export.h:
+        *
+          DnC/tests/RobotAssembly/PalletConveyorManager/PalletConveyorManager.cidl:
+        *
+          DnC/tests/RobotAssembly/PalletConveyorManager/PalletConveyorManager.idl:
+        *
+          DnC/tests/RobotAssembly/PalletConveyorManager/PalletConveyorManager.mpc:
+        *
+          DnC/tests/RobotAssembly/PalletConveyorManager/PalletConveyorManager_exec.cpp:
+        *
+          DnC/tests/RobotAssembly/PalletConveyorManager/PalletConveyorManager_exec.h:
+        *
+          DnC/tests/RobotAssembly/PalletConveyorManager/PalletConveyorManager_exec_export.h:
+        *
+          DnC/tests/RobotAssembly/PalletConveyorManager/PalletConveyorManager_stub_export.h:
+        *
+          DnC/tests/RobotAssembly/PalletConveyorManager/PalletConveyorManager_svnt_export.h:
+        * DnC/tests/RobotAssembly/RobotManager/RobotManager.cidl:
+        * DnC/tests/RobotAssembly/RobotManager/RobotManager.idl:
+        *
+          DnC/tests/RobotAssembly/WatchSettingManager/WatchSettingManager.cidl:
+        *
+          DnC/tests/RobotAssembly/WatchSettingManager/WatchSettingManager.idl:
+        *
+          DnC/tests/RobotAssembly/WatchSettingManager/WatchSettingManager.mpc:
+        *
+          DnC/tests/RobotAssembly/WatchSettingManager/WatchSettingManager_exec.cpp:
+        *
+          DnC/tests/RobotAssembly/WatchSettingManager/WatchSettingManager_exec.h:
+        *
+          DnC/tests/RobotAssembly/WatchSettingManager/WatchSettingManager_exec_export.h:
+        *
+          DnC/tests/RobotAssembly/WatchSettingManager/WatchSettingManager_stub_export.h:
+        *
+          DnC/tests/RobotAssembly/WatchSettingManager/WatchSettingManager_svnt_export.h:
+        * DnC/tests/RobotAssembly/RobotManager/RobotManager_svnt_export.h:
+        * DnC/tests/RobotAssembly/RobotManager/RobotManager_stub_export.h:
+        * DnC/tests/RobotAssembly/RobotManager/RobotManager_exec_export.h:
+        * DnC/tests/RobotAssembly/RobotManager/RobotManager.mpc:
+        * DnC/tests/RobotAssembly/RobotManager/RobotManager_exec.cpp:
+        * DnC/tests/RobotAssembly/RobotManager/RobotManager_exec.h:
+
+          RobotAssembly example deployment scenario files.
+
 Mon Jun 28 11:33:00 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 	* DnC/Deployment.mwc:
 
 	  DnC tests projects reincluded to the compilation.
 
-	* DnC/tests/Config_Handlers/handler_test.mpb: 
+	* DnC/tests/Config_Handlers/handler_test.mpb:
 
 	  Added after statement to ensure Config_Handlers is compiled before
 	  compiling handler_tests.
 
 Mon Jun 28 11:18:00 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
-  
+
 	* DnC/Config_Handlers/DnC_Dump.cpp:
-	* DnC/Config_Handlers/DnC_Dump.h: 
+	* DnC/Config_Handlers/DnC_Dump.h:
 
 	  Fixed the VC6 errors by excluding the DnC dump functionality on the
 	  compilers ACE_HAS_BROKEN_NESTED_TEMPLATES.
 
 Mon Jun 28 10:44:00 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-	* DnC/tests/Config_Handlers/Handler_Test.cpp: 
+	* DnC/tests/Config_Handlers/Handler_Test.cpp:
 	* DnC/tests/Config_Handlers/CompImplDesc_Handler_Test.cpp:
 	* DnC/tests/Config_Handlers/CompIntrDesc_Handler_Test.cpp:
 	* DnC/tests/Config_Handlers/CompPkgDesc_Handler_Test.cpp:
@@ -35,7 +117,7 @@ Mon Jun 28 10:44:00 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 Mon Jun 28 10:40:00 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
-	* DnC/tests/Config_Handlers/RobotAssembly/README.html: 
+	* DnC/tests/Config_Handlers/RobotAssembly/README.html:
 
 	  Deleted "file://" from -p & -d options of executor.
 
@@ -48,7 +130,7 @@ Mon Jun 28 08:03:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Mon Jun 28 00:18:04 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* CIAO/performance-tests/Protocols: 
+	* CIAO/performance-tests/Protocols:
 
 	  Added new test.  Closely mirrors
 	  $TAO_ROOT/performance-tests/Protocols but uses CCM components
