@@ -1,5 +1,6 @@
-Thu Sep  9 05:02:33 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+Thu Sep  9 05:08:57 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
+	* orbsvcs/orbsvcs/CosEvent.mpc:
 	* orbsvcs/orbsvcs/PortableGroup.mpc:
 	* orbsvcs/orbsvcs/RTSched.mpc:
 
