@@ -1,3 +1,9 @@
+Mon Jan 31 09:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ARGV.h:
+        * ace/Configuration.h:
+          Doxygen improvements
+
 Mon Jan 31 08:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/Logging/Trace_Return.cpp:
