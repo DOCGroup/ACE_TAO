@@ -25,6 +25,7 @@ TAO_LB_PropertyManager::get_default_properties (
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 void
@@ -54,6 +55,7 @@ TAO_LB_PropertyManager::get_type_properties (
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 void
@@ -86,4 +88,5 @@ TAO_LB_PropertyManager::get_properties (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    LoadBalancing::ObjectGroupNotFound))
 {
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
