@@ -1,38 +1,51 @@
+Tue Mar 06 08:29:28 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Collocation/Makefile.stub:
+        * tests/Collocation/Makefile.impl:
+          Define ACE_SHLIBS, this is the macro used to link shared
+          libraries.  Without the proper list of libraries the Tru64/CXX
+          compiler gives warnings, and other compilers could give out
+          errors.
+
+        * tests/AMI_Timeouts/timeout_i.cpp:
+        * tests/AMI_Timeouts/timeout_client.cpp:
+          Removed extra ';' at the end of function definitions.
+
 Tue Mar  6 07:15:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/MT_Client/simple-client.cpp: Fixed a typo that was giving
-	  annoying warnings in Debian boxes.
+        * tests/MT_Client/simple-client.cpp: Fixed a typo that was giving
+          annoying warnings in Debian boxes.
 
 Tue Mar  6 06:17:46 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Param_Test/client.cpp (run_sii_test): Make sure to
-	  call this->test_object_->print_values () before running each
- 	  test.  Thanks to Johnny Willemsen <jwillemsen@mego.nl> for
- 	  reporting this.
+        * tests/Param_Test/client.cpp (run_sii_test): Make sure to
+          call this->test_object_->print_values () before running each
+          test.  Thanks to Johnny Willemsen <jwillemsen@mego.nl> for
+          reporting this.
 
 Mon Mar  5 20:11:49 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/examples/Security/Send_File/server.cpp (main): 
-	* orbsvcs/examples/Security/SecurityLevel1/server.cpp (main):
+        * orbsvcs/examples/Security/Send_File/server.cpp (main):
+        * orbsvcs/examples/Security/SecurityLevel1/server.cpp (main):
 
-	  More missing ACE_TRY_ENV parameter fixes.
+          More missing ACE_TRY_ENV parameter fixes.
 
 Mon Mar  5 19:32:56 2001  Ossama Othman  <ossama@uci.edu>
 
-	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp (visit_array): 
-	* TAO_IDL/be/be_visitor_enum/any_op_cs.cpp (visit_enum): 
-	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp (visit_exception):
-	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp (visit_interface):
-	* TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp (visit_sequence):
-	* TAO_IDL/be/be_visitor_structure/any_op_cs.cpp (visit_structure):
-	* TAO_IDL/be/be_visitor_union/any_op_cs.cpp (visit_union):
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp (visit_array):
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp (visit_enum):
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp (visit_exception):
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp (visit_interface):
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp (visit_sequence):
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp (visit_structure):
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp (visit_union):
 
-	  Fixed generated code that it does an ACE_TRY_CHECK before
-	  checking the return value of the CORBA::TypeCode::equivalent()
-	  call.  This fixes a subtle problem where the return code could
-	  be potentially meaningless due to the fact that an emulated
-	  exception was thrown.  This change also makes the code match the
-	  semantics of native exceptions more closely.
+          Fixed generated code that it does an ACE_TRY_CHECK before
+          checking the return value of the CORBA::TypeCode::equivalent()
+          call.  This fixes a subtle problem where the return code could
+          be potentially meaningless due to the fact that an emulated
+          exception was thrown.  This change also makes the code match the
+          semantics of native exceptions more closely.
 
 Mon Mar  5 19:14:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
