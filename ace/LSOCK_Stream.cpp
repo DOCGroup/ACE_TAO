@@ -9,10 +9,32 @@
 ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK_Stream)
 
 int
-ACE_LSOCK_Stream::get_remote_addr (ACE_Addr &a) const
+ACE_LSOCK_Stream::get_local_addr (ACE_Addr &addr) const
+{
+  ACE_TRACE ("ACE_LSOCK_Stream::get_local_addr");
+
+  // Perform the downcast since <addr> had better be an
+  // <ACE_UNIX_Addr>.
+  ACE_UNIX_Addr *rhs_unix_addr = ACE_dynamic_cast (ACE_UNIX_Addr *, &addr);
+  ACE_UNIX_Addr lhs_unix_addr;
+
+  if (rhs_unix_addr == 0)
+    return -1;
+  else if (ACE_SOCK::get_local_addr (lhs_unix_addr) == -1)
+    return -1;
+  else
+    {
+      *rhs_unix_addr = lhs_unix_addr;
+      return 0;
+    }
+}
+
+int
+ACE_LSOCK_Stream::get_remote_addr (ACE_Addr &addr) const
 {
   ACE_TRACE ("ACE_LSOCK_Stream::get_remote_addr");
-  return ACE_SOCK_Stream::get_remote_addr (a);
+
+  return this->get_local_addr (addr);
 }
 
 void
