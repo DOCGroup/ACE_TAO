@@ -3,16 +3,15 @@
 #ifndef ChatClientWndH
 #define ChatClientWndH
 //---------------------------------------------------------------------------
-#include <Classes.hpp>
-#include <Controls.hpp>
-#include <StdCtrls.hpp>
-#include <Forms.hpp>
 #include "ReceiverImpl.h"
 #include "BroadcasterC.h"
+#include "ace/Auto_Ptr.h"
 #include "ORBThread.h"
+#include <Classes.hpp>
 #include <Dialogs.hpp>
-#include <ExtCtrls.hpp>
-#include <memory>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+
 //---------------------------------------------------------------------------
 // Message used to notify window of incoming data
 #define WM_MESSAGE_RECEIVED (WM_APP + 0x123)
@@ -25,7 +24,7 @@ __published:	// IDE-managed Components
   TOpenDialog *OpenDialog;
   void __fastcall FormClose (TObject *Sender, TCloseAction &Action);
   void __fastcall InputMemoKeyPress (TObject *Sender, char &Key);
-   
+
 private:
   void __fastcall ReadIOR (String filename);
   // Function to read the server ior from a file.
@@ -39,7 +38,7 @@ private:
   String nickname_;
   // Nickname of the user chatting.
 
-  std::auto_ptr<TORBThread> orb_thread_;
+  auto_ptr<TORBThread> orb_thread_;
   // We run the orb's main loop in a separate thread.
 
   CORBA::ORB_var orb_;
