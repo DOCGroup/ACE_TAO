@@ -291,14 +291,30 @@ main (int, ASYS_TCHAR *[])
                          ASYS_TEXT ("schedule_timer")),
                         1);
 
-  int result = r->handle_events ();
-  // All <ACE_MAX_TIMERS> should be counted in the return value + 2
-  // I/O dispatches (one for <handle_input> and the other for
-  // <handle_exception>).
-  if (result != ACE_MAX_TIMERS + 2) {
+  ACE_Time_Value no_waiting (0);
+  int events = 0;
+
+  while (1)
+    {
+      int result = r->handle_events (no_waiting);
+
+      // Timeout.
+      if (result == 0)
+        break;
+
+      // Make sure there were no errors.
+      ACE_ASSERT (result != -1);
+
+      events += result;
+    }
+
+  // All <ACE_MAX_TIMERS> + 2 I/O dispatches (one for <handle_input>
+  // and the other for <handle_exception>) should be counted in
+  // events.
+  if (events < ACE_MAX_TIMERS + 2) {
     ACE_ERROR ((LM_ERROR, ASYS_TEXT ("expected %d events, got %d instead\n"),
-                ACE_MAX_TIMERS + 2, result));
-    ACE_ASSERT (result == ACE_MAX_TIMERS + 2);
+                ACE_MAX_TIMERS + 2, events));
+    ACE_ASSERT (events >= ACE_MAX_TIMERS + 2);
   }
 
   status = callback.verify_results ();
@@ -310,8 +326,7 @@ main (int, ASYS_TCHAR *[])
 #if defined (ACE_HAS_THREADS)
 
   Time_Handler other_thread;
-  ACE_Time_Value time_limit(30);
-
+  ACE_Time_Value time_limit (30);
 
   // Set up initial set of timers.
   other_thread.setup ();

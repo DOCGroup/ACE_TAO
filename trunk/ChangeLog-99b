@@ -1,4 +1,8 @@
-Fri Jul 09 19:16:07 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Fri Jul 09 20:14:13 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/MT_Reactor_Timer_Test.cpp (main): Added fixes so that test
+	  can work with WFMO_Reactor (WFMO_Reactor needs an extra
+	  handle_events() to get started).
 
 	* tests/Conn_Test.cpp (spawn_processes): Only printing reaping
 	  message when result is not -1.
