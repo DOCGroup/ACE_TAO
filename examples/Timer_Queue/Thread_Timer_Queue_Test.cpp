@@ -4,110 +4,24 @@
 //
 // = LIBRARY
 //    examples
-//
+// 
 // = FILENAME
 //    Thread_Timer_Queue_Test.cpp
 //
 // = DESCRIPTION
-//      This test exercises the <ACE_Thread_Timer_Queue_Adapter>
+//      This test exercises the <ACE_Thread_Timer_Queue_Adapter> 
 //      using an <ACE_Timer_Heap>.
 //
 // = AUTHORS
 //    Carlos O'Ryan and Douglas C. Schmidt
-//
+// 
 // ============================================================================
 
 #include "ace/Task.h"
 #include "ace/Timer_Heap_T.h"
 #include "ace/Timer_Queue_Adapters.h"
 
-// These typedefs ensure that we use the minimal amount of locking
-// necessary.
-typedef ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>
-        Upcall;
-typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
-                         ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>,
-                         ACE_Null_Mutex>
-        Timer_Heap;
-typedef ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *,
-                                  ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>,
-                                  ACE_Null_Mutex>
-        Timer_Heap_Iterator;
-typedef ACE_Thread_Timer_Queue_Adapter<Timer_Heap>
-        Thread_Timer_Queue;
-
-class Handler : public ACE_Event_Handler
-  // = TITLE
-  //    This class implements a simple Event_Handler,
-  //
-  // = DESCRIPTION
-  //     The <handle_timeout> hook method justs printouts the current
-  //     time, delete this and prints the delay on the twhen it is
-  //     expired.
-{
-public:
-  Handler (const ACE_Time_Value &expiration_time);
-  ~Handler (void);
-
-  void set_id (int id);
-  // Store an "id" for the Handler, which is only use to print better
-  // messages.
-
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *arg);
-  // Call back hook.
-  virtual int cancelled (void);
-
-private:
-  ACE_Time_Value expires_;
-  // Store the expected time of expiration, it is used to print a nice
-  // message saying how much delay was at the actual expiration time.
-
-  int id_;
-  // Store an "id" for the Handler, which is only use to print better
-  // messages.
-};
-
-class Input_Task : public ACE_Task<ACE_SYNCH>
-  // = TITLE
-  //   Read user actions on the Timer_Queue from stdin.
-  //
-  // = DESCRIPTION
-  //   This class reads user input from stdin; those commands permit the
-  //   control of a Timer_Queue, which is dispatched by another thread.
-{
-public:
-  Input_Task (Thread_Timer_Queue* queue);
-
-  virtual int svc (void);
-  // The method run on the new thread.
-
-private:
-  // = Some helper methods.
-
-  void usage (void) const;
-  // Print a "Usage" message to the user.
-
-  int add_timer (u_long seconds);
-  // Add a new timer to expire in <seconds> more.
-
-  void cancel_timer (int id);
-  // Cancel timer <id>.
-
-  int parse_commands (const char *buffer);
-  // Parse the commands in <buffer>, it is expected to be a line of
-  // input from the user.
-
-  void dump (void);
-  // Dump the state of the timer queue.
-
-private:
-  Thread_Timer_Queue *queue_;
-  // The timer queue implementation.
-
-  const int usecs_;
-  // How many micro seconds are in a second.
-};
+#include "Thread_Timer_Queue_Test.h"
 
 // Administrivia methods...
 Handler::Handler(const ACE_Time_Value &expiration_time)
@@ -120,7 +34,7 @@ Handler::~Handler (void)
 {
 }
 
-void
+void 
 Handler::set_id (int id)
 {
   this->id_ = id;
@@ -128,20 +42,20 @@ Handler::set_id (int id)
 
 // This is the method invoked when the Timer expires.
 
-int
+int 
 Handler::handle_timeout (const ACE_Time_Value &current_time,
-                        const void *)
+ 			const void *)
 {
   ACE_Time_Value delay = current_time - this->expires_;
 
   // No need to protect this printf is always called from a Async safe
   // point.
   ACE_OS::printf ("\nexpiring timer %d at %u.%07.7u secs\n"
-                  "\tthere was a %u.%07.7u secs delay\n",
-                  this->id_,
-                  current_time.sec (),
-                  current_time.usec (),
-                  delay.sec (), delay.usec ());
+		  "\tthere was a %u.%07.7u secs delay\n",
+		  this->id_, 
+		  current_time.sec (),
+		  current_time.usec (),
+		  delay.sec (), delay.usec ());
 
   // Notice this delete is protected.
   delete this;
@@ -150,36 +64,26 @@ Handler::handle_timeout (const ACE_Time_Value &current_time,
 
 // The handler was cancelled, so we must delete this.
 
-int
+int 
 Handler::cancelled (void)
 {
   delete this;
   return 0;
 }
 
-Input_Task::Input_Task (Thread_Timer_Queue *queue)
+Input_Task::Input_Task (Thread_Timer_Queue *queue, Thread_Timer_Queue_Test_Driver &timer_queue_driver)
   : queue_ (queue),
-    usecs_ (1000000) // @@ Make this an ACE #define constant?
+    usecs_ (1000000), // @@ Make this an ACE #define constant?
+    driver_ (timer_queue_driver)
 {
 }
 
-int
+int 
 Input_Task::svc (void)
 {
   for (;;)
-    {
-      char buf[BUFSIZ];
-
-      this->usage ();
-      ACE_OS::printf ("please enter your choice: ");
-      ACE_OS::fflush (stdout);
-
-      if (ACE_OS::read (ACE_STDIN, buf, sizeof buf) <= 0)
-        break;
-
-      if (parse_commands (buf) < 0)
-        break;
-    }
+    if (this->driver_.get_next_request () == -1)
+      break;
 
   this->queue_->deactivate ();
   ACE_DEBUG ((LM_DEBUG, "terminating input thread\n"));
@@ -187,8 +91,9 @@ Input_Task::svc (void)
 }
 
 int
-Input_Task::add_timer (u_long useconds)
+Input_Task::add_timer (void *argument)
 {
+  u_long useconds = *(int *)argument;
   ACE_Time_Value interval (useconds / usecs_, useconds % usecs_);
   ACE_Time_Value expire_at = ACE_OS::gettimeofday () + interval;
 
@@ -197,7 +102,7 @@ Input_Task::add_timer (u_long useconds)
   ACE_NEW_RETURN (h, Handler (expire_at), -1);
 
   int id = queue_->schedule (h, 0, expire_at);
-
+  
   if (id == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "schedule failed"), -1);
 
@@ -210,13 +115,26 @@ Input_Task::add_timer (u_long useconds)
   return 0;
 }
 
-void
-Input_Task::cancel_timer (int id)
+int
+Input_Task::cancel_timer (void *argument)
 {
-  this->queue_->cancel (id);
+  return  this->queue_->cancel (*(int *)argument);
 }
 
-void
+int
+Input_Task::list_timer (void *argument)
+{
+  this->dump ();
+  return 0;
+}
+
+int
+Input_Task::shutdown_timer (void *argument)
+{
+  return -1;
+}
+
+void 
 Input_Task::dump (void)
 {
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->queue_->lock ());
@@ -231,133 +149,89 @@ Input_Task::dump (void)
   ACE_DEBUG ((LM_DEBUG, "end dumping timer queue\n"));
 }
 
-void
-Input_Task::usage (void) const
+int 
+Thread_Timer_Queue_Test_Driver::run_test (void)
 {
-  ACE_OS::printf ("Usage:\n"
-                  "1 <microseconds>: setups a new timer\n"
-                  "2 <timerid>: removes a timer\n"
-                  "3 : prints timer queue\n"
-                  "4 : exit\n");
-}
-
-int
-Input_Task::parse_commands (const char *buf)
-{
-  int option;
-
-  if (::sscanf (buf, "%d", &option) <= 0)
-    {
-      // If there was an error reading the option simply print thge
-      // usage and try on the next line.
-      this->usage ();
-      return 0;
-    }
-
-  switch (option)
-    {
-    case 1: // Install a new timer.
-      {
-        u_long useconds;
-        // We just reread the option, this simplies parsing (since
-        // sscanf can do it for us.)
-        if (::sscanf (buf, "%d %lu", &option, &useconds) < 2)
-          {
-            this->usage ();
-            return 0;
-          }
-        if (this->add_timer (useconds) == -1)
-          ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", "new timer failed"), -1);
-      }
-    break; // Cancel an existing timer.
-    case 2:
-      {
-        u_long id;
-        // We just reread the option, this simplies parsing (since
-        // sscanf can do it for us.)
-        if (::sscanf (buf, "%d %lu", &option, &id) < 2)
-          {
-            this->usage ();
-            return 0;
-          }
-        this->cancel_timer (id);
-      }
-      break;
-
-    case 3: // Dump the existing timers.
-      this->dump ();
-      break;
-
-    case 4: // Exit the program.
-      return -1;
-      ACE_NOTREACHED(break);
-
-    default:
-      this->usage ();
-      break;
-    }
+  this->init ();
   return 0;
 }
 
-int
-main (int, char *[])
-{
-  Thread_Timer_Queue tq;
+int 
+Thread_Timer_Queue_Test_Driver::display_menu (void)
+{ 
+  static char menu[] = 
+    "Usage:\n"
+    "1 <microseconds>: setups a new timer\n"
+    "2 <timerid>: removes a timer\n"
+    "3 : prints timer queue\n"
+    "4 : exit\n";
+  
+  ACE_DEBUG ((LM_DEBUG, "%s", menu)); 
 
-  Input_Task input_task (&tq);
+  return 0; 
+}
+
+int 
+Thread_Timer_Queue_Test_Driver::init (void)
+{
+
+  // initialize commands with their corresponding input_task methods.
+  ACE_NEW_RETURN (schedule_cmd_, 
+		  Command<Input_Task> (input_task,
+				       input_task.add_timer),
+		  -1);
+  
+  ACE_NEW_RETURN (cancel_cmd_,
+		  Command<Input_Task> (input_task,
+				       input_task.cancel_timer),
+		  -1);
+
+  ACE_NEW_RETURN (list_cmd_,
+		  Command<Input_Task> (input_task,
+				       input_task.list_timer),
+		  -1);
+
+  ACE_NEW_RETURN (shutdown_cmd_,
+		  Command<Input_Task> (input_task,
+				       input_task.shutdown_timer),
+		  -1);
 
   if (input_task.activate () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "cannot activate input task"), -1);
-
-  if (tq.activate () == -1)
+  
+  if (timer_queue_.activate () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "cannot activate timer queue"), -1);
-
+  
   if (ACE_Thread_Manager::instance ()->wait () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "wait on Thread_Manager failed"),-1);
 
-  return 0;
-}
+  return 0;     
+} 
+    
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>;
-  template class ACE_Timer_Heap_T<ACE_Event_Handler *,
-    ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>,
-    ACE_Null_Mutex>;
-  template class ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *,
-    ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>,
-    ACE_Null_Mutex>;
-  template class ACE_Timer_Queue_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>;
-  template class ACE_Timer_Queue_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>;
-  template class ACE_Thread_Timer_Queue_Adapter<Timer_Heap>;
+template class ACE_Thread_Timer_Queue_Adapter<Timer_Heap>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>
-# pragma instantiate ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>
-# pragma instantiate ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>
-# pragma instantiate ACE_Timer_Queue_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>
-# pragma instantiate ACE_Timer_Queue_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>
-# pragma instantiate ACE_Thread_Timer_Queue_Adapter<Timer_Heap>
+#pragma instantiate ACE_Thread_Timer_Queue_Adapter<Timer_Heap>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#if defined (ACE_MT_SAFE)
-# if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-    template class ACE_Condition<ACE_Thread_Mutex>;
-    template class ACE_Thread_Condition<ACE_Thread_Mutex>;
-# elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#   pragma instantiate ACE_Condition<ACE_Thread_Mutex>
-#   pragma instantiate ACE_Thread_Condition<ACE_Thread_Mutex>
-# endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-#else /* ! ACE_MT_SAFE */
+#if !defined(ACE_MT_SAFE)
 
-  // These templates will specialized in liACE.* if the platforms does
-  // not define ACE_MT_SAFE.
+// These templates will specialized in liACE.* if the platforms does
+// not define ACE_MT_SAFE.
 
-# if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-    template class ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>;
-    template class ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>;
-    template class ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>;
-# elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#   pragma instantiate ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>
-#   pragma instantiate ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>
-#   pragma instantiate ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>;
+template class ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>;
+template class ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>
+#pragma instantiate ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>
+#pragma instantiate ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_Null_Mutex>, ACE_Null_Mutex>
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-#endif /* ! ACE_MT_SAFE */
+#endif /* ACE_MT_SAFE */
