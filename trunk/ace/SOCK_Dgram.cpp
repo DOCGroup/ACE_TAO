@@ -133,7 +133,7 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
 }
 
 ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local, 
-                                const ACE_Connect_QoS_Params &qos_params,
+                                const ACE_QoS_Params &qos_params,
                                 int protocol_family, 
                                 int protocol,
                                 int reuse_addr)
@@ -145,7 +145,7 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
 
 int
 ACE_SOCK_Dgram::open (const ACE_Addr &local, 
-                      const ACE_Connect_QoS_Params &qos_params,
+                      const ACE_QoS_Params &qos_params,
                       int protocol_family, 
                       int protocol,
                       int reuse_addr)

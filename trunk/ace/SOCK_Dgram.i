@@ -29,8 +29,11 @@ ACE_SOCK_Dgram::send (const void *buf,
   sockaddr *saddr = (sockaddr *) addr.get_addr ();
   size_t len = addr.get_size ();
   return ACE_OS::sendto (this->get_handle (), 
-			 (const char *) buf, n, flags, 
-			 (struct sockaddr *) saddr, len);
+			 (const char *) buf,
+                         n,
+                         flags, 
+			 (struct sockaddr *) saddr,
+                         len);
 }
 
 // <recvfrom> an n byte datagram (connectionless version).
@@ -46,8 +49,60 @@ ACE_SOCK_Dgram::recv (void *buf,
   int addr_len = addr.get_size ();
 
   ssize_t status = ACE_OS::recvfrom (this->get_handle (), 
-				     (char *) buf, n, flags, 
-				     (sockaddr *) saddr, &addr_len);
+				     (char *) buf,
+                                     n,
+                                     flags, 
+				     (sockaddr *) saddr,
+                                     &addr_len);
+  addr.set_size (addr_len);
+  return status;
+}
+
+ASYS_INLINE ssize_t
+ACE_SOCK_Dgram::send (const iovec *buffers,
+                      int buffer_count,
+                      int *number_of_bytes_sent,
+                      int flags,
+                      const ACE_Addr &addr,
+                      ACE_OVERLAPPED *overlapped,
+                      ACE_OVERLAPPED_COMPLETION_FUNC func) const
+{
+  ACE_TRACE ("ACE_SOCK_Dgram::send");
+  sockaddr *saddr = (sockaddr *) addr.get_addr ();
+  size_t len = addr.get_size ();
+  return ACE_OS::sendto (this->get_handle (), 
+                         buffers,
+                         buffer_count,
+                         number_of_bytes_sent,
+                         flags, 
+			 (const sockaddr *) saddr,
+                         len,
+                         overlapped,
+                         func);
+}
+
+ASYS_INLINE ssize_t
+ACE_SOCK_Dgram::recv (iovec *buffers,
+                      int buffer_count,
+                      int *number_of_bytes_recvd,
+                      int flags,
+                      ACE_Addr &addr,
+                      ACE_OVERLAPPED *overlapped,
+                      ACE_OVERLAPPED_COMPLETION_FUNC func) const
+{
+  ACE_TRACE ("ACE_SOCK_IO::recv");
+  sockaddr *saddr = (sockaddr *) addr.get_addr ();
+  int addr_len = addr.get_size ();
+
+  ssize_t status = ACE_OS::recvfrom (this->get_handle (), 
+				     buffers,
+                                     buffer_count,
+                                     number_of_bytes_recvd,
+                                     flags, 
+				     (sockaddr *) saddr,
+                                     &addr_len,
+                                     overlapped,
+                                     func);
   addr.set_size (addr_len);
   return status;
 }

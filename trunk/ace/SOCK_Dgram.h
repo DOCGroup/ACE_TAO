@@ -43,7 +43,7 @@ public:
   // dgram that will accept datagrams at the <local> address.
 
   ACE_SOCK_Dgram (const ACE_Addr &local,
-                  const ACE_Connect_QoS_Params &qos_params,
+                  const ACE_QoS_Params &qos_params,
                   int protocol_family = PF_INET,
                   int protocol = 0,
                   int reuse_addr = 0);
@@ -59,7 +59,7 @@ public:
   // dgram that will accept datagrams at the <local> address.
 
   int open (const ACE_Addr &local,
-            const ACE_Connect_QoS_Params &qos_params,
+            const ACE_QoS_Params &qos_params,
             int protocol_family = PF_INET,
             int protocol = 0,
             int reuse_addr = 0);
@@ -121,6 +121,26 @@ public:
   // specified in *<timeout> elapses).  If <recv> times out a -1 is
   // returned with <errno == ETIME>.  If it succeeds the number of
   // bytes received is returned.
+
+  ssize_t send (const iovec *buffers,
+                int buffer_count,
+                int *number_of_bytes_sent,
+                int flags,
+                const ACE_Addr &addr,
+                ACE_OVERLAPPED *overlapped,
+                ACE_OVERLAPPED_COMPLETION_FUNC func) const;
+  // Send <buffer_count> worth of <buffers> to <addr> using overlapped
+  // I/O.
+
+  ssize_t recv (iovec *buffers,
+                int buffer_count,
+                int *number_of_bytes_recvd,
+                int flags,
+                ACE_Addr &addr,
+                ACE_OVERLAPPED *overlapped,
+                ACE_OVERLAPPED_COMPLETION_FUNC func) const;
+  // Recv <buffer_count> worth of <buffers> from <addr> using
+  // overlapped I/O.
 
   void dump (void) const;
   // Dump the state of an object.

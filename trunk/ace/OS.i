@@ -4216,6 +4216,56 @@ ACE_OS::event_reset (ACE_event_t *event)
 # endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 #endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 
+ACE_INLINE 
+ACE_Flow_Spec::ACE_Flow_Spec (u_long token_rate,
+                              u_long token_bucket_size,
+                              u_long peak_bandwidth,
+                              u_long latency,
+                              u_long delay_variation,
+                              ACE_SERVICE_TYPE service_type,
+                              u_long max_sdu_size,
+                              u_long minimum_policed_size,
+                              int ttl)
+{
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+  this->TokenRate = token_rate;
+  this->TokenBucketSize = token_bucket_size;
+  this->PeakBandwidth = peak_bandwidth;
+  this->Latency = latency;
+  this->DelayVariation = delay_variation;
+  this->ServiceType = service_type;
+  this->MaxSduSize = max_sdu_size;
+  this->MinimumPolicedSize = minimum_policed_size;
+  ACE_UNUSED_ARG (ttl);
+#else
+  ACE_UNUSED_ARG (token_rate);
+  ACE_UNUSED_ARG (token_bucket_size);
+  ACE_UNUSED_ARG (peak_bandwidth);
+  ACE_UNUSED_ARG (latency);
+  ACE_UNUSED_ARG (delay_variation);
+  ACE_UNUSED_ARG (service_type);
+  ACE_UNUSED_ARG (max_sdu_size);
+  ACE_UNUSED_ARG (minimum_policed_size);
+  ACE_UNUSED_ARG (ttl);
+#endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
+}
+
+ACE_INLINE 
+ACE_Flow_Spec::ACE_Flow_Spec (void)
+{
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+  this->TokenRate = 0;
+  this->TokenBucketSize = 0;
+  this->PeakBandwidth = 0;
+  this->Latency = 0;
+  this->DelayVariation = 0;
+  this->ServiceType = 0;
+  this->MaxSduSize = 0;
+  this->MinimumPolicedSize = 0;
+#else
+#endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
+}
+
 ACE_INLINE u_long
 ACE_Flow_Spec::token_rate (void)
 {
@@ -4381,6 +4431,29 @@ ACE_Flow_Spec::minimum_policed_size (u_long mps)
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
+ACE_INLINE int
+ACE_Flow_Spec::ttl (void)
+{
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
+    defined (ACE_HAS_WINSOCK2_GQOS)
+  ACE_NOTSUP_RETURN (-1);
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE void
+ACE_Flow_Spec::ttl (int t)
+{
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
+    defined (ACE_HAS_WINSOCK2_GQOS)
+  ACE_UNUSED_ARG (t);
+  // TBD...      
+#else
+  ACE_UNUSED_ARG (t);
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
 ACE_INLINE ACE_Flow_Spec
 ACE_QoS::sending_flowspec (void)
 {
@@ -4442,7 +4515,7 @@ ACE_QoS::provider_specific (const iovec &ps)
 }
 
 ACE_INLINE
-ACE_Connect_QoS_Params::ACE_Connect_QoS_Params (iovec *caller_data,
+ACE_QoS_Params::ACE_QoS_Params (iovec *caller_data,
                                                 iovec *callee_data,
                                                 ACE_QoS *socket_qos,
                                                 ACE_QoS *group_socket_qos,
@@ -4456,61 +4529,61 @@ ACE_Connect_QoS_Params::ACE_Connect_QoS_Params (iovec *caller_data,
 }
 
 ACE_INLINE iovec *
-ACE_Connect_QoS_Params::caller_data (void) const
+ACE_QoS_Params::caller_data (void) const
 {
   return this->caller_data_;
 }
 
 ACE_INLINE void
-ACE_Connect_QoS_Params::caller_data (iovec *cd)
+ACE_QoS_Params::caller_data (iovec *cd)
 {
   this->caller_data_ = cd;
 }
 
 ACE_INLINE iovec *
-ACE_Connect_QoS_Params::callee_data (void) const
+ACE_QoS_Params::callee_data (void) const
 {
   return this->callee_data_;
 }
 
 ACE_INLINE void
-ACE_Connect_QoS_Params::callee_data (iovec *cd)
+ACE_QoS_Params::callee_data (iovec *cd)
 {
   this->callee_data_ = cd;
 }
 
 ACE_INLINE ACE_QoS *
-ACE_Connect_QoS_Params::socket_qos (void) const
+ACE_QoS_Params::socket_qos (void) const
 {
   return this->socket_qos_;
 }
 
 ACE_INLINE void
-ACE_Connect_QoS_Params::socket_qos (ACE_QoS *sq)
+ACE_QoS_Params::socket_qos (ACE_QoS *sq)
 {
   this->socket_qos_ = sq;
 }
 
 ACE_INLINE ACE_QoS *
-ACE_Connect_QoS_Params::group_socket_qos (void) const
+ACE_QoS_Params::group_socket_qos (void) const
 {
   return this->group_socket_qos_;
 }
 
 ACE_INLINE void
-ACE_Connect_QoS_Params::group_socket_qos (ACE_QoS *gsq)
+ACE_QoS_Params::group_socket_qos (ACE_QoS *gsq)
 {
   this->group_socket_qos_ = gsq;
 }
 
 ACE_INLINE u_long
-ACE_Connect_QoS_Params::flags (void) const
+ACE_QoS_Params::flags (void) const
 {
   return this->flags_;
 }
 
 ACE_INLINE void
-ACE_Connect_QoS_Params::flags (u_long f)
+ACE_QoS_Params::flags (u_long f)
 {
   this->flags_ = f;
 }
@@ -4638,7 +4711,7 @@ ACE_INLINE ACE_HANDLE
 ACE_OS::join_leaf (ACE_HANDLE socket,
                    const sockaddr *name,
                    int namelen,
-                   const ACE_Connect_QoS_Params &qos_params)
+                   const ACE_QoS_Params &qos_params)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   ACE_SOCKCALL_RETURN (::WSAJoinLeaf ((ACE_SOCKET) socket,
@@ -4729,7 +4802,7 @@ ACE_INLINE int
 ACE_OS::connect (ACE_HANDLE handle,
                  const sockaddr *addr,
                  int addrlen,
-                 const ACE_Connect_QoS_Params &qos_params)
+                 const ACE_QoS_Params &qos_params)
 {
   ACE_TRACE ("ACE_OS::connect");
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
@@ -4890,8 +4963,12 @@ ACE_OS::recv (ACE_HANDLE handle, char *buf, int len, int flags)
 }
 
 ACE_INLINE int
-ACE_OS::recvfrom (ACE_HANDLE handle, char *buf, int len,
-                  int flags, struct sockaddr *addr, int *addrlen)
+ACE_OS::recvfrom (ACE_HANDLE handle,
+                  char *buf,
+                  int len,
+                  int flags,
+                  struct sockaddr *addr,
+                  int *addrlen)
 {
   ACE_TRACE ("ACE_OS::recvfrom");
 #if defined (ACE_PSOS)
@@ -4941,6 +5018,43 @@ ACE_OS::send (ACE_HANDLE handle, const char *buf, int len, int flags)
 }
 
 ACE_INLINE int
+ACE_OS::recvfrom (ACE_HANDLE handle,
+                  iovec *buffers,
+                  int buffer_count,
+                  int *number_of_bytes_recvd,
+                  int flags,
+                  struct sockaddr *addr,
+                  int *addrlen,
+                  ACE_OVERLAPPED *overlapped,
+                  ACE_OVERLAPPED_COMPLETION_FUNC func)
+{
+  ACE_TRACE ("ACE_OS::recvfrom");
+
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+  return ::WSARecvFrom (handle,
+                        buffers,
+                        buffer_count,
+                        number_of_bytes_recvd,
+                        flags,
+                        addr,
+                        addrlen,
+                        overlapped,
+                        func);
+#else
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (buffers);
+  ACE_UNUSED_ARG (buffer_count);
+  ACE_UNUSED_ARG (number_of_bytes_recvd);
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (addr);
+  ACE_UNUSED_ARG (addrlen);
+  ACE_UNUSED_ARG (overlapped);
+  ACE_UNUSED_ARG (func);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
+}
+
+ACE_INLINE int
 ACE_OS::sendto (ACE_HANDLE handle,
                 const char *buf,
                 int len,
@@ -4968,6 +5082,57 @@ ACE_OS::sendto (ACE_HANDLE handle,
                                  ACE_const_cast (struct sockaddr *, addr), addrlen),
                        int, -1);
 #endif /* VXWORKS */
+}
+
+ACE_INLINE int
+ACE_OS::sendto (ACE_HANDLE handle,
+                const iovec *buffers,
+                int buffer_count,
+                int *number_of_bytes_sent,
+                int flags,
+                const struct sockaddr *addr,
+                int addrlen,
+                ACE_OVERLAPPED *overlapped,
+                ACE_OVERLAPPED_COMPLETION_FUNC func)
+{
+  ACE_TRACE ("ACE_OS::sendto");
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+  return ::WSASendTo (handle,
+                      buffers,
+                      buffer_count,
+                      number_of_bytes_sent,
+                      flags,
+                      addr,
+                      addrlen,
+                      overlapped,
+                      func);
+#else
+  ACE_UNUSED_ARG (overlapped);
+  ACE_UNUSED_ARG (func);
+  int bytes_sent;
+  
+  if (number_of_bytes_sent == 0)
+    number_of_bytes_sent = &bytes_sent;
+
+  *number_of_bytes_sent = 0;
+
+  int result = 0;
+
+  for (int i = 0; i < buffer_count; i++)
+    {
+       result = ACE_OS::sendto (handle,
+                                buffers[i].iov_base,
+                                buffers[i].iov_len,
+                                flags,
+                                addr,
+                                addrlen);
+       if (result == -1)
+         break;
+       number_of_bytes_sent += result;
+    }
+
+  return result;
+#endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
 }
 
 ACE_INLINE int
