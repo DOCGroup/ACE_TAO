@@ -1,3 +1,18 @@
+Thu Sep 10 15:22:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_predefined_type.h: 
+	* TAO_IDL/be/be_predefined_type.cpp: 
+	  The repository ID in the TypeCode of a structure containing a
+	  CORBA_Object was invalid.
+
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp: 
+	  Use CORBA::Object::_duplicate() instead of foo->_duplicate() the
+	  first one is more readable.
+
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp: 
+	  An object was stored in a T_var and then as the field of a
+	  structure, resulting in a double delete.
+
 Tue Sep 08 14:05:56 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/POA/On_Demand_Activation/run_test.pl: Added a perl script

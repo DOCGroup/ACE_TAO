@@ -455,13 +455,8 @@ construct_dynamic_prop (const char* name,
 
   TAO_TRY
     {
-      CosTradingDynamic::DynamicPropEval_var dp_eval =
-        this->_this (TAO_TRY_ENV);
-
-      dp_struct->eval_if = dp_eval.in ();
-
+      dp_struct->eval_if = this->_this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
       dp_struct->returned_type = CORBA::TypeCode::_duplicate (returned_type);
       dp_struct->extra_info = extra_info;
     }
