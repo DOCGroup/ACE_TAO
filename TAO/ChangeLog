@@ -1,3 +1,11 @@
+Mon Dec  8 12:49:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/examples/PSS/PSS.mpc:
+
+	  Removed from the repository so that our daily builds will not
+	  run this to get a Makefile. We will not be supporting PSDL for
+	  TAO 1.4.
+
 Mon Dec  8 18:30:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* performance-tests/POA/Implicit_Activation/client.dsp:
