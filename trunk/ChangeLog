@@ -1,3 +1,11 @@
+Fri Oct 22 09:47:05 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/RMCast/RMCast_Copy_On_Write.h:
+        * ace/RMCast/RMCast_Membership.h:
+        * ace/RMCast/RMCast_Reordering.h:
+
+          Removed doxygen errors.
+
 Fri Oct 22 12:06:19 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-linux-common.h:
@@ -6,10 +14,10 @@ Fri Oct 22 12:06:19 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Oct 22 11:47:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/xerces.mpb:
+        * bin/MakeProjectCreator/config/xerces.mpb:
 
-	  Use libs instead of lit_libs since xerces also does the
-	  decoration in their VC* binaries.
+          Use libs instead of lit_libs since xerces also does the
+          decoration in their VC* binaries.
 
 Fri Oct 22 11:32:19 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -30,15 +38,15 @@ Fri Oct 22 08:34:19 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Oct 21 18:23:19 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-win32-msvc-7.h: ACE_HAS_TEMPLATE_TYPEDEFS doesn't apply
-	  to the Win64 SDK compiler (version 1300), even though it does for
-	  as MSVC 7.1 latest on Win32 (version 1310).
+        * ace/config-win32-msvc-7.h: ACE_HAS_TEMPLATE_TYPEDEFS doesn't apply
+          to the Win64 SDK compiler (version 1300), even though it does for
+          as MSVC 7.1 latest on Win32 (version 1310).
 
-	* ace/CDR_Base.h: Only use ACE::If_Then_Else on MSVC for VC 7.1; the
-	  Win64 SDK compiler can't hack it.
+        * ace/CDR_Base.h: Only use ACE::If_Then_Else on MSVC for VC 7.1; the
+          Win64 SDK compiler can't hack it.
 
-	* ASNMP/tests/test_config.h (randomize): Added some static_cast to
-	  convert size_t to int. Fixes compile warnings on Win64.
+        * ASNMP/tests/test_config.h (randomize): Added some static_cast to
+          convert size_t to int. Fixes compile warnings on Win64.
 
 Thu Oct 21 18:25:12  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
