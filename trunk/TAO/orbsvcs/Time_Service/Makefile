@@ -14,10 +14,6 @@ endif
 
 LDLIBS = -lorbsvcs -lTAO
 
-IDL_SRC = TimeServiceC.cpp TimeServiceS.cpp
-
-DIRS = ../ImplRepo_Service
-
 PROG_SRCS = \
 	server.cpp \
 	clerk.cpp \
@@ -25,14 +21,7 @@ PROG_SRCS = \
 	Server_i.cpp \
 	IR_Helper.cpp \
 
-SRC = $(IDL_SRC) $(PROG_SRCS)
-
-IMPLREPO_SERVICE_FILES = PingC.cpp \
-			 PingS.cpp \
-			 ImplRepoC.cpp \
-			 ImplRepoS.cpp
-
-IMPLREPO_SERVICE_OBJS = $(addprefix ../ImplRepo_Service/$(VDIR), $(patsubst %.cpp,%.o,$(IMPLREPO_SERVICE_FILES)))
+SRC = $(PROG_SRCS)
 
 SIMPLE_SVR_OBJS = IR_Helper.o \
 	Server_i.o \
@@ -56,7 +45,7 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
+
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
@@ -69,21 +58,13 @@ include $(TAO_ROOT)/taoconfig.mk
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/Naming_Service
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
-.PRECIOUS: TimeServiceC.cpp TimeServiceC.i TimeServiceC.h
-.PRECIOUS: TimeServiceS.cpp TimeServiceS.i TimeServiceS.h
-.PRECIOUS: TimeServiceS_T.cpp TimeServiceS_T.i TimeServiceS_T.h
-#.PRECIOUS: PingC.cpp PinC.h PingS.cpp PingS.h
-#.PRECIOUS: ImplRepoC.cpp ImplRepoC.h ImplrepoS.cpp ImplRepoS.h
-.SECONDARY: $(IMPLREPO_SERVICE_OBJS)
-
 server:	$(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(IMPLREPO_SERVICE_OBJS) $(VLDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 clerk:	$(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf TimeServiceC.* TimeServiceS.* TimeServiceS_T.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
