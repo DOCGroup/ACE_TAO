@@ -463,6 +463,98 @@ TAO_InputCDR::read_longdouble_array (CORBA::LongDouble* x,
 			   length);
 }
 
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::skip_char (void)
+{
+  CORBA::Char x;
+  return this->read_1 (ACE_reinterpret_cast(CORBA::Octet*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::skip_wchar (void)
+{
+  CORBA::WChar x;
+  return this->read_2 (ACE_reinterpret_cast(CORBA::UShort*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::skip_octet (void)
+{
+  CORBA::Octet x;
+  return this->read_1 (&x);
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::skip_boolean (void)
+{
+  CORBA::Octet tmp;
+  this->read_octet (tmp);
+  return this->good_bit_;
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::skip_short (void)
+{
+  CORBA::Short x;
+  return this->read_2 (ACE_reinterpret_cast(CORBA::UShort*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::skip_ushort (void)
+{
+  CORBA::UShort x;
+  return this->read_2 (ACE_reinterpret_cast(CORBA::UShort*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::skip_long (void)
+{
+  CORBA::Long x;
+  return this->read_4 (ACE_reinterpret_cast(CORBA::ULong*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::skip_ulong (void)
+{
+  CORBA::ULong x;
+  return this->read_4 (ACE_reinterpret_cast(CORBA::ULong*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::skip_longlong (void)
+{
+  CORBA::LongLong x;
+  return this->read_8 (ACE_reinterpret_cast(CORBA::ULongLong*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::skip_ulonglong (void)
+{
+  CORBA::ULongLong x;
+  return this->read_8 (ACE_reinterpret_cast(CORBA::ULongLong*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::skip_float (void)
+{
+  CORBA::Float x;
+  return this->read_4 (ACE_reinterpret_cast(CORBA::ULong*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::skip_double (void)
+{
+  CORBA::Double x;
+  return this->read_8 (ACE_reinterpret_cast(CORBA::ULongLong*,&x));
+}
+
+ACE_INLINE CORBA_Boolean
+TAO_InputCDR::skip_longdouble (void)
+{
+  CORBA::LongDouble x;
+  return this->read_16 (ACE_reinterpret_cast(CORBA::LongDouble*,&x));
+}
+
 ACE_INLINE int
 TAO_InputCDR::good_bit (void) const
 {
@@ -483,10 +575,28 @@ TAO_InputCDR::decode (CORBA::TypeCode_ptr tc,
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
+ACE_INLINE CORBA::TypeCode::traverse_status
+TAO_InputCDR::skip (CORBA::TypeCode_ptr tc,
+                    CORBA::Environment &env)
+{
+  TAO_Marshal_Object *mobj =
+    this->factory_->make_marshal_object (tc, env);
+
+  if (env.exception() == 0 && mobj != 0)
+    return mobj->skip (tc, this, env);
+  return CORBA::TypeCode::TRAVERSE_STOP;
+}
+
 ACE_INLINE size_t
 TAO_InputCDR::length (void) const
 {
   return this->start_->length ();
+}
+
+ACE_INLINE const ACE_Message_Block*
+TAO_InputCDR::start (void) const
+{
+  return this->start_;
 }
 
 ACE_INLINE char*
@@ -657,4 +767,3 @@ operator>> (TAO_InputCDR& cdr, CORBA::Char &x)
   return cdr;
 }
 #endif /* 0 */
-

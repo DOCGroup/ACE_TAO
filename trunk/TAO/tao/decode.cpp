@@ -156,10 +156,6 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
   // Typecode of the element that makes the Any.
   CORBA::TypeCode_ptr elem_tc;
 
-  // Value maintained by the Any.
-  void *value = 0;
-  CORBA::Boolean continue_decoding = CORBA::B_TRUE;
-
   // Context is the CDR stream.
   TAO_InputCDR *stream = (TAO_InputCDR *) context;
 
@@ -168,98 +164,27 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
     CORBA::TypeCode::TRAVERSE_CONTINUE;
 
   // Decode the typecode description for the element.
-  if (stream->decode (CORBA::_tc_TypeCode,
-                      &elem_tc,
-                      0,
-                      env) == CORBA::TypeCode::TRAVERSE_CONTINUE)
+  if ((retval = stream->decode (CORBA::_tc_TypeCode,
+                                &elem_tc,
+                                0,
+                                env))
+      == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      ACE_NEW_RETURN (value,
-                      CORBA::Octet[elem_tc->size (env)],
-                      CORBA::TypeCode::TRAVERSE_STOP);
-
-      if (env.exception () == 0)
-        {
-          // Switch on the data type and handle the cases for
-          // primitives here for efficiency rather than calling.
-          switch (elem_tc->kind_)
-            {
-            case CORBA::tk_null:
-            case CORBA::tk_void:
-              break;
-            case CORBA::tk_short:
-            case CORBA::tk_ushort:
-              continue_decoding =
-                stream->read_short (*(CORBA::Short *) value);
-              break;
-            case CORBA::tk_long:
-            case CORBA::tk_ulong:
-            case CORBA::tk_float:
-            case CORBA::tk_enum:
-              continue_decoding =
-                stream->read_long (*(CORBA::Long *) value);
-              break;
-            case CORBA::tk_double:
-            case CORBA::tk_longlong:
-            case CORBA::tk_ulonglong:
-              continue_decoding =
-                stream->read_longlong (*(CORBA::LongLong *) value);
-              break;
-            case CORBA::tk_boolean:
-              continue_decoding =
-                stream->read_boolean (*(CORBA::Boolean *) value);
-              break;
-            case CORBA::tk_char:
-            case CORBA::tk_octet:
-              continue_decoding =
-                stream->read_char (*(CORBA::Char *) value);
-              break;
-            case CORBA::tk_longdouble:
-              continue_decoding =
-                stream->read_longdouble (*(CORBA::LongDouble *) value);
-              break;
-            case CORBA::tk_wchar:
-              continue_decoding =
-                stream->read_wchar (*(CORBA::WChar *) value);
-              break;
-            case CORBA::tk_any:
-            case CORBA::tk_TypeCode:
-            case CORBA::tk_Principal:
-            case CORBA::tk_objref:
-            case CORBA::tk_struct:
-            case CORBA::tk_union:
-            case CORBA::tk_string:
-            case CORBA::tk_sequence:
-            case CORBA::tk_array:
-            case CORBA::tk_alias:
-            case CORBA::tk_except:
-            case CORBA::tk_wstring:
-              retval = stream->decode (elem_tc, value, 0, env);
-              break;
-            default:
-              // Anything else is an error.
-              retval = CORBA::TypeCode::TRAVERSE_STOP;
-            }
-        }
-      else
-        retval = CORBA::TypeCode::TRAVERSE_STOP;
+      // Let the Any maintain a pointer to the CDR stream
+      any->value_ = (ACE_Message_Block *) stream->start ();
+      any->any_owns_data_ = 1;
+      elem_tc->AddRef ();
+      any->type_ = elem_tc;
+      // now skip the value
+      retval = stream->skip (elem_tc, env);
     }
-  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
-      && continue_decoding == CORBA::B_TRUE)
+  if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      // Allocate an Any and populate it with the value and
-      // typecode. This eventually appears as "data"
-      (void) new (any) CORBA::Any (elem_tc, value, CORBA::B_TRUE);
-      return CORBA::TypeCode::TRAVERSE_CONTINUE;
-    }
-  else
-    {
-      // Free the allocated storage and release the typecode.
-      delete [] value;
       CORBA::release (elem_tc);
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
       dmsg ("TAO_Marshal_Any::decode detected error");
-      return CORBA::TypeCode::TRAVERSE_STOP;
     }
+  return retval;
 }
 
 CORBA::TypeCode::traverse_status
