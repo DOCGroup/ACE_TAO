@@ -318,7 +318,6 @@ int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
       ACE_ERROR ((LM_ERROR, "unrecognized dependency type %d for %s\n",
                   d.dependency_type, rt_info->entry_point.in ()));
       return -1;
-      break;
   }
 
   ACE_DEBUG ((LM_DEBUG, "adding dependecy to: %s\n",
