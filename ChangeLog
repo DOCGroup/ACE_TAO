@@ -1,3 +1,11 @@
+Sun Dec 28 15:46:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/*.doxygen:
+          Removed CGI_NAME, CGI_URL, DOC_URL, DOC_ABSPATH, BIN_ABSPATH and
+          EXT_DOC_PATHS from the doxygen config files. These options are no
+          longer available because doxygen now uses PHP for search pages
+          instead of CGI. The search page is disabled at this moment.
+
 Sun Dec 28 15:09:34 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * etc/ace.doxygen:
