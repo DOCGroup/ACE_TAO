@@ -1,70 +1,109 @@
-Mon Feb 21 14:35:39 2000 Christopher Kohlhoff <chris@kohlhoff.com> 
+Mon Feb 21 16:19:59 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Any.cpp:
+        * tao/decode.cpp:
+          Do not use ACE_Message_Block::duplicate() or clone() to copy the
+          underlying CDR stream.  The first one is not thread safe and the
+          second one does not preserve alignment.
+          Instead we use the ACE_CDR::consolidate() function that performs
+          a deep copy (thus thread safe) and preserves alignment.
+          This fixes [BUGID:430]
+
+        * examples/Makefile:
+          Add the Persistent_Grid example to the Makefile.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+          The try_pull() method was always setting the <has_event> flag to
+          0, even when there were events available.
+
+        * orbsvcs/tests/CosEvent/Basic/Pull_Push_Event.cpp:
+          Fine-tune the execution time.
+
+        * orbsvcs/tests/CosEvent/Basic/run_test.pl:
+          Enable the Pull-Push test because the bugs in TAO that kept it
+          from working have been fixed.
+
+        * performance-tests/Cubit/TAO/DII_Cubit/run_test.pl:
+          Fixed the invocation to the IDL server, the options where
+          wrong.
+
+        * tests/param_test/ub_any_seq.cpp:
+          Print debugging messages only if TAO_debug_level is defined.
+
+        * orbsvcs/orbsvcs/Event/EC_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.i:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+          Several cosmetic fixes and changes to the comments.
+
+Mon Feb 21 14:35:39 2000 Christopher Kohlhoff <chris@kohlhoff.com>
 
         * tao/Makefile.bor, TAO/orbsvcs/orbsvcs/Makefile.bor: Added new files.
-	  
-	* tests/MProfile/test_i.h: Removed extra semicolon.
-  
+
+        * tests/MProfile/test_i.h: Removed extra semicolon.
+
 Mon Feb 21 16:09:28 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* docs/DIFFERENCES: Clarified that this file doesn't reflect 
-	  what's in TAO any more.  Thanks to Alex Brown
- 	  <abrown@3com-ne.com> for pointing this out.
+        * docs/DIFFERENCES: Clarified that this file doesn't reflect
+          what's in TAO any more.  Thanks to Alex Brown
+          <abrown@3com-ne.com> for pointing this out.
 
 Mon Feb 21 15:54:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/IDL_Test/union.idl:
-	  Added an IDL code simplified from an example sent in
-	  by Jonathan Reis <reis@stentorsoft.com>
+        * tests/IDL_Test/union.idl:
+          Added an IDL code simplified from an example sent in
+          by Jonathan Reis <reis@stentorsoft.com>
 
 Mon Feb 21 10:59:00 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_generator.cpp:
-	* TAO_IDL/include.utl_scope.h:
-	* TAO_IDL/util/utl_scope.cpp:
-	  In create_module(), the check for a reopened module
-	  now includes a check for whether a previous module
-	  found with the scope iterator is from an included file or
-	  not. Previously, the node from the included file would be
-	  returned, and therefore no code would be generated for it. Also
-	  added code to add the included module's members to the reopened
-	  module, and removed an unused member from class UTL_Scope.	
-	  Thanks to Lothar Werzinger <werzinger.lothar@krones.de>
-	  for reporting this bug.
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/include.utl_scope.h:
+        * TAO_IDL/util/utl_scope.cpp:
+          In create_module(), the check for a reopened module
+          now includes a check for whether a previous module
+          found with the scope iterator is from an included file or
+          not. Previously, the node from the included file would be
+          returned, and therefore no code would be generated for it. Also
+          added code to add the included module's members to the reopened
+          module, and removed an unused member from class UTL_Scope.
+          Thanks to Lothar Werzinger <werzinger.lothar@krones.de>
+          for reporting this bug.
 
-	  Also, a small change to lookup_by_name_local in utl_scope.cpp
-	  fixed a bug reported by Jonathan Reis <reis@stentorsoft.com>.
-	  This closes out bugzilla bug #449.
+          Also, a small change to lookup_by_name_local in utl_scope.cpp
+          fixed a bug reported by Jonathan Reis <reis@stentorsoft.com>.
+          This closes out bugzilla bug #449.
 
 Sun Feb 20 23:43:22 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * TAO/orbsvcs/orbsvcs/orbsvcs_static.dsp:
-          Synced with orbsvcs.dsp.  Thanks to Mogens Hansen 
+          Synced with orbsvcs.dsp.  Thanks to Mogens Hansen
           <mogens_h@dk-online.dk> for noticing this.
 
 Sat Feb 19 20:24:29 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp
-	  (parse_collection_arg): Initialized <aux> to 0 to avoid MSVC
-	  warning.
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp
+          (parse_collection_arg): Initialized <aux> to 0 to avoid MSVC
+          warning.
 
 Sat Feb 19 18:47:22 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/decode.cpp:
-	  When decoding Anys from a CDR stream we always use "append", to
-	  copy the contents of the original CDR stream into a new buffer.
-	  This new buffer is created with the natural alignment on the
-	  local machine, but we were storing the original stream byte
-	  order in the Any.
+        * tao/decode.cpp:
+          When decoding Anys from a CDR stream we always use "append", to
+          copy the contents of the original CDR stream into a new buffer.
+          This new buffer is created with the natural alignment on the
+          local machine, but we were storing the original stream byte
+          order in the Any.
 
 Sat Feb 19 15:32:58 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/Any.cpp:
-	  Reverted accidental commit.
+        * tao/Any.cpp:
+          Reverted accidental commit.
 
 Sat Feb 19 17:07:24 2000  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
 
-	* docs/releasenotes/index.html (CosEC_Multiple):
-	  updated release notes
+        * docs/releasenotes/index.html (CosEC_Multiple):
+          updated release notes
 
 Sat Feb 19 14:23:38 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -73,7 +112,7 @@ Sat Feb 19 14:23:38 2000  Carlos O'Ryan  <coryan@uci.edu>
         * tao/Any.cpp:
           The Any structure keeps a byte_order field to determine what is
           the byte order in its internal CDR stream.
-	  This fixes [BUGID:431]
+          This fixes [BUGID:431]
 
         * tao/CDR.h:
         * tao/CDR.cpp:
@@ -163,7 +202,7 @@ Fri Feb 18 19:05:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
           of tie classes and *S_T.* files. A question about this
           was sent in by Alex Hornby <alex@anvil.co.uk>, which
           prompted the implementation. This closes out bugzilla
-	  bug #443.
+          bug #443.
 
 Fri Feb 18 13:53:43 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

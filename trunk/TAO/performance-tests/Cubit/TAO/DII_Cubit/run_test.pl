@@ -17,7 +17,7 @@ require ACEutils;
 $iorfile = "cubit.ior";
 $clexepref = '.' . $DIR_SEPARATOR;
 $svexepref = ".." . $DIR_SEPARATOR . "IDL_Cubit" . $DIR_SEPARATOR;
-$svnsflags = " -o $iorfile";
+$svnsflags = " -f $iorfile";
 $clnsflags = " -f $iorfile";
 $clflags = "";
 $svflags = "";

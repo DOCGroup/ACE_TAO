@@ -101,7 +101,8 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr tc,
 
           // Retrieve the start of the message block chain and save it.
           this->byte_order_ = TAO_ENCAP_BYTE_ORDER;
-          this->cdr_ = stream.begin ()->clone ();
+          ACE_NEW (this->cdr_, ACE_Message_Block);
+          ACE_CDR::consolidate (this->cdr_, stream.begin ());
         }
     }
   ACE_CATCHANY
@@ -120,9 +121,10 @@ CORBA_Any::CORBA_Any (CORBA::TypeCode_ptr type,
   : type_ (CORBA::TypeCode::_duplicate (type)),
     value_ (0),
     byte_order_ (byte_order),
-    cdr_ (ACE_Message_Block::duplicate (mb)),
     any_owns_data_ (0)
 {
+  ACE_NEW (this->cdr_, ACE_Message_Block);
+  ACE_CDR::consolidate (this->cdr_, mb);
 }
 
 // Copy constructor for "Any".
@@ -141,7 +143,8 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
   // CDR stream always contains encoded object, if any holds anything
   // at all.
   this->byte_order_ = src.byte_order_;
-  this->cdr_ = ACE_Message_Block::duplicate (src.cdr_);
+  ACE_NEW (this->cdr_, ACE_Message_Block);
+  ACE_CDR::consolidate (this->cdr_, src.cdr_);
 
   // No need to copy src's value_.  We can always get that from cdr.
 }
@@ -191,7 +194,8 @@ CORBA_Any::operator= (const CORBA_Any &src)
       this->any_owns_data_ = 0;
 
       this->byte_order_ = src.byte_order_;
-      this->cdr_ = ACE_Message_Block::duplicate (src.cdr_);
+      ACE_NEW_RETURN (this->cdr_, ACE_Message_Block, *this);
+      ACE_CDR::consolidate (this->cdr_, src.cdr_);
       // Simply duplicate the cdr string here.  We can save the decode
       // operation if there's no need to extract the object.
     }
@@ -276,7 +280,8 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
 
       // Retrieve the start of the message block chain and duplicate it.
       this->byte_order_ = TAO_ENCAP_BYTE_ORDER;
-      this->cdr_ = ACE_Message_Block::duplicate (stream.begin ());
+      ACE_NEW (this->cdr_, ACE_Message_Block);
+      ACE_CDR::consolidate (this->cdr_, stream.begin ());
     }
 }
 
@@ -304,7 +309,8 @@ CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
   this->any_owns_data_ = 0;
 
   this->byte_order_ = byte_order;
-  this->cdr_ = ACE_Message_Block::duplicate (mb);
+  ACE_NEW (this->cdr_, ACE_Message_Block);
+  ACE_CDR::consolidate (this->cdr_, mb);
   // We can save the decode operation if there's no need to extract
   // the object.
  }
@@ -337,7 +343,8 @@ CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
   this->any_owns_data_ = any_owns_data;
 
   this->byte_order_ = byte_order;
-  this->cdr_ = ACE_Message_Block::duplicate (mb);
+  ACE_NEW (this->cdr_, ACE_Message_Block);
+  ACE_CDR::consolidate (this->cdr_, mb);
   // We can save the decode operation if there's no need to extract
   // the object.
 }
@@ -2061,7 +2068,8 @@ CORBA_Any::operator>>= (to_object obj) const
     {
       // Any interface is allowed
       CORBA::Boolean result =
-        (this->type_->kind () == CORBA::tk_objref);
+        (this->type_->kind (ACE_TRY_ENV) == CORBA::tk_objref);
+      ACE_TRY_CHECK;
 
       if (result)
         {

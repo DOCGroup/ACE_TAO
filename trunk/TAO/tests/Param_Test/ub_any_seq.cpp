@@ -67,7 +67,7 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref,
 
   for (CORBA::ULong i=0; i < this->in_->length (); i++)
     {
-      CORBA::ULong index = 
+      CORBA::ULong index =
         (CORBA::ULong) (gen->gen_short () % NUM_TEST_TYPES);
       switch (index)
         {
@@ -75,8 +75,8 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref,
           {
             CORBA::Short s;
             s = gen->gen_short ();
-	          if (TAO_debug_level > 0)
-              ACE_DEBUG ((LM_DEBUG, 
+                  if (TAO_debug_level > 0)
+              ACE_DEBUG ((LM_DEBUG,
                           "setting short = %d\n", s));
             this->in_[i] <<= s;
             this->inout_[i] <<= 0; // different from in_
@@ -86,7 +86,7 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref,
           {
             char *str = gen->gen_string ();
             if (TAO_debug_level > 0)
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
                           "setting string = %s\n", str));
             this->in_[i] <<= str;
             this->inout_[i] <<= 0; // different from in_
@@ -94,8 +94,8 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref,
           break;
         case 2:
           {
-	          if (TAO_debug_level > 0)
-	            ACE_DEBUG ((LM_DEBUG, 
+                  if (TAO_debug_level > 0)
+                    ACE_DEBUG ((LM_DEBUG,
                           "setting coffee object \n" ));
             ACE_TRY
               {
@@ -118,10 +118,10 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref,
           break;
         case 3:
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "setting constant string \n" ));
-	        this->in_[i] <<= "Const string";
-	        this->inout_[i] <<= 0; // different from in_
+                this->in_[i] <<= "Const string";
+                this->inout_[i] <<= 0; // different from in_
           break;
         }
     }
@@ -136,7 +136,7 @@ Test_AnySeq::reset_parameters (void)
 
   for (CORBA::ULong i=0; i < this->in_->length (); i++)
     {
-      CORBA::ULong index = 
+      CORBA::ULong index =
         (CORBA::ULong) (gen->gen_long () % NUM_TEST_TYPES);
 
       switch (index)
@@ -162,8 +162,8 @@ Test_AnySeq::reset_parameters (void)
           }
           break;
         case 3:
-	        this->in_[i] <<= "Const string";
-	        this->inout_[i] <<= "Const string";
+                this->in_[i] <<= "Const string";
+                this->inout_[i] <<= "Const string";
           break;
         }
     }
@@ -272,19 +272,22 @@ Test_AnySeq::check_validity (void)
           (this->out_[i] >>= short_out) &&
           (this->ret_[i] >>= short_ret))
         {
-          ACE_DEBUG ((LM_DEBUG, 
-                      "Received shorts: in = %d, "
-                      "inout = %d, out = %d, ret = %d\n",
-                      short_in, 
-                      short_inout, 
-                      short_out, 
-                      short_ret));
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Received shorts: in = %d, "
+                          "inout = %d, out = %d, ret = %d\n",
+                          short_in,
+                          short_inout,
+                          short_out,
+                          short_ret));
+            }
 
           if ((short_in != short_inout) ||
               (short_in != short_out) ||
               (short_in != short_ret))
             {
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
                           "mismatch of short values\n"));
               return 0;
             }
@@ -300,7 +303,7 @@ Test_AnySeq::check_validity (void)
               ACE_OS::strcmp (str_in, str_out) ||
               ACE_OS::strcmp (str_in, str_ret))
             {
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
                           "mismatch of string values\n"));
               return 0;
             }
@@ -316,7 +319,7 @@ Test_AnySeq::check_validity (void)
               !(obj_in->_is_equivalent (obj_out)) ||
               !(obj_in->_is_equivalent (obj_ret)))
             {
-              ACE_DEBUG ((LM_DEBUG, 
+              ACE_DEBUG ((LM_DEBUG,
                           "mismatch of Coffee values\n"));
               return 0;
             }
@@ -380,6 +383,6 @@ Test_AnySeq::print_sequence (const Param_Test::AnySeq &s)
              "\td = %f\n",
              i,
              vs.l, vs.c, vs.s, vs.o, vs.f, vs.b, vs.d));
-      */    
+      */
     }
 }

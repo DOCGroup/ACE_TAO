@@ -564,7 +564,7 @@ public:
                     const ASYS_TCHAR *net_if = 0);
   // Constructor, the messages received by this EH are forwarded to
   // the <recv>.
-  // It is possible to select the NIC where the multicast messages are 
+  // It is possible to select the NIC where the multicast messages are
   // expected using <net_if>
 
   virtual ~TAO_ECG_Mcast_EH (void);

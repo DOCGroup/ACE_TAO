@@ -102,13 +102,6 @@ public:
                             CORBA::Environment &env = TAO_default_environment ());
 };
 
-// @@ TODO
-// We could implement other dispatching strategies, such as:
-// - A single queue with a thread pool to process each event (how does
-//   it compare to a thread pool in the ORB?): it should improve
-//   throughput when multiple CPUs are present.
-// - Enqueuing, but ordering the queue by priority.
-
 #if defined (__ACE_INLINE__)
 #include "EC_Dispatching.i"
 #endif /* __ACE_INLINE__ */
