@@ -1,3 +1,16 @@
+Fri Aug 06 14:24:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/orbconf.h (TAO_DEFAULT_RESOURCE_FACTORY_ARGS): Replaced
+	  the obsolete option -ORBReactorLock with -ORBReactorType.
+
+Thu Aug 05 15:48:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/Naming_Service.dsp:
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* tao/TAO.dsp: Changed the default configuration to Win32 Debug so
+	  if anyone doesn't know what he is doing, he'll most likely to
+	  success.
+
 Fri Aug 06 13:20:23 1999  Carlos O'Ryan  <coryan@JIG>
 
 	* tao/ORB_Core.cpp:
