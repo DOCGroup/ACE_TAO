@@ -1,3 +1,9 @@
+Wed May  8 16:29:05 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * bin/nightlybuilds/builds.lst (STATUS):
+
+          Added more information about the build on toutatis.
+
 Wed May  8 13:57:58 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/OS_Dirent.h:
@@ -5,7 +11,7 @@ Wed May  8 13:57:58 2002  Chad Elliott  <elliott_c@ociweb.com>
 
           Fixed the Dirent_Test under wide character builds with Visual C++
           6.0.  The d_name member of the dirent struct is normally a one
-          element ACE_TCHAR array that is used as an ACE_TCHAR pointer. 
+          element ACE_TCHAR array that is used as an ACE_TCHAR pointer.
           This doesn't work properly under wide character builds with VC6.
           Note: because of this change, memcpy on a 'struct dirent' no
           longer works on Windows as it would on UNIX.
@@ -20,16 +26,16 @@ Wed May  8 10:58:15 2002  Alex Libman <AlexL@rumblegroup.com>
 	* tests/Proactor_Test.cpp: Fixed the test to work right on
 	  Linux. Turned off full traces, only the error messages and
 	  statistics will go to the log.
-	  
+
 Wed May  8 06:14:08 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Proactor.h (ACE_Proactor): Fixed a comment that said
 	  "ACE_Reactor"  rather than "ACE_Proactor" (cut+paste error ;-)).
-	  Thanks to Don Hinton for reporting this.	  
+	  Thanks to Don Hinton for reporting this.
 
 	* ace/Filecache.cpp (R_MASK): Allow file sharing by default.
 	  Thanks to Peter Kullmann" <P.Kullmann@rog.de> for reporting
-	  this. 
+	  this.
 
 Tue May 07 21:03:01 2002  Ossama Othman  <ossama@uci.edu>
 

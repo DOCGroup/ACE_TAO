@@ -153,7 +153,7 @@ LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/beguine.doc.wustl.e
 WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?beguine.doc.wustl.edu_NO_AMI_MESSAGING
 STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/beguine.doc.wustl.edu_NO_AMI_MESSAGING/status.txt
 
-[RedHat_IA64_Linux]
+[IA64_Linux_GCC_3.1]
 LIST   = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/toutatis_Full
 WEB    = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?toutatis_Full
 STATUS = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/toutatis_Full/status.txt
