@@ -107,7 +107,6 @@ extern CORBA::TypeCode TC_opaque;
 #include "tao/default_server.h"
 
 #include "tao/except.h"
-#include "tao/interp.h"
 #include "tao/nvlist.h"
 #include "tao/orbobj.h"
 #include "tao/object.h"
@@ -141,6 +140,7 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 // GIOP - IIOP related includes
 #include "tao/iiopobj.h"
 #include "tao/iioporb.h"
+#include "tao/interp.h"
 #include "tao/giop.h"
 
 // The following *.i files are always included here
