@@ -43,6 +43,47 @@
       <p>
       <table border=2 width="100%" cellspacing="2" cellpadding="0">
 	<tr>
+	<tr>
+	  <th>Typical Use</th>
+	  <td>A brief description of the scenario and its typical use.</td>
+	</tr>
+
+	<tr>
+	  <th>Number Threads</th>
+	  <td>The number of threads used by ORB-related activities.</td>
+	</tr>
+
+	<tr>
+	  <th>Thread Creator</th>
+	  <td>Identifies the creator of the threads discussed above.</td>
+	</tr>
+
+	<tr>
+	  <th>Resource Location</th>
+	  <td>Where information on various resources is stored.</td>
+	</tr>
+
+	<tr>
+	  <th>Thread task</th>
+	  <td>Describes what task is undertaken for each thread.</td>
+	</tr>
+	<tr>
+	  <th>Options</th>
+	  <td>Specifies the options for each service in order to utilize this configuration.</td>
+	</tr>
+      </table>
+      </p>
+
+    </blockquote>
+
+    <H2>Configurations</H2>
+
+    <blockquote>
+
+      <H3>Single-threaded, reactive model.<A NAME="reactive"></A></H3>
+
+      <p>
+      <table border=2 width="100%" cellspacing="2" cellpadding="0">
 	  <th>Typical Use</th>
 	  <td>
 	    This is definitely the most common use of an ORB in a
@@ -70,42 +111,13 @@
 	  <th>Thread task</th>
 	  <td>The single thread processes all connection requests and CORBA messages.</td>
 	</tr>
-      </table>
-      </p>
-
-    </blockquote>
-
-    <H2>Configurations</H2>
-
-    <blockquote>
-
-      <H3>Single-threaded, reactive model.<A NAME="reactive"></A></H3>
-
-      <p>
-      <table border=2 width="100%" cellspacing="2" cellpadding="0">
-	<tr>
-	  <th>Typical Use</th>
-	  <td>A brief description of the scenario and its typical use.</td>
-	</tr>
 
 	<tr>
-	  <th>Number Threads</th>
-	  <td>The number of threads used by ORB-related activities.</td>
-	</tr>
-
-	<tr>
-	  <th>Thread Creator</th>
-	  <td>Identifies the creator of the threads discussed above.</td>
-	</tr>
-
-	<tr>
-	  <th>Resource Location</th>
-	  <td>Where information on various resources is stored.</td>
-	</tr>
-
-	<tr>
-	  <th>Thread task</th>
-	  <td>Describes what task is undertaken for each thread.</td>
+	  <th>Options</th>
+	  <td>
+	    <code>TAO_Resource_Manager</code>: <code>-ORBresources global</code><br>
+	    <code>TAO_Server_Strategy_Factory</code>: <code>-ORBconcurrency reactive</code>
+	  </td>
 	</tr>
       </table>
       </p>
@@ -214,7 +226,7 @@
 <P>
 <!-- Created: Fri Aug 29 10:06:40 CDT 1997 -->
 <!-- hhmts start -->
-Last modified: Mon Dec 15 20:23:56 CST 1997
+Last modified: Mon Dec 15 20:29:28 CST 1997
 <!-- hhmts end -->
 </BODY>
 </HTML>
