@@ -936,9 +936,11 @@ CORBA_ORB::resolve_initial_references (const char *name,
           return this->string_to_object (list_of_profiles.c_str (),
                                          ACE_TRY_ENV);
         }
-
-      // Clean up.
-      delete [] default_init_ref;
+      else
+        {
+          // Clean up.
+          delete [] default_init_ref;
+        }
     }
 
   // Did not find it in the InitRef table, or in the DefaultInitRef
@@ -954,7 +956,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
     return this->resolve_implrepo_service (timeout, ACE_TRY_ENV);
 
   else
-    ACE_THROW_RETURN (CORBA::ORB::InvalidName (), 0);
+    ACE_THROW_RETURN (CORBA::ORB::InvalidName (), CORBA::Object::_nil ());
 
 }
 
