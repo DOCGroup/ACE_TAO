@@ -14,6 +14,8 @@ Thu Feb 19 12:49:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/orbobj.cpp: enhanced some printouts.
 
+        * tao/tao_util.cpp (orb): added .in () dereference to orb_ argument.
+
 Thu Feb 19 10:15:00 1998  Michael Kircher <mk1@cs.wustl.edu>
 	* orbsvcs/test/Simulator: Set the file permissions right.
 
