@@ -1,3 +1,9 @@
+Mon Nov 24 16:37:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ciao/ComponentsC.h: 
+	  
+	  Removed unneeded inclusion of ComponentsC.i
+
 Mon Nov 24 14:48:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/ComponentsS.h:
