@@ -1,0 +1,8 @@
+Tue Aug 21 07:58:42 2001 Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TP_Reactor.i:
+	* ace/TP_Reactor.h:
+	* ace/TP_Reactor.cpp (handle_events): Started refactoring some of
+	  the code to help with this bug.  This change has not been
+	  compiled. This is just being done to transfer files from home
+	  to work.
