@@ -252,7 +252,7 @@ Worker::Worker (CORBA::ORB_ptr orb,
   RTCORBA::ProtocolProperties_var base_transport_protocol_properties =
     TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::TAG_INTERNET_IOP,
                                                                          orb->orb_core ());
-  
+
   RTCORBA::TCPProtocolProperties_var tcp_base_transport_protocol_properties =
     RTCORBA::TCPProtocolProperties::_narrow (base_transport_protocol_properties.in ());
 
@@ -275,7 +275,7 @@ Worker::Worker (CORBA::ORB_ptr orb,
   if (ACE_OS::strcmp (test_protocol, "DIOP") == 0)
     {
       if (TAO_debug_level) ACE_DEBUG ((LM_DEBUG, "test protocol is DIOP\n"));
-      protocols[0].protocol_type = TAO_TAG_UDP_PROFILE;
+      protocols[0].protocol_type = TAO_TAG_DIOP_PROFILE;
     }
   else if (ACE_OS::strcmp (test_protocol, "SCIOP") == 0)
     {
@@ -291,8 +291,8 @@ Worker::Worker (CORBA::ORB_ptr orb,
   RTCORBA::ProtocolProperties_var test_transport_protocol_properties =
     TAO_Protocol_Properties_Factory::create_transport_protocol_property (protocols[0].protocol_type,
                                                                          orb->orb_core ());
-  
-  if (protocols[0].protocol_type == TAO_TAG_UDP_PROFILE)
+
+  if (protocols[0].protocol_type == TAO_TAG_DIOP_PROFILE)
     {
       RTCORBA::UserDatagramProtocolProperties_var udp_test_transport_protocol_properties =
         RTCORBA::UserDatagramProtocolProperties::_narrow (test_transport_protocol_properties.in ());
@@ -661,7 +661,7 @@ Worker::run (ACE_ENV_SINGLE_ARG_DECL)
 
   // This call is used to ensure that all the THROUGHPUT related data
   // has reached the server.
-  if (test_type == THROUGHPUT && 
+  if (test_type == THROUGHPUT &&
       ACE_OS::strcmp (test_protocol, "DIOP") != 0)
     {
       this->test_->twoway_sync (ACE_ENV_SINGLE_ARG_PARAMETER);

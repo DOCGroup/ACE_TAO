@@ -1,3 +1,25 @@
+Mon Oct 11 17:46:48 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao/ORB_Constants.h: 
+	* CIAO/performance-tests/Protocols/Controller/Controller.cpp:
+	* CIAO/performance-tests/Protocols/Sender/Sender_exec.cpp:
+	* performance-tests/Protocols/distributor.cpp:
+	* performance-tests/Protocols/sender.cpp:
+	* tao/RTCORBA/RT_Policy_i.cpp:
+	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
+	* tao/Strategies/DIOP_Acceptor.cpp:
+	* tao/Strategies/DIOP_Connector.cpp:
+	* tao/Strategies/DIOP_Endpoint.cpp:
+	* tao/Strategies/DIOP_Factory.cpp:
+	* tao/Strategies/DIOP_Profile.cpp:
+	* tao/Strategies/DIOP_Transport.cpp:
+	* tests/RTCORBA/Server_Protocol/server.cpp:
+	* utils/catior/catior.cpp:
+	* utils/nslist/nslist.cpp:	
+
+	  TAO_TAG_UDP_PROFILE was changed to TAO_TAG_DIOP_PROFILE to make
+	  it consistent with the other profile tags.
+
 Mon Oct 11 17:11:19 2004  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao/RTCORBA/RT_Stub.cpp (effective_client_protocol): 

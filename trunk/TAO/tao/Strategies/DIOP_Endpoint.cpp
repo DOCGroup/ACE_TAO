@@ -28,7 +28,7 @@ ACE_RCSID (Strategies,
 TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const ACE_INET_Addr &addr,
                                       int use_dotted_decimal_addresses)
 
-  : TAO_Endpoint (TAO_TAG_UDP_PROFILE)
+  : TAO_Endpoint (TAO_TAG_DIOP_PROFILE)
     , host_ ()
     , port_ (0)
     , object_addr_ (addr)
@@ -42,7 +42,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const char *host,
                                       CORBA::UShort port,
                                       const ACE_INET_Addr &addr,
                                       CORBA::Short priority)
-  : TAO_Endpoint (TAO_TAG_UDP_PROFILE,
+  : TAO_Endpoint (TAO_TAG_DIOP_PROFILE,
                   priority)
     , host_ ()
     , port_ (port)
@@ -55,7 +55,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const char *host,
 }
 
 TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (void)
-  : TAO_Endpoint (TAO_TAG_UDP_PROFILE),
+  : TAO_Endpoint (TAO_TAG_DIOP_PROFILE),
     host_ (),
     port_ (0),
     object_addr_ (),
@@ -67,7 +67,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (void)
 TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const char *host,
                                       CORBA::UShort port,
                                       CORBA::Short priority)
-  : TAO_Endpoint (TAO_TAG_UDP_PROFILE),
+  : TAO_Endpoint (TAO_TAG_DIOP_PROFILE),
     host_ (),
     port_ (port),
     object_addr_ (),
