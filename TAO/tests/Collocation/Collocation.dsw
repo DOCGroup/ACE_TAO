@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "Coll_Test_Skels"=.\Coll_Test_Skels.dsp - Package Owner=<4>
+Project: "Diamond"=.\Diamond.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -39,7 +39,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name Coll_Test_Skels
+    Project_Dep_Name Diamond
     End Project Dependency
 }}}
 
@@ -56,4 +56,3 @@ Package=<3>
 }}}
 
 ###############################################################################
-
