@@ -1,4 +1,9 @@
-Mon Nov 10 15:01:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Mon Nov 10 16:06:09 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/Event/Fast_Reactor.h:
+	  Added #include ace/OS_NS_sys_select.h to get ACE_OS::select
+
+Mon Nov 10 16:01:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO_IDL/util/utl_indenter.cpp:
 	  Changed order of includes to get this file compiling with BCB6
