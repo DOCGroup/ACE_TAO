@@ -1,3 +1,9 @@
+Fri Dec 17 11:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_socket.inl:
+          HPUX and VxWorks seem to have a send that accepts a const char*, so
+          removed them from the list that uses a char*
+
 Thu Dec 16 16:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Timeprobe_T.cpp:
@@ -107,7 +113,7 @@ Thu Dec 16 10:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/wrapper_macros.GNU:
           Removed setting of PACE root, we don't use this anymore
-  
+
         Thanks to Pete McCann <mccap@lucent.com> for reporting these
 	problems.
 
