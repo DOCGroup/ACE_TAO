@@ -9,18 +9,16 @@
 # You will probably need to set the following environment variables
 # or macros:
 #
+# Define your CPU:
 # CPU               powerpc (default), sparc or ...
+#
+# Define these:
 # CHTOOLS_DIR       <chorus install path>/4.0/chorus-$CPU/tools
 # NUCLEUS_DIR       <chorus install path>/4.0/chorus-$CPU/kernel
 #
+# or
 #
-# Example:
-#  The Paths file that is set up when a kernel is configured and built
-#  contains definitions for the CHTOOLS_DIR and NUCLEUS_DIR.
-#
-# -- platform_macros.GNU --
-#  include $(MERGEDIR)/Paths
-#  include $(ACE_ROOT)/include/makeinclude/platform_chorus4.x_g++.GNU
+# Define MERGEDIR to your kernel build location.
 #
 
 CHORUS = 1
@@ -35,6 +33,9 @@ static_libs = 1
 #
 # Directory where the Chorus Development System is installed
 #
+ifdef MERGEDIR
+  include $(MERGEDIR)/Paths
+endif
 ifndef CHTOOLS_DIR
   CONFIGURATION_ERROR_CHTOOLS: CHTOOLS_DIR_must_be_set!
 endif
