@@ -1,3 +1,11 @@
+Wed Apr  2 08:47:57 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/SSLIOP.mpc:
+        * orbsvcs/orbsvcs/Security.mpc:
+
+          Added requirements upon ssl, corba_messaging and interceptors for
+          these projects.
+
 Tue Apr  1 21:44:47 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Param_Test/helper.cpp (gen_wstring): Fix the evaluation of
@@ -11,10 +19,10 @@ Tue Apr  1 07:20:15 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Tue Apr  1 13:55:04 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
-	* orbsvcs/orbsvcs/ESF/ESF_Proxy_List.{h,i}:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_List.{h,i}:
 
-	  Use ACE_Unbounded_Set_Ex instead of ACE_Unbounded_Set.
-	  This fixes Bugzilla entries 1460, 1465.
+          Use ACE_Unbounded_Set_Ex instead of ACE_Unbounded_Set.
+          This fixes Bugzilla entries 1460, 1465.
 
 Tue Apr 01 12:13:33 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
