@@ -6,6 +6,8 @@ Sun Dec 26 23:45:44 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 	* QoS_Session_Impl.{cpp,h}: Replaced the
 	  ACE_LACKS_INLINE_FUNCTIONS macro with __ACE_INLINE__.
 
+	* ace/ace_dll.dsp: Added the new QoS files to the NT DLL project.
+
 Sun Dec 26 21:50:46 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	  The following existing files were changed for the ACE QoS API.
