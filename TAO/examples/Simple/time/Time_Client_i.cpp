@@ -25,7 +25,9 @@ Time_Client_i::run (char *name,
   if (client.init (name, argc, argv) == -1)
     return -1;
 
-  ACE_TRY_NEW_ENV 
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
     {
       //Make the RMI.
       CORBA::Long timedate = client->time (ACE_TRY_ENV);
