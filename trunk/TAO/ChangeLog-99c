@@ -1,3 +1,11 @@
+Sun Dec  5 14:43:42 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+	* orbsvcs/orbsvcs/IR_Helper.cpp:
+	* utils/catior/catior.cpp:
+          Removed last uses of the TAO_IOP_TAG enums, thanks to Bala and
+	  Darrell for pointing this out.
+
 Sat Dec  4 17:19:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/fe_interface_header.cpp:
