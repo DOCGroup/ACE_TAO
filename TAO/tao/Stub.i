@@ -12,19 +12,19 @@ STUB_Object::~STUB_Object (void)
   // Cleanup hint
 
   if (this->profile_in_use_ != 0) 
-  {
-    this->profile_in_use_->reset_hint ();
-    // decrease reference count on profile
-    this->profile_in_use_->_decr_refcnt ();   
-    this->profile_in_use_ = 0;
-  }
+    {
+      this->profile_in_use_->reset_hint ();
+      // decrease reference count on profile
+      this->profile_in_use_->_decr_refcnt ();   
+      this->profile_in_use_ = 0;
+    }
 
   if (this->fwd_profile_)
-  {
-    this->fwd_profile_->reset_hint ();
-    this->fwd_profile_->_decr_refcnt ();
-    this->fwd_profile_ = 0;
-  }
+    {
+      this->fwd_profile_->reset_hint ();
+      this->fwd_profile_->_decr_refcnt ();
+      this->fwd_profile_ = 0;
+    }
 
   if (fwd_profiles_)
     delete fwd_profiles_;
@@ -43,11 +43,11 @@ STUB_Object::set_profile_in_use_i (TAO_Profile *pfile)
   // Since we are actively using this profile we dont want
   // it to disappear, so increase the reference count by one!!
   if (pfile && (pfile->_incr_refcnt () == 0))
-  {
-    ACE_ERROR_RETURN ((LM_ERROR,
-                      "(%P|%t) unable to increment profile ref!\n"),
-                      0);
-  }
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        "(%P|%t) unable to increment profile ref!\n"),
+                        0);
+    }
 
   this->profile_in_use_ = pfile;
 
@@ -131,11 +131,11 @@ STUB_Object::set_fwd_profile (TAO_Profile *new_profile)
   // show that we are using this!
   // @@ could be an inline => reduce code, common
   if (new_profile && (new_profile->_incr_refcnt () == 0))
-  {
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "(%P|%t) unable to increment profile ref!\n"), 
-                       0);
-  }
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, 
+                         "(%P|%t) unable to increment profile ref!\n"), 
+                         0);
+    }
 
   this->fwd_profile_ = new_profile;
 
@@ -189,15 +189,15 @@ STUB_Object::reset_fwd_profiles (void)
 {
 
   if (fwd_profiles_)
-  {
-    // @@ Assume on one level deep FRED
-    TAO_MProfile *old = fwd_profiles_;
-    TAO_MProfile *prev = old->fwded_mprofile ();
-    // this should be base_profiles_
-    if (prev->get_current_profile ())
-      prev->get_current_profile ()->fwd_profiles (0);
-      // it better be!  this should be profile_in_use_
-  }
+    {
+      // @@ Assume on one level deep FRED
+      TAO_MProfile *old = fwd_profiles_;
+      TAO_MProfile *prev = old->fwded_mprofile ();
+      // this should be base_profiles_
+      if (prev->get_current_profile ())
+        prev->get_current_profile ()->fwd_profiles (0);
+        // it better be!  this should be profile_in_use_
+    }
     
   set_fwd_profile (0);
 }
@@ -267,16 +267,16 @@ STUB_Object::set_fwd_profiles (TAO_MProfile *mprofiles)
                        *this->profile_lock_ptr_));
   
     if (this->fwd_profiles_)
-    {
-      if (TAO_orbdebug)
-        ACE_DEBUG ((LM_DEBUG, "** Overwriting fwd profiles!\n"));
-      TAO_MProfile *old = this->fwd_profiles_;
-      TAO_MProfile *prev = old->fwded_mprofile ();
-      if (prev->get_current_profile ())
-        prev->get_current_profile ()->fwd_profiles (0);
-      // @@ FRED: UGLY but for now just one level!
-      delete this->fwd_profiles_;
-    }
+      {
+        if (TAO_orbdebug)
+          ACE_DEBUG ((LM_DEBUG, "** Overwriting fwd profiles!\n"));
+        TAO_MProfile *old = this->fwd_profiles_;
+        TAO_MProfile *prev = old->fwded_mprofile ();
+        if (prev->get_current_profile ())
+          prev->get_current_profile ()->fwd_profiles (0);
+        // @@ FRED: UGLY but for now just one level!
+        delete this->fwd_profiles_;
+      }
       
     this->fwd_profiles_ = tmp;
   

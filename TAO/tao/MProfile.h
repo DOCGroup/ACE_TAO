@@ -94,6 +94,10 @@ public:
   // Return the index of this entry or -1 if it can not be added.
   // reference count on profile in incremented!
 
+  int give_profile (TAO_Profile_ptr pfile);
+  // Return the index of this entry or -1 if it can not be added.
+  // this object assumes ownership of this profile!!
+
   void fwded_mprofile (TAO_MProfile *mprofiles);
   // Set a pointer to the profile which was forwarded.  NOTE, the
   // forwarding profile *MUST* be set at object creation.  And it can
@@ -142,5 +146,9 @@ private:
   TAO_PHandle last_;
   // Index plus 1 of last valid entry!  May be < size_
 };
+
+#if defined (__ACE_INLINE__)
+# include "tao/MProfile.i"
+#endif /* __ACE_INLINE__ */
 
 #endif // TAO_MPROFILE_H

@@ -201,10 +201,7 @@ iiop_string_to_object (const char *string,
                   STUB_Object ((char *) 0,
                                pfile),
                   CORBA::Object::_nil ());
-  // pfile refcount == 2
-
-  pfile->_decr_refcnt ();
-  // pfile refcount == 1
+  // pfile is given to STUB_Object so refcount still = 1
 
   // Create the CORBA level proxy.
   TAO_ServantBase *servant =
