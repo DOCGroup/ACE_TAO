@@ -105,10 +105,10 @@ int StubFaultAnalyzer::parse_args (int argc, char * argv[])
 /**
  * Register this object as necessary
  */
-int StubFaultAnalyzer::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
+int StubFaultAnalyzer::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
   int result = 0;
-  this->orb_ = orb;
+  this->orb_ = CORBA::ORB::_duplicate (orb);
   //////////////////////////////////////////
   // resolve reference to detector factory
   CORBA::Object_var detector_obj = this->orb_->string_to_object(this->detector_ior_);

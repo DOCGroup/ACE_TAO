@@ -786,7 +786,7 @@ TAO::FT_ReplicationManager::add_member (
   {
     // remove the original profile.  It's a dummy entry supplied by create_object.
     PortableGroup::ObjectGroup_var cleaned =
-      iorm_->remove_profiles (merged, object_group);
+      iorm_->remove_profiles (merged.in (), object_group);
     ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil());
     if (! iorm_->set_primary (&prop, member, cleaned.in () ACE_ENV_ARG_PARAMETER))
     {
@@ -815,7 +815,7 @@ TAO::FT_ReplicationManager::add_member (
   // Now we do it again using
   // our own object group collection
   TAO::PG_Object_Group * group;
-  if (this->object_group_map_.find_group (merged, group))
+  if (this->object_group_map_.find_group (merged.in (), group))
   {
     group->add_member (the_location, member ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (CORBA::Object::_nil ());
@@ -962,7 +962,7 @@ TAO::FT_ReplicationManager::create_object (
   TAO::PG_Object_Group * objectGroup;
   ACE_NEW_THROW_EX (
     objectGroup,
-    TAO::PG_Object_Group (this->orb_, oid, type_id, the_criteria),
+    TAO::PG_Object_Group (this->orb_.in (), oid, type_id, the_criteria),
     CORBA::NO_MEMORY());
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 

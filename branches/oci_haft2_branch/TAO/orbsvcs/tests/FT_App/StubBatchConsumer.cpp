@@ -40,10 +40,10 @@ PortableServer::ObjectId StubBatchConsumer::objectId()const
 /**
  * register this object
  */
-int StubBatchConsumer::init (CORBA::ORB_var & orb, ::FT::FaultNotifier_var & notifier ACE_ENV_ARG_DECL)
+int StubBatchConsumer::init (CORBA::ORB_ptr orb, ::FT::FaultNotifier_var & notifier ACE_ENV_ARG_DECL)
 {
   int result = 0;
-  this->orb_ = orb;
+  this->orb_ = CORBA::ORB::_duplicate (orb);
   this->notifier_ = notifier;
   this->identity_ = "StubBatchConsumer";
 

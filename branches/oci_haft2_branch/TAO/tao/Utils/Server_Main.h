@@ -34,7 +34,7 @@
  *      Xyzzy_i (); // null constructor
  *      ~Xyzzy_i (); // destructor
  *      int parse_args (int argc, char * argv[]);
- *      int init (TAO_ORB_Manager & orbManager ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+ *      int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL_WITH_DEFAULTS);
  *      int idle(int &result);
  *      int fini (ACE_ENV_SINGLE_ARG_DECL);
  *      const char * identity () const;

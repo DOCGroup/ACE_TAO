@@ -46,7 +46,7 @@ public:
   /**
    * Initialize.
    */
-  int init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL);
+  int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
 
   /**
    * Prepare to exit.

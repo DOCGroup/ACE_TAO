@@ -1,8 +1,36 @@
+Mon Nov 10 11:19:40 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+          Fix build errors: missing .in ()s
+
+        * tao/Utils/Server_Main.h:
+        * tao/Utils/Server_Main.cpp:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.h:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * orbsvcs/tests/FT_App/FTAPP_FactoryRegistry_Main.cpp:
+        * orbsvcs/tests/FT_App/FT_App.mpc:
+        * orbsvcs/tests/FT_App/FT_Replica.cpp:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.h:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+        * orbsvcs/tests/FT_App/StubBatchConsumer.h:
+        * orbsvcs/tests/FT_App/StubBatchConsumer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultAnalyzer.h:
+        * orbsvcs/tests/FT_App/StubFaultAnalyzer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultConsumer.h:
+        * orbsvcs/tests/FT_App/StubFaultConsumer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultNotifier.h:
+        * orbsvcs/tests/FT_App/StubFaultNotifier.cpp:
+          To avoid build errors.  Argument to init is always ORB_ptr.
+
+
 Mon Nov 10 09:13:45 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h:
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
-        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.dsp:
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
         * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
         * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.cpp:
@@ -155,9 +183,7 @@ Fri Nov  7 17:01:12 2003  Dale Wilson  <wilson_d@ociweb.com>
         * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp:
         * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.i:
         * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
-        * ../bin/MakeProjectCreator/config/fault_tolerance.mpb:
         Step three of the oci_haft merge.  Add the FaultTolerance directory.
-        Also pick up the mpb file over in $ACE_ROOT/bin/MakeProjectCreator/Config
 
 Fri Nov  7 16:19:14 2003  Dale Wilson  <wilson_d@ociweb.com>
         * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:

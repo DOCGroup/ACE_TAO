@@ -153,12 +153,12 @@ int StubFaultConsumer::parse_args (int argc, char * argv[])
 /**
  * Register this object.
  */
-int StubFaultConsumer::init (CORBA::ORB_var & orb,
+int StubFaultConsumer::init (CORBA::ORB_ptr orb,
     ::FT::FaultNotifier_var & notifier
     ACE_ENV_ARG_DECL)
 {
   int result = 0;
-  this->orb_ = orb;
+  this->orb_ = CORBA::ORB::_duplicate (orb);
   this->notifier_ = notifier;
   this->identity_ = "StubFaultConsumer";
 
