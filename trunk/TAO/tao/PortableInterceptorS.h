@@ -23,50 +23,14 @@
 #define _TAO_IDL_PORTABLEINTERCEPTORS_H_
 
 #include "ace/pre.h"
-#include "CurrentS.h"
-#include "DynamicS.h"
-#include "MessagingS.h"
-#include "PortableInterceptorC.h"
 
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/PortableServer.h"
-#include "tao/PortableServer/Servant_Base.h"
-#include "tao/PortableServer/Collocated_Object.h"
-#include "tao/PortableServer/ThruPOA_Object_Proxy_Impl.h"
-#include "tao/PortableServer/Direct_Object_Proxy_Impl.h"
-#if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option push -w-rvl -w-rch -w-ccc -w-inl
-#endif /* __BORLANDC__ */
-
-TAO_NAMESPACE  POA_PortableInterceptor
-{
-}
-TAO_NAMESPACE_CLOSE // module PortableInterceptor
-
-#include "PortableInterceptorS_T.h"
-
-#if defined (__ACE_INLINE__)
-#include "PortableInterceptorS.i"
-#endif /* defined INLINE */
-
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
-#if defined (__BORLANDC__)
-#pragma option pop
-#endif /* __BORLANDC__ */
+#include "PortableInterceptorC.h"
 
 #include "ace/post.h"
 #endif /* ifndef */

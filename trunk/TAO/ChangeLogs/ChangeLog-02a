@@ -1,3 +1,12 @@
+Tue Jan 15 13:35:07 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/PortableInterceptorS.h: 
+	  Committing the right one.
+	
+	* tests/Portable_Interceptors/ForwardRequest/Makefile: 
+	  Added -Gv to the TAO_IDLFLAGS since PortableInterceptor.pidl now
+ 	  has valuetypes.
+
 Tue Jan 15 12:33:34 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ORB_Core.cpp: 
@@ -47,6 +56,7 @@ Tue Jan 15 11:43:48 2002  Jeff Parsons <parsons@cs.wustl.edu>
           Extended Trader Constraint Language (ETCL) grammar for filter
           construction.
 
+>>>>>>> 1.4751
 Tue Jan 15 09:08:17 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp:
