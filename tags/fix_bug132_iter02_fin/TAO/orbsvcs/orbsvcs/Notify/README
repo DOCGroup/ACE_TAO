@@ -1,0 +1,70 @@
+$Id$
+
+README for the Notification Service
+-----------------------------------
+
+Implementation notes
+--------------------
+
+Here is a brief description of the MT options for the Notify Service.
+The motivation for adding these "knobs" is give the user a chance to
+fine tune his/her thread requirements in the Service at its
+bottlenecks. These bottlenecks are at filter evaluation and in the two
+way push to consumers. These are the points at which the Event Channel
+has to interact with remote objects whose implementation is unknown to
+the Event Channel. e.g. if a consumer decided to execute a tight loop
+in its push method, it would block the entire event channel if it was
+single threaded. By depllying a thread pool to perform dispatching
+events to consumers - we can alleviate this problem.
+
+[Also read the $TAO_ROOT/orbsvcs/Notify_Service/README for a proper
+description of how to specify these parameters.]
+
+-MTDispatching
+Consider a Notify service running with just one thread, namely the main.
+In this case when the event channel dispatches an event to a consumer (by
+calling its push method) all other consumers will be blocked, waiting for
+their push methods to be invoked. To decouple the consumers from one
+another we can deploy dispatching threads using this option.
+
+
+-MTListenerEval
+In the design of the Notify, all proxy suppliers are modelled as
+"listeners". i,e. they listen for events from the event manager.
+The MListenerEval option allows us to deploy a thread pool per listener
+for filter evaluation. So, if you have big or remote filters associated
+with your proxy suppliers you would want to set this option. again the
+intent is to decouple the processing time for filter evaluation from rest
+of the activities in the event channel.
+as it stands now, if you were to set this option, there would be a thread
+pool for *every* proxy supplier in the EC. what i would have liked to do 
+is to be able to set this option as a QoS property so that the thread pool
+is set programatically at run time.
+
+
+-MTSourceEval
+Similarly, this option is used to deploy a thread pool per proxy consumer
+to evaluate filters attached with it. The proxy consumers are modelled as
+event sources - supplying events to the event manager. again this will set
+a thread pool per proxy consumer.
+ 
+-MTLookup
+This option allows us to set a common thread pool for *all* proxy
+suppliers (versus a dedicated thread pool for each proxy supplier via the
+-MTDispatching option).
+
+
+Usage:
+-----
+Use the $TAO_ROOT/orbsvcs/Notify_Service to register a ChannelFactory with the
+Naming Service.See the README for more details.
+
+Examples:
+--------
+The $TAO_ROOT/orbsvcs/examples/Notify/Filter example shows how to using
+filtering.
+
+The $TAO_ROOT/orbsvcs/examples/Notify/Subscribe example shows how consumers
+can subscribe only to the required event types.
+
+send comments/suggestions to Pradeep Gore <pradeep@cs.wustl.edu>
