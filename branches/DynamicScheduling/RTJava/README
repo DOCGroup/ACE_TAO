@@ -1,0 +1,8 @@
+This directory contains a series of benchmarks for evaluating the
+RealTime JVM performance, and a series of example that are intented
+to show how certain feature of the RT Java should be used.
+
+Make sure you read the file docs/CodingStyle.txt before you start
+adding code to the repository, so that all our code can look uniform
+and it will be easier for all of us to understand and read each
+other code.

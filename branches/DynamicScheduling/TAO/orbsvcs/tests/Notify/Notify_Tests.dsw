@@ -1,0 +1,209 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "AdminProperties_Test"=.\Basic\AdminProperties_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_NotifyTests
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ConnectDisconnect"=.\Basic\ConnectDisconnect.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_NotifyTests
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Events_Test"=.\BASIC\Events_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_NotifyTests
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "IdAssignment"=.\BASIC\IdAssignment.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_NotifyTests
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "LifeCycleTest"=.\BASIC\LifeCycleTest.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_NotifyTests
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RedGreen"=".\PERFORMANCE-TESTS\REDGREEN\RedGreen.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Simple"=.\BASIC\Simple.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_NotifyTests
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Structured_Filter_Consumer"=.\Structured_Filter\Structured_Filter_Consumer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Structured_Filter_Supplier"=.\Structured_Filter\Structured_Filter_Supplier.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Structured_Multi_Filter_Consumer"=.\Structured_Multi_Filter\Structured_Multi_Filter_Consumer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Structured_Multi_Filter_Supplier"=.\Structured_Multi_Filter\Structured_Multi_Filter_Supplier.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TAO_NotifyTests DLL"=.\lib\TAO_NotifyTests.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Throughput"=".\PERFORMANCE-TESTS\THROUGHPUT\Throughput.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_NotifyTests
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Updates"=.\Basic\Updates.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_NotifyTests
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

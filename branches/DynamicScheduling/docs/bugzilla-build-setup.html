@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <!-- $Id$ -->
+  <head>
+    <title>Setting Up A Bugzilla Nightly Build</title>
+  </head>
+
+  <body text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+
+    <h1>Setting Up A Bugzilla Nightly Build</h1>
+
+    <p>
+      The
+      <a href="http://www.cs.wustl.edu/~schmidt/doc-center.html">
+	Center for Distributed Object Computing</a> has automated
+      daily builds to keep track of the progress made each day for
+      selected software and hardware platforms.
+    </p>
+
+    <h2>Unix Instructions</h2>
+
+    <p>
+      Below are the steps to take to add a platform to the current
+      platforms included in the daily builds. BUILD_NAME should be
+      replaced with the name you want to give the build (e.g.,
+      Solaris8_gcc). It can be helpful to embed the OS and the compiler
+      used in BUILD_NAME as in the example in the previous sentence
+      (i.e., Solaris8_gcc =>
+      the Solaris 8 operating system and GNU's gcc/g++ compiler).
+    </p>
+
+    <ul>
+    <li>Configure CVSROOT as it will be used in the build
+<pre>
+    $ cvs checkout ACE_wrappers
+
+    $ cd ACE_wrappers
+    $ mkdir build build/BUILD_NAME
+    $ ./bin/create_ace_build -a build/BUILD_NAME
+    $ mkdir build/BUILD_NAME/auto_compile
+    $ touch build/BUILD_NAME/auto_compile/history
+</pre>
+
+    <li>Configure build/BUILD_NAME/ace/config.h.
+    (Solaris 8 is used here as an example.)
+<pre>
+    $ echo '#include "ace/config-sunos5.8.h" > build/BUILD_NAME/ace/config.h
+</pre>
+
+    <li>Configure build/BUILD_NAME/include/makeinclude/platform_macros.GNU
+    Solaris 8 and GNU compiler is used here as an example. This example
+    also shows building without debug.
+<pre>
+    $ cd build/BUILD_NAME/include/makeinclude
+    $ echo 'include $(ACE_ROOT)/include/makeinclude/platform_sunos5_g++.GNU' > platform_macros.GNU
+    $ echo 'debug=0' >> platform_macros.GNU
+</pre>
+
+    <li>Setup build script in ~bugzilla/bin.
+    (Copy an existing build script to use as a template. Solaris 8 and GNU compiler is used here as an example.)
+<pre>
+    $ su bugzilla
+    $ cd ~/bin
+    $ cp auto_compile_sunos_gcc272 auto_compile_sunos8_gcc
+</pre>
+    Modify the new auto compile file as needed. At a minimum, CHECKOUT and
+    BUILD will need to be modified.<BR><BR>
+
+    <li>Create a cron job to run the build.
+    (Decide which machine the build should be done. Add a cron job to bugzilla's crontab.)
+<pre>
+    $ ssh -l bugzilla <i>machine_of_choice</i>
+    $ crontab -e
+    <i>Add cron job to kick off the build every day.</i>
+</pre>
+
+    <li>After the build has been running successfully a few days (not
+    necessarily that there aren't errors or warnings in the compilation or
+    execution) incorporate it into the showlog.cgi script.
+<pre>
+    $ cd ~bugzilla/.www-docs/cgi-bin
+    $ vi showlog.cgi # to include the build you're making
+</pre>
+    Modify the new auto compile file as needed. At a minimum, CHECKOUT and
+    BUILD will need to be modified.
+
+    </ul>
+
+    <h2>Win32 Instructions</h2>
+
+    <p>
+	  The Win32 builds use a different set of scripts from the Unix nightly
+	  builds.  Instructions will be provided here for them at a future 
+	  date.
+	</p>
+
+    <h2>Scoreboard</h2>
+
+    <p>
+	  The scoreboard is the web page created by <code>
+	  ACE_wrappers/bin/nightlybuilds/scoreboard_update.pl</code>.  The main 
+	  build scoreboard for the DOC Group is located at <a href=
+	  "http://tao.doc.wustl.edu/scoreboard/">
+	  http://tao.doc.wustl.edu/scoreboard/</a>.
+	</p>
+
+    <p>
+	  The <code>scoreboard_update.pl</code> works by downloading a directory 
+	  via http, determining the build that has run last, download it, and 
+	  then parse and create html documents based on it. It requires that the 
+	  builds name their logs based on the time that the log was created (both
+	  <code>auto_compile</code> and <code>prepare_log.pl</code> do this
+	  correctly).
+	</p>
+
+    <p>
+	  To integrate into the scoreboard, the following steps should be taken:
+	</p>
+
+    <ol>
+	  <li>
+	    Make the directory containing the log files accessible from the
+		internet (or at least from the machine running the scoreboard, in 
+		this case, tao.doc.wustl.edu).  This directory must be able to be
+		browsed via the web and should not require a password.
+	    <br><br>
+	  </li>
+
+	  <li>
+        Add the build to the appropriate *.lst file in the <code>
+		ACE_wrappers/bin/nightlybuilds/*.lst</code>.  The main scoreboard
+		uses builds.lst.  Each entry looks like the following:
+<pre>
+    [BUILD_NAME]
+    TYPE = TIMEONLY
+    LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/build_dir/
+    WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?build_dir
+</pre>
+        BUILD_NAME, LIST, and WEB should be updated to the appropriate values.
+        TYPE currently needs to be TIMEONLY.  LIST refers to the address 
+		needed to browse the logs directory.  WEB refers to the address 
+		used to link to the logs directory (we usually put a url to the 
+		show_log_dir.cgi script here).
+	    <br><br>
+	  </li>
+
+	  <li>
+	    Check in the *.lst file.  The scoreboard will automatically update 
+		its copy of the list before parsing it.
+	    <br><br>
+	  </li>
+	</ol>
+
+    <hr>
+    <address><a href="mailto:joeh@cs.wustl.edu">Joe Hoffert</a></address>
+<!-- Created: Thu Feb 22 10:15:58 CST 2001 -->
+<!-- hhmts start -->
+Last modified: Wed Feb 28 15:32:45 CST 2001
+<!-- hhmts end -->
+    <br>
+  </body>
+</html>

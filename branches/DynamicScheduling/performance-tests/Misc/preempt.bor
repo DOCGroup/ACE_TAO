@@ -1,0 +1,18 @@
+
+#
+# Makefile for building the preempt Misc performance-test
+#
+
+NAME = preempt
+
+OBJFILES = \
+	$(OBJDIR)\preempt.obj
+
+CPPDIR = .
+
+LIBFILES = \
+        $(ACE_LIB)
+
+CFLAGS = $(ACE_CFLAGS)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>

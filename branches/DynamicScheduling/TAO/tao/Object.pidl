@@ -1,0 +1,44 @@
+//
+// $Id$
+//
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  typedef unsigned long PolicyType;
+  interface Policy {};
+
+  typedef sequence<Policy> PolicyList;
+
+  enum SetOverrideType
+  {
+    SET_OVERRIDE,
+    ADD_OVERRIDE
+  };
+
+  exception InvalidPolicies
+  {
+    sequence<unsigned short> indices;
+  };
+
+  typedef sequence<PolicyType> PolicyTypeSeq;
+
+  interface Object
+  {
+    Policy get_policy (in PolicyType type);
+    Policy get_client_policy (in PolicyType type);
+
+    Object set_policy_overrides (
+	    in PolicyList 	policies,
+	    in SetOverrideType 	set_add)
+	raises (InvalidPolicies);
+
+    PolicyList get_policy_overrides (
+	    in PolicyTypeSeq    types);
+    boolean validate_connection (
+            out PolicyList inconsistent_policies);
+  };
+};
+
+#pragma prefix ""
