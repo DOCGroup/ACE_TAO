@@ -3,11 +3,11 @@ IORManipulation interface
 
 Run the application as follows.
 
-% run.pl
+% ./run_test.pl
 
 Comments:
 ========
 
-- The varios stages of the test are printed out.  Each
+- The various stages of the test are printed out.  Each
   generated IOR and all error conditions.  Currently
   the NotFound exception is tested for. 
