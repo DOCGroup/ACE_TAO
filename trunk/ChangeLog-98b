@@ -22,6 +22,11 @@ Fri Jun 19 22:17:35 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile: fixed build of .obj/gethrtime.o with ghs/VxWorks/i86.
 
+        * tests/run_tests.vxworks:  added Timeprobe_Test, but commented
+          out.  That test page faults when built with ghs for Pentium.
+          It appears that the STL-style iterator usage in ACE_Timeprobe
+          isn't handled properly by the compiler.
+
 Fri Jun 19 16:51:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/config-freebsd-pthread.h (ACE_HAS_NONCONST_MSGSND): Macro
