@@ -50,8 +50,9 @@ TAO_EC_Negation_Filter::filter (const RtecEventComm::EventSet& event,
     {
       this->parent ()->push (event, qos_info ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
+      return 1;
     }
-  return 1;
+  return 0;
 }
 
 int
@@ -66,8 +67,9 @@ TAO_EC_Negation_Filter::filter_nocopy (RtecEventComm::EventSet& event,
     {
       this->parent ()->push_nocopy (event, qos_info ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
+      return 1;
     }
-  return 1;
+  return 0;
 }
 
 void

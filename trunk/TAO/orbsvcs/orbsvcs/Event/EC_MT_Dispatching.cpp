@@ -43,7 +43,7 @@ TAO_EC_MT_Dispatching::activate (void)
                       " default priority\n"));
           if (this->task_.activate (THR_BOUND, this->nthreads_) == -1)
             ACE_ERROR ((LM_ERROR,
-                        "EC (%P|%t) cannot activate dispatching queue"));
+                        "EC (%P|%t) cannot activate dispatching queue.\n"));
         }
     }
 }

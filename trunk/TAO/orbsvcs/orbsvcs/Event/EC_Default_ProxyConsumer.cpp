@@ -77,8 +77,8 @@ TAO_EC_Default_ProxyPushConsumer::connect_push_supplier (
     this->qos_ = qos;
 
 #if TAO_EC_ENABLE_DEBUG_MESSAGES
-    ACE_DEBUG ((EC_FORMAT (DEBUG,
-                           "Building filter for supplier <%x>."),
+    ACE_DEBUG ((LM_DEBUG,
+                 "Building filter for supplier <%x>.",
                 this));
 #endif /* TAO_EC_ENABLED_DEBUG_MESSAGES */
     this->filter_ =
@@ -102,8 +102,6 @@ TAO_EC_Default_ProxyPushConsumer::push (const RtecEventComm::EventSet& event
   if (!ace_mon.locked ())
     return;
 
-  // No need to keep the lock, the filter_ class is supposed to be
-  // thread safe....
   ace_mon.filter->push (event, this
                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

@@ -4,63 +4,156 @@
  *
  * $Id$
  *
- * @author Carlos O'Ryan <coryan@uci.edu>
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *  @author Marina Spivak (marina@atdesk.com)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
  *
  * http://doc.ece.uci.edu/~coryan/EC/index.html
  *
+ * Define helper classes to propagate events between ECs using
+ * either UDP or multicast.
+ * The architecture is a bit complicated and deserves some
+ * explanation: sending the events over UDP (or mcast) is easy, a
+ * Consumer (TAO_ECG_UDP_Sender) subscribes for a certain set of
+ * events, its push() method marshalls the event set into a CDR
+ * stream that is sent using an ACE_SOCK_Dgram. The subscription
+ * set and IP address can be configured.
+ * Another helper class (TAO_ECG_UDP_Receiver) acts as a supplier of
+ * events; it receives a callback when an event is available on an
+ * ACE_SOCK_Dgram, it demarshalls the event and pushes it to the
+ * EC.  Two ACE_Event_Handler classes are provided that can forward
+ * the events to this Supplier: TAO_ECG_Mcast_EH can receive events
+ * from a multicast group; TAO_ECG_UDP_EH can receive events from a
+ * regular UDP socket.
+ *
+ * @todo The class makes an extra copy of the events, we need to
+ * investigate if closer collaboration with its collocated EC could
+ * be used to remove that copy.
+ *
  */
+
 #ifndef TAO_ECG_UDP_SENDER_H
 #define TAO_ECG_UDP_SENDER_H
 #include "ace/pre.h"
 
-#include "orbsvcs/RtecEventCommS.h"
-#include "orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/RtecUDPAdminC.h"
+#include "orbsvcs/RtecUDPAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ACE_INET_Addr;
+#include "orbsvcs/Event/event_export.h"
+#include "orbsvcs/RtecEventChannelAdminS.h"
+
+#include "EC_Lifetime_Utils.h"
+#include "EC_Lifetime_Utils_T.h"
+#include "ECG_CDR_Message_Sender.h"
+
 class ACE_SOCK_Dgram;
-class ACE_Message_Block;
 class TAO_ECG_UDP_Out_Endpoint;
+
+/**
+ * @class TAO_ECG_UDP_Sender_Disconnect_Command
+ *
+ * @brief Disconnects consumer represented by <proxy> from the Event Channel.
+ *
+ * Utility class for use as a template argument to TAO_EC_Auto_Command.
+ * TAO_EC_Auto_Command<TAO_ECG_UDP_Sender_Disconnect_Command> manages
+ * consumer connection to the Event Channel, automatically disconnecting from
+ * <proxy> in its destructor, if necessary.
+ */
+class TAO_RTEvent_Export TAO_ECG_UDP_Sender_Disconnect_Command
+{
+public:
+  TAO_ECG_UDP_Sender_Disconnect_Command (void);
+  TAO_ECG_UDP_Sender_Disconnect_Command (
+              RtecEventChannelAdmin::ProxyPushSupplier_ptr proxy);
+
+  TAO_ECG_UDP_Sender_Disconnect_Command (
+              const TAO_ECG_UDP_Sender_Disconnect_Command & rhs);
+
+  TAO_ECG_UDP_Sender_Disconnect_Command &
+   operator= (const TAO_ECG_UDP_Sender_Disconnect_Command & rhs);
+
+  void execute (ACE_ENV_SINGLE_ARG_DECL);
+
+private:
+
+  RtecEventChannelAdmin::ProxyPushSupplier_var proxy_;
+};
+
 
 /**
  * @class TAO_ECG_UDP_Sender
  *
  * @brief Send events received from a "local" EC using UDP.
- *
+ *        NOT THREAD-SAFE.
  * This class connect as a consumer to an EventChannel
- * and it sends the events using UDP, the UDP address can be a
- * normal IP address or it can be a multicast group.
- * The UDP address is obtained from a RtecUDPAdmin::AddrServer
- * class.
- * It marshalls the events using TAO CDR classes.
+ * and forwards the events it receives from that EC using UDP.
  *
  */
-class TAO_RTEvent_Export TAO_ECG_UDP_Sender : public POA_RtecEventComm::PushConsumer
+class TAO_RTEvent_Export TAO_ECG_UDP_Sender :
+  public virtual PortableServer::RefCountServantBase,
+  public virtual POA_RtecEventComm::PushConsumer,
+  public TAO_EC_Deactivated_Object
 {
 public:
-  TAO_ECG_UDP_Sender (void);
 
-  /// Get the local endpoint used to send the events.
-  int get_local_addr (ACE_INET_Addr& addr);
+  /// Initialization and termination methods.
+  //@{
+
+  /// Create a new TAO_ECG_UDP_Sender object.
+  /// (Constructor access is restricted to insure that all
+  /// TAO_ECG_UDP_Sender objects are heap-allocated.)
+  static TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> create (void);
+
+  ~TAO_ECG_UDP_Sender (void);
 
   /**
-   * To do its job this class requires to know the local EC it will
-   * connect to; it also requires to build an RT_Info for the local
-   * scheduler.
-   * It only keeps a copy of its SupplierProxy, used for later
-   * connection and disconnections.
-   * @todo part of the RT_Info is hardcoded, we need to make it
-   * parametric.
+   * @param lcl_ec Event Channel to which we will act as a consumer of events.
+   * @param addr_server Address server used to obtain event type to
+   *        multicast group mapping.
+   * @param endpoint Endpoint for sending udp/multicast messages.
+   *        Endpoint's dgram must be open!
+   *
+   * To insure proper resource clean up, if init () is successful,
+   * shutdown () must be called when the sender is no longer needed.
+   * This is done by disconnect_push_consumer() method.  If
+   * disconnect_push_consumer() will not be called, it is the
+   * responsibility of the user.
+   * Furthermore, if shutdown() is not explicitly called by
+   * either disconnect_push_consumer () or the user, the sender
+   * will clean up the resources in its destructor, however, certain
+   * entities involved in cleanup must still exist at that point,
+   * e.g., POA.
    */
   void init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
              RtecUDPAdmin::AddrServer_ptr addr_server,
-             TAO_ECG_UDP_Out_Endpoint *endpoint
-             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+             TAO_ECG_Refcounted_Endpoint endpoint_rptr
+             ACE_ENV_ARG_DECL);
 
+  /// Connect or reconnect to the EC with the given subscriptions.
+  /**
+   * NOTE: if we are already connected to EC and a reconnection is
+   * necessary, the EC must have reconnects enabled in order for this
+   * method to succeed.
+   */
+  void connect (const RtecEventChannelAdmin::ConsumerQOS &sub
+                ACE_ENV_ARG_DECL);
+
+  /// Deactivate from POA and disconnect from EC, if necessary.  Shut
+  /// down all sender components.
+  /**
+   * Calling this method may result in decrementing of the reference
+   * count (due to deactivation) and deletion of the object.
+   */
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  //@}
+
+  /// Accessors.
+  //@{
   /**
    * The sender may need to fragment the message, otherwise the
    * network may drop the packets.
@@ -70,90 +163,56 @@ public:
   int mtu (CORBA::ULong mtu);
   CORBA::ULong mtu (void) const;
 
-  /// Disconnect and shutdown the sender, no further connections will
-  /// work unless init() is called again.
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-
-  /// Connect (or reconnect) to the EC with the given subscriptions.
-  void open (RtecEventChannelAdmin::ConsumerQOS &sub
-             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-  /// Disconnect from the EC, but reconnection is still possible.
-  void close (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  /// Get the local endpoint used to send the events.
+  int get_local_addr (ACE_INET_Addr& addr);
+  //@}
 
   /// The PushConsumer methods.
-  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  //@{
+  /// Invokes shutdown (), which may result in the object being deleted, if
+  /// refcounting is used to manage its lifetime.
+  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void push (const RtecEventComm::EventSet &events
-                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                     ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
+  //@}
+
+protected:
+
+  /// Constructor (protected).  Clients can create new
+  /// TAO_ECG_UDP_Sender objects using the static create() method.
+  TAO_ECG_UDP_Sender (void);
 
 private:
-  /// Marshal one event
-  /**
-   * The event TTL field is adjusted during marshaling, but without
-   * performing expensive copying.
-   */
-  void marshal_one_event (const RtecEventComm::Event& e,
-                          TAO_OutputCDR &cdr
-                          ACE_ENV_ARG_DECL);
 
-  /// Helper function to marshal and send a single event.
-  void send_event (const RtecUDPAdmin::UDP_Addr& udp_addr,
-                   const RtecEventComm::Event& e
-                   ACE_ENV_ARG_DECL);
+  /// Helpers for the connect() method.
+  //@{
+  // Establishes connection to the Event Channel for the first time.
+  void new_connect (const RtecEventChannelAdmin::ConsumerQOS& sub
+                    ACE_ENV_ARG_DECL);
 
-  /// Helper function to send one or more events once they have been
-  /// marshaled into a CDR stream.
-  void send_cdr_stream (const RtecUDPAdmin::UDP_Addr& udp_addr,
-                        TAO_OutputCDR &cdr
-                        ACE_ENV_ARG_DECL);
+  // Updates existing connection to the Event Channel.
+  void reconnect (const RtecEventChannelAdmin::ConsumerQOS& sub
+                  ACE_ENV_ARG_DECL);
+  //@}
 
-  /**
-   * Send one fragment, the first entry in the iovec is used to send
-   * the header, the rest of the iovec array should contain pointers
-   * to the actual data.
-   */
-  void send_fragment (const RtecUDPAdmin::UDP_Addr& udp_addr,
-                      CORBA::ULong request_id,
-                      CORBA::ULong request_size,
-                      CORBA::ULong fragment_size,
-                      CORBA::ULong fragment_offset,
-                      CORBA::ULong fragment_id,
-                      CORBA::ULong fragment_count,
-                      iovec iov[],
-                      int iovcnt
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-  /**
-   * Count the number of fragments that will be required to send the
-   * message blocks in the range [begin,end)
-   * The maximum fragment payload (i.e. the size without the header is
-   * also required); <total_length> returns the total message size.
-   */
-  CORBA::ULong compute_fragment_count (const ACE_Message_Block* begin,
-                                       const ACE_Message_Block* end,
-                                       int iov_size,
-                                       CORBA::ULong max_fragment_payload,
-                                       CORBA::ULong& total_length);
-
-private:
-  /// The remote and the local EC, so we can reconnect when the
-  /// subscription list changes.
-  RtecEventChannelAdmin::EventChannel_var lcl_ec_;
-
-  /// We talk to the EC (as a consumer) using this proxy.
+  /// Proxy used to receive events from the Event Channel.
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
 
-  /// We query this object to determine where are the events sent.
+  /// Event Channel to which we act as a consumer.
+  RtecEventChannelAdmin::EventChannel_var lcl_ec_;
+
+  /// We query this object to determine where the events should be sent.
   RtecUDPAdmin::AddrServer_var addr_server_;
 
-  /// The datagram used to sendto(), this object is *not* owned by the
-  /// UDP_Sender.
-  TAO_ECG_UDP_Out_Endpoint *endpoint_;
+  /// Helper for fragmenting and sending cdr-encoded events using udp.
+  TAO_ECG_CDR_Message_Sender cdr_sender_;
 
-  /// The MTU for this sender...
-  CORBA::ULong mtu_;
+  typedef TAO_EC_Auto_Command<TAO_ECG_UDP_Sender_Disconnect_Command>
+  ECG_Sender_Auto_Proxy_Disconnect;
+  /// Manages our connection to Supplier Proxy.
+  ECG_Sender_Auto_Proxy_Disconnect auto_proxy_disconnect_;
 };
 
 #if defined(__ACE_INLINE__)

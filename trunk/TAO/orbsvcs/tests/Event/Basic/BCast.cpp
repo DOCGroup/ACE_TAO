@@ -3,10 +3,7 @@
 #include "BCast.h"
 #include "Consumer.h"
 #include "Supplier.h"
-#include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/Event/EC_Gateway_UDP.h"
-#include "orbsvcs/Event/ECG_UDP_Sender.h"
-#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
+#include "orbsvcs/Event/ECG_Mcast_Gateway.h"
 #include "tao/ORB_Core.h"
 #include "ace/Arg_Shifter.h"
 
@@ -77,61 +74,40 @@ EC_BCast::modify_attributes (TAO_EC_Event_Channel_Attributes&)
 void
 EC_BCast::execute_test (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_ECG_UDP_Sender sender;
-  TAO_ECG_UDP_Out_Endpoint endpoint;
-
-  ACE_INET_Addr udp_addr (this->bcast_port_, this->bcast_address_);
-
-  Simple_Address_Server address_server_impl (udp_addr);
-  RtecUDPAdmin::AddrServer_var address_server =
-    address_server_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  if (endpoint.dgram ().open (ACE_Addr::sap_any) == -1)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Cannot open send endpoint\n"));
-      return;
-    }
-
-  sender.init (this->event_channel_.in (),
-               address_server.in (),
-               &endpoint
-               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
+  // Subscription determining which EC events will get sent out on the
+  // UDP socket.
   RtecEventChannelAdmin::ConsumerQOS sub;
   int shutdown_event_type;
   this->build_consumer_qos (0, sub, shutdown_event_type ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  sender.open (sub ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  TAO_ECG_UDP_Receiver receiver;
-
-  TAO_ECG_UDP_EH udp_eh (&receiver);
-
-  ACE_Time_Value expire (0, 50000);
-  receiver.init (this->event_channel_.in (),
-                 &endpoint,
-                 address_server.in (),
-                 this->orb_->orb_core ()->reactor (),
-                 expire, 5
-                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  udp_eh.reactor (this->orb_->orb_core ()->reactor ());
-  ACE_INET_Addr local_addr (this->bcast_port_);
-  if (udp_eh.open (local_addr) == -1)
+  // Obtain UDP address in the string format for Gateway initialization.
+  char address_server_arg [256];
+  ACE_INET_Addr udp_addr;
+  if (udp_addr.set (this->bcast_port_, this->bcast_address_) == -1
+      || udp_addr.addr_to_string (address_server_arg, 256) == -1)
     {
-      ACE_DEBUG ((LM_DEBUG, "Cannot open EH %p\n"));
+      ACE_ERROR ((LM_ERROR,
+                  "%N (%l): Problems with specified UDP address\n"));
+      return;
     }
 
-  RtecEventChannelAdmin::SupplierQOS pub;
-  this->build_supplier_qos (0, pub, shutdown_event_type ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  // Set up UDP federation.
+  TAO_ECG_Mcast_Gateway::Attributes lAttributes;
+  lAttributes.address_server_type = TAO_ECG_Mcast_Gateway::ECG_ADDRESS_SERVER_BASIC;
+  lAttributes.handler_type = TAO_ECG_Mcast_Gateway::ECG_HANDLER_UDP;
+  lAttributes.service_type = TAO_ECG_Mcast_Gateway::ECG_MCAST_TWO_WAY;
 
-  receiver.open (pub ACE_ENV_ARG_PARAMETER);
+  TAO_ECG_Mcast_Gateway gateway;
+  if (gateway.init (sub,
+                    address_server_arg,
+                    lAttributes)
+      == -1)
+    return;
+
+  gateway.run (this->orb_.in (),
+               this->event_channel_.in ()
+               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (this->allocate_tasks () == -1)
@@ -151,37 +127,6 @@ EC_BCast::execute_test (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_ERROR ((LM_ERROR, "BCast (%P|%t) Thread_Manager wait failed\n"));
     }
-
-  if (udp_eh.close () == -1)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Cannot close EH %p\n"));
-    }
-
-  if (this->verbose ())
-    ACE_DEBUG ((LM_DEBUG, "BCast (%P|%t) suppliers finished\n"));
-
-  receiver.close (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  sender.close (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // @@ Deactivate all the objects...!
-
-  {
-    // Deactivate the Address Server
-    PortableServer::POA_var poa =
-      address_server_impl._default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
-    PortableServer::ObjectId_var id =
-      poa->servant_to_id (&address_server_impl ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-    poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-
-    if (this->verbose ())
-      ACE_DEBUG ((LM_DEBUG, "EC_BCast (%P|%t) address server deactivated\n"));
-  }
 }
 
 void

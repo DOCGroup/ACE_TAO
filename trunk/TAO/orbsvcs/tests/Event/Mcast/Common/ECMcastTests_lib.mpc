@@ -1,0 +1,11 @@
+project(ECMcastTests Lib): orbsvcslib {
+  sharedname = ECMcastTests
+  depends   += TAO RTEvent Svc_Utils IORTable PortableServer
+  libs      += TAO TAO_RTEvent TAO_Svc_Utils TAO_IORTable TAO_PortableServer
+  dllflags   = ECMCASTTESTS_BUILD_DLL
+  comps     += RTEvent
+
+  Header_Files {
+    ectest_export.h
+  }
+}

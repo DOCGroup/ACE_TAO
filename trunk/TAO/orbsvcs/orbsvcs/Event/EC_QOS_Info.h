@@ -36,10 +36,10 @@
 class TAO_RTEvent_Export TAO_EC_QOS_Info
 {
 public:
-  /// constructor
+  /// Constructor
   TAO_EC_QOS_Info (void);
 
-  /// copy constructor, it does the obvious thing, but if it is not
+  /// Copy constructor, it does the obvious thing, but if it is not
   /// here the HP/aCC compiler breaks.
   TAO_EC_QOS_Info (const TAO_EC_QOS_Info &rhs);
 

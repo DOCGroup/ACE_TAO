@@ -1,3 +1,365 @@
+Wed Jun 18 06:39:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          Below an detail overview of all RTEC changes. The changes are made by
+          Carlos O'Ryan <coryan@atdesk.com>, Marina Spivak <marina@cs.wustl.edu>
+          and Jason Smith <jason@atdesk.com>. We have integrated all these
+          changes back into the repo and will make sure that it builds and works
+          using all different compilers.
+
+        * orbsvcs/orbsvcs/Event/ECG_Adapters.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Adapters.h:
+        * orbsvcs/orbsvcs/Event/ECG_Address_Server_Base.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Address_Server_Base.h:
+        * orbsvcs/orbsvcs/Event/ECG_Address_Server_Base.i:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.h:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.i:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.h:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.i:
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.h:
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.i:
+        * orbsvcs/orbsvcs/Event/ECG_Defaults.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.i:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Address_Server.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Address_Server.h:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Address_Server.i:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.h:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.i:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_EH.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_EH.i:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.i:
+        * orbsvcs/orbsvcs/Event/EC_Channel_Destroyer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Channel_Destroyer.h:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils.h:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils.i:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.h:
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.i:
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Disconnector.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Disconnector.h:
+          Added all these files. See below for details
+
+        * orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.i:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.inl:
+        * orbsvcs/orbsvcs/Event/EC_MT_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Negation_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_ProxyConsumer.h:
+          Modified all these files. See below for details
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp
+          Removed these files
+
+          The detailed changes. Changes are listed from recent to old and all
+          together are now migrated into the main repo.
+
+        * orbsvcs/orbsvcs/Event/ECG_Defaults.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.i:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+          Add new attribute to control if the gateway uses blocking or
+          non-blocking UDP sockets.
+
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp:
+          If the send() call returns with -1/EWOULDBLOCK simply report the
+          failure, do not raise exceptions that cause a disconnection.
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h:
+          In short, changed the class to use a dedicated socket for each
+          multicast subscription.
+
+        * orbsvcs/orbsvcs/Event/EC_Negation_Filter.cpp (filter):
+          Was always returning 1, resulting in not filtering any events
+          out. Fixed.
+
+        * orbsvcs/tests/Event/Mcast/Common/EC_Wrapper.cpp:
+          Enabled "consumer_reconnect" event channel attributes, so the
+          feature is enabled when test clients need it.
+
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+          Made the receiver a little more paranoid about the messages it
+          accepts.  Basically we reject messages whose 'byte_order' field
+          is neither 0 nor 1 (i.e. things like 71 or 42 are rejected when
+          they used to be accepted).  We also inject some magic numbers
+          ('ABC') in the padding bytes after the byte order field, so the
+          receiver can check for those too.
+          This was all motivated by an unexplained crash where the stack
+          trace revealed some out of range numbers in incoming data,
+          though the strangeness does not explain the crash.
+
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.h:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.i:
+          Reimplemented to optimize for non-fragmented multicast messages
+          and to make the logic easier to follow and maintain.
+          Non-fragmented messages now incur 0 data copies and 0 memory
+          allocations.  Also, we no longer use reactor timers to
+          expire incomplete messages.  Instead, we purge messages
+          whenever we run out of space in internal structures.
+
+          Instead of using a hash map indexed by address+request_id,
+          we now use a hash map indexed by address, where each entry
+          is an array, used in circular fashion, indexed by
+          request_id.  See source files for more details.
+
+        * orbsvcs/orbsvcs/Event/ECG_Defaults.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.i:
+          Removed -ECGFragmentTimeoutPeriod and
+          -ECGFragmentTimeoutNumber options and related code since we
+          no longer use timeouts.
+
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h:
+          Removed timeout period and timeout number multicast options
+          related code since we no longer use timeouts to expire
+          messages.
+
+          Updated to reflect minor interface changes in ECG_CDR_Message_Receiver.
+
+          Corrected error handling code: log all errors, but do not
+          return -1 in handle_input(), since this would deregister the
+          handler from reactor and put the object into a useless state.
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.i:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+          Re-order fields to make the Attributes structure, the init()
+          arguments, and their declarations consistent.
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+          Enable non-blocking I/O for the incoming UDP multicast
+          sockets. I ran into a dead-lock situation without this flag.
+
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils.h
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils.i:
+        * orbsvcs/orbsvcs/Event/EC_Channel_Destroyer.cpp
+        * orbsvcs/orbsvcs/Event/EC_Channel_Destroyer.h:
+          Utility for auto-destroying Event Channel.
+
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Disconnector.cpp
+        * orbsvcs/orbsvcs/Event/EC_Proxy_Disconnector.h:
+          Utility for autodisconnecting proxies from Event Channel.
+
+        * orbsvcs/orbsvcs/Event/ECG_Defaults.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.i:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+          Changed the init() methods to receive a single
+          TAO_ECG_Mcast_Gateway::Attributes structure.  It is easier to
+          add more attributes this way, and applications do not need to
+          know all the default values to change just one attribute.
+          Add support to disable the IP_MULTICAST_LOOP flag.
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h
+        * orbsvcs/orbsvcs/Event/ECG_UDP_EH.cpp
+        * orbsvcs/orbsvcs/Event/ECG_UDP_EH.h
+        * orbsvcs/orbsvcs/Event/ECG_UDP_EH.i:
+          Updated UDP handler to follow Mcast handlers in
+          interface/behavior.  Updated ECG_Mcast_Gateway so it can be
+          configured to use a UDP handler.
+
+        * orbsvcs/tests/Event/Mcast/Simple/README
+        * orbsvcs/tests/Event/Mcast/Simple/run_test.pl
+        * orbsvcs/tests/Event/Mcast/Simple/udp-consumer-ec.conf
+        * orbsvcs/tests/Event/Mcast/Simple/udp-supplier-ec.conf:
+          Added a test for federating Event Channels using UDP handler and
+          ECG_Mcast_Gateway wrapper.
+
+        * orbsvcs/orbsvcs/Event/ECG_Defaults.h
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.i
+          Added init() method to ECG_Mcast_Gateway, which allows to
+          configure the gateway programatically (without using config
+          files).
+
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Address_Server.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Address_Server.h
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Address_Server.i:
+          The most primitive implementation of the
+          RtecUDPAdmin::AddrServer interface: address server always
+          returns the same address it was initialized with.
+
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.h
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.i:
+          Implementation of RtecUDPAdmin::AddrServer idl interface, which
+          returns a different multicast address based on event source (or
+          event type - depending on how the server is configured).  String
+          provided at server initialization specifies type to address
+          mappings.
+
+        * orbsvcs/orbsvcs/Event/ECG_Address_Server_Base.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Address_Server_Base.h
+        * orbsvcs/orbsvcs/Event/ECG_Address_Server_Base.i:
+          Common abstract base class for various implementations of
+          RtecUDPAdmin::AddrServer interface.  The primary goal of this
+          ABC is to provide a common way to initialize all Address Server
+          implementations.
+
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.i
+        * orbsvcs/orbsvcs/Event/ECG_Defaults.h:
+          Wrapper for setting up multicast-federated Event Channel.
+          Can be configured through service conf. file.  See .h file for
+          all the valid options.
+
+        * orbsvcs/orbsvcs/Event/ECG_Adapters.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Adapters.h:
+          Define interfaces that Receivers and handler can use to
+          communicate with each other.  Use of these interfaces eliminates
+          the coupling of specific Receivers on specific handlers, and
+          vice versa.
+
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.h
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.i
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.h
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.i
+        * orbsvcs/orbsvcs/Event/ECG_Default_Dgram_Handler.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Default_Dgram_Handler.h
+        * orbsvcs/orbsvcs/Event/ECG_Default_Dgram_Handler.i
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.h
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.i
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.h
+        * orbsvcs/orbsvcs/Event/ECG_UDP_EH.cpp
+        * orbsvcs/orbsvcs/Event/ECG_UDP_EH.h
+        * orbsvcs/orbsvcs/Event/ECG_UDP_EH.i
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.i
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Sender.i:
+          EC_Gateway_UDP.* was removed, and its functionality split into
+          ECG_UDP_Sender.* and ECG_UDP_Receiver.*
+
+          Documented/updated documentation for all of the classes in this
+          checkin.
+
+          Changed how lifetime management and shutdown cleanup is done for
+          the above classes:
+          - Classes implementing idl interfaces derive from RefCounted
+          Servant Base - their lifetime is managed by POA
+          - Heap allocation is forced through named constructor idiom
+          - Classes that use these servants use type-safe Servant_vars
+          - Deactivators and auto-disconnect and auto-shutdown objects are
+          used throughout to insure proper object cleanup.
+
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.cpp
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.h
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.i:
+          Endpoint destructor now closes underlying dgram.
+
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.cpp
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.h:
+          Added deactivate_consumer_admin() and
+          deactivate_supplier_admin() helpers.  Unlike previous code,
+          these helpers ignore exceptions thrown during deactivation.  As
+          we migrate Event Channel servants to use refcounting and have
+          their lifetimes managed by POAs, it is possible that admins will
+          be deactivated before Event Channel servant, hence we should be
+          able to not choke up on exceptions in such a case.
+
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils.cpp
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils.h
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils.i
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.cpp
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.h
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.i:
+          These files are a temporary location for general CORBA
+          application utilities, e.g., Object Deactivator, ORB Holder,
+          type-safe Servant_Var, etc.  These utilities will be moved into
+          tao lib. Some are already moved and the Event code will be cleaned
+          up a little later.
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.h
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.i
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.h
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.i:
+          Factored out code for breaking up a CDR message into fragments
+          and sending each fragment with its own header from
+          TAO_ECG_UDP_Sender into a separate TAO_ECG_CDR_Message_Sender class.
+
+          Factored out code for receiving and assembling multicast message
+          fragments TAO_ECG_UDP_Receiver into a separate
+          TAO_ECG_CDR_Message_Receiver class.
+
+          This restructuring allows better reuse of the
+          fragmentation/assembly logic encapsulated into ECG_CDR_Message*
+          classes.
+
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.h
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.cpp
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.i:
+          Added implementation for a simplest possible multicast event
+          handler.  It subscribes to a single prespecified multicast
+          group using one socket and does not observe subscription changes
+          in the Event Channel.  Useful for setups where multicast traffic
+          is _not_ separated into different multicast groups.
+
+        * orbsvcs/tests/Event/Mcast/Common/*.{h,cpp,i}:
+        * orbsvcs/tests/Event/Mcast/Complex/*.{h,cpp,i}:
+        * orbsvcs/tests/Event/Mcast/Simple/*.{h,cpp,i}:
+        * orbsvcs/tests/Event/Mcast/Two_Way/*.{h,cpp,i}:
+          Added new RTEvent tests for the Mcast based federations.
+
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.h:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.i:
+        * orbsvcs/tests/Event/Basic/BCast.cpp:
+        * orbsvcs/examples/RtEC/MCast/MCast.cpp:
+          Updated these files because of all RTEC changes
+
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+        * orbsvcs/orbsvcs/RTEvent.bor:
+        * orbsvcs/orbsvcs/RTEvent.mpc:
+        * orbsvcs/orbsvcs/RTEvent.dsp:
+        * orbsvcs/orbsvcs/RTEvent_Static.dsp:
+          Updated to reflect all changes
+
 Tue Jun 17 18:31:31 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	From Terry Lacy <terry.lacy@thomson.net>
@@ -152,7 +514,7 @@ Tue Jun 17 09:56:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           - Fixed bug in code generation for sequences of managed
             types, when the managed type is declared in different
-            module than the sequence. Thanks to Huang-Ming Huang 
+            module than the sequence. Thanks to Huang-Ming Huang
             <hh1@cse.wustl.edu> for reporting the bug.
 
 	  - Added infrastructure to store and pass a default

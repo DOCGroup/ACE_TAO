@@ -7,9 +7,9 @@
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
-#include "orbsvcs/Event/EC_Gateway_UDP.h"
 #include "orbsvcs/Event/ECG_Mcast_EH.h"
 #include "orbsvcs/Event/ECG_UDP_Sender.h"
+#include "orbsvcs/Event/ECG_UDP_Receiver.h"
 #include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
@@ -154,11 +154,11 @@ main (int argc, char* argv[])
         }
 
       // Now we setup the sender:
-      TAO_ECG_UDP_Sender sender;
-      sender.init (event_channel.in (),
-                   address_server.in (),
-                   &endpoint
-                   ACE_ENV_ARG_PARAMETER);
+      TAO_EC_Servant_Var<TAO_ECG_UDP_Sender> sender = TAO_ECG_UDP_Sender::create();
+      sender->init (event_channel.in (),
+                    address_server.in (),
+                    &endpoint
+                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Now we connect the sender as a consumer of events, it will
@@ -173,12 +173,12 @@ main (int argc, char* argv[])
       sub.dependencies[0].event.header.source =
         ACE_ES_EVENT_SOURCE_ANY; // Any source is OK
 
-      sender.open (sub ACE_ENV_ARG_PARAMETER);
+      sender->connect (sub ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // To receive events we need to setup an event handler:
-      TAO_ECG_UDP_Receiver receiver;
-      TAO_ECG_Mcast_EH mcast_eh (&receiver);
+      TAO_EC_Servant_Var<TAO_ECG_UDP_Receiver> receiver = TAO_ECG_UDP_Receiver::create();
+      TAO_ECG_Mcast_EH mcast_eh (&(*receiver));
 
       // The event handler uses the ORB reactor to wait for multicast
       // traffic:
@@ -190,32 +190,17 @@ main (int argc, char* argv[])
       // required by all the local consumer.
       // Then it register for the multicast groups that carry those
       // events:
-      int r = mcast_eh.open (event_channel.in ()
+      mcast_eh.open (event_channel.in ()
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      if (r == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR, "Cannot open EH %p\n"), 1);
-        }
-
-      // Big events have to be fragmented when sent using multicast.
-      // The receiver periodically checks the status of the fragments,
-      // using the following timer.
-      // If after <max_expiration_count> iterations the complete
-      // message has not been received it is dropped:
-      ACE_Time_Value expire (0, 50000);
-      const int max_expiration_count = 5;
-
+      
       // Again the receiver connects to the event channel as a
       // supplier of events, using the Observer features to detect
       // local consumers and their interests:
-      receiver.init (event_channel.in (),
-                     &endpoint,
-                     address_server.in (),
-                     orb->orb_core ()->reactor (),
-                     expire,
-                     max_expiration_count
-                     ACE_ENV_ARG_PARAMETER);
+      receiver->init (event_channel.in (),
+                      &endpoint,
+                      address_server.in ()
+                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // The Receiver is also a supplier of events.  The exact type of
@@ -235,7 +220,7 @@ main (int argc, char* argv[])
       pub.publications[0].event.header.source = ACE_ES_EVENT_SOURCE_ANY;
       pub.is_gateway = 1;
 
-      receiver.open (pub ACE_ENV_ARG_PARAMETER);
+      receiver->connect (pub ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // **************** THAT COMPLETES THE FEDERATION SETUP
@@ -300,10 +285,10 @@ main (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       // Now let us close the Receiver
-      receiver.close (ACE_ENV_SINGLE_ARG_PARAMETER);
+      receiver->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      r = mcast_eh.close (ACE_ENV_SINGLE_ARG_PARAMETER);
+      int r = mcast_eh.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (r == -1)
         {
@@ -312,7 +297,7 @@ main (int argc, char* argv[])
         }
 
       // And also close the sender of events
-      sender.close (ACE_ENV_SINGLE_ARG_PARAMETER);
+      sender->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // The event channel must be destroyed, so it can release its

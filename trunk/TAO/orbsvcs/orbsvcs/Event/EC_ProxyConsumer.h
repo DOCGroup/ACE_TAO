@@ -65,7 +65,7 @@ public:
   virtual void activate (
           RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy
           ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   /// Deactivate from the POA
   virtual void deactivate (ACE_ENV_SINGLE_ARG_DECL);

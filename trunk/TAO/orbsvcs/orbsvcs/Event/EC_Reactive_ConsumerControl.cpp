@@ -51,6 +51,14 @@ TAO_EC_Reactive_ConsumerControl::handle_timeout (
       const ACE_Time_Value &,
       const void *)
 {
+  // NOTE, setting RELATIVE_RT_TIMEOUT_POLICY for the duration of
+  // query_consumers () below has greater impact than desired.  For
+  // example, while we are pinging consumers here, a nested upcall,
+  // which requires making remote calls may come into the ORB.  Those
+  // remote calls will be carried out with with
+  // RELATIVE_RT_TIMEOUT_POLICY set here in effect.
+
+  // @@ TODO: should use Guard to set and reset policies.
   ACE_TRY_NEW_ENV
     {
       // Query the state of the Current object *before* we initiate

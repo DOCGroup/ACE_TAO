@@ -38,6 +38,16 @@ class TAO_EC_Reactive_SupplierControl;
  * The Reactive SupplierControl strategy uses the reactor to
  * periodically wakeup and verify the state of the suppliers
  * registered with the Event Channel.
+ *
+ * @todo Marina Spivak made the following observation: these classes
+ * and implementation seem nearly identical to those in
+ * EC_Reactive_ConsumerControl.*  The only differences are using
+ * consumer_admin collection vs supplier_admin, and calling
+ * disconnect_push_consumer vs disconnect_push_supplier ...  Seems
+ * like it may be a good idea to change some naming and templatize...
+ * @todo The same templates should be used for the Notification and
+ * COS Event services.
+ *
  */
 class TAO_RTEvent_Export TAO_EC_SupplierControl_Adapter : public ACE_Event_Handler
 {

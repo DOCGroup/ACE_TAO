@@ -6,6 +6,7 @@
  *
  * @author Carlos O'Ryan <coryan@uci.edu>
  * @author Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
+ * @author Marina Spivak <marina@atdesk.com>
  * @author Don Hinton <dhinton@ieee.org>
  *
  * http://doc.ece.uci.edu/~coryan/EC/index.html
@@ -15,126 +16,107 @@
 #define TAO_ECG_MCAST_EH_H
 #include "ace/pre.h"
 
-#include "orbsvcs/Event/event_export.h"
+#include "orbsvcs/RtecEventChannelAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/RtecEventChannelAdminS.h"
 #include "ace/Event_Handler.h"
-#include "ace/Hash_Map_Manager.h"
 #include "ace/Array_Base.h"
 #include "ace/SOCK_Dgram_Mcast.h"
-#include "ace/Synch.h"
-#include "ace/Atomic_Op.h"
-#include "tao/Synch_Refcountable.h"
 
-/**
- * @class TAO_ECG_Mcast_Socket
- *
- * @brief Refcounted wrapper for ACE_SOCK_Dgram_Mcast
- *
- * This class is a simple refcounted wrapper around ACE_SOCK_Dgram_Mcast that
- * makes takes care of deleting itself if the refcount drops to zero.
- */
-class TAO_RTEvent_Export TAO_ECG_Mcast_Socket :
-  public ACE_SOCK_Dgram_Mcast, private TAO_Synch_Refcountable
-{
-public:
-  /// Default Constructor
-  TAO_ECG_Mcast_Socket (ACE_SOCK_Dgram_Mcast::options opts =
-                          ACE_SOCK_Dgram_Mcast::DEFOPTS,
-                        ACE_Lock *lock = 0);
-
-  int increment (void);
-  int decrement (void);
-  int refcount (void) const;
-
-private:
-  /// We need a friend so that we have a private dtor>
-  friend class ACE_SOCK_Dgram_Mcast;
-
-  /// Destructor.  Force it on the Heap, so we can call delete this in
-  /// decrement().
-  ~TAO_ECG_Mcast_Socket (void);
-};
-
-class TAO_ECG_UDP_Receiver;
+#include "orbsvcs/Event/event_export.h"
+#include "orbsvcs/Event/ECG_Adapters.h"
+#include "EC_Lifetime_Utils.h"
+#include "EC_Lifetime_Utils_T.h"
 
 /**
  * @class TAO_ECG_Mcast_EH
  *
- * @brief Event Handler for UDP messages.
+ * @brief Event Handler for Mcast messages.
+ *        NOT THREAD-SAFE.
  *
- * This object receives callbacks from the Reactor when data is
- * available on the mcast socket, it forwards to the UDP_Receive
- * gateway which reads the events and transform it into an event.
+ * This object acts as an Observer to Event Channel.  It subscribes to
+ * multicast groups that carry events matching the EC's subscriptions.
+ * This object then receives callbacks from the Reactor when data is
+ * available on the mcast sockets and alerts TAO_ECG_Dgram_Handler,
+ * which reads the data, transforms it into event and pushes to the
+ * Event Channel.
  */
-class TAO_RTEvent_Export TAO_ECG_Mcast_EH : public ACE_Event_Handler
+class TAO_RTEvent_Export TAO_ECG_Mcast_EH :
+  public ACE_Event_Handler,
+  public TAO_ECG_Handler_Shutdown
 {
 public:
-  /**
-   * Constructor, the messages received by this EH are forwarded to
-   * the <recv>.
-   * It is possible to select the NIC where the multicast messages are
-   * expected using <net_if>
-   */
-  TAO_ECG_Mcast_EH (TAO_ECG_UDP_Receiver *recv,
-                    const ACE_TCHAR *net_if = 0,
-                    ACE_Lock *lock = 0);
 
-  /// Destructor
+  /// Initialization and termination methods.
+  //@{
+  /**
+   * Constructor.  Messages received by this EH will be forwarded to
+   * the \a recv.  \a net_if can be used to specify NIC where multicast
+   * messages are expected.
+   *
+   * See comments for receiver_ data member on why raw pointer is
+   * used for the \a recv argument.
+   */
+  TAO_ECG_Mcast_EH (TAO_ECG_Dgram_Handler *recv,
+                    const ACE_TCHAR *net_if = 0);
+
+  /// Destructor.
   virtual ~TAO_ECG_Mcast_EH (void);
 
   /**
    * Register for changes in the EC subscription list.
    * When the subscription list becomes non-empty we join the proper
-   * multicast groups (using the receiver to translate between event
+   * multicast groups (using Dgram_Handler to translate between event
    * types and mcast groups) and the class registers itself with the
    * reactor.
+   *
+   * To insure proper resource clean up, if open () is successful,
+   * the user MUST call shutdown () when handler is no longer needed
+   * (and its reactor still exists).
    */
-  int open (RtecEventChannelAdmin::EventChannel_ptr ec
-            ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  void open (RtecEventChannelAdmin::EventChannel_ptr ec
+             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
+  /// TAO_ECG_Handler_Shutdown method.
   /**
    * Remove ourselves from the event channel, unsubscribe from the
-   * multicast groups, close the sockets and unsubscribe from the
+   * multicast groups, close the sockets and deregister from the
    * reactor.
    */
-  int close (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual int shutdown (void);
+  //@}
 
-  /// Reactor callbacks
-  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  /// Reactor callback.  Notify receiver_ that a dgram corresponding
+  /// to \a fd is ready for reading.
+  virtual int handle_input (ACE_HANDLE fd);
 
-  /// The Observer methods
-  void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+private:
 
   /**
    * @class Observer
    *
-   * @brief Observe changes in the EC subscriptions.
-   *
-   * As the subscriptions on the EC change we also change the
-   * mcast groups that we join.
-   * We could use the TIE classes, but they don't work in all
-   * compilers.
+   * @brief Observes changes in the EC consumer subscriptions and notifies
+   *        TAO_ECG_Mcast_EH  when there are changes.
    */
-
-  class Observer
-    : public POA_RtecEventChannelAdmin::Observer
+  class Observer :
+    public virtual POA_RtecEventChannelAdmin::Observer,
+    public virtual PortableServer::RefCountServantBase,
+    public TAO_EC_Deactivated_Object
   {
   public:
-    /// We report changes in the EC subscriptions to the event
-    /// handler.
+    /// Constructor.  Changes in the EC subscriptions will be reported
+    /// to the \a eh.
     Observer (TAO_ECG_Mcast_EH* eh);
 
-    // The Observer methods
+    /// Shut down the observer: disconnect from EC and deactivate from
+    /// POA.
+    void shutdown (void);
+
+    /// Event Channel Observer methods
+    //@{
     virtual void update_consumer (
         const RtecEventChannelAdmin::ConsumerQOS& sub
         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -145,100 +127,132 @@ public:
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
-    /// Our callback object.
+    /// Handler we notify of subscriptions changes.
+    /*
+     * Observer can keep a raw pointer to mcast handler, because the handler
+     * guarantees to notify the observer (by calling shutdown ())
+     * before going away.
+     */
     TAO_ECG_Mcast_EH *eh_;
   };
 
-private:
-  /// Find the socket mapped to a particular fd.  find() holds a lock and calls
-  /// increment () on the socket, if found, and returns a pointer to it.
-  TAO_ECG_Mcast_Socket *find (ACE_HANDLE fd);
+  /// Make update_consumer () accessible to Observer.
+  friend class Observer;
+
+  /// The Observer method.  Subscribe/unsubscribe to multicast groups
+  /// according to changes in consumer subscriptions.
+  void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub
+                        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
 
   typedef ACE_Unbounded_Set<ACE_INET_Addr> Address_Set;
 
+  /// Helpers for updating multicast subscriptions based on changes in
+  /// consumer subscriptions.
+  //@{
   /// Compute the list of multicast addresses that we need to be
   /// subscribed to, in order to receive the events described in the
   /// ConsumerQOS parameter.
   /**
    * @param sub The list of event types that our event channel
-   *        consumers are interested into.
-   * @param multicast_addresses Returns the list of multicast
-   *        addresses that we need to subscribe to.
-   * @param env Used to raise CORBA exceptions when there is no
-   *        support for native C++ exceptions.
+   *        consumers are interested in.
+   * @param multicast_addresses This method populates this list with
+   *        multicast addresses that we need to be subscribed to in
+   *        order to receive event types specified in /a sub.
    *
    * @throw CORBA::SystemException This method needs to perform
-   *        several CORBA invocations and propagates any exceptions
+   *        several CORBA invocations, and it propagates any exceptions
    *        back to the caller.
    */
-
   void compute_required_subscriptions (
         const RtecEventChannelAdmin::ConsumerQOS& sub,
               Address_Set& multicast_addresses
               ACE_ENV_ARG_DECL)
               ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Delete the list of multicast addresses that we need not
-  /// subscribe to, in order to receive the events described in the
-  /// ConsumerQOS parameter.
+  /// Unsubscribe from any multicast addresses we are currently
+  /// subscribed to that are not in the \a multicast_addresses list.
+  /// Also remove from /a multicast_addresses any addresses to which we are
+  /// already subscribed.
   /**
-   * @param multicast_addresses Returns the list of multicast
-   *        addresses that we need to subscribe to.
+   * @param multicast_addresses List of multicast
+   *        addresses we need to be subscribed to in order receive all
+   *        event types in the current consumer subscriptions.
    */
-
   int delete_unwanted_subscriptions (
               Address_Set& multicast_addresses);
 
-  /// Add the list of new multicast addresses that we need to
-  /// subscribe to, in order to receive the events described in the
-  /// ConsumerQOS parameter.
+  /// Subscribe to all multicast addresses in /a multicast_addresses -
+  /// we are not subscribed to them yet, but need to be.
   /**
-   * @param multicast_addresses Returns the list of multicast
-   *        addresses that we need to subscribe to.
+   * @param multicast_addresses List of multicast addresses to which
+   *        we need to subscribe to in order to be receiving all event
+   *        types in the current consumer subscriptions.
    */
-
   void add_new_subscriptions (
               Address_Set& multicast_addresses);
+  //@}
 
-  /// Subscribe an existing socket to a multicast group.
   /**
-   * @param multicast_group Returns the multicast
-   *        address that we need to subscribe to.
+   * @class Observer_Disconnect_Command
+   *
+   * @brief Disconnects Observer from the Event Channel
+   *
+   * Utility class for use as a template argument to TAO_EC_Auto_Command.
+   * TAO_EC_Auto_Command<Observer_Disconnect_Command> manages
+   * observer connection to the Event Channel, automatically
+   * disconnecting from ec in its destructor, if necessary.
    */
-  int subscribe_to_existing_socket (ACE_INET_Addr& multicast_group);
+  class TAO_RTEvent_Export Observer_Disconnect_Command
+  {
+  public:
+    Observer_Disconnect_Command (void);
+    Observer_Disconnect_Command (RtecEventChannelAdmin::Observer_Handle handle,
+                                 RtecEventChannelAdmin::EventChannel_ptr ec);
 
-  /// Subscribe a new socket to a multicast group.
-  /**
-   * @param multicast_group Returns the multicast
-   *        address that we need to subscribe to.
-   */
-  void subscribe_to_new_socket (ACE_INET_Addr& multicast_group);
+    Observer_Disconnect_Command (const Observer_Disconnect_Command &rhs);
+    Observer_Disconnect_Command & operator= (const Observer_Disconnect_Command & rhs);
+
+    void execute (ACE_ENV_SINGLE_ARG_DECL);
+
+  private:
+
+    RtecEventChannelAdmin::Observer_Handle handle_;
+    RtecEventChannelAdmin::EventChannel_var ec_;
+  };
 
 private:
-  /// The NIC name used to subscribe for multicast traffic.
+  /// The NIC used to subscribe for multicast traffic.
   ACE_TCHAR *net_if_;
 
-  /// Define the collection used to keep the iterator
-  typedef ACE_Hash_Map_Manager<ACE_INET_Addr, TAO_ECG_Mcast_Socket *, ACE_Null_Mutex>
-          Subscriptions_Map;
-  typedef ACE_Hash_Map_Iterator<ACE_INET_Addr, TAO_ECG_Mcast_Socket *, ACE_Null_Mutex>
-          Subscriptions_Iterator;
+  typedef struct {
+    ACE_INET_Addr mcast_addr;
+    ACE_SOCK_Dgram_Mcast* dgram;
+  } Subscription;
+  typedef ACE_Array_Base<Subscription> Subscriptions;
 
-  /// Map of multicast address to sockets, used to manage the subscription
-  /// to multicast address by the update_{consumer|supplier} () methods.
-  Subscriptions_Map subscriptions_;
-
-  typedef ACE_Hash_Map_Manager<ACE_HANDLE, TAO_ECG_Mcast_Socket *, ACE_Null_Mutex>
-          Handle_Map;
-  typedef ACE_Hash_Map_Iterator<ACE_HANDLE, TAO_ECG_Mcast_Socket *, ACE_Null_Mutex>
-          Handle_Iterator;
-
-  /// Map of ACE_HANDLEs to sockets.  Used to find the appropriate socket in
-  /// calls to handle_input ().
-  Handle_Map handles_;
-
-  /// The lock used to protect the lists.
-  ACE_Lock *lock_;
+  /// List of multicast addresses we subscribe to and dgrams we use.
+  /*
+   * We use a dedicated socket for each multicast subscription.  The
+   * reason: we assume the underlying software, i.e., ACE, binds each
+   * socket used to receive multicast to the multicast group (mcast addr
+   * + port) to avoid receiving promiscuous traffic, in which case it is
+   * not possible to subscribe to more than one mcast address on the same
+   * socket.  For a detailed description of multicast subscription and
+   * promiscuous traffic issues please see
+   * http://nexus.atdesk.com/bugzilla/show_bug.cgi?id=166
+   *
+   * Performance.  We use array to store subscriptions (mcast addr / dgram
+   * pairs).  If performance is not adequate, we should look into
+   * using a hash map, keyed on file descriptors, instead.  When there
+   * are many subscriptions, handle_input() is likely to be more
+   * efficient with a hash lookup than an array iteration for locating a
+   * target dgram.  Difference in costs of subscripton changes between
+   * hash map and array would need to be looked at as well, although
+   * it is probably highly dependent on the pattern of changes.
+   */
+  Subscriptions subscriptions_;
 
   /// We callback to this object when a message arrives.
   /*
@@ -250,17 +264,16 @@ private:
    * here to avoid a circular refcounting dependency between
    * receiver and handler.
    */
-  TAO_ECG_UDP_Receiver* receiver_;
+  TAO_ECG_Dgram_Handler * receiver_;
 
-  /// This object will call us back when the subscription list
-  /// changes.
-  Observer observer_;
+  /// Event Channel Observer.  Detects changes in EC consumer subscriptions.
+  /// ORDER DEPENDENCY: this member should be declared before
+  /// <auto_observer_disconnect_>.
+  TAO_EC_Servant_Var<Observer> observer_;
 
-  /// Keep the handle of the observer so we can unregister later.
-  RtecEventChannelAdmin::Observer_Handle handle_;
-
-  /// The Event Channel.
-  RtecEventChannelAdmin::EventChannel_var ec_;
+  /// Manages connection of our observer to the Event Channel.
+  /// ORDER DEPENDENCY: this member should be declared AFTER <observer_>.
+  TAO_EC_Auto_Command<Observer_Disconnect_Command> auto_observer_disconnect_;
 };
 
 #if defined(__ACE_INLINE__)

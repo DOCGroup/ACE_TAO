@@ -44,7 +44,7 @@ public:
   /// Destructor...
   virtual ~TAO_EC_Default_ProxyPushConsumer (void);
 
-  void activate (
+ virtual void activate (
      RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy
      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));

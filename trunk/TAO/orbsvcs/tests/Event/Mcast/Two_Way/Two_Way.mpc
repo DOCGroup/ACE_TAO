@@ -1,0 +1,21 @@
+project(application): messaging, rteventexe {
+  depends  += ECMcastTests_Lib CosNaming IORTable
+  libs     += ECMcastTests TAO_CosNaming TAO_IORTable
+  includes += ../Common
+  exename   = application
+
+  Source_Files {
+    application.cpp
+  }
+}
+
+project(gateway-ec): messaging, rteventexe {
+  depends  += ECMcastTests_Lib CosNaming IORTable
+  libs     += ECMcastTests TAO_CosNaming TAO_IORTable
+  includes += ../Common
+  exename   = gateway-ec
+
+  Source_Files {
+    gateway-ec.cpp
+  }
+}
