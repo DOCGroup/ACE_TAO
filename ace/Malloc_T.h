@@ -23,32 +23,34 @@
 #include "ace/Free_List.h"
 
 template <class T>
-class ACE_Cached_Mem_Pool_Node_T
+class ACE_Cached_Mem_Pool_Node
   // = TITLE
-  //    ACE_Cached_Mem_Pool_Node_T keeps unused memory within free
-  //    list Free list structure is kept within the memory being kept.
+  //    <ACE_Cached_Mem_Pool_Node> keeps unused memory within a free
+  //    list.
+  //
+  // = DESCRIPTION
   //    The length of a piece of unused memory must be greater than
   //    sizeof (void*).  This makes sense because we'll waste even
   //    more memory if we keep them in a separate data structure.
   //    This class should really be placed within the next class
-  //    ACE_Cached_Allocator.  But, if you have read enough ACE
-  //    code, you know why this can't be done.
+  //    <ACE_Cached_Allocator>.  But this can't be done due to C++
+  //    compiler portability problems.
 {
 public:
   T *addr (void) { return &this->obj_; }
   // return the address of free memory
 
-  ACE_Cached_Mem_Pool_Node_T<T> *get_next (void) { return this->next_; }
+  ACE_Cached_Mem_Pool_Node<T> *get_next (void) { return this->next_; }
   // get the next Mem_Pool_Node
 
-  void  set_next (ACE_Cached_Mem_Pool_Node_T<T> * ptr) { this->next_ = ptr; }
+  void set_next (ACE_Cached_Mem_Pool_Node<T> *ptr) { this->next_ = ptr; }
   // set the next Mem_Pool_Node 
 
 private:
   union
   {
     T obj_;
-    ACE_Cached_Mem_Pool_Node_T<T> *next_;
+    ACE_Cached_Mem_Pool_Node<T> *next_;
   } ;
 };
 
@@ -72,7 +74,7 @@ public:
 private:
   T *pool_;
 
-  ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node_T<T>, LOCK> free_list_ ;
+  ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<T>, LOCK> free_list_;
 };
 
 template <class MALLOC>

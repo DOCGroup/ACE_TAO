@@ -20,7 +20,7 @@ ACE_Cached_Allocator<T, LOCK>::ACE_Cached_Allocator (size_t n_chunks)
   // ERRNO could be lost because this is within ctor
   
   for (size_t c = 0 ; c < n_chunks ; c++)
-    this->free_list_.add (new (&this->pool_ [c]) ACE_Cached_Mem_Pool_Node_T<T>);
+    this->free_list_.add (new (&this->pool_ [c]) ACE_Cached_Mem_Pool_Node<T>);
   // put into free list using placement contructor, no real memory
   // allocation in the above new
 }
