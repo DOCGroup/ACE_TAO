@@ -64,8 +64,8 @@ TAO_Unbounded_Sequence<T>::~TAO_Unbounded_Sequence (void)
   this->_deallocate_buffer ();
 }
 
-template<class T>
-void TAO_Unbounded_Sequence<T>::_allocate_buffer (CORBA::ULong length)
+template<class T> void 
+TAO_Unbounded_Sequence<T>::_allocate_buffer (CORBA::ULong length)
 {
   T* tmp = TAO_Unbounded_Sequence<T>::allocbuf (length);
 
@@ -84,8 +84,8 @@ void TAO_Unbounded_Sequence<T>::_allocate_buffer (CORBA::ULong length)
   this->buffer_ = tmp;
 }
 
-template<class T>
-void TAO_Unbounded_Sequence<T>::_deallocate_buffer (void)
+template<class T> void
+TAO_Unbounded_Sequence<T>::_deallocate_buffer (void)
 {
   if (this->buffer_ == 0 || this->release_ == 0)
     return;
@@ -169,16 +169,16 @@ TAO_Bounded_Sequence<T, MAX>::~TAO_Bounded_Sequence (void)
   this->_deallocate_buffer ();
 }
 
-template<class T, CORBA::ULong MAX>
-void TAO_Bounded_Sequence<T, MAX>::_allocate_buffer (CORBA::ULong)
+template<class T, CORBA::ULong MAX> void 
+TAO_Bounded_Sequence<T, MAX>::_allocate_buffer (CORBA::ULong)
 {
   // For this class memory is never reallocated so the implementation
   // is *really* simple.
   this->buffer_ = TAO_Bounded_Sequence<T, MAX>::allocbuf (MAX);
 }
 
-template<class T, CORBA::ULong MAX>
-void TAO_Bounded_Sequence<T, MAX>::_deallocate_buffer (void)
+template<class T, CORBA::ULong MAX> void 
+TAO_Bounded_Sequence<T, MAX>::_deallocate_buffer (void)
 {
   if (this->buffer_ == 0 || this->release_ == 0)
     return;
@@ -210,8 +210,7 @@ TAO_Object_Manager<T>::operator= (const TAO_Object_Manager<T> &rhs)
   return *this;
 }
 
-template <class T>
-TAO_Object_Manager<T> &
+template <class T>TAO_Object_Manager<T> &
 TAO_Object_Manager<T>::operator=(T* p)
 {
   if (this->release_)
@@ -263,8 +262,7 @@ TAO_Unbounded_Object_Sequence<T>::~TAO_Unbounded_Object_Sequence (void)
 }
 
 // assignment operator
-template <class T>
-TAO_Unbounded_Object_Sequence<T>&
+template <class T>TAO_Unbounded_Object_Sequence<T>&
 TAO_Unbounded_Object_Sequence<T>::
 operator= (const TAO_Unbounded_Object_Sequence<T> &rhs)
 {
@@ -337,8 +335,8 @@ TAO_Unbounded_Object_Sequence<T>::freebuf (T **buffer)
   delete[] buffer;
 }
 
-template<class T>
-void TAO_Unbounded_Object_Sequence<T>::_allocate_buffer (CORBA::ULong length)
+template<class T> void 
+TAO_Unbounded_Object_Sequence<T>::_allocate_buffer (CORBA::ULong length)
 {
   T **tmp = TAO_Unbounded_Object_Sequence<T>::allocbuf (length);
 
@@ -362,8 +360,8 @@ void TAO_Unbounded_Object_Sequence<T>::_allocate_buffer (CORBA::ULong length)
   this->buffer_ = tmp;
 }
 
-template<class T>
-void TAO_Unbounded_Object_Sequence<T>::_deallocate_buffer (void)
+template<class T> void 
+TAO_Unbounded_Object_Sequence<T>::_deallocate_buffer (void)
 {
   if (this->buffer_ == 0 || this->release_ == 0)
     return;
@@ -433,8 +431,7 @@ TAO_Bounded_Object_Sequence (const TAO_Bounded_Object_Sequence<T, MAX> &rhs)
   this->buffer_ = tmp1;
 }
 
-template <class T, CORBA::ULong MAX>
-TAO_Bounded_Object_Sequence<T, MAX>&
+template <class T, CORBA::ULong MAX> TAO_Bounded_Object_Sequence<T, MAX>&
 TAO_Bounded_Object_Sequence<T, MAX>::operator=
 (const TAO_Bounded_Object_Sequence<T, MAX> &rhs)
 {
@@ -504,8 +501,8 @@ TAO_Bounded_Object_Sequence<T, MAX>::_allocate_buffer (CORBA::ULong length)
     TAO_Bounded_Object_Sequence<T, MAX>::allocbuf (length);
 }
 
-template<class T, CORBA::ULong MAX>
-void TAO_Bounded_Object_Sequence<T, MAX>::_deallocate_buffer (void)
+template<class T, CORBA::ULong MAX> void 
+TAO_Bounded_Object_Sequence<T, MAX>::_deallocate_buffer (void)
 {
   if (this->buffer_ == 0 || this->release_ == 0)
     return;
@@ -579,8 +576,7 @@ TAO_Unbounded_Pseudo_Sequence<T>::~TAO_Unbounded_Pseudo_Sequence (void)
 }
 
 // assignment operator
-template <class T>
-TAO_Unbounded_Pseudo_Sequence<T>&
+template <class T> TAO_Unbounded_Pseudo_Sequence<T>&
 TAO_Unbounded_Pseudo_Sequence<T>::
 operator= (const TAO_Unbounded_Pseudo_Sequence<T> &rhs)
 {
@@ -653,8 +649,8 @@ TAO_Unbounded_Pseudo_Sequence<T>::freebuf (T **buffer)
   delete[] buffer;
 }
 
-template<class T>
-void TAO_Unbounded_Pseudo_Sequence<T>::_allocate_buffer (CORBA::ULong length)
+template<class T> void 
+TAO_Unbounded_Pseudo_Sequence<T>::_allocate_buffer (CORBA::ULong length)
 {
   T **tmp = TAO_Unbounded_Pseudo_Sequence<T>::allocbuf (length);
 
@@ -678,8 +674,8 @@ void TAO_Unbounded_Pseudo_Sequence<T>::_allocate_buffer (CORBA::ULong length)
   this->buffer_ = tmp;
 }
 
-template<class T>
-void TAO_Unbounded_Pseudo_Sequence<T>::_deallocate_buffer (void)
+template<class T> void 
+TAO_Unbounded_Pseudo_Sequence<T>::_deallocate_buffer (void)
 {
   if (this->buffer_ == 0 || this->release_ == 0)
     return;
@@ -731,8 +727,7 @@ TAO_Bounded_Pseudo_Sequence (const TAO_Bounded_Pseudo_Sequence<T, MAX> &rhs)
   this->buffer_ = tmp1;
 }
 
-template <class T, CORBA::ULong MAX>
-TAO_Bounded_Pseudo_Sequence<T, MAX>&
+template <class T, CORBA::ULong MAX> TAO_Bounded_Pseudo_Sequence<T, MAX>&
 TAO_Bounded_Pseudo_Sequence<T, MAX>::operator=
 (const TAO_Bounded_Pseudo_Sequence<T, MAX> &rhs)
 {
@@ -802,8 +797,8 @@ TAO_Bounded_Pseudo_Sequence<T, MAX>::_allocate_buffer (CORBA::ULong length)
     TAO_Bounded_Pseudo_Sequence<T, MAX>::allocbuf (length);
 }
 
-template<class T, CORBA::ULong MAX>
-void TAO_Bounded_Pseudo_Sequence<T, MAX>::_deallocate_buffer (void)
+template<class T, CORBA::ULong MAX> void 
+TAO_Bounded_Pseudo_Sequence<T, MAX>::_deallocate_buffer (void)
 {
   if (this->buffer_ == 0 || this->release_ == 0)
     return;
@@ -853,8 +848,7 @@ TAO_Bounded_String_Sequence (const TAO_Bounded_String_Sequence<MAX> &rhs)
   this->buffer_ = tmp1;
 }
 
-template<CORBA::ULong MAX>
-TAO_Bounded_String_Sequence<MAX>&
+template<CORBA::ULong MAX> TAO_Bounded_String_Sequence<MAX>&
 TAO_Bounded_String_Sequence<MAX>::operator=
 (const TAO_Bounded_String_Sequence<MAX> &rhs)
 {
@@ -938,8 +932,8 @@ TAO_Bounded_String_Sequence<MAX>::_allocate_buffer (CORBA::ULong length)
     TAO_Bounded_String_Sequence<MAX>::allocbuf (MAX);
 }
 
-template<CORBA::ULong MAX>
-void TAO_Bounded_String_Sequence<MAX>::_deallocate_buffer (void)
+template<CORBA::ULong MAX> void 
+TAO_Bounded_String_Sequence<MAX>::_deallocate_buffer (void)
 {
   if (this->buffer_ == 0 || this->release_ == 0)
     return;
