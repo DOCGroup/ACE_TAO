@@ -142,7 +142,7 @@ open_new_endpoint (ACE_HANDLE listen_handle, const char dev[],
 
 // Close down the acceptor and release resources.
 
-ACE_INLINE int
+int
 ACE_TLI_Request_Queue::close (void)
 {
   ACE_TRACE ("ACE_TLI_Request_Queue::close");
@@ -189,7 +189,6 @@ ACE_TLI_Request_Queue::open (ACE_HANDLE f, int sz)
   return 0;
 }
 
-ACE_INLINE
 ACE_TLI_Request_Queue::ACE_TLI_Request_Queue (void)
   : size_ (0),
     current_count_ (0), 

@@ -54,7 +54,7 @@ main (int argc, char *argv[])
   daemon.open (argv[0]);
 
   // Register a signal handler.
-  ACE_Sig_Action sa (ACE_Sig_Handler_Ex (handler), SIGINT);
+  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
 
   int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_THREADS;
   int n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS;

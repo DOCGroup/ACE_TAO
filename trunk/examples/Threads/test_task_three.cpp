@@ -103,7 +103,7 @@ Test_Task::svc (void)
 
   for (int index = 0; index < NUM_INVOCATIONS; index++)
     {
-      ACE_OS::thr_extern "C" yield ();
+      ACE_OS::thr_yield ();
 
       if (r_->notify (this, ACE_Event_Handler::READ_MASK))
 	{
@@ -181,7 +181,7 @@ main (int argc, char **argv)
     }
 
   // Register a signal handler.
-  ACE_Sig_Action sa (ACE_Sig_Handler_Ex (handler), SIGINT);
+  ACE_Sig_Action sa (ACE_SignalHandler (handler), SIGINT);
 
   ACE_Reactor *reactor1 = ACE_Service_Config::reactor ();
   ACE_Reactor *reactor2 = new ACE_Reactor ();

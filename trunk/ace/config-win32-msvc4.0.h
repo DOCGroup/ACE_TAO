@@ -7,14 +7,23 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#if !defined (ACE_CONFIG_H)
+#define ACE_CONFIG_H
+
 #if defined (_MSC_VER)
 // "C4355: 'this' : used in base member initializer list"
 #pragma warning(disable:4355) // disable C4514 warning
-// #pragma warning(default:4355)   // use this to reenable, if desired
+//	#pragma warning(default:4355)   // use this to reenable, if desired
+
+#pragma warning(disable:4201)  // winnt.h uses nameless structs
 #endif /* _MSC_VER */
-// While digging the MSVC 4.0 include files, I found how to disable MSVC 
-// warnings:
-// --Amos Shapira
+
+// While digging the MSVC 4.0 include files, I found how to disable
+// MSVC warnings: --Amos Shapira
+
+// Comment this out for now since it will break existing application
+// code. 
+// #define ACE_HAS_STRICT
 
 // <windows.h> and MFC's <afxwin.h> are mutually
 // incompatible. <windows.h> is brain-dead about MFC; it doesn't check
@@ -30,34 +39,59 @@
 // advantage of all this to select the proper support for winsock. -
 // trl 26-July-1996
 
-#ifdef _AFXDLL        // May be defined by MSVC++ IDE
+// This is necessary since MFC users apparently can't #include
+// <windows.h> directly.
+#if defined (_AFXDLL) || defined (_WINDLL)
 #include /**/ <afxwin.h>   // He is doing MFC
-#define	_INC_WINDOWS  // Prevent winsock.h from including windows.h
-#endif
-#ifdef _WINDLL        // May be defined by MSVC++ IDE
-#include /**/ <afxwin.h>   // He is doing MFC
-#define	_INC_WINDOWS  // Prevent winsock.h from including windows.h
+	// Windows.h will be included via afxwin.h->afx.h->afx_ver_.h->afxv_w32.h
+	// #define	_INC_WINDOWS  // Prevent winsock.h from including windows.h
 #endif
 
-#ifndef __AFX_H__     // set in afxwin.h
-#include /**/ <windows.h>  // if he's not doing MFC, snag this
-#endif
+#if !defined (_INC_WINDOWS)	// Already include windows.h ?
+	// Must define strict before including windows.h !
+#if defined (ACE_HAS_STRICT)
+#define STRICT 1
+#endif /* ACE_HAS_STRICT */
 
-// Define the following two macros if you're compiling with WinSock 2.0.
+#if !defined (WIN32_LEAN_AND_MEAN)
+#define WIN32_LEAN_AND_MEAN
+#endif /* WIN32_LEAN_AND_MEAN */
+
+#if defined (_UNICODE)
+#if !defined (UNICODE)
+#define UNICODE         // UNICODE is used by Windows headers
+#endif /* UNICODE */
+#endif /* _UNICODE */
+
+#if defined (UNICODE)
+#if !defined (_UNICODE)
+#define _UNICODE        // _UNICODE is used by C-runtime/MFC headers
+#endif /* _UNICODE */
+#endif /* UNICODE */
+#endif /* !defined (_INC_INWDOWS) */
+
+// Define the following macro if you're compiling with WinSock 2.0.
 // #define ACE_HAS_WINSOCK2
-// #define ACE_WSOCK_VERSION 2, 0
-
-// Undefine the following macro if you're compiling with WinSock 2.0.
-// Version 1.1 of WinSock
-#define ACE_WSOCK_VERSION 1, 1
 
 // Needed for timeval.
 #if defined (ACE_HAS_WINSOCK2)
-#include /**/ <winsock2.h>
-#include "ace/ws2tcpip.h"
+#if !defined (_WINSOCK2API_)
+#include /**/ <winsock2.h>		// will also include windows.h, if not present
+#endif /* _WINSOCK2API */
+
+#define ACE_WSOCK_VERSION 2, 0
 #else
-#include /**/ <winsock.h>
+#if !defined (_WINSOCKAPI_)
+#include /**/ <winsock.h>	// will also include windows.h, if not present
+#endif /* _WINSOCKAPI */
+
+// Version 1.1 of WinSock
+#define ACE_WSOCK_VERSION 1, 1
 #endif /* ACE_HAS_WINSOCK2 */
+
+#if defined (_MSC_VER)
+#pragma warning(default: 4201)  // winnt.h uses nameless structs
+#endif /* _MSC_VER */
 
 #define ACE_HAS_UNICODE
 #define ACE_HAS_STL
@@ -180,7 +214,7 @@
 #define ACE_NEEDS_WRITEV
 #define ACE_NEEDS_READV
 
-// Comment this out for now since it will break existing application
-// code.
-#define ACE_HAS_STRICT
+// Compiler/Platform supports the "using" keyword.
+#define ACE_HAS_USING_KEYWORD
+
 #endif /* ACE_CONFIG_H */

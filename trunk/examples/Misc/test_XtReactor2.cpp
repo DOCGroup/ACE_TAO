@@ -8,6 +8,7 @@
 #include "ace/Message_Block.h"
 
 #if defined (ACE_HAS_XT)
+#define String XtString
 #include <Xm/PushB.h>
 
 class Stdin : public ACE_Event_Handler
@@ -44,8 +45,8 @@ int main (int argc, char**argv)
   XtManageChild (button);
   XtAddCallback (button, XmNactivateCallback, ActivateCB, NULL);
 
-  // A reactor beastie
-  XtReactor reactor (XtWidgetToApplicationContext (top_level));
+  // A reactor beastie.
+  ACE_XtReactor reactor (XtWidgetToApplicationContext (top_level));
 
   // Print a message when data is recv'd on stdin...
   ACE_Event_Handler * stdin_ = new Stdin;
