@@ -46,10 +46,11 @@
   
    Before compiling TAO_IDL on NT, you may need to set the environment
    variable CPP_PATH to where CL.exe is installed on your machine. By
-   default, we set this variable to to "C:/Program
-   Files/DevStudio/VC/bin". Your location may vary, however. Notice that
-   if you forget to set this variable, you must rebuild TAO_IDL after
-   setting it.
+   default, we set this variable to "C:/Program Files/DevStudio/VC/bin".
+   Your location may vary, however. Notice that if you forget to set this
+   variable before compiling TAO_IDL, you can use CPP_LOCATION to specify
+   the absolute pathname to CL.exe. We set if to "C:/Program
+   Files/DevStudio/VC/bin/CL.exe" when we do use it.
    
     Visual C++ 5.0
     
@@ -80,12 +81,12 @@
 
 References
 
-   1. file://localhost/project/adaptive/ACE_wrappers/TAO/TAO-obtain.html
+   1. file://localhost/project/doc/chris/tmpwrk/ACE_wrappers/TAO/TAO-obtain.html
    2. http://siesta.cs.wustl.edu/~schmidt/TAO-obtain.html
    3. http://siesta.cs.wustl.edu/~schmidt/ACE-obtain.html
    4. http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE.tar.gz
    5. http://www.cs.wustl.edu/~schmidt/ACE-INSTALL.html
-   6. file://localhost/project/adaptive/ACE_wrappers/TAO/TAO-INSTALL.html#makenotes
-   7. file://localhost/project/adaptive/ACE_wrappers/TAO/TAO-INSTALL.html#makenotes
-   8. file://localhost/project/adaptive/ACE_wrappers/TAO/TAO-INSTALL.html#makenotes
+   6. file://localhost/project/doc/chris/tmpwrk/ACE_wrappers/TAO/TAO-INSTALL.html#makenotes
+   7. file://localhost/project/doc/chris/tmpwrk/ACE_wrappers/TAO/TAO-INSTALL.html#makenotes
+   8. file://localhost/project/doc/chris/tmpwrk/ACE_wrappers/TAO/TAO-INSTALL.html#makenotes
    9. http://www.cs.wustl.edu/~schmidt/TAO.html
