@@ -25,9 +25,9 @@
 #if defined (ACE_HAS_THREADS)
 
 int
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST ("Atomic_Op_Test");
+  ACE_START_TEST (ASYS_TEXT ("Atomic_Op_Test"));
 
   ACE_Atomic_Op <ACE_Thread_Mutex, long> foo (5);
 
@@ -60,11 +60,11 @@ template class ACE_Atomic_Op<ACE_Thread_Mutex, long>;
 
 #else
 int
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST ("Atomic_Op_Test");
+  ACE_START_TEST (ASYS_TEXT ("Atomic_Op_Test"));
 
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
 
   ACE_END_TEST;
   return 0;

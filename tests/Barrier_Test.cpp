@@ -46,7 +46,7 @@ static void *
 tester (Tester_Args *args)
 {
 #if defined (VXWORKS)
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s stack size is %u\n",
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) %s stack size is %u\n"),
               ACE_OS::thr_self (), ACE_OS::thr_min_stack ()));
 #endif /* VXWORKS */
 
@@ -54,7 +54,8 @@ tester (Tester_Args *args)
        iterations <= args->n_iterations_;
        iterations++)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%t) in iteration %d\n", iterations));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) in iteration %d\n"),
+                  iterations));
 
       // Block until all other threads have waited, then continue.
       args->tester_barrier_.wait ();
@@ -66,9 +67,9 @@ tester (Tester_Args *args)
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST ("Barrier_Test");
+  ACE_START_TEST (ASYS_TEXT ("Barrier_Test"));
 
 #if defined (ACE_HAS_THREADS)
   int n_threads = ACE_MAX_THREADS;
@@ -92,7 +93,7 @@ main (int, char *[])
   for (i = 0; i < n_threads; ++i)
     {
       ACE_NEW_RETURN (thread_name[i], char[32], -1);
-      ACE_OS::sprintf (thread_name[i], "thread%u", i);
+      ACE_OS::sprintf (thread_name[i], ASYS_TEXT ("thread%u"), i);
 
       stack_size[i] = 40000;
     }
@@ -102,7 +103,7 @@ main (int, char *[])
        iteration_count < ACE_MAX_ITERATIONS;
        iteration_count++)
     {
-      ACE_DEBUG ((LM_DEBUG, "starting iteration %d\n",
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("starting iteration %d\n"),
                   iteration_count));
 
       if (ACE_Thread_Manager::instance ()->spawn_n
@@ -122,7 +123,8 @@ main (int, char *[])
 #endif /* VXWORKS */
            ) == -1)
 
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
+        ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"),
+                           ASYS_TEXT ("spawn_n")), 1);
 
       ACE_Thread_Manager::instance ()->wait ();
     }
@@ -136,9 +138,10 @@ main (int, char *[])
   delete [] stack_size;
 #endif /* VXWORKS */
 
-  ACE_DEBUG ((LM_DEBUG, "test done\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("test done\n")));
 #else
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+  ACE_ERROR ((LM_ERROR,
+              ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;
