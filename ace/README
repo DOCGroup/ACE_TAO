@@ -84,6 +84,8 @@ ACE_WSOCK_VERSION                       A parameter list indicating
                                         "1, 1" is version 1.1).
 
 ACE_HAS_AIO_CALLS                       Platform supports POSIX aio* calls.
+                                        Corresponds to _POSIX_ASYNCHRONOUS_IO
+                                        constant in <unistd.h>.
 ACE_HAS_ALT_CUSERID                     Use ACE's alternate cuserid()
                                         implementation since a system
                                         cuserid() may not exist, or it
@@ -429,11 +431,19 @@ ACE_HAS_POLL                            Platform contains <poll.h>
 ACE_HAS_POSITION_INDEPENDENT_POINTERS   Platform supports
                                         "position-independent" features
                                         provided by ACE_Based_Pointer<>.
+ACE_HAS_POSIX_MESSAGE_PASSING           Platform supports POSIX message queues.
+                                        Corresponds to _POSIX_MESSAGE_PASSING
+                                        constant in <unistd.h>.
 ACE_HAS_POSIX_NONBLOCK                  Platform supports POSIX
                                         O_NONBLOCK semantics
+ACE_HAS_POSIX_REALTIME_SIGNALS          Platform supports POSIX RT signals.
+                                        Corresponds to _POSIX_REALTIME_SIGNALS
+                                        constant in <unistd.h>. 
 ACE_HAS_POSIX_SEM                       Platform supports POSIX
                                         real-time semaphores (e.g.,
-                                        VxWorks and Solaris)
+                                        VxWorks and Solaris).  Corresponds
+                                        to _POSIX_SEMAPHORES constant
+                                        in <unistd.h>
 ACE_HAS_POSIX_TIME                      Platform supports the POSIX
                                         struct timespec type
 ACE_HAS_PROC_FS                         Platform supports the /proc
