@@ -1934,7 +1934,7 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
   // servant associated with that object in the Active Object Map.
   if (this->policies ().servant_retention () == PortableServer::RETAIN)
     {
-      TAO_ObjectKey_var key = reference->key (env);
+      TAO_ObjectKey_var key = reference->_key (env);
 
       // If the object reference was not created by this POA, the
       // WrongAdapter exception is raised.
@@ -2000,7 +2000,7 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
   // POA on which the operation is being performed.  If the object
   // reference was not created by this POA, the WrongAdapter exception
   // is raised.
-  TAO_ObjectKey_var key = reference->key (env);
+  TAO_ObjectKey_var key = reference->_key (env);
   PortableServer::ObjectId_var id;
   PortableServer::ObjectId_out id_out (id);
   TAO_POA::String poa_name;

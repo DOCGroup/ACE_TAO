@@ -30,10 +30,10 @@ TAO_ServantBase::_default_POA (CORBA::Environment &env)
   if (env.exception () != 0)
     return PortableServer::POA::_nil ();
   else
-    return result._retn ();  
+    return result._retn ();
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_ServantBase::_is_a (const char* logical_type_id,
 			CORBA::Environment &env)
 {
@@ -102,7 +102,7 @@ TAO_ServantBase::_create_stub (CORBA_Environment &env)
       if (env.exception () != 0)
 	return 0;
 
-      TAO_ObjectKey_var object_key = object->key (env);
+      TAO_ObjectKey_var object_key = object->_key (env);
       stub = new IIOP_Object (CORBA::string_copy (this->_interface_repository_id ()),
                               IIOP::Profile (orb_core->orb_params ()->addr (),
                                              object_key.in ()));
@@ -120,17 +120,17 @@ TAO_Local_ServantBase::_create_stub (CORBA_Environment &env)
                                          "0"));
 }
 
-CORBA::Object_ptr 
+CORBA::Object_ptr
 TAO_DynamicImplementation::_this (CORBA::Environment &env)
 {
   // The _this() function returns a CORBA::Object_ptr for the target
   // object. Unlike _this() for static skeletons, its return type is
   // not interface-specific because a DSI servant may very well
-  // incarnate multiple CORBA objects of different types. 
+  // incarnate multiple CORBA objects of different types.
   STUB_Object *stub = this->_create_stub (env);
   if (env.exception () != 0)
     return CORBA::Object::_nil ();
-  
+
   // Create a object
   return new CORBA::Object (stub, this, CORBA::B_TRUE);
 }
@@ -189,10 +189,10 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &env)
                                          poa_current->object_key ()));
 }
 
-void 
+void
 TAO_DynamicImplementation::_dispatch (CORBA::ServerRequest &request,
                                       void *context,
-                                      CORBA::Environment &env) 
+                                      CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (context);
 
