@@ -57,28 +57,31 @@ typedef ACE_Cached_Connect_Strategy<TAO_IIOP_Client_Connection_Handler,
 
 TAO_IIOP_Connector::TAO_IIOP_Connector (void)
   : TAO_Connector (TAO_IOP_TAG_INTERNET_IOP),
-    base_connector_ ()
+    base_connector_ (),
+    orb_core_ (0)
 {
 }
 
 int
 TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
+  this->orb_core_ = orb_core;
+
   TAO_Cached_Connector_Lock *connector_lock = 0;
   ACE_NEW_RETURN (connector_lock,
-                  TAO_Cached_Connector_Lock (orb_core),
+                  TAO_Cached_Connector_Lock (this->orb_core_),
                   -1);
 
   TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy =
     new TAO_CACHED_CONNECT_STRATEGY (
-        new TAO_IIOP_Connect_Creation_Strategy (orb_core->thr_mgr (),
-                                                orb_core),
+        new TAO_IIOP_Connect_Creation_Strategy (this->orb_core_->thr_mgr (),
+                                                this->orb_core_),
         0,
         0,
         connector_lock,
         1);
 
-  return this->base_connector_.open (orb_core->reactor (),
+  return this->base_connector_.open (this->orb_core_->reactor (),
                                      &this->null_creation_strategy_,
                                      cached_connect_strategy,
                                      &this->null_activation_strategy_);
@@ -281,7 +284,9 @@ TAO_Profile*
 TAO_IIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
   TAO_Profile* pfile;
-  ACE_NEW_RETURN (pfile, TAO_IIOP_Profile, 0);
+  ACE_NEW_RETURN (pfile,
+                  TAO_IIOP_Profile (this->orb_core_),
+                  0);
 
   int r = pfile->decode (cdr);
   if (r == -1)
@@ -307,7 +312,9 @@ TAO_IIOP_Connector::make_profile (const char *endpoint,
   //    //host:port/object_key
 
   ACE_NEW_RETURN (profile,
-                  TAO_IIOP_Profile (endpoint, ACE_TRY_ENV),
+                  TAO_IIOP_Profile (endpoint,
+                                    this->orb_core_,
+                                    ACE_TRY_ENV),
                   -1);
 
   return 0;  // Success

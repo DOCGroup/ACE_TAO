@@ -72,12 +72,15 @@ public:
   typedef TAO_Acceptor_Impl<TAO_UIOP_Server_Connection_Handler,ACE_LSOCK_ACCEPTOR> TAO_UIOP_BASE_ACCEPTOR;
 
 private:
-  int open_i (TAO_ORB_Core* orb_core, const ACE_UNIX_Addr& addr);
+  int open_i (TAO_ORB_Core *orb_core, const ACE_UNIX_Addr& addr);
   // Implement the common part of the open*() methods
 
 private:
   TAO_UIOP_BASE_ACCEPTOR base_acceptor_;
   // the concrete acceptor, as a pointer to its base class.
+
+  TAO_ORB_Core *orb_core_;
+  // ORB Core.
 };
 
 # endif /* !ACE_LACKS_UNIX_DOMAIN_SOCKETS */

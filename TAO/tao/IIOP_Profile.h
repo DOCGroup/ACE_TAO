@@ -52,60 +52,28 @@ public:
   // Return the char string prefix.
 
   TAO_IIOP_Profile (const ACE_INET_Addr &addr,
-                    const char *object_key);
-  // Profile constructor, the port and host fileds are derived from
-  // addr.  This is not an efficient creator since a call to
-  // get_host_XX is required.
-
-  TAO_IIOP_Profile (const ACE_INET_Addr &addr,
-                    const TAO_ObjectKey &object_key);
+                    const TAO_ObjectKey &object_key,
+                    TAO_ORB_Core *orb_core);
   // Profile constructor, same as above except the object_key has
   // already been marshaled.
-
-  TAO_IIOP_Profile (const ACE_INET_Addr &addr,
-                    const TAO_IOP_Version &version,
-                    const char *object_key);
-  //  Profile constructor, explicitly define the protocol version.
-
-  TAO_IIOP_Profile (const ACE_INET_Addr &addr,
-                    const TAO_IOP_Version &version,
-                    const TAO_ObjectKey &object_key);
-  //  Profile constructor, explicitly define the protocol version.
 
   TAO_IIOP_Profile (const char *host,
                     CORBA::UShort port,
                     const TAO_ObjectKey &object_key,
-                    const ACE_INET_Addr &addr);
+                    const ACE_INET_Addr &addr,
+                    TAO_ORB_Core *orb_core);
   //  Profile constructor, this is the most efficient since it
   // doesn't require any address resolution processing.
 
-  TAO_IIOP_Profile (const char *host,
-                    CORBA::UShort port,
-                    const TAO_ObjectKey &object_key);
-  // Profile constructor, the port and host fileds are specified
-  // but addr must be created rfom a call to get_host_byname which
-  // is expensive since it may go to DNS.
-
-  TAO_IIOP_Profile (const char *host,
-                    CORBA::UShort port,
-                    const TAO_IOP_Version &version,
-                    const TAO_ObjectKey &object_key);
-  //  Profile constructor, explicitly define the protocol version
-
   TAO_IIOP_Profile (const char *string,
+                    TAO_ORB_Core *orb_core,
                     CORBA::Environment &env);
   // Create object using a string ior.
-
-  TAO_IIOP_Profile (const TAO_IIOP_Profile *pfile);
-  // Profile copy constructor
 
   TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile);
   // Profile copy constructor
 
-  TAO_IIOP_Profile (const TAO_IOP_Version &version);
-  // Profile constructor, explicitly define the version.
-
-  TAO_IIOP_Profile (void);
+  TAO_IIOP_Profile (TAO_ORB_Core *orb_core);
   // Profile constructor, default.
 
   ~TAO_IIOP_Profile (void);
@@ -209,6 +177,9 @@ private:
   TAO_IIOP_Client_Connection_Handler *hint_;
   // Pointer to a connection handler which we successfully used
   // already.
+
+  TAO_ORB_Core *orb_core_;
+  // ORB Core.
 };
 
 #if defined (__ACE_INLINE__)
