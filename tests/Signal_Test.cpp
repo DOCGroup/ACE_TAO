@@ -67,7 +67,6 @@ handle_signal (int signum)
       /* NOTREACHED */
 
     case SIGCHLD:
-	  
       for (;;)
         {
           int child_exit_status;
@@ -300,7 +299,6 @@ worker_parent (void *)
 
   // Perform a <wait> until our child process has exited.
   
-#if 0
   while (shut_down == 0)
     {
       // Wait for a signal to arrive.
@@ -311,12 +309,9 @@ worker_parent (void *)
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%P|%t) got signal!\n")));
     }
-#else
-  pm.wait ();
-#endif
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%P|%t) child done\n")));
+              ASYS_TEXT ("(%P|%t) parent done\n")));
   return 0;
 }
 
