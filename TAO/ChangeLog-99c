@@ -1,9 +1,17 @@
+Thu Nov 18 10:16:23 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosNotifyChannelAdmin.idl:
+	* orbsvcs/orbsvcs/CosNotification.idl:
+	* orbsvcs/orbsvcs/CosNotifyComm.idl:
+	* orbsvcs/orbsvcs/CosNotifyFilter.idl:
+	  added these files for the Notification Service.
+
 Wed Nov 17 11:54:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union/discriminant_ci.cpp:
 	  Added a case for wchar discriminants to the generation
 	  of the _default() method. Also changed the output format
-	  of the char default discriminant value to make more 
+	  of the char default discriminant value to make more
 	  sense.
 
 Wed Nov 17 10:29:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
