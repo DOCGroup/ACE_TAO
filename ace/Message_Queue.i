@@ -15,14 +15,14 @@ ACE_INLINE int
 ACE_Message_Queue_Vx::is_empty_i (void)
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::is_empty_i");
-  return this->cur_bytes_ <= 0 && this->cur_count_ <= 0;
+  return ::msgQNumMsgs (msgq ()) == 0;
 }
 
 ACE_INLINE int
 ACE_Message_Queue_Vx::is_full_i (void)
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::is_full_i");
-  return this->cur_bytes_ > this->high_water_mark_;
+  return ::msgQNumMsgs (msgq ()) >= max_messages_;
 }
 
 ACE_INLINE size_t
@@ -31,7 +31,7 @@ ACE_Message_Queue_Vx::high_water_mark (void)
   ACE_TRACE ("ACE_Message_Queue_Vx::high_water_mark");
   // Don't need to guard, because this is fixed.
 
-  return this->high_water_mark_;
+  ACE_NOTSUP_RETURN ((size_t) -1);
 }
 
 ACE_INLINE void
@@ -48,7 +48,7 @@ ACE_Message_Queue_Vx::low_water_mark (void)
   ACE_TRACE ("ACE_Message_Queue_Vx::low_water_mark");
   // Don't need to guard, because this is fixed.
 
-  return this->low_water_mark_;
+  ACE_NOTSUP_RETURN ((size_t) -1);
 }
 
 ACE_INLINE void
