@@ -36,6 +36,13 @@ Wed Jul 14 13:38:12 1999  Steve Huston  <shuston@riverace.com>
           file and tosses its cookies. ACE is still the best C++ compiler
           test on the planet.
 
+Wed Jul 14 16:24:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/CDR_Stream.h:
+	* ace/CDR_Stream.cpp:
+	  Added new method to efficiently steal the contents of a CDR
+	  stream and store them in another.
+
 Wed Jul 14 12:05:13 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/rules.local.GNU (LN_S): on WIN32
