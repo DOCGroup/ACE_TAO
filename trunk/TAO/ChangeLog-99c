@@ -1,9 +1,14 @@
+Tue Mar 16 15:52:57 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/POAManager.i (lock): moved function definition before inline
+          activate (), because that function uses it.
+
 Tue Mar 16 15:41:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Param_Test/*.cpp 
-	Made them exception safe using the latest ACE_TRY macros. Had
-	a bunch of code which did not handle exception. Added code so 
-	that they are exception safe.. 
+        * tests/Param_Test/*.cpp
+        Made them exception safe using the latest ACE_TRY macros. Had
+        a bunch of code which did not handle exception. Added code so
+        that they are exception safe..
 
 Tue Mar 16 15:34:29 1999  David L. Levine  <levine@cs.wustl.edu>
 
