@@ -317,11 +317,16 @@ public:
   {
   public:
     InvalidName (void);
+    InvalidName (const InvalidName &);
+    ~InvalidName (void);
+    InvalidName &operator= (const InvalidName &);
 
     virtual void _raise (void);
     static InvalidName* _narrow (CORBA_Exception *ex);
-    virtual int _is_a (const char* interface_id) const;
+    // = TAO extension
+    static CORBA::Exception *_alloc (void);
   };
+  static CORBA::TypeCode_ptr _tc_InvalidName;
 
   typedef char *ObjectId;
   typedef CORBA::String_var ObjectId_var;
@@ -503,8 +508,8 @@ public:
                                                CORBA_Environment &ACE_TRY_ENV =
                                                TAO_default_environment ());
   // This method acts as a mini-bootstrapping Naming Service, which is
-  // provided by the ORB for certain well-known object references.  TAO 
-  // supports the "NameService", "TradingService", "RootPOA", "ImplRepo", 
+  // provided by the ORB for certain well-known object references.  TAO
+  // supports the "NameService", "TradingService", "RootPOA", "ImplRepo",
   // and "POACurrent" via this method.  The <timeout> value bounds the
   // amount of time the ORB blocks waiting to resolve the service.
   // This is most useful for bootstrapping remote services, such as
@@ -792,6 +797,17 @@ public:
 private:
   CORBA::ORB_ptr &ptr_;
 };
+
+extern TAO_Export void
+operator<<= (CORBA::Any &, const CORBA::ORB::InvalidName &);
+extern TAO_Export void
+operator<<= (CORBA::Any &, CORBA::ORB::InvalidName*);
+extern TAO_Export CORBA::Boolean
+operator>>= (const CORBA::Any &, CORBA::ORB::InvalidName *&);
+extern TAO_Export CORBA::Boolean
+operator<< (TAO_OutputCDR &, const CORBA::ORB::InvalidName &);
+extern TAO_Export CORBA::Boolean
+operator>> (TAO_InputCDR &, CORBA::ORB::InvalidName &);
 
 #if defined (__ACE_INLINE__)
 # include "tao/ORB.i"

@@ -73,8 +73,61 @@ int CORBA_ORB::orb_init_count_ = 0;
 
 // ****************************************************************
 
-CORBA_ORB::InvalidName::InvalidName (void)
+CORBA::Boolean
+operator<< (TAO_OutputCDR &strm,
+            const CORBA::ORB::InvalidName &_tao_aggregate)
 {
+  // first marshal the repository ID
+  if (strm << _tao_aggregate._id ())
+    return 1;
+  else
+    return 0;
+}
+
+CORBA::Boolean operator>> (TAO_InputCDR &strm,
+                           CORBA::ORB::InvalidName &_tao_aggregate)
+{
+  // retrieve  RepoID and verify if we are of that type
+  char *_tao_repoID;
+  if ((strm >> _tao_repoID) &&
+      (_tao_aggregate._is_a (_tao_repoID)))
+  {
+    return 1;
+  }
+  else
+    return 0;
+}
+
+CORBA_ORB::InvalidName::InvalidName (void)
+  : CORBA_UserException (CORBA::ORB::_tc_InvalidName)
+{
+}
+
+CORBA::ORB::InvalidName::~InvalidName (void)
+{
+}
+
+CORBA::ORB::InvalidName::InvalidName (const CORBA::ORB::InvalidName &_tao_excp)
+  : CORBA_UserException (_tao_excp._type ())
+{
+}
+
+// assignment operator
+CORBA::ORB::InvalidName&
+CORBA::ORB::InvalidName::operator= (const CORBA::ORB::InvalidName &_tao_excp)
+{
+
+  this->CORBA_UserException::operator= (_tao_excp);
+  return *this;
+}
+
+CORBA_ORB::InvalidName*
+CORBA_ORB::InvalidName::_narrow (CORBA_Exception *ex)
+{
+  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/ORB/InvalidName:1.0", ex->_id ()))
+    return ACE_dynamic_cast (CORBA::ORB::InvalidName*, ex);
+  else
+    return 0;
 }
 
 void
@@ -83,22 +136,13 @@ CORBA_ORB::InvalidName::_raise (void)
   TAO_RAISE(*this);
 }
 
-CORBA_ORB::InvalidName*
-CORBA_ORB::InvalidName::_narrow (CORBA_Exception *ex)
+// TAO extension - the _alloc method
+CORBA::Exception *CORBA::ORB::InvalidName::_alloc (void)
 {
-  if (ex->_is_a ("IDL:omg.orb/CORBA/ORB/InvalidName:1.0"))
-    return ACE_dynamic_cast (CORBA_ORB::InvalidName*, ex);
-  return 0;
+  return new CORBA::ORB::InvalidName;
 }
 
-int
-CORBA_ORB::InvalidName::_is_a (const char* interface_id) const
-{
-  return ((ACE_OS::strcmp (interface_id,
-                          "IDL:omg.orb/CORBA/ORB/InvalidName:1.0") ==
-           0)
-          || CORBA_UserException::_is_a (interface_id));
-}
+// ****************************************************************
 
 CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
   : refcount_ (1),
