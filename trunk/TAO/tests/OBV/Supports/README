@@ -10,7 +10,7 @@ probably not define an implementation of the interface. Doing so will result in
 multiple implementations of the same method - one for objects of the interface,
 and one for valuetypes - and clients will have no way to distiguish between the
 two, other than narrowing objects of the interface type to the
-valuetype. Instead, leave the interface unimplemented, and only define
+valuetype. Instead, one can leave the interface unimplemented, and only define
 implementations of its methods in the valuetype.
 
 The steps are as follows:
@@ -30,6 +30,3 @@ Supports_Test checks proper operation of the following features:
 -ORB::register_value_factory () return values:
    Supports_Test checks the return values of register_value_factory () to
    ensure compliance with the spec.
--Multithreading:
-   If the run_test.pl script is used, several clients will be spawned and the
-   server will used a thread-per-connection model.

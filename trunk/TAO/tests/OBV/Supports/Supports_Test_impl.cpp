@@ -71,7 +71,7 @@ CORBA::ValueBase * vt_graph_init_impl::create_for_unmarshal (void)
 
 /* test_impl */
 
-test_impl::test_impl (CORBA::ORB_ptr orb) : orb_ (CORBA::ORB::_duplicate (orb)), num_clients_ (0)
+test_impl::test_impl (CORBA::ORB_ptr orb) : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -145,16 +145,11 @@ void test_impl::pass_vt_graph_inout (Supports_Test::vt_graph * &vt_graph_param A
 
 void test_impl::start (ACE_ENV_SINGLE_ARG_DECL) ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_GUARD (ACE_Thread_Mutex, guard, lock_);
-  num_clients_++;
 }
 
 void test_impl::finish (ACE_ENV_SINGLE_ARG_DECL) ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_GUARD (ACE_Thread_Mutex, guard, lock_);
-  num_clients_--;
-	if (num_clients_ == 0)
-    this->_remove_ref ();
+  this->_remove_ref ();
 }
 
 

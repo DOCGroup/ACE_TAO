@@ -4,7 +4,7 @@
 /**
  * \file Supports_Test.idl
  *
- * \author George Thomas Edwards <g.edwards@vanderbilt.edu>
+ * \author George Edwards <g.edwards@vanderbilt.edu>
  *
  * This file contain definitions of the valuetypes and interfaces of
  * Supports_Test, a test of TAO's OBV capabilities. Specifically, Supports_Test
@@ -83,6 +83,7 @@ module Supports_Test
    */
 	interface test
 	{
+
 		void pass_vt_graph_in (in vt_graph vt_graph_param);
 		void pass_obj_graph_in (in graph graph_param);
     void pass_vt_graph_out (out vt_graph vt_graph_param);
@@ -91,6 +92,7 @@ module Supports_Test
 		void pass_obj_graph_inout (inout graph graph_param);
     void start ();
     oneway void finish ();
+
 	};
 
 };
