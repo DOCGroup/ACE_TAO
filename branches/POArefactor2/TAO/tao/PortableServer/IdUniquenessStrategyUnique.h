@@ -25,23 +25,22 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Unique_Id_Uniqueness_Strategy :
-       public virtual IdUniquenessStrategy
+    class TAO_PortableServer_Export Unique_Id_Uniqueness_Strategy
+      : public virtual IdUniquenessStrategy
     {
     public:
+
       Unique_Id_Uniqueness_Strategy (void);
 
       virtual ~Unique_Id_Uniqueness_Strategy (void);
 
-      void strategy_init (ServantRetentionStrategy* servant_retention_strategy);
+      void strategy_init (ServantRetentionStrategy *srs);
 
-      virtual
-      bool is_servant_activation_allowed (
+      virtual bool is_servant_activation_allowed (
         PortableServer::Servant servant,
         int &wait_occurred_restart_call);
 
-      virtual
-      bool allow_multiple_activations (void) const;
+      virtual bool allow_multiple_activations (void) const;
 
     private:
       ServantRetentionStrategy* servant_retention_strategy_;

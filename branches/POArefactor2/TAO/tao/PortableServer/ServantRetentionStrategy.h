@@ -41,8 +41,8 @@ namespace TAO
     class IdUniquenessStrategy;
     class RequestProcessingStrategy;
 
-    class TAO_PortableServer_Export ServantRetentionStrategy :
-       public virtual Policy_Strategy
+    class TAO_PortableServer_Export ServantRetentionStrategy
+      : public virtual Policy_Strategy
     {
     public:
       virtual ~ServantRetentionStrategy (void);

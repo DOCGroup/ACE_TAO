@@ -1,3 +1,11 @@
+Sun Nov 14 21:06:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/PortableServer/IdUniquenessStrategy.h:
+	* tao/PortableServer/IdUniquenessStrategyUnique.h:
+	* tao/PortableServer/ServantRetentionStrategy.h:
+
+	  Cosmetic changes.
+
 Sun Nov 14 19:08:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/PortableServer/Local_Servant_Base.h:
