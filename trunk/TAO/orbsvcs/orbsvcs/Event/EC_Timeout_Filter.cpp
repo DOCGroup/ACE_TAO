@@ -72,17 +72,17 @@ TAO_EC_Timeout_Filter::push_to_proxy (const RtecEventComm::EventSet& event,
 }
 
 int
-TAO_EC_Timeout_Filter::filter (const RtecEventComm::EventSet& event,
-                               TAO_EC_QOS_Info& qos_info,
-                               CORBA::Environment& ACE_TRY_ENV)
+TAO_EC_Timeout_Filter::filter (const RtecEventComm::EventSet&,
+                               TAO_EC_QOS_Info&,
+                               CORBA::Environment&)
 {
   return 0;
 }
 
 int
-TAO_EC_Timeout_Filter::filter_nocopy (RtecEventComm::EventSet& event,
-                                      TAO_EC_QOS_Info& qos_info,
-                                      CORBA::Environment& ACE_TRY_ENV)
+TAO_EC_Timeout_Filter::filter_nocopy (RtecEventComm::EventSet&,
+                                      TAO_EC_QOS_Info&,
+                                      CORBA::Environment&)
 {
   return 0;
 }
@@ -118,7 +118,7 @@ TAO_EC_Timeout_Filter::max_event_size (void) const
 
 int
 TAO_EC_Timeout_Filter::can_match (
-      const RtecEventComm::EventHeader& header) const
+      const RtecEventComm::EventHeader&) const
 {
   return 0;
 }

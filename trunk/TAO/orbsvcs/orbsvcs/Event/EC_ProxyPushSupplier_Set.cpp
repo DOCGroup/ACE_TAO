@@ -34,7 +34,7 @@ TAO_EC_ProxyPushSupplier_Set::connected_i (
 void
 TAO_EC_ProxyPushSupplier_Set::disconnected_i (
       TAO_EC_ProxyPushSupplier *supplier,
-      CORBA::Environment &ACE_TRY_ENV)
+      CORBA::Environment &)
 {
   if (this->all_suppliers_.remove (supplier) != 0)
     return; // ACE_THROW (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR ());
@@ -43,7 +43,7 @@ TAO_EC_ProxyPushSupplier_Set::disconnected_i (
 
 void
 TAO_EC_ProxyPushSupplier_Set::shutdown_i (
-      CORBA::Environment &ACE_TRY_ENV)
+      CORBA::Environment &)
 {
   SupplierSetIterator end = this->end ();
   for (SupplierSetIterator i = this->begin (); i != end; ++i)

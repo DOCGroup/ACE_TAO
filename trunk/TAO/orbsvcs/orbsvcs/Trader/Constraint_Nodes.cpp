@@ -294,6 +294,7 @@ TAO_Property_Constraint::name (void) const
 
 TAO_Literal_Constraint::
 TAO_Literal_Constraint (const TAO_Literal_Constraint& lit)
+  : TAO_Constraint (lit)
 {
   this->copy (lit);
 }
