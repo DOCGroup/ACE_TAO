@@ -41,7 +41,7 @@ LD		= $(CXX)
 
 ifdef orbix
 LDFLAGS		+= $(PIC) -L$(ORBIX_ROOT)/lib -R $(WRAPPER_ROOT)/ace -R $(ORBIX_ROOT)/lib
-LIBS		+= -lorbixmt -lsocket -ldl -lnsl -lthread -lgen
+LIBS		+= -lorbixmt -lsocket -ldl -lnsl -lthread -lgen -lposix4
 else
 LDFLAGS		+= -R $(WRAPPER_ROOT)/ace 
 LIBS		+= -lsocket -ldl -lnsl -lgen
