@@ -1,3 +1,9 @@
+Mon Oct  1 12:23:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/nightlybuilds/builds.lst (WEB): Changed the name of the
+	  Sun's EGCS build. We have not been using EGCS but 2.95.x for a
+	  long time now.
+
 Mon Oct  1 10:46:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/PerlACE/Run_Test.pm (check_n_cleanup_files): Removed the
