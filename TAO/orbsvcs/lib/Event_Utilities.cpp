@@ -83,7 +83,7 @@ ACE_ConsumerQOS_Factory::debug (const RtecEventChannelAdmin::ConsumerQOS& qos)
   ACE_DEBUG ((LM_DEBUG, "ConsumerQOS { \n"));
   event_debug ("    forward", qos.forward_event);
 
-  for (int i = 0; i < qos.dependencies.length (); ++i)
+  for (u_int i = 0; i < qos.dependencies.length (); ++i)
     {
       char buf[128];
       ACE_OS::sprintf (buf, " dep[%d]", i);
@@ -120,7 +120,7 @@ ACE_SupplierQOS_Factory::insert (RtecEventComm::EventSourceID sid,
 void ACE_SupplierQOS_Factory::debug (const RtecEventChannelAdmin::SupplierQOS& qos)
 {
   ACE_DEBUG ((LM_DEBUG, "ConsumerQOS { \n"));
-  for (int i = 0; i < qos.publications_.length (); ++i)
+  for (u_int i = 0; i < qos.publications_.length (); ++i)
     {
       char buf[128];
       ACE_OS::sprintf (buf, " publications[%d]", i);
