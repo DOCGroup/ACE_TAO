@@ -545,8 +545,7 @@ void TAO_FTEC_Event_Channel_Impl::set_update (const FTRT::State & s
     FtRtecEventChannelAdmin::Operation_var op(new FtRtecEventChannelAdmin::Operation);
 
     if (!(cdr >> *op)) {
-      ACE_DEBUG((LM_DEBUG, "**** received message length = %d\n", s.length() ));
-      ACE_HEX_DUMP((LM_DEBUG, (const char*)s.get_buffer(), s.length(), "  receiving state "));
+      TAO_FTRTEC::Log::hexdump(4, (const char*)s.get_buffer(), s.length(), "  receiving state ");
       TAO_FTRTEC::Log(3, "Throwing FTRT::InvalidUpdate\n");
       ACE_THROW(FTRT::InvalidUpdate() );
     }

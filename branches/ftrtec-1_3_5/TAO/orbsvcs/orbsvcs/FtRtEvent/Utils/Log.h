@@ -34,13 +34,14 @@ namespace TAO_FTRTEC {
   public:
     Log (unsigned int log_level, const ACE_TCHAR* format, ...);
     static void level(unsigned int log_level);
+    static void hexdump(unsigned int log_level, const char* buf, size_t len, const char* msg);
   private:
-    friend Trace;
+    friend class Trace;
     static unsigned log_level_;
   };
 }
 
-#define FTRTEC_TRACE(x) TAO_FTRTEC::Trace __trace_obj(x)
+#define FTRTEC_TRACE(x) TAO_FTRTEC::Trace __ftrtec_trace_obj(x)
 
 #if defined(__ACE_INLINE__)
 #include "Log.inl"

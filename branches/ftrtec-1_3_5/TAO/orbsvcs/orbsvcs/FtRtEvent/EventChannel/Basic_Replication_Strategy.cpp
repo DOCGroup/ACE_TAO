@@ -81,7 +81,7 @@ Basic_Replication_Strategy::replicate_request(
     Request_Context_Repository().set_transaction_depth(transaction_depth-1 ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    ACE_HEX_DUMP((LM_DEBUG, (const char*)state.get_buffer(), state.length(), "  sending state "));
+    TAO_FTRTEC::Log::hexdump(4, (const char*)state.get_buffer(), state.length(), "  sending state ");
     if (transaction_depth > 1) {
       successor->set_update(state ACE_ENV_ARG_PARAMETER);
     }
