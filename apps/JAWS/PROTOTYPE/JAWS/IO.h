@@ -160,8 +160,8 @@ public:
   virtual ~JAWS_Asynch_IO (void);
 
   virtual void accept (JAWS_IO_Handler *ioh,
-                       ACE_Message_Block *mb,
-                       unsigned int size);
+                       ACE_Message_Block *mb = 0,
+                       unsigned int size = 0);
 
   virtual void read (JAWS_IO_Handler *ioh,
                      ACE_Message_Block *mb,
@@ -211,8 +211,8 @@ class JAWS_Export JAWS_Asynch2_IO : public JAWS_Asynch_IO
   // This version of Asynch_IO has a do nothing accept() implementation.
 public:
   virtual void accept (JAWS_IO_Handler *ioh,
-                       ACE_Message_Block *mb,
-                       unsigned int size);
+                       ACE_Message_Block *mb = 0,
+                       unsigned int size = 0);
   // does nothing
 
 };

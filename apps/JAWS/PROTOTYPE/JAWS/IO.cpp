@@ -447,7 +447,7 @@ JAWS_Asynch_IO::send_message (JAWS_IO_Handler *ioh,
 void
 JAWS_Asynch2_IO::accept (JAWS_IO_Handler *,
                          ACE_Message_Block *,
-                         unsigned int);
+                         unsigned int)
 {
 }
 
