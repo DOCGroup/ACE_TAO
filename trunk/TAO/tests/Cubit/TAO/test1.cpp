@@ -22,31 +22,31 @@
 //
 #define	DEFINE_TEST3(typename, truetype, truetypename) \
     static const TAO_Param_Data test1_ ## typename ## _paramdata [4] = { \
-    { _tc_CORBA_ ## truetypename, PARAM_RETURN, 0 }, \
-    { _tc_CORBA_ ## truetypename, PARAM_IN, 0 }, \
-    { _tc_CORBA_ ## truetypename, PARAM_OUT, 0 }, \
-    { _tc_CORBA_ ## truetypename, PARAM_INOUT, 0 }, \
+    { CORBA::_tc_ ## truetypename, PARAM_RETURN, 0 }, \
+    { CORBA::_tc_ ## truetypename, PARAM_IN, 0 }, \
+    { CORBA::_tc_ ## truetypename, PARAM_OUT, 0 }, \
+    { CORBA::_tc_ ## truetypename, PARAM_INOUT, 0 }, \
     }; \
     \
     extern const TAO_Call_Data test1_ ## typename ## _calldata; \
     \
     const TAO_Call_Data test1_ ## typename ## _calldata = { \
-	"test_" #typename, CORBA_B_TRUE, \
+	"test_" #typename, CORBA::B_TRUE, \
 	4, &test1_ ## typename ## _paramdata [0], \
 	0, 0, \
     }; \
     \
-    CORBA_ ## truetype \
+    CORBA:: ## truetype \
     test1_test_ ## typename (test1_ptr target, \
-		CORBA_ ## truetype in_a1, \
-		CORBA_ ## truetype &out_a2, \
-		CORBA_ ## truetype &inout_a3, \
-		CORBA_Environment &env) { \
-	CORBA_ ## truetype _retval; \
+		CORBA:: ## truetype in_a1, \
+		CORBA:: ## truetype &out_a2, \
+		CORBA:: ## truetype &inout_a3, \
+		CORBA::Environment &env) { \
+	CORBA:: ## truetype _retval; \
 	STUB_Object	*_obj; \
 	if (target->QueryInterface (IID_STUB_Object, (void **)&_obj) \
 		!= NOERROR) \
-	    env.exception (new CORBA_INV_OBJREF (COMPLETED_NO)); \
+	    env.exception (new CORBA::INV_OBJREF (COMPLETED_NO)); \
 	else { \
 	    _obj->do_call (env, &test1_ ## typename ## _calldata, \
 		&_retval, &in_a1, &out_a2, &inout_a3); \
@@ -58,7 +58,7 @@
 //  changed extern const calldata test1_ ## typename ## _calldata;
 //  to     const calldata test1_ ## typename ## _calldata; \
 
-//	changed CORBA_ ## truetype _retval = 0; to changed CORBA_ ## truetype _retval;
+//	changed CORBA:: ## truetype _retval = 0; to changed CORBA:: ## truetype _retval;
 
 #define	DEFINE_TEST(typename, truetype) \
 	DEFINE_TEST3(typename, truetype, truetype)
@@ -70,19 +70,19 @@
 // that the server returns some kind of system exception.
 //
 static const TAO_Call_Data illegal_calldata = {
-    "+_illegal", CORBA_B_TRUE,
+    "+_illegal", CORBA::B_TRUE,
     0, 0,
     0, 0
 };
 
 void
-test_illegal (test1_ptr target, CORBA_Environment &env)
+test_illegal (test1_ptr target, CORBA::Environment &env)
 {
     STUB_Object		*data;
 
     if (target->QueryInterface (IID_STUB_Object, (void **)&data)
 	    != NOERROR)
-	env.exception (new CORBA_INV_OBJREF (COMPLETED_NO));
+	env.exception (new CORBA::INV_OBJREF (COMPLETED_NO));
     else {
 	data->do_call (env, &illegal_calldata
 	    );
@@ -93,19 +93,19 @@ test_illegal (test1_ptr target, CORBA_Environment &env)
 
 extern const TAO_Call_Data test1_void_calldata;
 const TAO_Call_Data test1_void_calldata = {
-    "test_void", CORBA_B_TRUE,
+    "test_void", CORBA::B_TRUE,
     0, 0,
     0, 0
 };
 
 void
-test1_test_void (test1_ptr target, CORBA_Environment &env)
+test1_test_void (test1_ptr target, CORBA::Environment &env)
 {
     STUB_Object		*data;
 
     if (target->QueryInterface (IID_STUB_Object, (void **)&data)
 	    != NOERROR)
-	env.exception (new CORBA_INV_OBJREF (COMPLETED_NO));
+	env.exception (new CORBA::INV_OBJREF (COMPLETED_NO));
     else {
 	data->do_call (env, &test1_void_calldata
 	    );
@@ -138,35 +138,35 @@ DEFINE_TEST (ulong, ULong);
 // (such as this one).  Tradeoffs!
 //
 static const TAO_Param_Data test1_float_paramdata [4] = {
-    { _tc_CORBA_Float , PARAM_RETURN , 0 },
-    { _tc_CORBA_Float , PARAM_IN , 0 },
-    { _tc_CORBA_Float , PARAM_OUT , 0 },
-    { _tc_CORBA_Float , PARAM_INOUT , 0 }
+    { CORBA::_tc_float , PARAM_RETURN , 0 },
+    { CORBA::_tc_float , PARAM_IN , 0 },
+    { CORBA::_tc_float , PARAM_OUT , 0 },
+    { CORBA::_tc_float , PARAM_INOUT , 0 }
 };
 
 extern const TAO_Call_Data test1_float_calldata;
 
 const TAO_Call_Data test1_float_calldata = {
-    "test_float", CORBA_B_TRUE,
+    "test_float", CORBA::B_TRUE,
     4 , &test1_float_paramdata [0],
     0 , 0
 };
 
-CORBA_Float
+CORBA::Float
 test1_test_float (
     test1_ptr		target,
-    CORBA_Float	in_a1,
-    CORBA_Float	&out_a2,
-    CORBA_Float	&inout_a3,
-    CORBA_Environment	&env
+    CORBA::Float	in_a1,
+    CORBA::Float	&out_a2,
+    CORBA::Float	&inout_a3,
+    CORBA::Environment	&env
 )
 {
-    CORBA_Float	_retval;
+    CORBA::Float	_retval;
 
     // These three temporaries required due to MIPS compiler bug
-    CORBA_Float	_in_a1 = in_a1;
-    CORBA_Float	_out_a2 = out_a2;
-    CORBA_Float	_inout_a3 = inout_a3;
+    CORBA::Float	_in_a1 = in_a1;
+    CORBA::Float	_out_a2 = out_a2;
+    CORBA::Float	_inout_a3 = inout_a3;
 
     target -> data -> do_call (env,
 	&test1_float_calldata,
@@ -188,12 +188,12 @@ DEFINE_TEST (char, Char);
 DEFINE_TEST (octet, Octet);
 
 /*
-CORBA_Any *
+CORBA::Any *
 test1_test_any (test1_ptr target,
-	const CORBA_Any &in_a1,
-	CORBA_Any *&out_a2,
-	CORBA_Any &inout_a3,
-	CORBA_Environment &env)
+	const CORBA::Any &in_a1,
+	CORBA::Any *&out_a2,
+	CORBA::Any &inout_a3,
+	CORBA::Environment &env)
 {
     // XXX implement this stub! ... annoying that C++ mapping
     // calls for so much special casing
@@ -255,7 +255,7 @@ DEFINE_TEST (longdouble, LongDouble);
 //
 // "x1" exception typecode ... must be longword aligned
 //
-static CORBA_Long oc_x1 [] = {
+static CORBA::Long oc_x1 [] = {
     0,					// big endian flag + padding
     BIG_ENDIAN_LONG (29),		// length of ID string + NUL
     MAKE_BIG_LONG ('I', 'D', 'L', ':'),	// bytes of ID string
@@ -273,16 +273,16 @@ static CORBA_Long oc_x1 [] = {
     0,
     BIG_ENDIAN_LONG (tk_long)
 };
-static CORBA_TypeCode tc_x1 (tk_except, sizeof oc_x1,
-	    (unsigned char *)&oc_x1, CORBA_B_FALSE);
-CORBA_TypeCode_ptr	_tc_test1_x1 = &tc_x1;
+static CORBA::TypeCode tc_x1 (tk_except, sizeof oc_x1,
+	    (unsigned char *)&oc_x1, CORBA::B_FALSE);
+CORBA::TypeCode_ptr	_tc_test1_x1 = &tc_x1;
 
 
 
 //
 // "x2" exception typecode ... must be longword aligned
 //
-static CORBA_Long oc_x2 [] = {
+static CORBA::Long oc_x2 [] = {
     0,					// big endian flag + padding
     BIG_ENDIAN_LONG (29),		// length of ID string + NUL
     MAKE_BIG_LONG ('I', 'D', 'L', ':'),	// bytes of ID string
@@ -314,26 +314,26 @@ static CORBA_Long oc_x2 [] = {
     0,
     BIG_ENDIAN_LONG (tk_long)
 };
-static CORBA_TypeCode tc_x2 (tk_except, sizeof oc_x2,
-	    (unsigned char *)&oc_x2, CORBA_B_FALSE);
-CORBA_TypeCode_ptr	_tc_test1_x2 = &tc_x2;
+static CORBA::TypeCode tc_x2 (tk_except, sizeof oc_x2,
+	    (unsigned char *)&oc_x2, CORBA::B_FALSE);
+CORBA::TypeCode_ptr	_tc_test1_x2 = &tc_x2;
 
 
 //
 // parameter, exception, and call descriptions for "test_throw"
 //
 static const TAO_Param_Data test1_test_throw_paramdata [1] = {
-    { _tc_CORBA_Long, PARAM_IN, 0 }
+    { CORBA::_tc_long, PARAM_IN, 0 }
 };
 
-static CORBA_TypeCode_ptr test1_test_throw_excepts [2] = {
+static CORBA::TypeCode_ptr test1_test_throw_excepts [2] = {
     &tc_x1, &tc_x2
 };
 
 extern const TAO_Call_Data test1_test_throw_calldata;
 
 const TAO_Call_Data test1_test_throw_calldata = {
-    "test_throw", CORBA_B_TRUE,
+    "test_throw", CORBA::B_TRUE,
     1, &test1_test_throw_paramdata [0],
     2, &test1_test_throw_excepts [0]
 };
@@ -344,15 +344,15 @@ const TAO_Call_Data test1_test_throw_calldata = {
 void
 test1_test_throw (
     test1_ptr		target,
-    CORBA_Long	case_num,
-    CORBA_Environment	&env		// throw (x1, x2)
+    CORBA::Long	case_num,
+    CORBA::Environment	&env		// throw (x1, x2)
 )
 {
     STUB_Object		*data;
 
     if (target->QueryInterface (IID_STUB_Object, (void **)&data)
 	    != NOERROR)
-	env.exception (new CORBA_INV_OBJREF (COMPLETED_NO));
+	env.exception (new CORBA::INV_OBJREF (COMPLETED_NO));
     else {
 	data->do_call (env, &test1_test_throw_calldata,
 	    &case_num);
@@ -365,7 +365,7 @@ test1_test_throw (
 //
 
 static const TAO_Call_Data test1_please_exit_calldata = {
-    "please_exit", CORBA_B_FALSE,
+    "please_exit", CORBA::B_FALSE,
     0, 0,
     0, 0
 };
@@ -373,14 +373,14 @@ static const TAO_Call_Data test1_please_exit_calldata = {
 void
 test1_please_exit (
     test1_ptr		target,
-    CORBA_Environment	&env
+    CORBA::Environment	&env
 )
 {
     STUB_Object		*data;
 
     if (target->QueryInterface (IID_STUB_Object, (void **)&data)
 	    != NOERROR)
-	env.exception (new CORBA_INV_OBJREF (COMPLETED_NO));
+	env.exception (new CORBA::INV_OBJREF (COMPLETED_NO));
     else {
 	data->do_call (env, &test1_please_exit_calldata
 	    );

@@ -163,8 +163,8 @@ public:
   typedef short Short;
   typedef u_short UShort;
 
-// CORBA "Long" (and its unsigned cousin) are 32 bits, just like on
-// almost all C/C++ compilers.
+  // CORBA "Long" (and its unsigned cousin) are 32 bits, just like on
+  // almost all C/C++ compilers.
 
 #  if	SIZEOF_LONG == 4
   typedef long Long;
@@ -239,48 +239,48 @@ public:
   // = TITLE
   // String var class. Provides automatic deallocation of storage for the
   // string once it goes out of scope. 
-  {
-  public:
-    String_var (void);
-    // default constructor
+    {
+    public:
+      String_var (void);
+      // default constructor
 
-    String_var (char *p);
-    // constructor, owns p
+      String_var (char *p);
+      // constructor, owns p
 
-    String_var (const char *p);
-    // constructor. Makes a copy of p
+      String_var (const char *p);
+      // constructor. Makes a copy of p
 
-    String_var (const String_var &s);
-    // copy constructor
+      String_var (const String_var &s);
+      // copy constructor
 
-    ~String_var (void);
-    // destructor
+      ~String_var (void);
+      // destructor
 
-    String_var &operator= (char *p);
-    // assignment operator
+      String_var &operator= (char *p);
+      // assignment operator
 
-    String_var &operator= (const char *p);
-    // assignment to a const char*. Makes a copy.
+      String_var &operator= (const char *p);
+      // assignment to a const char*. Makes a copy.
 
-    String_var &operator= (const String_var &s);
-    // assignment operator
+      String_var &operator= (const String_var &s);
+      // assignment operator
 
-    operator char *() { return ptr_; }
-    // access and modify
+      operator char *() { return ptr_; }
+      // access and modify
 
-    operator const char *() const {return ptr_; };
-    // only read privileges
+      operator const char *() const {return ptr_; };
+      // only read privileges
 
-    char &operator[] (ULong index);
-    // allows access and modification using an index
+      char &operator[] (ULong index);
+      // allows access and modification using an index
 
-    char operator[] (ULong index) const;
-    // allows only accessing thru an index
+      char operator[] (ULong index) const;
+      // allows only accessing thru an index
 
-  private:
-    char *ptr_;
-    // instance
-  };
+    private:
+      char *ptr_;
+      // instance
+    };
 
   // 94-9-32 Appendix A defines 16-bit UNICODE characters as
   // "WChar", and null-terminated strings of them as "WString".
@@ -500,41 +500,41 @@ public:
 #define SYSEX(name) \
   static TypeCode_ptr          _tc_ ## name
 
-SYSEX(UNKNOWN);
-SYSEX(BAD_PARAM);
-SYSEX(NO_MEMORY);
-SYSEX(IMP_LIMIT);
-SYSEX(COMM_FAILURE);
-SYSEX(INV_OBJREF);
-SYSEX(OBJECT_NOT_EXIST);
-SYSEX(NO_PERMISSION);
-SYSEX(INTERNAL);
-SYSEX(MARSHAL);
-SYSEX(INITIALIZE);
-SYSEX(NO_IMPLEMENT);
-SYSEX(BAD_TYPECODE);
-SYSEX(BAD_OPERATION);
-SYSEX(NO_RESOURCES);
-SYSEX(NO_RESPONSE);
-SYSEX(PERSIST_STORE);
-SYSEX(BAD_INV_ORDER);
-SYSEX(TRANSIENT);
-SYSEX(FREE_MEM);
-SYSEX(INV_IDENT);
-SYSEX(INV_FLAG);
-SYSEX(INTF_REPOS);
-SYSEX(BAD_CONTEXT);
-SYSEX(OBJ_ADAPTER);
-SYSEX(DATA_CONVERSION);
+  SYSEX(UNKNOWN);
+  SYSEX(BAD_PARAM);
+  SYSEX(NO_MEMORY);
+  SYSEX(IMP_LIMIT);
+  SYSEX(COMM_FAILURE);
+  SYSEX(INV_OBJREF);
+  SYSEX(OBJECT_NOT_EXIST);
+  SYSEX(NO_PERMISSION);
+  SYSEX(INTERNAL);
+  SYSEX(MARSHAL);
+  SYSEX(INITIALIZE);
+  SYSEX(NO_IMPLEMENT);
+  SYSEX(BAD_TYPECODE);
+  SYSEX(BAD_OPERATION);
+  SYSEX(NO_RESOURCES);
+  SYSEX(NO_RESPONSE);
+  SYSEX(PERSIST_STORE);
+  SYSEX(BAD_INV_ORDER);
+  SYSEX(TRANSIENT);
+  SYSEX(FREE_MEM);
+  SYSEX(INV_IDENT);
+  SYSEX(INV_FLAG);
+  SYSEX(INTF_REPOS);
+  SYSEX(BAD_CONTEXT);
+  SYSEX(OBJ_ADAPTER);
+  SYSEX(DATA_CONVERSION);
 #undef	SYSEX
 
   static TypeCode_ptr         _tc_Bounds;
   static TypeCode_ptr         _tc_BadKind;
 
-  ORB_ptr ACE_Svc_Export ORB_init (int &argc,
-				   char *const *argv,
-				   char *orb_name,
-				   Environment &env);
+  static ORB_ptr ACE_Svc_Export ORB_init (int &argc,
+                                          char *const *argv,
+                                          char *orb_name,
+                                          Environment &env);
   // ORB initialisation, per OMG document 94-9-46.
   
   // Define flags for NVList add methods

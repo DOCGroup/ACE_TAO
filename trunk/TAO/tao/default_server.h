@@ -46,10 +46,7 @@ public:
   virtual ~TAO_Default_Server_Strategy_Factory (void);
 
   // = Server-side ORB Strategy Factory Methods.
-  virtual CREATION_STRATEGY *creation_strategy (void);
-  virtual ACCEPT_STRATEGY *accept_strategy (void);
   virtual CONCURRENCY_STRATEGY *concurrency_strategy (void);
-  virtual SCHEDULING_STRATEGY *scheduling_strategy (void);
   virtual TAO_Object_Table *object_lookup_strategy( void);
 
   // = Service Configurator hooks.

@@ -28,27 +28,27 @@ public:
   ~Cubit_i (void);
    
   virtual
-  CORBA_Octet Cubit_cube_octet (CORBA_Octet       o,
-				CORBA_Environment &env);
+  CORBA::Octet Cubit_cube_octet (CORBA::Octet       o,
+				CORBA::Environment &env);
 
   virtual
-  CORBA_Short Cubit_cube_short (CORBA_Short       s,
-				CORBA_Environment &env);
+  CORBA::Short Cubit_cube_short (CORBA::Short       s,
+				CORBA::Environment &env);
   
   virtual
-  CORBA_Long Cubit_cube_long (CORBA_Long        l,
-			      CORBA_Environment &env);
+  CORBA::Long Cubit_cube_long (CORBA::Long        l,
+			      CORBA::Environment &env);
   
   virtual
   Cubit_Many *Cubit_cube_struct (Cubit_Many        &values,
-				 CORBA_Environment &env);
+				 CORBA::Environment &env);
   
   virtual
   Cubit_oneof *Cubit_cube_union (Cubit_oneof       &values,
-				 CORBA_Environment &env);
+				 CORBA::Environment &env);
   
   virtual
-  void Cubit_please_exit (CORBA_Environment &env);
+  void Cubit_please_exit (CORBA::Environment &env);
 };
 
 #endif	// _CUBIT_I_HH

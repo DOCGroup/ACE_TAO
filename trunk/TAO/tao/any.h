@@ -25,7 +25,7 @@
 #include "ace/Synch_T.h"
 #include "tao/orb.h"
 #include "tao/typecode.h"
-#endif
+#endif /* 0 */
 
 class ACE_Svc_Export CORBA_Any : public IUnknown
 {

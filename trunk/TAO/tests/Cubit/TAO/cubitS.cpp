@@ -21,7 +21,7 @@ _skel_Cubit::_skel_Cubit (const char *obj_name)
   char *type_id = "IDL:Cubit:1.0";
   IIOP_Object *data;
 
-  CORBA_BOA_ptr oa = TAO_OA_Parameters::instance ()->oa ();
+  CORBA::BOA_ptr oa = TAO_OA_Parameters::instance ()->oa ();
 
   if (oa == 0)
     {
@@ -41,7 +41,7 @@ _skel_Cubit::_skel_Cubit (const char *obj_name)
   data->profile.object_key.length =  ACE_OS::strlen (obj_name);
   data->profile.object_key.maximum = data->profile.object_key.length;
   data->profile.object_key.buffer =
-    new CORBA_Octet[(size_t)data->profile.object_key.length + 1];
+    new CORBA::Octet[(size_t)data->profile.object_key.length + 1];
    
   ACE_OS::memcpy (data->profile.object_key.buffer,
 		  obj_name,
@@ -58,99 +58,99 @@ _skel_Cubit::_skel_Cubit (const char *obj_name)
 }
 
 void
-_skel_Cubit::_cube_octet_skel (CORBA_ServerRequest &req,
-			       CORBA_Object_ptr    obj,
-			       CORBA_Environment   &env)
+_skel_Cubit::_cube_octet_skel (CORBA::ServerRequest &req,
+			       CORBA::Object_ptr    obj,
+			       CORBA::Environment   &env)
 {
-  CORBA_NVList_ptr nvlist;
-  CORBA_NamedValue_ptr	nv;
-  CORBA_Any temp_value (_tc_CORBA_Octet);
+  CORBA::NVList_ptr nvlist;
+  CORBA::NamedValue_ptr	nv;
+  CORBA::Any temp_value (CORBA::_tc_octet);
    
   req.orb ()->create_list (0, nvlist);
-  nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
+  nv = nvlist->add_value (0, temp_value, CORBA::ARG_IN, env);
   dexc (env, "cube_octet, add value");
    
   req.params (nvlist, env);
   dexc (env, "cube_octet, get params");
    
   // Call Implementation
-  CORBA_Octet *value = new CORBA_Octet;
+  CORBA::Octet *value = new CORBA::Octet;
   Cubit *the_cubit = (Cubit *) obj->get_subclass ();
 
-  *value = the_cubit->Cubit_cube_octet (*(CORBA_Octet *) nv->value ()->value (), env);
+  *value = the_cubit->Cubit_cube_octet (*(CORBA::Octet *) nv->value ()->value (), env);
 
-  CORBA_Any *any = new CORBA_Any (_tc_CORBA_Octet, value, CORBA_B_TRUE);
+  CORBA::Any *any = new CORBA::Any (CORBA::_tc_octet, value, CORBA::B_TRUE);
    
   req.result (any, env);
   dexc (env, "cube_octet, result");
 }
 
 void
-_skel_Cubit::_cube_short_skel (CORBA_ServerRequest &req,
-                               CORBA_Object_ptr    obj,
-                               CORBA_Environment   &env)
+_skel_Cubit::_cube_short_skel (CORBA::ServerRequest &req,
+                               CORBA::Object_ptr    obj,
+                               CORBA::Environment   &env)
 {
-  CORBA_NVList_ptr nvlist;
-  CORBA_NamedValue_ptr nv;
-  CORBA_Any temp_value (_tc_CORBA_Short);
+  CORBA::NVList_ptr nvlist;
+  CORBA::NamedValue_ptr nv;
+  CORBA::Any temp_value (CORBA::_tc_short);
    
   req.orb ()->create_list (0, nvlist);
-  nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
+  nv = nvlist->add_value (0, temp_value, CORBA::ARG_IN, env);
   dexc (env, "cube_short, add_value");
    
   req.params (nvlist, env);
   dexc (env, "cube_short, get params");
    
   // Call Implementation
-  CORBA_Short *value = new CORBA_Short;
+  CORBA::Short *value = new CORBA::Short;
   Cubit *the_cubit = (Cubit *) obj->get_subclass ();
-  *value = the_cubit->Cubit_cube_short (*(CORBA_Short *) nv->value ()->value (), env);
+  *value = the_cubit->Cubit_cube_short (*(CORBA::Short *) nv->value ()->value (), env);
    
-  CORBA_Any *any = new CORBA_Any (_tc_CORBA_Short, value, CORBA_B_TRUE);
+  CORBA::Any *any = new CORBA::Any (CORBA::_tc_short, value, CORBA::B_TRUE);
    
   req.result (any, env);
   dexc (env, "cube_short, result");
 }
 
 void
-_skel_Cubit::_cube_long_skel (CORBA_ServerRequest &req,
-                              CORBA_Object_ptr    obj,
-                              CORBA_Environment   &env)
+_skel_Cubit::_cube_long_skel (CORBA::ServerRequest &req,
+                              CORBA::Object_ptr    obj,
+                              CORBA::Environment   &env)
 {
-  CORBA_NVList_ptr nvlist;
-  CORBA_NamedValue_ptr nv;
-  CORBA_Any temp_value (_tc_CORBA_Long);
+  CORBA::NVList_ptr nvlist;
+  CORBA::NamedValue_ptr nv;
+  CORBA::Any temp_value (CORBA::_tc_long);
    
   req.orb ()->create_list (0, nvlist);
-  nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
+  nv = nvlist->add_value (0, temp_value, CORBA::ARG_IN, env);
   dexc (env, "cube_long, add_value");
    
   req.params (nvlist, env);
   dexc (env, "cube_long, get params");
    
   // Call Implementation
-  CORBA_Long *value = new CORBA_Long;
+  CORBA::Long *value = new CORBA::Long;
   Cubit *the_cubit = (Cubit *) obj->get_subclass ();
-  *value = the_cubit->Cubit_cube_long (*(CORBA_Long *) nv->value ()->value (), env);
+  *value = the_cubit->Cubit_cube_long (*(CORBA::Long *) nv->value ()->value (), env);
    
-  CORBA_Any  		*any =
-    new CORBA_Any (_tc_CORBA_Long, value, CORBA_B_TRUE);
+  CORBA::Any  		*any =
+    new CORBA::Any (CORBA::_tc_long, value, CORBA::B_TRUE);
    
   req.result (any, env);
   dexc (env, "cube_long, result");
 }
 
 void
-_skel_Cubit::_cube_struct_skel (CORBA_ServerRequest &req,
-                                CORBA_Object_ptr    obj,
-                                CORBA_Environment   &env)
+_skel_Cubit::_cube_struct_skel (CORBA::ServerRequest &req,
+                                CORBA::Object_ptr    obj,
+                                CORBA::Environment   &env)
 {
-  CORBA_NVList_ptr nvlist;
-  CORBA_NamedValue_ptr nv;
-  CORBA_Any temp_value (TC_Cubit_Many);
+  CORBA::NVList_ptr nvlist;
+  CORBA::NamedValue_ptr nv;
+  CORBA::Any temp_value (TC_Cubit_Many);
    
   req.orb ()->create_list (0, nvlist);
-  nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
+  nv = nvlist->add_value (0, temp_value, CORBA::ARG_IN, env);
   dexc (env, "cube_struct, add_value");
    
   req.params (nvlist, env);
@@ -162,31 +162,31 @@ _skel_Cubit::_cube_struct_skel (CORBA_ServerRequest &req,
   value = the_cubit->Cubit_cube_struct (*(Cubit_Many *) nv->value ()->value (), env);
    
   Cubit_Many *retval = new Cubit_Many;
-  retval->o = (CORBA_Octet)value->o;
-  retval->s = (CORBA_Short)value->s;
+  retval->o = (CORBA::Octet)value->o;
+  retval->s = (CORBA::Short)value->s;
   retval->l = value->l;
    
   // dmsg2 ("cube struct.o, %d -> %d", value->o, retval->o);
   // dmsg2 ("cube struct.s, %d -> %d", value->s, retval->s);
   // dmsg2 ("cube struct.l, %d -> %d", value->l, retval->l);
    
-  CORBA_Any *any = new CORBA_Any (TC_Cubit_Many, retval, CORBA_B_TRUE);
+  CORBA::Any *any = new CORBA::Any (TC_Cubit_Many, retval, CORBA::B_TRUE);
    
   req.result (any, env);
   dexc (env, "cube_struct, result");
 }
 
 void
-_skel_Cubit::_cube_union_skel (CORBA_ServerRequest	&req,
-                               CORBA_Object_ptr    obj,
-                               CORBA_Environment   &env)
+_skel_Cubit::_cube_union_skel (CORBA::ServerRequest	&req,
+                               CORBA::Object_ptr    obj,
+                               CORBA::Environment   &env)
 {
-  CORBA_NVList_ptr nvlist;
-  CORBA_NamedValue_ptr nv;
-  CORBA_Any temp_value (TC_Cubit_oneof);
+  CORBA::NVList_ptr nvlist;
+  CORBA::NamedValue_ptr nv;
+  CORBA::Any temp_value (TC_Cubit_oneof);
    
   req.orb ()->create_list (0, nvlist);
-  nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
+  nv = nvlist->add_value (0, temp_value, CORBA::ARG_IN, env);
   dexc (env, "cube_union_3rd, add_value");
    
   req.params (nvlist, env);
@@ -199,23 +199,23 @@ _skel_Cubit::_cube_union_skel (CORBA_ServerRequest	&req,
 
   Cubit_oneof *r = new Cubit_oneof;
   r->_disc = v->_disc;
-  r->o = (CORBA_Octet) (v->o);
-  r->s = (CORBA_Short) (v->s);
+  r->o = (CORBA::Octet) (v->o);
+  r->s = (CORBA::Short) (v->s);
   r->l = v->l;
-  r->cm.o = (CORBA_Octet) (v->cm.o);
-  r->cm.s = (CORBA_Short) (v->cm.s);
+  r->cm.o = (CORBA::Octet) (v->cm.o);
+  r->cm.s = (CORBA::Short) (v->cm.s);
   r->cm.l =  v->cm.l;
    
-  CORBA_Any *any = new CORBA_Any (TC_Cubit_oneof, r, CORBA_B_TRUE);
+  CORBA::Any *any = new CORBA::Any (TC_Cubit_oneof, r, CORBA::B_TRUE);
    
   req.result (any, env);
   dexc (env, "cube_struct, result");
 }
 
 void
-_skel_Cubit::_please_exit_skel (CORBA_ServerRequest &req,
-                                CORBA_Object_ptr    obj,
-                                CORBA_Environment   &env)
+_skel_Cubit::_please_exit_skel (CORBA::ServerRequest &req,
+                                CORBA::Object_ptr    obj,
+                                CORBA::Environment   &env)
 {
   ACE_UNUSED_ARG (req);
   

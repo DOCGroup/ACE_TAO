@@ -19,10 +19,10 @@
 
 // @@ Shouldn't this be defined in a headerfile somewhere?
 extern void
-print_exception (const CORBA_Exception *, const char *, FILE *f=stdout);
+print_exception (const CORBA::Exception *, const char *, FILE *f=stdout);
 
 // Global Variables
-static CORBA_String key = (CORBA_String) "key0";
+static CORBA::String key = (CORBA::String) "key0";
 
 static int num_of_objs = 1;
 
@@ -41,7 +41,7 @@ parse_args (int argc, char *argv[])
 	TAO_debug_level++;
 	break;
       case 'k':			// key (str)
-	key = (CORBA_String) opts.optarg;
+	key = (CORBA::String) opts.optarg;
 	break;
       case 'n':			// idle seconds b4 exit
 	num_of_objs = ACE_OS::atoi (opts.optarg);
@@ -63,10 +63,10 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  CORBA_Environment env;
+  CORBA::Environment env;
   char *orb_name = "internet";
 
-  CORBA_ORB_ptr	orb_ptr = CORBA_ORB_init (argc, argv, orb_name, env);
+  CORBA::ORB_ptr	orb_ptr = CORBA::ORB_init (argc, argv, orb_name, env);
 
   if (env.exception () != 0) 
     {
@@ -75,7 +75,7 @@ main (int argc, char *argv[])
     }
 
   // Initialize the Basic Object Adapter
-  CORBA_BOA_ptr oa_ptr = orb_ptr->BOA_init (argc, argv, "ROA");
+  CORBA::BOA_ptr oa_ptr = orb_ptr->BOA_init (argc, argv, "ROA");
 
   if (oa_ptr == 0)
     ACE_ERROR_RETURN ((LM_ERROR, " (%P|%t) Unable to initialize the BOA.\n"), 1);
@@ -89,7 +89,7 @@ main (int argc, char *argv[])
 
   for (int i = 0; i < num_of_objs; i++)
     {
-      CORBA_String obj_str = CORBA_string_alloc (ACE_OS::strlen ((char *) key)+2);
+      CORBA::String obj_str = CORBA::string_alloc (ACE_OS::strlen ((char *) key)+2);
 
       ::sprintf (obj_str, "%s%d", (char *) key, i);
 
@@ -106,11 +106,11 @@ main (int argc, char *argv[])
 	  // Why are we getting the BOA_ptr from here when we've
 	  // already got it above?
 
-	  CORBA_OctetSeq obj_key;
-	  obj_key.buffer = (CORBA_Octet *) obj_str;
+	  CORBA::OctetSeq obj_key;
+	  obj_key.buffer = (CORBA::Octet *) obj_str;
 	  obj_key.length = obj_key.maximum = ACE_OS::strlen (obj_str);
      
-	  CORBA_Object_ptr obj = 0;
+	  CORBA::Object_ptr obj = 0;
 
 	  if (oa_ptr->find (obj_key, obj) == -1)
 	    ACE_ERROR_RETURN ((LM_ERROR,
@@ -122,7 +122,7 @@ main (int argc, char *argv[])
 	  // to stdout.  Someone will take that string and give it to
 	  // some client.  Then release the object.
 
-	  CORBA_String str;
+	  CORBA::String str;
          
 	  str = orb_ptr->object_to_string (obj, env);
 
@@ -138,7 +138,7 @@ main (int argc, char *argv[])
 	  dmsg1 ("listening as object '%s'", str);
 	}
 
-      CORBA_string_free (obj_str);  
+      CORBA::string_free (obj_str);  
     }
 
 //  Cubit_i_ptr  my_cubit = new Cubit_i (key);

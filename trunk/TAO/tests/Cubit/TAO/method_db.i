@@ -6,18 +6,18 @@
 #include	"cubitS.h"
 
 static void
-is_a_skel (CORBA_ServerRequest &req,
-           CORBA_Object_ptr    obj,
-           CORBA_Environment   &env)
+is_a_skel (CORBA::ServerRequest &req,
+           CORBA::Object_ptr    obj,
+           CORBA::Environment   &env)
 {
   ACE_UNUSED_ARG (obj);
   
-  CORBA_NVList_ptr nvlist;
-  CORBA_NamedValue_ptr nv;
-  CORBA_Any temp_value (_tc_CORBA_String);
+  CORBA::NVList_ptr nvlist;
+  CORBA::NamedValue_ptr nv;
+  CORBA::Any temp_value (CORBA::_tc_string);
 
   req.orb ()->create_list (0, nvlist);
-  nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
+  nv = nvlist->add_value (0, temp_value, CORBA::ARG_IN, env);
 
   req.params (nvlist, env);
 
@@ -27,16 +27,16 @@ is_a_skel (CORBA_ServerRequest &req,
       return;
     }
 
-  CORBA_Boolean *retval;
-  CORBA_String value = * (CORBA_String *) nv->value ()->value ();
+  CORBA::Boolean *retval;
+  CORBA::String value = * (CORBA::String *) nv->value ()->value ();
 
   if (ACE_OS::strcmp ( (char*)value, "IDL:Cubit:1.0") == 0
-      || ACE_OS::strcmp ( (char *)value, _tc_CORBA_Object->id (env)) == 0)
-    retval = new CORBA_Boolean (CORBA_B_TRUE);
+      || ACE_OS::strcmp ( (char *)value, CORBA::_tc_Object->id (env)) == 0)
+    retval = new CORBA::Boolean (CORBA::B_TRUE);
   else
-    retval = new CORBA_Boolean (CORBA_B_FALSE);
+    retval = new CORBA::Boolean (CORBA::B_FALSE);
 
-  CORBA_Any *any = new CORBA_Any (_tc_CORBA_Boolean, retval, CORBA_B_TRUE);
+  CORBA::Any *any = new CORBA::Any (CORBA::_tc_boolean, retval, CORBA::B_TRUE);
 
   req.result (any, env);
   dexc (env, "_is_a, result");

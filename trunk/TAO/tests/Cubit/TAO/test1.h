@@ -14,14 +14,14 @@
 #pragma	pack (push, 1)			// VC++, known padding rules
 #endif	// VC++
 
-typedef CORBA_UShort		test1_ushort;
-typedef CORBA_ULong		test1_ulong;
+typedef CORBA::UShort		test1_ushort;
+typedef CORBA::ULong		test1_ulong;
 
-typedef CORBA_LongLong	test1_longlong;
-typedef CORBA_ULongLong 	test1_ulonglong;
-typedef CORBA_LongDouble	test1_longdouble;
+typedef CORBA::LongLong	test1_longlong;
+typedef CORBA::ULongLong 	test1_ulonglong;
+typedef CORBA::LongDouble	test1_longdouble;
 
-typedef CORBA_Object		test1;
+typedef CORBA::Object		test1;
 typedef test1			*test1_ptr;
 
 #define	DECL_TEST(typename, truetype) \
@@ -31,87 +31,87 @@ typedef test1			*test1_ptr;
 	truetype		in_a1, \
 	truetype		&out_a2, \
 	truetype		&inout_a3, \
-	CORBA_Environment	&env \
+	CORBA::Environment	&env \
     )
 
-void test_illegal (test1_ptr target, CORBA_Environment &env);
-void test1_test_void (test1_ptr target, CORBA_Environment &env);
+void test_illegal (test1_ptr target, CORBA::Environment &env);
+void test1_test_void (test1_ptr target, CORBA::Environment &env);
 
-DECL_TEST (short, CORBA_Short);
-DECL_TEST (long, CORBA_Long);
-DECL_TEST (ushort, CORBA_UShort);
-DECL_TEST (ulong, CORBA_ULong);
-DECL_TEST (float, CORBA_Float);
-DECL_TEST (double, CORBA_Double);
-DECL_TEST (boolean, CORBA_Boolean);
-DECL_TEST (char, CORBA_Char);
-DECL_TEST (octet, CORBA_Octet);
+DECL_TEST (short, CORBA::Short);
+DECL_TEST (long, CORBA::Long);
+DECL_TEST (ushort, CORBA::UShort);
+DECL_TEST (ulong, CORBA::ULong);
+DECL_TEST (float, CORBA::Float);
+DECL_TEST (double, CORBA::Double);
+DECL_TEST (boolean, CORBA::Boolean);
+DECL_TEST (char, CORBA::Char);
+DECL_TEST (octet, CORBA::Octet);
 
-CORBA_Any *
+CORBA::Any *
 test1_test_any (
     test1_ptr		target,
-    const CORBA_Any	&in_a1,
-    CORBA_Any		*&out_a2,
-    CORBA_Any		&inout_a3,
-    CORBA_Environment	&env
+    const CORBA::Any	&in_a1,
+    CORBA::Any		*&out_a2,
+    CORBA::Any		&inout_a3,
+    CORBA::Environment	&env
 );
 
-DECL_TEST (TypeCode, CORBA_TypeCode_ptr);
-DECL_TEST (Principal, CORBA_Principal_ptr);
-DECL_TEST (Object, CORBA_Object_ptr);
+DECL_TEST (TypeCode, CORBA::TypeCode_ptr);
+DECL_TEST (Principal, CORBA::Principal_ptr);
+DECL_TEST (Object, CORBA::Object_ptr);
 
 // NOTE:  CORBA C++ mapping says the "in" string is const
-DECL_TEST (string, CORBA_String);
+DECL_TEST (string, CORBA::String);
 
-DECL_TEST (longlong, CORBA_LongLong);
-DECL_TEST (ulonglong, CORBA_ULongLong);
-DECL_TEST (wchar, CORBA_WChar);
+DECL_TEST (longlong, CORBA::LongLong);
+DECL_TEST (ulonglong, CORBA::ULongLong);
+DECL_TEST (wchar, CORBA::WChar);
 
 // NOTE:  CORBA C++ mapping says the "in" string is const
-DECL_TEST (wstring, CORBA_WString);
+DECL_TEST (wstring, CORBA::WString);
 
-DECL_TEST (longdouble, CORBA_LongDouble);
+DECL_TEST (longdouble, CORBA::LongDouble);
 
 #undef	DECL_TEST
 
-extern CORBA_TypeCode_ptr	_tc_test1_x1;
+extern CORBA::TypeCode_ptr	_tc_test1_x1;
 
-class test1_x1 : public CORBA_UserException {
+class test1_x1 : public CORBA::UserException {
   public:
-    CORBA_Long	case_num;
+    CORBA::Long	case_num;
 			
-			test1_x1 (CORBA_Long n)
-			: CORBA_UserException (_tc_test1_x1), case_num (n)
+			test1_x1 (CORBA::Long n)
+			: CORBA::UserException (_tc_test1_x1), case_num (n)
 			{ }
 };
 
-extern CORBA_TypeCode_ptr	_tc_test1_x2;
+extern CORBA::TypeCode_ptr	_tc_test1_x2;
 
-class test1_x2 : public CORBA_UserException {
+class test1_x2 : public CORBA::UserException {
   public:
-    CORBA_Object_ptr	obj;
-    CORBA_Long	case_num;
+    CORBA::Object_ptr	obj;
+    CORBA::Long	case_num;
 
-			test1_x2 (CORBA_Object_ptr obj1,
-				CORBA_Long n)
-			: CORBA_UserException (_tc_test1_x2),
+			test1_x2 (CORBA::Object_ptr obj1,
+				CORBA::Long n)
+			: CORBA::UserException (_tc_test1_x2),
 			    obj (obj1), case_num (n) { }
 
 			~test1_x2 ()
-			{ CORBA_release (obj); }
+			{ CORBA::release (obj); }
 };
 
 void
 test1_test_throw (
     test1_ptr		target,
-    CORBA_Long	case_num,
-    CORBA_Environment	&env		// throw (x1, x2)
+    CORBA::Long	case_num,
+    CORBA::Environment	&env		// throw (x1, x2)
 );
 
 void
 test1_please_exit (
     test1_ptr		target,
-    CORBA_Environment	&env
+    CORBA::Environment	&env
 );
 
 #ifdef	_MSC_VER

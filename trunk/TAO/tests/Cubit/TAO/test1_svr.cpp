@@ -51,23 +51,23 @@ extern char 	*optarg;	// missing on some platforms
 #define	DEFINE_SKEL3(name,truetype,truetypename) \
     static void \
     _test1_test_ ## name ( \
-	CORBA_ServerRequest	&req, \
-        CORBA_Object_ptr        obj, \
-	CORBA_Environment	&env \
+	CORBA::ServerRequest	&req, \
+        CORBA::Object_ptr        obj, \
+	CORBA::Environment	&env \
     ) \
     { \
-	CORBA_NVList_ptr	nvlist; \
-	CORBA_ ## truetype	scratch = 0; \
-	CORBA_Any		temp_value (_tc_CORBA_ ## truetypename, \
-				    &scratch, CORBA_B_FALSE); \
+	CORBA::NVList_ptr	nvlist; \
+	CORBA:: ## truetype	scratch = 0; \
+	CORBA::Any		temp_value (CORBA::_tc_ ## truetypename, \
+				    &scratch, CORBA::B_FALSE); \
  	\
 	req.orb ()->create_list (3, nvlist); \
 	(void) nvlist->add_value (0, temp_value, \
-		CORBA_IN_COPY_VALUE|CORBA_ARG_IN, env); \
+		CORBA::IN_COPY_VALUE|CORBA::ARG_IN, env); \
 	(void) nvlist->add_value (0, temp_value, \
-		CORBA_IN_COPY_VALUE|CORBA_ARG_OUT, env); \
+		CORBA::IN_COPY_VALUE|CORBA::ARG_OUT, env); \
 	(void) nvlist->add_value (0, temp_value, \
-		CORBA_IN_COPY_VALUE|CORBA_ARG_INOUT, env); \
+		CORBA::IN_COPY_VALUE|CORBA::ARG_INOUT, env); \
 	 \
 	req.params (nvlist, env); \
 	if (env.exception () != 0) { \
@@ -75,29 +75,29 @@ extern char 	*optarg;	// missing on some platforms
 	    return; \
 	} \
  	\
-	CORBA_ ## truetype 	*v1, *v2, *retval; \
+	CORBA:: ## truetype 	*v1, *v2, *retval; \
  	\
-	v1 = (CORBA_ ## truetype *) nvlist->item (0)->value ()->value (); \
-	v2 = new CORBA_ ## truetype; \
-	*v2 = (CORBA_ ## truetype) OPERATION (*v1); \
-	retval = new CORBA_ ## truetype; \
-	*retval = (CORBA_ ## truetype) OPERATION (*v1); \
+	v1 = (CORBA:: ## truetype *) nvlist->item (0)->value ()->value (); \
+	v2 = new CORBA:: ## truetype; \
+	*v2 = (CORBA:: ## truetype) OPERATION (*v1); \
+	retval = new CORBA:: ## truetype; \
+	*retval = (CORBA:: ## truetype) OPERATION (*v1); \
  	\
-	CORBA_Any_ptr		any_val; \
+	CORBA::Any_ptr		any_val; \
  	\
 	any_val = nvlist->item (1)->value (); \
-	any_val->replace (any_val->type (), v2, CORBA_B_TRUE, env); \
+	any_val->replace (any_val->type (), v2, CORBA::B_TRUE, env); \
 	if (env.exception () != 0) { \
 	    dexc (env, "test1_test_" # name "skeleton, val2 replace"); \
 	    return; \
 	} \
  	\
-	v1 = (CORBA_ ## truetype *) nvlist->item (2)->value ()->value (); \
-    	CORBA_ ## truetype v1copy = *v1; \
-	*v1 = (CORBA_ ## truetype) OPERATION (v1copy); \
+	v1 = (CORBA:: ## truetype *) nvlist->item (2)->value ()->value (); \
+    	CORBA:: ## truetype v1copy = *v1; \
+	*v1 = (CORBA:: ## truetype) OPERATION (v1copy); \
  	\
-	any_val = new CORBA_Any (_tc_CORBA_ ## truetypename, \
-		retval, CORBA_B_TRUE); \
+	any_val = new CORBA::Any (CORBA::_tc_ ## truetypename, \
+		retval, CORBA::B_TRUE); \
 	req.result (any_val, env); \
 	if (env.exception () != 0) { \
 	    dexc (env, "test1_test_" # name "skeleton, result"); \
@@ -110,11 +110,11 @@ extern char 	*optarg;	// missing on some platforms
 extern const TAO_Call_Data test1_void_calldata;
 
 static void
-_test1_test_void (CORBA_ServerRequest &req,
-		  CORBA_Object_ptr obj,
-		  CORBA_Environment &env)
+_test1_test_void (CORBA::ServerRequest &req,
+		  CORBA::Object_ptr obj,
+		  CORBA::Environment &env)
 {
-  CORBA_NVList_ptr nvlist;
+  CORBA::NVList_ptr nvlist;
 
   req.orb ()->create_list (0, nvlist);
   req.params (nvlist, env);
@@ -194,14 +194,14 @@ DEFINE_SKEL3 (TypeCode, TypeCode_ptr, TypeCode)
 //
 // For string, output is copy of input
 //
-#define	OPERATION(x)	(CORBA_string_copy(x))
+#define	OPERATION(x)	(CORBA::string_copy(x))
 DEFINE_SKEL3 (string, String, String)
 #undef	OPERATION
 
 //
 // For wstring, output is copy of input
 //
-#define	OPERATION(x)	(CORBA_wstring_copy(x))
+#define	OPERATION(x)	(CORBA::wstring_copy(x))
 DEFINE_SKEL3 (wstring, WString, WString)
 #undef	OPERATION
 
@@ -227,17 +227,17 @@ DEFINE_SKEL3 (wstring, WString, WString)
 extern const TAO_Call_Data test1_test_throw_calldata;
 
 static void
-_test1_test_throw (CORBA_ServerRequest &req,
-		   CORBA_Object_ptr obj,
-		   CORBA_Environment &env)
+_test1_test_throw (CORBA::ServerRequest &req,
+		   CORBA::Object_ptr obj,
+		   CORBA::Environment &env)
 {
-  CORBA_NVList_ptr nvlist;
-  CORBA_NamedValue_ptr nv;
-  CORBA_Any temp_value (_tc_CORBA_Long);
-  CORBA_Long value;
+  CORBA::NVList_ptr nvlist;
+  CORBA::NamedValue_ptr nv;
+  CORBA::Any temp_value (CORBA::_tc_long);
+  CORBA::Long value;
 
   req.orb ()->create_list (0, nvlist);
-  nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
+  nv = nvlist->add_value (0, temp_value, CORBA::ARG_IN, env);
 
   req.params (nvlist, env);
   if (env.exception () != 0)
@@ -246,29 +246,29 @@ _test1_test_throw (CORBA_ServerRequest &req,
       return;
     }
 
-  value = *(CORBA_Long *)nv->value ()->value ();
+  value = *(CORBA::Long *)nv->value ()->value ();
   if (env.exception () != 0)
     {
       dexc (env, "test_throw, param value");
       return;
     }
 
-  CORBA_Any_ptr any;
+  CORBA::Any_ptr any;
 
   if (value <= 0) 
     {
       test1_x1		*x;
 
       x = new test1_x1 (value);
-      any = new CORBA_Any (_tc_test1_x1, x, CORBA_B_TRUE);
+      any = new CORBA::Any (_tc_test1_x1, x, CORBA::B_TRUE);
 
     }
   else if (value & 0x01)
     {
       test1_x2		*x;
 
-      x = new test1_x2 (CORBA_Object::_nil (), value);
-      any = new CORBA_Any (_tc_test1_x2, x, CORBA_B_TRUE);
+      x = new test1_x2 (CORBA::Object::_nil (), value);
+      any = new CORBA::Any (_tc_test1_x2, x, CORBA::B_TRUE);
 
     } 
   else
@@ -277,14 +277,14 @@ _test1_test_throw (CORBA_ServerRequest &req,
       test1_x2		*x;
 
       x = new test1_x2 (req.oa()->target (), value);
-      any = new CORBA_Any (_tc_test1_x2, x, CORBA_B_TRUE);
+      any = new CORBA::Any (_tc_test1_x2, x, CORBA::B_TRUE);
 #else
       //
       // XXX right now, we don't have a target() operation on the
       // BOA ... needs to be added.  Verify the client side memory
       // leak of pointers embedded in user exceptions is fixed, too.
       //
-      env.exception (new CORBA_IMP_LIMIT (COMPLETED_NO));
+      env.exception (new CORBA::IMP_LIMIT (COMPLETED_NO));
       return;
 #endif
     }
@@ -358,10 +358,10 @@ static const TAO_Skel_Entry test1_operations [] = {
 //
 static void
 level1_skeleton (
-    CORBA_OctetSeq		&key,
-    CORBA_ServerRequest		&req,
+    CORBA::OctetSeq		&key,
+    CORBA::ServerRequest		&req,
     void			*context,
-    CORBA_Environment		&env
+    CORBA::Environment		&env
 )
 {
   //
@@ -370,14 +370,14 @@ level1_skeleton (
   // which object was the target, and hence which operations
   // vector to dispatch the request.
   //
-  CORBA_OctetSeq		*obj_key;
+  CORBA::OctetSeq		*obj_key;
 
-  obj_key = (CORBA_OctetSeq *) context;
+  obj_key = (CORBA::OctetSeq *) context;
   if (obj_key->length != key.length
       || ACE_OS::memcmp (obj_key->buffer, key.buffer,
 			 obj_key->length) != 0)
     {
-    env.exception (new CORBA_OBJECT_NOT_EXIST (COMPLETED_NO));
+    env.exception (new CORBA::OBJECT_NOT_EXIST (COMPLETED_NO));
 #ifdef	DEBUG
     if (TAO_debug_level)
       dmsg_opaque ("request to nonexistent object, key = ",
@@ -391,7 +391,7 @@ level1_skeleton (
   // call it with the right per-object state.
   //
   const TAO_Skel_Entry	*entry;
-  CORBA_String		opname;
+  CORBA::String		opname;
 
   opname = req.op_name ();
   for (entry = &test1_operations [0]; entry->op_descriptor; entry++)
@@ -401,7 +401,7 @@ level1_skeleton (
       // We pass a bogus object because this version of the cubit example is
       // so tightly coupled that it doesn't use it.  Future modifications will,
       // hopefully!
-      CORBA_Object_ptr bogus_object = 0;
+      CORBA::Object_ptr bogus_object = 0;
       entry->impl_skeleton (req, bogus_object, env);
       return;
     }
@@ -448,7 +448,7 @@ level1_skeleton (
   // No match.  Operation not implemented; say so.
   //
   dmsg1 ("unknown operation, %s", opname);
-  env.exception (new CORBA_BAD_OPERATION (COMPLETED_NO));
+  env.exception (new CORBA::BAD_OPERATION (COMPLETED_NO));
 }
 
 
@@ -456,25 +456,25 @@ level1_skeleton (
 // Create and print the objref, listen for calls on it until done.
 //
 extern void
-print_exception (const CORBA_Exception *, const char *, FILE *f=stdout);
+print_exception (const CORBA::Exception *, const char *, FILE *f=stdout);
 
 int
-OA_listen (CORBA_ORB_ptr orb_ptr,
-	   CORBA_BOA_ptr oa_ptr,
-	   CORBA_String key,
+OA_listen (CORBA::ORB_ptr orb_ptr,
+	   CORBA::BOA_ptr oa_ptr,
+	   CORBA::String key,
 	   int idle)
 {
   //
   // Create the object we'll be implementing.
   //
-  CORBA_OctetSeq	obj_key;
-  CORBA_Object_ptr	obj;
-  CORBA_Environment	env;
+  CORBA::OctetSeq	obj_key;
+  CORBA::Object_ptr	obj;
+  CORBA::Environment	env;
 
-  obj_key.buffer = (CORBA_Octet *) key;
+  obj_key.buffer = (CORBA::Octet *) key;
   obj_key.length = obj_key.maximum = ACE_OS::strlen (key);
 
-  obj = oa_ptr->create (obj_key, (CORBA_String) "", env);
+  obj = oa_ptr->create (obj_key, (CORBA::String) "", env);
   if (env.exception () != 0)
     {
       print_exception (env.exception (), "BOA::create");
@@ -486,7 +486,7 @@ OA_listen (CORBA_ORB_ptr orb_ptr,
   // print it to stdout.  Someone will take that string
   // and give it to some client.
   //
-  CORBA_String	str;
+  CORBA::String	str;
 
   str = orb_ptr->object_to_string (obj, env);
   if (env.exception () != 0)
@@ -501,8 +501,8 @@ OA_listen (CORBA_ORB_ptr orb_ptr,
   //
   // Clean up -- "key" is sufficient to dispatch all requests.
   //
-  CORBA_release (obj);
-  CORBA_string_free (str);
+  CORBA::release (obj);
+  CORBA::string_free (str);
   env.clear ();
 
   //
@@ -526,21 +526,21 @@ OA_listen (CORBA_ORB_ptr orb_ptr,
 
   for (;;) {
     if (idle == -1)
-      oa_ptr->get_request (CORBA_B_FALSE, 0, env);
+      oa_ptr->get_request (CORBA::B_FALSE, 0, env);
     else
       {
 	timeval		tv;
 
 	tv.tv_sec = idle;
 	tv.tv_usec = 0;
-	oa_ptr->get_request (CORBA_B_FALSE, &tv, env);
+	oa_ptr->get_request (CORBA::B_FALSE, &tv, env);
       }
 
-    CORBA_Exception_ptr	xp;
+    CORBA::Exception_ptr	xp;
 
     if ((xp = env.exception ()) != 0)
       {
-	CORBA_Environment env2;	// XXX
+	CORBA::Environment env2;	// XXX
 	char *id;
 
 	id = env.exception ()->id ();
@@ -550,7 +550,7 @@ OA_listen (CORBA_ORB_ptr orb_ptr,
 	// shutdown was initiated.  Simpler to rely on that
 	// than to arrange any handshaking in this simple app.
 	//
-	if (strcmp (id, _tc_CORBA_BAD_INV_ORDER->id (env2)) == 0)
+	if (strcmp (id, CORBA::_tc_bAD_INV_ORDER->id (env2)) == 0)
 	  {
 	    break;
 
@@ -586,10 +586,10 @@ OA_listen (CORBA_ORB_ptr orb_ptr,
 int
 main (int    argc, char   *argv[])
 {
-  CORBA_Environment	env;
-  CORBA_ORB_ptr	orb_ptr;
-  CORBA_BOA_ptr		oa_ptr;
-  CORBA_String	key = (CORBA_String) "elvis";
+  CORBA::Environment	env;
+  CORBA::ORB_ptr	orb_ptr;
+  CORBA::BOA_ptr		oa_ptr;
+  CORBA::String	key = (CORBA::String) "elvis";
   char		*oa_name = 0;
   char		*orb_name = "internet";
   int			idle = -1;
@@ -612,7 +612,7 @@ main (int    argc, char   *argv[])
 	continue;
 
       case 'k':			// key (str)
-	key = (CORBA_String) get_opt.optarg;
+	key = (CORBA::String) get_opt.optarg;
 	continue;
 
       case 'o':			// orb name
@@ -655,7 +655,7 @@ main (int    argc, char   *argv[])
   //
   // The BOA may or may not actually be named ...
   //
-  oa_ptr = CORBA_BOA::get_named_boa (orb_ptr, oa_name, env);
+  oa_ptr = CORBA::BOA::get_named_boa (orb_ptr, oa_name, env);
   if (env.exception () != 0) {
     print_exception (env.exception (), "OA init");
     return 1;
