@@ -23,69 +23,20 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
-//#include "ace/Object_Manager_Base.h"
-
-
-// new ace includes
-// these are listed in alphabetical order to make it easy to scan over them.
-// they take care of their own dependancies.
-///# include "ace/ace_aio.h"
-//# include "ace/ace_assert.h" // not used directly
-///# include "ace/ace_ctype.h"
-# include "ace/ace_dlfcn.h" // needed in OS.h for ACE_SHLIB_HANDLE, etc...
-///# include "ace/ace_dirent.h"
-///# include "ace/ace_errno.h"
-# include "ace/ace_fcntl.h" // needed in OS.h for flock, etc...
-///# include "ace/ace_float.h"
-//# include "ace/ace_ftw.h"
-//# include "ace/ace_grp.h" // not used directly
-//# include "ace/ace_langinfo.h" // not used directly
-///# include "ace/ace_limits.h"
-//# include "ace/ace_local.h" // not used directly
-//# include "ace/ace_math.h" // not used directly
-//# include "ace/ace_memory" // only used in auto_prt
-///# include "ace/ace_new.h" //config-all, etc...
-//# include "ace/ace_nl_types.h" // not used directly
-# include "ace/ace_poll.h" // needed in OS.h for poll
-//# include "ace/ace_pthread.h"
-# include "ace/ace_pwd.h"  // needed in OS.h for password stuff
-//# include "ace/ace_regex.h" // not used directly
-///# include "ace/ace_sched.h" // for thread scheduling
-//# include "ace/ace_search.h" // not used directly
-//# include "ace/ace_semaphore.h" // on linux this is a pthread thing
-//# include "ace/ace_setjmp.h" // not used directly
-# include "ace/ace_signal.h" // needed in OS.h
-//# include "ace/ace_stdarg.h" // always used with ace_stdio.h
-///# include "ace/ace_stddef.h"
+# include "ace/ace_dlfcn.h" // needed for ACE_SHLIB_HANDLE, etc...
+# include "ace/ace_fcntl.h" // needed for flock, etc...
+# include "ace/ace_poll.h" // needed for poll
+# include "ace/ace_pwd.h"  // needed for password stuff
+# include "ace/ace_signal.h" 
 # include "ace/ace_stdio.h"
-# include "ace/ace_stdlib.h" // needed in OS.h for ACE_RANDR_TYPE
-///# include "ace/ace_string.h"
-# include "ace/ace_stropts.h" // needed by OS.h for strbuf, etc...
-///# include "ace/ace_termios.h" 
-# include "ace/ace_threads.h" // ace addition that includes pthreads, etc...
-# include "ace/ace_time.h"  // needed by OS.h for clock_t on windows
-//# include "ace/ace_ulimit.h" // user limits.. not used directly
-///# include "ace/ace_unistd.h"
-///# include "ace/ace_utime.h" // file access/mod
-
-//# include "ace/ace_am_wait.h" // config-chorus
-
-///# include "ace/ace_netinet_in.h"
-
-///# include "ace/ace_sys_ioctl.h"
-///# include "ace/ace_sys_ipc.h" // ipc
-///# include "ace/ace_sys_mman.h"
-///# include "ace/ace_sys_msg.h"
-///# include "ace/ace_sys_param.h"
+# include "ace/ace_stdlib.h" // needed for ACE_RANDR_TYPE
+# include "ace/ace_stropts.h" // needed for strbuf, etc...
+# include "ace/ace_threads.h" // ace specific that includes pthreads, etc...
+# include "ace/ace_time.h"  // needed for clock_t on windows
 # include "ace/ace_sys_resource.h"
-///# include "ace/ace_sys_select.h"
 # include "ace/ace_sys_sem.h"
-///# include "ace/ace_sys_shm.h"
 # include "ace/ace_sys_socket.h"
 # include "ace/ace_sys_stat.h"
-///# include "ace/ace_sys_times.h"
-///# include "ace/ace_sys_types.h"
 # include "ace/ace_sys_uio.h"
 # include "ace/ace_sys_utsname.h"
 # include "ace/ace_sys_wait.h" // process control
@@ -113,27 +64,16 @@ class ACE_Timeout_Manager;
 // include the ACE min()/max() functions.
 # include "ace/Min_Max.h"
 
+// Once the PSOS stuff has been incorporated into the various ace_*.h
+// headers, this can be removed.
 # if defined (ACE_PSOS)
 #   include "ace_psos.h"
 # endif /* ACE_PSOS */
 
+// The following are includes that have not been moved/examined yet.
 # if defined (ACE_HAS_PROC_FS)
 #   include /**/ <sys/procfs.h>
 # endif /* ACE_HAS_PROC_FS */
-
-
-// hmmm,  where should this go?
-# if 0
-// If the user wants minimum IOStream inclusion, we will just include
-// the forward declarations
-#   if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
-// Forward declaration for streams
-#     include "ace/iosfwd.h"
-#   else /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
-// Else they will get all the stream header files
-#     include "ace/streams.h"
-#   endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
-# endif /* 0 */
 
 # if defined ACE_HAS_BYTESEX_H
 #   include /**/ <bytesex.h>
@@ -141,14 +81,7 @@ class ACE_Timeout_Manager;
 
 # include "ace/Basic_Types.h"
 
-// Prototypes should come after ace/Basic_Types.h since some types may
-// be used in the prototypes.
-
-//This doesn't seem to be used in ACE
-# if defined (ACE_HAS_BROKEN_IF_HEADER)
-struct ifafilt;
-# endif /* ACE_HAS_BROKEN_IF_HEADER */
-
+// Need to look into moving this. (where?)
 # if defined (__QNX__)
     include /**/ <unix.h>
     typedef long fd_mask;
@@ -166,11 +99,8 @@ typedef ACE_TCHAR * ACE_DL_TYPE;
 typedef const ACE_TCHAR * ACE_DL_TYPE;
 # endif /* ACE_HAS_CHARPTR_DL */
 
-
-
 /////////////////////////////////////////
-// file stuff
-
+// file stuff  move to ace_stdio.h?
 # if defined (ACE_HAS_SYS_FILIO_H)
 #   include /**/ <sys/filio.h>
 # endif /* ACE_HAS_SYS_FILIO_H */
@@ -181,15 +111,12 @@ typedef const ACE_TCHAR * ACE_DL_TYPE;
 # else
     typedef struct stat ACE_stat;
 # endif /* ACE_WIN32 */
-///////////////////////////////////////////////
-
 
 // and where should this go? only used in ACE_OS::bsearch()
 // We need this for MVS...
 extern "C" {
   typedef int (*ACE_COMPARE_FUNC)(const void *, const void *);
 }
-
 
 ///////////////////////////////////////////////////////////////////
 // Don't know where to put these, but since they are only used in OS.i, 
@@ -224,7 +151,6 @@ inline long ace_timezone()
 # endif /* !ACE_HAS_WINCE && !VXWORKS && !ACE_PSOS */
 }
 
-
 # if !defined (ACE_LACKS_DIFFTIME)
 /// Helper for the ACE_OS::difftime() function
 /**
@@ -245,7 +171,6 @@ inline double ace_difftime(time_t t1, time_t t0)
 #   endif /* defined (ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME) */
 }
 # endif /* !ACE_LACKS_DIFFTIME */
-
 
 /// Helper for the ACE_OS::cuserid() function
 /**
@@ -269,23 +194,14 @@ inline char *ace_cuserid(char *user)
 }
 # endif /* !ACE_LACKS_CUSERID && !ACE_HAS_ALT_CUSERID && ... */
 
-
 ///////////////////////////////////////////////////////////////
-// Don't think this is needed (the ifdef that is...)
-//# if !defined (ACE_HAS_WINCE)
-// forward declarations of QoS data structures
 class ACE_QoS;
 class ACE_QoS_Params;
 class ACE_Accept_QoS_Params;
-//# endif  // ACE_HAS_WINCE
 class ACE_Base_Thread_Adapter;
 class ACE_Thread_Hook;
 
-
-// forward declaration
-//class ACE_Sched_Params;
 #include "ace/Sched_Params.h"
-
 
 /**
  * @class ACE_OS
@@ -310,12 +226,9 @@ class ACE_OS_Export ACE_OS
     public ACE_OS_Memory,
     public ACE_OS_TLI
 {
-
   ACE_CLASS_IS_NAMESPACE (ACE_OS);
 public:
   friend class ACE_Timeout_Manager;
-
-
 
 # if defined (ACE_WIN32)
   // = Default Win32 Security Attributes definition.
@@ -1749,12 +1662,9 @@ private:
 
   static ACE_Time_Value gettimeofday_i (void);
 };
-////////////////////////////////////////////////////////////////////////////
-
 
 /////////////////////////////////////////////////////////////////////////
 // These need to be moved out...
-
 // these are only used in the ctor for AOM and should be hidden in the 
 // cpp once the stuff is moved.
 # if defined (ACE_WIN32)
@@ -1763,13 +1673,8 @@ int ACE_SEH_Default_Exception_Selector (void *);
 int ACE_SEH_Default_Exception_Handler (void *);
 # endif /* ACE_WIN32 */
 
-
-
-
-//////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 // This is all TSS stuff and needs to be moved.
-
 # if defined (ACE_HAS_TSS_EMULATION)
     // Allow config.h to set the default number of thread keys.
 #   if !defined (ACE_DEFAULT_THREAD_KEYS)
@@ -2011,9 +1916,6 @@ private:
 };
 
 # endif /* defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) */
-//////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
-
 
 //////////////////////////////////////////////////////////////////////////
 // This is only used in OS.i and OS.cpp right now.
@@ -2027,8 +1929,6 @@ private:
 #   define ACE_KEY_INDEX(OBJ,KEY) u_int OBJ = KEY
 
 # endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
-/////////////////////////////////////////////////////////////////////////
-
 
 //////////////////////////////////////////////////////////////////////////
 // These seem to be used only in OS.i and Timer_Queue_Adapters.cpp
@@ -2049,8 +1949,6 @@ extern "C" ACE_OS_Export void ace_mutex_lock_cleanup_adapter (void *args);
 #   define ACE_PTHREAD_CLEANUP_PUSH(A)
 #   define ACE_PTHREAD_CLEANUP_POP(A)
 # endif /* ACE_HAS_THR_C_FUNC */
-///////////////////////////////////////////////////////////////////////////
-
 
 /////////////////////////////////////////////////////////////////////////////
 // These don't seem to be used anywhere...
@@ -2065,18 +1963,15 @@ extern "C" ACE_OS_Export void ace_mutex_lock_cleanup_adapter (void *args);
 
 # define ACE_DEFAULT_MUTEX ACE_LIB_TEXT (ACE_DEFAULT_MUTEX_A)
 #endif /* 0 */
+
 //////////////////////////////////////////////////////////////////////////////
-
-
 // Need to look into getting rid of this--or moving it to a move apropriate place.
 # if !defined (ACE_HAS_MINIMAL_ACE_OS)
 #   include "ace/Trace.h"
 # endif /* ! ACE_HAS_MINIMAL_ACE_OS */
 
 ///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
 // From here down should be stable.
-
 # if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)
 #     undef ACE_INLINE
