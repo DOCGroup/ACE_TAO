@@ -211,6 +211,10 @@ public:
   int get_timeout (void) const;
 
 private:
+  /// avoid usage of default constructor that does no proper
+  /// initialization
+  ACE_UNIMPLEMENTED_FUNC (TAO_ECG_UDP_Request_Entry (void));
+
   /// This attributes should remain constant in all the fragments, used
   /// for validation....
   CORBA::Boolean byte_order_;
@@ -355,6 +359,9 @@ private:
   /// The map containing all the incoming requests which have been
   /// partially received.
   Request_Map request_map_;
+
+  /// Mutex for the map
+  TAO_SYNCH_MUTEX request_map_protector_;
 
   /// To receive the timeouts..
   TAO_ECG_UDP_TH timeout_handler_;
