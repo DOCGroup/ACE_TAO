@@ -59,21 +59,34 @@ USELIB("..\ace\aced.lib");
 typedef ACE_Strategy_Acceptor <Acceptor_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
 
 static ASYS_TCHAR *rendezvous = ASYS_TEXT ("localhost:10010");
+// Accepting end point.
+
 static size_t svr_thrno = ACE_MAX_THREADS;
+// Total number of server threads.
+
 static size_t cli_thrno = ACE_MAX_ITERATIONS;
+// Total number of client threads.
+
 static size_t cli_conn_no = ACE_MAX_ITERATIONS;
+// Total connection attemps of a client thread.
+
 static size_t cli_req_no = ACE_MAX_THREADS;
+// Total requests a client thread sends.
+
 static int req_delay = 50;
-// @@ Nanbor, rather than "main event loop" is it possible to use the
-// ACE_Reactor::end_event_loop() stuff or does that just work for the
-// default Reactor?
+// Delay before a thread sending the next request (in msec.)
+
 static int main_event_loop = 1;
+// ACE_Reactor::end_event_loop() terminates only the singleton reactor,
+// therefore, we need another flag to terminate the reactor in main ()
+// (which accepts new connection.)
+
 static ACE_Reactor *main_reactor = 0;
+// Reactor used to accept new connection request.
 
 void
 parse_arg (int argc, ASYS_TCHAR *argv[])
 {
-  // @@ TODO: Support command line arguments stated above.
   ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("r:s:c:d:i:n:"));
 
   int c;
@@ -125,7 +138,7 @@ Acceptor_Handler::handle_input (ACE_HANDLE fd)
   ssize_t result = this->peer ().recv (&len,
                                        sizeof (ASYS_TCHAR));
 
-  if (result > 0 
+  if (result > 0
       && this->peer ().recv_n (buffer, len) == len)
     {
       ++this->nr_msgs_rcvd_;
@@ -195,9 +208,7 @@ cli_worker (void *arg)
   ACE_SOCK_Stream stream;
   ACE_SOCK_Connector connect;
   ACE_Time_Value delay (0, req_delay);
-  // @@ Nanbor, can you please use the right ACE_foo_cast() macro
-  // here?
-  size_t len = *(ASYS_TCHAR *) arg;
+  size_t len = * ACE_reinterpret_cast (ASYS_TCHAR *, arg);
 
   for (size_t i = 0 ; i < cli_conn_no; i++)
     {
@@ -216,8 +227,13 @@ cli_worker (void *arg)
                       stream.get_handle (),
                       j+1));
           // @@ Nanbor, please check the return value here!
-          stream.send_n (arg,
-                         len + sizeof (ASYS_TCHAR));
+          if (stream.send_n (arg, len + sizeof (ASYS_TCHAR)) == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ASYS_TEXT ("(%t) %p\n"),
+                          ASYS_TEXT ("send_n")));
+              continue;
+            }
           ACE_OS::sleep (delay);
         }
 
@@ -265,8 +281,11 @@ worker (void *)
               stream.get_handle ()));
 
   // @@ Nanbor, please check the return value here.
-  stream.send_n (sbuf,
-                 ACE_OS::strlen (sbuf) + 1);
+  if (stream.send_n (sbuf, ACE_OS::strlen (sbuf) + 1) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("(%t) %p\n"),
+                ASYS_TEXT ("send_n")));
+
   stream.close ();
 
   return 0;
@@ -309,8 +328,6 @@ main (int argc, ASYS_TCHAR *argv[])
 
   while (main_event_loop)
     {
-      // @@ Nanbor, I changed the test here a little bit.  Can you
-      // plase check this to make sure it's still correct?!
       int result = slr.handle_events ();
 
       ACE_ASSERT (result != -1);
