@@ -18,11 +18,6 @@ DIRS  =	mpeg_shared \
 	client \
 	server
 
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat -I$(TAO_ROOT)/orbsvcs -I$(TSS_ORB_FLAG)#-H
-
-MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
-CPPFLAGS += -I$(MPEG_ROOT)
-
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
