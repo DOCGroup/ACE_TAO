@@ -263,6 +263,16 @@ read_buffer (ACE_SOCK_Stream &peer,
 {
   int bytes_read = 0;
   bytes_read = peer.recv_n (buf, len);
+  if (bytes_read == -1 && errno == ECONNRESET)
+    {
+      // We got a connection reset (TCP RSET) from the other side,
+      // i.e., they didn't initiate a proper shutdown.
+      //
+      // Make it look like things are OK to the upper layer.
+      bytes_read = 0;
+      errno = 0;
+    }
+  
   return bytes_read;
 }
 
