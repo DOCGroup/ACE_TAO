@@ -33,7 +33,7 @@ ACE_Semaphore::ACE_Semaphore (unsigned int count,
   : removed_ (0)
 {
 // ACE_TRACE ("ACE_Semaphore::ACE_Semaphore");
-#if defined(ACE_LACKS_UNNAMED_SEMAPHORE)
+#if defined(ACE_LACKS_UNNAMED_SEMAPHORE) || !defined (ACE_HAS_SHM_OPEN)
 // if the user does not provide a name, we generate a unique name here
   ACE_TCHAR iname[ACE_UNIQUE_NAME_LEN];
   if (name == 0)
