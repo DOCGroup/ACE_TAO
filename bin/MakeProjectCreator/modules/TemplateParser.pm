@@ -594,7 +594,11 @@ sub collect_data {
   $prjc->update_project_info($self, 1, ['depends']);
 
   ## VC7 Projects need to know the GUID.
-  $prjc->update_project_info($self, 1, ['guid']);
+  ## We need to save this value in our know values
+  ## since each guid will be different.  We need this to
+  ## correspond to the same guid used in the workspace.
+  my($guid) = $prjc->update_project_info($self, 1, ['guid']);
+  $self->{'values'}->{'guid'} = $guid;
 }
 
 

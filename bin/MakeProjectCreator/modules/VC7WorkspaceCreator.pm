@@ -12,7 +12,6 @@ package VC7WorkspaceCreator;
 
 use strict;
 
-use GUID;
 use VC7ProjectCreator;
 use WorkspaceCreator;
 
@@ -55,13 +54,15 @@ sub write_comps {
   my($fh)       = shift;
   my($gen)      = shift;
   my($projects) = $self->get_projects();
-  my($ggen)     = new GUID();
-  my($guid)     = $ggen->generate($self->workspace_file_name());
+  my($guid)     = '8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942';
   my($pjs)      = $self->get_project_info();
+  my(@list)     = $self->sort_dependencies($projects, $pjs);
   my($crlf)     = $self->crlf();
 
+  ## $guid above is the VC7 Project GUID.  It should not change.
+
   ## Project Information
-  foreach my $project (@$projects) {
+  foreach my $project (@list) {
     my($pi) = $$pjs{$project};
     my($name, $deps, $pguid) = @$pi;
 
@@ -74,10 +75,10 @@ sub write_comps {
 
   ## Project Configurations
   print $fh "Global$crlf" .
-            "        GlobalSection(SolutionConfiguration) = preSolution$crlf";
+            "\tGlobalSection(SolutionConfiguration) = preSolution$crlf";
 
   my(%configs) = ();
-  foreach my $project (@$projects) {
+  foreach my $project (@list) {
     my($pi) = $$pjs{$project};
     my($name, $deps, $pguid, @cfgs) = @$pi;
     foreach my $cfg (@cfgs) {
@@ -87,14 +88,14 @@ sub write_comps {
   }
   my($count) = 0;
   foreach my $key (sort keys %configs) {
-    print $fh "                ConfigName.$count = $key$crlf";
+    print $fh "\t\tConfigName.$count = $key$crlf";
     $count++;
   }
 
   ## Project Dependencies
-  print $fh "        EndGlobalSection$crlf" .
-            "        GlobalSection(ProjectDependencies) = postSolution$crlf";
-  foreach my $project (@$projects) {
+  print $fh "\tEndGlobalSection$crlf" .
+            "\tGlobalSection(ProjectDependencies) = postSolution$crlf";
+  foreach my $project (@list) {
     my($pi) = $$pjs{$project};
     my($name, $deps, $pguid) = @$pi;
     if (defined $deps && $deps ne "") {
@@ -106,31 +107,31 @@ sub write_comps {
           $val = $dep;
         }
         if ($pguid ne $val) {
-          print $fh "                {$pguid}.$i = {$val}$crlf";
+          print $fh "\t\t{$pguid}.$i = {$val}$crlf";
           $i++;
         }
       }
     }
   }
-  print $fh "        EndGlobalSection$crlf" .
-            "        GlobalSection(ProjectConfiguration) = postSolution$crlf";
+  print $fh "\tEndGlobalSection$crlf" .
+            "\tGlobalSection(ProjectConfiguration) = postSolution$crlf";
 
   ## Project Configuration Names
-  foreach my $project (@$projects) {
+  foreach my $project (@list) {
     my($pi) = $$pjs{$project};
     my($name, $deps, $pguid, @cfgs) = @$pi;
-    foreach my $cfg (@cfgs) {
+    foreach my $cfg (sort @cfgs) {
       my($c) = $cfg;
       $c =~ s/\|.*//;
-      print $fh "                {$pguid}.$c.ActiveCfg = $cfg$crlf" .
-                "                {$pguid}.$c.Build.0 = $cfg$crlf";
+      print $fh "\t\t{$pguid}.$c.ActiveCfg = $cfg$crlf" .
+                "\t\t{$pguid}.$c.Build.0 = $cfg$crlf";
     }
   }
-  print $fh "        EndGlobalSection$crlf" .
-            "        GlobalSection(ExtensibilityGlobals) = postSolution$crlf" .
-            "        EndGlobalSection$crlf" .
-            "        GlobalSection(ExtensibilityAddIns) = postSolution$crlf" .
-            "        EndGlobalSection$crlf" .
+  print $fh "\tEndGlobalSection$crlf" .
+            "\tGlobalSection(ExtensibilityGlobals) = postSolution$crlf" .
+            "\tEndGlobalSection$crlf" .
+            "\tGlobalSection(ExtensibilityAddIns) = postSolution$crlf" .
+            "\tEndGlobalSection$crlf" .
             "EndGlobal$crlf";
 }
 
