@@ -1236,6 +1236,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Thread_Manager_Test"=".\Thread_Manager_Test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Thread_Pool_Reactor_Resume_Test"=".\Thread_Pool_Reactor_Resume_Test.dsp" - Package Owner=<4>
 
 Package=<5>
