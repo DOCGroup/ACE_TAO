@@ -419,13 +419,16 @@ be_visitor_traits::visit_array (be_array *node)
     }
 
   unique += "_traits";
-  os->gen_ifdef_macro (unique.fast_rep ());
+//  os->gen_ifdef_macro (unique.fast_rep ());
 
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
       << "struct " << be_global->stub_export_macro () << " Array_Traits<"
-      << name << ", " << name
-      << "_slice>" << be_nl
+      << be_idt << be_idt_nl
+      << name << "," << be_nl
+      << name << "_slice," << be_nl
+      << name << "_tag" << be_uidt_nl
+      << ">" << be_uidt_nl
       << "{" << be_idt_nl
       << "static void tao_free (" << be_idt << be_idt_nl
       << name << "_slice * _tao_slice" << be_uidt_nl
@@ -444,7 +447,7 @@ be_visitor_traits::visit_array (be_array *node)
       << be_uidt_nl
       << "};";
 
-  os->gen_endif ();
+//  os->gen_endif ();
 
   node->cli_traits_gen (I_TRUE);
   return 0;

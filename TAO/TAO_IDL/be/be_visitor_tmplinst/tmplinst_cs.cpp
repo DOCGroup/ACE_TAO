@@ -537,7 +537,8 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
       << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
       << "TAO::Array_Traits<" << this->linebreak_ << be_idt << be_idt_nl
       << fname << "," << this->linebreak_ << be_nl
-      << fname << "_slice" << this->linebreak_ << be_uidt_nl
+      << fname << "_slice," << this->linebreak_ << be_nl
+      << fname << "_tag" << this->linebreak_ << be_uidt_nl
       << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
   // For _var, _out and _forany template classes.
@@ -551,7 +552,8 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
           << "TAO_" << (fixed ? "Fixed" : "Var") << "Array_Var_T<"
           << this->linebreak_ << be_idt << be_idt_nl
           << fname << "," << this->linebreak_ << be_nl
-          << fname << "_slice" << this->linebreak_ << be_uidt_nl
+          << fname << "_slice," << this->linebreak_ << be_nl
+          << fname << "_tag" << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
       *os << be_nl << be_nl
@@ -559,7 +561,8 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
           << "TAO_Array_Out_T<" << this->linebreak_ << be_idt << be_idt_nl
           << fname << "," << this->linebreak_ << be_nl
           << fname << "_var," << this->linebreak_ << be_nl
-          << fname << "_slice" << this->linebreak_ << be_uidt_nl
+          << fname << "_slice," << this->linebreak_ << be_nl
+          << fname << "_tag" << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
       *os << be_nl << be_nl
@@ -567,7 +570,8 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
           << "TAO_Array_Var_Base_T<" << this->linebreak_ << be_idt
           << be_idt_nl
           << fname << "," << this->linebreak_ << be_nl
-          << fname << "_slice" << this->linebreak_ << be_uidt_nl
+          << fname << "_slice," << this->linebreak_ << be_nl
+          << fname << "_tag" << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
     }
 
@@ -575,7 +579,8 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
       << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
       << "TAO_Array_Forany_T<" << this->linebreak_ << be_idt << be_idt_nl
       << fname << "," << this->linebreak_ << be_nl
-      << fname << "_slice" << this->linebreak_ << be_uidt_nl
+      << fname << "_slice," << this->linebreak_ << be_nl
+      << fname << "_tag" << this->linebreak_ << be_uidt_nl
       << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
   // For Any impl template class.
