@@ -59,11 +59,11 @@ IIOP::Profile::set (const char *h,
     }
 
   int l = ACE_OS::strlen (key);
-  this->object_key.length (l + 1);
+  this->object_key.length (l);
 
   for (int i = 0; i < l; ++i)
     {
-      this->object_key[i] = buffer[i];
+      this->object_key[i] = key[i];
     }
   return 0;
 }

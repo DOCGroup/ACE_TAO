@@ -79,10 +79,25 @@ void
 TAO::_tao_seq_Octet::length (CORBA::ULong length)
 {
   if (length > this->maximum_)
-  {
-    // @@ throw something?
-    return;
-      }
+    {
+      CORBA::Octet  *tmp = TAO::_tao_seq_Octet::allocbuf (length);
+      if (!tmp)
+    	return;
+      CORBA::ULong i;
+      // copy old buffer
+      for (i=0; i < this->length_; i++)
+	{
+	  tmp[i] = this->buffer_[i];
+	}
+      if (this->release_) // free old one if we own it
+	{
+	  TAO::_tao_seq_Octet::freebuf (this->buffer_);
+	}
+      //assign the newly reallocated buffer
+      this->buffer_ = tmp;
+      this->release_ = 1; //after reallocation, we own it
+      this->maximum_ = length;
+    }
   this->length_ = length;
 }
 

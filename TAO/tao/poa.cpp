@@ -246,8 +246,13 @@ CORBA_POA::dispatch (PortableServer::ObjectId &key,
   else
     {
       env.exception (new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO));
-      ACE_ERROR ((LM_ERROR, "Cannot find object\n"));
 
+      ACE_ERROR ((LM_ERROR, "Cannot find object <"));
+      for (CORBA::ULong i = 0; i < key.length (); ++i)
+	{
+	  ACE_ERROR ((LM_ERROR, "%02.2x", int(key[i])));
+	}
+      ACE_ERROR ((LM_ERROR, ">\n"));
     }
 
   // @@ XXXASG -
