@@ -1,7 +1,8 @@
 Thu Jan  9 11:01:24 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/try_macros.h: Removed the file from the repo. This is no
-	  longer used and seems like a good time to remove it.
+	  longer used and seems like a good time to remove it. Thanks to
+	  Oliver Kellog for reminding us.
 
 Tue Jan  7 09:02:52 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
