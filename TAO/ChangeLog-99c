@@ -1,3 +1,22 @@
+Tue May 11 16:03:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/corbafwd.h:
+	  Added some flags to the enum containing the ones
+	  for NVList. The new ones are:
+	  DEPENDENT_LIST  
+	     If a sublist is added as a single item,
+	     this indicates that it should be freed
+	     when the parent list is freed.
+	  CTX_RESTRICT_SCOPE
+	     Used in Context::get_values to limit the scope of 
+	     the search to the supplied scope arg.
+	  CTX_DELETE_DESCENDENTS
+	     Deletes child Context objects along with the parent.
+	  INV_NO_RESPONSE
+	  INV_TERM_ON_ERR
+          RESP_NO_WAIT
+             Used in deferred synchronous requests.
+
 Tue May 11 14:34:56 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/{client,server}.cpp:
