@@ -1,3 +1,10 @@
+Tue Dec 28 19:45:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/make_release:
+
+	  Added .png to te list of files that needs to be omitted from
+	  LF->CRLF conversions. Thanks to Johnny for pointing this out.
+
 Sat Dec 25 20:58:12 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* bin/make_release:
