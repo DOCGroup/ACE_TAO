@@ -6,13 +6,10 @@ Mon Oct  4 13:34:08 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  (mkstemp_emulation):
 
-	  ACE_OS::rand_r() accepts a reference to an ACE_TCHAR, not a
-	  point to one.  Removed "address-of" "&" from ACE_OS::rand_r()
-	  argument.
-
-	  Removed "const" qualifier from "seed" variable.  It must
-	  actually be non-const since ACE_OS::rand_r() accepts a reference
-	  to a non-const seed value.
+	  ACE_OS::rand_r() accepts a reference to a non-const
+	  ACE_RANDR_TYPE, not a pointer to a const one.  Removed
+	  "address-of" "&" from ACE_OS::rand_r() seed argument, and
+	  removed the "const" qualifier from "seed" variable declaration.
 
 Mon Oct  4 14:22:03 2004  Martin Corino  <mcorino@remedy.nl>
 
