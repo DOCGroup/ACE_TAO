@@ -2,7 +2,7 @@ Wed Nov 25 20:34:12 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/DLL_Test.cpp (main): Removed ACE_OS::strcat which was
 	  concatenating a string literal with a defined string.
-	
+
 Wed Nov 25 12:01:20 1998  Ossama Othman  <othman@astrosun.tn.cornell.edu>
 
         * apps/gperf/gperf.texi:
@@ -28,6 +28,10 @@ Wed Nov 25 12:01:20 1998  David L. Levine  <levine@cs.wustl.edu>
           interface.  Though, we still don't get preemption if only using
           that interface.  performance-tests/Misc/preempt.cpp demonstrates
           that.
+
+        * ace/config-osf1-4.0.h: removed ACE_LACKS_THREAD_PROCESS_SCOPING.
+          DU 4.0 seems to have process scoping, though I think only
+          the superuser can use it.
 
 Wed Nov 25 10:48:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
