@@ -1,3 +1,12 @@
+Sat Feb  6 22:07:45 1999  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ace/CDR.{h,i,cpp}:  Renamed these as...
+        * ace/CDR_Stream.{h,i,cpp}:  Mustn't have files with the
+          same name (the TAO files) for the sake of some compilers.
+        * Makefile:
+        * ace_dll.dsp:
+          Changed to reflect the renaming above.
+
 Sat Feb  6 20:30:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/CDR.h: 
