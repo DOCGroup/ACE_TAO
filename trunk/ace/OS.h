@@ -3871,7 +3871,10 @@ class ACE_Thread_Adapter
   //     <ACE_Thread_Manager>.
   //
   // = DESCRIPTION
-  //     This class is used in <ACE_OS::thr_create>.
+  //     This class is used in <ACE_OS::thr_create>.  In general, the
+  //     thread that creates an object of this class is different from
+  //     the thread that calls <invoke> on this object.  Therefore,
+  //     the <invoke> method is responsible for deleting itself.
 public:
   ACE_Thread_Adapter (ACE_THR_FUNC user_func,
                       void *arg,
