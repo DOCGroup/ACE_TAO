@@ -186,7 +186,7 @@ gen_insertion (TAO_OutStream *os,
       << "stream << *_any_val;" << be_nl
       << "_tao_any._tao_replace (" << be_idt << be_idt_nl
       << node->tc_name () << "," << be_nl
-      << "stream.begin ()->clone ()," << be_nl
+      << "stream.begin ()," << be_nl
       << "1," << be_nl
       << "_any_val," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
@@ -204,7 +204,7 @@ gen_insertion_nocopy (TAO_OutStream *os,
       << "stream << *_tao_elem;" << be_nl
       << "_tao_any._tao_replace (" << be_idt << be_idt_nl
       << node->tc_name () << "," << be_nl
-      << "stream.begin ()->clone ()," << be_nl
+      << "stream.begin ()," << be_nl
       << "1," << be_nl
       << "_tao_elem," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
