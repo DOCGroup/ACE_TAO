@@ -363,7 +363,8 @@ be_decl::tc_name2long (const char *name, long *&larr, long &arrlen)
 
   ACE_OS::memset (buf, '\0', arrlen*4);
   larr = buf;
-
+  ACE_OS::memcpy (buf, name, arrlen*4);
+#if 0
   for (i=0; i < ACE_OS::strlen (name); i++)
     {
       long shift; // num bytes to shift left
@@ -373,6 +374,7 @@ be_decl::tc_name2long (const char *name, long *&larr, long &arrlen)
       // array to be returned
       larr [i/4] |= ((name[i] & 0xff) << (shift*8));
     }
+#endif
   return 0;
 }
 
