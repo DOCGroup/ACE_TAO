@@ -1,3 +1,23 @@
+Wed Apr 14 19:27:29 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/os_include/os_unistd.h (_POSIX_TIMER_MAX):
+	  (ACE_DEFAULT_TIMERS):
+
+	  Moved definitions of these macros to other more appropriate
+	  files described below.
+
+	* ace/os_include/os_limits.h (_POSIX_TIMER_MAX):
+
+	  Moved conditional definition of this macro to this file to avoid
+	  potential definition before the one in <limits.h>.  Fixes macro
+	  redefinition warnings.
+
+	* ace/Default_Constants.h (ACE_DEFAULT_TIMERS):
+	
+	  Moved conditional definition of this macro to this file.  It
+	  didn't make much sense to define it in the os_unistd.h
+	  portability header.
+
 Wed Apr 14 17:28:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* include/makeinclude/platform_qnx_rtp_gcc.GNU:
