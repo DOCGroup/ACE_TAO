@@ -563,10 +563,13 @@ spawn_processes (ACCEPTOR *acceptor,
 #if defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS)
 // Spawn threads and run the client and server.
 
-static void
+static
+int
 spawn_threads (ACCEPTOR *acceptor,
                ACE_INET_Addr *server_addr)
 {
+  int status = 0;
+
 #if defined (VXWORKS)
   // Assign thread (VxWorks task) names to test that feature.
   ACE_thread_t *server_name;
@@ -663,6 +666,8 @@ spawn_threads (ACCEPTOR *acceptor,
   delete [] stack;
   delete [] stack_size;
 #endif /* VXWORKS */
+
+  return status;
 }
 #endif /* ! ACE_LACKS_FORK && ACE_HAS_THREADS */
 
@@ -670,6 +675,7 @@ int
 main (int argc, ASYS_TCHAR *argv[])
 {
   ACE_START_TEST (ASYS_TEXT ("Conn_Test"));
+  int status = 0;
 
   ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("c:i:s:"));
   for (int c; (c = getopt ()) != -1; )
@@ -709,7 +715,7 @@ main (int argc, ASYS_TCHAR *argv[])
                            ASYS_TEXT ("spawn_processes")),
                           1);
 #elif defined (ACE_HAS_THREADS)
-      spawn_threads (&acceptor, &server_addr);
+      status = spawn_threads (&acceptor, &server_addr);
 #else  /* ACE_LACKS_FORK && ! ACE_HAS_THREADS */
       ACE_ERROR ((LM_ERROR,
                   ASYS_TEXT ("(%P|%t) only one thread may be run in a process on this platform\n%a"), 1));
@@ -717,7 +723,7 @@ main (int argc, ASYS_TCHAR *argv[])
     }
 
   ACE_END_TEST;
-  return 0;
+  return status;
 }
 
 #define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_MUTEX>
