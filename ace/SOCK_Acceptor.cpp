@@ -50,7 +50,7 @@ ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
   ACE_TRACE ("ACE_SOCK_Acceptor::ACE_SOCK_Acceptor");
   if (this->open (local_sap, reuse_addr, protocol_family, 
 		  backlog, protocol) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_SOCK_Acceptor"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("ACE_SOCK_Acceptor")));
 }
 
 void
