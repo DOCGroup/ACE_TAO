@@ -1,3 +1,13 @@
+Wed Nov 27 13:54:55 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
+
+	* orbsvcs/tests/Log/Basic_Log_Test/client.cpp:
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.h:
+	* orbsvcs/tests/Log/Basic_Log_Test/Makefile:
+
+	Documentation changes to files.
+	
+
 Wed Nov 27 13:48:19 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
