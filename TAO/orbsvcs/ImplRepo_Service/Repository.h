@@ -22,6 +22,12 @@
 
 #include "ace/Hash_Map_Manager.h"
 
+#if defined (UNICODE)
+#define ACE_TString ACE_WString
+#else /* UNICODE */
+#define ACE_TString ACE_CString
+#endif /* UNICODE */
+
 struct Repository_Record
 {
   // Constructors
@@ -56,39 +62,45 @@ public:
   Repository ();
   // Default Constructor
 
-  typedef ACE_Hash_Map_Entry<const ASYS_TCHAR *, 
-                             Repository_Record *> HASH_STRING_ENTRY;
+  typedef ACE_Hash_Map_Entry<ACE_TString, 
+                             Repository_Record *> HASH_IR_ENTRY;
 
-  typedef ACE_Hash_Map_Manager_Ex<const ASYS_TCHAR *, 
+  typedef ACE_Hash_Map_Manager_Ex<ACE_TString, 
                                   Repository_Record *, 
-                                  ACE_Hash<ASYS_TCHAR *>, 
-                                  ACE_Equal_To<ASYS_TCHAR *>, 
-                                  ACE_Null_Mutex> HASH_STRING_MAP;
+                                  ACE_Hash<ACE_TString>, 
+                                  ACE_Equal_To<ACE_TString>, 
+                                  ACE_Null_Mutex> HASH_IR_MAP;
 
-  int add (const ASYS_TCHAR *key, const Repository_Record &rec);
+  typedef ACE_Hash_Map_Iterator_Ex<ACE_TString,
+                                   Repository_Record *, 
+                                   ACE_Hash<ACE_TString>, 
+                                   ACE_Equal_To<ACE_TString>, 
+                                   ACE_Null_Mutex> HASH_IR_ITER;
+
+  int add (ACE_TString key, const Repository_Record &rec);
   // Add a new server to the Repository
 
-  int update (const ASYS_TCHAR *key, const Repository_Record &rec);
+  int update (ACE_TString key, const Repository_Record &rec);
   // Updates an existing key with <rec>
   
-  int remove (const ASYS_TCHAR *key);
+  int remove (ACE_TString key);
   // Removes the server from the Repository
 
-  int resolve (const ASYS_TCHAR *key, Repository_Record &rec);
+  int resolve (ACE_TString key, Repository_Record &rec);
   // Find the key record in the Repository
 
   // = Accessor methods
-  int get_comm_line (const ASYS_TCHAR *key, ASYS_TCHAR *&comm_line);
-  int get_env (const ASYS_TCHAR *key, ASYS_TCHAR *&env);
-  int get_wdir (const ASYS_TCHAR *key, ASYS_TCHAR *&wdir);
-  int get_ping_ior (const ASYS_TCHAR *key, ASYS_TCHAR *&ping_ior);
-  int get_hostport (const ASYS_TCHAR *key, ASYS_TCHAR *&host, unsigned short &port);
+  int get_comm_line (ACE_TString key, ASYS_TCHAR *&comm_line);
+  int get_env (ACE_TString key, ASYS_TCHAR *&env);
+  int get_wdir (ACE_TString key, ASYS_TCHAR *&wdir);
+  int get_ping_ior (ACE_TString key, ASYS_TCHAR *&ping_ior);
+  int get_hostport (ACE_TString key, ASYS_TCHAR *&host, unsigned short &port);
 
   // Dump method
   void dump (void);
 
 private:
-  HASH_STRING_MAP repository_;
+  HASH_IR_MAP repository_;
 };
 
 
