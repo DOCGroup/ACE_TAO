@@ -25,9 +25,9 @@
 
 #include "ace/Malloc_Base.h"
 
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 #include "ace/Based_Pointer_T.h"
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
 #if defined (ACE_HAS_MALLOC_STATS)
 #include "ace/Synch_T.h"
@@ -235,7 +235,7 @@ public:
   // Dump the state of the object.
 };
 
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
 // prepare for position independent malloc
 class ACE_Export ACE_PI_Control_Block
@@ -401,7 +401,7 @@ public:
 private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Control_Block &))
 };
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
 class ACE_Export ACE_New_Allocator : public ACE_Allocator
 {

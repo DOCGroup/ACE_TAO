@@ -326,8 +326,6 @@
 #endif /* !( __GNUG__ && (__GNUC__ == 2) && (__GNUC_MINOR__ == 95) ) */
 #define ACE_HAS_IDTYPE_T
 
-#define ACE_HAS_POSITION_INDEPENDENT_MALLOC
-
 #define ACE_HAS_GPERF
 #define ACE_HAS_DIRENT
 #define ACE_HAS_MEMCHR
