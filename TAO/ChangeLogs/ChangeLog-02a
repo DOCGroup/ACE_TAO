@@ -1,3 +1,13 @@
+Tue Feb  1 19:56:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/y.tab.cpp:
+	* TAO_IDL/fe/y.tab.h:
+	  Added code to yacc file to prevent a crash when an
+	  IDL file set a union's discriminator type to octet,
+	  or typedef of octet. It now just outputs the error
+	  message. This closes out bug #121.
+
 Tue Feb  1 17:43:09 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp: 
