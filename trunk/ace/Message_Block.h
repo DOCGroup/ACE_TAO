@@ -396,12 +396,10 @@ public:
   char *base (void) const;
   // Get message data pointer
 
-#if 0
   void base (char *data,
 	     size_t size,
-	     Message_Flags = DONT_DELETE);
+	     ACE_Message_Block::Message_Flags mflags = ACE_Message_Block::DONT_DELETE);
   // Set message data pointer (doesn't reallocate).
-#endif /* 0 */
 
   char *end (void) const;
   // Return a pointer to 1 past the end of the data in a message.
