@@ -1,3 +1,11 @@
+Sun Jan 18 09:48:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/TMCast/member.cpp:
+
+          Fixed a compilation errors with VC6 which stemmed due to the
+	  fact that a unsigned long long was used. We use ACE_UINT64
+	  instead. 
+
 Sun Jan 18 09:40:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tests/SOCK_Send_Recv_Test_IPV6.cpp:
