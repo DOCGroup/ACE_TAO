@@ -1,3 +1,28 @@
+Fri May 28 20:19:50 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/Vector.{h,i,cpp}:
+	* tests/Vector_Test.cpp:
+	
+	  Implemented an ACE_Vector class based on the ACE_Array class.
+	  It is not derived from it, however.  The ACE_Vector class
+	  provides an STL Vector-like interface.  The Vector_Test tests
+	  the important features of the ACE_Vector class and sends output
+	  to `logs/Vector_Test.log'.
+
+	* ace/Makefile:
+	* tests/Makefile:
+
+	  Added ACE_Vector related files to the makefiles and updated the
+	  dependencies.
+
+Thu May 27 15:50:17 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/UNIX_Addr.cpp (set): 
+
+	  Explicitly set the sun_family to AF_UNIX, otherwise it will be
+	  zero by a previous call to memset().  AF_UNSPEC, which is zero,
+	  is what the call to memset() cause the sun_family to be.
+
 Wed May 26 01:46:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* include/makeinclude/platform_freebsd.GNU:
