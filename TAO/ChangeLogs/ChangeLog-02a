@@ -1,3 +1,21 @@
+Mon Mar  5 07:59:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tests/AMI/client.cpp:
+	* tests/AMI/simple_client.cpp:
+	* tests/AMI/server.cpp:
+	* examples/mfc/client.cpp:
+	* examples/mfc/server.cpp:
+
+	  Fixed exception handling, especially missing ACE_TRY_ENVs for
+	  CORBA::ORB::resolve_initial_references (). Thanks to Ossama for 
+	  pointing this out.
+
+	* examples/PluggableUDP/Diop/README:
+
+	  Added a small paragraph about the limitations of the current
+	  DIOP implemenation.
+	  Also, added a disclaimer.
+
 Mon Mar  5 04:42:52 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Comp_Test/ftp.h: 
