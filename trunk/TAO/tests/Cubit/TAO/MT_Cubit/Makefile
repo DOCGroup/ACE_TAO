@@ -29,6 +29,8 @@ CUBIT_SVR_OBJS = \
 	cubitS.o \
 	server.o \
 	cubit_i.o \
+	Task_Client.o \
+	Util_Thread.o \
 	tmplinst.o
 
 CUBIT_CLIENT_OBJS = \

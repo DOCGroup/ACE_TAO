@@ -1,3 +1,13 @@
+Thu Jun 11 15:32:02 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/Makefile:
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.{h,cpp}:
+	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
+	* tests/Cubit/TAO/MT_Cubit/client.cpp:
+	* tests/Cubit/TAO/MT_Cubit/cubit_i.{h,cpp}:
+	* tests/Cubit/TAO/MT_Cubit/server.{h,cpp}: Added the server utilization
+ 	test.  Use "-U" on both the client and the server.
+		
 Thu Jun 11 15:26:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB_Core.{h,cpp} (inherit_from_parent_thread): This new

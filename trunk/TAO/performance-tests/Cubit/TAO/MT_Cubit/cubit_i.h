@@ -18,13 +18,14 @@
 #define _CUBIT_I_HH
 
 #include "cubitS.h"
+#include "Task_Client.h"
 
 class Cubit_i : public POA_Cubit
 {
   // = TITLE
   //   Cubit implementation class.
 public:
-  Cubit_i (void);
+  Cubit_i (Task_State *ts);
   ~Cubit_i (void);
    
   virtual CORBA::Octet cube_octet (CORBA::Octet o,
@@ -42,6 +43,8 @@ public:
   virtual void noop (CORBA::Environment &env);
 
   virtual void shutdown (CORBA::Environment &env);
+private:
+  Task_State *ts_;
 };
 
 #endif /* _CUBIT_I_HH */

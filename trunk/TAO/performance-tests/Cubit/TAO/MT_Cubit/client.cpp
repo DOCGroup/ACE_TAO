@@ -537,45 +537,40 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
 //  output_latency (ts);
 #endif /* !VXWORKS && !CHORUS */
 
-  // This loop visits each client.  thread_count_ is the number of clients.
-  for (j = 1; j < ts.thread_count_; j ++)
-      for (k = 0; k < ts.loop_count_/ts.granularity_; k ++)
-          total_latency_low += (ts.global_jitter_array_[j][k] * ts.granularity_);
 
-  for (j = 0; j < ts.loop_count_/ts.granularity_; j ++)
-    total_latency_high += (ts.global_jitter_array_[0][j] * ts.granularity_);
-
-  total_util_task_duration = util_task_duration * util_thread.get_number_of_computations ();
-
-  total_latency = total_latency_low +
-    total_latency_high +
-    total_util_task_duration;
-
-  // Calc and print the CPU percentage. I add 0.5 to round to the
-  // nearest integer before casting it to int.
-  ACE_DEBUG ((LM_DEBUG, 
-	      "\t%% Low Priority CPU utilization: %d %%\n"
-	      "\t%% High Priority CPU utilization: %d %%\n"
-	      "\t%% Idle time: %d %%\n",
-	      (int) (total_latency_low * 100 / total_latency + 0.5),
-	      (int) (total_latency_high * 100 / total_latency + 0.5),
-	      (int) (total_util_task_duration * 100 / total_latency + 0.5) ));
-
-#if defined (ACE_LACKS_FLOATING_POINT)
-  ACE_DEBUG ((LM_DEBUG,
-              "(%t) utilization task performed %u computations\n",
-              util_thread.get_number_of_computations ()));
-  ACE_DEBUG ((LM_DEBUG,
-	      "(%t) utilization computation time is %u usecs\n", 
-	      util_task_duration));
-#else
-  ACE_DEBUG ((LM_DEBUG,
-              "(%t) utilization task performed %g computations\n",
-              util_thread.get_number_of_computations ()));
-  ACE_DEBUG ((LM_DEBUG,
-	      "(%t) utilization computation time is %f msecs\n", 
-	      util_task_duration));
-#endif /* ! ACE_LACKS_FLOATING_POINT */
+  if (ts.use_utilization_test_ == 1)
+  {
+    for (j = 0; j < ts.loop_count_/ts.granularity_; j ++)
+      total_latency_high += (ts.global_jitter_array_[0][j] * ts.granularity_);
+    
+    total_util_task_duration = util_task_duration * util_thread.get_number_of_computations ();
+    
+    total_latency = total_latency_high + total_util_task_duration;
+    
+    // Calc and print the CPU percentage. I add 0.5 to round to the
+    // nearest integer before casting it to int.
+    ACE_DEBUG ((LM_DEBUG, 
+  		"\t%% ORB Client CPU utilization: %d %%\n"
+  		"\t%% Idle time: %d %%\n",
+  		(int) (total_latency_high * 100 / total_latency + 0.5),
+  		(int) (total_util_task_duration * 100 / total_latency + 0.5) ));
+    
+  #if defined (ACE_LACKS_FLOATING_POINT)
+    ACE_DEBUG ((LM_DEBUG,
+  		"(%t) utilization task performed %u computations\n",
+  		util_thread.get_number_of_computations ()));
+    ACE_DEBUG ((LM_DEBUG,
+  		"(%t) utilization computation time is %u usecs\n", 
+  		util_task_duration));
+  #else
+    ACE_DEBUG ((LM_DEBUG,
+  		"(%t) utilization task performed %g computations\n",
+  		util_thread.get_number_of_computations ()));
+    ACE_DEBUG ((LM_DEBUG,
+  		"(%t) utilization computation time is %f msecs\n", 
+  		util_task_duration));
+  #endif /* ! ACE_LACKS_FLOATING_POINT */
+  }
 
 #if defined (VXWORKS)
   delete task_id;

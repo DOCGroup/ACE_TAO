@@ -27,7 +27,8 @@ static int base_port = ACE_DEFAULT_SERVER_PORT;
 static u_int num_of_objs = 2;
 static u_int use_name_service = 1;
 static u_int thread_per_rate = 0;
-static u_int use_multiple_priority = 0;
+static u_int use_multiple_priority = 0; 
+static u_int run_utilization_test = 0;
 
 Cubit_Task::Cubit_Task (void)
 {
@@ -38,6 +39,7 @@ Cubit_Task::Cubit_Task (const char *args,
                         const char *orbname,
                         u_int num_of_objs,
                         ACE_Barrier *barrier,
+			Task_State *ts,
                         u_int task_id)
   : key_ ("Cubit"),
     orbname_ ((char *) orbname),
@@ -46,7 +48,8 @@ Cubit_Task::Cubit_Task (const char *args,
     servants_ (0),
     barrier_ (barrier),
     servants_iors_ (0),
-    task_id_ (task_id)
+    task_id_ (task_id),
+    ts_ (ts)
 {
 }
 
@@ -282,7 +285,7 @@ Cubit_Task::create_servants ()
             PortableServer::string_to_ObjectId (buffer);
 
           ACE_NEW_RETURN (this->servants_[i],
-                          Cubit_i,
+                          Cubit_i (ts_),
                           -1);
 
           if (this->servants_[i] == 0)
@@ -350,7 +353,7 @@ Cubit_Task::create_servants ()
 static int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "sh:p:t:f:rm");
+  ACE_Get_Opt opts (argc, argv, "sh:p:t:f:rmU");
   int c;
 
   if (ACE_OS::hostname (hostname, BUFSIZ) != 0)
@@ -362,6 +365,9 @@ parse_args (int argc, char *argv[])
   while ((c = opts ()) != -1)
     switch (c)
       {
+      case 'U':
+	run_utilization_test = 1;
+	break;
       case 'm':
         use_multiple_priority = 1;
         break;
@@ -401,6 +407,9 @@ parse_args (int argc, char *argv[])
 
   if (thread_per_rate == 1)
     num_of_objs = 4;
+
+  if (run_utilization_test == 1)
+    num_of_objs = 1;
 
   // Indicates successful parsing of command line
   return 0;
@@ -463,7 +472,7 @@ initialize (int argc, char **argv)
 // than kept as a stand-alone function.
 
 static int
-start_servants (ACE_Barrier &start_barrier)
+start_servants (ACE_Barrier &start_barrier, Task_State &ts)
 {
   char *args1;
 
@@ -495,6 +504,7 @@ start_servants (ACE_Barrier &start_barrier)
                               "internet",
                               1,
                               &start_barrier,
+			      &ts,
                               0), //task id 0.
                   -1);
 
@@ -602,7 +612,12 @@ start_servants (ACE_Barrier &start_barrier)
                        hostname);
 
       ACE_NEW_RETURN (low_priority_task [i - 1],
-                      Cubit_Task (args, "internet", 1, &start_barrier, i),
+                      Cubit_Task (args, 
+				  "internet", 
+				  1, 
+				  &start_barrier, 
+				  &ts,
+				  i),
                       -1);
 
       // Make the low priority task an active object.
@@ -669,6 +684,36 @@ start_servants (ACE_Barrier &start_barrier)
   return 0;
 }
 
+Util_Thread *
+start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State &ts)
+{
+  Util_Thread *util_task;
+
+  ACE_NEW_RETURN (util_task,
+                  Util_Thread (&ts,
+			       util_thr_mgr),
+		  0);
+
+  ACE_Sched_Priority priority = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
+                                                                ACE_SCOPE_THREAD);
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Creating Utilization Task with priority %d\n",
+              priority));
+
+  // Make the high priority task an active object.
+  if (util_task->activate (THR_BOUND | ACE_SCHED_FIFO,
+			   1,
+			   0,
+			   priority) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n",
+                  "util_task->activate"));
+    }
+
+  return util_task;
+}
+
 // main routine.
 
 #if defined (VXWORKS)
@@ -711,6 +756,57 @@ main (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error in Initialization\n"),
                       1);
+  int _argc = 3;
+  char *_argv[] = {"server",
+                  "-t",
+                  "1"};
+
+  Task_State ts ( _argc, _argv);
+
+  Util_Thread * util_task = 0;
+
+  // Create the daemon thread in its own <ACE_Thread_Manager>.
+  ACE_Thread_Manager util_thr_mgr;
+
+  if ((util_task = start_utilization (&util_thr_mgr, ts)) == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Error creating the utilization thread!\n"),
+                      1);
+
+  //
+  // Time the utilization thread' "computation" to get %IdleCPU at the end of the test.
+  //
+  ACE_Time_Value total_elapsed;
+  double util_task_duration = 0.0;
+  double total_latency = 0.0;
+  double total_latency_servants = 0.0;
+  double total_util_task_duration = 0.0;
+
+#if defined (CHORUS)
+  int pstartTime = 0;
+  int pstopTime = 0;
+  // Elapsed time will be in microseconds.
+  pstartTime = pccTime1Get();
+  // execute one computation.
+  util_task->computation ();
+  pstopTime = pccTime1Get();
+  // Store the time in micro-seconds.
+  util_task_duration = pstopTime - pstartTime;
+#else /* CHORUS */
+  ACE_High_Res_Timer timer_;
+  // Elapsed time will be in microseconds.
+  ACE_Time_Value delta_t;
+  timer_.start ();
+  // execute one computation.
+  for (int i=0; i< 1000; i++)
+    util_task->computation ();
+  timer_.stop ();
+  timer_.elapsed_time (delta_t);
+  // Store the time in milli-seconds.
+  util_task_duration = (delta_t.sec () * 
+			ACE_ONE_SECOND_IN_MSECS + 
+			(double)delta_t.usec () / ACE_ONE_SECOND_IN_MSECS) / 1000;
+#endif /* !CHORUS */
 
   // Barrier for the multiple clients to synchronize after binding to
   // the servants.
@@ -722,7 +818,7 @@ main (int argc, char *argv[])
   quantify_start_recording_data();
 #endif /* NO_ACE_QUANTIFY */
 
-  if (start_servants (start_barrier) != 0)
+  if (start_servants (start_barrier, ts) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error creating the servants\n"),
                       1);
@@ -732,6 +828,37 @@ main (int argc, char *argv[])
 
   // Wait for all the threads to exit.
   ACE_Thread_Manager::instance ()->wait ();
+
+  {
+    util_task->done_ = 1;
+    
+    // This will wait for the utilization thread to finish.
+    util_thr_mgr.wait ();
+    
+    ts.timer_.elapsed_time (total_elapsed);
+
+    ACE_DEBUG ((LM_DEBUG,
+		"(%t) utilization task performed %g computations"
+		"(%t) each computation had a duration of %u msecs\n",
+		util_task->get_number_of_computations (),
+		util_task_duration));    
+
+    total_util_task_duration = util_task_duration * util_task->get_number_of_computations ();
+    
+    total_latency = (total_elapsed.sec () * 
+		     ACE_ONE_SECOND_IN_MSECS + 
+		     (double)total_elapsed.usec () / ACE_ONE_SECOND_IN_MSECS);
+			      
+    total_latency_servants = total_latency - total_util_task_duration;
+    
+    // Calc and print the CPU percentage. I add 0.5 to round to the
+    // nearest integer before casting it to int.
+    ACE_DEBUG ((LM_DEBUG, 
+  		"\t%% ORB Servant CPU utilization: %u %%\n"
+  		"\t%% Idle time: %u %%\n",
+  		(int) (total_latency_servants * 100 / total_latency + 0.5),
+  		(int) (total_util_task_duration * 100 / total_latency + 0.5) ));    
+  }
 
 #if defined (NO_ACE_QUANTIFY)
   quantify_stop_recording_data();

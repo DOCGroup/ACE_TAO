@@ -25,6 +25,8 @@
 
 // MT Cubit application includes.
 #include "cubit_i.h"
+#include "Task_Client.h"
+#include "Util_Thread.h"
 
 #if defined (VME_DRIVER)
 #include <hostLib.h>
@@ -51,6 +53,7 @@ class Cubit_Task : public ACE_Task<ACE_NULL_SYNCH>
               const char* orbname,
               u_int num_of_objs,
 	      ACE_Barrier *barrier,
+	      Task_State *ts,
 	      u_int task_id);
   // Constructor.
 
@@ -112,5 +115,8 @@ private:
 
   CosNaming::NamingContext_var mt_cubit_context_;
   // context where all MT Cubit objects will be created.
+
+  Task_State *ts_;
+  // state for the utilization thread to synchronize with the servants.
 };
 
