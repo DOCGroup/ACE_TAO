@@ -24,6 +24,7 @@ PACE_FILES = \
   semaphore \
   setjmp \
   signal \
+  socket \
   stdio \
   stdlib \
   string \
