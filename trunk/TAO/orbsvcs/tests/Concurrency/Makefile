@@ -1,13 +1,13 @@
 #----------------------------------------------------------------------------
 #
-#	$Id$
+#       $Id$
 #
-#	Makefile for the concurrency service test.
+#       Makefile for the concurrency service test.
 #
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
 ifndef TAO_ROOT
@@ -17,25 +17,31 @@ endif # ! TAO_ROOT
 LDLIBS = -lorbsvcs -lTAO
 
 PROG_SRCS = CC_client.cpp CC_tests.cpp CC_naming_service.cpp \
-		tmplinst.cpp CC_command.tab.cpp \
-		lex.CC_command.cpp CC_command.cpp CC_test_utils.cpp
+                tmplinst.cpp CC_command.tab.cpp \
+                lex.CC_command.cpp CC_command.cpp CC_test_utils.cpp
 
 LSRC = $(PROG_SRCS)
 
 CC_CLT_OBJS = CC_client.o CC_tests.o tmplinst.o CC_naming_service.o \
-		CC_command.tab.o lex.CC_command.o \
-		CC_command.o CC_test_utils.o
+                CC_command.tab.o lex.CC_command.o \
+                CC_command.o CC_test_utils.o
 
-BIN = CC_client
-BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Concurrency,$(findstring Concurrency,$(TAO_ORBSVCS)))
+  BIN = CC_client
+endif # Concurrency
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -44,13 +50,13 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/Naming_Service
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
-lex.CC_command.cpp:	CC_command.l CC_command.tab.h
+lex.CC_command.cpp:     CC_command.l CC_command.tab.h
 	@echo "WARNING: Potentially outdated lex.CC_command.cpp"
 	@echo "         either touch(1) the file or explicitly"
 	@echo "         generate it using:"
@@ -73,7 +79,7 @@ lex.CC_command.cpp.target:
 		patch < lex.CC_command.cpp.diff
 		$(RM) -f /tmp/$(USER).CC_L1 /tmp/$(USER).CC_L2
 
-CC_command.tab.cpp CC_command.tab.h:	CC_command.y
+CC_command.tab.cpp CC_command.tab.h: CC_command.y
 	@echo "WARNING: Potentially outdated CC_command.tab.cpp"
 	@echo "         either touch(1) the file or explicitly "
 	@echo "         generate it using:"
@@ -95,9 +101,12 @@ CC_command.tab: CC_command.y
 		cp /tmp/$(USER).CC_YH CC_command.tab.h
 		$(RM) -f /tmp/$(USER).CC_Y  /tmp/$(USER).CC_YH y.tab.c y.tab.h
 
-CC_client:	$(addprefix $(VDIR),$(CC_CLT_OBJS))
+CC_client: $(addprefix $(VDIR),$(CC_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
