@@ -57,7 +57,7 @@ int
 main (int argc, char *argv[])
 {
   PortableServer::POA_var oa_ptr;
-  Param_Test_i *param_test;
+  Param_Test_i *param_test = 0;
 
   TAO_TRY
     {
@@ -68,9 +68,9 @@ main (int argc, char *argv[])
       // get the underlying ORB
       CORBA::ORB_var orb_ptr = CORBA::ORB_init (argc, argv, orb_name, TAO_TRY_ENV);
       TAO_CHECK_ENV;
-  
+
       // Get the Root POA
-      
+
       temp = orb_ptr->resolve_initial_references ("RootPOA");
       if (CORBA::is_nil (temp.in()))
         {
@@ -78,30 +78,30 @@ main (int argc, char *argv[])
                              "(%P|%t) Unable to get root poa reference.\n"),
                             1);
         }
-  
+
       oa_ptr = PortableServer::POA::_narrow (temp.in(), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       PortableServer::POAManager_var poa_manager =
         oa_ptr->the_POAManager (TAO_TRY_ENV);
       TAO_CHECK_ENV;
-  
+
       PortableServer::PolicyList policies (2);
-      policies.length (2);  
+      policies.length (2);
       policies[0] =
-	oa_ptr->create_id_assignment_policy (PortableServer::USER_ID,
+        oa_ptr->create_id_assignment_policy (PortableServer::USER_ID,
                                              TAO_TRY_ENV);
       policies[1] =
-	oa_ptr->create_lifespan_policy (PortableServer::PERSISTENT,
+        oa_ptr->create_lifespan_policy (PortableServer::PERSISTENT,
                                         TAO_TRY_ENV);
 
       // We use a different POA, otherwise the user would have to
       // change the object key each time it invokes the server.
       PortableServer::POA_var good_poa =
-	oa_ptr->create_POA ("RootPOA_is_BAD",
+        oa_ptr->create_POA ("RootPOA_is_BAD",
                             poa_manager.in (),
                             policies,
-                            TAO_TRY_ENV);  
+                            TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       // Parse remaining command line and verify parameters.
@@ -114,7 +114,7 @@ main (int argc, char *argv[])
       ACE_NEW_RETURN (param_test, Param_Test_i ("unknown"), 1);
 
       // Register with GoodPOA with a specific name
-      PortableServer::ObjectId_var id = 
+      PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId ("param_test");
       good_poa->activate_object_with_id (id.in (),
                                          param_test,
@@ -138,7 +138,7 @@ main (int argc, char *argv[])
           ACE_OS::fprintf (ior_output_file, "%s", str.in());
           ACE_OS::fclose (ior_output_file);
         }
-      
+
       // Make the POAs controlled by this manager active
       poa_manager->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -147,14 +147,14 @@ main (int argc, char *argv[])
         {
           ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
         }
- 
-      good_poa->destroy (CORBA::B_TRUE, 
-                         CORBA::B_TRUE, 
+
+      good_poa->destroy (CORBA::B_TRUE,
+                         CORBA::B_TRUE,
                          TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      oa_ptr->destroy (CORBA::B_TRUE, 
-                       CORBA::B_TRUE, 
+      oa_ptr->destroy (CORBA::B_TRUE,
+                       CORBA::B_TRUE,
                        TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
@@ -171,8 +171,8 @@ main (int argc, char *argv[])
       return -1;
     }
   TAO_ENDTRY;
-  
-  
+
+
   // Free resources
   delete param_test;
 
