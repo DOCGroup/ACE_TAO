@@ -827,6 +827,9 @@ protected:
   void cleanup_servant (TAO_Active_Object_Map::Map_Entry *active_object_map_entry,
                         CORBA::Environment &ACE_TRY_ENV);
 
+  void deactivate_map_entry (TAO_Active_Object_Map::Map_Entry *active_object_map_entry,
+                             CORBA::Environment &ACE_TRY_ENV);
+
   CORBA::Object_ptr create_reference_i (const char *intf,
                                         CORBA::Short priority,
                                         CORBA_Environment &ACE_TRY_ENV)

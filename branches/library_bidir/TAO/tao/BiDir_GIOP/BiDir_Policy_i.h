@@ -88,7 +88,7 @@ private:
 
 
 #if defined (__ACE_INLINE__)
-#include "tao/BiDir_Policy_i.inl"
+#include "BiDir_Policy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

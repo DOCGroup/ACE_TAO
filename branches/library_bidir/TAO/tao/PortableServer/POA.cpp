@@ -20,7 +20,7 @@
 #include "tao/Acceptor_Registry.h"
 
 #include "tao/RT_Policy_i.h"
-#include "tao/BiDir_Policy_i.h"
+
 
 #include "Default_Acceptor_Filter.h"
 #include "RT_Acceptor_Filters.h"
@@ -69,6 +69,7 @@ public:
     ACE_THROW_SPEC (())
     {
       this->orb_->shutdown (0, ACE_TRY_ENV);
+      ACE_CHECK;
     }
 private:
   CORBA::ORB_ptr orb_;
@@ -1157,9 +1158,10 @@ TAO_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
   // invoke operations on the POA will receive the OBJECT_NOT_EXIST
   // exception.
 
-  // We must copy the user ids into a separate place since we cannot
-  // remove entries while iterating through the map.
-  ACE_Array<PortableServer::ObjectId> ids (this->active_object_map ().current_size ());
+  // We must copy the map entries into a separate place since we
+  // cannot remove entries while iterating through the map.
+  ACE_Array_Base<TAO_Active_Object_Map::Map_Entry *> map_entries
+    (this->active_object_map ().current_size ());
 
   size_t counter = 0;
   TAO_Active_Object_Map::user_id_map::iterator end
@@ -1175,7 +1177,7 @@ TAO_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
 
       if (!active_object_map_entry->deactivated_)
         {
-          ids[counter] = active_object_map_entry->user_id_;
+          map_entries[counter] = active_object_map_entry;
           ++counter;
         }
     }
@@ -1184,8 +1186,8 @@ TAO_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects,
        i < counter;
        ++i)
     {
-      this->deactivate_object_i (ids[i],
-                                 ACE_TRY_ENV);
+      this->deactivate_map_entry (map_entries[i],
+                                  ACE_TRY_ENV);
       ACE_CHECK;
     }
 }
@@ -1215,6 +1217,15 @@ TAO_POA::deactivate_object_i (const PortableServer::ObjectId &id,
       ACE_THROW (PortableServer::POA::ObjectNotActive ());
     }
 
+  this->deactivate_map_entry (active_object_map_entry,
+                              ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+void
+TAO_POA::deactivate_map_entry (TAO_Active_Object_Map::Map_Entry *active_object_map_entry,
+                               CORBA::Environment &ACE_TRY_ENV)
+{
   // Decrement the reference count.
   CORBA::UShort new_count = --active_object_map_entry->reference_count_;
 
@@ -3884,21 +3895,16 @@ TAO_POA_Policies::parse_policy (const CORBA::Policy_ptr policy,
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
-  // Bidirectional policy. If we have a BiDirectional policy, we set a
-  // flag in the ORB_Core for use by the ORB
+  // Check whether we have a BiDirectional policy set. Call the
+  // ORB_Core to do the checking for us
+  int retval = this->orb_core_.parse_bidir_policy (policy,
+                                                   ACE_TRY_ENV);
 
-  BiDirPolicy::BidirectionalPolicy_var bidir_policy
-    = BiDirPolicy::BidirectionalPolicy::_narrow (policy,
-                                                 ACE_TRY_ENV);
   ACE_CHECK;
 
-  if (!CORBA::is_nil (bidir_policy.in ()))
-    {
-      // Set the flag in the ORB_Core
-      if (bidir_policy->value () == BiDirPolicy::BOTH)
-        this->orb_core_.bidir_giop_policy (1);
-      return;
-    }
+  // The policy has been successfully parsed, so return
+  if (retval)
+    return;
 
   ACE_THROW (PortableServer::POA::InvalidPolicy ());
 }
@@ -4134,51 +4140,72 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
 
   TAO_Stub *data = 0;
 
-  // If POA has RTCORBA::SERVER_DECLARED priority model,
-  // each object can potentially have a different priority.
-  // To preserve correctness with multithreading applications, a
-  // separate filter must be used for each object.  Here we allocate a
-  // filter of the stack, if necessary.
-  if (this->policies ().priority_model ()
-      == TAO_POA_Policies::SERVER_DECLARED
-      && this->policies ().server_priority () != priority)
-    {
+  // If the POA has RTCORBA::SERVER_DECLARED priority model
+  // then regardless of the fact that there are or that there
+  // are not bands then we need to pass only one endpoint that
+  // is either the one associated to the bands to which the
+  // server belongs, or the one associated to the server priority.
+  //
+  // If the POA has  RTCORBA::CLIENT_EXPOSED, than all endpoints
+  // should be passed.
 
 #if (TAO_HAS_RT_CORBA == 1)
 
+
+  if (this->policies ().priority_model ()
+      == TAO_POA_Policies::SERVER_DECLARED)
+    {
       if (this->policies ().priority_bands () != 0)
         {
-          TAO_Priority_Acceptor_Filter
+          TAO_Bands_Acceptor_Filter
             filter (this->policies ().server_protocol ()->protocols_rep (),
-                    priority);
+                    this->policies ().priority_bands ()->priority_bands_rep());
 
           data = this->orb_core_.create_stub_object (key,
                                                      type_id,
                                                      client_exposed_policies._retn (),
                                                      &filter,
                                                      ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
         }
-
       else
         {
+          RTCORBA::Priority object_priority =
+            this->policies ().server_priority () > priority ? this->policies ().server_priority () : priority;
+          TAO_Priority_Acceptor_Filter filter (this->policies ().server_protocol ()->protocols_rep (),
+                                               object_priority);
+
           data = this->orb_core_.create_stub_object (key,
                                                      type_id,
                                                      client_exposed_policies._retn (),
-                                                     this->acceptor_filter_,
+                                                     &filter,
                                                      ACE_TRY_ENV);
           ACE_CHECK_RETURN (0);
         }
-#endif /* TAO_HAS_RT_CORBA == 1 */
     }
-  else
+  else if (this->policies ().priority_model ()
+           == TAO_POA_Policies::CLIENT_PROPAGATED)
     {
+      TAO_Server_Protocol_Acceptor_Filter filter ((this->policies ().server_protocol ()->protocols_rep ()));
       data = this->orb_core_.create_stub_object (key,
                                                  type_id,
                                                  client_exposed_policies._retn (),
-                                                 this->acceptor_filter_,
+                                                 &filter,
                                                  ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
     }
+
+#else /* NON-RT-CORBA Section */
+
+  data = this->orb_core_.create_stub_object (key,
+                                             type_id,
+                                             client_exposed_policies._retn (),
+                                             this->acceptor_filter_,
+                                             ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+#endif /* TAO_HAS_RT_CORBA */
+
 
   return data;
 }
@@ -4376,8 +4403,8 @@ TAO_POA::imr_notify_shutdown (void)
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Array<PortableServer::ObjectId>;
-template class ACE_Array_Base<PortableServer::ObjectId>;
+
+template class ACE_Array_Base<TAO_Active_Object_Map::Map_Entry *>;
 
 //template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>;
 template class ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>;
@@ -4399,8 +4426,7 @@ template class ACE_Node<TAO_POA *>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Array<PortableServer::ObjectId>
-#pragma instantiate ACE_Array_Base<PortableServer::ObjectId>
+#pragma instantiate ACE_Array_Base<TAO_Active_Object_Map::Map_Entry *>
 
 //#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map_Iterator_Impl>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Active_Object_Map>

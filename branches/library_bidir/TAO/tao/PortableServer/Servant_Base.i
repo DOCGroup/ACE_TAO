@@ -7,7 +7,7 @@ TAO_Servant_Hash::operator () (PortableServer::Servant servant) const
 }
 
 ACE_INLINE TAO_Stub *
-TAO_Local_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
+TAO_Local_ServantBase::_create_stub (CORBA_Environment & /*ACE_TRY_ENV*/)
 {
 #if 0
   PortableServer::ObjectId_var invalid_oid =
@@ -29,7 +29,7 @@ TAO_Local_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
                                                                this->_interface_repository_id (),
                                                                ACE_TRY_ENV);
 #else
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
+  //  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return 0;
 #endif
 }

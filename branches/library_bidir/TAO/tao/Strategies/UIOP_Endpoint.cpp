@@ -7,8 +7,6 @@
 
 #if TAO_HAS_UIOP == 1
 
-#include "tao/debug.h"
-
 ACE_RCSID(Strategies, UIOP_Endpoint, "$Id$")
 
 #if !defined (__ACE_INLINE__)

@@ -44,6 +44,31 @@ TAO_BiDirGIOP_Loader::activate (CORBA::ORB_ptr,
 }
 
 int
+TAO_BiDirGIOP_Loader::parse_policy (TAO_ORB_Core *orb_core,
+                                    CORBA::Policy_ptr policy,
+                                    CORBA::Environment &ACE_TRY_ENV)
+{
+
+  BiDirPolicy::BidirectionalPolicy_var bidir_policy
+    = BiDirPolicy::BidirectionalPolicy::_narrow (policy,
+                                                 ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  // Bidirectional policy. If we have a BiDirectional policy, we set a
+  // flag in the ORB_Core for use by the ORB
+  if (!CORBA::is_nil (bidir_policy.in ()))
+    {
+      // Set the flag in the ORB_Core
+      if (bidir_policy->value () == BiDirPolicy::BOTH)
+        orb_core_->bidir_giop_policy (1);
+      return 1;
+    }
+
+  return 0;
+}
+
+
+int
 TAO_BiDirGIOP_Loader::Initializer (void)
 {
   ACE_Service_Config::static_svcs ()->

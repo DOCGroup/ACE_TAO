@@ -11,7 +11,7 @@
 //    ExceptionList.h
 //
 // = DESCRIPTION
-//    This file defines the ExceptionList datatype used in 
+//    This file defines the ExceptionList datatype used in
 //    dynamic invocations.
 //
 // = AUTHOR
@@ -23,13 +23,13 @@
 #define TAO_CORBA_EXCEPTIONLIST_H
 #include "ace/pre.h"
 
+#include "dynamicinterface_export.h"
 #include "tao/corbafwd.h"
+#include "ace/Unbounded_Queue.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "dynamicinterface_export.h"
 
 class CORBA_ExceptionList;
 typedef CORBA_ExceptionList *CORBA_ExceptionList_ptr;
@@ -149,4 +149,3 @@ private:
 
 #include "ace/post.h"
 #endif /* TAO_CORBA_EXCEPTIONLIST_H */
-
