@@ -84,7 +84,7 @@ public:
 private:
   CORBA::ULong reply_status_;
   // Reply or LocateReply status.
-  
+
   TAO_GIOP_Version version_;
   // The version
 
@@ -95,8 +95,8 @@ private:
   // CDR stream for reading the input.
 };
 
-#if !defined(__ACE_INLINE__)
+#if defined (__ACE_INLINE__)
 #include "tao/Reply_Dispatcher.i"
-#endif /* __ACE_INLINE__ */ 
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_REPLY_DISPATCHER_H */
