@@ -1,14 +1,28 @@
+Wed Apr 28 20:09:30 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Simple/echo/server.dsp:
+	* examples/Simple/echo/client.dsp:
+
+	  Added release dependencies to the IDL compiler.
+
+	* examples/POA/Reference_Counted_Servant/server.dsp: Updated this
+	  since some source files were removed.
+
+	* examples/POA/Explicit_Activation/server.cpp (main): Added the
+	  use of SINGLE_THREAD_MODEL POA policy.  This helps in MT
+	  debugging of the PAO.
+
 Wed Apr 28 19:03:34 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/corbafwd.h:
 	* tao/Context.{h,i,cpp}:
 	  Added an implementation of ContextList, based on TAO's
 	  implementation of ExceptionList, since the IDL definitions
-	  and the C++ mappings are very similar. Also added 
+	  and the C++ mappings are very similar. Also added
 	  ContextList_var and ContextList_out classes.
 
 	  Added the methods from the OMG C++ mapping for Context.
-	  Since our support for Context is intentionally minimal, 
+	  Since our support for Context is intentionally minimal,
 	  these methods just throw CORBA::NO_IMPLEMENT. Wherever
 	  a Context_ptr is used as an argument in TAO, the only
 	  value it may have is 0 (or the above exception is raised).

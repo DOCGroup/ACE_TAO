@@ -158,8 +158,8 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       // Policies for the firstPOA to be created.
-      CORBA::PolicyList policies (2);
-      policies.length (2);
+      CORBA::PolicyList policies (3);
+      policies.length (3);
 
       // Id Assignment Policy
       policies[0] =
@@ -173,6 +173,12 @@ main (int argc, char **argv)
                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // Threading policy
+      policies[2] =
+        root_poa->create_thread_policy (PortableServer::ORB_CTRL_MODEL,
+                                        ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       // Create the firstPOA under the RootPOA.
       ACE_CString name = "firstPOA";
       PortableServer::POA_var first_poa =
@@ -180,6 +186,15 @@ main (int argc, char **argv)
                               poa_manager.in (),
                               policies,
                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      policies[2]->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Threading policy
+      policies[2] =
+        root_poa->create_thread_policy (PortableServer::SINGLE_THREAD_MODEL,
+                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Create the secondPOA under the firstPOA.
