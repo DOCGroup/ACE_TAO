@@ -1,7 +1,12 @@
 Tue Sep 29 11:05:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/README: removed ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R
-          because it is no longer used.
+          because it is no longer used.  Thanks to Ossama for reporting this.
+
+        * ace/config-fsu-pthread.h,config-mit-pthread.h,config-mvs.h,
+          config-sco-5.0.0-mit-pthread.h,config-tandem.h,README:
+          removed ACE_HAS_PTHREAD_DSTATE_PTR because it is no longer used.
+          Thanks to Ossama for reporting this.
 
 Mon Sep 28 20:35:49 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
