@@ -68,7 +68,7 @@ namespace CIAO
      *
      * @@ What else do we need to initialize here?
      */
-    int init (int num_child_plans, ACE_CString * node_manager_names);
+    int init (int num_child_plans, const ACE_CString * node_manager_names);
 
     /**
      * Split the global (domain-level) deployment plan to a set of 
