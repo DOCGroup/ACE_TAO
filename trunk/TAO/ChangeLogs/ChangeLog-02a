@@ -1,3 +1,10 @@
+Sun Dec 30 17:02:24 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/drv_preproc_ifr.cpp: 
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_putarg):
+	  Now that ACE::strnew() checks for a NULL parameter, we can
+ 	  remove the checks in the TAO code.
+	
 Sun Dec 30 20:30:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent.bor:

@@ -314,9 +314,11 @@ ACE::debug (char c)
 ASYS_INLINE char *
 ACE::strnew (const char *s)
 {
+  if (s == 0)
+    return 0;
   char *t = 0;
   ACE_NEW_RETURN (t, 
-                  char [::strlen(s) + 1],
+                  char [::strlen (s) + 1],
                   0);
   if (t == 0)
     return 0;

@@ -1,3 +1,12 @@
+Sun Dec 30 16:54:18 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Parse_Node.cpp: Now that ACE::strnew() checks for a NULL
+	  parameter, we can remove the checks in the ACE code.
+
+	* ace/ACE.i (strnew): Check to see if the pointer passed to 
+	  ACE::strnew() is non-NULL.  Thanks to Don Hinton for reporting
+ 	  this.
+
 Sat Dec 29 18:36:13 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/OS.i (putenv): Fixed a typo.  Thanks to Venkita for
