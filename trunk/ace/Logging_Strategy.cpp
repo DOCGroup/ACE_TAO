@@ -25,45 +25,45 @@ ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string,
 
   // Parse string and alternate priority mask.
 
-  for (ACE_TCHAR *priority = ACE_OS::strtok (priority_string, "|");
+  for (ACE_TCHAR *priority = ACE_OS::strtok (priority_string, ACE_TEXT("|"));
        priority != 0;
-       priority = ACE_OS::strtok (0, "|"))
+       priority = ACE_OS::strtok (0, ACE_TEXT("|")))
     {
-      if (ACE_OS::strcmp (priority, "TRACE") == 0)
+      if (ACE_OS::strcmp (priority, ACE_TEXT("TRACE")) == 0)
         ACE_SET_BITS (priority_mask, LM_TRACE);
-      else if (ACE_OS::strcmp (priority, "~TRACE") == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT("~TRACE")) == 0)
         ACE_CLR_BITS (priority_mask, LM_TRACE);
-      else if (ACE_OS::strcmp (priority, "DEBUG") == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT("DEBUG")) == 0)
         ACE_SET_BITS (priority_mask, LM_DEBUG);
-      else if (ACE_OS::strcmp (priority, "~DEBUG") == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT("~DEBUG")) == 0)
         ACE_CLR_BITS (priority_mask, LM_DEBUG);
-      else if (ACE_OS::strcmp (priority, "INFO") == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT("INFO")) == 0)
         ACE_SET_BITS (priority_mask, LM_INFO);
-      else if (ACE_OS::strcmp (priority, "~INFO") == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT("~INFO")) == 0)
         ACE_CLR_BITS (priority_mask, LM_INFO);
-      else if (ACE_OS::strcmp (priority, "NOTICE") == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT("NOTICE")) == 0)
         ACE_SET_BITS (priority_mask, LM_NOTICE);
-      else if (ACE_OS::strcmp (priority, "~NOTICE") == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT("~NOTICE")) == 0)
         ACE_CLR_BITS (priority_mask, LM_NOTICE);
-      else if (ACE_OS::strcmp (priority, "WARNING") == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT("WARNING")) == 0)
         ACE_SET_BITS (priority_mask, LM_WARNING);
-      else if (ACE_OS::strcmp (priority, "~WARNING") == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT("~WARNING")) == 0)
         ACE_CLR_BITS (priority_mask, LM_WARNING);
-      else if (ACE_OS::strcmp (priority, "ERROR") == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT("ERROR")) == 0)
         ACE_SET_BITS (priority_mask, LM_ERROR);
-      else if (ACE_OS::strcmp (priority, "~ERROR") == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT("~ERROR")) == 0)
         ACE_CLR_BITS (priority_mask, LM_ERROR);
-      else if (ACE_OS::strcmp (priority, "CRITICAL") == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT("CRITICAL")) == 0)
         ACE_SET_BITS (priority_mask, LM_CRITICAL);
-      else if (ACE_OS::strcmp (priority, "~CRITICAL") == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT("~CRITICAL")) == 0)
         ACE_CLR_BITS (priority_mask, LM_CRITICAL);
-      else if (ACE_OS::strcmp (priority, "ALERT") == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT("ALERT")) == 0)
         ACE_SET_BITS (priority_mask, LM_ALERT);
-      else if (ACE_OS::strcmp (priority, "~ALERT") == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT("~ALERT")) == 0)
         ACE_CLR_BITS (priority_mask, LM_ALERT);
-      else if (ACE_OS::strcmp (priority, "EMERGENCY") == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT("EMERGENCY")) == 0)
         ACE_SET_BITS (priority_mask, LM_EMERGENCY);
-      else if (ACE_OS::strcmp (priority, "~EMERGENCY") == 0)
+      else if (ACE_OS::strcmp (priority, ACE_TEXT("~EMERGENCY")) == 0)
         ACE_CLR_BITS (priority_mask, LM_EMERGENCY);
     }
 

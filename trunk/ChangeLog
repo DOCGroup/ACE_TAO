@@ -1,3 +1,15 @@
+Fri Sep 22 09:27:42 2000  Darrell Brunsch  <brunsch@uci.edu>
+
+        * ace/Logging_Strategy.cpp:
+
+          Added ACE_TEXT to a couple of the literal strings.
+
+        * ace/Registry.cpp:
+
+          MSVC 5 has a different signature for RegConnectRegistry where
+          the first argument (machine name) is not constant.  Added a cast
+          to fix this. [Bug 620]
+
 Fri Sep 22 08:30:26 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Proactor.cpp:

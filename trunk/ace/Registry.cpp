@@ -1092,7 +1092,7 @@ ACE_Predefined_Naming_Contexts::connect (ACE_Registry::Naming_Context &naming_co
     machine_name = 0;
 
   if (predefined == HKEY_LOCAL_MACHINE || predefined == HKEY_USERS)
-    result = ACE_TEXT_RegConnectRegistry (machine_name,
+    result = ACE_TEXT_RegConnectRegistry (ACE_const_cast(ACE_TCHAR *, machine_name),
                                                           predefined,
                                                           &naming_context.key_);
   if (predefined == HKEY_CURRENT_USER || predefined == HKEY_CLASSES_ROOT)
