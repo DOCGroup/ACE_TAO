@@ -30,11 +30,11 @@ extern "C" {
 #endif /* PACE_TCHAR */
 
 #ifndef PACE_HANDLE
-  typedef int PACE_HANDLE;
+  typedef void * PACE_HANDLE;
 #endif /* PACE_HANDLE */
 
 #ifndef PACE_INVALID_HANDLE
-#define PACE_INVALID_HANDLE -1
+#define PACE_INVALID_HANDLE (void*)0
 #endif /* PACE_INVALID_HANDLE */
 
 #ifndef PACE_DEV_T
@@ -140,10 +140,6 @@ extern "C" {
   typedef int uid_t;
   typedef uid_t pace_uid_t;
 #endif /* PACE_UID_T */
-
-#ifndef PACE_WIN32_INVALID_HANDLE
-#define PACE_WIN32_INVALID_HANDLE (void*)0
-#endif
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }

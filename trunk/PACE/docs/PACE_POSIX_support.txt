@@ -1,36 +1,80 @@
 $Id$
 
-pace/win32      NATIVE          EMULATION       NOT_SUPPORTED
-..............................................................
-aio.inl                                         aio_cancel()
-                                                aio_error()
-                                                aio_fsync()
-                                                aio_read()
-                                                aio_return()
-                                                aio_suspend()
-                                                aio_write()
-                                                lio_listen()
+LEGEND
+N = NATIVE
+E = EMULATED
+X = NOT SUPPORTED
+
+FILE                    linux   lynxos  sunos   win32
 .............................................................
-assert.inl      assert()
+aio.h
+ aio_cancel()                                   X
+ aio_error()                                    X
+ aio_fsync()                                    X
+ aio_read()                                     X
+ aio_return()                                   X
+ aio_suspend()                                  X
+ aio_write()                                    X
+ lio_listen()                                   X
 .............................................................
-ctype.inl       isalnum()
-                isalpha()
-                iscntrl()
-                isdigit()
-                isgraph()
-                islower()
-                isprint()
-                ispunct()
-                isspace()
-                isupper()
-                isxdigit()
-                tolower()
+assert.h
+ assert()                                       N
 .............................................................
-dirent.inl                      closedir()
-                                opendir()
-                                readdir()
-                                                readdir_r()
-                                                rewinddir()
+ctype.h
+ isalnum()                                      N
+ isalpha()                                      N
+ iscntrl()                                      N
+ isdigit()                                      N
+ isgraph()                                      N
+ islower()                                      N
+ isprint()                                      N
+ ispunct()                                      N
+ isspace()                                      N
+ isupper()                                      N
+ isxdigit()                                     N
+ tolower()                                      N
 .............................................................
-fcntl.inl                                       creat()
+dirent.inl
+ closedir()                                     E
+ opendir()                                      E
+ readdir()                                      E
+ readdir_r()                                    X
+ rewinddir()                                    X
+.............................................................
+fcntl.inl
+ creat()                                        X
+.............................................................
+grp.inl
+ getgrgid()                                     X
+ getgrdid_r()                                   X
+ getgrname()                                    X
+ getgrname_r()                                  X
+.............................................................
+locale.inl
+ localeconv()                                   N
+ setlocale()                                    N
+.............................................................
+math.inl
+ acos()                                         N
+ asin()                                         N
+ atan()                                         N
+ atan2()                                        N
+ cos()                                          N
+ sin()                                          N
+ tan()                                          N
+ cosh()                                         N
+ sinh()                                         N
+ tanh()                                         N
+ exp()                                          N
+ frexp()                                        N
+ ldexp()                                        N
+ log()                                          N
+ log10()                                        N
+ modf()                                         N
+ pow()                                          N
+ sqrt()                                         N
+ ceil()                                         N
+ fabs()                                         N
+ floor()                                        N
+ fmod()                                         N
 .............................................................

@@ -1,3 +1,14 @@
+Mon Jul 17 12:49:17 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/types.h:
+
+	  PACE_HANDLE and PACE_INVALID_HANDLE get changed in WIN32
+	  to a void *. (In POSIX dir, we use an int as a file desc.)
+
+	* docs/PACE_POSIX_support.txt:
+
+	  Updated.
+
 Mon Jul 17 12:27:47 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
 	* pace/config/utility.h:
