@@ -1,30 +1,35 @@
+Tue Mar 14 14:37:58 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Simple/time/README: added note that this example
+          will not work with -DTAO_HAS_MINIMUM_CORBA.
+
 Mon Mar 13 22:20:11 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Smart_Proxies/On_Demand/svc.conf: Added a comment before
-	  $Id. Thanks to Bala <bala@cs.wustl.edu> of the DOC group for 
-	  trying out this test.
-	
+        * tests/Smart_Proxies/On_Demand/svc.conf: Added a comment before
+          $Id. Thanks to Bala <bala@cs.wustl.edu> of the DOC group for
+          trying out this test.
+
 Mon Mar 13 18:20:11 2000  Darrell Brunsch  <brunsch@uci.edu>
 
         * orbsvcs/orbscvs/orbsvcs.dsp:
         * orbsvcs/orbsvcs/orbsvcs_static.dsp:
           The CR/LF's were missing from the files.  Redid Pradeeps
-          changes.  
+          changes.
 
 Mon Mar 13 17:48:23 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Pluggable/server.h: 
-	* orbsvcs/tests/AVStreams/Pluggable/server.cpp: 
-	* orbsvcs/tests/AVStreams/Multicast/server.h:	
-	* orbsvcs/tests/AVStreams/Multicast/server.cpp:		
-	* orbsvcs/tests/AVStreams/Full_Profile/server.h:		
-	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp:		
-	* orbsvcs/tests/AVStreams/Multicas_Full_Profilet/server.h:		
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
-	  Replaced SERVER with FTP_SERVER as SERVER was reserved. Thanks
-	  to Norbert Krain <krain@lineone.net> for pointing this out and 
-	  Bala <bala@cs.wustl.edu> for helping me debug this. 
-	
+        * orbsvcs/tests/AVStreams/Pluggable/server.h:
+        * orbsvcs/tests/AVStreams/Pluggable/server.cpp:
+        * orbsvcs/tests/AVStreams/Multicast/server.h:
+        * orbsvcs/tests/AVStreams/Multicast/server.cpp:
+        * orbsvcs/tests/AVStreams/Full_Profile/server.h:
+        * orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
+        * orbsvcs/tests/AVStreams/Multicas_Full_Profilet/server.h:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
+          Replaced SERVER with FTP_SERVER as SERVER was reserved. Thanks
+          to Norbert Krain <krain@lineone.net> for pointing this out and
+          Bala <bala@cs.wustl.edu> for helping me debug this.
+
 Mon Mar 13 17:20:51 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * orbsvcs/tests/Event/lib/Counting_Supplier.cpp:

@@ -11,6 +11,8 @@ JACE's GetOpt class to parse the command line arguments.  See
 
 for more details.
 
+NOTE: this example will not work with -DTAO_HAS_MINIMUM_CORBA.
+
 server:
 -------
 
@@ -22,11 +24,11 @@ Options:
 
 When the server is started, you should see as the first line of output
 something that looks like
-	iiop:1.0//danzon.cs.wustl.edu:10015/P35ad159600081a38/child_poa/server
-	(-ORBobjrefstyle url)
+        iiop:1.0//danzon.cs.wustl.edu:10015/P35ad159600081a38/child_poa/server
+        (-ORBobjrefstyle url)
 or
-	IOR:000000000000001649444c3a43756269745...
-	(-ORBobjrefstyle ior)
+        IOR:000000000000001649444c3a43756269745...
+        (-ORBobjrefstyle ior)
 
 The -o option makes it easier to run from a script because the ior
 passing is done through the <ior_output_file>.
