@@ -1,8 +1,111 @@
+Wed Aug  9 18:16:26 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/RMCast/RMCast.h:
+        * ace/RMCast/RMCast.i:
+        * ace/RMCast/RMCast.cpp:
+          Document the state transitions for the receivers, the message
+          formats, and the state transitions for the senders.
+
+        * ace/RMCast/RMCast_Module.h:
+        * ace/RMCast/RMCast_Module.i:
+        * ace/RMCast/RMCast_Module.cpp:
+          Instead of using the ACE ASX framework we are using a lighter
+          weight class hierarchy. The Module interface will contain
+          explicit calls for all the relevant control messages, making it
+          easier to implement and debug.
+          In the future we may move back to the ASX framework, once all
+          the implementation problems have been nailed down.
+
+        * ace/RMCast/RMCast_Fragment.h:
+        * ace/RMCast/RMCast_Fragment.i:
+        * ace/RMCast/RMCast_Fragment.cpp:
+          Use the RMCast_Module classes instead of ACE_Task.
+          The header information is propagated in the RMCast::Data
+          structure and put on a separate iovec entry by the bottom module
+          in the stack.
+
+        * ace/RMCast/RMCast_Partial_Message.h:
+        * ace/RMCast/RMCast_Partial_Message.cpp:
+          Fixed missing #include and corrected a number of problems in the
+          implementation of the reassembly algorithm.  The randomized test
+          passes cleanly now, even on machines with multiple CPUs.
+
+        * ace/RMCast/RMCast_Reassembly.h:
+        * ace/RMCast/RMCast_Reassembly.i:
+        * ace/RMCast/RMCast_Reassembly.cpp:
+          Use the RMCast_Module classes instead of ACE_Task.
+          The header information is propagated in the RMCast::Data
+          structure and obtained from the first bytes in the message
+          decoded, but all that magic is performed by the Module at the
+          bottom of the stack.
+
+        * ace/RMCast/RMCast_Sender_Proxy.h:
+        * ace/RMCast/RMCast_Sender_Proxy.i:
+        * ace/RMCast/RMCast_Sender_Proxy.cpp:
+          This class is used in the receiver side to maintain information
+          about one sender, and to provide an entry point to the
+          per-sender module stack.
+
+        * ace/RMCast/RMCast_Sender_Proxy_Best_Effort.h:
+        * ace/RMCast/RMCast_Sender_Proxy_Best_Effort.i:
+        * ace/RMCast/RMCast_Sender_Proxy_Best_Effort.cpp:
+          An specialized Sender_Proxy that ignores all the control
+          messages, essentially working in best effort mode.
+
+        * ace/RMCast/RMCast_Sender_Proxy_Factory.h:
+        * ace/RMCast/RMCast_Sender_Proxy_Factory.i:
+        * ace/RMCast/RMCast_Sender_Proxy_Factory.cpp:
+          Define the interface to create Sender_Proxy instances.  The
+          application provides an instance of this class in the receiver
+          side to customize the protocol.
+
+        * ace/RMCast/RMCast_UDP_Receiver.h:
+        * ace/RMCast/RMCast_UDP_Receiver.i:
+        * ace/RMCast/RMCast_UDP_Receiver.cpp:
+          Implement a UDP based receiver.
+          Applications create an instance of this class, customized
+          through the Sender_Proxy_Factory, to receive messages.
+          The class can be used in (timed) blocking mode or through the
+          reactor (using the UDP_Event_Handler helper class).
+
+        * ace/RMCast/RMCast_UDP_Sender.h:
+        * ace/RMCast/RMCast_UDP_Sender.i:
+        * ace/RMCast/RMCast_UDP_Sender.cpp:
+          A Module that sends a single fragment using UDP multicast.
+          This version does not send or receive any control messages, so
+          it is best-effort.
+
+        * ace/RMCast/RMCast_UDP_Event_Handler.h:
+        * ace/RMCast/RMCast_UDP_Event_Handler.i:
+        * ace/RMCast/RMCast_UDP_Event_Handler.cpp:
+          Adapter between the Reactor and the UDP_Sender class.
+
+        * tests/RMCast/RMCast_Fragment_Test.cpp:
+        * tests/RMCast/RMCast_Reassembly_Test.cpp:
+          Fixed to match the new interfaces
+
+        * tests/RMCast/RMCast_UDP_Best_Effort_Test.cpp:
+          New unit test for the best effort UDP based senders and
+          receivers.
+          It creates a sending thread that continuosly send messages to a
+          single multicast address, meanwhile the main thread receives all
+          the messages and verifies that they have the expected contents.
+          It should be expandded to randomize the contents and create
+          multiple sending threads.
+
+        * tests/RMCast/Makefile:
+        * ace/RMCast/Makefile:
+          Add new files, updated dependencies
+
+        * ace/RMCast/RMCast_Header_Size.h:
+        * ace/RMCast/RMCast_Header_Size.cpp:
+          Removed
+
 Wed Aug  9 13:28:20 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Message_Queue_T.cpp (dequeue_head_i): Make sure to reset
-	  head_ and tail_ to 0 when the cur_count_ drops to 0.  Thanks to
- 	  Zoran Ivanovic <Zoran_Ivanovic@i2.com> for this fix.
+        * ace/Message_Queue_T.cpp (dequeue_head_i): Make sure to reset
+          head_ and tail_ to 0 when the cur_count_ drops to 0.  Thanks to
+          Zoran Ivanovic <Zoran_Ivanovic@i2.com> for this fix.
 
 Wed Aug 09 18:06:40 2000  Pradeep  <pradeep@cs.wustl.edu>
 

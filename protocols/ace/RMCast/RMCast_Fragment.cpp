@@ -1,9 +1,7 @@
 // $Id$
 
-#ifndef ACE_RMCAST_FRAGMENT_C
-#define ACE_RMCAST_FRAGMENT_C
-
 #include "RMCast_Fragment.h"
+#include "ace/Message_Block.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -15,36 +13,44 @@
 
 ACE_RCSID(ace, RMCast_Fragment, "$Id$")
 
-
-template <ACE_SYNCH_DECL>
-ACE_RMCast_Fragment<ACE_SYNCH_USE>::
-ACE_RMCast_Fragment (ACE_Thread_Manager *thr_mgr,
-                     ACE_Message_Queue<ACE_SYNCH_USE> *mq)
-  :  ACE_Task<ACE_SYNCH_USE> (thr_mgr, mq)
+ACE_RMCast_Fragment::
+ACE_RMCast_Fragment (void)
+  :  ACE_RMCast_Module ()
   ,  max_fragment_size_ (ACE_RMCAST_DEFAULT_FRAGMENT_SIZE)
 {
 }
 
-template <ACE_SYNCH_DECL>
-ACE_RMCast_Fragment<ACE_SYNCH_USE>::
-~ACE_RMCast_Fragment (void)
+ACE_RMCast_Fragment::~ACE_RMCast_Fragment (void)
 {
 }
 
-template <ACE_SYNCH_DECL> int
-ACE_RMCast_Fragment<ACE_SYNCH_USE>::put (ACE_Message_Block *mb,
-                                         ACE_Time_Value *tv)
+int
+ACE_RMCast_Fragment::put_data (ACE_RMCast::Data &received_data)
 {
-  // @@ We should keep the total size precomputed
-  size_t total_size = mb->total_size ();
+  if (this->next () == 0)
+    return 0;
 
+  // The Data object sent downstream
+  ACE_RMCast::Data data = received_data;
+
+  ACE_Message_Block *mb = data.payload;
+
+  // @@ We should keep the total size precomputed
+  data.total_size = mb->total_size ();
+
+  // We must leave room for the header 
 #if defined (ACE_HAS_BROKEN_DGRAM_SENDV)
-  const int TAO_WRITEV_MAX = IOV_MAX - 1;
+  const int ACE_RMCAST_WRITEV_MAX = IOV_MAX - 2;
 #else
-  const int TAO_WRITEV_MAX = IOV_MAX;
+  const int ACE_RMCAST_WRITEV_MAX = IOV_MAX - 1;
 #endif /* ACE_HAS_BROKEN_DGRAM_SENDV */
 
-  const size_t max_fragment_payload = this->max_fragment_size_;
+  // Assume the header will be included on each fragment, so readuce
+  // the maximum amount of memory allowed on each fragment....
+  const size_t fragment_header_size = 1 + 3 * sizeof(ACE_UINT32);
+
+  const size_t max_fragment_payload =
+    this->max_fragment_size_ - fragment_header_size;
 
   // Iterate over all the message blocks in the chain.  If there is
   // enough data to send an MTU then it is sent immediately.
@@ -64,57 +70,43 @@ ACE_RMCast_Fragment<ACE_SYNCH_USE>::put (ACE_Message_Block *mb,
   // - The total size of the message, so the reassembly layer knows
   //   when a complete message has been received.
 
-  ACE_UINT32 message_sequence_number;
-  ACE_UINT32 fragment_offset = 0;
-  {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->mutex_, -1);
-    message_sequence_number = ++(this->sequence_number_generator_);
-  }
+  // Complete the initialization of the <data> structure
 
+  data.fragment_offset = 0;
 
   // The underlying transport layer can only tolerate so many elements
   // in a chain, so we must count them and send a fragment if we are
   // going over the limit.
 
-  ACE_Message_Block blocks[TAO_WRITEV_MAX];
+  ACE_Message_Block blocks[ACE_RMCAST_WRITEV_MAX];
 
-  // The first message block contains the fragmentation layer
-  // header...
-  ACE_UINT32 header[3];
-  header[0] = ACE_HTONL(message_sequence_number);
-  header[1] = ACE_HTONL(fragment_offset);
-  header[2] = ACE_HTONL(total_size);
-
-  const size_t fragment_header_size = sizeof(header);
-
-  blocks[0].init (ACE_reinterpret_cast(char*,header),
-                  fragment_header_size);
-  blocks[0].wr_ptr (fragment_header_size);
 
   // How many elements of the <blocks> array are in use...
-  int iovcnt = 1;
+  int iovcnt = 0;
 
   // The size of the current message, adding the size of all its
   // message blocks.
-  size_t fragment_size = fragment_header_size;
+  size_t fragment_size = 0;
 
   for (ACE_Message_Block* b = mb;  b != 0; b = b->cont ())
     {
+      ACE_Message_Block *current_block = &blocks[iovcnt];
+
       // Add the block to the vector...
 
-      ACE_Message_Block *last_block = blocks + iovcnt;
+      current_block->data_block (b->data_block ()->duplicate ());
+      current_block->rd_ptr (b->rd_ptr ());
+      current_block->wr_ptr (b->wr_ptr ());
+      current_block->cont (0);
 
-      last_block->data_block (b->data_block ()->duplicate ());
-      last_block->rd_ptr (b->rd_ptr ());
-      last_block->wr_ptr (b->wr_ptr ());
-      last_block->cont (0);
       // Set the continuation field
-      blocks[iovcnt - 1].cont (last_block);
+      if (iovcnt != 0)
+        blocks[iovcnt-1].cont (current_block);
 
-      size_t last_block_length = last_block->length ();
+      size_t current_block_length = current_block->length ();
 
       // Recompute the state of the fragment
-      fragment_size += last_block_length;
+      fragment_size += current_block_length;
       iovcnt++;
 
       while (fragment_size >= max_fragment_payload)
@@ -126,29 +118,29 @@ ACE_RMCast_Fragment<ACE_SYNCH_USE>::put (ACE_Message_Block *mb,
           // First adjust the last message block to exactly fit in the
           // fragment:
           size_t last_sent_mb_len =
-            max_fragment_payload - (fragment_size - last_block_length);
+            max_fragment_payload - (fragment_size - current_block_length);
 
           // Send only enough data of the last message block to fill
           // the fragment...
-          last_block->wr_ptr (last_block->rd_ptr ()
+          current_block->wr_ptr (current_block->rd_ptr ()
                               + last_sent_mb_len);
 
-          if (this->put_next (blocks, tv) == -1)
+          data.payload = blocks;
+          if (this->next ()->put_data (data) == -1)
             return -1;
 
           // adjust the offset
-          fragment_offset += max_fragment_payload - fragment_header_size;
-          header[1] = ACE_HTONL(fragment_offset);
+          data.fragment_offset += max_fragment_payload;
 
           // Now compute how much data is left in the last message
           // block, to check if we should continue sending it...
-          last_block_length -= last_sent_mb_len;
-          if (last_block_length == 0)
+          current_block_length -= last_sent_mb_len;
+          if (current_block_length == 0)
             {
               // No more data from this message block, just continue
               // the outer loop...
-              iovcnt = 1;
-              fragment_size = fragment_header_size;
+              iovcnt = 0;
+              fragment_size = 0;
               blocks[0].cont (0);
               break; // while
             }
@@ -158,22 +150,18 @@ ACE_RMCast_Fragment<ACE_SYNCH_USE>::put (ACE_Message_Block *mb,
           // loop will adjust things.
 
           // We must put the data in the right place in the array..
-          char *rd_ptr = last_block->rd_ptr () + last_sent_mb_len;
-          char *wr_ptr = rd_ptr + last_block_length;
-          blocks[1].data_block (last_block->replace_data_block (0));
+          char *rd_ptr = current_block->rd_ptr () + last_sent_mb_len;
+          char *wr_ptr = rd_ptr + current_block_length;
+          blocks[0].data_block (current_block->replace_data_block (0));
 
           // And determine what segment of the data will be sent..
-          blocks[1].rd_ptr (rd_ptr);
-          blocks[1].wr_ptr (wr_ptr);
-          blocks[1].cont (0);
-          last_block = &blocks[1];
-
-          // Setup the cont field...
-          blocks[0].cont (last_block);
+          blocks[0].rd_ptr (rd_ptr);
+          blocks[0].wr_ptr (wr_ptr);
+          blocks[0].cont (0);
 
           // Adjust the state of the fragment
-          fragment_size = last_block_length + fragment_header_size;
-          iovcnt = 2;
+          fragment_size = current_block_length;
+          iovcnt = 1;
 
           // Notice that if <fragment_size> is too big the start of
           // this loop will continue the fragmentation.
@@ -182,23 +170,19 @@ ACE_RMCast_Fragment<ACE_SYNCH_USE>::put (ACE_Message_Block *mb,
       // It is also possible to fill up the iovec array before the
       // fragment is completed, in this case we must send whatever we
       // have:
-      if (iovcnt == TAO_WRITEV_MAX)
+      if (iovcnt == ACE_RMCAST_WRITEV_MAX)
         {
-          if (this->put_next (blocks, tv) == -1)
+          if (this->next ()->put_data (data) == -1)
             return -1;
 
-          fragment_offset += fragment_size - fragment_header_size;
-          header[1] = ACE_HTONL(fragment_offset);
-          iovcnt = 1;
-          fragment_size = fragment_header_size;
+          iovcnt = 0;
+          fragment_size = 0;
           blocks[0].cont (0);
         }
     }
 
-  if (iovcnt == 1)
+  if (iovcnt == 0)
     return 0;
 
-  return this->put_next (blocks, tv);
+  return this->next ()->put_data (data);
 }
-
-#endif /* ACE_RMCAST_FRAGMENT_C */
