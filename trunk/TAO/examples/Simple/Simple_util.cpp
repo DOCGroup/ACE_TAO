@@ -19,8 +19,7 @@ Server<Servant>::~Server (void)
 
 // Parse the command-line arguments and set options.
 
-template <class Servant>
-int 
+template <class Servant> int 
 Server<Servant>::parse_args (void)
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:");
@@ -55,8 +54,7 @@ Server<Servant>::parse_args (void)
 }
 
 // Initialize the server.
-template <class Servant>
-int 
+template <class Servant> int 
 Server<Servant>::init (const char *servant_name, 
                            int argc, 
                            char *argv[], 
@@ -124,8 +122,8 @@ Server<Servant>::init (const char *servant_name,
   return 0;
 }
 
-template <class Servant>
-int Server<Servant>::run (CORBA::Environment &env)
+template <class Servant>int 
+Server<Servant>::run (CORBA::Environment &env)
 {
     // Run the main event loop for the ORB.
   if (this->orb_manager_.run (env) == -1)
@@ -136,8 +134,7 @@ int Server<Servant>::run (CORBA::Environment &env)
   return 0;
 }
 
-template <class Servant>
-void 
+template <class Servant> void 
 Server<Servant>::register_name (void)
 {
   namingClient.init (orb_manager_.orb());
@@ -181,8 +178,7 @@ Client<InterfaceObj, Var>::Client (void)
 
 // Reads the Server ior from a file
 
-template <class InterfaceObj, class Var>
-int 
+template <class InterfaceObj, class Var> int 
 Client<InterfaceObj, Var>::read_ior (char *filename)
 {
   // Open the file for reading.
@@ -212,8 +208,7 @@ Client<InterfaceObj, Var>::read_ior (char *filename)
 
 // Parses the command line arguments and returns an error status.
 
-template <class InterfaceObj, class Var>
-int 
+template <class InterfaceObj, class Var> int 
 Client<InterfaceObj, Var>::parse_args (void)
 {
   ACE_Get_Opt get_opts (argc_, argv_, "df:k:x");
@@ -264,8 +259,7 @@ Client<InterfaceObj, Var>::~Client (void)
   ACE_OS::free (this->ior_);
 }
 
-template <class InterfaceObj, class Var>
-int 
+template <class InterfaceObj, class Var> int 
 Client<InterfaceObj, Var>::init (int argc, char **argv)
 {
   this->argc_ = argc;
@@ -315,16 +309,14 @@ Client<InterfaceObj, Var>::init (int argc, char **argv)
   return 0;
 }
 
-template <class InterfaceObj, class Var>
-int 
+template <class InterfaceObj, class Var> int 
 Client<InterfaceObj, Var>::shutdown (void )
 {
   // Returns the shutdwon flag
   return shutdown_;
 }
 
-template <class InterfaceObj, class Var>
-void  
+template <class InterfaceObj, class Var> void  
 Client<InterfaceObj, Var>::shutdown (int flag)
 {
   // Fills the flag
