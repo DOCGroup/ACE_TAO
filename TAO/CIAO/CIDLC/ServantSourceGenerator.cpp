@@ -2711,11 +2711,11 @@ namespace
         os << "::CCM_";
 
         {
-          SimpleTypeNameEmitter returns_emitter (os);
-          Traversal::Returns returns_;
-          returns_.node_traverser (returns_emitter);
+          SimpleTypeNameEmitter manages_emitter (os);
+          Traversal::Manages manages_;
+          manages_.node_traverser (manages_emitter);
 
-          Traversal::HomeFactory::returns (hf, returns_);
+          manages (scope_, manages_);
         }
 
         os << "_var _ciao_comp =" << endl;
@@ -2731,11 +2731,11 @@ namespace
         os << "::CCM_";
 
         {
-          SimpleTypeNameEmitter returns_emitter (os);
-          Traversal::Returns returns_;
-          returns_.node_traverser (returns_emitter);
+          SimpleTypeNameEmitter manages_emitter (os);
+          Traversal::Manages manages_;
+          manages_.node_traverser (manages_emitter);
 
-          Traversal::HomeFactory::returns (hf, returns_);
+          manages (scope_, manages_);
         }
 
         os << "::_narrow (" << endl
