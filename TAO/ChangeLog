@@ -1,3 +1,16 @@
+Mon Nov  3 21:36:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/diffs/Current.diff:
+
+	  Added a new diff file for tao/CurrentC.*
+
+	* tao/diffs/CurrentC.cpp.diff:
+	* tao/diffs/CurrentC.h.diff:
+	* tao/diffs/CurrentC.i.diff:
+
+	  Three files are maddening. Replace them with one file (above)
+	  that serve the same purpose.
+
 Mon Nov  3 21:33:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/BiDir_GIOP/diffs/BiDirPolicy.diff:
