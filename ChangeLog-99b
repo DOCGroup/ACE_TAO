@@ -1,3 +1,8 @@
+Tue Mar  2 12:41:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/IOStream_T.{cpp, h}: Fixed some line breaks that were 
+          inadvertently introduced when these files were last checked in.
+
 Tue Mar  2 10:54:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* Cache_{Hash,Heap}_T.{h,cpp}:
