@@ -1026,13 +1026,13 @@ ACE_POSIX_AIOCB_Proactor::handle_events (ACE_Time_Value &wait_time)
 {
   // Decrement <wait_time> with the amount of time spent in the method
   ACE_Countdown_Time countdown (&wait_time);
-  return this->handle_events (wait_time.msec ());
+  return this->handle_events_i (wait_time.msec ());
 }
 
 int
 ACE_POSIX_AIOCB_Proactor::handle_events (void)
 {
-  return this->handle_events (ACE_INFINITE);
+  return this->handle_events_i (ACE_INFINITE);
 }
 
 int
@@ -1129,7 +1129,7 @@ int ACE_POSIX_AIOCB_Proactor::process_result_queue (void)
 }
 
 int
-ACE_POSIX_AIOCB_Proactor::handle_events (u_long milli_seconds)
+ACE_POSIX_AIOCB_Proactor::handle_events_i (u_long milli_seconds)
 {
   int result_suspend = 0;
   int retval= 0;
@@ -1317,24 +1317,20 @@ ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
   ret_val = start_aio_i (result);
   switch (ret_val)
     {
-    case 0 :     // started OK
+    case 0:     // started OK
       aiocb_list_[index] = result;
       return 0;
 
-    case 1 :     //OS AIO queue overflow
+    case 1:     // OS AIO queue overflow
       num_deferred_aiocb_ ++;
       return 0;
 
-    default:    //Invalid request, there is no point
+    default:    // Invalid request, there is no point
       break;    // to start it later
     }
 
   result_list_[index] = 0;
   aiocb_list_cur_size_--;
-
-  ACE_ERROR ((LM_ERROR,
-              "%N:%l:(%P | %t)::%p\n",
-              "start_aio: Invalid request to start <aio>\n"));
   return -1;
 }
 
@@ -1413,11 +1409,11 @@ ACE_POSIX_AIOCB_Proactor::start_aio_i (ACE_POSIX_Asynch_Result *result)
     this->num_started_aio_++;
   else // if (ret_val == -1)
     {
-      if (errno == EAGAIN)  //Ok, it will be deferred AIO
-         ret_val = 1;
+      if (errno == EAGAIN || errno == ENOMEM)  //Ok, it will be deferred AIO
+        ret_val = 1;
       else
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("%N:%l:(%P | %t)::start_aio: aio_%s %p\n"),
+                    ACE_LIB_TEXT ("%N:%l:(%P | %t)::start_aio_i: aio_%s %p\n"),
                     ptype,
                     ACE_LIB_TEXT ("queueing failed\n")));
     }
@@ -1514,38 +1510,38 @@ ACE_POSIX_AIOCB_Proactor::cancel_aio (ACE_HANDLE handle)
 
     size_t ai = 0;
 
-    for (ai = 0; ai < aiocb_list_max_size_; ai++)
+    for (ai = 0; ai < this->aiocb_list_max_size_; ai++)
       {
-        if (result_list_[ai] == 0)    //skip empty slot
-           continue;
+        if (this->result_list_[ai] == 0)    // Skip empty slot
+          continue;
 
-        if (result_list_[ai]->aio_fildes != handle)  //skip not our slot
-           continue;
+        if (this->result_list_[ai]->aio_fildes != handle)  // Not ours
+          continue;
 
         num_total++;
 
-        ACE_POSIX_Asynch_Result *asynch_result = result_list_[ai];
+        ACE_POSIX_Asynch_Result *asynch_result = this->result_list_[ai];
 
-        if (aiocb_list_ [ai] == 0)  //deferred aio
+        if (this->aiocb_list_[ai] == 0)  // Canceling a deferred operation
           {
-            num_cancelled ++;
-            num_deferred_aiocb_ --;
+            num_cancelled++;
+            this->num_deferred_aiocb_--;
 
-            aiocb_list_[ai] = 0;
-            result_list_[ai] = 0;
-            aiocb_list_cur_size_--;
+            this->aiocb_list_[ai] = 0;
+            this->result_list_[ai] = 0;
+            this->aiocb_list_cur_size_--;
 
             asynch_result->set_error (ECANCELED);
             asynch_result->set_bytes_transferred (0);
             this->putq_result (asynch_result);
             // we are with locked mutex_ here !
           }
-        else      //cancel started aio
+        else      // Cancel started aio
           {
             int rc_cancel = this->cancel_aiocb (asynch_result);
 
             if (rc_cancel == 0)    //notification in the future
-              num_cancelled ++;     //it is OS responsiblity
+              num_cancelled++;     //it is OS responsiblity
           }
       }
 
@@ -1563,8 +1559,8 @@ ACE_POSIX_AIOCB_Proactor::cancel_aio (ACE_HANDLE handle)
 int
 ACE_POSIX_AIOCB_Proactor::cancel_aiocb (ACE_POSIX_Asynch_Result * result)
 {
-  // This new method is called from cancel_aio
-  // to cancel concrete running AIO request
+  // This method is called from cancel_aio
+  // to cancel a previously submitted AIO request
   int rc = ::aio_cancel (0, result);
 
   // Check the return value and return 0/1/2 appropriately.
@@ -1572,15 +1568,8 @@ ACE_POSIX_AIOCB_Proactor::cancel_aiocb (ACE_POSIX_Asynch_Result * result)
     return 0;
   else if (rc == AIO_ALLDONE)
     return 1;
-  else if (rc == AIO_NOTCANCELED)
+  else // (rc == AIO_NOTCANCELED)
     return 2;
-
-  ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:(%P | %t)::%p\n",
-                       "cancel_aiocb:"
-                       "Unexpected result from <aio_cancel>"),
-                      -1);
-
 }
 
 
