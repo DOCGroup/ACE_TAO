@@ -1,3 +1,15 @@
+Thu Nov 14 12:19:51 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+
+          Modify the way  projects are created on windows.  If using
+          cygwin perl then use \n instead of \r\n.
+
+        * bin/MakeProjectCreator/modules/VC7WorkspaceCreator.pm:
+
+          Sort the list of projects to make the generated solution file more
+          similar to actual solution files.
+
 Thu Nov 14 06:16:51 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Parser.pm:
@@ -46,12 +58,12 @@ Wed Nov 13 17:29:31 2002  Steve Huston  <shuston@riverace.com>
 Wed Nov 13 16:52:04 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
         * ace/Lib_Find.cpp (ldname): MacOS X prepends an underscore to
-	  symbols in shared libaries.
+          symbols in shared libaries.
 
         * ace/config-macosx.h:
         * include/makeinclude/platform_macosx.GNU:
 
-	- add support for dlcompat, a third party package which provides
+        - add support for dlcompat, a third party package which provides
             dlopen(), dlsym(), dlcose() functions
 
         - Define ACE_LD_SEARCH_PATH to DYLD_LIBRARY_PATH and
@@ -59,17 +71,17 @@ Wed Nov 13 16:52:04 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 Tue Nov 12 14:12:59 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	This is a hackish fix for BUG 1361. Please see
-	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1361
-	for details of this problem
+        This is a hackish fix for BUG 1361. Please see
+        http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1361
+        for details of this problem
 
-	* ace/TP_Reactor.cpp (handle_socket_events): A hack to prevent
-	  BUG 1361 from surfacing for applications like TAO, using the
-	  TP_Reactor. This fix basically ensures that resume_i () is
-	  not called naively.
+        * ace/TP_Reactor.cpp (handle_socket_events): A hack to prevent
+          BUG 1361 from surfacing for applications like TAO, using the
+          TP_Reactor. This fix basically ensures that resume_i () is
+          not called naively.
 
-	* ace/Event_Handler.h: Added a enum type which could be could be
-	  used by  the TP_Reactor.
+        * ace/Event_Handler.h: Added a enum type which could be could be
+          used by  the TP_Reactor.
 
 Tue Nov 12 11:53:29 2002  Steve Huston  <shuston@riverace.com>
 
@@ -89,29 +101,29 @@ Tue Nov 12 13:15:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Nov 11 20:37:18 2002  Ossama Othman  <ossama@uci.edu>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Added Jai's application-controlled membership load balancing
-	  test to the list of regression tests to be run.
+          Added Jai's application-controlled membership load balancing
+          test to the list of regression tests to be run.
 
 Mon Nov 11 17:57:12 2002  Ossama Othman  <ossama@uci.edu>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Added Carlos' new PortableInterceptor AMI test to the list of
-	  regression tests to be run.
+          Added Carlos' new PortableInterceptor AMI test to the list of
+          regression tests to be run.
 
 Mon Nov 11 16:17:59 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/MakeProjectCreator/modules/TemplateParser.pm (relative):
-	  Changed to invoke slash_to_backslash from $self.  The original
-	  code only runs on some specific version of perl.
+        * bin/MakeProjectCreator/modules/TemplateParser.pm (relative):
+          Changed to invoke slash_to_backslash from $self.  The original
+          code only runs on some specific version of perl.
 
 Mon Nov 11 13:35:53 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Hash_Map_Manager_T.h: Updated
-	  comments on the class ACE_Hash_Map_Bucket_Iterator.  Thanks to
- 	  Kitty and Irfan for helping with this.
+        * ace/Hash_Map_Manager_T.h: Updated
+          comments on the class ACE_Hash_Map_Bucket_Iterator.  Thanks to
+          Kitty and Irfan for helping with this.
 
 Mon Nov 11 12:52:41 2002  Steve Huston  <shuston@riverace.com>
 
@@ -138,33 +150,33 @@ Mon Nov 11 12:39:18 2002  Steve Huston  <shuston@riverace.com>
 
 Mon Nov 11 09:58:13 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/CDR_Stream.{i,cpp} Add casts to ACE_CDR::Octet and
+        * ace/CDR_Stream.{i,cpp} Add casts to ACE_CDR::Octet and
           ACE_CDR::Boolean to prevent warnings when run with MSVC++ level
           4 warnings.  Thanks to Lukas Gruetzmacher
           <gruetzmacher@ais-dresden.de> for motivating this fix.
 
-	* ace/OS_String.cpp (itoa_emulation): Updated the code so that it'll
-	  work correctly with negative numbers.  Thanks to Joseph Sarbak
- 	  <joseph.sarbak@csfb.com> for reporting this and providing a fix.
+        * ace/OS_String.cpp (itoa_emulation): Updated the code so that it'll
+          work correctly with negative numbers.  Thanks to Joseph Sarbak
+          <joseph.sarbak@csfb.com> for reporting this and providing a fix.
 
 Sun Nov 10 19:38:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/Message_Block.cpp(copy): The copy () methods were copying
-	  data till the end_ pointer. This is a wrong assumption,
-	  especially in places where the alloted bytes are less than the
-	  allocated bytes. Now we use the space () method to find out the
-	  amount of space available in the data block for copying. Thanks
-	  to Edan Ayal for finding this and providing a patch.
+        * ace/Message_Block.cpp(copy): The copy () methods were copying
+          data till the end_ pointer. This is a wrong assumption,
+          especially in places where the alloted bytes are less than the
+          allocated bytes. Now we use the space () method to find out the
+          amount of space available in the data block for copying. Thanks
+          to Edan Ayal for finding this and providing a patch.
 
-	* ace/Simple_Message_Block_Test.cpp: Added a test which tests
-	  copying in a case where the alloted space is less than the
-	  allocated space. Thanks to Edan Ayal for this test case.
+        * ace/Simple_Message_Block_Test.cpp: Added a test which tests
+          copying in a case where the alloted space is less than the
+          allocated space. Thanks to Edan Ayal for this test case.
 
 Sat Nov  9 12:37:54 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* docs/ACE-guidelines.html: Updated the ACE guidelines to
-	  refer to the correct Doxygen links.  Thanks to
-	  Johnny Willemsen for reporting this.
+        * docs/ACE-guidelines.html: Updated the ACE guidelines to
+          refer to the correct Doxygen links.  Thanks to
+          Johnny Willemsen for reporting this.
 
 Sat Nov  9 21:48:31 2002  Steve Huston  <shuston@riverace.com>
 
@@ -214,7 +226,7 @@ Sat Nov  9 18:49:11 2002  Steve Huston  <shuston@riverace.com>
 
 Sat Nov  9 13:16:50 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* THANKS: Added Simon McQueen to the hall of fame.
+        * THANKS: Added Simon McQueen to the hall of fame.
 
 Fri Nov  8 13:04:10 2002  Chad Elliott  <elliott_c@ociweb.com>
 
