@@ -19,6 +19,6 @@
 #endif /* ! __GNUG__ && ! __KCC */
 
 // SunOS 5.6 does support sched_get_priority_{min,max}
-#undef ACE_THR_PRI_FIFO_DEF 
+#undef ACE_THR_PRI_FIFO_DEF
 
 #endif /* ACE_CONFIG_H */
