@@ -16,26 +16,13 @@ project(EC_stub): ciao_client {
   }
 }
 
-project(EC_svnt) : ciao_server {
+project(EC_svnt) : ciao_servant {
   depends += BasicSP_svnt EC_stub
   sharedname  = EC_svnt
   libs    += EC_stub BasicSP_stub BasicSP_svnt TAO_Valuetype
   libpaths += .. $(TAO_ROOT)/tao/Valuetype
   idlflags  +=  -Wb,export_macro=EC_SVNT_Export -Wb,export_include=EC_svnt_export.h
   dllflags = EC_SVNT_BUILD_DLL
-
-  Source_Files {
-    ECEC.cpp
-    ECS.cpp
-  }
-
-  Define_Custom(CIDL) {
-    automatic = 1
-    command = ..\..\..\..\bin\cidlc --lem-file-suffix "E.idl" --
-    inputext    = cidl
-    source_outputext = _svnt.cpp
-    generic_outputext = E.idl
-  }
 
   CIDL_Files {
     EC.cidl
@@ -46,12 +33,14 @@ project(EC_svnt) : ciao_server {
   }
 
   Source_Files {
+    ECEC.cpp
+    ECS.cpp
     EC_svnt.cpp
   }
 }
 
 
-project(EC_exec) : ciao_server {
+project(EC_exec) : ciao_component {
   depends   += EC_svnt
   sharedname = EC_exec
   libs      += EC_stub BasicSP_stub EC_svnt

@@ -16,13 +16,17 @@ project(NavDisplay_stub): ciao_client {
   }
 }
 
-project(NavDisplay_svnt) : ciao_server {
+project(NavDisplay_svnt) : ciao_servant {
   depends += HUDisplay_svnt NavDisplay_stub
   sharedname  = NavDisplay_svnt
   libs    += NavDisplay_stub HUDisplay_stub HUDisplay_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=NAVDISPLAY_SVNT_Export -Wb,export_include=NavDisplay_svnt_export.h
   dllflags = NAVDISPLAY_SVNT_BUILD_DLL
+
+  CIDL_Files {
+// CIDL files are not used in handcrafted examples.
+  }
 
   IDL_Files {
     NavDisplayE.idl
@@ -36,7 +40,7 @@ project(NavDisplay_svnt) : ciao_server {
 }
 
 
-project(NavDisplay_exec) : ciao_server {
+project(NavDisplay_exec) : ciao_component {
   depends   += NavDisplay_svnt
   sharedname = NavDisplay_exec
   libs      += NavDisplay_stub NavDisplay_svnt HUDisplay_stub HUDisplay_svnt
@@ -53,6 +57,3 @@ project(NavDisplay_exec) : ciao_server {
     NavDisplay_exec.cpp
   }
 }
-
-
-

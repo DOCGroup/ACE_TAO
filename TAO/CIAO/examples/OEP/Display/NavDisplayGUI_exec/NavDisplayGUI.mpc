@@ -1,5 +1,5 @@
 // $Id$
-project(NavDisplayGUI_exec) : ciao_server, qt_moc {
+project(NavDisplayGUI_exec) : ciao_component, qt_moc {
   depends   += NavDisplay_exec
   sharedname = NavDisplayGUI_exec
   libs      += NavDisplay_stub NavDisplay_svnt HUDisplay_stub HUDisplay_svnt

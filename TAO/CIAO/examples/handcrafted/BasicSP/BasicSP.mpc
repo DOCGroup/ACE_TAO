@@ -16,7 +16,7 @@ project(BasicSP_stub): ciao_client {
   }
 }
 
-project(BasicSP_svnt) : ciao_server {
+project(BasicSP_svnt) : ciao_servant {
   depends +=  BasicSP_stub
   sharedname = BasicSP_svnt
   libs    += BasicSP_stub
