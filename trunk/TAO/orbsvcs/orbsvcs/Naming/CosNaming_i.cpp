@@ -19,15 +19,18 @@
 ACE_RCSID(Naming, CosNaming_i, "$Id$")
 
 TAO_NamingContext::TAO_NamingContext (PortableServer::POA_ptr poa,
+                                      const char *poa_id,
                                       size_t default_hash_table_size,
                                       int root)
   : root_ (root),
     lock_ (0),
     poa_ (PortableServer::POA::_duplicate (poa)),
-    counter_ (0)
+    counter_ (0),
+    hash_table_size_ (default_hash_table_size),
+    poa_id_ (poa_id)
 {
   // Deal with faults.
-  if (context_.open (default_hash_table_size) == -1)
+  if (context_.open (this->hash_table_size_) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "TAO_NamingContext"));
@@ -468,17 +471,22 @@ TAO_NamingContext::new_context (CORBA::Environment &_env)
 
   CosNaming::NamingContext_var result;
 
+  char poa_id[BUFSIZ];
+  ACE_OS::sprintf (poa_id, 
+                   "%s_%ld", 
+                   this->poa_id_.c_str (), 
+                   this->counter_++);
+
   ACE_NEW_THROW_RETURN (c,
-                        TAO_NamingContext (poa_.in ()),
+                        TAO_NamingContext (poa_.in (),
+                                           poa_id,
+                                           this->hash_table_size_),
                         CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
                         result._retn ());
   TAO_TRY
     {
-      char name[BUFSIZ];
-      ACE_OS::sprintf (name, "%d", this->counter_++);
-
       PortableServer::ObjectId_var id =
-        PortableServer::string_to_ObjectId (name);
+        PortableServer::string_to_ObjectId (poa_id);
 
       this->poa_->activate_object_with_id (id.in (),
                                            c,
@@ -686,11 +694,14 @@ TAO_NamingContext::list (CORBA::ULong how_many,
                        TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
-          char name[BUFSIZ];
-          ACE_OS::sprintf (name, "%d", this->counter_++);
+          char poa_id[BUFSIZ];
+          ACE_OS::sprintf (poa_id, 
+                           "%s_%ld", 
+                           this->poa_id_.c_str (), 
+                           this->counter_++);
 
           PortableServer::ObjectId_var id =
-            PortableServer::string_to_ObjectId (name);
+            PortableServer::string_to_ObjectId (poa_id);
 
           this->poa_->activate_object_with_id (id.in (),
                                                bind_iter,
