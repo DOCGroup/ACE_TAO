@@ -20,8 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "corbafwd.h"
-#include "DynamicC.h"
+#include "tao/corbafwd.h"
+#include "tao/DynamicC.h"
 
 namespace TAO
 {
@@ -34,35 +34,11 @@ namespace TAO
   class TAO_Export Argument
   {
   public:
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &) = 0;
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &) = 0;
-    virtual void add_to_interceptor (Dynamic::Parameter &) = 0;
-  };
-
-  /**
-   * @class Stub_Retval
-   *
-   * @brief Base class for stub return value classes.
-   *
-   */
-  class TAO_Export Stub_Retval
-  {
-  public:
-    virtual CORBA::Boolean demarshal (TAO_InputCDR &) = 0;
-    virtual void add_to_interceptor (CORBA::Any *) = 0;
-  };
-
-  /**
-   * @class Skel_Retval
-   *
-   * @brief Base class for skelton return value classes.
-   *
-   */
-  class TAO_Export Skel_Retval
-  {
-  public:
-    virtual CORBA::Boolean marshal (TAO_OutputCDR &) = 0;
-    virtual void add_to_interceptor (CORBA::Any *) = 0;
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &) {return 1;}
+    virtual CORBA::Boolean demarshal (TAO_InputCDR &) {return 1;}
+    virtual void interceptor_param (Dynamic::Parameter &) {}
+    virtual void interceptor_result (CORBA::Any *) {}
+    virtual CORBA::Boolean interceptor_replace (CORBA::Any &) {return 1;}
   };
 };
 

@@ -118,6 +118,15 @@ Ret_Special_Basic_Argument_T (void)
 
 template<typename S, typename to_S, typename from_S>
 CORBA::Boolean
+TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S>::marshal (
+    TAO_OutputCDR &
+  )
+{
+  return 1;
+}
+
+template<typename S, typename to_S, typename from_S>
+CORBA::Boolean
 TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S>::demarshal (
     TAO_InputCDR & cdr
   )
@@ -132,6 +141,19 @@ TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S>::add_to_interceptor (
   )
 {
   (*any) <<= this->x_;
+}
+
+template<typename S, typename to_S, typename from_S>
+TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S>::operator S ()
+{
+  return this->x_;
+}
+
+template<typename S, typename to_S, typename from_S>
+S
+TAO::Ret_Special_Basic_Argument_T<S,to_S,from_S>::retn (void)
+{
+  return this->x_;
 }
 
 // ============================================================
@@ -269,6 +291,15 @@ TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::marshal (
 }
 
 template<typename S, typename to_S, typename from_S>
+CORBA::Boolean
+TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::demarshal (
+    TAO_InputCDR &
+  )
+{
+  return 1;
+}
+
+template<typename S, typename to_S, typename from_S>
 void
 TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::add_to_interceptor (
     CORBA::Any * any
@@ -278,13 +309,15 @@ TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::add_to_interceptor (
 }
 
 template<typename S, typename to_S, typename from_S>
-TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::operator S () const
+TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S> &
+TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::operator= (S & rhs)
 {
-  return this->x_;
+  this->x_ = rhs;
+  return *this;
 }
 
 template<typename S, typename to_S, typename from_S>
-TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::operator S & ()
+TAO::Ret_Special_Basic_SArgument_T<S,to_S,from_S>::operator S () const
 {
   return this->x_;
 }

@@ -32,9 +32,10 @@ namespace TAO
    */
 
   template<>
-  class TAO_Export Ret_Basic_Argument_T<void> : public Stub_Retval
+  class TAO_Export Ret_Basic_Argument_T<void> : public Argument
   {
   public:
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
     virtual void add_to_interceptor (CORBA::Any *);
 
@@ -42,10 +43,11 @@ namespace TAO
   };
 
   template<>
-  class TAO_Export Ret_Basic_SArgument_T<void> : public Skel_Retval
+  class TAO_Export Ret_Basic_SArgument_T<void> : public Argument
   {
   public:
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
     virtual void add_to_interceptor (CORBA::Any *);
 
     operator void () const;

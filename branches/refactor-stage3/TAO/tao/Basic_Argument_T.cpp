@@ -30,7 +30,7 @@ TAO::In_Basic_Argument_T<S>::demarshal (TAO_InputCDR &)
 
 template<typename S>
 void
-TAO::In_Basic_Argument_T<S>::add_to_interceptor (Dynamic::Parameter & p)
+TAO::In_Basic_Argument_T<S>::interceptor_param (Dynamic::Parameter & p)
 {
   p.argument <<= this->x_;
   p.mode = CORBA::PARAM_IN;
@@ -59,7 +59,7 @@ TAO::Inout_Basic_Argument_T<S>::demarshal (TAO_InputCDR & cdr)
 
 template<typename S>
 void
-TAO::Inout_Basic_Argument_T<S>::add_to_interceptor (Dynamic::Parameter & p)
+TAO::Inout_Basic_Argument_T<S>::interceptor_param (Dynamic::Parameter & p)
 {
   p.argument <<= this->x_;
   p.mode = CORBA::PARAM_INOUT;
@@ -86,17 +86,18 @@ TAO::Out_Basic_Argument_T<S>::demarshal (TAO_InputCDR & cdr)
   return cdr >> this->x_;
 }
 
-template<typename S>
-void
-TAO::Out_Basic_Argument_T<S>::add_to_interceptor (Dynamic::Parameter &)
-{
-}
-
 // ============================================================
 
 template<typename S>
 TAO::Ret_Basic_Argument_T<S>::Ret_Basic_Argument_T (void)
 {
+}
+
+template<typename S>
+CORBA::Boolean
+TAO::Ret_Basic_Argument_T<S>::marshal (TAO_OutputCDR &)
+{
+  return 1;
 }
 
 template<typename S>
@@ -108,13 +109,20 @@ TAO::Ret_Basic_Argument_T<S>::demarshal (TAO_InputCDR & cdr)
 
 template<typename S>
 void
-TAO::Ret_Basic_Argument_T<S>::add_to_interceptor (CORBA::Any * any)
+TAO::Ret_Basic_Argument_T<S>::interceptor_result (CORBA::Any * any)
 {
   (*any) <<= this->x_;
 }
 
 template<typename S>
 TAO::Ret_Basic_Argument_T<S>::operator S () const
+{
+  return this->x_;
+}
+
+template<typename S>
+S
+TAO::Ret_Basic_Argument_T<S>::retn (void)
 {
   return this->x_;
 }
@@ -141,7 +149,7 @@ TAO::In_Basic_SArgument_T<S>::demarshal (TAO_InputCDR &cdr)
 
 template<typename S>
 void
-TAO::In_Basic_SArgument_T<S>::add_to_interceptor (Dynamic::Parameter & p)
+TAO::In_Basic_SArgument_T<S>::interceptor_param (Dynamic::Parameter & p)
 {
   p.argument <<= this->x_;
   p.mode = CORBA::PARAM_IN;
@@ -175,7 +183,7 @@ TAO::Inout_Basic_SArgument_T<S>::demarshal (TAO_InputCDR & cdr)
 
 template<typename S>
 void
-TAO::Inout_Basic_SArgument_T<S>::add_to_interceptor (Dynamic::Parameter & p)
+TAO::Inout_Basic_SArgument_T<S>::interceptor_param (Dynamic::Parameter & p)
 {
   p.argument <<= this->x_;
   p.mode = CORBA::PARAM_INOUT;
@@ -207,18 +215,6 @@ TAO::Out_Basic_SArgument_T<S>::demarshal (TAO_InputCDR &)
   return 1;
 }
 
-template<typename S>
-void
-TAO::Out_Basic_SArgument_T<S>::add_to_interceptor (Dynamic::Parameter &)
-{
-}
-
-template<typename S>
-TAO::Out_Basic_SArgument_T<S>::operator S & ()
-{
-  return this->x_;
-}
-
 // ============================================================
 
 template<typename S>
@@ -234,20 +230,29 @@ TAO::Ret_Basic_SArgument_T<S>::marshal (TAO_OutputCDR & cdr)
 }
 
 template<typename S>
+CORBA::Boolean
+TAO::Ret_Basic_SArgument_T<S>::demarshal (TAO_InputCDR &)
+{
+  return 1;
+}
+
+template<typename S>
 void
-TAO::Ret_Basic_SArgument_T<S>::add_to_interceptor (CORBA::Any * any)
+TAO::Ret_Basic_SArgument_T<S>::interceptor_result (CORBA::Any * any)
 {
   (*any) <<= this->x_;
 }
 
 template<typename S>
-TAO::Ret_Basic_SArgument_T<S>::operator S () const
+TAO::Ret_Basic_SArgument_T<S> &
+TAO::Ret_Basic_SArgument_T<S>::operator= (const S & rhs)
 {
-  return this->x_;
+  this->x_ = rhs;
+  return *this;
 }
 
 template<typename S>
-TAO::Ret_Basic_SArgument_T<S>::operator S & ()
+TAO::Ret_Basic_SArgument_T<S>::operator S () const
 {
   return this->x_;
 }

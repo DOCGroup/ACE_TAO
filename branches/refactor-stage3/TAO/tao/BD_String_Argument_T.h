@@ -34,14 +34,14 @@ namespace TAO
   class In_BD_String_Argument_T : public Argument
   {
   public:
-    In_BD_String_Argument_T (S * const & x);
+    In_BD_String_Argument_T (const S * x);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
     virtual void add_to_interceptor (Dynamic::Parameter &);
 
   private:
-    S * const & x_;
+    const S * x_;
   };
 
   /**
@@ -70,11 +70,15 @@ namespace TAO
    * @brief Template class for INOUT unbounded (w)string argument.
    *
    */
-  template<typename S, typename to_S, typename from_S, size_t BOUND>
+  template<typename S, 
+           typename S_out, 
+           typename to_S, 
+           typename from_S, 
+           size_t BOUND>
   class Out_BD_String_Argument_T : public Argument
   {
   public:
-    Out_BD_String_Argument_T (S *& x);
+    Out_BD_String_Argument_T (S_out x);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
@@ -90,19 +94,25 @@ namespace TAO
    * @brief Template class for return stub value of ub (w)string argument.
    *
    */
-  template<typename S, typename to_S, typename from_S, size_t BOUND>
-  class Ret_BD_String_Argument_T : public Stub_Retval
+  template<typename S, 
+           typename S_var, 
+           typename to_S, 
+           typename from_S, 
+           size_t BOUND>
+  class Ret_BD_String_Argument_T : public Argument
   {
   public:
     Ret_BD_String_Argument_T (void);
 
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
     virtual void add_to_interceptor (CORBA::Any *);
 
-    operator S * () const;
+    operator S * ();
+    S * retn (void);
 
   private:
-    S * x_;
+    S_var x_;
   };
 
   /**
@@ -111,7 +121,11 @@ namespace TAO
    * @brief Template class for IN skeleton UB (w)string argument.
    *
    */
-  template<typename S, typename to_S, typename from_S, size_t BOUND>
+  template<typename S, 
+           typename S_var, 
+           typename to_S, 
+           typename from_S, 
+           size_t BOUND>
   class In_BD_String_SArgument_T : public Argument
   {
   public:
@@ -121,7 +135,7 @@ namespace TAO
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
     virtual void add_to_interceptor (Dynamic::Parameter &);
 
-    operator S * () const;
+    operator const S * () const;
 
   private:
     S * x_;
@@ -133,7 +147,11 @@ namespace TAO
    * @brief Template class for INOUT skeleton UB (w)string argument.
    *
    */
-  template<typename S, typename to_S, typename from_S, size_t BOUND>
+  template<typename S, 
+           typename S_var, 
+           typename to_S, 
+           typename from_S, 
+           size_t BOUND>
   class Inout_BD_String_SArgument_T : public Argument
   {
   public:
@@ -146,7 +164,7 @@ namespace TAO
     operator S *& ();
 
   private:
-    S * x_;
+    S_var x_;
   };
 
   /**
@@ -155,7 +173,12 @@ namespace TAO
    * @brief Template class for INOUT skeleton UB (w)string argument.
    *
    */
-  template<typename S, typename to_S, typename from_S, size_t BOUND>
+  template<typename S, 
+           typename S_var, 
+           typename S_out, 
+           typename to_S, 
+           typename from_S, 
+           size_t BOUND>
   class Out_BD_String_SArgument_T : public Argument
   {
   public:
@@ -165,10 +188,10 @@ namespace TAO
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
     virtual void add_to_interceptor (Dynamic::Parameter &);
 
-    operator S *& ();
+    operator S_out ();
 
   private:
-    S * x_;
+    S_var x_;
   };
 
   /**
@@ -177,20 +200,24 @@ namespace TAO
    * @brief Template class for return skeleton value of UB (w)string.
    *
    */
-  template<typename S, typename to_S, typename from_S, size_t BOUND>
+  template<typename S, 
+           typename S_var, 
+           typename to_S, 
+           typename from_S, 
+           size_t BOUND>
   class Ret_BD_String_SArgument_T : public Skel_Retval
   {
   public:
     Ret_BD_String_SArgument_T (void);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
     virtual void add_to_interceptor (CORBA::Any *);
 
-    operator S * () const;
-    operator S *& ();
+    operator S * ();
 
   private:
-    S * x_;
+    S_var x_;
   };
 
   /**
@@ -207,7 +234,12 @@ namespace TAO
    * @brief Template class for argument traits of bounded (w)strings.
    *
    */
-  template<typename T, typename T_out, typename to_T, typename from_T, size_t BOUND>
+  template<typename T, 
+           typename T_var, 
+           typename T_out, 
+           typename to_T, 
+           typename from_T, 
+           size_t BOUND>
   struct BD_String_Arg_Traits_T
   {
     typedef T *                                               ret_type;
@@ -215,15 +247,46 @@ namespace TAO
     typedef T *&                                              inout_type;
     typedef T_out                                             out_type;
 
-    typedef In_BD_String_Argument_T<T,to_T,from_T,BOUND>      in_arg_val;
-    typedef Inout_BD_String_Argument_T<T,to_T,from_T,BOUND>   inout_arg_val;
-    typedef Out_BD_String_Argument_T<T,to_T,from_T,BOUND>     out_arg_val;
-    typedef Ret_BD_String_Argument_T<T,to_T,from_T,BOUND>     stub_ret_val;
+    typedef In_BD_String_Argument_T<T,
+                                    to_T,
+                                    from_T,
+                                    BOUND>                    in_arg_val;
+    typedef Inout_BD_String_Argument_T<T,
+                                       to_T,
+                                       from_T,
+                                       BOUND>                 inout_arg_val;
+    typedef Out_BD_String_Argument_T<T,
+                                     T_out,
+                                     to_T,
+                                     from_T,
+                                     BOUND>                   out_arg_val;
+    typedef Ret_BD_String_Argument_T<T,
+                                     T_var,
+                                     to_T,
+                                     from_T,
+                                     BOUND>                   stub_ret_val;
 
-    typedef In_BD_String_SArgument_T<T,to_T,from_T,BOUND>     in_sarg_val;
-    typedef Inout_BD_String_SArgument_T<T,to_T,from_T,BOUND>  inout_sarg_val;
-    typedef Out_BD_String_SArgument_T<T,to_T,from_T,BOUND>    out_sarg_val;
-    typedef Ret_BD_String_SArgument_T<T,to_T,from_T,BOUND>    skel_ret_val;
+    typedef In_BD_String_SArgument_T<T,
+                                     T_var,
+                                     to_T,
+                                     from_T,
+                                     BOUND>                   in_sarg_val;
+    typedef Inout_BD_String_SArgument_T<T,
+                                        T_var,
+                                        to_T,
+                                        from_T,
+                                        BOUND>                inout_sarg_val;
+    typedef Out_BD_String_SArgument_T<T,
+                                      T_var,
+                                      T_out,
+                                      to_T,
+                                      from_T,
+                                      BOUND>                  out_sarg_val;
+    typedef Ret_BD_String_SArgument_T<T,
+                                      T_var,
+                                      to_T,
+                                      from_T,
+                                      BOUND>                  skel_ret_val;
 
     typedef BD_String_Tag                                     idl_tag;
   };
@@ -237,6 +300,7 @@ namespace TAO
   template<size_t BOUND>
   class BD_String_Traits
     : public BD_String_Arg_Traits_T<CORBA::Char, 
+                                    CORBA::String_var,
                                     CORBA::String_out,
                                     ACE_InputCDR::to_string,
                                     ACE_OutputCDR::from_string,
@@ -247,6 +311,7 @@ namespace TAO
   template<size_t BOUND>
   class BD_WString_Traits
     : public BD_String_Arg_Traits_T<CORBA::WChar, 
+                                    CORBA::WString_var,
                                     CORBA::WString_out,
                                     ACE_InputCDR::to_wstring,
                                     ACE_OutputCDR::from_wstring,

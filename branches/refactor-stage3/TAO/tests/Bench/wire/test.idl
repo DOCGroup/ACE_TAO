@@ -1,0 +1,10 @@
+
+// $Id$
+
+interface foo
+{
+  string all_str (in string inarg,
+                 inout string inoutarg,
+                 out string outarg);
+};
+

@@ -21,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Argument.h"
+#include "tao/DynamicC.h"
 
 namespace TAO
 {
@@ -91,15 +92,17 @@ namespace TAO
    *
    */
   template<typename S, typename to_S, typename from_S>
-  class TAO_Export Ret_Special_Basic_Argument_T : public Stub_Retval
+  class TAO_Export Ret_Special_Basic_Argument_T : public Argument
   {
   public:
     Ret_Special_Basic_Argument_T (void);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
     virtual void add_to_interceptor (CORBA::Any *);
 
-    operator S () const;
+    operator S ();
+    S retn (void);
 
   private:
     S x_;
@@ -178,16 +181,17 @@ namespace TAO
    *
    */
   template<typename S, typename to_S, typename from_S>
-  class TAO_Export Ret_Special_Basic_SArgument_T : public Skel_Retval
+  class TAO_Export Ret_Special_Basic_SArgument_T : public Argument
   {
   public:
     Ret_Special_Basic_SArgument_T (void);
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &);
+    virtual CORBA::Boolean demarshal (TAO_InputCDR &);
     virtual void add_to_interceptor (CORBA::Any *);
 
+    Ret_Special_Basic_SArgument_T<S,to_S,from_S> & operator= (S & rhs);
     operator S () const;
-    operator S & ();
 
   private:
     S x_;

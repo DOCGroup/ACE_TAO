@@ -1,3 +1,43 @@
+Thu Jun 19 17:31:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Bench/wire/client.cpp:
+        * tests/Bench/wire/client.dsp:
+        * tests/Bench/wire/server.cpp:
+        * tests/Bench/wire/server.dsp:
+        * tests/Bench/wire/test.idl:
+        * tests/Bench/wire/testC.cpp:
+        * tests/Bench/wire/testC.h:
+        * tests/Bench/wire/testC.i:
+        * tests/Bench/wire/testS.cpp:
+        * tests/Bench/wire/testS.h:
+        * tests/Bench/wire/test_i.cpp:
+        * tests/Bench/wire/test_i.h:
+
+	        New files, handcrafted example for testing
+	        changes in this branch.
+
+        * tao/Argument.h:
+        * tao/BD_String_Argument_T.h:
+        * tao/Basic_Argument_T.cpp:
+        * tao/Basic_Argument_T.h:
+        * tao/Basic_Arguments.cpp:
+        * tao/Basic_Arguments.h:
+        * tao/Special_Basic_Argument_T.cpp:
+        * tao/Special_Basic_Argument_T.h:
+        * tao/UB_String_Argument_T.cpp:
+        * tao/UB_String_Argument_T.h:
+        * tao/UB_String_Arguments.h:
+
+	        Changes to the new TAO template args/traits
+	        interface.
+
+        * tao/CORBA_String.h:
+        * tao/CORBA_String.inl:
+
+	        Added ptr() method to (w)string _var classes,
+	        to get a return value of T * without giving
+	        up ownership of the underlying pointer.
+
 Wed Jun 18 22:57:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/BD_String_Argument_T.cpp:
