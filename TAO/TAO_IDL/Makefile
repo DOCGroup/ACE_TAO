@@ -39,15 +39,23 @@ MKLIST = \
 	Makefile.EXE \
 	Makefile.dependencies
 
+## If parallel makes (-j) are invoked , we want to make sure that the order
+## of the Makefiles invoked from this Makefile is preserved.
+## Recursively invoked makes from this file will still be run in parallel.
+.NOTPARALLEL:
+
+## Makefile.BE.mkfile is a dummy target which will cause
+## $(MAKE) -f Makefile.BE to be invoked
+%.mkfile: %
+	@echo $(MAKE) -f $< $(MKFILE_TARGET)
+	@$(MAKE) -f $< $(MKFILE_TARGET)
+
 all debug profile optimize install deinstall clean realclean clobber depend idl_stubs :
-ifeq (Windows,$(findstring Windows,$(OS)))
-	@cmd /c "FOR /D %m IN ($(MKLIST)) DO $(MAKE) -f %m MAKEFILE=$$m $(@:.nested=)"
-else  # ! Windows
-	@for m in $(MKLIST); do \
-	echo $$m; \
-        $(MAKE) -f $$m MAKEFILE=$$m $(@:.nested=); \
-        done
-endif # ! Windows
+ifneq ($(MKLIST),)
+	@echo $(MAKE) -f $(MAKEFILE) MKFILE_TARGET=$@ $(addsuffix .mkfile, $(MKLIST))
+	@$(MAKE) -f $(MAKEFILE) MKFILE_TARGET=$@ $(addsuffix .mkfile, $(MKLIST))
+endif
+
 
 endif # ! CROSS-COMPILE
 
