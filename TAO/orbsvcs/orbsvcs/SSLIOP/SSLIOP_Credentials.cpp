@@ -71,25 +71,15 @@ TAO_SSLIOP_Credentials::credentials_type (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 Security::AuthenticationStatus
-TAO_SSLIOP_Credentials::authentication_state (TAO_ENV_SINGLE_ARG_DECL)
+TAO_SSLIOP_Credentials::authentication_state (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  Security::UtcT expiry_time;
-
-  CORBA::Boolean is_valid =
-    this->is_valid (expiry_time
-                    TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (Security::SecAuthFailure);
-
   // @@ Is the following statement correct?
 
   // No "continued authentication" occurs in SSL.  Authentication is
   // done in one step during SSL session establishment.
 
-  if (is_valid)
-    return Security::SecAuthSuccess;
-  else
-    return Security::SecAuthExpired;
+  return Security::SecAuthSuccess;
 }
 
 char *

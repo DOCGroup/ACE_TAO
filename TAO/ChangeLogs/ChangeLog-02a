@@ -1,3 +1,13 @@
+Wed Jan 23 12:00:35 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp
+	  (authentication_state):
+
+	  Do not check if the credential is valid.  Once the credential
+	  has been authenticated it remains authenticated.  Users should
+	  call the is_valid() method if they wish to determine whether or
+	  not the credential has expired.
+
 Wed Jan 23 11:10:33 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	
         * tao/PortableServer/AMH_Response_Handler.h:
