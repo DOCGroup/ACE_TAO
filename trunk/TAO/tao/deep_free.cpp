@@ -322,7 +322,7 @@ TAO_Marshal_Union::deep_free (CORBA::TypeCode_ptr  tc,
                               CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
-  CORBA::TypeCode_ptr discrim_tc;
+  CORBA::TypeCode_var discrim_tc;
   CORBA::TypeCode_var member_tc;
   CORBA::Any_ptr member_label;
   const void *discrim_val;
