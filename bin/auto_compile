@@ -62,12 +62,12 @@ while ($#ARGV >= 0) {
     $minimum_corba = 1;
     shift;
   } elsif ($ARGV[0] eq "-ami") {
-      $ami =1;
-      shift;
+    $ami =1;
+    shift;
   } elsif ($ARGV[0] eq "-smart_proxies") {
-     $smart_proxies = 1;
-     shift
-  }elsif ($ARGV[0] eq "-build_list") {
+    $smart_proxies = 1;
+v    shift;
+  } elsif ($ARGV[0] eq "-build_list") {
     shift;
     @BUILD_LIST = split (/,/, $ARGV[0]);
     shift;

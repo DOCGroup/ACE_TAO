@@ -1,3 +1,12 @@
+Wed May 17 19:01:52 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_compile:
+          Fixed minor typos in the -smart_proxies option.
+
+        * bin/run_all_list.pm:
+          The path for one of the tests (InterOp-Naming) was broken, my
+          fault.
+
 Wed May 17 16:20:30 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Future.cpp:
@@ -23,13 +32,13 @@ Wed May 17 16:20:30 2000  Darrell Brunsch <brunsch@uci.edu>
           file, it would get reenabled because of these headers.
 
           So I added a #pragma warning(push/pop) pair around the includes
-          in this file to localize the warning settings.  
+          in this file to localize the warning settings.
 
 Wed May 17 14:32:50 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tests/CDR_Array_Test.cpp:
-	  Fixed warnings in KAI-3.4 (and other EDG based compilers), it
-	  makes no sense to return 'const int'
+        * tests/CDR_Array_Test.cpp:
+          Fixed warnings in KAI-3.4 (and other EDG based compilers), it
+          makes no sense to return 'const int'
 
 Wed May 17 12:03:41 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -53,9 +62,9 @@ Wed May 17 13:34:22 2000  Steve Huston  <shuston@riverace.com>
 
 Wed May 17 12:48:24 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/CDR_File_Test.cpp:
-	  More workarounds for compiler bugs, this time egcs-1.1.1 is at
-	  fault.
+        * tests/CDR_File_Test.cpp:
+          More workarounds for compiler bugs, this time egcs-1.1.1 is at
+          fault.
 
 Wed May 17 10:58:23 2000  Steve Huston  <shuston@riverace.com>
 
@@ -74,26 +83,26 @@ Wed May 17 10:58:23 2000  Steve Huston  <shuston@riverace.com>
 
 Wed May 17 10:54:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* examples/ConfigViewer/ConfigTreeCtrl.cpp:
-	* examples/ConfigViewer/ConfigTreeCtrl.h:
- 	* examples/ConfigViewer/ConfigurationViewer.cpp:
-	* examples/ConfigViewer/ConfigurationViewer.dsp:
-	* examples/ConfigViewer/ConfigurationViewer.dsw:
-	* examples/ConfigViewer/ConfigurationViewer.rc:
-	* examples/ConfigViewer/MainFrame.cpp:
-	* examples/ConfigViewer/MainFrame.h:
-	* examples/ConfigViewer/README:
-	* examples/ConfigViewer/ValueDlg.cpp:
-	* examples/ConfigViewer/ValueDlg.h:
-	* examples/ConfigViewer/ValueListCtrl.cpp:
-	* examples/ConfigViewer/ValueListCtrl.h:
-	* examples/ConfigViewer/mondrian.ico:
-	* examples/ConfigViewer/mondrian.xpm:
-	* examples/ConfigViewer/stdafx.cpp:
-	* examples/ConfigViewer/stdafx.h:
-	  Chris Hafey's ACE_Configuration viewer/editor for vxWindows.
-	  For details, see the README file or email Chris at
-	  <chris@stentorsoft.com>.
+        * examples/ConfigViewer/ConfigTreeCtrl.cpp:
+        * examples/ConfigViewer/ConfigTreeCtrl.h:
+        * examples/ConfigViewer/ConfigurationViewer.cpp:
+        * examples/ConfigViewer/ConfigurationViewer.dsp:
+        * examples/ConfigViewer/ConfigurationViewer.dsw:
+        * examples/ConfigViewer/ConfigurationViewer.rc:
+        * examples/ConfigViewer/MainFrame.cpp:
+        * examples/ConfigViewer/MainFrame.h:
+        * examples/ConfigViewer/README:
+        * examples/ConfigViewer/ValueDlg.cpp:
+        * examples/ConfigViewer/ValueDlg.h:
+        * examples/ConfigViewer/ValueListCtrl.cpp:
+        * examples/ConfigViewer/ValueListCtrl.h:
+        * examples/ConfigViewer/mondrian.ico:
+        * examples/ConfigViewer/mondrian.xpm:
+        * examples/ConfigViewer/stdafx.cpp:
+        * examples/ConfigViewer/stdafx.h:
+          Chris Hafey's ACE_Configuration viewer/editor for vxWindows.
+          For details, see the README file or email Chris at
+          <chris@stentorsoft.com>.
 
 Wed May 17 09:02:45 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -118,14 +127,14 @@ Tue May 16 12:01:56 2000  Darrell Brunsch <brunsch@uci.edu>
           seen that doesn't follow the same FuncA/FuncW naming that the
           rest do.  So I added a wrapper in ACE_OS (getenvstrings) and it
           does the appropriate magic in the .cpp file to get this to work.
-          
+
           This only showed up when UNICODE was defined but ACE_USES_WCHAR
           wasn't.
 
         * ace/Process.cpp:
 
           Removed a comment that stated that the WinCE version of
-          inherit_environment () was in Process.i.  Actually, there isn't 
+          inherit_environment () was in Process.i.  Actually, there isn't
           a version for CE at all.
 
         * tests/CDR_Array_Test.cpp:
