@@ -509,8 +509,8 @@ ACE::crc32 (const void *buffer, size_t len)
 {
   register ACE_UINT32 crc = 0;
 
-  for (const char *p = (char *) buffer,
-                  *e = (char *) buffer + len;
+  for (const char *p = (const char *) buffer,
+                  *e = (const char *) buffer + len;
        p != e;
        ++p)
     {
@@ -521,14 +521,14 @@ ACE::crc32 (const void *buffer, size_t len)
 }
 
 ACE_UINT32
-ACE::crc32 (iovec *iov, int len)
+ACE::crc32 (const iovec *iov, int len)
 {
   register ACE_UINT32 crc = 0;
 
   for (int i = 0; i < len; ++i)
     {
-      for (const char *p = (char *) iov[i].iov_base,
-	              *e = (char *) iov[i].iov_base + iov[i].iov_len;
+      for (const char *p = (const char *) iov[i].iov_base,
+	              *e = (const char *) iov[i].iov_base + iov[i].iov_len;
            p != e;
            ++p)
         COMPUTE (crc, *p);
