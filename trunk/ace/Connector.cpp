@@ -50,20 +50,22 @@ template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::activate_svc_handler (SVC_HANDLER *svc_handler)
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::activate_svc_handler");
+  // No errors initially
+  int error = 0;
 
   // See if we should enable non-blocking I/O on the <svc_handler>'s
   // peer.
   if (ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK) != 0)
     {
       if (svc_handler->peer ().enable (ACE_NONBLOCK) == -1)
-	return -1;
+	error = 1;
     }
   // Otherwise, make sure it's disabled by default.
   else if (svc_handler->peer ().disable (ACE_NONBLOCK) == -1)
-    return -1;
+    error = 1;
 
   // We are connected now, so try to open things up.
-  if (svc_handler->open ((void *) this) == -1)
+  if (error || svc_handler->open ((void *) this) == -1)
     {
       // Make sure to close down the <svc_handler> to avoid descriptor
       // leaks.
@@ -310,7 +312,7 @@ ACE_Connector<SH, PR_CO_2>::handle_output (ACE_HANDLE handle)
 
   // Check to see if we're connected.
   if (ast->svc_handler ()->peer ().get_remote_addr (raddr) != -1)
-      this->activate_svc_handler (ast->svc_handler ());
+    this->activate_svc_handler (ast->svc_handler ());
   else // Somethings gone wrong, so close down...
     ast->svc_handler ()->close (0);
 
@@ -403,7 +405,7 @@ ACE_Connector<SH, PR_CO_2>::cancel (SH *sh)
 	AST *ast = 0;
 	this->cleanup_AST (me->ext_id_, ast);
 	ACE_ASSERT (ast == me->int_id_);
-	delete me->int_id_;
+	delete ast;
 	return 0;
       }
 
@@ -526,7 +528,7 @@ ACE_Connector<SH, PR_CO_2>::handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
 	  ACE_ASSERT (ast == me->int_id_);
 	  me->int_id_->svc_handler ()->close (0);
 
-	  delete me->int_id_;
+	  delete ast;
 	}
     }
 
