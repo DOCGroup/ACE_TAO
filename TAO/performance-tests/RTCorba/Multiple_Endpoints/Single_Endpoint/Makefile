@@ -14,8 +14,6 @@ endif # ! TAO_ROOT
 
 TAO_IDLFLAGS+=-Ge 1
 
-LDLIBS = -lRTCORBA_Common 
-
 BIN_UNCHECKED = server client
 
 CLIENT_OBJS = 	client.o
@@ -47,11 +45,14 @@ include $(TAO_ROOT)/taoconfig.mk
 #       Local targets
 #----------------------------------------------------------------------------
 
+SERVER_LIBS = -lRTCORBA_Common $(RT_TAO_SRVR_LIBS)
+CLIENT_LIBS =  -lRTCORBA_Common $(RT_TAO_CLNT_LIBS)
+
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(RT_TAO_SRVR_LIBS) $(LDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(SERVER_LIBS) $(LDLIBS) $(POSTLINK)
 
 client: $(addprefix $(VDIR),$(CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(RT_TAO_CLNT_LIBS) $(LDLIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(CLIENT_LIBS) $(LDLIBS) $(POSTLINK)
 
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.

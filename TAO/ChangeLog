@@ -1,3 +1,9 @@
+Wed Nov 26 11:00:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/RtCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
+	  Reordered the libraries to get it linking. Static linking needs
+	  proper ordering of libraries. 
+
 Wed Nov 26 10:20:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Servant_To_Reference_Test/server.cpp:
