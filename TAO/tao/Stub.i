@@ -241,6 +241,12 @@ TAO_Stub::base_profiles (void)
   return this->base_profiles_;
 }
 
+ACE_INLINE const TAO_MProfile *
+TAO_Stub::forward_profiles (void) const
+{
+  return this->forward_profiles_;
+}
+
 
 ACE_INLINE TAO_ORB_Core*
 TAO_Stub::orb_core (void) const

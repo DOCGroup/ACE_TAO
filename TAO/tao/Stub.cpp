@@ -59,7 +59,9 @@ TAO_Stub::TAO_Stub (const char *repository_id,
 #if (TAO_HAS_CORBA_MESSAGING == 1)
     policies_ (0),
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-    addressing_mode_ (0)
+    addressing_mode_ (0),
+    ior_info_ (0),
+    forwarded_ior_info_ (0)
 {
   if (this->orb_core_ == 0)
     {
@@ -176,6 +178,111 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
   this->orb_core_->reset_service_profile_flags ();
 }
 
+
+int
+TAO_Stub::create_ior_info (IOP::IOR *ior_info,
+                           CORBA::ULong &index,
+                           CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // We are creating the IOR info. Let us not be disturbed. So grab a
+  // lock.
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                            guard,
+                            *this->profile_lock_ptr_,
+                            -1));
+
+  IOP::IOR *tmp_info = 0;
+
+  if (this->forward_profiles_ != 0)
+    {
+      if (this->forwarded_ior_info_ == 0)
+        {
+          this->get_profile_ior_info (*this->forward_profiles_,
+                                      tmp_info,
+                                      ACE_TRY_ENV);
+          ACE_CHECK_RETURN (-1);
+
+          this->forwarded_ior_info_ = tmp_info;
+        }
+
+      // First we look at the forward profiles to see whether the
+      // profile_in_use is any of it.
+      for (CORBA::ULong i = 0;
+           i < this->forward_profiles_->profile_count ();
+           ++i)
+        {
+          if (this->forward_profiles_->get_profile (i)
+              == this->profile_in_use_)
+            {
+              ior_info = this->forwarded_ior_info_;
+              index = i;
+              return 0;
+            }
+        }
+    }
+
+  // Else we look at the base profiles
+  if (this->ior_info_ == 0)
+    {
+      this->get_profile_ior_info (this->base_profiles_,
+                                  tmp_info,
+                                  ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+
+      this->ior_info_ = tmp_info;
+    }
+
+
+  for (CORBA::ULong ind = 0;
+       ind < this->base_profiles_.profile_count ();
+       ++ind)
+    {
+      if (this->base_profiles_.get_profile (ind) ==
+          this->profile_in_use_)
+        {
+          index = ind;
+          ior_info = this->ior_info_;
+          return 0;
+        }
+    }
+
+  // Error, there was no match
+  return -1;
+}
+
+
+int
+TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles,
+                                IOP::IOR *&ior_info,
+                                CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+
+
+  ACE_NEW_THROW_EX (ior_info,
+                    IOP::IOR (),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (-1);
+
+
+  // Get the number of elements
+  CORBA::ULong count = profiles.profile_count ();
+
+  // Set the number of elements in the sequence of tagged_profile
+  ior_info->profiles.length (count);
+
+  // Call the create_tagged_profile one every member of the
+  // profile and make the sequence
+  for (CORBA::ULong index = 0; index < count; ++index)
+    {
+      TAO_Profile *prof = profiles.get_profile (index);
+
+      ior_info->profiles[index] = prof->create_tagged_profile ();
+    }
+
+  return 0;
+}
 
 
 

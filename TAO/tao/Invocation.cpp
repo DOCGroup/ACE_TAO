@@ -94,7 +94,6 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (void)
     profile_ (0),
     endpoint_ (0),
     max_wait_time_ (0),
-    ior_info_ (),
     rt_context_initialized_ (0),
     restart_flag_ (0),
     forward_reference_ (),
@@ -128,7 +127,6 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
     profile_ (0),
     endpoint_ (0),
     max_wait_time_ (0),
-    ior_info_ (),
     rt_context_initialized_ (0),
     restart_flag_ (0),
     forward_reference_ (),
@@ -350,8 +348,26 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
       // We need to call the method seperately. If there is no
       // IOP::IOR info, the call would create the info and return the
       // index that we need.
-      CORBA::ULong index = this->create_ior_info ();
-      this->target_spec_.target_specifier (this->ior_info_,
+      CORBA::ULong index = 0;
+
+      IOP::IOR *ior_info = 0;
+      int retval = this->stub_->create_ior_info (ior_info,
+                                                 index,
+                                                 ACE_TRY_ENV);
+      ACE_CHECK;
+
+      if (retval == -1)
+        {
+          if (TAO_debug_level > 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) Error in finding index for \n")
+                          ACE_TEXT ("IOP::IOR \n")));
+            }
+          return;
+        }
+
+      this->target_spec_.target_specifier (*ior_info,
                                            index);
     }
 
@@ -515,60 +531,7 @@ TAO_GIOP_Invocation::location_forward (CORBA::Object_ptr forward,
   return TAO_INVOKE_RESTART;
 }
 
-CORBA::ULong
-TAO_GIOP_Invocation::create_ior_info (void)
-{
-  if (this->ior_info_.profiles.length () == 0)
-    {
-      // We are making a copy, it is expensive. We want a copy of the
-      // profiles as we dont want to modify the profile set held by
-      // the Stub classes. We may want to hold a lock for doing
-      // that. To avoid unnecssary complications we make a copy and
-      // get the info
 
-      // @@ There should be a better way to do this - Bala
-      // @@ Bala, your code is not exception-safe.  The call below
-      // allocates memory, and could very well return 0.  In such
-      // case, the second call below would seg fault.
-      TAO_MProfile *multi_prof =
-        this->stub_->make_profiles ();
-
-      // Get the number of elements
-      CORBA::ULong count = multi_prof->profile_count ();
-
-      // Set the number of elements in the sequence of tagged_profile
-      this->ior_info_.profiles.length (count);
-
-      // Call the create_tagged_profile one every member of the
-      // profile and make the sequence
-      for (CORBA::ULong index = 0; index < count; ++index)
-        {
-          TAO_Profile *prof = multi_prof->get_profile (index);
-
-          this->ior_info_.profiles[index] = prof->create_tagged_profile ();
-        }
-
-      delete multi_prof;
-    }
-
-  // Figure out the index of the profile we are using for invocation.
-
-  // @@ Bala, you are using base_profiles, which means this will not
-  // work if there was forwarding ...  But it seems the problem isn't
-  // just here, but the whole addressing mode thing won't work if
-  // there was forwarding.
-
-  const TAO_MProfile &mprofile = this->stub_->base_profiles ();
-
-  for (CORBA::ULong i = 0; i < mprofile.profile_count (); ++i)
-    {
-      if (mprofile.get_profile (i) == this->profile_)
-        return i;
-
-    }
-  // If there was forwarding the loop above won't find a match.
-  return mprofile.get_current_handle ();
-}
 
 void
 TAO_GIOP_Invocation::add_rt_service_context (CORBA_Environment &ACE_TRY_ENV)
