@@ -21,11 +21,12 @@
 
 static char *IOR = 0;
 static int iterations = 1;
+static int oneway = 0;
 
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:i:");
+  ACE_Get_Opt get_opts (argc, argv, "k:i:o");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -33,6 +34,9 @@ parse_args (int argc, char **argv)
       {
       case 'k':
         IOR = get_opts.optarg;
+        break;
+      case 'o':
+        oneway = 1;
         break;
       case 'i':
         iterations = ::atoi (get_opts.optarg);
@@ -42,6 +46,7 @@ parse_args (int argc, char **argv)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            "-k IOR"
+                           "-o oneway"
                            "\n",
                            argv [0]),
                           -1);
@@ -143,12 +148,20 @@ main (int argc, char **argv)
 
   CORBA::Long result = 0;
   int i = 0;
-  for (i = 0; i < iterations; i++ && env.exception () == 0)
-    {
-      // Invoke the doit() method of the foo reference.
-      result = foo->doit (env);
-    }
-     
+
+  if (oneway)
+    for (i = 0; i < iterations; i++ && env.exception () == 0)
+      {
+        // Invoke the doit() method of the foo reference.
+        foo->simply_doit (env);
+      }
+  else
+    for (i = 0; i < iterations; i++ && env.exception () == 0)
+      {
+        // Invoke the doit() method of the foo reference.
+        result = foo->doit (env);
+      }
+
   // stop the timer.
   timer.stop ();
   timer.elapsed_time (elapsed_time);
