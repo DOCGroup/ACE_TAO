@@ -159,8 +159,7 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
   long msec_period = rt_info->period/10000; //1/10000 msec per nsec
   qosd.period_.msec(msec_period);
   qosd.deadline_.msec(msec_period); //assume deadline same as period
-  //qosd.period_ = rt_info->period;
-  //qosd.deadline_ = rt_info->period;
+  qosd.deadline_ += ACE_OS::gettimeofday(); //deadline should be absolute!
   ORBSVCS_Time::TimeT_to_Time_Value (qosd.execution_time_,
                                      rt_info->worst_case_execution_time);
 
