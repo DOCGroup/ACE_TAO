@@ -23,6 +23,13 @@ Mon Oct 13 12:58:01 1997  David L. Levine  <levine@cs.wustl.edu>
 	  initializers to match declaration order.  (spawn_i): added
 	  ACE_UNUSED_ARG (t_handle) without WTHREADS.
 
+	* ace/Strategies_T.cpp (ACE_NOOP_Creation_Strategy<SVC_HANDLER>::
+	  make_svc_handler): removed unused arg declaration to avoid
+	  compiler warning.
+
+	* ace/Svc_Conf_y.cpp: commented out unused args and wrapped
+	  assignments in "if" conditionals to avoid g++ warnings.
+
 Mon Oct 13 09:58:11 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/Priority_Reactor.cpp: 
