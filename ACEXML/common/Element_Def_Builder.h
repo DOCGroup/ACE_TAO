@@ -12,7 +12,8 @@
 #ifndef _ACEXML_ELEMENT_DEF_BUILDER_H_
 #define _ACEXML_ELEMENT_DEF_BUILDER_H_
 
-#include "XML_Types.h"
+#include "common/XML_Types.h"
+#include "common/Env.h"
 
 /**
  * @ class ACEXML_Element_Def_Builder Element_Def_Builder.h "common/Element_Def_Builder.h"

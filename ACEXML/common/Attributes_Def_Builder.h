@@ -12,7 +12,76 @@
 #ifndef _ACEXML_ATTRIBUTES_DEF_BUILDER_H_
 #define _ACEXML_ATTRIBUTES_DEF_BUILDER_H_
 
-#include "XML_Types.h"
+#include "common/XML_Types.h"
+#include "common/Env.h"
+
+/**
+ * @ class ACEXML_Attribute_Def_Builder Attributes_Def_Builder.h "common/Attributes_Def_Builder.h"
+ *
+ * @ brief An abstract virtual class defining an interface
+ *         for building an attribute definition from DTD.
+ *
+ * This class should be invisible to application programmers and
+ * is only used for validator implementors.
+ */
+class ACEXML_Export ACEXML_Attribute_Def_Builder
+{
+public:
+  typedef enum {
+    CDATA,
+    ID,
+    IDREF,
+    IDREFS,
+    ENTITY,
+    ENTITIES,
+    NMTOKEN,
+    NMTOKENS,
+    NOTATION,
+    ENUMERATION,
+    ERROR_TYPE,
+  } ATT_TYPE;
+
+  typedef enum {
+    REQUIRED,
+    IMPLIED,
+    FIXED,
+    INVALID
+  } DEFAULT_DECL;
+
+  virtual ~ACEXML_Attribute_Def_Builder () = 0;
+
+  /**
+   * Set the attribute type.
+   */
+  virtual int setAttType (const ATT_TYPE type,
+                          ACEXML_Env &xmlenv)
+    // ACE_THORW_SPEC ((ACEXML_SAXException))
+    = 0;
+
+  /**
+   * Insert an element for NOTATION or ENUMERATION type attribute.
+   */
+  virtual int insertList (const ACEXML_Char Name,
+                          ACEXML_Env &xmlenv)
+    // ACE_THORW_SPEC ((ACEXML_SAXException))
+    = 0;
+
+  /**
+   * Set default attribute declaration.
+   */
+  virtual int setDefault (const DEFAULT_DECL def,
+                          const ACEXML_Char *value,
+                          ACEXML_Env &xmlenv)
+    // ACE_THORW_SPEC ((ACEXML_SAXException))
+    = 0;
+
+  /**
+   * Check validity of the current attribute definition being built.
+   *
+   * @retval 0 if the attribute is not a valid combo.
+   */
+  virtual int validAttr (void) = 0;
+};
 
 /**
  * @ class ACEXML_Attributes_Def_Builder Attributes_Def_Builder.h "common/Attributes_Def_Builder.h"
@@ -26,19 +95,6 @@
 class ACEXML_Export ACEXML_Attributes_Def_Builder
 {
 public:
-  typedef enum {
-    CDATA,
-    ID,
-    IDREF,
-    IDREFS,
-    ENTITY,
-    ENTITIES,
-    NMTOKEN,
-    NMTOKENS,
-    NOTATION,
-    ENUMERATION
-  } ATT_TYPE;
-
   virtual ~ACEXML_Attributes_Def_Builder () = 0;
 
   /**
@@ -52,6 +108,8 @@ public:
                           ACEXML_Env &xmlenv)
     //    ACE_THROW_SPEC ((ACEXML_SAXException))
     = 0;
+
+
 
 };
 
