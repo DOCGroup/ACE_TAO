@@ -298,7 +298,7 @@ public:
   /**
    * Set the inherit_environment flag.
    */
-  void inherit_environment (int);
+  void inherit_environment (int nv);
 #endif /* ACE_WIN32 */
 protected:
 
@@ -519,7 +519,7 @@ public:
   /// <waitpid>).  This value is system dependent.
   ACE_exitcode exit_code (void) const;
 
-  /// Return the Process' return value.  This method returns the 
+  /// Return the Process' return value.  This method returns the
   /// actual return value that a child process returns or <exit>s.
   int return_value (void) const;
 

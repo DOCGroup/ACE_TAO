@@ -53,7 +53,7 @@ typedef int Param_Udata;
  * @class ACE_ATM_Params
  *
  * @brief Wrapper class that simplifies the information passed to the ATM
- * enabled <ACE_ATM_Connector> class.
+ * enabled ACE_ATM_Connector class.
  */
 class ACE_Export ACE_ATM_Params
 {
