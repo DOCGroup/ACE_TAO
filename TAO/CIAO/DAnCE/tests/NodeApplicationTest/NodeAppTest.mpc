@@ -55,10 +55,10 @@ project(NodeAppTest_RoundTrip_exec) : ciao_component_dnc {
   }
 }
 
-project (NodeAppTest_client_simple) : ciao_server_dnc, ciao_deployment_stub {
+project (NodeAppTest_client_simple) : ciao_server_dnc, ciao_deployment_svnt {
  after += NodeAppTest_RoundTrip_exec
 
- libs += NodeAppTest_RoundTrip_stub Deployment_svnt
+ libs += NodeAppTest_RoundTrip_stub 
  exename += client_simple
 
  IDL_Files {
@@ -69,9 +69,9 @@ project (NodeAppTest_client_simple) : ciao_server_dnc, ciao_deployment_stub {
  }
 }
 
-project (NodeAppTest_client) : ciao_server_dnc, ciao_deployment_stub {
+project (NodeAppTest_client) : ciao_server_dnc, ciao_deployment_svnt {
  after += NodeAppTest_RoundTrip_exec
- libs += NodeAppTest_RoundTrip_stub Deployment_svnt
+ libs += NodeAppTest_RoundTrip_stub
  exename += client
 
 
@@ -83,9 +83,9 @@ project (NodeAppTest_client) : ciao_server_dnc, ciao_deployment_stub {
  }
 }
 
-project (NodeAppTest_client_ex) : ciao_server_dnc, ciao_deployment_stub {
+project (NodeAppTest_client_ex) : ciao_server_dnc, ciao_deployment_svnt {
  after += NodeAppTest_RoundTrip_exec
- libs += NodeAppTest_RoundTrip_stub Deployment_svnt
+ libs += NodeAppTest_RoundTrip_stub 
  exename += client_ex
 
  IDL_Files {

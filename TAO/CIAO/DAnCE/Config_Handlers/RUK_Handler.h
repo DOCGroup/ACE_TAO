@@ -12,7 +12,7 @@
 #define RUK_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "DeploymentC.h"
+#include "ciao/DeploymentC.h"
 #include "Config_Handler_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
