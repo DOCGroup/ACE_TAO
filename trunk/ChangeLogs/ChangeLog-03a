@@ -1,3 +1,8 @@
+Thu Apr 25 14:02:38 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/MT_Reactor_Upcall_Test.cpp: Fixed compile errors by using
+          sizeof (type) instead of sizeof type.
+
 Thu Apr 25 06:51:58 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/OS.h (ACE_FACTORY_DEFINE): Replaced an ACE_reinterpret_cast()
