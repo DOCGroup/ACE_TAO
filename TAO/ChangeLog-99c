@@ -1,3 +1,17 @@
+Wed Jul 28 13:44:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/examples/RtEC/Makefile:
+	* orbsvcs/examples/RtEC/Schedule/README:
+	* orbsvcs/examples/RtEC/Schedule/Makefile:
+	* orbsvcs/examples/RtEC/Schedule/Consumer.h:
+	* orbsvcs/examples/RtEC/Schedule/Consumer.cpp:
+	* orbsvcs/examples/RtEC/Schedule/Schedule.h:
+	* orbsvcs/examples/RtEC/Schedule/Service.cpp:
+	* orbsvcs/examples/RtEC/Schedule/Supplier.h:
+	* orbsvcs/examples/RtEC/Schedule/Supplier.cpp:
+	  New example that shows how to use the event service and the
+	  scheduling service to generate (and use) schedules.
+
 Wed Jul 28 13:09:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/minimumTAO.html: updated libTAO size breakdown.
