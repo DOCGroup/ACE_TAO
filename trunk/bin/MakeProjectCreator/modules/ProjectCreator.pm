@@ -76,8 +76,10 @@ sub new {
   my($dynamic)   = shift;
   my($static)    = shift;
   my($relative)  = shift;
+  my($progress)  = shift;
   my($self)      = Creator::new($class, $global, $inc,
-                                $template, $ti, $relative, 'project');
+                                $template, $ti, $relative,
+                                $progress, 'project');
 
   $self->{$self->{'type_check'}}   = 0;
   $self->{'global_assign'}         = {};
@@ -1116,6 +1118,11 @@ sub write_project {
   my($error)    = "";
   my($name)     = $self->transform_file_name($self->project_file_name());
   my($prjname)  = $self->get_assignment('project_name');
+  my($progress) = $self->get_progress_callback();
+
+  if (defined $progress) {
+    &$progress();
+  }
 
   ## Writing the non-static file so set it to 0
   if ($self->{'want_dynamic_projects'}) {

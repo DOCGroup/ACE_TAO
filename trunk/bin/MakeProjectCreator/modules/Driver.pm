@@ -13,6 +13,13 @@ package Driver;
 use strict;
 
 # ************************************************************
+# Data Section
+# ************************************************************
+
+my($index)    = 0;
+my(@progress) = ("|", "/", "-", "\\");
+
+# ************************************************************
 # Subroutine Section
 # ************************************************************
 
@@ -23,7 +30,7 @@ sub new {
   my(@creators) = @_;
   my($self)     = bless {'path'     => $path,
                          'name'     => $name,
-                         'version'  => 1.0,
+                         'version'  => 1.1,
                          'types'    => {},
                          'creators' => \@creators,
                         }, $class;
@@ -258,11 +265,15 @@ sub run {
     }
   }
 
+  ## Set up un-buffered output for the progress callback
+  $| = 1;
+
   ## Generate the files
   foreach my $file (@input) {
     foreach my $name (@generators) {
       my($generator) = $name->new($global, \@include, $template,
-                                  \%ti, $dynamic, $static, \%relative);
+                                  \%ti, $dynamic, $static, \%relative,
+                                  \&progress);
       print "Generating output using " .
             ($file eq "" ? "default input" : $file) . "\n";
       print "Start Time: " . scalar(localtime(time())) . "\n";
@@ -270,11 +281,22 @@ sub run {
         print STDERR "Unable to process: $file\n";
         $status++;
       }
-      print "  End Time: " . scalar(localtime(time())) . "\n";
+      print "\r  End Time: " . scalar(localtime(time())) . "\n";
     }
   }
 
   return $status;
+}
+
+
+sub progress {
+  ## This method will be called before each output
+  ## file (or set of output files in vc6's case) is written.
+  print "\r$progress[$index]";
+  $index++;
+  if ($index > $#progress) {
+    $index = 0;
+  }
 }
 
 
