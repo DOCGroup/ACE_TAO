@@ -43,7 +43,7 @@ template class ACE_Hash_Map_Manager<ACE_CString,
 
 template class ACE_Hash_Map_Manager<ACE_CString, 
                                     ACE_CString, 
-                                    ACE_Null_Mutex>
+                                    ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<ACE_CString, 
                                   ACE_CString>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, 
