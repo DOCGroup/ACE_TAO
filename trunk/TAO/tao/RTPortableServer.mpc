@@ -1,5 +1,5 @@
 //$Id$
-project(TAO_RTPortableServer): taolib, core, rtcorba, portableserver {
+project : taolib, core, rtcorba, portableserver {
   sharedname   = TAO_RTPortableServer
   dynamicflags = TAO_RTPORTABLESERVER_BUILD_DLL
 
