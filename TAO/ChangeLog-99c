@@ -1,5 +1,7 @@
 Sat Sep 11 14:28:55 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+	  Fixed warnings with Sun C++
 	* RTCP.cpp: 
 	* orbsvcs/orbsvcs/AV/RTCP.h: 
 	  Fixed warnings with egcs
