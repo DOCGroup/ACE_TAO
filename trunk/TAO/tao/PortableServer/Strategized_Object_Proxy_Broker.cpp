@@ -96,7 +96,7 @@ TAO_Object_Proxy_Broker * _TAO_collocation_Object_Proxy_Broker_Factory (
                                                          CORBA::Object_ptr obj
                                                          )
 {
-
+  ACE_UNUSED_ARG (obj);
   return the_tao_strategized_object_proxy_broker ();
 }
 

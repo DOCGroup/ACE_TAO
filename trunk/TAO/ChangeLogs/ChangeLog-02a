@@ -1,3 +1,9 @@
+Wed Oct 11 23:12:03 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/PortableServer/Strategized_Object_Proxy_Broker.cpp:
+
+	  Added ACE_UNUSED_ARG to avoid warning.
+
 Wed Oct 11 22:39:59 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP_Profile.cpp:
