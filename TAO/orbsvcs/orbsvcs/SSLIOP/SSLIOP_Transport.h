@@ -111,12 +111,12 @@ public:
   virtual int send_request (TAO_Stub *stub,
                             TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
-                            int twoway,
+                            int message_semantics,
                             ACE_Time_Value *max_wait_time);
 
   virtual int send_message (TAO_OutputCDR &stream,
                             TAO_Stub *stub = 0,
-                            int twoway = 1,
+                            int message_semantics = TAO_Transport::TAO_TWOWAY_REQUEST,
                             ACE_Time_Value *max_time_wait = 0);
 
   virtual int generate_request_header (TAO_Operation_Details &opdetails,
