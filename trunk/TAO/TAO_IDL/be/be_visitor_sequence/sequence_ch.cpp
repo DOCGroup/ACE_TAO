@@ -645,7 +645,9 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
         }
       else
         {
-          p = AST_PredefinedType::narrow_from_decl (btd->base_type ());
+          p = AST_PredefinedType::narrow_from_decl (
+                  btd->primitive_base_type ()
+                );
         }
 
       pdt = p->pt ();
