@@ -2128,15 +2128,11 @@ ACE_CACHE_CHECK([for C++ typename keyword],
                      public:
                        typedef typename T::Y Y;
                        Foo(T* foo) : foo_(foo) {}
-                       void bilbo(typename T::Y y);
+                       void bilbo(typename T::Y y)
+                         { typename T::Y x(10); }
                      private:
                        T* foo_;
                      };
-
-                     template <class T>
-                     void Foo<T>::bilbo(typename T::Y y)
-                     {
-                     }
                    ]],[[
                      Bar bar(15);
                      Foo<Bar> foo(&bar);
@@ -3216,7 +3212,54 @@ ACE_CHECK_LACKS_FUNCS(strtol)
 
 ACE_CHECK_LACKS_FUNCS(strtoul)
 
-ACE_CHECK_LACKS_FUNCS(swab)
+# swab() comes in a number of forms:
+#   swab (const void*, void*, ssize_t) is POSIX, XPG4, SUS, SUSv2 standard.
+#   swab (const char*, char*, ssize_t) is SVID third edition.
+#   swab (char*, char*, ssize_t) is on some odd platforms like Windows.
+# So, if swab() is available, figure out which of the three variants it is.
+# The second and third have ACE config settings.
+ACE_CHECK_LACKS_FUNCS([swab],
+    [
+      AC_LINK_IFELSE([
+      AC_LANG_PROGRAM([
+#include <stdlib.h>
+#include <unistd.h>
+       ],
+       [
+// If this compiles, we have the POSIX, XPG4, etc. standard.
+const char src[2] = {'a', 'b'};
+char dst[2];
+const void *vsrc = src;
+void *vdst = dst;
+swab (vsrc, vdst, 2);
+       ])
+      ],
+      [
+        ace_cv_std_swab=yes
+      ],
+      [
+        AC_LINK_IFELSE([
+        AC_LANG_PROGRAM([
+#include <stdlib.h>
+#include <unistd.h>
+        ],
+        [
+// If this compiles, we have the SVID3 version, else it's the odd,
+// non-const one.
+const char src[2] = {'a', 'b'};
+char dst[2];
+swab (src, dst, 2);
+        ])
+       ],
+       [
+         AC_DEFINE([ACE_HAS_CONST_CHAR_SWAB])
+       ],
+       [
+         AC_DEFINE([ACE_HAS_NONCONST_SWAB])
+       ])
+      ])
+    ],
+)
 
 dnl ACE uses execv, execvp and execve, so we don't bother to check
 dnl for the others (e.g. execl, execlp, execle)
