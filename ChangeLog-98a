@@ -1,3 +1,10 @@
+Wed Mar 11 15:20:09 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i (thr_getspecific): Added comments to the code to
+ 	  explain the unusual step of saving errno across calls to
+ 	  TlsGetValue() on Win32.  Thanks to Tim Harrison for clarifying
+ 	  this.
+  
 Wed Mar 11 00:39:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* CE-status: A temporary file to trace the progress of the CE
