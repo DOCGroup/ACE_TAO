@@ -1,3 +1,11 @@
+Tue Aug 24 12:06:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/IDL_Test/included.idl:
+	* tests/IDL_Test/including.idl:
+	  Added example similar to that sent in by
+	  Nick Sawadsky <Nick_Sawadsky@BrooksSoftware.com>
+	  to the above two file.
+
 Tue Aug 24 12:00:03 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* rules.tao.GNU: Disabled the option that was compiling the
