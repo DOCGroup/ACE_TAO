@@ -1,8 +1,8 @@
 Tue May 23 17:36:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_args.cpp:
-	  Added a missing pair of braces that got lost in my last cut and 
-          paste session in this file. Thanks to 
+	  Added a missing pair of braces that got lost in my last cut and
+          paste session in this file. Thanks to
 	  Yiu L. Lee <yiulee@crosskeys.com> for reporting it.
 
 Tue May 23 15:04:13 2000  Marina Spivak  <marina@cs.wustl.edu>
@@ -10,6 +10,11 @@ Tue May 23 15:04:13 2000  Marina Spivak  <marina@cs.wustl.edu>
 	* tests/Endpoint_Per_Priority/Makefile:
 	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Makefile:
 	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp:
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp:
 	  Updated dependencies to reflect changes in:
 	  Mon May 22 22:12:22 2000  Marina Spivak  <marina@cs.wustl.edu>
 
