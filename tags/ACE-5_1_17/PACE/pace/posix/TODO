@@ -1,0 +1,7 @@
+$ID$
+
+Testing
+=======
+Test PACE libraries with and without PACE_HAS_POSIX_PTHREAD_SEMANTICS
+defined. There are some functions (e.g., in time.h) that have been
+changed because it looked like they didn't need this guard.
