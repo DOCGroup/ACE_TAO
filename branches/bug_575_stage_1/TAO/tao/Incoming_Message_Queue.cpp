@@ -1,6 +1,7 @@
 #include "Incoming_Message_Queue.h"
 #include "ORB_Core.h"
 #include "debug.h"
+#include "Pluggable_Messaging_Utils.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Incoming_Message_Queue.inl"
@@ -21,41 +22,6 @@ TAO_Incoming_Message_Queue::~TAO_Incoming_Message_Queue (void)
   // Need to delete all the unused data-blocks
 }
 
-int
-TAO_Incoming_Message_Queue::add_message (ACE_Message_Block *incoming,
-                                         ssize_t missing_data,
-                                         CORBA::Octet byte_order)
-
-{
-  // Allocate memory for TAO_Queued_Data
-  TAO_Queued_Data *qd = this->get_node ();
-
-  if (qd == 0)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) Could not make a node \n")));
-        }
-      return -1;
-    }
-
-  // Set the data block
-  qd->msg_block_ = incoming;
-
-  // Set the byte_order
-  qd->byte_order_ = byte_order;
-
-  qd->missing_data_ = missing_data;
-
-  this->add_node (qd);
-
-  // increment the size of the list
-  ++this->size_;
-
-  return 1;
-}
-
 void
 TAO_Incoming_Message_Queue::copy_message (ACE_Message_Block &block)
 {
@@ -63,7 +29,7 @@ TAO_Incoming_Message_Queue::copy_message (ACE_Message_Block &block)
     {
       size_t n = 0;
 
-      if (block.length () <= this->queued_data_->missing_data_)
+      if ((CORBA::Long)block.length () <= this->queued_data_->missing_data_)
         {
           n = block.length ();
         }
@@ -78,32 +44,54 @@ TAO_Incoming_Message_Queue::copy_message (ACE_Message_Block &block)
     }
 }
 
-ACE_Message_Block *
-TAO_Incoming_Message_Queue::dequeue_head (CORBA::Octet &byte_order)
+TAO_Queued_Data *
+TAO_Incoming_Message_Queue::dequeue_head (void)
 {
+  // Get the node on the head of the queue...
   TAO_Queued_Data *tmp =
     this->queued_data_->next_;
 
-  if (tmp->missing_data_ != 0)
-    return 0;
-
-  ACE_Message_Block *db =
-    tmp->msg_block_;
-
+  // Reset the head node..
   this->queued_data_->next_ = tmp->next_;
-  byte_order = tmp->byte_order_;
-
-  delete tmp;
 
   // Decrease the size
   --this->size_;
 
- return db;
+ return tmp;
 }
 
+TAO_Queued_Data *
+TAO_Incoming_Message_Queue::dequeue_tail (void)
+{
+  // This is a bit painful stuff...
+  if (this->size_ == 0)
+    return 0;
+
+  // Get the node on the head of the queue...
+  TAO_Queued_Data *tmp =
+    this->queued_data_->next_;
+
+  while (tmp->next_ != this->queued_data_)
+    {
+      tmp = tmp->next_;
+    }
+
+  // Put the head in tmp.
+  tmp->next_ = this->queued_data_->next_;
+
+  TAO_Queued_Data *ret_qd = this->queued_data_;
+
+  this->queued_data_ = tmp;
+
+  // Decrease the size
+  --this->size_;
+
+ return ret_qd;
+}
+
+
 int
-TAO_Incoming_Message_Queue::add_node (
-    TAO_Incoming_Message_Queue::TAO_Queued_Data *nd)
+TAO_Incoming_Message_Queue::enqueue_tail (TAO_Queued_Data *nd)
 {
   if (this->size_ == 0)
     {
@@ -117,5 +105,20 @@ TAO_Incoming_Message_Queue::add_node (
       this->queued_data_ = nd;
     }
 
+  ++ this->size_;
   return 0;
+}
+
+
+/************************************************************************/
+
+TAO_Queued_Data::TAO_Queued_Data (void)
+  : msg_block_ (0),
+    missing_data_ (0),
+    byte_order_ (0),
+    major_version_ (0),
+    minor_version_ (0),
+    msg_type_ (TAO_PLUGGABLE_MESSAGE_MESSAGERROR),
+    next_ (0)
+{
 }

@@ -41,6 +41,7 @@ class TAO_Connection_Handler;
 class TAO_Pluggable_Messaging;
 
 class TAO_Queued_Message;
+class TAO_Resume_Handle;
 
 class TAO_Export TAO_Synch_Refcountable : private ACE_Refcountable
 {
@@ -488,7 +489,7 @@ public:
    *
    */
   // @@ lockme
-  virtual int handle_input_i (ACE_HANDLE h = ACE_INVALID_HANDLE,
+  virtual int handle_input_i (TAO_Resume_Handle &rh,
                               ACE_Time_Value *max_wait_time = 0,
                               int block = 0);
 
@@ -574,22 +575,22 @@ protected:
 
   int check_message_integrity (ACE_Message_Block &message_block);
 
-  int consolidate_process_message (ACE_Message_Block &incoming,
-                                   ssize_t missing_data,
-                                   ACE_HANDLE h,
-                                   ACE_Time_Value *max_wait_time);
+  int consolidate_message (ACE_Message_Block &incoming,
+                           ssize_t missing_data,
+                           TAO_Resume_Handle &rh,
+                           ACE_Time_Value *max_wait_time);
 
   int consolidate_message_queue (ACE_Message_Block &incoming,
                                  ssize_t missing_data,
-                                 ACE_HANDLE h,
+                                 TAO_Resume_Handle &rh,
                                  ACE_Time_Value *max_wait_time);
 
-  void consolidate_extra_messages (ACE_Message_Block &incoming);
+  int consolidate_extra_messages (ACE_Message_Block &incoming,
+                                  TAO_Resume_Handle &rh);
 
   /// @@ Bala: Documentation
-  virtual int process_parsed_messages (ACE_Message_Block &message_block,
-                                       CORBA::Octet byte_order,
-                                       ACE_HANDLE h = ACE_INVALID_HANDLE);
+  virtual int process_parsed_messages (TAO_Queued_Data *qd,
+                                       TAO_Resume_Handle &rh);
 
 public:
   /// Method for the connection handler to signify that it

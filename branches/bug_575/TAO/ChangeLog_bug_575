@@ -1,3 +1,59 @@
+Thu Jun 28 09:30:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.cpp:
+	* tao/GIOP_Message_Base.h:
+	* tao/GIOP_Message_Base.i:
+	* tao/GIOP_Message_Base.cpp: Made lots of changes to deal with the
+	  following
+
+	  - to parse & queue up messages if we have read multiple messages.
+	  - to consolidate messages if we had read half of a message
+	  - to process a consolidated message.
+
+	 We now use the node of the Incoming Message Queue to share data
+	 between the Transport layer and the GIOP layer.
+
+	* tao/Incoming_Message_Queue.h:
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Incoming_Message_Queue.inl: Made the TAO_Queued_Data as a
+	  seperate class. This helped using the node of the queue to be
+	  shared between the GIOP layer. Removed many of the useless
+	  methods like wr_ptr (), is_message_complete (), add_message ()
+	  etc. We have the following methods that are more meaningful
+
+	  - is_tail_complete ()
+	  - is_message_complete ()
+	  - dequeue_head ()
+	  - dequeue_tail ()
+	  - enqueue_tail ()
+
+	 Added a static method get_queued_data () to create a node in the
+	 Message Queue.
+
+	 Added the protocol version information to the Queued Data.  We
+	 also need the message type and that has also been added.
+
+	* tao/Resume_Handle.h:
+	* tao/Resume_Handle.cpp:
+	* tao/Resume_Handle.inl: This is a utility class that is used to
+	  resume handlers. This works more or less similar to our
+	  ACE_GUARD macros, but uses a flag to keep track whether the
+	  handle has been resumed.
+
+	* tao/IIOP_Connection_Handler.cpp: Installed the Resume_Handle in
+	  handle_input () methods.
+
+	* tao/Pluggable_Messaging.h: Removed the method  byte_order () and
+	  added the methods consolidate_node (), get_message_data () and
+	  extract_next_message ().
+
+	* tao/Wait_On_Read.cpp:
+	* tao/Connection_Handler.cpp: Changes to keep in sync with the
+	  changes to the signature of handle_input_i () in Transport
+	  class.
+
+	* tao/LIST_OF_TODO: Updated the list of TODO's.
+
 Mon Jun 25 19:21:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Base.cpp:

@@ -27,6 +27,7 @@
 
 
 class TAO_Pluggable_Reply_Params;
+class TAO_Queued_Data;
 
 /**
  * @class TAO_GIOP_Message_Base
@@ -111,23 +112,26 @@ public:
   virtual ssize_t missing_data (ACE_Message_Block &message_block);
 
   virtual int extract_next_message (ACE_Message_Block &incoming,
-                                    TAO_Queued_Data *qd);
+                                    TAO_Queued_Data *&qd);
 
-  virtual CORBA::Octet byte_order (void);
+  virtual int consolidate_node (TAO_Queued_Data *qd,
+                                ACE_Message_Block &incoming);
+
+  virtual void get_message_data (TAO_Queued_Data *qd);
 
   /// Process the request message that we have received on the
   /// connection
   virtual int process_request_message (TAO_Transport *transport,
                                        TAO_ORB_Core *orb_core,
-                                       ACE_Message_Block &block,
-                                       CORBA::Octet byte_order);
+                                       TAO_Queued_Data *qd);
+
 
   /// Parse the reply message that we received and return the reply
   /// information though <reply_info>
   virtual int process_reply_message (
       TAO_Pluggable_Reply_Params &reply_info,
-      ACE_Message_Block &block,
-      CORBA::Octet byte_order);
+      TAO_Queued_Data *qd);
+
 
 
   /// Generate a reply message with the exception <ex>.
@@ -204,9 +208,14 @@ private:
   /// Are there any more messages that needs processing
   virtual int more_messages (void);
 
-  /// @@Bala:Docu??
+  /// Creates a new node for the queue with a message block in the
+  /// node of size <sz>..
   TAO_Queued_Data *make_queued_data (size_t sz);
+
 private:
+
+  /// Cached ORB_Core pointer...
+  TAO_ORB_Core *orb_core_;
 
   /// Thr message handler object that does reading and parsing of the
   /// incoming messages
