@@ -1,3 +1,9 @@
+Tue Jul 10 09:00:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/OS_Dirent.h
+          Made the member 'd_name' of the 'dirent' struct non-const, because
+          BCB had problems with it
+
 Mon Jul 09 22:41:43 2001  Ossama Othman  <ossama@uci.edu>
 
 	* include/makeinclude/wrapper_macros.GNU (exceptions):
@@ -33,7 +39,7 @@ Mon Jul 09 19:12:42 2001  Steve Huston  <shuston@riverace.com>
 
 Mon Jul  9 15:59:56 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
-        * ace/config-lynxos.h: 
+        * ace/config-lynxos.h:
           Added ACE_LACKS_MKSTEMP since LynxOS doesn't seem to have
           this.
 
@@ -98,7 +104,7 @@ Mon Jul 09 14:39:50 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Mon Jul  9 13:33:43 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
-        * include/makeinclude/wrapper_macros.GNU: 
+        * include/makeinclude/wrapper_macros.GNU:
           Change PACE path to start at $PACE_ROOT rather than $ACE_ROOT/PACE
           since the latter is not as flexible. Defined PACE_ROOT if not
           already defined. Also, added inclusion of PACE library for VxWorks

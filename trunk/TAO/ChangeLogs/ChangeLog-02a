@@ -1,3 +1,9 @@
+Tue Jul 10 09:13:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/orbsvcs/orbsvcs/security.bor
+
+          Added the missing files Security_PolicyFactory and QOPPolicy
+
 Mon Jul 09 23:43:29 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/params.i (default_init_ref):
@@ -89,7 +95,7 @@ Mon Jul  9 10:13:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           Added static int _tao_class_id to CORBA::Object and
           to all classes generated from IDL interfaces. The
-          address of this variable is used in all 
+          address of this variable is used in all
           _unchecked_narrow() and _tao_QueryInterface() methods.
           Formerly, the address of the _narrow() method was used,
           but on BCB, this address is not usable across DLLs.
