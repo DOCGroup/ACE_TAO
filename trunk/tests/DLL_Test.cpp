@@ -27,7 +27,9 @@ ACE_RCSID(tests, DLL_Test, "$Id$")
 
 #if defined (ACE_WIN32) && defined (_MSC_VER) && defined (_DEBUG)
 # define OBJ_SUFFIX ACE_TEXT ("d") ACE_DLL_SUFFIX
-#else /* ACE_WIN32 && _MSC_VER && _DEBUG */
+#elif defined (ACE_WIN32) && defined (__BORLANDC__)
+# define OBJ_SUFFIX ACE_LD_DECORATOR_STR ACE_DLL_SUFFIX
+#else
 # define OBJ_SUFFIX ACE_DLL_SUFFIX
 #endif /* ACE_WIN32 && && _MSC_VER && _DEBUG */
 
@@ -144,7 +146,7 @@ int dynamic_cast_test (ACE_DLL &dll)
                        dll.error ()),
                       -1);
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("before %x %x\n"), 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("before %x %x\n"),
               &child,  dynamic_cast<Child*>( parent )));
 
   if (pfnAcquire( &child ) == -1)
