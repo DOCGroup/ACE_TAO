@@ -227,7 +227,7 @@ Acceptor::make_svc_handler (Connection_Handler *&sh)
   return 0;
 }
 
-int main(int argc, char *argv[])
+int main (int argc, char *argv[])
 {
   ACE_START_TEST (ASYS_TEXT ("FlReactor_Test"));
 
