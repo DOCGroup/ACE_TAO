@@ -1,3 +1,16 @@
+Mon Aug  2 18:43:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+	  Print the precise error code returned from the server or client
+	  if they die.
+
+	* tests/Cubit/TAO/IDL_Cubit/server.cpp:
+	  Sleep before exit to avoid crashes.
+
+	* ORB_Core.cpp:
+	  The ORB was not waiting for the threads it creates if the
+	  -ORBThreadPerConnectionTimeout option was used.
+
 Mon Aug  2 17:13:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/releasenotes/index.html:
