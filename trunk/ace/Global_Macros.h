@@ -447,11 +447,10 @@ typedef void (*ACE_Service_Object_Exterminator)(void *);
 /** @name Service Configurator macros
  *
  * The following macros are used to define helper objects used in
- * ACE's Service Configurator.  This is an implementation of the
- * Service Configurator pattern:
- *
- * http://www.cs.wustl.edu/~schmidt/PDF/SvcConf.pdf
- *
+ * ACE's Service Configurator framework, which is described in
+ * Chapter 5 of C++NPv2 <www.cs.wustl.edu/~schmidt/ACE/book2/>.  This
+ * framework implements the Component Configurator pattern, which is
+ * described in Chapter 2 of POSA2 <www.cs.wustl.edu/~schmidt/POSA/>.
  * The intent of this pattern is to allow developers to dynamically
  * load and configure services into a system.  With a little help from
  * this macros statically linked services can also be dynamically
