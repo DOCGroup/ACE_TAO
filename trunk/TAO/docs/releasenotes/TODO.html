@@ -146,6 +146,13 @@
 	</UL>
       </P>
       </LI>
+
+      <LI><P>Optimize marshaling for <CODE>TypeCode</CODE>, by not
+	  including the optional fields on the wire;
+	  this fields are useful (in some cases), so they should be
+	  present for the "on memory" representation.
+	</P>
+      </LI>
     </OL>
 
     <H4>New features</H4>
@@ -447,10 +454,6 @@ class Foo {
 	</UL>
       <P></LI>
 
-      <LI><P>Check how does the IDL compiler handles a union with an
-	  octet for a discriminator</P>
-      </LI>
-
       <LI><P>The methods on the server side <B>must</B> have a throw
 	  spec, check CORBA 2.2, 20.35</P>
       </LI>
@@ -489,9 +492,60 @@ class Foo {
 	</P>
       </LI>
 
+      <LI><P>Include a regression test to verify that
+	  <CODE>octet</CODE> is <B>not</B> a valid discriminator for
+	  unions
+	</P>
+      </LI>
+
+      <LI><P>Verify that the typecode for unions use a
+	  <CODE>octet</CODE> with value <CODE>0</CODE> for the default
+	  discriminator
+	</P>
+      </LI>
+
+      <LI><P>Add the <CODE>CORBA::TypeCode::_tc_Bounds</CODE> and the
+	  <CODE>CORBA::TypeCode::_tc_BadKind</CODE> type codes.
+	  Currently they are in the wrong namespace (just
+	  <CODE>CORBA::_tc_Bounds</CODE>).
+	</P>
+      </LI>
+
+      <LI><P>Is the client side in TAO handling a
+	  <CODE>CloseConnection</CODE> GIOP message properly?
+	</P>
+      </LI>
+
+      <LI><P>If the connection to the server cannot be established the
+	  right exception is <CODE>TRANSIENT</CODE>, not
+	  <CODE>COMM_FAILURE</CODE>; this and other exception
+	  inconsistencies have to be checked
+	</P>
+      </LI>
+
+      <LI><P>The spec (CORBA 2.2, 20.17) defines accesor methods for the
+	  fields of a <CODE>SystemException</CODE>.
+	</P>
+      </LI>
+
+      <LI><P>In some platforms it may be necessary to add an extra
+	  value to an enum to force it to be 32-bits wide.
+	</P>
+      </LI>
+
+      <LI><P>The spec requires that strings as fields of structures be
+	  initialized to the empty (not the null) string.
+	</P>
+      </LI>
+
+      <LI><P>The <CODE>SINGLE_THREAD_MODEL</CODE> for the POA requires
+	  that the execution for all request on that POA happen on the
+	  same thread.
+	</P>
+      </LI>
+
       <!-- Things below this point are "big" tasks" that -->
       <!-- could require major work -->
-
 
       <LI><P>The ORB should support server side and client side
 	  interceptors</P>
