@@ -44,14 +44,17 @@ class Cubit_Client
   //    server is hidden in the class.  Just the run() interface is needed.
 public:
   // = Constructor and destructor.
-  Cubit_Client (void);
+  Cubit_Client (int testing_collocation = 0);
+  // Use <testing_collocation> to control some client's behaviors.
+
   ~Cubit_Client (void);
 
-  int run (int testing_collocation = 0);
+  int run (void);
   // Execute client example code.
 
-  int init (int argc, char **argv);
+  int init (int argc, char **argv, char *collocation_test_ior = 0);
   // Initialize the client communication endpoint with server.
+  // <collocation_test_ior> is used to pass in the ior file name.
 
 private:
   int func (u_int i);
@@ -107,6 +110,11 @@ private:
   int run_oneway (void);
   // This method runs only the cube_oneway() test.
 
+  int shutdown_server (int do_shutdown);
+  // Invoke the method with <do_shutdown> != 0 to shutdown the server.
+  // When testing collocation, <do_shutdown> has no effect (it always
+  // shuts the server down.
+
   int argc_;
   // # of arguments on the command line.
 
@@ -151,6 +159,9 @@ private:
 
   int only_oneway_;
   // Run only the cube_oneway() test.
+
+  int testing_collocation_;
+  // We are running the collocation test.
 };
 
 #endif /* _CUBIT_CLIENT_H */

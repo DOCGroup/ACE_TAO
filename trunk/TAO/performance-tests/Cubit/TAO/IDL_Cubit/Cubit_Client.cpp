@@ -92,7 +92,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_Client_Timeprobe_Description,
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 // Constructor.
-Cubit_Client::Cubit_Client (void)
+Cubit_Client::Cubit_Client (int testing_collocation)
   : cubit_factory_key_ (0),
     loop_count_ (250),
     shutdown_ (0),
@@ -102,7 +102,8 @@ Cubit_Client::Cubit_Client (void)
     cubit_factory_ior_file_ (0),
     f_handle_ (ACE_INVALID_HANDLE),
     only_void_ (0),
-    only_oneway_ (0)
+    only_oneway_ (0),
+    testing_collocation_ (testing_collocation)
 {
 }
 
@@ -819,7 +820,7 @@ Cubit_Client::print_stats (const char *call_name,
 // Execute client example code.
 
 int
-Cubit_Client::run (int testing_collocation)
+Cubit_Client::run ()
 {
   if (this->only_void_)
     return this->run_void ();
@@ -995,15 +996,44 @@ Cubit_Client::run (int testing_collocation)
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube_oneway", elapsed_time);
 
-  if (testing_collocation)
+  this->shutdown_server (this->shutdown_);
+
+  return this->error_count_ == 0 ? 0 : 1;
+}
+
+int
+Cubit_Client::shutdown_server (int do_shutdown)
+{
+  if (this->testing_collocation_)
     {
-      // @@ Nanbor, this code should be split into a separate method.
       TAO_ORB_Core_instance ()->using_collocation (0);
       // Make sure we call the following method "remotely" so
       // the right ORB could be used.
 
       TAO_TRY
         {
+          if (this->cubit_factory_key_ == 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "%s: no cubit factory key specified\n",
+                               this->argv_[0]),
+                              -1);
+
+          CORBA::Object_var factory_object =
+            this->orb_->string_to_object (this->cubit_factory_key_,
+                                          TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+
+          this->factory_ =
+            Cubit_Factory::_narrow (factory_object.in(),
+                                    TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+
+          if (CORBA::is_nil (this->factory_.in ()))
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "invalid factory key <%s>\n",
+                               this->cubit_factory_key_),
+                              -1);
+
           this->cubit_ =
             this->factory_->make_cubit (TAO_TRY_ENV);
           TAO_CHECK_ENV;
@@ -1023,15 +1053,13 @@ Cubit_Client::run (int testing_collocation)
       TAO_ENDTRY;
 
     }
-  else if (this->shutdown_)
+  else if (do_shutdown)
     {
       ACE_DEBUG ((LM_DEBUG, "shutdown on cubit object\n"));
       this->cubit_->shutdown (this->env_);
       dexc (this->env_, "server, please ACE_OS::exit");
     }
-
-
-  return this->error_count_ == 0 ? 0 : 1;
+  return 0;
 }
 
 int
@@ -1107,7 +1135,7 @@ Cubit_Client::~Cubit_Client (void)
 }
 
 int
-Cubit_Client::init (int argc, char **argv)
+Cubit_Client::init (int argc, char **argv, char *collocation_test_ior)
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -1124,6 +1152,9 @@ Cubit_Client::init (int argc, char **argv)
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
         return -1;
+
+      if (collocation_test_ior != 0)
+        this->read_ior (collocation_test_ior);
 
       if (this->cubit_factory_key_ == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
