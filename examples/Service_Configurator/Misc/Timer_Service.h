@@ -7,7 +7,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class Timer_Service_1 : public ACE_Service_Object
+class ACE_Svc_Export Timer_Service_1 : public ACE_Service_Object
 {
   // = TITLE
   //   Demonstrates a simple timer service that can be configured
@@ -44,14 +44,14 @@ private:
   // Current number of timeouts.
 };
 
-class Timer_Service_2 : public Timer_Service_1
+class ACE_Svc_Export Timer_Service_2 : public Timer_Service_1
 {
 public:
   Timer_Service_2 (void);
   // Default constructor.
 };
 
-class Timer_Service_3 : public Timer_Service_1
+class ACE_Svc_Export Timer_Service_3 : public Timer_Service_1
 {
 public:
   Timer_Service_3 (void);
