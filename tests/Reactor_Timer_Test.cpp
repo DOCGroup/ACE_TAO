@@ -43,14 +43,15 @@ public:
       long current_count = long (arg);
       ACE_ASSERT (current_count == count);
 
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%d: Timer #%d timed out at %d!\n"),
-                  count, current_count, tv.sec ()));
-
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("%d: Timer #%d timed out at %d!\n"),
+                  count,
+                  current_count,
+                  tv.sec ()));
       count += (1 + odd);
 
-      if (long(current_count) == long(ACE_MAX_TIMERS - 1))
+      if (long (current_count) == long (ACE_MAX_TIMERS - 1))
         done = 1;
-
       return 0;
     }
 };
@@ -60,9 +61,12 @@ main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Reactor_Timer_Test"));
 
+  // We put the <Time_Handler> first so that it'll still be alive when
+  // the <reactor> is closed down.
+  Time_Handler rt[ACE_MAX_TIMERS];
+
   ACE_Reactor reactor;
 
-  Time_Handler rt[ACE_MAX_TIMERS];
   int t_id[ACE_MAX_TIMERS];
 
   size_t i;
@@ -71,7 +75,6 @@ main (int, ASYS_TCHAR *[])
     t_id[i] = reactor.schedule_timer (&rt[i], 
 				      (const void *) i, 
 				      ACE_Time_Value (2 * i + 1));
-
   while (!done)
     reactor.handle_events ();
 
@@ -84,7 +87,6 @@ main (int, ASYS_TCHAR *[])
     t_id[i] = reactor.schedule_timer (&rt[0],
                                       (const void *) i,
                                       ACE_Time_Value (2 * i + 1));
-
   while (!done)
     reactor.handle_events ();
 

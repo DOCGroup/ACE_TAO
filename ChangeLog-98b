@@ -1,5 +1,8 @@
 Tue Aug 25 20:04:09 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/config-hpux11.h: Added ACE_HAS_AIO_CALLS.  Thanks to John
+ 	  Mulhern for verifying this.
+
 	* etc: Began to add the ACE tutorials.  Thanks to James CE Johnson
  	  <ace-users@lads.com> for contributing this stuff.
 
