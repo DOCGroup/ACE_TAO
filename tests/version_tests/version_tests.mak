@@ -24633,7 +24633,7 @@ LINK32_OBJS= \
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Atomic_Op_Test.cpp
+SOURCE=..\Atomic_Op_Test.cpp
 DEP_CPP_ATOMI=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -24773,7 +24773,7 @@ DEP_CPP_ATOMI=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Buffer_Stream_Test.cpp
+SOURCE=..\Buffer_Stream_Test.cpp
 DEP_CPP_BUFFE=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -24979,7 +24979,7 @@ DEP_CPP_BUFFE=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Conn_Test.cpp
+SOURCE=..\Conn_Test.cpp
 DEP_CPP_CONN_=\
 	"..\..\ace\LOCK_SOCK_Acceptor.cpp"\
 	"..\Conn_Test.h"\
@@ -25220,7 +25220,7 @@ DEP_CPP_CONN_=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Enum_Interfaces_Test.cpp
+SOURCE=..\Enum_Interfaces_Test.cpp
 DEP_CPP_ENUM_=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -25350,7 +25350,7 @@ DEP_CPP_ENUM_=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Future_Test.cpp
+SOURCE=..\Future_Test.cpp
 DEP_CPP_FUTUR=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -25556,7 +25556,7 @@ DEP_CPP_FUTUR=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Handle_Set_Test.cpp
+SOURCE=..\Handle_Set_Test.cpp
 DEP_CPP_HANDL=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -25720,7 +25720,7 @@ DEP_CPP_HANDL=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Hash_Map_Manager_Test.cpp
+SOURCE=..\Hash_Map_Manager_Test.cpp
 DEP_CPP_HASH_=\
 	"..\Hash_Map_Manager_Test.h"\
 	{$(INCLUDE)}"\..\test_config.h"\
@@ -25896,7 +25896,7 @@ DEP_CPP_HASH_=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\IOStream_Test.cpp
+SOURCE=..\IOStream_Test.cpp
 DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
@@ -26130,7 +26130,7 @@ DEP_CPP_IOSTR=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Mem_Map_Test.cpp
+SOURCE=..\Mem_Map_Test.cpp
 DEP_CPP_MEM_M=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -26258,7 +26258,7 @@ DEP_CPP_MEM_M=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Message_Block_Test.cpp
+SOURCE=..\Message_Block_Test.cpp
 DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -26469,8 +26469,7 @@ DEP_CPP_MESSA=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\
-\irfan\Repository\ACE_wrappers\tests\Message_Queue_Notifications_Test.cpp
+SOURCE=..\Message_Queue_Notifications_Test.cpp
 DEP_CPP_MESSAG=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -26684,7 +26683,7 @@ DEP_CPP_MESSAG=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Message_Queue_Test.cpp
+SOURCE=..\Message_Queue_Test.cpp
 DEP_CPP_MESSAGE=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -26875,7 +26874,7 @@ DEP_CPP_MESSAGE=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\MM_Shared_Memory_Test.cpp
+SOURCE=..\MM_Shared_Memory_Test.cpp
 DEP_CPP_MM_SH=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -27037,7 +27036,7 @@ DEP_CPP_MM_SH=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\MT_SOCK_Test.cpp
+SOURCE=..\MT_SOCK_Test.cpp
 DEP_CPP_MT_SO=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -27215,7 +27214,7 @@ DEP_CPP_MT_SO=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Naming_Test.cpp
+SOURCE=..\Naming_Test.cpp
 DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -27412,7 +27411,7 @@ DEP_CPP_NAMIN=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Notify_Performance_Test.cpp
+SOURCE=..\Notify_Performance_Test.cpp
 DEP_CPP_NOTIF=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -27629,7 +27628,7 @@ DEP_CPP_NOTIF=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Pipe_Test.cpp
+SOURCE=..\Pipe_Test.cpp
 DEP_CPP_PIPE_=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -27761,7 +27760,7 @@ DEP_CPP_PIPE_=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Priority_Reactor_Test.cpp
+SOURCE=..\Priority_Reactor_Test.cpp
 DEP_CPP_PRIOR=\
 	"..\Priority_Reactor_Test.h"\
 	{$(INCLUDE)}"\..\test_config.h"\
@@ -28010,7 +28009,7 @@ DEP_CPP_PRIOR=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Priority_Buffer_Test.cpp
+SOURCE=..\Priority_Buffer_Test.cpp
 DEP_CPP_PRIORI=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -28201,7 +28200,7 @@ DEP_CPP_PRIORI=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Priority_Task_Test.cpp
+SOURCE=..\Priority_Task_Test.cpp
 DEP_CPP_PRIORIT=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -28405,7 +28404,7 @@ DEP_CPP_PRIORIT=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Process_Mutex_Test.cpp
+SOURCE=..\Process_Mutex_Test.cpp
 DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -28549,7 +28548,7 @@ DEP_CPP_PROCE=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Process_Strategy_Test.cpp
+SOURCE=..\Process_Strategy_Test.cpp
 DEP_CPP_PROCES=\
 	"..\Process_Strategy_Test.h"\
 	{$(INCLUDE)}"\..\test_config.h"\
@@ -28782,7 +28781,7 @@ DEP_CPP_PROCES=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Reactor_Exceptions_Test.cpp
+SOURCE=..\Reactor_Exceptions_Test.cpp
 DEP_CPP_REACT=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -28968,7 +28967,7 @@ DEP_CPP_REACT=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Reactor_Performance_Test.cpp
+SOURCE=..\Reactor_Performance_Test.cpp
 DEP_CPP_REACTO=\
 	"..\Reactor_Performance_Test.h"\
 	{$(INCLUDE)}"\..\test_config.h"\
@@ -29227,7 +29226,7 @@ DEP_CPP_REACTO=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Reactor_Notify_Test.cpp
+SOURCE=..\Reactor_Notify_Test.cpp
 DEP_CPP_REACTOR=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -29431,7 +29430,7 @@ DEP_CPP_REACTOR=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Reactor_Timer_Test.cpp
+SOURCE=..\Reactor_Timer_Test.cpp
 DEP_CPP_REACTOR_=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -29597,7 +29596,7 @@ DEP_CPP_REACTOR_=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Reader_Writer_Test.cpp
+SOURCE=..\Reader_Writer_Test.cpp
 DEP_CPP_READE=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -29758,7 +29757,7 @@ DEP_CPP_READE=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Recursive_Mutex_Test.cpp
+SOURCE=..\Recursive_Mutex_Test.cpp
 DEP_CPP_RECUR=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -29919,7 +29918,7 @@ DEP_CPP_RECUR=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Sigset_Ops_Test.cpp
+SOURCE=..\Sigset_Ops_Test.cpp
 DEP_CPP_SIGSE=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -30045,7 +30044,7 @@ DEP_CPP_SIGSE=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Simple_Message_Block_Test.cpp
+SOURCE=..\Simple_Message_Block_Test.cpp
 DEP_CPP_SIMPL=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -30212,7 +30211,7 @@ DEP_CPP_SIMPL=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\SOCK_Test.cpp
+SOURCE=..\SOCK_Test.cpp
 DEP_CPP_SOCK_=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -30390,7 +30389,7 @@ DEP_CPP_SOCK_=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\SPIPE_Test.cpp
+SOURCE=..\SPIPE_Test.cpp
 DEP_CPP_SPIPE=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -30562,7 +30561,7 @@ DEP_CPP_SPIPE=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\SString_Test.cpp
+SOURCE=..\SString_Test.cpp
 DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -30688,7 +30687,7 @@ DEP_CPP_SSTRI=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\SV_Shared_Memory_Test.cpp
+SOURCE=..\SV_Shared_Memory_Test.cpp
 DEP_CPP_SV_SH=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -30845,7 +30844,7 @@ DEP_CPP_SV_SH=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Task_Test.cpp
+SOURCE=..\Task_Test.cpp
 DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -31047,7 +31046,7 @@ DEP_CPP_TASK_=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Thread_Manager_Test.cpp
+SOURCE=..\Thread_Manager_Test.cpp
 DEP_CPP_THREA=\
 	"..\Thread_Manager_Test.h"\
 	{$(INCLUDE)}"\..\test_config.h"\
@@ -31207,7 +31206,7 @@ DEP_CPP_THREA=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Thread_Pool_Test.cpp
+SOURCE=..\Thread_Pool_Test.cpp
 DEP_CPP_THREAD=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -31409,7 +31408,7 @@ DEP_CPP_THREAD=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Time_Service_Test.cpp
+SOURCE=..\Time_Service_Test.cpp
 DEP_CPP_TIME_=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -31537,7 +31536,7 @@ DEP_CPP_TIME_=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Timer_Queue_Test.cpp
+SOURCE=..\Timer_Queue_Test.cpp
 DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -31715,7 +31714,7 @@ DEP_CPP_TIMER=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\TSS_Test.cpp
+SOURCE=..\TSS_Test.cpp
 DEP_CPP_TSS_T=\
 	"..\TSS_Test_Errno.h"\
 	{$(INCLUDE)}"\..\test_config.h"\
@@ -31875,7 +31874,7 @@ DEP_CPP_TSS_T=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\UPIPE_SAP_Test.cpp
+SOURCE=..\UPIPE_SAP_Test.cpp
 DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -32099,7 +32098,7 @@ DEP_CPP_UPIPE=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Tokens_Test.cpp
+SOURCE=..\Tokens_Test.cpp
 DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -32307,7 +32306,7 @@ DEP_CPP_TOKEN=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Service_Config_Test.cpp
+SOURCE=..\Service_Config_Test.cpp
 DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -32480,7 +32479,7 @@ DEP_CPP_SERVI=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Barrier_Test.cpp
+SOURCE=..\Barrier_Test.cpp
 DEP_CPP_BARRI=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -32639,7 +32638,7 @@ DEP_CPP_BARRI=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Time_Value_Test.cpp
+SOURCE=..\Time_Value_Test.cpp
 DEP_CPP_TIME_V=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -32765,7 +32764,7 @@ DEP_CPP_TIME_V=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Semaphore_Test.cpp
+SOURCE=..\Semaphore_Test.cpp
 DEP_CPP_SEMAP=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -32926,7 +32925,7 @@ DEP_CPP_SEMAP=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Map_Manager_Test.cpp
+SOURCE=..\Map_Manager_Test.cpp
 DEP_CPP_MAP_M=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -33109,7 +33108,7 @@ DEP_CPP_MAP_M=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Reactors_Test.cpp
+SOURCE=..\Reactors_Test.cpp
 DEP_CPP_REACTORS=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -33311,7 +33310,7 @@ DEP_CPP_REACTORS=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Thread_Mutex_Test.cpp
+SOURCE=..\Thread_Mutex_Test.cpp
 DEP_CPP_THREAD_=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -33470,7 +33469,7 @@ DEP_CPP_THREAD_=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\SOCK_Connector_Test.cpp
+SOURCE=..\SOCK_Connector_Test.cpp
 DEP_CPP_SOCK_C=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -33611,7 +33610,7 @@ DEP_CPP_SOCK_C=\
 ################################################################################
 # Begin Source File
 
-SOURCE=\irfan\Repository\ACE_wrappers\tests\Basic_Types_Test.cpp
+SOURCE=..\Basic_Types_Test.cpp
 DEP_CPP_BASIC=\
 	{$(INCLUDE)}"\..\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
