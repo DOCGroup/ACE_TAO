@@ -85,10 +85,6 @@ be_visitor_typedef::visit_array (be_array *node)
     case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_ARRAY_CDR_OP_CS);
       break;
-    case TAO_CodeGen::TAO_TYPEDEF_SH:
-    case TAO_CodeGen::TAO_TYPEDEF_SI:
-    case TAO_CodeGen::TAO_TYPEDEF_SS:
-      return 0; // nothing to be done
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -156,9 +152,6 @@ be_visitor_typedef::visit_enum (be_enum *node)
       ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CS);
       break;
     case TAO_CodeGen::TAO_TYPEDEF_CI:
-    case TAO_CodeGen::TAO_TYPEDEF_SH:
-    case TAO_CodeGen::TAO_TYPEDEF_SI:
-    case TAO_CodeGen::TAO_TYPEDEF_SS:
       return 0; // nothing to be done
     default:
       {
@@ -236,10 +229,6 @@ be_visitor_typedef::visit_sequence (be_sequence *node)
     case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CS);
       break;
-    case TAO_CodeGen::TAO_TYPEDEF_SH:
-    case TAO_CodeGen::TAO_TYPEDEF_SI:
-    case TAO_CodeGen::TAO_TYPEDEF_SS:
-      return 0; // nothing to be done
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -301,9 +290,6 @@ be_visitor_typedef::visit_string (be_string *node)
     case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS:
     case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CH:
     case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS:
-    case TAO_CodeGen::TAO_TYPEDEF_SH:
-    case TAO_CodeGen::TAO_TYPEDEF_SI:
-    case TAO_CodeGen::TAO_TYPEDEF_SS:
       return 0; // nothing to be done
     default:
       {
@@ -374,9 +360,6 @@ be_visitor_typedef::visit_structure (be_structure *node)
     case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CS);
       break;
-    case TAO_CodeGen::TAO_TYPEDEF_SH:
-    case TAO_CodeGen::TAO_TYPEDEF_SI:
-    case TAO_CodeGen::TAO_TYPEDEF_SS:
       return 0; // nothing to be done
     default:
       {
@@ -447,9 +430,6 @@ be_visitor_typedef::visit_union (be_union *node)
     case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS:
       ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CS);
       break;
-    case TAO_CodeGen::TAO_TYPEDEF_SH:
-    case TAO_CodeGen::TAO_TYPEDEF_SI:
-    case TAO_CodeGen::TAO_TYPEDEF_SS:
       return 0; // nothing to be done
     default:
       {

@@ -202,12 +202,12 @@ CORBA_Object_out::CORBA_Object_out (CORBA_Object_var &p) // constructor from _va
 }
 
 ACE_INLINE
-CORBA_Object_out::CORBA_Object_out (CORBA_Object_out &p) // copy constructor
+CORBA_Object_out::CORBA_Object_out (const CORBA_Object_out &p) // copy constructor
         : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE CORBA_Object_out &
-CORBA_Object_out::operator= (CORBA_Object_out &p)
+CORBA_Object_out::operator= (const CORBA_Object_out &p)
 {
   this->ptr_ = p.ptr_;
   return *this;

@@ -44,28 +44,28 @@ public:
   ~be_visitor_operation_rettype_pre_docall_cs (void);
   // destructor
 
-  int visit_array (be_array *node);
+  virtual int visit_array (be_array *node);
   // visit an array node
 
-  int visit_interface (be_interface *node);
+  virtual int visit_interface (be_interface *node);
   // visit an interface node
 
-  int visit_interface_fwd (be_interface_fwd *node);
+  virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit an interface node
 
-  int visit_predefined_type (be_predefined_type *node);
+  virtual int visit_predefined_type (be_predefined_type *node);
   // visit a predefined type node
 
-  int visit_sequence (be_sequence *node);
+  virtual int visit_sequence (be_sequence *node);
   // visit a sequence node
 
-  int visit_structure (be_structure *node);
+  virtual int visit_structure (be_structure *node);
   // visit a structure node
 
-  int visit_typedef (be_typedef *node);
+  virtual int visit_typedef (be_typedef *node);
   // visit a typedef node
 
-  int visit_union (be_union *node);
+  virtual int visit_union (be_union *node);
   // visit a union node
 
 };

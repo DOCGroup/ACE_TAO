@@ -105,13 +105,13 @@ CORBA::String_out::String_out (CORBA::String_var &s)
 }
 
 ACE_INLINE
-CORBA::String_out::String_out (CORBA::String_out &s)
+CORBA::String_out::String_out (const CORBA::String_out &s)
   : ptr_ (s.ptr_)
 {
 }
 
 ACE_INLINE CORBA::String_out &
-CORBA::String_out::operator= (CORBA::String_out &s)
+CORBA::String_out::operator= (const CORBA::String_out &s)
 {
   this->ptr_ = s.ptr_;
   return *this;
@@ -121,13 +121,6 @@ ACE_INLINE CORBA::String_out &
 CORBA::String_out::operator= (char *s)
 {
   this->ptr_ = s;
-  return *this;
-}
-
-ACE_INLINE CORBA::String_out &
-CORBA::String_out::operator= (const char *s)
-{
-  this->ptr_ = CORBA::string_dup (s);
   return *this;
 }
 

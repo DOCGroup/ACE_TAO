@@ -25,8 +25,11 @@
 #include "be_visitor_operation.h"
 
 // include all the individual files
+#include "be_visitor_operation/operation.cpp"
 #include "be_visitor_operation/arglist.cpp"
 #include "be_visitor_operation/argument.cpp"
+#include "be_visitor_operation/argument_invoke.cpp"
+#include "be_visitor_operation/argument_marshal.cpp"
 #include "be_visitor_operation/collocated_sh.cpp"
 #include "be_visitor_operation/collocated_ss.cpp"
 #include "be_visitor_operation/exceptlist_cs.cpp"
@@ -46,6 +49,8 @@
 #include "be_visitor_operation/rettype_vardecl_ss.cpp"
 #include "be_visitor_operation/tie_sh.cpp"
 #include "be_visitor_operation/tie_si.cpp"
+#include "be_visitor_operation/compiled_marshal.cpp"
+#include "be_visitor_operation/rettype_pre_invoke_cs.cpp"
 
 ACE_RCSID(be, be_visitor_operation, "$Id$")
 

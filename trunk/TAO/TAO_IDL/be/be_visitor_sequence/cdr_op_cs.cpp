@@ -77,7 +77,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       this->ctx_->node (node);
 
       //  set the sub state as generating code for the output operator
-      this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
+      this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
       *os << "CORBA::Boolean operator<< (" << be_idt << be_idt_nl
 	  << "TAO_OutputCDR &strm," << be_nl
           << "const " << node->name ()
@@ -327,30 +327,8 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
       *os << " (_tao_sequence.get_buffer (), ";
       break;
     }
-  AST_Expression *expr = sequence->max_size ();
-  // dimension value
-  if ((expr == NULL) || ((expr != NULL) && (expr->ev () == NULL)))
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_cdr_op_cs::"
-                         "visit_predefined_type - "
-                         "bad sequence dimension\n"),
-                        -1);
-    }
-  if (expr->ev ()->et == AST_Expression::EV_ulong)
-    {
-      // generate a loop for each dimension
-      *os << expr->ev ()->u.ulval;
-    }
-  else
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_cdr_op_cs::"
-                         "visit_predefined_type - "
-                         "bad sequence dimension value\n"),
-                        -1);
-    }
-  *os << ");" << be_uidt_nl;
+
+  *os << "_tao_sequence.length ());" << be_uidt_nl;
 
   return 0;
 }
@@ -450,13 +428,36 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "_tao_marshal_flag = (strm >> _tao_sequence[i]"; 
+      *os << "_tao_marshal_flag = (strm >> ";
       switch (bt->node_type ())
         {
         case AST_Decl::NT_string:
+          {
+            be_string *str = be_string::narrow_from_decl (bt);
+
+            if (!str)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "(%N:%l) be_visitor_sequence_cdr_op_cs::"
+                                   "visit_node - "
+                                   "bad string node\n"),
+                                  -1);
+              }
+            if (str->max_size ()->ev ()->u.ulval == 0)
+              {
+                // unbounded
+                *os << "_tao_sequence[i].out ()"; 
+              }
+            else
+              {
+                *os << "CORBA::Any::to_string (_tao_sequence[i].out (), "
+                    << str->max_size ()->ev ()->u.ulval << ")"; 
+              }
+          }
+          break;
         case AST_Decl::NT_interface:
         case AST_Decl::NT_interface_fwd:
-          *os << ".out ()";
+          *os << "_tao_sequence[i].out ()"; 
           break;
         case AST_Decl::NT_pre_defined:
           {
@@ -473,9 +474,16 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
               }
             if (pt->pt () == AST_PredefinedType::PT_pseudo)
               {
-                *os << ".out ()";
+                *os << "_tao_sequence[i].out ()"; 
+              }
+            else
+              {
+                *os << "_tao_sequence[i]"; 
               }
           }
+          break;
+        default:
+          *os << "_tao_sequence[i]"; 
         }
       *os << ");";
       break;

@@ -25,7 +25,7 @@
 // Operation visitor for client header
 // ************************************************************
 
-class be_visitor_operation_ch : public be_visitor_scope
+class be_visitor_operation_ch : public be_visitor_operation
 {
   //
   // = TITLE

@@ -44,9 +44,24 @@ public:
   int visit_scope (be_scope *node);
   // visit scope
 
-  virtual int post_process (void);
+  virtual int post_process (be_decl *);
   // do any processing after every element except the last one of the scope is
   // processed
+
+  virtual int pre_process (be_decl *);
+  // do any processing prior to processing the element in the scope
+
+  virtual int elem_number (void);
+  // return the element number that is being processed
+
+  virtual int next_elem (be_decl *elem, be_decl *&);
+  // get the successor to elem
+
+  virtual idl_bool last_node (be_decl *bd);
+  // Is bd the last node in the scope
+
+protected:
+  int elem_number_;
 };
 
 

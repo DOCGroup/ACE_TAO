@@ -13,6 +13,7 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 LDLIBS = -lTAO
+#TAO_IDLFLAGS += -Gc
 
 IDL_SRC	= cubitC.cpp cubitS.cpp
 PROG_SRCS = Cubit_Server.cpp \

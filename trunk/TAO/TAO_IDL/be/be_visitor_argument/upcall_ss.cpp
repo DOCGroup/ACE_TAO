@@ -81,8 +81,17 @@ int be_visitor_args_upcall_ss::visit_array (be_array *node)
     {
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
-    case AST_Argument::dir_OUT:
       *os << arg->local_name ();
+      break;
+    case AST_Argument::dir_OUT:
+      if (node->size_type () == be_decl::VARIABLE)
+        if (this->ctx_->state ()
+            == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
+          *os << arg->local_name ();
+        else
+          *os << arg->local_name () << ".out ()";
+      else
+        *os << arg->local_name ();
       break;
     }
   return 0;
@@ -129,7 +138,12 @@ int be_visitor_args_upcall_ss::visit_interface (be_interface *node)
         *os << arg->local_name () << ".inout ()";
       break;
     case AST_Argument::dir_OUT:
-      *os << arg->local_name ();
+      //      *os << arg->local_name ();
+      if (this->ctx_->state ()
+          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
+        *os << arg->local_name ();
+      else
+        *os << arg->local_name () << ".out ()";
       break;
     }
   return 0;
@@ -158,7 +172,12 @@ int be_visitor_args_upcall_ss::visit_interface_fwd (be_interface_fwd *node)
         *os << arg->local_name () << ".inout ()";
       break;
     case AST_Argument::dir_OUT:
-      *os << arg->local_name ();
+      //      *os << arg->local_name ();
+      if (this->ctx_->state ()
+          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
+        *os << arg->local_name ();
+      else
+        *os << arg->local_name () << ".out ()";
       break;
     }
   return 0;
@@ -178,8 +197,14 @@ int be_visitor_args_upcall_ss::visit_predefined_type (be_predefined_type *node)
 	{
 	case AST_Argument::dir_IN:
 	case AST_Argument::dir_INOUT:
-	case AST_Argument::dir_OUT:
           *os << arg->local_name ();
+          break;
+	case AST_Argument::dir_OUT:
+          if (this->ctx_->state ()
+              == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
+            *os << arg->local_name ();
+          else
+            *os << arg->local_name () << ".out ()";
 	  break;
 	} // end switch direction
     } // end of if
@@ -202,7 +227,12 @@ int be_visitor_args_upcall_ss::visit_predefined_type (be_predefined_type *node)
             *os << arg->local_name () << ".inout ()";
 	  break;
 	case AST_Argument::dir_OUT:
-          *os << arg->local_name ();
+          //          *os << arg->local_name ();
+          if (this->ctx_->state ()
+              == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
+            *os << arg->local_name ();
+          else
+            *os << arg->local_name () << ".out ()";
 	  break;
 	} // end switch direction
     } // end else if
@@ -232,8 +262,14 @@ int be_visitor_args_upcall_ss::visit_sequence (be_sequence *node)
     {
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
-    case AST_Argument::dir_OUT:
       *os << arg->local_name ();
+      break;
+    case AST_Argument::dir_OUT:
+      if (this->ctx_->state ()
+          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
+        *os << arg->local_name ();
+      else
+        *os << arg->local_name () << ".out ()";
       break;
     }
   return 0;
@@ -249,9 +285,25 @@ int be_visitor_args_upcall_ss::visit_string (be_string *)
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
+      if (this->ctx_->state ()
+          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
+        *os << arg->local_name ();
+      else
+        *os << arg->local_name () << ".in ()";
+      break;
     case AST_Argument::dir_INOUT:
+      if (this->ctx_->state ()
+          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
+        *os << arg->local_name ();
+      else
+        *os << arg->local_name () << ".inout ()";
+      break;
     case AST_Argument::dir_OUT:
-      *os << arg->local_name ();
+      if (this->ctx_->state ()
+          == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
+        *os << arg->local_name ();
+      else
+        *os << arg->local_name () << ".out ()";
       break;
     }
   return 0;
@@ -268,8 +320,17 @@ int be_visitor_args_upcall_ss::visit_structure (be_structure *node)
     {
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
-    case AST_Argument::dir_OUT:
       *os << arg->local_name ();
+      break;
+    case AST_Argument::dir_OUT:
+      if (node->size_type () == be_decl::VARIABLE)
+        if (this->ctx_->state ()
+            == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
+          *os << arg->local_name ();
+        else
+          *os << arg->local_name () << ".out ()";
+      else
+        *os << arg->local_name ();
       break;
     }
   return 0;
@@ -286,8 +347,17 @@ int be_visitor_args_upcall_ss::visit_union (be_union *node)
     {
     case AST_Argument::dir_IN:
     case AST_Argument::dir_INOUT:
-    case AST_Argument::dir_OUT:
       *os << arg->local_name ();
+      break;
+    case AST_Argument::dir_OUT:
+      if (node->size_type () == be_decl::VARIABLE)
+        if (this->ctx_->state ()
+            == TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS)
+          *os << arg->local_name ();
+        else
+          *os << arg->local_name () << ".out ()";
+      else
+        *os << arg->local_name ();
       break;
     }
   return 0;

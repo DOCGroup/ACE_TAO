@@ -91,11 +91,13 @@ be_visitor_enum_ch::visit_enum (be_enum *node)
 }
 
 int
-be_visitor_enum_ch::post_process (void)
+be_visitor_enum_ch::post_process (be_decl *bd)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "," << be_nl;
+  // Am I the last one?
+  if (!this->last_node (bd))
+    *os << "," << be_nl;
   return 0;
 }
 

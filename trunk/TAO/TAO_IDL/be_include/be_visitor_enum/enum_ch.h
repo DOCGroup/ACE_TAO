@@ -49,7 +49,7 @@ public:
 
   // = helper
 
-  virtual int post_process (void);
+  virtual int post_process (be_decl *);
   // generate a comma after each element is processed
 };
 

@@ -34,6 +34,9 @@
 #include "be_visitor_argument/pre_upcall_ss.cpp"
 #include "be_visitor_argument/upcall_ss.cpp"
 #include "be_visitor_argument/vardecl_ss.cpp"
+#include "be_visitor_argument/compiled_marshal_cs.cpp"
+#include "be_visitor_argument/compiled_marshal_ss.cpp"
+#include "be_visitor_argument/pre_invoke_cs.cpp"
 
 ACE_RCSID(be, be_visitor_argument, "$Id$")
 

@@ -50,20 +50,14 @@ public:
 
     // emitting code for arguments of an operation. No distinction between
     // headers, inlines, stubs.
-    TAO_ARGUMENT_CH,                         // in client header
-    TAO_ARGUMENT_CI,                         // in client inline
-    TAO_ARGUMENT_CS,                         // in client stubs
-    TAO_ARGUMENT_SH,                         // in server header
-    TAO_ARGUMENT_SI,                         // in server inline
-    TAO_ARGUMENT_SS,                         // in server skeleton
     TAO_ARGUMENT_ARGLIST_CH,                 // argument in op signature of
                                              // ... client header
     TAO_ARGUMENT_ARGLIST_OTHERS,             // ... in other cases
-    TAO_ARGUMENT_PRE_DOCALL_CS,              // preprocessing of argument
+    TAO_ARGUMENT_PRE_INVOKE_CS,              // preprocessing of argument
                                              // variable before passing to
                                              // do_static_call  (in stub)
-    TAO_ARGUMENT_DOCALL_CS,                  // passing argument variable to do_static_call
-    TAO_ARGUMENT_POST_DOCALL_CS,             // postprocessing of argument
+    TAO_ARGUMENT_INVOKE_CS,                  // passing argument variable to do_static_call
+    TAO_ARGUMENT_POST_INVOKE_CS,             // postprocessing of argument
                                              // variable after do_static_call
     TAO_ARGUMENT_VARDECL_SS,                 // declaration of argument
                                              // variable in skeleton (server)
@@ -87,26 +81,6 @@ public:
     TAO_ATTRIBUTE_COLLOCATED_SH,             // in server header for collocated
     TAO_ATTRIBUTE_COLLOCATED_SS,             // in server skeletons for
                                              // collocated
-
-    TAO_ATTRIBUTE_RETVAL_DECL_SS,
-    TAO_ATTRIBUTE_RETVAL_ASSIGN_SS,
-    TAO_ATTRIBUTE_RETURN_TYPE_CH,
-    TAO_ATTRIBUTE_INPARAM_TYPE_CH,
-    TAO_ATTRIBUTE_RETURN_TYPE_CS,
-    TAO_ATTRIBUTE_RETVAL_DECL_CS,
-    TAO_ATTRIBUTE_RETVAL_EXCEPTION_CS,
-    TAO_ATTRIBUTE_RETVAL_RETURN_CS,
-    TAO_ATTRIBUTE_INPARAM_TYPE_CS,
-    TAO_ATTRIBUTE_PRE_DOCALL_CS,
-    TAO_ATTRIBUTE_DOCALL_CS,
-    TAO_ATTRIBUTE_POST_DOCALL_CS,
-    TAO_ATTRIBUTE_RETURN_TYPE_SH,
-    TAO_ATTRIBUTE_INPARAM_TYPE_SH,
-    TAO_ATTRIBUTE_RESULT_SS,
-    TAO_ATTRIBUTE_INPARAM_TYPE_SS,
-    TAO_ATTRIBUTE_PRE_UPCALL_SS,
-    TAO_ATTRIBUTE_UPCALL_SS,
-    TAO_ATTRIBUTE_POST_UPCALL_SS,
     TAO_ATTRIBUTE_TIE_SH,
     TAO_ATTRIBUTE_TIE_SI,
 
@@ -114,25 +88,10 @@ public:
     TAO_ARRAY_CH,
     TAO_ARRAY_CI,
     TAO_ARRAY_CS,
-
-    TAO_ARRAY_DEFN_CH,
-    TAO_ARRAY_DEFN_CI,
-    TAO_ARRAY_DEFN_CS,
-    TAO_ARRAY_DEFN_SH,
-    TAO_ARRAY_DEFN_SI,
-    TAO_ARRAY_DEFN_SS,
     TAO_ARRAY_ANY_OP_CH,
     TAO_ARRAY_ANY_OP_CS,
     TAO_ARRAY_CDR_OP_CH,
     TAO_ARRAY_CDR_OP_CS,
-
-    // emitting code for rest of the array decl
-    TAO_ARRAY_OTHER_CH,
-    TAO_ARRAY_OTHER_CI,
-    TAO_ARRAY_OTHER_CS,
-    TAO_ARRAY_OTHER_SH,
-    TAO_ARRAY_OTHER_SI,
-    TAO_ARRAY_OTHER_SS,
 
     // emitting code for the constants
     TAO_CONSTANT_CH,                         // in client header
@@ -141,11 +100,7 @@ public:
 
     // emitting code for enums
     TAO_ENUM_CH,                             // in client header
-    TAO_ENUM_CI,                             // XXXASG rm?
     TAO_ENUM_CS,                             // in client stubs
-    TAO_ENUM_SH,                             // XXXASG rm? all 3
-    TAO_ENUM_SI,
-    TAO_ENUM_SS,
     TAO_ENUM_ANY_OP_CH,
     TAO_ENUM_ANY_OP_CS,
     TAO_ENUM_CDR_OP_CH,
@@ -158,9 +113,6 @@ public:
     TAO_EXCEPTION_CS,
     TAO_EXCEPTION_CTOR_CS,
     TAO_EXCEPTION_CTOR_ASSIGN_CS,
-    TAO_EXCEPTION_SH,
-    TAO_EXCEPTION_SI,
-    TAO_EXCEPTION_SS,
     TAO_EXCEPTION_ANY_OP_CH,
     TAO_EXCEPTION_ANY_OP_CS,
     TAO_EXCEPTION_CDR_OP_CH,
@@ -207,34 +159,30 @@ public:
 
     // emitting code for an operation.
     TAO_OPERATION_CH,                       // in client header
-    TAO_OPERATION_CI,                       // XXXASG rm?
     TAO_OPERATION_CS,                       // in client stubs
     TAO_OPERATION_SH,                       // in server header
-    TAO_OPERATION_SI,                       // XXXASG rm?
     TAO_OPERATION_SS,                       // in server skeletons
     TAO_OPERATION_COLLOCATED_SH,            // in collocated server header
     TAO_OPERATION_COLLOCATED_SS,            // in collocated server skel
     TAO_OPERATION_RETTYPE_CH,                // return type in client header op
                                              // signature
     TAO_OPERATION_RETTYPE_OTHERS,            // ... in other cases
-    TAO_OPERATION_RETURN_TYPE_CS,            //
     TAO_OPERATION_ARGLIST_CH,                // parameter list in op signature
                                              // ... for client header
     TAO_OPERATION_ARGLIST_SH,                // ... for server header
     TAO_OPERATION_ARGLIST_COLLOCATED_SH,     // ... for collocated server
     TAO_OPERATION_ARGLIST_OTHERS,            // ... for all other cases
     TAO_OPERATION_RETVAL_DECL_CS,            // return value variable declaration
-    TAO_OPERATION_RETVAL_EXCEPTION_CS,       // return value on exception (error)
-    TAO_OPERATION_RETVAL_PRE_DOCALL_CS,      // preprocessing for return value
+    TAO_OPERATION_RETVAL_PRE_INVOKE_CS,      // preprocessing for return value
                                              // before sending over the wire
-    TAO_OPERATION_ARG_PRE_DOCALL_CS,         // preprocessing of arguments
+    TAO_OPERATION_ARG_PRE_INVOKE_CS,         // preprocessing of arguments
                                              //   before do_static_call
-    TAO_OPERATION_RETVAL_DOCALL_CS,          // passing the return type
+    TAO_OPERATION_RETVAL_INVOKE_CS,          // passing the return type
                                              //   variable to do_static_call
-    TAO_OPERATION_ARG_DOCALL_CS,             // passing argument variable to do_static_call
-    TAO_OPERATION_RETVAL_POST_DOCALL_CS,     // processing  of return type
+    TAO_OPERATION_ARG_INVOKE_CS,             // passing argument variable to do_static_call
+    TAO_OPERATION_RETVAL_POST_INVOKE_CS,     // processing  of return type
                                              //   after do_static_call
-    TAO_OPERATION_ARG_POST_DOCALL_CS,        // processing of arg after do_static_call
+    TAO_OPERATION_ARG_POST_INVOKE_CS,        // processing of arg after do_static_call
     TAO_OPERATION_RETVAL_RETURN_CS,          // returning the return type
                                              // variable
     TAO_OPERATION_EXCEPTLIST_CS,             // generating the exception list
@@ -248,7 +196,6 @@ public:
     TAO_OPERATION_RETVAL_ASSIGN_SS,          // assigning to return type
                                              // variable
     TAO_OPERATION_ARG_PRE_UPCALL_SS,         // pre upcall processing
-    TAO_OPERATION_RETVAL_UPCALL_SS,          // passing return type var and argument
     TAO_OPERATION_ARG_UPCALL_SS,             // variables to upcall
     TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS,  // variables to upcall for
                                              // collocated op
@@ -257,11 +204,6 @@ public:
     TAO_OPERATION_RESULT_SS,                 // XXXASG rm?
     TAO_OPERATION_TIE_SH,
     TAO_OPERATION_TIE_SI,
-
-    // for predefined type
-    TAO_PREDEFINED_TYPE_CH,
-    TAO_PREDEFINED_TYPE_CI,
-    TAO_PREDEFINED_TYPE_CS,
 
     // emitting code for root
     TAO_ROOT_CH,
@@ -288,17 +230,6 @@ public:
     TAO_SEQUENCE_BASE_CH,
     TAO_SEQUENCE_BASE_CI,
     TAO_SEQUENCE_BASE_CS,
-    TAO_SEQUENCE_BASE_SH,
-    TAO_SEQUENCE_BASE_SI,
-    TAO_SEQUENCE_BASE_SS,
-
-    // emitting code for sequence body
-    TAO_SEQUENCE_BODY_CH,
-    TAO_SEQUENCE_BODY_CI,
-    TAO_SEQUENCE_BODY_CS,
-    TAO_SEQUENCE_BODY_SH,
-    TAO_SEQUENCE_BODY_SI,
-    TAO_SEQUENCE_BODY_SS,
 
     // for special sequnce elements
     TAO_SEQELEM_RETTYPE_CH,
@@ -309,14 +240,6 @@ public:
     TAO_SEQUENCE_BUFFER_TYPE_CH,
     TAO_SEQUENCE_BUFFER_TYPE_CI,
     TAO_SEQUENCE_BUFFER_TYPE_CS,
-
-    // emitting code for strings
-    TAO_STRING_CH,
-    TAO_STRING_CI,
-    TAO_STRING_CS,
-    TAO_STRING_SH,
-    TAO_STRING_SI,
-    TAO_STRING_SS,
 
     // emitting code for struct and its members
     TAO_STRUCT_CH,
@@ -331,9 +254,6 @@ public:
     TAO_TYPEDEF_CH,
     TAO_TYPEDEF_CI,
     TAO_TYPEDEF_CS,
-    TAO_TYPEDEF_SH,
-    TAO_TYPEDEF_SI,
-    TAO_TYPEDEF_SS,
     TAO_TYPEDEF_ANY_OP_CH,
     TAO_TYPEDEF_ANY_OP_CS,
     TAO_TYPEDEF_CDR_OP_CH,
@@ -352,9 +272,6 @@ public:
     TAO_UNION_DISCTYPEDEFN_CH,
     TAO_UNION_DISCTYPEDEFN_CI,
     TAO_UNION_DISCTYPEDEFN_CS,
-    TAO_UNION_DISCTYPEDEFN_SH,
-    TAO_UNION_DISCTYPEDEFN_SI,
-    TAO_UNION_DISCTYPEDEFN_SS,
 
     // emitting code for the public members of the union
     TAO_UNION_PUBLIC_CH,
@@ -363,17 +280,9 @@ public:
     TAO_UNION_PUBLIC_ASSIGN_CS,
     TAO_UNION_PUBLIC_RESET_CS,
     TAO_UNION_PUBLIC_ACCESS_CS,
-    TAO_UNION_PUBLIC_SH,
-    TAO_UNION_PUBLIC_SI,
-    TAO_UNION_PUBLIC_SS,
 
     // emitting code for private members of the union
     TAO_UNION_PRIVATE_CH,
-    TAO_UNION_PRIVATE_CI,
-    TAO_UNION_PRIVATE_CS,
-    TAO_UNION_PRIVATE_SH,
-    TAO_UNION_PRIVATE_SI,
-    TAO_UNION_PRIVATE_SS,
 
     // emitting code for CDR operators for types defined inside unions
     TAO_UNION_BRANCH_CDR_OP_CH,
@@ -508,8 +417,10 @@ public:
   TAO_OutStream *outstream (void);
   // retrieve current out stream being used
 
-  void visitor_factory (TAO_Visitor_Factory *);
-  // set the visitor factory  object
+  void config_visitor_factory (void);
+  // set the visitor factory  object. In this respect, this behaves as the
+  // "strategy" pattern in which the TAO_CodeGen object is the context and the
+  // visitor_factory is the strategy object
 
   void node (be_decl *n);
   // pass info

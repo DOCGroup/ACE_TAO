@@ -428,6 +428,37 @@ public:
 
   virtual const char* perfect_hasher (void) const;
   // Get the path for the perfect hashing program (GPERF). 
+
+  virtual void any_support (idl_bool);
+  // enable suppressing any support
+
+  virtual idl_bool any_support (void);
+  // check if Any support is suppressed
+
+  virtual void tc_support (idl_bool);
+  // enable suppressing TypeCode support
+
+  virtual idl_bool tc_support (void);
+  // check if TypeCode support is suppressed
+
+  virtual void compiled_marshaling (idl_bool);
+  // enable compiled marshaling support
+
+  virtual idl_bool compiled_marshaling (void);
+  // check if we use compiled marshaling 
+
+  virtual void exception_support (idl_bool);
+  // enable real C++ exceptions
+
+  virtual idl_bool exception_support (void);
+  // check if real C++ exception support is to be enabled 
+
+  virtual void opt_tc (idl_bool);
+  // enable optimized typecodes
+
+  virtual idl_bool opt_tc (void);
+  // check if TypeCodes need be optimized
+  
 private:
   // Data
   UTL_ScopeStack		*pd_scopes;		// Store scopes stack
@@ -512,6 +543,21 @@ private:
   // kept. Default value is 0 for this string which means the current
   // directory from which the <tao_idl> is called.
   char* output_dir_;
+
+  idl_bool any_support_;
+  // do we support Any operators?
+
+  idl_bool tc_support_;
+  // do we support typecodes?
+
+  idl_bool compiled_marshaling_;
+  // do we support compiled marshaling
+
+  idl_bool exception_support_;
+  // do we support real C++ exceptions (strict mapping) for stubs/skeletons
+
+  idl_bool opt_tc_;
+  // do we generate optimized typecodes?
 };
 
 #endif	//_IDL_IDL_GLOBAL_HH

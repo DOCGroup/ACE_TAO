@@ -112,15 +112,11 @@ int be_visitor_args_post_upcall_ss::visit_interface (be_interface *node)
     case AST_Argument::dir_IN:
       break;
     case AST_Argument::dir_INOUT: // inout
+    case AST_Argument::dir_OUT:
       os->indent ();
       *os << "_tao_base_var_" << arg->local_name ()
 	  << " = CORBA::Object::_duplicate ("
 	  << arg->local_name () << ".in ());\n";
-      break;
-    case AST_Argument::dir_OUT:
-      os->indent ();
-      *os << "_tao_base_ptr_" << arg->local_name () << " = _tao_var_"
-          << arg->local_name () << ".in ();\n";
       break;
     }
   return 0;
@@ -136,14 +132,12 @@ int be_visitor_args_post_upcall_ss::visit_interface_fwd (be_interface_fwd *node)
     case AST_Argument::dir_IN:
       break;
     case AST_Argument::dir_INOUT: // inout
-      os->indent ();
-      *os << "_tao_base_ptr_" << arg->local_name () << " = "
-          << arg->local_name () << ".in ();\n";
-      break;
     case AST_Argument::dir_OUT:
       os->indent ();
-      *os << "_tao_base_ptr_" << arg->local_name () << " = _tao_var_"
-          << arg->local_name () << ".in ();\n";
+      *os << "_tao_base_var_" << arg->local_name ()
+	  << " = CORBA::Object::_duplicate ("
+	  << arg->local_name () << ".in ());\n";
+      break;
       break;
     }
   return 0;

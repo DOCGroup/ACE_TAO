@@ -78,8 +78,15 @@ A complete list of all modifications to TAO is available in the <A HREF="http://
 <A NAME="idl"></A>IDL Compiler</H3>
 Point of contact: <A HREF="mailto:gokhale@research.bell-labs.com">Aniruddha Gokhale</A>
 
-<P>Current status: (As of August  26th, 1998.)
+<P>Current status: (As of October 1, 1998.)
 <UL>
+     <LI>
+     Support for generating compiled marshaling code is added. Use the
+     -Gc option. However, this needs thorough testing before we can
+     claim success. Unions are still a problme with compiled
+     marshaling.
+     </LI>
+
      <LI> The problem of "#include"ing the relative path of the header
          files rather than the paths of their corresponding IDL files
          has been fixed. tao_idl now generates #include path names
@@ -141,7 +148,7 @@ to be handled.</LI>
 
 <LI>
 Added support for Arrays. Right now, support for typedefed arrays is in.
-Still needs testing.</LI>
+Arrays inside unions not done yet.
 
 <LI>
 Added support for TIE classes. If the interfaces are defined inside modules,
@@ -183,26 +190,6 @@ A new test to test all the parameter passing modes for a number of data
 types has been added. At this point in time, it tests primitive types and
 strings. Other tests will be added. Bugs discovered thru these tests have
 been fixed.</LI>
-
-<LI>
-Very preliminary support for arrays. Not working yet.</LI>
-
-<LI>
-Many bugs associated with stub generation fixed. This included support
-for return values that are variable sized IDL types. Unions improved.</LI>
-
-<LI>
-Support for sequences of strings and object references added. However,
-it is not tested yet so there may be some bugs. We should have these fixed
-in a day or so.</LI>
-
-<LI>
-Sequences as out parameters have been tested in the IDL_Cubit example.
-A test suite is currently being built to test all the parameter passing
-modes on a variety of IDL data types.</LI>
-
-<LI>
-Support for attributes completed. Not tested yet.</LI>
 
 <LI>
 The problem of incorrect code generation for typedefs defined in an imported
@@ -268,8 +255,10 @@ Known bugs/unimplemented constructs:
 Generation of Managed types must somehow be moved to the ORB Core</LI>
 
 <LI>
-TypeCode generation for multidimensional arrays, indirected typecodes,
-and recursive types is still a problem.</LI>
+We need support for ``TIEs'' (i.e., the object form of the Adapter pattern).</LI>
+
+<LI>
+TypeCode generation for recursive types not implemented yet. </LI>
 
 <LI>
 Unions with default cases yet to be handled</LI>

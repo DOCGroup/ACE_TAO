@@ -437,17 +437,14 @@ public:
     String_out (String_var &p);
     // Construction from a var.
 
-    String_out (String_out &s);
+    String_out (const String_out &s);
     // Copy constructor.
 
-    String_out &operator= (String_out &s);
+    String_out &operator= (const String_out &s);
     // Assignment from a string_out.
 
     String_out &operator= (char *p);
     // Assignment from a string.
-
-    String_out &operator= (const char *p);
-    // Assignment from a const string.
 
     operator char *&();
     // Cast.

@@ -139,7 +139,7 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
       << "if (this->maximum_ < rhs.maximum_)" << be_nl
       << "{" << be_idt_nl
       << "// free the old buffer" << be_nl;
-  pt->accept(visitor); *os <<" *tmp = ACE_reinterpret_cast (";
+  pt->accept (visitor); *os <<" *tmp = ACE_reinterpret_cast (";
   pt->accept (visitor); *os << " *, this->buffer_);" << be_nl
       << "freebuf (tmp);" << be_nl
       << "this->buffer_ = allocbuf (rhs.maximum_);" << be_uidt_nl
@@ -150,9 +150,9 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
       << be_nl
       << "TAO_Unbounded_Base_Sequence::operator= (rhs);" << be_nl
       << be_nl;
-  pt->accept(visitor); *os <<" *tmp1 = ACE_reinterpret_cast (";
+  pt->accept (visitor); *os <<" *tmp1 = ACE_reinterpret_cast (";
   pt->accept (visitor); *os << " *, this->buffer_);" << be_nl;
-  pt->accept(visitor); *os <<" * const tmp2 = ACE_reinterpret_cast (";
+  pt->accept (visitor); *os <<" * const tmp2 = ACE_reinterpret_cast (";
   pt->accept (visitor); *os << " * ACE_CAST_CONST, rhs.buffer_);" << be_nl
       << be_nl
       << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl
@@ -171,11 +171,11 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
 
   // Accessors
   *os << "// = Accessors." << be_nl;
-  pt->accept(visitor); *os <<" &operator[] (CORBA::ULong i)" << be_nl
+  pt->accept (visitor); *os <<" &operator[] (CORBA::ULong i)" << be_nl
       << "// operator []" << be_nl
       << "{" << be_idt_nl
       << "ACE_ASSERT (i < this->maximum_);" << be_nl;
-  pt->accept(visitor); *os <<"* tmp = ACE_reinterpret_cast(";
+  pt->accept (visitor); *os <<"* tmp = ACE_reinterpret_cast(";
   pt->accept (visitor); *os << "*,this->buffer_);" << be_nl
       << "return tmp[i];" << be_uidt_nl
       << "}" << be_nl
@@ -186,7 +186,7 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
       << "// operator []" << be_nl
       << "{" << be_idt_nl
       << "ACE_ASSERT (i < this->maximum_);" << be_nl;
-  pt->accept(visitor); *os <<" * const tmp = ACE_reinterpret_cast (";
+  pt->accept (visitor); *os <<" * const tmp = ACE_reinterpret_cast (";
   pt->accept (visitor); *os << "* ACE_CAST_CONST, this->buffer_);" << be_nl
       << "return tmp[i];" << be_uidt_nl
       << "}" << be_nl
@@ -210,11 +210,11 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
   // allocate_buffer
   *os << "virtual void _allocate_buffer (CORBA::ULong length)" << be_nl
       << "{" << be_idt_nl;
-  pt->accept(visitor); *os <<"* tmp = allocbuf (length);" << be_nl
+  pt->accept (visitor); *os <<"* tmp = allocbuf (length);" << be_nl
       << be_nl
       << "if (this->buffer_ != 0)" << be_nl
       << "{" << be_idt_nl;
-  pt->accept(visitor); *os <<" *old = ACE_reinterpret_cast (";
+  pt->accept (visitor); *os <<" *old = ACE_reinterpret_cast (";
   pt->accept (visitor); *os << " *,this->buffer_);" << be_nl
       << be_nl
       << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl

@@ -43,7 +43,7 @@ public:
   ~be_visitor_operation_argument (void);
   // destructor
 
-  int post_process (void);
+  int post_process (be_decl *);
   // stuff to o/p after each element of the scope is handled
 
   int visit_operation (be_operation *node);

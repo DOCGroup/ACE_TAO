@@ -97,7 +97,8 @@ int be_visitor_args_docall_cs::visit_array (be_array *node)
     case AST_Argument::dir_OUT:
       if (node->size_type () == be_type::VARIABLE)
         // pass reference to the pointer to slice
-        *os << "_tao_base_" << arg->local_name ();
+        //        *os << "_tao_base_" << arg->local_name ();
+        *os << arg->local_name () << ".ptr ()";
       else
         *os << arg->local_name ();
       break;
@@ -176,7 +177,8 @@ int be_visitor_args_docall_cs::visit_predefined_type (be_predefined_type *node)
 	  *os << "&" << arg->local_name ();
 	  break;
 	case AST_Argument::dir_OUT:
-	  *os << "_tao_base_" << arg->local_name ();
+	  //*os << "_tao_base_" << arg->local_name ();
+          *os << arg->local_name () << ".ptr ()";
 	  break;
 	} // end switch direction
     } // end of if any
@@ -191,7 +193,8 @@ int be_visitor_args_docall_cs::visit_predefined_type (be_predefined_type *node)
           *os << "&" << arg->local_name ();
           break;
 	case AST_Argument::dir_OUT:
-          *os << "&_tao_base_" << arg->local_name ();
+          //*os << "&_tao_base_" << arg->local_name ();
+          *os << "&" << arg->local_name () << ".ptr ()";
 	  break;
 	} // end switch direction
     } // end else if pseudo
@@ -224,7 +227,8 @@ int be_visitor_args_docall_cs::visit_sequence (be_sequence *node)
       *os << "&" << arg->local_name ();
       break;
     case AST_Argument::dir_OUT:
-      *os << "_tao_base_" << arg->local_name ();
+      //      *os << "_tao_base_" << arg->local_name ();
+      *os << arg->local_name () << ".ptr ()";
       break;
     }
   return 0;
@@ -244,7 +248,8 @@ int be_visitor_args_docall_cs::visit_string (be_string *)
       *os << "&" << arg->local_name ();
       break;
     case AST_Argument::dir_OUT:
-      *os << "&_tao_base_" << arg->local_name ();
+      //*os << "&_tao_base_" << arg->local_name ();
+      *os << "&" << arg->local_name () << ".ptr ()";
       break;
     }
   return 0;
@@ -267,7 +272,8 @@ int be_visitor_args_docall_cs::visit_structure (be_structure *node)
       {
         // check if the size type is VARIABLE
         if (node->size_type () == be_type::VARIABLE)
-          *os << "_tao_base_" << arg->local_name ();
+          //          *os << "_tao_base_" << arg->local_name ();
+          *os << arg->local_name () << ".ptr ()";
         else
           *os << "&" << arg->local_name ();
       }
@@ -293,7 +299,8 @@ int be_visitor_args_docall_cs::visit_union (be_union *node)
       {
         // check if the size type is VARIABLE
         if (node->size_type () == be_type::VARIABLE)
-          *os << "_tao_base_" << arg->local_name ();
+          //*os << "_tao_base_" << arg->local_name ();
+          *os << arg->local_name () << ".ptr ()";
         else
           *os << "&" << arg->local_name ();
       }

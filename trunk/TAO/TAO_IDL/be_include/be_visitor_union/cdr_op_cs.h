@@ -45,7 +45,7 @@ public:
   virtual int visit_union (be_union *node);
   // visit union
 
-  virtual int post_process (void);
+  virtual int post_process (be_decl *);
   // any post processing that needs to be done after a scope element is handled
 
 };

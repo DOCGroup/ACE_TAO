@@ -32,7 +32,7 @@ ACE_RCSID(be_visitor_operation, operation_ch, "$Id$")
 // ******************************************************
 
 be_visitor_operation_ch::be_visitor_operation_ch (be_visitor_context *ctx)
-  : be_visitor_scope (ctx)
+  : be_visitor_operation (ctx)
 {
 }
 

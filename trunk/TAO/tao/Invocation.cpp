@@ -1028,7 +1028,6 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
 }
 
 
-
 // ****************************************************************
 
 
