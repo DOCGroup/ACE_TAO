@@ -338,7 +338,9 @@ endif # IPC
 
 ifneq (,$(findstring Svcconf,$(ACE_COMPONENTS)))
   FILES += $(SVCCONF_FILES)
-endif # Svcconf
+else # ! Svcconf
+  CCFLAGS += -DACE_LACKS_ACE_SVCCONF
+endif # ! Svcconf
 
 ifneq (,$(findstring Streams,$(ACE_COMPONENTS)))
   FILES += $(STREAMS_FILES)
