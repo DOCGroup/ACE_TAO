@@ -1,3 +1,24 @@
+Mon Jan 31 20:29:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.ll:
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/lex.yy.cpp:
+	* TAO_IDL/fe/lex.yy.cpp.diff:
+	* TAO_IDL/fe/y.tab.h:
+	* TAO_IDL/fe/y.tab.cpp:
+	  Added keyword 'fixed' to lexer and parser.
+
+	* TAO_IDL/util/utl_scope.cpp:
+	  Modified lookup_by_name_local() to output an
+	  error if it sees any case variation of 'fixed'. The
+	  change to the lexer and parser will catch the use
+	  of 'fixed' as a type. This change will catch the use
+	  of 'fixed' as an identifier. Fixed types are not
+	  implemented in TAO, so we need to output an error
+	  message whenever the word is used in an IDL file.
+	  Thanks to J. Scott Evans <evans@cpi.com> for reporting
+	  this bug.
+
 Mon Jan 31 20:15:25 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.h:
