@@ -1,6 +1,4 @@
-//
 // $Id$
-//
 
 #include "CosTimeBase.idl"
 
@@ -10,7 +8,7 @@ module RtecScheduler {
   typedef Time Quantum;
 
   typedef long Period;
-  // @@ What are the units for this?
+  // In units of 100 nanoseconds.
 
   //
   // TODO: This differ from the ones documented in the TAO paper,
@@ -22,7 +20,7 @@ module RtecScheduler {
   // BACKGROUND
   // Notice that the order is inverted and, of course, the names don't
   // match.
-  // 
+  //
   enum Importance {
     VERY_LOW,
     LOW,
@@ -33,7 +31,7 @@ module RtecScheduler {
 
   typedef long handle_t;
   // RT_Info's are assignned per-application unique identifiers.
-  
+
   struct Dependency_Info {
     long number_of_calls;
     handle_t rt_info;
@@ -119,7 +117,7 @@ module RtecScheduler {
 
   // TODO: Find a reasonable name for this interface, maybe we should
   // change the name of the module to RtecSchedulerAdmin and name this
-  // Scheduler 
+  // Scheduler
   interface Scheduler
     // = DESCRIPTION
     //   This class holds all the RT_Info's for a single application.
@@ -145,7 +143,7 @@ module RtecScheduler {
     // Creates a new RT_Info entry for the function identifier
     // "entry_point", it can be any string, but the fully qualified
     // name function name is suggested.
-    // Returns a handle to the RT_Info. 
+    // Returns a handle to the RT_Info.
 
     handle_t lookup (in string entry_point);
     // Lookups a handle for entry_point.
@@ -155,32 +153,32 @@ module RtecScheduler {
     // Retrieve information about an RT_Info.
 
     void set (in handle_t handle,
-	      in Time time,
-	      in Time typical_time,
-	      in Time cached_time,
-	      in Period period,
-	      in Importance importance,
-	      in Quantum quantum,
-	      in long threads)
+              in Time time,
+              in Time typical_time,
+              in Time cached_time,
+              in Period period,
+              in Importance importance,
+              in Quantum quantum,
+              in long threads)
       raises (UNKNOWN_TASK);
     // Set the attributes of an RT_Info.
     // Notice that some values may not be modified (like priority).
 
     void add_dependency (in handle_t handle,
-			 in handle_t dependency,
-			 in long number_of_calls)
+                         in handle_t dependency,
+                         in long number_of_calls)
       raises (UNKNOWN_TASK);
     // Adds <dependency> to <handle>
 
     void priority (in handle_t handle,
-		       out OS_Priority priority,
-		       out Sub_Priority subpriority,
-		       out Preemption_Priority p_priority)
+                       out OS_Priority priority,
+                       out Sub_Priority subpriority,
+                       out Preemption_Priority p_priority)
       raises (UNKNOWN_TASK, NOT_SCHEDULED);
     void entry_point_priority (in string entry_point,
-			       out OS_Priority priority,
-			       out Sub_Priority subpriority,
-			       out Preemption_Priority p_priority)
+                               out OS_Priority priority,
+                               out Sub_Priority subpriority,
+                               out Preemption_Priority p_priority)
       raises (UNKNOWN_TASK, NOT_SCHEDULED);
     // Obtain the run time priorities.
     // TODO: Do we need the two interfaces or is it simply confusing?
@@ -190,11 +188,11 @@ module RtecScheduler {
     // the string affordable?
 
     void compute_scheduling (in long minimum_priority,
-			     in long maximum_priority,
-			     out RT_Info_Set infos)
+                             in long maximum_priority,
+                             out RT_Info_Set infos)
       raises (UTILIZATION_BOUND_EXCEEDED,
-	      INSUFFICIENT_THREAD_PRIORITY_LEVELS,
-	      TASK_COUNT_MISMATCH);
+              INSUFFICIENT_THREAD_PRIORITY_LEVELS,
+              TASK_COUNT_MISMATCH);
     // Computes the scheduling priorities, returns the RT_Info's with
     // their priorities properly filled.
     // This info can be cached by a Run_Time_Scheduler service or
@@ -210,11 +208,11 @@ module RtecScheduler {
     //   handle_t dependency;
     // };
     // typedef sequence<Dependency> Dependency_Set;
-    // 
+    //
     // Dependency_Set dependencies (in handle_t handle)
     //    raises (UNKNOWN_TASK);
     // Returns the list of dependencies
-    // 
+    //
     // long number_of_dependencies (in handle_t handle)
     //    raises (UNKNOWN_TASK);
     // Returns the number of dependencies.
