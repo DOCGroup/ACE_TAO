@@ -1,3 +1,15 @@
+Thu Dec  9 18:47:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+	  Fixed code generation of CDR operatorsfor a certain 
+	  use case of nested anonymous sequences. IDL file
+	  would build correctly, but would give rise to
+	  marshaling errors at runtime. Also fixed
+	  generation of #ifdef guards for these operators - some
+	  cases were generating the guards unnecessarily. Thanks
+	  to Derek Dominish <Derek.Dominish@Australia.Boeing.com>
+	  for reporting the marshaling error.
+
 Thu Dec 09 15:53:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
