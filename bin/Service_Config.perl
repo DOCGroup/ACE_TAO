@@ -1,4 +1,14 @@
 #!/pkg/gnu/bin/perl -pi
+#
+#
+# You may want to run the "find" command with this script, which maybe something like this:
+#
+# find . -type f \( -name "*.i" -o -name "*.h" -o -name "*.C" -o -name "*.cc" -o -name "*.c" -o -name "*.cpp" -o -name "*.hpp" -o -name "*.ipp" \) -print | xargs $ACE_ROOT/bin/Service_Config.perl
+#
+# And if your perl installation isn't in /pkg/gnu/bin/perl, 
+# please make the change accordingly
+#
+#
 s/ACE_Service_Config::run_reactor_event_loop/ACE_Reactor::run_event_loop/g;
 s/ACE_Service_Config::end_reactor_event_loop/ACE_Reactor::end_event_loop/g;
 s/ACE_Service_Config::reactor_event_loop_done/ACE_Reactor::event_loop_done/g;
