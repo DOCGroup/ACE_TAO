@@ -2440,7 +2440,7 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
   int last_token_position = 0;
   if (system_id)
     // The minus one is because of zero indexing
-    last_token_position = key.length () - TAO_POA::MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX - 1;
+    last_token_position = key.length () - (2 * sizeof (CORBA::ULong)) - 1;
   else
     last_token_position = this->rfind (key, TAO_POA::name_separator ());
 

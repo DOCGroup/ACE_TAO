@@ -314,16 +314,16 @@ TAO_Active_Demux_ObjTable::create_object_id (PortableServer::Servant servant,
     this->next_++;
 
   PortableServer::ObjectId *id;
-
+  CORBA::ULong size = 2 * sizeof (CORBA::ULong);
   ACE_NEW_RETURN (id,
-                  PortableServer::ObjectId (TAO_POA::MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX),
+                  PortableServer::ObjectId (size),
                   0);
 
-  id->length (TAO_POA::MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX);
+  id->length (size);
 
   ACE_OS::memcpy (id->get_buffer (),
                   &id_data,
-                  TAO_POA::MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX);
+                  size);
 
   // Set the new values
   this->table_[index].id_ = *id;
