@@ -24,7 +24,6 @@ CFG=TAO - Win32 Debug
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
-# PROP WCE_Configuration "H/PC Ver. 2.00"
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -274,6 +273,10 @@ SOURCE=.\Typecode.cpp
 # Begin Source File
 
 SOURCE=.\Typecode_Constants.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Union.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
