@@ -53,8 +53,8 @@ class ACE_Export Snmp
   //      communicate with another SNMP Version 1 agent 
 {
  public:
-    Snmp();
-   ~Snmp();
+   Snmp(unsigned short port = INADDR_ANY);
+   virtual ~Snmp();
 
     int get( Pdu &pdu, UdpTarget &target);
     // retrieve data from a peer agent for a given list of oid values
@@ -81,7 +81,7 @@ class ACE_Export Snmp
     char * error_string();  
     // retrieve a reason string if any of the above commands fail
 
-private:
+ protected:
   void check_default_port(UdpTarget& target,unsigned short port=DEF_AGENT_PORT);
   int run_transaction(Pdu& pdu, UdpTarget& target);
   int validate_args(const Pdu& pdu, const UdpTarget& target) const;
