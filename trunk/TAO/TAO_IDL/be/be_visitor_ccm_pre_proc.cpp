@@ -1699,6 +1699,15 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
   event_consumer->set_defined_in (s);
   event_consumer->set_imported (node->imported ());
   event_consumer->set_name (consumer_name);
+  
+  // Set repo id to 0, so it will be recomputed on the next access,
+  // and set the prefix to the eventtype's prefix. All this is
+  // necessary in case the eventtype's prefix was modified after
+  // its declaration. We assume 'implied IDL' means that the
+  // derived event consumer interface should have the same prefix.
+  event_consumer->repoID (0);
+  event_consumer->prefix (const_cast<char*> (node->prefix ()));
+  
   be_type::narrow_from_decl (event_consumer)->gen_fwd_helper_name ();
   m->be_add_interface (event_consumer);
   return this->gen_push_op (node,
