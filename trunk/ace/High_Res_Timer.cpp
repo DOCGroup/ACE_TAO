@@ -69,7 +69,23 @@ ACE_High_Res_Timer::dump (void) const
   ACE_TRACE ("ACE_High_Res_Timer::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nglobal_scale_factor_: %u\n"),
+             global_scale_factor_));
+#if defined (ACE_LACKS_LONGLONG_T)
+  ACE_DEBUG ((LM_DEBUG,
+             ASYS_TEXT ("start_.hi (): %u; start_.lo (): %u;\n"
+                        "end_.hi (): %u; end_.lo (): %u;\n"
+                        "total_.hi (): %u; total_.lo (): %u;\n"
+                        "start_incr_.hi () %u; start_incr_.lo (): %u\n"),
+             start_.hi (), start_.lo (),
+             end_.hi (), end_.lo (),
+             total_.hi (), total_.lo (),
+             start_incr_.hi (), start_incr_.lo ()));
+#else  /* ! ACE_LACKS_LONGLONG_T */
+  ACE_DEBUG ((LM_DEBUG,
+             ASYS_TEXT ("start_: %u; end_: %u; total_: %u; start_incr_: %u\n"),
+             start_, end_, total_, start_incr_));
+#endif /* ! ACE_LACKS_LONGLONG_T */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
