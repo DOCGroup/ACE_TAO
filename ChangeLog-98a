@@ -14,6 +14,11 @@ Fri Jan  2 12:39:45 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 	  Cannot use ACE_ASSERT in OS.i, at least it make SGI compiler
 	  unhappy.
 
+Fri Jan 02 11:55:59 1998  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* ace/Map_Manager.h: Remove unnecessary method declarations from
+ 	  ACE_Map_Iterator adn ACE_Map_Reverse_Iterator.
+
 Fri Jan  2 10:56:38 1998  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/Map_Manager.cpp: 
