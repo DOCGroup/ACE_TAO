@@ -459,20 +459,19 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
   *os << "ACE_CHECK;" << be_nl;
 
   // Prepare the request header
-  *os << "const CORBA::Octet flag = " << be_idt_nl
-      << "ACE_static_cast (const CORBA::Octet, ";
+  *os << "CORBA::Long flag = ";
 
   switch (node->flags ())
     {
     case AST_Operation::OP_oneway:
-      *os << "_tao_call.sync_scope ());";
+      *os << "_tao_call.sync_scope ();";
       break;
     default:
-      *os << "TAO::SYNC_WITH_TARGET);";
+      *os << "TAO::SYNC_WITH_TARGET;";
     }
 
-  *os << be_uidt_nl 
-      << "_tao_call.prepare_header (flag, ACE_TRY_ENV);" << be_nl
+  *os << be_nl
+      << "_tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);" << be_nl
       << "ACE_CHECK;\n" << be_nl;
 
   // Now make sure that we have some in and inout
