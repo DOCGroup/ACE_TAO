@@ -1,9 +1,6 @@
 #include "params.hh"
 #include "connect.hh"
 
-ROA_Parameters* ROA_Parameters::_instance = 0;
-ROA_Factory* ROA_Factory::_instance = 0;
-
 ROA_Parameters::ROA_Parameters()
   : using_threads_(0),
     thread_flags_(THR_NEW_LWP),
@@ -12,26 +9,6 @@ ROA_Parameters::ROA_Parameters()
     forwarder_(0),
     oa_(0)
 {
-}
-
-ROA_Parameters*
-ROA_Parameters::instance()
-{
-  if (_instance == 0)
-    {
-      _instance = new ROA_Parameters;
-    }
-  return _instance;
-}
-
-ROA_Factory*
-ROA_Factory::instance()
-{
-  if (_instance == 0)
-    {
-      _instance = new ROA_Factory;
-    }
-  return _instance;
 }
 
 // Determine the appropriate default thread flags, based on system.
@@ -51,7 +28,7 @@ ROA_Factory::instance()
 ROA_Factory::CONCURRENCY_STRATEGY*
 ROA_Factory::concurrency_strategy()
 {
-  ROA_Parameters* p = ROA_Parameters::instance();
+  ROA_Parameters* p = ROA_PARAMS::instance();
 
 
   if (p->using_threads())
@@ -77,4 +54,6 @@ template class ACE_Concurrency_Strategy<ROA_Handler>;
 template class ACE_Creation_Strategy<ROA_Handler>;
 template class ACE_Scheduling_Strategy<ROA_Handler>;
 template class ACE_Accept_Strategy<ROA_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Singleton<ROA_Parameters, ACE_Thread_Mutex>;
+template class ACE_Singleton<ROA_Factory, ACE_Thread_Mutex>;
 #endif
