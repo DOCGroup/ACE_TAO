@@ -74,7 +74,7 @@ ACE_U_LongLong::operator< (const ACE_U_LongLong &n) const
 ACE_INLINE int
 ACE_U_LongLong::operator< (const ACE_UINT32 n) const
 {
-  return operator< (ACE_static_cast (ACE_U_LongLong, n));
+  return operator< (ACE_static_cast (const ACE_U_LongLong, n));
 }
 
 ACE_INLINE int
@@ -88,7 +88,7 @@ ACE_U_LongLong::operator<= (const ACE_U_LongLong &n) const
 ACE_INLINE int
 ACE_U_LongLong::operator<= (const ACE_UINT32 n) const
 {
-  return operator<= (ACE_static_cast (ACE_U_LongLong, n));
+  return operator<= (ACE_static_cast (const ACE_U_LongLong, n));
 }
 
 ACE_INLINE int
@@ -102,7 +102,7 @@ ACE_U_LongLong::operator> (const ACE_U_LongLong &n) const
 ACE_INLINE int
 ACE_U_LongLong::operator> (const ACE_UINT32 n) const
 {
-  return operator> (ACE_static_cast (ACE_U_LongLong, n));
+  return operator> (ACE_static_cast (const ACE_U_LongLong, n));
 }
 
 ACE_INLINE int
@@ -116,7 +116,7 @@ ACE_U_LongLong::operator>= (const ACE_U_LongLong &n) const
 ACE_INLINE int
 ACE_U_LongLong::operator>= (const ACE_UINT32 n) const
 {
-  return operator>= (ACE_static_cast (ACE_U_LongLong, n));
+  return operator>= (ACE_static_cast (const ACE_U_LongLong, n));
 }
 
 ACE_INLINE
@@ -147,7 +147,7 @@ ACE_U_LongLong::operator+ (const ACE_U_LongLong &n) const
 ACE_INLINE ACE_U_LongLong
 ACE_U_LongLong::operator+ (const ACE_UINT32 n) const
 {
-  return operator+ (ACE_static_cast (ACE_U_LongLong, n));
+  return operator+ (ACE_static_cast (const ACE_U_LongLong, n));
 }
 
 ACE_INLINE ACE_U_LongLong
@@ -162,7 +162,7 @@ ACE_U_LongLong::operator- (const ACE_U_LongLong &n) const
 ACE_INLINE ACE_U_LongLong
 ACE_U_LongLong::operator- (const ACE_UINT32 n) const
 {
-  return operator- (ACE_static_cast (ACE_U_LongLong, n));
+  return operator- (ACE_static_cast (const ACE_U_LongLong, n));
 }
 
 ACE_INLINE ACE_U_LongLong
@@ -229,7 +229,7 @@ ACE_U_LongLong::operator+= (const ACE_U_LongLong &n)
 ACE_INLINE ACE_U_LongLong &
 ACE_U_LongLong::operator+= (const ACE_UINT32 n)
 {
-  return operator+= (ACE_static_cast (ACE_U_LongLong, n));
+  return operator+= (ACE_static_cast (const ACE_U_LongLong, n));
 }
 
 #define ACE_HIGHBIT (~(~0UL >> 1))
@@ -336,7 +336,7 @@ ACE_U_LongLong::operator-= (const ACE_U_LongLong &n)
 ACE_INLINE ACE_U_LongLong &
 ACE_U_LongLong::operator-= (const ACE_UINT32 n)
 {
-  return operator-= (ACE_static_cast (ACE_U_LongLong, n));
+  return operator-= (ACE_static_cast (const ACE_U_LongLong, n));
 }
 
 ACE_INLINE ACE_U_LongLong &
@@ -369,7 +369,7 @@ ACE_U_LongLong::operator|= (const ACE_U_LongLong n)
 ACE_INLINE ACE_U_LongLong &
 ACE_U_LongLong::operator|= (const ACE_UINT32 n)
 {
-  return operator|= (ACE_static_cast (ACE_U_LongLong, n));
+  return operator|= (ACE_static_cast (const ACE_U_LongLong, n));
 }
 
 ACE_INLINE ACE_U_LongLong &
@@ -384,7 +384,7 @@ ACE_U_LongLong::operator&= (const ACE_U_LongLong n)
 ACE_INLINE ACE_U_LongLong &
 ACE_U_LongLong::operator&= (const ACE_UINT32 n)
 {
-  return operator&= (ACE_static_cast (ACE_U_LongLong, n));
+  return operator&= (ACE_static_cast (const ACE_U_LongLong, n));
 }
 
 ACE_INLINE ACE_UINT32
