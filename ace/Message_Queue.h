@@ -274,6 +274,12 @@ protected:
   ACE_SYNCH_CONDITION_T not_full_cond_;
   // Used to make threads sleep until the queue is no longer full.
 #endif /* ACE_HAS_OPTIMIZED_MESSAGE_QUEUE */
+
+private:
+
+  // = Disallow these operations.
+  ACE_UNIMPLEMENTED_FUNC (ACE_Message_Queue &operator= (const ACE_Message_Queue<ACE_SYNCH_USE> &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Message_Queue (const ACE_Message_Queue<ACE_SYNCH_USE> &));
 };
 
 template <ACE_SYNCH_DECL>

@@ -191,6 +191,12 @@ public:
   // Protect the state of a Task during concurrent operations, but
   // only if we're configured as MT safe...
 #endif /* ACE_MT_SAFE */
+
+private:
+
+  // = Disallow these operations.
+  ACE_UNIMPLEMENTED_FUNC (ACE_Task_Base &operator= (const ACE_Task_Base &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Task_Base (const ACE_Task_Base &));
 };
 
 #if defined (__ACE_INLINE__)

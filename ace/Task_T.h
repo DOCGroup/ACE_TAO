@@ -120,6 +120,12 @@ public: // Should be protected:
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
+
+private:
+
+  // = Disallow these operations.
+  ACE_UNIMPLEMENTED_FUNC (ACE_Task &operator= (const ACE_Task<ACE_SYNCH_USE> &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Task (const ACE_Task<ACE_SYNCH_USE> &));
 };
 
 #if defined (__ACE_INLINE__)
