@@ -53,8 +53,8 @@ main (int argc, char** argv)
       ACE_DEBUG ((LM_DEBUG, "Running the Offer Importer tests.\n"));
       TAO_Offer_Importer offer_importer (lookup_if.in ());
       
-      //      offer_importer.perform_queries (TAO_TRY_ENV);
-      //      TAO_CHECK_ENV;
+      offer_importer.perform_queries (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
       if (federated)
         {
