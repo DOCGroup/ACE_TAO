@@ -50,7 +50,7 @@ public class TimerQueueTest implements EventHandler
     
     int i;
     // Set a bunch of single timers
-    for (i=1; i < n; i++)
+    for (i=1; i <= n; i++)
       {
 	tq.scheduleTimer (th1,
 			   "A-timer-" + new Integer (i),
@@ -58,7 +58,7 @@ public class TimerQueueTest implements EventHandler
       }
 
     TimerQueueTest th2 = new TimerQueueTest ();
-    for (i=1; i < n; i++)
+    for (i=1; i <= n; i++)
       {
 	tq.scheduleTimer (th2,
 			  "B-timer-" + new Integer (i),
@@ -75,5 +75,6 @@ public class TimerQueueTest implements EventHandler
       {
       }
     tq.cancelTimer (id);
+    System.exit (0);
   }
 }
