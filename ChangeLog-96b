@@ -16,6 +16,10 @@ Tue Nov 26 21:06:13 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
  	  multiple ACE_Pipes in one process and hence create multiple
 	  Reactors also without any problems.
 
+	* tests/Pipe_Test.cpp: Added a ACE_Pipe test to check for the
+ 	  creation of multiple pipes in a process.  Also changed the
+	  relevant makefiles and scripts.
+
 Tue Nov 26 11:27:33 1996  David L. Levine  <levine@cs.wustl.edu>
 
 	* tests/{CPP_Test,Mutex_Test,Shared_Memory_MM_Test,SPIPE_Test}.cpp:
