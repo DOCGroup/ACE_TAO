@@ -1,5 +1,8 @@
 Sun Sep  6 15:49:46 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS: Added fputs() to ACE_OS.  I'm not sure why this was
+	  missing...
+
 	* ace/Makefile (FILES): Moved Priority_Reactor to earlier in
 	  the Makefile to maintain alphabetical order.
 
