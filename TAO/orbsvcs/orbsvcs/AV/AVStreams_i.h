@@ -155,8 +155,8 @@ class TAO_ORBSVCS_Export TAO_Base_StreamEndPoint
 //    is used to control the stream. It should be subclassed
 //    by applications that want to provide more control features.
 {
-
 public:
+  virtual ~TAO_Base_StreamEndPoint (void);
 
   virtual int handle_open (void) = 0;
   // called when streamendpoint is instantiated
