@@ -1,3 +1,19 @@
+Thu Apr  4 11:52:45 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* ace/SOCK_Dgram.cpp:
+	  Add support for anonymous PF_LOCAL/SOCK_DGRAM (aka
+	  PF_UNIX/SOCK_DGRAM) sockets.  As the class stood before these
+	  changes it was impossible to create such sockets, forcing people
+	  to choose a binding address even for sockets that are used only
+	  to send messages.  For PF_INET this is not a big deal, because
+	  the OS (or ACE::bind_port) can choose a port for the
+	  application.  But there is no such luck for PF_LOCAL sockets,
+	  where the application has to choose a filename for the socket,
+	  functions like ACE_OS::tempnam() or ACE_OS::mktemp() are more
+	  trouble than they are worth, as they open a security can of
+	  worms.
+	  This fixes bug 1179.
+
 Thu Apr  4 10:30:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/RMCast:

@@ -101,15 +101,14 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
   ACE_TRACE ("ACE_SOCK_Dgram::shared_open");
   int error = 0;
 
-  if (local == ACE_Addr::sap_any
-      && (protocol_family == PF_INET
-#if defined (ACE_HAS_IPV6)
-          || protocol_family == PF_INET6
-#endif /* ACE_HAS_IPV6 */
-          ))
+  if (local == ACE_Addr::sap_any)
     {
-      if (ACE::bind_port (this->get_handle ()) == -1)
-        error = 1;
+      if (protocol_family == PF_INET
+          || protocol_family == PF_INET6)
+        {
+          if (ACE::bind_port (this->get_handle ()) == -1)
+            error = 1;
+        }
     }
   else if (ACE_OS::bind (this->get_handle (),
                          ACE_reinterpret_cast (sockaddr *,
@@ -484,7 +483,7 @@ ACE_SOCK_Dgram::set_nic (const char *option_value)
     htonl (interface_addr.get_ip_address ());
 #else
   ifreq if_address;
-  
+
 #if defined (ACE_PSOS)
   // Look up the interface by number, not name.
   if_address.ifr_ifno = ACE_OS::atoi (option_value);
