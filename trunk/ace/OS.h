@@ -22,12 +22,6 @@
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).
 # include "ace/inc_user_config.h"
 
-#if defined (ACE_LACKS_FLOATING_POINT)
-typedef ACE_UINT32 ACE_timer_t;
-#else
-typedef double ACE_timer_t;
-#endif /* ACE_LACKS_FLOATING_POINT */
-
 # if defined (ACE_HAS_MOSTLY_UNICODE_APIS) && !defined (UNICODE)
 #   error UNICODE must be defined when using ACE_HAS_MOSTLY_UNICODE_APIS, check your compiler document on how to enable UNICODE.
 # endif /* ACE_HAS_MOSTLY_UNICODE_APIS && !UNICODE */
@@ -4077,6 +4071,12 @@ private:
   // Friend declaration to avoid compiler warning:  only defines a private
   // destructor and has no friends.
 };
+
+#if defined (ACE_LACKS_FLOATING_POINT)
+typedef ACE_UINT32 ACE_timer_t;
+#else
+typedef double ACE_timer_t;
+#endif /* ACE_LACKS_FLOATING_POINT */
 
 #if defined (ACE_HAS_PRUSAGE_T)
     typedef prusage_t ACE_Rusage;
