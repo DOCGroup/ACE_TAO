@@ -1,3 +1,9 @@
+Tue Jun 16 16:52:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/Event_Service/Makefile: 
+	* orbsvcs/tests/Event_Latency/Makefile: 
+	  Updated dependencies.
+
 1998-06-16  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
         * orbsvcs/tests/Concurrency/Makefile, CC_command.tab.cpp
