@@ -1,9 +1,9 @@
 // $Id$
 
-#ifndef ACE_SHARED_HASH_MAP_T_C
-#define ACE_SHARED_HASH_MAP_T_C
+#ifndef ACE_SHARED_HASH_MAP_T_CPP
+#define ACE_SHARED_HASH_MAP_T_CPP
 
-#include "Shared_Hash_Map.h"
+#include "Shared_Hash_Map_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -67,4 +67,4 @@ ACE_Shared_Hash_Map<EXT_ID, INT_ID>::find (const EXT_ID &ext_id,
   return this->find_i (ext_id, int_id);
 }
 
-#endif /* ACE_SHARED_HASH_MAP_T_C */
+#endif /* ACE_SHARED_HASH_MAP_T_CPP */
