@@ -60,8 +60,8 @@ main (int argc, LPTSTR [], LPTSTR envp[])
       status = options.setenv (envp);
       ACE_ASSERT (status == 0);
 
-      options.command_line (ACE_TEXT ("." ACE_DIRECTORY_SEPARATOR_STR
-                                      "Env_Value_Test run_as_test"));
+      options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
+                            ACE_TEXT ("Env_Value_Test run_as_test"));
 
       status = options.setenv (ACE_TEXT ("TEST_VALUE_POSITIVE"),
                                ACE_TEXT ("%s"),

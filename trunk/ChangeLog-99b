@@ -1,3 +1,29 @@
+Thu Apr 22 19:30:01 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Synch_T.h (class ACE_Reverse_Lock): Added an interesting
+	  adapter class that changes a lock into a reverse lock, i.e.,
+	  acquire() on this class calls release() on the lock, and
+	  release() on this class calls acquire() on the lock.
+
+	  One motivation for this class is when we temporarily want to
+	  release a lock (which we have already acquired) but then
+	  reaquire it soon after.  An alternative design would be to add a
+	  Anti_Guard or Reverse_Guard class which would release() on
+	  construction and acquire() destruction.  However, there are
+	  *many* varieties of the Guard class and this design choice would
+	  lead to at least 6 new classes.  One new ACE_Reverse_Lock class
+	  seemed more reasonable.
+
+	* tests/Reverse_Lock_Test.cpp: Test for the new ACE_Reverse_Lock
+	  class.
+
+	* tests/Env_Value_Test.cpp (main): Fixed UNICODE string
+	  concatination problem.
+
+	* tests/version_tests: Added a bunch of missing project files.
+
+	* ace/ace_lib.dsp: Added missing files.
+
 Thu Apr 22 19:10:52 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/ATM_Addr.cpp: Put in class's consts for non-FORE platforms.

@@ -125,6 +125,8 @@ run MT_SOCK_Test                        # uses Thread_Manager, Acceptor/Connecto
 
 run Recursive_Mutex_Test                # uses Service_Config, Recursive_Thread_Mutex
 
+run Reverse_Lock_Test                   # uses ACE_Reverse_Lock
+
 #Time_Service_Test: uses fork
 #run Time_Service_Test                   # uses libnetsvcs
 

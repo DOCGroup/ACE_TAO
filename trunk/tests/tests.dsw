@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "ACE_Init_Test"=".\ACE_Init_Test.dsp" - Package Owner=<4>
+Project: "ACE_Init_Test"=.\ACE_Init_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Atomic_Op_Test"=".\Atomic_Op_Test.dsp" - Package Owner=<4>
+Project: "Atomic_Op_Test"=.\Atomic_Op_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -27,7 +27,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Barrier_Test"=".\Barrier_Test.dsp" - Package Owner=<4>
+Project: "Barrier_Test"=.\Barrier_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -39,7 +39,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Basic_Types_Test"=".\Basic_Types_Test.dsp" - Package Owner=<4>
+Project: "Basic_Types_Test"=.\Basic_Types_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -51,7 +51,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Buffer_Stream_Test"=".\Buffer_Stream_Test.dsp" - Package Owner=<4>
+Project: "Buffer_Stream_Test"=.\Buffer_Stream_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -63,7 +63,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CDR_Test"=".\CDR_Test.dsp" - Package Owner=<4>
+Project: "CDR_Test"=.\CDR_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -75,7 +75,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Collection_Test"=".\Collection_Test.dsp" - Package Owner=<4>
+Project: "Collection_Test"=.\Collection_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -87,7 +87,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Conn_Test"=".\Conn_Test.dsp" - Package Owner=<4>
+Project: "Conn_Test"=.\Conn_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -99,7 +99,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DLL_Test"=".\DLL_Test.dsp" - Package Owner=<4>
+Project: "DLL_Test"=.\DLL_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -111,7 +111,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DLList_Test"=".\DLList_Test.dsp" - Package Owner=<4>
+Project: "DLList_Test"=.\DLList_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -123,7 +123,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Dynamic_Priority_Test"=".\Dynamic_Priority_Test.dsp" - Package Owner=<4>
+Project: "Dynamic_Priority_Test"=.\Dynamic_Priority_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -135,7 +135,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Enum_Interfaces_Test"=".\Enum_Interfaces_Test.dsp" - Package Owner=<4>
+Project: "Enum_Interfaces_Test"=.\Enum_Interfaces_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -147,7 +147,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Env_Value_Test"=".\Env_Value_Test.dsp" - Package Owner=<4>
+Project: "Env_Value_Test"=.\Env_Value_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -159,7 +159,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Future_Test"=".\Future_Test.dsp" - Package Owner=<4>
+Project: "Future_Test"=.\Future_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -171,7 +171,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Handle_Set_Test"=".\Handle_Set_Test.dsp" - Package Owner=<4>
+Project: "Handle_Set_Test"=.\Handle_Set_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -183,7 +183,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Hash_Map_Manager_Test"=".\Hash_Map_Manager_Test.dsp" - Package Owner=<4>
+Project: "Hash_Map_Manager_Test"=.\Hash_Map_Manager_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -195,7 +195,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "High_Res_Timer_Test"=".\High_Res_Timer_Test.dsp" - Package Owner=<4>
+Project: "High_Res_Timer_Test"=.\High_Res_Timer_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -207,7 +207,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "IOStream_Test"=".\IOStream_Test.dsp" - Package Owner=<4>
+Project: "IOStream_Test"=.\IOStream_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -219,7 +219,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "MM_Shared_Memory_Test"=".\MM_Shared_Memory_Test.dsp" - Package Owner=<4>
+Project: "MM_Shared_Memory_Test"=.\MM_Shared_Memory_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -231,7 +231,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "MT_Reactor_Timer_Test"=".\MT_Reactor_Timer_Test.dsp" - Package Owner=<4>
+Project: "MT_Reactor_Timer_Test"=.\MT_Reactor_Timer_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -243,7 +243,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "MT_SOCK_Test"=".\MT_SOCK_Test.dsp" - Package Owner=<4>
+Project: "MT_SOCK_Test"=.\MT_SOCK_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -255,7 +255,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Map_Manager_Test"=".\Map_Manager_Test.dsp" - Package Owner=<4>
+Project: "Map_Manager_Test"=.\Map_Manager_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -267,7 +267,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Map_Test"=".\Map_Test.dsp" - Package Owner=<4>
+Project: "Map_Test"=.\Map_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -279,7 +279,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Mem_Map_Test"=".\Mem_Map_Test.dsp" - Package Owner=<4>
+Project: "Mem_Map_Test"=.\Mem_Map_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -291,7 +291,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Message_Block_Test"=".\Message_Block_Test.dsp" - Package Owner=<4>
+Project: "Message_Block_Test"=.\Message_Block_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -303,7 +303,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Message_Queue_Notifications_Test"=".\Message_Queue_Notifications_Test.dsp" - Package Owner=<4>
+Project: "Message_Queue_Notifications_Test"=.\Message_Queue_Notifications_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -315,7 +315,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Message_Queue_Test"=".\Message_Queue_Test.dsp" - Package Owner=<4>
+Project: "Message_Queue_Test"=.\Message_Queue_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -327,7 +327,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Naming_Test"=".\Naming_Test.dsp" - Package Owner=<4>
+Project: "Naming_Test"=.\Naming_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -339,7 +339,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "New_Fail_Test"=".\New_Fail_Test.dsp" - Package Owner=<4>
+Project: "New_Fail_Test"=.\New_Fail_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -351,7 +351,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Notify_Performance_Test"=".\Notify_Performance_Test.dsp" - Package Owner=<4>
+Project: "Notify_Performance_Test"=.\Notify_Performance_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -363,7 +363,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "OrdMultiSet_Test"=".\OrdMultiSet_Test.dsp" - Package Owner=<4>
+Project: "OrdMultiSet_Test"=.\OrdMultiSet_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -375,7 +375,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Pipe_Test"=".\Pipe_Test.dsp" - Package Owner=<4>
+Project: "Pipe_Test"=.\Pipe_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -387,7 +387,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Priority_Buffer_Test"=".\Priority_Buffer_Test.dsp" - Package Owner=<4>
+Project: "Priority_Buffer_Test"=.\Priority_Buffer_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -399,7 +399,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Priority_Reactor_Test"=".\Priority_Reactor_Test.dsp" - Package Owner=<4>
+Project: "Priority_Reactor_Test"=.\Priority_Reactor_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -411,7 +411,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Priority_Task_Test"=".\Priority_Task_Test.dsp" - Package Owner=<4>
+Project: "Priority_Task_Test"=.\Priority_Task_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -423,7 +423,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Process_Mutex_Test"=".\Process_Mutex_Test.dsp" - Package Owner=<4>
+Project: "Process_Mutex_Test"=.\Process_Mutex_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -435,7 +435,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Process_Strategy_Test"=".\Process_Strategy_Test.dsp" - Package Owner=<4>
+Project: "Process_Strategy_Test"=.\Process_Strategy_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -447,7 +447,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RB_Tree_Test"=".\RB_Tree_Test.dsp" - Package Owner=<4>
+Project: "RB_Tree_Test"=.\RB_Tree_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -459,7 +459,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Reactor_Exceptions_Test"=".\Reactor_Exceptions_Test.dsp" - Package Owner=<4>
+Project: "Reactor_Exceptions_Test"=.\Reactor_Exceptions_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -471,7 +471,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Reactor_Notify_Test"=".\Reactor_Notify_Test.dsp" - Package Owner=<4>
+Project: "Reactor_Notify_Test"=.\Reactor_Notify_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -483,7 +483,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Reactor_Performance_Test"=".\Reactor_Performance_Test.dsp" - Package Owner=<4>
+Project: "Reactor_Performance_Test"=.\Reactor_Performance_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -495,7 +495,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Reactor_Timer_Test"=".\Reactor_Timer_Test.dsp" - Package Owner=<4>
+Project: "Reactor_Timer_Test"=.\Reactor_Timer_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -507,7 +507,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Reactors_Test"=".\Reactors_Test.dsp" - Package Owner=<4>
+Project: "Reactors_Test"=.\Reactors_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -519,7 +519,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Reader_Writer_Test"=".\Reader_Writer_Test.dsp" - Package Owner=<4>
+Project: "Reader_Writer_Test"=.\Reader_Writer_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -531,7 +531,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Recursive_Mutex_Test"=".\Recursive_Mutex_Test.dsp" - Package Owner=<4>
+Project: "Recursive_Mutex_Test"=.\Recursive_Mutex_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -543,7 +543,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "SOCK_Connector_Test"=".\SOCK_Connector_Test.dsp" - Package Owner=<4>
+Project: "Reverse_Lock_Test"=.\Reverse_Lock_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -555,7 +555,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "SOCK_Test"=".\SOCK_Test.dsp" - Package Owner=<4>
+Project: "SOCK_Connector_Test"=.\SOCK_Connector_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -567,7 +567,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "SPIPE_Test"=".\SPIPE_Test.dsp" - Package Owner=<4>
+Project: "SOCK_Test"=.\SOCK_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -579,7 +579,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "SString_Test"=".\SString_Test.dsp" - Package Owner=<4>
+Project: "SPIPE_Test"=.\SPIPE_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -591,7 +591,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "SV_Shared_Memory_Test"=".\SV_Shared_Memory_Test.dsp" - Package Owner=<4>
+Project: "SString_Test"=.\SString_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -603,7 +603,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Semaphore_Test"=".\Semaphore_Test.dsp" - Package Owner=<4>
+Project: "SV_Shared_Memory_Test"=.\SV_Shared_Memory_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -615,7 +615,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Service_Config_Test"=".\Service_Config_Test.dsp" - Package Owner=<4>
+Project: "Semaphore_Test"=.\Semaphore_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -627,7 +627,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Sigset_Ops_Test"=".\Sigset_Ops_Test.dsp" - Package Owner=<4>
+Project: "Service_Config_Test"=.\Service_Config_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -639,7 +639,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Simple_Message_Block_Test"=".\Simple_Message_Block_Test.dsp" - Package Owner=<4>
+Project: "Sigset_Ops_Test"=.\Sigset_Ops_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -651,7 +651,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "TSS_Test"=".\TSS_Test.dsp" - Package Owner=<4>
+Project: "Simple_Message_Block_Test"=.\Simple_Message_Block_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -663,7 +663,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Task_Test"=".\Task_Test.dsp" - Package Owner=<4>
+Project: "TSS_Test"=.\TSS_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -675,7 +675,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Thread_Manager_Test"=".\Thread_Manager_Test.dsp" - Package Owner=<4>
+Project: "Task_Test"=.\Task_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -687,7 +687,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Thread_Mutex_Test"=".\Thread_Mutex_Test.dsp" - Package Owner=<4>
+Project: "Thread_Manager_Test"=.\Thread_Manager_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -699,7 +699,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Thread_Pool_Reactor_Test"=".\Thread_Pool_Reactor_Test.dsp" - Package Owner=<4>
+Project: "Thread_Mutex_Test"=.\Thread_Mutex_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -711,7 +711,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Thread_Pool_Test"=".\Thread_Pool_Test.dsp" - Package Owner=<4>
+Project: "Thread_Pool_Reactor_Test"=.\Thread_Pool_Reactor_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -723,7 +723,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Time_Service_Test"=".\Time_Service_Test.dsp" - Package Owner=<4>
+Project: "Thread_Pool_Test"=.\Thread_Pool_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -735,7 +735,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Time_Value_Test"=".\Time_Value_Test.dsp" - Package Owner=<4>
+Project: "Time_Service_Test"=.\Time_Service_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -747,7 +747,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Timeprobe_Test"=".\Timeprobe_Test.dsp" - Package Owner=<4>
+Project: "Time_Value_Test"=.\Time_Value_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -759,7 +759,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Timer_Queue_Test"=".\Timer_Queue_Test.dsp" - Package Owner=<4>
+Project: "Timeprobe_Test"=.\Timeprobe_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -771,7 +771,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Tokens_Test"=".\Tokens_Test.dsp" - Package Owner=<4>
+Project: "Timer_Queue_Test"=.\Timer_Queue_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -783,7 +783,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "UPIPE_SAP_Test"=".\UPIPE_SAP_Test.dsp" - Package Owner=<4>
+Project: "Tokens_Test"=.\Tokens_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -795,7 +795,19 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Upgradable_RW_Test"=".\Upgradable_RW_Test.dsp" - Package Owner=<4>
+Project: "UPIPE_SAP_Test"=.\UPIPE_SAP_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Upgradable_RW_Test"=.\Upgradable_RW_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

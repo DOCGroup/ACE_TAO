@@ -1113,6 +1113,29 @@ DEP_CPP_BASIC=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\CDR_Stream.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Containers.cpp
 
 !IF  "$(CFG)" == "ACE static library - Win32 Debug"
@@ -2900,6 +2923,29 @@ DEP_CPP_FILEC=\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Functor.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
 
@@ -5025,6 +5071,29 @@ DEP_CPP_METHO=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\Msg_WFMO_Reactor.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Multiplexor.cpp
 
 !IF  "$(CFG)" == "ACE static library - Win32 Debug"
@@ -6955,6 +7024,29 @@ DEP_CPP_PROFI=\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\RB_Tree.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
 
@@ -15998,6 +16090,31 @@ SOURCE=.\Free_List.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Functor_T.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Hash_Map_Manager_T.cpp
 
 !IF  "$(CFG)" == "ACE static library - Win32 Debug"
@@ -16041,6 +16158,31 @@ SOURCE=.\Local_Name_Space_T.cpp
 SOURCE=.\Malloc_T.cpp
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Managed_Object.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 

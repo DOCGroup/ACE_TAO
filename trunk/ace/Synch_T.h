@@ -96,6 +96,76 @@ private:
   // the lock
 };
 
+template <class ACE_LOCKING_MECHANISM>
+class ACE_Reverse_Lock : public ACE_Lock
+{
+  // = TITLE
+  //     A reverse (or anti) lock.
+  //
+  // = DESCRIPTION
+  //     This is an interesting adapter class that changes a lock into
+  //     a reverse lock, i.e., acquire() on this class calls release()
+  //     on the lock, and release() on this class calls acquire() on
+  //     the lock.
+  //
+  //  	 One motivation for this class is when we temporarily want to
+  //  	 release a lock (which we have already acquired) but then
+  //  	 reaquire it soon after.  An alternative design would be to
+  //  	 add a Anti_Guard or Reverse_Guard class which would release()
+  //  	 on construction and acquire() destruction.  However, there
+  //  	 are *many* varieties of the Guard class and this design
+  //  	 choice would lead to at least 6 new classes.  One new
+  //  	 ACE_Reverse_Lock class seemed more reasonable.
+public:
+  typedef ACE_LOCKING_MECHANISM ACE_LOCK;
+
+  // = Initialization/Finalization methods.
+
+  ACE_Reverse_Lock (ACE_LOCKING_MECHANISM &lock);
+  // Constructor. All locking requests will be forwarded to <lock>.
+
+  ACE_Reverse_Lock (void);
+  // Constructor. Since no lock is provided by the user, one will be
+  // created internally.
+
+  virtual ~ACE_Reverse_Lock (void);
+  // Destructor. If <lock_> was not passed in by the user, it will be
+  // deleted.
+
+  // = Lock accessors.
+  virtual int acquire (void);
+  // Release the lock.
+
+  virtual int tryacquire (void);
+  // Release the lock.
+
+  virtual int release (void);
+  // Acquire the lock.
+
+  virtual int acquire_read (void);
+  // Release the lock.
+
+  virtual int acquire_write (void);
+  // Release the lock.
+
+  virtual int tryacquire_read (void);
+  // Release the lock.
+
+  virtual int tryacquire_write (void);
+  // Release the lock.
+
+  virtual int remove (void);
+  // Explicitly destroy the lock.
+
+private:
+  ACE_LOCKING_MECHANISM *lock_;
+  // The concrete locking mechanism that all the methods delegate to.
+
+  int delete_lock_;
+  // This flag keep track of whether we are responsible for deleting
+  // the lock
+};
+
 template <class ACE_LOCK, class TYPE>
 class ACE_Test_and_Set : public ACE_Event_Handler
 {
@@ -639,6 +709,299 @@ class ACE_TSS_Read_Guard : public ACE_TSS_Guard<ACE_LOCK>
 public:
   // = Initialization method.
   ACE_TSS_Read_Guard (ACE_LOCK &lock, int block = 1);
+  // Implicitly and automatically acquire the thread-specific read lock.
+
+  // = Lock accessors.
+  int acquire_read (void);
+  // Explicitly acquire the thread-specific read lock.
+
+  int acquire (void);
+  // Explicitly acquire the thread-specific read lock.
+
+  int tryacquire_read (void);
+  // Conditionally acquire the thread-specific read lock (i.e., won't
+  // block).
+
+  int tryacquire (void);
+  // Conditionally acquire the thread-specific read lock (i.e., won't
+  // block).
+
+  // = Utility methods.
+  void dump (void) const;
+  // Dump the state of an object.
+
+  // ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+};
+#endif /* !(defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))) */
+
+template <class ACE_LOCK>
+class ACE_Anti_Guard
+{
+  // = TITLE
+  //     This data structure is meant to be used within a method or
+  //     function...  It performs automatic acquisition and release of
+  //     a parameterized synchronization object <ACE_LOCK>. It has the
+  //     reverse functionality of an ACE_Guard, i.e., it releases upon
+  //     construction and acquires upon destruction.
+  //
+  // = DESCRIPTION
+  //     The <ACE_LOCK> class given as an actual parameter must
+  //     provide at the very least the <acquire>, <tryacquire>,
+  //     <release>, and <remove> methods.
+public:
+
+  // = Initialization and termination methods.
+  ACE_Anti_Guard (ACE_LOCK &l);
+  // Implicitly and automatically release the lock.
+
+  ~ACE_Anti_Guard (void);
+  // Implicitly acquire the lock.
+
+  // = Lock accessors.
+
+  int acquire (void);
+  // Explicitly acquire the lock.
+
+  int tryacquire (void);
+  // Conditionally acquire the lock (i.e., won't block).
+
+  int release (void);
+  // Explicitly release the lock, but only if it is held!
+
+  // = Utility methods.
+  int locked (void);
+  // 1 if locked, 0 if couldn't acquire the lock
+  // (errno will contain the reason for this).
+
+  int remove (void);
+  // Explicitly remove the lock.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  // ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+protected:
+
+  ACE_LOCK &lock_;
+  // Reference to the ACE_LOCK we're anti-guarding.
+
+  int owner_;
+  // Keeps track of whether we released the lock or failed.
+
+private:
+  // = Prevent assignment and initialization.
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Anti_Guard<ACE_LOCK> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Anti_Guard (const ACE_Anti_Guard<ACE_LOCK> &))
+};
+
+template <class ACE_LOCK>
+class ACE_Write_Anti_Guard : public ACE_Anti_Guard<ACE_LOCK>
+{
+  // = TITLE
+  //     This class is similar to class <ACE_Anti_Guard>, though it
+  //     acquires/releases a write lock automatically (naturally, the
+  //     <ACE_LOCK> it is instantiated with must support the
+  //     appropriate API).
+public:
+  // = Initialization method.
+
+  ACE_Write_Anti_Guard (ACE_LOCK &m): ACE_Anti_Guard<ACE_LOCK> (m)
+    {
+    }
+  // Implicitly and automatically acquire a write lock.
+
+  ~ACE_Write_Anti_Guard (void)
+    {
+      this->acquire_write ();
+    }
+  // Implicitly and automatically acquires a write lock.
+
+  // = Lock accessors.
+
+  int acquire_write (void) { return this->lock_.acquire_write (); }
+  // Explicitly acquire the write lock.
+
+  int acquire (void) { return this->lock_.acquire_write (); }
+  // Explicitly acquire the write lock.
+
+  int tryacquire_write (void) { return this->lock_.tryacquire_write (); }
+  // Conditionally acquire the write lock (i.e., won't block).
+
+  int tryacquire (void) { return this->lock_->tryacquire_write (); }
+  // Conditionally acquire the write lock (i.e., won't block).
+
+  // Utility methods.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  // ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+};
+
+template <class ACE_LOCK>
+class ACE_Read_Anti_Guard : public ACE_Anti_Guard<ACE_LOCK>
+{
+  // = TITLE
+  //     This class is similar to class <ACE_Anti_Guard>, though it
+  //     acquires/releases a read lock automatically (naturally, the
+  //     <ACE_LOCK> it is instantiated with must support the appropriate
+  //     API).
+public:
+  // = Initialization methods.
+
+  ACE_Read_Anti_Guard (ACE_LOCK& m): ACE_Anti_Guard<ACE_LOCK> (m)
+    {
+    }
+
+  ~ACE_Read_Anti_Guard (void)
+    {
+      this->acquire_read ();
+    }
+  // Implicitly and automatically acquires a read lock.
+
+  // = Lock accessors.
+
+  int acquire_read (void) { return this->lock_->acquire_read (); }
+  // Explicitly acquire the read lock.
+
+  int acquire (void) { return this->lock_->acquire_read (); }
+  // Explicitly acquire the read lock.
+
+  int tryacquire_read (void) { return this->lock_->tryacquire_read (); }
+  // Conditionally acquire the read lock (i.e., won't block).
+
+  int tryacquire (void) { return this->lock_->tryacquire_read (); }
+  // Conditionally acquire the read lock (i.e., won't block).
+
+  // = Utility methods.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  // ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+};
+
+#if !(defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
+
+#define ACE_TSS_Anti_Guard ACE_Anti_Guard
+#define ACE_TSS_Write_ANTI_GUARD ACE_Write_Anti_Guard
+#define ACE_TSS_Read_ANTI_GUARD ACE_Read_Anti_Guard
+
+#else
+ /* ACE platform supports some form of threading and
+  thread-specific storage. */
+
+template <class ACE_LOCK>
+class ACE_TSS_Anti_Guard
+{
+  // = TITLE
+  //     This data structure is meant to be used within a method or
+  //     function...  It performs automatic aquisition and release of
+  //     a synchronization object.  Moreover, it ensures that the lock
+  //     is released even if a thread exits via "thr_exit()"!
+public:
+  // = Initialization and termination methods.
+
+  ACE_TSS_Anti_Guard (ACE_LOCK &lock, int block = 1);
+  // Implicitly and automatically acquire the thread-specific lock.
+
+  ~ACE_TSS_Anti_Guard (void);
+  // Implicitly release the thread-specific lock.
+
+  // = Lock accessors.
+
+  int acquire (void);
+  // Explicitly acquire the thread-specific lock.
+
+  int tryacquire (void);
+  // Conditionally acquire the thread-specific lock (i.e., won't
+  // block).
+
+  int release (void);
+  // Explicitly release the thread-specific lock.
+
+  // = Utility methods.
+  int remove (void);
+  // Explicitly release the thread-specific lock.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  // ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+protected:
+  ACE_TSS_Anti_Guard (void);
+  // Helper, meant for subclass only.
+
+  void init_key (void);
+  // Initialize the key.
+
+  static void cleanup (void *ptr);
+  // Called when thread exits to clean up the lock.
+
+  ACE_thread_key_t key_;
+  // Thread-specific key...
+
+private:
+  // = Prevent assignment and initialization.
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_TSS_Anti_Guard<ACE_LOCK> &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_TSS_Anti_Guard (const ACE_TSS_Anti_Guard<ACE_LOCK> &))
+};
+
+template <class ACE_LOCK>
+class ACE_TSS_Write_Anti_Guard : public ACE_TSS_Anti_Guard<ACE_LOCK>
+{
+  // = TITLE
+  //     This class is similar to class ACE_TSS_Anti_Guard, though it
+  //     acquires/releases a write-lock automatically (naturally, the
+  //     ACE_LOCK it is instantiated with must support the appropriate
+  //     API).
+public:
+  // = Initialization method.
+
+  ACE_TSS_Write_Anti_Guard (ACE_LOCK &lock, int block = 1);
+  // Implicitly and automatically acquire the thread-specific write lock.
+
+  // = Lock accessors.
+
+  int acquire_write (void);
+  // Explicitly acquire the thread-specific write lock.
+
+  int acquire (void);
+  // Explicitly acquire the thread-specific write lock.
+
+  int tryacquire_write (void);
+  // Conditionally acquire the thread-specific write lock (i.e., won't block).
+
+  int tryacquire (void);
+  // Conditionally acquire the thread-specific write lock (i.e., won't block).
+
+  // = Utility methods.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  // ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+};
+
+template <class ACE_LOCK>
+class ACE_TSS_Read_Anti_Guard : public ACE_TSS_Anti_Guard<ACE_LOCK>
+{
+  // = TITLE
+  //     This class is similar to class <ACE_TSS_Anti_Guard>, though it
+  //     acquires/releases a read lock automatically (naturally, the
+  //     <ACE_LOCK> it is instantiated with must support the
+  //     appropriate API).
+public:
+  // = Initialization method.
+  ACE_TSS_Read_Anti_Guard (ACE_LOCK &lock, int block = 1);
   // Implicitly and automatically acquire the thread-specific read lock.
 
   // = Lock accessors.

@@ -175,6 +175,7 @@ run Buffer_Stream_Test                  # tests ACE_Service_Config, ACE_Stream (
 run Priority_Buffer_Test                # tests ACE_Service_Config, ACE_Message_Queue
 run Dynamic_Priority_Test               # tests ACE_ACE_Message_Queue, ACE_Dynamic_Message_Queue
 run Recursive_Mutex_Test                # tests ACE_Service_Config, ACE_Recursive_Thread_Mutex
+run Reverse_Lock_Test                   # tests ACE_Reverse_Lock
 
 # Time_Service_Test: UNICOS fails dlopen() - no shared libs on UNICOS
 if [ -f ../netsvcs/servers/main ]; then

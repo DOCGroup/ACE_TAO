@@ -3,7 +3,19 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "Atomic_Op_Test"=.\version_tests.dsp - Package Owner=<4>
+Project: "Ace_Init_Test"=.\ACE_Init_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Atomic_Op_Test"=.\Atomic_Op_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -51,7 +63,43 @@ Package=<4>
 
 ###############################################################################
 
+Project: "CDR_Test"=.\CDR_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Collection_Test"=.\Collection_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Conn_Test"=.\Conn_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "DLL_Test"=.\DLL_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -207,6 +255,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Map_Test"=.\Map_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Mem_Map_Test"=.\Mem_Map_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -255,7 +315,31 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Mt_Reactor_Timer_Test"=.\MT_Reactor_Timer_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Naming_Test"=.\Naming_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "New_Fail_Test"=.\New_Fail_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -448,6 +532,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Recursive_Mutex_Test"=.\Recursive_Mutex_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Reverse_Lock_Test"=.\Reverse_Lock_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
