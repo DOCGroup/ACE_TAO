@@ -198,5 +198,5 @@ main (int argc, char **argv)
                                           1, 1, 1);
   ACE_ASSERT (result == 0);
 
-  return 0;
+  return result;
 }

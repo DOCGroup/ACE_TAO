@@ -246,12 +246,14 @@ Echo_Server_Request_Interceptor::send_reply (
 void
 Echo_Server_Request_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr rinfo
-    TAO_ENV_ARG_DECL_NOT_USED)
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
+  TAO_ENV_ARG_DEFN;
+
   CORBA::String_var operation =
-    rinfo->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
+    rinfo->operation (ACE_TRY_ENV);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -261,12 +263,12 @@ Echo_Server_Request_Interceptor::send_exception (
 
 
   CORBA::Any_var any =
-    rinfo->sending_exception (TAO_ENV_SINGLE_ARG_PARAMETER);
+    rinfo->sending_exception (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::TypeCode_var type = any->type ();
 
-  const char *exception_id = type->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  const char *exception_id = type->id (ACE_TRY_ENV);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,

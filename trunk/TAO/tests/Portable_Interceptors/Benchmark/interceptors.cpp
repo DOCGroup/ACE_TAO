@@ -99,7 +99,7 @@ Vault_Client_Request_Interceptor::receive_reply (
 
 }
 
-void 
+void
 Vault_Client_Request_Interceptor::receive_other (
                PortableInterceptor::ClientRequestInfo_ptr
                TAO_ENV_ARG_DECL_NOT_USED
@@ -130,8 +130,9 @@ Vault_Client_Request_Interceptor::receive_exception (
   CORBA::String_var exception_id =
     rinfo->received_exception_id (ACE_TRY_ENV);
 
-  // Check for exception id mismatch
-  ACE_ASSERT (ACE_OS::strcmp (id, exception_id.in ()) == 0);
+  if (ACE_OS::strcmp (id, exception_id.in ()) != 0)
+    ACE_ERROR ((LM_ERROR, "Mismatched exception ids %s != %s\n",
+                id, exception_id.in ()));
 }
 
 
@@ -201,7 +202,7 @@ Vault_Server_Request_Interceptor::receive_request (
 
 }
 
-void 
+void
 Vault_Server_Request_Interceptor::receive_request_service_contexts (
              PortableInterceptor::ServerRequestInfo_ptr
              TAO_ENV_ARG_DECL_NOT_USED)
@@ -235,7 +236,7 @@ Vault_Server_Request_Interceptor::send_exception (
   // Do Nothing
 }
 
-void 
+void
 Vault_Server_Request_Interceptor::send_other (
              PortableInterceptor::ServerRequestInfo_ptr
              TAO_ENV_ARG_DECL_NOT_USED)
@@ -313,7 +314,7 @@ Vault_Client_Request_Context_Interceptor::send_request (
 
 }
 
-void 
+void
 Vault_Client_Request_Context_Interceptor::receive_other (
                PortableInterceptor::ClientRequestInfo_ptr
                TAO_ENV_ARG_DECL_NOT_USED
@@ -353,8 +354,9 @@ Vault_Client_Request_Context_Interceptor::receive_exception (
   CORBA::String_var exception_id =
     rinfo->received_exception_id (ACE_TRY_ENV);
 
-  // Check for exception id mismatch
-  ACE_ASSERT (ACE_OS::strcmp (id, exception_id.in ()) == 0);
+  if (ACE_OS::strcmp (id, exception_id.in ()) != 0)
+    ACE_ERROR ((LM_ERROR, "Mismatched exception ids %s != %s\n",
+                id, exception_id.in ()));
 }
 
 
@@ -437,7 +439,7 @@ Vault_Server_Request_Context_Interceptor::send_exception (
 {
 }
 
-void 
+void
 Vault_Server_Request_Context_Interceptor::send_other (
              PortableInterceptor::ServerRequestInfo_ptr
              TAO_ENV_ARG_DECL_NOT_USED)
@@ -537,7 +539,7 @@ Vault_Client_Request_Dynamic_Interceptor::receive_reply (
 
 }
 
-void 
+void
 Vault_Client_Request_Dynamic_Interceptor::receive_other (
                PortableInterceptor::ClientRequestInfo_ptr
                TAO_ENV_ARG_DECL_NOT_USED
@@ -568,8 +570,9 @@ Vault_Client_Request_Dynamic_Interceptor::receive_exception (
   CORBA::String_var exception_id =
     rinfo->received_exception_id (ACE_TRY_ENV);
 
-  // Check for exception id mismatch
-  ACE_ASSERT (ACE_OS::strcmp (id, exception_id.in ()) == 0);
+  if (ACE_OS::strcmp (id, exception_id.in ()) != 0)
+    ACE_ERROR ((LM_ERROR, "Mismatched exception ids %s != %s\n",
+                id, exception_id.in ()));
 }
 
 
@@ -668,7 +671,7 @@ Vault_Server_Request_Dynamic_Interceptor::send_exception (
 {
 }
 
-void 
+void
 Vault_Server_Request_Dynamic_Interceptor::send_other (
              PortableInterceptor::ServerRequestInfo_ptr
              TAO_ENV_ARG_DECL_NOT_USED)
@@ -730,7 +733,7 @@ Vault_Client_Request_NOOP_Interceptor::send_request (
 
 }
 
-void 
+void
 Vault_Client_Request_NOOP_Interceptor::receive_other (
                PortableInterceptor::ClientRequestInfo_ptr
                TAO_ENV_ARG_DECL_NOT_USED
@@ -770,8 +773,9 @@ Vault_Client_Request_NOOP_Interceptor::receive_exception (
   CORBA::String_var exception_id =
     rinfo->received_exception_id (ACE_TRY_ENV);
 
-  // Check for exception id mismatch
-  ACE_ASSERT (ACE_OS::strcmp (id, exception_id.in ()) == 0);
+  if (ACE_OS::strcmp (id, exception_id.in ()) != 0)
+    ACE_ERROR ((LM_ERROR, "Mismatched exception ids %s != %s\n",
+                id, exception_id.in ()));
 }
 
 
@@ -843,7 +847,7 @@ Vault_Server_Request_NOOP_Interceptor::send_exception (
 {
 }
 
-void 
+void
 Vault_Server_Request_NOOP_Interceptor::send_other (
              PortableInterceptor::ServerRequestInfo_ptr
              TAO_ENV_ARG_DECL_NOT_USED)
