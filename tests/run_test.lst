@@ -77,7 +77,7 @@ Message_Queue_Test: !chorus
 Message_Queue_Test_Ex: !chorus
 Multicast_Test: !ST
 Multihomed_INET_Addr_Test
-Naming_Test: OTHER !chorus !LynxOS !Unicos !VxWorks
+Naming_Test: !chorus !LynxOS !Unicos !VxWorks
 New_Fail_Test: ALL !DISABLED
 NonBlocking_Conn_Test
 Notify_Performance_Test
@@ -127,8 +127,8 @@ Task_Test
 Task_Ex_Test
 Thread_Manager_Test: !Unicos
 Thread_Mutex_Test: !chorus
-Thread_Pool_Reactor_Resume_Test: OTHER !ST
-Thread_Pool_Reactor_Test: OTHER
+Thread_Pool_Reactor_Resume_Test: !ST
+Thread_Pool_Reactor_Test
 Thread_Pool_Test: !LynxOS !VxWorks
 Time_Service_Test: ALL !STATIC !DISABLED !missing_netsvcs TOKEN !chorus !Unicos
 Time_Value_Test
