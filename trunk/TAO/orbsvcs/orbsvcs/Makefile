@@ -177,7 +177,7 @@ ifneq (,$(findstring Event2,$(TAO_ORBSVCS)))
 	Event/EC_Per_Supplier_Filter \
 	Event/EC_Timeout_Filter \
 	Event/EC_Timeout_Generator \
-	Event/EC_Reactive_Timeout_Generator \
+	Event/EC_Reactive_Timeout_Generator
 endif # Event2
 
 ifneq (,$(findstring CosEvent,$(TAO_ORBSVCS)))
