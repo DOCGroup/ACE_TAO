@@ -1,3 +1,27 @@
+Wed Oct 29 22:55:15 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/config-vxworks5.x-g++.h:
+	* ace/config-unixware-2.1.2-g++.h:
+	* ace/config-unixware-2.01-g++.h:
+	* ace/config-sunos5.5-g++.h:
+	* ace/config-sunos5.4-g++.h:
+	* ace/config-sunos4-g++.h:
+	* ace/config-osf1-4.0.h:
+	* ace/config-osf1-4.0-g++.h:
+	* ace/config-linux.h:
+	* ace/config-linux-pthread.h:
+	* ace/config-linux-lxpthreads.h:
+	* ace/config-irix6.x-g++.h:
+	* ace/config-irix5.3-g++.h:
+	* ace/config-hpux-10.x-g++.h:
+	* ace/config-gcc-2.7.2.h:
+	* ace/config-freebsd.h:
+	* ace/config-freebsd-pthread.h:
+	* ace/config-chorus.h:
+	* ace/config-aix-4.1.x.h:
+	* ace/README: Removed ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR.
+	  It is no longer in use.
+
 Wed Oct 29 21:12:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/README: Added a new macro called ACE_LACKS_SOCKET_BUFSIZ,
