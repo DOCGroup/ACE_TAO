@@ -1,4 +1,7 @@
-#ifndef _AST_NATIVE_H_
+// This may look like C, but it's really -*- C++ -*-
+// $Id$
+
+#if !defined (_AST_NATIVE_H_)
 #define _AST_NATIVE_H_
 
 // Representation of "native" IDL type added by the POA spec

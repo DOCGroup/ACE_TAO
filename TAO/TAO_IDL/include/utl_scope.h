@@ -1,3 +1,5 @@
+// This may look like C, but it's really -*- C++ -*-
+// $Id$
 /*
 
 COPYRIGHT
@@ -228,7 +230,7 @@ private:
   friend class			UTL_ScopeActiveIterator;
 
 private:
-  friend int yyparse();
+  friend int tao_yyparse();
   friend class AST_Enum;
 
   // Scope Management Protocol

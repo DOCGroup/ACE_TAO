@@ -63,8 +63,11 @@ LFLAGS	= -t
 y.tab.h y.tab.cpp: idl.yy
 	@-$(RM) -f $@
 	$(YACC) $(YFLAGS) idl.yy
-	sed -e "s/yy/tao_yy/g" \
+	@sed -e "s/yy/tao_yy/g" \
 	    -e "s/YY/TAO_YY/g" < y.tab.c > y.tab.cpp
+	@sed -e "s/yy/tao_yy/g" \
+	    -e "s/YY/TAO_YY/g" < y.tab.h > /tmp/$@
+	@mv /tmp/$@ y.tab.h
 	@patch < y.tab.cpp.diff
 	@-$(RM) -f y.tab.cpp.orig y.tab.c 
 
