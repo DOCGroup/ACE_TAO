@@ -1,3 +1,11 @@
+Wed Aug 04 21:16:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* version_tests.dsw:
+	* orbsvcs/tests/Event/Event.dsw:
+	* orbsvcs/tests/Event/Basic/Basic.dsw:
+	* orbsvcs/tests/Event/Basic/Timeout.dsp:
+	  Added the new test to the NT project files.
+
 Wed Aug  4 20:35:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:

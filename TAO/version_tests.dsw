@@ -189,7 +189,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Cached_Conn_Test"=..\tests\Cached_Conn_Test.dsp - Package Owner=<4>
+Project: "Cached_Accept_Conn_Test"=..\tests\Cached_Accept_Conn_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -204,7 +204,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Cached_Accept_Conn_Test"=..\tests\Cached_Accept_Conn_Test.dsp - Package Owner=<4>
+Project: "Cached_Conn_Test"=..\tests\Cached_Conn_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -708,7 +708,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Hash_Map_Manager_Test"=..\tests\Hash_Map_Manager_Test.dsp - Package Owner=<4>
+Project: "Hash_Map_Bucket_Iterator_Test"=..\tests\Hash_Map_Bucket_Iterator_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -723,7 +723,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Hash_Map_Bucket_Iterator_Test"=..\tests\Hash_Map_Bucket_Iterator_Test.dsp - Package Owner=<4>
+Project: "Hash_Map_Manager_Test"=..\tests\Hash_Map_Manager_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -790,24 +790,6 @@ Package=<4>
 ###############################################################################
 
 Project: "IDL_Cubit Server"=".\performance-tests\Cubit\TAO\IDL_Cubit\server.dsp" - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "idl_test"=".\tests\IDL_Test\idl_test.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1275,42 +1257,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Nested Upcall Simple Client"=.\tests\NestedUpcall\Simple\client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Nested Upcall Simple Server"=.\tests\NestedUpcall\Simple\server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "Nested Upcall MT_Client Client"=.\tests\NestedUpcall\MT_Client_Test\client.dsp - Package Owner=<4>
 
 Package=<5>
@@ -1330,6 +1276,42 @@ Package=<4>
 ###############################################################################
 
 Project: "Nested Upcall MT_Client Server"=.\tests\NestedUpcall\MT_Client_Test\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Nested Upcall Simple Client"=.\tests\NestedUpcall\Simple\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Nested Upcall Simple Server"=.\tests\NestedUpcall\Simple\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -2970,6 +2952,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Timeout"=.\orbsvcs\tests\Event\Basic\Timeout.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Timeout Client"=.\tests\Timeout\client.dsp - Package Owner=<4>
 
 Package=<5>
@@ -3126,6 +3120,24 @@ Package=<4>
 
 ###############################################################################
 
+Project: "idl_test"=.\tests\IDL_Test\idl_test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Global:
 
 Package=<5>
@@ -3137,3 +3149,4 @@ Package=<3>
 }}}
 
 ###############################################################################
+
