@@ -1,3 +1,8 @@
+Fri Nov 10 10:14:04 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Connection_Cache_Manager.cpp:
+          Protect naked debug message with a if(TAO_debug_level > 0)
+
 Fri Nov 10 10:12:29 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tao/Strategies/TAO_Strategies.dsp:
@@ -6,15 +11,15 @@ Fri Nov 10 10:12:29 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Nov 10 08:59:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao_idl/be/be_visitor_argument/request_info_sh.cpp:
+        * tao_idl/be/be_visitor_argument/request_info_sh.cpp:
 
-	  In request info class generation, changed the generation
-	  of a private member which is a valuetype from '*&' to
-	  '*' for an IN argument, to match the generation of the
-	  valuetype in the class constructor arglist. This 
-	  discrepancy caused BCB builds to fail in AMI_Test. Thanks
-	  to Johnny Willemsen <jwillemsen@remedy.nl> for pointing
-	  it out.
+          In request info class generation, changed the generation
+          of a private member which is a valuetype from '*&' to
+          '*' for an IN argument, to match the generation of the
+          valuetype in the class constructor arglist. This
+          discrepancy caused BCB builds to fail in AMI_Test. Thanks
+          to Johnny Willemsen <jwillemsen@remedy.nl> for pointing
+          it out.
 
 Fri Nov  10 09:20:58 2000 Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -28,6 +33,7 @@ Fri Nov  10 08:56:58 2000 Johnny Willemsen <jwillemsen@remedy.nl>
         * tao/Makefile.bor:
           Removed the TAO Strategies files because they are moved to
           the new Strategies directory
+
         * tao/Strategies/Makefile.bor:
           Added new Borland C++ Builder specific makefile
 
@@ -38,20 +44,20 @@ Thu Nov  9 19:09:58 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Thu Nov  9 20:56:30 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/UIOP_Connect.cpp:
-	* tao/SHMIOP_Connect.cpp: These two files were removed. I checked
-	  them back in by mistake.
+        * tao/UIOP_Connect.cpp:
+        * tao/SHMIOP_Connect.cpp: These two files were removed. I checked
+          them back in by mistake.
 
 Thu Nov  9 20:07:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Connection_Cache_Manager.cpp:
-	* tao/Cache_Entries.inl: Fixed a problem for multi-threaded case.
+        * tao/Connection_Cache_Manager.cpp:
+        * tao/Cache_Entries.inl: Fixed a problem for multi-threaded case.
 
-	* tao/IIOP_Connect.cpp:
-	* tao/UIOP_Connect.cpp:
-	* tao/SHMIOP_Connect.cpp: Minor cosmetic changes.
+        * tao/IIOP_Connect.cpp:
+        * tao/UIOP_Connect.cpp:
+        * tao/SHMIOP_Connect.cpp: Minor cosmetic changes.
 
-	* tao/default_resource.h: Fixed a compile error.
+        * tao/default_resource.h: Fixed a compile error.
 
 Thu Nov  9 17:54:21 2000  Carlos O'Ryan  <coryan@uci.edu>
 
