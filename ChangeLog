@@ -1,3 +1,9 @@
+Thu Dec  4 14:30:44 2003  Kobi Cohen-Arazi  <kcarazi@finjan.com>
+
+	* ace/Task_Ex_T.i (reply, put_next): 
+	Thses 2 funcitons releted to ACE_Stream Framework,
+	doesn't work with new ACE_Task_Ex (yet)
+
 Wed Dec  3 23:37:59 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
 	* ace/Task_Ex_T.h:
