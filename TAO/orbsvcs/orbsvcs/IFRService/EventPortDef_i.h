@@ -30,13 +30,11 @@
 #include "IFR_ComponentsS.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_IFRService_Export TAO_EventPortDef_i 
+class TAO_IFRService_Export TAO_EventPortDef_i
   : public virtual TAO_Contained_i
 {
   // = TITLE
@@ -57,30 +55,30 @@ public:
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   CORBA::ComponentIR::EventDef_ptr event_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual void event (
       CORBA::ComponentIR::EventDef_ptr event
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   void event_i (
       CORBA::ComponentIR::EventDef_ptr event
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   virtual CORBA::Boolean is_a (
       const char *event_id
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
   CORBA::Boolean is_a_i (
       const char *event_id
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -111,7 +109,7 @@ private:
   // in this 'abstract' base class.
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

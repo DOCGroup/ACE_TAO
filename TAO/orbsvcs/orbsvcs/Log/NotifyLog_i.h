@@ -32,9 +32,7 @@
 #include "notifylog_serv_export.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -45,12 +43,12 @@ class TAO_NotifyLogFactory_i;
 /**
  * @class TAO_NotifyLog_i
  *
- * @brief The NotifyLog is an EventChannel and a Log. 
+ * @brief The NotifyLog is an EventChannel and a Log.
  *
  * It is used to log events that pass through the EventChannel.
  * The class supports the @c destroy> method to destroy the Log.
  */
-class TAO_NotifyLog_Serv_Export TAO_NotifyLog_i : 
+class TAO_NotifyLog_Serv_Export TAO_NotifyLog_i :
   public TAO_Log_i,
   public POA_DsNotifyLogAdmin::NotifyLog,
   public virtual PortableServer::RefCountServantBase
@@ -245,7 +243,7 @@ private:
   CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin_;
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

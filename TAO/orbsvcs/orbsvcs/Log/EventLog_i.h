@@ -35,9 +35,7 @@
 #include "eventlog_serv_export.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -48,12 +46,12 @@ class TAO_EventLogFactory_i;
 /**
  * @class TAO_EventLog_i
  *
- * @brief The EventLog is an EventChannel and a Log. 
+ * @brief The EventLog is an EventChannel and a Log.
  *
  * It is used to log events that pass through the EventChannel.
  * The class supports the @c destroy> method to destroy the Log.
  */
-class TAO_EventLog_i : 
+class TAO_EventLog_i :
   public TAO_Log_i,
   public POA_DsEventLogAdmin::EventLog,
   public virtual PortableServer::RefCountServantBase
@@ -72,7 +70,7 @@ public:
                   CORBA::ULongLong max_size = 0,
                   ACE_Reactor *reactor = ACE_Reactor::instance ());
 
-  /// Duplicate the log. 
+  /// Duplicate the log.
   virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id
                                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -138,7 +136,7 @@ private:
   TAO_Event_LogConsumer *my_log_consumer_;
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

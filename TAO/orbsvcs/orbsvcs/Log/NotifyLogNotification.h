@@ -10,8 +10,8 @@
  *
  *
  *  @author D A Hanvey <d.hanvey@qub.ac.uk>
- *   
- *  
+ *
+ *
  */
 //=============================================================================
 
@@ -33,9 +33,7 @@
 #include "notifylog_serv_export.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -44,9 +42,9 @@
  *
  * @brief Used to forward log generated events to a logging server.
  */
-class TAO_NotifyLog_Serv_Export TAO_NotifyLogNotification : 
-  public TAO_LogNotification, 
-  public POA_CosNotifyComm::PushSupplier, 
+class TAO_NotifyLog_Serv_Export TAO_NotifyLogNotification :
+  public TAO_LogNotification,
+  public POA_CosNotifyComm::PushSupplier,
   public PortableServer::RefCountServantBase
 {
 public:
@@ -102,7 +100,7 @@ private:
   CosNotifyChannelAdmin::EventChannel_var event_channel_;
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

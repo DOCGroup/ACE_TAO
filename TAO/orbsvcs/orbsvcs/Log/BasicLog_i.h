@@ -33,9 +33,7 @@
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -87,13 +85,13 @@ protected:
   ~TAO_BasicLog_i (void);
 
 protected:
-	
+
   /// Used to access the hash map that holds all the Logs created.
   TAO_LogMgr_i &logmgr_i_;
 
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

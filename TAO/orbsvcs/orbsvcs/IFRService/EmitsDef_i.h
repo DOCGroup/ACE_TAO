@@ -28,13 +28,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_IFRService_Export TAO_EmitsDef_i 
+class TAO_IFRService_Export TAO_EmitsDef_i
   : public virtual TAO_EventPortDef_i
 {
   // = TITLE
@@ -58,7 +56,7 @@ public:
   // Return our definition kind.
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

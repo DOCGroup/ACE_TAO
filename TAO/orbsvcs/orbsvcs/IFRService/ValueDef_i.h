@@ -29,9 +29,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -334,7 +332,7 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
   static int name_clash (const char *name);
   // Called from TAO_IFR_Service_Utils::name_exists() when we
   // are a base valuetype.
@@ -343,7 +341,7 @@ public:
                                ACE_ENV_ARG_DECL);
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

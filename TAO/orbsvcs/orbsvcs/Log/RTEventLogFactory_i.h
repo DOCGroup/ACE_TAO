@@ -7,7 +7,7 @@
  *  $Id$
  *
  *  Implements the Factory for NotifyLog Objects.
- *  
+ *
  *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
@@ -34,9 +34,7 @@
 #include "rteventlog_export.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -61,7 +59,7 @@ public:
   /// Destructor.
   ~TAO_RTEventLogFactory_i ();
 
-  /// Initialise the EventChannel and obtain a 
+  /// Initialise the EventChannel and obtain a
   /// pointer to it.
   int
   init (PortableServer::POA_ptr poa,
@@ -105,7 +103,7 @@ public:
 
    // = Implementation of the RtecEventChannelAdmin::ConsumerAdmin methods.
   RtecEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (
-        ACE_ENV_SINGLE_ARG_DECL 
+        ACE_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -134,7 +132,7 @@ protected:
   CosNaming::NamingContext_var naming_;
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

@@ -31,9 +31,7 @@
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -42,7 +40,7 @@
  *
  * @brief The BasicLogFactory is a factory that is used to create event-unaware Logs.
  */
-class TAO_Log_Serv_Export TAO_BasicLogFactory_i : 
+class TAO_Log_Serv_Export TAO_BasicLogFactory_i :
   public POA_DsLogAdmin::BasicLogFactory,
   public TAO_LogMgr_i
 {
@@ -91,7 +89,7 @@ protected:
 
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

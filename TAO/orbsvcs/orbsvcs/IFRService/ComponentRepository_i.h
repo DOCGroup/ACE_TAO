@@ -42,13 +42,11 @@ class TAO_ProvidesDef_i;
 class TAO_UsesDef_i;
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_IFRService_Export TAO_ComponentRepository_i 
+class TAO_IFRService_Export TAO_ComponentRepository_i
   : public virtual TAO_Repository_i,
     public virtual TAO_ComponentContainer_i
 {
@@ -118,7 +116,7 @@ protected:
   // Servants for each IR Object type, created at startup.
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

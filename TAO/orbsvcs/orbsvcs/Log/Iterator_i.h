@@ -11,7 +11,7 @@
  *
  *  @author Matthew Braun <mjb2@cs.wustl.edu>
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
- *  
+ *
  */
 //=============================================================================
 
@@ -30,9 +30,7 @@
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -41,7 +39,7 @@
  *
  * @brief Iterator to get LogRecords for the log via a query.
  */
-class TAO_Log_Serv_Export TAO_Iterator_i : 
+class TAO_Log_Serv_Export TAO_Iterator_i :
   public POA_DsLogAdmin::Iterator,
   public virtual PortableServer::RefCountServantBase
 {
@@ -86,7 +84,7 @@ private:
   CORBA::ULong max_rec_list_len_;
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

@@ -10,8 +10,8 @@
  *
  *
  *  @author D A Hanvey <d.hanvey@qub.ac.uk>
- *   
- *  
+ *
+ *
  */
 //=============================================================================
 
@@ -36,9 +36,7 @@
 #include "rteventlog_export.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -47,7 +45,7 @@
  *
  * @brief Used to forward log generated events to a logging server.
  */
-class TAO_RTEventLog_Export TAO_RTEventLogNotification : public TAO_LogNotification, 
+class TAO_RTEventLog_Export TAO_RTEventLogNotification : public TAO_LogNotification,
                                                          POA_RtecEventComm::PushSupplier
 {
 public:
@@ -85,7 +83,7 @@ private:
   RtecEventChannelAdmin::ProxyPushConsumer_var consumer_;
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

@@ -33,9 +33,7 @@
 #include "eventlog_serv_export.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -47,7 +45,7 @@ class TAO_EventLogFactory_i;
  * @class TAO_Event_LogConsumer
  *
  * @brief An implementation of the PushConsumer interface.
- * 
+ *
  * Connects to the EventLog and writes LogRecords to the
  * Log when events are 'pushed' to the EventLog which is an
  * EventChannel.
@@ -92,7 +90,7 @@ private:
   TAO_EventLog_i *log_;
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

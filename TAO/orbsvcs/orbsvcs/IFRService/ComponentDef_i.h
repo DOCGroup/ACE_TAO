@@ -31,13 +31,11 @@
 #include "IFR_Service_Utils_T.h"
 
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_IFRService_Export TAO_ComponentDef_i 
+class TAO_IFRService_Export TAO_ComponentDef_i
   : public virtual TAO_ExtInterfaceDef_i
 {
   // = TITLE
@@ -132,13 +130,13 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-      
+
   void base_component_i (
       CORBA::ComponentIR::ComponentDef_ptr base_component
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-      
+
   virtual CORBA::ComponentIR::ProvidesDef_ptr create_provides (
       const char *id,
       const char *name,
@@ -230,13 +228,13 @@ public:
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
   static int name_clash (const char *name);
   // Called from TAO_IFR_Service_Utils::name_exists() when we
   // are a base component.
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
