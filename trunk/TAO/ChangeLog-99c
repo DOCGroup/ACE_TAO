@@ -45,9 +45,9 @@ Mon Jan 11 16:36:08 1999  Jeff Parsons <jp4@cs.wustl.edu>
 
 Mon Jan 11 13:15:15 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-        * tao/GIOP.cpp: Changed the implementation to use the new
-          sendv_n() method on SOCK_Stream.  This enabled me to be able to
-          remove the adhoc use of writev_n() in this file.
+        * tao/GIOP.cpp: Changed the implementation to use the new send_n()
+ 	  method on SOCK_Stream.  This enabled me to be able to remove the
+ 	  adhoc use of writev_n() in this file.
 
 Mon Jan 11 12:37:23 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
