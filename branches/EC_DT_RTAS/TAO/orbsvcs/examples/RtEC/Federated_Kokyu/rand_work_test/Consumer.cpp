@@ -145,7 +145,7 @@ Consumer::push (const RtecEventComm::EventSet& events
   if (this->fwddest_ != 0)
     {
       //trigger next subtask
-      this->fwddest_->timeout_occured(ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->fwddest_->timeout_occured(oid ACE_ENV_SINGLE_ARG_PARAMETER);
     }
 
   if (this->handler_ != 0)
