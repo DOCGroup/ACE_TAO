@@ -103,13 +103,13 @@ ACE::log2 (u_long num)
   return log;
 }
 
-ACE_INLINE char 
+inline char 
 ACE::nibble2hex (u_int n)
 {
   return ACE::hex_chars_[n & 0x0f];
 }
 
-ACE_INLINE u_char 
+inline u_char 
 ACE::hex2byte (char c)
 {
   if (isdigit (c))
