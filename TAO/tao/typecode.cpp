@@ -119,6 +119,13 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
 // Destructor.  For "indirected" typecodes and children, the typecode reuses the
 // buffer owned by its parent
 
+void
+CORBA_TypeCode::operator delete (void* p)
+{
+  if (! ((CORBA_TypeCode*)p)->_orb_owns)
+    ::delete p;
+}
+
 CORBA_TypeCode::~CORBA_TypeCode (void)
 {
   if (_orb_owns)
@@ -292,8 +299,7 @@ TC_Private_State::~TC_Private_State (void)
       break;
     case CORBA::tk_union:
       {
-	// free up discriminator type, member label list, and member type list
-	delete tc_discriminator_type_;
+        // Free up type list, label list, and finally the discriminator
 	if (tc_member_type_list_known_)
 	  {
 	    for (CORBA::ULong i = 0; 
@@ -318,6 +324,9 @@ TC_Private_State::~TC_Private_State (void)
 	    delete [] tc_member_label_list_;
 	  }
 	tc_member_count_ = 0;
+        // Discriminator must come last b/c it will be inside the Any
+        // in each element of the label list.
+	delete tc_discriminator_type_;
       }
     break;
     default:
