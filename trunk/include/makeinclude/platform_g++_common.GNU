@@ -43,10 +43,6 @@ ifeq ($(templates),explicit)
   CPPFLAGS += -DACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 endif
 
-ifeq (,$(with_ld))
- with_ld = gnu
-endif
-
 # The correct flags to pass to the linker for ELF dynamic shared library
 # versioning
 #
@@ -62,13 +58,13 @@ ifneq ($(SONAME),)
   endif
 endif
 
-# Add all symbols to the dynamic symbol table.  Needed to enable dynamic_cast 
+# Add all symbols to the dynamic symbol table.  Needed to enable dynamic_cast
 # for shared libraries. (see http://gcc.gnu.org/faq.html#dso)
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
-    ifeq ($(with_ld), gnu)
+    LD_EXPORT_DEFINED := $(shell `$(CXX_FOR_VERSION_TEST) -print-prog-name=ld` -E 2>&1 | grep 'option' /dev/null; echo $$?)
+    ifeq ($(LD_EXPORT_DEFINED),1)
       LDFLAGS += -Wl,-E
-    endif # macosx
+    endif # LD_EXPORT_DEFINED
   endif # static_libs_only
 endif # shared_libs
-
