@@ -59,12 +59,12 @@ public:
   // Recv an <n> byte buffer from the connected socket (uses
   // <read(2)>).
 
-  ssize_t sendv (const iovec iov[],
+  ssize_t send (const iovec iov[],
                 size_t n) const;
   // Send an <iovec> of size <n> to the connected socket.
 
-  ssize_t recvv (iovec *io_vec,
-                 const ACE_Time_Value *timeout = 0);
+  ssize_t recv (iovec *io_vec,
+                const ACE_Time_Value *timeout = 0);
   // Allows a client to read from a socket without having to provide a
   // buffer to read.  This method determines how much data is in the
   // socket, allocates a buffer of this size, reads in the data, and
