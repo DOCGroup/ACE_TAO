@@ -102,7 +102,7 @@ void
 TAO::Unknown_IDL_Type::free_value (void)
 {
   CORBA::release (this->type_);
-  ACE_Message_Block::release (this->cdr_);
+  delete this->cdr_;
 }
 
 ACE_Message_Block *

@@ -104,16 +104,19 @@ TAO::Any_Impl::_add_ref (void)
 void
 TAO::Any_Impl::_remove_ref (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX,
-             guard,
-             this->mutex_);
+  {
+    ACE_GUARD (ACE_SYNCH_MUTEX,
+               guard,
+               this->mutex_);
 
-  if (--this->refcount_ != 0)
-    {
-      return;
-    }
+    if (--this->refcount_ != 0)
+      {
+        return;
+      }
 
-  this->free_value ();
+    this->free_value ();
+  }
+
   delete this;
 }
 
