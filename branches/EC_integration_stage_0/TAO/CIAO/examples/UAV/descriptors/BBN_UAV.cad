@@ -102,7 +102,7 @@
           <componentinstantiation id="a_Battle">
         </componentinstantiation>
       </homeplacement>
-     <destination>EngagementBattleHost</destination>
+     <destination>CAOCHost</destination>
     </processcollocation>
 
 
@@ -112,7 +112,7 @@
           <componentinstantiation id="a_UCAV_GS">
         </componentinstantiation>
       </homeplacement>
-     <destination>UCAVGSHost</destination>
+     <destination>UAVGSHost</destination>
     </processcollocation>                  
                   
                   
@@ -134,7 +134,7 @@
           <componentinstantiation id="c_UCAV">
         </componentinstantiation>
       </homeplacement>      
-     <destination>UAVHost</destination>
+     <destination>UCAVHost</destination>
     </processcollocation>               
   <!-- A plain vanilla partition.  We don't even need the processcollocation tag here. -->
 

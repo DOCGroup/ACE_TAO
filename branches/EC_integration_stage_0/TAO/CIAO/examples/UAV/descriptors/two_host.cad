@@ -62,18 +62,6 @@
         </componentinstantiation>
       </homeplacement>
 
-      <homeplacement id="b_UAVHome">
-        <componentfileref idref="com-UAV"/>
-          <componentinstantiation id="b_UAV">
-        </componentinstantiation>
-      </homeplacement>
-      
-      <homeplacement id="c_UAVHome">
-        <componentfileref idref="com-UAV"/>
-          <componentinstantiation id="c_UAV">
-        </componentinstantiation>
-      </homeplacement>
-            
       <homeplacement id="a_EngagementHome">
         <componentfileref idref="com-Engagement"/>
           <componentinstantiation id="a_Engagement">
@@ -92,18 +80,6 @@
         </componentinstantiation>
       </homeplacement>
                   
-      <homeplacement id="a_UCAVHome">
-        <componentfileref idref="com-UCAV"/>
-          <componentinstantiation id="a_UCAV">
-        </componentinstantiation>
-      </homeplacement>
-
-      <homeplacement id="b_UCAVHome">
-        <componentfileref idref="com-UCAV"/>
-          <componentinstantiation id="b_UCAV">
-        </componentinstantiation>
-      </homeplacement>
-      
     <processcollocation>      
       <homeplacement id="c_UCAVHome">
         <componentfileref idref="com-UCAV"/>
