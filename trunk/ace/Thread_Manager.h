@@ -98,18 +98,21 @@ private:
   // Pointer to an <ACE_Task_Base> or NULL if there's no <ACE_Task_Base>;
 
   ACE_Thread_Descriptor *next_;
+  // @@ Please document
 
   ACE_Thread_Descriptor *prev_;
+  // @@ Please document
 };
 
 // Forward declaration.
 class ACE_Thread_Control;
 
-// This typedef should be (and used to be) inside the ACE_Thread_Manager
-// declaration.  But, it caused compilation problems on g++/VxWorks/i960
-// with -g.  Note that ACE_Thread_Manager::THR_FUNC is only used
-// internally in ACE_Thread_Manager, so it's not useful for anyone else.
-typedef int (ACE_Thread_Manager::*THR_FUNC)(ACE_Thread_Descriptor*, int);
+// This typedef should be (and used to be) inside the
+// ACE_Thread_Manager declaration.  But, it caused compilation
+// problems on g++/VxWorks/i960 with -g.  Note that
+// ACE_Thread_Manager::THR_FUNC is only used internally in
+// ACE_Thread_Manager, so it's not useful for anyone else.
+typedef int (ACE_Thread_Manager::*THR_FUNC)(ACE_Thread_Descriptor *, int);
 
 class ACE_Export ACE_Thread_Manager
   // = TITLE
@@ -436,6 +439,7 @@ protected:
 
   ACE_Double_Linked_List<ACE_Thread_Descriptor> thr_list_;
   // Keeping a list of threads within the thread manager.
+  // @@ Please add more details on what this is used for.
 
 #if !defined (VXWORKS)
   ACE_Unbounded_Queue<ACE_Thread_Descriptor> terminated_thr_queue_;

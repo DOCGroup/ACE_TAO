@@ -34,9 +34,9 @@ ACE_Thread_Manager::dump (void)
   ACE_DEBUG ((LM_DEBUG, "\ngrp_id_ = %d", this->grp_id_));
   ACE_DEBUG ((LM_DEBUG, "\ncurrent_count_ = %d", this->thr_list_.size ()));
 
-  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
-    iter (this->thr_list_);
-  for (; ! iter.done (); iter.advance ())
+  for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
+       !iter.done ();
+       iter.advance ())
     iter.next ()->dump ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -106,11 +106,13 @@ ACE_Thread_Manager::thread_desc_self (void)
       
       desc = this->find_thread (id);
 
-      if (desc != 0)            // thread descriptor adapter might not have been
-                                // put into the list yet.
+      // Thread descriptor adapter might not have been put into the
+      // list yet.
+      if (desc != 0)
         // Update the TSS cache. 
         ACE_LOG_MSG->thr_desc (desc);
     } 
+
   return desc;
 }
 
@@ -155,14 +157,13 @@ ACE_Thread_Manager::thr_self (ACE_hthread_t &self)
 
 // Initialize the synchronization variables.
 
-ACE_Thread_Manager::ACE_Thread_Manager (size_t size)
+ACE_Thread_Manager::ACE_Thread_Manager (void)
   : grp_id_ (1)
 #if defined (ACE_HAS_THREADS)
     , zero_cond_ (lock_)
 #endif /* ACE_HAS_THREADS */
 {
   ACE_TRACE ("ACE_Thread_Manager::ACE_Thread_Manager");
-  ACE_UNUSED_ARG (size);
 }
 
 ACE_Thread_Manager *
@@ -217,14 +218,6 @@ ACE_Thread_Manager::close_singleton (void)
     }
 }
 
-int
-ACE_Thread_Managr::open (size_t size)
-{
-  ACE_TRACE ("ACE_Thread_Manager::open");
-  // Currently a no-op.
-  ACE_UNUSED_ARG (size);
-}
-
 // Close up and release all resources.
 
 int
@@ -233,8 +226,8 @@ ACE_Thread_Manager::close (void)
   ACE_TRACE ("ACE_Thread_Manager::close");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  // @@ Clear out thr_list_ here.  Have to iterate thru each of
-  // list entry.
+  // @@ Clear out thr_list_ here.  Have to iterate thru each of list
+  // entry.
 
   return 0;
 }
@@ -414,12 +407,6 @@ ace_thread_manager_adapter (void *args)
   // <exit_hook>.
   exit_hook.thr_mgr (thread_args->thr_mgr ());
 
-  // @@@@@@@@@@ Try to insert thread descriptor here.  Notice we can't guarantee
-  // whether this thread or the main thread will insert thread descriptor first,
-  // we'll need to check whether there is already an entry in the list.  If it does,
-  // we'll just bail out without addind anything.  Otherwise, add an entry with
-  // only thread_id field filled.
-
   // Invoke the user-supplied function with the args.
   void *status = thread_args->invoke ();
 
@@ -498,12 +485,6 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
       ACE_UNUSED_ARG (t_handle);
 #endif /* ACE_HAS_WTHREADS */
       
-  // @@@@@@@@@@ Try to insert thread descriptor here.  Notice we can't guarantee
-  // whether this thread or the main thread will insert thread descriptor first,
-  // we'll need to check whether there is already an entry in the list.  If there
-  // is, then, the spawned thread has got ahead of us.  We'll still need to fill
-  // in the blanks.
-
       return this->append_thr (*t_id,
                                thr_handle, 
                                ACE_THR_SPAWNED, 
@@ -629,12 +610,6 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
 				long flags)
 {
   ACE_TRACE ("ACE_Thread_Manager::append_thr");
-  // @@ This code will need to be replaced with a loop that will
-  // iterate from 0 to this->max_table_size_ looking for a
-  // thr_table_[i].thr_state_ entry that is set to ACE_THR_IDLE.  Only
-  // if all the entries are in use do we have to reallocate the table.
-  // Note that at some point we should use an "in situ" free list that
-  // is woven through the table...
 
   // Create a new thread descriptor entry.
   ACE_Thread_Descriptor *thr_desc;
@@ -659,12 +634,12 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
 ACE_Thread_Descriptor *
 ACE_Thread_Manager::find_hthread (ACE_hthread_t h_id)
 {
-  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
-    iter (this->thr_list_);
-
-  for ( ; ! iter.done (); iter.advance ())
+  for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
+       !iter.done ();
+       iter.advance ())
     if (iter.next ()->thr_handle_ == h_id)
       return iter.next ();
+
   return 0;
 }
 
@@ -676,10 +651,9 @@ ACE_Thread_Manager::find_thread (ACE_thread_t t_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::find_thread");
 
-  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
-    iter (this->thr_list_);
-
-  for (; ! iter.done (); iter.advance ())
+  for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
+       !iter.done ();
+       iter.advance ())
     if (iter.next ()->thr_id_ == t_id)
       return iter.next ();
   return 0;
@@ -1222,10 +1196,9 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
 
     ACE_Thread_Descriptor item;
 
-    while (! this->terminated_thr_queue_.dequeue_head (item))
-	ACE_Thread::join (item.thr_handle_);
+    while (!this->terminated_thr_queue_.dequeue_head (item))
+      ACE_Thread::join (item.thr_handle_);
   }
-
 #endif /* VXWORKS */
 #else
   ACE_UNUSED_ARG (timeout);
@@ -1243,10 +1216,10 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   int result = 0;
-  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
-    iter (this->thr_list_);
 
-  for (; ! iter.done (); iter.advance ())
+  for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
+       !iter.done ();
+       iter.advance ())
     if (iter.next ()->task_ == task
         && (this->*func) (iter.next (), arg) == -1)
       result = -1;
@@ -1255,6 +1228,7 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
 }
 
 // Wait for task  
+
 int 
 ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
 {
@@ -1271,10 +1245,9 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
                     ACE_Thread_Descriptor [this->thr_list_.size ()],
                     -1);
 
-    ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
-      iter (this->thr_list_);
-
-    for (; ! iter.done (); iter.advance ())
+    for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
+	 !iter.done ();
+	 iter.advance ())
       if (iter.next ()->task_ == task)
         {
           copy_table[copy_count] = *iter.next ();
@@ -1295,6 +1268,7 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
 }
 
 // Suspend a task
+
 int  
 ACE_Thread_Manager::suspend_task (ACE_Task_Base *task)
 { 
@@ -1313,6 +1287,7 @@ ACE_Thread_Manager::resume_task (ACE_Task_Base *task)
 }
 
 // Kill a task.
+
 int  
 ACE_Thread_Manager::kill_task (ACE_Task_Base *task, int /* signum */)
 {
@@ -1338,12 +1313,21 @@ ACE_Thread_Descriptor *
 ACE_Thread_Manager::find_task (ACE_Task_Base *task, int index)
 {
   ACE_TRACE ("ACE_Thread_Manager::find_task");
-  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
-    iter (this->thr_list_);
 
-  for (int i = 0; i < index && ! iter.done (); iter.advance (), i++)
-    if (task == iter.next ()->task_)
-      return iter.next ();
+  int i = 0;
+
+  for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
+       !iter.done ();
+       iter.advance ())
+    {
+      if (i >= index)
+	break;
+
+      if (task == iter.next ()->task_)
+	return iter.next ();
+
+      i++;
+    }
 
   return 0;
 }
@@ -1357,15 +1341,19 @@ ACE_Thread_Manager::num_tasks_in_group (int grp_id)
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   int tasks_count = 0;
-  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
-    iter (this->thr_list_);
+  size_t i = 0;
 
-  for (size_t i = 0; ! iter.done (); iter.advance (), i++)
-    if (iter.next ()->grp_id_ == grp_id
-        && this->find_task (iter.next ()->task_, i) ==
-        0)
-      tasks_count++;
+  for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
+       !iter.done ();
+       iter.advance ())
+    {
+      if (iter.next ()->grp_id_ == grp_id
+	  && this->find_task (iter.next ()->task_, i) ==
+	  0)
+	tasks_count++;
 
+      i++;
+    }
   return tasks_count;
 }
 
@@ -1378,10 +1366,10 @@ ACE_Thread_Manager::num_threads_in_task (ACE_Task_Base *task)
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   int threads_count = 0;
-  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
-    iter (this->thr_list_);
 
-  for (; ! iter.done (); iter.advance ())
+  for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
+       !iter.done ();
+       iter.advance ())
     if (iter.next ()->task_ == task)
       threads_count++;
 
@@ -1400,17 +1388,26 @@ ACE_Thread_Manager::task_list (int grp_id,
 
   ACE_Task_Base **task_list_iterator = task_list;
   size_t task_list_count = 0;
-  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
-    iter (this->thr_list_);
 
-  for (size_t i = 0; task_list_count < n && ! iter.done ();
-       iter.advance (), i++)
-    if (iter.next ()->grp_id_ == grp_id
-        && this->find_task (iter.next ()->task_, i) == 0)
-      {
-        task_list_iterator[task_list_count] = iter.next ()->task_;
-        task_list_count++;
-      }
+  size_t i = 0;
+
+  for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
+       !iter.done ();
+       iter.advance ())
+    {
+      if (task_list_count >= n)
+	break;
+
+      if (iter.next ()->grp_id_ == grp_id
+	  && this->find_task (iter.next ()->task_, i) == 0)
+	{
+	  task_list_iterator[task_list_count] = iter.next ()->task_;
+	  task_list_count++;
+	}
+
+      i++;
+    }
+
 
   return 0;
 }
@@ -1425,17 +1422,21 @@ ACE_Thread_Manager::thread_list (ACE_Task_Base *task,
   ACE_TRACE ("ACE_Thread_Manager::thread_list");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
-    iter (this->thr_list_);
   size_t thread_count = 0;
 
-  for (; thread_count < n && ! iter.done (); iter.advance ())
-    if (iter.next ()->task_ == task)
-      {
-        thread_list[thread_count] = iter.next ()->thr_id_;
-        thread_count ++;
-      }
+  for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
+       !iter.done ();
+       iter.advance ())
+    {
+      if (thread_count >= n)
+	break;
 
+      if (iter.next ()->task_ == task)
+	{
+	  thread_list[thread_count] = iter.next ()->thr_id_;
+	  thread_count ++;
+	}
+    }
   return 0;
 }
 
@@ -1449,16 +1450,21 @@ ACE_Thread_Manager::hthread_list (ACE_Task_Base *task,
   ACE_TRACE ("ACE_Thread_Manager::thread_list");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
-    iter (this->thr_list_);
   size_t hthread_count = 0;
 
-  for (; hthread_count < n && ! iter.done (); iter.advance ())
-    if (iter.next ()->task_ == task)
-      {
-        hthread_list[hthread_count] = iter.next ()->thr_handle_;
-        hthread_count ++;
-      }
+  for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
+       !iter.done (); 
+       iter.advance ())
+    {
+      if (hthread_count >= n)
+	break;
+
+      if (iter.next ()->task_ == task)
+	{
+	  hthread_list[hthread_count] = iter.next ()->thr_handle_;
+	  hthread_count ++;
+	}
+    }
 
   return 0;
 }
@@ -1468,12 +1474,13 @@ ACE_Thread_Manager::set_grp (ACE_Task_Base *task, int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::set_grp");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
-  ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
-    iter (this->thr_list_);
 
-  for ( ; ! iter.done (); iter.advance ())
+  for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
+       !iter.done ();
+       iter.advance ())
     if (iter.next ()->task_ == task)
       iter.next ()->grp_id_ = grp_id;
+
   return 0;
 }
 
@@ -1576,7 +1583,7 @@ template class ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
   #pragma instantiate ACE_Node<ACE_Thread_Descriptor>
 #endif /* VXWORKS */
   #pragma instantiate ACE_Double_Linked_List<ACE_Thread_Descriptor>
-  $pragma instantiate ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
+  #pragma instantiate ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>
 #if (defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
   // This doesn't necessarily belong here, but it's a convenient place for it.
   #pragma instantiate ACE_TSS<ACE_Dynamic>

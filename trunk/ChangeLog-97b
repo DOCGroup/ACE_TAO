@@ -174,9 +174,9 @@ Sun Oct 19 13:49:17 1997  Carlos O'Ryan  <coryan@MILONGA>
 	* tests/Conn_Test.h: 
 	* tests/Conn_Test.cpp: 
 	  The Svc_Handler was cached, but it had the default
-	  handle_close() method, which destroys the object.
-	  The new version leaks a bit of memory, but it seems that it
-	  never crashes.
+ 	  handle_close() method, which destroys the object.  The new
+ 	  version leaks a bit of memory, but it seems that it never
+ 	  crashes.
 
 Sat Oct 18 09:13:29 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -1131,7 +1131,7 @@ Thu Oct 09 18:43:14 1997    <irfan@TWOSTEP>
  	  in the service handler must be done atomically with the finding
  	  and binding of the service handler in the cache.
 
-	* tests/Conn_Test.cpp (client_connections): Added mutlithreading
+	* tests/Conn_Test.cpp (client_connections): Added multithreading
  	  to the test in order to test out the new MT features of the
  	  Connector.
 
