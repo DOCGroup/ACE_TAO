@@ -73,5 +73,5 @@ main (int argc, char *argv[])
 
   ACE_END_TEST;
 
-  return 42;
+  return 0;
 }
