@@ -63,7 +63,7 @@ changequote(, )dnl
 ACE_VERSION=`head -1 ${srcdir}/VERSION | sed 's/.*version \([0-9.]*\).*/\1/'`
 changequote([, ])dnl
 
-AM_INIT_AUTOMAKE("$PACKAGE", "$ACE_VERSION", )
+AM_INIT_AUTOMAKE("$PACKAGE", "$ACE_VERSION", DUMMY)
 
 dnl Generate a header file with all settings.
 AM_CONFIG_HEADER(ace/config.h)
@@ -2511,13 +2511,28 @@ if test "$ac_cv_header_new" = yes &&
      AC_TRY_COMPILE(
        [
 #include <memory>
+
+        template <class T>
+        class Foo
+        {
+        public:
+          Foo (void);
+          ~Foo (void);
+
+          T* bar (void) const { return this->bar_; }
+        private:
+          T* bar_;
+        };
        ],
        [
+        Foo<int *> Baz = 0;
+
 #ifdef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
-        std::auto_ptr<int> Foo;
+        std::auto_ptr<Foo<int *> > Foobar;
 #else
-        auto_ptr<int> Foo;
+        auto_ptr<Foo<int *> > Foobar;
 #endif
+        Foobar = Baz;
        ],
        [
         ace_cv_lib_auto_ptr_class=yes
@@ -2528,7 +2543,10 @@ if test "$ac_cv_header_new" = yes &&
     ],
     [
      AC_DEFINE(ACE_HAS_STANDARD_CPP_LIBRARY)
-    ],)
+    ],
+    [
+     AC_DEFINE(ACE_LACKS_AUTO_PTR)
+    ])
 fi
 
 dnl Check for ANSI C++ cast support

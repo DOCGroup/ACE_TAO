@@ -672,6 +672,9 @@
 /* No system support for replacing any previous mappings. */
 #undef ACE_LACKS_AUTO_MMAP_REPLACEMENT
 
+/* Platform lacks support for the standard C++ auto_ptr class */
+#undef ACE_LACKS_AUTO_PTR
+
 /* Compiler/platform lacks the standard C library bsearch() function  */
 #undef ACE_LACKS_BSEARCH
 
