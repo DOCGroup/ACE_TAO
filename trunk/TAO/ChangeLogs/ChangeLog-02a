@@ -50,7 +50,7 @@ Sun May  6 10:27:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  thrashing when the application received a signal. We dont ask
 	  the reactor to call us back, instead we just return a zero to
 	  the reactor. Further, changed the error codes to match the
-	  reactor semantics.
+	  reactor semantics. This should fix bug id 830.
 
 	* tao/IIOP_Connection_Handler.cpp:
 	* tao/IIOP_Transport.cpp: Made sure that we pass the error codes
