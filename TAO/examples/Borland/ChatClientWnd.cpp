@@ -68,7 +68,7 @@ void __fastcall TChatClientWindow::WMMessageReceived (TMessage& Message)
 {
   String* str = (String*)Message.WParam;
   for (int i = 1; i <= str->Length (); i++)
-    if (std::isspace ( (*str)[i]))
+    if (isspace ((*str)[i]))
       (*str)[i] = ' ';
   OutputMemo->Lines->Append (str->Trim ());
   delete str;
