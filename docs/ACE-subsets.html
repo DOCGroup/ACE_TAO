@@ -769,6 +769,9 @@ currently supports.  To reduce build time and library size, you can
 exclude unused components.  To do that, define an
 <code>ACE_COMPONENTS</code> variable using one of these approaches:<p>
 
+<ul>
+<li>
+<h4>UNIX</h4>
 <ol>
   <li>In your <code>$(ACE_ROOT)/include/makeinclude/platform_macros.GNU</code>
     file, <em>e.g.</em>, add:
@@ -779,7 +782,27 @@ exclude unused components.  To do that, define an
 
   <li>Set (and export) the <code>ACE_COMPONENTS</code> environment variable
     to contain the components that you want to build.<p>
-</ol><p>
+</ol>
+</li>
+
+<li>
+<h4>Win32</h4>
+Follow these steps to select subsets to build using Microsoft Visual
+C++:
+<p>
+<ol>
+<li>Go the <em>Project->Settings</em> menu.</li>
+<li>Select the <em>C/C++</em> tab.
+<li>In the <em>Preprocessor Definitions</em> box select subsets to
+build by setting the <code>ACE_COMPONENTS</code> macro appropriately.
+For example, to build the <code>OS</code> and <code>Sockets</code>
+ACE subsets, add the following to the <em>Preprocessor
+Definitions</em> box:
+<BLOCKQUOTE><PRE>ACE_COMPONENTS="OS Sockets"</PRE></BLOCKQUOTE>
+</ol>
+</li>
+
+</ul>
 
 Please see <code><a href="../ace/Makefile">../ace/Makefile</a></code>
 for the default contents of <code>ACE_COMPONENTS</code>.<p>
