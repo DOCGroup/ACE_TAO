@@ -241,7 +241,7 @@ $ ln -s cacert.pem `openssl x509 -noout -hash < cacert.pem`.0
   <p><code>};</code></p>
   <h4>Obtaining a Reference to the <code>SSLIOP::Current</code> Object</h4>
   <p>A reference to the <code>SSLIOP::Current</code> object may be obtained using
-    the standard <code>CORBA::ORB::resolve_initial_references</code> mechanism
+    the standard <code>CORBA::ORB::resolve_initial_references()</code> mechanism
     with the argument <code>&quot;<font color="#009900">SSLIOPCurrent</font>&quot;</code>.
     Here is an example:</p>
   <blockquote>
