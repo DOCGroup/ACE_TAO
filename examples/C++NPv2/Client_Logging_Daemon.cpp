@@ -326,7 +326,7 @@ int Client_Logging_Daemon::init (int argc, ACE_TCHAR *argv[]) {
   u_short cld_port = ACE_DEFAULT_SERVICE_PORT;
   u_short sld_port = ACE_DEFAULT_LOGGING_SERVER_PORT;
   ACE_TCHAR sld_host[MAXHOSTNAMELEN];
-  ACE_OS::strcpy (sld_host, ACE_LOCALHOST);
+  ACE_OS_String::strcpy (sld_host, ACE_LOCALHOST);
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:r:s:"), 0);
   get_opt.long_option (ACE_TEXT ("client_port"), 'p',
