@@ -2751,7 +2751,7 @@ TAO_ORB_Core::add_interceptor (
       ACE_CHECK;
     }
   else
-    ACE_TRY_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA::INTERNAL ());
 }
 
 TAO_IORInterceptor_List *
