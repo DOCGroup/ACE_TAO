@@ -155,7 +155,7 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
   </TR>
   <TR>
     <TD><CODE><A HREF="ORBEndpoint.html">-ORBEndpoint</A></CODE>
-	      <EM>endpoint</EM></TD>
+              <EM>endpoint</EM></TD>
     <TD><a name="-ORBEndpoint"></a>Tells the ORB to listen for requests on the
         interface specified by <I><EM>endpoint</EM></I>.  Endpoints are
         specified using a URL style format.  An endpoint has the form:
@@ -276,11 +276,11 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         <CODE>-ORBEndpoint</CODE> option.
         <P>
         This is a client-side option.
-	<P>
-	<FONT COLOR=RED>-ORBPreconnect is <STRONG>deprecated</STRONG>.
-	This option will be removed in the near future.  The Real-Time CORBA standard
-	<CODE>validate_connection()</CODE> method should be used
-	instead.
+        <P>
+        <FONT COLOR=RED>-ORBPreconnect is <STRONG>deprecated</STRONG>.
+        This option will be removed in the near future.  The Real-Time CORBA standard
+        <CODE>validate_connection()</CODE> method should be used
+        instead.
     </TD>
   </TR>
   <TR>
@@ -403,7 +403,7 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
         <TABLE BORDER="1" CELLSPACING="2" CELLPADDING="0">
           <TR><TH><em>which</em></TH><TH>Reactor</TH>
         </TR>
-	<TR>
+        <TR>
           <TD><CODE>select_mt</CODE></TD>
           <TD>Use the multi-thread select-based reactor.</TD>
         </TR>
@@ -431,7 +431,7 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
         <TR>
           <TD><CODE>tp</CODE></TD>
           <TD>Use the <CODE>ACE_TP_Reactor</CODE>, a select based
-	      thread-pool reactor.</TD>
+              thread-pool reactor.</TD>
         </TR>
       </TABLE>
 </TD>
@@ -439,10 +439,10 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
   <TR>
     <TD><CODE>-ORBReactorMaskSignals</CODE> <EM>0/1</EM></TD>
     <TD>ACE select reactors mask signals during upcalls to the event
-	handlers.  This is only useful if the application is going to
+        handlers.  This is only useful if the application is going to
         trap those signals and handle them in any way.
         Disabling the mask can improve performance by reducing the
-	number of kernel level locks.
+        number of kernel level locks.
     </TD>
   </TR>
 <TR>
@@ -459,6 +459,24 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
       configurator file. The
       <em><code>Foo</code></em> pluggable protocol would then be available
       for use.
+  </TD>
+</TR>
+<TR>
+  <TD><CODE>-ORBIORParser</CODE> <EM>parser</EM></TD>
+  <TD><a name="-ORBIORParser"></a>
+      Name an IOR Parser to load.
+      IOR Parsers are used to interpret strings passed to
+      <CODE>ORB::string_to_object()</CODE>.
+      By default the ORB can handle multiple string formats,
+      including <CODE>IOR:</CODE>,
+      <CODE>corbaloc:</CODE>,
+      <CODE>corbaname:</CODE>,
+      and <CODE>file:</CODE>.
+      The application developer can
+      <A HREF="ior_parsing.html">
+        add new IOR formats
+      </A>
+      using this option.
   </TD>
 </TR>
 <TR>
@@ -546,7 +564,7 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
       Select the type of reactor registry.
       Currently two implementations are provided:
       <B>single</B> uses a single reactor per ORB, this is the default
-	    and is sufficient for most applications.
+            and is sufficient for most applications.
       Applications with stringent QoS requirements may prefer
       the <B>per-priority</B> strategy, in this case threads at
       different CORBA priorities are assigned different
@@ -578,12 +596,12 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
         for a purely Reactor-driven concurrency strategy or
         <code>thread-per-connection</code> for creating a new thread to
         service each connection. The default is reactive.
-	      <P>
-		TAO also supports the thread-pool concurrency model
-		but this is implemented by the user, creating multiple
-		threads that call <CODE>ORB::run()</CODE> and using
-		the <CODE>-ORBReactorType tp</CODE> option.
-	      </P>
+              <P>
+                TAO also supports the thread-pool concurrency model
+                but this is implemented by the user, creating multiple
+                threads that call <CODE>ORB::run()</CODE> and using
+                the <CODE>-ORBReactorType tp</CODE> option.
+              </P>
     </TD>
   </TR>
   <TR>
@@ -591,33 +609,33 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
     <TD><a name="server_timeout"><CODE>-ORBThreadPerConnectionTimeout</CODE></a>
         <EM>milliseconds</EM></TD>
     <TD>In many platforms it is impossible to interrupt the server
-	      threads created by the
-	      <code>thread-per-connection</code> model.
-	      This is because these threads are blocked in
-	      <CODE>read()</CODE> operations (and not in
-	      <CODE>select()</CODE>).
-	      As a workaround, the server threads
-	      periodically poll the ORB to find out if they should
-	      shutdown.
-	      This option controls the period of the polling,
-	      expressed in milliseconds.
-	      Applications that do not shutdown, or that can otherwise
-	      ensure that no server threads will be running at
-	      shutdown (for example if all the clients terminate
-	      before the server) can disable the polling using  the
-	      magic value <CODE>INFINITE</CODE>.
+              threads created by the
+              <code>thread-per-connection</code> model.
+              This is because these threads are blocked in
+              <CODE>read()</CODE> operations (and not in
+              <CODE>select()</CODE>).
+              As a workaround, the server threads
+              periodically poll the ORB to find out if they should
+              shutdown.
+              This option controls the period of the polling,
+              expressed in milliseconds.
+              Applications that do not shutdown, or that can otherwise
+              ensure that no server threads will be running at
+              shutdown (for example if all the clients terminate
+              before the server) can disable the polling using  the
+              magic value <CODE>INFINITE</CODE>.
 
-	      <P>
-		If the option is not provided then the ORB uses the
-		compile time flag
-		<CODE>TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT</CODE>,
-		this flag also expresses the time in milliseconds (as
-		a string constant) and the magic value
-		<CODE>"INFINITE"</CODE> can be used to disable polling
-		entirely. This yields a slight performance improvement
-		(around 1%).
-	      </P>
-	    </TD>
+              <P>
+                If the option is not provided then the ORB uses the
+                compile time flag
+                <CODE>TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT</CODE>,
+                this flag also expresses the time in milliseconds (as
+                a string constant) and the magic value
+                <CODE>"INFINITE"</CODE> can be used to disable polling
+                entirely. This yields a slight performance improvement
+                (around 1%).
+              </P>
+            </TD>
   </TR>
   <TR>
     <TD><CODE>-ORBActiveObjectMapSize</CODE> <EM>active object map
@@ -821,8 +839,8 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
 
         MUXED means that Transport multiplexes more than one request at the
         same time on a connection.  This option is often used in
-	conjunction with Asynchronous Method Invocation, because
-	multiple requests can be sent 'in bulk'. <p>
+        conjunction with Asynchronous Method Invocation, because
+        multiple requests can be sent 'in bulk'. <p>
 
         Default for this option is EXCLUSIVE.
 
