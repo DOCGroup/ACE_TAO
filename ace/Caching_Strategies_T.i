@@ -13,7 +13,7 @@ ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY
     {
       ACE_NEW (this->implementation_,
                IMPLEMENTATION);
-      this->delete_implemenation_ = 1;
+      this->delete_implementation_ = 1;
     }
 }
 
@@ -52,9 +52,7 @@ template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHIN
 ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::purge_percent (double percentage)
 {
   this->implementation_->purge_percent (percentage);
-  return;
 }
-
 
 template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY, class IMPLEMENTATION> int
 ACE_Caching_Strategy_Adapter<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY, IMPLEMENTATION>::notify_bind (int result,
