@@ -39,7 +39,8 @@ CPP=cl.exe
 # PROP Intermediate_Dir "Release\Static"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MT /W3 /GX /O2 /I "..\..\\" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /c
+# ADD CPP /nologo /MT /W3 /GX /O2 /I "..\..\\" /I "..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D __ACE_INLINE__=0 /FD /c
+# SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -196,13 +197,6 @@ SOURCE=.\params.cpp
 # Begin Source File
 
 SOURCE=.\POA.cpp
-
-!IF  "$(CFG)" == "TAO Static - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO Static - Win32 Debug"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
