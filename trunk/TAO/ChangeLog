@@ -1,3 +1,10 @@
+Thu Sep 26 11:55:05 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tao/Connection_Handler.h:
+	* tao/Connection_Handler.inl:
+	  Remove unused IIOP-specific method.  This fixes:
+	    http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1314
+
 Tue Sep 26 05:32:22 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/ESF/ESF_Busy_Lock.h:
