@@ -13,11 +13,62 @@ TAO_SSLIOP_TargetCredentials::TAO_SSLIOP_TargetCredentials (X509 *cert)
 {
 }
 
+#ifndef NO_RSA
+TAO_SSLIOP_TargetCredentials::TAO_SSLIOP_TargetCredentials (X509 *cert,
+                                                            RSA *rsa)
+  : TAO_SSLIOP_Credentials (cert, rsa)
+{
+}
+#endif  /* !NO_RSA */
+
+// #ifndef NO_DSA
+// TAO_SSLIOP_TargetCredentials::TAO_SSLIOP_TargetCredentials (X509 *cert,
+//                                                             DSA *dsa)
+//   : TAO_SSLIOP_Credentials (cert, dsa)
+// {
+// }
+// #endif  /* !NO_DSA */
+
 SecurityLevel2::Credentials_ptr
 TAO_SSLIOP_TargetCredentials::copy (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_SSLIOP_TargetCredentials *c = 0;
+
+#ifndef NO_RSA
+  if (this->rsa_.in () != 0)
+    {
+    ACE_NEW_THROW_EX (c,
+                      TAO_SSLIOP_TargetCredentials (this->x509_.in (),
+                                                    this->rsa_.in ()),
+                        CORBA::NO_MEMORY (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
+      ACE_CHECK_RETURN (SecurityLevel2::Credentials::_nil ());
+
+      return c;
+    }
+#endif  /* !NO_RSA */
+
+// #ifndef NO_DSA
+//   if (this->dsa_.in () != 0)
+//     {
+//       ACE_NEW_THROW_EX (c,
+//                         TAO_SSLIOP_TargetCredentials (this->x509_.in (),
+//                                                       this->dsa_.in ()),
+//                         CORBA::NO_MEMORY (
+//                           CORBA::SystemException::_tao_minor_code (
+//                             TAO_DEFAULT_MINOR_CODE,
+//                             ENOMEM),
+//                           CORBA::COMPLETED_NO));
+//       ACE_CHECK_RETURN (SecurityLevel2::Credentials::_nil ());
+
+//       return c;
+//     }
+// #endif  /* !NO_DSA */
+
   ACE_NEW_THROW_EX (c,
                     TAO_SSLIOP_TargetCredentials (this->x509_.in ()),
                     CORBA::NO_MEMORY (
