@@ -26,7 +26,7 @@
 
 ACE_RCSID(Performance, server, "$Id$")
 
-const char *ior_output_file = 0;
+const char *ior_output_file = "test.ior";
 int orb_threads = 1; // Number of threads running inside the ORB.
 
 int

@@ -10,7 +10,7 @@ require ACEutils;
 require Process;
 
 $status = 0;
-$iorfile = "time.ior";
+$iorfile = "test.ior";
 
 unlink $iorfile;
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT", "-o $iorfile -ORBendpoint diop://:12345");

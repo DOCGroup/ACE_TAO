@@ -1,3 +1,14 @@
+Sat Apr 21 00:47:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * examples/PluggableUDP/tests/SimplePerformance/run_test.pl:
+        * examples/PluggableUDP/tests/SimplePerformance/server.cpp:
+        * examples/PluggableUDP/tests/Basic/run_test.pl:
+        * examples/PluggableUDP/tests/Basic/server.cpp:
+        * examples/PluggableUDP/tests/Performance/run_test.pl:
+        * examples/PluggableUDP/tests/Performance/server.cpp:
+
+          Fixed some confusion between ior file names.
+
 Sat Apr 21 00:40:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/tests/SimplePerformance/run_test.pl:
