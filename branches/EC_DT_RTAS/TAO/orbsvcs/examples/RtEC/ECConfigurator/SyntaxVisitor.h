@@ -49,7 +49,7 @@ class Value;
 class SyntaxVisitor
 {
 public:
-  virtual int parseVisitableSyntax (VisitableSyntax vs, void *arg)
+  virtual int parseVisitableSyntax (VisitableSyntax* vs, void *arg)
     ACE_THROW_SPEC ((ACEXML_SAXException)) = 0;
 
   virtual int parseECConfiguration (ECConfiguration* vs, void *arg)

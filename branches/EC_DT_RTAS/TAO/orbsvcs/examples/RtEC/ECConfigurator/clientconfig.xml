@@ -11,6 +11,7 @@
   
 <Event name="Subtask1.1 Trigger" > <!-- name must be unique among Events -->
   <Period>200</Period> <!-- in msec -->
+  <Phase>0</Phase> <!-- in msec -->
   <Criticality value="VERY_LOW" />
   <Importance value="VERY_LOW" />
   <WorstExecution>50</WorstExecution> <!-- in msec -->
@@ -19,6 +20,7 @@
 
 <Event name="Subtask1.2 Trigger" >
   <Period>200</Period> <!-- in msec -->
+  <Phase>0</Phase> <!-- in msec -->
   <Criticality value="VERY_LOW" />
   <Importance value="VERY_LOW" />
   <WorstExecution>50</WorstExecution> <!-- in msec -->

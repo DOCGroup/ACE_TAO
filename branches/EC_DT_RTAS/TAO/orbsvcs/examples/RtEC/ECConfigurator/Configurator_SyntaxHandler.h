@@ -14,10 +14,16 @@
 #ifndef CONFIGURATOR_SYNTAXHANDLER_H
 #define CONFIGURATOR_SYNTAXHANDLER_H
 
-#include "ACEXML/common/SAXExceptions.h"
-
 #include "SyntaxVisitor.h"
 #include "SyntaxTree.h"
+#include "RtSchedEventChannelC.h"
+
+#include "ACEXML/common/SAXExceptions.h"
+
+#include <vector>
+
+// Forward decls
+class ECTestDriver;
 
 /**
  * @class Configurator_SyntaxHandler
@@ -34,6 +40,8 @@ public:
    * Default constructor.
    */
   Configurator_SyntaxHandler (void);
+
+  //int init(CORBA::ORB_var orb, PortableServer::POA_var poa);
 
   /*
    * Default destructor.
@@ -103,9 +111,35 @@ public:
 
   virtual void setRootNode(VisitableSyntax *vs);
 
+  virtual void parse (void)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
+
+  ECTestDriver *getTestDriver (void);
+
+  void setNameTable(NameTable &nt);
+
+  typedef ACE_Hash_Map_Manager<ACE_CString,RtEventChannelAdmin::SchedInfo,ACE_Null_Mutex> QoSTable;
+  typedef std::vector<RtEventChannelAdmin::SchedInfo> QoSVector;
+
+  typedef std::vector<RtEventChannelAdmin::RtSchedEventChannel_var> ECVector;
+  //typedef std::vector<GatewayInitializer> GatewayInitVector;
 private:
 
+  NameTable nametable;
+  QoSTable eventqostable;
+  QoSTable timeoutqostable;
+
   VisitableSyntax *root;
+
+  ECTestDriver *testdriver;
+
+  // ORB stuff
+  //CORBA::ORB_var orb;
+  //PortableServer::POA_var poa;
+  ECVector localECs;
+  ECVector remoteECs;
+  //GatewayInitVector ginitv;
+
 };
 
 #endif /* CONFIGURATOR_SYNTAXHANDLER_H */
