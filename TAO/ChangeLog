@@ -1,3 +1,10 @@
+Wed Dec 31 12:50:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/TAO_Strategies_Static.dsp:
+        * tao/Messaging/TAO_Messaging_Static.dsp:
+        * tao/IORManipulation/TAO_IORManip_Static.dsp:
+          Fixed these projects
+
 Wed Dec 31 09:58:14 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/RT_lib/RT_Factories_Define.cpp:
