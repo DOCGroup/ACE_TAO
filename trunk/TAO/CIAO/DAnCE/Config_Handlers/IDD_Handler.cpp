@@ -81,6 +81,8 @@ namespace CIAO
       bool r = MDD_Handler::IDREF.find_ref 
           (src.implementation ().id ().c_str (), tmp);
       
+      ACE_UNUSED_ARG (r);
+      
       // @@ MAJO:  What shouold we do if find_ref fails??
       dest.implementationRef = tmp;
 

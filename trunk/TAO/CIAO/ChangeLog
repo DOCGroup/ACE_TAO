@@ -1,3 +1,19 @@
+Tue Mar 22 00:13:56 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	
+	* DAnCE/Config_Handlers/Any_Handler.cpp
+
+	Silenced warnings present in GCC >3 builds.
+	
+	* DAnCE/Config_Handlers/CCD_Handler.h
+	* DAnCE/Config_Handlers/Config_Handlers.mpc
+	* DAnCE/Config_Handlers/IDD_Handler.cpp
+	* DAnCE/Config_Handlers/Property_Handler.h
+	* DAnCE/Config_Handlers/Req_Handler.h
+	* DAnCE/Config_Handlers/XML_Error_Handler.h
+	* DAnCE/Config_Handlers/XML_File_Intf.h
+	
+	Silenced a few warnings present in the Fuzz build.
+	
 Mon Mar 21 08:47:44 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CCF/CCF/IDL2/IDL2.vcproj:

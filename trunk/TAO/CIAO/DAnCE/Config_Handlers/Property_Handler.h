@@ -1,6 +1,6 @@
 //================================================
 /**
- *  @file  Prop_Handler.h
+ *  @file  Property_Handler.h
  *
  *  $Id$
  *

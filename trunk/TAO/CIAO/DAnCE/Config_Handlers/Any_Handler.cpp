@@ -29,46 +29,43 @@ namespace CIAO
 
       if (value.short_p ())
         {
-          toconfig <<=
-            static_cast<CORBA::Short> (value.short_ ());
+          toconfig <<= 
+            CORBA::Short (static_cast <short &> (value.short_ ()));
+          
+          //  static_cast<CORBA::Short> (value.short_ ());
         }
       else if (value.ushort_p ())
         {
           toconfig <<=
-            static_cast<CORBA::UShort> (value.ushort ());
+            CORBA::UShort (static_cast<unsigned short &> (value.ushort ()));
 
         }
       else if (value.long_p ())
         {
           toconfig <<=
-            static_cast <CORBA::Long> (value.long_ ());
+            CORBA::Long (static_cast <int &> (value.long_ ()));
 
         }
       else if (value.ulong_p ())
         {
-          CORBA::ULong val = value.ulong ();
-
-          toconfig <<= val;
-
+          toconfig <<=
+            CORBA::ULong (static_cast <unsigned int &> (value.ulong ()));
         }
       else if (value.boolean_p ())
         {
-          CORBA::Boolean val = value.boolean ();
-
-          toconfig <<= val;
+          toconfig <<= 
+            CORBA::Boolean (static_cast <bool &> (value.boolean ()));
 
         }
       else if (value.double_p ())
         {
-          CORBA::Boolean val = value.double_ ();
-          toconfig <<= val;
-
+          toconfig <<= 
+            CORBA::Double (static_cast <double &> (value.double_ ()));
         }
       else if (value.float_p ())
         {
-          CORBA::Float val = value.float_ ();
-          toconfig <<= val;
-
+          toconfig <<= 
+            CORBA::Float (static_cast <float &> (value.float_ ()));
         }
       else if (value.string_p ())
         {
@@ -78,7 +75,7 @@ namespace CIAO
         }
       else if (value.octet_p ())
         {
-          CORBA::Octet val = value.octet ();
+          CORBA::Octet val (static_cast <unsigned char &> (value.octet ()));
 
           toconfig <<=
             CORBA::Any::from_octet (val);
@@ -86,16 +83,13 @@ namespace CIAO
         }
       else if (value.longlong_p ())
         {
-          CORBA::LongLong val = value.longlong ();
-
-          toconfig <<= val;
-
+          toconfig <<= 
+            CORBA::LongLong (static_cast <long long &> (value.longlong ()));
         }
       else if (value.ulonglong_p ())
         {
-          CORBA::ULongLong val = value.ulonglong ();
-          toconfig <<=val;
-
+          toconfig <<=
+            CORBA::ULongLong (static_cast <unsigned long long &> (value.ulonglong ()));
         }
     }
 
