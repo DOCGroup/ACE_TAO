@@ -134,6 +134,38 @@ be_union::accept (be_visitor *visitor)
   return visitor->visit_union (this);
 }
 
+idl_bool
+be_union::gen_empty_default_label (void)
+{
+  // A non-empty explicit default label will be generated.
+  if (this->default_index () != -1)
+    {
+      return I_FALSE;
+    }
+    
+  AST_ConcreteType *disc = this->disc_type ();
+  AST_Decl::NodeType nt = disc->node_type ();
+  
+  if (nt == AST_Decl::NT_enum)
+    {
+      return I_TRUE;
+    }
+  
+  AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (disc);
+  
+  if (pdt == 0)
+    {
+      return I_TRUE;
+    }
+      
+  if (pdt->pt () == AST_PredefinedType::PT_boolean && this->nmembers () == 2)
+    {
+      return I_FALSE;
+    }
+    
+  return I_TRUE;
+}
+
 // Narrowing.
 IMPL_NARROW_METHODS3 (be_union, AST_Union, be_scope, be_type)
 IMPL_NARROW_FROM_DECL (be_union)

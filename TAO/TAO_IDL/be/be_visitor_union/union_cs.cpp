@@ -143,7 +143,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
   *os << "{" << be_idt_nl;
   *os << "this->disc_ = u.disc_;" << be_nl;
   *os << "switch (this->disc_)" << be_nl;
-  *os << "{" << be_idt_nl;
+  *os << "{" << be_idt;
 
   if (this->visit_scope (node) == -1)
     {
@@ -160,9 +160,10 @@ int be_visitor_union_cs::visit_union (be_union *node)
   // not all case values are included. If there is no
   // implicit default case, or the discriminator is not
   // an enum, this does no harm.
-  if (node->default_index () == -1)
+  if (node->gen_empty_default_label ())
     {
-      *os << "default:" << be_nl
+      *os << be_nl
+          << "default:" << be_nl
           << "break;";
     }
 
@@ -209,7 +210,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
   *os << "this->disc_ = u.disc_;" << be_nl << be_nl;
   // now switch based on the disc value
   *os << "switch (this->disc_)" << be_nl;
-  *os << "{" << be_idt_nl;
+  *os << "{" << be_idt;
 
   if (this->visit_scope (node) == -1)
     {
@@ -226,17 +227,15 @@ int be_visitor_union_cs::visit_union (be_union *node)
   // not all case values are included. If there is no
   // implicit default case, or the discriminator is not
   // an enum, this does no harm.
-  if (node->default_index () == -1)
+  if (node->gen_empty_default_label ())
     {
-      *os << "default:" << be_nl
-          << "break;" << be_uidt_nl;
-    }
-  else
-    {
-      *os << be_uidt_nl;
+      *os << be_nl
+          << "default:" << be_nl
+          << "break;";
     }
 
-  *os << "}" << be_nl << be_nl;
+  *os << be_uidt_nl
+      << "}" << be_nl << be_nl;
   *os << "return *this;" << be_uidt_nl;
   *os << "}\n\n";
 
@@ -265,12 +264,11 @@ int be_visitor_union_cs::visit_union (be_union *node)
   // not all case values are included. If there is no
   // implicit default case, or the discriminator is not
   // an enum, this does no harm.
-  if (node->default_index () == -1)
+  if (node->gen_empty_default_label ())
     {
-      os->decr_indent (0);
-      *os << "default:" << be_nl;
-      os->incr_indent ();
-      *os << "break;";
+      *os << be_nl
+          << "default:" << be_nl
+          << "break;";
     }
 
   *os << be_uidt_nl << "}" << be_uidt_nl

@@ -1,3 +1,25 @@
+Mon May 17 17:33:27 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+        * TAO_IDL/be_include/be_union.h:
+        
+          Removed generation of empty union default case (as distinguished
+          from the non-empty explicit default case when the IDL union
+          has an explicit default case label) when the discriminator
+          is of boolean type and the union has 2 members. In the
+          case where the descriminator is an enum type and all the enum
+          values are used as case labels, the empty default case is
+          required by some compilers (this fix was made to the IDL
+          compiler some time ago). In the case in question, however,
+          it seems some compilers emit warnings if the switch
+          statements have 2 cases plus the default. These generated
+          switch statements appear in the union's copy constructor,
+          assignment operator, _reset() method, and CDR operators.
+
 Mon May 17 12:46:26 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* orbsvcs/performance-tests/RTEvent/lib/Shutdown.h:
