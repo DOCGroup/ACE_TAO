@@ -1,3 +1,12 @@
+Wed Jun 28 09:32:29 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * pace/config/config.h: added platform-dependent determination
+          of PACE_HAS_REENTRANT.  Also, wrapped all of the PACE_HAS...
+          #defines with a check to see if it had already been defined.
+
+        * pace/posix/stdlib.inl (pace_rand_r): use PACE_HAS_REENTRANT,
+          now that the platform-dependent code is in pace/config/config.h.
+
 Wed Jun 28 09:21:07 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * tests/Makefile:
