@@ -11,12 +11,6 @@ const unsigned int ACE_INT2BIT[32] =
 
 // **************************************************
 
-ACE_INLINE RtecEventChannelAdmin::ProxyPushConsumer_ptr
-ACE_Push_Supplier_Proxy::get_ref (CORBA::Environment &env)
-{
-  return this->_this (env);
-}
-
 ACE_INLINE int
 ACE_Push_Supplier_Proxy::connected (void)
 {
@@ -55,12 +49,6 @@ ACE_Push_Supplier_Proxy::qos (void) const
 }
 
 // **************************************************
-
-ACE_INLINE RtecEventChannelAdmin::ProxyPushSupplier_ptr
-ACE_Push_Consumer_Proxy::get_ref (CORBA::Environment &env)
-{
-  return this->_this (env);
-}
 
 ACE_INLINE RtecEventChannelAdmin::ConsumerQOS &
 ACE_Push_Consumer_Proxy::qos (void)

@@ -102,8 +102,8 @@ public:
   void destroy_proxy_push_supplier_set (TAO_EC_ProxyPushSupplier_Set*);
   // Create and destroy a ProxyPushSupplier_Set
 
-  PortableServer::POA_ptr supplier_poa (CORBA::Environment&);
-  PortableServer::POA_ptr consumer_poa (CORBA::Environment&);
+  PortableServer::POA_ptr supplier_poa (void);
+  PortableServer::POA_ptr consumer_poa (void);
   // Access the supplier and consumer POAs from the factory.
 
   ACE_Lock* create_consumer_lock (void);

@@ -52,39 +52,39 @@ public:
 // a CORBA::NO_IMPLEMENT exception and do nothing else.
 
   const char *context_name (
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::Environment::default_environment ()
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::default_environment ()
       ) const;
 
   CORBA_Context_ptr parent (
-        CORBA::Environment &ACE_TRY_ENV = 
-          CORBA::Environment::default_environment ()
+        CORBA::Environment &ACE_TRY_ENV =
+          CORBA::default_environment ()
       ) const;
 
-  void create_child (const char *child_ctx_name, 
+  void create_child (const char *child_ctx_name,
                      CORBA_Context_out child_ctx,
-                     CORBA::Environment &ACE_TRY_ENV = 
-                       CORBA::Environment::default_environment ());
+                     CORBA::Environment &ACE_TRY_ENV =
+                       CORBA::default_environment ());
 
-  void set_one_value (const char *propname, 
+  void set_one_value (const char *propname,
                       const CORBA_Any &propvalue,
-                      CORBA::Environment &ACE_TRY_ENV = 
-                        CORBA::Environment::default_environment ());
+                      CORBA::Environment &ACE_TRY_ENV =
+                        CORBA::default_environment ());
 
   void set_values (CORBA::NVList_ptr values,
-                   CORBA::Environment &ACE_TRY_ENV = 
-                     CORBA::Environment::default_environment ());
+                   CORBA::Environment &ACE_TRY_ENV =
+                     CORBA::default_environment ());
 
   void delete_values (const char *propname,
-                      CORBA::Environment &ACE_TRY_ENV = 
-                        CORBA::Environment::default_environment ());
+                      CORBA::Environment &ACE_TRY_ENV =
+                        CORBA::default_environment ());
 
   void get_values (const char *start_scope,
                    CORBA::Flags op_flags,
                    const char *pattern,
                    CORBA::NVList_ptr &values,
-                   CORBA::Environment &ACE_TRY_ENV = 
-                     CORBA::Environment::default_environment ());
+                   CORBA::Environment &ACE_TRY_ENV =
+                     CORBA::default_environment ());
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_Context_ptr _ptr_type;
@@ -202,13 +202,13 @@ public:
   void add_consume (char *ctx);
   // add and consume a string to the list
 
-  char *item (CORBA::ULong index, 
-              CORBA_Environment &ACE_TRY_ENV = 
+  char *item (CORBA::ULong index,
+              CORBA_Environment &ACE_TRY_ENV =
                 CORBA::default_environment ());
   // return the typecode at index i. Raises the "Bounds" exception
 
-  void remove (CORBA::ULong index, 
-               CORBA_Environment &ACE_TRY_ENV = 
+  void remove (CORBA::ULong index,
+               CORBA_Environment &ACE_TRY_ENV =
                 CORBA::default_environment ());
   // remove the typecode at index i. Raises the "Bounds" exception
 

@@ -111,7 +111,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
       << "const char* logical_type_id," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-      << "CORBA::Environment::default_environment ()"
+      << "CORBA::default_environment ()"
       << be_uidt << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
@@ -125,7 +125,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "void *obj," << be_nl
       << "void *context," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-      << "CORBA::Environment::default_environment ()"
+      << "CORBA::default_environment ()"
       << be_uidt << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
@@ -136,7 +136,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "void *obj," << be_nl
       << "void *context," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-      << "CORBA::Environment::default_environment ()"
+      << "CORBA::default_environment ()"
       << be_uidt << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
@@ -145,14 +145,14 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "CORBA::ServerRequest &_tao_req," << be_nl
       << "void *_tao_context," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-      << "CORBA::Environment::default_environment ()"
+      << "CORBA::default_environment ()"
       << be_uidt << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
   // Print out the _this() method.
   *os << node->name () << " *_this (" << be_idt << be_idt_nl
       << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
-      << "CORBA::Environment::default_environment ()"
+      << "CORBA::default_environment ()"
       << be_uidt << be_uidt_nl
       << ");\n" << be_uidt_nl;
 

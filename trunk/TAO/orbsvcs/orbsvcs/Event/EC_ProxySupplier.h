@@ -96,9 +96,6 @@ public:
   // Usually implemented as no-ops, but some configurations may
   // require this methods.
 
-  void set_default_POA (PortableServer::POA_ptr poa);
-  // Set this servant's default POA
-
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
   // Override the ServantBase method.
 
@@ -124,13 +121,9 @@ public:
   virtual void suspend_connection (CORBA::Environment &);
   virtual void resume_connection (CORBA::Environment &);
 
-  virtual CORBA::ULong _incr_refcnt (void);
-  virtual CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt (void);
+  CORBA::ULong _decr_refcnt (void);
   // Increment and decrement the reference count.
-  // @@ TODO We use the canonical tao form, but in the future we may
-  // want to add methods that follow the upcoming CORBA2.3
-  // specification, which will include reference counting for
-  // servants.
 
   // = The TAO_EC_Filter methods, only push() is implemented...
   virtual int filter (const RtecEventComm::EventSet& event,
@@ -149,12 +142,15 @@ public:
   virtual CORBA::ULong max_event_size (void) const;
   virtual int can_match (const RtecEventComm::EventHeader &header) const;
 
+  // = Servant reference counting methods.
+  virtual void _add_ref (CORBA_Environment &ACE_TRY_ENV =
+                             CORBA::default_environment ());
+  virtual void _remove_ref (CORBA_Environment &ACE_TRY_ENV =
+                                CORBA::default_environment ());
+
 private:
   CORBA::Boolean is_connected_i (void) const;
   // The private version (without locking) of is_connected().
-
-  PortableServer::POA_ptr _default_POA_i ();
-  // The private version (without locking) of _default_POA_i ().
 
 private:
   TAO_EC_Event_Channel* event_channel_;

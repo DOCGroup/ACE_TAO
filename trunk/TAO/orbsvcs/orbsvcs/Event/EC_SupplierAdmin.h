@@ -63,9 +63,6 @@ public:
   virtual ~TAO_EC_SupplierAdmin (void);
   // destructor...
 
-  void set_default_POA (PortableServer::POA_ptr poa);
-  // Set this servant's default POA
-
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
   // Override the ServantBase method.
 

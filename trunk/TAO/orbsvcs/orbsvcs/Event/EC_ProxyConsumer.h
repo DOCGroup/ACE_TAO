@@ -90,11 +90,12 @@ public:
   // Usually implemented as no-ops, but some configurations may
   // require this methods.
 
-  void set_default_POA (PortableServer::POA_ptr poa);
-  // Set this servant's default POA
-
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
   // Override the ServantBase method.
+
+  CORBA::ULong _incr_refcnt (void);
+  CORBA::ULong _decr_refcnt (void);
+  // Increment and decrement the reference count.
 
   // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
   virtual void connect_push_supplier (
@@ -105,12 +106,25 @@ public:
                      CORBA::Environment &);
   virtual void disconnect_push_consumer (CORBA::Environment &);
 
+  // = Servant reference counting methods.
+  virtual void _add_ref (CORBA_Environment &ACE_TRY_ENV =
+                             CORBA::default_environment ());
+  virtual void _remove_ref (CORBA_Environment &ACE_TRY_ENV =
+                                CORBA::default_environment ());
+
+private:
+  CORBA::Boolean is_connected_i (void) const;
+  // The private version (without locking) of is_connected().
+
 private:
   TAO_EC_Event_Channel* event_channel_;
   // The supplier admin, used for activation and memory managment.
 
-  TAO_EC_SupplierFiltering* filter_;
-  // The strategy to do filtering close to the supplier
+  ACE_Lock* lock_;
+  // The locking strategy.
+
+  CORBA::ULong refcount_;
+  // The reference count.
 
   RtecEventComm::PushSupplier_var supplier_;
   // The supplier....
@@ -120,6 +134,9 @@ private:
 
   PortableServer::POA_var default_POA_;
   // Store the default POA.
+
+  TAO_EC_SupplierFiltering* filter_;
+  // The strategy to do filtering close to the supplier
 };
 
 #if defined (__ACE_INLINE__)

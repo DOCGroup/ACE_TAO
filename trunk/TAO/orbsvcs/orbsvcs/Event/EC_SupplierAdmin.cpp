@@ -14,17 +14,12 @@ ACE_RCSID(Event, EC_SupplierAdmin, "$Id$")
 TAO_EC_SupplierAdmin::TAO_EC_SupplierAdmin (TAO_EC_Event_Channel *ec)
   :  event_channel_ (ec)
 {
+  this->default_POA_ =
+    this->event_channel_->supplier_poa ();
 }
 
 TAO_EC_SupplierAdmin::~TAO_EC_SupplierAdmin (void)
 {
-}
-
-void
-TAO_EC_SupplierAdmin::set_default_POA (PortableServer::POA_ptr poa)
-{
-  this->default_POA_ =
-    PortableServer::POA::_duplicate (poa);
 }
 
 PortableServer::POA_ptr
@@ -86,10 +81,6 @@ TAO_EC_SupplierAdmin::obtain_push_consumer (CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_EC_ProxyPushConsumer* consumer =
     this->event_channel_->create_proxy_push_consumer ();
-
-  PortableServer::POA_var poa =
-    this->event_channel_->consumer_poa (ACE_TRY_ENV);
-  consumer->set_default_POA (poa.in ());
 
   return consumer->_this (ACE_TRY_ENV);
 }

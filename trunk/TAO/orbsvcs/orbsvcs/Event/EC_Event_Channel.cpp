@@ -77,20 +77,10 @@ TAO_EC_Event_Channel::~TAO_EC_Event_Channel (void)
 }
 
 void
-TAO_EC_Event_Channel::activate (CORBA::Environment& ACE_TRY_ENV)
+TAO_EC_Event_Channel::activate (CORBA::Environment&)
 {
   this->dispatching_->activate ();
   this->timeout_generator_->activate ();
-
-  PortableServer::POA_var supplier_poa =
-    this->supplier_poa (ACE_TRY_ENV);
-  ACE_CHECK;
-  this->supplier_admin_->set_default_POA (supplier_poa.in ());
-
-  PortableServer::POA_var consumer_poa =
-    this->consumer_poa (ACE_TRY_ENV);
-  ACE_CHECK;
-  this->consumer_admin_->set_default_POA (consumer_poa.in ());
 }
 
 void

@@ -1,3 +1,49 @@
+Fri Apr 30 12:42:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/arglist.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+	  Generate CORBA::default_environment() instead of
+	  CORBA::Environment::default_environment. It is easier to
+	  generate code for the TAO library that way and it is slightly
+	  more efficient.
+
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.i:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+	  Added support for reference counting of ProxyPushConsumer and
+	  ProxyPushSupplier objects.
+	  Also fixed the initialization of the default_POAs for those
+	  classes and the Admin interfaces.
+	  Added strategized locking to the 
+
+	* tao/Context.h:
+	* tao/Context.cpp:
+	  Use CORBA::defaul_environment() instead of
+	  CORBA::Environment::default_environment() that way we can
+	  include Context.h without requiring Environment.h
+	  Also reordered some includes in the .cpp file to validate the
+	  Context.h file on its own.
+
+	* tao/IOR_LookupTable.cpp:
+	* tao/ORB.cpp:
+	  Protected some debug messages with TAO_debug_level. Also added a 
+	  few more to check the iioploc support.
+
 Fri Apr 30 11:58:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Request.{h,cpp} (operator[]): Changed the return type from
