@@ -187,7 +187,7 @@ writev_n (ACE_HANDLE h, iovec *iov, int iovcnt)
           writelen += n;
           while (s < iovcnt && n >= iov[s].iov_len)
             {
-              n -= iov[s].length ();
+              n -= iov[s].iov_len;
               s++;
             }
           if (n != 0)
@@ -195,7 +195,7 @@ writev_n (ACE_HANDLE h, iovec *iov, int iovcnt)
               char* base = ACE_reinterpret_cast (char*, iov[s].iov_base);
 
               iov[s].iov_base = base + n;
-              iov[s].iov_len = iov[s].length () - n;
+              iov[s].iov_len = iov[s].iov_len - n;
             }
         }
     }
