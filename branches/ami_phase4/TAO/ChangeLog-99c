@@ -1,3 +1,15 @@
+Sat Jul 17 10:53:49 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+  
+	* performance-tests/Latency/Makefile
+	* performance-tests/Latency/client.cpp
+	* performance-tests/Latency/test.idl
+	* performance-tests/Latency/test_i.cpp
+	* performance-tests/Latency/test_i.h
+	* performance-tests/Latency/client.exclusive.conf
+	* performance-tests/Latency/ami-latency-client.cpp
+	* performance-tests/Latency/client-st-muxed.conf : Latency test is
+	  in place now. This should do for Throughput meaurement also.  
+
 Fri Jul 16 12:20:50 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tests/AMI/client.cpp: Cosmetic changes. 
