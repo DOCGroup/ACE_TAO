@@ -758,7 +758,7 @@ Supplier_Main::init_event_channel (ACE_ENV_SINGLE_ARG_DECL)
   }
 }
 
-CosNotifyChannelAdmin::AdminID default_admin_id = ACE_static_cast (CosNotifyChannelAdmin::AdminID, -1);
+CosNotifyChannelAdmin::AdminID default_admin_id = static_cast<CosNotifyChannelAdmin::AdminID> (-1);
 
 void
 Supplier_Main::init_supplier_admin (ACE_ENV_SINGLE_ARG_DECL)

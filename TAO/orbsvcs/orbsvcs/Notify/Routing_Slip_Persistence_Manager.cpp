@@ -313,14 +313,14 @@ Routing_Slip_Persistence_Manager::Block_Header::put_header(
   size_t pos = offset;
   unsigned char* data = psb.data();
   // Store serial_number
-  data[pos++] = ACE_static_cast (unsigned char, (serial_number >> 56) & 0xff);
-  data[pos++] = ACE_static_cast (unsigned char, (serial_number >> 48) & 0xff);
-  data[pos++] = ACE_static_cast (unsigned char, (serial_number >> 40) & 0xff);
-  data[pos++] = ACE_static_cast (unsigned char, (serial_number >> 32) & 0xff);
-  data[pos++] = ACE_static_cast (unsigned char, (serial_number >> 24) & 0xff);
-  data[pos++] = ACE_static_cast (unsigned char, (serial_number >> 16) & 0xff);
-  data[pos++] = ACE_static_cast (unsigned char, (serial_number >> 8) & 0xff);
-  data[pos++] = ACE_static_cast (unsigned char, (serial_number >> 0) & 0xff);
+  data[pos++] = static_cast<unsigned char> ((serial_number >> 56) & 0xff);
+  data[pos++] = static_cast<unsigned char> ((serial_number >> 48) & 0xff);
+  data[pos++] = static_cast<unsigned char> ((serial_number >> 40) & 0xff);
+  data[pos++] = static_cast<unsigned char> ((serial_number >> 32) & 0xff);
+  data[pos++] = static_cast<unsigned char> ((serial_number >> 24) & 0xff);
+  data[pos++] = static_cast<unsigned char> ((serial_number >> 16) & 0xff);
+  data[pos++] = static_cast<unsigned char> ((serial_number >> 8) & 0xff);
+  data[pos++] = static_cast<unsigned char> ((serial_number >> 0) & 0xff);
   // Store next_overflow
   data[pos++] = next_overflow >> 24;
   data[pos++] = (next_overflow >> 16) & 0xff;
@@ -386,14 +386,14 @@ Routing_Slip_Persistence_Manager::Routing_Slip_Header::put_header(
   data[pos++] = (next_routing_slip_block >> 8) & 0xff;
   data[pos++] = next_routing_slip_block & 0xff;
   // Store serial_number
-  data[pos++] = ACE_static_cast (unsigned char, (next_serial_number >> 56) & 0xff);
-  data[pos++] = ACE_static_cast (unsigned char, (next_serial_number >> 48) & 0xff);
-  data[pos++] = ACE_static_cast (unsigned char, (next_serial_number >> 40) & 0xff);
-  data[pos++] = ACE_static_cast (unsigned char, (next_serial_number >> 32) & 0xff);
-  data[pos++] = ACE_static_cast (unsigned char, (next_serial_number >> 24) & 0xff);
-  data[pos++] = ACE_static_cast (unsigned char, (next_serial_number >> 16) & 0xff);
-  data[pos++] = ACE_static_cast (unsigned char, (next_serial_number >> 8) & 0xff);
-  data[pos++] = ACE_static_cast (unsigned char, (next_serial_number >> 0) & 0xff);
+  data[pos++] = static_cast<unsigned char> ((next_serial_number >> 56) & 0xff);
+  data[pos++] = static_cast<unsigned char> ((next_serial_number >> 48) & 0xff);
+  data[pos++] = static_cast<unsigned char> ((next_serial_number >> 40) & 0xff);
+  data[pos++] = static_cast<unsigned char> ((next_serial_number >> 32) & 0xff);
+  data[pos++] = static_cast<unsigned char> ((next_serial_number >> 24) & 0xff);
+  data[pos++] = static_cast<unsigned char> ((next_serial_number >> 16) & 0xff);
+  data[pos++] = static_cast<unsigned char> ((next_serial_number >> 8) & 0xff);
+  data[pos++] = static_cast<unsigned char> ((next_serial_number >> 0) & 0xff);
   // Store event_block
   data[pos++] = event_block >> 24;
   data[pos++] = (event_block >> 16) & 0xff;
@@ -664,8 +664,7 @@ Routing_Slip_Persistence_Manager::reload_chain(
         Persistent_Storage_Block* psb = this->allocator_->allocate_at(nextptr);
         mbptr = mbnew;
         // Deallocate the PSB's data and reallocate it to our wr_ptr()...
-        psb->reassign_data(ACE_static_cast(unsigned char*,
-          static_cast<void*> (mbptr->wr_ptr())), true);
+        psb->reassign_data(static_cast<unsigned char*> (static_cast<void*> (mbptr->wr_ptr())), true);
         // ...read into the PSB (whose data is inside of the AMB)...
         this->allocator_->read(psb);
         allocated_blocks.push(psb->block_number());

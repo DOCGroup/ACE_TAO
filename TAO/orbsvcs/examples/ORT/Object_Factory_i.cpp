@@ -26,8 +26,7 @@ Object_Factory_i::create_object (const char *interface_repository_id,
     PortableServer::string_to_ObjectId (stringified_object.in ());
 
   const PortableInterceptor::ObjectId *obj_id =
-    ACE_reinterpret_cast (const PortableInterceptor::ObjectId *,
-                          &id.in ());
+    reinterpret_cast<const PortableInterceptor::ObjectId *> (&id.in ());
   ACE_UNUSED_ARG(obj_id);
   ACE_UNUSED_ARG(interface_repository_id);
 /*

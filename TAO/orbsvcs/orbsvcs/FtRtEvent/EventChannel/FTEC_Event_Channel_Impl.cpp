@@ -545,9 +545,7 @@ TAO_FTEC_Event_Channel_Impl::find_proxy_push_supplier(const FtRtecEventChannelAd
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     POA_RtecEventChannelAdmin::ProxyPushSupplier_ptr obj =
-      ACE_reinterpret_cast (
-      POA_RtecEventChannelAdmin::ProxyPushSupplier_ptr,
-      servant->_downcast ("IDL:RtecEventChannelAdmin/ProxyPushSupplier:1.0")
+      reinterpret_cast<POA_RtecEventChannelAdmin::ProxyPushSupplier_ptr> (servant->_downcast ("IDL:RtecEventChannelAdmin/ProxyPushSupplier:1.0")
       );
 
     return static_cast<TAO_FTEC_ProxyPushSupplier*> (obj);
@@ -570,9 +568,7 @@ TAO_FTEC_Event_Channel_Impl::find_proxy_push_consumer(const FtRtecEventChannelAd
     ACE_TRY_CHECK;
 
     POA_RtecEventChannelAdmin::ProxyPushConsumer_ptr obj =
-      ACE_reinterpret_cast (
-      POA_RtecEventChannelAdmin::ProxyPushConsumer_ptr,
-      servant->_downcast ("IDL:RtecEventChannelAdmin/ProxyPushConsumer:1.0")
+      reinterpret_cast<POA_RtecEventChannelAdmin::ProxyPushConsumer_ptr> (servant->_downcast ("IDL:RtecEventChannelAdmin/ProxyPushConsumer:1.0")
       );
 
     return static_cast<TAO_FTEC_ProxyPushConsumer*> (obj);

@@ -107,7 +107,7 @@ TAO_NT_Naming_Service::init (int argc,
         argv_save_[i] = ACE_OS::strdup (argv[i]);
 
       int j = 0;
-      for (i = argc; i < ACE_static_cast (int, (args.argc () + argc)); i++)
+      for (i = argc; i < static_cast<int> ((args.argc () + argc)); i++)
         argv_save_[i] = ACE_OS::strdup (args.argv ()[j++]);
 
       // Set the arg counter.

@@ -112,7 +112,7 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
                    "%s:%s:%ld",
                    "TAO_AV_Process_Semaphore",
                    this->host_,
-                   ACE_static_cast (long int, this->pid_));
+                   static_cast<long int> (this->pid_));
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) semaphore is %s\n",

@@ -9,8 +9,7 @@ Task_Stats::diff_sec (ACE_UINT64 before, ACE_UINT64 after)
 #if defined ACE_LACKS_LONGLONG_T
     (after - before) / gsf_;
 #else  /* ! ACE_LACKS_LONGLONG_T */
-  ACE_static_cast (double,
-                   ACE_UINT64_DBLCAST_ADAPTER((after - before) / gsf_));
+  static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER((after - before) / gsf_));
 #endif /* ! ACE_LACKS_LONGLONG_T */
   seconds /= ACE_HR_SCALE_CONVERSION;
 

@@ -131,8 +131,7 @@ void FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::set_state(
       ACE_ENV_ARG_PARAMETER);
 
     ACE_CHECK;
-    Skeleton skeleton = ACE_reinterpret_cast(Skeleton,
-      servant->_downcast(proxy_ior->_interface_repository_id()));
+    Skeleton skeleton = reinterpret_cast<Skeleton> (servant->_downcast(proxy_ior->_interface_repository_id()));
     ACE_CHECK;
 
     static_cast<Proxy*> (skeleton)->set_state(proxy_state

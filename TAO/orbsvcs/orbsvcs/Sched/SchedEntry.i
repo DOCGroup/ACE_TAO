@@ -177,8 +177,7 @@ Task_Entry::effective_execution_time () const
 
   return ((rt_info_->info_type == RtecScheduler::OPERATION) ||
           (rt_info_->info_type == RtecScheduler::REMOTE_DEPENDANT))
-         ? ACE_static_cast (u_long,
-                            worst_case_execution_time * dispatches_.size ())
+         ? static_cast<u_long> (worst_case_execution_time * dispatches_.size ())
          : 0;
 }
 

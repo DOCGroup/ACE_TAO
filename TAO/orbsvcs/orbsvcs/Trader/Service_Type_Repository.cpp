@@ -515,8 +515,7 @@ validate_properties (Prop_Map &prop_map,
         {
           TAO_String_Hash_Key prop_name (n);
           CosTradingRepos::ServiceTypeRepository::PropStruct *prop_val =
-            ACE_const_cast (CosTradingRepos::ServiceTypeRepository::PropStruct *,
-                            &props[i]);
+            const_cast<CosTradingRepos::ServiceTypeRepository::PropStruct *> (&props[i]);
 
           if (prop_map.bind (prop_name,
                              prop_val) == 1)

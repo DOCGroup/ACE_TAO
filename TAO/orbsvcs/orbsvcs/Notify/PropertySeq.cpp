@@ -39,8 +39,7 @@ TAO_Notify_PropertySeq::populate (CosNotification::PropertySeq_var& prop_seq) co
   PROPERTY_MAP::CONST_ITERATOR iterator (this->property_map_);
 
   int index = prop_seq->length ();
-  prop_seq->length (ACE_static_cast (CORBA::ULong,
-                        index + this->property_map_.current_size ()));
+  prop_seq->length (static_cast<CORBA::ULong> (index + this->property_map_.current_size ()));
 
   for (PROPERTY_MAP::ENTRY *entry = 0;
        iterator.next (entry) != 0;

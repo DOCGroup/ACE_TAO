@@ -1311,14 +1311,14 @@ TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
   if (ip_addr != 0)
     {
       pid_t pid = ACE_OS::getpid ();
-      this->stem_id_[0] = ACE_static_cast (CORBA::Octet, (ip_addr >> 24) & 0xff);
-      this->stem_id_[1] = ACE_static_cast (CORBA::Octet, (ip_addr >> 16) & 0xff);
-      this->stem_id_[2] = ACE_static_cast (CORBA::Octet, (ip_addr >> 8) & 0xff);
-      this->stem_id_[3] = ACE_static_cast (CORBA::Octet, ip_addr & 0xff);
-      this->stem_id_[4] = ACE_static_cast (CORBA::Octet, (pid >> 24) & 0xff);
-      this->stem_id_[5] = ACE_static_cast (CORBA::Octet, (pid >> 16) & 0xff);
-      this->stem_id_[6] = ACE_static_cast (CORBA::Octet, (pid >> 8) & 0xff);
-      this->stem_id_[7] = ACE_static_cast (CORBA::Octet, pid & 0xff);
+      this->stem_id_[0] = static_cast<CORBA::Octet> ((ip_addr >> 24) & 0xff);
+      this->stem_id_[1] = static_cast<CORBA::Octet> ((ip_addr >> 16) & 0xff);
+      this->stem_id_[2] = static_cast<CORBA::Octet> ((ip_addr >> 8) & 0xff);
+      this->stem_id_[3] = static_cast<CORBA::Octet> (ip_addr & 0xff);
+      this->stem_id_[4] = static_cast<CORBA::Octet> ((pid >> 24) & 0xff);
+      this->stem_id_[5] = static_cast<CORBA::Octet> ((pid >> 16) & 0xff);
+      this->stem_id_[6] = static_cast<CORBA::Octet> ((pid >> 8) & 0xff);
+      this->stem_id_[7] = static_cast<CORBA::Octet> (pid & 0xff);
     }
 
   // The default way -- eight random integers.
@@ -1327,14 +1327,14 @@ TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
       size_t time_value = ACE_OS::time ();
       ACE_OS::srand (static_cast<u_int> (time_value));
 
-      this->stem_id_[0] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
-      this->stem_id_[1] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
-      this->stem_id_[2] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
-      this->stem_id_[3] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
-      this->stem_id_[4] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
-      this->stem_id_[5] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
-      this->stem_id_[6] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
-      this->stem_id_[7] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
+      this->stem_id_[0] = static_cast<CORBA::Octet> (ACE_OS::rand () %  256);
+      this->stem_id_[1] = static_cast<CORBA::Octet> (ACE_OS::rand () %  256);
+      this->stem_id_[2] = static_cast<CORBA::Octet> (ACE_OS::rand () %  256);
+      this->stem_id_[3] = static_cast<CORBA::Octet> (ACE_OS::rand () %  256);
+      this->stem_id_[4] = static_cast<CORBA::Octet> (ACE_OS::rand () %  256);
+      this->stem_id_[5] = static_cast<CORBA::Octet> (ACE_OS::rand () %  256);
+      this->stem_id_[6] = static_cast<CORBA::Octet> (ACE_OS::rand () %  256);
+      this->stem_id_[7] = static_cast<CORBA::Octet> (ACE_OS::rand () %  256);
     }
 }
 

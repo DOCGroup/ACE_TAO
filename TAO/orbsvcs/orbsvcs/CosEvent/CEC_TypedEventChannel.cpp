@@ -223,11 +223,11 @@ TAO_CEC_TypedEventChannel::clear_ifr_cache (void)
       if (TAO_debug_level >= 10)
         {
           ACE_DEBUG ((LM_DEBUG, "***** Destroying operation %s from ifr cache *****\n",
-                      ACE_const_cast (char *, (*i).ext_id_)));
+                      const_cast<char *> ((*i).ext_id_)));
         }
 
       // Deallocate the operation
-      CORBA::string_free (ACE_const_cast (char *, (*i).ext_id_));
+      CORBA::string_free (const_cast<char *> ((*i).ext_id_));
 
       // Destroy the parameter
       delete ((*i).int_id_);

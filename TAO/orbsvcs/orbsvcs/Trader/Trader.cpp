@@ -788,8 +788,7 @@ TAO_Trader_Factory::parse_args (int& argc, ACE_TCHAR** argv)
           if (arg_shifter.is_parameter_next ())
             {
               CORBA::ULong value =
-                ACE_static_cast (CORBA::ULong,
-                                 ACE_OS::atoi (arg_shifter.get_current ()));
+                static_cast<CORBA::ULong> (ACE_OS::atoi (arg_shifter.get_current ()));
               arg_shifter.consume_arg ();
 
               if (ACE_OS::strstr (current_arg, ACE_LIB_TEXT("card")))

@@ -149,8 +149,7 @@ TAO::HTIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       pfile = mprofile.get_profile (i);
       if (pfile->tag () == OCI_TAG_HTIOP_PROFILE)
         {
-          htiop_profile = ACE_dynamic_cast (TAO::HTIOP::Profile *,
-					    pfile);
+          htiop_profile = dynamic_cast<TAO::HTIOP::Profile *> (pfile);
           break;
         }
     }
@@ -214,7 +213,7 @@ int
 TAO::HTIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 {
   const TAO::HTIOP::Endpoint *endp =
-    ACE_dynamic_cast (const TAO::HTIOP::Endpoint *, endpoint);
+    dynamic_cast<const TAO::HTIOP::Endpoint *> (endpoint);
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == 0)
@@ -463,7 +462,7 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
   // address.
   ACE::HTBP::Addr addr;
 
-  if (addr.ACE_INET_Addr::set (ACE_static_cast(u_short, 0),
+  if (addr.ACE_INET_Addr::set (static_cast<u_short> (0),
                                static_cast<ACE_UINT32> (INADDR_ANY),
                                1) != 0)
     return -1;
@@ -676,7 +675,7 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   if (if_cnt == lo_cnt)
     this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt);
   else
-    this->endpoint_count_ = ACE_static_cast(CORBA::ULong, if_cnt - lo_cnt);
+    this->endpoint_count_ = static_cast<CORBA::ULong> (if_cnt - lo_cnt);
 
   ACE_NEW_RETURN (this->addrs_,
                   ACE::HTBP::Addr[this->endpoint_count_],
@@ -851,7 +850,7 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
 
           int slot = opt.find ("=");
 
-          if (slot == ACE_static_cast (int, len - 1)
+          if (slot == static_cast<int> (len - 1)
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) HTIOP option <%s> is ")

@@ -30,7 +30,7 @@ ACE_RCSID (FT_ReplicationManagerFaultAnalyzer,
 TAO::FT_ReplicationManagerFaultAnalyzer::FT_ReplicationManagerFaultAnalyzer (
   const TAO::FT_ReplicationManager * replication_manager)
   : replication_manager_ (
-      ACE_const_cast (TAO::FT_ReplicationManager *, replication_manager))
+      const_cast<TAO::FT_ReplicationManager *> (replication_manager))
 {
 }
 

@@ -232,7 +232,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 
   // Length of ior to be sent.
   CORBA::Short data_len =
-    ACE_static_cast(CORBA::Short, ACE_HTONS (this->ior_.length () + 1));
+    static_cast<CORBA::Short> (ACE_HTONS (this->ior_.length () + 1));
 
   // Vector to be sent.
   const int cnt = 2;
@@ -244,7 +244,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 
   // The ior.
   iovp[1].iov_base = const_cast<char*> (this->ior_.c_str ());
-  iovp[1].iov_len  = ACE_static_cast(u_long, this->ior_.length () + 1);
+  iovp[1].iov_len  = static_cast<u_long> (this->ior_.length () + 1);
 
   ssize_t result = stream.sendv_n (iovp, cnt);
   // Close the stream.

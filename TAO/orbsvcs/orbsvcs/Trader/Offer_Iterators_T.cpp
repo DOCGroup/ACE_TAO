@@ -89,7 +89,7 @@ next_n (CORBA::ULong n,
   // Reset the length to the correct value
   offers->length (ret_offers);
 
-  return ACE_static_cast (CORBA::Boolean, ret_offers != 0);
+  return static_cast<CORBA::Boolean> (ret_offers != 0);
 }
 
 #endif /* TAO_REGISTER_OFFER_ITERATOR_C */

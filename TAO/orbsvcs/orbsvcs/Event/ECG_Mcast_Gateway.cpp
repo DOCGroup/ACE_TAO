@@ -520,8 +520,7 @@ TAO_ECG_Mcast_Gateway::init_sender (
                                    ACE_ES_EVENT_ANY,
                                    0);
       RtecEventChannelAdmin::ConsumerQOS & qos =
-        ACE_const_cast (RtecEventChannelAdmin::ConsumerQOS &,
-                        consumer_qos_factory.get_ConsumerQOS ());
+        const_cast<RtecEventChannelAdmin::ConsumerQOS &> (consumer_qos_factory.get_ConsumerQOS ());
       qos.is_gateway = 1;
 
       sender->connect (qos ACE_ENV_ARG_PARAMETER);
@@ -558,8 +557,7 @@ TAO_ECG_Mcast_Gateway::init_receiver (
                                ACE_ES_EVENT_ANY,
                                0, 1);
   RtecEventChannelAdmin::SupplierQOS & qos =
-    ACE_const_cast (RtecEventChannelAdmin::SupplierQOS &,
-                    supplier_qos_factory.get_SupplierQOS ());
+    const_cast<RtecEventChannelAdmin::SupplierQOS &> (supplier_qos_factory.get_SupplierQOS ());
   qos.is_gateway = 1;
 
   receiver->connect (qos ACE_ENV_ARG_PARAMETER);

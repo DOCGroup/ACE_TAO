@@ -26,8 +26,7 @@ TAO_PSDL_Datastore::TAO_PSDL_Datastore ()
 TAO_PSDL_Datastore::~TAO_PSDL_Datastore (void)
 {
   // delete allocator_;
-  //ACE_OS::free (ACE_const_cast (ACE_TCHAR *,
-  //                            this->index_file_));
+  // ACE_OS::free (const_cast<ACE_TCHAR *> (this->index_file_));
 }
 
 int

@@ -47,8 +47,7 @@ UIPMC_Message_Block_Data_Iterator::next_block (size_t max_length,
           // Break up the block.
           this->iov_len_left_ = current_iov_len - max_length;
           this->iov_ptr_ =
-            ACE_reinterpret_cast (char *,
-                                  reinterpret_cast<char *> (block.iov_base)
+            reinterpret_cast<char *> (reinterpret_cast<char *> (block.iov_base)
                                   + max_length);
           this->state_ = INTRA_BLOCK;
 

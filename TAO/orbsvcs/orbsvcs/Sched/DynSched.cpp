@@ -50,9 +50,9 @@ extern "C" int compare_entry_finish_times (const void *first, const void *second
   }
 
   const Task_Entry *first_entry =
-          * ACE_static_cast (const Task_Entry *const *, first);
+          * static_cast<const Task_Entry *const *> (first);
   const Task_Entry *second_entry =
-          * ACE_static_cast (const Task_Entry *const *, second);
+          * static_cast<const Task_Entry *const *> (second);
 
   // sort blank entries to the end
   if (! first_entry)
@@ -1276,8 +1276,7 @@ ACE_DynScheduler::calculate_utilization_params (void)
         (ordered_dispatch_entries_ [i]->task_entry ().effective_period () > 0))
     {
       utilization_ +=
-        ACE_static_cast (double,
-          ACE_UINT64_DBLCAST_ADAPTER (ordered_dispatch_entries_ [i]->
+        static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER (ordered_dispatch_entries_ [i]->
             task_entry ().rt_info ()->worst_case_execution_time)) /
         static_cast<double> (ordered_dispatch_entries_ [i]->
             task_entry ().effective_period ());
@@ -1380,9 +1379,7 @@ ACE_DynScheduler::setup_task_entries (void)
     // stored magic cookie are the same (see the definition of
     // ptrdiff_t in ACE to grok how this works portably).
     task_entries_ [i].rt_info ()->volatile_token =
-      ACE_static_cast (CORBA::ULongLong,
-                       ACE_reinterpret_cast (ptrdiff_t,
-                                             &(task_entries_ [i])));
+      static_cast<CORBA::ULongLong> (reinterpret_cast<ptrdiff_t> (&(task_entries_ [i])));
 
     // tie ordered task entry pointer to corresponding task entry
     ordered_task_entries_ [i] = &(task_entries_ [i]);

@@ -1306,9 +1306,7 @@ TAO_Log_i::check_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
     {
       CORBA::ULongLong current_size = this->recordstore_.get_current_size ();
       const CORBA::UShort percent =
-        ACE_static_cast (
-          CORBA::UShort,
-          ((double) ACE_UINT64_DBLCAST_ADAPTER (current_size * 100U) /
+        static_cast<CORBA::UShort> (((double) ACE_UINT64_DBLCAST_ADAPTER (current_size * 100U) /
            (double) ACE_UINT64_DBLCAST_ADAPTER (max_size)));
 
       while (current_threshold_ < this->thresholds_.length ()
@@ -1361,9 +1359,7 @@ TAO_Log_i::reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     {
       CORBA::ULongLong current_size = this->recordstore_.get_current_size ();
       const CORBA::UShort percent =
-        ACE_static_cast (
-          CORBA::UShort,
-          (((double) ACE_UINT64_DBLCAST_ADAPTER (current_size * 100U)) /
+        static_cast<CORBA::UShort> ((((double) ACE_UINT64_DBLCAST_ADAPTER (current_size * 100U)) /
             (double) ACE_UINT64_DBLCAST_ADAPTER (max_size)));
 
       this->current_threshold_ = 0;

@@ -947,8 +947,7 @@ TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_RT_Info_Tuple &
   // Compute the current tuple's utilization.
   CORBA::Double delta_utilization =
     (static_cast<CORBA::Double> (t.threads)
-     * ACE_static_cast (CORBA::Double,
-                        ACE_UINT64_DBLCAST_ADAPTER (entry->
+     * static_cast<CORBA::Double> (ACE_UINT64_DBLCAST_ADAPTER (entry->
                                                       aggregate_exec_time ())))
     / static_cast<CORBA::Double> (t.period);
 
@@ -957,8 +956,7 @@ TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_RT_Info_Tuple &
     {
       delta_utilization -=
         (static_cast<CORBA::Double> (entry->current_admitted_tuple ()->threads)
-         * ACE_static_cast (CORBA::Double,
-                            ACE_UINT64_DBLCAST_ADAPTER (entry->
+         * static_cast<CORBA::Double> (ACE_UINT64_DBLCAST_ADAPTER (entry->
                                                           aggregate_exec_time ())))
         / static_cast<CORBA::Double> (entry->current_admitted_tuple ()->period);
     }

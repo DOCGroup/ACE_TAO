@@ -108,10 +108,10 @@ TAO_LB_run_load_manager (void * orb_arg)
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "TAO Load Manager");
 
-      return ACE_reinterpret_cast (void *, -1);
+      return reinterpret_cast<void *> (-1);
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (ACE_reinterpret_cast (void *, -1));
+  ACE_CHECK_RETURN (reinterpret_cast<void *> (-1));
 
   return 0;
 }

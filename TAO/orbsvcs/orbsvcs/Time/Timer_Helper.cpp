@@ -134,10 +134,8 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
       // updation of time was done.
       clerk_->update_timestamp_ =
         static_cast<CORBA::ULongLong> (timeofday.sec ()) *
-        ACE_static_cast (ACE_UINT32,
-                         10000000) +
-        ACE_static_cast (CORBA::ULongLong,
-                         timeofday.usec () * 10);
+        static_cast<ACE_UINT32> (10000000) +
+        static_cast<CORBA::ULongLong> (timeofday.usec () * 10);
     }
   ACE_CATCHANY
     {

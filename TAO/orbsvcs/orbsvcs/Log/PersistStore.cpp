@@ -224,6 +224,5 @@ TAO_PersistStore::get_percentage_full (void)
   if (this->max_size_ == 0)
     return 0;
 
-  return ACE_static_cast (unsigned short,
-                          (100U * this->current_size_ / this->max_size_));
+  return static_cast<unsigned short> ((100U * this->current_size_ / this->max_size_));
 }

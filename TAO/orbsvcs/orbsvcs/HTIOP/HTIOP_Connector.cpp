@@ -411,8 +411,7 @@ TAO::HTIOP::Connector::remote_endpoint (TAO_Endpoint *endpoint)
     return 0;
 
   TAO::HTIOP::Endpoint *htiop_endpoint =
-    ACE_dynamic_cast (TAO::HTIOP::Endpoint *,
-                      endpoint );
+    dynamic_cast<TAO::HTIOP::Endpoint *> (endpoint );
 
  if (htiop_endpoint == 0)
     return 0;
