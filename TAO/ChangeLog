@@ -1,3 +1,13 @@
+Wed Oct  9 09:56:40 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.h:
+
+	  No need to explicitly include "tao/corba.h".
+
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
+
+	  DOC group coding style fixes.
+
 Wed Oct  9 09:28:28 2002  Ossama Othman  <ossama@uci.edu>
 
 	* TAOACE.dsw:
