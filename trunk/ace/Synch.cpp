@@ -472,7 +472,7 @@ ACE_Event::ACE_Event (int manual_reset,
                           name,
                           arg) != 0)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT("%p\n"), 
+                ASYS_TEXT("%p\n"),
                 ASYS_TEXT("ACE_Event::ACE_Event")));
 }
 
@@ -600,6 +600,7 @@ ACE_Thread_Semaphore::ACE_Thread_Semaphore (u_int count,
 // ACE_TRACE ("ACE_Thread_Semaphore::ACE_Thread_Semaphore");
 }
 
+#if defined (ACE_USES_OBSOLETE_GUARD_CLASSES)
 void
 ACE_Thread_Mutex_Guard::dump (void) const
 {
@@ -609,6 +610,7 @@ ACE_Thread_Mutex_Guard::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif /* ACE_USES_OBSOLETE_GUARD_CLASSES */
 
 ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (LPCTSTR name,
                                                         void *arg)
@@ -1011,7 +1013,7 @@ ACE_Thread_Mutex::ACE_Thread_Mutex (LPCTSTR name, void *arg)
 //  ACE_TRACE ("ACE_Thread_Mutex::ACE_Thread_Mutex");
 
   if (ACE_OS::thread_mutex_init (&this->lock_, USYNC_THREAD, name, arg) != 0)
-    ACE_ERROR ((LM_ERROR, 
+    ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT("%p\n"),
                 ASYS_TEXT("ACE_Thread_Mutex::ACE_Thread_Mutex")));
 }

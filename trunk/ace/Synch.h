@@ -794,6 +794,7 @@ private:
   ACE_Null_Condition (const ACE_Null_Condition &);
 };
 
+#if defined (ACE_USES_OBSOLETE_GUARD_CLASSES)
 class ACE_Export ACE_Null_Mutex_Guard
 {
   // = TITLE
@@ -819,6 +820,7 @@ private:
   void operator= (const ACE_Null_Mutex_Guard &);
   ACE_Null_Mutex_Guard (const ACE_Null_Mutex_Guard &);
 };
+#endif /* ACE_USES_OBSOLETE_GUARD_CLASSES */
 
 class ACE_Export ACE_TSS_Adapter
 {
@@ -1091,6 +1093,7 @@ private:
   ACE_Thread_Mutex (const ACE_Thread_Mutex &);
 };
 
+#if defined (ACE_USES_OBSOLETE_GUARD_CLASSES)
 class ACE_Export ACE_Thread_Mutex_Guard
 {
   // = TITLE
@@ -1144,6 +1147,7 @@ private:
   void operator= (const ACE_Thread_Mutex_Guard &);
   ACE_Thread_Mutex_Guard (const ACE_Thread_Mutex_Guard &);
 };
+#endif /* ACE_USES_OBSOLETE_GUARD_CLASSES */
 
 class ACE_Export ACE_Condition_Thread_Mutex
 {
