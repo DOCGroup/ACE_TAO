@@ -900,7 +900,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     if (errno >= 0 && errno < sys_nerr)
                       ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%s: %s"),
                                        va_arg (argp, ACE_TCHAR *),
-                                       ACE_OS_String::strerror (errno));
+                                       ACE_TEXT_CHAR_TO_TCHAR (ACE_OS_String::strerror (errno)));
                     else
                       {
 #if defined (ACE_WIN32)
