@@ -50,7 +50,7 @@ create_servant (void *arg)
     return -1;
   }
 
-  ACE_DEBUG ((LM_DEBUG, "Entering boa->run ()"));
+  ACE_DEBUG ((LM_DEBUG, "Entering boa->run ()\n"));
   boa->run ();
   return 0;
 }
