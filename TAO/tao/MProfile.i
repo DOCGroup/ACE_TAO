@@ -87,10 +87,10 @@ TAO_MProfile::get_prev (void)
   if (last_ == 0 || current_ <= 1)
     // No List of BeginningOfList
     return 0;
-  else if (current_ > 1)
+  if (current_ > 1)
     current_--;
-  else
-    return pfiles_[current_ - 1];
+ 
+  return pfiles_[current_ - 1];
 }
 
 // does not affect the current_ setting!
@@ -109,11 +109,11 @@ TAO_MProfile::get_current_profile (void)
 {
   if (last_ == 0) 
     return 0;
-  else if (current_ == 0)
+  if (current_ == 0)
     // means list has not been read before.
     current_ = 1;
-  else
-    return pfiles_[current_ - 1];
+
+  return pfiles_[current_ - 1];
 }
 
 ACE_INLINE TAO_PHandle 
