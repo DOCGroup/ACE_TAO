@@ -1,3 +1,13 @@
+Tue Jan 20 14:11:48 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+
+          Added support for file grouping in these templates.  If source
+          files are grouped in the mpc file, they will show up grouped in
+          the graphical interfaces for these project types.
+
 Tue Jan 20 12:20:35 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/make.mpd:
