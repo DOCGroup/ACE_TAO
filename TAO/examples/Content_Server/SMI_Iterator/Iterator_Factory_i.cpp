@@ -7,6 +7,7 @@
 #include "Iterator_Factory_i.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (SMI_Iterator, Iterator_Factory_i, "$Id$")
 

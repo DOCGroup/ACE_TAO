@@ -6,6 +6,7 @@
 #include "orbsvcs/Event_Service_Constants.h"
 #include "EventChannel_i.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/OS_NS_string.h"
 
 CosEC_ServantBase::CosEC_ServantBase (void)
   :poa_ (PortableServer::POA::_nil ()),

@@ -15,6 +15,7 @@
 
 #include "Naming_Context_Interface.h"
 #include "ace/ACE.h"
+#include "ace/OS_NS_string.h"
 
 TAO_Naming_Context::TAO_Naming_Context (TAO_Naming_Context_Impl *impl)
   : impl_ (impl)

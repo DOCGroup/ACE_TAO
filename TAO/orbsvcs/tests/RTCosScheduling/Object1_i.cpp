@@ -13,6 +13,7 @@
 #include "Object1_i.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 //#include "tao/RTCORBA/RTCORBA.h"
 ////##include "ace/Task.h"
 //

@@ -1,3 +1,81 @@
+Tue Nov  4 08:18:37 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * docs/tutorials/Quoter/RT_Event_Service/client.cpp:
+        * examples/Callback_Quoter/Supplier_i.cpp:
+        * examples/Content_Server/SMI_Iterator/Iterator_Factory_i.cpp:
+        * examples/Kokyu_dsrt_schedulers/FP_SchedulingC.cpp:
+        * examples/Kokyu_dsrt_schedulers/MIF_SchedulingC.cpp:
+        * examples/Kokyu_dsrt_schedulers/MUF_SchedulingC.cpp:
+        * examples/Kokyu_dsrt_schedulers/utils.cpp:
+        * examples/Load_Balancing/Identity_Client.cpp:
+        * examples/POA/Adapter_Activator/server.cpp:
+        * examples/POA/DSI/client.cpp:
+        * examples/POA/Generic_Servant/test_i.cpp:
+        * examples/POA/Loader/Servant_Activator.cpp:
+        * examples/POA/Loader/Servant_Locator.cpp:
+        * examples/POA/On_Demand_Activation/Servant_Activator.cpp:
+        * examples/POA/On_Demand_Activation/Servant_Locator.cpp:
+        * examples/POA/Reference_Counted_Servant/server.cpp:
+        * examples/POA/TIE/client.cpp:
+        * examples/Persistent_Grid/Simple_util.cpp:
+        * examples/RTScheduling/FP_SchedulingC.cpp:
+        * examples/RTScheduling/MIF_SchedulingC.cpp:
+        * examples/Simple/Simple_util.cpp:
+        * examples/Simulator/Event_Supplier/Event_Sup.cpp:
+        * examples/Simulator/Event_Supplier/Logging_Sup.cpp:
+        * orbsvcs/LifeCycle_Service/Criteria_Evaluator.cpp:
+        * orbsvcs/Time_Service/Clerk_i.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/CosEvent_Utilities.cpp:
+        * orbsvcs/orbsvcs/Event_Utilities.cpp:
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
+        * orbsvcs/orbsvcs/Notify/EventType.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Operators.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+        * orbsvcs/tests/Concurrency/CC_client.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_i.cpp:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
+        * orbsvcs/tests/Notify/Ordering/common.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/common.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/common.cpp:
+        * orbsvcs/tests/RTCosScheduling/Object1_i.cpp:
+        * orbsvcs/tests/Time/Client_i.cpp:
+        * orbsvcs/tests/Trading/TT_Info.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+        * performance-tests/POA/Demux/demux_test_client.cpp:
+        * performance-tests/POA/Demux/demux_test_server.cpp:
+        * performance-tests/Pluggable/PP_Test_Client.cpp:
+        * tests/DynAny_Test/driver.cpp:
+        * tests/Exposed_Policies/Policy_Verifier.cpp:
+        * tests/Exposed_Policies/RT_Properties.cpp:
+        * tests/Multiple/Collocation_Tester.cpp:
+        * tests/Param_Test/anyop.cpp:
+        * tests/Portable_Interceptors/AMI/Client_Interceptor.cpp:
+        * tests/Portable_Interceptors/AMI/Server_Interceptor.cpp:
+        * tests/Portable_Interceptors/Benchmark/interceptors.cpp:
+        * tests/Portable_Interceptors/Benchmark/test_i.cpp:
+        * tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+        * tests/Portable_Interceptors/ForwardRequest/Client_ORBInitializer.cpp:
+        * tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor.cpp:
+        * tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor2.cpp:
+        * tests/Portable_Interceptors/PICurrent/ServerRequestInterceptor.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Client_Request_Interceptor.cpp:
+        * tests/Portable_Interceptors/Request_Interceptor_Flow/Server_Request_Interceptor.cpp:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
+        * tests/RTScheduling/DT_Spawn/Thread_Action.h:
+        * tests/Smart_Proxies/client.cpp:
+        * tests/Smart_Proxies/server.cpp:
+        * tests/Smart_Proxies/On_Demand/client.cpp:
+        * tests/Smart_Proxies/On_Demand/server.cpp:
+        * utils/nslist/nsadd.cpp:
+        * utils/nslist/nsdel.cpp:
+          Added #include of OS_NS_string.h.
+
 Mon Nov  3 23:23:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_module.cpp:
