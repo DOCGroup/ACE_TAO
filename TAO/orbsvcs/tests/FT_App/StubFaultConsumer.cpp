@@ -266,10 +266,20 @@ void StubFaultConsumer::push_structured_event(
   for (size_t nProp = 0; nProp < propertyCount; ++nProp)
   {
     const CosNotification::Property & property = filterable[nProp];
+
+    const char * property_name = ACE_static_cast (const char *, property.name);
+    const char * value = "<unknown>";
+    if (property.value >>= value )
+    {
+      // ok!
+    }
     ACE_ERROR ((LM_ERROR,
-      "FaultConsumer:   Property Name: %s\n",
-      ACE_static_cast (const char *, property.name)
+      "FaultConsumer:   Property Name: %s=%s\n",
+      property_name,
+      value
       ));
+
+
 //    int todo_finish_decode;
   }
 

@@ -14,6 +14,7 @@
 #include "FT_TestReplica_i.h"
 #include <ace/Get_Opt.h>
 #include <orbsvcs/CosNamingC.h>
+#include <orbsvcs/PortableGroupC.h>
 #include <tao/PortableServer/ORB_Manager.h>
 #include <orbsvcs/PortableGroup/PG_Properties_Decoder.h>
 
@@ -42,9 +43,7 @@
     return /* value goes here */
 
 
-static const char * type_property = "type";
-
-static const char * type_initial_value = "INITIAL_VALUE";
+static const char * criterion_initial_value = "INITIAL_VALUE";
 
 //////////////////////////////////////////////////////
 // FT_ReplicaFactory_i  Construction/destruction
@@ -63,6 +62,11 @@ FT_ReplicaFactory_i::FT_ReplicaFactory_i ()
   , have_replication_manager_(0)
   , replication_manager_(0)
 {
+  ACE_DEBUG((LM_DEBUG, "TestReplica type_id: %s\n", FT_TEST::_tc_TestReplica->id() ));
+//  ACE_DEBUG((LM_DEBUG, "Hobbit type_id: %s\n", FT_TEST::_tc_Hobbit->id() ));
+//  ACE_DEBUG((LM_DEBUG, "Elf type_id: %s\n", FT_TEST::_tc_Elf->id() ));
+//  ACE_DEBUG((LM_DEBUG, "Human type_id: %s\n", FT_TEST::_tc_Human->id() ));
+
 }
 
 
@@ -164,7 +168,7 @@ int FT_ReplicaFactory_i::parse_args (int argc, char * argv[])
       }
       case 'i':
       {
-        this->types_.push_back(get_opts.opt_arg ());
+        this->roles_.push_back(get_opts.opt_arg ());
         break;
       }
       case 'l':
@@ -193,16 +197,15 @@ int FT_ReplicaFactory_i::parse_args (int argc, char * argv[])
         // fall thru
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " -o <factory ior file>"
-                           " -n <naming service registration name>"
-                           " -f <factory registry ior file>"
-                           " -i <registration: type_id>"
-                           " -l <registration: location>"
-                           " -t <test replica ior file>"
-                           " -u{nregister by location}"
-                           " -q{uit on idle}"
-                           "\n",
+                           "usage:  %s \n"
+                           " -o <factory ior file>\n"
+                           " -n <naming service registration name>\n"
+                           " -f <factory registry ior file>\n"
+                           " -i <registration: role>\n"
+                           " -l <registration: location>\n"
+                           " -t <test replica ior file>\n"
+                           " -u{nregister by location}\n"
+                           " -q{uit on idle}\n",
                            argv [0]),
                           -1);
       break;
@@ -301,13 +304,13 @@ int FT_ReplicaFactory_i::fini (ACE_ENV_SINGLE_ARG_DECL)
     }
     else
     {
-      size_t typeCount = types_.size();
-      for (size_t nType = 0; nType < typeCount; ++nType)
+      size_t roleCount = roles_.size();
+      for (size_t nRole = 0; nRole < roleCount; ++nRole)
       {
-        const char * typeId = this->types_[nType].c_str();
+        const char * roleName = this->roles_[nRole].c_str();
         ACE_ERROR (( LM_INFO,
            "Factory for: %s@%s unregistering from factory registry\n",
-           typeId,
+           roleName,
            location_
            ));
 
@@ -315,7 +318,7 @@ int FT_ReplicaFactory_i::fini (ACE_ENV_SINGLE_ARG_DECL)
         location.length(1);
         location[0].id = CORBA::string_dup(location_);
         this->factory_registry_->unregister_factory (
-                typeId,
+                roleName,
                 location
           ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
@@ -381,17 +384,20 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
 
   if (this->factory_registry_ior_ != 0)
   {
-    CORBA::Object_var reg_obj = this->orb_->string_to_object(factory_registry_ior_
-                                  ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-    this->factory_registry_ = ::PortableGroup::FactoryRegistry::_narrow(reg_obj);
-    if (CORBA::is_nil(this->factory_registry_))
+    if (ACE_OS::strcmp (this->factory_registry_ior_, "none") != 0)
     {
-      ACE_ERROR (( LM_ERROR,
-         "Can't resolve Factory Registry IOR %s\n",
-         this->factory_registry_ior_
-         ));
-      result = -1;
+      CORBA::Object_var reg_obj = this->orb_->string_to_object(factory_registry_ior_
+                                    ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      this->factory_registry_ = ::PortableGroup::FactoryRegistry::_narrow(reg_obj);
+      if (CORBA::is_nil(this->factory_registry_))
+      {
+        ACE_ERROR (( LM_ERROR,
+           "Can't resolve Factory Registry IOR %s\n",
+           this->factory_registry_ior_
+           ));
+        result = -1;
+      }
     }
   }
   else // no -f option.  Try RIR(RM)
@@ -400,14 +406,12 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
     // Find the ReplicationManager
     ACE_TRY_NEW_ENV
     {
-ACE_ERROR ((LM_DEBUG,"RIR(ReplicationManager)\n" ));
       CORBA::Object_var rm_obj = orb->resolve_initial_references("ReplicationManager" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       this->replication_manager_ = ::FT::ReplicationManager::_narrow(rm_obj.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (!CORBA::is_nil (replication_manager_))
       {
-ACE_ERROR ((LM_DEBUG, "Found a _real_ ReplicationManager.  Ask it for a factory registry.\n"));
         have_replication_manager_ = 1;
         // empty criteria
         ::PortableGroup::Criteria criteria;
@@ -415,19 +419,16 @@ ACE_ERROR ((LM_DEBUG, "Found a _real_ ReplicationManager.  Ask it for a factory 
         ACE_TRY_CHECK;
         if (CORBA::is_nil (this->factory_registry_))
         {
-          result = -1;
-          ACE_ERROR ((LM_ERROR,"ReplicaFactory: ReplicationManager failed to return FactoryRegistry.\n" ));
+          ACE_ERROR ((LM_ERROR,"ReplicaFactory: ReplicationManager failed to return FactoryRegistry.  Factory will not be registered.\n" ));
         }
       }
       else
       {
-ACE_ERROR ((LM_DEBUG,"did we get a FactoryRegistry instead?\n" ));
         this->factory_registry_ =  ::PortableGroup::FactoryRegistry::_narrow(rm_obj.in()  ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
         if (!CORBA::is_nil(this->factory_registry_))
         {
-ACE_ERROR ((LM_DEBUG,"Found a FactoryRegistry DBA ReplicationManager\n" ));
-          result = 0; // success
+          ACE_DEBUG ((LM_DEBUG,"Found a FactoryRegistry DBA ReplicationManager\n" ));
         }
         else
         {
@@ -438,8 +439,7 @@ ACE_ERROR ((LM_DEBUG,"Found a FactoryRegistry DBA ReplicationManager\n" ));
     ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-        "ReplicaFactory: Exception resolving ReplicationManager, and no -f option was given.\n" );
-      result = 1;
+        "ReplicaFactory: Exception resolving ReplicationManager, and no -f option was given.  Factory will not be registered.\n" );
     }
     ACE_ENDTRY;
 
@@ -450,10 +450,10 @@ ACE_ERROR ((LM_DEBUG,"Found a FactoryRegistry DBA ReplicationManager\n" ));
     ::PortableGroup::GenericFactory_var this_var = ::PortableGroup::GenericFactory::_narrow(this_obj);
     if (! CORBA::is_nil(this_var))
     {
-      size_t typeCount = types_.size();
-      for (size_t nType = 0; nType < typeCount; ++nType)
+      size_t roleCount = roles_.size();
+      for (size_t nRole = 0; nRole < roleCount; ++nRole)
       {
-        const char * typeId = this->types_[nType].c_str();
+        const char * roleName = this->roles_[nRole].c_str();
 
         PortableGroup::FactoryInfo info;
         info.the_factory = this_var;
@@ -461,17 +461,18 @@ ACE_ERROR ((LM_DEBUG,"Found a FactoryRegistry DBA ReplicationManager\n" ));
         info.the_location[0].id = CORBA::string_dup(location_);
         info.the_criteria.length(1);
         info.the_criteria[0].nam.length(1);
-        info.the_criteria[0].nam[0].id = CORBA::string_dup(type_property);
-        info.the_criteria[0].val <<= CORBA::string_dup(typeId);
+        info.the_criteria[0].nam[0].id = CORBA::string_dup(PortableGroup::role_criteron);
+        info.the_criteria[0].val <<= CORBA::string_dup(roleName);
 
         ACE_ERROR (( LM_INFO,
            "Factory: %s@%s registering with factory registry\n",
-           typeId,
+           roleName,
            location_
            ));
 
         this->factory_registry_->register_factory(
-          typeId,
+          roleName,
+          FT_TEST::_tc_TestReplica->id(),
           info
           ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -488,7 +489,7 @@ ACE_ERROR ((LM_DEBUG,"Found a FactoryRegistry DBA ReplicationManager\n" ));
 
   int identified = 0; // bool
 
-  if (this->types_.size() > 0)
+  if (this->roles_.size() > 0)
   {
     this->identity_ = "Factory";
     if (this->location_ != 0)
@@ -511,9 +512,13 @@ ACE_ERROR ((LM_DEBUG,"Found a FactoryRegistry DBA ReplicationManager\n" ));
   }
   else
   {
-    // if no IOR file specified,
-    // then always try to register with name service
-    this->ns_name_ = "FT_ReplicaFactory";
+    if (this->registered_)
+    {
+      // if we didn't register with a FactoryRegistry
+      // and no IOR file specified,
+      // then always try to register with name service
+      this->ns_name_ = "FT_ReplicaFactory";
+    }
   }
 
   if (this->ns_name_ != 0)
@@ -623,22 +628,22 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
   const char * missingParameterName = 0;
 
   CORBA::Long initialValue = 0;
-  if (! ::TAO_PG::find (decoder, type_initial_value, initialValue) )
+  if (! ::TAO_PG::find (decoder, criterion_initial_value, initialValue) )
   {
     // not required.  Otherwise:
     // missingParameter = 1;
-    // missingParameterName = type_initial_value;
+    // missingParameterName = criterion_initial_value;
   }
 
-  const char * type = "replica";
-  if (! ::TAO_PG::find (decoder, type_property, type) )
+  const char * role = "replica";
+  if (! ::TAO_PG::find (decoder, PortableGroup::role_criteron, role) )
   {
     ACE_ERROR((LM_INFO,
-      "Property \"%s\" not found?\n", type_property
+      "Property \"%s\" not found?\n", PortableGroup::role_criteron
       ));
     // not required.  Otherwise:
     // missingParameter = 1;
-    // missingParameterName = "type";
+    // missingParameterName = PortableGroup::role_criteron;
   }
 
   if (missingParameter)
@@ -650,7 +655,7 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
     ACE_THROW ( PortableGroup::InvalidCriteria() );
   }
 
-  FT_TestReplica_i * replica = create_replica(type);
+  FT_TestReplica_i * replica = create_replica(role);
   if (replica == 0)
   {
     ACE_ERROR ((LM_ERROR,
@@ -666,7 +671,7 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
   (*factory_creation_id) <<= factory_id;
 
   ACE_ERROR ((LM_INFO,
-    "Created %s@%s#%d.\n", type, this->location_, ACE_static_cast(int, factory_id)
+    "Created %s@%s#%d.\n", role, this->location_, ACE_static_cast(int, factory_id)
     ));
 
 
@@ -680,11 +685,13 @@ FT_TestReplica_i * FT_ReplicaFactory_i::create_replica(const char * name)
   CORBA::ULong factoryId = allocate_id();
 
   FT_TestReplica_i * pFTReplica = 0;
+
   ACE_NEW_NORETURN(pFTReplica, FT_TestReplica_i(
     this,
     name,
     factoryId
     ));
+
   this->replicas_[factoryId] = pFTReplica;
   this->empty_slots_ -= 1;
 

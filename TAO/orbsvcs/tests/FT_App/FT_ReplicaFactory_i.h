@@ -41,7 +41,8 @@ class FT_TestReplica_i;
  * Implement the GenericFactory interface.
  */
 class  FT_ReplicaFactory_i
-  : public virtual POA_FT_TEST::ReplicaFactory
+//FT_TEST::ReplicaFactory
+  : public virtual POA_PortableGroup::GenericFactory
 {
   typedef ACE_Vector<FT_TestReplica_i *> ReplicaVec;
   typedef ACE_Vector<ACE_CString> StringVec;
@@ -251,8 +252,9 @@ private:
 
   CosNaming::Name this_name_;
 
-
-  StringVec types_;
+  /////////////////
+  // The roles used to register types
+  StringVec roles_;
 
   const char * location_;
 

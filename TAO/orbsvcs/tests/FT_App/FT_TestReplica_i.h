@@ -75,8 +75,9 @@ public:
 
   void request_quit();
 
-
   unsigned long factory_id()const;
+
+  static const char * repository_id();
 
   ::FT_TEST::TestReplica_ptr object_reference();
 

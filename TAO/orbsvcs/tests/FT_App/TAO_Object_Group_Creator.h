@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file    TAO_Object_Group_Creator.cpp
+ *  @file    TAO_Object_Group_Creator.h
  *
  *  $Id$
  *
@@ -57,8 +57,8 @@ namespace TAO
     void usage (ostream & out)const;
     int write_ior_file(const char * outputFile, const char * ior);
 
-    int create_group(const char * type_id ACE_ENV_ARG_DECL);
-    int kill_type(const char * type_id ACE_ENV_ARG_DECL);
+    int create_group(const char * role ACE_ENV_ARG_DECL);
+    int unregister_role(const char * role ACE_ENV_ARG_DECL);
 
     ////////////////////
     // forbidden methods
@@ -72,8 +72,8 @@ namespace TAO
     CORBA::ORB_var orb_;
     const char * registry_filename_;
     PortableGroup::FactoryRegistry_var registry_;
-    StringVec create_types_;
-    StringVec kill_types_;
+    StringVec create_roles_;
+    StringVec unregister_roles_;
 
 
   ::FT::ReplicationManager_var replication_manager_;
@@ -81,6 +81,16 @@ namespace TAO
      * bool: true if we have a real replication manager
      */
     int have_replication_manager_;
+
+    /**
+     * bool: true if we should create IOGR's
+     */
+    int make_iogr_;
+
+    /**
+     * bool:  true if we should write individual IOR files
+     */
+    int write_iors_;
 
     /**
      * sequence number applied to created IOGRs

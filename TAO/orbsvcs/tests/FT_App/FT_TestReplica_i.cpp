@@ -17,6 +17,7 @@
 #include "FT_ReplicaFactory_i.h"
 #include <tao/PortableServer/ORB_Manager.h>
 #include <iostream>
+#include "FT_TestReplicaC.h"
 
 //////////////////
 // TestReplica_i
@@ -112,6 +113,15 @@ void FT_TestReplica_i::suicide(const char * note)
 
 /////////////////////////////////////////////////////
 // class FT_TestReplica_i public, non-CORBA interface
+
+
+
+//static
+const char * FT_TestReplica_i::repository_id()
+{
+  return FT_TEST::_tc_TestReplica->id();
+}
+
 int
 FT_TestReplica_i::parse_args (int argc, char *argv[])
 {

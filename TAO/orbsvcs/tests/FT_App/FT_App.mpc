@@ -20,7 +20,7 @@ project(*Client_Unit): taoclient, fault_tolerance, iormanip, ftorb, orbsvcsexe {
   }
 }
 
-project(*Client): taoclient, fault_tolerance, iormanip, ftorb, orbsvcsexe {
+project(*Client): taoclient, fault_tolerance, orbsvcsexe {
   exename = ft_client
   includes += $(TAO_ROOT)
   Source_Files {
@@ -42,7 +42,7 @@ project(*Notifier): taoserver, fault_tolerance, orbsvcsexe {
   // Custom folder: script to run this test
 // too bad this doesn't work!
 // If you omit the generic_outputext, it creates an empty folder
-// if you include the generic_outputext, it tries to "build" the .pl 
+// if you include the generic_outputext, it tries to "build" the .pl
 //    file which runs the test even when you don't want to.
 //  Define_Custom(Script) {
 //    inputext = .pl, .py, .rb
@@ -117,9 +117,9 @@ project(*FactoryRegistry): taoclient, fault_tolerance, orbsvcsexe {
 project(*Creator): taoclient, fault_tolerance, orbsvcsexe {
   exename = ft_create
 
-	Source_Files {
-		TAO_Object_Group_Creator.cpp
-	}
+  Source_Files {
+    TAO_Object_Group_Creator.cpp
+  }
 
   // explicitly omit IDL files
   IDL_Files {
@@ -128,7 +128,7 @@ project(*Creator): taoclient, fault_tolerance, orbsvcsexe {
   Documentation_Files {
     // pretend the pl file is documentation for now
     run_test_registry.pl
-		run_test_rmregistry.pl
+    run_test_rmregistry.pl
   }
 }
 
