@@ -9,15 +9,6 @@
 
 ACE_RCSID(ace, Stats, "$Id$")
 
-#if !defined ACE_LACKS_LONGLONG_T
-  static const ACE_UINT64 ACE_STATS_INTERNAL_OFFSET =
-    ACE_UINT64_LITERAL (0x100000000);
-
-// If ACE_LACKS_LONGLONG_T, then ACE_UINT64 is a user-defined class.
-// To prevent having to construct a static of that class, declare it
-// on the stack, and construct it, in each function that needs it.
-#endif /* ! ACE_LACKS_LONGLONG_T */
-
 ACE_UINT32
 ACE_Stats_Value::fractional_field (void) const
 {
@@ -74,8 +65,14 @@ ACE_Stats::mean (ACE_Stats_Value &m,
   if (number_of_samples_ > 0)
     {
 #if defined ACE_LACKS_LONGLONG_T
+      // If ACE_LACKS_LONGLONG_T, then ACE_UINT64 is a user-defined class.
+      // To prevent having to construct a static of that class, declare it
+      // on the stack, and construct it, in each function that needs it.
       const ACE_U_LongLong ACE_STATS_INTERNAL_OFFSET (0, 8);
-#endif /* ACE_LACKS_LONGLONG_T */
+#else  /* ! ACE_LACKS_LONGLONG_T */
+      const ACE_UINT64 ACE_STATS_INTERNAL_OFFSET =
+        ACE_UINT64_LITERAL (0x100000000);
+#endif /* ! ACE_LACKS_LONGLONG_T */
 
       ACE_UINT64 sum = ACE_STATS_INTERNAL_OFFSET;
       ACE_Unbounded_Queue_Iterator<ACE_INT32> i (samples_);
@@ -140,15 +137,12 @@ ACE_Stats::std_dev (ACE_Stats_Value &std_dev,
               // Scale up by field width so that we don't lose the
               // precision of the mean.  Carefully . . .
               const ACE_UINT64 product (*sample * field);
-              ACE_UINT64 difference = product - mean_scaled;
+              ACE_UINT64 difference =
+                product >= mean_scaled  ?  product - mean_scaled
+                                        :  mean_scaled - product;
               // Do the squaring using 64-bit arithmetic.
               sum_of_squares += difference *
-#if defined (ACE_LACKS_LONGLONG_T)
                 ACE_U64_TO_U32 (difference);
-#else
-                // The 64-to-32 bit conversion messes things up.
-                difference;
-#endif
               i.advance ();
 
               if (sum_of_squares < original_sum_of_squares)
