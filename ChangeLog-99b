@@ -1,3 +1,17 @@
+Wed Sep  1 15:51:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i: Ensure that ACE_OS::localtime_r() does the "Right
+	  Thing"[TM], i.e., returns the pointer in the buffer provided by
+ 	  the user, even if there's no native support for localtime_r() on
+ 	  the OS platform.  In addition, added an ACE_OS_GUARD for this
+ 	  use-case so that we don't have race conditions in MT programs.
+  	  This necessitated moving the localtime_r() wrapper facade into
+ 	  the OS.cpp file.  Thanks to Jody Hagins <jody@atdesk.com> for
+ 	  these suggestions.
+
+	* ace/SV_Semaphore_Complex: Improved the documentation a bit
+	  based on comments from Herbert <herbert@shym.com>.
+
 Wed Sep  1 15:15:00 1999  Luther Baker  <ljb1@cs.wustl.edu>
 
 	* ace/Arg_Shifter.h: Added function (get_current_parameter(offset)

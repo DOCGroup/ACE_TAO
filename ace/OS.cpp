@@ -4728,6 +4728,40 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
     }
 }
 
+struct tm *
+ACE_OS::localtime_r (const time_t *t, struct tm *res)
+{
+  ACE_TRACE ("ACE_OS::localtime_r");
+#if defined (ACE_HAS_REENTRANT_FUNCTIONS)
+# if defined (DIGITAL_UNIX)
+  ACE_OSCALL_RETURN (::_Plocaltime_r (t, res), struct tm *, 0);
+# elif defined (HPUX_10)
+  return (::localtime_r (t, res) == 0 ? res : (struct tm *)0);
+# else
+  ACE_OSCALL_RETURN (::localtime_r (t, res), struct tm *, 0);
+# endif /* DIGITAL_UNIX */
+#elif !defined (ACE_HAS_WINCE) && !defined(ACE_PSOS) || defined (ACE_PSOS_HAS_TIME)
+  ACE_OS_GUARD
+
+  ACE_UNUSED_ARG (res);
+  struct tm * res_ptr;
+  ACE_OSCALL (::localtime (t), struct tm *, 0, res_ptr);
+  if (res_ptr == 0) 
+    return 0;
+  else
+    {
+      *res = *res_ptr;
+      return res;
+    }
+#else
+  // @@ Same as ACE_OS::localtime (), you need to implement it
+  //    yourself.
+  ACE_UNUSED_ARG (t);
+  ACE_UNUSED_ARG (res);
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_REENTRANT_FUNCTIONS */
+}
+
 ssize_t
 ACE_OS::pread (ACE_HANDLE handle,
                void *buf,

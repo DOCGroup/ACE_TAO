@@ -85,23 +85,24 @@ ACE_SV_Semaphore_Complex::open (key_t k,
 	{
 	  this->internal_id_ = ACE_OS::semget
 	    (this->key_,
-             (u_short) 2 + nsems, perms | ACE_SV_Semaphore_Complex::ACE_CREATE);
+             (u_short) 2 + nsems, 
+             perms | ACE_SV_Semaphore_Complex::ACE_CREATE);
 
 	  if (this->internal_id_ == -1)
 	    return -1; // permission problem or tables full
 
-	  // When the ACE_SV_Semaphore is created, we know that the
-	  // value of all 3 members is 0. Get a lock on the
-	  // ACE_SV_Semaphore by waiting for [0] to equal 0, then
-	  // increment it.
+	  // When the <ACE_SV_Semaphore_Complex> is created, we know
+	  // that the value of all 3 members is 0.  Get a lock on the
+	  // <ACE_SV_Semaphore_Complex> by waiting for [0] to equal 0,
+	  // then increment it.
 
 	  // There is a race condition here. There is the possibility
-	  // that between the semget() above and the semop() below,
-	  // another process can call out close() function which can
-	  // remove the ACE_SV_Semaphore if that process is the last
+	  // that between the <semget> above and the <semop> below,
+	  // another process can call out <close> function which can
+	  // remove the <ACE_SV_Semaphore> if that process is the last
 	  // one using it.  Therefor we handle the error condition of
-	  // an invalid ACE_SV_Semaphore ID specifically below, and if
-	  // it does happen, we just go back and create it again.
+	  // an invalid <ACE_SV_Semaphore> ID specifically below, and
+	  // if it does happen, we just go back and create it again.
 	  result = ACE_OS::semop (this->internal_id_,
 				  &ACE_SV_Semaphore_Complex::op_lock_[0],
 				  2);
