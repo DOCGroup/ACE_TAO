@@ -1,16 +1,23 @@
+Tue Nov  2 12:28:47 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbvcs/FT_CORBA.idl:
+
+	  Changed "orbsvcs/orbsvcs/" #include path prefix to "orbsvcs/".
+	  Was missed in earlier refactor.
+
 Tue Nov  2 12:23:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
         * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
         * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
         * TAO_IDL/be/be_visitor_operation/operation_ch.cpp:
-        
+
           - Fixed a bug that occurs when a local interface inherits
             from one or more abstract interfaces with operations.
             The inherited operations were getting generated twice,
             once without being pure virtual as required for local
             interfaces.
-            
+
           - Removed generation of the function pointer for collocation
             factory initialization when we have a local interface, since
             it's not relevant in that case.
