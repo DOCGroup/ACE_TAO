@@ -1,3 +1,29 @@
+Sat Oct 02 14:50:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/be/be_attribute.cpp,
+	  TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
+	  TAO_IDL/be/be_visitor_attribute/attribute.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_cs.cpp,
+	  TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp,
+	  TAO_IDL/be_include/be_attribute.h,
+	  TAO_IDL/be_include/be_visitor_ami_pre_proc.h:
+	  Added support for attributes.
+
+	* TAO_IDL/ast/ast_interface.cpp
+	  TAO_IDL/include/ast_interface.h: Added be_replace_operation
+	  method to be able to replace operations if needed.
+
+	  TAO_IDL/include/utl_scope.h
+	  TAO_IDL/util/utl_scope.cpp: Added replace operations for
+	  scope and referenced.
+
+	* tests/AMI/ami_test.idl,
+	  tests/AMI/simple_client.cpp: Activated the tests for 
+	  attributes again.
+
+	* docs/releasenotes/index.html: Updated comment on support
+	  for AMI attributes.
+
 Fri Oct  1 19:02:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/ORB_Core.h:

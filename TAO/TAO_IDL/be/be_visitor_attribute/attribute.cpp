@@ -68,13 +68,20 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   this->ctx_->node (node); // save the node
   this->ctx_->attribute (node); // save this attribute node
 
-  be_operation *op;
 
   // first the "get" operation
-  op = new be_operation (node->field_type (), AST_Operation::OP_noflags,
-                         node->name (), 0);
+  be_operation *op = new be_operation (node->field_type (), 
+                                       AST_Operation::OP_noflags,
+                                       node->name (), 
+                                       0);
   op->set_name (node->name ());
   op->set_defined_in (node->defined_in ());
+
+  // Get the strategy from the attribute and hand it over
+  // to the operation
+  delete op->set_strategy (node->get_get_strategy ());
+
+  
   be_visitor_context ctx (*this->ctx_);
 
   // this switch statement eliminates the need for different classes that have
@@ -127,6 +134,9 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                         -1);
     }
 
+  // Change the state depending on the kind of node strategy
+  ctx.state (op->next_state (ctx.state ()));
+
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
   if (!visitor || !op || (op->accept (visitor) == -1))
     {
@@ -140,18 +150,37 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     }
 
   delete visitor;
+  visitor = 0;
 
-  if (op)
+  if (op->has_extra_code_generation (ctx.state ()))
     {
-      delete op;
-      op = 0;
+      // Change the state depending on the kind of node strategy
+      ctx.state (op->next_state (ctx.state (), 1));
+
+      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || !op || (op->accept (visitor) == -1))
+        {
+          delete visitor;
+          delete op;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_attribute::"
+                             "visit_attribute - "
+                             "codegen for get_attribute failed\n"),
+                            -1);
+        }
+
+      delete visitor;
+      visitor = 0;
     }
+
+  delete op;
 
   // Do nothing for readonly attributes.
   if (node->readonly ())
     return 0;  
 
-  // the set method.
+  // Create the set method.
+
   // the return type  is "void"
   be_predefined_type *rt = new be_predefined_type (AST_PredefinedType::PT_void,
                                                    new UTL_ScopedName
@@ -170,6 +199,10 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   op->set_name (node->name ());
   op->set_defined_in (node->defined_in ());
   op->add_argument_to_scope (arg);
+
+  // Get the strategy from the attribute and hand it over
+  // to the operation, thereby deleting the old one.
+  delete op->set_strategy (node->get_set_strategy ());
 
   ctx = *this->ctx_;
   // this switch statement eliminates the need for different classes that have
@@ -222,6 +255,10 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                         -1);
     }
 
+  
+  // Change the state depending on the kind of node strategy
+  ctx.state (op->next_state (ctx.state ()));
+
   visitor = tao_cg->make_visitor (&ctx);
   if (!visitor || !op || (op->accept (visitor) == -1))
     {
@@ -236,6 +273,29 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                         -1);
     }
   delete visitor;
+  visitor = 0;
+
+  if (op->has_extra_code_generation (ctx.state ()))
+    {
+      // Change the state depending on the kind of node strategy
+      ctx.state (op->next_state (ctx.state (), 1));
+
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || !op || (op->accept (visitor) == -1))
+        {
+          delete visitor;
+          delete op;
+          delete arg;
+          delete rt;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_attribute::"
+                             "visit_attribute - "
+                             "codegen for set_attribute failed\n"),
+                            -1);
+        }
+      delete visitor;
+      visitor = 0;
+    }
 
   
   delete op;

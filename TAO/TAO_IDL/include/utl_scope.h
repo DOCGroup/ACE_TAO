@@ -198,11 +198,20 @@ protected:
   void                          add_to_local_types(AST_Decl *e);
 
   // Add to referenced nodes set.
-  // If pos is not -1 it will be inserted at the the given position
+  // If ex is not 0 'e' will be inserted at the position
+  // before ex, which is already in the list.
   void                          add_to_referenced(AST_Decl *e,
                                                   idl_bool recursive,
                                                   Identifier *id,
                                                   AST_Decl *ex = 0);
+
+  // Replace old_decl with new_decl
+  void replace_scope (AST_Decl *old_decl,
+                      AST_Decl *new_decl);
+
+  // Replace old_decl with new_decl
+  void replace_referenced (AST_Decl *old_decl,
+                           AST_Decl *new_decl);
 
   // Has this node been referenced here already?
   idl_bool                      referenced(AST_Decl *e,
