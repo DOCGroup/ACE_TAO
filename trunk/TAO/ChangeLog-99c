@@ -1,3 +1,17 @@
+Sun Mar 14 14:58:51 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Request.i
+	* tao/Reequest.cpp
+	* tao/Request.h
+	Changed the arguments of two method call in the Request 
+	class. They are send_oneway () and invoke (). They now
+	take in the environment variable ACE_TRY_ENV that should 
+	be passed in from the application. These methods were 
+	using a variable env_ stored in the class itself. The variable
+	env_ has also been removed thus necesitating the users of the 
+	API to send their own environment variables that should be 
+	theoretically in a TRY block.
+
 Sun Mar 14 14:13:22 19	99  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout): 
