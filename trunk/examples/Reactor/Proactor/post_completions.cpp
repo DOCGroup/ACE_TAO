@@ -37,6 +37,11 @@
 #include "ace/WIN32_Proactor.h"
 #include "ace/POSIX_Proactor.h"
 
+
+// Keep track of how many completions are still expected.
+static ACE_Atomic_Op <ACE_Thread_Mutex, size_t> Completions_To_Go;
+
+
 #if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
      (defined (ACE_HAS_AIO_CALLS)) && !defined (ACE_POSIX_AIOCB_PROACTOR))
 // This only works on Win32 platforms and on Unix platforms supporting
@@ -90,11 +95,16 @@ public:
       this->completion_key_ = completion_key;
       this->error_ = error;
 
+      size_t to_go = --Completions_To_Go;
+
       // Print the completion details.
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) Completion sequence number %d, success : %d, error : %d, signal_number : %d\n", 
+                  "(%t) Completion sequence number %d, success : %d, error : %d, signal_number : %d, %ud more to go\n", 
                   this->sequence_number_,
-                  this->success_, this->error_, this->signal_number ()));
+                  this->success_,
+                  this->error_,
+                  this->signal_number (),
+                  to_go));
       
       // Sleep for a while.
       ACE_OS::sleep (4);
@@ -120,9 +130,6 @@ public:
   
   virtual ~My_Handler (void) {}
   // Destructor.
-
-  //  ACE_Atomic_Op <ACE_Thread_Mutex, int> completion_count_;
-  // Count for the completion.
 };
 
 class My_Task: public ACE_Task <ACE_NULL_SYNCH>
@@ -146,7 +153,6 @@ public:
       
       // Activate the Task.
       this->activate (THR_NEW_LWP, 5);
-      
       return 0;
     }
 
@@ -220,26 +226,27 @@ main (int argc, char *argv[])
   My_Task task1, task2;
   task1.open (&proactor1);
   task2.open (&proactor2);
-  
+
   // Handler for completions.
   My_Handler handler;
   
   // = Create a few MyResult objects and post them to Proactor.
-  
-  My_Result *result_objects [10];
+  const size_t NrCompletions (10);  
+  My_Result *result_objects [NrCompletions];
   int signal_number = ACE_SIGRTMAX;
   size_t ri;
 
+  Completions_To_Go = NrCompletions;
+
   // Creation.
-  for (ri = 0; ri < 10; ri++)
+  for (ri = 0; ri < NrCompletions; ri++)
     {
       // Use RTMIN and RTMAX proactor alternatively, to post
-      // completions. 
+      // completions.
       if (ri % 2)
         signal_number = ACE_SIGRTMIN;
       else
         signal_number = ACE_SIGRTMAX;
-      
       // Create the result.
       ACE_NEW_RETURN (result_objects [ri],
                       My_Result (handler,
@@ -248,10 +255,10 @@ main (int argc, char *argv[])
                                  ri),
                       1);
     }
-  
+  ACE_OS::sleep(5);  
   // Post all the result objects.
-  ACE_Proactor *proactor = &proactor2;
-  for (ri = 0; ri < 10; ri++)
+  ACE_Proactor *proactor;
+  for (ri = 0; ri < NrCompletions; ri++)
     {
       // Use RTMIN and RTMAX Proactor alternatively, to post
       // completions.
@@ -259,7 +266,6 @@ main (int argc, char *argv[])
         proactor = &proactor1;
       else 
         proactor = &proactor2;
-      
       if (result_objects [ri]->post_completion (proactor->implementation ())
           == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -268,16 +274,28 @@ main (int argc, char *argv[])
     }
   
   ACE_Thread_Manager::instance ()->wait ();
-  
+
+  int status = 0;
+  size_t to_go = Completions_To_Go.value ();
+  if (size_t (0) != to_go)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Fail! Expected all completions to finish but %u to go\n",
+                  to_go));
+      status = 1;
+    }
+
   ACE_DEBUG ((LM_DEBUG,
               "(%P | %t):Test ends\n"));
-  return 0;
+  return status;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Task <ACE_NULL_SYNCH>;
+template class ACE_Atomic_Op <ACE_Thread_Mutex, size_t>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Task <ACE_NULL_SYNCH>
+#pragma instantiate ACE_Atomic_Op <ACE_Thread_Mutex, size_t>
 #endif /* ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA */
 
 #else /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS && !ACE_POSIX_AIOCB_PROACTOR*/
