@@ -4,6 +4,8 @@ Fri Feb 26 12:38:00 1999  David L. Levine  <levine@cs.wustl.edu>
           WIN32, for ACE_Thread_Descriptor declaration.  Thanks
           to Barry Hoggard <hoggard@cfx.com> for reporting this.
 
+        * ace/Managed_Object.h: fixed comments in description.
+
 Fri Feb 26 11:56:08 1999  Ossama Othman  <othman@cs.wustl.edu>
 
         * ace/Log_Priority.h (ACE_Log_Priority): Removed all references to
@@ -27,8 +29,6 @@ Thu Feb 25 22:17:58 1999  David L. Levine  <levine@cs.wustl.edu>
           ::sp () default values, and added comments for each argument
           to ::taskSpawn ().  Thanks to Tad Jarosinski <tadj@qualcomm.com>
           for asking about spa ().
-
-        * ace/Managed_Object.h: fixed comments in description.
 
 Thu Feb 25 20:10:06 1999  Ossama Othman  <othman@cs.wustl.edu>
 
