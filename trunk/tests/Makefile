@@ -10,6 +10,7 @@
 #----------------------------------------------------------------------------
 
 BIN =   Aio_Platform_Test \
+        Arg_Shifter_Test \
         ARGV_Test \
         Atomic_Op_Test \
         Auto_IncDec_Test \
