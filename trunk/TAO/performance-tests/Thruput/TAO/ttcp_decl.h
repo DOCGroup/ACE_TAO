@@ -78,7 +78,7 @@ extern ACE_Svc_Export ttcp_sequence::OctetSeq           *oseq;
 extern ACE_Svc_Export ttcp_sequence::DoubleSeq          *dseq;
 extern ACE_Svc_Export ttcp_sequence::CharSeq            *cseq;
 extern ACE_Svc_Export ttcp_sequence::StructSeq          *Sseq;
-extern ACE_Svc_Export ttcp_sequence::RtiPacketSeq       *rtipacketSeq;
+//extern ACE_Svc_Export ttcp_sequence::RtiPacketSeq *rtipacketSeq;
 
 #endif
 

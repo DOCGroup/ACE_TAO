@@ -475,7 +475,7 @@ prusage (char *outp)
             break;
 
           case 'X':
-	    /ACE_OS::sprintf (outp, "%d", t == 0 ? 0 : (rusage.ru_ixrss) / t);
+	    ACE_OS::sprintf (outp, "%d", t == 0 ? 0 : (rusage.ru_ixrss) / t);
             END (outp);
             break;
 
@@ -507,7 +507,7 @@ prusage (char *outp)
             break;
 
           case 'I':
-            ACE_OS::sprintf (outp, "%d", rusage.ru_inbloc);
+            ACE_OS::sprintf (outp, "%d", rusage.ru_inblock);
             END (outp);
             break;
 
