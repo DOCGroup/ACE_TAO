@@ -1,3 +1,8 @@
+Tue Feb 22 18:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.cpp:
+          Fixed compile error due to TAO_Server_Request interface change
+
 Tue Feb 22 07:57:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/PortableServer/Upcall_Wrapper.h:
