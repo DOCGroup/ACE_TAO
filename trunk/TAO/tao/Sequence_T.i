@@ -80,7 +80,7 @@ TAO_Unbounded_Sequence<T>::get_buffer (CORBA::Boolean orphan)
 template <class T> ACE_INLINE const T *
 TAO_Unbounded_Sequence<T>::get_buffer (void) const
 {
-  return ACE_reinterpret_cast(const T *, this->buffer_);
+  return ACE_reinterpret_cast(const T * ACE_CAST_CONST, this->buffer_);
 }
 
 template <class T> ACE_INLINE void
@@ -184,7 +184,7 @@ TAO_Bounded_Sequence<T, MAX>::get_buffer (CORBA::Boolean orphan)
 template <class T, CORBA::ULong MAX> ACE_INLINE const T *
 TAO_Bounded_Sequence<T, MAX>::get_buffer (void) const
 {
-  return ACE_reinterpret_cast(const T *, this->buffer_);
+  return ACE_reinterpret_cast(const T * ACE_CAST_CONST, this->buffer_);
 }
 
 template <class T, CORBA::ULong MAX> ACE_INLINE void
