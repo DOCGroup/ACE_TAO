@@ -51,11 +51,26 @@ private:
   int parse_args (void);
   // Parses the arguments passed on the command line.
 
-  CORBA::Float balance (void);
-  // Return the balance in the account
+  CORBA::Float check_accounts (void);
+  // Checks the various operations of the account.
 
-  int init_naming_service (void);
-  // To initialize the naming service and get a ptr. to server
+  void deposit (CORBA::Float deposit_amount,
+		CORBA::Environment &env);
+  // Deposit in the account.
+
+  void withdraw (CORBA::Float withdrawl_amount);
+  // Withdraw from the account.
+
+  Bank::Account_ptr open (const char *name,
+			  CORBA::Float initial_balance,
+			  CORBA::Environment &env);
+  // Open a new account with the given name and initial balance.
+
+  CORBA::Float balance (CORBA::Environment &env);
+  // Returns the current balance in the account.
+
+  int obtain_initial_references (void);
+  // To initialize the naming service and get a ptr to server.
 
   int argc_;
   // # of arguments on the command line.
@@ -83,8 +98,11 @@ private:
 
   TAO_Naming_Client my_name_client_;
   // An instance of the name client used for resolving the factory
-  // objects
+  // objects.
 
   CORBA::ORB_var orb_;
   // Remember our orb.
+
+  CORBA::Float initial_balance_;
+  // Filled up by a command line argument.
 };
