@@ -47,7 +47,8 @@ TAO::Utils::RIR_Narrow<T>::narrow_object (CORBA::Object_ptr object
 
   if (CORBA::is_nil (narrowed_object.in ()))
   {
-    ACE_THROW (CORBA::INV_OBJREF ());
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (),
+                      T::_nil ());
   }
   return narrowed_object._retn ();
 }
