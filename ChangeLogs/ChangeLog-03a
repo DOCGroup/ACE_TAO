@@ -1,3 +1,12 @@
+Fri Sep 21 17:11:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Message_Block.h: Tried rewording some comments in the
+	  ACE_Message_Block. Thanks to Tom Wagner <TomW@CoManage.net> for
+	  suggesting this.
+
+	* THANKS: Added Tom Wagner <TomW@CoManage.net> to the hall of
+	  fame. 
+
 Fri Sep 21 22:11:53 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/ACE_SSL_LIB.dsp:
