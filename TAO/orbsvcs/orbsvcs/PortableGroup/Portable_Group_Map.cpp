@@ -171,6 +171,7 @@ template class ACE_Hash_Map_Iterator<PortableGroup::TagGroupTaggedComponent *, T
 template class ACE_Hash_Map_Reverse_Iterator<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, ACE_Hash<PortableGroup::TagGroupTaggedComponent *>, ACE_Equal_To<PortableGroup::TagGroupTaggedComponent *>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>;
 
@@ -182,6 +183,7 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<PortableGroup::TagGroupTaggedCom
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, ACE_Hash<PortableGroup::TagGroupTaggedComponent *>, ACE_Equal_To<PortableGroup::TagGroupTaggedComponent *>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<PortableGroup::TagGroupTaggedComponent *, TAO_Portable_Group_Map::Map_Entry *, TAO_GroupId_Hash, TAO_GroupId_Equal_To, ACE_Null_Mutex>
 
