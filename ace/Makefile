@@ -193,6 +193,8 @@ TEMPLATE_FILES = \
            Free_List \
            Functor_T \
            Future \
+           Future_Node \
+           Future_Set \
            Hash_Map_Manager_T \
            Hash_Cache_Map_Manager_T \
            IOStream_T \
