@@ -10,8 +10,8 @@ class Consumer_Entry
   //   Keeps track of context information associated with
   //   a <Event_Comm::Consumer> entry.
 public:
-  Consumer_Entry (Event_Comm::Consumer *notification_receiver,
-			       const char *filtering_criteria);
+  Consumer_Entry (Event_Comm::Consumer *consumer,
+		  const char *filtering_criteria);
   ~Consumer_Entry (void);
 
   // = Set/get filtering criteria.
@@ -20,8 +20,8 @@ public:
   const char *criteria (void);
 
   // = Set/get Event_Comm::Consumer object reference.
-  Event_Comm::Consumer *receiver (void);
-  void receiver (Event_Comm::Consumer *);
+  Event_Comm::Consumer *consumer (void);
+  void consumer (Event_Comm::Consumer *);
 
   // = Set/get the compiled regular expression buffer.
   const char *regexp (void);
@@ -35,7 +35,7 @@ private:
   // Compiled representation of the regular expression (see
   // regexpr(3g)).
 
-  Event_Comm::Consumer *receiver_;
+  Event_Comm::Consumer_ptr consumer_;
   // Object reference for the Event_Comm::Consumer.
 };
 
@@ -57,15 +57,15 @@ Consumer_Entry::criteria (void)
 // = Set/get Event_Comm::Consumer object reference.
 
 Event_Comm::Consumer *
-Consumer_Entry::receiver (void)
+Consumer_Entry::consumer (void)
 {
-  return this->receiver_;
+  return this->consumer_;
 }
 
 void
-Consumer_Entry::receiver (Event_Comm::Consumer *receiver)
+Consumer_Entry::consumer (Event_Comm::Consumer *consumer)
 {
-  this->receiver_ = receiver;
+  this->consumer_ = consumer;
 }
 
 const char *
@@ -77,13 +77,13 @@ Consumer_Entry::regexp (void)
 void
 Consumer_Entry::regexp (char *regexp)
 {
-  ACE_OS::free (ACE_MALLOC_T (this->compiled_regexp_));
+  ACE_OS::free ((void *) this->compiled_regexp_);
   this->compiled_regexp_ = regexp;
 }
 
-Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *receiver,
+Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
 				const char *filtering_criteria)
-  : receiver_ (receiver),
+  : consumer_ (consumer),
     filtering_criteria_ (0),
     compiled_regexp_ (0)
 {
@@ -108,15 +108,15 @@ Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *receiver,
 
   // Increment the reference count since we are keeping a copy of
   // this...
-  this->receiver_->_duplicate (this->receiver_);
+  this->consumer_ = Event_Comm::Consumer::_duplicate (this->consumer_);
 }
 
 Consumer_Entry::~Consumer_Entry (void)
 {
-  ACE_OS::free ((void*)this->filtering_criteria_);
-  ACE_OS::free ((void*)this->compiled_regexp_);
+  ACE_OS::free ((void *) this->filtering_criteria_);
+  ACE_OS::free ((void *) this->compiled_regexp_);
   // Decrement the object reference count.
-  CORBA::release (this->receiver_);
+  CORBA::release (this->consumer_);
 }
 
 Notifier_i::Notifier_i (size_t size)
@@ -124,49 +124,55 @@ Notifier_i::Notifier_i (size_t size)
 {
 }
 
-// Add a new receiver to the table, being careful to check for
-// duplicate entries.  A receiver is considered a duplicate under the
+// Add a new consumer to the table, being careful to check for
+// duplicate entries.  A consumer is considered a duplicate under the
 // following circumstances:
-//   1. It has the same marker name and the same filtering criteria
-//   2. It has the same marker name and its filtering criteria is "" (the wild card).
+//
+//   1. It has the same object reference and the same filtering
+//      criteria.
+//   2. It has the same object reference and its filtering criteria is
+//      "" (the wild card).
 
 void
-Notifier_i::subscribe (Event_Comm::Consumer_ptr receiver_ref,
+Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
 		       const char *filtering_criteria,
 		       CORBA::Environment &TAO_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "in Notifier_i::subscribe for %s with filtering criteria \"%s\"\n",
-	      receiver_ref->marker (),
+	      "in Notifier_i::subscribe for %x with filtering criteria \"%s\"\n",
+	      consumer_ref,
               filtering_criteria));
-  ACE_SString key (receiver_ref->marker ());
+
   MAP_ITERATOR mi (this->map_);
 
-  // Try to locate an entry using its marker name (which should be
-  // unique across the system).  If we don't find the entry, or if the
+  // Try to locate an entry checking if the object references are equivalent .
+  // If we don't find the entry, or if the
   // filtering criteria is different that is good news since we
-  // currently don't allow duplicates...  In particular, if @@ Should
+  // currently don't allow duplicates...  @@ Should
   // duplicates be allowed?
 
   for (MAP_ENTRY *me = 0; mi.next (me) != 0; mi.advance ())
     {
       Consumer_Entry *nr_entry = me->int_id_;
 
-      // Check for a duplicate entry.
-      if (key == me->ext_id_
-	  && (ACE_OS::strcmp (filtering_criteria, "") == 0
-	      || ACE_OS::strcmp (filtering_criteria, nr_entry->criteria ()) == 0))
-	{
-	  // Inform the caller that the
-	  // Event_Comm::Consumer * is already being
-	  // used.
+      // The <_is_equivalent> function checks if objects
+      // are the same.
+      // NOTE: this call might not behave well on other
+      // ORBs since <_is_equivalent> isn't guaranteed to differentiate
+      // object references.
 
-	  errno = EADDRINUSE;
-	  ACE_ERROR ((LM_ERROR,
-		      "duplicate entry for receiver %s with criteria \"%s\"",
-		     receiver_ref->marker (),
-                      filtering_criteria));
-	  // Raise exception here???
+      // Check for a duplicate entry.
+      if (consumer_ref->_is_equivalent (me->ext_id_) //(nr_entry->consumer())
+	  && (ACE_OS::strcmp (filtering_criteria,
+			      "") == 0
+	      || ACE_OS::strcmp (filtering_criteria,
+				 nr_entry->criteria ()) == 0))
+	{
+	  // Inform the caller that the <Event_Comm::Consumer> * is
+	  // already being used.
+
+	  TAO_TRY_ENV.exception (new Event_Comm::Notifier::CannotSubscribe
+				 ("Duplicate consumer and filtering criteria found.\n"));
 	  return;
 	}
     }
@@ -175,70 +181,73 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr receiver_ref,
   // new entry!
   Consumer_Entry *nr_entry;
   ACE_NEW (nr_entry,
-           Consumer_Entry (receiver_ref,
+           Consumer_Entry (consumer_ref,
                                         filtering_criteria));
   // Try to add new <Consumer_Entry> to the map.
-  /*else*/ if (this->map_.bind (key, nr_entry) == -1)
+  if (this->map_.bind (nr_entry->consumer(), nr_entry) == -1)
     {
       // Prevent memory leaks.
       delete nr_entry;
-      // Raise exception here...
-      ACE_ERROR ((LM_ERROR,
-                  "%p\n",
-                  "bind failed"));
+      TAO_TRY_ENV.exception (new Event_Comm::Notifier::CannotSubscribe
+                           ("Failed to add Consumer to internal map\n"));
     }
 }
 
-// Remove a receiver from the table.
+// Remove a consumer from the table.
 
 void
-Notifier_i::unsubscribe (Event_Comm::Consumer_ptr receiver_ref,
+Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
 			 const char *filtering_criteria,
 			 CORBA::Environment &TAO_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "in Notifier_i::unsubscribe for %s\n",
-	     receiver_ref->marker ()));
+              "in Notifier_i::unsubscribe for %x\n",
+	     consumer_ref));
+
   Consumer_Entry *nr_entry = 0;
-  ACE_SString key;
   MAP_ITERATOR mi (this->map_);
   int found = 0;
-
-  // Don't make a copy since we are deleting...
-  key.rep ((char *) receiver_ref->marker ());
 
   // Locate <Consumer_Entry> and free up resources.  @@
   // Note, we don't properly handle deallocation of KEYS!
 
-  for (MAP_ENTRY *me = 0; mi.next (me) != 0; mi.advance ())
+  for (MAP_ENTRY *me = 0;
+       mi.next (me) != 0;
+       mi.advance ())
     {
-      if (key == me->ext_id_
+       Consumer_Entry *nr_entry = me->int_id_;
+
+      // The <_is_equivalent> function checks if objects
+      // are the same.
+      // NOTE: this call might not behave well on other
+      // ORBs since <_is_equivalent> isn't guaranteed to differentiate
+      // object references.
+
+      // look for a match ..
+      if (consumer_ref->_is_equivalent (me->ext_id_)
 	  && (ACE_OS::strcmp (filtering_criteria, "") == 0
 	      || ACE_OS::strcmp (filtering_criteria, nr_entry->criteria ()) == 0))
 	{
 	  ACE_DEBUG ((LM_DEBUG,
-                      "removed entry %s with criteria \"%s\"\n",
-                      receiver_ref->marker (),
+                      "removed entry %x with criteria \"%s\"\n",
+                      consumer_ref,
                       filtering_criteria));
 	  found = 1;
 	  // @@ This is a hack, we need a better approach!
-	  if (this->map_.unbind (key, nr_entry) == -1)
-	    ACE_ERROR ((LM_ERROR,
-                        "unbind failed for %s\n",
-		       receiver_ref->marker ()));
+	  if (this->map_.unbind (me->ext_id_, nr_entry) == -1)
+	    TAO_TRY_ENV.exception (new Event_Comm::Notifier::CannotUnsubscribe
+                           ("Internal map unbind failed."));
 	  else
 	    delete nr_entry;
 	}
     }
 
   if (found == 0)
-    ACE_ERROR ((LM_ERROR,
-                "entry %s with criteria \"%s\" not found\n",
-	       receiver_ref->marker (),
-                filtering_criteria));
+    TAO_TRY_ENV.exception (new Event_Comm::Notifier::CannotUnsubscribe
+                           ("The Consumer and filtering criteria were not found."));
 }
 
-// Disconnect all the receivers, giving them the <reason>.
+// Disconnect all the consumers, giving them the <reason>.
 
 void
 Notifier_i::disconnect (const char *reason,
@@ -250,18 +259,18 @@ Notifier_i::disconnect (const char *reason,
   MAP_ITERATOR mi (this->map_);
   int count = 0;
 
-  // Notify all the receivers, taking into account the filtering criteria.
+  // Notify all the consumers, taking into account the filtering criteria.
 
   for (MAP_ENTRY *me = 0; mi.next (me) != 0; mi.advance ())
     {
-      Event_Comm::Consumer *receiver_ref = me->int_id_->receiver ();
-      ACE_ASSERT (receiver_ref->marker () != 0);
+      Event_Comm::Consumer_ptr consumer_ref = me->ext_id_; //int_id_->consumer ();
+      ACE_ASSERT (consumer_ref != 0);
       ACE_DEBUG ((LM_DEBUG,
-                  "disconnecting client %s\n",
-                  receiver_ref->marker ()));
+                  "disconnecting client %x\n",
+                  consumer_ref));
       TAO_TRY
         {
-          receiver_ref->disconnect (reason, TAO_TRY_ENV);
+          consumer_ref->disconnect (reason, TAO_TRY_ENV);
         }
       TAO_CATCHANY
         {
@@ -279,14 +288,14 @@ Notifier_i::disconnect (const char *reason,
   this->map_.close ();
   if (count == 1)
     ACE_DEBUG ((LM_DEBUG,
-                "there was 1 receiver\n"));
+                "there was 1 consumer\n"));
   else
     ACE_DEBUG ((LM_DEBUG,
-                "there were %d receivers\n",
+                "there were %d consumers\n",
                 count));
 }
 
-// Notify all receivers whose filtering criteria match the event.
+// Notify all consumers whose filtering criteria match the event.
 
 void
 Notifier_i::push (const Event_Comm::Event &event,
@@ -294,34 +303,35 @@ Notifier_i::push (const Event_Comm::Event &event,
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::send_notification = %s\n",
-	      event.tag_));
+	      (const char *)event.tag_));
   MAP_ITERATOR mi (this->map_);
   int count = 0;
 
-  // Notify all the receivers.
+  // Notify all the consumers.
+
   // @@ Later on we need to consider the filtering_criteria!
 
   for (MAP_ENTRY *me = 0; mi.next (me) != 0; mi.advance ())
     {
-      Event_Comm::Consumer *receiver_ref = me->int_id_->receiver ();
-      ACE_ASSERT (receiver_ref->marker () != 0);
-      const char *regexp   = me->int_id_->regexp ();
+      Event_Comm::Consumer_ptr consumer_ref = me->int_id_->consumer ();
+      ACE_ASSERT (consumer_ref != 0);
+      ACE_CString regexp (me->int_id_->regexp ());
       const char *criteria = me->int_id_->criteria ();
-      ACE_ASSERT (regexp);
+      ACE_ASSERT (regexp.fast_rep());
       ACE_ASSERT (criteria);
 
       // Do a regular expression comparison to determine matching.
       if (ACE_OS::strcmp ("", criteria) == 0 // Everything matches the wildcard.
-	  //  || ACE_OS::strcmp (event.tag_, regexp) == 0)
-	  || ACE_OS::step (event.tag_, regexp) != 0)
+	   || ACE_OS::strcmp (event.tag_, regexp.fast_rep()) == 0
+	  || ACE_OS::step (event.tag_, regexp.rep()) != 0)
 	{
 	  ACE_DEBUG ((LM_DEBUG,
-                      "string %s matched regexp \"%s\" for client %s\n",
-		     event.tag_, me->int_id_->criteria (),
-		     receiver_ref->marker ()));
+                      "string %s matched regexp \"%s\" for client %x\n",
+		      (const char *)event.tag_, me->int_id_->criteria (),
+		     consumer_ref));
 	  TAO_TRY
             {
-              receiver_ref->push (event, TAO_TRY_ENV);
+              consumer_ref->push (event, TAO_TRY_ENV);
 	      TAO_CHECK_ENV;
             }
 	  TAO_CATCHANY
@@ -336,10 +346,10 @@ Notifier_i::push (const Event_Comm::Event &event,
 
   if (count == 1)
     ACE_DEBUG ((LM_DEBUG,
-                "there was 1 receiver\n"));
+                "there was 1 consumer\n"));
   else
     ACE_DEBUG ((LM_DEBUG,
-                "there were %d receivers\n",
+                "there were %d consumers\n",
                 count));
 }
 

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Notifier_Handler.h"
+#include "Notifier_Server.h"
 
 ACE_RCSID(Notifier, notifier, "$Id$")
 
@@ -10,69 +10,69 @@ class Notifier : public ACE_Event_Handler
   //   Notifier driver for the TAO Publish/Subscribe example.
   //
   // = DESCRIPTION
-  //   The executable file generated from this code should be
-  //   registered (under the name 'logger').
+  //    The driver class for the <Event_Comm::Notifier> object.
 public:
+  // = Initialization and termination methods.
   Notifier (int argc, char *argv[]);
+  // Constructor.
+
   ~Notifier (void);
+  // Destructor.
 
   void run (void);
   // Execute the notifier.
 
 private:
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
+  virtual int handle_signal (int signum,
+			     siginfo_t *,
+			     ucontext_t *);
+  // Handle signals that shut us down.
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
-
-  Notifier_Handler *nh_;
-  // Handler for CORBA Notifier.
-
-  //  Notifier_Input_Handler *ih_;
+  Notifier_Server ns_;
+  // The notifier server.
 };
-
-int
-Notifier::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              "closing down Notifier\n"));
-  return 0;
-}
 
 int
 Notifier::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "%S\n",
+              "got signal in handle_signal %S\n",
               signum));
-  ACE_Reactor::end_event_loop ();
+
+  // tell the <Notifier_Server> to shut down the ORB.
+  ns_.close ();
   return 0;
 }
 
 void
 Notifier::run (void)
-
 {
-  if (ACE_Reactor::run_event_loop () == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "run_reactor_event_loop"));
+  TAO_TRY
+    {
+      ns_.run (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCHANY
+    {
+    }
+  TAO_ENDTRY;
 }
 
 Notifier::Notifier (int argc, char *argv[])
-  : //ih_ (0),
-    nh_ (0)
 {
-  ACE_DEBUG ((LM_DEBUG,
-	      "no config file, using static binding\n"));
+  TAO_TRY
+    {
+      ns_.init (argc, argv, TAO_TRY_ENV);
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Notifier_Server.init failed\n ");
+    }
+  TAO_ENDTRY;
 
-  // Pass in program exec name to use a service_location!
-  ACE_NEW (this->nh_,
-	   Notifier_Handler (argv[0],
-			     "notifier"));
-  //ACE_NEW (this->ih_,
-  //   Notifier_Input_Handler (this->nh_));
-
-  if (ACE_Reactor::instance ()->register_handler (SIGINT, this) == -1)
+  // Register with the ORB's Reactor to receive a signal to shut us
+  // down.
+  if (ns_.reactor ()->register_handler (SIGINT, this) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "register_handler"));
@@ -80,8 +80,8 @@ Notifier::Notifier (int argc, char *argv[])
 
 Notifier::~Notifier (void)
 {
-  // Free up the handlers if they were statically bound.
-  this->nh_->handle_close ();
+  // cleanup.
+  this->ns_.close ();
 }
 
 int

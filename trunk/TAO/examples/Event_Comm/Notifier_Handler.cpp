@@ -4,8 +4,20 @@
 
 ACE_RCSID(Supplier, Notifier_Handler, "$Id$")
 
+Notifier_Handler::Notifier_Handler (void)
+{
+  // No-Op.
+}
+
+// Destroy a Notifier target object.
+
+Notifier_Handler::~Notifier_Handler (void)
+{
+  this->handle_close ();
+}
+
 int
-Notifier_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+Notifier_Handler::handle_close (void)
 {
   if (this->notifier_ != 0)
     {
@@ -13,8 +25,6 @@ Notifier_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
                   "closing down Notifier_Handler\n"));
       CORBA::release (this->notifier_);
       this->notifier_ = 0;
-      // *Must* be allocated dyanmically!
-      ::operator delete ((void *) this);
     }
 
   return 0;
@@ -36,29 +46,62 @@ Notifier_Handler::notifier (Event_Comm::Notifier *notifier)
     }
 }
 
-Notifier_Handler::Notifier_Handler()
-{
-  // get the notifier from the naming service.
-}
 
-// Create and initialize a Notifier target object.
-Notifier_Handler::Notifier_Handler (const char *service_location,
-				    const char *marker,
-				    int putit)
-{
-  // Create a notifier object using the implementation class
-  // Notifier_i.
-  /*ACE_NEW (this->notifier_,
-           TIE_Event_Comm_Notifier (Notifier_i) (new Notifier_i,
-                                                 marker));
-  */
-  //@@ declare and orb and a notifir_var in the .h
-  // init the orb, register the object with the orb and the naming service
-}
 
-// Destroy a Notifier target object.
+// Init function.
 
-Notifier_Handler::~Notifier_Handler (void)
+int
+Notifier_Handler::init (int argc, char *argv[])
 {
-  this->handle_close ();
+ TAO_TRY
+    {
+      // Retrieve the ORB.
+      this->orb_ = CORBA::ORB_init (argc,
+                                    argv,
+                                    0,
+                                    TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      // Initialization of the naming service.
+      if (this->naming_client_.init (orb_.in ()) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) Unable to initialize "
+                           "the TAO_Naming_Client. \n"),
+                          -1);
+
+      ACE_DEBUG ((LM_DEBUG,
+		  "after naming_client init \n"));
+
+      CosNaming::Name notifier_ref_name (1);
+      notifier_ref_name.length (1);
+      notifier_ref_name[0].id =
+      CORBA::string_dup (NOTIFIER_BIND_NAME);
+
+      ACE_DEBUG ((LM_DEBUG,
+		  "after using CosNaming::Name\n"));
+
+      CORBA::Object_var notifier_obj =
+       this->naming_client_->resolve (notifier_ref_name,
+				      TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+
+      ACE_DEBUG ((LM_DEBUG,
+		  "after naming_client resolve \n"));
+      // The CORBA::Object_var object is downcast to Echo_var using
+      // the <_narrow> method.
+      this->notifier_ =
+         Event_Comm::Notifier::_narrow (notifier_obj.in (),
+					TAO_TRY_ENV);
+      ACE_DEBUG ((LM_DEBUG,
+		  "after notifier\n"));
+      TAO_CHECK_ENV;
+
+  }
+ TAO_CATCHANY
+   {
+     TAO_TRY_ENV.print_exception ("Notifier_Handler::init\n");
+     return -1;
+   }
+ TAO_ENDTRY;
 }

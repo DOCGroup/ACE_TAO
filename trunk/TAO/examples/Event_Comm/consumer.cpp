@@ -8,32 +8,44 @@ ACE_RCSID(Consumer, consumer, "$Id$")
 class Consumer : public ACE_Event_Handler
 {
   // = TITLE
-  // Consumer driver for the Publish/Subscribe example.
+  //    Consumer driver for the Publish/Subscribe example.
+  // = DESCRIPTION
+  //    The Consumer holds the <Consumer_Input_Handler> and <Cosumer_Handler> objects.
+
 public:
-  Consumer (int argc, char *argv[]);
+  // = Initialization and Termination methods.
+  Consumer ();
   ~Consumer (void);
+
+  int initialize (int argc, char *argv[]);
+  // initialization method.
 
   void run (void);
   // Execute the consumer;
 
 private:
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
+  // signal handler method.
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
-
-  Consumer_Input_Handler *ih_;
+  Consumer_Input_Handler ih_;
   // Handler for keyboard input.
 
-  Consumer_Handler *ch_;
+  Consumer_Handler ch_;
   // Handler for CORBA Consumer.
 };
 
-int
-Consumer::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+Consumer::Consumer (void)
+  : ih_ (),
+    ch_ ()
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "closing down Consumer\n"));
-  return 0;
+  // No-Op.
+}
+
+Consumer::~Consumer (void)
+{
+  // Allow the handlers to clean up.
+  this->ih_.handle_close();
+  this->ch_.handle_close();
 }
 
 int
@@ -44,55 +56,53 @@ Consumer::handle_signal (int signum, siginfo_t *, ucontext_t *)
               signum));
 
   // Indicate that the consumer initiated the shutdown.
-  this->ih_->consumer_initiated_shutdown (1);
+  this->ih_.consumer_initiated_shutdown (1);
 
-  // Shut down the event loop.
-  ACE_Reactor::end_event_loop();
+  // Shut down the ORB
+  ch_.close();
   return 0;
 }
-
-// Run the event loop until someone calls
-// calls ACE_Reactor::end_event_loop().
 
 void
 Consumer::run (void)
 {
-  if (ACE_Reactor::run_event_loop () == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "run_reactor_event_loop"));
+  // run the <Consumer_Handler>'s ORB
+  ch_.run();
 }
 
-Consumer::Consumer (int argc, char *argv[])
-  : ih_ (0),
-    ch_ (0)
+int Consumer::initialize (int argc, char *argv[])
 {
-  ACE_DEBUG ((LM_DEBUG,
-	      "no config file, using static binding\n"));
-  // The constructor registers the handlers...
-  ACE_NEW (this->ch_,
-	   Consumer_Handler (argc, argv));
-  ACE_NEW (this->ih_,
-	   Consumer_Input_Handler (this->ch_));
+  // initialize the <Consumer_Handler>.
+  if (this->ch_.init (argc, argv) == -1)
+     ACE_ERROR_RETURN ((LM_ERROR,
+			"%p\n",
+			"Consumer_Handler failed to initialize\n"), -1);
 
-  if (ACE_Reactor::instance ()->register_handler (SIGINT, this) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "register_handler"));
+   // initialize the <Consumer_Input_Handler>.
+  if (this->ih_.initialize (&this->ch_) == -1)
+     ACE_ERROR_RETURN ((LM_ERROR,
+			"%p\n",
+			"Consumer_Input_Handler failed to initialize\n"), -1);
+
+  if (this->ch_.reactor()->register_handler (SIGINT, this) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "%p\n",
+		       "register_handler"), -1);
+  return 0;
 }
 
-Consumer::~Consumer (void)
-{
-  // Free up the handlers if they were statically bound.
-  this->ih_->handle_close ();
-  this->ch_->handle_close ();
-}
+
 
 int
 main (int argc, char *argv[])
 {
   // Initialize the supplier and consumer object references.
-  Consumer consumer (argc, argv);
+  Consumer consumer;
+
+  if (consumer.initialize (argc, argv) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+			"%p\n",
+			"Consumer init failed\n"), 1);
 
   // Loop forever handling events.
   consumer.run ();

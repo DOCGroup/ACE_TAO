@@ -28,10 +28,16 @@ class Consumer_Input_Handler : public ACE_Service_Object
   //   Handles input events generated from a keyboard.
   //
   // = DESCRIPTION
-  //    This subclass <ACE_Service_Object> receives "unsubscribes"
-  //    from the <Notifier> when input is received from the keyboard.
+  //    This class holds a <Consumer_Handler> object. It accepts input from the user
+  //    and passes events to the <Notifier>. It also initiates shutdown.
+  //
 public:
-  Consumer_Input_Handler (Consumer_Handler *,
+  // Initialization and termination methods.
+  Consumer_Input_Handler(void);
+
+  ~Consumer_Input_Handler (void);
+
+  int initialize (Consumer_Handler *,
 			  ACE_HANDLE h = 0);
 
   virtual int handle_input (ACE_HANDLE);
@@ -48,9 +54,6 @@ public:
   // Indicate that the Consumer initiated the shutdown.
 
 private:
-  ~Consumer_Input_Handler (void);
-  // Ensure dynamic allocation.
-
   virtual ACE_HANDLE get_handle (void) const;
 
   ACE_HANDLE handle_;

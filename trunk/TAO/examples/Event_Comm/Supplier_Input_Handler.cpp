@@ -6,6 +6,19 @@
 
 ACE_RCSID(Supplier, Supplier_Input_Handler, "$Id$")
 
+Supplier_Input_Handler::Supplier_Input_Handler ()
+  : notifier_ (0),
+    handle_ (0)
+{
+  // No-Op.
+}
+
+Supplier_Input_Handler::~Supplier_Input_Handler (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "closing down Supplier_Input_Handler::~Supplier_Input_Handler\n"));
+}
+
 int
 Supplier_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
@@ -38,38 +51,31 @@ Supplier_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
                 "%p\n",
                 "remove_handler"));
 
-  // *Must* be allocated dyanmically!
-  ::operator delete ((void *) this);
   return 0;
 }
 
-Supplier_Input_Handler::Supplier_Input_Handler (Notifier_Handler *notifier,
-			      ACE_HANDLE handle) // Use stdin by default.
-  : notifier_ (notifier),
-    handle_ (handle)
+int Supplier_Input_Handler::initialize (Notifier_Handler *notifier,
+					ACE_HANDLE handle) // Use stdin by default.
 {
+  notifier_ = notifier;
+  handle_ = handle;
+
   // Register ourselves with the ACE_Reactor so that input events
   // cause our handle_input() method to be dispatched automatically.
 
   if (ACE_Reactor::instance ()->register_handler
       (this, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR ((LM_ERROR,
+    ACE_ERROR_RETURN ((LM_ERROR,
                 "%p\n",
-                "register_handler"));
+                "register_handler"), -1);
 
   this->fp_ = ACE_OS::fdopen (handle, "r");
 
   if (this->fp_ == 0)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "fdopen"));
-}
-
-Supplier_Input_Handler::~Supplier_Input_Handler (void)
-{
-  ACE_DEBUG ((LM_DEBUG,
-              "closing down Supplier_Input_Handler::~Supplier_Input_Handler\n"));
-  this->handle_close ();
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "%p\n",
+		       "fdopen"), -1);
+  return 0;
 }
 
 ACE_HANDLE

@@ -5,11 +5,17 @@
 
 ACE_RCSID(Consumer, Consumer_Input_Handler, "$Id$")
 
+Consumer_Input_Handler::Consumer_Input_Handler (void)
+  : receiver_handler_ (0),
+    handle_ (0),
+    consumer_initiated_shutdown_ (0)
+{
+  // No-Op.
+}
+
 Consumer_Input_Handler::~Consumer_Input_Handler (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "closing down Input_Handler::~Input_Handler\n"));
-  this->handle_close ();
+  // No-Op.
 }
 
 int
@@ -48,8 +54,8 @@ Consumer_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
         {
           // Gracefully shutdown the Receiver by removing it from the
           // Notifier's internal map.
-
-          notifier->unsubscribe (receiver, "", TAO_TRY_ENV); //IT_X);
+	  if (notifier != 0)
+	    notifier->unsubscribe (receiver, "", TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
         }
       TAO_CATCHANY
@@ -61,29 +67,28 @@ Consumer_Input_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 
   // Don't execute a callback here otherwise we'll recurse
   // indefinitely!
-  if (ACE_Reactor::instance ()->remove_handler
+  if (this->receiver_handler_->reactor()->remove_handler
       (this,
        ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL) == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
                 "remove_handler"));
 
-  // *Must* be allocated dyanmically!
-  ::operator delete (this);
   return 0;
 }
 
-Consumer_Input_Handler::Consumer_Input_Handler (Consumer_Handler *ch,
+int Consumer_Input_Handler::initialize (Consumer_Handler *ch,
 			      ACE_HANDLE handle)
-  : receiver_handler_ (ch),
-    handle_ (handle),
-    consumer_initiated_shutdown_ (0)
 {
-  if (ACE_Reactor::instance ()->register_handler
+  receiver_handler_ = ch;
+  handle_ = handle;
+
+  if (this->receiver_handler_->reactor()->register_handler
       (this,
        ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "Consumer_Input_Handler::Input_Handler\n"));
+    ACE_ERROR_RETURN ((LM_ERROR,
+                "Consumer_Input_Handler::Input_Handler\n"), -1);
+  return 0;
 }
 
 int
@@ -123,10 +128,8 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE h)
       // Consumer wants to shutdown.
       this->consumer_initiated_shutdown (1);
 
-
-
       // Tell the main event loop to shutdown.
-      ACE_Reactor::end_event_loop();
+       this->receiver_handler_->close ();
     }
   else
     {
@@ -136,7 +139,7 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE h)
 
           event.tag_ = ACE_OS::strdup (buf);
 
-          notifier->push (event, TAO_TRY_ENV); //IT_X);
+          notifier->push (event, TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 	}
       TAO_CATCHANY

@@ -11,11 +11,18 @@ class Supplier : public ACE_Event_Handler
   //   Supplier driver for the TAO Publish/Subscribe example.
   //
   // = DESCRIPTION
-  //   The executable file generated from this code should be
-  //   registered (under the name 'logger').
+  //    This class starts up the <Supplier_Input_Handler> and <Notifier_Handler>
+  //    objects.
 public:
-  Supplier (int argc, char *argv[]);
+  // Initialization and Termination methods.
+  Supplier (void);
+  // Constructor.
+
   ~Supplier (void);
+  // Destructor.
+
+  int init (int argc, char *argv[]);
+  // Initialization method. returns 0 on success, -1 on error.
 
   void run (void);
   // Execute the supplier.
@@ -23,21 +30,24 @@ public:
 private:
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
-
-  Supplier_Input_Handler *ih_;
+  Supplier_Input_Handler ih_;
   // Handler for keyboard input.
 
-  Notifier_Handler *nh_;
+  Notifier_Handler nh_;
   // The notifier handler.
 };
 
-int
-Supplier::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+Supplier::Supplier (void)
+  :nh_ (),
+   ih_ ()
+
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "closing down Supplier\n"));
-  return 0;
+  // No-Op.
+}
+
+Supplier::~Supplier (void)
+{
+  // No-Op.
 }
 
 int
@@ -46,6 +56,10 @@ Supplier::handle_signal (int signum, siginfo_t *, ucontext_t *)
   ACE_DEBUG ((LM_DEBUG,
               "%S\n",
               signum));
+
+  this->ih_.handle_close ();
+  this->nh_.handle_close ();
+
   ACE_Reactor::end_event_loop ();
   return 0;
 }
@@ -59,33 +73,37 @@ Supplier::run (void)
                 "run_reactor_event_loop"));
 }
 
-Supplier::Supplier (int argc, char *argv[])
-  : ih_ (0)
+int
+Supplier::init (int argc, char *argv[])
 {
-  ACE_DEBUG ((LM_DEBUG,
-	      "no config file, using static binding\n"));
+  if (this->nh_.init (argc, argv) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "%p\n",
+		       "Notifier_Handler did not init\n"), -1);
 
-  ACE_NEW (this->nh_, Notifier_Handler());
-  ACE_NEW (this->ih_,
-	   Supplier_Input_Handler (this->nh_));
+   if (this->ih_.initialize (&nh_) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "%p\n",
+		       "Supplier Input handler did not init\n"), -1);
 
   if (ACE_Reactor::instance ()->register_handler (SIGINT, this) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "register_handler"));
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "%p\n",
+		       "register_handler"), -1);
 }
 
-Supplier::~Supplier (void)
-{
-  // Free up the handlers if they were statically bound.
-  this->ih_->handle_close ();
-}
+
 
 int
 main (int argc, char *argv[])
 {
   // Initialize server daemon.
-  Supplier supplier (argc, argv);
+  Supplier supplier;
+
+  if (supplier.init (argc, argv) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                "%p\n",
+                "supplier init failed"), 1);
 
   // Loop forever handling events.
   supplier.run ();
