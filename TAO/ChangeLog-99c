@@ -1,3 +1,12 @@
+Fri Jan 29 20:16:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * tao/NVList.cpp:
+          Changed add_value() to always copy the value of the Any,
+          ignoring the CORBA::IN_COPY_VALUE flag. Calling replace(),
+          as we did before, is faster, but if the value of the Any is
+          0 (void* value is null), a crash will result. Thanks to
+          Carlos for figuring this out and to Barry Hoggard for
+          reporting the bug.
 
 Fri Jan 29 18:07:28 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
