@@ -156,7 +156,6 @@ CONTROLLED_FILES = \
         docs \
         etc \
         examples \
-        html \
         include \
         install-sh \
         ltcf-c.sh \

@@ -14,6 +14,9 @@ require File::Path;
 $is_release = 0;
 $exclude_ace = 0;
 $exclude_tao = 0;
+$verbose = 0;
+$perl_path = '/usr/bin/perl';
+$dot_path = '/usr/local/bin';
 @ACE_DOCS = ('ace',
              'ace_man',
              'ace_rmcast',
@@ -55,6 +58,14 @@ sub parse_args {
       $exclude_ace = 1;
     } elsif ($ARGV[0] eq "-exclude_tao") {
       $exclude_tao = 1;
+    } elsif ($ARGV[0] eq "-verbose") {
+      $verbose = 1;
+    } elsif ($ARGV[0] eq "-perl_path" && $#ARGV >= 1) {
+      $perl_path = $ARGV[1];
+      shift;
+    } elsif ($ARGV[0] eq "-dot_path" && $#ARGV >= 1) {
+      $dot_path = $ARGV[1];
+      shift;
     } else {
       print "Ignoring option $ARGV[0]\n";
     }
@@ -95,6 +106,15 @@ sub generate_doxy_files {
       if (/^PROJECT_NUMBER/) {
         print DOXYOUTPUT "PROJECT_NUMBER        = ", $VERSION, "\n";
         next;
+      } elsif (/^PERL_PATH /) {
+	print DOXYOUTPUT "PERL_PATH = $perl_path\n";
+	next;
+      } elsif (/^DOT_PATH /) {
+	print DOXYOUTPUT "DOT_PATH = $dot_path\n";
+	next;
+      } elsif (/^QUIET / && $verbose) {
+	print DOXYOUTPUT "QUIET = NO\n";
+	next;
       } elsif (/^GENERATE_MAN/ && /= YES/) {
         $generate_man = 1;
       } elsif (/^GENERATE_HTML/ && /= YES/) {

@@ -1,3 +1,19 @@
+Thu Nov 23 14:43:40 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* Makefile: 
+	  Do not include the html directory in the release. The doxygen
+	  files are too big for this.
+
+	* ace/config-doxygen.h:
+	  Improve doxygen documentation.
+
+	* bin/generate_doxygen.pl:
+	  Add options to change the path to find dot and perl on the fly.
+
+	* bin/make_release:
+	  Generate the HTML documentation in a separate .tar.gz (or .zip)
+	  file.
+
 Wed Nov 22 17:35:55 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: 
