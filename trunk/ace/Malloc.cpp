@@ -161,8 +161,8 @@ ACE_Control_Block::ACE_Name_Node::dump (void) const
 
 #if defined (ACE_HAS_MALLOC_STATS)
 ACE_Malloc_Stats::ACE_Malloc_Stats (void)
-  : nblocks_ (0),
-    nchunks_ (0),
+  : nchunks_ (0),
+    nblocks_ (0),
     ninuse_ (0)
 {
   ACE_TRACE ("ACE_Malloc_Stats::ACE_Malloc_Stats");
