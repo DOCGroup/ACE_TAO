@@ -136,6 +136,13 @@
 
 # define ACE_HAS_SIGSUSPEND
 
+// However, sigqueue-ing things across threads does not work (at least
+// prior to the 2.4 kernel) so unless the user has specifically requested
+// the POSIX_SIG_PROACTOR, use the AIOCB version to avoid this problem.
+# if !defined (ACE_POSIX_SIG_PROACTOR)
+#   define ACE_POSIX_AIOCB_PROACTOR
+# endif  /* ACE_POSIX_SIG_PROACTOR */
+
 // Some misc wide character stuff
 # define ACE_LACKS_WCSDUP_PROTOTYPE
 

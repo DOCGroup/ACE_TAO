@@ -238,7 +238,11 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (u_long) result.completion_key ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
+#if 0
+  // This can overrun the ACE_Log_Msg buffer and do bad things.
+  // Re-enable it at your risk.
   ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", result.message_block ().rd_ptr ()));
+#endif /* 0 */
 
   if (result.success () && result.bytes_transferred () != 0)
     {
@@ -591,7 +595,9 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (u_long) result.completion_key ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
+#if 0
   ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block", result.message_block ().rd_ptr ()));
+#endif
 
   if (result.success ())
     {
