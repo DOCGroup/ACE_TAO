@@ -1,0 +1,29 @@
+// $Id$
+
+project(EC_Benchmark_stub): ciao_client_dnc {
+
+  sharedname = EC_Benchmark_stub
+  idlflags += -Wb,stub_export_macro=EC_BENCHMARK_STUB_Export -Wb,stub_export_include=EC_Benchmark_stub_export.h -Wb,skel_export_macro=EC_BENCHMARK_SVNT_Export -Wb,skel_export_include=EC_Benchmark_svnt_export.h
+  dynamicflags   = EC_BENCHMARK_STUB_BUILD_DLL
+
+  IDL_Files {
+    EC_Benchmark.idl
+  }
+
+  Source_Files {
+    EC_BenchmarkC.cpp
+  }
+}
+
+project(EC_Benchmark_svnt) : ciao_server_dnc {
+  after +=  EC_Benchmark_stub
+  sharedname = EC_Benchmark_svnt
+  libs    += EC_Benchmark_stub
+
+  idlflags  += -Wb,stub_export_macro=EC_BENCHMARK_STUB_Export -Wb,stub_export_include=EC_Benchmark_stub_export.h -Wb,skel_export_macro=EC_BENCHMARK_SVNT_Export -Wb,skel_export_include=EC_Benchmark_svnt_export.h
+  dynamicflags = EC_BENCHMARK_SVNT_BUILD_DLL
+
+  Source_Files {
+    EC_BenchmarkS.cpp
+  }
+}
