@@ -240,7 +240,7 @@ TAO_Transport_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
 
 
 int
-TAO_Transport_Cache_Manager::close_i (ACE_Handle_Set &handle_set)
+TAO_Transport_Cache_Manager::close_i (ACE_Handle_Set & /*handle_set*/)
 {
   for (HASH_MAP_ITER iter = this->cache_map_.begin ();
        iter != this->cache_map_.end ();

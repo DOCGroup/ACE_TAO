@@ -1,3 +1,11 @@
+Sat Mar 17 09:23:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Connection_Handler.cpp: 
+	* tao/Transport_Cache_Manager.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp: Fixed warnings with
+	  g++. 
+
 Fri Mar 16 18:25:54 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/Cache_Entries.h:
