@@ -1,3 +1,12 @@
+Sat Apr 29 19:45:41 2000  Ossama Othman  <ossama@uci.edu>
+
+	* netsvcs/lib/Log_Message_Receiver.cpp (attach, detach):
+
+	  Fixed warning that occured when
+	  ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES was not defined.
+
+	  Use ACE_GUARD{_RETURN} macro instead of naked ACE_Guard.
+
 Sat Apr 29 19:17:25 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace-dll.icc:
