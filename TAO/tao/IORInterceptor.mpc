@@ -22,4 +22,8 @@ project : taolib, objreftemplate, core {
   Resource_Files {
     IORInterceptor
   }
+
+  PIDL_Files {
+    IORInterceptor
+  }
 }

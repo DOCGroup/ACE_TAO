@@ -296,8 +296,6 @@ IDL_Compiler = \
 lib_LTLIBRARIES = libTAO.la
 
 libTAO_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -902,7 +900,51 @@ nobase_include_HEADERS = \
   Var_Array_SArgument_T.cpp \
   Var_Size_Argument_T.cpp \
   Var_Size_SArgument_T.cpp \
-  orb.idl
+  orb.idl \
+  AnySeq.pidl \
+  BooleanSeq.pidl \
+  Bounds.pidl \
+  CONV_FRAME.pidl \
+  CORBA.pidl \
+  CharSeq.pidl \
+  Current.pidl \
+  Domain.pidl \
+  DoubleSeq.pidl \
+  Dynamic.pidl \
+  Dynamic_Parameter.pidl \
+  FloatSeq.pidl \
+  GIOP.pidl \
+  IIOP.pidl \
+  IIOP_Endpoints.pidl \
+  IOP.pidl \
+  IOP_Codec.pidl \
+  IOP_IOR.pidl \
+  InterfaceDef.pidl \
+  InvalidName.pidl \
+  LongDoubleSeq.pidl \
+  LongLongSeq.pidl \
+  LongSeq.pidl \
+  Messaging_PolicyValue.pidl \
+  Messaging_SyncScope.pidl \
+  ObjectIdList.pidl \
+  Object_Key.pidl \
+  OctetSeq.pidl \
+  PI_Forward.pidl \
+  Policy.pidl \
+  Policy_Forward.pidl \
+  Pollable.pidl \
+  PortableInterceptor.pidl \
+  Services.pidl \
+  ShortSeq.pidl \
+  StringSeq.pidl \
+  TAO.pidl \
+  TimeBase.pidl \
+  ULongLongSeq.pidl \
+  ULongSeq.pidl \
+  UShortSeq.pidl \
+  WCharSeq.pidl \
+  WStringSeq.pidl \
+  WrongTransaction.pidl
 
 EXTRA_DIST = \
   tao.rc
@@ -913,8 +955,6 @@ EXTRA_DIST = \
 lib_LTLIBRARIES += libTAO_BiDirGIOP.la
 
 libTAO_BiDirGIOP_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -945,7 +985,8 @@ nobase_include_HEADERS += \
   BiDir_GIOP/BiDir_Policy_i.h \
   BiDir_GIOP/bidirgiop_export.h \
   BiDir_GIOP/BiDirPolicyC.i \
-  BiDir_GIOP/BiDir_Policy_i.inl
+  BiDir_GIOP/BiDir_Policy_i.inl \
+  BiDir_GIOP/BiDirPolicy.pidl
 
 EXTRA_DIST += \
   BiDir_GIOP/TAO_BiDir_GIOP.rc
@@ -956,8 +997,6 @@ EXTRA_DIST += \
 lib_LTLIBRARIES += libTAO_Valuetype.la
 
 libTAO_Valuetype_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -1011,8 +1050,6 @@ EXTRA_DIST += \
 lib_LTLIBRARIES += libTAO_ObjRefTemplate.la
 
 libTAO_ObjRefTemplate_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -1033,7 +1070,8 @@ libTAO_ObjRefTemplate_la_LIBADD = \
 nobase_include_HEADERS += \
   ObjRefTemplate/ObjectReferenceTemplateC.h \
   ObjRefTemplate/ort_export.h \
-  ObjRefTemplate/ObjectReferenceTemplateC.i
+  ObjRefTemplate/ObjectReferenceTemplateC.i \
+  ObjRefTemplate/ObjectReferenceTemplate.pidl
 
 EXTRA_DIST += \
   ObjRefTemplate/TAO_ObjRefTemplate.rc
@@ -1044,8 +1082,6 @@ EXTRA_DIST += \
 lib_LTLIBRARIES += libTAO_IORInterceptor.la
 
 libTAO_IORInterceptor_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -1074,7 +1110,8 @@ nobase_include_HEADERS += \
   IORInterceptor/IORInterceptor_List.h \
   IORInterceptor/iorinterceptor_export.h \
   IORInterceptor/IORInterceptorC.i \
-  IORInterceptor/IORInterceptor_List.inl
+  IORInterceptor/IORInterceptor_List.inl \
+  IORInterceptor/IORInterceptor.pidl
 
 EXTRA_DIST += \
   IORInterceptor/TAO_IORInterceptor.rc
@@ -1085,8 +1122,6 @@ EXTRA_DIST += \
 lib_LTLIBRARIES += libTAO_PortableServer.la
 
 libTAO_PortableServer_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -1201,7 +1236,11 @@ nobase_include_HEADERS += \
   PortableServer/Servant_Base.i \
   PortableServer/ServerInterceptorAdapter.inl \
   PortableServer/ServerRequestInfo.inl \
-  PortableServer/PolicyS_T.cpp
+  PortableServer/PolicyS_T.cpp \
+  PortableServer/Default_ORT.pidl \
+  PortableServer/ImR_Locator.pidl \
+  PortableServer/ImplRepo.pidl \
+  PortableServer/PortableServer.pidl
 
 EXTRA_DIST += \
   PortableServer/TAO_PortableServer.rc
@@ -1212,8 +1251,6 @@ EXTRA_DIST += \
 lib_LTLIBRARIES += libTAO_IFR_Client.la
 
 libTAO_IFR_Client_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -1249,7 +1286,11 @@ nobase_include_HEADERS += \
   IFR_Client/IFR_BaseC.i \
   IFR_Client/IFR_BasicC.i \
   IFR_Client/IFR_ComponentsC.i \
-  IFR_Client/IFR_ExtendedC.i
+  IFR_Client/IFR_ExtendedC.i \
+  IFR_Client/IFR_Base.pidl \
+  IFR_Client/IFR_Basic.pidl \
+  IFR_Client/IFR_Components.pidl \
+  IFR_Client/IFR_Extended.pidl
 
 EXTRA_DIST += \
   IFR_Client/TAO_IFR_Client.rc
@@ -1260,8 +1301,6 @@ EXTRA_DIST += \
 lib_LTLIBRARIES += libTAO_Domain.la
 
 libTAO_Domain_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -1300,8 +1339,6 @@ EXTRA_DIST += \
 lib_LTLIBRARIES += libTAO_DynamicAny.la
 
 libTAO_DynamicAny_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -1340,7 +1377,8 @@ nobase_include_HEADERS += \
   DynamicAny/DynamicAny.h \
   DynamicAny/DynamicAnyC.h \
   DynamicAny/dynamicany_export.h \
-  DynamicAny/DynamicAnyC.i
+  DynamicAny/DynamicAnyC.i \
+  DynamicAny/DynamicAny.pidl
 
 EXTRA_DIST += \
   DynamicAny/TAO_DynamicAny.rc
@@ -1351,8 +1389,6 @@ EXTRA_DIST += \
 lib_LTLIBRARIES += libTAO_Messaging.la
 
 libTAO_Messaging_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -1415,7 +1451,12 @@ nobase_include_HEADERS += \
   Messaging/Messaging_RT_PolicyC.i \
   Messaging/Messaging_SyncScope_PolicyC.i \
   Messaging/TAO_ExtC.i \
-  Messaging/MessagingS_T.cpp
+  Messaging/MessagingS_T.cpp \
+  Messaging/Messaging.pidl \
+  Messaging/Messaging_No_Impl.pidl \
+  Messaging/Messaging_RT_Policy.pidl \
+  Messaging/Messaging_SyncScope_Policy.pidl \
+  Messaging/TAO_Ext.pidl
 
 EXTRA_DIST += \
   Messaging/TAO_Messaging.rc
@@ -1428,8 +1469,6 @@ lib_LTLIBRARIES += libTAO_DynamicInterface.la
 endif
 
 libTAO_DynamicInterface_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -1480,7 +1519,51 @@ nobase_include_HEADERS += \
   DynamicInterface/DII_Invocation.inl \
   DynamicInterface/ExceptionList.inl \
   DynamicInterface/Request.inl \
-  DynamicInterface/Server_Request.inl
+  DynamicInterface/Server_Request.inl \
+  AnySeq.pidl \
+  BooleanSeq.pidl \
+  Bounds.pidl \
+  CONV_FRAME.pidl \
+  CORBA.pidl \
+  CharSeq.pidl \
+  Current.pidl \
+  Domain.pidl \
+  DoubleSeq.pidl \
+  Dynamic.pidl \
+  Dynamic_Parameter.pidl \
+  FloatSeq.pidl \
+  GIOP.pidl \
+  IIOP.pidl \
+  IIOP_Endpoints.pidl \
+  IOP.pidl \
+  IOP_Codec.pidl \
+  IOP_IOR.pidl \
+  InterfaceDef.pidl \
+  InvalidName.pidl \
+  LongDoubleSeq.pidl \
+  LongLongSeq.pidl \
+  LongSeq.pidl \
+  Messaging_PolicyValue.pidl \
+  Messaging_SyncScope.pidl \
+  ObjectIdList.pidl \
+  Object_Key.pidl \
+  OctetSeq.pidl \
+  PI_Forward.pidl \
+  Policy.pidl \
+  Policy_Forward.pidl \
+  Pollable.pidl \
+  PortableInterceptor.pidl \
+  Services.pidl \
+  ShortSeq.pidl \
+  StringSeq.pidl \
+  TAO.pidl \
+  TimeBase.pidl \
+  ULongLongSeq.pidl \
+  ULongSeq.pidl \
+  UShortSeq.pidl \
+  WCharSeq.pidl \
+  WStringSeq.pidl \
+  WrongTransaction.pidl
 
 EXTRA_DIST += \
   DynamicInterface/TAO_DynamicInterface.rc
@@ -1491,8 +1574,6 @@ EXTRA_DIST += \
 lib_LTLIBRARIES += libTAO_IORManip.la
 
 libTAO_IORManip_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -1517,7 +1598,8 @@ nobase_include_HEADERS += \
   IORManipulation/IORManip_Loader.h \
   IORManipulation/IORManipulation.h \
   IORManipulation/ior_manip_export.h \
-  IORManipulation/IORC.i
+  IORManipulation/IORC.i \
+  IORManipulation/IOR.pidl
 
 EXTRA_DIST += \
   IORManipulation/TAO_IORManip.rc
@@ -1528,8 +1610,6 @@ EXTRA_DIST += \
 lib_LTLIBRARIES += libTAO_IORTable.la
 
 libTAO_IORTable_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -1555,7 +1635,8 @@ nobase_include_HEADERS += \
   IORTable/IOR_Table_Impl.h \
   IORTable/Table_Adapter.h \
   IORTable/iortable_export.h \
-  IORTable/IORTableC.i
+  IORTable/IORTableC.i \
+  IORTable/IORTable.pidl
 
 EXTRA_DIST += \
   IORTable/TAO_IORTable.rc
@@ -1568,8 +1649,6 @@ lib_LTLIBRARIES += libTAO_RTCORBA.la
 endif
 
 libTAO_RTCORBA_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -1665,7 +1744,9 @@ nobase_include_HEADERS += \
   RTCORBA/RT_Thread_Lane_Resources_Manager.i \
   RTCORBA/RT_Transport_Descriptor.inl \
   RTCORBA/RT_Transport_Descriptor_Property.inl \
-  RTCORBA/Thread_Pool.i
+  RTCORBA/Thread_Pool.i \
+  RTCORBA/RTCORBA.pidl \
+  RTCORBA/RTCORBA_include.pidl
 
 EXTRA_DIST += \
   RTCORBA/TAO_RTCORBA.rc
@@ -1678,8 +1759,6 @@ lib_LTLIBRARIES += libTAO_RTPortableServer.la
 endif
 
 libTAO_RTPortableServer_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -1722,7 +1801,8 @@ nobase_include_HEADERS += \
   RTPortableServer/RTPortableServerC.i \
   RTPortableServer/RT_Acceptor_Filters.i \
   RTPortableServer/RT_Collocation_Resolver.i \
-  RTPortableServer/RT_POA.i
+  RTPortableServer/RT_POA.i \
+  RTPortableServer/RTPortableServer.pidl
 
 EXTRA_DIST += \
   RTPortableServer/TAO_RTPortableServer.rc
@@ -1737,8 +1817,6 @@ endif
 endif
 
 libTAO_RTScheduler_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -1780,7 +1858,9 @@ nobase_include_HEADERS += \
   RTScheduling/ThreadAction.h \
   RTScheduling/rtscheduler_export.h \
   RTScheduling/RTSchedulerC.i \
-  RTScheduling/RTScheduler_Manager.i
+  RTScheduling/RTScheduler_Manager.i \
+  RTScheduling/RTScheduler.pidl \
+  RTScheduling/RTScheduler_include.pidl
 
 EXTRA_DIST += \
   RTScheduling/TAO_RTScheduler.rc
@@ -1791,8 +1871,6 @@ EXTRA_DIST += \
 lib_LTLIBRARIES += libTAO_SmartProxies.la
 
 libTAO_SmartProxies_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -1823,8 +1901,6 @@ EXTRA_DIST += \
 lib_LTLIBRARIES += libTAO_Strategies.la
 
 libTAO_Strategies_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -1938,7 +2014,9 @@ nobase_include_HEADERS += \
   Strategies/UIOP_Transport.i \
   Strategies/advanced_resource.i \
   Strategies/sciop_endpoints.i \
-  Strategies/uiop_endpoints.i
+  Strategies/uiop_endpoints.i \
+  Strategies/sciop_endpoints.pidl \
+  Strategies/uiop_endpoints.pidl
 
 EXTRA_DIST += \
   Strategies/TAO_Strategies.rc
@@ -1949,8 +2027,6 @@ EXTRA_DIST += \
 lib_LTLIBRARIES += libTAO_TypeCodeFactory.la
 
 libTAO_TypeCodeFactory_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
@@ -1977,7 +2053,8 @@ nobase_include_HEADERS += \
   TypeCodeFactory/TypeCodeFactory_Loader.h \
   TypeCodeFactory/TypeCodeFactory_i.h \
   TypeCodeFactory/typecodefactory_export.h \
-  TypeCodeFactory/TypeCodeFactoryC.inl
+  TypeCodeFactory/TypeCodeFactoryC.inl \
+  TypeCodeFactory/TypeCodeFactory.pidl
 
 EXTRA_DIST += \
   TypeCodeFactory/TypeCodeFactory.rc
@@ -1988,8 +2065,6 @@ EXTRA_DIST += \
 lib_LTLIBRARIES += libTAO_Utils.la
 
 libTAO_Utils_la_CPPFLAGS = \
-  -I$(top_builddir) \
-  -I$(top_srcdir) \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \

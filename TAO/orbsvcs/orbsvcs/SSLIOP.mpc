@@ -21,4 +21,8 @@ project(SSLIOP) : orbsvcslib, core, security, ssl {
       SSLIOP
     }
   }
+
+  PIDL_Files {
+    SSLIOP
+  }
 }
