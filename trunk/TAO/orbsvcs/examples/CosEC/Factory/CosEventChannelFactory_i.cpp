@@ -36,12 +36,16 @@ TAO_CosEventChannelFactory_i::init
     poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID, //UNIQUE_ID,
                                       ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
+  // @@ Pradeep: Why did you end up using the MULTIPLE_ID policy? And
+  //    why doesn't it match with the comment?
 
   // Create a PolicyList
   CORBA::PolicyList policy_list;
   policy_list.length (1);
   policy_list [0] =
     PortableServer::IdUniquenessPolicy::_duplicate (idpolicy);
+  // @@ Pradeep: maybe a little comment explaining why you don't need
+  //    to override any POA policies would be a good idea.
 
   // Create the child POA.
   this->poa_ = poa->create_POA ("CosEC_ChildPOA",
@@ -55,9 +59,12 @@ TAO_CosEventChannelFactory_i::init
   ACE_CHECK_RETURN (-1);
 
   this->poa_ = poa;
+
   // @@ I want to use the child poa but the factoryec::create fails
-  // with that.
-  // so use the root poa for the time being. ;(
+  //    with that.
+  //    So use the root poa for the time being. ;(
+  // @@ Pradeep: Maybe it fails because you didn't specify the USER_ID
+  //    policy too?
   return 0;
 }
 
@@ -81,13 +88,26 @@ TAO_CosEventChannelFactory_i::create
       ACE_NEW_THROW_EX (_ec,
                         FactoryCosEventChannel_i,
                         CORBA::NO_MEMORY ());
+      // @@ Pradeep: you may need to pass more arguments to that
+      //    exception.
       ACE_TRY_CHECK;
 
       auto_ptr <FactoryCosEventChannel_i> ec (_ec);
 
+      // @@ Pradeep: you may want to store the _ec variable directly
+      //    in the auto_ptr, that way you don't leak memory if the
+      //    constructor raises an exception...
+
+      // @@ Pradeep: use the auto_ptr to manipulate the ec, that way
+      //    you don't need to change the code if the initialization of
+      //    _ec and ec changes.
       if (_ec->init (this->poa_,
                      ACE_TRY_ENV) == -1)
         return 0;
+      // @@ Pradeep: you have a point here! the POA that the EC needs
+      //    to activate its own objects maybe different from the POA
+      //    where you activate the EC itself, this is because the
+      //    policies required in each case are different....
 
       ACE_TRY_CHECK;
 
@@ -110,6 +130,8 @@ TAO_CosEventChannelFactory_i::create
       // Give the ownership to the POA.
       _ec->_remove_ref (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      // @@ Pradeep: is this OK? Does the reference count start at 1
+      //     then?
 
       if (store_in_naming_service &&
           this->naming_ != CosNaming::NamingContext::_nil ())
@@ -129,6 +151,9 @@ TAO_CosEventChannelFactory_i::create
     }
   ACE_CATCH (PortableServer::POA::ServantAlreadyActive, sa_ex)
     {
+      // @@ Pradeep: you shouldn't return 0, but
+      //    CosEventChannelAdmin::EventChannel::_nil () use a
+      //    temporary variable or a macro if it is too much pain.
       ACE_THROW_RETURN (CosEventChannelFactory::DuplicateChannel,
                         0);
     }
@@ -213,6 +238,13 @@ TAO_CosEventChannelFactory_i::destroy
                                                      ACE_TRY_ENV);
       ACE_CHECK;
 
+      // @@ Pradeep: in a completely complaint ORB this will fail: you
+      //    are invoking an operation after the servant was
+      //    deactivated.  It is even possible that the reference count
+      //    went to 0 already and the program crashes.
+      //    We need to either invoke this before or use
+      //    id_to_servant() then a downcast and then operate on the
+      //    servant directly.
       fact_ec->destroy (ACE_TRY_ENV);
       ACE_CHECK;
     }
@@ -246,6 +278,7 @@ TAO_CosEventChannelFactory_i::find
     }
   ACE_CATCHANY
     {
+      // @@ Pradeep: same comment about 0 vs. _nil()
       ACE_THROW_RETURN (CosEventChannelFactory::NoSuchChannel,
                         0);
     }
@@ -287,6 +320,11 @@ TAO_CosEventChannelFactory_i::find_channel_id
 int
 main (int argc, char *argv [])
 {
+  // @@ Pradeep: can we put the main function on a separate file? That
+  //    will make it easier for the users to integrate the class in
+  //    their system.
+  //    Also: can we give the users some command line options to
+  //    control the name to use in the naming service?
   const char* Factory_Name = "CosEC_Factory";
   // The name of the factory registered with the naming service.
 
@@ -392,6 +430,9 @@ main (int argc, char *argv [])
     }
   ACE_CATCH (CORBA::UserException, ue)
     {
+      // @@ Pradeep: there is a macro for this: ACE_PRINT_EXCEPTION.
+      //    print_exception() is a TAO extension, so we shouldn't rely
+      //    on it.
       ue.print_exception ("cosecfactory: ");
       return -1;
     }
@@ -404,4 +445,6 @@ main (int argc, char *argv [])
   ACE_CHECK_RETURN (-1);
 
   ACE_NOTREACHED (return 0;)
+  // @@ Pradeep: was this intentional or is it just a misplaced
+  //    semi-colon?
 }
