@@ -1,0 +1,184 @@
+
+Intention of this file is to capture and document CIDL complier design 
+ideas/decisions.
+
+Conceptual parts of CIDL compiler design
+----------------------------------------
+
+Option Parser                       Consists of option parser and option
+                                    database. 
+
+C Preprocessor Interfacing          Represents mechanism of preprocessing
+                                    cidl files.
+
+IDL Compiler Interfacing            Represents mechanism of invoking IDL
+                                    compiler.
+
+Scanner                             Scanner for preprocessed cidl file.
+
+Parser                              CIDL grammar parser. Consists of grammar
+                                    and semantic rules.
+
+Syntax Tree                         Intermediate representation of cidl file.
+
+Executor Mapping Generator          Generator for local executor mapping.
+
+Executor Implementation Generator   Generator for partial implementation
+                                    of local executor mapping.
+
+Skeleton Thunk Generator            Generator for skeleton thunks i.e.
+                                    code that implements skeleton and
+                                    thunks user-defined functions to
+                                    executor mapping.
+
+Compiler driver                     Establishes order of execution of
+                                    different components as part of 
+                                    compilation process.
+
+
+How everything works together
+-----------------------------
+
+(1) Compiler Driver executes Option Parser to populate Option Database
+
+(2) Compiler Driver executes C Preprocessor on a supplied cidl file
+
+(3) Compiler Driver executes Parser which uses Scanner to scan preprocessed
+    cidl file and generates Syntax Tree by means of semantic rules.
+
+(4) At this point we have Syntax Tree corresponding to the original cidl
+    file. Compiler Driver executes Executor Mapping Generator, 
+    Executor Implementation Generator and Skeleton Thunk Generator on 
+    Syntax Tree.
+
+
+
+General Design Ideas/Decision
+-------------
+
+[IDEA]: There is an effort to use autoconf/automake in ACE/TAO. Maybe it's 
+        a good idea to start using it with CIDLC? There is one side advantage
+        of this approach: if we decide to embed GCC CPP then we will have to
+        use configure (or otherwise ACE-ify the code which doesn't sound like
+        a right solution).
+
+[IDEA]: CIDLC is a prototype for a new IDLC, PSDLC and IfR model. Here are
+        basic concepts:
+
+          - use common IDL grammar, semantic rules and syntax tree nodes 
+            for IDLC, CIDLC, PSDLC and IfR.
+
+          - use the same internal representation (syntax tree) in all 
+            compilers and IfR. This way at some stage if we will need
+            to make one of the compilers IfR-integrated (import keyword?)
+            then it will be a much easier task than it's now.
+
+
+Option Parser
+-------------
+
+[IDEA]: Use Spirit parser framework to generate option parser.
+
+[IDEA]: Option Database is probably a singleton.
+
+[IDEA]: It seems we will have to execute at least two external programs
+        as part of CIDLC execution: CPP and IDLC. Why wouldn't we follow
+        GCC specs model (gcc -dumpspecs). Here are candidates to be put into
+        specs:        
+
+          - default CPP name and options
+          - default  IDLC name and options
+          - default file extensions and formats for different mappings
+          - other ideas? 
+
+[IDEA]: Provide short and long option names (e.g. -o and --output-dir)
+        for every option (maybe except -I, -D, etc).
+
+
+C Preprocessor Interfacing
+--------------------------
+
+[IDEA]: Embed/require GCC CPP
+
+[IDEA]: We need a new model of handling includes in CIDLC (as well as IDLC).
+        Right now I'm mentally testing a new model (thanks to Carlos for the
+        comments). Soon I will put the description here.
+
+[IDEA]: We cannot move cidl file being preprocessed to for example /tmp
+        as it's currently the case with IDLC.
+
+[IDEA]: Can we use pipes (ACE Pipes) portably to avoid temporary files?
+        (Kitty, you had some ideas about that?)
+
+
+
+IDL Compiler Interfacing
+------------------------
+
+[IDEA]: Same as for CPP: Can we use pipes?
+
+[IDEA]: Will need a mechanism to pass options to IDLC from CIDLC command
+        line (would be nice to have this ability for CPP as well).
+        Something like -x in xterm? Better ideas?
+
+
+
+Scanner
+------
+
+[IDEA]: Use Spirit framework to construct scanner. The resulting sequence
+        can be sequence of objects? BTW, Spirit parser expects a "forward
+        iterator"-based scanner. So this basically mean that we may have to
+        keep the whole sequence in memory. BTW, this is another good reason
+        to have scanner: if we manage to make scanner a predictable parser
+        (i.e. no backtracking) then we don't have to keep the whole 
+        preprocessed cidl file in memory.
+
+
+
+Parser
+------
+
+[IDEA]: Use Spirit framework to construct parser.
+
+[IDEA]: Define IDL grammar as a number of grammar capsules. This way it's
+        much easier to reuse/inherit even dynamically. Need to elaborate
+        this idea.
+
+[IDEA]: Use functors as semantic actions. This way we can specify (via 
+        functor's data member) on which Syntax Tree they are working.
+        Bad side: semantic rules are defined during grammar construction.
+        However we can use a modification of the factory method pattern.
+        Better ideas?
+
+
+
+Syntax Tree
+-----------
+
+[IDEA]: Use interface repository model as a base for Syntax Tree hierarchy.
+
+
+
+
+Executor Mapping Generator
+--------------------------
+
+
+
+
+Executor Implementation Generator
+--------------------------------
+
+[IDEA]: Translate CIDL composition to C++ namespace.
+
+
+
+Skeleton Thunk Generator
+------------------------
+
+
+
+
+Compiler driver
+---------------
