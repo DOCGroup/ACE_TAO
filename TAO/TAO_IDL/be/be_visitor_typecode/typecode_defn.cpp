@@ -56,11 +56,6 @@ be_visitor_typecode_defn::visit_members (AST_Structure *node)
   AST_Field **member_ptr = 0;
   size_t count = node->nfields ();
 
-  // Set the scope node as "node" in which the code is being
-  // generated so that elements in the node's scope can use it
-  // for code generation.
-  this->ctx_->scope (be_decl::narrow_from_decl (node));
-
   for (size_t i = 0; i < count; ++i)
     {
       node->field (member_ptr, i);
@@ -1038,6 +1033,7 @@ be_visitor_typecode_defn::gen_typecode (be_exception *node)
 
       // now emit the encapsulation
       this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_ENCAPSULATION);
+
       if (node->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -1079,6 +1075,12 @@ be_visitor_typecode_defn::gen_encapsulation (be_exception *node)
 
   // hand over to the scope to generate the typecode for elements
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE);
+
+  // Set the scope node as "node" in which the code is being
+  // generated so that elements in the node's scope can use it
+  // for code generation.
+  this->ctx_->scope (node);
+
   if (node->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, 
@@ -1623,6 +1625,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_structure *node)
 
   // hand over to the scope to generate the typecode for elements
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE);
+
   if (node->accept (this) == -1)
     {
       ACE_ERROR ((LM_ERROR, "be_structure: cannot generate typecode for members\n"));
@@ -1867,6 +1870,12 @@ be_visitor_typecode_defn::gen_encapsulation (be_union *node)
 
   // hand over to the scope to generate the typecode for elements
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE);
+
+  // Set the scope node as "node" in which the code is being
+  // generated so that elements in the node's scope can use it
+  // for code generation.
+  this->ctx_->scope (node);
+
   if (node->accept (this) == -1)
     {
       ACE_ERROR ((LM_ERROR, "be_union: cannot generate code for members\n"));
