@@ -298,12 +298,20 @@ ACE_SOCK_Dgram::recv (void *buf,
   handle_set.set_bit (this->get_handle ());
 
   // Check the status of the current socket.
-  int result = ACE_OS::select (int (this->get_handle ()) + 1,
-			       handle_set,
-			       0, 0, 
-			       timeout);
-  if (result <= 0) // Other error (-1) or timeout (0).
-    return result;
-  else  // Goes fine, call <recv> to get data
-    return this->recv (buf, n, addr, flags);
+  switch (ACE_OS::select (int (this->get_handle ()) + 1,
+			  handle_set,
+			  0, 0, 
+			  timeout))
+    {
+    case -1:
+      return -1;
+      /* NOTREACHED */
+    case 0:
+      errno = ETIME;
+      return -1;
+      /* NOTREACHED */
+    default:
+      // Goes fine, call <recv> to get data
+      return this->recv (buf, n, addr, flags);
+    }
 }

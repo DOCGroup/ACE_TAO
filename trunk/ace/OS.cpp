@@ -213,13 +213,13 @@ ACE_OS::gethrtime (void)
   // potentially being used without being initialized, but the
   // assembly code insures that they ARE initialized.  So, that
   // warning can be ignored.
-  volatile unsigned long least, most;
+  volatile u_long least, most;
 
   asm ("rdtsc");
   asm ("movl %eax, -4(%ebp)");  // least
   asm ("movl %edx, -8(%ebp)");  // most
 
-  return (unsigned long long) most << 32  |  least;
+  return (u_long long) most << 32  |  least;
 }
 #endif /* ACE_HAS_PENTIUM && __GNUC__ */
 

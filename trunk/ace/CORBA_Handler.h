@@ -42,9 +42,12 @@
 
 class ACE_Export ACE_CORBA_Handler : public ACE_Service_Object
   // = TITLE
-  //     Handle CORBA requests in conjunction with the ACE ACE_Reactor.
+  //     Handle CORBA requests in conjunction with ACE.
+  //
+  // = DESCRIPTION
   //     Note, do *NOT* inherit from this class!  Instead, use the
-  //     ACE_MT_CORBA_HAndler and ACE_ST_CORBA_Handler as Singletons.
+  //     <ACE_MT_CORBA_HAndler> and <ACE_ST_CORBA_Handler> as
+  //     Singletons.
 {
 public:
   // = Activation and deactivation methods.
@@ -102,8 +105,7 @@ protected:
   // Keep track of the number of active CORBA_Handlers.
 
 private:
-  // = Disallow assignment and initialization (this applies to derived
-  // classes, as well!) 
+  // = Disallow assignment and initialization.
   ACE_CORBA_Handler (const ACE_CORBA_Handler &rhs);
   const ACE_CORBA_Handler &operator= (const ACE_CORBA_Handler &rhs);
 };
@@ -111,29 +113,16 @@ private:
 class ACE_Export ACE_ST_CORBA_Handler : public ACE_CORBA_Handler
   // = TITLE
   //     Handle single-threaded CORBA requests in conjunction with the
-  //     ACE_Reactor.
+  //     <ACE_Reactor>.
 {
 public:
+  // = Singleton access point.
   static ACE_CORBA_Handler *instance (void);
   // Returns a Singleton.
 
+  // = Demuxing hook.
   virtual int handle_input (ACE_HANDLE);
   // Process the next Orbix event.
-
-  void dump (void) const;
-  // Dump the state of an object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
-  // = The iterations are dictate how many processNextEvent() calls
-  // are run per-callback.
-
-  size_t iterations (void);
-  // Get the current iteration.
-
-  void iterations (size_t);
-  // Set the current iteration.
 
   // = Dynamic linking hooks.
   virtual int suspend (void);
@@ -141,6 +130,19 @@ public:
 
   virtual int resume (void);
   // Atomically resume all the threads associated with the <thr_mgr ()_>.
+
+  // = Iterations dictate # of <processNextEvent> calls per-callback.
+  size_t iterations (void);
+  // Get the current iteration.
+
+  void iterations (size_t);
+  // Set the current iteration.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
 
 protected:
   void get_orbix_descriptors (void);
@@ -171,26 +173,23 @@ protected:
 class ACE_Export ACE_MT_CORBA_Handler : public ACE_CORBA_Handler, public ACE_CORBA_1 (ThreadFilter)
   // = TITLE
   //     Handle multi-threaded CORBA requests in conjunction with the
-  //     ACE Reactor.
+  //     <ACE_Reactor>.
 {
 public:
+  // = Singleton access point.
   static ACE_CORBA_Handler *instance (void);
   // Returns a Singleton.
 
+  // = Demuxing hook.
   virtual int handle_input (ACE_HANDLE);
   // Process the next Orbix event.
 
+  // = Threading hook.
   void thr_mgr (ACE_Thread_Manager *tm);
   // Set the Thread_Manager used by ACE_MT_CORBA_Handler
 
   ACE_Thread_Manager *thr_mgr (void) const;
   // Get the Thread_Manager used by ACE_MT_CORBA_Handler
-
-  void dump (void) const;
-  // Dump the state of an object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 
   // = Dynamic linking hooks.
   virtual int suspend (void);
@@ -198,6 +197,12 @@ public:
 
   virtual int resume (void);
   // Atomically resume all the threads associated with the <thr_mgr ()>.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
 
 protected:
   static void *process_events (void *);
