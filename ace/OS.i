@@ -1153,8 +1153,10 @@ ACE_OS::rename (const ACE_TCHAR *old_name,
     ACE_FAIL_RETURN (-1);
   return 0;
 # elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  ACE_UNUSED_ARG (flags);
   ACE_OSCALL_RETURN (::_wrename (old_name, new_name), int, -1);
 # else /* ACE_LACKS_RENAME */
+  ACE_UNUSED_ARG (flags);
   ACE_OSCALL_RETURN (::rename (old_name, new_name), int, -1);
 # endif /* ACE_LACKS_RENAME */
 }
