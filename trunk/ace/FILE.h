@@ -70,6 +70,11 @@ public:
   void dump (void) const;
   // Dump the state of an object.
 
+  int disable (int signum) const ;
+  // Disable signal <signum>
+  // This is here to prevent Win32 from
+  // disabling SPIPE using socket calls
+
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 

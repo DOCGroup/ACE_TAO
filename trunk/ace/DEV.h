@@ -58,6 +58,11 @@ public:
   // Return the address of the remotely connected peer (if there is
   // one).
 
+  int disable (int signum) const ;
+  // Disable signal <signum>
+  // This is here to prevent Win32 from
+  // disabling SPIPE using socket calls
+
 protected:
   ACE_DEV (void);
   // Ensure that this class is an abstract base class 
