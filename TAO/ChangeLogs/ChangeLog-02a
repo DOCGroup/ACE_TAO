@@ -1,11 +1,18 @@
+Wed Mar 15 23:56:37 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/IIOP_Transport.cpp:
+	* tao/UIOP_Transport.cpp: Fixed some minor warnings on NT.  The
+	  string "*/*" confused NT.  BTW, UIOP is not compiled under NT.
+	  ;-)
+
 Wed Mar 15 22:02:22 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/iiop_lite.conf:
 	* performance-tests/Cubit/TAO/IDL_Cubit/uiop_lite.conf: Added
-	  these new service configurator files. 
-	
+	  these new service configurator files.
+
 	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl: Changed the
-	  script for using GIOPlite. 
+	  script for using GIOPlite.
 
 Wed Mar 15 21:50:42 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -36,7 +43,7 @@ Wed Mar 15 20:26:13 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* examples/POA/On_Demand_Loading/Makefile
 	* examples/POA/Reference_Counted_Servant/Makefile
 	* examples/POA/RootPOA/Makefile
-	* examples/POA/TIE/Makefile: 
+	* examples/POA/TIE/Makefile:
 
 
 Wed Mar 15 19:49:35 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -121,12 +128,12 @@ Wed Mar 15 19:10:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Acceptor_Impl.h (TAO_ACCEPTOR_IMPL_H)
 	* tao/Acceptor_Impl.i:
 	* tao/Acceptor_Impl.cpp:Added an argument to the constructor of
-	  TAO_Creation_Strategy. 
+	  TAO_Creation_Strategy.
 
 Wed Mar 15 19:05:53 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Protocol_Factory.h
-       	* tao/Transport_Mux_Strategy.h: 
+       	* tao/Transport_Mux_Strategy.h:
 	* tao/ORB.cpp
        	* tao/ORB.h
 	* tao/skip.cpp
@@ -140,10 +147,10 @@ Wed Mar 15 19:05:53 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/corba.h
 	* tao/Server_Request.h
 	* tao/Typecode_Constants.cpp: Removed the header file GIOP.h from
-	  these files. GIOP.h would be retired now. 
+	  these files. GIOP.h would be retired now.
 
 Wed Mar 15 18:22:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
-	
+
 	* tao/GIOPC.cpp
 	* tao/GIOPC.i
 	* tao/GIOPC.h: Removed some generated code for
@@ -172,7 +179,7 @@ Wed Mar 15 18:22:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/IIOP_Transport.cpp
 	* tao/IIOP_Transport.h
 	* tao/Invocation.cpp
-	* tao/Invocation.h	
+	* tao/Invocation.h
 	* tao/Invocation.i
 	* tao/Async_Invocation.cpp
 	* tao/SHMIOP_Acceptor.cpp
@@ -221,15 +228,15 @@ Wed Mar 15 18:22:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  initialised now with either IIOP or IIOP_Lite and not both. In
 	  other words, the user shouldn't try to load TCP/IP mapping of
 	  GIOP & GIOPlite for the same ORB. The same applies to the UNIX
-	  domain sockets mapping of GIOP & GIOPlite. 
+	  domain sockets mapping of GIOP & GIOPlite.
 
-	* tao/Reply_Dispatcher.h		
+	* tao/Reply_Dispatcher.h
 	* tao/Reply_Dispatcher.i
 	* tao/Reply_Dispatcher.cpp: Removed GIOP_Version info.  theyhave
 	  just been commented out. At a later stage we should be removing
 	  them. We shouldn't be doing any GIOP version specific processing
 	  in this piece of code.
-	
+
 Wed Mar 15 17:34:47 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Pluggable_Messaging.cpp
