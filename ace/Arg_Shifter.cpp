@@ -58,6 +58,52 @@ ACE_Arg_Shifter::get_current (void) const
   return retval;
 }
 
+char*
+ACE_Arg_Shifter::get_current_parameter (int offset)
+{
+  if (this->is_anything_left())
+    {
+      unsigned int margin = 0;
+      if (offset < 0)
+	{
+	  unsigned int difference = 0;
+	  if ((difference = ACE_OS::strlen(this->temp_[current_index_])
+	       + offset) < 0)
+	    {
+	      return 0;
+	    }
+	  else
+	    {
+	      margin = ++difference;
+	    }
+	}
+      else if (offset > 0)
+	{
+	  unsigned int difference = 0;
+	  if ((difference = ACE_OS::strlen(this->temp_[current_index_])
+	       - offset) < 0)
+	    {
+	      return 0;
+	    }
+	  else
+	    {
+	      margin = offset;
+	    }
+	}
+      else
+	{
+	  this->consume_arg ();
+	  if (!this->is_parameter_next())
+	    {
+	      return 0;
+	    }
+	}
+      return this->temp_[current_index_] + margin;
+    }
+
+  return 0;
+}
+
 int
 ACE_Arg_Shifter::cur_arg_strncasecmp (const char* flag)
 {
@@ -79,8 +125,10 @@ ACE_Arg_Shifter::cur_arg_strncasecmp (const char* flag)
 	    }
 	  else
 	    {
-	      // match but more info passed in
-	      return flag_length;
+	      // matches, with more info to boot!
+	      return ACE_OS::strspn
+		(this->temp_[current_index_] + flag_length,
+		 " ") + flag_length;
 	    }
 	}
     }
