@@ -1,6 +1,14 @@
+Thu Apr 08 14:05:28 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * CosEvent_Service/Makefile,tests/CosEC_Basic/Makefile,
+          tests/CosEC_Multiple/Makefile:
+          only build if the orbsvcs library was built with the CosEvent
+          TAO_ORBSVCS component.
+
 Thu Apr 08 13:47:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * README, VERSION, Makefile, Makefile.am: moved BUG-REPORT-FORM
+        * BUG-REPORT-FORM,PROBLEM-REPORT-FORM,
+          README,VERSION,Makefile,Makefile.am: moved BUG-REPORT-FORM
           to PROBLEM-REPORT-FORM.  Thanks to Thomas Lockhart
           <Thomas.G.Lockhart@jpl.nasa.gov> for suggesting this.
 
