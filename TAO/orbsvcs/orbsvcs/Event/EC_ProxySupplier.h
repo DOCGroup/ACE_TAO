@@ -58,35 +58,50 @@ public:
   typedef RtecEventChannelAdmin::ProxyPushSupplier_var _var_type;
   typedef RtecEventChannelAdmin::ProxyPushSupplier_ptr _ptr_type;
 
-  /// Constructor...
+  /**
+   * @brief Default Constructor
+   * @param event_channel Reference to the event channel making the connection.
+   * @param validate_connection Boolean value (true = 1, false = 0) used to indicated
+\   * whether to validate the connection to the TAO_EC_ProxyPushSupllier upon connect.
+   */
   TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel_Base* event_channel, int validate_connection);
 
   /// Destructor...
   virtual ~TAO_EC_ProxyPushSupplier (void);
 
-  /// Activate in the POA
+  /**
+   * @brief Abstract function to create a ProxyPushSupplier and register the
+   * servant with the Root POA.
+   * @param proxy Variable for holding the new created ProxyPushSupplier reference.
+   */
   virtual void activate (
        RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy
        ACE_ENV_ARG_DECL)
    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
-  /// Deactivate from the POA
+  /**
+   * @brief Deactivate this ProxySupplier from the POA
+   */
   virtual void deactivate (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC (());
 
-  /// Disconnect this from
+  /**
+   * @brief Disconnect the calling Consumer from the event channel. If
+   * event channel supports disconnect callbacks then the
+   * disconnect_push_consumer operation is called on the Consumer.
+   */
   virtual void disconnect_push_supplier (
             ACE_ENV_SINGLE_ARG_DECL) = 0;
 
-  /// Return 0 if no consumer is connected...
+  /// Return 1 if consumer is connected...
   CORBA::Boolean is_connected (void) const;
 
   /// Return 1 if it is suspended.
   CORBA::Boolean is_suspended (void) const;
 
   /**
-   * Return the consumer object reference. It returns nil() if it has
-   * not connected yet.
+   * @brief Return the consumer object reference. The function returns
+   * nil() if it has not connected yet.
    */
   RtecEventComm::PushConsumer_ptr consumer (void) const;
 

@@ -279,6 +279,7 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
 {
   Headers headers;
 
+  //Get the event headers of all the consumer subscriptions from the ProxyPushSuppliers
   TAO_EC_Accumulate_Supplier_Headers worker (headers);
   this->event_channel_->for_each_consumer (&worker
                                            ACE_ENV_ARG_PARAMETER);
@@ -288,12 +289,18 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
 
   dep.length (ACE_static_cast (CORBA::ULong, headers.current_size () + 1));
 
+  //All the gateway dependencies are disjoint, meaning that it wants a
+  //push any time any one or any combination of the dependencies is
+  //pushed to the gateway.
+  //First, insert the disjunction dependency
   dep[0].event.header.type = ACE_ES_DISJUNCTION_DESIGNATOR;
   dep[0].event.header.source = ACE_static_cast (CORBA::ULong,
                                                 headers.current_size ());
   dep[0].event.header.creation_time = ORBSVCS_Time::zero ();
   dep[0].rt_info = 0;
 
+  //Then, insert the disjoint dependencies
+  //The gateway depends on all the headers, so they must be put in the dependency set
   CORBA::ULong count = 1;
   for (HeadersIterator i = headers.begin (); i != headers.end (); ++i)
     {

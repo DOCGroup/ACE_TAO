@@ -37,8 +37,9 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
                      RtecEventChannelAdmin::TypeError))
 {
   // Nil PushConsumers are illegal
-  if (CORBA::is_nil (push_consumer))
+  if (CORBA::is_nil (push_consumer)) {
     ACE_THROW (CORBA::BAD_PARAM ());
+  }
 
   {
     ACE_GUARD_THROW_EX (
@@ -47,10 +48,15 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
     // @@ RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
+    ACE_DEBUG((LM_DEBUG,"ECDPS:connect_push_consumer -  checking if connected: %d\n",this->is_connected_i()));
+    /* If there is a consumer (non-nil) do this otherwise
+     * skip
+     */
     if (this->is_connected_i ())
       {
-        if (this->event_channel_->consumer_reconnect () == 0)
+        if (this->event_channel_->consumer_reconnect () == 0) {
           ACE_THROW (RtecEventChannelAdmin::AlreadyConnected ());
+        }
 
         // Re-connections are allowed....
         this->cleanup_i ();
@@ -58,6 +64,15 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
         this->consumer_ =
           RtecEventComm::PushConsumer::_duplicate (push_consumer);
         this->qos_ = qos;
+
+        ACE_DEBUG((LM_DEBUG,"ECDPS:connect_push_consumer - CONNECTED printing qos dependencies\n"));
+        for (unsigned int i = 0; i < this->qos_.dependencies.length(); ++i) {
+          ACE_DEBUG((LM_DEBUG, "ECDPS::connect_push_consumer - qos dependency #%d type (%d)\n",
+                     i,
+                     this->qos_.dependencies[i].event.header.type));
+        }
+        ACE_DEBUG((LM_DEBUG,"ECDPS:connect_push_consumer - done\n"));
+
         this->child_ =
           this->event_channel_->filter_builder ()->build (this,
                                                           this->qos_
@@ -82,9 +97,10 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
         // A separate thread could have connected simultaneously,
         // this is probably an application error, handle it as
         // gracefully as possible
-        if (this->is_connected_i ())
+        if (this->is_connected_i ()) {
           return; // @@ Should we throw
-      }
+        }
+      } /* End of if (this->is_connected_i ()) */
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
       if ( consumer_validate_connection_ == 1 )
@@ -102,6 +118,10 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
       }
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
+      /* Since our consumer is a NIL then we set the set the consumer.
+       * The above 'if (this->is_connected_i())' and this section
+       * act together as a implied if-else statement.
+       */
       this->consumer_ =
         RtecEventComm::PushConsumer::_duplicate (push_consumer);
       this->qos_ = qos;
@@ -111,6 +131,14 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
                 "Building filters for consumer <%x>.\n",
                 this));
 #endif /* TAO_EC_ENABLED_DEBUG_MESSAGES */
+    ACE_DEBUG((LM_DEBUG,"ECDPS:connect_push_consumer - NOT CONNECTED printing qos dependencies\n"));
+        for (unsigned int i = 0; i < this->qos_.dependencies.length(); ++i) {
+          ACE_DEBUG((LM_DEBUG, "ECDPS::connect_push_consumer - qos dependency #%d type (%d)\n",
+                     i,
+                     this->qos_.dependencies[i].event.header.type));
+        }
+        ACE_DEBUG((LM_DEBUG,"ECDPS:connect_push_consumer - done\n"));
+
     this->child_ =
       this->event_channel_->filter_builder ()->build (this,
                                                       this->qos_
