@@ -118,13 +118,13 @@ TAO_Transport::handle_output ()
     {
       // The reactor is asking us to send more data, first check if
       // there is a current message that needs more sending:
-      retval = this->send_current_message ();
+      retval = this->drain_queue ();
 
       if (TAO_debug_level > 4)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - Transport[%d]::handle_output, "
-                      "send_current_message returns %d/%d\n",
+                      "drain_queue returns %d/%d\n",
                       this->id (),
                       retval, errno));
         }
@@ -159,86 +159,6 @@ TAO_Transport::provide_handle (ACE_Handle_Set &handle_set)
   if (ch && ch->is_registered ())
     handle_set.set_bit (eh->get_handle ());
 }
-
-#if 0
-ssize_t
-TAO_Transport::send_buffered_messages (const ACE_Time_Value *max_wait_time)
-{
-  // Make sure we have a buffering queue and there are messages in it.
-  if (this->buffering_queue_ == 0 ||
-      this->buffering_queue_->is_empty ())
-    return 1;
-
-  // Now, we can take the lock and try to do something.
-  //
-  // @@CJC We might be able to reduce the length of time we hold
-  // the lock depending on whether or not we need to hold the
-  // hold the lock while we're doing queueing activities.
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                            guard,
-                            *this->handler_lock_,
-                            -1));
-
-  // Get the first message from the queue.
-  ACE_Message_Block *queued_message = 0;
-  ssize_t result = this->buffering_queue_->peek_dequeue_head (queued_message);
-
-  // @@ What to do here on failures?
-  ACE_ASSERT (result != -1);
-
-  // @@CJC take lock??
-  // Actual network send.
-  size_t bytes_transferred = 0;
-  result = this->send_i (queued_message,
-                         max_wait_time,
-                         &bytes_transferred);
-  // @@CJC release lock??
-
-  // Cannot send completely: timed out.
-  if (result == -1 &&
-      errno == ETIME)
-    {
-      if (bytes_transferred > 0)
-        {
-          // If successful in sending some of the data, reset the
-          // queue appropriately.
-          this->reset_queued_message (queued_message,
-                                      bytes_transferred);
-
-          // Indicate some success.
-          return bytes_transferred;
-        }
-
-      // Since we queue up the message, this is not an error.  We can
-      // try next time around.
-      return 1;
-    }
-
-  // EOF or other errors.
-  if (result == -1 ||
-      result == 0)
-    {
-      this->dequeue_all ();
-      return -1;
-    }
-
-  // If successful in sending data, reset the queue appropriately.
-  this->reset_queued_message (queued_message,
-                              bytes_transferred);
-
-  // Everything was successfully delivered.
-  return result;
-}
-
-void
-TAO_Transport::reset_sent_message (ACE_Message_Block *message_block,
-                                   size_t bytes_delivered)
-{
-  this->reset_message (message_block,
-                       bytes_delivered,
-                       0);
-}
-#endif /* 0 */
 
 static void
 dump_iov (iovec *iov, int iovcnt, int id, size_t current_transfer)
@@ -364,98 +284,6 @@ TAO_Transport::send_message_block_chain (const ACE_Message_Block *message_block,
 }
 
 int
-TAO_Transport::send_current_message (void)
-{
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->queue_mutex_, -1);
-
-  if (this->head_ == 0)
-    return 1;
-
-  // This is the vector used to send data, it must be declared outside
-  // the loop because after the loop there may still be data to be
-  // sent
-  int iovcnt = 0;
-  iovec iov[IOV_MAX];
-
-  // We loop over all the elements in the queue ...
-  TAO_Queued_Message *i = this->head_;
-  while (i != 0)
-    {
-      // ... each element fills the iovector ...
-      i->fill_iov (IOV_MAX, iovcnt, iov);
-
-      // ... if the vector is not full we tack another message into
-      // the vector ...
-      if (iovcnt != IOV_MAX)
-        {
-          // Go for the next element in the list
-          i = i->next ();
-          continue;
-        }
-
-      // ... time to send data because the vector is full.  We need to
-      // loop because a single message can span multiple IOV_MAX
-      // elements ...
-      while (iovcnt == IOV_MAX)
-        {
-          size_t byte_count;
-
-          // ... send the message ...
-          ssize_t retval =
-            this->send (iov, iovcnt, byte_count);
-
-          // ... now we need to update the queue, removing elements
-          // that have been sent, and updating the last element if it
-          // was only partially sent ...
-          this->bytes_transferred_i (byte_count, i);
-          iovcnt = 0;
-
-          if (retval == 0)
-            {
-              return -1;
-            }
-          else if (retval == -1)
-            {
-              if (errno == EWOULDBLOCK || errno == ETIME)
-                return 0;
-              return -1;
-            }
-
-          if (i == 0)
-            break;
-
-          /// Message <i> may have been only partially sent...
-          i->fill_iov (IOV_MAX, iovcnt, iov);
-        }
-
-      if (i != 0)
-        i = i->next ();
-    }
-
-  size_t byte_count;
-  ssize_t retval =
-    this->send (iov, iovcnt, byte_count);
-
-  this->bytes_transferred_i (byte_count, i);
-  iovcnt = 0;
-
-  if (retval == 0)
-    {
-      return -1;
-    }
-  else if (retval == -1)
-    {
-      if (errno == EWOULDBLOCK || errno == ETIME)
-        return 0;
-      return -1;
-    }
-
-  if (this->head_ == 0)
-    return 1;
-  return 0;
-}
-
-int
 TAO_Transport::send_message_i (TAO_Stub *stub,
                                int twoway_flag,
                                const ACE_Message_Block *message_block,
@@ -575,7 +403,6 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
 
         ace_mon.acquire ();
       }
-      synch_message.remove_from_list (this->head_, this->tail_);
       synch_message.destroy ();
       return result;
     }
@@ -592,27 +419,7 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
                   " queued anyway, %d bytes sent\n",
                   this->id (),
                   byte_count));
-
-#if 0
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Transport[%d]::send_message_i, "
-                  " queued message contains %d bytes, %d transferred\n",
-                  this->id (),
-                  queued_message->mb ()->total_length (),
-                  byte_count));
-#endif /* 0 */
     }
-  
-#if 0
-  if (TAO_debug_level > 6)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Transport[%d]::send_message_i, "
-                  " queued message still has %d bytes to go\n",
-                  this->id (),
-                  queued_message->mb ()->total_length ()));
-    }
-#endif /* 0 */
 
   // ... insert at the head of the queue, we can use push_back()
   // because the queue is empty ...
@@ -763,28 +570,6 @@ TAO_Transport::close_connection (void)
     }
 }
 
-#if 0
-TAO_Queued_Message *
-TAO_Transport::copy_message_block (const ACE_Message_Block *message_block)
-{
-  size_t length = message_block->total_length ();
-
-  // @@ Use Auto_Ptr<> to cleanup the message block, should the second
-  // allocation fail
-  ACE_Message_Block *copy;
-  ACE_NEW_RETURN (copy, ACE_Message_Block (length), 0);
-  for (const ACE_Message_Block *i = message_block;
-       i != 0;
-       i = i->cont ())
-    copy->copy (i->rd_ptr (), i->length ());
-
-  TAO_Queued_Message *msg;
-  ACE_NEW_RETURN (msg, TAO_Queued_Message (copy, 1), 0);
-
-  return msg;
-}
-#endif /* 0 */
-
 ssize_t
 TAO_Transport::send (iovec *iov, int iovcnt,
                      size_t &bytes_transferred,
@@ -930,6 +715,117 @@ TAO_Transport::cancel_output (void)
 }
 
 int
+TAO_Transport::drain_queue (void)
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->queue_mutex_, -1);
+
+  if (this->head_ == 0)
+    return 1;
+
+  // This is the vector used to send data, it must be declared outside
+  // the loop because after the loop there may still be data to be
+  // sent
+  int iovcnt = 0;
+  iovec iov[IOV_MAX];
+
+  // We loop over all the elements in the queue ...
+  TAO_Queued_Message *i = this->head_;
+  do
+    {
+      // ... each element fills the iovector ...
+      i->fill_iov (IOV_MAX, iovcnt, iov);
+
+      // ... if the vector is not full we tack another message into
+      // the vector ...
+      if (iovcnt != IOV_MAX)
+        {
+          // Go for the next element in the list
+          i = i->next ();
+          continue;
+        }
+
+      // ... time to send data because the vector is full.  We need to
+      // loop because a single message can span multiple IOV_MAX
+      // elements ...
+      while (iovcnt == IOV_MAX)
+        {
+          size_t byte_count;
+
+          // ... send the message ...
+          ssize_t retval =
+            this->send (iov, iovcnt, byte_count);
+
+          // ... now we need to update the queue, removing elements
+          // that have been sent, and updating the last element if it
+          // was only partially sent ...
+          this->cleanup_queue (byte_count);
+          iovcnt = 0;
+
+          if (retval == 0)
+            {
+              return -1;
+            }
+          else if (retval == -1)
+            {
+              if (errno == EWOULDBLOCK || errno == ETIME)
+                return 0;
+              return -1;
+            }
+
+          if (this->head_ == 0)
+            break;
+
+          /// Message <i> may have been only partially sent...
+          i->fill_iov (IOV_MAX, iovcnt, iov);
+        }
+    }
+  while (this->head_ != 0);
+
+  size_t byte_count;
+  ssize_t retval =
+    this->send (iov, iovcnt, byte_count);
+
+  this->cleanup_queue (byte_count);
+  iovcnt = 0;
+
+  if (retval == 0)
+    {
+      return -1;
+    }
+  else if (retval == -1)
+    {
+      if (errno == EWOULDBLOCK || errno == ETIME)
+        return 0;
+      return -1;
+    }
+
+  if (this->head_ == 0)
+    return 1;
+
+  return 0;
+}
+
+void
+TAO_Transport::cleanup_queue (size_t byte_count)
+{
+  while (this->head_ != 0 && byte_count > 0)
+    {
+      TAO_Queued_Message *i = this->head_;
+
+      // Update the state of the first message
+      i->bytes_transferred (byte_count);
+
+      // ... if all the data was sent the message must be removed from
+      // the queue...
+      if (i->all_data_sent ())
+        {
+          i->remove_from_list (this->head_, this->tail_);
+          i->destroy ();
+        }
+    }
+}
+
+int
 TAO_Transport::must_flush_queue_i (TAO_Stub *stub)
 {
   // First let's compute the size of the queue:
@@ -963,37 +859,4 @@ TAO_Transport::must_flush_queue_i (TAO_Stub *stub)
     }
 
   return 0;
-}
-
-void
-TAO_Transport::bytes_transferred_i (size_t byte_count,
-                                    TAO_Queued_Message *&iterator)
-{
-  TAO_Queued_Message *i = this->head_;
-  while (i != iterator && byte_count > 0)
-    {
-      // Update the state of each queued message
-      i->bytes_transferred (byte_count);
-      // ... if all the data was sent the message must be removed from
-      // the queue...
-      TAO_Queued_Message *tmp = i->next ();
-      if (i->all_data_sent ())
-        {
-          i->remove_from_list (this->head_, this->tail_);
-          i->destroy ();
-        }
-      i = tmp;
-    }
-  // ... all the data has been taken care of ...
-  if (byte_count == 0 || iterator == 0)
-    return;
-
-  iterator->bytes_transferred (byte_count);
-  TAO_Queued_Message *tmp = iterator->next ();
-  if (iterator->all_data_sent ())
-    {
-      iterator->remove_from_list (this->head_, this->tail_);
-      iterator->destroy ();
-      iterator = tmp;
-    }
 }

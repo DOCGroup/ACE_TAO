@@ -1,3 +1,27 @@
+Wed Apr  4 10:53:27 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+        * tao/Transport.cpp:
+          Remove dead code.
+          Rename some methods to more clearly reflect their intent.
+          Simplify the management for the outgoing data queue.  The
+          cleanup_queue() method removes any element that is completely
+          sent, while the drain_queue() method simply tries to send as
+          much data as possible.
+
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.inl:
+        * tao/Queued_Message.cpp:
+          Each derived class can decided if the message has been
+          completely sent very efficiently, no need to keep a local
+          variable for that.
+          We do need variables to keep track of closed connections, failed
+          sends and timeouts.
+
+        * tao/Messaging_Policy_i.cpp:
+        * tao/Invocation.cpp:
+          Improved debugging messages for timeouts
+
 Sun Apr 01 15:34:32 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Makefile:

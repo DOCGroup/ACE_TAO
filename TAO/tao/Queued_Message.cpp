@@ -11,8 +11,9 @@
 ACE_RCSID(tao, Queued_Message, "$Id$")
 
 TAO_Queued_Message::TAO_Queued_Message (TAO_Message_Sent_Callback *callback)
-  : data_sent_successfully_ (0)
-  , connection_closed_ (0)
+  : connection_closed_ (0)
+  , send_failure_ (0)
+  , timeout_ (0)
   , callback_ (callback)
   , next_ (0)
   , prev_ (0)
@@ -30,14 +31,18 @@ TAO_Queued_Message::connection_closed (void)
 
   if (this->callback_ != 0)
     {
-      if (this->done ())
-        {
-          this->callback_->connection_closed ();
-        }
-      else
-        {
-          this->callback_->send_failed ();
-        }
+      this->callback_->connection_closed ();
+    }
+}
+
+void
+TAO_Queued_Message::send_failure (void)
+{
+  this->send_failure_ = 1;
+  
+  if (this->callback_ != 0)
+    {
+      this->callback_->send_failed ();
     }
 }
 
