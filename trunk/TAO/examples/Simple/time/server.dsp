@@ -977,7 +977,7 @@ InputPath=.\Time.idl
 InputName=Time
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1016,7 +1016,7 @@ InputPath=.\Time.idl
 InputName=Time
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1056,7 +1056,7 @@ InputPath=.\Time.idl
 InputName=Time
 
 BuildCmds= \
-	..\..\..\tao_idl\tao_idl $(InputName).idl
+	..\..\..\tao_idl\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1094,7 +1094,7 @@ InputPath=.\Time.idl
 InputName=Time
 
 BuildCmds= \
-	..\..\..\tao_idl\Release\tao_idl $(InputName).idl
+	..\..\..\tao_idl\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

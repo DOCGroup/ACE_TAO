@@ -173,7 +173,7 @@ InputPath=.\Consumer.idl
 InputName=Consumer
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -208,7 +208,7 @@ InputPath=.\Consumer.idl
 InputName=Consumer
 
 BuildCmds= \
-	..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -253,7 +253,7 @@ InputPath=.\Notifier.idl
 InputName=Notifier
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl $(InputName).idl
+	..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -288,7 +288,7 @@ InputPath=.\Notifier.idl
 InputName=Notifier
 
 BuildCmds= \
-	..\..\..\bin\tao_idl $(InputName).idl
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
