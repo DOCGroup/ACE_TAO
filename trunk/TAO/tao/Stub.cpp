@@ -295,7 +295,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
                            CORBA::NVList_ptr args,
                            CORBA::NamedValue_ptr result,
                            CORBA::Flags,
-                           CORBA::ExceptionList &exceptions,
+                           CORBA::ExceptionList_ptr exceptions,
                            int lazy_evaluation,
                            CORBA::Environment &ACE_TRY_ENV)
 {
@@ -348,8 +348,7 @@ TAO_Stub::do_dynamic_call (const char *opname,
 
           // Make the call ... blocking for the response.
           int status =
-            call.invoke (exceptions,
-                         ACE_TRY_ENV);
+            call.invoke (exceptions, ACE_TRY_ENV);
           ACE_CHECK;
 
           if (status == TAO_INVOKE_RESTART)

@@ -58,20 +58,26 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
                               CORBA::NVList_ptr args,
                               CORBA::NamedValue_ptr result,
                               CORBA::Flags flags,
+                              CORBA::ExceptionList_ptr exceptions,
                               CORBA::Environment &ACE_TRY_ENV)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     args_ (CORBA::NVList::_duplicate (args)),
     result_ (CORBA::NamedValue::_duplicate (result)),
     flags_ (flags),
     env_ (ACE_TRY_ENV),
+    exceptions_ (CORBA::ExceptionList::_duplicate (exceptions)),
     contexts_ (0),
     ctx_ (0),
     refcount_ (1),
     lazy_evaluation_ (0),
     response_received_ (0)
 {
-  target_ = CORBA::Object::_duplicate (obj);
-  opname_ = CORBA::string_dup (op);
+  this->target_ = CORBA::Object::_duplicate (obj);
+  this->opname_ = CORBA::string_dup (op);
+  if (this->exceptions_.in () == 0)
+    {
+      this->exceptions_ = new CORBA::ExceptionList;
+    }
 }
 
 CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
@@ -87,8 +93,9 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
     lazy_evaluation_ (0),
     response_received_ (0)
 {
-  target_ = CORBA::Object::_duplicate (obj);
-  opname_ = CORBA::string_dup (op);
+  this->target_ = CORBA::Object::_duplicate (obj);
+  this->opname_ = CORBA::string_dup (op);
+  this->exceptions_ = new CORBA::ExceptionList;
 
   ACE_NEW (args_, CORBA::NVList);
   ACE_NEW (result_, CORBA::NamedValue);
@@ -122,7 +129,7 @@ CORBA_Request::invoke (CORBA::Environment &ACE_TRY_ENV)
                          this->args_,
                          this->result_,
                          this->flags_,
-                         this->exceptions_,
+                         this->exceptions_.in (),
                          this->lazy_evaluation_,
                          ACE_TRY_ENV);
 }
@@ -137,7 +144,7 @@ CORBA_Request::send_oneway (CORBA::Environment &ACE_TRY_ENV)
                          this->args_,
                          this->result_,
                          this->flags_,
-                         this->exceptions_,
+                         this->exceptions_.in (),
                          this->lazy_evaluation_,
                          ACE_TRY_ENV);
 }
