@@ -126,7 +126,7 @@ namespace CIAO
       TAO::Utils::Servant_Var<CIAO::DomainApplicationManager_Impl> dam_servant_;
     };
 
-};
+}
 
 #include /**/ "ace/post.h"
 #endif /* EXECUTIONMANAGER_IMPL_H */
