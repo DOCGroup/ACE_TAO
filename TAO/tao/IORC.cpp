@@ -27,7 +27,7 @@ TAO_IOP::TAO_IOR_Manipulation_ptr TAO_IOP::TAO_IOR_Manipulation::_narrow (
 {
   if (CORBA::is_nil (obj))
     return TAO_IOP::TAO_IOR_Manipulation::_nil ();
-  CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation:1.0", ACE_TRY_ENV);
+  CORBA::Boolean is_a = obj->_is_a ("IDL:TAO_IOP/TAO_IOR_Manipulation:1.0", ACE_TRY_ENV);
   ACE_CHECK_RETURN (TAO_IOP::TAO_IOR_Manipulation::_nil ());
   if (is_a == 0)
     return TAO_IOP::TAO_IOR_Manipulation::_nil ();
@@ -45,7 +45,7 @@ TAO_IOP::TAO_IOR_Manipulation_ptr TAO_IOP::TAO_IOR_Manipulation::_unchecked_narr
   stub->_incr_refcnt ();
   void* servant = 0;
   if (obj->_is_collocated () && obj->_servant() != 0)
-    servant = obj->_servant()->_downcast ("IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation:1.0");
+    servant = obj->_servant()->_downcast ("IDL:TAO_IOP/TAO_IOR_Manipulation:1.0");
   if (servant != 0)
     {
       // PortableServer::Servant iservant = ACE_reinterpret_cast(POA_TAO_IOP::TAO_IOR_Manipulation_ptr, servant);
@@ -101,7 +101,7 @@ TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::operator= (const TAO_IOP::TAO_I
 TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList_ptr
 TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_narrow (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation/EmptyProfileList:1.0", exc->_id ())) // same type
+  if (!ACE_OS::strcmp ("IDL:TAO_IOP/TAO_IOR_Manipulation/EmptyProfileList:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList_ptr, exc);
   else
     return 0;
@@ -122,7 +122,7 @@ CORBA::Exception *TAO_IOP::TAO_IOR_Manipulation::EmptyProfileList::_alloc (void)
 static const CORBA::Long _oc_TAO_IOP_TAO_IOR_Manipulation_EmptyProfileList[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  58, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x494f502f), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f525f), ACE_NTOHL (0x6d616e69), ACE_NTOHL (0x70756c61), ACE_NTOHL (0x74696f6e), ACE_NTOHL (0x2f456d70), ACE_NTOHL (0x74795072), ACE_NTOHL (0x6f66696c), ACE_NTOHL (0x654c6973), ACE_NTOHL (0x743a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation/EmptyProfileList:1.0
+  54, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f502f), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f525f), ACE_NTOHL (0x4d616e69), ACE_NTOHL (0x70756c61), ACE_NTOHL (0x74696f6e), ACE_NTOHL (0x2f456d70), ACE_NTOHL (0x74795072), ACE_NTOHL (0x6f66696c), ACE_NTOHL (0x654c6973), ACE_NTOHL (0x743a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:TAO_IOP/TAO_IOR_Manipulation/EmptyProfileList:1.0
   17, ACE_NTOHL (0x456d7074), ACE_NTOHL (0x7950726f), ACE_NTOHL (0x66696c65), ACE_NTOHL (0x4c697374), ACE_NTOHL (0x0),  // name = EmptyProfileList
   0, // member count
 };
@@ -159,7 +159,7 @@ TAO_IOP::TAO_IOR_Manipulation::NotFound::operator= (const TAO_IOP::TAO_IOR_Manip
 TAO_IOP::TAO_IOR_Manipulation::NotFound_ptr
 TAO_IOP::TAO_IOR_Manipulation::NotFound::_narrow (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation/NotFound:1.0", exc->_id ())) // same type
+  if (!ACE_OS::strcmp ("IDL:TAO_IOP/TAO_IOR_Manipulation/NotFound:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (TAO_IOP::TAO_IOR_Manipulation::NotFound_ptr, exc);
   else
     return 0;
@@ -180,7 +180,7 @@ CORBA::Exception *TAO_IOP::TAO_IOR_Manipulation::NotFound::_alloc (void)
 static const CORBA::Long _oc_TAO_IOP_TAO_IOR_Manipulation_NotFound[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  50, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x494f502f), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f525f), ACE_NTOHL (0x6d616e69), ACE_NTOHL (0x70756c61), ACE_NTOHL (0x74696f6e), ACE_NTOHL (0x2f4e6f74), ACE_NTOHL (0x466f756e), ACE_NTOHL (0x643a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation/NotFound:1.0
+  46, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f502f), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f525f), ACE_NTOHL (0x4d616e69), ACE_NTOHL (0x70756c61), ACE_NTOHL (0x74696f6e), ACE_NTOHL (0x2f4e6f74), ACE_NTOHL (0x466f756e), ACE_NTOHL (0x643a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:TAO_IOP/TAO_IOR_Manipulation/NotFound:1.0
   9, ACE_NTOHL (0x4e6f7446), ACE_NTOHL (0x6f756e64), ACE_NTOHL (0x0),  // name = NotFound
   0, // member count
 };
@@ -217,7 +217,7 @@ TAO_IOP::TAO_IOR_Manipulation::Duplicate::operator= (const TAO_IOP::TAO_IOR_Mani
 TAO_IOP::TAO_IOR_Manipulation::Duplicate_ptr
 TAO_IOP::TAO_IOR_Manipulation::Duplicate::_narrow (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation/Duplicate:1.0", exc->_id ())) // same type
+  if (!ACE_OS::strcmp ("IDL:TAO_IOP/TAO_IOR_Manipulation/Duplicate:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (TAO_IOP::TAO_IOR_Manipulation::Duplicate_ptr, exc);
   else
     return 0;
@@ -238,7 +238,7 @@ CORBA::Exception *TAO_IOP::TAO_IOR_Manipulation::Duplicate::_alloc (void)
 static const CORBA::Long _oc_TAO_IOP_TAO_IOR_Manipulation_Duplicate[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  51, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x494f502f), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f525f), ACE_NTOHL (0x6d616e69), ACE_NTOHL (0x70756c61), ACE_NTOHL (0x74696f6e), ACE_NTOHL (0x2f447570), ACE_NTOHL (0x6c696361), ACE_NTOHL (0x74653a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation/Duplicate:1.0
+  47, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f502f), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f525f), ACE_NTOHL (0x4d616e69), ACE_NTOHL (0x70756c61), ACE_NTOHL (0x74696f6e), ACE_NTOHL (0x2f447570), ACE_NTOHL (0x6c696361), ACE_NTOHL (0x74653a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:TAO_IOP/TAO_IOR_Manipulation/Duplicate:1.0
   10, ACE_NTOHL (0x4475706c), ACE_NTOHL (0x69636174), ACE_NTOHL (0x65000000),  // name = Duplicate
   0, // member count
 };
@@ -275,7 +275,7 @@ TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::operator= (const TAO_IOP::TAO_IOR_Ma
 TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR_ptr
 TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_narrow (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation/Invalid_IOR:1.0", exc->_id ())) // same type
+  if (!ACE_OS::strcmp ("IDL:TAO_IOP/TAO_IOR_Manipulation/Invalid_IOR:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR_ptr, exc);
   else
     return 0;
@@ -296,7 +296,7 @@ CORBA::Exception *TAO_IOP::TAO_IOR_Manipulation::Invalid_IOR::_alloc (void)
 static const CORBA::Long _oc_TAO_IOP_TAO_IOR_Manipulation_Invalid_IOR[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  53, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x494f502f), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f525f), ACE_NTOHL (0x6d616e69), ACE_NTOHL (0x70756c61), ACE_NTOHL (0x74696f6e), ACE_NTOHL (0x2f496e76), ACE_NTOHL (0x616c6964), ACE_NTOHL (0x5f494f52), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation/Invalid_IOR:1.0
+  49, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f502f), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f525f), ACE_NTOHL (0x4d616e69), ACE_NTOHL (0x70756c61), ACE_NTOHL (0x74696f6e), ACE_NTOHL (0x2f496e76), ACE_NTOHL (0x616c6964), ACE_NTOHL (0x5f494f52), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:TAO_IOP/TAO_IOR_Manipulation/Invalid_IOR:1.0
   12, ACE_NTOHL (0x496e7661), ACE_NTOHL (0x6c69645f), ACE_NTOHL (0x494f5200),  // name = Invalid_IOR
   0, // member count
 };
@@ -430,7 +430,7 @@ TAO_IOP::TAO_IOR_Manipulation::IORList::~IORList (void) // dtor
 static const CORBA::Long _oc_TAO_IOP_TAO_IOR_Manipulation_IORList[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  49, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x494f502f), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f525f), ACE_NTOHL (0x6d616e69), ACE_NTOHL (0x70756c61), ACE_NTOHL (0x74696f6e), ACE_NTOHL (0x2f494f52), ACE_NTOHL (0x4c697374), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation/IORList:1.0
+  45, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f502f), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f525f), ACE_NTOHL (0x4d616e69), ACE_NTOHL (0x70756c61), ACE_NTOHL (0x74696f6e), ACE_NTOHL (0x2f494f52), ACE_NTOHL (0x4c697374), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:TAO_IOP/TAO_IOR_Manipulation/IORList:1.0 
   8, ACE_NTOHL (0x494f524c), ACE_NTOHL (0x69737400),  // name = IORList
   CORBA::tk_sequence, // typecode kind
   68, // encapsulation length
@@ -438,7 +438,7 @@ static const CORBA::Long _oc_TAO_IOP_TAO_IOR_Manipulation_IORList[] =
     CORBA::tk_objref,
     52, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
-      29, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f4f62), ACE_NTOHL (0x6a656374), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Object:1.0
+      29, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f4f62), ACE_NTOHL (0x6a656374), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:CORBA/Object:1.0
       7, ACE_NTOHL (0x4f626a65), ACE_NTOHL (0x63740000),  // name = Object
 
     0,
@@ -788,8 +788,8 @@ CORBA::ULong TAO_IOP::TAO_IOR_Manipulation::get_profile_count (
 CORBA::Boolean TAO_IOP::TAO_IOR_Manipulation::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
 {
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
+    (!ACE_OS::strcmp ((char *)value, "IDL:TAO_IOP/TAO_IOR_Manipulation:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
     return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
@@ -797,13 +797,13 @@ CORBA::Boolean TAO_IOP::TAO_IOR_Manipulation::_is_a (const CORBA::Char *value, C
 
 const char* TAO_IOP::TAO_IOR_Manipulation::_interface_repository_id (void) const
 {
-  return "IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation:1.0";
+  return "IDL:TAO_IOP/TAO_IOR_Manipulation:1.0";
 }
 
 static const CORBA::Long _oc_TAO_IOP_TAO_IOR_Manipulation[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  41, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x494f502f), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f525f), ACE_NTOHL (0x6d616e69), ACE_NTOHL (0x70756c61), ACE_NTOHL (0x74696f6e), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation:1.0
+  41, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x494f502f), ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f525f), ACE_NTOHL (0x6d616e69), ACE_NTOHL (0x70756c61), ACE_NTOHL (0x74696f6e), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:TAO_IOP/TAO_IOR_Manipulation:1.0
   21, ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x494f525f), ACE_NTOHL (0x6d616e69), ACE_NTOHL (0x70756c61), ACE_NTOHL (0x74696f6e), ACE_NTOHL (0x0),  // name = TAO_IOR_Manipulation
 };
 static CORBA::TypeCode _tc_TAO_tc_TAO_IOP_TAO_IOR_Manipulation (CORBA::tk_objref, sizeof (_oc_TAO_IOP_TAO_IOR_Manipulation), (char *) &_oc_TAO_IOP_TAO_IOR_Manipulation, 0, sizeof (TAO_IOP::TAO_IOR_Manipulation));

@@ -17,8 +17,6 @@
 //
 // ================================================================
 
-#pragma prefix "omg.org"
-
 module TAO_IOP {
 
   interface TAO_IOR_Manipulation {

@@ -1,3 +1,7 @@
+Mon Jun 28 18:04:54 1999 Fred Kuhns <fredk@cs.wustl.edu>
+        * Added test for IORManipultion
+          TAO/tests/IORManipultion
+
 Mon Jun 28 17:50:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Param_Test/client.cpp:
