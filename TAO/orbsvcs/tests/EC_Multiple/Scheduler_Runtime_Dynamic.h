@@ -63,10 +63,4 @@ static ACE_Scheduler_Factory::POD_RT_Info runtime_infos_3[] = {
 };
 static int runtime_infos_3_size = sizeof(runtime_infos_3)/sizeof(runtime_infos_3[0]);
 
-// This setups Scheduler_Factory to use the runtime version
-// Removed static because DEC cxx complains about unused variable.
-/* static */ int scheduler_factory_setup =
-  ACE_Scheduler_Factory::use_runtime (sizeof (runtime_infos_3)/sizeof (runtime_infos_3[0]),
-  runtime_infos_3);
-
 // EOF
