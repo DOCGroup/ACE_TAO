@@ -1,3 +1,8 @@
+Mon Jun 28 15:40:22 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/IR_Helper.cpp: Fixed some bugs with using old 
+          print_exception method instead of ACE_PRINT_EXCEPTION.
+
 Mon Jun 28 12:53:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/Makefile:
