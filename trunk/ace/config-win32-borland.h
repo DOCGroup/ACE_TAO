@@ -31,7 +31,7 @@
 # define ACE_HAS_ITOA 1
 # define ACE_STRCASECMP_EQUIVALENT ::stricmp 
 # define ACE_STRNCASECMP_EQUIVALENT ::strnicmp 
-# define ACe_WCSDUP_EQUIVALENT ::_wcsdup
+# define ACE_WCSDUP_EQUIVALENT ::_wcsdup
 
 # define ACE_EXPORT_NESTED_CLASSES 1
 # define ACE_HAS_ANSI_CASTS 1
