@@ -11,12 +11,10 @@ TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
   : server_ (servers),
     helper_ (this)
 {
-  TAO_TRY
-    {
+
       // Schedule the helper to be invoked by the reactor
       // periodically.
-      ACE_DEBUG ((LM_DEBUG,
-		  "In the constructor of Clerk\n"));
+
       if (TAO_ORB_Core_instance ()->reactor ()->schedule_timer
 	  (&helper_,
 	   0,
@@ -25,12 +23,6 @@ TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
 	ACE_ERROR ((LM_ERROR,
 		    "%p\n",
 		    "schedule_timer ()"));
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("(%P|%t) Exception in Clerk_i::run ()\n");
-    }
-  TAO_ENDTRY;
 }
 
 // Destructor.
@@ -65,16 +57,7 @@ TAO_Time_Service_Clerk::universal_time (CORBA::Environment &_env)
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::secure_universal_time (CORBA::Environment &env)
 {
-  TAO_TRY
-    {
-      TAO_TRY_ENV.exception (new CORBA::NO_IMPLEMENT (CORBA::COMPLETED_NO));
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("Exception:");
-    }
-  TAO_ENDTRY;
-
+  env.exception (new CORBA::NO_IMPLEMENT (CORBA::COMPLETED_NO));
   return 0;
 }
 
@@ -136,8 +119,10 @@ TAO_Time_Service_Clerk::get_time (void)
 {
   // Globally sync. time is the latest global time plus the time
   // elapsed since last updation was done.
+  CORBA::ULongLong time;
 
-  return ACE_OS::gettimeofday ().sec ()
+  time = (CORBA::ULongLong) ACE_OS::gettimeofday ().sec ()
     - this->update_timestamp_ + this->time_;
 
+  return time;
 }
