@@ -1,163 +1,174 @@
+Mon Jan  5 13:54:09 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/examples/Notify/ThreadPool/Notify_ThreadPool.mpc:
+
+          Set the executable name for each project and added naming and
+          rtportableserver to the Supplier inheritance list.
+
+        * tests/Servant_To_Reference_Test/Servant_to_Reference.mpc:
+
+          Fixed a typo that caused link errors on Windows.
+
 Mon Jan  5 10:21:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Smart_Proxies/On_Demand/Makefile:
+        * tests/Smart_Proxies/On_Demand/Makefile:
 
-	  Fixed the dependencies in the above Makefile.
+          Fixed the dependencies in the above Makefile.
 
 Mon Jan 05 00:52:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.dsp:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.dsp:
 
- 	  Fixed the release configurations by adding messaging
-	  library. Looks like they have been busted recently.
+          Fixed the release configurations by adding messaging
+          library. Looks like they have been busted recently.
 
 Mon Jan 05 00:24:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/FaultTolerance/IOGR/Manager.dsp:
-	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp:
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.dsp:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp:
 
-	  Fixed the release configurations by adding messaging
-	  library. Looks like they have been busted recently.
+          Fixed the release configurations by adding messaging
+          library. Looks like they have been busted recently.
 
 Sun Jan  4 23:08:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Bug_1568_Regression/server.dsp:
-	* tests/Bug_1568_Regression/client.dsp:
-	* tests/Bug_1670_Regression/server.dsp:
-	* tests/Bug_1670_Regression/client.dsp:
+        * tests/Bug_1568_Regression/server.dsp:
+        * tests/Bug_1568_Regression/client.dsp:
+        * tests/Bug_1670_Regression/server.dsp:
+        * tests/Bug_1670_Regression/client.dsp:
 
-	  Fixed the release configurations to compile and link cleanly.
+          Fixed the release configurations to compile and link cleanly.
 
 Sun Jan  4 22:56:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAOACE.dsw:
+        * TAOACE.dsw:
 
-	  Added a dependency for AV. 
-	
-	* orbsvcs/orbsvcs/FTClientORB.dsp:
-	* orbsvcs/orbsvcs/FTServerORB.dsp:
+          Added a dependency for AV.
 
-	  Added Messaging library to be linked in for release builds. This
-	  is crazy, but that is what the daily builds want. Grrr..
+        * orbsvcs/orbsvcs/FTClientORB.dsp:
+        * orbsvcs/orbsvcs/FTServerORB.dsp:
+
+          Added Messaging library to be linked in for release builds. This
+          is crazy, but that is what the daily builds want. Grrr..
 
 Sun Jan  4 20:17:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Smart_Proxies/Collocation/Makefile.main:
+        * tests/Smart_Proxies/Collocation/Makefile.main:
 
-	  Added the smart proxy library to the link line.
+          Added the smart proxy library to the link line.
 
 Sun Jan 4 16:04:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Utils/Server_Main.cpp:
+        * tao/Utils/Server_Main.cpp:
 
-	  Another wrong macros usage problem.
+          Another wrong macros usage problem.
 
 Sun Jan 4 16:01:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/FT_App/FT_App.mpc:
+        * orbsvcs/tests/FT_App/FT_App.mpc:
 
-	  Prevented a bunch of compilations by making exceptions=1 a
-	  requirement. There is no scope or hope for this to be fixed in
-	  the next day or two. Things are too borken in the CPP files,
-	  esepcially there are some macros that have been used that are
-	  broken for exceptions=0. x.4 will have this example only
-	  compilable with exceptions=1.
+          Prevented a bunch of compilations by making exceptions=1 a
+          requirement. There is no scope or hope for this to be fixed in
+          the next day or two. Things are too borken in the CPP files,
+          esepcially there are some macros that have been used that are
+          broken for exceptions=0. x.4 will have this example only
+          compilable with exceptions=1.
 
-	* orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
-	* orbsvcs/tests/FT_App/StubBatchConsumer.cpp:
-	* orbsvcs/tests/FT_App/StubFaultAnalyzer.cpp:
-	* orbsvcs/tests/FT_App/StubFaultAnalyzer.h:
-	* orbsvcs/tests/FT_App/StubFaultConsumer.cpp:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+        * orbsvcs/tests/FT_App/StubBatchConsumer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultAnalyzer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultAnalyzer.h:
+        * orbsvcs/tests/FT_App/StubFaultConsumer.cpp:
 
-	  Attempt to fix some of the macro usage problems. Please see
-	  above. 
+          Attempt to fix some of the macro usage problems. Please see
+          above.
 
 Sun Jan  4 09:55:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
+        * orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
           Added missing type of inheritence from base class. Fixes Tru64
           warning.
 
 Sun Jan  4 09:23:56 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/examples/Notify/Lanes/Notify_Lanes.mpc:
-	  Supplier needs naming
+        * orbsvcs/examples/Notify/Lanes/Notify_Lanes.mpc:
+          Supplier needs naming
 
 Sun Jan  4 08:24:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.bor:
-	  Fixed this borland makefile for static build
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.bor:
+          Fixed this borland makefile for static build
 
 Sat Jan  3 23:56:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
 
-	  The last checkin actually broke g++ builds. Slightly corrected
-	  the fix by calling the cast operator so that it works in both
-	  the compilers.
+          The last checkin actually broke g++ builds. Slightly corrected
+          the fix by calling the cast operator so that it works in both
+          the compilers.
 
 Sat Jan  3 11:23:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Smart_Proxies/Collocation/Collocation.dsp:
+        * tests/Smart_Proxies/Collocation/Collocation.dsp:
 
-	  Fixed the dsp file for the debug configuration.
+          Fixed the dsp file for the debug configuration.
 
 Sat Jan  3 11:00:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
 
-	  Fixed compile errors with Borland. Thanks to Johnny for
-	  reporting them.
+          Fixed compile errors with Borland. Thanks to Johnny for
+          reporting them.
 
 Sat Jan  3 11:55:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/Smart_Proxies/Collocation/Coll_Test_Stubs.bor:
-	* tests/Smart_Proxies/Collocation/Diamond.bor:
-	  Fixed these BCB makefiles.
+        * tests/Smart_Proxies/Collocation/Coll_Test_Stubs.bor:
+        * tests/Smart_Proxies/Collocation/Diamond.bor:
+          Fixed these BCB makefiles.
 
 Fri Jan  2 23:22:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	This fix should have gone in long time back. Since this is
+        This fix should have gone in long time back. Since this is
         non-intrusive and needed by a sponsor it was decided to checkin.
 
-	* tao/ORB_Core.cpp:
+        * tao/ORB_Core.cpp:
 
-	  Added a command line option -ORBDisableRTCollocation. This is
-	  useful for applications that would like to disable RT
-	  collocation with RTORB and use the default collocation features
-	  instead. Most notably this is being added for Boeing.
+          Added a command line option -ORBDisableRTCollocation. This is
+          useful for applications that would like to disable RT
+          collocation with RTORB and use the default collocation features
+          instead. Most notably this is being added for Boeing.
 
-	* tao/params.cpp:
-	* tao/params.h:
-	* tao/params.i:
+        * tao/params.cpp:
+        * tao/params.h:
+        * tao/params.i:
 
-	  Added a new boolean variable to the class, together with
-	  accessors and mutators. The new boolean caches the value of the
-	  above option passed to the ORB by the application.
+          Added a new boolean variable to the class, together with
+          accessors and mutators. The new boolean caches the value of the
+          above option passed to the ORB by the application.
 
-	* tao/RTPortableServer/RT_Object_Adapter_Factory.cpp:
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.cpp:
 
-	  Do a check before setting the collocation resolver name and
-	  intializing the service configurator with the new directive.
+          Do a check before setting the collocation resolver name and
+          intializing the service configurator with the new directive.
 
 Fri Jan  2 14:50:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Smart_Proxies/Collocation/Coll_Tester.cpp:
-	* tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.h:
+        * tests/Smart_Proxies/Collocation/Coll_Tester.cpp:
+        * tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.h:
 
-	  Cosmetic fixes!
+          Cosmetic fixes!
 
-	* tests/Smart_Proxies/Collocation/Makefile.Coll_Test_Stubs:
-	* tests/Smart_Proxies/Collocation/Makefile.Diamond:
-	* tests/Smart_Proxies/Collocation/Makefile.main:
+        * tests/Smart_Proxies/Collocation/Makefile.Coll_Test_Stubs:
+        * tests/Smart_Proxies/Collocation/Makefile.Diamond:
+        * tests/Smart_Proxies/Collocation/Makefile.main:
 
-	  Fixed the makefiles so that they can build properly in our daily
-	  builds.
+          Fixed the makefiles so that they can build properly in our daily
+          builds.
 
 Fri Jan  2 14:14:03 2004  Chad Elliott  <elliott_c@ociweb.com>
 
