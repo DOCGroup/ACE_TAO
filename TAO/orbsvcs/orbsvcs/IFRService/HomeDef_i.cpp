@@ -16,12 +16,12 @@ ACE_RCSID (IFRService,
 
 TAO_HomeDef_i::TAO_HomeDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
-    TAO_Container_i (repo),
     TAO_Contained_i (repo),
+    TAO_Container_i (repo),
     TAO_IDLType_i (repo),
-    TAO_ExtInterfaceDef_i (repo),
+    TAO_InterfaceDef_i (repo),
     TAO_InterfaceAttrExtension_i (repo),
-    TAO_InterfaceDef_i (repo)
+    TAO_ExtInterfaceDef_i (repo)
 {
 }
 
