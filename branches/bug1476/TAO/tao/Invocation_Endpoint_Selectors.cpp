@@ -43,37 +43,34 @@ TAO_Default_Endpoint_Selector::select_endpoint (
     {
       r->profile (r->stub ()->profile_in_use ());
 
-// need also a book heere
-      // If we shouldn't block but the profile doesn't support this
-      // we can't use this profile
-// shouldn't we just loop and try the next?
-      if (!r->blocked () && !r->profile ()->supports_non_blocking_oneways ())
+      // Check whether we need to have do a blocked wait or we have a non
+      // blocked wait and we support that, if this is not the case we
+      // can't use this profile and try the next
+      if (r->blocked () ||
+         (!r->blocked () && r->profile ()->supports_non_blocking_oneways ()))
         {
-          break;
-        }
+          const size_t endpoint_count =
+            r->profile ()->endpoint_count ();
 
-      const size_t endpoint_count =
-        r->profile ()->endpoint_count ();
+          TAO_Endpoint *ep =
+            r->profile ()->endpoint ();
 
-      TAO_Endpoint *ep =
-        r->profile ()->endpoint ();
+          for (size_t i = 0; i < endpoint_count; ++i)
+            {
+              TAO_Base_Transport_Property desc (ep);
+              bool retval =
+                r->try_connect (&desc,
+                                max_wait_time
+                                ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK;
 
-      for (size_t i = 0; i < endpoint_count; ++i)
-        {
-          TAO_Base_Transport_Property desc (ep);
-// now back to the transport resolver
-          bool retval =
-            r->try_connect (&desc,
-                            max_wait_time
-                            ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+              // Check if the connect has completed.
+              if (retval)
+                return;
 
-          // Check if the connect has completed.
-          if (retval)
-            return;
-
-          // Go to the next endpoint in this profile.
-          ep = ep->next ();
+              // Go to the next endpoint in this profile.
+              ep = ep->next ();
+            }
         }
     }
   while (r->stub ()->next_profile_retry () != 0);

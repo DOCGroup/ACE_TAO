@@ -349,7 +349,6 @@ TAO_Connector::check_connection_closure (
   if (local_result == -1 && !closed)
     {
       // First, cancel from connector.
-      //this->base_connector_.cancel (svc_handler);
       if (this->cancel_svc_handler (svc_handler) == -1)
         return -1;
 
@@ -373,7 +372,7 @@ TAO_Connector::check_connection_closure (
           // though wait failed for this thread.
           if (open)
             {
-              // Overwrite <result>.
+              // Overwrite the local result.
               local_result = 0;
             }
           else

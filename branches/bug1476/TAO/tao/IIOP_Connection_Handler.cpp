@@ -9,8 +9,6 @@
 #include "Protocols_Hooks.h"
 #include "Wait_Strategy.h"
 
-#include "Flushing_Strategy.h"
-
 #if !defined (__ACE_INLINE__)
 # include "IIOP_Connection_Handler.i"
 #endif /* ! __ACE_INLINE__ */

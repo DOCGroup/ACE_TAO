@@ -198,6 +198,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   // another thread pick up the completion and potentially deletes the
   // handler before we get a chance to increment the reference count.
 
+  // Make sure that we always do a remove_reference
   ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
 
   if (result == -1 && errno == EWOULDBLOCK)

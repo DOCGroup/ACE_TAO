@@ -880,6 +880,8 @@ TAO_Transport::cleanup_queue_i ()
     {
       TAO_Queued_Message *i = this->head_;
 
+       // @@ This is a good point to insert a flag to indicate that a
+       //    CloseConnection message was successfully received.
       i->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
 
       i->remove_from_list (this->head_, this->tail_);
@@ -1013,7 +1015,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
                                       ACE_Time_Value *max_wait_time)
 {
 
-// This has to go out here
+// @todo Bala mentioned that this has to go out here
 // {
   if (message_semantics == TAO_Transport::TAO_TWOWAY_REQUEST)
     {

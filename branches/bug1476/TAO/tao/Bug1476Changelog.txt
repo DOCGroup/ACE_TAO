@@ -1,3 +1,18 @@
+Fri Jul 30 10:25:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.cpp:
+        * tao/Transport_Connector.cpp:
+        * tao/IIOP_Connector.cpp:
+          Added some comments, removed commented out code
+
+        * tao/IIOP_Connection_Handler.cpp:
+          Removed not needed include which I added during my changes but is
+          now not needed anymore
+
+        * tao/Invocation_Endpoint_Selectors.cpp:
+          Removed comments and changed the logic of selecting an endpoint, if
+          one isn't usable not break but try the next.
+
 Thu Jul 29 13:35:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport_Connector.cpp:
