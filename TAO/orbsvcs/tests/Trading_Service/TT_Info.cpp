@@ -20,21 +20,6 @@ const char* TT_Info::REMOTE_IO_PROPERTY_NAMES[] =
   "Description"
 };
 
-CORBA::TypeCode_ptr TT_Info::REMOTE_IO_PROPERTY_TYPES[] =
-{
-  CORBA::_tc_string,
-  CORBA::_tc_string,
-  CORBA::_tc_string
-};
-
-CosTradingRepos::ServiceTypeRepository::PropertyMode
-TT_Info::REMOTE_IO_PROPERTY_MODES[] =
-{
-  CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY_READONLY,
-  CosTradingRepos::ServiceTypeRepository::PROP_NORMAL,
-  CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY
-};
-
 const char* TT_Info::PLOTTER_NAME = "Plotter";
 
 const char* TT_Info::PLOTTER_PROPERTY_NAMES[] = 
@@ -45,27 +30,6 @@ const char* TT_Info::PLOTTER_PROPERTY_NAMES[] =
   "Model_Number",
   "User_Queue",
   "File_Sizes_Pending"
-};
-
-CORBA::TypeCode_ptr TT_Info::PLOTTER_PROPERTY_TYPES[] =
-{
-  CORBA::_tc_long,
-  CORBA::_tc_boolean,
-  CORBA::_tc_float,
-  CORBA::_tc_string,
-  TAO_Sequences::_tc_StringSeq,
-  TAO_Sequences::_tc_ULongSeq
-};
-
-CosTradingRepos::ServiceTypeRepository::PropertyMode
-TT_Info::PLOTTER_PROPERTY_MODES[] =
-{
-  CosTradingRepos::ServiceTypeRepository::PROP_NORMAL,
-  CosTradingRepos::ServiceTypeRepository::PROP_READONLY,
-  CosTradingRepos::ServiceTypeRepository::PROP_NORMAL,
-  CosTradingRepos::ServiceTypeRepository::PROP_READONLY,
-  CosTradingRepos::ServiceTypeRepository::PROP_NORMAL,
-  CosTradingRepos::ServiceTypeRepository::PROP_NORMAL
 };
 
 const char* TT_Info::PRINTER_NAME = "Printer";
@@ -81,29 +45,6 @@ const char* TT_Info::PRINTER_PROPERTY_NAMES[] =
   "File_Sizes_Pending"
 };
 
-CORBA::TypeCode_ptr TT_Info::PRINTER_PROPERTY_TYPES[] =
-{
-  CORBA::_tc_boolean,
-  CORBA::_tc_boolean,
-  CORBA::_tc_float,
-  CORBA::_tc_string,
-  CORBA::_tc_ushort,
-  TAO_Sequences::_tc_StringSeq,
-  TAO_Sequences::_tc_ULongSeq
-};
-
-CosTradingRepos::ServiceTypeRepository::PropertyMode
-TT_Info::PRINTER_PROPERTY_MODES[] =
-{
-  CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY_READONLY,
-  CosTradingRepos::ServiceTypeRepository::PROP_READONLY,
-  CosTradingRepos::ServiceTypeRepository::PROP_NORMAL,
-  CosTradingRepos::ServiceTypeRepository::PROP_READONLY,
-  CosTradingRepos::ServiceTypeRepository::PROP_READONLY,
-  CosTradingRepos::ServiceTypeRepository::PROP_NORMAL,
-  CosTradingRepos::ServiceTypeRepository::PROP_NORMAL
-};
-
 const char* TT_Info::FILESYSTEM_NAME = "File_System";
 
 const char* TT_Info::FILESYSTEM_PROPERTY_NAMES[] =
@@ -113,39 +54,12 @@ const char* TT_Info::FILESYSTEM_PROPERTY_NAMES[] =
   "Permission_Level"
 };
 
-CORBA::TypeCode_ptr TT_Info::FILESYSTEM_PROPERTY_TYPES[] =
-{
-  CORBA::_tc_ulong,
-  CORBA::_tc_ulong,
-  CORBA::_tc_ushort
-};
-
-CosTradingRepos::ServiceTypeRepository::PropertyMode
-TT_Info::FILESYSTEM_PROPERTY_MODES[] =
-{
-  CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY_READONLY,
-  CosTradingRepos::ServiceTypeRepository::PROP_NORMAL,
-  CosTradingRepos::ServiceTypeRepository::PROP_NORMAL
-};
-
 const char* TT_Info::PS_PRINTER_PROPERTY_NAMES[] = 
 {
   "Version"
 };
 
-
 const char* TT_Info::PS_PRINTER_NAME = "PostScript_Printer";
-
-CORBA::TypeCode_ptr TT_Info::PS_PRINTER_PROPERTY_TYPES[] =
-{
-  CORBA::_tc_ushort
-};
-
-CosTradingRepos::ServiceTypeRepository::PropertyMode
-TT_Info::PS_PRINTER_PROPERTY_MODES[] =
-{
-  CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY_READONLY
-};
 
 const char* TT_Info::LOCATIONS[] =
 {

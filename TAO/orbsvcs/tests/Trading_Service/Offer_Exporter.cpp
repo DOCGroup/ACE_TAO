@@ -66,23 +66,29 @@ TAO_Offer_Exporter::export_offers (CORBA::Environment& _env)
     {
       for (int i = 0; i < NUM_OFFERS; i++)
 	{
-	  this->register_->export (this->plotter_[i]._this (TAO_TRY_ENV),
-				   TT_Info::INTERFACE_NAMES[1],
-				   this->props_plotters_[i],
-				   TAO_TRY_ENV);
+	  CosTrading::OfferId_var offer_id = 
+	    this->register_->export (this->plotter_[i]._this (TAO_TRY_ENV),
+				     TT_Info::INTERFACE_NAMES[1],
+				     this->props_plotters_[i],
+				     TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
+	  ACE_DEBUG ((LM_DEBUG, "Registered offer id: %s.\n", offer_id.in ()));
 
-	  this->register_->export (this->printer_[i]._this (TAO_TRY_ENV),
-				   TT_Info::INTERFACE_NAMES[2],
-				   this->props_printers_[i],
-				   TAO_TRY_ENV);
+	  offer_id = 
+	    this->register_->export (this->printer_[i]._this (TAO_TRY_ENV),
+				     TT_Info::INTERFACE_NAMES[2],
+				     this->props_printers_[i],
+				     TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
-	  
+	  ACE_DEBUG ((LM_DEBUG, "Registered offer id: %s.\n", offer_id.in ()));
+
+	  offer_id = 
 	  this->register_->export (this->fs_[i]._this (TAO_TRY_ENV),
 				   TT_Info::INTERFACE_NAMES[3],
 				   this->props_fs_[i],
 				   TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
+	  ACE_DEBUG ((LM_DEBUG, "Registered offer id: %s.\n", offer_id.in ()));
 	}
     }
   TAO_CATCHANY
@@ -242,9 +248,9 @@ TAO_Offer_Exporter::grab_offerids (CORBA::Environment& _env)
 	    } while (any_left);	      
 	}
 
-      ACE_DEBUG ((LM_DEBUG, "The following offer ids are registered:\n"));
+      ACE_DEBUG ((LM_DEBUG, "\tThe following offer ids are registered:\n"));
       for (int len = offer_id_seq->length (), j = 0; j < len; j++)
-	ACE_DEBUG ((LM_DEBUG, "Offer Id: %s\n", (const char *)(*offer_id_seq)[j]));
+	ACE_DEBUG ((LM_DEBUG, "\tOffer Id: %s\n", (const char *)(*offer_id_seq)[j]));
       
       return offer_id_seq;
     }
@@ -289,12 +295,12 @@ TAO_Offer_Exporter::create_offers (void)
 
       dp_user_queue = this->dp_plotters_[i].construct_dynamic_prop
 	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE],
-	 TT_Info::PLOTTER_PROPERTY_TYPES[TT_Info::PLOTTER_USER_QUEUE],
+	 TAO_Sequences::_tc_StringSeq,
 	 extra_info);
 
       dp_file_queue = this->dp_plotters_[i].construct_dynamic_prop
 	(TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_FILE_SIZES_PENDING],
-	 TT_Info::PLOTTER_PROPERTY_TYPES[TT_Info::PLOTTER_FILE_SIZES_PENDING],
+	 TAO_Sequences::_tc_ULongSeq,
 	 extra_info);
       
       this->dp_plotters_[i].register_handler
@@ -316,7 +322,7 @@ TAO_Offer_Exporter::create_offers (void)
       this->props_plotters_[i][2].name = CORBA::string_dup (TT_Info::REMOTE_IO_PROPERTY_NAMES[TT_Info::DESCRIPTION]);
       this->props_plotters_[i][2].value <<= CORBA::string_dup (description);
       this->props_plotters_[i][3].name = CORBA::string_dup (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_NUM_COLORS]);
-      this->props_plotters_[i][3].value <<= (i * 2);
+      this->props_plotters_[i][3].value <<= (CORBA::Long)(i * 2);
       this->props_plotters_[i][4].name = CORBA::string_dup (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_AUTO_LOADING]);
       this->props_plotters_[i][4].value <<= CORBA::Any::from_boolean ((CORBA::Boolean) (i % 2));
       this->props_plotters_[i][5].name = CORBA::string_dup (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_COST_PER_PAGE]);

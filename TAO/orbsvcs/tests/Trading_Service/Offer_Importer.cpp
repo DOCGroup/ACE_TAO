@@ -37,32 +37,37 @@ TAO_Offer_Importer::perform_queries (CORBA::Environment& _env)
 	  ACE_DEBUG ((LM_DEBUG, "Query: %s\n", TT_Info::QUERIES[i][1]));
 	  ACE_DEBUG ((LM_DEBUG, "Preferences: %s\n", TT_Info::QUERIES[i][2]));     
 
-	  CosTrading::OfferSeq_ptr offer_seq_out = 0;
-	  CosTrading::OfferIterator_ptr offer_iterator_out = 0;
-	  CosTrading::PolicyNameSeq_ptr limits_applied_out = 0;
+	  CosTrading::OfferSeq_ptr offer_seq_ptr = 0;
+	  CosTrading::OfferIterator_ptr offer_iterator_ptr = 0;
+	  CosTrading::PolicyNameSeq_ptr limits_applied_ptr = 0;
+
+	  CosTrading::OfferSeq_out offer_seq_out (offer_seq_ptr);
+	  CosTrading::OfferIterator_out offer_iterator_out (offer_iterator_ptr);
+	  CosTrading::PolicyNameSeq_out limits_applied_out (limits_applied_ptr);
 	  
 	  this->lookup_->query (TT_Info::QUERIES[i][0],
 				TT_Info::QUERIES[i][1],
 				TT_Info::QUERIES[i][2],
 				policies.policy_seq (),
 				desired_props,
-				8,				
-				CosTrading::OfferSeq_out (offer_seq_out),
-				CosTrading::OfferIterator_out (offer_iterator_out),
-				CosTrading::PolicyNameSeq_out (limits_applied_out),
+				8,
+				offer_seq_out,
+				offer_iterator_out,
+				limits_applied_out,
 				TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 
-	  //CosTrading::OfferSeq_var offer_seq (offer_seq_out);
-	  //CosTrading::OfferIterator_var offer_iterator (offer_iterator_out);
-	  //CosTrading::PolicyNameSeq_var limits_applied (limits_applied_out);
+	  CosTrading::OfferSeq_var offer_seq (offer_seq_ptr);
+	  CosTrading::OfferIterator_var offer_iterator (offer_iterator_ptr);
+	  CosTrading::PolicyNameSeq_var limits_applied (limits_applied_ptr);
 	  ACE_DEBUG ((LM_DEBUG, "Results:\n\n"));
+
 	  
-	  this->display_results (*offer_seq_out,
-				 offer_iterator_out,
+	  this->display_results (*offer_seq_ptr,
+				 offer_iterator_ptr,
 				 TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
-
+	  
 	  ACE_DEBUG ((LM_DEBUG, "Limits Applied:\n\n"));
 	  for (int length = limits_applied_out->length (), j = 0; j < length; j++)
 	    {
