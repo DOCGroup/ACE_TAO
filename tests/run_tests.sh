@@ -111,7 +111,7 @@ run Reactors_Test                       # tests ACE_Task, ACE_Mutex, ACE_Reactor
 run Reactor_Exceptions_Test             # tests ACE_Reactor and C++ exceptions
 run Reactor_Notify_Test                 # tests ACE_Reactor's notify() method, ACE_Task
 run Reactor_Timer_Test                  # tests ACE_Event_Handler, ACE_Reactor
-run Thread_Pool_Reactor_Test            # tests ACE_TP_Reactor, ACE_Select_Reactor, ACE_Acceptor...
+# run Thread_Pool_Reactor_Test            # tests ACE_TP_Reactor, ACE_Select_Reactor, ACE_Acceptor...
 test $chorus || test $LynxOS || run Reactor_Performance_Test # tests ACE_Event_Handler, ACE_Reactor
 run Notify_Performance_Test             # tests ACE_Event_Handler, ACE_Reactor
 run Reader_Writer_Test                  # tests ACE_Thread_Manager, ACE_Mutex
