@@ -19,24 +19,6 @@ void *ACE_Object_Manager::managed_object[ACE_MAX_MANAGED_OBJECTS] = { 0 };
 
 u_int ACE_Object_Manager::next_managed_object = 0;
 
-template <class TYPE>
-class ACE_Managed_Cleanup : public ACE_Cleanup
-{
-public:
-  ACE_Managed_Cleanup ();
-  TYPE &object () { return object_; }
-private:
-  TYPE object_;
-};
-
-
-template <class TYPE>
-ACE_Managed_Cleanup<TYPE>::ACE_Managed_Cleanup ()
-  : object_ ()
-{
-}
-
-
 ACE_Object_Manager::ACE_Object_Manager (void)
   : shutting_down_(0)
 {
