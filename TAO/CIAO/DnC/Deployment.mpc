@@ -15,7 +15,6 @@ project(Deployment_stub) : ciao_client {
 
   Source_Files {
     DeploymentC.cpp
-    DnC_Dump.cpp
   }
 }
 
