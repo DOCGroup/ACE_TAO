@@ -1,3 +1,8 @@
+Mon Nov 03 16:52:47 1997    <nw1@CHA-CHA>
+
+	* TAO_IDL/fe/y.tab.cpp: Commented out include <values.h>.  This
+ 	  was causing compilation errors on NT.
+
 Mon Nov  3 16:52:19 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 	* TAO_IDL/be/be_typedef.cpp (gen_client_stubs): Removed unused
