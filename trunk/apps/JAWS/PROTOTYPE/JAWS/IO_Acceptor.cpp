@@ -59,7 +59,7 @@ JAWS_IO_Asynch_Acceptor::accept (size_t bytes_to_read)
 {
 #if defined (ACE_WIN32)
   // This only works on Win32 platforms
-  return this->acceptor_->accept (bytes_to_read);
+  return this->acceptor_.accept (bytes_to_read);
 #else
   ACE_UNUSED_ARG (bytes_to_read);
   return -1;

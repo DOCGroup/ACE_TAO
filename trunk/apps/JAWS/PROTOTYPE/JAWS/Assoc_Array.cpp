@@ -8,14 +8,16 @@ JAWS_Assoc_Array<KEY,DATA>::JAWS_Assoc_Array (int maxsize)
     d_array_ (0),
     maxsize_ (maxsize)
 {
-  this->k_array_ = new (KEY *)[this->maxsize_];
+  typedef void * ptr_type;
+
+  this->k_array_ = ACE_static_cast(KEY **, new ptr_type[this->maxsize_]);
   if (this->k_array_ == 0)
     {
       this->maxsize_ = 0;
       return;
     }
 
-  this->d_array_ = new (DATA *)[this->maxsize_];
+  this->d_array_ = ACE_static_cast(DATA **, new ptr_type[this->maxsize_]);
   if (this->d_array_ == 0)
     {
       delete[] this->k_array_;
@@ -35,8 +37,8 @@ JAWS_Assoc_Array<KEY,DATA>::~JAWS_Assoc_Array (void)
 {
   this->clear ();
 
-  delete[] this->k_array_;
-  delete[] this->d_array_;
+  delete[] ACE_static_cast(void *, this->k_array_);
+  delete[] ACE_static_cast(void *, this->d_array_);
 
   this->k_array_ = 0;
   this->d_array_ = 0;

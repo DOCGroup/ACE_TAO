@@ -1,11 +1,15 @@
 // $Id$
 
+
 #include "JAWS/JAWS.h"
+
+#include "ace/Filecache.h"
 
 #include "JAWS/IO.h"
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Data_Block.h"
 #include "JAWS/Policy.h"
+#include "JAWS/Waiter.h"
 
 JAWS_Abstract_IO_Handler::~JAWS_Abstract_IO_Handler (void)
 {
@@ -228,10 +232,10 @@ JAWS_Asynch_Handler::dispatch_handler (void)
   ACE_thread_t thr_name;
   thr_name = ACE_OS::thr_self ();
 
-  ACE_Thread_ID tid (thr_handle, thr_name);
+  ACE_Thread_ID tid (thr_name, thr_handle);
 #endif /* 0 */
 
-  JAWS_IO_Handler **iohref = this->find (tid);
+  JAWS_IO_Handler **iohref = JAWS_Waiter_Singleton::instance ()->find (tid);
 
   *iohref = this->handler ();
 }
@@ -281,7 +285,7 @@ JAWS_Asynch_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result
       // This callback is for this->read()
       if (result.success ()
           && result.bytes_transferred () != 0)
-        this->handler ()->read_complete (result.message_block ());
+        this->handler ()->read_complete (&result.message_block ());
       else
         this->handler ()->read_error ();
     }
@@ -295,7 +299,7 @@ JAWS_Asynch_Handler::handle_write_stream (const ACE_Asynch_Write_Stream::Result
 
   result.message_block ().release ();
 
-  if (result.act () == (void *) CONFORMATION)
+  if (result.act () == (void *) CONFIRMATION)
     this->handler ()->confirmation_message_complete ();
   else
     this->handler ()->error_message_complete ();
