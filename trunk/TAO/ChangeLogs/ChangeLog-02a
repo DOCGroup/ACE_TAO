@@ -1,8 +1,16 @@
+Fri Jun 22 09:24:54 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/Protocols_Hooks.cpp:
+	* tao/Stub_Factory.cpp:
+
+	  Added template instantiations to fix up the noinline
+	  builds.
+
 Fri Jun 22 07:06:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/tutorials/Quoter/Event_Service/Makefile:
 	* docs/tutorials/Quoter/RT_Event_Service/Makefile: Updated
-	  dependencies.  
+	  dependencies.
 
 Fri Jun 22 08:14:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
