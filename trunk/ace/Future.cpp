@@ -1,4 +1,3 @@
-// Future.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -39,7 +38,7 @@ ACE_Future_Rep<T>::dump (void) const
   if(this->value_)
     ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" (NON-NULL)\n")));
   else
-    ACE_DEBUG	((LM_DEBUG, ASYS_TEXT (" (NULL)\n")));
+    ACE_DEBUG   ((LM_DEBUG, ASYS_TEXT (" (NULL)\n")));
 
   ACE_DEBUG ((LM_INFO,"value_ready_: \n"));
   this->value_ready_.dump ();
@@ -222,10 +221,10 @@ ACE_Future_Rep<T>::detach(ACE_Future_Observer<T> *observer)
       iter.advance ())
     {
       OBSERVER *curr_observer =
-        ACE_reinterpret_cast (OBSERVER *, 
+        ACE_reinterpret_cast (OBSERVER *,
                               node->item_);
 
-      if (curr_observer == curr_observer)
+      if (curr_observer == observer)
         {
           this->observer_list_.remove (node);
           delete node;
@@ -307,7 +306,7 @@ template <class T> int
 ACE_Future<T>::cancel (const T &r)
 {
   this->cancel ();
-  return this->future_rep_->set (r, 
+  return this->future_rep_->set (r,
                                  *this);
 }
 
