@@ -1,3 +1,8 @@
+Thu Apr  1 03:30:19 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* bin/tao_svcconf.pl: New perl script to help converting TAO's
+	  svc.conf file to use static services.
+
 Wed Mar 31 14:30:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h: Fixed mis-matched #endif comments.  Thanks to Eric
