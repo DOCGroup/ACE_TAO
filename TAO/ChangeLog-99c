@@ -1,3 +1,121 @@
+Mon Jul 19 18:06:00 1999 Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	Connection Caching Feature
+	--------------------------
+
+	Motivation:
+
+  	In TAO,  connections opened on a request are stored in a
+	connection cache and reused for the subsequent requests between
+	the same  client and server , since establishing TCP connections
+	per request is expensive.
+	
+   	Every connection needs a connection endpoint which has to obtained
+	from the OS. The OS can allot only a fixed number of file
+	descriptors to a process. This can become a issue in case of
+	clients and servers with multiple connections open who may not be
+	allowed to make a new connection as the process has run out of
+	file descriptors.
+	
+	Aim:
+
+  	Clients and servers should be able to to continue making new
+	connections and not be hindered due to running out of file
+	descriptors.
+	
+	Solution:
+
+	Auto-purging .
+
+	The connections are stored in a cache.  The connections arent
+	closed as soon as they are used as it is expensive to establish a
+	TCP connection per request.
+
+	 So on the client side,
+
+	 When ever the connect call fails due to the process running out
+	 of descriptors to create a new socket, auto-purging will occur
+	 and those connections which are unused will be removed from the
+	 connection cache.
+
+  	 On the server side,	
+
+	 The acceptor in TAO will tackle the issue of the process running
+	 out of descriptors by requesting the peer connector in the
+	 process to clear its connection cache. TAO_Accept_Strategy has
+	 been added for this purpose.
+
+	Caching Strategy:
+
+	This is the entity which will decide which entries of the
+	connection cache shoudl be removed. Least Recently Used,
+	Least Frequently Used , FIrst In First Out and Null (do-nothing)
+	strategies have been implemented. LRU is the default one.
+
+	Purge_Percent:
+
+	Denotes the percentage of total entries to be removed.
+	
+	Advantages:
+
+	Large number of connections can be supported on the  client and server
+	side overcoming the problem of inadequate resources.
+
+	Disadvantages.
+	
+	Latency could arise since the purging would eat up some memory cycles.
+
+	( I look at it being something like the garbage collection feature in
+	Java! )
+
+	---------------------------------------------------------------------
+	
+	* tao/Resource_Factory.{h, cpp}:
+	* tao/ORB_Core.{h, cpp}:
+	* tao/default_resource.{h,cpp}:
+	  
+	  Added connection_caching_strategy and purge_percent options.
+	  This will enable the user to choose the kind of caching strategy
+	  he wants to implement which will be part of the connection
+	  strategy. This strategy will be used when entries need to be
+	  removed from the connector's connection cache. The purge_percent
+	  denotes the percentage of entries to discrad on demand.
+
+	* tao/IIOP_Connector.h:
+	* tao/UIOP_Connector.h:
+
+	  Changed the TAO_CACHED_CONNECT_STRATEGY to
+	  Cached_Connect_Strategy_Ex which provides an advanced way of
+	  caching and purging entries from the connection cache depending
+	  on the different caching_strategies plugged in at run-time.
+	
+	* tao/IIOP_Connector.cpp (make_connection_caching_strategy): 
+	* tao/UIOP_Connector.cpp (make_connection_caching_strategy): 
+		
+	  Creation of the appropriate caching strategy according to the
+	  -ORBConnectionCachingStrategy option specified.
+
+	* tao/Acceptor_Impl.{h, cpp} (TAO_Accept_Strategy): 	
+	  
+	  Added TAO_Accept_Strategy which does the open and accepting of
+	  connections. If connections fail because the process runs out of
+	  descriptors, then the unused connections from the connection
+	  cache are purged. Both the open () as well as teh
+	  accept_svc_handler () tackle thsi problem.
+
+	* tao/IIOP_Acceptor.cpp (open_i): 
+	* tao/UIOP_Acceptor.cpp (open_i): 
+
+	  Added accept_strategy during the creation of the
+	  TAO_ACCEPTOR_BASE. 
+
+	* tao/IIOP_Acceptor.cpp (~TAO_IIOP_Acceptor): 
+	* tao/UIOP_Acceptor.cpp (~TAO_UIOP_Acceptor): 
+
+	  Added the deletion of the accept_strategy.
+	  
+	 Thanks to Irfan of the DOC group for helping me out with this.
+	
 Fri Jul 16 16:31:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_visitor_array/cdr_op_ci.h:
