@@ -1,3 +1,10 @@
+Mon Oct 23 08:37:49 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp (handle_input): 
+	  Fixed a mistake where we were calling release() via a NULL
+ 	  pointer!  Thanks to Pedro Brandao <pbrandao@inescn.pt> for
+ 	  reporting this.
+
 Sun Oct 22 18:01:34 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS_String.cpp:
