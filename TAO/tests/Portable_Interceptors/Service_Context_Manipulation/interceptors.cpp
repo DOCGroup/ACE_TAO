@@ -129,10 +129,9 @@ Echo_Client_Request_Interceptor::receive_reply (
               operation.in (), ior.in ()));
 
   IOP::ServiceId id = reply_ctx_id;
-  IOP::ServiceContext * sc = ri->get_reply_service_context (id);
-
-  if (sc == 0)
-    ACE_THROW (CORBA::NO_MEMORY ());
+  IOP::ServiceContext_var sc =
+    ri->get_reply_service_context (id, ACE_TRY_ENV);
+  ACE_CHECK;
 
   const char *buf = ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
@@ -147,7 +146,8 @@ Echo_Client_Request_Interceptor::receive_other (
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
-  // Do Nothing
+  ACE_DEBUG ((LM_DEBUG,
+              "Echo_Client_Request_Interceptor::receive_other\n"));
 }
 
 void
