@@ -11,6 +11,7 @@
 #ifndef TAO_UTILS_ORB_DESTROYER_H
 #define TAO_UTILS_ORB_DESTROYER_H
 #include /**/ "ace/pre.h"
+#include "utils_export.h"
 #include "Auto_Functor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -29,7 +30,7 @@ namespace TAO
      *
      * @brief Implements a functor for the ORB_Destroyer class.
      */
-    struct ORB_Destroyer_Functor
+    struct TAO_UTILS_Export ORB_Destroyer_Functor
     {
       typedef CORBA::ORB_ptr argument;
 
