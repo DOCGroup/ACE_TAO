@@ -523,6 +523,7 @@ Test_String_Sequence::init_parameters (Param_Test_ptr objref,
 
   // set the length of the sequence
   this->in_->length (len);
+  this->inout_->length (len);
   // now set each individual element
   for (CORBA::ULong i=0; i < this->in_->length (); i++)
     {
@@ -531,7 +532,7 @@ Test_String_Sequence::init_parameters (Param_Test_ptr objref,
       //      char *str = gen->gen_string ();
       //this->in_[i] = str;
       this->in_[i] = choiceList[i];
-
+      this->inout_[i] = choiceList[i];
     }
   return 0;
 }

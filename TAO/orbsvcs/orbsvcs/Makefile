@@ -37,7 +37,7 @@ IDL_FILES = \
 	RtecEventChannelAdminC \
 	RtecEventChannelAdminS \
 	LifeCycleServiceC \
-	LifeCycleServiceS 
+	LifeCycleServiceS
 
 # Compile using av=1 to compile the AVStreams stuff.
 ifdef av
@@ -196,7 +196,8 @@ clean:
 	-/bin/rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
-	-/bin/rm -rf $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES))
+	-/bin/rm -rf $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES)) \
+	$(addsuffix _T.h, $(IDL_FILES)) $(addsuffix _T.i, $(IDL_FILES)) $(addsuffix _T.cpp, $(IDL_FILES))
 
 ifdef trader
 

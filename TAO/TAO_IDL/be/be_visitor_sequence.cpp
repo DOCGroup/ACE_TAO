@@ -112,9 +112,6 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   be_type *bt;       // type node
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (node->cli_hdr_gen () || node->imported ())
-    return 0;
-
   // first create a name for ourselves
   if (node->create_name (this->ctx_->tdef ()) == -1)
     {
@@ -123,6 +120,9 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                          "visit_sequence - "
                          "failed creating name\n"), -1);
     }
+
+  if (node->cli_hdr_gen () || node->imported ())
+    return 0;
 
    // generate the ifdefined macro for the sequence type
   os->gen_ifdef_macro (node->flatname ());
