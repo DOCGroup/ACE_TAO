@@ -1,3 +1,23 @@
+Thu Jun 24 15:25:55 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/corbafwd.h:
+
+	  Added '-*- C++ -*-' line so that Emacs will be in C++ mode when
+	  editing the file in it.
+
+	* tao/ORB.h:
+
+	  Changed inclusion of "IORManipulation.h" to
+	  "tao/IORManipulation.h".
+
+	* tao/{IIOP,UIOP}*:
+
+	  Fixed old style of exception handling.
+
+	* tao/UIOP_Profile.h:
+
+	  Comment updates.
+
 Thu Jun 24 16:03:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/DomainS_T.i:
