@@ -1,5 +1,8 @@
 Thu Jul 16 12:50:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* netsvcs/lib/netsvcs.dsp:
+	* netsvcs/servers/servers.dsp:  Updated DLL names.
+	
 	* ace/ACE.cpp (ldfind): Conventionallly, Win32 platforms
 	  distinguish debug version DLL from release version DLLs by
  	  suffixing debug version DLL names with 'd'.  (E.g., aced.dll
