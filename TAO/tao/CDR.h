@@ -56,6 +56,11 @@
 
 class TAO_ORB_Core;
 
+namespace CORBA
+{
+  class Environment;
+}
+
 /**
  * @class TAO_OutputCDR
  *

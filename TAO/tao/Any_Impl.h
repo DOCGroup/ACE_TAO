@@ -39,6 +39,8 @@ namespace CORBA
   class ValueBase;
   class AbstractBase;
   typedef AbstractBase *AbstractBase_ptr;
+
+  class Environment;
 }
 
 namespace TAO

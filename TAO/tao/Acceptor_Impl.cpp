@@ -23,6 +23,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "Thread_Per_Connection_Handler.h"
+#include "Server_Strategy_Factory.h"
+#include "ORB_Core.h"
+#include "Transport_Cache_Manager.h"
+#include "Thread_Lane_Resources.h"
+
 #if !defined(__ACE_INLINE__)
 #include "tao/Acceptor_Impl.i"
 #endif /* __ACE_INLINE__ */
