@@ -870,10 +870,7 @@ TAO_ORB_Core::add_to_collocation_table (void)
     {
       TAO_GLOBAL_COLTBL *coltbl = this->resource_factory ()->get_global_collocation_table ();
       if (coltbl != 0)
-        {
-          ACE_Hash_Addr<ACE_INET_Addr> hash_addr (this->addr (), 1);
-          return coltbl->bind (hash_addr, this->root_poa ());
-        }
+        return coltbl->bind (this->addr (), this->root_poa ());
     }
   return 0;
 }
