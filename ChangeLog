@@ -1,3 +1,29 @@
+Wed Dec 15 16:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Active_Objects/active_objects.mwc:
+        * examples/APG/Config/config.mwc:
+        * examples/APG/Containers/containers.mwc:
+        * examples/APG/Logging/logging.mwc:
+        * examples/APG/Misc_IPC/misc_ipc.mwc:
+        * examples/APG/Naming/naming.mwc:
+        * examples/APG/Proactor/proactor.mwc:
+        * examples/APG/Processes/processes.mwc:
+        * examples/APG/Reactor/reactor.mwc:
+        * examples/APG/Shared_Memory/shared_memory.mwc:
+        * examples/APG/Signals/signals.mwc:
+        * examples/APG/Sockets/sockets.mwc:
+        * examples/APG/Streams/streams.mwc:
+        * examples/APG/Svc_Config/svc_config.mwc:
+        * examples/APG/ThreadManagement/threadmgmt.mwc:
+        * examples/APG/ThreadPools/threadpools.mwc:
+        * examples/APG/Threads/threads.mwc:
+        * examples/APG/ThreadSafety/threadsafety.mwc:
+        * examples/APG/Timers/timers.mwc:
+          Removed these files, they are not needed anymore because all project
+          files are now generated and they interfere in our release proces,
+          they cause workspaces which only differ in casing then the
+          ones generated from higher levels.
+
 Wed Dec 15 13:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release:
