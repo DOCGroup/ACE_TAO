@@ -1205,38 +1205,54 @@ UTL_Scope::replace_scope (AST_Decl *old_decl,
 
 // Add a node to set of nodes declared in this scope
 void
-UTL_Scope::add_to_scope(AST_Decl *e, AST_Decl *ex)
+UTL_Scope::add_to_scope (AST_Decl *e, 
+                         AST_Decl *ex)
 {
   if (e == NULL) return;
 
   AST_Decl **tmp = this->pd_referenced;
   UTL_IdListActiveIterator *iter;
   long i = this->pd_referenced_used;
-  long odecls_allocated;
+
   Identifier *decl_name = e->local_name ();
+  char *decl_string = decl_name->get_string ();
+
+  Identifier *ref_name = 0;
+  char *ref_string = 0;
 
   // First, make sure there's no clash between e, that was
   // just declared, and some other identifier referenced
   // in this scope.
   for (; i > 0; i--, tmp++)
     {
-      UTL_ScopedName *s = (*tmp)->name ();
-      iter = new UTL_IdListActiveIterator (s);
-      Identifier *ref_name = iter->item ();
-      char *ref_string = ref_name->get_string ();
-
-      // Get the top level compenent of the scoped
-      // name. That's the only one that matters for
-      // collision comparisons.
-      while (!ACE_OS::strcmp (ref_string, "")
-             || !ACE_OS::strcmp (ref_string, "::"))
+      if ((*tmp)->defined_in () == this)
         {
-          iter->next ();
-          ref_name = iter->item ();
+          // A local declaration doesn't use a scoped name.
+          ref_name = (*tmp)->local_name ();
           ref_string = ref_name->get_string ();
         }
+      else
+        {
+          // If this item is merely referenced in this scope,
+          // then only the top level of whatever scoped name
+          // is used may clash with a local declaration.
+          UTL_ScopedName *s = (*tmp)->name ();
+          iter = new UTL_IdListActiveIterator (s);
+          ref_name = iter->item ();
+          ref_string = ref_name->get_string ();
 
-      delete iter;
+          // Get the first non-null component of the scoped
+          // nane that's not the global double colon.
+          while (!ACE_OS::strcmp (ref_string, "")
+                 || !ACE_OS::strcmp (ref_string, "::"))
+            {
+              iter->next ();
+              ref_name = iter->item ();
+              ref_string = ref_name->get_string ();
+            }
+
+          delete iter;
+        }
 
       // If the names compare exactly, it's a redefinition 
       // error, unless they're both modules (which can be
@@ -1247,7 +1263,7 @@ UTL_Scope::add_to_scope(AST_Decl *e, AST_Decl *ex)
           && ((*tmp)->node_type () != AST_Decl::NT_interface_fwd
               || e->node_type () != AST_Decl::NT_interface))
         {
-          idl_global->err ()->redef_error (decl_name->get_string (),
+          idl_global->err ()->redef_error (decl_string,
                                            ref_string);
 
           return;
@@ -1257,12 +1273,12 @@ UTL_Scope::add_to_scope(AST_Decl *e, AST_Decl *ex)
         {
           if (idl_global->case_diff_error ())
             {
-              idl_global->err ()->name_case_error (decl_name->get_string (),
+              idl_global->err ()->name_case_error (decl_string,
                                                    ref_string);
             }
           else
             {
-              idl_global->err ()->name_case_warning (decl_name->get_string (),
+              idl_global->err ()->name_case_warning (decl_string,
                                                      ref_string);
             }
 
@@ -1308,10 +1324,9 @@ UTL_Scope::add_to_scope(AST_Decl *e, AST_Decl *ex)
   // Now make sure there's space for one more.
   if (pd_decls_allocated == pd_decls_used) 
     {
-
-      odecls_allocated    = pd_decls_allocated;
-      pd_decls_allocated  += INCREMENT;
-      tmp                 = new AST_Decl *[pd_decls_allocated];
+      long odecls_allocated = pd_decls_allocated;
+      pd_decls_allocated += INCREMENT;
+      tmp = new AST_Decl *[pd_decls_allocated];
 
       for (i = 0; i < odecls_allocated; i++)
         {
@@ -1338,6 +1353,7 @@ UTL_Scope::add_to_scope(AST_Decl *e, AST_Decl *ex)
               break;
             }
         }
+
       ++pd_decls_used;
     }
 }
