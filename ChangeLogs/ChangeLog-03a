@@ -1,3 +1,8 @@
+Fri Jun 21 14:34:51 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-sunos5.5.h: Enable
+          ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION for Forte 6 Update 1.
+
 Fri Jun 21 14:06:33 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Timer_Queue_Adapters.cpp (ACE_Thread_Timer_Queue_Adapter):
