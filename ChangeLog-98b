@@ -1,3 +1,8 @@
+Mon Aug 17 17:04:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Env_Value_Test.cpp (main): Changed to use ASYS_TCHAR* for
+	  arguments in main.
+
 Mon Aug 17 15:51:30 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (thr_sigsetmask): with ACE_HAS_PTHREADS_DRAFT4 or
