@@ -650,7 +650,7 @@ namespace
            
         os << "CORBA::ULong i = 0;" << endl;
         
-        os << "for (ACE_Active_Map_Manager<";
+        os << "for (ACE_Active_Map_Manager< ";
            
         Traversal::MultiUserData::belongs (u, belongs_);
         
@@ -659,7 +659,7 @@ namespace
            << "     iter != this->ciao_uses_" << u.name () << "_.end ();"
            << "     ++iter)" << endl
            << "{"
-           << "ACE_Active_Map_Manager<";
+           << "ACE_Active_Map_Manager< ";
 
         Traversal::MultiUserData::belongs (u, belongs_);
         
@@ -782,14 +782,14 @@ namespace
            << STRS[ENV_SRC] << ")" << endl
            << STRS[EXCP_SNGL] << endl
            << "{"
-           << "ACE_Active_Map_Manager<" << endl; //@@ gcc bug
+           << "ACE_Active_Map_Manager< " << endl; //@@ gcc bug
 
         Traversal::PublisherData::belongs (p, belongs_);
 
         os << "Consumer_var>::iterator end =" << endl
            << "this->ciao_publishes_" << p.name ()
            << "_map_.end ();" << endl
-           << "for (ACE_Active_Map_Manager<" << endl; //@@ gcc bug
+           << "for (ACE_Active_Map_Manager< " << endl; //@@ gcc bug
 
         Traversal::PublisherData::belongs (p, belongs_);
 
@@ -799,7 +799,7 @@ namespace
            << "iter != end;"
            << "++iter)" << endl
            << "{"
-           << "ACE_Active_Map_Manager<" << endl; //@@ gcc bug
+           << "ACE_Active_Map_Manager< " << endl; //@@ gcc bug
 
         Traversal::PublisherData::belongs (p, belongs_);
 
@@ -1189,10 +1189,55 @@ namespace
 
   // Nested classes used by ServantEmitter.
   private:
-    struct NavigationEmitter : Traversal::ProviderData,
-                               EmitterBase
+    struct NavigationEmitsEmitter : Traversal::EmitterData,
+                                    EmitterBase
     {
-      NavigationEmitter (Context& c)
+      NavigationEmitsEmitter (Context& c)
+        : EmitterBase (c),
+          type_name_emitter_ (c.os ())
+      {
+        belongs_.node_traverser (type_name_emitter_);
+      }
+
+      virtual void
+      traverse (Type& t)
+      {
+        os << "if (ACE_OS::strcmp (emitter_name, \""
+           << t.name () << "\") == 0)" << endl
+           << "{";
+           
+        Traversal::EmitterData::belongs (t, belongs_);
+
+        os << "Consumer_var _ciao_consumer =" << endl;
+
+        Traversal::EmitterData::belongs (t, belongs_);
+
+        os << "Consumer::_narrow (" << endl
+           << "consumer" << endl
+           << STRS[ENV_ARG] << ");"
+           << "ACE_CHECK;" << endl
+           << "if (::CORBA::is_nil (_ciao_consumer.in ()))" << endl
+           << "{"
+           << "ACE_THROW (" << STRS[EXCP_IC] << " ());"
+           << endl
+           << "}" << endl
+           << "this->connect_" << t.name ()
+           << " (" << endl
+           << "_ciao_consumer.in ()" << endl
+           << STRS[ENV_ARG] << ");" << endl
+           << "return;"
+           << "}" << endl;
+      }
+
+    private:
+      TypeNameEmitter type_name_emitter_;
+      Traversal::Belongs belongs_;
+    };
+
+    struct NavigationProvidesEmitter : Traversal::ProviderData,
+                                       EmitterBase
+    {
+      NavigationProvidesEmitter (Context& c)
         : EmitterBase (c)
       {}
 
@@ -1983,6 +2028,35 @@ namespace
       SemanticGraph::Component& scope_;
     };
 
+    struct RegisterValueFactoryEmitter : Traversal::ConsumerData,
+                                         EmitterBase
+    {
+      RegisterValueFactoryEmitter (Context& c)
+        : EmitterBase (c),
+          type_name_emitter_ (c.os ())
+      {
+        belongs_.node_traverser (type_name_emitter_);
+      }
+
+      virtual void
+      traverse (Type& c)
+      {
+        os << "CIAO_REGISTER_OBV_FACTORY (" << endl;
+        
+        Traversal::ConsumerData::belongs (c, belongs_);
+        
+        os << "_init," << endl;
+        
+        Traversal::ConsumerData::belongs (c, belongs_);
+        
+        os << ");";
+      }
+      
+    private:
+      TypeNameEmitter type_name_emitter_;
+      Traversal::Belongs belongs_;
+    };
+
   public:
     virtual void
     pre (Type& t)
@@ -2093,8 +2167,8 @@ namespace
         component_emitter.edge_traverser (defines);
         component_emitter.edge_traverser (inherits);
 
-        NavigationEmitter navigation_emitter (ctx);
-        defines.node_traverser (navigation_emitter);
+        NavigationProvidesEmitter navigation_provides_emitter (ctx);
+        defines.node_traverser (navigation_provides_emitter);
 
         component_emitter.traverse (t);
       }
@@ -2278,6 +2352,7 @@ namespace
       os << "ACE_THROW_RETURN (" << endl
          << STRS[EXCP_IN] << " ()," << endl
          << "::CORBA::Object::_nil ());" << endl
+         << "ACE_UNUSED_ARG (ck);" << endl
          << "}" << endl;
 
       os << "::Components::ConnectionDescriptions *" << endl
@@ -2370,8 +2445,8 @@ namespace
       os << "void" << endl
          << t.name () << "_Servant::connect_consumer ("
          << endl
-         << "const char * /* emitter_name */," << endl
-         << STRS[COMP_ECB] << "_ptr /*consumer*/" << endl
+         << "const char * emitter_name," << endl
+         << STRS[COMP_ECB] << "_ptr consumer" << endl
          << STRS[ENV_SRC] << ")" << endl
          << STRS[EXCP_START] << endl
          << STRS[EXCP_SYS] << "," << endl
@@ -2379,7 +2454,31 @@ namespace
          << STRS[EXCP_AC] << "," << endl
          << STRS[EXCP_IC] << "))" << endl
          << "{"
-         << "ACE_THROW (::CORBA::NO_IMPLEMENT ());" << endl
+         << "if (emitter_name == 0)" << endl
+         << "{"
+         << "ACE_THROW (::CORBA::BAD_PARAM ());" << endl
+         << "}" << endl;
+         
+      // Generate an IF block for each 'emits' declaration.
+      {
+        Traversal::Component component_emitter;
+
+        Traversal::Inherits inherits;
+        inherits.node_traverser (component_emitter);
+
+        Traversal::Defines defines;
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (inherits);
+
+        NavigationEmitsEmitter navigation_emits_emitter (ctx);
+        defines.node_traverser (navigation_emits_emitter);
+
+        component_emitter.traverse (t);
+      }
+
+      os << "ACE_UNUSED_ARG (consumer);"
+         << "ACE_THROW ("
+         << STRS[EXCP_IN] << " ());" << endl
          << "}" << endl;
 
       os << STRS[COMP_ECB] << "_ptr" << endl
@@ -2674,7 +2773,27 @@ namespace
          << t.name () << "_Servant::ciao_activate (" << endl
          << STRS[ENV_SNGL_SRC] << ")" << endl
          << STRS[EXCP_SNGL] << endl
-         << "{"
+         << "{";     
+         
+      // Generate the macro to register a value factory for each
+      // eventtype consumed.
+      {
+        Traversal::Component component_emitter;
+
+        Traversal::Inherits inherits;
+        inherits.node_traverser (component_emitter);
+
+        Traversal::Defines defines;
+        component_emitter.edge_traverser (defines);
+        component_emitter.edge_traverser (inherits);
+
+        RegisterValueFactoryEmitter factory_emitter (ctx);
+        defines.node_traverser (factory_emitter);
+
+        component_emitter.traverse (t);
+      }
+
+      os << endl
          << "::Components::SessionComponent_var temp =" << endl
          << "::Components::SessionComponent::_narrow (" << endl
          << "this->executor_.in ()" << endl

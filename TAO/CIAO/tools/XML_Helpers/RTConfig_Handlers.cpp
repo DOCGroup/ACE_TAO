@@ -306,7 +306,9 @@ CIAO::RTConfig_Handler::parse_threadpool_attrs (ACEXML_Attributes *alist
       else if (ACE_OS_String::strcmp (attName, "priority") == 0)
         {
           tp_config->default_priority =
-            strtoul (attValue, &endpos, 10);
+            static_cast<RTCORBA::Priority> (ACE_OS::strtoul (attValue,
+                                                             &endpos,
+                                                             10));
 
           if (*endpos != 0)
             ACEXML_THROW
@@ -505,7 +507,7 @@ CIAO::RTConfig_Handler::add_threadpoollane (ACEXML_Attributes *alist
       if (ACE_OS_String::strcmp (attName, "priority") == 0)
         {
           alane.lane_priority =
-            strtoul (attValue, &endpos, 10);
+            static_cast<RTCORBA::Priority> (strtoul (attValue, &endpos, 10));
 
           if (*endpos != 0)
             ACEXML_THROW
@@ -582,7 +584,7 @@ CIAO::RTConfig_Handler::add_priorityband (ACEXML_Attributes *alist
       if (ACE_OS_String::strcmp (attName, "low") == 0)
         {
           band.low =
-            strtoul (attValue, &endpos, 10);
+            static_cast<RTCORBA::Priority> (strtoul (attValue, &endpos, 10));
 
           if (*endpos != 0)
             ACEXML_THROW
@@ -595,7 +597,7 @@ CIAO::RTConfig_Handler::add_priorityband (ACEXML_Attributes *alist
       else if (ACE_OS_String::strcmp (attName, "high") == 0)
         {
           band.high =
-            strtoul (attValue, &endpos, 10);
+            static_cast<RTCORBA::Priority> (strtoul (attValue, &endpos, 10));
 
           if (*endpos != 0)
             ACEXML_THROW
@@ -674,7 +676,7 @@ CIAO::RTConfig_Handler::parse_priority_model_config (ACEXML_Attributes *alist,
           char *endpos;
 
           config.default_priority =
-            strtoul (attValue, &endpos, 10);
+            static_cast<RTCORBA::Priority> (strtoul (attValue, &endpos, 10));
 
           if (*endpos != 0)
             ACEXML_THROW
