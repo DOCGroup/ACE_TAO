@@ -23,20 +23,20 @@ module Test_Interceptors
 
   interface Visual
   {
+    /// Normal operation.
     void normal (in long arg);
-    // Normal operation.
 
+    /// Normal operation with a return val.
     long calculate (in long one, in long two);
-    // Normal operation with a return val.
 
+    /// throws a user exception.
     void user ()
       raises (Silly);
-    // throws a user exception.
 
+    /// throws a system exception.
     void system ();
-    // thows a system exception.
 
+    /// shutdown the ORB
    oneway void shutdown ();
-    // shutdown the ORB
   };
 };
