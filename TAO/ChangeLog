@@ -1,10 +1,16 @@
+Thu Jan  1 15:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* examples/Simple/time-date/Simple_time_date.mpc:
+	  Removed idl_flags, they are not set in the original project files and
+	  cause problems in the VC71 build
+
 Thu Jan  1 08:49:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
 
 	  Use flat_name () instead of local_name () while generating code
 	  for create_proxy. Thanks to Christoph for reminding me to do
-	  this. 
+	  this.
 
 Thu Jan  1 14:47:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
