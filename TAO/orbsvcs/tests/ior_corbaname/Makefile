@@ -17,7 +17,7 @@ IDL_FILES = corbaname
 LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils $(TAO_SRVR_LIBS)
 
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
-BIN = server client
+BIN2 = server client
 
 SRC = $(addsuffix .cpp, $(BIN) status_i ior_corbaname_client_i) $(IDL_SRC)
 
@@ -25,6 +25,12 @@ SERVER_OBJS = $(addsuffix .o, server status_i) $(IDL_SRC:%.cpp=%.o)
 CLIENT_OBJS = $(addsuffix .o, client ior_corbaname_client_i status_i) $(IDL_SRC:%.cpp=%.o)
 
 TAO_IDLFLAGS += -Ge 1
+
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # Naming
+
 #----------------------------------------------------------------------------
 # Include macros and targets
 #----------------------------------------------------------------------------

@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-BIN = Sequence_Supplier Sequence_Consumer
+BIN2 = Sequence_Supplier Sequence_Consumer
 
 IDL_FILES = go
 IDL_SRC = goC.cpp goS.cpp
@@ -28,6 +28,12 @@ SRC = common.cpp $(IDL_SRC) \
 
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I../lib
 TAO_IDLFLAGS += -Ge 1
+
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Notify,$(findstring Notify,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # Notify
+
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
