@@ -1,158 +1,164 @@
+Sat Feb 12 14:40:20 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Connection/misc/Connection_Handler.cpp
+          (handle_timeout): added ACE_UNUSED_ARG (arg), only
+          with ACE_NDEBUG.
+
 Sat Feb 12 00:27:45 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h: Changed to conditionally define
-	  ACE_DEFAULT_TEMP_DIR_ENV according to whether the unicode is
-	  supported or not.
+        * ace/OS.h: Changed to conditionally define
+          ACE_DEFAULT_TEMP_DIR_ENV according to whether the unicode is
+          supported or not.
 
-	* ace/MEM_SAP.h:
-	* ace/MEM_SAP.cpp:
-	* ace/MEM_Acceptor.cpp (accept):
-	* ace/MEM_Connector.cpp (connect): Made UNICODE friendly.  Thanks
-	  to Steve for reporting the problem.
+        * ace/MEM_SAP.h:
+        * ace/MEM_SAP.cpp:
+        * ace/MEM_Acceptor.cpp (accept):
+        * ace/MEM_Connector.cpp (connect): Made UNICODE friendly.  Thanks
+          to Steve for reporting the problem.
 
 Fri Feb 11 13:26:49 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/MEM_Acceptor.cpp (accept): Changed to use
-	  ACE_reinterpret_cast to cast (sockaddr *) to (sockaddr_in *).
-	  This eliminate the warning on HPUX aCC compiler.
+        * ace/MEM_Acceptor.cpp (accept): Changed to use
+          ACE_reinterpret_cast to cast (sockaddr *) to (sockaddr_in *).
+          This eliminate the warning on HPUX aCC compiler.
 
 Fri Feb 11 01:16:15 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/MEM_Acceptor.cpp:
-	* ace/MEM_Acceptor.h: Changed to use ACE_LACKS_INLINE_FUNCTIONS to
-	  determine where to include MEM_Acceptor.i file as ASYS_INLINE is
-	  used.  Thanks to Marina and SunCC 5 for reporting the problem.
+        * ace/MEM_Acceptor.cpp:
+        * ace/MEM_Acceptor.h: Changed to use ACE_LACKS_INLINE_FUNCTIONS to
+          determine where to include MEM_Acceptor.i file as ASYS_INLINE is
+          used.  Thanks to Marina and SunCC 5 for reporting the problem.
 
 Thu Feb 10 21:57:04 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/MEM_SAP.h
-	* ace/MEM_SAP.i (set_buf_len): Removed the const'ness of argument
-	  <buf>.
+        * ace/MEM_SAP.h
+        * ace/MEM_SAP.i (set_buf_len): Removed the const'ness of argument
+          <buf>.
 
 Thu Feb 10 14:09:56 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp: Added MEM_* files.
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp: Added MEM_* files.
 
 Thu Feb 10 13:49:34 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/MEM_SAP.h:
-	* ace/MEM_SAP.i:
-	* ace/MEM_SAP.cpp: Implemented the adaptation layer for managing
-	  shared memory in shared memory transport.
+        * ace/MEM_SAP.h:
+        * ace/MEM_SAP.i:
+        * ace/MEM_SAP.cpp: Implemented the adaptation layer for managing
+          shared memory in shared memory transport.
 
-	* ace/MEM_Addr.h:
-	* ace/MEM_Addr.i:
-	* ace/MEM_Addr.cpp: Implemented the "endpoint" addressing
-	  mechanism for shared memory transport.  The ACE_MEM_Addr make
-	  sure the "endpoint" is not on an interface that is accessable
-	  outside of the running host.  It also serves as endpoint
-	  identification and provides the <same_host> checking method.
+        * ace/MEM_Addr.h:
+        * ace/MEM_Addr.i:
+        * ace/MEM_Addr.cpp: Implemented the "endpoint" addressing
+          mechanism for shared memory transport.  The ACE_MEM_Addr make
+          sure the "endpoint" is not on an interface that is accessable
+          outside of the running host.  It also serves as endpoint
+          identification and provides the <same_host> checking method.
 
-	* ace/MEM_IO.h:
-	* ace/MEM_IO.i:
-	* ace/MEM_IO.cpp: Implemented the IO routines for shared memory
-	  transport.  Currently, these IO routines treat shared memory
-	  transport as a streaming devide and copy the data into its own
-	  buffer before sending the data over.  We'll add method for
-	  acquiring and sending the internal buffer later.
+        * ace/MEM_IO.h:
+        * ace/MEM_IO.i:
+        * ace/MEM_IO.cpp: Implemented the IO routines for shared memory
+          transport.  Currently, these IO routines treat shared memory
+          transport as a streaming devide and copy the data into its own
+          buffer before sending the data over.  We'll add method for
+          acquiring and sending the internal buffer later.
 
-	* ace/MEM_Acceptor.h:
-	* ace/MEM_Acceptor.i:
-	* ace/MEM_Acceptor.cpp:
-	* ace/MEM_Connector.h:
-	* ace/MEM_Connector.i:
-	* ace/MEM_Connector.cpp:
-	* ace/MEM_Stream.h:
-	* ace/MEM_Stream.i:
-	* ace/MEM_Stream.cpp: These classes emulate SOCK_* classes but use
-	  shared memory as their transport mechanism.
+        * ace/MEM_Acceptor.h:
+        * ace/MEM_Acceptor.i:
+        * ace/MEM_Acceptor.cpp:
+        * ace/MEM_Connector.h:
+        * ace/MEM_Connector.i:
+        * ace/MEM_Connector.cpp:
+        * ace/MEM_Stream.h:
+        * ace/MEM_Stream.i:
+        * ace/MEM_Stream.cpp: These classes emulate SOCK_* classes but use
+          shared memory as their transport mechanism.
 
-	* ace/Malloc_T.cpp: Fixed a mis-matched ACE_TRACE message.
+        * ace/Malloc_T.cpp: Fixed a mis-matched ACE_TRACE message.
 
-	* ace/OS.h: Added definitions of ACE_MEM_ACCEPTOR,
-	  ACE_MEM_CONNECTOR and, ACE_MEM_STREAM.
+        * ace/OS.h: Added definitions of ACE_MEM_ACCEPTOR,
+          ACE_MEM_CONNECTOR and, ACE_MEM_STREAM.
 
-	* ace/Makefile: Aded MEM_* files and updated dependencies.
+        * ace/Makefile: Aded MEM_* files and updated dependencies.
 
-	* tests/Malloc_Test.cpp: Removed explicit template instantiations
-	  for ACE_Malloc[_T] as they are taken care of in MEM_SAP.cpp
-	  now.
+        * tests/Malloc_Test.cpp: Removed explicit template instantiations
+          for ACE_Malloc[_T] as they are taken care of in MEM_SAP.cpp
+          now.
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp:
-	* examples/IPC_SAP/SOCK_SAP/CPP-memserver.cpp:
-	* examples/IPC_SAP/SOCK_SAP/CPP_memclient.dsp:
-	* examples/IPC_SAP/SOCK_SAP/CPP_memserver.dsp:
-	* examples/IPC_SAP/SOCK_SAP/SOCK_SAP.dsw: Added a simple example
-	  on how to use the shared-memory transport.
+        * examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-memserver.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP_memclient.dsp:
+        * examples/IPC_SAP/SOCK_SAP/CPP_memserver.dsp:
+        * examples/IPC_SAP/SOCK_SAP/SOCK_SAP.dsw: Added a simple example
+          on how to use the shared-memory transport.
 
 Thu Feb 10 10:18:00 2000  Ossama Othman  <ossama@uci.edu>
 
-	* THANKS:
+        * THANKS:
 
-	  Added Hajdukiewicz Markus <MHajdukiewic@heyde.de> and Gerwin
-	  Robert <RGerwin@heyde.de> to the list of fame.
+          Added Hajdukiewicz Markus <MHajdukiewic@heyde.de> and Gerwin
+          Robert <RGerwin@heyde.de> to the list of fame.
 
-	* configure.in (ACE_LACKS_SETSCHED):
+        * configure.in (ACE_LACKS_SETSCHED):
 
-	  Fixed test so that it defines ACE_LACKS_SETSCHED when
-	  sched_setscheduler() isn't found.  This was the intended
-	  behavior.  Thanks to Hajdukiewicz Markus <MHajdukiewic@heyde.de>
-	  and Gerwin Robert <RGerwin@heyde.de> for providing a patch for
-	  this problem.
+          Fixed test so that it defines ACE_LACKS_SETSCHED when
+          sched_setscheduler() isn't found.  This was the intended
+          behavior.  Thanks to Hajdukiewicz Markus <MHajdukiewic@heyde.de>
+          and Gerwin Robert <RGerwin@heyde.de> for providing a patch for
+          this problem.
 
-	  (ace_cv_feature_cxx_std_template_specialization):
+          (ace_cv_feature_cxx_std_template_specialization):
 
-	  It appears that this variable had to be quoted when testing if
-	  it was set to "yes" on AIX.  Thanks again to Markus and Robert
-	  for providing a patch.
+          It appears that this variable had to be quoted when testing if
+          it was set to "yes" on AIX.  Thanks again to Markus and Robert
+          for providing a patch.
 
 Wed Feb 09 00:41:36 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Pipe_Test.cpp (main): Spawn command should be
-	  "./Pipe_Test" and not "Pipe_Test".  Otherwise the test will fail
-	  if the user does not have "." in his/her PATH.  Thanks to Ossama
-	  for reporting this problem.
+        * tests/Pipe_Test.cpp (main): Spawn command should be
+          "./Pipe_Test" and not "Pipe_Test".  Otherwise the test will fail
+          if the user does not have "." in his/her PATH.  Thanks to Ossama
+          for reporting this problem.
 
 Tue Feb 08 21:22:45 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Token: Yesterday's change caused one problem.  There was no
-	  way to distinguish which thread was going to be the next owner.
-	  So the following happened:
+        * ace/Token: Yesterday's change caused one problem.  There was no
+          way to distinguish which thread was going to be the next owner.
+          So the following happened:
 
-	  Thread A had a read lock and was waiting in select().  Thread B
-	  wanted a write lock, therefore it executed the sleep hook, and
-	  then waited on the condition.  Thread A got up through the sleep
-	  hook, signaled thread B, released the lock and went back to grab
-	  the read lock.  Even though thread B was runnable, it hadn't
-	  gotten a chance to become the owner and <in_use_> was still
-	  zero.  When thread A tried to reacquire the read lock, it
-	  succeeded.  Thread B finally ran to find out that the token was
-	  in use and went back to sleep, and hence got starved in the
-	  process.
+          Thread A had a read lock and was waiting in select().  Thread B
+          wanted a write lock, therefore it executed the sleep hook, and
+          then waited on the condition.  Thread A got up through the sleep
+          hook, signaled thread B, released the lock and went back to grab
+          the read lock.  Even though thread B was runnable, it hadn't
+          gotten a chance to become the owner and <in_use_> was still
+          zero.  When thread A tried to reacquire the read lock, it
+          succeeded.  Thread B finally ran to find out that the token was
+          in use and went back to sleep, and hence got starved in the
+          process.
 
-	  Therefore, the following changes were made to fix the above:
+          Therefore, the following changes were made to fix the above:
 
-	  - wakeup_next_waiter() always reset <in_use_> and <owner_>.  If
-	    there is a waiter, it sets <in_use_> and <owner_> for the next
-	    owner.
+          - wakeup_next_waiter() always reset <in_use_> and <owner_>.  If
+            there is a waiter, it sets <in_use_> and <owner_> for the next
+            owner.
 
-	  - release() doesn't reset <in_use_> and <owner_> since
-	    wakeup_next_waiter() now does.
+          - release() doesn't reset <in_use_> and <owner_> since
+            wakeup_next_waiter() now does.
 
-	  - renew() doesn't set or reset <in_use_> and <owner_> since
-	    wakeup_next_waiter() now does.
+          - renew() doesn't set or reset <in_use_> and <owner_> since
+            wakeup_next_waiter() now does.
 
-	  - shared_acquire() doesn't set <in_use_> and <owner_> since
-	    wakeup_next_waiter() now does.
+          - shared_acquire() doesn't set <in_use_> and <owner_> since
+            wakeup_next_waiter() now does.
 
-	  - The while loops in shared_acquire() and renew() now loop until
-	    the calling thread becomes the owner.
+          - The while loops in shared_acquire() and renew() now loop until
+            the calling thread becomes the owner.
 
-	  Note that this version of the Token implementation is still
-	  better than the previous one since it does not double delete on
-	  timeouts and wakes up the next waiter if it timed out and became
-	  the owner simultaneously.
+          Note that this version of the Token implementation is still
+          better than the previous one since it does not double delete on
+          timeouts and wakes up the next waiter if it timed out and became
+          the owner simultaneously.
 
 Tue Feb 08 21:46:51 2000  Girish Birajdar  <birajdar@lucent.com>
 

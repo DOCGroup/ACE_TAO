@@ -42,7 +42,7 @@ Connection_Handler::close (u_long)
               "(%P|%t) in close()\n"));
 
   // Shut ourself down.  Note that this doesn't destroy the thread,
-  // just the state of the object. 
+  // just the state of the object.
   this->destroy ();
   return 0;
 }
@@ -75,9 +75,9 @@ Connection_Handler::svc (void)
                       -1);
   // Schedule a timer.
   else if (this->reactor ()->schedule_timer (this,
-					     (const void *) this,
-					     ACE_Time_Value (2),
-					     ACE_Time_Value (2)) == -1)
+                                             (const void *) this,
+                                             ACE_Time_Value (2),
+                                             ACE_Time_Value (2)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) can't register with reactor\n"),
                       -1);
@@ -111,7 +111,7 @@ Connection_Handler::svc (void)
 
 int
 Connection_Handler::handle_close (ACE_HANDLE,
-				  ACE_Reactor_Mask)
+                                  ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) in handle_close \n"));
@@ -137,17 +137,17 @@ Connection_Handler::handle_input (ACE_HANDLE)
                         -1);
     case 0:
       ACE_ERROR_RETURN ((LM_ERROR,
-			 "(%P|%t) closing log daemon (fd = %d)\n",
+                         "(%P|%t) closing log daemon (fd = %d)\n",
                          this->get_handle ()),
                         -1);
     default:
       if (((int) buf[0]) == (int) EOF)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "(%P|%t) closing log daemon (fd = %d)\n",
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P|%t) closing log daemon (fd = %d)\n",
                            this->get_handle ()),
                           -1);
       else
-	ACE_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) from client: %s",
                     buf));
     }
@@ -157,8 +157,8 @@ Connection_Handler::handle_input (ACE_HANDLE)
 
 int
 Connection_Handler::handle_signal (int signum,
-				   siginfo_t *,
-				   ucontext_t *)
+                                   siginfo_t *,
+                                   ucontext_t *)
 {
   // @@ Note that this code is not portable to all OS platforms since
   // it uses print statements within signal handler context.
@@ -173,9 +173,12 @@ Connection_Handler::handle_signal (int signum,
 
 int
 Connection_Handler::handle_timeout (const ACE_Time_Value &tv,
-				    const void *arg)
+                                    const void *arg)
 {
   ACE_UNUSED_ARG (tv);
+#if defined (ACE_NDEBUG)
+  ACE_UNUSED_ARG (arg);
+#endif /* ACE_NDEBUG */
 
   ACE_ASSERT (arg == this);
   ACE_DEBUG ((LM_DEBUG,
@@ -187,7 +190,7 @@ Connection_Handler::handle_timeout (const ACE_Time_Value &tv,
 // Define an Acceptor for the <Connection_Handler>.
 
 typedef ACE_Acceptor <Connection_Handler, ACE_SOCK_ACCEPTOR>
-	Connection_Acceptor;
+        Connection_Acceptor;
 
 int
 main (int argc, char *argv[])
@@ -214,7 +217,7 @@ main (int argc, char *argv[])
 
   // Open the Acceptor.
   else if (peer_acceptor.open (ACE_INET_Addr (port),
-			       daemon.reactor ()) == -1)
+                               daemon.reactor ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "open"),
@@ -240,4 +243,3 @@ template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 #pragma instantiate ACE_Acceptor<Connection_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
