@@ -984,8 +984,8 @@ sub sort_dependencies {
           ## See if the dependency is listed after this project
           for(my $j = $i; $j <= $#list; ++$j) {
             if ($i != $j && $list[$j] eq $full &&
-                $list[$i] ne $moved_project &&
-                $list[$j] ne $start_project) {
+                ($list[$i] ne $moved_project ||
+                 $list[$j] ne $start_project)) {
               ## Keep track of the one we started with and the
               ## one we are going to move.  If there is a circular
               ## dependency, the next time through we will catch it.
