@@ -28,7 +28,7 @@ ACE_Framework_Component_T<Concrete>::~ACE_Framework_Component_T (void)
 template <class Concrete> void
 ACE_Framework_Component_T<Concrete>::close_singleton (void)
 {
-  ACE_TRACE ("ACE_Framework_Component_T<Concrete>::close");
+  ACE_TRACE ("ACE_Framework_Component_T<Concrete>::close_singleton");
   Concrete::close_singleton ();
 }
 

@@ -224,4 +224,5 @@ private:
 typedef ACE_Singleton < ACE_DLL_Manager_Ex,
                         ACE_SYNCH_MUTEX > ACE_DLL_Manager;
 
+#include "ace/post.h"
 #endif /* ACE_DLL_MANAGER_H */
