@@ -339,10 +339,19 @@ TAO_Object_Adapter::dispatch_servant (const TAO::ObjectKey &key,
   if (result != TAO_Adapter::DS_OK)
     return result;
 
-  // Preprocess remote request.
-  servant_upcall.pre_invoke_remote_request (req
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (result);
+  // Preprocess request.
+  if (req.collocated ())
+    {
+      servant_upcall.pre_invoke_collocated_request (
+        ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (result);
+    }
+  else
+    {
+      servant_upcall.pre_invoke_remote_request (req
+						ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (result);
+    }
 
   // Servant dispatch.
   {
