@@ -2075,6 +2075,12 @@ AST_Expression::check_and_coerce (AST_Expression::ExprType t,
         {
           AST_Decl *enum_decl = ScopeAsDecl (enum_val->defined_in ());
 
+          if (d->node_type () == AST_Decl::NT_typedef)
+            {
+              AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
+              d = td->primitive_base_type ();
+            }
+
           if (d != enum_decl)
             {
               idl_global->err ()->incompatible_type_error (this);

@@ -82,6 +82,10 @@ public:
   /// into the Object class.
   virtual CORBA_Object *_upcast (void *src) const;
 
+  // = orbos/98-01-11 proposed extensions.
+  /// Returns the state of the sequence release flag.
+  CORBA::Boolean release (void) const;
+
 protected:
   /// Default constructor.
   TAO_Base_Sequence (void);
@@ -95,10 +99,6 @@ protected:
   /// Assume ownership and set length to 0.
   TAO_Base_Sequence (CORBA::ULong maximum,
                      void *buffer);
-
-  // = orbos/98-01-11 proposed extensions.
-  /// Returns the state of the sequence release flag.
-  CORBA::Boolean release (void) const;
 
 public:
 

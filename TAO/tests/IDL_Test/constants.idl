@@ -70,6 +70,21 @@ const unsigned short stuff = ~0;
 const unsigned long day = ~0;
 const unsigned long drink = 1000000000 << 2;
 
+// An enum of one type cannot be assigned to an constant of another
+// enum type, but it's ok if one is a typedef of the other.
+module m_a {
+   enum enum_a { value_1, value_2, value_3, value_4, value_5 };
+};
+
+module m_b {
+   typedef m_a::enum_a enum_b;
+};
+
+module problems {
+
+   const m_b::enum_b bconst = m_a::value_2;
+};
+
 
 
 
