@@ -1,3 +1,9 @@
+Tue Mar 30 22:04:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-win32-common.h: Added definition of
+	  ACE_DEFAULT_THREAD_PRIORITY as 0.  Thanks to John Morey
+	  <jmorey@tbi.com> for reporting this.
+
 Tue Mar 30 21:31:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile (RELEASE_LIB_FILES): added bin/ and etc/.
