@@ -429,7 +429,19 @@ protected:
    */
   // @@ this is broken once we add the lock b/c it returns the thing
   // we're trying to lock down! (CJC)
-  virtual ACE_Event_Handler *event_handler_i (void) = 0;
+  virtual ACE_Event_Handler * event_handler_i (void) = 0;
+
+  /// Called by <code>connection_handler_closing()</code> to signal
+  /// that the protocol-specific transport should dissociate itself
+  /// with the protocol-specific connection handler.
+  /**
+   * Typically, this just sets the pointer to the associated connection
+   * handler to zero, although it could also clear out any additional
+   * resources associated with the handler association.
+   *
+   * @return The old event handler
+   */
+  virtual ACE_Event_Handler * invalidate_event_handler_i (void) = 0;
 
   /// Return the messaging object that is used to format the data that
   /// needs to be sent.
@@ -481,14 +493,6 @@ protected:
   virtual ssize_t recv_i (char *buffer,
                           size_t len,
                           const ACE_Time_Value *timeout = 0) = 0;
-
-  /// This class needs priviledged access to
-  /// - close_connection_i()
-  friend class TAO_Transport_Cache_Manager;
-
-  /// Call the corresponding connection handler's <close>
-  /// method.
-  virtual void close_connection_i (void);
 
 public:
 
@@ -592,17 +596,6 @@ protected:
   // @@ lockme
   virtual int register_handler_i (void) = 0;
 
-  /// Called by <code>connection_handler_closing()</code> to signal
-  /// that the protocol-specific transport should dissociate itself
-  /// with the protocol-specific connection handler.
-  /**
-   * Typically, this just sets the pointer to the associated connection
-   * handler to zero, although it could also clear out any additional
-   * resources associated with the handler association.
-   */
-  virtual void transition_handler_state_i (void) = 0;
-
-
   /// Called by the handle_input_i  (). This method is used to parse
   /// message read by the handle_input_i () call. It also decides
   /// whether the message  needs consolidation before processing.
@@ -682,9 +675,6 @@ public:
 
   /// Sent the contents of <message_block>
   /**
-   * @todo This method name sucks, but send_message() was already
-   *       taken by other silly methods!
-   *
    * @param stub The object reference used for this operation, useful
    *             to obtain the current policies.
    * @param is_synchronous If set this method will block until the
@@ -695,13 +685,11 @@ public:
    *             field.
    * @param max_wait_time The maximum time that the operation can
    *             block, used in the implementation of timeouts.
-   *
    */
-  /// the twoway flag or by the current policies in the stub.
-  int send_message_i (TAO_Stub *stub,
-                      int is_synchronous,
-                      const ACE_Message_Block *message_block,
-                      ACE_Time_Value *max_wait_time);
+  int send_message_shared (TAO_Stub *stub,
+                           int is_synchronous,
+                           const ACE_Message_Block *message_block,
+                           ACE_Time_Value *max_wait_time);
 
   /// Send a message block chain, assuming the lock is held
   int send_message_block_chain_i (const ACE_Message_Block *message_block,
@@ -816,6 +804,36 @@ private:
   /// If there are more messages in the queue, this method sends a
   /// notify () to the reactor to send a next thread along.
   int process_queue_head (TAO_Resume_Handle &rh);
+
+  /// Grab the mutex and then call invalidate_event_handler_i()
+  ACE_Event_Handler * invalidate_event_handler (void);
+
+  /// Notify all the components inside a Transport when the underlying
+  /// connection is closed.
+  void send_connection_closed_notifications (void);
+
+  /// Implement send_message_shared() assuming the handler_lock_ is
+  /// held.
+  int send_message_shared_i (TAO_Stub *stub,
+                             int is_synchronous,
+                             const ACE_Message_Block *message_block,
+                             ACE_Time_Value *max_wait_time);
+
+  /// Implement close_connection() assuming the handler_lock_ is held.
+  void close_connection_i (void);
+
+  /// This class needs priviledged access to:
+  /// close_connection_no_purge ()
+  friend class TAO_Transport_Cache_Manager;
+
+  /// Close the underlying connection, do not purge the entry from the
+  /// map (supposedly it was purged already, trust the caller, yuck!)
+  void close_connection_no_purge (void);
+
+  /// Close the underlying connection, implements the code shared by
+  /// all the close_connection_* variants.
+  void close_connection_shared (int disable_purge,
+                                ACE_Event_Handler * eh);
 
   /// Prohibited
   ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport&))

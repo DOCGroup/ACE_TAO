@@ -81,7 +81,7 @@ main (int argc, char *argv[])
         ACE_TRY_CHECK;
       }
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - event loop finished\n"));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) scavenger - event loop finished\n"));
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

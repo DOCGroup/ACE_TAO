@@ -211,29 +211,33 @@ int
 TAO_SSLIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                                              ACE_Reactor_Mask rm)
 {
+  // @@ TODO this too similar to IIOP_Connection_Handler::handle_close,
+  //    in fact, even the comments were identical.  IMHO needs
+  //    re-factoring.
+  ACE_HANDLE my_handle = this->get_handle ();
+
   if (TAO_debug_level)
-    ACE_DEBUG  ((LM_DEBUG,
-                 "TAO (%P|%t) SSLIOP_Connection_Handler::handle_close "
-                 "(%d, %d)\n",
-                 handle,
-                 rm));
+    {
+      ACE_DEBUG  ((LM_DEBUG,
+                   "TAO (%P|%t) - SSLIOP_Connection_Handler[%d]::handle_close, "
+                   "(%d, %d)\n",
+                   my_handle, handle, rm));
+    }
+
+  if(my_handle == ACE_INVALID_HANDLE)
+    {
+      return 0;
+    }
+  this->peer().close ();
+
+  this->set_handle (ACE_INVALID_HANDLE);
+  this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
 
   long upcalls = this->decr_pending_upcalls ();
 
   if (upcalls < 0)
     return 0;
 
-  if (this->get_handle () != ACE_INVALID_HANDLE)
-    {
-      // Just close the socket irrespective of what the upcall count
-      // is.
-      this->peer().close ();
-
-      // Set the handle to be INVALID_HANDLE
-      this->set_handle (ACE_INVALID_HANDLE);
-    }
-
-  // Try to clean up things if the upcall count has reached 0
   if (upcalls == 0)
     this->decr_refcount ();
 

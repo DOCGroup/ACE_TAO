@@ -273,10 +273,10 @@ TAO_DIOP_Transport::send_message (TAO_OutputCDR &stream,
   // versions seem to need it though.  Leaving it costs little.
 
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_message_i (stub,
-                                    twoway,
-                                    stream.begin (),
-                                    max_wait_time);
+  ssize_t n = this->send_message_shared (stub,
+                                         twoway,
+                                         stream.begin (),
+                                         max_wait_time);
 
   if (n == -1)
     {
@@ -464,10 +464,12 @@ TAO_DIOP_Transport::get_listen_point (
 }
 */
 
-void
-TAO_DIOP_Transport::transition_handler_state_i (void)
+ACE_Event_Handler *
+TAO_DIOP_Transport::invalidate_event_handler_i (void)
 {
+  ACE_Event_Handler * eh = this->connection_handler_;
   this->connection_handler_ = 0;
+  return eh;
 }
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

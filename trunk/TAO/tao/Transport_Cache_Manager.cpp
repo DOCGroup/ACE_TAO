@@ -523,7 +523,7 @@ TAO_Transport_Cache_Manager::close_entries(DESCRIPTOR_SET& sorted_set,
           // This is a bit ugly, but we must do this to
           // avoid taking and giving locks inside this loop.
           transport->cache_map_entry (0);
-          transport->close_connection_i ();
+          transport->close_connection_no_purge ();
           this->purge_entry_i (entry);
 
           // Count this as a successful purged entry

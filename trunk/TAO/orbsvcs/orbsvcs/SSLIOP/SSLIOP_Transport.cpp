@@ -5,10 +5,6 @@
 #include "SSLIOP_Transport.h"
 #include "tao/debug.h"
 
-ACE_RCSID (SSLIOP,
-           SSLIOP_Transport,
-           "$Id$")
-
 #include "SSLIOP_Connection_Handler.h"
 #include "SSLIOP_Profile.h"
 #include "SSLIOP_Acceptor.h"
@@ -23,6 +19,7 @@ ACE_RCSID (SSLIOP,
 #include "tao/GIOP_Message_Base.h"
 #include "tao/Acceptor_Registry.h"
 
+ACE_RCSID (SSLIOP, SSLIOP_Transport, "$Id$")
 
 TAO_SSLIOP_Transport::TAO_SSLIOP_Transport (
   TAO_SSLIOP_Connection_Handler *handler,
@@ -197,10 +194,10 @@ TAO_SSLIOP_Transport::send_message (TAO_OutputCDR &stream,
   // versions seem to need it though.  Leaving it costs little.
 
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_message_i (stub,
-                                    twoway,
-                                    stream.begin (),
-                                    max_wait_time);
+  ssize_t n = this->send_message_shared (stub,
+                                         twoway,
+                                         stream.begin (),
+                                         max_wait_time);
 
   if (n == -1)
     {
@@ -399,8 +396,10 @@ TAO_SSLIOP_Transport::get_listen_point (
   return 1;
 }
 
-void
-TAO_SSLIOP_Transport::transition_handler_state_i (void)
+ACE_Event_Handler *
+TAO_IIOP_Transport::invalidate_event_handler_i (void)
 {
+  ACE_Event_Handler * eh = this->connection_handler_;
   this->connection_handler_ = 0;
+  return eh;
 }

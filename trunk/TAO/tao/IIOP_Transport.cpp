@@ -179,10 +179,10 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
     return -1;
 
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_message_i (stub,
-                                    twoway,
-                                    stream.begin (),
-                                    max_wait_time);
+  ssize_t n = this->send_message_shared (stub,
+                                         twoway,
+                                         stream.begin (),
+                                         max_wait_time);
 
   if (n == -1)
     {
@@ -368,8 +368,10 @@ TAO_IIOP_Transport::get_listen_point (
   return 1;
 }
 
-void
-TAO_IIOP_Transport::transition_handler_state_i (void)
+ACE_Event_Handler *
+TAO_IIOP_Transport::invalidate_event_handler_i (void)
 {
+  ACE_Event_Handler * eh = this->connection_handler_;
   this->connection_handler_ = 0;
+  return eh;
 }

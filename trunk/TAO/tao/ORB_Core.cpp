@@ -1675,7 +1675,9 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 {
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("TAO (%P|%t) - start of run/perform_work\n")));
+                "TAO (%P|%t) - ORB_Core::run, "
+                "start [%s]\n",
+                perform_work?"perform_work":"run"));
 
   // Fetch the Reactor
   ACE_Reactor *r = this->reactor ();
@@ -1726,13 +1728,15 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 
       if (TAO_debug_level >= 3)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("TAO (%P|%t) - calling handle_events\n")));
+                    ACE_LIB_TEXT ("TAO (%P|%t) - ORB_Core::run, "
+                                  "calling handle_events()\n")));
 
       result = r->handle_events (tv);
 
       if (TAO_debug_level >= 3)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("TAO (%P|%t) - handle_events returns %d\n"),
+                    ACE_LIB_TEXT ("TAO (%P|%t) - ORB_Core::run, "
+                                  "handle_events() returns %d\n"),
                     result));
 
       if (result == -1)
@@ -1758,8 +1762,8 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("TAO (%P|%t) - ")
-                ACE_LIB_TEXT ("end of run/perform_work %d\n"),
+                ACE_LIB_TEXT ("TAO (%P|%t) - ORB_Core::run, ")
+                ACE_LIB_TEXT ("ends with result = %d\n"),
                 result));
 
   return result;

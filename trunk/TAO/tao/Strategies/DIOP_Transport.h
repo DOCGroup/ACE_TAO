@@ -73,8 +73,8 @@ protected:
    */
   //@{
 
-  virtual ACE_Event_Handler *event_handler_i (void);
-
+  virtual ACE_Event_Handler * event_handler_i (void);
+  virtual ACE_Event_Handler * invalidate_event_handler_i (void);
   virtual TAO_Pluggable_Messaging *messaging_object (void);
 
   /// Write the complete Message_Block chain to the connection.
@@ -90,9 +90,6 @@ protected:
 
   virtual int register_handler_i (void);
 
-  /// Method to do whatever it needs to do when the connection
-  /// handler is being closed and destroyed.
-  virtual void transition_handler_state_i (void);
   ///@}
 public:
   /// @todo These methods IMHO should have more meaningful names.
