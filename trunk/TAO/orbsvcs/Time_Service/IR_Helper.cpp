@@ -20,7 +20,7 @@ public:
   Ping_i (int debug = 0) : debug_ (debug) {}
 
   virtual void ping (CORBA::Environment &env = CORBA_Environment::default_environment ())
-  ACE_THROW_SPEC (( CORBA::SystemException ))  
+  ACE_THROW_SPEC (( CORBA::SystemException ))
     {
       if (this->debug_)
         ACE_DEBUG ((LM_DEBUG, "Pong!\n"));
@@ -32,7 +32,7 @@ private:
   int debug_;
 };
 
-IR_Helper::IR_Helper (char *server_name,
+IR_Helper::IR_Helper (const char *server_name,
                       PortableServer::POA_ptr poa,
                       CORBA::ORB_ptr orb,
                       int debug)

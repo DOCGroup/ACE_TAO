@@ -25,7 +25,7 @@ ACE_Message_Block * m1;
 ACE_Message_Block * m2;
 ACE_Message_Block * m3;
 
-void dump(char * msg)
+void dump(const char * msg)
 {
   ACE_DEBUG ((LM_INFO,
               "%s\n"
