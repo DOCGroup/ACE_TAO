@@ -1,10 +1,10 @@
 // $Id$
 
-#include "ace/SOCK_Dgram_Mcast_QoS.h"
+#include "SOCK_Dgram_Mcast_QoS.h"
 #include "ace/Log_Msg.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_Dgram_Mcast_QoS.i"
+#include "SOCK_Dgram_Mcast_QoS.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 // This is a workaround for platforms with non-standard
@@ -35,7 +35,7 @@ ACE_SOCK_Dgram_Mcast_QoS::open (const ACE_Addr &mcast_addr,
                                 int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_QoS::open");
-  
+
   ACE_UNUSED_ARG (qos_params);
 
   // Make a copy of address to use in the <send> methods.
@@ -43,7 +43,7 @@ ACE_SOCK_Dgram_Mcast_QoS::open (const ACE_Addr &mcast_addr,
   this->mcast_addr_.set (ACE_reinterpret_cast (const ACE_INET_Addr &,
                                                ACE_const_cast (ACE_Addr &,
                                                                mcast_addr)));
-  
+
   // Only perform the <open> initialization if we haven't been opened
   // earlier.
   if (this->get_handle () == ACE_INVALID_HANDLE)
@@ -56,7 +56,7 @@ ACE_SOCK_Dgram_Mcast_QoS::open (const ACE_Addr &mcast_addr,
                           flags,
                           reuse_addr) == -1)
         return -1;
-      
+
       int one = 1;
       if (reuse_addr
           && this->ACE_SOCK::set_option (SOL_SOCKET,
@@ -151,7 +151,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
             if (this->subscribe (mcast_addr,
                                  qos_params,
                                  reuse_addr,
-                                 ACE_TEXT_CHAR_TO_TCHAR 
+                                 ACE_TEXT_CHAR_TO_TCHAR
                                    (if_addrs[if_cnt].get_host_addr()),
                                  protocol_family,
                                  protocol,
@@ -170,7 +170,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
         // 1 indicates a "short-circuit" return.  This handles the
         // rather bizarre semantics of checking all the interfaces on
         // NT.
-        return 1; 
+        return 1;
     }
 #else
   ACE_UNUSED_ARG (mcast_addr);
@@ -203,7 +203,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
                                      ACE_QoS_Session *qos_session)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::subscribe");
-  
+
   if (this->open (mcast_addr,
                   qos_params,
                   protocol_family,
@@ -232,27 +232,27 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
     {
       // Check if the mcast_addr passed into this method is the
       // same as the QoS session address.
-      if (mcast_addr == qos_session->dest_addr ()) 
+      if (mcast_addr == qos_session->dest_addr ())
       {
         // Subscribe to the QoS session.
         if (this->qos_manager_.join_qos_session (qos_session) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_LIB_TEXT ("Unable to join QoS Session\n")),
                             -1);
-      } 
+      }
       else
         {
           if (this->close () != 0)
             ACE_ERROR ((LM_ERROR,
                         ACE_LIB_TEXT ("Unable to close socket\n")));
-          
+
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_LIB_TEXT ("Dest Addr in the QoS Session does")
                              ACE_LIB_TEXT (" not match the address passed into")
                              ACE_LIB_TEXT (" subscribe\n")),
                             -1);
         }
-      
+
       sockaddr_in mult_addr;
 
       if (protocol_family == ACE_FROM_PROTOCOL_INFO)

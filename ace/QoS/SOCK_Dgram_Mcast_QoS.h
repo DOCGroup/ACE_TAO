@@ -16,7 +16,7 @@
 #include "ace/pre.h"
 
 #include "ace/SOCK_Dgram_Mcast.h"
-#include "ace/QoS_Manager.h"
+#include "QoS_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,7 +28,7 @@
  * @brief Defines the member functions for the ACE QoS enabled socket
  * wrapper for UDP/IP multicast.
  */
-class ACE_Export ACE_SOCK_Dgram_Mcast_QoS : public ACE_SOCK_Dgram_Mcast
+class ACE_QoS_Export ACE_SOCK_Dgram_Mcast_QoS : public ACE_SOCK_Dgram_Mcast
 {
 
 public:
@@ -130,7 +130,7 @@ private:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_Dgram_Mcast_QoS.i"
+#include "SOCK_Dgram_Mcast_QoS.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"

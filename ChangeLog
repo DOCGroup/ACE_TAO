@@ -1,3 +1,33 @@
+Thu Feb  8 00:17:43 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* ace/QoS_Decorator.cpp:
+	* ace/QoS_Session_Factory.cpp:
+	* ace/SOCK_Dgram_Mcast_QoS.cpp:
+	* ace/QoS_Decorator.h:
+	* ace/QoS_Session_Factory.h:
+	* ace/SOCK_Dgram_Mcast_QoS.h:
+	* ace/QoS_Manager.cpp:
+	* ace/QoS_Session_Impl.cpp:
+	* ace/SOCK_Dgram_Mcast_QoS.i:
+	* ace/QoS_Manager.h:
+	* ace/QoS_Session_Impl.h:
+	* ace/QoS_Session_Impl.i: 
+	  Moved the AQoSA classes to ace/QoS directory.
+
+	* ace/Makefile:
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp:
+	  Removed the QoS related files, added QoS directory to build.
+
+	* ace/Qos/Makefile
+	* ace/QoS/ACE_QoS.dsw:
+	* ace/QoS/ACE_QoS.dsp:	
+	* ace/QoS/ACE_QoS_Lib.dsp:
+	* ace/QoS/ACE_QoS_Export.h:
+	  Added Makefile and MSVC project files.
+	  Thanks to Craig Rodrigues <crodrigu@bbn.com> for suggesting this 
+	  change and providing the patch.
+	
 Wed Feb  7 11:34:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Message_Queue_Test_Ex.cpp:
@@ -1095,8 +1125,8 @@ Thu Jan 18 23:50:35 2001  Rick Stille  <stille_r@ociweb.com>
 
         * ace/Process_Manager.cpp(wait): The "result >= WAIT_OBJECT_0"
           test within the ACE_ASSERT statement causes the Native x86
-          compiler to produce a “pointless comparison of unsigned
-          integer with zero” warning because "result" is of type
+          compiler to produce a ôpointless comparison of unsigned
+          integer with zeroö warning because "result" is of type
           "DWORD," which is defined by the Native x86 compiler as type
           "unsigned int."  This test has been blocked out for ghs.
 
@@ -1113,8 +1143,8 @@ Thu Jan 18 23:50:35 2001  Rick Stille  <stille_r@ociweb.com>
           within the function get_ip_interfaces() function only when
           either ACE_HAS_WINSOCK2 is not defined or when ACE_HAS_WINSOCK2
           is defined as "0." Because ACE_HAS_WINSOCK2 is defined on the
-          Native x86 platform, the compiler was issuing a “defined, but
-          never used” warning. This warning has been eliminated by
+          Native x86 platform, the compiler was issuing a ôdefined, but
+          never usedö warning. This warning has been eliminated by
           blocking out the definition of get_reg_value() when
           ACE_HAS_WINSOCK2 is defined as a value other than "0."
 
@@ -1136,8 +1166,8 @@ Thu Jan 18 23:50:35 2001  Rick Stille  <stille_r@ociweb.com>
           has been cast to "DWORD."
 
         * ace/WFMO_Reactor.cpp(dispatch_handles): The "wait_status >=
-          WAIT_OBJECT_0" comparison was producing a “pointless
-          comparison of unsigned integer with zero” warning because
+          WAIT_OBJECT_0" comparison was producing a ôpointless
+          comparison of unsigned integer with zeroö warning because
           "wait_status" is an unsigned integer. This was a known problem
           with Borland, so the blocking out of this comparison has been
           extende to ghs.

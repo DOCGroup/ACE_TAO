@@ -1,7 +1,7 @@
 // QoS_Manager.cpp
 // $Id$
 
-#include "ace/QoS_Manager.h"
+#include "QoS_Manager.h"
 #include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, QoS_Manager, "$Id $")
@@ -17,7 +17,7 @@ ACE_QoS_Manager::~ACE_QoS_Manager (void)
 // Adds the given session to the list of session objects joined by
 // this socket.
 
-int 
+int
 ACE_QoS_Manager::join_qos_session (ACE_QoS_Session *qos_session)
 {
   if (this->qos_session_set ().insert (qos_session) != 0)
