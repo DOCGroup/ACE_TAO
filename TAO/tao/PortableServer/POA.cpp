@@ -4305,6 +4305,9 @@ TAO_POA_Static_Resources::instance (void)
 TAO_POA_Static_Resources::TAO_POA_Static_Resources (void)
   : ort_adapter_factory_name_ ("ObjectReferenceTemplate_Adapter_Factory")
 {
+  // @@Johnny, I don't understand what is the use of this name?
+  // Probably, we should nuke this. We shoudl anyway be using the
+  // concrete name that we have out there in the library.
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
