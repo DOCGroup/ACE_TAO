@@ -1,3 +1,14 @@
+Fri Feb  9 11:38:06 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/PortableServer/Servant_Base.cpp:
+          Fixed problem with expressions like:
+
+          PortableServer::ServantBase_var foo = ...;
+          foo = foo.in ();
+
+          they used to crash.  Thanks to Jody Hagins <jody@atdesk.com> for
+          pointing this out.
+
 Fri Feb  9 11:35:17 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/Interoperable_Naming/client.cpp:
