@@ -462,9 +462,9 @@ be_interface::gen_def_ctors_helper (be_interface* node,
 
   static int first = 0;
 
-  if(node != base)
+  if (node != base)
     {
-      if(first)
+      if (first)
         {
           *os << be_global->impl_class_prefix () << base->flat_name ()
               << be_global->impl_class_suffix () << " ()";
@@ -500,16 +500,14 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           << "TAO_Stub *objref," << be_nl
           << "CORBA::Boolean _tao_collocated," << be_nl
                 << "TAO_Abstract_ServantBase *servant" << be_uidt_nl
-                << ")" // constructor
+                << ")"
                 << be_nl;
-      *os << ": CORBA_Object (objref, _tao_collocated, servant)" 
-          << be_uidt_nl;
-      *os << "{" << be_idt_nl
-                << "this->" << this->flat_name ()
-          << "_setup_collocation (_tao_collocated);";
+      *os << ": CORBA_Object (objref, _tao_collocated, servant)";
 
       if (this->has_mixed_parentage_)
         {
+          *os << be_idt;
+
           int status = 
             this->traverse_inheritance_graph (
                       be_interface::gen_abstract_init_helper, 
@@ -523,7 +521,19 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
                           "be_interface::gen_stub_ctor - "
                           "inheritance graph traversal failed\n"));
             }
+
+          *os << "," << be_nl
+              << "CORBA_AbstractBase (objref, _tao_collocated, servant)"
+              << be_uidt << be_uidt;
         }
+      else
+        {
+          *os << be_uidt;
+        }
+
+      *os << be_nl << "{" << be_idt_nl
+                << "this->" << this->flat_name ()
+          << "_setup_collocation (_tao_collocated);";
 
       *os << be_uidt_nl
           << "}" << be_nl << be_nl;
@@ -1155,9 +1165,22 @@ be_interface::gen_operation_table (const char *flat_name,
 
         // Start the table generation.
         *os << "static const TAO_operation_db_entry " << flat_name <<
-          "_operations [] = {\n";
+          "_operations [] = {" << be_nl;
 
         os->incr_indent (0);
+
+        // Make sure the queues are empty.
+        this->insert_queue.reset ();
+        this->del_queue.reset ();
+
+        // Insert ourselves in the queue.
+        if (insert_queue.enqueue_tail (this) == -1)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%N:%l) be_interface::gen_operation_table - "
+                               "error generating entries\n"),
+                              -1);
+          }
 
         // Traverse the graph.
         TAO_IDL_Gen_OpTable_Worker worker (skeleton_class_name);
@@ -1170,28 +1193,20 @@ be_interface::gen_operation_table (const char *flat_name,
           }
 
         // Generate the skeleton for the is_a method.
-        os->indent ();
-
         *os << "{\"_is_a\", &" << skeleton_class_name
-            << "::_is_a_skel},\n";
+            << "::_is_a_skel}," << be_nl;
 
         this->skel_count_++;
-
-        os->indent ();
 
         *os << "{\"_non_existent\", &" << skeleton_class_name
-            << "::_non_existent_skel},\n";
+            << "::_non_existent_skel}," << be_nl;
 
         this->skel_count_++;
-
-        os->indent ();
 
         *os << "{\"_interface\", &" << skeleton_class_name
-            << "::_interface_skel}\n";
+            << "::_interface_skel}" << be_uidt_nl;
 
         this->skel_count_++;
-
-        os->decr_indent ();
 
         *os << "};\n" << be_nl;
         *os << "static const CORBA::Long _tao_" << flat_name
@@ -1288,8 +1303,22 @@ be_interface::gen_operation_table (const char *flat_name,
         // Add the gperf input header.
         this->gen_gperf_input_header (os);
 
+        // Make sure the queues are empty.
+        this->insert_queue.reset ();
+        this->del_queue.reset ();
+
+        // Insert ourselves in the queue.
+        if (insert_queue.enqueue_tail (this) == -1)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%N:%l) be_interface::gen_operation_table - "
+                               "error generating entries\n"),
+                              -1);
+          }
+
         // Traverse the graph.
         TAO_IDL_Gen_OpTable_Worker worker (skeleton_class_name);
+
         if (this->traverse_inheritance_graph (worker, os) == -1)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -1300,21 +1329,23 @@ be_interface::gen_operation_table (const char *flat_name,
 
         // Generate the skeleton for the is_a method.
         os->indent ();
+
         *os << "_is_a, &"
             << skeleton_class_name
-            << "::_is_a_skel\n";
+            << "::_is_a_skel" << be_nl;
+
         this->skel_count_++;
 
-        os->indent ();
         *os << "_non_existent, &"
             << skeleton_class_name
-            << "::_non_existent_skel\n";
+            << "::_non_existent_skel" << be_nl;
+
         this->skel_count_++;
 
-        os->indent ();
         *os << "_interface, &"
             << skeleton_class_name
             << "::_interface_skel\n";
+
         this->skel_count_++;
 
         // Input to the gperf is ready. Run gperf and get things
@@ -1515,7 +1546,7 @@ be_interface::analyze_parentage (AST_Interface **parents,
         }
     }
 
-  if (this->has_mixed_parentage_ == I_TRUE)
+  if (this->has_mixed_parentage_)
     {
       be_global->mixed_parentage_interfaces.enqueue_tail (this);
     }
@@ -2440,22 +2471,24 @@ be_interface::gen_abstract_init_helper (be_interface *node,
       return 0;
     }
 
-  if (node->is_nested () && base->is_nested ())
+  *os << ",";
+
+  if (base->is_nested ())
     {
       UTL_Scope *parent_scope = base->defined_in ();
       AST_Decl *parent_decl = ScopeAsDecl (parent_scope);
 
       *os << be_nl
-          << "this->ACE_NESTED_CLASS ("
+          << "ACE_NESTED_CLASS ("
           << parent_decl->name () << ", "
           << base->local_name () 
-          << ")::obj_ = this;";
+          << ") (objref, _tao_collocated, servant)";
     }
   else
     {
       *os << be_nl
-          << "this->" << base->name ()
-          << "::obj_ = this;";
+          << base->name ()
+          << " (objref, _tao_collocated, servant)";
     }
 
   return 0;

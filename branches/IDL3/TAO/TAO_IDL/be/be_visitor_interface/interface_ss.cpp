@@ -427,8 +427,9 @@ be_visitor_interface_ss::gen_abstract_ops_helper (be_interface *node,
                                0,
                                op->is_local (),
                                op->is_abstract ());
-
           new_op.set_defined_in (node);
+          be_visitor_interface::add_abstract_op_args (op,
+                                                      new_op);
           new_op.set_name (base);
           ctx.state (TAO_CodeGen::TAO_OPERATION_SS);
           be_visitor_operation_ss op_visitor (&ctx);

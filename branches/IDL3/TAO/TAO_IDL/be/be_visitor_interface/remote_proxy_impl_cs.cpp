@@ -122,8 +122,9 @@ be_visitor_interface_remote_proxy_impl_cs::gen_abstract_ops_helper (
                                0,
                                op->is_local (),
                                op->is_abstract ());
-
           new_op.set_defined_in (node);
+          be_visitor_interface::add_abstract_op_args (op,
+                                                      new_op);
           new_op.set_name (base);
           ctx.state (TAO_CodeGen::TAO_OPERATION_REMOTE_PROXY_IMPL_CS);
           be_visitor_operation_remote_proxy_impl_cs op_visitor (&ctx);

@@ -108,13 +108,39 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "// narrow to the right type" << be_nl;
-  *os << "_tao_objref =" << be_idt_nl
-      << node->full_name () << "::_unchecked_narrow ("
-      << be_idt << be_idt_nl
-      << "obj.in ()" << be_nl
-      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl;
+      << "// Narrow to the right type." << be_nl;
+
+  if (node->is_abstract ())
+    {
+      *os << "if (obj->_is_objref ())" << be_idt_nl
+          << "{" << be_idt_nl
+          << "_tao_objref =" << be_idt_nl
+          << node->full_name () << "::_unchecked_narrow ("
+          << be_idt << be_idt_nl
+          << "obj.in ()" << be_nl
+          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+          << ");" << be_uidt << be_uidt << be_uidt_nl
+          << "}" << be_uidt_nl
+          << "else" << be_idt_nl
+          << "{" << be_idt_nl
+          << "_tao_objref =" << be_idt_nl
+          << node->full_name () << "::_unchecked_narrow ("
+          << be_idt << be_idt_nl
+          << "obj._retn ()" << be_nl
+          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+          << ");" << be_uidt << be_uidt << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
+    }
+  else
+    {
+      *os << "_tao_objref =" << be_idt_nl
+          << node->full_name () << "::_unchecked_narrow ("
+          << be_idt << be_idt_nl
+          << "obj.in ()" << be_nl
+          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl;
+    }
+
   *os << "ACE_TRY_CHECK;" << be_nl;
   *os << "return 1;" << be_uidt_nl;
   *os << "}" << be_nl

@@ -315,8 +315,8 @@ be_valuetype::gen_var_impl (char *local_name,
   // which reclaims amguity between T(T*) and T(const T_var &)
   *cs << fname << "::" << lname << " (const "
       << local_name << "* p)" << be_nl;
-  *cs << "  : ptr_ (ACE_const_cast("
-      << local_name << "*, p))" << be_nl;
+  *cs << "  : ptr_ (ACE_const_cast ("
+      << local_name << " *, p))" << be_nl;
   *cs << "{}" << be_nl << be_nl;
 
   // The additional ptr () member function. This member function must be
@@ -350,7 +350,7 @@ be_valuetype::gen_var_impl (char *local_name,
   // Assignment operator.
   *cs << fname << " &" << be_nl;
   *cs << fname << "::operator= (" << local_name
-      << "* p)" << be_nl;
+      << " *p)" << be_nl;
   *cs << "{" << be_idt_nl;
 
   *cs << "CORBA::remove_ref (this->ptr_);" << be_nl;
@@ -369,7 +369,7 @@ be_valuetype::gen_var_impl (char *local_name,
   *cs << "{" << be_idt_nl;
 
   *cs << "CORBA::remove_ref (this->ptr_);" << be_nl
-      << local_name << "* tmp = p.ptr ();" << be_nl
+      << local_name << " *tmp = p.ptr ();" << be_nl
       << "CORBA::add_ref (tmp);" << be_nl
       << "this->ptr_ = tmp;" << be_uidt_nl;
 
@@ -396,7 +396,7 @@ be_valuetype::gen_var_impl (char *local_name,
   *cs << "}" << be_nl << be_nl;
 
   // operator->
-  *cs << full_name << "* " << be_nl;
+  *cs << full_name << " *" << be_nl;
   *cs << fname << "::operator-> (void) const" << be_nl;
   *cs << "{" << be_idt_nl;
 
@@ -405,7 +405,7 @@ be_valuetype::gen_var_impl (char *local_name,
   *cs << "}" << be_nl << be_nl;
 
   // in, inout, out, and _retn.
-  *cs << full_name << "*" << be_nl;
+  *cs << full_name << " *" << be_nl;
   *cs << fname << "::in (void) const" << be_nl;
   *cs << "{" << be_idt_nl;
 
@@ -413,7 +413,7 @@ be_valuetype::gen_var_impl (char *local_name,
 
   *cs << "}" << be_nl << be_nl;
 
-  *cs << full_name << "* &" << be_nl;
+  *cs << full_name << " *&" << be_nl;
   *cs << fname << "::inout (void)" << be_nl;
   *cs << "{" << be_idt_nl;
 
@@ -421,7 +421,7 @@ be_valuetype::gen_var_impl (char *local_name,
 
   *cs << "}" << be_nl << be_nl;
 
-  *cs << full_name << "* &" << be_nl;
+  *cs << full_name << " *&" << be_nl;
   *cs << fname << "::out (void)" << be_nl;
   *cs << "{" << be_idt_nl;
 
@@ -431,7 +431,7 @@ be_valuetype::gen_var_impl (char *local_name,
 
   *cs << "}" << be_nl << be_nl;
 
-  *cs << full_name << "* " << be_nl;
+  *cs << full_name << " *" << be_nl;
   *cs << fname << "::_retn (void)" << be_nl;
   *cs << "{" << be_idt_nl;
 
@@ -556,7 +556,7 @@ be_valuetype::gen_out_impl (char *,
 
   // Constructor from a pointer.
   *cs << fname << "::" << lname << " (" << this->local_name ()
-      << "* &p)" << be_nl;
+      << " *&p)" << be_nl;
   *cs << "  : ptr_ (p)" << be_nl;
   *cs << "{" << be_idt_nl;
 
@@ -578,7 +578,7 @@ be_valuetype::gen_out_impl (char *,
   // Copy constructor.
   *cs << fname << "::" << lname << " (const " << lname
       << " &p)" << be_nl;
-  *cs << "  : ptr_ (ACE_const_cast (" << lname << "&,p).ptr_)" << be_nl;
+  *cs << "  : ptr_ (ACE_const_cast (" << lname << "&, p).ptr_)" << be_nl;
   *cs << "{}" << be_nl << be_nl;
 
   // Assignment operator from _out &.
@@ -587,7 +587,7 @@ be_valuetype::gen_out_impl (char *,
     " &p)" << be_nl;
   *cs << "{" << be_idt_nl;
 
-  *cs << "this->ptr_ = ACE_const_cast (" << lname << "&,p).ptr_;" << be_nl;
+  *cs << "this->ptr_ = ACE_const_cast (" << lname << "&, p).ptr_;" << be_nl;
   *cs << "return *this;" << be_uidt_nl;
 
   *cs << "}" << be_nl << be_nl;
@@ -598,7 +598,7 @@ be_valuetype::gen_out_impl (char *,
       << "_var &p)" << be_nl;
   *cs << "{" << be_idt_nl;
 
-  *cs << this->local_name () << "* tmp = p.ptr ();" << be_nl
+  *cs << this->local_name () << " *tmp = p.ptr ();" << be_nl
       << "CORBA::add_ref (tmp);" << be_nl
       << "this->ptr_ = tmp;" << be_nl;
   *cs << "return *this;" << be_uidt_nl;
@@ -608,7 +608,7 @@ be_valuetype::gen_out_impl (char *,
   // Assignment operator from *.
   *cs << fname << " &" << be_nl;
   *cs << fname << "::operator= (" << this->local_name ()
-      << "* p)" << be_nl;
+      << " *p)" << be_nl;
   *cs << "{" << be_idt_nl;
 
   *cs << "this->ptr_ = p;" << be_nl;
@@ -618,14 +618,14 @@ be_valuetype::gen_out_impl (char *,
 
   // Other extra methods - cast operator ().
   *cs << fname << "::operator " << this->name ()
-      << "* &() // cast" << be_nl;
+      << "*& () // cast" << be_nl;
   *cs << "{" << be_idt_nl;
   *cs << "return this->ptr_;" << be_uidt_nl;
 
   *cs << "}" << be_nl << be_nl;
 
   // ptr function.
-  *cs << this->name () << "* &" << be_nl;
+  *cs << this->name () << " *&" << be_nl;
   *cs << fname << "::ptr (void) // ptr" << be_nl;
   *cs << "{" << be_idt_nl;
   *cs << "return this->ptr_;" << be_uidt_nl;
@@ -633,13 +633,14 @@ be_valuetype::gen_out_impl (char *,
   *cs << "}" << be_nl << be_nl;
 
   // operator->
-  *cs << this->name () << "* " << be_nl;
+  *cs << this->name () << " *" << be_nl;
   *cs << fname << "::operator-> (void)" << be_nl;
   *cs << "{" << be_idt_nl;
 
   *cs << "return this->ptr_;" << be_uidt_nl;
 
   *cs << "}" << be_nl << be_nl;
+
   *cs << "// *************************************************************"
       << be_nl << be_nl;
 
@@ -647,33 +648,44 @@ be_valuetype::gen_out_impl (char *,
 }
 
 int
-be_valuetype::gen_helper_header (char* ,
-                                 char* )
+be_valuetype::gen_helper_header (char*,
+                                 char*)
 {
   TAO_OutStream *os = 0;
 
   os = tao_cg->client_header ();
 
   *os << be_nl
-      << "//@@ Boris: begin experimental" << be_nl
-      << "TAO_NAMESPACE CORBA" << be_nl
+      << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
+  *os << "TAO_NAMESPACE CORBA" << be_nl
       << "{"
       << be_idt_nl
       << "TAO_NAMESPACE_STORAGE_CLASS void add_ref (" 
       << this->full_name () << " *);" << be_nl
       << "TAO_NAMESPACE_STORAGE_CLASS void remove_ref (" 
-      << this->full_name () << " *);"
-      <<  be_uidt_nl
+      << this->full_name () << " *);";
+/*
+  if (this->supports_abstract ())
+    {
+      *os << be_nl
+          << "TAO_NAMESPACE_STORAGE_CLASS void add_ref (" 
+          << "OBV_" << this->full_name () << " *);" << be_nl
+          << "TAO_NAMESPACE_STORAGE_CLASS void remove_ref (" 
+          << "OBV_" << this->full_name () << " *);";
+    }
+*/
+  *os <<  be_uidt_nl
       << "}" << be_nl
-      << "TAO_NAMESPACE_CLOSE" << be_nl
-      << "//@@ Boris: end experimental" << be_nl << be_nl;
+      << "TAO_NAMESPACE_CLOSE" << be_nl << be_nl;
 
   return 0;
 }
 
 int
-be_valuetype::gen_helper_inline (char* ,
-                                 char* )
+be_valuetype::gen_helper_inline (char*,
+                                 char*)
 {
   TAO_OutStream *os = 0;
 
@@ -683,8 +695,10 @@ be_valuetype::gen_helper_inline (char* ,
   // is not getting generated... Actually this is a much bigger
   // problem. Just hacking  it up for the timebeing..
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   *os << "#if defined (__ACE_INLINE__)" << be_nl
-      << "//@@ Boris: begin experimental" << be_nl
       << "TAO_NAMESPACE CORBA" << be_nl
       << "{"
       << be_idt_nl
@@ -695,7 +709,6 @@ be_valuetype::gen_helper_inline (char* ,
       <<  be_uidt_nl
       << "}" << be_nl
       << "TAO_NAMESPACE_CLOSE" << be_nl
-      << "//@@ Boris: end experimental" << be_nl
       << "#endif /*__ACE_INLINE__*/"<< be_nl;
 
   return 0;
@@ -710,34 +723,26 @@ be_valuetype::gen_helper_stubs (char* ,
 
   os = tao_cg->client_stubs ();
 
-  *os << "//@@ Boris: begin experimental" << be_nl
-    // add_ref
-      << "void" << be_nl
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
+  *os << "void" << be_nl
       << "CORBA::add_ref (" << this->full_name () << " * vt)" << be_nl
-      << "{"
-      << be_idt_nl
-      << "if (vt != 0)" << be_nl
-      << "{"
-      << be_idt_nl
-      << "vt->_add_ref ();"
-      << be_uidt_nl
-      << "}"
-      << be_uidt_nl
-      << "}" << be_nl << be_nl
-  // remove_ref
-      << "void" << be_nl
+      << "{" << be_idt_nl
+      << "if (vt != 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "vt->_add_ref ();" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << "void" << be_nl
       << "CORBA::remove_ref (" << this->full_name () << " * vt)" << be_nl
-      << "{"
-      << be_idt_nl
-      << "if (vt != 0)" << be_nl
-      << "{"
-      << be_idt_nl
-      << "vt->_remove_ref ();"
-      << be_uidt_nl
-      << "}"
-      << be_uidt_nl
-      << "}" << be_nl << be_nl
-      << "//@@ Boris: end experimental" << be_nl;
+      << "{" << be_idt_nl
+      << "if (vt != 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "vt->_remove_ref ();" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   return 0;
 }
@@ -993,7 +998,7 @@ be_valuetype::abstract_supports_helper (be_interface *,
 
       *os << "ACE_NESTED_CLASS ("
           << parent_decl->name () << ", "
-          << base->local_name ();
+          << base->local_name () << ")";
     }
   else
     {
@@ -1004,27 +1009,12 @@ be_valuetype::abstract_supports_helper (be_interface *,
 }
 
 int 
-be_valuetype::gen_abstract_init_helper (be_interface *node,
-                                        be_interface *base,
+be_valuetype::gen_abstract_init_helper (be_interface *,
+                                        be_interface *,
                                         TAO_OutStream *os)
 {
-  if (node->is_nested () && base->is_nested ())
-    {
-      UTL_Scope *parent_scope = base->defined_in ();
-      AST_Decl *parent_decl = ScopeAsDecl (parent_scope);
-
-      *os << be_nl
-          << "this->ACE_NESTED_CLASS ("
-          << parent_decl->name () << ", "
-          << base->local_name () 
-          << ")::val_ = this;";
-    }
-  else
-    {
-      *os << be_nl
-          << "this->" << base->name ()
-          << "::val_ = this;";
-    }
+//  *os << be_nl
+//      << "this->value_ = this;";
 
   return 0;
 }

@@ -40,6 +40,8 @@
 //   methods.
 //
 
+class AST_Operation;
+
 class be_visitor_interface : public be_visitor_scope
 {
   //
@@ -49,7 +51,6 @@ class be_visitor_interface : public be_visitor_scope
   // = DESCRIPTION
   //   This is a concrete visitor for interface that abstracts all common tasks
   //
-
 public:
   be_visitor_interface (be_visitor_context *ctx);
   // constructor
@@ -98,6 +99,9 @@ public:
 
  protected:
     int is_amh_rh_node (be_interface *node);
+
+    static void add_abstract_op_args (AST_Operation *old_op,
+                                      be_operation &new_op);
 };
 
 #endif /*  _BE_INTERFACE_INTERFACE_H_ */

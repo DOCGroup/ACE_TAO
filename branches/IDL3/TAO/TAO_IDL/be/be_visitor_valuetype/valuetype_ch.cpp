@@ -46,6 +46,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
+  int status = 0;
 
   *os << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
@@ -149,24 +150,31 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       *os << "public virtual CORBA_ValueBase";
     }
 
-  int status =
-    node->traverse_supports_list_graphs (
-        be_valuetype::abstract_supports_helper,
-        os,
-        I_TRUE
-      );    
-
-  if (status == -1)
+  if (node->supports_abstract ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_ch::"
-                         "visit_valuetype - "
-                         "traversal of supported interfaces failed\n"),
-                        -1);
+      *os << be_idt;
+
+      status =
+        node->traverse_supports_list_graphs (
+            be_valuetype::abstract_supports_helper,
+            os,
+            I_TRUE
+          );    
+
+      if (status == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_valuetype_ch::"
+                             "visit_valuetype - "
+                             "traversal of supported interfaces failed\n"),
+                            -1);
+        }
+
+      *os << be_uidt;
     }
 
   // Generate the body.
-  *os << be_uidt << be_uidt_nl << "{" << be_nl
+  *os << be_uidt_nl << "{" << be_nl
       << "public:" << be_idt_nl;
 
       // Generate the _var_type typedef.
@@ -176,7 +184,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       // Generate the static _downcast operation.
       // (see OMG 20.17.{4,5}).
   *os << "static " << node->local_name () << "* "
-      << "_downcast (CORBA::ValueBase* );" << be_nl
+      << "_downcast (CORBA::ValueBase *);" << be_nl
       << "// The address of static _downcast is implicit used as type id\n"
       << be_nl
       << "// (TAO extensions or internals)" << be_nl
@@ -221,16 +229,20 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__;
+
   // If we inherit from both CORBA::ValueBase and CORBA::AbstractBase,
   // we have to add this to avoid ambiguity.
   if (node->supports_abstract ())
     {
-      *os << be_nl << "virtual void _add_ref (void) = 0;" << be_nl;
+      *os << be_nl << be_nl << "virtual void _add_ref (void) = 0;" << be_nl;
+      *os << "virtual void _remove_ref (void) = 0;";
     }
 
   // Generate the "protected" constructor so that users cannot
   // instantiate us.
-  *os << be_uidt_nl << "protected:" << be_idt_nl
+  *os << be_uidt_nl << be_nl << "protected:" << be_idt_nl
       << node->local_name ()
       << " (void);" << be_nl
       << "virtual ~" << node->local_name () << " (void);\n" << be_nl;
@@ -245,8 +257,6 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           << "_tao_marshal_v (TAO_OutputCDR &);" << be_nl;
       *os << "virtual CORBA::Boolean "
           << "_tao_unmarshal_v (TAO_InputCDR &);" << be_nl;
-  // %! optimize _downcast away: extra parameter with type info
-  // set (void *) in CDR Stream with the right derived pointer.
     }
 
 
@@ -282,8 +292,12 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
               <<    node->flat_name () << " (TAO_OutputCDR &) = 0;"
               << be_nl;
           *os << "virtual CORBA::Boolean _tao_unmarshal__"
-              <<    node->flat_name () << " (TAO_InputCDR &) = 0;"
-              << be_nl;
+              <<    node->flat_name () << " (TAO_InputCDR &) = 0;";
+        }
+
+      if (node->supports_abstract ())
+        {
+          *os << be_nl << "virtual CORBA::ValueBase *_tao_to_value (void);";
         }
     }
 

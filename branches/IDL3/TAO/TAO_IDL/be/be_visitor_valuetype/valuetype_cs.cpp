@@ -85,30 +85,37 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // The _downcast method    // %! use ACE_xxx_cast here ?
-  *os << node->name() << "* " << node->name()
-      <<                 "::_downcast (CORBA::ValueBase* v)" << be_nl
-      <<  "{" << be_idt_nl
-      <<     "if (v == 0) return 0;" << be_nl
-      <<     "return (" << node->local_name() << "* ) "
-      <<          "v->_tao_obv_narrow ((ptr_arith_t) &_downcast);" << be_uidt_nl
-      <<  "}\n" << be_nl
+  *os << node->name () << " *" << be_nl << node->name ()
+      << "::_downcast (CORBA::ValueBase *v)" << be_nl
+      << "{" << be_idt_nl
+      << "if (v == 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "return 0;" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "return (" << node->local_name () << " *) "
+      << "v->_tao_obv_narrow ((ptr_arith_t) &_downcast);" << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   // The _tao_obv_repository_id method
-      << "const char* " << node->name()
-      <<                   "::_tao_obv_repository_id () const" << be_nl
-      <<  "{" << be_idt_nl
-      <<     "return this->_tao_obv_static_repository_id ();" << be_uidt_nl
-      <<  "}\n" << be_nl
+  *os << "const char *" << be_nl 
+      << node->name () << "::_tao_obv_repository_id (void) const" << be_nl
+      << "{" << be_idt_nl
+      << "return this->_tao_obv_static_repository_id ();" << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   // The _tao_obv_narrow method
-      << "void* " << node->name()
+  *os << "void *" << be_nl << node->name ()
       << "::_tao_obv_narrow (ptr_arith_t type_id)" << be_nl
-      <<  "{" << be_idt_nl
-      <<    "if (type_id == (ptr_arith_t) &_downcast)" << be_idt_nl
-      <<       "return this;" << be_uidt_nl
-      <<    "void *rval = 0;" << be_nl;
+      << "{" << be_idt_nl
+      << "if (type_id == (ptr_arith_t) &_downcast)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "return this;" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "void *rval = 0;" << be_nl;
 
   // Find the possible base classes.
 
@@ -121,7 +128,9 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
       ++n_inherits_downcastable;
 
-      *os << "if (rval == 0)" << be_idt_nl
+      *os << be_nl
+          << "if (rval == 0)" << be_idt_nl
+          << "{" << be_idt_nl
           << "rval = ";
 
       AST_Decl::NodeType nt = 
@@ -142,18 +151,62 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           *os << inherited->name ();
         }
 
-      *os << "::_tao_obv_narrow (type_id);" << be_uidt_nl;
+      *os << "::_tao_obv_narrow (type_id);" << be_uidt_nl
+          << "}" << be_uidt_nl;
     }
 
-  *os <<    "return rval;" << be_uidt_nl
-      <<  "}\n\n";
+  if (node->supports_abstract ())
+    {
+      long size = node->n_supports ();
+      AST_Interface *supported = 0;
+
+      for (long i = 0; i < size; ++i)
+        {
+          supported = node->supports ()[i];
+
+          if (supported->is_abstract ())
+            {
+              *os << be_nl
+                  << "if (rval == 0)" << be_idt_nl
+                  << "{" << be_idt_nl
+                  << "rval = ";
+
+              AST_Decl::NodeType supported_nt = 
+                supported->defined_in ()->scope_node_type ();
+
+              if (supported_nt == AST_Decl::NT_module)
+                {
+                  be_scope *supported_scope = 
+                    be_scope::narrow_from_scope (supported->defined_in ());
+                  be_decl *supported_scope_decl = supported_scope->decl ();
+
+                  *os << "ACE_NESTED_CLASS ("
+                      << supported_scope_decl->name () << ","
+                      << supported->local_name () << ")";
+                }
+              else
+                {
+                  *os << supported->name ();
+                }
+
+              *os << "::_tao_obv_narrow (type_id);" << be_uidt_nl
+                  << "}" << be_uidt_nl;
+            }
+        }
+    }
+
+  *os << be_nl << "return rval;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   *os << "void" << be_nl
       << node->name () 
       << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
       << "{" << be_idt_nl
-      << node->local_name () << " *tmp = ACE_static_cast ("
-      << node->local_name () << "*, _tao_void_pointer);" << be_nl
+      << node->local_name () << " *tmp =" << be_idt_nl
+      << "ACE_static_cast (" << be_idt << be_idt_nl
+      << node->local_name () << " *," << be_nl
+      << "_tao_void_pointer" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
       << "delete tmp;" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -229,10 +282,12 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "base," << be_nl
       << node->local_name () << "::_tao_obv_static_repository_id ()" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl << be_nl
-      << "if (retval == 0 || factory.in () == 0)" << be_idt_nl
+      << "if (retval == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
+      << "if (factory.in () != 0)" << be_idt_nl
+      << "{" << be_idt_nl
       << "base = factory->create_for_unmarshal ();" << be_nl << be_nl
       << "if (base == 0)" << be_idt_nl
       << "{" << be_idt_nl
@@ -242,12 +297,22 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "if (retval == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl 
       << "}" << be_uidt_nl << be_nl
       << "// Now base must be null or point to the unmarshaled object." << be_nl
       << "// Align the pointer to the right subobject." << be_nl
       << "new_object = " << node->local_name () << "::_downcast (base);" << be_nl
       << "return retval;" << be_uidt_nl
-      << "}\n" << be_nl;
+      << "}" << be_nl << be_nl;
+
+  if (node->supports_abstract ())
+    {
+      *os << "CORBA::ValueBase *" << be_nl
+          << node->name () << "::_tao_to_value (void)" << be_nl
+          << "{" << be_idt_nl
+          << "return this;" << be_uidt_nl
+          << "}" << be_nl << be_nl;
+    }
 
   // Generate code for the elements of the valuetype.
   if (this->visit_scope (node) == -1)

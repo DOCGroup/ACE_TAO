@@ -240,6 +240,12 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       << "_ptr)0;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
+  if (node->is_abstract ())
+    {
+      *os << "static foo_ptr _downcast (CORBA::AbstractBase_ptr abs);" 
+          << be_nl << be_nl;
+    }
+
   // No Any operator for local interfaces.
   if (! node->is_local () && be_global->any_support ())
     {
@@ -284,19 +290,26 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       << be_nl << be_nl;
 
   // The _interface_repository_id method.
-  *os << "virtual const char* _interface_repository_id (void) const;\n"
-      << be_uidt_nl;
+  *os << "virtual const char* _interface_repository_id (void) const;";
+
+  if (node->is_abstract ())
+    {
+      *os << be_nl << be_nl
+          << "virtual void *_tao_obv_narrow (ptr_arith_t type_id);";
+    }
 
   if (! node->is_local () && ! node->is_abstract ())
     {
       // Add the Proxy Broker member variable.
-      *os << "private:" << be_idt_nl
+      *os << be_uidt_nl
+          << "private:" << be_idt_nl
           << node->base_proxy_broker_name () << " *"
           << "the" << node->base_proxy_broker_name ()
-          << "_;" << be_nl <<  be_uidt_nl;
+          << "_;";
     }
 
-  *os << "protected:" << be_idt_nl;
+  *os << be_uidt_nl << be_nl 
+      << "protected:" << be_idt_nl;
 
   if (! node->is_local () && ! node->is_abstract ())
     {
@@ -315,41 +328,42 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     }
   else
     {
-      *os << node->local_name () << " (void);" << be_nl << be_nl;
+      // Protected default constructor for abstract interfaces.
+      *os << node->local_name () << " (void);" << be_nl;
+
+      // Protected copy constructor for abstract interfaces.
+      *os << node->local_name () << " (const " 
+          << node->local_name () << " &);" << be_nl;
     }
 
-  // Local and abstract interfaces don't support stub objects.
-  if (! node->is_local () && ! node->is_abstract ())
+  // Local interfaces don't support stub objects.
+  if (! node->is_local ())
     {
       *os << node->local_name ()
           << " (" << be_idt << be_idt_nl << "TAO_Stub *objref, " << be_nl
           << "CORBA::Boolean _tao_collocated = 0," << be_nl
           << "TAO_Abstract_ServantBase *servant = 0" <<  be_uidt_nl
-          << ");" << be_uidt_nl << be_nl;
-
-      // Friends declarations.
-      *os << "friend class " << node->remote_proxy_impl_name () << ";"
-          << be_nl
-          << "friend class " << node->thru_poa_proxy_impl_name () << ";"
-          << be_nl
-          << "friend class " << node->direct_proxy_impl_name () << ";"
-          << be_nl << be_nl;
-    }
-
-  // Protected copy constructor for abstract interfaces.
-  if (node->is_abstract ())
-    {
-      *os << node->local_name () << " (const " 
-          << node->local_name () << " &);" << be_nl << be_nl;
+          << ");" << be_uidt_nl;
     }
 
   // Protected destructor.
-  *os << "virtual ~" << node->local_name () << " (void);"
-      << be_uidt_nl << be_nl;
+  *os << "virtual ~" << node->local_name () << " (void);";
+
+  if (! node->is_abstract ())
+    {
+      // Friends declarations.
+      *os << be_nl << be_nl
+          << "friend class " << node->remote_proxy_impl_name () << ";"
+          << be_nl
+          << "friend class " << node->thru_poa_proxy_impl_name () << ";"
+          << be_nl
+          << "friend class " << node->direct_proxy_impl_name () << ";";
+    }
 
   // Private copy constructor and assignment operator. These are not
   // allowed, hence they are private.
-  *os << "private:" << be_idt_nl;
+  *os << be_uidt_nl << be_nl 
+      << "private:" << be_idt_nl;
 
   // Abstract interfaces have a *protected* copy constructor.
   if (! node->is_abstract ())
@@ -371,6 +385,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   *os << "};" << be_nl << be_nl;
 
   // Don't support smart proxies for local interfaces.
+  // @@@ (JP) This is TODO for abstract interfaces.
   if (! node->is_local () && ! node->is_abstract ())
     {
       // Smart Proxy related classes.
@@ -476,7 +491,9 @@ be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
                                &item_new_name,
                                op->is_local (),
                                op->is_abstract ());
-
+          new_op.set_defined_in (node);
+          be_visitor_interface::add_abstract_op_args (op,
+                                                      new_op);
           ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
           be_visitor_operation_ch op_visitor (&ctx);
           op_visitor.visit_operation (&new_op);
