@@ -1,3 +1,11 @@
+Thu May 13 17:50:16 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Deployment.xsd:
+
+          Added the name attribute for the Deployment:Requirement complex
+          type defined in the schema. This was present in the model but
+          not in the schema and necessitated this addition.
+
 Thu May 13 15:13:50 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/tests/Config_Handlers/Domain_Handler_Test.cpp:

@@ -625,6 +625,7 @@
   <xsd:complexType name="Requirement">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element name="resourceType" type="xsd:string"/>
+      <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="property" type="Deployment:Property"/>
       <xsd:element ref="xmi:Extension"/>
     </xsd:choice>
