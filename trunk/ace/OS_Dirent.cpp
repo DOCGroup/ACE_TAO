@@ -40,9 +40,9 @@ ACE_OS_Dirent::opendir_emulation (const ACE_TCHAR *filename)
       if (filename[lastchar-1] != '*') 
         {
           if (filename[lastchar-1] != '/' && filename[lastchar-1] != '\\') 
-            ACE_OS_String::strcpy (extra,"/*");
+            ACE_OS_String::strcpy (extra, ACE_LIB_TEXT ("/*"));
           else
-            ACE_OS_String::strcpy (extra,"*");
+            ACE_OS_String::strcpy (extra, ACE_LIB_TEXT ("*"));
         }
     }
     

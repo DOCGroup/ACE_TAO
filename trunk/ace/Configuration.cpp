@@ -173,7 +173,7 @@ ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key,
   parser.delimiter_replace ('\\', '\0');
   parser.delimiter_replace ('/', '\0');
 
-  for (char *temp = 0; parser.next (); current_section = key_out)
+  for (ACE_TCHAR *temp = 0; parser.next (); current_section = key_out)
     // Open the section
     if (open_section (current_section,
                       temp,
@@ -2070,7 +2070,7 @@ ACE_Configuration::import_config_as_strings (const ACE_TCHAR* filename)
       const ACE_TCHAR *name = this->skip_whitespace (buffer);
       if (name)
         {
-          ACE_TCHAR *end = (char *) ACE_OS::strpbrk (name, ACE_LIB_TEXT ("= \t\n\r"));
+          ACE_TCHAR *end = (ACE_TCHAR *) ACE_OS::strpbrk (name, ACE_LIB_TEXT ("= \t\n\r"));
 
           // locate equal sign after name and retrieve value
           const ACE_TCHAR *value = ACE_OS::strrchr (name, ACE_LIB_TEXT ('='));
@@ -2080,12 +2080,12 @@ ACE_Configuration::import_config_as_strings (const ACE_TCHAR* filename)
               value = this->skip_whitespace (value);
               ACE_TCHAR *value_end;
               if (value[0] != ACE_LIB_TEXT ('"'))
-                value_end = (char *) ACE_OS::strpbrk (value, ACE_LIB_TEXT (" \t\n\r"));
+                value_end = (ACE_TCHAR *) ACE_OS::strpbrk (value, ACE_LIB_TEXT (" \t\n\r"));
               else
                 {
                   // double quote delimited allows spaces and tabs in string
                   value++;
-                  value_end = (char *) ACE_OS::strpbrk (value, ACE_LIB_TEXT ("\"\n\r"));
+                  value_end = (ACE_TCHAR *) ACE_OS::strpbrk (value, ACE_LIB_TEXT ("\"\n\r"));
                 }
               if (value_end)
                 *value_end = '\0'; // terminate value
