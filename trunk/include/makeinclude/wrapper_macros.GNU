@@ -570,7 +570,14 @@ ssl ?=
 ifeq ($(ssl),0)
   override ssl =
 else
+  ifneq ($(SSL_ROOT),)
+      # Don't do a thing..
+    else
+      CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
+      LDFLAGS  += $(PLATFORM_SSL_LDFLAGS)
+      LIBS     += $(PLATFORM_SSL_LIBS)
   ACE_MAKE_OPTIONS += ssl
+  endif
 endif
 
 ifeq ($(exceptions),0)
@@ -783,7 +790,6 @@ ifeq ($(stlport),1)
   LDFLAGS  += $(PLATFORM_STLPORT_LDFLAGS)
   LIBS     += $(PLATFORM_STLPORT_LIBS)
 endif
-
 
 # If not explicitly is set that we have wfmo, assume we don't have it.
 wfmo ?= 0
