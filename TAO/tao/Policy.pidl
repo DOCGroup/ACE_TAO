@@ -17,6 +17,8 @@
 //
 // ================================================================
 
+#ifndef TAO_CORBA_POLICY_IDL
+#define TAO_CORBA_POLICY_IDL
 
 #pragma prefix "omg.org"
 
@@ -75,3 +77,7 @@ module CORBA
   };
 
 };
+
+#pragma prefix ""
+
+#endif /* TAO_CORBA_POLICY_IDL */_

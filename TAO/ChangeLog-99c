@@ -1,3 +1,11 @@
+Mon May 31 19:52:26 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/orb.idl: Included the Policy.pidl file in orb.idl.  This
+	  will bring the Policy interface into the CORBA module.
+
+	* tao/Policy.pidl: Added ending pragmas and appropriate #defines
+	  for file inclusion.
+
 Mon May 31 19:32:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/releasenotes/ec.html:
@@ -79,7 +87,7 @@ Mon May 31 15:55:07 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 	  VxWorks. Replaces long int * ACE_UINT64 with ACE_UINT64 *
 	  ACE_UINT64.
 
-	* Removed tests/InterOp-Naming/InterOp_test.cpp as it was 
+	* Removed tests/InterOp-Naming/InterOp_test.cpp as it was
 	  obsolete.
 
 Mon May 31 16:44:22 1999  Ossama Othman  <othman@cs.wustl.edu>
@@ -103,11 +111,11 @@ Mon May 31 16:44:22 1999  Ossama Othman  <othman@cs.wustl.edu>
  	  Connector_Registry::close_all() and
  	  Acceptor_Registry::close_all() to make sure all connectors and
  	  acceptors are shutdown properly.
-	
+
 	* tao/IIOP_Profile.cpp (set): Added a comment about passing in
  	  TAO_ORB_Core as a parameter, instead of using the TAO_ORB_Core
  	  singleton.
-	
+
 	* tao/UIOP_Connector.cpp: Fixed pragma template instantiation that
  	  was split between two lines without a backslash.
 
@@ -121,31 +129,31 @@ Mon May 31 16:44:22 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 Mon May 31 15:55:07 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	Converted the INS test to a stand-alone. It was previously 
-	working in conjunction with the bank server.The test can be used 
+	Converted the INS test to a stand-alone. It was previously
+	working in conjunction with the bank server.The test can be used
 	to locate the Naming Service or any arbitrary service through
 	iioploc IORs. Added the following files :
-	
+
 	* tests/InterOp-Naming/INS.idl: Defines a simple interface with
 	  a single operation.
 
-	The following files define the INS test server capable of being 
+	The following files define the INS test server capable of being
 	located through iiopoc IORs.
-	* tests/InterOp-Naming/Server_i.h: 
-	* tests/InterOp-Naming/Server_i.cpp: 
+	* tests/InterOp-Naming/Server_i.h:
+	* tests/InterOp-Naming/Server_i.cpp:
 	* tests/InterOp-Naming/INS_test_server:
- 	
+
 	The following files define the servant implementation.
-	* tests/InterOp-Naming/INS_i.cpp: 
+	* tests/InterOp-Naming/INS_i.cpp:
 	* tests/InterOp-Naming/INS_i.h:
 
 	The test client :
 	* tests/InterOp-Naming/INS_test_client.cpp:
-	
+
 	Changed the Makefile and README according to the above changes.
-	* tests/InterOp-Naming/README: 
+	* tests/InterOp-Naming/README:
 	* tests/InterOp-Naming/Makefile:
-	
+
 Mon May 31 14:50:07 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/default_resource.cpp (init_protocol_factories): This routine
