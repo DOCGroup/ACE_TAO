@@ -30,7 +30,7 @@ public:
 
   // Constructor
   TAO_Naming_Loader (void);
-  
+
   // Destructor
   ~TAO_Naming_Loader (void);
 
@@ -41,14 +41,14 @@ public:
   // Called by the Service Configurator framework to remove the
   // Event Service. Defined in <ace/Service_Config.h>
   virtual int fini (void);
-  
+
   // This function call initializes the Naming Service given a reference to the
   // ORB and the command line parameters.
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                    int argc, char *argv[],
                                    CORBA::Environment &ACE_TRY_ENV)
-     ACE_THROW_SPEC (());
-  
+     ACE_THROW_SPEC ((CORBA::SystemException));
+
 
  protected:
   TAO_Naming_Server naming_server_;

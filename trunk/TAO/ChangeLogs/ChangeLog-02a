@@ -1,3 +1,13 @@
+Tue May 01 19:00:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/examples/RtEC/MCast/AddrServer.{h,cpp}:
+	* orbsvcs/orbsvcs/Naming/Naming_Loader.{h,cpp}:
+	* orbsvcs/tests/Event/Basic/BCast.{h,cpp}: Changed the empty
+	  ACE_THROW_SPEC (()) with ACE_THROW_SPEC
+	  ((CORBA::SystemException)) so that TAO can compile with FORTE
+	  6.1. Thanks to Russ Noseworthy for the patches. More of the
+	  patches would be checked in the next few hours.
+
 Tue May 01 12:00:11 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* $ACE_ROOT/auto_run_tests.lst: Don't run
@@ -36,12 +46,12 @@ Tue May 01 08:50:11 2001  Ossama Othman  <ossama@uci.edu>
 Tue May  1 09:40:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/AMI_Buffering/Makefile: Made a check for ami instead of
-	  corba_messaging. 
-	
+	  corba_messaging.
+
 Mon Apr 30 22:50:27 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/CORBALOC_Parser.h: 
-	* tao/CORBALOC_Parser.cpp: 
+	* tao/CORBALOC_Parser.h:
+	* tao/CORBALOC_Parser.cpp:
 	  Fixed the blocker bug 849. Included some parsing code so as to
 	  check if the protocol used by the application is a known protocol.
 
@@ -53,7 +63,7 @@ Mon Apr 30 19:17:42 2001  Jeff Parsons <parsons@cs.wustl.edu>
           operator for the union extracts it straight into
           a _var. In the IDL_Test file full.idl, the interface
           member is undefined, and VxWorks balks. The target
-          of the member extraction was modified to be 
+          of the member extraction was modified to be
           foo_var.inout(), which it should have been anyway.
 
         * tests/IDL_Test/fwd.idl:
@@ -61,7 +71,7 @@ Mon Apr 30 19:17:42 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           If modules are nested, VxWorks gives a typedef error,
           thinking that mod1::mod2::foo_ptr and
-          POA_mod1::mod2::foo_ptr are the same. Since the 
+          POA_mod1::mod2::foo_ptr are the same. Since the
           nested modules are not essential to the test, and
           rather than disable the test for VxWorks, one layer
           of modules was taken out of the mutually dependent
@@ -74,7 +84,7 @@ Mon Apr 30 18:49:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 	  New files for a new visitor that begins a separate
 	  pass through the AST for generating the tie
-	  classes. Code generation for the tie classes has 
+	  classes. Code generation for the tie classes has
  	  been moved from *S.h to *S_T.h. Some compilers,
 	  notably SunCC 5.2, require that template class
 	  declarations and source be in the same

@@ -72,7 +72,7 @@ public:
   virtual void get_addr (const RtecEventComm::EventHeader& header,
                          RtecUDPAdmin::UDP_Addr& address,
                          CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   RtecUDPAdmin::UDP_Addr address_;
