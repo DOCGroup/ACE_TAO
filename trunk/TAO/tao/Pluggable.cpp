@@ -294,7 +294,14 @@ TAO_Connector::make_mprofile (const char *string,
 
   // Check for a valid string
   if (!string || !*string)
-    return 1;  // Failure
+    {
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (
+        CORBA_SystemException::_tao_minor_code (
+          TAO_NULL_POINTER_MINOR_CODE,
+          0),
+        CORBA::COMPLETED_NO),
+        -1);
+    }
 
   // Check for the proper prefix in the IOR.  If the proper prefix isn't
   // in the IOR then it is not an IOR we can use.
@@ -323,7 +330,7 @@ TAO_Connector::make_mprofile (const char *string,
 
   if (ior_index == ACE_CString::npos)
     {
-      ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
       // No colon ':' in the IOR!
     }
   else
@@ -348,10 +355,15 @@ TAO_Connector::make_mprofile (const char *string,
     }
 
   // Tell the MProfile object how many Profiles it should hold.
-  // Mprofile::set(size) returns the number profiles it can hold.
+  // MProfile::set(size) returns the number profiles it can hold.
   if (mprofile.set (profile_count) != ACE_static_cast (int, profile_count))
     {
-      ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (
+        CORBA_SystemException::_tao_minor_code (
+          TAO_MPROFILE_CREATION_ERROR,
+          0),
+        CORBA::COMPLETED_NO),
+      -1);
       // Error while setting the MProfile size!
     }
 
@@ -370,7 +382,7 @@ TAO_Connector::make_mprofile (const char *string,
 
   if (objkey_index == 0 || objkey_index == ACE_CString::npos)
     {
-      ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
       // Failure: No endpoints specified or no object key specified.
     }
 
@@ -401,27 +413,31 @@ TAO_Connector::make_mprofile (const char *string,
           TAO_Profile *profile = 0;
           // Must initialize since pointer is passed as a reference!
 
-          if (this->make_profile (endpoint.c_str (),
-                                  profile,
-                                  ACE_TRY_ENV) != 0)
-            {
-              ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
-              // Failure:  Problem during profile creation
-            }
+          int mp_result = this->make_profile (endpoint.c_str (),
+                                              profile,
+                                              ACE_TRY_ENV);
+
+          ACE_CHECK_RETURN (mp_result);
+          // Failure:  Problem during profile creation
 
           // Create a Profile using the individual endpoint string
 
           // Give up ownership of the profile.
           if (mprofile.give_profile (profile) == -1)
             {
-              ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
+              ACE_THROW_RETURN (CORBA::INV_OBJREF (
+                CORBA_SystemException::_tao_minor_code (
+                  TAO_MPROFILE_CREATION_ERROR,
+                  0),
+                CORBA::COMPLETED_NO),
+              -1);
               // Failure presumably only occurs when MProfile is full!
               // This should never happen.
             }
         }
       else
         {
-          ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
+          ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
           // Unable to seperate endpoints
         }
     }

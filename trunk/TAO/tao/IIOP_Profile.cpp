@@ -28,7 +28,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO_GIOP_Version &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
-    host_ (0),
+    host_ (),
     port_ (0),
     version_ (version),
     object_key_ (object_key),
@@ -46,7 +46,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                                     const TAO_GIOP_Version &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
-    host_ (0),
+    host_ (),
     port_ (port),
     version_ (version),
     object_key_ (object_key),
@@ -54,27 +54,23 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
     hint_ (0),
     orb_core_ (orb_core)
 {
-  if (host)
-    {
-      ACE_NEW (this->host_,
-               char[ACE_OS::strlen (host) + 1]);
-      ACE_OS::strcpy (this->host_, host);
-    }
+  if (host != 0)
+    this->host_ = host;
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile)
   : TAO_Profile (pfile.tag ()),
-    host_(0),
-    port_(pfile.port_),
-    version_(pfile.version_),
-    object_key_(pfile.object_key_),
-    object_addr_(pfile.object_addr_),
-    hint_(0),
+    host_ (),
+    port_ (pfile.port_),
+    version_ (pfile.version_),
+    object_key_ (pfile.object_key_),
+    object_addr_ (pfile.object_addr_),
+    hint_ (0),
     orb_core_ (pfile.orb_core_)
 {
-  ACE_NEW (this->host_,
-           char[ACE_OS::strlen (pfile.host_) + 1]);
-  ACE_OS::strcpy (this->host_, pfile.host_);
+  if (pfile.host_ != 0)
+    this->host_ = pfile.host_;
+
   hint_ = pfile.hint_;
 }
 
@@ -82,7 +78,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string,
                                     TAO_ORB_Core *orb_core,
                                     CORBA::Environment &ACE_TRY_ENV)
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
-    host_ (0),
+    host_ (),
     port_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     object_key_ (),
@@ -96,7 +92,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string,
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_IOP_TAG_INTERNET_IOP),
-    host_ (0),
+    host_ (),
     port_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     object_key_ (),
@@ -109,39 +105,32 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
 int
 TAO_IIOP_Profile::set (const ACE_INET_Addr &addr)
 {
-  char temphost[MAXHOSTNAMELEN + 1];
-  const char *temphost2 = 0;
-
   this->port_ = addr.get_port_number();
 
   if (this->orb_core_->orb_params ()->use_dotted_decimal_addresses ())
     {
-      temphost2 = addr.get_host_addr ();
-      if (temphost2 == 0)
+      const char *temp = addr.get_host_addr ();
+      if (temp == 0)
         return -1;
+      else
+        this->host_ = temp;
     }
   else
     {
+      char temphost[MAXHOSTNAMELEN + 1];
+
       if (addr.get_host_name (temphost,
                               sizeof temphost) != 0)
         return -1;
 
-      temphost2 = temphost;
+      this->host_ = CORBA::string_dup (temphost);
     }
 
-  ACE_NEW_RETURN (this->host_,
-                  char[ACE_OS::strlen (temphost2) + 1],
-                  -1);
-  ACE_OS::strcpy (this->host_, temphost2);
-
   return 0;
-
 }
 
 TAO_IIOP_Profile::~TAO_IIOP_Profile (void)
 {
-  delete [] this->host_;
-  this->host_ = 0;
 }
 
 // return codes:
@@ -170,14 +159,8 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
       }
   }
 
-  if (this->host_)
-    {
-      delete [] this->host_;
-      this->host_ = 0;
-    }
-
   // Get host and port
-  if (cdr.read_string (this->host_) == 0
+  if (cdr.read_string (this->host_.out ()) == 0
       || cdr.read_ushort (this->port_) == 0)
     {
       if (TAO_debug_level > 0)
@@ -189,7 +172,7 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
       return -1;
     }
 
-  this->object_addr_.set (this->port_, this->host_);
+  this->object_addr_.set (this->port_, this->host_.in ());
 
   // ... and object key.
 
@@ -246,29 +229,24 @@ TAO_IIOP_Profile::parse_string (const char *string,
   if (this->version_.major != TAO_DEF_GIOP_MAJOR ||
       this->version_.minor >  TAO_DEF_GIOP_MINOR)
     {
-      ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
     }
 
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
-  CORBA::String_var copy = CORBA::string_dup (string);
+  CORBA::String_var copy (string);
 
   char *start = copy.inout ();
   char *cp = ACE_OS::strchr (start, ':');
 
   if (cp == 0)
     {
-      ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
     }
 
-  if (this->host_)
-    {
-      CORBA::string_free (this->host_);
-      this->host_ = 0;
-    }
+  CORBA::String_var tmp = CORBA::string_alloc (cp - start + 1);
 
-  this->host_ = CORBA::string_alloc (1 + cp - start);
-  for (cp = this->host_; *start != ':'; *cp++ = *start++)
+  for (cp = tmp.inout (); *start != ':'; *cp++ = *start++)
     continue;
 
   *cp = 0; start++; // increment past :
@@ -277,18 +255,23 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
   if (cp == 0)
     {
-      CORBA::string_free (this->host_);
-      ACE_THROW_RETURN (CORBA::MARSHAL (), -1);
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
     }
 
+  this->host_ = tmp._retn ();
   this->port_ = (CORBA::UShort) ACE_OS::atoi (start);
+
+  ACE_DEBUG ((LM_DEBUG, "OSSAMA 0 ----> <%s>\n", this->host_.in ()));
+  ACE_DEBUG ((LM_DEBUG, "OSSAMA 1 ----> <%s>\n", start));
+  ACE_DEBUG ((LM_DEBUG, "OSSAMA 2 ----> <%d>\n", this->port_));
+
   // @@ This call to atoi appears to pass in a string that
   //    still has the object key appended to it.
   //    Shouldn't we actually parse the port from the string
   //    rather than pass a `port/object_key' combined string?
   //                      -Ossama
 
-  this->object_addr_.set (this->port_, this->host_);
+  this->object_addr_.set (this->port_, this->host_.in ());
 
   start = ++cp;  // increment past the /
 
@@ -311,7 +294,7 @@ TAO_IIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
 
   return this->port_ == op->port_
     && this->object_key_ == op->object_key_
-    && ACE_OS::strcmp (this->host_, op->host_) == 0
+    && ACE_OS::strcmp (this->host_.in (), op->host_.in ()) == 0
     && this->version_ == op->version_;
 }
 
@@ -338,38 +321,29 @@ TAO_IIOP_Profile::hash (CORBA::ULong max,
 }
 
 int
-TAO_IIOP_Profile::addr_to_string(char *buffer, size_t length)
+TAO_IIOP_Profile::addr_to_string (char *buffer, size_t length)
 {
-  size_t actual_len = ACE_OS::strlen (this->host_) // chars in host name
-                    + sizeof (':')               // delimiter
-                    + ACE_OS::strlen ("65536")    // max port
-                    + sizeof ('\0');
+  size_t actual_len =
+    ACE_OS::strlen (this->host_.in ()) // chars in host name
+    + sizeof (':')                     // delimiter
+    + ACE_OS::strlen ("65536")         // max port
+    + sizeof ('\0');
+
   if (length < actual_len)
     return -1;
 
   ACE_OS::sprintf (buffer, "%s:%d",
-                   this->host_, port_);
+                   this->host_.in (), this->port_);
+
   return 0;
 }
 
 const char *
 TAO_IIOP_Profile::host (const char *h)
 {
-  if (this->host_)
-    {
-      delete [] this->host_;
-      this->host_ = 0;
-    }
+  this->host_ = h;
 
-  if (h)
-    {
-      ACE_NEW_RETURN (this->host_,
-                      char[ACE_OS::strlen (h) + 1],
-                      0);
-      ACE_OS::strcpy (this->host_, h);
-    }
-
-  return this->host_;
+  return this->host_.in ();
 }
 
 void
@@ -393,19 +367,7 @@ TAO_IIOP_Profile::operator= (const TAO_IIOP_Profile &src)
 
   this->port_ = src.port_;
 
-  if (this->host_)
-    {
-      delete [] this->host_;
-      this->host_ = 0;
-    }
-
-  if (src.host_)
-    {
-      ACE_NEW_RETURN (this->host_,
-                      char[ACE_OS::strlen (src.host_) + 1],
-                      *this);
-      ACE_OS::strcpy (this->host_, src.host_);
-    }
+  this->host_ = src.host_;
 
   return *this;
 }
@@ -423,7 +385,7 @@ TAO_IIOP_Profile::to_string (CORBA::Environment &)
                   1 /* decimal point */ +
                   1 /* minor version */ +
                   1 /* `@' character */ +
-                  ACE_OS::strlen (this->host_) +
+                  ACE_OS::strlen (this->host_.in ()) +
                   1 /* colon separator */ +
                   5 /* port number */ +
                   1 /* object key separator */ +
@@ -439,7 +401,7 @@ TAO_IIOP_Profile::to_string (CORBA::Environment &)
                    ::prefix_,
                    digits [this->version_.major],
                    digits [this->version_.minor],
-                   this->host_,
+                   this->host_.in (),
                    this->port_,
                    this->object_key_delimiter,
                    key.in ());
@@ -474,7 +436,7 @@ TAO_IIOP_Profile::encode (TAO_OutputCDR &stream) const
   encap.write_octet (this->version_.minor);
 
   // STRING hostname from profile
-  encap.write_string (this->host_);
+  encap.write_string (this->host_.in ());
 
   // UNSIGNED SHORT port number
   encap.write_ushort (this->port_);

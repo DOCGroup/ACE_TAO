@@ -300,11 +300,13 @@ TAO_UIOP_Connector::make_profile (const char *endpoint,
   //
   //    //rendezvous_point|object_key
 
-  ACE_NEW_RETURN (profile,
-                  TAO_UIOP_Profile (endpoint,
-                                    this->orb_core_,
-                                    ACE_TRY_ENV),
-                  -1);
+  ACE_NEW_THROW_EX (profile,
+                    TAO_UIOP_Profile (endpoint,
+                                      this->orb_core_,
+                                      ACE_TRY_ENV),
+                    CORBA::NO_MEMORY ());
+
+  ACE_CHECK_RETURN (-1);
 
   return 0;  // Success
 }
