@@ -1,3 +1,9 @@
+Sat May  3 09:35:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/orbconf.h:
+	* tao/default_resource.cpp: Added a #if option to select lazy
+	  resource strategy at compile time.
+
 Fri May  2 12:01:45 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
