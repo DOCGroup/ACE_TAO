@@ -117,8 +117,6 @@ int
 MarketFeed_i::send_market_status (const char *stock_name,
 				  long value)
 {
-  CORBA::Environment TAO_TRY_ENV;
-
   TAO_TRY
     {
       // Make the RMI.

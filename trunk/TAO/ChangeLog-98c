@@ -1,3 +1,14 @@
+Tue Oct  6 20:28:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/try_macros.h: 
+	  The TAO_TRY macro generates a new do/while block even for the
+	  native C++ exception case, this is more consistent with the
+	  alternative mapping.
+
+	* examples/Callback_Quoter/MarketFeed_i.cpp: 
+	* examples/Callback_Quoter/Client_i.cpp: 
+	  Removed instantiations of TAO_TRY_ENV because TAO_TRY does it
+	  for us.
 
 Tue Oct  6 20:05:55 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
