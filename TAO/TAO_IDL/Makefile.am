@@ -44,3 +44,10 @@ tags:
 	rm -f TAGS
 	find . -name "*.h" -print | etags -a --c++ -
 	find . -name "*.cpp" -print | etags -a -
+
+## Clean up some additional files/directories possibly created during
+## the configure script tests.
+clean-local:
+	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
+	-rm -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations
+

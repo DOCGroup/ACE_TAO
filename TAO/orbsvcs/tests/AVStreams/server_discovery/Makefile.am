@@ -50,3 +50,10 @@ noinst_DATA = \
         www1.gif
 
 EXTRA_DIST = AV_Demo README $(IDL_SOURCES) $(JAVA_SOURCES) $(noinst_DATA)
+
+## Clean up some additional files/directories possibly created during
+## the configure script tests.
+clean-local:
+	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
+	-rm -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations
+
