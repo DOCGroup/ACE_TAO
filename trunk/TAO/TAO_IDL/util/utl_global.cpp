@@ -916,8 +916,7 @@ IDL_GlobalData::update_prefix (char *filename)
 {
   ACE_CString tmp ("", 0, 0);
   ACE_CString fn (filename, 0, 0);
-  int result =
-    this->file_prefixes_.trybind (fn, tmp);
+  (void) this->file_prefixes_.trybind (fn, tmp);
   char *trash = 0;
   this->pragma_prefixes_.pop (trash);
   delete [] trash;
