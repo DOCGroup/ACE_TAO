@@ -30,12 +30,15 @@ static char *message = "POA rules!!";
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:f:m:");
+  ACE_Get_Opt get_opts (argc, argv, "dk:f:m:");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'd':
+	TAO_debug_level++;
+	break;
       case 'k':
         iorfile = ACE_OS::strdup (get_opts.optarg);
         break;
