@@ -27,6 +27,8 @@ include		$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include		$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
+realclean: clean
+	-/bin/rm -rf libDLL_Test.$(SOEXT)
 #----------------------------------------------------------------------------
 #	Local targets
 #----------------------------------------------------------------------------
