@@ -1,3 +1,46 @@
+Fri Oct 13 21:35:52 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/RTCORBA/RTCORBA_tests.dsw
+	* tests/RTCORBA/Makefile.bor
+	* tests/RTCORBA/Makefile:
+	* tests/RTCORBA/README:
+
+	  Added Client_Protocol test.
+
+	* tests/RTCORBA/Client_Protocol/Makefile:
+
+	  Generated dependencies.
+
+	* tests/RTCORBA/Client_Protocol/run_test.pl
+	* tests/RTCORBA/Client_Protocol/README:
+
+	  Updated.
+
+	* tests/RTCORBA/Client_Protocol/client.cpp
+	* tests/RTCORBA/Client_Protocol/server.cpp:
+
+	  Fixed compile warnings/errors.
+
+	* tests/RTCORBA/Client_Protocol/server.dsp
+	* tests/RTCORBA/Client_Protocol/client.dsp:
+
+	  Changed project names.
+
+	* tao/IIOP_Connector.cpp (connect)
+	* tao/UIOP_Connector.cpp (connect)
+	* tao/SHMIOP_Connector.cpp (connect)
+	* tao/orbsvcs/orbsvcs/SSLIOP_Connector.cpp (connect)
+	* tao/Connector_Registry.cpp (connect):
+
+	  Added debugging message.
+
+	* tests/Endpoint_Per_Priority/client.cpp
+	* tests/Endpoint_Per_Priority/server.cpp
+	* performance-tests/RTCORBA/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp
+	* performance-tests/RTCORBA/Multiple_Endpoints/Endpoint_Per_Priority/server.cpp:
+
+	  Compile tests only if TAO::ClientPriorityPolicy is enabled.
+
 Fri Oct 13 20:03:01 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/RTCORBA/Client_Protocol/Client_Protocol.dsw

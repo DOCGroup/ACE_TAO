@@ -8,6 +8,8 @@
 
 ACE_RCSID(TPP, server, "$Id$")
 
+#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
+
 const char *ior_output_file = "test.ior";
 int nthreads = 1;
 
@@ -149,3 +151,14 @@ main (int argc, char *argv[])
 
   return 0;
 }
+
+#else /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
+
+int
+main (int argc, char *argv[])
+{
+  ACE_ERROR_RETURN ((LM_ERROR,
+          "\n TAO::ClientPriorityPolicy must be enabled to run this test!\n"),
+                    1);
+}
+#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */

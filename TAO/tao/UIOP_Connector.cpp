@@ -469,6 +469,11 @@ TAO_UIOP_Connector::connect (TAO_Endpoint *endpoint,
                              ACE_Time_Value *max_wait_time,
                              CORBA::Environment &)
 {
+  if (TAO_debug_level > 0)
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
+                  ACE_TEXT ("looking for UIOP connection.\n")));
+
   if (endpoint->tag () != TAO_TAG_UIOP_PROFILE)
     return -1;
 
