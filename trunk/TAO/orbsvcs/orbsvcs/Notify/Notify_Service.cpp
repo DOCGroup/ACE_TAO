@@ -1,13 +1,14 @@
 // $Id$
 
 #include "Notify_Service.h"
+#include "Builder.h"
+#include "Properties.h"
+#include "Factory.h"
 
 #include "ace/Sched_Params.h"
 #include "ace/Arg_Shifter.h"
 #include "tao/ORB_Core.h"
-#include "Builder.h"
-#include "Properties.h"
-#include "Factory.h"
+#include "tao/debug.h"
 
 ACE_RCSID(RT_Notify, TAO_NS_Notify_Service, "$Id$")
 

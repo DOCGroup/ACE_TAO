@@ -1,3 +1,9 @@
+Sun Nov  3 10:18:15 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Service.cpp: Fixed a compile error
+	  with minimum builds. Rearranged includes to have local includes
+	  first.
+
 Sun Nov 03 11:00:27 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/CosNotification.bor:
