@@ -149,6 +149,9 @@ DCCFLAGS        += -g
 DLD             = $(CXX)
 
 
+#### Sun CC-specific "Pure virtual finction called" bug fix trigger.
+CPPFLAGS       += -DSUN_CC_HAS_PVFC_BUG
+
 #### Exception handling breaks on MP machines prior to Sun C++ 4.2
 #### with jumbo patch 104631-02, see ace/config-sunos5.5.h.
 #### If you are using a version of Sun C++ prior to 4,2, or haven't
