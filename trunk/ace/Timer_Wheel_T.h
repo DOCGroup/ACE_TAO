@@ -36,7 +36,7 @@ class ACE_Timer_Wheel_T;
  * in the order of timeout values.
  */
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
-class ACE_Timer_Wheel_Iterator_T 
+class ACE_Timer_Wheel_Iterator_T
   : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCTOR, ACE_LOCK>
 {
 public:
@@ -53,7 +53,7 @@ public:
   virtual void next (void);
 
   /// Returns true when there are no more nodes in the sequence
-  virtual int isdone (void);
+  virtual int isdone (void) const;
 
   /// Returns the node at the current position in the sequence
   virtual ACE_Timer_Node_T<TYPE> *item (void);
@@ -121,7 +121,7 @@ public:
   virtual long schedule (const TYPE &type,
                          const void *act,
                          const ACE_Time_Value &delay,
-                         const ACE_Time_Value &interval 
+                         const ACE_Time_Value &interval
                            = ACE_Time_Value::zero);
 
   /// Changes the interval of a timer (and can make it periodic or non
@@ -196,7 +196,7 @@ private:
     void operator= (const ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK> &))
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE) 
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 #include "ace/Timer_Wheel_T.cpp"
 #endif /* !ACE_HAS_BROKEN_HPUX_TEMPLATES */

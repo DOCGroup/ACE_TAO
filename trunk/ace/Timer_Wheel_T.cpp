@@ -16,14 +16,14 @@ ACE_RCSID(ace, Timer_Wheel_T, "$Id$")
 
 
 /**
- * Just initializes the iterator with a ACE_Timer_Wheel_T and then calls 
+ * Just initializes the iterator with a ACE_Timer_Wheel_T and then calls
  * first() to initialize the rest of itself.
- * 
+ *
  * @param wheel A reference for a timer queue to iterate over
  */
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
-ACE_Timer_Wheel_Iterator_T<TYPE, 
-                           FUNCTOR, 
+ACE_Timer_Wheel_Iterator_T<TYPE,
+                           FUNCTOR,
                            ACE_LOCK>::ACE_Timer_Wheel_Iterator_T (
   ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK> &wheel
   )
@@ -37,8 +37,8 @@ ACE_Timer_Wheel_Iterator_T<TYPE,
  * Destructor, at this level does nothing.
  */
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
-ACE_Timer_Wheel_Iterator_T<TYPE, 
-                           FUNCTOR, 
+ACE_Timer_Wheel_Iterator_T<TYPE,
+                           FUNCTOR,
                            ACE_LOCK>::~ACE_Timer_Wheel_Iterator_T (void)
 {
 }
@@ -48,7 +48,7 @@ ACE_Timer_Wheel_Iterator_T<TYPE,
  * Positions the iterator at the first position in the timing wheel
  * that contains something. pos_ will be set to the position of this entry
  * and list_item_ will point to the first entry in that position.  Since
- * this is an iterator, 
+ * this is an iterator,
  *
  * If the wheel is empty, pos_ will be equal timer_wheel_.wheel_size_ and
  * list_item_ would be 0.
@@ -61,7 +61,7 @@ ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::first (void)
        this->pos_++)
     {
       // Skip over empty entries
-      if (this->timer_wheel_.wheel_[this->pos_]->get_next () 
+      if (this->timer_wheel_.wheel_[this->pos_]->get_next ()
           != this->timer_wheel_.wheel_[this->pos_])
         {
           this->list_item_ =
@@ -96,7 +96,7 @@ ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::next (void)
            this->pos_++)
         {
           // Check for an empty entry
-          if (this->timer_wheel_.wheel_[this->pos_]->get_next () 
+          if (this->timer_wheel_.wheel_[this->pos_]->get_next ()
               != this->timer_wheel_.wheel_[this->pos_])
             {
               this->list_item_ =
@@ -114,7 +114,7 @@ ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::next (void)
  * @return True when we there isn't anymore items (when list_item_ == 0)
  */
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
-ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::isdone (void)
+ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::isdone (void) const
 {
   return this->list_item_ == 0;
 }
