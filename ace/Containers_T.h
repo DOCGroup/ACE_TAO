@@ -1711,10 +1711,35 @@ private:
 /**
  * @class ACE_Array
  *
- * @brief Implement a dynamic array class.
+ * @brief A dynamic array class.
  *
- * This class extends ACE_Array_Base, it provides comparison
- * operators.
+ * This class extends ACE_Array_Base, adding comparison operators.
+ *
+ * <b> Requirements and Performance Characteristics</b>
+ *   - Internal Structure
+ *       Dynamic array
+ *   - Duplicates allowed?
+ *       Yes
+ *   - Random access allowed?
+ *       Yes
+ *   - Search speed
+ *       N/A
+ *   - Insert/replace speed
+ *       O(1)
+ *   - Iterator still valid after change to container?
+ *       - In general, yes.
+ *       - If array size is changed during iteration, no.
+ *   - Frees memory for removed elements?
+ *       No
+ *   - Items inserted by
+ *       Value
+ *   - Requirements for contained type
+ *       -# Default constructor
+ *       -# Copy constructor
+ *       -# operator=
+ *       -# operator!=
+ *
+ * @sa ACE_Array_Base. This class inherits its operations and requirements.
  */
 template <class T>
 class ACE_Array : public ACE_Array_Base<T>
