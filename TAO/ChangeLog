@@ -41,6 +41,7 @@ Tue Dec 23 21:24:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/tao.mpc:
 	* tao/Makefile.bor:
 	* tao/Makefile.tao:
+	* tao/TAO.dsp:
 
 	  Added the new files into the various projects.
 
