@@ -1,3 +1,21 @@
+Mon May 11 05:14:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-WinCE.h: Added ACE_HAS_NON_STATIC_OBJECT_MANAGER.  CE
+	  console programs have to set this flag because the main
+	  functions is actually renamed and running in a threads.
+
+	* tests/test_config.h: Excluded class and macros to redirect
+	  debugging messages to files under CE.  This make debugging a bit
+	  easier but we should eventually put them back under CE.
+
+	* tests/Map_Manager_Test.cpp: Made CE friendly.
+
+	* ace/Hash_Map_Manager.cpp: Some ACE_ERROR were not CE friendly. 
+	
+	* ace/Profile_Timer.{h,i}:
+	* ace/Synch.{h,i}: Moved inline function definitions to Synch.i
+	  file.  Windows CE can't grok any inline at all.
+
 Mon May 11 02:43:45 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Misc/childbirth_time.cpp (main): Added
