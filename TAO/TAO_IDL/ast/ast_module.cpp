@@ -1000,7 +1000,7 @@ AST_Module::fe_add_constant (AST_Constant *t)
         {
           idl_global->err ()->redefinition_in_scope (t,
                                                      d);
-          return NULL;
+          return 0;
         }
     }
 
