@@ -69,7 +69,7 @@ project(TAO_IDL_FE) : acelib, core, tao_output, crosscompile {
     // Override the template value for optimize.  Building the frontend
     // with optimization turned on doesn't seem to work (at least not with
     // vc6 or vc71).
-    // optimize =
+    optimize =
   }
 
   Source_Files {
