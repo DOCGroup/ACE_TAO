@@ -19,7 +19,7 @@ ACE_OS_Dirent::opendir (const ACE_TCHAR *filename)
   DIR *dir;
   ACE_NEW_RETURN (dir, DIR, 0);
   ACE_NEW_RETURN (dir->directory_name_,
-                  ACE_TCHAR[ACE_OS_String::strlen (filename)],
+                  ACE_TCHAR[ACE_OS_String::strlen (filename)+1],
                   0);
   ACE_OS_String::strcpy (dir->directory_name_, filename);
   dir->current_handle_ = INVALID_HANDLE_VALUE;
