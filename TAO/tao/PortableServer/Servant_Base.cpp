@@ -230,7 +230,6 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest &req,
       // invoke the right operation on the skeleton class
       // (<derived_this>), and marshal any results.
       skel (req,
-            derived_this,
             servant_upcall
             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

@@ -736,12 +736,11 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
   TAO::ServerRequestInterceptor_Adapter sri_adapter (request);
 
   TAO::ServerRequestInfo ri (request,
-                             0,
-                             0,
-                             0,
-                             0,
-                             0,
-                             0);
+                             0,  // args
+                             0,  // nargs
+                             0,  // servant_upcall
+                             0,  // exceptions
+                             0); // nexceptions
 
   ACE_TRY
     {

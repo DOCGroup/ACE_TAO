@@ -11,7 +11,6 @@ TAO::ServerRequestInfo::ServerRequestInfo (
   TAO::Argument * const * args,
   size_t nargs,
   void * servant_upcall,
-  PortableServer::ServantBase * servant,
   CORBA::TypeCode_ptr const exceptions[],
   size_t nexceptions)
   : server_request_ (server_request)
@@ -19,7 +18,6 @@ TAO::ServerRequestInfo::ServerRequestInfo (
   , nargs_ (nargs)
   , servant_upcall_ (
       static_cast<TAO_Object_Adapter::Servant_Upcall *> (servant_upcall))
-  , servant_ (servant)
   , exceptions_ (exceptions)
   , nexceptions_ (nexceptions)
   , caught_exception_ (0)

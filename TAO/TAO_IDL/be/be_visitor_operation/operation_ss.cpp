@@ -182,9 +182,8 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
 
   *os << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
-      << "TAO_ServerRequest &server_request," << be_nl
-      << "void *servant," << be_nl
-      << "void * TAO_INTERCEPTOR (servant_upcall)" << be_nl
+      << "TAO_ServerRequest & server_request," << be_nl
+      << "void * servant_upcall" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
 
@@ -192,6 +191,11 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   // argument types is "native", we do not generate any skeleton
   // last argument - is always CORBA::Environment.
   *os << "{" << be_idt_nl;
+
+  // Generate the local class encapsulating the actual servant upcall
+  // command/invocation.
+  be_visitor_operation_upcall_command_ss upcall_command_visitor (this->ctx_);
+  upcall_command_visitor.visit_operation (node);
 
   // Generate all the tables and other pre-skel info.
   if (this->gen_pre_skel_info (node) == -1)
@@ -202,14 +206,6 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
                          "gen_pre_skel_info failed\n"),
                         -1);
     }
-
-  // Get the right object implementation.
-  *os << intf->full_skel_name () << " * const impl =" << be_idt_nl
-      << "static_cast<" << be_idt << be_idt_nl
-      << intf->full_skel_name () << " *> (" << be_nl
-      << "servant" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl << be_nl;
-
 
   // Declare return type helper class.
 
@@ -246,12 +242,14 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   *os << "static size_t const nargs = "
       << (node->argument_count () + 1) << ";" << be_nl << be_nl;
 
+  // Get the right object implementation.
+  *os << intf->full_skel_name () << " * const impl =" << be_idt_nl
+      << "static_cast<" << be_idt << be_idt_nl
+      << intf->full_skel_name () << " *> (" << be_nl
+      << "servant_upcall->servant ()" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl << be_nl;
 
-  // Generate the local class encapsulating the actual servant upcall
-  // command/invocation.
-  be_visitor_operation_upcall_command_ss upcall_command_visitor (this->ctx_);
-  upcall_command_visitor.visit_operation (node);
-
+  // Upcall_Command instantiation.
   *os << be_nl
       << "Upcall_Command command (" << be_idt_nl
       << "  impl";
