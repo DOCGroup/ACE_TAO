@@ -31,6 +31,28 @@ void ECT_Driver::Latency_Stats::sample (ACE_hrtime_t sample)
 
 // ****************************************************************
 
+ACE_INLINE void
+ECT_Driver::Throughput_Stats::start (void)
+{
+  this->done_ = 0;
+  this->start_ = ACE_OS::gethrtime ();
+}
+
+ACE_INLINE void
+ECT_Driver::Throughput_Stats::stop (void)
+{
+  this->done_ = 1;
+  this->stop_ = ACE_OS::gethrtime ();
+}
+
+ACE_INLINE void
+ECT_Driver::Throughput_Stats::sample (void)
+{
+  this->n_++;
+}
+
+// ****************************************************************
+
 ACE_INLINE
 void ECT_Driver::end_to_end (ACE_hrtime_t sample)
 {
@@ -54,3 +76,4 @@ void ECT_Driver::ec_to_consumer (ACE_hrtime_t sample)
 {
   this->ec_to_consumer_.sample (sample);
 }
+

@@ -49,7 +49,8 @@ ECT_Throughput::ECT_Throughput (void)
     active_count_ (0),
     reactive_ec_ (0),
     new_ec_ (1),
-    ec_concurrency_hwm_ (1)
+    ec_concurrency_hwm_ (1),
+    thr_create_flags_ (THR_NEW_LWP|THR_BOUND|THR_SCHED_FIFO)
 {
 }
 
@@ -141,9 +142,12 @@ ECT_Throughput::run (int argc, char* argv[])
                                                   ACE_SCOPE_PROCESS)) != 0)
         {
           if (ACE_OS::last_error () == EPERM)
-            ACE_DEBUG ((LM_DEBUG,
-                        "%s: user is not superuser, "
-                        "so remain in time-sharing class\n", argv[0]));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "%s: user is not superuser, "
+                          "so remain in time-sharing class\n", argv[0]));
+              this->thr_create_flags_ = THR_NEW_LWP;
+            }
           else
             ACE_ERROR ((LM_ERROR,
                         "%s: ACE_OS::sched_params failed\n", argv[0]));
@@ -264,16 +268,6 @@ ECT_Throughput::run (int argc, char* argv[])
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "suppliers are active\n"));
-
-      ACE_DEBUG ((LM_DEBUG, "running the event loop\n"));
-      if (this->orb_->run () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
-      ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
-
-#if 0
-      naming_context->unbind (schedule_name, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-#endif
 
       // Wait for the supplier threads...
       if (ACE_Thread_Manager::instance ()->wait () == -1)
@@ -419,8 +413,13 @@ ECT_Throughput::activate_suppliers (CORBA::Environment &)
 
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
-      this->suppliers_[i]->activate (THR_BOUND|THR_SCHED_FIFO,
-                                     1, 0, min_priority);
+      if (this->suppliers_[i]->activate (this->thr_create_flags_,
+                                         1, 0, min_priority) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Cannot activate thread for supplier %d\n",
+                      i));
+        }
     }
 }
 
@@ -447,20 +446,30 @@ ECT_Throughput::disconnect_consumers (CORBA::Environment &TAO_IN_ENV)
 void
 ECT_Throughput::dump_results (void)
 {
+  ECT_Driver::Throughput_Stats consumers;
+  ECT_Driver::Latency_Stats latency;
   for (int j = 0; j < this->n_consumers_; ++j)
     {
       char buf[BUFSIZ];
       ACE_OS::sprintf (buf, "consumer_%02.2d", j);
 
       this->consumers_[j]->dump_results (buf);
+      this->consumers_[j]->accumulate (consumers);
+      this->consumers_[j]->accumulate (latency);
     }
+  consumers.dump_results ("ECT_Consumer", "throughput");
+  latency.dump_results ("ECT_Consumer", "latency");
+
+  ECT_Driver::Throughput_Stats suppliers;
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       char buf[BUFSIZ];
       ACE_OS::sprintf (buf, "supplier_%02.2d", i);
 
       this->suppliers_[i]->dump_results (buf);
+      this->suppliers_[i]->accumulate (suppliers);
     }
+  suppliers.dump_results ("ECT_Supplier", "accumulated");
   this->dump_latency_results ("Latency");
 }
 
@@ -469,7 +478,7 @@ ECT_Throughput::parse_args (int argc, char *argv [])
 {
   ACE_Get_Opt get_opt (argc, argv, "rdc:s:u:n:t:b:h:l:p:m:w:");
   int opt;
-
+  
   while ((opt = get_opt ()) != EOF)
     {
       switch (opt)

@@ -1,3 +1,36 @@
+Mon Apr 26 09:16:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Throughput/ECT_Driver.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Driver.i:
+	* orbsvcs/tests/EC_Throughput/ECT_Driver.cpp:
+	  Encapsulated throughput measurements in a helper class.
+	  Added support for accumulating several latency measurements.
+
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+	  Added support for accumulated throughput and per-consumer
+	  latency.
+
+	* orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp:
+	  Fine tuned.
+
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp:
+	  We should not raise an exception when removing a supplier,
+	  because we would need to filter out supplier removal too. It is
+	  enough to raise the exception from the SupplierAdmin module.
+
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+	  Added debugging messages (currently commented out).
+
+	* orbsvcs/orbsvcs/Event/EC_Filter.cpp:
+	  Added some @@ comments.
+
 Mon Apr 26 05:35:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/TAO_Internal.{h,cpp}: Changed *_args to of type const char

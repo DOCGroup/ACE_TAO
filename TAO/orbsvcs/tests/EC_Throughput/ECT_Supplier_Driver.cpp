@@ -257,13 +257,16 @@ ECT_Supplier_Driver::disconnect_suppliers (CORBA::Environment &TAO_IN_ENV)
 void
 ECT_Supplier_Driver::dump_results (void)
 {
+  ECT_Driver::Throughput_Stats throughput;
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       char buf[BUFSIZ];
       ACE_OS::sprintf (buf, "supplier_%02.2d", i);
 
       this->suppliers_[i]->dump_results (buf);
+      this->suppliers_[i]->accumulate (throughput);
     }
+  throughput.dump_results ("ECT_Supplier", "accumulated");
 }
 
 int

@@ -163,7 +163,7 @@ Test_Supplier::svc ()
       event[0].data.payload.replace (this->event_size_,
                                      &mb);
 
-      this->timer_.start ();
+      this->throughput_.start ();
       for (int i = 0; i < this->burst_count_; ++i)
         {
           for (int j = 0; j < this->burst_size_; ++j)
@@ -179,6 +179,7 @@ Test_Supplier::svc ()
 
               TAO_CHECK_ENV;
             }
+          this->throughput_.sample ();
           ACE_OS::sleep (tv);
         }
 
@@ -186,7 +187,8 @@ Test_Supplier::svc ()
       event[0].header.type = ACE_ES_EVENT_SHUTDOWN;
       this->consumer_proxy ()->push(event, TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      this->timer_.stop ();
+      this->throughput_.sample ();
+      this->throughput_.stop ();
 
     }
   TAO_CATCH (CORBA::SystemException, sys_ex)
@@ -198,6 +200,10 @@ Test_Supplier::svc ()
       TAO_TRY_ENV.print_exception ("NON SYS EX");
     }
   TAO_ENDTRY;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Supplier %4.4x completed\n",
+              this->supplier_id_));
   return 0;
 }
 
@@ -220,22 +226,13 @@ Test_Supplier::consumer_proxy (void)
 void
 Test_Supplier::dump_results (const char* name)
 {
-  ACE_Time_Value tv;
-  this->timer_.elapsed_time (tv);
+  this->throughput_.dump_results ("ECT_Supplier", name);
+}
 
-  int event_count = this->burst_count_ * this->burst_size_ + 1;
-  double f = 1.0 / (tv.sec () + tv.usec () / 1000000.0);
-  double eps = event_count * f;
-
-  ACE_DEBUG ((LM_DEBUG,
-              "ECT_Supplier (%s):\n"
-              "    Total time: %d.%08.8d (secs.usecs)\n"
-              "    Total events: %d\n"
-              "    Events per second: %.3f\n",
-              name,
-              tv.sec (), tv.usec (),
-              event_count,
-              eps));
+void
+Test_Supplier::accumulate (ECT_Driver::Throughput_Stats& stats) const
+{
+  stats.accumulate (this->throughput_);
 }
 
 // ****************************************************************
