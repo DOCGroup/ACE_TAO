@@ -62,7 +62,11 @@ class TAO_SSLIOP_Export TAO_SSLIOP_Connect_Creation_Strategy : public ACE_Creati
   //
 public:
   TAO_SSLIOP_Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
-                                      TAO_ORB_Core* orb_core = 0);
+                                        TAO_ORB_Core* orb_core = 0,
+                                        void *arg = 0);
+  // Constructor. <arg> parameter is used to pass any special
+  // state/info to the service handler upon creation.  Currently used
+  // to pass protocol configuration properties.
 
   virtual int make_svc_handler (TAO_SSLIOP_Client_Connection_Handler *&sh);
   // Makes TAO_SSLIOP_Client_Connection_Handlers
@@ -70,6 +74,9 @@ public:
 private:
   TAO_ORB_Core* orb_core_;
   // The ORB
+
+  void *arg_;
+  // Some info/state to be passed to the service handler we create.
 };
 
 // ****************************************************************

@@ -82,10 +82,6 @@ private:
   int parse_options (const char *options);
   // Parse protocol specific options.
 
-  int init_tcp_properties (void);
-  // Obtain TCP properties that must be used by this acceptor, i.e.,
-  // initialize <tcp_properties_>.
-
   int create_rt_mprofile (const TAO_ObjectKey &object_key,
                           TAO_MProfile &mprofile);
   // Rather than creating a separate profile for each endpoint, this
@@ -104,10 +100,6 @@ private:
 
   SSLIOP::SSL ssl_component_;
   // The SSL component.
-
-  TAO_SSLIOP_Handler_Base::TCP_Properties tcp_properties_;
-  // TCP configuration properties to be used for all connections
-  // opened by this acceptor.
 };
 
 #if defined(__ACE_INLINE__)

@@ -318,9 +318,11 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 
 TAO_SSLIOP_Connect_Creation_Strategy::
   TAO_SSLIOP_Connect_Creation_Strategy (ACE_Thread_Manager* t,
-                                      TAO_ORB_Core *orb_core)
+                                        TAO_ORB_Core *orb_core,
+                                        void *arg)
     :  ACE_Creation_Strategy<TAO_SSLIOP_Client_Connection_Handler> (t),
-       orb_core_ (orb_core)
+       orb_core_ (orb_core),
+       arg_ (arg)
 {
 }
 
@@ -332,7 +334,8 @@ TAO_SSLIOP_Connect_Creation_Strategy::make_svc_handler
     ACE_NEW_RETURN (sh,
                     TAO_SSLIOP_Client_Connection_Handler
                     (this->orb_core_->thr_mgr (),
-                     this->orb_core_),
+                     this->orb_core_,
+                     this->arg_),
                     -1);
   return 0;
 }
@@ -369,7 +372,8 @@ TAO_SSLIOP_Connector::open (TAO_ORB_Core *orb_core)
   ACE_NEW_RETURN (connect_creation_strategy,
                   TAO_SSLIOP_Connect_Creation_Strategy
                   (this->orb_core_->thr_mgr (),
-                   this->orb_core_),
+                   this->orb_core_,
+                   &(this->tcp_properties_)),
                   -1);
 
   auto_ptr<TAO_SSLIOP_Connect_Creation_Strategy>
