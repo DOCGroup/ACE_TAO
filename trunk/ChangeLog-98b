@@ -3,6 +3,10 @@ Wed Sep 02 10:07:15 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Name_Request_Reply.{h,cpp}: reverted ACE_SUCCESS to SUCCESS
           because other ACE code depended on it.
 
+        * ace/Object_Manager.cpp (~ACE_Object_Manager_Base): moved
+          internal_lock_ deletion inside ACE_MT_SAFE protection.  Thanks
+          to Dongwook Kim <baksoo@dbserver.kaist.ac.kr> for reporting this.
+
 Wed Sep 02 09:34:32 1998  Oliver M. Kellogg <Oliver.Kellogg@vs.dasa.de>
 
         * ace/OS.i (sigwait): use __sigwaitd10 with g++ on DU 4.0.
