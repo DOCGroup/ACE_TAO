@@ -2447,6 +2447,7 @@ param_type_spec
 	  $$ = idl_global->scopes()->bottom()->lookup_primitive_type($1);
 	}
         | string_type_spec
+	| wstring_type_spec
         | scoped_name
 	{
 	  UTL_Scope	*s = idl_global->scopes()->top_non_null();
