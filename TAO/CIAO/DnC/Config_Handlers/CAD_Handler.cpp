@@ -8,6 +8,7 @@
 #include "Property_Handler.h"
 #include "Requirement_Handler.h"
 #include "CompPkgDesc_Handler.h"
+#include "Process_Element.h"
 
 #include <iostream>
 

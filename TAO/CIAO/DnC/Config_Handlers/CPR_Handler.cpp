@@ -3,8 +3,9 @@
 #include "tao/Exception.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
-n
+
 #include "CPR_Handler.h"
+#include "Process_Basic_Type.h"
 
 #include <iostream>
 

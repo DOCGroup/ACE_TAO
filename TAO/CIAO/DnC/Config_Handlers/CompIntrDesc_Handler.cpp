@@ -1,20 +1,13 @@
-//==================================================================
-/**
- *  @file  CCD_Handler.cpp
- *
- *  $Id$
- *
- *  @author Emre Turkay  <turkaye@dre.vanderbilt.edu>
- */
-//=====================================================================
+//$Id$
 
-#ifndef CCD_HANDLER_C
-#define CCD_HANDLER_C
+#ifndef CompIntrDesc_HANDLER_C
+#define CompIntrDesc_HANDLER_C
 
 #include "tao/Exception.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 
+#include "Process_Basic_Type.h"
 #include "Property_Handler.h"
 #include "CompIntrDesc_Handler.h"
 #include "DT_Handler.h"
@@ -26,7 +19,7 @@ using std::endl;
 BEGIN_DEPLOYMENT_NAMESPACE
 
 /// handle the package configuration and populate it
-void CCD_Handler::process_ComponentInterfaceDescription
+void CompIntrDesc_Handler::process_ComponentInterfaceDescription
 (::Deployment::ComponentInterfaceDescription &ccd)
 {
   for (DOMNode* node = this->iter_->nextNode();
@@ -76,7 +69,7 @@ void CCD_Handler::process_ComponentInterfaceDescription
 }
 
 /// process component property element
-void CCD_Handler::process_comp_property (DOMNodeIterator* iter,
+void CompIntrDesc_Handler::process_comp_property (DOMNodeIterator* iter,
                                          Deployment::ComponentPropertyDescription& property)
 {
   for (DOMNode* node = iter->nextNode();
@@ -104,7 +97,7 @@ void CCD_Handler::process_comp_property (DOMNodeIterator* iter,
 }
 
 /// process port element
-void CCD_Handler::process_port (DOMNodeIterator* iter,
+void CompIntrDesc_Handler::process_port (DOMNodeIterator* iter,
                                 Deployment::ComponentPortDescription& port)
 {
   for (DOMNode* node = iter->nextNode();
@@ -140,4 +133,4 @@ void CCD_Handler::process_port (DOMNodeIterator* iter,
 
 END_DEPLOYMENT_NAMESPACE
 
-#endif /* CCD_HANDLER_C */
+#endif /* CompIntrDesc_HANDLER_C */

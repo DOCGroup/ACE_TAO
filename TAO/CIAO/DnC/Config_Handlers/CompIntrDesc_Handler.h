@@ -1,15 +1,7 @@
-//==================================================================
-/**
- *  @file  CCD_Handler.h
- *
- *  $Id$
- *
- *  @author Emre Turkay  <turkaye@dre.vanderbilt.edu>
- */
-//=====================================================================
+//$Id$
 
-#ifndef CCD_HANDLER_H
-#define CCD_HANDLER_H
+#ifndef COMPINTRDESC_HANDLER_H
+#define COMPINTRDESC_HANDLER_H
 #include /**/ "ace/pre.h"
 
 #include "DeploymentC.h"
@@ -60,124 +52,33 @@ using xercesc::DOMNamedNodeMap;
 
 BEGIN_DEPLOYMENT_NAMESPACE
 
-class CCD_Handler: public Basic_Handler
+class CompIntrDesc_Handler: public Basic_Handler
 {
 public:
 
   /// constructor
-  CCD_Handler (DOMDocument* doc, unsigned long filter_)
+  CompIntrDesc_Handler (DOMDocument* doc, unsigned long filter_)
     : Basic_Handler (doc, filter_) { }
 
   /// constructor
-  CCD_Handler (DOMNodeIterator* iter, bool release = false)
+  CompIntrDesc_Handler (DOMNodeIterator* iter, bool release = false)
     : Basic_Handler (iter, release) { };
 
   /// Process the component package description
   void process_ComponentInterfaceDescription (::Deployment::ComponentInterfaceDescription &CompIntrDesc);
 
 protected:
-  /// Process the label attribute
-  void process_label (const XMLCh* label,
-                      Deployment::ComponentInterfaceDescription &compintrdesc);
-
-  /// Process the UUID attribute
-  void process_UUID (const XMLCh* UUID,
-                     Deployment::ComponentInterfaceDescription &compintrdesc);
-
-  /// Process the specificType attribute
-  void process_specificType (const XMLCh* specificType,
-                             Deployment::ComponentInterfaceDescription &compintrdesc);
-
-  /// Process the supportedType attribute
-  void process_supportedType (const XMLCh* supportedType,
-                              Deployment::ComponentInterfaceDescription &compintrdesc);
-
-  /// process config property element
-  void process_config_property_element (DOMNode* node,
-                                        DOMDocument* doc, DOMNodeIterator* iter,
-                                        Deployment::ComponentInterfaceDescription& cid);
-
-  /// process info property element
-  void process_info_property_element (DOMNode* node,
-                                      DOMDocument* doc, DOMNodeIterator* iter,
-                                      Deployment::ComponentInterfaceDescription& cid);
-
   /// process port element
-  void process_port_element (DOMNode* node,
-                             DOMDocument* doc, DOMNodeIterator* iter,
-                             Deployment::ComponentInterfaceDescription& cid);
-
-  /// process property element
-  void process_property_element (DOMNode* node,
-                                 DOMDocument* doc, DOMNodeIterator* iter,
-                                 Deployment::ComponentInterfaceDescription& cid);
-
-  /// process attributes for property
-  void process_attributes_for_property (DOMNamedNodeMap* named_node_map,
-                                        DOMDocument* doc,
-                                        DOMNodeIterator* iter,
-                                        int value,
-                                        Deployment::Property& ccd_property);
-
-  /// process attributes for port
-  void process_attributes_for_port (DOMNamedNodeMap* named_node_map,
-                                    DOMDocument* doc,
-                                    DOMNodeIterator* iter,
-                                    int value,
-                                    Deployment::ComponentPortDescription& port);
-
-  /// process port element
-  void process_port (DOMDocument* doc,
-                     DOMNodeIterator* iter,
+  void process_port (DOMNodeIterator* iter,
                      Deployment::ComponentPortDescription& port);
 
   /// process component property element
-  void process_comp_property (DOMDocument* doc,
-                              DOMNodeIterator* iter,
+  void process_comp_property (DOMNodeIterator* iter,
                               Deployment::ComponentPropertyDescription& property);
-
-  /// process attributes for component property
-  void process_attributes_for_comp_property (DOMNamedNodeMap* named_node_map,
-                                             DOMDocument* doc,
-                                             DOMNodeIterator* iter,
-                                             int value,
-                                             Deployment::ComponentPropertyDescription& property);
-
-  /// create a XML document
-  DOMDocument* create_document (const char *url);
-
-  /// process port name
-  void process_port_name (const XMLCh* name,
-                          Deployment::ComponentPortDescription& port);
-
-  /// process port type
-  void process_port_type (const XMLCh* name,
-                          Deployment::ComponentPortDescription& port);
-
-  /// process port provider
-  void process_port_provider (const XMLCh* name,
-                              Deployment::ComponentPortDescription& port);
-
-  /// process port exclusive provider
-  void process_port_exprovider (const XMLCh* name,
-                                Deployment::ComponentPortDescription& port);
-
-  /// process port exclusive user
-  void process_port_exuser (const XMLCh* name,
-                            Deployment::ComponentPortDescription& port);
-
-  /// process port optional
-  void process_port_optional (const XMLCh* name,
-                              Deployment::ComponentPortDescription& port);
-
-  /// process property name
-  void process_pro_name (const XMLCh* name,
-                         Deployment::ComponentPropertyDescription& property);
-
 };
 
 END_DEPLOYMENT_NAMESPACE
 
 #include /**/ "ace/post.h"
 
-#endif /* CCD_HANDLER_H */
+#endif // COMPINTRDESC_HANDLER_H
