@@ -1,3 +1,11 @@
+Tue Jul 18 20:37:40 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
+
+	  Moved conditional assignment of LIB and SHLIB
+	  names. SHLIB was not getting built. Thanks to
+	  David Levine for his help with this.
+
 Tue Jul 18 16:37:44 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/: Fixed non-const string warnings in the following:
