@@ -29,7 +29,7 @@
 #define ACE_HAS_BROKEN_SENDMSG
 
 // The SunOS 5.x version of rand_r is inconsistent with the header files...
-// #define ACE_HAS_BROKEN_RANDR
+#define ACE_HAS_BROKEN_RANDR
 
 // Platform supports system configuration information.
 #define ACE_HAS_SYSINFO
@@ -120,9 +120,6 @@
 
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
-// Compiler has system V signals
-// #define ACE_HAS_SVR4_SIGNAL_T
-
 // Compiler/platform supports struct strbuf.
 #define ACE_HAS_STRBUF_T
 
@@ -133,7 +130,10 @@
 #define ACE_HAS_SVR4_GETTIMEOFDAY
 
 // Compiler/platform supports SVR4 signal typedef.
-#define ACE_HAS_SVR4_SIGNAL_T
+// If enabled, this define causes this warning, I think:
+//     OS.i:591: warning: passing `unsigned
+//     int *' to argument 1 of `rand_r(unsigned int)' lacks a cast
+// #define ACE_HAS_SVR4_SIGNAL_T
 
 // Compiler/platform supports SVR4 TLI (in particular, T_GETNAME stuff)...
 #define ACE_HAS_SVR4_TLI
