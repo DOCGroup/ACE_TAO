@@ -125,9 +125,6 @@ public:
   // are stack-allocated.
 
 private:
-  ACE_SYNCH_MUTEX lock_;
-  // Lock protecting each instance.
-
   u_int refcount_;
   // Number of things hold references to here.
 

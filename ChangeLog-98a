@@ -1,3 +1,13 @@
+Mon Mar 09 22:15:43 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/SString.cpp (ACE_CString::operator=): Special cases have to
+ 	  considered carefully so that memory is managed properly.  This
+ 	  is specially true when the ACE_CString::NULL_CString_ is used.
+
+	* ace/SString.h (ACE_CString and ACE_WString): Added set methods
+ 	  that allows the user to set the strings without having to use
+ 	  the assignment operator.
+
 Mon Mar 09 16:11:16 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Map_Manager/test_hash_map_manager.cpp: added #include

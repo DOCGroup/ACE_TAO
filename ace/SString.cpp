@@ -383,26 +383,52 @@ ACE_CString::operator= (const ACE_CString &s)
   // Check for identify.
 
   if (this != &s)
-    {
-      // Only reallocate if we don't have enough space...
-      if (this->len_ < s.len_)
-	{
-          if (this->rep_ != &ACE_CString::NULL_CString_)
-	    this->allocator_->free (this->rep_);
-
-          // s.len_ is greather than 0, so must allocate space for it.
-	  this->rep_ = (char *) this->allocator_->malloc (s.len_ + 1);
-	}
-
-      this->len_ = s.len_;
-
-      if (s[0] == '\0')
-	this->rep_ = &ACE_CString::NULL_CString_;
-      else
-	ACE_OS::strcpy (this->rep_, s.rep_);
-    }
+    this->set (s.rep_, s.len_);
 
   return *this;
+}
+
+void 
+ACE_CString::set (const char *s)
+{
+  this->set (s, ACE_OS::strlen (s));
+}
+
+void 
+ACE_CString::set (const char *s, size_t len)
+{
+  //
+  // Free memory if necessary
+  //
+
+  // Going from memory to no memory
+  if (s[0] == '\0' &&
+      this->rep_ != &ACE_CString::NULL_CString_)
+    this->allocator_->free (this->rep_);
+        
+  // Going from memory to more memory
+  else if (this->len_ < len &&
+           this->rep_ != &ACE_CString::NULL_CString_)
+    this->allocator_->free (this->rep_);
+      
+  //
+  // Allocate memory if necessary
+  //
+
+  // len is greather than 0, so must allocate space for it.
+  if (this->len_ < len)
+    this->rep_ = (char *) this->allocator_->malloc (len + 1);
+
+  this->len_ = len;
+
+  if (s[0] == '\0')
+    this->rep_ = &ACE_CString::NULL_CString_;
+  else
+    {
+      ACE_OS::memcpy (this->rep_, s, len);
+      // NUL terminate.
+      this->rep_[len] = 0;
+    }          
 }
 
 // Return substring.
@@ -852,23 +878,31 @@ ACE_WString::operator= (const ACE_WString &s)
   // Check for identify.
 
   if (this != &s)
-    {
-      // Only reallocate if we don't have enough space...
-      if (this->len_ < s.len_)
-	{
-	  this->allocator_->free (this->rep_);
-	  this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc ((s.len_ + 1) * sizeof (ACE_USHORT16));
-	}
+    this->set (s.rep_, s.len_);
 
-      this->len_ = s.len_;
-      ACE_OS::memcpy ((void *) this->rep_,
-                      (const void *) s.rep_,
-		      this->len_ * sizeof (ACE_USHORT16));
-      // NUL terminate.
-      this->rep_[s.len_] = 0;
-    }
-  
   return *this;
+}
+
+void 
+ACE_WString::set (const ACE_USHORT16 *s)
+{
+  this->set (s, ACE_OS::strlen (s));
+}
+
+void 
+ACE_WString::set (const ACE_USHORT16 *s, size_t len)
+{
+  // Only reallocate if we don't have enough space...
+  if (this->len_ < len)
+    {
+      this->allocator_->free (this->rep_);
+      this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc ((len + 1) * sizeof (ACE_USHORT16));
+    }
+
+  this->len_ = len;
+  ACE_OS::memcpy (this->rep_, s, len * sizeof (ACE_USHORT16));
+  // NUL terminate.
+  this->rep_[len] = 0;
 }
 
 // return substring

@@ -7,15 +7,15 @@ TAO_Operation_Table::~TAO_Operation_Table (void)
 
 // Template Specialization for char*
 int
-ACE_Hash_Map_Manager<const char *, TAO_Skeleton, ACE_SYNCH_RW_MUTEX>::equal (const char *const &id1,
-									     const char *const &id2)
+ACE_Hash_Map_Manager<const char *, TAO_Skeleton, ACE_SYNCH_NULL_MUTEX>::equal (const char *const &id1,
+                                                                               const char *const &id2)
 {
   return ACE_OS::strcmp (id1, id2) == 0;
 }
 
 // Template Specialization for char *
 u_long
-ACE_Hash_Map_Manager<const char *, TAO_Skeleton, ACE_SYNCH_RW_MUTEX>::hash (const char *const &ext_id)
+ACE_Hash_Map_Manager<const char *, TAO_Skeleton, ACE_SYNCH_NULL_MUTEX>::hash (const char *const &ext_id)
 {
   return ACE::hash_pjw (ext_id);
 }
@@ -260,17 +260,17 @@ TAO_Operation_Table_Factory::opname_lookup_strategy (void)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Iterator_Base<const char*, TAO_Skeleton, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Iterator<const char*, TAO_Skeleton, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<const char*, TAO_Skeleton, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Hash_Map_Manager<const char*, TAO_Skeleton, ACE_SYNCH_RW_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base<const char*, TAO_Skeleton, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Iterator<const char*, TAO_Skeleton, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<const char*, TAO_Skeleton, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Hash_Map_Manager<const char*, TAO_Skeleton, ACE_SYNCH_NULL_MUTEX>;
 template class ACE_Hash_Map_Entry<const char*, TAO_Skeleton>;
 template class ACE_Singleton<TAO_Operation_Table_Parameters, ACE_SYNCH_RECURSIVE_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Iterator_Base<const char*, TAO_Skeleton, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator<const char*, TAO_Skeleton, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<const char*, TAO_Skeleton, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager<const char*, TAO_Skeleton, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<const char*, TAO_Skeleton, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator<const char*, TAO_Skeleton, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<const char*, TAO_Skeleton, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager<const char*, TAO_Skeleton, ACE_SYNCH_NULL_MUTEX>
 #pragma instantiate ACE_Hash_Map_Entry<const char*, TAO_Skeleton>
 #pragma instantiate ACE_Singleton<TAO_Operation_Table_Parameters, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -52,7 +52,7 @@ public:
 // Dynamic hashing.  We use template specialization here to use const
 // char* as the external ID. The template specialization is needed
 // since the "hash" method is not defined on type "char *".
-typedef ACE_Hash_Map_Manager<const char *, TAO_Skeleton, ACE_SYNCH_RW_MUTEX> 
+typedef ACE_Hash_Map_Manager<const char *, TAO_Skeleton, ACE_SYNCH_NULL_MUTEX> 
         OP_MAP_MANAGER;
 
 class TAO_Export TAO_Dynamic_Hash_OpTable : public TAO_Operation_Table
