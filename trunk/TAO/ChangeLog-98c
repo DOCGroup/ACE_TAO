@@ -1,3 +1,10 @@
+Tue Aug  4 17:23:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/tests/Trading/export_test.cpp,
+ 	  orbsvcs/tests/Trading/Trading_Service.cpp: Changed all uses of
+ 	  TAO_OBJID_TRADINGSERVICE to "TradingService" to be compliant
+ 	  with the CORBA specification.
+
 Tue Aug 04 16:42:50 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Multiple_Inheritance: This module is used as a test for

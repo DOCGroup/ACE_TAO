@@ -47,7 +47,7 @@ main (int argc, char** argv)
       CORBA::ORB_var orb = orb_manager.orb ();
       ACE_DEBUG ((LM_ERROR, "*** Bootstrap to the Lookup interface.\n"));
       CORBA::Object_var trading_obj =
-      	orb->resolve_initial_references (TAO_OBJID_TRADINGSERVICE);
+      	orb->resolve_initial_references ("TradingService");
       
       if (CORBA::is_nil (trading_obj.in ()))
       	ACE_ERROR_RETURN ((LM_ERROR,

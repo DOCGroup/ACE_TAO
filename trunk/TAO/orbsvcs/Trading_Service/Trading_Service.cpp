@@ -177,7 +177,7 @@ Trading_Service::bootstrap_to_federation (void)
 
   ACE_DEBUG ((LM_DEBUG, "*** Bootstrapping to another Trading Service.\n"));
   CORBA::Object_var trading_obj =
-    orb->resolve_initial_references (TAO_OBJID_TRADINGSERVICE);
+    orb->resolve_initial_references ("TradingService");
 
   if (CORBA::is_nil (trading_obj.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,
