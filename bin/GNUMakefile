@@ -2,15 +2,15 @@
 #
 # $Id$
 #
-#	Makefile for all the ACE binaries
+#	GNUMakefile for all the ACE binaries
 #
-# This Makefile can build clone and envinfo, but not both at the same time.
-# clone must not use any ACE pieces, since it's building a clone of the source
-# tree and it can't have done a build yet.  envinfo, on the other hand,
-# requires a built ACE to build correctly.
-# This Makefile is distributed so as to be able to build clone without
-# changes.  To build envinfo, first build ACE, then come back and do a
-# make envinfo=1
+# This Makefile can build clone and envinfo, but not both at the same
+# time.  clone must not use any ACE pieces, since it's building a
+# clone of the source tree and it can't have done a build yet.
+# envinfo, on the other hand, requires a built ACE to build
+# correctly.  This Makefile is distributed so as to be able to build
+# clone without changes.  To build envinfo, first build ACE, then come
+# back and do a make envinfo=1
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
@@ -63,6 +63,8 @@ CCFLAGS		+= -I$(ACE_ROOT)
 clone: $(OFILES)
 	$(CXX) $(CCFLAGS) -o $@ $(OFILES)
 
+clean:
+	-$(RM) $(OFILES)
 realclean: clean
 	-$(RM) clone
 

@@ -14,7 +14,7 @@ if [ $# = 0 ] ; then
 fi
 
 DO_ACE_MAKE_DEPEND=0
-MAKE=Makefile
+MAKE=GNUMakefile
 STOPNOW=0
 while [ $STOPNOW -eq 0 ]
 do

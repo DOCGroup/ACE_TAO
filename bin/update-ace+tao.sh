@@ -17,7 +17,7 @@ old_tao_version=`version <TAO/VERSION TAO`
 if [ -z $old_ace_version ]; then echo No existing ACE version; exit 1; fi
 if [ -z $old_tao_version ]; then echo No existing TAO version; exit 1; fi
 
-cvs update -A VERSION TAO/VERSION Makefile
+cvs update -A VERSION TAO/VERSION GNUMakefile
 
 ace_version=`version <VERSION ACE`
 tao_version=`version <TAO/VERSION TAO`
