@@ -1,3 +1,18 @@
+Sun Jan 25 20:46:03 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * ace/Global_Macros.h:
+        * ace/config-lite.h:
+        * ace/config-all.h:
+          Moved the ACE_TRACE defines from Global_Macros.h to config-all.
+          and ACE_OS_TRACE from config-lite.h to config-all.h, and added
+          ACE_OS_NTRACE to config-all.h with the same symantics.  Thanks
+          to Johnny Willemsen  <jwillemsen@remedy.nl> for motivating this
+          change.
+
+        * examples/ASX/Event_Server/Event_Server/Options.cpp:
+        * examples/ASX/UPIPE_Event_Server/Options.cpp:
+          Added #include OS_NS_strings.h if ACE_HAS_TRACE is defined.
+
 Sun Jan 25 15:55:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/OS_NS_stdio.h:
