@@ -471,7 +471,7 @@ ACE_Log_Msg::open (const char *prog_name,
         if (ACE_Log_Msg_message_queue->get_handle () != ACE_INVALID_HANDLE)
           ACE_Log_Msg_message_queue->close ();
         status = ACE_Log_Msg_message_queue->open (logger_key);
-#endif /* ACE_WIN32 */
+#endif /* ACE_LACKS_FIFO */
 
       if (status == -1)
         ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR);
@@ -857,7 +857,7 @@ ACE_Log_Msg::log (const char *format_str,
       this->stop_tracing ();
 
 #if !defined (ACE_WIN32)
-      // Make this block signal safe.
+      // Make this block signal-safe.
       ACE_Sig_Guard sb;
 #endif /* ACE_WIN32 */
 
@@ -871,27 +871,30 @@ ACE_Log_Msg::log (const char *format_str,
                           stderr);
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER))
         {
+#if defined (ACE_LACKS_FIFO)
+	  // We're running over sockets, so we'll need to indicate the
+	  // number of bytes to send.
+          result = ACE_Log_Msg_message_queue->send ((void *) &log_record,
+						    log_record.length ());
+#else
           ACE_Str_Buf log_msg ((void *) &log_record,
                                int (log_record.length ()));
+
 #if defined (ACE_HAS_STREAM_PIPES)
-          // Try to use the putpmsg() API if possible in order to
+          // Try to use the <putpmsg> API if possible in order to
           // ensure correct message queueing according to priority.
-          result = ACE_Log_Msg_message_queue->
-                     send (int (log_record.priority ()),
-                           &log_msg);
-#elif !defined (ACE_WIN32)
-          result = ACE_Log_Msg_message_queue->send (log_msg);
+          result = ACE_Log_Msg_message_queue->send (int (log_record.priority ()),
+						    &log_msg);
 #else
-          result = ACE_Log_Msg_message_queue->
-                     send ((const ACE_Str_Buf *) &log_msg,
-                           (const ACE_Str_Buf *) 0);
+	  // Use the FIFO API that uses the ol' 2-write trick.
+          result = ACE_Log_Msg_message_queue->send (log_msg);
 #endif /* ACE_HAS_STREAM_PIPES */
+#endif /* ACE_LACKS_FIFO */
         }
-      // Format the message and print it to stderr and/or ship it
-      // off to the log_client daemon, and/or print it to the
-      // ostream.  This must come last, after the other two print
-      // operations (see the ACE_Log_Record::print method for
-      // details).
+      // Format the message and print it to stderr and/or ship it off
+      // to the log_client daemon, and/or print it to the ostream.
+      // This must come last, after the other two print operations
+      // (see the ACE_Log_Record::print method for details).
 
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::OSTREAM)
           && this->msg_ostream () != 0)

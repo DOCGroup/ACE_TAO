@@ -35,7 +35,7 @@ main (int argc, char *argv[])
   if (daemon.open (argc, argv) == -1)
     {
       if (errno != ENOENT)
-	ACE_ERROR ((LM_ERROR, "%p\n%a", "open", 1));
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 1);
       else // Use static linking.
 	{
 	  char *l_argv[3];
@@ -76,13 +76,6 @@ main (int argc, char *argv[])
 
 	  if (sp_5->init (1, l_argv) == -1)
 	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Threaded Logging Server", 1));
-#endif
-	  l_argv[0] = "-p " ACE_DEFAULT_LOGGING_SERVER_PORT_STR;
-	  l_argv[1] = 0;
-	  ACE_Service_Object_Ptr sp_6 = ACE_SVC_INVOKE (ACE_Client_Logging_Connector);
-
-	  if (sp_6->init (1, l_argv) == -1)
-	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Logging Client", 1));
 
 	  l_argv[0] = "-p " ACE_DEFAULT_LOGGING_SERVER_PORT_STR;
 	  l_argv[1] = 0;
@@ -90,14 +83,22 @@ main (int argc, char *argv[])
 
 	  if (sp_7->init (1, l_argv) == -1)
 	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Logging Server", 1));
+
+#endif
+	  l_argv[0] = "-p " ACE_DEFAULT_LOGGING_SERVER_PORT_STR;
+	  l_argv[1] = "-hflamenco.cs.wustl.edu";
+	  ACE_Service_Object_Ptr sp_6 = ACE_SVC_INVOKE (ACE_Client_Logging_Connector);
+
+	  if (sp_6->init (2, l_argv) == -1)
+	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Logging Client", 1));
+
+	  // Run forever, performing the configured services until we are shut
+	  // down by a SIGINT/SIGQUIT signal.
+
+	  ACE_Reactor::run_event_loop ();
+
+	  // Destructors of ACE_Service_Object_Ptr's automagically call fini().
 	}
-
-      // Run forever, performing the configured services until we are shut
-      // down by a SIGINT/SIGQUIT signal.
-
-      ACE_Reactor::run_event_loop ();
-
-      // Destructors of ACE_Service_Object_Ptr's automagically call fini().
     }
   else // Use dynamic linking.
 
