@@ -65,7 +65,7 @@ while ($#ARGV >= 0  &&  $ARGV[0] =~ /^-/) {
         $verbose = 1;
     } elsif ($ARGV[0] eq '-d') {
         if ($ARGV[1] =~ /^\d+$/) {
-            $directory_mode = $ARGV[1]; shift;
+            $directory_mode = eval ($ARGV[1]); shift;
         } else {
             warn "$0:  must provide argument for -d option\n";
             die $usage;
