@@ -204,12 +204,25 @@ ACE::Ping_Socket::receive_echo_reply (ACE_Time_Value const * timeout)
 int
 ACE::Ping_Socket::process_incoming_dgram (char * ptr, ssize_t len)
 {
-  int hlen1, icmplen;
+  unsigned char hlen1;
+  int icmplen;
   struct ip * ip;
   struct icmp * icmp;
 
   ip = (struct ip *) ptr;                 // start of IP header
-  hlen1 = ip->ip_hl << 2;                 // length of IP header
+
+  // Warning... using knowledge of IP header layout. This avoids a maze of
+  // #if blocks for various systems. The first byte of the header has the
+  // IP version in the left-most 4 bits and the length in the other 4 bits.
+#if 0
+  hlen1 = ip->ip_hl;                      // length of IP header
+#else
+  hlen1 = static_cast<unsigned char>(*ptr);
+  hlen1 <<= 4;                            // Bump the version off
+  hlen1 >>= 4;                            // Zero-extended length remains
+#endif
+  hlen1 <<= 2;                            // Now it counts bytes, not words
+
   icmp = (struct icmp *) (ptr + hlen1);   // start of ICMP header
 
   if ((icmplen = len - hlen1) < ICMP_MIN)
