@@ -1,3 +1,70 @@
+Thu May 01 21:55:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        Please address all concerns regarding this commit
+        to Jason Cohen <jcohen@atl.lmco.com>.  Thank you.
+	
+        * tao/corbafwd.h:
+
+        Added profile tag for SCIOP = 0x54414f0EU
+        Note that this is not an official tag , but has been permitted
+        for the time being.  It may change in the future.
+
+        * tao/orbconf.h:
+
+        To enable SCIOP building, ACE_HAS_SCTP must be enabled by
+        added sctp=openss7 to the gmake command line.
+        See $ACE_ROOT/performance-tests/SCTP/README for more info.
+        Added code to set the major/minor types and enable
+        sctp via TAO_HAS_SCIOP #define.
+
+        * tao/Strategies/Makefile:
+        * tao/Strategies/advanced_resource.cpp:
+
+        Modified these two files to enable inclusion of the following
+        new files.  Added SCIOP_* and sciop_* files to the Makefile
+        and added SCIOP tag checking to advanced_resource.cpp to
+        enable the Acceptor_Registry to know of SCIOP_Factory.
+
+        * tao/Strategies/SCIOP_Acceptor.cpp:
+        * tao/Strategies/SCIOP_Acceptor.h:
+        * tao/Strategies/SCIOP_Acceptor.i:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.h:
+        * tao/Strategies/SCIOP_Connection_Handler.i:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/SCIOP_Connector.h:
+        * tao/Strategies/SCIOP_Endpoint.cpp:
+        * tao/Strategies/SCIOP_Endpoint.h:
+        * tao/Strategies/SCIOP_Endpoint.i:
+        * tao/Strategies/SCIOP_Factory.cpp:
+        * tao/Strategies/SCIOP_Factory.h:
+        * tao/Strategies/SCIOP_Lite_Factory.cpp:
+        * tao/Strategies/SCIOP_Lite_Factory.h:
+        * tao/Strategies/SCIOP_Profile.cpp:
+        * tao/Strategies/SCIOP_Profile.h:
+        * tao/Strategies/SCIOP_Profile.i:
+        * tao/Strategies/SCIOP_Transport.cpp:
+        * tao/Strategies/SCIOP_Transport.h:
+        * tao/Strategies/SCIOP_Transport.i:
+        * tao/Strategies/sciop_endpoints.cpp:
+        * tao/Strategies/sciop_endpoints.h:
+        * tao/Strategies/sciop_endpoints.i:
+        * tao/Strategies/sciop_endpoints.pidl:
+
+        Files added for SCIOP pluggable protocol.
+        These files mirror the functionality of IIOP but do not
+        inherit from IIOP.  SCIOP, while currently unsupported in
+        this implementation, has a unique set of protocol properties.
+        In the future, we may find a way to use inheritence from
+        IIOP, but this is not currently trivial.
+
+        * utils/catior/catior.cpp:
+
+        Enabled SCIOP IOR recognition fulltime by removing
+        #if 0 statements.  This *should* be okay, now that the SCIOP
+        tag is available on all platforms, even if SCTP is not
+        supported.
+
 Thu May 01 16:15:29 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao\PortableServer\POA: 

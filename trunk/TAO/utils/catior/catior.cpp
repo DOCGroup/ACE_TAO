@@ -126,10 +126,8 @@ catiiop (char* string
 static CORBA::Boolean
 cat_iiop_profile (TAO_InputCDR& cdr);
 
-#if 0
 static CORBA::Boolean
 cat_sciop_profile (TAO_InputCDR& cdr);
-#endif /*if 0*/
 
 static CORBA::Boolean
 cat_uiop_profile (TAO_InputCDR& cdr);
@@ -268,19 +266,12 @@ catior (char* str
             continue_decoding = cat_iiop_profile (stream);
             ACE_DEBUG ((LM_DEBUG, "%}"));
           }
-
-// the SCIOR decoding is disabled in the main branch. This will be
-// enabled when SCTP_O branch is merged in.
-// gthaker@atl.lmco.com, Feb 11, 2003.
-#if 0
         else if (tag == TAO_TAG_SCIOP_PROFILE)
           {
             ACE_DEBUG ((LM_DEBUG, "%{"));
             continue_decoding = cat_sciop_profile (stream);
             ACE_DEBUG ((LM_DEBUG, "%}"));
           }
-#endif
-
         else if (tag == TAO_TAG_UIOP_PROFILE)
           {
             ACE_DEBUG ((LM_DEBUG, "%{"));
@@ -1135,7 +1126,6 @@ cat_uiop_profile (TAO_InputCDR& stream)
   return 1;
 }
 
-#if 0
 static CORBA::Boolean
 cat_sciop_profile (TAO_InputCDR& stream)
 {
@@ -1226,4 +1216,3 @@ cat_sciop_profile (TAO_InputCDR& stream)
 
   return 1;
 }
-#endif /*if 0*/
