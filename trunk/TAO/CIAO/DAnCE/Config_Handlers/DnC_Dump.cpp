@@ -1,123 +1,23 @@
 // $Id$
 
-#ifndef DNC_DUMP_C
-#define DNC_DUMP_C
-
 #include "ace/Log_Msg.h"
-
+#include "ciao/Deployment_DataC.h"
 #include "DnC_Dump.h"
+#include "DnC_Dump_T.h"
 #include <iostream>
-#include <string>
-#include <map>
 
+using namespace ::Deployment::DnC_Dump_T;
 namespace Deployment
 {
-#ifndef ACE_HAS_BROKEN_NESTED_TEMPLATES
-  /*
-   *  Generic dump functions
-   */
-
-  /*
-   *  class Dump_Obj handles the indentation and keeps a map of 
-      structures for reference look-up.
-   */
-  class Dump_Obj {
-  public:
-    // Exception thrown when there is a node with the same name in the map
-    class Node_Exist { };
-    // Exception thrown when there is no node with the name given in the map
-    class Node_Not_Exist { };
-
-    // Constructor prints out the caption and increases indent
-    Dump_Obj(const char* caption)
-      : desc_()
-    {
-      ACE_DEBUG ((LM_DEBUG, "%s%s:\n", indent_.c_str(), caption));
-      indent_.append("  ");
-    }
-
-    // Constructor prints out the caption, increases indent and inserts 
-    // the given desc into the map
-    template <typename DESC>
-    Dump_Obj(const char* caption, DESC &desc)
-      : desc_(caption)
-    {
-      ACE_DEBUG ((LM_DEBUG, "%s%s:\n", indent_.c_str(), caption));
-      indent_.append("   ");
-
-      if (desc_map_.find(std::string(caption)) != desc_map_.end())
-        {
-          ACE_DEBUG ((LM_DEBUG, "DnC_Dump.cpp:Dump_Obj - \
-                      The item with name %s is already in \
-                      the node map.\n", caption));
-          throw Node_Exist();
-        }
-      else
-        {
-          CORBA::Any val;
-          val <<= desc;
-          desc_map_[std::string(caption)] = val;
-        }
-    }
-
-    // Destructor
-    ~Dump_Obj()
-    {
-      indent_.erase(indent_.size() - 2, 2);
-      if (desc_.size() != 0)
-        {
-          if (desc_map_.find(desc_) != desc_map_.end())
-            {
-              desc_map_.erase(desc_map_.find(desc_));
-            }
-          else
-            {
-              ACE_DEBUG ((LM_DEBUG, "DnC_Dump.cpp:Dump_Obj - \
-                          The item with name %s is not in the node map.\n",
-                          desc_.c_str()));
-              throw Node_Not_Exist();
-            }
-        }
-    }
-
-    // return the indent string
-    static const char* indent()
-    {
-      return indent_.c_str();
-    }
-
-    // reference lookup within the map
-    template <typename DESC>
-    static const DESC& desc(const char* caption)
-    {
-      static DESC* val;
-      desc_map_[caption] >>= val;
-      return *val;
-    }
-
-  private:
-    // indent string
-    static std::string indent_;
-    // map for reference lookup
-    static std::map<std::string, CORBA::Any> desc_map_;
-    // descriptor - used by destructor for deleting the 
-    // correct descriptor from the map
-    std::string desc_;
-  };
-
-  // static member initialization
-  std::string Dump_Obj::indent_ = "-";
-  std::map<std::string, CORBA::Any> Dump_Obj::desc_map_;
-
-  // Dumps a string sequence
-  void DnC_Dump::dump (const char* caption, const ::CORBA::StringSeq &str_seq)
+  void
+  DnC_Dump::dump (const char* caption, const ::CORBA::StringSeq &str_seq)
   {
     CORBA::ULong size = str_seq.length ();
 
     if (size != 0)
       {
         Dump_Obj dump_obj (caption);
-        
+
         for (CORBA::ULong i = 0; i < size; ++i)
           {
             ACE_DEBUG ((LM_DEBUG, "%s%s %d: \n",
@@ -128,70 +28,18 @@ namespace Deployment
       }
   }
 
-  // Dumps a sequence
-  template <typename SEQUENCE>
-  void DnC_Dump::dump_sequence (const char* caption, const SEQUENCE &seq)
-  {
-    CORBA::ULong size = seq.length ();
-
-    if (size != 0)
-      {
-        Dump_Obj dump_obj(caption);
-        
-        for (CORBA::ULong i = 0; i < size; ++i)
-          {
-            ACE_DEBUG ((LM_DEBUG, "%s%s %d: \n", Dump_Obj::indent(), 
-                        caption, i));
-            DnC_Dump::dump (seq[i]);
-          }
-      }
-  }
-
   // Dumps a string
   void DnC_Dump::dump (const char* caption, const TAO_String_Manager& str)
   {
-    ACE_DEBUG ((LM_DEBUG, "%s%s: %s\n", Dump_Obj::indent(), 
+    ACE_DEBUG ((LM_DEBUG, "%s%s: %s\n", Dump_Obj::indent(),
                 caption, str.in()));
   }
 
   // Dumps a boolean
   void DnC_Dump::dump (const char* caption, const CORBA::Boolean& val)
   {
-    ACE_DEBUG ((LM_DEBUG, "%s%s: %s\n", Dump_Obj::indent(), 
+    ACE_DEBUG ((LM_DEBUG, "%s%s: %s\n", Dump_Obj::indent(),
                 caption, val ? "true" : "false"));
-  }
-
-  // Dumps a reference
-  template <typename ROOT, typename REFERENCE, typename DATA_TYPE, 
-            typename CLASS>
-  void DnC_Dump::dump_ref (const char* caption, REFERENCE& ref, 
-                           const char* root, DATA_TYPE CLASS::*data)
-  {
-    ACE_DEBUG ((LM_DEBUG, "%s%s:\n", Dump_Obj::indent(), caption));
-    const ROOT &root_obj = Dump_Obj::desc<ROOT>(root);
-
-    int value = ref;
-    ACE_DEBUG ((LM_DEBUG, "%s%s.name: %s\n",
-                Dump_Obj::indent(), caption,
-                (root_obj.*data)[value].name.in()));
-  }
-
-  // Dumps a reference sequence
-  template <typename ROOT, typename SEQUENCE, typename DATA_TYPE, 
-            typename CLASS>
-  void DnC_Dump::dump_ref_seq (const char* caption, SEQUENCE& seq, 
-                               const char* root, DATA_TYPE CLASS::*data)
-  {
-    ACE_DEBUG ((LM_DEBUG, "%s%s:\n", Dump_Obj::indent(), caption));
-    for (size_t i = 0; i < seq.length(); ++i)
-      {
-        const ROOT &root_obj = Dump_Obj::desc<ROOT>(root);
-
-        int value = seq[i];
-        ACE_DEBUG ((LM_DEBUG, "%s%s[%d].name: %s\n",
-                    Dump_Obj::indent(), caption, i,
-                    (root_obj.*data)[value].name.in()));
-      }
   }
 
   /*
@@ -224,9 +72,14 @@ namespace Deployment
     Dump_Obj dump_obj("SharedResource");
     dump ("name", sr.name);
     dump ("resourceType", sr.resourceType);
-    dump_ref_seq<Deployment::Domain> ("nodeRef", sr.nodeRef, 
-                                      "Domain", &Domain::node);
-    dump_sequence ("property", sr.property);
+#if 0
+    dump_ref_seq<Deployment::Domain> ("nodeRef",
+                                      sr.nodeRef,
+                                      "Domain",
+                                      &Domain::node);
+#endif /*if 0*/
+    dump_sequence ("property",
+                   sr.property);
   }
 
   // Resource
@@ -235,7 +88,8 @@ namespace Deployment
     Dump_Obj dump_obj("Resource");
     dump ("name", resource.name);
     dump ("resourceType", resource.resourceType);
-    dump_sequence ("property", resource.property);
+    dump_sequence ("property",
+                   resource.property);
   }
 
   // Node
@@ -244,12 +98,20 @@ namespace Deployment
     Dump_Obj dump_obj("Node");
     dump ("name", node.name);
     dump ("label", node.label);
-    dump_ref_seq<Deployment::Domain> ("sharedResourceRef", 
-                                      node.sharedResourceRef, "Domain", 
-                                      &Domain::sharedResource);
-    dump_ref_seq<Deployment::Domain> ("connectionRef", node.connectionRef, 
-                                      "Domain", &Domain::interconnect);
-    dump_sequence ("resource", node.resource);
+
+    dump_ref_seq<Deployment::Domain> (
+      "sharedResourceRef",
+      node.sharedResourceRef, "Domain",
+      &Domain::sharedResource);
+
+    dump_ref_seq<Deployment::Domain> (
+      "connectionRef",
+      node.connectionRef,
+      "Domain",
+      &Domain::interconnect);
+
+    dump_sequence ("resource",
+                   node.resource);
   }
 
   // Interconnect
@@ -258,40 +120,66 @@ namespace Deployment
     Dump_Obj dump_obj("Interconnect");
     dump ("name", conn.name);
     dump ("label", conn.label);
-    dump_ref_seq<Deployment::Domain> ("connectionRef", conn.connectionRef, 
-                                      "Domain", &Domain::bridge);
-    dump_ref_seq<Deployment::Domain> ("connectRef", conn.connectRef, 
-                                      "Domain", &Domain::node);
-    dump_sequence ("resource", conn.resource);
+    dump_ref_seq<Deployment::Domain> (
+      "connectionRef",
+      conn.connectionRef,
+      "Domain",
+      &Domain::bridge);
+
+    dump_ref_seq<Deployment::Domain> (
+      "connectRef",
+      conn.connectRef,
+      "Domain",
+      &Domain::node);
+
+    dump_sequence ("resource",
+                   conn.resource);
   }
 
   // Bridge
-  void DnC_Dump::dump (const Deployment::Bridge& bridge)
+  void
+  DnC_Dump::dump (const Deployment::Bridge& bridge)
   {
     Dump_Obj dump_obj("Bridge");
     dump ("name", bridge.name);
     dump ("label", bridge.label);
-    dump_ref_seq<Deployment::Domain> ("connectRef", bridge.connectRef,
-                                      "Domain", &Domain::interconnect);
+    dump_ref_seq<Deployment::Domain> (
+      "connectRef",
+      bridge.connectRef,
+      "Domain",
+      &Domain::interconnect);
     dump_sequence ("resource", bridge.resource);
   }
 
   void DnC_Dump::dump (const ::Deployment::Domain &domain)
   {
-    Dump_Obj dump_obj("Domain", domain);
-    dump ("UUID", domain.UUID);
-    dump ("label", domain.label);
+    CORBA::Any val;
+    val <<= domain;
 
-    dump_sequence ("sharedResource", domain.sharedResource);
-    dump_sequence ("node", domain.node);
-    dump_sequence ("interconnect", domain.interconnect);
-    dump_sequence ("bridge", domain.bridge);
-    dump_sequence ("infoProperty", domain.infoProperty);
+    Dump_Obj dump_obj ("Domain",
+                       val);
+
+    dump ("UUID",
+          domain.UUID);
+    dump ("label",
+          domain.label);
+
+    dump_sequence ("sharedResource",
+                   domain.sharedResource);
+    dump_sequence ("node",
+                   domain.node);
+    dump_sequence ("interconnect",
+                   domain.interconnect);
+    dump_sequence ("bridge",
+                   domain.bridge);
+
+    dump_sequence ("infoProperty",
+                   domain.infoProperty);
   }
 
   // ComponentPortDescription
 
-  void DnC_Dump::dump (const ::Deployment::ComponentPortDescription 
+  void DnC_Dump::dump (const ::Deployment::ComponentPortDescription
                          &compportdesc)
   {
     Dump_Obj dump_obj("ComponentPortDescription");
@@ -320,7 +208,7 @@ namespace Deployment
   void DnC_Dump::dump (const ::Deployment::ComponentPropertyDescription &comppropdesc)
   {
     Dump_Obj dump_obj("ComponentPropertyDescription");
-    
+
     dump ("name", comppropdesc.name);
 
     ACE_DEBUG ((LM_DEBUG, "%stype: ", Dump_Obj::indent()));
@@ -388,7 +276,7 @@ namespace Deployment
   void DnC_Dump::dump (const ::Deployment::Requirement &req)
   {
     Dump_Obj dump_obj("Requirement");
-    
+
     dump ("resourceType", req.resourceType);
     dump ("name", req.name);
     dump_sequence ("property", req.property);
@@ -577,7 +465,7 @@ namespace Deployment
     dump ("name", add.name);
     dump ("location", add.location);
     dump ("node", add.node);
-    dump ("source", add.source); 
+    dump ("source", add.source);
     dump_sequence ("execParameter", add.execParameter);
     dump_sequence ("deployRequirement", add.deployRequirement);
     dump_sequence ("deployedResource", add.deployedResource);
@@ -585,7 +473,11 @@ namespace Deployment
 
   void DnC_Dump::dump(const Deployment::DeploymentPlan &plan)
   {
-    Dump_Obj dump_obj("DeploymentPlan", plan);
+    CORBA::Any val;
+
+    val <<= plan;
+
+    Dump_Obj dump_obj("DeploymentPlan", val);
 
     dump ("label", plan.label);
     dump ("UUID", plan.UUID);
@@ -631,9 +523,14 @@ namespace Deployment
 
     dump ("portName", spe.portName);
     int value = spe.instanceRef;
+    ::Deployment::ComponentAssemblyDescription *v;
+    const CORBA::Any &a =
+      Dump_Obj::desc ("ComponentAssemblyDescription");
+
+    a >>= v;
+
     ACE_DEBUG ((LM_DEBUG, "%sinstance: %s \n", Dump_Obj::indent (),
-                Dump_Obj::desc<Deployment::ComponentAssemblyDescription>
-                ("ComponentAssemblyDescription").instance[value].name.in ()));
+                v->instance[value].name.in ()));
   }
 
   // AssemblyConnectionDescription
@@ -657,14 +554,20 @@ namespace Deployment
 
     dump ("propertyName", spr.propertyName);
     int value = spr.instanceRef;
+
+    ::Deployment::ComponentAssemblyDescription *v;
+
+    const CORBA::Any &a =
+      Dump_Obj::desc ("ComponentAssemblyDescription");
+
+    a >>= v;
+
     ACE_DEBUG ((LM_DEBUG, "%sinstance: %s \n", Dump_Obj::indent (),
-                Dump_Obj::desc<Deployment::ComponentAssemblyDescription>
-                ("ComponentAssemblyDescription").instance[value].name.in ()));
+                v->instance[value].name.in ()));
   }
 
-  // AssemblyPropertyMapping
-
-  void DnC_Dump::dump (const ::Deployment::AssemblyPropertyMapping &apm)
+  void
+  DnC_Dump::dump (const ::Deployment::AssemblyPropertyMapping &apm)
   {
     Dump_Obj dump_obj("AssemblyPropertyMapping");
 
@@ -674,11 +577,15 @@ namespace Deployment
   }
 
   // ComponentAssemblyDescription
- 
+
   void DnC_Dump::dump (const ::Deployment::ComponentAssemblyDescription& cad)
   {
-    Dump_Obj dump_obj("ComponentAssemblyDescription", cad);
-    
+    CORBA::Any a;
+    a <<= cad;
+
+    Dump_Obj dump_obj ("ComponentAssemblyDescription",
+                       a);
+
     dump_sequence ("instance", cad.instance);
     dump_sequence ("connection", cad.connection);
     dump_sequence ("externalProperty", cad.externalProperty);
@@ -694,9 +601,9 @@ namespace Deployment
     dump ("UUID", iad.UUID);
     dump ("location", iad.location);
     dump_sequence ("execParameter", iad.execParameter);
-    dump_sequence ("deployRequirement", iad.deployRequirement); 
-    dump_sequence ("dependsOn", iad.dependsOn); 
-    dump_sequence ("infoProperty", iad.infoProperty); 
+    dump_sequence ("deployRequirement", iad.deployRequirement);
+    dump_sequence ("dependsOn", iad.dependsOn);
+    dump_sequence ("infoProperty", iad.infoProperty);
   }
 
   // NamedImplementationArtifact
@@ -714,7 +621,7 @@ namespace Deployment
   void DnC_Dump::dump (const ::Deployment::ImplementationRequirement &ir)
   {
     Dump_Obj dump_obj("ImplementationRequirement");
-    
+
     dump_sequence ("resourceUsage", ir.resourceUsage);
     dump ("resourcePort", ir.resourcePort);
     dump ("componentPort", ir.componentPort);
@@ -725,7 +632,7 @@ namespace Deployment
 
   // MonolithicImplementationDescription
 
-  void DnC_Dump::dump (const ::Deployment::MonolithicImplementationDescription 
+  void DnC_Dump::dump (const ::Deployment::MonolithicImplementationDescription
                          &mid)
   {
     Dump_Obj dump_obj("MonolithicImplementationDescription");
@@ -735,15 +642,15 @@ namespace Deployment
     dump_sequence ("deployRequirement", mid.deployRequirement);
   }
 
-  // Capability
-
-  void DnC_Dump::dump (const ::Deployment::Capability &capability)
+  void
+  DnC_Dump::dump (const ::Deployment::Capability &capability)
   {
     Dump_Obj dump_obj("Capability");
-    
+
     dump ("name", capability.name);
-    DnC_Dump::dump ("resourceType", capability.resourceType); 
-    DnC_Dump::dump_sequence ("property", capability.property);
+    DnC_Dump::dump ("resourceType", capability.resourceType);
+    dump_sequence ("property",
+                   capability.property);
   }
 
   // ComponentImplementationDescription
@@ -772,14 +679,14 @@ namespace Deployment
     Dump_Obj dump_obj("PackagedComponentImplementation");
 
     dump ("Name", pci.name);
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 "%sreferencedImplementation: \n", Dump_Obj::indent()));
-    DnC_Dump::dump (pci.referencedImplementation); 
+    DnC_Dump::dump (pci.referencedImplementation);
   }
 
   // ComponentPackageDescription
 
-  void DnC_Dump::dump (const ::Deployment::ComponentPackageDescription 
+  void DnC_Dump::dump (const ::Deployment::ComponentPackageDescription
                          &comppkgdesc)
   {
     Dump_Obj dump_obj("ComponentPackageDescription");
@@ -812,7 +719,7 @@ namespace Deployment
   void DnC_Dump::dump (const Deployment::RequirementSatisfier& rs)
   {
     Dump_Obj dump_obj("RequirementSatisfier");
-    
+
     dump ("name", rs.name);
     dump ("resourceType", rs.resourceType);
     dump_sequence ("property", rs.property);
@@ -1043,7 +950,4 @@ namespace Deployment
         ACE_THROW (CORBA::INTERNAL ());
       }
   }
-#endif // ACE_HAS_BROKEN_NESTED_TEMPLATES
 }
-
-#endif /* DNC_DUMP_C */
