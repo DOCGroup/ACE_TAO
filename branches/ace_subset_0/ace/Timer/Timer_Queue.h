@@ -15,13 +15,13 @@
 #define ACE_TIMER_QUEUE_H
 #include "ace/pre.h"
 
-#include "ace/Synch.h"
+#include "ace/Threads/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Timer_Queue_T.h"
+#include "ace/Timer/Timer_Queue_T.h"
 
 // The following typedef are here for ease of use and backward
 // compatibility.

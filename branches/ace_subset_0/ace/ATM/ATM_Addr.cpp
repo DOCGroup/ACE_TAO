@@ -3,7 +3,10 @@
 // Defines the Internet domain address family address format.
 
 #include "ace/ATM/ATM_Addr.h"
+
+#ifdef ACE_SUBSET_0
 #include "ace/Logging/Log_Msg.h"
+#endif
 
 #if defined (ACE_HAS_FORE_ATM_WS2)
 #include "forews2.h"
@@ -483,6 +486,7 @@ ACE_ATM_Addr::operator == (const ACE_ATM_Addr &sap) const
 #endif /*  ACE_HAS_LINUX_ATM */
 }
 
+#ifdef ACE_SUBSET_0
 void
 ACE_ATM_Addr::dump (void) const
 {
@@ -497,3 +501,4 @@ ACE_ATM_Addr::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("%s"), s));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif

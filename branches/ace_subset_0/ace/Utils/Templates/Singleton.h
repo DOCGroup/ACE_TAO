@@ -21,7 +21,7 @@
 #define ACE_SINGLETON_H
 #include "ace/pre.h"
 
-#include "ace/Synch.h"
+#include "ace/Threads/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -235,11 +235,11 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Singleton.i"
+#include "ace/Utils/Templates/Singleton.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Singleton.cpp"
+#include "ace/Utils/Templates/Singleton.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -15,7 +15,7 @@
 #include "ace/pre.h"
 
 #include "ace/ACE.h"
-#include "ace/Thread_Adapter.h"
+#include "ace/Threads/Thread_Adapter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -234,7 +234,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Thread.i"
+#include "ace/Threads/Thread.i"
 #endif /* __ACE_INLINE__ */
 #include "ace/post.h"
 #endif /* ACE_THREAD_H */

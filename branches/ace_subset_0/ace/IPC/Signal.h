@@ -18,13 +18,13 @@
 # error ace/Signal.h was #included instead of signal.h by ace/OS.h:  fix!!!!
 #endif /* ACE_DONT_INCLUDE_ACE_SIGNAL_H */
 
-#include "ace/Synch.h"
+#include "ace/Threads/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Event_Handler.h"
+#include "ace/Demux/Event_Handler.h"
 
 // This worksaround a horrible bug with HP/UX C++...
 typedef struct sigaction ACE_SIGACTION;
@@ -504,7 +504,7 @@ ace_sig_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context);
 #endif /* ACE_HAS_SIG_C_FUNC */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Signal.i"
+#include "ace/IPC/Signal.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

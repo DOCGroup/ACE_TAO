@@ -14,7 +14,7 @@
 #define ACE_SELECT_REACTOR_H
 #include "ace/pre.h"
 
-#include "ace/Select_Reactor_T.h"
+#include "ace/Demux/Select_Reactor_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,7 +22,7 @@
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #if defined (ACE_SELECT_REACTOR_HAS_DEADLOCK_DETECTION)
-#include "ace/Local_Tokens.h"
+#include "ace/Token/Local_Tokens.h"
 typedef ACE_Select_Reactor_Token_T<ACE_Local_Mutex> ACE_Select_Reactor_Token;
 #else
 typedef ACE_Select_Reactor_Token_T<ACE_Token> ACE_Select_Reactor_Token;

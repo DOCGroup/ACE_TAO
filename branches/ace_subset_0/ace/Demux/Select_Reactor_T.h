@@ -14,7 +14,7 @@
 #define ACE_SELECT_REACTOR_T_H
 #include "ace/pre.h"
 
-#include "ace/Select_Reactor_Base.h"
+#include "ace/Demux/Select_Reactor_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -759,7 +759,7 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Select_Reactor_T.cpp"
+#include "ace/Demux/Select_Reactor_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
