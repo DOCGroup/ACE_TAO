@@ -21,7 +21,7 @@
 
 #include /**/ "event_export.h"
 
-#include "tao/Exception.h"
+#include "tao/SystemException.h"
 #include "tao/Environment.h"
 
 #include "ace/INET_Addr.h"
