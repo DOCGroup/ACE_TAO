@@ -69,7 +69,7 @@ be_visitor_component_ch::visit_component (be_component *node)
   // Now generate the class definition.
   *os << "class " << be_global->stub_export_macro ()
       << " " << node->local_name () << be_idt_nl
-      << ": public virtual " ;
+      << ": public virtual ::" ;
 
   AST_Component *parent = node->base_component ();
 
@@ -91,7 +91,7 @@ be_visitor_component_ch::visit_component (be_component *node)
       for (long i = 0; i < nsupports; ++i)
         {
           *os << ", " << be_nl
-              << "public virtual " << node->supports()[i]->name ();
+              << "public virtual ::" << node->supports()[i]->name ();
         }
 
       *os << be_uidt;

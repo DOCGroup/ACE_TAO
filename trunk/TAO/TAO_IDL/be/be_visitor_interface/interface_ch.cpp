@@ -77,7 +77,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
               has_concrete_parent = 1;
             }
 
-          *os << "public virtual "
+          *os << "public virtual ::"
               << node->inherits ()[i]->name ();
 
           if (i < nparents - 1)
