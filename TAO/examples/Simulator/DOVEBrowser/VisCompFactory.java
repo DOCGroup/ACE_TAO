@@ -31,6 +31,9 @@ class VisCompFactory {
       case Properties.WEAPONS:
         visCompName_ = "Weapons"+visCompName_;
         break;
+      case Properties.PERSIAN:
+        visCompName_ = "Persian"+visCompName_;
+        break;
       default: return null;
     }
     try {
