@@ -63,11 +63,11 @@ $current_dir_in_libDirs = 0;
 @objs = '';
 
 foreach $arg (@ARGV) {
-  if ($arg =~ /-L([\S]+)/) {
+  if ($arg =~ /^['"]?-L([\S]+)/) {
     ($dir = $1) =~ s%/+$%%;     #### trim any trailing slashes
     push (@libDirs, $dir);
     $current_dir_in_libDirs = 1 if $dir eq '.';
-  } elsif ($arg =~ /-l([\S]+)/) {
+  } elsif ($arg =~ /^['"]?-l([\S]+)/) {
     push (@libs, $1);
   } elsif ($arg =~ /\.o$/) {
     push (@objs, $arg);
@@ -129,7 +129,7 @@ if ($munch) {
   #### Insert ctordtor object file before first library in link command.
   $arg_lib = 0;
   foreach $arg (@ARGV) {
-    if ($arg =~ /-l/) {
+    if ($arg =~ /^['"]?-l/) {
       last;
     }
     ++$arg_lib;
