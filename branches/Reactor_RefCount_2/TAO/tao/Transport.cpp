@@ -319,7 +319,7 @@ TAO_Transport::send_message_block_chain (const ACE_Message_Block *mb,
 int
 TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
                                            size_t &bytes_transferred,
-                                           ACE_Time_Value *max_wait_time)
+                                           ACE_Time_Value *)
 {
   size_t total_length = mb->total_length ();
 
