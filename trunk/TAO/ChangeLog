@@ -1,4 +1,11 @@
-Sat Aug 23 04:28:54 UTC 2003  Don Hinton <dhinton@dresystems.com>
+Sat Aug 23 18:28:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/TypeCode_Creation/TypeCode_Creation.mpc:
+        * performance-tests/RTCorba/Oneways/Reliable/Reliable.mpc:
+        * tests/RTCORBA/ORB_init/RTCORBA_ORB_init.mpc:
+          Modified the project names to make them unique.
+
+Sat Aug 23 04:28:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/orbsvcs/CosEvent.mpc:
           Made the case of CosEvent match that of the file CosEvent.mpb,
