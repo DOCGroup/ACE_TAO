@@ -78,7 +78,7 @@ HTTP_Server::fini (void)
 int
 HTTP_Server::synch_thread_pool (void)
 {
-  if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1) == -1)
+  if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1, PF_INET, 30) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::open"), -1);
   
   for (int i = 0; i < this->threads_; i++) 
@@ -144,7 +144,7 @@ int
 HTTP_Server::thread_per_request (void)
 {
   // thread per request
-  if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1) == -1)
+  if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1, PF_INET, 30) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::open"), -1);
   
   for (;;) 
