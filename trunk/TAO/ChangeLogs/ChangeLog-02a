@@ -1,3 +1,8 @@
+Tue Mar 21 21:16:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao.PollableC.cpp:
+	  Fixed typo.
+
 Tue Mar 21 20:31:02 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DynAnyC.cpp 
