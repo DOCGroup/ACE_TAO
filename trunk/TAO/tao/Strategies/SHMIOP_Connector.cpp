@@ -444,12 +444,12 @@ template class ACE_Auto_Basic_Array_Ptr<TAO_SHMIOP_Connection_Handler*>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler>;
-#pragma instantiate TAO_Connect_Creation_Strategy<TAO_SHMIOP_Connection_Handler>;
-#pragma instantiate ACE_Strategy_Connector<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>;
-#pragma instantiate ACE_Connect_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>;
-#pragma instantiate ACE_Connector<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>;
-#pragma instantiate ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>;
+#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler>
+#pragma instantiate TAO_Connect_Creation_Strategy<TAO_SHMIOP_Connection_Handler>
+#pragma instantiate ACE_Strategy_Connector<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>
+#pragma instantiate ACE_Connect_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>
+#pragma instantiate ACE_Connector<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>
+#pragma instantiate ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler>
 
 #pragma instantiate ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_SHMIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>

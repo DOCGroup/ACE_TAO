@@ -734,6 +734,6 @@ template class ACE_Auto_Basic_Ptr<TAO_Protocol_Factory>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate auto_ptr<TAO_Protocol_Factory>
-#pragma ACE_Auto_Basic_Ptr<TAO_Protocol_Factory>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Protocol_Factory>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

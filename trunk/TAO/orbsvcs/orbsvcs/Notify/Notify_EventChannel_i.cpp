@@ -417,7 +417,7 @@ template class ACE_Unbounded_Set_Iterator<CosNotifyChannelAdmin::AdminID>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::AdminID, CosNotifyChannelAdmin::AdminIDSeq>;
+#pragma instantiate TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::AdminID, CosNotifyChannelAdmin::AdminIDSeq>
 #pragma instantiate TAO_Notify_ID_Pool<CosNotifyChannelAdmin::AdminID>
 
 #pragma instantiate ACE_Unbounded_Set<CosNotifyChannelAdmin::AdminID>

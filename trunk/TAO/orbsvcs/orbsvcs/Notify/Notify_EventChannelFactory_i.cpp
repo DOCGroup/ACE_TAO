@@ -206,6 +206,6 @@ TAO_Notify_EventChannelFactory_i::get_default_filter_factory (void)
 template class TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ChannelID, CosNotifyChannelAdmin::ChannelIDSeq>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ChannelID, CosNotifyChannelAdmin::ChannelIDSeq>;
+#pragma instantiate TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ChannelID, CosNotifyChannelAdmin::ChannelIDSeq>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

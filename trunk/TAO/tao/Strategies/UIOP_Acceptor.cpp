@@ -46,15 +46,15 @@ template class TAO_Accept_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPT
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>
-#pragma instantiate ACE_Strategy_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>
-#pragma instantiate ACE_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>
-#pragma instantiate ACE_Creation_Strategy<TAO_UIOP_Server_Connection_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler>
-#pragma instantiate ACE_Scheduling_Strategy<TAO_UIOP_Server_Connection_Handler>
-#pragma instantiate TAO_Creation_Strategy<TAO_UIOP_Server_Connection_Handler>
-#pragma instantiate TAO_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler>
-#pragma instantiate TAO_Accept_Strategy<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR>
+#pragma instantiate ACE_Acceptor<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>
+#pragma instantiate ACE_Strategy_Acceptor<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>
+#pragma instantiate ACE_Accept_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>
+#pragma instantiate ACE_Creation_Strategy<TAO_UIOP_Connection_Handler>
+#pragma instantiate ACE_Concurrency_Strategy<TAO_UIOP_Connection_Handler>
+#pragma instantiate ACE_Scheduling_Strategy<TAO_UIOP_Connection_Handler>
+#pragma instantiate TAO_Creation_Strategy<TAO_UIOP_Connection_Handler>
+#pragma instantiate TAO_Concurrency_Strategy<TAO_UIOP_Connection_Handler>
+#pragma instantiate TAO_Accept_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -562,11 +562,11 @@ TAO_UIOP_Acceptor::init_uiop_properties (void)
                                          recv_buffer_size,
                                          no_delay,
                                          protocol_type);
-      
+
       if(hook_result == -1)
         return -1;
     }
-  
+
   // Extract and locally store properties of interest.
   this->uiop_properties_.send_buffer_size =
     send_buffer_size;

@@ -444,6 +444,6 @@ TAO_Notify_SupplierAdmin_i::obtain_pull_consumer (CORBA::Environment &ACE_TRY_EN
 template class TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ProxyID, CosNotifyChannelAdmin::ProxyIDSeq>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ProxyID, CosNotifyChannelAdmin::ProxyIDSeq>;
+#pragma instantiate TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ProxyID, CosNotifyChannelAdmin::ProxyIDSeq>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -113,8 +113,8 @@ template class ACE_Hash_Map_Entry<TAO_String_Hash_Key,int>;
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, CORBA::TypeCode *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,CORBA_TypeCode*>
 
-#pragma instantiate ACE_Hash<TAO_String_Hash_Key>;
-#pragma instantiate ACE_Equal_To<TAO_String_Hash_Key>;
+#pragma instantiate ACE_Hash<TAO_String_Hash_Key>
+#pragma instantiate ACE_Equal_To<TAO_String_Hash_Key>
 
 #pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, int, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, int, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
