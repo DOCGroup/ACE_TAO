@@ -46,7 +46,7 @@ class CosEvent_Service
   CosEvent_Service (void);
   // Constructor.
 
-  ~CosEvent_Service (void);
+  virtual ~CosEvent_Service (void);
   // Destructor.
 
   int startup (int argc, char *argv[]);
@@ -171,7 +171,7 @@ class OLD_CosEvent_Service : public CosEvent_Service
 public:
   // = Initialization and termination methods.
   OLD_CosEvent_Service (void);
-  ~OLD_CosEvent_Service (void);
+  virtual ~OLD_CosEvent_Service (void);
 
   virtual int create_local_RtecService (void);
   // Creates a local Rtec.
