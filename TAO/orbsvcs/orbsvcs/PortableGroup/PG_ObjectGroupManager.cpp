@@ -212,19 +212,16 @@ TAO_PG_ObjectGroupManager::get_object_group_id (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::ObjectGroupNotFound))
 {
-  TAO_PG_ObjectGroup_Map_Entry * entry = 0;
-
-  {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                      guard,
-                      this->lock_,
-                      0);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                    guard,
+                    this->lock_,
+                    0);
 
 
-    entry = this->get_group_entry (object_group
-                                   ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (0);
-  }
+  TAO_PG_ObjectGroup_Map_Entry * entry =
+    this->get_group_entry (object_group
+                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
   if (entry == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
@@ -340,9 +337,11 @@ TAO_PG_ObjectGroupManager::create_object_group (
 
   auto_ptr<TAO_PG_ObjectGroup_Map_Entry> safe_group_entry (group_entry);
 
-  // Set the RepositoryId associated with the created ObjectGroupMap
+  // Set the RepositoryId associated with the created ObjectGroup_Map
   // entry.
   group_entry->type_id = CORBA::string_dup (type_id);
+
+  group_entry->group_id = group_id;
 
   group_entry->object_group = object_group;
 
