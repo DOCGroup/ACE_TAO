@@ -1,3 +1,13 @@
+Mon Jun 17 15:40:17 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ccm_core/Component_Base.idl:
+	* tao/ccm_core/CosPersistentState.idl:
+	* CIAO/ciao/Component_Base.idl:
+	* CIAO/ciao/CosPersistentState.idl: Moved these files under the new
+	  CIAO subdirectory.
+
+	* CIAO/ChangeLog: Added CIAO ChangeLog file.
+
 Mon Jun 10 22:48:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/TypeCode.cpp (private_member_type):
