@@ -113,12 +113,6 @@ TAO_Connection_Handler::svc_i (void)
   TAO_Resume_Handle rh (this->orb_core_,
                         ACE_INVALID_HANDLE);
 
-
-  // Increase the reference count before we process any requests
-  //
-  // REFCNT: Matches decr_refcount() in this function after the loop.
-  (void) this->incr_refcount ();
-
   // We exit of the loop if
   // - If the ORB core is shutdown by another thread
   // - Or if the transport is null. This could happen if an error
@@ -154,8 +148,6 @@ TAO_Connection_Handler::svc_i (void)
                     "TAO (%P|%t) - Connection_Handler::svc_i - "
                     "loop <%d>\n", current_timeout.msec ()));
     }
-  // REFCNT: Matches incr_refcount() before the loop...
-  (void) this->decr_refcount ();
 
   if (TAO_debug_level > 0)
     ACE_DEBUG  ((LM_DEBUG,

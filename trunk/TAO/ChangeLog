@@ -1,3 +1,65 @@
+Fri May 23 05:31:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	  This checkin is for fixing a problem with thread-per-connection
+	  strategy. If the client crahses during request processing on the
+	  server side, the server cleans up both the transport and the
+	  connection handler. This is in sync with what needs to happen
+	  for the reactive strategy.
+
+	  But in the thread-per-connection strategy, the problem gets
+	  exacerbated when the thread created for handling a new
+	  connection starts to clean itself up once its exits the
+	  *IOP_Connection_Handler::svc (). Since the handler is completely
+	  deleted resource cleanup by ACE_Task crashes. 
+
+	  This checkin basically decouples the thread-per-connection
+	  handler and the handler that has protocol specific code. When
+	  the client crahses only the protocol specific handler would get
+	  cleaned up, leaving the thread-per-connection handler to be
+	  cleaned when the thread created exits. 
+
+	* tao/Thread_Per_Connection_Handler.h:
+	* tao/Thread_Per_Connection_Handler.cpp: The new
+	  thread-per-connection handler class. 
+
+	* tao/Acceptor_Impl.cpp (activate_svc_handler): If
+	  thread-per-connection is enabled, create a thread-per-connection
+	  handler object and pass the protocol specific handler to it. 
+
+	* tao/Connection_Handler.cpp (svc_i): Remove reference counting
+	  since this is now performed by the thread-per-connection
+	  handler. 
+
+	* tao/Transport.h: Provide privileged access to the
+	  thread-per-connection-handler.
+
+	* tao/Connection_Handler.h: Added a pure virtual open_handler ()
+	  method which would serve as a hook for the protocol specific
+	  handler's open () call. 
+
+	* tao/IIOP_Connection_Handler.h:
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/Strategies/DIOP_Connection_Handler.h:
+	* tao/Strategies/DIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.h:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* tao/Strategies/DIOP_Connection_Handler.h:
+	* tao/Strategies/DIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.h:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/SCIOP_Connection_Handler.h:
+	* tao/Strategies/SCIOP_Connection_Handler.cpp: Implemented the
+	  open_handler () hook method. Removed the svc () and activate ()
+	  calls since they should be taken care by the new
+	  thread-per-connection-handler class. This also removes a bunch
+	  of code duplication from within these classes. 
+	
+	* tao/ObjectKey_Table.cpp (unbind_i): Removed a wrong comment. 
+
+	* tao/TAO.dsp:
+	* tao/Makefile.tao:
+	* tao/Makefile.bor: Added the new files for building.
+
 Thu May 22 14:06:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/util/utl_err.cpp:
