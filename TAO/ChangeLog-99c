@@ -1,3 +1,10 @@
+Thu Jul 22 11:06:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+	  (visit_interface):  I should use obj.in() to pass the object
+	  into _uncheck_narrow().  Thanks to David and Carlos for pointing
+	  this out.
+
 Thu Jul 22 07:21:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/GIOP_Server_Request.cpp: added #include of tao/ORB.h,
