@@ -1,3 +1,12 @@
+Tue Sep 01 03:46:21 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/Asynch_Acceptor.{h cpp}: Enable the contents for platforms
+	  with ACE_HAS_AIO_CALLS, not just ACE_WIN32.  Thanks to John Mulhern
+	  for these fixes.
+
+	* examples/Reactor/Proactor/Makefile: Removed include of
+	  platform_macros.GNU. Thanks to John Mulhern for this one too.
+
 Mon Aug 31 16:38:03 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/config-kcc-common.h: Added ACE_HAS_CPLUSPLUS_HEADERS to
