@@ -1,5 +1,9 @@
 Fri May  7 12:56:08 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Integrated Byron
+	Harris <harris_b@ociweb.com> 's patches for checking for \\'s in
+	command line IDL file given to tao_idl. 
+
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: Fixed the
 	IRIX warnings. 
 
