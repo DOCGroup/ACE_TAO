@@ -1,3 +1,8 @@
+Sat May 17 23:24:34 1997  Nanbor Wang  <nw1@number.wustl.edu>
+
+	* ace/OS.i (sigismember): Corrected the code when
+	  ACE_LACKS_SIGSET.
+
 Sat May 17 00:06:04 1997    <irfan@TWOSTEP>
 
 	* examples/ASX/Event_Server/Transceiver/transceiver.cpp
