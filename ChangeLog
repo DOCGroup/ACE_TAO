@@ -1,3 +1,8 @@
+Sun May 16 17:40:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test.cpp:
+          Fixed internal compiler error in MinGW build.
+
 Sun May 16 15:39:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
