@@ -1,9 +1,8 @@
 Mon Jun 28 16:18:28 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/MT_Cubit/README:
-
 	  Documentation updates due to pluggable protocol updates in
-	  MT_Cubit.
+ 	  MT_Cubit.
 
 	* performance-tests/Cubit/TAO/MT_Cubit/Globals.h:
 	* performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp:
@@ -44,6 +43,10 @@ Mon Jun 28 16:15:21 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	  Added extra information on execution of this example.
 
 Mon Jun 28 15:44:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+  
+	* orbsvcs/orbsvcs/Trader: Completed a pass through the Trading
+	  Service to update its exception handling scheme to the new
+ 	  ACE_TRY techniques.
 
 	* orbsvcs/orbsvcs/Sched/SchedEntry.cpp (operator <):
 	  Fixed a typo where "this_laxity" should have been "that_laxity".
