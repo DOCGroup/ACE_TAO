@@ -4,12 +4,11 @@ Fri Mar 06 09:36:47 1998  David L. Levine  <levine@cs.wustl.edu>
           declaration order.  Also, move _set_parent () before the
           constructor so that it is defined before being used.
 
-        * tao/cdr.h: added RCS keyword string.
-
         * tao/cdr.{i,cpp}: modified to base in/out operations
           on ULongLong instead of LongLong, because we have
           better support for ULongLong with ACE_LACKS_LONGLONG_T.
-          (get_ulonglong): removed const argument qualifier in .i file.
+
+        * tao/cdr.{h,cpp} (get_ulonglong): removed const argument qualifier.
 
 Fri Mar 06 00:18:38 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
