@@ -178,13 +178,14 @@ public:
                            const char *buffer,
                            unsigned int length);
 
-protected:
   enum Message_Types
   {
     CONFORMATION,
     CONFIRMATION = CONFORMATION,
     ERROR_MESSAGE
   };
+
+protected:
 
   virtual void send_message (JAWS_IO_Handler *ioh,
                              const char *buffer,
