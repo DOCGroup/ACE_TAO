@@ -1,6 +1,6 @@
 # $Id$
 #
-# VxWorks 5.2-5.3.1 with Green Hills 1.8.8 and 1.8.9
+# VxWorks 5.3.1 and later with Green Hills 1.8.8 and later.
 
 #### Notes:
 #### 1) This file requires that your PATH be set to include the location

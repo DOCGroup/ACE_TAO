@@ -1,3 +1,9 @@
+Fri Feb 25 13:06:14 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_{ghs,g++}.GNU:
+          updated platform information to reflect that these
+          files are intended for VxWorks 5.3.1 and later.
+
 Fri Feb 25 13:03:35 2000  Fernando D. Mato Mira  <matomira@iname.com>
 
         * include/makeinclude/platform_vxworks5.x_{diab,g++}.GNU:

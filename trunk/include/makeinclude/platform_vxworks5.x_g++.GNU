@@ -1,5 +1,6 @@
 # $Id$
-# VxWorks 5.2-5.3.1 with GNU g++ 2.7.2
+#
+# VxWorks 5.3.1 and later with GNU g++ that is distributed by Wind River.
 
 #### Notes:
 #### 1) This file requires that the WIND_BASE and WIND_HOST_TYPE environment
