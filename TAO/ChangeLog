@@ -1,3 +1,13 @@
+Wed Sep 25 17:12:06 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/IDL_Test/keywords.idl:
+
+	  This file tests the acceptance of C++ keywords used as identifiers,
+	  which is legal (the IDL compiler prepends '_cxx_'). However, two of
+	  these, 'private' and 'public' are now IDL keywords as well, and so
+	  are no longer legal identifiers. They have been commented out of the 
+	  test IDL file.
+
 Wed Sep 25 17:05:32 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_root/root_sth.cpp:
