@@ -403,7 +403,7 @@ Cubit_Client::cube_sequence (int i)
   this->cubit_->cube_sequence (input, vout, this->env_);
 
   //  Cubit::vector& output = *vout.ptr ();
-  output = vout;
+  //  output = vout;
 
   if (this->env_.exception () != 0)
     {
