@@ -202,8 +202,7 @@ TAO_RT_Protocols_Hooks::get_selector_hook (
 }
 
 void
-TAO_RT_Protocols_Hooks::get_selector_bands_policy_hook (
-                                                        CORBA::Policy *bands_policy,
+TAO_RT_Protocols_Hooks::get_selector_bands_policy_hook (CORBA::Policy *bands_policy,
                                                         CORBA::Short &min_priority,
                                                         CORBA::Short &max_priority,
                                                         CORBA::Short &p,
