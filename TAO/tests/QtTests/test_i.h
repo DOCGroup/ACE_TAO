@@ -56,10 +56,6 @@ private:
   // The ORB
 };
 
-#if defined(__ACE_INLINE__)
-#include "test_i.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* ACE_HAS_QT */
 
 #endif /* SERVER_TEST_I_H */

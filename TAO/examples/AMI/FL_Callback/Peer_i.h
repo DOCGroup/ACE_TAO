@@ -128,8 +128,4 @@ private:
   // Our id
 };
 
-#if defined(__ACE_INLINE__)
-#include "Peer_i.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* PEER_I_H */

@@ -38,10 +38,6 @@ public:
   // Create a new instance
 };
 
-#if defined(__ACE_INLINE__)
-#include "Loader.i"
-#endif /* __ACE_INLINE__ */
-
 // ACE_STATIC_SVC_DECLARE (Loader)
 ACE_FACTORY_DECLARE (OLT, Loader)
 

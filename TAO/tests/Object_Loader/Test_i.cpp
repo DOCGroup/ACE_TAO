@@ -2,10 +2,6 @@
 
 #include "Test_i.h"
 
-#if !defined(__ACE_INLINE__)
-#include "Test_i.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Object_Loader, Test_i, "$Id$")
 
 CORBA::Long

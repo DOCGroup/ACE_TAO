@@ -12,7 +12,7 @@ ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 noinst_PROGRAMS =
-## Makefile.SAXPrint.am 
+## Makefile.SAXPrint.am
 
 if BUILD_ACEXML
 noinst_PROGRAMS += SAXPrint
@@ -28,7 +28,6 @@ SAXPrint_SOURCES = \
   main.cpp \
   Print_Handler.h \
   SAXPrint_Handler.h \
-  Print_Handler.i \
   SAXPrint_Handler.i
 
 SAXPrint_LDADD = \
