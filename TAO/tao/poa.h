@@ -784,7 +784,4 @@ private:
   void operator= (const TAO_POA_Current &);
 };
 
-// Include the templates here.
-#include "tao/poa_T.h"
-
 #endif /* POA_H */

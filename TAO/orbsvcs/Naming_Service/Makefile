@@ -44,7 +44,7 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/NS_CosNaming.o .obj/NS_CosNaming. .shobj/NS_CosNaming.o .shobj/NS_CosNaming.: NS_CosNaming.cpp NS_CosNaming.h \
+.obj/NS_CosNaming.o .obj/NS_CosNaming.so .shobj/NS_CosNaming.o .shobj/NS_CosNaming.so: NS_CosNaming.cpp NS_CosNaming.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -159,22 +159,26 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
+ $(TAO_ROOT)/tao/corbacom.h \
  $(TAO_ROOT)/tao/sequence.h \
+ $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/sequence_T.h \
  $(TAO_ROOT)/tao/sequence_T.i \
+ $(TAO_ROOT)/tao/objkeyC.h \
+ $(TAO_ROOT)/tao/objkeyC.i \
  $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/strategy_T.h \
+ $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
  $(TAO_ROOT)/tao/nvlist.h \
+ $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
  $(TAO_ROOT)/tao/request.h \
  $(TAO_ROOT)/tao/svrrqst.h \
@@ -182,9 +186,15 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/marshal.h \
  $(TAO_ROOT)/tao/cdr.h \
  $(TAO_ROOT)/tao/stub.h \
+ $(TAO_ROOT)/tao/poa.h \
+ $(TAO_ROOT)/tao/poaC.h \
+ $(TAO_ROOT)/tao/poaC.i \
+ $(TAO_ROOT)/tao/servant_base.h \
+ $(TAO_ROOT)/tao/poaS.h \
+ $(TAO_ROOT)/tao/poaS.i \
+ $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiopobj.h \
@@ -193,7 +203,6 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/orb_core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
@@ -202,7 +211,6 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
  $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \
@@ -214,7 +222,7 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i
-.obj/CosNaming_i.o .obj/CosNaming_i. .shobj/CosNaming_i.o .shobj/CosNaming_i.: CosNaming_i.cpp CosNaming_i.h \
+.obj/CosNaming_i.o .obj/CosNaming_i.so .shobj/CosNaming_i.o .shobj/CosNaming_i.so: CosNaming_i.cpp CosNaming_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -331,22 +339,26 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
+ $(TAO_ROOT)/tao/corbacom.h \
  $(TAO_ROOT)/tao/sequence.h \
+ $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/sequence_T.h \
  $(TAO_ROOT)/tao/sequence_T.i \
+ $(TAO_ROOT)/tao/objkeyC.h \
+ $(TAO_ROOT)/tao/objkeyC.i \
  $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/strategy_T.h \
+ $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
  $(TAO_ROOT)/tao/nvlist.h \
+ $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
  $(TAO_ROOT)/tao/request.h \
  $(TAO_ROOT)/tao/svrrqst.h \
@@ -354,9 +366,15 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/marshal.h \
  $(TAO_ROOT)/tao/cdr.h \
  $(TAO_ROOT)/tao/stub.h \
+ $(TAO_ROOT)/tao/poa.h \
+ $(TAO_ROOT)/tao/poaC.h \
+ $(TAO_ROOT)/tao/poaC.i \
+ $(TAO_ROOT)/tao/servant_base.h \
+ $(TAO_ROOT)/tao/poaS.h \
+ $(TAO_ROOT)/tao/poaS.i \
+ $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiopobj.h \
@@ -365,7 +383,6 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/orb_core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
@@ -374,7 +391,6 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
  $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \
@@ -387,14 +403,14 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  NS_CosNaming.h
-.obj/Naming_Service.o .obj/Naming_Service. .shobj/Naming_Service.o .shobj/Naming_Service.: Naming_Service.cpp CosNaming_i.h \
+.obj/Naming_Service.o .obj/Naming_Service.so .shobj/Naming_Service.o .shobj/Naming_Service.so: Naming_Service.cpp \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/config.h CosNaming_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS.i \
@@ -504,22 +520,26 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
+ $(TAO_ROOT)/tao/corbacom.h \
  $(TAO_ROOT)/tao/sequence.h \
+ $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/sequence_T.h \
  $(TAO_ROOT)/tao/sequence_T.i \
+ $(TAO_ROOT)/tao/objkeyC.h \
+ $(TAO_ROOT)/tao/objkeyC.i \
  $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/strategy_T.h \
+ $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
  $(TAO_ROOT)/tao/nvlist.h \
+ $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
  $(TAO_ROOT)/tao/request.h \
  $(TAO_ROOT)/tao/svrrqst.h \
@@ -527,9 +547,15 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/marshal.h \
  $(TAO_ROOT)/tao/cdr.h \
  $(TAO_ROOT)/tao/stub.h \
+ $(TAO_ROOT)/tao/poa.h \
+ $(TAO_ROOT)/tao/poaC.h \
+ $(TAO_ROOT)/tao/poaC.i \
+ $(TAO_ROOT)/tao/servant_base.h \
+ $(TAO_ROOT)/tao/poaS.h \
+ $(TAO_ROOT)/tao/poaS.i \
+ $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiopobj.h \
@@ -538,7 +564,6 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/orb_core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
@@ -547,7 +572,6 @@ Naming_Service:	$(addprefix $(VDIR),$(SVR_OBJS))
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
  $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \

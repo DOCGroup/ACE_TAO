@@ -42,7 +42,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_O
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/clnt.o .obj/clnt. .shobj/clnt.o .shobj/clnt.: clnt.cpp clnt.h \
+.obj/clnt.o .obj/clnt.so .shobj/clnt.o .shobj/clnt.so: clnt.cpp clnt.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -157,22 +157,26 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_O
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/align.h \
+ $(TAO_ROOT)/tao/corbacom.h \
  $(TAO_ROOT)/tao/sequence.h \
+ $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/sequence_T.h \
  $(TAO_ROOT)/tao/sequence_T.i \
+ $(TAO_ROOT)/tao/objkeyC.h \
+ $(TAO_ROOT)/tao/objkeyC.i \
  $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/poa.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
+ $(TAO_ROOT)/tao/strategy_T.h \
+ $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
  $(TAO_ROOT)/tao/nvlist.h \
+ $(TAO_ROOT)/tao/object.h \
  $(TAO_ROOT)/tao/principa.h \
  $(TAO_ROOT)/tao/request.h \
  $(TAO_ROOT)/tao/svrrqst.h \
@@ -180,9 +184,15 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_O
  $(TAO_ROOT)/tao/marshal.h \
  $(TAO_ROOT)/tao/cdr.h \
  $(TAO_ROOT)/tao/stub.h \
+ $(TAO_ROOT)/tao/poa.h \
+ $(TAO_ROOT)/tao/poaC.h \
+ $(TAO_ROOT)/tao/poaC.i \
+ $(TAO_ROOT)/tao/servant_base.h \
+ $(TAO_ROOT)/tao/poaS.h \
+ $(TAO_ROOT)/tao/poaS.i \
+ $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/iiopobj.h \
@@ -191,7 +201,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_O
  $(TAO_ROOT)/tao/orb_core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/nvlist.i \
  $(TAO_ROOT)/tao/any.i \
@@ -200,7 +209,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_O
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
  $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \

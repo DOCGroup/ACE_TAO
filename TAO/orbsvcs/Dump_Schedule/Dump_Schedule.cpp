@@ -56,7 +56,7 @@ int main (int argc, char *argv[])
 					 ACE_SCOPE_THREAD),
 	 ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
 					 ACE_SCOPE_THREAD),
-	 infos, TAO_TRY_ENV);
+	 infos.out (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_Scheduler_Factory::dump_schedule (infos.in (),
