@@ -20,25 +20,21 @@ TAO_Logger_Hash::hash (const ACE_CString &ext_id)
 #endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
 
 Logger_Factory_i::Logger_Factory_i (void)
-  :hash_map_ ()
 {
-  //Do nothing?
-  //hash_map_.open (void);
 }
 
 Logger_Factory_i::~Logger_Factory_i (void)
 {
-  // Do nothing?
-  //hash_map_.close (void);
 }
 
 Logger_ptr
 Logger_Factory_i::make_logger (const char *name,
                                CORBA::Environment &_env)
 {
-  Logger_i  *result;
-  // If name is already in the map, find() will assign <result> to the
+  Logger_i *result;
+  // If name is already in the map, <find> will assign <result> to the
   // appropriate value
+
   if (hash_map_.find (name, result) != 0)
     {
       if (TAO_debug_level > 0)
@@ -47,6 +43,9 @@ Logger_Factory_i::make_logger (const char *name,
       ACE_NEW_RETURN (result,
                       Logger_i (name),
                       0);
+      // @@ Matt, please make sure you check the result of this bind()
+      // call.  If it fails, you need to set the _env exception
+      // appropriately to indicate a failure back to the client.
       hash_map_.bind (name, result);
     }
   else
@@ -54,6 +53,14 @@ Logger_Factory_i::make_logger (const char *name,
       ACE_DEBUG ((LM_DEBUG,
                   "\nLogger name already bound"));
     }
+
+  // @@ Matt, there are some nasty bugs here...  If you find a
+  // "result" that's already registered, then you're registering it
+  // AGAIN with the object adapter.  I believe that this is a BAD
+  // THING to do...  What you need to do instead is to simple return
+  // the object reference to the previously registered Logger_i,
+  // rather than calling _this()...
+
   return result->_this (_env);
 }
 
@@ -111,7 +118,6 @@ Logger_i::log (const Logger::Log_Record &log_rec,
 {
   this->logv (log_rec, verbosity_level_, _env);
 }
-
 
 void
 Logger_i::logv (const Logger::Log_Record &log_rec,
