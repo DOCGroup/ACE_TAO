@@ -1,8 +1,0 @@
-
-#
-# Makefile for building the Pluggable UDP tests
-#
-
-DIRS = Basic Performance SimplePerformance
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
