@@ -166,10 +166,10 @@ public:
     ACE_NEW(consumer_impl3,
             Consumer);
 
-    tv.set(1,0);
+    tv.set(0,50000);
     consumer_impl3->setWorkTime(tv);
     //consumer's rate specified remotely, so need to specify a period here.
-    tv.set(4,0); //period
+    tv.set(0,200000); //period
     add_consumer(consumer_impl3,
                  "consumer3",
                  tv,

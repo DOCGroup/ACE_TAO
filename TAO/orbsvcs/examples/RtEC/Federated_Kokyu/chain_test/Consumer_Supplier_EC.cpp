@@ -122,11 +122,11 @@ public:
     ACE_NEW(consumer_impl1_2,
             Consumer(supplier_impl1_3));
 
-    tv.set(1,0);
+    tv.set(0,50000);
     consumer_impl1_2->setWorkTime(tv);
     //consumer's rate will get propagated from the supplier.
     //so no need to specify a period here.
-    tv.set(4,0); //Period
+    tv.set(0,200000); //Period
     add_consumer_with_supplier(consumer_impl1_2, //deleted in consumer
                                "consumer1_2",
                                tv,

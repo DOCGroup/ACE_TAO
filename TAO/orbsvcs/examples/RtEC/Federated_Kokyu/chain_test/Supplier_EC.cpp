@@ -117,7 +117,7 @@ public:
             Supplier(1));
     ACE_NEW(timeout_consumer_impl1_1,
             Timeout_Consumer(supplier_impl1_1));
-    ACE_Time_Value tv(4,0); //period
+    ACE_Time_Value tv(0,200000); //period
     add_supplier_with_timeout(supplier_impl1_1,
                               "supplier1_1",
                               ACE_ES_EVENT_UNDEFINED,
@@ -137,11 +137,11 @@ public:
     ACE_NEW(consumer_impl1_1,
             Consumer(supplier_impl1_2));
 
-    tv.set(1,0);
+    tv.set(0,50000);
     consumer_impl1_1->setWorkTime(tv);
     //consumer's rate will get propagated from the supplier.
     //so no need to specify a period here.
-    tv.set(4,0); //Period
+    tv.set(0,200000); //Period
     add_consumer_with_supplier(consumer_impl1_1, //deleted in consumer
                                "consumer1_1",
                                tv,
