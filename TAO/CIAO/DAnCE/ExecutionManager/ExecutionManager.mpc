@@ -15,7 +15,7 @@ project (ExecutionManager_stub): ciao_deployment_stub, ciao_server_dnc {
   }
 }
 
-project(Execution_Manager): ciao_server_dnc, ciao_deployment_svnt, ciao_deployment_stub, iortable, naming", ifr_client {
+project(Execution_Manager): ciao_server_dnc, ciao_deployment_svnt, ciao_deployment_stub, iortable, naming, ifr_client {
   exename = Execution_Manager
   after += DomainApplicationManager ExecutionManager_stub
   libs += DomainApplicationManager ExecutionManager_stub
