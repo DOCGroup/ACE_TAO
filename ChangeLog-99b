@@ -1,10 +1,18 @@
+Wed Jul 07 00:24:50 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp: Added the Based_Pointer_Repository.{h,cpp} and
+	  Based_Pointer_Repository_T.{h,cpp} files to the project files.
+
+	* ace/Based_Pointer_Repository.cpp: Added define ACE_BUILD_DLL.
+
 Tue Jul  6 23:07:36 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Makefile: Reran make depend.
 
 	* ace/Makefile: Added the Based_Pointer_Repository.{h,cpp} and
 	  Based_Pointer_Repository_T.{h,cpp} files to the Makefile.
-  
+
         * ace: Added the Based_Pointer_Repository.{h,cpp} and
 	  Based_Pointer_Repository_T.{h,cpp} files to the release.  These
  	  classes make it possible to transparently use "pointers" in
