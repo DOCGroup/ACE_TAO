@@ -1,3 +1,12 @@
+Thu May  6 20:12:57 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* acconfig.h:
+	* configure.in:
+
+	  Added tests/support for ACE_LACKS_PTHREAD_SIGMASK, 
+	  ACE_LACKS_TCP_NODELAY and ACE_LACKS_NULL_PTHREAD_STATUS.  Thanks
+	  to David for providing a test for ACE_LACKS_NULL_PTHREAD_STATUS.
+
 Thu May 06 14:26:54 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/README,ace/Pipe.cpp (open): added support for
