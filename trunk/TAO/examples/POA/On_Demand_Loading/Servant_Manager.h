@@ -81,9 +81,11 @@ public:
   // The symbol which on getting invoked will give us the servant
   // pointer.
   
-  typedef ACE_Hash_Map_Manager<PortableServer::ObjectId,
-                               ACE_DLL *,
-                               ACE_Null_Mutex>
+  typedef ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
+                                  ACE_DLL *,
+                                  TAO_ObjectId_Hash,
+                                  ACE_Equal_To<PortableServer::ObjectId>,
+                                  ACE_Null_Mutex>
           SERVANT_MAP;
   
   SERVANT_MAP servant_map_;
