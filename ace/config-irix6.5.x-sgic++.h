@@ -11,7 +11,6 @@
 #include "ace/config-irix6.x-sgic++.h"
 
 #undef ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-#define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION   
 
 // Irix 6.5 man pages show that they exist
 #undef ACE_LACKS_CONDATTR_PSHARED

@@ -380,10 +380,6 @@ extern int cma_sigwait  (sigset_t *);
 // Platform/compiler supports Standard C++ Library
 #define ACE_HAS_STANDARD_CPP_LIBRARY 0
 
-// Compiler uses the template<> syntax
-#define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
-#define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-
 // Compiler's template mechanism must see source code (i.e.,
 // .cpp files).
 #define ACE_TEMPLATES_REQUIRE_SOURCE
@@ -406,7 +402,7 @@ extern int cma_sigwait  (sigset_t *);
 #define ACE_LACKS_SIGNED_CHAR
 
 // Compiler supports the new using keyword for C++ namespaces.
-#define ACE_HAS_USING_KEYWORD 
+#define ACE_HAS_USING_KEYWORD
 
 //=========================================================================
 // Build options

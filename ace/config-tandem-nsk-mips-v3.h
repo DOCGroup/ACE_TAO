@@ -384,10 +384,6 @@ extern int cma_sigwait  (sigset_t *);
 // Platform/compiler supports Standard C++ Library
 #define ACE_HAS_STANDARD_CPP_LIBRARY 1
 
-// Compiler uses the template<> syntax
-#define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
-#define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
-
 // Compiler's template mechanism must see source code (i.e.,
 // .cpp files).
 #define ACE_TEMPLATES_REQUIRE_SOURCE
@@ -399,8 +395,8 @@ extern int cma_sigwait  (sigset_t *);
 // of classes used as formal arguments to a template class.
 #define ACE_HAS_TEMPLATE_TYPEDEFS
 
-// Platform/Compiler supports a String class 
-#define ACE_HAS_STRING_CLASS 
+// Platform/Compiler supports a String class
+#define ACE_HAS_STRING_CLASS
 #define ACE_HAS_STDCPP_STL_INCLUDES
 
 // Platform has its standard c++ library in the namespace std.
@@ -414,7 +410,7 @@ extern int cma_sigwait  (sigset_t *);
 #define ACE_LACKS_SIGNED_CHAR
 
 // Compiler supports the new using keyword for C++ namespaces.
-#define ACE_HAS_USING_KEYWORD 
+#define ACE_HAS_USING_KEYWORD
 
 // Compiler supports the typename keyword for templates
 #define ACE_HAS_TYPENAME_KEYWORD
