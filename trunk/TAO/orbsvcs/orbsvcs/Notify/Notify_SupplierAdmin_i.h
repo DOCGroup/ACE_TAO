@@ -20,13 +20,14 @@
 #define TAO_NOTIFY_SUPPLIERADMIN_I_H
 #include "ace/pre.h"
 
-// @@ Pradeep: i believe that the #pragma once guideline is still in
-// effect.
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "Notify_ID_Pool_T.h"
 #include "Notify_QoSAdmin_i.h"
 #include "Notify_FilterAdmin_i.h"
-#include "orbsvcs/CosNotifyChannelAdminS.h"
 
 class TAO_Notify_EventChannel_i;
 class TAO_Notify_Resource_Manager;

@@ -60,7 +60,7 @@ public:
     CosEventChannelAdmin::AlreadyConnected
   ));
 
-virtual void push_structured_events (
+  virtual void push_structured_events (
     const CosNotification::EventBatch & notifications,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -87,6 +87,9 @@ protected:
   // = Data members
   CosNotifyComm::SequencePushSupplier_ptr push_supplier_;
   // The supplier that we're connected to.
+
+  typedef TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer>
+  sequence_proxy_inherited;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

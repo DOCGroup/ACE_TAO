@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/Auto_Ptr.h"
 #include "Notify_SupplierAdmin_i.h"
 #include "Notify_ProxyPushConsumer_i.h"
 #include "Notify_StructuredProxyPushConsumer_i.h"
@@ -7,7 +8,8 @@
 #include "Notify_EventChannel_i.h"
 #include "Notify_Resource_Manager.h"
 #include "Notify_Event_Manager.h"
-#include "ace/Auto_Ptr.h"
+
+ACE_RCSID(Notify, Notify_SupplierAdmin_i, "$Id$")
 
 // Implementation skeleton constructor
 TAO_Notify_SupplierAdmin_i::TAO_Notify_SupplierAdmin_i (TAO_Notify_EventChannel_i* myChannel, TAO_Notify_Resource_Manager* resource_manager)
@@ -21,8 +23,8 @@ TAO_Notify_SupplierAdmin_i::TAO_Notify_SupplierAdmin_i (TAO_Notify_EventChannel_
 // Implementation skeleton destructor
 TAO_Notify_SupplierAdmin_i::~TAO_Notify_SupplierAdmin_i (void)
 {
-  if (this->is_destroyed_ == 0)
-    this->cleanup_i ();
+  /*ACE_DEBUG ((LM_DEBUG,"in SA dtor\n"));*/
+  this->cleanup_i ();
 
   this->my_channel_->supplier_admin_destroyed (this->myID_);
 }
@@ -39,12 +41,10 @@ TAO_Notify_SupplierAdmin_i::init (CosNotifyChannelAdmin::AdminID myID,
                                   PortableServer::POA_ptr my_POA,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
-  // @@ Pradeep: please use the this-> style to access fields...
-
-  my_POA_ = PortableServer::POA::_duplicate (my_POA);
+  this->my_POA_ = PortableServer::POA::_duplicate (my_POA);
 
   this->proxy_pushconsumer_POA_ = this->resource_manager_->
-    create_proxy_pushconsumer_POA (this->my_POA_.in (),
+    create_proxy_pushconsumer_POA (this->my_POA_.in (), myID,
                                    ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -81,11 +81,9 @@ TAO_Notify_SupplierAdmin_i::get_filter_admin (void)
 }
 
 void
-TAO_Notify_SupplierAdmin_i::cleanup_i (CORBA::Environment &ACE_TRY_ENV)
+TAO_Notify_SupplierAdmin_i::cleanup_i (CORBA::Environment &/*ACE_TRY_ENV*/)
 {
   // Cleanup all resources..
-  this->resource_manager_->destroy_POA (this->proxy_pushconsumer_POA_.in (),
-                                        ACE_TRY_ENV);
   this->proxy_pushconsumer_POA_ = PortableServer::POA::_nil ();
   this->my_POA_ = PortableServer::POA::_nil ();
 }
@@ -284,16 +282,17 @@ TAO_Notify_SupplierAdmin_i::obtain_notification_push_consumer (CosNotifyChannelA
 
 void
 TAO_Notify_SupplierAdmin_i::destroy (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((
-                   CORBA::SystemException
-                   ))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->is_destroyed_ = 1;
+
+  this->resource_manager_->destroy_POA (this->proxy_pushconsumer_POA_.in (),
+                                        ACE_TRY_ENV);
+  ACE_CHECK;
 
   // deactivate ourselves
   this->resource_manager_->deactivate_object (this, this->my_POA_.in (),
                                               ACE_TRY_ENV);
-  this->cleanup_i (ACE_TRY_ENV);
 }
 
 CosNotification::QoSProperties*

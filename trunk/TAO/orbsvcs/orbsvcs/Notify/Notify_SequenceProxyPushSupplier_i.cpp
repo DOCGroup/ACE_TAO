@@ -4,22 +4,21 @@
 #include "Notify_SequenceProxyPushSupplier_i.h"
 #include "Notify_ConsumerAdmin_i.h"
 
+ACE_RCSID(Notify, Notify_SequenceProxyPushSupplier_i, "$Id$")
+
 TAO_Notify_SequenceProxyPushSupplier_i::TAO_Notify_SequenceProxyPushSupplier_i (TAO_Notify_ConsumerAdmin_i* consumeradmin, TAO_Notify_Resource_Manager* resource_manager)
-  :TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier> (consumeradmin, resource_manager)
+  :sequence_proxy_inherited (consumeradmin, resource_manager)
 {
-  //No-Op.
 }
 
 TAO_Notify_SequenceProxyPushSupplier_i::~TAO_Notify_SequenceProxyPushSupplier_i (void)
 {
-  // No-Op.
 }
 
 void
 TAO_Notify_SequenceProxyPushSupplier_i::cleanup_i (CORBA::Environment &ACE_TRY_ENV)
 {
-  // @@ Pradeep: maybe a typedef would simplify this...
-  TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>::cleanup_i (ACE_TRY_ENV);
+  sequence_proxy_inherited::cleanup_i (ACE_TRY_ENV);
 
   this->push_consumer_ = CosNotifyComm::SequencePushConsumer::_nil ();
 }

@@ -58,7 +58,7 @@ class TAO_Notify_Export TAO_Notify_StructuredProxyPushSupplier_i : public TAO_No
     CosEventChannelAdmin::TypeError
   ));
 
-virtual void disconnect_structured_push_supplier (
+  virtual void disconnect_structured_push_supplier (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -66,7 +66,7 @@ virtual void disconnect_structured_push_supplier (
   ));
 
  protected:
-// = Helper methods
+  // = Helper methods
   virtual void dispatch_event_i (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV);
   // Deliver the event to the consumer.
 
@@ -78,6 +78,9 @@ virtual void disconnect_structured_push_supplier (
 
  CosNotifyComm::StructuredPushConsumer_var push_consumer_;
  // The consumer that we're connect to.
+
+ typedef TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::StructuredProxyPushSupplier>
+   structured_proxy_inherited;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

@@ -29,7 +29,7 @@ class TAO_Notify_ConsumerAdmin_i;
 #endif /* _MSC_VER */
 
 template <class SERVANT_TYPE>
-class TAO_Notify_Export TAO_Notify_ProxySupplier : public TAO_Notify_Proxy <SERVANT_TYPE>, public TAO_Notify_Event_Listener
+class TAO_Notify_Export TAO_Notify_ProxySupplier : public TAO_Notify_Proxy <SERVANT_TYPE>, public TAO_Notify_EventListener
 {
   // = TITLE
   //   TAO_Notify_ProxySupplier
@@ -136,14 +136,14 @@ virtual void subscription_change (
  TAO_Notify_ConsumerAdmin_i* myadmin_;
  // My parent consumer admin.
 
- EVENTTYPE_LIST subscription_list_;
+ TAO_Notify_EventType_List subscription_list_;
  // A list of event types that we are interested in.
 
   CORBA::Boolean is_suspended_;
   // True if we are connected to a consumer and suspended.
 
-  typedef ACE_Unbounded_Queue<TAO_Notify_Event*> EVENT_LIST;
-  EVENT_LIST event_list_;
+  typedef ACE_Unbounded_Queue<TAO_Notify_Event*> TAO_Notify_Event_List;
+  TAO_Notify_Event_List event_list_;
   // A list of events populated when we're suspended.
 };
 

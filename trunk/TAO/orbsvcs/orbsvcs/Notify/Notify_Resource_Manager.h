@@ -18,11 +18,14 @@
 #define TAO_NOTIFY_RESOURCE_MANAGER
 #include "ace/pre.h"
 
-// @@ Pradeep: do not forget the #pragma once.
-
-#include "Notify_ID_Pool_T.h"
-#include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "tao/POA.h"
+#include "orbsvcs/CosNotifyChannelAdminS.h"
+#include "Notify_ID_Pool_T.h"
+#include "notify_export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_Notify_EventChannelFactory_i;
 class TAO_Notify_EventChannel_i;
@@ -37,8 +40,7 @@ class TAO_Notify_SequenceProxyPushConsumer_i;
 class TAO_Notify_ProxyPushConsumer_i;
 class TAO_Notify_Event_Manager;
 
-// @@ Pradeep: do not forget the TAO_****_Export
-class TAO_Notify_Resource_Manager
+class TAO_Notify_Export TAO_Notify_Resource_Manager
 {
   // = TITLE
   //   Notify_Resource_Factory
@@ -80,8 +82,11 @@ class TAO_Notify_Resource_Manager
   PortableServer::POA_ptr get_default_POA (void);
   // Returns the default POA.
 
+  CosNotifyFilter::FilterFactory_ptr get_default_filter_factory (void);
+  // Returns the default filter factory.
+
   // = Creation methods
-  TAO_Notify_EventChannel_i* create_event_channel (CosNotifyChannelAdmin::EventChannelFactory_ptr parent, CORBA::Environment &ACE_TRY_ENV);
+  TAO_Notify_EventChannel_i* create_event_channel (TAO_Notify_EventChannelFactory_i* parent, CORBA::Environment &ACE_TRY_ENV);
   // Create an Event Channel.
 
   TAO_Notify_ConsumerAdmin_i* create_consumer_admin (TAO_Notify_EventChannel_i* channel, CORBA::Environment &ACE_TRY_ENV);
@@ -117,16 +122,16 @@ class TAO_Notify_Resource_Manager
   PortableServer::POA_ptr create_event_channel_POA (PortableServer::POA_ptr parent_poa, CORBA::Environment &ACE_TRY_ENV);
   // Create the POA to activate Event Channels in.
 
-  PortableServer::POA_ptr create_supplier_admin_POA (PortableServer::POA_ptr parent_poa, CORBA::Environment &ACE_TRY_ENV);
+  PortableServer::POA_ptr create_supplier_admin_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id, CORBA::Environment &ACE_TRY_ENV);
   // Create the POA to activate SA's in.
 
-  PortableServer::POA_ptr create_consumer_admin_POA (PortableServer::POA_ptr parent_poa, CORBA::Environment &ACE_TRY_ENV);
+  PortableServer::POA_ptr create_consumer_admin_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id, CORBA::Environment &ACE_TRY_ENV);
   // Create the POA to activate CA's in.
 
-  PortableServer::POA_ptr create_proxy_pushconsumer_POA (PortableServer::POA_ptr parent_poa, CORBA::Environment &ACE_TRY_ENV);
+  PortableServer::POA_ptr create_proxy_pushconsumer_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id, CORBA::Environment &ACE_TRY_ENV);
   // Create the POA to activate proxy push consumers in.
 
-  PortableServer::POA_ptr create_proxy_pushsupplier_POA (PortableServer::POA_ptr parent_poa, CORBA::Environment &ACE_TRY_ENV);
+  PortableServer::POA_ptr create_proxy_pushsupplier_POA (PortableServer::POA_ptr parent_poa, CORBA::Long new_poa_id, CORBA::Environment &ACE_TRY_ENV);
   // Create the POA to activate proxy push suppliers in.
 
   // = Object activation and POA methods
@@ -157,19 +162,25 @@ class TAO_Notify_Resource_Manager
 
  protected:
   // = Helper methods
+  void init_i (CORBA::Environment &ACE_TRY_ENV);
+  // Initialize.
+
   PortableServer::ObjectId* long_to_ObjectId (const CORBA::Long id);
   // Converts a CORBA::Long to an ObjectId
 
-  PortableServer::POA_ptr create_generic_childPOA_i (PortableServer::POA_ptr parent_poa, CORBA::Environment &ACE_TRY_ENV);
-  // Create the POA with the most generic policies.
+  PortableServer::POA_ptr create_generic_childPOA_i (const char* child_poa_name, PortableServer::POA_ptr parent_poa, CORBA::Environment &ACE_TRY_ENV);
+  // Create the POA with the most generic policies required of our POA's.
 
- protected:
+  CosNotifyFilter::FilterFactory_ptr create_default_filter_factory_i (CORBA::Environment& ACE_TRY_ENV);
+  // Create the filter factory used by all ECs.
+
+  // = Data Members
   PortableServer::POA_var default_POA_;
   // The default POA to use.
 
-  TAO_Notify_ID_Pool<CORBA::Long> poa_ids_;
-  // Id generator for poa's.
-  // These id's are used to generate unique names for child poa's.
+  CosNotifyFilter::FilterFactory_var default_filter_factory_;
+  // The default filter factory.
+  // We create and own this.
 };
 
 #include "ace/post.h"

@@ -3,6 +3,8 @@
 #include "Notify_Constraint_Interpreter.h"
 #include "Notify_Constraint_Visitors.h"
 
+ACE_RCSID(Notify, Notify_Constraint_Interpreter, "$Id$")
+
 TAO_Notify_Constraint_Interpreter::TAO_Notify_Constraint_Interpreter(void)
 {
 }
