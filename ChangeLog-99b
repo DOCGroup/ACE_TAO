@@ -7,8 +7,8 @@ Sun Apr 11 16:09:16 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 Sun Apr 11 16:02:49 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp (create_handler):
-	Fixed the warnings (control reaching end of block) and error (passing
-	u_long to close) which showed up on Linux(with config-linux.h)
+	  Fixed the warnings (control reaching end of block) and error (passing
+	  u_long to close) which showed up on Linux(with config-linux.h)
 	* performance-tests/Misc/preempt.cpp: 
 	* examples/Threads/task_five.cpp: Replaced ACE_MT_SYNCH by
  	  ACE_SYNCH to get it compile on Linux.
