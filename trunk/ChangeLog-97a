@@ -4,7 +4,7 @@ Sat Feb 22 23:03:45 1997  David L. Levine  <levine@cs.wustl.edu>
 	  were lost in version 4.91.
 
 	* ace/OS.{i,cpp},config-linux*.h: added ACE_OS::gethrtime ()
-	  support for Linux on Pentiums.  It's not thread safe, yet.
+	  support for Linux on Pentiums.
 
 	* ace/High_Res_Timer.*: changed scale_factor type from
 	  u_long to double so that it can be less than 1.
