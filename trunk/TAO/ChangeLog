@@ -1,3 +1,9 @@
+Tue Dec 17 08:14:35 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * utils/nslist/nslist.mpc:
+
+          Adding an mpc file for nslist and company.
+
 Tue Dec 17 06:36:17 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
