@@ -1,3 +1,9 @@
+Fri Dec 10 18:40:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* tests/Reactor_Exceptions_Test.cpp: Force the ACE_SOCK_Dgram to all
+	  its work with IPv4. Allows this test to run clean on IPv6 systems
+	  as well as IPv4.
+
 Fri Dec 10 23:06:24 UTC 2004  Don Hinton  <don.hinton@vanderbilt.edu>
 
         * Kokyu/tests/DSRT_MIF/MIF.cpp:
