@@ -1,3 +1,10 @@
+Wed Aug  4 08:31:43 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/config-linux-common.h: If the version of glibc
+	  is less than 2.1 add the ACE_HAS_NONCONST_MSGSND macro.  Thanks
+ 	  to Anand <anand@icmgworld.com> and Johnny Willemsen for this
+ 	  fix.
+
 Tue Aug  3 15:25:43 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	From Jaroslaw Nozderko <jaroslaw.nozderko@polkomtel.com.pl>.

@@ -265,6 +265,7 @@
 
 // glibc supports wchar, but lacks fgetwc and ungetwc
 #define ACE_LACKS_FGETWC
+#define ACE_HAS_NONCONST_MSGSND
 
 #endif
 
