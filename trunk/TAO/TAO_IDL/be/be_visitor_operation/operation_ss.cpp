@@ -385,17 +385,15 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       // Here's what we are going to do to have a uniform way of
       // getting the return value updated for the Request Info:
       // declare a operation_retval type object and assign the
-      // _tao_safe_retval._retn() to it.  We pass this to the result
+      // _tao_retval._retn() to it.  We pass this to the result
       // updation method (note: it hasn't been destroyed).  We then
-      // put it back into the original _tao_safe_retval object.  And
+      // put it back into the original _tao_retval object.  And
       // finally the _retn() is returned from the operation without
       // causing any problems.
       // Generate the return type mapping (same as in the header file)
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
       visitor = tao_cg->make_visitor (&ctx);
-
-//      os->indent ();
 
       if ((!visitor) || (bt->accept (visitor) == -1))
         {
@@ -550,7 +548,7 @@ be_visitor_operation_ss::gen_pre_skel_info (be_operation *node)
 
 int
 be_visitor_operation_ss::gen_demarshal_params (be_operation *node,
-                                               be_type *bt)
+                                               be_type *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_visitor *visitor;
@@ -585,7 +583,7 @@ be_visitor_operation_ss::gen_demarshal_params (be_operation *node,
       *os << be_uidt_nl << "))\n" << be_idt;
 
       // If marshaling fails, raise exception.
-      if (this->gen_raise_exception (bt,
+      if (this->gen_raise_exception (0,
                                      "CORBA::MARSHAL",
                                      "") == -1)
         {
@@ -715,7 +713,7 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
 
   *os << be_uidt_nl << "))\n";
   // if marshaling fails, raise exception
-  if (this->gen_raise_exception (bt,
+  if (this->gen_raise_exception (0,
                                  "CORBA::MARSHAL",
                                  "") == -1)
     {

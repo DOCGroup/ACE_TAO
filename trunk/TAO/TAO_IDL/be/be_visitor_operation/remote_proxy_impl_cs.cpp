@@ -231,7 +231,7 @@ be_visitor_operation_remote_proxy_impl_cs::visit_operation (be_operation *node)
           if (bt->size_type () == be_decl::VARIABLE
               || bt->base_node_type () == AST_Decl::NT_array)
             {
-              *os << "return _tao_safe_retval._retn ();";
+              *os << "return _tao_retval._retn ();";
             }
           else
             {
@@ -777,10 +777,10 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
       // Here's what we are going to do to have a uniform way of getting the
       // return value updated for the Request Info:
       // declare a operation_retval type object and assign the
-      // _tao_safe_retval._retn () to it.
+      // _tao_retval._retn () to it.
       // We pass this to the result updation method (note: it hasnt
       // got destroyed)
-      // We then put it back into the original _tao_safe_retval
+      // We then put it back into the original _tao_retval
       // object.
       // And finally the _retn () is returned from the operation w.o
       // causing any problems.
@@ -803,9 +803,9 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
       if (bt->size_type () == be_decl::VARIABLE
           || bt->base_node_type () == AST_Decl::NT_array)
         {
-          *os << " _tao_retval_info = _tao_safe_retval._retn ();" << be_nl
+          *os << " _tao_retval_info = _tao_retval._retn ();" << be_nl
               << "_tao_ri.result (_tao_retval_info);" << be_nl
-              << "_tao_safe_retval = _tao_retval_info;" << be_nl;
+              << "_tao_retval = _tao_retval_info;" << be_nl;
         }
       else
         {
