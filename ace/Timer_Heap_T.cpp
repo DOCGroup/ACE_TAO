@@ -544,3 +544,4 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::cancel (const TYPE &type,
 }
 
 #endif /* ACE_TIMER_HEAP_T_C */
+
