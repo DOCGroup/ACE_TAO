@@ -446,7 +446,7 @@ be_operation::gen_server_skeletons (void)
       << this->local_name () << "_skel ("
       << "CORBA::ServerRequest &_tao_server_request, "
       << "CORBA::Object_ptr _tao_object_reference, "
-      << "CORBA::Environment &_tao_enviroment)" << nl;
+      << "CORBA::Environment &_tao_environment)" << nl;
   *ss << "{\n";
   ss->incr_indent ();
   // define an NVList to hold arguments
@@ -563,13 +563,13 @@ be_operation::gen_server_skeletons (void)
                   switch (bd->direction ())
                     {
                     case AST_Argument::dir_IN:
-                      *ss << "CORBA::ARG_IN, _tao_enviroment);" << nl;
+                      *ss << "CORBA::ARG_IN, _tao_environment);" << nl;
                       break;
                     case AST_Argument::dir_INOUT:
-                      *ss << "CORBA::ARG_INOUT, _tao_enviroment);" << nl;
+                      *ss << "CORBA::ARG_INOUT, _tao_environment);" << nl;
                       break;
                     case AST_Argument::dir_OUT:
-                      *ss << "CORBA::ARG_OUT, _tao_enviroment);" << nl;
+                      *ss << "CORBA::ARG_OUT, _tao_environment);" << nl;
                       break;
                     }
                 } // end if argument node

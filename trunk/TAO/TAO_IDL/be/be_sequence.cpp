@@ -62,55 +62,46 @@ be_sequence::create_name (void)
 
 
   d = cg->node (); // retrieve the node that was passed in via the CodeGen
-                   // object
+  // object
 
   if (!d)
     return -1; // error, we cannot be free standing.
 
-  if (d->node_type () == AST_Decl::NT_typedef)
+  // we generate a name for ourselves. Start by generating a local name
+
+  ACE_OS::memset (namebuf, '\0', 200);
+  ACE_OS::sprintf (namebuf, "_tao__seq_%s", d->local_name ()->get_string ());
+
+  if (d->node_type () == AST_Decl::NT_sequence)
     {
-      // we are a named sequence. We will assume the same name as the typedef
-      // node
-      this->set_name ((UTL_ScopedName *)d->name ()->copy ());
+      // this means that we are an anonymous sequence who happens to be a
+      // base type of the sequence denoted by the node "d".
+      // Hence we set our enclosing scope to be the node "d"
+      this->set_defined_in (DeclAsScope (d));
+    }
+
+  // now set our fully scoped name
+
+  // now see if we have a fully scoped name.
+  scope = be_decl::narrow_from_decl (ScopeAsDecl (this->defined_in ()));
+  if (scope != NULL)
+    {
+      // make a copy of the enclosing scope's  name
+      n = (UTL_ScopedName *)scope->name ()->copy () ;
+
+      // add our local name as the last component
+      n->nconc (new UTL_ScopedName (new Identifier (ACE_OS::strdup
+                                                    (namebuf), 1,
+                                                    0, I_FALSE),
+                                    NULL));
+      // set the fully scoped name
+      this->set_name (n);
     }
   else
     {
-      // we generate a name for ourselves. Start by generating a local name
-
-      ACE_OS::memset (namebuf, '\0', 200);
-      ACE_OS::sprintf (namebuf, "_seq_%s", d->local_name ()->get_string ());
-
-      if (d->node_type () == AST_Decl::NT_sequence)
-        {
-          // this means that we are an anonymous sequence who happens to be a
-          // base type of the sequence denoted by the node "d".
-          // Hence we set our enclosing scope to be the node "d"
-          this->set_defined_in (DeclAsScope (d));
-        }
-
-      // now set our fully scoped name
-
-      // now see if we have a fully scoped name.
-      scope = be_decl::narrow_from_decl (ScopeAsDecl (this->defined_in ()));
-      if (scope != NULL)
-        {
-          // make a copy of the enclosing scope's  name
-          n = (UTL_ScopedName *)scope->name ()->copy () ;
-
-          // add our local name as the last component
-          n->nconc (new UTL_ScopedName (new Identifier (ACE_OS::strdup
-                                                        (namebuf), 1,
-                                                        0, I_FALSE),
-                                        NULL));
-          // set the fully scoped name
-          this->set_name (n);
-        }
-      else
-        {
-          // We better be not here because we must be inside some scope,
-          // atleast the ROOT scope.
-          return -1;
-        }
+      // We better be not here because we must be inside some scope,
+      // atleast the ROOT scope.
+      return -1;
     }
   return 0;
 }
@@ -1316,8 +1307,6 @@ be_sequence::gen_encapsulation (void)
   os = cg->client_stubs ();
   os->indent (); // start from the current indentation level
 
-  // XXXASG - byte order must be based on what m/c we are generating code -
-  // TODO
   *os << "TAO_ENCAP_BYTE_ORDER, // byte order" << nl;
 
   // emit typecode of element type
