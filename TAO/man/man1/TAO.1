@@ -167,66 +167,41 @@ reference. The URL prefix format currently supported is iioploc.
 .TP
 .B TAO_Resource_Factory
 .IP
-.BI \-ORBresources \ value
-\ \ Specify whether each thread uses a global (
-.I value
-=
-.B global
-) or a thread\-specific (
-.IR value
-=
-.B tss
+.BI \-ORBresources \ global | tss
+\ \ Specify whether each thread uses a global or a thread\-specific (
+.I tss
 ) instance for the resources it returns.
 .IP
-.BI \-ORBpoa \ value
-\ \ Specify whether each thread uses a global (which = global) or a
-thread\-specific (
-.I value
-=
-.B tss
+.BI \-ORBpoa \ global | tss
+\ \ Specify whether each thread uses a global or a thread\-specific (
+.I tss
 ) instance for the Root POA.
 .IP
-.BI \-ORBreactorlock \ value
+.BI \-ORBreactorlock \ token | null
 \ \ Specify whether the ORB reactor is thread\-safe (
-.I value
-=
-.B token
+.I token
 ) or not (
-.I value
-=
-.B null
+.I null
 ). Default is
-.BR token .
+.IR token .
 .IP
-.BI \-ORBcoltable \ value
-\ \ Specify whether each ORB uses a global (
-.I value
-=
-.B global
-) or a per\-ORB (
-.I value
-=
-.B orb
+.BI \-ORBcoltable \ global | orb
+\ \ Specify whether each ORB uses a global or a per\-ORB (
+.I orb
 ) collocation table.
 .IP
-.BI \-ORBinputcdrallocator \ value
-\ \ Specify whether the ORB uses a global (
-.I value
-=
-.B global
-) or a per\-thread (
-.I value
-=
-.B tss
+.BI \-ORBinputcdrallocator \ global | tss
+\ \ Specify whether the ORB uses a global or a per\-thread (
+.I tss
 ) allocator for the incoming CDR buffers. Though
-.B tss
+.I tss
 should give the optimal performance; we made the default
-.BR global .
+.IR global .
 TAO optimizations for octet sequences will not work when returning that data
 type if the allocator is
-.BR tss .
+.IR tss .
 Using a
-.B global
+.I global
 allocator also allows the users to take advantage of the TAO octet sequence
 extensions to preserve the buffer after the upcall.
 .TP
@@ -243,10 +218,13 @@ and
 flag has been changed to
 .BR \-ORBactiveobjectmapsize .
 .IP
-.BI \-ORBconcurrency \ value
-\ \ Specify which concurrency strategy to use. Range of values is reactive for
-a purely Reactor\-driven concurrency strategy or thread\-per\-connection for
-creating a new thread to service each connection.
+.BI \-ORBconcurrency \ reactive | thread\-per\-connection 
+\ \ Specify which concurrency strategy to use. Range of values is
+.I reactive
+for
+a purely Reactor\-driven concurrency strategy or
+.I thread\-per\-connection
+for creating a new thread to service each connection.
 .IP
 .BI \-ORBactiveobjectmapsize \ active_object_map_size
 \ \ Specify the size of the active object map. If not specified, the default
@@ -292,7 +270,7 @@ option can be
 This option defaults to
 .IR 1 .
 .IP
-.BI \-ORBpoamapsize poa_map_size
+.BI \-ORBpoamapsize \ poa_map_size
 \ \ Specify the size of the POA map. If not specified, the default value is 24.
 .IP
 .BI \-ORBpersiententidpolicydemuxstrategy \ dynamic | linear
