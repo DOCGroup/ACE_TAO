@@ -1,3 +1,10 @@
+Sun Jan  9 11:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Unbounded_Set_Test.cpp:
+          Removed test for bug 1460, it is just not safe to remove the element
+          the iterator points to, always move the iterator first forward
+          and then remove the element.
+
 Sat Jan  8 14:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/server.mpb:
