@@ -70,10 +70,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FE_InterfaceHeader
 //
 // Internal class for FE to describe interface headers
-//
-// FE_obv_header
-// Internal class for FE to describe valuetype headers
-//
 
 /*
 ** DEPENDENCIES: utl_scoped_name.hh, ast_interface.hh, utl_scope.hh,
@@ -88,9 +84,7 @@ public:
   // Operations
 
   // Constructor(s)
-  FE_InterfaceHeader(UTL_ScopedName *n, UTL_NameList *l,
-                                        UTL_NameList *supports = 0,
-                                        idl_bool compile_now = 1);
+  FE_InterfaceHeader(UTL_ScopedName *n, UTL_NameList *l);
   virtual ~FE_InterfaceHeader() {}
 
   // Data Accessors
@@ -98,10 +92,9 @@ public:
   AST_Interface **inherits();
   long n_inherits();
 
-  // Data
-protected:
-  UTL_ScopedName        *pd_interface_name;     // Interface name
 private:
+  // Data
+  UTL_ScopedName        *pd_interface_name;     // Interface name
   AST_Interface         **pd_inherits;          // Inherited interfaces
   long                  pd_n_inherits;          // How many
 
@@ -109,46 +102,8 @@ private:
 
   // Compile the flattened unique list of interfaces which this
   // interface inherits from
-protected:
-  void                  compile_inheritance(UTL_NameList *l,
-                                            UTL_NameList *supports);
-private:
   void                  compile_one_inheritance(AST_Interface *i);
-
-  // called from compile_inheritance()
-  virtual idl_bool check_first (AST_Interface *i);
-  virtual idl_bool check_further (AST_Interface *i);
-  virtual idl_bool check_supports (AST_Interface *i);
+  void                  compile_inheritance(UTL_NameList *l);
 };
-
-
-class FE_obv_header;
-
-// #ifdef IDL_HAS_VALUETYPE
-
-class FE_obv_header : public FE_InterfaceHeader
-{
-public:
-
-  // Constructor(s)
-  FE_obv_header(UTL_ScopedName *n, UTL_NameList *l, UTL_NameList *supports);
-  virtual ~FE_obv_header() {}
-
-  // Data Accessors
-  void valuetype_name (UTL_ScopedName *n);
-  long n_concrete ();
-
- private:
-
-  // called from compile_inheritance()
-  virtual idl_bool check_first (AST_Interface *i);
-  virtual idl_bool check_further (AST_Interface *i);
-  virtual idl_bool check_supports (AST_Interface *i);
-
-  idl_bool truncatable_;  /* currently 0, ignored */
-  long n_concrete_;
-};
-
-// #endif /* IDL_HAS_VALUETYPE */
 
 #endif           // _FE_INTERFACE_HEADER_FE_INTERFACE_HH

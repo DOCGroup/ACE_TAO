@@ -13,14 +13,16 @@
 #ifndef ECT_CONSUMER_H
 #define ECT_CONSUMER_H
 
-#include "ECT_Driver.h"
+#include "ace/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/High_Res_Timer.h"
 #include "orbsvcs/Channel_Clients_T.h"
-#include "ace/Task.h"
+
+#include "ECT_Driver.h"
 
 class Test_Consumer : public POA_RtecEventComm::PushConsumer
 {
@@ -52,12 +54,6 @@ public:
   void dump_results (const char* name);
   // Print out the results
 
-  void accumulate (ECT_Driver::Throughput_Stats& stats) const;
-  // Add our throughput statistics to <stats>
-
-  void accumulate (ECT_Driver::Latency_Stats& stats) const;
-  // Add our latency statistics to <stats>
-
   virtual void push (const RtecEventComm::EventSet& events,
                      CORBA::Environment &_env);
   virtual void disconnect_push_consumer (CORBA::Environment &);
@@ -80,13 +76,8 @@ private:
 
   ACE_SYNCH_MUTEX lock_;
   int recv_count_;
+  ACE_High_Res_Timer timer_;
   // How many events we have received.
-
-  ECT_Driver::Throughput_Stats throughput_;
-  // Used for reporting stats.
-
-  ECT_Driver::Latency_Stats latency_;
-  // Used for reporting stats.
 
   int shutdown_count_;
   // How many shutdown events we have received.

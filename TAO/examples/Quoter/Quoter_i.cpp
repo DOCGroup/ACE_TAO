@@ -250,13 +250,11 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
       ACE_TRY_ENV.print_exception ("SYS_EX");
       
       // Report a NoFactory exception back to the caller
-      ACE_TRY_THROW (CosLifeCycle::NoFactory ());
+      ACE_THROW_RETURN (CosLifeCycle::NoFactory (), CosLifeCycle::LifeCycleObject::_nil());
     }
   ACE_ENDTRY;
-
-  ACE_CHECK_RETURN (CosLifeCycle::LifeCycleObject::_nil());
   
-  return 0;
+  return CosLifeCycle::LifeCycleObject::_nil();
 }
 
 

@@ -19,7 +19,6 @@
 #include "tao/Invocation.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
-#include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Stub.i"
@@ -27,42 +26,41 @@
 
 #include "tao/Timeprobe.h"
 
-ACE_RCSID(tao, TAO_Stub, "$Id$")
+ACE_RCSID(tao, STUB_Object, "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_TAO_Stub_Timeprobe_Description[] =
-  {
-    "TAO_Stub::do_static_call - start",
-    "TAO_Stub::do_static_call - end",
-    "TAO_Stub::do_static_call - set_cancel",
-    "TAO_Stub::do_static_call - grab_orb_core",
-    "TAO_Stub::do_static_call - invocation_ctor",
-    "TAO_Stub::do_static_call - invocation_start",
-    "TAO_Stub::do_static_call - put_params"
-  };
+static const char *TAO_STUB_Object_Timeprobe_Description[] =
+{
+  "STUB_Object::do_static_call - start",
+  "STUB_Object::do_static_call - end",
+  "STUB_Object::do_static_call - set_cancel",
+  "STUB_Object::do_static_call - grab_orb_core",
+  "STUB_Object::do_static_call - invocation_ctor",
+  "STUB_Object::do_static_call - invocation_start",
+  "STUB_Object::do_static_call - put_params"
+};
 
 enum
-  {
-    // Timeprobe description table start key
-    TAO_STUB_OBJECT_DO_STATIC_CALL_START = 500,
-    TAO_STUB_OBJECT_DO_STATIC_CALL_END,
-    TAO_STUB_OBJECT_DO_STATIC_CALL_SET_CANCEL,
-    TAO_STUB_OBJECT_DO_STATIC_CALL_GRAB_ORB_CORE,
-    TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR,
-    TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_START,
-    TAO_STUB_OBJECT_DO_STATIC_CALL_PUT_PARAMS
-  };
+{
+  // Timeprobe description table start key
+  TAO_STUB_OBJECT_DO_STATIC_CALL_START = 500,
+  TAO_STUB_OBJECT_DO_STATIC_CALL_END,
+  TAO_STUB_OBJECT_DO_STATIC_CALL_SET_CANCEL,
+  TAO_STUB_OBJECT_DO_STATIC_CALL_GRAB_ORB_CORE,
+  TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR,
+  TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_START,
+  TAO_STUB_OBJECT_DO_STATIC_CALL_PUT_PARAMS
+};
 
 // Setup Timeprobes
-ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_TAO_Stub_Timeprobe_Description,
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_STUB_Object_Timeprobe_Description,
                                   TAO_STUB_OBJECT_DO_STATIC_CALL_START);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-TAO_Stub::TAO_Stub (char *repository_id,
-                    const TAO_MProfile &profiles,
-                    TAO_ORB_Core* orb_core)
+STUB_Object::STUB_Object (char *repository_id,
+                          TAO_MProfile &profiles)
   : type_id (repository_id),
     base_profiles_ ((CORBA::ULong) 0),
     forward_profiles_ (0),
@@ -72,27 +70,78 @@ TAO_Stub::TAO_Stub (char *repository_id,
     // what about ACE_SYNCH_MUTEX refcount_lock_
     refcount_ (1),
     use_locate_request_ (0),
-    first_locate_request_ (0),
-    orb_core_ (orb_core)
-#if defined (TAO_HAS_CORBA_MESSAGING)
-    , policies_ (0)
-#endif /* TAO_HAS_CORBA_MESSAGING */
+    first_locate_request_ (0)
 {
-  if (this->orb_core_ == 0)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO: (%P|%t) TAO_Stub created with default "
-                      "ORB core\n"));
-        }
-      this->orb_core_ = TAO_ORB_Core_instance ();
-    }
 
   this->profile_lock_ptr_ =
-    this->orb_core_->client_factory ()->create_iiop_profile_lock ();
+    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();
 
-  this->set_base_profiles (profiles);
+  set_base_profiles (&profiles);
+}
+
+STUB_Object::STUB_Object (char *repository_id,
+                          TAO_Profile *profile)
+  : type_id (repository_id),
+    base_profiles_ ((CORBA::ULong) 0),
+    forward_profiles_ (0),
+    profile_in_use_ (0),
+    profile_lock_ptr_ (0),
+    profile_success_ (0),
+    // what about ACE_SYNCH_MUTEX refcount_lock_
+    refcount_ (1),
+    use_locate_request_ (0),
+    first_locate_request_ (0)
+{
+  // @@ XXX need to verify type and deal with wrong types
+
+  this->profile_lock_ptr_ =
+    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();
+
+  base_profiles_.set (1);
+
+  base_profiles_.give_profile (profile);
+
+  reset_base ();
+
+}
+
+STUB_Object::STUB_Object (char *repository_id,
+                          TAO_MProfile *profiles)
+  : type_id (repository_id),
+    base_profiles_ ((CORBA::ULong) 0),
+    forward_profiles_ (0),
+    profile_in_use_ (0),
+    profile_lock_ptr_ (0),
+    profile_success_ (0),
+    // what about ACE_SYNCH_MUTEX refcount_lock_
+    refcount_ (1),
+    use_locate_request_ (0),
+    first_locate_request_ (0)
+{
+  // @@ XXX need to verify type and deal with wrong types
+
+  // @@ does this need to be freed?
+  this->profile_lock_ptr_ =
+    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();
+
+  set_base_profiles (profiles);
+
+}
+
+STUB_Object::STUB_Object (char *repository_id)
+  : type_id (repository_id),
+    base_profiles_ ((CORBA::ULong) 0),
+    forward_profiles_ (0),
+    profile_in_use_ (0),
+    profile_lock_ptr_ (0),
+    profile_success_ (0),
+    // what about ACE_SYNCH_MUTEX refcount_lock_
+    refcount_ (1),
+    use_locate_request_ (0),
+    first_locate_request_ (0)
+{
+  this->profile_lock_ptr_ =
+    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();
 }
 
 // Quick'n'dirty hash of objref data, for partitioning objrefs into
@@ -103,13 +152,34 @@ TAO_Stub::TAO_Stub (char *repository_id,
 // @@ Use all profiles for hash function!!!!!  FRED
 //    can get different values, depending on the profile_in_use!!
 CORBA::ULong
-TAO_Stub::hash (CORBA::ULong max,
-                CORBA::Environment &env)
+STUB_Object::hash (CORBA::ULong max,
+                   CORBA::Environment &env)
 {
   // we rely on the profile object to has it's address info
   if (profile_in_use_)
     return profile_in_use_->hash (max, env);
   ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) hash called on a null profile!\n"), 0);
+}
+
+int operator==(const TAO_opaque& rhs,
+               const TAO_opaque& lhs)
+{
+  if (rhs.length () != lhs.length ())
+    return 0;
+
+  for (CORBA::ULong i = 0;
+       i < rhs.length ();
+       ++i)
+    if (rhs[i] != lhs[i])
+      return 0;
+
+  return 1;
+}
+
+int operator!=(const TAO_opaque& rhs,
+               const TAO_opaque& lhs)
+{
+  return !(rhs == lhs);
 }
 
 // Expensive comparison of objref data, to see if two objrefs
@@ -120,8 +190,8 @@ TAO_Stub::hash (CORBA::ULong max,
 // NOTE that this must NOT go across the network!
 // @@ Two object references are the same if any two profiles are the same!
 CORBA::Boolean
-TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj,
-                         CORBA::Environment &env)
+STUB_Object::is_equivalent (CORBA::Object_ptr other_obj,
+                            CORBA::Environment &env)
 {
   if (CORBA::is_nil (other_obj) == 1)
     return 0;
@@ -139,7 +209,7 @@ TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj,
 // Memory managment
 
 CORBA::ULong
-TAO_Stub::_incr_refcnt (void)
+STUB_Object::_incr_refcnt (void)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->refcount_lock_, 0);
 
@@ -147,7 +217,7 @@ TAO_Stub::_incr_refcnt (void)
 }
 
 CORBA::ULong
-TAO_Stub::_decr_refcnt (void)
+STUB_Object::_decr_refcnt (void)
 {
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->refcount_lock_, 0);
@@ -224,7 +294,7 @@ private:
 // which does all the work.
 
 void
-TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
+STUB_Object::do_static_call (CORBA::Environment &TAO_IN_ENV,
                              const TAO_Call_Data *info,
                              void** args)
 
@@ -235,7 +305,11 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
 
   ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_SET_CANCEL);
 
+  TAO_ORB_Core* orb_core = TAO_ORB_Core_instance ();
+
   ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_GRAB_ORB_CORE);
+
+  TAO_GIOP_ReplyStatusType status = TAO_GIOP_NO_EXCEPTION;
 
   // Do a locate_request if necessary/wanted.
   // Suspect that you will be forwarded, so be proactive!
@@ -243,24 +317,23 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
   // be forwarded.  No standard way now to know.
   if (this->use_locate_request_ && this->first_locate_request_)
     {
-      TAO_GIOP_Locate_Request_Invocation call (this,
-                                               this->orb_core_);
+      TAO_GIOP_Locate_Request_Invocation call (this, orb_core);
 
       // Simply let these exceptions propagate up
       // (if any of them occurs.)
-      call.start (ACE_TRY_ENV);
-      ACE_CHECK;
+      call.start (TAO_IN_ENV);
 
-      call.invoke (ACE_TRY_ENV);
-      ACE_CHECK;
+      status = call.invoke (TAO_IN_ENV);
 
       this->first_locate_request_ = 0;
+
+      if (status == TAO_GIOP_SYSTEM_EXCEPTION)
+        return;
     }
 
   if (info->is_roundtrip)
     {
-      TAO_GIOP_Twoway_Invocation call (this, info->opname,
-                                       this->orb_core_);
+      TAO_GIOP_Twoway_Invocation call (this, info->opname, orb_core);
       ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR);
 
       // We may need to loop through here more than once if we're
@@ -278,146 +351,245 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
       //
       for (;;)
         {
-          call.start (ACE_TRY_ENV);
-          ACE_CHECK;
+          // Start the call by constructing the request message header.
+          // and connecting to the server.
+          TAO_TRY_VAR_EX (TAO_IN_ENV, SYSEX1)
+            {
+              call.start (TAO_IN_ENV);
+              TAO_CHECK_ENV_EX (SYSEX1);
 
-          ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_START);
+              ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_START);
+            }
+          TAO_CATCH (CORBA_SystemException, ex)
+            {
+              ACE_MT (ACE_GUARD (ACE_Lock,
+                                guard,
+                                *this->profile_lock_ptr_));
 
-          // Make the call ... blocking for the response.
-          this->put_params (ACE_TRY_ENV, info, call, args);
-          ACE_CHECK;
+              // get the next profile and try again
+              // If a forward profile once succeeded but now fails then
+              // start all over again.  Otherwise get the next profile and
+              // try again.  If this was the last profile in the list then
+              // stop.
+              if (profile_success_ && forward_profiles_)
+                {
+                  // reset profiles list and start all over again
+                  reset_profiles_i ();
+                  TAO_IN_ENV.clear ();
+                  TAO_GOTO (roundtrip_continue_label);
+                }
+              else if (next_profile_i () != 0)
+                {
+                  TAO_IN_ENV.clear ();
+                  TAO_GOTO (roundtrip_continue_label);
+                }
+
+              // @@ Should re reset the profile list here?
+              reset_profiles_i ();
+              TAO_RETHROW_SAME_ENV_RETURN_VOID;
+            }
+          TAO_ENDTRY;
+
+          this->put_params (TAO_IN_ENV, info, call, args);
+          TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
           ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_PUT_PARAMS);
 
-          int status =
-            call.invoke (info->excepts,
-                         info->except_count,
-                         ACE_TRY_ENV);
-          ACE_CHECK;
-
-          if (status == TAO_INVOKE_RESTART)
-            continue;
-
-          if (status == TAO_INVOKE_EXCEPTION)
-            return; // Shouldn't happen
-
-          if (status != TAO_INVOKE_OK)
-            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
-
-          // The only case left is status == TAO_INVOKE_OK, exit the
-          // loop.  We cannot retry because at this point we either
-          // got a reply or something with an status of
-          // COMPLETED_MAYBE, thus we cannot reissue the request if we
-          // are to satisfy the "at most once" semantics.
-          break;
-        }
-
-      // Now, get all the "return", "out", and "inout" parameters
-      // from the response message body ... return parameter is
-      // first, the rest are in the order defined in the IDL spec
-      // (which is also the order that DII users are required to
-      // use).
-
-      const TAO_Param_Data *pdp = info->params;
-      for (void** i = args;
-           i !=  args + info->param_count;
-           i++, pdp++)
-        {
-          void *ptr = *i;
-
-          // if it is an inout parameter, it would become
-          // necessary to first release the "in" memory
-          if (pdp->mode == PARAM_INOUT)
+          TAO_TRY_VAR_EX (TAO_IN_ENV, SYSEX2)
             {
-              // @@ TODO - add others as we test each case
-              // (ASG) will do 03/22/98.
-              // @@ IMHO this should be handled in the stub
-              // (coryan)
-              switch (pdp->tc->kind (TAO_IN_ENV))
+              status = call.invoke (info->excepts, info->except_count, TAO_IN_ENV);
+              TAO_CHECK_ENV_EX (SYSEX2);
+            }
+          TAO_CATCH (CORBA_SystemException, ex)
+            {
+              ACE_MT (ACE_GUARD (ACE_Lock,
+                                guard,
+                                *this->profile_lock_ptr_));
+
+              if (profile_success_ && forward_profiles_)
                 {
-                case CORBA::tk_string:
-                  {
-                    CORBA::string_free (*(char **)ptr);
-                    *(char **)ptr = 0;
-                  }
-                  break;
-                default:
-                  break;
+                  // reset profiles list and start all over again
+                  reset_profiles_i ();
+                  TAO_IN_ENV.clear ();
+                  TAO_GOTO (roundtrip_continue_label);
                 }
+              else if (next_profile_i () != 0)
+                {
+                  TAO_IN_ENV.clear ();
+                  TAO_GOTO (roundtrip_continue_label);
+                }
+
+              // @@ Should re reset the profile list here?
+              reset_profiles_i ();
+              TAO_RETHROW_SAME_ENV_RETURN_VOID;
+            }
+          TAO_ENDTRY;
+
+          if (status == TAO_GIOP_USER_EXCEPTION)
+            return;
+          else if (status == TAO_GIOP_NO_EXCEPTION)
+            {
+              profile_success_ = 1;
+
+              // Now, get all the "return", "out", and "inout"
+              // parameters from the response message body.
+
+              const TAO_Param_Data *pdp = info->params;
+              for (void** i = args;
+                   i !=  args + info->param_count;
+                   i++, pdp++)
+                {
+                  void *ptr = *i;
+
+                  // if it is an inout parameter, it would become
+                  // necessary to first release the "in" memory
+                  if (pdp->mode == PARAM_INOUT)
+                    {
+                      // @@ TODO - add others as we test each case
+                      // (ASG) will do 03/22/98.
+                      // @@ IMHO this should be handled in the stub
+                      // (coryan)
+                      switch (pdp->tc->kind (TAO_IN_ENV))
+                        {
+                        case CORBA::tk_string:
+                          {
+                            CORBA::string_free (*(char **)ptr);
+                            *(char **)ptr = 0;
+                          }
+                        break;
+                        default:
+                          break;
+                        }
+                    }
+                  if (pdp->mode == PARAM_RETURN
+                      || pdp->mode == PARAM_OUT
+                      || pdp->mode == PARAM_INOUT)
+                    {
+                      // The language mapping's memory allocation
+                      // policy says that some data is heap-allocated.
+                      // This interpreter is told about the relevant
+                      // policy by whoever built the operation
+                      // description (e.g. the IDL compiler) so it
+                      // doesn't have to know the policy associated
+                      // with a particular language binding
+                      // (e.g. C/C++ differ, and C++ even has
+                      // different policies for different kinds of
+                      // structures).
+                      if (pdp->value_size == 0)
+                        call.get_value (pdp->tc, ptr, TAO_IN_ENV);
+                      else
+                        {
+                          // @@ (ASG) -  I think we must completely
+                          // get rid of this case because IDL compiler
+                          // generated stubs will use this function
+                          // and they better allocate all the memory.
+
+                          // assert (value_size == tc->size());
+                          *(void **)ptr = new CORBA::Octet [pdp->value_size];
+                          call.get_value (pdp->tc, *(void **)ptr, TAO_IN_ENV);
+                        }
+
+                      if (TAO_IN_ENV.exception ())
+                        {
+                          TAO_IN_ENV.print_exception ("do_static_call, get reply parameter");
+                          return;
+                        }
+                    }
+                }
+              return;
             }
 
-          if (pdp->mode == PARAM_RETURN
-              || pdp->mode == PARAM_OUT
-              || pdp->mode == PARAM_INOUT)
+          // ... or maybe this request got forwarded to someplace
+          // else; send the request there instead.
+          if (status == TAO_GIOP_LOCATION_FORWARD)
             {
-              // The language mapping's memory allocation
-              // policy says that some data is heap-allocated.
-              // This interpreter is told about the relevant
-              // policy by whoever built the operation
-              // description (e.g. the IDL compiler) so it
-              // doesn't have to know the policy associated
-              // with a particular language binding
-              // (e.g. C/C++ differ, and C++ even has
-              // different policies for different kinds of
-              // structures).
-              if (pdp->value_size == 0)
+              if (next_profile () == 0)
                 {
-                  call.get_value (pdp->tc, ptr, ACE_TRY_ENV);
-                  ACE_CHECK;
-                }
-              else
-                {
-                  // @@ (ASG) -  I think we must completely
-                  // get rid of this case because IDL compiler
-                  // generated stubs will use this function
-                  // and they better allocate all the memory.
-
-                  // assert (value_size == tc->size());
-                  *(void **)ptr = new CORBA::Octet [pdp->value_size];
-                  call.get_value (pdp->tc, *(void **)ptr, ACE_TRY_ENV);
-                  ACE_CHECK;
+                  TAO_IN_ENV.exception (new CORBA::TRANSIENT (CORBA::COMPLETED_NO));
+                  return;
                 }
             }
-        }
+          else
+            {
+              // @@ What is the right exception to throw in this case?
+              // TRANSIENT - FRED
+              TAO_IN_ENV.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
+              return;
+            }
+          TAO_LABEL (roundtrip_continue_label);
+        } // for loop
     } // if (two way)
   else
     {
-      TAO_GIOP_Oneway_Invocation call (this, info->opname,
-                                       this->orb_core_);
-      ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR);
-
       for (;;)
         {
-          call.start (ACE_TRY_ENV);
-          ACE_CHECK;
+          TAO_GIOP_Oneway_Invocation call (this, info->opname, orb_core);
+          ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR);
 
-          this->put_params (ACE_TRY_ENV, info, call, args);
-          ACE_CHECK;
+          // Start the call by constructing the request message header.
+          TAO_TRY_VAR_EX (TAO_IN_ENV, SYSEX3)
+            {
+              call.start (TAO_IN_ENV);
+              TAO_CHECK_ENV_EX (SYSEX3);
+              ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_INVOCATION_START);
+            }
+          TAO_CATCH (CORBA_SystemException, ex)
+            {
+              ACE_MT (ACE_GUARD (ACE_Lock,
+                                guard,
+                                        *this->profile_lock_ptr_));
+
+              // If this is the forward_profile, then check to see if we
+              // need to go back to the original profile and try that.
+              if (profile_success_ && forward_profiles_)
+                {
+                  // reset profiles list and start all over again
+                  reset_profiles_i ();
+                  TAO_IN_ENV.clear ();
+                  TAO_GOTO (oneway_continue_label);
+                }
+              else if (next_profile_i () != 0)
+                {
+                  TAO_IN_ENV.clear ();
+                  TAO_GOTO (oneway_continue_label);
+                }
+
+              // @@ Should re reset the profile list here?
+              reset_profiles_i ();
+              TAO_RETHROW_SAME_ENV_RETURN_VOID;
+            }
+          TAO_ENDTRY;
+
+          this->put_params (TAO_IN_ENV, info, call, args);
+          TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
 
           ACE_TIMEPROBE (TAO_STUB_OBJECT_DO_STATIC_CALL_PUT_PARAMS);
-          int status = call.invoke (ACE_TRY_ENV);
-          ACE_CHECK;
+          /* TAO_GIOP_ReplyStatusType status = */ call.invoke (TAO_IN_ENV);
 
-          if (status == TAO_INVOKE_RESTART)
-            continue;
+          profile_success_ = 1;
 
-          if (status == TAO_INVOKE_EXCEPTION)
-            return; // Shouldn't happen
-
-          if (status != TAO_INVOKE_OK)
-            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
-
-          break;
+          // @@ TODO We do not get any LOCATION_FORWARD in this case,
+          // IMHO this is a good case for use of a LocateRequest,
+          // under some strategy control, of course. In that case we need
+          // a loop, as above.
+          return;
         }
+      TAO_LABEL (oneway_continue_label);
     }
 }
 
 void
-TAO_Stub::put_params (CORBA::Environment &ACE_TRY_ENV,
+STUB_Object::put_params (CORBA::Environment &env,
                          const TAO_Call_Data *info,
                          TAO_GIOP_Invocation &call,
                          void** args)
 {
+  if (env.exception ())
+    {
+      env.print_exception ("do_static_call, start request message");
+      return;
+    }
+
   // Now, put all "in" and "inout" parameters into the request
   // message body.
   //
@@ -435,283 +607,239 @@ TAO_Stub::put_params (CORBA::Environment &ACE_TRY_ENV,
       void *ptr = *i;
 
       if (pdp->mode == PARAM_IN)
-        {
-          call.put_param (pdp->tc, ptr, ACE_TRY_ENV);
-        }
+        call.put_param (pdp->tc, ptr, env);
       else if (pdp->mode == PARAM_INOUT)
         {
           if (pdp->value_size == 0)
-            call.put_param (pdp->tc, ptr, ACE_TRY_ENV);
+            call.put_param (pdp->tc, ptr, env);
           else
-            call.put_param (pdp->tc, *(void **)ptr, ACE_TRY_ENV);
+            call.put_param (pdp->tc, *(void **)ptr, env);
         }
-      ACE_CHECK;
+      if (env.exception ())
+        {
+          env.print_exception ("do_static_call, put request parameter");
+          return;
+        }
     }
 }
-
-#if !defined (TAO_HAS_MINIMUM_CORBA)
 
 // DII analogue of the above.
 
 void
-TAO_Stub::do_dynamic_call (const char *opname,
+STUB_Object::do_dynamic_call (const char *opname,
                               CORBA::Boolean is_roundtrip,
                               CORBA::NVList_ptr args,
                               CORBA::NamedValue_ptr result,
                               CORBA::Flags,
                               CORBA::ExceptionList &exceptions,
-                              CORBA::Environment &ACE_TRY_ENV)
+                              CORBA::Environment &env)
 {
   TAO_Synchronous_Cancellation_Required NOT_USED;
 
-  // Do a locate_request if necessary/wanted.
-  // Suspect that you will be forwarded, so be proactive!
-  // strategy for reducing overhead when you think a request will
-  // be forwarded.  No standard way now to know.
-  if (this->use_locate_request_ && this->first_locate_request_)
-    {
-      TAO_GIOP_Locate_Request_Invocation call (this, this->orb_core_);
-
-      // Simply let these exceptions propagate up
-      // (if any of them occurs.)
-      call.start (ACE_TRY_ENV);
-      ACE_CHECK;
-
-      call.invoke (ACE_TRY_ENV);
-      ACE_CHECK;
-
-      this->first_locate_request_ = 0;
-    }
-
+  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
   if (is_roundtrip)
     {
-      TAO_GIOP_Twoway_Invocation call (this, opname, this->orb_core_);
+      TAO_GIOP_Twoway_Invocation call (this, opname, orb_core);
 
       // Loop as needed for forwarding; see above.
 
       for (;;)
         {
-          call.start (ACE_TRY_ENV);
-          ACE_CHECK;
+          call.start (env);
+          if (env.exception () != 0) return;
 
-          this->put_params (call, args, ACE_TRY_ENV);
-          ACE_CHECK;
+          this->put_params (call, args, env);
+          if (env.exception () != 0) return;
 
           // Make the call ... blocking for the response.
-          int status =
-            call.invoke (exceptions, ACE_TRY_ENV);
-          ACE_CHECK;
+          TAO_GIOP_ReplyStatusType status =
+            call.invoke (exceptions, env);
+          if (env.exception ())
+            {
+              env.print_exception ("do_dynamic_call, invoke");
+              return;
+            }
+          if (status == TAO_GIOP_SYSTEM_EXCEPTION
+              || status == TAO_GIOP_USER_EXCEPTION)
+            return;
 
-          if (status == TAO_INVOKE_RESTART)
-            continue;
+          // Now, get all the "return", "out", and "inout" parameters
+          // from the response message body ... return parameter is
+          // first, the rest are in the order defined in the IDL spec
+          // (which is also the order that DII users are required to
+          // use).
 
-          if (status == TAO_INVOKE_EXCEPTION)
-            return; // Shouldn't happen
-
-          if (status != TAO_INVOKE_OK)
-            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
-
-          // The only case left is status == TAO_INVOKE_OK, exit the
-          // loop.  We cannot retry because at this point we either
-          // got a reply or something with an status of
-          // COMPLETED_MAYBE, thus we cannot reissue the request if we
-          // are to satisfy the "at most once" semantics.
-          break;
-        }
-
-      // Now, get all the "return", "out", and "inout" parameters
-      // from the response message body ... return parameter is
-      // first, the rest are in the order defined in the IDL spec
-      // (which is also the order that DII users are required to
-      // use).
-
-      if (result != 0)
-        {
+          if (status == TAO_GIOP_NO_EXCEPTION)
+            {
+              if (result != 0)
+                {
 #if 0
-          // @@ (ASG) I need to look into this OUT_LIST_MEMORY stuff
-          // (4/21/98).
-          // @@ (Carlos) All this code seems bogus, we know that
-          //    allocating memory of behalf of the user is and endless
-          //    source of trouble (due to vtbls and the such).
+                  // @@ (ASG) I need to look into this OUT_LIST_MEMORY stuff
+                  // (4/21/98).
 
-          // If caller didn't set OUT_LIST_MEMORY flag, allocate
-          // memory for return value ...
+                  // If caller didn't set OUT_LIST_MEMORY flag, allocate
+                  // memory for return value ...
 
-          if (!(flags & CORBA::OUT_LIST_MEMORY))
-            {
-              CORBA::TypeCode_var tcp = result->value ()->type ();
-              size_t size = tcp->size (ACE_TRY_ENV);
-              ACE_CHECK;
-
-              if (size != 0)
-                {
-                  void *ptr = new CORBA::Octet [size];
-
-                  result->value ()->replace (tcp.in (), ptr, 1, ACE_TRY_ENV);
-                  ACE_CHECK;
-                }
-            }
-#endif
-          if (!result->value ()->value_)
-            {
-              // storage was not allocated. In this case, we
-              // simply grab the portion of the CDR stream
-              // that contained this parameter, The
-              // application should use the appropriate >>=
-              // operator to retrieve the value
-              char *begin, *end;
-              TAO_InputCDR temp (call.inp_stream ());
-              CORBA::TypeCode::traverse_status retval;
-              CORBA::Any *any = result->value ();
-
-              begin = call.inp_stream ().rd_ptr ();
-              // skip the parameter to get the ending position
-              retval = temp.skip (any->type_, ACE_TRY_ENV);
-              ACE_CHECK;
-
-              if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
-                {
-                  end = temp.rd_ptr ();
-                  any->cdr_ = new ACE_Message_Block (end - begin);
-                  TAO_OutputCDR out (any->cdr_);
-
-                  retval = out.append (any->type_,
-                                       &call.inp_stream (), ACE_TRY_ENV);
-                  ACE_CHECK;
-
-                  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                  if (!(flags & CORBA::OUT_LIST_MEMORY))
                     {
-                      any->any_owns_data_ = 1;
-                      any->value_ = 0;
+                      CORBA::TypeCode_var tcp = result->value ()->type ();
+                      size_t size = tcp->size (env);
+                      env.print_exception ("do_dynamic_call, get result size");
+
+                      if (size != 0)
+                        {
+                          void *ptr = new CORBA::Octet [size];
+
+                          result->value ()->replace (tcp.in (), ptr,
+                                                     1, env);
+                          env.print_exception ("do_dynamic_call, set result mem");
+                        }
                     }
-                }
-            }
-          else
-            {
-              // the application had allocated the top level
-              // storage. We simply retrieve the data
-              call.get_value (result->value ()->type_,
-                              result->value ()->value_, ACE_TRY_ENV);
-              ACE_CHECK;
-            }
-        }
-
-      for (u_int i = 0; i < args->count (); i++)
-        {
-          CORBA::NamedValue_ptr value = args->item (i, ACE_TRY_ENV);
-          ACE_CHECK;
-
-          CORBA::Any *any = value->value ();
-
-          if (value->flags () == CORBA::ARG_OUT
-              || value->flags () == CORBA::ARG_INOUT)
-            {
-#if 0
-              // @@  (ASG) need to deal with this
-
-              // If caller didn't set OUT_LIST_MEMORY flag, allocate
-              // memory for this parameter ...
-              if (!(flags & CORBA::OUT_LIST_MEMORY))
-                {
-                  CORBA::TypeCode_var tcp = value->value ()->type ();
-                  size_t size = tcp->size (ACE_TRY_ENV);
-                  ACE_CHECK;
-
-                  if (size != 0)
-                    {
-                      CORBA::Octet *ptr = new CORBA::Octet [size];
-
-                      value->value ()->replace (tcp.in (), ptr,
-                                                1, ACE_TRY_ENV);
-                      ACE_CHECK;
-                    }
-                }
 #endif
-              if (!any->value_)
-                {
-                  // storage was not allocated. In this case,
-                  // we simply grab the portion of the CDR
-                  // stream that contained this parameter, The
-                  // application should use the appropriate
-                  // >>= operator to retrieve the value
-                  char *begin, *end;
-                  TAO_InputCDR temp (call.inp_stream ());
-                  CORBA::TypeCode::traverse_status retval;
-
-                  begin = call.inp_stream ().rd_ptr ();
-                  // skip the parameter to get the ending position
-                  retval = temp.skip (any->type_, ACE_TRY_ENV);
-                  ACE_CHECK;
-
-                  if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                  if (!result->value ()->value_)
                     {
-                      end = temp.rd_ptr ();
-                      any->cdr_ = new ACE_Message_Block (end - begin);
-                      TAO_OutputCDR out (any->cdr_);
+                      // storage was not allocated. In this case, we
+                      // simply grab the portion of the CDR stream
+                      // that contained this parameter, The
+                      // application should use the appropriate >>=
+                      // operator to retrieve the value
+                      char *begin, *end;
+                      TAO_InputCDR temp (call.inp_stream ());
+                      CORBA::TypeCode::traverse_status retval;
+                      CORBA::Any *any = result->value ();
 
-                      retval = out.append (any->type_,
-                                           &call.inp_stream (), ACE_TRY_ENV);
-                      ACE_CHECK;
-
+                      begin = call.inp_stream ().rd_ptr ();
+                      // skip the parameter to get the ending position
+                      retval = temp.skip (any->type_, env);
                       if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                         {
-                          any->any_owns_data_ = 1;
-                          any->value_ = 0;
+                          end = temp.rd_ptr ();
+                          any->cdr_ = new ACE_Message_Block (end - begin);
+                          TAO_OutputCDR out (any->cdr_);
+
+                          retval = out.append (any->type_,
+                                               &call.inp_stream (), env);
+                          if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                            {
+                              any->any_owns_data_ = 1;
+                              any->value_ = 0;
+                            }
+                        }
+                    }
+                  else
+                    {
+                      // the application had allocated the top level
+                      // storage. We simply retrieve the data
+                      call.get_value (result->value ()->type_,
+                                      result->value ()->value_, env);
+                    }
+                }
+
+              for (u_int i = 0; i < args->count (); i++)
+                {
+                  CORBA::NamedValue_ptr value = args->item (i, env);
+                  CORBA::Any *any = value->value ();
+
+                  if (value->flags () == CORBA::ARG_OUT
+                      || value->flags () == CORBA::ARG_INOUT)
+                    {
+#if 0
+                      // @@  (ASG) need to deal with this
+
+                      // If caller didn't set OUT_LIST_MEMORY flag, allocate
+                      // memory for this parameter ...
+                      if (!(flags & CORBA::OUT_LIST_MEMORY))
+                        {
+                          CORBA::TypeCode_var tcp = value->value ()->type ();
+                          size_t size = tcp->size (env);
+                          env.print_exception ("do_dynamic_call, get param size");
+
+                          if (size != 0)
+                            {
+                              CORBA::Octet *ptr = new CORBA::Octet [size];
+
+                              value->value ()->replace (tcp.in (), ptr,
+                                                        1, env);
+                              env.print_exception ("do_dynamic_call, set result mem");
+                            }
+                        }
+#endif
+                      if (!any->value_)
+                        {
+                          // storage was not allocated. In this case,
+                          // we simply grab the portion of the CDR
+                          // stream that contained this parameter, The
+                          // application should use the appropriate
+                          // >>= operator to retrieve the value
+                          char *begin, *end;
+                          TAO_InputCDR temp (call.inp_stream ());
+                          CORBA::TypeCode::traverse_status retval;
+
+                          begin = call.inp_stream ().rd_ptr ();
+                          // skip the parameter to get the ending position
+                          retval = temp.skip (any->type_, env);
+                          if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                            {
+                              end = temp.rd_ptr ();
+                              any->cdr_ = new ACE_Message_Block (end - begin);
+                              TAO_OutputCDR out (any->cdr_);
+
+                              retval = out.append (any->type_,
+                                                   &call.inp_stream (), env);
+                              if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
+                                {
+                                  any->any_owns_data_ = 1;
+                                  any->value_ = 0;
+                                }
+                            }
+                        }
+                      else
+                        {
+                          // the application had allocated the top level
+                          // storage. We simply retrieve the data
+                          call.get_value (any->type_,
+                                          (void *) any->value_, env);
+                        }
+                      if (env.exception ())
+                        {
+                          env.print_exception ("do_dynamic_call, get response parameter");
+                          return;
                         }
                     }
                 }
-              else
-                {
-                  // the application had allocated the top level
-                  // storage. We simply retrieve the data
-                  call.get_value (any->type_,
-                                  (void *) any->value_, ACE_TRY_ENV);
-                  ACE_CHECK;
-                }
+              return;
             }
+          // ... or maybe this request got forwarded to someplace else.
+          assert (status == TAO_GIOP_LOCATION_FORWARD);
+          // @@ TODO We should not use assert because it crashes the
+          // application, raise an exception
         }
     }
   else
     {
-      TAO_GIOP_Oneway_Invocation call (this, opname, this->orb_core_);
+      TAO_GIOP_Oneway_Invocation call (this, opname, orb_core);
+      call.start (env);
+      if (env.exception () != 0) return;
 
-      for (;;)
-        {
-          call.start (ACE_TRY_ENV);
-          ACE_CHECK;
+      this->put_params (call, args, env);
+      if (env.exception () != 0) return;
 
-          this->put_params (call, args, ACE_TRY_ENV);
-          ACE_CHECK;
-
-          int status = call.invoke (ACE_TRY_ENV);
-          ACE_CHECK;
-
-          if (status == TAO_INVOKE_RESTART)
-            continue;
-
-          if (status == TAO_INVOKE_EXCEPTION)
-            return; // Shouldn't happen
-
-          if (status != TAO_INVOKE_OK)
-            ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE));
-
-          break;
-        }
+      (void) call.invoke (env);
     }
+
 }
 
 void
-TAO_Stub::put_params (TAO_GIOP_Invocation &call,
-                      CORBA::NVList_ptr args,
-                      CORBA::Environment &ACE_TRY_ENV)
+STUB_Object::put_params (TAO_GIOP_Invocation &call,
+                         CORBA::NVList_ptr args,
+                         CORBA::Environment &env)
 {
   // Now, put all "in" and "inout" parameters into the request
   // message body.
 
   for (u_int i = 0; i < args->count (); i++)
     {
-      CORBA::NamedValue_ptr value = args->item (i, ACE_TRY_ENV);
-      ACE_CHECK;
+      CORBA::NamedValue_ptr value = args->item (i, env);
 
       if (value->flags () == CORBA::ARG_IN
           || value->flags () == CORBA::ARG_INOUT)
@@ -720,188 +848,19 @@ TAO_Stub::put_params (TAO_GIOP_Invocation &call,
           if (value->value ()->any_owns_data_)
             {
               call.put_param (value->value ()->type_,
-                              value->value ()->value_, ACE_TRY_ENV);
-              ACE_CHECK;
+                              value->value ()->value_, env);
             }
           else
             {
               TAO_OutputCDR &cdr = call.out_stream ();
-              TAO_InputCDR in (value->value ()->cdr_,
-                               TAO_ENCAP_BYTE_ORDER,
-                               this->orb_core_);
-              cdr.append (value->value ()->type_, &in, ACE_TRY_ENV);
-              ACE_CHECK;
+              TAO_InputCDR in (value->value ()->cdr_);
+              cdr.append (value->value ()->type_, &in, env);
+            }
+          if (env.exception ())
+            {
+              env.print_exception ("do_dynamic_call, put request parameter");
+              return;
             }
         }
     }
 }
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
-// ****************************************************************
-
-#if defined (TAO_HAS_CORBA_MESSAGING)
-CORBA::Policy_ptr
-TAO_Stub::get_policy (
-    CORBA::PolicyType type,
-    CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
-                    this->refcount_lock_,
-                    CORBA::Policy::_nil ());
-
-  if (this->policies_ == 0)
-    return CORBA::Policy::_nil ();
-
-  return this->policies_->get_policy (type, ACE_TRY_ENV);
-}
-
-CORBA::Policy_ptr
-TAO_Stub::get_client_policy (
-    CORBA::PolicyType type,
-    CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
-                    this->refcount_lock_,
-                    CORBA::Policy::_nil ());
-
-  CORBA::Policy_var result;
-  if (this->policies_ != 0)
-    {
-      result = this->policies_->get_policy (type, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-    }
-
-  if (CORBA::is_nil (result.in ()))
-    {
-      TAO_Policy_Current *policy_current =
-        this->orb_core_->policy_current ();
-      if (policy_current != 0)
-        {
-          result = policy_current->get_policy (type, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-        }
-    }
-
-  if (CORBA::is_nil (result.in ()))
-    {
-      TAO_Policy_Manager *policy_manager =
-        this->orb_core_->policy_manager ();
-      if (policy_manager != 0)
-        {
-          result = policy_manager->get_policy (type, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-        }
-    }
-
-  if (CORBA::is_nil (result.in ()))
-    {
-      result = this->orb_core_->get_default_policy (type, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-    }
-
-  return result._retn ();
-}
-
-TAO_Stub*
-TAO_Stub::set_policy_overrides (
-    const CORBA::PolicyList & policies,
-    CORBA::SetOverrideType set_add,
-    CORBA::Environment &ACE_TRY_ENV)
-{
-  // Notice the use of an explicit constructor....
-  auto_ptr<TAO_Policy_Manager_Impl> policy_manager (new TAO_Policy_Manager_Impl);
-
-  if (set_add == CORBA::SET_OVERRIDE)
-    {
-      policy_manager->set_policy_overrides (policies,
-                                            set_add,
-                                            ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
-    }
-  else if (this->policies_ == 0)
-    {
-      policy_manager->set_policy_overrides (policies,
-                                            CORBA::SET_OVERRIDE,
-                                            ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
-    }
-  else
-    {
-      *policy_manager = *this->policies_;
-      policy_manager->set_policy_overrides (policies,
-                                            set_add,
-                                            ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
-    }
-
-  TAO_Stub* stub;
-  ACE_NEW_RETURN (stub, TAO_Stub (CORBA::string_dup (this->type_id.in ()),
-                                  this->base_profiles_,
-                                  this->orb_core_),
-                  0);
-  stub->policies_ = policy_manager.release ();
-  return stub;
-}
-
-CORBA::PolicyList *
-TAO_Stub::get_policy_overrides (
-    const CORBA::PolicyTypeSeq & types,
-    CORBA::Environment &ACE_TRY_ENV)
-{
-  if (this->policies_ == 0)
-    return 0;
-
-  return this->policies_->get_policy_overrides (types, ACE_TRY_ENV);
-}
-
-CORBA::Boolean
-TAO_Stub::validate_connection (
-    CORBA::PolicyList_out inconsistent_policies,
-    CORBA::Environment &ACE_TRY_ENV)
-{
-  // @@ What is a good default value to return....
-  inconsistent_policies = 0;
-  return 0;
-}
-
-void
-TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
-{
-  // we assume that the profile_in_use_ is being
-  // forwarded!  Grab the lock so things don't change.
-  ACE_MT (ACE_GUARD (ACE_Lock,
-                     guard,
-                     *this->profile_lock_ptr_));
-
-  TAO_MProfile *now_pfiles = this->forward_profiles_;
-  if (now_pfiles == 0)
-    now_pfiles = &this->base_profiles_;
-
-  ACE_NEW (this->forward_profiles_,
-           TAO_MProfile (mprofiles));
-
-  // forwarded profile points to the new IOR (profiles)
-  this->profile_in_use_->forward_to (this->forward_profiles_);
-
-  // new profile list points back to the list which was forwarded.
-  this->forward_profiles_->forward_from (now_pfiles);
-
-  // make sure we start at the beginning of mprofiles
-  this->forward_profiles_->rewind ();
-}
-
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class auto_ptr<TAO_Policy_Manager_Impl>;
-template class ACE_Auto_Basic_Ptr<TAO_Policy_Manager_Impl>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate auto_ptr<TAO_Policy_Manager_Impl>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Policy_Manager_Impl>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#endif /* TAO_HAS_CORBA_MESSAGING */

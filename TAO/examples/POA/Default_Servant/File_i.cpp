@@ -24,10 +24,10 @@ FileImpl::System::System (PortableServer::POA_ptr poa)
    // Create the Default Descriptor Servant
     fd_servant_ (poa)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  CORBA::Environment env;
   // set the default servant of the POA
-  poa->set_servant (&this->fd_servant_, ACE_TRY_ENV);
-  ACE_CHECK;
+  poa->set_servant (&this->fd_servant_, env);
+  ACE_ASSERT (env.exception () == 0);
 }
 
 FileImpl::System::~System (void)
@@ -35,15 +35,16 @@ FileImpl::System::~System (void)
 }
 
 PortableServer::POA_ptr
-FileImpl::System::_default_POA (CORBA::Environment &)
+FileImpl::System::_default_POA (CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 File::Descriptor_ptr
 FileImpl::System::open (const char *file_name,
                         CORBA::Long flags,
-                        CORBA::Environment &ACE_TRY_ENV)
+                        CORBA::Environment &env)
 {
   // Do an ACE_OS::open
   ACE_HANDLE file_descriptor = ACE_OS::open (file_name,
@@ -51,13 +52,9 @@ FileImpl::System::open (const char *file_name,
 
   if (file_descriptor == ACE_INVALID_HANDLE)
     {
-      //CORBA::Exception exception = File::IOError (errno);
-      ACE_THROW_RETURN (File::IOError (), 0);
-
-      /*      ACE_NEW_THROW_EX (exception,
-                        File::IOError (errno),
-                        exception);
-                        ACE_CHECK_RETURN (0);*/
+      CORBA::Exception *exception = new File::IOError (errno);
+      env.exception (exception);
+      return 0;
     }
 
   char file_descriptor_buffer[BUFSIZ];
@@ -76,14 +73,16 @@ FileImpl::System::open (const char *file_name,
   CORBA::Object_var obj =
     this->poa_->create_reference_with_id (oid.in (),
                                           "IDL:File/Descriptor:1.0",
-                                          ACE_TRY_ENV);
-  ACE_CHECK_RETURN (File::Descriptor::_nil ());
+                                          env);
+  if (env.exception () != 0)
+    return File::Descriptor::_nil ();
 
   // Narrow the object reference to a File Descriptor
   File::Descriptor_var fd =
-    File::Descriptor::_narrow (obj.in (), ACE_TRY_ENV);
+    File::Descriptor::_narrow (obj.in (), env);
 
-  ACE_CHECK_RETURN (File::Descriptor::_nil ());
+  if (env.exception () != 0)
+    return File::Descriptor::_nil ();
 
   return fd._retn ();
 }
@@ -99,27 +98,30 @@ FileImpl::Descriptor::~Descriptor (void)
 }
 
 PortableServer::POA_ptr
-FileImpl::Descriptor::_default_POA (CORBA::Environment &)
+FileImpl::Descriptor::_default_POA (CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 //Extracts the ACE_HANDLE from the passed object reference
 ACE_HANDLE
-FileImpl::Descriptor::fd (CORBA::Environment &ACE_TRY_ENV)
+FileImpl::Descriptor::fd (CORBA::Environment &env)
 {
   // Get a reference to myself
-  File::Descriptor_var me = this->_this (ACE_TRY_ENV);
+  File::Descriptor_var me = this->_this (env);
 
-  ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
+  if (env.exception () != 0)
+    return ACE_INVALID_HANDLE;
 
   // Get the ObjectId from the reference
   PortableServer::ObjectId_var oid =
-    this->poa_->reference_to_id (me.in (), ACE_TRY_ENV);
-  
-  ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
+    this->poa_->reference_to_id (me.in (), env);
 
-    // Convert the ObjectId to a string
+  if (env.exception () != 0)
+    return ACE_INVALID_HANDLE;
+
+  // Convert the ObjectId to a string
   CORBA::String_var s =
     PortableServer::ObjectId_to_string (oid.in ());
 
@@ -129,10 +131,12 @@ FileImpl::Descriptor::fd (CORBA::Environment &ACE_TRY_ENV)
 
 CORBA::Long
 FileImpl::Descriptor::write (const File::Descriptor::DataBuffer &buffer,
-                             CORBA::Environment &ACE_TRY_ENV)
+                             CORBA::Environment &env)
 {
-  ACE_HANDLE file_descriptor = this->fd (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_HANDLE file_descriptor = this->fd (env);
+
+  if (env.exception () != 0)
+    return 0;
 
   const CORBA::Octet *data = &buffer[0];
 
@@ -141,16 +145,22 @@ FileImpl::Descriptor::write (const File::Descriptor::DataBuffer &buffer,
                                buffer.length ());
   if (len > 0)
     return len;
-
-  ACE_THROW_RETURN (File::IOError (), 0);
+  else
+    {
+      CORBA::Exception *exception = new File::IOError (errno);
+      env.exception (exception);
+      return 0;
+    }
 }
 
 File::Descriptor::DataBuffer *
 FileImpl::Descriptor::read (CORBA::Long num_bytes,
-                            CORBA::Environment &ACE_TRY_ENV)
+                            CORBA::Environment &env)
 {
-  ACE_HANDLE file_descriptor = this->fd (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_HANDLE file_descriptor = this->fd (env);
+
+  if (env.exception () != 0)
+    return 0;
 
   CORBA::Octet *buffer = File::Descriptor::DataBuffer::allocbuf (num_bytes);
   int length = ACE_OS::read (file_descriptor, buffer, num_bytes);
@@ -160,40 +170,54 @@ FileImpl::Descriptor::read (CORBA::Long num_bytes,
                                              length,
                                              buffer,
                                              1);
-
-  File::Descriptor::DataBuffer::freebuf (buffer);
-  ACE_THROW_RETURN (File::IOError (), 0);
+  else
+    {
+      File::Descriptor::DataBuffer::freebuf (buffer);
+      CORBA::Exception *exception = new File::IOError (errno);
+      env.exception (exception);
+      return 0;
+    }
 }
 
 CORBA::ULong
 FileImpl::Descriptor::lseek (CORBA::ULong offset,
                              CORBA::Long whence,
-                             CORBA::Environment &ACE_TRY_ENV)
+                             CORBA::Environment &env)
 {
-  ACE_HANDLE file_descriptor = this->fd (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_HANDLE file_descriptor = this->fd (env);
+
+  if (env.exception () != 0)
+    return 0;
 
   CORBA::Long result = (CORBA::Long) ACE_OS::lseek (file_descriptor,
                                                     offset,
                                                     whence);
   if (result == -1)
-    ACE_THROW_RETURN (File::IOError (), 0);
-
-  return (CORBA::ULong) result;
+    {
+      CORBA::Exception *exception = new File::IOError (errno);
+      env.exception (exception);
+      return 0;
+    }
+  else
+    return (CORBA::ULong) result;
 }
 
 void
-FileImpl::Descriptor::destroy (CORBA::Environment &ACE_TRY_ENV)
+FileImpl::Descriptor::destroy (CORBA::Environment &env)
 {
   // Get the ACE_HANDLE for this object reference
-  ACE_HANDLE file_descriptor = this->fd (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_HANDLE file_descriptor = this->fd (env);
+
+  if (env.exception () != 0)
+    return;
 
   //close the file corresponding to this object reference
   int result = ACE_OS::close (file_descriptor);
 
   if (result != 0)
     {
-      ACE_THROW (File::IOError ());
+      CORBA::Exception *exception = new File::IOError (errno);
+      env.exception (exception);
+      return;
     }
 }

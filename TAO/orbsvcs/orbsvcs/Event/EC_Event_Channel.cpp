@@ -1,13 +1,12 @@
 // $Id$
 
 #include "EC_Event_Channel.h"
-#include "EC_Default_Factory.h"
+#include "EC_Factory.h"
 #include "EC_Dispatching.h"
 #include "EC_ConsumerAdmin.h"
 #include "EC_SupplierAdmin.h"
 #include "EC_Timeout_Generator.h"
 #include "EC_ObserverStrategy.h"
-#include "ace/Dynamic_Service.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Event_Channel.i"
@@ -15,39 +14,15 @@
 
 ACE_RCSID(Event, EC_Event_Channel, "$Id$")
 
-TAO_EC_Event_Channel::
-TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attr,
-                      TAO_EC_Factory* factory,
-                      int own_factory)
-  : supplier_poa_ (PortableServer::POA::_duplicate (attr.supplier_poa)),
-    consumer_poa_ (PortableServer::POA::_duplicate (attr.consumer_poa)),
-    factory_ (factory),
-    own_factory_ (own_factory),
-    consumer_reconnect_ (attr.consumer_reconnect),
-    supplier_reconnect_ (attr.supplier_reconnect),
-    busy_hwm_ (attr.busy_hwm),
-    max_write_delay_ (attr.max_write_delay)
+TAO_EC_Event_Channel::TAO_EC_Event_Channel (TAO_EC_Factory* factory)
+  : factory_ (factory)
 {
-  if (this->factory_ == 0)
-    {
-      this->factory_ =
-        ACE_Dynamic_Service<TAO_EC_Factory>::instance ("EC_Factory");
-      this->own_factory_ = 0;
-
-      if (this->factory_ == 0)
-        {
-          ACE_NEW (this->factory_,
-                   TAO_EC_Default_Factory);
-          this->own_factory_ = 1;
-        }
-    }
+  ACE_ASSERT (this->factory_ != 0);
 
   this->dispatching_ =
     this->factory_->create_dispatching (this);
   this->filter_builder_ =
     this->factory_->create_filter_builder (this);
-  this->supplier_filter_builder_ =
-    this->factory_->create_supplier_filter_builder (this);
   this->consumer_admin_ =
     this->factory_->create_consumer_admin (this);
   this->supplier_admin_ =
@@ -56,12 +31,6 @@ TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attr,
     this->factory_->create_timeout_generator (this);
   this->observer_strategy_ =
     this->factory_->create_observer_strategy (this);
-
-  this->scheduler_ =
-    RtecScheduler::Scheduler::_duplicate (attr.scheduler);
-
-  this->scheduling_strategy_ =
-    this->factory_->create_scheduling_strategy (this);
 }
 
 TAO_EC_Event_Channel::~TAO_EC_Event_Channel (void)
@@ -70,8 +39,6 @@ TAO_EC_Event_Channel::~TAO_EC_Event_Channel (void)
   this->dispatching_ = 0;
   this->factory_->destroy_filter_builder (this->filter_builder_);
   this->filter_builder_ = 0;
-  this->factory_->destroy_supplier_filter_builder (this->supplier_filter_builder_);
-  this->supplier_filter_builder_ = 0;
   this->factory_->destroy_consumer_admin (this->consumer_admin_);
   this->consumer_admin_ = 0;
   this->factory_->destroy_supplier_admin (this->supplier_admin_);
@@ -80,16 +47,23 @@ TAO_EC_Event_Channel::~TAO_EC_Event_Channel (void)
   this->timeout_generator_ = 0;
   this->factory_->destroy_observer_strategy (this->observer_strategy_);
   this->observer_strategy_ = 0;
-
-  if (this->own_factory_)
-    delete this->factory_;
 }
 
 void
-TAO_EC_Event_Channel::activate (CORBA::Environment&)
+TAO_EC_Event_Channel::activate (CORBA::Environment& ACE_TRY_ENV)
 {
   this->dispatching_->activate ();
   this->timeout_generator_->activate ();
+
+  PortableServer::POA_var supplier_poa =
+    this->factory_->supplier_poa (ACE_TRY_ENV);
+  ACE_CHECK;
+  this->supplier_admin_->set_default_POA (supplier_poa.in ());
+
+  PortableServer::POA_var consumer_poa =
+    this->factory_->consumer_poa (ACE_TRY_ENV);
+  ACE_CHECK;
+  this->consumer_admin_->set_default_POA (consumer_poa.in ());
 }
 
 void
@@ -115,10 +89,6 @@ TAO_EC_Event_Channel::shutdown (CORBA::Environment& ACE_TRY_ENV)
   ACE_CHECK;
   supplier_poa->deactivate_object (supplier_id.in (), ACE_TRY_ENV);
   ACE_CHECK;
-
-  this->supplier_admin_->shutdown (ACE_TRY_ENV);
-
-  this->consumer_admin_->shutdown (ACE_TRY_ENV);
 }
 
 void

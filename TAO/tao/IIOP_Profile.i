@@ -31,8 +31,8 @@ TAO_IIOP_Profile::body (void) const
   return this->body_;
 }
 
-ACE_INLINE const ACE_INET_Addr&
-TAO_IIOP_Profile::object_addr (void) const
+ACE_INLINE ACE_Addr&
+TAO_IIOP_Profile::object_addr (void)
 {
   return this->object_addr_;
 }
@@ -78,4 +78,10 @@ ACE_INLINE TAO_Profile *
 TAO_IIOP_Profile::_nil (void)
 {
   return (TAO_IIOP_Profile *)0;
+}
+
+ACE_INLINE TAO_MProfile *
+TAO_IIOP_Profile::forward_to_i (void)
+{
+  return this->forward_to_;
 }

@@ -103,6 +103,10 @@ SOURCE=.\EchoS.cpp
 
 SOURCE=.\server.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\Server_i.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -123,6 +127,10 @@ SOURCE=.\EchoS.h
 
 SOURCE=.\EchoS_T.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\Server_i.h
+# End Source File
 # End Group
 # Begin Group "IDL Files"
 
@@ -133,7 +141,6 @@ SOURCE=.\Echo.idl
 
 !IF  "$(CFG)" == "Simple Echo Server - Win32 Release"
 
-USERDEP__ECHO_="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Echo.idl
 InputName=Echo
