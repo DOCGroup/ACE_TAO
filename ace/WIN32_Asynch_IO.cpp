@@ -254,8 +254,8 @@ ACE_WIN32_Asynch_Read_Stream_Result::complete (size_t bytes_transferred,
     this->message_block_.wr_ptr (bytes_transferred);
   else
   {
-    for (ACE_Message_Block* mb = &this->message_block_; 
-         (mb != 0) && (bytes_transferred > 0); 
+    for (ACE_Message_Block* mb = &this->message_block_;
+         (mb != 0) && (bytes_transferred > 0);
          mb = mb->cont ())
     {
       size_t len_part = mb->space ();
@@ -669,8 +669,8 @@ ACE_WIN32_Asynch_Write_Stream_Result::complete (size_t bytes_transferred,
     this->message_block_.rd_ptr (bytes_transferred);
   else
   {
-    for (ACE_Message_Block* mb = &this->message_block_; 
-         (mb != 0) && (bytes_transferred > 0); 
+    for (ACE_Message_Block* mb = &this->message_block_;
+         (mb != 0) && (bytes_transferred > 0);
          mb = mb->cont ())
     {
       size_t len_part = mb->length ();
@@ -785,12 +785,12 @@ ACE_WIN32_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                                       int signal_number)
 {
   size_t len = message_block.length();
-  
+
   if (bytes_to_write > len)
      bytes_to_write = len ;
 
   if (bytes_to_write == 0)
-    ACE_ERROR_RETURN 
+    ACE_ERROR_RETURN
       ((LM_ERROR,
         ACE_LIB_TEXT ("ACE_WIN32_Asynch_Write_Stream::write:")
         ACE_LIB_TEXT ("Attempt to write 0 bytes\n")),
@@ -1072,16 +1072,16 @@ ACE_WIN32_Asynch_Read_File_Result::complete (size_t bytes_transferred,
   {
     static const size_t page_size = ACE_OS::getpagesize();
 
-    for (ACE_Message_Block* mb = &this->message_block_; 
-         (mb != 0) && (bytes_transferred > 0); 
+    for (ACE_Message_Block* mb = &this->message_block_;
+         (mb != 0) && (bytes_transferred > 0);
          mb = mb->cont ())
     {
       // mb->space () is ought to be >= page_size.
       // this is verified in the readv method
       // ACE_ASSERT (mb->space () >= page_size);
-      
-      size_t len_part = page_size ;    
-      
+
+      size_t len_part = page_size ;
+
       if ( len_part > bytes_transferred)
         len_part = bytes_transferred;
 
@@ -1218,7 +1218,7 @@ ACE_WIN32_Asynch_Read_File::read (ACE_Message_Block &message_block,
     bytes_to_read = space;
 
   if ( bytes_to_read == 0 )
-    ACE_ERROR_RETURN 
+    ACE_ERROR_RETURN
       ((LM_ERROR,
         ACE_LIB_TEXT ("ACE_WIN32_Asynch_Read_File::read:")
         ACE_LIB_TEXT ("Attempt to read 0 bytes or no space in the message block\n")),
@@ -1284,7 +1284,7 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
                          ACE_LIB_TEXT ("Invalid message block size\n")),
                         -1);
 
-    buffer_pointers[buffer_pointers_count].Buffer = msg->wr_ptr ();    
+    buffer_pointers[buffer_pointers_count].Buffer = msg->wr_ptr ();
     total_space += page_size;
   }
 
@@ -1616,7 +1616,7 @@ ACE_WIN32_Asynch_Write_File::write (ACE_Message_Block &message_block,
      bytes_to_write = len;
 
   if ( bytes_to_write == 0 )
-    ACE_ERROR_RETURN 
+    ACE_ERROR_RETURN
       ((LM_ERROR,
         ACE_LIB_TEXT ("ACE_WIN32_Asynch_Write_File::write:")
         ACE_LIB_TEXT ("Attempt to read 0 bytes\n")),
@@ -1675,7 +1675,7 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
   {
     size_t msg_len = msg->length ();
 
-    // Don't allow writing less than page_size, unless 
+    // Don't allow writing less than page_size, unless
     // the size of the message block is big enough (so we don't write from
     // memory which does not belong to the message block), and the message
     // block is the last in the chain.
@@ -3206,10 +3206,12 @@ ACE_WIN32_Asynch_Read_Dgram_Result::ACE_WIN32_Asynch_Read_Dgram_Result (ACE_Hand
     flags_ (flags),
     handle_ (handle)
 {
-  ACE_ASSERT(protocol_family == PF_INET); // only supporting INET addresses
+  ACE_ASSERT (protocol_family == PF_INET); // only supporting INET addresses
 
-  ACE_NEW(remote_address_, ACE_INET_Addr);
-  addr_len_ = remote_address_->get_size();
+  ACE_NEW (remote_address_, ACE_INET_Addr);
+  addr_len_ = remote_address_->get_size ();
+
+  ACE_UNUSED_ARG (protocol_family);
 }
 
 void
@@ -3225,8 +3227,8 @@ ACE_WIN32_Asynch_Read_Dgram_Result::complete (size_t bytes_transferred,
   this->error_ = error;
 
   // Appropriately move the pointers in the message block.
-  for (ACE_Message_Block* mb = this->message_block_; 
-       (mb != 0) && (bytes_transferred > 0); 
+  for (ACE_Message_Block* mb = this->message_block_;
+       (mb != 0) && (bytes_transferred > 0);
        mb = mb->cont ())
     {
       size_t len_part = mb->space ();
@@ -3546,8 +3548,8 @@ ACE_WIN32_Asynch_Write_Dgram_Result::complete (size_t bytes_transferred,
   this->error_ = error;
 
   // Appropriately move the pointers in the message block.
-  for (ACE_Message_Block* mb = this->message_block_; 
-       (mb != 0) && (bytes_transferred > 0); 
+  for (ACE_Message_Block* mb = this->message_block_;
+       (mb != 0) && (bytes_transferred > 0);
        mb = mb->cont ())
     {
       size_t len_part = mb->length ();
@@ -3559,7 +3561,7 @@ ACE_WIN32_Asynch_Write_Dgram_Result::complete (size_t bytes_transferred,
 
       bytes_transferred -= len_part;
     }
-  
+
   // Create the interface result class.
   ACE_Asynch_Write_Dgram::Result result (this);
 
