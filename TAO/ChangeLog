@@ -1,3 +1,24 @@
+Tue Feb  1 11:17:10 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_cs.cpp:
+        
+          - Converted more generated C-style casts to C++-style casts, in
+            _is_a() (stub side), _non_existent_skel(), _is_a_skel(),
+            _interface_skel(), and _component_skel().
+            
+          - Refactored generated code for _this() to eliminate an
+            IF block.
+            
+          Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for
+          the above suggestions.
+          
+        * tao/Any_Array_Impl_T.cpp:
+        
+          Added #include of SystemException.h. The definition of
+          _tao_decode() at the end of the file now seems to need it.
+
 Tue Feb  1 13:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/FlResource.mpc:
