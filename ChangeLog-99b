@@ -1,3 +1,8 @@
+Wed Oct 20 00:05:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i: Replaced 0666 wit ACE_DEFAULT_FILE_PERMS.  Thanks
+	  to Dave Delano for reporting this.
+
 Tue Oct 19 13:31:15 1999  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * ace/ATM_Params.h, ATM_QoS.{h,i}:
