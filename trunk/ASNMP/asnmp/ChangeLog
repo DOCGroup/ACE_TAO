@@ -1,3 +1,11 @@
+Thu May  6 11:13:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* oid.cpp (operator+=, OidToStr):
+	* pdu.cpp (agent_error_reason):
+
+	  Fixed warnings regarding mismatch format specifiers and
+	  arguments to sprintf().
+
 Thu May  6 11:05:01 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* gauge.h:
