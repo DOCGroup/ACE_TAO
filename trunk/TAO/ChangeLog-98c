@@ -1,133 +1,137 @@
+Mon Jun 08 09:41:52 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/ORB_Core.cpp: added/fixed template instantiations.
+
 Sun Jun  7 17:54:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/Options.html: Added options available for ORB,
-	  Resource_Factory, and Default_Server_Strategy_Factory.
+        * docs/Options.html: Added options available for ORB,
+          Resource_Factory, and Default_Server_Strategy_Factory.
 
-	* tao/IIOP_ORB.{h,cpp}: Removed _register_collocation from
-	  IIOP_ORB and all usage of it.  Also, when using a global
-	  collocation table, it gets the table from the resource factory.
+        * tao/IIOP_ORB.{h,cpp}: Removed _register_collocation from
+          IIOP_ORB and all usage of it.  Also, when using a global
+          collocation table, it gets the table from the resource factory.
 
-	* tao/ORB.h: Remove pure virtual function _register_collocation.
+        * tao/ORB.h: Remove pure virtual function _register_collocation.
 
-	* tao/ORB.cpp: Register the ORB's listening endpoint to the global
-	  collocation table if we are using one.
+        * tao/ORB.cpp: Register the ORB's listening endpoint to the global
+          collocation table if we are using one.
 
-	* ORB_Core.{h,i,cpp}: Added a new class TAO_COLTBL_Lock to choose
-	  the lock to use in global collocation table at run time.
+        * ORB_Core.{h,i,cpp}: Added a new class TAO_COLTBL_Lock to choose
+          the lock to use in global collocation table at run time.
 
-	  Added a command option in ORB_Core to disable collocation
-	  optimization and an option in  Resource Factory to decide to use
-	  a global collocation table or not.
+          Added a command option in ORB_Core to disable collocation
+          optimization and an option in  Resource Factory to decide to use
+          a global collocation table or not.
 
-	  (using_collocation): Get whether we want to use the collocation
-	  optimization.
+          (using_collocation): Get whether we want to use the collocation
+          optimization.
 
-	  (add_to_collocation_table): Used to register a listening
-	  endpoint when an ORB gets initialized.
+          (add_to_collocation_table): Used to register a listening
+          endpoint when an ORB gets initialized.
 
-	  (get_collocated_poa): This function look thru the collocation
-	  table and return the root poa associate with the ORB.
+          (get_collocated_poa): This function look thru the collocation
+          table and return the root poa associate with the ORB.
 
-	  (get_global_collocation_table): Return a pointer to the global
-	  collocation table if we choose to use one, otherwise, return 0.
+          (get_global_collocation_table): Return a pointer to the global
+          collocation table if we choose to use one, otherwise, return 0.
 
-	* tao/Server_Strategy_Factory.{h,cpp} (create_coltbl_lock): Added
-	  new method to allow not using a lock in the global collocation
-	  table.
+        * tao/Server_Strategy_Factory.{h,cpp} (create_coltbl_lock): Added
+          new method to allow not using a lock in the global collocation
+          table.
 
-	* tao/default_server.{h,cpp} (create_coltbl_lock): Added
-	  implementation of this method.
+        * tao/default_server.{h,cpp} (create_coltbl_lock): Added
+          implementation of this method.
 
 Sat Jun 06 21:17:13 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/{server,client}.dsp: Both projects now
- 	  require to link against orbsvcs.lib.
+        * tests/Cubit/TAO/MT_Cubit/{server,client}.dsp: Both projects now
+          require to link against orbsvcs.lib.
 
 Sat Jun  6 20:32:26 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/OctetSeq/OctetSeq.cpp: Changed Test::_tc_CharSeq_seq and
- 	  Test::_tc_OctetSeq_seq to Test::_tc_CharSeq and
- 	  Test::_tc_OctetSeq.  Thanks to David Levine for spotting this.
+        * tests/OctetSeq/OctetSeq.cpp: Changed Test::_tc_CharSeq_seq and
+          Test::_tc_OctetSeq_seq to Test::_tc_CharSeq and
+          Test::_tc_OctetSeq.  Thanks to David Levine for spotting this.
 
 Sat Jun 6 Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* docs/orbsvcs.html: Changed the test directory from
-	  CosPropertyService to Property.
+        * docs/orbsvcs.html: Changed the test directory from
+          CosPropertyService to Property.
 
 Sat Jun 6 Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* Moved $TAO_ROOT/orbsvcs/tests/CosPropertyService to
-	  $TAO_ROOT/orbsvcs/tests/Property.
+        * Moved $TAO_ROOT/orbsvcs/tests/CosPropertyService to
+          $TAO_ROOT/orbsvcs/tests/Property.
 
 Sat Jun  6 18:55:51 1998  Sergio Flores  <sergio@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:
-	* tests/Cubit/TAO/MT_Cubit/client.cpp:
-	* tests/Cubit/TAO/MT_Cubit/cubit.idl:
-	* tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:
-	* tests/Cubit/TAO/MT_Cubit/cubit_i.h:
-	* tests/Cubit/TAO/MT_Cubit/server.cpp:
-	* tests/Cubit/TAO/MT_Cubit/server.h: Changed the code to use the
- 	same priority for all low priority clients.  Deleted unnecessary
- 	code that implemented a cubit factory, we now will use the file to
- 	store/retrieve the iors.  Fixed a bug having to with unsupported
- 	fields in the rusage structure for NT.
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+        * tests/Cubit/TAO/MT_Cubit/client.cpp:
+        * tests/Cubit/TAO/MT_Cubit/cubit.idl:
+        * tests/Cubit/TAO/MT_Cubit/cubit_i.cpp:
+        * tests/Cubit/TAO/MT_Cubit/cubit_i.h:
+        * tests/Cubit/TAO/MT_Cubit/server.cpp:
+        * tests/Cubit/TAO/MT_Cubit/server.h: Changed the code to use the
+        same priority for all low priority clients.  Deleted unnecessary
+        code that implemented a cubit factory, we now will use the file to
+        store/retrieve the iors.  Fixed a bug having to with unsupported
+        fields in the rusage structure for NT.
 
 Sat Jun  6 17:35:59 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface.cpp: Added CORBA::Environment
- 	  &env to the _default_POA() tie method.  Thanks to David Levine
- 	  for reporting this.
+        * TAO_IDL/be/be_visitor_interface.cpp: Added CORBA::Environment
+          &env to the _default_POA() tie method.  Thanks to David Levine
+          for reporting this.
 
-	* orbsvcs/orbsvcs/Log/Logger_i.cpp: Added a simple-minded
- 	  implementation of the log() method.  This can certainly be
- 	  improved...
+        * orbsvcs/orbsvcs/Log/Logger_i.cpp: Added a simple-minded
+          implementation of the log() method.  This can certainly be
+          improved...
 
 Fri Jun  5 16:02:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/CDR.h:
-	* tao/CDR.i:
-	* tao/CDR.cpp:
-	  The output CDR class uses the Data_Block directly to minimize
-	  memory allocation.
-	  This has taken the count of memory allocations to 4 on the
-	  client side and 4 on the server side.
+        * tao/CDR.h:
+        * tao/CDR.i:
+        * tao/CDR.cpp:
+          The output CDR class uses the Data_Block directly to minimize
+          memory allocation.
+          This has taken the count of memory allocations to 4 on the
+          client side and 4 on the server side.
 
-	* tao/GIOP.cpp:
-	  OutputCDR::stream() now returns a const message block.
+        * tao/GIOP.cpp:
+          OutputCDR::stream() now returns a const message block.
 
-	* tests/Param_Test/client.cpp:
-	* tests/Param_Test/driver.h:
-	* tests/Param_Test/driver.cpp:
-	* tests/Param_Test/options.h:
-	* tests/Param_Test/options.cpp:
-	* tests/Param_Test/param_test.idl:
-	* tests/Param_Test/param_test_i.h:
-	* tests/Param_Test/param_test_i.cpp:
-	  It is now possible to shutdown the server using a method, this
-	  is useful to test memory leaks because the client can request a
-	  clean shutdown (using the option -x).
+        * tests/Param_Test/client.cpp:
+        * tests/Param_Test/driver.h:
+        * tests/Param_Test/driver.cpp:
+        * tests/Param_Test/options.h:
+        * tests/Param_Test/options.cpp:
+        * tests/Param_Test/param_test.idl:
+        * tests/Param_Test/param_test_i.h:
+        * tests/Param_Test/param_test_i.cpp:
+          It is now possible to shutdown the server using a method, this
+          is useful to test memory leaks because the client can request a
+          clean shutdown (using the option -x).
 
-	* TAO_IDL/be/be_visitor_operation.cpp:
-	  For some types the return values were not deleted at the end of
-	  the upcall. I'm using T_var classes to automatically release the
-	  memory.
+        * TAO_IDL/be/be_visitor_operation.cpp:
+          For some types the return values were not deleted at the end of
+          the upcall. I'm using T_var classes to automatically release the
+          memory.
 
 Fri Jun  5 12:22:44 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tao/debug.{h,cpp}: Added TAO_orbdebug flag so TAO code
-	  does not check the flag in Service Configurator anymore.
-	  That way, it should still work when there isn't a
-	  Service Configurator.
+        * tao/debug.{h,cpp}: Added TAO_orbdebug flag so TAO code
+          does not check the flag in Service Configurator anymore.
+          That way, it should still work when there isn't a
+          Service Configurator.
 
-	* tao/Connect.cpp: Made the switch to TAO_orbdebug.
+        * tao/Connect.cpp: Made the switch to TAO_orbdebug.
 
-	* tao/ORB_Core.cpp: First, since the semantics of the -d
-	  flag in the Service Configurator now means to suppress
-	  debug messages, it is now passed in by default unless
-	  -ORBdebug was specified.  Also sets TAO_orbdebug when
-	  -ORBdebug is specified.
+        * tao/ORB_Core.cpp: First, since the semantics of the -d
+          flag in the Service Configurator now means to suppress
+          debug messages, it is now passed in by default unless
+          -ORBdebug was specified.  Also sets TAO_orbdebug when
+          -ORBdebug is specified.
 
 Thu Jun 04 05:05:39 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -135,92 +139,92 @@ Thu Jun 04 05:05:39 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Jun 04 03:45:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface.cpp
- 	  (be_visitor_interface_sh::visit_interface): Don't change the
-	  output stream until the template declaration part is complete.
-	  This delayed redirection of output writes the generated template
-	  classes into regular *S.h file and get them enclosed by
-	  appropriate namespace there.  Perhaps we can put them in the
-	  *S_T.h files, but that won't make platforms which don't have
-	  namespace support happy.
+        * TAO_IDL/be/be_visitor_interface.cpp
+          (be_visitor_interface_sh::visit_interface): Don't change the
+          output stream until the template declaration part is complete.
+          This delayed redirection of output writes the generated template
+          classes into regular *S.h file and get them enclosed by
+          appropriate namespace there.  Perhaps we can put them in the
+          *S_T.h files, but that won't make platforms which don't have
+          namespace support happy.
 
-	* TAO_IDL/be/be_visitor_module.cpp
- 	  (be_visitor_module_sh::visit_module): Changed to use
- 	  TAO_NAMESPACE as server side's module namescope.
+        * TAO_IDL/be/be_visitor_module.cpp
+          (be_visitor_module_sh::visit_module): Changed to use
+          TAO_NAMESPACE as server side's module namescope.
 
 Wed Jun  3 17:50:09 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	Irfan Pyarali discussed the need to generate *_T.{h, i, cpp} files
-	that hold the generated code for the TIE classes. The *_T.h file
-	uses the ACE_TEMPLATES_REQUIRE_SOURCE and
-	ACE_TEMPLATES_REQUIRE_PRAGMA macros to conditionally include the
-	*_T.cpp files. The following changes were necessary to suport
-	these features.
+        Irfan Pyarali discussed the need to generate *_T.{h, i, cpp} files
+        that hold the generated code for the TIE classes. The *_T.h file
+        uses the ACE_TEMPLATES_REQUIRE_SOURCE and
+        ACE_TEMPLATES_REQUIRE_PRAGMA macros to conditionally include the
+        *_T.cpp files. The following changes were necessary to suport
+        these features.
 
-	* TAO_IDL/be_include/be_codegen.h
-	  TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be_include/be_codegen.h
+          TAO_IDL/be/be_codegen.cpp:
 
-	Added more methods and data mebers for the server-side template
-	files that have the code for the TIE classes. The added methods
-	are: start_server_template_header, start_server_template_inline,
-	start_server_template_skeletons, end_server_template_header, and
-	end_server_template_skeletons. The corresponding data members were
-	added.
+        Added more methods and data mebers for the server-side template
+        files that have the code for the TIE classes. The added methods
+        are: start_server_template_header, start_server_template_inline,
+        start_server_template_skeletons, end_server_template_header, and
+        end_server_template_skeletons. The corresponding data members were
+        added.
 
-	* TAO_IDL/be_include/be_helper.h: Added 3 new enumerations for the
-	three newly introduced streams that will hold code for the TIE
-	classes.
+        * TAO_IDL/be_include/be_helper.h: Added 3 new enumerations for the
+        three newly introduced streams that will hold code for the TIE
+        classes.
 
-	* TAO_IDL/be_visitor_interface.cpp: We now initialize the visitor
-	context of the TIE visitors with the appropriate *_T.{h, i} files.
+        * TAO_IDL/be_visitor_interface.cpp: We now initialize the visitor
+        context of the TIE visitors with the appropriate *_T.{h, i} files.
 
-	* TAO_IDL/be_visitor_root.cpp: Made calls to initialize and close
-	the newly added streams that hold the code for the TIE classes.
+        * TAO_IDL/be_visitor_root.cpp: Made calls to initialize and close
+        the newly added streams that hold the code for the TIE classes.
 
-	* TAO_IDL/include/idl_global.h:
-	  TAO_IDL/utils/utl_global.cpp:
+        * TAO_IDL/include/idl_global.h:
+          TAO_IDL/utils/utl_global.cpp:
 
-	Added new methods that generate names for the newly introduced
-	streams that hold the code for TIE classes. These methods are:
-	be_get_server_template_fname, be_get_server_template_inline_fname,
-	be_get_server_template_inline_skeleton_fname and their
-	corresponding helper methods.
+        Added new methods that generate names for the newly introduced
+        streams that hold the code for TIE classes. These methods are:
+        be_get_server_template_fname, be_get_server_template_inline_fname,
+        be_get_server_template_inline_skeleton_fname and their
+        corresponding helper methods.
 
 Tue Jun  2 18:57:08 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
         * TAO_IDL/be/{be_visitor_enum, be_visitor_exception,
         be_visitor_interface, be_visitor_sequence, be_visitor_structure,
         be_visitor_typedef, be_visitor_union}.cpp:
-	Factored out some code that should have been placed inside the
-	TypeCode visitors.
+        Factored out some code that should have been placed inside the
+        TypeCode visitors.
 
-	* TAO_IDL/be/be_visitor_typecode.cpp: Added teh factored out code
-	mentioned above.
+        * TAO_IDL/be/be_visitor_typecode.cpp: Added teh factored out code
+        mentioned above.
 
-	* TAO_IDL/be_include/be_codegen.h: Added a few more enumerations
-	that deal with generation of the TIE classes and code for
-	interfaces, operations and attributes.
+        * TAO_IDL/be_include/be_codegen.h: Added a few more enumerations
+        that deal with generation of the TIE classes and code for
+        interfaces, operations and attributes.
 
-	* TAO_IDL/be/be_visitor_attribute.cpp: Added cases to deal with
-	attribute mapping inside a TIE class.
+        * TAO_IDL/be/be_visitor_attribute.cpp: Added cases to deal with
+        attribute mapping inside a TIE class.
 
-	* TAO_IDL/be_include/be_visitor_interface.h
-	  TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be_include/be_visitor_interface.h
+          TAO_IDL/be/be_visitor_interface.cpp:
 
-	Added 2 new visitors for generation of the TIE class and its code
-	in the server header and server inline file.
+        Added 2 new visitors for generation of the TIE class and its code
+        in the server header and server inline file.
 
-	* TAO_IDL/be_include/be_visitor_operation.h
-	  TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be_include/be_visitor_operation.h
+          TAO_IDL/be/be_visitor_operation.cpp:
 
-	Added 2 new visitors for generation of the operations and its code
-	inside the TIE class in the server header and server inline file.
+        Added 2 new visitors for generation of the operations and its code
+        inside the TIE class in the server header and server inline file.
 
-	* TAO_IDL/be/be_interpretive.cpp: Added cases for the TIE visitors
-	for interfaces, operations and attributes.
+        * TAO_IDL/be/be_interpretive.cpp: Added cases for the TIE visitors
+        for interfaces, operations and attributes.
 
-	* docs/releasenotes.index.html: Updated to indicate support for
-	TIEs.
+        * docs/releasenotes.index.html: Updated to indicate support for
+        TIEs.
 
 Tue Jun 02 08:35:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
