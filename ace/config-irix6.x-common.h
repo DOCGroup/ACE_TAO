@@ -45,6 +45,8 @@
 
 // Platform/compiler has the sigwait(2) prototype
 #define ACE_HAS_SIGWAIT
+#define ACE_HAS_SIGTIMEDWAIT
+#define ACE_HAS_SIGSUSPEND
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC
