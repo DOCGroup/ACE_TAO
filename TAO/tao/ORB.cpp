@@ -737,7 +737,7 @@ CORBA_ORB::multicast_query (char *buf,
         {
           ACE_ERROR ((LM_ERROR,
                       "%p\n",
-                      "multicast_query : Unable to accept"));
+                      "multicast_query: unable to accept"));
           result = -1;
         }
       else
