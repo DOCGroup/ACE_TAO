@@ -66,15 +66,39 @@ sub parse_line {
 
   if ($line eq '') {
   }
-  elsif ($line =~ /^(\w+)(\s*,\s*(.*))?$/) {
+  elsif ($line =~ /^([\w\*]+)(\s*,\s*(.*))?$/) {
     my($name)  = $1;
     my($value) = $3;
     if (defined $value) {
       $value =~ s/^\s+//;
       $value =~ s/\s+$//;
     }
-    $self->{'reldefs'}->{$name} = $value;
-    push(@{$self->{'relorder'}}, $name);
+    if ($name =~ /\*/) {
+      $name =~ s/\*/.*/g;
+      foreach my $key (sort keys %ENV) {
+        if ($key =~ /^$name$/ && !exists $self->{'reldefs'}->{$key}) {
+          ## Put this value at the front since it doesn't need
+          ## to be built up from anything else.  It is a stand-alone
+          ## relative definition.
+          $self->{'reldefs'}->{$key} = undef;
+          unshift(@{$self->{'relorder'}}, $key);
+        }
+      }
+    }
+    else {
+      $self->{'reldefs'}->{$name} = $value;
+      if (defined $value) {
+        ## This relative definition may need to be built up from an
+        ## existing value, so it needs to be put at the end.
+        push(@{$self->{'relorder'}}, $name);
+      }
+      else {
+        ## Put this value at the front since it doesn't need
+        ## to be built up from anything else.  It is a stand-alone
+        ## relative definition.
+        unshift(@{$self->{'relorder'}}, $name);
+      }
+    }
   }
   else {
     $status = 0;
