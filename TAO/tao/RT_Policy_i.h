@@ -31,6 +31,7 @@
 
 #include "RTCORBAS.h"
 
+
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
@@ -38,6 +39,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+
+class Policy_Factory;
 
 class TAO_Export TAO_PriorityModelPolicy :
   public RTCORBA::PriorityModelPolicy
@@ -79,6 +82,22 @@ public:
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
                                          TAO_default_environment ());
+
+  virtual CORBA::Boolean _tao_encode(TAO_OutputCDR &out_cdr);
+  // This method writes a CDR representation of the current object
+  
+  virtual CORBA::Boolean _tao_decode(TAO_InputCDR &in_cdr);
+  // This method reads the object state from a CDR representation
+
+protected:
+
+  friend class Policy_Factory;
+  TAO_PriorityModelPolicy();
+  // This constructor is needed to create and instance
+  // and then restore its state from the CDR stream. In
+  // fact the logic of how the policy is streamed out and
+  // in a CDR stream is encapsulated in the class.
+
 
 private:
 
@@ -190,7 +209,7 @@ public:
   virtual RTCORBA::PriorityBands * priority_bands (CORBA::Environment
                                                    &ACE_TRY_ENV =
                                                    TAO_default_environment ())
-    ACE_THROW_SPEC (());
+  ACE_THROW_SPEC (());
 
   virtual CORBA::PolicyType policy_type (CORBA::Environment
                                          &ACE_TRY_ENV =
@@ -201,6 +220,22 @@ public:
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
                                          TAO_default_environment ());
+
+  virtual CORBA::Boolean _tao_encode(TAO_OutputCDR &out_cdr);
+  // This method writes a CDR representation of the current object
+  
+  virtual CORBA::Boolean _tao_decode(TAO_InputCDR &in_cdr);
+  // This method reads the object state from a CDR representation
+
+protected:
+
+  friend class Policy_Factory;
+  TAO_PriorityBandedConnectionPolicy();
+  // This constructor is needed to create and instance
+  // and then restore its state from the CDR stream. In
+  // fact the logic of how the policy is streamed out and
+  // in a CDR stream is encapsulated in the class.
+
 
 private:
 
@@ -243,6 +278,21 @@ public:
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
                                          TAO_default_environment ());
+
+  virtual CORBA::Boolean _tao_encode(TAO_OutputCDR &out_cdr);
+  // This method writes a CDR representation of the current object
+  
+  virtual CORBA::Boolean _tao_decode(TAO_InputCDR &in_cdr);
+  // This method reads the object state from a CDR representation
+
+protected:
+
+  friend class Policy_Factory;
+  TAO_ServerProtocolPolicy();
+  // This constructor is needed to create and instance
+  // and then restore its state from the CDR stream. In
+  // fact the logic of how the policy is streamed out and
+  // in a CDR stream is encapsulated in the class.
 
 private:
 
@@ -295,7 +345,8 @@ private:
 
 ////////////////////////////////////////////////////////////////////////////
 
-class TAO_Export TAO_TCP_Properties : public RTCORBA::TCPProtocolProperties
+class TAO_Export TAO_TCP_Properties : public RTCORBA::TCPProtocolProperties,
+                                      public TAO_Encodable
 {
   // = TITLE
   //   RTCORBA::TCPProtocolProperties implementation
@@ -362,6 +413,14 @@ public:
                          CORBA::Environment &ACE_TRY_ENV =
                          TAO_default_environment ())
     ACE_THROW_SPEC (());
+
+
+  virtual CORBA::Boolean _tao_encode(TAO_OutputCDR &out_cdr);
+  // This method writes a CDR representation of the current object
+  
+  virtual CORBA::Boolean _tao_decode(TAO_InputCDR &in_cdr);
+  // This method reads the object state from a CDR representation
+
 
 private:
   // = Attributes.

@@ -486,6 +486,14 @@ public:
                      PortableServer::POA::ObjectAlreadyActive,
                      PortableServer::POA::WrongPolicy));
 
+
+  
+  const CORBA::PolicyList& get_client_exposed_policies();
+  // This method gives the Policies that are exposed to the client,
+  // this policies are shipped within the IOR.
+
+
+
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -707,6 +715,7 @@ protected:
   void validate_priority_and_policies (RTCORBA::Priority priority,
                                        CORBA::Environment &ACE_TRY_ENV);
 
+
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
 protected:
@@ -833,7 +842,12 @@ protected:
   ACE_SYNCH_CONDITION servant_deactivation_condition_;
 
   CORBA::ULong waiting_servant_deactivation_;
+
+
+  // Client exposed Policies List
+  CORBA::PolicyList client_exposed_policies_;
 };
+
 
 class TAO_POA_Guard
 {

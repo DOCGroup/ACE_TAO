@@ -67,6 +67,47 @@ void TAO_PriorityModelPolicy::destroy (CORBA::Environment &)
 {
 }
 
+
+///////////////////////////////////////////////////////
+// Method for serialization support.
+
+TAO_PriorityModelPolicy::TAO_PriorityModelPolicy() : priority_model_(RTCORBA::SERVER_DECLARED), 
+                            server_priority_(0)
+{
+  
+}
+
+CORBA::Boolean 
+TAO_PriorityModelPolicy::_tao_encode(TAO_OutputCDR &out_cdr)
+{
+  // Note the field are encoded according to 
+  // the order specified in the spec. see p. 4.7.3
+
+  CORBA::Boolean b = (out_cdr << priority_model_);
+  if (b  && (out_cdr << server_priority_) )
+    return 1;
+
+  return 0;
+
+}
+
+CORBA::Boolean 
+TAO_PriorityModelPolicy::_tao_decode(TAO_InputCDR &in_cdr)
+{
+
+  CORBA::Boolean b = (in_cdr >> priority_model_);
+  if (b  && (in_cdr >> server_priority_) )
+    return 1;
+  
+  priority_model_ = RTCORBA::SERVER_DECLARED;
+  server_priority_ = 0;
+
+  
+  return 0;
+
+}
+
+                            
 // ****************************************************************
 
 TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id)
@@ -212,6 +253,27 @@ void TAO_PriorityBandedConnectionPolicy::destroy (CORBA::Environment &)
 {
 }
 
+///////////////////////////////////////////////////////
+// Method for serialization support.
+
+TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy()
+{
+  
+}
+
+CORBA::Boolean 
+TAO_PriorityBandedConnectionPolicy::_tao_encode(TAO_OutputCDR &out_cdr)
+{
+  
+  return 1;
+}
+
+CORBA::Boolean 
+TAO_PriorityBandedConnectionPolicy::_tao_decode(TAO_InputCDR &in_cdr)
+{
+  return 1;
+}
+
 // ****************************************************************
 
 TAO_TCP_Properties::TAO_TCP_Properties (CORBA::Long send_buffer_size,
@@ -305,6 +367,24 @@ TAO_TCP_Properties::no_delay (CORBA::Boolean no_delay,
   this->no_delay_ = no_delay;
 }
 
+///////////////////////////////////////////////////////
+// Method for serialization support.
+
+CORBA::Boolean 
+TAO_TCP_Properties::_tao_encode(TAO_OutputCDR &out_cdr)
+{
+  
+  return 1;
+}
+
+CORBA::Boolean 
+TAO_TCP_Properties::_tao_decode(TAO_InputCDR &in_cdr)
+{
+  return 1;
+}
+
+
+
 // ****************************************************************
 
 TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const
@@ -361,6 +441,27 @@ TAO_ServerProtocolPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 void
 TAO_ServerProtocolPolicy::destroy (CORBA::Environment &)
 {
+}
+
+///////////////////////////////////////////////////////
+// Method for serialization support.
+
+TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy()
+{
+
+}
+
+
+CORBA::Boolean 
+TAO_ServerProtocolPolicy::_tao_encode(TAO_OutputCDR &out_cdr)
+{
+  return 1;
+}
+
+CORBA::Boolean 
+TAO_ServerProtocolPolicy::_tao_decode(TAO_InputCDR &in_cdr)
+{
+  return 1;
 }
 
 // ****************************************************************

@@ -2005,6 +2005,12 @@ TAO_POA::validate_priority_and_policies (RTCORBA::Priority priority,
   // observed.
 }
 
+
+const CORBA::PolicyList& TAO_POA::get_client_exposed_policies()
+{
+  return this->client_exposed_policies_;
+}
+
 #endif /* TAO_HAS_RT_CORBA */
 
 //
@@ -3907,8 +3913,11 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+
+  
   obj = this->orb_core_.orb()->key_to_object (key,
                                               type_id,
+                                              this->get_client_exposed_policies(),
                                               servant,
                                               collocated,
                                               ACE_TRY_ENV);

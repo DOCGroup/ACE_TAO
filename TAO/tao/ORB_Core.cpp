@@ -1563,6 +1563,7 @@ TAO_ORB_Core::leader_follower_condition_variable (void)
 TAO_Stub *
 TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
                                   const char *type_id,
+                                  const CORBA::PolicyList& policy_list,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
   (void) this->open (ACE_TRY_ENV);
@@ -1581,13 +1582,38 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
   // First we create a profile list, well actually the empty container
   TAO_MProfile mp (pfile_count);
 
-  if (this->acceptor_registry ()->make_mprofile (key, mp) == -1)
+  if (this->acceptor_registry ()->make_mprofile (key, mp) == -1) 
+  {
     ACE_THROW_RETURN (CORBA::INTERNAL (
                         CORBA::SystemException::_tao_minor_code (
-                           TAO_MPROFILE_CREATION_ERROR,
-                           0),
-                        CORBA::COMPLETED_NO),
+                          TAO_MPROFILE_CREATION_ERROR, 0 ),
+                        CORBA::COMPLETED_NO ),
                       0);
+  }
+   
+
+  //  Add the Polices contained in "policy_list" to each profile
+  //  so that those policies will be exposed to the client in the IOR.
+  //  In particular each CORBA::Policy has to be converted in to  
+  //  Messaging::PolicyValue, and then all the Messaging::PolicyValue
+  //  should be embedded inside a Messaging::PolicyValueSeq which became
+  //  in turns the "body" of the IOP::TaggedComponent. This conversion 
+  //  is a responsability of the CORBA::Profile class.
+  //  (See orbos\98-05-05.pdf Section 5.4) 
+
+  if (policy_list.length() != 0)
+  {
+    // Set the "iterator" to the beginning of MProfile.
+    mp.rewind();
+    TAO_Profile * profile;
+    for (unsigned int i = 0; i < mp.profile_count(); ++i)
+    {
+      // Get the ith profile
+      profile = mp.get_next();
+      profile->set_policies(&policy_list);
+    }
+    
+  }
 
   ACE_NEW_THROW_EX (stub,
                     TAO_Stub (id._retn (), mp, this),

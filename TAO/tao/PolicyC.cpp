@@ -444,6 +444,22 @@ CORBA_Policy::_nil (void)
   return (CORBA_Policy_ptr)0;
 }
 
+////////////////////////////////////////////////////////////////
+//        Serializatio Support Methods
+//
+CORBA::Boolean 
+CORBA_Policy::_tao_encode(TAO_OutputCDR &out_cdr)
+{
+  return 0;
+}
+
+CORBA::Boolean 
+CORBA_Policy::_tao_decode(TAO_InputCDR &in_cdr)
+{
+  return 0;
+}
+
+
 // *************************************************************
 // CORBA_PolicyList
 // *************************************************************

@@ -95,15 +95,7 @@ TAO_GIOP_ServerRequest::object_key (void)
   return this->profile_.object_key ();
 }
 
-ACE_INLINE CORBA::Object_ptr
-TAO_GIOP_ServerRequest::objref (CORBA_Environment &ACE_TRY_ENV)
-{
-  return this->orb ()->key_to_object (this->object_key (),
-                                      0,
-                                      0,
-                                      1,
-                                      ACE_TRY_ENV);
-}
+
 
 ACE_INLINE IOP::ServiceContextList &
 TAO_GIOP_ServerRequest::service_info (void)
