@@ -1,3 +1,9 @@
+Thu Oct 09 18:43:14 1997    <irfan@TWOSTEP>
+
+	* ace/OS.cpp (invoke): Somehow there was a bug introduced in
+ 	  ACE_Thread_Adapter::invoke where the user entry point was being
+ 	  called twice!
+	  
 Thu Oct 09 17:54:31 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.12, released Thu Oct 09 17:54:31 1997.
