@@ -161,6 +161,7 @@ ACE_Token::ACE_Token_Queue::insert_entry (ACE_Token::ACE_Token_Queue_Entry &entr
 
 ACE_Token::ACE_Token (LPCTSTR name, void *any)
   : lock_ (name, any),
+    owner_ (ACE_OS::NULL_thread),
     in_use_ (0),
     waiters_ (0),
     nesting_level_ (0),
@@ -185,12 +186,7 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
 #if defined (DEBUGGING)
-  cerr << '(' << ACE_Thread::self () << ')'
-       << " acquire: owner_ = " << this->owner_
-       << ", owner_ addr = " << &this->owner_
-       << ", waiters_ = " << this->waiters_
-       << ", in_use_ = " << this->in_use_
-       << ", nesting level = " << this->nesting_level_ << endl;
+  this->dump ();
 #endif /* DEBUGGING */
 
   ACE_thread_t thr_id = ACE_Thread::self ();
@@ -214,6 +210,7 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
       this->nesting_level_++;
       return 0;
     }
+
   // Do a quick check for "polling" behavior.
   if (timeout != 0 && timeout->sec () == 0 && timeout->usec () == 0)
     {
@@ -258,30 +255,37 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
   int error = 0;
 
   // Sleep until we've got the token (ignore signals).
-  while (my_entry.wait (timeout, this->lock_) == -1)
+  do
     {
-      // Note, this should obey whatever thread-specific interrupt
-      // policy is currently in place...
-      if (errno == EINTR)
-        continue;
+      int result = my_entry.wait (timeout,
+                                  this->lock_);
+
+      if (result == -1)
+        {
+          // Note, this should obey whatever thread-specific interrupt
+          // policy is currently in place...
+          if (errno == EINTR)
+            continue;
 
 #if defined (DEBUGGING)
-      cerr << '(' << ACE_Thread::self () << ')'
-           << " acquire: "
-           << (errno == ETIME ? "timed out" : "error occurred")
-           << endl;
+          cerr << '(' << ACE_Thread::self () << ')'
+               << " acquire: "
+               << (errno == ETIME ? "timed out" : "error occurred")
+               << endl;
 #endif /* DEBUGGING */
 
-      // We come here if a timeout occurs or some serious
-      // ACE_Condition object error.
-      if (errno == ETIME)
-        timed_out = 1;
-      else
-        error = 1;
+          // We come here if a timeout occurs or some serious
+          // ACE_Condition object error.
+          if (errno == ETIME)
+            timed_out = 1;
+          else
+            error = 1;
 
-      // Stop the loop.
-      break;
+          // Stop the loop.
+          break;
+        }
     }
+  while (this->in_use_);
 
   // Do this always and irrespective of the result of wait().
   this->waiters_--;
@@ -396,7 +400,11 @@ ACE_Token::renew (int requeue_position,
 
   // Remember nesting level...
   int save_nesting_level_ = this->nesting_level_;
+
+  // Reset state for new owner.
+  this->owner_ = ACE_OS::NULL_thread;
   this->nesting_level_ = 0;
+  this->in_use_ = 0;
 
   // Wakeup waiter.
   this->wakeup_next_waiter ();
@@ -405,30 +413,37 @@ ACE_Token::renew (int requeue_position,
   int error = 0;
 
   // Sleep until we've got the token (ignore signals).
-  while (my_entry.wait (timeout, this->lock_) == -1)
+  do
     {
-      // Note, this should obey whatever thread-specific interrupt
-      // policy is currently in place...
-      if (errno == EINTR)
-        continue;
+      int result = my_entry.wait (timeout,
+                                  this->lock_);
+
+      if (result == -1)
+        {
+          // Note, this should obey whatever thread-specific interrupt
+          // policy is currently in place...
+          if (errno == EINTR)
+            continue;
 
 #if defined (DEBUGGING)
-      cerr << '(' << ACE_Thread::self () << ')'
-           << " renew: "
-           << (errno == ETIME ? "timed out" : "error occurred")
-           << endl;
+          cerr << '(' << ACE_Thread::self () << ')'
+               << " renew: "
+               << (errno == ETIME ? "timed out" : "error occurred")
+               << endl;
 #endif /* DEBUGGING */
 
-      // We come here if a timeout occurs or some serious
-      // ACE_Condition object error.
-      if (errno == ETIME)
-        timed_out = 1;
-      else
-        error = 1;
+          // We come here if a timeout occurs or some serious
+          // ACE_Condition object error.
+          if (errno == ETIME)
+            timed_out = 1;
+          else
+            error = 1;
 
-      // Stop the loop.
-      break;
+          // Stop the loop.
+          break;
+        }
     }
+  while (this->in_use_);
 
   // Do this always and irrespective of the result of wait().
   this->waiters_--;
@@ -500,8 +515,18 @@ ACE_Token::release (void)
   if (this->nesting_level_ > 0)
     --this->nesting_level_;
   else
-    // Regular release...
-    this->wakeup_next_waiter ();
+    {
+      //
+      // Regular release...
+      //
+
+      // Reset state for new owner.
+      this->owner_ = ACE_OS::NULL_thread;
+      this->in_use_ = 0;
+
+      // Wakeup waiter.
+      this->wakeup_next_waiter ();
+    }
 
   return 0;
 }
@@ -516,7 +541,7 @@ ACE_Token::wakeup_next_waiter (void)
       this->readers_.head_ == 0)
     {
       // No more waiters...
-      this->signal_all_threads_ = this->in_use_ = 0;
+      this->signal_all_threads_ = 0;
       return;
     }
 
