@@ -1,7 +1,13 @@
+Mon Jun 23 19:35:58 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ObjRefTemplate/ObjRefTemplate.mpc: Changed parent project
+	  named "valuetype_only" to "valuetype".  There doesn't seem to be
+	  a base project called "valuetype_only".
+
 Mon Jun 23 20:18:31 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	More fixes for compile warnings and errors:
-	
+
 	* orbsvcs/tests/Notify/lib/PushConsumer.h:
  	* orbsvcs/tests/Notify/lib/PushSupplier.h:
  	* orbsvcs/tests/Notify/lib/SequencePushConsumer.h:
@@ -10,20 +16,20 @@ Mon Jun 23 20:18:31 2003  Pradeep Gore  <pradeep@oomworks.com>
  	* orbsvcs/tests/Notify/lib/StructuredPushSupplier.h:
 
 	  Added missing export directive to class declaration.
-	
+
  	* orbsvcs/tests/Notify/lib/Supplier_T.cpp:
 	* orbsvcs/tests/Notify/lib/Consumer_T.cpp:
 
 	  Added missing ACE_TYPENAME.
-	
+
  	* orbsvcs/tests/Notify/lib/Task_Stats.cpp:
  	* orbsvcs/tests/Notify/lib/Task_Stats.h:
  	* orbsvcs/tests/Notify/lib/Task_Stats.inl:
-	  
+
 	  Changed all parameter types to ACE_UINT64.
-	
+
 	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp
-	
+
 	  Specify the correct scope for call to <activate> method.
 
 Mon Jun 23 19:04:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -34,21 +40,21 @@ Mon Jun 23 19:04:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Seq_Var_T.h:
         * tao/VarOut_T.h:
 	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
-	  
+
 	  Added typedefs of the return types of the .in(), .inout(),
 	  .out() and ._retn() operations for _vars. Also added
 	  typedefs of the stub type, stub _ptr type and stub _var type
 	  to the code generation for the corresponding skeleton class
-	  for interfaces. This closes [BUGID:1083]. Thanks to 
+	  for interfaces. This closes [BUGID:1083]. Thanks to
 	  Andrew Sutton <ansutton@sep.com>, Holger Krekel <krekel@merlinux.de>
 	  and Jody Hagins <jody@atdesk.com> for their suggestions.
 
 Mon Jun 23 16:53:58 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp: 
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp: 
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp: 
-	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp: 
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Sender.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
 
 	  Removed '<>' from explicit instantiation for template function
 	  to try to placate the Redhat 7.1 explicit instantiation build.
