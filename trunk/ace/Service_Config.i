@@ -7,11 +7,13 @@
 // constructor just handles simple initializations).
 
 ACE_INLINE int
-ACE_Service_Config::open (int argc, char *argv[])
+ACE_Service_Config::open (int argc,
+                          char *argv[], 
+                          LPCTSTR logger_key)
 {
   ACE_TRACE ("ACE_Service_Config::open");
   ACE_Service_Config::parse_args (argc, argv);
-  return ACE_Service_Config::open (argv[0]);
+  return ACE_Service_Config::open (argv[0], logger_key);
 }
 
 // Compare two service descriptors for equality.

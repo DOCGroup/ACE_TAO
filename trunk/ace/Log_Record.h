@@ -128,10 +128,11 @@ private:
   void round_up (void);
   // Round up to the alignment restrictions.
 
-  long length_;      
+  ACE_INT32 length_;      
   // Total length of the logging record in bytes.  This field *must*
-  // come first in order for various framing mechanisms to work
-  // correctly.
+  // come first in order for various IPC framing mechanisms to work
+  // correctly.  In addition, the field must be an ACE_INT32 in order
+  // to be passed portably across platforms.
 
   long type_;
   // Type of logging record.

@@ -1,4 +1,61 @@
+Thu Dec  4 00:26:46 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* netsvcs/lib/Client_Logging_Handler: Changed "rendezvous" to
+ 	  "logger."
+
+	* netsvcs/clients/Logger/indirect_logging.cpp,
+	  netsvcs/lib/Client_Logging_Handler: Changed DEFAULT_RENDEZVOUS
+ 	  to DEFAULT_LOGGER_KEY.  Thanks to Steven Coy for pointing out
+ 	  this inconsistency.
+
+	* ace/OS.h: Renamed ACE_LOGGER_KEY to ACE_DEFAULT_LOGGER_KEY to 
+	  make it consistent with other ACE_DEFAULT_* names.
+
+	* ace/OS.h: Changed the definition for ACE_LOGGER_KEY so that it
+ 	  defaults to "localhost:10015" on platforms that don't support
+ 	  ACE STREAM Pipes.  Thanks to Steven Coy for suggesting this.
+
+	* ace/Service_Config.cpp: Added the -k option to parse_args() so
+ 	  that the user can set the logger key.  Thanks to Steven Coy for
+ 	  suggesting this.
+
+	* ace/Service_Config: Added the logger_key as a parameter to the
+ 	  other open() method, as well.  Thanks to Steve Coy for being
+ 	  picky ;-).
+
+	* netsvcs/clients/Logger/direct_logging.cpp (main): Modified the
+ 	  code to use the new framing scheme.
+
+	* netsvcs/lib/Server_Logging_Handler_T.cpp
+ 	  (handle_logging_record): Updated the code to take advantage of
+ 	  our new framing scheme.
+
+	* netsvcs/lib/Client_Logging_Handler.cpp (send): We can be smarter
+ 	  now about sending the ACE_Log_Record across the network since
+ 	  the length field is now fixed and it's guaranteed to be in the
+ 	  first 4 bytes.  Thanks to Steve Coy for suggesting this.
+
+	* ace/Log_Record.h (ACE_Log_Record): Replaced the horribly
+ 	  non-portable "long length_" field with the "ACE_INT32 length_"
+ 	  field, which is nice because it is portable across platforms
+ 	  with different long-word sizes.
+
 Wed Dec  3 21:37:47 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* Added the new ACE-inheritance.ps and pdf files, which show the
+ 	  class structure of ACE.  Thanks to John Lindal
+ 	  <jafl@cheshire-cat.caltech.edu> for generating this.
+
+	* ace/Service_Config: Removed the static logger_key_ member and
+ 	  replaced it with a (defaulted) parameter to open().  This is
+ 	  more flexible.  Thanks to Steve Coy for the suggestion.
+
+	* ace/Service_Config.h: Addressed all the "@@" questions.
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp (main): Fixed a
+ 	  subtle bug in the "quit" logic.  Thanks to Michael Hoffman
+ 	  <Hoffman_Michael@mac-mailserver.atc.ll.mit.edu> for reporting
+ 	  this.
 
 	* netsvcs/lib/Server_Logging_Handler_T.cpp (handle_logging_record),
 	  netsvcs/lib/Client_Logging_Handler.cpp (send):

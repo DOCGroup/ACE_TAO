@@ -54,60 +54,67 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ho
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR> int
 ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::handle_logging_record (void)
 {
-  ACE_INT32 len;
+  ACE_INT32 length;
 
-  // Perform two recv's to emulate record-oriented semantics.  Note
-  // that this code is portable as long as ACE_UNIT32 is always 32
-  // bits on both the sender and receiver side.
+  // We need to use the ol' two-read trick here since TCP sockets
+  // don't support framing natively.  Note that the first call is just
+  // a "peek" -- we don't actually remove the data until the second
+  // call.  Note that this code is portable as long as ACE_UNIT32 is
+  // always 32 bits on both the sender and receiver side.
 
-  ssize_t n = this->peer ().recv ((void *) &len, sizeof len);
-
-  switch (n)
+  switch (this->peer ().recv ((void *) &length, 
+                              sizeof length,
+                              MSG_PEEK))
     {
+    default:
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR, "%p at host %s\n",
-			"server logger", this->host_name ()), -1);      
+                         "server logger", this->host_name ()), -1);      
       /* NOTREACHED */
     case 0:
       ACE_ERROR_RETURN ((LM_ERROR, "closing log daemon at host %s\n",
-			this->host_name ()), -1);
+                         this->host_name ()), -1);
       /* NOTREACHED */
-    case sizeof (ACE_INT32):
+    case sizeof length:
       {
 	ACE_Log_Record lp;
 	
+        length = ntohl (length);
+
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
 	u_long count = ++this->request_count_;
-	ACE_DEBUG ((LM_DEBUG, "request count = %d\n", count));
+	ACE_DEBUG ((LM_DEBUG,
+                    "request count = %d, length = %d\n", 
+                    count, length));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
-        len = ntohl (len);
-	n = this->peer ().recv_n ((void *) &lp, len);
-	if (n != len)
-	  ACE_ERROR_RETURN ((LM_ERROR, "len = %d, %p at host %s\n",
-			    n, "server logger", this->host_name ()), -1);
+        // Perform the actual <recv> this time.
+	ssize_t n = this->peer ().recv_n ((void *) &lp, length);
+
+	if (n != length)
+	  ACE_ERROR_RETURN ((LM_ERROR,
+                             "%d != %d, %p at host %s\n",
+                             n,
+                             length,
+                             "server logger",
+                             this->host_name ()), -1);
 	/* NOTREACHED */
 	  
 	lp.decode ();
 
 	if (lp.length () == n)
-          {
-            receiver().log_record(this->host_name (), lp);
-            // Send the log record to the log message receiver for
-            // processing.
-          }
+          // Send the log record to the log message receiver for
+          // processing.
+          receiver ().log_record (this->host_name (), lp);
 	else
 	  ACE_ERROR ((LM_ERROR, "error, lp.length = %d, n = %d\n",
-		     lp.length (), n));
-	break;
+                      lp.length (), n));
+        return n;
       }
-    default:
-      ACE_ERROR_RETURN ((LM_ERROR, "%p at host %s\n",
-			"server logger", this->host_name ()), -1);
-      /* NOTREACHED */
     }
 
-  return n;
+  /* NOTREACHED */
+  return -1;
 }
 
 // Hook called by Server_Logging_Acceptor when connection is
