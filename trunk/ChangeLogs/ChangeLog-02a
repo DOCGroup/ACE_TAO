@@ -1,52 +1,59 @@
+Wed Jan 05 09:53:04 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/SOCK_Stream.[hi] (sendv_n): added const to iov[]
+          argument declaration.  Thanks to Rob Ruff <rruff@scires.com>
+          for reporting that TAO's AV service failed to compile
+          with Sun CC 5.0 because of this.
+
 Tue Jan  4 15:06:41 2000  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in:
+        * configure.in:
 
-	  Added note that asks user to use stock ACE build procedure
-	  detailed in ACE-INSTALL.html in the event that the configure
-	  script fails.
+          Added note that asks user to use stock ACE build procedure
+          detailed in ACE-INSTALL.html in the event that the configure
+          script fails.
 
 Tue Jan  4 14:40:17 2000  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/OS.h:
+        * ace/OS.h:
 
-	  AIX defines "off64_t" as its 64 bit offset type.  Typedef
-	  ACE_LOFF_T as that type if ACE_HAS_LLSEEK or ACE_HAS_LSEEK64 is
-	  defined.  This should correct a problem that occurred during an
-	  AIX configure script run.  Thanks to Mike Winter for pointing
-	  this out.
+          AIX defines "off64_t" as its 64 bit offset type.  Typedef
+          ACE_LOFF_T as that type if ACE_HAS_LLSEEK or ACE_HAS_LSEEK64 is
+          defined.  This should correct a problem that occurred during an
+          AIX configure script run.  Thanks to Mike Winter for pointing
+          this out.
 
 Tue Jan  4 14:09:51 2000  Ossama Othman  <othman@cs.wustl.edu>
 
-	* configure.in:
+        * configure.in:
 
-	  Fixed test that checks if sched.h is needed for thread
-	  scheduling definitions.  This should correct problems discovered
-	  on RedHat 6.1 installations.  Thanks to 
+          Fixed test that checks if sched.h is needed for thread
+          scheduling definitions.  This should correct problems discovered
+          on RedHat 6.1 installations.  Thanks to
 
-	  Improved sys_nerr and sys_errlist[] tests by checking for
-	  external global variables in libraries.  This should correct a
-	  problem discovered in an AIX configure script run.  Thanks to
-	  Mike Winter for providing feedback.
+          Improved sys_nerr and sys_errlist[] tests by checking for
+          external global variables in libraries.  This should correct a
+          problem discovered in an AIX configure script run.  Thanks to
+          Mike Winter for providing feedback.
 
 Tue Jan  4 13:23:26 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Service_Config: Updated the documentation for the various
-	  open() methods and the constructors.  Thanks to Christopher
- 	  Kohlhoff <chris@kohlhoff.com> for reporting this.
+        * ace/Service_Config: Updated the documentation for the various
+          open() methods and the constructors.  Thanks to Christopher
+          Kohlhoff <chris@kohlhoff.com> for reporting this.
 
 Tue Jan  4 12:58:54 2000  Ossama Othman  <othman@cs.wustl.edu>
 
-	* Makefile (CONTROLLED_FILES):
+        * Makefile (CONTROLLED_FILES):
 
-	  man/man3/Makefile.am and man/html/Makefile.am previously weren't
-	  being labelled.  Thanks to David for pointing this out.
+          man/man3/Makefile.am and man/html/Makefile.am previously weren't
+          being labelled.  Thanks to David for pointing this out.
 
 Mon Jan  3 21:01:53 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Service_Configurator/IPC-tests: Updated the
-	  README file so it'll point to the right documentation!  Thanks
- 	  to John Buttitto for reporting this.
+        * examples/Service_Configurator/IPC-tests: Updated the
+          README file so it'll point to the right documentation!  Thanks
+          to John Buttitto for reporting this.
 
 Tue Jan 04 07:26:24 2000  David L. Levine  <levine@cs.wustl.edu>
 

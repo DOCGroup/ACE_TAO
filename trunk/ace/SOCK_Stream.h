@@ -92,7 +92,7 @@ public:
                   const ACE_Time_Value *timeout = 0) const;
   // Try to send exactly <len> bytes into <buf> from <handle>.
 
-  ssize_t sendv_n (iovec iov[],
+  ssize_t sendv_n (const iovec iov[],
                    size_t iovcnt,
                    const ACE_Time_Value *timeout = 0) const;
   // Send an <iovec> of size <iovcnt> to the connected socket.
