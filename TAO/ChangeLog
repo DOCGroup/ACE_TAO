@@ -1,3 +1,11 @@
+Sun Feb 15 08:09:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory.idl:
+ 	* orbsvcs/examples/CosEC/Factory/FactoryClient.dsp:
+	* orbsvcs/examples/CosEC/Factory/FactoryServer.dsp:
+
+	  Fixes for the Win32 builds.
+
 Sun Feb 15 00:20:28 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * docs/releasenotes/ftcorba_services.html:
