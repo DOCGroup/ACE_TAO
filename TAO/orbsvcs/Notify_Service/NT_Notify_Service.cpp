@@ -1,10 +1,11 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include /**/ "NT_Notify_Service.h"
+
 #if defined (ACE_WIN32)
 
 #include /**/ "Notify_Service.h"
-#include /**/ "NT_Notify_Service.h"
 #include "tao/ORB_Core.h"
 #include "ace/ARGV.h"
 
@@ -135,7 +136,7 @@ TAO_NT_Notify_Service::svc (void)
   ACE_TRY
     {
       report_status (SERVICE_RUNNING);
-      notify_service.run (ACE_TRY_ENV);
+      notify_service.run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
