@@ -129,7 +129,7 @@ TAO_Client_Factory::TAO_Client_Factory (void)
 TAO_Client_Factory::~TAO_Client_Factory (void)
 {}
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Thread_Strategy<TAO_OA_Connection_Handler>;
 template class ACE_Concurrency_Strategy<TAO_OA_Connection_Handler>;
 template class ACE_Reactive_Strategy<TAO_OA_Connection_Handler>;
@@ -153,5 +153,28 @@ template class TAO_SVC_TUPLE;
 template class ACE_Map_Manager<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Entry<int, TAO_SVC_TUPLE*>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Thread_Strategy<TAO_OA_Connection_Handler>;
+#pragma instantiate ACE_Concurrency_Strategy<TAO_OA_Connection_Handler>;
+#pragma instantiate ACE_Reactive_Strategy<TAO_OA_Connection_Handler>;
+#pragma instantiate ACE_Creation_Strategy<TAO_OA_Connection_Handler>;
+#pragma instantiate ACE_Scheduling_Strategy<TAO_OA_Connection_Handler>;
+#pragma instantiate ACE_Accept_Strategy<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR>;
 
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#pragma instantiate ACE_Creation_Strategy<TAO_Client_Connection_Handler>;
+#pragma instantiate ACE_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
+#pragma instantiate ACE_Concurrency_Strategy<TAO_Client_Connection_Handler>;
+#pragma instantiate ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_RW_MUTEX>;
+#pragma instantiate ACE_NOOP_Creation_Strategy<TAO_Client_Connection_Handler>;
+#pragma instantiate ACE_Strategy_Connector<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
+#pragma instantiate ACE_Connector<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR>;
+#define TAO_HASH_ADDR ACE_Hash_Addr<ACE_INET_Addr, TAO_Client_Connection_Handler>
+#pragma instantiate TAO_HASH_ADDR;
+#pragma instantiate ACE_Hash_Map_Manager<TAO_HASH_ADDR, TAO_Client_Connection_Handler*, ACE_SYNCH_RW_MUTEX>;
+#pragma instantiate ACE_Hash_Map_Entry<TAO_HASH_ADDR, TAO_Client_Connection_Handler*>;
+#define TAO_SVC_TUPLE ACE_Svc_Tuple<TAO_Client_Connection_Handler>
+#pragma instantiate TAO_SVC_TUPLE;
+#pragma instantiate ACE_Map_Manager<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
+#pragma instantiate ACE_Map_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
+#pragma instantiate ACE_Map_Entry<int, TAO_SVC_TUPLE*>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -155,7 +155,9 @@ CORBA_ORB_init (int &/* argc */,
 
   // Call various internal initialization routines.
   __TC_init_table ();
+  TAO_Marshal::initialize ();
   __TC_init_standard_exceptions (env);
+  
   if (env.exception () != 0)
     return 0;
 
