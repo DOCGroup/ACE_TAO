@@ -211,6 +211,7 @@ class TAO_Export TAO_Server_Connection_Handler : public TAO_IIOP_Handler_Base
 public:
   TAO_Server_Connection_Handler (ACE_Thread_Manager* t = 0);
   TAO_Server_Connection_Handler (TAO_ORB_Core *orb_core);
+  ~TAO_Server_Connection_Handler (void);
   // Constructor.
 
   virtual int open (void *);
