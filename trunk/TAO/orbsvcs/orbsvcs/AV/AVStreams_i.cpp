@@ -564,7 +564,9 @@ TAO_Client_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
-  ACE_NOTREACHED (return 1;)
+#if !defined (__KCC)
+  return 1;
+#endif /* __KCC */
 }
 
 
