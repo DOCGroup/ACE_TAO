@@ -59,10 +59,6 @@
 # define ACE_NOTSUP do { errno = ENOTSUP; return; } while (0)
 #endif /* ! ACE_HAS_VERBOSE_NOTSUP */
 
-// These includes are here to avoid circular dependencies.
-// Keep this at the bottom of the file.  It contains the main macros.
-#include "ace/OS_main.h"
-
 // ----------------------------------------------------------------
 
 # define ACE_TRACE_IMPL(X) ACE_Trace ____ (ACE_LIB_TEXT (X), __LINE__, ACE_LIB_TEXT (__FILE__))
@@ -98,6 +94,10 @@
 #  define ACE_OS_TRACE(X) ACE_TRACE_IMPL(X)
 #  include "ace/Trace.h"
 #endif /* ACE_OS_NTRACE */
+
+// These includes are here to avoid circular dependencies.
+// Keep this at the bottom of the file.  It contains the main macros.
+#include "ace/OS_main.h"
 
 #include /**/ "ace/post.h"
 
