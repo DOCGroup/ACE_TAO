@@ -5,17 +5,17 @@
 //
 // = LIBRARY
 //     TAO
-// 
+//
 // = FILENAME
 //     default_server.h
 //
 // = DESCRIPTION
-//     Build configuration file for the Inter-ORB Engine, and application 
+//     Build configuration file for the Inter-ORB Engine, and application
 //     level code using it via <corba.hh>
 //
 // = AUTHOR
 //     Copyright 1995 by Sun Microsystems, Inc.
-// 
+//
 //     TAO-specific changes by Chris Cleeland and Douglas C. Schmidt
 //
 // ============================================================================
@@ -68,7 +68,7 @@
 
 // Define if your processor stores words with the most significant
 // byte first (like Motorola and SPARC, unlike Intel and VAX).
-#if defined (i386) || defined (_M_IX86) || defined (vax)
+#if defined (i386) || defined (__i386) || defined (_M_IX86) || defined (vax)
 #else
 #  define TAO_WORDS_BIGENDIAN 1
 #endif
@@ -93,15 +93,15 @@
 # error: unsupported long size, must be updated for this platform!
 #endif /* ULONG_MAX */
 
-// The number of bytes in a void *.  
+// The number of bytes in a void *.
 #define SIZEOF_VOID_P SIZEOF_LONG
 
-// The number of bytes in a long long.  
+// The number of bytes in a long long.
 #if !defined (_WIN32) && !defined (VXWORKS)
 #define SIZEOF_LONG_LONG 8
 #endif /* !defined (_WIN32) && !defined (VXWORKS) */
 
-// The number of bytes in a long double.  
+// The number of bytes in a long double.
 #if defined (linux) || defined (ACE_NETBSD) || defined (__FreeBSD__)
 #  define SIZEOF_LONG_DOUBLE 12
 #elif defined (_WIN32) || defined (VXWORKS) || defined (M_UNIX)
@@ -110,16 +110,16 @@
 #  define SIZEOF_LONG_DOUBLE 16
 #endif /* linux */
 
-// The number of bytes in a bool.  
+// The number of bytes in a bool.
 #define SIZEOF_BOOL 0
 
 // Define as the return type of signal handlers (int or void).
 #define RETSIGTYPE void
 
-// Define if you don't have vprintf but do have _doprnt.  
+// Define if you don't have vprintf but do have _doprnt.
 /* #undef HAVE_DOPRNT */
 
-// Define if you have the vprintf function.  
+// Define if you have the vprintf function.
 #define HAVE_VPRINTF 1
 
 // Avoid namespace pollution that's common on older UNIXes...
