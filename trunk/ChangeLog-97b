@@ -1,3 +1,8 @@
+Thu Sep 25 20:33:09 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Timer_List_T.cpp (ACE_Timer_List_Iterator_T): Changed
+ 	  listParam to timer_list to keep programming style consistent...
+
 Thu Sep 25 17:06:42 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS.i - ACE_OS::cond_timedwait - HP's threads return

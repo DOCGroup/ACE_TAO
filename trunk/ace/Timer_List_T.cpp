@@ -9,11 +9,9 @@
 
 // Default Constructor
 
-// WARNING:  _Please_ do not change the name of the "listParam" argument
-//           to "list"!  Otherwise, we'll have name clashes with STL!
 template <class TYPE, class FUNCTOR, class LOCK>
-ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_List_Iterator_T (ACE_Timer_List_T<TYPE, FUNCTOR, LOCK> &listParam)
-  : timer_list_ (listParam)
+ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_List_Iterator_T (ACE_Timer_List_T<TYPE, FUNCTOR, LOCK> &timer_list)
+  : timer_list_ (timer_list)
 {
   this->first();
   // Nothing
