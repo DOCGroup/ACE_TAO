@@ -1,5 +1,9 @@
 Thu Feb  3 11:38:15 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Malloc_T.cpp (unbind): Removed the != 0 test since it was
+	  causing ambiguity problems for G++.  Thanks to David Levine for
+ 	  reporting this.
+	
 	* ace/Malloc_T.cpp (unbind): Make sure to update the prev_ pointer
 	  so that we don't end up with an improperly linked list.  Thanks
  	  to Sandro Doro <doro.s@flashnet.it> for reporting this.
