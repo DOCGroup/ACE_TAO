@@ -28,7 +28,7 @@
 
 // @todo move this to a windows config file
 // Add new macro ACE_LACKS_STDDEF_H
-#if defined (ACE_HAS_WINCE) && _WIN32_WCE < 400 
+#if defined (ACE_HAS_WINCE) && _WIN32_WCE < 400
 #  if !define (ACE_LACKS_STDDEF_H)
 #    define ACE_LACKS_STDDEF_H
 #    define ACE_LACKS_PTRDIFF_T
@@ -56,8 +56,8 @@ extern "C"
 #endif /* ACE_LACKS_NULL */
 
 /*
-  Integer constant expression of type size_t, the value of which is the offset 
-  in bytes to the structure member (member-designator), from the beginning of 
+  Integer constant expression of type size_t, the value of which is the offset
+  in bytes to the structure member (member-designator), from the beginning of
   its structure (type).
 */
 #if defined (ACE_LACKS_OFFSETOF)
@@ -74,11 +74,11 @@ extern "C"
 #endif /* ACE_LACKS_PTRDIFF_T */
 
 /*
-  Integer type whose range of values can represent distinct wide-character 
-  codes for all members of the largest character set specified among the 
-  locales supported by the compilation environment: the null character has 
-  the code value 0 and each member of the portable character set has a code 
-  value equal to its value when used as the lone character in an integer 
+  Integer type whose range of values can represent distinct wide-character
+  codes for all members of the largest character set specified among the
+  locales supported by the compilation environment: the null character has
+  the code value 0 and each member of the portable character set has a code
+  value equal to its value when used as the lone character in an integer
   character constant.
 */
 #if defined (ACE_LACKS_WCHAR_T)

@@ -50,7 +50,7 @@ extern "C" pthread_t pthread_self (void);
    }
 #endif /* !ACE_LACKS_PTHREAD_H */
 
-// @todo: need to reoganize to put includes at the top and the rest of the 
+// @todo: need to reoganize to put includes at the top and the rest of the
 // code at the bottom.  Also, move the classes out of this file.
 #if defined (ACE_HAS_PTHREADS)
 #  define ACE_SCHED_OTHER SCHED_OTHER

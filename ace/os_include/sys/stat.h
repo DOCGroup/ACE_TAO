@@ -4,7 +4,7 @@
 /**
  *  @file    os_stat.h
  *
- *  data returned by the stat() function 
+ *  data returned by the stat() function
  *
  *  $Id$
  *

@@ -1,3 +1,15 @@
+Fri May 16 18:26:11 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/os_include/aio.h:
+        * ace/os_include/iconv.h:
+        * ace/os_include/pthread.h:
+        * ace/os_include/signal.h:
+        * ace/os_include/stddef.h:
+        * ace/os_include/stdint.h:
+        * ace/os_include/ucontext.h:
+        * ace/os_include/sys/stat.h:
+          Nuked trailing whitespace.
+
 Fri May 16 18:03:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         Merged dre_osh_01 up to the main and rebranched to dre_osh_02

@@ -129,22 +129,22 @@ extern "C"
 // @todo pull in ACE class here
 // 64 bit will be a problem, but stub it out for now
 /*
-If an implementation provides integer types with width 64 that meet 
+If an implementation provides integer types with width 64 that meet
 these requirements, then the following types are required: int64_t uint64_t
 
 In particular, this will be the case if any of the following are true:
 
-The implementation supports the _POSIX_V6_ILP32_OFFBIG programming 
-environment and the application is being built in the 
-_POSIX_V6_ILP32_OFFBIG programming environment (see the Shell and 
+The implementation supports the _POSIX_V6_ILP32_OFFBIG programming
+environment and the application is being built in the
+_POSIX_V6_ILP32_OFFBIG programming environment (see the Shell and
 Utilities volume of IEEE Std 1003.1-2001, c99, Programming Environments).
 
-The implementation supports the _POSIX_V6_LP64_OFF64 programming 
-environment and the application is being built in the 
+The implementation supports the _POSIX_V6_LP64_OFF64 programming
+environment and the application is being built in the
 _POSIX_V6_LP64_OFF64 programming environment.
 
-The implementation supports the _POSIX_V6_LPBIG_OFFBIG programming 
-environment and the application is being built in the 
+The implementation supports the _POSIX_V6_LPBIG_OFFBIG programming
+environment and the application is being built in the
 _POSIX_V6_LPBIG_OFFBIG programming environment.
 */
 #if defined (ACE_LACKS_INT64_T)

@@ -2,8 +2,8 @@
 
 //=============================================================================
 /**
- *  @file    os_aio.h 
- *  
+ *  @file    os_aio.h
+ *
  *  asynchronous input and output (REALTIME)
  *
  *  $Id$
@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// Inclusion of the <aio.h> header may make visible symbols defined in 
+// Inclusion of the <aio.h> header may make visible symbols defined in
 // the headers <fcntl.h>, <signal.h>, <sys/types.h>, and <time.h>.
 
 #include "ace/os_include/signal.h" // for sigevent

@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/sys/types.h" 
+#include "ace/os_include/sys/types.h"
 
 #if !defined (ACE_LACKS_ICONV_H)
 # include /**/ <iconv.h>
