@@ -1,7 +1,13 @@
+Fri Apr 06 16:22:24 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/SString.h (ACE_Tokenizer): Updated documentation and added
+	  some examples.  Thanks to Jody Hagins <jody@atdesk.com> for
+	  providing the original example.
+
 Fri Apr  6 17:11:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Added the Single_Read test to the
-	  nightly build list.  
+	  nightly build list.
 
 Fri Apr  6 14:45:52 2001  Chad Elliott  <elliott_c@ociweb.com>
 

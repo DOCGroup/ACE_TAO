@@ -559,24 +559,92 @@ ACE_Export ostream &operator << (ostream &, const ACE_SString &);
 class ACE_Export ACE_Tokenizer
 {
 public:
-  /// <buffer> will be parsed.
+  /**
+   * \a buffer will be parsed.  Notice that ACE_Tokenizer will modify
+   * \a buffer if you use <code> delimiter_replace </code> or <code>
+   * preserve_designators </code> to do character substitution.
+   * \sa preserve_designators
+   * \sa preserve_designators
+   */
   ACE_Tokenizer (ACE_TCHAR *buffer);
 
-  /// <d> is a delimiter.  Returns 0 on success, -1 if there is no
-  /// memory left.
+  /**
+   * \a d is a delimiter.
+   * \return Returns 0 on success, -1 if there is no memory left.
+   *
+   * <B>Example:</B>
+   * \verbatim
+     ACE_Tokenizer tok ("William/Joseph/Hagins");
+     tok.delimiter ('/');
+     for (char *p = tok.next (); p; p = tok.next ())
+       cout << p << endl;
+    \endverbatim
+   *
+   * This will print out:
+   * \verbatim
+      William/Joseph/Hagins
+      Joseph/Hagins
+      Hagins \endverbatim
+   */
   int delimiter (ACE_TCHAR d);
 
   /**
-   * <d> is a delimiter and, when found, will be replaced by
-   * <replacement>.  Returns 0 on success, -1 if there is no memory
-   * left.
+   * \a d is a delimiter and, when found, will be replaced by
+   * \a replacement.
+   * \return 0 on success, -1 if there is no memory left.
+   *
+   * <B>Example:</B>
+   * \verbatim
+     ACE_Tokenizer tok ("William/Joseph/Hagins");
+     tok.delimiter_replace ('/', 0);
+     for (char *p = tok.next (); p; p = tok.next ())
+       cout << p << endl;
+    \endverbatim
+   *
+   * This will print out:
+   * \verbatim
+       William
+       Joseph
+       Hagins \endverbatim
    */
   int delimiter_replace (ACE_TCHAR d, ACE_TCHAR replacement);
 
   /**
-   * For instance, quotes, or '(' and ')'.  Returns 0 on success, -1
-   * if there is no memory left.  If <strip> == 1, then the preserve
+   * Extract string between a pair of designator characters.
+   * For instance, quotes, or '(' and ')'.
+   * \a start specifies the begin designator.
+   * \a stop specifies the end designator.
+   * \a strip If \a strip == 1, then the preserve
    * designators will be stripped from the tokens returned by next.
+   * \return 0 on success, -1 if there is no memory left.
+   *
+   * <B>Example with strip = 0:</B>
+   * \verbatim
+     ACE_Tokenizer tok ("William(Joseph)Hagins");
+     tok.preserve_designators ('(', ')', 0);
+     for (char *p = tok.next (); p; p = tok.next ())
+       cout << p << endl;
+    \endverbatim
+   *
+   * This will print out:
+   * \verbatim
+      William(Joseph)Hagins
+      (Joseph)Hagins
+      )Hagins \endverbatim
+   *
+   * <B>Example with strip = 1:</B>
+   * \verbatim
+     ACE_Tokenizer tok ("William(Joseph)Hagins");
+     tok.preserve_designators ('(', ')', 1);
+     for (char *p = tok.next (); p; p = tok.next ())
+       cout << p << endl;
+    \endverbatim
+   *
+   * This will print out:
+   * \verbatim
+      William
+      Joseph
+      Hagins \endverbatim
    */
   int preserve_designators (ACE_TCHAR start, ACE_TCHAR stop, int strip=1);
 
