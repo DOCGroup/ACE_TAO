@@ -58,5 +58,12 @@ TAO_RT_POA_Initializer::init_rt_default_policies (TAO_POA_Policy_Set &policies,
       policies.merge_policy (protocol.in (), ACE_TRY_ENV);
       ACE_CHECK;
     }
-}
 
+  CORBA::Policy_var thread_pool =
+    orb_core.get_cached_policy (TAO_CACHED_POLICY_THREADPOOL);
+  if (!CORBA::is_nil (thread_pool.in ()))
+    {
+      policies.merge_policy (thread_pool.in (), ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+}

@@ -152,6 +152,9 @@ public:
   /// Condition variable for the leader follower model.
   TAO_SYNCH_CONDITION* leader_follower_condition_variable_;
 
+  /// Lane for this thread.
+  void *lane_;
+
   /// The Reactor Holder that we should callback when destroying the
   /// cookie.
   TAO_Reactor_Registry *reactor_registry_;

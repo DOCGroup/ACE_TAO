@@ -578,18 +578,6 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
 
   PortableServer::POAManager_var safe_poa_manager = poa_manager;
 
-#if 0
-  TAO_POA_Policy_Set root_poa_policies (this->default_poa_policies ());
-
-  if (policies == 0)
-    {
-      // RootPOA policies defined in spec
-      root_poa_policies.implicit_activation (
-           PortableServer::IMPLICIT_ACTIVATION);
-
-      policies = &root_poa_policies;
-    }
-#else
   TAO_POA_Policy_Set policies (this->default_poa_policies ());
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -603,8 +591,6 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
   policies.merge_policy (&implicit_activation_policy,
                          ACE_TRY_ENV);
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-#endif /* 0 */
 
   // Construct a new POA
   TAO_POA::String root_poa_name (TAO_DEFAULT_ROOTPOA_NAME);
