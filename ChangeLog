@@ -1,3 +1,10 @@
+Mon Aug 23 08:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-hpux11.h:
+          Removed this file from the repo, use config-hpux-11.00.h instead,
+          the contents of this file refers to config-hpux11-xx.h files
+          which are not there, making this file unusable.
+
 Sun Aug 22 21:49:14 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/config-netbsd.h:
