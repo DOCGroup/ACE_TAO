@@ -85,7 +85,8 @@ BE_GlobalData::BE_GlobalData (void)
     void_type_ (0),
     ccmobject_ (0),
     gen_anyop_files_ (I_FALSE),
-    do_ccm_preproc_ (I_TRUE)
+    do_ccm_preproc_ (I_TRUE),
+    gen_skel_files_ (I_TRUE)
 {
 }
 
@@ -1024,6 +1025,18 @@ BE_GlobalData::do_ccm_preproc (idl_bool val)
   this->do_ccm_preproc_ = val;
 }
 
+idl_bool
+BE_GlobalData::gen_skel_files (void) const
+{
+  return this->gen_skel_files_;
+}
+
+void
+BE_GlobalData::gen_skel_files (idl_bool val)
+{
+  this->gen_skel_files_ = val;
+}
+
 ACE_CString
 BE_GlobalData::spawn_options (void)
 {
@@ -1519,6 +1532,11 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             // disable IDL3 to IDL2 preprocessing.
             be_global->do_ccm_preproc (I_FALSE);
+          }
+        else if (av[i][2] == 'S')
+          {
+            // disable skeleton file generation.
+            be_global->gen_skel_files (I_FALSE);
           }
         else
           {

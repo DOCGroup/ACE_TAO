@@ -253,6 +253,13 @@ BE_produce (void)
                   "server header for Root failed\n"));
       BE_abort ();
     }
+   
+  // If skeleton file generation is suppressed, we're done.  
+  if (!be_global->gen_skel_files ())
+    {
+        BE_cleanup ();
+        return;
+    }
 
   // (5) Generate server inline.
   ctx.reset ();
