@@ -16,45 +16,39 @@ Wed May 12 14:47:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.h:
 	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
 	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.h:
-	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
-	  Fixed several memory leaks on "dirty" shutdowns of the EC
-	  (i.e. shutdowns when there are some consumers or suppliers still 
-	  connected).
-	  Implemented new "delayed" shutdown operation on the
-	  Supplier_Sets.
-	  Handling shutdowns while the EC is still processing events may
-	  prove more tricky, I'm certain that there are some race
-	  conditions still lurking there.
+	* orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp: Fixed several
+ 	  memory leaks on "dirty" shutdowns of the EC (i.e. shutdowns when
+ 	  there are some consumers or suppliers still connected).
+  	  Implemented new "delayed" shutdown operation on the
+ 	  Supplier_Sets.  Handling shutdowns while the EC is still
+ 	  processing events may prove more tricky, I'm certain that there
+ 	  are some race conditions still lurking there.
 
-	* orbsvcs/tests/Event/Basic/Makefile:
-	  Fixed order of libraries.
+	* orbsvcs/tests/Event/Basic/Makefile: Fixed order of libraries.
 
-	* orbsvcs/tests/Event/lib/Driver.cpp:
-	  Reset all pointers to 0 after destruction
+	* orbsvcs/tests/Event/lib/Driver.cpp: Reset all pointers to 0
+ 	  after destruction.
 
 Wed May 12 13:58:59 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/ORB.{h,cpp}:
-	  Added the dummy function list_initial_services().
-	  For now it just throws CORBA::NO_IMPLEMENT.
+	* tao/ORB.{h,cpp}: Added the dummy function
+ 	  list_initial_services().  For now it just throws
+ 	  CORBA::NO_IMPLEMENT.
 
 Wed May 12 13:35:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/MProfile.h:
-	* tao/MProfile.cpp:
-	  Fixed warnings
+	* tao/MProfile.cpp: Fixed warnings
 
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
-	  I forgot to fix the TAO_Stub constructors in this file.
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp: I forgot to fix the
+ 	  TAO_Stub constructors in this file.
 
-	* orbsvcs/ImplRepo_Service/Makefile:
-	  Updated dependencies
+	* orbsvcs/ImplRepo_Service/Makefile: Updated dependencies.
 
 Wed May 12 12:14:41 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* COPYING: 
-
-	  Additional updates/clarifications suggested by Richard Stallman.
+	* COPYING: Additional updates/clarifications suggested by Richard
+ 	  Stallman.
 
 Wed May 12 10:38:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -75,74 +69,70 @@ Wed May 12 10:38:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/UIOP_Profile.cpp:
 	* tao/Invocation.cpp:
 	* tao/ORB.cpp:
-	* tao/Object.cpp:
-	  Fixed memory leaks in the managment of MProfiles.
-	  Use references to document and clarify the memory managment
-	  rules.
-	  Implemented the forward_to() methods on TAO_Profile instead of
-	  TAO_IIOP_Profile, they are required for all protocols.
+	* tao/Object.cpp: Fixed memory leaks in the managment of
+ 	  MProfiles.  Use references to document and clarify the memory
+ 	  managment rules.  Implemented the forward_to() methods on
+ 	  TAO_Profile instead of TAO_IIOP_Profile, they are required for
+ 	  all protocols.
 
 Wed May 12 10:18:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/releasenotes/TODO.html:
 	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	  Some servants where not beign properly deactivated, thanks to
-	  J. Russell Noseworthy <rnosewor@objectsciences.com> for pointing 
-	  this out.
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: Some servants where
+ 	  not beign properly deactivated, thanks to J. Russell Noseworthy
+ 	  <rnosewor@objectsciences.com> for pointing this out.
 
 Wed May 12 10:16:15 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* tao/corbafwd.h:
-	 
-	  Fixed the warnings on NT related to foward declaration of
-	  ServiceDetail and ServiceInformation.
+	* tao/corbafwd.h: Fixed the warnings on NT related to foward
+ 	  declaration of ServiceDetail and ServiceInformation.
 
-	* tao/ObjectIDList.h:
+	* tao/ObjectIDList.h: Fixed an error in the declaration of the CDR
+ 	  operators.
 
-	  Fixed an error in the declaration of the CDR operators.
-
-	* tao/Service.h:
-
-	  Fixed an error where TAO_Unbounded_Sequence<ServiceDetail>
-	  should have been TAO_Unbounded_Sequence<CORBA_ServiceDetail>
+	* tao/Service.h: Fixed an error where
+ 	  TAO_Unbounded_Sequence<ServiceDetail> should have been
+ 	  TAO_Unbounded_Sequence<CORBA_ServiceDetail>
 
 Wed May 12 08:56:40 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* tao/corbafwd.h
 	  tao/ORB.h
-	  tao/ObjectIDList.{h, i, cpp}:
-
-	  Fixed a number of compile errors with the newly added
-	  ObjectIdList class. We now use the same trick that we use for
-	  classes defined in the CORBA namespace. Thus, we define the
-	  ObjectIdList class as CORBA_ORB_ObjectIdList and then typedef it
-	  inside class CORBA_ORB. We needed some forward declarations in
-	  corbafwd.h. 
+	  tao/ObjectIDList.{h, i, cpp}: Fixed a number of compile errors
+ 	  with the newly added ObjectIdList class. We now use the same
+ 	  trick that we use for classes defined in the CORBA
+ 	  namespace. Thus, we define the ObjectIdList class as
+ 	  CORBA_ORB_ObjectIdList and then typedef it inside class
+ 	  CORBA_ORB. We needed some forward declarations in corbafwd.h.
 
 	  Removed some possibly unnecessary explicit template
-	  instantiation from ObjectIDList.cpp. We were trying to
-	  instantiate a TAO_Object_Field_T<CORBA::ORB>.
+ 	  instantiation from ObjectIDList.cpp. We were trying to
+ 	  instantiate a TAO_Object_Field_T<CORBA::ORB>.
 
 Wed May 12 02:38:52 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	  Code review changes and additions for the CosEC Factory.
 	  Added the following files:
+
 	* orbsvcs/examples/CosEC/Factory/main.cpp
+
 	* orbsvcs/examples/CosEC/Factory/FactoryDriver.{h,cpp}
 	  modified the following:
+
 	* orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
 	  completed the test code for the factory.
+
 	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.{h,cpp}:
+
 	* orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.{h,cpp}:
-	  code review corrections.
+ 	  code review corrections.
 
 Tue May 11 22:39:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
-	  Added Bala's new files to these projects.
+	* tao/TAO_Static.dsp: Added Bala's new files to these projects.
 
 Tue May 11 21:46:52 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
@@ -162,26 +152,23 @@ Tue May 11 21:46:52 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 Tue May 11 21:46:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DomainC.h:
-	  Removed the generated typecode declarations - they're
-	  unnecessary and cause warnings on VxWorks.
+	* tao/DomainC.h: Removed the generated typecode declarations -
+ 	  they're unnecessary and cause warnings on VxWorks.
 
 Tue May 11 20:40:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Environment.cpp:
-	  Added a check for NULL pointer before dereferencing the
-	  exception (to increment the refcount) in the copy
-	  constructor. This was causing all the DII param_tests to
-	  fail.
+	* tao/Environment.cpp: Added a check for NULL pointer before
+ 	  dereferencing the exception (to increment the refcount) in the
+ 	  copy constructor. This was causing all the DII param_tests to
+ 	  fail.
 
-	* tao/Any.cpp:
-	  Removed the branch from value() that returns (void *)cdr_.
-	  After checking through all the code in the TAO directory,
-	  there seems to be nothing that this endangers. Also ran the
-	  DII param_tests before and after committing the change -
-	  the results were the same. So now the functionality is
-	  cleanly divided: Any::value() for the void* and
-	  Any::_tao_get_cdr() for the cdr_.
+	* tao/Any.cpp: Removed the branch from value() that returns (void
+ 	  *)cdr_.  After checking through all the code in the TAO
+ 	  directory, there seems to be nothing that this endangers. Also
+ 	  ran the DII param_tests before and after committing the change -
+ 	  the results were the same. So now the functionality is cleanly
+ 	  divided: Any::value() for the void* and Any::_tao_get_cdr() for
+ 	  the cdr_.
 
 Tue May 11 18:06:40 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -217,16 +204,15 @@ Tue May 11 17:19:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/tests/Event/lib/ECTest.dsp:
 	* orbsvcs/tests/Event/lib/ECTest.dsw:
 	* orbsvcs/tests/Event/lib/Supplier.h:
-	* orbsvcs/tests/Event/lib/ectest_export.h:
-	  Added project files, workspaces and export macros to compile
-	  this tests on NT.
+	* orbsvcs/tests/Event/lib/ectest_export.h: Added project files,
+ 	  workspaces and export macros to compile this tests on NT.
 
 Tue May 11 16:46:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Object.{h,cpp}:
-	  Added the second form of create_request(). It has two
-	  additional args - an exception list and a context list,
-	  which are both unused in this implementation.
+	* tao/Object.{h,cpp}: Added the second form of
+ 	  create_request(). It has two additional args - an exception list
+ 	  and a context list, which are both unused in this
+ 	  implementation.
 
 Tue May 11 16:03:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -250,18 +236,17 @@ Tue May 11 16:03:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 Tue May 11 14:34:56 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/{client,server}.cpp:
-          removed unnecessary #includes of "tests/test_config.h".
+ 	  removed unnecessary #includes of "tests/test_config.h".
 
-        * performance-tests/Cubit/TAO/IDL_Cubit/run_tests.pl: fixed
-          check for existing files to work on NT, by using full path.
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_tests.pl: fixed check
+ 	  for existing files to work on NT, by using full path.
 
 Tue May 11 14:17:54 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-        * tao/DomainS.cpp:
-          Added some ACE_UNUSED_ARGs for generated code that has
-          been commented out, and a marshaling exception because
-          this method (ConstructionPolicy::make_domain_manager) is
-          not yet implemented.
+        * tao/DomainS.cpp: Added some ACE_UNUSED_ARGs for generated code
+ 	  that has been commented out, and a marshaling exception because
+ 	  this method (ConstructionPolicy::make_domain_manager) is not yet
+ 	  implemented.
 
 Tue May 11 13:51:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -282,10 +267,10 @@ Tue May 11 13:51:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * orbsvcs/tests/Event/lib/Consumer.cpp:
         * orbsvcs/tests/Event/lib/Driver.cpp:
         * orbsvcs/tests/Event/lib/Driver.h:
-        * orbsvcs/tests/Event/lib/Supplier.cpp:
-          Completed the implementation of the destroy() method in the new
-          Event Channel. It was not invoking the disconnect_push_XXX()
-          operations on its list of suppliers and consumers.
+        * orbsvcs/tests/Event/lib/Supplier.cpp: Completed the
+ 	  implementation of the destroy() method in the new Event
+ 	  Channel. It was not invoking the disconnect_push_XXX()
+ 	  operations on its list of suppliers and consumers.
 
 Tue May 11 13:45:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -294,27 +279,25 @@ Tue May 11 13:45:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
         * tao/Typecode_Constants.cpp:
         * tao/TAO.dsp:
         * tao/TAO_Staatic.dsp:
-        * tao/Makefile:
-          Added WrongTransaction exception. It applies to Requests
-          so it is not part of minimum CORBA. Also, while the spec
-          does not say so explicitly, it seems to be thrown only
-          on the client side, so only that part of the generated
-          code is here. If this turns out not to be the case,
-          server side code will have to be added.
+        * tao/Makefile: Added WrongTransaction exception. It applies to
+ 	  Requests so it is not part of minimum CORBA. Also, while the
+ 	  spec does not say so explicitly, it seems to be thrown only on
+ 	  the client side, so only that part of the generated code is
+ 	  here. If this turns out not to be the case, server side code
+ 	  will have to be added.
 
 Tue May 11 13:25:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/{server.dsp,client.dsp}:
-          fixed path for static release builds.  Actually, Nanbor fixed it.
+ 	  fixed path for static release builds.  Actually, Nanbor fixed
+ 	  it.
 
 Tue May 11 12:30:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/AST_Expression.cpp:
-        * TAO_IDL/include/AST_Expression.h:
-          Backed out the change I made yesterday. Not an
-          important change by itself, but one day we'll have
-          to overhaul all the basic type stuff in the IDL
-          compiler.
+        * TAO_IDL/include/AST_Expression.h: Backed out the change I made
+ 	  yesterday. Not an important change by itself, but one day we'll
+ 	  have to overhaul all the basic type stuff in the IDL compiler.
 
 Tue May 11 11:03:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
