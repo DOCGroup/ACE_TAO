@@ -348,7 +348,7 @@ TAO_AttributeDef_i::make_description (CORBA::Environment &ACE_TRY_ENV)
                                key);
 
       put_ed.type = impl.type (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (ad);
 
       put_ed_seq[i] = put_ed;
     }
