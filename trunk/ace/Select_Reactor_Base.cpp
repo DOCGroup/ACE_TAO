@@ -524,11 +524,11 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
                       ACE_Notification_Buffer[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
                       -1);
 
-      if (this->alloc_set_.enqueue_head (temp) == -1)
+      if (this->alloc_queue_.enqueue_head (temp) == -1)
         return -1;
 
       for (size_t i = 0; i < ACE_REACTOR_NOTIFICATION_ARRAY_SIZE; i++)
-        if (free_set_.enqueue_head (temp + i) == -1)
+        if (free_queue_.enqueue_head (temp + i) == -1)
           return -1;
 
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
@@ -560,14 +560,17 @@ ACE_Select_Reactor_Notify::close (void)
   // Free up the dynamically allocated resources.
   ACE_Notification_Buffer **b;
 
-  for (ACE_Unbounded_Queue_Iterator<ACE_Notification_Buffer *> alloc_iter (this->alloc_set_);
+  for (ACE_Unbounded_Queue_Iterator<ACE_Notification_Buffer *> alloc_iter (this->alloc_queue_);
        alloc_iter.next (b) != 0;
        alloc_iter.advance ())
-    delete [] *b;
+    {
+      delete [] *b;
+      *b = 0;
+    }
 
-  this->alloc_set_.reset ();
-  this->notify_set_.reset ();
-  this->free_set_.reset ();
+  this->alloc_queue_.reset ();
+  this->notify_queue_.reset ();
+  this->free_queue_.reset ();
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
   return this->notification_pipe_.close ();
@@ -593,12 +596,12 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *eh,
       ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->notify_queue_lock_, -1);
 
       // No pending notifications.
-      if (this->notify_set_.is_empty ()) 
+      if (this->notify_queue_.is_empty ()) 
         notification_required = 1;
 
       ACE_Notification_Buffer *temp = 0;
 
-      if (free_set_.dequeue_head (temp) == -1) 
+      if (free_queue_.dequeue_head (temp) == -1) 
         {
           // Grow the queue of available buffers.
           ACE_Notification_Buffer *temp1;
@@ -607,7 +610,7 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *eh,
                           ACE_Notification_Buffer[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
                           -1);
 
-          if (this->alloc_set_.enqueue_head (temp1) == -1)
+          if (this->alloc_queue_.enqueue_head (temp1) == -1)
             return -1;
 
           // Start at 1 and enqueue only
@@ -616,7 +619,7 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *eh,
           for (size_t i = 1; 
                i < ACE_REACTOR_NOTIFICATION_ARRAY_SIZE; 
                i++)
-            this->free_set_.enqueue_head (temp1 + i);
+            this->free_queue_.enqueue_head (temp1 + i);
           
           temp = temp1;
         }
@@ -624,7 +627,7 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *eh,
       ACE_ASSERT (temp != 0);
       *temp = buffer;
 
-      if (notify_set_.enqueue_tail (temp) == -1)
+      if (notify_queue_.enqueue_tail (temp) == -1)
         return -1;
 
       if (notification_required)
@@ -709,7 +712,7 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
         }
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-      // Dispatch all messages that are in the <notify_set_>.
+      // Dispatch all messages that are in the <notify_queue_>.
       for (;;)
         {
           {
@@ -719,15 +722,15 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
 
             ACE_Notification_Buffer *temp;
 
-            if (notify_set_.is_empty ())
+            if (notify_queue_.is_empty ())
               break;
-            else if (notify_set_.dequeue_head (temp) == -1)
+            else if (notify_queue_.dequeue_head (temp) == -1)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ASYS_TEXT ("%p\n"),
                                  ASYS_TEXT ("dequeue_head")),
                                 -1);
             buffer = *temp;
-            if (free_set_.enqueue_head (temp) == -1)
+            if (free_queue_.enqueue_head (temp) == -1)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ASYS_TEXT ("%p\n"),
                                  ASYS_TEXT ("enqueue_head")),

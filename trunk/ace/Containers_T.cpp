@@ -435,11 +435,10 @@ ACE_Unbounded_Queue<T>::copy_nodes (const ACE_Unbounded_Queue<T> &us)
 template <class T> void
 ACE_Unbounded_Queue<T>::delete_nodes (void)
 {
-  ACE_Node<T> *curr = this->head_->next_;
-
-  // Keep looking until we've hit the dummy node.
-
-  while (curr != this->head_)
+  for (ACE_Node<T> *curr = this->head_->next_;
+       // Keep looking until we've hit the dummy node.
+       curr != this->head_;
+       )
     {
       ACE_Node<T> *temp = curr;
       curr = curr->next_;
@@ -449,6 +448,7 @@ ACE_Unbounded_Queue<T>::delete_nodes (void)
                              ACE_Node,
                              <T>);
       this->cur_size_--;
+      ACE_ASSERT (this->cur_size_ >= 0);
     }
 
   // Reset the list to be a circular list with just a dummy node.
