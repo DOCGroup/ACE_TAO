@@ -29,27 +29,30 @@ ACE_Process::ACE_Process (void)
 #endif /* ACE_WIN32 */
 {
 #if defined (ACE_WIN32)
-  ACE_OS::memset ((void *) &startup_info_, 0, sizeof startup_info_);
-  ACE_OS::memset ((void *) &process_info_, 0, sizeof process_info_);
-  startup_info_.cb = sizeof startup_info_;
+  ACE_OS::memset ((void *) &this->startup_info_, 
+		  0, sizeof this->startup_info_);
+  ACE_OS::memset ((void *) &this->process_info_, 
+		  0, sizeof this->process_info_);
+  this->startup_info_.cb = sizeof this->startup_info_;
 #endif /* ACE_WIN32 */
+  this->cwd_[0] = '\0';
 }
 
 ACE_Process::~ACE_Process (void)
 {
 #if defined (ACE_WIN32)
-  // Just in case start wasn't called.
-  if (set_handles_called_)
+  // Just in case <start> wasn't called.
+  if (this->set_handles_called_)
     {
-      ::CloseHandle (startup_info_.hStdInput);
-      ::CloseHandle (startup_info_.hStdOutput);
-      ::CloseHandle (startup_info_.hStdOutput);
-      set_handles_called_ = 0;
+      ::CloseHandle (this->startup_info_.hStdInput);
+      ::CloseHandle (this->startup_info_.hStdOutput);
+      ::CloseHandle (this->startup_info_.hStdOutput);
+      this->set_handles_called_ = 0;
     }
 
   // Free resources allocated in kernel.
-  ACE_OS::close (process_info_.hThread);
-  ACE_OS::close (process_info_.hProcess);
+  ACE_OS::close (this->process_info_.hThread);
+  ACE_OS::close (this->process_info_.hProcess);
 
 #endif /* ACE_WIN32 */
 }
@@ -60,10 +63,10 @@ ACE_Process::set_handles (ACE_HANDLE std_in,
 			  ACE_HANDLE std_err)
 {
 #if defined (ACE_WIN32)
-  set_handles_called_ = 1;
+  this->set_handles_called_ = 1;
 
   // Tell the new process to use our std handles.
-  startup_info_.dwFlags = STARTF_USESTDHANDLES;
+  this->startup_info_.dwFlags = STARTF_USESTDHANDLES;
 
   if (std_in == ACE_INVALID_HANDLE)
     std_in = ACE_STDIN;
@@ -75,7 +78,7 @@ ACE_Process::set_handles (ACE_HANDLE std_in,
   if (!::DuplicateHandle (::GetCurrentProcess(),
 			  std_in,
 			  ::GetCurrentProcess(),
-			  &startup_info_.hStdInput,
+			  &this->startup_info_.hStdInput,
 			  NULL,
 			  TRUE,
 			  DUPLICATE_SAME_ACCESS))
@@ -84,7 +87,7 @@ ACE_Process::set_handles (ACE_HANDLE std_in,
   if (!::DuplicateHandle (::GetCurrentProcess(),
 			  std_out,
 			  ::GetCurrentProcess(),
-			  &startup_info_.hStdOutput,
+			  &this->startup_info_.hStdOutput,
 			  NULL,
 			  TRUE,
 			  DUPLICATE_SAME_ACCESS))
@@ -93,22 +96,31 @@ ACE_Process::set_handles (ACE_HANDLE std_in,
   if (!::DuplicateHandle (::GetCurrentProcess(),
 			  std_err,
 			  ::GetCurrentProcess(),
-			  &startup_info_.hStdError,
+			  &this->startup_info_.hStdError,
 			  NULL,
 			  TRUE,
 			  DUPLICATE_SAME_ACCESS))
     return -1;
 #else /* ACE_WIN32 */
-  stdin_ = std_in;
-  stdout_ = std_out;
-  stderr_ = std_err;
+  this->stdin_ = std_in;
+  this->stdout_ = std_out;
+  this->stderr_ = std_err;
 #endif /* ACE_WIN32 */
 
   return 0; // Success.
 }
 
 int
-ACE_Process::start (char *argv[])
+ACE_Process::set_cwd (const TCHAR *cwd)
+{
+  ACE_OS::strncpy (this->cwd_, cwd, MAXPATHLEN);
+  // This is for paranoia...
+  this->cwd_[MAXPATHLEN] = '\0';
+  return 0;
+}
+
+int
+ACE_Process::start (char *argv[], char *envp[])
 {
 #if defined (ACE_WIN32)
   ACE_ARGV argv_buf (argv);
@@ -122,20 +134,20 @@ ACE_Process::start (char *argv[])
     ::CreateProcess (NULL,
 		     buf,
 		     NULL, // No process attributes.
-		     NULL,  // No thread attributes.
+		     NULL, // No thread attributes.
 		     TRUE, // Allow handle inheritance.
 		     NULL, // CREATE_NEW_CONSOLE, // Create a new console window.
-		     NULL, // No environment.
-		     NULL, // No current directory.
-		     &startup_info_,
-		     &process_info_);
+		     envp, // Environment.
+		     this->cwd_, // Current directory to start in.
+		     &this->startup_info_,
+		     &this->process_info_);
 
   if (set_handles_called_)
     {
-      ::CloseHandle (startup_info_.hStdInput);
-      ::CloseHandle (startup_info_.hStdOutput);
-      ::CloseHandle (startup_info_.hStdOutput);
-      set_handles_called_ = 0;
+      ::CloseHandle (this->startup_info_.hStdInput);
+      ::CloseHandle (this->startup_info_.hStdOutput);
+      ::CloseHandle (this->startup_info_.hStdOutput);
+      this->set_handles_called_ = 0;
     }
 
   if (fork_result) // If success.
@@ -163,8 +175,19 @@ ACE_Process::start (char *argv[])
 	       && ACE_OS::dup2 (stderr_, ACE_STDERR) == -1)
 	return -1;
 
+      // If we must, set the working directory for the child process.
+      if (this->cwd_[0] != '\0')
+	::chdir (cwd_);
+
       // Child process executes the command.
-      if (ACE_OS::execv (argv[0], argv) == -1)
+      int result;
+      
+      if (envp == 0)
+	result = ACE_OS::execv (argv[0], argv);
+      else
+	result = ACE_OS::execv (argv[0], argv, envp);
+
+      if (result == -1)
 	// If the execv fails, this child needs to exit.
 	ACE_OS::exit (errno);
     default:
@@ -187,10 +210,15 @@ ACE_Process::ACE_Process (char *argv[],
 #endif /* ACE_WIN32 */
 {
 #if defined (ACE_WIN32)
-  ACE_OS::memset ((void *) &startup_info_, 0, sizeof startup_info_);
-  ACE_OS::memset ((void *) &process_info_, 0, sizeof process_info_);
-  startup_info_.cb = sizeof startup_info_;
+  ACE_OS::memset ((void *) &this->startup_info_, 
+		  0, 
+		  sizeof this->startup_info_);
+  ACE_OS::memset ((void *) &this->process_info_, 
+		  0, 
+		  sizeof this->process_info_);
+  this->startup_info_.cb = sizeof this->startup_info_;
 #endif /* ACE_WIN32 */
+  this->cwd_[0] = '\0';
 
   if (this->set_handles (std_in, std_out, std_err) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "set_handles"));

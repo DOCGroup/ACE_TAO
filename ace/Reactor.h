@@ -600,8 +600,8 @@ protected:
   // held by the public methods that call down to them.
 
   virtual int register_handler_i (ACE_HANDLE handle, 
-				 ACE_Event_Handler *eh, 
-				 ACE_Reactor_Mask mask); 
+				  ACE_Event_Handler *eh, 
+				  ACE_Reactor_Mask mask); 
   // Do the work of actually binding the <handle> and <eh> with the
   // <mask>.
 

@@ -19,6 +19,11 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Config)
 
+#if defined (ACE_MT_SAFE)
+// Lock the creation of the Singletons.
+static ACE_Thread_Mutex ace_service_config_lock_;
+#endif /* ACE_MT_SAFE */
+
 void
 ACE_Service_Config::dump (void) const
 {
@@ -126,12 +131,19 @@ ACE_Allocator *
 ACE_Service_Config::alloc (void)
 {
   ACE_TRACE ("ACE_Service_Config::allocator");
+
   if (ACE_Service_Config::allocator_ == 0)
     {
-      ACE_NEW_RETURN (ACE_Service_Config::allocator_,
-		      ACE_New_Allocator,
-		      0);
-      ACE_Service_Config::delete_allocator_ = 1;
+      // Perform Double-Checked Locking Optimization.
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
+
+      if (ACE_Service_Config::allocator_ == 0)
+	{
+	  ACE_NEW_RETURN (ACE_Service_Config::allocator_,
+			  ACE_New_Allocator,
+			  0);
+	  ACE_Service_Config::delete_allocator_ = 1;
+	}
     }
   return ACE_Service_Config::allocator_;
 }
@@ -140,7 +152,7 @@ ACE_Allocator *
 ACE_Service_Config::alloc (ACE_Allocator *r)
 {
   ACE_TRACE ("ACE_Service_Config::allocator");
-
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
   ACE_Allocator *t = ACE_Service_Config::allocator_;
 
   // We can't safely delete it since we don't know who created it!
@@ -154,10 +166,17 @@ ACE_Reactor *
 ACE_Service_Config::reactor (void)
 {
   ACE_TRACE ("ACE_Service_Config::reactor");
+
   if (ACE_Service_Config::reactor_ == 0)
     {
-      ACE_NEW_RETURN (ACE_Service_Config::reactor_, ACE_Reactor, 0);
-      ACE_Service_Config::delete_reactor_ = 1;
+      // Perform Double-Checked Locking Optimization.
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
+
+      if (ACE_Service_Config::reactor_ == 0)
+	{
+	  ACE_NEW_RETURN (ACE_Service_Config::reactor_, ACE_Reactor, 0);
+	  ACE_Service_Config::delete_reactor_ = 1;
+	}
     }
   return ACE_Service_Config::reactor_;
 }
@@ -167,6 +186,7 @@ ACE_Service_Config::reactor (ACE_Reactor *r)
 {
   ACE_TRACE ("ACE_Service_Config::reactor");
 
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
   ACE_Reactor *t = ACE_Service_Config::reactor_;
   // We can't safely delete it since we don't know who created it!
   ACE_Service_Config::delete_reactor_ = 0;
@@ -179,10 +199,17 @@ ACE_Proactor *
 ACE_Service_Config::proactor (size_t threads)
 {
   ACE_TRACE ("ACE_Service_Config::proactor");
+
   if (ACE_Service_Config::proactor_ == 0)
     {
-      ACE_NEW_RETURN (ACE_Service_Config::proactor_, ACE_Proactor (threads), 0);
-      ACE_Service_Config::delete_proactor_ = 1;
+      // Perform Double-Checked Locking Optimization.
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
+
+      if (ACE_Service_Config::proactor_ == 0)
+	{
+	  ACE_NEW_RETURN (ACE_Service_Config::proactor_, ACE_Proactor (threads), 0);
+	  ACE_Service_Config::delete_proactor_ = 1;
+	}
     }
   return ACE_Service_Config::proactor_;
 }
@@ -191,6 +218,8 @@ ACE_Proactor *
 ACE_Service_Config::proactor (ACE_Proactor *r)
 {
   ACE_TRACE ("ACE_Service_Config::proactor");
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
 
   ACE_Proactor *t = ACE_Service_Config::proactor_;
   // We can't safely delete it since we don't know who created it!
@@ -204,10 +233,17 @@ ACE_ReactorEx *
 ACE_Service_Config::reactorEx (void)
 {
   ACE_TRACE ("ACE_Service_Config::reactorEx");
+
   if (ACE_Service_Config::reactorEx_ == 0)
     {
-      ACE_NEW_RETURN (ACE_Service_Config::reactorEx_, ACE_ReactorEx, 0);
-      ACE_Service_Config::delete_reactorEx_ = 1;
+      // Perform Double-Checked Locking Optimization.
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
+
+      if (ACE_Service_Config::reactorEx_ == 0)
+	{
+	  ACE_NEW_RETURN (ACE_Service_Config::reactorEx_, ACE_ReactorEx, 0);
+	  ACE_Service_Config::delete_reactorEx_ = 1;
+	}
     }
 
   return ACE_Service_Config::reactorEx_;
@@ -218,6 +254,7 @@ ACE_Service_Config::reactorEx (ACE_ReactorEx *r)
 {
   ACE_TRACE ("ACE_Service_Config::reactorEx");
 
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
   ACE_ReactorEx *t = ACE_Service_Config::reactorEx_;
   // We can't safely delete it since we don't know who created it!
   ACE_Service_Config::delete_reactorEx_ = 0;
@@ -233,10 +270,15 @@ ACE_Service_Config::svc_rep (void)
 
   if (ACE_Service_Config::svc_rep_ == 0)
     {
-      ACE_NEW_RETURN (ACE_Service_Config::svc_rep_, ACE_Service_Repository, 0);
-      ACE_Service_Config::delete_svc_rep_ = 1;
-    }
+      // Perform Double-Checked Locking Optimization.
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
 
+      if (ACE_Service_Config::svc_rep_ == 0)
+	{
+	  ACE_NEW_RETURN (ACE_Service_Config::svc_rep_, ACE_Service_Repository, 0);
+	  ACE_Service_Config::delete_svc_rep_ = 1;
+	}
+    }
   return ACE_Service_Config::svc_rep_;
 }
 
@@ -244,6 +286,7 @@ ACE_Service_Repository *
 ACE_Service_Config::svc_rep (ACE_Service_Repository *s)
 {
   ACE_TRACE ("ACE_Service_Config::svc_rep");
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
 
   ACE_Service_Repository *t = ACE_Service_Config::svc_rep_;
   // We can't safely delete it since we don't know who created it!
@@ -260,8 +303,14 @@ ACE_Service_Config::thr_mgr (void)
 
   if (ACE_Service_Config::thr_mgr_ == 0)
     {
-      ACE_NEW_RETURN (ACE_Service_Config::thr_mgr_, ACE_Thread_Manager, 0);
-      ACE_Service_Config::delete_thr_mgr_ = 1;
+      // Perform Double-Checked Locking Optimization.
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
+
+      if (ACE_Service_Config::thr_mgr_ == 0)
+	{
+	  ACE_NEW_RETURN (ACE_Service_Config::thr_mgr_, ACE_Thread_Manager, 0);
+	  ACE_Service_Config::delete_thr_mgr_ = 1;
+	}
     }
 
   return ACE_Service_Config::thr_mgr_;
@@ -271,6 +320,8 @@ ACE_Thread_Manager *
 ACE_Service_Config::thr_mgr (ACE_Thread_Manager *tm)
 {
   ACE_TRACE ("ACE_Service_Config::thr_mgr");
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
 
   ACE_Thread_Manager *t = ACE_Service_Config::thr_mgr_;
   // We can't safely delete it since we don't know who created it!
@@ -662,6 +713,7 @@ ACE_Service_Config::run_reactor_event_loop (ACE_Time_Value &tv)
   while (ACE_Service_Config::end_reactor_event_loop_ == 0)
     {
       int result = ACE_Service_Config::reactor ()->handle_events (tv);
+
       if (ACE_Service_Config::reconfig_occurred_)
 	ACE_Service_Config::reconfigure ();
       else if (result <= 0)

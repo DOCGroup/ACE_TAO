@@ -12,6 +12,10 @@
 #define HPUX
 #endif /* HPUX */
 
+#if __cplusplus < 199707L
+#define ACE_HAS_BROKEN_HPUX_TEMPLATES
+#endif /* __cplusplus < 199707L */
+
 #define ACE_HAS_BROKEN_CONVERSIONS
 
 // They forgot a const in the prototype of const_timewait...

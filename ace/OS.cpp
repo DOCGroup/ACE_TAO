@@ -589,7 +589,6 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
       return -1;
     }
 
-  return 0;
 #elif defined (ACE_WIN32)
 
   if (sched_params.scope () != ACE_SCOPE_PROCESS  ||

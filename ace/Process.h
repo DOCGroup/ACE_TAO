@@ -44,7 +44,7 @@ public:
 	       ACE_HANDLE std_out = ACE_INVALID_HANDLE,
 	       ACE_HANDLE std_err = ACE_INVALID_HANDLE);
   // Set the standard handles of the new process to the respective
-  // handles and start the new process.  -argv- must be specified.  It
+  // handles and start the new process.  <argv> must be specified.  It
   // should be of the following form: argv = {
   // "c:\full\path\to\foo.exe", "-a", "arg1", "etc", 0 } Returns the
   // new process id on success, -1 on failure.  If you want to affect
@@ -62,11 +62,15 @@ public:
   // sure to set the others to ACE_INVALID_HANDLE.  Returns 0 on
   // success, -1 on failure.
 
-  int start (char *argv[]);
-  // Start the new process.  -argv- must be specified.  It should be
+  int set_cwd (const TCHAR *cwd);
+  // Set the working directory for the process.
+
+  int start (char *argv[], char *envp[]);
+  // Start the new process.  <argv> must be specified.  It should be
   // of the following form: argv = { "c:\full\path\to\foo.exe", "-a",
-  // "arg1", "etc", 0 } Returns the new process id on success, -1 on
-  // failure.
+  // "arg1", "etc", 0 }.  If <envp> is specified, it is passed as the
+  // environment for the new process, according to the rules for
+  // execve().  Returns the new process id on success, -1 on failure.
 
   int wait (void);
   // Wait for the process we just created to exit.
@@ -81,13 +85,20 @@ private:
 #if defined (ACE_WIN32)
   PROCESS_INFORMATION process_info_;
   STARTUPINFO startup_info_;
+
   int set_handles_called_;
   // Is 1 if stdhandles was called.
+
 #else /* ACE_WIN32 */
   ACE_HANDLE stdin_;
   ACE_HANDLE stdout_;
   ACE_HANDLE stderr_;
+
   pid_t child_id_;
+  // Process id of the child.
+
+  TCHAR cwd_[MAXPATHLEN + 1];
+  // The current working directory.
 #endif /* ACE_WIN32 */
 };
 

@@ -133,23 +133,23 @@
 // block is left. The old state will then be restored
 // Only used for Win32 (in the moment).
 #if defined(ACE_WIN32)
-	#if defined (_DEBUG)
-		class ACE_No_Heap_Check {
-			int old_state;
-		public:
-			ACE_No_Heap_Check() 
-				: old_state( _CrtSetDbgFlag( _CRTDBG_REPORT_FLAG )) 
-								 { _CrtSetDbgFlag( old_state & ~_CRTDBG_ALLOC_MEM_DF );}
-		   ~ACE_No_Heap_Check () { _CrtSetDbgFlag( old_state );}
-		};
-
-		#define ACE_NO_HEAP_CHECK ACE_No_Heap_Check ____no_heap;
-	#else /* !_DEBUG*/
-		#define ACE_NO_HEAP_CHECK
-	#endif /* _DEBUG*/
-
+#if defined (_DEBUG)
+class ACE_No_Heap_Check 
+{
+public:
+  ACE_No_Heap_Check() 
+    : old_state (_CrtSetDbgFlag (_CRTDBG_REPORT_FLAG))
+  { _CrtSetDbgFlag (old_state & ~_CRTDBG_ALLOC_MEM_DF);}
+  ~ACE_No_Heap_Check (void) { _CrtSetDbgFlag (old_state);}
+private:
+  int old_state;
+};
+#define ACE_NO_HEAP_CHECK ACE_No_Heap_Check ____no_heap;
+#else /* !_DEBUG*/
+#define ACE_NO_HEAP_CHECK
+#endif /* _DEBUG*/
 #else /* !ACE_WIN32 */
-	#define ACE_NO_HEAP_CHECK
+#define ACE_NO_HEAP_CHECK
 #endif /* ACE_WIN32 */
 
 // Increase the range of "address families".
@@ -185,7 +185,7 @@
 // GreenHills C++ 1.8.8 complains that the (a) expression has no effect.  But,
 // it doesn't complain about unused args, so don't bother with them.
 #define ACE_UNUSED_ARG(a)
-#elif defined (__GNUC__) || defined (ACE_HAS_IRIX_GETTIMEOFDAY)
+#elif defined (__GNUC__) || defined (__sgi)
 // Some compilers complain about "statement with no effect" with (a).
 // This eliminates the warnings, and no code is generated for the null
 // conditional statement.
@@ -453,28 +453,36 @@ public:
   void operator -= (const ACE_Time_Value &tv);
   // Subtract <tv> to this.
 
-  friend ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1, const ACE_Time_Value &tv2);
+  friend ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1, 
+					       const ACE_Time_Value &tv2);
   // Adds two ACE_Time_Value objects together, returns the sum.
 
-  friend ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1, const ACE_Time_Value &tv2);
+  friend ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1, 
+					       const ACE_Time_Value &tv2);
   // Subtracts two ACE_Time_Value objects, returns the difference.
 
-  friend ACE_Export int operator < (const ACE_Time_Value &tv1, const ACE_Time_Value &tv2);
+  friend ACE_Export int operator < (const ACE_Time_Value &tv1, 
+				    const ACE_Time_Value &tv2);
   // True if tv1 < tv2.
 
-  friend ACE_Export int operator > (const ACE_Time_Value &tv1, const ACE_Time_Value &tv2);  
+  friend ACE_Export int operator > (const ACE_Time_Value &tv1, 
+				    const ACE_Time_Value &tv2);  
   // True if tv1 > tv2.
 
-  friend ACE_Export int operator <= (const ACE_Time_Value &tv1, const ACE_Time_Value &tv2);
+  friend ACE_Export int operator <= (const ACE_Time_Value &tv1, 
+				     const ACE_Time_Value &tv2);
   // True if tv1 <= tv2.
 
-  friend ACE_Export int operator >= (const ACE_Time_Value &tv1, const ACE_Time_Value &tv2);  
+  friend ACE_Export int operator >= (const ACE_Time_Value &tv1, 
+				     const ACE_Time_Value &tv2);  
   // True if tv1 >= tv2.
 
-  friend ACE_Export int operator == (const ACE_Time_Value &tv1, const ACE_Time_Value &tv2);  
+  friend ACE_Export int operator == (const ACE_Time_Value &tv1, 
+				     const ACE_Time_Value &tv2);  
   // True if tv1 == tv2.
 
-  friend ACE_Export int operator != (const ACE_Time_Value &tv1, const ACE_Time_Value &tv2);  
+  friend ACE_Export int operator != (const ACE_Time_Value &tv1, 
+				     const ACE_Time_Value &tv2);  
   // True if tv1 != tv2.
 
   void dump (void) const;
@@ -1854,7 +1862,6 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #endif /* VXWORKS */
 #include /**/ <sys/ioctl.h>
 #include /**/ <dirent.h>
-#include /**/ <sys/stat.h>
 #include /**/ <unistd.h>
 
 #if !defined (ACE_LACKS_PARAM_H)

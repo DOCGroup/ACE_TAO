@@ -6,7 +6,9 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Task_T.h"
+#if !defined(HPUX) || defined(__GNUG_)
 #include "ace/Module.h"
+#endif /* !defined(HPUX) || defined(__GNUG__)
 #include "ace/Service_Config.h"
 
 #if !defined (__ACE_INLINE__)
