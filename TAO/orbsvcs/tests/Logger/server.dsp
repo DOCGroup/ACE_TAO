@@ -83,10 +83,6 @@ LINK32=link.exe
 # Name "server - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\logger_i.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\svr.cpp
 # End Source File
 # End Target
