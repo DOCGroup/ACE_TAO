@@ -351,7 +351,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "POA Deactivation"=.\POA\Deactivation\Deactivation.dsp - Package Owner=<4>
+Project: "POA Object_Reactivation"=.\POA\Object_Reactivation\Object_Reactivation.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -363,7 +363,19 @@ Package=<4>
 
 ###############################################################################
 
-Project: "POA Destruction"=.\POA\Destruction\Destruction.dsp - Package Owner=<4>
+Project: "POA POA_Destruction"=.\POA\POA_Destruction\POA_Destruction.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "POA Excessive_Object_Deactivations"=.\POA\Excessive_Object_Deactivations\Excessive_Object_Deactivations.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

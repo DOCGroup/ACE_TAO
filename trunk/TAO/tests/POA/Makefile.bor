@@ -3,8 +3,9 @@
 #
 
 DIRS = \
-        Deactivation \
-        Destruction \
+        Object_Reactivation \
+	Excessive_Object_Deactivations \
+        POA_Destruction \
         Identity \
         Non_Servant_Upcalls \
         Single_Threaded_POA \

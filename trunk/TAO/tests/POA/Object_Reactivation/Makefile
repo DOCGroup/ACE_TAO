@@ -16,13 +16,13 @@ LDLIBS = -lTAO
 
 IDL_FILES = test
 IDL_SRC = testC.cpp testS.cpp
-PROG_SRCS =	$(IDL_SRC) Destruction.cpp
+PROG_SRCS =	$(IDL_SRC) Object_Reactivation.cpp
 
 LSRC = $(PROG_SRCS)
 
-SVR_OBJS = testC.o testS.o Destruction.o
+SVR_OBJS = testC.o testS.o Object_Reactivation.o
 
-BIN = Destruction
+BIN = Object_Reactivation
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
@@ -41,7 +41,7 @@ include $(TAO_ROOT)/taoconfig.mk
 
 .PRECIOUS: testC.h testC.i testC.cpp testS.h testS.i testS.cpp testS_T.h testS_T.i testS_T.cpp
 
-Destruction:	$(addprefix $(VDIR),$(SVR_OBJS))
+Object_Reactivation:	$(addprefix $(VDIR),$(SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
 
 realclean: clean
@@ -480,7 +480,7 @@ realclean: clean
  $(TAO_ROOT)/tao/RequestInfo_Util.h \
  testS.i
 
-.obj/Destruction.o .obj/Destruction.so .shobj/Destruction.o .shobj/Destruction.so: Destruction.cpp testS.h testC.h \
+.obj/Object_Reactivation.o .obj/Object_Reactivation.so .shobj/Object_Reactivation.o .shobj/Object_Reactivation.so: Object_Reactivation.cpp testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -687,6 +687,30 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
- testS_T.h testS_T.cpp testS_T.i
+ testS_T.h testS_T.cpp testS_T.i \
+ $(ACE_ROOT)/ace/Task.h \
+ $(ACE_ROOT)/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Process_Mutex.h \
+ $(ACE_ROOT)/ace/Task_T.cpp \
+ $(ACE_ROOT)/ace/Module.h \
+ $(ACE_ROOT)/ace/Module.cpp \
+ $(ACE_ROOT)/ace/Stream_Modules.h \
+ $(ACE_ROOT)/ace/Stream_Modules.cpp \
+ $(ACE_ROOT)/ace/Module.i \
+ $(ACE_ROOT)/ace/Task_T.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

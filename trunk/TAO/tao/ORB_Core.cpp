@@ -2975,7 +2975,7 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object)
 {
 
   TAO_Stub *stub = object->_stubobj ();
-  if (stub->servant_orb_var ().in () != CORBA::ORB::_nil () &&
+  if (!CORBA::is_nil (stub->servant_orb_var ().in ()) &&
       stub->servant_orb_var ()->orb_core () != 0 &&
       object->_servant () != 0)
     {

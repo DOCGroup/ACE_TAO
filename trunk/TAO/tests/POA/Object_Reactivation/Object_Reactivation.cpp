@@ -3,10 +3,10 @@
 //========================================================================
 //
 // = LIBRARY
-//     TAO/tests/POA/Deactivation
+//     TAO/tests/POA/Object_Reactivation
 //
 // = FILENAME
-//     Deactivation.cpp
+//     Object_Reactivation.cpp
 //
 // = DESCRIPTION
 //     This program tests the reactivation of a servant that has been

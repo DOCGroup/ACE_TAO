@@ -3,10 +3,10 @@
 //========================================================================
 //
 // = LIBRARY
-//     TAO/tests/POA/Destruction
+//     TAO/tests/POA/POA_Destruction
 //
 // = FILENAME
-//     Destruction.cpp
+//     POA_Destruction.cpp
 //
 // = DESCRIPTION
 //     This program tests the destruction of a POA while there is an

@@ -43,8 +43,9 @@ TAO/tests/NestedUpcall/MT_Client_Test/run_test.pl
 TAO/tests/NestedUpcall/Triangle_Test/run_test.pl
 TAO/tests/Nested_Event_Loop/run_test.pl
 TAO/tests/POA/Identity/run_test.pl
-TAO/tests/POA/Deactivation/run_test.pl
-TAO/tests/POA/Destruction/run_test.pl
+TAO/tests/POA/Excessive_Object_Deactivations/run_test.pl
+TAO/tests/POA/Object_Reactivation/run_test.pl
+TAO/tests/POA/POA_Destruction/run_test.pl
 TAO/tests/POA/Single_Threaded_POA/run_test.pl: !MINIMUM !ST
 TAO/tests/POA/Non_Servant_Upcalls/run_test.pl
 TAO/tests/POA/wait_for_completion/run_test.pl
