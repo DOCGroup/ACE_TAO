@@ -364,8 +364,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- testC.i
+ $(TAO_ROOT)/tao/MessagingS.i testC.i
 
 .obj/testS.o .obj/testS.so .shobj/testS.o .shobj/testS.so: testS.cpp testS.h testC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -680,8 +679,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- testC.i testS_T.h testS_T.i testS_T.cpp testS.i
+ $(TAO_ROOT)/tao/MessagingS.i testC.i \
+ testS_T.h testS_T.i testS_T.cpp testS.i
 
 .obj/Connection_Purging.o .obj/Connection_Purging.so .shobj/Connection_Purging.o .shobj/Connection_Purging.so: Connection_Purging.cpp \
  $(ACE_ROOT)/ace/Task.h \
@@ -825,9 +824,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Handle_Gobbler.h \
- $(ACE_ROOT)/ace/Handle_Gobbler.i \
- testS.h testC.h \
- $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/Handle_Gobbler.i testS.h \
+ testC.h $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -1011,7 +1009,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- testC.i testS_T.h testS_T.i testS_T.cpp testS.i
+ $(TAO_ROOT)/tao/MessagingS.i testC.i \
+ testS_T.h testS_T.i testS_T.cpp testS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

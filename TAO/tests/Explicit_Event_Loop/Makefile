@@ -385,8 +385,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- timeC.i
+ $(TAO_ROOT)/tao/MessagingS.i timeC.i
 
 .obj/timeS.o .obj/timeS.so .shobj/timeS.o .shobj/timeS.so: timeS.cpp timeS.h timeC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -701,8 +700,8 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- timeC.i timeS_T.h timeS_T.i timeS_T.cpp timeS.i
+ $(TAO_ROOT)/tao/MessagingS.i timeC.i \
+ timeS_T.h timeS_T.i timeS_T.cpp timeS.i
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp timeC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -1017,8 +1016,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- timeC.i
+ $(TAO_ROOT)/tao/MessagingS.i timeC.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp server.h timeS.h timeC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -1333,7 +1331,7 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingS_T.h \
  $(TAO_ROOT)/tao/MessagingS_T.i \
  $(TAO_ROOT)/tao/MessagingS_T.cpp \
- $(TAO_ROOT)/tao/MessagingS.i \
- timeC.i timeS_T.h timeS_T.i timeS_T.cpp timeS.i
+ $(TAO_ROOT)/tao/MessagingS.i timeC.i \
+ timeS_T.h timeS_T.i timeS_T.cpp timeS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
