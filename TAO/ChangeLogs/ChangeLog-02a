@@ -1,3 +1,16 @@
+Sat Jan 22 17:11:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_codegen.cpp:
+	  Brian Harris <harris_b@ociweb.com> reported that when using
+	  the -GI option with the IDL compiler to generate implementation
+	  files for an IDL file 'foo', an included IDL file 'bar' caused 
+	  the generation of #include "barI.h" in the implementation header 
+	  file, when it should be #include "barC.h". However, since barC.h 
+	  is indirectly included by the line #include "fooS.h", it does 
+	  not need to be there at all. The block that generates this line 
+	  in be_codegen.cpp is commented out for now, to see if some use
+	  case arises where it is needed.
+
 Fri Jan 21 21:19:26 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Makefile:
