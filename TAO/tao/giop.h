@@ -127,15 +127,16 @@ enum { MY_MAJOR = 1, MY_MINOR = 0 };	// 1.0
 // All GIOP messages include a header and message type.
 enum TAO_GIOP_MsgType 
 {
+  // Not really a message type, but needed to bring that information back somehow
+  TAO_GIOP_EndOfFile = -1, // "discovered" by either
+
   TAO_GIOP_Request = 0, // sent by client
   TAO_GIOP_Reply = 1, // by server
   TAO_GIOP_CancelRequest = 2, // by client
   TAO_GIOP_LocateRequest = 3, // by client
   TAO_GIOP_LocateReply = 4, // by server
   TAO_GIOP_CloseConnection = 5, // by server
-  TAO_GIOP_MessageError = 6, // by both
-  // Not really a message type, but needed to bring that information back somehow
-  TAO_GIOP_EndOfFile = 7 // "discovered" by either
+  TAO_GIOP_MessageError = 6 // by both
 };
 
 struct TAO_GIOP_MessageHeader 
