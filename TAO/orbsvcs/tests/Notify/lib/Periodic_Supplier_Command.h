@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_PERIODICSUPPLIER_COMMAND_H
-#define TAO_NS_PERIODICSUPPLIER_COMMAND_H
+#ifndef TAO_Notify_Tests_PERIODICSUPPLIER_COMMAND_H
+#define TAO_Notify_Tests_PERIODICSUPPLIER_COMMAND_H
 #include "ace/pre.h"
 
 #include "notify_test_export.h"
@@ -23,22 +23,22 @@
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "Command.h"
 
-class TAO_NS_Periodic_Supplier;
+class TAO_Notify_Tests_Periodic_Supplier;
 
 /**
- * @class TAO_NS_Periodic_Supplier_Command
+ * @class TAO_Notify_Tests_Periodic_Supplier_Command
  *
  * @brief Command for Periodic Suppliers.
  *
  */
-class TAO_NOTIFY_TEST_Export TAO_NS_Periodic_Supplier_Command : public TAO_NS_Command
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Periodic_Supplier_Command : public TAO_Notify_Tests_Command
 {
 public:
   /// Constuctor
-  TAO_NS_Periodic_Supplier_Command (void);
+  TAO_Notify_Tests_Periodic_Supplier_Command (void);
 
   /// Destructor
-  ~TAO_NS_Periodic_Supplier_Command ();
+  ~TAO_Notify_Tests_Periodic_Supplier_Command ();
 
   /// Parse args and populate options.
   virtual void init (ACE_Arg_Shifter& arg_shifter);
@@ -80,7 +80,7 @@ protected:
 
   ///= Methods
   // Retreive the suppliers.
-  TAO_NS_Periodic_Supplier* supplier (void);
+  TAO_Notify_Tests_Periodic_Supplier* supplier (void);
 
   ///= Handlers
   void handle_create (ACE_ENV_SINGLE_ARG_DECL);
@@ -92,4 +92,4 @@ protected:
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_PERIODICSUPPLIER_COMMAND_H */
+#endif /* TAO_Notify_Tests_PERIODICSUPPLIER_COMMAND_H */

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_REFCOUNTABLE_GUARD_T_H
-#define TAO_NS_REFCOUNTABLE_GUARD_T_H
+#ifndef TAO_Notify_REFCOUNTABLE_GUARD_T_H
+#define TAO_Notify_REFCOUNTABLE_GUARD_T_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -20,20 +20,20 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /**
- * @class TAO_NS_Refcountable_Guard_T
+ * @class TAO_Notify_Refcountable_Guard_T
  *
  * @brief Increments the reference count in the constructor, the count is decremented in the destructor.
  *
  */
 template <class T>
-class TAO_NS_Refcountable_Guard_T
+class TAO_Notify_Refcountable_Guard_T
 {
 public:
   /// Constuctor
-  TAO_NS_Refcountable_Guard_T (T* t);
+  TAO_Notify_Refcountable_Guard_T (T* t);
 
   /// Destructor
-  ~TAO_NS_Refcountable_Guard_T ();
+  ~TAO_Notify_Refcountable_Guard_T ();
 
   /// Redirection operator
   T *operator-> (void) const;
@@ -57,4 +57,4 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
-#endif /* TAO_NS_REFCOUNTABLE_GUARD_T_H */
+#endif /* TAO_Notify_REFCOUNTABLE_GUARD_T_H */

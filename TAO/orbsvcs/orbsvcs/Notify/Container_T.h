@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_CONTAINER_T_H
-#define TAO_NS_CONTAINER_T_H
+#ifndef TAO_Notify_CONTAINER_T_H
+#define TAO_Notify_CONTAINER_T_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -22,23 +22,23 @@
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 
 /**
- * @class TAO_NS_Container_T
+ * @class TAO_Notify_Container_T
  *
  * @brief A template class that manages a collection.
  * TYPE = type of collection
  *
  */
 template <class TYPE>
-class TAO_Notify_Export TAO_NS_Container_T
+class TAO_Notify_Export TAO_Notify_Container_T
 {
   typedef TAO_ESF_Proxy_Collection<TYPE> COLLECTION;
  public:
 
   /// Constuctor
-  TAO_NS_Container_T (void);
+  TAO_Notify_Container_T (void);
 
   /// Destructor
-  virtual ~TAO_NS_Container_T ();
+  virtual ~TAO_Notify_Container_T ();
 
   /// Init this object.
   void init (ACE_ENV_SINGLE_ARG_DECL);
@@ -73,4 +73,4 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
-#endif /* TAO_NS_CONTAINER_T_H */
+#endif /* TAO_Notify_CONTAINER_T_H */

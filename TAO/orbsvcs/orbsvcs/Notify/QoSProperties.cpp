@@ -6,11 +6,11 @@
 #include "QoSProperties.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_QoSProperties, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_QoSProperties, "$Id$")
 
 #include "Property.h"
 
-TAO_NS_QoSProperties::TAO_NS_QoSProperties (void)
+TAO_Notify_QoSProperties::TAO_Notify_QoSProperties (void)
   : priority_ (CosNotification::Priority)
     , timeout_ (CosNotification::Timeout)
     , stop_time_supported_ (CosNotification::StopTimeSupported)
@@ -24,12 +24,12 @@ TAO_NS_QoSProperties::TAO_NS_QoSProperties (void)
   unsupported_[2] = CosNotification::StartTimeSupported;
 }
 
-TAO_NS_QoSProperties::~TAO_NS_QoSProperties ()
+TAO_Notify_QoSProperties::~TAO_Notify_QoSProperties ()
 {
 }
 
 int
-TAO_NS_QoSProperties::unsupported (ACE_CString& name)
+TAO_Notify_QoSProperties::unsupported (ACE_CString& name)
 {
   for (int i = 0; i < UNSUPPORTED_PROPERTY_COUNT; ++i)
     {
@@ -41,7 +41,7 @@ TAO_NS_QoSProperties::unsupported (ACE_CString& name)
 }
 
 int
-TAO_NS_QoSProperties::init (const CosNotification::PropertySeq& prop_seq, CosNotification::PropertyErrorSeq& err_seq)
+TAO_Notify_QoSProperties::init (const CosNotification::PropertySeq& prop_seq, CosNotification::PropertyErrorSeq& err_seq)
 {
   int err_index = -1;
 
@@ -79,7 +79,7 @@ TAO_NS_QoSProperties::init (const CosNotification::PropertySeq& prop_seq, CosNot
 }
 
 int
-TAO_NS_QoSProperties::copy (TAO_NS_QoSProperties& qos_properties)
+TAO_Notify_QoSProperties::copy (TAO_Notify_QoSProperties& qos_properties)
 {
   qos_properties.priority_ = this->priority_.value ();
   qos_properties.timeout_ = this->timeout_.value ();
@@ -100,7 +100,7 @@ TAO_NS_QoSProperties::copy (TAO_NS_QoSProperties& qos_properties)
 }
 
 int
-TAO_NS_QoSProperties::transfer (TAO_NS_QoSProperties& qos_properties)
+TAO_Notify_QoSProperties::transfer (TAO_Notify_QoSProperties& qos_properties)
 {
   if (this->copy (qos_properties) == -1)
     return -1;
@@ -114,28 +114,28 @@ TAO_NS_QoSProperties::transfer (TAO_NS_QoSProperties& qos_properties)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_NS_PropertyBase_T<CORBA::Long>;
-template class TAO_NS_PropertyBase_T<CORBA::Short>;
-template class TAO_NS_PropertyBase_T<TimeBase::TimeT>;
+template class TAO_Notify_PropertyBase_T<CORBA::Long>;
+template class TAO_Notify_PropertyBase_T<CORBA::Short>;
+template class TAO_Notify_PropertyBase_T<TimeBase::TimeT>;
 
-template class TAO_NS_Property_T<CORBA::Long>;
-template class TAO_NS_Property_T<CORBA::Short>;
-template class TAO_NS_Property_T<TimeBase::TimeT>;
+template class TAO_Notify_Property_T<CORBA::Long>;
+template class TAO_Notify_Property_T<CORBA::Short>;
+template class TAO_Notify_Property_T<TimeBase::TimeT>;
 
-template class TAO_NS_StructProperty_T<NotifyExt::ThreadPoolParams>;
-template class TAO_NS_StructProperty_T<NotifyExt::ThreadPoolLanesParams>;
+template class TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolParams>;
+template class TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolLanesParams>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_NS_PropertyBase_T<CORBA::Long>
-#pragma instantiate TAO_NS_PropertyBase_T<CORBA::Short>
-#pragma instantiate TAO_NS_PropertyBase_T<TimeBase::TimeT>
+#pragma instantiate TAO_Notify_PropertyBase_T<CORBA::Long>
+#pragma instantiate TAO_Notify_PropertyBase_T<CORBA::Short>
+#pragma instantiate TAO_Notify_PropertyBase_T<TimeBase::TimeT>
 
-#pragma instantiate TAO_NS_Property_T<CORBA::Long>
-#pragma instantiate TAO_NS_Property_T<CORBA::Short>
-#pragma instantiate TAO_NS_Property_T<TimeBase::TimeT>
+#pragma instantiate TAO_Notify_Property_T<CORBA::Long>
+#pragma instantiate TAO_Notify_Property_T<CORBA::Short>
+#pragma instantiate TAO_Notify_Property_T<TimeBase::TimeT>
 
-#pragma instantiate TAO_NS_StructProperty_T<NotifyExt::ThreadPoolParams>
-#pragma instantiate TAO_NS_StructProperty_T<NotifyExt::ThreadPoolLanesParams>
+#pragma instantiate TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolParams>
+#pragma instantiate TAO_Notify_StructProperty_T<NotifyExt::ThreadPoolLanesParams>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

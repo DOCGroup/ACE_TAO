@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_EVENT_MAP_T_H
-#define TAO_NS_EVENT_MAP_T_H
+#ifndef TAO_Notify_EVENT_MAP_T_H
+#define TAO_Notify_EVENT_MAP_T_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -27,23 +27,23 @@
 #include "EventTypeSeq.h"
 
 /**
- * @class TAO_NS_Event_Map_T
+ * @class TAO_Notify_Event_Map_T
  *
  * @brief Template class for storing the collection of Proxys.
  *
  */
 template <class PROXY, class ACE_LOCK>
-class TAO_NS_Event_Map_T
+class TAO_Notify_Event_Map_T
 {
 
 public:
-  typedef  TAO_NS_Event_Map_Entry_T<PROXY> ENTRY;
+  typedef  TAO_Notify_Event_Map_Entry_T<PROXY> ENTRY;
 
   /// Constuctor
-  TAO_NS_Event_Map_T (void);
+  TAO_Notify_Event_Map_T (void);
 
   /// Destructor
-  ~TAO_NS_Event_Map_T ();
+  ~TAO_Notify_Event_Map_T ();
 
   /// Init
   void init (ACE_ENV_SINGLE_ARG_DECL);
@@ -57,16 +57,16 @@ public:
   /// Associate PROXY and event_type.
   /// Returns 1 if <event_type> is being seem for the 1st time otherwise returns 0.
   /// Returns -1 on error.
-  int insert (PROXY* proxy, const TAO_NS_EventType& event_type ACE_ENV_ARG_DECL);
+  int insert (PROXY* proxy, const TAO_Notify_EventType& event_type ACE_ENV_ARG_DECL);
 
   /// Remove association of PROXY and event_type.
   /// Returns 1 if <event_type> is being seem for the last time otherwise returns 0.
   /// Returns -1 on error.
-  int remove (PROXY* proxy, const TAO_NS_EventType& event_type ACE_ENV_ARG_DECL);
+  int remove (PROXY* proxy, const TAO_Notify_EventType& event_type ACE_ENV_ARG_DECL);
 
   /// Find the collection mapped to the <event_type>
   /// The usage_count on the entry returned is incremented.
-  ENTRY* find (const TAO_NS_EventType& event_type ACE_ENV_ARG_DECL);
+  ENTRY* find (const TAO_Notify_EventType& event_type ACE_ENV_ARG_DECL);
 
   /// Find the default broadcast list.
   ACE_TYPENAME ENTRY::COLLECTION* broadcast_collection (void);
@@ -78,14 +78,14 @@ public:
   void release (ENTRY* entry);
 
   /// Access all the event types available
-  const TAO_NS_EventTypeSeq& event_types (void);
+  const TAO_Notify_EventTypeSeq& event_types (void);
 
   /// Access number of proxys connected in all.
   int proxy_count (void);
 
 protected:
   /// The Map that stores eventtype to entry mapping.
-  ACE_Hash_Map_Manager <TAO_NS_EventType, ENTRY*, ACE_SYNCH_NULL_MUTEX> map_;
+  ACE_Hash_Map_Manager <TAO_Notify_EventType, ENTRY*, ACE_SYNCH_NULL_MUTEX> map_;
 
   /// The lock to use.
   ACE_LOCK lock_;
@@ -100,7 +100,7 @@ protected:
   ENTRY updates_entry_;
 
   /// The event types that are available in this map.
-  TAO_NS_EventTypeSeq event_types_;
+  TAO_Notify_EventTypeSeq event_types_;
 };
 
 #if defined (__ACE_INLINE__)
@@ -116,4 +116,4 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
-#endif /* TAO_NS_EVENT_MAP_T_H */
+#endif /* TAO_Notify_EVENT_MAP_T_H */

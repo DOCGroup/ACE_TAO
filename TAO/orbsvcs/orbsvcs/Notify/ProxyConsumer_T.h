@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_PROXYCONSUMER_T_H
-#define TAO_NS_PROXYCONSUMER_T_H
+#ifndef TAO_Notify_PROXYCONSUMER_T_H
+#define TAO_Notify_PROXYCONSUMER_T_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -23,20 +23,20 @@
 #include "ProxyConsumer.h"
 
 /**
- * @class TAO_NS_ProxyConsumer_T
+ * @class TAO_Notify_ProxyConsumer_T
  *
  * @brief
  *
  */
 template <class SERVANT_TYPE>
-class TAO_Notify_Export TAO_NS_ProxyConsumer_T : public virtual TAO_NS_Proxy_T <SERVANT_TYPE>, public virtual TAO_NS_ProxyConsumer
+class TAO_Notify_Export TAO_Notify_ProxyConsumer_T : public virtual TAO_Notify_Proxy_T <SERVANT_TYPE>, public virtual TAO_Notify_ProxyConsumer
 {
 public:
   /// Constuctor
-  TAO_NS_ProxyConsumer_T (void);
+  TAO_Notify_ProxyConsumer_T (void);
 
   /// Destructor
-  ~TAO_NS_ProxyConsumer_T ();
+  ~TAO_Notify_ProxyConsumer_T ();
 
   /// Notification of subscriptions set at the admin.
   virtual void admin_types_changed (const CosNotification::EventTypeSeq & added,
@@ -81,4 +81,4 @@ public:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
-#endif /* TAO_NS_PROXYCONSUMER_T_H */
+#endif /* TAO_Notify_PROXYCONSUMER_T_H */

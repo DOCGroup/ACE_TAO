@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_COSNOTIFY_SERVICE_H
-#define TAO_NS_COSNOTIFY_SERVICE_H
+#ifndef TAO_Notify_COSNOTIFY_SERVICE_H
+#define TAO_Notify_COSNOTIFY_SERVICE_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -21,10 +21,10 @@
 
 #include "Service.h"
 
-class TAO_NS_Factory;
-class TAO_NS_Builder;
-class TAO_NS_Properties;
-class TAO_NS_EventChannelFactory;
+class TAO_Notify_Factory;
+class TAO_Notify_Builder;
+class TAO_Notify_Properties;
+class TAO_Notify_EventChannelFactory;
 
 /**
  * @class TAO_CosNotify_Service
@@ -52,7 +52,7 @@ public:
   virtual CosNotifyChannelAdmin::EventChannelFactory_ptr create (PortableServer::POA_ptr default_POA ACE_ENV_ARG_DECL);
 
   /// Called by the factory when it is destroyed.
-  virtual void remove (TAO_NS_EventChannelFactory* ecf ACE_ENV_ARG_DECL);
+  virtual void remove (TAO_Notify_EventChannelFactory* ecf ACE_ENV_ARG_DECL);
 
 protected:
   /// Init the data members
@@ -68,10 +68,10 @@ protected:
   void set_threads (CosNotification::QoSProperties &qos, int threads);
 
   /// Service component for object factory operations.
-  TAO_NS_Factory* factory_;
+  TAO_Notify_Factory* factory_;
 
   /// Service component for building NS participants.
-  TAO_NS_Builder* builder_;
+  TAO_Notify_Builder* builder_;
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_CosNotify_Service)
@@ -84,4 +84,4 @@ ACE_STATIC_SVC_DECLARE (TAO_Notify_Default_EMO_Factory_OLD)
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_COSNOTIFY_SERVICE_H */
+#endif /* TAO_Notify_COSNOTIFY_SERVICE_H */

@@ -30,7 +30,7 @@
 
 class Sequence;
 
-class SequencePushConsumer : public TAO_Notify_SequencePushConsumer
+class SequencePushConsumer : public TAO_Notify_Tests_SequencePushConsumer
 {
 public:
   SequencePushConsumer (Sequence* client);
@@ -51,7 +51,7 @@ protected:
 
 /***************************************************************************/
 
-class SequencePushSupplier : public TAO_Notify_SequencePushSupplier
+class SequencePushSupplier : public TAO_Notify_Tests_SequencePushSupplier
 {
 public:
   SequencePushSupplier (Sequence * test_client);
@@ -124,10 +124,10 @@ protected:
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
   // The supplier admin used by suppliers.
 
-  TAO_Notify_SequencePushConsumer* consumer_;
+  TAO_Notify_Tests_SequencePushConsumer* consumer_;
   // Consumer
 
-  TAO_Notify_SequencePushSupplier* supplier_;
+  TAO_Notify_Tests_SequencePushSupplier* supplier_;
   // Supplier
 
 private:

@@ -30,7 +30,7 @@
 
 class Updates;
 
-class Updates_StructuredPushConsumer : public TAO_Notify_StructuredPushConsumer
+class Updates_StructuredPushConsumer : public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
   Updates_StructuredPushConsumer (Updates *test_client);
@@ -49,7 +49,7 @@ protected:
 
 /***************************************************************************/
 
-class Updates_StructuredPushSupplier : public TAO_Notify_StructuredPushSupplier
+class Updates_StructuredPushSupplier : public TAO_Notify_Tests_StructuredPushSupplier
 {
 public:
   Updates_StructuredPushSupplier (Updates * test_client);
@@ -130,10 +130,10 @@ protected:
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
   // The supplier admin used by suppliers.
 
-  TAO_Notify_StructuredPushConsumer* consumer_;
+  TAO_Notify_Tests_StructuredPushConsumer* consumer_;
   // Consumer
 
-  TAO_Notify_StructuredPushSupplier* supplier_;
+  TAO_Notify_Tests_StructuredPushSupplier* supplier_;
   // Supplier
 
 private:

@@ -1,7 +1,7 @@
 // $Id$
 
-ACE_INLINE TAO_NS_Buffering_Strategy*
-TAO_NS_Reactive_Task::buffering_strategy (void)
+ACE_INLINE TAO_Notify_Buffering_Strategy*
+TAO_Notify_Reactive_Task::buffering_strategy (void)
 {
   return 0;
 }

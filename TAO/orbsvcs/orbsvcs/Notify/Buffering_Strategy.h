@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_BUFFERING_STRATEGY_H
-#define TAO_NS_BUFFERING_STRATEGY_H
+#ifndef TAO_Notify_BUFFERING_STRATEGY_H
+#define TAO_Notify_BUFFERING_STRATEGY_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -26,40 +26,40 @@
 #include "Property_T.h"
 #include "AdminProperties.h"
 
-class TAO_NS_Method_Request;
-class TAO_NS_QoSProperties;
+class TAO_Notify_Method_Request;
+class TAO_Notify_QoSProperties;
 
-typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_NS_Message_Queue;
+typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Notify_Message_Queue;
 
 /**
- * @class TAO_NS_Buffering_Strategy
+ * @class TAO_Notify_Buffering_Strategy
  *
  * @brief Base Strategy to enqueue and dequeue items from a Message Queue.
  *
  */
-class TAO_Notify_Export TAO_NS_Buffering_Strategy
+class TAO_Notify_Export TAO_Notify_Buffering_Strategy
 {
 public:
   /// Constuctor
-  TAO_NS_Buffering_Strategy (TAO_NS_Message_Queue& msg_queue, TAO_NS_AdminProperties_var& admin_properties, CORBA::Long batch_size);
+  TAO_Notify_Buffering_Strategy (TAO_Notify_Message_Queue& msg_queue, TAO_Notify_AdminProperties_var& admin_properties, CORBA::Long batch_size);
 
   /// Destructor
-  ~TAO_NS_Buffering_Strategy ();
+  ~TAO_Notify_Buffering_Strategy ();
 
   /// Update state with the following QoS Properties:
   /// Order Policy
   /// Discard Policy
   /// MaxEventsPerConsumer
   /// TAO_Notify_Extensions::BlockingPolicy
-  void update_qos_properties (const TAO_NS_QoSProperties& qos_properties);
+  void update_qos_properties (const TAO_Notify_QoSProperties& qos_properties);
 
   /// Enqueue according the enqueing strategy.
   /// Return -1 on error else the number of items in the queue.
-  int enqueue (TAO_NS_Method_Request& method_request);
+  int enqueue (TAO_Notify_Method_Request& method_request);
 
   /// Dequeue batch. This method will block for <abstime> if non-zero or else blocks till an item is available.
   /// Return -1 on error or if nothing is available, else the number of items actually dequeued (1).
-  int dequeue (TAO_NS_Method_Request* &method_request, const ACE_Time_Value *abstime);
+  int dequeue (TAO_Notify_Method_Request* &method_request, const ACE_Time_Value *abstime);
 
   /// Shutdown
   void shutdown (void);
@@ -75,7 +75,7 @@ public:
 
 protected:
   /// Apply the Order Policy and queue. return -1 on error.
-  int queue (TAO_NS_Method_Request& method_request);
+  int queue (TAO_Notify_Method_Request& method_request);
 
   /// Discard as per the Discard Policy.
   int discard (void);
@@ -83,10 +83,10 @@ protected:
   ///= Data Members
 
   /// The local Message Queue
-  TAO_NS_Message_Queue& msg_queue_;
+  TAO_Notify_Message_Queue& msg_queue_;
 
   /// Reference to the properties per event channel.
-  TAO_NS_AdminProperties_var admin_properties_;
+  TAO_Notify_AdminProperties_var admin_properties_;
 
   /// The shared global lock used by all the queues.
   ACE_SYNCH_MUTEX& global_queue_lock_;
@@ -98,16 +98,16 @@ protected:
   CORBA::Long& global_queue_length_;
 
   /// The maximum events that can be queued overall.
-  const TAO_NS_Property_Long& max_global_queue_length_;
+  const TAO_Notify_Property_Long& max_global_queue_length_;
 
   /// The maximum queue length for the local queue.
   CORBA::Long max_local_queue_length_;
 
   /// Order of events in internal buffers.
-  TAO_NS_Property_Short order_policy_;
+  TAO_Notify_Property_Short order_policy_;
 
   /// Policy to discard when buffers are full.
-  TAO_NS_Property_Short discard_policy_;
+  TAO_Notify_Property_Short discard_policy_;
 
   /// Flag that we should use discarding(1) or blocking (0).
   int use_discarding_;
@@ -134,4 +134,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_BUFFERING_STRATEGY_H */
+#endif /* TAO_Notify_BUFFERING_STRATEGY_H */

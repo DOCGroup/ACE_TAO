@@ -6,31 +6,31 @@
 #include "ThreadPool_Task.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_ThreadPool_Task, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_ThreadPool_Task, "$Id$")
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "Properties.h"
 #include "Timer_Queue.h"
 
-TAO_NS_ThreadPool_Task::TAO_NS_ThreadPool_Task (void)
+TAO_Notify_ThreadPool_Task::TAO_Notify_ThreadPool_Task (void)
   : buffering_strategy_ (0), shutdown_ (0), timer_ (0)
 {
 }
 
-TAO_NS_ThreadPool_Task::~TAO_NS_ThreadPool_Task ()
+TAO_Notify_ThreadPool_Task::~TAO_Notify_ThreadPool_Task ()
 {
   delete this->buffering_strategy_;
 }
 
 int
-TAO_NS_ThreadPool_Task::init (int argc, char **argv)
+TAO_Notify_ThreadPool_Task::init (int argc, char **argv)
 {
   return this->ACE_Task<ACE_NULL_SYNCH>::init (argc, argv);
 }
 
-TAO_NS_Timer*
-TAO_NS_ThreadPool_Task::timer (void)
+TAO_Notify_Timer*
+TAO_Notify_ThreadPool_Task::timer (void)
 {
   this->timer_->_incr_refcnt ();
 
@@ -38,29 +38,29 @@ TAO_NS_ThreadPool_Task::timer (void)
 }
 
 void
-TAO_NS_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, TAO_NS_AdminProperties_var& admin_properties  ACE_ENV_ARG_DECL)
+TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, TAO_Notify_AdminProperties_var& admin_properties  ACE_ENV_ARG_DECL)
 {
   ACE_NEW_THROW_EX (this->timer_,
-                    TAO_NS_Timer_Queue (),
+                    TAO_Notify_Timer_Queue (),
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
   ACE_NEW_THROW_EX (this->buffering_strategy_,
-                    TAO_NS_Buffering_Strategy (*msg_queue (), admin_properties, 1),
+                    TAO_Notify_Buffering_Strategy (*msg_queue (), admin_properties, 1),
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
   long flags = THR_NEW_LWP | THR_JOINABLE;
 
   CORBA::ORB_var orb =
-    TAO_NS_PROPERTIES::instance()->orb ();
+    TAO_Notify_PROPERTIES::instance()->orb ();
 
   flags |=
     orb->orb_core ()->orb_params ()->thread_creation_flags ();
 
   // Increment the count on this object by the number of threads using it.
   {
-    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->TAO_NS_Refcountable::lock_);
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->TAO_Notify_Refcountable::lock_);
 
     this->refcount_+=tp_params.static_threads;
   }
@@ -74,7 +74,7 @@ TAO_NS_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, TAO_
       // Decrement the count on this object. We know that this object's owner is holding a count on this object so
       // we can neglect our responsibility of checking if the refcount is decremented to 0.
       {
-        ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->TAO_NS_Refcountable::lock_);
+        ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->TAO_Notify_Refcountable::lock_);
 
         this->refcount_-=tp_params.static_threads;
       }
@@ -95,9 +95,9 @@ TAO_NS_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params, TAO_
 }
 
 void
-TAO_NS_ThreadPool_Task::execute (TAO_NS_Method_Request_No_Copy& method_request ACE_ENV_ARG_DECL)
+TAO_Notify_ThreadPool_Task::execute (TAO_Notify_Method_Request_No_Copy& method_request ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Method_Request& request_copy = *method_request.copy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  TAO_Notify_Method_Request& request_copy = *method_request.copy (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   if (this->buffering_strategy_->enqueue (request_copy) == -1)
     {
@@ -108,9 +108,9 @@ TAO_NS_ThreadPool_Task::execute (TAO_NS_Method_Request_No_Copy& method_request A
 }
 
 int
-TAO_NS_ThreadPool_Task::svc (void)
+TAO_Notify_ThreadPool_Task::svc (void)
 {
-  TAO_NS_Method_Request* method_request;
+  TAO_Notify_Method_Request* method_request;
 
   while (!shutdown_)
     {
@@ -157,7 +157,7 @@ TAO_NS_ThreadPool_Task::svc (void)
 }
 
 void
-TAO_NS_ThreadPool_Task::shutdown (void)
+TAO_Notify_ThreadPool_Task::shutdown (void)
 {
   this->shutdown_ = 1;
 
@@ -167,7 +167,7 @@ TAO_NS_ThreadPool_Task::shutdown (void)
 }
 
 void
-TAO_NS_ThreadPool_Task::release (void)
+TAO_Notify_ThreadPool_Task::release (void)
 {
   this->timer_->_decr_refcnt ();
 
@@ -175,7 +175,7 @@ TAO_NS_ThreadPool_Task::release (void)
 }
 
 int
-TAO_NS_ThreadPool_Task::close (u_long /*flags*/)
+TAO_Notify_ThreadPool_Task::close (u_long /*flags*/)
 {
   this->_decr_refcnt ();
 

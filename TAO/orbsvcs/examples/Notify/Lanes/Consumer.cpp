@@ -2,19 +2,19 @@
 
 #include "Consumer.h"
 
-ACE_RCSID(Notify, TAO_NS_Consumer, "$id$")
+ACE_RCSID(Notify, TAO_Notify_Lanes_Consumer, "$id$")
 
-TAO_NS_Consumer::TAO_NS_Consumer (TAO_NS_ORB_Objects& orb_objects)
+TAO_Notify_Lanes_Consumer::TAO_Notify_Lanes_Consumer (TAO_Notify_ORB_Objects& orb_objects)
   : orb_objects_ (orb_objects)
 {
 }
 
-TAO_NS_Consumer::~TAO_NS_Consumer (void)
+TAO_Notify_Lanes_Consumer::~TAO_Notify_Lanes_Consumer (void)
 {
 }
 
 void
-TAO_NS_Consumer::init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::ConsumerAdmin_var& admin, ACE_CString& event_type ACE_ENV_ARG_DECL)
+TAO_Notify_Lanes_Consumer::init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::ConsumerAdmin_var& admin, ACE_CString& event_type ACE_ENV_ARG_DECL)
 {
   this->default_POA_ = poa;
   this->admin_ = admin;
@@ -24,19 +24,19 @@ TAO_NS_Consumer::init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::Cons
 }
 
 PortableServer::POA_ptr
-TAO_NS_Consumer::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Lanes_Consumer::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
-TAO_NS_Consumer::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Lanes_Consumer::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   // Nothing to do.
 }
 
 void
-TAO_NS_Consumer::connect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Consumer::connect (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Activate the consumer with the default_POA_
   CosNotifyComm::StructuredPushConsumer_var objref = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -73,14 +73,14 @@ TAO_NS_Consumer::connect (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->proxy_supplier_->disconnect_structured_push_supplier(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_NS_Consumer::offer_change (const CosNotification::EventTypeSeq & /*added*/,
+TAO_Notify_Lanes_Consumer::offer_change (const CosNotification::EventTypeSeq & /*added*/,
                                const CosNotification::EventTypeSeq & /*removed*/
                                ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
@@ -92,7 +92,7 @@ TAO_NS_Consumer::offer_change (const CosNotification::EventTypeSeq & /*added*/,
 }
 
 void
-TAO_NS_Consumer::push_structured_event (const CosNotification::StructuredEvent & notification
+TAO_Notify_Lanes_Consumer::push_structured_event (const CosNotification::StructuredEvent & notification
                                         ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
@@ -144,7 +144,7 @@ TAO_NS_Consumer::push_structured_event (const CosNotification::StructuredEvent &
 }
 
 void
-TAO_NS_Consumer::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Consumer::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 {
   PortableServer::POA_var poa (this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER));
   ACE_CHECK;
@@ -159,7 +159,7 @@ TAO_NS_Consumer::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Consumer::disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Consumer::disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))

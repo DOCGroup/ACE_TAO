@@ -7,25 +7,25 @@
 #include "Method_Request_Shutdown.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Method_Request_Shutdown, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_Method_Request_Shutdown, "$Id$")
 
-TAO_NS_Method_Request_Shutdown::TAO_NS_Method_Request_Shutdown (TAO_NS_ThreadPool_Task* task)
+TAO_Notify_Method_Request_Shutdown::TAO_Notify_Method_Request_Shutdown (TAO_Notify_ThreadPool_Task* task)
   : task_ (task)
 {
 }
 
-TAO_NS_Method_Request_Shutdown::~TAO_NS_Method_Request_Shutdown ()
+TAO_Notify_Method_Request_Shutdown::~TAO_Notify_Method_Request_Shutdown ()
 {
 }
 
-TAO_NS_Method_Request*
-TAO_NS_Method_Request_Shutdown::copy (void)
+TAO_Notify_Method_Request*
+TAO_Notify_Method_Request_Shutdown::copy (void)
 {
-  return new TAO_NS_Method_Request_Shutdown (this->task_);
+  return new TAO_Notify_Method_Request_Shutdown (this->task_);
 }
 
 int
-TAO_NS_Method_Request_Shutdown::execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Method_Request_Shutdown::execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   // Shut down the scheduler by deactivating the activation queue's
   // underlying message queue - should pop all worker threads off their

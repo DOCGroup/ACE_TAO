@@ -3,8 +3,8 @@
 This directory has the library used by the test examples to test the
 Notification Service.
 
-Helper classes TAO_Notify_StructuredPushConsumer,
-               TAO_Notify_StructuredPushSupplier,
-               TAO_Notify_PushConsumer,
-               TAO_Notify_PushSupplier,
+Helper classes TAO_Notify_Tests_StructuredPushConsumer,
+               TAO_Notify_Tests_StructuredPushSupplier,
+               TAO_Notify_Tests_PushConsumer,
+               TAO_Notify_Tests_PushSupplier,
 to help write client consumers and suppliers.

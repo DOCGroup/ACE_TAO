@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_METHOD_REQUEST_LOOKUP_T_H
-#define TAO_NS_METHOD_REQUEST_LOOKUP_T_H
+#ifndef TAO_Notify_METHOD_REQUEST_LOOKUP_T_H
+#define TAO_Notify_METHOD_REQUEST_LOOKUP_T_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -23,27 +23,27 @@
 #include "ProxySupplier.h"
 
 /**
- * @class TAO_NS_Method_Request_Lookup_T
+ * @class TAO_Notify_Method_Request_Lookup_T
  *
  * @brief
  *
  */
 template <class EVENT, class PROXY, class EVENT_PARAM, class PROXY_PARAM>
-class TAO_Notify_Export TAO_NS_Method_Request_Lookup_T : public TAO_ESF_Worker<TAO_NS_ProxySupplier>
+class TAO_Notify_Export TAO_Notify_Method_Request_Lookup_T : public TAO_ESF_Worker<TAO_Notify_ProxySupplier>
 {
 public:
   /// Constuctor
-  TAO_NS_Method_Request_Lookup_T (EVENT_PARAM event, PROXY_PARAM proxy);
+  TAO_Notify_Method_Request_Lookup_T (EVENT_PARAM event, PROXY_PARAM proxy);
 
   /// Destructor
-  virtual ~TAO_NS_Method_Request_Lookup_T ();
+  virtual ~TAO_Notify_Method_Request_Lookup_T ();
 
   /// Execute the dispatch operation.
   int execute_i (ACE_ENV_SINGLE_ARG_DECL);
 
 protected:
   ///= TAO_ESF_Worker method
-  virtual void work (TAO_NS_ProxySupplier* proxy_supplier ACE_ENV_ARG_DECL);
+  virtual void work (TAO_Notify_ProxySupplier* proxy_supplier ACE_ENV_ARG_DECL);
 
   /// The Event
   EVENT event_;
@@ -65,4 +65,4 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
-#endif /* TAO_NS_METHOD_REQUEST_LOOKUP_T_H */
+#endif /* TAO_Notify_METHOD_REQUEST_LOOKUP_T_H */

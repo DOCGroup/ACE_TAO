@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_EVENTCHANNELFACTORY_H
-#define TAO_NS_EVENTCHANNELFACTORY_H
+#ifndef TAO_Notify_EVENTCHANNELFACTORY_H
+#define TAO_Notify_EVENTCHANNELFACTORY_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -23,8 +23,8 @@
 #include "orbsvcs/NotifyExtS.h"
 #include "Object.h"
 
-class TAO_NS_EventChannel;
-template <class TYPE> class TAO_NS_Container_T;
+class TAO_Notify_EventChannel;
+template <class TYPE> class TAO_Notify_Container_T;
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -34,25 +34,25 @@ template <class TYPE> class TAO_NS_Container_T;
 #endif /* _MSC_VER */
 
 /**
- * @class TAO_NS_EventChannelFactory
+ * @class TAO_Notify_EventChannelFactory
  *
  * @brief Implementation of CosNotifyChannelAdmin::EventChannelFactory
  *
  */
-class TAO_Notify_Export TAO_NS_EventChannelFactory : public virtual POA_NotifyExt::EventChannelFactory
-                                                   , public virtual TAO_NS_Object
+class TAO_Notify_Export TAO_Notify_EventChannelFactory : public virtual POA_NotifyExt::EventChannelFactory
+                                                   , public virtual TAO_Notify_Object
 {
-  friend class TAO_NS_Builder;
+  friend class TAO_Notify_Builder;
 
 public:
   /// Constuctor
-  TAO_NS_EventChannelFactory (void);
+  TAO_Notify_EventChannelFactory (void);
 
   /// Init the factory
   void init (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL);
 
   /// Destructor
-  virtual ~TAO_NS_EventChannelFactory ();
+  virtual ~TAO_Notify_EventChannelFactory ();
 
   /// = ServantBase  Methods
   virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
@@ -62,7 +62,7 @@ public:
   virtual void release (void);
 
   /// Remove <channel> from the <ec_container_>
-  void remove (TAO_NS_EventChannel* channel ACE_ENV_ARG_DECL);
+  void remove (TAO_Notify_EventChannel* channel ACE_ENV_ARG_DECL);
 
   /// Accesor for the default filter factory shared by all EC's.
   virtual CosNotifyFilter::FilterFactory_ptr get_default_filter_factory (ACE_ENV_SINGLE_ARG_DECL);
@@ -71,11 +71,11 @@ public:
   virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
  protected:
-  typedef TAO_NS_Container_T<TAO_NS_EventChannel> TAO_NS_EventChannel_Container;
+  typedef TAO_Notify_Container_T<TAO_Notify_EventChannel> TAO_Notify_EventChannel_Container;
 
   /// = Data Members
   /// Container for Event Channels.
-  TAO_NS_EventChannel_Container *ec_container_;
+  TAO_Notify_EventChannel_Container *ec_container_;
 
   /// The default filter factory.
   CosNotifyFilter::FilterFactory_var default_filter_factory_;
@@ -119,4 +119,4 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_EVENTCHANNELFACTORY_H */
+#endif /* TAO_Notify_EVENTCHANNELFACTORY_H */

@@ -6,20 +6,20 @@
 #include "EventType.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_EventType, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_EventType, "$Id$")
 
-TAO_NS_EventType
-TAO_NS_EventType::special (void)
+TAO_Notify_EventType
+TAO_Notify_EventType::special (void)
 {
-  return TAO_NS_EventType ("*", "%ALL");
+  return TAO_Notify_EventType ("*", "%ALL");
 }
 
-TAO_NS_EventType::TAO_NS_EventType (void)
+TAO_Notify_EventType::TAO_Notify_EventType (void)
 {
 }
 
 void
-TAO_NS_EventType::init_i (const char* domain_name, const char* type_name)
+TAO_Notify_EventType::init_i (const char* domain_name, const char* type_name)
 {
   this->event_type_.domain_name = domain_name;
   this->event_type_.type_name = type_name;
@@ -33,22 +33,22 @@ TAO_NS_EventType::init_i (const char* domain_name, const char* type_name)
   this->recompute_hash ();
 }
 
-TAO_NS_EventType::TAO_NS_EventType (const char* domain_name, const char* type_name)
+TAO_Notify_EventType::TAO_Notify_EventType (const char* domain_name, const char* type_name)
 {
   this->init_i (domain_name, type_name);
 }
 
-TAO_NS_EventType::TAO_NS_EventType (const CosNotification::EventType& event_type)
+TAO_Notify_EventType::TAO_Notify_EventType (const CosNotification::EventType& event_type)
 {
   this->init_i (event_type.domain_name.in (), event_type.type_name.in ());
 }
 
-TAO_NS_EventType::~TAO_NS_EventType ()
+TAO_Notify_EventType::~TAO_Notify_EventType ()
 {
 }
 
 void
-TAO_NS_EventType::recompute_hash (void)
+TAO_Notify_EventType::recompute_hash (void)
 {
   // @@ Pradeep: this code is bound to crash someday if the strings
   // are too long....  See if the hash_pjw () function can be modified
@@ -66,16 +66,16 @@ TAO_NS_EventType::recompute_hash (void)
   this->hash_value_ =  ACE::hash_pjw (buffer);
 }
 
-TAO_NS_EventType&
-TAO_NS_EventType::operator=(const CosNotification::EventType& event_type)
+TAO_Notify_EventType&
+TAO_Notify_EventType::operator=(const CosNotification::EventType& event_type)
 {
   this->init_i (event_type.domain_name.in (),event_type.type_name.in ());
 
   return *this;
 }
 
-TAO_NS_EventType&
-TAO_NS_EventType::operator=(const TAO_NS_EventType& event_type)
+TAO_Notify_EventType&
+TAO_Notify_EventType::operator=(const TAO_Notify_EventType& event_type)
 {
   if (this == &event_type)
     return *this;
@@ -86,7 +86,7 @@ TAO_NS_EventType::operator=(const TAO_NS_EventType& event_type)
 }
 
 int
-TAO_NS_EventType::operator==(const TAO_NS_EventType& event_type) const
+TAO_Notify_EventType::operator==(const TAO_Notify_EventType& event_type) const
 {
   if (this->hash () != event_type.hash ())
     return 0;
@@ -97,7 +97,7 @@ TAO_NS_EventType::operator==(const TAO_NS_EventType& event_type) const
 }
 
 int
-TAO_NS_EventType::operator!=(const TAO_NS_EventType& event_type) const
+TAO_Notify_EventType::operator!=(const TAO_Notify_EventType& event_type) const
 {
   if (this->hash () != event_type.hash ())
     return 1;
@@ -108,7 +108,7 @@ TAO_NS_EventType::operator!=(const TAO_NS_EventType& event_type) const
 }
 
 CORBA::Boolean
-TAO_NS_EventType::is_special (void) const
+TAO_Notify_EventType::is_special (void) const
 {
   if ((this->event_type_.domain_name == 0 ||
              ACE_OS::strcmp (this->event_type_.domain_name, "") == 0 ||
@@ -123,7 +123,7 @@ TAO_NS_EventType::is_special (void) const
 }
 
 void
-TAO_NS_EventType::dump (void) const
+TAO_Notify_EventType::dump (void) const
 {
   ACE_DEBUG ((LM_DEBUG, "(%s,%s)", this->event_type_.domain_name.in (), this->event_type_.type_name.in ()));
 }

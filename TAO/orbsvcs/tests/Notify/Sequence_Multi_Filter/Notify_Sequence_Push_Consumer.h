@@ -21,7 +21,7 @@
 #include "Notify_SequencePushConsumer.h"
 
 
-class Notify_Sequence_Push_Consumer : public TAO_Notify_SequencePushConsumer
+class Notify_Sequence_Push_Consumer : public TAO_Notify_Tests_SequencePushConsumer
 {
 public:
   Notify_Sequence_Push_Consumer (const char* name,

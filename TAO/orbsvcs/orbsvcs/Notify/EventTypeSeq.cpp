@@ -6,25 +6,25 @@
 #include "EventTypeSeq.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_EventTypeSeq, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_EventTypeSeq, "$Id$")
 
-TAO_NS_EventTypeSeq::TAO_NS_EventTypeSeq (void)
+TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq (void)
 {
 }
 
-TAO_NS_EventTypeSeq::TAO_NS_EventTypeSeq (const CosNotification::EventTypeSeq& event_type_seq)
+TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq (const CosNotification::EventTypeSeq& event_type_seq)
 {
   this->insert_seq (event_type_seq);
 }
 
 void
-TAO_NS_EventTypeSeq::populate (CosNotification::EventTypeSeq& event_type_seq) const
+TAO_Notify_EventTypeSeq::populate (CosNotification::EventTypeSeq& event_type_seq) const
 {
   event_type_seq.length (ACE_static_cast (CORBA::ULong, this->size ()));
 
   inherited::CONST_ITERATOR iter (*this);
 
-  TAO_NS_EventType* event_type;
+  TAO_Notify_EventType* event_type;
 
   CORBA::ULong i = 0;
   for (iter.first (); iter.next (event_type); iter.advance (), ++i)
@@ -32,10 +32,10 @@ TAO_NS_EventTypeSeq::populate (CosNotification::EventTypeSeq& event_type_seq) co
 }
 
 void
-TAO_NS_EventTypeSeq::populate_no_special (CosNotification::EventTypeSeq& event_type_seq) const
+TAO_Notify_EventTypeSeq::populate_no_special (CosNotification::EventTypeSeq& event_type_seq) const
 {
   // If the special exists in us, don't include it.
-  const TAO_NS_EventType& special = TAO_NS_EventType::special ();
+  const TAO_Notify_EventType& special = TAO_Notify_EventType::special ();
 
   if (this->find (special) == 0)
     {
@@ -46,7 +46,7 @@ TAO_NS_EventTypeSeq::populate_no_special (CosNotification::EventTypeSeq& event_t
 
   inherited::CONST_ITERATOR iter (*this);
 
-  TAO_NS_EventType* event_type;
+  TAO_Notify_EventType* event_type;
 
   CORBA::ULong i = 0;
   for (iter.first (); iter.next (event_type); iter.advance (), ++i)
@@ -57,9 +57,9 @@ TAO_NS_EventTypeSeq::populate_no_special (CosNotification::EventTypeSeq& event_t
 }
 
 void
-TAO_NS_EventTypeSeq::insert_seq (const CosNotification::EventTypeSeq& event_type_seq)
+TAO_Notify_EventTypeSeq::insert_seq (const CosNotification::EventTypeSeq& event_type_seq)
 {
-  TAO_NS_EventType event_type;
+  TAO_Notify_EventType event_type;
 
   for (CORBA::ULong i = 0; i < event_type_seq.length (); ++i)
     {
@@ -69,9 +69,9 @@ TAO_NS_EventTypeSeq::insert_seq (const CosNotification::EventTypeSeq& event_type
 }
 
 void
-TAO_NS_EventTypeSeq::remove_seq (const CosNotification::EventTypeSeq& event_type_seq)
+TAO_Notify_EventTypeSeq::remove_seq (const CosNotification::EventTypeSeq& event_type_seq)
 {
-  TAO_NS_EventType event_type;
+  TAO_Notify_EventType event_type;
 
   for (CORBA::ULong i = 0; i < event_type_seq.length (); ++i)
     {
@@ -81,31 +81,31 @@ TAO_NS_EventTypeSeq::remove_seq (const CosNotification::EventTypeSeq& event_type
 }
 
 void
-TAO_NS_EventTypeSeq::insert_seq (const TAO_NS_EventTypeSeq& event_type_seq)
+TAO_Notify_EventTypeSeq::insert_seq (const TAO_Notify_EventTypeSeq& event_type_seq)
 {
-  TAO_NS_EventTypeSeq::CONST_ITERATOR iter (event_type_seq);
+  TAO_Notify_EventTypeSeq::CONST_ITERATOR iter (event_type_seq);
 
-  TAO_NS_EventType* event_type;
+  TAO_Notify_EventType* event_type;
 
   for (iter.first (); iter.next (event_type); iter.advance ())
     inherited::insert (*event_type);
 }
 
 void
-TAO_NS_EventTypeSeq::remove_seq (const TAO_NS_EventTypeSeq& event_type_seq)
+TAO_Notify_EventTypeSeq::remove_seq (const TAO_Notify_EventTypeSeq& event_type_seq)
 {
-  TAO_NS_EventTypeSeq::CONST_ITERATOR iter (event_type_seq);
+  TAO_Notify_EventTypeSeq::CONST_ITERATOR iter (event_type_seq);
 
-  TAO_NS_EventType* event_type;
+  TAO_Notify_EventType* event_type;
 
   for (iter.first (); iter.next (event_type); iter.advance ())
     inherited::remove (*event_type);
 }
 
 void
-TAO_NS_EventTypeSeq::init (TAO_NS_EventTypeSeq& seq_added, TAO_NS_EventTypeSeq& seq_remove)
+TAO_Notify_EventTypeSeq::init (TAO_Notify_EventTypeSeq& seq_added, TAO_Notify_EventTypeSeq& seq_remove)
 {
-  const TAO_NS_EventType& special = TAO_NS_EventType::special ();
+  const TAO_Notify_EventType& special = TAO_Notify_EventType::special ();
 
   if (this->find (special) == 0) // If this object has the special type.
     {
@@ -157,7 +157,7 @@ TAO_NS_EventTypeSeq::init (TAO_NS_EventTypeSeq& seq_added, TAO_NS_EventTypeSeq& 
               //= First remove the duplicates in the added and removes lists.
               // compute the intersection.
 
-              TAO_NS_EventTypeSeq common;
+              TAO_Notify_EventTypeSeq common;
               common.intersection (seq_added, seq_remove);
 
               // remove the common elements from both the lists so Added {BCDK} and Removed {CDEA} will yield Added {BK} and Removed {EA}
@@ -189,14 +189,14 @@ TAO_NS_EventTypeSeq::init (TAO_NS_EventTypeSeq& seq_added, TAO_NS_EventTypeSeq& 
 }
 
 void
-TAO_NS_EventTypeSeq::intersection (const TAO_NS_EventTypeSeq& rhs, const TAO_NS_EventTypeSeq& lhs)
+TAO_Notify_EventTypeSeq::intersection (const TAO_Notify_EventTypeSeq& rhs, const TAO_Notify_EventTypeSeq& lhs)
 {
   // linear search.
-  TAO_NS_EventTypeSeq::CONST_ITERATOR rhs_iter (rhs);
-  TAO_NS_EventType* rhs_event_type;
+  TAO_Notify_EventTypeSeq::CONST_ITERATOR rhs_iter (rhs);
+  TAO_Notify_EventType* rhs_event_type;
 
-  TAO_NS_EventTypeSeq::CONST_ITERATOR lhs_iter (lhs);
-  TAO_NS_EventType* lhs_event_type;
+  TAO_Notify_EventTypeSeq::CONST_ITERATOR lhs_iter (lhs);
+  TAO_Notify_EventType* lhs_event_type;
 
   for (rhs_iter.first (); rhs_iter.next (rhs_event_type); rhs_iter.advance ())
     {
@@ -209,11 +209,11 @@ TAO_NS_EventTypeSeq::intersection (const TAO_NS_EventTypeSeq& rhs, const TAO_NS_
 }
 
 void
-TAO_NS_EventTypeSeq::dump (void) const
+TAO_Notify_EventTypeSeq::dump (void) const
 {
-  TAO_NS_EventTypeSeq::CONST_ITERATOR iter (*this);
+  TAO_Notify_EventTypeSeq::CONST_ITERATOR iter (*this);
 
-  TAO_NS_EventType* event_type;
+  TAO_Notify_EventType* event_type;
 
   for (iter.first (); iter.next (event_type); iter.advance ())
     {

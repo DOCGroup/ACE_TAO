@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_COSEC_PROXYPUSHSUPPLIER_H
-#define TAO_NS_COSEC_PROXYPUSHSUPPLIER_H
+#ifndef TAO_Notify_COSEC_PROXYPUSHSUPPLIER_H
+#define TAO_Notify_COSEC_PROXYPUSHSUPPLIER_H
 #include "ace/pre.h"
 
 #include "../notify_export.h"
@@ -31,24 +31,24 @@
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 template class TAO_Notify_Export
-TAO_NS_ProxySupplier_T<POA_CosEventChannelAdmin::ProxyPushSupplier>;
+TAO_Notify_ProxySupplier_T<POA_CosEventChannelAdmin::ProxyPushSupplier>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
 
 /**
- * @class TAO_NS_CosEC_ProxyPushSupplier
+ * @class TAO_Notify_CosEC_ProxyPushSupplier
  *
  * @brief
  *
  */
-class TAO_Notify_Export TAO_NS_CosEC_ProxyPushSupplier : public virtual TAO_NS_ProxySupplier_T <POA_CosEventChannelAdmin::ProxyPushSupplier>
+class TAO_Notify_Export TAO_Notify_CosEC_ProxyPushSupplier : public virtual TAO_Notify_ProxySupplier_T <POA_CosEventChannelAdmin::ProxyPushSupplier>
 {
-  friend class TAO_NS_Builder;
+  friend class TAO_Notify_Builder;
 public:
   /// Constuctor
-  TAO_NS_CosEC_ProxyPushSupplier (void);
+  TAO_Notify_CosEC_ProxyPushSupplier (void);
 
   /// Destructor
-  ~TAO_NS_CosEC_ProxyPushSupplier ();
+  ~TAO_Notify_CosEC_ProxyPushSupplier ();
 
   /// Destroy this object.
   virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
@@ -84,4 +84,4 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_COSEC_PROXYPUSHSUPPLIER_H */
+#endif /* TAO_Notify_COSEC_PROXYPUSHSUPPLIER_H */

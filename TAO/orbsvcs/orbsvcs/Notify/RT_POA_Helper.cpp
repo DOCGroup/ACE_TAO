@@ -10,14 +10,14 @@
 #include "RT_POA_Helper.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_RT_POA_Helper, "$Id$")
+ACE_RCSID(RT_Notify, TAO_Notify_RT_POA_Helper, "$Id$")
 
-TAO_NS_RT_POA_Helper::~TAO_NS_RT_POA_Helper ()
+TAO_Notify_RT_POA_Helper::~TAO_Notify_RT_POA_Helper ()
 {
 }
 
 void
-TAO_NS_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const NotifyExt::ThreadPoolParams& tp_params ACE_ENV_ARG_DECL)
+TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const NotifyExt::ThreadPoolParams& tp_params ACE_ENV_ARG_DECL)
 {
   ACE_CString child_poa_name = this->get_unique_id ();
 
@@ -25,7 +25,7 @@ TAO_NS_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const NotifyExt:
 }
 
 void
-TAO_NS_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_name
+TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_name
                                  , const NotifyExt::ThreadPoolParams& tp_params ACE_ENV_ARG_DECL)
 {
   CORBA::PolicyList policy_list (4);
@@ -33,7 +33,7 @@ TAO_NS_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_
   this->set_policy (parent_poa, policy_list ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  RTCORBA::RTORB_var rt_orb = TAO_NS_RT_PROPERTIES::instance ()->rt_orb ();
+  RTCORBA::RTORB_var rt_orb = TAO_Notify_RT_PROPERTIES::instance ()->rt_orb ();
 
   RTCORBA::PriorityModel priority_model =
     tp_params.priority_model == NotifyExt::CLIENT_PROPAGATED ?
@@ -76,7 +76,7 @@ TAO_NS_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_
 }
 
 void
-TAO_NS_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const NotifyExt::ThreadPoolLanesParams& tpl_params ACE_ENV_ARG_DECL)
+TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const NotifyExt::ThreadPoolLanesParams& tpl_params ACE_ENV_ARG_DECL)
 {
   ACE_CString child_poa_name = this->get_unique_id ();
 
@@ -84,7 +84,7 @@ TAO_NS_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const NotifyExt:
 }
 
 void
-TAO_NS_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_name
+TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_name
                                  , const NotifyExt::ThreadPoolLanesParams& tpl_params ACE_ENV_ARG_DECL)
 {
   CORBA::PolicyList policy_list (4);
@@ -92,7 +92,7 @@ TAO_NS_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_
   this->set_policy (parent_poa, policy_list ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  RTCORBA::RTORB_var rt_orb = TAO_NS_RT_PROPERTIES::instance ()->rt_orb ();
+  RTCORBA::RTORB_var rt_orb = TAO_Notify_RT_PROPERTIES::instance ()->rt_orb ();
 
   RTCORBA::PriorityModel priority_model =
     tpl_params.priority_model == NotifyExt::CLIENT_PROPAGATED ?
@@ -143,11 +143,11 @@ TAO_NS_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_
 }
 
 void
-TAO_NS_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL)
+TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL)
 {
   CORBA::PolicyList policy_list (1);
 
-  RTCORBA::RTORB_var rt_orb = TAO_NS_RT_PROPERTIES::instance ()->rt_orb ();
+  RTCORBA::RTORB_var rt_orb = TAO_Notify_RT_PROPERTIES::instance ()->rt_orb ();
 
   policy_list.length (1);
 

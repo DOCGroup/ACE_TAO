@@ -1,7 +1,7 @@
 //$Id$
 
 ACE_INLINE CORBA::Boolean
-TAO_NS_FilterAdmin::match (const TAO_NS_Event* event ACE_ENV_ARG_DECL)
+TAO_Notify_FilterAdmin::match (const TAO_Notify_Event* event ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::UnsupportedFilterableData

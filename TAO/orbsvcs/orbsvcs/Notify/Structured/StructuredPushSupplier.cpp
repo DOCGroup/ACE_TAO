@@ -6,19 +6,19 @@
 #include "StructuredPushSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(RT_Notify, TAO_NS_StructuredPushSupplier, "$Id$")
+ACE_RCSID(RT_Notify, TAO_Notify_StructuredPushSupplier, "$Id$")
 
-TAO_NS_StructuredPushSupplier::TAO_NS_StructuredPushSupplier (TAO_NS_ProxyConsumer* proxy)
-  :TAO_NS_Supplier (proxy)
+TAO_Notify_StructuredPushSupplier::TAO_Notify_StructuredPushSupplier (TAO_Notify_ProxyConsumer* proxy)
+  :TAO_Notify_Supplier (proxy)
 {
 }
 
-TAO_NS_StructuredPushSupplier::~TAO_NS_StructuredPushSupplier ()
+TAO_Notify_StructuredPushSupplier::~TAO_Notify_StructuredPushSupplier ()
 {
 }
 
 void
-TAO_NS_StructuredPushSupplier::init (CosNotifyComm::StructuredPushSupplier_ptr push_supplier ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_StructuredPushSupplier::init (CosNotifyComm::StructuredPushSupplier_ptr push_supplier ACE_ENV_ARG_DECL_NOT_USED)
 {
   this->push_supplier_ = CosNotifyComm::StructuredPushSupplier::_duplicate (push_supplier);
 
@@ -26,7 +26,7 @@ TAO_NS_StructuredPushSupplier::init (CosNotifyComm::StructuredPushSupplier_ptr p
 }
 
 void
-TAO_NS_StructuredPushSupplier::release (void)
+TAO_Notify_StructuredPushSupplier::release (void)
 {
   delete this;
   //@@ inform factory

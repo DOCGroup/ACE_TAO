@@ -10,21 +10,21 @@
 #include "orbsvcs/orbsvcs/NotifyExtC.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
 
-ACE_RCSID(Notify, TAO_NS_Supplier_Client, "$id$")
+ACE_RCSID(Notify, TAO_Notify_Lanes_Supplier_Client, "$id$")
 
-TAO_NS_Supplier_Client::TAO_NS_Supplier_Client (TAO_NS_ORB_Objects& orb_objects)
+TAO_Notify_Lanes_Supplier_Client::TAO_Notify_Lanes_Supplier_Client (TAO_Notify_ORB_Objects& orb_objects)
   : orb_objects_ (orb_objects)
     ,supplier_ (0)
     , consumer_count_ (2)
 {
 }
 
-TAO_NS_Supplier_Client::~TAO_NS_Supplier_Client ()
+TAO_Notify_Lanes_Supplier_Client::~TAO_Notify_Lanes_Supplier_Client ()
 {
 }
 
 int
-TAO_NS_Supplier_Client::parse_args (int argc, char *argv[])
+TAO_Notify_Lanes_Supplier_Client::parse_args (int argc, char *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -60,7 +60,7 @@ TAO_NS_Supplier_Client::parse_args (int argc, char *argv[])
 }
 
 void
-TAO_NS_Supplier_Client::initialize (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Supplier_Client::initialize (ACE_ENV_SINGLE_ARG_DECL)
 {
   PortableServer::POAManager_var poa_manager =
     this->orb_objects_.root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -82,14 +82,14 @@ TAO_NS_Supplier_Client::initialize (ACE_ENV_SINGLE_ARG_DECL)
   ACE_ASSERT (!CORBA::is_nil (supplier_admin.in ()));
 
   // Create a Supplier
-  this->supplier_ = new TAO_NS_Supplier (this->orb_objects_);
+  this->supplier_ = new TAO_Notify_Lanes_Supplier (this->orb_objects_);
 
   // Initialize it.
   this->supplier_->init (supplier_admin, this->consumer_count_ ACE_ENV_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
-TAO_NS_Supplier_Client::create_ec (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Supplier_Client::create_ec (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::EventChannel_var ec;
 
@@ -154,7 +154,7 @@ TAO_NS_Supplier_Client::create_ec (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Supplier_Client::run (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Supplier_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   /// First, signal that the supplier is ready.
   this->write_ior (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -164,7 +164,7 @@ TAO_NS_Supplier_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Supplier_Client::write_ior (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Supplier_Client::write_ior (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyComm::StructuredPushSupplier_var objref = this->supplier_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -186,7 +186,7 @@ TAO_NS_Supplier_Client::write_ior (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-TAO_NS_Supplier_Client::svc (void)
+TAO_Notify_Lanes_Supplier_Client::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
@@ -223,16 +223,16 @@ main (int argc, char *argv [])
       ACE_TRY_CHECK;
 
       // Create a holder for the common ORB Objects.
-      TAO_NS_ORB_Objects orb_objects;
+      TAO_Notify_ORB_Objects orb_objects;
 
       orb_objects.init (orb ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /* Run the ORB in a seperate thread */
-      TAO_NS_ORB_Run_Task orb_run_task (orb_objects);
+      TAO_Notify_ORB_Run_Task orb_run_task (orb_objects);
 
       /* Create a Client */
-      TAO_NS_Supplier_Client client (orb_objects);
+      TAO_Notify_Lanes_Supplier_Client client (orb_objects);
 
       if (client.parse_args (argc, argv) != 0)
         {

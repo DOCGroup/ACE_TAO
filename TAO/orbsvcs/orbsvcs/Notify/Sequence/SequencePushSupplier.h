@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_SEQUENCEPUSHSUPPLIER_H
-#define TAO_NS_SEQUENCEPUSHSUPPLIER_H
+#ifndef TAO_Notify_SEQUENCEPUSHSUPPLIER_H
+#define TAO_Notify_SEQUENCEPUSHSUPPLIER_H
 #include "ace/pre.h"
 
 #include "../notify_export.h"
@@ -22,27 +22,27 @@
 #include "orbsvcs/CosNotifyCommC.h"
 #include "../Supplier.h"
 
-class TAO_NS_ProxyConsumer;
+class TAO_Notify_ProxyConsumer;
 
 /**
- * @class TAO_NS_SequencePushSupplier
+ * @class TAO_Notify_SequencePushSupplier
  *
  * @brief Wrapper for the SequencePushSupplier that connect to the EventChannel.
  *
  */
-class TAO_Notify_Export TAO_NS_SequencePushSupplier : public TAO_NS_Supplier
+class TAO_Notify_Export TAO_Notify_SequencePushSupplier : public TAO_Notify_Supplier
 {
 public:
   /// Constuctor
-  TAO_NS_SequencePushSupplier (TAO_NS_ProxyConsumer* proxy);
+  TAO_Notify_SequencePushSupplier (TAO_Notify_ProxyConsumer* proxy);
 
   /// Destructor
-  ~TAO_NS_SequencePushSupplier ();
+  ~TAO_Notify_SequencePushSupplier ();
 
   /// Init
   void init (CosNotifyComm::SequencePushSupplier_ptr push_supplier ACE_ENV_ARG_DECL);
 
-  /// TAO_NS_Destroy_Callback methods
+  /// TAO_Notify_Destroy_Callback methods
   virtual void release (void);
 
 protected:
@@ -55,4 +55,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_SEQUENCEPUSHSUPPLIER_H */
+#endif /* TAO_Notify_SEQUENCEPUSHSUPPLIER_H */

@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_NS_PROXYCONSUMER_T_CPP
-#define TAO_NS_PROXYCONSUMER_T_CPP
+#ifndef TAO_Notify_PROXYCONSUMER_T_CPP
+#define TAO_Notify_PROXYCONSUMER_T_CPP
 
 #include "ProxyConsumer_T.h"
 #include "SupplierAdmin.h"
@@ -10,22 +10,22 @@
 #include "ProxyConsumer_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_ProxyConsumer_T, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_ProxyConsumer_T, "$Id$")
 
 #include "Event_Manager.h"
 
 template <class SERVANT_TYPE>
-TAO_NS_ProxyConsumer_T<SERVANT_TYPE>::TAO_NS_ProxyConsumer_T (void)
+TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::TAO_Notify_ProxyConsumer_T (void)
 {
 }
 
 template <class SERVANT_TYPE>
-TAO_NS_ProxyConsumer_T<SERVANT_TYPE>::~TAO_NS_ProxyConsumer_T ()
+TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::~TAO_Notify_ProxyConsumer_T ()
 {
 }
 
 template <class SERVANT_TYPE> void
-TAO_NS_ProxyConsumer_T<SERVANT_TYPE>::admin_types_changed (const CosNotification::EventTypeSeq & added,
+TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::admin_types_changed (const CosNotification::EventTypeSeq & added,
                                                            const CosNotification::EventTypeSeq & removed
                                                            ACE_ENV_ARG_DECL)
 {
@@ -33,7 +33,7 @@ TAO_NS_ProxyConsumer_T<SERVANT_TYPE>::admin_types_changed (const CosNotification
 }
 
 template <class SERVANT_TYPE> CosNotifyChannelAdmin::SupplierAdmin_ptr
-TAO_NS_ProxyConsumer_T<SERVANT_TYPE>::MyAdmin (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::MyAdmin (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -49,14 +49,14 @@ TAO_NS_ProxyConsumer_T<SERVANT_TYPE>::MyAdmin (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 template <class SERVANT_TYPE> void
-TAO_NS_ProxyConsumer_T<SERVANT_TYPE>::offer_change (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed ACE_ENV_ARG_DECL)
+TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::offer_change (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyComm::InvalidEventType
                    ))
 {
-  TAO_NS_EventTypeSeq seq_added (added);
-  TAO_NS_EventTypeSeq seq_removed (removed);
+  TAO_Notify_EventTypeSeq seq_added (added);
+  TAO_Notify_EventTypeSeq seq_removed (removed);
 
   {
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
@@ -70,7 +70,7 @@ TAO_NS_ProxyConsumer_T<SERVANT_TYPE>::offer_change (const CosNotification::Event
 }
 
 template <class SERVANT_TYPE> CosNotification::EventTypeSeq*
-TAO_NS_ProxyConsumer_T<SERVANT_TYPE>::obtain_subscription_types (CosNotifyChannelAdmin::ObtainInfoMode mode ACE_ENV_ARG_DECL)
+TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::obtain_subscription_types (CosNotifyChannelAdmin::ObtainInfoMode mode ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -78,4 +78,4 @@ TAO_NS_ProxyConsumer_T<SERVANT_TYPE>::obtain_subscription_types (CosNotifyChanne
   return this->obtain_types (mode, this->event_manager_->subscription_types () ACE_ENV_ARG_PARAMETER);
 }
 
-#endif /* TAO_NS_PROXYCONSUMER_T_CPP */
+#endif /* TAO_Notify_PROXYCONSUMER_T_CPP */

@@ -6,11 +6,11 @@
 #include "AdminProperties.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_AdminProperties, "$id$")
+ACE_RCSID(Notify, TAO_Notify_AdminProperties, "$id$")
 
 #include "orbsvcs/CosNotificationC.h"
 
-TAO_NS_AdminProperties::TAO_NS_AdminProperties (void)
+TAO_Notify_AdminProperties::TAO_Notify_AdminProperties (void)
   : max_global_queue_length_ (CosNotification::MaxQueueLength, 0)
   , max_consumers_ (CosNotification::MaxConsumers, 0)
   , max_suppliers_ (CosNotification::MaxSuppliers, 0)
@@ -20,14 +20,14 @@ TAO_NS_AdminProperties::TAO_NS_AdminProperties (void)
 {
 }
 
-TAO_NS_AdminProperties::~TAO_NS_AdminProperties ()
+TAO_Notify_AdminProperties::~TAO_Notify_AdminProperties ()
 {
 }
 
 int
-TAO_NS_AdminProperties::init (const CosNotification::PropertySeq& prop_seq)
+TAO_Notify_AdminProperties::init (const CosNotification::PropertySeq& prop_seq)
 {
-  if (TAO_NS_PropertySeq::init (prop_seq) != 0)
+  if (TAO_Notify_PropertySeq::init (prop_seq) != 0)
     return -1;
 
   this->max_global_queue_length_.set (*this);
@@ -42,7 +42,7 @@ TAO_NS_AdminProperties::init (const CosNotification::PropertySeq& prop_seq)
 }
 
 CORBA::Boolean
-TAO_NS_AdminProperties::queue_full (void)
+TAO_Notify_AdminProperties::queue_full (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, 1);
 
@@ -59,12 +59,12 @@ TAO_NS_AdminProperties::queue_full (void)
 
 template class ACE_Atomic_Op<TAO_SYNCH_MUTEX,int>;
 template class ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX,int>;
-template class ACE_Refcounted_Auto_Ptr<TAO_NS_AdminProperties, TAO_SYNCH_MUTEX>;
+template class ACE_Refcounted_Auto_Ptr<TAO_Notify_AdminProperties, TAO_SYNCH_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Atomic_Op<TAO_SYNCH_MUTEX,int>
 #pragma instantiate ACE_Atomic_Op_Ex<TAO_SYNCH_MUTEX,int>
-#pragma ACE_Refcounted_Auto_Ptr<TAO_NS_AdminProperties, TAO_SYNCH_MUTEX>
+#pragma ACE_Refcounted_Auto_Ptr<TAO_Notify_AdminProperties, TAO_SYNCH_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

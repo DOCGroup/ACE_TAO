@@ -9,22 +9,22 @@
 
 ACE_RCSID(lib, TAO_Command_Builder, "$id$")
 
-TAO_NS_Command_Builder::TAO_NS_Command_Builder (void)
+TAO_Notify_Tests_Command_Builder::TAO_Notify_Tests_Command_Builder (void)
   :start_command_ (0)
 {
 }
 
-TAO_NS_Command_Builder::~TAO_NS_Command_Builder ()
+TAO_Notify_Tests_Command_Builder::~TAO_Notify_Tests_Command_Builder ()
 {
 }
 
 int
-TAO_NS_Command_Builder::init (int argc, char *argv[])
+TAO_Notify_Tests_Command_Builder::init (int argc, char *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
   ACE_CString current_arg;
-  TAO_NS_Command_Factory* factory = 0;
+  TAO_Notify_Tests_Command_Factory* factory = 0;
 
   if (arg_shifter.is_anything_left ())
     {
@@ -37,7 +37,7 @@ TAO_NS_Command_Builder::init (int argc, char *argv[])
           ACE_DEBUG ((LM_DEBUG, "NS Command: %s not recognized!\n", current_arg.c_str ()));
       else
         {
-          TAO_NS_Command* new_command = factory->create ();
+          TAO_Notify_Tests_Command* new_command = factory->create ();
 
           new_command->init (arg_shifter);
 
@@ -59,13 +59,13 @@ TAO_NS_Command_Builder::init (int argc, char *argv[])
 }
 
 int
-TAO_NS_Command_Builder::fini (void)
+TAO_Notify_Tests_Command_Builder::fini (void)
 {
         return 0;
 }
 
 void
-TAO_NS_Command_Builder::_register (ACE_CString command_factory_name, TAO_NS_Command_Factory* command_factory)
+TAO_Notify_Tests_Command_Builder::_register (ACE_CString command_factory_name, TAO_Notify_Tests_Command_Factory* command_factory)
 {
   if (this->factory_map_.bind (command_factory_name, command_factory) == -1)
     ACE_DEBUG ((LM_DEBUG, "Failed to register command factory for %s\n", command_factory_name.c_str ()));
@@ -74,35 +74,35 @@ TAO_NS_Command_Builder::_register (ACE_CString command_factory_name, TAO_NS_Comm
 }
 
 void
-TAO_NS_Command_Builder::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Command_Builder::execute (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->start_command_)
     this->start_command_->execute (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-ACE_STATIC_SVC_DEFINE(TAO_NS_Command_Builder,
-                      TAO_NS_Name::command_builder,
+ACE_STATIC_SVC_DEFINE(TAO_Notify_Tests_Command_Builder,
+                      TAO_Notify_Tests_Name::command_builder,
                       ACE_SVC_OBJ_T,
-                      &ACE_SVC_NAME (TAO_NS_Command_Builder),
+                      &ACE_SVC_NAME (TAO_Notify_Tests_Command_Builder),
                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                       0)
 
-ACE_FACTORY_DEFINE (TAO_NOTIFY_TEST, TAO_NS_Command_Builder)
+ACE_FACTORY_DEFINE (TAO_NOTIFY_TEST, TAO_Notify_Tests_Command_Builder)
 
-ACE_STATIC_SVC_REQUIRE (TAO_NS_Command_Builder)
+ACE_STATIC_SVC_REQUIRE (TAO_Notify_Tests_Command_Builder)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Hash_Map_Manager <ACE_CString, TAO_NS_Command_Factory*, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_NS_Command_Factory *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_NS_Command_Factory *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Entry<ACE_CString, TAO_NS_Command_Factory *>;
+template class ACE_Hash_Map_Manager <ACE_CString, TAO_Notify_Tests_Command_Factory*, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Notify_Tests_Command_Factory *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Notify_Tests_Command_Factory *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Command_Factory *>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Hash_Map_Manager <ACE_CString, TAO_NS_Command_Factory*, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_NS_Command_Factory *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_NS_Command_Factory *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_NS_Command_Factory *>
+#pragma instantiate ACE_Hash_Map_Manager <ACE_CString, TAO_Notify_Tests_Command_Factory*, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Notify_Tests_Command_Factory *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Notify_Tests_Command_Factory *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Command_Factory *>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

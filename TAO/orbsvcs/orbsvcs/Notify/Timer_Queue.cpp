@@ -6,25 +6,25 @@
 #include "Timer_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Timer_Queue, "$id$")
+ACE_RCSID(Notify, TAO_Notify_Timer_Queue, "$id$")
 
-TAO_NS_Timer_Queue::TAO_NS_Timer_Queue (void)
+TAO_Notify_Timer_Queue::TAO_Notify_Timer_Queue (void)
 {
 }
 
-TAO_NS_Timer_Queue::~TAO_NS_Timer_Queue ()
+TAO_Notify_Timer_Queue::~TAO_Notify_Timer_Queue ()
 {
 }
 
 void
-TAO_NS_Timer_Queue::release (void)
+TAO_Notify_Timer_Queue::release (void)
 {
   delete this;
   //@@ inform factory
 }
 
 long
-TAO_NS_Timer_Queue::schedule_timer (ACE_Event_Handler *handler,
+TAO_Notify_Timer_Queue::schedule_timer (ACE_Event_Handler *handler,
                                     const ACE_Time_Value &delay_time,
                                     const ACE_Time_Value &interval)
 {
@@ -35,13 +35,13 @@ TAO_NS_Timer_Queue::schedule_timer (ACE_Event_Handler *handler,
 }
 
 int
-TAO_NS_Timer_Queue::cancel_timer (long timer_id)
+TAO_Notify_Timer_Queue::cancel_timer (long timer_id)
 {
   return this->timer_queue_.cancel (timer_id);
 }
 
 ACE_Timer_Queue&
-TAO_NS_Timer_Queue::impl (void)
+TAO_Notify_Timer_Queue::impl (void)
 {
   return this->timer_queue_;
 }

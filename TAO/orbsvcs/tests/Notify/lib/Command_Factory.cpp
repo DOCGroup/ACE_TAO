@@ -5,10 +5,10 @@
 
 ACE_RCSID(lib, TAO_Command_Factory, "$id$")
 
-TAO_NS_Command_Factory::TAO_NS_Command_Factory (void)
+TAO_Notify_Tests_Command_Factory::TAO_Notify_Tests_Command_Factory (void)
 {
 }
 
-TAO_NS_Command_Factory::~TAO_NS_Command_Factory ()
+TAO_Notify_Tests_Command_Factory::~TAO_Notify_Tests_Command_Factory ()
 {
 }

@@ -1,14 +1,14 @@
 // $Id$
 
 ACE_INLINE CORBA::Boolean
-TAO_NS_Proxy::updates_off (void)
+TAO_Notify_Proxy::updates_off (void)
 {
   return this->updates_off_;
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_NS_Proxy::check_filters (const TAO_NS_Event_var &event
-                             , TAO_NS_FilterAdmin& parent_filter_admin
+TAO_Notify_Proxy::check_filters (const TAO_Notify_Event_var &event
+                             , TAO_Notify_FilterAdmin& parent_filter_admin
                              , CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator
                              ACE_ENV_ARG_DECL)
 {
@@ -16,8 +16,8 @@ TAO_NS_Proxy::check_filters (const TAO_NS_Event_var &event
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_NS_Proxy::check_filters (const TAO_NS_Event* event
-                             , TAO_NS_FilterAdmin& parent_filter_admin
+TAO_Notify_Proxy::check_filters (const TAO_Notify_Event* event
+                             , TAO_Notify_FilterAdmin& parent_filter_admin
                              , CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator
                              ACE_ENV_ARG_DECL)
 {

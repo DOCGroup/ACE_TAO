@@ -8,11 +8,11 @@
 
 ACE_RCSID(Notify, TAO_Subscription_Change_Worker, "$Id$")
 
-TAO_NS_Subscription_Change_Worker::TAO_NS_Subscription_Change_Worker (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed)
+TAO_Notify_Subscription_Change_Worker::TAO_Notify_Subscription_Change_Worker (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed)
 :added_ (added), removed_ (removed)
 {
 }
 
-TAO_NS_Subscription_Change_Worker::~TAO_NS_Subscription_Change_Worker ()
+TAO_Notify_Subscription_Change_Worker::~TAO_Notify_Subscription_Change_Worker ()
 {
 }

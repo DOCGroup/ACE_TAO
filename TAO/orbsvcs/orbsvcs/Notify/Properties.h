@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_PROPERTIES_H
-#define TAO_NS_PROPERTIES_H
+#ifndef TAO_Notify_PROPERTIES_H
+#define TAO_Notify_PROPERTIES_H
 #include "ace/pre.h"
 
 #include "notify_export.h"
@@ -24,32 +24,32 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNotificationC.h"
 
-class TAO_NS_Factory;
-class TAO_NS_Builder;
+class TAO_Notify_Factory;
+class TAO_Notify_Builder;
 
 /**
- * @class TAO_NS_Properties
+ * @class TAO_Notify_Properties
  *
  * @brief Global properties that strategize Notify's run-time behaviour.
  *
  */
-class TAO_Notify_Export TAO_NS_Properties
+class TAO_Notify_Export TAO_Notify_Properties
 {
-  friend class TAO_Singleton<TAO_NS_Properties, TAO_SYNCH_MUTEX>;
+  friend class TAO_Singleton<TAO_Notify_Properties, TAO_SYNCH_MUTEX>;
 
 public:
   /// Constuctor
-  TAO_NS_Properties (void);
+  TAO_Notify_Properties (void);
 
   /// Destructor
-  ~TAO_NS_Properties ();
+  ~TAO_Notify_Properties ();
 
   // = Property Accessors
-  TAO_NS_Factory* factory (void);
-  void factory (TAO_NS_Factory* factory);
+  TAO_Notify_Factory* factory (void);
+  void factory (TAO_Notify_Factory* factory);
 
-  TAO_NS_Builder* builder (void);
-  void builder (TAO_NS_Builder* builder);
+  TAO_Notify_Builder* builder (void);
+  void builder (TAO_Notify_Builder* builder);
 
   CORBA::ORB_ptr orb (void);
   void orb (CORBA::ORB_ptr orb);
@@ -92,10 +92,10 @@ public:
 
 protected:
   /// Object Factory
-  TAO_NS_Factory* factory_;
+  TAO_Notify_Factory* factory_;
 
   /// Object Builder
-  TAO_NS_Builder* builder_;
+  TAO_Notify_Builder* builder_;
 
   /// ORB
   CORBA::ORB_var orb_;
@@ -125,13 +125,13 @@ protected:
   CosNotification::QoSProperties pc_qos_;
 };
 
-typedef TAO_Singleton<TAO_NS_Properties, TAO_SYNCH_MUTEX> TAO_NS_PROPERTIES;
+typedef TAO_Singleton<TAO_Notify_Properties, TAO_SYNCH_MUTEX> TAO_Notify_PROPERTIES;
 
-TAO_NOTIFY_SINGLETON_DECLARE (TAO_Singleton, TAO_NS_Properties, TAO_SYNCH_MUTEX);
+TAO_NOTIFY_SINGLETON_DECLARE (TAO_Singleton, TAO_Notify_Properties, TAO_SYNCH_MUTEX);
 
 #if defined (__ACE_INLINE__)
 #include "Properties.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_PROPERTIES_H */
+#endif /* TAO_Notify_PROPERTIES_H */

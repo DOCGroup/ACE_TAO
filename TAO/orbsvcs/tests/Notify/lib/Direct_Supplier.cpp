@@ -6,21 +6,21 @@
 #include "Direct_Supplier.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Direct_Supplier, "$id$")
+ACE_RCSID(Notify, TAO_Notify_Tests_Direct_Supplier, "$id$")
 
 #include "LookupManager.h"
 
-TAO_NS_Direct_Supplier::TAO_NS_Direct_Supplier (ACE_CString& target)
+TAO_Notify_Tests_Direct_Supplier::TAO_Notify_Tests_Direct_Supplier (ACE_CString& target)
   : target_ (target)
 {
 }
 
-TAO_NS_Direct_Supplier::~TAO_NS_Direct_Supplier ()
+TAO_Notify_Tests_Direct_Supplier::~TAO_Notify_Tests_Direct_Supplier ()
 {
 }
 
 void
-TAO_NS_Direct_Supplier::connect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Direct_Supplier::connect (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Get the POA
   PortableServer::POA_var poa;
@@ -46,7 +46,7 @@ TAO_NS_Direct_Supplier::connect (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Direct_Supplier::send_event (const CosNotification::StructuredEvent& event
+TAO_Notify_Tests_Direct_Supplier::send_event (const CosNotification::StructuredEvent& event
                                    ACE_ENV_ARG_DECL)
 {
   ACE_ASSERT (!CORBA::is_nil (this->target_object_.in ()));

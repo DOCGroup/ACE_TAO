@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_SUPPLIER_H
-#define TAO_NS_SUPPLIER_H
+#ifndef TAO_Notify_SUPPLIER_H
+#define TAO_Notify_SUPPLIER_H
 #include "ace/pre.h"
 
 #include "ORB_Objects.h"
@@ -26,18 +26,18 @@
 #endif /* _MSC_VER */
 
 /**
- * @class TAO_NS_Supplier
+ * @class TAO_Notify_Lanes_Supplier
  *
  * @brief Implement a Structured Supplier.
  *
  */
-class TAO_NS_Supplier : public POA_CosNotifyComm::StructuredPushSupplier, public PortableServer::RefCountServantBase
+class TAO_Notify_Lanes_Supplier : public POA_CosNotifyComm::StructuredPushSupplier, public PortableServer::RefCountServantBase
 {
  public:
   // = Initialization and Termination code
 
   /// Constructor.
-  TAO_NS_Supplier (TAO_NS_ORB_Objects& orb_objects);
+  TAO_Notify_Lanes_Supplier (TAO_Notify_ORB_Objects& orb_objects);
 
   /// Init
   void init (CosNotifyChannelAdmin::SupplierAdmin_var& admin, int count ACE_ENV_ARG_DECL);
@@ -62,7 +62,7 @@ protected:
   virtual void send_event (const CosNotification::StructuredEvent& event ACE_ENV_ARG_DECL);
 
   /// Destructor
-  virtual ~TAO_NS_Supplier ();
+  virtual ~TAO_Notify_Lanes_Supplier ();
 
   // = NotifySubscribe
   virtual void subscription_change (
@@ -83,7 +83,7 @@ protected:
   /// = Data members
 
   /// ORB Objects.
-  TAO_NS_ORB_Objects orb_objects_;
+  TAO_Notify_ORB_Objects orb_objects_;
 
   /// The proxy that we are connected to.
   CosNotifyChannelAdmin::StructuredProxyPushConsumer_var proxy_consumer_;
@@ -115,4 +115,4 @@ protected:
 #endif /* _MSC_VER */
 
 #include "ace/post.h"
-#endif /* TAO_NS_SUPPLIER_H */
+#endif /* TAO_Notify_SUPPLIER_H */

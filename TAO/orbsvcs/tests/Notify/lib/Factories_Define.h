@@ -15,9 +15,9 @@
 
 #include "Command_Factory_T.h"
 
-#define TAO_NS_COMMAND_FACTORY_DEFINE(export, command, factory_name) \
+#define TAO_Notify_Tests_COMMAND_FACTORY_DEFINE(export, command, factory_name) \
 \
-typedef TAO_NS_Command_Factory_T <command> command##_Factory;\
+typedef TAO_Notify_Tests_Command_Factory_T <command> command##_Factory;\
 \
 ACE_STATIC_SVC_DECLARE_EXPORT (export, command##_Factory) \
 \

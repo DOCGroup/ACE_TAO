@@ -23,7 +23,7 @@
 
 #include "StructuredPushConsumer.h"
 
-typedef TAO_NS_StructuredPushConsumer TAO_Notify_StructuredPushConsumer;
+typedef TAO_Notify_Tests_StructuredPushConsumer TAO_Notify_StructuredPushConsumer;
 
 #include "ace/post.h"
 #endif /* NOTIFY_STRUCTUREDPUSHCONSUMER_H */

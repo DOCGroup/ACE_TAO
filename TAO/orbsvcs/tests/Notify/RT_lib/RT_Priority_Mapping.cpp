@@ -6,12 +6,12 @@ ACE_RCSID(lib, RT_Priority_Mapping, "$id$")
 
 #include "../lib/LookupManager.h"
 
-TAO_NS_RT_Priority_Mapping::~TAO_NS_RT_Priority_Mapping (void)
+TAO_Notify_Tests_RT_Priority_Mapping::~TAO_Notify_Tests_RT_Priority_Mapping (void)
 {
 }
 
 void
-TAO_NS_RT_Priority_Mapping::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_RT_Priority_Mapping::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var object = orb->resolve_initial_references ("PriorityMappingManager"
                                                               ACE_ENV_ARG_PARAMETER);
@@ -26,14 +26,14 @@ TAO_NS_RT_Priority_Mapping::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 }
 
 CORBA::Boolean
-TAO_NS_RT_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
+TAO_Notify_Tests_RT_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
                                     RTCORBA::NativePriority &native_priority)
 {
   return this->priority_mapping_->to_native (corba_priority, native_priority);
 }
 
 CORBA::Boolean
-TAO_NS_RT_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
+TAO_Notify_Tests_RT_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
                                 RTCORBA::Priority &corba_priority)
 {
   return this->priority_mapping_->to_CORBA (native_priority, corba_priority);

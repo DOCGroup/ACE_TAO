@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_STRUCTUREDPROXYPUSHCONSUMER_H
-#define TAO_NS_STRUCTUREDPROXYPUSHCONSUMER_H
+#ifndef TAO_Notify_STRUCTUREDPROXYPUSHCONSUMER_H
+#define TAO_Notify_STRUCTUREDPROXYPUSHCONSUMER_H
 #include "ace/pre.h"
 
 #include "../notify_export.h"
@@ -30,21 +30,21 @@
 #endif /* _MSC_VER */
 
 /**
- * @class TAO_NS_StructuredProxyPushConsumer
+ * @class TAO_Notify_StructuredProxyPushConsumer
  *
  * @brief CosNotifyChannelAdmin::StructuredProxyPushConsumer implementation.
  *
  */
-class TAO_Notify_Export TAO_NS_StructuredProxyPushConsumer : public virtual TAO_NS_ProxyConsumer_T <POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>
+class TAO_Notify_Export TAO_Notify_StructuredProxyPushConsumer : public virtual TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>
 {
-  friend class TAO_NS_Builder;
+  friend class TAO_Notify_Builder;
 
 public:
   /// Constuctor
-  TAO_NS_StructuredProxyPushConsumer (void);
+  TAO_Notify_StructuredProxyPushConsumer (void);
 
   /// Destructor
-  ~TAO_NS_StructuredProxyPushConsumer ();
+  ~TAO_Notify_StructuredProxyPushConsumer ();
 
   /// Release
   virtual void release (void);
@@ -95,4 +95,4 @@ virtual void push_structured_event (
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_STRUCTUREDPROXYPUSHCONSUMER_H */
+#endif /* TAO_Notify_STRUCTUREDPROXYPUSHCONSUMER_H */

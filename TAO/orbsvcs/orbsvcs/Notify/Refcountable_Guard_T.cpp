@@ -1,7 +1,7 @@
 // $Id$
 
-#ifndef TAO_NS_REFCOUNTABLE_GUARD_T_CPP
-#define TAO_NS_REFCOUNTABLE_GUARD_T_CPP
+#ifndef TAO_Notify_REFCOUNTABLE_GUARD_T_CPP
+#define TAO_Notify_REFCOUNTABLE_GUARD_T_CPP
 
 #include "Refcountable_Guard_T.h"
 
@@ -9,6 +9,6 @@
 #include "Refcountable_Guard_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Refcountable_Guard_T, "$id$")
+ACE_RCSID(Notify, TAO_Notify_Refcountable_Guard_T, "$id$")
 
-#endif /* TAO_NS_REFCOUNTABLE_GUARD_T_CPP */
+#endif /* TAO_Notify_REFCOUNTABLE_GUARD_T_CPP */

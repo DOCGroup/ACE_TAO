@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_APPLICATION_STARTER_H
-#define TAO_NS_APPLICATION_STARTER_H
+#ifndef TAO_Notify_Tests_APPLICATION_STARTER_H
+#define TAO_Notify_Tests_APPLICATION_STARTER_H
 #include "ace/pre.h"
 
 #include "notify_test_export.h"
@@ -20,19 +20,19 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /**
- * @class TAO_NS_Driver_Base
+ * @class TAO_Notify_Tests_Driver_Base
  *
  * @brief Base class for Driver.
  *
  */
-class TAO_NOTIFY_TEST_Export TAO_NS_Driver_Base
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Driver_Base
 {
 public:
-  virtual ~TAO_NS_Driver_Base () {};
+  virtual ~TAO_Notify_Tests_Driver_Base () {};
 
   /// Shutdown
   virtual void shutdown (void) = 0;
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_APPLICATION_STARTER_H */
+#endif /* TAO_Notify_Tests_APPLICATION_STARTER_H */

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_DIRECT_SUPPLIER_H
-#define TAO_NS_DIRECT_SUPPLIER_H
+#ifndef TAO_Notify_Tests_DIRECT_SUPPLIER_H
+#define TAO_Notify_Tests_DIRECT_SUPPLIER_H
 #include "ace/pre.h"
 
 #include "notify_test_export.h"
@@ -22,19 +22,19 @@
 #include "Periodic_Supplier.h"
 
 /**
- * @class TAO_NS_Direct_Supplier
+ * @class TAO_Notify_Tests_Direct_Supplier
  *
  * @brief Send Directly to a consumer.
  *
  */
-class TAO_NOTIFY_TEST_Export TAO_NS_Direct_Supplier : public TAO_NS_Periodic_Supplier
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Direct_Supplier : public TAO_Notify_Tests_Periodic_Supplier
 {
 public:
   /// Constuctor
-  TAO_NS_Direct_Supplier (ACE_CString& target);
+  TAO_Notify_Tests_Direct_Supplier (ACE_CString& target);
 
   /// Destructor
-  ~TAO_NS_Direct_Supplier ();
+  ~TAO_Notify_Tests_Direct_Supplier ();
 
   /// Connect using options parsed and set initial QoS.
   virtual void connect (ACE_ENV_SINGLE_ARG_DECL);
@@ -56,4 +56,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_DIRECT_SUPPLIER_H */
+#endif /* TAO_Notify_Tests_DIRECT_SUPPLIER_H */

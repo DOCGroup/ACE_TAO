@@ -6,20 +6,20 @@
 #include "ETCL_FilterFactory.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_ETCL_FilterFactory, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_ETCL_FilterFactory, "$Id$")
 
 #include "ETCL_Filter.h"
 
-TAO_NS_ETCL_FilterFactory::TAO_NS_ETCL_FilterFactory (void)
+TAO_Notify_ETCL_FilterFactory::TAO_Notify_ETCL_FilterFactory (void)
 {
 }
 
-TAO_NS_ETCL_FilterFactory::~TAO_NS_ETCL_FilterFactory ()
+TAO_Notify_ETCL_FilterFactory::~TAO_Notify_ETCL_FilterFactory ()
 {
 }
 
 CosNotifyFilter::FilterFactory_ptr
-TAO_NS_ETCL_FilterFactory::create (PortableServer::POA_var& filter_poa ACE_ENV_ARG_DECL)
+TAO_Notify_ETCL_FilterFactory::create (PortableServer::POA_var& filter_poa ACE_ENV_ARG_DECL)
 {
   this->filter_poa_ = filter_poa; // save the filter poa.
 
@@ -29,7 +29,7 @@ TAO_NS_ETCL_FilterFactory::create (PortableServer::POA_var& filter_poa ACE_ENV_A
 }
 
 CosNotifyFilter::Filter_ptr
-TAO_NS_ETCL_FilterFactory::create_filter (const char *constraint_grammar ACE_ENV_ARG_DECL)
+TAO_Notify_ETCL_FilterFactory::create_filter (const char *constraint_grammar ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::InvalidGrammar
@@ -43,10 +43,10 @@ TAO_NS_ETCL_FilterFactory::create_filter (const char *constraint_grammar ACE_ENV
 
 
   // Create the RefCounted servant.
-  TAO_NS_ETCL_Filter* filter = 0;
+  TAO_Notify_ETCL_Filter* filter = 0;
 
   ACE_NEW_THROW_EX (filter,
-                    TAO_NS_ETCL_Filter (),
+                    TAO_Notify_ETCL_Filter (),
                     CORBA::NO_MEMORY ());
 
   PortableServer::ServantBase_var filter_var (filter);
@@ -66,7 +66,7 @@ TAO_NS_ETCL_FilterFactory::create_filter (const char *constraint_grammar ACE_ENV
 }
 
 CosNotifyFilter::MappingFilter_ptr
-TAO_NS_ETCL_FilterFactory::create_mapping_filter (const char * /*constraint_grammar*/,
+TAO_Notify_ETCL_FilterFactory::create_mapping_filter (const char * /*constraint_grammar*/,
                                                   const CORBA::Any & /*default_value*/
                                                   ACE_ENV_ARG_DECL
                                                   )
@@ -78,4 +78,4 @@ TAO_NS_ETCL_FilterFactory::create_mapping_filter (const char * /*constraint_gram
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), CosNotifyFilter::MappingFilter::_nil ());
 }
 
-ACE_FACTORY_DEFINE (TAO_Notify, TAO_NS_ETCL_FilterFactory)
+ACE_FACTORY_DEFINE (TAO_Notify, TAO_Notify_ETCL_FilterFactory)

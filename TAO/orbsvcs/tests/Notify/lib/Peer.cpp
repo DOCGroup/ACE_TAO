@@ -14,24 +14,24 @@ ACE_RCSID(lib, TAO_Peer, "$id$")
 #include "Options_Parser.h"
 #include "orbsvcs/NotifyExtC.h"
 
-TAO_NS_Peer::TAO_NS_Peer (void)
-  : poa_name_ (TAO_NS_Name::root_poa)
+TAO_Notify_Tests_Peer::TAO_Notify_Tests_Peer (void)
+  : poa_name_ (TAO_Notify_Tests_Name::root_poa)
   , ifgop_ (CosNotifyChannelAdmin::OR_OP)
 {
 }
 
-TAO_NS_Peer::~TAO_NS_Peer ()
+TAO_Notify_Tests_Peer::~TAO_Notify_Tests_Peer ()
 {
 }
 
 void
-TAO_NS_Peer::init (PortableServer::POA_ptr poa  ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Peer::init (PortableServer::POA_ptr poa  ACE_ENV_ARG_DECL_NOT_USED)
 {
   this->default_POA_ = PortableServer::POA::_duplicate (poa);
 }
 
 int
-TAO_NS_Peer::init_state (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_Peer::init_state (ACE_Arg_Shifter& arg_shifter)
 {
   while (arg_shifter.is_anything_left ())
     {
@@ -61,7 +61,7 @@ TAO_NS_Peer::init_state (ACE_Arg_Shifter& arg_shifter)
         {
           arg_shifter.consume_arg ();
 
-          TAO_NS_Options_Parser qos_parser;
+          TAO_Notify_Tests_Options_Parser qos_parser;
           qos_parser.execute (this->qos_, arg_shifter);
         }
       else
@@ -74,19 +74,19 @@ TAO_NS_Peer::init_state (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_NS_Peer::set_name (ACE_CString& name)
+TAO_Notify_Tests_Peer::set_name (ACE_CString& name)
 {
   this->name_ = name;
 }
 
 const ACE_CString&
-TAO_NS_Peer::get_name (void)
+TAO_Notify_Tests_Peer::get_name (void)
 {
   return this->name_;
 }
 
 void
-TAO_NS_Peer::set_poa (PortableServer::POA_ptr poa  ACE_ENV_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Peer::set_poa (PortableServer::POA_ptr poa  ACE_ENV_ARG_DECL_NOT_USED)
 {
   this->default_POA_ = PortableServer::POA::_duplicate (poa);
 }

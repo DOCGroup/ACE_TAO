@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_RT_PROPERTIES_H
-#define TAO_NS_RT_PROPERTIES_H
+#ifndef TAO_Notify_RT_PROPERTIES_H
+#define TAO_Notify_RT_PROPERTIES_H
 #include "ace/pre.h"
 
 #include "rt_notify_export.h"
@@ -23,21 +23,21 @@
 #include "tao/RTCORBA/RTCORBA.h"
 
 /**
- * @class TAO_NS_RT_Properties
+ * @class TAO_Notify_RT_Properties
  *
  * @brief RT specifc global properties are stored here.
  *
  */
-class TAO_RT_Notify_Export TAO_NS_RT_Properties
+class TAO_RT_Notify_Export TAO_Notify_RT_Properties
 {
-  friend class TAO_Singleton<TAO_NS_RT_Properties, TAO_SYNCH_MUTEX>;
+  friend class TAO_Singleton<TAO_Notify_RT_Properties, TAO_SYNCH_MUTEX>;
 
 public:
   /// Constuctor
-  TAO_NS_RT_Properties (void);
+  TAO_Notify_RT_Properties (void);
 
   /// Destructor
-  ~TAO_NS_RT_Properties ();
+  ~TAO_Notify_RT_Properties ();
 
   RTCORBA::RTORB_ptr rt_orb (void);
   void rt_orb (RTCORBA::RTORB_ptr rt_orb);
@@ -53,13 +53,13 @@ protected:
   RTCORBA::Current_var current_;
 };
 
-typedef TAO_Singleton<TAO_NS_RT_Properties, TAO_SYNCH_MUTEX> TAO_NS_RT_PROPERTIES;
+typedef TAO_Singleton<TAO_Notify_RT_Properties, TAO_SYNCH_MUTEX> TAO_Notify_RT_PROPERTIES;
 
-TAO_RT_NOTIFY_SINGLETON_DECLARE (TAO_Singleton, TAO_NS_RT_Properties, TAO_SYNCH_MUTEX);
+TAO_RT_NOTIFY_SINGLETON_DECLARE (TAO_Singleton, TAO_Notify_RT_Properties, TAO_SYNCH_MUTEX);
 
 #if defined (__ACE_INLINE__)
 #include "RT_Properties.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_RT_PROPERTIES_H */
+#endif /* TAO_Notify_RT_PROPERTIES_H */

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_DRIVER_H
-#define TAO_NS_DRIVER_H
+#ifndef TAO_Notify_Tests_DRIVER_H
+#define TAO_Notify_Tests_DRIVER_H
 #include "ace/pre.h"
 
 #include "notify_test_export.h"
@@ -24,16 +24,16 @@
 #include "tao/corba.h"
 #include "Driver_Base.h"
 
-class TAO_NS_Command_Builder;
-class TAO_NS_Activation_Manager;
+class TAO_Notify_Tests_Command_Builder;
+class TAO_Notify_Tests_Activation_Manager;
 
 /**
- * @class TAO_NS_Worker
+ * @class TAO_Notify_Tests_Worker
  *
  * @brief A Task to execute commands asynchronously.
  *
  */
-class TAO_NS_Worker : public ACE_Task_Base
+class TAO_Notify_Tests_Worker : public ACE_Task_Base
 {
   // = TITLE
   //   Run a server thread
@@ -42,11 +42,11 @@ class TAO_NS_Worker : public ACE_Task_Base
   //   Use the ACE_Task_Base class to run server threads
   //
 public:
-  TAO_NS_Worker (void);
+  TAO_Notify_Tests_Worker (void);
   // ctor
 
   /// Set the command builder.
-  void command_builder (TAO_NS_Command_Builder* cmd_builder);
+  void command_builder (TAO_Notify_Tests_Command_Builder* cmd_builder);
 
   virtual int svc (void);
   // The thread entry point.
@@ -55,12 +55,12 @@ public:
 
 private:
   /// The command builder
-  TAO_NS_Command_Builder* cmd_builder_;
+  TAO_Notify_Tests_Command_Builder* cmd_builder_;
 };
 
 
 
-class TAO_NS_ORB_Run_Worker : public ACE_Task_Base
+class TAO_Notify_Tests_ORB_Run_Worker : public ACE_Task_Base
 {
   // = TITLE
   //   Run a server thread
@@ -69,7 +69,7 @@ class TAO_NS_ORB_Run_Worker : public ACE_Task_Base
   //   Use the ACE_Task_Base class to run server threads
   //
 public:
-  TAO_NS_ORB_Run_Worker (void);
+  TAO_Notify_Tests_ORB_Run_Worker (void);
   // ctor
 
   void orb (CORBA::ORB_ptr orb);
@@ -90,19 +90,19 @@ private:
 
 
 /**
- * @class TAO_NS_Driver
+ * @class TAO_Notify_Tests_Driver
  *
  * @brief A default Application Starter.
  *
  */
-class TAO_NOTIFY_TEST_Export TAO_NS_Driver : public TAO_NS_Driver_Base
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Driver : public TAO_Notify_Tests_Driver_Base
 {
 public:
   /// Constuctor
-  TAO_NS_Driver (void);
+  TAO_Notify_Tests_Driver (void);
 
   /// Destructor
-  ~TAO_NS_Driver ();
+  ~TAO_Notify_Tests_Driver ();
 
   /// Init
   int init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL);
@@ -118,16 +118,16 @@ protected:
   int parse_args (int argc, char *argv[]);
 
   /// The command builder
-  TAO_NS_Command_Builder* cmd_builder_;
+  TAO_Notify_Tests_Command_Builder* cmd_builder_;
 
   /// Manage activation of periodic suppliers and consumers.
-  TAO_NS_Activation_Manager* activation_manager_;
+  TAO_Notify_Tests_Activation_Manager* activation_manager_;
 
   /// Thread in which to run commands.
-  TAO_NS_Worker worker_;
+  TAO_Notify_Tests_Worker worker_;
 
   /// Thread in which to run the orb.
-  TAO_NS_ORB_Run_Worker orb_run_worker_;
+  TAO_Notify_Tests_ORB_Run_Worker orb_run_worker_;
 
   /// The ORB we run.
   CORBA::ORB_var orb_;
@@ -143,4 +143,4 @@ protected:
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_DRIVER_H */
+#endif /* TAO_Notify_Tests_DRIVER_H */

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_SEQUENCEPROXYPUSHCONSUMER_H
-#define TAO_NS_SEQUENCEPROXYPUSHCONSUMER_H
+#ifndef TAO_Notify_SEQUENCEPROXYPUSHCONSUMER_H
+#define TAO_Notify_SEQUENCEPROXYPUSHCONSUMER_H
 #include "ace/pre.h"
 
 #include "../notify_export.h"
@@ -30,22 +30,22 @@
 #endif /* _MSC_VER */
 
 /**
- * @class TAO_NS_SequenceProxyPushConsumer
+ * @class TAO_Notify_SequenceProxyPushConsumer
  *
  * @brief
  *
  */
-class TAO_Notify_Export TAO_NS_SequenceProxyPushConsumer : public virtual TAO_NS_ProxyConsumer_T <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer>
+class TAO_Notify_Export TAO_Notify_SequenceProxyPushConsumer : public virtual TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer>
 {
-  friend class TAO_NS_Builder;
+  friend class TAO_Notify_Builder;
 public:
   /// Constuctor
-  TAO_NS_SequenceProxyPushConsumer (void);
+  TAO_Notify_SequenceProxyPushConsumer (void);
 
   /// Destructor
-  ~TAO_NS_SequenceProxyPushConsumer ();
+  ~TAO_Notify_SequenceProxyPushConsumer ();
 
-  /// TAO_NS_Destroy_Callback methods
+  /// TAO_Notify_Destroy_Callback methods
   virtual void release (void);
 
   /// Destroy this object.
@@ -53,7 +53,7 @@ public:
 
 protected:
   ///= Data Members
-  TAO_NS_Property_Time pacing_interval_;
+  TAO_Notify_Property_Time pacing_interval_;
 
   ///= Protected Methods
 
@@ -94,4 +94,4 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_SEQUENCEPROXYPUSHCONSUMER_H */
+#endif /* TAO_Notify_SEQUENCEPROXYPUSHCONSUMER_H */

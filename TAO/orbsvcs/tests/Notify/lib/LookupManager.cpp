@@ -6,30 +6,30 @@ ACE_RCSID(lib, TAO_LookupManager, "$id$")
 
 #include "Name.h"
 
-TAO_NS_LookupManager::TAO_NS_LookupManager (void)
+TAO_Notify_Tests_LookupManager::TAO_Notify_Tests_LookupManager (void)
   : app_ (0)
     , activation_manager_ (0)
     , priority_mapping_ (0)
 {
 }
 
-TAO_NS_LookupManager::~TAO_NS_LookupManager ()
+TAO_Notify_Tests_LookupManager::~TAO_Notify_Tests_LookupManager ()
 {
 }
 
 void
-TAO_NS_LookupManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_LookupManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
   orb_ = CORBA::ORB::_duplicate (orb);
 
-  this->resolve (this->root_poa_, TAO_NS_Name::root_poa ACE_ENV_ARG_PARAMETER);
+  this->resolve (this->root_poa_, TAO_Notify_Tests_Name::root_poa ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->resolve (this->naming_, TAO_NS_Name::naming_service ACE_ENV_ARG_PARAMETER);
+  this->resolve (this->naming_, TAO_Notify_Tests_Name::naming_service ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_NS_LookupManager::_register (CORBA::Object_ptr obj, const char* obj_name ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_LookupManager::_register (CORBA::Object_ptr obj, const char* obj_name ACE_ENV_ARG_DECL)
 {
   CosNaming::Name_var name =
     this->naming_->to_name (obj_name
@@ -45,66 +45,66 @@ TAO_NS_LookupManager::_register (CORBA::Object_ptr obj, const char* obj_name ACE
 }
 
 void
-TAO_NS_LookupManager::_register (TAO_NS_Driver_Base* app)
+TAO_Notify_Tests_LookupManager::_register (TAO_Notify_Tests_Driver_Base* app)
 {
   this->app_ = app;
 }
 
 void
-TAO_NS_LookupManager::resolve (TAO_NS_Driver_Base*& app)
+TAO_Notify_Tests_LookupManager::resolve (TAO_Notify_Tests_Driver_Base*& app)
 {
   app = this->app_;
 }
 
 void
-TAO_NS_LookupManager::_register (TAO_NS_Activation_Manager* activation_manager)
+TAO_Notify_Tests_LookupManager::_register (TAO_Notify_Tests_Activation_Manager* activation_manager)
 {
   this->activation_manager_ = activation_manager;
 }
 
 void
-TAO_NS_LookupManager::resolve (TAO_NS_Activation_Manager*& activation_manager)
+TAO_Notify_Tests_LookupManager::resolve (TAO_Notify_Tests_Activation_Manager*& activation_manager)
 {
   activation_manager = this->activation_manager_;
 }
 
 void
-TAO_NS_LookupManager::_register (TAO_NS_Priority_Mapping* priority_mapping)
+TAO_Notify_Tests_LookupManager::_register (TAO_Notify_Tests_Priority_Mapping* priority_mapping)
 {
   this->priority_mapping_ = priority_mapping;
 }
 
 void
-TAO_NS_LookupManager::resolve (TAO_NS_Priority_Mapping* &priority_mapping)
+TAO_Notify_Tests_LookupManager::resolve (TAO_Notify_Tests_Priority_Mapping* &priority_mapping)
 {
   priority_mapping = this->priority_mapping_;
 }
 
 void
-TAO_NS_LookupManager::resolve (CORBA::ORB_var& orb)
+TAO_Notify_Tests_LookupManager::resolve (CORBA::ORB_var& orb)
 {
   orb = this->orb_;
 }
 
 void
-TAO_NS_LookupManager::resolve (PortableServer::POA_var& poa)
+TAO_Notify_Tests_LookupManager::resolve (PortableServer::POA_var& poa)
 {
   poa = this->root_poa_;
 }
 
 void
-TAO_NS_LookupManager::resolve (CosNaming::NamingContextExt_var& naming)
+TAO_Notify_Tests_LookupManager::resolve (CosNaming::NamingContextExt_var& naming)
 {
   naming = this->naming_;
 }
 
 void
-TAO_NS_LookupManager::resolve (PortableServer::POA_var& poa, const char *poa_name ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_LookupManager::resolve (PortableServer::POA_var& poa, const char *poa_name ACE_ENV_ARG_DECL)
 {
-  if (ACE_OS::strcmp (poa_name, TAO_NS_Name::root_poa) == 0)
+  if (ACE_OS::strcmp (poa_name, TAO_Notify_Tests_Name::root_poa) == 0)
     {
       CORBA::Object_ptr poa_object  =
-                this->orb_->resolve_initial_references(TAO_NS_Name::root_poa ACE_ENV_ARG_PARAMETER);
+                this->orb_->resolve_initial_references(TAO_Notify_Tests_Name::root_poa ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (CORBA::is_nil (poa_object))
@@ -127,7 +127,7 @@ TAO_NS_LookupManager::resolve (PortableServer::POA_var& poa, const char *poa_nam
 }
 
 void
-TAO_NS_LookupManager::resolve (CosNaming::NamingContextExt_var& naming, const char *naming_name ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_LookupManager::resolve (CosNaming::NamingContextExt_var& naming, const char *naming_name ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references (naming_name ACE_ENV_ARG_PARAMETER);
@@ -147,7 +147,7 @@ TAO_NS_LookupManager::resolve (CosNaming::NamingContextExt_var& naming, const ch
 }
 
 CORBA::Object_ptr
-TAO_NS_LookupManager::resolve_object (const char* obj_name ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_LookupManager::resolve_object (const char* obj_name ACE_ENV_ARG_DECL)
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -161,7 +161,7 @@ TAO_NS_LookupManager::resolve_object (const char* obj_name ACE_ENV_ARG_DECL)
 }
 
 void
-TAO_NS_LookupManager::resolve (CosNotifyChannelAdmin::EventChannelFactory_var& ecf, const char * factory_name ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_LookupManager::resolve (CosNotifyChannelAdmin::EventChannelFactory_var& ecf, const char * factory_name ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var object = this->resolve_object (factory_name ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -171,7 +171,7 @@ TAO_NS_LookupManager::resolve (CosNotifyChannelAdmin::EventChannelFactory_var& e
 }
 
 void
-TAO_NS_LookupManager::resolve (CosNotifyChannelAdmin::EventChannel_var& ec, const char * channel_name ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_LookupManager::resolve (CosNotifyChannelAdmin::EventChannel_var& ec, const char * channel_name ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var object = this->resolve_object (channel_name ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -181,7 +181,7 @@ TAO_NS_LookupManager::resolve (CosNotifyChannelAdmin::EventChannel_var& ec, cons
 }
 
 void
-TAO_NS_LookupManager::resolve (CosNotifyChannelAdmin::SupplierAdmin_var& sa, const char * admin_name ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_LookupManager::resolve (CosNotifyChannelAdmin::SupplierAdmin_var& sa, const char * admin_name ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var object = this->resolve_object (admin_name ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -191,7 +191,7 @@ TAO_NS_LookupManager::resolve (CosNotifyChannelAdmin::SupplierAdmin_var& sa, con
 }
 
 void
-TAO_NS_LookupManager::resolve (CosNotifyChannelAdmin::ConsumerAdmin_var& ca , const char * admin_name ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_LookupManager::resolve (CosNotifyChannelAdmin::ConsumerAdmin_var& ca , const char * admin_name ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var object = this->resolve_object (admin_name ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -201,7 +201,7 @@ TAO_NS_LookupManager::resolve (CosNotifyChannelAdmin::ConsumerAdmin_var& ca , co
 }
 
 void
-TAO_NS_LookupManager::resolve (CosNotifyComm::StructuredPushSupplier_var& supplier, const char *supplier_name ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_LookupManager::resolve (CosNotifyComm::StructuredPushSupplier_var& supplier, const char *supplier_name ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var object = this->resolve_object (supplier_name ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -211,7 +211,7 @@ TAO_NS_LookupManager::resolve (CosNotifyComm::StructuredPushSupplier_var& suppli
 }
 
 void
-TAO_NS_LookupManager::resolve (CosNotifyComm::StructuredPushConsumer_var& consumer, const char * consumer_name ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_LookupManager::resolve (CosNotifyComm::StructuredPushConsumer_var& consumer, const char * consumer_name ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var object = this->resolve_object (consumer_name ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -221,7 +221,7 @@ TAO_NS_LookupManager::resolve (CosNotifyComm::StructuredPushConsumer_var& consum
 }
 
 void
-TAO_NS_LookupManager::resolve (CosNotifyFilter::FilterFactory_var& ff, const char *filter_factory_name ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_LookupManager::resolve (CosNotifyFilter::FilterFactory_var& ff, const char *filter_factory_name ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var object = this->resolve_object (filter_factory_name ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -231,7 +231,7 @@ TAO_NS_LookupManager::resolve (CosNotifyFilter::FilterFactory_var& ff, const cha
 }
 
 void
-TAO_NS_LookupManager::resolve (CosNotifyFilter::Filter_var& filter, const char *filter_name ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_LookupManager::resolve (CosNotifyFilter::Filter_var& filter, const char *filter_name ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var object = this->resolve_object (filter_name ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -241,7 +241,7 @@ TAO_NS_LookupManager::resolve (CosNotifyFilter::Filter_var& filter, const char *
 }
 
 void
-TAO_NS_LookupManager::resolve (CosNotifyFilter::FilterAdmin_var& filter_admin, const char *filter_admin_name ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_LookupManager::resolve (CosNotifyFilter::FilterAdmin_var& filter_admin, const char *filter_admin_name ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var object = this->resolve_object (filter_admin_name ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -252,10 +252,10 @@ TAO_NS_LookupManager::resolve (CosNotifyFilter::FilterAdmin_var& filter_admin, c
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Singleton<TAO_NS_LookupManager, TAO_SYNCH_MUTEX>;
+template class ACE_Singleton<TAO_Notify_Tests_LookupManager, TAO_SYNCH_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Singleton<TAO_NS_LookupManager, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_Notify_Tests_LookupManager, TAO_SYNCH_MUTEX>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -165,9 +165,9 @@ MultiTypes::init (int argc,
   structured_consumer_ = new MultiTypes_StructuredPushConsumer (this);
   sequence_consumer_ = new MultiTypes_SequencePushConsumer (this);
 
-  any_supplier_ = new TAO_Notify_PushSupplier;
-  structured_supplier_ = new TAO_Notify_StructuredPushSupplier ();
-  sequence_supplier_ = new TAO_Notify_SequencePushSupplier ();
+  any_supplier_ = new TAO_Notify_Tests_PushSupplier;
+  structured_supplier_ = new TAO_Notify_Tests_StructuredPushSupplier ();
+  sequence_supplier_ = new TAO_Notify_Tests_SequencePushSupplier ();
 
   // Init and connect all consumers.
   structured_consumer_->init (root_poa_.in () ACE_ENV_ARG_PARAMETER);

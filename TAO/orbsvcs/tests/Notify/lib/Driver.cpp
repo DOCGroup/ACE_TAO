@@ -16,19 +16,65 @@ ACE_RCSID(lib, TAO_Driver, "$id$")
 #include "Name.h"
 #include "Activation_Manager.h"
 
+const char *
+sched_policy_name (int sched_policy)
+{
+  const char *name = 0;
+
+  switch (sched_policy)
+    {
+    case ACE_SCHED_OTHER:
+      name = "SCHED_OTHER";
+      break;
+    case ACE_SCHED_RR:
+      name = "SCHED_RR";
+      break;
+    case ACE_SCHED_FIFO:
+      name = "SCHED_FIFO";
+      break;
+    }
+
+  return name;
+}
+
+void
+check_supported_priorities (CORBA::ORB_ptr orb)
+{
+  int sched_policy =
+    orb->orb_core ()->orb_params ()->ace_sched_policy ();
+
+  // Check that we have sufficient priority range to run this test,
+  // i.e., more than 1 priority level.
+  int max_priority =
+    ACE_Sched_Params::priority_max (sched_policy);
+  int min_priority =
+    ACE_Sched_Params::priority_min (sched_policy);
+
+  if (max_priority == min_priority)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Not enough priority levels with the %s scheduling policy\n"
+                  "on this platform to run the test, terminating program....\n"
+                  "Check svc.conf options\n",
+                  sched_policy_name (sched_policy)));
+
+      ACE_OS::exit (2);
+    }
+}
+
 /*****************************************************************/
-TAO_NS_Worker::TAO_NS_Worker (void)
+TAO_Notify_Tests_Worker::TAO_Notify_Tests_Worker (void)
 {
 }
 
 void
-TAO_NS_Worker::command_builder (TAO_NS_Command_Builder* cmd_builder)
+TAO_Notify_Tests_Worker::command_builder (TAO_Notify_Tests_Command_Builder* cmd_builder)
 {
   this->cmd_builder_ = cmd_builder;
 }
 
 int
-TAO_NS_Worker::svc (void)
+TAO_Notify_Tests_Worker::svc (void)
 {
   ACE_hthread_t current;
   ACE_Thread::self (current);
@@ -64,24 +110,24 @@ TAO_NS_Worker::svc (void)
 
 /*****************************************************************/
 
-TAO_NS_ORB_Run_Worker::TAO_NS_ORB_Run_Worker (void)
+TAO_Notify_Tests_ORB_Run_Worker::TAO_Notify_Tests_ORB_Run_Worker (void)
 {
 }
 
 void
-TAO_NS_ORB_Run_Worker::orb (CORBA::ORB_ptr orb)
+TAO_Notify_Tests_ORB_Run_Worker::orb (CORBA::ORB_ptr orb)
 {
   orb_ = CORBA::ORB::_duplicate (orb);
 }
 
 void
-TAO_NS_ORB_Run_Worker::run_period (ACE_Time_Value run_period)
+TAO_Notify_Tests_ORB_Run_Worker::run_period (ACE_Time_Value run_period)
 {
   this->run_period_ = run_period;
 }
 
 int
-TAO_NS_ORB_Run_Worker::svc (void)
+TAO_Notify_Tests_ORB_Run_Worker::svc (void)
 {
   ACE_hthread_t current;
   ACE_Thread::self (current);
@@ -114,22 +160,22 @@ TAO_NS_ORB_Run_Worker::svc (void)
 
 /*****************************************************************/
 
-TAO_NS_Driver::TAO_NS_Driver (void)
+TAO_Notify_Tests_Driver::TAO_Notify_Tests_Driver (void)
   :cmd_builder_ (0), activation_manager_ (0), run_period_ (0,0)
 {
-  this->activation_manager_ = new TAO_NS_Activation_Manager ();
+  this->activation_manager_ = new TAO_Notify_Tests_Activation_Manager ();
   LOOKUP_MANAGER->_register (this->activation_manager_);
 
   LOOKUP_MANAGER->_register (this);
 }
 
-TAO_NS_Driver::~TAO_NS_Driver ()
+TAO_Notify_Tests_Driver::~TAO_Notify_Tests_Driver ()
 {
   delete this->activation_manager_;
 }
 
 int
-TAO_NS_Driver::parse_args (int argc, char *argv[])
+TAO_Notify_Tests_Driver::parse_args (int argc, char *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -174,7 +220,7 @@ TAO_NS_Driver::parse_args (int argc, char *argv[])
 }
 
 int
-TAO_NS_Driver::init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
+TAO_Notify_Tests_Driver::init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 {
   ACE_Argv_Type_Converter command_line(argc, argv);
 
@@ -187,11 +233,15 @@ TAO_NS_Driver::init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
+  // Make sure we can support multiple priorities that are required
+  // for this test.
+  check_supported_priorities (this->orb_.in());
+
   LOOKUP_MANAGER->init (this->orb_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   this->cmd_builder_ =
-    ACE_Dynamic_Service<TAO_NS_Command_Builder>::instance (TAO_NS_Name::command_builder);
+    ACE_Dynamic_Service<TAO_Notify_Tests_Command_Builder>::instance (TAO_Notify_Tests_Name::command_builder);
 
   worker_.command_builder (this->cmd_builder_);
 
@@ -206,7 +256,7 @@ TAO_NS_Driver::init (int argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
 }
 
 void
-TAO_NS_Driver::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Driver::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   // Task activation flags.
   long flags =
@@ -253,7 +303,7 @@ TAO_NS_Driver::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TAO_NS_Driver::shutdown (void)
+TAO_Notify_Tests_Driver::shutdown (void)
 {
   this->orb_->shutdown ();
 }
@@ -261,10 +311,10 @@ TAO_NS_Driver::shutdown (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Dynamic_Service<TAO_NS_Command_Builder>;
+template class ACE_Dynamic_Service<TAO_Notify_Tests_Command_Builder>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Dynamic_Service<TAO_NS_Command_Builder>
+#pragma instantiate ACE_Dynamic_Service<TAO_Notify_Tests_Command_Builder>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

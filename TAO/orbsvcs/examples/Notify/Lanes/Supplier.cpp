@@ -2,11 +2,11 @@
 
 #include "Supplier.h"
 
-ACE_RCSID(Notify, TAO_NS_Supplier, "$id$")
+ACE_RCSID(Notify, TAO_Notify_Lanes_Supplier, "$id$")
 
 #include "tao/ORB_Core.h"
 
-TAO_NS_Supplier::TAO_NS_Supplier  (TAO_NS_ORB_Objects& orb_objects)
+TAO_Notify_Lanes_Supplier::TAO_Notify_Lanes_Supplier  (TAO_Notify_ORB_Objects& orb_objects)
   : orb_objects_ (orb_objects)
   , proxy_consumer_id_ (0)
   , expected_consumer_count_ (2)
@@ -15,12 +15,12 @@ TAO_NS_Supplier::TAO_NS_Supplier  (TAO_NS_ORB_Objects& orb_objects)
 {
 }
 
-TAO_NS_Supplier::~TAO_NS_Supplier ()
+TAO_Notify_Lanes_Supplier::~TAO_Notify_Lanes_Supplier ()
 {
 }
 
 void
-TAO_NS_Supplier::init (CosNotifyChannelAdmin::SupplierAdmin_var& admin, int expected_consumer_count ACE_ENV_ARG_DECL)
+TAO_Notify_Lanes_Supplier::init (CosNotifyChannelAdmin::SupplierAdmin_var& admin, int expected_consumer_count ACE_ENV_ARG_DECL)
 {
   // First initialize the class members.
   this->admin_ = admin;
@@ -30,7 +30,7 @@ TAO_NS_Supplier::init (CosNotifyChannelAdmin::SupplierAdmin_var& admin, int expe
 }
 
 void
-TAO_NS_Supplier::run (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Supplier::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   // The Priority at which we send the first event to the first consumer.
   RTCORBA::Priority priority = 1;
@@ -97,7 +97,7 @@ TAO_NS_Supplier::run (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Supplier::connect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Supplier::connect (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Activate the supplier object.
   CosNotifyComm::StructuredPushSupplier_var objref = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -125,7 +125,7 @@ TAO_NS_Supplier::connect (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
@@ -133,7 +133,7 @@ TAO_NS_Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Supplier::deactivate (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Supplier::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 {
   PortableServer::POA_var poa (this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER));
   ACE_CHECK;
@@ -148,7 +148,7 @@ TAO_NS_Supplier::deactivate (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Supplier::subscription_change (const CosNotification::EventTypeSeq & added,
+TAO_Notify_Lanes_Supplier::subscription_change (const CosNotification::EventTypeSeq & added,
                                       const CosNotification::EventTypeSeq & /*removed */
                                       ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
@@ -167,7 +167,7 @@ TAO_NS_Supplier::subscription_change (const CosNotification::EventTypeSeq & adde
 }
 
 void
-TAO_NS_Supplier::send_event (const CosNotification::StructuredEvent& event ACE_ENV_ARG_DECL)
+TAO_Notify_Lanes_Supplier::send_event (const CosNotification::StructuredEvent& event ACE_ENV_ARG_DECL)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
@@ -176,7 +176,7 @@ TAO_NS_Supplier::send_event (const CosNotification::StructuredEvent& event ACE_E
 }
 
 void
-TAO_NS_Supplier::disconnect_structured_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Lanes_Supplier::disconnect_structured_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))

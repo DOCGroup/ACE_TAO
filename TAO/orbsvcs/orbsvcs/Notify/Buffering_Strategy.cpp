@@ -6,7 +6,7 @@
 #include "Buffering_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Buffering_Strategy, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_Buffering_Strategy, "$Id$")
 
 #include "ace/Message_Queue.h"
 #include "orbsvcs/CosNotificationC.h"
@@ -15,7 +15,7 @@ ACE_RCSID(Notify, TAO_NS_Buffering_Strategy, "$Id$")
 #include "QoSProperties.h"
 #include "tao/debug.h"
 
-TAO_NS_Buffering_Strategy::TAO_NS_Buffering_Strategy (TAO_NS_Message_Queue& msg_queue, TAO_NS_AdminProperties_var& admin_properties, CORBA::Long batch_size)
+TAO_Notify_Buffering_Strategy::TAO_Notify_Buffering_Strategy (TAO_Notify_Message_Queue& msg_queue, TAO_Notify_AdminProperties_var& admin_properties, CORBA::Long batch_size)
   : msg_queue_ (msg_queue),
     admin_properties_ (admin_properties),
     global_queue_lock_ (admin_properties->global_queue_lock ()),
@@ -33,12 +33,12 @@ TAO_NS_Buffering_Strategy::TAO_NS_Buffering_Strategy (TAO_NS_Message_Queue& msg_
 {
 }
 
-TAO_NS_Buffering_Strategy::~TAO_NS_Buffering_Strategy ()
+TAO_Notify_Buffering_Strategy::~TAO_Notify_Buffering_Strategy ()
 {
 }
 
 void
-TAO_NS_Buffering_Strategy::update_qos_properties (const TAO_NS_QoSProperties& qos_properties)
+TAO_Notify_Buffering_Strategy::update_qos_properties (const TAO_Notify_QoSProperties& qos_properties)
 {
   this->order_policy_.set (qos_properties);
 
@@ -47,7 +47,7 @@ TAO_NS_Buffering_Strategy::update_qos_properties (const TAO_NS_QoSProperties& qo
       this->use_discarding_ = 1;
     }
 
-  TAO_NS_Property_Time blocking_timeout (TAO_Notify_Extensions::BlockingPolicy);
+  TAO_Notify_Property_Time blocking_timeout (TAO_Notify_Extensions::BlockingPolicy);
 
   if (blocking_timeout.set (qos_properties) != -1) // if set to a valid time, init the blocking_time_
     {
@@ -63,7 +63,7 @@ TAO_NS_Buffering_Strategy::update_qos_properties (const TAO_NS_QoSProperties& qo
 }
 
 void
-TAO_NS_Buffering_Strategy::shutdown (void)
+TAO_Notify_Buffering_Strategy::shutdown (void)
 {
   ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->global_queue_lock_);
 
@@ -75,7 +75,7 @@ TAO_NS_Buffering_Strategy::shutdown (void)
 }
 
 int
-TAO_NS_Buffering_Strategy::enqueue (TAO_NS_Method_Request& method_request)
+TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request& method_request)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, -1);
 
@@ -161,7 +161,7 @@ TAO_NS_Buffering_Strategy::enqueue (TAO_NS_Method_Request& method_request)
 }
 
 int
-TAO_NS_Buffering_Strategy::dequeue (TAO_NS_Method_Request* &method_request, const ACE_Time_Value *abstime)
+TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request* &method_request, const ACE_Time_Value *abstime)
 {
   ACE_Message_Block *mb;
 
@@ -181,7 +181,7 @@ TAO_NS_Buffering_Strategy::dequeue (TAO_NS_Method_Request* &method_request, cons
   if (this->msg_queue_.dequeue (mb) == -1)
     return -1;
 
-  method_request = ACE_dynamic_cast (TAO_NS_Method_Request*, mb);
+  method_request = ACE_dynamic_cast (TAO_Notify_Method_Request*, mb);
 
   if (method_request == 0)
     return -1;
@@ -197,7 +197,7 @@ TAO_NS_Buffering_Strategy::dequeue (TAO_NS_Method_Request* &method_request, cons
 }
 
 int
-TAO_NS_Buffering_Strategy::queue (TAO_NS_Method_Request& method_request)
+TAO_Notify_Buffering_Strategy::queue (TAO_Notify_Method_Request& method_request)
 {
   int result;
 
@@ -237,7 +237,7 @@ TAO_NS_Buffering_Strategy::queue (TAO_NS_Method_Request& method_request)
 }
 
 int
-TAO_NS_Buffering_Strategy::discard (void)
+TAO_Notify_Buffering_Strategy::discard (void)
 {
   ACE_Message_Block *mb;
   int result;

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_RT_APPLICATION_COMMAND_H
-#define TAO_NS_RT_APPLICATION_COMMAND_H
+#ifndef TAO_Notify_Tests_RT_APPLICATION_COMMAND_H
+#define TAO_Notify_Tests_RT_APPLICATION_COMMAND_H
 #include "ace/pre.h"
 
 #include "rt_notify_test_export.h"
@@ -22,22 +22,22 @@
 #include "../lib/Application_Command.h"
 
 /**
- * @class TAO_NS_RT_Application_Command
+ * @class TAO_Notify_Tests_RT_Application_Command
  *
  * @brief
  *
  */
-class TAO_RT_NOTIFY_TEST_Export TAO_NS_RT_Application_Command : public TAO_NS_Application_Command
+class TAO_RT_NOTIFY_TEST_Export TAO_Notify_Tests_RT_Application_Command : public TAO_Notify_Tests_Application_Command
 {
 public:
   /// Constuctor
-  TAO_NS_RT_Application_Command (void);
+  TAO_Notify_Tests_RT_Application_Command (void);
 
   /// Destructor
-  ~TAO_NS_RT_Application_Command ();
+  ~TAO_Notify_Tests_RT_Application_Command ();
 
   virtual void handle_init (ACE_ENV_SINGLE_ARG_DECL);
 };
 
 #include "ace/post.h"
-#endif /* TAO_NS_RT_APPLICATION_COMMAND_H */
+#endif /* TAO_Notify_Tests_RT_APPLICATION_COMMAND_H */

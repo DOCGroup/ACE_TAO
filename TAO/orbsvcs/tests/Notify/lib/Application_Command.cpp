@@ -11,29 +11,29 @@ ACE_RCSID(lib, TAO_Application_Command, "$id$")
 #include "Driver_Base.h"
 #include "Priority_Mapping.h"
 
-TAO_NS_Application_Command::TAO_NS_Application_Command (void)
+TAO_Notify_Tests_Application_Command::TAO_Notify_Tests_Application_Command (void)
   : dump_samples_ (0)
 {
 }
 
-TAO_NS_Application_Command::~TAO_NS_Application_Command ()
+TAO_Notify_Tests_Application_Command::~TAO_Notify_Tests_Application_Command ()
 {
 }
 
 const char*
-TAO_NS_Application_Command::get_name (void)
+TAO_Notify_Tests_Application_Command::get_name (void)
 {
-  return TAO_NS_Application_Command::name ();
+  return TAO_Notify_Tests_Application_Command::name ();
 }
 
 const char*
-TAO_NS_Application_Command::name (void)
+TAO_Notify_Tests_Application_Command::name (void)
 {
-  return TAO_NS_Name::application_command;
+  return TAO_Notify_Tests_Name::application_command;
 }
 
 void
-TAO_NS_Application_Command::init (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_Application_Command::init (ACE_Arg_Shifter& arg_shifter)
 {
   if (arg_shifter.is_anything_left ())
     {
@@ -92,7 +92,7 @@ TAO_NS_Application_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_NS_Application_Command::handle_init (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Application_Command::handle_init (ACE_ENV_SINGLE_ARG_DECL)
 {
   /// Fetch the root poa.
   PortableServer::POA_var root_poa;
@@ -106,28 +106,28 @@ TAO_NS_Application_Command::handle_init (ACE_ENV_SINGLE_ARG_DECL)
   /// Activate the root POA.
   poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
 
-  TAO_NS_Priority_Mapping* mapping = new TAO_NS_Priority_Mapping ();
+  TAO_Notify_Tests_Priority_Mapping* mapping = new TAO_Notify_Tests_Priority_Mapping ();
 
   LOOKUP_MANAGER->_register (mapping);
 }
 
 void
-TAO_NS_Application_Command::handle_wait_for_completion (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Application_Command::handle_wait_for_completion (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P, %t) Waiting for suppliers and consumers to finish...\n"));
 
-  TAO_NS_Activation_Manager* act_mgr = 0;
+  TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
   LOOKUP_MANAGER->resolve (act_mgr);
 
   act_mgr->wait_for_completion ();
 }
 
 void
-TAO_NS_Application_Command::handle_shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Application_Command::handle_shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P, %t)Shutting down the Application...\n"));
 
-  TAO_NS_Driver_Base* driver = 0;
+  TAO_Notify_Tests_Driver_Base* driver = 0;
   LOOKUP_MANAGER->resolve (driver);
 
   driver->shutdown ();
@@ -135,24 +135,24 @@ TAO_NS_Application_Command::handle_shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TAO_NS_Application_Command::handle_dump_stats (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Application_Command::handle_dump_stats (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P, %t)Dumpimg stats...\n"));
 
-  TAO_NS_Activation_Manager* act_mgr = 0;
+  TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
   LOOKUP_MANAGER->resolve (act_mgr);
 
   act_mgr->dump_stats (this->dump_samples_);
 }
 
 void
-TAO_NS_Application_Command::handle_run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Application_Command::handle_run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   // Run the Consumers
 
 
   //= Run the Suppliers
-  TAO_NS_Activation_Manager* act_mgr = 0;
+  TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
   LOOKUP_MANAGER->resolve (act_mgr);
 
   if (act_mgr->activate_suppliers () == 0)
@@ -162,18 +162,18 @@ TAO_NS_Application_Command::handle_run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TAO_NS_Application_Command::handle_signal_peer (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Application_Command::handle_signal_peer (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_NS_Activation_Manager* act_mgr = 0;
+  TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
   LOOKUP_MANAGER->resolve (act_mgr);
 
   act_mgr->signal_peer (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_NS_Application_Command::handle_wait_to_start (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Application_Command::handle_wait_to_start (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_NS_Activation_Manager* act_mgr = 0;
+  TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
   LOOKUP_MANAGER->resolve (act_mgr);
 
   act_mgr->write_ior (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -183,7 +183,7 @@ TAO_NS_Application_Command::handle_wait_to_start (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Application_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Application_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->command_ == INIT)
     {

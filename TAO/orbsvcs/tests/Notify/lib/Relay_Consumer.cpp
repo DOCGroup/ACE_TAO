@@ -2,23 +2,23 @@
 
 #include "Relay_Consumer.h"
 
-ACE_RCSID(Notify, TAO_NS_Relay_Consumer, "$id$")
+ACE_RCSID(Notify, TAO_Notify_Tests_Relay_Consumer, "$id$")
 
 #include "LookupManager.h"
 
-TAO_NS_Relay_Consumer::TAO_NS_Relay_Consumer (ACE_CString& destination)
+TAO_Notify_Tests_Relay_Consumer::TAO_Notify_Tests_Relay_Consumer (ACE_CString& destination)
   : destination_ (destination)
 {
 }
 
-TAO_NS_Relay_Consumer::~TAO_NS_Relay_Consumer ()
+TAO_Notify_Tests_Relay_Consumer::~TAO_Notify_Tests_Relay_Consumer ()
 {
 }
 
 void
-TAO_NS_Relay_Consumer::connect (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Relay_Consumer::connect (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_NS_Direct_Consumer::connect (ACE_ENV_SINGLE_ARG_PARAMETER);
+  TAO_Notify_Tests_Direct_Consumer::connect (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Resolve the destination object.
@@ -27,13 +27,13 @@ TAO_NS_Relay_Consumer::connect (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Relay_Consumer::push_structured_event (const CosNotification::StructuredEvent &notification
+TAO_Notify_Tests_Relay_Consumer::push_structured_event (const CosNotification::StructuredEvent &notification
                                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosEventComm::Disconnected))
 {
   // The Periodic Consumer will record the run statistics.
-  //TAO_NS_Periodic_Consumer::push_structured_event (notification ACE_ENV_ARG_PARAMETER);
+  //TAO_Notify_Tests_Periodic_Consumer::push_structured_event (notification ACE_ENV_ARG_PARAMETER);
   //ACE_CHECK;
 
   // Forward the event.

@@ -8,28 +8,28 @@ ACE_RCSID(lib, TAO_Filter_Command, "$id$")
 #include "LookupManager.h"
 #include "Name.h"
 
-TAO_NS_Filter_Command::TAO_NS_Filter_Command (void)
+TAO_Notify_Tests_Filter_Command::TAO_Notify_Tests_Filter_Command (void)
 {
 }
 
-TAO_NS_Filter_Command::~TAO_NS_Filter_Command ()
+TAO_Notify_Tests_Filter_Command::~TAO_Notify_Tests_Filter_Command ()
 {
-}
-
-const char*
-TAO_NS_Filter_Command::get_name (void)
-{
-  return TAO_NS_Filter_Command::name ();
 }
 
 const char*
-TAO_NS_Filter_Command::name (void)
+TAO_Notify_Tests_Filter_Command::get_name (void)
 {
-  return TAO_NS_Name::filter_command;
+  return TAO_Notify_Tests_Filter_Command::name ();
+}
+
+const char*
+TAO_Notify_Tests_Filter_Command::name (void)
+{
+  return TAO_Notify_Tests_Name::filter_command;
 }
 
 void
-TAO_NS_Filter_Command::init (ACE_Arg_Shifter& arg_shifter)
+TAO_Notify_Tests_Filter_Command::init (ACE_Arg_Shifter& arg_shifter)
 {
   if (arg_shifter.is_anything_left ())
     {
@@ -98,7 +98,7 @@ TAO_NS_Filter_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_NS_Filter_Command::handle_create_filter_factory (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Filter_Command::handle_create_filter_factory (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::EventChannel_var ec;
 
@@ -114,7 +114,7 @@ TAO_NS_Filter_Command::handle_create_filter_factory (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Filter_Command::handle_create_filter (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Filter_Command::handle_create_filter (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyFilter::FilterFactory_var ff;
 
@@ -130,7 +130,7 @@ TAO_NS_Filter_Command::handle_create_filter (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Filter_Command::handle_add_constraint (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Filter_Command::handle_add_constraint (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyFilter::Filter_var filter;
 
@@ -149,7 +149,7 @@ TAO_NS_Filter_Command::handle_add_constraint (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Filter_Command::handle_add_filter (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Filter_Command::handle_add_filter (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyFilter::Filter_var filter;
 
@@ -166,7 +166,7 @@ TAO_NS_Filter_Command::handle_add_filter (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Filter_Command::handle_destroy_filter (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Filter_Command::handle_destroy_filter (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyFilter::Filter_var filter;
 
@@ -178,7 +178,7 @@ TAO_NS_Filter_Command::handle_destroy_filter (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_NS_Filter_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Tests_Filter_Command::execute_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->command_ == CREATE_FACTORY)
     {

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef TAO_NS_RT_POA_Helper_H
-#define TAO_NS_RT_POA_Helper_H
+#ifndef TAO_Notify_RT_POA_Helper_H
+#define TAO_Notify_RT_POA_Helper_H
 #include "ace/pre.h"
 
 #include "rt_notify_export.h"
@@ -23,16 +23,16 @@
 #include "orbsvcs/NotifyExtC.h"
 
 /**
- * @class TAO_NS_RT_POA_Helper
+ * @class TAO_Notify_RT_POA_Helper
  *
  * @brief Helper for creating RT POA objects.
  *
  */
-class TAO_RT_Notify_Export TAO_NS_RT_POA_Helper : public TAO_NS_POA_Helper
+class TAO_RT_Notify_Export TAO_Notify_RT_POA_Helper : public TAO_Notify_POA_Helper
 {
 public:
   /// Destructor
-  ~TAO_NS_RT_POA_Helper ();
+  ~TAO_Notify_RT_POA_Helper ();
 
   /// Create a new PortableServer::POA.
   /// The UNIQUE_ID, USER_ID , CLIENT_PROPAGATED and thread pool policy is applied to the new POA.
@@ -61,4 +61,4 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* TAO_NS_RT_POA_Helper_H */
+#endif /* TAO_Notify_RT_POA_Helper_H */

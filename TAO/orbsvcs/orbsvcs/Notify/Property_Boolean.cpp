@@ -6,22 +6,22 @@
 #include "Property_Boolean.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_NS_Property_Boolean, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_Property_Boolean, "$Id$")
 
 #include "PropertySeq.h"
 
-TAO_NS_Property_Boolean::TAO_NS_Property_Boolean (const char* name)
+TAO_Notify_Property_Boolean::TAO_Notify_Property_Boolean (const char* name)
   :name_ (name), valid_(0)
 {
 }
 
-TAO_NS_Property_Boolean::TAO_NS_Property_Boolean (const char* name, CORBA::Boolean initial)
+TAO_Notify_Property_Boolean::TAO_Notify_Property_Boolean (const char* name, CORBA::Boolean initial)
   :name_ (name), value_ (initial), valid_ (1)
 {
 }
 
 int
-TAO_NS_Property_Boolean::set (const TAO_NS_PropertySeq& property_seq)
+TAO_Notify_Property_Boolean::set (const TAO_Notify_PropertySeq& property_seq)
 {
   CosNotification::PropertyValue value;
 
@@ -34,7 +34,7 @@ TAO_NS_Property_Boolean::set (const TAO_NS_PropertySeq& property_seq)
 }
 
 void
-TAO_NS_Property_Boolean::get (CosNotification::PropertySeq& prop_seq)
+TAO_Notify_Property_Boolean::get (CosNotification::PropertySeq& prop_seq)
 {
   /// Make space
   prop_seq.length (prop_seq.length () + 1);
