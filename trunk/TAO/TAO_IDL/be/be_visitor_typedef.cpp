@@ -724,11 +724,14 @@ be_visitor_typedef_ch::visit_predefined_type (be_predefined_type *node)
   // typedef the type
   *os << "typedef " << bt->nested_type_name (scope)
       << " " << tdef->nested_type_name (scope) << ";" << be_nl;
-  if (node->pt () == AST_PredefinedType::PT_pseudo)
+  if ((node->pt () == AST_PredefinedType::PT_pseudo) ||
+      (node->pt () == AST_PredefinedType::PT_any))
     {
-      // typedef the _ptr
+      // typedef the _ptr and _var
       *os << "typedef " << bt->nested_type_name (scope, "_ptr")
           << " " << tdef->nested_type_name (scope, "_ptr") << ";" << be_nl;
+      *os << "typedef " << bt->nested_type_name (scope, "_var")
+          << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
     }
   // typedef the _out
   *os << "typedef " << bt->nested_type_name (scope, "_out")
