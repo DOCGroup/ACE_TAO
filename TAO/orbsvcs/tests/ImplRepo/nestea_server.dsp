@@ -17,12 +17,13 @@ CFG=Nestea Server - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Nestea Server - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Nestea Server - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Nestea Server - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Nestea Server - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -89,6 +90,10 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\IR_Helper.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\nestea_i.cpp
 # End Source File
 # Begin Source File
@@ -98,10 +103,6 @@ SOURCE=.\nestea_server.cpp
 # Begin Source File
 
 SOURCE=.\nestea_server_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\IR_Helper.cpp
 # End Source File
 # End Group
 # Begin Group "Generated Source Files"
@@ -121,15 +122,15 @@ SOURCE=.\NesteaS.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\IR_Helper.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\nestea_i.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\nestea_server_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\IR_Helper.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -141,13 +142,13 @@ SOURCE=.\Nestea.idl
 
 !IF  "$(CFG)" == "Nestea Server - Win32 Release"
 
-USERDEP__AIRPL="..\..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__NESTE="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Nestea.idl
 InputName=Nestea
 
 BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -180,13 +181,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Nestea Server - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__AIRPL="..\..\..\..\bin\tao_idl.exe"	
+USERDEP__NESTE="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Nestea.idl
 InputName=Nestea
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl -Gi  $(InputName).idl
+	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
