@@ -3,11 +3,11 @@
 #
 # needed for the trading service stuff
 
-ifdef trader
-
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # TAO_ROOT
+
+ifdef trader
 
 ifndef STL_ROOT
   STL_ROOT=/project/doc/irfan/ObjectSpace/SC4.0
