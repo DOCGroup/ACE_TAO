@@ -52,6 +52,7 @@ public:
   //   following methods.
   virtual ACE_Lock* create_profile_lock (void);
   virtual TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport);
+  virtual ACE_Lock *create_transport_mux_strategy_lock (void);
   virtual int reply_dispatcher_table_size (void) const;
   virtual int allow_callback (void);
   virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
@@ -103,6 +104,9 @@ private:
 
   /// Size of the reply dispatcher table
   int rd_table_size_;
+
+  /// Type of lock for the muxed_strategy
+  Lock_Type muxed_strategy_lock_type_;
 };
 
 #if defined (__ACE_INLINE__)

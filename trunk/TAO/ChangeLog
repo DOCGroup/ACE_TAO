@@ -1,3 +1,33 @@
+Thu Apr 10 10:30x:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/default_client.cpp:
+	* tao/default_client.h: 
+	* tao/Client_Strategy_Factory.cpp:
+	* tao/Client_Strategy_Factory.h: Added a new -ORB option,
+	  -ORBTransporMuxStrategyLock, and a accessor
+	  create_transport_mux_strategy_lock () that  returns the lock
+	  created by the strategy factory. The options and the accessor
+	  helps the user to use either a locked or a lock free transport
+	  muxed strategy. Please see the documentation in
+	  docs/Options.html for details on how to use this.
+
+	* tao/Transport_Mux_Strategy.cpp:
+	* tao/Transport_Mux_Strategy.h: Added a lock to the muxed strategy
+	  class. The lock will actually be created, and used by the
+	  concrete strategies. Looks like the all the concrete strategies
+	  may require some type of strategized locking. Hence this has
+	  been moved here with a purpose. 
+	
+	* tao/Muxed_TMS.cpp:
+	* tao/Muxed_TMS.h: Removed the hard coded recursive mutex, and used
+	  the strategized lock created by the client strategy factory
+	  instead. 
+
+	  This fixes BUG 1491 and thanks again to Carlos for motivating
+	  this change.
+
+	* docs/Options.html: Added documentation for the new options.
+
 Thu Apr 10 13:40:02 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
