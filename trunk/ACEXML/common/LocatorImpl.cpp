@@ -14,9 +14,19 @@ ACEXML_LocatorImpl::ACEXML_LocatorImpl (void)
 {
 }
 
+ACEXML_LocatorImpl::ACEXML_LocatorImpl (const ACEXML_Char* systemId,
+                                        const ACEXML_Char* publicId)
+  : publicId_ (publicId ? ACE::strnew (publicId) : 0),
+    systemId_ (systemId ? ACE::strnew (systemId) : 0),
+    lineNumber_ (1),
+    columnNumber_ (0)
+{
+}
+
+
 ACEXML_LocatorImpl::ACEXML_LocatorImpl (const ACEXML_Locator& locator)
-  : publicId_ (ACE::strnew (locator.getPublicId ())),
-    systemId_ (ACE::strnew (locator.getSystemId ())),
+  : publicId_ (locator.getPublicId() ? ACE::strnew(locator.getPublicId ()): 0),
+    systemId_ (locator.getSystemId() ? ACE::strnew(locator.getSystemId ()): 0),
     lineNumber_ (locator.getLineNumber ()),
     columnNumber_ (locator.getColumnNumber ())
 {
@@ -24,7 +34,7 @@ ACEXML_LocatorImpl::ACEXML_LocatorImpl (const ACEXML_Locator& locator)
 
 ACEXML_LocatorImpl::~ACEXML_LocatorImpl (void)
 {
-
+  this->reset();
 }
 
 void

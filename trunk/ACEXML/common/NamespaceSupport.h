@@ -5,6 +5,7 @@
  *  @file    NamespaceSupport.h
  *
  *  $Id$
+ *  $Id$
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
@@ -141,6 +142,11 @@ public:
   ~ACEXML_NamespaceSupport (void);
 
   /**
+   *  Initialize the namespace support object
+   */
+  int init(void);
+
+  /**
    * XMLNS default prefix and URI strings.
    */
   static const ACEXML_Char *XMLNS_PREFIX;
@@ -211,7 +217,7 @@ public:
 
   /**
    * Reset this Namespace support object for reuse.
-   * @todo Not implemented.
+   *
    */
   int reset (void);
 

@@ -103,7 +103,7 @@ ACEXML_DefaultHandler::startPrefixMapping (const ACEXML_Char *,
   // No-op.
 }
 
-  // *** Methods inherit from ACEXML_DTDHandler.
+  // *** Methods inherited from ACEXML_DTDHandler.
 
 void
 ACEXML_DefaultHandler::notationDecl (const ACEXML_Char *,
@@ -124,7 +124,7 @@ ACEXML_DefaultHandler::unparsedEntityDecl (const ACEXML_Char *,
   // No-op.
 }
 
-  // Methods inherit from ACEXML_EnitityResolver.
+  // Methods inherited from ACEXML_EntityResolver.
 
 ACEXML_InputSource *
 ACEXML_DefaultHandler::resolveEntity (const ACEXML_Char *,
@@ -135,7 +135,7 @@ ACEXML_DefaultHandler::resolveEntity (const ACEXML_Char *,
   return 0;
 }
 
-  // Methods inherit from ACEXML_ErrorHandler.
+  // Methods inherited from ACEXML_ErrorHandler.
 
   /*
    * Receive notification of a recoverable error.

@@ -71,8 +71,13 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 {
   int status = 0;
   Basic_Content_Tester tester;
-  ACEXML_StrCharStream *test_stream =
-    new ACEXML_StrCharStream (tester.get_test_string ());
+  ACEXML_StrCharStream *test_stream = 0;
+  ACE_NEW_RETURN (test_stream, ACEXML_StrCharStream, -1);
+  if (test_stream->open (tester.get_test_string (), ACE_TEXT ("test_stream")) < 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create input stream\n")));
+      return -1;
+    }
   ACEXML_InputSource input (test_stream);
   ACEXML_Parser parser;
   parser.setContentHandler (&tester);

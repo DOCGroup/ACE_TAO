@@ -39,7 +39,7 @@ public:
 
   typedef auto_ptr<ACEXML_Attribute_Def_Builder> VAR;
 
-  typedef enum {
+  enum ATT_TYPE {
     CDATA,
     ID,
     IDREF,
@@ -51,14 +51,14 @@ public:
     NOTATION,
     ENUMERATION,
     ERROR_TYPE
-  } ATT_TYPE;
+  };
 
-  typedef enum {
+  enum DEFAULT_DECL {
     REQUIRED,
     IMPLIED,
     FIXED,
     INVALID
-  } DEFAULT_DECL;
+  };
 
   virtual ~ACEXML_Attribute_Def_Builder () = 0;
 

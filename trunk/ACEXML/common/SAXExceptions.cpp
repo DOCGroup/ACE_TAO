@@ -105,7 +105,7 @@ ACEXML_SAXException::is_a (const ACEXML_Char *name)
 void
 ACEXML_SAXException::print (void)
 {
-    ACE_DEBUG ((LM_ERROR,
+  ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("ACEXML: (%P|%t) %s: %s\n"),
               this->exception_name_, this->message()));
 }
@@ -249,7 +249,7 @@ ACEXML_SAXParseException::is_a (const ACEXML_Char *name)
 void
 ACEXML_SAXParseException::print (void)
 {
-  ACE_DEBUG ((LM_ERROR,
+  ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("ACEXML: (%P|%t) %s: %s\n"),
                         this->exception_name_, this->message()));
 }

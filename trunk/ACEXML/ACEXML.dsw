@@ -3,7 +3,19 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "ACEXML_Parser"=.\parser\parser\Parser.dsp - Package Owner=<4>
+Project: "ACEXML DLL"=common\ACEXML.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ACEXML_Parser DLL"=parser\parser\ACEXML_Parser.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -12,13 +24,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name XML_Common
+    Project_Dep_Name ACEXML DLL
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Debug_Validator"=.\PARSER\DEBUG_VALIDATOR\Debug_Validator.dsp - Package Owner=<4>
+Project: "ACEXML_XML_Svc_Conf_Parser DLL"=apps\svcconf\ACEXML_XML_Svc_Conf_Parser.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -27,13 +39,16 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name XML_Common
+    Project_Dep_Name ACEXML_Parser DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ACEXML DLL
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "XML_Common"=.\COMMON\XML_Common.dsp - Package Owner=<4>
+Project: "SAXPrint EXE"=examples\SAXPrint\SAXPrint.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -41,11 +56,17 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name ACEXML_Parser DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ACEXML DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "XML_Svc_Conf_Parser"=.\apps\svcconf\XML_Svc_Conf_Parser.dsp - Package Owner=<4>
+Project: "Svcconf EXE"=examples\svcconf\Svcconf.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -53,6 +74,87 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name ACEXML_XML_Svc_Conf_Parser DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ACEXML_Parser DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ACEXML DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Transcoder_Test EXE"=tests\Transcoder_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACEXML_Parser DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ACEXML DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "NamespaceSupport_Test EXE"=tests\NamespaceSupport_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACEXML_Parser DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ACEXML DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "HttpCharStream_Test EXE"=tests\HttpCharStream_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACEXML_Parser DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ACEXML DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ContentHandler_Test EXE"=tests\ContentHandler_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACEXML_Parser DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ACEXML DLL
+    End Project Dependency
 }}}
 
 ###############################################################################

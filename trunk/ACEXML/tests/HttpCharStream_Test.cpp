@@ -4,32 +4,35 @@
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  const ACEXML_Char* test = ACE_TEXT("http://www.cs.wustl.edu/~nanbor/");
+  const ACEXML_Char* test = ACE_TEXT("http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd");
 
-  const ACEXML_Char* simple = ACE_TEXT("http://www.cs.wustl.edu/~kitty/");
+  const ACEXML_Char* simple = ACE_TEXT("http://www.w3.org/TR/xhtml1/DTD/xhtml-lat1.ent");
 
-  ACEXML_HttpCharStream stream;
+  ACEXML_HttpCharStream first;
+  ACEXML_HttpCharStream second;
   ACEXML_Char ch;
 
-  if (stream.open (test) != -1)
+  if (first.open (test) != -1)
     {
-      while (stream.get (ch) != -1)
-        ACE_OS::printf ("%c", ch);
-      stream.close();
-    }
-  else
-    {
-      ACE_ERROR ((LM_ERROR, "Error in opening stream : %m\n"));
-    }
-
-  if (stream.open (simple) != -1)
-    {
-      while (stream.get (ch) != -1)
+      while (first.get (ch) != -1)
         ACE_OS::printf ("%c", ch);
     }
   else
     {
+      first.close();
       ACE_ERROR ((LM_ERROR, "Error in opening stream : %m\n"));
     }
+  if (second.open (simple) != -1)
+    {
+      while (second.get (ch) != -1)
+        ACE_OS::printf ("%c", ch);
+    }
+  else
+    {
+      second.close();
+      ACE_ERROR ((LM_ERROR, "Error in opening stream : %m\n"));
+    }
+  first.close();
+  second.close();
   return 0;
 }

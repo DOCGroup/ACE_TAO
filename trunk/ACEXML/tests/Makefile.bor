@@ -1,26 +1,32 @@
-#
-# $Id$
-# Makefile for building the ACE XML tests
-#
+#----------------------------------------------------------------------------
+#       Borland Workspace
+#----------------------------------------------------------------------------
 
-NAMES = \
-        NamespaceSupport_Test \
-        Transcoder_Test \
-        HttpCharStream_Test \
-        ContentHandler_Test
+!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
 
-OBJFILES = $(OBJDIR)\$(NAME).obj
+all:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Transcoder_Test.bor all
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.NamespaceSupport_Test.bor all
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.HttpCharStream_Test.bor all
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ContentHandler_Test.bor all
 
-CFLAGS = \
-        $(ACE_CFLAGS) \
-        $(ACE_XML_CFLAGS)
+clean:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Transcoder_Test.bor clean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.NamespaceSupport_Test.bor clean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.HttpCharStream_Test.bor clean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ContentHandler_Test.bor clean
 
-CPPDIR = .
+realclean:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Transcoder_Test.bor realclean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.NamespaceSupport_Test.bor realclean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.HttpCharStream_Test.bor realclean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ContentHandler_Test.bor realclean
 
-LIBFILES = \
-        $(ACE_LIB) \
-        $(ACE_XML_PARSER_LIB) \
-        $(ACE_XML_LIB)
+install:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Transcoder_Test.bor install
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.NamespaceSupport_Test.bor install
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.HttpCharStream_Test.bor install
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ContentHandler_Test.bor install
 
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
-!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+regenerate:
+	D:\Perl\bin\perl.exe D:\ACE_wrappers\bin\mwc.pl -type borland -recurse

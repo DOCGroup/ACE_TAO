@@ -54,7 +54,7 @@ public:
 
   /**
    * Read the next ACEXML_Char.  Return -1 if we are not able to
-   * return an ACEXML_Char, 0 if EOS is reached, or 1 if succeed.
+   * return an ACEXML_Char, 0 if succees.
    */
   virtual int get (ACEXML_Char& ch);
 
@@ -82,18 +82,21 @@ public:
   virtual void rewind (void);
 
   /*
-   * Get the character encoding for a byte stream or URI.
+   * Get the character encoding for the file.
    */
   virtual const ACEXML_Char *getEncoding (void);
 
-protected:
+  /*
+   * Get the systemId for the underlying CharStream
+   */
+  virtual const ACEXML_Char* getSystemId (void);
+
+private:
 
   /** Read the next character as a normal character. Return -1 if EOF is
    *  reached, else return 0.
    */
-  virtual int getchar_i (char& ch);
-
-private:
+  int getchar_i (char& ch);
 
 #if defined (ACE_USES_WCHAR)
   /**

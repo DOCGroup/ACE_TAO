@@ -1,10 +1,124 @@
-#
-# Makefile for building the ACE XML Library
-#
+#----------------------------------------------------------------------------
+#       Borland Workspace
+#----------------------------------------------------------------------------
 
-DIRS = \
-        common \
-        parser \
-        apps
+!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
 
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+all:
+	@cd common
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ACEXML.bor all
+	@cd ../
+	@cd parser/parser
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ACEXML_Parser.bor all
+	@cd ../../
+	@cd apps/svcconf
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ACEXML_XML_Svc_Conf_Parser.bor all
+	@cd ../../
+	@cd examples/SAXPrint
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.SAXPrint.bor all
+	@cd ../../
+	@cd examples/svcconf
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Svcconf.bor all
+	@cd ../../
+	@cd tests
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Transcoder_Test.bor all
+	@cd ../
+	@cd tests
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.NamespaceSupport_Test.bor all
+	@cd ../
+	@cd tests
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.HttpCharStream_Test.bor all
+	@cd ../
+	@cd tests
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ContentHandler_Test.bor all
+	@cd ../
+
+clean:
+	@cd common
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ACEXML.bor clean
+	@cd ../
+	@cd parser/parser
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ACEXML_Parser.bor clean
+	@cd ../../
+	@cd apps/svcconf
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ACEXML_XML_Svc_Conf_Parser.bor clean
+	@cd ../../
+	@cd examples/SAXPrint
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.SAXPrint.bor clean
+	@cd ../../
+	@cd examples/svcconf
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Svcconf.bor clean
+	@cd ../../
+	@cd tests
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Transcoder_Test.bor clean
+	@cd ../
+	@cd tests
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.NamespaceSupport_Test.bor clean
+	@cd ../
+	@cd tests
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.HttpCharStream_Test.bor clean
+	@cd ../
+	@cd tests
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ContentHandler_Test.bor clean
+	@cd ../
+
+realclean:
+	@cd common
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ACEXML.bor realclean
+	@cd ../
+	@cd parser/parser
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ACEXML_Parser.bor realclean
+	@cd ../../
+	@cd apps/svcconf
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ACEXML_XML_Svc_Conf_Parser.bor realclean
+	@cd ../../
+	@cd examples/SAXPrint
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.SAXPrint.bor realclean
+	@cd ../../
+	@cd examples/svcconf
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Svcconf.bor realclean
+	@cd ../../
+	@cd tests
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Transcoder_Test.bor realclean
+	@cd ../
+	@cd tests
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.NamespaceSupport_Test.bor realclean
+	@cd ../
+	@cd tests
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.HttpCharStream_Test.bor realclean
+	@cd ../
+	@cd tests
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ContentHandler_Test.bor realclean
+	@cd ../
+
+install:
+	@cd common
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ACEXML.bor install
+	@cd ../
+	@cd parser/parser
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ACEXML_Parser.bor install
+	@cd ../../
+	@cd apps/svcconf
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ACEXML_XML_Svc_Conf_Parser.bor install
+	@cd ../../
+	@cd examples/SAXPrint
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.SAXPrint.bor install
+	@cd ../../
+	@cd examples/svcconf
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Svcconf.bor install
+	@cd ../../
+	@cd tests
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.Transcoder_Test.bor install
+	@cd ../
+	@cd tests
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.NamespaceSupport_Test.bor install
+	@cd ../
+	@cd tests
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.HttpCharStream_Test.bor install
+	@cd ../
+	@cd tests
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Makefile.ContentHandler_Test.bor install
+	@cd ../
+
+regenerate:
+	D:\Perl\bin\perl.exe D:\ACE_wrappers\bin\mwc.pl -type borland -recurse
