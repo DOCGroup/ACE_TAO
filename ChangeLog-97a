@@ -3,6 +3,10 @@ Wed Feb 05 10:45:41 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/SOCK_Dgram.cpp (send,recv): added casts of addr.get_addr ()
 	  to caddr_t so it will compile with Sun C++.
 
+	* ace/IOStream.h: replaced __*manip with expanded types, because
+	  Sun C++ doesn't have those typedefs, and added complete prototypes
+	  for send, recv, send_n, and recv_n.
+
 	* ace/IOStream.cpp: fixed "#define ACE_IOSTREAM_C" to keep g++ sane.
 
 	* tests/Naming_Test.cpp: moved declaration of "i" out of for loop
@@ -11,6 +15,10 @@ Wed Feb 05 10:45:41 1997  David L. Levine  <levine@cs.wustl.edu>
 	* examples/ASX/UPIPE_Event_server/{Consumer,Supplier}_Router.cpp
 	  (open): return 1 if init () succeeds.  There's a commented-out
 	  call to activate the objects that would (should?) return a value.
+
+	* examples/IPC_SAP/FIFO_SAP/FIFO-client.cpp (main): declare n
+	  as ssize_t instead of size_t to avoid compiler warning about
+	  signed/unsigned comparison.
 
 Tue Feb  4 19:06:52 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
