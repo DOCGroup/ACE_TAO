@@ -62,6 +62,7 @@ project (CIAO_Container) : orbsvcslib, portableserver, security, valuetype, ifr_
 
 project (CIAO_Server) : orbsvcslib, portableserver, valuetype, ifr_client, security, utils {
   after += CIAO_Container
+  includes += $(CIAO_ROOT)
   sharedname  = CIAO_Server
   libs       +=  CIAO_Client CIAO_Container
   idlflags  += -Sc -Wb,export_include=CIAO_Server_Export.h -Wb,export_macro=CIAO_SERVER_Export
@@ -84,6 +85,8 @@ project (CIAO_Server) : orbsvcslib, portableserver, valuetype, ifr_client, secur
     Container_Base.cpp
     Container_Impl.cpp
     Servant_Impl_Base.cpp
+    Servant_Activator.cpp
+    Port_Activator.cpp
     Server_init.cpp
     ServerActivator_Impl.cpp
     StandardConfigurator_Impl.cpp
@@ -97,5 +100,6 @@ project (CIAO_Server) : orbsvcslib, portableserver, valuetype, ifr_client, secur
   Template_Files {
     Object_Set_T.cpp
     Servant_Impl_T.cpp
+    Servant_Activator_T.cpp
   }
 }
