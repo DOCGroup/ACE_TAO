@@ -42,7 +42,7 @@ namespace CIAO
     class Config_Handler_Export SP_Handler
     {
     public:
-      static ::Deployment::SatisfierProperty *
+      static Deployment::SatisfierProperty *
         process_SatisfierProperty (DOMNodeIterator * iter);
       // process elements of type SatisfierProperty definitions in
       // the descriptor files

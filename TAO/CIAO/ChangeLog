@@ -1,3 +1,21 @@
+Thu Apr 22 11:35:42 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handler/CEPE_Handler.h:
+        * DnC/Config_Handler/CEPE_Handler.cpp:
+        * DnC/Config_Handler/ERE_Handler.h:
+        * DnC/Config_Handler/ERE_Handler.cpp:
+        * DnC/Config_Handler/ID_Handler.h:
+        * DnC/Config_Handler/ID_Handler.cpp:
+        * DnC/Config_Handler/RS_Handler.h:
+        * DnC/Config_Handler/RS_Handler.cpp:
+        * DnC/Config_Handlers/SP_Handler.h:
+        * DnC/Config_Handler/SP_Handler.cpp:
+          Correct ::Deployment namespace definitions to Deployment:: as it
+          need not always start from the root. Changed ACE_NEW_RETURN
+          macros to ACE_NEW_THROW_EX as exceptions are going to be used as
+          default meachnism to flag errors. Thanks to Kitty for pointing
+          these two changes.
+
 Wed Apr 21 22:35:07 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/Config_Handler/Config_Handlers.mpc:

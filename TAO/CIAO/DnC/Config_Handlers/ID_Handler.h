@@ -48,7 +48,7 @@ namespace CIAO
     class Config_Handler_Export ID_Handler
     {
     public:
-      static ::Deployment::ImplementationDependency *
+      static Deployment::ImplementationDependency *
         process_ImplementationDependency (DOMNodeIterator * iter);
       // process elements of type Implementation Dependency definitions in
       // the descriptor files
