@@ -1,3 +1,11 @@
+Thu May 07 04:15:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.{h,cpp} (ACE_Time_Value): (Win32 only) Added a new static
+	  const member (Time_To_The_Beginning) of type DWORDLONG (unsigned
+	  _int64) to adjust the time skew between FILETIME and POSIX time.
+	  Changed the type of _100ns to ULARGE_INTEGER to eliminate
+	  unnecessary computation. 
+
 Wed May  6 23:58:40 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
 	* ace/XtReactor.cpp: 
