@@ -280,9 +280,13 @@ class CORBA_PolicyTypeSeq_var;
 class CORBA_PolicyTypeSeq_out;
 
 class CORBA_PolicyManager;
+class CORBA_PolicyManager_var;
+class CORBA_PolicyManager_out;
 typedef CORBA_PolicyManager *CORBA_PolicyManager_ptr;
 
 class CORBA_PolicyCurrent;
+class CORBA_PolicyCurrent_var;
+class CORBA_PolicyCurrent_out;
 typedef CORBA_PolicyCurrent *CORBA_PolicyCurrent_ptr;
 
 class CORBA_Policy;
@@ -782,10 +786,14 @@ TAO_SYSTEM_EXCEPTION_LIST
   static CORBA::TypeCode_ptr _tc_SetOverrideType;
 
   typedef CORBA_PolicyManager PolicyManager;
+  typedef CORBA_PolicyManager_var PolicyManager_var;
+  typedef CORBA_PolicyManager_out PolicyManager_out;
   typedef CORBA_PolicyManager *PolicyManager_ptr;
   static CORBA::TypeCode_ptr _tc_PolicyManager;
 
   typedef CORBA_PolicyCurrent PolicyCurrent;
+  typedef CORBA_PolicyCurrent_var PolicyCurrent_var;
+  typedef CORBA_PolicyCurrent_out PolicyCurrent_out;
   typedef CORBA_PolicyCurrent *PolicyCurrent_ptr;
   static CORBA::TypeCode_ptr _tc_PolicyCurrent;
 

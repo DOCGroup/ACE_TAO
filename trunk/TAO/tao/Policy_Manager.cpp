@@ -23,11 +23,29 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
   // @@ The spec does not say what to do on this case.
   if (set_add != CORBA::SET_OVERRIDE
       && set_add != CORBA::ADD_OVERRIDE)
-    ACE_THROW (CORBA::BAD_PARAM ());
+    ACE_THROW (CORBA::BAD_PARAM (TAO_DEFAULT_MINOR_CODE,
+                                 CORBA::COMPLETED_NO));
 
-  CORBA::InvalidPolicies invalid_policies;
-  invalid_policies.indices.length (policies.length ());
-  int n = 0;
+  if (set_add == CORBA::SET_OVERRIDE)
+    {
+      for (CORBA::ULong i = 0; i < this->other_policies_.length (); ++i)
+        {
+          this->other_policies_[i]->destroy (ACE_TRY_ENV);
+          ACE_CHECK;
+          this->other_policies_[i] = CORBA::Policy::_nil ();
+        }
+      this->other_policies_.length (0);
+      if (this->relative_roundtrip_timeout_ != 0)
+        {
+          this->relative_roundtrip_timeout_->destroy (ACE_TRY_ENV);
+          ACE_CHECK;
+          this->relative_roundtrip_timeout_->_remove_ref (ACE_TRY_ENV);
+          ACE_CHECK;
+          this->relative_roundtrip_timeout_ = 0;
+        }
+      this->count_ = 0;
+    }
+
   for (CORBA::ULong i = 0; i < policies.length ();  ++i)
     {
       CORBA::Policy_ptr policy = policies[i];
@@ -37,47 +55,79 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
       CORBA::ULong index = policy->policy_type (ACE_TRY_ENV);
       ACE_CHECK;
 
-      if (TAO_MIN_PROPIETARY_POLICY <= index
-          && index < TAO_MAX_PROPIETARY_POLICY)
-        index -= TAO_MIN_PROPIETARY_POLICY;
-
-      if (index >= TAO_MAX_POLICIES)
-        invalid_policies.indices[n++] = CORBA::UShort (i);
-    }
-  if (n != 0)
-    {
-      invalid_policies.indices.length (n);
-      ACE_THROW (CORBA::InvalidPolicies (invalid_policies));
-    }
-
-  if (set_add == CORBA::SET_OVERRIDE)
-    {
-      for (int i = 0; i < TAO_MAX_POLICIES; ++i)
+      switch (index)
         {
-          this->policies_[i] = CORBA::Policy::_nil ();
+        case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
+          {
+            CORBA::Policy_var copy = policy->copy (ACE_TRY_ENV);
+            ACE_CHECK;
+
+            TAO_ServantBase* servant = copy->_servant ();
+            if (servant == 0)
+              ACE_THROW (CORBA::INTERNAL ());
+
+            POA_Messaging::RelativeRoundtripTimeoutPolicy *tmp =
+              ACE_static_cast(POA_Messaging::RelativeRoundtripTimeoutPolicy*,
+                              servant->_downcast ("IDL:Messaging/RelativeRoundtripTimeoutPolicy:1.0"));
+            if (tmp == 0)
+              ACE_THROW (CORBA::INTERNAL ());
+
+            if (this->relative_roundtrip_timeout_ != 0)
+              {
+                this->relative_roundtrip_timeout_->destroy (ACE_TRY_ENV);
+                ACE_CHECK;
+                this->relative_roundtrip_timeout_->_remove_ref (ACE_TRY_ENV);
+                ACE_CHECK;
+              }
+            this->relative_roundtrip_timeout_ = tmp;
+            this->relative_roundtrip_timeout_->_add_ref (ACE_TRY_ENV);
+            ACE_CHECK;
+            this->count_++;
+          }
+          break;
+
+        case TAO_MESSAGING_REBIND_POLICY_TYPE:
+        case TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE:
+        case TAO_MESSAGING_REQUEST_PRIORITY_POLICY_TYPE:
+        case TAO_MESSAGING_REPLY_PRIORITY_POLICY_TYPE:
+        case TAO_MESSAGING_REQUEST_START_TIME_POLICY_TYPE:
+        case TAO_MESSAGING_REQUEST_END_TIME_POLICY_TYPE:
+        case TAO_MESSAGING_REPLY_START_TIME_POLICY_TYPE:
+        case TAO_MESSAGING_REPLY_END_TIME_POLICY_TYPE:
+        case TAO_MESSAGING_RELATIVE_REQ_TIMEOUT_POLICY_TYPE:
+        case TAO_MESSAGING_ROUTING_POLICY_TYPE:
+        case TAO_MESSAGING_MAX_HOPS_POLICY_TYPE:
+        case TAO_MESSAGING_QUEUE_ORDER_POLICY_TYPE:
+        default:
+          {
+            CORBA::Policy_var copy = policy->copy (ACE_TRY_ENV);
+            ACE_CHECK;
+
+            CORBA::ULong j = 0;
+            CORBA::ULong length = this->other_policies_.length ();
+            while (j != length)
+              {
+                CORBA::ULong current =
+                  this->other_policies_[j]->policy_type (ACE_TRY_ENV);
+                ACE_CHECK;
+
+                if (current == index)
+                  {
+                    this->other_policies_[j]->destroy (ACE_TRY_ENV);
+                    ACE_CHECK;
+                    this->other_policies_[j] = copy._retn ();
+                    break;
+                  }
+                ++j;
+              }
+            if (j == length)
+              {
+                this->other_policies_.length (length + 1);
+                this->other_policies_[j] = copy._retn ();
+              }
+          }
+          break;
         }
-      this->count_ = 0;
-    }
-
-  for (CORBA::ULong j = 0; j < policies.length ();  ++j)
-    {
-      CORBA::Policy_ptr policy = policies[j];
-      if (CORBA::is_nil (policy))
-        continue;
-
-      CORBA::ULong index = policy->policy_type (ACE_TRY_ENV);
-      ACE_CHECK;
-
-      if (TAO_MIN_PROPIETARY_POLICY <= index
-          && index < TAO_MAX_PROPIETARY_POLICY)
-        index -= TAO_MIN_PROPIETARY_POLICY;
-
-      // No need to validate the index...
-      if (CORBA::is_nil (this->policies_[index].in ()))
-        this->count_++;
-
-      this->policies_[index] =
-        CORBA::Policy::_duplicate (policy);
     }
 }
 
@@ -86,9 +136,9 @@ TAO_Policy_Manager_Impl::get_policy_overrides (
     const CORBA::PolicyTypeSeq & types,
     CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::ULong l = types.length ();
+  CORBA::ULong types_length = types.length ();
 
-  CORBA::ULong slots = l;
+  CORBA::ULong slots = types_length;
   if (slots == 0)
     slots = this->count_;
 
@@ -96,15 +146,22 @@ TAO_Policy_Manager_Impl::get_policy_overrides (
     new CORBA::PolicyList (slots);
   policy_list->length (slots);
 
-  int n = 0;
-  if (types.length () == 0)
+  CORBA::ULong n = 0;
+  if (types_length == 0)
     {
-      for (int i = 0; i < TAO_MAX_POLICIES; ++i)
+      if (this->relative_roundtrip_timeout_ != 0)
         {
-          if (CORBA::is_nil (this->policies_[i].in ()))
+          policy_list[n++] =
+            relative_roundtrip_timeout_->_this (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+        }
+      CORBA::ULong length = this->other_policies_.length ();
+      for (CORBA::ULong i = 0; i != length; ++i)
+        {
+          if (CORBA::is_nil (this->other_policies_[i].in ()))
             continue;
           policy_list[n++] =
-            CORBA::Policy::_duplicate (this->policies_[i].in ());
+            CORBA::Policy::_duplicate (this->other_policies_[i].in ());
         }
     }
   else
@@ -113,13 +170,49 @@ TAO_Policy_Manager_Impl::get_policy_overrides (
         {
           CORBA::ULong index = types[j];
 
-          if (TAO_MIN_PROPIETARY_POLICY <= index
-              && index < TAO_MAX_PROPIETARY_POLICY)
-            index -= TAO_MIN_PROPIETARY_POLICY;
+          switch (index)
+            {
+            case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
+              if (this->relative_roundtrip_timeout_ != 0)
+                {
+                  policy_list[n++] =
+                    relative_roundtrip_timeout_->_this (ACE_TRY_ENV);
+                  ACE_CHECK_RETURN (0);
+                }
+              break;
 
-          if (index < TAO_MAX_POLICIES)
-            policy_list[n++] =
-              CORBA::Policy::_duplicate (this->policies_[index].in ());
+            case TAO_MESSAGING_REBIND_POLICY_TYPE:
+            case TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE:
+            case TAO_MESSAGING_REQUEST_PRIORITY_POLICY_TYPE:
+            case TAO_MESSAGING_REPLY_PRIORITY_POLICY_TYPE:
+            case TAO_MESSAGING_REQUEST_START_TIME_POLICY_TYPE:
+            case TAO_MESSAGING_REQUEST_END_TIME_POLICY_TYPE:
+            case TAO_MESSAGING_REPLY_START_TIME_POLICY_TYPE:
+            case TAO_MESSAGING_REPLY_END_TIME_POLICY_TYPE:
+            case TAO_MESSAGING_RELATIVE_REQ_TIMEOUT_POLICY_TYPE:
+            case TAO_MESSAGING_ROUTING_POLICY_TYPE:
+            case TAO_MESSAGING_MAX_HOPS_POLICY_TYPE:
+            case TAO_MESSAGING_QUEUE_ORDER_POLICY_TYPE:
+            default:
+              {
+                CORBA::ULong length = this->other_policies_.length ();
+                for (CORBA::ULong i = 0;
+                     i != length;
+                     ++i)
+                  {
+                    CORBA::ULong current =
+                      this->other_policies_[i]->policy_type (ACE_TRY_ENV);
+                    ACE_CHECK_RETURN (0);
+
+                    if (current != index)
+                      continue;
+
+                    policy_list[n++] =
+                      CORBA::Policy::_duplicate (this->other_policies_[i].in ());
+                    break;
+                  }
+              }
+            }
         }
     }
 
@@ -132,16 +225,46 @@ TAO_Policy_Manager_Impl::get_policy (
     CORBA::PolicyType type,
     CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::ULong index = type;
+  switch (type)
+    {
+    case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
+      if (this->relative_roundtrip_timeout_ != 0)
+        {
+          return this->relative_roundtrip_timeout_->_this (ACE_TRY_ENV);
+        }
+      return CORBA::Policy::_nil ();
 
-  if (TAO_MIN_PROPIETARY_POLICY <= index
-      && index < TAO_MAX_PROPIETARY_POLICY)
-    index -= TAO_MIN_PROPIETARY_POLICY;
+    case TAO_MESSAGING_REBIND_POLICY_TYPE:
+    case TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE:
+    case TAO_MESSAGING_REQUEST_PRIORITY_POLICY_TYPE:
+    case TAO_MESSAGING_REPLY_PRIORITY_POLICY_TYPE:
+    case TAO_MESSAGING_REQUEST_START_TIME_POLICY_TYPE:
+    case TAO_MESSAGING_REQUEST_END_TIME_POLICY_TYPE:
+    case TAO_MESSAGING_REPLY_START_TIME_POLICY_TYPE:
+    case TAO_MESSAGING_REPLY_END_TIME_POLICY_TYPE:
+    case TAO_MESSAGING_RELATIVE_REQ_TIMEOUT_POLICY_TYPE:
+    case TAO_MESSAGING_ROUTING_POLICY_TYPE:
+    case TAO_MESSAGING_MAX_HOPS_POLICY_TYPE:
+    case TAO_MESSAGING_QUEUE_ORDER_POLICY_TYPE:
+    default:
+      {
+        CORBA::ULong length = this->other_policies_.length ();
+        for (CORBA::ULong i = 0;
+             i != length;
+             ++i)
+          {
+            CORBA::ULong current =
+              this->other_policies_[i]->policy_type (ACE_TRY_ENV);
+            ACE_CHECK_RETURN (0);
 
-  if (index >= TAO_MAX_POLICIES)
-    return CORBA::Policy::_nil ();
+            if (current != type)
+              continue;
 
-  return CORBA::Policy::_duplicate (this->policies_[index].in ());
+            return CORBA::Policy::_duplicate (this->other_policies_[i].in ());
+          }
+      }
+    }
+  return CORBA::Policy::_nil ();
 }
 
 // ****************************************************************
@@ -158,11 +281,9 @@ TAO_Policy_Current::implementation (TAO_Policy_Current_Impl &current)
 }
 
 TAO_Policy_Current_Impl &
-TAO_Policy_Current::implementation (void)
+TAO_Policy_Current::implementation (void) const
 {
   return *TAO_ORB_CORE_TSS_RESOURCES::instance ()->policy_current_;
 }
-
-// ****************************************************************
 
 #endif /* TAO_HAS_CORBA_MESSAGING */

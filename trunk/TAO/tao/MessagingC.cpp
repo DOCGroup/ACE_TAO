@@ -164,7 +164,8 @@ TAO_NAMESPACE_DEFINE (const CORBA::UShort, ORDER_DEADLINE, 8)
 TAO_NAMESPACE_END
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, REBIND_POLICY_TYPE, 23)
+TAO_NAMESPACE_DEFINE (const CORBA::ULong, REBIND_POLICY_TYPE,
+                      TAO_MESSAGING_REBIND_POLICY_TYPE)
 TAO_NAMESPACE_END
 Messaging::RebindPolicy_ptr Messaging::RebindPolicy::_narrow (
     CORBA::Object_ptr obj,
@@ -236,7 +237,8 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RebindPolicy, &_tc_TAO_tc_Messagi
 TAO_NAMESPACE_END
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, SYNC_SCOPE_POLICY_TYPE, 24)
+TAO_NAMESPACE_DEFINE (const CORBA::ULong, SYNC_SCOPE_POLICY_TYPE,
+                      TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE)
 TAO_NAMESPACE_END
 Messaging::SyncScopePolicy_ptr Messaging::SyncScopePolicy::_narrow (
     CORBA::Object_ptr obj,
@@ -308,7 +310,8 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_SyncScopePolicy, &_tc_TAO_tc_Mess
 TAO_NAMESPACE_END
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, REQUEST_PRIORITY_POLICY_TYPE, 25)
+TAO_NAMESPACE_DEFINE (const CORBA::ULong, REQUEST_PRIORITY_POLICY_TYPE,
+                      TAO_MESSAGING_REQUEST_PRIORITY_POLICY_TYPE)
 TAO_NAMESPACE_END
 static const CORBA::Long _oc_Messaging_PriorityRange[] =
 {
@@ -410,7 +413,8 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RequestPriorityPolicy, &_tc_TAO_t
 TAO_NAMESPACE_END
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, REPLY_PRIORITY_POLICY_TYPE, 26)
+TAO_NAMESPACE_DEFINE (const CORBA::ULong, REPLY_PRIORITY_POLICY_TYPE,
+                      TAO_MESSAGING_REPLY_PRIORITY_POLICY_TYPE)
 TAO_NAMESPACE_END
 Messaging::ReplyPriorityPolicy_ptr Messaging::ReplyPriorityPolicy::_narrow (
     CORBA::Object_ptr obj,
@@ -484,7 +488,8 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ReplyPriorityPolicy, &_tc_TAO_tc_
 TAO_NAMESPACE_END
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, REQUEST_START_TIME_POLICY_TYPE, 27)
+TAO_NAMESPACE_DEFINE (const CORBA::ULong, REQUEST_START_TIME_POLICY_TYPE,
+                      TAO_MESSAGING_REQUEST_START_TIME_POLICY_TYPE)
 TAO_NAMESPACE_END
 Messaging::RequestStartTimePolicy_ptr Messaging::RequestStartTimePolicy::_narrow (
     CORBA::Object_ptr obj,
@@ -560,7 +565,8 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RequestStartTimePolicy, &_tc_TAO_
 TAO_NAMESPACE_END
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, REQUEST_END_TIME_POLICY_TYPE, 28)
+TAO_NAMESPACE_DEFINE (const CORBA::ULong, REQUEST_END_TIME_POLICY_TYPE,
+                      TAO_MESSAGING_REQUEST_END_TIME_POLICY_TYPE)
 TAO_NAMESPACE_END
 Messaging::RequestEndTimePolicy_ptr Messaging::RequestEndTimePolicy::_narrow (
     CORBA::Object_ptr obj,
@@ -636,7 +642,8 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RequestEndTimePolicy, &_tc_TAO_tc
 TAO_NAMESPACE_END
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, REPLY_START_TIME_POLICY_TYPE, 29)
+TAO_NAMESPACE_DEFINE (const CORBA::ULong, REPLY_START_TIME_POLICY_TYPE,
+                      TAO_MESSAGING_REPLY_START_TIME_POLICY_TYPE)
 TAO_NAMESPACE_END
 Messaging::ReplyStartTimePolicy_ptr Messaging::ReplyStartTimePolicy::_narrow (
     CORBA::Object_ptr obj,
@@ -712,7 +719,8 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ReplyStartTimePolicy, &_tc_TAO_tc
 TAO_NAMESPACE_END
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, REPLY_END_TIME_POLICY_TYPE, 30)
+TAO_NAMESPACE_DEFINE (const CORBA::ULong, REPLY_END_TIME_POLICY_TYPE,
+                      TAO_MESSAGING_REPLY_END_TIME_POLICY_TYPE)
 TAO_NAMESPACE_END
 Messaging::ReplyEndTimePolicy_ptr Messaging::ReplyEndTimePolicy::_narrow (
     CORBA::Object_ptr obj,
@@ -788,7 +796,8 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ReplyEndTimePolicy, &_tc_TAO_tc_M
 TAO_NAMESPACE_END
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, RELATIVE_REQ_TIMEOUT_POLICY_TYPE, 31)
+TAO_NAMESPACE_DEFINE (const CORBA::ULong, RELATIVE_REQ_TIMEOUT_POLICY_TYPE,
+                      TAO_MESSAGING_RELATIVE_REQ_TIMEOUT_POLICY_TYPE)
 TAO_NAMESPACE_END
 Messaging::RelativeRequestTimeoutPolicy_ptr Messaging::RelativeRequestTimeoutPolicy::_narrow (
     CORBA::Object_ptr obj,
@@ -860,7 +869,8 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RelativeRequestTimeoutPolicy, &_t
 TAO_NAMESPACE_END
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, RELATIVE_RT_TIMEOUT_POLICY_TYPE, 32)
+TAO_NAMESPACE_DEFINE (const CORBA::ULong, RELATIVE_RT_TIMEOUT_POLICY_TYPE,
+                      TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE)
 TAO_NAMESPACE_END
 Messaging::RelativeRoundtripTimeoutPolicy_ptr Messaging::RelativeRoundtripTimeoutPolicy::_narrow (
     CORBA::Object_ptr obj,
@@ -932,7 +942,8 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RelativeRoundtripTimeoutPolicy, &
 TAO_NAMESPACE_END
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, ROUTING_POLICY_TYPE, 33)
+TAO_NAMESPACE_DEFINE (const CORBA::ULong, ROUTING_POLICY_TYPE,
+                      TAO_MESSAGING_ROUTING_POLICY_TYPE)
 TAO_NAMESPACE_END
 static const CORBA::Long _oc_Messaging_RoutingTypeRange[] =
 {
@@ -1034,7 +1045,8 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RoutingPolicy, &_tc_TAO_tc_Messag
 TAO_NAMESPACE_END
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, MAX_HOPS_POLICY_TYPE, 34)
+TAO_NAMESPACE_DEFINE (const CORBA::ULong, MAX_HOPS_POLICY_TYPE,
+                      TAO_MESSAGING_MAX_HOPS_POLICY_TYPE)
 TAO_NAMESPACE_END
 Messaging::MaxHopsPolicy_ptr Messaging::MaxHopsPolicy::_narrow (
     CORBA::Object_ptr obj,
@@ -1106,7 +1118,8 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_MaxHopsPolicy, &_tc_TAO_tc_Messag
 TAO_NAMESPACE_END
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
-TAO_NAMESPACE_DEFINE (const CORBA::ULong, QUEUE_ORDER_POLICY_TYPE, 35)
+TAO_NAMESPACE_DEFINE (const CORBA::ULong, QUEUE_ORDER_POLICY_TYPE,
+                      TAO_MESSAGING_QUEUE_ORDER_POLICY_TYPE)
 TAO_NAMESPACE_END
 Messaging::QueueOrderPolicy_ptr Messaging::QueueOrderPolicy::_narrow (
     CORBA::Object_ptr obj,

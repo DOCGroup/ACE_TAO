@@ -2,8 +2,15 @@
 
 ACE_INLINE
 TAO_Policy_Manager_Impl::TAO_Policy_Manager_Impl (void)
-  :  count_ (0)
+  :  relative_roundtrip_timeout_ (0),
+     count_ (0)
 {
+}
+
+ACE_INLINE POA_Messaging::RelativeRoundtripTimeoutPolicy*
+TAO_Policy_Manager_Impl::relative_roundtrip_timeout (void) const
+{
+  return this->relative_roundtrip_timeout_;
 }
 
 // ****************************************************************
@@ -38,6 +45,12 @@ TAO_Policy_Manager::set_policy_overrides (
   this->impl_.set_policy_overrides (policies, set_add, ACE_TRY_ENV);
 }
 
+ACE_INLINE POA_Messaging::RelativeRoundtripTimeoutPolicy*
+TAO_Policy_Manager::relative_roundtrip_timeout (void) const
+{
+  return this->impl_.relative_roundtrip_timeout ();
+}
+
 // ****************************************************************
 
 ACE_INLINE CORBA::Policy_ptr
@@ -65,6 +78,11 @@ TAO_Policy_Current_Impl::set_policy_overrides (
   this->manager_impl_.set_policy_overrides (policies, set_add, ACE_TRY_ENV);
 }
 
+ACE_INLINE POA_Messaging::RelativeRoundtripTimeoutPolicy*
+TAO_Policy_Current_Impl::relative_roundtrip_timeout (void) const
+{
+  return this->manager_impl_.relative_roundtrip_timeout ();
+}
 // ****************************************************************
 
 ACE_INLINE CORBA::Policy_ptr
@@ -98,4 +116,10 @@ TAO_Policy_Current::set_policy_overrides (
   impl.set_policy_overrides (policies, set_add, ACE_TRY_ENV);
 }
 
-// ****************************************************************
+ACE_INLINE POA_Messaging::RelativeRoundtripTimeoutPolicy*
+TAO_Policy_Current::relative_roundtrip_timeout (void) const
+{
+  TAO_Policy_Current_Impl &impl = this->implementation ();
+
+  return impl.relative_roundtrip_timeout ();
+}

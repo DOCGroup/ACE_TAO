@@ -741,6 +741,7 @@ TAO_Stub::put_params (TAO_GIOP_Invocation &call,
 // ****************************************************************
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
+
 CORBA::Policy_ptr
 TAO_Stub::get_policy (
     CORBA::PolicyType type,
@@ -797,6 +798,38 @@ TAO_Stub::get_client_policy (
     }
 
   return result._retn ();
+}
+
+POA_Messaging::RelativeRoundtripTimeoutPolicy*
+TAO_Stub::relative_roundtrip_timeout (void)
+{
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard,
+                    this->refcount_lock_,
+                    0);
+
+  POA_Messaging::RelativeRoundtripTimeoutPolicy* result = 0;
+  if (this->policies_ != 0)
+    result = this->policies_->relative_roundtrip_timeout ();
+
+  if (result == 0)
+    {
+      TAO_Policy_Current &policy_current =
+        this->orb_core_->policy_current ();
+      result = policy_current.relative_roundtrip_timeout ();
+    }
+
+  if (result == 0)
+    {
+      TAO_Policy_Manager *policy_manager =
+        this->orb_core_->policy_manager ();
+      if (policy_manager != 0)
+        result = policy_manager->relative_roundtrip_timeout ();
+    }
+
+  if (result == 0)
+    result = this->orb_core_->default_relative_roundtrip_timeout ();
+
+  return result;
 }
 
 TAO_Stub*

@@ -255,6 +255,8 @@ public:
   // type.
   // If there is no default policy it returns CORBA::Policy::_nil ()
 
+  POA_Messaging::RelativeRoundtripTimeoutPolicy*
+      default_relative_roundtrip_timeout (void) const;
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
 protected:

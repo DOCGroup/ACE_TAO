@@ -1,3 +1,57 @@
+Tue May 25 12:07:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Makefile:
+	  TAO_HAS_CORBA_MESSAGING is defined in the orbconf.h the user
+	  must comment out that definition to eliminate the CORBA
+	  messaging support.
+
+	* tao/Invocation.cpp:
+	  Added some debugging code (currently commented out) to test the
+	  timeout policies.
+	  If the send() call fails we should return an TAO_INVOKE_RESTART, 
+	  this needs more debugging, but the code there was broken
+	  anyway.
+
+	* tao/Messaging_Policy_i.cpp:
+	* tao/Messaging_Policy_i.h:
+	* tao/Messaging_Policy_i.i:
+	  Added new file for the Messaging policy implementations.
+
+	* tao/MessagingS.h:
+	  Removed declaration of skeletons, the skeletons where in fact
+	  removed, but somehow I missed the files.
+
+	* tao/orbconf.h:
+	* tao/MessagingC.cpp:
+	  Initialize the Policy_Type constants using macros in orbconf.h
+	  that way we can use the same macros to switch() in the code.
+	  
+	* tao/ORB.h:
+	* tao/ORB.cpp:
+	  Added the create_policy() method, it delegates on the right
+	  class to actually create the policy.
+	  In resolve_initial_references() the hard-coded object ids (such
+	  as "RootPOA") are searched before anything else.
+
+	* tao/Stub.h:
+	* tao/Stub.cpp:
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	  Added new method to query the default timeout policy in an
+	  efficient way.
+
+	* tao/Policy_Manager.h:
+	* tao/Policy_Manager.i:
+	* tao/Policy_Manager.cpp:
+	  We keep a pointer to the RelativeRoundtripTimeoutPolicy
+	  *implementation* that way the ORB can speed up its lookups,
+	  minimize memory allocations and in general work in a more
+	  deterministic way.
+
+	* tao/corbafwd.h:
+	  Added missing forward declaration for PolicyManager_var,
+	  PolicyCurrent_var and their _out classes.
+
 Tue May 25 11:50:01 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB.cpp (ORB_init): Removed out-dated comments.  Thanks to
