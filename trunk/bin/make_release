@@ -22,6 +22,7 @@ $long_usage="   -? option prints this message\n" .
             "   -r <release files> lists the files to be released\n" .
             "   -l <release lib files> list the files to put in the lib kit\n";
 
+
 ########
 ######## Configuration parameters.
 ########
@@ -42,6 +43,7 @@ $release_files = '';
 $release_filter = '-name CVS -prune -name build -prune -o ! -name \'.\#*\' ' .
                   '! -name \'\#*\' ! -name \'*~\' ' .
                   '! -name \'*.MAK\' -print';
+
 
 ########
 ######## Process command line args.
@@ -122,14 +124,16 @@ chop ($now = `$date +"%a %b %d %T %Y"`);
 
 
 ########
-######## Setup signal handler.
+######## Setup signal handlers.
 ########
 $SIG{'HUP'} = $SIG{'INT'} = $SIG{'QUIT'} = $SIG{'TERM'} = 'cleanup';
+
 
 ########
 ######## Defend against fascist umasks.
 ########
 umask 022;
+
 
 ########
 ######## Main execution thread.
@@ -150,12 +154,14 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
 }
 &cleanup;
 
+
 ########
 ######## Clean up when done or on signal.
 ########
 sub cleanup {
   exit;
 }
+
 
 ########
 ######## Check that the workspace is up-to-date, if releasing from
@@ -196,6 +202,7 @@ sub check_workspace () {
 
   0;
 }
+
 
 ########
 ######## Retrieve version information from VERSION file(s).
@@ -276,6 +283,7 @@ sub get_versions () {
   0;
 }
 
+
 ########
 ######## Update VERSION file(s).
 ########
@@ -315,6 +323,7 @@ sub update_version_files () {
   0;
 }
 
+
 ########
 ######## Add ChangeLog entries, and make sure that they have proper
 ######## permissions.
@@ -349,6 +358,7 @@ sub update_changelog () {
   0;
 }
 
+
 ########
 ######## Tag the release.
 ########
@@ -365,6 +375,7 @@ sub tag () {
   0;
 }
 
+
 ########
 ######## If building a beta, create a diff from the previos version.
 ########
@@ -374,6 +385,7 @@ sub diff () {
 
     my $previous_tag = "$KIT-$previous_version";
     my $tag = "$KIT-$version";
+    my $diffs_dir = "$kit" eq 'ace+tao'  ?  '../diffs'  :  'diffs';
 
     #### cvs tag does not allow dots.
     $previous_tag =~ tr/./_/;
@@ -385,19 +397,20 @@ sub diff () {
       print "nice -15 $cvs -q rdiff -u -r $previous_tag -r $tag " .
               "$module 2>/dev/null | " .
             "nice -15 sed 's%ACE_wrappers-repository/%ACE_wrappers/%g' | " .
-            "nice -15 $gzip -9 > diffs/$previous_tag-$tag.diff.gz &";
+            "nice -15 $gzip -9 > $diffs_dir/$previous_tag-$tag.diff.gz &";
     } else {
       system ("sleep 60; " .
               "nice -15 $cvs -q rdiff -u -r $previous_tag -r $tag " .
                 "$module 2>/dev/null | " .
               "nice -15 sed 's%ACE_wrappers-repository/%ACE_wrappers/%g' | " .
-              "nice -15 $gzip -9 > diffs/$previous_tag-$tag.diff.gz &");
+              "nice -15 $gzip -9 > $diffs_dir/$previous_tag-$tag.diff.gz &");
     }
   }
 
   #### Ignore return value.  No promises on diffs.
   0;
 }
+
 
 ########
 ######## Create the tar file(s) and move to their proper location.
