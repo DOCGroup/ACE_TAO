@@ -1360,6 +1360,8 @@ pkginclude_HEADERS = \
 ## needed anyway.
 ACE_EXTRA_DIST = os_include
 
+## Automake recognized targets
+
 dist-hook:
 	(cd $(srcdir); tar cf - $(ACE_EXTRA_DIST)) | (cd $(distdir); \
           tar xfBp -)
@@ -1378,11 +1380,11 @@ clean-local:
 ## os_include subdirectory just for installation purposes seemed like
 ## overkill.
 install-data-local:
-	list=`find os_include -type d | grep -v CVS`; for p in $$list; do \
-	  $(mkdir_p) $$p; \
-	  files=`(cd $$p; echo *.h)`; \
+	list=`(cd $(srcdir); find os_include -type d | $(EGREP) -v CVS)`; for p in $$list; do \
+	  $(mkdir_p) $(DESTDIR)$(pkgincludedir)/$$p; \
+	  files=`(cd $(srcdir)/$$p; $(ECHO) *.h)`; \
           test "$$files" != "*.h"  && \
-            (cd $$p; $(INSTALL_DATA) $$files $(DESTDIR)$(pkgincludedir)/$$p); \
+            (cd $(srcdir)/$$p; $(INSTALL_DATA) $$files $(DESTDIR)$(pkgincludedir)/$$p); \
 	done
 
 ## Clean up data installed by local targets.

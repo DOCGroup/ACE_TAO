@@ -1,3 +1,11 @@
+Thu Jan 22 19:57:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Makefile.am (install-data-local):
+
+	  Fixed problem that occurred when performing a "make install".
+	  The "os_include" source and installation directories were not
+	  properly referenced.
+
 Thu Jan 22 18:11:00 2004  Gary Maxey <gary.maxey@hp.com>
 
 	* ace/os_include/os_pthread.h
