@@ -34,15 +34,15 @@ class ACE_Export ACE_Sock_Connect
 
   // = Socket connection establishment calls.
 
-  /// Bind a new unused port to <handle>.
+  /// Bind a new unused port to @a handle.
   static int bind_port (ACE_HANDLE handle,
                         ACE_UINT32 ip_addr = INADDR_ANY,
                         int address_family = AF_UNSPEC);
 
   /**
-   * Get our broadcast address based on our <host_addr>.  If
-   * <hostname> is non-0 we'll use it to determine our IP address.  If
-   * <handle> is not <ACE_INVALID_HANDLE> then we'll use this to
+   * Get our broadcast address based on our @a host_addr.  If
+   * @a hostname is non-0 we'll use it to determine our IP address.  If
+   * @a handle is not ACE_INVALID_HANDLE then we'll use this to
    * determine our broadcast address, otherwise we'll have to create a
    * socket internally (and free it).  Returns -1 on failure and 0 on
    * success.
@@ -55,7 +55,7 @@ class ACE_Export ACE_Sock_Connect
   /**
    * Return count and array of all configured IP interfaces on this
    * host, rc = 0 on success (count == number of interfaces else -1).
-   * Caller is responsible for calling delete [] on <addr_array>.
+   * Caller is responsible for calling delete [] on @a addr_array.
    */
   static int get_ip_interfaces (size_t &count,
                                 ACE_INET_Addr *&addr_array);
@@ -68,8 +68,8 @@ class ACE_Export ACE_Sock_Connect
   static int count_interfaces (ACE_HANDLE handle,
                                size_t &how_many);
 
-  /// Routine to return a handle from which <ioctl> requests can be
-  /// made.  Caller must <close> the handle.
+  /// Routine to return a handle from which @c ioctl requests can be
+  /// made.  Caller must close the handle.
   static ACE_HANDLE get_handle (void);
 
   /**

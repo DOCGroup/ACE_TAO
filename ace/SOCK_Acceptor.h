@@ -28,10 +28,10 @@ class ACE_Accept_QoS_Params;
  *
  * @brief Defines a factory that creates new <ACE_Stream>s passively.
  *
- * The <ACE_SOCK_Acceptor> has its own "passive-mode" socket.
+ * The ACE_SOCK_Acceptor has its own "passive-mode" socket.
  * This serves as a factory to create so-called "data-mode"
- * sockets, which are what the <ACE_SOCK_Stream> encapsulates.
- * Therefore, by inheriting from <ACE_SOCK>, <ACE_SOCK_Acceptor>
+ * sockets, which are what the ACE_SOCK_Stream encapsulates.
+ * Therefore, by inheriting from ACE_SOCK, ACE_SOCK_Acceptor
  * gets its very own socket.
  */
 class ACE_Export ACE_SOCK_Acceptor : public ACE_SOCK
@@ -43,9 +43,9 @@ public:
 
   /**
    * Initialize a passive-mode BSD-style acceptor socket (no QoS).
-   * <local_sap> is the address that we're going to listen for
-   * connections on.  If <reuse_addr> is 1 then we'll use the
-   * <SO_REUSEADDR> to reuse this address.
+   * @a local_sap is the address that we're going to listen for
+   * connections on.  If @a reuse_addr is 1 then we'll use the
+   * @c SO_REUSEADDR to reuse this address.
    */
   ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
                      int reuse_addr = 0,

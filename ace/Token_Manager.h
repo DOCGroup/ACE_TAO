@@ -63,7 +63,7 @@ public:
    * The Token manager uses ACE_Token_Proxy::token_id_ to look for
    * an existing token.  If none is found, the Token Manager calls
    * ACE_Token_Proxy::create_token to create a new one.  When
-   * finished, sets ACE_Token_Proxy::token_.  <token_name> uniquely
+   * finished, sets ACE_Token_Proxy::token_.  @a token_name uniquely
    * id's the token name.
    */
   void get_token (ACE_Token_Proxy *, const ACE_TCHAR *token_name);
