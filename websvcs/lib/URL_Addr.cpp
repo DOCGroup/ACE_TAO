@@ -327,7 +327,7 @@ path_copy (LPCTSTR begin,
       switch (c)
         {
         case '/':
-          if (src[1] == '.' && src[2] == '.' && url[3] == '/')
+          if (src[1] == '.' && src[2] == '.' && src[3] == '/')
             {
               while (target != begin && *(--target) != '/');
               src += 3;
