@@ -234,7 +234,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
 // Returns the "NameService" NamingContext implementation object.
 
 NS_NamingContext &
-TAO_Naming_Server::GetNamingContext (void)
+TAO_Naming_Server::get_naming_context (void)
 {
   return naming_context_impl_ ;
 }
@@ -250,7 +250,6 @@ TAO_Naming_Server::naming_service_ior (void)
 CosNaming::NamingContext_ptr
 TAO_Naming_Server::operator -> (void) const
 {
-  // @@ Is the memory managment here correct? Is it clear?
   return this->naming_context_var_.ptr ();
 }
 
@@ -264,4 +263,20 @@ TAO_Naming_Server::~TAO_Naming_Server (void)
                                                             ACE_Event_Handler::READ_MASK);
       delete this->ior_multicast_;
     }
+}
+
+// Returns a pointer to the NamingContext.
+
+CosNaming::NamingContext_ptr
+TAO_Naming_Client::operator -> (void) const
+{
+  return this->naming_context_var_.ptr ();
+}
+
+TAO_Naming_Client::TAO_Naming_Client (void)
+{
+}
+
+TAO_Naming_Client::~TAO_Naming_Client (void)
+{
 }

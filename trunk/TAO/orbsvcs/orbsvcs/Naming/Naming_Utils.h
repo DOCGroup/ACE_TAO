@@ -10,16 +10,17 @@
 //    Naming_Utils.h
 //
 // = DESCRIPTION
-//      This class implements a Naming Server wrapper class which holds
-//      a Naming Context for TAO NameService.
+//      This class implements wrapper classes for clients and servers
+//      of the Naming Service.
 //
 // = AUTHORS
-//    Nagarajan Surendran (naga@cs.wustl.edu)
+//    Nagarajan Surendran (naga@cs.wustl.edu), Matt Braun
+//    <mjb2@cs.wustl.edu>, and Douglas C. Schmidt <schmidt@cs.wustl.edu>.
 //
 // ============================================================================
 
-#if !defined (_NAMING_SERVER_H)
-#define _NAMING_SERVER_H
+#if !defined (TAO_NAMING_UTILS_H)
+#define TAO_NAMING_UTILS_H
 
 #include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
@@ -29,14 +30,18 @@
 class TAO_ORBSVCS_Export TAO_Naming_Server
 {
   // = TITLE
-  //    Defines a wrapper class which holds a Naming Context
-  //    implementation for TAO "NamingService" naming context.
+  //    Defines a wrapper class that holds a Naming Context
+  //    implementation for a TAO "NamingService" naming context.
   //
   // = DESCRIPTION
-  //    This class takes an orb and Poa reference and activates the
+  //    This class takes an ORB and POA reference and activates the
   //    NamingService naming context object under that.  It also
-  //    defines the operator -> so that NamingContext functions like
-  //    bind, unbind .. can be called on a NameServer object.
+  //    defines the operator-> so that <NamingContext> functions like
+  //    <bind>, <unbind> .. can be called on a <NameServer> object.
+  //    This class is intended to simplify programs that want to play
+  //    the role of a Naming Service servers.  To simplify programs
+  //    that want to play the role of Naming Service clients, use
+  //    <TAO_Naming_Client>.
 public:
   // = Initialization and termination methods.
 
@@ -64,7 +69,7 @@ public:
   ~TAO_Naming_Server (void);
   // Destructor.
 
-  NS_NamingContext &GetNamingContext (void);
+  NS_NamingContext &get_naming_context (void);
   // Returns the "NameService" NamingContext implementation object
   // reference.
 
@@ -92,4 +97,31 @@ private:
   // "NameService").
 };
 
-#endif /* _NAMING_SERVER_H */
+class TAO_ORBSVCS_Export TAO_Naming_Client
+{
+  // = TITLE
+  //    Defines a wrapper class that simplifies initialization and
+  //    access to a <NamingContext>.
+  //
+  // = DESCRIPTION
+  //    @@ Matt, please fill in here...
+public:
+  // = Initialization and termination methods.
+
+  TAO_Naming_Client (void);
+  //Default constructor.
+
+  ~TAO_Naming_Client (void);
+  // Destructor.
+
+  // @@ Matt, please add other methods here...
+
+  CosNaming::NamingContext_ptr operator-> (void) const;
+  // Returns a <NamingContext_ptr>.
+
+private:
+  CosNaming::NamingContext_var naming_context_var_;
+  // NamingContext ptr.
+};
+
+#endif /* TAO_NAMING_UTILS_H */
