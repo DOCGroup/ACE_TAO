@@ -1,14 +1,19 @@
+Fri Sep 27 12:49:33 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/rules.lib.GNU:
+          Added special part for Kylix
+
 Thu Sep 26 21:52:05 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* THANKS: Added Erich Hochmuth" <erich_hochmuth@hotmail.com> to
-	  the hall of fame.  
+	  the hall of fame.
 
 Thu Sep 26 13:48:26 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* ace/TP_Reactor.cpp (remove_handler): Make a check for the return
 	  value from the remove_handler_i () call before calling
 	  handle_close (). Thanks to Eric Malenfant
-	  <EMalenfant@interstarinc.com> for suggesting this. 
+	  <EMalenfant@interstarinc.com> for suggesting this.
 
 	  Eric mentions that doesnt show up the BUG 1020  problem. But
 	  local testing here doesnt tell so. I still see some core dumps
