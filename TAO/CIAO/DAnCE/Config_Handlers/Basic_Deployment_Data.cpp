@@ -6,7 +6,7 @@ namespace CIAO
   namespace Config_Handlers
   {
     // TCKind
-    //
+    // 
 
     TCKind::Value TCKind::
     integral () const
@@ -33,7 +33,7 @@ namespace CIAO
     }
 
     // DataType
-    //
+    // 
 
     DataType::
     DataType ()
@@ -62,7 +62,7 @@ namespace CIAO
 
 
     // DataType
-    //
+    // 
     bool DataType::
     kind_p () const
     {
@@ -98,7 +98,7 @@ namespace CIAO
 
 
     // DataValue
-    //
+    // 
 
     DataValue::
     DataValue ()
@@ -202,7 +202,7 @@ namespace CIAO
 
 
     // DataValue
-    //
+    // 
     bool DataValue::
     short_p () const
     {
@@ -237,7 +237,7 @@ namespace CIAO
     }
 
     // DataValue
-    //
+    // 
     bool DataValue::
     long_p () const
     {
@@ -272,7 +272,7 @@ namespace CIAO
     }
 
     // DataValue
-    //
+    // 
     bool DataValue::
     ushort_p () const
     {
@@ -307,7 +307,7 @@ namespace CIAO
     }
 
     // DataValue
-    //
+    // 
     bool DataValue::
     ulong_p () const
     {
@@ -342,7 +342,7 @@ namespace CIAO
     }
 
     // DataValue
-    //
+    // 
     bool DataValue::
     float_p () const
     {
@@ -377,7 +377,7 @@ namespace CIAO
     }
 
     // DataValue
-    //
+    // 
     bool DataValue::
     double_p () const
     {
@@ -412,7 +412,7 @@ namespace CIAO
     }
 
     // DataValue
-    //
+    // 
     bool DataValue::
     boolean_p () const
     {
@@ -447,7 +447,7 @@ namespace CIAO
     }
 
     // DataValue
-    //
+    // 
     bool DataValue::
     octet_p () const
     {
@@ -482,7 +482,7 @@ namespace CIAO
     }
 
     // DataValue
-    //
+    // 
     bool DataValue::
     objref_p () const
     {
@@ -517,7 +517,7 @@ namespace CIAO
     }
 
     // DataValue
-    //
+    // 
     bool DataValue::
     enum_p () const
     {
@@ -552,7 +552,7 @@ namespace CIAO
     }
 
     // DataValue
-    //
+    // 
     bool DataValue::
     string_p () const
     {
@@ -587,7 +587,7 @@ namespace CIAO
     }
 
     // DataValue
-    //
+    // 
     bool DataValue::
     longlong_p () const
     {
@@ -622,7 +622,7 @@ namespace CIAO
     }
 
     // DataValue
-    //
+    // 
     bool DataValue::
     ulonglong_p () const
     {
@@ -657,7 +657,7 @@ namespace CIAO
     }
 
     // DataValue
-    //
+    // 
     bool DataValue::
     longdouble_p () const
     {
@@ -692,7 +692,7 @@ namespace CIAO
     }
 
     // DataValue
-    //
+    // 
     bool DataValue::
     fixed_p () const
     {
@@ -727,7 +727,7 @@ namespace CIAO
     }
 
     // DataValue
-    //
+    // 
     bool DataValue::
     typecode_p () const
     {
@@ -763,7 +763,7 @@ namespace CIAO
 
 
     // Any
-    //
+    // 
 
     Any::
     Any (::CIAO::Config_Handlers::DataType const& type__,
@@ -800,7 +800,7 @@ namespace CIAO
 
 
     // Any
-    //
+    // 
     ::CIAO::Config_Handlers::DataType const& Any::
     type () const
     {
@@ -820,7 +820,7 @@ namespace CIAO
     }
 
     // Any
-    //
+    // 
     ::CIAO::Config_Handlers::DataValue const& Any::
     value () const
     {
@@ -841,7 +841,7 @@ namespace CIAO
 
 
     // Property
-    //
+    // 
 
     Property::
     Property (::XMLSchema::string< char > const& name__,
@@ -878,7 +878,7 @@ namespace CIAO
 
 
     // Property
-    //
+    // 
     ::XMLSchema::string< char > const& Property::
     name () const
     {
@@ -898,7 +898,7 @@ namespace CIAO
     }
 
     // Property
-    //
+    // 
     ::CIAO::Config_Handlers::Any const& Property::
     value () const
     {
@@ -919,7 +919,7 @@ namespace CIAO
 
 
     // Node
-    //
+    // 
 
     Node::
     Node (::XMLSchema::string< char > const& name__,
@@ -956,7 +956,7 @@ namespace CIAO
 
 
     // Node
-    //
+    // 
     ::XMLSchema::string< char > const& Node::
     name () const
     {
@@ -976,7 +976,7 @@ namespace CIAO
     }
 
     // Node
-    //
+    // 
     ::XMLSchema::string< char > const& Node::
     label () const
     {
@@ -997,7 +997,7 @@ namespace CIAO
 
 
     // SatisfierPropertyKind
-    //
+    // 
 
     SatisfierPropertyKind::Value SatisfierPropertyKind::
     integral () const
@@ -1024,7 +1024,7 @@ namespace CIAO
     }
 
     // SatisfierProperty
-    //
+    // 
 
     SatisfierProperty::
     SatisfierProperty (::XMLSchema::string< char > const& name__,
@@ -1068,7 +1068,7 @@ namespace CIAO
 
 
     // SatisfierProperty
-    //
+    // 
     ::XMLSchema::string< char > const& SatisfierProperty::
     name () const
     {
@@ -1088,7 +1088,7 @@ namespace CIAO
     }
 
     // SatisfierProperty
-    //
+    // 
     ::CIAO::Config_Handlers::SatisfierPropertyKind const& SatisfierProperty::
     kind () const
     {
@@ -1108,7 +1108,7 @@ namespace CIAO
     }
 
     // SatisfierProperty
-    //
+    // 
     ::CIAO::Config_Handlers::Any const& SatisfierProperty::
     value () const
     {
@@ -1129,7 +1129,7 @@ namespace CIAO
 
 
     // Resource
-    //
+    // 
 
     Resource::
     Resource (::XMLSchema::string< char > const& name__,
@@ -1173,7 +1173,7 @@ namespace CIAO
 
 
     // Resource
-    //
+    // 
     ::XMLSchema::string< char > const& Resource::
     name () const
     {
@@ -1193,7 +1193,7 @@ namespace CIAO
     }
 
     // Resource
-    //
+    // 
     ::XMLSchema::string< char > const& Resource::
     resourceType () const
     {
@@ -1213,7 +1213,7 @@ namespace CIAO
     }
 
     // Resource
-    //
+    // 
     ::CIAO::Config_Handlers::SatisfierProperty const& Resource::
     property () const
     {
@@ -1234,7 +1234,7 @@ namespace CIAO
 
 
     // SharedResource
-    //
+    // 
 
     SharedResource::
     SharedResource (::XMLSchema::string< char > const& name__,
@@ -1285,7 +1285,7 @@ namespace CIAO
 
 
     // SharedResource
-    //
+    // 
     ::XMLSchema::string< char > const& SharedResource::
     name () const
     {
@@ -1305,7 +1305,7 @@ namespace CIAO
     }
 
     // SharedResource
-    //
+    // 
     ::XMLSchema::string< char > const& SharedResource::
     resourceType () const
     {
@@ -1325,7 +1325,7 @@ namespace CIAO
     }
 
     // SharedResource
-    //
+    // 
     ::CIAO::Config_Handlers::Node const& SharedResource::
     node () const
     {
@@ -1345,7 +1345,7 @@ namespace CIAO
     }
 
     // SharedResource
-    //
+    // 
     ::CIAO::Config_Handlers::SatisfierProperty const& SharedResource::
     property () const
     {
@@ -1366,7 +1366,7 @@ namespace CIAO
 
 
     // Requirement
-    //
+    // 
 
     Requirement::
     Requirement (::XMLSchema::string< char > const& resourceType__,
@@ -1410,7 +1410,7 @@ namespace CIAO
 
 
     // Requirement
-    //
+    // 
     ::XMLSchema::string< char > const& Requirement::
     resourceType () const
     {
@@ -1430,7 +1430,7 @@ namespace CIAO
     }
 
     // Requirement
-    //
+    // 
     ::XMLSchema::string< char > const& Requirement::
     name () const
     {
@@ -1450,7 +1450,7 @@ namespace CIAO
     }
 
     // Requirement
-    //
+    // 
     ::CIAO::Config_Handlers::Property const& Requirement::
     property () const
     {
@@ -1471,7 +1471,7 @@ namespace CIAO
 
 
     // ResourceDeploymentDescription
-    //
+    // 
 
     ResourceDeploymentDescription::
     ResourceDeploymentDescription (::XMLSchema::string< char > const& requirementName__,
@@ -1515,7 +1515,7 @@ namespace CIAO
 
 
     // ResourceDeploymentDescription
-    //
+    // 
     ::XMLSchema::string< char > const& ResourceDeploymentDescription::
     requirementName () const
     {
@@ -1535,7 +1535,7 @@ namespace CIAO
     }
 
     // ResourceDeploymentDescription
-    //
+    // 
     ::XMLSchema::string< char > const& ResourceDeploymentDescription::
     resourceName () const
     {
@@ -1555,7 +1555,7 @@ namespace CIAO
     }
 
     // ResourceDeploymentDescription
-    //
+    // 
     ::CIAO::Config_Handlers::Any const& ResourceDeploymentDescription::
     resourceValue () const
     {
@@ -1576,7 +1576,7 @@ namespace CIAO
 
 
     // ArtifactDeploymentDescription
-    //
+    // 
 
     ArtifactDeploymentDescription::
     ArtifactDeploymentDescription (::XMLSchema::string< char > const& name__,
@@ -1693,7 +1693,7 @@ namespace CIAO
 
 
     // ArtifactDeploymentDescription
-    //
+    // 
     ::XMLSchema::string< char > const& ArtifactDeploymentDescription::
     name () const
     {
@@ -1713,7 +1713,7 @@ namespace CIAO
     }
 
     // ArtifactDeploymentDescription
-    //
+    // 
     ArtifactDeploymentDescription::source_iterator ArtifactDeploymentDescription::
     begin_source ()
     {
@@ -1764,7 +1764,7 @@ namespace CIAO
     }
 
     // ArtifactDeploymentDescription
-    //
+    // 
     ::XMLSchema::string< char > const& ArtifactDeploymentDescription::
     node () const
     {
@@ -1784,7 +1784,7 @@ namespace CIAO
     }
 
     // ArtifactDeploymentDescription
-    //
+    // 
     ArtifactDeploymentDescription::location_iterator ArtifactDeploymentDescription::
     begin_location ()
     {
@@ -1835,7 +1835,7 @@ namespace CIAO
     }
 
     // ArtifactDeploymentDescription
-    //
+    // 
     ArtifactDeploymentDescription::execParameter_iterator ArtifactDeploymentDescription::
     begin_execParameter ()
     {
@@ -1886,7 +1886,7 @@ namespace CIAO
     }
 
     // ArtifactDeploymentDescription
-    //
+    // 
     ArtifactDeploymentDescription::deployRequirement_iterator ArtifactDeploymentDescription::
     begin_deployRequirement ()
     {
@@ -1937,7 +1937,7 @@ namespace CIAO
     }
 
     // ArtifactDeploymentDescription
-    //
+    // 
     ArtifactDeploymentDescription::deployedResource_iterator ArtifactDeploymentDescription::
     begin_deployedResource ()
     {
@@ -1988,7 +1988,7 @@ namespace CIAO
     }
 
     // ArtifactDeploymentDescription
-    //
+    // 
     bool ArtifactDeploymentDescription::
     id_p () const
     {
@@ -2024,7 +2024,7 @@ namespace CIAO
 
 
     // MonolithicDeploymentDescription
-    //
+    // 
 
     MonolithicDeploymentDescription::
     MonolithicDeploymentDescription (::XMLSchema::string< char > const& name__)
@@ -2119,7 +2119,7 @@ namespace CIAO
 
 
     // MonolithicDeploymentDescription
-    //
+    // 
     ::XMLSchema::string< char > const& MonolithicDeploymentDescription::
     name () const
     {
@@ -2139,7 +2139,7 @@ namespace CIAO
     }
 
     // MonolithicDeploymentDescription
-    //
+    // 
     MonolithicDeploymentDescription::source_iterator MonolithicDeploymentDescription::
     begin_source ()
     {
@@ -2190,7 +2190,7 @@ namespace CIAO
     }
 
     // MonolithicDeploymentDescription
-    //
+    // 
     MonolithicDeploymentDescription::artifact_iterator MonolithicDeploymentDescription::
     begin_artifact ()
     {
@@ -2241,7 +2241,7 @@ namespace CIAO
     }
 
     // MonolithicDeploymentDescription
-    //
+    // 
     MonolithicDeploymentDescription::execParameter_iterator MonolithicDeploymentDescription::
     begin_execParameter ()
     {
@@ -2292,7 +2292,7 @@ namespace CIAO
     }
 
     // MonolithicDeploymentDescription
-    //
+    // 
     MonolithicDeploymentDescription::deployRequirement_iterator MonolithicDeploymentDescription::
     begin_deployRequirement ()
     {
@@ -2343,7 +2343,7 @@ namespace CIAO
     }
 
     // MonolithicDeploymentDescription
-    //
+    // 
     bool MonolithicDeploymentDescription::
     id_p () const
     {
@@ -2379,7 +2379,7 @@ namespace CIAO
 
 
     // ResourceUsageKind
-    //
+    // 
 
     ResourceUsageKind::Value ResourceUsageKind::
     integral () const
@@ -2406,7 +2406,7 @@ namespace CIAO
     }
 
     // InstanceResourceDeploymentDescription
-    //
+    // 
 
     InstanceResourceDeploymentDescription::
     InstanceResourceDeploymentDescription (::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage__,
@@ -2457,7 +2457,7 @@ namespace CIAO
 
 
     // InstanceResourceDeploymentDescription
-    //
+    // 
     ::CIAO::Config_Handlers::ResourceUsageKind const& InstanceResourceDeploymentDescription::
     resourceUsage () const
     {
@@ -2477,7 +2477,7 @@ namespace CIAO
     }
 
     // InstanceResourceDeploymentDescription
-    //
+    // 
     ::XMLSchema::string< char > const& InstanceResourceDeploymentDescription::
     requirementName () const
     {
@@ -2497,7 +2497,7 @@ namespace CIAO
     }
 
     // InstanceResourceDeploymentDescription
-    //
+    // 
     ::XMLSchema::string< char > const& InstanceResourceDeploymentDescription::
     resourceName () const
     {
@@ -2517,7 +2517,7 @@ namespace CIAO
     }
 
     // InstanceResourceDeploymentDescription
-    //
+    // 
     ::CIAO::Config_Handlers::Any const& InstanceResourceDeploymentDescription::
     resourceValue () const
     {
@@ -2538,7 +2538,7 @@ namespace CIAO
 
 
     // InstanceDeploymentDescription
-    //
+    // 
 
     InstanceDeploymentDescription::
     InstanceDeploymentDescription (::XMLSchema::string< char > const& name__,
@@ -2565,7 +2565,6 @@ namespace CIAO
     node_ (new ::XMLSchema::string< char > (*s.node_)),
     source_ (new ::XMLSchema::string< char > (*s.source_)),
     implementation_ (new ::XMLSchema::IDREF< char > (*s.implementation_)),
-    configProperty_ (s.configProperty_.get () ? new ::CIAO::Config_Handlers::Property (*s.configProperty_) : 0),
     deployedResource_ (s.deployedResource_.get () ? new ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription (*s.deployedResource_) : 0),
     deployedSharedResource_ (s.deployedSharedResource_.get () ? new ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription (*s.deployedSharedResource_) : 0),
     id_ (s.id_.get () ? new ::XMLSchema::ID< char > (*s.id_) : 0),
@@ -2575,7 +2574,13 @@ namespace CIAO
       node_->container (this);
       source_->container (this);
       implementation_->container (this);
-      if (configProperty_.get ()) configProperty_->container (this);
+      configProperty_.reserve (s.configProperty_.size ());
+      {
+        for (configProperty_const_iterator i (s.configProperty_.begin ());
+        i != s.configProperty_.end ();
+        ++i) add_configProperty (*i);
+      }
+
       if (deployedResource_.get ()) deployedResource_->container (this);
       if (deployedSharedResource_.get ()) deployedSharedResource_->container (this);
       if (id_.get ()) id_->container (this);
@@ -2592,8 +2597,13 @@ namespace CIAO
 
       implementation (s.implementation ());
 
-      if (s.configProperty_.get ()) configProperty (*(s.configProperty_));
-      else configProperty_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Property > (0);
+      configProperty_.clear ();
+      configProperty_.reserve (s.configProperty_.size ());
+      {
+        for (configProperty_const_iterator i (s.configProperty_.begin ());
+        i != s.configProperty_.end ();
+        ++i) add_configProperty (*i);
+      }
 
       if (s.deployedResource_.get ()) deployedResource (*(s.deployedResource_));
       else deployedResource_ = ::std::auto_ptr< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > (0);
@@ -2609,7 +2619,7 @@ namespace CIAO
 
 
     // InstanceDeploymentDescription
-    //
+    // 
     ::XMLSchema::string< char > const& InstanceDeploymentDescription::
     name () const
     {
@@ -2629,7 +2639,7 @@ namespace CIAO
     }
 
     // InstanceDeploymentDescription
-    //
+    // 
     ::XMLSchema::string< char > const& InstanceDeploymentDescription::
     node () const
     {
@@ -2649,7 +2659,7 @@ namespace CIAO
     }
 
     // InstanceDeploymentDescription
-    //
+    // 
     ::XMLSchema::string< char > const& InstanceDeploymentDescription::
     source () const
     {
@@ -2669,7 +2679,7 @@ namespace CIAO
     }
 
     // InstanceDeploymentDescription
-    //
+    // 
     ::XMLSchema::IDREF< char > const& InstanceDeploymentDescription::
     implementation () const
     {
@@ -2689,42 +2699,58 @@ namespace CIAO
     }
 
     // InstanceDeploymentDescription
-    //
-    bool InstanceDeploymentDescription::
-    configProperty_p () const
+    // 
+    InstanceDeploymentDescription::configProperty_iterator InstanceDeploymentDescription::
+    begin_configProperty ()
     {
-      return configProperty_.get () != 0;
+      return configProperty_.begin ();
     }
 
-    ::CIAO::Config_Handlers::Property const& InstanceDeploymentDescription::
-    configProperty () const
+    InstanceDeploymentDescription::configProperty_iterator InstanceDeploymentDescription::
+    end_configProperty ()
     {
-      return *configProperty_;
+      return configProperty_.end ();
     }
 
-    ::CIAO::Config_Handlers::Property& InstanceDeploymentDescription::
-    configProperty ()
+    InstanceDeploymentDescription::configProperty_const_iterator InstanceDeploymentDescription::
+    begin_configProperty () const
     {
-      return *configProperty_;
+      return configProperty_.begin ();
+    }
+
+    InstanceDeploymentDescription::configProperty_const_iterator InstanceDeploymentDescription::
+    end_configProperty () const
+    {
+      return configProperty_.end ();
     }
 
     void InstanceDeploymentDescription::
-    configProperty (::CIAO::Config_Handlers::Property const& e)
+    add_configProperty (::CIAO::Config_Handlers::Property const& e)
     {
-      if (configProperty_.get ())
+      if (configProperty_.capacity () < configProperty_.size () + 1)
       {
-        *configProperty_ = e;
+        ::std::vector< ::CIAO::Config_Handlers::Property > v;
+        v.reserve (configProperty_.size () + 1);
+
+        while (configProperty_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::Property& t = configProperty_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          configProperty_.pop_back ();
+        }
+
+        configProperty_.swap (v);
       }
 
-      else
-      {
-        configProperty_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Property > (new ::CIAO::Config_Handlers::Property (e));
-        configProperty_->container (this);
-      }
+      configProperty_.push_back (e);
+      configProperty_.back ().container (this);
     }
 
     // InstanceDeploymentDescription
-    //
+    // 
     bool InstanceDeploymentDescription::
     deployedResource_p () const
     {
@@ -2759,7 +2785,7 @@ namespace CIAO
     }
 
     // InstanceDeploymentDescription
-    //
+    // 
     bool InstanceDeploymentDescription::
     deployedSharedResource_p () const
     {
@@ -2794,7 +2820,7 @@ namespace CIAO
     }
 
     // InstanceDeploymentDescription
-    //
+    // 
     bool InstanceDeploymentDescription::
     id_p () const
     {
@@ -2830,7 +2856,7 @@ namespace CIAO
 
 
     // CCMComponentPortKind
-    //
+    // 
 
     CCMComponentPortKind::Value CCMComponentPortKind::
     integral () const
@@ -2857,7 +2883,7 @@ namespace CIAO
     }
 
     // ComponentPortDescription
-    //
+    // 
 
     ComponentPortDescription::
     ComponentPortDescription (::XMLSchema::string< char > const& name__,
@@ -2936,7 +2962,7 @@ namespace CIAO
 
 
     // ComponentPortDescription
-    //
+    // 
     ::XMLSchema::string< char > const& ComponentPortDescription::
     name () const
     {
@@ -2956,7 +2982,7 @@ namespace CIAO
     }
 
     // ComponentPortDescription
-    //
+    // 
     ::XMLSchema::string< char > const& ComponentPortDescription::
     specificType () const
     {
@@ -2976,7 +3002,7 @@ namespace CIAO
     }
 
     // ComponentPortDescription
-    //
+    // 
     ::XMLSchema::string< char > const& ComponentPortDescription::
     supportedType () const
     {
@@ -2996,7 +3022,7 @@ namespace CIAO
     }
 
     // ComponentPortDescription
-    //
+    // 
     ::XMLSchema::string< char > const& ComponentPortDescription::
     provider () const
     {
@@ -3016,7 +3042,7 @@ namespace CIAO
     }
 
     // ComponentPortDescription
-    //
+    // 
     ::XMLSchema::string< char > const& ComponentPortDescription::
     exclusiveProvider () const
     {
@@ -3036,7 +3062,7 @@ namespace CIAO
     }
 
     // ComponentPortDescription
-    //
+    // 
     ::XMLSchema::string< char > const& ComponentPortDescription::
     exclusiveUser () const
     {
@@ -3056,7 +3082,7 @@ namespace CIAO
     }
 
     // ComponentPortDescription
-    //
+    // 
     ::XMLSchema::string< char > const& ComponentPortDescription::
     optional () const
     {
@@ -3076,7 +3102,7 @@ namespace CIAO
     }
 
     // ComponentPortDescription
-    //
+    // 
     ::CIAO::Config_Handlers::CCMComponentPortKind const& ComponentPortDescription::
     kind () const
     {
@@ -3097,7 +3123,7 @@ namespace CIAO
 
 
     // ComponentPropertyDescription
-    //
+    // 
 
     ComponentPropertyDescription::
     ComponentPropertyDescription (::XMLSchema::string< char > const& name__,
@@ -3134,7 +3160,7 @@ namespace CIAO
 
 
     // ComponentPropertyDescription
-    //
+    // 
     ::XMLSchema::string< char > const& ComponentPropertyDescription::
     name () const
     {
@@ -3154,7 +3180,7 @@ namespace CIAO
     }
 
     // ComponentPropertyDescription
-    //
+    // 
     ::CIAO::Config_Handlers::DataType const& ComponentPropertyDescription::
     type () const
     {
@@ -3175,7 +3201,7 @@ namespace CIAO
 
 
     // ComponentExternalPortEndpoint
-    //
+    // 
 
     ComponentExternalPortEndpoint::
     ComponentExternalPortEndpoint (::XMLSchema::string< char > const& portName__)
@@ -3205,7 +3231,7 @@ namespace CIAO
 
 
     // ComponentExternalPortEndpoint
-    //
+    // 
     ::XMLSchema::string< char > const& ComponentExternalPortEndpoint::
     portName () const
     {
@@ -3226,7 +3252,7 @@ namespace CIAO
 
 
     // PlanSubcomponentPortEndpoint
-    //
+    // 
 
     PlanSubcomponentPortEndpoint::
     PlanSubcomponentPortEndpoint (::XMLSchema::string< char > const& portName__,
@@ -3275,7 +3301,7 @@ namespace CIAO
 
 
     // PlanSubcomponentPortEndpoint
-    //
+    // 
     ::XMLSchema::string< char > const& PlanSubcomponentPortEndpoint::
     portName () const
     {
@@ -3295,7 +3321,7 @@ namespace CIAO
     }
 
     // PlanSubcomponentPortEndpoint
-    //
+    // 
     bool PlanSubcomponentPortEndpoint::
     provider_p () const
     {
@@ -3330,7 +3356,7 @@ namespace CIAO
     }
 
     // PlanSubcomponentPortEndpoint
-    //
+    // 
     ::CIAO::Config_Handlers::CCMComponentPortKind const& PlanSubcomponentPortEndpoint::
     kind () const
     {
@@ -3350,7 +3376,7 @@ namespace CIAO
     }
 
     // PlanSubcomponentPortEndpoint
-    //
+    // 
     ::XMLSchema::IDREF< char > const& PlanSubcomponentPortEndpoint::
     instance () const
     {
@@ -3371,7 +3397,7 @@ namespace CIAO
 
 
     // ExternalReferenceEndpoint
-    //
+    // 
 
     ExternalReferenceEndpoint::
     ExternalReferenceEndpoint (::XMLSchema::string< char > const& location__)
@@ -3401,7 +3427,7 @@ namespace CIAO
 
 
     // ExternalReferenceEndpoint
-    //
+    // 
     ::XMLSchema::string< char > const& ExternalReferenceEndpoint::
     location () const
     {
@@ -3422,7 +3448,7 @@ namespace CIAO
 
 
     // ConnectionResourceDeploymentDescription
-    //
+    // 
 
     ConnectionResourceDeploymentDescription::
     ConnectionResourceDeploymentDescription (::XMLSchema::string< char > const& targetName__,
@@ -3473,7 +3499,7 @@ namespace CIAO
 
 
     // ConnectionResourceDeploymentDescription
-    //
+    // 
     ::XMLSchema::string< char > const& ConnectionResourceDeploymentDescription::
     targetName () const
     {
@@ -3493,7 +3519,7 @@ namespace CIAO
     }
 
     // ConnectionResourceDeploymentDescription
-    //
+    // 
     ::XMLSchema::string< char > const& ConnectionResourceDeploymentDescription::
     requirementName () const
     {
@@ -3513,7 +3539,7 @@ namespace CIAO
     }
 
     // ConnectionResourceDeploymentDescription
-    //
+    // 
     ::XMLSchema::string< char > const& ConnectionResourceDeploymentDescription::
     resourceName () const
     {
@@ -3533,7 +3559,7 @@ namespace CIAO
     }
 
     // ConnectionResourceDeploymentDescription
-    //
+    // 
     ::CIAO::Config_Handlers::Any const& ConnectionResourceDeploymentDescription::
     resourceValue () const
     {
@@ -3554,7 +3580,7 @@ namespace CIAO
 
 
     // PlanConnectionDescription
-    //
+    // 
 
     PlanConnectionDescription::
     PlanConnectionDescription (::XMLSchema::string< char > const& name__)
@@ -3570,13 +3596,17 @@ namespace CIAO
     :
     name_ (new ::XMLSchema::string< char > (*s.name_)),
     source_ (s.source_.get () ? new ::XMLSchema::string< char > (*s.source_) : 0),
-    deployRequirement_ (s.deployRequirement_.get () ? new ::CIAO::Config_Handlers::Requirement (*s.deployRequirement_) : 0),
-    deployedResource_ (s.deployedResource_.get () ? new ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription (*s.deployedResource_) : 0),
     regulator__ ()
     {
       name_->container (this);
       if (source_.get ()) source_->container (this);
-      if (deployRequirement_.get ()) deployRequirement_->container (this);
+      deployRequirement_.reserve (s.deployRequirement_.size ());
+      {
+        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());
+        i != s.deployRequirement_.end ();
+        ++i) add_deployRequirement (*i);
+      }
+
       externalEndpoint_.reserve (s.externalEndpoint_.size ());
       {
         for (externalEndpoint_const_iterator i (s.externalEndpoint_.begin ());
@@ -3598,7 +3628,12 @@ namespace CIAO
         ++i) add_externalReference (*i);
       }
 
-      if (deployedResource_.get ()) deployedResource_->container (this);
+      deployedResource_.reserve (s.deployedResource_.size ());
+      {
+        for (deployedResource_const_iterator i (s.deployedResource_.begin ());
+        i != s.deployedResource_.end ();
+        ++i) add_deployedResource (*i);
+      }
     }
 
     ::CIAO::Config_Handlers::PlanConnectionDescription& PlanConnectionDescription::
@@ -3609,8 +3644,13 @@ namespace CIAO
       if (s.source_.get ()) source (*(s.source_));
       else source_ = ::std::auto_ptr< ::XMLSchema::string< char > > (0);
 
-      if (s.deployRequirement_.get ()) deployRequirement (*(s.deployRequirement_));
-      else deployRequirement_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > (0);
+      deployRequirement_.clear ();
+      deployRequirement_.reserve (s.deployRequirement_.size ());
+      {
+        for (deployRequirement_const_iterator i (s.deployRequirement_.begin ());
+        i != s.deployRequirement_.end ();
+        ++i) add_deployRequirement (*i);
+      }
 
       externalEndpoint_.clear ();
       externalEndpoint_.reserve (s.externalEndpoint_.size ());
@@ -3636,15 +3676,20 @@ namespace CIAO
         ++i) add_externalReference (*i);
       }
 
-      if (s.deployedResource_.get ()) deployedResource (*(s.deployedResource_));
-      else deployedResource_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription > (0);
+      deployedResource_.clear ();
+      deployedResource_.reserve (s.deployedResource_.size ());
+      {
+        for (deployedResource_const_iterator i (s.deployedResource_.begin ());
+        i != s.deployedResource_.end ();
+        ++i) add_deployedResource (*i);
+      }
 
       return *this;
     }
 
 
     // PlanConnectionDescription
-    //
+    // 
     ::XMLSchema::string< char > const& PlanConnectionDescription::
     name () const
     {
@@ -3664,7 +3709,7 @@ namespace CIAO
     }
 
     // PlanConnectionDescription
-    //
+    // 
     bool PlanConnectionDescription::
     source_p () const
     {
@@ -3699,42 +3744,58 @@ namespace CIAO
     }
 
     // PlanConnectionDescription
-    //
-    bool PlanConnectionDescription::
-    deployRequirement_p () const
+    // 
+    PlanConnectionDescription::deployRequirement_iterator PlanConnectionDescription::
+    begin_deployRequirement ()
     {
-      return deployRequirement_.get () != 0;
+      return deployRequirement_.begin ();
     }
 
-    ::CIAO::Config_Handlers::Requirement const& PlanConnectionDescription::
-    deployRequirement () const
+    PlanConnectionDescription::deployRequirement_iterator PlanConnectionDescription::
+    end_deployRequirement ()
     {
-      return *deployRequirement_;
+      return deployRequirement_.end ();
     }
 
-    ::CIAO::Config_Handlers::Requirement& PlanConnectionDescription::
-    deployRequirement ()
+    PlanConnectionDescription::deployRequirement_const_iterator PlanConnectionDescription::
+    begin_deployRequirement () const
     {
-      return *deployRequirement_;
+      return deployRequirement_.begin ();
+    }
+
+    PlanConnectionDescription::deployRequirement_const_iterator PlanConnectionDescription::
+    end_deployRequirement () const
+    {
+      return deployRequirement_.end ();
     }
 
     void PlanConnectionDescription::
-    deployRequirement (::CIAO::Config_Handlers::Requirement const& e)
+    add_deployRequirement (::CIAO::Config_Handlers::Requirement const& e)
     {
-      if (deployRequirement_.get ())
+      if (deployRequirement_.capacity () < deployRequirement_.size () + 1)
       {
-        *deployRequirement_ = e;
+        ::std::vector< ::CIAO::Config_Handlers::Requirement > v;
+        v.reserve (deployRequirement_.size () + 1);
+
+        while (deployRequirement_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::Requirement& t = deployRequirement_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          deployRequirement_.pop_back ();
+        }
+
+        deployRequirement_.swap (v);
       }
 
-      else
-      {
-        deployRequirement_ = ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > (new ::CIAO::Config_Handlers::Requirement (e));
-        deployRequirement_->container (this);
-      }
+      deployRequirement_.push_back (e);
+      deployRequirement_.back ().container (this);
     }
 
     // PlanConnectionDescription
-    //
+    // 
     PlanConnectionDescription::externalEndpoint_iterator PlanConnectionDescription::
     begin_externalEndpoint ()
     {
@@ -3785,7 +3846,7 @@ namespace CIAO
     }
 
     // PlanConnectionDescription
-    //
+    // 
     PlanConnectionDescription::internalEndpoint_iterator PlanConnectionDescription::
     begin_internalEndpoint ()
     {
@@ -3836,7 +3897,7 @@ namespace CIAO
     }
 
     // PlanConnectionDescription
-    //
+    // 
     PlanConnectionDescription::externalReference_iterator PlanConnectionDescription::
     begin_externalReference ()
     {
@@ -3887,43 +3948,59 @@ namespace CIAO
     }
 
     // PlanConnectionDescription
-    //
-    bool PlanConnectionDescription::
-    deployedResource_p () const
+    // 
+    PlanConnectionDescription::deployedResource_iterator PlanConnectionDescription::
+    begin_deployedResource ()
     {
-      return deployedResource_.get () != 0;
+      return deployedResource_.begin ();
     }
 
-    ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription const& PlanConnectionDescription::
-    deployedResource () const
+    PlanConnectionDescription::deployedResource_iterator PlanConnectionDescription::
+    end_deployedResource ()
     {
-      return *deployedResource_;
+      return deployedResource_.end ();
     }
 
-    ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription& PlanConnectionDescription::
-    deployedResource ()
+    PlanConnectionDescription::deployedResource_const_iterator PlanConnectionDescription::
+    begin_deployedResource () const
     {
-      return *deployedResource_;
+      return deployedResource_.begin ();
+    }
+
+    PlanConnectionDescription::deployedResource_const_iterator PlanConnectionDescription::
+    end_deployedResource () const
+    {
+      return deployedResource_.end ();
     }
 
     void PlanConnectionDescription::
-    deployedResource (::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription const& e)
+    add_deployedResource (::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription const& e)
     {
-      if (deployedResource_.get ())
+      if (deployedResource_.capacity () < deployedResource_.size () + 1)
       {
-        *deployedResource_ = e;
+        ::std::vector< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription > v;
+        v.reserve (deployedResource_.size () + 1);
+
+        while (deployedResource_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription& t = deployedResource_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          deployedResource_.pop_back ();
+        }
+
+        deployedResource_.swap (v);
       }
 
-      else
-      {
-        deployedResource_ = ::std::auto_ptr< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription > (new ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription (e));
-        deployedResource_->container (this);
-      }
+      deployedResource_.push_back (e);
+      deployedResource_.back ().container (this);
     }
 
 
     // ImplementationDependency
-    //
+    // 
 
     ImplementationDependency::
     ImplementationDependency (::XMLSchema::string< char > const& requiredType__)
@@ -3953,7 +4030,7 @@ namespace CIAO
 
 
     // ImplementationDependency
-    //
+    // 
     ::XMLSchema::string< char > const& ImplementationDependency::
     requiredType () const
     {
@@ -3974,7 +4051,7 @@ namespace CIAO
 
 
     // Capability
-    //
+    // 
 
     Capability::
     Capability (::XMLSchema::string< char > const& name__,
@@ -4018,7 +4095,7 @@ namespace CIAO
 
 
     // Capability
-    //
+    // 
     ::XMLSchema::string< char > const& Capability::
     name () const
     {
@@ -4038,7 +4115,7 @@ namespace CIAO
     }
 
     // Capability
-    //
+    // 
     ::XMLSchema::string< char > const& Capability::
     resourceType () const
     {
@@ -4058,7 +4135,7 @@ namespace CIAO
     }
 
     // Capability
-    //
+    // 
     ::CIAO::Config_Handlers::SatisfierProperty const& Capability::
     property () const
     {
@@ -4079,7 +4156,7 @@ namespace CIAO
 
 
     // ImplementationRequirement
-    //
+    // 
 
     ImplementationRequirement::
     ImplementationRequirement (::CIAO::Config_Handlers::ResourceUsageKind const& resourceUsage__,
@@ -4144,7 +4221,7 @@ namespace CIAO
 
 
     // ImplementationRequirement
-    //
+    // 
     ::CIAO::Config_Handlers::ResourceUsageKind const& ImplementationRequirement::
     resourceUsage () const
     {
@@ -4164,7 +4241,7 @@ namespace CIAO
     }
 
     // ImplementationRequirement
-    //
+    // 
     ::XMLSchema::string< char > const& ImplementationRequirement::
     resourcePort () const
     {
@@ -4184,7 +4261,7 @@ namespace CIAO
     }
 
     // ImplementationRequirement
-    //
+    // 
     ::XMLSchema::string< char > const& ImplementationRequirement::
     componentPort () const
     {
@@ -4204,7 +4281,7 @@ namespace CIAO
     }
 
     // ImplementationRequirement
-    //
+    // 
     ::XMLSchema::string< char > const& ImplementationRequirement::
     resourceType () const
     {
@@ -4224,7 +4301,7 @@ namespace CIAO
     }
 
     // ImplementationRequirement
-    //
+    // 
     ::XMLSchema::string< char > const& ImplementationRequirement::
     name () const
     {
@@ -4244,7 +4321,7 @@ namespace CIAO
     }
 
     // ImplementationRequirement
-    //
+    // 
     ::CIAO::Config_Handlers::Property const& ImplementationRequirement::
     property () const
     {
@@ -4265,7 +4342,7 @@ namespace CIAO
 
 
     // ComponentPackageReference
-    //
+    // 
 
     ComponentPackageReference::
     ComponentPackageReference (::XMLSchema::string< char > const& requiredUUID__,
@@ -4309,7 +4386,7 @@ namespace CIAO
 
 
     // ComponentPackageReference
-    //
+    // 
     ::XMLSchema::string< char > const& ComponentPackageReference::
     requiredUUID () const
     {
@@ -4329,7 +4406,7 @@ namespace CIAO
     }
 
     // ComponentPackageReference
-    //
+    // 
     ::XMLSchema::string< char > const& ComponentPackageReference::
     requiredName () const
     {
@@ -4349,7 +4426,7 @@ namespace CIAO
     }
 
     // ComponentPackageReference
-    //
+    // 
     ::XMLSchema::string< char > const& ComponentPackageReference::
     requiredType () const
     {
@@ -4370,7 +4447,7 @@ namespace CIAO
 
 
     // SubcomponentPortEndpoint
-    //
+    // 
 
     SubcomponentPortEndpoint::
     SubcomponentPortEndpoint (::XMLSchema::string< char > const& portName__,
@@ -4407,7 +4484,7 @@ namespace CIAO
 
 
     // SubcomponentPortEndpoint
-    //
+    // 
     ::XMLSchema::string< char > const& SubcomponentPortEndpoint::
     portName () const
     {
@@ -4427,7 +4504,7 @@ namespace CIAO
     }
 
     // SubcomponentPortEndpoint
-    //
+    // 
     ::XMLSchema::IDREF< char > const& SubcomponentPortEndpoint::
     instance () const
     {
@@ -4448,7 +4525,7 @@ namespace CIAO
 
 
     // AssemblyConnectionDescription
-    //
+    // 
 
     AssemblyConnectionDescription::
     AssemblyConnectionDescription (::XMLSchema::string< char > const& name__)
@@ -4527,7 +4604,7 @@ namespace CIAO
 
 
     // AssemblyConnectionDescription
-    //
+    // 
     ::XMLSchema::string< char > const& AssemblyConnectionDescription::
     name () const
     {
@@ -4547,7 +4624,7 @@ namespace CIAO
     }
 
     // AssemblyConnectionDescription
-    //
+    // 
     bool AssemblyConnectionDescription::
     deployRequirement_p () const
     {
@@ -4582,7 +4659,7 @@ namespace CIAO
     }
 
     // AssemblyConnectionDescription
-    //
+    // 
     AssemblyConnectionDescription::externalEndpoint_iterator AssemblyConnectionDescription::
     begin_externalEndpoint ()
     {
@@ -4633,7 +4710,7 @@ namespace CIAO
     }
 
     // AssemblyConnectionDescription
-    //
+    // 
     AssemblyConnectionDescription::internalEndpoint_iterator AssemblyConnectionDescription::
     begin_internalEndpoint ()
     {
@@ -4684,7 +4761,7 @@ namespace CIAO
     }
 
     // AssemblyConnectionDescription
-    //
+    // 
     AssemblyConnectionDescription::externalReference_iterator AssemblyConnectionDescription::
     begin_externalReference ()
     {
@@ -4786,7 +4863,7 @@ namespace CIAO
       else if (v == "tk_component") v_ = tk_component_l;
       else if (v == "tk_home") v_ = tk_home_l;
       else if (v == "tk_event") v_ = tk_event_l;
-      else
+      else 
       {
       }
     }
@@ -4834,7 +4911,7 @@ namespace CIAO
       else if (v == "tk_component") v_ = tk_component_l;
       else if (v == "tk_home") v_ = tk_home_l;
       else if (v == "tk_event") v_ = tk_event_l;
-      else
+      else 
       {
       }
     }
@@ -4898,7 +4975,7 @@ namespace CIAO
           kind (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5015,7 +5092,7 @@ namespace CIAO
           typecode (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5048,7 +5125,7 @@ namespace CIAO
           value_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5081,7 +5158,7 @@ namespace CIAO
           value_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5114,7 +5191,7 @@ namespace CIAO
           label_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5135,7 +5212,7 @@ namespace CIAO
       else if (v == "Maximum") v_ = Maximum_l;
       else if (v == "Attribute") v_ = Attribute_l;
       else if (v == "Selection") v_ = Selection_l;
-      else
+      else 
       {
       }
     }
@@ -5152,7 +5229,7 @@ namespace CIAO
       else if (v == "Maximum") v_ = Maximum_l;
       else if (v == "Attribute") v_ = Attribute_l;
       else if (v == "Selection") v_ = Selection_l;
-      else
+      else 
       {
       }
     }
@@ -5197,7 +5274,7 @@ namespace CIAO
           value_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5236,7 +5313,7 @@ namespace CIAO
           property_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5281,7 +5358,7 @@ namespace CIAO
           property_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5320,7 +5397,7 @@ namespace CIAO
           property_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5359,7 +5436,7 @@ namespace CIAO
           resourceValue_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5422,7 +5499,7 @@ namespace CIAO
           add_deployedResource (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5437,7 +5514,7 @@ namespace CIAO
           id (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5488,7 +5565,7 @@ namespace CIAO
           add_deployRequirement (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5503,7 +5580,7 @@ namespace CIAO
           id (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5523,7 +5600,7 @@ namespace CIAO
       else if (v == "ResourceUsesInstance") v_ = ResourceUsesInstance_l;
       else if (v == "PortUsesResource") v_ = PortUsesResource_l;
       else if (v == "ResourceUsesPort") v_ = ResourceUsesPort_l;
-      else
+      else 
       {
       }
     }
@@ -5539,7 +5616,7 @@ namespace CIAO
       else if (v == "ResourceUsesInstance") v_ = ResourceUsesInstance_l;
       else if (v == "PortUsesResource") v_ = PortUsesResource_l;
       else if (v == "ResourceUsesPort") v_ = ResourceUsesPort_l;
-      else
+      else 
       {
       }
     }
@@ -5589,7 +5666,7 @@ namespace CIAO
           resourceValue_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5637,7 +5714,7 @@ namespace CIAO
         else if (n == "configProperty")
         {
           ::CIAO::Config_Handlers::Property t (e);
-          configProperty (t);
+          add_configProperty (t);
         }
 
         else if (n == "deployedResource")
@@ -5652,7 +5729,7 @@ namespace CIAO
           deployedSharedResource (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5667,7 +5744,7 @@ namespace CIAO
           id (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5688,7 +5765,7 @@ namespace CIAO
       else if (v == "EventEmitter") v_ = EventEmitter_l;
       else if (v == "EventPublisher") v_ = EventPublisher_l;
       else if (v == "EventConsumer") v_ = EventConsumer_l;
-      else
+      else 
       {
       }
     }
@@ -5705,7 +5782,7 @@ namespace CIAO
       else if (v == "EventEmitter") v_ = EventEmitter_l;
       else if (v == "EventPublisher") v_ = EventPublisher_l;
       else if (v == "EventConsumer") v_ = EventConsumer_l;
-      else
+      else 
       {
       }
     }
@@ -5780,7 +5857,7 @@ namespace CIAO
           kind_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5813,7 +5890,7 @@ namespace CIAO
           type_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5840,7 +5917,7 @@ namespace CIAO
           portName_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5885,7 +5962,7 @@ namespace CIAO
           instance_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5912,7 +5989,7 @@ namespace CIAO
           location_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5957,7 +6034,7 @@ namespace CIAO
           resourceValue_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -5993,7 +6070,7 @@ namespace CIAO
         else if (n == "deployRequirement")
         {
           ::CIAO::Config_Handlers::Requirement t (e);
-          deployRequirement (t);
+          add_deployRequirement (t);
         }
 
         else if (n == "externalEndpoint")
@@ -6017,10 +6094,10 @@ namespace CIAO
         else if (n == "deployedResource")
         {
           ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription t (e);
-          deployedResource (t);
+          add_deployedResource (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -6047,7 +6124,7 @@ namespace CIAO
           requiredType_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -6086,7 +6163,7 @@ namespace CIAO
           property_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -6143,7 +6220,7 @@ namespace CIAO
           property_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -6182,7 +6259,7 @@ namespace CIAO
           requiredType_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -6215,7 +6292,7 @@ namespace CIAO
           instance_->container (this);
         }
 
-        else
+        else 
         {
         }
       }
@@ -6266,7 +6343,7 @@ namespace CIAO
           add_externalReference (t);
         }
 
-        else
+        else 
         {
         }
       }
@@ -6280,3 +6357,4 @@ namespace CIAO
   {
   }
 }
+

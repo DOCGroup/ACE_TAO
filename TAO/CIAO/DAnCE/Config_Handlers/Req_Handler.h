@@ -1,7 +1,6 @@
-
-      //==============================================================
+//==============================================================
 /**
- *  @file  Req_Handler.h
+ *  @file  REQ_Handler.h
  *
  *  $Id$
  *
@@ -9,60 +8,55 @@
  */
 //================================================================
 
-#ifndef CIAO_CONFIG_HANDLERS_Req_Handler_H
-#define CIAO_CONFIG_HANDLERS_Req_Handler_H
+#ifndef CIAO_CONFIG_HANDLERS_REQ_HANDLER_H
+#define CIAO_CONFIG_HANDLERS_REQ_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers/Config_Handlers_Export.h"
-#include "ace/config-lite.h"
+#include "Basic_Deployment_Data.hpp"
+#include "Config_Handlers_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
-
 namespace Deployment
 {
-  class Requirement;
+  struct Requirement; 
 }
-
 
 namespace CIAO
 {
 
   namespace Config_Handlers
   {
-
-   class Requirement;
-
-
    /*
-    * @class Req_Handler
+    * @class REQ_Handler
     *
     * @brief Handler class for <Requirement> types.
     *
     * This class defines handler methods to map values from
-    * XSC Requirement objects, parsed from the descriptor files, to the
-    * corresponding CORBA IDL Any type.
+    * XSC Requirement objects, parsed from
+    * the descriptor files, to the corresponding CORBA IDL type.
     *
     */
     
-    class Config_Handlers_Export Req_Handler {
+    class Config_Handlers_Export Req_Handler{
      
       public:
-
+       
         Req_Handler (void);
         virtual ~Req_Handler (void);
-
-        static void requirement (
-             const Requirement& desc,
-             Deployment::Requirement& toconfig);
+  
+        ///This method takes a <Deployment::Requirement>
+        ///and maps the values from the passed in XSC 
+        ///Requirement to its members.
+        void get_Requirement (
+                    Deployment::Requirement& toconfig,
+                    Requirement& desc);          
 
     };
   }
 }
 
-#include /**/ "ace/post.h" 
-#endif /* CIAO_CONFIG_HANDLERS_Req_Handler_H */
-
+#include /**/ "ace/post.h"
+#endif /* CIAO_CONFIG_HANDLERS_REQ_HANDLER_H*/

@@ -8,25 +8,39 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
+    bool
+    CEPE_Handler::external_port_endpoints (
+        const PlanConnectionDescription &src,
+        ::Deployment::ComponentExternalPortEndpoints &dest)
+    {
+      PlanConnectionDescription::externalEndpoint_const_iterator eeci_e =
+        src.end_externalEndpoint ();
 
-    CEPE_Handler::CEPE_Handler (void)
-    {
+      for (PlanConnectionDescription::externalEndpoint_const_iterator eeci_b =
+             src.begin_externalEndpoint ();
+           eeci_b != eeci_e;
+           ++eeci_b)
+        {
+          CORBA::ULong len =
+            dest.length ();
+
+          dest.length (len + 1);
+
+          (void) CEPE_Handler::external_port_endpoint ((*eeci_b),
+                                                       dest[len]);
+        }
+
+      return true;
+
     }
 
-    CEPE_Handler::~CEPE_Handler (void)
+    void
+    CEPE_Handler::external_port_endpoint (
+        const ComponentExternalPortEndpoint &src,
+        ::Deployment::ComponentExternalPortEndpoint &dest)
     {
+      dest.portName =
+        src.portName ().c_str ();
     }
- 
-    ///This method takes a <Deployment::ComponentExternalPortEndpoint>
-    ///and maps the values from the passed in XSC 
-    ///ComponentExternalPortEndpoint to its members.
-    void CEPE_Handler::get_ComponentExternalPortEndpoint (
-                Deployment::ComponentExternalPortEndpoint& toconfig,
-                ComponentExternalPortEndpoint& desc)
-    {
-      toconfig.portName = CORBA::string_dup (desc.portName ().c_str ());
-    }
-    
   }
 }
-

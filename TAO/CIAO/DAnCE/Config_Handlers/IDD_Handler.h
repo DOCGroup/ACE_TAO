@@ -1,5 +1,4 @@
-
-      //==============================================================
+//==============================================================
 /**
  *  @file  IDD_Handler.h
  *
@@ -9,24 +8,21 @@
  */
 //================================================================
 
-#ifndef CIAO_CONFIG_HANDLERS_IDD_Handler_H
-#define CIAO_CONFIG_HANDLERS_IDD_Handler_H
+#ifndef CIAO_CONFIG_HANDLERS_IDD_HANDLER_H
+#define CIAO_CONFIG_HANDLERS_IDD_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers/Config_Handlers_Export.h"
-#include "ace/config-lite.h"
+#include "Config_Handlers_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
-
 namespace Deployment
 {
-  class InstanceDeploymentDescription;
+  struct InstanceDeploymentDescription;
+  struct InstanceResourceDeploymentDescription;
 }
-
 
 namespace CIAO
 {
@@ -34,8 +30,8 @@ namespace CIAO
   namespace Config_Handlers
   {
 
-   class InstanceDeploymentDescription;
-
+   struct InstanceDeploymentDescription;
+    struct InstanceResourceDeploymentDescription;
 
    /*
     * @class IDD_Handler
@@ -43,26 +39,25 @@ namespace CIAO
     * @brief Handler class for <InstanceDeploymentDescription> types.
     *
     * This class defines handler methods to map values from
-    * XSC InstanceDeploymentDescription objects, parsed from the descriptor files, to the
-    * corresponding CORBA IDL Any type.
+    * XSC InstanceDeploymentDescriptionn objects, parsed from
+    * the descriptor files, to the corresponding CORBA IDL type.
     *
     */
-    
-    class Config_Handlers_Export IDD_Handler {
-     
-      public:
 
-        IDD_Handler (void);
-        virtual ~IDD_Handler (void);
+    class Config_Handlers_Export IDD_Handler
+    {
+    public:
+      static bool instance_deployment_descrs (
+          const DeploymentPlan &src,
+          Deployment::InstanceDeploymentDescriptions& dest);
 
-        static void instance_deployment_descr (
-             const InstanceDeploymentDescription& desc,
-             Deployment::InstanceDeploymentDescription& toconfig);
-
+    private:
+      static bool instance_deployment_descr (
+          const InstanceDeploymentDescription &src,
+          Deployment::InstanceDeploymentDescription& dest);
     };
   }
 }
 
-#include /**/ "ace/post.h" 
-#endif /* CIAO_CONFIG_HANDLERS_IDD_Handler_H */
-
+#include /**/ "ace/post.h"
+#endif /* CIAO_CONFIG_HANDLERS_IDD_HANDLER_H*/

@@ -1,4 +1,4 @@
-//$Id$
+// $Id$
 #ifndef CCD_HPP
 #define CCD_HPP
 

@@ -2,6 +2,9 @@
 #include "ciao/Deployment_DataC.h"
 #include "ace/Auto_Ptr.h"
 #include "CCD_Handler.h"
+#include "ADD_Handler.h"
+#include "MDD_Handler.h"
+#include "IDD_Handler.h"
 #include "cdp.hpp"
 
 ACE_RCSID (Config_Handlers,
@@ -35,12 +38,36 @@ namespace CIAO
         auto_idl_dp (tmp);
 
       bool retval =
-        CCD_Handler::component_interface_descr ((*auto_idl_dp).realizes,
-                                                this->dp_.realizes ());
+        CCD_Handler::component_interface_descr (
+          this->dp_.realizes (),
+          (*auto_idl_dp).realizes);
 
       if (!retval)
         return retval;
 
+      retval =
+        ADD_Handler::artifact_deployment_descrs (
+          this->dp_,
+          (*auto_idl_dp).artifact);
+
+      if (!retval)
+        return retval;
+
+      retval =
+        MDD_Handler::mono_deployment_descriptions (
+          this->dp_.implementation (),
+          (*auto_idl_dp).implementation);
+
+      if (!retval)
+        return retval;
+
+      retval =
+        IDD_Handler::instance_deployment_descrs (
+          this->dp_,
+          (*auto_idl_dp).instance);
+
+      if (!retval)
+        return retval;
 
       this->idl_dp_ =
         auto_idl_dp.release ();

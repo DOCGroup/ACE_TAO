@@ -1153,13 +1153,16 @@ namespace CIAO
       // configProperty
       //
       public:
-      bool configProperty_p () const;
-      ::CIAO::Config_Handlers::Property const& configProperty () const;
-      ::CIAO::Config_Handlers::Property& configProperty ();
-      void configProperty (::CIAO::Config_Handlers::Property const& );
+      typedef ::std::vector< ::CIAO::Config_Handlers::Property >::iterator configProperty_iterator;
+      typedef ::std::vector< ::CIAO::Config_Handlers::Property >::const_iterator configProperty_const_iterator;
+      configProperty_iterator begin_configProperty ();
+      configProperty_iterator end_configProperty ();
+      configProperty_const_iterator begin_configProperty () const;
+      configProperty_const_iterator end_configProperty () const;
+      void add_configProperty (::CIAO::Config_Handlers::Property const& );
 
       protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::Property > configProperty_;
+      ::std::vector< ::CIAO::Config_Handlers::Property > configProperty_;
 
       // deployedResource
       //
@@ -1600,13 +1603,16 @@ namespace CIAO
       // deployRequirement
       //
       public:
-      bool deployRequirement_p () const;
-      ::CIAO::Config_Handlers::Requirement const& deployRequirement () const;
-      ::CIAO::Config_Handlers::Requirement& deployRequirement ();
-      void deployRequirement (::CIAO::Config_Handlers::Requirement const& );
+      typedef ::std::vector< ::CIAO::Config_Handlers::Requirement >::iterator deployRequirement_iterator;
+      typedef ::std::vector< ::CIAO::Config_Handlers::Requirement >::const_iterator deployRequirement_const_iterator;
+      deployRequirement_iterator begin_deployRequirement ();
+      deployRequirement_iterator end_deployRequirement ();
+      deployRequirement_const_iterator begin_deployRequirement () const;
+      deployRequirement_const_iterator end_deployRequirement () const;
+      void add_deployRequirement (::CIAO::Config_Handlers::Requirement const& );
 
       protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
+      ::std::vector< ::CIAO::Config_Handlers::Requirement > deployRequirement_;
 
       // externalEndpoint
       //
@@ -1653,13 +1659,16 @@ namespace CIAO
       // deployedResource
       //
       public:
-      bool deployedResource_p () const;
-      ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription const& deployedResource () const;
-      ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription& deployedResource ();
-      void deployedResource (::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription const& );
+      typedef ::std::vector< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription >::iterator deployedResource_iterator;
+      typedef ::std::vector< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription >::const_iterator deployedResource_const_iterator;
+      deployedResource_iterator begin_deployedResource ();
+      deployedResource_iterator end_deployedResource ();
+      deployedResource_const_iterator begin_deployedResource () const;
+      deployedResource_const_iterator end_deployedResource () const;
+      void add_deployedResource (::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription const& );
 
       protected:
-      ::std::auto_ptr< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription > deployedResource_;
+      ::std::vector< ::CIAO::Config_Handlers::ConnectionResourceDeploymentDescription > deployedResource_;
 
       public:
       PlanConnectionDescription (::XMLSchema::string< char > const& name__);

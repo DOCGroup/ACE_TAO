@@ -12,7 +12,7 @@
 #define CIAO_CONFIG_HANDLERS_ERE_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers_export.h"
+#include "Config_Handlers/Config_Handlers_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -20,7 +20,8 @@
 
 namespace Deployment
 {
-  struct ExternalReferenceEndpoint; 
+  class ExternalReferenceEndpoints;
+  struct ExternalReferenceEndpoint;
 }
 
 namespace CIAO
@@ -28,9 +29,9 @@ namespace CIAO
 
   namespace Config_Handlers
   {
-    
-   struct ExternalReferenceEndpoint;
-   
+    class PlanConnectionDescription;
+    class ExternalReferenceEndpoint;
+
    /*
     * @class ERE_Handler
     *
@@ -41,21 +42,18 @@ namespace CIAO
     * the descriptor files, to the corresponding CORBA IDL type.
     *
     */
-    
-    class Config_Handlers_Export ERE_Handler{
-     
-      public:
-       
-        ERE_Handler (void);
-        virtual ~ERE_Handler (void);
-  
-        ///This method takes a <Deployment::ExternalReferenceEndpoint>
-        ///and maps the values from the passed in XSC 
-        ///ExternalReferenceEndpoint to its members.
-        void get_ExternalReferenceEndpoint (
-                    Deployment::ExternalReferenceEndpoint& toconfig,
-                    ExternalReferenceEndpoint& desc);          
 
+    class Config_Handlers_Export ERE_Handler
+    {
+    public:
+      static bool external_ref_endpoints (
+        const PlanConnectionDescription &src,
+        ::Deployment::ExternalReferenceEndpoints &dest);
+
+    private:
+      static void external_ref_endpoint (
+        const ExternalReferenceEndpoint &src,
+        Deployment::ExternalReferenceEndpoint &dest);
     };
   }
 }

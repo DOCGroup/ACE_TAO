@@ -20,6 +20,7 @@
 
 namespace Deployment
 {
+  struct ComponentExternalPortEndpoints;
   struct ComponentExternalPortEndpoint;
 }
 
@@ -27,8 +28,8 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-
-    struct ComponentExternalPortEndpoint;
+    class PlanConnectionDescription;
+    class ComponentExternalPortEndpoint;
 
     /*
      * @class CEPE_Handler
@@ -44,17 +45,13 @@ namespace CIAO
     class Config_Handlers_Export CEPE_Handler
     {
     public:
-      CEPE_Handler (void);
-      virtual ~CEPE_Handler (void);
-
-      /// This method takes a
-      /// <Deployment::ComponentExternalPortEndpoint> and maps the
-      /// values from the passed in XSC  ComponentExternalPortEndpoint
-      /// to its members.
-      void get_ComponentExternalPortEndpoint (
-                Deployment::ComponentExternalPortEndpoint& toconfig,
-                ComponentExternalPortEndpoint& desc);
-
+      static bool external_port_endpoints (
+        const PlanConnectionDescription &src,
+        ::Deployment::ComponentExternalPortEndpoints &dest);
+    private:
+      static void external_port_endpoint (
+        const ComponentExternalPortEndpoint &src,
+        ::Deployment::ComponentExternalPortEndpoint &dest);
     };
   }
 }

@@ -12,7 +12,7 @@
 #define CIAO_CONFIG_HANDLERS_PSPE_HANDLER_H
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers_export.h"
+#include "Config_Handlers/Config_Handlers_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -20,7 +20,8 @@
 
 namespace Deployment
 {
-  struct PlanSubcomponentPortEndpoint; 
+  class PlanSubcomponentPortEndpoints;
+  struct PlanSubcomponentPortEndpoint;
 }
 
 namespace CIAO
@@ -28,34 +29,30 @@ namespace CIAO
 
   namespace Config_Handlers
   {
-    
-   struct PlanSubcomponentPortEndpoint;
-   
-   /*
-    * @class PSPE_Handler
-    *
-    * @brief Handler class for <PlanSubcomponentPortEndpoint> types.
-    *
-    * This class defines handler methods to map values from
-    * XSC PlanSubcomponentPortEndpoint objects, parsed from
-    * the descriptor files, to the corresponding CORBA IDL type.
-    *
-    */
-    
-    class Config_Handlers_Export PSPE_Handler{
-     
-      public:
-       
-        PSPE_Handler (void);
-        virtual ~PSPE_Handler (void);
-  
-        ///This method takes a <Deployment::PlanConnectionDescription>
-        ///and maps the values from the passed in XSC 
-        ///PlanConnectionDescription to its members.
-        void get_PlanSubcomponentPortEndpoint (
-                    Deployment::PlanSubcomponentPortEndpoint& toconfig,
-                    PlanSubcomponentPortEndpoint& desc);          
+    class PlanConnectionDescription;
+    class PlanSubcomponentPortEndpoint;
 
+    /*
+     * @class PSPE_Handler
+     *
+     * @brief Handler class for <PlanSubcomponentPortEndpoint> types.
+     *
+     * This class defines handler methods to map values from
+     * XSC PlanSubcomponentPortEndpoint objects, parsed from
+     * the descriptor files, to the corresponding CORBA IDL type.
+     *
+     */
+    class Config_Handlers_Export PSPE_Handler
+    {
+    public:
+      static bool sub_component_port_endpoints (
+        const PlanConnectionDescription &src,
+        ::Deployment::PlanSubcomponentPortEndpoints &dest);
+
+    private:
+      static void sub_component_port_endpoint (
+        const PlanSubcomponentPortEndpoint &src,
+        ::Deployment::PlanSubcomponentPortEndpoint &dest);
     };
   }
 }
