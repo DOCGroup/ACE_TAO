@@ -1,3 +1,14 @@
+Fri Oct 10 09:48:05 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* examples/Kokyu_dsrt_schedulers/fp_example/fp_client.dsp: 
+	* examples/Kokyu_dsrt_schedulers/fp_example/fp_server.dsp: 
+	* examples/Kokyu_dsrt_schedulers/mif_example/mif_server.dsp: 
+	* examples/Kokyu_dsrt_schedulers/mif_example/mif_client.dsp: 
+	* examples/Kokyu_dsrt_schedulers/muf_example/muf_server.dsp: 
+	* examples/Kokyu_dsrt_schedulers/muf_example/muf_client.dsp: 
+	  Fixed path to the idl compiler to clear MSVC Release build 
+	  errors. 
+
 Fri Oct 10 09:17:42 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/server.dsp:
