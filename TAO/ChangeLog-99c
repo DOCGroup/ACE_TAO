@@ -1,70 +1,77 @@
+Tue Jul 13 07:47:12 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/ORB.cpp (_tao_add_to_IOR_table): made the 0 string
+          index unsigned, to avoid ambiguous operator [] overload
+          resolution with VC++ 6.0 and Green Hills.  Thanks to
+          Andy for reporting the problem on VC++ 6.0.
+
 Mon Jul 12 23:06:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_interface.h:
-	* TAO_IDL/be_include/be_interface.cpp (compute_coll_name): Fixed
-	  the misgenerating collocation class names problem when compile
-	  multiple-inherited interfaces.  Thanks to Francois Bernier
-	  <fbernier@gel.ulaval.ca> for reporting the bug.
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_interface.cpp (compute_coll_name): Fixed
+          the misgenerating collocation class names problem when compile
+          multiple-inherited interfaces.  Thanks to Francois Bernier
+          <fbernier@gel.ulaval.ca> for reporting the bug.
 
 Mon Jul 12 21:42:27 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/GIOP.cpp (process_server_request):
-	* tao/IOR_LookupTable.cpp (find_ior):
-	* tao/ORB.cpp (_tao_find_in_IOR_table):
+        * tao/GIOP.cpp (process_server_request):
+        * tao/IOR_LookupTable.cpp (find_ior):
+        * tao/ORB.cpp (_tao_find_in_IOR_table):
 
-	  Debugging output was attempting to print the name of the object
-	  found in the object key, which isn't null terminated.  However,
-	  due to performance considerations, that string is not copied.
-	  Only pointer to the object_key is used during the IOR lookup.
-	  Hence, the string *cannot* be null terminated since doing so
-	  would modify the contents of the object key.  For the moment,
-	  the only solution is to remove the debugging output
-	  entirely. [Bug 56]
+          Debugging output was attempting to print the name of the object
+          found in the object key, which isn't null terminated.  However,
+          due to performance considerations, that string is not copied.
+          Only pointer to the object_key is used during the IOR lookup.
+          Hence, the string *cannot* be null terminated since doing so
+          would modify the contents of the object key.  For the moment,
+          the only solution is to remove the debugging output
+          entirely. [Bug 56]
 
-	* tao/POA.cpp (encode_sequence_to_string):
+        * tao/POA.cpp (encode_sequence_to_string):
 
-	  CORBA::string_alloc() is being used to allocate space for a
-	  string so there is no need to explicitly allocate space for a
-	  null terminator since CORBA::string_alloc() already does it.
+          CORBA::string_alloc() is being used to allocate space for a
+          string so there is no need to explicitly allocate space for a
+          null terminator since CORBA::string_alloc() already does it.
 
 Mon Jul 12 21:44:24 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/deep_free.cpp:
-	  Added code in TAO_Marshal_Struct::deep_free() to keep the
-	  pointer aligned as it frees each member. Thanks to
-	  David Brock <dbrock@mail.arc.nasa.gov> and to
-	  John Morey <jmorey@tbi.com> for sending in examples
-	  that pointed out the need for this.
+        * tao/deep_free.cpp:
+          Added code in TAO_Marshal_Struct::deep_free() to keep the
+          pointer aligned as it frees each member. Thanks to
+          David Brock <dbrock@mail.arc.nasa.gov> and to
+          John Morey <jmorey@tbi.com> for sending in examples
+          that pointed out the need for this.
 
 Mon Jul 12 20:40:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB.cpp:
-	  The ORB returned from CORBA::ORB_init() should be duplicated
+        * tao/ORB.cpp:
+          The ORB returned from CORBA::ORB_init() should be duplicated
 
-	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
-	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
-	  Use an ORB-per-thread to minimize contention and simplify memory
-	  managment of per-ORB-per-thread resources.
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+          Use an ORB-per-thread to minimize contention and simplify memory
+          managment of per-ORB-per-thread resources.
 
-	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
-	  Fixed the InputCDRAllocator argument
+        * performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
+          Fixed the InputCDRAllocator argument
 
 Mon Jul 12 19:23:47 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.ll:
-	* TAO_IDL/fe/lex.yy.cpp:
-	  Modified a lex rule to accept the output of the new
-	  preprocessor used by the HP/UX folks.
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+          Modified a lex rule to accept the output of the new
+          preprocessor used by the HP/UX folks.
 
 Mon Jul 12 16:59:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/try_macros.h: Updated comments regarding how to re-enable
-	  the deprecated TAO try macros and moved the comments to make
-	  them more obvious.  Thanks to Carlos and Phil Y. Wang
-	  <yhwang@cs.columbia.edu> for reporting this.
+        * tao/try_macros.h: Updated comments regarding how to re-enable
+          the deprecated TAO try macros and moved the comments to make
+          them more obvious.  Thanks to Carlos and Phil Y. Wang
+          <yhwang@cs.columbia.edu> for reporting this.
 
-	* tao/Exceptions.h: Moved the macro definition of TAO_RAISE from
-	  <try_macros.h> to here.  It's really an TAO-specific macros.
+        * tao/Exceptions.h: Moved the macro definition of TAO_RAISE from
+          <try_macros.h> to here.  It's really an TAO-specific macros.
 
 Mon Jul 12 16:10:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
