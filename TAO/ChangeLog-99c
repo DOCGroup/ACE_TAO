@@ -1,4 +1,7 @@
-Thu Jun 03 13:44:37 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Thu Jun 03 13:57:49 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Reply_Dispatcher: Fixed incorrect inclusion of the
+	  Reply_Dispatcher.i file.
 
 	* tao/GIOP.cpp (process_server_message): Fixed use of <transport>.
 
