@@ -1,3 +1,14 @@
+Thu Feb 06 18:35:05 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Proxy_T.h:
+ 	* orbsvcs/orbsvcs/Notify/Any/CosEC_ProxyPushSupplier.h:
+ 	* orbsvcs/orbsvcs/Notify/Any/ProxyPushSupplier.h:
+ 	* orbsvcs/orbsvcs/Notify/Sequence/SequenceProxyPushSupplier.h:
+ 	* orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h:
+
+	  Added the patch from Bruce MacDonald <brucemac@netcomuk.co.uk> to get
+	  Notification compiling on VC7/.NET 
+	
 Wed Feb  5 12:10:08 2003  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tao/PortableServer/AMH_Response_Handler.cpp:
