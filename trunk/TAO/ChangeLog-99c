@@ -1,65 +1,80 @@
+Tue Apr 13 09:52:20 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/Concurrency_Service/Makefile,
+          orbsvcs/CosEvent_Service/Makefile,
+          orbsvcs/ImplRepo_Service/Makefile,
+          orbsvcs/Logging_Service/Makefile,
+          orbsvcs/Naming_Service/Makefile,
+          orbsvcs/tests/Concurrency/Makefile,
+          orbsvcs/tests/CosEC_Basic/Makefile,
+          orbsvcs/tests/CosEC_Multiple/Makefile,
+          orbsvcs/tests/ImplRepo/Makefile,
+          orbsvcs/tests/Logger/Makefile,
+          orbsvcs/tests/Simple_Naming/Makefile: added BIN2 support,
+          for make realclean.
+
 Mon Apr 12 22:12:27 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	Removed the resolve_commandline_ref (). This was no longer 
-	being used. Also passed ACE_TRY_ENV as a parameter to the
-	following functions. Carlos suggested these changes :
+        Removed the resolve_commandline_ref (). This was no longer
+        being used. Also passed ACE_TRY_ENV as a parameter to the
+        following functions. Carlos suggested these changes :
 
-	resolve_service ()
-	multicast_to_service ()
-	resolve_trading_service ()
-	
-	* tao/ORB.h  
-	* tao/ORB.cpp
+        resolve_service ()
+        multicast_to_service ()
+        resolve_trading_service ()
+
+        * tao/ORB.h
+        * tao/ORB.cpp
 
 Mon Apr 12 17:13:37 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp: Added the AVStreams_i_T.{h,cpp} and
-	  CosPropertyService_i_T.{h,cpp} to the project file.
+        * orbsvcs/orbsvcs/orbsvcs.dsp: Added the AVStreams_i_T.{h,cpp} and
+          CosPropertyService_i_T.{h,cpp} to the project file.
 
-	* orbsvcs/tests/AVStreams/benchmark/AV_benchmark.dsw: 
-	* orbsvcs/tests/AVStreams/benchmark/av_benchmark_client.dsp: 
-	* orbsvcs/tests/AVStreams/benchmark/av_benchmark_server.dsp: 
-	* orbsvcs/tests/AVStreams/benchmark/av_benchmark_child.dsp: 
-		Added the NT VC++ project files and worspace files.
+        * orbsvcs/tests/AVStreams/benchmark/AV_benchmark.dsw:
+        * orbsvcs/tests/AVStreams/benchmark/av_benchmark_client.dsp:
+        * orbsvcs/tests/AVStreams/benchmark/av_benchmark_server.dsp:
+        * orbsvcs/tests/AVStreams/benchmark/av_benchmark_child.dsp:
+                Added the NT VC++ project files and worspace files.
 
-	* orbsvcs/tests/AVStreams/benchmark/server.cpp: 
-	* orbsvcs/tests/AVStreams/benchmark/client.cpp: 	
-		Fixed the compilation errors on NT. 
-		Works fine on Unix platforms.
-	* orbsvcs/tests/AVStreams/benchmark/child_process.cpp:
-	  Added the new file which has just the main() for the child
-	  process. Thanks to David Hooker <DHooker@uniview.net> for
-	  reporting the errors.
-	
-	* orbsvcs/orbsvcs/AV/AVStreams_i_T.{h,cpp}: Moved the
-	TAO_StreamEndpoint classes from AVStreams_i.{h,cpp} as it was made
-	a template to avoid interface inheritance errors on NT VC++.
+        * orbsvcs/tests/AVStreams/benchmark/server.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/client.cpp:
+                Fixed the compilation errors on NT.
+                Works fine on Unix platforms.
+        * orbsvcs/tests/AVStreams/benchmark/child_process.cpp:
+          Added the new file which has just the main() for the child
+          process. Thanks to David Hooker <DHooker@uniview.net> for
+          reporting the errors.
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i_T.{h,cpp}: Moved the
-	TAO_PropertySet classes from AVStreams_i.{h,cpp} as it was made
-	a template to avoid interface inheritance errors on NT VC++.
+        * orbsvcs/orbsvcs/AV/AVStreams_i_T.{h,cpp}: Moved the
+        TAO_StreamEndpoint classes from AVStreams_i.{h,cpp} as it was made
+        a template to avoid interface inheritance errors on NT VC++.
 
-	* orbsvcs/orbsvcs/Makefile: Added the new AVStreams_i_T.{h,cpp}
-	and CosPropertyService_i_T.{h,cpp}.
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i_T.{h,cpp}: Moved the
+        TAO_PropertySet classes from AVStreams_i.{h,cpp} as it was made
+        a template to avoid interface inheritance errors on NT VC++.
+
+        * orbsvcs/orbsvcs/Makefile: Added the new AVStreams_i_T.{h,cpp}
+        and CosPropertyService_i_T.{h,cpp}.
 
 Mon Apr 12 14:24:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/ORB.cpp: The resolve_policy_manager() and
- 	  resolve_policy_current() only worked if TAO_HAS_CORBA_MESSAGING
- 	  was defined.
+          resolve_policy_current() only worked if TAO_HAS_CORBA_MESSAGING
+          was defined.
 
-	* tao/ORB_Core.cpp:
-	* tao/Stub.cpp: More problems if TAO_HAS_CORBA_MESSAGING is not
- 	  defined.
+        * tao/ORB_Core.cpp:
+        * tao/Stub.cpp: More problems if TAO_HAS_CORBA_MESSAGING is not
+          defined.
 
 Mon Apr 12 14:19:45 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * LifeCycle_Service/Makefile,tests/Property/Makefile,
           Trading_Service/Makefile,tests/Trading/Makefile: only build if
- 	  the orbsvcs library was built with the necessary component.
+          the orbsvcs library was built with the necessary component.
 
         * Time_Service/Makefile,tests/Time/Makefile: added BIN2 support,
- 	  for make realclean.
+          for make realclean.
 
 Mon Apr 12 14:09:06 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
@@ -70,12 +85,12 @@ Mon Apr 12 14:09:06 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
         * tao/Servant_Base.cpp,
         * tao/Server_Request.cpp,
         * tao/Operation_Table.cpp: Committed again the changes related to
- 	  Removing strlen calculation for the Operation Name from the
- 	  critical path. Length as it is obtained during demarshalling is
- 	  stored in the IIOP_Request object and passed to the Perfect
- 	  Hash's find operation. ACE_CString is used to store the
- 	  operation as opposed char *. Thanks to Irfan for suggesting this
- 	  change.
+          Removing strlen calculation for the Operation Name from the
+          critical path. Length as it is obtained during demarshalling is
+          stored in the IIOP_Request object and passed to the Perfect
+          Hash's find operation. ACE_CString is used to store the
+          operation as opposed char *. Thanks to Irfan for suggesting this
+          change.
 
 Mon Apr 12 13:41:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -83,10 +98,10 @@ Mon Apr 12 13:41:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
         * tao/Connect.cpp,
         * tao/Invocation.cpp:
           Added four new timeprobes to measure client outgoing process
- 	  time and server process time. Whereas the pluggable protocols
- 	  timeprobes were a subset of the regular timeprobes, these are a
- 	  disjoint set. If both the pluggable and minimal timeprobes
- 	  macros are uncommented in Timeprobe.h, pluggable will override.
+          time and server process time. Whereas the pluggable protocols
+          timeprobes were a subset of the regular timeprobes, these are a
+          disjoint set. If both the pluggable and minimal timeprobes
+          macros are uncommented in Timeprobe.h, pluggable will override.
 
 Mon Apr 12 12:37:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -197,7 +212,7 @@ Sun Apr 11 11:45:49 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
         * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
           Added missing template instantiation.
 
-	
+
 Sat Apr 10 20:55:00 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tests/Param_Test/multdim_array.cpp:
@@ -213,8 +228,8 @@ Sat Apr 10 20:55:00 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Sat Apr 10 16:22:59 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* doc/papers/COOTS-99/poa.tex (): Made the Nos. in the table 
-	  consistent with the figure.
+        * doc/papers/COOTS-99/poa.tex (): Made the Nos. in the table
+          consistent with the figure.
 
 Sat Apr 10 14:26:48 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
