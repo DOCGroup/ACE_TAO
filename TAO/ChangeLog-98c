@@ -15,6 +15,17 @@ Mon Feb 23 11:57:16 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 Mon Feb 23 11:40:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
+        * tao/corbacom.h (CORBA::LongLong): use ACE_BIG_ENDIAN
+          instead of TAO_WORDS_BIGENDIAN.
+
+        * tao/orbconf.h (TAO_ENCAP_BYTE_ORDER): use ACE_LITTLE_ENDIAN
+          instead of trying to figure it out from cpp #defines, which
+          failed for LynxOS.  Also, removed TAO_WORDS_BIGENDIAN.
+
+        * tao/interp.cpp (declare_entry,setup_entry): use the align_struct_
+          with padding by default, unless TAO_HAS_FIXED_BYTE_ALIGNMENT is
+          #defined.
+
         * TAO_IDL/Makefile: added clean and realclean targets for
           CROSS-COMPILE platforms.
 
