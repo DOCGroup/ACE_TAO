@@ -1,13 +1,18 @@
 Sun Oct 11 17:33:22 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Synch.cpp: Fixed a typo, s/lock_/process_lock_/.  Thanks to
- 	  Naga for noticing this.
+        * ace/Synch.cpp: Fixed a typo, s/lock_/process_lock_/.  Thanks to
+          Naga for noticing this.
 
 Sun Oct 11 08:19:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-linux-common.h: re-enabled msg_* undefs and defines,
           but for libc5 (non-glibc) only.  Thanks to JM Strauss
           <jms97@club-internet.fr> for verifying that they're needed.
+
+        * netsvcs/lib/Name_Handler.cpp (lists_entries): replaced
+          switch statement with a multi-branch if statement, to
+          avoid Internal compiler error 980331 with egcs 1.1 (2.91.57)
+          (on Linux/alpha).
 
 Sat Oct 10 18:30:02 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
