@@ -46,8 +46,10 @@ be_visitor_ami_interface_ch::visit_interface (be_interface *node)
 {
   TAO_OutStream *os; // output stream
 
-  if (!node->cli_hdr_gen () &&  // not already generated and
-      !node->imported () &&     // not imported
+  // No need to check for code already having been generated. This
+  // is a separate pass through the AST specific to AMI, and will
+  // happen only once.
+  if (!node->imported () &&     // not imported
       !node->is_local ())       // and not local interface.
     {
       // Grab the stream.
@@ -65,15 +67,6 @@ be_visitor_ami_interface_ch::visit_interface (be_interface *node)
           << " *" << node->replacement ()->local_name ()
           << "_ptr;" << be_nl << be_nl;
 
-
-/*      // forward declaration
-      *os << "class AMI_" << node->local_name () << "Handler;" << be_nl;
-
-      // generate the _ptr declaration
-      *os << "typedef AMI_" << node->local_name ()
-          << "Handler *AMI_" << node->local_name ()
-          << "Handler_ptr;" << be_nl << be_nl;
-*/
       os->gen_endif ();
     }
 
