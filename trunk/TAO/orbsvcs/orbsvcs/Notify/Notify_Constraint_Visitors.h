@@ -96,18 +96,55 @@ private:
                                     CORBA::TCKind tc_kind);
 
 private:
-  ACE_Hash_Map_Manager <ACE_CString, 
-                        CORBA::Any*,
-                        TAO_SYNCH_MUTEX> 
-    property_lookup_;
-    // Used to lookup property name and values.
+  enum structured_event_field
+    {
+      FILTERABLE_DATA,
+      HEADER,
+      FIXED_HEADER,
+      EVENT_TYPE,
+      DOMAIN_NAME,
+      TYPE_NAME,
+      EVENT_NAME,
+      VARIABLE_HEADER,
+      REMAINDER_OF_BODY,
+      NONE
+    };
+
+  structured_event_field implicit_id_;
+  // Storage for the type of implicit id the component has (if any).
+
+  ACE_Hash_Map_Manager <ACE_CString, structured_event_field, TAO_SYNCH_MUTEX>
+    implicit_ids_;
+  // Lookup table for the implicit ids, to avoid string comparisons in
+  // derived visitors.
+
+  ACE_Hash_Map_Manager <ACE_CString, CORBA::Any *, TAO_SYNCH_MUTEX> 
+    filterable_data_;
+    // Used to lookup names and values in the event's 'filterable_data' field.
+
+  ACE_Hash_Map_Manager <ACE_CString, CORBA::Any *, TAO_SYNCH_MUTEX> 
+    variable_header_;
+    // Used to lookup names and values in the event's 'variable_header' field.
+
+  CORBA::String_var domain_name_;
+  CORBA::String_var type_name_;
+  CORBA::String_var event_name_;
+  // Storage for string names under the structured event's 
+  // 'fixed_header' field.
+
+  CORBA::Any remainder_of_body_;
+  // Storage for the structured_event's 'remainder_of_body' field.
 
   ACE_Unbounded_Queue <TAO_ETCL_Literal_Constraint> queue_;
   // The result of a non_boolean operation.
 
-  CORBA::Any_var current_member_;
-  // Holder for a value found in property_lookup_ or for a
-  // nested type within that value.
+  CORBA::Any_var current_value_;
+  // Holder for a value found in the event fields filterable_data, 
+  // variable_header or remainder_of_body.
+
+  CORBA::String_var current_name_;
+  // Holder for a string name in the event fields fixed_header, 
+  // variable_header, or filterable_data.
 };
 
 #include "ace/post.h"

@@ -12,7 +12,44 @@
 #include "tao/DynamicAny/DynAnyFactory.h"
 
 TAO_Notify_Constraint_Visitor::TAO_Notify_Constraint_Visitor (void)
+  : implicit_id_ (NONE)
 {
+  (void) this->implicit_ids_.bind (ACE_CString ("filterable_data",
+                                                0,
+                                               0),
+                                   FILTERABLE_DATA);
+  (void) this->implicit_ids_.bind (ACE_CString ("header",
+                                                0,
+                                                0),
+                                   HEADER);
+  (void) this->implicit_ids_.bind (ACE_CString ("remainder_of_body",
+                                                0,
+                                                0),
+                                   REMAINDER_OF_BODY);
+  (void) this->implicit_ids_.bind (ACE_CString ("fixed_header",
+                                                0,
+                                                0),
+                                   FIXED_HEADER);
+  (void) this->implicit_ids_.bind (ACE_CString ("variable_header",
+                                                0,
+                                                0),
+                                   VARIABLE_HEADER);
+  (void) this->implicit_ids_.bind (ACE_CString ("event_name",
+                                                0,
+                                                         0),
+                                   EVENT_NAME);
+  (void) this->implicit_ids_.bind (ACE_CString ("event_type",
+                                                0,
+                                                         0),
+                                   EVENT_TYPE);
+  (void) this->implicit_ids_.bind (ACE_CString ("domain_name",
+                                                0,
+                                                0),
+                                   DOMAIN_NAME);
+  (void) this->implicit_ids_.bind (ACE_CString ("type_name",
+                                                0,
+                                                0),
+                                   TYPE_NAME);
 }
 
 int
@@ -20,14 +57,18 @@ TAO_Notify_Constraint_Visitor::bind_structured_event (
     const CosNotification::StructuredEvent &s_event
   )
 {
-  u_int length = s_event.filterable_data.length ();
+  // The two sequences contained in a structured event are
+  // copied into hash tables so iteration is done only once.
 
-  for (u_int index = 0; index < length; ++index)
+  CORBA::ULong length = s_event.filterable_data.length ();
+  CORBA::ULong index = 0;
+
+  for (index = 0; index < length; ++index)
     {
       ACE_CString name_str (s_event.filterable_data[index].name, 0, 0);
 
       int status =
-        this->property_lookup_.bind (
+        this->filterable_data_.bind (
             name_str,
             ACE_const_cast (CORBA::Any *,
                             &s_event.filterable_data[index].value)
@@ -35,9 +76,39 @@ TAO_Notify_Constraint_Visitor::bind_structured_event (
 
       if (status != 0)
         {
-          return 1;
+          return -1;
         }
     }
+
+  length = s_event.header.variable_header.length ();
+
+  for (index = 0; index < length; ++index)
+    {
+      ACE_CString name_str (s_event.header.variable_header[index].name, 0, 0);
+
+      int status =
+        this->variable_header_.bind (
+            name_str,
+            ACE_const_cast (CORBA::Any *,
+                            &s_event.header.variable_header[index].value)
+          );
+
+      if (status != 0)
+        {
+          return -1;
+        }
+    }
+
+  this->domain_name_ = 
+    CORBA::string_dup (s_event.header.fixed_header.event_type.domain_name);
+
+  this->type_name_ = 
+    CORBA::string_dup (s_event.header.fixed_header.event_type.type_name);
+
+  this->event_name_ =
+    CORBA::string_dup (s_event.header.fixed_header.event_name);
+
+  this->remainder_of_body_ = s_event.remainder_of_body;
 
   return 0;
 }
@@ -84,7 +155,7 @@ TAO_Notify_Constraint_Visitor::visit_identifier (TAO_ETCL_Identifier *ident)
 
   CORBA::Any *any = 0;
 
-  if (this->property_lookup_.find (key, any) == 0)
+  if (this->filterable_data_.find (key, any) == 0)
     {
       if (any != 0)
         {
@@ -133,11 +204,11 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
           this->queue_.dequeue_head (disc_val);
 
           TAO_DynUnion_i dyn_union;
-          dyn_union.init (this->current_member_.in ()
+          dyn_union.init (this->current_value_.in ()
                           ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          CORBA::TypeCode_var tc = this->current_member_->type ();
+          CORBA::TypeCode_var tc = this->current_value_->type ();
 
           switch (disc_val.expr_type ())
           {
@@ -202,7 +273,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
                 DynamicAny::DynAny_var u_member =
                   dyn_union.member (ACE_ENV_SINGLE_ARG_PARAMETER);
                 ACE_TRY_CHECK;
-                this->current_member_ =
+                this->current_value_ =
                   u_member->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
                 ACE_TRY_CHECK;
 
@@ -233,7 +304,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
                 // If there's no match, member_label will throw
                 // CORBA::TypeCode::Bounds and the catch block will
                 // return -1;
-                this->current_member_ = tc->member_label (i
+                this->current_value_ = tc->member_label (i
                                                           ACE_ENV_ARG_PARAMETER);
                 ACE_TRY_CHECK;
 
@@ -249,11 +320,11 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
 
           // If there's no nested component, then we just want the
           // union member value on the queue. Otherwise, we want
-          // the member value in current_member_ while we visit
+          // the member value in current_value_ while we visit
           // the nested component.
           if (nested == 0)
             {
-              TAO_ETCL_Literal_Constraint lit (this->current_member_);
+              TAO_ETCL_Literal_Constraint lit (this->current_value_);
               this->queue_.enqueue_head (lit);
               return 0;
             }
@@ -285,8 +356,8 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
   ACE_TRY
     {
       // If we are here (from visit_component) the Any containing the
-      // component as found in property_lookup_ will be in current_member_.
-      CORBA::TypeCode_var tc = this->current_member_->type ();
+      // component as found in filterable_data_ will be in current_value_.
+      CORBA::TypeCode_var tc = this->current_value_->type ();
       CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ()
                                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -300,7 +371,7 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
         case CORBA::tk_enum:
           {
             TAO_DynEnum_i dyn_enum;
-            dyn_enum.init (this->current_member_.in ()
+            dyn_enum.init (this->current_value_.in ()
                            ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
@@ -322,7 +393,7 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
         case CORBA::tk_struct:
           {
             TAO_DynStruct_i dyn_struct;
-            dyn_struct.init (this->current_member_.in ()
+            dyn_struct.init (this->current_value_.in ()
                              ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
@@ -360,7 +431,7 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
         }
       else
         {
-          this->current_member_ = value._retn ();
+          this->current_value_ = value._retn ();
           return comp->accept (this);
         }
     }
@@ -378,41 +449,59 @@ TAO_Notify_Constraint_Visitor::visit_component_assoc (
     TAO_ETCL_Component_Assoc *assoc
   )
 {
-  // @@@ (JP) The spec reserves this type of constraint for NVLists.
-  // Since NVLists don't have type codes or Any operators, there's
-  // no way that TAO can put one into the event's filterable data.
-  // However, from the looks of the ETCL grammar, I believe that a
-  // contruct like 'exist $(foo)' is legal, and is in effect using
-  // the event's filterable data as one big NVList. It is
-  // equivalent to '$.foo'. I've implemented this method on that
-  // basis, while keeping in mind that a clearer interpretation of
-  // the spec may come along someday.
-
-  const char *name = assoc->identifier ()->value ();
-  ACE_CString key (name, 0, 0);
   CORBA::Any *any = 0;
+  ACE_CString name (assoc->identifier ()->value (), 
+                    0, 
+                    0);
 
-  if (this->property_lookup_.find (key, any) != 0
-      || any == 0)
-    {
+  switch (this->implicit_id_)
+  {
+    case FILTERABLE_DATA:
+      if (this->filterable_data_.find (name, any) != 0
+          || any == 0)
+        {
+          return -1;
+        }
+
+      break;
+    case VARIABLE_HEADER:
+      if (this->variable_header_.find (name, any) != 0
+          || any == 0)
+        {
+          return -1;
+        }
+
+      break;
+    // Only the sequence members of CosNotification::StructuredEvent can be
+    // treated as associative arrays.
+    default:
       return -1;
-    }
+  }
 
   TAO_ETCL_Constraint *comp = assoc->component ();
+  CORBA::Any *any_ptr = 0;
 
   if (comp == 0)
     {
       TAO_ETCL_Literal_Constraint result (any);
       this->queue_.enqueue_head (result);
+
+      // If we're at the end of the line, put the name into
+      // current_value_ so visit_exist can use it.
+      ACE_NEW_RETURN (any_ptr,
+                      CORBA::Any,
+                      -1);
+      (*any_ptr) <<= name.c_str ();
+      this->current_value_ = any_ptr;
+
       return 0;
     }
   else
     {
-      CORBA::Any *any_ptr = 0;
       ACE_NEW_RETURN (any_ptr,
                       CORBA::Any (*any),
                       -1);
-      this->current_member_ = any_ptr;
+      this->current_value_ = any_ptr;
       return comp->accept (this);
     }
 }
@@ -426,8 +515,8 @@ TAO_Notify_Constraint_Visitor::visit_component_array (
   ACE_TRY
     {
       // If we are here (from visit_component) the Any containing the
-      // component as found in property_lookup_ will be in current_member_.
-      CORBA::TypeCode_var tc = this->current_member_->type ();
+      // component as found in filterable_data_ will be in current_value_.
+      CORBA::TypeCode_var tc = this->current_value_->type ();
       CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ()
                                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -441,7 +530,7 @@ TAO_Notify_Constraint_Visitor::visit_component_array (
         case CORBA::tk_array:
           {
             TAO_DynEnum_i dyn_array;
-            dyn_array.init (this->current_member_.in ()
+            dyn_array.init (this->current_value_.in ()
                             ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
@@ -462,7 +551,7 @@ TAO_Notify_Constraint_Visitor::visit_component_array (
         case CORBA::tk_sequence:
           {
             TAO_DynStruct_i dyn_sequence;
-            dyn_sequence.init (this->current_member_.in ()
+            dyn_sequence.init (this->current_value_.in ()
                                ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
@@ -500,7 +589,7 @@ TAO_Notify_Constraint_Visitor::visit_component_array (
         }
       else
         {
-          this->current_member_ = value._retn ();
+          this->current_value_ = value._retn ();
           return comp->accept (this);
         }
     }
@@ -519,7 +608,7 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      CORBA::TypeCode_var tc = this->current_member_->type ();
+      CORBA::TypeCode_var tc = this->current_value_->type ();
 
       switch (special->type ())
       {
@@ -541,7 +630,7 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
             // call to init() will raise an exception, and the
             // catch block will return -1;
             TAO_DynUnion_i dyn_union;
-            dyn_union.init (this->current_member_.in ()
+            dyn_union.init (this->current_value_.in ()
                             ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
@@ -592,30 +681,96 @@ TAO_Notify_Constraint_Visitor::visit_component (
     TAO_ETCL_Component *component
   )
 {
+  TAO_ETCL_Constraint *nested = component->component ();
+  TAO_ETCL_Identifier *identifier = component->identifier ();
+  ACE_CString component_name (identifier->value (),
+                              0,
+                              0);
+  CORBA::Any *any_ptr = 0;
+
+  if (this->implicit_ids_.find (component_name, this->implicit_id_) != 0)
+    {
+      this->implicit_id_ = NONE;
+    }
+
   // If this component has no sub-component, only an identifier,
   // then we just visit the identifier, which puts a literal on
   // the queue to be handled upon returning from this method call.
   // If there is a sub-component, we store the literal's value
   // in our member _var for possible examination at a more
-  // nested level, and visit the sub-component.
-
-  TAO_ETCL_Constraint *nested = component->component ();
-  int result = component->identifier ()->accept (this);
-
-  if (nested == 0 || result != 0)
+  // nested level, and visit the sub-component. If the identifier 
+  // matches one of the nested field names in 
+  // CosNotification::StructuredEvent, we just visit the nested
+  // component, if any.
+  if (this->implicit_id_ == NONE)
     {
-      return result;
+      if (nested == 0)
+        {
+          // If this is the end of the line, we put the component name
+          // into current_value_ so visit_exist can use it.
+          ACE_NEW_RETURN (any_ptr,
+                          CORBA::Any,
+                          -1);
+          (*any_ptr) <<= component_name.c_str ();
+          this->current_value_ = any_ptr;
+          return identifier->accept (this);
+        }
+      else
+        {
+          int result = identifier->accept (this);
+
+          if (result != 0)
+            {
+              return result;
+            }
+
+          TAO_ETCL_Literal_Constraint id;
+          this->queue_.dequeue_head (id);
+          ACE_NEW_RETURN (any_ptr,
+                          CORBA::Any (*(const CORBA::Any *) id),
+                          -1);
+          this->current_value_ = any_ptr;
+        }
+    }
+
+  if (nested != 0)
+    {
+      return nested->accept (this);
     }
   else
     {
-      TAO_ETCL_Literal_Constraint id;
-      this->queue_.dequeue_head (id);
-      CORBA::Any *any_ptr = 0;
-      ACE_NEW_RETURN (any_ptr,
-                      CORBA::Any (*(const CORBA::Any *) id),
-                      -1);
-      this->current_member_ = any_ptr;
-      return nested->accept (this);
+      switch (this->implicit_id_)
+      {
+        case TYPE_NAME:
+          {
+            TAO_ETCL_Literal_Constraint tn (this->type_name_.in ());
+            this->queue_.enqueue_head (tn);
+            return 0;
+          }
+        case EVENT_NAME:
+          {
+            TAO_ETCL_Literal_Constraint en (this->event_name_.in ());
+            this->queue_.enqueue_head (en);
+            return 0;
+          }
+        case DOMAIN_NAME:
+          {
+            TAO_ETCL_Literal_Constraint dn (this->domain_name_.in ());
+            this->queue_.enqueue_head (dn);
+            return 0;
+          }
+        case REMAINDER_OF_BODY:
+          {
+            TAO_ETCL_Literal_Constraint rob (&this->remainder_of_body_);
+            this->queue_.enqueue_head (rob);
+            return 0;
+          }
+        // The above cases are the leaves of the 
+        // CosNotification::StructuredEvent "tree". Anything else and we
+        // should have a nested component. otherwise, it's an error.
+        default:
+          return -1;
+      }
     }
 }
 
@@ -653,7 +808,7 @@ TAO_Notify_Constraint_Visitor::visit_default (TAO_ETCL_Default *def)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      CORBA::TypeCode_var tc = this->current_member_->type ();
+      CORBA::TypeCode_var tc = this->current_value_->type ();
 
       // If the current member is not a union, this call will
       // throw BadKind and the catch block will return -1.
@@ -691,14 +846,45 @@ TAO_Notify_Constraint_Visitor::visit_exist (TAO_ETCL_Exist *exist)
 
   if (component->accept (this) == 0)
     {
-      TAO_ETCL_Literal_Constraint top;
+      const char *value = 0;
+      CORBA::Boolean result = 0;
 
-      this->queue_.dequeue_head (top);
+      // For the two cases below, we don't want the item at the top of
+      // the queue, because it's the result of a hash table lookup. For
+      // an existence test, we want the key value, which is stored in
+      // the current_value_ member.
+      if (this->implicit_id_ == FILTERABLE_DATA
+          || this->implicit_id_ == VARIABLE_HEADER)
+        {
+          TAO_ETCL_Literal_Constraint current (
+                                          &this->current_value_.inout ()
+                                        );
+          value = CORBA::string_dup ((const char *) current);
+        }
 
-      const char *value = (const char *) top;
-      ACE_CString key (value, 0, 0);
-
-      CORBA::Boolean result = (this->property_lookup_.find (key) == 0);
+      switch (this->implicit_id_)
+      {
+        case FILTERABLE_DATA:
+          result = 
+            (this->filterable_data_.find (ACE_CString (value, 0, 0)) == 0);
+          break;
+        case VARIABLE_HEADER:
+          result = 
+            (this->variable_header_.find (ACE_CString (value, 0, 0)) == 0);
+          break;
+        case TYPE_NAME:
+          result = (this->type_name_.in () != 0);
+          break;
+        case EVENT_NAME:
+          result = (this->event_name_.in () != 0);
+          break;
+        case DOMAIN_NAME:
+          result = (this->domain_name_.in () != 0);
+          break;
+        // Anything other than the above cases is an error.
+        default:
+          return -1;
+      }
 
       this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
 
@@ -958,8 +1144,8 @@ TAO_Notify_Constraint_Visitor::visit_twiddle (
           TAO_ETCL_Literal_Constraint right;
           this->queue_.dequeue_head (right);
           CORBA::Boolean result =
-            (ACE_OS::strstr ((const char *) left,
-                             (const char *) right) != 0);
+            (ACE_OS::strstr ((const char *) right,
+                             (const char *) left) != 0);
           this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
           return_value = 0;
         }
