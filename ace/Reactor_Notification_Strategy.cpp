@@ -5,7 +5,7 @@
 #include "ace/Reactor_Notification_Strategy.inl"
 #endif /* __ACE_INLINE __ */
 
-ACE_RCSID(ace, Strategies, "$Id$")
+ACE_RCSID(ace, Reactor_Notification_Strategy, "$Id$")
 
 ACE_Reactor_Notification_Strategy::ACE_Reactor_Notification_Strategy (ACE_Reactor *reactor,
                                                                       ACE_Event_Handler *eh,

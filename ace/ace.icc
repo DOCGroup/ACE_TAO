@@ -60,6 +60,7 @@ group UTILS_FILES =
   "Init_ACE.cpp",
   "Lib_Find.cpp",
   "Malloc_Instantiations.cpp",
+  "Message_Block.cpp",
   "Method_Request.cpp",
   "Notification_Strategy.cpp",
   "Object_Manager.cpp",
@@ -105,6 +106,7 @@ group UTILS_INCLUDES =
   "High_Res_Timer.h",
   "Init_ACE.h",
   "Lib_Find.h",
+  "Message_Block.h",
   "Method_Request.h",
   "Notification_Strategy.h",
   "Object_Manager.h",
@@ -401,16 +403,16 @@ group STREAMS_FILES =
   "CDR_Base.cpp",
   "CDR_Stream.cpp",
   "Codeset_IBM1047.cpp",
-  "Message_Block.cpp",
   "Message_Queue.cpp",
+  "Reactor_Notification_Strategy.cpp",
   "Task.cpp"
 
 group STREAMS_INCLUDES =
   "CDR_Base.h",
   "CDR_Stream.h",
   "Codeset_IBM1047.h",
-  "Message_Block.h",
   "Message_Queue.h",
+  "Reactor_Notification_Strategy.h",
   "Task.h"
 
 group MEMORY_FILES =
