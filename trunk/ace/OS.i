@@ -10375,18 +10375,11 @@ ACE_OS::llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence)
 {
   ACE_TRACE ("ACE_OS::llseek");
 
-#if ACE_SIZEOF_LONG == 8
+#if ACE_SIZEOF_LONG == 8 || (defined (_FILE_OFFSET_BITS) && _FILE_OFFSET_BITS == 64)
   /* The native lseek is 64 bit, use it. */
   return ACE_OS::lseek (handle, offset, whence);
-#elif defined (__sgi) \
-      || (defined (linux) && __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0 && defined (_LARGEFILE64_SOURCE))
-  ACE_OSCALL_RETURN (::lseek64 (handle, offset, whence), ACE_LOFF_T,
-                     -1);
-#elif defined (linux)
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (offset);
-  ACE_UNUSED_ARG (whence);
-  ACE_NOTSUP_RETURN (ACE_static_cast (ACE_LOFF_T, -1));
+#elif defined (__sgi) || defined (linux)
+  ACE_OSCALL_RETURN (::lseek64 (handle, offset, whence), ACE_LOFF_T, -1);
 #else
   ACE_OSCALL_RETURN (::llseek (handle, offset, whence), ACE_LOFF_T, -1);
 #endif

@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 // ============================================================================
@@ -9,8 +10,8 @@
 //    Codeset_IBM1047.cpp
 //
 // = DESCRIPTION
-//   Declares the arrays required to convert between ISO8859 (aka
-//   Latin/1) and IBM1047 (aka EBCDIC).
+//    Declares the arrays required to convert between ISO8859 (aka
+//    Latin/1) and IBM1047 (aka EBCDIC).
 //
 // = AUTHOR
 //   Jim Rogers (jrogers@viasoft.com)
@@ -20,13 +21,15 @@
 #ifndef ACE_CODESET_IMB1047_H
 #define ACE_CODESET_IMB1047_H
 
-#if defined(ACE_MVS)
-
-#include "ace/CDR_Stream.h"
+#include "ace/inc_user_config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if defined(ACE_MVS)
+
+#include "ace/CDR_Stream.h"
 
 extern ACE_Export char ACE_to_IBM1047[257];
 extern ACE_Export char ACE_from_IBM1047[257];

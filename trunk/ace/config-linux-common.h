@@ -173,7 +173,7 @@ extern "C" char *strtok_r __P ((char *__s, __const char *__delim,
 #define ACE_HAS_STRPTIME
 #if !defined (_XOPEN_SOURCE)
 # include <time.h>
-// strptime() is an XOPEN function.  It is only enabled if _XOPEN_SOURCE
+// strptime() is an XPG function.  It is only enabled if _XOPEN_SOURCE
 // or _GNU_SOURCE is defined.  (_GNU_SOURCE causes _XOPEN_SOURCE to be
 // defined on Linux/glibc systems)
 extern "C" char *strptime __P ((__const char *__s, __const char *__fmt,
@@ -197,6 +197,11 @@ extern "C" char *strptime __P ((__const char *__s, __const char *__fmt,
 
 // Linux has lseek64()
 #define ACE_HAS_LLSEEK
+#if !defined (_LARGEFILE64_SOURCE) && __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0
+extern "C"
+__off64_t lseek64 __P ((int __fd, __off64_t __offset, int __whence));
+#endif /* !_LARGEFILE64_SOURCE && __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0 */
+
 
 # define ACE_UINT64_FORMAT_SPECIFIER "%Lu"
 

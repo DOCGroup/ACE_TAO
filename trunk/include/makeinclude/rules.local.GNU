@@ -1,3 +1,4 @@
+# -*- Makefile -*-
 #----------------------------------------------------------------------------
 #       $Id$
 #
@@ -195,7 +196,7 @@ ifndef SOEXT
   SOEXT=so
 endif # SOEXT
 
-depend.local: $(MAKEFILE)
+ORIGdepend.local: $(MAKEFILE)
 	@$(RM) $(MAKEFILE).old
 	@cp $(MAKEFILE) $(MAKEFILE).old
 	$(ACE_ROOT)/bin/g++dep -f $(MAKEFILE) $(CPPFLAGS) -DMAKEDEPEND $(LSRC) $(SRC) $(PSRC)
@@ -209,6 +210,17 @@ depend.local: $(MAKEFILE)
 	> $(MAKEFILE).new
 	@cat $(MAKEFILE).new >$(MAKEFILE)
 	@$(RM) $(MAKEFILE).new
+	@if	cmp -s $(MAKEFILE) $(MAKEFILE).old ;\
+	then	echo "Makefile dependencies unchanged." ;\
+	else \
+		echo "Makefile dependencies updated." ;\
+	fi ;\
+	$(RM) $(MAKEFILE).old ;
+
+depend.local: $(MAKEFILE)
+	@$(RM) $(MAKEFILE).old
+	@cp $(MAKEFILE) $(MAKEFILE).old
+	SOEXT=$(SOEXT) VSHDIR=$(VSHDIR) ACE_DEPEND_SED_CMD="$(ACE_DEPEND_SED_CMD)" $(ACE_ROOT)/bin/g++dep -A -f $(MAKEFILE) $(CPPFLAGS) -DMAKEDEPEND $(LSRC) $(SRC) $(PSRC)
 	@if cmp -s $(MAKEFILE) $(MAKEFILE).old ;\
 	then echo "Makefile dependencies unchanged." ;\
 	else \

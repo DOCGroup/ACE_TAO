@@ -22,7 +22,11 @@ if [ $# = 0 ] ; then
   exit 1
 fi
 
+DO_ACE_MAKE_DEPEND=0
 MAKE=Makefile
+STOPNOW=0
+while [ $STOPNOW -eq 0 ]
+do
 case $1 in
   # -f allows you to select a makefile name
   -f) MAKE=$2
@@ -34,7 +38,7 @@ case $1 in
       shift ;;
 
   # -r allows the use of relative pathnames...
-  -r) REL="-e s;$ACE_ROOT;\$(ACE_ROOT);g "
+  -r) REL="-e s;$ACE_ROOT;\$(ACE_ROOT);g ${ACE_DEPEND_SED_CMD}"
       if [ ${TAO_ROOT:-no_tao_root} = "no_tao_root" ]; then
         echo no TAO_ROOT
       else
@@ -42,7 +46,19 @@ case $1 in
         echo REL=$REL
       fi
       shift ;;
+  # -A uses relative pathnames and fixes the .obj line
+  #    and it implies -r
+  -A) REL="-e s;$ACE_ROOT;\$(ACE_ROOT);g ${ACE_DEPEND_SED_CMD}"
+      if [ ${TAO_ROOT:-no_tao_root} = "no_tao_root" ]; then
+        echo no TAO_ROOT
+      else
+        REL="-e s;$TAO_ROOT;\$(TAO_ROOT);g "$REL
+      fi
+      DO_ACE_MAKE_DEPEND=1
+      shift ;;
+  *) STOPNOW=1
 esac
+done
 
 if [ ! -w $MAKE ]; then
   echo "g++dep: no writeable file \"$MAKE\""
@@ -71,6 +87,22 @@ g++ -MM -DACE_LACKS_PRAGMA_ONCE $* | \
          { if (length(rec $2) > 78) { print rec; rec = $0; } \
            else rec = rec " " $2 } } \
        END { print rec }' >> $TMP
+
+if [ $DO_ACE_MAKE_DEPEND -eq 1 ]
+then
+  SCRIPT=${TMP}_script
+  echo "s;\([-a-zA-Z0-9._]*\)\.o:;\\" > $SCRIPT
+  echo ".obj/\1.o .obj/\1.${SOEXT} ${VSHDIR}\1.o ${VSHDIR}\1.${SOEXT}:;" >> $SCRIPT
+  TMP2=${TMP}_2
+  cat $TMP | \
+  sed \
+      -e '/$(ACE_ROOT)\/ace\/config[^\.]*\.h/d' \
+      -e "s; /[-a-zA-Z0-9_./]*\.h;;g" \
+      -f $SCRIPT > $TMP2
+  mv $TMP2 $TMP
+  rm -f $TMP2
+  rm -f $SCRIPT
+fi
 
 cat << _EOF_ >> $TMP
 
