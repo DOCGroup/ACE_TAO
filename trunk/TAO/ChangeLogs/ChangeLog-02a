@@ -13,6 +13,9 @@ Mon Feb 21 10:59:00 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Thanks to Lothar Werzinger <werzinger.lothar@krones.de>
 	  for reporting this bug.
 
+	  Also, a small change to lookup_by_name_local in utl_scope.cpp
+	  fixed a bug reported by Jonathan Reis <reis@stentorsoft.com>.
+
 Sun Feb 20 23:43:22 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * TAO/orbsvcs/orbsvcs/orbsvcs_static.dsp:
