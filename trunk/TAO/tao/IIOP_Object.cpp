@@ -70,7 +70,7 @@ IIOP::Profile::set (const char *h,
   if (h)
     {
       ACE_NEW_RETURN (this->host,
-                      char[ACE_OS::strlen(h) + 1],
+                      char[ACE_OS::strlen (h) + 1],
                       -1);
       ACE_OS::strcpy (this->host, h);
     }
@@ -134,13 +134,13 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
     return -1;
   else
     {
-      const char *host = 0;
+      const char *temphost2 = 0;
       if (TAO_ORB_Core_instance ()->orb_params ()->use_dotted_decimal_addresses ())
-        host = addr.get_host_addr ();
+        temphost2 = addr.get_host_addr ();
       else
-        host = temphost;
+        temphost2 = temphost;
 
-      return this->set (host,
+      return this->set (temphost2,
                         addr.get_port_number (),
                         key,
                         &addr);

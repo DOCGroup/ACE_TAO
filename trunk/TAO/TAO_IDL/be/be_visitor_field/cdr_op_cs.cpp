@@ -86,15 +86,43 @@ be_visitor_field_cdr_op_cs::visit_array (be_array *node)
                          ), -1);
     }
 
-  // check what is the code generations substate. Are we generating code for
+  // check what is the code generation substate. Are we generating code for
   // the in/out operators for our parent or for us?
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> _tao_aggregate." << f->local_name () << ")";
+      // check if we are an anonymous array
+      if (!this->ctx_->alias () // not a typedef
+          && node->is_child (this->ctx_->scope ()))
+        {
+          *os << "(strm >> " << f->name () << "_forany "
+              << "(ACE_static_cast (" << f->name () << "_slice *, "
+              << "_tao_aggregate." << f->local_name () << ")))";
+        }
+      else
+        {
+          // it is a typedef
+          *os << "(strm >> " << node->name () << "_forany "
+              << "(ACE_static_cast (" << node->name () << "_slice *, "
+              << "_tao_aggregate." << f->local_name () << ")))";
+        }
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << _tao_aggregate." << f->local_name () << ")";
+      // check if we are an anonymous array
+      if (!this->ctx_->alias () // not a typedef
+          && node->is_child (this->ctx_->scope ()))
+        {
+          *os << "(strm << " << f->name () << "_forany "
+              << "(ACE_static_cast (" << f->name () << "_slice *, "
+              << "_tao_aggregate." << f->local_name () << ")))";
+        }
+      else
+        {
+          // it is a typedef
+          *os << "(strm << " << node->name () << "_forany "
+              << "(ACE_static_cast (" << node->name () << "_slice *, "
+              << "_tao_aggregate." << f->local_name () << ")))";
+        }
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // proceed further
@@ -113,7 +141,8 @@ be_visitor_field_cdr_op_cs::visit_array (be_array *node)
   if (!this->ctx_->alias () // not a typedef
       && node->is_child (this->ctx_->scope ()))
     {
-      // this is the case for anonymous arrays.
+      // this is the case for anonymous arrays. Generate the <<, >> operators
+      // for the type defined by the anonymous array
 
       // instantiate a visitor context with a copy of our context. This info
       // will be modified based on what type of node we are visiting

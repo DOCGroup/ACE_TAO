@@ -826,6 +826,42 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
     return 0;
 }
 
+// The following use the helper classes
+ACE_INLINE CORBA_Boolean
+operator<< (TAO_OutputCDR& cdr, CORBA::Any::from_boolean x)
+{
+  cdr.write_boolean (x.val_);
+  return cdr.good_bit ();
+}
+
+ACE_INLINE CORBA_Boolean
+operator<< (TAO_OutputCDR& cdr, CORBA::Any::from_char x)
+{
+  cdr.write_char (x.val_);
+  return cdr.good_bit ();
+}
+
+ACE_INLINE CORBA_Boolean
+operator<< (TAO_OutputCDR& cdr, CORBA::Any::from_wchar x)
+{
+  cdr.write_wchar (x.val_);
+  return cdr.good_bit ();
+}
+
+ACE_INLINE CORBA_Boolean
+operator<< (TAO_OutputCDR& cdr, CORBA::Any::from_octet x)
+{
+  cdr.write_octet (x.val_);
+  return cdr.good_bit ();
+}
+
+ACE_INLINE CORBA_Boolean
+operator<< (TAO_OutputCDR& cdr, CORBA::Any::from_string x)
+{
+  cdr.write_string (x.bound_, x.val_);
+  return cdr.good_bit ();
+}
+
 #if defined (ACE_HAS_BOOL)
 ACE_INLINE CORBA_Boolean
 operator>> (TAO_InputCDR& cdr, CORBA::Boolean &x)
@@ -943,6 +979,44 @@ operator>> (TAO_InputCDR& cdr, CORBA::TypeCode *&x)
     return 1;
   else
     return 0;
+}
+
+// The following use the helper classes
+ACE_INLINE CORBA_Boolean
+operator>> (TAO_InputCDR& cdr, CORBA::Any::to_boolean x)
+{
+  cdr.read_boolean (x.ref_);
+  return cdr.good_bit ();
+}
+
+ACE_INLINE CORBA_Boolean
+operator>> (TAO_InputCDR& cdr, CORBA::Any::to_char x)
+{
+  cdr.read_char (x.ref_);
+  return cdr.good_bit ();
+}
+
+ACE_INLINE CORBA_Boolean
+operator>> (TAO_InputCDR& cdr, CORBA::Any::to_wchar x)
+{
+  cdr.read_wchar (x.ref_);
+  return cdr.good_bit ();
+}
+
+ACE_INLINE CORBA_Boolean
+operator>> (TAO_InputCDR& cdr, CORBA::Any::to_octet x)
+{
+  cdr.read_octet (x.ref_);
+  return cdr.good_bit ();
+}
+
+ACE_INLINE CORBA_Boolean
+operator>> (TAO_InputCDR& cdr, CORBA::Any::to_string x)
+{
+  cdr.read_string (x.val_);
+  // check if the bounds are satisfied
+  return (cdr.good_bit () &&
+          (ACE_OS::strlen (x.val_) <= x.bound_));
 }
 
 // ***************************************************************************

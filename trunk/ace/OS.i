@@ -4819,6 +4819,29 @@ ACE_OS::fwrite (const void *ptr, size_t size, size_t nitems, FILE *fp)
 #endif /* ACE_LACKS_POSIX_PROTOTYPES */
 }
 
+ACE_INLINE int
+ACE_OS::truncate (const char *filename,
+                  off_t offset)
+{
+  // ACE_TRACE ("ACE_OS::truncate");
+#if defined (ACE_WIN32)
+  ACE_HANDLE handle;
+  if ((handle = ACE_OS::open (filename, O_WRONLY, 0666)) < 0)
+    ACE_FAIL_RETURN (-1);
+  else
+    {
+      if (::SetFilePointer (handle, offset, NULL, FILE_BEGIN) != (unsigned) -1)
+        ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetEndOfFile (handle), 
+                                                ace_result_), int, -1);
+      else
+        ACE_FAIL_RETURN (-1);
+    }
+  /* NOTREACHED */
+#else
+  ACE_OSCALL_RETURN (::truncate (filename, offset), int, -1);
+#endif /* ACE_WIN32 */
+}
+
 // Accessors to PWD file.
 
 ACE_INLINE struct passwd *
