@@ -126,6 +126,7 @@ TAO_CEC_Reactive_Pulling_Strategy::shutdown (void)
 {
   this->reactor_->remove_handler (&this->adapter_,
                                   ACE_Event_Handler::DONT_CALL);
+  this->adapter_.reactor (0);
 }
 
 // ****************************************************************
