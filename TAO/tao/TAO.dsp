@@ -20,12 +20,13 @@ CFG=TAO - Win32 Debug
 !MESSAGE 
 !MESSAGE "TAO - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "TAO - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE "TAO - Win32 Alpha Release" (based on "Win32 (ALPHA) Dynamic-Link Library")
-!MESSAGE "TAO - Win32 Alpha Debug" (based on "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "TAO - Win32 Alpha Release" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
+!MESSAGE "TAO - Win32 Alpha Debug" (based on\
+ "Win32 (ALPHA) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
 
@@ -139,7 +140,7 @@ MTL=midl.exe
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 CPP=cl.exe
 # ADD BASE CPP /Gt0 nologo Gt0 W3 GX Zi Od Gy I "..\..\\ /I" D "WIN32" D "_DEBUG" D "_WINDOWS" D "TAO_BUILD_DLL" FD MTd ..\\ c
-# ADD CPP /nologo /MDd /Gt0 /W3 /GX /Zi /Od /Gy /I "..\..\\" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\..\\" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MDd /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -794,6 +795,21 @@ SOURCE=.\Managed_Types.cpp
 # Begin Source File
 
 SOURCE=.\Marshal.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Messaging_Policy_i.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
 
@@ -1579,6 +1595,10 @@ SOURCE=.\marshal.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Messaging_Policy_i.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\MessagingC.h
 # End Source File
 # Begin Source File
@@ -1832,6 +1852,10 @@ SOURCE=.\Managed_Types.i
 # Begin Source File
 
 SOURCE=.\marshal.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Messaging_Policy_i.i
 # End Source File
 # Begin Source File
 
