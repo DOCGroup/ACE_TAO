@@ -44,7 +44,7 @@ IDL_SRC = \
         $(addsuffix C.cpp, $(IDL_FILES))
 
 FILES = \
-  POA_Hooks \
+  PortableGroup/POA_Hooks \
   PortableGroup/PortableGroup_Acceptor_Registry \
   PortableGroup/PortableGroup_Loader \
   PortableGroup/PortableGroup_ORBInitializer \
