@@ -1,3 +1,10 @@
+Wed Jul 28 12:00:54 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/Asynch_Invocation.cpp:
+
+	  Changed initial timeprobe enumeration value.  The previous was
+	  already in use by another set of timeprobes in a different file.
+
 Wed Jul 28 11:51:45 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/README:
