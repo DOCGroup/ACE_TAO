@@ -34,20 +34,6 @@
         indent using spaces.
         </pre><p>
 
-    <li>Insert a CVS/RCS keyword string at the top of every source file,
-        Makefile, config file, <em>etc</em>.  For C++ files, it is:
-        <pre>
-        // $<!-- -->Id$
-        </pre>
-        It's not necessary to fill in the fields of the keyword string,
-        or modify them when you edit a file that already has one.  CVS
-        does that automatically when you checkout or update the file.<p>
-
-        To insert that string at the top of a file:
-        <pre>
-        perl -pi -e 'if (! $o) {printf "// \$<!-- -->Id\$\n\n";}; $o = 1;' <em>file</em>
-        </pre><p>
-
     <li>Every program should have a ``usage'' message.  It should be
         printed out if erroneous command line arguments, or a
         <strong><code>-?</code></strong> command line argument, are
@@ -67,6 +53,29 @@
 
         It should also return 0 on successful termination, and non-zero
         otherwise.<p>
+  </ul>
+
+  <li><strong>Code Documentation</strong><p>
+  <ul>
+    <li>Use comments and whitespace (:-) liberally.<p>
+
+    <li>Insert a CVS/RCS keyword string at the top of every source file,
+        Makefile, config file, <em>etc</em>.  For C++ files, it is:
+        <pre>
+        // $<!-- -->Id$
+        </pre>
+        It's not necessary to fill in the fields of the keyword string,
+        or modify them when you edit a file that already has one.  CVS
+        does that automatically when you checkout or update the file.<p>
+
+        To insert that string at the top of a file:
+        <pre>
+        perl -pi -e 'if (! $o) {printf "// \$<!-- -->Id\$\n\n";}; $o = 1;' <em>file</em>
+        </pre><p>
+
+    <li>Comments, especially in header files, must follow the OSE
+        <a href=http://www.dscpl.com.au/ose-5.2/tls_3.htm#HEADING3-0>Classinfo
+        Tools</a> format requirements.<p>
   </ul>
 
   <li><strong>Preprocessor</strong><p>
@@ -125,7 +134,8 @@
 
             <pre>
             class ACE_Export ACE_High_Res_Timer
-            [...]
+            {
+              [...]
             };
 
             #if defined (__ACE_INLINE__)
@@ -161,8 +171,8 @@
         allocate memory, and <strong><code>delete</code></strong> should
         be used to deallocate it.  And be careful to use the correct form,
         <strong><code>delete</code></strong> or
-        <strong><code>delete []</code></strong><p> depending on whether
-        an array was allocated.<p>
+        <strong><code>delete []</code></strong> to correspond to the
+        allocation.<p>
 
     <li>Never compare or assign a pointer value with <strong>NULL</strong>;
         use <strong>0</strong> instead.  The language allows any pointer to
@@ -203,8 +213,9 @@
       portability between threaded and non-threaded platforms.<p>
 
   <li>Avoid creating a static instance of user-defined (class) type.
-      Instead, either create is as an
-      <strong><code>ACE_Singleton</code></strong> or as an
+      Instead, either create it as an
+      <strong><code>ACE_Singleton</code></strong>,
+      <strong><code>ACE_TSS_Singleton</code></strong>, or as an
       <strong><code>ACE_Cleanup</code></strong> object.  See the
       <strong>ACE</strong>
       <a href="../ace/Singleton.h"><code>Singleton.h</code></a>,
