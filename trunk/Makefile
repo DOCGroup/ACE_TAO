@@ -192,7 +192,9 @@ CONTROLLED_FILES = \
 
 RELEASE_FILES = \
         $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
+	ACE_wrappers/Makefile.in \
 	ACE_wrappers/configure \
+	ACE_wrappers/aclocal.m4 \
 	ACE_wrappers/aux \
         ACE_wrappers/ACE-INSTALL \
         ACE_wrappers/man
