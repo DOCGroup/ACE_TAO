@@ -127,7 +127,7 @@ SOURCE=.\Asynch_Timeout_Handler.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Transport_Connection_Property.h
+SOURCE=.\Base_Transport_Property.h
 # End Source File
 # Begin Source File
 
@@ -192,14 +192,6 @@ SOURCE=.\CodecFactory.h
 # Begin Source File
 
 SOURCE=.\CodecFactory_ORBInitializer.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Transport_Cache_Manager.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Transport_Descriptor_Interface.h
 # End Source File
 # Begin Source File
 
@@ -831,6 +823,14 @@ SOURCE=.\Transport.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Transport_Cache_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Descriptor_Interface.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Transport_Mux_Strategy.h
 # End Source File
 # Begin Source File
@@ -907,7 +907,7 @@ SOURCE=.\Asynch_Reply_Dispatcher.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Transport_Connection_Property.inl
+SOURCE=.\Base_Transport_Property.inl
 # End Source File
 # Begin Source File
 
@@ -944,14 +944,6 @@ SOURCE=.\Cleanup_Func_Registry.inl
 # Begin Source File
 
 SOURCE=.\Client_Priority_Policy.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Transport_Cache_Manager.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\Transport_Descriptor_Interface.inl
 # End Source File
 # Begin Source File
 
@@ -1451,6 +1443,14 @@ SOURCE=.\Transport.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\Transport_Cache_Manager.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Descriptor_Interface.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\typecode.i
 # End Source File
 # Begin Source File
@@ -1523,7 +1523,7 @@ SOURCE=.\Asynch_Timeout_Handler.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Transport_Connection_Property.cpp
+SOURCE=.\Base_Transport_Property.cpp
 # End Source File
 # Begin Source File
 
@@ -1588,14 +1588,6 @@ SOURCE=.\CodecFactory.cpp
 # Begin Source File
 
 SOURCE=.\CodecFactory_ORBInitializer.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Transport_Cache_Manager.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Transport_Descriptor_Interface.cpp
 # End Source File
 # Begin Source File
 
@@ -2148,6 +2140,14 @@ SOURCE=.\TimeBaseS.cpp
 # Begin Source File
 
 SOURCE=.\Transport.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Cache_Manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Descriptor_Interface.cpp
 # End Source File
 # Begin Source File
 
