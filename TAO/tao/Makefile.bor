@@ -153,6 +153,7 @@ OBJFILES = \
 	$(OBJDIR)\Profile.obj \
 	$(OBJDIR)\Protocol_Factory.obj \
 	$(OBJDIR)\Protocols_Hooks.obj \
+	$(OBJDIR)\Reactive_Flushing_Strategy.obj \
 	$(OBJDIR)\Reactor_Registry.obj \
 	$(OBJDIR)\Remote_Object_Proxy_Broker.obj \
 	$(OBJDIR)\Remote_Object_Proxy_Impl.obj \
