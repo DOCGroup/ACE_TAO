@@ -1119,7 +1119,7 @@ Key_List::output_hash_function (void)
                   max_hash_value <= UCHAR_MAX ? "char" : (max_hash_value <= USHRT_MAX ? "short" : "int"));
 
   ACE_OS::printf ("\n#if defined (ACE_MVS)");
-  if (ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE)
+#if ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE
     {
       // We are running in EBCDIC environment.
       for (count = 0; count < ACE_EBCDIC_SIZE; ++count)
@@ -1145,7 +1145,7 @@ Key_List::output_hash_function (void)
  			  Vectors::occurrences[target] ? Vectors::asso_values[target] : max_hash_value + 1);
         }
     }
-  else
+#  else
     {
       // We are running in ASCII environment.
       for (count = 0; count < ACE_EBCDIC_SIZE; ++count)
@@ -1179,6 +1179,7 @@ Key_List::output_hash_function (void)
  			  Vectors::occurrences[count] ? Vectors::asso_values[count] : max_hash_value + 1);
         }
     }
+#endif /* ACE_STANDARD_CHARACTER_SET_SIZE == ACE_EBCDIC_SIZE */
    ACE_OS::printf ("\n#endif /* ACE_MVS */");
 
   // Optimize special case of ``-k 1,$''
