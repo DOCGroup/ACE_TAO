@@ -1,3 +1,19 @@
+Tue Jan 15 09:16:22 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Makefile:
+
+          Added Makefile.ETCL to the list when Makefile>CosNotification
+          is added.
+
+        * orbsvcs/orbsvcs/ETCL/ETCL_Static.dsp:
+          
+          Fixed path errors.
+
+        * orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp:
+
+          Changed an incorrect TAO_ENV_ARG_PARAMETER to
+          TAO_ENV_ARG_DECL.
+
 Tue Jan 15 13:22:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/ORT/*.bor:
