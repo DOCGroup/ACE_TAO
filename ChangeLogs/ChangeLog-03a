@@ -1,3 +1,9 @@
+Fri Oct 27 17:21:56 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/OS_Test.cpp:
+
+          Darrell learned how to use strtok_r properly.  'nuff said.
+
 Fri Oct 27 17:04:02 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/OS_Test.cpp:
