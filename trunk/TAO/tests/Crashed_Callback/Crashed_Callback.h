@@ -40,4 +40,4 @@ public:
 #endif /* _MSC_VER */
 
 #include "ace/post.h"
-#endif /* CRASHED_CALLBACK_RECEIVER_H */
+#endif /* CRASHED_CALLBACK_CRASHED_CALLBACK_H */
