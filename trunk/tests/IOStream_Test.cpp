@@ -148,7 +148,7 @@ operator<< (ostream &stream, qchar *buf)
 // the server.
 
 static void *
-client (void *arg)
+client (void *arg = 0)
 {
   ACE_NEW_THREAD;
   ACE_UNUSED_ARG (arg);
@@ -227,7 +227,7 @@ client (void *arg)
 // begin a two-way conversation.
 
 static void *
-server (void *)
+server (void * = 0)
 {
   ACE_NEW_THREAD;
 
