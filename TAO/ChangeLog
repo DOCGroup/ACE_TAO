@@ -1,3 +1,11 @@
+Wed Feb 23 15:47:31 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_component/component_sh.cpp:
+        
+          Commented out code generation that has been recently
+          commented out in the corresponding interface visitor,
+          due to the skeleton refactoring work.
+
 Wed Feb 23 10:50:43 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
