@@ -17,6 +17,8 @@ CIAO::Container_Impl::_default_POA (void)
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
+  ///////////////////////////////////////////////////////////////
+
 CORBA::Long
 CIAO::Container_Impl::init (const ::Deployment::Properties &properties
                             ACE_ENV_ARG_DECL)
@@ -61,14 +63,19 @@ CIAO::Container_Impl::install (
                        CORBA::NO_MEMORY ());
      ACE_TRY_CHECK;
 
-     const CORBA::ULong len = container_impl_info.length ();
+     // Get the ComponentImplementationInfos from the ContainerImplementationInfo
+     // to avoid too long syntax representation
+     const ::Deployment::ComponentImplementationInfos impl_infos =
+       container_impl_info.impl_infos;
+
+     const CORBA::ULong len = impl_infos.length ();
      retv->length (len);
 
      for (CORBA::ULong i = 0; i < len; ++i)
        {
          // Install home
          Components::CCMHome_var home = 
-           this->install_home (container_impl_info[i]
+           this->install_home (impl_infos[i]
                                ACE_ENV_ARG_PARAMETER);
          ACE_TRY_CHECK;
 
@@ -88,13 +95,13 @@ CIAO::Container_Impl::install (
          if (CORBA::is_nil (comp.in ()))
            ACE_THROW_RETURN (Components::RemoveFailure (), 0);
 
-         if (this->component_map_.bind (container_impl_info[i].component_instance_name.in (),
+         if (this->component_map_.bind (impl_infos[i].component_instance_name.in (),
                                         Components::CCMObject::_duplicate (comp.in ())))
            ACE_TRY_THROW (Deployment::InstallationFailure ());
 
          // Set the return value.
          (*retv)[i].component_instance_name
-           = container_impl_info[i].component_instance_name.in ();
+           = impl_infos[i].component_instance_name.in ();
 
          (*retv)[i].component_ref = Components::CCMObject::_duplicate (comp.in ());
 
@@ -102,16 +109,16 @@ CIAO::Container_Impl::install (
          // Now I am only concerning about the COMPOENTIOR and here is only
          // the hardcoded version of the configuration.
 
-         const CORBA::ULong clen = container_impl_info[i].component_config.length ();
+         const CORBA::ULong clen = impl_infos[i].component_config.length ();
          for (CORBA::ULong prop_len = 0; prop_len < clen; ++prop_len)
            {
-             if (ACE_OS::strcmp (container_impl_info[i].component_config[prop_len].name.in (),
+             if (ACE_OS::strcmp (impl_infos[i].component_config[prop_len].name.in (),
                                  "ComponentIOR") == 0)
                {
                  if (CIAO::debug_level () > 1)
                    ACE_DEBUG ((LM_DEBUG, "Found property to write the IOR.\n"));
                  const char * path;
-                 container_impl_info[i].component_config[prop_len].value >>= path;
+                 impl_infos[i].component_config[prop_len].value >>= path;
 
                  CORBA::String_var ior =
                    this->orb_->object_to_string (comp.in ()
@@ -278,15 +285,12 @@ CIAO::Container_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
 
   //if (CIAO::debug_level () > 1)
   if (true)
-    ACE_DEBUG ((LM_DEBUG, "Removing this Container!\n"));
-
-  //@TODO: Find out why shutdown?
-  //this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+    ACE_DEBUG ((LM_DEBUG, "Removed all homes and components from this container!\n"));
 }
 
-//======================================================================
-//  Internal helper functions.
-//======================================================================
+////////////////////////////////////////////////////////////////////////
+//                      Internal helper functions.
+////////////////////////////////////////////////////////////////////////
 
 void
 CIAO::Container_Impl::remove_components (ACE_ENV_SINGLE_ARG_DECL)

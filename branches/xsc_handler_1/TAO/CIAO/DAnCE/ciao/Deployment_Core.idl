@@ -77,8 +77,15 @@ module Deployment
 
   typedef sequence <ComponentImplementationInfo> ComponentImplementationInfos;
 
-  typedef ComponentImplementationInfos ContainerImplementationInfo;
+  // ContainerImplementationInfo contains a list of components to be installed and
+  // policy configuration for the container which hosts these components
+  struct ContainerImplementationInfo
+  {
+    ComponentImplementationInfos impl_infos;
+    Properties container_config;
+  };
 
+  typedef sequence <ContainerImplementationInfo> ContainerImplementationInfos;
   typedef sequence <ContainerImplementationInfo> NodeImplementationInfo;
 
   //==================================

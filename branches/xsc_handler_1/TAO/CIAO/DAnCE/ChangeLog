@@ -1,3 +1,35 @@
+Thu Jan 27 15:43:21 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/Object_Set_T.cpp
+	* DAnCE/ciao/Object_Set_T.h
+	* DAnCE/ciao/Object_Set_T.inl
+
+          Add this template class, also add a <remove_all> method on it
+          for easily remove all object reference in the set.
+
+	* DAnCE/ciao/Container_Base.cpp
+	* DAnCE/ciao/Container_Base.h
+          
+          When creating multiple session containers, we need to give different
+          POA names to the all POAs for ports (i.e., consumers and facets).
+          Changed the method to take an additional name argument.
+
+	* DAnCE/ciao/Deployment_Core.idl
+
+          Changed ContainerImplementationInfo type from sequence to a struct type
+          and added a config property attribute to it.
+
+	* DAnCE/ciao/Container_Impl.cpp
+	* DAnCE/ciao/NodeApplication_Impl.cpp
+	* DAnCE/ciao/NodeApplication_Impl.h
+
+          Changed container and NodeApplication implementation to reflect above 
+          changes.
+
+	* tests/NodeApplicationTest/NodeApp_test_client.cpp
+
+          Changed to test to reflect the above IDL changes.
+
 Wed Jan 26 22:53:12 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/Container_Impl.cpp

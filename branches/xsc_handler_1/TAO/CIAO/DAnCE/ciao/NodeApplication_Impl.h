@@ -156,6 +156,10 @@ namespace CIAO
     get_objref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   protected:
+    /// Create and initialize all the containers
+    virtual CORBA::Long init_containers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
 
     /// This function is a helper for start call. Bala's
     /// Idea of adding those pre/post activate calls doesn't work
