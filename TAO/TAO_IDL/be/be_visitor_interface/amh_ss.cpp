@@ -69,7 +69,7 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << non_amh_name.c_str() << "*" << be_nl
+  *os << non_amh_name.c_str () << "*" << be_nl
       << full_skel_name
       << "::_this (ACE_ENV_SINGLE_ARG_DECL)" << be_nl
       << "{" << be_idt_nl

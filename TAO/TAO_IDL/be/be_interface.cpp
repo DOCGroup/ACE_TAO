@@ -1950,7 +1950,9 @@ be_interface::gen_skel_helper (be_interface *derived,
           if (d->node_type () == AST_Decl::NT_op)
             {
               *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-                  << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+                  << "// " << __FILE__ << ":" << __LINE__;
+
+              *os << be_nl << be_nl;
 
               if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
                 {
@@ -1967,7 +1969,8 @@ be_interface::gen_skel_helper (be_interface *derived,
               else
                 { // Generate code in the inline file.
                   // Generate the static method corresponding to this method.
-                  *os << "ACE_INLINE void "
+                  *os << "ACE_INLINE" << be_nl
+                      << "void" << be_nl
                       << derived->full_skel_name () << "::"
                       << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
@@ -2002,6 +2005,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                   return -1;
                 }
 
+              *os << be_nl << be_nl;
+
               if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
                 {
                   // Generate the static method corresponding to this method.
@@ -2017,7 +2022,8 @@ be_interface::gen_skel_helper (be_interface *derived,
               else
                 { // Generate code in the inline file.
                   // Generate the static method corresponding to this method.
-                  *os << "ACE_INLINE void "
+                  *os << "ACE_INLINE" << be_nl
+                      << "void" << be_nl
                       << derived->full_skel_name () << "::_get_"
                       << d->local_name ()
                       << "_skel (" << be_idt << be_idt_nl
@@ -2064,7 +2070,8 @@ be_interface::gen_skel_helper (be_interface *derived,
                     { // Generate code in the inline file.
                       // Generate the static method corresponding to
                       // this method.
-                      *os << "ACE_INLINE void "
+                      *os << "ACE_INLINE" << be_nl
+                          << "void" << be_nl
                           << derived->full_skel_name ()
                           << "::_set_" << d->local_name ()
                           << "_skel (" << be_idt << be_idt_nl
@@ -2091,7 +2098,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                     }
                 }
             }
-        } // End of while.
+        } // End of FOR.
     }
 
   return 0;
