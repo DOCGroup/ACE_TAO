@@ -83,7 +83,7 @@ ACE_Name_Node::name (const char *)
   ACE_ASSERT (!"not implemented yet");
 }
 
-ACE_Malloc_Header (void)
+ACE_Malloc_Header::ACE_Malloc_Header (void)
   : next_block_ (0),
     size_ (0)
 {
