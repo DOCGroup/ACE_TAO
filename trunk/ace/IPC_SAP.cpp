@@ -140,7 +140,8 @@ ACE_IPC_SAP::disable (int signum) const
     case ACE_NONBLOCK:
       if (ACE::clr_flags (this->handle_, ACE_NONBLOCK) == -1)
         return -1;
-      break;
+      else
+        return 0;
     default:
       return -1;
     }
