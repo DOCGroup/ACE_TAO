@@ -1,3 +1,12 @@
+Fri Feb 19 11:22:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (open): Don't call CreateFileA with FILE_SHARE_DELETE
+	  when compiled on Win95 because it doesn't support the flag.  The
+	  implication of this change is that unlink before close will not
+	  work on Win95.  So programs that are targeted to both NT and
+	  Win95 cannot depend on it.  Thanks to Rod Joseph
+	  <rodjoseph@adt.com> for reporting the bug.
+
 Thu Feb 18 21:10:45 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.cpp (string_to_argv): We no longer have to special case
@@ -18,7 +27,7 @@ Thu Feb 18 21:10:45 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  ACE_OS to remove the dependency on ACE_ARGV.
 
 Thu Feb 18 19:21:03 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
-	
+
 	* docs/tutorials/005/client_handler.cpp: Replaced the leading '_'
 	in the open() method so that we can cast _acceptor to acceptor.
 
