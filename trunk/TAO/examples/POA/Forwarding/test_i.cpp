@@ -1,15 +1,15 @@
 // $Id$
 
-#include "MyFooServant.h"
+#include "test_i.h"
 #include "Servant_Activator.h"
 
-ACE_RCSID(Forwarding, MyFooServant, "$Id$")
+ACE_RCSID(Forwarding, test_i, "$Id$")
 
 // Constructor
-MyFooServant::MyFooServant (CORBA::ORB_ptr orb,
-                            PortableServer::POA_ptr poa,
-                            MyFooServantActivator &activator,
-                            CORBA::Long value)
+test_i::test_i (CORBA::ORB_ptr orb,
+                PortableServer::POA_ptr poa,
+                ServantActivator &activator,
+                CORBA::Long value)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
     activator_ (activator),
@@ -18,16 +18,16 @@ MyFooServant::MyFooServant (CORBA::ORB_ptr orb,
 }
 
 CORBA::Long
-MyFooServant::doit (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::doit (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_++;
 }
 
 void
-MyFooServant::forward (ACE_ENV_SINGLE_ARG_DECL)
+test_i::forward (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   Foo::Cannot_Forward))
+                   test::Cannot_Forward))
 {
   this->activator_.forward_requests (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -44,7 +44,7 @@ MyFooServant::forward (ACE_ENV_SINGLE_ARG_DECL)
 
 
 void
-MyFooServant::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0
@@ -53,7 +53,7 @@ MyFooServant::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 PortableServer::POA_ptr
-MyFooServant::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

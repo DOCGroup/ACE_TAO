@@ -23,7 +23,7 @@
 // ================================================================
 
 #include "ace/Get_Opt.h"
-#include "MyFooServant.h"
+#include "test_i.h"
 
 ACE_RCSID(Adapter_Activator, server, "$Id$")
 
@@ -33,22 +33,19 @@ ACE_RCSID(Adapter_Activator, server, "$Id$")
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
-class Reference_Counted_Foo : public virtual PortableServer::RefCountServantBase,
-                              public virtual MyFooServant
+class reference_counted_test_i : public virtual PortableServer::RefCountServantBase,
+                                 public virtual test_i
 {
 public:
-  Reference_Counted_Foo (CORBA::ORB_ptr orb,
-                         PortableServer::POA_ptr poa,
-                         CORBA::Long value);
+  reference_counted_test_i (CORBA::ORB_ptr orb,
+                            PortableServer::POA_ptr poa);
   // Constructor - takes a POA and a value parameter
 };
 
-Reference_Counted_Foo::Reference_Counted_Foo (CORBA::ORB_ptr orb,
-                                              PortableServer::POA_ptr poa,
-                                              CORBA::Long value)
-  : MyFooServant (orb,
-                  poa,
-                  value)
+reference_counted_test_i::reference_counted_test_i (CORBA::ORB_ptr orb,
+                                                    PortableServer::POA_ptr poa)
+  : test_i (orb,
+            poa)
 {
 }
 
@@ -107,17 +104,17 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      Reference_Counted_Foo *foo_impl = new Reference_Counted_Foo (this->orb_.in (),
-                                                                   child.in (),
-                                                                   28);
+      reference_counted_test_i *servant =
+        new reference_counted_test_i (this->orb_.in (),
+                                      child.in ());
 
-      child->set_servant (foo_impl
+      child->set_servant (servant
                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      // This means that the ownership of <foo_impl> now belongs to
-      // the POA.
-      foo_impl->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+      // This means that the ownership of <servant> now belongs to the
+      // POA.
+      servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // Finally everything is fine
@@ -140,21 +137,21 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
           ACE_CHECK_RETURN (0);
         }
 
-      Reference_Counted_Foo *foo_impl = new Reference_Counted_Foo (this->orb_.in (),
-                                                                   child.in (),
-                                                                   29);
+      reference_counted_test_i *servant =
+        new reference_counted_test_i (this->orb_.in (),
+                                      child.in ());
 
       PortableServer::ObjectId_var oid =
-        PortableServer::string_to_ObjectId ("third Foo");
+        PortableServer::string_to_ObjectId ("third test");
 
       child->activate_object_with_id (oid.in (),
-                                      foo_impl
+                                      servant
                                       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      // This means that the ownership of <foo_impl> now belongs to
-      // the POA.
-      foo_impl->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+      // This means that the ownership of <servant> now belongs to the
+      // POA.
+      servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // Finally everything is fine
@@ -373,44 +370,45 @@ main (int argc, char **argv)
       }
 
       // Create a servant.
-      Reference_Counted_Foo first_foo_impl (orb.in (),
-                                            root_poa.in (),
-                                            27);
+      reference_counted_test_i first_servant (orb.in (),
+                                              root_poa.in ());
 
       PortableServer::ObjectId_var first_oid =
-        root_poa->activate_object (&first_foo_impl
+        root_poa->activate_object (&first_servant
                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Get Object Reference for the first_foo_impl object.
-      Foo_var first_foo = first_foo_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
+      // Get Object Reference for the first_servant object.
+      test_var first_test = first_servant._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::Object_var second_foo =
-        first_poa->create_reference ("IDL:Foo:1.0"
+      CORBA::Object_var second_test =
+        first_poa->create_reference ("IDL:test:1.0"
                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var third_oid =
-        PortableServer::string_to_ObjectId ("third Foo");
+        PortableServer::string_to_ObjectId ("third test");
 
-      CORBA::Object_var third_foo =
+      CORBA::Object_var third_test =
         second_poa->create_reference_with_id (third_oid.in (),
-                                              "IDL:Foo:1.0"
+                                              "IDL:test:1.0"
                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Stringyfy all the object references and print them out.
       CORBA::String_var first_ior =
-        orb->object_to_string (first_foo.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (first_test.in ()
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var second_ior =
-        orb->object_to_string (second_foo.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (second_test.in ()
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var third_ior =
-        orb->object_to_string (third_foo.in () ACE_ENV_ARG_PARAMETER);
+        orb->object_to_string (third_test.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,

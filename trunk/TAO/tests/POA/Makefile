@@ -11,6 +11,7 @@
 #----------------------------------------------------------------------------
 
 DIRS  = POA_Destruction \
+	Default_Servant \
 	wait_for_completion \
 	Excessive_Object_Deactivations \
 	Etherealization \

@@ -27,15 +27,14 @@ server:
 
         The test program server creates 2 POAs firstPOA and secondPOA.
 firstPOA is created with a RETAIN,USER_ID,USE_SERVANT_MANAGER policy
-and MyFooServantActivator is registered as its servant Manager.
+and test_i_Activator is registered as its servant Manager.
 secondPOA is created with a NON_RETAIN,USER_ID,USE_SERVANT_MANAGER
-policy and MyFooServantLocator is registered as it servant Manager.
+policy and ServantLocator is registered as it servant Manager.
 
-        It then creates an object reference from the string "firstFoo"
-in firstPOA and prints its IOR.Similarly it creates an object
-reference from the string "secondFoo" in secondPOA and prints its
-IOR. Finally it changes the state of the POA_Manager to 'active' and
-runs the ORB.
+It then creates an object reference from the string "first test" in
+firstPOA and prints its IOR.Similarly it creates an object reference
+from the string "second test" in secondPOA and prints its IOR. Finally
+it changes the state of the POA_Manager to 'active' and runs the ORB.
 
 USAGE:
 ======
@@ -46,7 +45,7 @@ You can use the run_test.pl perl script or follow these directions:
 
 client:
 ======
-        The Foo client program is in the path
+        The client program is in the path
 
         TAO/tests/POA/Generic_Servant/client
         i.e ../Generic_Servant/client
@@ -63,7 +62,7 @@ To Test:
 Servant Activator:
 ===================
 
-2. Get the IOR for "firstFOO"  from the server output .
+2. Get the IOR for "first test"  from the server output .
 
 3. Run client -k IOR	
 
@@ -76,7 +75,7 @@ along with some diagnostic messages.
 Servant Locator:
 =================
 
-2. Get the IOR for "secondFoo" from the server output
+2. Get the IOR for "second test" from the server output
 
 3. Run client -k IOR
 

@@ -23,7 +23,7 @@ these applications further.
 
         . Generic_Servant
 
-                A simple interface (Foo) is defined here and its
+                A simple test interface is defined here and its
                 implementations, server and client programs are
                 available, which can be used for testing POA
                 applications.  Several servers for that interface are

@@ -66,7 +66,7 @@ if (PerlACE::waitforfile_timed ($iorfile_2, 5) == -1) {
     exit 1;
 }
 
-$CL->Arguments ("$extra_args $oneway -i $iterations -f $iorfile_1");
+$CL->Arguments ("$extra_args $oneway -i $iterations -k file://$iorfile_1");
 
 $client = $CL->SpawnWaitKill (60);
 
@@ -75,7 +75,7 @@ if ($client != 0) {
     $status = 1;
 }
 
-$CL->Arguments ("$extra_args $oneway -i $iterations -f $iorfile_2 -x");
+$CL->Arguments ("$extra_args $oneway -i $iterations -k file://$iorfile_2 -x");
 
 $client = $CL->SpawnWaitKill (60);
 

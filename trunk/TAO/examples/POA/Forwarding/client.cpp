@@ -8,8 +8,8 @@
 //
 // = DESCRIPTION
 //
-//     This is a simple foo client implementation.  Also looks out for
-//     forwarding exceptions
+//     This is a simple test client implementation.  Also looks out
+//     for forwarding exceptions
 //
 // = AUTHOR
 //     Irfan Pyarali
@@ -19,7 +19,7 @@
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
-#include "FooC.h"
+#include "testC.h"
 
 ACE_RCSID(Forwarding, client, "$Id$")
 
@@ -66,18 +66,18 @@ parse_args (int argc, char **argv)
 }
 
 void
-do_calls (Foo_ptr foo
+do_calls (test_ptr test
           ACE_ENV_ARG_DECL)
 {
   for (int j = 1; j <= servers; j++)
     {
       for (int i = 1; i <= iterations; i++)
         {
-          // Invoke the doit() method of the foo reference.
-          CORBA::Long result = foo->doit (ACE_ENV_SINGLE_ARG_PARAMETER);
+          // Invoke the doit() method of the test reference.
+          CORBA::Long result = test->doit (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
-          // Print the result of doit () method of the foo reference.
+          // Print the result of doit () method of the test reference.
           ACE_DEBUG ((LM_DEBUG,
                       "doit() returned %d \n",
                       result));
@@ -88,7 +88,7 @@ do_calls (Foo_ptr foo
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Asking server to forward next time\n"));
-          foo->forward (ACE_ENV_SINGLE_ARG_PARAMETER);
+          test->forward (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
         }
     }
@@ -117,16 +117,16 @@ main (int argc, char **argv)
         orb->string_to_object (IOR ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Try to narrow the object reference to a Foo reference.
-      Foo_var foo =
-        Foo::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+      // Try to narrow the object reference to a test reference.
+      test_var test =
+        test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      do_calls (foo.in ()
+      do_calls (test.in ()
                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      foo->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+      test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -96,15 +96,15 @@ LINK32=link.exe
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\FooC.cpp
+SOURCE=.\testC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\FooS.cpp
+SOURCE=.\testS.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\MyFooServant.cpp
+SOURCE=.\test_i.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -112,19 +112,19 @@ SOURCE=.\MyFooServant.cpp
 # PROP Default_Filter ".h"
 # Begin Source File
 
-SOURCE=.\FooC.h
+SOURCE=.\testC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\FooS.h
+SOURCE=.\testS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\FooS_T.h
+SOURCE=.\testS_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\MyFooServant.h
+SOURCE=.\test_i.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -132,15 +132,15 @@ SOURCE=.\MyFooServant.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\Foo.idl
+SOURCE=.\test.idl
 
 !IF  "$(CFG)" == "POA Generic Servant DLL - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
 USERDEP__FOO_I="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
-InputPath=.\Foo.idl
-InputName=Foo
+InputPath=.\test.idl
+InputName=test
 
 BuildCmds= \
 	..\..\..\..\bin\Release\tao_idl -Ge 1 -Wb,export_macro=GENERIC_SERVANT_Export -Wb,export_include=generic_servant_export.h $(InputName).idl
@@ -169,8 +169,8 @@ BuildCmds= \
 # PROP Ignore_Default_Tool 1
 USERDEP__FOO_I="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
-InputPath=.\Foo.idl
-InputName=Foo
+InputPath=.\test.idl
+InputName=test
 
 BuildCmds= \
 	..\..\..\..\bin\tao_idl -Ge 1 -Wb,export_macro=GENERIC_SERVANT_Export -Wb,export_include=generic_servant_export.h $(InputName).idl

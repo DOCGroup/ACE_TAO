@@ -9,7 +9,7 @@
 //     Servant_Locator.cpp
 //
 // = DESCRIPTION
-//     Implementation of ServantLocator_i class, used with a POA
+//     Implementation of ServantLocator class, used with a POA
 //     having a NON_RETAIN policy.
 //
 // = AUTHOR
@@ -26,10 +26,10 @@ ACE_RCSID(Loader, Servant_Locator, "$Id$")
 // is used for obtaining the servant. The garbage_collection_function
 // is used to kill the servant.
 
-ServantLocator_i::ServantLocator_i (CORBA::ORB_ptr orb,
-                                    const char *dllname,
-                                    const char *factory_function,
-                                    const char *garbage_collection_function)
+ServantLocator::ServantLocator (CORBA::ORB_ptr orb,
+                                const char *dllname,
+                                const char *factory_function,
+                                const char *garbage_collection_function)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
   // The dll is opened using the dllname passed.
@@ -67,11 +67,11 @@ ServantLocator_i::ServantLocator_i (CORBA::ORB_ptr orb,
 // This method associates an servant with the ObjectID.
 
 PortableServer::Servant
-ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
-                             PortableServer::POA_ptr poa,
-                             const char * /* operation */,
-                             PortableServer::ServantLocator::Cookie &cookie
-                             ACE_ENV_ARG_DECL)
+ServantLocator::preinvoke (const PortableServer::ObjectId &oid,
+                           PortableServer::POA_ptr poa,
+                           const char * /* operation */,
+                           PortableServer::ServantLocator::Cookie &cookie
+                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -82,7 +82,7 @@ ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
   if (servant != 0)
     {
       // Return the servant as the cookie , used as a check when
-      // postinvoke is called on this ServantLocator_i.
+      // postinvoke is called on this ServantLocator.
 
       cookie = servant;
       return servant;
@@ -97,12 +97,12 @@ ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
 // postinvoke method.
 
 void
-ServantLocator_i::postinvoke (const PortableServer::ObjectId &oid,
-                              PortableServer::POA_ptr poa ,
-                              const char * /* operation */,
-                              PortableServer::ServantLocator::Cookie cookie,
-                              PortableServer::Servant servant
-                              ACE_ENV_ARG_DECL_NOT_USED)
+ServantLocator::postinvoke (const PortableServer::ObjectId &oid,
+                            PortableServer::POA_ptr poa ,
+                            const char * /* operation */,
+                            PortableServer::ServantLocator::Cookie cookie,
+                            PortableServer::Servant servant
+                            ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Check the passed servant with the cookie.

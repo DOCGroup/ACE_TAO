@@ -39,8 +39,7 @@ ServantManager_i::~ServantManager_i (void)
 
 PortableServer::Servant
 ServantManager_i::obtain_servant (const char *str,
-                                  PortableServer::POA_ptr poa,
-                                  long value)
+                                  PortableServer::POA_ptr poa)
 {
   // The string format is <dllname:factory_function> that must be
   // parsed.
@@ -99,8 +98,7 @@ ServantManager_i::obtain_servant (const char *str,
   // Now create and return the servant using the <servant_creator>
   // factory function.
   return (*servant_creator) (this->orb_.in (),
-                             poa,
-                             value);
+                             poa);
 }
 
 // The objectID is in a format of dllname:factory_function which has

@@ -18,7 +18,7 @@
 // ========================================================================
 
 #include "ace/Get_Opt.h"
-#include "MyFooServant.h"
+#include "test_i.h"
 #include "Servant_Activator.h"
 
 ACE_RCSID(Forwarding, server, "$Id$")
@@ -107,7 +107,7 @@ setup_poa (PortableServer::POA_ptr root_poa
   return child_poa._retn ();
 }
 
-MyFooServantActivator *
+ServantActivator *
 create_servant_manager (CORBA::ORB_ptr orb,
                         PortableServer::POA_ptr child_poa
                         ACE_ENV_ARG_DECL)
@@ -121,13 +121,13 @@ create_servant_manager (CORBA::ORB_ptr orb,
       ACE_CHECK_RETURN (0);
     }
 
-  MyFooServantActivator *activator = 0;
+  ServantActivator *activator = 0;
   ACE_NEW_RETURN (activator,
-                  MyFooServantActivator (orb,
-                                         forward_to.in ()),
+                  ServantActivator (orb,
+                                    forward_to.in ()),
                   0);
 
-  // Set MyFooServantActivator to be the servant activator.
+  // Set ServantActivator to be the servant activator.
   child_poa->set_servant_manager (activator
                                   ACE_ENV_ARG_PARAMETER);
   // For the code above, we're using the CORBA 3.0 servant manager
@@ -141,22 +141,22 @@ create_servant_manager (CORBA::ORB_ptr orb,
   //                                 ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  MyFooServant *servant = 0;
+  test_i *servant = 0;
   ACE_NEW_RETURN (servant,
-                  MyFooServant (orb,
-                                child_poa,
-                                *activator,
-                                127),
+                  test_i (orb,
+                          child_poa,
+                          *activator,
+                          127),
                   0);
 
   PortableServer::ServantBase_var servant_var (servant);
 
-  Foo_var foo =
+  test_var test =
     servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   CORBA::String_var ior =
-    orb->object_to_string (foo.in ()
+    orb->object_to_string (test.in ()
                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 

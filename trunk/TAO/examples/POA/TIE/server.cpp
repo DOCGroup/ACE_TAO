@@ -15,7 +15,7 @@
 // =========================================================================
 
 #include "ace/streams.h"
-#include "Foo_i.h"
+#include "test_i.h"
 
 ACE_RCSID(TIE, server, "$Id$")
 

@@ -95,11 +95,11 @@ SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\FooC.cpp
+SOURCE=.\testC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\FooS.cpp
+SOURCE=.\testS.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -107,15 +107,15 @@ SOURCE=.\FooS.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\FooC.h
+SOURCE=.\testC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\FooS.h
+SOURCE=.\testS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\FooS_T.h
+SOURCE=.\testS_T.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -123,14 +123,14 @@ SOURCE=.\FooS_T.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\Foo.idl
+SOURCE=.\test.idl
 
 !IF  "$(CFG)" == "POA Forwarding Client - Win32 Release"
 
 USERDEP__FOO_I="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
-InputPath=.\Foo.idl
-InputName=Foo
+InputPath=.\test.idl
+InputName=test
 
 BuildCmds= \
 	..\..\..\..\bin\release\tao_idl -Ge 1 $(InputName).idl
@@ -168,8 +168,8 @@ BuildCmds= \
 # PROP Ignore_Default_Tool 1
 USERDEP__FOO_I="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
-InputPath=.\Foo.idl
-InputName=Foo
+InputPath=.\test.idl
+InputName=test
 
 BuildCmds= \
 	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
