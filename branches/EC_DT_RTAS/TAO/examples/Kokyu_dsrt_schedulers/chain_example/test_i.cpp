@@ -144,9 +144,23 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
 	      "prio = %d, load = %d, elapsed time = %umsec\n", 
 	      prio, exec_duration, elapsed_time.msec () ));
   DSUI_EVENT_LOG (TEST_ONE_FAM, STOP_SERVICE, 0, sizeof(Object_ID), (char*)&oid);
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);  
+
+  const char * name = 0;
+  EDF_Scheduling::SchedulingParameterPolicy_var implicit_sched_param;
+  //If we do not define implicit_sched_param, the new spawned DT will have the default lowest prio.
+  implicit_sched_param = sched_param_policy;
+
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
+  this->current_->begin_scheduling_segment (name,
+                                                    sched_param_policy.in (),
+                                                    implicit_sched_param.in ()
+                                                    ACE_ENV_ARG_PARAMETER);
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&oid);
+    
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);
   this->server_->test_method2(exec_duration);
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid); 
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid);
+  this->current_->end_scheduling_segment (name);
 }
 
 void
