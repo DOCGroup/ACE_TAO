@@ -614,17 +614,6 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
                         TAO_INVOKE_EXCEPTION);
     }
 
-  // Do we have timeout se for the invocation?
-  if (this->max_wait_time_ != 0)
-    {
-      if (TAO_debug_level > 4)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Synch_Invocation::invoke_i, "
-                    "setting timeout in the reply dispatcher \n"));
-
-      this->rd_.has_timeout (TAO_Reply_Dispatcher::TIMEOUT);
-    }
-
   // Just send the request, without trying to wait for the reply.
   int retval = TAO_GIOP_Invocation::invoke (TAO_Transport::TAO_TWOWAY_REQUEST
                                             ACE_ENV_ARG_PARAMETER);
@@ -850,10 +839,17 @@ TAO_GIOP_Synch_Invocation::validate_error (TAO_Bind_Dispatcher_Guard &guard
                 "TAO (%P|%t) - Synch_Invocation::invoke_i, "
                 "unbinding dispatcher after an error \n"));
 
-  int retval =
-    guard.unbind_dispatcher ();
-
-  if (retval == 0)
+  // If the unbind succeeds then thrown an exception to the
+  // application, else just collect the reply and dispatch that to the
+  // application.
+  // NOTE: A fragile synchronization is provided when using the Muxed
+  // Transport strategy. We could infact be a follower thread getting
+  // timedout in the LF whereas the dispatching thread could be
+  // on the reply_dispatcher that we created. This would lead bad
+  // crashes. To get around that, the call to unbind_dispatcher ()
+  // will wait on the lock on the Muxed_Transport_Strategy if
+  // dispatching has started. This is fragile.
+  if (guard.unbind_dispatcher () == 0)
     {
       // Just a timeout, don't close the connection or
       // anything...
@@ -864,17 +860,6 @@ TAO_GIOP_Synch_Invocation::validate_error (TAO_Bind_Dispatcher_Guard &guard
               CORBA::COMPLETED_NO),
             TAO_INVOKE_EXCEPTION);
     }
-
-  if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Synch_Invocation::validate_error "
-                  "waiting for dispatching to end \n"));
-    }
-
-  // Peek into the dispatcher to see whether we need to be waiting and
-  // if so wait
-  (void) this->rd_.wait_for_dispatch_completion ();
 
   return 0;
 }

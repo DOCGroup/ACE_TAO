@@ -95,17 +95,9 @@ TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   this->request_id_ = 0; // @@ What is a good value???
   this->rd_ = 0;
 
-  // Starting dispatch
-  (void) rd->start_dispatch ();
-
   // Dispatch the reply.
   // Returns 1 on success, -1 on failure.
-  int retval =
-    rd->dispatch_reply (params);
-
-  (void) rd->end_dispatch ();
-
-  return retval;
+  return rd->dispatch_reply (params);
 }
 
 int
