@@ -18,6 +18,33 @@ Package=<4>
 
 ###############################################################################
 
+Project: "TAO_IDL_FE_DLL"=..\..\TAO_IDL\TAO_IDL_FE_DLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TAO_IFR_BE_DLL"=.\TAO_IFR_BE_DLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "TypeCodeFactory_DLL"=.\TypeCodeFactory_DLL.dsp - Package Owner=<4>
 
 Package=<5>
@@ -26,6 +53,27 @@ Package=<5>
 
 Package=<4>
 {{{
+}}}
+
+###############################################################################
+
+Project: "tao_ifr"=.\tao_ifr.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name IFR_Service
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IFR_BE_DLL
+    End Project Dependency
 }}}
 
 ###############################################################################

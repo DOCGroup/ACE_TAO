@@ -846,6 +846,24 @@ Package=<4>
 
 ###############################################################################
 
+Project: "TAO_IFR_BE_DLL"=.\orbsvcs\IFR_Service\TAO_IFR_BE_DLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name IFR_Service
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "TAO_Strategies"=.\tao\Strategies\TAO_Strategies.dsp - Package Owner=<4>
 
 Package=<5>
@@ -928,6 +946,24 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name ACE DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "tao_ifr"=.\orbsvcs\IFR_Service\tao_ifr.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IFR_BE_DLL
     End Project Dependency
 }}}
 
