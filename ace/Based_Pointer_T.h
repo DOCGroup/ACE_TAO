@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_BASED_POINTER_T_H
 #define ACE_BASED_POINTER_T_H
 #include "ace/pre.h"
@@ -64,7 +63,7 @@ public:
    * Initialize this object using the <initial> pointer.  This
    * constructor initializes the <base_offset_> by asking the
    * <ACE_BASED_POINTER_REPOSITORY> Singleton for the base address of
-   * the memory region within which it is instantiated.  Two results
+   * the memory region within which it is instantiated.  Three results
    * are possible:
    *
    * 1. An <ACE_*_Memory_Pool> has stored a base address/size pair and the
@@ -75,8 +74,11 @@ public:
    * 2. No suitable address/size pair was found.  The repository
    *    assumes an address in the regular (not mapped) virtual address
    *    space of the process and returns 0.  In this case, the
-   *    based-pointer uses its address as an offset to it's base
+   *    based-pointer uses its address as an offset to its base
    *    address 0.
+   *
+   * 3. If <initial> is 0 then set the value of <target_> to -1, which
+   *    indicates a "NULL" pointer. 
    */
   ACE_Based_Pointer_Basic (CONCRETE *initial);
 
@@ -158,12 +160,14 @@ public:
   /// details.
   ACE_Based_Pointer (void);
 
-  /// Initialize this object using the <initial> pointer.
+  /// Initialize this object using the <initial> pointer.  See
+  /// constructor for <ACE_Based_Pointer_Basic> for details.
   ACE_Based_Pointer (CONCRETE *initial);
 
-  /// Initialize this object with known <base_addr>.  <o> is
-  /// only used to resolve overload ambiguity.
-  ACE_Based_Pointer (const void *base_addr, int o);
+  /// Initialize this object with known <base_addr>.  <dummy> is
+  /// a dummy value used to resolve overload ambiguity and it
+  /// otherwise ignored.
+  ACE_Based_Pointer (const void *base_addr, int dummy);
 
   /// Copy constructor (not implemented yet).
   ACE_Based_Pointer (const ACE_Based_Pointer<CONCRETE> &);
