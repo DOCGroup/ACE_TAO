@@ -1,89 +1,146 @@
+Wed Jun 21 15:40:37 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+        * tao/IOR_Parser.h:
+        * tao/IOR_Parser.i:
+        * tao/IOR_Parser.cpp:
+          Define the interface for the dynamically loadable IOR parsing
+          components.
+
+        * tao/Parser_Registry.h:
+        * tao/Parser_Registry.i:
+        * tao/Parser_Registry.cpp:
+          Maintain the collection of IOR parsers, just like the
+          Connector_Registry and Acceptor_Registry do for connectors and
+          acceptors.
+          Currently the set of parsers is hardcoded, but eventually it
+          will be dynamically configured using svc.conf options.
+
+        * tao/ORB.h:
+        * tao/ORB.cpp:
+          Try to use one of the dynamically configured IOR parsers first.
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+          Add the Parser_Registry object to this class.
+          Remove all the support for the DLL ior style.
+
+        * tao/Object_Loader.h:
+        * tao/Object_Loader.i:
+        * tao/Object_Loader.cpp:
+          Removed, it is now in the ior_dll subdirectory.
+
+        * tao/Makefile:
+          Update the Makefile and its dependencies.
+
+        * tao/ior_dll/Makefile:
+        * tao/ior_dll/ior_dll_export.h:
+        * tao/ior_dll/DLL_Parser.h:
+        * tao/ior_dll/DLL_Parser.i:
+        * tao/ior_dll/DLL_Parser.cpp:
+          Implement the DLL-style ior parser.
+
+        * tao/ior_dll/Object_Loader.h:
+        * tao/ior_dll/Object_Loader.i:
+        * tao/ior_dll/Object_Loader.cpp:
+          The Object_Loader class was moved here.
+
+        * tao/ior_file/Makefile:
+        * tao/ior_file/ior_file_export.h:
+        * tao/ior_file/FILE_Parser.h:
+        * tao/ior_file/FILE_Parser.cpp:
+          Implement the file:-style IOR parser.
+
+        * tests/Object_Loader/Makefile:
+        * tests/Object_Loader/Loader.h:
+          Use the new location for the Object_Loader class.
+
 Wed Jun 21 13:19:47 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.ll:
-	* TAO_IDL/fe/lex.yy.cpp:
-	* TAO_IDL/fe/lex.yy.cpp.diff:
-	  Added a regular expression to the lexer. Phil Mesnier 
-	  <mesnier_p@ociweb.com> is porting TAO to Unixware 7.1 
-	  using the UDK (unixware dev kit) CC compiler, and its
-	  preprocessor is outputting a #file "...." directive
-	  that the IDL compiler lexer doesn't recognize. We now
-	  recognize the directive, and ignore it.
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+          Added a regular expression to the lexer. Phil Mesnier
+          <mesnier_p@ociweb.com> is porting TAO to Unixware 7.1
+          using the UDK (unixware dev kit) CC compiler, and its
+          preprocessor is outputting a #file "...." directive
+          that the IDL compiler lexer doesn't recognize. We now
+          recognize the directive, and ignore it.
 
 Wed Jun 21 04:54:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/FT_CORBA.pidl: Deleted the file from the tao library. Looks
-	  like the whole file in $TAO_ROOT/tao may not be the right
-	  place. 
+        * tao/FT_CORBA.pidl: Deleted the file from the tao library. Looks
+          like the whole file in $TAO_ROOT/tao may not be the right
+          place.
 
 Tue Jun 20 18:08:11 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/tests/Interoperable_Naming/Makefile : 
-	* orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp: 
-	* orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.h:
-	* orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.cpp:
-	* orbsvcs/tests/Interoperable_Naming/server.cpp:
-	  
-	  The test doesnot need server implementation. So, removed
-	server.cpp, Iterator_Factory_i.{h,cpp}. Made changes in Makefile
-	and ncontext_client_i.cpp to reflect this.
-	
+        * orbsvcs/tests/Interoperable_Naming/Makefile :
+        * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
+        * orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.h:
+        * orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.cpp:
+        * orbsvcs/tests/Interoperable_Naming/server.cpp:
+
+          The test doesnot need server implementation. So, removed
+        server.cpp, Iterator_Factory_i.{h,cpp}. Made changes in Makefile
+        and ncontext_client_i.cpp to reflect this.
+
 Mon Jun 19 17:14:25 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/orbsvcs/CosNaming.idl:
-	* orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h:
-	* orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
+        * orbsvcs/orbsvcs/CosNaming.idl:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
 
-	  Added the CosNaming::NamingContextExt interface to the
-	CosNaming.idl file. And made the corresonding changes to the base
-	class too. This interface has four methods:
-	to_string (), to_name (), to_url () and resolve_str ().
+          Added the CosNaming::NamingContextExt interface to the
+        CosNaming.idl file. And made the corresonding changes to the base
+        class too. This interface has four methods:
+        to_string (), to_name (), to_url () and resolve_str ().
 
-	These changes are in accordance with the following CORBA spec:
-	Document orbos/98-10-11 (Interoperable Naming Joint Revised Submission)
-      	Joint Submission by BEA Systems, DSTC, IONA, and Inprise
+        These changes are in accordance with the following CORBA spec:
+        Document orbos/98-10-11 (Interoperable Naming Joint Revised Submission)
+        Joint Submission by BEA Systems, DSTC, IONA, and Inprise
 
-	* orbsvcs/tests/Makefile: 
-	* orbsvcs/tests/Interoperable_Naming/Makefile: 
-	* orbsvcs/tests/Interoperable_Naming/Web_Server.idl: 
-	* orbsvcs/tests/Interoperable_Naming/README: 
-	* orbsvcs/tests/Interoperable_Naming/run_test.pl: 
-	* orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.cpp: 
-	* orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.h: 
-	* orbsvcs/tests/Interoperable_Naming/server.cpp: 
-	* orbsvcs/tests/Interoperable_Naming/client.cpp: 
-	* orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.h: 
-	* orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp: 
-		
-	  Added a test to show the functionality of the
-	  CosNaming::NamingContextExt interface in the Interoperable
-	  Naming Service. This test converts a name into its stringified
-	  form <to_name>, then uses this stringified name to resolve its
-	  naming context <resolve_str> , then converts this stringified
-	  name back to the unstringified form <to_string>. It also forms a
-	  iiopname url string given the address of a random naming context
-	  and the name of an object in that naming context <to_url>.
+        * orbsvcs/tests/Makefile:
+        * orbsvcs/tests/Interoperable_Naming/Makefile:
+        * orbsvcs/tests/Interoperable_Naming/Web_Server.idl:
+        * orbsvcs/tests/Interoperable_Naming/README:
+        * orbsvcs/tests/Interoperable_Naming/run_test.pl:
+        * orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.cpp:
+        * orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.h:
+        * orbsvcs/tests/Interoperable_Naming/server.cpp:
+        * orbsvcs/tests/Interoperable_Naming/client.cpp:
+        * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.h:
+        * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
+
+          Added a test to show the functionality of the
+          CosNaming::NamingContextExt interface in the Interoperable
+          Naming Service. This test converts a name into its stringified
+          form <to_name>, then uses this stringified name to resolve its
+          naming context <resolve_str> , then converts this stringified
+          name back to the unstringified form <to_string>. It also forms a
+          iiopname url string given the address of a random naming context
+          and the name of an object in that naming context <to_url>.
 
 
 Tue Jun 20 15:07:30 2000  Ossama Othman  <ossama@uci.edu>
 
-	* examples/Content_Server/SMI_Iterator/Makefile (TAO_IDLFLAGS):
-	* examples/Content_Server/AMI_Iterator/Makefile (TAO_IDLFLAGS):
-	* examples/Content_Server/AMI_Observer/Makefile (TAO_IDLFLAGS):
+        * examples/Content_Server/SMI_Iterator/Makefile (TAO_IDLFLAGS):
+        * examples/Content_Server/AMI_Iterator/Makefile (TAO_IDLFLAGS):
+        * examples/Content_Server/AMI_Observer/Makefile (TAO_IDLFLAGS):
 
-	  Added "-Ge 1" TAO IDL compiler flag so that a CORBA Environment
-	  variable argument is added to each method.  This fixes a compile
-	  error that occured when native exception support was enabled.
+          Added "-Ge 1" TAO IDL compiler flag so that a CORBA Environment
+          variable argument is added to each method.  This fixes a compile
+          error that occured when native exception support was enabled.
 
-	* docs/compiler.html:
+        * docs/compiler.html:
 
-	  Added missing description of "-GC" flag.  It causes stubs with
-	  AMI support to be generated.
+          Added missing description of "-GC" flag.  It causes stubs with
+          AMI support to be generated.
 
 Tue Jun 20 15:03:07 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Content_Server/AMI_Observer: Fixed some more style
-	  issues.
+        * examples/Content_Server/AMI_Observer: Fixed some more style
+          issues.
 
 Tue Jun 20 10:44:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 

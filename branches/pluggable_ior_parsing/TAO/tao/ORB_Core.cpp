@@ -152,6 +152,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->transport_sync_strategy_,
            TAO_Transport_Sync_Strategy);
 
+  this->parser_registry_.open ();
 }
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
