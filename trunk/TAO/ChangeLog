@@ -1,3 +1,10 @@
+Tue Jul 15 19:28:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.cpp:
+          Splitted the narrow in two steps, some compilers don't like it doing
+          T::_obj_type_::_narrow(). Thanks to Chris Cleeland for helping with
+          this.
+
 Tue Jul 15 15:44:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/releasenotes/ec.html:
