@@ -2813,6 +2813,7 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\.\UPIPE_Addr.h"\
 	{$(INCLUDE)}"\.\UPIPE_Stream.h"\
 	{$(INCLUDE)}"\.\UPIPE_Stream.i"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -2966,6 +2967,7 @@ DEP_CPP_UPIPE_=\
 	{$(INCLUDE)}"\.\UPIPE_Connector.i"\
 	{$(INCLUDE)}"\.\UPIPE_Stream.h"\
 	{$(INCLUDE)}"\.\UPIPE_Stream.i"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -3120,6 +3122,7 @@ DEP_CPP_UPIPE_A=\
 	{$(INCLUDE)}"\.\UPIPE_Addr.h"\
 	{$(INCLUDE)}"\.\UPIPE_Stream.h"\
 	{$(INCLUDE)}"\.\UPIPE_Stream.i"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -3184,6 +3187,7 @@ DEP_CPP_UNIX_=\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\UNIX_Addr.h"\
 	{$(INCLUDE)}"\.\UNIX_Addr.i"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -3255,6 +3259,7 @@ DEP_CPP_TTY_I=\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\TTY_IO.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -3314,6 +3319,7 @@ DEP_CPP_TRACE=\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\Trace.i"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -3428,6 +3434,7 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\.\Token_Request_Reply.h"\
 	{$(INCLUDE)}"\.\Token_Request_Reply.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -3541,6 +3548,7 @@ DEP_CPP_TOKEN_=\
 	{$(INCLUDE)}"\.\Token_Manager.h"\
 	{$(INCLUDE)}"\.\Token_Manager.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -3654,6 +3662,7 @@ DEP_CPP_TOKEN_I=\
 	{$(INCLUDE)}"\.\Token_Invariants.h"\
 	{$(INCLUDE)}"\.\Token_Invariants.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -3767,6 +3776,7 @@ DEP_CPP_TOKEN_C=\
 	{$(INCLUDE)}"\.\Token_Collection.h"\
 	{$(INCLUDE)}"\.\Token_Collection.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -3841,6 +3851,7 @@ DEP_CPP_TOKEN_CP=\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -3909,6 +3920,7 @@ DEP_CPP_TLI_S=\
 	{$(INCLUDE)}"\.\TLI_Stream.h"\
 	{$(INCLUDE)}"\.\TLI_Stream.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -3981,6 +3993,7 @@ DEP_CPP_TLI_C=\
 	{$(INCLUDE)}"\.\TLI_Stream.h"\
 	{$(INCLUDE)}"\.\TLI_Stream.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -4052,6 +4065,7 @@ DEP_CPP_TLI_A=\
 	{$(INCLUDE)}"\.\TLI_Stream.h"\
 	{$(INCLUDE)}"\.\TLI_Stream.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -4116,6 +4130,7 @@ DEP_CPP_TLI_CP=\
 	{$(INCLUDE)}"\.\TLI.h"\
 	{$(INCLUDE)}"\.\TLI.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -4209,6 +4224,7 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -4269,6 +4285,7 @@ DEP_CPP_TIME_=\
 	{$(INCLUDE)}"\.\Time_Request_Reply.h"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -4362,6 +4379,7 @@ DEP_CPP_THREA=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -4422,6 +4440,7 @@ DEP_CPP_THREAD=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -4554,6 +4573,7 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -4646,6 +4666,7 @@ DEP_CPP_SYSTE=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -4705,6 +4726,7 @@ DEP_CPP_SYNCH=\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Synch_Options.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -4749,36 +4771,19 @@ DEP_CPP_SYNCH_=\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
 	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Containers.cpp"\
-	{$(INCLUDE)}"\.\Containers.h"\
-	{$(INCLUDE)}"\.\Containers.i"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
 	{$(INCLUDE)}"\.\Event_Handler.i"\
-	{$(INCLUDE)}"\.\Free_List.cpp"\
-	{$(INCLUDE)}"\.\Free_List.h"\
-	{$(INCLUDE)}"\.\Free_List.i"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
-	{$(INCLUDE)}"\.\Malloc.i"\
-	{$(INCLUDE)}"\.\Malloc_T.cpp"\
-	{$(INCLUDE)}"\.\Malloc_T.h"\
-	{$(INCLUDE)}"\.\Malloc_T.i"\
 	{$(INCLUDE)}"\.\Managed_Object.cpp"\
 	{$(INCLUDE)}"\.\Managed_Object.h"\
 	{$(INCLUDE)}"\.\Managed_Object.i"\
-	{$(INCLUDE)}"\.\Mem_Map.h"\
-	{$(INCLUDE)}"\.\Mem_Map.i"\
-	{$(INCLUDE)}"\.\Memory_Pool.h"\
-	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\Object_Manager.h"\
 	{$(INCLUDE)}"\.\Object_Manager.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
-	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
@@ -4794,6 +4799,7 @@ DEP_CPP_SYNCH_=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -4936,6 +4942,7 @@ DEP_CPP_SVC_C=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -5049,6 +5056,7 @@ DEP_CPP_SVC_CO=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -5109,6 +5117,7 @@ DEP_CPP_SV_SH=\
 	{$(INCLUDE)}"\.\SV_Shared_Memory.h"\
 	{$(INCLUDE)}"\.\SV_Shared_Memory.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -5169,6 +5178,7 @@ DEP_CPP_SV_SE=\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -5231,6 +5241,7 @@ DEP_CPP_SV_SEM=\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -5293,6 +5304,7 @@ DEP_CPP_SV_ME=\
 	{$(INCLUDE)}"\.\SV_Message_Queue.h"\
 	{$(INCLUDE)}"\.\SV_Message_Queue.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -5353,6 +5365,7 @@ DEP_CPP_SV_MES=\
 	{$(INCLUDE)}"\.\SV_Message.h"\
 	{$(INCLUDE)}"\.\SV_Message.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -5474,6 +5487,7 @@ DEP_CPP_STRAT=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -5581,6 +5595,7 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -5649,6 +5664,7 @@ DEP_CPP_SPIPE=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -5719,6 +5735,7 @@ DEP_CPP_SPIPE_=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -5781,6 +5798,7 @@ DEP_CPP_SPIPE_A=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -5850,6 +5868,7 @@ DEP_CPP_SPIPE_AC=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -5916,6 +5935,7 @@ DEP_CPP_SPIPE_C=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -5986,6 +6006,7 @@ DEP_CPP_SOCK_=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -6052,6 +6073,7 @@ DEP_CPP_SOCK_I=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -6122,6 +6144,7 @@ DEP_CPP_SOCK_D=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -6192,6 +6215,7 @@ DEP_CPP_SOCK_DG=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -6274,6 +6298,7 @@ DEP_CPP_SOCK_DGR=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -6349,6 +6374,7 @@ DEP_CPP_SOCK_C=\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -6417,6 +6443,7 @@ DEP_CPP_SOCK_CO=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -6504,6 +6531,7 @@ DEP_CPP_SOCK_A=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -6568,6 +6596,7 @@ DEP_CPP_SOCK_CP=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -6657,6 +6686,7 @@ DEP_CPP_SIGNA=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -6717,6 +6747,7 @@ DEP_CPP_SHARE=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -6780,6 +6811,7 @@ DEP_CPP_SHARED=\
 	{$(INCLUDE)}"\.\SV_Shared_Memory.h"\
 	{$(INCLUDE)}"\.\SV_Shared_Memory.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -6843,6 +6875,7 @@ DEP_CPP_SHARED_=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -6923,6 +6956,7 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -7001,6 +7035,7 @@ DEP_CPP_SERVIC=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -7143,6 +7178,7 @@ DEP_CPP_SERVICE=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -7250,6 +7286,7 @@ DEP_CPP_SERVICE_=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -7401,6 +7438,7 @@ DEP_CPP_SERVICE_C=\
 	{$(INCLUDE)}"\.\Timer_Wheel_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Wheel_T.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -7461,6 +7499,7 @@ DEP_CPP_SCHED=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -7594,6 +7633,7 @@ DEP_CPP_REMOT=\
 	{$(INCLUDE)}"\.\Token_Request_Reply.h"\
 	{$(INCLUDE)}"\.\Token_Request_Reply.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -7719,6 +7759,7 @@ DEP_CPP_REMOTE=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -7854,6 +7895,7 @@ DEP_CPP_REGIS=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\IOSTREAM.H"\
 	
@@ -7922,6 +7964,7 @@ DEP_CPP_REGIST=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\IOSTREAM.H"\
 	
@@ -8030,6 +8073,7 @@ DEP_CPP_READ_=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -8162,6 +8206,7 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -8227,6 +8272,7 @@ DEP_CPP_PROFI=\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -8303,6 +8349,7 @@ DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -8396,6 +8443,7 @@ DEP_CPP_PROCES=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -8543,6 +8591,7 @@ DEP_CPP_PROAC=\
 	{$(INCLUDE)}"\.\Timer_Wheel_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Wheel_T.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -8622,6 +8671,7 @@ DEP_CPP_PIPE_=\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -8758,6 +8808,7 @@ DEP_CPP_PARSE=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -8853,6 +8904,7 @@ DEP_CPP_OS_CP=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -8912,6 +8964,7 @@ DEP_CPP_OBSTA=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -9025,6 +9078,7 @@ DEP_CPP_OBJEC=\
 	{$(INCLUDE)}"\.\Token_Manager.h"\
 	{$(INCLUDE)}"\.\Token_Manager.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -9171,6 +9225,7 @@ DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\IOSTREAM.H"\
 	
@@ -9296,6 +9351,7 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -9356,6 +9412,7 @@ DEP_CPP_NAME_R=\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -9479,6 +9536,7 @@ DEP_CPP_NAME_P=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -9616,6 +9674,7 @@ DEP_CPP_MULTI=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -9677,6 +9736,7 @@ DEP_CPP_METHO=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -9768,6 +9828,7 @@ DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -9857,6 +9918,7 @@ DEP_CPP_MEMOR=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -9917,6 +9979,7 @@ DEP_CPP_MEM_M=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -10006,6 +10069,7 @@ DEP_CPP_MALLO=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -10082,6 +10146,7 @@ DEP_CPP_LSOCK=\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\UNIX_Addr.h"\
 	{$(INCLUDE)}"\.\UNIX_Addr.i"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -10152,6 +10217,7 @@ DEP_CPP_LSOCK_=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -10233,6 +10299,7 @@ DEP_CPP_LSOCK_C=\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\UNIX_Addr.h"\
 	{$(INCLUDE)}"\.\UNIX_Addr.i"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -10305,6 +10372,7 @@ DEP_CPP_LSOCK_CO=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -10386,6 +10454,7 @@ DEP_CPP_LSOCK_A=\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\UNIX_Addr.h"\
 	{$(INCLUDE)}"\.\UNIX_Addr.i"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -10452,6 +10521,7 @@ DEP_CPP_LSOCK_CP=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -10510,6 +10580,7 @@ DEP_CPP_LOG_R=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -10622,6 +10693,7 @@ DEP_CPP_LOG_M=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -10735,6 +10807,7 @@ DEP_CPP_LOCAL=\
 	{$(INCLUDE)}"\.\Token_Manager.h"\
 	{$(INCLUDE)}"\.\Token_Manager.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -10868,6 +10941,7 @@ DEP_CPP_LOCAL_=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -10928,6 +11002,7 @@ DEP_CPP_IPC_S=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -10996,6 +11071,7 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -11056,6 +11132,7 @@ DEP_CPP_IO_SA=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -11150,6 +11227,7 @@ DEP_CPP_INET_=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -11210,6 +11288,7 @@ DEP_CPP_HIGH_=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -11270,6 +11349,7 @@ DEP_CPP_HANDL=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -11330,6 +11410,7 @@ DEP_CPP_GET_O=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -11438,6 +11519,7 @@ DEP_CPP_FILEC=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -11506,6 +11588,7 @@ DEP_CPP_FILE_=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -11576,6 +11659,7 @@ DEP_CPP_FILE_C=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -11638,6 +11722,7 @@ DEP_CPP_FILE_A=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -11704,6 +11789,7 @@ DEP_CPP_FILE_CP=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -11770,6 +11856,7 @@ DEP_CPP_FIFO_=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -11834,6 +11921,7 @@ DEP_CPP_FIFO_S=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -11900,6 +11988,7 @@ DEP_CPP_FIFO_R=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -11964,6 +12053,7 @@ DEP_CPP_FIFO_RE=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -12026,6 +12116,7 @@ DEP_CPP_FIFO_C=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -12117,6 +12208,7 @@ DEP_CPP_EVENT=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -12177,6 +12269,7 @@ DEP_CPP_DYNAM=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -12252,6 +12345,7 @@ DEP_CPP_DUMP_=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -12320,6 +12414,7 @@ DEP_CPP_DEV_I=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -12390,6 +12485,7 @@ DEP_CPP_DEV_C=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -12452,6 +12548,7 @@ DEP_CPP_DEV_A=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -12518,6 +12615,7 @@ DEP_CPP_DEV_CP=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -12578,6 +12676,7 @@ DEP_CPP_DATE_=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -12689,6 +12788,7 @@ DEP_CPP_CORBA=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -12817,6 +12917,7 @@ DEP_CPP_ASYNC=\
 	{$(INCLUDE)}"\.\Timer_Wheel_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Wheel_T.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -12908,6 +13009,7 @@ DEP_CPP_ARGV_=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -12968,6 +13070,7 @@ DEP_CPP_ADDR_=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -13091,6 +13194,7 @@ DEP_CPP_ACTIV=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -13201,6 +13305,7 @@ DEP_CPP_ACE_C=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -13337,6 +13442,7 @@ DEP_CPP_SERVICE_T=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -13476,6 +13582,7 @@ DEP_CPP_SELEC=\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -13600,6 +13707,7 @@ DEP_CPP_WFMO_=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -13721,6 +13829,7 @@ DEP_CPP_PRIOR=\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -13887,6 +13996,7 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\.\UPIPE_Addr.h"\
 	{$(INCLUDE)}"\.\UPIPE_Stream.h"\
 	{$(INCLUDE)}"\.\UPIPE_Stream.i"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -14040,6 +14150,7 @@ DEP_CPP_UPIPE_=\
 	{$(INCLUDE)}"\.\UPIPE_Connector.i"\
 	{$(INCLUDE)}"\.\UPIPE_Stream.h"\
 	{$(INCLUDE)}"\.\UPIPE_Stream.i"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -14194,6 +14305,7 @@ DEP_CPP_UPIPE_A=\
 	{$(INCLUDE)}"\.\UPIPE_Addr.h"\
 	{$(INCLUDE)}"\.\UPIPE_Stream.h"\
 	{$(INCLUDE)}"\.\UPIPE_Stream.i"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -14258,6 +14370,7 @@ DEP_CPP_UNIX_=\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\UNIX_Addr.h"\
 	{$(INCLUDE)}"\.\UNIX_Addr.i"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -14329,6 +14442,7 @@ DEP_CPP_TTY_I=\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\TTY_IO.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -14388,6 +14502,7 @@ DEP_CPP_TRACE=\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\Trace.i"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -14502,6 +14617,7 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\.\Token_Request_Reply.h"\
 	{$(INCLUDE)}"\.\Token_Request_Reply.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -14615,6 +14731,7 @@ DEP_CPP_TOKEN_=\
 	{$(INCLUDE)}"\.\Token_Manager.h"\
 	{$(INCLUDE)}"\.\Token_Manager.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -14728,6 +14845,7 @@ DEP_CPP_TOKEN_I=\
 	{$(INCLUDE)}"\.\Token_Invariants.h"\
 	{$(INCLUDE)}"\.\Token_Invariants.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -14841,6 +14959,7 @@ DEP_CPP_TOKEN_C=\
 	{$(INCLUDE)}"\.\Token_Collection.h"\
 	{$(INCLUDE)}"\.\Token_Collection.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -14915,6 +15034,7 @@ DEP_CPP_TOKEN_CP=\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -14983,6 +15103,7 @@ DEP_CPP_TLI_S=\
 	{$(INCLUDE)}"\.\TLI_Stream.h"\
 	{$(INCLUDE)}"\.\TLI_Stream.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -15055,6 +15176,7 @@ DEP_CPP_TLI_C=\
 	{$(INCLUDE)}"\.\TLI_Stream.h"\
 	{$(INCLUDE)}"\.\TLI_Stream.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -15126,6 +15248,7 @@ DEP_CPP_TLI_A=\
 	{$(INCLUDE)}"\.\TLI_Stream.h"\
 	{$(INCLUDE)}"\.\TLI_Stream.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -15190,6 +15313,7 @@ DEP_CPP_TLI_CP=\
 	{$(INCLUDE)}"\.\TLI.h"\
 	{$(INCLUDE)}"\.\TLI.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -15283,6 +15407,7 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -15343,6 +15468,7 @@ DEP_CPP_TIME_=\
 	{$(INCLUDE)}"\.\Time_Request_Reply.h"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -15436,6 +15562,7 @@ DEP_CPP_THREA=\
 	{$(INCLUDE)}"\.\Thread_Manager.h"\
 	{$(INCLUDE)}"\.\Thread_Manager.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -15496,6 +15623,7 @@ DEP_CPP_THREAD=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -15628,6 +15756,7 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -15720,6 +15849,7 @@ DEP_CPP_SYSTE=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -15779,6 +15909,7 @@ DEP_CPP_SYNCH=\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Synch_Options.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -15823,36 +15954,19 @@ DEP_CPP_SYNCH_=\
 	{$(INCLUDE)}"\.\config-win32-common.h"\
 	{$(INCLUDE)}"\.\config-win32.h"\
 	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Containers.cpp"\
-	{$(INCLUDE)}"\.\Containers.h"\
-	{$(INCLUDE)}"\.\Containers.i"\
 	{$(INCLUDE)}"\.\Event_Handler.h"\
 	{$(INCLUDE)}"\.\Event_Handler.i"\
-	{$(INCLUDE)}"\.\Free_List.cpp"\
-	{$(INCLUDE)}"\.\Free_List.h"\
-	{$(INCLUDE)}"\.\Free_List.i"\
 	{$(INCLUDE)}"\.\Log_Msg.h"\
 	{$(INCLUDE)}"\.\Log_Priority.h"\
 	{$(INCLUDE)}"\.\Log_Record.h"\
 	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
-	{$(INCLUDE)}"\.\Malloc.i"\
-	{$(INCLUDE)}"\.\Malloc_T.cpp"\
-	{$(INCLUDE)}"\.\Malloc_T.h"\
-	{$(INCLUDE)}"\.\Malloc_T.i"\
 	{$(INCLUDE)}"\.\Managed_Object.cpp"\
 	{$(INCLUDE)}"\.\Managed_Object.h"\
 	{$(INCLUDE)}"\.\Managed_Object.i"\
-	{$(INCLUDE)}"\.\Mem_Map.h"\
-	{$(INCLUDE)}"\.\Mem_Map.i"\
-	{$(INCLUDE)}"\.\Memory_Pool.h"\
-	{$(INCLUDE)}"\.\Memory_Pool.i"\
 	{$(INCLUDE)}"\.\Object_Manager.h"\
 	{$(INCLUDE)}"\.\Object_Manager.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
-	{$(INCLUDE)}"\.\Signal.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
@@ -15868,6 +15982,7 @@ DEP_CPP_SYNCH_=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -16010,6 +16125,7 @@ DEP_CPP_SVC_C=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -16123,6 +16239,7 @@ DEP_CPP_SVC_CO=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -16183,6 +16300,7 @@ DEP_CPP_SV_SH=\
 	{$(INCLUDE)}"\.\SV_Shared_Memory.h"\
 	{$(INCLUDE)}"\.\SV_Shared_Memory.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -16243,6 +16361,7 @@ DEP_CPP_SV_SE=\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -16305,6 +16424,7 @@ DEP_CPP_SV_SEM=\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -16367,6 +16487,7 @@ DEP_CPP_SV_ME=\
 	{$(INCLUDE)}"\.\SV_Message_Queue.h"\
 	{$(INCLUDE)}"\.\SV_Message_Queue.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -16427,6 +16548,7 @@ DEP_CPP_SV_MES=\
 	{$(INCLUDE)}"\.\SV_Message.h"\
 	{$(INCLUDE)}"\.\SV_Message.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -16548,6 +16670,7 @@ DEP_CPP_STRAT=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -16655,6 +16778,7 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -16723,6 +16847,7 @@ DEP_CPP_SPIPE=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -16793,6 +16918,7 @@ DEP_CPP_SPIPE_=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -16855,6 +16981,7 @@ DEP_CPP_SPIPE_A=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -16924,6 +17051,7 @@ DEP_CPP_SPIPE_AC=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -16990,6 +17118,7 @@ DEP_CPP_SPIPE_C=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -17060,6 +17189,7 @@ DEP_CPP_SOCK_=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -17126,6 +17256,7 @@ DEP_CPP_SOCK_I=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -17196,6 +17327,7 @@ DEP_CPP_SOCK_D=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -17266,6 +17398,7 @@ DEP_CPP_SOCK_DG=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -17348,6 +17481,7 @@ DEP_CPP_SOCK_DGR=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -17423,6 +17557,7 @@ DEP_CPP_SOCK_C=\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -17491,6 +17626,7 @@ DEP_CPP_SOCK_CO=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -17578,6 +17714,7 @@ DEP_CPP_SOCK_A=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -17642,6 +17779,7 @@ DEP_CPP_SOCK_CP=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -17731,6 +17869,7 @@ DEP_CPP_SIGNA=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -17791,6 +17930,7 @@ DEP_CPP_SHARE=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -17854,6 +17994,7 @@ DEP_CPP_SHARED=\
 	{$(INCLUDE)}"\.\SV_Shared_Memory.h"\
 	{$(INCLUDE)}"\.\SV_Shared_Memory.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -17917,6 +18058,7 @@ DEP_CPP_SHARED_=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -17997,6 +18139,7 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -18075,6 +18218,7 @@ DEP_CPP_SERVIC=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -18217,6 +18361,7 @@ DEP_CPP_SERVICE=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -18324,6 +18469,7 @@ DEP_CPP_SERVICE_=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -18475,6 +18621,7 @@ DEP_CPP_SERVICE_C=\
 	{$(INCLUDE)}"\.\Timer_Wheel_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Wheel_T.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -18535,6 +18682,7 @@ DEP_CPP_SCHED=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -18668,6 +18816,7 @@ DEP_CPP_REMOT=\
 	{$(INCLUDE)}"\.\Token_Request_Reply.h"\
 	{$(INCLUDE)}"\.\Token_Request_Reply.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -18793,6 +18942,7 @@ DEP_CPP_REMOTE=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -18928,6 +19078,7 @@ DEP_CPP_REGIS=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\IOSTREAM.H"\
 	
@@ -18996,6 +19147,7 @@ DEP_CPP_REGIST=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\IOSTREAM.H"\
 	
@@ -19104,6 +19256,7 @@ DEP_CPP_READ_=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -19236,6 +19389,7 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -19301,6 +19455,7 @@ DEP_CPP_PROFI=\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -19377,6 +19532,7 @@ DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -19470,6 +19626,7 @@ DEP_CPP_PROCES=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -19617,6 +19774,7 @@ DEP_CPP_PROAC=\
 	{$(INCLUDE)}"\.\Timer_Wheel_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Wheel_T.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -19696,6 +19854,7 @@ DEP_CPP_PIPE_=\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -19832,6 +19991,7 @@ DEP_CPP_PARSE=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -19927,6 +20087,7 @@ DEP_CPP_OS_CP=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -19986,6 +20147,7 @@ DEP_CPP_OBSTA=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -20099,6 +20261,7 @@ DEP_CPP_OBJEC=\
 	{$(INCLUDE)}"\.\Token_Manager.h"\
 	{$(INCLUDE)}"\.\Token_Manager.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -20245,6 +20408,7 @@ DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	{$(INCLUDE)}"\IOSTREAM.H"\
 	
@@ -20370,6 +20534,7 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -20430,6 +20595,7 @@ DEP_CPP_NAME_R=\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -20553,6 +20719,7 @@ DEP_CPP_NAME_P=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -20690,6 +20857,7 @@ DEP_CPP_MULTI=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -20751,6 +20919,7 @@ DEP_CPP_METHO=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -20842,6 +21011,7 @@ DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -20931,6 +21101,7 @@ DEP_CPP_MEMOR=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -20991,6 +21162,7 @@ DEP_CPP_MEM_M=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -21080,6 +21252,7 @@ DEP_CPP_MALLO=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -21156,6 +21329,7 @@ DEP_CPP_LSOCK=\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\UNIX_Addr.h"\
 	{$(INCLUDE)}"\.\UNIX_Addr.i"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -21226,6 +21400,7 @@ DEP_CPP_LSOCK_=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -21307,6 +21482,7 @@ DEP_CPP_LSOCK_C=\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\UNIX_Addr.h"\
 	{$(INCLUDE)}"\.\UNIX_Addr.i"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -21379,6 +21555,7 @@ DEP_CPP_LSOCK_CO=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -21460,6 +21637,7 @@ DEP_CPP_LSOCK_A=\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\UNIX_Addr.h"\
 	{$(INCLUDE)}"\.\UNIX_Addr.i"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -21526,6 +21704,7 @@ DEP_CPP_LSOCK_CP=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -21584,6 +21763,7 @@ DEP_CPP_LOG_R=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -21696,6 +21876,7 @@ DEP_CPP_LOG_M=\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Time_Value.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -21809,6 +21990,7 @@ DEP_CPP_LOCAL=\
 	{$(INCLUDE)}"\.\Token_Manager.h"\
 	{$(INCLUDE)}"\.\Token_Manager.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -21942,6 +22124,7 @@ DEP_CPP_LOCAL_=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -22002,6 +22185,7 @@ DEP_CPP_IPC_S=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -22070,6 +22254,7 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -22130,6 +22315,7 @@ DEP_CPP_IO_SA=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -22224,6 +22410,7 @@ DEP_CPP_INET_=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -22284,6 +22471,7 @@ DEP_CPP_HIGH_=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -22344,6 +22532,7 @@ DEP_CPP_HANDL=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -22404,6 +22593,7 @@ DEP_CPP_GET_O=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -22512,6 +22702,7 @@ DEP_CPP_FILEC=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -22580,6 +22771,7 @@ DEP_CPP_FILE_=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -22650,6 +22842,7 @@ DEP_CPP_FILE_C=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -22712,6 +22905,7 @@ DEP_CPP_FILE_A=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -22778,6 +22972,7 @@ DEP_CPP_FILE_CP=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -22844,6 +23039,7 @@ DEP_CPP_FIFO_=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -22908,6 +23104,7 @@ DEP_CPP_FIFO_S=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -22974,6 +23171,7 @@ DEP_CPP_FIFO_R=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -23038,6 +23236,7 @@ DEP_CPP_FIFO_RE=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -23100,6 +23299,7 @@ DEP_CPP_FIFO_C=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -23191,6 +23391,7 @@ DEP_CPP_EVENT=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -23251,6 +23452,7 @@ DEP_CPP_DYNAM=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -23326,6 +23528,7 @@ DEP_CPP_DUMP_=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -23394,6 +23597,7 @@ DEP_CPP_DEV_I=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -23464,6 +23668,7 @@ DEP_CPP_DEV_C=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -23526,6 +23731,7 @@ DEP_CPP_DEV_A=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -23592,6 +23798,7 @@ DEP_CPP_DEV_CP=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -23652,6 +23859,7 @@ DEP_CPP_DATE_=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -23763,6 +23971,7 @@ DEP_CPP_CORBA=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -23891,6 +24100,7 @@ DEP_CPP_ASYNC=\
 	{$(INCLUDE)}"\.\Timer_Wheel_T.cpp"\
 	{$(INCLUDE)}"\.\Timer_Wheel_T.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -23982,6 +24192,7 @@ DEP_CPP_ARGV_=\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -24042,6 +24253,7 @@ DEP_CPP_ADDR_=\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -24165,6 +24377,7 @@ DEP_CPP_ACTIV=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -24275,6 +24488,7 @@ DEP_CPP_ACE_C=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -24411,6 +24625,7 @@ DEP_CPP_SERVICE_T=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -24537,6 +24752,7 @@ DEP_CPP_WFMO_=\
 	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\.\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
@@ -24676,6 +24892,7 @@ DEP_CPP_SELEC=\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
@@ -24710,9 +24927,6 @@ DEP_CPP_SELEC=\
 # Begin Source File
 
 SOURCE=.\Priority_Reactor.cpp
-
-!IF  "$(CFG)" == "ACE static library - Win32 Release"
-
 DEP_CPP_PRIOR=\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
@@ -24798,287 +25012,30 @@ DEP_CPP_PRIOR=\
 	{$(INCLUDE)}"\.\Token.h"\
 	{$(INCLUDE)}"\.\Token.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
+	{$(INCLUDE)}"\.\Version.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
+
+!IF  "$(CFG)" == "ACE static library - Win32 Release"
+
 
 "$(INTDIR)\Priority_Reactor.obj" : $(SOURCE) $(DEP_CPP_PRIOR) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Debug"
 
-DEP_CPP_PRIOR=\
-	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\ACE.i"\
-	{$(INCLUDE)}"\.\Atomic_Op.i"\
-	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\.\Auto_Ptr.h"\
-	{$(INCLUDE)}"\.\Auto_Ptr.i"\
-	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
-	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Containers.cpp"\
-	{$(INCLUDE)}"\.\Containers.h"\
-	{$(INCLUDE)}"\.\Containers.i"\
-	{$(INCLUDE)}"\.\Event_Handler.h"\
-	{$(INCLUDE)}"\.\Event_Handler.i"\
-	{$(INCLUDE)}"\.\Free_List.cpp"\
-	{$(INCLUDE)}"\.\Free_List.h"\
-	{$(INCLUDE)}"\.\Free_List.i"\
-	{$(INCLUDE)}"\.\Handle_Set.h"\
-	{$(INCLUDE)}"\.\Handle_Set.i"\
-	{$(INCLUDE)}"\.\Local_Tokens.h"\
-	{$(INCLUDE)}"\.\Local_Tokens.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
-	{$(INCLUDE)}"\.\Malloc.i"\
-	{$(INCLUDE)}"\.\Malloc_T.cpp"\
-	{$(INCLUDE)}"\.\Malloc_T.h"\
-	{$(INCLUDE)}"\.\Malloc_T.i"\
-	{$(INCLUDE)}"\.\Managed_Object.cpp"\
-	{$(INCLUDE)}"\.\Managed_Object.h"\
-	{$(INCLUDE)}"\.\Managed_Object.i"\
-	{$(INCLUDE)}"\.\Map_Manager.cpp"\
-	{$(INCLUDE)}"\.\Map_Manager.h"\
-	{$(INCLUDE)}"\.\Map_Manager.i"\
-	{$(INCLUDE)}"\.\Mem_Map.h"\
-	{$(INCLUDE)}"\.\Mem_Map.i"\
-	{$(INCLUDE)}"\.\Memory_Pool.h"\
-	{$(INCLUDE)}"\.\Memory_Pool.i"\
-	{$(INCLUDE)}"\.\Object_Manager.h"\
-	{$(INCLUDE)}"\.\Object_Manager.i"\
-	{$(INCLUDE)}"\.\OS.h"\
-	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Pipe.h"\
-	{$(INCLUDE)}"\.\Pipe.i"\
-	{$(INCLUDE)}"\.\Priority_Reactor.h"\
-	{$(INCLUDE)}"\.\Priority_Reactor.i"\
-	{$(INCLUDE)}"\.\Reactor.h"\
-	{$(INCLUDE)}"\.\Reactor.i"\
-	{$(INCLUDE)}"\.\Reactor_Impl.h"\
-	{$(INCLUDE)}"\.\Select_Reactor.h"\
-	{$(INCLUDE)}"\.\Select_Reactor.i"\
-	{$(INCLUDE)}"\.\Service_Config.h"\
-	{$(INCLUDE)}"\.\Service_Config.i"\
-	{$(INCLUDE)}"\.\Service_Object.h"\
-	{$(INCLUDE)}"\.\Service_Object.i"\
-	{$(INCLUDE)}"\.\Shared_Object.h"\
-	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
-	{$(INCLUDE)}"\.\Signal.i"\
-	{$(INCLUDE)}"\.\SString.h"\
-	{$(INCLUDE)}"\.\SString.i"\
-	{$(INCLUDE)}"\.\stdcpp.h"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\.\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\.\Synch.h"\
-	{$(INCLUDE)}"\.\Synch.i"\
-	{$(INCLUDE)}"\.\Synch_Options.h"\
-	{$(INCLUDE)}"\.\Synch_T.cpp"\
-	{$(INCLUDE)}"\.\Synch_T.h"\
-	{$(INCLUDE)}"\.\Synch_T.i"\
-	{$(INCLUDE)}"\.\Thread.h"\
-	{$(INCLUDE)}"\.\Thread.i"\
-	{$(INCLUDE)}"\.\Timer_Queue.h"\
-	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\.\Token.h"\
-	{$(INCLUDE)}"\.\Token.i"\
-	{$(INCLUDE)}"\.\Trace.h"\
-	{$(INCLUDE)}"\.\ws2tcpip.h"\
-	
 
 "$(INTDIR)\Priority_Reactor.obj" : $(SOURCE) $(DEP_CPP_PRIOR) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
 
-DEP_CPP_PRIOR=\
-	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\ACE.i"\
-	{$(INCLUDE)}"\.\Atomic_Op.i"\
-	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\.\Auto_Ptr.h"\
-	{$(INCLUDE)}"\.\Auto_Ptr.i"\
-	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
-	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Containers.cpp"\
-	{$(INCLUDE)}"\.\Containers.h"\
-	{$(INCLUDE)}"\.\Containers.i"\
-	{$(INCLUDE)}"\.\Event_Handler.h"\
-	{$(INCLUDE)}"\.\Event_Handler.i"\
-	{$(INCLUDE)}"\.\Free_List.cpp"\
-	{$(INCLUDE)}"\.\Free_List.h"\
-	{$(INCLUDE)}"\.\Free_List.i"\
-	{$(INCLUDE)}"\.\Handle_Set.h"\
-	{$(INCLUDE)}"\.\Handle_Set.i"\
-	{$(INCLUDE)}"\.\Local_Tokens.h"\
-	{$(INCLUDE)}"\.\Local_Tokens.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
-	{$(INCLUDE)}"\.\Malloc.i"\
-	{$(INCLUDE)}"\.\Malloc_T.cpp"\
-	{$(INCLUDE)}"\.\Malloc_T.h"\
-	{$(INCLUDE)}"\.\Malloc_T.i"\
-	{$(INCLUDE)}"\.\Managed_Object.cpp"\
-	{$(INCLUDE)}"\.\Managed_Object.h"\
-	{$(INCLUDE)}"\.\Managed_Object.i"\
-	{$(INCLUDE)}"\.\Map_Manager.cpp"\
-	{$(INCLUDE)}"\.\Map_Manager.h"\
-	{$(INCLUDE)}"\.\Map_Manager.i"\
-	{$(INCLUDE)}"\.\Mem_Map.h"\
-	{$(INCLUDE)}"\.\Mem_Map.i"\
-	{$(INCLUDE)}"\.\Memory_Pool.h"\
-	{$(INCLUDE)}"\.\Memory_Pool.i"\
-	{$(INCLUDE)}"\.\Object_Manager.h"\
-	{$(INCLUDE)}"\.\Object_Manager.i"\
-	{$(INCLUDE)}"\.\OS.h"\
-	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Pipe.h"\
-	{$(INCLUDE)}"\.\Pipe.i"\
-	{$(INCLUDE)}"\.\Priority_Reactor.h"\
-	{$(INCLUDE)}"\.\Priority_Reactor.i"\
-	{$(INCLUDE)}"\.\Reactor.h"\
-	{$(INCLUDE)}"\.\Reactor.i"\
-	{$(INCLUDE)}"\.\Reactor_Impl.h"\
-	{$(INCLUDE)}"\.\Select_Reactor.h"\
-	{$(INCLUDE)}"\.\Select_Reactor.i"\
-	{$(INCLUDE)}"\.\Service_Config.h"\
-	{$(INCLUDE)}"\.\Service_Config.i"\
-	{$(INCLUDE)}"\.\Service_Object.h"\
-	{$(INCLUDE)}"\.\Service_Object.i"\
-	{$(INCLUDE)}"\.\Shared_Object.h"\
-	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
-	{$(INCLUDE)}"\.\Signal.i"\
-	{$(INCLUDE)}"\.\SString.h"\
-	{$(INCLUDE)}"\.\SString.i"\
-	{$(INCLUDE)}"\.\stdcpp.h"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\.\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\.\Synch.h"\
-	{$(INCLUDE)}"\.\Synch.i"\
-	{$(INCLUDE)}"\.\Synch_Options.h"\
-	{$(INCLUDE)}"\.\Synch_T.cpp"\
-	{$(INCLUDE)}"\.\Synch_T.h"\
-	{$(INCLUDE)}"\.\Synch_T.i"\
-	{$(INCLUDE)}"\.\Thread.h"\
-	{$(INCLUDE)}"\.\Thread.i"\
-	{$(INCLUDE)}"\.\Timer_Queue.h"\
-	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\.\Token.h"\
-	{$(INCLUDE)}"\.\Token.i"\
-	{$(INCLUDE)}"\.\Trace.h"\
-	{$(INCLUDE)}"\.\ws2tcpip.h"\
-	
 
 "$(INTDIR)\Priority_Reactor.obj" : $(SOURCE) $(DEP_CPP_PRIOR) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
 
-DEP_CPP_PRIOR=\
-	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\ACE.i"\
-	{$(INCLUDE)}"\.\Atomic_Op.i"\
-	{$(INCLUDE)}"\.\Auto_Ptr.cpp"\
-	{$(INCLUDE)}"\.\Auto_Ptr.h"\
-	{$(INCLUDE)}"\.\Auto_Ptr.i"\
-	{$(INCLUDE)}"\.\config-win32-common.h"\
-	{$(INCLUDE)}"\.\config-win32.h"\
-	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Containers.cpp"\
-	{$(INCLUDE)}"\.\Containers.h"\
-	{$(INCLUDE)}"\.\Containers.i"\
-	{$(INCLUDE)}"\.\Event_Handler.h"\
-	{$(INCLUDE)}"\.\Event_Handler.i"\
-	{$(INCLUDE)}"\.\Free_List.cpp"\
-	{$(INCLUDE)}"\.\Free_List.h"\
-	{$(INCLUDE)}"\.\Free_List.i"\
-	{$(INCLUDE)}"\.\Handle_Set.h"\
-	{$(INCLUDE)}"\.\Handle_Set.i"\
-	{$(INCLUDE)}"\.\Local_Tokens.h"\
-	{$(INCLUDE)}"\.\Local_Tokens.i"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\Malloc.h"\
-	{$(INCLUDE)}"\.\Malloc.i"\
-	{$(INCLUDE)}"\.\Malloc_T.cpp"\
-	{$(INCLUDE)}"\.\Malloc_T.h"\
-	{$(INCLUDE)}"\.\Malloc_T.i"\
-	{$(INCLUDE)}"\.\Managed_Object.cpp"\
-	{$(INCLUDE)}"\.\Managed_Object.h"\
-	{$(INCLUDE)}"\.\Managed_Object.i"\
-	{$(INCLUDE)}"\.\Map_Manager.cpp"\
-	{$(INCLUDE)}"\.\Map_Manager.h"\
-	{$(INCLUDE)}"\.\Map_Manager.i"\
-	{$(INCLUDE)}"\.\Mem_Map.h"\
-	{$(INCLUDE)}"\.\Mem_Map.i"\
-	{$(INCLUDE)}"\.\Memory_Pool.h"\
-	{$(INCLUDE)}"\.\Memory_Pool.i"\
-	{$(INCLUDE)}"\.\Object_Manager.h"\
-	{$(INCLUDE)}"\.\Object_Manager.i"\
-	{$(INCLUDE)}"\.\OS.h"\
-	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Pipe.h"\
-	{$(INCLUDE)}"\.\Pipe.i"\
-	{$(INCLUDE)}"\.\Priority_Reactor.h"\
-	{$(INCLUDE)}"\.\Priority_Reactor.i"\
-	{$(INCLUDE)}"\.\Reactor.h"\
-	{$(INCLUDE)}"\.\Reactor.i"\
-	{$(INCLUDE)}"\.\Reactor_Impl.h"\
-	{$(INCLUDE)}"\.\Select_Reactor.h"\
-	{$(INCLUDE)}"\.\Select_Reactor.i"\
-	{$(INCLUDE)}"\.\Service_Config.h"\
-	{$(INCLUDE)}"\.\Service_Config.i"\
-	{$(INCLUDE)}"\.\Service_Object.h"\
-	{$(INCLUDE)}"\.\Service_Object.i"\
-	{$(INCLUDE)}"\.\Shared_Object.h"\
-	{$(INCLUDE)}"\.\Shared_Object.i"\
-	{$(INCLUDE)}"\.\Signal.h"\
-	{$(INCLUDE)}"\.\Signal.i"\
-	{$(INCLUDE)}"\.\SString.h"\
-	{$(INCLUDE)}"\.\SString.i"\
-	{$(INCLUDE)}"\.\stdcpp.h"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Complex.h"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Complex.i"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Simple.h"\
-	{$(INCLUDE)}"\.\SV_Semaphore_Simple.i"\
-	{$(INCLUDE)}"\.\Svc_Conf_Tokens.h"\
-	{$(INCLUDE)}"\.\Synch.h"\
-	{$(INCLUDE)}"\.\Synch.i"\
-	{$(INCLUDE)}"\.\Synch_Options.h"\
-	{$(INCLUDE)}"\.\Synch_T.cpp"\
-	{$(INCLUDE)}"\.\Synch_T.h"\
-	{$(INCLUDE)}"\.\Synch_T.i"\
-	{$(INCLUDE)}"\.\Thread.h"\
-	{$(INCLUDE)}"\.\Thread.i"\
-	{$(INCLUDE)}"\.\Timer_Queue.h"\
-	{$(INCLUDE)}"\.\Timer_Queue_T.cpp"\
-	{$(INCLUDE)}"\.\Timer_Queue_T.h"\
-	{$(INCLUDE)}"\.\Timer_Queue_T.i"\
-	{$(INCLUDE)}"\.\Token.h"\
-	{$(INCLUDE)}"\.\Token.i"\
-	{$(INCLUDE)}"\.\Trace.h"\
-	{$(INCLUDE)}"\.\ws2tcpip.h"\
-	
 
 "$(INTDIR)\Priority_Reactor.obj" : $(SOURCE) $(DEP_CPP_PRIOR) "$(INTDIR)"
 

@@ -46,7 +46,7 @@ Task_Test::open (void *)
 
   task_count++;
   ACE_DEBUG ((LM_DEBUG, "(%t) creating Task_Test, task count = %d\n",
-	      (int) task_count));
+	      task_count.value ()));
 
   return this->activate (THR_BOUND);
 }
@@ -58,7 +58,7 @@ Task_Test::close (u_long)
 
   task_count--;
   ACE_DEBUG ((LM_DEBUG, "(%t) destroying Task_Test, task count = %d\n",
-	      (int) task_count));
+	      task_count.value ()));
   wait_count--;
   return 0;
 }
@@ -92,7 +92,7 @@ main (int argc, char *argv[])
   for (int i = 1; i <= n_iterations; i++)
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) iteration = %d, max_count %d\n",
-		  i, (int) max_count));
+		  i, max_count.value ()));
       max_count = 0;
 
       ACE_DEBUG ((LM_DEBUG, "(%t) starting %d task%s\n",
@@ -118,7 +118,7 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
 		  "(%t) iteration %d finished, max_count %d, wait_count %d, waiting for tasks to exit\n",
-		  i, (int) max_count, (int) wait_count));
+		  i, max_count.value (), wait_count.value ()));
 
       // Wait for all the tasks to exit.
 	  ACE_Thread_Manager::instance ()->wait ();

@@ -1,3 +1,40 @@
+Fri Oct 17 00:05:55 1997    <irfan@TWOSTEP>
+
+	* ace/Malloc.cpp (dump): 
+	* tests/Future_Test.cpp (main): 
+	* tests/Reactors_Test.cpp (handle_input): 
+	* example/Threads/{future1.cpp future2.cpp manual_event.cpp task_two.cpp tss2.cpp}:
+	
+	* ace/OS: Added ACE_Export to declarations to:
+ 	  ace_mutex_lock_cleanup_adapter, ftruncate, ace_thread_adapter
+	
+	* ace/OS.cpp (readv, writev): Moved ACE_Export directive from
+	  OS.cpp to OS.i.
+	  
+	* ace/Atomic_Op (operator TYPE): operator TYPE() of Atomic_Op has
+ 	  been deprecated and removed. Because both user-defined
+ 	  conversions and user-defined operators were defined on
+ 	  Atomic_Op, it was possible to get ambiguities between the
+ 	  user-defined operators and the built-in operators. Therefore,
+ 	  operator TYPE() has been removed and explicit accessor value()
+ 	  has been added. Thanks to Stephen Coy <stevec@magna.com.au> for
+ 	  suggesting this.
+
+	* ace/Atomic_Op (operator!=): Add new operator.
+
+	* tests/Atomic_Op_Test.cpp: Previously we had foo.operator== (5).
+  	  It was necessary to resolve the ambiguities between the
+ 	  user-defined operators and the built-in operators. Since we have
+ 	  removed the automagic type conversion, we can go back to writing
+ 	  foo == 5.
+
+	* tests/Notify_Performance_Test.cpp: 
+	* tests/Reactor_Performance_Test.cpp: 
+
+	  Moved explicit template instantiation code to ACE_HAS_THREADS
+ 	  part for the test. Thanks to Stephen Coy <stevec@magna.com.au>
+ 	  for pointing this out.
+
 Thu Oct 16 20:44:40 1997  James C Hu  <jxh@cs.wustl.edu>
 
 	* ace/Message_Block.cpp: Changed how continuations are released in

@@ -144,57 +144,57 @@ public:
   // = Initialization methods.
 
   ACE_Atomic_Op (void);
-  // Initialize <count_> to 0.
+  // Initialize <value_> to 0.
 
   ACE_Atomic_Op (const TYPE &c);
-  // Initialize <count_> to c.
+  // Initialize <value_> to c.
 
   // = Accessors.
 
   TYPE operator++ (void);
-  // Atomically pre-increment <count_>.
+  // Atomically pre-increment <value_>.
 
   TYPE operator++ (int);
-  // Atomically post-increment <count_>.
+  // Atomically post-increment <value_>.
 
   TYPE operator+= (const TYPE &i);
-  // Atomically increment <count_> by inc.
+  // Atomically increment <value_> by i.
 
   TYPE operator-- (void);
-  // Atomically pre-decrement <count_>.
+  // Atomically pre-decrement <value_>.
 
   TYPE operator-- (int);
-  // Atomically post-decrement <count_>.
+  // Atomically post-decrement <value_>.
 
   TYPE operator-= (const TYPE &i);
-  // Atomically decrement <count_> by dec.
+  // Atomically decrement <value_> by i.
 
   int operator== (const TYPE &i) const;
-  // Atomically compare <count_> with rhs.
+  // Atomically compare <value_> with i.
+
+  int operator!= (const TYPE &i) const;
+  // Atomically compare <value_> with i.
 
   int operator>= (const TYPE &i) const;
-  // Atomically check if <count_> greater than or equal to rhs.
+  // Atomically check if <value_> greater than or equal to i.
 
   int operator> (const TYPE &rhs) const;
-  // Atomically check if <count_> greater than rhs.
+  // Atomically check if <value_> greater than i.
 
   int operator<= (const TYPE &rhs) const;
-  // Atomically check if <count_> less than or equal to rhs.
+  // Atomically check if <value_> less than or equal to i.
 
   int operator< (const TYPE &rhs) const;
-  // Atomically check if <count_> less than rhs.
+  // Atomically check if <value_> less than i.
 
   void operator= (const TYPE &i);
-  // Atomically assign rhs to <count_>.
+  // Atomically assign i to <value_>.
 
   void operator= (const ACE_Atomic_Op<ACE_LOCK, TYPE> &rhs);
-  // Atomically assign <rhs> to <count_>.
-
-  operator TYPE () const;
-  // Atomically return <count_>.
+  // Atomically assign <rhs> to <value_>.
 
   TYPE value (void) const;
-  // Explicitly return <count_>.
+  // Explicitly return <value_>.
 
   void dump (void) const;
   // Dump the state of an object.

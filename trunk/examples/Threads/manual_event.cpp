@@ -16,7 +16,7 @@
 #include "ace/Thread_Manager.h"
 
 #if defined (ACE_HAS_THREADS)
-static ACE_Atomic_Op <ACE_Thread_Mutex, int> amount_of_work = (u_long) 0;
+static ACE_Atomic_Op <ACE_Thread_Mutex, int> amount_of_work = 0;
 
 class Pseudo_Barrier
   // = TITLE
@@ -60,7 +60,7 @@ worker (void *arg)
   
   // work
   ACE_DEBUG ((LM_DEBUG, "(%t) working (%d secs)\n", ++::amount_of_work));
-  ACE_OS::sleep (::amount_of_work);
+  ACE_OS::sleep (::amount_of_work.value ());
 
   // synch with everybody else
   ACE_DEBUG ((LM_DEBUG, "(%t) waiting to synch with others \n"));
@@ -68,7 +68,7 @@ worker (void *arg)
 
   // more work
   ACE_DEBUG ((LM_DEBUG, "(%t) more work (%d secs)\n", ++::amount_of_work));
-  ACE_OS::sleep (amount_of_work);
+  ACE_OS::sleep (::amount_of_work.value ());
 
   ACE_DEBUG ((LM_DEBUG, "(%t) dying \n"));
 

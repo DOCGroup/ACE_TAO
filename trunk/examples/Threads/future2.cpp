@@ -410,19 +410,19 @@ test_active_object (int n_iterations)
     }
 
   ACE_DEBUG ((LM_DEBUG, " (%t) scheduler_open_count %d before end ()\n",
-              (int) scheduler_open_count));
+              scheduler_open_count.value ()));
 
   worker_a->end ();
   worker_b->end ();
   worker_c->end ();
 
   ACE_DEBUG ((LM_DEBUG, " (%t) scheduler_open_count %d immediately after end ()\n",
-              (int) scheduler_open_count));
+              scheduler_open_count.value ()));
 
   ACE_OS::sleep (2);
 
   ACE_DEBUG ((LM_DEBUG, " (%t) scheduler_open_count %d after waiting\n",
-              (int) scheduler_open_count));
+              scheduler_open_count.value ()));
   // @@ Can we safely delete worker_a, worker_b, and worker_c?
 }
 
