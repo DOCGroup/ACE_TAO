@@ -1,34 +1,34 @@
 #----------------------------------------------------------------------------
 #
-#	$Id$
+#       $Id$
 #
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lorbsvcs -lTAO
+LDLIBS = -lTAO
 
 IDL_SRC = Triangle_TestC.cpp Triangle_TestS.cpp
 PROG_SRCS = $(IDL_SRC) server_A.cpp server_B.cpp \
-	Object_A_i.cpp Object_B_i.cpp Initiator_i.cpp \
-	initiator.cpp 
+        Object_A_i.cpp Object_B_i.cpp Initiator_i.cpp \
+        initiator.cpp
 
 LSRC = $(PROG_SRCS)
 
 NESTEDUPCALLS_SVR_A_OBJS = Triangle_TestS.o Triangle_TestC.o server_A.o \
-	Object_A_i.o
+        Object_A_i.o
 
 NESTEDUPCALLS_SVR_B_OBJS = Triangle_TestS.o Triangle_TestC.o server_B.o \
-        Object_B_i.o 
+        Object_B_i.o
 
 NESTEDUPCALLS_INITIATOR_OBJS = Triangle_TestS.o Triangle_TestC.o initiator.o \
-	Initiator_i.o
+        Initiator_i.o
 
 
 BIN = server_A server_B initiator
@@ -37,7 +37,7 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
@@ -49,11 +49,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
-LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao 
-CPPFLAGS += -I$(TAO_ROOT)/orbsvcs 
+LDFLAGS += -L$(TAO_ROOT)/tao
 
 .PRECIOUS: Trangle_TestC.h Triangle_TestC.i Triangle_TestC.cpp
 .PRECIOUS: Triangle_TestS.h Triangle_TestS.i Triangle_TestS.cpp
@@ -68,7 +67,11 @@ initiator: $(addprefix $(VDIR),$(NESTEDUPCALLS_INITIATOR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf Triangle_TestS.* Triangle_TestC.* Triangle_TestS_T.*
+	-$(RM) Triangle_TestS.* Triangle_TestC.* Triangle_TestS_T.*
+
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
