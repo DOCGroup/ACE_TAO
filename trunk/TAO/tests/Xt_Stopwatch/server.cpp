@@ -131,7 +131,17 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       XtRealizeWidget (toplevel);
+      /* Looks like there seems to be a problem with ST cases using
+         XtAppMainLoop. Havent been able to figure out what the
+         problem could be. The funny part is that orb->run () works
+         fine. The XtRector actually calls XtAppProcessEvent (), which
+         actually does something similar to this. Need to investigate
+         this when we have time*/
+#if defined (ACE_HAS_THREADS)
       XtAppMainLoop (app);
+#else
+      orb->run ();
+#endif /*ACE_HAS_THREADS*/
     }
   ACE_CATCHANY
     {
