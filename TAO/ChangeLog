@@ -1,3 +1,9 @@
+Tue Mar  1 15:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CORBALOC_Parser.cpp:
+          Use TAO::VMCID instead of TAO_DEFAULT_MINOR_CODE,
+          TAO_DEFAULT_MINOR_CODE is deprecated and shouldn't be used
+
 Tue Mar  1 15:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Valuetype/AbstractBase.{h,cpp}:
