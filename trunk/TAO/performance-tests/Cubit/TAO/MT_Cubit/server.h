@@ -51,6 +51,37 @@ public:
 #define ACE_Barrier NOOP_ACE_Barrier
 #endif /* ACE_HAS_THREADS */
 
+class Globals
+{
+public:
+  Globals (void);
+  int parse_args (int argc,char **argv);
+  char hostname[BUFSIZ];
+  char *ior_file;
+  int base_port;
+  u_int num_of_objs;
+  u_int use_name_service;
+  u_int thread_per_rate;
+  u_int use_multiple_priority;
+  u_int run_utilization_test;
+  int ready_;
+  // ready flag used by the high priority thread to wake up the low
+  // priority threads after it's parsed the arguments.
+
+  ACE_SYNCH_MUTEX ready_mtx_;
+  // mutex for the condition variable.
+
+  ACE_Condition<ACE_SYNCH_MUTEX> ready_cnd_;
+  // condition variable for the low priority threads to wait 
+  //until the high priority thread is done with the arguments parsing.
+  
+  ACE_Barrier *barrier_;
+  // Barrier for the multiple clients to synchronize after binding to
+  // the servants.
+
+};
+
+typedef ACE_Singleton<Globals,ACE_Null_Mutex> GLOBALS;
 
 class Cubit_Task : public ACE_Task<ACE_MT_SYNCH>
 {
@@ -133,22 +164,11 @@ private:
 class Server
 {
 public:
-  Server (Task_State *ts);
   // default constructor
-  int parse_args (int argc, char *argv[]);
   int initialize (int argc, char **argv);
   int start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_barrier, Task_State *ts);
   Util_Thread * start_utilization (ACE_Thread_Manager *util_thr_mgr, Task_State *ts);
-public:
-  char hostname[BUFSIZ];
-  char *ior_file;
-  int base_port;
-  u_int num_of_objs;
-  u_int use_name_service;
-  u_int thread_per_rate;
-  u_int use_multiple_priority;
-  u_int run_utilization_test;
-private:
-  Task_State *ts_;
-  //pointer to task state
+ private:
+  int argc_;
+  char **argv_;
 };
