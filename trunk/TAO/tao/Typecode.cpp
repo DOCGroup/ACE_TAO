@@ -130,7 +130,7 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
                                 size_t length,
                                 const char *buffer,
                                 CORBA::Boolean orb_owns_tc,
-                                CORBA::ULong size,
+                                CORBA::ULong /* size */,
                                 CORBA::TypeCode_ptr parent)
   //  : length_ (length - 4),
   : length_ (length),

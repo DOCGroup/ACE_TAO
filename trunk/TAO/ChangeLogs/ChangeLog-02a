@@ -1,13 +1,22 @@
+Fri Apr 28 08:29:09 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Typecode.cpp:
+          Fixed unused argument warning.  The real fix is documented in
+          [BUGID:550]
+
+        * tests/Explicit_Event_Loop/server.cpp:
+          The code was not using the exception macros.
+
 Thu Apr 27 22:36:48 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/TAOC.h: Changed "orbconf.h" to "corbafwd.h".  Otherwise, it
-	  wouldn't compile for minimum CORBA.
+        * tao/TAOC.h: Changed "orbconf.h" to "corbafwd.h".  Otherwise, it
+          wouldn't compile for minimum CORBA.
 
-	* tao/Interceptor.h:
-	* tao/Interceptor.cpp:
-	* tao/InterceptorC.cpp: Made sure we complete disable interceptors
-	  when TAO_HAS_INTERCEPTORS==0 (which is default for minimum
-	  CORBA.)
+        * tao/Interceptor.h:
+        * tao/Interceptor.cpp:
+        * tao/InterceptorC.cpp: Made sure we complete disable interceptors
+          when TAO_HAS_INTERCEPTORS==0 (which is default for minimum
+          CORBA.)
 
 Thu Apr 27 18:06:53 2000  Carlos O'Ryan  <coryan@uci.edu>
 
