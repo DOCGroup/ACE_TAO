@@ -659,15 +659,15 @@ CORBA::FixedDef::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/IRObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/IDLType:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/FixedDef:1.0"
         ) ||
       !ACE_OS::strcmp (
@@ -1100,15 +1100,15 @@ CORBA::ValueMemberDef::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/IRObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Contained:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/ValueMemberDef:1.0"
         ) ||
       !ACE_OS::strcmp (
@@ -2140,23 +2140,23 @@ CORBA::ValueDef::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/IRObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Container:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Contained:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/IDLType:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/ValueDef:1.0"
         ) ||
       !ACE_OS::strcmp (
@@ -2527,27 +2527,27 @@ CORBA::ExtValueDef::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/IRObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Container:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Contained:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/IDLType:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/ValueDef:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/ExtValueDef:1.0"
         ) ||
       !ACE_OS::strcmp (
@@ -2787,23 +2787,23 @@ CORBA::ValueBoxDef::_is_a (
 {
   if (
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/IRObject:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/Contained:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/IDLType:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/TypedefDef:1.0"
         ) ||
       !ACE_OS::strcmp (
-          (char *)value,
+          value,
           "IDL:omg.org/CORBA/ValueBoxDef:1.0"
         ) ||
       !ACE_OS::strcmp (
@@ -2853,9 +2853,9 @@ CORBA::Boolean operator>> (
 {
   CORBA::Object_var obj;
   
-  if ((strm >> obj.inout ()) == 0)
+  if (!(strm >> obj.inout ()))
     {
-      return 0;
+      return false;
     }
   
   typedef ::CORBA::FixedDef RHS_SCOPED_NAME;
@@ -2922,7 +2922,7 @@ CORBA::Boolean operator<< (
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -2932,7 +2932,7 @@ CORBA::Boolean operator<< (
       return _tao_marshal_flag;
     }
   
-  return 0;
+  return false;
 }
 
 CORBA::Boolean operator>> (
@@ -2949,7 +2949,7 @@ CORBA::Boolean operator>> (
       // of the stream. (See bug 58.)
       if (_tao_seq_len > strm.length ())
         {
-          return 0;
+          return false;
         }
       
       // Set the length of the sequence.
@@ -2958,11 +2958,11 @@ CORBA::Boolean operator>> (
       // If length is 0 we return true.
       if (0 >= _tao_seq_len) 
         {
-          return 1;
+          return true;
         }
       
       // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -2973,7 +2973,7 @@ CORBA::Boolean operator>> (
     
     }
   
-  return 0;
+  return false;
 }
 
 #endif /* _TAO_CDR_OP_CORBA_ValueMemberSeq_CPP_ */
@@ -2997,9 +2997,9 @@ CORBA::Boolean operator>> (
 {
   CORBA::Object_var obj;
   
-  if ((strm >> obj.inout ()) == 0)
+  if (!(strm >> obj.inout ()))
     {
-      return 0;
+      return false;
     }
   
   typedef ::CORBA::ValueMemberDef RHS_SCOPED_NAME;
@@ -3082,9 +3082,9 @@ CORBA::Boolean operator>> (
 {
   CORBA::Object_var obj;
   
-  if ((strm >> obj.inout ()) == 0)
+  if (!(strm >> obj.inout ()))
     {
-      return 0;
+      return false;
     }
   
   typedef ::CORBA::ValueDef RHS_SCOPED_NAME;
@@ -3206,9 +3206,9 @@ CORBA::Boolean operator>> (
 {
   CORBA::Object_var obj;
   
-  if ((strm >> obj.inout ()) == 0)
+  if (!(strm >> obj.inout ()))
     {
-      return 0;
+      return false;
     }
   
   typedef ::CORBA::ExtValueDef RHS_SCOPED_NAME;
@@ -3242,9 +3242,9 @@ CORBA::Boolean operator>> (
 {
   CORBA::Object_var obj;
   
-  if ((strm >> obj.inout ()) == 0)
+  if (!(strm >> obj.inout ()))
     {
-      return 0;
+      return false;
     }
   
   typedef ::CORBA::ValueBoxDef RHS_SCOPED_NAME;
