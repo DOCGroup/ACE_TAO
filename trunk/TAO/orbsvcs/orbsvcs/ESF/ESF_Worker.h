@@ -33,6 +33,10 @@ class TAO_ESF_Worker
 public:
   virtual ~TAO_ESF_Worker (void);
 
+  /// Used by the collection to inform the worker
+  /// the number of proxies in the collection.
+  virtual void set_size(size_t size);
+
   /// Callback interface.
   virtual void work (Object *object
                      ACE_ENV_ARG_DECL) = 0;

@@ -50,6 +50,7 @@ TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 {
   ACE_GUARD (Busy_Lock, ace_mon, this->lock_);
 
+  worker->set_size(this->collection_.size());
   ITERATOR end = this->collection_.end ();
   for (ITERATOR i = this->collection_.begin (); i != end; ++i)
     {
