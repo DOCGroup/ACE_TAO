@@ -67,3 +67,40 @@ DOMDocument* create_document (const char *url)
 
   return doc;
 }
+
+/*
+ *  Process references
+ */
+
+void
+process_refs(DOMNode*& node,
+             CORBA::ULongSeq& seq,
+             int& index,
+             IDREF_MAP& idref_map)
+{
+  if (node->hasAttributes())
+    {
+      CORBA::ULong i (seq.length ());
+      seq.length (i + 1);
+      seq[i] = 0;
+      if (node->hasAttributes ())
+        {
+          DOMNamedNodeMap* named_node_map = node->getAttributes ();
+          
+          int length = named_node_map->getLength ();
+          
+          for (int j = 0; j < length; j++)
+            {
+              DOMNode* attribute_node = named_node_map->item (j);
+              XStr strattrnodename (attribute_node->getNodeName ());
+              ACE_TString aceattrnodevalue = XMLString::transcode
+                (attribute_node->getNodeValue ());
+              if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
+                {
+                  index = index + 1;
+                  idref_map.bind (index, aceattrnodevalue);
+                }
+            }
+        }
+    }
+}
