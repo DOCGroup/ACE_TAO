@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_LIFESPAN_STRATEGY_H
-#define TAO_LIFESPAN_STRATEGY_H
+#ifndef TAO_PORTABLESERVER_LIFESPANPOLICY_H
+#define TAO_PORTABLESERVER_LIFESPANPOLICY_H
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
@@ -85,4 +85,4 @@ namespace TAO
 } /* namespace TAO */
 
 #include /**/ "ace/post.h"
-#endif /* TAO_LIFESPAN_STRATEGY_H */
+#endif /* TAO_PORTABLESERVER_LIFESPANPOLICY_H */
