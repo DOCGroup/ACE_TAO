@@ -1,3 +1,9 @@
+Mon Mar 16 22:18:07 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/IPC_SAP.cpp: Moved return values outside of the #ifdefs to
+ 	  quiet warning messages with KAI C++.  Thanks to Laura Paterno
+ 	  <lpaterno@d0chb.fnal.gov> for reporting this.
+
 Tue Mar 17 00:04:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Svc_Conf.y:
