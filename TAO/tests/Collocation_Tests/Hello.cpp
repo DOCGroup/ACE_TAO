@@ -34,8 +34,8 @@ Hello::get_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       else if (this->orb_->orb_core ()->optimize_collocation_objects () &&
                this->orb_->orb_core ()->use_global_collocation () == 0)
         {
-          TAO_ORB_Table *orb_table =
-            TAO_ORB_Table::instance ();
+          TAO::ORB_Table * const orb_table =
+            TAO::ORB_Table::instance ();
 
           if (orb_table->find ("server_orb") == 0)
             {
