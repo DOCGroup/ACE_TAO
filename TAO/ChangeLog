@@ -1,3 +1,11 @@
+Thu Oct 24 09:29:59 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+
+          String literal conversions to typedef name that were overlooked in
+
+          Wed Oct 23 23:37:32 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>.
+
 Thu Oct 24 000:33:17 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * examples/POA/DSI/Database_i.cpp:
