@@ -1,3 +1,19 @@
+Fri Jun 16 18:41:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Sequence_T.h:
+	* tao/Sequence_T.i:
+
+	  If X is a string, wstring, or object reference, the
+	  spec says that, if X is a member of a structured
+	  type (struct, sequence, union or array), then
+	  assigning that member to X_var must result in copy
+	  semantics. This was not the case in TAO for object
+	  references. So a new cast operator was added to
+	  TAO_Object_Manager<T> which casts to const T_var,
+	  prompting the T_var lhs to use operator= (const T_var &),
+	  which makes a copy. Thanks to Greg Hall 
+	  <Greg.Hall@Australia.Boeing.com> for reporting this bug.
+
 Fri Jun 16 15:00:17 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/TAO.dsp:
