@@ -1,3 +1,11 @@
+Sat Jan 10 19:35:20 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/msvc_auto_compile.pl:
+
+	  Added missing dsp files for compilation to the static lib
+	  builds. The failure of te static builds is due to something
+	  else, which wil be fixed shortly in the autobuilds.
+
 Sat Jan 10 17:36:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.cpp:
