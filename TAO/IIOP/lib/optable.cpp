@@ -129,3 +129,47 @@ TAO_Active_Demux_OpTable::Entry::~Entry()
   this->skel_ptr = 0;  // cannot delete this as we do not own it
 }
 
+OpTable_Parameters::OpTable_Parameters()
+  : type_(OpTable_Parameters::TAO_DYNAMIC_HASH),
+    strategy_(0)
+{
+}
+
+OpTable_Parameters::~OpTable_Parameters()
+{
+}
+
+void OpTable_Parameters::lookup_strategy(OpTable_Parameters::DEMUX_STRATEGY s)
+{
+  this->type_ = s;
+}
+
+OpTable_Parameters::DEMUX_STRATEGY OpTable_Parameters::lookup_strategy() const
+{
+  return this->type_;
+}
+
+void OpTable_Parameters::concrete_strategy(TAO_Operation_Table *ot)
+{
+  this->strategy_ = ot;
+}
+
+TAO_Operation_Table* OpTable_Parameters::concrete_strategy()
+{
+  return this->strategy_;
+}
+
+OpTable_Factory::OpTable_Factory()
+{
+}
+
+OpTable_Factory::~OpTable_Factory()
+{
+}
+
+TAO_Operation_Table* OpTable_Factory::opname_lookup_strategy()
+{
+  OpTable_Parameters *p = TAO_OP_TABLE_PARAMETERS::instance();
+
+  return p->concrete_strategy();
+}

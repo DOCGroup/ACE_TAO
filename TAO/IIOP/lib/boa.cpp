@@ -149,6 +149,9 @@ void CORBA_BOA::dispatch(CORBA_OctetSeq &key, CORBA_ServerRequest &req, void
   CORBA_OctetSeq		*obj_key;
   CORBA_String_var  opname;
 
+#if 0
+  // this whole thing doesn't seem to be right since the context will be the
+  // key of just one object
   obj_key = (CORBA_OctetSeq *) context;
 
   if (obj_key->length != key.length
@@ -162,7 +165,7 @@ void CORBA_BOA::dispatch(CORBA_OctetSeq &key, CORBA_ServerRequest &req, void
 #endif
     return;
   }
-
+#endif
   obj = this->lookup(key);
   // get the skeleton
   if (obj != 0)

@@ -371,6 +371,27 @@ CORBA_Object::_is_equivalent (
 }
 
 
+// TAO's extension
+CORBA_String
+CORBA_Object::_get_name(
+    CORBA_Environment		&env
+)
+{
+    STUB_Object			*istub;
+
+    if (QueryInterface (IID_STUB_Object, (void **) &istub) != NOERROR) {
+	env.exception (new CORBA_DATA_CONVERSION (COMPLETED_NO));
+	return 0;
+    }
+    Release ();
+
+    if (istub)
+      return istub->_get_name(env);
+
+    return 0; //otherwise
+}
+
+
 //
 // COM's IUnknown support
 //

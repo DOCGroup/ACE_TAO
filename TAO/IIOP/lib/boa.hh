@@ -210,11 +210,33 @@ public:
   // system-specific mechanisms and
   // policies.
 
+  virtual void clean_shutdown(CORBA_Environment& env) = 0;
+				// NON-STANDARD CALL.
+				// OA user asks for a clean shutdown
+				// of the OA after currently active
+				// calls complete.  OA "requester"
+				// (calls <get_request>) asks if we're
+				// shutting down, and if so closes
+				// down transport cleanly.
+  virtual CORBA_Boolean shutting_down() = 0;
+				// NON-STANDARD CALL.
+				// Returns <TRUE> if we're in the process
+				// of shutting down.
+
+
   void dispatch(CORBA_OctetSeq &key, CORBA_ServerRequest &req, void
 			*context, CORBA_Environment &env);
+  virtual int register_obj(const CORBA_OctetSeq &key, const CORBA_Object_ptr &obj)
+    {
+      return objtable_->register_obj(key, obj);
+    }
+  // registers a CORBA_Object into the object table and associates the key with
+  // it
+
   virtual CORBA_Object_ptr lookup(CORBA_OctetSeq &key) { return
 							   objtable_->lookup(key);}
   virtual CORBA_ORB_ptr orb() const = 0;
+  virtual ACE_INET_Addr get_addr() const = 0;
 protected:
   TAO_Object_Table  *objtable_;
 private:
