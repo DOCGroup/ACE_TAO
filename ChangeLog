@@ -1,3 +1,9 @@
+Wed Aug 15 07:30:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU: Reverted the change "Tue
+	  Aug 14 21:42:24 2001  Balachandran Natarajan".Thought that was a
+	  typo. But looks like it is not. 
+
 Wed Aug 15 06:39:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Process.cpp: Fixed a warning with g++.
