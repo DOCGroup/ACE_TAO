@@ -59,9 +59,9 @@ be_visitor_sequence_ch::gen_base_sequence_class (be_sequence *node)
       break;
     case be_sequence::MNG_STRING: // sequence of strings
       if (node->unbounded ())
-	*os << "TAO_Unbounded_String_Sequence";
+        *os << "TAO_Unbounded_String_Sequence";
       else
-	*os << "TAO_Bounded_String_Sequence<";
+        *os << "TAO_Bounded_String_Sequence<";
       break;
     default: // not a managed type
       if (node->unbounded ())
@@ -89,20 +89,20 @@ be_visitor_sequence_ch::gen_base_sequence_class (be_sequence *node)
   if (node->managed_type () == be_sequence::MNG_STRING)
     {
       if (!node->unbounded ())
-	{
-	  *os << node->max_size () << ">";
-	}
+        {
+          *os << node->max_size () << ">";
+        }
     }
   else
     {
       if (node->unbounded ())
-	{
-	  *os << ">";
-	}
+        {
+          *os << ">";
+        }
       else
-	{
-	  *os << ", " << node->max_size () << ">";
-	}
+        {
+          *os << ", " << node->max_size () << ">";
+        }
     }
   return 0;
 }
@@ -218,9 +218,9 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       // we are in the ROOT scope
       os->indent ();
       *os << "extern "
-	 << idl_global->export_macro ()
-	 << " CORBA::TypeCode_ptr "
-	 << node->tc_name ()->last_component () << ";\n\n";
+         << idl_global->export_macro ()
+         << " CORBA::TypeCode_ptr "
+         << node->tc_name ()->last_component () << ";\n\n";
     }
 
 
@@ -477,6 +477,7 @@ be_visitor_sequence_ci::~be_visitor_sequence_ci (void)
 {
 }
 
+int
 be_visitor_sequence_ci::visit_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -949,9 +950,9 @@ be_visitor_sequence_cs::gen_base_sequence_class (be_sequence *node)
       break;
     case be_sequence::MNG_STRING: // sequence of strings
       if (node->unbounded ())
-	*os << "TAO_Unbounded_String_Sequence";
+        *os << "TAO_Unbounded_String_Sequence";
       else
-	*os << "TAO_Bounded_String_Sequence<";
+        *os << "TAO_Bounded_String_Sequence<";
       break;
     default: // not a managed type
       if (node->unbounded ())
@@ -979,20 +980,20 @@ be_visitor_sequence_cs::gen_base_sequence_class (be_sequence *node)
   if (node->managed_type () == be_sequence::MNG_STRING)
     {
       if (!node->unbounded ())
-	{
-	  *os << "<" << node->max_size () << ">";
-	}
+        {
+          *os << "<" << node->max_size () << ">";
+        }
     }
   else
     {
       if (node->unbounded ())
-	{
-	  *os << ">";
-	}
+        {
+          *os << ">";
+        }
       else
-	{
-	  *os << ", " << node->max_size () << ">";
-	}
+        {
+          *os << ", " << node->max_size () << ">";
+        }
     }
   return 0;
 }
