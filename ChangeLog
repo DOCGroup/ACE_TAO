@@ -1,3 +1,8 @@
+Wed May  5 16:16:33 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/WIN32_Proactor.cpp (post_completion): reinterpret_cast the void*
+	  to ULONG_PTR on Win64.
+
 Wed May  5 14:52:21 2004  Steve Huston  <shuston@riverace.com>
 
 	* apps/soreduce/Library.cpp:
