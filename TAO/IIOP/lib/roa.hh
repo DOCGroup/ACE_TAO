@@ -50,6 +50,9 @@ public:
   static TCP_OA_ptr oa();
   static void oa(TCP_OA_ptr anOA);
 
+  static unsigned int threadFlags();
+  static void threadFlags(unsigned int f);
+
   static int end_reactor_event_loop_;
 
 private:
@@ -59,6 +62,7 @@ private:
   static UpcallFunc theUpcall;
   static ForwardFunc theForwarder;
   static TCP_OA_ptr theOA;
+  static unsigned int theThreadFlags;
 };
 
 class ROA_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
@@ -66,6 +70,7 @@ class ROA_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 public:
   ROA_Handler();
   virtual int open(void*);
+  virtual int svc(void);
 protected:
   virtual int handle_input(ACE_HANDLE);
   virtual int handle_close(ACE_HANDLE, ACE_Reactor_Mask);

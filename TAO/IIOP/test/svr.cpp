@@ -193,6 +193,20 @@ tcpoa_forwarder (
 // Socket-based passive OA entry point
 //
 
+void
+usage(char* command)
+{
+  ACE_OS::fprintf (stderr, "usage:  %s"
+		   " -e endpoint=hostname:portnum"
+		   " [-d]"
+		   " [-f]"
+		   " [-i idle_seconds]"
+		   " [-k]"
+		   " [-k object_key=key0]"
+		   " [-o orb_name=internet]"
+		   " [-t]"
+		   "\n", command);
+}
 
 //
 // Standard command line parsing utilities used.
@@ -209,6 +223,7 @@ main (
   CORBA_Boolean	do_fork = CORBA_B_FALSE;
   CORBA_Boolean	do_threads = CORBA_B_FALSE;
   CORBA_String	key = (CORBA_String) "key0";
+  ACE_INET_Addr svraddr;
   char		*oa_name = 0;
   char		*orb_name = "internet";
   int			idle = -1;
@@ -216,7 +231,7 @@ main (
   //
   // Parse the command line, get options
   //
-  ACE_Get_Opt opts (argc, argv, "di:fk:o:p:t");
+  ACE_Get_Opt opts (argc, argv, "di:fk:o:e:t");
   int			c;
 
   while ((c = opts()) != -1)
@@ -241,12 +256,12 @@ main (
       orb_name = opts.optarg;
       continue;
 
-    case 'p':			// portnum
+    case 'e':			// portnum
       oa_name = opts.optarg;
       continue;
 	
     case 't':			// create thread-per-request
-      do_threads = CORBA_B_TRUE;
+      ACE_ROA::usingThreads(1);
       continue;
 
       // XXX set debug filters ...
@@ -260,17 +275,7 @@ main (
 
     case '?':
     default:
-      ACE_OS::fprintf (stderr, "usage:  %s"
-		       " [-d]"
-		       " [-f]"
-		       " [-i idle_seconds]"
-		       " [-k]"
-		       " [-k object_key=key0]"
-		       " [-o orb_name=internet]"
-		       " [-p portnum=5555]"
-		       " [-t]"
-		       "\n", argv [0]
-		       );
+      usage(argv[0]);
       return 1;
     }
 
@@ -280,11 +285,15 @@ main (
     return 1;
   }
 
-  ACE_INET_Addr svraddr;
   if (oa_name == 0)
-    svraddr.set((u_short)0, "watusi");
+    {
+      usage(argv[0]);
+      return 1;
+    }
   else
-    svraddr.set(oa_name);
+    {
+      svraddr.set(oa_name);
+    }
 
   oa_ptr = TCP_OA::init (orb_ptr, svraddr, env);
   if (env.exception () != 0) {
