@@ -23,8 +23,6 @@
 
 #include "ace/SOCK_Stream.h"
 
-#if defined (ACE_HAS_SSL)
-
 #include <openssl/err.h>
 
 #include "ace/Synch_T.h"
@@ -249,4 +247,3 @@ protected:
 
 #include "ace/post.h"
 
-#endif /* ACE_HAS_SSL */

@@ -3,8 +3,6 @@
 
 #include "ace/Handle_Set.h"
 
-#if defined (ACE_HAS_SSL)
-
 #include <openssl/err.h>
 
 #include "ace/SSL/SSL_SOCK_Stream.h"
@@ -479,4 +477,3 @@ ACE_SSL_SOCK_Stream::recvv_n (iovec iov[], size_t n) const
 }
 
 
-#endif /* ACE_HAS_SSL */

@@ -28,8 +28,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_SSL)
-
 #include "ace/SSL/SSL_SOCK_Stream.h"
 
 class ACE_SSL_Export ACE_SSL_SOCK_Connector
@@ -201,4 +199,3 @@ private:
 
 #include "ace/post.h"
 
-#endif /* ACE_HAS_SSL */

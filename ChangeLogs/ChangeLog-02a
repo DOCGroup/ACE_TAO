@@ -1,3 +1,25 @@
+Mon Oct 30 18:51:40 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * examples/IPC_SAP/SSL_SAP/SSL-client.dsp:
+        * examples/IPC_SAP/SSL_SAP/SSL-server.dsp:
+
+          Removed hardcoded OpenSSL include directories.
+
+        * ace/ssl/SSL_Context.cpp:
+        * ace/ssl/SSL_Context.h:
+        * ace/ssl/SSL_SOCK.cpp:
+        * ace/ssl/SSL_SOCK_Acceptor.cpp:
+        * ace/ssl/SSL_SOCK_Acceptor.h:
+        * ace/ssl/SSL_SOCK_Connector.cpp:
+        * ace/ssl/SSL_SOCK_Connector.h:
+        * ace/ssl/SSL_SOCK_Connector.i:
+        * ace/ssl/SSL_SOCK_Stream.cpp:
+        * ace/ssl/SSL_SOCK_Stream.h:
+        * ace/ssl/SSL_SOCK_Stream.i:
+
+          Removed the ACE_HAS_SSL #ifdefs, since ACE_SSL is a
+          separate library, so it isn't really needed.
+
 Mon Oct 30 16:34:33 2000  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* include/makeinclude/platform_vxworks5.x_g++.GNU:
