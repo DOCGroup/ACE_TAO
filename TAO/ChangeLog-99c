@@ -1,3 +1,7 @@
+Mon Mar  8 23:33:28 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: Fixed a problem in the Makefile.
+
 Mon Mar 08 22:20:32 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile (TAO_ORBSVCS_SRCS): if the Trader
