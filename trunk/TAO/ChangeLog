@@ -1,3 +1,10 @@
+Thu Aug 14 12:58:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * TAO_IDL/fe/fe_tmplinst.cpp:
+          Added #include SString.h needed when
+          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION is defined due to recent
+          subsetting.
+
 Thu Aug 14 12:15:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Event/Basic/Timeout.cpp:
