@@ -198,7 +198,7 @@ public:
   virtual void destroy (CORBA::Environment &);
   // Explicitly shut down the channel.
 
-  RtecEventChannelAdmin::EventChannel_ptr get_ref (void);
+  RtecEventChannelAdmin::EventChannel_ptr get_ref (CORBA::Environment &);
   // Allow transformations to RtecEventChannelAdmin::EventChannel.
 
   ACE_RTU_Manager *rtu_manager (void);
@@ -868,7 +868,7 @@ public:
   void push (const ACE_ES_Dispatch_Request *request,
              CORBA::Environment &);
 
-  RtecEventChannelAdmin::ConsumerAdmin_ptr get_ref (void);
+  RtecEventChannelAdmin::ConsumerAdmin_ptr get_ref (CORBA::Environment &);
   // Allow transformations to RtecEventChannelAdmin::ConsumerAdmin.
 
   void shutdown_request (ACE_ES_Dispatch_Request *request);
@@ -940,7 +940,7 @@ public:
   int subscribe (ACE_ES_Consumer_Rep *consumer);
   // Forwards to the subscription module.
 
-  //int unsubscribe (ACE_ES_Consumer_Rep *consumer);
+  int unsubscribe (ACE_ES_Consumer_Rep *consumer);
   // Forwards to the subscription module.
 
   int schedule_timeout (ACE_ES_Consumer_Rep_Timeout *consumer);
@@ -1073,12 +1073,14 @@ private:
   // = Push helper methods.
 
   int push_source (ACE_Push_Supplier_Proxy *source,
-                    ACE_ES_Event_Container *event);
+		   ACE_ES_Event_Container *event,
+		   CORBA::Environment &_env);
   // Push <event> to all consumers subscribed to all events from
   // <source>.  Returns 0 on success, -1 on failure.
 
   int push_source_type (ACE_Push_Supplier_Proxy *source,
-                         ACE_ES_Event_Container *event);
+                         ACE_ES_Event_Container *event,
+			CORBA::Environment &_env);
   // Push <event> to all consumers subscribed to <event>.type_ from
   // <source>.  Returns 0 on success, -1 on failure.
 
@@ -1142,7 +1144,7 @@ public:
                       CORBA::Environment &);
   // Unregister the consumer from the Event Service.
 
-  RtecEventChannelAdmin::SupplierAdmin_ptr get_ref (void);
+  RtecEventChannelAdmin::SupplierAdmin_ptr get_ref (CORBA::Environment &);
   // Allow transformations to RtecEventComm::PushConsumer.
 
   void shutdown (void);
@@ -1205,7 +1207,7 @@ public:
 
   // = Operations for the Event Channel.
 
-  RtecEventChannelAdmin::ProxyPushConsumer_ptr get_ref (void);
+  RtecEventChannelAdmin::ProxyPushConsumer_ptr get_ref (CORBA::Environment &);
   // Allow transformations to RtecEventChannelAdmin::ProxyPushConsumer.
 
   int connected (void);
@@ -1290,7 +1292,7 @@ public:
   void shutdown (void);
   // Actively disconnect from the consumer.
 
-  RtecEventChannelAdmin::ProxyPushSupplier_ptr get_ref (void);
+  RtecEventChannelAdmin::ProxyPushSupplier_ptr get_ref (CORBA::Environment &);
   // Allow transformations to RtecEventChannelAdmin::ProxyPushSupplier.
 
   ACE_ES_Consumer_Correlation &correlation (void);
@@ -1307,7 +1309,7 @@ private:
   // A hook so that the Correlation Module can associate correlation
   // information with the consumer.
 
-  RtecEventComm::PushConsumer_ptr push_consumer_;
+  RtecEventComm::PushConsumer_var push_consumer_;
   // Reference to our push consumer.
 
   ACE_ES_Consumer_Module *consumer_module_;

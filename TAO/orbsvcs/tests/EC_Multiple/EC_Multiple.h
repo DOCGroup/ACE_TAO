@@ -47,6 +47,9 @@ public:
 	     CORBA::Environment& _env);
   // This method connects the supplier to the EC.
 
+  void close (CORBA::Environment &_env);
+  // Disconnect from the EC.
+
   void activate (const char* name,
 		 const RtecScheduler::Period& rate,
 		 RtecEventChannelAdmin::EventChannel_ptr ec,
@@ -112,6 +115,9 @@ public:
 	     RtecEventChannelAdmin::EventChannel_ptr ec,
 	     CORBA::Environment& _env);
   // This method connects the consumer to the EC.
+
+  void close (CORBA::Environment &_env);
+  // Disconnect from the EC.
 
   virtual void push (const RtecEventComm::EventSet& events,
 		     CORBA::Environment &_env);
@@ -197,6 +203,7 @@ private:
 
   void connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
 			  CORBA::Environment &_env);
+  void disconnect_suppliers (CORBA::Environment &_env);
   // Connect the suppliers.
 
   void activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
@@ -212,7 +219,8 @@ private:
 
   void connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
 			  CORBA::Environment &_env);
-  // Connect the consumers.
+  void disconnect_consumers (CORBA::Environment &_env);
+  // Connect and disconnect the consumers.
 
   int shutdown (CORBA::Environment&);
   // Called when the main thread (i.e. not the scavenger thread) is
@@ -258,6 +266,12 @@ private:
   // simultaneous scheduling across all the processes.
   // "local" instantiate a local config time scheduling service.
   // "runtime" instantiates a local rumtime scheduling service.
+
+  int consumer_disconnects_;
+  int supplier_disconnects_;
+  // How many times to disconnect the consumers (and suppliers) before
+  // the final connection. This is useful to test the disconnection in
+  // the EC.
 
   int short_circuit_;
   // Don't send the messages through the EC. This is needed to measure
@@ -340,17 +354,17 @@ private:
   // Store the measurements for local and remote events..
 
   int ready_;
-  ACE_Thread_Mutex ready_mtx_;
-  ACE_Condition<ACE_Thread_Mutex> ready_cnd_;
+  ACE_SYNCH_MUTEX ready_mtx_;
+  ACE_Condition<ACE_SYNCH_MUTEX> ready_cnd_;
   // Before accepting any events the suppliers must wait for the test
   // to setup all the consumers.
   // The suppliers wait on the condition variable.
 
-  ACE_Atomic_Op<ACE_Thread_Mutex,int> running_suppliers_;
+  ACE_Atomic_Op<ACE_SYNCH_MUTEX,int> running_suppliers_;
   // keep track of how many suppliers are still running so we shutdown
   // at the right moment.
 
-  ACE_Atomic_Op<ACE_Thread_Mutex,int> running_consumers_;
+  ACE_Atomic_Op<ACE_SYNCH_MUTEX,int> running_consumers_;
   // keep track of how many consumers are still running so we shutdown
   // at the right moment.
 
