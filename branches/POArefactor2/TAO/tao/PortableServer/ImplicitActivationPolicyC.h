@@ -73,8 +73,6 @@
 // TAO_IDL - Generated from
 // be\be_visitor_root/root_ch.cpp:63
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 namespace TAO
 {
   class Collocation_Proxy_Broker;
@@ -98,6 +96,7 @@ namespace PortableServer
     NO_IMPLICIT_ACTIVATION
   };
 
+#if (TAO_HAS_MINIMUM_POA == 0)
   typedef ImplicitActivationPolicyValue &ImplicitActivationPolicyValue_out;
 
   // TAO_IDL - Generated from
@@ -225,11 +224,13 @@ namespace PortableServer
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:66
 
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 } // module PortableServer
 
 // TAO_IDL - Generated from
 // be\be_visitor_traits.cpp:59
 
+#if (TAO_HAS_MINIMUM_POA == 0)
 // Traits specializations.
 namespace TAO
 {

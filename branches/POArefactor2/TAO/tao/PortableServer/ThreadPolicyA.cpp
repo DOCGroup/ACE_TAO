@@ -248,4 +248,4 @@ operator>>= (
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */

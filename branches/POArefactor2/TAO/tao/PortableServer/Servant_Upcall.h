@@ -152,8 +152,12 @@ namespace TAO
       /// Get the active_object_map_entry.
       TAO_Active_Object_Map_Entry *active_object_map_entry (void) const;
 
+  #if (TAO_HAS_MINIMUM_POA == 0)
+
       /// We are using the servant locator for this upcall.
       void servant_locator (PortableServer::ServantLocator_ptr servant_locator);
+
+  #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
       /// Get the priority for the current upcall.
       CORBA::Short priority (void) const;

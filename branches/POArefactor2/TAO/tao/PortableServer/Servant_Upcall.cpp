@@ -367,11 +367,13 @@ namespace TAO
     #endif /* TAO_HAS_MINIMUM_POA == 0 */
     }
 
+    #if (TAO_HAS_MINIMUM_POA == 0)
     void
     Servant_Upcall::servant_locator (PortableServer::ServantLocator_ptr servant_locator)
     {
       servant_locator_ = PortableServer::ServantLocator::_duplicate (servant_locator);
     }
+    #endif /* !TAO_HAS_MINIMUM_POA == 0 */
 
     void
     Servant_Upcall::single_threaded_poa_setup (ACE_ENV_SINGLE_ARG_DECL)
