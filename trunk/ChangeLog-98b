@@ -1,39 +1,44 @@
+Sat Dec 12 07:44:02 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-mklinux.h: added.  Thanks to
+          John Lindal <jafl@cco.caltech.edu> for sending it.
+
 Fri Dec 11 23:26:20 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Message_Queue_Test.cpp: Generalize the test to perform
-	  "platform specific" message queue tests when applicable.
-	  Currently, this only applies to VxWorks and Windows NT 4.0 or
-	  above.
+        * tests/Message_Queue_Test.cpp: Generalize the test to perform
+          "platform specific" message queue tests when applicable.
+          Currently, this only applies to VxWorks and Windows NT 4.0 or
+          above.
 
-	* tests/DLL_Test.cpp (main): STL's implementation of auto_ptr
-	  doesn't define an assignment operator that takes a pointer of T.
-	  Changed to use constructor to initialize the auto_ptr my_hello.
+        * tests/DLL_Test.cpp (main): STL's implementation of auto_ptr
+          doesn't define an assignment operator that takes a pointer of T.
+          Changed to use constructor to initialize the auto_ptr my_hello.
 
 Fri Dec 11 16:30:44 1998  Ossama Othman  <othman@tango.cs.wustl.edu>
 
-	* tests/Time_Value_Test.cpp: Removed the ACE_DISABLE_AUTOCONF_LONGLONG
- 	  macro.  It broke ACE+autoconf on non-sun platforms.
+        * tests/Time_Value_Test.cpp: Removed the ACE_DISABLE_AUTOCONF_LONGLONG
+          macro.  It broke ACE+autoconf on non-sun platforms.
 
 1998-12-11  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* test/DLL_Test.dsp: Fixed configuration settings.  Most of the
-	  time, it's easier to add new projects by using the
-	  bin/dsp2dsp.pl.
+        * test/DLL_Test.dsp: Fixed configuration settings.  Most of the
+          time, it's easier to add new projects by using the
+          bin/dsp2dsp.pl.
 
-	* ace/Message_Queue.{h,cpp} (enqueue): Made sure all bytes in a message
-	  block chain are accounted for.
-	  (enqueue_tail,dequeue_head): Added two more methods into
-	  ACE_Message_Queue_Base.  They are the prefered methods to use.
+        * ace/Message_Queue.{h,cpp} (enqueue): Made sure all bytes in a message
+          block chain are accounted for.
+          (enqueue_tail,dequeue_head): Added two more methods into
+          ACE_Message_Queue_Base.  They are the prefered methods to use.
 
 Fri Dec 11 15:09:43 1998  Ossama Othman  <ossama@debian.org>
 
-	* tests/Time_Value_Test.cpp: define ACE_DISABLE_AUTOCONF_LONGLONG
-	  before including ace/inc_user_config.h.  This will prevent
-	  an automatically generated ACE Configuration Project config.h
-	  header from defining ACE_UINT64, and thus allowing
-	  Time_Value_Test.cpp to compile on platforms that define
- 	  ACE_HAS_STHREADS.  Please read the comment in Time_Value_Test.cpp.
-	  ACE_DISABLE_AUTOCONF_LONGLONG is not meant for general use!
+        * tests/Time_Value_Test.cpp: define ACE_DISABLE_AUTOCONF_LONGLONG
+          before including ace/inc_user_config.h.  This will prevent
+          an automatically generated ACE Configuration Project config.h
+          header from defining ACE_UINT64, and thus allowing
+          Time_Value_Test.cpp to compile on platforms that define
+          ACE_HAS_STHREADS.  Please read the comment in Time_Value_Test.cpp.
+          ACE_DISABLE_AUTOCONF_LONGLONG is not meant for general use!
 
 Fri Dec 11 14:05:11 1998  Steve Huston  <shuston@riverace.com>
 
