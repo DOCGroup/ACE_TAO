@@ -7,6 +7,7 @@
    can create a thread.  The ACE_Task<> is the basis for doing just
    such a thing.  */
 #include "ace/Task.h"
+#include "ace/Atomic_Op.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -54,8 +54,6 @@ int
 int
 <font color=#008888>Thread_Pool::stop</font> (void)
 {
-  ACE_UNUSED_ARG(flags);
-
   <font color=red>/* Find out how many threads are currently active */</font>
   int counter = active_threads_.value ();
 

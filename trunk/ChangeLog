@@ -1,3 +1,15 @@
+Mon Feb 25 19:16:12 2002 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/tutorials/007/thread_pool.{h|cpp}:
+        * docs/tutorials/007/page07.html:
+        * docs/tutorials/007/page08.html:
+        * docs/tutorials/013/mld.h:
+        * docs/tutorials/013/page03.html:
+        * docs/tutorials/017/Barrier_i.h:
+        * docs/tutorials/017/page03.html:
+        * docs/tutorials/018/page03.html:
+          Added missing include of 'ace/Atomic_Op.h'
+
 Mon Feb 25 18:51:37 2002 Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Makefile.bor:
