@@ -428,11 +428,17 @@ ACE_Data_Block::release_i (ACE_Message_Block *mb)
   if (this->reference_count_ == 0)
     {
       delete this;
-      // We need to delete <mb> here since the lock will be held
-      // correctly at this point, which protects against race
-      // conditions in multi-threaded programs.  Note that if <mb> is
-      // 0 there's no harm in deleting it.
-      delete mb;
+
+      if (mb != 0)
+	{
+	  // We need to delete <mb> here since the lock will be held
+	  // correctly at this point, which protects against race
+	  // conditions in multi-threaded programs.  Note that we must
+	  // reset <mb->data_block_> to 0 or else we'll end up in
+	  // infinite recursion.
+	  mb->data_block_ = 0;
+	  delete mb;
+	}
     }
   else // if (this->reference_count_ > 0)
     result = this;
@@ -462,9 +468,7 @@ ACE_Message_Block::release (void)
 {
   ACE_TRACE ("ACE_Message_Block::release");
 
-  this->data_block_ = this->data_block ()->release (this);
-
-  if (this->data_block_ == 0)
+  if (this->data_block ()->release (this) == 0)
     return 0;
   else
     return this;
