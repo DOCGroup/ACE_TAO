@@ -140,6 +140,12 @@ public:
 
 #endif  /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
+#if (TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
+
+  CORBA::Policy_ptr connection_timeout (void);
+
+#endif  /* TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1 */
+
   /// Return the sync strategy to be used in by the transport.
   /// Selection will be based on the SyncScope policies.
   TAO_Sync_Strategy &sync_strategy (void);

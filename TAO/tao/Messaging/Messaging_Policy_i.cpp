@@ -4,15 +4,15 @@
 #include "tao/Stub.h"
 #include "tao/debug.h"
 
-ACE_RCSID (TAO,
+#if ! defined (__ACE_INLINE__)
+#include "Messaging_Policy_i.i"
+#endif /* __ACE_INLINE__ */
+
+ACE_RCSID (Messaging,
            Messaging_Policy_i,
            "$Id$")
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-#if ! defined (__ACE_INLINE__)
-#include "tao/Messaging/Messaging_Policy_i.i"
-#endif /* __ACE_INLINE__ */
 
 TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (
   const TimeBase::TimeT& relative_expiry)

@@ -5,7 +5,7 @@ ACE_RCSID (tao,
            "$Id$")
 
 #include "Messaging_Policy_i.h"
-
+#include "Connection_Timeout_Policy_i.h"
 #include "tao/PolicyC.h"
 #include "tao/Buffering_Constraint_Policy.h"
 
@@ -21,6 +21,12 @@ TAO_Messaging_PolicyFactory::create_policy (
   if (type == Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE)
     return TAO_RelativeRoundtripTimeoutPolicy::create (value
                                                        ACE_ENV_ARG_PARAMETER);
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
+  if (type == TAO::CONNECTION_TIMEOUT_POLICY_TYPE)
+    return TAO_ConnectionTimeoutPolicy::create (value
+                                                ACE_ENV_ARG_PARAMETER);
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
@@ -73,5 +79,3 @@ TAO_Messaging_PolicyFactory::create_policy (
   ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
                     CORBA::Policy::_nil ());
 }
-
-

@@ -27,17 +27,19 @@
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
+/*
+ * @class TAO_RelativeRoundtripTimeoutPolicy
+ *
+ * @brief Messaging::RelativeRoundtripTimeoutPolicy implementation
+ *
+ *  This policy controls the total (round-trip) timeout time for a
+ *  request.
+ */
 class TAO_Messaging_Export TAO_RelativeRoundtripTimeoutPolicy
   : public Messaging::RelativeRoundtripTimeoutPolicy,
     public TAO_Local_RefCounted_Object
 {
-  // = TITLE
-  //   Messaging::RelativeRoundtripTimeoutPolicy implementation
-  //
-  // = DESCRIPTION
-  //   This policy controls the total (round-trip) timeout time for a
-  //   request.
-  //
+
 public:
   /// Constructor.
   TAO_RelativeRoundtripTimeoutPolicy (const TimeBase::TimeT& relative_expiry);
@@ -90,17 +92,19 @@ private:
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
+/*
+ * @class TAO_Sync_Scope_Policy
+ *
+ * @brief Messaging::SyncScopePolicy implementation.
+ *
+ *  This policy controls the sync strategy used by the ORB to transport
+ *  requests.
+ */
 class TAO_Messaging_Export TAO_Sync_Scope_Policy
   : public Messaging::SyncScopePolicy,
     public TAO_Local_RefCounted_Object
 {
-  // = TITLE
-  //   Messaging::SyncScopePolicy implementation.
-  //
-  // = DESCRIPTION
-  //   This policy controls the sync strategy used by the ORB to
-  //   transport requests.
-  //
+
 public:
   /// Constructor.
   TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization);
@@ -150,7 +154,7 @@ private:
 #endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #if defined (__ACE_INLINE__)
-#include "tao/Messaging/Messaging_Policy_i.i"
+#include "Messaging_Policy_i.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

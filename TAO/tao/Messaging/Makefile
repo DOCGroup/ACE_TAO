@@ -18,6 +18,7 @@ CPP_SRCS += \
   Twoway_Asynch_Invocation \
   Asynch_Reply_Dispatcher \
   Asynch_Timeout_Handler \
+  Connection_Timeout_Policy_i \
   Messaging \
   MessagingC \
   MessagingS \

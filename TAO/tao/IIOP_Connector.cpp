@@ -161,9 +161,20 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
 
 
    // Get the max_wait_time
-   // @@todo: Right place for Jon Reis stuff!!
-   ACE_Time_Value *max_wait_time =
-     invocation->max_wait_time ();
+   ACE_Time_Value *max_wait_time = 0;
+
+   ACE_Time_Value connection_timeout;
+   int timeout = 0;
+
+   this->orb_core ()->connection_timeout (invocation->stub (),
+                                          timeout,
+                                          connection_timeout);
+   if (!timeout)
+     max_wait_time =
+       invocation->max_wait_time ();
+   else
+     max_wait_time = &connection_timeout;
+
 
    // Get the right synch options
    ACE_Synch_Options synch_options;
