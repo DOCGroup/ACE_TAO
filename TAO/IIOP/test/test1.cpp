@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 
-#include "test1.hh"
+#include "test1.h"
 
 
 //
@@ -21,16 +21,16 @@
 // declaration as "extern" -- if it's not done, linking fails.
 //
 #define	DEFINE_TEST3(typename, truetype, truetypename) \
-    static const paramdata test1_ ## typename ## _paramdata [4] = { \
+    static const TAO_Param_Data test1_ ## typename ## _paramdata [4] = { \
     { _tc_CORBA_ ## truetypename, PARAM_RETURN, 0 }, \
     { _tc_CORBA_ ## truetypename, PARAM_IN, 0 }, \
     { _tc_CORBA_ ## truetypename, PARAM_OUT, 0 }, \
     { _tc_CORBA_ ## truetypename, PARAM_INOUT, 0 }, \
     }; \
     \
-    extern const calldata test1_ ## typename ## _calldata; \
+    extern const TAO_Call_Data test1_ ## typename ## _calldata; \
     \
-    const calldata test1_ ## typename ## _calldata = { \
+    const TAO_Call_Data test1_ ## typename ## _calldata = { \
 	"test_" #typename, CORBA_B_TRUE, \
 	4, &test1_ ## typename ## _paramdata [0], \
 	0, 0, \
@@ -69,7 +69,7 @@
 // not allowed by IIOP (much less this interface) and verifying
 // that the server returns some kind of system exception.
 //
-static const calldata illegal_calldata = {
+static const TAO_Call_Data illegal_calldata = {
     "+_illegal", CORBA_B_TRUE,
     0, 0,
     0, 0
@@ -91,8 +91,8 @@ test_illegal (test1_ptr target, CORBA_Environment &env)
 }
 
 
-extern const calldata test1_void_calldata;
-const calldata test1_void_calldata = {
+extern const TAO_Call_Data test1_void_calldata;
+const TAO_Call_Data test1_void_calldata = {
     "test_void", CORBA_B_TRUE,
     0, 0,
     0, 0
@@ -137,16 +137,16 @@ DEFINE_TEST (ulong, ULong);
 // interpreter down on _every_ call, not just the ones that require it
 // (such as this one).  Tradeoffs!
 //
-static const paramdata test1_float_paramdata [4] = {
+static const TAO_Param_Data test1_float_paramdata [4] = {
     { _tc_CORBA_Float , PARAM_RETURN , 0 },
     { _tc_CORBA_Float , PARAM_IN , 0 },
     { _tc_CORBA_Float , PARAM_OUT , 0 },
     { _tc_CORBA_Float , PARAM_INOUT , 0 }
 };
 
-extern const calldata test1_float_calldata;
+extern const TAO_Call_Data test1_float_calldata;
 
-const calldata test1_float_calldata = {
+const TAO_Call_Data test1_float_calldata = {
     "test_float", CORBA_B_TRUE,
     4 , &test1_float_paramdata [0],
     0 , 0
@@ -322,7 +322,7 @@ CORBA_TypeCode_ptr	_tc_test1_x2 = &tc_x2;
 //
 // parameter, exception, and call descriptions for "test_throw"
 //
-static const paramdata test1_test_throw_paramdata [1] = {
+static const TAO_Param_Data test1_test_throw_paramdata [1] = {
     { _tc_CORBA_Long, PARAM_IN, 0 }
 };
 
@@ -330,9 +330,9 @@ static CORBA_TypeCode_ptr test1_test_throw_excepts [2] = {
     &tc_x1, &tc_x2
 };
 
-extern const calldata test1_test_throw_calldata;
+extern const TAO_Call_Data test1_test_throw_calldata;
 
-const calldata test1_test_throw_calldata = {
+const TAO_Call_Data test1_test_throw_calldata = {
     "test_throw", CORBA_B_TRUE,
     1, &test1_test_throw_paramdata [0],
     2, &test1_test_throw_excepts [0]
@@ -364,7 +364,7 @@ test1_test_throw (
 // PLEASE EXIT
 //
 
-static const calldata test1_please_exit_calldata = {
+static const TAO_Call_Data test1_please_exit_calldata = {
     "please_exit", CORBA_B_FALSE,
     0, 0,
     0, 0

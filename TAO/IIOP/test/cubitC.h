@@ -17,8 +17,8 @@ implementation
 #pragma	pack (push, 1)			// VC++, known padding rules
 #endif	// VC++
 
-#include <corba/orb.hh>
-#include <corba/stub.hh>
+#include <corba/orb.h>
+#include <corba/stub.h>
 
 #include <iostream.h>
 

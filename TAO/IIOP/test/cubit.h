@@ -20,8 +20,8 @@
 #pragma	pack (push, 1)			// VC++, known padding rules
 #endif	// VC++
 
-#include <corba/orb.hh>
-#include <corba/stub.hh>
+#include <corba/orb.h>
+#include <corba/stub.h>
 
 
 //
@@ -97,7 +97,7 @@ Cubit_please_exit (
 
 extern const CORBA_Char *Cubit__id;		// type ID
 
-extern const skel_entry Cubit_operations [];
+extern const TAO_Skel_Entry Cubit_operations [];
 
 #ifdef	_MSC_VER
 #pragma	pack (pop)			// VC++, go back to other padding rules
