@@ -95,6 +95,11 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
   <li><p>Support new concurrency models, e.g., Thread-per-Request,
       thread pool, etc..</p>
   </li>
+
+  <li><p>Robustness improvements to connection cache so that it
+      wont crash when there are no more slots or sockets.</p>
+  </li>
+      
 </ul>
 <!-- --------------------- -->
 <a href="#toc">Back to TOC</a>
@@ -113,13 +118,6 @@ Point of contact: <a href="mailto: irfan@cs.wustl.edu">Irfan Pyarali</a>
             however it might also be possible to substitute an
             allocator better-tuned to an application's specific
             usage.</p>
-        </li>
-      </ol>
-
-  <li>Robustness improvements:</li>
-      <ol>
-        <li><p>Improve connection cache so that it won't crash when
-            there are no more slots or sockets.
         </li>
       </ol>
 
