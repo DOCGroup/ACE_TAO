@@ -12,40 +12,44 @@
 // = DESCRIPTION
 //
 //   This file was used to generate the code in RTPortableServerC.{h,i,cpp}
+//   The steps to regenerate the code are as follows:
 //
-//   The command used to generate code from this file is:
+//   1. Run the tao_idl compiler on the pidl file.  The command used for
+//   this is:
 //
-//     tao_idl.exe \
-//          -Ge 1 \
-//          -Wb,export_macro=TAO_RTPortableServer_Export \
-//          -Wb,export_include="rtportableserver_export.h" \
-//          -Wb,pre_include="ace/pre.h" \
-//          -Wb,post_include="ace/post.h" \
+//     tao_idl.exe
+//          -o orig -Ge 1
+//          -Wb,export_macro=TAO_RTPortableServer_Export
+//          -Wb,export_include="rtportableserver_export.h"
+//          -Wb,pre_include="ace/pre.h"
+//          -Wb,post_include="ace/post.h"
 //          RTPortableServer.pidl
 //
-//   After the file is generated a patch from the diffs directory must
-//   be applied.  The patch fixes include file dependencies and makes
+//   2. Then apply the patches in tao/RTPortableServer/diffs to the
+//   generated code.  The patch fixes include file dependencies and makes
 //   the inheritance of RTPortableServer::POA from PortableServer::POA
 //   non-virtual.  This was to make sure that classes casting from
 //   PortableServer::POA to TAO_POA can still do so.
 //
 //   Apply patches using the following commands:
 //
-//   patch < diffs\RTPortableServerC.h.diff
-//   patch < diffs\RTPortableServerC.cpp.diff
+//   patch < diffs/RTPortableServerC.h.diff
+//   patch < diffs/RTPortableServerC.i.diff
+//   patch < diffs/RTPortableServerC.cpp.diff
 //
 //   Note: The diffs were generated with these commands:
 //
-//   diff -wub RTPortableServerC.h RTPortableServerC.h.mod > diffs\RTPortableServerC.h.diff
-//   diff -wub RTPortableServerC.cpp RTPortableServerC.cpp.mod > diffs\RTPortableServerC.cpp.diff
+//   diff -wBbu orig/RTPortableServerC.h RTPortableServerC.h > diffs/RTPortableServerC.h.diff
+//   diff -wBbu orig/RTPortableServerC.i RTPortableServerC.i > diffs/RTPortableServerC.i.diff
+//   diff -wBbu orig/RTPortableServerC.cpp RTPortableServerC.cpp > diffs/RTPortableServerC.cpp.diff
 //
 // ================================================================
 
 #ifndef _RT_PORTABLE_SERVER_IDL_
 #define _RT_PORTABLE_SERVER_IDL_
 
-#include <PortableServer.pidl>
-#include <RTCORBA.pidl>
+#include <../PortableServer/PortableServer.pidl>
+#include <../RTCORBA/RTCORBA.pidl>
 
 #pragma prefix "omg.org"
 

@@ -30,6 +30,7 @@
 //   command used for this is:
 //
 //     tao_idl.exe
+//          -o orig
 //          -Ge 1
 //          -Wb,export_macro=TAO_Export
 //          -Wb,export_include="tao/corbafwd.h"
@@ -51,22 +52,23 @@
 //   patch < diffs/PolicyC.i.diff
 //   patch < diffs/PolicyC.cpp.diff
 //
-//   patch < diffs/PolicyS.cpp.diff
+//   patch < diffs/PolicyS.h.diff
 //
 //   4. You'll have to move the Policy skeleton definition from
 //   PolicyS.h to the POA_CORBA.h by hand.
 //
 //   5. Undo the patches to this pidl file.
 //
+//   patch -R < diffs/Policy.pidl.diff
+//
 //   Note: The diffs were generated with these commands:
 //
 //   diff -wbu Policy.pidl Policy.pidl.mod > diffs/Policy.pidl.diff
 //
-//   diff -wbu PolicyC.h PolicyC.h.mod > diffs/PolicyC.h.diff
-//   diff -wbu PolicyC.i PolicyC.i.mod > diffs/PolicyC.i.diff
-//   diff -wbu PolicyC.cpp PolicyC.cpp.mod > diffs/PolicyC.cpp.diff
-//
-//   diff -wbu PolicyS.cpp PolicyS.cpp.mod > diffs/PolicyS.cpp.diff
+//   diff -wBbu orig/PolicyC.h PolicyC.h > diffs/PolicyC.h.diff
+//   diff -wBbu orig/PolicyC.i PolicyC.i > diffs/PolicyC.i.diff
+//   diff -wBbu orig/PolicyC.cpp PolicyC.cpp > diffs/PolicyC.cpp.diff
+//   diff -wBbu orig/PolicyS.h PolicyS.h > diffs/PolicyS.h.diff
 //
 // ================================================================
 
