@@ -394,8 +394,7 @@ realclean: clean
  CosPropertyServiceS.i
 
 .obj/CosPropertyServiceS.o .obj/CosPropertyServiceS.so .shobj/CosPropertyServiceS.o .shobj/CosPropertyServiceS.so: CosPropertyServiceS.cpp CosPropertyServiceS.h \
- $(ACE_ROOT)/ace/pre.h \
- CosPropertyServiceC.h \
+ $(ACE_ROOT)/ace/pre.h CosPropertyServiceC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
