@@ -1,3 +1,12 @@
+Sat Dec 27 09:05:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/LoadBalancer/LoadManager.bor:
+	* orbsvcs/LoadBalancer/LoadMonitor.bor:
+	* orbsvcs/LoadBalancer/Makefile.LoadManager:
+	* orbsvcs/LoadBalancer/Makefile.LoadMonitor:
+	  
+	  They need the IORManipulation library to be linked in.
+
 Sat Dec 27 08:51:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/IDL_Test/Makefile:
