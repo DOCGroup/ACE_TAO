@@ -26,7 +26,9 @@ sub new {
   my($replace)  = shift;
   my($type)     = shift;
   my($noinline) = shift;
-  my($self)     = bless {'pre'      => new Preprocessor($macros, $ipaths),
+  my($exclude)  = shift;
+  my($self)     = bless {'pre'      => new Preprocessor($macros,
+                                                        $ipaths, $exclude),
                          'replace'  => $replace,
                          'dwrite'   => DependencyWriterFactory::create($type),
                          'noinline' => $noinline,

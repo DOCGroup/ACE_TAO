@@ -22,8 +22,10 @@ sub new {
   my($class)   = shift;
   my($macros)  = shift;
   my($ipaths)  = shift;
+  my($exclude) = shift;
   return bless {'macros'  => $macros,
                 'ipaths'  => $ipaths,
+                'exclude' => $exclude,
                 'files'   => {},
                 'ifound'  => {},
                 'recurse' => 0,
@@ -106,7 +108,9 @@ sub process {
               push(@{$$files{$file}}, $inc);
               if (!defined $$files{$inc}) {
                 ## Process this file, but do not return the include files
-                $self->process($inc, $noinline, 1);
+                if (!defined $self->{'exclude'}->{basename($inc)}) {
+                  $self->process($inc, $noinline, 1);
+                }
               }
             }
           }

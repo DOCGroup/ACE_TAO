@@ -19,6 +19,9 @@ STOPNOW=0
 while [ $STOPNOW -eq 0 ]
 do
 case $1 in
+  # -e for compatibility with depgen.pl
+  -e) shift; shift ;;
+
   # -f allows you to select a makefile name
   -f) MAKE=$2
       shift; shift ;;
