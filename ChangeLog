@@ -1,3 +1,9 @@
+Mon Mar 27 17:27:40 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* TAO/orbsvcs/tests/AVStreams/Full_Profile/server.cpp: 
+	  Fixed the ACE_Null_Mutex mispelt error. Thanks to Thomas Groth
+	  <groth.th@t-online.de> for pointing this out.
+
 Mon Mar 27 16:58:03 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* ace/TkReactor.cpp: 
