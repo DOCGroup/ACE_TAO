@@ -408,19 +408,25 @@ ACE_Name_Reply::msg_type (ACE_UINT32 t)
   this->transfer_.type_ = t;
 }
 
-// = Set/get the status of the reply (0 == success, -1 == failure).
-ACE_UINT32 
+// Get the status of the reply (0 == success, -1 == failure).
+
+ACE_INT32 
 ACE_Name_Reply::status (void) const
 {
   ACE_TRACE ("ACE_Name_Reply::status");
-  return this->transfer_.type_ == ACE_Name_Reply::ACE_SUCCESS ? 0 : -1;
+  return this->transfer_.type_;
 }
 
+// Set the status of the reply (0 == success, -1 == failure).
+
 void 
-ACE_Name_Reply::status (ACE_UINT32 s)
+ACE_Name_Reply::status (ACE_INT32 s)
 {
   ACE_TRACE ("ACE_Name_Reply::status");
-  this->transfer_.type_ = s == (ACE_UINT32) -1 ? ACE_Name_Reply::ACE_FAILURE : ACE_Name_Reply::ACE_SUCCESS;
+  if (s == -1)
+    this->transfer_.type_ = -1;
+  else
+    this->transfer_.type_ = 0;
 }
 
 // = Set/get the errno of a failed reply.
@@ -479,14 +485,18 @@ ACE_Name_Reply::dump (void) const
 
   switch (this->msg_type ())
     {
-    case ACE_Name_Reply::ACE_SUCCESS:
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("SUCCESS\n")));
+    case 0:
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("SUCCESS\n")));
       break;
-    case ACE_Name_Reply::ACE_FAILURE:
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("FAILURE\n")));
+    case -1:
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("FAILURE\n")));
       break;
     default:
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("<unknown type> = %d\n"), this->msg_type ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("<unknown type> = %d\n"),
+                  this->msg_type ()));
       break;
     }
 }
