@@ -346,6 +346,10 @@ ACE_Sig_Handler::dispatch (int signum,
       // Remove the current disposition by registering the default
       // disposition.
       sa.register_action (signum);
+
+      // Allow the event handler to close down if necessary.
+      eh->handle_close (ACE_INVALID_HANDLE,
+                        ACE_Event_Handler::SIGNAL_MASK);
     }
 
   // Restore error when callback completes.
