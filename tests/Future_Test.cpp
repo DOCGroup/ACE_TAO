@@ -543,7 +543,8 @@ main (int, ASYS_TCHAR *[])
     ACE_Future<int> f1;
     f1.set (100);
 
-    ACE_Time_Value timeout (1);
+    // Note you need to use absolute time, not relative time.
+    ACE_Time_Value timeout (ACE_OS::gettimeofday () + ACE_Time_Value (10));
     int value = 0;
 
     if (f1.get (value, &timeout) == 0
@@ -579,7 +580,6 @@ main (int, ASYS_TCHAR *[])
     // The stuff below might crash the process if the <operator=>
     // implementation was bad
     int value = 0;
-    ACE_Time_Value timeout (1);
 
     f1.set (100);
     f1.get (value, &timeout);
