@@ -1,5 +1,10 @@
 Thu Sep 04 10:26:11 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/OS.cpp: (tss_open): removed paren from around type in "new"
+	  statement, because GHS (and ANSI C++) compilers will choke on it.
+	  Thanks to Brian Mendel <brian.r.mendel@boeing.com> for reporting
+	  this.
+
 	* ace/Token_Manager.{h,cpp}: register ACE_Token_Manager singleton
 	  for deletion with ACE_Object_Manager.
 
