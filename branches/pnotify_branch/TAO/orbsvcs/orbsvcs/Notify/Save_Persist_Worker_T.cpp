@@ -19,7 +19,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
   template<class TOPOOBJ>
   Save_Persist_Worker<TOPOOBJ>::Save_Persist_Worker(
@@ -41,6 +41,6 @@ namespace TAO_NOTIFY
       ACE_CHECK;
     }
   }
-} // namespace TAO_NOTIFY
+} // namespace TAO_Notify
 
 #endif /* SAVE_PERSIST_WORKER_CPP */

@@ -13,12 +13,44 @@ ACE_RCSID(Notify, TAO_Notify_Method_Request_Dispatch, "$Id$")
 #include "Consumer.h"
 #include "Admin.h"
 #include "ConsumerAdmin.h"
+#include "EventChannelFactory.h"
+#include "ace/OS_NS_stdio.h"
+//#define DEBUG_LEVEL 10
+#ifndef DEBUG_LEVEL
+# define DEBUG_LEVEL TAO_debug_level
+#endif //DEBUG_LEVEL
 
+// Constuct from event
 TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
       const TAO_Notify_Event * event,
       TAO_Notify_ProxySupplier* proxy_supplier,
       bool filtering)
   : TAO_Notify_Method_Request_Event (event)
+  , proxy_supplier_ (proxy_supplier)
+  , filtering_ (filtering)
+{
+}
+
+// Construct from a delivery rquest
+TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
+      const TAO_Notify::Delivery_Request_Ptr & delivery,
+      TAO_Notify_ProxySupplier* proxy_supplier,
+      bool filtering)
+  : TAO_Notify_Method_Request_Event (delivery)
+  , proxy_supplier_ (proxy_supplier)
+  , filtering_ (filtering)
+{
+}
+
+// Constuct construct from another method request+event
+// event is passed separately because we may be using a copy
+// of the one in the previous method request
+TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
+      const TAO_Notify_Method_Request_Event & request,
+      const TAO_Notify_Event * event,
+      TAO_Notify_ProxySupplier* proxy_supplier,
+      bool filtering)
+  : TAO_Notify_Method_Request_Event (request, event)
   , proxy_supplier_ (proxy_supplier)
   , filtering_ (filtering)
 {
@@ -71,61 +103,115 @@ TAO_Notify_Method_Request_Dispatch::execute_i (ACE_ENV_SINGLE_ARG_DECL)
   return 0;
 }
 
+/// Static method used to reconstruct a Method Request Dispatch
+TAO_Notify_Method_Request_Dispatch_Queueable *
+TAO_Notify_Method_Request_Dispatch::unmarshal (
+    TAO_Notify::Delivery_Request_Ptr & delivery_request,
+    TAO_Notify_EventChannelFactory &ecf,
+    TAO_InputCDR & cdr
+    ACE_ENV_ARG_DECL)
+{
+  bool ok = true;
+  TAO_Notify_Method_Request_Dispatch_Queueable * result = 0;
+  ACE_CString textpath;
+  CORBA::ULong count;
+  if (cdr.read_ulong (count))
+  {
+    TAO_Notify::IdVec id_path (count);
+    for (size_t nid = 0; ok && nid < count; ++nid)
+    {
+      TAO_Notify_Object::ID id = 0;
+      if ( cdr.read_long (id))
+      {
+        id_path.push_back (id);
+        char idbuf[20];
+        ACE_OS::snprintf (idbuf, sizeof(idbuf)-1, "/%d", ACE_static_cast (int, id));
+        textpath += idbuf;
+      }
+      else
+      {
+        ok = false;
+      }
+    }
+
+    if (ok)
+    {
+      TAO_Notify_ProxySupplier* proxy_supplier = ecf.find_proxy_supplier (id_path,
+        0 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN(0);
+      if (proxy_supplier != 0)
+      {
+        if (DEBUG_LEVEL > 6) ACE_DEBUG ((LM_DEBUG,
+          ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch reload event for %s\n")
+          , textpath.c_str()
+          ));
+        ACE_NEW_NORETURN (result,
+          TAO_Notify_Method_Request_Dispatch_Queueable (delivery_request, proxy_supplier, true));
+      }
+      else
+      {
+        TAO_Notify_ProxyConsumer * proxy_consumer = ecf.find_proxy_consumer (id_path, 0 ACE_ENV_ARG_PARAMETER); //@@todo
+        if (proxy_consumer == 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+            ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch::unmarshal: unknown proxy id %s\n")
+            , textpath.c_str()
+            ));
+        }
+        else
+        {
+          ACE_ERROR ((LM_ERROR,
+            ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch::unmarshal: wrong type of proxy id %s\n")
+            , textpath.c_str()
+            ));
+        }
+      }
+    }
+    else
+    {
+      ACE_ERROR ((LM_ERROR,
+        ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch::unmarshal: Cant read proxy id path\n")
+        ));
+    }
+  }
+  return result;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 
 
 /*******************************************************************/
 
-TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (
-  const TAO_Notify_Event * event)
-  : event_ (event)
-{
-}
-
-
-TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (
-    const TAO_Notify_Method_Request_Event & rhs,
-    const TAO_Notify_Event * event)
-  : event_ (event)
-{
-}
-
-TAO_Notify_Method_Request_Event::~TAO_Notify_Method_Request_Event()
-{
-}
-
-void
-TAO_Notify_Method_Request_Event::complete ()
-{
-  int todo_request_complete;
-}
-
-
-unsigned long
-TAO_Notify_Method_Request_Event::sequence ()
-{
-  int todo_request_sequence;
-  return 0;
-}
-
-bool
-TAO_Notify_Method_Request_Event::should_retry ()
-{
-  int todo_request_should_retry;
-  return false;
-}
-
-/**********************************************************/
-
-TAO_Notify_Method_Request_Dispatch_Queueable::TAO_Notify_Method_Request_Dispatch_Queueable (const TAO_Notify_Event_var& event, TAO_Notify_ProxySupplier* proxy_supplier, CORBA::Boolean filtering)
+// Constuct construct from another method request+event
+// event is passed separately because we may be using a copy
+// of the one in the previous method request
+TAO_Notify_Method_Request_Dispatch_Queueable::TAO_Notify_Method_Request_Dispatch_Queueable (
+      const TAO_Notify_Method_Request_Event & request,
+      TAO_Notify_Event_var & event,
+      TAO_Notify_ProxySupplier* proxy_supplier,
+      bool filtering)
   : TAO_Notify_Method_Request_Queueable (event.get ())
-  , TAO_Notify_Method_Request_Dispatch (event.get(), proxy_supplier, filtering)
-  , event_var_ (event)
-  , proxy_guard_ (proxy_supplier)
+  , TAO_Notify_Method_Request_Dispatch (request, event.get (), proxy_supplier, filtering)
 {
 #if 0
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P|%t) Construct Method_Request_Dispatch @%@\n"),
+    this));
+#endif
+}
+
+  /// Constuct construct from Delivery Request
+  /// should ONLY be used by unmarshall
+TAO_Notify_Method_Request_Dispatch_Queueable::TAO_Notify_Method_Request_Dispatch_Queueable (
+        const TAO_Notify::Delivery_Request_Ptr & request,
+        TAO_Notify_ProxySupplier* proxy_supplier,
+        bool filtering)
+  : TAO_Notify_Method_Request_Queueable (request->event ().get ())
+  , TAO_Notify_Method_Request_Dispatch (request, request->event ().get (), proxy_supplier, filtering)
+{
+#if 0
+  ACE_DEBUG ((LM_DEBUG,
+    ACE_TEXT ("(%P|%t) Construct unmarshalled Method_Request_Dispatch_Queueable  @%@\n"),
     this));
 #endif
 }
@@ -147,7 +233,10 @@ TAO_Notify_Method_Request_Dispatch_Queueable::execute (ACE_ENV_SINGLE_ARG_DECL)
 
 /*********************************************************************************************************/
 
-TAO_Notify_Method_Request_Dispatch_No_Copy::TAO_Notify_Method_Request_Dispatch_No_Copy (const TAO_Notify_Event* event, TAO_Notify_ProxySupplier* proxy_supplier, CORBA::Boolean filtering)
+TAO_Notify_Method_Request_Dispatch_No_Copy::TAO_Notify_Method_Request_Dispatch_No_Copy (
+      const TAO_Notify_Event* event,
+      TAO_Notify_ProxySupplier* proxy_supplier,
+      CORBA::Boolean filtering)
   : TAO_Notify_Method_Request_Dispatch (event, proxy_supplier, filtering)
 {
 #if 0
@@ -155,7 +244,19 @@ TAO_Notify_Method_Request_Dispatch_No_Copy::TAO_Notify_Method_Request_Dispatch_N
       ACE_TEXT ("(%P|%t) Construct Method_Request_Dispatch_No_Copy @%@\n"),
       this));
 #endif
-
+}
+  /// Constuct construct from another method request
+TAO_Notify_Method_Request_Dispatch_No_Copy::TAO_Notify_Method_Request_Dispatch_No_Copy (
+      const TAO_Notify_Method_Request_Event & request,
+      TAO_Notify_ProxySupplier* proxy_supplier,
+      bool filtering)
+  : TAO_Notify_Method_Request_Dispatch (request, request.event (), proxy_supplier, filtering)
+{
+#if 0
+    ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT ("(%P|%t) Construct Method_Request_Dispatch_No_Copy @%@\n"),
+      this));
+#endif
 }
 
 TAO_Notify_Method_Request_Dispatch_No_Copy:: ~TAO_Notify_Method_Request_Dispatch_No_Copy ()
@@ -178,13 +279,12 @@ TAO_Notify_Method_Request_Dispatch_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Notify_Method_Request_Queueable* request;
 
-  const TAO_Notify_Event * event_copy = this->event_->queueable_copy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  TAO_Notify_Event_var event_var;
+  this->event_->queueable_copy (event_var ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  TAO_Notify_Event_Copy_var event_var (event_copy);
-
   ACE_NEW_THROW_EX (request,
-                    TAO_Notify_Method_Request_Dispatch_Queueable (event_var, this->proxy_supplier_, this->filtering_),
+                    TAO_Notify_Method_Request_Dispatch_Queueable (*this, event_var, this->proxy_supplier_, this->filtering_),
                     CORBA::INTERNAL ());
 
   return request;

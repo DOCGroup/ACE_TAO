@@ -27,7 +27,7 @@
 #include "ace/streams.h"
 #include "ace/Synch_T.h"
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
 
 /**
@@ -83,7 +83,7 @@ private:
   ACE_SYNCH_MUTEX lock_;
 };
 
-} /* namespace TAO_NOTIFY */
+} /* namespace TAO_Notify */
 
 #include /**/ "ace/post.h"
 #endif /* RANDOM_FILE_H */

@@ -131,14 +131,14 @@ TAO_Notify_FilterAdmin::remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_Notify_FilterAdmin::save_persistent (TAO_NOTIFY::Topology_Saver& saver ACE_ENV_ARG_DECL)
+TAO_Notify_FilterAdmin::save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL)
 {
   if (this->filter_list_.current_size() == 0)
     return;
 
   bool changed = true;
 
-  TAO_NOTIFY::NVPList attrs;
+  TAO_Notify::NVPList attrs;
   bool want_children = saver.begin_object(0, "filter_admin", attrs, changed ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   if (want_children)
@@ -152,11 +152,11 @@ TAO_Notify_FilterAdmin::save_persistent (TAO_NOTIFY::Topology_Saver& saver ACE_E
 
     for (; iter.next(entry) != 0; iter.advance())
     {
-      TAO_NOTIFY::NVPList fattrs;
+      TAO_Notify::NVPList fattrs;
       CORBA::Long id = entry->ext_id_;
       CORBA::String_var ior = orb->object_to_string(entry->int_id_.in() ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-      fattrs.push_back(TAO_NOTIFY::NVP("IOR", ior.in()));
+      fattrs.push_back(TAO_Notify::NVP("IOR", ior.in()));
       saver.begin_object(id, "filter", fattrs, changed ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
       saver.end_object(id, "filter" ACE_ENV_ARG_PARAMETER);
@@ -167,9 +167,9 @@ TAO_Notify_FilterAdmin::save_persistent (TAO_NOTIFY::Topology_Saver& saver ACE_E
   saver.end_object(0, "filter_admin" ACE_ENV_ARG_PARAMETER);
 }
 
-TAO_NOTIFY::Topology_Object*
+TAO_Notify::Topology_Object*
 TAO_Notify_FilterAdmin::load_child (const ACE_CString &type, CORBA::Long id,
-  const TAO_NOTIFY::NVPList& attrs ACE_ENV_ARG_DECL)
+  const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL)
 {
   if (type == "filter")
   {

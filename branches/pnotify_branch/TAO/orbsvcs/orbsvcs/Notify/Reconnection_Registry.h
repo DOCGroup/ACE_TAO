@@ -24,7 +24,7 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
   static const char REGISTRY_TYPE[] = "reconnect_registry";
   static const char RECONNECT_ID[] = "ReconnectId";
@@ -90,7 +90,7 @@ namespace TAO_NOTIFY
     Reconnection_Registry_Type reconnection_registry_;
     ::NotifyExt::ReconnectionRegistry::ReconnectionID highest_id_;
   };
-} // namespace TAO_NOTIFY
+} // namespace TAO_Notify
 
 #if defined (__ACE_INLINE__)
 #include "Reconnection_Registry.inl"

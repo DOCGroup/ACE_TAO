@@ -4,7 +4,7 @@
 #include "Standard_Event_Persistence.h"
 #include "Persistent_File_Allocator.h"
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
 
 Routing_Slip_Persistence_Manager::Routing_Slip_Persistence_Manager(
@@ -792,7 +792,7 @@ Routing_Slip_Persistence_Manager::remove_from_dllist()
   this->next_manager_ = this;
 }
 
-} /* namespace TAO_NOTIFY */
+} /* namespace TAO_Notify */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 //template class ACE_Node<size_t>;

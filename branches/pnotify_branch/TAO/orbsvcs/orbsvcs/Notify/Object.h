@@ -120,7 +120,7 @@ public:
 
   /// Load our attributes. Each derived type should call the superclass
   /// load first before loading its own attributes.
-  virtual void load_attrs(const TAO_NOTIFY::NVPList& attrs);
+  virtual void load_attrs(const TAO_Notify::NVPList& attrs);
 
 protected:
   /// Init this object with data from <rhs>.
@@ -141,7 +141,7 @@ protected:
   /// Called by derived types to save their attributes. Each
   /// derived type should call its superclass version before
   /// saving its own attrs.
-  virtual void save_attrs(TAO_NOTIFY::NVPList& attrs);
+  virtual void save_attrs(TAO_Notify::NVPList& attrs);
 
   ///= Protected data members.
 

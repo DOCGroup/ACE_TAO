@@ -6,7 +6,7 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_strings.h"
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
 
 Standard_Event_Persistence::Standard_Event_Persistence ()

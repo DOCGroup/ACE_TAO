@@ -2,7 +2,7 @@
 
 #include "Bit_Vector.h"
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
 
 Bit_Vector::Bit_Vector()

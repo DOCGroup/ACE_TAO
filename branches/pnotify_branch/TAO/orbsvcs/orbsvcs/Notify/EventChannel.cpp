@@ -63,7 +63,7 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
                            , const CosNotification::AdminProperties & initial_admin
                            ACE_ENV_ARG_DECL)
 {
-  this->TAO_NOTIFY::Topology_Object::init (ecf);
+  this->TAO_Notify::Topology_Object::init (ecf);
 
   this->ecf_ = ecf;
 
@@ -129,7 +129,7 @@ void
 TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
                            ACE_ENV_ARG_DECL)
 {
-  this->TAO_NOTIFY::Topology_Object::init (ecf);
+  this->TAO_Notify::Topology_Object::init (ecf);
 
   this->ecf_ = ecf;
 
@@ -483,7 +483,7 @@ TAO_Notify_EventChannel::validate_qos (const CosNotification::QoSProperties & /*
 }
 
 void
-TAO_Notify_EventChannel::save_persistent (TAO_NOTIFY::Topology_Saver& saver ACE_ENV_ARG_DECL)
+TAO_Notify_EventChannel::save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL)
 {
   bool changed = this->self_changed_;
   this->self_changed_ = false;
@@ -491,20 +491,20 @@ TAO_Notify_EventChannel::save_persistent (TAO_NOTIFY::Topology_Saver& saver ACE_
 
   if (is_persistent ())
   {
-    TAO_NOTIFY::NVPList attrs;
+    TAO_Notify::NVPList attrs;
     this->save_attrs(attrs);
 
     bool want_all_children = saver.begin_object(
       this->id(), "channel", attrs, changed ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    TAO_NOTIFY::Save_Persist_Worker<TAO_Notify_ConsumerAdmin> ca_wrk(saver, want_all_children);
+    TAO_Notify::Save_Persist_Worker<TAO_Notify_ConsumerAdmin> ca_wrk(saver, want_all_children);
 
     ACE_ASSERT(this->ca_container_ != 0);
     this->ca_container_->collection()->for_each(&ca_wrk ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    TAO_NOTIFY::Save_Persist_Worker<TAO_Notify_SupplierAdmin> sa_wrk(saver, want_all_children);
+    TAO_Notify::Save_Persist_Worker<TAO_Notify_SupplierAdmin> sa_wrk(saver, want_all_children);
     ACE_ASSERT(this->sa_container_ != 0);
     this->sa_container_->collection()->for_each(&sa_wrk ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
@@ -515,27 +515,27 @@ TAO_Notify_EventChannel::save_persistent (TAO_NOTIFY::Topology_Saver& saver ACE_
 
 namespace {
   template<class T>
-    void add_attr(TAO_NOTIFY::NVPList& attrs, const T& prop) {
+    void add_attr(TAO_Notify::NVPList& attrs, const T& prop) {
       if (prop.is_valid())
       {
-        attrs.push_back(TAO_NOTIFY::NVP (prop));
+        attrs.push_back(TAO_Notify::NVP (prop));
       }
     }
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template void add_attr<TAO_NS_Property_Boolean>(TAO_NOTIFY::NVPList&,
-  const TAO_NS_Property_Boolean&);
-template void add_attr<TAO_NS_Property_T<int> >(TAO_NOTIFY::NVPList&,
-  const TAO_NS_Property_T<int>&);
+template void add_attr<TAO_Notify_Property_Boolean>(TAO_Notify::NVPList&,
+  const TAO_Notify_Property_Boolean&);
+template void add_attr<TAO_Notify_Property_T<int> >(TAO_Notify::NVPList&,
+  const TAO_Notify_Property_T<int>&);
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate void add_attr<TAO_NS_Property_Boolean>(\
-  TAO_NOTIFY::NVPList&, const TAO_NS_Property_Boolean&)
-#pragma instantiate void add_attr<TAO_NS_Property_T<int> >(\
-  TAO_NOTIFY::NVPList&, const TAO_NS_Property_T<int>&)
+#pragma instantiate void add_attr<TAO_Notify_Property_Boolean>(\
+  TAO_Notify::NVPList&, const TAO_Notify_Property_Boolean&)
+#pragma instantiate void add_attr<TAO_Notify_Property_T<int> >(\
+  TAO_Notify::NVPList&, const TAO_Notify_Property_T<int>&)
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 }
 
 void
-TAO_Notify_EventChannel::save_attrs(TAO_NOTIFY::NVPList& attrs)
+TAO_Notify_EventChannel::save_attrs(TAO_Notify::NVPList& attrs)
 {
   TAO_Notify_Object::save_attrs(attrs);
   add_attr(attrs, this->admin_properties_->max_global_queue_length());
@@ -545,7 +545,7 @@ TAO_Notify_EventChannel::save_attrs(TAO_NOTIFY::NVPList& attrs)
 }
 
 void
-TAO_Notify_EventChannel::load_attrs(const TAO_NOTIFY::NVPList& attrs)
+TAO_Notify_EventChannel::load_attrs(const TAO_Notify::NVPList& attrs)
 {
   TAO_Notify_Object::load_attrs(attrs);
   attrs.load(this->admin_properties_->max_global_queue_length());
@@ -555,13 +555,13 @@ TAO_Notify_EventChannel::load_attrs(const TAO_NOTIFY::NVPList& attrs)
   this->admin_properties_->init();
 }
 
-TAO_NOTIFY::Topology_Object *
+TAO_Notify::Topology_Object *
 TAO_Notify_EventChannel::load_child (const ACE_CString &type,
                                                   CORBA::Long id,
-                                                  const TAO_NOTIFY::NVPList& attrs
+                                                  const TAO_Notify::NVPList& attrs
                                                   ACE_ENV_ARG_DECL)
 {
-  TAO_NOTIFY::Topology_Object* result = this;
+  TAO_Notify::Topology_Object* result = this;
   if (type == "consumer_admin")
   {
     if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
@@ -615,16 +615,58 @@ TAO_Notify_EventChannel::load_child (const ACE_CString &type,
   }
   return result;
 }
+TAO_Notify_ProxyConsumer *
+TAO_Notify_EventChannel::find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position ACE_ENV_ARG_DECL)
+{
+  TAO_Notify_ProxyConsumer * result = 0;
+  size_t path_size = id_path.size ();
+  if (position < path_size)
+  {
+    TAO_Notify_SupplierAdmin_Find_Worker find_worker;
+    TAO_Notify_SupplierAdmin * admin = find_worker.find (id_path[position], *this->sa_container_ ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+    ++position;
+    if (admin != 0)
+    {
+      result = admin->find_proxy_consumer (id_path, position
+        ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN(0);
+    }
+  }
+  return result;
+}
+
+TAO_Notify_ProxySupplier *
+TAO_Notify_EventChannel::find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position ACE_ENV_ARG_DECL)
+{
+  TAO_Notify_ProxySupplier * result = 0;
+  size_t path_size = id_path.size ();
+  if (position < path_size)
+  {
+    TAO_Notify_ConsumerAdmin_Find_Worker find_worker;
+    TAO_Notify_ConsumerAdmin * admin = find_worker.find (id_path[position], *this->ca_container_ ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+    ++position;
+    if (admin != 0)
+    {
+      result = admin->find_proxy_supplier (id_path, position
+        ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN(0);
+    }
+  }
+  return result;
+}
+
 
 void
 TAO_Notify_EventChannel::reconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
-  TAO_NOTIFY::Reconnect_Worker<TAO_Notify_ConsumerAdmin> ca_wrk;
+  TAO_Notify::Reconnect_Worker<TAO_Notify_ConsumerAdmin> ca_wrk;
   ACE_ASSERT(this->ca_container_ != 0);
   this->ca_container_->collection()->for_each(&ca_wrk ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  TAO_NOTIFY::Reconnect_Worker<TAO_Notify_SupplierAdmin> sa_wrk;
+  TAO_Notify::Reconnect_Worker<TAO_Notify_SupplierAdmin> sa_wrk;
   ACE_ASSERT(this->sa_container_ != 0);
   this->sa_container_->collection()->for_each(&sa_wrk ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -652,8 +694,8 @@ template class TAO_ESF_Shutdown_Proxy<TAO_Notify_SupplierAdmin>;
 
 template class Save_Persist_Worker<TAO_Notify_ConsumerAdmin>;
 template class Save_Persist_Worker<TAO_Notify_SupplierAdmin>;
-template class TAO_NOTIFY::Reconnect_Worker<TAO_Notify_ConsumerAdmin>;
-template class TAO_NOTIFY::Reconnect_Worker<TAO_Notify_SupplierAdmin>;
+template class TAO_Notify::Reconnect_Worker<TAO_Notify_ConsumerAdmin>;
+template class TAO_Notify::Reconnect_Worker<TAO_Notify_SupplierAdmin>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -677,7 +719,7 @@ template class TAO_NOTIFY::Reconnect_Worker<TAO_Notify_SupplierAdmin>;
 
 #pragma instantiate Save_Persist_Worker<TAO_Notify_ConsumerAdmin>
 #pragma instantiate Save_Persist_Worker<TAO_Notify_SupplierAdmin>
-#pragma instantiate TAO_NOTIFY::Reconnect_Worker<TAO_Notify_ConsumerAdmin>
-#pragma instantiate TAO_NOTIFY::Reconnect_Worker<TAO_Notify_SupplierAdmin>
+#pragma instantiate TAO_Notify::Reconnect_Worker<TAO_Notify_ConsumerAdmin>
+#pragma instantiate TAO_Notify::Reconnect_Worker<TAO_Notify_SupplierAdmin>
 
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -9,7 +9,10 @@
 ACE_RCSID(RT_Notify, TAO_Notify_POA_Helper, "$Id$")
 
 #include "tao/debug.h"
-#include "ID_Factory.h"
+//#define DEBUG_LEVEL 10
+#ifndef DEBUG_LEVEL
+# define DEBUG_LEVEL TAO_debug_level
+#endif // DEBUG_LEVEL
 
 TAO_Notify_POA_Helper::TAO_Notify_POA_Helper (void)
 {
@@ -81,7 +84,7 @@ TAO_Notify_POA_Helper::create_i (PortableServer::POA_ptr parent_poa, const char*
                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (TAO_debug_level > 0)
+  if (DEBUG_LEVEL > 0)
     ACE_DEBUG ((LM_DEBUG, "Created POA : %s\n", this->poa_->the_name ()));
   /*
   // Destroy the policies
@@ -125,13 +128,10 @@ TAO_Notify_POA_Helper::long_to_ObjectId (CORBA::Long id ACE_ENV_ARG_DECL) const
 CORBA::Object_ptr
 TAO_Notify_POA_Helper::activate (PortableServer::Servant servant, CORBA::Long& id ACE_ENV_ARG_DECL)
 {
-  /// ID Factory for objects.
-  static TAO_Notify_ID_Factory id_factory;
-
   // Generate a new ID.
-  id = id_factory.id ();
+  id = this->id_factory_.id ();
 
-  if (TAO_debug_level > 0)
+  if (DEBUG_LEVEL > 0)
     ACE_DEBUG ((LM_DEBUG, "Activating object with id = %d in  POA : %s\n", id, this->poa_->the_name ()));
 
   // Convert CORBA::Long to ObjectId
@@ -151,8 +151,9 @@ TAO_Notify_POA_Helper::activate (PortableServer::Servant servant, CORBA::Long& i
 CORBA::Object_ptr
 TAO_Notify_POA_Helper::activate_with_id (PortableServer::Servant servant, CORBA::Long id ACE_ENV_ARG_DECL)
 {
-  if (TAO_debug_level > 0)
+  if (DEBUG_LEVEL > 0)
     ACE_DEBUG ((LM_DEBUG, "Activating object with existing id = %d in  POA : %s\n", id, this->poa_->the_name ()));
+  this->id_factory_.set_last_used (id);
 
   // Convert CORBA::Long to ObjectId
   PortableServer::ObjectId_var oid =

@@ -1,7 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
+#include "Routing_Slip.h"
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
 
 ACE_INLINE
@@ -25,6 +26,21 @@ Delivery_Request::set_destination_id (IdVec & destination_id)
   this->destination_id_ = destination_id;
 }
 
-} // namespace TAO_NOTIFY
+ACE_INLINE
+unsigned long
+Delivery_Request::sequence () const
+{
+  return this->routing_slip_->sequence ();
+}
+
+ACE_INLINE
+bool
+Delivery_Request::should_retry () const
+{
+  return this->routing_slip_->should_retry ();
+}
+
+
+} // namespace TAO_Notify
 
 

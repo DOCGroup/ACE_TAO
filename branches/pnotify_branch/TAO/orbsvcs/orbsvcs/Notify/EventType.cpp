@@ -143,7 +143,7 @@ TAO_Notify_EventType::dump (void) const
 }
 
 /// Initialize from an NVPList, return false on failure
-bool TAO_Notify_EventType::init(const TAO_NOTIFY::NVPList& attrs)
+bool TAO_Notify_EventType::init(const TAO_Notify::NVPList& attrs)
 {
   bool result = false;
 
@@ -158,16 +158,16 @@ bool TAO_Notify_EventType::init(const TAO_NOTIFY::NVPList& attrs)
 
 }
 
-  // TAO_NOTIFY::Topology_Object
+  // TAO_Notify::Topology_Object
 
 void
-TAO_Notify_EventType::save_persistent (TAO_NOTIFY::Topology_Saver& saver ACE_ENV_ARG_DECL)
+TAO_Notify_EventType::save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL)
 {
-  TAO_NOTIFY::NVPList attrs;
+  TAO_Notify::NVPList attrs;
   bool changed = true;
 
-  attrs.push_back(TAO_NOTIFY::NVP("Domain", this->event_type_.domain_name.in()));
-  attrs.push_back(TAO_NOTIFY::NVP("Type", this->event_type_.type_name.in()));
+  attrs.push_back(TAO_Notify::NVP("Domain", this->event_type_.domain_name.in()));
+  attrs.push_back(TAO_Notify::NVP("Type", this->event_type_.type_name.in()));
   saver.begin_object(0, "subscription", attrs, changed ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 

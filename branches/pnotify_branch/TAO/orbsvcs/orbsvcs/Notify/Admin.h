@@ -35,7 +35,7 @@ template <class TYPE> class TAO_Notify_Container_T;
  *
  */
 
-class TAO_Notify_Serv_Export TAO_Notify_Admin : public TAO_NOTIFY::Topology_Parent
+class TAO_Notify_Serv_Export TAO_Notify_Admin : public TAO_Notify::Topology_Parent
 {
   friend class TAO_Notify_Builder;
 public:
@@ -72,20 +72,21 @@ public:
   void subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types
                          ACE_ENV_ARG_DECL);
 
+  TAO_Notify_EventChannel * event_channel () const;
   /// Shutdown
   virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
-  virtual void save_persistent (TAO_NOTIFY::Topology_Saver& saver ACE_ENV_ARG_DECL);
-  virtual TAO_NOTIFY::Topology_Object* load_child (const ACE_CString &type,
-    CORBA::Long id, const TAO_NOTIFY::NVPList& attrs ACE_ENV_ARG_DECL);
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
+  virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
+    CORBA::Long id, const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL);
   virtual void reconnect (ACE_ENV_SINGLE_ARG_DECL);
 
   void set_default (bool is_default);
   bool is_default () const;
-  virtual void load_attrs(const TAO_NOTIFY::NVPList& attrs);
+  virtual void load_attrs(const TAO_Notify::NVPList& attrs);
 
 protected:
-  void save_attrs (TAO_NOTIFY::NVPList& attrs);
+  void save_attrs (TAO_Notify::NVPList& attrs);
   virtual const char * get_admin_type_name (void) const = 0;
 
 protected:

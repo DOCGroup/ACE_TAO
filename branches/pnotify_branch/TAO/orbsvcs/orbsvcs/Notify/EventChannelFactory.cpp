@@ -25,7 +25,7 @@ ACE_RCSID(Notify, TAO_Notify_EventChannelFactory, "$Id$")
 #include "Seq_Worker_T.h"
 
 #include "tao/debug.h"
-//#define DEBUG_LEVEL 10
+//#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
@@ -117,7 +117,7 @@ TAO_Notify_EventChannelFactory::init (PortableServer::POA_ptr poa ACE_ENV_ARG_DE
   // Note topology factory is configured separately from the "builder" mediated
   // objects since it is independant of the "style" of Notification Service.
   this->topology_factory_ =
-    ACE_Dynamic_Service <TAO_NOTIFY::Topology_Factory>::instance ("Topology_Factory");
+    ACE_Dynamic_Service <TAO_Notify::Topology_Factory>::instance ("Topology_Factory");
 
   this->load_topology (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -218,7 +218,7 @@ TAO_Notify_EventChannelFactory::get_event_channel (CosNotifyChannelAdmin::Channe
 }
 
 void
-TAO_Notify_EventChannelFactory::set_topology_factory(TAO_NOTIFY::Topology_Factory* f)
+TAO_Notify_EventChannelFactory::set_topology_factory(TAO_Notify::Topology_Factory* f)
 {
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P,%t) Debug Topology_Factory installed in EventChannelFactory.\n")
@@ -235,7 +235,7 @@ TAO_Notify_EventChannelFactory::load_topology (ACE_ENV_SINGLE_ARG_DECL)
   this->loading_topology_ = true;
   if (this->topology_factory_ != 0)
   {
-    auto_ptr<TAO_NOTIFY::Topology_Loader> tl(this->topology_factory_->create_loader());
+    auto_ptr<TAO_Notify::Topology_Loader> tl(this->topology_factory_->create_loader());
     if (tl.get () != 0)
     {
       tl->load (this ACE_ENV_ARG_PARAMETER);
@@ -256,13 +256,13 @@ TAO_Notify_EventChannelFactory::is_persistent () const
 }
 
 void
-TAO_Notify_EventChannelFactory::save_persistent (TAO_NOTIFY::Topology_Saver& saver ACE_ENV_ARG_DECL)
+TAO_Notify_EventChannelFactory::save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL)
 {
   bool changed = this->self_changed_;
   this->self_changed_ = false;
   this->children_changed_ = false;
 
-  TAO_NOTIFY::NVPList attrs; // ECF has no attributes
+  TAO_Notify::NVPList attrs; // ECF has no attributes
 
   bool want_all_children =
     saver.begin_object(0, "channel_factory", attrs, changed ACE_ENV_ARG_PARAMETER);
@@ -271,7 +271,7 @@ TAO_Notify_EventChannelFactory::save_persistent (TAO_NOTIFY::Topology_Saver& sav
   // for each deleted child
   //  delete_child  // if the child has persistence.
 
-  TAO_NOTIFY::Save_Persist_Worker<TAO_Notify_EventChannel> wrk(saver, want_all_children);
+  TAO_Notify::Save_Persist_Worker<TAO_Notify_EventChannel> wrk(saver, want_all_children);
 
   ACE_ASSERT(this->ec_container_ != 0);
   this->ec_container_->collection()->for_each(&wrk ACE_ENV_ARG_PARAMETER);
@@ -288,22 +288,23 @@ TAO_Notify_EventChannelFactory::save_persistent (TAO_NOTIFY::Topology_Saver& sav
 void
 TAO_Notify_EventChannelFactory::load_event_persistence (ACE_ENV_SINGLE_ARG_DECL)
 {
+#define EVENT_PERISISTENCE_SUPPORT //@@todo
 #ifdef EVENT_PERISISTENCE_SUPPORT //@@todo
-  TAO_NOTIFY::Event_Persistence_Strategy * strategy =
-    ACE_Dynamic_Service <TAO_NOTIFY::Event_Persistence_Strategy>::instance ("Event_Persistence");
+  TAO_Notify::Event_Persistence_Strategy * strategy =
+    ACE_Dynamic_Service <TAO_Notify::Event_Persistence_Strategy>::instance ("Event_Persistence");
   if (strategy != 0)
   {
     if (this->topology_factory_ != 0)
     {
-      Event_Persistence_Factory * factory = strategy->get_factory ();
+      TAO_Notify::Event_Persistence_Factory * factory = strategy->get_factory ();
       if (factory != 0)
       {
         for (
-          Routing_Slip_Persistence_Manager * rspm = factory->first_reload_manager();
+          TAO_Notify::Routing_Slip_Persistence_Manager * rspm = factory->first_reload_manager();
           rspm != 0;
           rspm = rspm->load_next ())
         {
-          TAO_NOTIFY::Routing_Slip_Ptr routing_slip = Routing_Slip::create (*this, rspm);
+          TAO_Notify::Routing_Slip_Ptr routing_slip = TAO_Notify::Routing_Slip::create (*this, rspm);
           if (!routing_slip.null ())
           {
             this->routing_slip_restart_set_.insert (routing_slip);
@@ -352,7 +353,7 @@ TAO_Notify_EventChannelFactory::change_to_parent (ACE_ENV_SINGLE_ARG_DECL)
       ACE_CHECK_RETURN(false);
       if (seq == this->topology_save_seq_)
       {
-        auto_ptr<TAO_NOTIFY::Topology_Saver> saver(this->topology_factory_->create_saver());
+        auto_ptr<TAO_Notify::Topology_Saver> saver(this->topology_factory_->create_saver());
         if (saver.get() != 0)
         {
           this->save_persistent(*saver ACE_ENV_ARG_PARAMETER);
@@ -366,15 +367,15 @@ TAO_Notify_EventChannelFactory::change_to_parent (ACE_ENV_SINGLE_ARG_DECL)
   return saving;
 }
 
-TAO_NOTIFY::Topology_Object*
+TAO_Notify::Topology_Object*
 TAO_Notify_EventChannelFactory::load_child (const ACE_CString& type,
                                         CORBA::Long id,
-                                        const TAO_NOTIFY::
+                                        const TAO_Notify::
                                         NVPList& attrs
                                         ACE_ENV_ARG_DECL)
 {
   // ignore anything but our valid children (ie channel)
-  TAO_NOTIFY::Topology_Object * result = this;
+  TAO_Notify::Topology_Object * result = this;
   if (type == "channel")
   {
     if (DEBUG_LEVEL) ACE_DEBUG ((LM_DEBUG,
@@ -393,7 +394,7 @@ TAO_Notify_EventChannelFactory::load_child (const ACE_CString& type,
 
     result = ec;
   }
-  else if (type == TAO_NOTIFY::REGISTRY_TYPE)
+  else if (type == TAO_Notify::REGISTRY_TYPE)
   {
     result = & this->reconnect_registry_;
   }
@@ -404,7 +405,7 @@ void
 TAO_Notify_EventChannelFactory::reconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Reconnect all children first
-  TAO_NOTIFY::Reconnect_Worker<TAO_Notify_EventChannel> wrk;
+  TAO_Notify::Reconnect_Worker<TAO_Notify_EventChannel> wrk;
 
   this->ec_container_->collection()->for_each(&wrk ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -419,19 +420,15 @@ TAO_Notify_EventChannelFactory::reconnect (ACE_ENV_SINGLE_ARG_DECL)
   this->reconnect_registry_.send_reconnect (this_reference.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-#ifdef TODO_EVENT_PERSISTENCE //
   // reactivate events in-progress
   Routing_Slip_Set::CONST_ITERATOR iter (this->routing_slip_restart_set_);
-  Routing_Slip_Ptr * routing_slip;
+  TAO_Notify::Routing_Slip_Ptr * routing_slip;
   for (iter.first(); iter.next(routing_slip); iter.advance())
   {
     (*routing_slip)->reconnect(ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
   }
   this->routing_slip_restart_set_.reset ();
-#else
-  int TODO_Event_Persistence;
-#endif
 }
 
 NotifyExt::ReconnectionRegistry::ReconnectionID
@@ -469,6 +466,63 @@ TAO_Notify_EventChannelFactory::save_topology (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->self_change (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+}
+
+TAO_Notify_ProxyConsumer *
+TAO_Notify_EventChannelFactory::find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position ACE_ENV_ARG_DECL)
+{
+  TAO_Notify_ProxyConsumer * result = 0;
+  size_t path_size = id_path.size ();
+
+  // EventChannelFactory only:  The first id is proably for the ECF itself
+  // if so, silently consume it.
+  if (position < path_size && id_path[position] == this->id_)
+  {
+    ++position;
+  }
+  if (position < path_size)
+  {
+    TAO_Notify_EventChannel_Find_Worker find_worker;
+
+    TAO_Notify_EventChannel * ec = find_worker.find (id_path[position], *this->ec_container_ ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+    ++position;
+    if (ec != 0)
+    {
+      result = ec->find_proxy_consumer (id_path, position
+        ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN(0);
+    }
+  }
+  return result;
+}
+
+TAO_Notify_ProxySupplier *
+TAO_Notify_EventChannelFactory::find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position ACE_ENV_ARG_DECL)
+{
+  TAO_Notify_ProxySupplier * result = 0;
+  size_t path_size = id_path.size ();
+
+  // EventChannelFactory only:  The first id is proably for the ECF itself
+  // if so, silently consume it.
+  if (position < path_size && id_path[position] == this->id_)
+  {
+    ++position;
+  }
+  if (position < path_size)
+  {
+    TAO_Notify_EventChannel_Find_Worker find_worker;
+    TAO_Notify_EventChannel * ec = find_worker.find (id_path[position], *this->ec_container_ ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (0);
+    ++position;
+    if (ec != 0)
+    {
+      result = ec->find_proxy_supplier (id_path, position
+        ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN(0);
+    }
+  }
+  return result;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

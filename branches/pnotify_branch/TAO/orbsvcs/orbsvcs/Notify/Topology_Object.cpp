@@ -13,7 +13,7 @@
 // children have been saved in Topology_Object::save_persistent ().
 // If these rules are followed, the only risk is a (harmless) extra save.
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
   void
   Topology_Savable::reconnect (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -114,7 +114,7 @@ namespace TAO_NOTIFY
   }
 
   void
-  Topology_Object::get_id_path (TAO_NOTIFY::IdVec & id_path) const
+  Topology_Object::get_id_path (TAO_Notify::IdVec & id_path) const
   {
     if (this->topology_parent() != 0)
     {
@@ -145,4 +145,4 @@ template class ACE_Array_Base <TAO_Notify_Object::ID>;
 #pragma instantiate ACE_Array_Base <TAO_Notify_Object::ID>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-} // namespace TAO_NOTIFY
+} // namespace TAO_Notify

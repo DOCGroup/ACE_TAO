@@ -222,6 +222,11 @@ Supplier_Main::Supplier_Main ()
   , disconnect_on_exit_ (false)
   , id_file_ (ACE_TEXT ("supplier.ids"))
   , pause_ (0)
+  , ec_id_ (0)
+  , sa_id_(0)
+  , structured_proxy_id_(0)
+  , sequence_proxy_id_(0)
+  , any_proxy_id_(0)
   , reconnection_callback_ (*this)
   , reconnecting_ (false)
 {
@@ -447,13 +452,13 @@ Supplier_Main::save_ids()
     int imode = ACE_static_cast (int, this->mode_);
     ACE_OS::fprintf (idf,
       "%d,%d,%d,%d,%d,%d,%d,\n",
-      imode,
-      ec_id_,
-      sa_id_,
-      structured_proxy_id_,
-      sequence_proxy_id_,
-      any_proxy_id_,
-      endflag);
+      static_cast <int> (imode),
+      static_cast <int> (ec_id_),
+      static_cast <int> (sa_id_),
+      static_cast <int> (structured_proxy_id_),
+      static_cast <int> (sequence_proxy_id_),
+      static_cast <int> (any_proxy_id_),
+      static_cast <int> (endflag) );
     ACE_OS::fclose (idf);
   }
 }
@@ -463,18 +468,20 @@ Supplier_Main::load_ids()
 {
   bool ok = false;
   FILE *idf =
-    ACE_OS::fopen (this->id_file_.c_str (), "w");
+    ACE_OS::fopen (this->id_file_.c_str (), "r");
 
   if (idf != 0)
   {
     int field = 0;
 
-    char buffer[100];
+    char buffer[100] = "";
     ACE_OS::fgets (buffer, sizeof(buffer), idf);
     ACE_OS::fclose (idf);
+
     char * pb = buffer;
-    while (*pb != 0)
+    while (!ok && *pb != 0)
     {
+fprintf (stderr, "Buffer: %s\n" , pb);
       char * eb = ACE_OS::strchr (pb, ',');
       char * nb = eb + 1;
       if (eb == 0)
@@ -482,14 +489,13 @@ Supplier_Main::load_ids()
         eb = pb + ACE_OS::strlen (pb);
         nb = eb;
       }
-      else
-      {
-        *eb = 0;
-      }
+      *eb = 0;
+fprintf (stderr, "PARSE: [%s]\n", pb);
       if (pb < eb)
       {
         int value = ACE_OS::atoi(pb);
-        switch (field)
+fprintf (stderr, "field[%d], %d\n", field, value);
+        switch (++field)
         {
         case 1:
           this->mode_ = static_cast<Mode_T> (value);
@@ -513,7 +519,7 @@ Supplier_Main::load_ids()
           ok = value == 12345;
           break;
         default:
-          ACE_OS::fprintf (stderr, ACE_TEXT ("Warning: too many fields in saved id file.\n"));
+          ACE_OS::fprintf (stderr, ACE_TEXT ("Supplier: Warning: too many fields in saved id file.\n"));
           ok = false;
           break;
         }

@@ -13,9 +13,8 @@
 #define TAO_NOTIFY_ROUTING_SLIP_H
 #include "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 #include "Event.h"
-#include "Types.h"
 #include "Delivery_Request.h"
 #include "Event_Persistence_Factory.h"
 
@@ -31,22 +30,24 @@
 // Forward declarations of classes/pointers/collections
 // referenced from this header
 class TAO_Notify_EventChannelFactory;
+class TAO_Notify_Method_Request;
+class TAO_Notify_ProxyConsumer;
+class TAO_Notify_ProxySupplier;
 class TAO_Notify_Method_Request_Queueable;
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
 
-class TAO_Notify_Export Routing_Slip_Persistence_Manager;
+class TAO_Notify_Serv_Export Routing_Slip_Persistence_Manager;
 
-// Forward declarations of TAO_NOTIFY classes/pointers/collections
+// Forward declarations of TAO_Notify classes/pointers/collections
 // referenced from this header
 
 /// A vector of Delivery Requests.  The body of a Routing_Slip.
 typedef ACE_Vector <Delivery_Request_Ptr> Delivery_Request_Vec;
 
-class Delivery_Method;
-/// A vector of Delivery_Methods.  Used during recovery.
-typedef ACE_Vector <Delivery_Method *> Delivery_Method_Vec;
+/// A vector of Methods_.  Used during recovery.
+typedef ACE_Vector <TAO_Notify_Method_Request_Queueable *> Delivery_Method_Vec;
 
 class Routing_Slip;
 /// A reference-counted smart pointer to a Routing_Slip
@@ -61,12 +62,13 @@ class Routing_Slip_Queue;
  *
  * Interacts with persistent storage to provide reliable delivery.
  */
-class TAO_Notify_Export Routing_Slip : public Persistent_Callback
+class TAO_Notify_Serv_Export Routing_Slip : public Persistent_Callback
 {
   typedef ACE_Guard< TAO_SYNCH_MUTEX > Routing_Slip_Guard;
 public:
   /// "Factory" method for normal use.
-  static Routing_Slip_Ptr create (const TAO_Notify_Event_Ptr& event);
+  static Routing_Slip_Ptr create (const TAO_Notify_Event_var& event
+    ACE_ENV_ARG_DECL);
 
   /// "Factory" method for use during reload from persistent storage.
   static Routing_Slip_Ptr create (
@@ -86,13 +88,20 @@ public:
   /// Route this event to destinations
   /// must be the Action request after
   /// the routing slip is created.
-  void route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel);
+  void route (TAO_Notify_ProxyConsumer* pc, bool reliable_channel ACE_ENV_ARG_DECL);
 
   /// \brief Schedule delivery to a consumer via a proxy supplier
   /// \param proxy_supplier the proxy supplier that will deliver the event
   /// \param filter should consumer-based filtering be applied?
-  /// \param a task to use for this work.
-  void dispatch (TAO_Notify_ProxySupplier * proxy_supplier, bool filter);
+  void dispatch (TAO_Notify_ProxySupplier * proxy_supplier, bool filter ACE_ENV_ARG_DECL);
+
+
+#if 0
+  /// \brief Forward delivery to a consumer via a proxy supplier
+  /// \param proxy_supplier the proxy supplier that will deliver the event
+  /// \param filter should consumer-based filtering be applied?
+  void forward (TAO_Notify_ProxySupplier* ps, bool filter);
+#endif
 
   /////////////////////////////////////////
   /// \brief Wait until the event/routing_slip has
@@ -113,7 +122,7 @@ public:
 
   /////////////////////////////////////////////////////
   // \brief Access the event associated with this routing slip
-  const TAO_Notify_Event_Ptr & event () const;
+  const TAO_Notify_Event_var & event () const;
 
   /// \brief Provide an identifying number for this Routing Slip
   /// to use in debug messages.
@@ -146,7 +155,7 @@ private:
   bool create_persistence_manager();
 
   /// Private constructor for use by create method
-  Routing_Slip(const TAO_Notify_Event_Ptr& event);
+  Routing_Slip(const TAO_Notify_Event_var& event);
 
   /// Test to see if all deliveries are complete.
   bool all_deliveries_complete () const;
@@ -174,7 +183,7 @@ private:
   Routing_Slip_Ptr this_ptr_;
 
   // The event being delivered.
-  TAO_Notify_Event_Ptr event_;
+  TAO_Notify_Event_var event_;
 
   /// A  mini-state machine to control persistence
   /// See external doc for circles and arrows.

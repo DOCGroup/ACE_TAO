@@ -247,14 +247,14 @@ TAO_Notify_EventTypeSeq::dump (void) const
     }
 }
 
-  // TAO_NOTIFY::Topology_Object
+  // TAO_Notify::Topology_Object
 void
-TAO_Notify_EventTypeSeq::save_persistent (TAO_NOTIFY::Topology_Saver& saver ACE_ENV_ARG_DECL)
+TAO_Notify_EventTypeSeq::save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL)
 {
   bool changed = this->self_changed_;
   this->self_changed_ = false;
   this->children_changed_ = false;
-  TAO_NOTIFY::NVPList attrs;
+  TAO_Notify::NVPList attrs;
 
   TAO_Notify_EventTypeSeq::ITERATOR iter (*this);
   TAO_Notify_EventType* event_type;
@@ -278,11 +278,11 @@ TAO_Notify_EventTypeSeq::save_persistent (TAO_NOTIFY::Topology_Saver& saver ACE_
   }
 }
 
-TAO_NOTIFY::Topology_Object*
+TAO_Notify::Topology_Object*
 TAO_Notify_EventTypeSeq::load_child (const ACE_CString &type, CORBA::Long id,
-  const TAO_NOTIFY::NVPList& attrs ACE_ENV_ARG_DECL)
+  const TAO_Notify::NVPList& attrs ACE_ENV_ARG_DECL)
 {
-  TAO_NOTIFY::Topology_Object *result = this;
+  TAO_Notify::Topology_Object *result = this;
   TAO_Notify_EventType et;
 
   if ((type == "subscription") && et.init(attrs))

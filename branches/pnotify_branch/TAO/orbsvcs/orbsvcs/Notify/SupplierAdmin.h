@@ -24,6 +24,8 @@
 
 #include "Admin.h"
 
+class TAO_Notify_ProxyConsumer;
+
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
@@ -60,18 +62,23 @@ public:
 
   virtual const char * get_admin_type_name () const;
 
-  virtual TAO_NOTIFY::Topology_Object* load_child (
+  virtual TAO_Notify::Topology_Object* load_child (
     const ACE_CString &type,
     CORBA::Long id,
-    const TAO_NOTIFY::NVPList& attrs
+    const TAO_Notify::NVPList& attrs
     ACE_ENV_ARG_DECL);
+
+  TAO_Notify_ProxyConsumer * find_proxy_consumer (
+      TAO_Notify::IdVec & id_path,
+      size_t position
+      ACE_ENV_ARG_DECL);
 
 protected:
 
-    TAO_NOTIFY::Topology_Object *load_proxy (
+    TAO_Notify::Topology_Object *load_proxy (
     CORBA::Long id,
     CosNotifyChannelAdmin::ClientType ctype,
-    const TAO_NOTIFY::NVPList& attrs
+    const TAO_Notify::NVPList& attrs
     ACE_ENV_ARG_DECL);
 
   /// = NotifyExt::SupplierAdmin methods

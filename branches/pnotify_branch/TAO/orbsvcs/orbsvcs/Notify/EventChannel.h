@@ -46,7 +46,7 @@ template <class TYPE> class TAO_Notify_Container_T;
  */
 class TAO_Notify_Serv_Export TAO_Notify_EventChannel
   : public POA_CosNotifyChannelAdmin::EventChannel,
-    public TAO_NOTIFY::Topology_Parent
+    public TAO_Notify::Topology_Parent
 {
   friend class TAO_Notify_Builder;
 
@@ -80,29 +80,30 @@ public:
   virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
   virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
 
-  // TAO_NOTIFY::Topology_Parent
+  // TAO_Notify::Topology_Parent
 
-  virtual void save_persistent (TAO_NOTIFY::Topology_Saver& saver ACE_ENV_ARG_DECL);
-  virtual TAO_NOTIFY::Topology_Object* load_child (const ACE_CString &type,
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
+  virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
                                                    CORBA::Long id,
-                                                   const TAO_NOTIFY::NVPList& attrs
+                                                   const TAO_Notify::NVPList& attrs
                                                    ACE_ENV_ARG_DECL);
   virtual void reconnect (ACE_ENV_SINGLE_ARG_DECL);
 
   virtual TAO_Notify_Object::ID get_id () const {return id();}
 
-  TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_NOTIFY::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
-  TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_NOTIFY::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
+  TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
+  TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
 
   /// Release
   virtual void release (void);
 
   /// Shutdown
   virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
-  virtual void load_attrs(const TAO_NOTIFY::NVPList& attrs);
+  virtual void load_attrs(const TAO_Notify::NVPList& attrs);
+
 
 protected:
-  virtual void save_attrs(TAO_NOTIFY::NVPList& attrs);
+  virtual void save_attrs(TAO_Notify::NVPList& attrs);
 
 protected:
   typedef TAO_Notify_Container_T <TAO_Notify_ConsumerAdmin> TAO_Notify_ConsumerAdmin_Container;

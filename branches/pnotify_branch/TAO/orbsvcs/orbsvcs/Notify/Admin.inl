@@ -1,5 +1,13 @@
 // $Id$
 
+ACE_INLINE
+TAO_Notify_EventChannel *
+TAO_Notify_Admin::event_channel () const
+{
+  return this->ec_;
+}
+
+
 ACE_INLINE TAO_Notify_FilterAdmin&
 TAO_Notify_Admin::filter_admin (void)
 {

@@ -24,21 +24,25 @@
 #include "ProxySupplier.h"
 #include "tao/Basic_Types.h"
 #include "ace/CORBA_macros.h"
-
+#include "Delivery_Request.h"
 
 /**
  * @class TAO_Notify_Method_Request_Event
  *
- * @brief
+ * @brief A base class for all Method Requests that are associated with events.
  *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Event
 {
-protected:
-  /// Constuctor
+public:
+  /// Construct from event
   TAO_Notify_Method_Request_Event (const TAO_Notify_Event *);
 
-  /// Copy-like constructor
+  /// Construct from a delivery request
+  TAO_Notify_Method_Request_Event (
+    const TAO_Notify::Delivery_Request_Ptr & delivery_request);
+
+  /// Construct from another Method Request
   /// Event is passed separately because it may be a copy of the one in request.
   TAO_Notify_Method_Request_Event (const TAO_Notify_Method_Request_Event & rhs,
     const TAO_Notify_Event * event);
@@ -48,7 +52,6 @@ public:
   virtual ~TAO_Notify_Method_Request_Event ();
 
   const TAO_Notify_Event * event() const;
-
   void complete ();
   unsigned long sequence ();
   bool should_retry ();
@@ -57,6 +60,9 @@ protected:
 
   /// The Event
   const TAO_Notify_Event * event_;
+
+  /// Pointer to the routing slip's delivery request (if any)
+  TAO_Notify::Delivery_Request_Ptr delivery_request_;
 };
 
 /***************************************************************/
@@ -78,6 +84,9 @@ public:
   TAO_Notify_Method_Request_Event_Queueable (
     const TAO_Notify_Method_Request_Event & prev_request,
     const TAO_Notify_Event_var & event_var);
+
+  TAO_Notify_Method_Request_Event_Queueable (
+    TAO_Notify::Delivery_Request_Ptr & request);
 
   /// Destructor
   virtual ~TAO_Notify_Method_Request_Event_Queueable ();

@@ -30,7 +30,7 @@
 #include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Manager.h"
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
 
 
@@ -197,7 +197,7 @@ private:
   ACE_SYNCH_CONDITION wake_up_thread_;
 };
 
-} /* namespace TAO_NOTIFY */
+} /* namespace TAO_Notify */
 
 #include /**/ "ace/post.h"
 #endif /* PERSISTENT_FILE_ALLOCATOR_H */

@@ -16,7 +16,7 @@
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
 
-using namespace TAO_NOTIFY;
+using namespace TAO_Notify;
 
 namespace {
   CORBA::Long makeNVPList (NVPList& nvp, ACEXML_Attributes* attrs)
@@ -36,7 +36,7 @@ namespace {
   }
 }
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
   XML_Loader::XML_Loader ()
     : input_ (0)
@@ -217,12 +217,12 @@ namespace TAO_NOTIFY
     }
   }
 
-} /* namespace TAO_NOTIFY */
+} /* namespace TAO_Notify */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unbounded_Stack<TAO_NOTIFY::Topology_Object*>;
-template class ACE_Node<TAO_NOTIFY::Topology_Object*>;
+template class ACE_Unbounded_Stack<TAO_Notify::Topology_Object*>;
+template class ACE_Node<TAO_Notify::Topology_Object*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Unbounded_Stack<TAO_NOTIFY::Topology_Object*>
-#pragma instantiate ACE_Node<TAO_NOTIFY::Topology_Object*>
+#pragma instantiate ACE_Unbounded_Stack<TAO_Notify::Topology_Object*>
+#pragma instantiate ACE_Node<TAO_Notify::Topology_Object*>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -25,7 +25,7 @@
 #include "Topology_Object.h"
 #include "Topology_Factory.h"
 #include "Reconnection_Registry.h"
-//@@todo #include "Routing_Slip.h"
+#include "Routing_Slip.h"
 
 class TAO_Notify_EventChannel;
 template <class TYPE> class TAO_Notify_Container_T;
@@ -45,11 +45,11 @@ template <class TYPE> class TAO_Notify_Container_T;
  */
 class TAO_Notify_Serv_Export TAO_Notify_EventChannelFactory
   : public virtual POA_NotifyExt::EventChannelFactory
-  , public TAO_NOTIFY::Topology_Parent
+  , public TAO_Notify::Topology_Parent
 
 {
   friend class TAO_Notify_Builder;
-//@@todo   typedef ACE_Unbounded_Set <TAO_NOTIFY::Routing_Slip_Ptr> Routing_Slip_Set;
+  typedef ACE_Unbounded_Set <TAO_Notify::Routing_Slip_Ptr> Routing_Slip_Set;
 
 public:
   /// Constuctor
@@ -88,17 +88,17 @@ public:
 
   /// Use the passed in saver factory to generate topology saver objects.
   /// Does not take ownership.
-  void set_topology_factory(TAO_NOTIFY::Topology_Factory* sf);
+  void set_topology_factory(TAO_Notify::Topology_Factory* sf);
 
   //-- Topology_Parent
 
   virtual bool is_persistent () const;
 
-  virtual void save_persistent (TAO_NOTIFY::Topology_Saver& saver ACE_ENV_ARG_DECL);
+  virtual void save_persistent (TAO_Notify::Topology_Saver& saver ACE_ENV_ARG_DECL);
   virtual bool change_to_parent (ACE_ENV_SINGLE_ARG_DECL);
-  virtual TAO_NOTIFY::Topology_Object* load_child (const ACE_CString &type,
+  virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
                                                    CORBA::Long id,
-                                                   const TAO_NOTIFY::NVPList& attrs
+                                                   const TAO_Notify::NVPList& attrs
                                                    ACE_ENV_ARG_DECL);
   virtual void reconnect (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -109,6 +109,12 @@ public:
 
   virtual void save_topology (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+  TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
+  TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
+  TAO_Notify_Object * follow_id_path (TAO_Notify::IdVec & id_path, size_t position  ACE_ENV_ARG_DECL);
+  virtual TAO_Notify_Object::ID get_id () const {return id();} // @@todo move to INL
+
 
  protected:
   typedef TAO_Notify_Container_T<TAO_Notify_EventChannel>
@@ -172,11 +178,11 @@ private:
   TAO_SYNCH_MUTEX topology_save_lock_;
   /// change-in-progress detector to avoid duplicates
   short topology_save_seq_;
-  TAO_NOTIFY::Topology_Factory* topology_factory_;
-  TAO_NOTIFY::Reconnection_Registry reconnect_registry_;
+  TAO_Notify::Topology_Factory* topology_factory_;
+  TAO_Notify::Reconnection_Registry reconnect_registry_;
   bool loading_topology_;
 
-//@@todo   Routing_Slip_Set routing_slip_restart_set_;
+  Routing_Slip_Set routing_slip_restart_set_;
 
 };
 

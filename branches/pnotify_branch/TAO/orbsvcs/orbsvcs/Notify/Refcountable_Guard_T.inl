@@ -1,5 +1,7 @@
 // $Id$
 
+#include "ace/Log_Msg.h"
+
 template <class T> ACE_INLINE
 TAO_Notify_Refcountable_Guard_T<T>::TAO_Notify_Refcountable_Guard_T (T *t)
   : t_ (t)
@@ -56,7 +58,9 @@ TAO_Notify_Refcountable_Guard_T<T>::operator = (
   const TAO_Notify_Refcountable_Guard_T<T> & rhs)
 {
   // note exception safe assignment. see Sutter's "Exceptional C++"
-  swap (TAO_Notify_Refcountable_Guard_T<T> (rhs.t_));
+  // note it's worth the following optimization to avoid threadsafe increment/decrement refcounters
+  if (this->t_ != rhs.t_)
+    swap (TAO_Notify_Refcountable_Guard_T<T> (rhs.t_));
   return *this;
 }
 
@@ -67,5 +71,5 @@ TAO_Notify_Refcountable_Guard_T<T>::swap (TAO_Notify_Refcountable_Guard_T & rhs)
 {
   T* pt = rhs.t_;
   rhs.t_ = this->t_;
-  this->t_ = rhs.t_;
+  this->t_ = pt;
 }

@@ -8,7 +8,7 @@
 #include "ace/OS_NS_strings.h"
 //#include "ace/Service_Object.h"
 
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
 
   XML_Topology_Factory::XML_Topology_Factory()
@@ -149,6 +149,6 @@ ACE_FACTORY_DECLARE (TAO_Notify_Persist, XML_Topology_Factory)
 ACE_FACTORY_DEFINE (TAO_Notify_Persist, XML_Topology_Factory)
 
 
-} /* namespace TAO_NOTIFY */
+} /* namespace TAO_Notify */
 
 

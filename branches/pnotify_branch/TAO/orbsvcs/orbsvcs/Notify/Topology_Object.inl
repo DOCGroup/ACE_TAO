@@ -1,5 +1,5 @@
 // $Id$
-namespace TAO_NOTIFY
+namespace TAO_Notify
 {
   ACE_INLINE
   bool
@@ -16,5 +16,5 @@ namespace TAO_NOTIFY
     return send_change (ACE_ENV_SINGLE_ARG_PARAMETER);
   }
 
-} // namespace TAO_NOTIFY
+} // namespace TAO_Notify
 
