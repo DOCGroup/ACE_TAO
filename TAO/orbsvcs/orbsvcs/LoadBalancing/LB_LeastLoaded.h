@@ -73,17 +73,17 @@ public:
   //@{
   virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
   virtual CosLoadBalancing::Properties * get_properties (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
   virtual void push_loads (
       const PortableGroup::Location & the_location,
       const CosLoadBalancing::LoadList & loads
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-    
+
   virtual CORBA::Object_ptr next_member (
       PortableGroup::ObjectGroup_ptr object_group,
       CosLoadBalancing::LoadManager_ptr load_manager
@@ -91,7 +91,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound,
                      PortableGroup::MemberNotFound));
-    
+
 //   virtual void analyze_loads (
 //       PortableGroup::ObjectGroup_ptr object_group,
 //       CosLoadBalancing::LoadManager_ptr load_manager

@@ -1,3 +1,37 @@
+Thu Aug  1 21:00:03 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp (get_location):
+
+	  Corrected LoadManager parameter so that it is not "const."
+	  Fixes an "incompatible qualifier" compile-time error.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert.h (enable_alert):
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert.cpp (enable_alert):
+
+	  Corrected object group reference parameter.  "CORBA::Object_ptr"
+	  not "CORBA::Object".
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert.inl (forward):
+
+	  Removed this method.  There is no longer a need to cache a
+	  forward reference.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.cpp
+	  (receive_request_service_contexts):
+
+	  Check for the CosLoadBalancing::LOAD_MANAGED ServiceContext in
+	  the request's ServiceContextList.  If it exists, and a load
+	  alert has been enabled, throw a CORBA::TRANSIENT() to force the
+	  client back to the original target, i.e. the LoadManager.
+
+	  Do not attempt to obtain the cached forward reference from the
+	  LoadAlert object.  It is longer cached.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.h:
+
+	  Cosmetic updates.
+
 Thu Aug  1 21:09:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/PSS/PSDL_Node.cpp: Fixed a compile error in Win32
