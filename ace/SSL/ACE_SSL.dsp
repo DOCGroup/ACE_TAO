@@ -43,8 +43,8 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ACE_SSL_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\ACE_wrappers" /I "..\..\OpenSSL\openssl-0.9.5\inc32" /D "NDEBUG" /D "_WINDOWS" /D "WIN32" /D "ACE_HAS_SSL" /D "ACE_SSL_BUILD_DLL" /YX /FD /c
-# SUBTRACT CPP /X
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\ACE_wrappers" /I "..\..\OpenSSL\openssl-0.9.5\inc32" /D "NDEBUG" /D "_WINDOWS" /D "WIN32" /D "ACE_HAS_SSL" /D "ACE_SSL_BUILD_DLL" /FD /c
+# SUBTRACT CPP /X /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ACE_SSL.lib ace.lib libeay32.lib ssleay32.lib /nologo /dll /pdb:none /machine:I386 /libpath:"..\..\ACE_wrappers\ace" /libpath:"..\..\ACE_wrappers\TAO\tao" /libpath:"..\..\OpenSSL\openssl-0.9.5\out32dll"
+# ADD LINK32 ace.lib libeay32.lib ssleay32.lib /nologo /dll /pdb:none /machine:I386 /libpath:"..\..\ACE_wrappers\ace" /libpath:"..\..\ACE_wrappers\TAO\tao" /libpath:"..\..\OpenSSL\openssl-0.9.5\out32dll"
 
 !ELSEIF  "$(CFG)" == "ACE_SSL - Win32 Debug"
 
@@ -70,8 +70,8 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ACE_SSL_EXPORTS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\..\ACE_wrappers" /I "..\..\OpenSSL\openssl-0.9.5\inc32" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_HAS_SSL" /D "ACE_SSL_BUILD_DLL" /YX /FD /GZ /c
-# SUBTRACT CPP /Fr
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "..\..\ACE_wrappers" /I "..\..\OpenSSL\openssl-0.9.5\inc32" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_HAS_SSL" /D "ACE_SSL_BUILD_DLL" /FD /GZ /c
+# SUBTRACT CPP /Fr /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
