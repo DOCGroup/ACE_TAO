@@ -97,9 +97,11 @@ Fri Dec 25 01:55:32 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  TAO/examples/Callback_Quoter/Notifier_i.cpp
 	  TAO/examples/POA/On_Demand_Loading/Servant_Manager.cpp
 	  TAO/examples/Simple/bank/AccountManager_i.cpp
+	  TAO/orbsvcs/orbsvcs/AV/AVStreams_i.cpp	
 	  TAO/orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp
 	  TAO/orbsvcs/orbsvcs/Log/Logger_i.cpp
 	  TAO/orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
+	  TAO/orbsvcs/orbsvcs/Naming/CosNaming_i.cpp
 	  TAO/orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp
 	  TAO/orbsvcs/orbsvcs/Trader/Trader.cpp
 	  TAO/orbsvcs/orbsvcs/Trader/Trader_Utils.cpp
