@@ -2,6 +2,7 @@ Wed Dec  3 08:49:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Dynamic/client.cpp:
         * tests/Portable_Interceptors/Dynamic/server.cpp:
+        * tests/Portable_Interceptors/ForwardRequest/server.cpp:
         * tests/Portable_Interceptors/Collocated/Dynamic/Collocated_Test.cpp:
           Fixed compile errors when TAO_HAS_INTERCEPTORS has been set to 0
 
