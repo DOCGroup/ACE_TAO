@@ -1,44 +1,53 @@
+Fri Oct 30 23:04:20 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Callback_Quoter/Consumer_Handler.h (reactor_used):
+          removed superfluous class name qualification.
+
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp (add_type):
+          added ACE_UNUSED_ARG (inc_num).  With native exceptions enabled,
+          it's never used, because it's a default return value.
+
 Fri Oct 30 15:21:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* performance_tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.{h,cpp}:
-	  Fixed the collocation test.  It was broken when we stop using
-	  Naming Service with the test.  Also, separate out the
-	  shutdown_server method out since it needs to do more than an
-	  ordinary shutdown call to the server when we are testing the
-	  collocation.  Notice that Irfan is currently fixing this and in
-	  the future, we'll no longer need to treat collocated object
-	  specially. 
+        * performance_tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.{h,cpp}:
+          Fixed the collocation test.  It was broken when we stop using
+          Naming Service with the test.  Also, separate out the
+          shutdown_server method out since it needs to do more than an
+          ordinary shutdown call to the server when we are testing the
+          collocation.  Notice that Irfan is currently fixing this and in
+          the future, we'll no longer need to treat collocated object
+          specially.
 
 Fri Oct 30 15:10:16 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* performance_tests/Demux/CodeGen
+        * performance_tests/Demux/CodeGen
 
-	  Made modifications such that a new method called shutdown is
-	  always generated for every interface. This method will be called
-	  to shutdown the ORB on the server side. 
+          Made modifications such that a new method called shutdown is
+          always generated for every interface. This method will be called
+          to shutdown the ORB on the server side.
 
-	  In addition, we now generate the poa-names.dat file with a POA
-	  depth appaneded to it. Thus we shall have names like
-	  poa_names_1.dat. This will enable us to create many executables
-	  at the same time. Otherwise, everytime we ran the demux
-	  executable, we were overwriting this file. In the servant
-	  implementation, for the shutdown mehtod, we call the shutdown on
-	  the ORB.
+          In addition, we now generate the poa-names.dat file with a POA
+          depth appaneded to it. Thus we shall have names like
+          poa_names_1.dat. This will enable us to create many executables
+          at the same time. Otherwise, everytime we ran the demux
+          executable, we were overwriting this file. In the servant
+          implementation, for the shutdown mehtod, we call the shutdown on
+          the ORB.
 
-	  Affected files are:
+          Affected files are:
 
-	  codegen.cpp
-	  codegen.h
-	  gen_names.cpp
-	  idl.cpp
-	  servant_impl.cpp
-	
-	* performance_tests/Demux/demux_test_client.cpp
+          codegen.cpp
+          codegen.h
+          gen_names.cpp
+          idl.cpp
+          servant_impl.cpp
 
-	  The client now invokes the shutdown method on the very first obj
-	  reference it holds. This will enable the ORB shutting down on
-	  the other side.
+        * performance_tests/Demux/demux_test_client.cpp
+
+          The client now invokes the shutdown method on the very first obj
+          reference it holds. This will enable the ORB shutting down on
+          the other side.
 
 Fri Oct 30 13:50:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
