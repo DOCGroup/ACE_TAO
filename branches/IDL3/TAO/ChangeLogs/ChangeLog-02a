@@ -1,3 +1,25 @@
+Sun Mar 24 20:59:07 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/be/be_array.cpp:
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_visitor_decl.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_field/field_cs.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be_include/be_array.h:
+        * TAO_IDL/be_include/be_visitor_root/root.h:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+          Bugs fixed as a result of testing against IDL_Test. Also
+          fixed lookup problem where a struct/union/exception member
+          name was incorrectly clashing with the scope enclosing the
+          struct/union/exception.
+
 Sun Mar 24 16:30:01 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_structure_fwd.cpp:
