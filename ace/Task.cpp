@@ -18,7 +18,7 @@ ACE_Thread_Mutex ACE_Task_Exit::ace_task_lock_;
 // NOTE:  this preprocessor directive should match the one in
 // ACE_Task_Base::svc_run () below.  This prevents the two statics
 // from being defined.
-#if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) && ! defined (LINUX)
+#if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) && ! defined (ACE_HAS_PTHREADS_XAVIER)
 ACE_Task_Exit *
 ACE_Task_Exit::instance (void)
 {
@@ -46,7 +46,7 @@ ACE_Task_Exit::instance (void)
   return ACE_TSS_GET (instance_, ACE_Task_Exit);
 
 }
-#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE && ! LINUX */
+#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE && ! ACE_HAS_PTHREADS_XAVIER */
 
 
 // Grab hold of the Task * so that we can close() it in the
@@ -227,7 +227,10 @@ ACE_Task_Base::svc_run (void *args)
 
 // NOTE:  this preprocessor directive should match the one in
 // above ACE_Task_Exit::instance ().
-#if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) && ! defined (LINUX)
+// With the Xavier Pthreads package, the exit_hook in TSS causes
+// a seg fault.  So, this works around that by creating exit_hook
+// on the stack.
+#if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) && ! defined (ACE_HAS_PTHREADS_XAVIER)
   // Obtain our thread-specific exit hook and make sure that it knows
   // how to clean us up!  Note that we never use this pointer directly
   // (it's stored in thread-specific storage), so it's ok to
@@ -241,7 +244,7 @@ ACE_Task_Base::svc_run (void *args)
   // So, threads shouldn't exit that way.  Instead, they should
   // return from svc ().
   ACE_Task_Exit exit_hook;
-#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
+#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE && ! ACE_HAS_PTHREADS_XAVIER */
 
   exit_hook.set_task (t);
 
