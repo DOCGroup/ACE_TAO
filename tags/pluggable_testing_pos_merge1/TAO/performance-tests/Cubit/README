@@ -1,0 +1,4 @@
+This directory contains performance tests for COOL, CORBAplus,
+Hardpack, Orbix, TAO, and VisiBroker.  These tests measure the
+latency, jitter, CPU utilization, and priority inversion of these
+ORBs.

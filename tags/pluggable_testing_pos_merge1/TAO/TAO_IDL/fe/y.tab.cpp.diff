@@ -1,0 +1,28 @@
+--- y.tab.cpp.orig	Wed Mar 24 14:30:15 1999
++++ y.tab.cpp	Wed Mar 24 14:50:58 1999
+@@ -971,7 +972,7 @@
+     extern char *ace_foo();
+ #endif
+ 
+-    if (tao_yys = ACE_OS::getenv("TAO_YYDEBUG"))
++    if ((tao_yys = ACE_OS::getenv("TAO_YYDEBUG")))
+     {
+         tao_yyn = *tao_yys;
+         if (tao_yyn >= '0' && tao_yyn <= '9')
+@@ -988,7 +989,7 @@
+     *tao_yyssp = tao_yystate = 0;
+ 
+ tao_yyloop:
+-    if (tao_yyn = tao_yydefred[tao_yystate]) goto tao_yyreduce;
++    if ((tao_yyn = tao_yydefred[tao_yystate])) goto tao_yyreduce;
+     if (tao_yychar < 0)
+     {
+         if ((tao_yychar = tao_yylex()) < 0) tao_yychar = 0;
+@@ -1042,7 +1043,6 @@
+ #ifdef lint
+     goto tao_yyerrlab;
+ #endif
+-tao_yyerrlab:
+     ++tao_yynerrs;
+ tao_yyinrecovery:
+     if (tao_yyerrflag < 3)

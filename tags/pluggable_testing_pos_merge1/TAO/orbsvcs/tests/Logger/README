@@ -1,0 +1,45 @@
+$ID$
+
+This example tests the TAO logging service. It generates SII stubs and
+skeletons using the TAO IDL compiler.  You can either run the client
+and server as seperate processes in the same, or different windows (or
+machines), or you may run the "runtests.pl" script which will start
+both executables.
+
+By default, the client and server use the Naming Service. The
+log_server has its own NamingServer implementation, so it doesn't
+require you to start the NamingService before starting the client and
+server.
+
+The test demonstrates the functionality of the logging service. The
+client program will generate 4 logging messages which will be logged
+to the screen. The first message will be in the "verbose_lite"
+format. The rest will be fully verbose messages. Successful output is:
+
+LM_DEBUG@::log() test (1) 
+Mar  8 16:31:06.000 1999@128.252.165.142@822@LM_EMERGENCY@::log() test (2) 
+Mar  8 16:31:06.000 1999@128.252.165.142@822@LM_INFO@::logv() test (3) 
+Mar  8 16:31:06.000 1999@128.252.165.142@822@LM_EMERGENCY@::log2() test (4) 
+
+server: ------
+
+% server [-d]
+
+client: -------
+
+% client [-d]
+
+Options: -------
+
+-d Debug flag. It is an additive flag, so more -d's will increase
+	the debugging level. Only one flag is necessary to enable the
+	debugging output from the executables, but the debug level
+	affects how the utilized TAO methods act (including mysterious
+	debugging messages).
+
+That's all there is to it. If you desire, feel free to change the
+logging priorities, verbosity levels and messages in the client
+program but note that the maximum length of the message is 1023
+characters.
+
+-Matt Braun mjb2@cs.wustl.edu Thursday, Nov 12'th, 1998

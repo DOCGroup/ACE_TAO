@@ -1,0 +1,70 @@
+$Id$
+
+This is a simple chat application that uses the TAO CORBA ORB.
+It consists of a client and server programs.
+
+The server broadcasts messages from one client to all the clients registered with it.
+
+The client(s) register with a running server. It has a very simple user interface that accepts strings from the user and sends it across to the server.
+The client code also demonstrates the use of the ACE_Event_Handlerclass to accept user input events.
+
+server:
+-------
+
+server [-o <ior_output_file>]
+
+Options:
+-------
+-o    Outputs the server ior to the file specified.
+
+On successfull initialization, the server displays a message that it is running and waits for clients to register with it.
+
+if the [-o <ior_output_file>] option is not specified on the command line then the the server will write the IOR of the server CORBA object to a default file - "chat.ior".
+
+client:
+-------
+
+client [-n <your_nick_name> -f <ior_input_file>]
+
+Options:
+-------
+-n    The nickname that the chat user wants to use.
+-f    Reads the server ior from the file
+
+The nickname specified by the user is displayed by the chat server to all the clients.
+To quit the chat, type "quit".
+
+if the [-f <ior_input_file>] option is not specified on the command line then the client will attempt to read the IOR of the server CORBA object from the default file - "chat.ior".
+
+VxWorks
+-------
+On VxWorks, it's easiest to run the client without any command
+line options.  That way, its stdin can be captured:
+
+    -> ld < server
+    value = 400826292 = 0x17e41fb4
+    -> spa main
+    value = 0 = 0x0
+    Running chat server...
+    -> ld < client
+    value = 399329360 = 0x17cd4850
+    -> main
+
+    using defaults. nickname = noname, filename = chat.ior
+
+    ============= Simple Chat =================
+    ========== type 'quit' to exit  ===========
+    : **** noname has joined the chat ****
+
+    hello
+    : [noname] hello
+
+    goodbye
+    : [noname] goodbye
+
+    quit
+    value = 0 = 0x0
+
+NOTE:  if you built your VxWorks executables with g++, replace "main"
+with "ace_main" above.  See ACE-INSTALL.html for an explanation of why
+ACE renames "main" to "ace_main" with g++ on VxWorks.

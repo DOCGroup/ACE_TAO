@@ -1,0 +1,11 @@
+// $Id$
+
+interface Any_Test
+  // = TITLE
+  //
+  // = DESCRIPTION
+
+{
+  void try_an_any (in any a);
+};
+

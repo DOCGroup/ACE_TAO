@@ -1,0 +1,60 @@
+<html>
+  <!-- $Id $ -->
+  <head>
+    <title>Implementation of leader follower model for global resources</title>
+  </head>
+  
+  <BODY text = "#000000"
+    link="#0000ff"
+    vlink="#cc0000"
+    bgcolor="#ffffff">
+    
+    <body>
+      <HR>
+	<h1>Leader follower model for global resources</h1>
+	<HR>
+	  <h2>Context</h2>
+	  Global resources in TAO mean one ORB and using the reactive strategy
+	  one Reactor. TAO uses the ACE Select Reactor for this purpose. 
+	  One main problem with multithreading and only one Reactor is that
+	  only one thread can wait in handle_events at a time. 
+	  Handle_events is called, when a thread expects input, meaning
+	  it is blocking to wait for it.
+	  
+	  <h2>Idea</h2>
+	  One solution to this problem is to use a leader-follower model,
+	  which partitions the set of threads wanting to wait for input
+	  into one leader and followers. Every thread is eligible to become
+	  a leader. A thread wanting to wait while nobody else is waiting
+	  becomes the leader. If the leader gets its input, which is in
+	  this case its response, it will select a new leader out of the 
+	  set of followers. The followers wait on a condition variable they
+	  own and register it with the ORB core. The ORB core is thereby
+	  responsible for making this access thread-save by providing
+	  a lock for the list of followers with some flags, like
+	  leader_available.
+	  
+	  <h2>Implementation</h2>
+	  The above mentioned condition variables are owned by the 
+	  connection handlers, because reponses are expected per connection,
+	  not necessarily, thinking about other resource models, per thread.
+	  <p>
+	    The involved classes are TAO_ORB_Core, TAO_Client_Connection_Handler
+	    and TAO_ORB. In the TAO_ORB_Core class the list of followers, a lock,
+	    a leader reference counter and a leader thread ID were added.
+	    The handle_input and send_request methods on the TAO_Client_Connection_Handler
+	    contain 95% of the code used for implementing the leader-follower
+	    model. Care has to be taken, that the connection handlers are 
+	    suspended and resumed, properly. A special concern is that
+	    no deadlocking occurs. 
+	  
+	  <HR>
+	    For more details and questions,
+	    <p>
+	      
+	      <address><a href="mailto:mk1@cs.wustl.edu">Michael Kircher</a></address>
+	      <p>
+		<address><a href="mailto:irfan1@cs.wustl.edu">Irfan Pyarali</a></address>
+    </body>
+</html>
+

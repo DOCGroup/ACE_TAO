@@ -1,0 +1,322 @@
+/* -*- C++ -*- */
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO
+//
+// = FILENAME
+//    DynAny.pidl
+//
+// = DESCRIPTION
+//    Allows composition and decomposition of arbitrarily complex CORBA::Any
+//    values at runtime, without requiring compile-time knowledge of the
+//    IDL. See the OMG spec for CORBA v2.2, chapter 7.
+//
+// = AUTHOR
+//    OMG 
+//
+// ============================================================================
+
+#if !defined DYN_ANY_IDL
+#define DYN_ANY_IDL
+
+#pragma prefix "omg.org"
+
+typedef unsigned long TCKind;
+
+// IDL
+interface CORBA_DynAny
+  {
+    typedef CORBA_DynAny DynAny;
+
+    exception Invalid {};
+    // Typecodes don't match, or argument has no meaningful value.
+
+    exception InvalidValue {};
+    // Argument's typecode doesn't match.
+
+    exception TypeMismatch {};
+    // Requested type doesn't match what's there.
+
+    exception InvalidSeq {};
+    // Wrong length or typecode.
+
+
+    // Used only with DynFixed
+    //typedef sequence<octet> OctetSeq;
+
+
+    TypeCode type ();
+    // Returns the typecode expected or contained which, 
+    // once the DynAny object is created, cannot be changed.
+
+    void assign (in DynAny dyn_any)
+      raises (Invalid);
+    // Previous value is overwriiten, but typecodes must match.
+
+    void from_any (in any value)
+      raises (Invalid);
+    // Previous value is overwritten, but typecodes must match.
+
+    any to_any ()
+      raises (Invalid);
+    // Constructs a new CORBA::Any.
+
+    void destroy ();
+    // Destroys this object and any DynAny objects derived from it.
+
+    DynAny copy ();
+    // Clones this object.
+
+
+                // Insertion operations
+
+    void insert_boolean (in boolean value)
+      raises (InvalidValue);
+
+    void insert_octet (in octet value)
+      raises (InvalidValue);
+
+    void insert_char (in char value)
+      raises (InvalidValue);
+
+    void insert_short (in short value)
+      raises (InvalidValue);
+
+    void insert_ushort (in unsigned short value)
+      raises (InvalidValue);
+
+    void insert_long (in long value)
+      raises (InvalidValue);
+
+    void insert_ulong (in unsigned long value)
+      raises (InvalidValue);
+
+    void insert_float (in float value)
+      raises (InvalidValue);
+
+    void insert_double (in double value)
+      raises (InvalidValue);
+
+    void insert_string (in string value)
+      raises (InvalidValue);
+
+    void insert_reference (in Object value)
+      raises (InvalidValue);
+
+    void insert_typecode (in TypeCode value)
+      raises (InvalidValue);
+
+    void insert_longlong (in long long value)
+      raises (InvalidValue);
+
+    void insert_ulonglong (in unsigned long long value)
+      raises (InvalidValue);
+
+   // If sizeof(long double) != 16, it's represented as 
+   // as struct and ACE has no support for conversion or
+   // arithmetic operations.
+/*
+    void insert_longdouble (in long double value)
+        raises (InvalidValue);
+*/
+
+    void insert_wchar (in wchar value)
+      raises (InvalidValue);
+
+
+    // TAO IDL compiler doesn't recognize this type yet.
+/*
+    void insert_wstring (in wstring value)
+      raises (InvalidValue);
+*/
+
+    void insert_any (in any value)
+      raises (InvalidValue);
+
+
+                // Extraction operations
+                    
+    boolean get_boolean ()
+        raises (TypeMismatch);
+
+    octet get_octet ()
+        raises (TypeMismatch);
+
+    char get_char ()
+      raises (TypeMismatch);
+
+    short get_short ()
+      raises (TypeMismatch);
+
+    unsigned short get_ushort ()
+      raises (TypeMismatch);
+
+    long get_long ()
+      raises (TypeMismatch);
+
+    unsigned long get_ulong ()
+      raises (TypeMismatch);
+
+    float get_float ()
+      raises (TypeMismatch);
+
+    double get_double ()
+      raises (TypeMismatch);
+
+    string get_string ()
+      raises (TypeMismatch);
+
+    Object get_reference ()
+      raises (TypeMismatch);
+
+    TypeCode get_typecode ()
+      raises (TypeMismatch);
+
+    long long get_longlong ()
+      raises (TypeMismatch);
+
+    unsigned long long get_ulonglong ()
+      raises (TypeMismatch);
+
+   // If sizeof(long double) != 16, see above.
+/*
+    long double get_longdouble ()
+      raises (TypeMismatch);
+*/
+
+    wchar get_wchar ()
+      raises (TypeMismatch);
+
+
+    // TAO IDL compiler doesn't recognize this type yet.
+/*
+    wstring get_wstring ()
+      raises (TypeMismatch);
+*/
+
+    any get_any ()
+      raises (TypeMismatch);
+
+
+
+    DynAny current_component ();
+    // Returns component at the current position which, for simple
+    // and enumerated types, is *this.
+
+    boolean next ();
+    // Moves to the next component. Returns FALSE if already at the
+    // last component.
+
+    boolean seek (in long index);
+    // Makes the component at index the current component.
+    // Returns FALSE if index is out of range.
+
+    void rewind ();
+    // Same as seek (0), which never returns a FALSE value.
+  };
+
+
+
+  // Fixed types aren't supported by TAO at this time.
+/*
+interface DynFixed : DynAny
+  {
+    OctetSeq get_value ();
+
+    void set_value (in OctetSeq val)
+      raises (InvalidValue);
+  };
+*/
+
+
+interface CORBA_DynEnum : CORBA_DynAny
+  {
+    // Since the internal representation is a ulong,
+    // insert_ulong () and get_ulong () can also be used.
+
+    attribute string value_as_string;
+
+    attribute unsigned long value_as_ulong;
+  };
+
+
+
+typedef string FieldName;
+// The name of a struct or union member.
+
+struct NameValuePair
+  {
+    FieldName id;
+
+    any value;
+  };
+// Representation of a struct or union member.
+
+typedef sequence<NameValuePair> NameValuePairSeq;
+// External representation of the members of a DynStruct object.
+
+interface CORBA_DynStruct : CORBA_DynAny
+  {
+    FieldName current_member_name ();
+
+    TCKind current_member_kind ();
+
+    NameValuePairSeq get_members ();
+
+    void set_members (in NameValuePairSeq value)
+      raises (InvalidSeq);
+    // If the argument has the wrong length or order,
+    // mismatched typecodes or invalid members, the
+    // exception is raised.
+  };
+
+
+
+interface CORBA_DynUnion : CORBA_DynAny
+  {
+    attribute boolean set_as_default;
+    // Should be treated as if it were readonly, which it
+    // probably will be in a future spec.
+
+    DynAny discriminator ();
+
+    TCKind discriminator_kind ();
+
+    DynAny member ();
+
+    attribute FieldName member_name;
+
+    TCKind member_kind ();
+  };
+
+
+
+typedef sequence<any> AnySeq;
+// Representation of the values in a DynArray or DynSequence object.
+
+interface CORBA_DynSequence : CORBA_DynAny
+  {
+    attribute unsigned long length;
+
+    AnySeq get_elements ();
+
+    void set_elements (in AnySeq value)
+      raises (InvalidSeq);
+    // Length and each typecode must match.
+  };
+
+
+
+interface CORBA_DynArray : CORBA_DynAny
+  {
+    AnySeq get_elements ();
+
+    void set_elements (in AnySeq value)
+      raises (InvalidSeq);
+  // Length and each typecode must match.
+  };
+
+#endif /* !defined DYN_ANY_IDL */

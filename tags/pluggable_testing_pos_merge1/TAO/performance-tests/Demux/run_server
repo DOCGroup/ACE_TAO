@@ -1,0 +1,10 @@
+#!/bin/sh
+server_${1}_${2} -OAhost merengue -OAobjdemux linear -OAtablesize ${1} -o ${1} -m ${2} -t l -i $3
+server_${1}_${2} -OAhost merengue -OAobjdemux linear -OAtablesize ${1} -o ${1} -m ${2} -t l -i $3
+server_${1}_${2} -OAhost merengue -OAobjdemux active_demux -OAtablesize ${1} -o ${1} -m ${2} -t a -i $3
+server_${1}_${2} -OAhost merengue -OAobjdemux active_demux -OAtablesize ${1} -o ${1} -m ${2} -t a -i $3
+server_${1}_${2} -OAhost merengue -OAobjdemux user_def -o ${1} -m ${2} -t g -i $3
+server_${1}_${2} -OAhost merengue -OAobjdemux user_def -o ${1} -m ${2} -t g -i $3
+server_${1}_${2} -OAhost merengue -o ${1} -m ${2} -i $3
+server_${1}_${2} -OAhost merengue -o ${1} -m ${2} -i $3
+

@@ -1,0 +1,610 @@
+.\" Copyright (c) 1995 Oregon Graduate Institute
+.TH vcr 1 "November 1995" "MPEG video audio player"
+
+.SH NAME
+.B vcr vcrs
+\- Distributed, real-time synchronized video audio player, version 2.0
+.SH SYNOPSIS
+
+.B vcrs
+[
+.B \-rt
+] [
+.B \-rm
+] [
+.B \-s\fIsession_limit\fP
+] [
+.B \-help
+]
+
+.B vcr
+[
+.B\-rt
+] [
+.B \-shmem
+] [
+.B \-rmsem
+]
+.ti +5n
+[
+.BR \-dither " ordered\||\|ordered2\||\|fs4\||\|fs2\||\|fs2fast\||\|hybrid\||\|
+.if n .ti +5n
+          hybrid2\||\|2x2\||\|gray\||\|color\||\|mono\||\|threshold
+]
+.if n .ti +5n
+[
+.I X-window options
+]
+.if n .ti +5n
+[
+.BR \-v " \fI[hostname:]video-filename\fP"
+]
+.if n .ti +5n
+[
+.BR \-a " \fI[hostname:]audio-filename\fP"
+]
+.if n .ti +5n
+[
+.BR \-p " \fImovie-file-name\fP"
+]
+.if n .ti +5n
+[
+.BR \-l " \fImovie-list-file-name\fP"
+]
+.if n .ti +5n
+[
+.BR \-quiet
+]
+.if n .ti +5n
+[
+.BR \-help
+]
+.SH DESCRIPTION
+
+The player plays \fBMPEG\-1\fP video and \fB8\-bit mu\-law (Sun
+Sparc)\fP audio. It supports
+following \fBfour types\fP of playback:
+.TP
+\ \ \ \(bu
+Plays both video and audio synchronously, in real-time mode. Video
+frames, or even audio samples are dropped if needed.
+.TP
+\ \ \ \(bu
+Plays video only, in real-time mode. Video frames are dropped if
+needed.
+.TP
+\ \ \ \(bu
+Plays video only, in best-effort mode, video frames are played as fast
+as possible.
+.TP
+\ \ \ \(bu
+Plays audio only, in real time mode.
+.PP
+
+When video/audio is played in \fBreal-time\fP mode, play speed (defined in
+terms of frames-per-second (fps) for video and samples-per-second (sps)
+for audio) can be specified through a speed scale. If audio is played at a
+speed other than the recording (normal) speed, samples are interpolated.
+
+When video is played in \fBbest-effort\fP mode, the player tries its
+best to play video frame by frame, and not to drop frames.  This mode
+is not supported very well. Now and then some frames may be
+dropped. Audio is disabled in this mode.
+
+As well as various types of playback, the player also supports other
+common VCR functions such as fast forward, rewind, step
+(forward), random positioning, etc..
+
+The player is of \fBdistributed architecture\fP, with servers and
+clients communicating across Internet. A \fBserver\fP resides on a
+host, and services coming audio/video retrieval requests from clients.
+A \fBclient\fP receives instructions from the user, makes connection
+to servers, buffers incoming streams, decodes video frames,
+interpolates audio samples, and outputs audio and video to
+corresponding devices in a timely manner. A client can connect to
+different servers for audio and video streams, and still plays them
+synchronously.
+
+
+.SH SERVER
+
+To start the server, type:
+
+.B vcrs
+[
+.B \-rt
+] [
+.B \-rm
+] [
+.B \-s\fIsession_limit\fP
+] [
+.B \-help
+]
+
+One host can have a SINGLE server running, which responds to
+connection requests from all clients to that host. Subsequent
+invocation is terminated with an error message.
+
+\fBOptions\fP
+
+.IP "\fB-rt\fP"
+On \fBhpux\fP, \fBsparc-sunos5.3\fP and \fBi86pc-solaris2.4\fP, if you
+have real-time execution privilege, you can start the server with
+the option \fB\-rt\fP to get better service.
+
+.IP "\fB-rm\fP"
+With option \fB\-rm\fP, the server will try to remove socket names
+left by previous crashed invocations before initialization.
+
+.IP "\fB-s\fIsession_limit\fP"
+
+With the option of \fB\-s\fP followed by a positive integer, e.g.
+\fB-s2\fP, \fB-s4\fP or \fB-s10\fP, the number of sessions
+serviced by the server at any time will be limited to be no more than
+the given number. Both audio and video sessions are counted. The
+default session number limit is \fB4\fI.
+
+.IP "\fB-help\fP"
+This option tells the server to print all available options and then
+quit.
+
+.PP
+
+In a video session, the server tries to find a
+corresponding \fB.Info\fP file describing the structure of the MPEG
+file of the session. If this fails, the server scans the MPEG file for
+structure information and tries to create the \fB.Info\fP file. For
+big MPEG files, this scanning process may take quite a few minutes
+(some times even tens of minutes). If the \fB.Info\fP file is found,
+the server simply reads structure information from it.
+
+.SH CLIENT
+
+The client program is available on \fBsun4\fP, \fBhpux\fP and
+\fBi86pc-solaris2.4\fP.  It needs a \fBMotif\fP environment, and
+outputs audio to the default \fBAudioFile\fP server. If the client
+fails to connect to the default AudioFile server, then the audio is
+disabled.
+
+To start the client, type:
+
+.B vcr
+[
+.B\-rt
+] [
+.B \-shmem
+] [
+.B \-rmsem
+]
+.ti +5n
+[
+.BR \-dither " ordered\||\|ordered2\||\|fs4\||\|fs2\||\|fs2fast\||\|hybrid\||\|
+.if n .ti +5n
+          hybrid2\||\|2x2\||\|gray\||\|color\||\|mono\||\|threshold
+]
+.if n .ti +5n
+[
+.I X-window options
+]
+.if n .ti +5n
+[
+.BR \-v " \fI[hostname:]video-filename\fP"
+]
+.if n .ti +5n
+[
+.BR \-a " \fI[hostname:]audio-filename\fP"
+]
+.if n .ti +5n
+[
+.BR \-p " \fImovie-file-name\fP"
+]
+.if n .ti +5n
+[
+.BR \-l " \fImovie-list-file-name\fP"
+]
+.if n .ti +5n
+[
+.BR \-quiet
+]
+.if n .ti +5n
+[
+.BR \-help
+]
+
+\fBOptions\fP
+
+.IP \fB-rt\fP
+On \fBhpux\fP, and \fBi86pc-solaris2.4\fP, if you have real-time
+execution privilege, with this option you may get better service.
+.IP \fB-shmem\fP
+With this option, the client tries to output video frames to the
+X-server via shared memory instead of sockets.
+.IP \fB-rmsem\fP
+With this option, prior to initialization, the client tries to remove
+\fBall\fP existing semaphore and shared memory ids you have access to.
+\fBBe careful\fP, with this option, you also face the danger of
+removing semaphores or shared memory ids being used by other programs,
+as well as all the ones created by failed invocation of the player.  See
+\fBSemaphore ids and shared memory ids used up\fP in \fBKNOWN PROBLEMS\fP
+section.
+.IP "\fB-dither\fP ordered|ordered2|fs4|fs2|fs2fast|hybrid|"
+   hybrid2|2x2|gray|color|mono|threshold
+
+This option specifies the type of dithering performed on video frames
+in order to be displayed on an X-window. The default is
+\fIordered\fP. \fIcolor\fP only works with full color (24-bit)
+displays. All others work with 8-bit color displays. \fImono\fP and
+\fIthreshold\fP also work with mono displays.  Different types of
+dithering have different computational complexity and offer different
+image quality.
+.IP "\fIX-window options\fP"
+All standard X-window Toolkit command line options are accepted
+(see \fBX\fP(1)).
+.IP "\fB-v\fP \fI[hostname:]video-filename\fP"
+The very first program for the player can be specified in command line
+with \fB-v\fP and/or \fB-a\fP options, for video and/or audio streams
+respectively.
+
+This option specifies a video stream. If the \fIhostname\fP part is
+given, the client tries to connect to a running server on the given
+host, and plays the given file. If the hostname part is missing, the
+client assumes there is a running server on the local host or tries to
+fork one.  and tries to connect to it.
+
+.IP "\fB-a\fP \fI[hostname:]audio-filename\fP"
+This option specifies an audio stream of the very first program.
+Only file names with suffix \fB.au\fP are accepted as audio files.
+.IP "\fB-p\fP \fImovie-file-name\fP"
+This option specifies a file specifying a movie to be played upon
+client startup. A movies file contains \fBfive lines\fP lines: title,
+video host name, video file path, audio host name, and audio file path.
+.IP "\fB-l\fP \fImovie-list-file-name\fP"
+This option specifies a movie list file to replace the default movie
+list file \fI$(HOME)/.vcr/vcrPrograms\fP. A movie list file contains a
+banner line, followed by a list of movies.
+.IP "\fB-quiet\fP"
+This option tells the client not to print any text message. This is
+useful when the player is invoked from within a web browser.
+.IP "\fB-help\fP"
+This option tells the client to print all available options and quit.
+
+.PP
+
+\fBOperations\fP
+
+There are \fBtwelve buttons\fP and \fBfour scales\fP defined in the top-level window.
+Buttons from left to right are:
+.PP
+.IP \fIExit\fP
+Exits the client right away.
+.IP \fIInfo\fP
+Pops up a window containing information about the player.
+.IP \fIPara\fP
+Pops up a window with a list of parameters. Parameter values
+can be viewed and modified through this window.
+.IP \fIProg\fP
+Pops up a window with a list of programs.  You
+can select a program from this list to play.
+.IP \fIFile\fP
+This is an alternative way to select programs. pressing this button
+pops up a standard Motif file selection window. You can select
+audio/video file on local host to play. The client assumes a running
+server on local host, or tries to fork one.
+
+File names with suffix \fB.au\fP are accepted as audio, and file
+names with suffices \fB.mpg\fP, or \fB.mpeg\fP (some or all letters in
+the suffices can be upper-case ones) as MPEG video. Other types of
+file names are rejected.
+
+Selection of a new program causes the current program to be discarded.
+.IP \fILoop\fP
+A toggle button. When pressed, the current program is played
+repeatedly until stopped explicitly by the user, otherwise, playback stops when
+program end is hit. This button has no effect on rewind and fast
+forward.
+.IP \fINorm\fP
+Restores play speed to the normal (recording) speed.
+.IP \fIRewind\fP
+For video programs. Plays backward from the current position at a
+speed given by the parameter \fI(Rewind frames-per-second)\fP.  Only first
+frames of MPEG picture groups (I-frames) are played. Audio is
+disabled.
+.IP \fIStop\fP
+Stops active playback, fast forward or rewind.
+.IP \fIFast-Forward\fP
+For video programs. Plays forward from the current position at a speed
+given by the parameter \fI(FF frames-per-second)\fP.  Only first frames of MPEG
+picture groups (I-frames) are played. Audio is disabled.
+.IP \fIPlay\fP
+Plays the program from the current position in one of the two modes,
+depending on if video is involved and the value of an parameter \fI(Real
+time(audio on)(tag))\fP:
+.RS
+.IP -
+Best-effort mode, if the parameter is off (0), and video is involved.
+.IP -
+Real-time mode, otherwise.
+.RE
+.IP \fIStep\fP
+Steps forward for one frame from the current position.
+.PP
+Clicking on buttons \fIRewind\fP, \fIFast-Forward\fP, \fIPlay\fP and
+\fIStep\fP and dragging the \fIPlay-Speed\fP scale all stop current
+active rewind, fast forward, or play.
+
+.B "Four scales \fP from left to right are:"
+
+.IP \fIBalance\fP
+Currently not functional, because only mono audio is
+supported.
+.IP \fIVolume\fP
+Audio volume.
+.IP \fIPlay-Speed\fP
+Specifies play speed for real-time mode playback. This scale is not
+completely linear, with a special middle point (\fB50\fP).
+.RS
+.IP \fB50\fP
+normal (recording) speed.
+.IP "\fB[1 - 50)\fP"
+linear speed value increase from zero to the normal speed.
+.IP "\fB(50 - 100]\fP"
+Linear speed value increase from the normal speed to the maximum
+speed given by the parameter \fI(Video max frames-per-second)\fP when
+video is involved in the current program, or \fI(Audio max
+samples-per-second)\fP when only audio is involved.
+.RE
+This scale also defines the upper-limit of the best-effort playback
+speed.
+.IP \fIPosition\fP
+This scale has multiple functionalities:
+.RS
+.IP -
+Indicates the beginning position for rewind, fast forward and
+playback.
+.IP -
+Shows the current position during rewind, fast forward, and playback.
+.IP -
+Random positioning: you can set the position by dragging the
+slider. when video is involved, the first frame of the picture group
+at the current position is displayed.
+.RE
+.PP
+.B "Program list"
+
+.B Program list
+is maintained through the \fBprogram list\fP window, which is popped up by
+clicking the \fIProg\fP button in the main window. Currently only \fISelect\fP
+and \fIDismiss\fP buttons are fully functional, and contents of a selected
+program can be viewed (but not modified) by pressing the \fIModify\fP
+button. To select a program, \fBhighlight\fP the desired item and
+click \fISelect\fP.  To modify the program list, edit the program file given
+below.
+
+.B "Parameters"
+
+.B Parameters
+are viewed and maintained through the parameter window, which is activated
+by clicking the \fIPara\fP button in the main window. To update a parameter,
+\fBhighlight\fP the item, enter the new value in the text window next
+to the \fIUpdate\fP button, and press \fIUpdate\fP. Following parameters
+are supported:
+
+.IP "\fIReal time (audio on)(tag)\fP"
+Best-effort play mode when this parameter is 0 and video is involved
+in the current program, otherwise real-time play mode. Default: 1,
+range: 0, non-0.
+.IP "\fIVideo max frames-per-second\fP"
+For video programs, real-time mode play speed when speed scale has a
+value of 100. Default: 60, range: > the normal speed.
+.IP "\fIAudio max samples-per-second\fP"
+For audio-only programs, play speed when speed scale has a value of
+100. Default: 16000, range: > the normal speed.
+.IP "\fIFF frames-per-second\fP"
+Fast forward speed. Default: 150, range: > 0.
+.IP "\fIRewind frames-per-second\fP"
+Rewind speed. Default: 150, range: > 0.
+.IP "\fIFeedback delay (msec)\fP"
+Currently not used.
+.IP "\fIAudio output mask\fP"
+Currently not used.
+.IP "\fIAudio_para.encodeType\fP"
+Currently not used.
+.IP "\fIAudio_para.channels\fP"
+Currently not used.
+.IP "\fIAudio_para.samplesPerSecond\fP"
+Currently not used.
+.IP "\fIAudio_para.bytesPerSamples\fP"
+Currently not used.
+.IP "\fIAudio timer interval (millisec)\fP"
+For audio-only programs. Playback
+timer interval in milliseconds. Playback of audio and video is
+driven by a timer in the client. Default: 500, range: > 0.
+.IP "\fIAudio buffered intervals\fP"
+For audio-only programs. This number of timer intervals of audio
+samples are to be buffered in the AudioFile server internal buffer. This
+parameter and the previous one determine how many milliseconds of
+audio samples are to be buffered in AudioFile. Buffering too
+many samples reduces responsiveness, too few may degrade playback
+quality.  Default: 2, range: > 0.
+.IP "\fIFrames per audio play\fP"
+For audio+video programs, this parameter determines the ratio of the
+audio timer interval over the video timer interval.  Default: 4,
+range: > 0.
+.IP "\fIAudio forward (samples)\fP"
+For audio+video programs, this number of samples of audio is
+played ahead of video stream. This is supposed to compensate the
+delay in AudioFile server. Default: 800, range: > 0.
+.IP "\fIVS work-ahead (milli-seconds)\fP"
+For video program, this number of milli-seconds the player tries to
+keep the video server ahead of the client during playback, rewind and
+fast forward.
+
+If the parameter \fISync effective\fP has a value of non-0, then this
+parameter gives the initial value of the VS work-ahead time, and the
+actual work ahead time is adjusted according to current network delay
+jitter level.  If a value less than the default is set, then the
+default instead of the given one is used by the player.
+
+Default: 100, range: >= Default.
+
+.IP "\fIFrame rate limit (fps, float)\fP"
+For video programs. In real-time play mode, if current play speed is
+higher than the value of this parameter, then this
+parameter defines the maximum frame rate the player tries to play.
+Default: 60.0, range: >0.
+.IP "\fICollect statistics(tag)\fP"
+For video programs. If both the server and the client programs are compiled
+with STAT defined, this tag indicates that, at the end of a playback
+session, when \fIStop\fP button is pressed (or in loop-back mode when the
+end of the program is reached) statistics is collected to file
+stat.\fIn\fP in current directory (from which the client is
+invoked). Default: 0, range: 0, non-0.
+.IP "\fICollect video structure info(tag)\fP"
+For video programs. If both the server and the client programs are compiled
+with STAT defined, this tag indicates that, upon successful
+initialization of a video stream, structure information of the MPEG
+stream is collected to a file named struct.\fIn\fP in
+current directory Default: 0, range: 0, non-0.
+.IP "\fISync effective(tag)\fP"
+For video programs, when set, server/client synchronization control is
+effective during playback, rewind and fast forward. Default: 1, range:
+0, non-0.
+.IP "\fIQoS effective(tag)\fP"
+For video programs, when set, automatic frame rate control is
+effective during playback. Default: 1, range: 0, non-0.
+.IP "\fIAudio offset(samples)\fP"
+For audio+video programs. The player assumes that in a program, audio
+and video are recorded strictly synchronously.  But it is usually not
+the case, and there is a certain amount of timing shift between audio
+and video. This parameter specifies audio forward offset against video
+in order to compensate the shift. Default: 0, range: integer
+.IP "\fIFilter parameter(1/R or n-samples)\fP"
+Parameter of the filters for client/server synchronization and frame rate
+control. Default: 50, range: > 0.
+.IP "\fIMax send pattern frames\fP"
+This parameter sets the granularity of the frame rate control
+algorithm. Default: 60, range: > 0.
+.IP "\fIReliable byte-stream audio (tag)\fP"
+In the case when the server is on a remote host, when this tag is set,
+the client establishes a TCP connection to the server for shipping
+audio samples, otherwise a UDP is used. The client always setup a TCP
+connection to the server for control messages, no matter what value
+the tag is.
+.IP "\fIReliable byte-stream video (tag)\fP"
+Similar effort as previous tag, but for video channel.
+.IP "\fIVerbose message(tag)\fP"
+If this tag is set, then verbose message is printed (provided that
+command line option \fB-quiet\fP is not specified. Otherwise the
+client will still print some, but less verbose message.
+.PP
+Parameter setting is for experienced user only. It is suggested that
+you leave values of most parameters as default. If you like to change
+some of them, be careful. It may make the player behave improperly. In
+case you made some change, the player fails to work, and you are
+unable to undo the change, delete the parameter file shown below and
+restart the client.
+
+.SH FILES
+
+.IP "\fI($HOME)/.vcr/vcrPrograms\fP"
+Program file. If this file is absent, it is created with a default
+movie list of several basketball game sample movies in it. The movies
+in the default movies list are maintained at CSE OGI. In a movie list
+file, the first line is a banner. Following this line, each contiguous
+four lines describe a movie: video host, MPEG file path, audio host,
+audio file path. You may edit the movie list fileto include any movies
+you like.
+
+.IP "\fI($HOME)/.vcr/vcrParameters\fP"
+Parameter file. When absent, the system default parameter values
+apply. Whenever you update a parameter, this parameter file is also
+created or updated.
+
+.SH KNOWN PROBLEMS
+
+.B "The player stalls"
+when or after playing audio program at very \fBlow speed\fP, or the
+product of \fI(Audio timer interval)\fP and \fI(Audio buffered intervals)\fP
+parameters \fBtoo large\fP, or \fI(Frames per audio play)\fP too
+large. This is because the client tries to put too many audio
+samples to AudioFile each time, blocking itself for output.
+
+In this version of the player, when an video+audio program is played,
+some conditions are checked and low speed limit is enforced. You
+are not able to set too low play speed (even if you set the speed
+slider to 0 position). But the conditions might not be sufficient.
+
+.B "Play at too high speed\fP,"
+or \fI(Audio timer interval)\fP too small, or \fI(Video max
+frames-per-second)\fP, \fI(FF frames-per-second)\fP, or \fI(Rewind
+frames-per-second)\fP too high, presentation quality may be worse than
+expected. This is because of the resolution limit of the UNIX interval
+timer, which is about 10 milliseconds.
+
+.B "When Play speed jump from high to very low\fP,"
+a few seconds of worse-than-expected video presentation quality may be
+experienced. Because at high speed, the video server usually drops
+frames, and play speed changes, the player does not flush the video
+pipeline.
+
+Various problems may be experienced if the \fBparameter\fP values are too
+far from their default. The parameter values are seldomly guarded.
+
+.B "Audio doesn't work when played across the Internet\fP."
+This is because audio is retrieved from the audio server to the
+client via TCP, and the Internet TCP connection fails to provide
+enough (e.g. 8KB/s) sustained bandwidth. In this case, all audio
+samples would be too late showing up at the client, and thus are
+dropped.
+
+.B "X shared memory problem\fP."
+Parts of the user interface may not work correctly when the player
+outputs to X-window via shared memory (with option \fB-shmem\fP).  For
+example, some of the buttons may not show up. Usually, the missing
+buttons will show up by iconifying the user interface.
+
+.B "Core dump."
+The player may core dump when playing a specific MPEG stream, at a
+specific position. This may be because the parameters in the MPEG
+stream is out of the ability of the decoder code. Upon core dump, you
+may want to reproduce the problem, and recompile the player with
+option -DNDEBUG, run the player again to see if any assertions fails.
+
+.B "Semaphore or shared memory ids used up\fP."
+When this happens, an error shmget() or semget() is reported by the
+player.  This may happen if previous invocation(s) of the player have
+exit abnormally causing core dump, and you try to run the player
+again. Because semaphores and shared memory segments might not be
+reclaimed when the player exits abnormally.  You may run the client
+with option \fB\-rmsem\fP to remove all existing semaphores and shared
+memory ids accessable by you. See description of \fB\-rmsem\fP.  If
+\fB-rmsem\fP does not work, you may need to use tools like
+\fBipcrm(1)\fP.
+
+.B "Undeleted UNIX socket pathes /tmp/vcrs*\fP"
+Some UNIX socket names may remain in /tmp directory as "vcrs*", if the
+server or the client has terminated abnormally.
+
+.SH BUG REPORT
+
+If you experience problems, look at the above KNOWN PROBLEM section
+first. If the problem is not described, try to reproduce the problem, and
+\fBreport bug\fP to \fBscen@cse.ogi.edu\fP.  Thanks.
+
+.SH COPYRIGHT
+
+This software is covered by copyrights. It contains code contributed
+by the author and several other parties. Please see the beginning of
+source files and copyright file(s) in the root directory of the source
+kit.
+
+.SH SEE ALSO
+
+.B "AF\fP(1), \fBX\fP(1)"
+
+.SH AUTHOR
+
+ Shanwei Cen
+ Department of Computer Science and Engineering
+ Oregon Graduate Institute of Science and Technology
+ scen@cse.ogi.edu

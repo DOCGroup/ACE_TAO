@@ -1,0 +1,11 @@
+#!/bin/csh -x
+#
+# Usage: server <switches>
+# -u : use IOR 
+# -f m : output results in Mbps
+# -b <sock Q size> ** not implemented **
+# -ORBhost <host name>  ************* must provide this for this version
+# -OAthread : use threaded version as opposed to reactive
+#
+
+./server -d 1 -f m -o ior -ORBhost $1 -ORBdotteddecimaladdresses 1 -ORBobjrefstyle url#-OAthread

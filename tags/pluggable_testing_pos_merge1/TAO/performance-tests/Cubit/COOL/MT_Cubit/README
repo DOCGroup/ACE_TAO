@@ -1,0 +1,166 @@
+The MT-Cubit example for the CHORUS COOL ORB
+--------------------------------------------
+
+Compiling
+---------
+
+Setup the CHORUS COOL environment variables before compiling, the
+following is an example.  You would typically want this in the shells'
+resource file (e.g. .cshrc.mine).  The example provided is for a C
+shell.
+
+   setenv CHORUS_ROOT /project/doc/miniCOOL/minicool.r4.3/solaris2.5-CC-mt
+   set path = ($path /project/doc/miniCOOL/minicool.r4.3/solaris2.5-CC-mt/bin)
+   setenv LD_LIBRARY_PATH /project/doc/miniCOOL/minicool.r4.3/solaris2.5-CC-mt/lib:$LD_LIBRARY_PATH
+   setenv MANPATH /project/doc/miniCOOL/minicool.r4.3/solaris2.5-CC-mt/man:$MANPATH
+ 
+Makefiles are provided. Use make to compile.
+
+You can either run the server in the background in the same window as
+the client or open a separate window for the client and server.
+
+server:
+-------
+
+./server <tpr | tpool> 
+	 <cool-tcp://THIS_HOSTNAME:THIS_HOST_PORT | cool-chorus://:THIS_HOST_PORT>
+	 -v 
+	 <-cool-tcp -cool-iiop | -cool-chorus>
+
+tpr	: this indicates to the server to use the Thread Per Request concurrency model.
+
+tpool	: this indicates to the server to use the Thread Pool concurrency model.
+
+THIS_HOSTNAME : the name of the host that the server will be running on.  This is useful 
+		if you want to specifya different interface (e.g. ATM, 100Mbit Ethernet)
+
+THIS_HOST_PORT: is the port number at which the server will start the high
+		priority servant. The low priority servant will be created at
+		(THIS_HOST_PORT+1).
+
+The server will print the IOR of the high and low priority servants,
+but it is not required by the client.
+
+client:
+-------
+
+./client [-n <LOOP_COUNT>] 
+	 [-t <NUM_THREADS>] 
+	 [-h SERVER_HOSTNAME] 
+	 [-p <SERVER_PORT_NUM>] 
+	 [-cool-tcp -cool-iiop | -cool-chorus]
+	 [-I] 
+
+[-I] indicates to the client to use Chorus IPC as the underlying transport
+     instead of TCP
+
+<SERVER_HOSTNAME>: is the hostname of the server.
+
+<SERVER_PORT_NUM>: is the port number of the servant. 
+
+Based on the SERVER_HOSTNAME and the SERVER_PORT_NUM, the client constructs
+the IOR's for the high priority servant and the low priority servant.
+
+<LOOP_COUNT>	: is the number of times the group of CORBA twoway calls are to 
+		be made.  The group consists of the following calls: cube_octet(), cube_short(),
+		cube_long() and cube_struct().  The default is 100 loops (i.e. 400 calls are made).
+
+<NUM_THREADS> 	: is the total number of concurrent clients to be
+		created. One of these clients will be a high priority client (and thus
+		send requests to the high priority servant), and the rest will have
+		low priority.
+
+The high priority client makes requests at 20Hz, and the low priority
+clients make requests at 10Hz.
+
+Results
+-------
+
+The client prints the latency observed by the high priority client,
+and the average latency observed by the low priority client.
+
+Examples
+--------
+
+(1) An Example on a Sparc running SunOS 5.5.1 using TCP as the underlying transport
+
+
+   On the host lambada.cs.wustl.edu :
+      
+   % ./server tpool cool-tcp://lambada.cs.wustl.edu:3000 -v -cool-tcp -cool-iiop
+      
+   On the host merengue.cs.wustl.edu :
+      
+   % ./client -t 2 -h lambada.cs.wustl.edu -p 3000 -cool-tcp -cool-iiop 
+      
+   The output of the client program may look like this:
+      
+   (5) Everyone's done, here I go!!
+   (4) Threads have bound, utilization test started
+   (9) Everyone's done, here I go!!
+   (8) Everyone's done, here I go!!
+   (6) Everyone's done, here I go!!
+   (7) Everyone's done, here I go!!
+   cube average call ACE_OS::time  = 20.917016 msec,       47.807966 calls/second
+   (5) My latency was 20.917016
+   5 calls, 0 errors
+   cube average call ACE_OS::time  = 19.299501 msec,       51.814811 calls/second
+   (8) My latency was 19.299501
+   cube average call ACE_OS::time  = 19.262436 msec,       51.914514 calls/second
+   5 calls, 0 errors
+   (9) My latency was 19.262436
+   5 calls, 0 errors
+   cube average call ACE_OS::time  = 15.101540 msec,       66.218412 calls/second
+   (6) My latency was 15.101540
+   5 calls, 0 errors
+   cube average call ACE_OS::time  = 10.320359 msec,       96.895858 calls/second
+   (7) My latency was 10.320359
+   5 calls, 0 errors
+   Test done.
+   High priority client latency : 20.917016 msec, jitter: 36.582330 msec
+   Low priority client latency : 15.995959 msec, jitter: 527.515277 msec
+   utilization task performed 435 computations
+
+(2) An Example on a MVME177 backplane using 68k processors running ClassiX using 
+    Chorus IPC as the underlying transport
+
+
+   On the host tambora2.cs.wustl.edu :
+      
+   % rsh tambora2 arun /tests/Cubit/COOL/MT_Cubit/server tpool cool-chorus://:1023 -v -cool-chorus
+      
+   On the host tambora1.cs.wustl.edu :
+      
+   % rsh tambora1 arun /tests/Cubit/COOL/MT_Cubit/client -n 400 -I -t 2 -p 1023 -cool-chorus
+      
+   The output of the client program might look like this:
+
+   started aid = 12
+   COOL:0000000001000000010000001C00750AA60000000200750AA65555555500000001429A00000000000A(13) Thread created
+   (13) Im the high priority client, my id is 0.
+   Using ior = cool-chorus://:1023
+   Creating 1 clients with low priority of 125
+   (13) Binding succeeded
+   (13) Cb == 2c6144
+   Object Created at: '2908484l'connected to object 'COOL:0000000001000000010000001C00750AA60000000200750AA65555555500000001429A00000000000A'
+   COOL:0000000001000000010000001C00750AA60000000200750AA65555555500000001429A00000000000A
+   (13) Waiting for other threads to finish binding..
+   (12) Thread created
+   (12) Im a low priority client, my id is 1
+   Using ior = cool-chorus://:1023
+   (12) Binding succeeded
+   (12) Cb == 2c6164
+   Object Created at: '2908516l'connected to object 'COOL:0000000001000000010000001C00750AA60000000200750AA65555555500000001429A00000000000A'(12) Waiting for other threads to finish binding..
+   (13) Everyone's done, here I go!!
+   (12) Everyone's done, here I go!!
+   (12|13) cube average call ACE_OS::time	= 12835 usec, 	77 calls/second
+   (13) My latency was 12835
+   400 calls, 0 errors
+   (12|12) cube average call ACE_OS::time	= 12931 usec, 	77 calls/second
+   (12) My latency was 12931
+   Test done.
+   High priority client latency : 12835 usec
+   Low priority client latency : 12931 usec
+   400 calls, 0 errors
+   --->Output file for latency data is "cb12__2.txt"
+   (8) utilization task performed 0 computations

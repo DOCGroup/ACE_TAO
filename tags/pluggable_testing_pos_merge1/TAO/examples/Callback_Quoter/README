@@ -1,0 +1,85 @@
+******************************************************************************
+
+CALLBACK QUOTER TEST EXAMPLE                           -- Kirthika Parameswaran
+                                                          <kirthika@cs.wustl.edu>
+******************************************************************************
+
+This is an distributed application which highlights the importance
+of the callback feature in helping meet the demands of various clients
+without them having to poll continously for input from the server.
+
+There are three parts to the Callback Quoter Example.
+
+1) Supplier
+2) Notifier
+3) Consumer
+
+  
+In detail:
+_________
+      
+1) Supplier
+--is the market feed daemon who keeps feeding the current stock
+information to the Notifier periodically.
+The timer handler has been used in the implementation of the daemon
+process. It reads the current stock value from a file and sends it to
+the Notifier.
+
+2) Notifier
+-- On getting information form the supplier, it checks whether there are
+any consumers ineterested in the information and accordingly sends it to
+them. The consumer object is registered with the notifier and the data
+is pushed to the consumer usoing this refernce.
+
+3) Consumer
+-- He is the stock broker interested in the stock values in the market.
+He will make decisions of selling only if the stock he is interested in
+has a price greater than the threshold value he has set for that stock.
+He just registers himself with the Notifier. This saves the time he wastes in
+simply polling for information from the Notifier.
+This is the callback feature in this example.
+
+
+Running the application:
+________________________
+
+There are 3  parts to it:
+
+----------------------------------------------------------------------------
+
+1) shell 1: type at the command prompt:
+
+./notifier
+
+------------------------------------------------------------------------------
+
+2) shell 2: type at the command prompt:
+
+./consumer
+
+register yourself with 'r'
+Enter the stockname and value.
+Now wait for information to arrive.
+
+You can  unregister by typing 'u' and quit by typing 'q'.
+
+-----------------------------------------------------------------------------
+
+3) shell 3: type at the command prompt:
+
+./supplier -ifilename
+
+The -i option simply tells the daemon where to pick information from.
+TIP:: the contents of the input file per line should be: stockname and its price. 
+
+The other option includes setting the period for the stock feed.
+
+-----------------------------------------------------------------------------
+
+Happy troubleshooting!!!
+
+
+
+
+
+

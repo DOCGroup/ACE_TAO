@@ -1,0 +1,12 @@
+#!build
+default:
+	program
+	:debuglevel=multi
+cubit_i.cpp
+	C++
+cubitS.cpp
+	C++
+svr.cpp
+	C++
+cubitC.cpp
+	C++

@@ -1,0 +1,196 @@
+// $Id$
+
+This example uses the TAO IDL compiler to generate the SII stubs and
+skeletons.  You can either run the server in the background in the
+same window as the client or open a separate window for the client and
+server.
+
+The collocation_test demonstrates how the performance improves when
+objects are collocated.  The test runs both server and client in
+different threads.  To run it, simply run collocation_test.  It
+accepts any command line arguments for the client side, but there is
+not way to specify command line arguments for the server side at this
+moment.  This may be changed in the future.  At this moment, the
+collocation_test must use Naming_Service to resolve object
+references.  This may be changed later, also.
+
+NOTES: The IDL_Cubit server used to run a Naming Service so the client
+        could easily locate it.  This proved too problematic, the test
+        required a complete compilation of the orbsvcs library and was
+        not reliable. The preferred method is to use a file to pass
+        the factory IOR between the server and the client.
+
+server:
+-------
+
+% server [-ORBhost <serverhost>] [-ORBport <portnum>]
+         [-d] [-o <ior_output_file>]
+
+Options:
+-------
+-d       Debug flag (It is additive more -d flags will increase
+         the debugging level).
+
+-o       Outputs the cubit_factory IOR to a file.
+
+When the server is started and you have used the -d flag, you should
+see as the first line of output something that looks like the follow:
+
+        iiop:1.0//swarm:10015/Persistent/886013035/850128/RootPOA/RootPOA_is_BAD/factory
+        (-ORBobjrefstyle url)
+or
+        IOR:000000000000001649444c3a43756269745...
+        (-ORBobjrefstyle ior)
+
+Using -d turns on debugging messages.  It is additive, i.e., the more
+-d options provided, the more debugging you get.  At the moment, only
+2 levels of debugging are implemented, and more than 2 -d options are
+silently ignored.
+
+client:
+-------
+
+% client [-d] [-x] <-f cubit_factory_ior_file> <-k cubit_factory_ior>  -n <iterations>
+
+Options:
+-------
+-d      Debug flag
+-x      Tells the server to shutdown.
+-f      Reads the cubit factory IOR from the file
+-k      Reads the cubit factory IOR from commandline
+-n      no. of iterations
+
+The following are the three ways of giving the CubitFactory IOR to the
+client:
+
+        1. From a file using the -f option. (This file can be produced using
+                the -o option of the server.)
+
+        2. Directly on the commandline using the -k option.
+
+        3. Get it from the Naming Service (which is the default client
+           behavior).
+
+collocation_test:
+-----------------
+
+        This test demonstrates how collocation optimization improve
+performance of collocated objects.  Run the test without any argument
+to see results with collocation optimization.  Run it with
+<-ORBcollocation no> to perform the same test without the
+optimization.  Notice that the executable of collocation_test is
+generated in the subdirectory ./collocation/.
+
+
+run_test.pl:
+------------
+
+        This is a perl script which simplifies the execution of the
+test.
+
+run_test [-h] [-n num] [-mcast] [-sleeptime t] [-debug] [-release]
+
+-h                  -- prints this information
+-n num              -- client uses <num> iterations
+-mcast              -- uses the multicast version of the nameservice
+-sleeptime t        -- run_test should sleep for <t> seconds between running
+                       the server and client
+-debug              -- sets the debug flag for both client and server
+-release            -- runs the Release version of the test (for NT use)
+                       (default is 3 seconds)
+
+
+Sample Run, Using files to communicate IOR:
+------------------------------------------
+
+1. Start the server.
+
+% server -ORBport 20000 -ORBobjrefstyle url -o theior
+
+        IDL_Cubit:SERVER
+
+The IOR is: <iiop:1.0//tango:20000/Persistent/887665222/647179/RootPOA/RootPOA_is_BAD/factory\00\00>
+
+2. Start the client.
+
+%client -ORBport 19998 -f theior
+
+         IDL_Cubit: client
+
+Factory received OK
+.
+.
+.
+
+
+Sample Run, passing the IOR on the command line, on VxWorks:
+------------------------------------------------------------
+    -> ld < server
+    -> spa main, "-ORBobjrefstyle", "url"
+            IDL_Cubit: server
+
+    The IOR is: <iiop:1.0//samba:1028/U/child_poa/factory>
+
+    -> ld < client
+    -> spa main, "-k", "iiop:1.0//samba:1028/U/child_poa/factory"
+    Enter <number> to select, anything else to stop: 2
+
+The IOR provided to the client is the IOR that the server printed out.
+Be sure to replace the <> with "".
+
+NOTE:  if you built your VxWorks executables with g++, replace "main"
+with "ace_main" above.  See ACE-INSTALL.html for an explanation of why
+ACE renames "main" to "ace_main" with g++ on VxWorks.
+
+
+Using JAVA to access the IDL Cubit test:
+----------------------------------------
+
+install JDK1.2
+install Java to IDL compiler
+
+copy the following files:
+cp $TAO_ROOT/orbsvcs/orbsvcs/CosNaming.idl .
+cp $TAO_ROOT/orbsvcs/tests/Simulator/DOVEBrowser/NS_Resolve.java .
+
+Compile:
+javatoidl cubit.idl
+javatoidl CosNaming.idl
+javac *.java
+
+Run:
+java IDL_Cubit_Client
+
+
+Running IDL_Cubit on CHORUS:
+--------------------------
+
+1.You should make sure that you set the HOST environment variable on the
+Chorus VME Board to the IP address of that Board before you run
+MT_Cubit test.
+
+e.g.,
+$rsh tambora1 setenv HOST 128.252.165.82
+
+2. You should make sure that the path to IOR file has write permission
+for ALL.
+
+server:
+------
+$rsh host_name arun path_to_server -o path_to_ior_file -ORBdotteddecimaladdresses 1 <server_options>
+
+You DONT have to use -ORBdotteddecimaladdresses 1 if you have
+TAO_USE_DOTTED_DECIMAL_ADDRESSES defined in your config.h file.
+
+e.g.,
+$rsh tambora1 arun /IDL_Cubit/server  -o /ior
+-ORBdotteddecimaladdresses 1 -ORBobjrefstyle url
+
+client:
+-------
+
+$rsh host_name arun path_to_client -f path_to_ior_file <client_options>
+
+e.g.,
+
+$rsh tambora2 arun /IDL_Cubit/client -f /ior
