@@ -100,7 +100,7 @@ Supplier_Task::release (void)
 
 Supplier_Task::Supplier_Task (int disable_notify_pipe,
                               const ACE_Time_Value &tv)
-  : waiter_ (0), // Make semaphore "locked" by default.
+  : waiter_ ((unsigned int) 0), // Make semaphore "locked" by default.
     disable_notify_pipe_ (disable_notify_pipe),
     long_timeout_ (tv.sec () == LONG_TIMEOUT)
 {
