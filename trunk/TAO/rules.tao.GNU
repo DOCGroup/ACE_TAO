@@ -15,6 +15,6 @@ endif
 %S.h %C.h %S.i %C.i %S.cpp %C.cpp:	%.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) $?
 
-ifneq (,$(findstring g++,$(CXX)))
+ifeq ($(findstring g++,$(CXX)),g++)
   CCFLAGS += -Wno-unused
 endif # g++
