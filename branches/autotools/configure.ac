@@ -909,54 +909,6 @@ AC_CHECK_HEADER([cstring],
 
 AC_CHECK_HEADER([memory],,)
 
-AC_CHECK_HEADER([map],
-[
-  AC_CHECK_HEADER([net/if.h],
-   [
-    ACE_CACHE_CHECK([if STL map class conflicts with <net/if.h> map struct],
-    [ace_cv_header_stl_map_conflict],
-    [
-     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#ifndef ACE_LACKS_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#include <map>
-#include <net/if.h>
-       ]],[[
-        map<char, char> ace_map;
-       ]])],[
-        ace_cv_header_stl_map_conflict=no
-       ],[
-        ace_cv_header_stl_map_conflict=yes
-       ])
-    ],[AC_DEFINE([ACE_HAS_STL_MAP_CONFLICT])],)
-  ],)
-],)
-
-AC_CHECK_HEADER([queue],
-[
-  AC_CHECK_HEADER([netinet/in.h],
-   [
-    ACE_CACHE_CHECK([if STL queue class conflicts with <netinet/in.h> queue struct],
-    [ace_cv_header_stl_queue_conflict],
-    [
-     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#ifndef ACE_LACKS_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#include <queue>
-#include <netinet/in.h>
-       ]],[[
-        queue<char> ace_queue;
-       ]])],[
-        ace_cv_header_stl_queue_conflict=no
-       ],[
-        ace_cv_header_stl_queue_conflict=yes
-       ])
-    ],[AC_DEFINE([ACE_HAS_STL_QUEUE_CONFLICT])],)
-  ],)
-],)
-
 dnl Check for availablity of "new style" C++ stream headers
 AC_CHECK_HEADERS([iomanip ios iostream istream ostream fstream streambuf],
   ,
@@ -2030,6 +1982,62 @@ ACE_CACHE_CHECK([for new style C++ include file support],
    AC_DEFINE([ACE_HAS_STDCPP_STL_INCLUDES])
    AC_DEFINE([ACE_HAS_STRING_CLASS])
   ],)
+
+AC_CHECK_HEADER([map],
+[
+  AC_CHECK_HEADER([net/if.h],
+   [
+    ACE_CACHE_CHECK([if STL map class conflicts with <net/if.h> map struct],
+    [ace_cv_header_stl_map_conflict],
+    [
+     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#include <map>
+#include <net/if.h>
+       ]],[[
+#ifdef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
+        std::map<char, char> ace_map;
+#else
+        map<char, char> ace_map;
+#endif  /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
+       ]])],[
+        ace_cv_header_stl_map_conflict=no
+       ],[
+        ace_cv_header_stl_map_conflict=yes
+       ])
+    ],[AC_DEFINE([ACE_HAS_STL_MAP_CONFLICT])],)
+  ],)
+],)
+
+AC_CHECK_HEADER([queue],
+[
+  AC_CHECK_HEADER([netinet/in.h],
+   [
+    ACE_CACHE_CHECK([if STL queue class conflicts with <netinet/in.h> queue struct],
+    [ace_cv_header_stl_queue_conflict],
+    [
+     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#include <queue>
+#include <netinet/in.h>
+       ]],[[
+#ifdef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
+        std::queue<char> ace_queue;
+#else
+        queue<char> ace_queue;
+#endif  /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
+       ]])],[
+        ace_cv_header_stl_queue_conflict=no
+       ],[
+        ace_cv_header_stl_queue_conflict=yes
+       ])
+    ],[AC_DEFINE([ACE_HAS_STL_QUEUE_CONFLICT])],)
+  ],)
+],)
 
 dnl Check whether platform supports the standard C++ library
 dnl TODO: For now, check whether headers <new>, <iomanip>
@@ -3792,6 +3800,9 @@ AC_CHECK_FUNC([shm_open],
 dnl  AC_DEFINE([ACE_HAS_SHM_OPEN])
   ],)
 
+AC_CHECK_FUNC([snprintf],
+  [AC_DEFINE([ACE_HAS_SNPRINTF])],)
+
 AC_CHECK_FUNC([tempnam],
   ,
   [AC_DEFINE([ACE_LACKS_TEMPNAM])])
@@ -4187,7 +4198,7 @@ dnl Check if platform has thread_self() rather than pthread_self()
                  ])
 
 dnl Check if pthread.h declares an enum with PTHREAD_PROCESS_PRIVATE and
-dnl PTHREAD_PROCESS_SHARED valuesACE_CACHE_CHECK(for ctime() macro,
+dnl PTHREAD_PROCESS_SHARED values.
   ACE_CACHE_CHECK([for PTHREAD_PROCESS_* enumeration in pthread.h],
                   [ace_cv_lib_pthread_process_enum],
                   [
@@ -4562,7 +4573,7 @@ dnl Check if "getby" functions use a non-const  char * argument
 
 dnl Check if new throws exception upon failure
 if test "$ace_user_enable_exceptions" = yes; then
-  ACE_CACHE_CHECK([if new throws bad_alloc exception on failure],
+  ACE_CACHE_CHECK([if new throws std::bad_alloc exception on failure],
     [ace_cv_new_throws_bad_alloc_exception],
     [
      AC_RUN_IFELSE([AC_LANG_SOURCE([[
@@ -4587,7 +4598,11 @@ if test "$ace_user_enable_exceptions" = yes; then
               }
             }
 
+#ifdef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
+            catch (std::bad_alloc)
+#else
             catch (bad_alloc)
+#endif  /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
             {
              return 0; /* new() does throw exceptions */
             }
@@ -6629,6 +6644,101 @@ main ()
            ace_cv_have_null_status_pthread_join=yes
           ])
       ], , [AC_DEFINE([ACE_LACKS_NULL_PTHREAD_STATUS])])
+
+    dnl Check if OS supports timed mutex acquisitions
+    dnl (e.g. pthread_mutex_timedlock()).
+    ACE_CACHE_CHECK([for timed mutex acquisitions],
+      [ace_cv_have_mutex_timeouts],[
+         AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#ifndef _REENTRANT
+#define _REENTRANT
+#endif
+
+#include <pthread.h>
+
+/* _THREAD_SAFE is defined in <pthread.h> on some platforms. */
+#ifndef _THREAD_SAFE
+#define _THREAD_SAFE
+#endif
+
+#include <stdio.h>
+
+#include <errno.h>
+#include <sys/time.h>
+
+#ifndef ACE_LACKS_UNISTD_H
+# include <unistd.h>
+#endif
+
+
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
+#ifdef __cplusplus
+extern "C"
+#endif
+void *threadFunc (void *parm)
+{
+  int rc;
+  int i;
+  struct timespec deltatime;
+  struct timeval tv;
+
+  if (gettimeofday (&tv, 0) != 0)
+    {
+      return 0;
+    }
+
+  deltatime.tv_sec = tv.tv_sec + 5;
+  deltatime.tv_nsec = 0;
+
+  rc = pthread_mutex_timedlock (&mutex, &deltatime);
+
+  if (rc != ETIMEDOUT)
+    {
+      /* printf("Got an incorrect return code from pthread_mutex_timedlock\n"); */
+    }
+
+  return 0;
+}
+
+int main (void)
+{
+  int rc  =0;
+  pthread_t thread;
+
+  rc = pthread_mutex_lock (&mutex);
+  if (rc != 0)
+    {
+      exit (-1);
+    }
+
+  rc = pthread_create (&thread, NULL, threadFunc, NULL);
+  if (rc != 0)
+    {
+      exit (-1);
+    }
+
+  rc = pthread_join (thread, NULL);
+  if (rc != 0)
+    {
+      exit (-1);
+    }
+
+  pthread_mutex_destroy (&mutex);
+
+  return 0;
+}
+           ]])],[
+            ace_cv_have_mutex_timeouts=yes
+           ],[
+            ace_cv_have_mutex_timeouts=no
+           ],[
+              dnl Cross-compiled case
+              AC_CHECK_FUNC([pthread_mutex_timedlock],
+                [ace_cv_have_mutex_timeouts=yes],
+                [ace_cv_have_mutex_timeouts=no])
+           ])
+      ], [AC_DEFINE([ACE_HAS_MUTEX_TIMEOUTS])],)
 
     dnl Check if platform needs to #include <sched.h> to get thread
     dnl scheduling defs.
