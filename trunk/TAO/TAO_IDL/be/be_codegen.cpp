@@ -173,14 +173,14 @@ TAO_CodeGen::client_header (const char *fname)
 
 	  // We must include all the skeleton headers corresponding to
 	  // IDL files included by the current IDL file.
-	  for (int j = 0;
+	  for (size_t j = 0;
 	       j < idl_global->n_include_file_names ();
 	       ++j)
 	    {
 	      String* idl_name =
 		idl_global->include_file_names()[j];
-	      
-	      const char* client_hdr = 
+
+	      const char* client_hdr =
 		IDL_GlobalData::be_get_client_hdr (idl_name);
 
 	      this->client_header_->print ("#include \"%s\"\n",
@@ -305,14 +305,14 @@ TAO_CodeGen::server_header (const char *fname)
 
 	  // We must include all the skeleton headers corresponding to
 	  // IDL files included by the current IDL file.
-	  for (int j = 0;
+	  for (size_t j = 0;
 	       j < idl_global->n_include_file_names ();
 	       ++j)
 	    {
 	      String* idl_name =
 		idl_global->include_file_names()[j];
-	      
-	      const char* server_hdr = 
+
+	      const char* server_hdr =
 		IDL_GlobalData::be_get_server_hdr (idl_name);
 
 	      this->server_header_->print ("#include \"%s\"\n",
