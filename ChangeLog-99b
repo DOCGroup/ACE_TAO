@@ -1,3 +1,21 @@
+Thu May 20 18:01:24 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/Filecache.cpp: Added "template<>" to specializations.
+
+        * ace/OS.i (ACE_OS::select, ACE_OS::sleep): Removed implicit
+          dependency on binary object layout with regard to using an
+          ACE_Time_Value object as a struct timeval; use the timeval*
+          operator instead.  On platforms with ACE_HAS_NONCONST_SELECT_TIMEVAL
+          don't just cast away const-ness of the ACE_Time_Value - modification
+          of the timeval by select() is not consistent, and Linux is not the
+          only one that modifies it (Solaris 7 does also, as well as AIX and
+          possibly HP; Solaris 2.5/6 don't specify).  So, play it safe.
+          Inlining and optimization should prevent this from having any
+          affect on performance.
+
+        * ace/config-sunos5.5.h, config-hpux-10.x.h, config-aix-4.x.h:
+          Added #define ACE_HAS_NONCONST_SELECT_TIMEVAL.
+
 Thu May 20 17:47:35 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/OS.h (ACE_DES_ARRAY_FREE_*): Added new macros to facilitate
