@@ -1,3 +1,11 @@
+Mon Jul  9 15:27:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/orbsvcs/tests/AVStreams/Makefile.bor
+        * tao/orbsvcs/tests/AVStreams/Multicast_Full_Profile/*.bor
+        * tao/orbsvcs/tests/AVStreams/Full_Profile/*.bor
+
+          Added BCB makefiles for the mentioned AVStreams test
+
 Mon Jul 09 04:11:45 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Security/QOPPolicy.h:
@@ -95,7 +103,7 @@ Mon Jul 09 01:51:27 2001  Ossama Othman  <ossama@uci.edu>
 	  TAO_SSLIOP_Connector.  This cleans up the code a bit.  It
 	  shouldn't differ all that much from the
 	  IIOP_Connector::connect() implementation.
-	
+
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
 
 	  Now that both secure and insecure invocations are supported
