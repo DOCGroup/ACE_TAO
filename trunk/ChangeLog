@@ -1,3 +1,10 @@
+Tue Jan 16 11:25:32 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (log): Convert strerror() text string to a
+	  TCHAR so that this call will work correctly with Unicode.
+  	  Thanks to Matthias Wittig <m.wittig@com-on.de> for reporting
+ 	  this.
+
 Tue Jan 16 09:58:20 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ace_wchar.inl:
