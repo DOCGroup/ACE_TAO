@@ -284,7 +284,7 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
       // For now, the original code is minimally changed.
 
       IIOP_Object *iiopobj =
-        ACE_dynamic_cast (IIOP_Object*, obj->_stubobj ());
+        ACE_dynamic_cast (IIOP_Object *, obj->_stubobj ());
 
       IIOP::Profile *profile = &iiopobj->profile;
 

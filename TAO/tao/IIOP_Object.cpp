@@ -51,186 +51,26 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_IIOP_Object_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-int
+void
 IIOP::Profile::set (const char *h,
-                    const CORBA::UShort p,
-                    const ACE_INET_Addr *addr)
+                    CORBA::UShort p,
+                    const TAO_opaque &key,
+                    const ACE_INET_Addr &addr)
 {
-  this->iiop_version.major = IIOP::MY_MAJOR;
-  this->iiop_version.minor = IIOP::MY_MINOR;
-
-  if (this->host)
-    {
-      delete [] this->host;
-      this->host = 0;
-    }
-
   this->port = p;
+  this->object_addr_ = addr;
+
+  delete [] this->host;
 
   if (h)
     {
-      ACE_NEW_RETURN (this->host,
-                      char[ACE_OS::strlen (h) + 1],
-                      -1);
+      ACE_NEW (this->host,
+               char[ACE_OS::strlen (h) + 1]);
       ACE_OS::strcpy (this->host, h);
     }
 
-  this->object_addr (addr);
-  return 0;
-}
-
-int
-IIOP::Profile::set (const char *h,
-                    const CORBA::UShort p,
-                    const char *key,
-                    const ACE_INET_Addr *addr)
-{
-  if (key == 0)
-    return -1;
-
-  if (this->set (h, p, addr) == -1)
-    return -1;
-
-  int l = ACE_OS::strlen (key);
-  this->object_key.length (l);
-
-  for (int i = 0; i < l; ++i)
-    this->object_key[i] = key[i];
-
-  return 0;
-}
-
-int
-IIOP::Profile::set (const char *h,
-                    const CORBA::UShort p,
-                    const TAO_opaque &key,
-                    const ACE_INET_Addr *addr)
-{
-  if (this->set (h, p, addr) == -1)
-    return -1;
-
   this->object_key = key;
-
-  return 0;
 }
-
-IIOP::Profile::Profile (const IIOP::Profile &src)
-  : host (0)
-{
-  (void) this->set (src.host,
-                    src.port,
-                    src.object_key,
-                    &src.object_addr_);
-}
-
-int
-IIOP::Profile::set (const ACE_INET_Addr &addr,
-                    const char *key)
-{
-  // Set up an IIOP Profile to hold the host name.
-
-  char temphost[MAXHOSTNAMELEN + 1];
-  const char *temphost2 = 0;
-  if (TAO_ORB_Core_instance ()->orb_params ()->use_dotted_decimal_addresses ())
-    {
-      temphost2 = addr.get_host_addr ();
-      if (temphost2 == 0)
-        return -1;
-    }
-  else
-    {
-      if (addr.get_host_name (temphost, sizeof temphost) != 0)
-        return -1;
-
-      temphost2 = temphost;
-    }
-
-  return this->set (temphost2,
-                    addr.get_port_number (),
-                    key,
-                    &addr);
-}
-
-int
-IIOP::Profile::set (const ACE_INET_Addr &addr,
-                    const TAO_opaque &key)
-{
-  // Set up an IIOP Profile to hold the host name.
-
-  char temphost[MAXHOSTNAMELEN + 1];
-  const char *temphost2 = 0;
-  if (TAO_ORB_Core_instance ()->orb_params ()->use_dotted_decimal_addresses ())
-    {
-      temphost2 = addr.get_host_addr ();
-      if (temphost2 == 0)
-        return -1;
-    }
-  else
-    {
-      if (addr.get_host_name (temphost, sizeof temphost) != 0)
-        return -1;
-
-      temphost2 = temphost;
-    }
-
-  return this->set (temphost2,
-                    addr.get_port_number (),
-                    key,
-                    &addr);
-}
-
-IIOP::Profile::Profile (const char *h,
-                        const CORBA::UShort p,
-                        const char *key)
-  : host (0)
-{
-  (void) this->set (h, p, key);
-}
-
-IIOP::Profile::Profile (const char *h,
-                        const CORBA::UShort p,
-                        const char *key,
-                        const ACE_INET_Addr &addr)
-  : host (0)
-{
-  (void) this->set (h, p, key, &addr);
-}
-
-IIOP::Profile::Profile (const char *h,
-                        const CORBA::UShort p,
-                        const TAO_opaque &key,
-                        const ACE_INET_Addr &addr)
-  : host (0)
-{
-  (void) this->set (h, p, key, &addr);
-}
-
-IIOP::Profile::Profile (const ACE_INET_Addr &addr,
-                        const char *key)
-  : host (0)
-{
-  (void) this->set (addr, key);
-}
-
-IIOP::Profile::Profile (const ACE_INET_Addr &addr,
-                        const TAO_opaque &key)
-  : host (0)
-{
-  (void) this->set (addr, key);
-}
-
-
-IIOP::Profile &
-IIOP::Profile::operator= (const IIOP::Profile &src)
-{
-  this->set (src.host,
-             src.port,
-             src.object_key,
-             &src.object_addr_);
-  return *this;
-}
-
-
 
 // Quick'n'dirty hash of objref data, for partitioning objrefs into
 // sets.
@@ -303,18 +143,8 @@ IIOP_Object::is_equivalent (CORBA::Object_ptr other_obj,
   if (other_iiop_obj == 0)
     return 0;
 
-  // Compare all the bytes of the object address -- must be the same.
-
-  IIOP::Profile *body = &profile;
-  IIOP::Profile *body2 = &other_iiop_obj->profile;
-
-  ACE_ASSERT (body->object_key.length () < UINT_MAX);
-
-  return body->object_key == body2->object_key
-    && body->port == body2->port
-    && ACE_OS::strcmp (body->host, body2->host) == 0
-    && body->iiop_version.minor == body2->iiop_version.minor
-    && body->iiop_version.major == body2->iiop_version.major;
+  // Compare the profiles
+  return this->profile == other_iiop_obj->profile;
 }
 
 // Memory managment
@@ -346,42 +176,6 @@ TAO_ObjectKey*
 IIOP_Object::key (CORBA::Environment &)
 {
   return new TAO_ObjectKey (this->profile.object_key);
-}
-
-// Note that if the repository ID (typeID) is NULL, it will make
-// narrowing rather expensive, though it does ensure that type-safe
-// narrowing code gets thoroughly exercised/debugged!  Without a
-// typeID, the _narrow will be required to make an expensive remote
-// "is_a" call.
-
-IIOP_Object::IIOP_Object (const char *host,
-                          const CORBA::UShort port,
-                          const char *objkey,
-                          char *repository_id)
-  : STUB_Object (repository_id),
-    profile (host, port, objkey),
-    fwd_profile_ (0),
-    fwd_profile_success_ (0),
-    refcount_ (1),
-    handler_ (0)
-{
-  this->fwd_profile_lock_ptr_ =
-    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();
-}
-
-// Constructor.  It will usually be used by the server side.
-IIOP_Object::IIOP_Object (char *repository_id,
-                          const ACE_INET_Addr &addr,
-                          const char *objkey)
-  : STUB_Object (repository_id),
-    profile (addr, objkey),
-    fwd_profile_ (0),
-    fwd_profile_success_ (0),
-    refcount_ (1),
-    handler_ (0)
-{
-  this->fwd_profile_lock_ptr_ =
-    TAO_ORB_Core_instance ()->client_factory ()->create_iiop_profile_lock ();
 }
 
 // THREADING NOTE: Code below this point is of course thread-safe (at
