@@ -28,6 +28,8 @@
 #include "ace/Unbounded_Queue.h"
 #include "tao/Resource_Factory.h"
 
+class TAO_Profile;
+
 /**
  * @class TAO_PortableGroup_Acceptor_Registry
  *
