@@ -26,7 +26,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/IORManipulation/IORC.h"
+#include "tao/IORManipulation/IORManip_Loader.h"
 #include "orbsvcs/FT_CORBAC.h"
 #include "tao/IOPC.h"
 
