@@ -1,4 +1,3 @@
-// SString.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -45,7 +44,7 @@ ACE_Tokenizer::delimiter_replace (TCHAR d, TCHAR replacement)
   return 0;
 }
 
-int 
+int
 ACE_Tokenizer::preserve_designators (TCHAR start, TCHAR stop, int strip)
 {
   if (preserves_index_ == MAX_PRESERVES)
@@ -58,7 +57,7 @@ ACE_Tokenizer::preserve_designators (TCHAR start, TCHAR stop, int strip)
   return 0;
 }
 
-int 
+int
 ACE_Tokenizer::is_delimiter (TCHAR d, int &replace, TCHAR &r)
 {
   replace = 0;
@@ -66,26 +65,26 @@ ACE_Tokenizer::is_delimiter (TCHAR d, int &replace, TCHAR &r)
   for (int x=0; x < delimiter_index_; x++)
     if (delimiters_[x].delimiter_ == d)
       {
-	if (delimiters_[x].replace_)
-	  {
-	    r = delimiters_[x].replacement_;
-	    replace = 1;
-	  }
-	return 1;
+        if (delimiters_[x].replace_)
+          {
+            r = delimiters_[x].replacement_;
+            replace = 1;
+          }
+        return 1;
       }
 
   return 0;
 }
 
-int 
+int
 ACE_Tokenizer::is_preserve_designator (TCHAR start, TCHAR &stop, int &strip)
 {
   for (int x=0; x < preserves_index_; x++)
     if (preserves_[x].start_ == start)
       {
-	stop = preserves_[x].stop_;
-	strip = preserves_[x].strip_;
-	return 1;
+        stop = preserves_[x].stop_;
+        strip = preserves_[x].strip_;
+        return 1;
       }
 
   return 0;
@@ -110,17 +109,17 @@ ACE_Tokenizer::next (void)
     {
       // Check for end of string.
       if (buffer_[index_] == '\0')
-	{
-	  // If we hit EOS at the start, return 0.
-	  index_ = 0;
-	  return 0;
-	}
+        {
+          // If we hit EOS at the start, return 0.
+          index_ = 0;
+          return 0;
+        }
 
       if (this->is_delimiter (buffer_[index_], replace, replacement))
-	index_++;
+        index_++;
       else
-	break;
-    } 
+        break;
+    }
 
   // When we reach this point, buffer_[index_] is a non-delimiter and
   // not EOS - the start of our next_token.
@@ -132,29 +131,29 @@ ACE_Tokenizer::next (void)
   if (this->is_preserve_designator (buffer_[index_], stop, strip))
     {
       while (++index_)
-	{
-	  if (buffer_[index_] == '\0')
-	    {
-	      index_ = -1;
-	      goto EXIT_LABEL;
-	    }
-	      
-	  if (buffer_[index_] == stop)
-	    break;
-	}
+        {
+          if (buffer_[index_] == '\0')
+            {
+              index_ = -1;
+              goto EXIT_LABEL;
+            }
+
+          if (buffer_[index_] == stop)
+            break;
+        }
 
       if (strip)
-	{
-	  // Skip start preserve designator.
-	  next_token += 1;
-	  // Zap the stop preserve designator.
-	  buffer_[index_] = '\0';
-	  // Increment to the next token.
-	  index_++;
-	}
+        {
+          // Skip start preserve designator.
+          next_token += 1;
+          // Zap the stop preserve designator.
+          buffer_[index_] = '\0';
+          // Increment to the next token.
+          index_++;
+        }
       else
-	next_token = buffer_ + index_;
-      
+        next_token = buffer_ + index_;
+
       goto EXIT_LABEL;
     }
 
@@ -166,26 +165,26 @@ ACE_Tokenizer::next (void)
 
       // Check for delimiter.
       if (this->is_delimiter (buffer_[index_], replace, replacement))
-	{
-	  // Replace the delimiter.
-	  if (replace != 0)
-	    buffer_[index_] = replacement;
+        {
+          // Replace the delimiter.
+          if (replace != 0)
+            buffer_[index_] = replacement;
 
-	  // Move the pointer up and return.
-	  index_++;
-	  goto EXIT_LABEL;
-	}
+          // Move the pointer up and return.
+          index_++;
+          goto EXIT_LABEL;
+        }
 
       // A preserve designator signifies the end of this token.
       if (this->is_preserve_designator (buffer_[index_], stop, strip))
-	goto EXIT_LABEL;
+        goto EXIT_LABEL;
 
       // Check for end of string.
       if (buffer_[index_] == '\0')
-	{
-	  index_ = -1;
-	  goto EXIT_LABEL;
-	}
+        {
+          index_ = -1;
+          goto EXIT_LABEL;
+        }
     }
 
 EXIT_LABEL:
@@ -217,7 +216,7 @@ operator<< (ostream &os, const ACE_SString &ss)
 }
 #endif /* !ACE_HAS_WINCE */
 
-ACE_WString 
+ACE_WString
 operator+ (const ACE_WString &s, const ACE_WString &t)
 {
   ACE_WString temp (s);
@@ -272,7 +271,7 @@ ACE_CString::~ACE_CString (void)
 
 ACE_CString::ACE_CString (ACE_Allocator *alloc)
   : allocator_ (alloc),
-    len_ (0), 
+    len_ (0),
     rep_ (&ACE_CString::NULL_CString_)
 {
   ACE_TRACE ("ACE_CString::ACE_CString");
@@ -343,16 +342,16 @@ ACE_CString::ACE_CString (const ACE_USHORT16 *s, ACE_Allocator *alloc)
       // Copy the ACE_USHORT16 * string byte-by-byte into the char *
       // string.
       for (size_t i = 0; i < this->len_; i++)
-	this->rep_[i] = char (s[i]);
+        this->rep_[i] = char (s[i]);
       this->rep_[this->len_] = '\0';
     }
 }
 
 // Constructor that actually copies memory.
 
-ACE_CString::ACE_CString (const char *s, 
-			  size_t len, 
-			  ACE_Allocator *alloc)
+ACE_CString::ACE_CString (const char *s,
+                          size_t len,
+                          ACE_Allocator *alloc)
   : allocator_ (alloc)
 {
   ACE_TRACE ("ACE_CString::ACE_CString");
@@ -376,7 +375,7 @@ ACE_CString::ACE_CString (const char *s,
 
 // Assignment operator (does copy memory).
 
-ACE_CString & 
+ACE_CString &
 ACE_CString::operator= (const ACE_CString &s)
 {
   ACE_TRACE ("ACE_CString::operator=");
@@ -388,13 +387,13 @@ ACE_CString::operator= (const ACE_CString &s)
   return *this;
 }
 
-void 
+void
 ACE_CString::set (const char *s)
 {
   this->set (s, ACE_OS::strlen (s));
 }
 
-void 
+void
 ACE_CString::set (const char *s, size_t len)
 {
   //
@@ -405,12 +404,12 @@ ACE_CString::set (const char *s, size_t len)
   if (s[0] == '\0' &&
       this->rep_ != &ACE_CString::NULL_CString_)
     this->allocator_->free (this->rep_);
-        
+
   // Going from memory to more memory
   else if (this->len_ < len &&
            this->rep_ != &ACE_CString::NULL_CString_)
     this->allocator_->free (this->rep_);
-      
+
   //
   // Allocate memory if necessary
   //
@@ -428,13 +427,13 @@ ACE_CString::set (const char *s, size_t len)
       ACE_OS::memcpy (this->rep_, s, len);
       // NUL terminate.
       this->rep_[len] = 0;
-    }          
+    }
 }
 
 // Return substring.
-ACE_CString 
+ACE_CString
 ACE_CString::substring (size_t offset,
-			ssize_t length) const
+                        ssize_t length) const
 {
   ACE_CString nil;
   size_t count = length;
@@ -469,20 +468,20 @@ ACE_CString::operator+= (const ACE_CString &s)
       char *t = 0;
 
       if (oldlen < newlen)
-	{
-	  // Allocate memory for the new string.
-	  ACE_ALLOCATOR_RETURN (t,
+        {
+          // Allocate memory for the new string.
+          ACE_ALLOCATOR_RETURN (t,
                                 (char *) this->allocator_->malloc (newlen),
                                 *this);
-	  // Copy memory from old string into new string.
-	  ACE_OS::memcpy (t, this->rep_, oldlen);
-	}
+          // Copy memory from old string into new string.
+          ACE_OS::memcpy (t, this->rep_, oldlen);
+        }
 
       ACE_OS::memcpy (t + oldlen, s.rep_, s.len_);
       t[this->len_] = '\0';
 
       if (this->rep_ != &ACE_CString::NULL_CString_)
-	this->allocator_->free (this->rep_);
+        this->allocator_->free (this->rep_);
       this->rep_ = t;
     }
 
@@ -517,9 +516,9 @@ ACE_SString::ACE_SString (const ACE_SString &s)
 
 ACE_SString::ACE_SString (ACE_Allocator *alloc)
   : allocator_ (alloc),
-    len_ (0), 
+    len_ (0),
     rep_ (0)
-    
+
 {
   ACE_TRACE ("ACE_SString::ACE_SString");
 
@@ -528,12 +527,12 @@ ACE_SString::ACE_SString (ACE_Allocator *alloc)
 
   this->len_ = 0;
   this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
-  this->rep_[this->len_] = '\0';  
+  this->rep_[this->len_] = '\0';
 }
 
 // Set the underlying pointer (does not copy memory).
 
-void 
+void
 ACE_SString::rep (char *s)
 {
   ACE_TRACE ("ACE_SString::rep");
@@ -548,8 +547,8 @@ ACE_SString::rep (char *s)
 
 // Constructor that actually copies memory.
 
-ACE_SString::ACE_SString (const char *s, 
-			  ACE_Allocator *alloc)
+ACE_SString::ACE_SString (const char *s,
+                          ACE_Allocator *alloc)
   : allocator_ (alloc)
 {
   ACE_TRACE ("ACE_SString::ACE_SString");
@@ -561,7 +560,7 @@ ACE_SString::ACE_SString (const char *s,
     {
       this->len_ = 0;
       this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
-      this->rep_[this->len_] = '\0';  
+      this->rep_[this->len_] = '\0';
     }
   else
     {
@@ -571,8 +570,8 @@ ACE_SString::ACE_SString (const char *s,
     }
 }
 
-ACE_SString::ACE_SString (char c, 
-			  ACE_Allocator *alloc)
+ACE_SString::ACE_SString (char c,
+                          ACE_Allocator *alloc)
   : allocator_ (alloc)
 {
   ACE_TRACE ("ACE_SString::ACE_SString");
@@ -588,9 +587,9 @@ ACE_SString::ACE_SString (char c,
 
 // Constructor that actually copies memory.
 
-ACE_SString::ACE_SString (const char *s, 
-			    size_t len, 
-			    ACE_Allocator *alloc)
+ACE_SString::ACE_SString (const char *s,
+                            size_t len,
+                            ACE_Allocator *alloc)
   : allocator_ (alloc)
 {
   ACE_TRACE ("ACE_SString::ACE_SString");
@@ -602,7 +601,7 @@ ACE_SString::ACE_SString (const char *s,
     {
       this->len_ = 0;
       this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
-      this->rep_[this->len_] = '\0';  
+      this->rep_[this->len_] = '\0';
     }
   else
     {
@@ -625,21 +624,21 @@ ACE_SString::operator= (const ACE_SString &s)
     {
       // Only reallocate if we don't have enough space...
       if (this->len_ < s.len_)
-	{
-	  this->allocator_->free (this->rep_);
-	  this->rep_ = (char *) this->allocator_->malloc (s.len_ + 1);
-	}
+        {
+          this->allocator_->free (this->rep_);
+          this->rep_ = (char *) this->allocator_->malloc (s.len_ + 1);
+        }
       this->len_ = s.len_;
       ACE_OS::strcpy (this->rep_, s.rep_);
     }
-  
+
   return *this;
 }
 
 // Return substring.
-ACE_SString 
+ACE_SString
 ACE_SString::substring (size_t offset,
-			ssize_t length) const
+                        ssize_t length) const
 {
   ACE_SString nil;
   size_t count = length;
@@ -681,7 +680,7 @@ ACE_WString::ACE_WString (ACE_Allocator *alloc)
 
   this->len_ = 0;
   this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc ((this->len_ + 1) * sizeof (ACE_USHORT16));
-  this->rep_[this->len_] = 0;  
+  this->rep_[this->len_] = 0;
 }
 
 /* static */
@@ -693,7 +692,7 @@ ACE_WString::wstrlen (const ACE_USHORT16 *s)
 
   for (i = 0; s[i] != 0; i++)
     continue;
-  
+
   return i;
 }
 
@@ -708,13 +707,13 @@ ACE_WString::char_rep (void) const
   else
     {
       char *t;
-      
+
       ACE_NEW_RETURN (t, char[this->len_ + 1], 0);
 
       for (size_t i = 0; i < this->len_; i++)
-	// Note that this cast may lose data if wide chars are
-	// actually used!
-	t[i] = char (this->rep_[i]);
+        // Note that this cast may lose data if wide chars are
+        // actually used!
+        t[i] = char (this->rep_[i]);
 
       t[this->len_] = '\0';
       return t;
@@ -723,8 +722,8 @@ ACE_WString::char_rep (void) const
 
 // Constructor that actually copies memory.
 
-ACE_WString::ACE_WString (const char *s, 
-			  ACE_Allocator *alloc)
+ACE_WString::ACE_WString (const char *s,
+                          ACE_Allocator *alloc)
   : allocator_ (alloc)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
@@ -736,7 +735,7 @@ ACE_WString::ACE_WString (const char *s,
     {
       this->len_ = 0;
       this->rep_ = (ACE_USHORT16 *)  this->allocator_->malloc ((this->len_ + 1) * sizeof (ACE_USHORT16));
-      this->rep_[this->len_] = 0;  
+      this->rep_[this->len_] = 0;
     }
   else
     {
@@ -744,19 +743,19 @@ ACE_WString::ACE_WString (const char *s,
       this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc ((this->len_ + 1) * sizeof (ACE_USHORT16));
 
       // Copy the char * string byte-by-byte into the ACE_USHORT16 *
-      // string. 
+      // string.
       for (size_t i = 0; i < this->len_; i++)
-	this->rep_[i] = s[i];
+        this->rep_[i] = s[i];
 
-      // null terminate 
+      // null terminate
       this->rep_[this->len_] = 0;
     }
 }
 
 // Constructor that actually copies memory.
 
-ACE_WString::ACE_WString (const ACE_USHORT16 *s, 
-			  ACE_Allocator *alloc)
+ACE_WString::ACE_WString (const ACE_USHORT16 *s,
+                          ACE_Allocator *alloc)
   : allocator_ (alloc)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
@@ -768,7 +767,7 @@ ACE_WString::ACE_WString (const ACE_USHORT16 *s,
     {
       this->len_ = 0;
       this->rep_ = (ACE_USHORT16 *)  this->allocator_->malloc ((this->len_ + 1) * sizeof (ACE_USHORT16));
-      this->rep_[this->len_] = 0;  
+      this->rep_[this->len_] = 0;
     }
   else
     {
@@ -779,13 +778,13 @@ ACE_WString::ACE_WString (const ACE_USHORT16 *s,
                       s,
                       this->len_ * sizeof (ACE_USHORT16));
 
-      // null terminate 
+      // null terminate
       this->rep_[this->len_] = 0;
     }
 }
 
-ACE_WString::ACE_WString (ACE_USHORT16 c, 
-			  ACE_Allocator *alloc)
+ACE_WString::ACE_WString (ACE_USHORT16 c,
+                          ACE_Allocator *alloc)
   : allocator_ (alloc)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
@@ -794,16 +793,16 @@ ACE_WString::ACE_WString (ACE_USHORT16 c,
     this->allocator_ = ACE_Allocator::instance ();
 
   this->len_ = 1;
-  this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc ((this->len_ + 1) * sizeof (ACE_USHORT16));  
+  this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc ((this->len_ + 1) * sizeof (ACE_USHORT16));
   this->rep_[0] = c;
   this->rep_[this->len_] = 0;
 }
 
 // Constructor that actually copies memory.
 
-ACE_WString::ACE_WString (const ACE_USHORT16 *s, 
-			  size_t len, 
-			  ACE_Allocator *alloc)
+ACE_WString::ACE_WString (const ACE_USHORT16 *s,
+                          size_t len,
+                          ACE_Allocator *alloc)
   : allocator_ (alloc)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
@@ -815,7 +814,7 @@ ACE_WString::ACE_WString (const ACE_USHORT16 *s,
     {
       this->len_ = 0;
       this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc ((this->len_ + 1) * sizeof (ACE_USHORT16));
-      this->rep_[this->len_] = 0;  
+      this->rep_[this->len_] = 0;
     }
   else
     {
@@ -824,15 +823,15 @@ ACE_WString::ACE_WString (const ACE_USHORT16 *s,
 
       ACE_OS::memcpy (this->rep_, s, len * sizeof (ACE_USHORT16));
 
-      // null terminate 
+      // null terminate
       this->rep_[this->len_] = 0;
     }
 }
 
 // Constructor that allocates empty memory
 
-ACE_WString::ACE_WString (size_t len, 
-			  ACE_Allocator *alloc)
+ACE_WString::ACE_WString (size_t len,
+                          ACE_Allocator *alloc)
   : allocator_ (alloc)
 {
   ACE_TRACE ("ACE_WString::ACE_WString");
@@ -865,13 +864,13 @@ ACE_WString::ACE_WString (const ACE_WString &s)
   this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc ((s.len_ + 1) * sizeof (ACE_USHORT16));
   ACE_OS::memcpy ((void *) this->rep_,
                   (const void *) s.rep_,
-		  this->len_ * sizeof (ACE_USHORT16));
+                  this->len_ * sizeof (ACE_USHORT16));
   this->rep_[this->len_] = 0;
 }
 
 // Assignment operator (does copy memory).
 
-ACE_WString & 
+ACE_WString &
 ACE_WString::operator= (const ACE_WString &s)
 {
   ACE_TRACE ("ACE_WString::operator=");
@@ -883,13 +882,22 @@ ACE_WString::operator= (const ACE_WString &s)
   return *this;
 }
 
-void 
+void
 ACE_WString::set (const ACE_USHORT16 *s)
 {
-  this->set (s, ACE_OS::strlen (s));
+#if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
+  u_int len = 0;
+
+  while (*s++ != 0)
+    len++;
+
+  this->set (s, len);
+#else  /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
+  this->set (s, ACE_OS::strlen (ACE_static_cast (wchar_t *, s)));
+#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 }
 
-void 
+void
 ACE_WString::set (const ACE_USHORT16 *s, size_t len)
 {
   // Only reallocate if we don't have enough space...
@@ -906,9 +914,9 @@ ACE_WString::set (const ACE_USHORT16 *s, size_t len)
 }
 
 // return substring
-ACE_WString 
+ACE_WString
 ACE_WString::substring (size_t offset,
-			ssize_t length) const
+                        ssize_t length) const
 {
   ACE_WString nil;
   size_t count = length;
@@ -930,7 +938,7 @@ ACE_WString::substring (size_t offset,
                       this->allocator_);
 }
 
-void 
+void
 ACE_WString::resize (size_t len)
 {
   ACE_TRACE ("ACE_WString::resize");
@@ -956,12 +964,12 @@ ACE_WString::operator+= (const ACE_WString &s)
 {
   ACE_TRACE ("ACE_WString::operator+=");
   ACE_USHORT16 *t = (ACE_USHORT16 *) this->allocator_->malloc ((this->len_ + s.len_ + 1) * sizeof (ACE_USHORT16));
-  
+
   ACE_OS::memcpy ((void *) t,
                   (const void *) this->rep_,
                   this->len_ * sizeof (ACE_USHORT16));
-  ACE_OS::memcpy ((void *) (t + this->len_), 
-		  (const void *) s.rep_,
+  ACE_OS::memcpy ((void *) (t + this->len_),
+                  (const void *) s.rep_,
                   s.len_ * sizeof (ACE_USHORT16));
   this->len_ += s.len_;
 
@@ -990,19 +998,19 @@ ACE_WString::strstr (const ACE_USHORT16 *s1, const ACE_USHORT16 *s2)
   size_t len2 = ACE_WString::wstrlen (s2);
 
   size_t len = len1 - len2;
-  
+
   for (size_t i = 0; i < len; i++)
     {
       size_t j;
-      
+
       for (j = 0; j < len2; j++)
         if (s1[i + j] != s2[j])
           break;
-      
+
       if (j == len2)
         // Found a match!  Return the index.
         return &s1[i];
     }
-  
+
   return 0;
 }
