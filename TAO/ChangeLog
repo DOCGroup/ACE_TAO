@@ -1,3 +1,9 @@
+Sun Jan 25 10:25:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/examples/ORT/Object_Factory_i.cpp:
+
+	  Fixed compilation errors in VC6 builds.
+
 Sun Jan 25 11:16:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/Simple/time-date/Simple_time_date.mpc:
@@ -9,9 +15,7 @@ Fri Jan 23 11:10:00 2004  Gary Maxey <gary.maxey@hp.com>
 
         * tao/ORB_Constants.h
 
-        Fix for BUGID 1723
-
-	Added two new profile Ids
+          Fix for BUGID 1723. Added two new profile Ids
 
 Fri Jan 23 11:43:25 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
