@@ -10,6 +10,10 @@ Mon Apr 20 09:48:01 1998  David L. Levine  <levine@cs.wustl.edu>
           unused local "context_switch".  Protected declarations of
           "ptartTime" and "pstopTime" for CHORUS only.
 
+        * tests/Cubit/TAO/MT_Cubit/client.cpp (do_priority_inversion_test):
+          protected declaration of context_switch for ACE_HAS_PRUSAGE_T or
+          ACE_HAS_GETRUSAGE.
+
 Mon Apr 20 06:36:44 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
         * TAO_IDL/be/be_interface.cpp: The generated typecode was incorect
