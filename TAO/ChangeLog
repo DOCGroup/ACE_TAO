@@ -1,3 +1,20 @@
+Wed Sep  8 11:03:47 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/CosEvent/event_skel_export.h:
+	* orbsvcs/orbsvcs/Naming/naming_skel_export.h:
+	* orbsvcs/orbsvcs/Notify/notify_skel_export.h:
+	* orbsvcs/orbsvcs/Trader/trading_skel_export.h:
+
+	  New files.
+
+	* orbsvcs/orbsvcs/CosEvent.mpc:
+	* orbsvcs/orbsvcs/CosNaming.mpc:
+	* orbsvcs/orbsvcs/CosNotification.mpc:
+	* orbsvcs/orbsvcs/CosTrading.mpc:
+
+	  Changed to use different export macros and export includes for
+	  stub and skeleton libraries.
+
 Wed Sep  8 12:55:30 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/CosTrading.mpc:
