@@ -1,3 +1,10 @@
+Tue Nov  2 15:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PortableServerC.h:
+          Removed the guard to check this file is not included. This file is
+          included by other idl generated files, have to solve that first
+          before this guard can be in place.
+
 Tue Nov  2 14:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Lifespan_Strategy.cpp (notify_shutdown):
