@@ -49,9 +49,9 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
     {
 
       TAO_OutStream *os = this->ctx_->stream ();
-      
+
       be_type *bt;
-      
+
       // set the right type;
       if (this->ctx_->alias ())
         bt = this->ctx_->alias ();
@@ -59,7 +59,7 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
         bt = node;
       // output the class defn
 
-      *os << "class " << idl_global->stub_export_macro ()<< " " 
+      *os << "class " << idl_global->stub_export_macro ()<< " "
           << "TAO_" << node->flat_name ()
           << "_Default_Proxy_Factory" << be_nl
           << "{" << be_nl
@@ -73,12 +73,12 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
           << "_ptr create_proxy (" << be_idt << be_idt_nl
           << node->local_name ()
           << "_ptr proxy," << be_nl
-          << "CORBA::Environment &env = " << be_idt_nl
+          << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
           << "TAO_default_environment ()" << be_uidt << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl
           << "};\n\n";
 
-      *os << "class " << idl_global->stub_export_macro ()<< " " 
+      *os << "class " << idl_global->stub_export_macro ()<< " "
           << "TAO_" << node->flat_name ()
           << "_Proxy_Factory_Adapter" << be_nl
           << "{" << be_nl
@@ -87,17 +87,17 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
           << "_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;" << be_nl << be_nl
           << "int register_proxy_factory (" << be_idt << be_idt_nl
           << "TAO_" << node->flat_name () << "_Default_Proxy_Factory *df,"<< be_nl
-          << "CORBA::Environment &env = " << be_idt_nl
+          << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
           << "TAO_default_environment ()" << be_uidt << be_uidt_nl
           << ");" << be_uidt_nl << be_nl
           << "int unregister_proxy_factory (" << be_idt << be_idt_nl
-          << "CORBA::Environment &env = " << be_idt_nl
+          << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
           << "TAO_default_environment ()" << be_uidt << be_uidt_nl
           << ");" << be_uidt_nl << be_nl
           << node->local_name ()
           << "_ptr create_proxy (" << be_idt << be_idt_nl
           << node->local_name () << "_ptr proxy," << be_nl
-          << "CORBA::Environment &env = " << be_idt_nl
+          << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
           << "TAO_default_environment ()" << be_uidt << be_uidt_nl
           << ");" << be_uidt << be_uidt_nl << be_nl
           << "protected:" << be_idt_nl
@@ -121,7 +121,7 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
           << "_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_"
           << node->flat_name ()<< "_PROXY_FACTORY_ADAPTER;"<<be_nl << be_nl;
 
-      *os << "class " << idl_global->stub_export_macro ()<< " " 
+      *os << "class " << idl_global->stub_export_macro ()<< " "
           << "TAO_"<< node->flat_name ()
           << "_Smart_Proxy_Base" << be_idt_nl
           << ": public virtual "
@@ -163,7 +163,8 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
         // This method will delegate this method to the <base_proxy_>
         // member of the smart proxy and so the smart proxy's (nil)
         // stubobj will not be returned.
-          << "virtual TAO_Stub *_stubobj (void) const;"<<be_uidt_nl;
+          << "virtual TAO_Stub *_stubobj (void) const;"
+          << be_uidt_nl;
 
       // generate code for the interface definition by traversing thru the
       // elements of its scope. We depend on the front-end to have made sure
@@ -178,8 +179,7 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
                              "codegen for scope failed\n"), -1);
         }
 
-      os->decr_indent ();
-      *os << be_uidt_nl << "protected:" << be_idt_nl
+      *os << "protected:" << be_idt_nl
           << "::" << node->full_name ()
           << "_ptr get_proxy (void);" << be_nl
           << "::" << node->full_name () << "_var proxy_;"

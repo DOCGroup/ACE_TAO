@@ -119,7 +119,6 @@ be_visitor_interface_cdr_op_ci::visit_interface (be_interface *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
   // hand over to the TAO's internal marshaling engine
-  //  *os << "CORBA::Environment env;" << be_nl;
   *os << "ACE_TRY_NEW_ENV" << be_nl
       << "{" << be_idt_nl;
   *os << "CORBA::Object_var obj;" << be_nl;

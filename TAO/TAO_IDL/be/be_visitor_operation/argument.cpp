@@ -90,7 +90,7 @@ be_visitor_operation_argument::visit_operation (be_operation *node)
         {
         case TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS:
         case TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS:
-          // applicable only to these cases where the actual upcall is made 
+          // applicable only to these cases where the actual upcall is made
 
           if (node->argument_count () > 0)
             {

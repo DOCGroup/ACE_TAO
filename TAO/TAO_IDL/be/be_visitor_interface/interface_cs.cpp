@@ -177,7 +177,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
 
   // The _duplicate method
-  *os << node->full_name () << "_ptr " << be_nl
+  *os << node->full_name () << "_ptr" << be_nl
       << node->full_name () << "::_duplicate ("
       << bt->nested_type_name (this->ctx_->scope ())
       << "_ptr obj)" << be_nl
