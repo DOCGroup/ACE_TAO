@@ -663,10 +663,11 @@ start_servants (void)
                               0), //task id 0.
                   -1);
 
-  ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF;
+  ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF + 25;
 
   ACE_DEBUG ((LM_DEBUG,
-              "Creating servant with high priority %d\n", priority));
+              "Creating servant with high priority %d\n",
+	      priority));
 
   // Make the high priority task an active object.
   if (high_priority_task->activate (THR_BOUND | ACE_SCHED_FIFO,
@@ -715,16 +716,20 @@ start_servants (void)
                       Cubit_Task (args, "internet", 1, &barrier_, i+1),
                       -1);
 
-      // Make the low priority task an active object.
-    if (low_priority_task [i]->activate (THR_BOUND | ACE_SCHED_FIFO,
-                                       1,
-                                       0,
-                                       priority) == -1)
-      {
-        ACE_ERROR ((LM_ERROR, "(%P|%t; %p\n",
-                    "low_priority_task[i]->activate"));
-      }
+      ACE_DEBUG ((LM_DEBUG,
+		  "Creating servant with low priority %d\n",
+		  priority));
 
+      // Make the low priority task an active object.
+      if (low_priority_task [i]->activate (THR_BOUND | ACE_SCHED_FIFO,
+					   1,
+					   0,
+					   priority) == -1)
+	{
+	  ACE_ERROR ((LM_ERROR, "(%P|%t; %p\n",
+		      "low_priority_task[i]->activate"));
+	}
+      
       priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                                   priority,
                                                   ACE_SCOPE_THREAD);
