@@ -181,6 +181,32 @@ ACE_Hash_Cache_Map_Manager<T_2>::find (const KEY &key,
 }
 
 template <T_1> int
+ACE_Hash_Cache_Map_Manager<T_2>::find (const KEY &key,
+                                       VALUE &value)
+{
+  CACHE_ENTRY *entry = 0;
+
+  int result = this->find (key,
+                           entry);
+
+  if (result != -1)
+    {
+      value = entry->int_id_.first ();
+    }
+
+  return result;
+}
+
+template <T_1> int
+ACE_Hash_Cache_Map_Manager<T_2>::find (const KEY &key)
+{
+  CACHE_ENTRY *entry = 0;
+
+  return this->find (key,
+                     entry);
+}
+
+template <T_1> int
 ACE_Hash_Cache_Map_Manager<T_2>::unbind (ACE_Hash_Map_Entry<KEY, ACE_Pair<VALUE, ATTRIBUTES> > *entry)
 {
   // Remove the entry from the cache.
