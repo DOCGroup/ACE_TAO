@@ -45,11 +45,6 @@ TAO_Stub::reset_base (void)
 ACE_INLINE CORBA::Boolean
 TAO_Stub::service_profile_selection (void)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                            guard,
-                            *this->profile_lock_ptr_,
-                            0));
-
   TAO_Profile *profile = 0;
 
   this->orb_core_->service_profile_selection (this->base_profiles_,
