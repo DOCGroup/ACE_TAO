@@ -437,7 +437,8 @@ endif
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
   $(ACE_ROOT)/ace/RW_Mutex.h \
-  CosEvent/event_export.h \ CosEvent/CEC_ProxyPushSupplier.h
+  CosEvent/event_export.h \
+  CosEvent/CEC_ProxyPushSupplier.h \
   CosEventChannelAdminS.h \
   CosEventCommS.h \
   $(TAO_ROOT)/tao/Collocation_Proxy_Broker.h \
@@ -1981,7 +1982,8 @@ endif
   $(ACE_ROOT)/ace/Guard_T.inl \
   $(ACE_ROOT)/ace/RW_Thread_Mutex.h \
   $(ACE_ROOT)/ace/RW_Mutex.h \
-  CosEvent/event_export.h \ CosEvent/CEC_Dispatching_Task.h
+  CosEvent/event_export.h \
+  CosEvent/CEC_Dispatching_Task.h \
   $(ACE_ROOT)/ace/Task.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
