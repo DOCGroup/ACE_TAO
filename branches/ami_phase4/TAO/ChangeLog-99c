@@ -1,5 +1,14 @@
 Sat Jul 17 10:53:49 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
   
+	* tao/GIOP.h
+	* tao/Object_Adapter.cpp
+	* tao/Object_Adapter.h
+	* tao/Object_Adapter.i
+	* tao/Reply_Dispatcher.cpp
+	* tao/Stub.cpp : Merged the changes Carlos and Irfan did in the
+	  main brach fixing the memory leaks and optimizing a few locks
+	  here and there. 
+  
 	* performance-tests/Latency/Makefile
 	* performance-tests/Latency/client.cpp
 	* performance-tests/Latency/test.idl
