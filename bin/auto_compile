@@ -109,7 +109,7 @@ if ($debug) {
   print "TAO_ROOT = $ENV{TAO_ROOT}\n";
 }
 
-push @INC, "$ENV{ACE_ROOT}/bin";
+push @INC, $CHECKOUT . '/' . $MODULE . '/bin';
 require run_all_list;
 
 if ($debug) {
