@@ -1,0 +1,10 @@
+// $Id$
+
+interface test
+{
+ exception Oops {string reason;};
+
+ short method (in short boo) raises (Oops);
+
+ oneway void shutdown ();
+};
