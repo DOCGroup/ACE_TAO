@@ -29,9 +29,9 @@ TAO_Notify_EventChannelFactory_i::get_refx (CORBA::Environment &ACE_TRY_ENV)
 CosNotifyChannelAdmin::EventChannel_ptr
 TAO_Notify_EventChannelFactory_i::create_channel
 (
- const CosNotification::QoSProperties & initial_qos,
- const CosNotification::AdminProperties & initial_admin,
- CosNotifyChannelAdmin::ChannelID_out id,
+ const CosNotification::QoSProperties & /* initial_qos */,
+ const CosNotification::AdminProperties & /* initial_admin */,
+ CosNotifyChannelAdmin::ChannelID_out /* id */,
  CORBA::Environment &ACE_TRY_ENV
  )
   ACE_THROW_SPEC ((
@@ -63,8 +63,7 @@ TAO_Notify_EventChannelFactory_i::create_channel
     return ec_ret._retn ();
   }
 
-CosNotifyChannelAdmin::ChannelIDSeq * TAO_Notify_EventChannelFactory_i::get_all_channels (
-    CORBA::Environment &ACE_TRY_ENV
+CosNotifyChannelAdmin::ChannelIDSeq * TAO_Notify_EventChannelFactory_i::get_all_channels (CORBA::Environment & /* ACE_TRY_ENV */
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -75,9 +74,8 @@ CosNotifyChannelAdmin::ChannelIDSeq * TAO_Notify_EventChannelFactory_i::get_all_
     return 0;
   }
 
-CosNotifyChannelAdmin::EventChannel_ptr TAO_Notify_EventChannelFactory_i::get_event_channel (
-    CosNotifyChannelAdmin::ChannelID id,
-    CORBA::Environment &ACE_TRY_ENV
+CosNotifyChannelAdmin::EventChannel_ptr TAO_Notify_EventChannelFactory_i::get_event_channel (CosNotifyChannelAdmin::ChannelID /* id */,
+              CORBA::Environment & /*ACE_TRY_ENV */
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
