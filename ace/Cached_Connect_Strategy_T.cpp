@@ -47,7 +47,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 {
 #if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
   // Close down all cached service handlers.
-  for (CONNECTION_CACHE::ITERATOR iter = this->connection_cache_.begin ();
+  for (ACE_TYPENAME CONNECTION_CACHE::ITERATOR iter = this->connection_cache_.begin ();
        iter != this->connection_cache_.end ();
        ++iter)
     {
