@@ -1,3 +1,9 @@
+Mon Feb 16 13:29:31 1998  Brian Mendel <brian.r.mendel@boeing.com>
+
+	* tao/poa.cpp: Added SCE_HAS_TEMPLATE_TYPEDEFS_CHAR guards
+           around ACE_OS:strlen calls for WChar(s).
+        * tao/default.bld, tao.bld: Update VxWorks GHS Build files.
+
 Mon Feb 16 12:24:04 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/clnt.h (needed.): Added missing member
