@@ -1,3 +1,14 @@
+Wed Apr  9 22:50:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+          Fixed formatting in generated code for _unchecked_narrow().
+
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+
+          Fixed logic in code generation of _unchecked_narrow(). Thanks
+          to Nanbor Wang <nanbor@cse.wustl.edu> for reporting the problem.
+
 Wed Apr  9 15:28:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Stub.h (object_key):
