@@ -52,4 +52,3 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const TimeBase::Inter
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
-
