@@ -117,7 +117,7 @@ CLEAN :
 	-@erase "$(INTDIR)\Registry_Name_Space.obj"
 	-@erase "$(INTDIR)\Remote_Name_Space.obj"
 	-@erase "$(INTDIR)\Remote_Tokens.obj"
-	-@erase "$(INTDIR)\Scheduling_Params.obj"
+	-@erase "$(INTDIR)\Sched_Params.obj"
 	-@erase "$(INTDIR)\Service_Config.obj"
 	-@erase "$(INTDIR)\Service_Main.obj"
 	-@erase "$(INTDIR)\Service_Manager.obj"
@@ -157,7 +157,6 @@ CLEAN :
 	-@erase "$(INTDIR)\Task.obj"
 	-@erase "$(INTDIR)\Thread.obj"
 	-@erase "$(INTDIR)\Thread_Manager.obj"
-	-@erase "$(INTDIR)\Thread_Priority.obj"
 	-@erase "$(INTDIR)\Time_Request_Reply.obj"
 	-@erase "$(INTDIR)\Timer_Heap.obj"
 	-@erase "$(INTDIR)\Timer_List.obj"
@@ -273,7 +272,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\Registry_Name_Space.obj" \
 	"$(INTDIR)\Remote_Name_Space.obj" \
 	"$(INTDIR)\Remote_Tokens.obj" \
-	"$(INTDIR)\Scheduling_Params.obj" \
+	"$(INTDIR)\Sched_Params.obj" \
 	"$(INTDIR)\Service_Config.obj" \
 	"$(INTDIR)\Service_Main.obj" \
 	"$(INTDIR)\Service_Manager.obj" \
@@ -313,7 +312,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\Task.obj" \
 	"$(INTDIR)\Thread.obj" \
 	"$(INTDIR)\Thread_Manager.obj" \
-	"$(INTDIR)\Thread_Priority.obj" \
 	"$(INTDIR)\Time_Request_Reply.obj" \
 	"$(INTDIR)\Timer_Heap.obj" \
 	"$(INTDIR)\Timer_List.obj" \
@@ -421,7 +419,7 @@ CLEAN :
 	-@erase "$(INTDIR)\Registry_Name_Space.obj"
 	-@erase "$(INTDIR)\Remote_Name_Space.obj"
 	-@erase "$(INTDIR)\Remote_Tokens.obj"
-	-@erase "$(INTDIR)\Scheduling_Params.obj"
+	-@erase "$(INTDIR)\Sched_Params.obj"
 	-@erase "$(INTDIR)\Service_Config.obj"
 	-@erase "$(INTDIR)\Service_Main.obj"
 	-@erase "$(INTDIR)\Service_Manager.obj"
@@ -461,7 +459,6 @@ CLEAN :
 	-@erase "$(INTDIR)\Task.obj"
 	-@erase "$(INTDIR)\Thread.obj"
 	-@erase "$(INTDIR)\Thread_Manager.obj"
-	-@erase "$(INTDIR)\Thread_Priority.obj"
 	-@erase "$(INTDIR)\Time_Request_Reply.obj"
 	-@erase "$(INTDIR)\Timer_Heap.obj"
 	-@erase "$(INTDIR)\Timer_List.obj"
@@ -581,7 +578,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\Registry_Name_Space.obj" \
 	"$(INTDIR)\Remote_Name_Space.obj" \
 	"$(INTDIR)\Remote_Tokens.obj" \
-	"$(INTDIR)\Scheduling_Params.obj" \
+	"$(INTDIR)\Sched_Params.obj" \
 	"$(INTDIR)\Service_Config.obj" \
 	"$(INTDIR)\Service_Main.obj" \
 	"$(INTDIR)\Service_Manager.obj" \
@@ -621,7 +618,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\Task.obj" \
 	"$(INTDIR)\Thread.obj" \
 	"$(INTDIR)\Thread_Manager.obj" \
-	"$(INTDIR)\Thread_Priority.obj" \
 	"$(INTDIR)\Time_Request_Reply.obj" \
 	"$(INTDIR)\Timer_Heap.obj" \
 	"$(INTDIR)\Timer_List.obj" \
@@ -4330,8 +4326,8 @@ DEP_CPP_OS_CP=\
 	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Scheduling_Params.h"\
-	{$(INCLUDE)}"\.\Scheduling_Params.i"\
+	{$(INCLUDE)}"\.\Sched_Params.h"\
+	{$(INCLUDE)}"\.\Sched_Params.i"\
 	{$(INCLUDE)}"\.\Set.cpp"\
 	{$(INCLUDE)}"\.\Set.h"\
 	{$(INCLUDE)}"\.\Set.i"\
@@ -4349,8 +4345,6 @@ DEP_CPP_OS_CP=\
 	{$(INCLUDE)}"\.\Synch_T.i"\
 	{$(INCLUDE)}"\.\Thread.h"\
 	{$(INCLUDE)}"\.\Thread.i"\
-	{$(INCLUDE)}"\.\Thread_Priority.h"\
-	{$(INCLUDE)}"\.\Thread_Priority.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
@@ -7910,7 +7904,7 @@ DEP_CPP_TIMER_H=\
 ################################################################################
 # Begin Source File
 
-SOURCE=.\Scheduling_Params.cpp
+SOURCE=.\Sched_Params.cpp
 DEP_CPP_SCHED=\
 	{$(INCLUDE)}"\.\ACE.h"\
 	{$(INCLUDE)}"\.\ACE.i"\
@@ -7921,45 +7915,16 @@ DEP_CPP_SCHED=\
 	{$(INCLUDE)}"\.\Log_Record.i"\
 	{$(INCLUDE)}"\.\OS.h"\
 	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\Scheduling_Params.h"\
-	{$(INCLUDE)}"\.\Scheduling_Params.i"\
+	{$(INCLUDE)}"\.\Sched_Params.h"\
+	{$(INCLUDE)}"\.\Sched_Params.i"\
 	{$(INCLUDE)}"\.\SString.h"\
 	{$(INCLUDE)}"\.\SString.i"\
 	{$(INCLUDE)}"\.\stdcpp.h"\
-	{$(INCLUDE)}"\.\Thread_Priority.h"\
-	{$(INCLUDE)}"\.\Thread_Priority.i"\
 	{$(INCLUDE)}"\.\Trace.h"\
 	{$(INCLUDE)}"\.\ws2tcpip.h"\
 	
 
-"$(INTDIR)\Scheduling_Params.obj" : $(SOURCE) $(DEP_CPP_SCHED) "$(INTDIR)"
-
-
-# End Source File
-################################################################################
-# Begin Source File
-
-SOURCE=.\Thread_Priority.cpp
-DEP_CPP_THREAD_=\
-	{$(INCLUDE)}"\.\ACE.h"\
-	{$(INCLUDE)}"\.\ACE.i"\
-	{$(INCLUDE)}"\.\config.h"\
-	{$(INCLUDE)}"\.\Log_Msg.h"\
-	{$(INCLUDE)}"\.\Log_Priority.h"\
-	{$(INCLUDE)}"\.\Log_Record.h"\
-	{$(INCLUDE)}"\.\Log_Record.i"\
-	{$(INCLUDE)}"\.\OS.h"\
-	{$(INCLUDE)}"\.\OS.i"\
-	{$(INCLUDE)}"\.\SString.h"\
-	{$(INCLUDE)}"\.\SString.i"\
-	{$(INCLUDE)}"\.\stdcpp.h"\
-	{$(INCLUDE)}"\.\Thread_Priority.h"\
-	{$(INCLUDE)}"\.\Thread_Priority.i"\
-	{$(INCLUDE)}"\.\Trace.h"\
-	{$(INCLUDE)}"\.\ws2tcpip.h"\
-	
-
-"$(INTDIR)\Thread_Priority.obj" : $(SOURCE) $(DEP_CPP_THREAD_) "$(INTDIR)"
+"$(INTDIR)\Sched_Params.obj" : $(SOURCE) $(DEP_CPP_SCHED) "$(INTDIR)"
 
 
 # End Source File
