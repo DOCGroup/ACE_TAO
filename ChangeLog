@@ -1,23 +1,31 @@
+Mon Nov 29 13:12:14 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Modified the OBJS setting to allow cpp files that are generated
+          into a subdirectory below where the mpc file exists.  gperf tests
+          happen to do this now.
+
 Mon Nov 29 16:07:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
-	* examples/Web_Crawler/Iterators.cpp:
-	  Minor change to get rid of warning in GCC 2.96 build.
+        * examples/Web_Crawler/Iterators.cpp:
+          Minor change to get rid of warning in GCC 2.96 build.
 
 Mon Nov 29 16:03:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
-	* ACEXML/common/HttpCharStream.cpp:
-	  Minor change to get rid of warning in GCC 2.96 build.
+        * ACEXML/common/HttpCharStream.cpp:
+          Minor change to get rid of warning in GCC 2.96 build.
 
 Mon Nov 29 15:43:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
-	* performance-tests/SCTP/Options_Manager.h:
-	* performance-tests/SCTP/Options_Manager.cpp:
-	* performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
-	* performance-tests/SCTP/SOCK_SEQPACK_clt.cpp:
-	* performance-tests/SCTP/SOCK_STREAM_srv.cpp:
-	* performance-tests/SCTP/SOCK_STREAM_clt.cpp:
-	  Fixed problems with use of iostreams for
-	  ACE_LACKS_IOSTREAM_TOTALLY builds (VxWorks DIAB).
+        * performance-tests/SCTP/Options_Manager.h:
+        * performance-tests/SCTP/Options_Manager.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_clt.cpp:
+        * performance-tests/SCTP/SOCK_STREAM_srv.cpp:
+        * performance-tests/SCTP/SOCK_STREAM_clt.cpp:
+          Fixed problems with use of iostreams for
+          ACE_LACKS_IOSTREAM_TOTALLY builds (VxWorks DIAB).
 
 Mon Nov 29 07:04:58 2004  Chad Elliott  <elliott_c@ociweb.com>
 
