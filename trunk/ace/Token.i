@@ -16,7 +16,7 @@ ACE_Token::tryacquire (void)
 {
   ACE_TRACE ("ACE_Token::tryacquire");
   return this->shared_acquire 
-    (0, 0, (ACE_Time_Value *) &ACE_Time_Value::zero);
+    (0, 0, (ACE_Time_Value *) &ACE_Time_Value::zero, ACE_Token::WRITE_TOKEN);
 }
 
 ACE_INLINE int 
@@ -42,27 +42,57 @@ ACE_INLINE int
 ACE_Token::acquire_read (void)
 {
   ACE_TRACE ("ACE_Token::acquire_read");
-  return this->acquire ();
+  return this->shared_acquire
+    (0, 0, 0, ACE_Token::READ_TOKEN);
 }
 
 ACE_INLINE int
 ACE_Token::acquire_write (void)
 {
   ACE_TRACE ("ACE_Token::acquire_write");
-  return this->acquire ();
+  return this->shared_acquire
+    (0, 0, 0, ACE_Token::WRITE_TOKEN);
 }
 
 ACE_INLINE int
 ACE_Token::tryacquire_read (void)
 {
   ACE_TRACE ("ACE_Token::tryacquire_read");
-  return this->tryacquire ();
+  return this->shared_acquire
+    (0, 0, (ACE_Time_Value *) &ACE_Time_Value::zero, ACE_Token::READ_TOKEN);
 }
 
 ACE_INLINE int
 ACE_Token::tryacquire_write (void)
 {
   ACE_TRACE ("ACE_Token::tryacquire_write");
-  return this->tryacquire ();
+  return this->shared_acquire
+    (0, 0, (ACE_Time_Value *) &ACE_Time_Value::zero, ACE_Token::WRITE_TOKEN);
 }
 
+ACE_INLINE int
+ACE_Token::ACE_Token_Queue_Entry::wait (ACE_Time_Value *timeout, ACE_Thread_Mutex &lock)
+{
+#if defined (ACE_TOKEN_USES_SEMAPHORE)
+  lock.release ();
+  int retv = (timeout == 0 ?
+              this->cv_.acquire () :
+              this->cv_.acquire (*timeout));
+  lock.acquire ();
+  return retv;
+#else
+  ACE_UNUSED_ARG (lock);
+  return this->cv_.wait (timeout);
+#endif /* ACE_TOKEN_USES_SEMAPHORE */
+}
+
+ACE_INLINE int
+ACE_Token::ACE_Token_Queue_Entry::signal (void)
+{
+  return 
+#if defined (ACE_TOKEN_USES_SEMAPHORE)
+    this->cv_.release ();
+#else
+    this->cv_.signal ();
+#endif /* ACE_TOKEN_USES_SEMAPHORE */
+}
