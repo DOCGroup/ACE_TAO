@@ -709,6 +709,9 @@
 				<File
 					RelativePath=".\SemanticAction\ValueType.hpp">
 				</File>
+				<File
+					RelativePath=".\SemanticAction\ValueTypeMember.hpp">
+				</File>
 			</Filter>
 			<Filter
 				Name="Impl"
@@ -896,6 +899,9 @@
 								ObjectFile="$(IntDir)/$(InputName)2.obj"/>
 						</FileConfiguration>
 					</File>
+					<File
+						RelativePath=".\SemanticAction\Impl\ValueTypeMember.cpp">
+					</File>
 				</Filter>
 				<Filter
 					Name="Header Files"
@@ -947,6 +953,9 @@
 					</File>
 					<File
 						RelativePath=".\SemanticAction\Impl\ValueType.hpp">
+					</File>
+					<File
+						RelativePath=".\SemanticAction\Impl\ValueTypeMember.hpp">
 					</File>
 				</Filter>
 			</Filter>
