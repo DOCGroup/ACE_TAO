@@ -5,6 +5,10 @@ Mon Jul 28 15:56:12 2003  Yamuna Krishnamurthy <yamuna@oomworks.com>
 	  Took care of '\r' and '\n' characters terminating the endpoint
 	  info strings in the address file.
 
+	* orbsvcs/tests/AVStreams/Modify_QoS/Makefile: 
+
+	  Updated dependencies.
+
 Mon Jul 28 23:30:15 2003  Yamuna Krishnamurthy <yamuna@oomworks.com>
 
 	* orbsvcs/orbsvcs/AV/AV_Core.cpp: 	
