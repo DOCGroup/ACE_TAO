@@ -13,7 +13,7 @@
 #include "tao/Leader_Follower.h"
 
 ACE_RCSID (PortableGroup, 
-           PortableGroup_Acceptor_Registry.cpp, 
+           PortableGroup_Acceptor_Registry, 
            "$Id$")
 
 TAO_PortableGroup_Acceptor_Registry::TAO_PortableGroup_Acceptor_Registry (void)

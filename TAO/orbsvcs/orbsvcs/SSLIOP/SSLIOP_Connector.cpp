@@ -16,6 +16,7 @@
 #include "tao/Transport_Connector.h"
 #include "tao/Blocked_Connect_Strategy.h"
 #include "tao/Wait_Strategy.h"
+#include "tao/Profile_Transport_Resolver.h"
 #include "ace/Auto_Ptr.h"
 
 
@@ -114,19 +115,8 @@ TAO_SSLIOP_Connector::close (void)
   return this->base_connector_.close ();
 }
 
-int
-TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
-                               TAO_Transport_Descriptor_Interface *desc
-                               ACE_ENV_ARG_DECL)
-{
-  return this->connect (invocation,
-                        desc,
-                        0
-                        ACE_ENV_ARG_PARAMETER);
-}
-
-int
-TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
+TAO_Transport *
+TAO_SSLIOP_Connector::connect (TAO::Profile_Transport_Resolver *resolver,
                                TAO_Transport_Descriptor_Interface *desc,
                                ACE_Time_Value *timeout
                                ACE_ENV_ARG_DECL)
@@ -139,14 +129,14 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
   TAO_Endpoint *endpoint = desc->endpoint ();
 
   if (endpoint->tag () != IOP::TAG_INTERNET_IOP)
-    return -1;
+    return 0;
 
   TAO_SSLIOP_Endpoint *ssl_endpoint =
     ACE_dynamic_cast (TAO_SSLIOP_Endpoint *,
                       endpoint);
 
   if (ssl_endpoint == 0)
-    return -1;
+    return 0;
 
   // @@ TODO:  The EstablishTrust policy should be evaluated once per
   //           connection, not once per invocation.  This should
@@ -155,14 +145,14 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
   // Check if the user overrode the default establishment of trust
   // policy for the current object.
   CORBA::Policy_var policy =
-    invocation->stub ()->get_policy (Security::SecEstablishTrustPolicy
-                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+    resolver->stub ()->get_policy (Security::SecEstablishTrustPolicy
+                                  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
   SecurityLevel2::EstablishTrustPolicy_var trust_policy =
     SecurityLevel2::EstablishTrustPolicy::_narrow (policy.in ()
                                                    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK_RETURN (0);
 
   // We use a pointer and temporary to make it obvious to determine
   // if no establishment of trust policy was set.  Specifically, if
@@ -198,19 +188,19 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
         }
 
       ACE_THROW_RETURN (CORBA::INV_POLICY (),   // @@ Correct exception?
-                        -1);
+                        0);
     }
 
   // Check if the user overrode the default Quality-of-Protection for
   // the current object.
-  policy = invocation->stub ()->get_policy (Security::SecQOPPolicy
-                                            ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  policy = resolver->stub ()->get_policy (Security::SecQOPPolicy
+                                          ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
   SecurityLevel2::QOPPolicy_var qop_policy =
     SecurityLevel2::QOPPolicy::_narrow (policy.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
+  ACE_CHECK_RETURN (0);
 
   // Temporary variable used to avoid overwriting the default value
   // set when the ORB was initialized.
@@ -219,7 +209,7 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
   if (!CORBA::is_nil (qop_policy.in ()))
     {
       qop = qop_policy->qop (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      ACE_CHECK_RETURN (0);
     }
 
   // If the SSL port is zero, then no SSLIOP tagged component was
@@ -238,14 +228,14 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
         }
 
       ACE_THROW_RETURN (CORBA::INV_POLICY (),   // @@ Correct exception?
-                        -1);
+                        0);
     }
 
   if ((!establish_trust && qop == Security::SecQOPNoProtection)
       || ssl_endpoint->ssl_component ().port == 0)
     {
       return this->iiop_connect (ssl_endpoint,
-                                 invocation,
+                                 resolver,
                                  timeout
                                  ACE_ENV_ARG_PARAMETER);
     }
@@ -253,7 +243,7 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
   return this->ssliop_connect (ssl_endpoint,
                                qop,
                                trust,
-                               invocation,
+                               resolver,
                                desc,
                                timeout
                                ACE_ENV_ARG_PARAMETER);
@@ -300,9 +290,9 @@ TAO_SSLIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
   return profile;
 }
 
-int
+TAO_Transport*
 TAO_SSLIOP_Connector::iiop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
-                                    TAO_GIOP_Invocation *invocation,
+                                    TAO::Profile_Transport_Resolver *resolver,
                                     ACE_Time_Value *timeout
                                     ACE_ENV_ARG_DECL)
 {
@@ -337,17 +327,17 @@ TAO_SSLIOP_Connector::iiop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
   TAO_Base_Transport_Property iiop_desc (iiop_endpoint);
 
   // Note that the IIOP-only transport descriptor is used!
-  return this->TAO_IIOP_SSL_Connector::connect (invocation,
+  return this->TAO_IIOP_SSL_Connector::connect (resolver,
                                                 &iiop_desc,
                                                 timeout
                                                 ACE_ENV_ARG_PARAMETER);
 }
 
-int
+TAO_Transport *
 TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
                                       Security::QOP qop,
                                       const Security::EstablishTrust &trust,
-                                      TAO_GIOP_Invocation *invocation,
+                                      TAO::Profile_Transport_Resolver *resolver,
                                       TAO_Transport_Descriptor_Interface *desc,
                                       ACE_Time_Value *max_wait_time
                                       ACE_ENV_ARG_DECL)
@@ -401,7 +391,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
                       ACE_TEXT ("failure.\n")));
         }
 
-      return -1;
+      return 0;
     }
 
   int result = 0;
@@ -454,7 +444,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
                         ACE_TEXT ("(%P|%t) Unable to create SSLIOP ")
                         ACE_TEXT ("service handler.\n")));
 
-          return -1;
+          return 0;
         }
 
       ACE_Auto_Basic_Ptr<TAO_SSLIOP_Connection_Handler>
@@ -506,7 +496,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
         }
 
       TAO_SSLIOP_Credentials_var credentials =
-        this->retrieve_credentials (invocation->stub (),
+        this->retrieve_credentials (resolver->stub (),
                                     svc_handler->peer ().ssl ()
                                     ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
@@ -634,7 +624,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
                           ACE_TEXT ("errno")));
             }
 
-          return -1;
+          return 0;
         }
 
       // At this point, the connection has be successfully connected.
@@ -671,7 +661,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
                           "could not add the new connection to cache\n"));
             }
 
-          return -1;
+          return 0;
         }
 
       // If the wait strategy wants us to be registered with the reactor
@@ -695,16 +685,11 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
                           "could not register the new connection in the reactor\n"));
             }
 
-          return -1;
+          return 0;
         }
     }
 
-  // Handover the transport pointer to the Invocation class.
-  TAO_Transport *&invocation_transport =
-    invocation->transport ();
-  invocation_transport = transport;
-
-  return 0;
+  return transport;
 }
 
 TAO_SSLIOP_Credentials *

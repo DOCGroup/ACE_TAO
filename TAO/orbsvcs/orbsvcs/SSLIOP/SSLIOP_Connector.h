@@ -57,13 +57,10 @@ public:
   //@{
   virtual int open (TAO_ORB_Core *orb_core);
   virtual int close (void);
-  virtual int connect (TAO_GIOP_Invocation *invocation,
-                       TAO_Transport_Descriptor_Interface *desc
-                       ACE_ENV_ARG_DECL);
-  virtual int connect (TAO_GIOP_Invocation *invocation,
-                       TAO_Transport_Descriptor_Interface *desc,
-                       ACE_Time_Value *timeout
-                       ACE_ENV_ARG_DECL);
+  virtual TAO_Transport *connect (TAO::Profile_Transport_Resolver *r,
+                                  TAO_Transport_Descriptor_Interface *desc,
+                                  ACE_Time_Value *timeout
+                                  ACE_ENV_ARG_DECL);
 
   virtual TAO_Profile *create_profile (TAO_InputCDR& cdr);
   //@}
@@ -81,19 +78,21 @@ protected:
   /**
    * @note The IIOP endpoint is extracted from the SSLIOP endpoint.
    */
-  int iiop_connect (TAO_SSLIOP_Endpoint *ssliop_endpoint,
-                    TAO_GIOP_Invocation *invocation,
-                    ACE_Time_Value *timeout
-                    ACE_ENV_ARG_DECL);
+  TAO_Transport* iiop_connect (
+      TAO_SSLIOP_Endpoint *ssliop_endpoint,
+      TAO::Profile_Transport_Resolver *r,
+      ACE_Time_Value *timeout
+      ACE_ENV_ARG_DECL);
 
   /// SSLIOP-specific connection establishment.
-  int ssliop_connect (TAO_SSLIOP_Endpoint *ssliop_endpoint,
-                      Security::QOP qop,
-                      const Security::EstablishTrust &trust,
-                      TAO_GIOP_Invocation *invocation,
-                      TAO_Transport_Descriptor_Interface *desc,
-                      ACE_Time_Value *timeout
-                      ACE_ENV_ARG_DECL);
+  TAO_Transport* ssliop_connect (
+      TAO_SSLIOP_Endpoint *ssliop_endpoint,
+      Security::QOP qop,
+      const Security::EstablishTrust &trust,
+      TAO::Profile_Transport_Resolver *r,
+      TAO_Transport_Descriptor_Interface *desc,
+      ACE_Time_Value *timeout
+      ACE_ENV_ARG_DECL);
 
   /// Retrieve SSLIOP credentials from the policy overrides list and
   /// set up the underlying SSL connection to use the X.509
