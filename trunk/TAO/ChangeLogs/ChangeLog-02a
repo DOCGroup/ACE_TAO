@@ -1,3 +1,17 @@
+Thu May 17 20:28:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+
+          The change in the IDL compiler of the handling of undefined
+          forward declared interfaces necessitated a change in
+          tao_ifr's handling of forward declared interfaces (defined
+          or otherwise) and of interface members. Thanks to
+          Philippe Merle <Philippe.Merle@lifl.fr> for uncovering this
+          bug in his CorbaScrip testing efforts.
+
 Thu May 17 17:00:39 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* examples/PluggableUDP/DIOP/DIOP_Profile.cpp :
