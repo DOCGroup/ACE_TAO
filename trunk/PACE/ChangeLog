@@ -1,3 +1,14 @@
+Thu Jul 27 13:50:48 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/constants.h:
+
+	  Moved contents of pace/config/temp.h to constants.h.
+	  Some of this probably shouldn't be in contstants.h.
+
+	* pace/config/temp.h:
+
+	  Removed.
+
 Thu Jul 27 13:03:29 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/constants.h (PACE_ONE_SECOND_IN_NSECS):
