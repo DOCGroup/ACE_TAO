@@ -7,10 +7,10 @@
 
 #include <openssl/err.h>
 
-#include "SSL_SOCK_Stream.h"
+#include "ace/SSL/SSL_SOCK_Stream.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "SSL_SOCK_Stream.i"
+#include "ace/SSL/SSL_SOCK_Stream.i"
 #endif
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Stream)

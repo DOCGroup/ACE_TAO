@@ -9,7 +9,7 @@
 #include "ace/Handle_Set.h"
 #include "ace/Profile_Timer.h"
 
-#include "SSL_SOCK_Acceptor.h"
+#include "ace/SSL/SSL_SOCK_Acceptor.h"
 
 ACE_RCSID(SSL_SAP, SSL_server, "$Id$")
 

@@ -2,7 +2,7 @@
 // $Id$
 //
 
-#include "SSL_SOCK_Acceptor.h"
+#include "ace/SSL/SSL_SOCK_Acceptor.h"
 
 #if defined (ACE_HAS_SSL)
 
@@ -11,7 +11,7 @@
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Acceptor)
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "SSL_SOCK_Acceptor.i"
+#include "ace/SSL/SSL_SOCK_Acceptor.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 int
