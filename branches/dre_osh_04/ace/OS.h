@@ -792,7 +792,6 @@ public:
 class ACE_OS_Export ACE_cond_t
 {
 public:
-  friend class ACE_OS;
 
   /// Returns the number of waiters.
   long waiters (void) const;
@@ -854,7 +853,6 @@ struct ACE_OS_Export ACE_mutexattr_t
 struct ACE_OS_Export ACE_rwlock_t
 {
 protected:
-  friend class ACE_OS;
 
   ACE_mutex_t lock_;
   // Serialize access to internal state.
@@ -1089,8 +1087,6 @@ typedef unsigned int ACE_thread_key_t;
 // Wrapper for NT events on pSOS.
 class ACE_OS_Export ACE_event_t
 {
-  friend class ACE_OS;
-
 protected:
 
   /// Protect critical section.
@@ -1289,32 +1285,6 @@ typedef ACE_UINT64 ACE_hrtime_t;
 
 // The "null" device on UNIX.
 #   define ACE_DEV_NULL "/dev/null"
-
-/**
- * @class ACE_event_t
- *
- * @brief Wrapper for NT events on UNIX.
- */
-class ACE_OS_Export ACE_event_t
-{
-  friend class ACE_OS;
-protected:
-  /// Protect critical section.
-  ACE_mutex_t lock_;
-
-  /// Keeps track of waiters.
-  ACE_cond_t condition_;
-
-  /// Specifies if this is an auto- or manual-reset event.
-  int manual_reset_;
-
-  /// "True" if signaled.
-  int is_signaled_;
-
-  /// Number of waiting threads.
-  unsigned long waiting_threads_;
-};
-
 
 #   if defined (ACE_VXWORKS) && ACE_VXWORKS <= 0x540
       // Work around a lack of ANSI prototypes for these functions on VxWorks.
@@ -2170,10 +2140,13 @@ typedef u_long ACE_SOCK_GROUP;
 
 #endif /* (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
 
+// forward decl's
+class ACE_event_t;
+
 /**
- * @class ACE_OS
+ * @namespace ACE_OS
  *
- * @brief This class defines an OS independent programming API that
+ * @brief This namespace defines an OS independent programming API that
  *     shields developers from nonportable aspects of writing
  *     efficient system programs on Win32, POSIX and other versions
  *     of UNIX, and various real-time operating systems.
@@ -2187,17 +2160,8 @@ typedef u_long ACE_SOCK_GROUP;
  * in this directory for complete information on the meaning of
  * the various macros.
  */
-class ACE_OS_Export ACE_OS
-  : public ACE_OS_Dirent,
-    public ACE_OS_String,
-    public ACE_OS_Memory,
-    public ACE_OS_TLI
+namespace ACE_OS
 {
-
-  ACE_CLASS_IS_NAMESPACE (ACE_OS);
-public:
-  friend class ACE_Timeout_Manager;
-
 # if defined (CHORUS) && !defined (CHORUS_4)
   // We must format this code as follows to avoid confusing OSE.
   enum ACE_HRTimer_Op
@@ -2249,27 +2213,27 @@ public:
 
 # if defined (ACE_WIN32)
   // = Default Win32 Security Attributes definition.
-  static LPSECURITY_ATTRIBUTES default_win32_security_attributes (LPSECURITY_ATTRIBUTES);
+  LPSECURITY_ATTRIBUTES default_win32_security_attributes (LPSECURITY_ATTRIBUTES);
 
   // = Win32 OS version determination function.
   /// Return the win32 OSVERSIONINFO structure.
-  static const OSVERSIONINFO &get_win32_versioninfo (void);
+  const OSVERSIONINFO &get_win32_versioninfo (void);
 
   // = A pair of functions for modifying ACE's Win32 resource usage.
   /// Return the handle of the module containing ACE's resources. By
   /// default, for a DLL build of ACE this is a handle to the ACE DLL
   /// itself, and for a static build it is a handle to the executable.
-  static HINSTANCE get_win32_resource_module (void);
+  HINSTANCE get_win32_resource_module (void);
 
   /// Allow an application to modify which module contains ACE's
   /// resources. This is mainly useful for a static build of ACE where
   /// the required resources reside somewhere other than the executable.
-  static void set_win32_resource_module (HINSTANCE);
+  void set_win32_resource_module (HINSTANCE);
 
 # endif /* ACE_WIN32 */
 
   // = A set of wrappers for miscellaneous operations.
-  static int atoi (const char *s);
+  int atoi (const char *s);
 
   struct macaddr_node_t {
     unsigned char node[6];
@@ -2278,84 +2242,84 @@ public:
   /**
    * Get the first adapter found on the machine.
    */
-   static int getmacaddress (struct macaddr_node_t *node);
+   int getmacaddress (struct macaddr_node_t *node);
 
 # if defined (ACE_HAS_WCHAR)
-  static int atoi (const wchar_t *s);
+  int atoi (const wchar_t *s);
 # endif /* ACE_HAS_WCHAR */
 
 #if defined (atop)
 #undef atop
 #endif /* atop */
 
-  static void *atop (const char *s);
+  void *atop (const char *s);
 
 # if defined (ACE_HAS_WCHAR)
-  static void *atop (const wchar_t *s);
+  void *atop (const wchar_t *s);
 # endif /* ACE_HAS_WCHAR */
 
   /// This method computes the largest integral value not greater than x.
-  static double floor (double x);
+  double floor (double x);
 
   /// This method computes the smallest integral value not less than x.
-  static double ceil (double x);
+  double ceil (double x);
 
-  static char *getenv (const char *symbol);
+  char *getenv (const char *symbol);
 #   if defined (ACE_HAS_WCHAR) && defined (ACE_WIN32)
-  static wchar_t *getenv (const wchar_t *symbol);
+  wchar_t *getenv (const wchar_t *symbol);
 #   endif /* ACE_HAS_WCHAR && ACE_WIN32 */
-  static int putenv (const ACE_TCHAR *string);
-  static ACE_TCHAR *strenvdup (const ACE_TCHAR *str);
-  static ACE_TCHAR *getenvstrings (void);
+  int putenv (const ACE_TCHAR *string);
+  ACE_TCHAR *strenvdup (const ACE_TCHAR *str);
+  ACE_TCHAR *getenvstrings (void);
 
-  static int getopt (int argc,
-                     char *const *argv,
-                     const char *optstring);
-  static int argv_to_string (ACE_TCHAR **argv,
-                             ACE_TCHAR *&buf,
-                             int substitute_env_args = 1);
-  static int string_to_argv (ACE_TCHAR *buf,
-                             int &argc,
-                             ACE_TCHAR **&argv,
-                             int substitute_env_args = 1);
-  static long sysconf (int);
+  int getopt (int argc,
+              char *const *argv,
+              const char *optstring);
+  int argv_to_string (ACE_TCHAR **argv,
+                      ACE_TCHAR *&buf,
+                      int substitute_env_args = 1);
+  int string_to_argv (ACE_TCHAR *buf,
+                      int &argc,
+                      ACE_TCHAR **&argv,
+                      int substitute_env_args = 1);
+  long sysconf (int);
 
   //@{ @name A set of wrappers for condition variables.
-  static int condattr_init (ACE_condattr_t &attributes,
-                            int type = ACE_DEFAULT_SYNCH_TYPE);
-  static int condattr_destroy (ACE_condattr_t &attributes);
-  static int cond_broadcast (ACE_cond_t *cv);
-  static int cond_destroy (ACE_cond_t *cv);
-  static int cond_init (ACE_cond_t *cv,
-                        short type = ACE_DEFAULT_SYNCH_TYPE,
-                        const char *name = 0,
-                        void *arg = 0);
-  static int cond_init (ACE_cond_t *cv,
-                        ACE_condattr_t &attributes,
-                        const char *name = 0,
-                        void *arg = 0);
+  int condattr_init (ACE_condattr_t &attributes,
+                     int type = ACE_DEFAULT_SYNCH_TYPE);
+  int condattr_destroy (ACE_condattr_t &attributes);
+  int cond_broadcast (ACE_cond_t *cv);
+  int cond_destroy (ACE_cond_t *cv);
+  int cond_init (ACE_cond_t *cv,
+                 short type = ACE_DEFAULT_SYNCH_TYPE,
+                 const char *name = 0,
+                 void *arg = 0);
+  int cond_init (ACE_cond_t *cv,
+                 ACE_condattr_t &attributes,
+                 const char *name = 0,
+                 void *arg = 0);
 # if defined (ACE_HAS_WCHAR)
-  static int cond_init (ACE_cond_t *cv,
-                        short type,
-                        const wchar_t *name,
-                        void *arg = 0);
-  static int cond_init (ACE_cond_t *cv,
-                        ACE_condattr_t &attributes,
-                        const wchar_t *name,
-                        void *arg = 0);
+  int cond_init (ACE_cond_t *cv,
+                 short type,
+                 const wchar_t *name,
+                 void *arg = 0);
+  int cond_init (ACE_cond_t *cv,
+                 ACE_condattr_t &attributes,
+                 const wchar_t *name,
+                 void *arg = 0);
 # endif /* ACE_HAS_WCHAR */
-  static int cond_signal (ACE_cond_t *cv);
-  static int cond_timedwait (ACE_cond_t *cv,
-                             ACE_mutex_t *m,
-                             ACE_Time_Value *);
-  static int cond_wait (ACE_cond_t *cv,
-                        ACE_mutex_t *m);
+  int cond_signal (ACE_cond_t *cv);
+  int cond_timedwait (ACE_cond_t *cv,
+                      ACE_mutex_t *m,
+                      ACE_Time_Value *);
+  int cond_wait (ACE_cond_t *cv,
+                 ACE_mutex_t *m);
 # if defined (ACE_WIN32) && defined (ACE_HAS_WTHREADS)
-  static int cond_timedwait (ACE_cond_t *cv,
-                             ACE_thread_mutex_t *m,
-                             ACE_Time_Value *);
-  static int cond_wait (ACE_cond_t *cv,
-                        ACE_thread_mutex_t *m);
+  int cond_timedwait (ACE_cond_t *cv,
+                      ACE_thread_mutex_t *m,
+                      ACE_Time_Value *);
+  int cond_wait (ACE_cond_t *cv,
+                 ACE_thread_mutex_t *m);
 # endif /* ACE_WIN32 && ACE_HAS_WTHREADS */
   //@}
 
@@ -2365,82 +2329,82 @@ public:
 #if defined(cuserid)
 # undef cuserid
 #endif /* cuserid */
-  static char *cuserid (char *user,
-                        size_t maxlen = ACE_MAX_USERID);
+  char *cuserid (char *user,
+                 size_t maxlen = ACE_MAX_USERID);
 
 #   if defined (ACE_HAS_WCHAR)
-  static wchar_t *cuserid (wchar_t *user,
-                           size_t maxlen = ACE_MAX_USERID);
+  wchar_t *cuserid (wchar_t *user,
+                    size_t maxlen = ACE_MAX_USERID);
 #   endif /* ACE_HAS_WCHAR */
 # endif /* ACE_LACKS_CUSERID */
   //@}
 
   //@{ @name Wrappers to obtain configuration info
-  static int uname (ACE_utsname *name);
-  static long sysinfo (int cmd,
-                       char *buf,
-                       long count);
-  static int hostname (char *name,
-                       size_t maxnamelen);
+  int uname (ACE_utsname *name);
+  long sysinfo (int cmd,
+                char *buf,
+                long count);
+  int hostname (char *name,
+                size_t maxnamelen);
 
 #if defined (ACE_HAS_WCHAR)
-  static int hostname (wchar_t *name,
-                       size_t maxnamelen);
+  int hostname (wchar_t *name,
+                size_t maxnamelen);
 #endif /* ACE_HAS_WCHAR */
   //@}
 
   //@{ @name A set of wrappers for explicit dynamic linking.
-  static int dlclose (ACE_SHLIB_HANDLE handle);
+  int dlclose (ACE_SHLIB_HANDLE handle);
 
-  static ACE_TCHAR *dlerror (void);
-  static ACE_SHLIB_HANDLE dlopen (const ACE_TCHAR *filename,
-                                  int mode = ACE_DEFAULT_SHLIB_MODE);
-  static void *dlsym (ACE_SHLIB_HANDLE handle,
-                      const ACE_TCHAR *symbol);
+  ACE_TCHAR *dlerror (void);
+  ACE_SHLIB_HANDLE dlopen (const ACE_TCHAR *filename,
+                           int mode = ACE_DEFAULT_SHLIB_MODE);
+  void *dlsym (ACE_SHLIB_HANDLE handle,
+               const ACE_TCHAR *symbol);
   //@}
 
   //@{ @name A set of wrappers for stdio file operations.
-  static int last_error (void);
-  static void last_error (int);
-  static int set_errno_to_last_error (void);
-  static int set_errno_to_wsa_last_error (void);
-  static int fclose (FILE *fp);
-  static int fcntl (ACE_HANDLE handle,
-                    int cmd,
-                    long arg = 0);
-  static int fdetach (const char *file);
+  int last_error (void);
+  void last_error (int);
+  int set_errno_to_last_error (void);
+  int set_errno_to_wsa_last_error (void);
+  int fclose (FILE *fp);
+  int fcntl (ACE_HANDLE handle,
+             int cmd,
+             long arg = 0);
+  int fdetach (const char *file);
 
-  static int fsync (ACE_HANDLE handle);
+  int fsync (ACE_HANDLE handle);
 
 # if defined (ACE_USES_WCHAR)
   // If fp points to the Unicode format file, the file pointer will be moved right next
   // to the Unicode header (2 types).  Otherwise, file pointer will be at the beginning.
-  static void checkUnicodeFormat (FILE* fp);
+  void checkUnicodeFormat (FILE* fp);
 # endif  // ACE_USES_WCHAR
 
-  static FILE *fopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode);
-  static FILE *freopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode, FILE* stream);
+  FILE *fopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode);
+  FILE *freopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode, FILE* stream);
 # if defined (fdopen)
 #   undef fdopen
 # endif /* fdopen */
-  static FILE *fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode);
-  static ACE_TCHAR *fgets (ACE_TCHAR *buf, int size, FILE *fp);
-  static int stat (const ACE_TCHAR *file, ACE_stat *);
-  static int truncate (const ACE_TCHAR *filename, off_t length);
+  FILE *fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode);
+  ACE_TCHAR *fgets (ACE_TCHAR *buf, int size, FILE *fp);
+  int stat (const ACE_TCHAR *file, ACE_stat *);
+  int truncate (const ACE_TCHAR *filename, off_t length);
 
-  static int fprintf (FILE *fp, const char *format, ...);
-  static int sprintf (char *buf, const char *format, ...);
-  static int snprintf (char *buf, size_t maxlen, const char *format, ...);
-  static int vsprintf (char *buffer, const char *format, va_list argptr);
-  static int printf (const char *format, ...);
+  int fprintf (FILE *fp, const char *format, ...);
+  int sprintf (char *buf, const char *format, ...);
+  int snprintf (char *buf, size_t maxlen, const char *format, ...);
+  int vsprintf (char *buffer, const char *format, va_list argptr);
+  int printf (const char *format, ...);
 # if defined (ACE_HAS_WCHAR)
-  static int sprintf (wchar_t *buf, const wchar_t *format, ...);
-  static int snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format,...);
-  static int fprintf (FILE *fp, const wchar_t *format, ...);
-  static int vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr);
+  int sprintf (wchar_t *buf, const wchar_t *format, ...);
+  int snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format,...);
+  int fprintf (FILE *fp, const wchar_t *format, ...);
+  int vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr);
 # endif /* ACE_HAS_WCHAR */
 
-  static void perror (const ACE_TCHAR *s);
+  void perror (const ACE_TCHAR *s);
 
   // The old gets () which directly maps to the evil, unprotected
   // gets () has been deprecated.  If you really need gets (),
@@ -2451,25 +2415,25 @@ public:
   //   Otherwise, reads up to n-1 bytes (not including the newline),
   //              then swallows rest up to newline
   //              then swallows newline
-  static char *gets (char *str, int n = 0);
-  static int puts (const ACE_TCHAR *s);
-  static int fputs (const ACE_TCHAR *s,
-                    FILE *stream);
+  char *gets (char *str, int n = 0);
+  int puts (const ACE_TCHAR *s);
+  int fputs (const ACE_TCHAR *s,
+             FILE *stream);
 
-  static int fflush (FILE *fp);
-  static size_t fread (void *ptr,
-                       size_t size,
-                       size_t nelems,
-                       FILE *fp);
+  int fflush (FILE *fp);
+  size_t fread (void *ptr,
+                size_t size,
+                size_t nelems,
+                FILE *fp);
 
-  static int fgetc (FILE* fp);
+  int fgetc (FILE* fp);
 
 #if !defined (ACE_LACKS_CLEARERR)
 #if defined (clearerr)
 #define __ace_clearerr clearerr
 #undef clearerr
 #endif /* defined (clearerr) */
-  static void clearerr (FILE* fp);
+  void clearerr (FILE* fp);
 #if defined (clearerr)
 #define clearerr __ace_clearerr
 #undef __ace_clearerr
@@ -2477,118 +2441,118 @@ public:
 #endif /* !ACE_LACKS_CLEARERR */
 
 #if defined (ACE_HAS_WCHAR)
-  static wint_t fgetwc (FILE* fp);
-  static wint_t ungetwc (wint_t c, FILE* fp);
+  wint_t fgetwc (FILE* fp);
+  wint_t ungetwc (wint_t c, FILE* fp);
 #endif /* ACE_HAS_WCHAR */
 
-  static int fseek (FILE *fp,
-                    long offset,
-                    int ptrname);
-  static long ftell (FILE* fp);
-  static int  fgetpos (FILE* fp, fpos_t* pos);
-  static int  fsetpos (FILE* fp, fpos_t* pos);
-  static int fstat (ACE_HANDLE,
-                    ACE_stat *);
-  static int lstat (const char *,
-                    ACE_stat *);
-  static int ftruncate (ACE_HANDLE,
-                        off_t);
-  static size_t fwrite (const void *ptr,
-                        size_t size,
-                        size_t nitems,
-                        FILE *fp);
-  static void rewind (FILE *fp);
+  int fseek (FILE *fp,
+             long offset,
+             int ptrname);
+  long ftell (FILE* fp);
+  int  fgetpos (FILE* fp, fpos_t* pos);
+  int  fsetpos (FILE* fp, fpos_t* pos);
+  int fstat (ACE_HANDLE,
+             ACE_stat *);
+  int lstat (const char *,
+             ACE_stat *);
+  int ftruncate (ACE_HANDLE,
+                 off_t);
+  size_t fwrite (const void *ptr,
+                 size_t size,
+                 size_t nitems,
+                 FILE *fp);
+  void rewind (FILE *fp);
   //@}
 
   //@{ @name Wrappers for searching and sorting.
-  static void *bsearch (const void *key,
-                        const void *base,
-                        size_t nel,
-                        size_t size,
-                        ACE_COMPARE_FUNC);
-  static void qsort (void *base,
-                     size_t nel,
-                     size_t width,
-                     ACE_COMPARE_FUNC);
+  void *bsearch (const void *key,
+                 const void *base,
+                 size_t nel,
+                 size_t size,
+                 ACE_COMPARE_FUNC);
+  void qsort (void *base,
+              size_t nel,
+              size_t width,
+              ACE_COMPARE_FUNC);
   //@}
 
   //@{ @name A set of wrappers for file locks.
-  static int flock_init (ACE_OS::ace_flock_t *lock,
-                         int flags = 0,
-                         const ACE_TCHAR *name = 0,
-                         mode_t perms = 0);
-  static int flock_destroy (ACE_OS::ace_flock_t *lock,
-                            int unlink_file = 1);
+  int flock_init (ace_flock_t *lock,
+                  int flags = 0,
+                  const ACE_TCHAR *name = 0,
+                  mode_t perms = 0);
+  int flock_destroy (ace_flock_t *lock,
+                     int unlink_file = 1);
 # if defined (ACE_WIN32)
-  static void adjust_flock_params (ACE_OS::ace_flock_t *lock,
-                                   short whence,
-                                   off_t &start,
-                                   off_t &len);
+  void adjust_flock_params (ace_flock_t *lock,
+                            short whence,
+                            off_t &start,
+                            off_t &len);
 # endif /* ACE_WIN32 */
-  static int flock_rdlock (ACE_OS::ace_flock_t *lock,
-                           short whence = 0,
-                           off_t start = 0,
-                           off_t len = 0);
-  static int flock_tryrdlock (ACE_OS::ace_flock_t *lock,
-                              short whence = 0,
-                              off_t start = 0,
-                              off_t len = 0);
-  static int flock_trywrlock (ACE_OS::ace_flock_t *lock,
-                              short whence = 0,
-                              off_t start = 0,
-                              off_t len = 0);
-  static int flock_unlock (ACE_OS::ace_flock_t *lock,
-                           short whence = 0,
-                           off_t start = 0,
-                           off_t len = 0);
-  static int flock_wrlock (ACE_OS::ace_flock_t *lock,
-                           short whence = 0,
-                           off_t start = 0,
-                           off_t len = 0);
+  int flock_rdlock (ace_flock_t *lock,
+                    short whence = 0,
+                    off_t start = 0,
+                    off_t len = 0);
+  int flock_tryrdlock (ace_flock_t *lock,
+                       short whence = 0,
+                       off_t start = 0,
+                       off_t len = 0);
+  int flock_trywrlock (ace_flock_t *lock,
+                       short whence = 0,
+                       off_t start = 0,
+                       off_t len = 0);
+  int flock_unlock (ace_flock_t *lock,
+                    short whence = 0,
+                    off_t start = 0,
+                    off_t len = 0);
+  int flock_wrlock (ace_flock_t *lock,
+                    short whence = 0,
+                    off_t start = 0,
+                    off_t len = 0);
   //@}
 
   //@{ @name A set of wrappers for low-level process operations.
-  static int atexit (ACE_EXIT_HOOK func);
-  static int execl (const char *path,
-                    const char *arg0, ...);
-  static int execle (const char *path,
-                     const char *arg0, ...);
-  static int execlp (const char *file,
-                     const char *arg0, ...);
-  static int execv (const char *path,
-                    char *const argv[]);
-  static int execvp (const char *file,
-                     char *const argv[]);
-  static int execve (const char *path,
-                     char *const argv[],
-                     char *const envp[]);
-  static void _exit (int status = 0);
-  static void exit (int status = 0);
-  static void abort (void);
-  static pid_t fork (void);
+  int atexit (ACE_EXIT_HOOK func);
+  int execl (const char *path,
+             const char *arg0, ...);
+  int execle (const char *path,
+              const char *arg0, ...);
+  int execlp (const char *file,
+              const char *arg0, ...);
+  int execv (const char *path,
+             char *const argv[]);
+  int execvp (const char *file,
+              char *const argv[]);
+  int execve (const char *path,
+              char *const argv[],
+              char *const envp[]);
+  void _exit (int status = 0);
+  void exit (int status = 0);
+  void abort (void);
+  pid_t fork (void);
 
-  static int getpagesize (void);
-  static int allocation_granularity (void);
+  int getpagesize (void);
+  int allocation_granularity (void);
 
-  static gid_t getgid (void);
-  static int setgid (gid_t);
-  static pid_t getpid (void);
-  static pid_t getpgid (pid_t pid);
-  static pid_t getppid (void);
-  static uid_t getuid (void);
-  static int setuid (uid_t);
-  static pid_t setsid (void);
-  static int setpgid (pid_t pid, pid_t pgid);
-  static int setreuid (uid_t ruid, uid_t euid);
-  static int setregid (gid_t rgid, gid_t egid);
-  static int system (const ACE_TCHAR *s);
+  gid_t getgid (void);
+  int setgid (gid_t);
+  pid_t getpid (void);
+  pid_t getpgid (pid_t pid);
+  pid_t getppid (void);
+  uid_t getuid (void);
+  int setuid (uid_t);
+  pid_t setsid (void);
+  int setpgid (pid_t pid, pid_t pgid);
+  int setreuid (uid_t ruid, uid_t euid);
+  int setregid (gid_t rgid, gid_t egid);
+  int system (const ACE_TCHAR *s);
   //@}
 
   //@{
   /// Forks and exec's a process in a manner that works on Solaris and
   /// NT.  argv[0] must be the full path name to the executable.
-  static pid_t fork (const ACE_TCHAR *program_name);
-  static pid_t fork_exec (ACE_TCHAR *argv[]);
+  pid_t fork (const ACE_TCHAR *program_name);
+  pid_t fork_exec (ACE_TCHAR *argv[]);
   //@}
 
   /**
@@ -2599,10 +2563,10 @@ public:
    * <pid> to wait on the project doesn't always work correctly
    * if the waited process has already terminated.
    */
-  static pid_t waitpid (pid_t pid,
-                        ACE_exitcode *status = 0,
-                        int wait_options = 0,
-                        ACE_HANDLE handle = 0);
+  pid_t waitpid (pid_t pid,
+                 ACE_exitcode *status = 0,
+                 int wait_options = 0,
+                 ACE_HANDLE handle = 0);
 
   /**
    * Calls <::WaitForSingleObject> on Win32 and <ACE::waitpid>
@@ -2613,39 +2577,39 @@ public:
    * <pid> to wait on the project doesn't always work correctly
    * if the waited process has already terminated.
    */
-  static pid_t wait (pid_t pid,
-                     ACE_exitcode *status,
-                     int wait_options = 0,
-                     ACE_HANDLE handle = 0);
+  pid_t wait (pid_t pid,
+              ACE_exitcode *status,
+              int wait_options = 0,
+              ACE_HANDLE handle = 0);
 
   /// Calls OS <::wait> function, so it's only portable to UNIX/POSIX
   /// platforms.
-  static pid_t wait (int * = 0);
+  pid_t wait (int * = 0);
 
   //@{ @name A set of wrappers for timers and resource stats.
-  static u_int alarm (u_int secs);
-  static u_int ualarm (u_int usecs,
-                       u_int interval = 0);
-  static u_int ualarm (const ACE_Time_Value &tv,
-                       const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
-  static ACE_hrtime_t gethrtime (const ACE_HRTimer_Op = ACE_HRTIMER_GETTIME);
+  u_int alarm (u_int secs);
+  u_int ualarm (u_int usecs,
+                u_int interval = 0);
+  u_int ualarm (const ACE_Time_Value &tv,
+                const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
+  ACE_hrtime_t gethrtime (const ACE_HRTimer_Op = ACE_HRTIMER_GETTIME);
 # if defined (ACE_HAS_POWERPC_TIMER) && (defined (ghs) || defined (__GNUG__))
-  static void readPPCTimeBase (u_long &most,
-                               u_long &least);
+  void readPPCTimeBase (u_long &most,
+                        u_long &least);
 # endif /* ACE_HAS_POWERPC_TIMER  &&  (ghs or __GNUG__) */
-  static int clock_gettime (clockid_t,
-                            struct timespec *);
-  static ACE_Time_Value gettimeofday (void);
-  static int getrusage (int who,
-                        struct rusage *rusage);
-  static int getrlimit (int resource,
-                        struct rlimit *rl);
-  static int setrlimit (int resource,
-                        ACE_SETRLIMIT_TYPE *rl);
-  static int sleep (u_int seconds);
-  static int sleep (const ACE_Time_Value &tv);
-  static int nanosleep (const struct timespec *requested,
-                        struct timespec *remaining = 0);
+  int clock_gettime (clockid_t,
+                     struct timespec *);
+  ACE_Time_Value gettimeofday (void);
+  int getrusage (int who,
+                 struct rusage *rusage);
+  int getrlimit (int resource,
+                 struct rlimit *rl);
+  int setrlimit (int resource,
+                 ACE_SETRLIMIT_TYPE *rl);
+  int sleep (u_int seconds);
+  int sleep (const ACE_Time_Value &tv);
+  int nanosleep (const struct timespec *requested,
+                 struct timespec *remaining = 0);
 
 # if defined (ACE_HAS_BROKEN_R_ROUTINES)
 #   undef ctime_r
@@ -2658,120 +2622,120 @@ public:
   //@{ @name A set of wrappers for operations on time.
 
   // Get the current time.
-  static time_t mktime (struct tm *timeptr);
+  time_t mktime (struct tm *timeptr);
 
   // wrapper for time zone information.
-  static void tzset (void);
+  void tzset (void);
 
 # if defined (timezone)
 #   undef timezone
 # endif /* timezone */
-  static long timezone (void);
+  long timezone (void);
 
 # if defined (difftime)
 #   undef difftime
 # endif /* difftime */
-  static double difftime (time_t t1,
-                          time_t t0);
-  static time_t time (time_t *tloc = 0);
-  static struct tm *localtime (const time_t *clock);
-  static struct tm *localtime_r (const time_t *clock,
-                                 struct tm *res);
-  static struct tm *gmtime (const time_t *clock);
-  static struct tm *gmtime_r (const time_t *clock,
-                              struct tm *res);
-  static char *asctime (const struct tm *tm);
-  static char *asctime_r (const struct tm *tm,
-                          char *buf, int buflen);
-  static ACE_TCHAR *ctime (const time_t *t);
-  static ACE_TCHAR *ctime_r (const time_t *clock, ACE_TCHAR *buf, int buflen);
-  static size_t strftime (char *s,
-                          size_t maxsize,
-                          const char *format,
-                          const struct tm *timeptr);
+  double difftime (time_t t1,
+                   time_t t0);
+  time_t time (time_t *tloc = 0);
+  struct tm *localtime (const time_t *clock);
+  struct tm *localtime_r (const time_t *clock,
+                          struct tm *res);
+  struct tm *gmtime (const time_t *clock);
+  struct tm *gmtime_r (const time_t *clock,
+                       struct tm *res);
+  char *asctime (const struct tm *tm);
+  char *asctime_r (const struct tm *tm,
+                   char *buf, int buflen);
+  ACE_TCHAR *ctime (const time_t *t);
+  ACE_TCHAR *ctime_r (const time_t *clock, ACE_TCHAR *buf, int buflen);
+  size_t strftime (char *s,
+                   size_t maxsize,
+                   const char *format,
+                   const struct tm *timeptr);
   //@}
 
   //@{ @name A set of wrappers for System V message queues.
-  static int msgctl (int msqid,
-                     int cmd,
-                     struct msqid_ds *);
-  static int msgget (key_t key,
-                     int msgflg);
-  static int msgrcv (int int_id,
-                     void *buf,
-                     size_t len,
-                     long type,
-                     int flags);
-  static int msgsnd (int int_id,
-                     const void *buf,
-                     size_t len,
-                     int flags);
+  int msgctl (int msqid,
+              int cmd,
+              struct msqid_ds *);
+  int msgget (key_t key,
+              int msgflg);
+  int msgrcv (int int_id,
+              void *buf,
+              size_t len,
+              long type,
+              int flags);
+  int msgsnd (int int_id,
+              const void *buf,
+              size_t len,
+              int flags);
   //@}
 
   //@{ @name A set of wrappers for memory mapped files.
-  static int madvise (caddr_t addr,
-                      size_t len,
-                      int map_advice);
-  static void *mmap (void *addr,
-                     size_t len,
-                     int prot,
-                     int flags,
-                     ACE_HANDLE handle,
-                     off_t off = 0,
-                     ACE_HANDLE *file_mapping = 0,
-                     LPSECURITY_ATTRIBUTES sa = 0,
-                     const ACE_TCHAR *file_mapping_name = 0);
-  static int mprotect (void *addr,
-                       size_t len,
-                       int prot);
-  static int msync (void *addr,
-                    size_t len,
-                    int sync);
-  static int munmap (void *addr,
-                     size_t len);
+  int madvise (caddr_t addr,
+               size_t len,
+               int map_advice);
+  void *mmap (void *addr,
+              size_t len,
+              int prot,
+              int flags,
+              ACE_HANDLE handle,
+              off_t off = 0,
+              ACE_HANDLE *file_mapping = 0,
+              LPSECURITY_ATTRIBUTES sa = 0,
+              const ACE_TCHAR *file_mapping_name = 0);
+  int mprotect (void *addr,
+                size_t len,
+                int prot);
+  int msync (void *addr,
+             size_t len,
+             int sync);
+  int munmap (void *addr,
+              size_t len);
   //@}
 
   //@{ @name A set of wrappers for recursive mutex locks.
-  static int recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
-                                   const ACE_TCHAR *name = 0,
-                                   ACE_mutexattr_t *arg = 0,
-                                   LPSECURITY_ATTRIBUTES sa = 0);
-  static int recursive_mutex_destroy (ACE_recursive_thread_mutex_t *m);
-  static int recursive_mutex_lock (ACE_recursive_thread_mutex_t *m);
-  static int recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m);
-  static int recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m);
+  int recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
+                            const ACE_TCHAR *name = 0,
+                            ACE_mutexattr_t *arg = 0,
+                            LPSECURITY_ATTRIBUTES sa = 0);
+  int recursive_mutex_destroy (ACE_recursive_thread_mutex_t *m);
+  int recursive_mutex_lock (ACE_recursive_thread_mutex_t *m);
+  int recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m);
+  int recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m);
   // These two methods are primarily in support of
   // ACE_Condition<ACE_Recursive_Thread_Mutex> and should probably not
   // be called outside that context.
-  static int recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
-                                          ACE_recursive_mutex_state &state);
-  static void recursive_mutex_cond_relock (ACE_recursive_thread_mutex_t *m,
-                                           ACE_recursive_mutex_state &state);
+  int recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
+                                   ACE_recursive_mutex_state &state);
+  void recursive_mutex_cond_relock (ACE_recursive_thread_mutex_t *m,
+                                    ACE_recursive_mutex_state &state);
   //@}
 
   //@{ @name A set of wrappers for mutex locks.
-  static int mutex_init (ACE_mutex_t *m,
-                         int type = ACE_DEFAULT_SYNCH_TYPE,
-                         const char *name = 0,
-                         ACE_mutexattr_t *arg = 0,
-                         LPSECURITY_ATTRIBUTES sa = 0);
+  int mutex_init (ACE_mutex_t *m,
+                  int type = ACE_DEFAULT_SYNCH_TYPE,
+                  const char *name = 0,
+                  ACE_mutexattr_t *arg = 0,
+                  LPSECURITY_ATTRIBUTES sa = 0);
 #if defined (ACE_HAS_WCHAR)
-  static int mutex_init (ACE_mutex_t *m,
-                         int type,
-                         const wchar_t *name,
-                         ACE_mutexattr_t *arg = 0,
-                         LPSECURITY_ATTRIBUTES sa = 0);
+  int mutex_init (ACE_mutex_t *m,
+                  int type,
+                  const wchar_t *name,
+                  ACE_mutexattr_t *arg = 0,
+                  LPSECURITY_ATTRIBUTES sa = 0);
 #endif /* ACE_HAS_WCHAR */
-  static int mutex_destroy (ACE_mutex_t *m);
+  int mutex_destroy (ACE_mutex_t *m);
 
   /// Win32 note: Abandoned mutexes are not treated differently. 0 is
   /// returned since the calling thread does get the ownership.
-  static int mutex_lock (ACE_mutex_t *m);
+  int mutex_lock (ACE_mutex_t *m);
 
   /// This method is only implemented for Win32.  For abandoned
   /// mutexes, <abandoned> is set to 1 and 0 is returned.
-  static int mutex_lock (ACE_mutex_t *m,
-                         int &abandoned);
+  int mutex_lock (ACE_mutex_t *m,
+                  int &abandoned);
 
   /**
    * This method attempts to acquire a lock, but gives up if the lock
@@ -2782,8 +2746,8 @@ public:
    * Note that the mutex should not be a recursive one, i.e., it
    * should only be a standard mutex or an error checking mutex.
    */
-  static int mutex_lock (ACE_mutex_t *m,
-                         const ACE_Time_Value &timeout);
+  int mutex_lock (ACE_mutex_t *m,
+                  const ACE_Time_Value &timeout);
 
   /**
    * If <timeout> == 0, calls <ACE_OS::mutex_lock(m)>.  Otherwise,
@@ -2794,108 +2758,108 @@ public:
    * mutex should not be a recursive one, i.e., it should only be a
    * standard mutex or an error checking mutex.
    */
-  static int mutex_lock (ACE_mutex_t *m,
-                         const ACE_Time_Value *timeout);
+  int mutex_lock (ACE_mutex_t *m,
+                  const ACE_Time_Value *timeout);
 
   /// Win32 note: Abandoned mutexes are not treated differently. 0 is
   /// returned since the calling thread does get the ownership.
-  static int mutex_trylock (ACE_mutex_t *m);
+  int mutex_trylock (ACE_mutex_t *m);
 
   /// This method is only implemented for Win32.  For abandoned
   /// mutexes, <abandoned> is set to 1 and 0 is returned.
-  static int mutex_trylock (ACE_mutex_t *m,
-                            int &abandoned);
+  int mutex_trylock (ACE_mutex_t *m,
+                     int &abandoned);
 
-  static int mutex_unlock (ACE_mutex_t *m);
+  int mutex_unlock (ACE_mutex_t *m);
   //@}
 
   //@{ @name A set of wrappers for mutex locks that only work within a single process.
-  static int thread_mutex_init (ACE_thread_mutex_t *m,
-                                int type = ACE_DEFAULT_SYNCH_TYPE,
-                                const char *name = 0,
-                                ACE_mutexattr_t *arg = 0);
+  int thread_mutex_init (ACE_thread_mutex_t *m,
+                         int type = ACE_DEFAULT_SYNCH_TYPE,
+                         const char *name = 0,
+                         ACE_mutexattr_t *arg = 0);
 #if defined (ACE_HAS_WCHAR)
-  static int thread_mutex_init (ACE_thread_mutex_t *m,
-                                int type,
-                                const wchar_t *name,
-                                ACE_mutexattr_t *arg = 0);
+  int thread_mutex_init (ACE_thread_mutex_t *m,
+                         int type,
+                         const wchar_t *name,
+                         ACE_mutexattr_t *arg = 0);
 #endif /* ACE_HAS_WCHAR */
-  static int thread_mutex_destroy (ACE_thread_mutex_t *m);
-  static int thread_mutex_lock (ACE_thread_mutex_t *m);
-  static int thread_mutex_lock (ACE_thread_mutex_t *m,
-                                const ACE_Time_Value &timeout);
-  static int thread_mutex_lock (ACE_thread_mutex_t *m,
-                                const ACE_Time_Value *timeout);
-  static int thread_mutex_trylock (ACE_thread_mutex_t *m);
-  static int thread_mutex_unlock (ACE_thread_mutex_t *m);
+  int thread_mutex_destroy (ACE_thread_mutex_t *m);
+  int thread_mutex_lock (ACE_thread_mutex_t *m);
+  int thread_mutex_lock (ACE_thread_mutex_t *m,
+                         const ACE_Time_Value &timeout);
+  int thread_mutex_lock (ACE_thread_mutex_t *m,
+                         const ACE_Time_Value *timeout);
+  int thread_mutex_trylock (ACE_thread_mutex_t *m);
+  int thread_mutex_unlock (ACE_thread_mutex_t *m);
   //@}
 
   //@{ @name A set of wrappers for low-level file operations.
-  static int access (const char *path, int amode);
+  int access (const char *path, int amode);
 #if defined (ACE_HAS_WCHAR)
-  static int access (const wchar_t *path, int amode);
+  int access (const wchar_t *path, int amode);
 #endif /* ACE_HAS_WCHAR */
 
-  static int close (ACE_HANDLE handle);
-  static ACE_HANDLE creat (const ACE_TCHAR *filename,
-                           mode_t mode);
-  static ACE_HANDLE dup (ACE_HANDLE handle);
-  static int dup2 (ACE_HANDLE oldfd,
-                   ACE_HANDLE newfd);
-  static int fattach (int handle,
-                      const char *path);
-  static long filesize (ACE_HANDLE handle);
-  static long filesize (const ACE_TCHAR *handle);
-  static int getmsg (ACE_HANDLE handle,
-                     struct strbuf *ctl,
-                     struct strbuf
-                     *data, int *flags);
-  static int getpmsg (ACE_HANDLE handle,
-                      struct strbuf *ctl,
-                      struct strbuf
-                      *data,
-                      int *band,
-                      int *flags);
+  int close (ACE_HANDLE handle);
+  ACE_HANDLE creat (const ACE_TCHAR *filename,
+                    mode_t mode);
+  ACE_HANDLE dup (ACE_HANDLE handle);
+  int dup2 (ACE_HANDLE oldfd,
+            ACE_HANDLE newfd);
+  int fattach (int handle,
+               const char *path);
+  long filesize (ACE_HANDLE handle);
+  long filesize (const ACE_TCHAR *handle);
+  int getmsg (ACE_HANDLE handle,
+              struct strbuf *ctl,
+              struct strbuf
+              *data, int *flags);
+  int getpmsg (ACE_HANDLE handle,
+               struct strbuf *ctl,
+               struct strbuf
+               *data,
+               int *band,
+               int *flags);
 
   /// UNIX-style <ioctl>.
-  static int ioctl (ACE_HANDLE handle,
-                    int cmd,
-                    void * = 0);
+  int ioctl (ACE_HANDLE handle,
+             int cmd,
+             void * = 0);
 
 #if !defined (ACE_HAS_WINCE)
   /// QoS-enabled <ioctl>.
-  static int ioctl (ACE_HANDLE socket,
-                    u_long io_control_code,
-                    void *in_buffer_p,
-                    u_long in_buffer,
-                    void *out_buffer_p,
-                    u_long out_buffer,
-                    u_long *bytes_returned,
-                    ACE_OVERLAPPED *overlapped,
-                    ACE_OVERLAPPED_COMPLETION_FUNC func);
+  int ioctl (ACE_HANDLE socket,
+             u_long io_control_code,
+             void *in_buffer_p,
+             u_long in_buffer,
+             void *out_buffer_p,
+             u_long out_buffer,
+             u_long *bytes_returned,
+             ACE_OVERLAPPED *overlapped,
+             ACE_OVERLAPPED_COMPLETION_FUNC func);
 
   /// QoS-enabled <ioctl> when the I/O control code is either
   /// SIO_SET_QOS or SIO_GET_QOS.
-  static int ioctl (ACE_HANDLE socket,
-                    u_long io_control_code,
-                    ACE_QoS &ace_qos,
-                    u_long *bytes_returned,
-                    void *buffer_p = 0,
-                    u_long buffer = 0,
-                    ACE_OVERLAPPED *overlapped = 0,
-                    ACE_OVERLAPPED_COMPLETION_FUNC func = 0);
+  int ioctl (ACE_HANDLE socket,
+             u_long io_control_code,
+             ACE_QoS &ace_qos,
+             u_long *bytes_returned,
+             void *buffer_p = 0,
+             u_long buffer = 0,
+             ACE_OVERLAPPED *overlapped = 0,
+             ACE_OVERLAPPED_COMPLETION_FUNC func = 0);
 #endif  // ACE_HAS_WINCE
 
-  static int isastream (ACE_HANDLE handle);
-  static int isatty (int handle);
+  int isastream (ACE_HANDLE handle);
+  int isatty (int handle);
 #if defined (ACE_WIN32)
-  static int isatty (ACE_HANDLE handle);
+  int isatty (ACE_HANDLE handle);
 #endif /* ACE_WIN32 */
-  static off_t lseek (ACE_HANDLE handle,
-                      off_t offset,
-                      int whence);
+  off_t lseek (ACE_HANDLE handle,
+               off_t offset,
+               int whence);
 #if defined (ACE_HAS_LLSEEK) || defined (ACE_HAS_LSEEK64)
-  static ACE_LOFF_T llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence);
+  ACE_LOFF_T llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence);
 #endif /* ACE_HAS_LLSEEK */
 
   // It used to be that the <perms> argument default was 0 on all
@@ -2921,32 +2885,32 @@ public:
   /// the end prior to each write, as specified by POSIX.  This
   /// is generally good enough for typical situations, but it is ``not
   /// quite right'' in its semantics.
-  static ACE_HANDLE open (const char *filename,
-                          int mode,
-                          int perms = ACE_DEFAULT_OPEN_PERMS,
-                          LPSECURITY_ATTRIBUTES sa = 0);
+  ACE_HANDLE open (const char *filename,
+                   int mode,
+                   int perms = ACE_DEFAULT_OPEN_PERMS,
+                   LPSECURITY_ATTRIBUTES sa = 0);
 #if defined (ACE_HAS_WCHAR)
-  static ACE_HANDLE open (const wchar_t *filename,
-                          int mode,
-                          int perms = ACE_DEFAULT_OPEN_PERMS,
-                          LPSECURITY_ATTRIBUTES sa = 0);
+  ACE_HANDLE open (const wchar_t *filename,
+                   int mode,
+                   int perms = ACE_DEFAULT_OPEN_PERMS,
+                   LPSECURITY_ATTRIBUTES sa = 0);
 #endif /* ACE_HAS_WCHAR */
-  static int putmsg (ACE_HANDLE handle,
-                     const struct strbuf *ctl,
-                     const struct strbuf *data,
-                     int flags);
-  static int putpmsg (ACE_HANDLE handle,
-                      const struct strbuf *ctl,
-                      const struct strbuf *data,
-                      int band,
-                      int flags);
-  static ssize_t read (ACE_HANDLE handle,
-                       void *buf,
-                       size_t len);
-  static ssize_t read (ACE_HANDLE handle,
-                       void *buf,
-                       size_t len,
-                       ACE_OVERLAPPED *);
+  int putmsg (ACE_HANDLE handle,
+              const struct strbuf *ctl,
+              const struct strbuf *data,
+              int flags);
+  int putpmsg (ACE_HANDLE handle,
+               const struct strbuf *ctl,
+               const struct strbuf *data,
+               int band,
+               int flags);
+  ssize_t read (ACE_HANDLE handle,
+                void *buf,
+                size_t len);
+  ssize_t read (ACE_HANDLE handle,
+                void *buf,
+                size_t len,
+                ACE_OVERLAPPED *);
   /**
    * Receive <len> bytes into <buf> from <handle> (uses the
    * <ACE_OS::read> call, which uses the <read> system call on UNIX
@@ -2955,31 +2919,31 @@ public:
    * read will be returned to the caller through<bytes_transferred>.
    *
    */
-  static ssize_t read_n (ACE_HANDLE handle,
-                         void *buf,
-                         size_t len,
-                         size_t *bytes_transferred = 0);
+  ssize_t read_n (ACE_HANDLE handle,
+                  void *buf,
+                  size_t len,
+                  size_t *bytes_transferred = 0);
 
-  static int readlink (const char *path,
-                       char *buf,
-                       size_t bufsiz);
-  static ssize_t pread (ACE_HANDLE handle,
-                        void *buf,
-                        size_t nbyte,
-                        off_t offset);
-  static int recvmsg (ACE_HANDLE handle,
-                      struct msghdr *msg,
-                      int flags);
-  static int sendmsg (ACE_HANDLE handle,
-                      const struct msghdr *msg,
-                      int flags);
-  static ssize_t write (ACE_HANDLE handle,
-                        const void *buf,
-                        size_t nbyte);
-  static ssize_t write (ACE_HANDLE handle,
-                        const void *buf,
-                        size_t nbyte,
-                        ACE_OVERLAPPED *);
+  int readlink (const char *path,
+                char *buf,
+                size_t bufsiz);
+  ssize_t pread (ACE_HANDLE handle,
+                 void *buf,
+                 size_t nbyte,
+                 off_t offset);
+  int recvmsg (ACE_HANDLE handle,
+               struct msghdr *msg,
+               int flags);
+  int sendmsg (ACE_HANDLE handle,
+               const struct msghdr *msg,
+               int flags);
+  ssize_t write (ACE_HANDLE handle,
+                 const void *buf,
+                 size_t nbyte);
+  ssize_t write (ACE_HANDLE handle,
+                 const void *buf,
+                 size_t nbyte,
+                 ACE_OVERLAPPED *);
 
   /**
    * Send <len> bytes from <buf> to <handle> (uses the <ACE_OS::write>
@@ -2988,220 +2952,220 @@ public:
    * EOF occurs, 0 is returned.  Whatever data has been transmitted
    * will be returned to the caller through <bytes_transferred>.
    */
-  static ssize_t write_n (ACE_HANDLE handle,
-                          const void *buf,
-                          size_t len,
-                          size_t *bytes_transferred = 0);
+  ssize_t write_n (ACE_HANDLE handle,
+                   const void *buf,
+                   size_t len,
+                   size_t *bytes_transferred = 0);
 
-  static ssize_t pwrite (ACE_HANDLE handle,
-                         const void *buf,
-                         size_t nbyte,
-                         off_t offset);
-  static ssize_t readv (ACE_HANDLE handle,
-                        iovec *iov,
-                        int iovlen);
-  static ssize_t writev (ACE_HANDLE handle,
-                         const iovec *iov,
-                         int iovcnt);
-  static ssize_t recvv (ACE_HANDLE handle,
-                        iovec *iov,
-                        int iovlen);
-  static ssize_t sendv (ACE_HANDLE handle,
-                        const iovec *iov,
-                        int iovcnt);
+  ssize_t pwrite (ACE_HANDLE handle,
+                  const void *buf,
+                  size_t nbyte,
+                  off_t offset);
+  ssize_t readv (ACE_HANDLE handle,
+                 iovec *iov,
+                 int iovlen);
+  ssize_t writev (ACE_HANDLE handle,
+                  const iovec *iov,
+                  int iovcnt);
+  ssize_t recvv (ACE_HANDLE handle,
+                 iovec *iov,
+                 int iovlen);
+  ssize_t sendv (ACE_HANDLE handle,
+                 const iovec *iov,
+                 int iovcnt);
   //@}
 
   //@{ @name A set of wrappers for event demultiplexing and IPC.
-  static int select (int width,
-                     fd_set *rfds,
-                     fd_set *wfds = 0,
-                     fd_set *efds = 0,
-                     const ACE_Time_Value *tv = 0);
-  static int select (int width,
-                     fd_set *rfds,
-                     fd_set *wfds,
-                     fd_set *efds,
-                     const ACE_Time_Value &tv);
-  static int poll (struct pollfd *pollfds,
-                   u_long len,
-                   const ACE_Time_Value *tv = 0);
-  static int poll (struct pollfd *pollfds,
-                   u_long len,
-                   const ACE_Time_Value &tv);
-  static int pipe (ACE_HANDLE handles[]);
+  int select (int width,
+              fd_set *rfds,
+              fd_set *wfds = 0,
+              fd_set *efds = 0,
+              const ACE_Time_Value *tv = 0);
+  int select (int width,
+              fd_set *rfds,
+              fd_set *wfds,
+              fd_set *efds,
+              const ACE_Time_Value &tv);
+  int poll (struct pollfd *pollfds,
+            u_long len,
+            const ACE_Time_Value *tv = 0);
+  int poll (struct pollfd *pollfds,
+            u_long len,
+            const ACE_Time_Value &tv);
+  int pipe (ACE_HANDLE handles[]);
 
-  static ACE_HANDLE shm_open (const ACE_TCHAR *filename,
-                              int mode,
-                              int perms = 0,
-                              LPSECURITY_ATTRIBUTES sa = 0);
-  static int shm_unlink (const ACE_TCHAR *path);
+  ACE_HANDLE shm_open (const ACE_TCHAR *filename,
+                       int mode,
+                       int perms = 0,
+                       LPSECURITY_ATTRIBUTES sa = 0);
+  int shm_unlink (const ACE_TCHAR *path);
   //@}
 
   //@{ @name A set of wrappers for directory operations.
-  static mode_t umask (mode_t cmask);
+  mode_t umask (mode_t cmask);
 
 #if !defined (ACE_LACKS_CHDIR)
-  static int chdir (const char *path);
+  int chdir (const char *path);
 
 #if defined (ACE_HAS_WCHAR)
-  static int chdir (const wchar_t *path);
+  int chdir (const wchar_t *path);
 #endif /* ACE_HAS_WCHAR */
 #endif /* ACE_LACKS_CHDIR */
 
-  static int mkdir (const ACE_TCHAR *path,
-                    mode_t mode = ACE_DEFAULT_DIR_PERMS);
-  static int mkfifo (const ACE_TCHAR *file,
-                     mode_t mode = ACE_DEFAULT_FILE_PERMS);
-  static ACE_TCHAR *mktemp (ACE_TCHAR *t);
-  static ACE_HANDLE mkstemp (ACE_TCHAR *t);
-  static ACE_TCHAR *getcwd (ACE_TCHAR *, size_t);
-  static int rename (const ACE_TCHAR *old_name,
-                     const ACE_TCHAR *new_name,
-                     int flags = -1);
-  static int unlink (const ACE_TCHAR *path);
-  static ACE_TCHAR *tempnam (const ACE_TCHAR *dir = 0,
-                             const ACE_TCHAR *pfx = 0);
+  int mkdir (const ACE_TCHAR *path,
+             mode_t mode = ACE_DEFAULT_DIR_PERMS);
+  int mkfifo (const ACE_TCHAR *file,
+              mode_t mode = ACE_DEFAULT_FILE_PERMS);
+  ACE_TCHAR *mktemp (ACE_TCHAR *t);
+  ACE_HANDLE mkstemp (ACE_TCHAR *t);
+  ACE_TCHAR *getcwd (ACE_TCHAR *, size_t);
+  int rename (const ACE_TCHAR *old_name,
+              const ACE_TCHAR *new_name,
+              int flags = -1);
+  int unlink (const ACE_TCHAR *path);
+  ACE_TCHAR *tempnam (const ACE_TCHAR *dir = 0,
+                      const ACE_TCHAR *pfx = 0);
   //@}
 
   //@{ @name A set of wrappers for random number operations.
-  static int rand (void);
-  static int rand_r (ACE_RANDR_TYPE &seed);
-  static void srand (u_int seed);
+  int rand (void);
+  int rand_r (ACE_RANDR_TYPE &seed);
+  void srand (u_int seed);
   //@}
 
   //@{ @name A set of wrappers for readers/writer locks.
-  static int rwlock_init (ACE_rwlock_t *rw,
-                          int type = ACE_DEFAULT_SYNCH_TYPE,
-                          const ACE_TCHAR *name = 0,
-                          void *arg = 0);
-  static int rwlock_destroy (ACE_rwlock_t *rw);
-  static int rw_rdlock (ACE_rwlock_t *rw);
-  static int rw_wrlock (ACE_rwlock_t *rw);
-  static int rw_tryrdlock (ACE_rwlock_t *rw);
-  static int rw_trywrlock (ACE_rwlock_t *rw);
-  static int rw_trywrlock_upgrade (ACE_rwlock_t *rw);
-  static int rw_unlock (ACE_rwlock_t *rw);
+  int rwlock_init (ACE_rwlock_t *rw,
+                   int type = ACE_DEFAULT_SYNCH_TYPE,
+                   const ACE_TCHAR *name = 0,
+                   void *arg = 0);
+  int rwlock_destroy (ACE_rwlock_t *rw);
+  int rw_rdlock (ACE_rwlock_t *rw);
+  int rw_wrlock (ACE_rwlock_t *rw);
+  int rw_tryrdlock (ACE_rwlock_t *rw);
+  int rw_trywrlock (ACE_rwlock_t *rw);
+  int rw_trywrlock_upgrade (ACE_rwlock_t *rw);
+  int rw_unlock (ACE_rwlock_t *rw);
   //@}
 
   //@{ @name A set of wrappers for auto-reset and manual events.
-  static int event_init (ACE_event_t *event,
-                         int manual_reset = 0,
-                         int initial_state = 0,
-                         int type = ACE_DEFAULT_SYNCH_TYPE,
-                         const char *name = 0,
-                         void *arg = 0,
-                         LPSECURITY_ATTRIBUTES sa = 0);
+  int event_init (ACE_event_t *event,
+                  int manual_reset = 0,
+                  int initial_state = 0,
+                  int type = ACE_DEFAULT_SYNCH_TYPE,
+                  const char *name = 0,
+                  void *arg = 0,
+                  LPSECURITY_ATTRIBUTES sa = 0);
 # if defined (ACE_HAS_WCHAR)
-  static int event_init (ACE_event_t *event,
-                         int manual_reset,
-                         int initial_state,
-                         int type,
-                         const wchar_t *name,
-                         void *arg = 0,
-                         LPSECURITY_ATTRIBUTES sa = 0);
+  int event_init (ACE_event_t *event,
+                  int manual_reset,
+                  int initial_state,
+                  int type,
+                  const wchar_t *name,
+                  void *arg = 0,
+                  LPSECURITY_ATTRIBUTES sa = 0);
 # endif /* ACE_HAS_WCHAR */
-  static int event_destroy (ACE_event_t *event);
-  static int event_wait (ACE_event_t *event);
-  static int event_timedwait (ACE_event_t *event,
-                              ACE_Time_Value *timeout,
-                              int use_absolute_time = 1);
-  static int event_signal (ACE_event_t *event);
-  static int event_pulse (ACE_event_t *event);
-  static int event_reset (ACE_event_t *event);
+  int event_destroy (ACE_event_t *event);
+  int event_wait (ACE_event_t *event);
+  int event_timedwait (ACE_event_t *event,
+                       ACE_Time_Value *timeout,
+                       int use_absolute_time = 1);
+  int event_signal (ACE_event_t *event);
+  int event_pulse (ACE_event_t *event);
+  int event_reset (ACE_event_t *event);
   //@}
 
   //@{ @name A set of wrappers for semaphores.
-  static int sema_destroy (ACE_sema_t *s);
-  static int sema_init (ACE_sema_t *s,
-                        u_int count,
-                        int type = ACE_DEFAULT_SYNCH_TYPE,
-                        const char *name = 0,
-                        void *arg = 0,
-                        int max = 0x7fffffff,
-                        LPSECURITY_ATTRIBUTES sa = 0);
+  int sema_destroy (ACE_sema_t *s);
+  int sema_init (ACE_sema_t *s,
+                 u_int count,
+                 int type = ACE_DEFAULT_SYNCH_TYPE,
+                 const char *name = 0,
+                 void *arg = 0,
+                 int max = 0x7fffffff,
+                 LPSECURITY_ATTRIBUTES sa = 0);
 # if defined (ACE_HAS_WCHAR)
-  static int sema_init (ACE_sema_t *s,
-                        u_int count,
-                        int type,
-                        const wchar_t *name,
-                        void *arg = 0,
-                        int max = 0x7fffffff,
-                        LPSECURITY_ATTRIBUTES sa = 0);
+  int sema_init (ACE_sema_t *s,
+                 u_int count,
+                 int type,
+                 const wchar_t *name,
+                 void *arg = 0,
+                 int max = 0x7fffffff,
+                 LPSECURITY_ATTRIBUTES sa = 0);
 # endif /* ACE_HAS_WCHAR */
-  static int sema_post (ACE_sema_t *s);
-  static int sema_post (ACE_sema_t *s,
-                        u_int release_count);
-  static int sema_trywait (ACE_sema_t *s);
-  static int sema_wait (ACE_sema_t *s);
-  static int sema_wait (ACE_sema_t *s,
-                        ACE_Time_Value &tv);
-  static int sema_wait (ACE_sema_t *s,
-                        ACE_Time_Value *tv);
+  int sema_post (ACE_sema_t *s);
+  int sema_post (ACE_sema_t *s,
+                 u_int release_count);
+  int sema_trywait (ACE_sema_t *s);
+  int sema_wait (ACE_sema_t *s);
+  int sema_wait (ACE_sema_t *s,
+                 ACE_Time_Value &tv);
+  int sema_wait (ACE_sema_t *s,
+                 ACE_Time_Value *tv);
   //@}
 
   //@{ @name A set of wrappers for System V semaphores.
-  static int semctl (int int_id,
-                     int semnum,
-                     int cmd,
-                     semun);
-  static int semget (key_t key,
-                     int nsems,
-                     int flags);
-  static int semop (int int_id,
-                    struct sembuf *sops,
-                    size_t nsops);
+  int semctl (int int_id,
+              int semnum,
+              int cmd,
+              semun);
+  int semget (key_t key,
+              int nsems,
+              int flags);
+  int semop (int int_id,
+             struct sembuf *sops,
+             size_t nsops);
   //@}
 
   //@{ @name Thread scheduler interface.
   /// Set scheduling parameters.  An id of ACE_SELF indicates, e.g.,
   /// set the parameters on the calling thread.
-  static int sched_params (const ACE_Sched_Params &, ACE_id_t id = ACE_SELF);
+  int sched_params (const ACE_Sched_Params &, ACE_id_t id = ACE_SELF);
   //@}
 
   //@{ @name A set of wrappers for System V shared memory.
-  static void *shmat (int int_id,
-                      void *shmaddr,
-                      int shmflg);
-  static int shmctl (int int_id,
-                     int cmd,
-                     struct shmid_ds *buf);
-  static int shmdt (void *shmaddr);
-  static int shmget (key_t key,
-                     int size,
-                     int flags);
+  void *shmat (int int_id,
+               void *shmaddr,
+               int shmflg);
+  int shmctl (int int_id,
+              int cmd,
+              struct shmid_ds *buf);
+  int shmdt (void *shmaddr);
+  int shmget (key_t key,
+              int size,
+              int flags);
   ///@}
 
   //@{ @name A set of wrappers for Signals.
-  static int kill (pid_t pid,
+  int kill (pid_t pid,
+            int signum);
+  int sigaction (int signum,
+                 const struct sigaction *nsa,
+                 struct sigaction *osa);
+  int sigaddset (sigset_t *s,
+                 int signum);
+  int sigdelset (sigset_t *s,
+                 int signum);
+  int sigemptyset (sigset_t *s);
+  int sigfillset (sigset_t *s);
+  int sigismember (sigset_t *s,
                    int signum);
-  static int sigaction (int signum,
-                        const struct sigaction *nsa,
-                        struct sigaction *osa);
-  static int sigaddset (sigset_t *s,
-                        int signum);
-  static int sigdelset (sigset_t *s,
-                        int signum);
-  static int sigemptyset (sigset_t *s);
-  static int sigfillset (sigset_t *s);
-  static int sigismember (sigset_t *s,
-                          int signum);
-  static ACE_SignalHandler signal (int signum,
-                                   ACE_SignalHandler);
-  static int sigsuspend (const sigset_t *set);
-  static int sigprocmask (int how,
-                          const sigset_t *nsp,
-                          sigset_t *osp);
+  ACE_SignalHandler signal (int signum,
+                            ACE_SignalHandler);
+  int sigsuspend (const sigset_t *set);
+  int sigprocmask (int how,
+                   const sigset_t *nsp,
+                   sigset_t *osp);
 
-  static int pthread_sigmask (int how,
-                              const sigset_t *nsp,
-                              sigset_t *osp);
+  int pthread_sigmask (int how,
+                       const sigset_t *nsp,
+                       sigset_t *osp);
   //@}
 
   //@{ @name A set of wrappers for sockets.
   /// BSD-style <accept> (no QoS).
-  static ACE_HANDLE accept (ACE_HANDLE handle,
-                            struct sockaddr *addr,
-                            int *addrlen);
+  ACE_HANDLE accept (ACE_HANDLE handle,
+                     struct sockaddr *addr,
+                     int *addrlen);
 
 #if !defined (ACE_HAS_WINCE)
   /**
@@ -3209,16 +3173,16 @@ public:
    * the OS platform doesn't support QoS-enabled <accept> then the
    * <qos_params> are ignored and the BSD-style <accept> is called.
    */
-  static ACE_HANDLE accept (ACE_HANDLE handle,
-                            struct sockaddr *addr,
-                            int *addrlen,
-                            const ACE_Accept_QoS_Params &qos_params);
+  ACE_HANDLE accept (ACE_HANDLE handle,
+                     struct sockaddr *addr,
+                     int *addrlen,
+                     const ACE_Accept_QoS_Params &qos_params);
 #endif  // ACE_HAS_WINCE
 
   /// BSD-style <connect> (no QoS).
-  static int connect (ACE_HANDLE handle,
-                      struct sockaddr *addr,
-                      int addrlen);
+  int connect (ACE_HANDLE handle,
+               struct sockaddr *addr,
+               int addrlen);
 
 #if !defined (ACE_HAS_WINCE)
   /**
@@ -3226,218 +3190,218 @@ public:
    * If the OS platform doesn't support QoS-enabled <connect> then the
    * <qos_params> are ignored and the BSD-style <connect> is called.
    */
-  static int connect (ACE_HANDLE handle,
-                      const sockaddr *addr,
-                      int addrlen,
-                      const ACE_QoS_Params &qos_params);
+  int connect (ACE_HANDLE handle,
+               const sockaddr *addr,
+               int addrlen,
+               const ACE_QoS_Params &qos_params);
 #endif  // ACE_HAS_WINCE
 
-  static int bind (ACE_HANDLE s,
-                   struct sockaddr *name,
-                   int namelen);
+  int bind (ACE_HANDLE s,
+            struct sockaddr *name,
+            int namelen);
 
-  static int closesocket (ACE_HANDLE s);
-  static struct hostent *gethostbyaddr (const char *addr,
-                                        int length,
-                                        int type);
-  static struct hostent *gethostbyname (const char *name);
-  static struct hostent *getipnodebyname (const char *name, int family,
-                                          int flags = 0);
-  static struct hostent *getipnodebyaddr (const void *src, size_t len,
-                                          int family);
-  static struct hostent *gethostbyaddr_r (const char *addr,
-                                          int length,
-                                          int type,
-                                          struct hostent *result,
-                                          ACE_HOSTENT_DATA buffer,
-                                          int *h_errnop);
-  static struct hostent *gethostbyname_r (const char *name,
-                                          struct hostent *result,
-                                          ACE_HOSTENT_DATA buffer,
-                                          int *h_errnop);
-  static int getpeername (ACE_HANDLE handle,
-                          struct sockaddr *addr,
-                          int *addrlen);
-  static struct protoent *getprotobyname (const char *name);
-  static struct protoent *getprotobyname_r (const char *name,
-                                            struct protoent *result,
-                                            ACE_PROTOENT_DATA buffer);
-  static struct protoent *getprotobynumber (int proto);
-  static struct protoent *getprotobynumber_r (int proto,
-                                              struct protoent *result,
-                                              ACE_PROTOENT_DATA buffer);
-  static struct servent *getservbyname (const char *svc,
-                                        const char *proto);
-  static struct servent *getservbyname_r (const char *svc,
-                                          const char *proto,
-                                          struct servent *result,
-                                          ACE_SERVENT_DATA buf);
-  static int getsockname (ACE_HANDLE handle,
-                          struct sockaddr *addr,
-                          int *addrlen);
-  static int getsockopt (ACE_HANDLE handle,
-                         int level,
-                         int optname,
-                         char *optval,
-                         int *optlen);
-  static unsigned long inet_addr (const char *name);
-  static char *inet_ntoa (const struct in_addr addr);
-  static int inet_aton (const char *strptr,
-                        struct in_addr *addr);
-  static const char *inet_ntop (int family,
-                                const void *addrptr,
-                                char *strptr,
-                                 size_t len);
-  static int inet_pton (int family,
-                        const char *strptr,
-                        void *addrptr);
+  int closesocket (ACE_HANDLE s);
+  struct hostent *gethostbyaddr (const char *addr,
+                                 int length,
+                                 int type);
+  struct hostent *gethostbyname (const char *name);
+  struct hostent *getipnodebyname (const char *name, int family,
+                                   int flags = 0);
+  struct hostent *getipnodebyaddr (const void *src, size_t len,
+                                   int family);
+  struct hostent *gethostbyaddr_r (const char *addr,
+                                   int length,
+                                   int type,
+                                   struct hostent *result,
+                                   ACE_HOSTENT_DATA buffer,
+                                   int *h_errnop);
+  struct hostent *gethostbyname_r (const char *name,
+                                   struct hostent *result,
+                                   ACE_HOSTENT_DATA buffer,
+                                   int *h_errnop);
+  int getpeername (ACE_HANDLE handle,
+                   struct sockaddr *addr,
+                   int *addrlen);
+  struct protoent *getprotobyname (const char *name);
+  struct protoent *getprotobyname_r (const char *name,
+                                     struct protoent *result,
+                                     ACE_PROTOENT_DATA buffer);
+  struct protoent *getprotobynumber (int proto);
+  struct protoent *getprotobynumber_r (int proto,
+                                       struct protoent *result,
+                                       ACE_PROTOENT_DATA buffer);
+  struct servent *getservbyname (const char *svc,
+                                 const char *proto);
+  struct servent *getservbyname_r (const char *svc,
+                                   const char *proto,
+                                   struct servent *result,
+                                   ACE_SERVENT_DATA buf);
+  int getsockname (ACE_HANDLE handle,
+                   struct sockaddr *addr,
+                   int *addrlen);
+  int getsockopt (ACE_HANDLE handle,
+                  int level,
+                  int optname,
+                  char *optval,
+                  int *optlen);
+  unsigned long inet_addr (const char *name);
+  char *inet_ntoa (const struct in_addr addr);
+  int inet_aton (const char *strptr,
+                 struct in_addr *addr);
+  const char *inet_ntop (int family,
+                         const void *addrptr,
+                         char *strptr,
+                         size_t len);
+  int inet_pton (int family,
+                 const char *strptr,
+                 void *addrptr);
   /// Retrieve information about available transport protocols
   /// installed on the local machine.
-  static int enum_protocols (int *protocols,
-                             ACE_Protocol_Info *protocol_buffer,
-                             u_long *buffer_length);
+  int enum_protocols (int *protocols,
+                      ACE_Protocol_Info *protocol_buffer,
+                      u_long *buffer_length);
 
 #if !defined (ACE_HAS_WINCE)
   /// Joins a leaf node into a QoS-enabled multi-point session.
-  static ACE_HANDLE join_leaf (ACE_HANDLE socket,
-                               const sockaddr *name,
-                               int namelen,
-                               const ACE_QoS_Params &qos_params);
+  ACE_HANDLE join_leaf (ACE_HANDLE socket,
+                        const sockaddr *name,
+                        int namelen,
+                        const ACE_QoS_Params &qos_params);
 #endif  // ACE_HAS_WINCE
 
-  static int listen (ACE_HANDLE handle,
-                     int backlog);
-  static int recv (ACE_HANDLE handle,
-                   char *buf,
-                   size_t len,
-                   int flags = 0);
-  static int recvfrom (ACE_HANDLE handle,
-                       char *buf,
-                       size_t len,
-                       int flags,
-                       struct sockaddr *addr,
-                       int *addrlen);
-  static int recvfrom (ACE_HANDLE handle,
-                       iovec *buffers,
-                       int buffer_count,
-                       size_t &number_of_bytes_recvd,
-                       int &flags,
-                       struct sockaddr *addr,
-                       int *addrlen,
-                       ACE_OVERLAPPED *overlapped,
-                       ACE_OVERLAPPED_COMPLETION_FUNC func);
-  static int send (ACE_HANDLE handle,
-                   const char *buf,
-                   size_t len,
-                   int flags = 0);
-  static int sendto (ACE_HANDLE handle,
-                     const char *buf,
-                     size_t len,
-                     int flags,
-                     const struct sockaddr *addr,
-                     int addrlen);
-  static int sendto (ACE_HANDLE handle,
-                     const iovec *buffers,
-                     int buffer_count,
-                     size_t &number_of_bytes_sent,
-                     int flags,
-                     const struct sockaddr *addr,
-                     int addrlen,
-                     ACE_OVERLAPPED *overlapped,
-                     ACE_OVERLAPPED_COMPLETION_FUNC func);
+  int listen (ACE_HANDLE handle,
+              int backlog);
+  int recv (ACE_HANDLE handle,
+            char *buf,
+            size_t len,
+            int flags = 0);
+  int recvfrom (ACE_HANDLE handle,
+                char *buf,
+                size_t len,
+                int flags,
+                struct sockaddr *addr,
+                int *addrlen);
+  int recvfrom (ACE_HANDLE handle,
+                iovec *buffers,
+                int buffer_count,
+                size_t &number_of_bytes_recvd,
+                int &flags,
+                struct sockaddr *addr,
+                int *addrlen,
+                ACE_OVERLAPPED *overlapped,
+                ACE_OVERLAPPED_COMPLETION_FUNC func);
+  int send (ACE_HANDLE handle,
+            const char *buf,
+            size_t len,
+            int flags = 0);
+  int sendto (ACE_HANDLE handle,
+              const char *buf,
+              size_t len,
+              int flags,
+              const struct sockaddr *addr,
+              int addrlen);
+  int sendto (ACE_HANDLE handle,
+              const iovec *buffers,
+              int buffer_count,
+              size_t &number_of_bytes_sent,
+              int flags,
+              const struct sockaddr *addr,
+              int addrlen,
+              ACE_OVERLAPPED *overlapped,
+              ACE_OVERLAPPED_COMPLETION_FUNC func);
 
   /// Manipulate the options associated with a socket.
-  static int setsockopt (ACE_HANDLE handle,
-                         int level,
-                         int optname,
-                         const char *optval,
-                         int optlen);
-  static int shutdown (ACE_HANDLE handle,
-                       int how);
+  int setsockopt (ACE_HANDLE handle,
+                  int level,
+                  int optname,
+                  const char *optval,
+                  int optlen);
+  int shutdown (ACE_HANDLE handle,
+                int how);
 
   /// Create a BSD-style socket (no QoS).
-  static ACE_HANDLE socket (int protocol_family,
-                            int type,
-                            int proto);
+  ACE_HANDLE socket (int protocol_family,
+                     int type,
+                     int proto);
 
   /// Create a QoS-enabled socket.  If the OS platform doesn't support
   /// QoS-enabled <socket> then the BSD-style <socket> is called.
-  static ACE_HANDLE socket (int protocol_family,
-                            int type,
-                            int proto,
-                            ACE_Protocol_Info *protocolinfo,
-                            ACE_SOCK_GROUP g,
-                            u_long flags);
+  ACE_HANDLE socket (int protocol_family,
+                     int type,
+                     int proto,
+                     ACE_Protocol_Info *protocolinfo,
+                     ACE_SOCK_GROUP g,
+                     u_long flags);
 
-  static int socketpair (int domain,
-                         int type,
-                         int protocol,
-                         ACE_HANDLE sv[2]);
+  int socketpair (int domain,
+                  int type,
+                  int protocol,
+                  ACE_HANDLE sv[2]);
 
   /// Initialize WinSock before first use (e.g., when a DLL is first
   /// loaded or the first use of a socket() call.
-  static int socket_init (int version_high = 1,
-                          int version_low = 1);
+  int socket_init (int version_high = 1,
+                   int version_low = 1);
 
   /// Finalize WinSock after last use (e.g., when a DLL is unloaded).
-  static int socket_fini (void);
+  int socket_fini (void);
   //@}
 
   //@{ @name A set of wrappers for password routines.
-  static void setpwent (void);
-  static void endpwent (void);
-  static struct passwd *getpwent (void);
-  static struct passwd *getpwnam (const char *user);
-  static struct passwd *getpwnam_r (const char *name,
-                                    struct passwd *pwent,
-                                    char *buffer,
-                                    int buflen);
+  void setpwent (void);
+  void endpwent (void);
+  struct passwd *getpwent (void);
+  struct passwd *getpwnam (const char *user);
+  struct passwd *getpwnam_r (const char *name,
+                             struct passwd *pwent,
+                             char *buffer,
+                             int buflen);
   //@}
 
   //@{ @name A set of wrappers for regular expressions.
-  static char *compile (const char *instring,
-                        char *expbuf,
-                        char *endbuf);
-  static int step (const char *str,
-                   char *expbuf);
+  char *compile (const char *instring,
+                 char *expbuf,
+                 char *endbuf);
+  int step (const char *str,
+            char *expbuf);
   //@}
 
   //@{ @name Wide-character strings
   typedef ACE_WCHAR_T WChar;
 
-  static u_int wslen (const WChar *);
-  static WChar *wscpy (WChar *,
-                       const WChar *);
-  static int wscmp (const WChar *,
-                    const WChar *);
-  static int wsncmp (const WChar *,
-                     const WChar *,
-                     size_t len);
+  u_int wslen (const WChar *);
+  WChar *wscpy (WChar *,
+                const WChar *);
+  int wscmp (const WChar *,
+             const WChar *);
+  int wsncmp (const WChar *,
+              const WChar *,
+              size_t len);
   //@}
 
 # if 0
   //@{ @name A set of wrappers for threads (these are portable since they use the ACE_Thread_ID).
-  static int thr_continue (const ACE_Thread_ID &thread);
-  static int thr_create (ACE_THR_FUNC,
-                         void *args,
-                         long flags,
-                         ACE_Thread_ID *,
-                         long priority = ACE_DEFAULT_THREAD_PRIORITY,
-                         void *stack = 0,
-                         size_t stacksize = 0);
-  static int thr_getprio (ACE_Thread_ID thr_id,
-                          int &prio,
-                          int *policy = 0);
-  static int thr_join (ACE_Thread_ID waiter_id,
-                       ACE_THR_FUNC_RETURN *status);
-  static int thr_kill (ACE_Thread_ID thr_id,
-                       int signum);
-  static ACE_Thread_ID thr_self (void);
-  static int thr_setprio (ACE_Thread_ID thr_id,
-                          int prio);
-  static int thr_setprio (const ACE_Sched_Priority prio);
-  static int thr_suspend (ACE_Thread_ID target_thread);
-  static int thr_cancel (ACE_Thread_ID t_id);
+  int thr_continue (const ACE_Thread_ID &thread);
+  int thr_create (ACE_THR_FUNC,
+                  void *args,
+                  long flags,
+                  ACE_Thread_ID *,
+                  long priority = ACE_DEFAULT_THREAD_PRIORITY,
+                  void *stack = 0,
+                  size_t stacksize = 0);
+  int thr_getprio (ACE_Thread_ID thr_id,
+                   int &prio,
+                   int *policy = 0);
+  int thr_join (ACE_Thread_ID waiter_id,
+                ACE_THR_FUNC_RETURN *status);
+  int thr_kill (ACE_Thread_ID thr_id,
+                int signum);
+  ACE_Thread_ID thr_self (void);
+  int thr_setprio (ACE_Thread_ID thr_id,
+                   int prio);
+  int thr_setprio (const ACE_Sched_Priority prio);
+  int thr_suspend (ACE_Thread_ID target_thread);
+  int thr_cancel (ACE_Thread_ID t_id);
   //@}
 # endif /* 0 */
 
@@ -3445,7 +3409,7 @@ public:
 
   // These are non-portable since they use ACE_thread_t and
   // ACE_hthread_t and will go away in a future release.
-  static int thr_continue (ACE_hthread_t target_thread);
+  int thr_continue (ACE_hthread_t target_thread);
 
   /*
    * Creates a new thread having <flags> attributes and running <func>
@@ -3477,97 +3441,97 @@ public:
    * Note that <thread_adapter> is always deleted by <thr_create>,
    * therefore it must be allocated with global operator new.
    */
-  static int thr_create (ACE_THR_FUNC func,
-                         void *args,
-                         long flags,
-                         ACE_thread_t *thr_id,
-                         ACE_hthread_t *t_handle = 0,
-                         long priority = ACE_DEFAULT_THREAD_PRIORITY,
-                         void *stack = 0,
-                         size_t stacksize = 0,
-                         ACE_Base_Thread_Adapter *thread_adapter = 0);
+  int thr_create (ACE_THR_FUNC func,
+                  void *args,
+                  long flags,
+                  ACE_thread_t *thr_id,
+                  ACE_hthread_t *t_handle = 0,
+                  long priority = ACE_DEFAULT_THREAD_PRIORITY,
+                  void *stack = 0,
+                  size_t stacksize = 0,
+                  ACE_Base_Thread_Adapter *thread_adapter = 0);
 
-  static int thr_join (ACE_hthread_t waiter_id,
-                       ACE_THR_FUNC_RETURN *status);
-  static int thr_join (ACE_thread_t waiter_id,
-                       ACE_thread_t *thr_id,
-                       ACE_THR_FUNC_RETURN *status);
-  static int thr_kill (ACE_thread_t thr_id,
-                       int signum);
-  static ACE_thread_t thr_self (void);
-  static void thr_self (ACE_hthread_t &);
-  static int thr_getprio (ACE_hthread_t id,
-                          int &priority);
-  static int thr_getprio (ACE_hthread_t id,
-                          int &priority,
-                          int &policy);
-  static int thr_setprio (ACE_hthread_t id,
-                          int priority,
-                          int policy = -1);
-  static int thr_setprio (const ACE_Sched_Priority prio);
-  static int thr_suspend (ACE_hthread_t target_thread);
-  static int thr_cancel (ACE_thread_t t_id);
+  int thr_join (ACE_hthread_t waiter_id,
+                ACE_THR_FUNC_RETURN *status);
+  int thr_join (ACE_thread_t waiter_id,
+                ACE_thread_t *thr_id,
+                ACE_THR_FUNC_RETURN *status);
+  int thr_kill (ACE_thread_t thr_id,
+                int signum);
+  ACE_thread_t thr_self (void);
+  void thr_self (ACE_hthread_t &);
+  int thr_getprio (ACE_hthread_t id,
+                   int &priority);
+  int thr_getprio (ACE_hthread_t id,
+                   int &priority,
+                   int &policy);
+  int thr_setprio (ACE_hthread_t id,
+                   int priority,
+                   int policy = -1);
+  int thr_setprio (const ACE_Sched_Priority prio);
+  int thr_suspend (ACE_hthread_t target_thread);
+  int thr_cancel (ACE_thread_t t_id);
 
-  static int thr_cmp (ACE_hthread_t t1,
-                      ACE_hthread_t t2);
-  static int thr_equal (ACE_thread_t t1,
-                        ACE_thread_t t2);
-  static void thr_exit (ACE_THR_FUNC_RETURN status = 0);
-  static int thr_getconcurrency (void);
-  static int lwp_getparams (ACE_Sched_Params &);
+  int thr_cmp (ACE_hthread_t t1,
+               ACE_hthread_t t2);
+  int thr_equal (ACE_thread_t t1,
+                 ACE_thread_t t2);
+  void thr_exit (ACE_THR_FUNC_RETURN status = 0);
+  int thr_getconcurrency (void);
+  int lwp_getparams (ACE_Sched_Params &);
 # if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-  static int thr_getspecific (ACE_OS_thread_key_t key,
-                              void **data);
+  int thr_getspecific (ACE_OS_thread_key_t key,
+                       void **data);
 # endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
-  static int thr_getspecific (ACE_thread_key_t key,
-                              void **data);
-  static int thr_keyfree (ACE_thread_key_t key);
-  static int thr_key_detach (void *inst);
+  int thr_getspecific (ACE_thread_key_t key,
+                       void **data);
+  int thr_keyfree (ACE_thread_key_t key);
+  int thr_key_detach (void *inst);
 # if defined (ACE_HAS_THR_C_DEST)
 #   if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-  static int thr_keycreate (ACE_OS_thread_key_t *key,
-                            ACE_THR_C_DEST,
-                            void *inst = 0);
+  int thr_keycreate (ACE_OS_thread_key_t *key,
+                     ACE_THR_C_DEST,
+                     void *inst = 0);
 #   endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
-  static int thr_keycreate (ACE_thread_key_t *key,
-                            ACE_THR_C_DEST,
-                            void *inst = 0);
+  int thr_keycreate (ACE_thread_key_t *key,
+                     ACE_THR_C_DEST,
+                     void *inst = 0);
 # else
 #   if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-  static int thr_keycreate (ACE_OS_thread_key_t *key,
-                            ACE_THR_DEST,
-                            void *inst = 0);
+  int thr_keycreate (ACE_OS_thread_key_t *key,
+                     ACE_THR_DEST,
+                     void *inst = 0);
 #   endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
-  static int thr_keycreate (ACE_thread_key_t *key,
-                            ACE_THR_DEST,
-                            void *inst = 0);
+  int thr_keycreate (ACE_thread_key_t *key,
+                     ACE_THR_DEST,
+                     void *inst = 0);
 # endif /* ACE_HAS_THR_C_DEST */
-  static int thr_key_used (ACE_thread_key_t key);
-  static size_t thr_min_stack (void);
-  static int thr_setconcurrency (int hint);
-  static int lwp_setparams (const ACE_Sched_Params &);
+  int thr_key_used (ACE_thread_key_t key);
+  size_t thr_min_stack (void);
+  int thr_setconcurrency (int hint);
+  int lwp_setparams (const ACE_Sched_Params &);
 # if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-  static int thr_setspecific (ACE_OS_thread_key_t key,
-                              void *data);
+  int thr_setspecific (ACE_OS_thread_key_t key,
+                       void *data);
 # endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
-  static int thr_setspecific (ACE_thread_key_t key,
-                              void *data);
-  static int thr_sigsetmask (int how,
-                             const sigset_t *nsm,
-                             sigset_t *osm);
-  static int thr_setcancelstate (int new_state,
-                                 int *old_state);
-  static int thr_setcanceltype (int new_type,
-                                int *old_type);
-  static int sigwait (sigset_t *set,
-                      int *sig = 0);
-  static int sigtimedwait (const sigset_t *set,
-                           siginfo_t *info,
-                           const ACE_Time_Value *timeout);
-  static int sigwaitinfo (const sigset_t *set,
-                          siginfo_t *info);
-  static void thr_testcancel (void);
-  static void thr_yield (void);
+  int thr_setspecific (ACE_thread_key_t key,
+                       void *data);
+  int thr_sigsetmask (int how,
+                      const sigset_t *nsm,
+                      sigset_t *osm);
+  int thr_setcancelstate (int new_state,
+                          int *old_state);
+  int thr_setcanceltype (int new_type,
+                         int *old_type);
+  int sigwait (sigset_t *set,
+               int *sig = 0);
+  int sigtimedwait (const sigset_t *set,
+                    siginfo_t *info,
+                    const ACE_Time_Value *timeout);
+  int sigwaitinfo (const sigset_t *set,
+                   siginfo_t *info);
+  void thr_testcancel (void);
+  void thr_yield (void);
 
   /**
    * This method uses process id and object pointer to come up with a
@@ -3577,174 +3541,202 @@ public:
    * the same process. The uniqueness of this name is therefore only
    * valid for the life of <object>.
    */
-  static void unique_name (const void *object,
-                           ACE_TCHAR *name,
-                           size_t length);
+  void unique_name (const void *object,
+                    ACE_TCHAR *name,
+                    size_t length);
 
   /// This is necessary to deal with POSIX pthreads and their use of
   /// structures for thread ids.
-  static ACE_thread_t NULL_thread;
+  extern ACE_thread_t NULL_thread;
 
   /// This is necessary to deal with POSIX pthreads and their use of
   /// structures for thread handles.
-  static ACE_hthread_t NULL_hthread;
+  extern ACE_hthread_t NULL_hthread;
 
   /// This is necessary to deal with POSIX pthreads and their use of
   /// structures for TSS keys.
-  static ACE_thread_key_t NULL_key;
+  extern ACE_thread_key_t NULL_key;
 
 # if defined (CHORUS)
   /// This is used to map an actor's id into a KnCap for killing and
   /// waiting actors.
-  static KnCap actorcaps_[ACE_CHORUS_MAX_ACTORS];
+  KnCap actorcaps_[ACE_CHORUS_MAX_ACTORS];
 # endif /* CHORUS */
   //@}
 
 # if defined (ACE_WIN32)
   /// Keeps track of whether we've already initialized WinSock...
-  static int socket_initialized_;
+  int socket_initialized_;
 # endif /* ACE_WIN32 */
 
   /// Handle asynchronous thread cancellation cleanup.
-  static void mutex_lock_cleanup (void *mutex);
+  void mutex_lock_cleanup (void *mutex);
 
   /**
    * Call TSS destructors for the current thread.  If the current
    * thread is the main thread, then the argument must be 1.
    * For private use of ACE_Object_Manager and ACE_Thread_Adapter only.
    */
-  static void cleanup_tss (const u_int main_thread);
+  void cleanup_tss (const u_int main_thread);
 
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
-  static int netdb_acquire (void);
-  static int netdb_release (void);
+  int netdb_acquire (void);
+  int netdb_release (void);
 # endif /* defined (ACE_MT_SAFE) && ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 
   /// Find the schedling class ID that corresponds to the class name.
-  static int scheduling_class (const char *class_name, ACE_id_t &);
+  int scheduling_class (const char *class_name, ACE_id_t &);
 
   /// Friendly interface to <priocntl>(2).
-  static int set_scheduling_params (const ACE_Sched_Params &,
-                                    ACE_id_t id = ACE_SELF);
+  int set_scheduling_params (const ACE_Sched_Params &,
+                             ACE_id_t id = ACE_SELF);
 
   /// Low-level interface to <priocntl>(2).
   /**
    * Can't call the following priocntl, because that's a macro on
    * Solaris.
    */
-  static int priority_control (ACE_idtype_t, ACE_id_t, int, void *);
+  int priority_control (ACE_idtype_t, ACE_id_t, int, void *);
 
 #if defined (ACE_HAS_STRPTIME)
-  static char *strptime (char *buf,
-                         const char *format,
-                         struct tm *tm);
+  char *strptime (char *buf,
+                  const char *format,
+                  struct tm *tm);
 
 # if defined (ACE_LACKS_NATIVE_STRPTIME)
-  static int strptime_getnum (char *buf, int *num, int *bi,
-                              int *fi, int min, int max);
+  int strptime_getnum (char *buf, int *num, int *bi,
+                       int *fi, int min, int max);
 # endif /* ACE_LACKS_NATIVE_STRPTIME */
 #endif /* ACE_HAS_STRPTIME */
 
   /// Get the number of CPUs configured in the machine.
-  static long num_processors (void);
+  long num_processors (void);
 
   /// Get the number of CPUs currently online.
-  static long num_processors_online (void);
-
-private:
+  long num_processors_online (void);
 
 #if defined (ACE_LACKS_WRITEV)
-  static int writev_emulation (ACE_HANDLE handle,
-                               ACE_WRITEV_TYPE *iov,
-                               int iovcnt);
+  int writev_emulation (ACE_HANDLE handle,
+                        ACE_WRITEV_TYPE *iov,
+                        int iovcnt);
 #endif /* ACE_LACKS_WRITEV */
 
 #if defined (ACE_LACKS_READV)
-  static ssize_t readv_emulation (ACE_HANDLE handle,
-                                  ACE_READV_TYPE *iov,
-                                  int iovcnt);
+  ssize_t readv_emulation (ACE_HANDLE handle,
+                           ACE_READV_TYPE *iov,
+                           int iovcnt);
 #endif /* ACE_LACKS_READV */
 
   /// Function that is called by <ACE_OS::exit>, if non-null.
-  static ACE_EXIT_HOOK exit_hook_;
+  extern ACE_EXIT_HOOK exit_hook_;
 
   /// For use by ACE_Object_Manager only, to register its exit hook..
-  static ACE_EXIT_HOOK set_exit_hook (ACE_EXIT_HOOK hook);
-
-  /// Allow the ACE_OS_Object_Manager to call set_exit_hook.
-  friend class ACE_OS_Object_Manager;
+  ACE_EXIT_HOOK set_exit_hook (ACE_EXIT_HOOK hook);
 
 # if defined (ACE_WIN32)
 #   if defined (ACE_HAS_WINCE)
   /// Supporting data for ctime and ctime_r functions on WinCE.
-  static const wchar_t *day_of_week_name[7];
-  static const wchar_t *month_name[12];
+  const wchar_t *day_of_week_name[7];
+  const wchar_t *month_name[12];
 #   endif /* ACE_HAS_WINCE */
 
   /// Translate fopen's mode char to open's mode.  This helper function
   /// is here to avoid maintaining several pieces of identical code.
-  static void fopen_mode_to_open_mode_converter (ACE_TCHAR x, int &hmode);
+  void fopen_mode_to_open_mode_converter (ACE_TCHAR x, int &hmode);
 
-  static OSVERSIONINFO win32_versioninfo_;
+  OSVERSIONINFO win32_versioninfo_;
 
-  static HINSTANCE win32_resource_module_;
+  HINSTANCE win32_resource_module_;
 
 # endif /* ACE_WIN32 */
 
 #if defined (ACE_HAS_VIRTUAL_TIME)
-  static clock_t times (struct tms *buf);
+  clock_t times (struct tms *buf);
 #endif /* ACE_HAS_VIRTUAL_TIME */
 
   //changed for ACE_HAS_VIRTUAL_TIME changes.
 
-  static int cond_timedwait_i (ACE_cond_t *cv,
-                       ACE_mutex_t *m,
-                       ACE_Time_Value *);
+  int cond_timedwait_i (ACE_cond_t *cv,
+                        ACE_mutex_t *m,
+                        ACE_Time_Value *);
 
-  static u_int alarm_i (u_int secs);
+  u_int alarm_i (u_int secs);
 
-  static u_int ualarm_i (u_int usecs, u_int interval = 0);
+  u_int ualarm_i (u_int usecs, u_int interval = 0);
 
-  static u_int ualarm_i (const ACE_Time_Value &tv,
-                         const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
+  u_int ualarm_i (const ACE_Time_Value &tv,
+                  const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
 
-  static int sleep_i (u_int seconds);
+  int sleep_i (u_int seconds);
 
-  static int sleep_i (const ACE_Time_Value &tv);
+  int sleep_i (const ACE_Time_Value &tv);
 
-  static int nanosleep_i (const struct timespec *requested,
-                          struct timespec *remaining = 0);
+  int nanosleep_i (const struct timespec *requested,
+                   struct timespec *remaining = 0);
 
-  static int select_i (int width,
-                       fd_set *rfds,
-                       fd_set *wfds,
-                       fd_set *efds,
-                       const ACE_Time_Value *tv = 0);
+  int select_i (int width,
+                fd_set *rfds,
+                fd_set *wfds,
+                fd_set *efds,
+                const ACE_Time_Value *tv = 0);
 
-  static int select_i (int width,
-                       fd_set *rfds,
-                       fd_set *wfds,
-                       fd_set *efds,
-                       const ACE_Time_Value &tv);
+  int select_i (int width,
+                fd_set *rfds,
+                fd_set *wfds,
+                fd_set *efds,
+                const ACE_Time_Value &tv);
 
-  static int poll_i (struct pollfd *pollfds,
-                     u_long len,
-                     const ACE_Time_Value *tv = 0);
+  int poll_i (struct pollfd *pollfds,
+              u_long len,
+              const ACE_Time_Value *tv = 0);
 
-  static int poll_i (struct pollfd *pollfds,
-                     u_long len,
-                     const ACE_Time_Value &tv);
+  int poll_i (struct pollfd *pollfds,
+              u_long len,
+              const ACE_Time_Value &tv);
 
-  static int sema_wait_i (ACE_sema_t *s);
+  int sema_wait_i (ACE_sema_t *s);
 
-  static int sema_wait_i (ACE_sema_t *s,
-                          ACE_Time_Value &tv);
+  int sema_wait_i (ACE_sema_t *s,
+                   ACE_Time_Value &tv);
 
-  static int sigtimedwait_i (const sigset_t *set,
-                             siginfo_t *info,
-                             const ACE_Time_Value *timeout);
+  int sigtimedwait_i (const sigset_t *set,
+                      siginfo_t *info,
+                      const ACE_Time_Value *timeout);
 
-  static ACE_Time_Value gettimeofday_i (void);
+  ACE_Time_Value gettimeofday_i (void);
+};  /* namespace ACE_OS */
+
+
+/**
+ * @class ACE_event_t
+ *
+ * @brief Wrapper for NT events on UNIX.
+ */
+class ACE_OS_Export ACE_event_t
+{
+  friend int ACE_OS::event_init(ACE_event_t*, int, int, int, const char*, void*,int);
+  friend int ACE_OS::event_destroy(ACE_event_t*);
+  friend int ACE_OS::event_wait(ACE_event_t*);
+  friend int ACE_OS::event_timedwait(ACE_event_t*, ACE_Time_Value*, int);
+  friend int ACE_OS::event_signal(ACE_event_t*);
+  friend int ACE_OS::event_pulse(ACE_event_t*);
+  friend int ACE_OS::event_reset(ACE_event_t*);
+protected:
+
+  /// Protect critical section.
+  ACE_mutex_t lock_;
+
+  /// Keeps track of waiters.
+  ACE_cond_t condition_;
+
+  /// Specifies if this is an auto- or manual-reset event.
+  int manual_reset_;
+
+  /// "True" if signaled.
+  int is_signaled_;
+
+  /// Number of waiting threads.
+  unsigned long waiting_threads_;
 };
 
 /**
@@ -3951,7 +3943,8 @@ private:
   static void print_error_message (u_int line_number, const ACE_TCHAR *message);
 
   /// This class is for internal use by ACE_OS, etc., only.
-  friend class ACE_OS;
+  friend time_t ACE_OS::mktime(tm*);
+  friend int ACE_OS::atexit(void (*)());
   friend class ACE_Object_Manager;
   friend class ACE_OS_Object_Manager_Manager;
   friend class ACE_TSS_Cleanup;

@@ -14,14 +14,15 @@ static int shut_up_aCC = 0;
 
 #include "ace/os_include/os_stdlib.h"
 
+namespace ACE_OS {
 void *
-ACE_OS_Memory::malloc (size_t nbytes)
+malloc (size_t nbytes)
 {
   return ACE_MALLOC_FUNC (nbytes);
 }
 
 void *
-ACE_OS_Memory::calloc (size_t elements, size_t sizeof_elements)
+calloc (size_t elements, size_t sizeof_elements)
 {
 #if !defined (ACE_HAS_WINCE)
   return ACE_CALLOC_FUNC (elements, sizeof_elements);
@@ -33,13 +34,15 @@ ACE_OS_Memory::calloc (size_t elements, size_t sizeof_elements)
 }
 
 void *
-ACE_OS_Memory::realloc (void *ptr, size_t nbytes)
+realloc (void *ptr, size_t nbytes)
 {
   return ACE_REALLOC_FUNC (ACE_MALLOC_T (ptr), nbytes);
 }
 
 void
-ACE_OS_Memory::free (void *ptr)
+free (void *ptr)
 {
   ACE_FREE_FUNC (ACE_MALLOC_T (ptr));
 }
+
+} /* namespace ACE_OS */
