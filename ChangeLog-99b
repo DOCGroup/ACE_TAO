@@ -1,3 +1,15 @@
+Mon Nov  8 16:34:27 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* acconfig.h:
+	* configure.in:
+
+	  Added autoconf support/tests for the following ACE macros:
+
+		ACE_HAS_STRPTIME
+		ACE_LACKS_NATIVE_STRPTIME
+		ACE_LACKS_PLACEMENT_OPERATOR_NEW
+		ACE_LACKS_PLACEMENT_OPERATOR_DELETE
+
 Mon Nov  8 09:41:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/config-g++-common.h: Added ACE_LACKS_PLACEMENT_OPERATOR_NEW
