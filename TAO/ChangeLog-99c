@@ -1,3 +1,12 @@
+Tue Jun  8 15:09:35 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Callback_Quoter/Consumer_i.h (class Consumer): 
+	* examples/Callback_Quoter/Consumer_Handler.h (class Consumer_Handler): 
+	* examples/Callback_Quoter/Supplier_i.h (class Supplier):
+	  
+	  Moved the CORBA::ORB_var before the other vars in the member
+	  declaration so that it gets destructed last.
+
 Tue Jun  8 15:03:02 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* orbsvcs/tests/Property/client.h:	
