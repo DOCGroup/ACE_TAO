@@ -5,6 +5,7 @@
 #include "tao/operation_details.h"
 #include "tao/debug.h"
 #include "tao/Pluggable_Messaging_Utils.h"
+#include "tao/GIOP_Message_State.h"  
 #include "tao/TAO_Server_Request.h"
 #include "tao/TAOC.h"
 #include "tao/ORB_Core.h"
@@ -557,4 +558,10 @@ TAO_GIOP_Message_Generator_Parser_12::process_bidir_context (
                     context.context_data.length ());
 
   return transport->tear_listen_point_list (cdr);
+}
+
+size_t
+TAO_GIOP_Message_Generator_Parser_12::fragment_header_length (void) const
+{
+  return TAO_GIOP_MESSAGE_FRAGMENT_HEADER;
 }

@@ -94,6 +94,11 @@ public:
   virtual int format_message (TAO_OutputCDR &cdr);
 
   /// Parse the incoming messages..
+  ///
+  /// \return -1 There was some error parsing the GIOP header
+  /// \return 0  The GIOP header was parsed correctly
+  /// \return 1  There was not enough data in the message block to
+  ///            parse the header
   virtual int parse_incoming_messages (ACE_Message_Block &message_block);
 
   /// Calculate the amount of data that is missing in the <incoming>
@@ -113,10 +118,6 @@ public:
 
   /// Get the details of the message parsed through the @a qd.
   virtual void get_message_data (TAO_Queued_Data *qd);
-
-  /// @@Bala:Docu??
-  virtual int consolidate_fragments (TAO_Queued_Data *dqd,
-                                     const TAO_Queued_Data *sqd);
 
   /// Process the request message that we have received on the
   /// connection
@@ -140,6 +141,10 @@ public:
   /// Header length
   virtual size_t header_length (void) const;
 
+  /// The header length of a fragment
+  virtual size_t fragment_header_length (CORBA::Octet major,
+                                         CORBA::Octet minor) const;
+
   virtual TAO_OutputCDR &out_stream (void);
 protected:
 
@@ -158,7 +163,7 @@ protected:
   /// Set the state
   void set_state (CORBA::Octet major,
                   CORBA::Octet minor,
-                  TAO_GIOP_Message_Generator_Parser *&);
+                  TAO_GIOP_Message_Generator_Parser *&) const;
 
   /// Print out a debug messages..
   void dump_msg (const char *label,
@@ -171,7 +176,8 @@ protected:
   /// TAO_PLUGGABLE_MESSAGE_REPLY,
   /// TAO_PLUGGABLE_MESSAGE_CLOSECONNECTION,
   /// TAO_PLUGGABLE_MESSAGE_MESSAGE_ERROR.
-  TAO_Pluggable_Message_Type message_type (TAO_GIOP_Message_State &state);
+  TAO_Pluggable_Message_Type message_type (
+                               const TAO_GIOP_Message_State &state) const;
 
 private:
 
@@ -220,6 +226,11 @@ private:
   /// Creates a new node for the queue with a message block in the
   /// node of size @a sz.
   TAO_Queued_Data *make_queued_data (size_t sz);
+
+  /// Initialize the TAO_Queued_Data from the relevant portions of
+  /// a GIOP_Message_State.
+  void init_queued_data (TAO_Queued_Data* qd,
+                         const TAO_GIOP_Message_State& state) const;
 
 private:
   /// Cached ORB_Core pointer...

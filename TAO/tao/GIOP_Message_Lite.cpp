@@ -29,7 +29,7 @@ TAO_GIOP_Message_Lite::TAO_GIOP_Message_Lite (TAO_ORB_Core *orb_core,
   : orb_core_ (orb_core),
     message_type_ (0),
     message_size_ (0),
-    byte_order_ (ACE_CDR_BYTE_ORDER)
+    byte_order_ (TAO_ENCAP_BYTE_ORDER)
 {
 }
 
@@ -107,7 +107,7 @@ TAO_GIOP_Message_Lite::generate_locate_request_header (
   if (!this->write_protocol_header (TAO_GIOP_LOCATEREQUEST,
                                     cdr))
     {
-      if (TAO_debug_level > 3)
+      if (TAO_debug_level)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) Error in writing GIOPLite header \n")));
@@ -121,7 +121,7 @@ TAO_GIOP_Message_Lite::generate_locate_request_header (
                                           spec,
                                           cdr))
     {
-      if (TAO_debug_level > 4)
+      if (TAO_debug_level)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Error in writing locate request header \n")));
 
@@ -142,7 +142,7 @@ TAO_GIOP_Message_Lite::generate_reply_header (
   if (!this->write_protocol_header (TAO_GIOP_REPLY,
                                     cdr))
     {
-      if (TAO_debug_level > 3)
+      if (TAO_debug_level)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) Error in writing GIOPLite header \n")));
@@ -248,11 +248,18 @@ TAO_GIOP_Message_Lite::format_message (TAO_OutputCDR &stream)
 int
 TAO_GIOP_Message_Lite::parse_incoming_messages (ACE_Message_Block &block)
 {
+  // Make sure we have enough bytes in the header to read all
+  // of the information.
+  if (block.length () < TAO_GIOP_LITE_HEADER_LEN)
+    {
+      return 1;
+    }
+
     // Get the read pointer
   char *rd_ptr = block.rd_ptr ();
 
-  // We dont need to do this sort of copy. But some compilers (read it
-  // as solaris ones) have a problem in deferencing from the
+  // We don't need to do this sort of copy. But some compilers (read it
+  // as SunCC) have a problem in deferencing from the
   // reinterpret_cast pointer of the <rd_ptr>, as the <rd_ptr> can be
   // on stack. So let us go ahead with this copying...
   char buf [4];
@@ -263,7 +270,7 @@ TAO_GIOP_Message_Lite::parse_incoming_messages (ACE_Message_Block &block)
 
   CORBA::ULong x = 0;
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
-  if (!(this->byte_order_ != ACE_CDR_BYTE_ORDER))
+  if (!(this->byte_order_ != TAO_ENCAP_BYTE_ORDER))
     {
       x = *ACE_reinterpret_cast (ACE_CDR::ULong*, buf);
     }
@@ -284,7 +291,7 @@ TAO_GIOP_Message_Lite::parse_incoming_messages (ACE_Message_Block &block)
 }
 
 TAO_Pluggable_Message_Type
-TAO_GIOP_Message_Lite::message_type (void)
+TAO_GIOP_Message_Lite::message_type (void) const
 {
   switch (this->message_type_)
     {
@@ -368,8 +375,7 @@ TAO_GIOP_Message_Lite::extract_next_message (ACE_Message_Block &incoming,
 
   if (copying_len > incoming.length ())
     {
-      qd->missing_data_ =
-        copying_len - incoming.length ();
+      qd->missing_data_ = copying_len - incoming.length ();
 
       copying_len = incoming.length ();
     }
@@ -378,10 +384,8 @@ TAO_GIOP_Message_Lite::extract_next_message (ACE_Message_Block &incoming,
                         copying_len);
 
   incoming.rd_ptr (copying_len);
-  qd->byte_order_ = TAO_ENCAP_BYTE_ORDER;
-  qd->major_version_ = TAO_DEF_GIOP_MAJOR;
-  qd->minor_version_ = TAO_DEF_GIOP_MINOR;
-  qd->msg_type_ = this->message_type ();
+  this->init_queued_data (qd);
+
   return 1;
 }
 
@@ -420,13 +424,12 @@ TAO_GIOP_Message_Lite::consolidate_node (TAO_Queued_Data *qd,
       // Calculate the bytes that needs to be copied in the queue...
       size_t copy_len = this->message_size_;
 
-      // If teh data that needs to be copied is more than that is
+      // If the data that needs to be copied is more than that is
       // available to us ..
       if (copy_len > incoming.length ())
         {
           // Calculate the missing data..
-          qd->missing_data_ =
-            copy_len - incoming.length ();
+          qd->missing_data_ = copy_len - incoming.length ();
 
           // Set the actual possible copy_len that is available...
           copy_len = incoming.length ();
@@ -445,10 +448,7 @@ TAO_GIOP_Message_Lite::consolidate_node (TAO_Queued_Data *qd,
       incoming.rd_ptr (copy_len);
 
       // Get the other details...
-      qd->byte_order_ = TAO_ENCAP_BYTE_ORDER;
-      qd->major_version_ = TAO_DEF_GIOP_MAJOR;
-      qd->minor_version_ = TAO_DEF_GIOP_MINOR;
-      qd->msg_type_ = this->message_type ();
+      this->init_queued_data (qd);
     }
   else
     {
@@ -458,8 +458,7 @@ TAO_GIOP_Message_Lite::consolidate_node (TAO_Queued_Data *qd,
       if (copy_len > incoming.length ())
         {
           // Calculate the missing data..
-          qd->missing_data_ =
-            copy_len - incoming.length ();
+          qd->missing_data_ = copy_len - incoming.length ();
 
           // Set the actual possible copy_len that is available...
           copy_len = incoming.length ();
@@ -483,25 +482,10 @@ void
 TAO_GIOP_Message_Lite::get_message_data (TAO_Queued_Data *qd)
 {
   // Get the message information
-  qd->byte_order_ =
-    ACE_CDR_BYTE_ORDER;
-  qd->major_version_ =
-    TAO_DEF_GIOP_MAJOR;
-  qd->minor_version_ =
-    TAO_DEF_GIOP_MINOR;
+  this->init_queued_data (qd);
 
-  qd->msg_type_=
-    this->message_type ();
-
+  // Reset the message_state
   this->reset ();
-}
-
-int
-TAO_GIOP_Message_Lite::consolidate_fragments (TAO_Queued_Data * /*dqd*/,
-                                              const TAO_Queued_Data * /*sqd*/)
-{
-  // We dont know what fragments are???
-  return -1;
 }
 
 int
@@ -539,10 +523,11 @@ TAO_GIOP_Message_Lite::process_request_message (TAO_Transport *transport,
   size_t wr_pos = qd->msg_block_->wr_ptr () - qd->msg_block_->base ();
   rd_pos += TAO_GIOP_LITE_HEADER_LEN;
 
-  this->dump_msg ("recv",
-                  ACE_reinterpret_cast (u_char *,
-                                        qd->msg_block_->rd_ptr ()),
-                  qd->msg_block_->length ());
+  if (TAO_debug_level > 0)
+    this->dump_msg ("recv",
+                    ACE_reinterpret_cast (u_char *,
+                                          qd->msg_block_->rd_ptr ()),
+                    qd->msg_block_->length ());
 
 
   // Create a input CDR stream.
@@ -593,16 +578,17 @@ TAO_GIOP_Message_Lite::process_reply_message (
   size_t wr_pos = qd->msg_block_->wr_ptr () - qd->msg_block_->base ();
   rd_pos += TAO_GIOP_LITE_HEADER_LEN;
 
-  this->dump_msg ("recv",
-                  ACE_reinterpret_cast (u_char *,
-                                        qd->msg_block_->rd_ptr ()),
-                  qd->msg_block_->length ());
+  if (TAO_debug_level > 0)
+    this->dump_msg ("recv",
+                    ACE_reinterpret_cast (u_char *,
+                                          qd->msg_block_->rd_ptr ()),
+                    qd->msg_block_->length ());
 
 
   // Create a empty buffer on stack
   // NOTE: We use the same data block in which we read the message and
   // we pass it on to the higher layers of the ORB. So we dont to any
-  // copies at all here. The same is alos done in the higher layers.
+  // copies at all here. The same is also done in the higher layers.
   TAO_InputCDR input_cdr (qd->msg_block_->data_block (),
                           ACE_Message_Block::DONT_DELETE,
                           rd_pos,
@@ -627,11 +613,11 @@ TAO_GIOP_Message_Lite::process_reply_message (
   // GIOP_REPLY or GIOP_LOCATE_REPLY to take action.
   switch (qd->msg_type_)
     {
-    case TAO_GIOP_REPLY:
+    case TAO_PLUGGABLE_MESSAGE_REPLY:
       // Should be taken care by the state specific parsing
       return this->parse_reply (input_cdr,
                                 params);
-    case TAO_GIOP_LOCATEREPLY:
+    case TAO_PLUGGABLE_MESSAGE_LOCATEREPLY:
       // We call parse_reply () here because, the message format for
       // the LOCATEREPLY & REPLY are same.
       return this->parse_reply (input_cdr,
@@ -680,7 +666,7 @@ TAO_GIOP_Message_Lite::generate_exception_reply (
 
 int
 TAO_GIOP_Message_Lite::write_protocol_header (
-    TAO_GIOP_Message_Type t,
+    TAO_GIOP_Message_Type type,
     TAO_OutputCDR &msg)
 {
   // Reset the message type
@@ -700,7 +686,7 @@ TAO_GIOP_Message_Lite::write_protocol_header (
   CORBA::ULong size = 0;
   msg.write_ulong (size);
 
-  msg.write_octet ((CORBA::Octet) t);
+  msg.write_octet ((CORBA::Octet) type);
 
   return 1;
 }
@@ -811,15 +797,16 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
                               ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: ")
                               ACE_TEXT ("cannot send exception\n"),
                               ACE_TEXT ("process_request ()")));
-                  ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                       "TAO: ");
+                  ACE_PRINT_EXCEPTION (
+                      ACE_ANY_EXCEPTION,
+                      "TAO_GIOP_Message_Lite::process_request[2]");
                 }
             }
 
         }
       else if (TAO_debug_level > 0)
         {
-          // It is unfotunate that an exception (probably a system
+          // It is unfortunate that an exception (probably a system
           // exception) was thrown by the upcall code (even by the
           // user) when the client was not expecting a response.
           // However, in this case, we cannot close the connection
@@ -867,10 +854,13 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
               if (TAO_debug_level > 0)
                 {
                   ACE_ERROR ((LM_ERROR,
-                              ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: ")
+                              ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Lite::process_request[3], ")
+                              ACE_TEXT ("%p: ")
                               ACE_TEXT ("cannot send exception\n"),
                               ACE_TEXT ("process_request ()")));
-                  ACE_PRINT_EXCEPTION (exception, "TAO: ");
+                  ACE_PRINT_EXCEPTION (
+                      exception,
+                      "TAO_GIOP_Message_Lite::process_request[3]");
                 }
             }
         }
@@ -973,7 +963,8 @@ TAO_GIOP_Message_Lite::process_locate_request (TAO_Transport *transport,
           status_info.status = TAO_GIOP_OBJECT_FORWARD;
           status_info.forward_location_var = forward_to;
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("handle_locate has been called: forwarding\n")));
+                      ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Lite::process_locate_request, ")
+                      ACE_TEXT ("called: forwarding\n")));
         }
       else if (server_request.exception_type () == TAO_GIOP_NO_EXCEPTION)
         {
@@ -981,7 +972,8 @@ TAO_GIOP_Message_Lite::process_locate_request (TAO_Transport *transport,
           status_info.status = TAO_GIOP_OBJECT_HERE;
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO: (%P|%t) handle_locate() : found\n")));
+                        ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Lite::process_locate_request, ")
+                        ACE_TEXT ("found\n")));
         }
       else
         {
@@ -991,14 +983,16 @@ TAO_GIOP_Message_Lite::process_locate_request (TAO_Transport *transport,
             {
               status_info.status = TAO_GIOP_OBJECT_FORWARD;
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("handle_locate has been called: forwarding\n")));
+                          ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Lite::process_locate_request, ")
+                          ACE_TEXT ("forwarding\n")));
             }
           else
             {
               // Normal exception, so the object is not here
               status_info.status = TAO_GIOP_UNKNOWN_OBJECT;
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("handle_locate has been called: not here\n")));
+                          ACE_TEXT ("TAO (%P|%t) - TAO_GIOP_Message_Lite::process_locate_request, ")
+                          ACE_TEXT ("not here\n")));
             }
         }
     }
@@ -1416,11 +1410,11 @@ TAO_GIOP_Message_Lite::send_reply_exception (
   // Create a new output CDR stream
   char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
 
-#if defined(ACE_HAS_PURIFY)
+#if defined(ACE_INITIALIZE_MEMORY_BEFORE_USE)
   (void) ACE_OS::memset (repbuf,
                          '\0',
                          sizeof repbuf);
-#endif /* ACE_HAS_PURIFY */
+#endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
   TAO_OutputCDR output (repbuf,
                         sizeof repbuf,
                         TAO_ENCAP_BYTE_ORDER,
@@ -1569,20 +1563,20 @@ TAO_GIOP_Message_Lite::dump_msg (const char *label,
                                  const u_char *ptr,
                                  size_t len)
 {
-  static const char *names [] =
-  {
-    "Request",
-    "Reply",
-    "CancelRequest",
-    "LocateRequest",
-    "LocateReply",
-    "CloseConnection",
-    "MessageError"
-    "Fragment"
-  };
-
   if (TAO_debug_level >= 5)
     {
+      static const char *names [] =
+      {
+        "Request",
+        "Reply",
+        "CancelRequest",
+        "LocateRequest",
+        "LocateReply",
+        "CloseConnection",
+        "MessageError",
+        "Fragment"
+      };
+
       // Message name.
       const char *message_name = "UNKNOWN MESSAGE";
       u_long slot = ptr[TAO_GIOP_LITE_MESSAGE_TYPE_OFFSET];
@@ -1633,7 +1627,7 @@ TAO_GIOP_Message_Lite::make_queued_data (size_t sz)
 {
   // Get a node for the queue..
   TAO_Queued_Data *qd =
-    TAO_Queued_Data::get_queued_data ();
+    TAO_Queued_Data::make_queued_data ();
 
   // Make a datablock for the size requested + something. The
   // "something" is required because we are going to align the data
@@ -1680,4 +1674,20 @@ size_t
 TAO_GIOP_Message_Lite::header_length (void) const
 {
   return TAO_GIOP_LITE_HEADER_LEN;
+}
+
+size_t
+TAO_GIOP_Message_Lite::fragment_header_length (CORBA::Octet,
+                                               CORBA::Octet) const
+{
+  return 0;
+}
+
+void
+TAO_GIOP_Message_Lite::init_queued_data (TAO_Queued_Data* qd) const
+{
+  qd->byte_order_    = TAO_ENCAP_BYTE_ORDER;
+  qd->major_version_ = TAO_DEF_GIOP_MAJOR;
+  qd->minor_version_ = TAO_DEF_GIOP_MINOR;
+  qd->msg_type_      = this->message_type ();
 }
