@@ -102,14 +102,12 @@ module CosPropertyService
       ExceptionReason reason;
       PropertyName failing_property_name;
     };
-
-  // @@
-  //  typedef sequence<PropertyException> PropertyExceptions;
+  
+  typedef sequence<PropertyException> PropertyExceptions;
 
   exception MultipleExceptions
     {
-      // @@
-      //  PropertyExceptions exceptions;
+      PropertyExceptions exceptions;
     };
 
   // = Interface Definitions.
