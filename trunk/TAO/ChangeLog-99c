@@ -1,3 +1,8 @@
+Wed Apr  7 16:36:26 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * TAO-INSTALL.html: Added a note about rebuilding all when
+          upgrading releases.
+
 Wed Apr  7 16:32:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_expression.cpp:
