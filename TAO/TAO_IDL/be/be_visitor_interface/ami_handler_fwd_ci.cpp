@@ -26,7 +26,7 @@
 
 #include "be_visitor_interface_fwd.h"
 
-ACE_RCSID(be_visitor_ami_handler_fwd, ami_handler_fwd_ci, "$Id$")
+ACE_RCSID(be_visitor_interface_ami_handler_fwd, ami_handler_fwd_ci, "$Id$")
 
 
 // ********************************************************************
@@ -34,18 +34,18 @@ ACE_RCSID(be_visitor_ami_handler_fwd, ami_handler_fwd_ci, "$Id$")
 // This one for the client inline file
 // ********************************************************************
 
-be_visitor_ami_handler_fwd_ci::be_visitor_ami_handler_fwd_ci (be_visitor_context *ctx)
+be_visitor_interface_ami_handler_fwd_ci::be_visitor_interface_ami_handler_fwd_ci (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {
 }
 
-be_visitor_ami_handler_fwd_ci::~be_visitor_ami_handler_fwd_ci (void)
+be_visitor_interface_ami_handler_fwd_ci::~be_visitor_interface_ami_handler_fwd_ci (void)
 {
 }
 
 // visit the Ami_Handler_Fwd_ci node and its scope
 int
-be_visitor_ami_handler_fwd_ci::visit_interface (be_interface *node)
+be_visitor_interface_ami_handler_fwd_ci::visit_interface (be_interface *node)
 {
   if (node->cli_inline_gen () || node->imported ())
     return 0;
