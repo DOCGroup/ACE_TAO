@@ -1,3 +1,15 @@
+Mon Dec 03 14:22:57 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp:
+	  Add UNIX-only files.  Though strictly not required to compile
+	  ACE under NT, putting them in the project makes this directory
+	  more amenable for samwise.
+
+	* ace/POSIX_Proactor.cpp:
+	  Remove duplicate ACE_BUILD_DLL macro, when needed this is
+	  defined via options in the project file.
+
 Mon Dec  3 13:59:06 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/README:

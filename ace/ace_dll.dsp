@@ -450,6 +450,10 @@ SOURCE=.\Log_Msg_NT_Event_Log.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Log_Msg_UNIX_Syslog.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Log_Record.cpp
 # End Source File
 # Begin Source File
@@ -627,6 +631,14 @@ SOURCE=.\PI_Malloc.cpp
 # Begin Source File
 
 SOURCE=.\Pipe.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\POSIX_Asynch_IO.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\POSIX_Proactor.cpp
 # End Source File
 # Begin Source File
 
@@ -1430,6 +1442,10 @@ SOURCE=.\Log_Msg_NT_Event_Log.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Log_Msg_UNIX_Syslog.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Log_Priority.h
 # End Source File
 # Begin Source File
@@ -1651,6 +1667,14 @@ SOURCE=.\PI_Malloc.h
 # Begin Source File
 
 SOURCE=.\Pipe.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\POSIX_Asynch_IO.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\POSIX_Proactor.h
 # End Source File
 # Begin Source File
 
@@ -2627,6 +2651,14 @@ SOURCE=.\PI_Malloc.i
 # Begin Source File
 
 SOURCE=.\Pipe.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\POSIX_Asynch_IO.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\POSIX_Proactor.i
 # End Source File
 # Begin Source File
 
