@@ -1,3 +1,8 @@
+Tue Apr 22 17:46:30 1997    <harrison@samba.cs.wustl.edu>
+
+	* Process.cpp (start): We must pass in 0 instead of "" to
+	  CreateProcess for the current working directory.
+
 Tue Apr 22 01:38:14 1997    <irfan@TWOSTEP>
 
 	* ace/Timer_Queue: Added ACE_Upcall_Strategy as a parameter to the
