@@ -167,7 +167,8 @@ protected:
 
   CORBA::ULong create_ior_info (void);
   // Create the	IOP::IOR info. We will create the info atmost
-  // once. This	method will not	work for RTCorba - Bala
+  // once.  Return index of the profile we are using to make the
+  // invocation.
 
   void add_rt_service_context (CORBA_Environment &ACE_TRY_ENV =
 			       TAO_default_environment ());
