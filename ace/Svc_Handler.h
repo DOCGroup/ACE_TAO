@@ -65,7 +65,12 @@ public:
 
   virtual int close (u_long flags = 0);
   // Object termination hook -- application-specific cleanup code goes
-  // here.
+  // here. This function is called by the idle() function if the object
+  // does not have a ACE_Connection_Recycling_Strategy associated with it.
+  // Also, due to this class's derivation from <ACE_Task>, <close> is
+  // also called when a thread activated with this object exits. See
+  // <ACE_Task::close> for further details. The default action of this
+  // function is to call <handle_close> with the default arguments.
 
   virtual int idle (u_long flags = 0);
   // Call this method if you want to recycling the <Svc_Handler>
