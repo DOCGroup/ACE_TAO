@@ -5,6 +5,7 @@ Thu May 27 22:00:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  If an object is extracted from an InputCDR stream that doesn't
 	  have an ORB Core configured then the default ORB core is
 	  used. This is common in extraction from Anys.
+	  Thanks to Jeff Parsons for tracking this down.
 
 	* TAO_IDL/driver/drv_preproc.cpp:
 	  Added missing '/' between ACE_ROOT and TAO/tao to find the
