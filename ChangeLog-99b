@@ -1,3 +1,8 @@
+Tue May 11 17:11:51 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Conn_Test.cpp (spawn_threads): changed some ACE_NEW
+          statements to ACE_NEW_RETURN.
+
 Tue May 11 15:43:30 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: added ACE_THR_PRI_OTHER_DEF for NT, because
