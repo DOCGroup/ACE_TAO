@@ -180,11 +180,12 @@ release: ACE-INSTALL
          mv ACE.tar.gz ACE-lib.tar.gz ./ACE_wrappers/)
 
 releaseall: ACE-INSTALL
+	@cd TAO; make releaseall
 	@$(TIMESTAMP) (cd ..; \
          find $(ALL_RELEASE_FILES) $(FILTER) | \
-           cpio -o -H tar | gzip -9 > TAO-ACE.tar.gz; \
-         chmod a+r TAO-ACE.tar.gz \
-         mv TAO-ACE.tar.gz ./ACE_wrappers/)
+           cpio -o -H tar | gzip -9 > TAO.tar.gz; \
+         chmod a+r TAO.tar.gz \
+         mv TAO.tar.gz ./ACE_wrappers/)
 
 ACE-INSTALL: ACE-INSTALL.html
 	@lynx -dump $< > $@
