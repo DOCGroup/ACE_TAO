@@ -34,16 +34,16 @@ mib_Widget *mib_create_DrawingArea(mib_Widget *parent, char *name, char *label,
     mib_add_backward(temp, parent);
   else
     mib_add_mib_Widget(temp, parent);
-  myres = (mib_DrawingArea *)malloc(sizeof(mib_DrawingArea));
+  myres = (mib_DrawingArea *)ACE_OS::malloc(sizeof(mib_DrawingArea));
 
   /* initialize public resources */
 
   if (mib_fill == WDEFAULT)
   {
-    temp->name = (char *)malloc(strlen(name)+1);
+    temp->name = (char *)ACE_OS::malloc(strlen(name)+1);
     strcpy(temp->name,name);
   }
-  temp->mib_class = (char *)malloc(12);
+  temp->mib_class = (char *)ACE_OS::malloc(12);
   sprintf(temp->mib_class,"DrawingArea");
   temp->mib_class_num = MIB_DRAWINGAREA;
   temp->width = width;
@@ -96,7 +96,7 @@ void mib_delete_DrawingArea(mib_Widget *thisw)
 {
   mib_DrawingArea *temp = (mib_DrawingArea *)thisw->myres;
 
-  free(temp);
+  ACE_OS::free(temp);
 }
 
 void mib_save_DrawingArea(mib_Widget *thisw, FILE *fout)

@@ -43,7 +43,7 @@
 #elif defined(FreeBSD)
 #include <machine/pcaudioio.h>
 #elif defined(SunOS)
-#include <sun/audioio.h>
+#include <sys/audioio.h>
 #elif defined(_HPUX_SOURCE)
 #include <sys/audio.h>
 #elif defined(IRIX)

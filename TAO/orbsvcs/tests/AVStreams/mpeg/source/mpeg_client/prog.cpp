@@ -655,7 +655,7 @@ static void verifyCB(Widget w, XtPointer closure, XmTextVerifyCallbackStruct * c
     return;
 }
 
-static Widget CreateModifyWindow(Widget parent)
+static void CreateModifyWindow(Widget parent)
 {
   Arg   	args[20];
   int		n;

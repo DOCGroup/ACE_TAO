@@ -36,16 +36,16 @@ mib_Widget *mib_create_TextBig(mib_Widget *parent, char *name, char *label,
   else
     mib_add_mib_Widget(temp, parent);
 
-  myres = (mib_TextBig *)malloc(sizeof(mib_TextBig));
+  myres = (mib_TextBig *)ACE_OS::malloc(sizeof(mib_TextBig));
 
   /* initialize public resources */
 
   if (mib_fill == WDEFAULT)
   {
-    temp->name = (char *)malloc(strlen(name)+1);
+    temp->name = (char *)ACE_OS::malloc(strlen(name)+1);
     strcpy(temp->name,name);
   }
-  temp->mib_class = (char *)malloc(8);
+  temp->mib_class = (char *)ACE_OS::malloc(8);
   sprintf(temp->mib_class,"TextBig");
   temp->mib_class_num = MIB_TEXTBIG;
   temp->width = width;
@@ -119,7 +119,7 @@ void mib_delete_TextBig(mib_Widget *thisw)
 {
   mib_TextBig *temp = (mib_TextBig *)thisw->myres;
 
-  free(temp);
+  ACE_OS::free(temp);
 }
 
 void mib_save_TextBig(mib_Widget *thisw, FILE *fout)

@@ -39,16 +39,16 @@ mib_Widget *mib_create_List(mib_Widget *parent, char *name, char *label,
   else
     mib_add_mib_Widget(temp, parent);
 
-  myres = (mib_List *)malloc(sizeof(mib_List));
+  myres = (mib_List *)ACE_OS::malloc(sizeof(mib_List));
 
   /* initialize public resources */
 
   if (mib_fill == WDEFAULT)
   {
-    temp->name = (char *)malloc(strlen(name)+1);
+    temp->name = (char *)ACE_OS::malloc(strlen(name)+1);
     strcpy(temp->name,name);
   }
-  temp->mib_class = (char *)malloc(5);
+  temp->mib_class = (char *)ACE_OS::malloc(5);
   sprintf(temp->mib_class,"List");
   temp->mib_class_num = MIB_LIST;
   temp->width = width;
@@ -137,7 +137,7 @@ void mib_delete_List(mib_Widget *thisw)
 {
   mib_List *temp = (mib_List *)thisw->myres;
 
-  free(temp);
+  ACE_OS::free(temp);
 }
 
 void mib_save_List(mib_Widget *thisw, FILE *fout)

@@ -24,6 +24,10 @@
  *         email: scen@cse.ogi.edu
  */
 /* routine.c */
+#if !defined (_MPEG_ROUTINE_H)
+#define _MPEG_ROUTINE_H
+
+#include "../include/common.h"
 #ifdef LINUX
 #else
 void usleep(unsigned int usec);
@@ -46,3 +50,5 @@ int get_semval(int sid);
 void get_full_path(char *filename, char * buffer, int bufsize);
 void setsignal(int sig, void (func)(int));
 int SetRTpriority(char *msg, int pri);
+
+#endif /* _MPEG_ROUTINE_H */

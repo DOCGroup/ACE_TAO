@@ -92,10 +92,12 @@ void VBinitBuf(int size)
 
 char * VBgetBuf(int size)  /* block version */
 {
+  return 0;
 }
 
 int VBcheckBuf(int size) /* non-block check, return True/False*/
 {
+  return 0;
 }
 
 void VBputMsg(char * msgPtr)
