@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -12,6 +12,7 @@
 
 #ifndef ACE_ACCEPTOR_H
 #define ACE_ACCEPTOR_H
+
 #include "ace/pre.h"
 
 #include "ace/Service_Config.h"
@@ -51,7 +52,13 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class ACE_Acceptor : public ACE_Service_Object
 {
 public:
-  // = Initialization and termination methods.
+
+  // Useful STL-style traits.
+  typedef ACE_PEER_ACCEPTOR_ADDR    addr_type;
+  typedef ACE_PEER_ACCEPTOR         acceptor_type;
+  typedef SVC_HANDLER               handler_type;
+  typedef SVC_HANDLER::stream_type  stream_type;
+
   /// "Do-nothing" constructor.
   ACE_Acceptor (ACE_Reactor * = 0,
                 int use_select = 1);
@@ -214,10 +221,11 @@ protected:
  * particular concurrency mechanism.
  */
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
-class ACE_Strategy_Acceptor : public ACE_Acceptor <SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
+class ACE_Strategy_Acceptor
+  : public ACE_Acceptor <SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
 {
 public:
-  // = Initialization and termination methods.
+
   /// Default constructor.
   ACE_Strategy_Acceptor (const ACE_TCHAR service_name[] = 0,
                          const ACE_TCHAR service_description[] = 0,
@@ -413,7 +421,13 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class ACE_Oneshot_Acceptor : public ACE_Service_Object
 {
 public:
-  // = Initialization and termination methods.
+
+  // Useful STL-style traits.
+  typedef ACE_PEER_ACCEPTOR_ADDR    addr_type;
+  typedef ACE_PEER_ACCEPTOR         acceptor_type;
+  typedef SVC_HANDLER               handler_type;
+  typedef SVC_HANDLER::stream_type  stream_type;
+
   /// Constructor.
   ACE_Oneshot_Acceptor (void);
 
@@ -564,4 +578,5 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
+
 #endif /* ACE_ACCEPTOR_H */

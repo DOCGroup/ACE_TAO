@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -12,6 +12,7 @@
 
 #ifndef ACE_CONNECTOR_H
 #define ACE_CONNECTOR_H
+
 #include "ace/pre.h"
 
 #include "ace/Service_Config.h"
@@ -111,7 +112,13 @@ template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
 class ACE_Connector : public ACE_Service_Object
 {
 public:
-  // = Initialization and termination methods.
+
+  // Useful STL-style traits.
+  typedef SVC_HANDLER::addr_type    addr_type;
+  typedef ACE_PEER_CONNECTOR        connector_type;
+  typedef SVC_HANDLER               handler_type;
+  typedef SVC_HANDLER::stream_type  stream_type;
+
 
   // typedef ACE_TYPENAME ACE_PEER_CONNECTOR_ADDR PEER_ADDR;
 #if defined (ACE_HAS_TYPENAME_KEYWORD)
@@ -378,7 +385,8 @@ private:
  * particular concurrency mechanism after the connection is established.
  */
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
-class ACE_Strategy_Connector : public ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2>
+class ACE_Strategy_Connector
+  : public ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2>
 {
 public:
   /**
@@ -531,4 +539,5 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
+
 #endif /* ACE_CONNECTOR_H */

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -6,13 +6,14 @@
  *
  *  $Id$
  *
- *  @author Douglas Schmidt <schmidt@cs.wustl.edu> and
- *   Irfan Pyrarli <irfan@cs.wustl.edu>
+ *  @author Douglas Schmidt <schmidt@uci.edu>
+ *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================
 
 #ifndef ACE_SVC_HANDLER_H
 #define ACE_SVC_HANDLER_H
+
 #include "ace/pre.h"
 
 // Forward decls.
@@ -48,7 +49,11 @@ template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
 class ACE_Svc_Handler : public ACE_Task<ACE_SYNCH_USE>
 {
 public:
-  // = Initialization and termination methods.
+
+  // Useful STL-style traits.
+  typedef ACE_PEER_STREAM_ADDR addr_type;
+  typedef ACE_PEER_STREAM      stream_type;
+
   /**
    * Constructor initializes the <thr_mgr> and <mq> by passing them
    * down to the <ACE_Task> base class.  The <reactor> is passed to
@@ -324,4 +329,5 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
+
 #endif /* ACE_SVC_HANDLER_H */

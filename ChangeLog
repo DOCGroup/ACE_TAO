@@ -1,3 +1,12 @@
+Wed May 29 22:13:19 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Acceptor.h (ACE_Acceptor, ACE_Oneshot_Acceptor):
+	* ace/Connector.h (ACE_Connector):
+	* ace/Svc_Handler.h (ACE_Svc_Handler):
+
+	  Added STL-style traits that may be useful when subclassing these
+	  classes.
+
 Wed May 29 21:55:49 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/TPC_Logging_Server.{h cpp}:
