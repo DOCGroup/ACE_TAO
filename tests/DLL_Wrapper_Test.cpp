@@ -9,7 +9,7 @@
 //    DLL_Wrapper_Test.cpp
 //
 // = DESCRIPTION
-//    This test illustrates the use of <ACE_DLL> wrapper.
+//    This test illustrates the use of <ACE_DLL> wrapper class.
 //
 // = AUTHOR
 //    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
@@ -55,6 +55,7 @@ Hello* getHello (void)
 }
 
 typedef Hello* (*TC)(void);
+
 int main (void)
 {
   // First get an DLL object. Since the dllname is empty, the symbols 
