@@ -29,8 +29,9 @@ module A
       };
 
     exception DidNotWork {
-        long id;
-      };
+      long id;
+      string whatDidNotWork;
+    };
 
     interface AMI_Test
       {
@@ -38,6 +39,7 @@ module A
                   in long in_l,
                   in string in_str)
                   raises (DidNotWork);
+
         // Get the number as the return value as well as the out value and
         // also puts the value.  
   
