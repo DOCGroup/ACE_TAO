@@ -11,7 +11,7 @@
 LIB     = libFramework_Component_DLL.a
 SHLIB   = libFramework_Component_DLL.$(SOEXT)
 FILES   = Framework_Component_DLL
-LSRC    = $(addsuffix .cpp,$(FILES)) 
+LSRC    = $(addsuffix .cpp,$(FILES))
 LIBS   += $(ACELIB)
 
 BUILD   = $(VLIB) $(VSHLIB)
@@ -37,6 +37,12 @@ endif
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
+
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS     += -DFRAMEWORK_COMPONENT_DLL_BUILD_DLL
+endif
+endif
 
 #----------------------------------------------------------------------------
 #       Dependencies

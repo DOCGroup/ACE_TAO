@@ -53,6 +53,12 @@ else
 $(VBIN): $(VSHLIB)
 endif
 
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS     += -DACE_SVC_BUILD_DLL
+endif
+endif
+
 #----------------------------------------------------------------------------
 #	Dependencies
 #----------------------------------------------------------------------------

@@ -1,3 +1,14 @@
+Sat Jan 18 09:08:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/Makefile.BE:
+        * TAO_IDL/Makefile.FE:
+        * tao/Domain/Makefile:
+        * tao/RTCORBA/Makefile:
+        * tao/RTPortableServer/Makefile:
+        * tao/TypeCodeFactory/Makefile:
+          Set the correct x_BUILD_DLL defines. These are needed for the
+          Cygwin/MingW and Kylix compiler.
+
 Fri Jan 17 14:22:48 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* orbsvcs/orbsvcs/Notify/Properties.cpp: Fixed explicit
@@ -23,13 +34,13 @@ Thu Jan 16 17:24:30 2003  Pradeep Gore  <pradeep@oomworks.com>
 	  Extend the ChannelFactory interface to include a destroy method.
 	  This allows us to check for memory leaks using a tool like
 	  purify when the channel factory is destroyed.
-	
+
 	* orbsvcs/orbsvcs/Notify/EventType.cpp:
 	* orbsvcs/orbsvcs/Notify/EventType.h:
 	* orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
 	* orbsvcs/orbsvcs/Notify/EventTypeSeq.h:
 	  Made the <dump> methods const.
-	
+
 	* orbsvcs/orbsvcs/Notify/Object.cpp:
 	* orbsvcs/orbsvcs/Notify/Object_T.cpp:
 	* orbsvcs/orbsvcs/Notify/Object_T.h:
@@ -45,19 +56,19 @@ Thu Jan 16 17:24:30 2003  Pradeep Gore  <pradeep@oomworks.com>
 	  Changed the <subscribed_types> method to return a copy of the
 	  curent subscriptions. This method has been corrected to be
 	  thread safe.
-	
+
 	* orbsvcs/orbsvcs/Notify/Peer.cpp:
 	  Changed to new usage of Proxy::subscribed_types.
-	
+
 	* orbsvcs/orbsvcs/Notify/Properties.h:
-	  Use TAO_Singleton instead of ACE_Singleton.  
+	  Use TAO_Singleton instead of ACE_Singleton.
 
 Thu Jan 16 16:27:59 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.{h,cpp}: Added patches from
 	 this checkin "Mon Oct 28 18:21:18 CET 2002  Oliver Kellogg
          <oliver.kellogg@sysde.eads.net>". The patches mysteriously
-	 dissappeared. Thanks to Oliver Kellogg for alerting me. 
+	 dissappeared. Thanks to Oliver Kellogg for alerting me.
 
 Thu Jan 16 13:25:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 

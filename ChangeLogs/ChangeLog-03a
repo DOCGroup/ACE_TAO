@@ -1,3 +1,12 @@
+Sat Jan 18 09:07:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Makefile.DLL_Test:
+        * tests/Makefile.Framework_Component_DLL:
+        * tests/Makefile.Service_Config_DLL:
+        * examples/Service_Configurator/IPC-tests/server/Makefile:
+          Set the correct x_BUILD_DLL defines. These are needed for the
+          Cygwin/MingW and Kylix compiler.
+
 Fri Jan 17 12:34:51 2003  Steve Huston  <shuston@riverace.com>
 
         * ACE-INSTALL.html: Updated platform and compiler information.
@@ -17,7 +26,7 @@ Thu Jan 16 19:06:19 2003  Stephen Torri <storri@cse.wustl.edu>
 Thu Jan 16 16:25:45 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/auto_run_tests.lst: Added a TAO/orbsvcs/tests/EC_MT_Mcast
-	  test to the daily builds. 
+	  test to the daily builds.
 
 Thu Jan 16 12:27:24 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -31,7 +40,7 @@ Wed Jan 15 18:02:01 2003  Bala  <bala@cs.wustl.edu>
 
 Wed Jan 15 10:48:11 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* bin/make_release: Did the following enhancements 
+	* bin/make_release: Did the following enhancements
 
 	  - If it is a minor release do not append the beta version. Looks
 	    like somone broke this and the script started writing out
@@ -40,8 +49,8 @@ Wed Jan 15 10:48:11 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  - We now POSIX.1 tar, instead of old tar format with the -H
 	    option in cpio. This helps to tar files deep in the hierarchy
 	    tree to be properly zipped. We were loosing this in many
-	    betas. 
-	    
+	    betas.
+
 	  - Fixes for the generated filenames copied into the
 	    previous_versions directory.
 
