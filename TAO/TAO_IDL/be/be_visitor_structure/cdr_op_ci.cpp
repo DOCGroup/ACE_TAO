@@ -43,8 +43,7 @@ be_visitor_structure_cdr_op_ci::visit_structure (be_structure *node)
 {
   // already generated and/or we are imported. Don't do anything.
   if (node->cli_inline_cdr_op_gen ()
-      || node->imported ()
-      || node->is_local ())
+      || node->imported ())
     {
       return 0;
     }
@@ -84,7 +83,7 @@ be_visitor_structure_cdr_op_ci::visit_structure (be_structure *node)
   be_visitor_cdr_op_field_decl field_decl (&new_ctx);
   field_decl.visit_scope (node);
 
-  *os << "if (" << be_idt_nl;
+  *os << "return" << be_idt_nl;
 
   if (this->visit_scope (node) == -1)
     {
@@ -95,14 +94,7 @@ be_visitor_structure_cdr_op_ci::visit_structure (be_structure *node)
                         -1);
     }
 
-  *os << be_uidt_nl << " )"<< be_idt_nl
-      << "{" << be_idt_nl
-      << "return 1;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "else" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl 
-      << "}" << be_uidt << be_uidt_nl
+  *os << ";" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // Set the substate as generating code for the input operator.
@@ -115,29 +107,30 @@ be_visitor_structure_cdr_op_ci::visit_structure (be_structure *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
 
-  new_ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
-  field_decl.visit_scope (node);
-
-  *os << "if (" << be_idt_nl;
-
-  if (this->visit_scope (node) == -1)
+  if (node->is_local ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_structure_cdr_op_ci"
-                         "::visit_structure - "
-                         "codegen for scope failed\n"), 
-                        -1);
+      *os << "return 0;";
+    }
+  else
+    {
+      new_ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
+      field_decl.visit_scope (node);
+
+      *os << "return" << be_idt_nl;
+
+      if (this->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_structure_cdr_op_ci"
+                             "::visit_structure - "
+                             "codegen for scope failed\n"), 
+                            -1);
+        }
+
+      *os << ";" << be_uidt << be_uidt;
     }
 
-  *os << be_uidt_nl << " )" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return 1;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "else" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl 
-      << "}" << be_uidt << be_uidt_nl
-      << "}";
+  *os << be_uidt_nl << "}";
 
   node->cli_inline_cdr_op_gen (1);
   return 0;
