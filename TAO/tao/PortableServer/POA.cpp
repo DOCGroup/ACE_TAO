@@ -4050,6 +4050,12 @@ TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa
         CORBA::COMPLETED_NO));
 }
 
+CORBA::Policy *
+TAO_POA::server_protocol (void)
+{
+  return 0;
+}
+
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 PortableServer::ObjectId *
