@@ -67,8 +67,8 @@ public:
   // Set <tv> to the number of microseconds elapsed.
 
 #if defined (ACE_HAS_POSIX_TIME)
-  void elapsed_time (timespec_t &);
-  // returns the elapsed (stop - start) time in a timespec_t (sec, nsec)
+  void elapsed_time (struct timespec &);
+  // returns the elapsed (stop - start) time in a struct timespec (sec, nsec)
 #endif /* ACE_HAS_POSIX_TIME */
 
   void elapsed_microseconds (ACE_hrtime_t &usecs) const;
