@@ -22,7 +22,7 @@
 
 ACE_RCSID(be, be_codegen, "$Id$")
 
-  TAO_CodeGen *tao_cg = TAO_CODEGEN::instance ();
+TAO_CodeGen *tao_cg = TAO_CODEGEN::instance ();
 
 /* BE global Data */
 TAO_CodeGen::TAO_CodeGen (void)
@@ -56,14 +56,22 @@ TAO_CodeGen::~TAO_CodeGen (void)
   delete this->server_inline_;
   delete this->server_template_inline_;
   this->curr_os_ = 0;
-  delete this->visitor_factory_;
+  //  delete this->visitor_factory_;
 }
 
 // visitor factory method
 be_visitor *
 TAO_CodeGen::make_visitor (be_visitor_context *ctx)
 {
-  ACE_ASSERT (this->visitor_factory_ != 0);
+
+  if (!this->visitor_factory_)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "TAO_CodeGen::make_visitor - "
+                         "No Visitor Factory\n\n"),
+                        0);
+    }
+
   return this->visitor_factory_->make_visitor (ctx);
 }
 
@@ -707,9 +715,15 @@ TAO_CodeGen::node (void)
 }
 
 void
-TAO_CodeGen::visitor_factory (TAO_Visitor_Factory *f)
+TAO_CodeGen::config_visitor_factory (void)
 {
-  this->visitor_factory_ = f;
+  // What strategy are we interested in? Interpreted or Compiled Marshaling?
+  // This is the top level distinction we make and strategize our visitor
+  // factory object accordingly
+  if (idl_global->compiled_marshaling ())
+    this->visitor_factory_ = TAO_COMPILED_VISITOR_FACTORY::instance ();
+  else
+    this->visitor_factory_ = TAO_INTERPRETIVE_VISITOR_FACTORY::instance ();
 }
 
 void

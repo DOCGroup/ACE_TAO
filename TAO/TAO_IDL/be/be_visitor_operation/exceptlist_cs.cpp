@@ -50,10 +50,6 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
   if (node->exceptions ())
     {
       os->indent ();
-#if 0
-      *os << "static CORBA::TypeCode_ptr " << "_tao_" << node->flatname ()
-          << "_exceptlist [] = {" << be_idt_nl;
-#endif
       *os << "static TAO_Exception_Data " << "_tao_" << node->flatname ()
           << "_exceptiondata [] = " << be_nl;
       *os << "{" << be_idt_nl;
@@ -77,8 +73,10 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
 
             }
           *os << "{";
+          // the typecode name
           *os << excp->tc_name ();
           *os << ", ";
+          // allocator method
           *os << excp->name () << "::_alloc}";
           ei->next ();
           if (!ei->is_done ())

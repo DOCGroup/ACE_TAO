@@ -71,8 +71,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"idl_extern.h"
 #include	"be.h"
 
-#include        "be_interpretive.h"
-
 ACE_RCSID(be, be_produce, "$Id$")
 
 /*
@@ -80,20 +78,17 @@ ACE_RCSID(be, be_produce, "$Id$")
  */
 
 void
-BE_produce()
+BE_produce (void)
 {
   be_root *root;   // root of the AST made up of BE nodes
   be_visitor *visitor; // visitor for root
   be_visitor_context ctx; // context information for the visitor root
 
-  // XXXASG - Here is where we will have a choice of what to initialize i.e.,
-  // whether we want a visitor generating "interpetive" or "compiled" form of
-  // stubs/skeletons
-  // TODO - to do this elegantly.
-  // right now we just force it to be the interpretive one.
-  tao_cg->visitor_factory (new TAO_Interpretive_Visitor_Factory);
+  // configure the CodeGen object with the strategy to generate the visitors
+  // that can produce interpretive or compiled marshaling stubs and skeletons
+  tao_cg->config_visitor_factory ();
 
-  // get the root node and narro wit down to be the back-end root node
+  // get the root node and narrow it down to be the back-end root node
   AST_Decl *d = idl_global->root ();
   root = be_root::narrow_from_decl (d);
   if (!root)
@@ -101,7 +96,7 @@ BE_produce()
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
                   "No Root\n"));
-      BE_abort();
+      BE_abort ();
     }
 
   // Code generation involves six steps because of the six files that we
@@ -118,7 +113,7 @@ BE_produce()
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
                   "client header for Root failed\n"));
-      BE_abort();
+      BE_abort ();
     }
   // it is our responsibility to free up the visitor
   delete visitor;
@@ -135,7 +130,7 @@ BE_produce()
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
                   "client inline for Root failed\n"));
-      BE_abort();
+      BE_abort ();
     }
   // it is our responsibility to free up the visitor
   delete visitor;
@@ -152,7 +147,7 @@ BE_produce()
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
                   "client stubs for Root failed\n"));
-      BE_abort();
+      BE_abort ();
     }
   // it is our responsibility to free up the visitor
   delete visitor;
@@ -168,7 +163,7 @@ BE_produce()
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
                   "server header for Root failed\n"));
-      BE_abort();
+      BE_abort ();
     }
   // it is our responsibility to free up the visitor
   delete visitor;
@@ -184,7 +179,7 @@ BE_produce()
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
                   "server inline for Root failed\n"));
-      BE_abort();
+      BE_abort ();
     }
   // it is our responsibility to free up the visitor
   delete visitor;
@@ -200,7 +195,7 @@ BE_produce()
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
                   "server skeletons for Root failed\n"));
-      BE_abort();
+      BE_abort ();
     }
   // it is our responsibility to free up the visitor
   delete visitor;
@@ -210,8 +205,9 @@ BE_produce()
  * Abort this run of the BE
  */
 void
-BE_abort()
+BE_abort (void)
 {
-  cerr << "Fatal Error" << endl;
-  exit (1);
+  ACE_ERROR ((LM_ERROR,
+              "Fatal Error - Aborting\n"));
+  ACE_OS::exit (1);
 }

@@ -8,11 +8,6 @@
 
 ACE_RCSID(be, be_factory, "$Id$")
 
-// destructor
-TAO_Visitor_Factory::~TAO_Visitor_Factory (void)
-{
-}
-
 // constructor
 TAO_OutStream_Factory::TAO_OutStream_Factory (void)
   : strm_type_ (TAO_OutStream_Factory::TAO_SUNSOFT)

@@ -172,6 +172,8 @@ operator<< (TAO_OutputCDR&, const TAO_opaque&);
 extern TAO_Export CORBA_Boolean
 operator>> (TAO_InputCDR&, TAO_opaque&);
 
+#include "tao/try_macros.h"
+
 #include "tao/Exception.h"
 #include "tao/Any.h"
 
@@ -226,7 +228,6 @@ extern TAO_Export int operator!= (const TAO_ObjectKey &l,
 #include "tao/Invocation.h"
 #include "tao/Server_Request.h"
 
-#include "tao/try_macros.h"
 
 #if !defined (ACE_NESTED_CLASS)
 #if defined (ACE_WIN32)

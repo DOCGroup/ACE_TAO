@@ -192,8 +192,8 @@ class TAO_Export CORBA_Object_out
 public:
   CORBA_Object_out (CORBA::Object_ptr &);
   CORBA_Object_out (CORBA_Object_var &);
-  CORBA_Object_out (CORBA_Object_out &);
-  CORBA_Object_out &operator= (CORBA_Object_out &);
+  CORBA_Object_out (const CORBA_Object_out &);
+  CORBA_Object_out &operator= (const CORBA_Object_out &);
   CORBA_Object_out &operator= (const CORBA_Object_var &);
   CORBA_Object_out &operator= (CORBA::Object_ptr);
   operator CORBA::Object_ptr &();

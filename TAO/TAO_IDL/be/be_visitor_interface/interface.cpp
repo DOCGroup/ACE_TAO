@@ -364,19 +364,15 @@ be_visitor_interface::visit_operation (be_operation *node)
     {
     case TAO_CodeGen::TAO_INTERFACE_CH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
-      //      return node->gen_client_header ();
       break;
     case TAO_CodeGen::TAO_INTERFACE_CS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_CS);
-      //      return node->gen_client_stubs ();
       break;
     case TAO_CodeGen::TAO_INTERFACE_SH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_SH);
-      //      return node->gen_server_header ();
       break;
     case TAO_CodeGen::TAO_INTERFACE_SS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_SS);
-      //      return node->gen_server_skeletons ();
       break;
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_SH);

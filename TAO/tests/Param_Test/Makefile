@@ -15,6 +15,7 @@ endif # ! TAO_ROOT
 TAO_IDLFLAGS += -hc Cli.h -hs Ser.h -hT Ser_T.h
 TAO_IDLFLAGS += -cs Cli.cpp -ci Cli.i
 TAO_IDLFLAGS += -ss Ser.cpp -sT Ser_T.cpp  -si Ser.i -st Ser_T.i
+TAO_IDLFLAGS += -Gc
 
 LDLIBS     =  -lTAO
 LDFLAGS += -L$(TAO_ROOT)/tao

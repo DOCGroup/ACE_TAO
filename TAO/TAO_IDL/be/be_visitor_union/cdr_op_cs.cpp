@@ -119,19 +119,23 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
 }
 
 int
-be_visitor_union_cdr_op_cs::post_process (void)
+be_visitor_union_cdr_op_cs::post_process (be_decl *bd)
 {
   TAO_OutStream *os = tao_cg->client_stubs ();
 
-  switch (this->ctx_->sub_state ())
+  if (!this->last_node (bd))
     {
-    case TAO_CodeGen::TAO_CDR_OUTPUT:
-    case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << " &&" << be_nl;
-      break;
-    case TAO_CodeGen::TAO_CDR_SCOPE:
-    default:
-      break;
-    };
+      switch (this->ctx_->sub_state ())
+        {
+        case TAO_CodeGen::TAO_CDR_OUTPUT:
+        case TAO_CodeGen::TAO_CDR_INPUT:
+          *os << " &&" << be_nl;
+          break;
+        case TAO_CodeGen::TAO_CDR_SCOPE:
+        default:
+          break;
+        };
+    }
+        
   return 0;
 }

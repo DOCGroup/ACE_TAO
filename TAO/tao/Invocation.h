@@ -155,7 +155,7 @@ public:
   TAO_GIOP_ReplyStatusType invoke (TAO_Exception_Data *excepts,
                                    CORBA::ULong except_count,
                                    CORBA_Environment &_env = CORBA_Environment::default_environment ());
-  // Special purpose invoke method used by the stubs. This
+  // Special purpose invoke method used by the interpretive stubs. This
   // accomplishes the same task as the normal invoke except that
   // Exceptions are allocated and decoded here. This keeps the size of
   // the stubs small and abstracts all the common code here.

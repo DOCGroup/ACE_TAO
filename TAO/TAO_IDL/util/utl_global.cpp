@@ -78,32 +78,32 @@ ACE_RCSID(util, utl_global, "$Id$")
 #undef		INCREMENT
 #define		INCREMENT	64
 
-IDL_GlobalData::IDL_GlobalData()
-    : pd_scopes(NULL),
-      pd_root(NULL),
-      pd_gen(NULL),
-      pd_err(NULL),
-      pd_err_count(0),
-      pd_lineno(0),
-      pd_filename(NULL),
-      pd_main_filename(NULL),
-      pd_real_filename(NULL),
-      pd_in_main_file(I_FALSE),
-      pd_prog_name(NULL),
-      pd_cpp_location(NULL),
-      pd_compile_flags(0),
-      pd_be(NULL),
-      pd_local_escapes(NULL),
-      pd_indent(NULL),
-      pd_pragmas(NULL),
-      pd_read_from_stdin(I_FALSE),
-      pd_include_file_names(NULL),
-      pd_n_include_file_names(0),
-      pd_n_alloced_file_names(0),
+IDL_GlobalData::IDL_GlobalData (void)
+    : pd_scopes (0),
+      pd_root (0),
+      pd_gen (0),
+      pd_err (0),
+      pd_err_count (0),
+      pd_lineno (0),
+      pd_filename (0),
+      pd_main_filename (0),
+      pd_real_filename (0),
+      pd_in_main_file (I_FALSE),
+      pd_prog_name (0),
+      pd_cpp_location (0),
+      pd_compile_flags (0),
+      pd_be (0),
+      pd_local_escapes (0),
+      pd_indent (0),
+      pd_pragmas (0),
+      pd_read_from_stdin (I_FALSE),
+      pd_include_file_names (0),
+      pd_n_include_file_names (0),
+      pd_n_alloced_file_names (0),
       included_idl_files_ (0),
       n_included_idl_files_ (0),
       n_allocated_idl_files_ (0),
-      pd_parse_state(PS_NoState),
+      pd_parse_state (PS_NoState),
       pd_idl_src_file (0),
       export_macro_ (0),
       export_include_ (0),
@@ -117,7 +117,12 @@ IDL_GlobalData::IDL_GlobalData()
       server_inline_ending_ (ACE::strnew ("S.i")),
       server_template_inline_ending_ (ACE::strnew ("S_T.i")),
       perfect_hasher_ (0),
-      output_dir_ (0)  
+      output_dir_ (0),
+      any_support_ (I_TRUE),
+      tc_support_ (I_TRUE),
+      compiled_marshaling_ (I_FALSE),
+      exception_support_ (I_FALSE),
+      opt_tc_ (I_FALSE)
 {
   // Path for the perfect hash generator(gperf) program. Default
   // is $ACE_ROOT/bin/gperf.
@@ -136,7 +141,7 @@ IDL_GlobalData::IDL_GlobalData()
     {
       // Set it to the default value.
       ACE_NEW (this->perfect_hasher_, 
-               char [strlen (ace_root) + strlen ("/bin/gperf") + 1]);
+               char [ACE_OS::strlen (ace_root) + ACE_OS::strlen ("/bin/gperf") + 1]);
 #if defined (ACE_WIN32)
       ACE_OS::sprintf (this->perfect_hasher_,
                        "%s\\bin\\gperf",
@@ -151,269 +156,271 @@ IDL_GlobalData::IDL_GlobalData()
 
 // Get or set scopes stack
 UTL_ScopeStack *
-IDL_GlobalData::scopes()
+IDL_GlobalData::scopes (void)
 {
-  return pd_scopes;
+  return this->pd_scopes;
 }
 
 void
-IDL_GlobalData::set_scopes(UTL_ScopeStack *s)
+IDL_GlobalData::set_scopes (UTL_ScopeStack *s)
 {
-  pd_scopes = s;
+  this->pd_scopes = s;
 }
 
 // Get or set root of AST
 AST_Root *
-IDL_GlobalData::root()
+IDL_GlobalData::root (void)
 {
-  return pd_root;
+  return this->pd_root;
 }
 void
-IDL_GlobalData::set_root(AST_Root *r)
+IDL_GlobalData::set_root (AST_Root *r)
 {
-  pd_root = r;
+  this->pd_root = r;
 }
 
 // Get or set generator object
 AST_Generator *
-IDL_GlobalData::gen()
+IDL_GlobalData::gen (void)
 {
-  return pd_gen;
+  return this->pd_gen;
 }
 void
-IDL_GlobalData::set_gen(AST_Generator *g)
+IDL_GlobalData::set_gen (AST_Generator *g)
 {
-  pd_gen = g;
+  this->pd_gen = g;
 }
 
 // Get or set error object
 UTL_Error *
-IDL_GlobalData::err()
+IDL_GlobalData::err (void)
 {
-  return pd_err;
+  return this->pd_err;
 }
 void
-IDL_GlobalData::set_err(UTL_Error *e)
+IDL_GlobalData::set_err (UTL_Error *e)
 {
-  pd_err = e;
+  this->pd_err = e;
 }
 
 // Get or set error count
 long
-IDL_GlobalData::err_count()
+IDL_GlobalData::err_count (void)
 {
-  return pd_err_count;
+  return this->pd_err_count;
 }
 void
-IDL_GlobalData::set_err_count(long c)
+IDL_GlobalData::set_err_count (long c)
 {
-  pd_err_count = c;
+  this->pd_err_count = c;
 }
 
 // Get or set line number
 long
-IDL_GlobalData::lineno()
+IDL_GlobalData::lineno (void)
 {
-  return pd_lineno;
+  return this->pd_lineno;
 }
 void
-IDL_GlobalData::set_lineno(long n)
+IDL_GlobalData::set_lineno (long n)
 {
-  pd_lineno = n;
+  this->pd_lineno = n;
 }
 
 // Get or set file name being read now
 String *
-IDL_GlobalData::filename()
+IDL_GlobalData::filename (void)
 {
-  return pd_filename;
+  return this->pd_filename;
 }
 void
-IDL_GlobalData::set_filename(String *f)
+IDL_GlobalData::set_filename (String *f)
 {
-  pd_filename = f;
+  this->pd_filename = f;
 }
 
 // Get or set main file name
 String *
-IDL_GlobalData::main_filename()
+IDL_GlobalData::main_filename (void)
 {
-  return pd_main_filename;
+  return this->pd_main_filename;
 }
 void
-IDL_GlobalData::set_main_filename(String *n)
+IDL_GlobalData::set_main_filename (String *n)
 {
-  pd_main_filename = n;
+  this->pd_main_filename = n;
 }
 
 // Get or set real file name
 String *
-IDL_GlobalData::real_filename()
+IDL_GlobalData::real_filename (void)
 {
-  return pd_real_filename;
+  return this->pd_real_filename;
 }
 void
-IDL_GlobalData::set_real_filename(String *n)
+IDL_GlobalData::set_real_filename (String *n)
 {
-  pd_real_filename = n;
+  this->pd_real_filename = n;
 }
 
 // Get or set indicator whether import is on
 idl_bool
-IDL_GlobalData::imported()
+IDL_GlobalData::imported (void)
 {
-  return pd_in_main_file ? I_FALSE : pd_import;
+  return this->pd_in_main_file ? I_FALSE : pd_import;
 }
 idl_bool
-IDL_GlobalData::import()
+IDL_GlobalData::import (void)
 {
-  return pd_import;
+  return this->pd_import;
 }
 void
-IDL_GlobalData::set_import(idl_bool is_in)
+IDL_GlobalData::set_import (idl_bool is_in)
 {
-  pd_import = is_in;
+  this->pd_import = is_in;
 }
 
 // Get or set indicator whether we're reading the main file now
 idl_bool
-IDL_GlobalData::in_main_file()
+IDL_GlobalData::in_main_file (void)
 {
-  return pd_in_main_file;
+  return this->pd_in_main_file;
 }
 void
-IDL_GlobalData::set_in_main_file(idl_bool is_in)
+IDL_GlobalData::set_in_main_file (idl_bool is_in)
 {
-  pd_in_main_file = is_in;
+  this->pd_in_main_file = is_in;
 }
 
 // Get or set stripped file name
 String *
-IDL_GlobalData::stripped_filename()
+IDL_GlobalData::stripped_filename (void)
 {
-  return pd_stripped_filename;
+  return this->pd_stripped_filename;
 }
 void
-IDL_GlobalData::set_stripped_filename(String *nm)
+IDL_GlobalData::set_stripped_filename (String *nm)
 {
-  pd_stripped_filename = nm;
+  this->pd_stripped_filename = nm;
 }
 
 // Get or set cache value for argv[0]
 char *
-IDL_GlobalData::prog_name()
+IDL_GlobalData::prog_name (void)
 {
-  return pd_prog_name;
+  return this->pd_prog_name;
 }
 void
-IDL_GlobalData::set_prog_name(char *pn)
+IDL_GlobalData::set_prog_name (char *pn)
 {
-  pd_prog_name = pn;
+  this->pd_prog_name = pn;
 }
 
 // Get or set location to find C preprocessor
 char *
-IDL_GlobalData::cpp_location()
+IDL_GlobalData::cpp_location (void)
 {
-  return pd_cpp_location;
+  return this->pd_cpp_location;
 }
 void
-IDL_GlobalData::set_cpp_location(char *l)
+IDL_GlobalData::set_cpp_location (char *l)
 {
-  pd_cpp_location = l;
+  this->pd_cpp_location = l;
 }
 
 // Get or set IDL compiler flags
 long
-IDL_GlobalData::compile_flags()
+IDL_GlobalData::compile_flags (void)
 {
-  return pd_compile_flags;
+  return this->pd_compile_flags;
 }
 void
-IDL_GlobalData::set_compile_flags(long cf)
+IDL_GlobalData::set_compile_flags (long cf)
 {
-  pd_compile_flags = cf;
+  this->pd_compile_flags = cf;
 }
 
 // Get or set BE to be used
 char *
-IDL_GlobalData::be()
+IDL_GlobalData::be (void)
 {
-  return pd_be;
+  return this->pd_be;
 }
 void
-IDL_GlobalData::set_be(char *nbe)
+IDL_GlobalData::set_be (char *nbe)
 {
-  pd_be = nbe;
+  this->pd_be = nbe;
 }
 
 // Get or set local escapes string. This provides additional mechanism
 // to pass information to a BE.
 char *
-IDL_GlobalData::local_escapes()
+IDL_GlobalData::local_escapes (void)
 {
-  return pd_local_escapes;
+  return this->pd_local_escapes;
 }
 void
-IDL_GlobalData::set_local_escapes(char *e)
+IDL_GlobalData::set_local_escapes (char *e)
 {
-  pd_local_escapes = e;
+  this->pd_local_escapes = e;
 }
 
 // Get or set indent object
 UTL_Indenter *
-IDL_GlobalData::indent()
+IDL_GlobalData::indent (void)
 {
-  return pd_indent;
+  return this->pd_indent;
 }
 void
-IDL_GlobalData::set_indent(UTL_Indenter *i)
+IDL_GlobalData::set_indent (UTL_Indenter *i)
 {
-  pd_indent = i;
+  this->pd_indent = i;
 }
 
 // Get or set list of pragmas being parsed
 UTL_StrList *
-IDL_GlobalData::pragmas()
+IDL_GlobalData::pragmas (void)
 {
-  UTL_StrList *p = pd_pragmas;
+  UTL_StrList *p = this->pd_pragmas;
 
-  pd_pragmas = NULL;
+  this->pd_pragmas = 0;
   return p;
 }
+
 void
-IDL_GlobalData::set_pragmas(UTL_StrList *p)
+IDL_GlobalData::set_pragmas (UTL_StrList *p)
 {
-  pd_pragmas = p;
+  this->pd_pragmas = p;
 }
 
 // Get or set indicator whether we're reading from stdin.
 idl_bool
-IDL_GlobalData::read_from_stdin()
+IDL_GlobalData::read_from_stdin (void)
 {
-  return pd_read_from_stdin;
+  return this->pd_read_from_stdin;
 }
+
 void
-IDL_GlobalData::set_read_from_stdin(idl_bool r)
+IDL_GlobalData::set_read_from_stdin (idl_bool r)
 {
-  pd_read_from_stdin = r;
+  this->pd_read_from_stdin = r;
 }
 
 // Have we seen this include file name before?
 long
-IDL_GlobalData::seen_include_file_before(String *n)
+IDL_GlobalData::seen_include_file_before (String *n)
 {
   unsigned long i;
 
-  for (i = 0; i < pd_n_include_file_names; i++)
-    if (n->compare(pd_include_file_names[i]))
+  for (i = 0; i < this->pd_n_include_file_names; i++)
+    if (n->compare (this->pd_include_file_names[i]))
       return I_TRUE;
   return I_FALSE;
 }
 
 // Store a name of an #include file
 void
-IDL_GlobalData::store_include_file_name(String *n)
+IDL_GlobalData::store_include_file_name (String *n)
 {
   String	**o_include_file_names;
   unsigned long o_n_alloced_file_names, i;
@@ -421,50 +428,50 @@ IDL_GlobalData::store_include_file_name(String *n)
   /*
    * Check if we need to store it at all or whether we've seen it already
    */
-  if (seen_include_file_before(n))
+  if (seen_include_file_before (n))
     return;
   /*
    * OK, need to store. Make sure there's space for one more string
    */
-  if (pd_n_include_file_names == pd_n_alloced_file_names)
+  if (this->pd_n_include_file_names == this->pd_n_alloced_file_names)
     {
       // Allocating more space.
 
-      if (pd_n_alloced_file_names == 0)
+      if (this->pd_n_alloced_file_names == 0)
         {
-          pd_n_alloced_file_names = INCREMENT;
-          pd_include_file_names = new String *[pd_n_alloced_file_names];
+          this->pd_n_alloced_file_names = INCREMENT;
+          this->pd_include_file_names = new String *[this->pd_n_alloced_file_names];
         }
       else
         {
-          o_include_file_names = pd_include_file_names;
-          o_n_alloced_file_names = pd_n_alloced_file_names;
-          pd_n_alloced_file_names += INCREMENT;
-          pd_include_file_names = new String *[pd_n_alloced_file_names];
+          o_include_file_names = this->pd_include_file_names;
+          o_n_alloced_file_names = this->pd_n_alloced_file_names;
+          this->pd_n_alloced_file_names += INCREMENT;
+          this->pd_include_file_names = new String *[this->pd_n_alloced_file_names];
           for (i = 0; i < o_n_alloced_file_names; i++)
-            pd_include_file_names[i] = o_include_file_names[i];
+            this->pd_include_file_names[i] = o_include_file_names[i];
           delete [] o_include_file_names;
         }
     }
 
   // Store it.
-  pd_include_file_names[pd_n_include_file_names++] = n;
+  this->pd_include_file_names[this->pd_n_include_file_names++] = n;
 }
 
 void
-IDL_GlobalData::set_include_file_names(String **ns)
+IDL_GlobalData::set_include_file_names (String **ns)
 {
-  pd_include_file_names = ns;
+  this->pd_include_file_names = ns;
 }
 
 String **
-IDL_GlobalData::include_file_names()
+IDL_GlobalData::include_file_names (void)
 {
-  return pd_include_file_names;
+  return this->pd_include_file_names;
 }
 
 void
-IDL_GlobalData::set_n_include_file_names(unsigned long n)
+IDL_GlobalData::set_n_include_file_names (unsigned long n)
 {
   pd_n_include_file_names = n;
 }
@@ -949,3 +956,66 @@ IDL_GlobalData::perfect_hasher (void) const
 {
   return this->perfect_hasher_;
 }
+
+void
+IDL_GlobalData::any_support (idl_bool val)
+{
+  this->any_support_ = val;
+}
+
+idl_bool
+IDL_GlobalData::any_support (void)
+{
+  return this->any_support_;
+}
+
+void
+IDL_GlobalData::tc_support (idl_bool val)
+{
+  this->tc_support_ = val;
+}
+
+idl_bool
+IDL_GlobalData::tc_support (void)
+{
+  return this->tc_support_;
+}
+
+void
+IDL_GlobalData::compiled_marshaling (idl_bool val)
+{
+  this->compiled_marshaling_ = val;
+}
+
+idl_bool
+IDL_GlobalData::compiled_marshaling (void)
+{
+  return this->compiled_marshaling_;
+}
+
+void
+IDL_GlobalData::exception_support (idl_bool val)
+{
+  this->exception_support_ = val;
+}
+
+idl_bool
+IDL_GlobalData::exception_support (void)
+{
+  return this->exception_support_;
+}
+
+void
+IDL_GlobalData::opt_tc (idl_bool val)
+{
+  this->opt_tc_ = val;
+}
+
+idl_bool
+IDL_GlobalData::opt_tc (void)
+{
+  return this->opt_tc_;
+}
+
+
+

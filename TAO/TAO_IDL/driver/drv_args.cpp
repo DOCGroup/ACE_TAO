@@ -90,26 +90,26 @@ DRV_push_file(char *s)
  * Prepare a CPP argument
  */
 static void
-DRV_prep_cpp_arg(char *s)
+DRV_prep_cpp_arg (char *s)
 {
   char *newarg = new char[512];
   char *farg;
 
   newarg[0] = '\0';
-  for (farg = strtok(s, ","); farg != NULL; farg = strtok(NULL, ","))
-    strcat(newarg,farg);
-  DRV_cpp_putarg(newarg);
+  for (farg = ACE_OS::strtok (s, ","); farg != NULL; farg = ACE_OS::strtok (0, ","))
+    ACE_OS::strcat (newarg, farg);
+  DRV_cpp_putarg (newarg);
 }
 
 /*
  * Print a usage message and exit
  */
 void
-DRV_usage()
+DRV_usage (void)
 {
-  cerr << idl_global->prog_name()
-       << GTDEVEL(": usage: ")
-       << idl_global->prog_name()
+  cerr << idl_global->prog_name ()
+       << GTDEVEL (": usage: ")
+       << idl_global->prog_name ()
        << GTDEVEL (" [flag | file]*\n");
   cerr << GTDEVEL ("Legal flags:\n");
   cerr << GTDEVEL (" -A...\t\t\tlocal implementation-specific escape\n");
@@ -128,21 +128,27 @@ DRV_usage()
   cerr << GTDEVEL (" -sT\t\t\tServer's template skeleton file name ending. Default is S_T.cpp\n");
   cerr << GTDEVEL (" -si\t\t\tServer's inline file name ending. Default is S.i\n");
   cerr << GTDEVEL (" -st\t\t\tServer's template inline file name ending. Default S_T.i\n");
-  cerr << GTDEVEL(" -Uname\t\t\tundefines name for preprocessor\n");
-  cerr << GTDEVEL(" -V\t\t\tprints version info then exits\n");
-  cerr << GTDEVEL(" -W[p|b],arg1,argn\tpasses args to preprocessor or BE\n");
-  cerr << GTDEVEL(" -Yp,path\t\tdefines location of preprocessor\n");
-  cerr << GTDEVEL(" -bback_end\t\tcauses specified back end to be used\n");
-  cerr << GTDEVEL(" -u\t\t\tprints usage message and exits\n");
-  cerr << GTDEVEL(" -v\t\t\ttraces compilation stages\n");
-  cerr << GTDEVEL(" -w\t\t\tsuppresses IDL compiler warning messages\n");
+  cerr << GTDEVEL (" -Uname\t\t\tundefines name for preprocessor\n");
+  cerr << GTDEVEL (" -V\t\t\tprints version info then exits\n");
+  cerr << GTDEVEL (" -W[p|b],arg1,argn\tpasses args to preprocessor or BE\n");
+  cerr << GTDEVEL (" -Yp,path\t\tdefines location of preprocessor\n");
+  cerr << GTDEVEL (" -bback_end\t\tcauses specified back end to be used\n");
+  cerr << GTDEVEL (" -u\t\t\tprints usage message and exits\n");
+  cerr << GTDEVEL (" -v\t\t\ttraces compilation stages\n");
+  cerr << GTDEVEL (" -w\t\t\tsuppresses IDL compiler warning messages\n");
+  cerr << GTDEVEL (" -Sa\t\t\tsuppress Any support (support enabled by default)\n");
+  cerr << GTDEVEL (" -St\t\t\tsuppress TypeCode support (support enabled by default)\n");
+  cerr << GTDEVEL (" -Gc\t\t\tenable Compiled marshaling (default is interpretive)\n");
+  cerr << GTDEVEL (" -Ge\t\t\tenable C++ Exception support (suppressed by default)\n");
+  cerr << GTDEVEL (" -Gt\t\t\tenable optimized TypeCode support (unopt by default)\n");
+  cerr << GTDEVEL ("    \t\t\tNo effect if TypeCode generation is suppressed\n");
 }
 
 /*
  * Parse arguments on command line
  */
 void
-DRV_parse_args(long ac, char **av)
+DRV_parse_args (long ac, char **av)
 {
   char	*buffer;
   char	*s;
@@ -151,288 +157,351 @@ DRV_parse_args(long ac, char **av)
   // Retrieve the singleton instance of the code generator.
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
-  DRV_cpp_init();
-  idl_global->set_prog_name(av[0]);
+  DRV_cpp_init ();
+  idl_global->set_prog_name (av[0]);
   for (i = 1; i < ac; i++)
     {
-      if (av[i][0] == '-') {
-        switch (av[i][1]) {
-        case 0:
-          DRV_push_file("standard input");
-          break;
-        case 'A':
-          if (av[i][2] == '\0')
+      if (av[i][0] == '-') 
+        {
+          switch (av[i][1]) 
             {
-              if (i < ac - 1) {
-                i++;
-                s = av[i];
-              } else
-                exit(99);
-            } else
-              s = av[i] + 2;
-          strcat(idl_global->local_escapes(), s);
-          strcat(idl_global->local_escapes(), " ");
-          break;
-       
-          // = File name endings for all the IDL generated header files,
-          //   stub files, skeleton files and inline files. 
-
-          // = Various 'h'eader_file_name_endings.
-        case 'h':
-        
-          // <-hc Client's header file name ending> 
-          //      Default is "C.h".
-          // <-hs Server's header file name ending>
-          //       Default is "S.h".
-          // <-hT Server's template hdr file name ending>
-          //       Default is "S_T.h".
-
-          if (av[i][2] == 'c')
-            {
-              // Client stub's header file ending.
-              // @@ No error handling done here.
-              idl_global->client_hdr_ending (av[i+1]);
-              i++;
-            }
-          else if (av[i][2] == 's')
-            {
-              // Server skeleton's header file.
-              idl_global->server_hdr_ending (av[i+1]);
-              i++;
-            }
-          else if (av[i][2] == 'T')
-            {
-              // Server Template header ending.
-              idl_global->server_template_hdr_ending (av[i+1]);
-              i++;
-            }
-          else
-            {
-              // I expect 'c' or 's' or 'T' after this.
-              cerr << GTDEVEL("Incomplete Flag : ")
-                   << av[i];
-              exit(99);
-            }
-          break;
-        
-          // = Various 'c'lient side stub file_name_endings.
-        case 'c':
-          // <-cs Client stub's file name ending>
-          //      Default is "C.cpp".
-          // <-ci Client inline file name ending>
-          //      Default is "C.i".
-
-          if (av[i][2] == 's')
-            {
-              idl_global->client_stub_ending (av[i+1]);
-              i++;
-            }
-          else if (av[i][2] == 'i')
-            {
-              idl_global->client_inline_ending (av[i+1]);
-              i++;
-            }
-          else
-            {
-              // I expect 's' or 'i' after 'c'.
-              cerr << GTDEVEL("Incomplete Flag : ")
-                   << av[i];
-              exit(99);
-            }
-          break;
-     
-          // = Various 's'erver side skeleton file name endings. 
-        case 's':
-          // <-ss Server's skeleton file name ending>
-          //      Default is "S.cpp".
-          // <-sT Server's template skeleton file name ending>
-          //      Default is "S_T.cpp".
-          // <-si Server's inline file name ending>
-          //      Default is "S.i".
-          // <-st Server's template inline file name ending>
-          //      Default is "S_T.i".
-    
-          if (av[i][2] == 's')
-            {
-              idl_global->server_skeleton_ending (av[i+1]);
-              i++;
-            }
-          else if (av[i][2] == 'T')
-            {
-              idl_global->server_template_skeleton_ending (av[i+1]);
-              i++;
-            }
-          else if (av[i][2] == 'i')
-            {
-              idl_global->server_inline_ending (av[i+1]);
-              i++;
-            }
-          else if (av[i][2] == 't')
-            {
-              idl_global->server_template_inline_ending (av[i+1]);
-              i++;
-            }
-          else 
-            {
-              // I expect 's' or 'T' or 'i' or 't' after 's'. 
-              cerr << GTDEVEL("Incomplete Flag : ")
-                   << av[i];
-              exit(99);
-            }
-          break;
-    
-          // Operation lookup strategy.
-          // <perfect> or <dynamic>
-          // Default is perfect.
-        case 'H':
-          if (ACE_OS::strcmp (av[i+1], "dynamic") == 0)
-            cg->lookup_strategy (TAO_CodeGen::TAO_DYNAMIC_HASH);
-          // else Perfect Hash, the default strategy.
-          i++;
-          break;
-     
-          // Path for the perfect hash generator(gperf) program. Default
-          // is $ACE_ROOT/bin/gperf.
-        case 'g':
-          idl_global->perfect_hasher (av[i+1]);
-          i++;
-          break;
-      
-          // Directory where all the IDL-Compiler-Generated files are to
-          // be kept. Default is the current directory from which the
-          // <tao_idl> is called.
-        case 'o':
-          idl_global->output_dir (av [i+1]);
-          i++;
-          break;
-        
-        case 'D':
-        case 'U':
-        case 'I':
-          if (av[i][2] == '\0')
-            {
-              if (i < ac - 1)
+            case 0:
+              DRV_push_file ("standard input");
+              break;
+            case 'A':
+              if (av[i][2] == '\0')
                 {
-                  buffer = new char[strlen(av[i]) + strlen(av[i + 1]) + 2];
-                  sprintf(buffer, "%s%s", av[i], av[i+1]);
-                  DRV_cpp_putarg(buffer);
-                  i++;
-                }
-              else
-                {
-                  cerr << GTDEVEL("IDL: missing argument after '")
-                       << av[i]
-                       << GTDEVEL("' flag\n");
-                  exit(99);
-                }
-            } 
-          else
-            DRV_cpp_putarg(av[i]);
-          break;
-        case 'E':
-          idl_global->set_compile_flags(idl_global->compile_flags() |
-                                        IDL_CF_ONLY_PREPROC);
-          break;
-        case 'V':
-          idl_global->set_compile_flags(idl_global->compile_flags() |
-                                        IDL_CF_VERSION);
-          break;
-        case 'W':
-          if (av[i][2] == '\0') 
-            {
-              if (i < ac - 1) 
-                {
-                  i++;
-                  s = av[i];
+                  if (i < ac - 1) 
+                    {
+                      i++;
+                      s = av[i];
+                    } 
+                  else
+                    ACE_OS::exit (99);
                 } 
               else
+                s = av[i] + 2;
+              ACE_OS::strcat (idl_global->local_escapes (), s);
+              ACE_OS::strcat (idl_global->local_escapes (), " ");
+              break;
+       
+              // = File name endings for all the IDL generated header files,
+              //   stub files, skeleton files and inline files. 
+
+              // = Various 'h'eader_file_name_endings.
+            case 'h':
+        
+              // <-hc Client's header file name ending> 
+              //      Default is "C.h".
+              // <-hs Server's header file name ending>
+              //       Default is "S.h".
+              // <-hT Server's template hdr file name ending>
+              //       Default is "S_T.h".
+
+              if (av[i][2] == 'c')
+                {
+                  // Client stub's header file ending.
+                  // @@ No error handling done here.
+                  idl_global->client_hdr_ending (av[i+1]);
+                  i++;
+                }
+              else if (av[i][2] == 's')
+                {
+                  // Server skeleton's header file.
+                  idl_global->server_hdr_ending (av[i+1]);
+                  i++;
+                }
+              else if (av[i][2] == 'T')
+                {
+                  // Server Template header ending.
+                  idl_global->server_template_hdr_ending (av[i+1]);
+                  i++;
+                }
+              else
+                {
+                  // I expect 'c' or 's' or 'T' after this.
+                  cerr << GTDEVEL ("Incomplete Flag : ")
+                       << av[i];
+                  ACE_OS::exit (99);
+                }
+              break;
+        
+              // = Various 'c'lient side stub file_name_endings.
+            case 'c':
+              // <-cs Client stub's file name ending>
+              //      Default is "C.cpp".
+              // <-ci Client inline file name ending>
+              //      Default is "C.i".
+
+              if (av[i][2] == 's')
+                {
+                  idl_global->client_stub_ending (av[i+1]);
+                  i++;
+                }
+              else if (av[i][2] == 'i')
+                {
+                  idl_global->client_inline_ending (av[i+1]);
+                  i++;
+                }
+              else
+                {
+                  // I expect 's' or 'i' after 'c'.
+                  cerr << GTDEVEL("Incomplete Flag : ")
+                       << av[i];
+                  exit(99);
+                }
+              break;
+     
+              // = Various 's'erver side skeleton file name endings. 
+            case 's':
+              // <-ss Server's skeleton file name ending>
+              //      Default is "S.cpp".
+              // <-sT Server's template skeleton file name ending>
+              //      Default is "S_T.cpp".
+              // <-si Server's inline file name ending>
+              //      Default is "S.i".
+              // <-st Server's template inline file name ending>
+              //      Default is "S_T.i".
+    
+              if (av[i][2] == 's')
+                {
+                  idl_global->server_skeleton_ending (av[i+1]);
+                  i++;
+                }
+              else if (av[i][2] == 'T')
+                {
+                  idl_global->server_template_skeleton_ending (av[i+1]);
+                  i++;
+                }
+              else if (av[i][2] == 'i')
+                {
+                  idl_global->server_inline_ending (av[i+1]);
+                  i++;
+                }
+              else if (av[i][2] == 't')
+                {
+                  idl_global->server_template_inline_ending (av[i+1]);
+                  i++;
+                }
+              else 
+                {
+                  // I expect 's' or 'T' or 'i' or 't' after 's'. 
+                  cerr << GTDEVEL ("Incomplete Flag : ")
+                       << av[i];
+                  ACE_OS::exit (99);
+                }
+              break;
+    
+              // Operation lookup strategy.
+              // <perfect> or <dynamic>
+              // Default is perfect.
+            case 'H':
+              if (ACE_OS::strcmp (av[i+1], "dynamic") == 0)
+                cg->lookup_strategy (TAO_CodeGen::TAO_DYNAMIC_HASH);
+              // else Perfect Hash, the default strategy.
+              i++;
+              break;
+     
+              // Path for the perfect hash generator(gperf) program. Default
+              // is $ACE_ROOT/bin/gperf.
+            case 'g':
+              idl_global->perfect_hasher (av[i+1]);
+              i++;
+              break;
+      
+              // Directory where all the IDL-Compiler-Generated files are to
+              // be kept. Default is the current directory from which the
+              // <tao_idl> is called.
+            case 'o':
+              idl_global->output_dir (av [i+1]);
+              i++;
+              break;
+        
+            case 'D':
+            case 'U':
+            case 'I':
+              if (av[i][2] == '\0')
+                {
+                  if (i < ac - 1)
+                    {
+                      buffer = new char[ACE_OS::strlen (av[i]) + ACE_OS::strlen (av[i + 1]) + 2];
+                      ACE_OS::sprintf (buffer, "%s%s", av[i], av[i+1]);
+                      DRV_cpp_putarg (buffer);
+                      i++;
+                    }
+                  else
+                    {
+                      cerr << GTDEVEL ("IDL: missing argument after '")
+                           << av[i]
+                           << GTDEVEL ("' flag\n");
+                      ACE_OS::exit (99);
+                    }
+                } 
+              else
+                DRV_cpp_putarg (av[i]);
+              break;
+            case 'E':
+              idl_global->set_compile_flags (idl_global->compile_flags () |
+                                             IDL_CF_ONLY_PREPROC);
+              break;
+            case 'V':
+              idl_global->set_compile_flags (idl_global->compile_flags () |
+                                             IDL_CF_VERSION);
+              break;
+            case 'W':
+              if (av[i][2] == '\0') 
+                {
+                  if (i < ac - 1) 
+                    {
+                      i++;
+                      s = av[i];
+                    } 
+                  else
+                    {
+                      cerr << GTDEVEL ("IDL: missing argument after '")
+                           << av[i]
+                           << GTDEVEL ("' flag\n");
+                      ACE_OS::exit (99);
+                    }
+                } 
+              else
+                s = av[i] + 2;
+              switch (*s)
+                {
+                default:
+                  cerr << GTDEVEL ("IDL: -W must be followed by 'p' or 'b'\n");
+                  ACE_OS::exit (99);
+                case 'p':
+                  if (*(s + 1) == ',')
+                    DRV_prep_cpp_arg (s + 2);
+                  break;
+                case 'b':
+                  if (*(s + 1) == ',')
+                    (*DRV_BE_prep_arg) (s + 2, I_TRUE);
+                  break;
+                }
+              break;
+            case 'Y':
+              if (av[i][2] == '\0') 
+                {
+                  if (i < ac - 1) 
+                    {
+                      i++;
+                      s = av[i];
+                    } 
+                  else 
+                    {
+                      cerr << GTDEVEL ("IDL: missing argument after '")
+                           << av[i]
+                           << GTDEVEL ("' flag\n");
+                      ACE_OS::exit (99);
+                    }
+                } 
+              else
+                s = av[i] + 2;
+              switch (*s) 
+                {
+                case 'p':
+                  if (*(s + 1) == ',') 
+                    {
+                      idl_global->set_cpp_location (s + 2);
+                      DRV_cpp_new_location (s + 2);
+                    }
+                  break;
+                default:
+                  break;
+                }
+              break;
+            case 'b':
+              if (av[i][2] == '\0') 
+                {
+                  if (i < ac - 1) 
+                    {
+                      i++;
+                      s = av[i];
+                    } 
+                  else 
+                    {
+                      cerr << GTDEVEL("IDL: missing argument after '")
+                           << av[i]
+                           << GTDEVEL("' flag\n");
+                      ACE_OS::exit (99);
+                    }
+                } 
+              else
+                s = av[i] + 2;
+              idl_global->set_be (s);
+              break;
+            case 'd':
+              idl_global->set_compile_flags (idl_global->compile_flags () |
+                                             IDL_CF_DUMP_AST);
+              break;
+            case 'u':
+              idl_global->set_compile_flags (idl_global->compile_flags () |
+                                             IDL_CF_ONLY_USAGE);
+              break;
+            case 'v':
+              idl_global->set_compile_flags (idl_global->compile_flags () |
+                                             IDL_CF_INFORMATIVE);
+              break;
+            case 'w':
+              idl_global->set_compile_flags (idl_global->compile_flags () |
+                                             IDL_CF_NOWARNINGS);
+              break;
+            case 'S':
+              // suppress generation of ...
+              if (av[i][2] == 'a')
+                {
+                  // suppress Any support
+                  idl_global->any_support (0);
+                }
+              else if (av[i][2] == 't')
+                {
+                  // supress typecode support
+                  idl_global->tc_support (0);
+                }
+              else 
                 {
                   cerr << GTDEVEL("IDL: missing argument after '")
                        << av[i]
                        << GTDEVEL("' flag\n");
-                  exit(99);
+                  ACE_OS::exit (99);
                 }
-            } 
-          else
-            s = av[i] + 2;
-          switch (*s)
-            {
+              break;
+            case 'G':
+              // enable generation of ...
+              if (av[i][2] == 'c')
+                {
+                  // compiled marshaling support
+                  idl_global->compiled_marshaling (1);
+                }
+              else if (av[i][2] == 'e')
+                {
+                  // exception support
+                  idl_global->exception_support (1);
+                }
+              else if (av[i][2] == 'o')
+                {
+                  // optimized typecode support
+                  idl_global->opt_tc (1);
+                }
+              else 
+                {
+                  cerr << GTDEVEL("IDL: missing argument after '")
+                       << av[i]
+                       << GTDEVEL("' flag\n");
+                  ACE_OS::exit (99);
+                }
+              break;
             default:
-              cerr << GTDEVEL("IDL: -W must be followed by 'p' or 'b'\n");
-              exit(99);
-            case 'p':
-              if (*(s + 1) == ',')
-                DRV_prep_cpp_arg(s + 2);
-              break;
-            case 'b':
-              if (*(s + 1) == ',')
-                (*DRV_BE_prep_arg)(s + 2, I_TRUE);
+              cerr << GTDEVEL ("IDL: Illegal option '") << av[i] << "'\n";
+              idl_global->set_compile_flags (idl_global->compile_flags () |
+                                             IDL_CF_ONLY_USAGE);
               break;
             }
-          break;
-        case 'Y':
-          if (av[i][2] == '\0') {
-            if (i < ac - 1) {
-              i++;
-              s = av[i];
-            } else {
-              cerr << GTDEVEL("IDL: missing argument after '")
-                   << av[i]
-                   << GTDEVEL("' flag\n");
-              exit(99);
-            }
-          } else
-            s = av[i] + 2;
-          switch (*s) {
-          case 'p':
-            if (*(s + 1) == ',') {
-              idl_global->set_cpp_location(s + 2);
-              DRV_cpp_new_location(s + 2);
-            }
-            break;
-          default:
-            break;
-          }
-          break;
-        case 'b':
-          if (av[i][2] == '\0') {
-            if (i < ac - 1) {
-              i++;
-              s = av[i];
-            } else {
-              cerr << GTDEVEL("IDL: missing argument after '")
-                   << av[i]
-                   << GTDEVEL("' flag\n");
-              exit(99);
-            }
-          } else
-            s = av[i] + 2;
-          idl_global->set_be(s);
-          break;
-        case 'd':
-          idl_global->set_compile_flags(idl_global->compile_flags() |
-                                        IDL_CF_DUMP_AST);
-          break;
-        case 'u':
-          idl_global->set_compile_flags(idl_global->compile_flags() |
-                                        IDL_CF_ONLY_USAGE);
-          break;
-        case 'v':
-          idl_global->set_compile_flags(idl_global->compile_flags() |
-                                        IDL_CF_INFORMATIVE);
-          break;
-        case 'w':
-          idl_global->set_compile_flags(idl_global->compile_flags() |
-                                        IDL_CF_NOWARNINGS);
-          break;
-        default:
-          cerr << GTDEVEL("IDL: Illegal option '") << av[i] << "'\n";
-          idl_global->set_compile_flags(idl_global->compile_flags() |
-                                        IDL_CF_ONLY_USAGE);
-          break;
-        }
-      } else
-        DRV_push_file(av[i]);
+        } 
+      else
+        DRV_push_file (av[i]);
     }
 
   // Let us try to use Perfect Hashing Operation Lookup Strategy. Let
@@ -465,6 +534,14 @@ DRV_parse_args(long ac, char **av)
   if (cg->lookup_strategy () == TAO_CodeGen::TAO_PERFECT_HASH)
     cg->lookup_strategy (TAO_CodeGen::TAO_DYNAMIC_HASH);
 #endif /* ACE_HAS_GPERF */    
+
+  // make sure that we are not suppressing TypeCode generation and asking for
+  // optimized typecode support at the same time
+  if (!idl_global->tc_support () && idl_global->opt_tc ())
+    {
+      cerr << GTDEVEL ("Bad Combination -St and -Go \n");
+      ACE_OS::exit (99);
+    }
 }
   
 // Return 0 on success, -1 failure. The <errno> corresponding to the  
