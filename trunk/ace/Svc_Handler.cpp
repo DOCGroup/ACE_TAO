@@ -482,6 +482,14 @@ ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::dump (void) const
                 "timeoutp_ == NULL"));
 }
 
+template <PR_ST_1, ACE_SYNCH_DECL> int
+ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_timeout (const ACE_Time_Value &,
+                                                                  const void *)
+{
+  ACE_TRACE ("ACE_Buffered_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::handle_timeout");
+  return 0;
+}
+
 #undef PR_ST_1
 #undef PR_ST_2
 #endif /* ACE_SVC_HANDLER_C */
