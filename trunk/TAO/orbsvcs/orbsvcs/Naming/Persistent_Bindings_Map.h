@@ -54,27 +54,27 @@ public:
   size_t current_size (void);
   // return the size of the underlying hash map.
 
-  virtual int bind (const char *id,
-                    const char *kind,
-                    CORBA::Object_ptr obj,
-                    CosNaming::BindingType type);
+  int bind (const char *id,
+            const char *kind,
+            CORBA::Object_ptr obj,
+            CosNaming::BindingType type);
   // Bind a new name to a naming context
 
-  virtual int rebind (const char *id,
-                      const char *kind,
-                      CORBA::Object_ptr obj,
-                      CosNaming::BindingType type);
+  int rebind (const char *id,
+              const char *kind,
+              CORBA::Object_ptr obj,
+              CosNaming::BindingType type);
   // Overwrite the value or type of an existing name in a
   // ACE_Local_Name_Space or bind a new name to the context, if it
   // didn't exist yet. (Wide charcter strings interface).
 
-  virtual int unbind (const char * id,
-                      const char * kind);
+  int unbind (const char * id,
+              const char * kind);
 
-  virtual int find (const char * id,
-                    const char * kind,
-                    CORBA::Object_ptr & obj,
-                    CosNaming::BindingType &type);
+  int find (const char * id,
+            const char * kind,
+            CORBA::Object_ptr & obj,
+            CosNaming::BindingType &type);
 
   //A method to get the iterator.
 
