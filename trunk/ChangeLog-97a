@@ -1,5 +1,21 @@
 Wed Feb 19 14:41:18 1997  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
+	* ace/Reactor.cpp: Modified to use timer_queue_->gettimeofday().
+
+	* ace/Proactor.cpp: Modified to use timer_queue_->gettimeofday().
+
+	* ace/ReactorEx.cpp: Modified to use
+	  timer_queue_->gettimeofday().  Also had to modify the
+	  ReactorEx_Notify mechanism to use the ReactorEx's timer queue to
+	  call gettimeofday.
+
+	* ace/Timer_Queue.h: Added a gettimeofday method.  This allows
+	  applications to replace the timer mechanism used by the
+ 	  Reactors.  The default implementation returns
+ 	  ACE_OS::gettimeofday.  However, a real-time application can
+ 	  inherit from Timer_Queue and override gettimeofday to return a
+ 	  value from a high resolution timer.
+
 	* STL/bool.h: Changed the defines for type bool.  First, bool is no
 	  longer defined for WIN32 since yvals.h typedefs it already.
   	  Also, I moved the defines out the namespace.  I'm not sure if
