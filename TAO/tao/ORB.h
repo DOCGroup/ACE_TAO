@@ -31,6 +31,9 @@
 #include "tao/Services.h"
 #include "tao/IORManipulation.h"
 
+// Interceptor definitions.
+#include "tao/Interceptor.h"
+
 // IRIX needs this for the throw specs
 #include "tao/PolicyC.h"
 
@@ -379,6 +382,31 @@ public:
              TAO_default_environment () );
 #endif /* TAO_HAS_VALUETYPE */
 
+#if defined (TAO_HAS_INTERCEPTORS)
+  // = Interceptor registration routine
+  //   Currently, we only support one interceptor per-ORB.
+
+  PortableInterceptor::ClientRequestInterceptor_ptr _register_client_interceptor
+  (PortableInterceptor::ClientRequestInterceptor_ptr ci,
+   CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // Registerring the client-side request interceptor.  Unregister it with
+  // a null interceptor.
+
+  PortableInterceptor::ServerRequestInterceptor_ptr _register_server_interceptor
+  (PortableInterceptor::ServerRequestInterceptor_ptr ci,
+   CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // Registerring the server-side request interceptor.  Unregister it with
+  // a null interceptor.
+
+  PortableInterceptor::ClientRequestInterceptor_ptr _get_client_interceptor
+    (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // accessor to the client-side interceptor.  You get a duplicate.
+
+  PortableInterceptor::ServerRequestInterceptor_ptr _get_server_interceptor
+    (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // accessor to the server-side interceptor.  You get a duplicate.
+#endif /* TAO_HAS_INTERCEPTORS */
+
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
   // Typedefs for CORBA_ORB_RequestSeq,
@@ -489,7 +517,7 @@ public:
 
   void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
+
 
   CORBA::Boolean work_pending (CORBA_Environment &ACE_TRY_ENV =
                                TAO_default_environment ())
@@ -665,7 +693,7 @@ private:
   CORBA_Object_ptr resolve_name_service (ACE_Time_Value *timeout,
                                          CORBA::Environment& ACE_TRY_ENV);
   // Resolve the name service
-  
+
   CORBA_Object_ptr resolve_trading_service (ACE_Time_Value *timeout,
                                             CORBA::Environment& ACE_TRY_ENV);
   // Resolve the trading object reference.
@@ -720,10 +748,16 @@ private:
   TAO_ORB_Core *orb_core_;
   // The ORB_Core that created us....
 
-#ifdef TAO_HAS_VALUETYPE
+#if defined (TAO_HAS_VALUETYPE)
   TAO_ValueFactory_Map *valuetype_factory_map_;
   // If non-0 then this is the Factory for OBV unmarshaling
 #endif /* TAO_HAS_VALUETYPE */
+
+#if defined (TAO_HAS_INTERCEPTORS)
+  PortableInterceptor::ClientRequestInterceptor_var client_interceptor_;
+  PortableInterceptor::ServerRequestInterceptor_var server_interceptor_;
+  // Interceptor registries.
+#endif /* TAO_HAS_INTERCEPTORS */
 
   TAO_IOR_LookupTable lookup_table_;
   // Table of ObjectID->IOR mappings.
