@@ -34,7 +34,6 @@
 #include "tao/CurrentC.h"
 #include "tao/DomainC.h"
 #include "tao/WrongTransactionC.h"
-#include "tao/Services.h"
 #include "tao/NVList.h"
 #include "tao/BoundsC.h"
 
@@ -179,28 +178,6 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_NamedValue, 0)
 TAO_NAMESPACE_END
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-// Service definitions
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ServiceType, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ServiceOption, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ServiceDetailType, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ServiceDetail, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ServiceInformation, 0)
-TAO_NAMESPACE_END
 
 // Internal to TAO ORB
 CORBA::TypeCode_ptr TC_opaque = 0;

@@ -187,7 +187,7 @@ public:
   // void requesting_principal (CORBA_Principal_ptr principal);
 
   /// Set the requesting principal
-  void requesting_principal (const CORBA_OctetSeq & principal);
+  void requesting_principal (const CORBA::OctetSeq & principal);
 
   /// Return the reference to the tagged profile
   TAO_Tagged_Profile &profile (void);
