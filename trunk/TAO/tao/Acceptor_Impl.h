@@ -27,10 +27,20 @@
 template<class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> class TAO_Acceptor_Impl : public ACE_Acceptor<SVC_HANDLER,ACE_PEER_ACCEPTOR_2>
 {
   // = TITLE
-  //   @@ Carlos, please fill in here.
+  //   Helper class to implement the acceptors in TAO
   //
   // = DESCRIPTION
-  //   @@ Carlos, please fill in here.
+  //   TAO pluggable protocols framework provide an abstraction to
+  //   represent any kind of acceptor object, the implementation of
+  //   that acceptor is left for the pluggable protocol implementor,
+  //   but the most common case would be to use an ACE_Acceptor<>
+  //   instantiated over the right Svc_Handlers.
+  //   But the Svc_Handlers must inherit the <orb_core> that owns the
+  //   acceptor, though this could be implemented in each pluggable
+  //   protocol we believe that this class would simplify that task
+  //   and work in most cases.  Pluggable protocol implementors are,
+  //   of course, free to use something else.
+  //
 public:
   // = Initialization and termination methods.
   TAO_Acceptor_Impl (ACE_Reactor * = 0,

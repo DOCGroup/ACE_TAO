@@ -175,13 +175,6 @@ TAO_Wait_On_Leader_Follower::sending_request (TAO_ORB_Core *orb_core,
 int
 TAO_Wait_On_Leader_Follower::wait (void)
 {
-  // @@ Do we need this code (checking for the difference in the
-  //    Reactor)? (Alex).
-  // @@ Alex: yes, the same connection may be used in multiple
-  //    threads, each with its own reactor.
-  // @@ Carlos: But, where is that code now? I  cant see it here now?
-  //    (Alex).
-
   // Cache the ORB core, it won't change and is used multiple times
   // below:
   TAO_ORB_Core* orb_core =
