@@ -1,3 +1,14 @@
+Mon Feb 19 11:26:05 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/Sequence_T.i:
+        * tao/Seuqence_T.cpp:
+
+          Uninlined the operator const T_var () const for TAO_Object_Manager.
+          The T::_duplicate method call is not yet defined if the inline
+          operator is used on an interface from IFR_Client. This was
+          causing a problem on the VxWorks and old g++ builds. Thanks
+          to Carlos for the suggestion.
+
 Mon Feb 19 09:59:01 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* examples/Quoter/Makefile:
