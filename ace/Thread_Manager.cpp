@@ -1078,7 +1078,10 @@ ACE_Thread_Manager::wait_grp (int grp_id)
       iter (this->thr_list_);
 
     for (; ! iter.done (); iter.advance ())
-      if (iter.next ()->grp_id_ == grp_id)
+      // If threads are created as THR_DETACHED or THR_DAEMON, we can't help much.
+      if (iter.next ()->task_ == task &&
+          (((iter.next ()->flags & (THR_DETACHED | THR_DAEMON)) == 0)
+           || ((iter.next ()->flags & THR_JOINABLE) != 0)))
           copy_table[copy_count++] = *iter.next ();
   }
 
@@ -1150,7 +1153,7 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
         // Threads created with THR_DAEMON shouldn't exist here,
         // but just to be safe, let's put it here.
         if (((td->flags_ & (THR_DETACHED | THR_DAEMON)) == 0) ||
-            (td->flags_ & (THR_JOINABLE != 0)))
+            ((td->flags_ & THR_JOINABLE != 0))))
           {
             // Mark thread as terminated.
             td->thr_state_ = ACE_THR_TERMINATED;
@@ -1269,11 +1272,11 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
          !iter.done ();
          iter.advance ())
-      if (iter.next ()->task_ == task)
-        {
-          copy_table[copy_count] = *iter.next ();
-          copy_count++;
-        }
+      // If thread are created as THR_DETACHED or THR_DAEMON, we can't help much here.
+      if (iter.next ()->task_ == task &&
+          (((iter.next ()->flags & (THR_DETACHED | THR_DAEMON)) == 0)
+           || ((iter.next ()->flags & THR_JOINABLE) != 0)))
+          copy_table[copy_count++] = *iter.next ();
   }
 
   // Now to do the actual work
