@@ -1157,10 +1157,11 @@ UTL_Scope::lookup_pseudo (Identifier *e)
       || ACE_OS::strcmp (name_string, "ValueBase") == 0)
     {
       // Iterate over the global scope.
-      UTL_ScopeActiveIterator global_iter (idl_global->scopes ().bottom (),
-                                           UTL_Scope::IK_decls);
-
-      i = &global_iter;
+      ACE_NEW_RETURN (i,
+                      UTL_ScopeActiveIterator (
+                              idl_global->scopes ().bottom (),
+                              UTL_Scope::IK_decls),
+                      0);
     }
   else if (ACE_OS::strcmp (name_string, "TypeCode") == 0
            || ACE_OS::strcmp (name_string, "TCKind") == 0)
@@ -1169,10 +1170,10 @@ UTL_Scope::lookup_pseudo (Identifier *e)
       // scoped with "CORBA" so we know we'll be in the CORBA module
       // if we get this far, and we can use "this" for the scope of
       // the iterator.
-      UTL_ScopeActiveIterator corba_iter (this,
-                                          UTL_Scope::IK_decls);
-
-      i = &corba_iter;
+      ACE_NEW_RETURN (i,
+                      UTL_ScopeActiveIterator (this,
+                                               UTL_Scope::IK_decls),
+                      0);
     }
   else
     {
@@ -1187,10 +1188,12 @@ UTL_Scope::lookup_pseudo (Identifier *e)
 
       if (e->compare (item_name))
         {
+          delete i;
           return d;
         }
     }
 
+  delete i;
   return 0;
 }
 
