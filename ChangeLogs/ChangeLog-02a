@@ -1,3 +1,17 @@
+Tue Jan 23 10:54:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ace/config-doxygen.h:
+        * bin/autoconf_compile:
+
+          Removed all occurrences of 'smart_proxies' and 'interface_repo'.
+          These are no longer necessary.
+
+        * include/makeinclude/ace_flags.bor:
+
+          Added necessary variables to go along with the Borland
+          makefiles for the new libraries tao/Domain and
+          tao/IFR_Client.
+
 Mon Jan 22 17:01:17 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS_String.cpp:
