@@ -73,7 +73,6 @@ private:
   ACE_SOCK_CODgram dgram_;
 
   Audio_Global *audio_global_;
-  
 };
 
 typedef ACE_Singleton <Audio_Control_i,ACE_Null_Mutex> AUDIO_CONTROL_I;

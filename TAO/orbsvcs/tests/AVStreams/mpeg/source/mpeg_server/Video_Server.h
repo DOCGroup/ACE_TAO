@@ -144,49 +144,4 @@ private:
   
 };
 
-class Video_Server
-{
-  // = TITLE
-  //   Defines a class that abstracts the functionality of a
-  //   video_server.
-  //
-  // = DESCRIPTION
-  //   This registers 3 event handlers with the <ACE_Reactor::instance>,
-  //   namely a control,data and signal handlers.
-public:
-  Video_Server (void);
-  // Default constructor
-
-  ~Video_Server ();
-  // Destructor
-
-  int init (int argc,
-            char **argv,
-            CORBA::Environment &env);
-  // initialize the Video Server.
-
-
-  int run (CORBA::Environment &env);
-  // Runs the ORB event loop       
-
-  static void on_exit_routine(void);
-
-private:
-  
-  int initialize_orb (int argc,
-                      char **argv,
-                      CORBA::Environment &env);
-  // Initialize the orb using the orb_manager_
-  // Also registers the video_control_ object in the poa
-  // and in the naming service
-  TAO_ORB_Manager orb_manager_;
-  // the TAO ORB manager.
-  
-  TAO_VDev *video_vdev_;
-  // The video device
-
-  Video_Server_StreamEndPoint *video_streamendpoint_;
-  // The video server stream endpoint.
-};
-
 #endif /* MPEG_VIDEO_SERVER_H */

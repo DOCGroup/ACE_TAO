@@ -25,6 +25,26 @@
  *         email: scen@cse.ogi.edu
  */
 
+
+// ============================================================================
+//
+// = LIBRARY
+//    mpeg_client
+// 
+// = FILENAME
+//    Command_Handler.h
+//
+// = DESCRIPTION
+//     Defines the client side components of the A/V framework like
+//     video stream endpoints ,video multi media device, video virtual device.
+//
+// = AUTHORS
+//    Sumedh Mungee (sumedh@cs.wustl.edu)
+//    Nagarajan Surendran (naga@cs.wustl.edu)
+// 
+// ============================================================================
+
+
 #if !defined (AV_COMMAND_HANDLER_H)
 #define AV_COMMAND_HANDLER_H
 
@@ -45,6 +65,11 @@ class Command_Handler;
 class Video_Client_StreamEndPoint
   :public virtual TAO_Client_StreamEndPoint
 {
+  // = TITLE
+  //    Defines a video client StreamEndpoint class
+  // = DESCRIPTION
+  //    Makes use of a connected dgram to receive data from the server
+  //    side stream endpoint.
 public:
   Video_Client_StreamEndPoint (void);
 
@@ -84,6 +109,10 @@ private:
 class Audio_Client_StreamEndPoint
   :public virtual TAO_Client_StreamEndPoint
 {
+  // = TITLE
+  //    Defines a audio client stream endpoint
+  // = DESCRIPTION
+  //    Uses a connected dgram to receive data from the audio server.
 public:
   Audio_Client_StreamEndPoint (void);
 
@@ -124,6 +153,11 @@ private:
 class Video_Client_VDev
   : public virtual TAO_VDev
 {
+  // = TITLE
+  //    Defines a class that is a client side Virtual device for video.
+  // = Description
+  //    Needs a pointer to the command handler object so that it can
+  //    set the video control pointer of the command handler.
 public:
   Video_Client_VDev (void);
   Video_Client_VDev (Command_Handler *command_handler);
@@ -144,6 +178,11 @@ private:
 class Audio_Client_VDev
   : public virtual TAO_VDev
 {
+  // = TITLE
+  //    Defines a client side audio virtual device
+  // = DESCRIPTION
+  //    Takes a pointer to a command handler object so that it can set
+  //    the audio control object pointer of the command handler.
 public:
   Audio_Client_VDev (void);
   Audio_Client_VDev (Command_Handler *command_handler);
@@ -160,40 +199,16 @@ private:
   // pointer to the command handler object
 };
 
-// class Video_Client_MMDevice 
-//   :public virtual TAO_MMDevice
-// {
-// public:
-//   Video_Client_MMDevice (TAO_ORB_Manager *orb_manager);
-//   // Constructor taking pointer to an ORB Manager
-
-//   AVStreams::VDev_ptr vdev (void);
-//   // Return the virtual device pointer
-
-//   Video_Client_StreamEndPoint *streamendpoint (void);
-//   // Return the streamendpoint pointer
-  
-//   virtual AVStreams::StreamEndPoint_A_ptr  create_A (AVStreams::StreamCtrl_ptr the_requester, 
-//                                                      AVStreams::VDev_out the_vdev, 
-//                                                      AVStreams::streamQoS &the_qos, 
-//                                                      CORBA::Boolean_out met_qos, 
-//                                                      char *&named_vdev, 
-//                                                      const AVStreams::flowSpec &the_spec,  
-//                                                      CORBA::Environment &env);
-//   // Called by StreamCtrl to create a "A" type streamandpoint and vdev
-// private:
-//   TAO_ORB_Manager *orb_manager_;
-//   // Pointer to the  ORB Manager
-
-//   Video_Client_StreamEndPoint video_streamendpoint_;
-//   // The client side of the video stream.
-//   TAO_VDev video_vdev_;
-//   // Video virtual device
-// };
-
 class Video_Endpoint_Reactive_Strategy_A 
   : public TAO_AV_Endpoint_Reactive_Strategy_A<Video_Client_StreamEndPoint,Video_Client_VDev,AV_Null_MediaCtrl> 
 {
+  // = TITLE
+  //    Implementation of the Reactive Strategy for the client
+  //    video MMDevice.
+  // = DESCRIPTION
+  //    Takes a command handler object pointer. It overrides the
+  //    make_vdev and make_stream_endpoint hooks to create the video
+  //    vdev and video streamendpoint with command handler object pointers.
 public:
   Video_Endpoint_Reactive_Strategy_A (TAO_ORB_Manager *orb_manager,
                                       Command_Handler *command_handler);
@@ -212,6 +227,13 @@ private:
 class Audio_Endpoint_Reactive_Strategy_A 
   : public TAO_AV_Endpoint_Reactive_Strategy_A<Audio_Client_StreamEndPoint,Audio_Client_VDev,AV_Null_MediaCtrl> 
 {
+  // = TITLE
+  //    Implementation of the Reactive Strategy for the client audio
+  //     MMDevice
+  // = DESCRIPTION
+  //    Takes a command handler object pointer. It overrides the
+  //    make_vdev and make_stream_endpoint hooks to create the audio
+  //    vdev and audio streamendpoint with command handler object pointers.
 public:
   Audio_Endpoint_Reactive_Strategy_A (TAO_ORB_Manager *orb_manager,
                                       Command_Handler *command_handler);
@@ -280,20 +302,26 @@ public:
   // Returns the handle used by the event_handler.
   
   int init_av (void);
+  // Initialize both the audio and video
   
   int init_video_channel (char *phostname,char *videofile);
+  // Initializes the video channel by bind the client and server video
+  // mmdevices together and gets the video control object.
 
   int init_audio_channel (char *phostname,char *videofile);
+  // Initializes the audio channel by bind the client and server audio
+  // mmdevices together and gets the video control object.
 
-  int stat_stream (CORBA::Char_out ch,
-                              CORBA::Long_out size) ;
-  
+  int stat_stream (CORBA::Char_out ch,CORBA::Long_out size) ;
+  // statistics of this stream.  
+
   int  close (void) ;
-  
+  // close the audio and video connections
+
   int  stat_sent (void) ;
   
   int  fast_forward (void);
-  
+
   int fast_backward (void);
   
   int step (void);
@@ -321,12 +349,15 @@ public:
                                int *ctr_fd,
                                int *data_fd,
                                int *max_pkt_size);
+  // resolves the server video mmdevice and binds the local and server
+  // mmdevices together.
 
   int connect_to_audio_server (char *address,
                                int *ctr_fd,
                                int *data_fd,
                                int *max_pkt_size);
-
+  // resolves the server video mmdevice and binds the local and server
+  // mmdevices together.
 
 private:
   ACE_SOCK_Dgram video_dgram_;
@@ -382,10 +413,11 @@ private:
 class Client_Sig_Handler 
   : public virtual ACE_Event_Handler
   // = TITLE
-  //   Defines the signal handler class for the client timer processing
+  //    Defines the signal handler class for the client timer processing
   //
   // = DESCRIPTION
-  //     %%
+  //    Checks if the video is ready and refreshes the display and
+  //    also plays the audio packets in the timer processing.
 {
 public:
   Client_Sig_Handler (Command_Handler *command_handler);
