@@ -29,7 +29,7 @@ $mail_recipients = '';
 ####
 while ($#ARGV >= $[) {
   if ($ARGV[0] eq '-l') {
-    if ($ARGV[1] =~ /^[\da-zA-Z]+$/) {
+    if ($ARGV[1] =~ /^\w+$/) {
       $log_directory = $ARGV[1];
       shift;
     } else {
@@ -37,7 +37,7 @@ while ($#ARGV >= $[) {
       die $usage;
     }
   } elsif ($ARGV[0] eq '-m') {
-    if ($ARGV[1] =~ /^[\da-zA-Z]+$/) {
+    if ($ARGV[1] =~ /^\w+$/) {
       $mail_recipients = $ARGV[1];
       shift;
     } else {
