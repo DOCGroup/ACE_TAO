@@ -11,7 +11,7 @@ Mon May 12 18:41:19 1997  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* ace/config-freebsd-pthread.h: 
 	* ace/config-freebsd.h: Added ACE_LACKS_RWLOCK_T to FreeBSD config
-	  files.  Thanks to Amoncio Hasty <hasty@rah.star-gate.com> for
+	  files.  Thanks to Amancio Hasty <hasty@rah.star-gate.com> for
 	  noticing this. 
 
 Mon May 12 17:11:50 1997  Tim H. Harrison  <harrison@waltz.cs.wustl.edu>
