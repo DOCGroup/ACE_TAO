@@ -405,7 +405,7 @@ ACE_Message_Queue_NT::deactivate (int pulse)
   ACE_TRACE ("ACE_Message_Queue_NT::deactivate");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
-  int previous_status = this->state_;
+  int previous_state = this->state_;
   if (previous_state != ACE_Message_Queue_Base::DEACTIVATED)
     {
       if (pulse)
