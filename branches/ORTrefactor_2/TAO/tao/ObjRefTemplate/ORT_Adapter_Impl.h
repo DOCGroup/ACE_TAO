@@ -6,7 +6,7 @@
  *
  * $Id$
  *
- * This is the implementation of the TAO::ObjectReferenceTemplate_Adapter
+ * This is the implementation of the TAO::ORT_Adapter
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
@@ -40,7 +40,7 @@ namespace TAO
   /**
    * @class ObjectReferenceTemplate_Adapter_Impl
    *
-   * @brief Implementation of the TAO::ObjectReferenceTemplate_Adapter
+   * @brief Implementation of the TAO::ORT_Adapter
    */
   class TAO_ORT_Export ORT_Adapter_Impl
     : public ORT_Adapter

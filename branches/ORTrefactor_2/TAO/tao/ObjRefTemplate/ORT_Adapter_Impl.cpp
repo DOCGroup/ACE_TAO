@@ -91,8 +91,9 @@ namespace TAO
                               TAO_POA *poa
                               ACE_ENV_ARG_DECL)
   {
-    // @@Johnny, how do you protect against multiple activates. Just
-    // for sanity.. Do we need a lock?
+    // No need to lock here, there is one instance for each POA and when the POA
+    // creates and actives an ORT_Adapter it will lock itself.
+
     // Create an ObjectReferenceTemplate for this POA.
     ACE_NEW_THROW_EX (this->tao_ort_template_,
                       ObjectReferenceTemplate (server_id,
