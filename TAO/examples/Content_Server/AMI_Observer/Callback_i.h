@@ -56,6 +56,9 @@ class Callback_i :
   //    concurrently running threads attempt to update the state
   //    contained within a given <Callback> object.
 
+  friend class Callback_i_Friend;
+  // Dummy friend class declaration to quiet down a warning.
+
 public:
   Callback_i (int *request_count);
   // Constructor
