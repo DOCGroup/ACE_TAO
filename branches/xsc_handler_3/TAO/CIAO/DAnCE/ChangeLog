@@ -1,0 +1,987 @@
+Mon Mar 04 13:04:23 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* Config_Handlers/Config_Handlers.mpc
+	* Config_Handlers/Deployment.hpp
+	* Config_Handlers/test.cpp
+
+	  Fixed compilation errors and linking erros and warnings
+	  for the XSC basec config handlers and test.
+
+Fri Mar  4 11:13:23 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Container_Impl.cpp:
+	* ciao/Container_Impl.h:
+	* ciao/NodeApplication_Impl.cpp:
+	* ciao/NodeApplication_Impl.h: Fixed mismatched throw spec decls
+	  caused by IDL changes.
+
+Thu Mar  3 13:15:02 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	
+	* Config_Handlers/DnC_Dump.h
+	* Config_Handlers/DnC_Dump_T.cpp
+	* Config_Handlers/Dump_Obj.h
+	* Config_Handlers/Config_Handlers.mpc
+
+	Checked these files into the xsc_handler_1 branch, with a few changes.
+	
+Mon Mar 03 01:45:23 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* examples/BasicSP/BMDisplay/BMDisplay.idl
+	* examples/BasicSP/descriptors/HUDisplay.cid
+	* examples/BasicSP/descriptors/NavDisplay.ccd
+
+	  Added a multiplex receptacle to the BMDisplay component. 
+	  This is a place holder to test "users multipe" feature. 
+	  Modified descriptors to reflect this change as well. 
+
+Tue Mar 01 01:26:03 2005  Gan Deng <dengg@dre.vanderbilt.edu>
+
+	* ciao/Deployment_Core.idl
+
+	  Deleted a useless type definition.
+
+	* tests/NodeApplicationTest/NodeApp_test_client_ex.cpp
+	* tests/NodeApplicationTest/NodeApp_test_client_simple.cpp
+
+	  Fixed compilation errors. Now both these two tests runs fine.
+
+Tue Mar 01 12:20:21 2005  Gan Deng <dengg@dre.vanderbilt.edu>
+
+	* DomainApplicationManager/DomainApplicationManager_Impl.cpp
+	* examples/BasicSP/BMClosedED/BMClosedED_exec.cpp
+
+	  Fixed missing headers.
+
+Wed Mar  2 16:55:29 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	
+	* Config_Handlers.mpc
+	* DP_Handler.cpp
+
+	Fixed an error where the IDREF singleton was still trying to
+	be compiled.
+
+Tue Mar 01 23:54:21 2005  Gan Deng <dengg@dre.vanderbilt.edu>
+
+	* DomainApplicationManager/DomainApplicationManager_Impl.cpp
+	* ExecutionManager/Execution_Manager_Impl.cpp
+	* ciao/Deployment.idl
+	* ciao/Deployment_Core.idl
+	* ciao/NodeApplication_Impl.cpp
+
+	  Fixed bugs which caused exceptions of DomainApplicationManager
+	  when tearing down the assembly. Now all the DAnCE tools 
+	  are working fine together. 
+
+Tue Mar 01 21:39:21 2005  Gan Deng <dengg@dre.vanderbilt.edu>
+
+	* ExecutionManager/DAM_Map.h
+	* ExecutionManager/ExecutionManager.mpc
+	* ExecutionManager/Execution_Manager.cpp
+	* ExecutionManager/Execution_Manager_Impl.h
+	* ExecutionManager/ExecutionManager.mpc
+
+	  Fixed compilation errors due to the recent refactoring
+	  work in TAO.
+
+Tue Mar 01 11:14:21 2005  Gan Deng <dengg@dre.vanderbilt.edu>
+
+	* DomainApplicationManager/Deployment_Configuration.h
+	* ExecutionManager/Execution_Manager.cpp
+	* NodeApplicationManager/ImplementationInfo.cpp
+	* NodeApplicationManager/ImplementationInfo.h
+	* NodeApplicationManager/NodeApplicationManager_Impl.cpp
+	* NodeApplicationManager/NodeApplicationManager_Impl.h
+	* NodeManager/NodeDaemon_Impl.cpp
+	* ciao/Container_Base.cpp
+	* ciao/Container_Impl.h
+	* ciao/Deployment_Core.idl
+	* ciao/NodeApplication_Impl.cpp
+	* ciao/NodeApplication_Impl.h
+	* ciao/Servant_Activator.cpp
+	* ciao/Servant_Activator.h
+	* examples/BasicSP/BMClosedED/BMClosedED_exec.cpp
+
+	  Fixed compilation errors due to the recent refactoring
+	  work in TAO.
+
+	  Modified to make all the DAnCE tools to work together.
+	  Right now, there is still an exception when tearing down
+	  the assembly, which I will look into soon.
+
+Tue Feb 22 20:33:21 2005  Will Otte <wotte@dre.vanderbilt.edu>
+
+	* Config_Handlers/Singleton_IDREF_Map.cpp
+	* Config_Handlers/Singleton_IDREF_Map.h
+
+	No longer used.  Removed.
+	
+	* Config_Handlers/XML_Error_Handler.cpp
+
+	Made it print out a sane error message when parsing failed.
+
+Tue Feb 15 20:38:41 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	
+	* Config_Handlers/ADD_Handler.cpp
+	* Config_Handlers/ADD_Handler.h
+	* Config_Handlers/Any_Handler.cpp
+	* Config_Handlers/Any_Handler.h
+	* Config_Handlers/DP_Handler.cpp
+	* Config_Handlers/DP_Handler.h
+	* Config_Handlers/IDD_Handler.cpp
+	* Config_Handlers/ID_Handler.cpp
+	* Config_Handlers/ID_Handler.h
+	* Config_Handlers/MDD_Handler.cpp
+	* Config_Handlers/MDD_Handler.h
+
+	Various compile/bugfixes. 
+	
+	* Config_Handlers/Config_Handlers.mpc:
+
+	Updated to use the new test program and include the IDREF_Base class.
+	
+	* Config_Handlers/test.cpp
+
+	Trivial test program to process an instance document and dump it back
+	out using the DnC dump from HEAD.
+
+
+	* Config_Handlers/IDREF_Base.cpp
+	* Config_Handlers/IDREF_Base.h
+
+	Added this base class to handle IDREF mappings in handlers that bind them.
+	Please see ADD_Handler.cpp and MDD_Handler.cpp for how to use them.
+	
+Fri Feb 11 11:25:04 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	
+	* Config_Handlers/Basic_Deployment_Data.cpp
+	* Config_Handlers/Basic_Deployment_Data.hpp
+	* Config_Handlers/Deployment.cpp
+	* Config_Handlers/Deployment.hpp
+	* Config_Handlers/ccd.cpp
+	* Config_Handlers/ccd.hpp
+	* Config_Handlers/cdd.cpp
+	* Config_Handlers/cdd.hpp
+	* Config_Handlers/cdp.cpp
+	* Config_Handlers/cdp.hpp
+	* Config_Handlers/cid.cpp
+	* Config_Handlers/cid.hpp
+	* Config_Handlers/cpd.cpp
+	* Config_Handlers/cpd.hpp
+	* Config_Handlers/iad.cpp
+	* Config_Handlers/iad.hpp
+	* Config_Handlers/pcd.cpp
+	* Config_Handlers/pcd.hpp
+	* Config_Handlers/toplevel.cpp
+	* Config_Handlers/toplevel.hpp
+
+	Newly generated XSC handlers.
+
+	
+Fri Feb 11 11:03:42 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	
+	* examples/BasicSP/descriptors/BasicSP.cdp:
+
+	Validated hand crafted instance document for BasicSP
+	deployment.
+	
+Tue Feb  8 15:13:29 2005  Steve Goldman  <steve.goldman@vanderbilt.edu>
+	
+	* Config_Handlers/DP_Handler.cpp
+	* Config_Handlers/IDD_Handler.cpp
+	* Config_Handlers/MDD_Handler.cpp
+	
+	  Minor changes to populate missing fields.
+
+Thu Jan 28 15:02:42 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/Container_Impl.cpp
+	* DAnCE/ciao/NodeApplication_Impl.cpp
+
+	  Some minor optimization changes.
+
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp
+
+	  Changed this test by install a set of components in 2 different
+	  containers hosted in the same NodeApplication. I worked fine.          
+
+Thu Jan 27 15:43:21 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/Object_Set_T.cpp
+	* DAnCE/ciao/Object_Set_T.h
+	* DAnCE/ciao/Object_Set_T.inl
+
+	  Add this template class, also add a <remove_all> method on it
+	  for easily remove all object reference in the set.
+
+	* DAnCE/ciao/Container_Base.cpp
+	* DAnCE/ciao/Container_Base.h
+          
+	  When creating multiple session containers, we need to give different
+	  POA names to the all POAs for ports (i.e., consumers and facets).
+	  Changed the method to take an additional name argument.
+
+	* DAnCE/ciao/Deployment_Core.idl
+
+	  Changed ContainerImplementationInfo type from sequence to a struct type
+	  and added a config property attribute to it.
+
+	* DAnCE/ciao/Container_Impl.cpp
+	* DAnCE/ciao/NodeApplication_Impl.cpp
+	* DAnCE/ciao/NodeApplication_Impl.h
+
+	  Changed container and NodeApplication implementation to reflect above 
+	  changes.
+
+	* tests/NodeApplicationTest/NodeApp_test_client.cpp
+
+	  Changed to test to reflect the above IDL changes.
+
+Wed Jan 26 22:53:12 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/Container_Impl.cpp
+	* DAnCE/ciao/NodeApplication_Impl.cpp
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp
+
+	  Fixed bugs to make sure all the above three tests running OK.
+	  More tests will be written, at least one will test that multiple
+	  components installed on different containers running OK.
+
+Wed Jan 26 12:02:41 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/Deployment_Core.idl
+
+	  Modified to have totally 3 abstraction layers of ImplementationInfo,
+	  NodeImplementationInfo, ContainerImplementationInfo and
+	  ComponentImplementationInfo. 
+
+	* DAnCE/NodeApplication/NodeApplication.cpp
+	* DAnCE/ciao/Container_Impl.cpp
+	* DAnCE/ciao/Container_Impl.h
+	* DAnCE/ciao/NodeApplication_Impl.cpp
+	* DAnCE/ciao/NodeApplication_Impl.h
+	* DAnCE/ciao/NodeApplication_Impl.inl
+
+	  Added the abstraction layer of container interface. Reorganize
+	  the functionality between NodeApplication and Container.
+
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp
+
+	  Modified this to test against the above change. This test
+	  could run successfully when we have 1 component hosted in
+	  1 container, which in turn hosted in 1 NodeApplication.
+
+Wed Jan 19 21:41:48 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/ADD_Handler.cpp
+ 	* DAnCE/Config_Handlers/ADD_Handler.h
+ 	* DAnCE/Config_Handlers/Any_Handler.cpp
+ 	* DAnCE/Config_Handlers/CEPE_Handler.h
+ 	* DAnCE/Config_Handlers/CRDD_Handler.h
+ 	* DAnCE/Config_Handlers/Config_Handlers.mpc
+ 	* DAnCE/Config_Handlers/IDD_Handler.h
+ 	* DAnCE/Config_Handlers/ID_Handler.h
+ 	* DAnCE/Config_Handlers/MDD_Handler.h
+ 	* DAnCE/Config_Handlers/PSPE_Handler.cpp
+ 	* DAnCE/Config_Handlers/Property_Handler.h
+ 	* DAnCE/Config_Handlers/RDD_Handler.h
+ 	* DAnCE/Config_Handlers/Singleton_IDREF_Map.h
+
+	  Fixed compilation warnings or errors.
+
+Tue Jan 18 21:41:48 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* Config_Handlers/Basic_Deployment_Data.cpp:
+	* Config_Handlers/Basic_Deployment_Data.hpp:
+	* Config_Handlers/Deployment.cpp:
+	* Config_Handlers/Deployment.hpp:
+	* Config_Handlers/Singleton_IDREF_Map.h:
+	* Config_Handlers/ccd.cpp:
+	* Config_Handlers/ccd.hpp:
+	* Config_Handlers/cdd.cpp:
+	* Config_Handlers/cdd.hpp:
+	* Config_Handlers/cdp.cpp:
+	* Config_Handlers/cdp.hpp:
+	* Config_Handlers/cid.cpp:
+	* Config_Handlers/cid.hpp:
+	* Config_Handlers/cpd.cpp:
+	* Config_Handlers/cpd.hpp:
+	* Config_Handlers/iad.cpp:
+	* Config_Handlers/iad.hpp:
+	* Config_Handlers/pcd.cpp:
+	* Config_Handlers/pcd.hpp:
+	* Config_Handlers/toplevel.cpp:
+	* Config_Handlers/toplevel.hpp:
+	* Config_Handlers/XMLSchema/Traversal.hpp:
+	* Config_Handlers/XMLSchema/Traversal.ipp:
+	* Config_Handlers/XMLSchema/Traversal.tpp:
+	* Config_Handlers/XMLSchema/TypeInfo.hpp:
+	* Config_Handlers/XMLSchema/TypeInfo.ipp:
+	* Config_Handlers/XMLSchema/TypeInfo.tpp:
+	* Config_Handlers/XMLSchema/Types.hpp:
+	* Config_Handlers/XMLSchema/Types.ipp:
+	* Config_Handlers/XMLSchema/Types.tpp:
+	* Config_Handlers/XMLSchema/Writer.hpp:
+	* Config_Handlers/XMLSchema/Writer.ipp:
+	* Config_Handlers/XMLSchema/Writer.tpp:
+	* Config_Handlers/XSCRT/Elements.hpp:
+	* Config_Handlers/XSCRT/Elements.ipp:
+	* Config_Handlers/XSCRT/Elements.tpp:
+	* Config_Handlers/XSCRT/ExtendedTypeInfo.hpp:
+	* Config_Handlers/XSCRT/ExtendedTypeInfo.ipp:
+	* Config_Handlers/XSCRT/Parser.hpp:
+	* Config_Handlers/XSCRT/Parser.ipp:
+	* Config_Handlers/XSCRT/Parser.tpp:
+	* Config_Handlers/XSCRT/Traversal.hpp:
+	* Config_Handlers/XSCRT/Traversal.ipp:
+	* Config_Handlers/XSCRT/Traversal.tpp:
+	* Config_Handlers/XSCRT/Writer.hpp:
+	* Config_Handlers/XSCRT/Writer.ipp:
+	* Config_Handlers/XSCRT/Writer.tpp:
+	* Config_Handlers/XSCRT/XML.hpp:
+	* Config_Handlers/XSCRT/XML.ipp:
+	* Config_Handlers/XSCRT/XML.tpp:
+
+	  Changes due to XSC-0.0.6
+
+Mon Jan 17 11:03:17 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* DAnCE/ciao/Deployment_Core.idl
+
+	  Modified this file by adding container interface and
+	  modifying NodeApplication interface.
+
+	* DAnCE/ciao/Container_Impl.h:
+	* DAnCE/ciao/Container_Impl.inl:
+	* DAnCE/ciao/Container_Impl.cpp:
+
+	  Added these files which are the implementation of the container 
+	  interface that was added to the Deployment_Core.idl file.
+	
+	* DAnCE/ciao/CCM_Core.mpc
+          
+	  Modified this mpc file to add the above implementation into 
+	  the project.
+
+Thu Jan 13 14:59:17 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* DAnCE/Config_Handlers/Config_Handler_export.h:
+	* DAnCE/Config_Handlers/Config_Handlers_export.h:
+	  Removed redundant export files.  One of them is causing cvs
+	  error on win32 where filenames are not case-sensitive.
+	
+	* DAnCE/Config_Handlers/CRDD_Handler.h:
+	* DAnCE/Config_Handlers/ID_Handler.h:
+	* DAnCE/Config_Handlers/PCD_Handler.h:
+	* DAnCE/Config_Handlers/RDD_Handler.h:
+	* DAnCE/Config_Handlers/Req_Handler.h: Changed to use the header
+	  file: Config_Handler_Export.h.
+
+Wed Dec 22 17:13:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
+
+	  Fixed library names. 
+	
+	* DAnCE/NodeApplication/NodeApplication.cpp:
+
+	  Cosmetic fixes.
+
+Wed Dec 22 16:50:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp:
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp:
+	* DAnCE/Config_Handlers/cdp.cpp:
+	* DAnCE/Config_Handlers/cdp.hpp:
+
+	  Generated code from XSC. 
+	
+	* DAnCE/Config_Handlers/IDD_Handler.cpp:
+	* DAnCE/Config_Handlers/IDD_Handler.h:
+	* DAnCE/Config_Handlers/ID_Handler.cpp:
+	* DAnCE/Config_Handlers/ID_Handler.h:
+	  
+	  Some cosmetic changes. 
+
+Tue Oct 26 21:00:13 2004  Jules White  <Jules@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/Property_Handler.cpp:
+ 	* DAnCE/Config_Handlers/Property_Handler.h:
+ 	* DAnCE/Config_Handlers/PSPE_Handler.cpp:
+ 	* DAnCE/Config_Handlers/PSPE_Handler.h:
+ 	* DAnCE/Config_Handlers/RDD_Handler.cpp:
+ 	* DAnCE/Config_Handlers/RDD_Handler.h:
+ 	* DAnCE/Config_Handlers/Req_Handler.cpp:
+ 	* DAnCE/Config_Handlers/Req_Handler.h:
+ 	* DAnCE/Config_Handlers/IRDD_Handler.cpp:
+ 	* DAnCE/Config_Handlers/IRDD_Handler.h:
+ 	* DAnCE/Config_Handlers/ID_Handler.cpp:
+ 	* DAnCE/Config_Handlers/ID_Handler.h:
+ 	* DAnCE/Config_Handlers/ERE_Handler.cpp:
+ 	* DAnCE/Config_Handlers/ERE_Handler.h:
+ 	* DAnCE/Config_Handlers/DataType_Handler.cpp:
+ 	* DAnCE/Config_Handlers/DataType_Handler.h:
+ 	* DAnCE/Config_Handlers/CRDD_Handler.cpp:
+ 	* DAnCE/Config_Handlers/CRDD_Handler.h:
+ 	* DAnCE/Config_Handlers/CPD_Handler.cpp:
+ 	* DAnCE/Config_Handlers/CPD_Handler.h:
+ 	* DAnCE/Config_Handlers/ComponentPropertyDescription_Handler.cpp:
+ 	* DAnCE/Config_Handlers/ComponentPropertyDescription_Handler.h:
+ 	* DAnCE/Config_Handlers/CEPE_Handler.cpp:
+ 	* DAnCE/Config_Handlers/CEPE_Handler.h:
+ 	* DAnCE/Config_Handlers/CCD_Handler.cpp:
+ 	* DAnCE/Config_Handlers/CCD_Handler.h:
+ 	* DAnCE/Config_Handlers/Any_Handler.cpp:
+ 	* DAnCE/Config_Handlers/Any_Handler.h:
+ 	* DAnCE/Config_Handlers/ADD_Handler.cpp:
+ 	* DAnCE/Config_Handlers/ADD_Handler.h:
+ 	
+ 	  Added methods to map from idl types back to XSC types.
+
+Sun Oct 10 22:58:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/ExecutionManager/DAM_Map.cpp:
+	* DAnCE/ExecutionManager/DAM_Map.h:
+
+	  New files that stores the map of UUID of a plan to the reference
+	  to DomainApplicationManager.
+	
+	* DAnCE/ExecutionManager/ExecutionManager.mpc:
+	  
+	  Added new files. 
+	
+	* DAnCE/ExecutionManager/Execution_Manager.cpp:
+
+	  Removed a bunch of bogus options which contributed nothing. Made
+	  the implementation a bit cleaner and simpler. 
+	
+	* DAnCE/ExecutionManager/Execution_Manager_Impl.cpp:
+	* DAnCE/ExecutionManager/Execution_Manager_Impl.h:
+
+	  Total revamp of the implementation. We can now handle multiple
+	  domains. We now use UUID in the plan to make an informed
+	  decision on whether we are dealing with the same plan or a
+	  different plan. 
+	
+	* DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+
+	  Cosmetic fixes.
+	
+	* ciao/CIAO_Config.h:
+
+	  A configuration file having compile time options. 
+
+Fri Oct  8 15:24:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/Config_Handlers.mpc:
+
+	  Changed the name f the library to libConfig_Handlers.so.
+	
+	* DAnCE/Config_Handlers/DP_Handler.cpp:
+
+	  Cosmetic fixes.
+	
+	* DAnCE/Config_Handlers/IDD_Handler.cpp:
+	* DAnCE/Config_Handlers/IDD_Handler.h:
+
+	  Fixed compilation errors. This was never compiled before since
+	  it never got built.
+	
+	* DAnCE/Plan_Launcher/Plan_Launcher.cpp:
+	* DAnCE/Plan_Launcher/Plan_Launcher.mpc:
+
+	  A new exectable called plan launcher which simply contacts the
+	  execution manager to create a domain application manager and
+	  kick start the deployment process. 
+
+Thu Oct  7 03:39:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp:
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp:
+	* DAnCE/Config_Handlers/Deployment.cpp:
+	* DAnCE/Config_Handlers/Deployment.hpp:
+	* DAnCE/Config_Handlers/ccd.cpp:
+	* DAnCE/Config_Handlers/ccd.hpp:
+	* DAnCE/Config_Handlers/cdd.cpp:
+	* DAnCE/Config_Handlers/cdd.hpp:
+	* DAnCE/Config_Handlers/cdp.cpp:
+	* DAnCE/Config_Handlers/cdp.hpp:
+	* DAnCE/Config_Handlers/cid.cpp:
+	* DAnCE/Config_Handlers/cid.hpp:
+	* DAnCE/Config_Handlers/cpd.cpp:
+	* DAnCE/Config_Handlers/cpd.hpp:
+	* DAnCE/Config_Handlers/iad.cpp:
+	* DAnCE/Config_Handlers/iad.hpp:
+	* DAnCE/Config_Handlers/pcd.cpp:
+	* DAnCE/Config_Handlers/pcd.hpp:
+	* DAnCE/Config_Handlers/toplevel.cpp:
+	* DAnCE/Config_Handlers/toplevel.hpp:
+
+	  Jules wanted XSC generated code with Writers. So here it is. 
+
+Thu Oct  7 02:52:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/DP_Handler.cpp:
+	* DAnCE/Config_Handlers/DP_Handler.h:
+	* DAnCE/Config_Handlers/DP_PCD_Handler.cpp:
+	* DAnCE/Config_Handlers/DP_PCD_Handler.h:
+	* DAnCE/Config_Handlers/Singleton_IDREF_Map.cpp:
+	* DAnCE/Config_Handlers/Singleton_IDREF_Map.h:
+	* DAnCE/Config_Handlers/XML_Error_Handler.cpp:
+	* DAnCE/Config_Handlers/XML_Error_Handler.h:
+	* DAnCE/Config_Handlers/XML_File_Intf.cpp:
+	* DAnCE/Config_Handlers/XML_File_Intf.h:
+	* DAnCE/Config_Handlers/XML_Helper.cpp:
+	* DAnCE/Config_Handlers/XML_Helper.h:
+	* DAnCE/Config_Handlers/XercesString.cpp:
+	* DAnCE/Config_Handlers/XercesString.h:
+
+	  A set of classses that does the following
+
+	  (1) Take the file name for the deployment plan
+	  (2) Initialize xerces and make a DOM
+	  (3) Convert the DOM into DeploymentPlan generated by XSC. 
+	  (4) Convert the Object of type DeploymentPlan to
+              Deployment::DeploymentPlan  
+
+	  We had most of the C++->IDL convesrion. This checkin
+	  concebtrates in 1 through 3.
+
+ 	* DAnCE/Config_Handlers/Config_Handlers.mpc:
+
+	  Added the new files into the project.	
+
+
+Sun Oct  3 03:38:28 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/ADD_Handler.cpp:
+	* DAnCE/Config_Handlers/ADD_Handler.h:
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp:
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp:
+	* DAnCE/Config_Handlers/CCD_Handler.cpp:
+	* DAnCE/Config_Handlers/CCD_Handler.h:
+	* DAnCE/Config_Handlers/CEPE_Handler.cpp:
+	* DAnCE/Config_Handlers/CEPE_Handler.h:
+	* DAnCE/Config_Handlers/CPD_Handler.cpp:
+	* DAnCE/Config_Handlers/CPD_Handler.h:
+	* DAnCE/Config_Handlers/Config_Handlers.mpc:
+	* DAnCE/Config_Handlers/DP_Handler.cpp:
+	* DAnCE/Config_Handlers/ERE_Handler.cpp:
+	* DAnCE/Config_Handlers/ERE_Handler.h:
+	* DAnCE/Config_Handlers/IDD_Handler.cpp:
+	* DAnCE/Config_Handlers/IDD_Handler.h:
+	* DAnCE/Config_Handlers/ID_Handler.cpp:
+	* DAnCE/Config_Handlers/ID_Handler.h:
+	* DAnCE/Config_Handlers/MDD_Handler.cpp:
+	* DAnCE/Config_Handlers/MDD_Handler.h:
+	* DAnCE/Config_Handlers/PSPE_Handler.cpp:
+	* DAnCE/Config_Handlers/PSPE_Handler.h:
+	* DAnCE/Config_Handlers/Property_Handler.cpp:
+	* DAnCE/Config_Handlers/Property_Handler.h:
+	* DAnCE/Config_Handlers/RDD_Handler.cpp:
+	* DAnCE/Config_Handlers/RDD_Handler.h:
+	* DAnCE/Config_Handlers/Req_Handler.cpp:
+	* DAnCE/Config_Handlers/Req_Handler.h:
+	* DAnCE/Config_Handlers/ccd.cpp:
+	* DAnCE/Config_Handlers/ccd.hpp:
+	* DAnCE/Config_Handlers/cdp.cpp:
+	* DAnCE/Config_Handlers/cdp.hpp:
+
+	  Made the following changes
+
+	  (1) Formatting
+	  (2) Improved const correctness and
+	  (3) Made progress on reading the deployment plan.
+
+Wed Sep 29 15:17:23 2004  Jules White  <jules@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/CCD_Handler.cpp:
+	* DAnCE/Config_Handlers/CCD_Handler.h:
+	* DAnCE/Config_Handlers/ADD_Handler.cpp:
+	* DAnCE/Config_Handlers/ADD_Handler.h:
+	* DAnCE/Config_Handlers/IDD_Handler.cpp:
+	* DAnCE/Config_Handlers/IDD_Handler.h:
+	* DAnCE/Config_Handlers/IRDD_Handler.cpp:
+	* DAnCE/Config_Handlers/IRDD_Handler.h:
+	* DAnCE/Config_Handlers/RDD_Handler.cpp:
+	* DAnCE/Config_Handlers/RDD_Handler.h:
+	* DAnCE/Config_Handlers/MDD_Handler.cpp:
+	* DAnCE/Config_Handlers/MDD_Handler.h:
+	* DAnCE/Config_Handlers/Property_Handler.cpp:
+	* DAnCE/Config_Handlers/Property_Handler.h:
+	* DAnCE/Config_Handlers/Req_Handler.cpp:
+	* DAnCE/Config_Handlers/Req_Handler.h:	
+  
+          Re-generated the handlers to improve loop efficiency, account
+	  for schema changes, and use the new IDREF handling.
+    
+Tue Sep 28 15:26:41 2004  Jules White  <jules@dre.vanderbilt.edu>
+                                                                                
+  * DAnCE/Config_Handlers/Base_Handler.cpp:
+  * DAnCE/Config_Handlers/Base_Handler.h:
+  
+    Removed Base_Handler since it is no longer used.
+
+Tue Sep 28 18:38:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/ADD_Handler.cpp:
+	* DAnCE/Config_Handlers/ADD_Handler.h:
+	* DAnCE/Config_Handlers/MDD_Handler.cpp:
+	* DAnCE/Config_Handlers/MDD_Handler.h:
+
+	  Additional changes to accomodate to population of IDL data
+	  structures.
+
+Tue Sep 28 16:08:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/ADD_Handler.cpp:
+	* DAnCE/Config_Handlers/ADD_Handler.h:
+	* DAnCE/Config_Handlers/Config_Handlers.mpc:
+	* DAnCE/Config_Handlers/MDD_Handler.cpp:
+
+	  Made some changes to MDD and ADD handlers to register the
+	  IDREF's  and find the IDREF's.
+
+Tue Sep 28 15:16:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/XSCRT/Elements.hpp:
+	* DAnCE/Config_Handlers/XSCRT/Elements.ipp:
+	* DAnCE/Config_Handlers/XSCRT/Elements.tpp:
+	* DAnCE/Config_Handlers/XSCRT/ExtendedTypeInfo.hpp:
+	* DAnCE/Config_Handlers/XSCRT/ExtendedTypeInfo.ipp:
+	* DAnCE/Config_Handlers/XSCRT/Parser.hpp:
+	* DAnCE/Config_Handlers/XSCRT/Parser.ipp:
+	* DAnCE/Config_Handlers/XSCRT/Parser.tpp:
+	* DAnCE/Config_Handlers/XSCRT/Traversal.hpp:
+	* DAnCE/Config_Handlers/XSCRT/Traversal.ipp:
+	* DAnCE/Config_Handlers/XSCRT/Traversal.tpp:
+	* DAnCE/Config_Handlers/XSCRT/XMLSchema.hpp:
+	* DAnCE/Config_Handlers/XSCRT/XMLSchema.ipp:
+	* DAnCE/Config_Handlers/XSCRT/XMLSchema.tpp:
+
+	  Checked in XSCRT-0.0.5
+
+Tue Sep 28 14:43:48 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp:
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp:
+	* DAnCE/Config_Handlers/ccd.cpp:
+	* DAnCE/Config_Handlers/ccd.hpp:
+
+	  Newly generated XSC code.
+	
+ 	* DAnCE/Config_Handlers/ADD_Handler.cpp:
+	* DAnCE/Config_Handlers/ADD_Handler.h:
+	* DAnCE/Config_Handlers/Any_Handler.cpp:
+	* DAnCE/Config_Handlers/CCD_Handler.cpp:
+	* DAnCE/Config_Handlers/CPD_Handler.cpp:
+	* DAnCE/Config_Handlers/CPD_Handler.h:
+	* DAnCE/Config_Handlers/CRDD_Handler.cpp:
+	* DAnCE/Config_Handlers/ComponentPropertyDescription_Handler.cpp:
+	* DAnCE/Config_Handlers/ComponentPropertyDescription_Handler.h:
+	* DAnCE/Config_Handlers/Config_Handlers.mpc:
+	* DAnCE/Config_Handlers/MDD_Handler.cpp:
+	* DAnCE/Config_Handlers/MDD_Handler.h:
+	* DAnCE/Config_Handlers/PCD_Handler.cpp:
+	* DAnCE/Config_Handlers/RDD_Handler.cpp:
+	* DAnCE/Config_Handlers/RDD_Handler.h:
+	* DAnCE/Config_Handlers/Req_Handler.cpp:
+	* DAnCE/Config_Handlers/Singleton_IDREF_Map.cpp:
+	* DAnCE/Config_Handlers/Singleton_IDREF_Map.h:
+
+	  Updated files. Not everything is dandy. We still have issues
+	  with IDREF's. Need to talk with Boris. Lots of work remains to
+	  be done. Everything compiles fine.
+
+Mon Sep 27 15:42:12 2004  Jules White <jules@dre.vanderbilt.edu>
+  
+        * DAnCE/Config_Handlers/ID_Handler.h:
+	* DAnCE/Config_Handlers/IDD_Handler.h:
+	* DAnCE/Config_Handlers/ADD_Handler.h:
+	* DAnCE/Config_Handlers/RDD_Handler.h:
+	* DAnCE/Config_Handelrs/ComponentPropertyDescription_Handler.h:
+  
+          Removed references to Base_Handler.
+
+Sat Sep 25 14:56:37 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/ADD_Handler.cpp:
+	* DAnCE/Config_Handlers/ADD_Handler.h:
+	* DAnCE/Config_Handlers/Any_Handler.cpp:
+	* DAnCE/Config_Handlers/Any_Handler.h:
+	* DAnCE/Config_Handlers/Base_Handler.cpp:
+	* DAnCE/Config_Handlers/Base_Handler.h:
+	* DAnCE/Config_Handlers/CEPE_Handler.h:
+	* DAnCE/Config_Handlers/ComponentPropertyDescription_Handler.cpp:
+	* DAnCE/Config_Handlers/Config_Handlers.mpc:
+	* DAnCE/Config_Handlers/Deployment.cpp:
+	* DAnCE/Config_Handlers/Deployment.hpp:
+	* DAnCE/Config_Handlers/MDD_Handler.cpp:
+	* DAnCE/Config_Handlers/MDD_Handler.h:
+
+	  Cosmetic fixes to get them in shape and subtle bug fixes.  
+	
+	* DAnCE/Config_Handlers/Config_Handlers_Export.h:
+
+	  New file.
+
+	* DAnCE/Config_Handlers/CID_Handler.cpp:
+	* DAnCE/Config_Handlers/CID_Handler.h:	
+	* DAnCE/Config_Handlers/Prop_Handler.cpp:
+	* DAnCE/Config_Handlers/Prop_Handler.h:
+	* DAnCE/Config_Handlers/Config_Handlers_export.h:
+	  Removed this file from the repo.
+
+	* DAnCE/Config_Handlers/Property_Handler.h:
+	* DAnCE/Config_Handlers/Property_Handler.cpp:
+
+	  New file for property handler.
+	
+	* DAnCE/Config_Handlers/Any_Handler.h:
+	* DAnCE/Config_Handlers/Any_Handler.cpp:
+
+	  New file for Any_Handler. 
+	
+	* DAnCE/Config_Handlers/CCD_Handler.h:
+	* DAnCE/Config_Handlers/CCD_Handler.cpp:
+
+	  The CID_Handler has been named as CCD_Handler, since it
+	  represents data in .ccd file.
+
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp:
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp:	
+	* DAnCE/Config_Handlers/ccd.cpp:
+	* DAnCE/Config_Handlers/ccd.hpp:
+	* DAnCE/Config_Handlers/cdd.cpp:
+	* DAnCE/Config_Handlers/cdd.hpp:
+	* DAnCE/Config_Handlers/cdp.cpp:
+	* DAnCE/Config_Handlers/cdp.hpp:
+	* DAnCE/Config_Handlers/cid.cpp:
+	* DAnCE/Config_Handlers/cid.hpp:
+	* DAnCE/Config_Handlers/cpd.cpp:
+	* DAnCE/Config_Handlers/cpd.hpp:
+	* DAnCE/Config_Handlers/iad.cpp:
+	* DAnCE/Config_Handlers/iad.hpp:
+	* DAnCE/Config_Handlers/pcd.cpp:
+	* DAnCE/Config_Handlers/pcd.hpp:
+	* DAnCE/Config_Handlers/toplevel.cpp:
+	* DAnCE/Config_Handlers/toplevel.hpp:
+
+	  Regenerated all the code with XSC 0.0.5. I will checkin the
+	  changes to schema that warranted this change in the main trunk.
+
+
+Wed Sep 22 12:41:23 2004  Jules White <jules@dre.vanderbilt.edu>
+
+  * BaseTypes_Handler.h:
+  * BaseTypes_Handler.cpp:
+  * Config_Handlers.mpc
+  
+    Removed BaseTypes_Handler and updated the MPC file. 
+    
+Wed Sep 22 12:29:52 2004  Jules White <jules@dre.vanderbilt.edu>
+
+  * Any_Handler.h:
+  * Any_Handler.cpp:
+  * ADD_Handler.h:
+  * ADD_Handler.cpp:
+  * RDD_Handler.h:
+  * RDD_Handler.cpp:
+  
+    Added a class to handle ImplementationDependency. Changed ADD_Handler
+    to use RDD_Handler for ResourceDeploymentDependencies. 
+    
+Wed Sep 22 10:47:02 2004  Jules White <jules@dre.vanderbilt.edu>
+
+  * Any_Handler.h:
+  * Any_Handler.cpp:
+  
+    Renamed ANY_Handler to Any_Handler.
+    
+Tue Sep 21 19:47:02 2004  Jules White <jules@dre.vanderbilt.edu>
+  
+  * MDD_Handler.h:
+  * MDD_Handler.cpp:
+  * ADD_Handler.h:
+  * ADD_Handler.cpp:
+  * Req_Handler.h:
+  * Req_Handler.cpp:
+  
+    Added classes to handle MonolithicDeploymentDescription and
+    ArtifactDeploymentDescription. Changed Requirement_Handler to 
+    Req_Handler.
+
+Mon Sep 20 14:02:32 2004  Jules White <jules@dre.vanderbilt.edu>
+
+  * Base_Handler.h:
+  * Base_Handler.cpp:
+
+    Added a base class for the configuration handlers.
+    
+Mon Sep 13 12:44:19 2004  Jules White <jules@dre.vanderbilt.edu>
+
+  * Config_Handlers.mpc:
+
+    Added several files to the source and header sections.
+    
+Mon Sep 13 12:43:12 2004  Jules White <jules@dre.vanderbilt.edu>
+
+  * IDD_Handler.h:
+  * IDD_Handler.cpp:
+
+    Created a shell class for IDD_Handler.
+    
+Mon Sep 13 12:39:23 2004  Jules White <jules@dre.vanderbilt.edu>
+
+  * CRDD_Handler.h:
+  * CRDD_Handler.cpp:
+  * PCD_Handler.cpp:
+  
+    Created a class to handle ConnectionResourceDeploymentDescription.
+    Modified PCD_Handler to use CRDD_Handler.
+    
+Sat Sep 11 18:15:12 2004  Jules White <jules@dre.vanderbilt.edu>
+
+  * ERE_Handler.h:
+  * ERE_Handler.cpp:
+  * PCD_Handler.cpp:
+  * PSPE_Handler.h:
+  * PSPE_Handler.cpp:
+  
+    Created a class to handle ExternalReferenceEndpoint.
+    Modified PCD_Handler to use ERE_Handler. Fixed compile errors
+    in PSPE_Handler.
+    
+Sat Sep 11 17:43:34 2004  Jules White <jules@dre.vanderbilt.edu>
+
+  * PSPE_Handler.h:
+  * PSPE_Handler.cpp:
+  * PCD_Handler.cpp:
+  * PCD_Handler.h:
+  
+    Created a class to handle PlanSubcomponentPortEndpoint.
+    Created a class to hanlde PlanConnectionDescription.
+
+Thu Sep  9 14:34:02 2004  Jules White <jules@dre.vanderbilt.edu>
+
+  * DAnCE/Config_Handlers/CEPE_Handler.h:
+  * DAnCE/Config_Handlers/CEPE_Handler.cpp:
+  
+    Added a class to handle ComponentExternalPortEndpoints.
+    
+Wed Sep  8 17:23:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Dance/Config_Handlers/Config_Handlers.mpc: 
+
+	  Added many new files. 
+
+Wed Sep  8 17:19:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/Any_Handler.h:
+	* DAnCE/Config_Handlers/Basic_Handler.h:
+	* DAnCE/Config_Handlers/CAD_Handler.h:
+	* DAnCE/Config_Handlers/CEPE_Handler.h:
+	* DAnCE/Config_Handlers/CPK_Handler.h:
+	* DAnCE/Config_Handlers/CPR_Handler.h:
+	* DAnCE/Config_Handlers/Cap_Handler.h:
+	* DAnCE/Config_Handlers/CompImplDesc_Handler.h:
+	* DAnCE/Config_Handlers/CompIntrDesc_Handler.h:
+	* DAnCE/Config_Handlers/CompPkgDesc_Handler.h:
+	* DAnCE/Config_Handlers/Config_Error_Handler.h:
+	* DAnCE/Config_Handlers/DT_Handler.h:
+	* DAnCE/Config_Handlers/DnC_Dump.h:
+	* DAnCE/Config_Handlers/Domain_Handler.h:
+	* DAnCE/Config_Handlers/ERE_Handler.h:
+	* DAnCE/Config_Handlers/IAD_Handler.h:
+	* DAnCE/Config_Handlers/ID_Handler.h:
+	* DAnCE/Config_Handlers/IR_Handler.h:
+	* DAnCE/Config_Handlers/MID_Handler.h:
+	* DAnCE/Config_Handlers/NIA_Handler.h:
+	* DAnCE/Config_Handlers/PCI_Handler.h:
+	* DAnCE/Config_Handlers/PC_Handler.h:
+	* DAnCE/Config_Handlers/Plan_Handler.h:
+	* DAnCE/Config_Handlers/Process_Element.h:
+	* DAnCE/Config_Handlers/Property_Handler.h:
+	* DAnCE/Config_Handlers/RS_Handler.h:
+	* DAnCE/Config_Handlers/RUK_Handler.h:
+	* DAnCE/Config_Handlers/Requirement_Handler.h:
+	* DAnCE/Config_Handlers/SPK_Handler.h:
+	* DAnCE/Config_Handlers/SP_Handler.h:
+	* DAnCE/Config_Handlers/TPD_Handler.h:
+	* DAnCE/Config_Handlers/Utils.h:
+	* DAnCE/Config_Handlers/XercesString.h:
+	  
+	  Removed all the old files from this branch. This is simply
+	  confusing to see what is usable and what is not. 	  
+
+Wed Sep  8 17:09:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/Any_Handler.cpp:
+	* DAnCE/Config_Handlers/Basic_Handler.cpp:
+	* DAnCE/Config_Handlers/CAD_Handler.cpp:
+	* DAnCE/Config_Handlers/CEPE_Handler.cpp:
+	* DAnCE/Config_Handlers/CPK_Handler.cpp:
+	* DAnCE/Config_Handlers/CPR_Handler.cpp:
+	* DAnCE/Config_Handlers/Cap_Handler.cpp:
+	* DAnCE/Config_Handlers/CompImplDesc_Handler.cpp:
+	* DAnCE/Config_Handlers/CompIntrDesc_Handler.cpp:
+	* DAnCE/Config_Handlers/CompPkgDesc_Handler.cpp:
+	* DAnCE/Config_Handlers/Config_Error_Handler.cpp:
+	* DAnCE/Config_Handlers/DT_Handler.cpp:
+	* DAnCE/Config_Handlers/DnC_Dump.cpp:
+	* DAnCE/Config_Handlers/Domain_Handler.cpp:
+	* DAnCE/Config_Handlers/ERE_Handler.cpp:
+	* DAnCE/Config_Handlers/IAD_Handler.cpp:
+	* DAnCE/Config_Handlers/ID_Handler.cpp:
+	* DAnCE/Config_Handlers/IR_Handler.cpp:
+	* DAnCE/Config_Handlers/MID_Handler.cpp:
+	* DAnCE/Config_Handlers/NIA_Handler.cpp:
+	* DAnCE/Config_Handlers/PCI_Handler.cpp:
+	* DAnCE/Config_Handlers/PC_Handler.cpp:
+	* DAnCE/Config_Handlers/Plan_Handler.cpp:
+	* DAnCE/Config_Handlers/Process_Element.cpp:
+	* DAnCE/Config_Handlers/Property_Handler.cpp:
+	* DAnCE/Config_Handlers/RS_Handler.cpp:
+	* DAnCE/Config_Handlers/RUK_Handler.cpp:
+	* DAnCE/Config_Handlers/Requirement_Handler.cpp:
+	* DAnCE/Config_Handlers/SPK_Handler.cpp:
+	* DAnCE/Config_Handlers/SP_Handler.cpp:
+	* DAnCE/Config_Handlers/TPD_Handler.cpp:
+	* DAnCE/Config_Handlers/Utils.cpp:
+	* DAnCE/Config_Handlers/XercesString.cpp:
+
+	  Removed all the old files from this branch. This is simply
+	  confusing to see what is usable and what is not. 
+
+Tue Sep 07 18:23:02 2004  Jules White  <jules@dre.vanderbilt.edu>
+				
+  * DAnCE/Config_Handlers/MDD_Handler.h
+  * DAnCE/Config_Handlers/MDD_Handler.cpp
+  * DAnCE/Config_Handlers/Req_Handler.h
+  * DAnCE/Config_Handlers/Req_Handler.cpp
+				
+	 Created classes to handled mapping values from XSC
+	 MonolithicDeploymentDescription and Requirement to the
+	 corresponding IDL types. 
+				
+Thu Sep 02 15:01:21 2004  Jules White  <jules@dre.vanderbilt.edu>
+                                                                                
+  * DAnCE/Config_Handlers/ANY_Handler.h:
+  * DAnCE/Config_Handlers/ANY_Handler.cpp:
+  * DAnCE/Config_Handlers/CID_Handler.h:
+  * DAnCE/Config_Handlers/CID_Handler.cpp:
+  * DAnCE/Config_Handlers/ComponentPropertyDescription_Handler.h:
+  * DAnCE/Config_Handlers/ComponentPropertyDescription_Handler.cpp:
+  * DAnCE/Config_Handlers/CPD_Handler.h:
+  * DAnCE/Config_Handlers/CPD_Handler.cpp:
+  * DAnCE/Config_Handlers/DataType_Handler.h:
+  * DAnCE/Config_Handlers/DataType_Handler.cpp:
+  * DAnCE/Config_Handlers/Prop_Handler.h:
+  * DAnCE/Config_Handlers/Prop_Handler.cpp:
+        
+   Created classes to copy the values from XSC objects
+   into their corresponding IDL types.
+                                                                                
+
