@@ -4874,17 +4874,17 @@ ACE_OS::accept (ACE_HANDLE handle,
 
 ACE_INLINE int
 ACE_OS::enum_protocols (int *protocols,
-						ACE_Protocol_Info *protocol_buffer,
-						u_long *buffer_length)
+                        ACE_Protocol_Info *protocol_buffer,
+                        u_long *buffer_length)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-
-ACE_SOCKCALL_RETURN (::WSAEnumProtocols (protocols,
-										 protocol_buffer,
-										 buffer_length),
-					 int,
-					 SOCKET_ERROR);
-
+  
+  ACE_SOCKCALL_RETURN (::WSAEnumProtocols (protocols,
+                                           protocol_buffer,
+                                           buffer_length),
+                       int,
+                       SOCKET_ERROR);
+  
 #else
   ACE_UNUSED_ARG (protocols);
   ACE_UNUSED_ARG (protocol_buffer);
@@ -4900,10 +4900,10 @@ ACE_OS::join_leaf (ACE_HANDLE socket,
                    const ACE_QoS_Params &qos_params)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-
+  
   QOS qos;
   // Construct the WinSock2 QOS structure.
-
+  
   qos.SendingFlowspec = qos_params.socket_qos ()->sending_flowspec ();
   qos.ReceivingFlowspec = qos_params.socket_qos ()->receiving_flowspec ();
   qos.ProviderSpecific = (WSABUF) qos_params.socket_qos ()->provider_specific ();

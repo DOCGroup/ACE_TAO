@@ -419,16 +419,16 @@ BOOL FindServiceProvider(
                          ACE_Protocol_Info   *pProtocolInfo
                          )
 {
-  int nRet;
-  ACE_Protocol_Info *lpProtocolBuf = NULL;
-  DWORD dwBufLen = 0;
+  ACE_Protocol_Info *protocol_buffer = NULL;
+  u_long buffer_length = 0;
   DWORD dwErr;
   BOOL bProtocolFound = FALSE;
 
-
-  // first have WSAEnumProtocols tell us how big a buffer is needed
-  nRet = WSAEnumProtocols(NULL, lpProtocolBuf, &dwBufLen);
-  if (SOCKET_ERROR != nRet)
+  // first have enum_protocols () tell us how big a buffer is needed.
+  int ret_val = ACE_OS::enum_protocols(NULL, 
+ 									   protocol_buffer, 
+									   &buffer_length);
+  if (ret_val != -1)
     {
       printf("WSAEnumProtocols: should not have suceeded\n");
     }
@@ -441,33 +441,39 @@ BOOL FindServiceProvider(
     {
       // WSAEnumProtocols failed for the "expected" reason, allocate a buffer
       // of the needed size
-      lpProtocolBuf = (ACE_Protocol_Info *)malloc(dwBufLen);
-      if (lpProtocolBuf)
+      protocol_buffer = (ACE_Protocol_Info *)malloc(buffer_length);
+      if (protocol_buffer)
         {
           // now we can call WSAEnumProtocols again with the expectation it will
           // succeed because we have allocated a big enough buffer.
-          nRet = WSAEnumProtocols(NULL, lpProtocolBuf, &dwBufLen);
-          if (SOCKET_ERROR == nRet)
+          ret_val = ACE_OS::enum_protocols (NULL, 
+											protocol_buffer, 
+											&buffer_length);
+          if (ret_val == -1)
             {
               printf("WSAEnumProtocols(3): %d\n", WSAGetLastError());
             }
           else
             {
+			  ACE_DEBUG ((LM_DEBUG,
+						  "BUFFER LENGTH = %d",
+						  buffer_length));
+			  
               // loop thru protocols, looking for a matching service provider 
-              for (int i=0; i<nRet; i++)
+              for (int i = 0; i < ret_val; i++)
                 {
-                  printf("  sp <%s>\n", lpProtocolBuf[i].szProtocol);
-                  if (AF_INET == lpProtocolBuf[i].iAddressFamily &&
-                      iProtocol == lpProtocolBuf[i].iProtocol)
+                  printf("  sp <%s>\n", protocol_buffer[i].szProtocol);
+                  if (AF_INET == protocol_buffer[i].iAddressFamily &&
+                      iProtocol == protocol_buffer[i].iProtocol)
                     {
                       // look for 
                       if (bQos && bMulticast)
                         {
                           if ((XP1_QOS_SUPPORTED == (XP1_QOS_SUPPORTED &
-                                                     lpProtocolBuf[i].dwServiceFlags1)) && 
-                              (XP1_SUPPORT_MULTIPOINT == (XP1_SUPPORT_MULTIPOINT & lpProtocolBuf[i].dwServiceFlags1)))
+                                                     protocol_buffer[i].dwServiceFlags1)) && 
+                              (XP1_SUPPORT_MULTIPOINT == (XP1_SUPPORT_MULTIPOINT & protocol_buffer[i].dwServiceFlags1)))
                             {
-                              *pProtocolInfo = lpProtocolBuf[i];
+                              *pProtocolInfo = protocol_buffer[i];
                               bProtocolFound = TRUE;
                               break;
                             }
@@ -475,9 +481,9 @@ BOOL FindServiceProvider(
                       else if (bQos)
                         {
                           if ((XP1_QOS_SUPPORTED == (XP1_QOS_SUPPORTED &                                                 
-                                                     lpProtocolBuf[i].dwServiceFlags1)))
+                                                     protocol_buffer[i].dwServiceFlags1)))
                             {
-                              *pProtocolInfo = lpProtocolBuf[i];
+                              *pProtocolInfo = protocol_buffer[i];
                               bProtocolFound = TRUE;
                               break;
                             } 
@@ -485,11 +491,11 @@ BOOL FindServiceProvider(
                       else if (bMulticast)
                         {
                           if ((XP1_SUPPORT_MULTIPOINT == (XP1_SUPPORT_MULTIPOINT &   
-                                                          lpProtocolBuf[i].dwServiceFlags1)) &&
+                                                          protocol_buffer[i].dwServiceFlags1)) &&
                               (XP1_QOS_SUPPORTED != (XP1_QOS_SUPPORTED & 
-                                                     lpProtocolBuf[i].dwServiceFlags1)))
+                                                     protocol_buffer[i].dwServiceFlags1)))
                             {
-                              *pProtocolInfo = lpProtocolBuf[i];
+                              *pProtocolInfo = protocol_buffer[i];
                               bProtocolFound = TRUE;
                               break;
                             }
@@ -497,9 +503,9 @@ BOOL FindServiceProvider(
                       else 
                         {
                           if ((XP1_QOS_SUPPORTED != (XP1_QOS_SUPPORTED & 
-                                                     lpProtocolBuf[i].dwServiceFlags1)))
+                                                     protocol_buffer[i].dwServiceFlags1)))
                             {
-                              *pProtocolInfo = lpProtocolBuf[i];
+                              *pProtocolInfo = protocol_buffer[i];
                               bProtocolFound = TRUE;
                               break;
                             }
@@ -507,8 +513,8 @@ BOOL FindServiceProvider(
                     } 
                 } // for    
             } // WSAEnumProtocols
-          free(lpProtocolBuf);
-        } // lpProtocolBuf
+          free(protocol_buffer);
+        } // protocol_buffer
     } // WSAEnumProtocols
 
   if (bProtocolFound)
