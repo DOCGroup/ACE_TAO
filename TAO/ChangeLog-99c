@@ -1,3 +1,14 @@
+Wed Jul 21 16:06:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_array/array_ci.cpp:
+	  Modified _var and _forany copy constructor, deep copy assignment
+	  operator, [] const operator, and .in() method code
+	  generation to work with arrays of 3 or more dimensions.
+
+	* TAO/tests/IDL_Test/array.idl:
+	* TAO/tests/IDL_Test/typedef.idl:
+	  Uncommented examples with 3-dimensional arrays.
+
 Wed Jul 21 12:31:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/Repository.cpp:
