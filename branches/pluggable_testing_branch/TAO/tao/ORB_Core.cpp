@@ -103,6 +103,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // Prepare a copy of the argument vector for the service configurator.
 
   char **svc_config_argv;
+  // @@ depricated
+  int old_style_endpoint = 0;
 
   int svc_config_argc = 0;
   ACE_NEW_RETURN (svc_config_argv, char *[argc + 1], 0);
@@ -269,21 +271,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         }
       else if (ACE_OS::strcmp (current_arg, "-ORBhost") == 0)
         {
-          // @@ Again, there may be multiple interfaces, multiple protocols
-          //    and thus many "hostnames".  Perhaps this should be on a
-          //    per protocol bases.  Especially since a IP name will have
-          //    no meaning for say ATM or UNIX domain or Bus based I/O
-          // @@ Rather than specify a hostname and port number for the
-          //    server, one or more endpoints should be specified.  An
-          //    endpoint will have the following format:
-          //    IOP:[major.minor]//address1,address2,...,addressn/
-          //    so for IIOP this would be:
-          //    iiop://myhost_ether:5050,myhost_atm:6060/
-          //    fredk.
-          // @@ Fred&Ossama: I think the option should just die or
-          //    simply have the same effect as an extra -ORBendpoint
-          //    i.e. simply add another endpoint to the list in
-          //    orb_params().
           // @@ Fred&Carlos: This option now has the same effect as specifying
           //                 an extra -ORBendpoint.  Ideally, this option
           //                 should be removed so that all INET specific
@@ -291,6 +278,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           //                 guess we need to leave it here for backward
           //                 compatibility.  C'est la vie.
 
+          old_style_endpoint = 1;
           // Specify the name of the host (i.e., interface) on which
           // the server should listen.
           arg_shifter.consume_arg ();
@@ -355,11 +343,10 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         }
       else if (ACE_OS::strcmp (current_arg, "-ORBport") == 0)
         {
-          // @@ See comment for host option.  fredk
-
           // Issue a warning since this backward compatibilty support
           // may be dropped in future releases.
 
+          old_style_endpoint = 1;
           ACE_DEBUG ((LM_WARNING,
                       "(%P|%t) WARNING: The `-ORBport' option is obsolete.\n"
                       "In the future, use the `-ORBendpoint' option.\n"));
@@ -685,15 +672,17 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // @@ Set the endpoint string to iiop://host:port/
   //    Add a string to hold the endpoint desgination for this ORB
   //    for now it will be IIOP://host:port/  fredk
-  ACE_CString iiop_endpoint;
-  if (this->set_iiop_endpoint (dotted_decimal_addresses,
-                               port,
-                               host,
-                               iiop_endpoint) == -1)
-    return -1;
-
-  // Add the endpoint
-  this->orb_params ()->endpoints (iiop_endpoint);
+  if (old_style_endpoint)
+    {
+      ACE_CString iiop_endpoint;
+      if (this->set_iiop_endpoint (dotted_decimal_addresses,
+                                   port,
+                                   host,
+                                   iiop_endpoint) == -1)
+        return -1;
+      // Add the endpoint
+      this->orb_params ()->endpoints (iiop_endpoint);
+    }
 
   // Set the init_ref.
   this->orb_params ()->init_ref (init_ref);
