@@ -23,14 +23,10 @@ TAO_LB_ReplicaProxy::TAO_LB_ReplicaProxy (void)
 void
 TAO_LB_ReplicaProxy::current_load (CORBA::Float load,
                                    CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::InvalidLoad,
-                   CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Ossama: this is the point were the load dampening should
   // happen. Probably strategized....
-
-  if (load < 0)
-    ACE_THROW (LoadBalancing::ReplicaProxy::InvalidLoad ());
 
   this->current_load_ = load;
   // ACE_DEBUG ((LM_DEBUG, "Load[%x] = %f\n", long(this), load));

@@ -31,6 +31,7 @@ TAO_LB_Minimum_Dispersion_Strategy::~TAO_LB_Minimum_Dispersion_Strategy (void)
 
 CORBA::Object_ptr
 TAO_LB_Minimum_Dispersion_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Ossama: more code that is not thread safe
   while (!this->proxies_.is_empty ())

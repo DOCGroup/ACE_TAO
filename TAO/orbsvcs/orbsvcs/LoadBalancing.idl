@@ -129,6 +129,8 @@ module LoadBalancing
           //    This exception indicates that an attempt was made to
           //    use a ReplicaProxy that is not registered with the
           //    LoadBalancer.
+          //    @@ Ossama: where exactly is this exception used?  Who
+          //    can raise it!?
         };
 
       ReplicaProxy connect (in ReplicaControl control,
