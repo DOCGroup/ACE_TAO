@@ -1,3 +1,9 @@
+Mon Feb 28 11:14:35 2005  Ciju John  <john_c@ociweb.com>
+
+        * tao/IIOP_Acceptor.cpp:
+          Changed deperecated ACE_x_cast macros to C++ versions. Can cause
+          build failure if ACE_LACKS_DEPRECATED_MACROS is defined.
+
 Mon Feb 28 07:21:14 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
