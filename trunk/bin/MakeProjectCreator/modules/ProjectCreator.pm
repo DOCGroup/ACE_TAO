@@ -901,6 +901,13 @@ sub add_source_corresponding_component_files {
     }
   }
 
+  ## We need to cross-check the idl files.  But we need to remove
+  ## the idl extension first.
+  my(@idl) = $self->get_component_list('idl_files');
+  for(my $i = 0; $i <= $#idl; $i++) {
+    $idl[$i] =~ s/\.idl$//;
+  }
+
   ## for each cpp file, we add a corresponding header or inline file
   ## if it exists and is not already in the list of headers
   my($names) = $self->{$tag};
@@ -943,13 +950,18 @@ sub add_source_corresponding_component_files {
             ## we must check to see if the file *would be* generated
             ## from idl.  If so, we will add the file with the default
             ## (i.e. first) file extension.
-            foreach my $ending (@{$self->{'skeleton_endings'}}) {
-              if ($c =~ /$ending$/) {
-                my($ext) = $$vc{$tag}->[0];
-                $ext =~ s/\\//g;
-                push(@$array, "$c$ext");
-                last;
+            foreach my $idl (@idl) {
+              if ($c =~ /^$idl/) {
+                foreach my $ending (@{$self->{'skeleton_endings'}}) {
+                  if ($c =~ /^$idl$ending$/) {
+                    my($ext) = $$vc{$tag}->[0];
+                    $ext =~ s/\\//g;
+                    push(@$array, "$c$ext");
+                    last;
+                  }
+                }
               }
+              last;
             }
           }
         }
