@@ -1,3 +1,8 @@
+Fri Aug  2 15:13:28 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* docs/configurations.html: Added a documentation entry for the
+	  Real-time CORBA thread pool model.
+
 Fri Aug  2 16:17:34 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.cpp: Added a

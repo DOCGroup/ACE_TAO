@@ -72,7 +72,9 @@ Roadmap</h3>
         <li><a href="#multiorb-tpc">Multiple threads, multiple ORBs,
             thread-per-connection model.</a></li>
 
-        <li><a href="#tpool">Multiple threads, single ORB, thread-pool model.</a></li>
+        <li><a href="#tpool">Multiple threads, single ORB, TAO thread-pool model.</a></li>
+
+        <li><a href="#rtpool">Multiple threads, single ORB, Real-time CORBA thread-pool model.</a></li>
 
         <li><a href="#multiorb-tpool">Multiple threads,
             ORB-per-thread, thread-pool reactive model.</a></li>
@@ -274,7 +276,7 @@ The following are common ORB configurations used by TAO applications.<P>
 
 <ul>
   <li>
-      <a NAME="reactive"></a>Single-threaded, reactive model.</li> <P>
+      <a NAME="reactive"></a><B>Single-threaded, reactive model.</B></li> <P>
 
       <table BORDER=2 CELLSPACING=2 CELLPADDING=0 WIDTH="90%" >
         <tr>
@@ -284,7 +286,7 @@ The following are common ORB configurations used by TAO applications.<P>
               thread handles requests from multiple clients via a
               single Reactor. It is appropriate when the requests (1)
               take a fixed, relatively uniform amount of time and (2)
-              are largely compute bound.&nbsp;</td>
+              are largely compute bound.</td>
         </tr>
 
         <tr>
@@ -307,6 +309,14 @@ The following are common ORB configurations used by TAO applications.<P>
         </tr>
 
         <tr>
+          <th align=left>Synchronization considerations</th>
+
+          <td>Application servants needn't
+              be concerned with synchronizing their interactions since
+              there's only one thread active with this model.</td>
+        </tr>
+
+        <tr>
           <th align=left>Options</th>
 
           <td>The default settings should work just fine.  However,
@@ -325,8 +335,8 @@ The following are common ORB configurations used by TAO applications.<P>
       <P>Check out the <tt><a href="../examples/Simple/grid/">Grid</a></tt>
       for an example of this configuration. <P>
 
-  <li> <a NAME="tpc"></a>Multiple threads, single ORB, thread-per-connection
-      model.</li> <P>
+  <li> <a NAME="tpc"></a><B>Multiple threads, single ORB, thread-per-connection
+      model.</B></li> <P>
 
       <table BORDER=2 CELLSPACING=2 CELLPADDING=0 WIDTH="90%" >
         <tr ALIGN="LEFT">
@@ -363,6 +373,14 @@ The following are common ORB configurations used by TAO applications.<P>
             established connections.</td>
       </tr>
 
+        <tr>
+          <th align=left>Synchronization considerations</th>
+
+          <td> To avoid race conditions, application servants may need to
+            synchronize their methods if multiple clients can access
+            them concurrently.</td>
+        </tr>
+
       <tr>
         <th align=left>Options</th>
 
@@ -375,7 +393,7 @@ The following are common ORB configurations used by TAO applications.<P>
     is a good example on using <i>multiple threads, thread-per-connection</i>
     configuration.<P>
 <li>
-    <P>Multiple threads, multiple ORB, reactive model.<a NAME="multiorb"></a></li><P>
+    <P><B>Multiple threads, multiple ORB, reactive model.</B><a NAME="multiorb"></a></li><P>
 
     <table BORDER=2 CELLSPACING=2 CELLPADDING=0 WIDTH="90%">
       <tr>
@@ -383,7 +401,7 @@ The following are common ORB configurations used by TAO applications.<P>
 
         <td>In this configuration, there are multiple ORBs in a
             process with multiple threads. Each thread handles requests
-            reactively. It's good for hard real-time applications that
+            reactively.  This model is good for hard real-time applications that
             require different thread priorities for the various
             ORBs.</td>
       </tr>
@@ -406,6 +424,14 @@ The following are common ORB configurations used by TAO applications.<P>
         <td>Service the requests from associating ORB.</td>
       </tr>
 
+        <tr>
+          <th align=left>Synchronization considerations</th>
+
+          <td>Application servants needn't
+              be concerned with synchronizing their interactions if
+              there's no cross ORB/thread access.</td>
+        </tr>
+
       <tr>
         <th align=left>Options</th>
 
@@ -417,7 +443,7 @@ The following are common ORB configurations used by TAO applications.<P>
 </table>
 <P>
 
-<li>Multiple threads, multiple ORBs, thread-per-connection model.<a
+<li><B>Multiple threads, multiple ORBs, thread-per-connection model.</B><a
     NAME="multiorb-tpc"></a></li><P>
 
     <table BORDER=2 CELLSPACING=2 CELLPADDING=0 WIDTH="90%">
@@ -450,6 +476,14 @@ The following are common ORB configurations used by TAO applications.<P>
           requests from established connections.</td>
     </tr>
 
+        <tr>
+          <th align=left>Synchronization considerations</th>
+
+          <td> To avoid race conditions, application servants may need to
+            synchronize their methods if multiple clients can access
+            them concurrently.</td>
+        </tr>
+
     <tr>
       <th align=left>Options</th>
 
@@ -462,18 +496,19 @@ The following are common ORB configurations used by TAO applications.<P>
 <tt><a href="../performance-tests/Cubit/TAO/MT_Cubit/">MT_Cubit</a>
 </tt> is a good example on using <i>multiple threads,
 multiple ORBs, and thread-per-connection</i> configuration.<P>
+
 <li>
-    <a NAME="tpool"></a>Multiple threads, single ORB, thread-pool model.</li><P>
+    <a NAME="tpool"></a><B>Multiple threads, single ORB, TAO thread-pool model.</B></li><P>
 
     <table BORDER=2 CELLSPACING=2 CELLPADDING=0 WIDTH="90%" >
       <tr>
         <th align=left>Typical Use</th>
 
-        <td>This model implements a highly optimized thread pool that leverages
-            context switching, and thread creation costs.  In this
+        <td>This model implements a highly optimized, TAO-specific thread pool that minimizes
+            context switching and thread creation costs.  In this
             model, the programmer is responsible of spawning a group
-            of threads, start up the ORB and then instruct all the threads
-            to run the ORB event loop.  When a request comes in, one
+            of threads, start up the ORB and then instruct all the
+            threads to run the ORB event loop.  When a request comes in, one
             of these waiting threads in the pool will handle the
             request.</td>
       </tr>
@@ -496,6 +531,15 @@ multiple ORBs, and thread-per-connection</i> configuration.<P>
         <td>Blocking on the reactor to wait for its turn to handle a request.</td>
       </tr>
 
+        <tr>
+          <th align=left>Synchronization considerations</th>
+
+          <td> To avoid race conditions, application servants may need to
+            synchronize their methods if multiple clients or multiple
+              thread from the same client can access
+            them concurrently.</td>
+        </tr>
+
       <tr>
         <th align=left>Options</th>
 
@@ -504,10 +548,71 @@ multiple ORBs, and thread-per-connection</i> configuration.<P>
     </table>
     <P>
     <tt><a href="../tests/MT_Server">MT_Server</a></tt> is a good
-    example on using <i>multiple threads, single ORB, thread-pool</i>
+    example on using <i>multiple threads, single ORB, TAO thread-pool</i>
     configuration.<P>
-<P><li>
-    Multiple threads, multiple ORBs, thread-pool model.<a NAME="multiorb-tpool"></a>
+<P>
+
+<li>
+    <a NAME="rtpool"></a><B>Multiple threads, single ORB, Real-time
+    CORBA thread-pool model.</B></li><P>
+
+    <table BORDER=2 CELLSPACING=2 CELLPADDING=0 WIDTH="90%" >
+      <tr>
+        <th align=left>Typical Use</th>
+
+        <td>This model implements a highly optimized <A HREF="rtcorba/">Real-time CORBA</A> thread pool that minimizes
+            context switching, and thread creation costs.  In this
+            model, the application is responsible for starting up the ORB and then 
+            calling the Real-time CORBA thread pool factory methods that
+            internally spawn a pool of threads.  When a request comes in, one
+            of these waiting threads in the pool will handle the
+            request in accordance with the various CORBA policies.</td>
+      </tr>
+
+      <tr>
+        <th align=left>Number of Threads</th>
+
+        <td>Thread for the ORB, plus the number of threads used by the thread pool.</td>
+      </tr>
+
+      <tr>
+        <th align=left>Thread Creator</th>
+
+        <td>Static threads are pre-spawned by the ORB, which also
+            spawns any dynamic threads on-demand.</td>
+      </tr>
+
+      <tr>
+        <th align=left>Thread task</th>
+
+        <td>Blocking on the reactor to wait for its turn to handle a request.</td>
+      </tr>
+
+        <tr>
+          <th align=left>Synchronization considerations</th>
+
+          <td> To avoid race conditions, application servants may need to
+            synchronize their methods if multiple clients or multiple
+              thread from the same client can access
+            them concurrently.</td>
+        </tr>
+
+      <tr>
+        <th align=left>Options</th>
+
+        <td> The ORB must be configured to work with <A
+            HREF="rtcorba">Real-time CORBA</A>, at which point the
+            default settings work fine.</td>
+      </tr>
+    </table>
+    <P>
+    <tt><a href="../tests/RTCORBA/Thread_Pool">Thread_Pool</a></tt> is a good
+    example on using <i>multiple threads, single ORB, Real-time CORBA thread-pool</i>
+    configuration.<P>
+<P>
+
+<li>
+    <B>Multiple threads, multiple ORBs, thread-pool model.</B><a NAME="multiorb-tpool"></a>
 </li><P>
 
     <table BORDER=2 CELLSPACING=2 CELLPADDING=0 WIDTH="90%" >
@@ -537,6 +642,15 @@ multiple ORBs, and thread-per-connection</i> configuration.<P>
         <td>Handle incoming request for the ORB event loop it is
             waiting on.</td>
       </tr>
+
+        <tr>
+          <th align=left>Synchronization considerations</th>
+
+          <td>Application servants needn't
+              be concerned with synchronizing their interactions if
+              there's no cross ORB/thread access.</td>
+        </tr>
+
       <tr>
         <th align=left>Options</th>
 
