@@ -1,3 +1,8 @@
+Tue Apr  3 10:59:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/TypeCodeFactory/Makefile:
+	* tao/IFR_Client/Makefile: Made some cosmetic fixes.
+
 Tue Apr  3 09:58:47 2001  Chanaka Liyanaarachchi  <chanaka@ociweb.com>
 
         * tao/IIOP_Acceptor.cpp:
