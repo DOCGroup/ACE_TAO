@@ -35,7 +35,7 @@ Test_DynSequence::~Test_DynSequence (void)
 
 const char*
 Test_DynSequence::test_name (void) const
-{ 
+{
   return this->test_name_;
 }
 
@@ -60,7 +60,7 @@ Test_DynSequence::run_test (void)
       ts[1] = data.m_string2;
       CORBA_Any in_any1;
       in_any1 <<= ts;
-      CORBA_DynAny_ptr dp1 = 
+      CORBA_DynAny_ptr dp1 =
         this->orb_->create_dyn_any (in_any1,
                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -83,11 +83,8 @@ Test_DynSequence::run_test (void)
       if (!ACE_OS::strcmp (out_str1, data.m_string1))
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
-      else 
+      else
         ++this->error_count_;
-
-      // Created with NEW
-      delete out_str1;
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: constructor(TypeCode)/from_any/to_any\n"));
@@ -109,7 +106,7 @@ Test_DynSequence::run_test (void)
       if (!ACE_OS::strcmp ((*ts_out)[0], data.m_string1))
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
-      else 
+      else
         ++this->error_count_;
 
       // Created with NEW
@@ -174,4 +171,3 @@ Test_DynSequence::run_test (void)
 
   return 0;
 }
-
