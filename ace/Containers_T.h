@@ -1362,7 +1362,7 @@ private:
   ACE_Bounded_Set<T> &s_;
 
   /// How far we've advanced over the set.
-  size_t next_;
+  ssize_t next_;
 };
 
 /* MATT UPDATE */
