@@ -592,7 +592,7 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
                   media_ctrl_ior));
     }
   CORBA::Object_ptr media_ctrl_obj =
-    this->orb_manager_.orb ()->string_to_object
+    TAO_ORB_Core_instance ()->orb ()->string_to_object
     (media_ctrl_ior,env);
   TAO_CHECK_ENV_RETURN (env, CORBA::B_FALSE);
 
@@ -603,9 +603,11 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
   return result;
 }
 
-void
-TAO_VDev::set_media_ctrl (CORBA::Object_ptr media_ctrl)
+CORBA::Boolean
+TAO_VDev::set_media_ctrl (CORBA::Object_ptr media_ctrl,
+                          CORBA::Environment &env)
 {
+  return CORBA::B_TRUE;
 }
 
 // @@ Need to throw not-supported exception here
