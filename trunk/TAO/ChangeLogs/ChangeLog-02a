@@ -1,3 +1,14 @@
+Sun Feb 25 11:31:47 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/POA/Adapter_Activator/run_test.pl:
+        * examples/POA/Explicit_Activation/run_test.pl:
+        * examples/POA/Loader/run_test.pl:
+        * examples/POA/On_Demand_Activation/run_test.pl:
+        * examples/POA/Reference_Counted_Servant/run_test.pl:
+        * examples/POA/RootPOA/run_test.pl:
+          Replace 'require ACEutil' with 'use ACEutil', the latter should
+          eat the -Config options passed by the auto_compile script.
+
 Sun Feb 25 10:38:57 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/default_resource.h:

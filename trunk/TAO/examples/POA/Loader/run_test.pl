@@ -6,7 +6,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 unshift @INC, '../../../../bin';
-require ACEutils;
+use ACEutils;
 
 $iorfile = "ior";
 
