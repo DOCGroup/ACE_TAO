@@ -37,7 +37,7 @@ ACE_Date_Time::ACE_Date_Time (long day,
                               long hour,
                               long minute,
                               long second,
-                              long microsec
+                              long microsec,
                               long wday)
   : day_ (day),
     month_ (month),
@@ -170,7 +170,7 @@ ASYS_INLINE long
 ACE_Date_Time::weekday (void) const
 {
   ACE_TRACE ("ACE_Date_Time::weekday");
-  return weekday_;
+  return wday_;
 }
 
 // set wday
@@ -178,5 +178,5 @@ ASYS_INLINE void
 ACE_Date_Time::weekday (long wday)
 {
   ACE_TRACE ("ACE_Date_Time::weekday");
-  weekday_ = wday;
+  wday_ = wday;
 }
