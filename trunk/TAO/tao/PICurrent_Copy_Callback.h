@@ -63,7 +63,7 @@ namespace TAO
 
     /// Destination PICurrent to which copies will be made.
     PICurrent_Impl * dst_;
-    
+
   };
 }
 
