@@ -98,6 +98,7 @@ test_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
   return 0;
 }
 
+#if (TAO_HAS_NAMED_RT_MUTEXES == 1)
 static int
 test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
 {
@@ -238,6 +239,7 @@ test_named_mutex_exception (RTCORBA::RTORB_ptr rt_orb)
 
   return 0;
 }
+#endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 
 #if defined (ACE_HAS_THREADS)
 const size_t MAX_ITERATIONS=10;
@@ -531,6 +533,7 @@ main (int argc, char *argv[])
                            "test_mutex_simple failed\n"),
                           1);
 
+#if (TAO_HAS_NAMED_RT_MUTEXES == 1)
       if (test_named_mutex_simple (rt_orb.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "test_named_mutex_simple failed\n"),
@@ -540,6 +543,11 @@ main (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "test_named_mutex_exception failed\n"),
                           1);
+#else
+      ACE_DEBUG ((LM_DEBUG,
+                  "Named RT_Mutex support is not enabled. "
+                  "Skipping Named RT_Mutex tests.\n"));
+#endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 
 #if defined (ACE_HAS_THREADS)
 
