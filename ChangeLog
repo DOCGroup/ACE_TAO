@@ -1,3 +1,11 @@
+Wed Aug 15 11:10:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU: Added $(VDIR) for
+	  OBJDIRS. This prevents hardcoding the value of OBJDIRS. This has
+	  been tested for a dynamic and a static library on Linux. If
+	  there are other platforms that gives problems, please feel free
+	  to revert the changes to the version 4.114 of the file. 
+
 Wed Aug 15 09:35:19 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Dirent_Test.cpp:
