@@ -19,11 +19,11 @@
 # define ACE_OS_H
 #include "ace/pre.h"
 
+#include "ace/config-all.h"
+
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/config-all.h"
 
 # if !defined (ACE_MALLOC_ALIGN)
 #   define ACE_MALLOC_ALIGN ((int) sizeof (long))
