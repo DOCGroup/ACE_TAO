@@ -118,6 +118,10 @@ SOURCE=.\Element_Def_Builder.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Encoding.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Env.cpp
 # End Source File
 # Begin Source File
@@ -223,6 +227,10 @@ SOURCE=.\DTDHandler.h
 # Begin Source File
 
 SOURCE=.\Element_Def_Builder.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Encoding.h
 # End Source File
 # Begin Source File
 

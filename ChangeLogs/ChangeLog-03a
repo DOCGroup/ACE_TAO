@@ -1,3 +1,31 @@
+Tue Oct 15 17:17:44 2002  Krishnakumar B  <kitty@cse.wustl.edu>
+
+        * ACEXML/common/Encoding.cpp:
+        * ACEXML/common/Encoding.h:
+
+          New files which handle the automatic detection of encoding in
+          XML files.
+
+        * ACEXML/apps/svcconf/Makefile:
+        * ACEXML/common/CharStream.h:
+        * ACEXML/common/Exception.cpp:
+        * ACEXML/common/FileCharStream.cpp:
+        * ACEXML/common/FileCharStream.h:
+        * ACEXML/common/HttpCharStream.cpp:
+        * ACEXML/common/HttpCharStream.h:
+        * ACEXML/common/InputSource.cpp:
+        * ACEXML/common/Makefile:
+        * ACEXML/common/Mem_Map_Stream.cpp:
+        * ACEXML/common/Mem_Map_Stream.h:
+        * ACEXML/common/StrCharStream.cpp:
+        * ACEXML/common/StrCharStream.h:
+        * ACEXML/common/XML_Common.dsp:
+        * ACEXML/examples/SAXPrint/Makefile:
+        * ACEXML/parser/parser/Makefile:
+        * ACEXML/parser/parser/Parser.cpp:
+
+          Handle the automatic detection of encoding in XML files.
+
 Tue Oct 15 17:15:41 2002  Steve Huston  <shuston@riverace.com>
 
         Fixes for Bugzilla #1319:
@@ -27,9 +55,9 @@ Tue Oct 15 16:19:33 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 Tue Oct 15 10:47:20 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* ace/SPIPE_Connector.cpp: Fixed a unused variable warning. 
+	* ace/SPIPE_Connector.cpp: Fixed a unused variable warning.
 
-Tue Oct 15 06:56:18 2002  Patrick J. McNerthney <ace@mcnerthney.com>  
+Tue Oct 15 06:56:18 2002  Patrick J. McNerthney <ace@mcnerthney.com>
 
 	* tests/SPIPE_Test.cpp: Added support for testing the new Windows
 	  bytestream mode.

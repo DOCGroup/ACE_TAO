@@ -66,6 +66,11 @@ public:
    */
   virtual int peek (void) = 0;
 
+  /*
+   * Get the character encoding for a byte stream or URI.
+   */
+  virtual const ACEXML_Char *getEncoding (void)  = 0;
+
 };
 
 #include "ace/post.h"

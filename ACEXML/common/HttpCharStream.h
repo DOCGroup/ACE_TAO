@@ -71,6 +71,15 @@ public:
    */
   virtual int peek (void);
 
+  /**
+   *  Resets the file pointer to the beginning of the stream.
+   */
+  virtual void rewind (void);
+
+  /**
+   * Get the encoding of the file
+   */
+  virtual const ACEXML_Char* getEncoding (void);
 
 private:
 
@@ -93,6 +102,8 @@ private:
   Connector* connector_;
 
   off_t size_;
+
+  ACEXML_Char* encoding_;
 
 };
 

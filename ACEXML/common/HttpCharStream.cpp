@@ -23,7 +23,8 @@ ACEXML_HttpCharStream::ACEXML_HttpCharStream (void)
     url_addr_(0),
     stream_(0),
     connector_(0),
-    size_(0)
+    size_(0),
+    encoding_ (0)
 {
 
 }
@@ -286,6 +287,10 @@ ACEXML_HttpCharStream::close (void)
   this->connector_ = 0;
 
   this->size_ = 0;
+
+  delete[] this->encoding_;
+  this->encoding_ = 0;
+
   return 0;
 }
 
@@ -311,4 +316,16 @@ int
 ACEXML_HttpCharStream::peek (void)
 {
   return this->stream_->peek_char (0);
+}
+
+void
+ACEXML_HttpCharStream::rewind (void)
+{
+  this->stream_->rewind();
+}
+
+const ACEXML_Char*
+ACEXML_HttpCharStream::getEncoding (void)
+{
+  return this->encoding_;
 }
