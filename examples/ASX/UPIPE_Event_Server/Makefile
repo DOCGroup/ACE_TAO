@@ -51,8 +51,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -150,7 +148,8 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Get_Opt.i Options.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ Options.h \
  $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
@@ -160,8 +159,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/Supplier_Router.o .obj/Supplier_Router.so .shobj/Supplier_Router.o .shobj/Supplier_Router.so: Supplier_Router.cpp Options.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -287,6 +284,9 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
@@ -388,8 +388,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/Event_Analyzer.o .obj/Event_Analyzer.so .shobj/Event_Analyzer.o .shobj/Event_Analyzer.so: Event_Analyzer.cpp Event_Analyzer.h \
  $(ACE_ROOT)/ace/Stream.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -456,6 +454,9 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Node.h \
  $(ACE_ROOT)/ace/Node.cpp \
@@ -517,8 +518,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -551,6 +550,9 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -733,7 +735,8 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Map_Manager.cpp \
  Peer_Router.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/Get_Opt.i Options.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ Options.h \
  $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
@@ -747,8 +750,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/String_Base.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -877,6 +878,9 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Synch_Options.i \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \

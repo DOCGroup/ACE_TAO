@@ -63,8 +63,6 @@ libCCM_App.$(SOEXT): CCM_App.cpp
 .obj/CCM_App.o .obj/CCM_App.so .shobj/CCM_App.o .shobj/CCM_App.so: CCM_App.cpp \
  $(ACE_ROOT)/ace/Stream.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -131,6 +129,9 @@ libCCM_App.$(SOEXT): CCM_App.cpp
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Node.h \
  $(ACE_ROOT)/ace/Node.cpp \

@@ -69,8 +69,6 @@ endif
 .obj/auto_event.o .obj/auto_event.so .shobj/auto_event.o .shobj/auto_event.so: auto_event.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -200,6 +198,9 @@ endif
  $(ACE_ROOT)/ace/Framework_Component_T.inl \
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -214,8 +215,6 @@ endif
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -256,6 +255,9 @@ endif
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Node.h \
  $(ACE_ROOT)/ace/Node.cpp \
@@ -360,8 +362,6 @@ endif
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -402,6 +402,9 @@ endif
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -525,8 +528,6 @@ endif
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -581,6 +582,9 @@ endif
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -717,15 +721,15 @@ endif
  $(ACE_ROOT)/ace/Activation_Queue.h \
  $(ACE_ROOT)/ace/Activation_Queue.i \
  $(ACE_ROOT)/ace/Atomic_Op.h \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp
+ $(ACE_ROOT)/ace/Atomic_Op_T.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.i \
+ $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+ $(ACE_ROOT)/ace/Atomic_Op.i
 
 .obj/future2.o .obj/future2.so .shobj/future2.o .shobj/future2.so: future2.cpp \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -780,6 +784,9 @@ endif
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -916,14 +923,14 @@ endif
  $(ACE_ROOT)/ace/Activation_Queue.h \
  $(ACE_ROOT)/ace/Activation_Queue.i \
  $(ACE_ROOT)/ace/Atomic_Op.h \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp
+ $(ACE_ROOT)/ace/Atomic_Op_T.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.i \
+ $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+ $(ACE_ROOT)/ace/Atomic_Op.i
 
 .obj/manual_event.o .obj/manual_event.so .shobj/manual_event.o .shobj/manual_event.so: manual_event.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1040,6 +1047,9 @@ endif
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -1063,14 +1073,14 @@ endif
  $(ACE_ROOT)/ace/Framework_Component_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Atomic_Op.h \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp
+ $(ACE_ROOT)/ace/Atomic_Op_T.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.i \
+ $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+ $(ACE_ROOT)/ace/Atomic_Op.i
 
 .obj/process_manager.o .obj/process_manager.so .shobj/process_manager.o .shobj/process_manager.so: process_manager.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1187,6 +1197,9 @@ endif
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -1220,8 +1233,6 @@ endif
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1276,8 +1287,6 @@ endif
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1322,14 +1331,16 @@ endif
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Process_Semaphore.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
  $(ACE_ROOT)/ace/Process_Semaphore.inl
 
 .obj/reader_writer.o .obj/reader_writer.so .shobj/reader_writer.o .shobj/reader_writer.so: reader_writer.cpp \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1370,6 +1381,9 @@ endif
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Node.h \
  $(ACE_ROOT)/ace/Node.cpp \
@@ -1447,14 +1461,14 @@ endif
  $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Atomic_Op.h \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp
+ $(ACE_ROOT)/ace/Atomic_Op_T.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.i \
+ $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+ $(ACE_ROOT)/ace/Atomic_Op.i
 
 .obj/recursive_mutex.o .obj/recursive_mutex.so .shobj/recursive_mutex.o .shobj/recursive_mutex.so: recursive_mutex.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1571,6 +1585,9 @@ endif
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -1602,8 +1619,6 @@ endif
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1644,6 +1659,9 @@ endif
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -1769,8 +1787,6 @@ endif
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1811,6 +1827,9 @@ endif
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -1930,16 +1949,16 @@ endif
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Atomic_Op.h \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp
+ $(ACE_ROOT)/ace/Atomic_Op_T.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.i \
+ $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
+ $(ACE_ROOT)/ace/Atomic_Op.i
 
 .obj/task_three.o .obj/task_three.so .shobj/task_three.o .shobj/task_three.so: task_three.cpp \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2055,6 +2074,9 @@ endif
  $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -2106,8 +2128,6 @@ endif
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2148,6 +2168,9 @@ endif
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -2272,8 +2295,6 @@ endif
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2306,6 +2327,9 @@ endif
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -2394,8 +2418,6 @@ endif
 .obj/thread_manager.o .obj/thread_manager.so .shobj/thread_manager.o .shobj/thread_manager.so: thread_manager.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2512,6 +2534,9 @@ endif
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -2541,8 +2566,6 @@ endif
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2583,6 +2606,9 @@ endif
  $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -2705,8 +2731,6 @@ endif
 .obj/thread_specific.o .obj/thread_specific.so .shobj/thread_specific.o .shobj/thread_specific.so: thread_specific.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2823,6 +2847,9 @@ endif
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -2850,8 +2877,6 @@ endif
 .obj/tss1.o .obj/tss1.so .shobj/tss1.o .shobj/tss1.so: tss1.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2969,6 +2994,9 @@ endif
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -3019,8 +3047,6 @@ endif
  $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -3061,8 +3087,10 @@ endif
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Atomic_Op_T.h \
+ $(ACE_ROOT)/ace/Atomic_Op_T.i \
+ $(ACE_ROOT)/ace/Atomic_Op_T.cpp \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Atomic_Op.cpp \
  TSS_Data.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Singleton.i \
@@ -3098,8 +3126,6 @@ endif
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -3150,6 +3176,9 @@ endif
  $(ACE_ROOT)/ace/DLL.h \
  $(ACE_ROOT)/ace/Service_Object.i \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
  $(ACE_ROOT)/ace/Node.h \
  $(ACE_ROOT)/ace/Node.cpp \

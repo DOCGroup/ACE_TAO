@@ -44,8 +44,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/Log_Wrapper.o .obj/Log_Wrapper.so .shobj/Log_Wrapper.o .shobj/Log_Wrapper.so: Log_Wrapper.cpp Log_Wrapper.h \
  $(ACE_ROOT)/ace/Profile_Timer.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \

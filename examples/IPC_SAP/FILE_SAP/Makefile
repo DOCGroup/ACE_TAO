@@ -41,8 +41,6 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
