@@ -1,3 +1,8 @@
+Sat May 10 18:59;32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-cygwin32.h:
+          Added ACE_LACKS_SYS_IPC_H ACE_LACKS_SYS_MSG_H.
+
 Sat May 10 16:18:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.h:
