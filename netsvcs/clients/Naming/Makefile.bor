@@ -1,9 +1,0 @@
-
-!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
-
-all:
-	cd $(ACE_ROOT)\netsvcs\clients\Naming\Client
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-	cd $(ACE_ROOT)\netsvcs\clients\Naming\Dump_Restore
-	$(MAKE) -f Makefile.bor $(MAKE_FLAGS)
-
