@@ -128,6 +128,9 @@ private:
   static ACE_Dynamic *instance (void);
   // Point of access to the singleton.
 
+  static void cleanup (void *object, void *);
+  // Cleanup method, used by ACE_Object_Manager to destroy the singleton.
+
   char dynamic_;
   // Have we been dynamically created?
 

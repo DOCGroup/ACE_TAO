@@ -7,6 +7,7 @@
 #define ACE_BUILD_DLL
 #include "ace/Svc_Handler.h"
 #include "ace/Dynamic.h"
+#include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Svc_Handler.i"
@@ -20,6 +21,27 @@
 template <PR_ST_1, ACE_SYNCH_1>
 ACE_Thread_Mutex ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::ace_svc_handler_lock_;
 #endif /* defined (ACE_MT_SAFE) && !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
+
+#if defined (ACE_HAS_SIG_C_FUNC)
+extern "C" void
+ACE_Svc_Handler_cleanup (void *object, void *)
+{
+  ACE_TRACE ("ACE_Svc_Handler_cleanup");
+
+  // This won't call the object's destructor, but it will deallocate
+  // its storage.  That's better than nothing.
+  // (This function is only used if ACE_HAS_SIG_C_FUNC, e.g., on MVS.)
+  delete object;
+}
+#endif /* ACE_HAS_SIG_C_FUNC */
+
+template <PR_ST_1, ACE_SYNCH_1> void
+ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::cleanup (void *object, void *)
+{
+  ACE_TRACE ("ACE_Svc_Handler::cleanup");
+
+  delete (ACE_TSS_TYPE (ACE_Dynamic) *) object;
+}
 
 template <PR_ST_1, ACE_SYNCH_1> ACE_Dynamic *
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::instance (void)
@@ -45,6 +67,13 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::instance (void)
 
       if (instance_ == 0)
 	ACE_NEW_RETURN (instance_, ACE_TSS_TYPE (ACE_Dynamic), 0);
+
+      // Register for destruction with ACE_Object_Manager.
+#if defined (ACE_HAS_SIG_C_FUNC)
+      ACE_Object_Manager::at_exit (instance_, ACE_Svc_Handler_cleanup, 0);
+#else
+      ACE_Object_Manager::at_exit (instance_, cleanup, 0);
+#endif /* ACE_HAS_SIG_C_FUNC */
     }
 
   return ACE_TSS_GET (instance_, ACE_Dynamic);
