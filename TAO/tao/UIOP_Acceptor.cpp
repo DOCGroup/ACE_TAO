@@ -18,14 +18,15 @@
 //
 // ============================================================================
 
+#include "tao/UIOP_Acceptor.h"
+
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-#include "tao/UIOP_Acceptor.h"
 #include "tao/UIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
-#include "tao/Server_Strategy_Factory.h"
 #include "tao/GIOP.h"
+#include "tao/Server_Strategy_Factory.h"
 #include "tao/debug.h"
 
 ACE_RCSID(tao, UIOP_Acceptor, "$Id$")
