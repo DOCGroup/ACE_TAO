@@ -98,7 +98,8 @@ Thread_Pool::svc (void)
     {
       ACE_Message_Block *mb;
 
-      ACE_ASSERT (this->getq (mb) != -1);
+      int result = this->getq (mb);
+      ACE_ASSERT (result != -1);
 
       int length = mb->length ();
 
