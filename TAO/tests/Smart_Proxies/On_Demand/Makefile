@@ -38,7 +38,7 @@ LSRC = $(addsuffix .cpp,$(SHLIB_SRC))
 LOBJ = $(addsuffix .o,$(SHLIB_SRC))
 PSRC = $(addsuffix .cpp,$(BIN))
 
-TAO_IDLFLAGS += -Ge 1
+TAO_IDLFLAGS += -Ge 1 -Gsp
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------

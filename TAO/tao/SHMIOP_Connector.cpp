@@ -38,7 +38,8 @@ TAO_SHMIOP_Connector::purge_connections (void)
 typedef ACE_LRU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
         TAO_SHMIOP_LRU_CACHING_STRATEGY;
 
-#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES) || \
+(TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 1)
 typedef TAO_SHMIOP_LRU_CACHING_STRATEGY
         TAO_SHMIOP_CACHING_STRATEGY;
 #else
@@ -58,7 +59,8 @@ typedef ACE_Caching_Strategy_Adapter<TAO_ATTRIBUTES, TAO_CACHING_UTILITY, TAO_SH
         TAO_SHMIOP_FIFO_CACHING_STRATEGY_ADAPTER;
 typedef ACE_Caching_Strategy_Adapter<TAO_ATTRIBUTES, TAO_CACHING_UTILITY, TAO_SHMIOP_NULL_CACHING_STRATEGY>
         TAO_SHMIOP_NULL_CACHING_STRATEGY_ADAPTER;
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES
+          TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 1*/
 
 int
 TAO_SHMIOP_Connector::make_caching_strategy (void)
@@ -66,7 +68,8 @@ TAO_SHMIOP_Connector::make_caching_strategy (void)
   TAO_Resource_Factory *resource_factory =
     this->orb_core_->resource_factory ();
 
-#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES) || \
+(TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 1)
   ACE_NEW_RETURN (this->caching_strategy_,
                   TAO_SHMIOP_CACHING_STRATEGY,
                   -1);
@@ -99,7 +102,8 @@ TAO_SHMIOP_Connector::make_caching_strategy (void)
       break;
     }
 
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES
+          TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 1*/
 
   this->caching_strategy_->purge_percent (resource_factory->purge_percentage ());
   return 0;
@@ -174,7 +178,8 @@ template class ACE_Hash_Cache_Map_Manager<TAO_ADDR, TAO_HANDLER *, TAO_HASH_KEY,
 
 template class ACE_LRU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>;
 
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES) || \
+(TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 0)
 
 template class ACE_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>;
 template class ACE_LFU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>;
@@ -194,7 +199,8 @@ template class ACE_Cache_Map_Reverse_Iterator<TAO_ADDR, TAO_HANDLER *, TAO_HASH_
 
 template class ACE_Cache_Map_Manager<TAO_ADDR, TAO_HANDLER *, TAO_HASH_MAP, TAO_CACHING_STRATEGY, TAO_ATTRIBUTES>;
 
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES
+          TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 0*/
 
 template class ACE_Cached_Connect_Strategy_Ex<TAO_HANDLER, ACE_MEM_CONNECTOR, TAO_CACHING_STRATEGY, TAO_ATTRIBUTES, TAO_Cached_Connector_Lock>;
 template class ACE_Cached_Connect_Strategy<TAO_HANDLER, ACE_MEM_CONNECTOR, TAO_Cached_Connector_Lock>;
@@ -260,7 +266,8 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 
 #pragma instantiate ACE_LRU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
 
-#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+#if !defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES) || \
+(TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 0)
 
 #pragma instantiate ACE_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
 #pragma instantiate ACE_LFU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
@@ -280,7 +287,8 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 
 #pragma instantiate ACE_Cache_Map_Manager<TAO_ADDR, TAO_HANDLER *, TAO_HASH_MAP, TAO_CACHING_STRATEGY, TAO_ATTRIBUTES>
 
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES
+          TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY == 0*/
 
 #pragma instantiate ACE_Cached_Connect_Strategy_Ex<TAO_HANDLER, ACE_MEM_CONNECTOR, TAO_CACHING_STRATEGY, TAO_ATTRIBUTES, TAO_Cached_Connector_Lock>
 #pragma instantiate ACE_Cached_Connect_Strategy<TAO_HANDLER, ACE_MEM_CONNECTOR, TAO_Cached_Connector_Lock>

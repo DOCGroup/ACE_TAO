@@ -28,6 +28,7 @@ marshalled and sent to the target object.</p>
   <li><a href="#Design Overview">Design Overview</a>
   <li><a href="#Inheritance">Inheritance Issues</a>
   <li><a href="#Implementation Issues">Implementation Issues</a>
+  <li><a href="#Options">Usage Options</a>
   <li><a href="#Acknowledgements">Acknowledgements</a>
   <li><a href="#ref">References</a>
 </ul>
@@ -374,7 +375,15 @@ automatically used to create the proxy and thus a smart proxy is
 obtained instead of the default one. When the smart proxy makes its
 first invocation, this factory is unregistered. So all the proxies
 created from then on will be the default one.     
-</UL> 
+</UL>
+
+<Hr><P>
+<h3><a name="Options">Usage Options</a></h3>
+<p> To use this feature in TAO, one must set the following options:
+(1) TAO_HAS_SMART_PROXIES has to be defined in $TAO_ROOT/tao/orbconf.h
+and (2) Generate smart proxy classes using the IDL compiler option of
+-Gsp
+
 <Hr><P>
 <h3><a name="Acknowledgements">Acknowledgements</a></h3>
 

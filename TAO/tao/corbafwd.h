@@ -406,6 +406,10 @@ typedef CORBA_TypeCodeFactory *CORBA_TypeCodeFactory_ptr;
 
 #endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
+#if (TAO_HAS_SMART_PROXIES == 1)
+class TAO_Smart_Proxy_Base;
+#endif /*TAO_HAS_SMART_PROXIES == 1*/
+
 class CORBA_Bounds;
 typedef CORBA_Bounds *CORBA_Bounds_ptr;
 

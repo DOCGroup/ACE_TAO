@@ -154,7 +154,8 @@ IDL_GlobalData::IDL_GlobalData (void)
       case_diff_error_ (I_TRUE),
       ami_call_back_ (I_FALSE),
       gen_tie_classes_ (I_TRUE),
-      gen_except_ostream_op_ (I_TRUE)
+      gen_except_ostream_op_ (I_TRUE),
+      gen_smart_proxies_ (I_FALSE)
 {
 
   // Path for the perfect hash generator(gperf) program.
@@ -1522,4 +1523,17 @@ idl_bool
 IDL_GlobalData::gen_except_ostream_op (void)
 {
   return this->gen_except_ostream_op_;
+}
+
+
+void
+IDL_GlobalData::gen_smart_proxies (idl_bool val)
+{
+  this->gen_smart_proxies_ = val;
+}
+
+idl_bool
+IDL_GlobalData::gen_smart_proxies (void)
+{
+  return this->gen_smart_proxies_;
 }
