@@ -57,8 +57,8 @@ ARFLAGS         = -xar -o
 RANLIB          = echo
 SOFLAGS         = -G $(CPPFLAGS)
 
-#### Create these directories to avoid compiler warnings.
-TEMPLATE_REPOSITORY = Templates.DB Templates.DB/Modules.DB
+#### Create template repository to avoid compiler warning.
+TEMPLATE_REPOSITORY = Templates.DB
 
 ifdef BIN
   #### Builds .shobj/$*.o file, then .shobj/$*.so file.  The .o files

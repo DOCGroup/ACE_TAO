@@ -20,5 +20,5 @@ SOFLAGS         = -G $(CPPFLAGS)
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
                   $(SOLINK.cc) $(PIC) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
 
-#### Create these directories to avoid compiler warnings.
-TEMPLATE_REPOSITORY = Templates.DB Templates.DB/Modules.DB
+#### Create template repository to avoid compiler warning.
+TEMPLATE_REPOSITORY = Templates.DB
