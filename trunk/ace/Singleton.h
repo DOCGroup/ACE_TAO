@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Singleton.h
 //
@@ -14,7 +14,7 @@
 // = AUTHOR
 //    Tim Harrison (harrison@cs.wustl.edu), Douglas C. Schmidt, Chris
 //    Lahey, Rich Christy, and David Levine.
-// 
+//
 // ============================================================================
 
 #if !defined (ACE_SINGLETON_H)
@@ -27,8 +27,8 @@ class ACE_Singleton : public ACE_Cleanup
   // = TITLE
   //     A Singleton Adapter the uses the Adapter pattern to turn
   //     ordinary classes into Singletons optimized with the
-  //     Double-Checked Locking optimization pattern.  
-  //   
+  //     Double-Checked Locking optimization pattern.
+  //
   // = DESCRIPTION
   //     This implementation is a slight variation on the GoF
   //     Singleton pattern.  In particular, a single
@@ -44,9 +44,6 @@ public:
   static TYPE *instance (void);
   // Global access point to the Singleton.
 
-  static TYPE *instance (TYPE *);
-  // Set the Singleton instance.
-
   virtual void cleanup (void *param = 0);
   // Cleanup method, used by <ace_cleanup_destroyer> to destroy the
   // <ACE_Singleton>.
@@ -58,15 +55,15 @@ protected:
   ACE_Singleton (void);
   // Default constructor.
 
-  TYPE *instance_;
-  // Contained instance pointer.
+  TYPE instance_;
+  // Contained instance.
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   static ACE_Singleton<TYPE, LOCK> *singleton_;
   // Pointer to the Singleton (ACE_Cleanup) instance.
 
   static LOCK ace_singleton_lock_;
-  // Lock the creation of the singleton.  
+  // Lock the creation of the singleton.
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
   static ACE_Singleton<TYPE, LOCK> *&instance_i (void);
@@ -110,15 +107,15 @@ protected:
   ACE_TSS_Singleton (void);
   // Default constructor.
 
-  ACE_TSS<TYPE> *instance_;
-  // Contained instance pointer.
+  ACE_TSS<TYPE> instance_;
+  // Contained instance.
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   static ACE_TSS_Singleton<TYPE, LOCK> *singleton_;
   // Pointer to the Singleton (ACE_Cleanup) instance.
 
   static LOCK ace_singleton_lock_;
-  // Lock the creation of the singleton.                                        
+  // Lock the creation of the singleton.
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 };
 
