@@ -12,7 +12,7 @@
 #      test_http_request test_http_response
 
 LIB   = libHTTPU.a
-SHLIB = libHTTPU.so
+SHLIB = libHTTPU.$(SOEXT)
 FILES = parse_url parse_http_request parse_http_response \
         http_request http_response http_base http_status \
 	http_headers
@@ -22,9 +22,9 @@ LOBJ	= $(addsuffix .o,$(FILES))
 
 CPPFLAGS += -I..
 
+LDFLAGS = -L../JAWS -lJAWS2
 LDLIBS  = -lhttpu -laoutil
 BUILD   = $(VSHLIB) $(SHLIBA) $(VLIB)
-
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

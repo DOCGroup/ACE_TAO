@@ -112,19 +112,17 @@ BOOL CACE_Init_TestApp::InitInstance()
   return FALSE;
 }
 
-
-// This function runs in a separate thread - it will wait a couple of seconds
-// and then programatically dismiss the dialog box.  If ACE is not properly
-// initialized, we will have crashed before getting here.
+// This function runs in a separate thread - it will wait a couple of
+// seconds and then programatically dismiss the dialog box.  If ACE is
+// not properly initialized, we will have crashed before getting here.
 static void *
 wait_and_kill_dialog (void *pBox)
 {
-
-    CACE_Init_TestDlg *pDialog = ACE_reinterpret_cast (CACE_Init_TestDlg *,
-                                                       pBox);
-    ACE_OS::sleep(2);
-    pDialog->EndDialog (IDOK);
-    return 0;
+  CACE_Init_TestDlg *pDialog = ACE_reinterpret_cast (CACE_Init_TestDlg *,
+                                                     pBox);
+  ACE_OS::sleep(2);
+  pDialog->EndModalLoop (IDOK);
+  return 0;
 
 }
 
