@@ -665,7 +665,19 @@ ACE_Reactor_Notify::handle_input (ACE_HANDLE handle)
 
   while ((n = ACE::recv (handle, (char *) &buffer, sizeof buffer)) > 0)
     {
-      ACE_ASSERT (n == sizeof buffer);
+      // Check to see if we've got a short read.
+      if (n != sizeof buffer)      
+	{
+	  ssize_t remainder = sizeof buffer - n;
+
+	  // If so, try to recover by reading the remainder.  If this doesn't
+	  // work we're in big trouble since the input stream won't be aligned
+	  // correctly.  I'm not sure quite what to do at this point.  It's
+	  // probably best just to return -1.
+	  if (ACE::recv (handle, ((char *) &buffer) + n, remainder) != remainder)
+	    return -1;
+	}
+
       // If eh == 0 then another thread is unblocking the ACE_Reactor
       // to update the ACE_Reactor's internal structures.  Otherwise,
       // we need to dispatch the appropriate handle_* method on the
@@ -687,8 +699,8 @@ ACE_Reactor_Notify::handle_input (ACE_HANDLE handle)
               result = buffer.eh_->handle_exception (ACE_INVALID_HANDLE);
               break;
             default:
+	      // Should we bail out if we get an invalid mask?
               ACE_ERROR ((LM_ERROR, "invalid mask = %d\n", buffer.mask_));
-              break;
             }
           if (result == -1)
             buffer.eh_->handle_close (ACE_INVALID_HANDLE, 
