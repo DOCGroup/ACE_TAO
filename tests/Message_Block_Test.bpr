@@ -33,12 +33,12 @@ DEBUGLIBPATH = $(BCB)\lib\debug
 RELEASELIBPATH = $(BCB)\lib\release
 # ---------------------------------------------------------------------------
 CFLAG1 = -Od -r- -k -y -v -vi- -c -tWC
-CFLAG2 = -D_NO_VCL -Ic:\gonzo\ace-4.5.2\ACE_wrappers;$(BCB)\include
+CFLAG2 = -D_NO_VCL -I..;$(BCB)\include
 CFLAG3 = -w-rvl -Tkh30000
 PFLAGS = -D_NO_VCL -N2obj -N0obj -U$(BCB)\lib;$(DEBUGLIBPATH) \
-  -Ic:\gonzo\ace-4.5.2\ACE_wrappers;$(BCB)\include -$Y -$W -$O- -v -JPHN -M
-RFLAGS = -D_NO_VCL -ic:\gonzo\ace-4.5.2\ACE_wrappers;$(BCB)\include
-AFLAGS = /ic:\gonzo\ace-4.5.2\ACE_wrappers /i$(BCB)\include /d_NO_VCL /mx /w2 /zd
+  -I..;$(BCB)\include -$Y -$W -$O- -v -JPHN -M
+RFLAGS = -D_NO_VCL -i..;$(BCB)\include
+AFLAGS = /i.. /i$(BCB)\include /d_NO_VCL /mx /w2 /zd
 LFLAGS = -L$(BCB)\lib;$(DEBUGLIBPATH) -ap -Tpe -x -Gn -v
 IFLAGS =
 # ---------------------------------------------------------------------------
@@ -77,7 +77,7 @@ Comments=
 
 [HistoryLists\hlIncludePath]
 Count=2
-Item0=c:\gonzo\ace-4.5.2\ACE_wrappers;$(BCB)\include
+Item0=..;$(BCB)\include
 Item1=$(ACE_ROOT);$(BCB)\include
 
 [HistoryLists\hlLibraryPath]
