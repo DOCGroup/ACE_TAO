@@ -93,12 +93,28 @@ SOURCE=.\client.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ClientORBInitializer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ClientRequestInterceptor.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\testC.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h"
+# Begin Source File
+
+SOURCE=.\ClientORBInitializer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ClientRequestInterceptor.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\testC.h
