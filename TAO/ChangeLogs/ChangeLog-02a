@@ -1,3 +1,9 @@
+Tue Aug 28 12:28:58 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/TestUtils/TestCombinedThreads.cpp:
+
+          Reformat the code to follow the style guidelines.
+
 Tue Aug 28 10:40:06 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/TestUtils:

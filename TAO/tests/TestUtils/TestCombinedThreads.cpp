@@ -25,6 +25,7 @@ typedef ACE_Hash_Map_Manager<ACE_hthread_t,
 static TestORBIDMap*       idMap          = 0;
 static TestTimeValueMap*   timeMap        = 0;
 static ACE_Thread_Manager* thread_manager = 0;
+static const ACE_hthread_t largestId      = 0x7fffffff;
 
 // *******************************************************************
 // Method      : TAO_TestCombinedThreads::TAO_TestCombinedThreads
@@ -119,32 +120,35 @@ TAO_TestCombinedThreads::addNamingServiceTimeout (unsigned int timeout)
   // with the given timeout.
   static const char* timeoutOption = "-t";
   int timeoutFound = 0;
-  for (int i = 0; !timeoutFound && this->testArgs_.argv_[i] != 0; i++) {
-    if (ACE_OS_String::strcmp (this->testArgs_.argv_[i],
-                               timeoutOption) == 0) {
-      timeoutFound = 1;
+  for (int i = 0; !timeoutFound && this->testArgs_.argv_[i] != 0; i++)
+    {
+      if (ACE_OS_String::strcmp (this->testArgs_.argv_[i],
+                                 timeoutOption) == 0)
+        {
+          timeoutFound = 1;
+        }
     }
-  }
-  if (!timeoutFound) {
-    // Add the timeout option
-    ACE_NEW (this->testArgs_.argv_[this->testArgs_.argc_],
-             char[ACE_OS_String::strlen (timeoutOption) + 1]);
-    ACE_OS_String::strcpy (this->testArgs_.argv_[testArgs_.argc_],
-                           timeoutOption);
-    this->testArgs_.argc_++;
+  if (!timeoutFound)
+    {
+      // Add the timeout option
+      ACE_NEW (this->testArgs_.argv_[this->testArgs_.argc_],
+               char[ACE_OS_String::strlen (timeoutOption) + 1]);
+      ACE_OS_String::strcpy (this->testArgs_.argv_[testArgs_.argc_],
+                             timeoutOption);
+      this->testArgs_.argc_++;
 
-    // Add the number of seconds
-    char number[64];
-    ACE_OS::sprintf (number, "%d", timeout);
-    ACE_NEW (this->testArgs_.argv_[this->testArgs_.argc_],
-             char[ACE_OS::strlen (number) + 1]);
-    ACE_OS_String::strcpy (this->testArgs_.argv_[this->testArgs_.argc_],
-                           number);
-    this->testArgs_.argc_++;
+      // Add the number of seconds
+      char number[64];
+      ACE_OS::sprintf (number, "%d", timeout);
+      ACE_NEW (this->testArgs_.argv_[this->testArgs_.argc_],
+               char[ACE_OS::strlen (number) + 1]);
+      ACE_OS_String::strcpy (this->testArgs_.argv_[this->testArgs_.argc_],
+                             number);
+      this->testArgs_.argc_++;
 
-    // Add the NULL terminator
-    this->testArgs_.argv_[this->testArgs_.argc_] = 0;
-  }
+      // Add the NULL terminator
+      this->testArgs_.argv_[this->testArgs_.argc_] = 0;
+    }
 }
 
 
@@ -160,41 +164,49 @@ TAO_TestCombinedThreads::addNamingServiceTimeout (unsigned int timeout)
 int
 TAO_TestCombinedThreads::run (unsigned int timeout)
 {
-  if (this->args_ != 0) {
-    // Count up the arguments
-    int blank = 0;
-    for (this->testArgs_.argc_ = 0;
-         this->args_[this->testArgs_.argc_] != 0;
-         this->testArgs_.argc_++) {
-      if (this->args_[this->testArgs_.argc_][0] == '\0') {
-        blank++;
-      }
+  if (this->args_ != 0)
+    {
+      // Count up the arguments
+      int blank = 0;
+      for (this->testArgs_.argc_ = 0;
+           this->args_[this->testArgs_.argc_] != 0;
+           this->testArgs_.argc_++)
+        {
+          if (this->args_[this->testArgs_.argc_][0] == '\0')
+            {
+              blank++;
+            }
+        }
+      // Copy the arguments
+      int count = this->testArgs_.argc_ + 1 +
+                  (this->namingServiceHack_ ? 2: 0) - blank;
+      ACE_NEW_RETURN (this->testArgs_.argv_, char*[count], -1);
+      int p = 0;
+      for (int i = 0; i < this->testArgs_.argc_; i++)
+        {
+          if (this->args_[i][0] != '\0')
+            {
+              ACE_NEW_RETURN (this->testArgs_.argv_[p],
+                              char[ACE_OS_String::strlen (this->args_[i]) + 1],
+                              -1);
+              ACE_OS_String::strcpy (this->testArgs_.argv_[p],
+                                     this->args_[i]);
+              p++;
+            }
+        }
+      this->testArgs_.argv_[p] = 0;
+      this->testArgs_.argc_ -= blank;
     }
-    // Copy the arguments
-    int count = this->testArgs_.argc_ + 1 +
-                (this->namingServiceHack_ ? 2: 0) - blank;
-    ACE_NEW_RETURN (this->testArgs_.argv_, char*[count], -1);
-    int p = 0;
-    for (int i = 0; i < this->testArgs_.argc_; i++) {
-      if (this->args_[i][0] != '\0') {
-        ACE_NEW_RETURN (this->testArgs_.argv_[p],
-                        char[ACE_OS_String::strlen (this->args_[i]) + 1],
-                        -1);
-        ACE_OS_String::strcpy (this->testArgs_.argv_[p], this->args_[i]);
-        p++;
-      }
-    }
-    this->testArgs_.argv_[p] = 0;
-    this->testArgs_.argc_ -= blank;
-  }
 
-  if (timeout > 0) {
-    this->testArgs_.timeout_ = ACE_Time_Value (timeout);
+  if (timeout > 0)
+    {
+      this->testArgs_.timeout_ = ACE_Time_Value (timeout);
 
-    if (this->namingServiceHack_) {
-      this->addNamingServiceTimeout (timeout);
+      if (this->namingServiceHack_)
+        {
+          this->addNamingServiceTimeout (timeout);
+        }
     }
-  }
   return thread_manager->spawn (TAO_TestCombinedThreads::spawned,
                                 &(this->testArgs_));
 }
@@ -231,12 +243,14 @@ TAO_TestCombinedThreads::waitForFileTimed (const char* file,
                                            unsigned int seconds)
 {
   struct stat buf;
-  while (seconds-- != 0) {
-    if (ACE_OS::stat (file, &buf) == 0 && buf.st_size > 0) {
-      return 0;
+  while (seconds-- != 0)
+    {
+      if (ACE_OS::stat (file, &buf) == 0 && buf.st_size > 0)
+        {
+          return 0;
+        }
+      ACE_OS::sleep (1);
     }
-    ACE_OS::sleep (1);
-  }
   return -1;
 }
 
@@ -277,20 +291,22 @@ void TAO_TestCombinedThreads::initialize (TEST_MAIN_TYPE_FUNC func,
   this->testArgs_.argv_ = 0;
   this->copyArgv(args, this->args_);
 
-  if (thread_manager == 0) {
+  if (thread_manager == 0)
+    {
 #if defined (VXWORKS) && defined (ACE_HAS_IP_MULTICAST)
-    char host[MAXHOSTNAMELEN];
-    if (ACE_OS::hostname (host, MAXHOSTNAMELEN) != -1) {
-      routeAdd ("224.0.0.0", host);
-    }
+      char host[MAXHOSTNAMELEN];
+      if (ACE_OS::hostname (host, MAXHOSTNAMELEN) != -1)
+        {
+          routeAdd ("224.0.0.0", host);
+        }
 #endif
-    ACE_NEW (thread_manager,
-             ACE_Thread_Manager);
-    ACE_Object_Manager::at_exit (
-                          thread_manager,
-                          &TAO_TestCombinedThreads::destroyThreadManager,
-                          0);
-  }
+      ACE_NEW (thread_manager,
+               ACE_Thread_Manager);
+      ACE_Object_Manager::at_exit (
+                            thread_manager,
+                            &TAO_TestCombinedThreads::destroyThreadManager,
+                            0);
+    }
 }
 
 
@@ -334,12 +350,14 @@ TAO_TestCombinedThreads::copyArgv (char** argv,
 void
 TAO_TestCombinedThreads::deleteArguments (char** args)
 {
-  if (args != 0) {
-    for (int i = 0; args[i] != 0; i++) {
-      delete [] args[i];
+  if (args != 0)
+    {
+      for (int i = 0; args[i] != 0; i++)
+        {
+          delete [] args[i];
+        }
+      delete [] args;
     }
-    delete [] args;
-  }
 }
 
 
@@ -374,12 +392,14 @@ TAO_TestCombinedThreads::spawned (void* args)
 
   // Call the main function and print out the return value
   int status = -1;
-  if (testArgs->func_ != 0) {
-    status = testArgs->func_ (testArgs->argc_, testArgs->argv_);
-  }
-  else {
-    ACE_DEBUG ((LM_ERROR, "ERROR: testArgs->func_ is zero\n"));
-  }
+  if (testArgs->func_ != 0)
+    {
+      status = testArgs->func_ (testArgs->argc_, testArgs->argv_);
+    }
+  else
+    {
+      ACE_DEBUG ((LM_ERROR, "ERROR: testArgs->func_ is zero\n"));
+    }
   ACE_DEBUG ((LM_DEBUG, "Return status from %s: %d\n",
                         testArgs->argv_[0], status));
 
@@ -400,15 +420,24 @@ TAO_TestCombinedThreads::spawned (void* args)
 void
 TAO_TestCombinedThreads::setTimeout (ACE_Time_Value timeout)
 {
+  static ACE_Time_Value largest;
   // Only bind if timeout is not zero
-  if (timeout != ACE_Time_Value::zero) {
-    ACE_hthread_t threadId;
-    ACE_OS::thr_self (threadId);
+  if (timeout != ACE_Time_Value::zero)
+    {
+      ACE_hthread_t threadId;
+      ACE_OS::thr_self (threadId);
 
-    TAO_TestCombinedThreads::allocateTimeMap ();
+      TAO_TestCombinedThreads::allocateTimeMap ();
 
-    timeMap->bind (threadId, timeout);
-  }
+      timeMap->bind (threadId, timeout);
+      if (timeout > largest)
+        {
+          ACE_Time_Value dummy;
+          largest = timeout;
+          timeMap->unbind (largestId, dummy);
+          timeMap->bind (largestId, largest);
+        }
+    }
 }
 
 
@@ -444,9 +473,10 @@ TAO_TestCombinedThreads::disassociateORB (void)
   ACE_hthread_t threadId;
   ACE_OS::thr_self (threadId);
 
-  if (idMap != 0) {
-    idMap->unbind (threadId);
-  }
+  if (idMap != 0)
+    {
+      idMap->unbind (threadId);
+    }
 }
 
 
@@ -464,9 +494,10 @@ TAO_TestCombinedThreads::getORBId (void)
   ACE_hthread_t threadId;
   ACE_OS::thr_self (threadId);
 
-  if (idMap != 0) {
-    idMap->find (threadId, id);
-  }
+  if (idMap != 0)
+    {
+      idMap->find (threadId, id);
+    }
 
   return id;
 }
@@ -486,21 +517,35 @@ TAO_TestCombinedThreads::getTimeout (void)
   ACE_hthread_t threadId;
   ACE_OS::thr_self (threadId);
 
-  if (timeMap != 0) {
-    ACE_Hash_Map_Entry<ACE_hthread_t, ACE_Time_Value>* entry;
-    if (timeMap->find (threadId, entry) == 0) {
-      timeout = &(entry->int_id_);
+  if (timeMap != 0)
+    {
+      ACE_Hash_Map_Entry<ACE_hthread_t, ACE_Time_Value>* entry;
+      if (timeMap->find (threadId, entry) == 0)
+        {
+          timeout = &(entry->int_id_);
+        }
+      if (timeout == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "WARNING: Could not find timeout for %d\n",
+                      threadId));
+          // Couldn't find the timeout for the current thread, so
+          // we try to get the largest timeout registered.
+          if (timeMap->find (largestId, entry) == 0)
+            {
+              timeout = &(entry->int_id_);
+            }
+          else
+            {
+              // If that doesn't work, fall back to the 30 second default
+              timeMap->bind (threadId, ACE_Time_Value(30));
+              if (timeMap->find (threadId, entry) == 0)
+                {
+                  timeout = &(entry->int_id_);
+                }
+            }
+        }
     }
-    if (timeout == 0) {
-      ACE_DEBUG ((LM_DEBUG,
-                  "WARNING: Could not find timeout for %d\n", threadId));
-      timeMap->bind (threadId, ACE_Time_Value(30));
-      if (timeMap->find (threadId, entry) == 0) {
-        timeout = &(entry->int_id_);
-      }
-    }
-  }
-
 
   return timeout;
 }
@@ -608,9 +653,10 @@ TAO_TestCombinedThreads::getRandomString (const char* base)
   ACE_CString string ("");
   char number[32];
 
-  if (base != 0) {
-    string = base;
-  }
+  if (base != 0)
+    {
+      string = base;
+    }
   string += ACE_OS_String::itoa (ACE_OS::rand (), number, 10);
 
   return string;
@@ -641,12 +687,14 @@ TAO_TestCombinedThreads::cleanORBIdMap (void*, void*)
 void
 TAO_TestCombinedThreads::allocateORBIdMap (void)
 {
-  if (idMap == 0) {
-    ACE_NEW (idMap, TestORBIDMap ());
-    idMap->open (5);
-    ACE_Object_Manager::at_exit (idMap,
-                                 &TAO_TestCombinedThreads::cleanORBIdMap, 0);
-  }
+  if (idMap == 0)
+    {
+      ACE_NEW (idMap, TestORBIDMap ());
+      idMap->open (5);
+      ACE_Object_Manager::at_exit (idMap,
+                                   &TAO_TestCombinedThreads::cleanORBIdMap,
+                                   0);
+    }
 }
 
 
@@ -674,12 +722,14 @@ TAO_TestCombinedThreads::cleanTimeMap (void*, void*)
 void
 TAO_TestCombinedThreads::allocateTimeMap (void)
 {
-  if (timeMap == 0) {
-    ACE_NEW (timeMap, TestTimeValueMap ());
-    timeMap->open (5);
-    ACE_Object_Manager::at_exit (timeMap,
-                                 &TAO_TestCombinedThreads::cleanTimeMap, 0);
-  }
+  if (timeMap == 0)
+    {
+      ACE_NEW (timeMap, TestTimeValueMap ());
+      timeMap->open (5);
+      ACE_Object_Manager::at_exit (timeMap,
+                                   &TAO_TestCombinedThreads::cleanTimeMap,
+                                   0);
+    }
 }
 
 
