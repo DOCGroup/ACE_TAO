@@ -1,3 +1,10 @@
+Sat Dec 11 10:39:38 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/{Atomic_Op.h,Atomic_Op_T.h,Atomic_Op_T.inl,Atomic_Op_T.inl} 
+	  (operator=): Updated the ACE_Atomic_Op so that it allows
+ 	  "chained assignments."  Thanks to Michael Altmann <michael dot
+ 	  altmann dot extern at mchh dot siemens dot de> for these fixes.
+
 Sat Dec 11 09:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Task.cpp:

@@ -111,17 +111,18 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator< (const TYPE &rhs) const
   return this->value_ < rhs;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE void
+template <class ACE_LOCK, class TYPE> ACE_INLINE ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &
 ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator= (const ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &rhs)
 {
 // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator=");
   if (&rhs == this)
-    return; // Avoid deadlock...
-  ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_);
-  // This will call ACE_Atomic_Op_Ex::TYPE(), which will ensure the value
-  // of <rhs> is acquired atomically.
+    return *this; // Avoid deadlock...
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, *this);
+  // This will call ACE_Atomic_Op_Ex::TYPE(), which will ensure the
+  // value of <rhs> is acquired atomically.
 
   this->value_ = rhs.value ();
+  return *this;
 }
 
 template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
@@ -142,28 +143,31 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::value_i (void)
   return this->value_;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE void
+template <class ACE_LOCK, class TYPE> ACE_INLINE ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &
 ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator= (const TYPE &rhs)
 {
 // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator=");
-  ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_);
+  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, *this);
   this->value_ = rhs;
+  return *this;
 }
 
 //
 // ACE_Atomic_Op inline functions
 //
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE void
+template <class ACE_LOCK, class TYPE> ACE_INLINE ACE_Atomic_Op<ACE_LOCK, TYPE> &
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const TYPE &i)
 {
   this->impl_ = i;
+  return *this;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE void
+template <class ACE_LOCK, class TYPE> ACE_INLINE ACE_Atomic_Op<ACE_LOCK, TYPE> &
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const ACE_Atomic_Op<ACE_LOCK, TYPE> &rhs)
 {
   this->impl_ = rhs.impl_;
+  return *this;
 }
 
 template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
