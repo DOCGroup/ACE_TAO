@@ -37,13 +37,13 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
     messaging_object_ (0),
     bidirectional_flag_ (-1)
 {
-  /*  if (flag)
+  if (flag)
     {
       // Use the lite version of the protocol
       ACE_NEW (this->messaging_object_,
                TAO_GIOP_Message_Lite (orb_core));
     }
-    else*/
+    else
     {
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,

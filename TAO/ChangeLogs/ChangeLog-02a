@@ -1,3 +1,8 @@
+Thu Jan 11 15:30:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_State.cpp:
+	* tao/IIOP_Transport.cpp: Fixed warnings in g++ build.
+
 Thu Jan 11 12:36:49 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Simple/time-date/svc.conf:
