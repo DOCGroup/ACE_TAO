@@ -1,3 +1,9 @@
+Sun Feb 21 16:38:15 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Took care of
+	#includes with <>'s  in the idl files. Thanks to Mark Little
+	<M.C.Little@ncl.ac.uk> for pointing this out.
+
 Sun Feb 21 09:07:38 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Throughput/ECT_Driver.cpp (dump_results):
