@@ -642,11 +642,6 @@ Mon Aug  4 10:08:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Added additional includes required by recent changes to ACE.
 
-        * tests/Bench/wire/test.idl:
-
-          Changed interface operation name and signature to match what
-          is in the implementation class.
-
 Sun Aug  3 16:37:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Any_Basic_Impl_T.cpp:
@@ -1400,23 +1395,10 @@ Wed Jul  9 11:10:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
         * TAO_IDL/be_include/be_visitor_operation/operation.h:
         * TAO_IDL/include/ast_decl.h:
-        * tests/Bench/wire/client.dsp:
-        * tests/Bench/wire/test.idl:
-        * tests/Bench/wire/testC.cpp:
-        * tests/Bench/wire/testC.h:
-        * tests/Bench/wire/testC.i:
-        * tests/Bench/wire/testS.cpp:
-        * tests/Bench/wire/testS.h:
 
 	  Changes to generated code, and the hand-crafted
 	  example, to deal with exceptions, oneways and
 	  AMI flags in the invoke() parameter list.
-
-Tue Jul  8 22:44:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * tests/Bench/Bench.dsw:
-
-          New file, neglected to check this in originally.
 
 Tue Jul  8 20:24:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -1471,19 +1453,6 @@ Tue Jul  8 12:50:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Fixed initialization of the bitmasks used to modify the bit vector
           used to select ORB file includes for code generation.
-
-Mon Jul  7 21:58:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* tests/Bench/wire/testC.cpp:
-	* tests/Bench/wire/testS.cpp:
-	* tests/Bench/wire/testS.h:
-	* tests/Bench/wire/testC.h:
-	* tests/Bench/wire/test.idl:
-	* tests/Bench/wire/test_i.h:
-	* tests/Bench/wire/test_i.cpp: 
-	* tests/Bench/wire/client.cpp: 
-	* tests/Bench/wire/Makefile: Added a oneway operation to the
-	  test. 
 
 Mon Jul  7 21:38:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -1551,11 +1520,6 @@ Mon Jul  7 04:55:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Remote_Invocation.cpp:
 	* tao/Remote_Invocation.h:
 	* tao/Synch_Invocation.cpp: Fixed compile errors with exceptions=0. 
-
-Sun Jul 06 11:00:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* tests/Bench/wire/testC.cpp: Updated to use the Invocation
-	  classes.  
 
 Sat Jul 05 18:38:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
