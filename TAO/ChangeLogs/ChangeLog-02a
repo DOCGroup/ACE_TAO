@@ -1,3 +1,7 @@
+Wed Sep 12 17:05:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * tao/DynamicAny/DynAny_i.cpp: Fixed a compile problem with g++. 
+
 Wed Sep 12 16:29:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Leader_Follower.cpp (wait_for_event): If the follower times

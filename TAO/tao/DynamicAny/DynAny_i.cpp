@@ -475,7 +475,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs,
         // dispense with the to_string here, since the type codes have
         // already been checked for equivalence above (done with this
         // DynAny's type_ member, which does have the bound set correctly).
-        CORBA::Char * lhs_v;
+        const char* lhs_v;
         this->any_ >>= lhs_v;
 
         return ACE_OS::strcmp (rhs_v, lhs_v) == 0;
