@@ -34,6 +34,14 @@ class be_sequence : public virtual AST_Sequence,
                     public virtual be_type
 {
 public:
+  enum MANAGED_TYPE
+  {
+    MNG_UNKNOWN ,
+    MNG_NONE,
+    MNG_STRING,
+    MNG_OBJREF
+  };
+
   // =Operations
 
   be_sequence (void);
@@ -76,6 +84,15 @@ public:
   virtual int gen_out_impl (void);
   // generate the _out implementation
 
+  virtual int gen_managed_type_ch (void);
+  // generate code for managed types in header
+
+  virtual int gen_managed_type_ci (void);
+  // generate code for managed types in inlined file
+
+  virtual int gen_managed_type_cs (void);
+  // generate code for managed types in impl file
+
   virtual int gen_typecode (void);
   // generate the typecode
 
@@ -87,6 +104,9 @@ public:
 
   virtual long tc_encap_len (void);
   // return length of encapsulation
+
+  virtual MANAGED_TYPE managed_type (void);
+  // return the managed type
 
   // Narrowing
   DEF_NARROW_METHODS3 (be_sequence, AST_Sequence, be_scope, be_type);
@@ -101,6 +121,8 @@ private:
 
   be_sequence *seq_node_;
   // if we enclose a sequence node
+
+  MANAGED_TYPE mt_;
 };
 
 #endif

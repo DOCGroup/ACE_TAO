@@ -121,8 +121,8 @@ be_type::nested_type_name (be_decl *d, char *suffix)
 
 	  // now check if the scope in which we were defined is the same
 	  // as the current scope in which we are used or one of its ancestors
-	  while (d->node_type () != AST_Decl::NT_root) // keep moving up
-                                            	   // the chain
+	  while (d && d->node_type () != AST_Decl::NT_root) // keep moving up the
+                                                        // chain
 		{
 		  // now we need to make sure that "t" is not the same as "d" i.e., the
 		  // scope in which we are using ourselves.
@@ -141,11 +141,11 @@ be_type::nested_type_name (be_decl *d, char *suffix)
 			  return macro;
 			}
 		  d = be_decl::narrow_from_decl (ScopeAsDecl (d->defined_in ()));
-		}
+		} // end of while
 	} // end of if is_nested
 
   // not nested OR not defined in the same scope as "d" or its
-  // ancestors
+  // ancestors or d does not exist
   ACE_OS::sprintf (macro, "%s", this->fullname ());
   if (suffix)
     {

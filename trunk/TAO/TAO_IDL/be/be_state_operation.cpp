@@ -338,7 +338,7 @@ be_state_operation::gen_code (be_type *bt, be_decl *d, be_type *type)
             {
               if (bt->node_type () == AST_Decl::NT_typedef)
                 {
-                  *os << bt->name () << " *retval = new " << bt->name () << "*;" << nl;
+                  *os << bt->name () << " *retval = new " << bt->name () << ";" << nl;
                 }
               else
                 {

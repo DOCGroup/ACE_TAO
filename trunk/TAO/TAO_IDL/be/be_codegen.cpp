@@ -107,6 +107,9 @@ TAO_CodeGen::make_state (void)
     case TAO_SEQUENCE_BODY_CH:
     case TAO_SEQUENCE_BODY_CS:
     case TAO_SEQUENCE_BODY_CI:
+    case TAO_SEQELEM_RETTYPE_CH:
+    case TAO_SEQELEM_RETTYPE_CI:
+    case TAO_SEQELEM_RETTYPE_CS:
       return TAO_BE_STATE_SEQUENCE::instance ();
     case TAO_ATTRIBUTE_RETURN_TYPE_CH:
     case TAO_ATTRIBUTE_INPARAM_TYPE_CH:
