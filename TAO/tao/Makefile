@@ -9480,7 +9480,7 @@ realclean:
  StringSeqC.h ORBInitInfo.inl ORBInitializer_Registry.h \
  TAO_Singleton.h \
  ORBInitializer_Registry.inl \
- CodecFactory_ORBInitializer.h IOPC.h TypeCodeFactory_Adapter.h \
+ CodecFactory_ORBInitializer.h TypeCodeFactory_Adapter.h \
  PICurrent_ORBInitializer.h PICurrent.h ValueFactory_Map.h \
  ValueFactory_Map.i \
  Object_KeyC.h \
