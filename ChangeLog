@@ -1,3 +1,9 @@
+Sat Nov  8 22:11:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/TkReactor_Test.cpp:
+
+	  Fixed a compile error by removing cerr. 
+
 Sun Nov  9 04:08:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * bin/fuzz.pl:

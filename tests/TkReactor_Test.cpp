@@ -88,7 +88,6 @@ static int quit = 0;
 void
 Quit (ClientData, XEvent *)
 {
-  cerr << "quit called";
   ACE_DEBUG ((LM_DEBUG,"Quit called\n"));
   quit = 1;
 }
