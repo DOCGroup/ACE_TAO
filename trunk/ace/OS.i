@@ -7305,12 +7305,12 @@ ACE_OS::exit (int status)
 {
   // ACE_TRACE ("ACE_OS::exit");
 
-#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
+#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_HAS_WINCE) && !defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
   // Shut down the ACE_Object_Manager.  With
   // ACE_HAS_NONSTATIC_OBJECT_MANAGER, the ACE_Object_Manager is
   // instantiated on the main's stack.  ::exit () doesn't destroy it.
-  ACE_Object_Manager::fini ();
-#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
+  ACE_Object_Manager_fini ();
+#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
 #if !defined (ACE_HAS_WINCE)
 # if defined (ACE_WIN32)
@@ -10449,12 +10449,12 @@ fflush (FILE *fp)
 ACE_INLINE void
 exit (int status)
 {
-#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
+#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_HAS_WINCE) && !defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
   // Shut down the ACE_Object_Manager.  With
   // ACE_HAS_NONSTATIC_OBJECT_MANAGER, the ACE_Object_Manager is
   // instantiated on the main's stack.  ::exit () doesn't destroy it.
-  ACE_Object_Manager::fini ();
-#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
+  ACE_Object_Manager_fini ();
+#endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
   ACE_OS::exit (status);
 }
