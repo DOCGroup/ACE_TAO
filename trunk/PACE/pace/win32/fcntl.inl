@@ -16,6 +16,8 @@
 #include <windows.h>
 #include <wtypes.h>
 
+/* Working to get this right! */
+
 #if (PACE_HAS_POSIX_FS_UOF)
 PACE_INLINE
 int
@@ -162,6 +164,9 @@ PACE_INLINE
 int
 pace_creat (const char * path, pace_mode_t mode)
 {
-  return pace_win32_emulation_creat (path, mode);
+  /* Working to get this right!
+     return pace_win32_emulation_creat (path, mode);
+  */
+  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 }
 #endif /* PACE_HAS_POSIX_FS_UOF */

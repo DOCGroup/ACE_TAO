@@ -1,3 +1,14 @@
+Mon Jul 17 11:47:11 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* docs/PACE_POSIX_support.txt:
+	 
+	  Added to specify native/emulation/not supported funcs.
+
+	* pace/win32/fcntl.h:
+
+	  creat isn't quite exactly as ACE does it. Leave this out
+	  until correctly finished!
+
 Sun Jul 16 16:21:16 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/grp.inl: 
