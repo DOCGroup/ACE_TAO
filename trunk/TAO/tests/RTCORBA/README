@@ -45,3 +45,8 @@ includes the following:
         . Private_Connection
 
           Tests RTCORBA::PrivateConnectionPolicy support.
+
+        . Banded_Connections
+
+          Tests RTCORBA::PriorityBandedConnectionPolicy.
+
