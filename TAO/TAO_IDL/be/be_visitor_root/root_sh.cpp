@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_root.h"
 
@@ -49,7 +49,8 @@ be_visitor_root_sh::init (void)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_root_sh::init - "
-                         "Error :%p: Unable to open server header file : %s\n", 
+                         "Error :%p: Unable to open server header file : %s\n",
+                         "start_server_header",
                          idl_global->be_get_server_hdr_fname ()),
                         -1);
     }
