@@ -616,6 +616,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
+private:
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
   ACE_Mutex lock_;
 #else
@@ -635,7 +636,7 @@ class ACE_Export ACE_RW_Process_Mutex
 {
   // = TITLE
   //     Wrapper for readers/writer locks that exist across processes.
-  // 
+  //
   // = DESCRIPTION
   //     Note that because this class uses the
   //     <ACE_File_Lock> as its implementation it only can be reliably
