@@ -19,7 +19,7 @@
 #define _PortableGroup_IDL_
 
 //#include <PortableServer.pidl>
-#include <CosNaming.idl>
+#include "CosNaming.idl"
 #include <tao/IOP.pidl>
 #include <tao/GIOP.pidl>
 #include <orb.idl>

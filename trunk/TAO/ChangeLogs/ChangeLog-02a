@@ -1,3 +1,8 @@
+Mon Jan 14 08:49:31 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/PortableGroup.idl: Changed include
+	  specification to work under Win32 release builds.
+
 Mon Jan 14 09:52:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/Makefile.bor:
