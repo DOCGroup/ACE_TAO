@@ -159,6 +159,42 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Simple_Three_Stage sender"=.\Simple_Three_Stage\sender.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Simple_Three_Stage receiver"=.\Simple_Three_Stage\receiver.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Simple_Three_Stage distributer"=.\Simple_Three_Stage\distributer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Global:
 
 Package=<5>
