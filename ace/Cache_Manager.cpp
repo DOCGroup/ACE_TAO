@@ -157,47 +157,48 @@ template class ACE_Singleton<ACE_String_Counted_Cache_Manager,
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Hash_Bucket_Item<char const *, ACE_Cache_Object *>
-#pragma instantiate ACE_Hash_Bucket_DLCStack<char const *, ACE_Cache_Object *>
-#pragma instantiate ACE_Hash_Bucket_DLCStack_Iterator<char const *,
+#pragma instantiate ACE_Hash_Bucket_Item<ACE_Strdup_String, ACE_Cache_Object *>
+#pragma instantiate ACE_Hash_Bucket_DLCStack<ACE_Strdup_String, \
+                                             ACE_Cache_Object *>
+#pragma instantiate ACE_Hash_Bucket_DLCStack_Iterator<ACE_Strdup_String, \
                                                       ACE_Cache_Object *>
-#pragma instantiate ACE_Hash_Bucket_Manager<const char *,
-                                            ACE_Cache_Object *,
+#pragma instantiate ACE_Hash_Bucket_Manager<ACE_Strdup_String, \
+                                            ACE_Cache_Object *, \
                                             ACE_String_Equal_Functor>
-#pragma instantiate ACE_Cache_Hash<const char *,
-                                   ACE_String_Hash_Functor,
+#pragma instantiate ACE_Cache_Hash<ACE_Strdup_String, \
+                                   ACE_String_Hash_Functor, \
                                    ACE_String_Equal_Functor>
-#pragma instantiate ACE_Cache_Heap_Item<char const *,
-                                        ACE_Referenced_Cache_Object_Factory,
-                                        ACE_String_Hash_Functor,
+#pragma instantiate ACE_Cache_Heap_Item<ACE_Strdup_String, \
+                                        ACE_Referenced_Cache_Object_Factory, \
+                                        ACE_String_Hash_Functor, \
                                         ACE_String_Equal_Functor>
-#pragma instantiate ACE_Cache_Heap<const char *,
-                                   ACE_Referenced_Cache_Object_Factory,
-                                   ACE_String_Hash_Functor,
+#pragma instantiate ACE_Cache_Heap<ACE_Strdup_String, \
+                                   ACE_Referenced_Cache_Object_Factory, \
+                                   ACE_String_Hash_Functor, \
                                    ACE_String_Equal_Functor>
-#pragma instantiate ACE_Cache_Manager<const char *,
-                                      ACE_Referenced_Cache_Object_Factory,
-                                      ACE_String_Hash_Functor,
+#pragma instantiate ACE_Cache_Manager<ACE_Strdup_String, \
+                                      ACE_Referenced_Cache_Object_Factory, \
+                                      ACE_String_Hash_Functor, \
                                       ACE_String_Equal_Functor>
-#pragma instantiate ACE_Cache_Heap_Item<char const *,
-                                        ACE_Counted_Cache_Object_Factory,
-                                        ACE_String_Hash_Functor,
+#pragma instantiate ACE_Cache_Heap_Item<ACE_Strdup_String, \
+                                        ACE_Counted_Cache_Object_Factory, \
+                                        ACE_String_Hash_Functor, \
                                         ACE_String_Equal_Functor>
-#pragma instantiate ACE_Cache_Heap<const char *,
-                                   ACE_Counted_Cache_Object_Factory,
-                                   ACE_String_Hash_Functor,
+#pragma instantiate ACE_Cache_Heap<ACE_Strdup_String, \
+                                   ACE_Counted_Cache_Object_Factory, \
+                                   ACE_String_Hash_Functor, \
                                    ACE_String_Equal_Functor>
-#pragma instantiate ACE_Cache_Manager<const char *,
-                                      ACE_Counted_Cache_Object_Factory,
-                                      ACE_String_Hash_Functor,
+#pragma instantiate ACE_Cache_Manager<ACE_Strdup_String, \
+                                      ACE_Counted_Cache_Object_Factory, \
+                                      ACE_String_Hash_Functor, \
                                       ACE_String_Equal_Functor>
-#pragma instantiate ACE_Singleton<ACE_Referenced_Cache_Object_Factory,
+#pragma instantiate ACE_Singleton<ACE_Referenced_Cache_Object_Factory, \
                                   ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Singleton<ACE_Counted_Cache_Object_Factory,
+#pragma instantiate ACE_Singleton<ACE_Counted_Cache_Object_Factory, \
                                   ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Singleton<ACE_String_Referenced_Cache_Manager,
+#pragma instantiate ACE_Singleton<ACE_String_Referenced_Cache_Manager, \
                                   ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Singleton<ACE_String_Counted_Cache_Manager,
+#pragma instantiate ACE_Singleton<ACE_String_Counted_Cache_Manager, \
                                   ACE_SYNCH_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
