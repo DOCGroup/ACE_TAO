@@ -365,7 +365,7 @@ ACE_Log_Msg::instance (void)
 #endif /* ! ACE_MT_SAFE */
 }
 
-// Not inlined to help prevent having to include OS.h just to 
+// Not inlined to help prevent having to include OS.h just to
 // get ACE_DEBUG, et al, macros.
 int
 ACE_Log_Msg::last_error_adapter (void)
@@ -836,6 +836,7 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
 //   'P': format the current process id
 //   'p': format the appropriate errno message from sys_errlist, e.g., as done by <perror>
 //   'Q': print out the uint64 number
+//   '@': print a void* pointer (in hexadecimal)
 //   'r': call the function pointed to by the corresponding argument
 //   'R': print return status
 //   'S': format the appropriate _sys_siglist entry corresponding to var-argument.
@@ -1569,6 +1570,10 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   }
 #endif /* ! ACE_LACKS_LONGLONG_T */
                   break;
+                case '@':
+                    ACE_OS::strcpy (fp, ACE_LIB_TEXT ("p"));
+                    ACE_OS::sprintf (bp, format, va_arg (argp, void*));
+                    break;
 
                 default:
                   // So, it's not a legit format specifier after all...
