@@ -1,3 +1,9 @@
+Mon Dec  6 06:53:43 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * apps/soreduce/SO_Group.cpp:
+
+          Increase the number of libraries that soreduce can handle.
+
 Mon Dec 06 11:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-mingw.h:
@@ -35,13 +41,13 @@ Mon Dec 06 09:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Dec 05 16:44:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Select_Reactor_T.cpp (dispatch_notification_handlers):
+        * ace/Select_Reactor_T.cpp (dispatch_notification_handlers):
 
-	  Decrement the number_of_active_handles after a successful
-	  dispatch. This seems to cause Reactor_Notify_Test to fail on
-	  Win32. The reason why this does not show up in *nix is left as
-	  an exercise to the reader! Thanks to Steve Huston for alerting
-	  us about this issue.
+          Decrement the number_of_active_handles after a successful
+          dispatch. This seems to cause Reactor_Notify_Test to fail on
+          Win32. The reason why this does not show up in *nix is left as
+          an exercise to the reader! Thanks to Steve Huston for alerting
+          us about this issue.
 
 Sat Dec  4 20:39:20 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -49,26 +55,26 @@ Sat Dec  4 20:39:20 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Dec  5 14:49:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/TP_Reactor_Test.cpp:
+        * tests/TP_Reactor_Test.cpp:
 
-	  The test creates some listeners in the one button test, if that
-	  exceeds SOMAXCONN the test fails. We now reset the number of
-	  senders in the test to SOMAXCONN if they exceed
-	  SOMAXCONN. Thanks to Frare Steven <stevefr at avaya dot com> for
-	  the patch.
+          The test creates some listeners in the one button test, if that
+          exceeds SOMAXCONN the test fails. We now reset the number of
+          senders in the test to SOMAXCONN if they exceed
+          SOMAXCONN. Thanks to Frare Steven <stevefr at avaya dot com> for
+          the patch.
 
 Fri Dec  3 07:37:38 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* MakeProjectCreator/config/dsnotifylogadmin_serv.mpb:
+        * MakeProjectCreator/config/dsnotifylogadmin_serv.mpb:
 
-	  Changed to inherit from notification_serv.
+          Changed to inherit from notification_serv.
 
 Fri Dec 3 12:54:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-vxworks5.x.h:
           Added _GLIBCPP_USE_LONG_LONG for GCC 3.3+ since it is not defined
           by the compiler itself. This solves problems with long long support
-	  in standard C++ includes.
+          in standard C++ includes.
 
 Fri Dec  3 11:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
