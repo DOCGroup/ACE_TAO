@@ -2,7 +2,7 @@
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
    <META NAME="GENERATOR" CONTENT="Mozilla/4.03 [en] (X11; I; Linux 2.0.30_SMP i686) [Netscape]">
-   <TITLE>TAO Release Information</TITLE>
+   <TITLE>TAO Release Information and TODO List</TITLE>
 </HEAD>
 <BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
 <!-- $Id$ -->
@@ -372,6 +372,9 @@ Points of contact: <A HREF="mailto:cleeland@cs.wustl.edu">Chris Cleeland</A> and
       Task List:
 
       <ul>
+	<li>Fix <code>strsplit_r()</code> (waiting on response from
+	user having problems).</li>
+	
 	<li>The current caching connector does not behave properly in
 	the face of a non-blocking connect request.  The "fix" is
 	simply to not support non-blocking connects through the cache.
