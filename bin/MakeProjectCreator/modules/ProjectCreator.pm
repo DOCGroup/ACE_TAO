@@ -1086,16 +1086,6 @@ sub is_special_tag {
 }
 
 
-sub escape_regex_special {
-  my($self) = shift;
-  my($name) = shift;
-
-  $name =~ s/([\\\$\[\]\(\)\.])/\\$1/g;
-
-  return $name;
-}
-
-
 sub sift_files {
   my($self)  = shift;
   my($files) = shift;
