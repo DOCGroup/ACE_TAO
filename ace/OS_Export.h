@@ -4,7 +4,7 @@
 // This file is generated automatically by
 // generate_export_file.pl
 // ------------------------------
-#if !defined (ACE_OS_EXPORT_H)
+#ifndef ACE_OS_EXPORT_H
 #define ACE_OS_EXPORT_H
 
 #include "ace/config-all.h"

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,7 +13,7 @@
 #define ACE_REFCOUNTABLE_H
 #include "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,7 +27,6 @@
  *
  *
  */
-
 class ACE_Export ACE_Refcountable
 {
 public:

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -14,13 +14,15 @@
 #define ACE_HASH_MAP_MANAGER_T_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
-#include "ace/Functor.h"
-#include "ace/Log_Msg.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Default_Constants.h"
+#include "ace/Functor.h"
+#include "ace/Log_Msg.h"
 
 /**
  * @class ACE_Hash_Map_Entry

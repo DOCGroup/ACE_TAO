@@ -15,11 +15,12 @@
 
 #ifndef ACE_GLOBAL_MACROS_H
 #define ACE_GLOBAL_MACROS_H
+
 #include "ace/pre.h"
 
 // Included just keep compilers that see #pragma dierctive first
 // happy.
-#include "ace/config-all.h"
+#include "ace/OS_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -111,5 +112,31 @@ friend class ace_dewarn_gplusplus
 # endif /* ACE_NTRACE */
 
 
+// Convenient macro for testing for deadlock, as well as for detecting
+// when mutexes fail.
+#define ACE_GUARD_ACTION(MUTEX, OBJ, LOCK, ACTION, REACTION) \
+   ACE_Guard< MUTEX > OBJ (LOCK); \
+   if (OBJ.locked () != 0) { ACTION; } \
+   else { REACTION; }
+#define ACE_GUARD_REACTION(MUTEX, OBJ, LOCK, REACTION) \
+  ACE_GUARD_ACTION(MUTEX, OBJ, LOCK, ;, REACTION)
+#define ACE_GUARD(MUTEX, OBJ, LOCK) \
+  ACE_GUARD_REACTION(MUTEX, OBJ, LOCK, return)
+#define ACE_GUARD_RETURN(MUTEX, OBJ, LOCK, RETURN) \
+  ACE_GUARD_REACTION(MUTEX, OBJ, LOCK, return RETURN)
+# define ACE_WRITE_GUARD(MUTEX,OBJ,LOCK) \
+  ACE_Write_Guard< MUTEX > OBJ (LOCK); \
+    if (OBJ.locked () == 0) return;
+# define ACE_WRITE_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
+  ACE_Write_Guard< MUTEX > OBJ (LOCK); \
+    if (OBJ.locked () == 0) return RETURN;
+# define ACE_READ_GUARD(MUTEX,OBJ,LOCK) \
+  ACE_Read_Guard< MUTEX > OBJ (LOCK); \
+    if (OBJ.locked () == 0) return;
+# define ACE_READ_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
+  ACE_Read_Guard< MUTEX > OBJ (LOCK); \
+    if (OBJ.locked () == 0) return RETURN;
+
 #include "ace/post.h"
+
 #endif /*ACE_GLOBAL_MACROS_H*/

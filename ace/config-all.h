@@ -146,9 +146,6 @@
 #  define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
 #endif /* ACE_HAS_CUSTOM_EXPORT_MACROS */
 
-#include "ace/ACE_export.h"
-#include "ace/svc_export.h"
-
 // This is a whim of mine -- that instead of annotating a class with
 // ACE_Export in its declaration, we make the declaration near the TOP
 // of the file with ACE_DECLARE_EXPORT.
@@ -329,12 +326,6 @@
 #else  /* __sgi || ghs || ..... */
 # define ACE_NOTREACHED(a) a
 #endif /* __sgi || ghs || ..... */
-
-// ============================================================================
-// errno stuff
-// ============================================================================
-
-#include "ace/OS_Errno.h"
 
 // ============================================================================
 // ACE_NEW macros

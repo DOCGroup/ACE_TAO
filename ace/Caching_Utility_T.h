@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -10,14 +10,15 @@
  */
 //=============================================================================
 
-#ifndef CACHING_UTILITY_H
-#define CACHING_UTILITY_H
+#ifndef ACE_CACHING_UTILITY_H
+#define ACE_CACHING_UTILITY_H
+
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#define  ACE_LACKS_PRAGMA_ONCE
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Cleanup_Strategies_T.h"
@@ -340,4 +341,5 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
-#endif /* CACHING_UTILITY_H */
+
+#endif /* ACE_CACHING_UTILITY_H */

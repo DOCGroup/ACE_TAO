@@ -16,13 +16,14 @@
 #define ACE_OS_MEMORY_H
 #include "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "ace/OS_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_Export.h"
+#include "ace/OS_Errno.h"
+
 #if defined (ACE_HAS_PACE)
 # include /**/ "pace/stdlib.h"
 #endif /* ACE_HAS_PACE */

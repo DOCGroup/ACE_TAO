@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -11,14 +11,15 @@
 //=============================================================================
 
 
-#ifndef CACHE_MAP_MANAGER_T_H
-#define CACHE_MAP_MANAGER_T_H
+#ifndef ACE_CACHE_MAP_MANAGER_T_H
+#define ACE_CACHE_MAP_MANAGER_T_H
+
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#define  ACE_LACKS_PRAGMA_ONCE
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Pair_T.h"
@@ -422,4 +423,5 @@ protected:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
-#endif /* CACHE_MAP_MANAGER_T_H */
+
+#endif /* ACE_CACHE_MAP_MANAGER_T_H */

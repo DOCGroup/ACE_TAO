@@ -23,7 +23,7 @@
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
 // This only works on platforms that support async i/o.
 
-#include "ace/OS.h"
+#include "ace/Default_Constants.h"
 #include "ace/Asynch_IO.h"
 
 // Forward declarations

@@ -1,8 +1,10 @@
-// $Id$
+// -*- C++ -*-
 
 // ============================================================================
 /**
  * @file CORBA_macros.h
+ *
+ * $Id$
  *
  *   Writing code that is portable between platforms with or without
  *   native C++ exceptions is hard.  The following macros offer some
@@ -10,9 +12,8 @@
  *   IDL generated code portable.
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
- *  @author Based on the original <tao/try_macros.h> implementation by
  *  @author Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
- *  @author Carlos O'Ryan  <coryan@cs.wustl.edu>, et al.
+ *  @author Carlos O'Ryan  <coryan@uci.edu>, et al.
  */
 // ============================================================================
 
@@ -20,13 +21,14 @@
 
 #ifndef ACE_CORBA_MACROS_H
 #define ACE_CORBA_MACROS_H
+
 #include "ace/pre.h"
+
+#include "ace/config-all.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/OS.h"
 
 // All these macros assume the CORBA::Environment variable used to pass
 // in/out the exception is call ACE_TRY_ENV.  Below is the name we use
@@ -475,4 +477,5 @@
 # endif /* ACE_PRINT_EXCEPTION */
 
 #include "ace/post.h"
+
 #endif /* ACE_CORBA_MACROS_H */
