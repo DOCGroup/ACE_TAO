@@ -61,7 +61,8 @@ DIRS  = CDR \
 	Server_Leaks \
 	Muxing \
 	Hello \
-	MT_Timeout
+	MT_Timeout \
+	Crash_On_Write
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
