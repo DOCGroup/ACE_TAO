@@ -112,7 +112,7 @@ namespace CCF
       supports_none (Type&)
       {
       }
-      
+
       void Home::
       manages (Type& h, EdgeDispatcherBase& d)
       {
@@ -147,7 +147,7 @@ namespace CCF
       {
       }
 
-
+/*
       // HomeFactory
       //
       //
@@ -375,7 +375,7 @@ namespace CCF
       comma (Type&)
       {
       }
-
+*/
     }
   }
 }
