@@ -1,25 +1,8 @@
 // $Id$
 
+#define ACE_BUILD_SVC_DLL
+
 #include "Newsweek.h"
-
-// @@ Kirthika, please see the comments in the Today.cpp file to see
-// my recommendations for simplifying this stuff.
-
-// This declaration necessary to get thi sworking on NT.
-#if defined (ACE_HAS_WIN32)
-
-#ifdef __cplusplus
-extern "C" {  // only need to export C interface if
-              // used by C++ source code
-#endif
-
-	__declspec( dllexport ) Magazine *create_magazine (void);
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif
 
 // Implementation of the abstract class method which describes
 // the magazine.
@@ -31,9 +14,12 @@ void Newsweek::title (void)
 }
 
 // Returns the Newsweek class pointer.
+// The ACE_BUILD_SVC_DLL and ACE_Svc_Export directives are necessary as take care
+// of exporting the function for Win32 platforms.
+extern "C" ACE_Svc_Export Magazine *create_magazine (void);
 
-extern "C"
-Magazine *create_magazine (void)
+Magazine *
+create_magazine (void)
 {
   Magazine *mag;
   ACE_NEW_RETURN (mag,
