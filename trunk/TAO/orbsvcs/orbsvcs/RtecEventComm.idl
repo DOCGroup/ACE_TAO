@@ -30,7 +30,7 @@ module RtecEventComm {
   struct EventData {
     long x;
     long y;
-    
+
     double pad0;
     long   pad1;
     // This two objects ensure that the encapsulated stream below is
@@ -39,6 +39,10 @@ module RtecEventComm {
     // (without making extra copies).
 
     EventPayload payload;
+
+#if !defined (TAO_LACKS_EVENT_CHANNEL_ANY)
+    any any_value;
+#endif /* TAO_LACKS_EVENT_CHANNEL_ANY */
   };
 #endif
 
