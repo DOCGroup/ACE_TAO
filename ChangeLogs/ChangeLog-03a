@@ -1,3 +1,9 @@
+Thu Jan 30 21:57:58 2003  Frank Hunleth  <frank@hunleth.com>
+
+	* examples/Threads/thread_specific.cpp (worker): Added __OpenBSD__
+	  to the list of OS/compilers that can check printf arguments.
+	  This removes a compilation warning.
+
 Thu Jan 30 21:50:27 2003  Frank Hunleth  <frank@hunleth.com>
 
 	* ace/config-openbsd.h: Added ACE_LACKS_SETSCHED, since it turns
