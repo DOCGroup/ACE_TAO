@@ -1435,15 +1435,13 @@ ifr_adding_visitor::predefined_type_to_pkind (AST_PredefinedType *node)
       return CORBA::pk_any;
     case AST_PredefinedType::PT_void:
       return CORBA::pk_void;
+    case AST_PredefinedType::PT_object:
+      return CORBA::pk_objref;
     case AST_PredefinedType::PT_pseudo:
       {
         const char *local_name = node->local_name ()->get_string ();
 
-        if (!ACE_OS::strcmp (local_name, "Object"))
-          {
-            return CORBA::pk_objref;
-          }
-        else if (!ACE_OS::strcmp (local_name, "Principal"))
+        if (!ACE_OS::strcmp (local_name, "Principal"))
           {
             return CORBA::pk_Principal;
           }
