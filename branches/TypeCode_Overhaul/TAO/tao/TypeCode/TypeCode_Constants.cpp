@@ -1,17 +1,18 @@
 // $Id$
 
-#include "TypeCode_Constants.h"
 
+//#include "TypeCode_Constants.h"
+#include "Null_RefCount_Policy.h"
 
 ACE_RCSID (tao,
            TypeCode_Constants,
            "$Id$")
 
 
-#include "Null_RefCount_Policy.h"
 
 #include "Empty_Param_TypeCode.h"
 #include "Objref_TypeCode.h"
+#include "tao/TC_Constants_Forward.h"
 
 namespace TAO
 {
@@ -39,9 +40,11 @@ namespace TAO
     Empty_Param tc_TypeCode   (CORBA::tk_TypeCode);
     Empty_Param tc_Principal  (CORBA::tk_Principal);
 
-    char const * const tc_object_id   = "IDL:omg.org/CORBA/Object:1.0";
-    char const * const tc_object_name = "Object";
-    Objref tc_object (tc_object_id, tc_object_name);
+    char const tc_object_id[]   = "IDL:omg.org/CORBA/Object:1.0";
+    char const tc_object_name[] = "Object";
+    Objref<char const *,
+           CORBA::tk_objref,
+           TAO::Null_RefCount_Policy> tc_object (tc_object_id, tc_object_name);
 
   }  // End TypeCode namespace
 }  // End TAO namespace

@@ -9,7 +9,7 @@ ACE_RCSID (tao,
 
 
 #if !defined (__ACE_INLINE__)
-# include "tao/TypeCode.inl"
+# include "TypeCode.inl"
 #endif /* ! __ACE_INLINE__ */
 
 

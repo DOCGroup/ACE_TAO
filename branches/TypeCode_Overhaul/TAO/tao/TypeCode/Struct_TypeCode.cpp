@@ -19,8 +19,7 @@ bool
 TAO::TypeCode::Struct<StringType,
                       FieldArrayType,
                       Kind,
-                      RefCountPolicy>::tao_marshal (
-  TAO_OutputCDR & cdr) const
+                      RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr) const
 {
   // A tk_struct TypeCode has a "complex" parameter list type (see
   // Table 15-2 in Section 15.3.5.1 "TypeCode" in the CDR section of

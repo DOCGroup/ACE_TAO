@@ -32,7 +32,7 @@ namespace TAO
 {
   namespace TypeCode
   {
-    template <CORBA::TCKind KIND> Struct_Traits;
+    template <CORBA::TCKind KIND> struct Struct_Traits;
 
     template <>
     struct Struct_Traits<CORBA::tk_struct>

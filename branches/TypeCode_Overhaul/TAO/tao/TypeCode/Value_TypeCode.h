@@ -32,7 +32,7 @@ namespace TAO
 {
   namespace TypeCode
   {
-    template <CORBA::TCKind KIND> Value_Traits;
+    template <CORBA::TCKind KIND> struct Value_Traits;
 
     template <>
     struct Value_Traits<CORBA::tk_value>
