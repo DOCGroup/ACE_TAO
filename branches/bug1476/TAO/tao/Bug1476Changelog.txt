@@ -1,3 +1,19 @@
+Wed Jul 28 15:24:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport_Connector.{h,cpp}
+          Added pure virtual cancel_svc_handler() method which must be
+          implemented by derived connectors to cancel the passed svc_handler
+          with their base connector, the cancel on the base_connector must
+          have derived connection handler, so we just can't do it in the base.
+          Another option would be to make Transport_Connector a template which
+          gets the connection handler type as template argument.
+          Added also check_connection_closure, which is now generic and can
+          also be used from the connect() call.
+
+        * tao/IIOP_Connector.{h,cpp}:
+          Implemented the cancel_svc_handler() and removed the
+          check_connection_closure() because it is now in the base.
+
 Tue Jul 27 18:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Connection_Handler.{h,cpp}:

@@ -99,9 +99,8 @@ protected:
   /// initialize <tcp_properties_>.
   int init_tcp_properties (void);
 
-  /// Check whether the connection is not closed
-  int check_connection_closure (TAO_IIOP_Connection_Handler *svc_handler,
-                                 int result);
+  /// Cancel the passed cvs handler from the connector
+  int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
 
 protected:
 

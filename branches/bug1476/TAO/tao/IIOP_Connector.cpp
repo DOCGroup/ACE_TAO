@@ -472,55 +472,21 @@ TAO_IIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 }
 
 int
-TAO_IIOP_Connector::check_connection_closure (
-  TAO_IIOP_Connection_Handler *svc_handler,
-  int result)
+TAO_IIOP_Connector::cancel_svc_handler (
+  TAO_Connection_Handler * svc_handler)
 {
-  int local_result = result;
+  TAO_IIOP_Connection_Handler* handler=
+    dynamic_cast<TAO_IIOP_Connection_Handler*>(svc_handler);
 
-  // Check if the handler has been closed.
-  int closed =
-    svc_handler->is_closed ();
-
-  // In case of failures and close() has not be called.
-  if (local_result == -1 && !closed)
+  if (handler)
     {
-      // First, cancel from connector.
-      this->base_connector_.cancel (svc_handler);
+      // Cancel from the connector
+      this->base_connector_.cancel (handler);
 
-      // Double check to make sure the handler has not been closed
-      // yet.  This double check is required to ensure that the
-      // connection handler was not closed yet by some other
-      // thread since it was still registered with the connector.
-      // Once connector.cancel() has been processed, we are
-      // assured that the connector will no longer open/close this
-      // handler.
-      closed = svc_handler->is_closed ();
-
-      // If closed, there is nothing to do here.  If not closed,
-      // it was either opened or is still pending.
-      if (!closed)
-        {
-          // Check if the handler has been opened.
-          const int open = svc_handler->is_open ();
-
-          // Some other thread was able to open the handler even
-          // though wait failed for this thread.
-          if (open)
-            {
-              // Overwrite <result>.
-              local_result = 0;
-            }
-          else
-            {
-              // Assert that it is still connecting.
-              ACE_ASSERT (svc_handler->is_connecting ());
-
-              // Force close the handler now.
-              svc_handler->close ();
-            }
-        }
+      return 0;
     }
-
-  return local_result;
+  else
+    {
+      return -1;
+    }
 }

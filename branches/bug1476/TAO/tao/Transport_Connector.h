@@ -35,6 +35,7 @@ class TAO_MProfile;
 class TAO_ORB_Core;
 class TAO_Connect_Strategy;
 class TAO_Transport;
+class TAO_Connection_Handler;
 
 namespace TAO
 {
@@ -119,6 +120,13 @@ protected:
   virtual TAO_Transport* make_connection (TAO::Profile_Transport_Resolver *r,
                                           TAO_Transport_Descriptor_Interface &desc,
                                           ACE_Time_Value *timeout) = 0;
+
+  /// Cancel the passed cvs handler from the connector
+  virtual int cancel_svc_handler (TAO_Connection_Handler *svc_handler) = 0;
+
+  /// Check whether the connection is not closed
+  virtual int check_connection_closure (TAO_Connection_Handler *svc_handler,
+                                        int result);
 
   /// Register a transport with the reactor
   int register_transport (TAO_Transport *transport);
