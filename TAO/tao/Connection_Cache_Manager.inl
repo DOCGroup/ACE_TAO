@@ -119,6 +119,18 @@ TAO_Connection_Cache_Manager::purge (void)
 }
 
 ACE_INLINE int
+TAO_Connection_Cache_Manager::purge_entry (HASH_MAP_ENTRY *&entry)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                            guard,
+                            *this->cache_lock_,
+                            -1));
+
+  return this->purge_entry_i (entry);
+}
+
+
+ACE_INLINE int
 TAO_Connection_Cache_Manager::make_idle (HASH_MAP_ENTRY *&entry)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
@@ -128,15 +140,6 @@ TAO_Connection_Cache_Manager::make_idle (HASH_MAP_ENTRY *&entry)
   return this->make_idle_i (entry);
 }
 
-ACE_INLINE int
-TAO_Connection_Cache_Manager::mark_closed (HASH_MAP_ENTRY *&entry)
-{
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                            guard,
-                            *this->cache_lock_,
-                            -1));
-  return this->mark_closed_i (entry);
-}
 
 ACE_INLINE int
 TAO_Connection_Cache_Manager::close (ACE_Handle_Set &handle_Set)
