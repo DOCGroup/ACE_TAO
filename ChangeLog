@@ -1,3 +1,9 @@
+Sat Oct  5 12:30:49 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Service_Manager.cpp (list_services): Remove extra right paren.
+
+        * tests/Proactor_Timer_Test.cpp: Fixed signed/unsigned mismatch.
+
 Fri Oct 04 22:24:23 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML\common\URL_Addr.cpp (string_to_addr): Added a new wrapper
