@@ -135,6 +135,9 @@
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
+// select()'s timeval arg is not declared as const and may be modified
+#define ACE_HAS_NONCONST_SELECT_TIMEVAL
+
 // Platform supports pread() and pwrite()
 #define ACE_HAS_P_READ_WRITE
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
