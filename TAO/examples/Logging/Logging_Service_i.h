@@ -33,7 +33,7 @@
 #include "ace/OS.h"
 #include "tao/Utils/ORB_Manager.h"
 #include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Naming/Naming_Server.h"
+#include "orbsvcs/Naming/Naming_Client.h"
 #include "Logger_i.h"
 #include "LoggerS.h"
 #include "LoggerC.h"
@@ -80,9 +80,8 @@ private:
   TAO_ORB_Manager orb_manager_;
   // The ORB manager.
 
-  TAO_Naming_Server my_name_server_;
-  // An instance of the name server used for registering the factory
-  // objects.
+  TAO_Naming_Client my_name_server_;
+  // helper class for getting access to Naming Service.
 
   Logger_Factory_i factory_impl_;
   // Implementation object of the Logger_Factory.

@@ -63,13 +63,9 @@ Notifier_Server::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
     {
       CORBA::ORB_var orb = this->orb_manager_.orb ();
 
-      PortableServer::POA_var child_poa
-        = this->orb_manager_.child_poa ();
-
       TAO_debug_level = 1;
 
-      if (this->naming_server_.init (orb.in (),
-                                     child_poa.in ()) == -1)
+      if (this->naming_server_.init (orb.in ()) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Failed to initialize TAO_Naming_Server\n"),
                           -1);
