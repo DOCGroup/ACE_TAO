@@ -54,7 +54,7 @@ module PortableServer
 {
 # pragma version PortableServer 2.3
 
-  local interface POA;	    // forward declaration
+  local interface POA;      // forward declaration
   typedef sequence<POA> POAList;
   native Servant;
   typedef CORBA::OctetSeq ObjectId;
@@ -255,7 +255,7 @@ module PortableServer
                     in POAManager a_POAManager,
                     in CORBA::PolicyList policies)
       raises (AdapterAlreadyExists,
-	      InvalidPolicy);
+              InvalidPolicy);
 
     POA find_POA (in string adapter_name,
                   in boolean activate_it)
@@ -269,7 +269,7 @@ module PortableServer
     ThreadPolicy create_thread_policy (in ThreadPolicyValue value);
 
     LifespanPolicy create_lifespan_policy (
-	in LifespanPolicyValue value
+        in LifespanPolicyValue value
       );
 
     IdUniquenessPolicy  create_id_uniqueness_policy (
@@ -281,7 +281,7 @@ module PortableServer
       );
 
     ImplicitActivationPolicy create_implicit_activation_policy (
-        in ImplicitActivationPolicyValue value\
+        in ImplicitActivationPolicyValue value
       );
 
     ServantRetentionPolicy create_servant_retention_policy (
@@ -289,7 +289,7 @@ module PortableServer
       );
 
     RequestProcessingPolicy create_request_processing_policy (
-	in RequestProcessingPolicyValue value
+        in RequestProcessingPolicyValue value
       );
 
     // POA attributes
@@ -311,7 +311,7 @@ module PortableServer
 
     Servant get_servant ()
       raises (NoServant,
-	      WrongPolicy);
+              WrongPolicy);
 
     void set_servant (in Servant p_servant)
       raises (WrongPolicy);
@@ -320,13 +320,13 @@ module PortableServer
 
     ObjectId  activate_object (in Servant p_servant)
       raises (ServantAlreadyActive,
-	      WrongPolicy);
+              WrongPolicy);
 
     void activate_object_with_id (in ObjectId id,
                                   in Servant p_servant)
       raises (ServantAlreadyActive,
-	      ObjectAlreadyActive,
-	      WrongPolicy);
+              ObjectAlreadyActive,
+              WrongPolicy);
 
     void deactivate_object (in ObjectId oid)
       raises (ObjectNotActive, WrongPolicy);
@@ -337,32 +337,32 @@ module PortableServer
       raises (WrongPolicy);
 
     Object create_reference_with_id (in ObjectId oid,
-				     in CORBA::RepositoryId intf)
+                                     in CORBA::RepositoryId intf)
       raises (WrongPolicy);
 
     // Identity mapping operations:.
     ObjectId servant_to_id (in Servant p_servant)
       raises (ServantNotActive,
-	      WrongPolicy);
+              WrongPolicy);
 
     Object servant_to_reference (in Servant p_servant)
       raises (ServantNotActive, WrongPolicy);
 
     Servant reference_to_servant (in Object reference)
       raises (ObjectNotActive,
-	      WrongAdapter,
-	      WrongPolicy);
+              WrongAdapter,
+              WrongPolicy);
 
     ObjectId reference_to_id (in Object reference)
       raises (WrongAdapter,
-	      WrongPolicy);
+              WrongPolicy);
 
     Servant id_to_servant (in ObjectId oid)
       raises (ObjectNotActive, WrongPolicy);
 
     Object id_to_reference (in ObjectId oid)
       raises (ObjectNotActive,
-	      WrongPolicy);
+              WrongPolicy);
 
     readonly attribute CORBA::OctetSeq id;
 
