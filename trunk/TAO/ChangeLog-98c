@@ -1,3 +1,10 @@
+Fri Oct 23 12:33:56 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+
+	  Modified the generated code sightly to make sure that we check
+	  for exceptions. Thanks to Naga for pointing this out.
+
 Fri Oct 23 11:17:00 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/CDR.i (operator<<): wrapped several final return statements
