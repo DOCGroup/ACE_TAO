@@ -15,13 +15,22 @@ class DT_Creator : public ACE_Service_Object
 {
  public:
 
+  DT_Creator (void);
+  ~DT_Creator (void);
+
   int init (int argc, char *argv []);
   
   void create_distributable_threads (CORBA::ORB_ptr orb,
-									RTScheduling::Current_ptr  current
-									ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
+				     RTScheduling::Current_ptr  current
+				     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  
   virtual CORBA::Policy_ptr sched_param (int importance) = 0;
+
+  int dt_count (void);
+
+  void dt_ended (void);
+
+  void check_ifexit (void);
 
  private:
   DT_LIST dt_list_;
@@ -29,6 +38,9 @@ class DT_Creator : public ACE_Service_Object
   ACE_Barrier* barrier_;
   int dt_count_;
   CORBA::ORB_var orb_;
+  /// Mutex to serialize access to our internal state.
+  ACE_Lock* state_lock_;
+  int active_dt_count_;
 };
 
 
