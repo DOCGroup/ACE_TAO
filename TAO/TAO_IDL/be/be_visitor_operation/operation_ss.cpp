@@ -704,7 +704,6 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
   if (this->has_param_type (node, AST_Argument::dir_INOUT)
       || this->has_param_type (node, AST_Argument::dir_OUT))
     {
-
       if (!this->void_return_type (bt))
         {
           // We have already printed the return val. SO put a &&.
