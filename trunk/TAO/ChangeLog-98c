@@ -29,9 +29,23 @@ Mon Feb 23 11:40:37 1998  David L. Levine  <levine@cs.wustl.edu>
         * TAO_IDL/Makefile: added clean and realclean targets for
           CROSS-COMPILE platforms.
 
+        * TAO_IDL/be/be_interface.cpp (be_interface::relative_name):
+          commented out unused local variable "def_scope".
+
+        * TAO_IDL/be/be_sequence.cpp: commented out some unused variables
+          to avoid compiler warnings.  The comments correspond to commented-out
+          sections of code.
+
         * TAO_IDL/be/be_visitor_interface.cpp
           (be_visitor_collocated_ss::visit_operation): removed unused
           local "nl".
+
+        * TAO_IDL/be/be_visitor_root.cpp (be_visitor_root_ch::visit_sequence):
+          added ACE_UNUSED_ARG (node).
+
+        * TAO_IDL/be/be_visitor_sequence.cpp
+          (be_visitor_sequence_ch::visit_sequence): commented out unused
+          local "cg".
 
 Mon Feb 23 10:58:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
