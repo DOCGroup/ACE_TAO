@@ -1098,14 +1098,16 @@ namespace
 
       module.edge_traverser (defines);
 
+      //@@ MSVC bug: interface is considered to be an alias for a struct.
+      //
       Finder<Traversal::Composition> composition (ctx, r);
-      Finder<Traversal::UnconstrainedInterface> interface (ctx, r);
+      Finder<Traversal::UnconstrainedInterface> interface_ (ctx, r);
       Finder<Traversal::Component> component (ctx, r);
       Finder<Traversal::Home> home (ctx, r);
 
       defines.node_traverser (module);
       defines.node_traverser (composition);
-      defines.node_traverser (interface);
+      defines.node_traverser (interface_);
       defines.node_traverser (component);
       defines.node_traverser (home);
 
@@ -1501,9 +1503,9 @@ generate (CommandLine const& cl, TranslationUnit& tu, fs::path file_path)
     provider.edge_traverser (provider_belongs);
 
     //
-    InterfaceCollector interface (ctx);
+    InterfaceCollector interface_ (ctx);
 
-    provider_belongs.node_traverser (interface);
+    provider_belongs.node_traverser (interface_);
 
 
     // end
@@ -1568,7 +1570,7 @@ generate (CommandLine const& cl, TranslationUnit& tu, fs::path file_path)
 
     CompositionEmitter composition (ctx, os);
 
-    InterfaceEmitter interface (ctx, os);
+    InterfaceEmitter interface_ (ctx, os);
 
     MonolithEmitter component_monolith (ctx, os);
     ContextEmitter component_context (ctx, os);
@@ -1581,7 +1583,7 @@ generate (CommandLine const& cl, TranslationUnit& tu, fs::path file_path)
 
     defines.node_traverser (composition);
 
-    defines.node_traverser (interface);
+    defines.node_traverser (interface_);
 
     defines.node_traverser (component_monolith);
     defines.node_traverser (component_context);
