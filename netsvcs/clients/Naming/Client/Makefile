@@ -10,7 +10,7 @@
 
 BIN   	= main 
 LIB   	= libClient_Test.a
-SHLIB 	= libClient_Test.so
+SHLIB 	= libClient_Test.$(SOEXT)
 
 FILES 	= Client_Test
 

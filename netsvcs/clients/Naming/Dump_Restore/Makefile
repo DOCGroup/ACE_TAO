@@ -10,7 +10,7 @@
 
 BIN   	= main 
 LIB   	= libDump_Restore.a
-SHLIB 	= libDump_Restore.so
+SHLIB 	= libDump_Restore.$(SOEXT)
 
 FILES	= Dump_Restore
 
