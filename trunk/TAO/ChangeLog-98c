@@ -1,3 +1,8 @@
+Wed Oct 22 12:55:19 1997    <nw1@CHA-CHA>
+
+	* tao/TAO.dsp: Removed boa, Orb_Core and added poa, orb_core to
+ 	  the project file.
+
 Tue Oct 21 17:21:51 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* docs/releasenotes/orbcore.html: Updated to reflect daily
