@@ -1,3 +1,15 @@
+Wed Feb 23 12:19:51 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS.i (ACE_LACKS_SETREUID_PROTOTYPE,
+	            ACE_LACKS_SETREGID_PROTOTYPE):
+
+	  If either _BSD_SOURCE, _XOPEN_SOURCE or _XOPEN_SOURCE_EXTENEDED
+	  is defined then do not allow the prototypes corresponding to
+	  these macros to become visible since defining any of these
+	  macros may make the real prototypes in the system headers
+	  visible.  Thanks to Rich Seibel <seibel_r@ociweb.com> for
+	  pointing this out.
+
 Tue Feb 22 21:11:03 2000  Ossama Othman  <ossama@uci.edu>
 
 	* configure.in (ACE_HAS_XPG4_MULTIBYTE_CHAR):
