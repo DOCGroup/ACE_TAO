@@ -147,7 +147,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::set_qos (
 
 template <class Peer_Traits>
 void
-TAO_Notify_Tests_Peer_T<Peer_Traits>::status (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::status (ACE_ENV_SINGLE_ARG_DECL)
 {
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   ACE_TRY
@@ -185,7 +185,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::status (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     }
   ACE_ENDTRY;
 #else
-  //ACE_UNUSED_ARG (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_ENV_ARG_NOT_USED;
 #endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
