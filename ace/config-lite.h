@@ -522,7 +522,6 @@ typedef ACE_HANDLE ACE_SOCKET;
 // rest of ACE uses a real type so there's no a ton of conditional code
 // everywhere to deal with the possibility of no return type.
 # if defined (VXWORKS)
-//typedef FUNCPTR ACE_THR_FUNC;  // where typedef int (*FUNCPTR) (...)
 # include /**/ <taskLib.h>
 typedef int ACE_THR_FUNC_RETURN;
 # elif defined (ACE_PSOS)
