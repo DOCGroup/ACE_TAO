@@ -29,7 +29,7 @@ MyFirstFooServant::MyFirstFooServant (CORBA::ORB_ptr orb_ptr,
     value_ (value),
     forward_to_var_ (CORBA::Object::_duplicate (forward_to_ptr))
 {
-  if (CORBA::is_nil (this->forward_to_var_))
+  if (CORBA::is_nil (this->forward_to_var_.in ()))
     ACE_DEBUG ((LM_DEBUG,
                 "POA approach: Forward_to is nil!\n"));
 }
