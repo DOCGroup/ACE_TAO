@@ -286,8 +286,8 @@ ACE_RMCast_IO_UDP::send_data (ACE_RMCast::Data &data,
 
 #if 0
   ACE_HEX_DUMP ((LM_DEBUG,
-                 (char*)iov[0].iov_base, 
-                 iov[0].iov_len, 
+                 (char*)iov[0].iov_base,
+                 iov[0].iov_len,
                  ACE_TEXT ("Sending")));
 #endif
 
@@ -450,7 +450,12 @@ ACE_RMCast_IO_UDP::send_leave (ACE_RMCast::Leave &,
 template class ACE_Hash_Map_Manager<ACE_INET_Addr,ACE_RMCast_UDP_Proxy*,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<ACE_INET_Addr,ACE_RMCast_UDP_Proxy*,ACE_Hash<ACE_INET_Addr>,ACE_Equal_To<ACE_INET_Addr>,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<ACE_INET_Addr,ACE_RMCast_UDP_Proxy*,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr,ACE_RMCast_UDP_Proxy*,ACE_Hash<ACE_INET_Addr>,ACE_Equal_To<ACE_INET_Addr>,ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr,ACE_RMCast_UDP_Proxy*,ACE_Hash<ACE_INET_Addr>,ACE_Equal_To<ACE_INET_Addr>,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr,ACE_RMCast_UDP_Proxy*,ACE_Hash<ACE_INET_Addr>,ACE_Equal_To<ACE_INET_Addr>,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<ACE_INET_Addr,ACE_RMCast_UDP_Proxy*>;
+
+template class ACE_Equal_To<ACE_INET_Addr>;
+template class ACE_Hash<ACE_INET_Addr>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
