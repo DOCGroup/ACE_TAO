@@ -116,7 +116,7 @@ public:
   // Number of shared memory segments to allocate.
 
   off_t minimum_bytes_;
-  // What the minimim bytes of the initial segment should be.
+  // What the minimum bytes of the initial segment should be.
 
   size_t file_perms_;
   // File permissions to use when creating/opening a segment.

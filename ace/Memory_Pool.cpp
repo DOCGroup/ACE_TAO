@@ -596,6 +596,7 @@ ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (LPCTSTR backing_store_name,
 						const OPTIONS *options)
   : base_addr_ (0),
     file_perms_ (ACE_DEFAULT_FILE_PERMS),
+    minimum_bytes_ (0),
     max_segments_ (ACE_DEFAULT_MAX_SEGMENTS)
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool");
@@ -649,7 +650,6 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::init_acquire");
 
-  size_t counter;
   off_t shm_table_offset = ACE::round_to_pagesize (sizeof (SHM_TABLE));
   rounded_bytes = this->round_up (nbytes > (size_t) this->minimum_bytes_
 				  ? nbytes
@@ -698,7 +698,7 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
 
       st[0].used_ = 1;
 
-      for (counter = 1; // Skip over the first entry...
+      for (size_t counter = 1; // Skip over the first entry...
 	   counter < this->max_segments_;
 	   counter++)
 	{

@@ -180,6 +180,7 @@ Options::parse_args (int argc, char *argv[])
 	  break;
 	}
     }
+
   // Switch to using MMAP when the -p and -e options are enabled.
   if (this->exec_slave_ == 1 && this->spawn_threads_ == 0)
     this->use_mmap_ = 1;
