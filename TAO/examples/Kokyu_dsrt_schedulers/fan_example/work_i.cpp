@@ -167,5 +167,21 @@ Complex_Server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "shutdown request from client\n"));
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
+  int wflags = O_RDWR;
+  int wfd;
+  unsigned char *ptr;
+  const char *wshfile = "shfile.txt";
+
+  wfd = shm_open(wshfile, wflags, S_IRWXU);
+  ptr = (unsigned char *)mmap(NULL, 1, PROT_READ|PROT_WRITE, MAP_SHARED, wfd, 0);
+  close(wfd);
+
+  *ptr = *ptr - 1;
+
+  ACE_DEBUG((LM_DEBUG,"NOW count is equal to %d\n", *ptr));
+
+  if((*ptr)!=0) return;
+
+  else
+    this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }

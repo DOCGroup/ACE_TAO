@@ -459,6 +459,9 @@ main (int argc, char *argv[])
           server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
+          server2->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
           /* MEASURE: After call to server shutdown */
           DSUI_EVENT_LOG (MAIN_GROUP_FAM, AFTER_SERVER_SHUTDOWN, 0, 0, NULL);
           ACE_DEBUG ((LM_DEBUG, "after shutdown call in main thread\n"));
