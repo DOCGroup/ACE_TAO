@@ -27,6 +27,8 @@ TAO_PG_GenericFactory::TAO_PG_GenericFactory (
 TAO_PG_GenericFactory::~TAO_PG_GenericFactory (void)
 {
 
+  ACE_DECLARE_NEW_CORBA_ENV;
+
   TAO_PG_Factory_Map::iterator end = this->factory_map_.end ();
   for (TAO_PG_Factory_Map::iterator i = this->factory_map_.begin ();
        i != end;
@@ -39,7 +41,7 @@ TAO_PG_GenericFactory::~TAO_PG_GenericFactory (void)
           this->delete_object_i (factory_set,
                                  1 /* Ignore exceptions */
                                  ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
@@ -500,25 +502,27 @@ TAO_PG_GenericFactory::process_criteria (
     }
 }
 
-// #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+/*
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-// template class auto_ptr<TAO_PG_Factory_Node>;
+template class auto_ptr<TAO_PG_Factory_Node>;
 
-// #  if defined (ACE_LACKS_AUTO_PTR) \
-//       || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-//            && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-// template class ACE_Auto_Basic_Ptr<TAO_PG_Factory_Node>;
-// #  endif  /* ACE_LACKS_AUTO_PTR */
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+template class ACE_Auto_Basic_Ptr<TAO_PG_Factory_Node>;
+#  endif  /* ACE_LACKS_AUTO_PTR */
 
-// #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-// #pragma instantiate auto_ptr<TAO_PG_Factory_Node>
+#pragma instantiate auto_ptr<TAO_PG_Factory_Node>
 
-// #  if defined (ACE_LACKS_AUTO_PTR) \
-//       || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
-//            && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
-// #pragma instantiate ACE_Auto_Basic_Ptr<TAO_PG_Factory_Node>
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_PG_Factory_Node>
 
-// #  endif  /* ACE_LACKS_AUTO_PTR */
+#  endif  /* ACE_LACKS_AUTO_PTR */
 
-// #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+*/
