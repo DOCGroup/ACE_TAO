@@ -37,14 +37,13 @@ class ACE_SSL_Export ACE_SSL_SOCK_Connector
   //   Defines a factory that creates new <ACE_Stream>s actively.
   //
   // = DESCRIPTION
-  //   The <ACE_SOCK_Connector> doesn't have a socket of its own,
-  //   i.e., it simply "borrows" the one from the ACE_SOCK_Stream
+  //   The <ACE_SSL_SOCK_Connector> doesn't have a socket of its own,
+  //   i.e., it simply "borrows" the one from the ACE_SSL_SOCK_Stream
   //   that's being connected.  The reason for this is that the
   //   underlying socket API doesn't use a "factory" socket to connect
   //   "data-mode" sockets.  Therefore, there's no need to inherit
-  //   <ACE_SOCK_Connector> from <ACE_SOCK>.  A nice side-effect of
-  //   this is that <ACE_SOCK_Connector>'s do not store state so they
-  //   can be used reentrantly in multi-threaded programs.
+  //   <ACE_SSL_SOCK_Connector> from <ACE_SSL_SOCK>.
+
 public:
   // = Initialization and termination methods.
   ACE_SSL_SOCK_Connector (void);

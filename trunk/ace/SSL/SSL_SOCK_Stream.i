@@ -60,6 +60,8 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send");
 
+  // @@ FIXME: Not thread safe!
+
   // No send flags are supported in SSL.
   if (flags != 0)
     ACE_NOTSUP_RETURN (-1);
@@ -92,6 +94,8 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
                            int flags) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
+
+  // @@ FIXME: Not thread safe!
 
   if (flags)
     {
@@ -130,6 +134,8 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send");
 
+  // @@ FIXME: Not thread safe!
+
   int status = ::SSL_write (this->ssl_,
                             ACE_static_cast (const char *, buf),
                             n);
@@ -157,6 +163,8 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
                            size_t n) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
+
+  // @@ FIXME: Not thread safe!
 
   int status = ::SSL_read (this->ssl_,
                            ACE_static_cast (char*, buf),

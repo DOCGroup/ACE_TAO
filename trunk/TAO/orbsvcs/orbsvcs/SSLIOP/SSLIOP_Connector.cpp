@@ -506,12 +506,12 @@ TAO_SSLIOP_Connector::connect (TAO_Profile *pfile,
           profile->addr_to_string (buffer,
                                    sizeof(buffer) - 1);
           ACE_DEBUG ((LM_ERROR,
-                      "(%P|%t) %s:%u, connection to "
-                      "%s failed (%p)\n",
+                      ACE_TEXT ("(%P|%t) %s:%u, connection to ")
+                      ACE_TEXT ("%s failed (%p)\n"),
                       __FILE__,
                       __LINE__,
                       buffer,
-                      "errno"));
+                      ACE_TEXT ("errno")));
         }
       return -1;
     }
@@ -528,8 +528,8 @@ TAO_SSLIOP_Connector::connect (TAO_Profile *pfile,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("(%N|%l|%p|%t) messaging_init() ")
-                      ASYS_TEXT ("failed\n")));
+                      ACE_TEXT ("(%N|%l|%p|%t) messaging_init() ")
+                      ACE_TEXT ("failed\n")));
         }
       return -1;
     }

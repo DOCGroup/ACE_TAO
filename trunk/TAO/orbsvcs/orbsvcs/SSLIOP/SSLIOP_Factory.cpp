@@ -159,7 +159,7 @@ TAO_SSLIOP_Protocol_Factory::requires_explicit_endpoint (void) const
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_SSLIOP_Protocol_Factory,
-                       ASYS_TEXT ("SSLIOP_Factory"),
+                       ACE_TEXT ("SSLIOP_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_SSLIOP_Protocol_Factory),
                        ACE_Service_Type::DELETE_THIS |
