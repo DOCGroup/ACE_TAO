@@ -1,8 +1,14 @@
+Sun Jan 24 19:09:45 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-win32-common.h
+	  (ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR): VC apparently
+	  does it right.
+
 Sun Jan 24 17:22:02 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/SString.cpp (substring): the variable "length" was misspelled
 	  on one of the lines in the method.
-	
+
 Sun Jan 24 16:17:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/README:
