@@ -1,3 +1,10 @@
+Thu Apr 29 02:54:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* lots of .cpp files: Removed "TAO_DEFAULT_MINOR_CODE,
+	  CORBA::COMPLETED_NO" from many system exception instantiations
+	  because they are what the default constructors use.  Thanks to
+	  Irfan for suggesting this.
+
 Thu Apr 29 01:23:03 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA (policies): Fixed destroy() methods of the policies by
