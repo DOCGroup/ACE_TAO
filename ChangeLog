@@ -1,3 +1,7 @@
+Thu May 13 21:39:00 2004-05-13  Marek Brudka  <mbrudka@elka.pw.edu.pl>
+
+	* docs/ACE-guidelines.html: added guideline about lonmg file names
+
 Thu May 13 18:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32.h:
