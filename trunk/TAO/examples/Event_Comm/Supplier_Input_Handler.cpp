@@ -97,7 +97,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE h)
       ACE_ASSERT (notifier != 0);
       
       // Use the notifier to notify Consumers.
-      TAO_TRY
+      ACE_TRY_NEW_ENV
         {
           Event_Comm::Event event;
 
@@ -108,14 +108,14 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE h)
           // reference...  event.value_ = ...
 
           // Forward <Event> to all <Consumers>.
-          notifier->push (event, TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
+          notifier->push (event, ACE_TRY_ENV);
+	  ACE_TRY_CHECK;
         }
-      TAO_CATCHANY
+      ACE_CATCHANY
         {
-          TAO_TRY_ENV.print_exception ("Unexpected Error\n");
+          ACE_TRY_ENV.print_exception ("Unexpected Error\n");
         }
-      TAO_ENDTRY;
+      ACE_ENDTRY;
     }
   return 0;
 }

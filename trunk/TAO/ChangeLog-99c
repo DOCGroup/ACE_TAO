@@ -1,3 +1,10 @@
+Tue Feb  9 21:40:29 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* $TAO_ROOT/examples/Event_Comm/*.cpp
+	Changed all the TAO_* macros for exceptions to 
+	ACE_* macros. This went clean on SunOSC++.
+	
+
 Tue Feb  9 20:38:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp: 

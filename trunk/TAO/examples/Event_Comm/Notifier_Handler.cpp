@@ -82,14 +82,14 @@ Notifier_Handler::init (int argc,
   // set the callback
  shutdowncallback = _shutdowncallback;
 
- TAO_TRY
+ ACE_TRY_NEW_ENV
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
                                     0,
-                                    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Initialization of the naming service.
       if (this->naming_client_.init (orb_.in ()) != 0)
@@ -105,26 +105,26 @@ Notifier_Handler::init (int argc,
 
       CORBA::Object_var notifier_obj =
        this->naming_client_->resolve (notifier_ref_name,
-				      TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+				      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
 
       // The CORBA::Object_var object is downcast to Notifier_var
       // using the <_narrow> method.
       this->notifier_ =
          Event_Comm::Notifier::_narrow (notifier_obj.in (),
-					TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+					ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       return 0;
 
   }
- TAO_CATCHANY
+ ACE_CATCHANY
    {
-     TAO_TRY_ENV.print_exception ("Notifier_Handler::init\n");
+     ACE_TRY_ENV.print_exception ("Notifier_Handler::init\n");
      return -1;
    }
- TAO_ENDTRY;
+ ACE_ENDTRY;
 
  return 0;
 }
