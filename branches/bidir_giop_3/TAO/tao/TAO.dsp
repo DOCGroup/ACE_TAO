@@ -1563,6 +1563,25 @@ SOURCE=.\IIOP_Transport.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IIOPC.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Interceptor_List.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3752,6 +3771,10 @@ SOURCE=.\IIOP_Transport.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IIOPC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Interceptor_List.h
 # End Source File
 # Begin Source File
@@ -4437,6 +4460,10 @@ SOURCE=.\IIOP_Profile.i
 # Begin Source File
 
 SOURCE=.\IIOP_Transport.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOPC.i
 # End Source File
 # Begin Source File
 

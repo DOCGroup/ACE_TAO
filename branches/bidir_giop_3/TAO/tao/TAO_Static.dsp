@@ -379,6 +379,10 @@ SOURCE=.\IIOP_Transport.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IIOPC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Interceptor_List.h
 # End Source File
 # Begin Source File
@@ -1071,6 +1075,10 @@ SOURCE=.\IIOP_Transport.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\IIOPC.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Interceptor_List.inl
 # End Source File
 # Begin Source File
@@ -1692,6 +1700,10 @@ SOURCE=.\IIOP_Profile.cpp
 # Begin Source File
 
 SOURCE=.\IIOP_Transport.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOPC.cpp
 # End Source File
 # Begin Source File
 
