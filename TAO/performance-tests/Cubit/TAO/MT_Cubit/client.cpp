@@ -42,7 +42,8 @@ initialize (void)
 int
 do_priority_inversion_test (Task_State &ts)
 {
-  u_int j;
+  int i;
+  u_int j, k;
 
   // stores the total number of context switches incurred by the
   // program while making CORBA requests
@@ -114,11 +115,11 @@ do_priority_inversion_test (Task_State &ts)
       // activate the Utilization thread.  It will wait until
       // all threads have finished binding.
       util_thread.activate (THR_BOUND | ACE_SCHED_FIFO,
-			    1,
-			    0,
-			    priority);
+                            1,
+                            0,
+                            priority);
     }
-      
+
   // Now activate the high priority client.
   priority = ACE_THR_PRI_FIFO_DEF + 25;
 
@@ -148,23 +149,23 @@ do_priority_inversion_test (Task_State &ts)
               priority,
               priority + ts.thread_count_ - 2));
 
-  for (int i = ts.thread_count_ - 1; i > 0; i--)
+  for (i = ts.thread_count_ - 1; i > 0; i--)
     {
       ACE_NEW_RETURN (low_priority_client [i - 1],
                       Client (&ts, i),
                       -1);
 
       ACE_DEBUG ((LM_DEBUG,
-		  "Creating client with low priority %d and thread ID %d\n",
-		  priority,
-		  i));
+                  "Creating client with low priority %d and thread ID %d\n",
+                  priority,
+                  i));
 
       // The first thread starts at the lowest priority of all the low
       // priority clients.
       if (low_priority_client[i - 1]->activate (THR_BOUND | ACE_SCHED_FIFO,
-					    1,
-					    1,
-					    priority) == -1)
+                                            1,
+                                            1,
+                                            priority) == -1)
         ACE_ERROR ((LM_ERROR,
                     "%p; priority is %d\n",
                     "activate failed",
@@ -292,11 +293,11 @@ do_priority_inversion_test (Task_State &ts)
 
   // This loop visits each client.  thread_count_ is the number of clients.
   for (j = 1; j < ts.thread_count_; j ++)
-      for (i = 0; i < ts.loop_count_/ts.grain_; i ++)
-          total_latency_low += ts.global_jitter_array_[j][i];
+      for (k = 0; k < ts.loop_count_/ts.grain_; k ++)
+          total_latency_low += ts.global_jitter_array_[j][k];
 
-  for (i = 0; i < ts.loop_count_/ts.grain_; i ++)
-    total_latency_high += ts.global_jitter_array_[0][i];
+  for (j = 0; j < ts.loop_count_/ts.grain_; j ++)
+    total_latency_high += ts.global_jitter_array_[0][j];
 
   total_util_task_duration = util_task_duration * util_thread.get_number_of_computations ();
 
