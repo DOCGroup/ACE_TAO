@@ -86,6 +86,7 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
       ORB.cpp
       Policy_ForwardC.cpp
       PolicyC.cpp
+      PolicyA.cpp
       Policy_Validator.cpp
       Encodable.cpp
       Abstract_Servant_Base.cpp
@@ -122,6 +123,7 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
       ClientRequestInterceptor_Adapter.cpp
       PI_ForwardC.cpp
       PortableInterceptorC.cpp
+      PortableInterceptorA.cpp
       PICurrent.cpp
       PICurrent_ORBInitializer.cpp
       DynamicC.cpp
@@ -170,7 +172,9 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
       Synch_Refcountable.cpp
       Asynch_Reply_Dispatcher_Base.cpp
       IOP_IORC.cpp
+      IOP_IORA.cpp
       IOP_CodecC.cpp
+      IOP_CodecA.cpp
       IOPC.cpp
       PollableC.cpp
       CONV_FRAMEC.cpp
