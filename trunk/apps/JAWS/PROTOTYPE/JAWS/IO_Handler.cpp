@@ -50,7 +50,7 @@ JAWS_IO_Handler::JAWS_IO_Handler (JAWS_IO_Handler_Factory *factory)
     task_ (0),
     factory_ (factory)
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
-  , handler_ (this)
+  , handler_ (0)
 #endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS) */
 {
 }
@@ -158,7 +158,7 @@ JAWS_IO_Handler::factory (void)
 }
 
 ACE_HANDLE
-JAWS_IO_Handler::handle (void)
+JAWS_IO_Handler::handle (void) const
 {
   return this->handle_;
 }
@@ -204,11 +204,11 @@ JAWS_IO_Handler::status (void)
 ACE_Handler *
 JAWS_IO_Handler::handler (void)
 {
-  return &this->handler_;
+  return this->handler_;
 }
 
-JAWS_Asynch_Handler::JAWS_Asynch_Handler (JAWS_IO_Handler *ioh)
-  : ioh_ (ioh)
+JAWS_Asynch_Handler::JAWS_Asynch_Handler (void)
+  : ioh_ (0)
 {
   this->proactor (ACE_Proactor::instance ());
 }
@@ -221,18 +221,36 @@ void
 JAWS_Asynch_Handler::open (ACE_HANDLE h,
                            ACE_Message_Block &mb)
 {
+  // This currently does nothing, but just in case.
+  ACE_Service_Handler::open (h, mb);
+
   // ioh_ set from the ACT hopefully
-  this->dispatch_handler ();
+  //this->dispatch_handler ();
+
+  this->handler ()->mb_->crunch ();
+  if (mb.rd_ptr ()[0] != '\0')
+    this->handler ()->mb_->copy (mb.rd_ptr (), mb.length ());
+  ACE_Message_Block &mb2 = *(this->handler ()->mb_);
+  ACE_Asynch_Accept::Result fake_result
+    (*this, JAWS_IO_Asynch_Acceptor_Singleton::instance ()->get_handle (),
+     h, mb2, JAWS_Data_Block::JAWS_DATA_BLOCK_SIZE,
+     this->ioh_, ACE_INVALID_HANDLE);
   
-  this->handler ()->mb_->copy (mb.rd_ptr (), mb.length ());
-  this->handler ()->accept_complete (h);
+  this->handler ()->handler_ = this;
+  this->handle_accept (fake_result);
 }
 
 void
 JAWS_Asynch_Handler::act (const void *act_ref)
 {
   // Set the ioh from the act
-  this->ioh_ = (JAWS_IO_Handler *) act;
+  this->ioh_ = (JAWS_IO_Handler *) act_ref;
+}
+
+ACE_HANDLE
+JAWS_Asynch_Handler::handle (void) const
+{
+  return this->ioh_->handle ();
 }
 
 void
@@ -258,6 +276,7 @@ void
 JAWS_Asynch_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result
                                          &result)
 {
+  JAWS_TRACE ("JAWS_Asynch_Handler::handle_read_stream");
 
   this->dispatch_handler ();
 
@@ -342,7 +361,6 @@ JAWS_Asynch_Handler::handle_transmit_file (const
 void
 JAWS_Asynch_Handler::handle_accept (const ACE_Asynch_Accept::Result &result)
 {
-  // This routine is never actually called.
   this->dispatch_handler ();
 
   if (result.success ())
