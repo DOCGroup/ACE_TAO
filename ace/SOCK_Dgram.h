@@ -31,7 +31,7 @@ class ACE_Export ACE_SOCK_Dgram : public ACE_SOCK
   //     Defines the member functions for the ACE_SOCK datagram
   //     abstraction.
 public:
-  // = Initialization routines.
+  // = Initialization and termination methods.
   ACE_SOCK_Dgram (void);
   // Default constructor.
 
@@ -39,16 +39,36 @@ public:
                   int protocol_family = PF_INET,
                   int protocol = 0,
                   int reuse_addr = 0);
-  // Initiate a socket dgram.
+  // This is a BSD-style method (i.e., no QoS) for initiating a socket
+  // dgram that will accept datagrams at the <local> address.
 
-  ~ACE_SOCK_Dgram (void);
-  // Default dtor.
+  ACE_SOCK_Dgram (const ACE_Addr &local,
+                  const ACE_Connect_QoS_Params &qos_params,
+                  int protocol_family = PF_INET,
+                  int protocol = 0,
+                  int reuse_addr = 0);
+  // This is a QoS-enabed method for initiating a socket dgram that
+  // will accept datagrams at the <local> address.  The <qos_params>
+  // are passed to <ACE_OS::join_leaf>.
 
   int open (const ACE_Addr &local,
             int protocol_family = PF_INET,
             int protocol = 0,
             int reuse_addr = 0);
-  // Initiate a socket dgram.
+  // This is a BSD-style method (i.e., no QoS) for initiating a socket
+  // dgram that will accept datagrams at the <local> address.
+
+  int open (const ACE_Addr &local,
+            const ACE_Connect_QoS_Params &qos_params,
+            int protocol_family = PF_INET,
+            int protocol = 0,
+            int reuse_addr = 0);
+  // This is a QoS-enabed method for initiating a socket dgram that
+  // will accept datagrams at the <local> address.  The <qos_params>
+  // are passed to <ACE_OS::join_leaf>.
+
+  ~ACE_SOCK_Dgram (void);
+  // Default dtor.
 
   // = Data transfer routines.
   ssize_t send (const void *buf,
