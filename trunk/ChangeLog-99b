@@ -1,3 +1,12 @@
+Thu Jun 24 07:05:17 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-osf1-4.0.h,include/makeinclude/platform_osf1_4.0.GNU,
+          include/makeinclude/platform_osf1_cxx.GNU: use pragmas instead of
+          command line arguments to disable specific warning messages.
+          This cleans up the command line, and makes it easier to control
+          warning message suppression (because the compiler version is
+          available in __DECCXX_VER to the preprocessor.)
+
 Wed Jun 23 21:27:45 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: removed space from "resource requirements"
