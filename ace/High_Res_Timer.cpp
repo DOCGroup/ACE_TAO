@@ -384,7 +384,8 @@ ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds) const
   nanoseconds = (this->end_ - this->start_)
             * (1024000u / ACE_High_Res_Timer::global_scale_factor ());
 #endif /* ACE_WIN32 */
-  nanoseconds >>= 10;
+  // Caution - Borland has a problem with >>=, so resist the tempatation.
+  nanoseconds = nanoseconds >> 10;
   // Right shift is implemented for non native 64-bit ints
   // operator/ only for a 32 bit result !
 }
@@ -400,7 +401,8 @@ ACE_High_Res_Timer::elapsed_time_incr (ACE_hrtime_t &nanoseconds) const
   nanoseconds = this->total_
             * (1024000u / ACE_High_Res_Timer::global_scale_factor ());
 #endif
-  nanoseconds >>= 10;
+  // Caution - Borland has a problem with >>=, so resist the tempatation.
+  nanoseconds = nanoseconds >> 10;
 }
 
 #if !defined (ACE_HAS_WINCE)
