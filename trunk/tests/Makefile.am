@@ -45,6 +45,11 @@ else
 XTREACTOR_TEST = 
 endif
 
+## Build the shared library needed for the DLL_Test
+noinst_LTLIBRARIES = libDLL_Test.la
+libDLL_Test_la_SOURCES = $(DLL_Test_SOURCES)
+
+## Build the test programs
 noinst_PROGRAMS = \
 	Aio_Platform_Test \
 	Atomic_Op_Test \
@@ -125,7 +130,7 @@ CDR_Test_SOURCES = CDR_Test.cpp
 
 Conn_Test_SOURCES = Conn_Test.cpp Conn_Test.h
 
-DLL_Test_SOURCES = DLL_Test.cpp
+DLL_Test_SOURCES = DLL_Test.cpp DLL_Test.h
 
 DLList_Test_SOURCES = DLList_Test.cpp
 
@@ -270,10 +275,8 @@ else
 TESTS = $(noinst_PROGRAMS)
 endif
 
-
-## Environment variables to set for the tests
-##tmp = /tmp  ## This one is for the Makefile
-##TESTS_ENVIRONMENT = "tmp=$(tmp)"
+## Set up the test environment
+##TESTS_ENVIRONMENT = 
 
 EXTRA_DIST = $(noinst_SCRIPTS) $(noinst_DATA)
 
