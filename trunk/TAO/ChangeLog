@@ -1,3 +1,28 @@
+Tue Nov 11 01:14:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/POA/Loader/Server_Manager.h:
+        * examples/POA/On_Demand_Loading/Server_Manager.h:
+        * orbsvcs/tests/Security/Callback/client.cpp:
+        * orbsvcs/tests/Security/Callback/server.cpp:
+          Removed #include streams.h.
+
+        * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.cpp:
+        * orbsvcs/tests/RTCosScheduling/server.cpp:
+        * performance-tests/Cubit/TAO/IDL_Cubit/server.cpp:
+        * performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
+        * tests/Bug_1361_Regression/shutdown.cpp:
+        * tests/CodeSets/simple/client.cpp:
+        * tests/CodeSets/simple/server.cpp:
+          Fixed FUZZ errors.
+
+        * tests/Collocation/Collocation.cpp:
+          Removed #include streams.h, Get_Opt.h, and
+          tao/Strategies/advanced_resource.h.
+
+        * tests/Smart_Proxies/Collocation/main.cpp:
+          Removed #include streams.h and Get_Opt.h,
+
 Mon Nov 10 23:56:15 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/LB_server.cpp:

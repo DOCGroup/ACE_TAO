@@ -19,7 +19,10 @@
 // IDL generated headers
 #include "simpleC.h"
 #include "ace/ace_wchar.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/OS_NS_string.h"
 
 wchar_t *

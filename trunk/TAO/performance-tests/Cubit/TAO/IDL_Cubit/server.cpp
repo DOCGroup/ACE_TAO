@@ -9,7 +9,10 @@
 #include "Cubit_Server.h"
 #include "tao/Timeprobe.h"
 #include "ace/Sched_Params.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/OS_NS_errno.h"
 
 #include "tao/Strategies/advanced_resource.h"

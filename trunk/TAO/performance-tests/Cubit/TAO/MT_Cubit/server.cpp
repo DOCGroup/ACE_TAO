@@ -25,7 +25,10 @@
 #include "server.h"
 #include "ace/Sched_Params.h"
 #include "tao/Strategies/advanced_resource.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/Barrier.h"
 
 #if defined (ACE_HAS_QUANTIFY)
