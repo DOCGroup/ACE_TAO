@@ -1,3 +1,21 @@
+Wed Aug  6 19:09:00 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * performance-tests/Latency/Collocation/Client_Task.h:
+        * performance-tests/Latency/Collocation/Client_Task.cpp:
+        * performance-tests/Latency/Collocation/Server_Task.h:
+        * performance-tests/Latency/Collocation/Client_Task.cpp:
+        * performance-tests/Latency/Collocation/Collocated_Test.cpp:
+        * performance-tests/Latency/Collocation/Test.idl:
+        * performance-tests/Latency/Collocation/Roundtrip.h:
+        * performance-tests/Latency/Collocation/Roundtrip.cpp:
+        * performance-tests/Latency/Collocation/run_test.pl:
+        * performance-tests/Latency/Collocation/README:
+        * performance-tests/Latency/Collocation/Makefile:
+        * performance-tests/Latency/Collocation/svc.conf:
+          Simple test to measure round-trip latency when client and server
+          are collocated. Both client and server are single-threaded.
+          Collocation strategy used for testing is the "Thru_POA".
+
 Thu Aug  7 00:12:50 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/LoadBalancer/Signal_Handler.cpp:
@@ -131,7 +149,7 @@ Mon Aug  4 23:15:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tests/InterfaceRepo/IDL3_Test/idl3_client.h:
         * tests/InterfaceRepo/IDL3_Test/test.idl:
 
-	  More testing and debugging of IFR valuetype support.
+        More testing and debugging of IFR valuetype support.
 
 Mon Aug  4 19:06:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -147,18 +165,18 @@ Mon Aug  4 19:06:21 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tests/InterfaceRepo/IDL3_Test/idl3_client.h:
         * tests/InterfaceRepo/IDL3_Test/test.idl:
 
-	  More testing and debugging of IFR valuetype support.
+          More testing and debugging of IFR valuetype support.
 
 Mon Aug  4 18:28:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IORManipulation/IOR.pidl:
-	* tao/IORManipulation/IORC.h: Fixed typos from the last checkin.
+        * tao/IORManipulation/IOR.pidl:
+        * tao/IORManipulation/IORC.h: Fixed typos from the last checkin.
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h: Made the
-	  signature changes that were necessitated from "Mon Aug  4
-	  11:06:55 2003  Balachandran Natarajan
-	  <bala@dre.vanderbilt.edu>".
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h: Made the
+          signature changes that were necessitated from "Mon Aug  4
+          11:06:55 2003  Balachandran Natarajan
+          <bala@dre.vanderbilt.edu>".
 
 Mon Aug  4 18:01:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -178,42 +196,42 @@ Mon Aug  4 21:02:12 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Mon Aug  4 11:48:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/FaultTolerance/Makefile:
-	* orbsvcs/tests/FaultTolerance/Makefile.bor: Added
-	  GroupRef_Manipulation test to the daily builds.
+        * orbsvcs/tests/FaultTolerance/Makefile:
+        * orbsvcs/tests/FaultTolerance/Makefile.bor: Added
+          GroupRef_Manipulation test to the daily builds.
 
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/svc.conf:
-	  This file is not needed.
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/svc.conf:
+          This file is not needed.
 
 Mon Aug  4 11:06:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Tagged_Components.cpp (remove_component):
-	* tao/Tagged_Components.h: Added a new method which removes tagged
-	  components from the list of tagged components based on component
-	  id.
+        * tao/Tagged_Components.cpp (remove_component):
+        * tao/Tagged_Components.h: Added a new method which removes tagged
+          components from the list of tagged components based on component
+          id.
 
-	* tao/IORManipulation/IOR.pidl:
-	* tao/IORManipulation/IORC.cpp:
-	* tao/IORManipulation/IORC.h:
-	* tao/IORManipulation/IORC.i: A new operation, remove_primary_tag
-	  ()  on TAO_IOP::TAO_IOR_Property interface. Please see
-	  documentation for details.
+        * tao/IORManipulation/IOR.pidl:
+        * tao/IORManipulation/IORC.cpp:
+        * tao/IORManipulation/IORC.h:
+        * tao/IORManipulation/IORC.i: A new operation, remove_primary_tag
+          ()  on TAO_IOP::TAO_IOR_Property interface. Please see
+          documentation for details.
 
-	  Further all operations in TAO_IOP::TAO_IOR_Property interface
-	  that modify parameters have been made inout instead of just
-	  in. This was causing all sorts of confusion for a normal user.
+          Further all operations in TAO_IOP::TAO_IOR_Property interface
+          that modify parameters have been made inout instead of just
+          in. This was causing all sorts of confusion for a normal user.
 
-	* tao/IORManipulation/IORManipulation.cpp:
-	* tao/IORManipulation/IORManipulation.h: A concrete implementation
-	  of remove_primary_tag () within the IORManipulation library.
+        * tao/IORManipulation/IORManipulation.cpp:
+        * tao/IORManipulation/IORManipulation.h: A concrete implementation
+          of remove_primary_tag () within the IORManipulation library.
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h: A concrete
-	  implementation of remove_primary_tag () within the
-	  FaultTolerance library.
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h: A concrete
+          implementation of remove_primary_tag () within the
+          FaultTolerance library.
 
-	  Thanks to Milan Cvetkovic <mcvetcovic@mpathix.com>, for
-	  motivating the above changes and providing the patches.
+          Thanks to Milan Cvetkovic <mcvetcovic@mpathix.com>, for
+          motivating the above changes and providing the patches.
 
 Mon Aug  4 000:09:26 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -227,50 +245,50 @@ Mon Aug  4 000:09:26 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tests/InterfaceRepo/IDL3_Test/idl3_client.h:
         * tests/InterfaceRepo/IDL3_Test/test.idl:
 
-	  Debugging and testing of IFR's support of valuetypes.
+          Debugging and testing of IFR's support of valuetypes.
 
 Thu Aug  4 21:59:32 2003  Ossama Othman <ossama@dre.vanderbilt.edu>
 
-	* tao/corbafwd.i (string_alloc, wstring_alloc):
-	* tao/corbafwd.cpp:
+        * tao/corbafwd.i (string_alloc, wstring_alloc):
+        * tao/corbafwd.cpp:
 
-	  Uninlined these functions.  They invoke the standard free store
-	  allocator (e.g. new()), meaning that inlining them doesn't
-	  provide a noticeable performance gain.  Reduces static
-	  footprint.
+          Uninlined these functions.  They invoke the standard free store
+          allocator (e.g. new()), meaning that inlining them doesn't
+          provide a noticeable performance gain.  Reduces static
+          footprint.
 
-	* tao/corbafwd.h:
+        * tao/corbafwd.h:
 
-	  No longer any need to include "ace/OS_Memory.h".  Improves
-	  compile times.
+          No longer any need to include "ace/OS_Memory.h".  Improves
+          compile times.
 
-	* tao/Seq_Var_T.cpp:
-	* tao/Sequence_T.cpp:
+        * tao/Seq_Var_T.cpp:
+        * tao/Sequence_T.cpp:
 
-	  Include "ace/OS_Memory.h" to pull in ACE_NEW_RETURN macro
-	  definition.
+          Include "ace/OS_Memory.h" to pull in ACE_NEW_RETURN macro
+          definition.
 
-	* tao/ClientRequestInfo.h:
-	* tao/PortableServer/ServerRequestInfo.h:
+        * tao/ClientRequestInfo.h:
+        * tao/PortableServer/ServerRequestInfo.h:
 
-	  Updated documentation.
+          Updated documentation.
 
-	* tao/PortableServer/Object_Adapter.h (upcall_cleanup):
-	* tao/PortableServer/Object_Adapter.cpp (~Servant_Upcall)
-	  (upcall_cleanup):
+        * tao/PortableServer/Object_Adapter.h (upcall_cleanup):
+        * tao/PortableServer/Object_Adapter.cpp (~Servant_Upcall)
+          (upcall_cleanup):
 
-	  Moved Servant_Upcall cleanup code from ~Servant_Upcall()
-	  destructor to a new upcall_cleanup() method.  This allows the
-	  Servant_Upcall state to be explicitly cleaned up without
-	  destroying the Servant_Upcall object itself.
+          Moved Servant_Upcall cleanup code from ~Servant_Upcall()
+          destructor to a new upcall_cleanup() method.  This allows the
+          Servant_Upcall state to be explicitly cleaned up without
+          destroying the Servant_Upcall object itself.
 
-	  (prepare_for_upcall):
+          (prepare_for_upcall):
 
-	  Do not invoke the ~Servant_Upcall() destructor to reset the
-	  state of the Servant_Upcall object.  Doing so invokes undefined
-	  behavior since we end up making calls and using state in an
-	  object that no longer exists.  Call the new upcall_cleanup()
-	  method instead.
+          Do not invoke the ~Servant_Upcall() destructor to reset the
+          state of the Servant_Upcall object.  Doing so invokes undefined
+          behavior since we end up making calls and using state in an
+          object that no longer exists.  Call the new upcall_cleanup()
+          method instead.
 
 Mon Aug  4 03:26:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -285,135 +303,135 @@ Mon Aug  4 03:26:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * TAO/tao/orbconf.h:
           #included Synch_Traits.h needed due to Synch changes in ACE.
-        
+
         * TAO/tao/Sequence.cpp:
           #included OS.h needed due to Synch changes in ACE.
 
 Sun Aug  3 21:56:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/ImplRepo/airplane_client_i.cpp:
-	* orbsvcs/tests/ImplRepo/nestea_client_i.cpp: #included ACE.h to  
-	  get rid of compile  errors on full reactor build. 
+        * orbsvcs/tests/ImplRepo/airplane_client_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_client_i.cpp: #included ACE.h to
+          get rid of compile  errors on full reactor build.
 
 Sun Aug  3 21:05:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Notify/EventType.cpp:
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
-	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.cpp:
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: #included ACE.h to
-	  get rid of compile  errors on full reactor build. 
+        * orbsvcs/orbsvcs/Notify/EventType.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * orbsvcs/orbsvcs/Trader/Interpreter_Utils.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: #included ACE.h to
+          get rid of compile  errors on full reactor build.
 
 Sun Aug  3 20:57:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/OctetSeq/client.cpp:
-	* tests/OctetSeq/test_i.cpp: #included ACE.h to get rid of compile
-	  errors on full reactor build.
+        * tests/OctetSeq/client.cpp:
+        * tests/OctetSeq/test_i.cpp: #included ACE.h to get rid of compile
+          errors on full reactor build.
 
 Sun Aug  3 18:43:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Notify/lib/Peer.h: #included ace/SStream.h
+        * orbsvcs/tests/Notify/lib/Peer.h: #included ace/SStream.h
 
 Sun Aug  3 17:39:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Collocation_Tests/Collocated_Test.cpp:
-	* tests/File_IO/client.cpp:
-	* tests/File_IO/server.cpp:
-	* tests/POA/Default_Servant/Default_Servant.cpp:
-	* tests/POA/Object_Reactivation/Object_Reactivation.cpp:
-	* tests/POA/Persistent_ID/server.cpp: Fixed compile errors that
-	  were caused due to recent refactoring. Most of the files needed
-	  an include of "ace/SString.h".
+        * tests/Collocation_Tests/Collocated_Test.cpp:
+        * tests/File_IO/client.cpp:
+        * tests/File_IO/server.cpp:
+        * tests/POA/Default_Servant/Default_Servant.cpp:
+        * tests/POA/Object_Reactivation/Object_Reactivation.cpp:
+        * tests/POA/Persistent_ID/server.cpp: Fixed compile errors that
+          were caused due to recent refactoring. Most of the files needed
+          an include of "ace/SString.h".
 
 Sun Aug  3 17:33:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_codegen.cpp: The skeleton files needed an extra
-	  include if dynamic_hash is used. This was needed due to the
-	  recent refactoring. 
+        * TAO_IDL/be/be_codegen.cpp: The skeleton files needed an extra
+          include if dynamic_hash is used. This was needed due to the
+          recent refactoring.
 
 Sat Aug 02 17:35:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.h (class
-	  TAO_Notify_Method_Request_Dispatch_T): Removed unnecessary
-	  export declaration for the template class.  It was causing
-	  compilation errors on MSVC 7.1.
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.h (class
+          TAO_Notify_Method_Request_Dispatch_T): Removed unnecessary
+          export declaration for the template class.  It was causing
+          compilation errors on MSVC 7.1.
 
 Sat Aug  2 13:08:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/Event_Service/Event_Service.h:
-	* orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
-	* orbsvcs/ImplRepo_Service/tao_imr_i.h:
-	* orbsvcs/LoadBalancer/Signal_Handler.h:
-	* orbsvcs/Notify_Service/Notify_Service.h:
-	* orbsvcs/PSS/PSDL_Datastore.cpp:
-	* orbsvcs/PSS/PSDL_Datastore.h:
-	* orbsvcs/PSS/PSDL_Scope.h:
-	* orbsvcs/PSS/PSDL_String.cpp: Fixed compile errors that were
-	  caused due to the refactoring done in ACE+TAO core.
+        * orbsvcs/Event_Service/Event_Service.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h:
+        * orbsvcs/LoadBalancer/Signal_Handler.h:
+        * orbsvcs/Notify_Service/Notify_Service.h:
+        * orbsvcs/PSS/PSDL_Datastore.cpp:
+        * orbsvcs/PSS/PSDL_Datastore.h:
+        * orbsvcs/PSS/PSDL_Scope.h:
+        * orbsvcs/PSS/PSDL_String.cpp: Fixed compile errors that were
+          caused due to the refactoring done in ACE+TAO core.
 
 Sat Aug  2 09:14:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_interceptor.cpp:
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.cpp:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_interceptor.cpp:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.cpp:
 
-	  Cosmetic fixes.
+          Cosmetic fixes.
 
 Sat Aug  2 09:10:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
-	  Cosmetic fixes.
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+          Cosmetic fixes.
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Services_Activate.h:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Services_Activate.cpp: Moved
-	  all the initialization to the Initializer () routine. This
-	  should fix problems in the static builds. This have been long
-	  overdue.
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Services_Activate.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Services_Activate.cpp: Moved
+          all the initialization to the Initializer () routine. This
+          should fix problems in the static builds. This have been long
+          overdue.
 
 Sat Aug  2 08:05:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Adapter.h:
-	* tao/Adapter.cpp: Looks like a forward declaration of
-	  SystemException was insufficient in builds where native
-	  exceptions are used.
+        * tao/Adapter.h:
+        * tao/Adapter.cpp: Looks like a forward declaration of
+          SystemException was insufficient in builds where native
+          exceptions are used.
 
 Fri Aug  1 22:45:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ORB_Core.i (is_profile_equivalent): Intialize the default
-	  value to be true. Incorrect initializations lead to simple
-	  errors with oebjref comparisions which showed up in our daily
-	  builds.
+        * tao/ORB_Core.i (is_profile_equivalent): Intialize the default
+          value to be true. Incorrect initializations lead to simple
+          errors with oebjref comparisions which showed up in our daily
+          builds.
 
 Fri Aug  1 22:33:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Sequence.cpp: Fixed a link error due to a wrong inline
-	  declaration within the cpp file.
+        * tao/Sequence.cpp: Fixed a link error due to a wrong inline
+          declaration within the cpp file.
 
 Fri Aug  1 21:48:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/IFRService/Container_i.cpp: Fixed a simple
-	  compiler in non-native exception builds.
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp: Fixed a simple
+          compiler in non-native exception builds.
 
 Fri Aug  1 20:11:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Scheduler_Factory.h:
-	* orbsvcs/orbsvcs/Scheduler_Utilities.h:
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
-	* orbsvcs/orbsvcs/ESF/ESF_Busy_Lock.h:
-	* orbsvcs/orbsvcs/ESF/ESF_RefCount_Guard.h:
-	* orbsvcs/orbsvcs/Event/BCU.h:
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h:
-	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Busy_Lock.h
-	* orbsvcs/orbsvcs/Event/EC_Sched_Filter.h:
-	* orbsvcs/orbsvcs/Event/Memory_Pools.h:
-	* orbsvcs/orbsvcs/Naming/Naming_Service_Container.cpp:
-	* orbsvcs/orbsvcs/Notify/RT_POA_Helper.cpp:
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
-	* orbsvcs/orbsvcs/Sched/SchedEntry.cpp: #included "ace/SString.h"
-	  to get them compiling for the timebeing. We need to take a
-	  closer look to see whether they are even necessary in the first
-	  place. We need to take a closer look in the next checkin.
+        * orbsvcs/orbsvcs/Scheduler_Factory.h:
+        * orbsvcs/orbsvcs/Scheduler_Utilities.h:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Busy_Lock.h:
+        * orbsvcs/orbsvcs/ESF/ESF_RefCount_Guard.h:
+        * orbsvcs/orbsvcs/Event/BCU.h:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.h:
+        * orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Busy_Lock.h
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter.h:
+        * orbsvcs/orbsvcs/Event/Memory_Pools.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Service_Container.cpp:
+        * orbsvcs/orbsvcs/Notify/RT_POA_Helper.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+        * orbsvcs/orbsvcs/Sched/SchedEntry.cpp: #included "ace/SString.h"
+          to get them compiling for the timebeing. We need to take a
+          closer look to see whether they are even necessary in the first
+          place. We need to take a closer look in the next checkin.
 
 Fri Aug  1 20:13:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -431,76 +449,76 @@ Fri Aug  1 20:13:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
         * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
 
-	  Implemented CORBA::Container::create_ext_value method.
-	  Also factored out common servant code that creates IFR entries for
-	  valuetype factories, and for the exception references
-	  of operations, attributes and valuetype factories.
+          Implemented CORBA::Container::create_ext_value method.
+          Also factored out common servant code that creates IFR entries for
+          valuetype factories, and for the exception references
+          of operations, attributes and valuetype factories.
 
 Fri Aug  1 20:08:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Adapter.h: Forward declared CORBA::Exception.
-	* tao/Adapter.cpp: #included Exception.h
+        * tao/Adapter.h: Forward declared CORBA::Exception.
+        * tao/Adapter.cpp: #included Exception.h
 
-	* tao/Any_Basic_Impl_T.cpp:
-	* tao/Any_Dual_Impl_T.cpp:
-	* tao/Any_Impl_T.cpp:
-	* tao/Any_SystemException.cpp: #included ace/Auto_Ptr.h
+        * tao/Any_Basic_Impl_T.cpp:
+        * tao/Any_Dual_Impl_T.cpp:
+        * tao/Any_Impl_T.cpp:
+        * tao/Any_SystemException.cpp: #included ace/Auto_Ptr.h
 
-	* tao/Codeset_Manager.h: #included ace/Unbounded_Set.h
+        * tao/Codeset_Manager.h: #included ace/Unbounded_Set.h
 
-	* tao/Exception.cpp: #included ace/Malloc.h
+        * tao/Exception.cpp: #included ace/Malloc.h
 
         * tao/LocalObject.h:
-	* tao/Fault_Tolerance_Service.h: #included ace/Synch.h
+        * tao/Fault_Tolerance_Service.h: #included ace/Synch.h
 
-	* tao/Object.h: Forward declared ACE_Lock;
+        * tao/Object.h: Forward declared ACE_Lock;
 
-	* tao/PI_ForwardC.cpp: #included "Typecode.h"
-	* tao/Principal.h: #included "Pseudo_VarOut_T.h"
+        * tao/PI_ForwardC.cpp: #included "Typecode.h"
+        * tao/Principal.h: #included "Pseudo_VarOut_T.h"
 
-	* tao/Refcounted_ObjectKey.cpp: #included "ace/Log_Msg.h".
+        * tao/Refcounted_ObjectKey.cpp: #included "ace/Log_Msg.h".
 
-	* tao/Sequence_T.cpp:
-	* tao/Sequence_T.i:
-	* tao/Sequence.cpp:
-	* tao/Sequence.h:
-	* tao/Sequence.i: Removed dependency on Log_Msg.h ie. files
-	  including Sequence.h wouldnt get Log_msg.h free. Log_Msg.h was
-	  included just to get ACE_ASSERT.
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.i:
+        * tao/Sequence.cpp:
+        * tao/Sequence.h:
+        * tao/Sequence.i: Removed dependency on Log_Msg.h ie. files
+          including Sequence.h wouldnt get Log_msg.h free. Log_Msg.h was
+          included just to get ACE_ASSERT.
 
-	  Added a new method check_bounds () which is used for checking
-	  the bounds of the sequence.
+          Added a new method check_bounds () which is used for checking
+          the bounds of the sequence.
 
-	* tao/Typecode.h: #included "ace/Hash_Map_Manager.h" and
-	  "ace/Unbounded_Queue.h".
+        * tao/Typecode.h: #included "ace/Hash_Map_Manager.h" and
+          "ace/Unbounded_Queue.h".
 
-	* tao/PortableServer/Key_Adapters.cpp:
-	* tao/RTScheduling/Current.cpp:
-	* tao/Transport_Cache_Manager.cpp: #included "ace/ACE.h".
+        * tao/PortableServer/Key_Adapters.cpp:
+        * tao/RTScheduling/Current.cpp:
+        * tao/Transport_Cache_Manager.cpp: #included "ace/ACE.h".
 
-	* tao/Strategies/advanced_resource.cpp: #included "ace/Malloc.h".
+        * tao/Strategies/advanced_resource.cpp: #included "ace/Malloc.h".
 
-	  Thanks to Carlos for providing the patches. These patches
-	  improve the compilation times by removing unwanted dependencies
-	  that take up compilation time for TAO's applications.
+          Thanks to Carlos for providing the patches. These patches
+          improve the compilation times by removing unwanted dependencies
+          that take up compilation time for TAO's applications.
 
 Fri Aug  1 17:04:49 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.cpp:
+        * examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.cpp:
 
-	  Removed the unused ACE_TRY_LABEL warning from RH 7.1 Explicit
-	  Template build.
+          Removed the unused ACE_TRY_LABEL warning from RH 7.1 Explicit
+          Template build.
 
 Fri Aug 1 16:35:43 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tests/RTScheduling/VoidData/run_test.pl:
-	* tests/RTScheduling/Thread_Cancel/run_test.pl:
-	* tests/RTScheduling/DT_Spawn/run_test.pl:
-	* tests/RTScheduling/Current/run_test.pl:
-	* tests/RTScheduling/Scheduling_Interceptor/run_test.pl:
-	* tao_orb_tests.lst:
+        * tests/RTScheduling/VoidData/run_test.pl:
+        * tests/RTScheduling/Thread_Cancel/run_test.pl:
+        * tests/RTScheduling/DT_Spawn/run_test.pl:
+        * tests/RTScheduling/Current/run_test.pl:
+        * tests/RTScheduling/Scheduling_Interceptor/run_test.pl:
+        * tao_orb_tests.lst:
 
-	  Added run_test.pl to execute the tests.
+          Added run_test.pl to execute the tests.
 
 Fri Aug 01 14:37:23 2003  Simon McQueen  <sm@prismtechnologies.com>
 
@@ -530,18 +548,18 @@ Fri Aug  1 12:32:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 Thu Jul 31 22:39:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
-	* orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
 
-	  More debugging of IFR IDL3 support.
+          More debugging of IFR IDL3 support.
 
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/client.cpp:
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.h:
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/test.idl:
 
-	  Extended test so that it now covers component attributes,
-	  inheritance, supported interfaces, facets, receptacles,
-	  event sources and sinks.
+          Extended test so that it now covers component attributes,
+          inheritance, supported interfaces, facets, receptacles,
+          event sources and sinks.
 
 Fri Aug  1 01:16:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -559,46 +577,46 @@ Thu Jul 31 18:00:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/orbsvcs/IFRService/ProvidesDef_i.cpp:
         * orbsvcs/orbsvcs/IFRService/UsesDef_i.cpp:
 
-	  More debugging of IFR IDL3 support.
+          More debugging of IFR IDL3 support.
 
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/client.cpp:
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.h:
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/test.idl:
 
-	  Extended test so that it now covers component attributes,
-	  inheritance, supported interfaces, facets and receptacles.
+          Extended test so that it now covers component attributes,
+          inheritance, supported interfaces, facets and receptacles.
 
         * tao/Typecode.cpp:
         * tao/append.cpp:
         * tao/skip.cpp:
 
-	  Fixed bug in demarshaling of IDL3-related type codes.
-	  Also fixed similar bugs in interpretive (de)marshaling,
-	  where the interpreter skips over or appends portions
-	  of the CDR stream.
+          Fixed bug in demarshaling of IDL3-related type codes.
+          Also fixed similar bugs in interpretive (de)marshaling,
+          where the interpreter skips over or appends portions
+          of the CDR stream.
 
 Thu Jul 31 12:26:27 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tests/RTScheduling/RTScheduling_tests.dsw:
-	* tests/RTScheduling/VoidData/VoidData.dsp:
-	* tests/RTScheduling/Thread_Cancel/Thread_Cancel.dsp:
-	* tests/RTScheduling/DT_Spawn/DT_Spawn.dsp:
-	* tests/RTScheduling/Current/Current.dsp:
-	* tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Server.dsp:
-	* tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Client.dsp:
+        * tests/RTScheduling/RTScheduling_tests.dsw:
+        * tests/RTScheduling/VoidData/VoidData.dsp:
+        * tests/RTScheduling/Thread_Cancel/Thread_Cancel.dsp:
+        * tests/RTScheduling/DT_Spawn/DT_Spawn.dsp:
+        * tests/RTScheduling/Current/Current.dsp:
+        * tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Server.dsp:
+        * tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Client.dsp:
 
-	  Added windows project and workspace files to compile
-	  RTScheduling tests on windows.
+          Added windows project and workspace files to compile
+          RTScheduling tests on windows.
 
-	* examples/RTScheduling/rtschedulers.dsw:
-	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.dsp:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler.dsp:
-	* examples/RTScheduling/Starter.dsp:
-	* examples/RTScheduling/Common_IDL_Gen.dsp:
+        * examples/RTScheduling/rtschedulers.dsw:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.dsp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler.dsp:
+        * examples/RTScheduling/Starter.dsp:
+        * examples/RTScheduling/Common_IDL_Gen.dsp:
 
-	  Added windows project and workspace files to compile
-	  RTScheduling examples on windows.
+          Added windows project and workspace files to compile
+          RTScheduling examples on windows.
 
 Wed Jul 30 23:00:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -619,8 +637,8 @@ Wed Jul 30 18:25:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/fe/idl.yy:
         * TAO_IDL/fe/y.tab.cpp:
 
-	  Fixed cut and paste error in code that adds attribute
-	  exceptions to the AST.
+          Fixed cut and paste error in code that adds attribute
+          exceptions to the AST.
 
         * orbsvcs/IFR_Service/be_produce.cpp:
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
@@ -639,13 +657,13 @@ Wed Jul 30 18:25:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
         * orbsvcs/orbsvcs/IFRService/Repository_i.h:
 
-	  A start on debugging and testing the IFR's support of
-	  IDL3 types.
+          A start on debugging and testing the IFR's support of
+          IDL3 types.
 
         * tao/Typecode.cpp:
 
-	  Fixed bugs in marshaling and demarshaling of IDL3
-	  type codes.
+          Fixed bugs in marshaling and demarshaling of IDL3
+          type codes.
 
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/IDL3_Test.dsp:
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/client.cpp:
@@ -653,147 +671,147 @@ Wed Jul 30 18:25:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.h:
         * orbsvcs/tests/InterfaceRepo/IDL3_Test/test.idl:
 
-	  Start of new test for IFR's IDL3 support.
+          Start of new test for IFR's IDL3 support.
 
         * orbsvcs/tests/InterfaceRepo/InterfaceRepo.dsw:
         * orbsvcs/tests/InterfaceRepo/Application_Test/client.cpp:
 
-	  Updates and minor changes.
+          Updates and minor changes.
 
 Wed Jul 30 17:00:03 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* examples/RTScheduling/FP_SchedulingC.h:
-	* examples/RTScheduling/FP_SchedulingC.cpp:
-	* examples/RTScheduling/FP_SchedulingC.i:
-	* examples/RTScheduling/MIF_SchedulingC.h:
-	* examples/RTScheduling/MIF_SchedulingC.cpp:
-	* examples/RTScheduling/MIF_SchedulingC.i:
+        * examples/RTScheduling/FP_SchedulingC.h:
+        * examples/RTScheduling/FP_SchedulingC.cpp:
+        * examples/RTScheduling/FP_SchedulingC.i:
+        * examples/RTScheduling/MIF_SchedulingC.h:
+        * examples/RTScheduling/MIF_SchedulingC.cpp:
+        * examples/RTScheduling/MIF_SchedulingC.i:
 
-	  Generated stubs with exceptions. This should fix compile errors
-	  on Redhat 7.1 and Debian builds.
+          Generated stubs with exceptions. This should fix compile errors
+          on Redhat 7.1 and Debian builds.
 
 Wed Jul 30 16:09:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h:
 
-	  Fixed compile errors from improper exception specifications.
+          Fixed compile errors from improper exception specifications.
 
-	* orbsvcs/orbsvcs/FT_CORBA_ORB.idl: This missed my last commit.
+        * orbsvcs/orbsvcs/FT_CORBA_ORB.idl: This missed my last commit.
 
-	  This should fix compile errors in the core builds.
+          This should fix compile errors in the core builds.
 
 Wed Jul 30 18:34:34 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* orbsvcs/orbsvcs/AV/UDP.cpp:
-	  - Change mtu() to return the maximum theoretical MTU for UDP.
-	    The existing value was too low, and was silently corrupting
-	    data by silently truncating it.
-	  - Make the the iovec version of send_frame() like the other versions.
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
+          - Change mtu() to return the maximum theoretical MTU for UDP.
+            The existing value was too low, and was silently corrupting
+            data by silently truncating it.
+          - Make the the iovec version of send_frame() like the other versions.
 
 Wed Jul 30 13:12:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FT_ORB.dsp: Added the new file
-	  (FT_ClientRequest_Interceptor.h,cpp} into the MSVC projects.
+        * orbsvcs/orbsvcs/FT_ORB.dsp: Added the new file
+          (FT_ClientRequest_Interceptor.h,cpp} into the MSVC projects.
 
 Wed Jul 30 12:53:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation: A new test
-	  for testing some simple FT ORB features. Please see the README
-	  file for more details.
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation: A new test
+          for testing some simple FT ORB features. Please see the README
+          file for more details.
 
-	* orbsvcs/tests/FaultTolerance/IOGR/svc.conf: Fixed a typo.
-	* orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp: Fixed some
-	  obvious memory leaks.
+        * orbsvcs/tests/FaultTolerance/IOGR/svc.conf: Fixed a typo.
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp: Fixed some
+          obvious memory leaks.
 
 Wed Jul 30 12:50:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Profile.h:
-	* tao/Profile.cpp: Added two new methods, hash_service_i () and
-	  is_profile_equivalent_i (). These methods are basically hooks
-	  for is_equivalent () and  hash () calls declared in the profile
-	  classes. The hook serves to address the following problem
+        * tao/Profile.h:
+        * tao/Profile.cpp: Added two new methods, hash_service_i () and
+          is_profile_equivalent_i (). These methods are basically hooks
+          for is_equivalent () and  hash () calls declared in the profile
+          classes. The hook serves to address the following problem
 
-	  - services like FTCORBA have additional requirements to decide
-	    whether two objects or profiles are equivalent. This hook
-	    is used by the services, like FTCORBA to their additional
-	    requirements.
+          - services like FTCORBA have additional requirements to decide
+            whether two objects or profiles are equivalent. This hook
+            is used by the services, like FTCORBA to their additional
+            requirements.
 
         * tao/IIOP_Profile.cpp:
-	* tao/Strategies/UIOP_Profile.cpp:
-	* tao/Strategies/DIOP_Profile.cpp:
-	* tao/Strategies/SHMIOP_Profile.cpp:
-	* tao/Strategies/SCIOP_Profile.cpp: Calls to hash () and
-	  is_equivalent (), invokes the above new methods in their base
-	  classes in addition to the computations that is already done.
+        * tao/Strategies/UIOP_Profile.cpp:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/Strategies/SCIOP_Profile.cpp: Calls to hash () and
+          is_equivalent (), invokes the above new methods in their base
+          classes in addition to the computations that is already done.
 
-	  Thanks to Didier Becu <didier.becu@fr.thalesgroup.com> for
-	  motivating these changes.
-
-
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
-
-	  Fixed a subtle problem which prevented location forwarded IOR's
-	  to be overlooked when trying to search for a primary.
-
-	* orbsvcs/orbsvcs/FT_ORB.bor: Added the new file to the borland
-	  Makefile.
+          Thanks to Didier Becu <didier.becu@fr.thalesgroup.com> for
+          motivating these changes.
 
 
-	Integration from the branch. The relevant ChangeLog entries are:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
 
-	Thu Jul 10 11:20:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+          Fixed a subtle problem which prevented location forwarded IOR's
+          to be overlooked when trying to search for a primary.
 
-	* orbsvcs/orbsvcs/Makefile.FaulTolerance: Added new files.
-
-	* orbsvcs/orbsvcs/FT_CORBA_ORB.idl: Make the IDL spec compatible.
-
-	Thu Jul 10 11:09:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
-	  Client side interceptor for FaultTolerance. This interceptor is
-	  now used to modify the service context list that is passed to
-	  the server side. The interceptor is setup using the standard
-	  svc.conf mechanism. This fixes some of the subtle bugs that have
-	  been reported in the past that arose from
-
-	  - A new IOGR version showing up from the server through a
-	    location forward mechanism but the service context list
-	    sending older group version information to the server.
-
-	  - The policy for request_duration_time not accessible if set on
-	    the PolicyManager.
-
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ORBInitializer.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ORBInitializer.h: Register the
-	  server side and client side interceptors through the
-	  initializer.
-
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h: The latest specs
-	  changed the attribute in FTRequestDurationPolicy from
-	  request_duration_policy to
-	  request_duration_policy_value. Changed the accesor to match the
-	  IDL file.
-
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h: Removed
-	  all the callback code used for processing service context
-	  information. We now interceptors to do that.
-
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.cpp:
-	* tao/ORB_Core.i: Removed all the callbacks for logging and
-	  service context for FT.
+        * orbsvcs/orbsvcs/FT_ORB.bor: Added the new file to the borland
+          Makefile.
 
 
-	* tao/Service_Callbacks.h:
-	* tao/Service_Callbacks.cpp: The effect of the above
-	  changes. Remove interfaces that are totally irrelevant.
+        Integration from the branch. The relevant ChangeLog entries are:
+
+        Thu Jul 10 11:20:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Makefile.FaulTolerance: Added new files.
+
+        * orbsvcs/orbsvcs/FT_CORBA_ORB.idl: Make the IDL spec compatible.
+
+        Thu Jul 10 11:09:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+          Client side interceptor for FaultTolerance. This interceptor is
+          now used to modify the service context list that is passed to
+          the server side. The interceptor is setup using the standard
+          svc.conf mechanism. This fixes some of the subtle bugs that have
+          been reported in the past that arose from
+
+          - A new IOGR version showing up from the server through a
+            location forward mechanism but the service context list
+            sending older group version information to the server.
+
+          - The policy for request_duration_time not accessible if set on
+            the PolicyManager.
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ORBInitializer.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ORBInitializer.h: Register the
+          server side and client side interceptors through the
+          initializer.
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h: The latest specs
+          changed the attribute in FTRequestDurationPolicy from
+          request_duration_policy to
+          request_duration_policy_value. Changed the accesor to match the
+          IDL file.
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h: Removed
+          all the callback code used for processing service context
+          information. We now interceptors to do that.
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.i: Removed all the callbacks for logging and
+          service context for FT.
 
 
-	* tao/PortableServer/ServantBase.cpp: The effect of the above change.
+        * tao/Service_Callbacks.h:
+        * tao/Service_Callbacks.cpp: The effect of the above
+          changes. Remove interfaces that are totally irrelevant.
+
+
+        * tao/PortableServer/ServantBase.cpp: The effect of the above change.
 
 Tue Jul 29 16:27:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -835,40 +853,40 @@ Tue Jul 29 19:08:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jul 29 09:04:08 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* docs/ORBEndpoint.html: Updated this document so that the DIOP
-	  section points to the examples/PluggableUDP/DIOP/README file,
- 	  which describes the limitations with DIOP.  Thanks to
-	  Michael Kircher for motivating this!
+        * docs/ORBEndpoint.html: Updated this document so that the DIOP
+          section points to the examples/PluggableUDP/DIOP/README file,
+          which describes the limitations with DIOP.  Thanks to
+          Michael Kircher for motivating this!
 
 Tue Jul 29 10:08:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/Metrics/Metrics.dsp:
 
-	  Turned on RTTI in MetricsC.cpp.
+          Turned on RTTI in MetricsC.cpp.
 
 Tue Jul 29 09:24:16 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* tao/Muxed_TMS.cpp
+        * tao/Muxed_TMS.cpp
 
-	  Reverted the changes to the file to version 1.23, since the
- 	  changes might cause applications to crash, because in the
- 	  clear_cache () function the unbind () function call will make
- 	  the iterator to be invalid.
+          Reverted the changes to the file to version 1.23, since the
+          changes might cause applications to crash, because in the
+          clear_cache () function the unbind () function call will make
+          the iterator to be invalid.
 
 Tue Jul 29 01:08:10 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* examples/RTScheduling/DT_Creator.cpp:
+        * examples/RTScheduling/DT_Creator.cpp:
 
-	  Removed the inclusion of file Task.h. This should fix the Debian
-	  builds.
+          Removed the inclusion of file Task.h. This should fix the Debian
+          builds.
 
 Mon Jul 28 18:37:27 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
-	* tao/Muxed_TMS.cpp
-	  Modify the TAO_Muxed_TMS::clear_cache () function, which
-	  is supposed to be modified fully in the last patch at:
+        * tao/Muxed_TMS.cpp
+          Modify the TAO_Muxed_TMS::clear_cache () function, which
+          is supposed to be modified fully in the last patch at:
 
-	  Tue Jul 15 10:18:07 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+          Tue Jul 15 10:18:07 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
 Mon Jul 28 16:12:15 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
@@ -882,15 +900,15 @@ Mon Jul 28 16:12:15 2003  Gan Deng  <gan.deng@vanderbilt.edu>
           specification for Exception type has been fulfilled. Some
           constructors, copy constructors and assignment operators which
           are supposed be be put into the "protected" section in class
-	  declaration still remained in the "public" section. These
-	  changes will be made later when we full migrate to MS VC++
-	  7.0 or later version.
+          declaration still remained in the "public" section. These
+          changes will be made later when we full migrate to MS VC++
+          7.0 or later version.
 
           See the "NOTE" section in the Exception.h file for details.
 
 Mon Jul 28 16:14:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Exception.cpp: Fixed explicit template build problems.
+        * tao/Exception.cpp: Fixed explicit template build problems.
 
 Mon Jul 28 14:46:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -904,17 +922,17 @@ Mon Jul 28 14:46:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Jul 28 13:05:08 2003  Gan Deng <gan.deng@vanderbilt.edu>
 
-	* tests/Param_Test/except.cpp
-	* tests/Param_Test/param_test_i.cpp
+        * tests/Param_Test/except.cpp
+        * tests/Param_Test/param_test_i.cpp
 
-	  Added the testing for the SystemException into the
-	  exception test.
+          Added the testing for the SystemException into the
+          exception test.
 
 Mon Jul 28 13:03:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Any.cpp:
-	* tao/Any.h: Provided a default implementation for
-	  TAO::Any_Impl::_tao_decode ().
+        * tao/Any.cpp:
+        * tao/Any.h: Provided a default implementation for
+          TAO::Any_Impl::_tao_decode ().
 
 Mon Jul 28 12:47:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -928,24 +946,24 @@ Mon Jul 28 12:47:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Jul 28 12:34:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Any_SystemException.h:
-	* tao/Any_SystemException.cpp: New Any_Impl classes to be used by
-	  different concrete CORBA::SystemException  types. The way it was
-	  done before added a lot of footprint.
+        * tao/Any_SystemException.h:
+        * tao/Any_SystemException.cpp: New Any_Impl classes to be used by
+          different concrete CORBA::SystemException  types. The way it was
+          done before added a lot of footprint.
 
-	* tao/Exception.cpp: Use TAO::Any_SystemException class for Any
-	  extraction and insertion operators.
+        * tao/Exception.cpp: Use TAO::Any_SystemException class for Any
+          extraction and insertion operators.
 
-	* tao/Makefile.tao:
-	* tao/tao.mpc:
-	* tao/makefile.bor: Added the new file to the following Makefiles
-	  and project files.
+        * tao/Makefile.tao:
+        * tao/tao.mpc:
+        * tao/makefile.bor: Added the new file to the following Makefiles
+          and project files.
 
 Mon Jul 28 13:25:00 2003  Stephen Torri <storri@cse.wustl.edu>
 
-	* orbsvcs/orbsvcs/Metrics.idl:
+        * orbsvcs/orbsvcs/Metrics.idl:
 
-	  Added missing file.
+          Added missing file.
 
 Mon Jul 28 10:48:49 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1084,59 +1102,59 @@ Sun Jul 27 19:11:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sun Jul 27 19:31:27 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* examples/RTScheduling/DT_Creator.h:
+        * examples/RTScheduling/DT_Creator.h:
 
-	  Added the missing DT_Creator.h file.
+          Added the missing DT_Creator.h file.
 
-	* examples/RTScheduling/FP_SchedulingC.h:
-	* examples/RTScheduling/MIF_SchedulingC.h:
+        * examples/RTScheduling/FP_SchedulingC.h:
+        * examples/RTScheduling/MIF_SchedulingC.h:
 
-	  Included RTScheduler.h file instaed of RTSchedulerC.h.
+          Included RTScheduler.h file instaed of RTSchedulerC.h.
 
-	* examples/RTScheduling/Thread_Task.h:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_DT_Creator.h:
-	* examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.h:
+        * examples/RTScheduling/Thread_Task.h:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_DT_Creator.h:
+        * examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.h:
 
-	  Removed the inclusion of Task.h file that is no longer used.
+          Removed the inclusion of Task.h file that is no longer used.
 
-	* examples/RTScheduling/MIF_Scheduler/Makefile:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile:
+        * examples/RTScheduling/MIF_Scheduler/Makefile:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
-	  Above changes fix compile problems on most builds.
+          Above changes fix compile problems on most builds.
 
 Sun Jul 27 17:30:14 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp: Converted period
-	  argument for scheduler->set from ACE_Time_Value to
-	  RtecScheduler::Period_t to clear warnings in
-	  WinXP_MSVC_Warning_Level_4_Debug build.
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp: Converted period
+          argument for scheduler->set from ACE_Time_Value to
+          RtecScheduler::Period_t to clear warnings in
+          WinXP_MSVC_Warning_Level_4_Debug build.
 
-	* orbsvcs/examples/RtEC/Kokyu/Service.cpp: Used ORBSVCS_Time
-	  utility function to convert between ACE_Time_Value and
-	  TimeBase::TimeT to clear warnings in
-	  WinXP_MSVC_Warning_Level_4_Debug build.
+        * orbsvcs/examples/RtEC/Kokyu/Service.cpp: Used ORBSVCS_Time
+          utility function to convert between ACE_Time_Value and
+          TimeBase::TimeT to clear warnings in
+          WinXP_MSVC_Warning_Level_4_Debug build.
 
 Sun Jul 27 09:06:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Stub.cpp (get_policy): Removed the check for this->policies_
-	  == 0. This is actually bogus since the get_client_policy () does
-	  all the checks. Moreover, if the policy is set on Current or on
-	  the PolicyManager, we could by mistake a return a null
-	  policy. Thanks to Christoph Liebig <xfrog2000@yahoo.com>
-	  for reporting this problem.
+        * tao/Stub.cpp (get_policy): Removed the check for this->policies_
+          == 0. This is actually bogus since the get_client_policy () does
+          all the checks. Moreover, if the policy is set on Current or on
+          the PolicyManager, we could by mistake a return a null
+          policy. Thanks to Christoph Liebig <xfrog2000@yahoo.com>
+          for reporting this problem.
 
 Sun Jul 27 07:29:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Exception.h:
-	* tao/Exception.cpp: Fixed compiation errors and warnings in
-	  SunC++  builds. These were caused due to the following
+        * tao/Exception.h:
+        * tao/Exception.cpp: Fixed compiation errors and warnings in
+          SunC++  builds. These were caused due to the following
 
-	  - string literal being converted to char *
-	  - explicit template instantiations required that the
-	  CORBA::SystemException not be an abstract base class. Hence
-	  provided default implementations for them.
+          - string literal being converted to char *
+          - explicit template instantiations required that the
+          CORBA::SystemException not be an abstract base class. Hence
+          provided default implementations for them.
 
 Sat Jul 26 19:03:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1157,46 +1175,46 @@ Sat Jul 26 14:34:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sat Jul 26 11:37:17 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_Component.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_Component.h:
 
-	  Uncommented ACE_STATIC_SVC_REQUIRE macro.  It is needed when
-	  using this component in a statically linked application.
+          Uncommented ACE_STATIC_SVC_REQUIRE macro.  It is needed when
+          using this component in a statically linked application.
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.cpp:
 
-	  Re-enabled code that automatically and transparently adds load
-	  balancing to servers.  This was made possible by Carlos'
-	  IORInterceptor deadlock fix (see Bug 1414).
+          Re-enabled code that automatically and transparently adds load
+          balancing to servers.  This was made possible by Carlos'
+          IORInterceptor deadlock fix (see Bug 1414).
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp
-	  (find_object_group):
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp
+          (find_object_group):
 
-	  Fixed problem where nil object group reference was used when
-	  adding members to the object group.  In particular, use
-	  "_retn()" not "out()" when transferring ownership of object
-	  group reference.
+          Fixed problem where nil object group reference was used when
+          adding members to the object group.  In particular, use
+          "_retn()" not "out()" when transferring ownership of object
+          group reference.
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.cpp
-	  (receive_request_service_contexts):
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.cpp
+          (receive_request_service_contexts):
 
-	  Commented out code that attempts to check for a load
-	  balancing-specific IOP::ServiceContext.  Such a service context
-	  is no longer used.  A CORBA::TRANSIENT exception is now thrown
-	  for all requests when a load alert is enabled, regardless of
-	  whether or not the target is load balanced.
+          Commented out code that attempts to check for a load
+          balancing-specific IOP::ServiceContext.  Such a service context
+          is no longer used.  A CORBA::TRANSIENT exception is now thrown
+          for all requests when a load alert is enabled, regardless of
+          whether or not the target is load balanced.
 
-	* tao/Pseudo_VarOut_T.inl:
-	* tao/Pseudo_VarOut_T.cpp:
+        * tao/Pseudo_VarOut_T.inl:
+        * tao/Pseudo_VarOut_T.cpp:
 
-	  Nuked trailing whitespace.
+          Nuked trailing whitespace.
 
 Sat Jul 26 13:27:35 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/RTKokyuEvent.dsp:
+        * orbsvcs/orbsvcs/RTKokyuEvent.dsp:
 
-	  Added Kokyu library to list of link libraries and added Kokyu
-	  path to link path.
+          Added Kokyu library to list of link libraries and added Kokyu
+          path to link path.
 
 Sat Jul 26 10:02:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1215,25 +1233,25 @@ Sat Jul 26 10:02:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Jul 25 22:17:44 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.h:
 
-	  Modifications to reflect changes in Kokyu. The Kokyu dispatcher
-	  is stored in an auto ptr instead of a regular pointer. This is
-	  enforced by the Kokyu interface.
+          Modifications to reflect changes in Kokyu. The Kokyu dispatcher
+          is stored in an auto ptr instead of a regular pointer. This is
+          enforced by the Kokyu interface.
 
-	* orbsvcs/orbsvcs/Event/RTKokyuEvent.dsw:
+        * orbsvcs/orbsvcs/Event/RTKokyuEvent.dsw:
 
-	  Changed the dependency to Kokyu.dsp instead of Kokyu_DLL.dsp.
+          Changed the dependency to Kokyu.dsp instead of Kokyu_DLL.dsp.
 
 Fri Jul 25 17:07:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
         * orbsvcs/orbsvcs/AV/AVStreams_i.h:
 
-	  Removed unused copy constructors and assignment
-	  operators, inserted only for older versions
-	  of gcc no longer supported.
+          Removed unused copy constructors and assignment
+          operators, inserted only for older versions
+          of gcc no longer supported.
 
         * TAO_IDL/fe/fe_lookup.cpp:
         * orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.i:
@@ -1253,8 +1271,8 @@ Fri Jul 25 17:07:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Messaging/MessagingS.cpp:
 
           Fixed more gcc 3.3 warnings, about array subscript
-	  values of type char and about the order of base
-	  class constructor calls in copy constructors.
+          values of type char and about the order of base
+          class constructor calls in copy constructors.
 
 Fri Jul 25 13:15:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1277,9 +1295,9 @@ Fri Jul 25 14:08:09 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jul 25 08:21:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Exception.h: Fix for the undefined symbol error that showed
-	  up in our daily builds. Strange that it never showed up in my
-	  workspace before I checked stuff in.
+        * tao/Exception.h: Fix for the undefined symbol error that showed
+          up in our daily builds. Strange that it never showed up in my
+          workspace before I checked stuff in.
 
 Fri Jul 25 13:09:56 UTC 2003  Johnny Willlemsen  <jwillemsen@remedy.nl>
 
@@ -1330,96 +1348,96 @@ Thu Jul 24 17:38:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_interface.cpp:
         * TAO_IDL/include/ast_interface.h:
 
-	  Changed the inheritance graph traversal mechanism
-	  to be depth-first instead of breadth-first. It
-	  seems that gcc 3.3 wants base class constructors
-	  to be called in left-to-right depth-first order,
-	  as required by ANSI C++.
+          Changed the inheritance graph traversal mechanism
+          to be depth-first instead of breadth-first. It
+          seems that gcc 3.3 wants base class constructors
+          to be called in left-to-right depth-first order,
+          as required by ANSI C++.
 
         * orbsvcs/orbsvcs/CosTrading.dsp:
 
-	  Added missing header files to project.
+          Added missing header files to project.
 
         * orbsvcs/orbsvcs/PortableGroup.dsp:
 
-	  Modified an included template source file to be
-	  excluded from the build.
+          Modified an included template source file to be
+          excluded from the build.
 
         * orbsvcs/orbsvcs/AV/RTCP_Packet.cpp:
 
-	  Removed a check for an unsigned char argument
-	  value greater than 255, which gcc 3.3 correctly
-	  warns is impossible.
+          Removed a check for an unsigned char argument
+          value greater than 255, which gcc 3.3 correctly
+          warns is impossible.
 
         * orbsvcs/orbsvcs/Trader/Offer_Iterators.h:
         * orbsvcs/orbsvcs/Trader/Trader_Utils.h:
 
-	  Removed some legacy no-op copy constructors that
-	  were originally added only to please some version
-	  of gcc. The new 3.3 version of gcc now complains
-	  about their existence.
+          Removed some legacy no-op copy constructors that
+          were originally added only to please some version
+          of gcc. The new 3.3 version of gcc now complains
+          about their existence.
 
         * tao/Messaging/MessagingS.cpp:
         * TAO_IDL/fe/fe_lookup.cpp:
 
-	  Modified char type array subscripts to be cast
-	  to int, reflecting recent changes to gperf.
+          Modified char type array subscripts to be cast
+          to int, reflecting recent changes to gperf.
 
 Thu Jul 24 17:30:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* orbsvcs/tests/Notify/lib/Peer_T.ccp (status):
+        * orbsvcs/tests/Notify/lib/Peer_T.ccp (status):
 
-	  Changed ENV to NOT_USED to fix compile warning.
+          Changed ENV to NOT_USED to fix compile warning.
 
 Thu Jul 24 16:06:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Exception.h:
-	* tao/Exception.cpp: Some cosmetic fixes that reduce the in disk
-	  footprint of this file. The problem is that we use macros to
-	  create and initalize a tonne of system exceptions. The footprint
-	  blow up is due to code duplication. This checkin primarily tries
-	  to reduce code duplication which helps the footprint.
+        * tao/Exception.h:
+        * tao/Exception.cpp: Some cosmetic fixes that reduce the in disk
+          footprint of this file. The problem is that we use macros to
+          create and initalize a tonne of system exceptions. The footprint
+          blow up is due to code duplication. This checkin primarily tries
+          to reduce code duplication which helps the footprint.
 
 Thu Jul 24 14:26:12 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* examples/Makefile:
+        * examples/Makefile:
 
-	Updated the Makefile to include the RTScheduling DIR.
+        Updated the Makefile to include the RTScheduling DIR.
 
-	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile:
-	* examples/RTScheduling/MIF_Scheduler/Makefile:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Makefile:
+        * examples/RTScheduling/MIF_Scheduler/Makefile:
 
-	Removed rules to compile FP_Scheduling.idl and
-	MIF_Scheduling.idl.
+        Removed rules to compile FP_Scheduling.idl and
+        MIF_Scheduling.idl.
 
 Thu Jul 24 13:48:33 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* orbsvcs/examples/Notify/ThreadPool/Supplier.cpp
-	  (subscription_change):
+        * orbsvcs/examples/Notify/ThreadPool/Supplier.cpp
+          (subscription_change):
 
-	  string_var needed .in() accessor.
+          string_var needed .in() accessor.
 
-	* orbsvcs/examples/Notify/ThreadPool/run_test.pl:
+        * orbsvcs/examples/Notify/ThreadPool/run_test.pl:
 
-	  Fixed typo.
+          Fixed typo.
 
 Thu Jul 24 13:36:48 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/RTScheduling/Scheduler.cpp:
-	* tests/RTScheduling/VoidData/test_client.cpp (main):
-	* tests/RTScheduling/Scheduling_Interceptor/test_client.cpp (main):
-	* tests/RTScheduling/Current/test.cpp:
-	* tests/RTScheduling/Current/Thread_Task.cpp:
-	* tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
+        * tests/RTScheduling/Scheduler.cpp:
+        * tests/RTScheduling/VoidData/test_client.cpp (main):
+        * tests/RTScheduling/Scheduling_Interceptor/test_client.cpp (main):
+        * tests/RTScheduling/Current/test.cpp:
+        * tests/RTScheduling/Current/Thread_Task.cpp:
+        * tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
 
-	  Fixed use of ACE_ENV.
+          Fixed use of ACE_ENV.
 
 Thu Jul 24 13:01:46 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/RTCORBA/Priority_Inversion_With_Bands/test_i.cpp
-	  (initialize):
+        * tests/RTCORBA/Priority_Inversion_With_Bands/test_i.cpp
+          (initialize):
 
-	  ACE_ENV_ARG was not used in this function.
+          ACE_ENV_ARG was not used in this function.
 
 Thu Jul 24 11:35:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1433,9 +1451,9 @@ Thu Jul 24 11:35:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Jul 24 11:36:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/CosTrading.idl: Thanks to Sebastien Lalonde
-	  <SLalonde@interstarinc.com> for reporting that the IDL is not
-	  spec compatible. The IDL should now be spec compliant.
+        * orbsvcs/orbsvcs/CosTrading.idl: Thanks to Sebastien Lalonde
+          <SLalonde@interstarinc.com> for reporting that the IDL is not
+          spec compatible. The IDL should now be spec compliant.
 
 Thu Jul 24 11:09:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1451,170 +1469,170 @@ Thu Jul 24 11:09:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Jul 24 08:27:07 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* README:
+        * README:
 
-	  Reverted accidental changes. Thanks to Johnny Willemsen for
-	  pointing this out.
+          Reverted accidental changes. Thanks to Johnny Willemsen for
+          pointing this out.
 
 Thu Jul 24 03:03:20 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	Two example schedulers were plugged into the Dynamic Scheduling
-	framework to illustrate the pluggable scheduler concept of the
-	framework. The two schedulers are Fixed_Priority_Scheduler and
-	Most Important First (MIF) Scheduler.
+        Two example schedulers were plugged into the Dynamic Scheduling
+        framework to illustrate the pluggable scheduler concept of the
+        framework. The two schedulers are Fixed_Priority_Scheduler and
+        Most Important First (MIF) Scheduler.
 
-	Fixed Priority Scheduler
-	------------------------
+        Fixed Priority Scheduler
+        ------------------------
 
-	* examples/RTScheduling/FP_Scheduling.pidl:
-	* examples/RTScheduling/FP_SchedulingC.h:
-	* examples/RTScheduling/FP_SchedulingC.cpp:
-	* examples/RTScheduling/FP_SchedulingC.i:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.h:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.cpp:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_DT_Creator.h:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_DT_Creator.cpp:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Task.h:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Task.cpp:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/test.cpp:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/test.h:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/README:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/fp_dt_creator_export.h:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/svc.conf.client:
-	* examples/RTScheduling/Fixed_Priority_Scheduler/svc.conf.server:
+        * examples/RTScheduling/FP_Scheduling.pidl:
+        * examples/RTScheduling/FP_SchedulingC.h:
+        * examples/RTScheduling/FP_SchedulingC.cpp:
+        * examples/RTScheduling/FP_SchedulingC.i:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.h:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_DT_Creator.h:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_DT_Creator.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Task.h:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Task.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/test.cpp:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/test.h:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Makefile:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/README:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/fp_dt_creator_export.h:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/svc.conf.client:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/svc.conf.server:
 
-	In this experiment we show how dynamic scheduling is done using
-	the Dynamic Scheduling framework with the Fixed Priority Scheduler
-	as the pluggable scheduler.
+        In this experiment we show how dynamic scheduling is done using
+        the Dynamic Scheduling framework with the Fixed Priority Scheduler
+        as the pluggable scheduler.
 
-	This scheduler uses the OS scheduler to schedule the Distributable
-	Threads (DTs) in the system. The DTs are scheduled according to
-	their importance. The scheduler maps the importance of the DT to
-	native thread priorities so the OS scheduler can schedule the
-	DTs. At any given instance the DT of highest priority is running
-	on a given host.
+        This scheduler uses the OS scheduler to schedule the Distributable
+        Threads (DTs) in the system. The DTs are scheduled according to
+        their importance. The scheduler maps the importance of the DT to
+        native thread priorities so the OS scheduler can schedule the
+        DTs. At any given instance the DT of highest priority is running
+        on a given host.
 
 
-	MIF Scheduler
-	--------------
+        MIF Scheduler
+        --------------
 
-	* examples/RTScheduling/MIF_Scheduling.pidl:
-	* examples/RTScheduling/MIF_SchedulingC.h:
-	* examples/RTScheduling/MIF_SchedulingC.cpp:
-	* examples/RTScheduling/MIF_SchedulingC.i:
-	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.h:
-	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp:
-	* examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.h:
-	* examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.cpp:
-	* examples/RTScheduling/MIF_Scheduler/MIF_Task.h:
-	* examples/RTScheduling/MIF_Scheduler/MIF_Task.cpp:
-	* examples/RTScheduling/MIF_Scheduler/test.cpp:
-	* examples/RTScheduling/MIF_Scheduler/test.h:
-	* examples/RTScheduling/MIF_Scheduler/Makefile:
-	* examples/RTScheduling/MIF_Scheduler/README:
-	* examples/RTScheduling/MIF_Scheduler/mif_dt_creator_export.h:
-	* examples/RTScheduling/MIF_Scheduler/svc.conf.client:
-	* examples/RTScheduling/MIF_Scheduler/svc.conf.server:
+        * examples/RTScheduling/MIF_Scheduling.pidl:
+        * examples/RTScheduling/MIF_SchedulingC.h:
+        * examples/RTScheduling/MIF_SchedulingC.cpp:
+        * examples/RTScheduling/MIF_SchedulingC.i:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.h:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp:
+        * examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.h:
+        * examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.cpp:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Task.h:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Task.cpp:
+        * examples/RTScheduling/MIF_Scheduler/test.cpp:
+        * examples/RTScheduling/MIF_Scheduler/test.h:
+        * examples/RTScheduling/MIF_Scheduler/Makefile:
+        * examples/RTScheduling/MIF_Scheduler/README:
+        * examples/RTScheduling/MIF_Scheduler/mif_dt_creator_export.h:
+        * examples/RTScheduling/MIF_Scheduler/svc.conf.client:
+        * examples/RTScheduling/MIF_Scheduler/svc.conf.server:
 
-	In this experiment we show how dynamic scheduling is done using
-	the Dynamic Scheduling framework with the MIF Scheduler as the
-	pluggable scheduler.
+        In this experiment we show how dynamic scheduling is done using
+        the Dynamic Scheduling framework with the MIF Scheduler as the
+        pluggable scheduler.
 
-	This scheduler manages a ready queue of Distributable Threads
-	(DTs) ordered by their importance and suspended on a condition
-	variable. AT any given time the scheduler dequeues the DT at the
-	head of the queue, that corresponds to the most important thread,
-	and signals the thread to activate it. The service context is used
-	to send the importance and GUID of the DT across hosts it spans so
-	the DT can be scheduled accordingly on the remote host. At any
-	given instance the DT of highest priority is running on a given
-	host.
+        This scheduler manages a ready queue of Distributable Threads
+        (DTs) ordered by their importance and suspended on a condition
+        variable. AT any given time the scheduler dequeues the DT at the
+        head of the queue, that corresponds to the most important thread,
+        and signals the thread to activate it. The service context is used
+        to send the importance and GUID of the DT across hosts it spans so
+        the DT can be scheduled accordingly on the remote host. At any
+        given instance the DT of highest priority is running on a given
+        host.
 
-	Common Files
-	------------
+        Common Files
+        ------------
 
-	* examples/RTScheduling/Job.idl:
-	* examples/RTScheduling/Job_i.cpp:
-	* examples/RTScheduling/Job_i.h:
-	* examples/RTScheduling/DT_Creator.cpp:
-	* examples/RTScheduling/DT_Creator.h:
+        * examples/RTScheduling/Job.idl:
+        * examples/RTScheduling/Job_i.cpp:
+        * examples/RTScheduling/Job_i.h:
+        * examples/RTScheduling/DT_Creator.cpp:
+        * examples/RTScheduling/DT_Creator.h:
         * examples/RTScheduling/Synch.idl:
         * examples/RTScheduling/Synch_i.cpp:
         * examples/RTScheduling/Synch_i.h:
         * examples/RTScheduling/Task_Stats.cpp:
         * examples/RTScheduling/Task_Stats.h:
         * examples/RTScheduling/Task_Stats.inl:
-	* examples/RTScheduling/Thread_Task.cpp:
-	* examples/RTScheduling/Thread_Task.h:
+        * examples/RTScheduling/Thread_Task.cpp:
+        * examples/RTScheduling/Thread_Task.h:
         * examples/RTScheduling/POA_Holder.h:
-	* examples/RTScheduling/POA_Holder.cpp:
-	* examples/RTScheduling/Starter.h:
+        * examples/RTScheduling/POA_Holder.cpp:
+        * examples/RTScheduling/Starter.h:
         * examples/RTScheduling/Starter.cpp:
-	* examples/RTScheduling/Makefile:
-	* examples/RTScheduling/README:
+        * examples/RTScheduling/Makefile:
+        * examples/RTScheduling/README:
 
 
 Wed Jul 23 14:45:32 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/PortableServer/Object_Adapter.cpp (open):
-	* tao/PortableServer/POA.cpp (TAO_POA, create_POA_i):
-	  (establish_components):
+        * tao/PortableServer/Object_Adapter.cpp (open):
+        * tao/PortableServer/POA.cpp (TAO_POA, create_POA_i):
+          (establish_components):
 
-	  Re-applied Carlos' fix for a deadlock in the IORInterceptor
-	  support code.  It now works due to some corrections made by
-	  Irfan.  [Bug 1414]
+          Re-applied Carlos' fix for a deadlock in the IORInterceptor
+          support code.  It now works due to some corrections made by
+          Irfan.  [Bug 1414]
 
-	* tao/RTScheduling/Request_Interceptor.cpp (receive_request):
+        * tao/RTScheduling/Request_Interceptor.cpp (receive_request):
 
-	  Fixed a memory leak.
+          Fixed a memory leak.
 
-	  Fixed emulated exception usage.
+          Fixed emulated exception usage.
 
-	* orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp (operator>>):
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp (operator>>):
 
-	  Fixed format specifier mismatch warning in fscanf() call.  The
-	  data being scanned is an "unsigned int".  As such, the format
-	  specifier should be "%u", not "%d".
+          Fixed format specifier mismatch warning in fscanf() call.  The
+          data being scanned is an "unsigned int".  As such, the format
+          specifier should be "%u", not "%d".
 
 Wed Jul 23 16:25:52 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/examples/RtEC/Kokyu/Makefile:
+        * orbsvcs/examples/RtEC/Kokyu/Makefile:
 
-	  Modified Makefile to add the RTKokyuEvent library to the
-	  list of libraries.
+          Modified Makefile to add the RTKokyuEvent library to the
+          list of libraries.
 
-	* orbsvcs/examples/RtEC/Kokyu/Service.cpp:
+        * orbsvcs/examples/RtEC/Kokyu/Service.cpp:
 
-	  Removed the capability to run in config mode. Running in config
-	  mode used to generate a Schedule.h file, which needs to be
-	  included and compiled to enable running in "non-config"
-	  mode. After these changes, the scheduler regenerates the
-	  schedule on each run (based on the RT_Infos registered with it)
-	  and the EC_Kokyu dispatcher gets the schedule info dynamically
-	  from the scheduler and sets up the dispatch lanes.
+          Removed the capability to run in config mode. Running in config
+          mode used to generate a Schedule.h file, which needs to be
+          included and compiled to enable running in "non-config"
+          mode. After these changes, the scheduler regenerates the
+          schedule on each run (based on the RT_Infos registered with it)
+          and the EC_Kokyu dispatcher gets the schedule info dynamically
+          from the scheduler and sets up the dispatch lanes.
 
 Wed Jul 23 16:18:38 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* README:
+        * README:
 
-	  Reverted accidental changes. Thanks to Johnny Willemsen for
-	  pointing this out.
+          Reverted accidental changes. Thanks to Johnny Willemsen for
+          pointing this out.
 
 Wed Jul 23 15:26:41 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tests/RTScheduling/DT_Spawn/test.cpp (main): Used ACE_TRY_EX
-	  macro because of nested pseudo-try blocks.  This should fix
-	  compilation problems on non-exception builds.
+        * tests/RTScheduling/DT_Spawn/test.cpp (main): Used ACE_TRY_EX
+          macro because of nested pseudo-try blocks.  This should fix
+          compilation problems on non-exception builds.
 
-	* tests/RTScheduling/Scheduler.h (CTOR): Fixed signature so that
-	  it's consistent with non-exception builds.
+        * tests/RTScheduling/Scheduler.h (CTOR): Fixed signature so that
+          it's consistent with non-exception builds.
 
-	* tests/RTScheduling/DT_Spawn/Thread_Action.h (_cxx_do):
+        * tests/RTScheduling/DT_Spawn/Thread_Action.h (_cxx_do):
 
-	  Changed to use proper ACE_CHECK macro rather than
-	  ACE_TRY_CHECK.  This should get rid of compilation problems on
-	  non-exception builds.
+          Changed to use proper ACE_CHECK macro rather than
+          ACE_TRY_CHECK.  This should get rid of compilation problems on
+          non-exception builds.
 
 Wed Jul 23 19:35:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -1735,36 +1753,36 @@ Wed Jul 23 10:37:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jul 22 20:44:47 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.RTKokyuEvent:
+        * orbsvcs/orbsvcs/Makefile.RTKokyuEvent:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Tue Jul 22 18:57:59 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/TAO_Tests.dsw:
+        * tests/TAO_Tests.dsw:
 
-	  Restored DOS style end-of-line markers.
+          Restored DOS style end-of-line markers.
 
 Tue Jul 22 18:05:09 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/Connection_Failure/Connection_Failure.mpc:
+        * tests/Connection_Failure/Connection_Failure.mpc:
 
-	  No need to include messaging.
+          No need to include messaging.
 
 2003-07-22  Jaiganesh Balasubramanian  <jai@equus.dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Makefile:
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Makefile.bor:
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Makefile:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Makefile.bor:
 
-	  Changed the files to assist in adding the test to check the infrastructure
-	  controlled membership of the Load Balancer.
+          Changed the files to assist in adding the test to check the infrastructure
+          controlled membership of the Load Balancer.
 
 Tue Jul 22 17:51:03 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests/Collocation_Opportunities/Makefile:
+        * tests/Collocation_Opportunities/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Tue Jul 22 16:48:48 2003  Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
 
@@ -2220,8 +2238,8 @@ Mon Jul 21 15:58:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/include/ast_generator.h:
 
           Fixed a bug where unsigned long long constants were truncated if
-	  the literal rhs was greater than ULONG_MAX. Thanks to Scott
-	  Clarke <sclarke@ideorlando.org>for reporting the bug.
+          the literal rhs was greater than ULONG_MAX. Thanks to Scott
+          Clarke <sclarke@ideorlando.org>for reporting the bug.
 
 Mon Jul 21 19:33:24 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
