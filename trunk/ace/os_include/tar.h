@@ -28,4 +28,5 @@
 # include /**/ <tar.h>
 #endif /* !ACE_LACKS_TAR_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_TAR_H */

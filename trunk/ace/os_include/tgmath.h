@@ -31,4 +31,5 @@
 # include /**/ <tgmath.h>
 #endif /* !ACE_LACKS_TGMATH_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_TGMATH_H */

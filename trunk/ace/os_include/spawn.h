@@ -32,4 +32,5 @@
 # include /**/ <spawn.h>
 #endif /* !ACE_LACKS_SPAWN_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SPAWN_H */

@@ -30,4 +30,5 @@
 # include /**/ <search.h>
 #endif /* !ACE_LACKS_SEARCH_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SEARCH_H */

@@ -30,4 +30,5 @@
 # include /**/ <glob.h>
 #endif /* !ACE_LACKS_GLOB_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_GLOB_H */

@@ -28,5 +28,5 @@
 # include /**/ <errno.h>
 #endif /* !ACE_LACKS_ERRNO_H */
 
-
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_ERRNO_H */

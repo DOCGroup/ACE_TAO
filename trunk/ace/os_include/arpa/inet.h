@@ -32,4 +32,5 @@
 
 // @todo move the ACE_HTONL, etc macros here
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_ARPA_INET_H */

@@ -30,4 +30,5 @@
 # include /**/ <monetary.h>
 #endif /* !ACE_LACKS_MONETARY_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_MONETARY_H */

@@ -28,4 +28,5 @@
 # include /**/ <stdbool.h>
 #endif /* !ACE_LACKS_STDBOOL_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_STDBOOL_H */

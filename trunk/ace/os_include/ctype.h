@@ -31,5 +31,5 @@
 // @todo move the is* and is* emulation methods in ACE_OS here
 // and let ACE_OS just call them.
 
-
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_CTYPE_H */

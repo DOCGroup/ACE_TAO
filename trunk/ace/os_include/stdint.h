@@ -114,4 +114,5 @@ typedef ACE_UINT64_T_TYPE int64_t;
 
 // @todo perhaps add macros
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_STDINT_H */

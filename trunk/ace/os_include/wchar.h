@@ -35,4 +35,5 @@
 # include /**/ <wchar.h>
 #endif /* !ACE_LACKS_WCHAR_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_WCHAR_H */

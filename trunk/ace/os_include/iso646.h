@@ -28,4 +28,5 @@
 # include /**/ <iso646.h>
 #endif /* !ACE_LACKS_ISO646_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_ISO646_H */

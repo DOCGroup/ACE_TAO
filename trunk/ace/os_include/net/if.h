@@ -28,4 +28,5 @@
 # include /**/ <net/if.h>
 #endif /* !ACE_LACKS_NET_IF_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_NET_IF_H */

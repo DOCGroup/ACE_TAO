@@ -30,4 +30,5 @@
 # include /**/ <local.h>
 #endif /* !ACE_LACKS_LOCAL_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_LOCAL_H */

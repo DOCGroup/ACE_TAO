@@ -30,5 +30,5 @@
 # include /**/ <dirent.h>
 #endif /* !ACE_LACKS_DIRENT_H */
 
-
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_DIRENT_H */

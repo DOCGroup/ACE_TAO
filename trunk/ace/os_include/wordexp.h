@@ -31,4 +31,5 @@
 # include /**/ <wordexp.h>
 #endif /* !ACE_LACKS_WORDEXP_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_WORDEXP_H */

@@ -31,4 +31,5 @@
 # include /**/ <stdio.h>
 #endif /* !ACE_LACKS_STDIO_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_STDIO_H */

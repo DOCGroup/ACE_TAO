@@ -30,4 +30,5 @@
 # include /**/ <trace.h>
 #endif /* !ACE_LACKS_TRACE_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_TRACE_H */

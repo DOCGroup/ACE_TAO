@@ -28,4 +28,5 @@
 # include /**/ <math.h>
 #endif /* !ACE_LACKS_MATH_H */
 
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_MATH_H */
