@@ -105,7 +105,7 @@ sub run_program ($)
     my $P;
 
     if ($config_list->check_config ('Valgrind')) {
-      $P = new PerlACE::Process ("valgrind -q ./$program");   
+      $P = new PerlACE::Process ("valgrind -q --leak-check=yes --trace-children=yes ./$program");   
       $P->IgnoreExeSubDir(1);
     }
     else {
