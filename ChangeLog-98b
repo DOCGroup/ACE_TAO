@@ -1,3 +1,9 @@
+Mon May 11 15:15:24 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Thread_Manager.h: 
+	  Removed bogus ACE_INLINE macros in class declaration, they were
+	  making the SGI compiler *very* unhappy.
+
 Mon May 11 15:11:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.cpp (ctime_r): Renamed the fmtstr to
