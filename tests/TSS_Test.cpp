@@ -49,7 +49,11 @@ static u_int errors = 0;
   // to be available.
   static const int ITERATIONS = 1;
 #else
-  static const int ITERATIONS = 100;
+  // POSIX requires at least _POSIX_THREAD_KEYS_MAX (128) keys.  25
+  // iterations with 4 worker threads should be sufficient to check
+  // the TSS wrappers without exceeding the minimum requirements.
+
+  static const int ITERATIONS = 25;
 #endif /* ACE_DEFAULT_THREAD_KEYS */
 
 // Static variables.

@@ -1,3 +1,12 @@
+Mon Aug 30 22:39:24 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tests/TSS_Test.cpp:
+
+	  Changed the number of iterations from 100 to 25 so the test will
+	  run on systems with pthreads with the minimum required number of
+	  thread keys (128).  This should still be sufficient to check the
+	  TSS wrappers without exceeding the minimum requirements.
+
 Mon Aug 30 18:31:28 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/config-netbsd.h:
