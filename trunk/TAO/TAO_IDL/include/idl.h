@@ -91,7 +91,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "ast.h"                 // AST classes
 #include        "util.h"                // Utility classes
 
-if defined (interface)
+#if defined (interface)
 // Mingw needs this.
 # undef interface
 #endif /* defined (interface) */
