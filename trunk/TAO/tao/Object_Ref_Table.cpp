@@ -4,11 +4,14 @@
 #include "debug.h"
 #include "ORB_Constants.h"
 #include "SystemException.h"
+#include "Object.h"
 #include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (tao,
            Object_Ref_Table,
            "$Id$")
+
 
 // ****************************************************************
 

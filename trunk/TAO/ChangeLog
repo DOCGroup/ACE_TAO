@@ -1,3 +1,70 @@
+Sun Sep  5 01:13:12 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/ORB.h:
+
+	  Removed exception specifications from CORBA::ORB methods.  The
+	  C++ mapping no longer requires them.  This also allows for the
+	  removal ofthe "tao/SystemException.h" include which should
+	  improve TAO library compile times, in addition to compile times
+	  for TAO_IDL generated stubs for IDL that contain no operations
+	  (e.g. anything except for non-empty interfaces).
+
+	  Include "Policy_ForwardC.h" instead of "PolicyC.h".  The former
+	  is much lighter weight, and is all that is needed.
+
+	  Forward declare some types in the CORBA namespace since they are
+	  no longer pulled in by removed "PolicyC.h" #include.
+
+	  Include "VarOut_T.h" to pull in some necessary TAO templates.
+
+	  Corrected some Doxygen documentation.
+
+	* tao/ORB.cpp:
+
+	  Removed exception specifications from CORBA::ORB methods in
+	  accordance with changes made to ORB.h.
+
+	  Removed code that initiated TAO unexpected exception handler
+	  registration.  See TAO_Singleton_Manager.* change description
+	  below for details.
+
+	* tao/TAO_Singleton_Manager.h:
+	* tao/TAO_Singleton_Manager.cpp:
+
+	  Removed code that set the TAO unexpected exception handler.  It
+	  is no longer needed since the C++ mapping no longer requires
+	  unknown C++ exceptions to be converted to the CORBA::UNKNOWN
+	  system exception.  It was anyway considered "bad form" to
+	  potentially override an application defined unexpected exception
+	  handler.
+
+	* tao/ClientRequestInfo.cpp:
+	* tao/FILE_Parser.cpp:
+	* tao/Object.cpp:
+	* tao/Object_Ref_Table.cpp:
+	* tao/PolicyFactory_Registry.cpp:
+	* tao/PortableInterceptorC.cpp:
+	* tao/PortableInterceptorC.h:
+	* tao/Stub.h:
+	* tao/DynamicInterface/Server_Request.cpp:
+	* tao/RTCORBA/RTCORBAC.h:
+	* tao/RTCORBA/RT_ORB_Loader.cpp:
+	* tao/RTCORBA/RT_Stub_Factory.cpp:
+	* tao/Utils/RIR_Narrow.cpp:
+
+	  Added missing header #includes now made necessary by header
+	  dependency reductions in tao/ORB.h.
+
+	* TAO_IDL/be/be_codegen.cpp (gen_stub_hdr_includes):
+
+	  Enabled/uncommented code that conditionally generates a
+	  "tao/SystemException.h" include for IDL that defines
+	  operations.  Since tao/ORB.h no longer includes
+	  "tao/SystemException.h", it must be included in TAO_IDL
+	  generated stub headers; at least until exception specifications
+	  are removed from IDL-based stub and skeleton operations (see Bug
+	  1852).
+
 Sat Sep  4 23:30:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/IORTable/IORTableC.h:

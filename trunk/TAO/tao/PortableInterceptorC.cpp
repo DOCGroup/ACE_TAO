@@ -32,6 +32,7 @@
 #include "PortableInterceptorC.h"
 #include "tao/CDR.h"
 #include "tao/Typecode.h"
+#include "tao/PolicyC.h"
 #include "tao/SystemException.h"
 #include "ace/OS_NS_string.h"
 

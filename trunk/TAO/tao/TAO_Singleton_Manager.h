@@ -28,10 +28,6 @@
 #include "tao/orbconf.h"
 #include "ace/Object_Manager_Base.h"
 
-#if defined (ACE_HAS_EXCEPTIONS)
-typedef void (*TAO_unexpected_handler)(void);
-#endif  /* ACE_HAS_EXCEPTIONS */
-
 
 /// Adapter for cleanup, used to register cleanup function with the
 /// ACE_Object_Manager.
@@ -149,17 +145,6 @@ public:
                       ACE_CLEANUP_FUNC cleanup_hook,
                       void *param);
 
-#if defined (ACE_HAS_EXCEPTIONS)
-  /// Set a new unexpected exception handler.
-  /**
-   * The old one will be stored for restoration later on.
-   *
-   * @note Calling this method multiple times will cause the stored
-   *       old unexpected exception handler pointer to be lost.
-   */
-  void _set_unexpected (TAO_unexpected_handler u);
-#endif /* ACE_HAS_EXCEPTIONS */
-
 private:
   /// Force allocation on the heap.
   //@{
@@ -202,17 +187,6 @@ private:
   TAO_SYNCH_RECURSIVE_MUTEX *internal_lock_;
 #endif /* ACE_MT_SAFE */
 
-#if defined (ACE_HAS_EXCEPTIONS)
-  /// The old unexpected exception handler.
-  /**
-   * A pointer to the old unexpected exception handler is stored so
-   * that it can be restored when TAO is unloaded, for example.
-   * Otherwise, any unexpected exceptions will result in a call to
-   * TAO's unexpected exception handler which may no longer exist if
-   * TAO was unloaded.
-   */
-  TAO_unexpected_handler old_unexpected_;
-#endif  /* ACE_HAS_EXCEPTIONS */
 };
 
 #if defined (__ACE_INLINE__)

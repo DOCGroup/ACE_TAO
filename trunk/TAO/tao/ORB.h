@@ -18,17 +18,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "SystemException.h"
+#include "UserException.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "UserException.h"
 #include "objectid.h"
-#include "PolicyC.h"
+#include "Policy_ForwardC.h"
 #include "OBV_Constants.h"
 #include "CORBA_methods.h"
+#include "VarOut_T.h"
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Guard_T.h"
@@ -62,6 +62,15 @@ namespace CORBA
   class UnionMemberSeq;
   class ValueMemberSeq;
   class ORB_ObjectIdList;
+
+  class ExceptionList;
+  typedef ExceptionList * ExceptionList_ptr;
+
+  class ContextList;
+  typedef ContextList * ContextList_ptr;
+
+  class Context;
+  typedef Context * Context_ptr;
 
   // Used at present only in Typecode_Constants.cpp, to make _tc_ORBid.
   // TODO - implement OMG's 'ORBid CORBA::ORB::id (void)'.
@@ -114,11 +123,12 @@ namespace CORBA
   typedef UShort ServiceType;
 
   class Request;
+  typedef Request * Request_ptr;
   typedef TAO_Pseudo_Var_T<Request> Request_var;
   typedef TAO_Pseudo_Out_T<Request, Request_var> Request_out;
 
   class ORB;
-  typedef ORB *ORB_ptr;
+  typedef ORB * ORB_ptr;
   typedef TAO_Pseudo_Var_T<ORB> ORB_var;
   typedef TAO_Pseudo_Out_T<ORB, ORB_var> ORB_out;
 
@@ -198,7 +208,7 @@ namespace CORBA
      * Turn an object reference into a string.  Each type of ORB,
      * e.g. an IIOP ORB, must implement this.  This can be used by
      * servers to publish their whereabouts to clients.  The output of
-     * this is typically eventually given to <string_to_object()> as
+     * this is typically eventually given to @c string_to_object() as
      * an argument.
      */
     char * object_to_string (CORBA::Object_ptr obj
@@ -293,71 +303,60 @@ namespace CORBA
         const char *id,
         const char *name,
         const CORBA::StructMemberSeq &members
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::TypeCode_ptr create_union_tc (
         const char *id,
         const char *name,
         CORBA::TypeCode_ptr discriminator_type,
         const CORBA::UnionMemberSeq &members
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::TypeCode_ptr create_enum_tc (
         const char *id,
         const char *name,
         const CORBA::EnumMemberSeq &members
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::TypeCode_ptr create_alias_tc (
         const char *id,
         const char *name,
         CORBA::TypeCode_ptr original_type
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::TypeCode_ptr create_exception_tc (
         const char *id,
         const char *name,
         const CORBA::StructMemberSeq &members
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::TypeCode_ptr create_interface_tc (
         const char *id,
         const char *name
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::TypeCode_ptr create_string_tc (
         CORBA::ULong bound
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::TypeCode_ptr create_wstring_tc (
         CORBA::ULong bound
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::TypeCode_ptr create_fixed_tc (
         CORBA::UShort digits,
         CORBA::UShort scale
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::TypeCode_ptr create_sequence_tc (
         CORBA::ULong bound,
         CORBA::TypeCode_ptr element_type
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::TypeCode_ptr create_array_tc (
         CORBA::ULong length,
         CORBA::TypeCode_ptr element_type
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::TypeCode_ptr create_value_tc (
         const char *id,
@@ -365,52 +364,43 @@ namespace CORBA
         CORBA::ValueModifier type_modifier,
         CORBA::TypeCode_ptr concrete_base,
         const CORBA::ValueMemberSeq &members
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::TypeCode_ptr create_value_box_tc (
         const char *id,
         const char *name,
         CORBA::TypeCode_ptr boxed_type
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::TypeCode_ptr create_native_tc (
         const char *id,
         const char *name
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::TypeCode_ptr create_recursive_tc (
         const char *id
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::TypeCode_ptr create_abstract_interface_tc (
         const char *id,
         const char *name
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::TypeCode_ptr create_local_interface_tc (
         const char *id,
         const char *ame
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::TypeCode_ptr create_component_tc (
         const char *id,
         const char *name
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     CORBA::TypeCode_ptr create_home_tc (
         const char *id,
         const char *name
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        );
 
     CORBA::TypeCode_ptr create_event_tc (
         const char *id,
@@ -418,9 +408,7 @@ namespace CORBA
         CORBA::ValueModifier type_modifier,
         CORBA::TypeCode_ptr concrete_base,
         const CORBA::ValueMemberSeq &members
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((CORBA::SystemException));
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -437,12 +425,12 @@ namespace CORBA
     /**
      * Instructs the ORB to initialize itself and run its event loop in
      * the current thread, not returning until the ORB has shut down or
-     * the time value specified through <tv> has expired.  If an error
-     * occurs during initialization or at runtime, a CORBA system
-     * exception will be thrown.  <tv> is reduced by the amount of time
-     * spent in this call.
+     * the time value specified through @a tv has expired.  If an
+     * error occurs during initialization or at runtime, a CORBA
+     * system exception will be thrown.  @a tv is reduced by the
+     * amount of time spent in this call.
      *
-     * If this function is called with  <tv> value, client threads
+     * If this function is called with a @ tv value, client threads
      * making invocations will continue their operations. When the
      * operation timesout and returns, any invocations showing up on
      * the server will be buffered by TCP.
@@ -453,14 +441,14 @@ namespace CORBA
     /**
      * Instructs the ORB to initialize itself and run its event loop in
      * the current thread, not returning until the ORB has shut down or
-     * the time value specified through <tv> has expired.  If an error
+     * the time value specified through @a tv has expired.  If an error
      * occurs during initialization or at runtime, a CORBA system
-     * exception will be thrown.  <tv> is reduced by the amount of time
-     * spent in this call.  If <tv> is 0, it means that the timeout is
-     * infinite.  If <tv> is ACE_Time_Value::zero, it specifies to poll
-     * and does not block.
+     * exception will be thrown.  @a tv is reduced by the amount of time
+     * spent in this call.  If @a tv is 0, it means that the timeout
+     * is infinite.  If @a tv is @c ACE_Time_Value::zero, it specifies
+     * to poll and does not block.
      *
-     * If this function is called with  <tv> value, client threads
+     * If this function is called with @a tv value, client threads
      * making invocations will continue their operations. When the
      * operation timesout and returns, any invocations showing up on
      * the server will be buffered by TCP.
@@ -557,9 +545,7 @@ namespace CORBA
 
     CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                      const CORBA::Any& val
-                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       CORBA::PolicyError));
+                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     // ----------------------------------------------------------------
     // = TAO-specific extensions to the CORBA specification.
@@ -568,9 +554,7 @@ namespace CORBA
     /// Create an empty policy, usually to be filled in later by
     /// demarshaling.
     CORBA::Policy_ptr _create_policy (CORBA::PolicyType type
-                                      ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       CORBA::PolicyError));
+                                      ACE_ENV_ARG_DECL);
 
     /// Resolve the POA.
     CORBA::Object_ptr resolve_root_poa (ACE_ENV_SINGLE_ARG_DECL);
@@ -578,10 +562,6 @@ namespace CORBA
     /// Initialize the ORB globals correctly, i.e., only when they
     /// haven't been initialized yet.
     static void init_orb_globals (ACE_ENV_SINGLE_ARG_DECL);
-
-    // The function used by tao to handle the "unexpected" exceptions,
-    // It raises CORBA::UNKNOWN.
-    static void _tao_unexpected_exception (void);
 
     // Reference counting...
     CORBA::ULong _incr_refcnt (void);

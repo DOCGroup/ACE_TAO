@@ -1380,18 +1380,17 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
   this->gen_standard_include (this->client_header_,
                               "tao/ORB.h");
 
-  // Not needed at the moment, since {System,User}Exception.h are
-  // pulled in by ORB.h, which is included in the stub header
-  // file. May change if ORB.h is rearranged to make a lighter include
-  // for applications.
-#if 0
-  // System exception throw spec for every operation may change soon.
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.operation_seen_,
       "tao/SystemException.h",
       this->client_header_
     );
 
+  // Not needed at the moment, since UserException.h is pulled in by
+  // ORB.h, which is included in the stub header file. May change if
+  // ORB.h is rearranged to make a lighter include for applications.
+  // System exception throw spec for every operation may change soon.
+#if 0
   // For IDL exception, we need full knowledge of CORBA::UserException.
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.exception_seen_,

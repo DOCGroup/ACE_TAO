@@ -1,13 +1,18 @@
-// -*- C++ -*-
+// $Id$
+
 #include "ClientRequestInfo.h"
-ACE_RCSID (TAO,
-           ClientRequestInfo,
-           "$Id$")
 
 #if TAO_HAS_INTERCEPTORS == 1
 
+
+ACE_RCSID (tao,
+           ClientRequestInfo,
+           "$Id$")
+
+
 #include "ClientRequestInfo_i.h"
 #include "Any.h"
+#include "PolicyC.h"
 
 # if !defined (__ACE_INLINE__)
 #   include "ClientRequestInfo.inl"
