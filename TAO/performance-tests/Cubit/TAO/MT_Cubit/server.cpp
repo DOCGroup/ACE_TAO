@@ -183,7 +183,6 @@ Server::activate_high_servant (void)
                    GLOBALS::instance ()->hostname);
   char *high_second_argv[] = {orbport,
                               orbhost,
-                              "-ORBobjrefstyle URL ",
                               "-ORBsndsock 32768 ",
                               "-ORBrcvsock 32768 ",
                               0};
@@ -253,7 +252,6 @@ Server::activate_low_servants (void)
 
       char *low_second_argv[] = {orbport,
                                  orbhost,
-                                 "-ORBobjrefstyle URL ",
                                  "-ORBsndsock 32768 ",
                                  "-ORBrcvsock 32768 ",
                                  0};

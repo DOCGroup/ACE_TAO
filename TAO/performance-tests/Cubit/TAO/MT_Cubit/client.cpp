@@ -596,7 +596,6 @@ Client_i::start_servant (void)
   ACE_OS::sprintf (high_thread_args,
                    "-ORBport %u "
                    "-ORBhost %s "
-                   "-ORBobjrefstyle URL "
                    "-ORBsndsock 32768 "
                    "-ORBrcvsock 32768 ",
                    ACE_DEFAULT_SERVER_PORT,
