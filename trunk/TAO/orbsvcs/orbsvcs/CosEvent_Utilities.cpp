@@ -83,7 +83,7 @@ CosEC_ServantBase::activate (CORBA::Environment &ACE_TRY_ENV)
    ACE_CHECK_RETURN (-1);
 
    CORBA::Object_var obj =
-     this->thispoa_->id_to_reference (oid,
+     this->thispoa_->id_to_reference (oid.in (),
                                       ACE_TRY_ENV);
    ACE_CHECK_RETURN (-1);
 
@@ -112,7 +112,7 @@ CosEC_ServantBase::activate (const char* servant_id,
 
   // Activate ourselves.
   // Note that the POA is <thispoa_>
-  this->thispoa_->activate_object_with_id (oid,
+  this->thispoa_->activate_object_with_id (oid.in (),
                                            this,
                                            ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
@@ -121,7 +121,7 @@ CosEC_ServantBase::activate (const char* servant_id,
   ACE_CHECK_RETURN (-1);
 
   CORBA::Object_var obj =
-    this->thispoa_->id_to_reference (oid,
+    this->thispoa_->id_to_reference (oid.in (),
                                      ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
@@ -141,7 +141,7 @@ CosEC_ServantBase::activate_rtec (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   CORBA::Object_var obj =
-    this->poa_->id_to_reference (oid,
+    this->poa_->id_to_reference (oid.in (),
                                  ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -189,7 +189,7 @@ CosEC_ServantBase::activate_cosec (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK_RETURN (-1);
 
   CORBA::Object_var obj =
-    this->poa_->id_to_reference (oid,
+    this->poa_->id_to_reference (oid.in (),
                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
@@ -215,8 +215,8 @@ CosEC_ServantBase::deactivate (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   // deactivate from the poa.
-  this->thispoa_->deactivate_object (oid,
-                                 ACE_TRY_ENV);
+  this->thispoa_->deactivate_object (oid.in (),
+                                     ACE_TRY_ENV);
   ACE_CHECK;
 }
 
@@ -230,7 +230,7 @@ CosEC_ServantBase::deactivate_rtec (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   // deactivate from the poa.
-  this->poa_->deactivate_object (oid,
+  this->poa_->deactivate_object (oid.in (),
                                  ACE_TRY_ENV);
   ACE_CHECK;
 }
@@ -245,7 +245,7 @@ CosEC_ServantBase::deactivate_cosec (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   // deactivate from the poa.
-  this->poa_->deactivate_object (oid,
+  this->poa_->deactivate_object (oid.in (),
                                  ACE_TRY_ENV);
   ACE_CHECK;
 }
