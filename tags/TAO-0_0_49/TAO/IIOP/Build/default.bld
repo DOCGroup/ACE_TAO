@@ -1,0 +1,16 @@
+#!build
+default:
+	nobuild
+	:debuglevel=multi
+tao.bld
+	library
+	:cx_e_option=nomsgnumbers
+	:dependency=nodepend
+	:cx_silent=1
+	:cx_silent=21
+	:cx_silent=191
+	:sourcedirs=/home/ace/ACE_wrappers.vxworks
+	:sourcedirs=../lib
+	:sourcedirs=..
+	:libraries=/home/ace/ACE_wrappers.vxworks/libACE.a
+	:libraries=/appl/newgreen/vxppc603/indlib.o
