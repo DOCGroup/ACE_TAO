@@ -7,6 +7,8 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # TAO_ROOT
 
+TAO_IDLFLAGS=-I$(TAO_ROOT)/orbsvcs/orbsvcs
+
 ifdef trader
 
 ifndef STL_ROOT
