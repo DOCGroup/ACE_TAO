@@ -47,7 +47,7 @@ public:
 
   ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                       const ACE_Addr &remote_sap,
-                      ACE_Time_Value *timeout = 0,
+                      const ACE_Time_Value *timeout = 0,
                       const ACE_Addr &local_sap = ACE_Addr::sap_any,
                       int reuse_addr = 0,
                       int flags = 0,
@@ -70,8 +70,8 @@ public:
 
   ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
                       const ACE_Addr &remote_sap,
-		      ACE_QoS_Params qos_params,
-                      ACE_Time_Value *timeout = 0,
+                      ACE_QoS_Params qos_params,
+                      const ACE_Time_Value *timeout = 0,
                       const ACE_Addr &local_sap = ACE_Addr::sap_any,
                       ACE_Protocol_Info *protocolinfo = 0,
                       ACE_SOCK_GROUP g = 0,
@@ -98,7 +98,7 @@ public:
 
   int connect (ACE_SOCK_Stream &new_stream,
                const ACE_Addr &remote_sap,
-               ACE_Time_Value *timeout = 0,
+               const ACE_Time_Value *timeout = 0,
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = 0,
@@ -121,17 +121,17 @@ public:
   // Note that the <new_stream> always starts out in blocking mode.
 
   int connect (ACE_SOCK_Stream &new_stream,
-	       const ACE_Addr &remote_sap,
-	       ACE_QoS_Params qos_params,
-	       ACE_Time_Value *timeout = 0,
-	       const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               const ACE_Addr &remote_sap,
+               ACE_QoS_Params qos_params,
+               const ACE_Time_Value *timeout = 0,
+               const ACE_Addr &local_sap = ACE_Addr::sap_any,
                ACE_Protocol_Info *protocolinfo = 0,
                ACE_SOCK_GROUP g = 0,
                u_long flags = 0,
-	       int reuse_addr = 0,
-	       int perms = 0,
-	       int protocol_family = PF_INET,
-	       int protocol = 0);
+               int reuse_addr = 0,
+               int perms = 0,
+               int protocol_family = PF_INET,
+               int protocol = 0);
   // Actively connect and produce a <new_stream> if things go well.
   // The <remote_sap> is the address that we are trying to connect
   // with.  The <qos_params> contains QoS parameters that are passed
@@ -154,7 +154,7 @@ public:
   // = Completion routine.
   int complete (ACE_SOCK_Stream &new_stream,
                 ACE_Addr *remote_sap = 0,
-                ACE_Time_Value *timeout = 0);
+                const ACE_Time_Value *timeout = 0);
   // Try to complete a non-blocking connection.
   // If connection completion is successful then <new_stream> contains
   // the connected ACE_SOCK_Stream.  If <remote_sap> is non-NULL then it
@@ -175,7 +175,7 @@ public:
 
 protected:
   int shared_open (ACE_SOCK_Stream &new_stream,
-                   int protocol_family, 
+                   int protocol_family,
                    int protocol,
                    int reuse_addr);
   // Perform operations that ensure the socket is opened using
@@ -192,13 +192,13 @@ protected:
   // QoS-enabled semantics.
 
   int shared_connect_start (ACE_SOCK_Stream &new_stream,
-			    ACE_Time_Value *timeout,
-			    const ACE_Addr &local_sap);
+                            const ACE_Time_Value *timeout,
+                            const ACE_Addr &local_sap);
   // Perform operations that must be called before <ACE_OS::connect>.
 
   int shared_connect_finish (ACE_SOCK_Stream &new_stream,
-			     ACE_Time_Value *timeout,
-			     int result);
+                             const ACE_Time_Value *timeout,
+                             int result);
   // Perform operations that must be called after <ACE_OS::connect>.
 };
 

@@ -1,3 +1,19 @@
+Thu Sep 28 15:02:36 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/SOCK_Connector.cpp: ACE_Time_Value args to
+	  ACE_SOCK_Connector could be const.  Had to patch functions in
+	  the following files to make it happen:
+
+	  ACE.cpp
+	  ACE.h	  
+	  OS.h
+	  OS.i
+	  SOCK_Connector.cpp
+	  SOCK_Connector.h
+
+	  Thanks to Steve Huston <shuston@riverace.com> for reporting
+	  this.  This also fixes bug 673.
+
 Thu Sep 28 11:14:29 2000  Martin Stack <mstack@cambertx.com>
 
 	* ace/config-freebsd.h:

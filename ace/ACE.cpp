@@ -3062,7 +3062,7 @@ ACE::round_to_allocation_granularity (off_t len)
 
 ACE_HANDLE
 ACE::handle_timed_complete (ACE_HANDLE h,
-                            ACE_Time_Value *timeout,
+                            const ACE_Time_Value *timeout,
                             int is_tli)
 {
   ACE_TRACE ("ACE::handle_timed_complete");
@@ -3890,7 +3890,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
        n--,
            ((ifr->ifr_addr.sa_len <= sizeof (struct sockaddr)) ?
              ifr++ :
-             ifr = (struct ifreq *) 
+             ifr = (struct ifreq *)
              (ifr->ifr_addr.sa_len + (caddr_t) &ifr->ifr_addr)))
 #endif /* CHORUS_4 */
     {
@@ -4070,10 +4070,10 @@ ACE::count_interfaces (ACE_HANDLE handle,
           p_ifs++;
        }
        else
-       {   
+       {
           p_ifs = (struct ifreq *)
               (p_ifs->ifr_addr.sa_len + (caddr_t) &p_ifs->ifr_addr);
-       }      
+       }
 #endif /* CHORUS_4 */
     }
 
@@ -4509,8 +4509,8 @@ ACE::get_ip_interfaces (size_t &count,
            pcur++;
         }
       else
-        {   
-           pcur = (struct ifreq *) 
+        {
+           pcur = (struct ifreq *)
                (pcur->ifr_addr.sa_len + (caddr_t) &pcur->ifr_addr);
         }
 #endif

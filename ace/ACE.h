@@ -344,7 +344,7 @@ public:
   // does the timed wait...
 
   static ACE_HANDLE handle_timed_complete (ACE_HANDLE listener,
-                                           ACE_Time_Value *timeout,
+                                           const ACE_Time_Value *timeout,
                                            int is_tli = 0);
   // Wait up to <timeout> amount of time to complete an actively
   // established non-blocking connection.  If <is_tli> is non-0 then
