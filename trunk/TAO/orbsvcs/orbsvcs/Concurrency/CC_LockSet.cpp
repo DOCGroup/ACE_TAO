@@ -347,3 +347,13 @@ CORBA::Boolean CC_LockSet::compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODE
   {CORBA::B_TRUE, CORBA::B_TRUE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE},
   {CORBA::B_TRUE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_TRUE, CORBA::B_FALSE},
   {CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE, CORBA::B_FALSE}};
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Node<CC_LockModeEnum>;
+template class ACE_Unbounded_Queue<CC_LockModeEnum>;
+template class ACE_Unbounded_Queue_Iterator<CC_LockModeEnum>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Node<CC_LockModeEnum>
+#pragma instantiate ACE_Unbounded_Queue<CC_LockModeEnum>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<CC_LockModeEnum>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
