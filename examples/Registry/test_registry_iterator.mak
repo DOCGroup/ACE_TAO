@@ -35,9 +35,8 @@ NULL=nul
 !ENDIF 
 ################################################################################
 # Begin Project
-# PROP Target_Last_Scanned "test_registry_iterator - Win32 Debug"
-RSC=rc.exe
 CPP=cl.exe
+RSC=rc.exe
 
 !IF  "$(CFG)" == "test_registry_iterator - Win32 Release"
 
@@ -55,9 +54,9 @@ CLEAN :
 	-@erase ".\test_registry_iterator.obj"
 
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /GX /O2 /I ".." /I " ..\stl" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /GX /O2 /I ".." /I " ..\stl" /D "WIN32" /D "NDEBUG"\
- /D "_CONSOLE" /Fp"test_registry_iterator.pch" /YX /c 
+# ADD CPP /nologo /MDd /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
+CPP_PROJ=/nologo /MDd /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE"\
+ /Fp"test_registry_iterator.pch" /YX /c 
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -67,12 +66,12 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)/test_registry_iterator.bsc"
 BSC32_SBRS=
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib c:\users\irfan\registry\ace\debug\registry.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-LINK32_FLAGS=ace.lib c:\users\irfan\registry\ace\debug\registry.lib\
- kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib\
- shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo\
- /subsystem:console /incremental:no /pdb:"$(OUTDIR)/test_registry_iterator.pdb"\
- /machine:I386 /out:"$(OUTDIR)/test_registry_iterator.exe" 
+# ADD LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
+LINK32_FLAGS=ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
+ comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
+ odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:no\
+ /pdb:"$(OUTDIR)/test_registry_iterator.pdb" /machine:I386\
+ /out:"$(OUTDIR)/test_registry_iterator.exe" 
 LINK32_OBJS= \
 	"$(INTDIR)/test_registry_iterator.obj"
 
@@ -93,17 +92,17 @@ INTDIR=.
 ALL : "$(OUTDIR)\test_registry_iterator.exe"
 
 CLEAN : 
-	-@erase ".\vc40.pdb"
-	-@erase ".\vc40.idb"
 	-@erase ".\test_registry_iterator.exe"
 	-@erase ".\test_registry_iterator.obj"
 	-@erase ".\test_registry_iterator.ilk"
 	-@erase ".\test_registry_iterator.pdb"
+	-@erase ".\vc40.pdb"
+	-@erase ".\vc40.idb"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /I " ..\stl" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /I " ..\stl" /D "WIN32" /D\
- "_DEBUG" /D "_CONSOLE" /Fp"test_registry_iterator.pch" /YX /c 
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
+ /Fp"test_registry_iterator.pch" /YX /c 
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -113,12 +112,12 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)/test_registry_iterator.bsc"
 BSC32_SBRS=
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 ace.lib c:\users\irfan\registry\ace\debug\registry.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=ace.lib c:\users\irfan\registry\ace\debug\registry.lib\
- kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib\
- shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo\
- /subsystem:console /incremental:yes /pdb:"$(OUTDIR)/test_registry_iterator.pdb"\
- /debug /machine:I386 /out:"$(OUTDIR)/test_registry_iterator.exe" 
+# ADD LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
+ comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
+ odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes\
+ /pdb:"$(OUTDIR)/test_registry_iterator.pdb" /debug /machine:I386\
+ /out:"$(OUTDIR)/test_registry_iterator.exe" 
 LINK32_OBJS= \
 	"$(INTDIR)/test_registry_iterator.obj"
 
@@ -164,14 +163,13 @@ LINK32_OBJS= \
 
 SOURCE=.\test_registry_iterator.cpp
 DEP_CPP_TEST_=\
-	".\..\ace/Registry.h"\
+	{$(INCLUDE)}"\ace\Registry.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\OS.h"\
-	{$(INCLUDE)}"\bstring.h"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
-	{$(INCLUDE)}"\sys\TYPES.H"\
-	{$(INCLUDE)}"\sys\STAT.H"\
-	{$(INCLUDE)}"\sys\TIMEB.H"\
+	{$(INCLUDE)}"\sys\types.h"\
+	{$(INCLUDE)}"\sys\stat.h"\
+	{$(INCLUDE)}"\sys\timeb.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\config.h"\
@@ -183,7 +181,7 @@ DEP_CPP_TEST_=\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	
 NODEP_CPP_TEST_=\
-	".\..\..\stl\msdev\mutex.h"\
+	"..\..\ace\bstring.h"\
 	
 
 "$(INTDIR)\test_registry_iterator.obj" : $(SOURCE) $(DEP_CPP_TEST_) "$(INTDIR)"
