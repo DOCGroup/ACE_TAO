@@ -3,24 +3,14 @@
 portspan Test
 -------------
 
-The portspan test verifies that the portspan option to ORB_init() call
-behaves correctly. This option allows to restrict the port that a 
+The portspan test verifies that the portspan option to the ORB_init() call
+behaves correctly. This option allows you to restrict the port that a 
 server-side ORB will use to listen for IIOP requests, from a given range
 of port numbers, starting at a given initial port.
 
-This test tests the following four test cases.
-1) Checks if the server has been started at the first free port available
-in the range.
-2) Checks if the server has been started at the first free port 
-available after explicitly making some of the ports within the range 
-unavailable.
-3) Checks if the server has been started at the first free port 
-available after explicitly making all but the last ports within the range 
-unavailable.
-4) See if BAD_PARAM exception is raised if all ports within the
-range are unavailable. 
+The test works by starting a simple ORB on an endpoint with a portspan of 2.
+server -ORBEndpoint iiop://:5555/portspan=2
+The test script does this three times and reports an error if the first two
+don't succeed, or if the third call doesn't fail. 
 
-To run the test:
-
-./run_test.pl <initial port> <port range>
 

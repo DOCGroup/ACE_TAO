@@ -20,7 +20,7 @@ if ($test1 != 0) {
 
 $test2 = $P2->Spawn();
 if ($test2 != 0) {
-    print STDERR "ERROR: Couldn't start first server. Err:$test2\n";
+    print STDERR "ERROR: Couldn't start second server. Err:$test2\n";
     $P1->Kill();
     $P2->Kill();
     exit 1;

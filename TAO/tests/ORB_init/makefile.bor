@@ -23,5 +23,6 @@ LIBFILES = \
   
 CPPDIR = .
 
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
   
