@@ -38,6 +38,7 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 VBIN = $(BIN:%=%$(VAR))
 
+LIBS = -lTAO
 LSRC = $(addsuffix .cpp,$(SHLIB_SRC))
 LOBJ = $(addsuffix .o,$(SHLIB_SRC))
 
