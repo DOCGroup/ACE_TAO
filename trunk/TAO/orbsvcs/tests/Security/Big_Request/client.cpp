@@ -1,6 +1,7 @@
 
 #include "TX_ObjectC.h"
-
+#include "ace/OS_NS_stdlib.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Get_Opt.h"
 
 ACE_RCSID (Big_Request,
