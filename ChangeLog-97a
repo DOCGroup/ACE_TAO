@@ -1,3 +1,11 @@
+Fri Apr 25 14:58:38 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/Timers: Updated the following files to make it compile on
+ 	  g++. The following files were updated:
+
+	  Proactor.cpp Timer_Heap.cpp Timer_List.cpp Timer_Queue.cpp
+ 	  Timers.cpp
+
 Thu Apr 24 21:13:51 1997    <irfan@TWOSTEP>
 
 	* ace/Timer_Queue: Decoupled the Timer Queue from
