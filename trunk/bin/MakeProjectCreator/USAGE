@@ -9,7 +9,7 @@ script was started.  It looks for .mpc files and generates a project or
 projects for each one found.
 
 
-Usage: mwc.pl [-global <file>] [-include <directory>]
+Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>]
               [-template <file>] [-dynamic_only] [-static_only]
               [-relative NAME=VAR] [-noreldefs] [-notoplevel]
@@ -30,6 +30,8 @@ Usage: mwc.pl [-global <file>] [-include <directory>]
        -template       Specifies the template name (with no extension).
        -dynamic_only   Specifies that only dynamic projects will be generated.
        -static_only    Specifies that only static projects will be generated.
+       -recurse        Recurse from the current directory and generate from
+                       all found input files.
        -relative       Any $() variable in an mpc that is matched to NAME
                        is replaced by VAR only if VAR can be made into a
                        relative path based on the current working directory.
@@ -100,7 +102,7 @@ file) is not provided, the project creator will attempt to create a default
 project in the directory from which the script was started.
 
 
-Usage: mpc.pl [-global <file>] [-include <directory>]
+Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>]
               [-template <file>] [-dynamic_only] [-static_only]
               [-relative NAME=VAR] [-noreldefs] [-notoplevel]
@@ -121,6 +123,8 @@ Usage: mpc.pl [-global <file>] [-include <directory>]
        -template       Specifies the template name (with no extension).
        -dynamic_only   Specifies that only dynamic projects will be generated.
        -static_only    Specifies that only static projects will be generated.
+       -recurse        Recurse from the current directory and generate from
+                       all found input files.
        -relative       Any $() variable in an mpc that is matched to NAME
                        is replaced by VAR only if VAR can be made into a
                        relative path based on the current working directory.

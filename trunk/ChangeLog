@@ -1,10 +1,21 @@
+Tue Mar 11 14:12:46 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/USAGE:
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/Driver.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Added a -recurse option and fixed a problem with changing
+          to non-existent directories.
+
 Mon Mar 10 18:10:31 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/ARGV.h: Clarified the behavior of ACE_ARGV's behavior with
-	  respect to environment variable substitution; it only substitutes
-	  when the token is itself an environment variable reference and not
-	  if there's an environment variable reference contained within the
-	  token. e.g. $HOME will subtitute, $HOME/file will not.
+        * ace/ARGV.h: Clarified the behavior of ACE_ARGV's behavior with
+          respect to environment variable substitution; it only substitutes
+          when the token is itself an environment variable reference and not
+          if there's an environment variable reference contained within the
+          token. e.g. $HOME will subtitute, $HOME/file will not.
 
 Mon Mar 10 14:03:11 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -134,13 +145,13 @@ Thu Mar  6 18:14:21 2003  Steve Huston  <shuston@riverace.com>
           is that the separate template closure step is also used for
           shared libraries, and thus, +inst_none needed to be added to
           SOFLAGS.
-	  Also set AR to /usr/ccs/bin/ar to be sure to pick up the native
-	  HP-supplied ar command.
+          Also set AR to /usr/ccs/bin/ar to be sure to pick up the native
+          HP-supplied ar command.
 
-	* examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp: Don't
-	  reinterpret_cast on non-Windows. Not needed and aC++ complains.
-	  Also see:
-	  Wed Feb 19 10:41:20 2003  Steve Huston  <shuston@riverace.com>
+        * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp: Don't
+          reinterpret_cast on non-Windows. Not needed and aC++ complains.
+          Also see:
+          Wed Feb 19 10:41:20 2003  Steve Huston  <shuston@riverace.com>
 
 Thu Mar  6 14:49:37 2003  Steve Huston  <shuston@riverace.com>
 
