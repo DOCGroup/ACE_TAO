@@ -9,7 +9,7 @@ unshift @INC, '../../../bin';
 require Process;
 require ACEutils;
 
-$T = Process::Create ($EXEPREFIX."Connection_Purging -ORBCollocation no".$EXE_EXT);
+$T = Process::Create ($EXEPREFIX."Connection_Purging -ORBCollocation no -d".$EXE_EXT);
 
 $client = $T->TimedWait (60);
 if ($client == -1) {
