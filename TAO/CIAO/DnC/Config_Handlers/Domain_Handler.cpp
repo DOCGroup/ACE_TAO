@@ -164,6 +164,25 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("infoProperty")))
             {
+              if (node->hasAttributes ())
+                {
+                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
+                  int length = named_node_map->getLength ();
+                  CORBA::ULong i (domain.infoProperty.length ());
+                  domain.infoProperty.length (i + 1);
+                  if (length == 1)
+                    {
+                      Property_Handler::process_Property 
+                         (this->iter_,
+                          domain.infoProperty[i]);
+                    }
+                  else if (length > 1)
+                    {
+                      this->process_attributes_for_property
+                        (named_node_map, this->doc_,
+                         this->iter_, i, domain.infoProperty[i]);
+                    }
+                }
             }
           else
             {
@@ -307,6 +326,27 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("property")))
             {
+              if (node->hasAttributes ())
+                {
+                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
+                  int length = named_node_map->getLength ();
+                  CORBA::ULong sp_length 
+                     (domain_resource.property.length ());
+                  domain_resource.property.length (sp_length + 1);
+                  if (length == 1)
+                    {
+                      SP_Handler::process_SatisfierProperty
+                        (iter,
+                         domain_resource.property[sp_length]);
+                    }
+                  else if (length > 1)
+                    {
+                      this->process_attributes_for_satisfier_property 
+                        (named_node_map, doc,
+                         iter, sp_length,
+                         domain_resource.property[sp_length]);
+                    }
+                }
             }
           else
             {
@@ -557,6 +597,27 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("property")))
             {
+              if (node->hasAttributes ())
+                {
+                  DOMNamedNodeMap* named_node_map = node->getAttributes ();
+                  int length = named_node_map->getLength ();
+                  CORBA::ULong sp_length 
+                     (domain_sr.property.length ());
+                  domain_sr.property.length (sp_length + 1);
+                  if (length == 1)
+                    {
+                      SP_Handler::process_SatisfierProperty
+                        (iter,
+                         domain_sr.property[sp_length]);
+                    }
+                  else if (length > 1)
+                    {
+                      this->process_attributes_for_satisfier_property 
+                        (named_node_map, doc,
+                         iter, sp_length,
+                         domain_sr.property[sp_length]);
+                    }
+                }
             }
           else
             {
@@ -694,44 +755,6 @@ namespace CIAO
       root_node_name = XMLString::transcode (doc->getDocumentElement ()->getNodeName ());
 
       return doc;
-    }
-
-    void Domain_Handler::parse_property_href_doc (DOMDocument* href_doc,
-                                                  unsigned long filter,
-                                                  Deployment::Property& property)
-    {
-      DOMDocumentTraversal* traverse (href_doc);
-      DOMNode* root (href_doc->getDocumentElement ());
-
-      DOMNodeIterator* iter (traverse->createNodeIterator (root,
-                                                           filter,
-                                                           0,
-                                                           true));
-      /*
-      Property_Handler::process_Property (iter,
-                                          property);
-      */
-
-      return;
-    }
-
-    void Domain_Handler::parse_satisfier_property_href_doc (DOMDocument* href_doc,
-                                                            unsigned long filter,
-                                                            Deployment::SatisfierProperty& satisfier_property)
-    {
-      DOMDocumentTraversal* traverse (href_doc);
-      DOMNode* root (href_doc->getDocumentElement ());
-
-      DOMNodeIterator* iter (traverse->createNodeIterator (root,
-                                                           filter,
-                                                           0,
-                                                           true));
-      /*
-      SP_Handler::process_SatisfierProperty (iter,
-                                             satisfier_property);
-      */
-
-      return;
     }
 
     void Domain_Handler::dump_nodes (Deployment::Domain& domain)
@@ -1146,6 +1169,140 @@ namespace CIAO
               this->process_bridge (href_doc,
                                            href_iter,
                                            domain_bridge);
+            }
+        }
+
+      return;
+    }
+
+    void Domain_Handler::process_attributes_for_property 
+         (DOMNamedNodeMap* named_node_map,
+          DOMDocument* doc,
+          DOMNodeIterator* iter,
+          int value,
+          Deployment::Property& domain_property)
+    {
+      int length = named_node_map->getLength ();
+
+      for (int j = 0; j < length; j++)
+        {
+          DOMNode* attribute_node = named_node_map->item (j);
+          XStr strattrnodename
+             (attribute_node->getNodeName ());
+          ACE_TString aceattrnodevalue =  XMLString::transcode
+             (attribute_node->getNodeValue ());
+
+          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
+            {
+              Property_Handler::process_Property (iter,
+                                                  domain_property);
+              id_map_.bind (aceattrnodevalue, value);
+            }
+          else if (strattrnodename == XStr (ACE_TEXT ("href")))
+            {
+              XMLURL xml_url (aceattrnodevalue.c_str ());
+              XMLURL result (aceattrnodevalue.c_str ());
+              std::string url_string = aceattrnodevalue.c_str ();
+              ACE_TString doc_path =
+               XMLString::transcode ( doc->getDocumentURI ());
+              result.makeRelativeTo
+                 (XMLString::transcode (doc_path.c_str ()));
+              ACE_TString final_url =
+               XMLString::transcode (result.getURLText ());
+
+              DOMDocument* href_doc;
+
+              if (xml_url.isRelative ())
+                {
+                  href_doc = this->create_document 
+                       (final_url.c_str ());
+                }
+              else
+                {
+                  href_doc = this->create_document 
+                       (url_string.c_str ());
+                }
+
+              DOMDocumentTraversal* traverse (href_doc);
+              DOMNode* root = (href_doc->getDocumentElement ());
+              unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
+                                     DOMNodeFilter::SHOW_TEXT;
+              DOMNodeIterator* href_iter = traverse->createNodeIterator
+                                              (root,
+                                               filter,
+                                               0,
+                                               true);
+              href_iter->nextNode ();
+              Property_Handler::process_Property (href_iter,
+                                                  domain_property);
+            }
+        }
+
+      return;
+    }
+
+    void Domain_Handler::process_attributes_for_satisfier_property 
+         (DOMNamedNodeMap* named_node_map,
+          DOMDocument* doc,
+          DOMNodeIterator* iter,
+          int value,
+          Deployment::SatisfierProperty& domain_satisfier_property)
+    {
+      int length = named_node_map->getLength ();
+
+      for (int j = 0; j < length; j++)
+        {
+          DOMNode* attribute_node = named_node_map->item (j);
+          XStr strattrnodename
+             (attribute_node->getNodeName ());
+          ACE_TString aceattrnodevalue =  XMLString::transcode
+             (attribute_node->getNodeValue ());
+
+          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
+            {
+              SP_Handler::process_SatisfierProperty
+                 (iter,
+                  domain_satisfier_property);
+              id_map_.bind (aceattrnodevalue, value);
+            }
+          else if (strattrnodename == XStr (ACE_TEXT ("href")))
+            {
+              XMLURL xml_url (aceattrnodevalue.c_str ());
+              XMLURL result (aceattrnodevalue.c_str ());
+              std::string url_string = aceattrnodevalue.c_str ();
+              ACE_TString doc_path =
+               XMLString::transcode ( doc->getDocumentURI ());
+              result.makeRelativeTo
+                 (XMLString::transcode (doc_path.c_str ()));
+              ACE_TString final_url =
+               XMLString::transcode (result.getURLText ());
+
+              DOMDocument* href_doc;
+
+              if (xml_url.isRelative ())
+                {
+                  href_doc = this->create_document 
+                       (final_url.c_str ());
+                }
+              else
+                {
+                  href_doc = this->create_document 
+                       (url_string.c_str ());
+                }
+
+              DOMDocumentTraversal* traverse (href_doc);
+              DOMNode* root = (href_doc->getDocumentElement ());
+              unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
+                                     DOMNodeFilter::SHOW_TEXT;
+              DOMNodeIterator* href_iter = traverse->createNodeIterator
+                                              (root,
+                                               filter,
+                                               0,
+                                               true);
+              href_iter->nextNode ();
+              SP_Handler::process_SatisfierProperty
+                 (href_iter,
+                  domain_satisfier_property);
             }
         }
 
