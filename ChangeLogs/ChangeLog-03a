@@ -1,3 +1,10 @@
+Fri Jul  6 08:36:20 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * netsvcs/Makefile:
+
+          Don't build this if ACE_COMPONENTS does not contain Other.
+          The netsvcs library requires Naming_Context.
+
 Thu Jul  5 23:22:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	  Fixes that were required for fixing bug 575. Merged in from
