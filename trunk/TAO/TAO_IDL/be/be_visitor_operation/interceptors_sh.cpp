@@ -131,8 +131,24 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
 
 
   *os << " (" << be_idt_nl
-      << "const char *  _tao_operation," << be_nl
-      << "IOP::ServiceContextList &_tao_service_context_list";
+      << "TAO_ServerRequest &_tao_server_request," << be_nl;
+
+  be_interface *intf;
+  intf = this->ctx_->attribute ()
+    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
+    : be_interface::narrow_from_scope (node->defined_in ());
+
+  if (!intf)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interceptors_sh::"
+                         "visit_operation - "
+                         "bad interface scope\n"),
+                        -1);
+    }
+
+  // Get the right object implementation.
+  *os << intf->full_skel_name () << " *tao_impl" << be_nl;
 
   // Generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing.
@@ -188,7 +204,21 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
       << "TAO_default_environment ()" << be_uidt << be_uidt_nl
       << ")" << be_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException));"
-      << be_uidt_nl;
+      << be_uidt_nl << be_nl;
+
+  *os << "virtual char * target_most_derived_interface ("
+      << be_idt << be_idt_nl
+      << "CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())"
+      << be_uidt_nl
+      << "ACE_THROW_SPEC ((CORBA::SystemException));"
+      << be_uidt_nl << be_nl;
+
+  *os << "virtual CORBA::Boolean target_is_a (" << be_idt << be_idt_nl
+      << "const char * id," << be_nl
+      << "CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())"
+      << be_uidt_nl
+      << "ACE_THROW_SPEC ((CORBA::SystemException));"
+      << be_uidt_nl << be_nl;
 
   *os << be_uidt_nl << "private:" << be_idt_nl;
 
@@ -294,6 +324,11 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
 
   *os << " &);" << be_nl;
 
+  *os << be_uidt_nl << "private:" << be_idt_nl;
+
+  // Get the right object implementation.
+  *os << intf->full_skel_name () << " *_tao_impl;" << be_nl;
+
   // Need to generate the args as reference memebers...
   // generate the member list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing and
@@ -393,7 +428,7 @@ be_visitor_operation_interceptors_sh::visit_operation (be_operation *node)
         }
 
       os->indent ();
-      *os << "  result_;" << be_uidt << be_uidt << be_uidt_nl;
+      *os << "  _result;" << be_uidt << be_uidt << be_uidt_nl;
     }
 
   os->decr_indent ();

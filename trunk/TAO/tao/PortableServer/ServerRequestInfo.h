@@ -1,25 +1,18 @@
 // -*- C++ -*-
-//
-// $Id$
 
-//========================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     ServerRequestInfo.h
-//
-// = DESCRIPTION
-//     This is the implementation of the
-//     PortableInterceptor::ServerRequestInfo interface.
-//
-// = AUTHOR
-//     Kirthika Parameswaran <kirthika@cs.wustl.edu>
-//     Ossama Othman <ossama@uci.edu>
-//
-//=========================================================================
-
+//=============================================================================
+/**
+ *  @file     ServerRequestInfo.h
+ *
+ *  $Id$
+ *
+ *  This is the implementation of the
+ *  PortableInterceptor::ServerRequestInfo interface.
+ *
+ * @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
+ * @author Ossama Othman <ossama@uci.edu>
+ */
+//=============================================================================
 
 #ifndef TAO_SERVER_REQUEST_INFO_H
 #define TAO_SERVER_REQUEST_INFO_H
@@ -47,13 +40,15 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+class TAO_ServerRequest;
+
+
 class TAO_PortableServer_Export TAO_ServerRequestInfo
   : public virtual PortableInterceptor::ServerRequestInfo,
     public virtual CORBA::LocalObject
 {
  public:
-  TAO_ServerRequestInfo (const char *operation,
-                         IOP::ServiceContextList &service_context_list);
+  TAO_ServerRequestInfo (TAO_ServerRequest &server_request);
 
   virtual CORBA::ULong request_id (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
@@ -101,7 +96,6 @@ class TAO_PortableServer_Export TAO_ServerRequestInfo
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException)) ;
 
-  // Probably the following methods should be delegated to the PICurrent
   virtual CORBA::Any * get_slot (
       PortableInterceptor::SlotId id,
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
@@ -118,17 +112,17 @@ class TAO_PortableServer_Export TAO_ServerRequestInfo
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// This method causes problem since there is no trivial way to
+  /// extract the exception from the Any.
   virtual CORBA::Any * sending_exception (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // This method causes problem since there is no trivial way to
-  // extract the exception from the Any.
 
+  /// Note: This is TAO specific and was done to combat the previous
+  /// problem to some extent.
   virtual CORBA::Exception * _sending_exception (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Note: This is TAO specific and was done to combat the previous
-  // problem to some extent.
 
   virtual CORBA::OctetSeq * object_id (
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
@@ -165,31 +159,43 @@ class TAO_PortableServer_Export TAO_ServerRequestInfo
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
- protected:
+public:
+
+  /// Change the exception status.
   void exception (CORBA::Exception *exception);
-  // Change the exception status.
 
-  void request_id (CORBA::ULong request_id);
-  // Update the request id.
+  /// Set the status of the received reply.
+  void reply_status (PortableInterceptor::ReplyStatus s);
 
-  CORBA::ULong request_id_;
-  const char * operation_;
-  Dynamic::ParameterList parameter_list_;
-  Dynamic::ExceptionList  exception_list_;
-  Dynamic::ContextList context_list_;
-  Dynamic::RequestContext request_context_;
+  /// Extract the forward object reference from the
+  /// PortableInterceptor::ForwardRequest exception, and set the reply
+  /// status flag accordingly.
+  void forward_reference (PortableInterceptor::ForwardRequest &exc);
+
+  /// Set the forward reference associated with the current
+  /// LOCATION_FORWARD reply.  This method is only invoked when a
+  /// PortableServer::ForwardRequest exception is thrown by a servant
+  /// manager.
+  void forward_reference (CORBA::Object_ptr obj);
+
+protected:
+
+  /// Underlying request object that contains much of the information
+  /// encapsulated by this ServerRequestInfo class.
+  TAO_ServerRequest &server_request_;
+
   CORBA::Object_var forward_reference_;
 
-  // Needed to ensure no copy anywhere.
-  IOP::ServiceContextList &service_context_list_;
-
-  CORBA::Any result_val_;
   CORBA::OctetSeq_var object_id_;
   CORBA::OctetSeq_var adapter_id_;
   CORBA::Exception *caught_exception_;
 
   PortableInterceptor::ReplyStatus reply_status_;
 };
+
+# if defined (__ACE_INLINE__)
+#  include "ServerRequestInfo.inl"
+# endif  /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)

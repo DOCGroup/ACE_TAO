@@ -1,33 +1,32 @@
 // $Id$
 
+#include "Invocation.h"
+#include "Principal.h"
+#include "Stub.h"
 
-#include "tao/Invocation.h"
-#include "tao/Principal.h"
-#include "tao/Stub.h"
+#include "Timeprobe.h"
+#include "Dynamic_Adapter.h"
+#include "Object_KeyC.h"
+#include "debug.h"
+#include "Pluggable.h"
+#include "Connector_Registry.h"
+#include "Wait_Strategy.h"
+#include "Transport_Mux_Strategy.h"
+#include "Bind_Dispatcher_Guard.h"
+#include "Endpoint.h"
+#include "RT_Policy_i.h"
+#include "Base_Connection_Property.h"
+#include "Private_Connection_Descriptor.h"
 
-#include "tao/Timeprobe.h"
-#include "tao/Dynamic_Adapter.h"
-#include "tao/Object_KeyC.h"
-#include "tao/debug.h"
-#include "tao/Pluggable.h"
-#include "tao/Connector_Registry.h"
-#include "tao/Wait_Strategy.h"
-#include "tao/Transport_Mux_Strategy.h"
-#include "tao/Bind_Dispatcher_Guard.h"
-#include "tao/Endpoint.h"
-#include "tao/RT_Policy_i.h"
-#include "tao/Base_Connection_Property.h"
-#include "tao/Private_Connection_Descriptor.h"
-
-#include "tao/Messaging_Policy_i.h"
-#include "tao/GIOP_Utils.h"
-#include "tao/ORB_Core.h"
-#include "tao/Pluggable_Messaging_Utils.h"
+#include "Messaging_Policy_i.h"
+#include "GIOP_Utils.h"
+#include "ORB_Core.h"
+#include "Pluggable_Messaging_Utils.h"
 
 #include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Invocation.i"
+# include "Invocation.i"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, Invocation, "$Id$")
@@ -97,7 +96,9 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (void)
     max_wait_time_ (0),
     ior_info_ (),
     rt_context_initialized_ (0),
-    restart_flag_ (0)
+    restart_flag_ (0),
+    forward_reference_ (),
+    received_location_forward_ (0)
 {
 }
 
@@ -128,7 +129,9 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
     max_wait_time_ (0),
     ior_info_ (),
     rt_context_initialized_ (0),
-    restart_flag_ (0)
+    restart_flag_ (0),
+    forward_reference_ (),
+    received_location_forward_ (0)
 {
 }
 
@@ -363,7 +366,6 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
     }
 }
 
-
 // Send request.
 int
 TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
@@ -465,20 +467,17 @@ TAO_GIOP_Invocation::close_connection (void)
 
 // Handle the GIOP Reply with status = LOCATION_FORWARD
 // Replace the IIOP Profile.
-
 int
 TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
                                        CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // It can be assumed that the GIOP header and the reply header
-  // are already handled. Further it can be assumed that the
+  // are already handled.  Further it can be assumed that the
   // reply body contains an object reference to the new object.
   // This object pointer will be now extracted.
 
-  CORBA::Object_var object = 0;
-
-  if ( (inp_stream >> object.inout ()) == 0)
+  if ((inp_stream >> this->forward_reference_.inout ()) == 0)
     {
       ACE_THROW_RETURN (CORBA::MARSHAL (),
                         TAO_INVOKE_EXCEPTION);
@@ -486,23 +485,33 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
 
   // The object pointer has to be changed to a TAO_Stub pointer
   // in order to obtain the profiles.
-  TAO_Stub *stubobj = object->_stubobj ();
+  TAO_Stub *stubobj = this->forward_reference_->_stubobj ();
 
-  if (stubobj == 0)
-    {
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        TAO_INVOKE_EXCEPTION);
-    }
-
-  // Modify the state as appropriate to include new forwarding profiles.
-  this->endpoint_selector_->forward (this,
-                                     stubobj->base_profiles (),
-                                     ACE_TRY_ENV);
+  this->location_forward_i (stubobj, ACE_TRY_ENV);
   ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
 
   return TAO_INVOKE_RESTART;
 }
 
+int
+TAO_GIOP_Invocation::location_forward (CORBA::Object_ptr forward,
+                                       CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  if (CORBA::is_nil (forward))
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), TAO_INVOKE_EXCEPTION);
+
+  this->forward_reference_ = CORBA::Object::_duplicate (forward);
+
+  // The object pointer has to be changed to a TAO_Stub pointer
+  // in order to obtain the profiles.
+  TAO_Stub *stubobj = forward->_stubobj ();
+
+  this->location_forward_i (stubobj, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (TAO_INVOKE_EXCEPTION);
+
+  return TAO_INVOKE_RESTART;
+}
 
 CORBA::ULong
 TAO_GIOP_Invocation::create_ior_info (void)
@@ -662,9 +671,10 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request,
 
   TAO_Transport_Mux_Strategy *tms = this->transport_->tms ();
 
-  TAO_Bind_Dispatcher_Guard dispatch_guard (this->op_details_.request_id(),
-                                            &this->rd_,
-                                            tms);
+  TAO_Bind_Dispatcher_Guard dispatch_guard (
+    this->op_details_.request_id (),
+    &this->rd_,
+    tms);
   int &status = dispatch_guard.status ();
 
   if (status == -1)

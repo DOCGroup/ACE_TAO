@@ -73,8 +73,9 @@ be_visitor_operation_interceptors_exceptlist::gen_exceptlist (be_operation *node
   this->ctx_->node (node); // save the node for future use
 
   // Generate the exception data array.
-  *os << "static TAO_Exception_Data " << "_tao_" << node->flat_name ()
-      << "_exceptiondata [] = " << be_nl;
+  *os << be_nl
+      << "static TAO_Exception_Data " << "_tao_" << node->flat_name ()
+      << "_exceptiondata[] = " << be_nl;
   *os << "{" << be_idt_nl;
   // initialize an iterator to iterate thru the exception list
   UTL_ExceptlistActiveIterator *ei;
@@ -112,19 +113,20 @@ be_visitor_operation_interceptors_exceptlist::gen_exceptlist (be_operation *node
 
     } // end of while loop
   delete ei;
-  *os << be_uidt_nl << "};\n\n";
+  *os << be_uidt_nl << "};" << be_nl;
 
   long excp_count = (node->exceptions())->length ();
-  *os <<" CORBA::ULong length = 0;"<<be_nl
-      << "for (CORBA::ULong i = 0;i < "<< excp_count <<"; ++i)" << be_nl
-      << " {" << be_idt_nl
-      << " CORBA::TypeCode_ptr tcp = _tao_" << node->flat_name ()
-      << "_exceptiondata [i].tc;" << be_nl
-      << "length = this->exception_list_.length ();" << be_nl
-      << "this->exception_list_.length (length + 1);"<<be_nl
-      << "TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> tcp_object (&tcp, 1);"<<be_nl
-      << "this->exception_list_[length] = tcp_object;" << be_uidt_nl
-      << " }\n";
+  *os << be_nl << "CORBA::ULong len = 0;" << be_nl
+      << "for (CORBA::ULong i = 0; i < " << excp_count << "; ++i)"
+      << be_idt_nl
+      << "{" << be_idt_nl
+      << "CORBA::TypeCode_ptr tcp = _tao_" << node->flat_name ()
+      << "_exceptiondata[i].tc;" << be_nl
+      << "len = exception_list->length ();" << be_nl
+      << "exception_list->length (len + 1);"<<be_nl
+      << "TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> tcp_object (&tcp, 1);" << be_nl
+      << "(*exception_list)[len] = tcp_object;" << be_uidt_nl
+      << "}\n" << be_uidt;
 
 return 0;
 }
