@@ -13,7 +13,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs \
 
 IDL_FILES = Control
 IDL_SRC = ControlC.cpp ControlS.cpp
-BIN = client server
+BIN_UNCHECKED = client server
 
 server_OBJS=$(addsuffix .o,server Coordinator ControlC ControlS)
 client_OBJS=$(addsuffix .o,client Consumer Supplier Loopback_Consumer Loopback_Supplier Loopback Peer ControlC ControlS)
