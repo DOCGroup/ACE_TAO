@@ -25,7 +25,7 @@ ACE_Service_Type_Impl::dump (void) const
 ACE_Service_Type_Impl::ACE_Service_Type_Impl (void *so,
                                               const ASYS_TCHAR *s_name,
                                               u_int f,
-                                              void (*gobbler)(void*))
+                                              ACE_Service_Object_Exterminator gobbler)
   : name_ (0),
     obj_ (so),
     gobbler_ (gobbler),
@@ -73,7 +73,7 @@ ACE_Service_Type_Impl::fini (void) const
 ACE_Service_Object_Type::ACE_Service_Object_Type (void *so,
 						  const ASYS_TCHAR *s_name,
 						  u_int f,
-                                                  void (*gobbler)(void *))
+                                                  ACE_Service_Object_Exterminator gobbler)
   : ACE_Service_Type_Impl (so, s_name, f, gobbler)
 {
   ACE_TRACE ("ACE_Service_Object_Type::ACE_Service_Object_Type");
