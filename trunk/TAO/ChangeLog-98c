@@ -1,3 +1,8 @@
+Tue Feb 17 11:30:53 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/orbconf.h: set TAO_ALIGNMENT_MAGIC_NUMBER to 128 if
+          ACE_SIZEOF_LONG > 4, e.g., on 64-bit CPUs.
+
 Tue Feb 17 10:43:45 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosTimeBase.idl: 
