@@ -35,7 +35,6 @@
 #define _REENTRANT
 #define ACE_MT_SAFE 1
 #define __ACE_INLINE__
-#define ACE_HAS_ONE_DEFINITION_RULE
 
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
