@@ -565,7 +565,7 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
   // information printed during service initialization.
   if (ACE::debug ())
     ACE_Log_Msg::enable_debug_messages ();
-  else 
+  else
     // The user has requested no debugging info.
     ACE_Log_Msg::disable_debug_messages ();
 
@@ -635,7 +635,7 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
   // <open_i>.
   if (debugging_enabled)
     ACE_Log_Msg::enable_debug_messages ();
-   else 
+   else
      // Debugging was off when we entered <open_i>.
     ACE_Log_Msg::disable_debug_messages ();
 
@@ -647,7 +647,7 @@ ACE_Service_Config::ACE_Service_Config (const ASYS_TCHAR program_name[],
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
 
-  if (this->open (program_name, 
+  if (this->open (program_name,
                   logger_key) == -1
       && errno != ENOENT)
     // Only print out an error if it wasn't the svc.conf file that was
@@ -785,7 +785,9 @@ ACE_Service_Config::fini_svcs (void)
   if (ACE::debug ())
     ACE_Log_Msg::disable_debug_messages ();
 
-  int result = ACE_Service_Repository::instance ()->fini ();
+  int result = 0;
+  if (ACE_Service_Repository::instance () != 0)
+    result = ACE_Service_Repository::instance ()->fini ();
 
   // Since the fini() method of the objects inside the service
   // repository may reference the ACE singletons, they must be
