@@ -1,3 +1,10 @@
+Sat Jun 12 21:56:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/index.html:
+	* docs/Tags.html:
+	  A new document that describes how TAO uses tags and other magic
+	  numbers.
+
 Sat Jun 12 20:29:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/corbafwd.h:
