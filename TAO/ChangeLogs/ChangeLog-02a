@@ -1,3 +1,7 @@
+Fri Apr 27 11:31:38 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/TAO_Static.dsp: Added missing Endpoint_Selector_Factory.*.
+
 Fri Apr 27 11:03:40 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/DynAny_Test/driver.cpp:
@@ -25,7 +29,7 @@ Fri Apr 27 07:29:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Big_Request_Muxing/Client_Task.h: Included
 	  "tao/Messaging.h" in this file.
-	
+
 	* tests/Big_Request_Muxing/Client_Task.cpp: Removed the inclusion
 	  of "tao/Messaging.h" from this file.
 
@@ -33,11 +37,11 @@ Fri Apr 27 04:07:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
 	* examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
 
-	  Fixed the send method, as it used not the right handle to send 
+	  Fixed the send method, as it used not the right handle to send
 	  its data.
 
 	* examples/PluggableUDP/DIOP/DIOP_Acceptor.cpp:
-	 
+
 	  Fixed code to remove connection handlers.
 
 Thu Apr 26 22:21:26 2001  Jeff Parsons <parsons@cs.wustl.edu>
@@ -84,9 +88,9 @@ Thu Apr 26 09:34:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * tao/diffs/MessagingC.cpp.diff:
 
           Added missing
-          
+
           #if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
-        
+
           guard around the CDR operator implementations for class
           Messaging::ReplyHandler and regenerated the .diff file.
 
@@ -97,8 +101,8 @@ Thu Apr 26 08:14:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  "tao/Messaging.h" so that the file would compile when
 	 interceptors are turned off. This is part of the requirement for
 	  writing TAO applications, which should include all the namespace
-	  files implicitly or explicitly. 
-	
+	  files implicitly or explicitly.
+
 
 Thu Apr 26 08:06:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -109,7 +113,7 @@ Thu Apr 26 08:06:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Thu Apr 26 07:26:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Fixed a compile
-	  error. 
+	  error.
 
 Wed Apr 25 16:15:49 2001  Carlos O'Ryan  <coryan@uci.edu>
 
