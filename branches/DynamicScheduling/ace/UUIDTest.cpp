@@ -47,9 +47,11 @@ int Tester::test()
 //      return -1;
 //    if (test2() == -1)
 //      return -1;
+  ACE_UUID_GENERATOR::instance ()->init ();
+
   ACE_DEBUG ((LM_DEBUG,
 	      "%s\n",
-	      ACE_UUID_GENERATOR::instance ()->generateUUID ().to_string ()->c_str ()));
+	      ACE_UUID_GENERATOR::instance ()->generateUUID ()->to_string ()->c_str ()));
   
   return 0;
 }

@@ -10,6 +10,30 @@
 //typedef unsigned char Octet;
 class ACE_Lock;
 
+/// Class to hold a MAC address
+class ACE_Export UUID_node 
+{
+ public:
+
+  UUID_Node (void);
+
+  typedef enum {NODE_ID_SIZE = 6};
+  typedef u_char NodeID[NODE_ID_SIZE];
+  
+  NodeID& nodeID (void);
+  void nodeID (NodeID&);
+  
+  /*
+  bool operator == (const UUID_node_t& right) const;
+  bool operator != (const UUID_node_t& right) const;
+  bool operator <  (const UUID_node_t& right) const;
+  */
+
+ private:
+  NodeID nodeID_;
+};
+
+
 /**
  *  @class ACE_UUID
  *
@@ -33,92 +57,86 @@ class ACE_Lock;
 class ACE_Export ACE_UUID 
 {
  public:
-  
-  /**
-   * Type to hold a MAC address
-   */
-  struct UUID_node_t 
-  {
-    typedef enum {NODE_ID_SIZE = 6};
-    typedef u_char NodeID[NODE_ID_SIZE];
-    bool operator == (const UUID_node_t& right) const;
-    bool operator != (const UUID_node_t& right) const;
-    bool operator <  (const UUID_node_t& right) const;
-    NodeID nodeID;
-  };
-
-  struct UUID_t 
-  {
-    // Data Members for Class Attributes
-    ACE_UINT32  timeLow;
-    ACE_UINT16  timeMid;    
-    ACE_UINT16  timeHiAndVersion;    
-    u_char      clockSeqHiAndReserved;    
-    u_char      clockSeqLow;    
-    ACE_CString* thr_id;
-    ACE_CString* pid;
-    UUID_node_t node; 
-  };
 
   ACE_UUID(void);
-
-  /**
-   * Copy constructor
-   */
+ 
+  /// Copy constructor
   ACE_UUID(const ACE_UUID &right);
-
-  /** 
-   * Construct a UUID based on a UUID_t
-   */
-  ACE_UUID (const UUID_t& newUUID);
-
-  /**	
-   * Constructs a UUID from a string representation.
-   */
+  
+  /// Constructs a UUID from a string representation.
   ACE_UUID (const ACE_SString& uuidString);
 
   ~ACE_UUID(void);
 
-  /**
-   * Assignment Operation
-   */
+  /// Data Members for Class Attributes
+  ACE_UINT32 timeLow (void);
+  void timeLow (ACE_UINT32);
+
+  ACE_UINT16 timeMid (void);    
+  void timeMid (ACE_UINT16);    
+
+  ACE_UINT16 timeHiAndVersion (void);
+  void timeHiAndVersion (ACE_UINT16);
+
+  u_char clockSeqHiAndReserved (void);    
+  void clockSeqHiAndReserved (u_char);    
+
+  u_char clockSeqLow (void);
+  void clockSeqLow (u_char);
+  
+  UUID_node* node (void); 
+  void node (UUID_node*); 
+
+  /// Returns a string representation of the UUID. 
+  const ACE_SString* to_string (void);
+    
+  static ACE_UUID NIL_UUID;
+
+  /*
+  /// Assignment Operation
   ACE_UUID & operator=(const ACE_UUID &right);
 
-  /** 
-   * Equality Operations 
-   */
+  /// Equality Operations 
   bool operator==(const ACE_UUID &right) const;
   bool operator!=(const ACE_UUID &right) const;
 
-  /**
-   * Relational Operations 
-   */
+  /// Relational Operations 
   bool operator< (const ACE_UUID &right) const;
   bool operator> (const ACE_UUID &right) const;
   bool operator<=(const ACE_UUID &right) const;
   bool operator>=(const ACE_UUID &right) const;
-
-  /**
-   * Returns a string representation of the UUID. Internally,
-   * the string representation, which is contained in as
-   * String, is only computed if this operation is called.
-   * Once the representation is computed it can never change.
-   */
-  const ACE_SString* to_string (void);
-    
-  static ACE_UUID NIL_UUID;
-    
+  */
  private:
-  /**
-   * The string representation of the UUID. This is created
-   * and updated only on demand.
-   */
-  //mutable ACE_SString asString; 
+
+  /// Data Members for Class Attributes
+  ACE_UINT32 timeLow_;
+  ACE_UINT16 timeMid_;    
+  ACE_UINT16 timeHiAndVersion_;    
+  u_char clockSeqHiAndReserved_;    
+  u_char clockSeqLow_;    
+  UUID_node* node_; 
+  
+  /// The string representation of the UUID. This is created */
+  /// and updated only on demand. 
   ACE_SString *as_string_; 
-    
-  // This ACE_UUID_Impl's representation of the UUID
-  UUID_t uuid_;
 };
+
+
+/* class ACE_UUID_Ext: public ACE_UUID */
+/* { */
+/*  public: */
+/*   ACE_UUID_Ext (void); */
+/*   ~ACE_UUID_Ext (void); */
+
+/*   ACE_CString* thr_id (void); */
+  
+/*   ACE_CString* pid (void); */
+
+/*  private: */
+/*   ACE_CString* thr_id_; */
+/*   ACE_CString* pid_; */
+//};
+
 
 /**
  * @class ACE_UUID_Generator
@@ -128,98 +146,68 @@ class ACE_Export ACE_UUID_Generator
 {
  public:
 
-  enum { ACE_UUID_CLOCK_SEQ_MASK = 0x3FFF };
+  enum {ACE_UUID_CLOCK_SEQ_MASK = 0x3FFF};
+
+  void init (void);
+
+  /// Format timestamp, clockseq, and nodeID into a VI UUID.
+  void generateUUID(ACE_UUID&);
   
-  // Format timestamp, clockseq, and nodeID into a VI UUID.
-  void generateV1(ACE_UUID::UUID_t&);
+  /// Format timestamp, clockseq, and nodeID into a VI UUID.
+  ACE_UUID* generateUUID (void);
 
-  // Format timestamp, clockseq, and nodeID into a VI UUID.
-  ACE_UUID generateUUID (void);
-
-  /**
-   * Type to represent UTC as a count of 100 nanosecond intervals since
-   * 00:00:00.00, 15 October 1582.
-   */
-  typedef ACE_UINT64 UUID_time_t;
+  /// Type to represent UTC as a count of 100 nanosecond intervals since
+  /// 00:00:00.00, 15 October 1582.
+  typedef ACE_UINT64 UUID_time;
 
   ACE_UUID_Generator(void);
-  ACE_UUID_Generator(ACE_Lock* lock);
   ~ACE_UUID_Generator();
 
-  
-  /**
-   * The locking strategy prevents multiple generators
-   * from accessing the UUID_state at the same time.
-   * Get the locking strategy.
-   */
-  ACE_Lock *lock (void);
+  /// The locking strategy prevents multiple generators
+  /// from accessing the UUID_state at the same time.
+  /// Get the locking strategy.
+  ACE_Lock* lock (void);
 
-  /**
-   * Set a new locking strategy and return the hold one.
-   */
-  ACE_Lock *lock (ACE_Lock *lock);
+  /// Set a new locking strategy and return the hold one.
+  ACE_Lock* lock (ACE_Lock *lock);
 
 
  private:
 
-  /**
-   * The maximum number of uuids that can be generated per tick of the
-   * system clock. This number should be the number of 100ns ticks of the
-   * actual resolution of the system's clock.
-   */
-  enum { UUIDS_PER_TICK = 1000 };
+  /// The maximum number of uuids that can be generated per tick of the
+  /// system clock. This number should be the number of 100ns ticks of the
+  /// actual resolution of the system's clock.
+  enum {UUIDS_PER_TICK = 1000};
 
-  /**
-   * The number of uuids generated in this process since the last clock
-   * tick. Value never exceeds uuidsPerTick - 1.
-   */
-  ACE_UINT32 uuidsThisTick;
+  /// The number of uuids generated in this process since the last clock
+  /// tick. Value never exceeds uuidsPerTick - 1.
+  ACE_UINT32 uuidsThisTick_;
 
-  /**
-   * The system time when that last uuid was generated.
-   */
-  UUID_time_t timeLast;
+  /// The system time when that last uuid was generated.
+  UUID_time timeLast_;
 
-  /**
-   * Type to map to contain the UUID generator persistent state. This
-   * will be kept in memory mapped shared memory
-   */
-  struct UUID_state
+  /// Type to map to contain the UUID generator persistent state. This
+  /// will be kept in memory mapped shared memory
+  struct UUID_State
   {
-    UUID_time_t timestamp;
-    ACE_UUID::UUID_node_t node;
+    UUID_time timestamp;
+    UUID_node node;
     ACE_UINT16 clockSequence;
   };
 
-  /**
-   * Obtain a UUID timestamp. Compensate for the fact that the time
-   * obtained from getSystem time has a resolution less than 100ns.
-   */
-  void getTimestamp( UUID_time_t& timestamp);
+  /// Obtain a UUID timestamp. Compensate for the fact that the time
+  /// obtained from getSystem time has a resolution less than 100ns.
+  void get_timestamp (UUID_time& timestamp);
 
-  /**
-   * Obtain the system time in UTC as a count of 100 nanosecond intervals
-   * since 00:00:00.00, 15 October 1582 (the date of Gregorian reform to
-   * the Christian calendar).
-   */
-  void get_system_time( UUID_time_t& timeNow);
-
+  /// Obtain the system time in UTC as a count of 100 nanosecond intervals
+  /// since 00:00:00.00, 15 October 1582 (the date of Gregorian reform to
+  /// the Christian calendar).
+  void get_systemtime( UUID_time& timeNow);
   
-  /**
-   * The system time when that last uuid was generated.
-   */
-  UUID_time_t time_last_;
- 
-  /**
-   * The UUID generator persistent state.
-   */
-  UUID_state uuid_state_;
+  /// The UUID generator persistent state.
+  UUID_State uuid_state_;
 
   ACE_Lock* lock_;
-  
-  // No value semantics
-  //ACE_UNIMPLEMENTED_FUNC (ACE_UUID_Generator( const ACE_UUID_Generator&))
-  // ACE_UNIMPLEMENTED_FUNC (ACE_UUID_Generator& operator=( const ACE_UUID_Generator&))
 };
 
 typedef ACE_Singleton <ACE_UUID_Generator, ACE_SYNCH_MUTEX> ACE_UUID_GENERATOR;
