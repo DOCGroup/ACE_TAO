@@ -18,11 +18,9 @@
 
 INFO    = VERSION
 
-DIRS    = CIDLC \
-	  ciao \
-	  examples \
-	  tests \
-	  tools 
+ALT_DIRS = CIDLC \
+           examples \
+           tests
 
 CLONE   = Makefile \
 	  CIDLC \
@@ -33,22 +31,25 @@ CLONE   = Makefile \
 	  tests \
 	  tools 
 
-CORE_DIRS = tools \
-	    ciao
-
-# Just realclean for the core directories. This is temporary. Will be 
-# removed at a later date. 
-coreclean:
-	@for dir in $(CORE_DIRS); \
-        do \
-        	($(MAKE) realclean -C $$dir) \
-        done
+CORE_DIRS = ciao \
+            tools
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+DIRS = $(CORE_DIRS)
+
+# Need boost and utility libs in order to compile these.  You
+# may need to run MPC in these directories to create the Makefiles
+# first.
+ifdef BOOST_ROOT
+  ifdef UTILITY_ROOT
+    DIRS += $(ALT_DIRS)
+  endif # UTILITY_ROOT
+endif # BOOST_ROOT
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
@@ -100,4 +101,12 @@ clone:
 
 reverseclean:
 	@$(ACE_ROOT)/bin/reverse_clean $(DIRS)
+
+# Just realclean for the core directories. This is temporary. Will be 
+# removed at a later date. 
+coreclean:
+	@for dir in $(CORE_DIRS); \
+        do \
+          ($(MAKE) realclean -C $$dir) \
+        done
 
