@@ -74,7 +74,10 @@ CIAO::ComponentServer_Impl::create_container (const Components::ConfigValues & c
   ACE_NEW_THROW_EX (container_servant,
                     CIAO::Container_Impl (this->orb_.in (),
                                           this->poa_.in (),
-                                          this->get_objref ()),
+                                          this->get_objref (),
+                                          this->static_config_flag_,
+                                          this->static_entrypts_maps_
+                                          ),
                     CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
 
