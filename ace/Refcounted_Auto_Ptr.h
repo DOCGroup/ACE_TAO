@@ -42,20 +42,20 @@ public:
 
   // = Initialization and termination methods.
 
-  /// Constructor that initializes an <ACE_Refcounted_Auto_Ptr> to
-  /// point to the result <r> immediately.
+  /// Constructor that initializes an @c ACE_Refcounted_Auto_Ptr to
+  /// point to the result immediately.
   ACE_Refcounted_Auto_Ptr (X *p = 0);
 
-  /// Copy constructor binds <this> and <r> to the same 
-  /// <ACE_Refcounted_Auto_Ptr_Rep>. An <ACE_Refcounted_Auto_Ptr_Rep> 
+  /// Copy constructor binds the created object and @c r to the same
+  /// @c ACE_Refcounted_Auto_Ptr_Rep. An @c ACE_Refcounted_Auto_Ptr_Rep
   /// is created if necessary.
   ACE_Refcounted_Auto_Ptr (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r);
 
   /// Destructor.
   virtual ~ACE_Refcounted_Auto_Ptr (void);
 
-  /// Assignment operator that binds <this> and <r> to the same 
-  /// <ACE_Refcounted_Auto_Ptr_Rep>. An <ACE_Refcounted_Auto_Ptr_Rep> 
+  /// Assignment operator that binds the current object and @c r to the same
+  /// @c ACE_Refcounted_Auto_Ptr_Rep. An @c ACE_Refcounted_Auto_Ptr_Rep
   /// is created if necessary.
   void operator = (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r);
 
@@ -109,7 +109,7 @@ protected:
  * @class ACE_Refcounted_Auto_Ptr_Rep
  *
  * @brief An ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> object
- * incapsulates a pointer to an object of type X.  It is pointed to by
+ * encapsulates a pointer to an object of type X.  It is pointed to by
  * ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> object[s] and only accessible
  * through them. 
  */
