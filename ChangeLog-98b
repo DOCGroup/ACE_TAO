@@ -18,6 +18,11 @@ Thu Aug 13 13:34:52 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Conn_Test.cpp: disabled ACE_Hash_Addr template
           specialization on non-egcs g++.
 
+        * tests/Process_Strategy_Test.{h,cpp} (~Process_Strategy):
+          added an explicit destructor.  g++ 2.7.2.3 got very
+          confused ("Internal compiler error") without it, apparently
+          when generating it implicitly.
+
 Wed Aug 12 22:45:50 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/MsgQueue_Notifications_Test.cpp: Added an explicit
