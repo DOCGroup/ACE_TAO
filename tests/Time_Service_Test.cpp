@@ -43,6 +43,11 @@ main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Time_Service_Test"));
 
+#if defined (ACE_LACKS_FORK)
+  ACE_ERROR ((LM_INFO,
+              ASYS_TEXT ("fork is not supported on this platform\n")));
+#else  /* ! ACE_LACKS_FORK */
+
   // Make sure that the backing store is not there. We need to make
   // sure because this test kills the Time Clerk and on some platforms
   // the Clerk is not allowed to do a graceful shutdown. By cleaning
@@ -59,7 +64,8 @@ main (int, ASYS_TCHAR *[])
     ACE_ERROR_RETURN ((LM_DEBUG, ASYS_TEXT ("%n; %p (%s).\n"),
                        ASYS_TEXT ("Server fork failed"), server_cl), -1);
   else
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Server forked with pid = %d.\n"), server.getpid ()));
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Server forked with pid = %d.\n"),
+                server.getpid ()));
 
   ACE_OS::sleep (3);
 
@@ -72,21 +78,25 @@ main (int, ASYS_TCHAR *[])
     ACE_ERROR_RETURN ((LM_DEBUG, ASYS_TEXT ("%n; %p: (%s).\n"),
                        ASYS_TEXT ("Clerk fork failed"), clerk_cl), -1);
   else
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Clerk forked with pid = %d.\n"), clerk.getpid ()));
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Clerk forked with pid = %d.\n"),
+                clerk.getpid ()));
 
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Sleeping...\n")));
   ACE_OS::sleep (10);
 
   if (clerk.terminate () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Terminate failed for clerk.\n")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Terminate failed for clerk.\n")),
+                      -1);
 
   if (server.terminate () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Terminate failed for server.\n")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Terminate failed for server.\n")),
+                      -1);
 
-  // Since we kill the clerk process, on Win32 it may not do a
+  // Because we kill the clerk process, on Win32 it may not do a
   // graceful shutdown and the backing store file is left behind.
   if (clerk.wait () != 0)
     ACE_OS::unlink (ACE_DEFAULT_BACKING_STORE);
+#endif /* ! ACE_LACKS_FORK */
 
   ACE_END_TEST;
   return 0;
