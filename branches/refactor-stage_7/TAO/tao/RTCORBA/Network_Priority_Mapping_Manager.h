@@ -69,12 +69,10 @@ public:
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   // the static operations
-  static TAO_Network_Priority_Mapping_Manager_ptr _duplicate (TAO_Network_Priority_Mapping_Manager_ptr obj);
+  static TAO_Network_Priority_Mapping_Manager_ptr _duplicate (
+      TAO_Network_Priority_Mapping_Manager_ptr obj
+    );
   static TAO_Network_Priority_Mapping_Manager_ptr _narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-  static TAO_Network_Priority_Mapping_Manager_ptr _unchecked_narrow (
       CORBA::Object_ptr obj
       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
@@ -82,8 +80,6 @@ public:
     {
       return (TAO_Network_Priority_Mapping_Manager_ptr)0;
     }
-
-  virtual void *_tao_QueryInterface (ptrdiff_t type);
 
   virtual const char* _interface_repository_id (void) const;
 

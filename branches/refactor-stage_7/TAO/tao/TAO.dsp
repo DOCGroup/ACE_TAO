@@ -629,6 +629,14 @@ SOURCE=.\LocalObject.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\LocateRequest_Invocation.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LocateRequest_Invocation_Adapter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\LRU_Connection_Purging_Strategy.cpp
 # End Source File
 # Begin Source File
@@ -1600,6 +1608,14 @@ SOURCE=.\LF_Strategy_Complete.h
 # Begin Source File
 
 SOURCE=.\LocalObject.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LocateRequest_Invocation.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LocateRequest_Invocation_Adapter.h
 # End Source File
 # Begin Source File
 

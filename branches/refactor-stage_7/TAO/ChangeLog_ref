@@ -1,3 +1,38 @@
+Sun Sep  7 15:52:14 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/TAO.dsp:
+
+          Added LocateRequest_Invocation.{h,cpp} and
+          LocateRequest_Invocation_Adapter.{h,cpp} to the project.
+
+        * tao/RTCORBA/Network_Priority_Mapping_Manager.cpp:
+        * tao/RTCORBA/Network_Priority_Mapping_Manager.h:
+        * tao/RTCORBA/Priority_Mapping_Manager.cpp:
+        * tao/RTCORBA/Priority_Mapping_Manager.h:
+        * tao/RTCORBA/RT_Endpoint_Selector_Factory.cpp:
+        * tao/RTCORBA/RT_Endpoint_Selector_Factory.h:
+        * tao/RTCORBA/RT_Endpoint_Utils.cpp:
+        * tao/RTCORBA/RT_Endpoint_Utils.h:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.h:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+
+          - Updated hand-written _narrow() and related methods to
+            correspond with the generated versions.
+
+          - Where there were pairs of overloaded methods, one taking
+            a TAO_GIOP_Invocation and one taking a 
+            TAO::Profile_Transport_Resolver, removed the instance of the
+            former.
+
+          - Removed #includes of tao/Invocation.h.
+
+          - Cosmetic changes.
+
+        * tao/RTCORBA/TAO_RTCORBA.dsp:
+
+          Turned on RTTI.
+
 Sun Sep  7 15:05:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/LocateRequest_Invocation.cpp:
