@@ -26,6 +26,10 @@ class TAO_ORB_Manager
   //     Helper class for simple ORB/POA initialization and 
   //     registering servants with the POA.
 public:
+  TAO_ORB_Manager (CORBA::ORB_ptr orb = 0,
+                   PortableServer::POA_ptr root_poa = 0,
+                   PortableServer::POAManager_ptr poa_manager = 0); 
+
   int init (int argc, 
             char **argv, 
             CORBA_Environment &env);
@@ -38,25 +42,25 @@ public:
   // Users can call this method multiple times to activate multiple
   // objects.
       
-  int run (CORBA_Environment &env);
+  int run (CORBA_Environment &env,
+           ACE_Time_Value *tv = 0);
   // Run the ORB event loop.
       
   CORBA::ORB_ptr orb (void);
   // Accessor which returns the ORB pointer.
+  
+  ~TAO_ORB_Manager ();
+  // Destructor
       
 protected:
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_var orb_;
   // The ORB.
       
   PortableServer::POA_var root_poa_;
   // The root POA.
-  // @@ Sumedh, shouldn't the user be able to specify the POA to use
-  // @@ when they call the class constructor?!
       
   PortableServer::POAManager_var poa_manager_;
   // The POA manager.
-  // @@ Sumedh, shouldn't users be able to specify which POAManager they
-  // @@ want to use when they call the class constructor?!
 };
   
 #endif /* TAO_UTIL_H */
