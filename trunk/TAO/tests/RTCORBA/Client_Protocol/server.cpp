@@ -3,6 +3,7 @@
 #include "testS.h"
 #include "ace/Get_Opt.h"
 #include "tao/RTCORBAC.h"
+#include "tao/RT_Policy_i.h"
 
 #if (TAO_HAS_RT_CORBA == 1)
 
@@ -190,6 +191,12 @@ main (int argc, char *argv[])
       RTCORBA::ProtocolList protocols;
       protocols.length (1);
       protocols[0].protocol_type = protocol_type;
+      protocols[0].orb_protocol_properties =
+        TAO_Protocol_Properties_Factory::create_orb_protocol_property
+        (protocol_type);
+      protocols[0].transport_protocol_properties =
+        TAO_Protocol_Properties_Factory::create_transport_protocol_property
+        (protocol_type);
 
       CORBA::PolicyList poa_policy_list;
       poa_policy_list.length (1);
