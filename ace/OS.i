@@ -226,7 +226,7 @@ ACE_Time_Value::operator timestruc_t () const
 {
   // ACE_TRACE ("ACE_Time_Value::operator timestruc_t");
   timestruc_t tv;
-#if !defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
+#if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
   tv.tv_sec = this->tv_.tv_sec;
   tv.tv_nsec = this->tv_.tv_usec * 1000;
 #else
