@@ -31,33 +31,6 @@ class TAO_Object_Adapter;
 
 // ****************************************************************
 
-class TAO_Export TAO_Allocated_Resources
-{
-  // = TITLE
-  //   Container for the resources allocated by the factory.
-  //
-  // = DESCRIPTION
-  //
-public:
-  TAO_Allocated_Resources (void);
-  // Constructor necessary because we have pointers.  It's inlined
-  // here rather than in the .i file because it's easier than trying
-  // to re-order header files in corba.h to eliminate the "used
-  // before declared inline" warnings/errors on certain compilers.
-
-  ~TAO_Allocated_Resources (void);
-  // Destructor is also necessary because we now allocate some of
-  // the objects held here.
-
-  // = Resources
-
-  ACE_Allocator *input_cdr_dblock_allocator_;
-  ACE_Allocator *input_cdr_buffer_allocator_;
-  // The allocators for the input CDR streams.
-};
-
-// ****************************************************************
-
 class TAO_Default_Resource_Factory : public TAO_Resource_Factory
 {
   // = TITLE
@@ -87,8 +60,8 @@ public:
   // = Member Accessors
   enum
   {
-    TAO_GLOBAL,
-    TAO_TSS
+    TAO_ALLOCATOR_NULL_LOCK,
+    TAO_ALLOCATOR_THREAD_LOCK
   };
 
   // = Type of Reactor
@@ -108,6 +81,7 @@ public:
 
   // = Resource Retrieval
   virtual int use_tss_resources (void) const;
+  virtual int use_locked_data_blocks (void) const;
   virtual ACE_Reactor *get_reactor (void);
   virtual TAO_Acceptor_Registry  *get_acceptor_registry (void);
   virtual TAO_Connector_Registry *get_connector_registry (void);
@@ -115,8 +89,6 @@ public:
   virtual ACE_Allocator* input_cdr_buffer_allocator (void);
   virtual ACE_Allocator* output_cdr_dblock_allocator (void);
   virtual ACE_Allocator* output_cdr_buffer_allocator (void);
-  virtual ACE_Data_Block *create_input_cdr_data_block (size_t size);
-
   virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
   virtual int init_protocol_factories (void);
 
@@ -129,24 +101,17 @@ protected:
   // Flag indicating whether resources should be global or
   // thread-specific.
 
+  int use_locked_data_blocks_;
+  // The type of data blocks that the ORB should use
+
   int reactor_type_;
   // Flag indicating which kind of reactor we should use.
 
-  int cdr_allocator_source_;
-  // The source for the CDR allocator. Even with a TSS resource
-  // factory the user may be interested in global allocators for the
-  // CDR streams, for instance to keep the buffers around after the
-  // upcall and/or pass them to another thread.
+  int cdr_allocator_type_;
+  // The type of CDR allocators.
 
   TAO_ProtocolFactorySet protocol_factories_;
   // list of loaded protocol factories.
-
-  // = Typedefs for the singleton types used to store our orb core
-  // information.
-  typedef ACE_Singleton<TAO_Allocated_Resources, ACE_SYNCH_MUTEX>
-          GLOBAL_ALLOCATED;
-  typedef ACE_TSS_Singleton<TAO_Allocated_Resources, ACE_SYNCH_MUTEX>
-          TSS_ALLOCATED;
 };
 
 #if defined (__ACE_INLINE__)

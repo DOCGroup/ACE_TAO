@@ -389,7 +389,12 @@ public:
   TAO_ORB_Core* orb_core (void) const;
   // Accessor
 
-  CORBA::ORB_ptr servant_orb (void);
+  CORBA::ORB_ptr servant_orb_ptr (void);
+  // This returns a duplicated ORB pointer.
+
+  CORBA::ORB_var &servant_orb_var (void);
+  // This returns the ORB var itself (generally for temporary use).
+
   void servant_orb (CORBA::ORB_ptr orb);
   // Accesor and mutator for the servant ORB.  Notice that the muatator
   // assumes the ownership of the passed in ORB and the accesor does not

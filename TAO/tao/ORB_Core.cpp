@@ -73,8 +73,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char* orbid)
     to_iso8859_ (0),
     from_unicode_ (0),
     to_unicode_ (0),
-    use_tss_resources_ (0),
-    reactor_ (0)
+    use_tss_resources_ (0)
 {
   ACE_NEW (this->poa_current_,
            TAO_POA_Current);
@@ -101,12 +100,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
   delete this->from_iso8859_;
   delete this->to_iso8859_;
-
-  if (this->reactor_ != 0)
-    {
-      delete this->reactor_;
-      this->reactor_ = 0;
-    }
 }
 
 int
@@ -1138,28 +1131,6 @@ TAO_ORB_Core::orb (CORBA::ORB_ptr op)
   return old_orb;
 }
 
-PortableServer::POA_ptr
-TAO_ORB_Core::root_poa_reference (CORBA::Environment &ACE_TRY_ENV,
-                                  const char *adapter_name,
-                                  TAO_POA_Manager *poa_manager,
-                                  const TAO_POA_Policies *policies)
-{
-  // @@ Double check??
-  if (CORBA::is_nil (this->root_poa_reference_.in ()))
-    {
-      TAO_POA *poa = this->root_poa (ACE_TRY_ENV,
-                                     adapter_name,
-                                     poa_manager,
-                                     policies);
-      ACE_CHECK_RETURN (PortableServer::POA::_nil ());
-
-      this->root_poa_reference_ = poa->_this (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (PortableServer::POA::_nil ());
-    }
-
-  return PortableServer::POA::_duplicate (this->root_poa_reference_.in ());
-}
-
 int
 TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resources)
 {
@@ -1178,11 +1149,11 @@ TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resour
         {
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - non nil reactor on thread startup!\n"));
-          if (tss->owns_reactor_ != 0)
+          if (tss->owns_resources_ != 0 && !tss->inherited_reactor_)
             delete tss->reactor_;
         }
       tss->reactor_ = tss_resources->reactor_;
-      tss->owns_reactor_ = 0;
+      tss->inherited_reactor_ = 1;
     }
 
   // this->connection_cache (tss_resources->connection_cache_);
@@ -1191,57 +1162,88 @@ TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resour
   return 0;
 }
 
+PortableServer::POA_ptr
+TAO_ORB_Core::root_poa_reference (CORBA::Environment &ACE_TRY_ENV,
+                                  const char *adapter_name,
+                                  TAO_POA_Manager *poa_manager,
+                                  const TAO_POA_Policies *policies)
+{
+  if (CORBA::is_nil (this->root_poa_reference_.in ()))
+    {
+      this->create_and_set_root_poa (adapter_name,
+                                     poa_manager,
+                                     policies,
+                                     ACE_TRY_ENV);
+      ACE_CHECK_RETURN (PortableServer::POA::_nil ());
+    }
+
+  return PortableServer::POA::_duplicate (this->root_poa_reference_.in ());
+}
+
 void
 TAO_ORB_Core::create_and_set_root_poa (const char *adapter_name,
                                        TAO_POA_Manager *poa_manager,
                                        const TAO_POA_Policies *policies,
                                        CORBA::Environment &ACE_TRY_ENV)
 {
-  // @@ Locking??
-
-  int delete_policies = 0;
-
-  // Need to do double-checked locking here to cover the case of
-  // multiple threads using a global resource policy.
-  if (poa_manager == 0)
-    poa_manager = new TAO_POA_Manager (*this->object_adapter ());
-
-  TAO_POA_Policies *root_poa_policies = 0;
-  if (policies == 0)
+  if (this->root_poa_ == 0)
     {
-      root_poa_policies = new TAO_POA_Policies;
-      // RootPOA policies defined in spec
-      root_poa_policies->implicit_activation (PortableServer::IMPLICIT_ACTIVATION);
+      // Double checked locking
+      ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->lock_);
+      if (this->root_poa_ == 0)
+        {
+          // @@ Irfan: please use auto_ptr here
+          if (poa_manager == 0)
+            {
+              ACE_NEW_THROW_EX (poa_manager,
+                                TAO_POA_Manager (*this->object_adapter ()),
+                                CORBA::NO_MEMORY ());
+              ACE_CHECK;
+            }
 
-      delete_policies = 1;
-      policies = root_poa_policies;
+          TAO_POA_Policies root_poa_policies;
+          if (policies == 0)
+            {
+              // RootPOA policies defined in spec
+              root_poa_policies.implicit_activation (PortableServer::IMPLICIT_ACTIVATION);
+
+              policies = &root_poa_policies;
+            }
+
+          // Construct a new POA
+          ACE_NEW_THROW_EX (this->root_poa_,
+                            TAO_POA (adapter_name,
+                                     *poa_manager,
+                                     *policies,
+                                     0,
+                                     this->object_adapter ()->lock (),
+                                     this->object_adapter ()->thread_lock (),
+                                     *this,
+                                     ACE_TRY_ENV),
+                            CORBA::NO_MEMORY ());
+          ACE_CHECK;
+
+          this->root_poa_reference_ =
+            this->root_poa_->_this (ACE_TRY_ENV);
+          ACE_CHECK;
+        }
     }
-
-  // Construct a new POA
-  this->root_poa_ = new TAO_POA (adapter_name,
-                                 *poa_manager,
-                                 *policies,
-                                 0,
-                                 this->object_adapter ()->lock (),
-                                 this->object_adapter ()->thread_lock (),
-                                 *this,
-                                 ACE_TRY_ENV);
-  ACE_CHECK;
-
-  if (delete_policies)
-    delete root_poa_policies;
 }
 
 TAO_Object_Adapter *
 TAO_ORB_Core::object_adapter (void)
 {
-  // @@ Double check??
   if (this->object_adapter_ == 0)
     {
-      ACE_NEW_RETURN (this->object_adapter_,
-                      TAO_Object_Adapter (this->server_factory ()->active_object_map_creation_parameters (),
-                                          *this),
-                      0);
+      // Double checked locking
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->object_adapter_ == 0)
+        {
+          ACE_NEW_RETURN (this->object_adapter_,
+                          TAO_Object_Adapter (this->server_factory ()->active_object_map_creation_parameters (),
+                                              *this),
+                          0);
+        }
     }
 
   return this->object_adapter_;
@@ -1384,86 +1386,193 @@ TAO_ORB_Core::get_next_follower (void)
 ACE_Allocator*
 TAO_ORB_Core::input_cdr_dblock_allocator (void)
 {
-#if 0
-  if (this->input_cdr_dblock_allocator_ == 0)
+  if (this->use_tss_resources_)
     {
-      this->input_cdr_dblock_allocator_ =
-        this->resource_factory ()->input_cdr_dblock_allocator ();
+      TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
+
+      if (tss->input_cdr_dblock_allocator_ == 0)
+        {
+          tss->input_cdr_dblock_allocator_ = this->resource_factory ()->input_cdr_dblock_allocator ();
+          tss->owns_resources_ = 1;
+        }
+      return tss->input_cdr_dblock_allocator_;
     }
-  return this->input_cdr_dblock_allocator_;
-#else
-  return this->resource_factory ()->input_cdr_dblock_allocator ();
-#endif
+
+  if (this->orb_resources_.input_cdr_dblock_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->orb_resources_.input_cdr_dblock_allocator_ == 0)
+        {
+          this->orb_resources_.input_cdr_dblock_allocator_ =
+            this->resource_factory ()->input_cdr_dblock_allocator ();
+          this->orb_resources_.owns_resources_ = 1;
+        }
+    }
+  return this->orb_resources_.input_cdr_dblock_allocator_;
 }
 
 ACE_Allocator*
 TAO_ORB_Core::input_cdr_buffer_allocator (void)
 {
-#if 0
-  if (this->input_cdr_buffer_allocator_ == 0)
+  if (this->use_tss_resources_)
     {
-      this->input_cdr_buffer_allocator_ =
-        this->resource_factory ()->input_cdr_buffer_allocator ();
+      TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
+
+      if (tss->input_cdr_buffer_allocator_ == 0)
+        {
+          tss->input_cdr_buffer_allocator_ = this->resource_factory ()->input_cdr_buffer_allocator ();
+          tss->owns_resources_ = 1;
+        }
+      return tss->input_cdr_buffer_allocator_;
     }
-  return this->input_cdr_buffer_allocator_;
-#else
-  return this->resource_factory ()->input_cdr_buffer_allocator ();
-#endif
+
+  if (this->orb_resources_.input_cdr_buffer_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->orb_resources_.input_cdr_buffer_allocator_ == 0)
+        {
+          this->orb_resources_.input_cdr_buffer_allocator_ =
+            this->resource_factory ()->input_cdr_buffer_allocator ();
+          this->orb_resources_.owns_resources_ = 1;
+        }
+    }
+  return this->orb_resources_.input_cdr_buffer_allocator_;
 }
 
 ACE_Allocator*
 TAO_ORB_Core::output_cdr_dblock_allocator (void)
 {
-  TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
-
-  if (tss->output_cdr_dblock_allocator_ == 0)
+  if (this->use_tss_resources_)
     {
-      tss->output_cdr_dblock_allocator_ =
-        this->resource_factory ()->output_cdr_dblock_allocator ();
+      TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
+
+      if (tss->output_cdr_buffer_allocator_ == 0)
+        {
+          tss->output_cdr_buffer_allocator_ = this->resource_factory ()->output_cdr_buffer_allocator ();
+          tss->owns_resources_ = 1;
+        }
+      return tss->output_cdr_buffer_allocator_;
     }
 
-  return tss->output_cdr_dblock_allocator_;
+  if (this->orb_resources_.output_cdr_buffer_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->orb_resources_.output_cdr_buffer_allocator_ == 0)
+        {
+          this->orb_resources_.output_cdr_buffer_allocator_ =
+            this->resource_factory ()->output_cdr_buffer_allocator ();
+          this->orb_resources_.owns_resources_ = 1;
+        }
+    }
+  return this->orb_resources_.output_cdr_buffer_allocator_;
 }
 
 ACE_Allocator*
 TAO_ORB_Core::output_cdr_buffer_allocator (void)
 {
-  TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
-
-  if (tss->output_cdr_buffer_allocator_ == 0)
+  if (this->use_tss_resources_)
     {
-      tss->output_cdr_buffer_allocator_ =
-        this->resource_factory ()->output_cdr_dblock_allocator ();
+      TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
+
+      if (tss->output_cdr_buffer_allocator_ == 0)
+        {
+          tss->output_cdr_buffer_allocator_ = this->resource_factory ()->output_cdr_buffer_allocator ();
+          tss->owns_resources_ = 1;
+        }
+      return tss->output_cdr_buffer_allocator_;
     }
 
-  return tss->output_cdr_buffer_allocator_;
+  if (this->orb_resources_.output_cdr_buffer_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->orb_resources_.output_cdr_buffer_allocator_ == 0)
+        {
+          this->orb_resources_.output_cdr_buffer_allocator_ =
+            this->resource_factory ()->output_cdr_buffer_allocator ();
+          this->orb_resources_.owns_resources_ = 1;
+        }
+    }
+  return this->orb_resources_.output_cdr_buffer_allocator_;
+}
+
+ACE_INLINE ACE_Data_Block*
+TAO_ORB_Core::create_input_cdr_data_block (size_t size)
+{
+  ACE_Data_Block *nb = 0;
+
+  ACE_Allocator *dblock_allocator =
+    this->input_cdr_dblock_allocator ();
+  ACE_Allocator *buffer_allocator =
+    this->input_cdr_buffer_allocator ();
+
+  if (this->resource_factory ()->use_locked_data_blocks ())
+    {
+      typedef
+        ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >
+        Locked_Data_Block;
+
+      ACE_NEW_MALLOC_RETURN (
+            nb,
+            ACE_static_cast (Locked_Data_Block *,
+                             dblock_allocator->malloc (sizeof (Locked_Data_Block))),
+            Locked_Data_Block (size,
+                               ACE_Message_Block::MB_DATA,
+                               0,
+                               buffer_allocator,
+                               0,
+                               dblock_allocator),
+            0);
+    }
+  else
+    {
+      ACE_NEW_MALLOC_RETURN (
+            nb,
+            ACE_static_cast(ACE_Data_Block*,
+                            dblock_allocator->malloc (sizeof (ACE_Data_Block))),
+            ACE_Data_Block (size,
+                            ACE_Message_Block::MB_DATA,
+                            0,
+                            buffer_allocator,
+                            0,
+                            0,
+                            dblock_allocator),
+            0);
+    }
+
+  return nb;
 }
 
 ACE_Reactor *
 TAO_ORB_Core::reactor (void)
 {
-  TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
-
-  if (tss->reactor_ == 0)
+  if (this->use_tss_resources_)
     {
-      if (this->use_tss_resources_)
+      TAO_ORB_Core_TSS_Resources* tss = this->get_tss_resources ();
+
+      if (tss->reactor_ == 0)
         {
           tss->reactor_ = this->resource_factory ()->get_reactor ();
-          tss->owns_reactor_ = 1;
+          tss->owns_resources_ = 1;
         }
-      else
-        {
-          if (this->reactor_ == 0)
-            {
-              // @@ Double checked locking!
-              this->reactor_ =
-                this->resource_factory ()->get_reactor ();
-            }
-          tss->reactor_ = this->reactor_;
-        }
+      return tss->reactor_;
     }
 
-  return tss->reactor_;
+  if (this->orb_resources_.reactor_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->orb_resources_.reactor_ == 0)
+        {
+          this->orb_resources_.reactor_ =
+            this->resource_factory ()->get_reactor ();
+          this->orb_resources_.owns_resources_ = 1;
+        }
+    }
+  return this->orb_resources_.reactor_;
 }
 
 TAO_POA_Current &
@@ -1497,24 +1606,26 @@ TAO_ORB_Core::policy_current (void)
 // ****************************************************************
 
 TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
-  :  owns_reactor_ (0),
+  :  owns_resources_ (0),
      reactor_ (0),
+     inherited_reactor_ (0),
      output_cdr_dblock_allocator_ (0),
      output_cdr_buffer_allocator_ (0),
      output_cdr_msgblock_allocator_ (0),
-     owns_connection_cache_ (0),
+     input_cdr_dblock_allocator_ (0),
+     input_cdr_buffer_allocator_ (0),
      connection_cache_ (0)
 {
 }
 
 TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
 {
-  if (this->owns_reactor_)
-    {
-      delete this->reactor_;
-      this->reactor_ = 0;
-      this->owns_reactor_ = 0;
-    }
+  if (!this->owns_resources_)
+    return;
+
+  if (!this->inherited_reactor_)
+    delete this->reactor_;
+  this->reactor_ = 0;
 
   if (this->output_cdr_dblock_allocator_ != 0)
     this->output_cdr_dblock_allocator_->remove ();
@@ -1528,12 +1639,16 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
     this->output_cdr_msgblock_allocator_->remove ();
   delete this->output_cdr_msgblock_allocator_;
 
-  if (this->owns_connection_cache_)
-    {
-      // unimplemented delete this->connection_cache_;
-      this->connection_cache_ = 0;
-      this->owns_connection_cache_ = 0;
-    }
+  if (this->input_cdr_dblock_allocator_ != 0)
+    this->input_cdr_dblock_allocator_->remove ();
+  delete this->input_cdr_dblock_allocator_;
+
+  if (this->input_cdr_buffer_allocator_ != 0)
+    this->input_cdr_buffer_allocator_->remove ();
+  delete this->input_cdr_buffer_allocator_;
+
+  // unimplemented delete this->connection_cache_;
+  this->connection_cache_ = 0;
 }
 
 // ****************************************************************
@@ -1637,6 +1752,8 @@ TAO_ORB_Core_instance (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >;
+
 template class ACE_Env_Value<int>;
 template class ACE_Env_Value<u_int>;
 
@@ -1656,6 +1773,8 @@ template class ACE_Map_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>;
 template class ACE_Map_Reverse_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >
 
 #pragma instantiate ACE_Env_Value<int>
 #pragma instantiate ACE_Env_Value<u_int>
