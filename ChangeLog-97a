@@ -1,3 +1,11 @@
+Mon Apr 28 19:54:05 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp: protected
+	  the ACE_*Guard template instantiations with #ifdef ACE_HAS_THREADS.
+
+	* examples/ASX/Event_Server/Transceiver/transceiver.cpp: protected
+	  the ACE_*Guard template instantiations with #ifdef ACE_HAS_THREADS.
+
 Mon Apr 28 18:53:58 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* ace/OS.h: Added ACE_DEFAULT_TIMER_WHEEL_SIZE and 
@@ -5792,5 +5800,3 @@ Wed Jan  1 00:10:47 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* Happy new year!  Let's start a new ChangeLog to celebrate the
 	  new year.
-
-	
