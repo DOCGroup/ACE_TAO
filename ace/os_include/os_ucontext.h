@@ -24,9 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// @todo need to define sigset_t both here and in signal.h, but
-// there is a circular dependancy since signal.h needs to include ucontext.h
-//#include "ace/os_include/os_signal.h"
+#include "ace/os_include/os_signal.h"
 
 #if !defined (ACE_LACKS_UCONTEXT_H)
 #  include /**/ <ucontext.h>
