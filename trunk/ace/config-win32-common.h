@@ -211,7 +211,7 @@
 #endif
 
 // We are build ACE and want to use MFC (multithreaded)
-#if defined(ACE_BUILD_DLL) && defined(ACE_HAS_MFC) && defined (_MT)
+#if defined(ACE_HAS_DLL) && defined(ACE_BUILD_DLL) && defined(ACE_HAS_MFC) && defined (_MT)
         #if !defined (_AFXDLL)
 	        // force multithreaded MFC DLL
 	        #define _AFXDLL
@@ -234,7 +234,8 @@
 
 // This is necessary since MFC users apparently can't #include
 // <windows.h> directly.
-#if defined (_AFXDLL) || defined (_WINDLL) || ( defined(ACE_BUILD_DLL) && defined(ACE_HAS_MFC))
+#if defined (_AFXDLL) || defined (_WINDLL) || 
+    ( defined(ACE_HAS_DLL) && defined(ACE_BUILD_DLL) && defined(ACE_HAS_MFC))
 	#include /**/ <afxwin.h>   /* He is doing MFC */
 		// Windows.h will be included via afxwin.h->afx.h->afx_ver_.h->afxv_w32.h
 		// #define	_INC_WINDOWS  // Prevent winsock.h from including windows.h
