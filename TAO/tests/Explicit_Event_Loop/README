@@ -1,8 +1,0 @@
-$Id$
-
-Test code adapted from code in chaper 3 of "Advanced CORBA 
-Programming  with C++" by Michi Henning and Steve Vinoski.
-
-Adaptations to to make the code run with TAO are found in
-the file CHANGES.  Further, in server.cpp the orb->run() line
-has been replaced with an explicit event loop.
