@@ -48,7 +48,7 @@ return ( (errno = ENOTSUP), FAILVALUE)
 /* Create a string of a server address with a "host:port" format. */
 # define PACE_SERVER_ADDRESS(H,P) H":"P
 
-#if (PACE_WIN32 != 0)
+#if (PACE_WIN32)
 
 #include <windows.h>
 
