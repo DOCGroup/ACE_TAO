@@ -6,10 +6,12 @@ DIRS = \
 	orbsvcs \
 	CosEvent_Service \
 	Event_Service \
+	IFR_Service \
 	ImplRepo_Service \
 	LoadBalancer \
 	Naming_Service \
 	Notify_Service \
+	TAO_Service \
 	Time_Service \
 	Trading_Service
 
