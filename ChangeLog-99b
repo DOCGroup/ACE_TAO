@@ -1,3 +1,12 @@
+Thu Jul 01 10:53:33 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU,
+          bin/ace_ld: changed -c option to -C [...] --, so
+          that its arguments don't need to be quoted.  I
+          couldn't figure out a way to quote on NT host.  Thanks
+          to Dale Wood <dale_wood@Mitel.com> for enlightening me
+          on some of the intricacies of NT.
+
 Thu Jul 01 10:47:41 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/libsizes.pl: always use `pwd`, because the PWD environment
