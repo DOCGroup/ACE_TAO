@@ -39,18 +39,24 @@ CORE_DIRS = ciao \
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-DIRS = $(CORE_DIRS)
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+
+ifneq ($(static_libs_only),1)
+  DIRS = $(CORE_DIRS)
+endif #static_libs_only
 
 # Need boost and utility libs in order to compile these.  You
 # may need to run MPC in these directories to create the Makefiles
 # first.
 ifdef BOOST_ROOT
   ifdef UTILITY_ROOT
-    DIRS += $(ALT_DIRS)
+    ifneq ($(static_libs_only),1)
+      DIRS += $(ALT_DIRS)
+    endif #static_libs_only
   endif # UTILITY_ROOT
 endif # BOOST_ROOT
 
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
