@@ -1,8 +1,18 @@
+Tue May 13 10:57:22 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/Typecode.cpp:
+
+          The length_ data member is of size_t, on some 64-bit platforms
+          (Solaris, HP-UX, ...) this is 64-bits.  Doing a memcpy of that
+          value into character buffer will not give the right value.  We
+          first cast length_ to a CORBA::ULong and then memcpy that into the
+          character buffer.
+
 Tue May 13 09:48:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/Options_new.html: A new file whose contents will replace
-	  the contents in our canonical Options.html page after some
-	  editing.
+        * docs/Options_new.html: A new file whose contents will replace
+          the contents in our canonical Options.html page after some
+          editing.
 
 Tue May 13 09:48:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -14,29 +24,29 @@ Tue May 13 09:48:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue May 13 07:44:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/IFR_Service/Makefile.IFR_Service:
-	* orbsvcs/examples/Log/Event/Makefile:
-	* orbsvcs/examples/Log/Notify/Makefile:
-	* orbsvcs/examples/Log/RTEvent/Makefile:
-	* orbsvcs/examples/Notify/Filter/Makefile:
-	* orbsvcs/examples/Notify/Subscribe/Makefile:
-	* orbsvcs/examples/ORT/Makefile:
-	* orbsvcs/examples/RtEC/MCast/Makefile:
-	* orbsvcs/examples/RtEC/Schedule/Makefile:
-	* orbsvcs/examples/RtEC/Simple/Makefile:
-	* examples/Callback_Quoter/Makefile: 
-	* examples/POA/Reference_Counted_Servant/Makefile: Fixes to get
-	  the above compiling in static builds.
+        * orbsvcs/IFR_Service/Makefile.IFR_Service:
+        * orbsvcs/examples/Log/Event/Makefile:
+        * orbsvcs/examples/Log/Notify/Makefile:
+        * orbsvcs/examples/Log/RTEvent/Makefile:
+        * orbsvcs/examples/Notify/Filter/Makefile:
+        * orbsvcs/examples/Notify/Subscribe/Makefile:
+        * orbsvcs/examples/ORT/Makefile:
+        * orbsvcs/examples/RtEC/MCast/Makefile:
+        * orbsvcs/examples/RtEC/Schedule/Makefile:
+        * orbsvcs/examples/RtEC/Simple/Makefile:
+        * examples/Callback_Quoter/Makefile:
+        * examples/POA/Reference_Counted_Servant/Makefile: Fixes to get
+          the above compiling in static builds.
 
 Tue May 13 07:35:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs//examples/CosEC/Factory/Makefile:
-	* orbsvcs//examples/CosEC/RtEC_Based/bin/Makefile:
-	* orbsvcs//examples/CosEC/RtEC_Based/tests/Basic/Makefile:
-	* orbsvcs//examples/CosEC/RtEC_Based/tests/Multiple/Makefile:
-	* orbsvcs//examples/CosEC/Simple/Makefile:
-	* tests/Smart_Proxies/Makefile: Next set of fixes to get it going
-	  in the static builds.
+        * orbsvcs//examples/CosEC/Factory/Makefile:
+        * orbsvcs//examples/CosEC/RtEC_Based/bin/Makefile:
+        * orbsvcs//examples/CosEC/RtEC_Based/tests/Basic/Makefile:
+        * orbsvcs//examples/CosEC/RtEC_Based/tests/Multiple/Makefile:
+        * orbsvcs//examples/CosEC/Simple/Makefile:
+        * tests/Smart_Proxies/Makefile: Next set of fixes to get it going
+          in the static builds.
 
 Tue May 13 12:58:18 2003  Simon McQueen  <sm@prismtechnologies.com>
 
@@ -116,12 +126,12 @@ Mon May 12 18:42:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon May 12 10:24:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IIOP_Profile.cpp  (parse_string_i):
-	* tao/Strategies/DIOP_Profile.cpp:
-	* tao/Strategies/SHMIOP_Profile.cpp:
-	* tao/Strategies/UIOP_Profile.cpp: Fixed a memory management
-	  problem with parse_string_i () method that lead to crashes in
-	  our daily builds.
+        * tao/IIOP_Profile.cpp  (parse_string_i):
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/Strategies/UIOP_Profile.cpp: Fixed a memory management
+          problem with parse_string_i () method that lead to crashes in
+          our daily builds.
 
 Mon May 12 16:15:27 2003  Simon McQueen  <sm@prismtechnologies.com>
 
@@ -151,232 +161,232 @@ Mon May 12 16:15:27 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 Sun May 11 22:48:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/LoadBalancer/Makefile.LoadManager:
-	* orbsvcs/LoadBalancer/Makefile.LoadMonitor:
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:
-	* orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile:
-	* orbsvcs/tests/AVStreams/Component_Switching/Makefile:
-	* orbsvcs/tests/AVStreams/Full_Profile/Makefile:
-	* orbsvcs/tests/AVStreams/Latency/Makefile:
-	* orbsvcs/tests/AVStreams/Multicast/Makefile:
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
-	* orbsvcs/tests/AVStreams/Pluggable/Makefile:
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
-	* orbsvcs/tests/Event/Performance/Makefile:
-	* orbsvcs/tests/ImplRepo/Makefile:
-	* orbsvcs/tests/ImplRepo/NameService/Makefile:
-	* orbsvcs/tests/Interoperable_Naming/Makefile:
-	* orbsvcs/tests/Notify/Basic/Makefile:
-	* orbsvcs/tests/Notify/Blocking/Makefile:
-	* orbsvcs/tests/Notify/Destroy/Makefile:
-	* orbsvcs/tests/Notify/Discarding/Makefile:
-	* orbsvcs/tests/Notify/Driver/Makefile:
-	* orbsvcs/tests/Notify/MT_Dispatching/Makefile:
-	* orbsvcs/tests/Notify/Ordering/Makefile:
-	* orbsvcs/tests/Notify/RT_lib/Makefile:
-	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile:
-	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile:
-	* orbsvcs/tests/Notify/Structured_Filter/Makefile:
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile:
-	* orbsvcs/tests/Notify/Test_Filter/Makefile:
-	* orbsvcs/tests/Notify/performance-tests/Filter/Makefile:
-	* orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile:
-	* orbsvcs/tests/Notify/performance-tests/Throughput/Makefile:
-	* orbsvcs/tests/Trading/Makefile:
-	* orbsvcs/tests/ior_corbaname/Makefile:
+        * orbsvcs/LoadBalancer/Makefile.LoadManager:
+        * orbsvcs/LoadBalancer/Makefile.LoadMonitor:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile:
+        * orbsvcs/tests/AVStreams/Component_Switching/Makefile:
+        * orbsvcs/tests/AVStreams/Full_Profile/Makefile:
+        * orbsvcs/tests/AVStreams/Latency/Makefile:
+        * orbsvcs/tests/AVStreams/Multicast/Makefile:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
+        * orbsvcs/tests/AVStreams/Pluggable/Makefile:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
+        * orbsvcs/tests/Event/Performance/Makefile:
+        * orbsvcs/tests/ImplRepo/Makefile:
+        * orbsvcs/tests/ImplRepo/NameService/Makefile:
+        * orbsvcs/tests/Interoperable_Naming/Makefile:
+        * orbsvcs/tests/Notify/Basic/Makefile:
+        * orbsvcs/tests/Notify/Blocking/Makefile:
+        * orbsvcs/tests/Notify/Destroy/Makefile:
+        * orbsvcs/tests/Notify/Discarding/Makefile:
+        * orbsvcs/tests/Notify/Driver/Makefile:
+        * orbsvcs/tests/Notify/MT_Dispatching/Makefile:
+        * orbsvcs/tests/Notify/Ordering/Makefile:
+        * orbsvcs/tests/Notify/RT_lib/Makefile:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile:
+        * orbsvcs/tests/Notify/Structured_Filter/Makefile:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile:
+        * orbsvcs/tests/Notify/Test_Filter/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/Filter/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Makefile:
+        * orbsvcs/tests/Trading/Makefile:
+        * orbsvcs/tests/ior_corbaname/Makefile:
 
-	  Yet another setof fixes to get the static builds linking fine.
+          Yet another setof fixes to get the static builds linking fine.
 
-	* orbsvcs/tests/Notify/notify_tests.GNU: Removed all the common
-	  libraries to a GNU file. Probably this idea needs to be done for
-	  all the tests.
+        * orbsvcs/tests/Notify/notify_tests.GNU: Removed all the common
+          libraries to a GNU file. Probably this idea needs to be done for
+          all the tests.
 
 Sun May 11 11:44:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp: Added new files into the following projects
-	  for the MSVC builds.
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp: Added new files into the following projects
+          for the MSVC builds.
 
 Sun May 11 11:37:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Makefile.bor: Added new files for the borland builds.
+        * tao/Makefile.bor: Added new files for the borland builds.
 
 Sun May 11 11:02:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/Options.html: Added documentation for the new ORB option.
+        * docs/Options.html: Added documentation for the new ORB option.
 
 Sun May 11 10:44:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	The aim of this checkin is to reduce the runtime memory consumed
+        The aim of this checkin is to reduce the runtime memory consumed
         by the IORs. Every profile held by the ORB had a copy of the
         ObjectKey which added to the memory consumed by the IORs. This
         checkin builds a map to store and access the object key
         efficiently.
 
-	* tao/ObjectKey_Table.cpp:
-	* tao/ObjectKey_Table.h: Class that builds a map to store the
-	  object key.
+        * tao/ObjectKey_Table.cpp:
+        * tao/ObjectKey_Table.h: Class that builds a map to store the
+          object key.
 
-	* tao/Refcounted_ObjectKey.cpp:
-	* tao/Refcounted_ObjectKey.h:
-	* tao/Refcounted_ObjectKey.inl: A wrapper class for the object key
-	  that provides reference counting and automatic lifetime
-	  management to the object keys.
+        * tao/Refcounted_ObjectKey.cpp:
+        * tao/Refcounted_ObjectKey.h:
+        * tao/Refcounted_ObjectKey.inl: A wrapper class for the object key
+          that provides reference counting and automatic lifetime
+          management to the object keys.
 
-	* tao/Profile.cpp:
-	* tao/Profile.h:
-	* tao/Profile.i: Have a pointer to the refcounted object key
-	  instead of the actual object key. After unmarshalling the
-	  object key from the profile we now bind it with the ObjectKey
-	  table which returns a pointer to the refcounted object key
-	  which is cached and  used during invocation.
+        * tao/Profile.cpp:
+        * tao/Profile.h:
+        * tao/Profile.i: Have a pointer to the refcounted object key
+          instead of the actual object key. After unmarshalling the
+          object key from the profile we now bind it with the ObjectKey
+          table which returns a pointer to the refcounted object key
+          which is cached and  used during invocation.
 
-	* tao/IIOP_Profile.cpp:
-	* tao/Strategies/DIOP_Profile.cpp:
-	* tao/Strategies/SHMIOP_Profile.cpp:
-	* tao/Strategies/UIOP_Profile.cpp: Use the refcounted object key
-	  pointer instead of object keys.
+        * tao/IIOP_Profile.cpp:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/Strategies/UIOP_Profile.cpp: Use the refcounted object key
+          pointer instead of object keys.
 
-	* tao/IIOP_Transport.cpp: Removed gratuitious inclusion of the
-	  Stub.h.
+        * tao/IIOP_Transport.cpp: Removed gratuitious inclusion of the
+          Stub.h.
 
-	* tao/ORB_Core.cpp:
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.i: ObjectKey_Table would now be a member of the
-	  ORB_Core class, initialized during the init () call and
-	  destroyed during TAO_ORB_Core::fini (). This class also provides
-	  an accessor for accessing the ObjectKey_Table.
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i: ObjectKey_Table would now be a member of the
+          ORB_Core class, initialized during the init () call and
+          destroyed during TAO_ORB_Core::fini (). This class also provides
+          an accessor for accessing the ObjectKey_Table.
 
-	* tao/Resource_Factory.cpp:
-	* tao/Resource_Factory.h: Added a virtual method
-	  create_object_key_table_lock () that helps in creating the right
-	  type of lock for the ObjectKey_Table.
+        * tao/Resource_Factory.cpp:
+        * tao/Resource_Factory.h: Added a virtual method
+          create_object_key_table_lock () that helps in creating the right
+          type of lock for the ObjectKey_Table.
 
-	* tao/default_resource.cpp:
-	* tao/default_resource.h: Implementation for
-	  create_object_key_table_lock ().
+        * tao/default_resource.cpp:
+        * tao/default_resource.h: Implementation for
+          create_object_key_table_lock ().
 
-	  Added an option -ORBObjectKeyTableLock that helps the user to
-	  configure the type of lock used.
+          Added an option -ORBObjectKeyTableLock that helps the user to
+          configure the type of lock used.
 
-	* tao/Makefile.tao: Added the new files into the Makefile.
+        * tao/Makefile.tao: Added the new files into the Makefile.
 
 Sun May 11 10:37:56 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	  Checked in updates that sat in my workspace for a long time.
+          Checked in updates that sat in my workspace for a long time.
 
-	* orbsvcs/ImplRepo_Service/README.txt: The ORBInitRef for ImplRepo
-	  should refer to ImplRepoService, not ImplRepo_Service.
+        * orbsvcs/ImplRepo_Service/README.txt: The ORBInitRef for ImplRepo
+          should refer to ImplRepoService, not ImplRepo_Service.
 
-	* docs/rtcorba/features.html: Added contineous priority mapping,
-	  which went amiss in the document.
+        * docs/rtcorba/features.html: Added contineous priority mapping,
+          which went amiss in the document.
 
 Sun May 11 09:28:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/LoadBalancer/Makefile.LoadManager:
-	* orbsvcs/LoadBalancer/Makefile.LoadMonitor:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Makefile:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Makefile:
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile:
-	* orbsvcs/Trading_Service/Makefile:
-	* orbsvcs/tests/Concurrency/Makefile:
-	* orbsvcs/tests/CosEvent/Basic/Makefile:
-	* orbsvcs/tests/EC_Custom_Marshal/Makefile:
-	* orbsvcs/tests/EC_MT_Mcast/Makefile:
-	* orbsvcs/tests/EC_Mcast/Makefile:
-	* orbsvcs/tests/EC_Multiple/Makefile:
-	* orbsvcs/tests/EC_Throughput/Makefile:
-	* orbsvcs/tests/Event/Basic/Makefile:
-	* orbsvcs/tests/Event/Performance/Makefile:
-	* orbsvcs/tests/Property/Makefile:
-	* orbsvcs/tests/Sched_Conf/Makefile:
-	* orbsvcs/tests/Simple_Naming/Makefile:
-	* orbsvcs/tests/Time/Makefile: Another set fixes to get static
-	  builds linking fine.
+        * orbsvcs/LoadBalancer/Makefile.LoadManager:
+        * orbsvcs/LoadBalancer/Makefile.LoadMonitor:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Makefile:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Makefile:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile:
+        * orbsvcs/Trading_Service/Makefile:
+        * orbsvcs/tests/Concurrency/Makefile:
+        * orbsvcs/tests/CosEvent/Basic/Makefile:
+        * orbsvcs/tests/EC_Custom_Marshal/Makefile:
+        * orbsvcs/tests/EC_MT_Mcast/Makefile:
+        * orbsvcs/tests/EC_Mcast/Makefile:
+        * orbsvcs/tests/EC_Multiple/Makefile:
+        * orbsvcs/tests/EC_Throughput/Makefile:
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Performance/Makefile:
+        * orbsvcs/tests/Property/Makefile:
+        * orbsvcs/tests/Sched_Conf/Makefile:
+        * orbsvcs/tests/Simple_Naming/Makefile:
+        * orbsvcs/tests/Time/Makefile: Another set fixes to get static
+          builds linking fine.
 
 Sun May 11 09:26:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Bug_1482_Regression/Makefile: Updated dependencies once
-	  again.
+        * tests/Bug_1482_Regression/Makefile: Updated dependencies once
+          again.
 
 Sun May 11 09:12:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* utils/*/Makefile: Updated dependencies.
+        * utils/*/Makefile: Updated dependencies.
 
 Sun May 11 08:50:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* rules.tao.GNU: Added the list of new libraries to
-	  RT_TAO_SRVR_LIBS. This shoudl prevent link errors in static
-	  builds.
+        * rules.tao.GNU: Added the list of new libraries to
+          RT_TAO_SRVR_LIBS. This shoudl prevent link errors in static
+          builds.
 
 Sun May 11 12:22:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/tutorials/Quoter/*/Makefile: Updated dependencies.
-	* examples/POA/Generic_Servant/Makefile*: Updated dependencies.
+        * docs/tutorials/Quoter/*/Makefile: Updated dependencies.
+        * examples/POA/Generic_Servant/Makefile*: Updated dependencies.
 
 Sat May 10 15:21:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Client_Leaks/Makefile:
-	* tests/Crashed_Callback/Makefile:
-	* tests/IDL_Test/Makefile:
-	* tests/ORB_destroy/Makefile:
-	* tests/Object_Loader/Makefile:
-	* tests/Smart_Proxies/On_Demand/Makefile:
-	* orbsvcs/Concurrency_Service/Makefile:
-	* orbsvcs/CosEvent_Service/Makefile:
-	* orbsvcs/Dump_Schedule/Makefile:
-	* orbsvcs/Event_Service/Makefile:
-	* orbsvcs/ImplRepo_Service/Makefile:
-	* orbsvcs/LifeCycle_Service/Makefile:
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile:
-	* orbsvcs/Naming_Service/Makefile:
-	* orbsvcs/Notify_Service/Makefile:
-	* orbsvcs/Scheduling_Service/Makefile:
-	* orbsvcs/Time_Service/Makefile:
-	* orbsvcs/tests/Notify/lib/Makefile: A set fixes to get static
-	  builds linking fine.
+        * tests/Client_Leaks/Makefile:
+        * tests/Crashed_Callback/Makefile:
+        * tests/IDL_Test/Makefile:
+        * tests/ORB_destroy/Makefile:
+        * tests/Object_Loader/Makefile:
+        * tests/Smart_Proxies/On_Demand/Makefile:
+        * orbsvcs/Concurrency_Service/Makefile:
+        * orbsvcs/CosEvent_Service/Makefile:
+        * orbsvcs/Dump_Schedule/Makefile:
+        * orbsvcs/Event_Service/Makefile:
+        * orbsvcs/ImplRepo_Service/Makefile:
+        * orbsvcs/LifeCycle_Service/Makefile:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Makefile:
+        * orbsvcs/Naming_Service/Makefile:
+        * orbsvcs/Notify_Service/Makefile:
+        * orbsvcs/Scheduling_Service/Makefile:
+        * orbsvcs/Time_Service/Makefile:
+        * orbsvcs/tests/Notify/lib/Makefile: A set fixes to get static
+          builds linking fine.
 
 Sat May 10 12:24:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Collocation/Makefile.test: Fixes to get it linking
-	  properly in static builds.
+        * tests/Collocation/Makefile.test: Fixes to get it linking
+          properly in static builds.
 
 Sat May 10 10:15:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/*/Makefile*: More updates.
+        * examples/*/Makefile*: More updates.
 
 Sat May 10 10:06:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/POA/*/Makefile*: Updated dependencies. This has been a
-	  problem in our daily builds for almost a week now.
+        * examples/POA/*/Makefile*: Updated dependencies. This has been a
+          problem in our daily builds for almost a week now.
 
 Fri May  9 16:43:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Invocation.i: Removed TAO_GIOP_Invocation::profile () from
-	  the inlined file to the cpp file.
+        * tao/Invocation.i: Removed TAO_GIOP_Invocation::profile () from
+          the inlined file to the cpp file.
 
-	* tao/Invocation.cpp: In TAO_GIOP_Invocation::profile () increment
-	  the refcount of the profile that is being stored in the
-	  class. Decerement the refcount of the profile, if one exists
-	  in the destructor. Thanks to Bertin Colpron
-	  <BColpron@interstarinc.com> for providing this patch and Thomas
-	  Wiegert <wiegert@schlund.de> for reporting the problem.
+        * tao/Invocation.cpp: In TAO_GIOP_Invocation::profile () increment
+          the refcount of the profile that is being stored in the
+          class. Decerement the refcount of the profile, if one exists
+          in the destructor. Thanks to Bertin Colpron
+          <BColpron@interstarinc.com> for providing this patch and Thomas
+          Wiegert <wiegert@schlund.de> for reporting the problem.
 
-	  The above checkin is just a workaorund for a more serious
-	  problem with profile managements especially during location
-	  forwards.
+          The above checkin is just a workaorund for a more serious
+          problem with profile managements especially during location
+          forwards.
 
 Fri May  9 16:21:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/SArgument.h:
-	* tao/SArgument_T.h: Removed these files from the main
-	  trunk. Shouldnt have been there in the first place.
+        * tao/SArgument.h:
+        * tao/SArgument_T.h: Removed these files from the main
+          trunk. Shouldnt have been there in the first place.
 
 Fri May  9 16:19:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/corba.h: Actually doing what is supposed to be done by "Fri
-	  May  9 12:24:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>"
+        * tao/corba.h: Actually doing what is supposed to be done by "Fri
+          May  9 12:24:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>"
 
 Fri May  9 12:24:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -495,7 +505,7 @@ Wed May 07 22:32:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           dissappears under thread-per-connection strategy.
 
           Thanks to Ira Burton <imburton@micron.com> for reporting this
-	  problem.
+          problem.
 
 Wed May  7 17:56:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -576,7 +586,7 @@ Tue May  6 17:52:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tests/Faults/ping_i.h:
         * tests/Faults/test_i.h: Fixed servant memory management
           problems. Thanks to Ira Burton <imburton@micron.com> for motivating
-	  to take a look.
+          to take a look.
 
 Tue May  6 15:52:42 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
