@@ -1,27 +1,36 @@
-Tue Dec 30 11:42:08 2003  lut  <lu@birute>
+Tue Dec 30 13:39:00 2003  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* ChangeLog
+	Updated my ChangeLog entries to the correct format.
+	Thanks for the help from Bala and Boris.
+
+Tue Dec 30 11:42:08 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* examples/handcrafted/examples.mwc
 	Removed this file since MPC works recursively now.
 
-Tue Dec 30 11:28:43 2003  lut  <lu@dre.vanderbilt.edu>
+Tue Dec 30 11:28:43 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* exmaples/handcrafted/BasicSP
-	Removed this directory.
+	Removed this directory. This example has been moved to
+	examples/OEP/BasicSP and been modified to use the CIDL compiler.
 
-Tue Dec 30 11:26:24 2003  lut  <lu@dre.vanderbilt.edu>
+Tue Dec 30 11:26:24 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* examples/handcrafted/Philosophers
 	Removed this directory.
 
-Tue Dec 30 11:20:39 2003  lut  <lu@dre.vanderbilt.edu>
+Tue Dec 30 11:20:39 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* examples/handcrafted/Hello
-	Removed this directory.
+	Removed this directory. This example has been moved to
+	docs/tutorial/Hello and been modified to use the CIDL compiler.
 
-Tue Dec 30 10:56:03 2003  lut  <lu@dre.vanderbilt.edu>
+Tue Dec 30 10:56:03 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* examples/handcrafted/Display
-	Removed this directory.
+	Removed this directory. This example has been moved to
+	examples/OEP/Display and been modified to use the CIDL compiler.
 
 Tue Dec 23 16:26:19 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
