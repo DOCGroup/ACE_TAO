@@ -15,7 +15,7 @@ ACE_Thread::spawn_n (size_t n,
 		     ACE_THR_FUNC func, 
 		     void *arg, 
 		     long flags, 
-		     u_int priority,
+		     long priority,
 		     void *stack[], 
 		     size_t stack_size[])
 {
@@ -39,7 +39,7 @@ ACE_Thread::spawn_n (ACE_thread_t thread_ids[],
 		     ACE_THR_FUNC func, 
 		     void *arg, 
 		     long flags, 
-		     u_int priority,
+		     long priority,
 		     void *stack[],
 		     size_t stack_size[],
 		     ACE_hthread_t thread_handles[])

@@ -151,6 +151,9 @@
 #define ACE_BIT_DISABLED(WORD, BIT) (((WORD) & (BIT)) == 0)
 #define ACE_SET_BITS(WORD, BITS) (WORD |= (BITS))
 #define ACE_CLR_BITS(WORD, BITS) (WORD &= ~(BITS))
+#define ACE_MAX(x,y) (((x)>(y))?(x):(y))
+#define ACE_MIN(x,y) (((x)<(y))?(x):(y))
+
 
 // keep the compiler from complaining of
 // parameters which are not used.
@@ -2897,7 +2900,7 @@ public:
                          void *args, 
                          long flags, 
                          ACE_Thread_ID *,
-                         u_int priority = 0,
+                         long priority = -1,
                          void *stack = 0,
                          size_t stacksize = 0);
   static int thr_getprio (ACE_Thread_ID thr_id, int &prio, int *policy = 0);
@@ -2917,7 +2920,7 @@ public:
                          long flags, 
                          ACE_thread_t *thr_id, 
                          ACE_hthread_t *t_handle = 0,
-                         u_int priority = 0,
+                         long priority = -1,
                          void *stack = 0,
                          size_t stacksize = 0);
   static int thr_getprio (ACE_hthread_t thr_id, int &prio);

@@ -6467,10 +6467,10 @@ ACE_INLINE int
 ACE_OS::thr_create (ACE_THR_FUNC func,
 		    void *args, 
 		    long flags, 
-		    ACE_Thread_ID *thr_id = 0,
-		    u_int priority = 0,
-		    void *stack = 0,
-		    size_t stacksize = 0);
+		    ACE_Thread_ID *thr_id,
+		    long priority,
+		    void *stack,
+		    size_t stacksize);
 {
   // ACE_TRACE ("ACE_OS::thr_create");
   ACE_thread_t thread_id;

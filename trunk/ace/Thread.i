@@ -76,7 +76,7 @@ ACE_Thread::spawn (ACE_THR_FUNC func,
 		   long flags, 
 		   ACE_thread_t *t_id, 
 		   ACE_hthread_t *t_handle,
-		   u_int priority,
+		   long priority,
 		   void *stack, 
 		   size_t stack_size)
 {
