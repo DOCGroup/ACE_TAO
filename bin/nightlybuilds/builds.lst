@@ -175,17 +175,17 @@ WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?ace_LYNX_PPC
 #LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/tango_SUNOS_GCC272/
 #WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?tango_SUNOS_GCC272
 
-[RedHat_7.0_Full]
+[RedHat_7.1_Full]
 TYPE = TIMEONLY
 LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/beguine.doc.wustl.edu_Full/
 WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?beguine.doc.wustl.edu_Full
 
-[RedHat_7.0_Core]
+[RedHat_7.1_Core]
 TYPE = TIMEONLY
 LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/beguine.doc.wustl.edu_Core/
 WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?beguine.doc.wustl.edu_Core
 
-[RedHat_7.0_No_AMI_Messaging]
+[RedHat_7.1_No_AMI_Messaging]
 TYPE = TIMEONLY
 LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/beguine.doc.wustl.edu_NO_AMI_MESSAGING/
 WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?beguine.doc.wustl.edu_NO_AMI_MESSAGING
