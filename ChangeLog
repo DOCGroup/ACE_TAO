@@ -1,3 +1,10 @@
+Mon Apr 26 17:21:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* configure.ac: Change the tests for sem_init() and sem_destroy() to
+	  use AC_SEARCH_LIBS instead of AC_CHECK_FUNC. The entrypoints are in
+	  librt, so weren't being located. This allows ACE_HAS_POSIX_SEM to
+	  be detected correctly.
+
 Mon Apr 26 17:31:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/Acceptor.cpp:
