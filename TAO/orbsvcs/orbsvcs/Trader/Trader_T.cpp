@@ -14,6 +14,8 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
 
+  // @@ Seth, we need a way to propagate the exception out.  This will
+  // not work on platforms using environment variable.
   for (int i = LOOKUP_IF; i <= LINK_IF; i++)
     this->ifs_[i] = 0;
 
