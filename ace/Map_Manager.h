@@ -198,12 +198,12 @@ public:
   int trybind (const EXT_ID &ext_id,
                INT_ID &int_id);
 
-  /// Locate <ext_id> and pass out parameter via <int_id>.  If found,
-  /// returns and non-negative integer; returns -1 if not found.
+  /// Locate <ext_id> and pass out parameter via <int_id>.  
+  /// Returns 0 if found, returns -1 if not found.
   int find (const EXT_ID &ext_id,
             INT_ID &int_id) const;
 
-  /// Returns a non-negative integer if the <ext_id> is in the mapping, otherwise -1.
+  /// Returns 0 if the <ext_id> is in the mapping, otherwise -1.
   int find (const EXT_ID &ext_id) const;
 
   /**
