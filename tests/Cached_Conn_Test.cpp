@@ -182,7 +182,7 @@ out_of_sockets_handler (void)
       // connection cache maintained by the connector.
       ACE_DEBUG ((LM_DEBUG, "Purging connections from Connection Cache...\n"));
 
-      int retval = connect_strategy->purge_connections (purge_percentage);
+      int retval = connect_strategy->purge_connections ();
       ACE_ASSERT (retval != -1);
     }
   else
