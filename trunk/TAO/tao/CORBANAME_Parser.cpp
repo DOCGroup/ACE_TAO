@@ -70,7 +70,7 @@ parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
       ACE_TRY
         {
           _invoke_status = _tao_call.invoke (0, 0, ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::Object::_nil ());
+          ACE_TRY_CHECK (CORBA::Object::_nil ());
         }
       ACE_CATCH (CORBA::UNKNOWN, ex)
         {
