@@ -110,18 +110,18 @@ TAO_Server_Connection_Handler::svc (void)
 }
 
 // Extract a message from the stream associated with <peer()> and
-// place it into <msg>.  Return 0 if success, -1 with <errno> and
+// place it into <input>.  Return 0 if success, -1 with <errno> and
 // <env> set if problems.
 
 TAO_Server_Connection_Handler::RequestStatus
-TAO_Server_Connection_Handler::recv_request (TAO_InputCDR &msg,
+TAO_Server_Connection_Handler::recv_request (TAO_InputCDR &input,
                                              CORBA::Environment &env)
 {
   RequestStatus which = Error;
 
   TAO_SVC_HANDLER *this_ptr = this;
 
-  switch (TAO_GIOP::recv_request (this_ptr, msg, env))
+  switch (TAO_GIOP::recv_request (this_ptr, input, env))
     {
     case TAO_GIOP::Request:
       // Received a request...just exit for further processing!
@@ -162,30 +162,31 @@ TAO_Server_Connection_Handler::recv_request (TAO_InputCDR &msg,
   return which;
 }
 
-// Handle processing of the request residing in <msg>, setting
+// Handle processing of the request residing in <input>, setting
 // <response_required> to zero if the request is for a oneway or
-// non-zero if for a two-way and <response> to any necessary response
+// non-zero if for a two-way and <output> to any necessary response
 // (including errors).  In case of errors, -1 is returned and
 // additional information carried in <env>.
 
 int
-TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &msg,
+TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
+                                               TAO_OutputCDR &output,
                                                int &response_required,
-                                               TAO_OutputCDR &response,
                                                CORBA::Environment &env)
 {
+  TAO_POA *the_poa = TAO_ORB_Core_instance ()->root_poa ();
+
   // This will extract the request header, set <response_required> as
   // appropriate.
-  TAO_GIOP_RequestHeader req;
+  IIOP_ServerRequest request (input,
+                              output,
+                              TAO_ORB_Core_instance ()->orb (),
+                              the_poa,
+                              env);
+  if (env.exception ())
+    return -1;
 
-  env.clear ();
-  if (! req.init (msg, env))
-    {
-      env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
-      return -1;
-    }
-
-  response_required = req.response_expected;
+  response_required = request.response_expected ();
 
   // So, we read a request, now handle it using something more
   // primitive than a CORBA2 ServerRequest pseudo-object.
@@ -199,10 +200,10 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &msg,
   // with a single write so that they're not accidentally interleaved
   // over the transport (as could happen using TCP).
 
-  this->handle_request (req, msg, response, 0, env);
-
-  CORBA::string_free (req.operation);
-  req.operation = 0;
+  the_poa->dispatch_servant (request.object_key (),
+                             request,
+                             0,
+                             env);
 
   // Need to check for any errors present in <env> and set the return
   // code appropriately.
@@ -210,9 +211,9 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &msg,
 }
 
 int
-TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &msg,
+TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
+                                              TAO_OutputCDR &output,
                                               int &response_required,
-                                              TAO_OutputCDR &response,
                                               CORBA::Environment &env)
 {
   // This will extract the request header, set <response_required> as
@@ -220,7 +221,7 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &msg,
   TAO_GIOP_LocateRequestHeader req;
 
   env.clear ();
-  if (! req.init (msg, env))
+  if (! req.init (input, env))
     {
       // @@ FIXME! Need to set <env>.
       response_required = 0;
@@ -248,9 +249,9 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &msg,
     }
 
   // Create the response.
-  TAO_GIOP::start_message (TAO_GIOP::LocateReply, response);
-  response.write_ulong (req.request_id);
-  response.write_ulong (status);
+  TAO_GIOP::start_message (TAO_GIOP::LocateReply, output);
+  output.write_ulong (req.request_id);
+  output.write_ulong (status);
 
   // Need to check for any errors present in <env> and set the return
   // code appropriately.
@@ -258,36 +259,12 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &msg,
 }
 
 void
-TAO_Server_Connection_Handler::handle_request (const TAO_GIOP_RequestHeader &hdr,
-                                               TAO_InputCDR &request_body,
-                                               TAO_OutputCDR &response,
-                                               TAO_Dispatch_Context *some_info,
-                                               CORBA::Environment &env)
-{
-  ACE_UNUSED_ARG (some_info);
-
-  TAO_POA *the_poa =
-    TAO_ORB_Core_instance ()->root_poa ();
-
-  IIOP_ServerRequest svr_req (hdr,
-                              &request_body,
-                              &response,
-                              TAO_ORB_Core_instance ()->orb (),
-                              the_poa);
-
-  the_poa->dispatch_servant (hdr.object_key,
-                             svr_req,
-                             0, // this is SunSoft IIOP residue
-                             env);
-}
-
-void
-TAO_Server_Connection_Handler::send_response (TAO_OutputCDR &msg)
+TAO_Server_Connection_Handler::send_response (TAO_OutputCDR &output)
 {
   TAO_SVC_HANDLER *this_ptr = this;
 
   ACE_TIMEPROBE ("  -> Connection_Handler::send_response - start");
-  TAO_GIOP::send_request (this_ptr, msg);
+  TAO_GIOP::send_request (this_ptr, output);
   ACE_TIMEPROBE ("  -> Connection_Handler::send_response - end");
 }
 
@@ -303,31 +280,31 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
   ACE_TIMEPROBE ("  -> Connection_Handler::handle_input");
 
   char reqbuf[CDR::DEFAULT_BUFSIZE];
-  TAO_InputCDR msg (reqbuf, sizeof(reqbuf));
+  TAO_InputCDR input (reqbuf, sizeof(reqbuf));
 
   char repbuf[CDR::DEFAULT_BUFSIZE];
 #if defined(ACE_PURIFY)
   (void) ACE_OS::memset (repbuf, '\0', sizeof (repbuf));
 #endif /* ACE_PURIFY */
-  TAO_OutputCDR reply (repbuf, sizeof(repbuf));
+  TAO_OutputCDR output (repbuf, sizeof(repbuf));
 
   int result = 0;
   int error_encountered = 0;
   int response_required;
   CORBA::Environment env;
 
-  switch (this->recv_request (msg, env))
+  switch (this->recv_request (input, env))
     {
     case Request:
       // Message was successfully read, so handle it.  If we encounter
-      // any errors, <reply> will be set appropriately by the called
+      // any errors, <output> will be set appropriately by the called
       // code, and -1 will be returned.
-      if (this->handle_message (msg, response_required, reply, env) == -1)
+      if (this->handle_message (input, output, response_required, env) == -1)
         error_encountered = 1;
       break;
 
     case LocateRequest:
-      if (this->handle_locate (msg, response_required, reply, env) == -1)
+      if (this->handle_locate (input, output, response_required, env) == -1)
         error_encountered = 1;
       break;
 
@@ -335,7 +312,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
       // Check errno and/or env for details
       if (env.exception ())
         {
-          TAO_GIOP::make_error (reply /* ...other information... */ );
+          TAO_GIOP::make_error (output /* ...other information... */ );
           error_encountered = 1;
           // Of course, we must be careful to properly process
           // end-of-file and other communications-related conditions
@@ -351,11 +328,11 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
     }
 
   // Message was successfully read, so handle it.  If we encounter
-  // any errors, <reply> will be set appropriately by the called
+  // any errors, <output> will be set appropriately by the called
   // code, and -1 will be returned.
 
   if (response_required || error_encountered)
-    this->send_response (reply);
+    this->send_response (output);
 
   ACE_TIMEPROBE ("  -> Connection_Handler::handle_input done");
   return result;

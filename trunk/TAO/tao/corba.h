@@ -179,7 +179,6 @@ extern CORBA::TypeCode_ptr TC_opaque;
 #include "tao/Request.h"
 #include "tao/Stub.h"
 #include "tao/Object.h"
-#include "tao/Server_Request.h"
 #include "tao/Typecode.h"
 
 // Marshaling
@@ -207,6 +206,7 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 #include "tao/IIOP_ORB.h"
 #include "tao/IIOP_Interpreter.h"
 #include "tao/GIOP.h"
+#include "tao/Server_Request.h"
 
 #include "tao/singletons.h"
 

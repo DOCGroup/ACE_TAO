@@ -1,3 +1,20 @@
+Fri May 22 12:29:28 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Connect.cpp (handle_message): Simplified code in this file.
+
+	* tao/GIOP.cpp (writev_n): Changed TAO to use the new
+ 	  ACE_IO_Vector class.
+
+	* poaC.* (PortableServer): Updated the old exceptions in the POA
+ 	  generated code.
+
+	* tao/Server_Request.h (IIOP_ServerRequest): Merged the
+ 	  ServerRequest and the GIOP_RequestHeader class into one
+ 	  class. When these classes were separate, there were too many
+ 	  questions about ownership of memory.  The separation also caused
+ 	  extra memory allocations and tight coupling between the two
+ 	  classes.
+
 Fri May 22 10:24:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Quoter/Factory_Finder.cpp,Generic_Factory.cpp,

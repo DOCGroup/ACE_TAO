@@ -25,7 +25,6 @@
 
 // Forward Decls
 class TAO_OA_Parameters;
-class TAO_GIOP_RequestHeader;
 
 typedef ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>
         TAO_SVC_HANDLER;
@@ -112,8 +111,8 @@ public:
   // if success, <Error> with <errno> and <env> set if problems.
 
   virtual int handle_message (TAO_InputCDR &msg,
-			      int &response_required,
                               TAO_OutputCDR &response,
+			      int &response_required,
 			      CORBA::Environment &env);
   // Handle processing of the request residing in <msg>, setting
   // <response_required> to zero if the request is for a oneway or
@@ -123,23 +122,14 @@ public:
 
 protected:
   virtual int handle_locate (TAO_InputCDR &msg,
-			     int &response_required,
                              TAO_OutputCDR &response,
+			     int &response_required,
 			     CORBA::Environment &env);
   // Handle processing of the location request residing in <msg>,
   // setting <response_required> to one if no errors are encountered.
   // The LocateRequestReply is placed into <response>.  In case of
   // errors, -1 is returned and additional information carried in
   // <env>.
-
-  virtual void handle_request (const TAO_GIOP_RequestHeader &hdr,
-                               TAO_InputCDR &request_body,
-                               TAO_OutputCDR &response,
-                               TAO_Dispatch_Context *some_info,
-                               CORBA::Environment &env);
-  // Once a request is found in a message, this finds the appropriate
-  // POA and dispatches it, then takes care to properly format any
-  // response.
 
   virtual void send_response (TAO_OutputCDR &response);
   // Send <response> to the client on the other end.

@@ -33,24 +33,62 @@ CORBA_ServerRequest::_nil (void)
   return (CORBA_ServerRequest *) 0;
 }
 
-IIOP_ServerRequest::IIOP_ServerRequest (const TAO_GIOP_RequestHeader &hdr,
-					TAO_InputCDR *req,
-                                        TAO_OutputCDR *resp,
+IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
+                                        TAO_OutputCDR &output,
                                         CORBA::ORB_ptr the_orb,
-                                        TAO_POA *the_poa)
-  : opname_ (CORBA::string_dup (hdr.operation)),
-    incoming_ (req),
-    outgoing_ (resp),
-    reqid_ (hdr.request_id),
-    response_expected_ (hdr.response_expected),
+                                        TAO_POA *the_poa,
+                                        CORBA::Environment &env)
+  : operation_ (),
+    incoming_ (&input),
+    outgoing_ (&output),
+    response_expected_ (CORBA::B_FALSE),
     params_ (0),
     retval_ (0),
     exception_ (0),
     exception_type_ (TAO_GIOP_NO_EXCEPTION),
     refcount_ (1),
     orb_ (the_orb),
-    poa_ (the_poa)
+    poa_ (the_poa),
+    service_info_ (),
+    request_id_ (0),
+    object_key_ (),
+    requesting_principal_ (0)
 {
+  CORBA::Boolean hdr_status;
+
+  // Tear out the service context ... we currently ignore it, but it
+  // should probably be passed to each ORB service as appropriate
+  // (e.g. transactions, security).
+  //
+  // NOTE: As security support kicks in, this is a good place to
+  // verify a digital signature, if that is required in this security
+  // environment.  It may be required even when using IPSEC security
+  // infrastructure.
+
+  hdr_status = input.decode (TC_ServiceContextList,
+                             &this->service_info_,
+                             0,
+                             env);
+
+  // Get the rest of the request header ...
+
+  hdr_status = hdr_status && input.read_ulong (this->request_id_);
+  hdr_status = hdr_status && input.read_boolean (this->response_expected_);
+  hdr_status = hdr_status && input.decode (TC_opaque,
+                                           &this->object_key_,
+                                           0,
+                                           env);
+  hdr_status = hdr_status && input.decode (CORBA::_tc_string,
+                                           &this->operation_,
+                                           0,
+                                           env);
+  hdr_status = hdr_status && input.decode (CORBA::_tc_Principal,
+                                           &this->requesting_principal_,
+                                           0,
+                                           env);
+
+  if (!hdr_status)
+    env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
 }
 
 IIOP_ServerRequest::~IIOP_ServerRequest (void)
@@ -400,7 +438,7 @@ IIOP_ServerRequest::init_reply (CORBA::Environment &env)
                            &resp_ctx,
                            0,
                            env);
-  this->outgoing_->write_ulong (this->reqid_);
+  this->outgoing_->write_ulong (this->request_id_);
 
   // Standard exceptions only.
   if (env.exception () != 0)
