@@ -1,3 +1,10 @@
+Mon Jul 12 19:23:47 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.ll:
+	* TAO_IDL/fe/lex.yy.cpp:
+	  Modified a lex rule to accept the output of the new
+	  preprocessor used by the HP/UX folks.
+
 Mon Jul 12 16:59:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/try_macros.h: Updated comments regarding how to re-enable
