@@ -21,8 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Time_Value.h"
-#include "ace/High_Res_Timer.h"
+#include "ace/Timer/Time_Value.h"
+#include "ace/Timer/High_Res_Timer.h"
 
 /**
  * @class ACE_Profile_Timer
@@ -126,7 +126,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "ace/Profile_Timer.i"
+# include "ace/Timer/Profile_Timer.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

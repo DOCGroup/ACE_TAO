@@ -15,14 +15,14 @@
 #define ACE_TIMER_HASH_H
 #include "ace/pre.h"
 
-#include "ace/Timer_Hash_T.h"
+#include "ace/Timer/Timer_Hash_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Timer_Heap_T.h"
-#include "ace/Timer_List_T.h"
+#include "ace/Timer/Timer_Heap_T.h"
+#include "ace/Timer/Timer_List_T.h"
 
 // The following typedef are here for ease of use
 

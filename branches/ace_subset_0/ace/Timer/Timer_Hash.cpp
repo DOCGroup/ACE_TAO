@@ -5,10 +5,10 @@
 #if !defined (ACE_TIMER_HASH_C)
 #define ACE_TIMER_HASH_C
 
-#include "ace/Timer_Hash.h"
+#include "ace/Timer/Timer_Hash.h"
 
 #if defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
-#include "ace/Timer_Hash_T.cpp"
+#include "ace/Timer/Timer_Hash_T.cpp"
 #endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 
 ACE_RCSID(ace, Timer_Hash, "$Id$")

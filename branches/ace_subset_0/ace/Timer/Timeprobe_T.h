@@ -15,7 +15,7 @@
 #define ACE_TIMEPROBE_T_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,7 +23,7 @@
 
 #if defined (ACE_COMPILE_TIMEPROBES)
 
-#include "ace/Unbounded_Set.h"
+#include "ace/Utils/Unbounded_Set.h"
 
 /**
  * @class ACE_Timeprobe
@@ -176,7 +176,7 @@ protected:
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Timeprobe_T.cpp"
+#include "ace/Timer/Timeprobe_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

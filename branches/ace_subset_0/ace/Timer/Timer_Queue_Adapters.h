@@ -15,13 +15,13 @@
 #define ACE_TIMER_QUEUE_ADAPTERS_H
 #include "ace/pre.h"
 
-#include "ace/Task.h"
+#include "ace/Streams/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Signal.h"
+#include "ace/IPC/Signal.h"
 
 /**
  * @class ACE_Async_Timer_Queue_Adapter
@@ -215,11 +215,11 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-# include "ace/Timer_Queue_Adapters.i"
+# include "ace/Timer/Timer_Queue_Adapters.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-# include "ace/Timer_Queue_Adapters.cpp"
+# include "ace/Timer/Timer_Queue_Adapters.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/Timer_Queue_Adapters.h"
+#include "ace/Timer/Timer_Queue_Adapters.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -12,7 +12,7 @@
 ACE_RCSID(ace, Timer_Queue_Adapters, "$Id$")
 
 # if !defined (__ACE_INLINE__)
-#  include "ace/Timer_Queue_Adapters.i"
+#  include "ace/Timer/Timer_Queue_Adapters.i"
 # endif /* __ACE_INLINE__ */
 
 template <class TQ> TQ &

@@ -3,14 +3,14 @@
 #if !defined (ACE_TIMER_QUEUE_C)
 #define ACE_TIMER_QUEUE_C
 
-#include "ace/Containers.h"
-#include "ace/Timer_Queue.h"
+#include "ace/Utils/Containers.h"
+#include "ace/Timer/Timer_Queue.h"
 
 ACE_RCSID(ace, Timer_Queue, "$Id$")
 
 #if defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
-#include "ace/Timer_Hash.h"
-#include "ace/Timer_Queue_T.cpp"
+#include "ace/Timer/Timer_Hash.h"
+#include "ace/Timer/Timer_Queue_T.cpp"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class

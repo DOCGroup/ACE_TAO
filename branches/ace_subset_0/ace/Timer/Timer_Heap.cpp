@@ -3,13 +3,13 @@
 #if !defined (ACE_TIMER_HEAP_C)
 #define ACE_TIMER_HEAP_C
 
-#include "ace/Timer_Heap.h"
+#include "ace/Timer/Timer_Heap.h"
 
 ACE_RCSID(ace, Timer_Heap, "$Id$")
 
 #if defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
-#include "ace/Timer_Hash.h"
-#include "ace/Timer_Heap_T.cpp"
+#include "ace/Timer/Timer_Hash.h"
+#include "ace/Timer/Timer_Heap_T.cpp"
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class
     ACE_Timer_Heap_T<

@@ -3,7 +3,7 @@
 #ifndef ACE_TIMEPROBE_T_C
 #define ACE_TIMEPROBE_T_C
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -13,8 +13,8 @@ ACE_RCSID(ace, Timeprobe_T, "$Id$")
 
 #if defined (ACE_COMPILE_TIMEPROBES)
 
-#include "ace/Timeprobe.h"
-#include "ace/High_Res_Timer.h"
+#include "ace/Timer/Timeprobe.h"
+#include "ace/Timer/High_Res_Timer.h"
 
 template <class ACE_LOCK>
 ACE_Timeprobe<ACE_LOCK>::ACE_Timeprobe (u_long size)
