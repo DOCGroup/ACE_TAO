@@ -124,7 +124,7 @@ main (int argc, char *argv[])
 
       CosNaming::Name the_name (ntoks);
       the_name.length (ntoks);
-      for (int i=0; i<(ntoks - 1); i++) // up to last directory entry
+      for (i=0; i<(ntoks - 1); i++) // up to last directory entry
         the_name[i].id = CORBA::string_dup (toks[i]);
 
       the_name[ntoks - 1].id = CORBA::string_dup (lastname);
