@@ -40,7 +40,6 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind)
     kind_ (kind),
     parent_ (0),
     refcount_ (1),
-    delete_flag_ (CORBA::B_FALSE),
     orb_owns_ (CORBA::B_TRUE),
     private_state_ (new TC_Private_State (kind)),
     non_aligned_buffer_ (0)
@@ -60,7 +59,6 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
     kind_ (kind),
     parent_ (parent),
     refcount_ (1),
-    delete_flag_ (CORBA::B_FALSE),
     orb_owns_ (orb_owns_tc),
     private_state_ (new TC_Private_State (kind)),
     non_aligned_buffer_ (0)
@@ -87,7 +85,7 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
   // case it must be freed or the case where our buffer just points to
   // the buffer passed in.
 
-  if (!parent_)
+  if (this->parent_ == 0)
     {
       // Allocate a buffer to hold the encapsulated stream. We
       // allocate extra space since we need a buffer that is aligned
@@ -140,54 +138,9 @@ CORBA_TypeCode::~CORBA_TypeCode (void)
     }
   this->buffer_ = 0;
 
-  if (this->orb_owns_)
+  // Free up our private state (if any)
+  if (this->private_state_)
     {
-      // we free up this typcode only when the ORB resources are freed
-      if (CORBA_ORB::orb_free_resources ())
-        {
-          this->delete_flag_ = CORBA::B_TRUE;
-
-          // Free up our private state (if any)
-	  if (this->private_state_)
-	    {
-	      delete this->private_state_;
-	      this->private_state_ = 0;
-	    }
-        }
-    }
-  else if (this->parent_) // check if we have a parent
-    {
-      // We have a parent which means that we were not directly
-      // created by IDL compiler generated code, but by the
-      // precomputation logic. We should delete ourselves and the
-      // subtree below us only if our parent was in the process of
-      // deleting itself
-      if (parent_->delete_flag_)
-        // Parent is deleting, so we have to go.
-        {
-          // Set our delete flag to TRUE so that our children (if any)
-          // will know that we have initiated our destruction
-          this->delete_flag_ = CORBA::B_TRUE;
-
-          // Delete any private state we have and thus free up the
-          // children.
-          if (this->private_state_)
-            {
-              delete this->private_state_;
-              this->private_state_ = 0;
-            }
-        }
-      // Else, somebody maliciously tried to delete us, but we won't
-      // get deleted.
-    }
-  else
-    {
-      // We are free standing (IDL compiler generated code) and are to
-      // be deleted.  We indicate to our children that we are getting
-      // deleted.
-      this->delete_flag_ = CORBA::B_TRUE;
-
-      // Free up our children.
       delete this->private_state_;
       this->private_state_ = 0;
     }
@@ -455,7 +408,10 @@ TC_Private_State::~TC_Private_State (void)
             for (CORBA::ULong i = 0;
                  i < this->tc_member_count_;
                  i++)
-              this->tc_member_name_list_ [i] = 0; // not owned by us
+	      {
+		CORBA::string_free (this->tc_member_name_list_ [i]);
+		this->tc_member_name_list_ [i] = 0;
+	      }
 
             delete [] this->tc_member_name_list_;
 	    this->tc_member_name_list_ = 0;
@@ -471,7 +427,10 @@ TC_Private_State::~TC_Private_State (void)
             for (CORBA::ULong i = 0;
                  i < this->tc_member_count_;
                  i++)
-              this->tc_member_name_list_ [i] = 0; // not owned by us
+	      {
+		CORBA::string_free (this->tc_member_name_list_ [i]);
+		this->tc_member_name_list_ [i] = 0;
+	      }
 
             delete [] this->tc_member_name_list_;
 	    this->tc_member_name_list_ = 0;
@@ -483,10 +442,9 @@ TC_Private_State::~TC_Private_State (void)
             for (CORBA::ULong i = 0;
                  i < this->tc_member_count_;
                  i++)
-              // free up the memory allocated for the typecode only if
-	      // it has a parent
-              if (this->tc_member_type_list_[i]->parent_)
+	      {
 		CORBA::release (this->tc_member_type_list_[i]);
+	      }
 
             // Now free up the array.
             delete [] this->tc_member_type_list_;
@@ -517,7 +475,10 @@ TC_Private_State::~TC_Private_State (void)
             for (CORBA::ULong i = 0;
                  i < this->tc_member_count_;
                  i++)
-              this->tc_member_name_list_ [i] = 0; // not owned by us
+	      {
+		CORBA::string_free (this->tc_member_name_list_ [i]);
+		this->tc_member_name_list_ [i] = 0;
+	      }
 
             delete [] this->tc_member_name_list_;
           }
@@ -528,10 +489,9 @@ TC_Private_State::~TC_Private_State (void)
             for (CORBA::ULong i = 0;
                  i < this->tc_member_count_;
                  i++)
-              // free up the memory allocated for the typecode if it has a
-              // parent that owns it
-              if (this->tc_member_type_list_[i]->parent_)
+	      {
                 CORBA::release (this->tc_member_type_list_[i]);
+	      }
 
             // Now free up the array.
             delete [] this->tc_member_type_list_;

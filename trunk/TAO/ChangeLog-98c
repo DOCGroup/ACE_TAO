@@ -1,3 +1,24 @@
+Thu Jul 23 16:54:59 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Server_Request.cpp: 
+	  Care must be exercised when transferring the exception from the
+	  Environment to the Any (in set_exception()): both believe that
+	  they own the Exception so the refcnt() must be increased.
+
+	* tao/Any.cpp: 
+	  The Any owns the top-level memory for the objects it contains,
+	  we delete it now.
+
+	* tao/Typecode.h: 
+	* tao/Typecode.cpp: 
+	  Fixed memory leaks in the private_member_name_list and in
+	  Typecodes created on the stack (not owned by the ORB, yes there
+	  are some).
+
+	* orbsvcs/Trading_Service/Makefile: 
+	* orbsvcs/tests/Trading/Makefile: 
+	  Updated dependencies.
+
 Thu Jul 23 13:06:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union/union_cs.cpp: 
