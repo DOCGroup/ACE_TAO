@@ -1,3 +1,8 @@
+Sat Aug 29 19:22:22 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Service_Configurator/Misc/main.cpp (main): Fixed a stray
+	  l_argv[3] =  0;  I'm not sure why this was here...
+
 Sat Aug 29 17:31:06 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* examples/IPC_SAP/SOCK_SAP/CPP-in{client,server,server-fancy}.cpp:
