@@ -1,3 +1,8 @@
+Thu Jul  5 23:57:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Makefile:
+	* tao/*/makefile: Updated dependencies.
+
 Thu Jul  5 23:49:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.SSLIOP: Added IIOP_SSL_Transport to it.  
