@@ -72,7 +72,7 @@ namespace TAO
     {
       // Always try the request processing strategy
       PortableServer::Servant servant =
-        this->request_processing_strategy_->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+        this->poa_->get_servant_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (servant != 0)
@@ -96,7 +96,6 @@ namespace TAO
       else
         {
           // Otherwise the ObjectNotActive exception is raised.
-          // @todo, is this the correct exception, the spec is not clear
           ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
                             0);
         }
@@ -133,8 +132,8 @@ namespace TAO
       // Get the default servant, in case we have a not correct request_processing
       // strategy we will get an exception
       PortableServer::Servant servant = 0;
-      servant =
-        this->request_processing_strategy_->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+      servant = this->poa_->get_servant_i (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (servant != 0)
@@ -160,9 +159,9 @@ namespace TAO
           /*
            * If using default servant request processing strategy but
            * no default servant is available, we will raise the
-           * OBJ_ADAPTER system exception.
+           * ObjectNotActive system exception.
            */
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+          ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
                             0);
         }
     }
@@ -273,8 +272,7 @@ namespace TAO
        */
 
       PortableServer::Servant default_servant = 0;
-      default_servant =
-        this->request_processing_strategy_->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+      default_servant = this->poa_->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (default_servant != 0 &&
@@ -293,15 +291,13 @@ namespace TAO
               return poa_current_impl->get_object_id (ACE_ENV_SINGLE_ARG_PARAMETER);
             }
         }
-      else
-        {
-          /*
-           * If no default servant is available, the POA will raise the
-            * OBJ_ADAPTER system exception.
-            */
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            0);
-        }
+
+      /*
+       * If no default servant is available or we are not in the context of the
+       * executing request we throw the ServantNotActive exception
+        */
+      ACE_THROW_RETURN (PortableServer::POA::ServantNotActive (),
+                        0);
     }
 
     CORBA::Object_ptr

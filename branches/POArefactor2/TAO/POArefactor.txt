@@ -1,3 +1,10 @@
+Wed Nov 17 11:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
+          Call the get_servant_i() on the POA instead of on the request
+          processing strategy. Also corrected some exceptions that we throw
+          based on the latest corba spec
+
 Wed Nov 17 10:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp}:
