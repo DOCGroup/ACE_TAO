@@ -131,6 +131,8 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
       << full_class_name << "::" << class_name << " (const " << full_class_name << " &rhs)" << be_idt_nl
       << ": TAO_Bounded_Base_Sequence (rhs)" << be_uidt_nl
       << "{" << be_idt_nl
+      << "if (rhs.buffer_ != 0)" << be_nl
+      << "{" << be_idt_nl
       << "char **tmp1 = " << full_class_name << "::allocbuf (this->maximum_);" << be_nl
       << "char ** const tmp2 = ACE_reinterpret_cast (char ** ACE_CAST_CONST, rhs.buffer_);" << be_nl
       << be_nl
@@ -138,6 +140,11 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
       << "tmp1[i] = CORBA::string_dup (tmp2[i]);" << be_uidt_nl
       << be_nl
       << "this->buffer_ = tmp1;" << be_uidt_nl
+      << "}" << be_nl
+      << "else" << be_nl
+      << "{" << be_idt_nl
+      << "this->buffer_ = 0;" << be_uidt_nl
+      << "}" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
 
