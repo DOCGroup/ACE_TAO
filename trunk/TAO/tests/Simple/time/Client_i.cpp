@@ -108,9 +108,12 @@ Client_i::time (void)
       
       // Print out Value
       char *ascii_timedate =
-        ACE_OS::ctime (ACE_reinterpret_cast (time_t *, &timedate));
+        ACE_OS::ctime (ACE_reinterpret_cast (time_t *,
+                                             &timedate));
 
-      ACE_DEBUG ((LM_DEBUG, "string time is %s\n", ascii_timedate));
+      ACE_DEBUG ((LM_DEBUG,
+                  "string time is %s\n",
+                  ascii_timedate));
     }
   TAO_CATCHANY
     {
@@ -125,9 +128,7 @@ Client_i::time (void)
 int
 Client_i::run (void)
 {
-  u_int i;
-
-  for (i = 0; i < this->loop_count_; i++)
+  for (u_int i = 0; i < this->loop_count_; i++)
     {
       this->time ();
       ACE_OS::sleep (1);
