@@ -14,13 +14,13 @@
 #define ACE_TYPED_MESSAGE_QUEUE_H
 #include "ace/pre.h"
 
-#include "ace/SV_Message_Queue.h"
+#include "ace/IPC/SV_Message_Queue.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Typed_SV_Message.h"
+#include "ace/Streams/Typed_SV_Message.h"
 
 /**
  * @class ACE_Typed_SV_Message_Queue
@@ -71,11 +71,11 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Typed_SV_Message_Queue.i"
+#include "ace/Streams/Typed_SV_Message_Queue.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Typed_SV_Message_Queue.cpp"
+#include "ace/Streams/Typed_SV_Message_Queue.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

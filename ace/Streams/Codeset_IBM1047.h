@@ -27,7 +27,7 @@
 
 #if defined(ACE_MVS)
 
-#include "ace/CDR_Stream.h"
+#include "ace/Streams/CDR_Stream.h"
 
 extern ACE_Export char ACE_to_IBM1047[257];
 extern ACE_Export char ACE_from_IBM1047[257];

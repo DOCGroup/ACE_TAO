@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#include "ace/Codeset_IBM1047.h"
+#include "ace/Streams/Codeset_IBM1047.h"
 
 #if defined(ACE_MVS)
 
