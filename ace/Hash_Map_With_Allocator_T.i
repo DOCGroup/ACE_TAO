@@ -33,6 +33,15 @@ ACE_Hash_Map_With_Allocator<EXT_ID, INT_ID>::unbind (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID>  ACE_INLINE int
+ACE_Hash_Map_With_Allocator<EXT_ID, INT_ID>::unbind (const EXT_ID &ext_id,
+                                                     ACE_Allocator *alloc)
+{
+  ACE_TRACE ("ACE_Hash_Map_With_Allocator<EXT_ID>::unbind");
+  this->allocator_ = alloc;
+  return this->unbind_i (ext_id);
+}
+
+template <class EXT_ID, class INT_ID>  ACE_INLINE int
 ACE_Hash_Map_With_Allocator<EXT_ID, INT_ID>::rebind (const EXT_ID &ext_id,
                                                      const INT_ID &int_id,
                                                      EXT_ID &old_ext_id,

@@ -66,6 +66,9 @@ public:
   int unbind (const EXT_ID &,
               INT_ID &,
               ACE_Allocator *alloc);
+  
+  int unbind (const EXT_ID &,
+              ACE_Allocator *alloc);
 
   int rebind (const EXT_ID &,
               const INT_ID &,
