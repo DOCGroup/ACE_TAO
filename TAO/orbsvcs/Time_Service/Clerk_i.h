@@ -19,7 +19,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/Time/TAO_Time_Service_Clerk.h"
@@ -108,7 +108,7 @@ private:
   // <TimeService Clerk> object. The same instance is used by the
   // Clerk to periodically iterate through the Server Naming Context
   // and get IORs of the available servers.
-  
+
   TAO_Time_Service_Clerk *time_service_clerk_impl_;
   // Implementation of the <TimeService> Clerk object.
 
@@ -120,7 +120,7 @@ private:
 
   CORBA::ORB_var orb_;
   // My orb.
-  
+
   int timer_value_ ;
   // Clerk seeks time periodically after this interval in secs. from the
   // servers in the network.

@@ -224,7 +224,7 @@ TAO_CodeGen::start_client_header (const char *fname)
               *this->client_header_ << "<";
             }
 
-          *this->client_header_ << "tao/MessagingS.h";
+          *this->client_header_ << "tao/MessagingC.h";
 
           if (be_global->changing_standard_include_files () == 1)
             {
@@ -363,21 +363,21 @@ TAO_CodeGen::start_client_stubs (const char *fname)
   if (be_global->pch_include ())
     {
       *this->client_stubs_ << "#include \""
-                           << be_global->pch_include () 
+                           << be_global->pch_include ()
                            << "\"\n\n";
     }
 
   // Generate the include statement for the client header. We just
   // need to put only the base names. Path info is not required.
-  *this->client_stubs_ << "#include \"" 
-                       << be_global->be_get_client_hdr_fname (1) 
+  *this->client_stubs_ << "#include \""
+                       << be_global->be_get_client_hdr_fname (1)
                        << "\"\n\n";
 
   // Generate the code that includes the inline file if not included in the
   // header file.
   *this->client_stubs_ << "#if !defined (__ACE_INLINE__)\n";
-  *this->client_stubs_ << "#include \"" 
-                       << be_global->be_get_client_inline_fname (1) 
+  *this->client_stubs_ << "#include \""
+                       << be_global->be_get_client_inline_fname (1)
                        << "\"\n";
   *this->client_stubs_ << "#endif /* !defined INLINE */\n\n";
 
@@ -507,7 +507,7 @@ TAO_CodeGen::start_server_header (const char *fname)
               *this->server_header_ << "<";
             }
 
-          *this->server_header_ << "tao/MessagingS.h";
+          *this->server_header_ << "tao/PortableServer/MessagingS.h";
 
           if (be_global->changing_standard_include_files () == 1)
             {
@@ -565,8 +565,8 @@ TAO_CodeGen::start_server_header (const char *fname)
         }
 
       // The server header should include the client header.
-      *this->server_header_ << "#include \"" 
-                            << be_global->be_get_client_hdr_fname (1) 
+      *this->server_header_ << "#include \""
+                            << be_global->be_get_client_hdr_fname (1)
                             << "\"\n\n";
 
       // Some compilers don't optimize the #ifndef header include
@@ -574,6 +574,16 @@ TAO_CodeGen::start_server_header (const char *fname)
       *this->server_header_ << "\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
                             << "# pragma once\n"
                             << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
+
+      // Include the definitions for the PortableServer namespace,
+      // this forces the application to link the POA library, a good
+      // thing, because we need the definitions there, it also
+      // registers the POA factory with the Service_Configurator, so
+      // the ORB can automatically find it.
+      *this->server_header_
+        << "#include \"tao/PortableServer/PortableServer.h\"\n"
+        << "#include \"tao/PortableServer/Servant_Base.h\"\n"
+        << "\n";
 
       *this->server_header_ << "#if defined(_MSC_VER)\n"
                             << "#if (_MSC_VER >= 1200)\n"
@@ -746,20 +756,24 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
   if (be_global->pch_include ())
     {
       *this->server_skeletons_ << "#include \""
-                               << be_global->pch_include () 
+                               << be_global->pch_include ()
                                << "\"\n\n";
     }
 
   // Generate the include statement for the server header.
-  *this->server_skeletons_ << "#include \"" 
-                           << be_global->be_get_server_hdr_fname (1) 
-                           << "\"\n\n";
+  *this->server_skeletons_
+    << "#include \""
+    << be_global->be_get_server_hdr_fname (1)
+    << "\"\n"
+    << "#include \"tao/PortableServer/Object_Adapter.h\"\n"
+    << "#include \"tao/PortableServer/Operation_Table.h\"\n"
+    << "\n";
 
   // Generate the code that includes the inline file if not included in the
   // header file.
   *this->server_skeletons_ << "#if !defined (__ACE_INLINE__)\n";
-  *this->server_skeletons_ << "#include \"" 
-                           << be_global->be_get_server_inline_fname (1) 
+  *this->server_skeletons_ << "#include \""
+                           << be_global->be_get_server_inline_fname (1)
                            << "\"\n";
   *this->server_skeletons_ << "#endif /* !defined INLINE */\n\n";
 
@@ -842,17 +856,17 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
       this->server_template_skeletons_->print ("#define %s\n\n", macro_name);
 
       // Generate the include statement for the server header.
-      *this->server_template_skeletons_ 
-          << "#include \"" 
-          << be_global->be_get_server_template_hdr_fname (1) 
+      *this->server_template_skeletons_
+          << "#include \""
+          << be_global->be_get_server_template_hdr_fname (1)
           << "\"\n\n";
 
       // Generate the code that includes the inline file if not included in the
       // header file.
       *this->server_template_skeletons_ << "#if !defined (__ACE_INLINE__)\n";
-      *this->server_template_skeletons_ 
-          << "#include \"" 
-          << be_global->be_get_server_template_inline_fname (1) 
+      *this->server_template_skeletons_
+          << "#include \""
+          << be_global->be_get_server_template_inline_fname (1)
           << "\"\n";
       *this->server_template_skeletons_ << "#endif /* !defined INLINE */\n\n";
 
@@ -939,8 +953,8 @@ TAO_CodeGen::start_implementation_header (const char *fname)
       return -1;
     }
 
-  if (this->implementation_header_->open (fname, 
-                                          TAO_OutStream::TAO_IMPL_HDR) 
+  if (this->implementation_header_->open (fname,
+                                          TAO_OutStream::TAO_IMPL_HDR)
         == -1)
     {
       return -1;
@@ -1031,8 +1045,8 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
       return -1;
     }
 
-  if (this->implementation_skeleton_->open (fname, 
-                                            TAO_OutStream::TAO_IMPL_SKEL) 
+  if (this->implementation_skeleton_->open (fname,
+                                            TAO_OutStream::TAO_IMPL_SKEL)
         == -1)
     {
       return -1;
@@ -1098,8 +1112,8 @@ TAO_CodeGen::end_client_header (void)
 
   // Insert the code to include the inline file.
   *this->client_header_ << "\n#if defined (__ACE_INLINE__)\n";
-  *this->client_header_ << "#include \"" 
-                        << be_global->be_get_client_inline_fname (1) 
+  *this->client_header_ << "#include \""
+                        << be_global->be_get_client_inline_fname (1)
                         << "\"\n";
   *this->client_header_ << "#endif /* defined INLINE */\n\n";
 
@@ -1134,8 +1148,8 @@ TAO_CodeGen::end_server_header (void)
 
   // Insert the code to include the inline file.
   *this->server_header_ << "\n#if defined (__ACE_INLINE__)\n";
-  *this->server_header_ << "#include \"" 
-                        << be_global->be_get_server_inline_fname (1) 
+  *this->server_header_ << "#include \""
+                        << be_global->be_get_server_inline_fname (1)
                         << "\"\n";
   *this->server_header_ << "#endif /* defined INLINE */\n\n";
 
@@ -1209,27 +1223,27 @@ TAO_CodeGen::end_server_template_header (void)
 {
   // Insert the code to include the inline file.
   *this->server_template_header_ << "\n#if defined (__ACE_INLINE__)\n";
-  *this->server_template_header_ 
-      << "#include \"" 
-      << be_global->be_get_server_template_inline_fname (1) 
+  *this->server_template_header_
+      << "#include \""
+      << be_global->be_get_server_template_inline_fname (1)
       << "\"\n";
   *this->server_template_header_ << "#endif /* defined INLINE */\n\n";
 
   // Insert the code to include the template source file.
   *this->server_template_header_
       << "\n#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)\n";
-  *this->server_template_header_ 
-      << "#include \"" 
-      << be_global->be_get_server_template_skeleton_fname (1) 
+  *this->server_template_header_
+      << "#include \""
+      << be_global->be_get_server_template_skeleton_fname (1)
       << "\"\n";
   *this->server_template_header_ << "#endif /* defined REQUIRED SOURCE */\n\n";
 
   // Insert the code to include the template pragma.
   *this->server_template_header_
       << "\n#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)\n";
-  *this->server_template_header_ 
-      << "#pragma implementation (\"" 
-      << be_global->be_get_server_template_skeleton_fname (1) 
+  *this->server_template_header_
+      << "#pragma implementation (\""
+      << be_global->be_get_server_template_skeleton_fname (1)
       << "\")\n";
   *this->server_template_header_ << "#endif /* defined REQUIRED PRAGMA */\n\n";
 

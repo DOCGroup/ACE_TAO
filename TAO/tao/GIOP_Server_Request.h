@@ -152,8 +152,8 @@ public:
 
   virtual TAO_ObjectKey &object_key (void);
 
-  virtual CORBA::Object_ptr objref (CORBA_Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ());
+  // @@ PPOA: virtual CORBA::Object_ptr objref (CORBA_Environment &ACE_TRY_ENV =
+  // @@ PPOA: TAO_default_environment ());
   // Return the object reference of the request.
 
   virtual IOP::ServiceContextList &service_info (void);

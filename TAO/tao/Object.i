@@ -4,8 +4,7 @@
 
 ACE_INLINE
 CORBA_Object::CORBA_Object (int)
-  : servant_ (0),
-    is_collocated_ (0),
+  : is_collocated_ (0),
     is_local_ (1),
     protocol_proxy_ (0),
     refcount_ (1),

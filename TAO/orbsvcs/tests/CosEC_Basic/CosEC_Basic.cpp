@@ -3,7 +3,6 @@
 
 #include "CosEC_Basic.h"
 #include "orbsvcs/CosEvent_Utilities.h"
-#include "tao/PortableServerC.h"
 
 int
 main (int argc, char *argv [])

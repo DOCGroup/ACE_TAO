@@ -71,6 +71,7 @@ TAO_ORB_Core::orb (void)
   return this->orb_.in ();
 }
 
+#if 0 // PPOA
 ACE_INLINE TAO_POA *
 TAO_ORB_Core::root_poa (CORBA::Environment &ACE_TRY_ENV,
                         const char *adapter_name,
@@ -86,6 +87,15 @@ TAO_ORB_Core::root_poa (CORBA::Environment &ACE_TRY_ENV,
     }
   return this->root_poa_;
 }
+
+#else
+
+ACE_INLINE TAO_Adapter_Registry *
+TAO_ORB_Core::adapter_registry (void)
+{
+  return &this->adapter_registry_;
+}
+#endif /* 0 PPOA */
 
 ACE_INLINE void
 TAO_ORB_Core::optimize_collocation_objects (CORBA::Boolean opt)
@@ -372,12 +382,28 @@ TAO_ORB_Core::policy_current (void)
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-
+#if 0 // PPOA
 ACE_INLINE TAO_POA_Current &
 TAO_ORB_Core::poa_current (void) const
 {
   return *this->poa_current_;
 }
+#else
+ACE_INLINE CORBA::Object_ptr
+TAO_ORB_Core::poa_current (void)
+{
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0);
+  return CORBA::Object::_duplicate (this->poa_current_.in ());
+}
+
+ACE_INLINE void
+TAO_ORB_Core::poa_current (CORBA::Object_ptr current)
+{
+  ACE_GUARD (ACE_SYNCH_MUTEX, mon, this->lock_);
+  this->poa_current_ =
+    CORBA::Object::_duplicate (current);
+}
+#endif /* 0 PPOA */
 
 ACE_INLINE CORBA_Environment *
 TAO_ORB_Core::default_environment (void) const

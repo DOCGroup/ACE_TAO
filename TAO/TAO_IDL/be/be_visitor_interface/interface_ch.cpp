@@ -227,7 +227,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       if (! node->is_local ())
         *os << node->local_name ()
             << " (TAO_Stub *objref, " << be_idt << be_idt_nl
-            << "TAO_ServantBase *_tao_servant = 0, " << be_nl
             << "CORBA::Boolean _tao_collocated = 0" << be_uidt_nl
             << ");" << be_uidt_nl;
 

@@ -44,7 +44,7 @@ TAO_MProfile::~TAO_MProfile (void)
         (*policy_list_)[i]->destroy ();
     }
   delete policy_list_;
-  
+
   this->cleanup ();
 }
 
@@ -257,11 +257,11 @@ TAO_MProfile::create_policy_list (void)
   ACE_ASSERT (this->policy_list_ == 0);
 
   ACE_NEW (this->policy_list_, CORBA::PolicyList ());
- 
+
   // Post-Condition: Make sure that the memory get allcated
   // for real.
   ACE_ASSERT (this->policy_list_ != 0);
-  
+
   // @@ Marina & Irfan I would raise an exception in this case.
 }
 
@@ -272,8 +272,8 @@ TAO_MProfile::policy_list (CORBA::PolicyList *policy_list)
   this->policy_list_ = policy_list;
 }
 
-ACE_INLINE CORBA::PolicyList* 
-TAO_MProfile::policy_list (void) 
+ACE_INLINE CORBA::PolicyList*
+TAO_MProfile::policy_list (void)
 {
   if (this->policy_list_ == 0)
     {
@@ -283,4 +283,4 @@ TAO_MProfile::policy_list (void)
       this->get_next ()->policies ();
     }
   return this->policy_list_;
-}  
+}

@@ -20,8 +20,6 @@
 #include "tao/Connector_Registry.h"
 #include "tao/Acceptor_Registry.h"
 
-#include "tao/POA.h"
-
 #include "tao/RT_ORB.h"
 #include "tao/Priority_Mapping_Manager.h"
 #include "tao/RT_Current.h"
@@ -66,7 +64,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     typecode_factory_ (CORBA::Object::_nil ()),
     dynany_factory_ (CORBA::Object::_nil ()),
     orb_ (),
-    root_poa_ (0),
+    // PPOA root_poa_ (0),
     orb_params_ (),
     orbid_ (ACE_OS::strdup (orbid ? orbid : "")),
     resource_factory_ (0),
@@ -94,7 +92,9 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
     poa_current_ (0),
-    object_adapter_ (0),
+    // PPOA: object_adapter_ (0),
+    adapter_registry_ (this), // PPOA
+    poa_adapter_ (0), // PPOA
     tm_ (),
     from_iso8859_ (0),
     to_iso8859_ (0),
@@ -128,8 +128,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     refcount_ (1),
     handle_set_ ()
 {
-  ACE_NEW (this->poa_current_,
-           TAO_POA_Current);
+  // @@ PPOA ACE_NEW (this->poa_current_,
+  //                  TAO_POA_Current);
 
 #if defined(ACE_MVS)
   ACE_NEW (this->from_iso8859_, ACE_IBM1047_ISO8859);
@@ -220,6 +220,7 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
       delete [] this->svc_config_argv_;
     }
 
+#if 0  // PPOA
   // Make sure these two objects are deleted last (other objects may
   // depend on this).
 #if !defined (__Lynx__)  ||  !defined (__powerpc__)
@@ -244,6 +245,9 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   ACE_ENDTRY;
 
   delete this->object_adapter_;
+#else
+  // @@ this->adapter_registry_.close ();
+#endif /* 0 */
 }
 
 int
@@ -1506,6 +1510,7 @@ TAO_ORB_Core::inherit_from_parent_thread (
   return 0;
 }
 
+#if 0 // PPOA
 PortableServer::POA_ptr
 TAO_ORB_Core::root_poa_reference (CORBA::Environment &ACE_TRY_ENV,
                                   const char *adapter_name,
@@ -1607,6 +1612,60 @@ TAO_ORB_Core::object_adapter_i (void)
     }
   return this->object_adapter_;
 }
+#else
+
+CORBA::Object_ptr
+TAO_ORB_Core::root_poa (CORBA::Environment &ACE_TRY_ENV)
+{
+  if (!CORBA::is_nil (this->root_poa_.in ()))
+    return CORBA::Object::_duplicate (this->root_poa_.in ());
+
+  TAO_Adapter_Factory *factory =
+    ACE_Dynamic_Service<TAO_Adapter_Factory>::instance ("TAO_POA");
+  if (factory == 0)
+    {
+      // Try again, using the default directive...
+      ACE_Service_Config::process_directive (
+          "dynamic TAO_POA Service_Object * TAO_POA_DLL:_make_TAO_POA()"
+      );
+      factory =
+        ACE_Dynamic_Service<TAO_Adapter_Factory>::instance ("TAO_POA");
+    }
+
+  if (factory == 0)
+    {
+      // It really failed, raise an exception!
+      ACE_THROW_RETURN (CORBA::ORB::InvalidName (),
+                        CORBA::Object::_nil ());
+    }
+
+  // @@ Not exception safe
+  TAO_Adapter *poa_adapter = factory->create (this);
+  poa_adapter->open (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  this->root_poa_ = poa_adapter->root ();
+
+  this->adapter_registry_.insert (poa_adapter, ACE_TRY_ENV);
+
+  return CORBA::Object::_duplicate (this->root_poa_.in ());
+}
+
+TAO_Adapter *
+TAO_ORB_Core::poa_adapter (void)
+{
+  if (this->poa_adapter_ == 0)
+    {
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->poa_adapter_ == 0)
+        {
+          this->poa_adapter_ =
+            this->adapter_registry_.find_adapter ("RootPOA");
+        }
+    }
+  return this->poa_adapter_;
+}
+#endif /* 0 PPOA */
 
 ACE_SYNCH_CONDITION *
 TAO_ORB_Core::leader_follower_condition_variable (void)
@@ -1631,7 +1690,7 @@ TAO_Stub *
 TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
                                   const char *type_id,
                                   CORBA::PolicyList *policy_list,
-                                  TAO_POA *poa,
+                                  TAO_Acceptor_Filter *filter,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
   (void) this->open (ACE_TRY_ENV);
@@ -1643,11 +1702,10 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
     id = CORBA::string_dup (type_id);
 
   TAO_Stub *stub = 0;
-
   // Create a profile container and have Acceptor_Registry populate it
   // with profiles as appropriate.
   TAO_MProfile mp (0);
-  if (this->acceptor_registry ()->make_mprofile (key, mp, poa) == -1)
+  if (this->acceptor_registry ()->make_mprofile (key, mp, filter) == -1)
   {
     ACE_THROW_RETURN (CORBA::INTERNAL (
                         CORBA::SystemException::_tao_minor_code (
@@ -1689,6 +1747,67 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
   stub->base_profiles ().policy_list (policy_list);
 
   return stub;
+}
+
+CORBA::Object_ptr
+TAO_ORB_Core::create_object (TAO_Stub *stub)
+{
+  // @@ What about forwarding.  With this approach we are never forwarded
+  //    when we use collocation!
+  const TAO_MProfile &mprofile = stub->base_profiles ();
+
+  {
+    // @@ Ossama: maybe we need another lock for the table, to
+    //    reduce contention on the Static_Object_Lock below, if so
+    //    then we need to use that lock in the ORB_init() function.
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
+                              *ACE_Static_Object_Lock::instance (),
+                              0));
+
+    TAO_ORB_Table *table = TAO_ORB_Table::instance ();
+    TAO_ORB_Table::Iterator end = table->end ();
+    for (TAO_ORB_Table::Iterator i = table->begin ();
+         i != end;
+         ++i)
+      {
+        TAO_ORB_Core *other_core = (*i).int_id_;
+        CORBA::Object_ptr x =
+          this->create_collocated_object (stub,
+                                          other_core,
+                                          mprofile);
+        if (x != 0)
+          return x;
+      }
+  }
+
+  // @@ We should thow CORBA::NO_MEMORY in platforms with exceptions,
+  // but we are stuck in platforms without exceptions!
+  CORBA::Object_ptr x;
+  ACE_NEW_RETURN (x,
+                  CORBA_Object (stub, 0),
+                  0);
+  return x;
+}
+
+CORBA::Object_ptr
+TAO_ORB_Core::create_collocated_object (TAO_Stub *stub,
+                                        TAO_ORB_Core *orb_core,
+                                        const TAO_MProfile &mprofile)
+{
+  if (!orb_core->optimize_collocation_objects ())
+    return 0;
+
+  if (!orb_core->use_global_collocation () && orb_core != this)
+    return 0;
+
+  if (!orb_core->is_collocated (mprofile))
+    return 0;
+
+  // OK, the target ORB and the mprofile match, use the Adapter
+  // Registry of each ORB to find the right one.
+
+  return orb_core->adapter_registry ()->create_collocated_object (stub,
+                                                                  mprofile);
 }
 
 int
@@ -1815,6 +1934,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
   return result;
 }
 
+#if 0 // PPOA
 void
 TAO_ORB_Core::destroy_root_poa (CORBA::Boolean wait_for_completion,
                                 CORBA::Environment &ACE_TRY_ENV)
@@ -1842,11 +1962,13 @@ TAO_ORB_Core::destroy_root_poa (CORBA::Boolean wait_for_completion,
       this->root_poa_ = 0;
     }
 }
+#endif /* 0 PPOA */
 
 void
 TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
                         CORBA::Environment &ACE_TRY_ENV)
 {
+#if 0 // PPOA
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_POA::check_for_valid_wait_for_completions (wait_for_completion,
                                                  ACE_TRY_ENV);
@@ -1855,6 +1977,12 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
   this->destroy_root_poa (wait_for_completion,
                           ACE_TRY_ENV);
   ACE_CHECK;
+#else
+  this->adapter_registry_.check_close (wait_for_completion,
+                                       ACE_TRY_ENV);
+  this->adapter_registry_.close (wait_for_completion,
+                                 ACE_TRY_ENV);
+#endif /* 0 PPOA */
 
   // Set the shutdown flag
   this->has_shutdown_ = 1;
@@ -2630,6 +2758,12 @@ TAO_ORB_Core_instance (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class ACE_Lock_Adapter<ACE_Null_Mutex>;
+#if defined (ACE_HAS_THREADS)
+template class ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex>;
+template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
+#endif /* ACE_HAS_THREADS */
+
 template class ACE_Reverse_Lock<ACE_SYNCH_MUTEX>;
 template class ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_MUTEX> >;
 
@@ -2648,6 +2782,12 @@ template class ACE_Map_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>;
 template class ACE_Map_Reverse_Iterator<ACE_CString,TAO_ORB_Core*,ACE_Null_Mutex>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Lock_Adapter<ACE_Null_Mutex>
+#if defined (ACE_HAS_THREADS)
+#pragma instantiate ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex>
+#pragma instantiate ACE_Lock_Adapter<ACE_Thread_Mutex>
+#endif /* ACE_HAS_THREADS */
 
 #pragma instantiate ACE_Reverse_Lock<ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Guard<ACE_Reverse_Lock<ACE_SYNCH_MUTEX> >

@@ -2,7 +2,7 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "Offer_Exporter.h"
 #include "Offer_Importer.h"
 #include "Service_Type_Exporter.h"

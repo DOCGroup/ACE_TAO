@@ -36,7 +36,7 @@
 class ACE_Addr;
 class ACE_Reactor;
 class TAO_ORB_Core;
-class TAO_POA;
+class TAO_Acceptor_Filter;
 
 class TAO_Stub;
 class TAO_Profile;
@@ -78,7 +78,7 @@ public:
 
   int make_mprofile (const TAO_ObjectKey& object_key,
                      TAO_MProfile &mprofile,
-                     TAO_POA *poa);
+                     TAO_Acceptor_Filter *filter = 0);
   // Add profiles to the <mprofile> object for all open endpoints.
   // <poa> parameter is passed because the POA may contain some
   // information affecting how/which profiles get created.

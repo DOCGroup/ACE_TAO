@@ -22,7 +22,7 @@
 #ifndef IDENTITY_CLIENT_H_
 #define IDENTITY_CLIENT_H_
 
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -40,7 +40,7 @@
 
 // TAO includes.
 #include "tao/corba.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 
 // MT Cubit application includes.
 #include "cubit_i.h"

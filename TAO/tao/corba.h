@@ -52,7 +52,6 @@
 
 #include "tao/PolicyC.h"
 #include "tao/CurrentC.h"
-#include "tao/POA.h"
 
 // TAO specific files, avoid them as much as possible.
 #include "tao/PortableInterceptor.h"
@@ -62,13 +61,10 @@
 #include "tao/Stub.h"
 #include "tao/params.h"
 #include "tao/ORB_Core.h"
-#include "tao/Operation_Table.h"
 #include "tao/debug.h"
 
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Server_Strategy_Factory.h"
-#include "tao/Active_Object_Map.h"
-//#include "tao/GIOP.h"
 #include "tao/Invocation.h"
 
 #include "tao/Managed_Types.h"
@@ -90,7 +86,6 @@
 #include "tao/BoundsC.h"
 #include "tao/TAOC.h"
 #include "tao/MessagingC.h"
-#include "tao/MessagingS.h"
 
 #if !defined (ACE_NESTED_CLASS)
 #if defined (ACE_WIN32)

@@ -3,7 +3,7 @@
 #include "pong.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 #include "tao/corba.h"
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"

@@ -14,13 +14,13 @@
 // has been separated, removed from the TAO library. and included
 // here.
 
-#include "tao/POA_CORBA.h"
-#include "tao/Operation_Table.h"
+#include "tao/PortableServer/POA_CORBA.h"
+#include "tao/PortableServer/Operation_Table.h"
+#include "tao/PortableServer/Object_Adapter.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Request.h"
 #include "tao/NVList.h"
-#include "tao/Object_Adapter.h"
 
 ACE_RCSID(IFR_Service, TypeCodeFactory_skel, "$Id$")
 

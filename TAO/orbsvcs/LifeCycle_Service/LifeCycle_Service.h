@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "LifeCycle_Service_i.h"
 
 #ifndef LIFECYCLE_SERVICE_H
@@ -69,4 +69,3 @@ private:
 };
 
 #endif /* LIFECYCLE_SERVICE_H */
-

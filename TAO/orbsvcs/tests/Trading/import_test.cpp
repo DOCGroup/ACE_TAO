@@ -1,6 +1,6 @@
 // $Id$
 
-#include "tao/TAO.h"
+#include "tao/PortableServer/ORB_Manager.h"
 #include "Offer_Importer.h"
 
 ACE_RCSID(Trading, import_test, "$Id$")
@@ -16,7 +16,7 @@ main (int argc, char** argv)
 
       // Command line argument interpretation.
       TT_Parse_Args parse_args (argc, argv);
-      
+
       // Initialize the ORB and bootstrap to the Lookup interface.
       CORBA::ORB_var orb = orb_manager.orb ();
       ACE_DEBUG ((LM_ERROR, "*** Bootstrap to the Lookup interface.\n"));
@@ -25,22 +25,22 @@ main (int argc, char** argv)
         orb->resolve_initial_references ("TradingService") :
         orb->string_to_object (ior);
 
-      
+
       if (CORBA::is_nil (trading_obj.in ()))
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to initialize the Trading Service.\n"),
 			  -1);
-      
+
       // Narrow the lookup interface.
       ACE_DEBUG ((LM_DEBUG, "*** Narrowing the lookup interface.\n"));
-      CosTrading::Lookup_var lookup_if = 
+      CosTrading::Lookup_var lookup_if =
 	CosTrading::Lookup::_narrow (trading_obj.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Run the Offer Importer tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Importer tests.\n"));
       TAO_Offer_Importer offer_importer (lookup_if.in (), ! parse_args.quiet ());
-      
+
       offer_importer.perform_queries (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

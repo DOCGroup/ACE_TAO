@@ -28,7 +28,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/corba.h"
-#include "tao/POA.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "notify_export.h"
 
 class TAO_Notify_Export TAO_Notify_POA_Factory : public ACE_Service_Object

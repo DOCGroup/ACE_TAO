@@ -4,7 +4,6 @@
 #include "CosEventChannelFactory_i.h"
 #include "orbsvcs/CosEvent_Utilities.h"
 #include "ace/Auto_Ptr.h"
-#include "tao/POA.h"
 
 TAO_CosEventChannelFactory_i::TAO_CosEventChannelFactory_i (void)
   :poa_ (PortableServer::POA::_nil ()),

@@ -50,28 +50,28 @@ int be_visitor_interface_direct_collocated_sh::visit_interface (be_interface *no
 
   // output the class defn
   os->indent ();
-  *os << "class " << be_global->skel_export_macro ()
+  *os << "class "
+      << be_global->skel_export_macro ()
       << " " << node->local_coll_name (be_interface::DIRECT);
-  os->incr_indent ();
-  *os << " : public virtual " << node->name ();
+  *os << be_idt << be_idt_nl
+      << ": public virtual " << node->name () << be_nl
+      << ", public virtual TAO_Collocated_Object";
 
   // generate base classes if any
   if (node->n_inherits () > 0)
     {
       for (int i = 0; i < node->n_inherits (); ++i)
         {
-          *os << "," << be_nl;
           be_interface* parent =
             be_interface::narrow_from_decl (node->inherits()[i]);
-          *os << "  public virtual "
+          *os << be_nl << ", public virtual "
               << be_interface::relative_name (parent->full_coll_name (be_interface::DIRECT),
                                               node->full_coll_name (be_interface::DIRECT));
         }
     }
-  *os << "\n";
-  os->decr_indent ();
-  *os << "{" << be_nl;
-  *os << "public:\n";
+  *os << be_uidt << be_uidt_nl
+      << "{" << be_nl
+      << "public:\n";
   os->incr_indent ();
 
   *os << node->local_coll_name (be_interface::DIRECT) << " (\n";
