@@ -1,3 +1,11 @@
+Fri Oct 18 16:09:37 2002  Priyanka Gontla  <pgontla@ociweb.com>
+
+	* orbsvcs/ImplRepo_Service/README.txt: 
+	* orbsvcs/ImplRepo_Service/README: 
+	  Removed README and added README.txt instead as doxygen
+	  is looking for only txt files besides the normal implementation,
+	  header and inline files.
+
 Fri Oct 18 15:52:11 2002  Priyanka Gontla  <pgontla@ociweb.com>
 
 	* orbsvcs/tests/ImplRepo/Makefile: 
