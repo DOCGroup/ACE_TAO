@@ -1,3 +1,9 @@
+Fri Oct  3 11:39:45 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/CORBA_Handler: Removed the reactor() accessors since they
+ 	  are subsumed by the methods in ACE_Event_Handler.  Thanks to
+ 	  Jean-Marc STRAUSS <strauss@objectif.fr> for reporting this.
+
 Thu Oct 02 15:38:34 1997    <irfan@TWOSTEP>
 
 	* Reactor: Renamed reset_new_handle to uses_event_associations.
