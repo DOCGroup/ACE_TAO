@@ -989,7 +989,7 @@ module CosNotifyChannelAdmin
     /**
      * @param initial_qos Configure the initial QoS properties of the
      *   new EventChannel
-     * @param inital_admin Configure the initial Admin properties of
+     * @param initial_admin Configure the initial Admin properties of
      *   the new EventChannel
      * @param id Returns the ID assigned to the new EventChannel
      * @return The new event channel

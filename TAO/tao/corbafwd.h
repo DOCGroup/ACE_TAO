@@ -31,7 +31,7 @@
 
 #if defined (HPUX)
 #  if defined (IOR)
-   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h 
+   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
       and we don't want that definition, see IOPC.h */
 #  undef IOR
 #  endif /* IOR */
@@ -261,8 +261,7 @@ class CORBA_WString_out;
 class CORBA_ExceptionList;
 
 /**
- * @class TAO_OutputCDR;
- @@ TODO This should be TAO_TAO_Stub
+ * @todo This should be TAO_TAO_Stub
  */
 class TAO_InputCDR;
 class TAO_OutputCDR;

@@ -347,7 +347,7 @@ private:
 };
 
 /**
- * @class TAO_AV_Protocol_Object
+ * @class TAO_AV_RTP_Object
  * @brief TAO_AV_Protocol_object for the RTP protocol
  */
 class TAO_AV_Export TAO_AV_RTP_Object : public TAO_AV_Protocol_Object

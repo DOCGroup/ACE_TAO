@@ -109,7 +109,7 @@ public:
 
 
 /**
- * @class TAO_AV_Flow_Protocol_Factory
+ * @class TAO_AV_RTCP_Flow_Factory
  * @brief
  */
 class TAO_AV_Export TAO_AV_RTCP_Flow_Factory

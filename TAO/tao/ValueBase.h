@@ -130,7 +130,7 @@ private:
 };
 
 /**
- * @class CORBA_ValueBase_var
+ * @class CORBA_ValueBase_out
  *
  * @brief _out class for ValueBase
  */
