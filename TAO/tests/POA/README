@@ -25,7 +25,7 @@ these applications further.
 
                 A simple interface (Foo) is defined here and its
                 implementations, server and client programs are
-                availabale, which can be used for testing POA
+                available, which can be used for testing POA
                 applications.  Several servers for that interface are
                 implemented using different POA policies; a common
                 client for all the servers is also provided.
@@ -38,6 +38,13 @@ these applications further.
                 on the RETAIN/NON-RETAIN policy of a POA.
 
         . Default_Servant 
+		
+		Contains a File IDL module and its implementation and
+		a server,client to test the File Module interfaces.
+		The System interface uses the USE_DEFAULT_MANAGER policy
+		to create a POA and registers a single File Descriptor
+		object as the default servant. The default servant serves
+		requests for many Descriptor objects.
 
         . Explicit_Activation
 
