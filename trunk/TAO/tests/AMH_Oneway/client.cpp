@@ -1,9 +1,28 @@
 // $Id$
 
+#include "ace/Get_Opt.h"
 #include "TestC.h"
 
 const char *ior = "file://test.ior";
-const int num_calls = 10;
+int num_calls = 10;
+
+int
+parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, "n:");
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'n':
+        num_calls = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+      default:
+        break;
+      }
+  return 0;
+}
 
 int
 main (int argc, char *argv[])
@@ -13,6 +32,9 @@ main (int argc, char *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      if (parse_args (argc, argv) != 0)
+        return 1;
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
@@ -37,7 +59,7 @@ main (int argc, char *argv[])
       for (int i = 0; i < num_calls; i++)
         {
           roundtrip->test_method (time ACE_ENV_ARG_PARAMETER);
-          ACE_DEBUG ((LM_DEBUG, "Sent call # %d \n", i)); 
+          ACE_DEBUG ((LM_DEBUG, "Sent call # %d \n", i));
           ACE_TRY_CHECK;
         }
     }

@@ -2,13 +2,33 @@
 // $Id$
 
 #include "ace/OS_NS_stdio.h"
+#include "ace/Get_Opt.h"
 #include "TestS.h"
 
-const int num_calls = 10; // total calls client si going to make
+int num_calls = 10; // total calls client is going to make
 const int sleep_time = 1; // sleep for  1 sec on each call
 
 // This should equal num_calls within 'sleep * num_calls' seconds
 int calls_received = 0;
+
+int
+parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, "n:");
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'n':
+        num_calls = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+      default:
+        break;
+      }
+  return 0;
+}
+
 
 /***************************/
 /*** Servant Declaration ***/
@@ -230,6 +250,9 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var ior)
 int
 main (int argc, char *argv[])
 {
+  if (parse_args (argc, argv) != 0)
+    return 1;
+
   ST_AMH_Server amh_server (&argc, argv);
 
   amh_server.start_orb_and_poa ();
