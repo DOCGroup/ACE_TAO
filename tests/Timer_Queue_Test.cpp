@@ -457,6 +457,7 @@ main (int argc, char *argv[])
       delete temp;
     }
 
+  delete [] timer_ids;
   
   ACE_END_TEST;
   return 0;
