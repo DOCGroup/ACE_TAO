@@ -1,4 +1,9 @@
-Thu May  7 14:44:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+Thu May  7 15:17:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Makefile: 
+	* orbsvcs/README: 
+	  The README file is generated from the docs/orbsvcs.html page
+	  whenever a release is made.
 
 	* orbsvcs/tests/Logger/Makefile: 
 	* orbsvcs/tests/Logger/logger_i.h: 
