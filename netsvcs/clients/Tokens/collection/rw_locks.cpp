@@ -152,7 +152,7 @@ main (int argc, char* argv[])
   ACE_Thread_Manager mgr;
 
   if (mgr.spawn_n (threads, ACE_THR_FUNC (run_thread),
-		   (void *) &0,
+		   (void *) 0,
 		   THR_BOUND | THR_SUSPENDED) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn failed"), -1);
 

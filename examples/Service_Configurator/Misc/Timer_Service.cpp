@@ -103,4 +103,5 @@ ACE_STATIC_SVC_DEFINE (Timer_Service_1,
 // svc.conf file to dynamically initialize the state of the Timer
 // Services.
 ACE_SVC_FACTORY_DEFINE (Timer_Service_1)
+ACE_SVC_FACTORY_DEFINE (Timer_Service_1)
 ACE_SVC_FACTORY_DEFINE (Timer_Service_2)
