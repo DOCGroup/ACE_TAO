@@ -54,15 +54,7 @@ $(CLIENT_MODULE_LIB):
 $(SERVER_MODULE_LIB):
 	$(MAKE) -f Makefile.Test_Server_Module
 
-idl_stubs:
-	$(MAKE) -f Makefile.Test_Client_Module $@
-	$(MAKE) -f Makefile.Test_Server_Module $@
-
-realclean: clean
-	$(MAKE) -f Makefile.Test_Client_Module $@
-	$(MAKE) -f Makefile.Test_Server_Module $@
-
-depend:
+idl_stubs realclean depend:
 	$(MAKE) -f Makefile.Test_Client_Module $@
 	$(MAKE) -f Makefile.Test_Server_Module $@
 
