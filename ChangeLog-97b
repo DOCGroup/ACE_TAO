@@ -10,6 +10,9 @@ Thu Oct 16 08:43:50 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* include/makeinclude/platform_osf1_4.0.GNU: OCFLAGS instead of OFLAGS.
 
+	* tests/test_config.h (VxWorks): restored the removal of the log
+	  file, because it again appears to be necessary.
+
 Thu Oct 16 02:26:12 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.19, released Thu Oct 16 02:26:12 1997.
