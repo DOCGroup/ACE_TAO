@@ -1,3 +1,16 @@
+Mon Jul 19 10:48:21 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Interface.pidl:
+	* tao/InterfaceC.h:
+	* tao/InterfaceC.i:
+	* tao/Interface.cpp:
+	* tao/corba.h:
+	* tao/corbafwd.h: Added preliminary stuff for Interface
+	  Repository. These files were added at the request of Phillippe
+	  <Philippe.Merle@lifl.fr> who wanted to use TAO with
+	  CorbaScript. These files will not get compiled till we release
+	  TAO 1.0.  
+
 Sun Jul 18 20:36:27 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/IIOP_Connector.cpp (check_prefix):
