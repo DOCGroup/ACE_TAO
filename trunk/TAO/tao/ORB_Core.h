@@ -48,6 +48,7 @@ class TAO_Resource_Factory;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
 class TAO_Connection_Cache;
+class TAO_Object_Adapter;
 class TAO_TSS_Resources;
 class TAO_Reactor_Registry;
 class TAO_Leader_Follower;
