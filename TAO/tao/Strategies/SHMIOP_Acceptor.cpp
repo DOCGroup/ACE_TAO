@@ -289,7 +289,6 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
 
   ACE_NEW_RETURN (this->creation_strategy_,
                   TAO_SHMIOP_CREATION_STRATEGY (this->orb_core_,
-                                                0,
                                                 this->lite_flag_),
                   -1);
 

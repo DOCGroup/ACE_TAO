@@ -50,44 +50,6 @@ class TAO_Pluggable_Messaging;
 // ****************************************************************
 
 /**
- * @class TAO_SCIOP_Properties
- *
- * @brief TCP protocol properties specification for a set of
- *  connections.
- *
- */
-
-#define IPDSFIELD_DSCP_DEFAULT  0x00
-
-class TAO_Strategies_Export TAO_SCIOP_Properties
-{
-
-public:
-  int send_buffer_size;
-  int recv_buffer_size;
-  int no_delay;
-  int enable_network_priority;
-
-  /*
-  TimeBase::TimeT rto_initial;
-  TimeBase::TimeT rto_min;
-  TimeBase::TimeT rto_max;
-  float rto_alpha;
-  float rto_beta;
-  TimeBase::TimeT valid_cookie_life;
-  short associaion_max_retrans;
-  short path_max_retrans;
-  short max_init_retransmits;
-  TimeBase::TimeT hb_interval;
-  short desired_streams;
-  */
-};
-
-
-
-// ****************************************************************
-
-/**
  * @class TAO_SCIOP_Connection_Handler
  *
  * @brief  Handles requests on a single connection.
@@ -106,12 +68,9 @@ public:
 
   TAO_SCIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
-  /// Constructor. <arg> parameter is used by the Acceptor to pass the
-  /// protocol configuration properties for this connection.
+  /// Constructor. 
   TAO_SCIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                               CORBA::Boolean flag,
-                               void *arg);
-
+                                CORBA::Boolean flag);
 
   /// Destructor.
   ~TAO_SCIOP_Connection_Handler (void);
@@ -149,20 +108,8 @@ public:
   /// Process the <listen_list>
   int process_listen_point_list (IIOP::ListenPointList &listen_list);
 
-    ///Check if network priority needs to be enabled
-  int enable_network_priority (void);
-
-  ///Set the Diff-Serv codepoint if the Policy dicates the setting of Network Priority
-  int set_dscp_codepoint (void);
-
-  int set_dscp_codepoint (int tos);
-
-  /// Update the tcp properties of the hanlder to the most recent
-  /// properties set after the last invocation
-  virtual void update_protocol_properties (int send_buffer_size,
-                                           int recv_buffer_size,
-                                           int no_delay,
-                                           int enable_network_priority);
+  /// Set Diff-Serv codepoint on outgoing packets.
+  int set_dscp_codepoint (CORBA::Boolean set_network_priority);
 
 protected:
 
@@ -174,8 +121,7 @@ protected:
    * constructor just initializes its base class and sets all of its
    * contents to the default value, if any
    */
-  TAO_SCIOP_Connection_Handler (TAO_ORB_Core *orb_core,
-                               void *arg);
+  TAO_SCIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
   //@{
   /**
@@ -186,8 +132,6 @@ protected:
   //@}
 
 private:
-  /// TCP configuration for this connection.
-  TAO_SCIOP_Properties tcp_properties_;
 
   /// Stores the type of service value.
   int dscp_codepoint_;

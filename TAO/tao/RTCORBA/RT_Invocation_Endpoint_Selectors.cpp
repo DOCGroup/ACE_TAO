@@ -37,8 +37,9 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
     ACE_THROW (CORBA::INTERNAL ());
 
   CORBA::Policy_var client_protocol_policy_base =
-    TAO_RT_Endpoint_Utils::client_protocol_policy (*r
-                                                   ACE_ENV_ARG_PARAMETER);
+    TAO_RT_Endpoint_Utils::policy (TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL,
+                                   *r
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (client_protocol_policy_base.ptr () == 0)
@@ -173,27 +174,17 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
   TAO_RT_Stub *rt_stub =
     dynamic_cast <TAO_RT_Stub *> (r.stub ());
 
-  if (rt_stub == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Unexpected error narrowing stub to TAO_RT_Stub"));
-
-      ACE_THROW_RETURN (CORBA::INTERNAL (
-                           CORBA::SystemException::_tao_minor_code (
-                              TAO_DEFAULT_MINOR_CODE,
-                              EINVAL),
-                           CORBA::COMPLETED_NO),
-                        0);
-    }
-
   // Get the priority model policy.
   CORBA::Policy_var priority_model_policy =
-    rt_stub->exposed_priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
+    rt_stub->get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL
+                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Get the bands policy.
   CORBA::Policy_var bands_policy =
-    TAO_RT_Endpoint_Utils::priority_bands_policy (r
-                                                  ACE_ENV_ARG_PARAMETER);
+    TAO_RT_Endpoint_Utils::policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION,
+                                   r
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   int all_endpoints_are_valid = 0;
@@ -232,8 +223,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
     {
       // Get the protocol hooks.
       TAO_Protocols_Hooks *protocol_hooks =
-        r.stub ()->orb_core ()->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+        r.stub ()->orb_core ()->get_protocols_hooks ();
 
       CORBA::Short server_priority = 0;
       CORBA::Boolean is_client_propagated = 0;
@@ -350,7 +340,10 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
           TAO_RT_Transport_Descriptor
             rt_transport_descriptor (ep);
 
-          if (rt_stub->private_connection ())
+          CORBA::Policy_var private_connection_policy =
+            rt_stub->get_cached_policy (TAO_CACHED_POLICY_RT_PRIVATE_CONNECTION);
+
+          if (!CORBA::is_nil (private_connection_policy.in ()))
             {
               private_connection_descriptor_property.init
                 (ACE_static_cast (long,

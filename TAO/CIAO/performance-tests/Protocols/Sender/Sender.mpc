@@ -44,10 +44,9 @@ project(Protocols_Sender_svnt) : ciao_servant {
 
 project(Protocols_Sender_exec) : ciao_component, rtcorba {
   after   += Protocols_Sender_svnt
-  requires += dummy
   sharedname = Protocols_Sender_exec
-  libs      += Sender_stub Sender_svnt Protocols_stub Protocols_svnt
-  includes += ../../../../tests/RTCORBA/DiffServ
+  libs      += Protocols_Sender_stub Protocols_Sender_svnt Protocols_stub Protocols_svnt
+  includes += ../../../../tests/RTCORBA/Diffserv
   
   idlflags  +=  -Wb,export_macro=SENDER_EXEC_Export -Wb,export_include=Sender_exec_export.h
   dynamicflags   = SENDER_EXEC_BUILD_DLL
@@ -58,7 +57,6 @@ project(Protocols_Sender_exec) : ciao_component, rtcorba {
 
   Source_Files {
     Sender_exec.cpp
-    ../../../../tests/RTCORBA/DiffServ/Custom_Network_Priority_Mapping.cpp
   }
 }
 

@@ -87,6 +87,10 @@ protected:
                         size_t len,
                         const ACE_Time_Value *s = 0);
 
+  virtual int send_message_shared (TAO_Stub *stub,
+                                   int message_semantics,
+                                   const ACE_Message_Block *message_block,
+                                   ACE_Time_Value *max_wait_time);
 
   virtual int register_handler (void);
 

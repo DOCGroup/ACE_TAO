@@ -16,7 +16,6 @@
 #include "tao/Transport_Acceptor.h"
 #include "tao/Transport_Connector.h"
 #include "tao/Policy_Set.h"
-#include "tao/IIOP_Transport.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"
 
@@ -28,11 +27,6 @@ ACE_RCSID (RTCORBA,
            RT_Protocols_Hooks,
            "$Id$")
 
-
-TAO_RT_Protocols_Hooks::Client_Protocols_Hook
-  TAO_RT_Protocols_Hooks::client_protocols_hook_ = 0;
-TAO_RT_Protocols_Hooks::Server_Protocols_Hook
-  TAO_RT_Protocols_Hooks::server_protocols_hook_ = 0;
 
 TAO_RT_Protocols_Hooks::TAO_RT_Protocols_Hooks (void)
 {
@@ -50,10 +44,8 @@ TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core
 
   // Save a reference to the priority mapping manager.
   CORBA::Object_var obj =
-    orb_core->object_ref_table ().resolve_initial_references (
-                                      TAO_OBJID_PRIORITYMAPPINGMANAGER
-                                      ACE_ENV_ARG_PARAMETER
-                                    );
+    orb_core->object_ref_table ().resolve_initial_references (TAO_OBJID_PRIORITYMAPPINGMANAGER
+                                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->mapping_manager_ =
@@ -63,10 +55,8 @@ TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core
 
   // Save a reference to the priority mapping manager.
   CORBA::Object_var object =
-    orb_core->object_ref_table ().resolve_initial_references (
-                                      TAO_OBJID_NETWORKPRIORITYMAPPINGMANAGER
-                                      ACE_ENV_ARG_PARAMETER
-                                    );
+    orb_core->object_ref_table ().resolve_initial_references (TAO_OBJID_NETWORKPRIORITYMAPPINGMANAGER
+                                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->network_mapping_manager_ =
@@ -75,10 +65,8 @@ TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core
   ACE_CHECK;
 
   object =
-    this->orb_core_->object_ref_table ().resolve_initial_references (
-                                             "RTCurrent"
-                                             ACE_ENV_ARG_PARAMETER
-                                           );
+    this->orb_core_->object_ref_table ().resolve_initial_references ("RTCurrent"
+                                                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->current_ =
@@ -88,313 +76,439 @@ TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core
 
 }
 
-int
-TAO_RT_Protocols_Hooks::call_client_protocols_hook (
-    int &send_buffer_size,
-    int &recv_buffer_size,
-    int &no_delay,
-    int &enable_network_priority,
-    const char *protocol_type
-  )
+RTCORBA::ProtocolProperties_ptr
+TAO_RT_Protocols_Hooks::server_protocol_properties (IOP::ProfileId protocol_tag,
+                                                    CORBA::Policy_ptr policy
+                                                    ACE_ENV_ARG_DECL)
 {
-  if (TAO_RT_Protocols_Hooks::client_protocols_hook_ == 0)
-    return -1;
+  if (CORBA::is_nil (policy))
+    return 0;
+  
+  RTCORBA::ServerProtocolPolicy_var server_protocol_policy =
+    RTCORBA::ServerProtocolPolicy::_narrow (policy
+                                            ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
-  (*TAO_RT_Protocols_Hooks::client_protocols_hook_) (this->orb_core_,
-                                                     send_buffer_size,
-                                                     recv_buffer_size,
-                                                     no_delay,
-                                                     enable_network_priority,
-                                                     protocol_type);
+  if (CORBA::is_nil (server_protocol_policy.in ()))
+    return 0;
+  
+  TAO_ServerProtocolPolicy *server_protocols = 
+    ACE_dynamic_cast (TAO_ServerProtocolPolicy *,
+                      server_protocol_policy.in ());
+
+  if (server_protocols == 0)
+    return 0;
+
+  // TAO_ServerProtocolPolicy
+  RTCORBA::ProtocolList &protocols =
+    server_protocols->protocols_rep ();
+  
+  for (CORBA::ULong j = 0; j < protocols.length (); ++j)
+    {
+      if (protocols[j].protocol_type == protocol_tag)
+        {
+          return RTCORBA::ProtocolProperties::_duplicate (protocols[j].transport_protocol_properties.in ());
+        }
+    }
 
   return 0;
+}
+
+RTCORBA::ProtocolProperties_ptr
+TAO_RT_Protocols_Hooks::client_protocol_properties (IOP::ProfileId protocol_tag,
+                                                    CORBA::Policy_ptr policy
+                                                    ACE_ENV_ARG_DECL)
+{
+  if (CORBA::is_nil (policy))
+    return 0;
+  
+  RTCORBA::ClientProtocolPolicy_var client_protocol_policy =
+    RTCORBA::ClientProtocolPolicy::_narrow (policy
+                                            ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+  
+  if (CORBA::is_nil (client_protocol_policy.in ()))
+    return 0;
+  
+  TAO_ClientProtocolPolicy *client_protocols = 
+    ACE_dynamic_cast (TAO_ClientProtocolPolicy *,
+                      client_protocol_policy.in ());
+  
+  if (client_protocols == 0)
+    return 0;
+
+  // TAO_ClientProtocolPolicy
+  RTCORBA::ProtocolList &protocols =
+    client_protocols->protocols_rep ();
+  
+  for (CORBA::ULong j = 0; j < protocols.length (); ++j)
+    {
+      if (protocols[j].protocol_type == protocol_tag)
+        {
+          return RTCORBA::ProtocolProperties::_duplicate (protocols[j].transport_protocol_properties.in ());
+        }
+    }
+
+  return 0;
+}
+
+RTCORBA::ProtocolProperties_ptr
+TAO_RT_Protocols_Hooks::server_protocol_properties_at_orb_level (IOP::ProfileId protocol_tag
+                                                                 ACE_ENV_ARG_DECL)
+{
+  CORBA::Policy_var policy =
+    this->orb_core_->get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL
+                                        ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return this->server_protocol_properties (protocol_tag,
+                                           policy.in ()
+                                           ACE_ENV_ARG_PARAMETER);
+}
+
+RTCORBA::ProtocolProperties_ptr
+TAO_RT_Protocols_Hooks::client_protocol_properties_at_orb_level (IOP::ProfileId protocol_tag
+                                                                 ACE_ENV_ARG_DECL)
+{
+  CORBA::Policy_var policy =
+    this->orb_core_->get_cached_policy (TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL
+                                        ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return this->client_protocol_properties (protocol_tag,
+                                           policy.in ()
+                                           ACE_ENV_ARG_PARAMETER);
+}
+
+RTCORBA::ProtocolProperties_ptr
+TAO_RT_Protocols_Hooks::client_protocol_properties_at_object_level (IOP::ProfileId protocol_tag,
+                                                                    TAO_Stub *stub
+                                                                    ACE_ENV_ARG_DECL)
+{
+  CORBA::Policy_var policy =
+    stub->get_cached_policy (TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL
+                             ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return this->client_protocol_properties (protocol_tag,
+                                           policy.in ()
+                                           ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_RT_Protocols_Hooks::set_client_protocols_hook (Client_Protocols_Hook hook)
+TAO_RT_Protocols_Hooks::extract_protocol_properties (TAO_IIOP_Protocol_Properties &to,
+                                                     RTCORBA::ProtocolProperties_ptr from
+                                                     ACE_ENV_ARG_DECL)
 {
-  TAO_RT_Protocols_Hooks::client_protocols_hook_ = hook;
-  // Saving the hook pointer so that we can use it later when needed.
-}
-
-int
-TAO_RT_Protocols_Hooks::call_server_protocols_hook (
-    int &send_buffer_size,
-    int &recv_buffer_size,
-    int &no_delay,
-    int &enable_network_priority,
-    const char *protocol_type
-  )
-{
-  if (TAO_RT_Protocols_Hooks::server_protocols_hook_ == 0)
-    {
-      return -1;
-    }
-
-  int result_value =
-    (*TAO_RT_Protocols_Hooks::server_protocols_hook_) (this->orb_core_,
-                                                       send_buffer_size,
-                                                       recv_buffer_size,
-                                                       no_delay,
-                                                       enable_network_priority,
-                                                       protocol_type);
-
-  if (result_value != 0)
-    {
-      return -1;
-    }
-
-  return 0;
+  RTCORBA::TCPProtocolProperties_var protocol_properties =
+    RTCORBA::TCPProtocolProperties::_narrow (from
+                                             ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  to.send_buffer_size_ = protocol_properties->send_buffer_size ();
+  to.recv_buffer_size_ = protocol_properties->recv_buffer_size ();
+  to.keep_alive_ = protocol_properties->keep_alive ();
+  to.dont_route_ = protocol_properties->dont_route ();
+  to.no_delay_ = protocol_properties->no_delay ();
+  to.enable_network_priority_ = protocol_properties->enable_network_priority ();
 }
 
 void
-TAO_RT_Protocols_Hooks::set_server_protocols_hook (Server_Protocols_Hook hook)
+TAO_RT_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &to
+                                                                 ACE_ENV_ARG_DECL)
 {
-  TAO_RT_Protocols_Hooks::server_protocols_hook_ = hook;
-  // Saving the hook pointer so that we can use it later when needed.
+  RTCORBA::ProtocolProperties_var from =
+    this->server_protocol_properties_at_orb_level (IOP::TAG_INTERNET_IOP
+                                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (!CORBA::is_nil (from.in ()))
+    this->extract_protocol_properties (to,
+                                       from.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
-int
-TAO_RT_Protocols_Hooks::update_client_protocol_properties (
-    TAO_Stub *stub,
-    TAO_Transport *transport,
-    const char *protocol_type
-  )
+void
+TAO_RT_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &to
+                                                                 ACE_ENV_ARG_DECL)
 {
-  if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO_RT_Protocols_Hooks::"
-                "get_effective_client_protocol_properties\n"));
+  RTCORBA::ProtocolProperties_var from =
+    this->client_protocol_properties_at_orb_level (IOP::TAG_INTERNET_IOP
+                                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-  ACE_TRY_NEW_ENV
-    {
-      RTCORBA::ProtocolProperties_var properties =
-        RTCORBA::ProtocolProperties::_nil ();
-
-      TAO_RT_Stub *rt_stub = ACE_dynamic_cast (TAO_RT_Stub *,
-                                               stub);
-
-      CORBA::Policy* policy = rt_stub->client_protocol ();
-
-      RTCORBA::ClientProtocolPolicy_var client_protocols_policy;
-      TAO_ClientProtocolPolicy *client_protocols = 0;
-
-      if (!CORBA::is_nil (policy))
-        {
-          client_protocols_policy =
-            RTCORBA::ClientProtocolPolicy::_narrow (policy
-                                                    ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          client_protocols =
-            ACE_dynamic_cast (TAO_ClientProtocolPolicy *,
-                              client_protocols_policy.in ());
-
-          if (client_protocols != 0)
-            {
-              // TAO_ClientProtocolPolicy
-              RTCORBA::ProtocolList & protocols =
-                client_protocols->protocols_rep ();
-
-              for (CORBA::ULong j = 0; j < protocols.length (); ++j)
-                {
-                  if (protocols[j].protocol_type == IOP::TAG_INTERNET_IOP)
-                    {
-                      properties =
-                        RTCORBA::ProtocolProperties::_narrow (
-                            protocols[j].transport_protocol_properties.in ()
-                            ACE_ENV_ARG_PARAMETER
-                          );
-                      ACE_TRY_CHECK;
-
-                      if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
-                        {
-                          break;
-                        }
-                    }
-                }
-            }
-
-          if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
-            {
-              if (!CORBA::is_nil (properties.in ()))
-                {
-                  RTCORBA::TCPProtocolProperties_var tcp_properties =
-                    RTCORBA::TCPProtocolProperties::_narrow (
-                        properties.in ()
-                        ACE_ENV_ARG_PARAMETER
-                      );
-                  ACE_TRY_CHECK;
-
-                  const int send_buffer_size =
-                    tcp_properties->send_buffer_size (
-                                        ACE_ENV_SINGLE_ARG_PARAMETER
-                                      );
-                  ACE_TRY_CHECK;
-
-                  const int recv_buffer_size =
-                    tcp_properties->recv_buffer_size (
-                                        ACE_ENV_SINGLE_ARG_PARAMETER
-                                      );
-                  ACE_TRY_CHECK;
-
-                  const int no_delay =
-                    tcp_properties->no_delay (
-                                        ACE_ENV_SINGLE_ARG_PARAMETER
-                                      );
-                  ACE_TRY_CHECK;
-
-                  const int enable_network_priority =
-                    tcp_properties->enable_network_priority (
-                                        ACE_ENV_SINGLE_ARG_PARAMETER
-                                      );
-                  ACE_TRY_CHECK;
-
-                  TAO_IIOP_Transport *iiop_transport =
-                    ACE_dynamic_cast (TAO_IIOP_Transport *,
-                                      transport);
-
-                  iiop_transport->update_protocol_properties (
-                                      send_buffer_size,
-                                      recv_buffer_size,
-                                      no_delay,
-                                      enable_network_priority
-                                    );
-                }
-            }
-        }
-    }
-  ACE_CATCHANY
-    {
-      if (TAO_debug_level > 4)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                             "TAO_RT_Protocols_Hooks::"
-                             "get_effective_client_protocol_properties");
-
-      return -1;
-    }
-  ACE_ENDTRY;
-
-  return 0;
+  if (!CORBA::is_nil (from.in ()))
+    this->extract_protocol_properties (to,
+                                       from.in ()
+                                       ACE_ENV_ARG_PARAMETER);
 }
 
-int
-TAO_RT_Protocols_Hooks::update_server_protocol_properties (
-    CORBA::Policy *policy,
-    TAO_Transport *transport,
-    const char *protocol_type
-  )
+void
+TAO_RT_Protocols_Hooks::extract_protocol_properties (TAO_UIOP_Protocol_Properties &to,
+                                                     RTCORBA::ProtocolProperties_ptr from
+                                                     ACE_ENV_ARG_DECL)
 {
-
-  if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO_RT_Protocols_Hooks::"
-                "get_effective_server_protocol_properties\n"));
-
-  ACE_TRY_NEW_ENV
-    {
-      RTCORBA::ProtocolProperties_var properties =
-        RTCORBA::ProtocolProperties::_nil ();
-
-      RTCORBA::ServerProtocolPolicy_var server_protocols_policy;
-      TAO_ServerProtocolPolicy *server_protocols = 0;
-
-      if (!CORBA::is_nil (policy))
-        {
-          server_protocols_policy =
-            RTCORBA::ServerProtocolPolicy::_narrow (policy
+  RTCORBA::UnixDomainProtocolProperties_var protocol_properties =
+    RTCORBA::UnixDomainProtocolProperties::_narrow (from
                                                     ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+  ACE_CHECK;
+  
+  to.send_buffer_size_ = protocol_properties->send_buffer_size ();
+  to.recv_buffer_size_ = protocol_properties->recv_buffer_size ();
+}
 
-          server_protocols =
-            ACE_dynamic_cast (TAO_ServerProtocolPolicy *,
-                              server_protocols_policy.in ());
+void
+TAO_RT_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &to
+                                                                 ACE_ENV_ARG_DECL)
+{
+  RTCORBA::ProtocolProperties_var from =
+    this->server_protocol_properties_at_orb_level (TAO_TAG_UIOP_PROFILE
+                                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-          if (server_protocols != 0)
-            {
-              // TAO_ServerProtocolPolicy
-              RTCORBA::ProtocolList & protocols =
-                server_protocols->protocols_rep ();
+  if (!CORBA::is_nil (from.in ()))
+    this->extract_protocol_properties (to,
+                                       from.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}
 
-              for (CORBA::ULong j = 0; j < protocols.length (); ++j)
-                {
-                  if (protocols[j].protocol_type == IOP::TAG_INTERNET_IOP)
-                    {
-                      properties =
-                        RTCORBA::ProtocolProperties::_narrow (
-                          protocols[j].transport_protocol_properties.in ()
-                          ACE_ENV_ARG_PARAMETER);
-                      ACE_TRY_CHECK;
+void
+TAO_RT_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &to
+                                                                 ACE_ENV_ARG_DECL)
+{
+  RTCORBA::ProtocolProperties_var from =
+    this->client_protocol_properties_at_orb_level (TAO_TAG_UIOP_PROFILE
+                                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-                      if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
-                        {
-                          break;
-                        }
-                    }
-                }
-            }
+  if (!CORBA::is_nil (from.in ()))
+    this->extract_protocol_properties (to,
+                                       from.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+}
 
-          if (ACE_OS::strcmp (protocol_type, "iiop") == 0)
-            {
-              if (!CORBA::is_nil (properties.in ()))
-                {
-                  RTCORBA::TCPProtocolProperties_var tcp_properties =
-                    RTCORBA::TCPProtocolProperties::_narrow (
-                        properties.in ()
-                        ACE_ENV_ARG_PARAMETER
-                      );
-                  ACE_TRY_CHECK;
+void
+TAO_RT_Protocols_Hooks::extract_protocol_properties (TAO_SHMIOP_Protocol_Properties &to,
+                                                     RTCORBA::ProtocolProperties_ptr from
+                                                     ACE_ENV_ARG_DECL)
+{
+  RTCORBA::SharedMemoryProtocolProperties_var protocol_properties =
+    RTCORBA::SharedMemoryProtocolProperties::_narrow (from
+                                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  to.preallocate_buffer_size_ = protocol_properties->preallocate_buffer_size ();
+  to.mmap_filename_ = protocol_properties->mmap_filename ();
+  to.mmap_lockname_ = protocol_properties->mmap_lockname ();
+}
 
-                  const int send_buffer_size =
-                    tcp_properties->send_buffer_size (
-                                        ACE_ENV_SINGLE_ARG_PARAMETER
-                                      );
-                  ACE_TRY_CHECK;
+void
+TAO_RT_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &to
+                                                                 ACE_ENV_ARG_DECL)
+{
+  RTCORBA::ProtocolProperties_var from =
+    this->server_protocol_properties_at_orb_level (TAO_TAG_SHMEM_PROFILE
+                                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-                  const int recv_buffer_size =
-                    tcp_properties->recv_buffer_size (
-                                        ACE_ENV_SINGLE_ARG_PARAMETER
-                                      );
-                  ACE_TRY_CHECK;
+  if (!CORBA::is_nil (from.in ()))
+    this->extract_protocol_properties (to,
+                                       from.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}
 
-                  const int no_delay =
-                    tcp_properties->no_delay (
-                                        ACE_ENV_SINGLE_ARG_PARAMETER
-                                      );
-                  ACE_TRY_CHECK;
+void
+TAO_RT_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &to
+                                                                 ACE_ENV_ARG_DECL)
+{
+  RTCORBA::ProtocolProperties_var from =
+    this->client_protocol_properties_at_orb_level (TAO_TAG_SHMEM_PROFILE
+                                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-                  const int enable_network_priority =
-                    tcp_properties->enable_network_priority (
-                                        ACE_ENV_SINGLE_ARG_PARAMETER
-                                      );
-                  ACE_TRY_CHECK;
+  if (!CORBA::is_nil (from.in ()))
+    this->extract_protocol_properties (to,
+                                       from.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+}
 
-                  TAO_IIOP_Transport *iiop_transport =
-                    ACE_dynamic_cast (TAO_IIOP_Transport *,
-                                      transport);
+void
+TAO_RT_Protocols_Hooks::extract_protocol_properties (TAO_DIOP_Protocol_Properties &to,
+                                                     RTCORBA::ProtocolProperties_ptr from
+                                                     ACE_ENV_ARG_DECL)
+{
+  RTCORBA::UserDatagramProtocolProperties_var protocol_properties =
+    RTCORBA::UserDatagramProtocolProperties::_narrow (from
+                                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  to.enable_network_priority_ = protocol_properties->enable_network_priority ();
+}
 
-                  iiop_transport->update_protocol_properties (
-                                      send_buffer_size,
-                                      recv_buffer_size,
-                                      no_delay,
-                                      enable_network_priority
-                                    );
-                }
-            }
-        }
-    }
-  ACE_CATCHANY
+void
+TAO_RT_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &to
+                                                                 ACE_ENV_ARG_DECL)
+{
+  RTCORBA::ProtocolProperties_var from =
+    this->server_protocol_properties_at_orb_level (TAO_TAG_UDP_PROFILE
+                                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (!CORBA::is_nil (from.in ()))
+    this->extract_protocol_properties (to,
+                                       from.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+void
+TAO_RT_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &to
+                                                                 ACE_ENV_ARG_DECL)
+{
+  RTCORBA::ProtocolProperties_var from =
+    this->client_protocol_properties_at_orb_level (TAO_TAG_UDP_PROFILE
+                                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (!CORBA::is_nil (from.in ()))
+    this->extract_protocol_properties (to,
+                                       from.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_RT_Protocols_Hooks::extract_protocol_properties (TAO_SCIOP_Protocol_Properties &to,
+                                                     RTCORBA::ProtocolProperties_ptr from
+                                                     ACE_ENV_ARG_DECL)
+{
+  RTCORBA::StreamControlProtocolProperties_var protocol_properties =
+    RTCORBA::StreamControlProtocolProperties::_narrow (from
+                                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  to.send_buffer_size_ = protocol_properties->send_buffer_size ();
+  to.recv_buffer_size_ = protocol_properties->recv_buffer_size ();
+  to.keep_alive_ = protocol_properties->keep_alive ();
+  to.dont_route_ = protocol_properties->dont_route ();
+  to.no_delay_ = protocol_properties->no_delay ();
+  to.enable_network_priority_ = protocol_properties->enable_network_priority ();
+}
+
+void
+TAO_RT_Protocols_Hooks::server_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &to
+                                                                 ACE_ENV_ARG_DECL)
+{
+  RTCORBA::ProtocolProperties_var from =
+    this->server_protocol_properties_at_orb_level (TAO_TAG_SCIOP_PROFILE
+                                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (!CORBA::is_nil (from.in ()))
+    this->extract_protocol_properties (to,
+                                       from.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+void
+TAO_RT_Protocols_Hooks::client_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &to
+                                                                 ACE_ENV_ARG_DECL)
+{
+  RTCORBA::ProtocolProperties_var from =
+    this->client_protocol_properties_at_orb_level (TAO_TAG_SCIOP_PROFILE
+                                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (!CORBA::is_nil (from.in ()))
+    this->extract_protocol_properties (to,
+                                       from.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::Boolean
+TAO_RT_Protocols_Hooks::set_network_priority (IOP::ProfileId protocol_tag,
+                                              RTCORBA::ProtocolProperties_ptr protocol_properties
+                                              ACE_ENV_ARG_DECL)
+{
+  if (CORBA::is_nil (protocol_properties))
+      return false;
+
+  if (protocol_tag == IOP::TAG_INTERNET_IOP)
     {
-      if (TAO_debug_level > 4)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                             "TAO_RT_Protocols_Hooks::"
-                             "get_effective_client_protocol_properties");
+      RTCORBA::TCPProtocolProperties_var tcp_protocol_properties =
+        RTCORBA::TCPProtocolProperties::_narrow (protocol_properties
+                                                 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (false);
 
-      return -1;
+      return tcp_protocol_properties->enable_network_priority ();
     }
-  ACE_ENDTRY;
+  
+  if (protocol_tag == TAO_TAG_UDP_PROFILE)
+    {
+      RTCORBA::UserDatagramProtocolProperties_var udp_protocol_properties =
+        RTCORBA::UserDatagramProtocolProperties::_narrow (protocol_properties
+                                                          ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (false);
 
-  return 0;
+      return udp_protocol_properties->enable_network_priority ();
+    }
+
+  if (protocol_tag == TAO_TAG_SCIOP_PROFILE)
+    {
+      RTCORBA::StreamControlProtocolProperties_var sctp_protocol_properties =
+        RTCORBA::StreamControlProtocolProperties::_narrow (protocol_properties
+                                                           ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (false);
+
+      return sctp_protocol_properties->enable_network_priority ();
+    }
+
+  return false;
+}
+
+CORBA::Boolean
+TAO_RT_Protocols_Hooks::set_client_network_priority (IOP::ProfileId protocol_tag,
+                                                     TAO_Stub *stub
+                                                     ACE_ENV_ARG_DECL)
+{
+  if (protocol_tag != IOP::TAG_INTERNET_IOP &&
+      protocol_tag != TAO_TAG_UDP_PROFILE &&
+      protocol_tag != TAO_TAG_SCIOP_PROFILE)
+    return false;
+
+  RTCORBA::ProtocolProperties_var protocol_properties =
+    this->client_protocol_properties_at_object_level (protocol_tag,
+                                                      stub
+                                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (false);
+
+  return this->set_network_priority (protocol_tag,
+                                     protocol_properties.in ()
+                                     ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::Boolean
+TAO_RT_Protocols_Hooks::set_server_network_priority (IOP::ProfileId protocol_tag,
+                                                     CORBA::Policy *policy
+                                                     ACE_ENV_ARG_DECL)
+{
+  if (protocol_tag != IOP::TAG_INTERNET_IOP &&
+      protocol_tag != TAO_TAG_UDP_PROFILE &&
+      protocol_tag != TAO_TAG_SCIOP_PROFILE)
+    return false;
+
+  RTCORBA::ProtocolProperties_var protocol_properties =
+    this->server_protocol_properties (protocol_tag,
+                                      policy
+                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (false);
+
+  return this->set_network_priority (protocol_tag,
+                                     protocol_properties.in ()
+                                     ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Long
@@ -461,28 +575,27 @@ TAO_RT_Protocols_Hooks::rt_service_context (
   // again. We can use the already existing one.
   if (!restart)
     {
-      TAO_RT_Stub *rt_stub = ACE_dynamic_cast (TAO_RT_Stub *,
-                                               stub);
-      CORBA::Policy *priority_model_policy =
-        rt_stub->exposed_priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
+      TAO_RT_Stub *rt_stub = 
+        ACE_dynamic_cast (TAO_RT_Stub *,
+                          stub);
+
+      CORBA::Policy_var priority_model_policy =
+        rt_stub->get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL
+                                    ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
-      if (priority_model_policy)
+
+      if (!CORBA::is_nil (priority_model_policy.in ()))
         {
-
-          CORBA::Policy *priority_model_policy =
-            rt_stub->exposed_priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
-
           CORBA::Short client_priority;
+
           int status =
             this->get_thread_CORBA_priority (client_priority
                                              ACE_ENV_ARG_PARAMETER);
           if (status == -1)
             ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
 
-
           this->add_rt_service_context_hook (service_context,
-                                             priority_model_policy,
+                                             priority_model_policy.in (),
                                              client_priority
                                              ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
@@ -705,74 +818,6 @@ TAO_RT_Protocols_Hooks::set_thread_native_priority (
 }
 
 int
-TAO_RT_Protocols_Hooks::set_default_policies (ACE_ENV_SINGLE_ARG_DECL)
-{
-  // Set RTCORBA policy defaults.
-  // Set RTCORBA::ServerProtocolPolicy and
-  // RTCORBA::ClientProtocolPolicy defaults to include all protocols
-  // that were loaded into this ORB.
-  // First, create a protocol list.
-
-  TAO_ProtocolFactorySet *pfs = this->orb_core_->protocol_factories ();
-
-  RTCORBA::ProtocolList protocols;
-  protocols.length (ACE_static_cast (CORBA::ULong, pfs->size ()));
-
-  int i = 0;
-  for (TAO_ProtocolFactorySetItor factory = pfs->begin ();
-       factory != pfs->end ();
-       ++factory, ++i)
-    {
-      CORBA::ULong protocol_type = (*factory)->factory ()->tag ();
-      protocols[i].protocol_type = protocol_type;
-      protocols[i].orb_protocol_properties =
-        RTCORBA::ProtocolProperties::_nil ();
-      // @@ Later, we will likely migrate to using RTCORBA protocol
-      // policies for configuration of protocols in nonRT use cases.
-      // Then, the code below will change to each protocol factory
-      // being responsible for creation of its own default protocol
-      // properties.
-      protocols[i].transport_protocol_properties =
-        TAO_Protocol_Properties_Factory::create_transport_protocol_property
-        (protocol_type);
-    }
-
-  // Set ServerProtocolPolicy.
-  TAO_ServerProtocolPolicy *server_protocol_policy = 0;
-  ACE_NEW_RETURN (server_protocol_policy,
-                  TAO_ServerProtocolPolicy (protocols),
-                  -1);
-
-  RTCORBA::ServerProtocolPolicy_var safe_server_protocol_policy =
-    server_protocol_policy;
-
-  this->orb_core_->get_default_policies ()->set_policy (server_protocol_policy
-                                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  // Set ClientProtocolPolicy.
-  // NOTE: ClientProtocolPolicy default is used ONLY for protocol
-  // configuration (not protocol preference) IF there is no ORB-level
-  // override.  It is not used when computing effective policy value
-  // for preferencing protocols.
-  TAO_ClientProtocolPolicy *client_protocol_policy = 0;
-  ACE_NEW_RETURN (client_protocol_policy,
-                  TAO_ClientProtocolPolicy (protocols),
-                  -1);
-
-  RTCORBA::ClientProtocolPolicy_var safe_client_protocol_policy =
-    client_protocol_policy;
-
-  this->orb_core_->get_default_policies ()->set_policy (
-                                                client_protocol_policy
-                                                ACE_ENV_ARG_PARAMETER
-                                              );
-  ACE_CHECK_RETURN (-1);
-
-  return 0;
-}
-
-int
 TAO_RT_Protocols_Hooks::set_default_server_protocol_policy (
     TAO_Acceptor_Registry &acceptor_registry
     ACE_ENV_ARG_DECL
@@ -808,9 +853,8 @@ TAO_RT_Protocols_Hooks::set_default_server_protocol_policy (
       // being responsible for creation of its own default protocol
       // properties.
       protocols[current_length].transport_protocol_properties =
-        TAO_Protocol_Properties_Factory::create_transport_protocol_property (
-            (*acceptor)->tag ()
-          );
+        TAO_Protocol_Properties_Factory::create_transport_protocol_property ((*acceptor)->tag (), 
+                                                                             this->orb_core_);
     }
 
   // Set ServerProtocolPolicy.
@@ -842,7 +886,7 @@ ACE_STATIC_SVC_DEFINE (TAO_RT_Protocols_Hooks,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-  template class ACE_Dynamic_Service<TAO_RT_Protocols_Hooks>;
+template class ACE_Dynamic_Service<TAO_RT_Protocols_Hooks>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 

@@ -319,7 +319,7 @@ TAO_Policy_Set::get_policy_overrides (const CORBA::PolicyTypeSeq &types
 
 CORBA::Policy_ptr
 TAO_Policy_Set::get_policy (CORBA::PolicyType type
-                                     ACE_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
 {
   const CORBA::ULong length = this->policy_list_.length ();
 

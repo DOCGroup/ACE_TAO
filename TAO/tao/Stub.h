@@ -79,53 +79,18 @@ public:
   virtual CORBA::Policy_ptr get_policy (CORBA::PolicyType type
                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-
-  virtual CORBA::Policy_ptr get_client_policy (CORBA::PolicyType type
+  virtual CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
                                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   virtual TAO_Stub* set_policy_overrides (const CORBA::PolicyList & policies,
                                           CORBA::SetOverrideType set_add
                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  virtual CORBA::PolicyList * get_policy_overrides (
+  virtual CORBA::PolicyList *get_policy_overrides (
     const CORBA::PolicyTypeSeq & types
     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-
-  // = Methods for obtaining effective overrides.
-  //
-  //   Same functionality as <get_client_policy>, but more efficient.
-  //   Each of the methods below returns effective override for the
-  //   corresponding policy.  The effective override is obtained by
-  //   first checking for an override of the given policy type at the
-  //   Object scope, then at the Current scope, then at the ORB scope,
-  //   and, finally, ORB default values are checked.
-
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-  CORBA::Policy_ptr relative_roundtrip_timeout (void);
-
-#endif  /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
-
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-  CORBA::Policy_ptr sync_scope (void);
-
-#endif  /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
-
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-
-  CORBA::Policy_ptr buffering_constraint (void);
-
-#endif  /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-#if (TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
-
-  CORBA::Policy_ptr connection_timeout (void);
-
-#endif  /* TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1 */
 
   /// Return the sync strategy to be used in by the transport.
   /// Selection will be based on the SyncScope policies.

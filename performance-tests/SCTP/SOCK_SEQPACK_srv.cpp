@@ -283,7 +283,7 @@ int main(int argc, char **argv){
                ACE_OS::inet_ntoa( addresses[0].sin_addr)  ));
 
    unsigned int i;
-   for(i=1; i < serverAddr.get_num_secondary_addresses() ; ++i ) {
+   for(i=1; i <= serverAddr.get_num_secondary_addresses() ; ++i ) {
      ACE_DEBUG((LM_DEBUG, " and %s", ACE_OS::inet_ntoa( addresses[i].sin_addr) ));
    }
    ACE_DEBUG((LM_DEBUG, "\n" ));

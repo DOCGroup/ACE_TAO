@@ -11,8 +11,8 @@
 
   <title>Sender</title>
 
-  <idl id="IDL:Hello/Sender:1.0"
-       homeid="IDL:Hello/SenderHome:1.0">
+  <idl id="IDL:DiffServ/Sender:1.0"
+       homeid="IDL:DiffServ/SenderHome:1.0">
    <fileinarchive name="Sender.idl"/>
   </idl>
 
@@ -31,7 +31,7 @@
    </dependency>
 
    <code type="DLL">
-     <fileinarchive name="Sender_exec"/>
+     <fileinarchive name="DiffServ_Sender_exec"/>
      <entrypoint>createSenderHome_Impl</entrypoint>
    </code>
 

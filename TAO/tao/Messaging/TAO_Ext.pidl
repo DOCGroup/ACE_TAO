@@ -50,10 +50,9 @@ module TAO
 {
   const CORBA::PolicyType CONNECTION_TIMEOUT_POLICY_TYPE = 0x54410008;
 
-    local interface ConnectionTimeoutPolicy : CORBA::Policy {
+  local interface ConnectionTimeoutPolicy : CORBA::Policy {
     readonly attribute TimeBase::TimeT relative_expiry;
-    };
-
+  };
 };
 
 #endif /* TAO_TAO_EXT_IDL */

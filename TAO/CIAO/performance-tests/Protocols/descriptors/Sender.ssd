@@ -11,8 +11,8 @@
 
   <title>componentizedSender::Sender Servants</title>
 
-  <idl id="IDL:Hello/Sender:1.0"
-       homeid="IDL:Hello/SenderHome:1.0">
+  <idl id="IDL:Protocols/Sender:1.0"
+       homeid="IDL:Protocols/SenderHome:1.0">
    <fileinarchive name="Sender.idl"/>
   </idl>
 
@@ -28,7 +28,7 @@
 
    <code>
      <!-- No need to specify extension below since ACE takes care of that, -->
-     <fileinarchive name="Sender_svnt"/>
+     <fileinarchive name="Protocols_Sender_svnt"/>
      <entrypoint>createSenderHome_Servant</entrypoint>
    </code>
 

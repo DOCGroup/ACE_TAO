@@ -22,6 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Basic_Types.h"
+
 class TAO_ORB_Core;
 class TAO_ORB_Core_TSS_Resources;
 class TAO_Transport;
@@ -96,6 +98,11 @@ public:
   /// A close() hook, called by the Transport Connector when they want to close
   /// this handler
   virtual int close_handler (void);
+
+  /// Set the Diff-Serv codepoint on outgoing packets.  Only has
+  /// effect for remote protocols (e.g., IIOP); no effect for local
+  /// protocols (UIOP).
+  virtual int set_dscp_codepoint (CORBA::Boolean set_network_priority) = 0;
 
 protected:
 

@@ -126,6 +126,12 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
           ACE_TString *name = 0;
           while (name_iter.next (name))
             {
+              if (ACE::debug ())
+                ACE_DEBUG ((LM_DEBUG,
+                            ACE_LIB_TEXT ("ACE_DLL_Handle::open: Trying to open DLL %s with %s name\n"),
+                            this->dll_name_,
+                            name->c_str ()));
+              
               // The ACE_SHLIB_HANDLE object is obtained.
               this->handle_ = ACE_OS::dlopen (name->c_str (),
                                               open_mode);

@@ -47,7 +47,6 @@ class TAO_RTCORBA_Export TAO_RT_Stub : public TAO_Stub
 {
 public:
 
-  // -- Ctor/Dtor --
   TAO_RT_Stub (const char *repository_id,
                const TAO_MProfile &profiles,
                TAO_ORB_Core *orb_core);
@@ -65,19 +64,25 @@ public:
   CORBA::Policy_ptr get_policy (CORBA::PolicyType type
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-
-
-  CORBA::Policy_ptr get_client_policy (CORBA::PolicyType type
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type
                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-
-  virtual TAO_Stub* set_policy_overrides (const CORBA::PolicyList & policies,
-                                             CORBA::SetOverrideType set_add
-                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  TAO_Stub* set_policy_overrides (const CORBA::PolicyList & policies,
+                                  CORBA::SetOverrideType set_add
+                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
-  /// Creates a Stub Object.
+private:
+
+  /// Helper method used to parse the policies.
+  void parse_policies (ACE_ENV_SINGLE_ARG_DECL);
+
+  void exposed_priority_model (CORBA::Policy_ptr policy);
+
+  void exposed_priority_banded_connection (CORBA::Policy_ptr policy);
+
+  void exposed_client_protocol (CORBA::Policy_ptr policy);
 
   /// Returns the CORBA::Policy (which will be narrowed to be
   /// used as RTCORBA::PriorityModelPolicy) exported
@@ -94,13 +99,6 @@ public:
   /// in object's IOR.
   CORBA::Policy_ptr exposed_client_protocol (ACE_ENV_SINGLE_ARG_DECL);
 
-
-  CORBA::Policy *private_connection (void);
-
-  CORBA::Policy *priority_banded_connection (void);
-
-  CORBA::Policy *client_protocol (void);
-
   // = Methods for obtaining effective policies.
   //
   //   Effective policy is the one that would be used if a request
@@ -108,25 +106,8 @@ public:
   //   override for a given policy type, and then reconciling it with
   //   the policy value exported in the Object's IOR.
 
-  CORBA::Policy *
-  effective_priority_banded_connection (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  CORBA::Policy *
-  effective_client_protocol (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-
-
-
-private:
-
-  /// Helper method used to parse the policies.
-  void parse_policies (ACE_ENV_SINGLE_ARG_DECL);
-
-  void exposed_priority_model (CORBA::Policy_ptr policy);
-
-  void exposed_priority_banded_connection (CORBA::Policy_ptr policy);
-
-  void exposed_client_protocol (CORBA::Policy_ptr policy);
-
-private:
+  CORBA::Policy *effective_priority_banded_connection (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  CORBA::Policy *effective_client_protocol (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   // The following attribute are used to cache
   // the different kind of policies and avoid to
@@ -140,8 +121,6 @@ private:
   CORBA::Policy *client_protocol_policy_;
 
   CORBA::Boolean are_policies_parsed_;
-
-
 
 private:
   // = Disallow copy constructor and assignment operator.

@@ -60,8 +60,8 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
 {
   CORBA::Policy_var policy =
     (stub == 0
-     ? orb_core->stubless_relative_roundtrip_timeout ()
-     : stub->relative_roundtrip_timeout ());
+     ? orb_core->get_cached_policy_including_current (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT)
+     : stub->get_cached_policy (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT));
 
   if (CORBA::is_nil (policy.in ()))
     {
@@ -218,7 +218,9 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
                              Messaging::SyncScope &scope)
 {
   CORBA::Policy_var policy =
-    (stub == 0 ? orb_core->stubless_sync_scope () : stub->sync_scope ());
+    (stub == 0
+     ? orb_core->get_cached_policy_including_current (TAO_CACHED_POLICY_SYNC_SCOPE)
+     : stub->get_cached_policy (TAO_CACHED_POLICY_SYNC_SCOPE));
 
   if (CORBA::is_nil (policy.in ()))
     {

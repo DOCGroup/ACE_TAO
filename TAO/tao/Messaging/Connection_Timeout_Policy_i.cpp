@@ -58,8 +58,8 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
 {
   CORBA::Policy_var policy =
     (stub == 0
-     ? orb_core->stubless_connection_timeout ()
-     : stub->connection_timeout ());
+     ? orb_core->get_cached_policy_including_current (TAO_CACHED_POLICY_CONNECTION_TIMEOUT)
+     : stub->get_cached_policy (TAO_CACHED_POLICY_CONNECTION_TIMEOUT));
 
   if (CORBA::is_nil (policy.in ()))
     {

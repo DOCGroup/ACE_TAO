@@ -24,6 +24,8 @@
 
 #include "TAO_Export.h"
 #include "Basic_Types.h"
+#include "IOP_IORC.h"
+#include "ace/SString.h"
 
 namespace CORBA
 {
@@ -40,6 +42,69 @@ class TAO_Connection_Handler;
 class TAO_Transport;
 class TAO_Stub;
 
+class TAO_IIOP_Protocol_Properties
+{
+public:  
+  
+  TAO_IIOP_Protocol_Properties (void);
+
+  CORBA::Long send_buffer_size_;
+  CORBA::Long recv_buffer_size_;
+  CORBA::Boolean keep_alive_;
+  CORBA::Boolean dont_route_;
+  CORBA::Boolean no_delay_;
+  CORBA::Boolean enable_network_priority_;
+};
+  
+class TAO_UIOP_Protocol_Properties
+{
+public:  
+  
+  TAO_UIOP_Protocol_Properties (void);
+
+  CORBA::Long send_buffer_size_;
+  CORBA::Long recv_buffer_size_;
+};
+  
+class TAO_SHMIOP_Protocol_Properties
+{
+public:  
+  
+  TAO_SHMIOP_Protocol_Properties (void);
+
+  CORBA::Long send_buffer_size_;
+  CORBA::Long recv_buffer_size_;
+  CORBA::Boolean keep_alive_;
+  CORBA::Boolean dont_route_;
+  CORBA::Boolean no_delay_;
+  CORBA::Long preallocate_buffer_size_;
+  ACE_CString mmap_filename_;
+  ACE_CString mmap_lockname_;
+};
+  
+class TAO_DIOP_Protocol_Properties
+{
+public:  
+  
+  TAO_DIOP_Protocol_Properties (void);
+
+  CORBA::Boolean enable_network_priority_;
+};
+  
+class TAO_SCIOP_Protocol_Properties
+{
+public:  
+  
+  TAO_SCIOP_Protocol_Properties (void);
+
+  CORBA::Long send_buffer_size_;
+  CORBA::Long recv_buffer_size_;
+  CORBA::Boolean keep_alive_;
+  CORBA::Boolean dont_route_;
+  CORBA::Boolean no_delay_;
+  CORBA::Boolean enable_network_priority_;
+};
+  
 class TAO_Export TAO_Protocols_Hooks : public ACE_Service_Object
 {
 public:
@@ -50,30 +115,44 @@ public:
   virtual void init_hooks (TAO_ORB_Core *orb_core
                            ACE_ENV_ARG_DECL) = 0;
 
-  virtual int call_client_protocols_hook (int &send_buffer_size,
-                                          int &recv_buffer_size,
-                                          int &no_delay,
-                                          int &enable_network_priority,
-                                          const char *protocol_type) = 0;
-
-  virtual int call_server_protocols_hook (int &send_buffer_size,
-                                          int &recv_buffer_size,
-                                          int &no_delay,
-                                          int &enable_network_priority,
-                                          const char *protocol_type) = 0;
-
-  virtual int update_client_protocol_properties (
-    TAO_Stub *stub,
-    TAO_Transport *t,
-    const char *protocol_type) = 0;
-
-
-  virtual int update_server_protocol_properties (
-    CORBA::Policy *policy,
-    TAO_Transport *t,
-    const char *protocol_type) = 0;
-
-
+  virtual CORBA::Boolean set_client_network_priority (IOP::ProfileId protocol_tag,
+                                                      TAO_Stub *stub
+                                                      ACE_ENV_ARG_DECL) = 0;
+  
+  virtual CORBA::Boolean set_server_network_priority (IOP::ProfileId protocol_tag,
+                                                      CORBA::Policy *policy
+                                                      ACE_ENV_ARG_DECL) = 0;
+  
+  virtual void server_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties
+                                                        ACE_ENV_ARG_DECL) = 0;
+  
+  virtual void client_protocol_properties_at_orb_level (TAO_IIOP_Protocol_Properties &protocol_properties
+                                                        ACE_ENV_ARG_DECL) = 0;
+  
+  virtual void server_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties
+                                                        ACE_ENV_ARG_DECL) = 0;
+  
+  virtual void client_protocol_properties_at_orb_level (TAO_UIOP_Protocol_Properties &protocol_properties
+                                                        ACE_ENV_ARG_DECL) = 0;
+  
+  virtual void server_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties
+                                                        ACE_ENV_ARG_DECL) = 0;
+  
+  virtual void client_protocol_properties_at_orb_level (TAO_SHMIOP_Protocol_Properties &protocol_properties
+                                                        ACE_ENV_ARG_DECL) = 0;
+  
+  virtual void server_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties
+                                                        ACE_ENV_ARG_DECL) = 0;
+  
+  virtual void client_protocol_properties_at_orb_level (TAO_DIOP_Protocol_Properties &protocol_properties
+                                                        ACE_ENV_ARG_DECL) = 0;
+  
+  virtual void server_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties
+                                                        ACE_ENV_ARG_DECL) = 0;
+  
+  virtual void client_protocol_properties_at_orb_level (TAO_SCIOP_Protocol_Properties &protocol_properties
+                                                        ACE_ENV_ARG_DECL) = 0;
+  
   virtual CORBA::Long get_dscp_codepoint (void) = 0;
 
   virtual void rt_service_context (TAO_Stub *stub,
@@ -106,28 +185,23 @@ public:
    */
   //@{
   virtual int get_thread_CORBA_priority (CORBA::Short &
-                                         ACE_ENV_ARG_DECL_NOT_USED) = 0;
+                                         ACE_ENV_ARG_DECL) = 0;
 
   virtual int get_thread_native_priority (CORBA::Short &
-                                          ACE_ENV_ARG_DECL_NOT_USED) = 0;
+                                          ACE_ENV_ARG_DECL) = 0;
 
   virtual int get_thread_CORBA_and_native_priority (
     CORBA::Short &,
     CORBA::Short &
-    ACE_ENV_ARG_DECL_NOT_USED) = 0;
+    ACE_ENV_ARG_DECL) = 0;
 
   virtual int set_thread_CORBA_priority (CORBA::Short
-                                         ACE_ENV_ARG_DECL_NOT_USED) = 0;
+                                         ACE_ENV_ARG_DECL) = 0;
 
   virtual int set_thread_native_priority (CORBA::Short
-                                          ACE_ENV_ARG_DECL_NOT_USED) = 0;
+                                          ACE_ENV_ARG_DECL) = 0;
 
   //@}
-
-  /// Sets the default_policies for ORB.
-  /// 1. Sets ORB-level policy defaults for this ORB.  Currently sets
-  /// default RTCORBA policies: ClientProtocolPolicy.
-  virtual int set_default_policies (ACE_ENV_SINGLE_ARG_DECL) = 0;
 
   /// Sets the default ServerProtocolPolicy.
   virtual int set_default_server_protocol_policy (
