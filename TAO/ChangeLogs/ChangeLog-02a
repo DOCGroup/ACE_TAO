@@ -1,3 +1,11 @@
+Mon Apr 16 09:49:58 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
+        * performance-tests/Latency/Makefile:
+        * tests/DSI_Gateway/Makefile:
+        * tests/Param_Test/Makefile:
+          More missing libraries for QNX
+
 Mon Apr 16 02:15:49 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * tao/Domain/Makefile.bor:
