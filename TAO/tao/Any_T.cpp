@@ -322,11 +322,6 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::insert (CORBA::Any & any,
                                                   CORBA::ULong bound
   )
 {
-  if (bound > 0 && value != 0 && ACE_OS::strlen (value) > bound)
-    {
-      return;
-    }
-
   CORBA::TypeCode_ptr bounded_tc = CORBA::TypeCode::_nil ();
 
   if (bound > 0)
