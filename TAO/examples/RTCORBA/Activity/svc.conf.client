@@ -1,6 +1,0 @@
-# -- E X A M P L E conf. file --
-# Note! priority values are for Linux
-
-static RT_ORB_Loader "-ORBSchedPolicy SCHED_RR -ORBScopePolicy PROCESS -ORBPriorityMapping direct"
-
-static Builder "-ThreadTask -JobName job_10 -Priority 10 -Period 1 -ExecTime 10000 -Phase 0 -Iter 20 -Load 1000 -ThreadTask -JobName job_80 -Priority 80 -Period 1 -ExecTime 10000 -Phase 0 -Iter 20 -Load 1000"
