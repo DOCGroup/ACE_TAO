@@ -23,7 +23,6 @@ include $(TAO_ROOT)/rules.tao.GNU
 #---------------------------------------------------------------------------
 
 MKLIST = \
-#	../../TAO_IDL/Makefile.FE \
 	Makefile.BE \
 	Makefile.EX \
 	Makefile.dependencies
