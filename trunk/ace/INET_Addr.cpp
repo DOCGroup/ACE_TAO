@@ -432,14 +432,26 @@ ACE_INET_Addr::get_host_name (ASYS_TCHAR hostname[], size_t len) const
         }
       else
         {
-          if (ACE_OS::strlen (hp->h_name) >= len)
+          char** p = hp->h_addr_list;
+          for (; *p != 0; ++p)
+            {
+              if (ACE_OS::memcmp (&inet_addr_.sin_addr,
+                                  *p, 
+                                  hp->h_length) == 0)
+                break;
+            }
+          if (*p == 0)
+            return -1;
+
+          char* h = hp->h_aliases[p - hp->h_addr_list];
+          if (ACE_OS::strlen (h) >= len)
             {
               errno = ENOSPC;
               return -1;
             }
           else
             {
-              ACE_OS::strcpy (hostname, ASYS_WIDE_STRING (hp->h_name));
+              ACE_OS::strcpy (hostname, ASYS_WIDE_STRING (h));
               return 0;
             }
         }
@@ -455,38 +467,8 @@ ACE_INET_Addr::get_host_name (void) const
   ACE_TRACE ("ACE_INET_Addr::get_host_name");
 
   static ASYS_TCHAR name[MAXHOSTNAMELEN + 1];
-#if defined (VXWORKS)
-  if (this->get_host_name (name, MAXHOSTNAMELEN) == -1)
-    return 0;
-  else
-    return name;
-#else
-  if (this->inet_addr_.sin_addr.s_addr == INADDR_ANY)
-    {
-      if (ACE_OS::hostname (name, MAXHOSTNAMELEN) == -1)
-        return 0;
-      else
-        return name;
-    }
-  else
-    {
-      int a_len = sizeof this->inet_addr_.sin_addr.s_addr;
-
-      hostent *hp = ACE_OS::gethostbyaddr ((char *) &this->inet_addr_.sin_addr,
-                                           a_len,
-                                           this->addr_type_);
-
-      if (hp == 0)
-        return 0;
-      else
-#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-        return hp->h_name;
-#else
-        return ACE_OS::strcpy (name, ASYS_WIDE_STRING (hp->h_name));
-
-#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
-    }
-#endif /* VXWORKS */
+  this->get_host_name (name, MAXHOSTNAMELEN + 1);
+  return name;
 }
 
 void
