@@ -1,3 +1,9 @@
+Thu Jun 24 16:38:09 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
+
+	* tao/Any.i:
+	  Changed all references to the deprecated "ACE_TRY_NEW_ENV" to
+	  "ACE_DECLARE_NEW_CORBA_ENV; ACE_TRY"
+
 Thu Jun 24 15:25:55 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/corbafwd.h:
