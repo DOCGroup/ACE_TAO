@@ -3480,7 +3480,16 @@ ACE_OS::event_timedwait (ACE_event_t *event,
       // as a parameter) and relative time (which is what
       // WaitForSingleObjects() expects).
       ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
-      result = ::WaitForSingleObject (*event, relative_time.msec ());
+
+      // Watchout for situations where a context switch has caused the
+      // current time to be > the timeout.  Thanks to Norbert Rapp
+      // <NRapp@nexus-informatics.de> for pointing this.
+      int msec_timeout;
+      if (relative_time < ACE_Time_Value::zero)
+        msec_timeout = 0;
+      else
+        msec_timeout = relative_time.msec ();
+      result = ::WaitForSingleObject (*event, msec_timeout);
     }
 
   switch (result)
