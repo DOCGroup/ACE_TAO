@@ -1,3 +1,8 @@
+Fri Jun 06 21:30:57 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Timer_{Hash,Wheel}_T.cpp:  added #includes of
+	  ace/High_Res_Timer.h.
+
 Fri Jun 06 17:11:13 1997    <irfan@TWOSTEP>
 
 	* OS.i (sleep): If ACE_POLL_IS_BROKEN is defined, use select() to
