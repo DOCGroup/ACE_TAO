@@ -13,7 +13,8 @@ TAO_IDL	= $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe \
 
 IDLFILES = \
         $(IDLDIR)\miop.idl \
-        $(IDLDIR)\PortableGroup.idl
+        $(IDLDIR)\PortableGroup.idl \
+	$(IDLDIR)\PortableGroup_Simple_DS.idl
 
 OBJFILES = \
 	$(OBJDIR)\PortableGroup_Simple_DSC.obj \
