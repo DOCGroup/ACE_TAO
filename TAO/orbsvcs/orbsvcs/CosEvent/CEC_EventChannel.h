@@ -19,6 +19,7 @@
 // ============================================================================
 
 #ifndef TAO_CEC_EVENTCHANNEL_H
+#include "ace/pre.h"
 #define TAO_CEC_EVENTCHANNEL_H
 
 #include "CEC_Factory.h"
@@ -290,4 +291,5 @@ private:
 #include "CEC_EventChannel.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_CEC_EVENT_CHANNEL_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_OBJECT_ADAPTER_H
+#include "ace/pre.h"
 #define TAO_OBJECT_ADAPTER_H
 
 #include "tao/Key_Adapters.h"
@@ -662,4 +663,5 @@ public:
 # include "tao/Object_Adapter.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_OBJECT_ADAPTER_H */

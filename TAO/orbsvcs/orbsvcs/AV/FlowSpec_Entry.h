@@ -17,6 +17,7 @@
 // ============================================================================
 
 #ifndef TAO_AV_FLOWSPEC_ENTRY_H
+#include "ace/pre.h"
 #define TAO_AV_FLOWSPEC_ENTRY_H
 
 #include "orbsvcs/AV/AV_export.h"
@@ -279,4 +280,5 @@ public:
 #include "FlowSpec_Entry.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_AV_FLOWSPEC_ENTRY_H */

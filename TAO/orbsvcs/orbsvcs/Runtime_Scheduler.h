@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_RUNTIME_SCHEDULER_H
+#include "ace/pre.h"
 #define ACE_RUNTIME_SCHEDULER_H
 
 #include "orbsvcs/Scheduler_Factory.h"
@@ -153,4 +154,5 @@ private:
 #include "orbsvcs/Runtime_Scheduler.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_RUNTIME_SCHEDULER_H */

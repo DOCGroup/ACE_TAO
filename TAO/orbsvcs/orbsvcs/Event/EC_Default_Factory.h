@@ -23,6 +23,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_DEFAULT_FACTORY_H
+#include "ace/pre.h"
 #define TAO_EC_DEFAULT_FACTORY_H
 
 #include "EC_Factory.h"
@@ -165,4 +166,5 @@ private:
 ACE_STATIC_SVC_DECLARE (TAO_EC_Default_Factory)
 ACE_FACTORY_DECLARE (TAO_ORBSVCS, TAO_EC_Default_Factory)
 
+#include "ace/post.h"
 #endif /* TAO_EC_DEFAULT_FACTORY_H */

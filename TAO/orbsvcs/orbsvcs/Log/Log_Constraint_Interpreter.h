@@ -15,6 +15,7 @@
 // ========================================================================
 
 #ifndef TAO_LOG_CONSTRAINT_INTERPRETER_H
+#include "ace/pre.h"
 #define TAO_LOG_CONSTRAINT_INTERPRETER_H
 
 #include "orbsvcs/orbsvcs/Trader/Constraint_Nodes.h"
@@ -50,4 +51,5 @@ public:
   // Returns true if the constraint is evaluated successfully by
   // the evaluator.
 };
+#include "ace/post.h"
 #endif /* TAO_LOG_CONSTRAINT_INTERPRETER_H */

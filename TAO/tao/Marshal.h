@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_MARSHAL_H
+#include "ace/pre.h"
 #define TAO_MARSHAL_H
 
 #include "tao/corbafwd.h"
@@ -645,4 +646,5 @@ public:
 # include "tao/Marshal.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_MARSHAL_H */

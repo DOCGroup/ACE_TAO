@@ -20,6 +20,7 @@
 // ============================================================================
 
 #ifndef TAO_UIOP_TRANSPORT_H
+#include "ace/pre.h"
 #define TAO_UIOP_TRANSPORT_H
 
 #include "tao/Pluggable.h"
@@ -215,4 +216,5 @@ public:
 
 # endif  /* TAO_HAS_UIOP == 1 */
 
+#include "ace/post.h"
 #endif  /* TAO_UIOP_TRANSPORT_H */

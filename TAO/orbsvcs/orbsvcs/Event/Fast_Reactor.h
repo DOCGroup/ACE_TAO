@@ -2,6 +2,7 @@
 // $Id$
 //
 #ifndef FAST_REACTOR_H
+#include "ace/pre.h"
 #define FAST_REACTOR_H
 
 #if defined (ACE_OLD_STYLE_REACTOR)
@@ -57,4 +58,5 @@ public:
   }
 };
 
+#include "ace/post.h"
 #endif /* FAST_REACTOR_H */

@@ -20,6 +20,7 @@
 // ================================================================
 
 #ifndef TAO_IOPC_H
+#include "ace/pre.h"
 #define TAO_IOPC_H
 
 #include "tao/CDR.h"
@@ -701,4 +702,5 @@ TAO_Export CORBA::Boolean operator>> (
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TAO_IOPC_H */

@@ -20,6 +20,7 @@
 // ============================================================================
 
 #ifndef TAO_TRANSPORT_MUX_STRATEGY_H
+#include "ace/pre.h"
 #define TAO_TRANSPORT_MUX_STRATEGY_H
 
 // BALA should not be here But for the time being
@@ -262,4 +263,5 @@ protected:
 
 // *********************************************************************
 
+#include "ace/post.h"
 #endif /* TRANSPORT_MUX_STRATEGY_H */

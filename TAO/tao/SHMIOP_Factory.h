@@ -14,6 +14,7 @@
 // ============================================================================
 
 #ifndef TAO_SHMIOP_FACTORY_H
+#include "ace/pre.h"
 #define TAO_SHMIOP_FACTORY_H
 
 #include "tao/corbafwd.h"
@@ -66,4 +67,5 @@ ACE_FACTORY_DECLARE (TAO, TAO_SHMIOP_Protocol_Factory)
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 
+#include "ace/post.h"
 #endif /* TAO_SHMIOP_FACTORY_H */

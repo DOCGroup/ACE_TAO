@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_CONTEXT_H
+#include "ace/pre.h"
 #define TAO_CONTEXT_H
 
 #include "tao/corbafwd.h"
@@ -300,4 +301,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
+#include "ace/post.h"
 #endif /* TAO_CONTEXT_H */

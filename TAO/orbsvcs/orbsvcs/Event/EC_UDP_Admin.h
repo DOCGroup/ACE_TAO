@@ -32,6 +32,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_UDP_ADMIN_H
+#include "ace/pre.h"
 #define TAO_EC_UDP_ADMIN_H
 
 #include "orbsvcs/RtecUDPAdminS.h"
@@ -68,4 +69,5 @@ private:
   CORBA::UShort port_;
 };
 
+#include "ace/post.h"
 #endif /* TAO_EC_UDP_ADMIN_H */

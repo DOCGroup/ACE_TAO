@@ -19,6 +19,7 @@
 // ============================================================================
 
 #ifndef SUPPLIER_ADMIN_I_H
+#include "ace/pre.h"
 #define SUPPLIER_ADMIN_I_H
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
@@ -78,4 +79,5 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* SUPPLIER_ADMIN_I_H */

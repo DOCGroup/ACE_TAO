@@ -1,3 +1,27 @@
+Sat Mar 18 05:34:48 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/*.h:
+	* orbsvcs/orbsvcs/*.h: Applied alignment preserving code.
+
+	* TAO_IDL/be/be_args.cpp:
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/include/idl_global.h:
+	* TAO_IDL/util/utl_global.cpp: Added new compiler flags
+	  -Wb,pre_include and -Wb,post_include.  They specify the names of
+	  include files that will be included at the beginning and ending
+	  of the generated header files.  Currently used to include
+	  "ace/pre.h" and "ace/post.h."
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/Makefile.bor: Added the new tao_idl options to the
+	  tao_idl compiler flags in the orbsvcs makefiles.  Too bad
+	  Darrell is going to removed orbsvcs.dsp and orbsvcs_static.dsp. ;-)
+
+	  Thanks to Christopher Kohlhoff <chris@kohlhoff.com> for
+	  providing the patches.
+
 Sat Mar 18 01:33:47 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp: Changed to

@@ -14,6 +14,7 @@
 // ========================================================================
 
 #ifndef TAO_TRADER_CONSTRAINT_VISITOR_H
+#include "ace/pre.h"
 #define TAO_TRADER_CONSTRAINT_VISITOR_H
 
 #include "Constraint_Visitors.h"
@@ -53,4 +54,5 @@ class TAO_Trader_Constraint_Evaluator : public TAO_Constraint_Evaluator
   // they dyanmic or static.
 };
 
+#include "ace/post.h"
 #endif /* TAO_TRADER_CONSTRAINT_VISITOR_H */

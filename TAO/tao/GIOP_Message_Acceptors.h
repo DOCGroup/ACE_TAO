@@ -17,6 +17,7 @@
 //
 // ============================================================================
 #ifndef TAO_GIOP_MESSAGE_ACCEPTORS
+#include "ace/pre.h"
 #define TAO_GIOP_MESSAGE_ACCEPTORS
 
 #include "tao/GIOP_Message_Base.h"
@@ -138,4 +139,5 @@ private:
 # include "tao/GIOP_Message_Acceptors.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /*TAO_GIOP_MESSAGE_ACCEPTORS*/

@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_TIME_SERVICE_SERVER_H
+#include "ace/pre.h"
 #define TAO_TIME_SERVICE_SERVER_H
 
 #include "orbsvcs/TimeServiceS.h"
@@ -76,4 +77,5 @@ public:
 
 };
 
+#include "ace/post.h"
 #endif /* TAO_TIME_SERVICE_SERVER_H */

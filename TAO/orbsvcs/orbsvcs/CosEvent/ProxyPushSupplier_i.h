@@ -19,6 +19,7 @@
 // ================================================================
 
 #ifndef _PROXYPUSHSUPPLIER_H
+#include "ace/pre.h"
 #define _PROXYPUSHSUPPLIER_H
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
@@ -82,4 +83,5 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* _PROXYPUSHSUPPLIER_H */

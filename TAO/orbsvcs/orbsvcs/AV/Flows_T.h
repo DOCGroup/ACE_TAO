@@ -17,6 +17,7 @@
 // ============================================================================
 
 #ifndef TAO_AV_FLOWS_T_H
+#include "ace/pre.h"
 #define TAO_AV_FLOWS_T_H
 
 #include "AVStreams_i.h"
@@ -123,4 +124,5 @@ protected:
 #pragma implementation ("Flows_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* TAO_AV_FLOWS_T_H */

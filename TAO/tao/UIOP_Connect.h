@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef TAO_UIOP_CONNECT_H
+#include "ace/pre.h"
 #define TAO_UIOP_CONNECT_H
 
 #include "tao/UIOP_Transport.h"
@@ -192,4 +193,5 @@ protected:
 
 #endif /* TAO_HAS_UIOP == 1 */
 
+#include "ace/post.h"
 #endif /* TAO_UIOP_CONNECT_H */

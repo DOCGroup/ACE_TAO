@@ -19,6 +19,7 @@
 // ============================================================================
 
 #ifndef TAO_IOR_LOOKUPTABLE_H
+#include "ace/pre.h"
 #define TAO_IOR_LOOKUPTABLE_H
 
 #include "ace/Synch_T.h"
@@ -93,5 +94,6 @@ private:
   // If true, means delete the callback_.
 };
 
+#include "ace/post.h"
 #endif /* TAO_IOR_LOOKUPTABLE_H */
 

@@ -113,6 +113,8 @@ IDL_GlobalData::IDL_GlobalData (void)
       stub_export_macro_ (0),
       stub_export_include_ (0),
       pch_include_ (0),
+      pre_include_ (0),
+      post_include_ (0),
       client_hdr_ending_ (ACE::strnew ("C.h")),
       client_stub_ending_ (ACE::strnew ("C.cpp")),
       client_inline_ending_ (ACE::strnew ("C.i")),
@@ -1076,6 +1078,30 @@ void
 IDL_GlobalData::pch_include (const char *s)
 {
   this->pch_include_ = ACE_OS::strdup (s);
+}
+
+const char*
+IDL_GlobalData::pre_include (void) const
+{
+  return this->pre_include_;
+}
+
+void
+IDL_GlobalData::pre_include (const char *s)
+{
+  this->pre_include_ = ACE_OS::strdup (s);
+}
+
+const char*
+IDL_GlobalData::post_include (void) const
+{
+  return this->post_include_;
+}
+
+void
+IDL_GlobalData::post_include (const char *s)
+{
+  this->post_include_ = ACE_OS::strdup (s);
 }
 
 // Set the client_hdr_ending.

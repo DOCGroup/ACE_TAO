@@ -17,6 +17,7 @@
 // ==========================================================================
 
 #ifndef TAO_NOTIFY_PROXYPUSHCONSUMER_I_H
+#include "ace/pre.h"
 #define TAO_NOTIFY_PROXYPUSHCONSUMER_I_H
 
 #include "Notify_ProxyConsumer_T.h"
@@ -134,4 +135,5 @@ public:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TAO_NOTIFY_PROXYPUSHCONSUMER_I_H */

@@ -22,6 +22,7 @@
 // ============================================================================
 
 #ifndef TIMER_HELPER_H
+#include "ace/pre.h"
 #define	TIMER_HELPER_H
 
 #include "ace/Event_Handler.h"
@@ -69,4 +70,5 @@ protected:
   // The set of server IORs.
 };
 
+#include "ace/post.h"
 #endif /* TIMER_HELPER_H */

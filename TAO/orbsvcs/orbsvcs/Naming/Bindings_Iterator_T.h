@@ -14,6 +14,7 @@
 // ============================================================================
 
 #ifndef TAO_BINDINGS_ITERATOR_T_H
+#include "ace/pre.h"
 #define TAO_BINDINGS_ITERATOR_T_H
 
 #include "Hash_Naming_Context.h"
@@ -127,4 +128,5 @@ private:
 #pragma implementation ("Bindings_Iterator_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
+#include "ace/post.h"
 #endif /* TAO_BINDINGS_ITERATOR_T_H */

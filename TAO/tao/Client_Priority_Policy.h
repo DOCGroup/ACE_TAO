@@ -20,6 +20,7 @@
 // ============================================================================
 
 #ifndef TAO_CLIENT_PRIORITY_POLICY_H
+#include "ace/pre.h"
 #define TAO_CLIENT_PRIORITY_POLICY_H
 
 #include "tao/orbconf.h"
@@ -103,4 +104,5 @@ private:
 #include "tao/Client_Priority_Policy.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_CLIENT_PRIORITY_POLICY_H */

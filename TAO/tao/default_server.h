@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_DEFAULT_SERVER_FACTORY_H
+#include "ace/pre.h"
 #define TAO_DEFAULT_SERVER_FACTORY_H
 
 #include "tao/Server_Strategy_Factory.h"
@@ -96,4 +97,5 @@ protected:
 ACE_STATIC_SVC_DECLARE (TAO_Default_Server_Strategy_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Server_Strategy_Factory)
 
+#include "ace/post.h"
 #endif /* TAO_DEFAULT_SERVER_FACTORY_H */

@@ -16,6 +16,7 @@
 // ==========================================================================
 
 #ifndef TAO_NOTIFY_EVENT_MANAGER
+#include "ace/pre.h"
 #define TAO_NOTIFY_EVENT_MANAGER
 
 #include "Notify_Listeners.h"
@@ -134,4 +135,5 @@ class TAO_Notify_Event_Manager
   // from suppliers changes the <publication_list_>.
 };
 
+#include "ace/post.h"
 #endif /* TAO_NOTIFY_EVENT_MANAGER */

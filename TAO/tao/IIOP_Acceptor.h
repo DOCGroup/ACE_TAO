@@ -19,6 +19,7 @@
 //============================================================================
 
 #ifndef TAO_IIOP_ACCEPTOR_H
+#include "ace/pre.h"
 #define TAO_IIOP_ACCEPTOR_H
 
 #include "tao/Pluggable.h"
@@ -124,4 +125,5 @@ private:
 #include "tao/IIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif  /* TAO_IIOP_ACCEPTOR_H */

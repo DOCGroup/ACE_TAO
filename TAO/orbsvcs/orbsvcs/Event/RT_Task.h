@@ -19,6 +19,7 @@
 // ============================================================================
 
 #ifndef ACE_RT_TASK_H
+#include "ace/pre.h"
 #define ACE_RT_TASK_H
 
 #include "ace/Task.h"
@@ -181,4 +182,5 @@ protected:
 #include "RT_Task.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_RT_TASK_H */

@@ -17,6 +17,7 @@
 // ============================================================================
 
 #ifndef TAO_AV_CORE_H
+#include "ace/pre.h"
 #define TAO_AV_CORE_H
 
 #include "tao/TAO.h"
@@ -182,4 +183,5 @@ protected:
   CORBA::Boolean stop_run_;
 };
 
+#include "ace/post.h"
 #endif /* TAO_AV_CORE_H */

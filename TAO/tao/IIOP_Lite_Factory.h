@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_IIOP_LITE_FACTORY_H
+#include "ace/pre.h"
 #define TAO_IIOP_LITE_FACTORY_H
 
 #include "tao/Protocol_Factory.h"
@@ -63,4 +64,5 @@ private:
 ACE_STATIC_SVC_DECLARE (TAO_IIOP_Lite_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_IIOP_Lite_Protocol_Factory)
 
+#include "ace/post.h"
 #endif /* TAO_IIOP_Lite_factory_H */

@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_CEC_CONSUMERCONTROL_H
+#include "ace/pre.h"
 #define TAO_CEC_CONSUMERCONTROL_H
 
 #include "orbsvcs/orbsvcs_export.h"
@@ -83,4 +84,5 @@ public:
 #include "CEC_ConsumerControl.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_CEC_CONSUMERCONTROL_H */

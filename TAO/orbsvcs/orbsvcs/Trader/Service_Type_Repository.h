@@ -16,6 +16,7 @@
 // ========================================================================
 
 #ifndef TAO_SERVICE_TYPE_REPOSITORY_H
+#include "ace/pre.h"
 #define TAO_SERVICE_TYPE_REPOSITORY_H
 
 #include "Trader.h"
@@ -295,4 +296,5 @@ public:
   // repository.
 };
 
+#include "ace/post.h"
 #endif /* TAO_SERVICE_TYPE_REPOSITORY_H */

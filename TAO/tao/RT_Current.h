@@ -14,6 +14,7 @@
 // ============================================================================
 
 #ifndef TAO_RT_CURRENT_H
+#include "ace/pre.h"
 #define TAO_RT_CURRENT_H
 
 #include "tao/rtcorbafwd.h"
@@ -145,4 +146,5 @@ private:
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
+#include "ace/post.h"
 #endif /* TAO_RT_CURRENT_H */

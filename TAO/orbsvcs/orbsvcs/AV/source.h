@@ -37,6 +37,7 @@
  */
 
 #ifndef TAO_AV_SOURCE_H
+#include "ace/pre.h"
 #define TAO_AV_SOURCE_H
 
 #define RTCP_SDES_MAX 7
@@ -229,4 +230,5 @@ protected:
 #include "source.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_AV_Source_H */

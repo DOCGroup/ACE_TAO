@@ -6,6 +6,7 @@
 //
 
 #ifndef ACE_ES_CONSTANTS_H
+#include "ace/pre.h"
 #define ACE_ES_CONSTANTS_H
 
 #include "ace/Message_Block.h"
@@ -113,4 +114,5 @@ const int ACE_ES_EVENT_CONTAINER_MEMORY_POOL = 1024;
 const int ACE_ES_EVENT_MEMORY_POOL = 1024;
 const int ACE_ES_DISPATCH_REQUEST_MEMORY_POOL = 1024;
 
+#include "ace/post.h"
 #endif /* ACE_ES_CONSTANTS_H */

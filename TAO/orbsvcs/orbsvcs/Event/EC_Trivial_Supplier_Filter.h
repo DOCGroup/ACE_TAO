@@ -23,6 +23,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_TRIVIAL_SUPPLIER_FILTER_H
+#include "ace/pre.h"
 #define TAO_EC_TRIVIAL_SUPPLIER_FILTER_H
 
 #include "EC_Supplier_Filter.h"
@@ -103,4 +104,5 @@ private:
 #include "EC_Trivial_Supplier_Filter.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_EC_TRIVIAL_SUPPLIER_FILTER_H */

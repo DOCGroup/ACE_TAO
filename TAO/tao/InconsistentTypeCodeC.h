@@ -23,6 +23,7 @@
 // ============================================================================
 
 #ifndef TAO_IDL_INCONSISTENTTYPECODEC_H
+#include "ace/pre.h"
 #define TAO_IDL_INCONSISTENTTYPECODEC_H
 
 #include "tao/orbconf.h"
@@ -90,4 +91,5 @@ public:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+#include "ace/post.h"
 #endif /* TAO_IDL_INCONSISTENTTYPECODEC_H */

@@ -17,6 +17,7 @@
 // ============================================================================
 
 #ifndef TLS_BASICLOG_I_H
+#include "ace/pre.h"
 #define TLS_BASICLOG_I_H
 
 #include "orbsvcs/DsLogAdminS.h"
@@ -76,4 +77,5 @@ public:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TLS_BASICLOG_I_H */

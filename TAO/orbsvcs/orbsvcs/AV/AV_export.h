@@ -5,6 +5,7 @@
 // ${ACE_ROOT}/GenExportH.BAT
 // ------------------------------
 #ifndef TAO_AV_EXPORT_H
+#include "ace/pre.h"
 #define TAO_AV_EXPORT_H
 
 #include "ace/OS.h"

@@ -19,6 +19,7 @@
 // ============================================================================
 
 #ifndef _CC_LOCKSETFACTORY_H
+#include "ace/pre.h"
 #define _CC_LOCKSETFACTORY_H
 
 // #include "tao/corba.h"
@@ -57,4 +58,5 @@ private:
   // Lock to serialize the access to the factory.
 };
 
+#include "ace/post.h"
 #endif /* _CC_LOCKSETFACTORY_H */

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_UIOP_FACTORY_H
+#include "ace/pre.h"
 #define TAO_UIOP_FACTORY_H
 
 #include "tao/Protocol_Factory.h"
@@ -66,4 +67,5 @@ ACE_FACTORY_DECLARE (TAO, TAO_UIOP_Protocol_Factory)
 
 # endif  /* TAO_HAS_UIOP == 1 */
 
+#include "ace/post.h"
 #endif /* TAO_UIOP_FACTORY_H */

@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_IIOP_CONNECTOR_H
+#include "ace/pre.h"
 #define TAO_IIOP_CONNECTOR_H
 
 #include "ace/Connector.h"
@@ -210,4 +211,5 @@ private:
 
 };
 
+#include "ace/post.h"
 #endif  /* TAO_IIOP_CONNECTOR_H */

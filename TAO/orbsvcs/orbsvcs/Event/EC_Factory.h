@@ -23,6 +23,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_FACTORY_H
+#include "ace/pre.h"
 #define TAO_EC_FACTORY_H
 
 #include "orbsvcs/orbsvcs_export.h"
@@ -168,4 +169,5 @@ public:
 #include "EC_Factory.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_EC_FACTORY_H */

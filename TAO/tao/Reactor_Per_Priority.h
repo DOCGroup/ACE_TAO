@@ -14,6 +14,7 @@
 // ============================================================================
 
 #ifndef TAO_REACTOR_PER_PRIORITY_H
+#include "ace/pre.h"
 #define TAO_REACTOR_PER_PRIORITY_H
 
 #include "tao/Reactor_Registry.h"
@@ -72,4 +73,5 @@ private:
 # include "tao/Reactor_Per_Priority.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_REACTOR_PER_PRIORITY_H */

@@ -19,6 +19,7 @@
 // ============================================================================
 
 #ifndef TAO_IIOP_PROFILE_H
+#include "ace/pre.h"
 #define TAO_IIOP_PROFILE_H
 
 #include "tao/Profile.h"
@@ -182,4 +183,5 @@ private:
 # include "tao/IIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif  /* TAO_IIOP_PROFILE_H */

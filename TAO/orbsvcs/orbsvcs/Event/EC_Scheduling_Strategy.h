@@ -23,6 +23,7 @@
 // ============================================================================
 
 #ifndef TAO_EC_SCHEDULING_STRATEGY_H
+#include "ace/pre.h"
 #define TAO_EC_SCHEDULING_STRATEGY_H
 
 #include "orbsvcs/RtecSchedulerC.h"
@@ -75,4 +76,5 @@ public:
 #include "EC_Scheduling_Strategy.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_EC_SCHEDULING_STRATEGY_H */

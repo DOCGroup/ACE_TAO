@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef TAO_AV_POLICY_H
+#include "ace/pre.h"
 #define TAO_AV_POLICY_H
 
 #include "ace/Addr.h"
@@ -155,4 +156,5 @@ protected:
 #if defined(__ACE_INLINE__)
 #include "Policy.i"
 #endif /* __ACE_INLINE__ */
+#include "ace/post.h"
 #endif /* TAO_AV_POLICY_H */

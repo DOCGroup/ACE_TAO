@@ -156,6 +156,12 @@ TAO_CodeGen::start_client_header (const char *fname)
 
       // generate the #ifndef ... #define statements
       this->client_header_->print ("#ifndef %s\n", macro_name);
+      if (idl_global->pre_include () != 0)
+        {
+          *this->client_header_ << "#include \""
+                                << idl_global->pre_include ()
+                                << "\"\n";
+        }
       this->client_header_->print ("#define %s\n\n", macro_name);
 
       // Including standard files
@@ -446,6 +452,12 @@ TAO_CodeGen::start_server_header (const char *fname)
       ACE_OS::strcat (macro_name, "_H_");
 
       this->server_header_->print ("#ifndef %s\n", macro_name);
+      if (idl_global->pre_include () != 0)
+        {
+          *this->server_header_ << "#include \""
+                                << idl_global->pre_include ()
+                                << "\"\n";
+        }
       this->server_header_->print ("#define %s\n\n", macro_name);
 
       // Include the Messaging files if AMI is enabled.
@@ -603,6 +615,12 @@ TAO_CodeGen::start_server_template_header (const char *fname)
       ACE_OS::strcat (macro_name, "_H_");
 
       this->server_template_header_->print ("#ifndef %s\n", macro_name);
+      if (idl_global->pre_include () != 0)
+        {
+          *this->server_template_header_ << "#include \""
+                                         << idl_global->pre_include ()
+                                         << "\"\n";
+        }
       this->server_template_header_->print ("#define %s\n\n", macro_name);
 
       *this->server_template_header_ << "#if defined(_MSC_VER)\n"
@@ -844,7 +862,7 @@ TAO_CodeGen::start_implementation_header (const char *fname)
       this->implementation_header_->print ("#define %s\n\n", macro_name);
 
       // @@ (JP) I think the code below can be safely left out. It has
-      // been modified but not checked, so I'll leave it here for a 
+      // been modified but not checked, so I'll leave it here for a
       // while to make sure it's really safe to leave out. 2000/01/22
 #if 0
       // We must include all the client headers corresponding to
@@ -977,7 +995,14 @@ TAO_CodeGen::end_client_header (void)
                         << "#endif /* _MSC_VER */\n";
 
   // code to put the last #endif
-  *this->client_header_ << "\n#endif /* ifndef */\n";
+  *this->client_header_ << "\n";
+  if (idl_global->post_include () != 0)
+    {
+      *this->client_header_ << "#include \""
+                            << idl_global->post_include ()
+                            << "\"\n";
+    }
+  *this->client_header_ << "#endif /* ifndef */\n";
   return 0;
 }
 
@@ -987,8 +1012,8 @@ TAO_CodeGen::end_server_header (void)
   // insert the template header
   if (idl_global->gen_tie_classes ())
     {
-      *this->server_header_ << "#include \"" 
-                            << idl_global->be_get_server_template_hdr_fname (1) 
+      *this->server_header_ << "#include \""
+                            << idl_global->be_get_server_template_hdr_fname (1)
                             << "\"\n";
     }
 
@@ -1003,7 +1028,14 @@ TAO_CodeGen::end_server_header (void)
                         << "#endif /* _MSC_VER */\n";
 
   // code to put the last #endif
-  *this->server_header_ << "\n#endif /* ifndef */\n";
+  *this->server_header_ << "\n";
+  if (idl_global->post_include () != 0)
+    {
+      *this->server_header_ << "#include \""
+                            << idl_global->post_include ()
+                            << "\"\n";
+    }
+  *this->server_header_ << "#endif /* ifndef */\n";
   return 0;
 }
 
@@ -1072,7 +1104,14 @@ TAO_CodeGen::end_server_template_header (void)
                                  << "#endif /* _MSC_VER */\n";
 
   // code to put the last #endif
-  *this->server_template_header_ << "\n#endif /* ifndef */\n";
+  *this->server_template_header_ << "\n";
+  if (idl_global->post_include () != 0)
+    {
+      *this->server_template_header_ << "#include \""
+                                     << idl_global->post_include ()
+                                     << "\"\n";
+    }
+  *this->server_template_header_ << "#endif /* ifndef */\n";
   return 0;
 }
 

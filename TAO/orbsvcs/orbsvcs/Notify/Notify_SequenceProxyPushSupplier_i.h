@@ -16,6 +16,7 @@
 //
 // ==========================================================================
 #ifndef TAO_NOTIFY_SEQUENCEPROXYPUSHSUPPLIER_I_H
+#include "ace/pre.h"
 #define TAO_NOTIFY_SEQUENCEPROXYPUSHSUPPLIER_I_H
 
 #include "Notify_ProxySupplier_T.h"
@@ -83,4 +84,5 @@ virtual void disconnect_sequence_push_supplier (
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TAO_NOTIFY_SEQUENCEPROXYPUSHSUPPLIER_I_H */

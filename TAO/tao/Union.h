@@ -16,6 +16,7 @@
 // ============================================================================
 
 #ifndef TAO_UNION_H
+#include "ace/pre.h"
 #define TAO_UNION_H
 
 #include "tao/corbafwd.h"
@@ -58,4 +59,5 @@ protected:
 
 };
 
+#include "ace/post.h"
 #endif /* TAO_BASE_UNION_H */

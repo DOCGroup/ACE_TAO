@@ -16,6 +16,7 @@
 //    Taken from the old GIOP.h file. Not sure of the author
 // ============================================================================
 #ifndef _TAO_IOP_DEFN_H_
+#include "ace/pre.h"
 #define _TAO_IOP_DEFN_H_
 
 // These were all in the GIOP.h file. They shouldn't be combined with
@@ -102,4 +103,5 @@ public:
 typedef TAO_Unbounded_Sequence<TAO_IOP_TaggedComponent>
         TAO_IOP_MultipleComponentProfile;
 
+#include "ace/post.h"
 #endif /*_TAO_IOP_DEFN_H_*/

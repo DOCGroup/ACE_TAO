@@ -15,6 +15,7 @@
 // ========================================================================
 
 #ifndef TAO_CONSTRAINT_VISITOR_H
+#include "ace/pre.h"
 #define TAO_CONSTRAINT_VISITOR_H
 
 #include "orbsvcs/orbsvcs/Trader/Interpreter_Utils.h"
@@ -426,4 +427,5 @@ public:
   // then uses the appropriate form of equals comparison.
 };
 
+#include "ace/post.h"
 #endif /* CONSTRAINT_VISITORS_H */

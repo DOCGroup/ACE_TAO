@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_PRIORITY_MAPPING_H
+#include "ace/pre.h"
 #define TAO_PRIORITY_MAPPING_H
 
 #include "tao/orbconf.h"
@@ -60,4 +61,5 @@ public:
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
+#include "ace/post.h"
 #endif /* TAO_PRIORITY_MAPPING_H */

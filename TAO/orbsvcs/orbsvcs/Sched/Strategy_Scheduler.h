@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef STRATEGY_SCHEDULER_H
+#include "ace/pre.h"
 #define STRATEGY_SCHEDULER_H
 
 #include "DynSched.h"
@@ -123,9 +124,9 @@ public:
 
   virtual int priority_comp (const Dispatch_Entry &first_entry,
                              const Dispatch_Entry &second_entry) = 0;
-    // = Compares two dispatch entries in strategy specific high to low 
-    //   priority ordering: returns -1 if the first Dispatch_Entry is greater 
-    //   in the order, 0 if they are equivalent, or 1 if the second 
+    // = Compares two dispatch entries in strategy specific high to low
+    //   priority ordering: returns -1 if the first Dispatch_Entry is greater
+    //   in the order, 0 if they are equivalent, or 1 if the second
     //   Dispatch_Entry is greater in the order.
 
   virtual void sort (Dispatch_Entry **dispatch_entries,
@@ -150,8 +151,8 @@ public:
 
   virtual int static_subpriority_comp (const Dispatch_Entry &first_entry,
                                        const Dispatch_Entry &second_entry);
-    // = Provides a lowest level ordering based first on importance 
-    // (descending), and then on the dependency topological sort finishing 
+    // = Provides a lowest level ordering based first on importance
+    // (descending), and then on the dependency topological sort finishing
     // time (ascending).
 
   virtual ACE_DynScheduler::Dispatching_Type
@@ -165,11 +166,11 @@ protected:
     // = Compares two dispatch entries using the specific priority, dynamic
     //   subpriority, and static subpriority method definitions provided by
     //   the derived strategy class to produce the strategy specific sort
-    //   ordering: returns -1 if the first Dispatch_Entry is greater in the 
+    //   ordering: returns -1 if the first Dispatch_Entry is greater in the
     //   order, 0 if they are equivalent, or 1 if the second Dispatch_Entry is
-    //   greater in the order.  This is an example of the Template Method 
-    //   pattern (and also of Pree's Unification Metapattern), in which 
-    //   derived classes provide  definitions of the methods on which the 
+    //   greater in the order.  This is an example of the Template Method
+    //   pattern (and also of Pree's Unification Metapattern), in which
+    //   derived classes provide  definitions of the methods on which the
     //   sort_comp Template Method relies.
 
   ACE_DynScheduler::Preemption_Priority minimum_critical_priority_;
@@ -199,13 +200,13 @@ public:
 
   virtual int priority_comp (const Dispatch_Entry &first_entry,
                              const Dispatch_Entry &second_entry);
-    // = Compares two dispatch entries by maximum criticality: returns -1 if 
-    //   the first Dispatch_Entry is greater in the order, 0 if they're 
+    // = Compares two dispatch entries by maximum criticality: returns -1 if
+    //   the first Dispatch_Entry is greater in the order, 0 if they're
     //   equivalent, or 1 if the second Dispatch_Entry is greater in the order.
 
   virtual void sort (Dispatch_Entry **dispatch_entries,
                      u_int count);
-    // = Sorts the dispatch entry link pointer array 
+    // = Sorts the dispatch entry link pointer array
     //   in descending urgency order.
 
   virtual ACE_DynScheduler::Preemption_Priority minimum_critical_priority ();
@@ -269,7 +270,7 @@ public:
 
   virtual void sort (Dispatch_Entry **dispatch_entries,
                      u_int count);
-    // = Sorts the dispatch entry link pointer array in 
+    // = Sorts the dispatch entry link pointer array in
     //   descending RMS (rate) order.
 
   virtual ACE_DynScheduler::Preemption_Priority minimum_critical_priority ();
@@ -325,7 +326,7 @@ public:
 
   virtual int priority_comp (const Dispatch_Entry &first_entry,
                              const Dispatch_Entry &second_entry);
-    // = Just returns 0, as all dispatch entries are of equivalent 
+    // = Just returns 0, as all dispatch entries are of equivalent
     //   static priority under MLF.
 
   virtual void sort (Dispatch_Entry **dispatch_entries,
@@ -385,12 +386,12 @@ public:
 
   virtual int priority_comp (const Dispatch_Entry &first_entry,
                              const Dispatch_Entry &second_entry);
-    // = Returns 0, as all dispatch entries are of equivalent 
+    // = Returns 0, as all dispatch entries are of equivalent
     //   priority under EDF.
 
   virtual void sort (Dispatch_Entry **dispatch_entries,
                      u_int count);
-    // = Sorts the dispatch entry link pointer array 
+    // = Sorts the dispatch entry link pointer array
     //   in ascending deadline (period) order.
 
   virtual ACE_DynScheduler::Dispatching_Type
@@ -412,7 +413,7 @@ protected:
     (const Dispatch_Entry &first_entry,
      const Dispatch_Entry &second_entry);
     // = Orders two dispatch entries by ascending time to deadline: returns -1
-    //   if the first Dispatch_Entry is greater in the order, 0 if they're 
+    //   if the first Dispatch_Entry is greater in the order, 0 if they're
     //   equivalent, or 1 if the second Dispatch_Entry is greater in the order.
 
 private:
@@ -431,7 +432,7 @@ class TAO_ORBSVCS_Export ACE_Criticality_Scheduler_Strategy : public ACE_Schedul
   //    ACE_Criticality_Scheduler_Strategy
   //
   // = DESCRIPTION
-  //    Defines "schedule" method using a simple mapping directly from 
+  //    Defines "schedule" method using a simple mapping directly from
   //    operation criticality to static priority.
 {
 public:
@@ -453,7 +454,7 @@ public:
 
   virtual void sort (Dispatch_Entry **dispatch_entries,
                      u_int count);
-    // = Sort the dispatch entry link pointer array in descending 
+    // = Sort the dispatch entry link pointer array in descending
     //   criticality order.
 
   virtual ACE_DynScheduler::Preemption_Priority minimum_critical_priority ();
@@ -492,6 +493,7 @@ private:
 #include "Strategy_Scheduler.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* STRATEGY_SCHEDULER_H */
 
 // EOF

@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_CEC_PROXYPUSHCONSUMER_H
+#include "ace/pre.h"
 #define TAO_CEC_PROXYPUSHCONSUMER_H
 
 #include "orbsvcs/CosEventChannelAdminS.h"
@@ -126,4 +127,5 @@ private:
 #include "CEC_ProxyPushConsumer.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* TAO_CEC_PROXYPUSHCONSUMER_H */

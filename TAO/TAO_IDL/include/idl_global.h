@@ -408,6 +408,22 @@ public:
   // set the name of the include file to be used for precompiled
   // header support.
 
+  virtual const char* pre_include (void) const;
+  // returns the name of the include file to be put at the top of
+  // every header file.
+
+  virtual void pre_include (const char* s);
+  // set the name of the include file to be put at the top of every
+  // header file.
+
+  virtual const char* post_include (void) const;
+  // returns the name of the include file to be put at the bottom of
+  // every header file.
+
+  virtual void post_include (const char* s);
+  // set the name of the include file to be put at the bottom of every
+  // header file.
+
   // = Set and get methods for different file name endings.
 
   virtual void client_hdr_ending (const char* s);
@@ -617,7 +633,6 @@ public:
 
   virtual idl_bool gen_except_ostream_op (void);
   // Return the flag.
-
 private:
   // Data
   UTL_ScopeStack             *pd_scopes;             // Store scopes stack
@@ -673,6 +688,8 @@ private:
   char* stub_export_macro_;
   char* stub_export_include_;
   char* pch_include_;
+  char* pre_include_;
+  char* post_include_;
 
   // Client's header file name ending. Default is "C.h".
   char*  client_hdr_ending_;

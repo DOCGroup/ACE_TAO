@@ -17,6 +17,7 @@
 // ================================================================
 
 #ifndef TAO_IOPS_H
+#include "ace/pre.h"
 #define TAO_IOPS_H
 
 #include "tao/IOPC.h"
@@ -48,4 +49,5 @@ TAO_NAMESPACE_CLOSE
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TAO_IOPS_H */

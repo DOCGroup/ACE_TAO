@@ -8,6 +8,7 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #ifndef _TAO_IDL_IMPLREPOC_H_
+#include "ace/pre.h"
 #define _TAO_IDL_IMPLREPOC_H_
 
 #include "tao/Object.h"
@@ -1746,4 +1747,5 @@ operator>> (TAO_InputCDR &, ImplementationRepository::ServerInformationIterator_
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* ifndef */

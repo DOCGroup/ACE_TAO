@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef TAO_PERSISTENT_ENTRIES_H
+#include "ace/pre.h"
 #define TAO_PERSISTENT_ENTRIES_H
 
 #include "ace/Hash_Map_With_Allocator_T.h"
@@ -223,4 +224,5 @@ public:
   // Persistent Naming Context in the Persistent Context Index.
 };
 
+#include "ace/post.h"
 #endif /* TAO_PERSISTENT_ENTRIES_H */

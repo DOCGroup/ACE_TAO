@@ -19,6 +19,7 @@
 // ============================================================================
 
 #ifndef LOG_RECORD_STORE_H
+#include "ace/pre.h"
 #define LOG_RECORD_STORE_H
 
 #include "orbsvcs/DsLogAdminS.h"
@@ -133,4 +134,5 @@ class LogRecordStore
   // The max size of the record list returned in a query.
 };
 
+#include "ace/post.h"
 #endif /*LOG_RECORD_STORE_H*/

@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef SCHEDULER_INTERNAL_H
+#include "ace/pre.h"
 #define SCHEDULER_INTERNAL_H
 
 #include "Scheduler.h"
@@ -54,7 +55,7 @@ public:
   // Obtains a Config_Info based on its priority.
 
   // = Computes the schedule.
-  virtual status_t 
+  virtual status_t
     schedule (ACE_Unbounded_Set<Scheduling_Anomaly *> &anomaly_set);
 
   // = Access a thread priority.
@@ -131,6 +132,7 @@ private:
 #include "Scheduler_Generic.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* SCHEDULER_INTERNAL_H */
 
 

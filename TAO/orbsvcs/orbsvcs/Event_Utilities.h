@@ -15,6 +15,7 @@
 // ============================================================================
 
 #ifndef ACE_EVENT_UTILITIES_H
+#include "ace/pre.h"
 #define ACE_EVENT_UTILITIES_H
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
@@ -257,4 +258,5 @@ private:
 #include "orbsvcs/Event_Utilities.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /* ACE_EVENT_UTILITIES_H */

@@ -18,6 +18,7 @@
 // ============================================================================
 
 #ifndef TAO_COSEVENT_UTILITIES_H
+#include "ace/pre.h"
 #define TAO_COSEVENT_UTILITIES_H
 
 #include "orbsvcs/RtecSchedulerC.h"
@@ -164,4 +165,5 @@ class TAO_ORBSVCS_Export CosEC_ServantBase :
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /* TAO_COSEVENT_UTILITIES_H */

@@ -17,6 +17,7 @@
 // ============================================================================
 
 #ifndef TLS_LOG_I_H
+#include "ace/pre.h"
 #define TLS_LOG_I_H
 
 #include "orbsvcs/Log/LogRecordStore.h"
@@ -387,4 +388,5 @@ protected:
   CORBA::ULong max_rec_list_len_;
   // Max count to return in queries.
 };
+#include "ace/post.h"
 #endif /* TLS_LOG_I_H */
