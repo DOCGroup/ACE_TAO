@@ -1,0 +1,93 @@
+// $Id$
+
+/**
+ * @file RTConfiguration.idl
+ *
+ * @brief Define the data structure for configuraing RTComponentServer.
+ *
+ * Define the data structure for configuraing RTComponentServer.
+ */
+
+#include "RTCORBA/RTCORBA.pidl"
+
+module CIAO
+{
+  module RTConfiguration
+  {
+    struct ThreadPool_Configuration
+    {
+      string name;
+      unsigned long stacksize;
+      unsigned long static_threads;
+      unsigned long dynamic_threads;
+      RTCORBA::Priority default_priority;
+      boolean allow_request_buffering;
+      unsigned long max_buffered_requests;
+      unsigned long max_request_buffer_size;
+    };
+
+    struct ThreadPoolLanes_Configuration
+    {
+      string name;
+      unsigned long stacksize;
+      RTCORBA::ThreadpoolLanes lanes;
+      boolean allow_borrowing;
+      boolean allow_request_buffering;
+      unsigned long max_buffered_requests;
+      unsigned long max_request_buffer_size;
+    };
+
+    typedef sequence<ThreadPool_Configuration> ThreadPool_Configurations;
+    typedef sequence<ThreadPoolLanes_Configuration> ThreadPoolLanes_Configurations;
+
+    struct PriorityBands_Configuration
+    {
+      string name;
+
+      RTCORBA::PriorityBands bands;
+    };
+    typedef sequence<PriorityBands_Configuration> PriorityBands_Configurations;
+
+    /**
+     * @brief RT-related resources global to a component server.
+     *
+     * These are Real-time related resources that are global within an
+     * RT component server.  They can be shared by several containers.
+     */
+    struct RTORB_Resources_Info
+    {
+      ThreadPool_Configurations tp_configs;
+
+      ThreadPoolLanes_Configurations tpl_configs;
+
+      PriorityBands_Configurations pb_configs;
+    };
+
+    // ---------------------------------------------------------------
+    // PolicySet
+
+    struct Priority_Model_Config
+    {
+      RTCORBA::PriorityModel model;
+      RTCORBA::Priority default_priority;
+    };
+
+    struct Policy_Config
+    {
+      CORBA::PolicyType type;
+
+      any configuration;
+    };
+
+    typedef sequence<Policy_Config> Policy_Configs;
+
+    struct Policy_Set
+    {
+      string name;
+
+      Policy_Configs configs;
+    };
+
+    typedef sequence<Policy_Set> Policy_Sets;
+  };
+};
