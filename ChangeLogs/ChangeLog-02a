@@ -1,3 +1,13 @@
+Thu Mar 16 11:51:49 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/MEM_SAP.i:
+        * ace/Malloc_T.cpp:
+
+          The ACE_TRACE macros were incompatible with SEH.  Conditionally
+          compiled the ACE_TRACE statements in places where this was a 
+          problem.  Thanks to Edan Ayal <edanayal@yahoo.com> for reporting
+          this.
+
 Thu Mar 16 13:40:53 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5.h: just #define ACE_USES_OLD_IOSTREAMS,

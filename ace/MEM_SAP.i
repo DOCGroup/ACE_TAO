@@ -60,7 +60,9 @@ ACE_MEM_SAP::set_buf_len (void *buf, size_t n)
 ASYS_INLINE ssize_t
 ACE_MEM_SAP::get_buf_len (const off_t off, void *&buf)
 {
+#if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
   ACE_TRACE ("ACE_MEM_SAP::get_buf_len");
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
   if (this->shm_malloc_ == 0)
     return -1;
