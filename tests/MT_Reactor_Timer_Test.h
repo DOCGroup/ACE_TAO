@@ -102,7 +102,7 @@ private:
 
   int input_seen_;
   int notify_seen_;
-  int timers_fired_;
+  size_t timers_fired_;
 
 };
 
