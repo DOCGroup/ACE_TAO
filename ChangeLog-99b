@@ -1,3 +1,5 @@
+Mon Jul 12 18:24:34 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
 Mon Jul 12 17:31:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/run_all_win32.pl: Fixed the missing execution output problem
