@@ -59,7 +59,7 @@ namespace TAO
 
     void
     POA_Current_Impl::setup (TAO_POA *p,
-                                 const TAO::ObjectKey &key)
+                             const TAO::ObjectKey &key)
     {
       // Remember information about this upcall.
       this->poa_ = p;

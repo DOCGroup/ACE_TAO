@@ -11,7 +11,7 @@
 
 #include "Servant_Retention_Strategy.h"
 #include "Request_Processing_Strategy.h"
-#include "Activation_Strategy.h"
+#include "ImplicitActivationStrategy.h"
 #include "tao/PortableServer/Id_Uniqueness_Strategy.h"
 #include "Lifespan_Strategy.h"
 #include "tao/ORB_Core.h"
@@ -713,7 +713,7 @@ namespace TAO
       // active, the servant is activated using a POA-generated Object Id
       // and the Interface Id associated with the servant, and that Object
       // Id is returned.
-      if (this->poa_->active_policy_strategies().activation_strategy ()->allow_implicit_activation ())
+      if (this->poa_->active_policy_strategies().implicit_activation_strategy ()->allow_implicit_activation ())
         {
           // If we reach here, then we either have the MULTIPLE_ID policy
           // or we have the UNIQUE_ID policy and we are not in the active
@@ -816,7 +816,7 @@ namespace TAO
       // IMPLICIT_ACTIVATION policies; if not present, the WrongPolicy
       // exception is raised.
       if (!((this->poa_->cached_policies().id_uniqueness () == PortableServer::UNIQUE_ID
-                || this->poa_->active_policy_strategies().activation_strategy ()->allow_implicit_activation ())))
+                || this->poa_->active_policy_strategies().implicit_activation_strategy ()->allow_implicit_activation ())))
         {
           ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
                             0);
@@ -841,7 +841,7 @@ namespace TAO
       // active, the servant is activated using a POA-generated Object Id
       // and the Interface Id associated with the servant, and that Object
       // Id is returned.
-      if (this->poa_->active_policy_strategies().activation_strategy ()->allow_implicit_activation ())
+      if (this->poa_->active_policy_strategies().implicit_activation_strategy ()->allow_implicit_activation ())
         {
           // If we reach here, then we either have the MULTIPLE_ID policy
           // or we have the UNIQUE_ID policy and we are not in the active

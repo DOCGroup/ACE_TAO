@@ -40,10 +40,10 @@ namespace TAO
     }
 
     ACE_INLINE
-    Activation_Strategy*
-    Active_Policy_Strategies::activation_strategy (void) const
+    ImplicitActivationStrategy*
+    Active_Policy_Strategies::implicit_activation_strategy (void) const
     {
-      return activation_strategy_;
+      return implicit_activation_strategy_;
     }
 
     ACE_INLINE

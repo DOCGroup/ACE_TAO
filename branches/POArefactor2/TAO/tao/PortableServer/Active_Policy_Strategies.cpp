@@ -16,7 +16,8 @@
 #include "Id_Assignment_Strategy.h"
 #include "Lifespan_Strategy.h"
 #include "Id_Uniqueness_Strategy.h"
-#include "Activation_Strategy.h"
+#include "ImplicitActivationStrategy.h"
+#include "ImplicitActivationStrategyFactory.h"
 #include "ServantRetentionStrategy.h"
 #include "ServantRetentionStrategyFactory.h"
 
@@ -40,7 +41,7 @@ namespace TAO
       id_assignment_strategy_ (0),
       lifespan_strategy_ (0),
       id_uniqueness_strategy_ (0),
-      activation_strategy_ (0),
+      implicit_activation_strategy_ (0),
       servant_retention_strategy_ (0)
     {
     }
@@ -143,35 +144,44 @@ namespace TAO
 
       lifespan_strategy_->strategy_init (poa);
 
-      switch (policies.implicit_activation())
-      {
-        case ::PortableServer::IMPLICIT_ACTIVATION :
-        {
-          ACE_NEW (activation_strategy_, Implicit_Activation_Strategy);
-          break;
-        }
-        case ::PortableServer::NO_IMPLICIT_ACTIVATION :
-        {
-          ACE_NEW (activation_strategy_, Explicit_Activation_Strategy);
-          break;
-        }
-      }
+      /**/
 
-      activation_strategy_->strategy_init (poa);
+      ImplicitActivationStrategyFactory *implicit_activation_strategy_factory =
+        ACE_Dynamic_Service<ImplicitActivationStrategyFactory>::instance ("ImplicitActivationStrategyFactory");
 
-      ServantRetentionStrategyFactory *strategy_factory =
+      if (implicit_activation_strategy_factory == 0)
+        {
+          ACE_Service_Config::process_directive (ACE_TEXT("dynamic ImplicitActivationStrategyFactory Service_Object *")
+                                                 ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationFactoryImpl()"));
+          implicit_activation_strategy_factory =
+            ACE_Dynamic_Service<ImplicitActivationStrategyFactory>::instance ("ImplicitActivationStrategyFactory");
+        }
+
+      if (implicit_activation_strategy_factory != 0)
+        implicit_activation_strategy_ = implicit_activation_strategy_factory->create (policies.implicit_activation());
+
+      if (implicit_activation_strategy_ != 0)
+        implicit_activation_strategy_->strategy_init (poa);
+
+      /**/
+
+      ServantRetentionStrategyFactory *servant_retention_strategy_factory =
         ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyFactory");
 
-      if (strategy_factory == 0)
+      if (servant_retention_strategy_factory == 0)
         {
           ACE_Service_Config::process_directive (ACE_TEXT("dynamic ServantRetentionStrategyFactory Service_Object *")
                                                  ACE_TEXT("TAO_PortableServer:_make_ServantRetentionStrategyFactoryImpl()"));
-          strategy_factory =
+          servant_retention_strategy_factory =
             ACE_Dynamic_Service<ServantRetentionStrategyFactory>::instance ("ServantRetentionStrategyFactory");
         }
 
-      servant_retention_strategy_ = strategy_factory->create (policies.servant_retention());
 
+      if (servant_retention_strategy_factory != 0)
+        servant_retention_strategy_ =
+          servant_retention_strategy_factory->create (policies.servant_retention());
+
+      if (servant_retention_strategy_ != 0)
       servant_retention_strategy_->strategy_init (poa);
     }
   }

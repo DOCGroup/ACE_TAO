@@ -10,13 +10,12 @@
  */
 //=============================================================================
 
-#ifndef TAO_ACTIVATION_STRATEGY_H
-#define TAO_ACTIVATION_STRATEGY_H
+#ifndef TAO_IMPLICITACTIVATIONSTRATEGYIMPLICIT_H
+#define TAO_IMPLICITACTIVATIONSTRATEGYIMPLICIT_H
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "Policy_Strategy.h"
-#include "ace/Service_Config.h"
+#include "ImplicitActivationStrategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,19 +27,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Activation_Strategy :
-       public virtual Policy_Strategy
-    {
-    public:
-      virtual ~Activation_Strategy (void);
-
-      virtual void strategy_init (TAO_POA *);
-
-      virtual bool allow_implicit_activation (void) const = 0;
-    };
-
     class TAO_PortableServer_Export Implicit_Activation_Strategy :
-       public virtual Activation_Strategy
+       public virtual ImplicitActivationStrategy
     {
     public:
       virtual ~Implicit_Activation_Strategy (void);
@@ -49,19 +37,10 @@ namespace TAO
 
     private:
     };
-
-    class TAO_PortableServer_Export Explicit_Activation_Strategy :
-       public virtual Activation_Strategy
-    {
-    public:
-      virtual ~Explicit_Activation_Strategy (void);
-
-      virtual bool allow_implicit_activation (void) const;
-    };
   }
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #include /**/ "ace/post.h"
-#endif /* TAO_ACTIVATION_STRATEGY_H */
+#endif /* TAO_IMPLICITACTIVATIONSTRATEGYIMPLICIT_H */
