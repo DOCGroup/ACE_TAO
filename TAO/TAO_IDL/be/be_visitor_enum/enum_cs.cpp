@@ -43,7 +43,14 @@ be_visitor_enum_cs::~be_visitor_enum_cs (void)
 int
 be_visitor_enum_cs::visit_enum (be_enum *node)
 {
-  if (!node->cli_stub_gen () && !node->imported () && !node->is_local ())
+  if (node->cli_stub_gen () 
+      || node->imported () 
+      || node->is_local ())
+    {
+		  return 0;
+    }
+
+  if (be_global->tc_support ())
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.state (TAO_CodeGen::TAO_TYPECODE_DEFN);
@@ -58,9 +65,8 @@ be_visitor_enum_cs::visit_enum (be_enum *node)
                              "TypeCode definition failed\n"), 
                             -1);
         }
-
-      node->cli_stub_gen (I_TRUE);
     }
 
+  node->cli_stub_gen (I_TRUE);
   return 0;
 }
