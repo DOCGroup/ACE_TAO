@@ -30,7 +30,7 @@ class TAO_Notify_ProxySupplier;
  * @brief Wrapper for the StructuredPushConsumer that connect to the EventChannel.
  *
  */
-class TAO_Notify_Export TAO_Notify_StructuredPushConsumer : public TAO_Notify_Consumer
+class TAO_Notify_Serv_Export TAO_Notify_StructuredPushConsumer : public TAO_Notify_Consumer
 {
 public:
   /// Constuctor

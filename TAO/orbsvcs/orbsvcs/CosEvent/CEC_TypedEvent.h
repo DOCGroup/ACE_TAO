@@ -12,7 +12,7 @@
 #define TAO_CEC_TYPEDEVENT_H_
 #include /**/ "ace/pre.h"
 
-#include "event_export.h"
+#include "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -34,7 +34,7 @@
 
 class TAO_CEC_ProxyPushSupplier;
 
-class TAO_Event_Export TAO_CEC_TypedEvent
+class TAO_Event_Serv_Export TAO_CEC_TypedEvent
 {
 public:
   /// constructors...

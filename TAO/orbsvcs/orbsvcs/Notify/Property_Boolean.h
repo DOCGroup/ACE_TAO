@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,7 +32,7 @@ class TAO_Notify_PropertySeq;
  */
 /*******************************************************************************/
 
-class TAO_Notify_Export TAO_Notify_Property_Boolean
+class TAO_Notify_Serv_Export TAO_Notify_Property_Boolean
 {
 public:
   /// Constuctor

@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,7 +30,7 @@
  *
  */
 template <class SERVANT_TYPE>
-class TAO_Notify_Export TAO_Notify_ProxyConsumer_T 
+class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer_T 
   : public virtual TAO_Notify_Proxy_T <SERVANT_TYPE>, 
     public virtual TAO_Notify_ProxyConsumer
 {

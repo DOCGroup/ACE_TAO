@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,7 +31,7 @@
  * @brief Thread-safe refounting, calls the <release> method when refcount falls to 0.
  *
  */
-class TAO_Notify_Export TAO_Notify_Refcountable
+class TAO_Notify_Serv_Export TAO_Notify_Refcountable
 {
 public:
   /// Constuctor

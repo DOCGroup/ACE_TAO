@@ -13,7 +13,7 @@
 #define TAO_Notify_TIMER_H
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,7 +30,7 @@ class ACE_Event_Handler;
  * @brief Interface for scheduling timers.
  *
  */
-class TAO_Notify_Export TAO_Notify_Timer : public TAO_Notify_Refcountable
+class TAO_Notify_Serv_Export TAO_Notify_Timer : public TAO_Notify_Refcountable
 {
 public:
   /// Destructor

@@ -29,7 +29,7 @@
 #include "tao/PortableServer/PortableServerC.h"
 #include "tao/Objref_VarOut_T.h"
 
-#include "orbsvcs/CosEvent/event_export.h"
+#include "orbsvcs/CosEvent/event_serv_export.h"
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPushConsumer;
@@ -55,7 +55,7 @@ namespace CORBA
  * = LOCKING
  * = TODO
  */
-class TAO_Event_Export TAO_CEC_SupplierControl
+class TAO_Event_Serv_Export TAO_CEC_SupplierControl
 {
 public:
   /// Constructor.  It does not assume ownership of the <event_channel>

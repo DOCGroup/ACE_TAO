@@ -24,7 +24,7 @@
 #include "ace/SString.h"
 
 #include "orbsvcs/CosNamingC.h"
-#include "naming_export.h"
+#include "naming_serv_export.h"
 
 /**
  * @class TAO_IntId
@@ -38,7 +38,7 @@
  * they can be stored together as a <value> for a <key> in a
  * hash table holding the state of a Transient Naming Context.
  */
-class TAO_Naming_Export TAO_IntId
+class TAO_Naming_Serv_Export TAO_IntId
 {
 public:
   // = Initialization and termination methods.
@@ -79,7 +79,7 @@ public:
  * they can be stored together as a <key> for a <value> in a
  * hash table holding the state of a Transient Naming Context.
  */
-class TAO_Naming_Export TAO_ExtId
+class TAO_Naming_Serv_Export TAO_ExtId
 {
 public:
   // = Initialization and termination methods.

@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,7 +37,7 @@
  * @brief
  *
  */
-class TAO_Notify_Export TAO_Notify_ETCL_FilterFactory
+class TAO_Notify_Serv_Export TAO_Notify_ETCL_FilterFactory
   : public virtual PortableServer::RefCountServantBase,
     public virtual POA_CosNotifyFilter::FilterFactory,
     public virtual TAO_Notify_FilterFactory
@@ -86,7 +86,7 @@ protected:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-ACE_FACTORY_DECLARE (TAO_Notify, TAO_Notify_ETCL_FilterFactory)
+ACE_FACTORY_DECLARE (TAO_Notify_Serv, TAO_Notify_ETCL_FilterFactory)
 
 #if defined (__ACE_INLINE__)
 #include "ETCL_FilterFactory.inl"

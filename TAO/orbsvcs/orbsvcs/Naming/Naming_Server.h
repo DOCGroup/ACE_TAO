@@ -57,7 +57,7 @@ class TAO_Storable_Naming_Context_Activator;
  * orbsvcs/orbsvcs/TAO_IOR_Multicast.*, implementation of
  * <resolve_initial_references>, and orbsvcs/Naming/README.
  */
-class TAO_Naming_Export TAO_Naming_Server
+class TAO_Naming_Serv_Export TAO_Naming_Server
 {
 public:
   /// Default constructor.

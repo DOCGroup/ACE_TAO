@@ -13,7 +13,7 @@
 #define TAO_Notify_SUPPLIER_H
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,7 +30,7 @@ class TAO_Notify_ProxyConsumer;
  * @brief Base Wrappers for Suppliers that connect to the EventChannel.
  *
  */
-class TAO_Notify_Export TAO_Notify_Supplier : public TAO_Notify_Peer
+class TAO_Notify_Serv_Export TAO_Notify_Supplier : public TAO_Notify_Peer
 {
 public:
   /// Constuctor

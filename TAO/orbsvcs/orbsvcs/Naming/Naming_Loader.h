@@ -24,7 +24,7 @@
 
 #include "orbsvcs/Naming/Naming_Server.h"
 
-class TAO_Naming_Export TAO_Naming_Loader : public TAO_Object_Loader
+class TAO_Naming_Serv_Export TAO_Naming_Loader : public TAO_Object_Loader
 {
 public:
 
@@ -60,6 +60,6 @@ private:
   ACE_UNIMPLEMENTED_FUNC (TAO_Naming_Loader &operator = (const TAO_Naming_Loader &))
 };
 
-ACE_FACTORY_DECLARE (TAO_Naming, TAO_Naming_Loader)
+ACE_FACTORY_DECLARE (TAO_Naming_Serv, TAO_Naming_Loader)
 
 #endif /* TAO_NAMING_LOADER_H */

@@ -17,7 +17,7 @@
 
 #include "ace/Hash_Map_With_Allocator_T.h"
 #include "orbsvcs/CosNamingC.h"
-#include "naming_export.h"
+#include "naming_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,7 +37,7 @@
  * Memory for the ior isn't allocated/deallocated, this class just
  * copies a pointer.
  */
-class TAO_Naming_Export TAO_Persistent_IntId
+class TAO_Naming_Serv_Export TAO_Persistent_IntId
 {
 public:
   // = Initialization and termination methods.
@@ -80,7 +80,7 @@ public:
  * Memory for id and kind isn't allocated/deallocated, this
  * class just copies pointers.
  */
-class TAO_Naming_Export TAO_Persistent_ExtId
+class TAO_Naming_Serv_Export TAO_Persistent_ExtId
 {
 public:
   // = Initialization and termination methods.
@@ -142,7 +142,7 @@ public:
  * they can be stored together as a <value> for a <key> in a
  * hash table holding the state of a Persistent Context Index.
  */
-class TAO_Naming_Export TAO_Persistent_Index_IntId
+class TAO_Naming_Serv_Export TAO_Persistent_Index_IntId
 {
 public:
   // = Initialization and termination methods.
@@ -186,7 +186,7 @@ public:
  * provide <hash> function for it to work with
  * ACE_Hash_Map_Manager.
  */
-class TAO_Naming_Export TAO_Persistent_Index_ExtId
+class TAO_Naming_Serv_Export TAO_Persistent_Index_ExtId
 {
 public:
   // = Initialization and termination methods.

@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -40,7 +40,7 @@ typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Notify_Message_Queue;
  * @brief Base Strategy to enqueue and dequeue items from a Message Queue.
  *
  */
-class TAO_Notify_Export TAO_Notify_Buffering_Strategy
+class TAO_Notify_Serv_Export TAO_Notify_Buffering_Strategy
 {
 public:
   /// Constuctor

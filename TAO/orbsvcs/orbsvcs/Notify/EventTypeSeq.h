@@ -13,7 +13,7 @@
 #define TAO_Notify_EVENTTYPESEQ_H
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,7 +28,7 @@
  * @brief Allows operations using the CosNotification::EventTypeSeq type.
  *
  */
-class TAO_Notify_Export TAO_Notify_EventTypeSeq : public ACE_Unbounded_Set <TAO_Notify_EventType>
+class TAO_Notify_Serv_Export TAO_Notify_EventTypeSeq : public ACE_Unbounded_Set <TAO_Notify_EventType>
 {
  typedef ACE_Unbounded_Set <TAO_Notify_EventType> inherited;
 

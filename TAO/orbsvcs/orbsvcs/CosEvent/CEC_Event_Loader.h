@@ -32,7 +32,7 @@
  *
  * @brief Dynamically load an instance of the COS Event Service.
  */
-class TAO_Event_Export TAO_CEC_Event_Loader : public TAO_Object_Loader
+class TAO_Event_Serv_Export TAO_CEC_Event_Loader : public TAO_Object_Loader
 {
 public:
   /// Constructor
@@ -98,6 +98,6 @@ private:
   ACE_UNIMPLEMENTED_FUNC (TAO_CEC_Event_Loader &operator= (const TAO_CEC_Event_Loader &))
 };
 
-ACE_FACTORY_DECLARE (TAO_Event, TAO_CEC_Event_Loader)
+ACE_FACTORY_DECLARE (TAO_Event_Serv, TAO_CEC_Event_Loader)
 
 #endif /* TAO_CEC_EVENT_LOADER_H */

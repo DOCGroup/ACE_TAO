@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,7 +36,7 @@ class TAO_Notify_Timer_Queue;
  * @brief Implements a Thread Pool Worker Task.
  *
  */
-class TAO_Notify_Export TAO_Notify_ThreadPool_Task : public TAO_Notify_Worker_Task, public ACE_Task<ACE_NULL_SYNCH>
+class TAO_Notify_Serv_Export TAO_Notify_ThreadPool_Task : public TAO_Notify_Worker_Task, public ACE_Task<ACE_NULL_SYNCH>
 {
   friend class TAO_Notify_Method_Request_Shutdown;
 

@@ -14,7 +14,7 @@
 #define NOTIFY_DEFAULT_COLLECTION_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,7 +27,7 @@
  *
  *
  */
-class TAO_Notify_Export TAO_Notify_Default_Collection_Factory
+class TAO_Notify_Serv_Export TAO_Notify_Default_Collection_Factory
 {
 public:
 

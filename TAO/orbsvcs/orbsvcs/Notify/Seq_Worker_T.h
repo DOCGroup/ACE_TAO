@@ -13,7 +13,7 @@
 #define TAO_Notify_SEQ_WORKER_T_H
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,7 +30,7 @@
  *
  */
 template <class TYPE>
-class TAO_Notify_Export TAO_Notify_Seq_Worker_T : public TAO_ESF_Worker<TYPE>
+class TAO_Notify_Serv_Export TAO_Notify_Seq_Worker_T : public TAO_ESF_Worker<TYPE>
 {
   typedef TAO_Notify_Container_T<TYPE> CONTAINER;
   typedef TAO_ESF_Proxy_Collection<TYPE> COLLECTION;

@@ -13,7 +13,7 @@
 #define TAO_Notify_SERVICE_H
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,7 +33,7 @@
  *        Note that a Service creates only 1 Factory object.
  *
  */
-class TAO_Notify_Export TAO_Notify_Service : public ACE_Service_Object
+class TAO_Notify_Serv_Export TAO_Notify_Service : public ACE_Service_Object
 {
 public:
   /// Define Service_Object method otherwise SunCC compiler complains.

@@ -13,7 +13,7 @@
 #define TAO_Notify_COSNOTIFY_SERVICE_H
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,7 +32,7 @@ class TAO_Notify_EventChannelFactory;
  * @brief A service object for creating the  Notify Service Factory.
  *
  */
-class TAO_Notify_Export TAO_CosNotify_Service : public TAO_Notify_Service
+class TAO_Notify_Serv_Export TAO_CosNotify_Service : public TAO_Notify_Service
 {
 public:
   /// Constuctor
@@ -75,7 +75,7 @@ protected:
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_CosNotify_Service)
-ACE_FACTORY_DECLARE (TAO_Notify, TAO_CosNotify_Service)
+ACE_FACTORY_DECLARE (TAO_Notify_Serv, TAO_CosNotify_Service)
 
 ACE_STATIC_SVC_DECLARE (TAO_Notify_Default_EMO_Factory_OLD)
 

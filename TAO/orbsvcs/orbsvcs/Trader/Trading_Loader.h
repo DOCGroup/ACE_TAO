@@ -28,7 +28,7 @@
 #include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Service_Type_Repository.h"
 
-class TAO_Trading_Export TAO_Trading_Loader : public TAO_Object_Loader
+class TAO_Trading_Serv_Export TAO_Trading_Loader : public TAO_Object_Loader
 {
 public:
 
@@ -106,6 +106,6 @@ public:
 
 };
 
-ACE_FACTORY_DECLARE (TAO_Trading, TAO_Trading_Loader)
+ACE_FACTORY_DECLARE (TAO_Trading_Serv, TAO_Trading_Loader)
 
 #endif /* TAO_TRADING_LOADER_H */

@@ -17,7 +17,7 @@
 
 #include "Constraint_Nodes.h"
 #include "Constraint_Visitors.h"
-#include "orbsvcs/Trader/trading_export.h"
+#include "orbsvcs/Trader/trading_serv_export.h"
 
 class TAO_Constraint_Evaluator;
 class TAO_Constraint_Validator;
@@ -29,7 +29,7 @@ class TAO_Constraint_Validator;
  * build tree method invokes the yacc parser to parse a constraint
  * or preference string.
  */
-class TAO_Trading_Export TAO_Interpreter
+class TAO_Trading_Serv_Export TAO_Interpreter
 {
 protected:
   // = Initialization and termination methods.

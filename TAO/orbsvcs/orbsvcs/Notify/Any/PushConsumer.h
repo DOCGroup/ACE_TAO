@@ -28,7 +28,7 @@
  * @brief Wrapper for the PushConsumer that connect to the EventChannel.
  *
  */
-class TAO_Notify_Export TAO_Notify_PushConsumer : public TAO_Notify_Consumer
+class TAO_Notify_Serv_Export TAO_Notify_PushConsumer : public TAO_Notify_Consumer
 {
 public:
   /// Constuctor

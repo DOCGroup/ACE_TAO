@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,7 +41,7 @@ template <class TYPE> class TAO_Notify_Container_T;
  * @brief Implementation of CosNotifyChannelAdmin::EventChannelFactory
  *
  */
-class TAO_Notify_Export TAO_Notify_EventChannelFactory 
+class TAO_Notify_Serv_Export TAO_Notify_EventChannelFactory 
   : public virtual POA_NotifyExt::EventChannelFactory, 
     public virtual TAO_Notify_Object
 {

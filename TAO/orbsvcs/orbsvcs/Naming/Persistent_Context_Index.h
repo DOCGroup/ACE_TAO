@@ -16,7 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "Persistent_Entries.h"
-#include "naming_export.h"
+#include "naming_serv_export.h"
 #include "nsconf.h"
 #include "tao/PortableServer/PortableServer.h"
 
@@ -41,7 +41,7 @@
  * facilitates Persistent Naming Context servant initialization
  * upon Naming Server start-up.
  */
-class TAO_Naming_Export TAO_Persistent_Context_Index
+class TAO_Naming_Serv_Export TAO_Persistent_Context_Index
 {
 public:
   // = Some typedefs for convenience.

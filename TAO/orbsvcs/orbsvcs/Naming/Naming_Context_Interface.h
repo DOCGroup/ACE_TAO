@@ -17,7 +17,7 @@
 
 #include "orbsvcs/CosNamingS.h"
 
-#include "naming_export.h"
+#include "naming_serv_export.h"
 #include "ace/Null_Mutex.h"
 
 class TAO_Naming_Context_Impl;
@@ -41,7 +41,7 @@ class TAO_Naming_Context_Impl;
  * concrete implementors.
  */
 
-class TAO_Naming_Export TAO_Naming_Context :
+class TAO_Naming_Serv_Export TAO_Naming_Context :
   public virtual PortableServer::RefCountServantBase,
   public virtual POA_CosNaming::NamingContextExt
 {
@@ -304,7 +304,7 @@ protected:
  * Subclasses of TAO_Naming_Context_Impl provide concrete
  * implementations of the NamingContext functionality.
  */
-class TAO_Naming_Export TAO_Naming_Context_Impl
+class TAO_Naming_Serv_Export TAO_Naming_Context_Impl
 {
 
 public:

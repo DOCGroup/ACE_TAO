@@ -29,7 +29,7 @@
  *
  */
 
-class TAO_Notify_Export TAO_Notify_StructuredEvent_No_Copy : public TAO_Notify_Event
+class TAO_Notify_Serv_Export TAO_Notify_StructuredEvent_No_Copy : public TAO_Notify_Event
 {
 public:
   /// Constuctor
@@ -80,7 +80,7 @@ protected:
  * @brief StructuredEvent implementation.
  *
  */
-class TAO_Notify_Export TAO_Notify_StructuredEvent : public TAO_Notify_StructuredEvent_No_Copy
+class TAO_Notify_Serv_Export TAO_Notify_StructuredEvent : public TAO_Notify_StructuredEvent_No_Copy
 {
 public:
   /// Constuctor

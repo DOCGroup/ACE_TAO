@@ -43,7 +43,7 @@ class TAO_CEC_Reactive_Pulling_Strategy;
  * periodically wakeup and try top pull events from each
  * PullSupplier connected to the EventChannel.
  */
-class TAO_Event_Export TAO_CEC_Pulling_Strategy_Adapter : public ACE_Event_Handler
+class TAO_Event_Serv_Export TAO_CEC_Pulling_Strategy_Adapter : public ACE_Event_Handler
 {
 public:
   /// Constructor
@@ -68,7 +68,7 @@ private:
  * The events are dispatched in FIFO ordering, using the invoking
  * thread to push the event to the consumer.
  */
-class TAO_Event_Export TAO_CEC_Reactive_Pulling_Strategy : public TAO_CEC_Pulling_Strategy
+class TAO_Event_Serv_Export TAO_CEC_Reactive_Pulling_Strategy : public TAO_CEC_Pulling_Strategy
 {
 public:
   /// The scheduler is used to find the range of priorities and similar

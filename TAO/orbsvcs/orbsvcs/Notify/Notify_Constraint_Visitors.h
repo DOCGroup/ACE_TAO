@@ -27,13 +27,13 @@
 
 #include "tao/Typecode.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 class TAO_ETCL_Constraint;
 class TAO_ETCL_Literal_Constraint;
 class TAO_Notify_Property_Constraint;
 
-class TAO_Notify_Export TAO_Notify_Constraint_Visitor
+class TAO_Notify_Serv_Export TAO_Notify_Constraint_Visitor
   : public TAO_ETCL_Constraint_Visitor
 {
 public:

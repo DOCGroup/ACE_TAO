@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,7 +34,7 @@ class TAO_Notify_Method_Request;
  * @brief Base class for Method Requests that do not copy the event.
  *
  */
-class TAO_Notify_Export TAO_Notify_Method_Request_No_Copy
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_No_Copy
 {
 public:
   /// Execute the Request
@@ -52,7 +52,7 @@ public:
  * @brief Interface for NS method Requests
  *
  */
-class TAO_Notify_Export TAO_Notify_Method_Request : public ACE_Message_Block
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request : public ACE_Message_Block
 {
 public:
   enum {PRIORITY_BASE = 32768};

@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "CEC_Defaults.h"
-#include "event_export.h"
+#include "event_serv_export.h"
 
 #include "orbsvcs/CosTypedEventChannelAdminS.h"
 
@@ -50,7 +50,7 @@
  * an easy mechanism to extend the attributes without requiring
  * changes in the EC constructor.
  */
-class TAO_Event_Export TAO_CEC_TypedEventChannel_Attributes
+class TAO_Event_Serv_Export TAO_CEC_TypedEventChannel_Attributes
 {
 public:
   /**
@@ -105,7 +105,7 @@ private:
 class TAO_CEC_Operation_Params;
 
 //Class TAO_CEC_TypedEventChannel
-class TAO_Event_Export TAO_CEC_TypedEventChannel : public virtual POA_CosTypedEventChannelAdmin::TypedEventChannel
+class TAO_Event_Serv_Export TAO_CEC_TypedEventChannel : public virtual POA_CosTypedEventChannelAdmin::TypedEventChannel
 {
 public:
 
@@ -322,7 +322,7 @@ private:
 };
 
 
-class TAO_Event_Export TAO_CEC_Param
+class TAO_Event_Serv_Export TAO_CEC_Param
 {
 public:
   /// Constructor
@@ -341,7 +341,7 @@ private:
 };
 
 
-class TAO_Event_Export TAO_CEC_Operation_Params
+class TAO_Event_Serv_Export TAO_CEC_Operation_Params
 {
   /// constructor
   TAO_CEC_Operation_Params (CORBA::ULong num_params);

@@ -22,7 +22,7 @@
 
 #include "tao/Objref_VarOut_T.h"
 
-#include "event_export.h"
+#include "event_serv_export.h"
 
 class ACE_Lock;
 
@@ -70,7 +70,7 @@ typedef TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPullSupplier> TAO_CEC_ProxyPullSup
  * Some implementations may require a different instance for the
  * CEC_Factory for each instance of a CEC_EventChannel.
  */
-class TAO_Event_Export TAO_CEC_Factory : public ACE_Service_Object
+class TAO_Event_Serv_Export TAO_CEC_Factory : public ACE_Service_Object
 {
 public:
   /// destructor...

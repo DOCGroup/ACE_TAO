@@ -33,7 +33,7 @@ class TAO_Notify_Consumer;
  * @brief
  *
  */
-class TAO_Notify_Export TAO_Notify_AnyEvent_No_Copy : public TAO_Notify_Event
+class TAO_Notify_Serv_Export TAO_Notify_AnyEvent_No_Copy : public TAO_Notify_Event
 {
   friend class TAO_Notify_Builder;
 public:
@@ -85,7 +85,7 @@ protected:
  * @brief AnyEvent implementation.
  *
  */
-class TAO_Notify_Export TAO_Notify_AnyEvent : public TAO_Notify_AnyEvent_No_Copy
+class TAO_Notify_Serv_Export TAO_Notify_AnyEvent : public TAO_Notify_AnyEvent_No_Copy
 {
 public:
   /// Constuctor

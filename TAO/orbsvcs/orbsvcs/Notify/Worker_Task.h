@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,7 +37,7 @@ class TAO_Notify_Buffering_Strategy;
  * the <shutdown> method should be called to release memory.
  *
  */
-class TAO_Notify_Export TAO_Notify_Worker_Task : public TAO_Notify_Refcountable
+class TAO_Notify_Serv_Export TAO_Notify_Worker_Task : public TAO_Notify_Refcountable
 {
 public:
   /// Constuctor

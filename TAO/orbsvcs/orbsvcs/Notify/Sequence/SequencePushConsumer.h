@@ -38,7 +38,7 @@ class TAO_Notify_Timer;
  * @brief
  *
  */
-class TAO_Notify_Export TAO_Notify_SequencePushConsumer : public ACE_Event_Handler, public TAO_Notify_Consumer
+class TAO_Notify_Serv_Export TAO_Notify_SequencePushConsumer : public ACE_Event_Handler, public TAO_Notify_Consumer
 {
 public:
   /// Constuctor
