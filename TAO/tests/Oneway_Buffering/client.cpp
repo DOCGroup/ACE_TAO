@@ -309,7 +309,7 @@ sync_server (Test::Oneway_Buffering_ptr flusher,
   ACE_CHECK;
   flusher->sync (ACE_TRY_ENV);
   ACE_CHECK;
-}             
+}
 
 int
 run_liveness_test (Test::Oneway_Buffering_ptr oneway_buffering,
@@ -354,12 +354,12 @@ run_liveness_test (Test::Oneway_Buffering_ptr oneway_buffering,
       if (receive_count < expected)
         {
           test_failed = 1;
-          ACE_ERROR ((LM_ERROR,
-                      "ERROR: Iteration %d "
+          ACE_DEBUG ((LM_DEBUG,
+                      "DEBUG: Iteration %d "
                       "not enough messages received %u "
                       "expected %u\n",
                       i, receive_count, expected));
-          
+
           sync_server (flusher, ACE_TRY_ENV);
           ACE_CHECK_RETURN (-1);
         }
@@ -371,7 +371,7 @@ run_liveness_test (Test::Oneway_Buffering_ptr oneway_buffering,
 
           depth = 0;
         }
-      
+
     }
 
   return test_failed;
@@ -417,8 +417,8 @@ run_message_count (CORBA::ORB_ptr orb,
       if (initial_receive_count != send_count)
         {
           test_failed = 1;
-          ACE_ERROR ((LM_ERROR,
-                      "ERROR: Iteration %d message lost (%u != %u)\n",
+          ACE_DEBUG ((LM_DEBUG,
+                      "DEBUG: Iteration %d message lost (%u != %u)\n",
                       i, initial_receive_count, send_count));
         }
 
@@ -439,8 +439,8 @@ run_message_count (CORBA::ORB_ptr orb,
               if (iteration_count < CORBA::ULong(BUFFERED_MESSAGES_COUNT))
                 {
                   test_failed = 1;
-                  ACE_ERROR ((LM_ERROR,
-                              "ERROR: Iteration %d flush before "
+                  ACE_DEBUG ((LM_DEBUG,
+                              "DEBUG: Iteration %d flush before "
                               "message count reached. "
                               "Iteration count = %u, Threshold = %u\n",
                               i,
@@ -452,8 +452,8 @@ run_message_count (CORBA::ORB_ptr orb,
           if (iteration_count > 3 * BUFFERED_MESSAGES_COUNT)
             {
               test_failed = 1;
-              ACE_ERROR ((LM_ERROR,
-                          "ERROR: Iteration %d no flush past "
+              ACE_DEBUG ((LM_DEBUG,
+                          "DEBUG: Iteration %d no flush past "
                           "message count threshold. "
                           "Iteration count = %u, Threshold = %u\n",
                           i,
@@ -516,8 +516,8 @@ run_timeout (CORBA::ORB_ptr orb,
       if (initial_receive_count != send_count)
         {
           test_failed = 1;
-          ACE_ERROR ((LM_ERROR,
-                      "ERROR: Iteration %d message lost (%u != %u)\n",
+          ACE_DEBUG ((LM_DEBUG,
+                      "DEBUG: Iteration %d message lost (%u != %u)\n",
                       i, initial_receive_count, send_count));
         }
 
@@ -538,8 +538,8 @@ run_timeout (CORBA::ORB_ptr orb,
               if (elapsed.msec () < TIMEOUT_MILLISECONDS)
                 {
                   test_failed = 1;
-                  ACE_ERROR ((LM_ERROR,
-                              "ERROR: Iteration %d flush before "
+                  ACE_DEBUG ((LM_DEBUG,
+                              "DEBUG: Iteration %d flush before "
                               "timeout expired. "
                               "Elapsed = %d, Timeout = %d msecs\n",
                               i,
@@ -552,8 +552,8 @@ run_timeout (CORBA::ORB_ptr orb,
           if (elapsed.msec () > 3 * TIMEOUT_MILLISECONDS)
             {
               test_failed = 1;
-              ACE_ERROR ((LM_ERROR,
-                          "ERROR: Iteration %d no flush past "
+              ACE_DEBUG ((LM_DEBUG,
+                          "DEBUG: Iteration %d no flush past "
                           "timeout threshold. "
                           "Elapsed = %d, Timeout = %d msecs\n",
                           i,
@@ -617,8 +617,8 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
       if (initial_receive_count != send_count)
         {
           test_failed = 1;
-          ACE_ERROR ((LM_ERROR,
-                      "ERROR: Iteration %d message lost (%u != %u)\n",
+          ACE_DEBUG ((LM_DEBUG,
+                      "DEBUG: Iteration %d message lost (%u != %u)\n",
                       i, initial_receive_count, send_count));
         }
 
@@ -645,8 +645,8 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
               if (elapsed.msec () < TIMEOUT_MILLISECONDS)
                 {
                   test_failed = 1;
-                  ACE_ERROR ((LM_ERROR,
-                              "ERROR: Iteration %d flush before "
+                  ACE_DEBUG ((LM_DEBUG,
+                              "DEBUG: Iteration %d flush before "
                               "timeout expired. "
                               "Elapsed = %d, Timeout = %d msecs\n",
                               i,
@@ -659,8 +659,8 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
           if (elapsed.msec () > 3 * TIMEOUT_MILLISECONDS)
             {
               test_failed = 1;
-              ACE_ERROR ((LM_ERROR,
-                          "ERROR: Iteration %d no flush past "
+              ACE_DEBUG ((LM_DEBUG,
+                          "DEBUG: Iteration %d no flush past "
                           "timeout threshold. "
                           "Elapsed = %d, Timeout = %d msecs\n",
                           i,
@@ -724,8 +724,8 @@ run_buffer_size (CORBA::ORB_ptr orb,
       if (initial_bytes_received != bytes_sent)
         {
           test_failed = 1;
-          ACE_ERROR ((LM_ERROR,
-                      "ERROR: Iteration %d data lost (%u != %u)\n",
+          ACE_DEBUG ((LM_DEBUG,
+                      "DEBUG: Iteration %d data lost (%u != %u)\n",
                       i, initial_bytes_received, bytes_sent));
         }
 
@@ -751,8 +751,8 @@ run_buffer_size (CORBA::ORB_ptr orb,
               if (payload_delta < CORBA::ULong (GIOP_OVERHEAD * BUFFER_SIZE))
                 {
                   test_failed = 1;
-                  ACE_ERROR ((LM_ERROR,
-                              "ERROR: Iteration %d flush before "
+                  ACE_DEBUG ((LM_DEBUG,
+                              "DEBUG: Iteration %d flush before "
                               "minimum buffer size was reached. "
                               "Sent = %u, Minimum buffer = %u bytes\n",
                               i,
@@ -764,8 +764,8 @@ run_buffer_size (CORBA::ORB_ptr orb,
           if (payload_delta > 3 * BUFFER_SIZE)
             {
               test_failed = 1;
-              ACE_ERROR ((LM_ERROR,
-                          "ERROR: Iteration %d no flush past "
+              ACE_DEBUG ((LM_DEBUG,
+                          "DEBUG: Iteration %d no flush past "
                           "buffer size threshold. "
                           "Sent = %u, Minimum buffer = %u bytes\n",
                           i,
