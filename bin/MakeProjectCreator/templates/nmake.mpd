@@ -196,13 +196,23 @@ SOURCE=.\<%idl_file%>
 !<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%platform%> <%configuration%>"
 
 InputPath=.\<%idl_file%>
-InputName=<%noextension(idl_file)%>
+InputName=<%basenoextension(idl_file)%>
+InputDir=<%dirname(idl_file)%>
 
+<%if(dirname_found)%>
+".\$(InputDir)\$(InputName)C.h"	".\$(InputDir)\$(InputName)C.i"	".\$(InputDir)\$(InputName)C.cpp"	".\$(InputDir)\$(InputName)S.h"	".\$(InputDir)\$(InputName)S.i"	".\$(InputDir)\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	<<tempfile.bat
+	@echo off
+	cd $(InputDir)
+	<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%idlflags("-Sc")%> <%basename(idl_file)%>
+<<
+<%else%>
 ".\$(InputName)C.h"	".\$(InputName)C.i"	".\$(InputName)C.cpp"	".\$(InputName)S.h"	".\$(InputName)S.i"	".\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
 	<<tempfile.bat 
 	@echo off 
 	<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%idlflags("-Sc")%> $(InputPath)
 <<
+<%endif%>
 
 <%endfor%>
 !ENDIF

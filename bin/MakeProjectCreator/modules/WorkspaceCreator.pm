@@ -38,9 +38,12 @@ sub new {
   my($dynamic)   = shift;
   my($static)    = shift;
   my($relative)  = shift;
+  my($addtemp)   = shift;
+  my($addproj)   = shift;
   my($progress)  = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $relative,
+                                $addtemp, $addproj,
                                 $progress, 'workspace');
   my($typecheck) = $self->{'type_check'};
 
@@ -386,6 +389,8 @@ sub project_creator {
                    $self->get_dynamic(),
                    $self->get_static(),
                    $self->get_relative(),
+                   $self->get_addtemp(),
+                   $self->get_addproj(),
                    $self->get_progress_callback());
 }
 
