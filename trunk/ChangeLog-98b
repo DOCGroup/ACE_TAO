@@ -1,3 +1,13 @@
+Sat Jul 18 13:51:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* apps/Makefile: Always compile the gperf directory by default
+ 	  now.
+
+	* ace/config-sunos5.5.h: Added a new flag called ACE_HAS_GPERF,
+ 	  which should be enabled if the OS/compiler platform can compile
+ 	  GPERF.  This will determine if we can use perfect hashing in
+ 	  TAO!
+
 Sat Jul 18 10:52:49 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
 	* ace/Svc_Conf_l.cpp: 
