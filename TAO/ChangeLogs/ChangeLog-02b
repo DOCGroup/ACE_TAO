@@ -556,7 +556,7 @@ Wed Oct  2 21:48:07 2002  Ossama Othman  <ossama@uci.edu>
 	  eventually transfer ownership to the POA.  This addresses a
 	  potential memory access violation due to improper memory
 	  management through the reference counting mechanism.
-	  Furthermoee, it also cleans up an unnecessary, and
+	  Furthermore, it also cleans up an unnecessary, and
 	  non-exception-safe, call to the servant's _remove_ref() method.
 	  This bug was made obvious by the change below where the
 	  servant's destructor was made protected.  Protected destructors
