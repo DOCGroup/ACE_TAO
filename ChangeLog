@@ -1,67 +1,74 @@
+Fri Nov  5 13:44:57 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+
+          Added ACE_NO_INLINE=1 to debug_macros only for the bmake project
+          type.
+
 Fri Nov  5 18:11:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/OS_NS_Thread.cpp (thr_create):
+        * ace/OS_NS_Thread.cpp (thr_create):
 
-	  Fixed memory leak that were caused due to allocated
-	  <thread_args> not being deleted whenever there is an error. Got
-	  around this problem by using an auto_ptr, and releasing the
-	  pointer when thr_create () is successful. Thanks to Gary Maxey
-	  for reporting the problem.
-	  
-	* ace/Base_Thread_Adapter.h (ACE_Base_Thread_Adapter): 
+          Fixed memory leak that were caused due to allocated
+          <thread_args> not being deleted whenever there is an error. Got
+          around this problem by using an auto_ptr, and releasing the
+          pointer when thr_create () is successful. Thanks to Gary Maxey
+          for reporting the problem.
 
-	  Moved the destructor to be public and the constructor to be
-	  private. Making the destructor seems to have more downsides like
-	  the one above (which basically prevented us from using
-	  auto_ptr's).
+        * ace/Base_Thread_Adapter.h (ACE_Base_Thread_Adapter):
+
+          Moved the destructor to be public and the constructor to be
+          private. Making the destructor seems to have more downsides like
+          the one above (which basically prevented us from using
+          auto_ptr's).
 
 Fri Nov  5 16:14:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * ace/OS_NS_stdlib.cpp:
           Fixed unnecessary inclusion of 'limits' for VxWorks because
-	  it caused problems with GCC 2.9.6 toolchain.
+          it caused problems with GCC 2.9.6 toolchain.
 
 Fri Nov  5 07:52:51 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/ACE.cpp:
+        * ace/ACE.cpp:
 
-	  Changed gcd() from recursive to iterative implementation.
-	  A good optimizing compiler should be able to convert the
-	  tail call to a jump; but some compilers aren't good, and
-	  sometimes ACE is compiled without optimization.
+          Changed gcd() from recursive to iterative implementation.
+          A good optimizing compiler should be able to convert the
+          tail call to a jump; but some compilers aren't good, and
+          sometimes ACE is compiled without optimization.
 
 Fri Nov  5 15:36:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
-	* include/makeinclude/rules.bin.GNU:
-	  Changes to support VxWorks 5.5.1 linking (both DIAB and GNU
-	  toolchains). With VxWorks 5.5.1 linking is done based on
-	  rules/targets defined in the makefile configuration provided
-	  with the VxWorks toolset which is embedded in the ACE/TAO
-	  structure through the platform_macros. 
+        * include/makeinclude/rules.bin.GNU:
+          Changes to support VxWorks 5.5.1 linking (both DIAB and GNU
+          toolchains). With VxWorks 5.5.1 linking is done based on
+          rules/targets defined in the makefile configuration provided
+          with the VxWorks toolset which is embedded in the ACE/TAO
+          structure through the platform_macros.
 
 Fri Nov  5 15:30:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-vxworks5.x.h:
-	  Updates for VxWorks 5.5.1 support.
+          Updates for VxWorks 5.5.1 support.
 
 Fri Nov  5 07:27:16 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
-	* Makefile.am:
+        * configure.ac:
+        * Makefile.am:
 
-	  Changed to configure/build new protocols subdirectory
-	  heirarchy.
+          Changed to configure/build new protocols subdirectory
+          heirarchy.
 
-	* ace/Makefile.am:
+        * ace/Makefile.am:
 
-	  Changed to not decend into HTBP subdirectory.
+          Changed to not decend into HTBP subdirectory.
 
-	* protocols/Makefile.am:
-	* protocols/ace/Makefile.am:
-	* protocols/ace/HTBP/Makefile.am:
+        * protocols/Makefile.am:
+        * protocols/ace/Makefile.am:
+        * protocols/ace/HTBP/Makefile.am:
 
-	  Added new files.  Automake support for new HTBP location.
+          Added new files.  Automake support for new HTBP location.
 
 Fri Nov  5 07:33:33 2004  Chad Elliott  <elliott_c@ociweb.com>
 
