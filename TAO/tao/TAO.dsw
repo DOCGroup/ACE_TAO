@@ -3,6 +3,30 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
+Project: "Domain"=.\Domain\TAO_Domain.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Domain_static"=.\Domain\TAO_Domain_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "DynamicAny"=.\DynamicAny\TAO_DynamicAny.dsp - Package Owner=<4>
 
 Package=<5>
@@ -29,6 +53,54 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name TAO LIB
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DynamicInterface"=.\DynamicInterface\TAO_DynamicInterface.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "DynamicInterface_Static"=.\DynamicInterface\TAO_DynamicInterface_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "IFR_Client"=.\IFR_Client\TAO_IFR_Client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "IFR_Client_Static"=.\IFR_Client\TAO_IFR_Client_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
@@ -116,6 +188,18 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name TAO LIB
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "SmartProxies"=.\SmartProxies\SmartProxies.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
