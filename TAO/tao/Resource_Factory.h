@@ -6,7 +6,8 @@
  *
  *  $Id$
  *
- *  @author Chris CleelandCarlos O'Ryan
+ *  @author Chris Cleeland
+ *  @author Carlos O'Ryan
  */
 //=============================================================================
 
@@ -33,6 +34,8 @@ class TAO_Connector_Registry;
 class TAO_Flushing_Strategy;
 class TAO_Connection_Purging_Strategy;
 class TAO_LF_Strategy;
+
+class ACE_Lock;
 
 // ****************************************************************
 
