@@ -73,7 +73,7 @@ ACE_Name_Proxy::request_reply (ACE_Name_Request &request)
 {
   ACE_TRACE ("ACE_Name_Proxy::request_reply");
   void *buffer;
-  ssize_t length = length = request.encode (buffer);
+  ssize_t length = request.encode (buffer);
  
   if (length == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
