@@ -54,7 +54,7 @@ ServantActivator_i::ServantActivator_i (CORBA::ORB_ptr orb,
   symbol = this->dll_.symbol (garbage_collection_function);
   function = ACE_reinterpret_cast (long, symbol);
   servant_garbage_collector_ =
-    ACE_reinterpret_cast (SERVANT_GARBAGE_COLLECTOR, symbol);
+    ACE_reinterpret_cast (SERVANT_GARBAGE_COLLECTOR, function);
 }
 
 // This method associates an servant with the ObjectID.
