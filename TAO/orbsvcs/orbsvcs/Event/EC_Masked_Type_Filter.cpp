@@ -36,7 +36,7 @@ TAO_EC_Masked_Type_Filter::end (void) const
   return 0;
 }
 
-ACE_INLINE int
+int
 TAO_EC_Masked_Type_Filter::size (void) const
 {
   return 0;
