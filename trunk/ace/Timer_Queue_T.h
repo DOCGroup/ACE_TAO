@@ -65,7 +65,7 @@ class ACE_Timer_Node_T
 		    const ACE_Time_Value &t, 
 		    const ACE_Time_Value &i, 
 		    ACE_Timer_Node_T<TYPE, FUNCTOR> *n, 
-		    int timer_id);
+		    long timer_id);
   // Constructor.
 
   ACE_Timer_Node_T (const TYPE &type, 
@@ -74,7 +74,7 @@ class ACE_Timer_Node_T
 		    const ACE_Time_Value &i, 
 		    ACE_Timer_Node_T<TYPE, FUNCTOR> *p,
                     ACE_Timer_Node_T<TYPE, FUNCTOR> *n, 
-		    int timer_id);
+		    long timer_id);
   // Constructor for the doubly linked list version.
 
 
@@ -100,7 +100,7 @@ class ACE_Timer_Node_T
   ACE_Timer_Node_T<TYPE, FUNCTOR> *next_;
   // Pointer to next timer.
   
-  int timer_id_;
+  long timer_id_;
   // Id of this timer (used to cancel timers before they expire).
 
   ACE_ALLOC_HOOK_DECLARE;
@@ -166,10 +166,10 @@ public:
   virtual const ACE_Time_Value &earliest_time (void) const = 0;
   // Returns the time of the earlier node in the Timer_Queue.
 
-  virtual int schedule (const TYPE &type, 
-		        const void *act, 
-		        const ACE_Time_Value &delay,
-		        const ACE_Time_Value &interval = ACE_Time_Value::zero) = 0;
+  virtual long schedule (const TYPE &type, 
+			 const void *act, 
+			 const ACE_Time_Value &delay,
+			 const ACE_Time_Value &interval = ACE_Time_Value::zero) = 0;
   // Schedule <type> that will expire after <delay> amount of time.
   // If it expires then <act> is passed in as the value to the
   // <functor>.  If <interval> is != to <ACE_Time_Value::zero> then it
@@ -189,7 +189,7 @@ public:
   // then the <functor> will be invoked.  Returns number of timers
   // cancelled.
 
-  virtual int cancel (int timer_id, 
+  virtual int cancel (long timer_id, 
 		      const void **act = 0,
 		      int dont_call_handle_close = 1) = 0;
   // Cancel the single timer that matches the <timer_id> value (which

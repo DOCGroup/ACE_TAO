@@ -93,10 +93,10 @@ public:
   virtual const ACE_Time_Value &earliest_time (void) const;
   // Returns the time of the earlier node in the <ACE_Timer_List>.
 
-  virtual int schedule (const TYPE &type, 
-		        const void *act, 
-		        const ACE_Time_Value &delay,
-		        const ACE_Time_Value &interval = ACE_Time_Value::zero);
+  virtual long schedule (const TYPE &type, 
+			 const void *act, 
+			 const ACE_Time_Value &delay,
+			 const ACE_Time_Value &interval = ACE_Time_Value::zero);
   // Schedule <type> that will expire after <delay> amount of time.
   // If it expires then <act> is passed in as the value to the
   // <functor>.  If <interval> is != to <ACE_Time_Value::zero> then it
@@ -116,7 +116,7 @@ public:
   // then the <functor> will be invoked.  Returns number of timers
   // cancelled.
 
-  virtual int cancel (int timer_id, 
+  virtual int cancel (long timer_id,
 		      const void **act = 0,
 		      int dont_call_handle_close = 1);
   // Cancel the single timer that matches the <timer_id> value (which
@@ -157,7 +157,7 @@ private:
   LIST_ITERATOR iterator_;
   // Iterator used to expire timers.
 
-  int timer_id_;
+  long timer_id_;
   // Keeps track of the timer id that uniquely identifies each timer.
   // This id can be used to cancel a timer via the <cancel (int)>
   // method.

@@ -435,7 +435,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::free_node (ACE_Timer_Node_T<TYPE, FUNCTOR> *nod
 // > 0, the handler will be reinvoked periodically.
 
 
-template <class TYPE, class FUNCTOR> int
+template <class TYPE, class FUNCTOR> long
 ACE_Timer_Heap_T<TYPE, FUNCTOR>::schedule (const TYPE &type,
 					   const void *act,
 					   const ACE_Time_Value &future_time, 
@@ -475,7 +475,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::schedule (const TYPE &type,
 // the timer queue.
 
 template <class TYPE, class FUNCTOR> int
-ACE_Timer_Heap_T<TYPE, FUNCTOR>::cancel (int timer_id, 
+ACE_Timer_Heap_T<TYPE, FUNCTOR>::cancel (long timer_id,
 					 const void **act,
 					 int dont_call)
 {
@@ -484,7 +484,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::cancel (int timer_id,
 
   // Locate the ACE_Timer_Node that corresponds to the timer_id.
 
-  int timer_node_slot = this->timer_ids_[timer_id];
+  long timer_node_slot = this->timer_ids_[timer_id];
 
   if (timer_id != this->heap_[timer_node_slot]->timer_id_)
     {
@@ -498,6 +498,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::cancel (int timer_id,
       if (dont_call == 0)
 	// Call the close hook.
 	this->upcall_functor_.operator () (*this, temp->type_);
+
       if (act != 0)
         *act = temp->act_;
       

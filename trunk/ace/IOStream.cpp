@@ -1,7 +1,7 @@
 // IOStream.cpp
 // $Id$
 
-#ifndef ACE_IOSTREAM_C
+#if !defined (ACE_IOSTREAM_C)
 #define ACE_IOSTREAM_C
 
 #define ACE_BUILD_DLL
@@ -13,7 +13,6 @@
 
 /* Here's a simple example of how iostream's non-virtual operators can
    get you in a mess:
-
 
   class myiostream : public iostream
   {
@@ -651,12 +650,14 @@ ACE_IOStream<STREAM>::ACE_IOStream (STREAM & stream, u_int streambuf_size)
   : iostream (streambuf_ = new ACE_Streambuf<STREAM> ((STREAM *) this, streambuf_size)),
     STREAM (stream)
 {
+  iostream::init (this->streambuf_);
 }
 
 template <class STREAM>
 ACE_IOStream<STREAM>::ACE_IOStream (u_int streambuf_size)
   : iostream (streambuf_ = new ACE_Streambuf<STREAM> ((STREAM *) this, streambuf_size))
 {
+  iostream::init (this->streambuf_);
 }
 
 // We have to get rid of the streambuf_ ourselves since we gave it to

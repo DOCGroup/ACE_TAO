@@ -491,7 +491,22 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Set)
 template <class T> void
 ACE_Unbounded_Set<T>::dump (void) const
 {
-// ACE_TRACE ("ACE_Unbounded_Set<T>::dump");
+  ACE_TRACE ("ACE_Unbounded_Set<T>::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG, "\nhead_ = %u", this->head_));
+  ACE_DEBUG ((LM_DEBUG, "\nhead_->next_ = %u", this->head_->next_));
+  ACE_DEBUG ((LM_DEBUG, "\ncur_size_ = %d\n", this->cur_size_));
+
+  T *item = 0;
+  size_t count = 1;
+
+  for (ACE_Unbounded_Set_Iterator<T> iter (*(ACE_Unbounded_Set<T> *) this);
+       iter.next (item) != 0;
+       iter.advance ())
+    ACE_DEBUG ((LM_DEBUG, "count = %d\n", count++));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
 }
 
 template <class T> void
@@ -581,21 +596,25 @@ ACE_Unbounded_Set<T>::find (T &item, size_t index) const
 
 template <class T>
 ACE_Unbounded_Set<T>::ACE_Unbounded_Set (void)
-  : head_ (new ACE_Set_Node<T>),
+  : head_ (0),
     cur_size_ (0)
 {
 // ACE_TRACE ("ACE_Unbounded_Set<T>::ACE_Unbounded_Set");
+
+  ACE_NEW (this->head_, ACE_Set_Node<T>);
+
   // Make the list circular by pointing it back to itself.
   this->head_->next_ = this->head_;
 }
 
 template <class T>
 ACE_Unbounded_Set<T>::ACE_Unbounded_Set (const ACE_Unbounded_Set<T> &us)
-  : head_ (new ACE_Set_Node<T>),
-    cur_size_ (us.cur_size_)
+  : head_ (0),
+    cur_size_ (0)
 {
   ACE_TRACE ("ACE_Unbounded_Set<T>::ACE_Unbounded_Set");
 
+  ACE_NEW (this->head_, ACE_Set_Node<T>);
   this->head_->next_ = this->head_;
   this->copy_nodes (us);
 }
@@ -619,8 +638,19 @@ ACE_Unbounded_Set<T>::insert_tail (const T &item)
 {
 // ACE_TRACE ("ACE_Unbounded_Set<T>::insert");
   ACE_Set_Node<T> *temp;
-  ACE_NEW_RETURN (temp, ACE_Set_Node<T> (item, this->head_->next_), -1);
+
+  // Insert <item> into the old dummy node location.
+  this->head_->item_ = item;
+
+  // Create a new dummy node.
+  ACE_NEW_RETURN (temp, ACE_Set_Node<T> (this->head_->next_), -1);
+
+  // Link this pointer into the list.
   this->head_->next_ = temp;
+
+  // Point the head to the new dummy node.
+  this->head_ = temp;
+
   this->cur_size_++;
   return 0;
 }

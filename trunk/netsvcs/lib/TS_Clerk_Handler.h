@@ -208,7 +208,7 @@ private:
   System_Time system_time_;
   // Clerk system time containing pointers to entries in shared memory
 
-  int timer_id_;
+  long timer_id_;
   // Timer id returned by Reactor
 
   int timeout_;

@@ -158,7 +158,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR>::earliest_time (void) const
 }
 
 
-template <class TYPE, class FUNCTOR> int 
+template <class TYPE, class FUNCTOR> long
 ACE_Timer_Wheel_T<TYPE, FUNCTOR>::schedule (const TYPE &type, 
                                             const void *act,
                                             const ACE_Time_Value &delay,
@@ -170,21 +170,21 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR>::schedule (const TYPE &type,
   ACE_Timer_Node_T<TYPE, FUNCTOR> *tempnode = this->alloc_node ();
 
   if (tempnode)
-  {
-    // Note that the timer_id is actually the pointer to the node
+    {
+      // Note that the timer_id is actually the pointer to the node
     
-    // Use operator placement new.
-    new (tempnode) ACE_Timer_Node_T<TYPE, FUNCTOR> (type,
-                         act,
-                         delay,
-                         interval,
-                         NULL,
-                         NULL,
-                         (int) tempnode);
+      // Use operator placement new.
+      new (tempnode) ACE_Timer_Node_T<TYPE, FUNCTOR> (type,
+						      act,
+						      delay,
+						      interval,
+						      NULL,
+						      NULL,
+						      (long) tempnode);
 
-    this->reschedule (tempnode);
-    return tempnode->timer_id_;
-  }
+      this->reschedule (tempnode);
+      return tempnode->timer_id_;
+    }
 
   // Failure return.
   errno = ENOMEM;
@@ -235,7 +235,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR>::cancel (const TYPE &type,
 }
 
 template <class TYPE, class FUNCTOR> int
-ACE_Timer_Wheel_T<TYPE, FUNCTOR>::cancel (int timer_id, 
+ACE_Timer_Wheel_T<TYPE, FUNCTOR>::cancel (long timer_id,
                                           const void **act,
                                           int dont_call_handle_close)
 {

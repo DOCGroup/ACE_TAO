@@ -1,8 +1,7 @@
-// The following test exercises the Eric C. Newton's <ecn@clark.net>
 // $Id$
 
+// The following test exercises the Eric C. Newton's <ecn@clark.net>
 // XtReactor implementation.
-
 
 #include "ace/XtReactor.h"
 #include "ace/Message_Block.h"
@@ -14,29 +13,31 @@
 class Stdin : public ACE_Event_Handler
 {
 public:
-    ACE_HANDLE get_handle (void) const { return ACE_STDIN; }
+  ACE_HANDLE get_handle (void) const { return ACE_STDIN; }
 
-    int handle_input (ACE_HANDLE fd)
-    {
-	char c;
-	if (read (0, &c, 1)==1)
-	    printf ("Got input '%d'\n", (int)c);
-	return 0;
-    }
+  int handle_input (ACE_HANDLE fd)
+  {
+    char c;
+    if (read (0, &c, 1)==1)
+      printf ("Got input '%d'\n", (int)c);
+    return 0;
+  }
 
-    int handle_timeout (const ACE_Time_Value &tv, const void *arg)
-    {
-	printf ("Timeout! %f\n", (double) (tv.msec ()/1000.));
-	return 0;
-    }
+  int handle_timeout (const ACE_Time_Value &tv, const void *arg)
+  {
+    printf ("Timeout! %f\n", (double) (tv.msec ()/1000.));
+    return 0;
+  }
 };
 
-void ActivateCB (Widget w, XtPointer, XtPointer)
+static void 
+ActivateCB (Widget w, XtPointer, XtPointer)
 {
-    printf ("Button pushed!\n");
+  printf ("Button pushed!\n");
 }
 
-int main (int argc, char**argv)
+int 
+main (int argc, char**argv)
 {
   // The worlds most useless user interface
   Widget top_level = XtVaAppInitialize (NULL, "buttontest", NULL, 0,
@@ -53,7 +54,10 @@ int main (int argc, char**argv)
   reactor.register_handler (stdin_, ACE_Event_Handler::READ_MASK);
 
   // Print a message every 10 seconds
-  reactor.schedule_timer (stdin_, 0, ACE_Time_Value (10), ACE_Time_Value (10));
+  if (reactor.schedule_timer (stdin_, 0, 
+			      ACE_Time_Value (10), 
+			      ACE_Time_Value (10)) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
 
   // Show the top_level widget
   XtRealizeWidget (top_level);

@@ -79,7 +79,7 @@ public:
 };
 
 int
-main ()
+main (void)
 {
   Timeout_Handler handler;
   ACE_Proactor proactor (0, 0, 1);
@@ -88,18 +88,22 @@ main ()
   
   // Register a 2 second timer.
   ACE_Time_Value foo_tv (2);
-  proactor.schedule_timer (handler,
-			   (void *) "Proactor",
-			   ACE_Time_Value::zero,
-			   foo_tv);
+  if (proactor.schedule_timer (handler,
+			       (void *) "Proactor",
+			       ACE_Time_Value::zero,
+			       foo_tv) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
 
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);
-  ACE_Service_Config::reactorEx ()->schedule_timer (&handler,
-						    (void *) "ReactorEx",
-						    ACE_Time_Value::zero,
-						    bar_tv);  
+  if (ACE_Service_Config::reactorEx ()->schedule_timer (&handler,
+							(void *) "ReactorEx",
+							ACE_Time_Value::zero,
+							bar_tv) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
+
   Worker worker;
+
   if (worker.activate (THR_NEW_LWP, 10) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
   

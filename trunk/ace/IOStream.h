@@ -111,7 +111,7 @@ public:
     return (QuotedString&) ACE_IOStream_String::operator= (c); 
   }
   inline bool operator < (const QuotedString& s) const {
-    return * (ACE_IOStream_String *)this < (ACE_IOStream_String)s;	
+    return *(ACE_IOStream_String *) this < (ACE_IOStream_String) s;
   }
 #if defined (ACE_WIN32)
   inline int length (void) { return this->GetLength (); }
@@ -379,7 +379,14 @@ typedef ostream& (*__omanip_)(ostream&);
 // operators.  Notice how the ipfx() and isfx() functions are used.
 
 #define GET_SIG(MT,DT)		inline virtual MT& operator>> (DT v)
-#define GET_CODE		{ if (ipfx ()) iostream::operator>> (v); isfx (); return *this; }
+#define GET_CODE { 			\
+	if (ipfx (0))					\
+	{						\
+		iostream::operator>> (v);		\
+	}						\
+	isfx ();					\
+	return *this;					\
+	}
 #define GET_PROT(MT,DT,CODE)	GET_SIG(MT,DT)	CODE
 #define GET_FUNC(MT,DT)		GET_PROT(MT,DT,GET_CODE)
 
@@ -388,7 +395,14 @@ typedef ostream& (*__omanip_)(ostream&);
 // operators.  Notice how the opfx() and osfx() functions are used.
 
 #define PUT_SIG(MT,DT)		inline virtual MT& operator<< (DT v)
-#define PUT_CODE		{ if (opfx ()) iostream::operator<< (v); osfx ();  return *this; }
+#define PUT_CODE {			\
+	if (opfx ())					\
+	{						\
+		iostream::operator<< (v);		\
+	}						\
+	osfx ();					\
+	return *this;					\
+	}
 #define PUT_PROT(MT,DT,CODE)	PUT_SIG(MT,DT)	CODE
 #define PUT_FUNC(MT,DT)		PUT_PROT(MT,DT,PUT_CODE)
 
@@ -405,7 +419,6 @@ typedef ostream& (*__omanip_)(ostream&);
         GET_PROT(MT,u_long &,CODE) \
         GET_PROT(MT,float &,CODE) \
         GET_PROT(MT,double &,CODE) \
-        GET_PROT(MT,long double &,CODE) \
         GET_PROT(MT,char &,CODE) \
         GET_PROT(MT,u_char &,CODE) \
         GET_PROT(MT,char *,CODE) \
@@ -533,24 +546,24 @@ public:
 #endif /* ACE_LACKS_IOSTREAM_SETSET */
 
 #if defined (ACE_LACKS_IOSTREAM_FX)
-  virtual int ipfx (int need = 0) { ACE_UNUSED_ARG (need); return good(); }
-  virtual int ipfx0(void)         { return good(); }  // Optimized ipfx(0)
-  virtual int ipfx1(void)         { return good(); }  // Optimized ipfx(1)
-  virtual void isfx (void)        { }
-  virtual int opfx (void)         { return good(); }
-  virtual void osfx (void)        { put(' '); }
+  virtual int ipfx (int need = 0) {  return good(); }
+  virtual int ipfx0(void)         {  return good(); }  // Optimized ipfx(0)
+  virtual int ipfx1(void)         {  return good(); }  // Optimized ipfx(1)
+  virtual void isfx (void)        {  return; }
+  virtual int opfx (void)         {  return good(); }
+  virtual void osfx (void)        {  put(' '); return; }
 #else
 #if defined (__GNUC__) 
   virtual int ipfx0(void)         { return(iostream::ipfx0()); }  // Optimized ipfx(0)
   virtual int ipfx1(void)         { return(iostream::ipfx1()); }  // Optimized ipfx(1)
 #else
-  virtual int ipfx0(void)         { return(iostream::ipfx(0)); }
-  virtual int ipfx1(void)         { return(iostream::ipfx(1)); }
+  virtual int ipfx0(void)         {  return(iostream::ipfx(0)); }
+  virtual int ipfx1(void)         {  return(iostream::ipfx(1)); }
 #endif
-  virtual int ipfx (int need = 0) { return(iostream::ipfx(need)); }
-  virtual void isfx (void)        { iostream::isfx(); }
-  virtual int opfx (void)         { return(iostream::opfx()); }
-  virtual void osfx (void)        { iostream::osfx(); }
+  virtual int ipfx (int need = 0) {  return(iostream::ipfx(need)); }
+  virtual void isfx (void)        {  iostream::isfx(); return; }
+  virtual int opfx (void)         {  return(iostream::opfx()); }
+  virtual void osfx (void)        {  iostream::osfx(); return; }
 #endif /* ACE_LACKS_IOSTREAM_FX */
 
   ACE_IOStream & operator>>( ACE_Time_Value *& tv );

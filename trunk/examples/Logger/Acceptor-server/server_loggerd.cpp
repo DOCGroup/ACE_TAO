@@ -194,10 +194,10 @@ Logging_Handler::open (void *)
 	ACE_ERROR_RETURN ((LM_ERROR, 
 			   "(%P|%t) can't register with reactor\n"), -1);
       else if (REACTOR::instance ()->schedule_timer
-	  (this, 
-	  (const void *) this, 
-	   ACE_Time_Value (2), 
-	   ACE_Time_Value (2)) == -1)
+	       (this, 
+		(const void *) this, 
+		ACE_Time_Value (2), 
+		ACE_Time_Value (2)) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, 
 			   "can'(%P|%t) t register with reactor\n"), -1);
       else

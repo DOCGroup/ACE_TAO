@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 #include "ace/Service_Config.h"
 #include "ace/Get_Opt.h"
 
@@ -48,7 +47,13 @@ Handle_Timeout::init (int argc, char *argv[])
 	 break;
        }
   
-  return ACE_Service_Config::reactor ()->schedule_timer (this, (void *) arg, delta, interval);
+  if (ACE_Service_Config::reactor ()->schedule_timer (this, 
+						      (void *) arg, 
+						      delta, 
+						      interval) == -1)
+    return -1;
+  else
+    return 0;
 }
 
 ACE_INLINE int 
@@ -64,11 +69,14 @@ Handle_Timeout::get_handle (void) const
 }
 
 ACE_INLINE int
-Handle_Timeout::handle_timeout (const ACE_Time_Value &tv, const void *arg)
+Handle_Timeout::handle_timeout (const ACE_Time_Value &tv, 
+				const void *arg)
 {
   if (this->count++ >= 10)
-    return -1; /* Automatically cancel periodic timer... */
-  ACE_DEBUG ((LM_INFO, "time for this(%u) expired at (%d, %d) with arg = %d\n",
+    return -1; // Automatically cancel periodic timer...
+
+  ACE_DEBUG ((LM_INFO, 
+	      "time for this(%u) expired at (%d, %d) with arg = %d\n",
 	     this, tv.sec (), tv.usec (), int (arg)));
   return 0;
 }
