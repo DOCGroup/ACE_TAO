@@ -11,3 +11,9 @@ TAO_Reply_Dispatcher::has_timeout (CORBA::Boolean t)
 {
   this->timeout_ = t;
 }
+
+ACE_INLINE CORBA::Boolean
+TAO_Reply_Dispatcher::has_timeout (void) const
+{
+  return this->timeout_;
+}

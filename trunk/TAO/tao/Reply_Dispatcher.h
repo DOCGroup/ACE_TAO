@@ -111,6 +111,9 @@ public:
   /// set operation is not synchronized.
   void has_timeout (CORBA::Boolean t);
 
+  /// Accessor for <timeout_> and un_synchronized!
+  CORBA::Boolean has_timeout (void) const;
+
   /// Methods used to change the state to indicate that whether
   /// dispatching is started or not!
   void start_dispatch (void);
