@@ -130,19 +130,27 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   delete visitor;
 
   *os << "{" << be_idt_nl;
-  *os << this->gen_environment_var () << be_nl;
+  *os << this->gen_environment_var () << be_nl << be_nl;
 
   // Generate code that retrieves the proper proxy implementation
   // using the proxy broker available, and perform the call
   // using the proxy implementation provided by the broker.
 
-  if (!this->void_return_type (bt))
-    *os << "return ";
+  *os << intf->base_proxy_impl_name () << " &proxy = " << be_idt_nl
+      << "this->the" << intf->base_proxy_broker_name ()
+      << "_->select_proxy (this, ACE_TRY_ENV);" << be_uidt_nl;
 
-  *os << "this->the"
-      << intf->base_proxy_broker_name ()
-      << "_->select_proxy (this, ACE_TRY_ENV)."
-      << node->local_name ()
+  if (!this->void_return_type (bt))
+    {
+      *os << "ACE_CHECK_RETURN (0);" << be_nl << be_nl
+          << "return ";
+    }
+  else
+    {
+      *os << "ACE_CHECK;" << be_nl << be_nl;
+    }
+
+  *os << "proxy." << node->local_name ()
       << " (" << be_idt << be_idt_nl << "this";
 
   if (node->nmembers () > 0)
