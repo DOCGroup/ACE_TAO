@@ -9,8 +9,15 @@
 //
 // ========================================================================
 
-#include "Server_0005fDiscovery_0005fUtil.h"
+// %% Beware of this hack %%
+// We define _BOOL_H so that $JAVA_ROOT/include/bool.h bool_t doesn't get
+// defined conflicting with /usr/include/rpc/types.h definition of
+// bool_t. The order of including Trader_client.h before
+// Server_0005fDiscovery_0005fUtil.h also matters.
+
+#define _BOOL_H_
 #include "Trader_Client.h"
+#include "Server_0005fDiscovery_0005fUtil.h"
 
 ACE_RCSID(server_discovery, Server_Discovery, "$Id$")
 
@@ -20,7 +27,8 @@ ACE_RCSID(server_discovery, Server_Discovery, "$Id$")
 //static const char* LIBRARY_NAME = "libtclient.so";
 //static const char* FACTORY_NAME = "create_trader_client";
 static jclass _movie_class;
-static jfieldID _name_id, _filename_id, _category_id, _description_id;
+static jfieldID _name_id, _audio_filename_id, _video_filename_id, _category_id, _description_id;
+static   jobjectArray server_names = 0;
 
 // Static function declarations:
 //void print_dlerror (void);
@@ -61,12 +69,13 @@ Java_Server_1Discovery_1Util_evaluate_1performance_1property
  * Signature: (Ljava/lang/String;)[LTAO_VR/Movie;
  */
 JNIEXPORT jobjectArray JNICALL
-Java_Server_1Discovery_1Util_get_1movie_1info__Ljava_lang_String_2
+Java_Server_1Discovery_1Util_get_1movie_1info
 (JNIEnv * env,
  jclass this_class,
  jstring java_server_name)
 {
-  fprintf (stderr, "Server_Discover: get movie info.\n");
+  //  fprintf (stderr, "Server_Discover: get movie info.\n");
+  //cout<< "Server_Discover: get movie info"<<endl;
   jobjectArray return_value = 0;
 
   Trader_Client* trader_client = Trader_Client::instance ();
@@ -76,6 +85,15 @@ Java_Server_1Discovery_1Util_get_1movie_1info__Ljava_lang_String_2
       // movie_structures for all movies of the given server.
       const char* server_name = env->GetStringUTFChars (java_server_name, 0);
       Movie_Iterator* movie_iter = trader_client->get_movie_info (server_name);
+
+      // Init some global variables
+      jclass movie_class = env->FindClass ("TAO_VR/Movie");        
+      _movie_class = static_cast<jclass> (env->NewGlobalRef (movie_class));
+      _name_id = env->GetFieldID (movie_class, "name_", "Ljava/lang/String;");
+      _audio_filename_id = env->GetFieldID (movie_class, "audio_filename_", "Ljava/lang/String;");
+      _video_filename_id = env->GetFieldID (movie_class, "video_filename_", "Ljava/lang/String;");
+      //      _category_id = env->GetFieldID (movie_class, "category_", "Ljava/lang/String;");
+      _description_id = env->GetFieldID (movie_class, "description_", "Ljava/lang/String;");
 
       if (movie_iter != 0)
         {
@@ -91,19 +109,23 @@ Java_Server_1Discovery_1Util_get_1movie_1info__Ljava_lang_String_2
               // into java strings, and set them in the structure.
               jobject movie_struct = env->AllocObject (_movie_class);
               jstring name = env->NewStringUTF (movie_iter->name ());
-              jstring filename = env->NewStringUTF (movie_iter->filename ());
-              jstring category = env->NewStringUTF (movie_iter->category ());
+              jstring audio_filename = env->NewStringUTF (movie_iter->audio_filename ());
+              jstring video_filename = env->NewStringUTF (movie_iter->video_filename ());
+              //jstring category = env->NewStringUTF (movie_iter->category ());
               jstring description = env->NewStringUTF (movie_iter->description ());
               env->SetObjectField (movie_struct, _name_id, name);
-              env->SetObjectField (movie_struct, _filename_id, filename);
-              env->SetObjectField (movie_struct, _category_id, category);
+              env->SetObjectField (movie_struct, _audio_filename_id, audio_filename);
+              env->SetObjectField (movie_struct, _video_filename_id, video_filename);
+              //env->SetObjectField (movie_struct, _category_id, category);
               env->SetObjectField (movie_struct, _description_id, description);
               env->SetObjectArrayElement (return_value, i, movie_struct);
               env->DeleteLocalRef (movie_struct);
             }
           
+          
           delete movie_iter;
         }
+      else cout<<"Movie Info Not found"<<endl;
       
       env->ReleaseStringUTFChars (java_server_name, server_name);
     }
@@ -120,7 +142,7 @@ JNIEXPORT jobjectArray JNICALL
 Java_Server_1Discovery_1Util_get_1servers (JNIEnv *env, jclass this_class)
 {
   fprintf (stderr, "Server Discovery: get servers.\n");
-  jobjectArray server_names = 0;
+
 
   Trader_Client* trader_client = Trader_Client::instance ();
   if (trader_client != 0)
@@ -136,8 +158,7 @@ Java_Server_1Discovery_1Util_get_1servers (JNIEnv *env, jclass this_class)
           // to the Java invoker. 
           jstring initial_string = env->NewStringUTF ("");
           jclass string_class = env->FindClass ("java/lang/String");
-          jobjectArray server_names =
-            env->NewObjectArray (length, string_class, initial_string);
+          server_names = env->NewObjectArray (length, string_class, initial_string);
 
           // Convert those C++ strings into Java Strings.
           for (int i = 0; i < length; i++)
@@ -170,16 +191,51 @@ JNIEXPORT void JNICALL
 Java_Server_1Discovery_1Util_load_1movie (JNIEnv * env,
                                           jclass this_class,
                                           jstring java_server_name,
-                                          jstring java_movie_name)
+                                          jobject  movie_info)
 {
   Trader_Client* trader_client = Trader_Client::instance ();
   if (trader_client != 0)
     {
       const char* server_name = env->GetStringUTFChars (java_server_name, 0);
-      const char* movie_name = env->GetStringUTFChars (java_movie_name, 0);
-      trader_client->load_movie (server_name, movie_name);
+      cout<<"Within load movie"<<endl;
+      
+      jclass movie_class = static_cast<jclass>(env->GetObjectClass (movie_info));
+      //_movie_class = static_cast<jclass> (env->NewGlobalRef (movie_class));
+      _name_id = env->GetFieldID (movie_class, "name_", "Ljava/lang/String;");
+      _audio_filename_id = env->GetFieldID (movie_class, "audio_filename_", "Ljava/lang/String;");
+      _video_filename_id = env->GetFieldID (movie_class, "video_filename_", "Ljava/lang/String;");
+      _description_id = env->GetFieldID (movie_class, "description_", "Ljava/lang/String;");
+     
+      jstring name =static_cast<jstring>(env->GetObjectField (movie_info,_name_id));
+      jstring audio_filename =static_cast<jstring>(env->GetObjectField (movie_info,_audio_filename_id));
+      jstring video_filename =static_cast<jstring>(env->GetObjectField (movie_info,_video_filename_id));
+      jstring description =static_cast<jstring>(env->GetObjectField (movie_info,_description_id));
+      
+      //TAO_VR::Movie_Info* movie_info = TAO_VR::Movie_Info::allocbuf (1);
+      
+      TAO_VR::Movie* movie = 0;
+      
+      ACE_NEW (movie,TAO_VR::Movie ());
+
+      movie->name_ = CORBA::String_var(env->GetStringUTFChars (name, 0));
+      movie->audio_filename_ = CORBA::String_var(env->GetStringUTFChars (audio_filename, 0));
+      movie->video_filename_ = CORBA::String_var(env->GetStringUTFChars (video_filename, 0));
+      movie->description_ = CORBA::String_var(env->GetStringUTFChars (description, 0));
+      
+      
+      /*      TAO_VR::Movie* movie_info = 0;
+      ACE_NEW (movie_info,
+		      TAO_VR::Movie (name_,
+                                     filename_,
+                                     description_
+					  ) );
+      */
+      trader_client->load_movie (server_name, movie);
       env->ReleaseStringUTFChars (java_server_name, server_name);
-      env->ReleaseStringUTFChars (java_movie_name, movie_name);
+      //      env->ReleaseStringUTFChars (name, name_);
+      //env->ReleaseStringUTFChars (filename, filename_);
+      //env->ReleaseStringUTFChars (description, description_);
+      //      env->ReleaseStringUTFChars (java_movie_name, movie_name);
     }
 }
 

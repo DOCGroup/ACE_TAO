@@ -19,6 +19,8 @@ public class Server_Discovery_Selection
   DefaultMutableTreeNode root_ = new DefaultMutableTreeNode ("Movies");
   String selected_movie_ = null, selected_server_ = null;
   Hashtable movie_map_ = new Hashtable ();
+  JTable movie_table;
+  TAO_VR.Movie selected_movie_info_; 
   
   public Server_Discovery_Selection (Server_Discovery sd)
     {
@@ -35,27 +37,38 @@ public class Server_Discovery_Selection
         {
           public void valueChanged (TreeSelectionEvent e)
             {
-              TreePath tree_path = e.getNewLeadSelectionPath ();
-
-              if (tree_path.getPath ().length == 3)
-                {
-                  DefaultMutableTreeNode tree_node =
-                    (DefaultMutableTreeNode) tree_path.getLastPathComponent ();
-                  String host_name = (String) tree_node.getUserObject ();
-                  DefaultMutableTreeNode parent_node =
-                    (DefaultMutableTreeNode) tree_node.getParent ();
-                  String movie_name = (String) parent_node.getUserObject ();
-
-                  String key = host_name + movie_name;
-                  TAO_VR.Movie movie = (TAO_VR.Movie) movie_map_.get (key);
-                  generate_table (host_name, movie);
+              
+              DefaultMutableTreeNode tree_node =
+                (DefaultMutableTreeNode) (e.getPath().getLastPathComponent ());
+             
+              if(tree_node.getChildCount()==1)
+                {  
+                  String movie_name = (String) tree_node.getUserObject ();
+                  System.out.println("The moviename is" + movie_name);
+                  
+                    DefaultMutableTreeNode child_node =
+                      (DefaultMutableTreeNode) tree_node.getChildAt (0);
+                    String host_name = (String) child_node.getUserObject();
+                    System.out.println("The hostname is" + host_name);
+                    
+                    String key = host_name + movie_name;
+                    System.out.println("The host and movie name are " +key);
+                    TAO_VR.Movie movie = (TAO_VR.Movie) movie_map_.get (key);
+                    
+                    generate_table (host_name, movie);
+                    movie_table.updateUI();
+                    selected_server_=host_name;
+                    selected_movie_=movie_name;
+                    selected_movie_info_=movie;
+                    System.out.println("Movie Name is "+movie.name_);
                 }
             }
         };
-        
+          
+      
       this.tree_.addTreeSelectionListener (tsl);
       tree_scroller.setBackground (this.tree_.getBackground ());
-
+      
       JPanel content_pane = new JPanel ();
       JPanel button_pane = new JPanel ();
       ImageIcon mmedia = new ImageIcon ("select", "mmedia3.gif");
@@ -72,8 +85,7 @@ public class Server_Discovery_Selection
             {
               if (selected_server_ != null && selected_movie_ != null)
                 {
-                  Server_Discovery_Util.load_movie (selected_server_,
-                                                    selected_movie_);
+                  Server_Discovery_Util.load_movie (selected_server_,selected_movie_info_);
                 }
             }
         };
@@ -88,19 +100,21 @@ public class Server_Discovery_Selection
   public void add_movie (String host_name, TAO_VR.Movie movie)
     {
       // @ TODO: Order the movies alphabetically by name.
-      DefaultMutableTreeNode category =
-        new DefaultMutableTreeNode (movie.category_);
+      //      DefaultMutableTreeNode category =
+      //new DefaultMutableTreeNode (movie.category_);
       DefaultMutableTreeNode movie_name =
         new DefaultMutableTreeNode (movie.name_);
       DefaultMutableTreeNode server_name =
         new DefaultMutableTreeNode (host_name);
 
-      Object[] path = { category, movie_name, server_name };
-      TreePath tree_path = new TreePath (path);
+      root_.add(movie_name);
+      movie_name.add(server_name);
+      //Object[] path = { movie_name, server_name };
+      //TreePath tree_path = new TreePath (path);
 
       String key = host_name + movie.name_;
       this.movie_map_.put (key, movie);
-      this.tree_.addSelectionPath (tree_path);      
+      //this.tree_.addSelectionPath (tree_path);      
     }
 
   public void flush ()
@@ -120,8 +134,8 @@ public class Server_Discovery_Selection
 
       // Set the column values:
       table_model.setValueAt ("Name", 0, 0);
-      table_model.setValueAt ("File Name", 1, 0);
-      table_model.setValueAt ("Category", 2, 0);
+      table_model.setValueAt ("AudioFile Name", 1, 0);
+      table_model.setValueAt ("VideoFile Name", 2, 0);
       table_model.setValueAt ("Description", 3, 0);
       table_model.setValueAt ("Format", 4, 0);
       table_model.setValueAt ("File Size", 5, 0);
@@ -131,10 +145,11 @@ public class Server_Discovery_Selection
       table_model.setValueAt ("Server Performance", 9, 0);
 
       table_model.setValueAt (movie.name_, 0, 1);
-      table_model.setValueAt (movie.filename_, 1, 1);
-      table_model.setValueAt (movie.category_, 2, 1);
-      table_model.setValueAt ("0", 4, 1);
-      table_model.setValueAt ("MPEG", 5, 1);
+      table_model.setValueAt (movie.audio_filename_, 1, 1);
+      table_model.setValueAt (movie.video_filename_, 2, 1);
+      table_model.setValueAt (movie.description_, 3, 1);
+      table_model.setValueAt ("MPEG1", 4, 1);
+      table_model.setValueAt ("0", 5, 1);
       table_model.setValueAt ("0", 6, 1);
       table_model.setValueAt ("0", 7, 1);
       table_model.setValueAt ("0", 8, 1);
@@ -155,11 +170,12 @@ public class Server_Discovery_Selection
       graph_label.addMouseListener (new Clicked_Graph (movie.name_, host_name));
       table_model.setValueAt (graph_label, 9, 1);
 
-      JTable movie_table = new JTable (table_model);
+      movie_table = new JTable (table_model);
       DefaultMutableTreeNode table_node = new DefaultMutableTreeNode (movie_table, false);
 
       JViewport viewport = new JViewport ();
       viewport.setView (movie_table);
+      movie_table.updateUI();
       this.table_scroller_.setViewport (viewport);
       this.selected_movie_ = movie.name_;
       this.selected_server_ = host_name;
