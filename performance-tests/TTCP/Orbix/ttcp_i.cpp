@@ -421,7 +421,7 @@ main (int argc, char *argv[])
 	ENDTRY;
 	
 	cout << "server exiting" << endl;
-	return 42;
+	return 0;
     }
     
     //

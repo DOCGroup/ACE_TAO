@@ -331,7 +331,7 @@ main (int argc, char* argv[])
     mutex_test ();
 
   ACE_DEBUG ((LM_DEBUG, "test exiting.\n"));
-  return 42;
+  return 0;
 }
 #else
 int 

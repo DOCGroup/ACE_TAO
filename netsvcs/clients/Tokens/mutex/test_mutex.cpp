@@ -134,7 +134,7 @@ main (int argc, char* argv[])
 
   thread_mgr.wait ();
 
-  return 42;
+  return 0;
 }
 #else
 int main (void)
