@@ -6,11 +6,16 @@ To run all tests automatically -
 	execute Perl script run_test.pl
 
 To run tests manually -
-	start Naming Service ($TAO_ROOT/orbsvcs/Naming_Service/Naming_Service),
-	 then run ./client with one of the following options below.
+	start the Naming Service (see
+	TAO/orbsvcs/Naming_Service/README for valid options),
+	then run ./client with one of the options below.       
+
+NOTE: if running tests manually, Naming Service has to be restarted
+before each test (this is due to some tests not 'cleaning up' bindings
+after themselves).
 
 The following options exist:
-
+---------------------------
 -s	Run the Simple test of the Naming Service.
 
 -t  	Run the Tree test of the Naming Service.
@@ -21,25 +26,74 @@ The following options exist:
 
 -y      Run the Destroy test of the Naming Service.
 
--m      Run the MT test of the Naming Service.  Requires integer
-        argument specifying number of thread to spawn.  (If running
-        this test manually, its output should be redirected to some
-        file, say, "foo".  Then, process-m-output.pl script can be
-        used to analyze the test output and print out a diagnostic
-        message.  Invoke the script with
-        "process-m-output.pl foo number_of_threads", where
-        <number_of_threads> is the argument that was supplied with "-m"
-        option to the client.)
+-m <n>  Run the Multi-Threaded test of the Naming Service (multiple
+        client threads).  Requires integer argument specifying number
+        of thread to spawn.  (If running this test manually, its
+        output should be redirected to some file, say, "foo".  Then,
+        "process-m-output.pl" script can be used to analyze the test
+        output and print out a diagnostic message.  Invoke the output
+        processing script like so: 
+        "process-m-output.pl foo number_of_threads", 
+        where <foo> is the name of the file containing test output, 
+        and <number_of_threads> is the argument that was supplied with
+        "-m" option  to the client.)
+
+        Example (on a Unix system):
+        $ ../../Naming_Service &        
+        $ ./client -m 10 >& foo         
+        $ ./process-m-output.pl foo 10        
+
+        where the steps correspond to 1)starting the Naming Service,
+        2) running the client and redirecting the output to a file,
+        and 3) running the diagnostic script.
+        Don't forget to kill the Naming Service after you are done.        
+
+Persistent test consists of two parts (below).
+
+-p <file_name>
+        Run the Persistent Naming Service test, part 1.  Requires an
+        argument specifying the name of the file in which to store an ior for
+        use by Persistent Naming Service test, part 2.  Note, in order
+        to test out persistent capabilities of the Naming Service, the
+        Naming Service must be started with -f and -ORBendpoint options.
+        The values for these options must be the same for both runs of
+        the Naming Service (i.e., for part 1 and part 2 of persistent test).
+
+-c <ior> 
+        Run the Persistent Naming Service test, part 2.  Requires an
+        argument specifying the ior, which was produced in part 1 of
+        the test.  Note, in order to test out persistent capabilities
+        of the Naming Service, the Naming Service must be started with
+        -f and -ORBendpoint options.  The values for these options
+        must remain the same for both runs of the Naming Service (i.e.,
+        for part 1 and part 2 of persistent test).
+
+        Example of testing persistence on a Unix system:
+        $ ../../Naming_Service -f log -ORBendpoint iiop://localhost:20000
+        $ ./client -p ior_file
+        kill the Naming_Service process
+        $ ../../Naming_Service -f log -ORBendpoint iiop://localhost:20000
+        $ ./client -c file://ior_file
+
+        where the steps correspond to 1)starting the Naming Service on
+        port 20000 in persistent mode, with persistent state being
+        stored in file called "log", 2) running the first part of the
+        client persistent naming test, and sending its data to file
+        called "ior_file", 3) killing the Naming Service process, 4)
+        restarting the Naming Service on the same port with the same
+        persistent state storage file, and 5) running the second part
+        of the client persistence test by specifying the ior from part
+        1 in the file format.
+
+        We kill the Naming Service process between 2 client runs to
+        make sure it can recreate its state from persistent storage.
+        It is necessary to restart the Naming Service on the same
+        host/port in order for the persistent IORs from the first
+        run to be valid for the second run.
 
 If no option is specified, Simple test is run.  If more than one
 option is specified, only one test runs.
 
-NOTE: if running tests manually, Naming Service has to be restarted
-before each test (this is due to some tests not 'cleaning up' bindings
-after themselves).
-
-NOTE: destroy test will not produce desired output if POA 'recreates
-servants on request'.
 
 DESCRIPTION AND EXPECTED OUTPUT FOR EACH TEST
 *******************************************
@@ -65,6 +119,15 @@ bind (), resolve (), and unbind () the object reference.
 Expected Output (produced by the output processing script):
 
 Multithreaded output is ok
+
+The output of the actual test varies from run to run, due to the
+variation in the thread scheduling.  Correct output must have the
+following properties (these are the properties that the processing
+script checks for):
+1) number of bind () calls = number of resolve () calls = number of
+unbind () calls = number of threads specified for the test
+2) number of successful bind () calls = number of successful unbind () calls.
+
 *******************************************
 
 Tree Test.
@@ -165,5 +228,35 @@ Expected Output:
 
 NotEmpty exception works properly
 Destroy works properly
+
+********************************************
+
+Persistent Test (part 1).
+
+Makes sure persistence mode of the Naming Service functions properly:
+this test sets things up for part 2
+
+Creates the Naming Context hierarchy:
+root -> level1_context -> level2_context,
+and prints out the ior of the <level1_context> to the specified file.
+
+
+Expected Output:
+
+Persistent Naming test (part 1) OK.
+
+********************************************
+Persistent Test (part 2).
+
+Makes sure persistence mode of the Naming Service functions properly.
+
+Attempts to resolve <level2_context> both through the ior obtained
+from part 1 of the test, and through the Naming Context obtained from
+<resolve_initial_references>.  Compares the results of both resolve ()
+calls.
+
+Expected Output:
+
+Persistent Naming test (part 2) OK.
 
 ********************************************

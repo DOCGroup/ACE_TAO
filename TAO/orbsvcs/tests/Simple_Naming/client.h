@@ -55,22 +55,6 @@ public:
   // Execute the simple test code.
 };
 
-class Loop_Test : public Naming_Test
-{
-  // = TITLE
-  //    This class implements a loop Naming Service test.
-  //
-  // = DESCRIPTION
-  //    The test binds(), resolves(), and unbinds() an object
-  //    reference in a loop, ignoring AlreadyBound and NotFound
-  //    exceptions.  This is useful for a script that spawns multiple
-  //    client processes, each executing the loop test, using the same
-  //    name for the object reference.
-public:
-  virtual int execute (TAO_Naming_Client &root_context);
-  // Execute the loop test code.
-};
-
 class MT_Test : public Naming_Test, public ACE_Task_Base
 {
   // = TITLE
@@ -240,7 +224,8 @@ class Persistent_Test_Begin : public Naming_Test
 public:
   // = Initialization and termination methods.
 
-  Persistent_Test_Begin (CORBA::ORB_ptr orb);
+  Persistent_Test_Begin (CORBA::ORB_ptr orb,
+                         FILE * ior_output_file);
   // Constructor.  Takes in an orb pointer.
 
   virtual ~Persistent_Test_Begin (void);
@@ -253,6 +238,9 @@ private:
 
   CORBA::ORB_var orb_;
   // A pointer to our ORB (needed for object/string conversion).
+
+  FILE *file_;
+  // File where we output the ior for use by part 2 of persistent test.
 };
 
 class Persistent_Test_End : public Naming_Test
