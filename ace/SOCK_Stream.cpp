@@ -20,6 +20,6 @@ ACE_SOCK_Stream::close (void)
   // close in order to avoid losing data.
   this->close_writer ();
   // Close down the socket.
-  ACE_SOCK::close ();
+  return ACE_SOCK::close ();
 }
 

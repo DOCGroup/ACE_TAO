@@ -54,6 +54,11 @@ friend ostream &operator << (ostream &, ACE_Log_Record &);
 		  long pid);
   // Create a <Log_Record> and set its priority, time stamp, and
   // process id.
+  ACE_Log_Record (ACE_Log_Priority lp, 
+		  const ACE_Time_Value &time_stamp,
+		  long pid);
+  // Create a <Log_Record> and set its priority, time stamp, and
+  // process id.
 
   int print (const char host_name[], 
 	     int verbose = 1, 
@@ -88,10 +93,10 @@ friend ostream &operator << (ostream &, ACE_Log_Record &);
   void length (long);
   // Set the length of the <Log_Record>.
 
-  long time_stamp (void) const;
+  const ACE_Time_Value &time_stamp (void) const;
   // Get the time stamp of the <Log_Record>.
 
-  void time_stamp (long);
+  void time_stamp (const ACE_Time_Value &);
   // Set the time stamp of the <Log_Record>.
 
   long pid (void) const;
@@ -120,16 +125,16 @@ private:
   // Round up to the alignment restrictions.
 
   long type_;
-  // Type of logging record 
+  // Type of logging record.
 
   long length_;      
-  // length of the logging record 
+  // Total length of the logging record in bytes.
 
-  long time_stamp_;  
-  // Time logging record generated 
+  ACE_Time_Value time_stamp_;  
+  // Time that the logging record was generated.
 
   long pid_;         
-  // Id of process that generated the record 
+  // Id of process that generated the logging record.
 
   char msg_data_[MAXLOGMSGLEN]; 
   // Logging record data 

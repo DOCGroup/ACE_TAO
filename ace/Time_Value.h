@@ -76,6 +76,10 @@
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
 extern "C" {
 #include <pthread.h>
+#if defined (DIGITAL_UNIX)
+#define pthread_self __pthread_self
+extern "C" pthread_t pthread_self (void);
+#endif /* DIGITAL_UNIX */
 }
 #endif /* ACE_HAS_DCETHREADS */
 

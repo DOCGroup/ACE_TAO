@@ -15,8 +15,8 @@ ACE_Log_Record::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, "type_ = %d\n", this->type_));
   ACE_DEBUG ((LM_DEBUG, "\nlength_ = %d\n", this->length_));
-  ACE_DEBUG ((LM_DEBUG, "\nlength_ = %d\n", this->time_stamp_));
-  ACE_DEBUG ((LM_DEBUG, "\ntime_stamp_ = %s\n", this->pid_));
+  ACE_DEBUG ((LM_DEBUG, "\ntime_stamp_ = (%d, %d)\n", this->time_stamp_.sec (), this->time_stamp_.usec ()));
+  ACE_DEBUG ((LM_DEBUG, "\npid_ = %s\n", this->pid_));
   ACE_DEBUG ((LM_DEBUG, "\nmsg_data_ = %s\n", this->msg_data_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -30,7 +30,18 @@ ACE_Log_Record::msg_data (const char *data)
 }
 
 ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp, 
-				long ts, 
+				long ts_sec,
+				long p)
+  : type_ (long (lp)), 
+    length_ (0),
+    time_stamp_ (ts_sec), 
+    pid_ (p)
+{
+  // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
+}
+
+ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp, 
+				const ACE_Time_Value &ts,
 				long p)
   : type_ (long (lp)), 
     length_ (0),
@@ -74,7 +85,7 @@ ACE_Log_Record::print (const char host_name[],
 
   if (verbose)
     {
-      time_t now = this->time_stamp_;
+      time_t now = this->time_stamp_.sec ();
       char ctp[26]; // 26 is a magic number...
 
       if (ACE_OS::ctime_r (&now, ctp, sizeof ctp) == 0)
@@ -83,14 +94,20 @@ ACE_Log_Record::print (const char host_name[],
       /* 01234567890123456789012345 */
       /* Wed Oct 18 14:25:36 1989n0 */
 
-      ctp[24] = '\0';
+      ctp[19] = '\0'; // NUL-terminate after the time.
+      ctp[24] = '\0'; // NUL-terminate after the date.
 
       if (host_name == 0)
 	host_name = "<local_host>";
 
-      return ACE_OS::fprintf (fp, "%s@%s@%d@%d@%s", 
-			      ctp + 4, host_name, this->pid_,
-			      this->type_, this->msg_data_);
+      return ACE_OS::fprintf (fp, "%s.%d%s@%s@%d@%d@%s",
+			      ctp + 4, 
+			      this->time_stamp_.usec () / 1000,
+			      ctp + 20, 
+			      host_name, 
+			      this->pid_,
+			      this->type_, 
+			      this->msg_data_);
     }
   else
     return ACE_OS::fprintf (fp, "%s", this->msg_data_);
@@ -105,20 +122,26 @@ ACE_Log_Record::print (const char host_name[],
 
   if (verbose)
     {
-      time_t now = this->time_stamp_;
+      time_t now = this->time_stamp_.sec ();
       char ctp[26]; // 26 is a magic number...
+
       if (ACE_OS::ctime_r (&now, ctp, sizeof ctp) == 0)
 	return -1;
 
       /* 01234567890123456789012345 */
       /* Wed Oct 18 14:25:36 1989n0 */
 
-      ctp[24] = '\0';
+      ctp[19] = '\0'; // NUL-terminate after the time.
+      ctp[24] = '\0'; // NUL-terminate after the date.
 
       if (host_name == 0)
 	host_name = "<local_host>";
 
-      s << (ctp + 4)
+      s << (ctp + 4) << '.'
+	// The following line isn't portable, so I've commented it out...
+	// << setw (3) << setfill ('0') << this->time_stamp_.usec () / 1000 << ' '
+	<< this->time_stamp_.usec () / 1000 << ' '
+	<< (ctp + 20)
 	<< '@'
 	<< host_name
 	<< '@'
