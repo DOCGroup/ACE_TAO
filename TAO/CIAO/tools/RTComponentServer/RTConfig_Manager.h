@@ -26,6 +26,7 @@
 
 #include "tao/RTCORBA/RTCORBA.h"
 #include "../XML_Helpers/RTConfigurationC.h"
+#include "ace/Null_Mutex.h"
 
 namespace CIAO
 {

@@ -1,3 +1,11 @@
+Mon Aug 25 07:42:14 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/RTComponentServer/ComponentServer_Task.cpp:
+	* tools/RTComponentServer/ComponentServer_Task.h:
+	* tools/RTComponentServer/RTConfig_Manager.h: Fixed merge errors
+	  by adding inclusion of "tao/ORB.h", "ace/Null_Mutex.h" and
+	  such.
+
 Sun Aug 24 22:03:55 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	  Merged the RTCIAO-0 branch into main trunk.
