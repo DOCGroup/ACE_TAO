@@ -3158,7 +3158,7 @@ public:
   // = A set of wrappers for operations on time.
   static double difftime (time_t t1,
 			  time_t t0);
-  static time_t time (time_t *tloc);
+  static time_t time (time_t *tloc = 0);
   static time_t mktime (struct tm *timeptr);
   static struct tm *localtime (const time_t *clock);
   static struct tm *localtime_r (const time_t *clock,

@@ -1816,7 +1816,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   if (timeout != 0)
     ts = *timeout; // Calls ACE_Time_Value::operator timespec_t().
 
-#if (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_HAS_FSU_PTHREADS)
+#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
 #  if defined (ACE_HAS_DCE_DRAFT4_THREADS) || defined (ACE_HAS_FSU_PTHREADS)
   ACE_OSCALL (timeout == 0
 	      ? ::pthread_cond_wait (cv, external_mutex)
