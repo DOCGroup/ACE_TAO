@@ -1,6 +1,6 @@
 //$Id$
-#ifndef CIAO_IMPLEMENTATION_INFO_C
-#define CIAO_IMPLEMENTATION_INFO_C
+#ifndef CIAO_IMPLEMENTATION_INFO_CPP
+#define CIAO_IMPLEMENTATION_INFO_CPP
 
 #include "ImplementationInfo.h"
 #include "ace/SString.h"
@@ -8,11 +8,21 @@
 // Specialized operation that we will use for now.
 namespace CIAO
 {
-  bool operator<< (Deployment::ImplementationInfos & info,
+  bool operator<< (Deployment::NodeImplementationInfo & node_info,
                    const Deployment::DeploymentPlan & plan)
   {
     const CORBA::ULong len = plan.instance.length ();
-    info.length (len);
+
+    // @@ Install all the components into a single container.
+    // @@ Nanbor, I didn't create separate containers since the
+    // deploymentplan IDL is still unknown at this phase.
+
+    node_info.length (1); //everything is in a single container.
+    Deployment::ContainerImplementationInfo container_info;
+    container_info.impl_infos.length (len);
+
+    Deployment::ComponentImplementationInfos impl_infos;
+    impl_infos.length (len);
 
     for (CORBA::ULong i = 0; i < len; ++i)
       {
@@ -20,7 +30,7 @@ namespace CIAO
           plan.instance[i];
 
         // Get the component instance name.
-        info[i].component_instance_name = inst.name.in ();
+        impl_infos[i].component_instance_name = inst.name.in ();
 
         const Deployment::MonolithicDeploymentDescription & impl =
           plan.implementation[inst.implementationRef];
@@ -30,7 +40,7 @@ namespace CIAO
         // Copy Component instance related Properties if there is any.
         if (inst.configProperty.length () > 0)
           {
-            info[i].component_config = inst.configProperty;
+            impl_infos[i].component_config = inst.configProperty;
           }
 
         // For svnt artifact
@@ -53,12 +63,14 @@ namespace CIAO
                     ACE_DEBUG ((LM_DEBUG, "Servant Artifact must have a location!\n"));
                     return  0;
                   }
-                // Cpoy the servant dll/so name.
+                // Copy the servant dll/so name.
                 // @@ Note: I ignore all the other locations except the first one.
-                info[i].servant_dll = CORBA::string_dup (arti.location[0].in ());
+                impl_infos[i].servant_dll = 
+                  CORBA::string_dup (arti.location[0].in ());
 
-		// Get the entry point.
-		const CORBA::ULong prop_length = arti.execParameter.length ();
+                // Get the entry point.
+		            const CORBA::ULong prop_length = arti.execParameter.length ();
+
                 for (CORBA::ULong prop_num = 0;
                      prop_num < prop_length;
                      ++prop_num)
@@ -68,7 +80,7 @@ namespace CIAO
                       {
                         const char * entry;
                         (arti.execParameter[prop_num].value) >>= entry;
-                        info[i].servant_entrypt = CORBA::string_dup (entry);
+                        impl_infos[i].servant_entrypt = CORBA::string_dup (entry);
                       }
                     else
                       {
@@ -77,6 +89,7 @@ namespace CIAO
                       }
                   }
               }
+
             // As one can see, code is duplicated here. I will come back for this later.
             // For exec artifact
             if ((pos  = tmp.find ("_exec")) != ACE_CString::npos ||
@@ -89,10 +102,11 @@ namespace CIAO
                   }
                 // Cpoy the servant dll/so name.
                 // @@ Note: I ignore all the other locations except the first one.
-                info[i].executor_dll = CORBA::string_dup (arti.location[0].in ());
+                impl_infos[i].executor_dll = 
+                  CORBA::string_dup (arti.location[0].in ());
 
                 // Get the entry point.
-		const CORBA::ULong prop_length = arti.execParameter.length ();
+                const CORBA::ULong prop_length = arti.execParameter.length ();
                 for (CORBA::ULong prop_num = 0;
                      prop_num < prop_length;
                      ++prop_num)
@@ -102,7 +116,7 @@ namespace CIAO
                       {
                         const char * entry;
                         (arti.execParameter[prop_num].value) >>= entry;
-                        info[i].executor_entrypt = CORBA::string_dup (entry);
+                        impl_infos[i].executor_entrypt = CORBA::string_dup (entry);
                       }
                     else
                       {
@@ -117,8 +131,12 @@ namespace CIAO
               continue;
           }
       }
+
+    container_info.impl_infos = impl_infos;
+    node_info[0] = container_info;
+
     return 1;
   }
 }
 
-#endif /* CIAO_IMPLEMENTATION_INFO_C */
+#endif /* CIAO_IMPLEMENTATION_INFO_CPP */

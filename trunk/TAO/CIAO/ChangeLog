@@ -1,3 +1,17 @@
+Sat Mar 19 13:13:13 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplicationManager/ImplementationInfo.cpp:
+        * DAnCE/NodeApplicationManager/ImplementationInfo.h:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
+
+          Changes to reflect the infrasrtuctural changes related
+          to providing capability in the NodeApplication
+          to support multiple containers.
+
+          Thanks to Gan Deng <dengg@dre.vanderbilt.edu> for
+          architecting and implementing this project.
+
 Sat Mar 19 13:08:18 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/ciao/NodeApplication_Impl.inl:

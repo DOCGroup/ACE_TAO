@@ -23,6 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/SString.h"
 #include "ciao/DeploymentS.h"
 #include "CIAO_NAM_Export.h"
 #include "ciao/NodeApp_CB_Impl.h"
@@ -68,10 +69,12 @@ namespace CIAO
                               Deployment::StopError));
 
     /**
-     * Initialize the NodeApplicationManager.  The currently implementation
+     * A factory operation to create NodeApplicationManager interface, and return
+     * the object reference.
+     * Initialize the NodeApplicationManager.  The current implementation
      * of CIAO_NodeApplicationManager can only activate CIAO's own
      * NodeApplication processes.  You should specify the location
-     * (pathname) of the NodeApplication and the delay
+     * (pathname) of the NodeApplication and the delay.
      * CIAO_NodeApplicationManager should wait (in second) for NodeApplication to
      * call back.
      *
