@@ -1,10 +1,13 @@
 Tue Mar 25 10:17:08 1997  David L. Levine  <levine@cs.wustl.edu>
 
-	* OS.cpp (thr_create): on VxWorks, always pass 0 as first arg to
+	* ace/OS.cpp (thr_create): on VxWorks, always pass 0 as first arg to
 	  ::taskSpawn () so that VxWorks will generate the task ID.
 	  Thanks to Dave Mayerhoefer <m210229@svappl36.mdc.com>
 	  for providing this fix, without which random task names would
 	  be assigned.
+
+	* ace/ACE.cpp (get_bcast_addr): added return 0 at end of non-WIN32
+	  code to avoid compile warning from g++.
 
 	* tests/IOStream_Test.cpp: removed extra "(%P|%t)" from output.
 	  I couldn't get ACE_ERROR_RETURN to work on g++:  it complained
@@ -12,7 +15,7 @@ Tue Mar 25 10:17:08 1997  David L. Levine  <levine@cs.wustl.edu>
 	  function that returns a void *, and about mismatched arguments
 	  to an ACE_Log_Msg function if I cast the int to a void *.  So,
 	  I used ACE_ERROR instead.
-	  Added ACE_UNUNSED_ARG (arg).  Removed unused variables
+	  Added ACE_UNUNSED_ARG (arg).	Removed unused variables
 	  error_at_server and error_at_client.
 
 	* netsvcs/lib/TS_Clerk_Handler.cpp: added another template
@@ -22,11 +25,11 @@ Tue Mar 25 10:17:08 1997  David L. Levine  <levine@cs.wustl.edu>
 	  instead of LM_DEBUG.
 
 	* examples/Threads/context_switch_time.cpp: use ACE_Sched_Params
-	  to get platform-dependent thread priorities.  Also, moved #includes
+	  to get platform-dependent thread priorities.	Also, moved #includes
 	  so that config.h is read before testing for ACE_HAS_THREADS.
 
 	* examples/Threads/{auto_event.cpp,barrier2.cpp,future1.cpp,
-                            future2.cpp,reader_writer.cpp,tss1.cpp,tss2.cpp}:
+			    future2.cpp,reader_writer.cpp,tss1.cpp,tss2.cpp}:
 	  added template specializations.
 
 Tue Mar 25 10:01:05 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
