@@ -1,7 +1,18 @@
+Tue Apr 20 12:40:14 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.cpp:
+
+          Added two new load balancing strategies LoadAverage and
+          LoadMinimum.
+
 Tue Apr 20 12:16:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_args.cpp:
-        
+
           Added usage message for -Ge 2 option. Thanks to Johnny
           Willemsen <jwillemsen@remedy.nl> for pointing out the
           oversight.
@@ -9,7 +20,7 @@ Tue Apr 20 12:16:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Apr 20 11:56:25 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_decl.cpp:
-        
+
           Fixed mistake in accessor method for one of the 'visited'
           flags that was causing the #pragma instantiate directive
           for argument helper class templates to not get generated.

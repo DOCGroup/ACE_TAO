@@ -39,6 +39,8 @@ namespace TAO_LB
   const CORBA::Float LA_DEFAULT_TOLERANCE = 1;
   const CORBA::Float LA_DEFAULT_DAMPENING = 0;
   const CORBA::Float LA_DEFAULT_PER_BALANCE_LOAD = 0;
+
+  const CORBA::Float LA_DEFAULT_DIFF_AVERAGE_CUTOFF = 0.8f;
   //@}
 
 }

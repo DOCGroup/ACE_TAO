@@ -273,6 +273,11 @@ TAO_LB_LoadAverage::analyze_loads (
     }
 
   avg_load.value = total_load.value / len;
+/*
+  ACE_DEBUG ((LM_DEBUG,
+              "AVERAGE LOAD == %f\n",
+              avg_load.value));
+*/
 
   // Iterate through the entire location list to determine
   // the location where the load has to be shed.
@@ -299,13 +304,13 @@ TAO_LB_LoadAverage::analyze_loads (
           ACE_TRY_CHECK;
           */
 
-          /*
+         /* 
           ACE_DEBUG ((LM_DEBUG,
                        "EFFECTIVE_LOAD == %f\n"
                        "AVERAGE       == %f\n",
                        tmp[i].value,
                        avg_load.value));
-          */
+         */ 
 
           if (tmp[i].value <= avg_load.value)
             {
@@ -315,14 +320,47 @@ TAO_LB_LoadAverage::analyze_loads (
             }
           else
             {
-              /*
+          
+              CORBA::Float percent_diff =
+                  (tmp[i].value / avg_load.value) - 1;    
+
+              if (tmp[i].value == avg_load.value)
+              {
+                percent_diff = 0;
+              }
+/*
               ACE_DEBUG ((LM_DEBUG,
-                          "%P --- ALERTING LOCATION %u\n",
-                          i));
-              */
-              load_manager->enable_alert (loc
-                                          ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
+                          "ALERT LOC == %u"
+                          "\tAVG LOAD == %f\n"
+                          "\tLOAD == %f\n"
+                          "\tPERCENT == %f\n",
+                          i,
+                          avg_load.value,
+                          tmp[i].value,
+                          percent_diff));
+*/
+
+              if (percent_diff <= TAO_LB::LA_DEFAULT_DIFF_AVERAGE_CUTOFF)
+              {
+                load_manager->disable_alert (loc
+                                             ACE_ENV_ARG_PARAMETER);
+                ACE_TRY_CHECK;
+              }
+              else if ((percent_diff > TAO_LB::LA_DEFAULT_DIFF_AVERAGE_CUTOFF)
+                       && (percent_diff < 1))
+              {
+/*                      
+                ACE_DEBUG ((LM_DEBUG,
+                            "%P --- ALERTING LOCATION %u\n",
+                            i));
+*/                            
+              
+                load_manager->enable_alert (loc
+                                            ACE_ENV_ARG_PARAMETER);
+
+                ACE_TRY_CHECK;
+              }
+
             }
         }
       ACE_CATCH (CosLoadBalancing::LocationNotFound, ex)
