@@ -1,7 +1,16 @@
+Sun Aug  1 17:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/RTCORBA/Banded_Connections/server.cpp:
+          When we get an exception, an internal corba error is handled
+          to look if it is an permission error and a specific minor code
+          is set, this fails on HPUX and then the test just uses ACE_ASSERT,
+          added some more code to get some specific feedback what the
+          retrieved minor code from the exception is
+
 Sun Aug  1 08:53:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/tao.mpc:
-	  Updated Header_Files, Inline_Files, and Template_Files so that 
+	  Updated Header_Files, Inline_Files, and Template_Files so that
 	  generated project files will contain complete list for install.
 	  Suggested by Chad Elliot <elliot_c@ociweb.com>.
 
