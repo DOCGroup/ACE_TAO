@@ -81,10 +81,11 @@ main (int argc, char *argv[])
         ACE_TRY_CHECK;
       }
 
+      /* ANY STATEMENT FROM HERE EXHIBITS A WARNING IN TRU 64
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) scavenger - event loop finished\n"));
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_TRY_CHECK;*/
     }
   ACE_CATCHANY
     {
