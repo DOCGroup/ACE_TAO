@@ -37,12 +37,13 @@ sub client
 }
 
 # Options for all tests recognized by the 'client' program. 
-@opts = ("-s", "-t", "-i", "-e");
+@opts = ("-s", "-t", "-i", "-e", "-y");
 
 @comments = ("Simple Test: \n", 
 	     "Tree Test: \n",
 	     "Iterator Test: \n",
-	     "Exceptions Test: \n");
+	     "Exceptions Test: \n",
+	     "Destroy Test: \n");
 
 $test_number = 0;
 

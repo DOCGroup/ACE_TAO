@@ -142,11 +142,25 @@ class Destroy_Test : public Naming_Test
   //    in the Naming Service.
   //
   // = DESCRIPTION
-  //    @@ Please comment me.
+  //    Create a context and bind an object under it.
+  //    Attempt to destroy the context - NotEmpty exception should be raised.
+  //
+  //    Unbind the object and call destroy on the context.
+  //    Attempt to call destroy on the object again - OBJECT_NOT_EXIST
+  //    exception should be raised.
   //    
 public:
   virtual int execute (TAO_Naming_Client &root_context);
   // Execute the destroy test code.
+
+private:
+  // the following functions isolate specific tests.
+
+  void not_empty_test (CosNaming::NamingContext_var &ref,
+		       CORBA::Environment &_env);
+  void not_exist_test (CosNaming::NamingContext_var &ref,
+		       CORBA::Environment &_env);
+
 };
 
 class CosNaming_Client 
