@@ -1,3 +1,9 @@
+Thu Jul  1 22:23:15 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/IIOP_Profile.h:
+
+	  Removed extraneous forward declaration.
+
 Thu Jul  1 19:42:26 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (parse_args):
