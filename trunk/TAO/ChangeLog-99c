@@ -1,3 +1,19 @@
+Wed May 12 10:16:15 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* tao/corbafwd.h:
+	 
+	  Fixed the warnings on NT related to foward declaration of
+	  ServiceDetail and ServiceInformation.
+
+	* tao/ObjectIDList.h:
+
+	  Fixed an error in the declaration of the CDR operators.
+
+	* tao/Service.h:
+
+	  Fixed an error where TAO_Unbounded_Sequence<ServiceDetail>
+	  should have been TAO_Unbounded_Sequence<CORBA_ServiceDetail>
+
 Wed May 12 08:56:40 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* tao/corbafwd.h
