@@ -1538,7 +1538,8 @@ CORBA_ORB::create_struct_tc (
 
   if (adapter == 0)
     {
-      return CORBA::TypeCode::_nil ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return adapter->create_struct_tc (id,
@@ -1564,7 +1565,8 @@ CORBA_ORB::create_union_tc (
 
   if (adapter == 0)
     {
-      return CORBA::TypeCode::_nil ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return adapter->create_union_tc (id,
@@ -1590,7 +1592,8 @@ CORBA_ORB::create_enum_tc (
 
   if (adapter == 0)
     {
-      return CORBA::TypeCode::_nil ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return adapter->create_enum_tc (id,
@@ -1615,7 +1618,8 @@ CORBA_ORB::create_alias_tc (
 
   if (adapter == 0)
     {
-      return CORBA::TypeCode::_nil ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return adapter->create_alias_tc (id,
@@ -1640,7 +1644,8 @@ CORBA_ORB::create_exception_tc (
 
   if (adapter == 0)
     {
-      return CORBA::TypeCode::_nil ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return adapter->create_exception_tc (id,
@@ -1664,7 +1669,8 @@ CORBA_ORB::create_interface_tc (
 
   if (adapter == 0)
     {
-      return CORBA::TypeCode::_nil ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return adapter->create_interface_tc (id,
@@ -1686,7 +1692,8 @@ CORBA_ORB::create_string_tc (
 
   if (adapter == 0)
     {
-      return CORBA::TypeCode::_nil ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return adapter->create_string_tc (bound,
@@ -1707,7 +1714,8 @@ CORBA_ORB::create_wstring_tc (
 
   if (adapter == 0)
     {
-      return CORBA::TypeCode::_nil ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return adapter->create_wstring_tc (bound,
@@ -1729,7 +1737,8 @@ CORBA_ORB::create_fixed_tc (
 
   if (adapter == 0)
     {
-      return CORBA::TypeCode::_nil ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return adapter->create_fixed_tc (digits,
@@ -1752,7 +1761,8 @@ CORBA_ORB::create_sequence_tc (
 
   if (adapter == 0)
     {
-      return CORBA::TypeCode::_nil ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return adapter->create_sequence_tc (bound,
@@ -1775,7 +1785,8 @@ CORBA_ORB::create_array_tc (
 
   if (adapter == 0)
     {
-      return CORBA::TypeCode::_nil ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return adapter->create_array_tc (length,
@@ -1801,7 +1812,8 @@ CORBA_ORB::create_value_tc (
 
   if (adapter == 0)
     {
-      return CORBA::TypeCode::_nil ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return adapter->create_value_tc (id,
@@ -1828,7 +1840,8 @@ CORBA_ORB::create_value_box_tc (
 
   if (adapter == 0)
     {
-      return CORBA::TypeCode::_nil ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return adapter->create_value_box_tc (id,
@@ -1852,7 +1865,8 @@ CORBA_ORB::create_native_tc (
 
   if (adapter == 0)
     {
-      return CORBA::TypeCode::_nil ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return adapter->create_native_tc (id,
@@ -1874,7 +1888,8 @@ CORBA_ORB::create_recursive_tc (
 
   if (adapter == 0)
     {
-      return CORBA::TypeCode::_nil ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return adapter->create_recursive_tc (id,
@@ -1896,7 +1911,8 @@ CORBA_ORB::create_abstract_interface_tc (
 
   if (adapter == 0)
     {
-      return CORBA::TypeCode::_nil ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return adapter->create_abstract_interface_tc (id,
@@ -1919,7 +1935,8 @@ CORBA_ORB::create_local_interface_tc (
 
   if (adapter == 0)
     {
-      return CORBA::TypeCode::_nil ();
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        CORBA::TypeCode::_nil ());
     }
 
   return adapter->create_local_interface_tc (id,
