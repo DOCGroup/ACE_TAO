@@ -1153,7 +1153,7 @@ be_visitor_tmplinst_cs::gen_base_class_tmplinst (be_sequence *node)
   else
     {
       ACE_OS::sprintf (ifdef_suffix,
-                       "%d_%s",
+                       "%ld_%s",
                        node->max_size ()->ev ()->u.ulval,
                        "explicit");
     }
