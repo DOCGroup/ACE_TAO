@@ -1,3 +1,9 @@
+Mon Aug 25 09:47:19 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/OEP/Display/NavDisplayGUI_exec/RootPanel.h: Fixed a
+	  compilation error by adding inclusion of "ace/Null_Mutex.h" and
+	  define QT_GENUINE_STR.
+
 Mon Aug 25 07:42:14 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tools/RTComponentServer/ComponentServer_Task.cpp:
