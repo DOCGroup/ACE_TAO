@@ -1260,7 +1260,13 @@ ACE_INLINE unsigned long
 ACE_OS::strtoul (const char *s, char **ptr, int base)
 {
   // ACE_TRACE ("ACE_OS::strtoul");
+#if defined (linux) && defined (__alpha)
+  // ::strtoul () appears to be broken on Linux 2.0.30/Alpha:
+  // it returns 0 for a negative number.
+  return (unsigned long) ::strtol (s, ptr, base);
+#else  /* ! linux || ! __alpha */
   return ::strtoul (s, ptr, base);
+#endif /* ! linux || ! __alpha */
 }
 
 ACE_INLINE double
