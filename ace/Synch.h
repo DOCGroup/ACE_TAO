@@ -1536,12 +1536,15 @@ struct ACE_Export ACE_Sub_Barrier
  *
  * This class allows <count> number of threads to synchronize
  * their completion of (one round of) a task, which is known as
- * "barrier synchronization".  The implementation uses a
- * "sub-barrier generation numbering" scheme to avoid overhead
- * and to ensure that all threads wait to leave the barrier
- * correct.  This code is based on an article from SunOpsis
- * Vol. 4, No. 1 by Richard Marejka
- * (Richard.Marejka@canada.sun.com).
+ * "barrier synchronization".   After all the threads call <wait()>
+ * on the barrier they are all atomically released and can begin a new
+ * round.
+ * 
+ * This implementation uses a "sub-barrier generation numbering"
+ * scheme to avoid overhead and to ensure that all threads wait to
+ * leave the barrier correct.  This code is based on an article from
+ * SunOpsis Vol. 4, No. 1 by Richard Marejka
+ * (Richard.Marejka@canada.sun.com). 
  */
 class ACE_Export ACE_Barrier
 {
