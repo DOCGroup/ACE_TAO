@@ -7,8 +7,8 @@ Wed Aug  7 10:50:03 2002  Ossama Othman  <ossama@uci.edu>
 
 Wed Aug  7 13:06:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-        * tao/PortableServer/Object_Adapter.h
-        * tao/PortableServer/Object_Adapter.cpp
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/Object_Adapter.cpp:
 
 	  Fixed compile errors.
 
