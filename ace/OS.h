@@ -5398,15 +5398,7 @@ public:
   static int cond_init (ACE_cond_t *cv,
                         ACE_condattr_t &attributes,
                         LPCTSTR name = 0,
-                        void *arg = 0
-#if defined(CHORUS)
-                        ,
-                        int dummy = 0
-#endif /* CHORUS */
-                        );
-    // Use a "dummy" prameter to overcome Chorus compiler error:
-    // Parameters int and int are regarded as the same
-
+                        void *arg = 0);
   static int cond_signal (ACE_cond_t *cv);
   static int cond_timedwait (ACE_cond_t *cv,
                              ACE_mutex_t *m,
