@@ -1,3 +1,12 @@
+Thu Jun 17 00:47:30 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_decl.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	* TAO_IDL/include/ast_decl.h:
+	
+	Fixed the warnings in IRIX. Thanks to Carlos for reporting this.   
+
 Thu Jun 17 00:13:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
