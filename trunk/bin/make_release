@@ -758,13 +758,46 @@ sub generate_makefiles () {
     #
     # Need todo a common chmod on the file lists!
     my $here = Cwd::getcwd();
+    
+    my $exclude_option = '-exclude TAOACE.mwc,CIAOTAO.mwc';
+    my $mpc_option = 
+        '-recurse -hierarchy -relative ACE_ROOT=$here/ACE_wrappers'; 
+    
+    my $static_option = 
+        '-static -name_modifier *_Static -apply_project -exclude TAO/CIAO,TAOACE.mwc $mpc_option';
+
+    open (FEATURES, "> ACE_wrappers/bin/MakeProjectCreator/config/default.features")  ||
+        die "$0: unable to open default.features\n";
+
+    print FEATURES
+        "// \$Id\$\n" .
+        "// This is an automatically generated file.\n\n" .
+        "ssl=1\n" .
+        "cidl=1\n" .
+        "sctp=1\n";
 
     &ex ("cd ACE_wrappers; \
-          bin/mwc.pl -type vc6 -static -recurse -hierarchy -name_modifier *_Static -apply_project -exclude TAO/CIAO -relative ACE_ROOT=$here/ACE_wrappers;\
-        bin/mwc.pl -type vc71 -recurse -hierarchy -relative ACE_ROOT=$here/ACE_wrappers;\
-        find ./ -name '*.ds[p,w]' | /usr/bin/xargs chmod 0644;\
-	find ./ -name '*.vcproj' | /usr/bin/xargs chmod 0644;\
-	find ./ -name '*.sln' | /usr/bin/xargs chmod 0644");
+          bin/mwc.pl $mpc_option; \
+          find ./ -name 'GNUmake*' | /usr/bin/xargs chmod 0644");
+
+    open (FEATURES_1, "> ACE_wrappers/bin/MakeProjectCreator/config/default.features")  ||
+        die "$0: unable to open default.features\n";
+
+    print FEATURES_1
+        "// \$Id\$\n" .
+        "// This is an automatically generated file.\n\n" .
+        "ssl=0\n" .
+        "cidl=0\n" .
+        "sctp=0\n";
+
+    &ex ("cd ACE_wrappers; \
+          bin/mwc.pl -type vc71 $mpc_option $exclude_option; \
+          bin/mwc.pl -type vc6  $mpc_option $exclude_option; \
+          bin/mwc.pl -type vc6 $static_option; \
+          bin/mwc.pl -type vc71 $static_option; \
+          find ./ -name '*.ds[p,w]' | /usr/bin/xargs chmod 0644;\
+	  find ./ -name '*.vcproj' | /usr/bin/xargs chmod 0644;\
+	  find ./ -name '*.sln' | /usr/bin/xargs chmod 0644");
 }
 
 sub generate_em3 () {

@@ -1,3 +1,10 @@
+Fri Jul 23 11:38:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/make_release:
+
+	  Changes to the make_release. This has not been tested
+	  yet. Checking in to test it in a different repository.
+
 Fri Jul 23 13:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/SOCK_Connector_Test.cpp:
