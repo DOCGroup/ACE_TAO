@@ -73,12 +73,11 @@ int MyTask::svc (void)
 {
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
-  int prio;
 
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): task activated\n"));
   ACE_ASSERT (dispatcher_ != 0);
 
-  prio = dispatcher_->schedule (guid_, qos_);
+  (void) dispatcher_->schedule (guid_, qos_);
 
   barrier_.wait ();
 
