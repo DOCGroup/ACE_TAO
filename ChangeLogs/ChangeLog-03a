@@ -1,3 +1,7 @@
+Wed Dec 25 06:14:17 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* Merry Christmas to all.  May we have peace and justice for all in 2003.
+
 Tue Dec 24 17:29:11 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* docs/ACE-subsets.html: Documented the compiler options that
@@ -1313,7 +1317,8 @@ Sat Nov 23 18:12:37 2002  Steve Huston  <shuston@riverace.com>
         The above are only done when using automatic template instantiation
         on AIX with g++. Without this, the compiler and linker don't get
         things done right and static data members in templates don't get
-        instantiated correctly.
+        instantiated correctly.  Thanks to Max F. Bilyk <mbilyk@europe.com>
+	for reporting this problem.
 
         * ace/SSL/Makefile: Set LIBS = $(ACELIB). Else it won't link on
           AIX, g++.

@@ -1,3 +1,8 @@
+Wed Dec 25 06:24:01 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* docs/performance.html: Added some tips about how to reduce the size of
+	  the compile-time and run-time memory footprint.
+
 Tue Dec 24 12:36:11 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/Crash_Test/server.cpp: Fixed a compile
