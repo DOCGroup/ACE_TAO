@@ -65,7 +65,7 @@ pace_mqd_t mq_open (const char* name,
   int create_mmap = 0; /* 1 if the file has never be inited */
   message_header* temp = 0; /*Used in initialization of mqueue*/
   long index; /* index into the file */
-  pace_mqd_t result = pace_malloc (sizeof (struct mqd));
+  pace_mqd_t result = (pace_mqd_t) pace_malloc (sizeof (struct mqd));
   pace_stat_s statbuf;
 
 retry:
@@ -83,8 +83,8 @@ retry:
   }
 
   /* Create a name that will go to /tmp with a unique name */
-  new_name = malloc (256);
-  lock_name = malloc (256);
+  new_name = (char*) malloc (256);
+  lock_name = (char*) malloc (256);
   snprintf (new_name, 256, "/tmp%s%s", name, PACE_MQ_DATAPOSTFIX);
   snprintf (lock_name, 256, "/tmp%s%s", name, PACE_MQ_LOCKPOSTFIX);
 
@@ -158,7 +158,6 @@ retry:
     {
       break;
     }
-    pace_sleep (1);
   }
 
   mapsize = f_padding + (attr->mq_msgsize + m_padding) * (attr->mq_maxmsg);
@@ -179,7 +178,7 @@ retry:
       return (pace_mqd_t)-1;
     }
 
-    mmaploc = pace_mmap (0, mapsize, mprot, mflags, fd, 0);
+    mmaploc = (char*) pace_mmap (0, mapsize, mprot, mflags, fd, 0);
     pace_close (fd);
     if (mmaploc == MAP_FAILED)
     {
@@ -235,7 +234,7 @@ retry:
   else
   {
     /* Just open the existing map */
-    mmaploc = pace_mmap (0, mapsize, mprot, mflags, fd, 0);
+    mmaploc = (char*) pace_mmap (0, mapsize, mprot, mflags, fd, 0);
     if (mmaploc == MAP_FAILED)
     {
       return (pace_mqd_t)-1;
@@ -297,7 +296,7 @@ int mq_unlink (const char* name)
 {
   int result1, result2;
   char* new_name;
-  new_name = malloc (256);
+  new_name = (char*) malloc (256);
   snprintf (new_name, 256, "/tmp%s%s", name, PACE_MQ_DATAPOSTFIX);
   result1 = pace_unlink (new_name);
   snprintf (new_name, 256, "/tmp%s%s", name, PACE_MQ_LOCKPOSTFIX);

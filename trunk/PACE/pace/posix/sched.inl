@@ -47,7 +47,11 @@ int
 pace_sched_rr_get_interval (pace_pid_t pid,
                             pace_timespec * interval)
 {
+#if PACE_SUNOS == 551
+  return sched_get_rr_get_interval (pid, interval);
+#else
   return sched_rr_get_interval (pid, interval);
+#endif /* PACE_SUNOS != 551 */
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 

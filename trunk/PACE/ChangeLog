@@ -1,3 +1,24 @@
+Thu Jan 18 15:22:07 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * tests/Stdio_Test.c (main):
+          Removed SLEEPTIME constant since it isn't always used.
+
+        * pace/emulation/mqueue.c:
+          Added char* casts from malloc and mmap calls.
+
+        * pace/posix/unistd.inl (pace_getlogin_r):
+          Changed from POSIX User Group Unit of Functionality to
+          User Group Reentrant Unit of Functionality.
+
+        * pace/posix/sched.inl (pace_sched_rr_get_interval):
+          SunOS 5.5.1 uses sched_get_rr_get_interval rather than
+          sched_rr_get_interval.
+
+        * pace/posix/socket.h:
+          Fixed problems with SunOS 5.5.1 support (i.e., doesn't
+          use socklen_t structs - it uses ints instead - and it
+          doesn't use family_t structs at all.)
+
 Mon Jan 15 10:44:39 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/tests.dsw:
