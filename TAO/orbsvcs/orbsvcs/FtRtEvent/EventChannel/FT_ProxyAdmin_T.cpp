@@ -53,7 +53,7 @@ FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::obtain_proxy (ACE_E
   ACE_CHECK_RETURN(0);
 
   CORBA::Object_var obj;
-  if (*any >>= CORBA::Any::to_object(obj))
+  if (any >>= CORBA::Any::to_object(obj))
     return ProxyInterface::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
 
   FtRtecEventChannelAdmin::ObjectId oid;
