@@ -28,9 +28,9 @@ namespace TAO
   /**
    * @class Const_Argument_T
    *
-   * @brief 
+   * @brief
    *
-   * 
+   *
    */
   template <typename T>
   class Const_Argument_T : public Argument
@@ -38,15 +38,15 @@ namespace TAO
   public:
 
     virtual T arg (void) const = 0;
-    
+
   };
 
   /**
    * @class Mutable_Argument_T
    *
-   * @brief 
+   * @brief
    *
-   * 
+   *
    */
   template <typename T>
   class Mutable_Argument_T : public Argument
@@ -54,7 +54,7 @@ namespace TAO
   public:
 
     virtual T arg (void) = 0;
-    
+
   };
 
 }
