@@ -99,7 +99,7 @@ test_functionality (ACE_Timer_Queue *tq)
   timer_id = tq->schedule (&eh, (const void *) 1,
                            earliest_time);
   
-  ACE_OS::sleep (ACE_Time_Value (1));
+  ACE_OS::sleep (ACE_Time_Value (0, 10));
     
   timer_id2 = tq->schedule (&eh, (const void *) 1,
                             tq->gettimeofday ());
