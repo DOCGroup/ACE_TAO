@@ -19,6 +19,10 @@
 
 #include "TestConfig.h"
 
+#include <stack>
+
+enum element { TESTCONFIG,TEST_CONFIG_T,TYPE,PERIOD,CRITICALITY,IMPORTANCE,NUM_ENTITIES };
+
 /**
  * @class Test_Handler
  *
@@ -30,6 +34,9 @@
 class Test_Handler : public ACEXML_ContentHandler, public ACEXML_ErrorHandler
 {
 public:
+
+  typedef std::stack<element> STACK;
+
   /*
    * Default constructor.
    */
@@ -163,6 +170,10 @@ private:
   ACEXML_Char* fileName_;
   ACEXML_Locator* locator_;
 
+  STACK scope_;
+
+  int didtype_,didperiod_,didcrit_,didimp_,didnum_;
+  //for each test_config_t, whether the leaf element was processed or not
 };
 
 #endif /* TEST_HANDLER_H */
