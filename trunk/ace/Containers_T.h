@@ -37,6 +37,8 @@
 
 class ACE_Allocator;
 
+/* MATT UPDATE */
+
 /**
  * @class ACE_Bounded_Stack
  *
@@ -643,6 +645,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 };
 
+/* MATT UPDATE */
+
 /**
  * @class ACE_Double_Linked_List
  *
@@ -1134,6 +1138,8 @@ private:
   ssize_t next_;
 };
 
+/* MATT UPDATE */
+
 /**
  * @class ACE_Fixed_Set
  *
@@ -1296,6 +1302,8 @@ private:
   /// How far we've advanced over the set.
   size_t next_;
 };
+
+/* MATT UPDATE */
 
 /**
  * @class ACE_Bounded_Set
