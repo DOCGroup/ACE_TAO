@@ -75,13 +75,15 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("node")))
             {
+              Process_Member_Function<Domain_Handler, Deployment::Node> 
+                pf (this,
+                    &Domain_Handler::process_node,
+                    this->doc_);
               process_sequential_element (node,
                                           this->doc_,
                                           this->iter_,
                                           domain.node,
-                                          Process_Member_Function<Domain_Handler, Deployment::Node> (this,
-                                                                                                      &Domain_Handler::process_node,
-                                                                                                      this->doc_),
+                                          &pf,
                                           this->id_map_);
               /*
               this->process_node_element (node, this->doc_,

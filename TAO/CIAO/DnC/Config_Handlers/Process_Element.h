@@ -56,6 +56,8 @@ using xercesc::DOMNode;
 using xercesc::DOMNodeFilter;
 using xercesc::DOMNamedNodeMap;
 
+#include <iostream>
+
 // ID map type definition
 typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REFMAP;
 
@@ -63,7 +65,7 @@ typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REFMAP;
 template <typename OBJ, typename DATA>
 class Process_Function {
 public:
-  virtual void call(DOMNodeIterator*, DATA&) { }
+  virtual void call(DOMNodeIterator*, DATA&)=0;
 
   void operator() (DOMNodeIterator* iter, DATA& data)
   {
@@ -150,7 +152,7 @@ void process_element (DOMNode* node,
                       DOMNodeIterator* iter,
                       DATA& data,
                       VALUE val,
-                      Process_Function <OBJECT, DATA> func,
+                      Process_Function <OBJECT, DATA>* func,
                       REFMAP& id_map);
 
 // This function only works for calling static process_ methods
@@ -159,7 +161,7 @@ void process_sequential_element (DOMNode* node,
                                  DOMDocument* doc,
                                  DOMNodeIterator* iter,
                                  SEQUENCE& seq,
-                                 Process_Function <OBJECT, DATA> func,
+                                 Process_Function <OBJECT, DATA>* func,
                                  REFMAP& id_map);
 
 #include "Process_Element.i"
