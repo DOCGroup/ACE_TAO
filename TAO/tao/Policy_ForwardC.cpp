@@ -36,6 +36,8 @@
 #include "Policy_ForwardC.i"
 #endif /* !defined INLINE */
 
+#include "ace/os_include/arpa/os_inet.h"
+
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
 

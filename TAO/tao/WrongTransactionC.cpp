@@ -47,6 +47,8 @@
 #include "WrongTransactionC.i"
 #endif /* !defined INLINE */
 
+#include "ace/os_include/arpa/os_inet.h"
+
 // TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
 
