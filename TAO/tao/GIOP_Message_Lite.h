@@ -25,6 +25,7 @@
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/Exception.h"
+#include "tao/CDR.h"
 
 class TAO_Operation_Details;
 class TAO_Pluggable_Reply_Params;

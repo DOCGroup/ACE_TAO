@@ -1,12 +1,13 @@
 // $Id$
 
-#include "Connector_Registry.h"
-#include "ORB_Core.h"
-#include "Profile.h"
-#include "Transport_Connector.h"
-#include "Protocol_Factory.h"
-#include "debug.h"
-#include "ORB_Constants.h"
+#include "tao/Connector_Registry.h"
+#include "tao/ORB_Core.h"
+#include "tao/Profile.h"
+#include "tao/Transport_Connector.h"
+#include "tao/Protocol_Factory.h"
+#include "tao/debug.h"
+#include "tao/ORB_Constants.h"
+#include "tao/CDR.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Connector_Registry.i"

@@ -2,7 +2,8 @@
 
 #include "tao/GIOP_Utils.h"
 #include "tao/debug.h"
-#include "Transport.h"
+#include "tao/Transport.h"
+#include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Utils.i"

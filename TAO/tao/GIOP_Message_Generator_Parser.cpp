@@ -1,7 +1,10 @@
+// -*- C++ -*-
+
 #include "tao/GIOP_Message_Generator_Parser.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/debug.h"
+#include "tao/CDR.h"
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)

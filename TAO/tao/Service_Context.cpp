@@ -3,6 +3,7 @@
 //
 
 #include "tao/Service_Context.h"
+#include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Service_Context.inl"
@@ -11,7 +12,7 @@
 #include "ace/OS_NS_string.h"
 
 ACE_RCSID (tao,
-           Service_Context, 
+           Service_Context,
            "$Id$")
 
 void
@@ -166,7 +167,7 @@ TAO_Service_Context::get_context (IOP::ServiceContext& context) const
 }
 
 int
-TAO_Service_Context::get_context (IOP::ServiceId id, 
+TAO_Service_Context::get_context (IOP::ServiceId id,
                                   const IOP::ServiceContext **context) const
 {
   for (CORBA::ULong i = 0; i != this->service_context_.length (); ++i)

@@ -7,6 +7,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/Typecode.h"
+#include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ValueBase.inl"

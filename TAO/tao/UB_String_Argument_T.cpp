@@ -5,6 +5,7 @@
 
 #include "tao/UB_String_Argument_T.h"
 #include "tao/Dynamic_ParameterC.h"
+#include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/UB_String_Argument_T.inl"

@@ -26,6 +26,7 @@ ACE_RCSID (tao,
 #include "CodecFactory_ORBInitializer.h"
 #include "TypeCodeFactory_Adapter.h"
 #include "debug.h"
+#include "CDR.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "PICurrent_ORBInitializer.h"  /* @@ This should go away! */
