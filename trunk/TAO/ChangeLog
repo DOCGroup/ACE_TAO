@@ -9,8 +9,8 @@ Fri Jun 20 17:45:46 2003  Gan Deng  <dengg@dre.vanderbilt.edu>
         * performance-tests/Sequence_Latency/Thread_Pool/run_test.pl
 
           Fixed the perl running command line format in order to facilitate
-	  automatic performance statistics analysis.
-	
+          automatic performance statistics analysis.
+
 Fri Jun 20 16:42:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
