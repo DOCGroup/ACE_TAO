@@ -1,3 +1,9 @@
+Wed Oct 25 10:16:38 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/ORBInitializer_Registry.cpp:
+          Add missing #include for platforms that don't define
+          ACE_TEMPLATES_REQUIRE_SOURCE.
+
 Wed Oct 25 08:23:34 2000  Chad Elliott  <elliott_c@ociweb.com>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Globals.h
