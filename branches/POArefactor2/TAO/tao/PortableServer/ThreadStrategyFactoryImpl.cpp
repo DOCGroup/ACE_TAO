@@ -44,7 +44,7 @@ namespace TAO
 
     ACE_STATIC_SVC_DEFINE (
         ThreadStrategyFactoryImpl,
-        ACE_TEXT ("ThreadStrategyFactoryImpl"),
+        ACE_TEXT ("ThreadStrategyFactory"),
         ACE_SVC_OBJ_T,
         &ACE_SVC_NAME (ThreadStrategyFactoryImpl),
         ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,

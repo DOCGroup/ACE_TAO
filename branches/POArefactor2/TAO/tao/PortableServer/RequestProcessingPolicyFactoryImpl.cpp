@@ -53,7 +53,7 @@ namespace TAO
 
     ACE_STATIC_SVC_DEFINE (
         RequestProcessingPolicyFactoryImpl,
-        ACE_TEXT ("RequestProcessingPolicyFactoryImpl"),
+        ACE_TEXT ("RequestProcessingPolicyFactory"),
         ACE_SVC_OBJ_T,
         &ACE_SVC_NAME (RequestProcessingPolicyFactoryImpl),
         ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,

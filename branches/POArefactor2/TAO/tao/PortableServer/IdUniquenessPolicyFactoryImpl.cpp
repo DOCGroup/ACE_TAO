@@ -51,7 +51,7 @@ namespace TAO
 
     ACE_STATIC_SVC_DEFINE (
         IdUniquenessPolicyFactoryImpl,
-        ACE_TEXT ("IdUniquenessPolicyFactoryImpl"),
+        ACE_TEXT ("IdUniquenessPolicyFactory"),
         ACE_SVC_OBJ_T,
         &ACE_SVC_NAME (IdUniquenessPolicyFactoryImpl),
         ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,

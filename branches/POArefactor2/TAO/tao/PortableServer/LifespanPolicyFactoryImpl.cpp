@@ -51,7 +51,7 @@ namespace TAO
 
     ACE_STATIC_SVC_DEFINE (
         LifespanPolicyFactoryImpl,
-        ACE_TEXT ("LifespanPolicyFactoryImpl"),
+        ACE_TEXT ("LifespanPolicyFactory"),
         ACE_SVC_OBJ_T,
         &ACE_SVC_NAME (LifespanPolicyFactoryImpl),
         ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,

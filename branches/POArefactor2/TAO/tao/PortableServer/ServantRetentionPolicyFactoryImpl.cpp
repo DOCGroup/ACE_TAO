@@ -53,7 +53,7 @@ namespace TAO
 
     ACE_STATIC_SVC_DEFINE (
         ServantRetentionPolicyFactoryImpl,
-        ACE_TEXT ("ServantRetentionPolicyFactoryImpl"),
+        ACE_TEXT ("ServantRetentionPolicyFactory"),
         ACE_SVC_OBJ_T,
         &ACE_SVC_NAME (ServantRetentionPolicyFactoryImpl),
         ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,

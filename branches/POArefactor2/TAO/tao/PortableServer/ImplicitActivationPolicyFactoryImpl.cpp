@@ -53,7 +53,7 @@ namespace TAO
 
     ACE_STATIC_SVC_DEFINE (
         ImplicitActivationPolicyFactoryImpl,
-        ACE_TEXT ("ImplicitActivationPolicyFactoryImpl"),
+        ACE_TEXT ("ImplicitActivationPolicyFactory"),
         ACE_SVC_OBJ_T,
         &ACE_SVC_NAME (ImplicitActivationPolicyFactoryImpl),
         ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,

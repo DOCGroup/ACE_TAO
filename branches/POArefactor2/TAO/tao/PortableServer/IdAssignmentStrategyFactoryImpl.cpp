@@ -40,7 +40,7 @@ namespace TAO
 
     ACE_STATIC_SVC_DEFINE (
         IdAssignmentStrategyFactoryImpl,
-        ACE_TEXT ("IdAssignmentStrategyFactoryImpl"),
+        ACE_TEXT ("IdAssignmentStrategyFactory"),
         ACE_SVC_OBJ_T,
         &ACE_SVC_NAME (IdAssignmentStrategyFactoryImpl),
         ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,

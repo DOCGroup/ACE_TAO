@@ -43,7 +43,7 @@ namespace TAO
 
     ACE_STATIC_SVC_DEFINE (
         ImplicitActivationStrategyFactoryImpl,
-        ACE_TEXT ("ImplicitActivationStrategyFactoryImpl"),
+        ACE_TEXT ("ImplicitActivationStrategyFactory"),
         ACE_SVC_OBJ_T,
         &ACE_SVC_NAME (ImplicitActivationStrategyFactoryImpl),
         ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
