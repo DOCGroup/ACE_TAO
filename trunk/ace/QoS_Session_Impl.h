@@ -25,7 +25,7 @@
 
 
 #if defined (ACE_HAS_RAPI)
-#include "rapi/rapi_lib.h"
+#include "rapi_lib.h"
 
 class ACE_Export ACE_RAPI_Session : public ACE_QoS_Session
 {

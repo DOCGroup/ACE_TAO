@@ -15,7 +15,7 @@ ACE_RCSID(ace, QoS_Session_Impl, "$Id$")
 ACE_ALLOC_HOOK_DEFINE(ACE_QoS_Session_Impl)
 
 #if defined (ACE_HAS_RAPI)
-#include "rapi/rapi_err.h"
+#include "rapi_err.h"
 
 int ACE_RAPI_Session::rsvp_error = 0;
 
@@ -159,12 +159,12 @@ ACE_RAPI_Session::open (ACE_INET_Addr dest_addr,
   // Open a RAPI session. Note "this" is being passed as an argument to 
   // the callback function. The callback function uses this argument to 
   // update the QoS of this session based on the RSVP event it receives.
-  if (this->session_id_ = rapi_session((sockaddr *) dest_addr.get_addr (), 
+  if ((this->session_id_ = rapi_session((sockaddr *) dest_addr.get_addr (), 
                                        protocol_id,
                                        0, 
                                        rsvp_callback, 
                                        (void *) this, 
-                                       &rsvp_error) != 0)
+                                       &rsvp_error)) == NULL_SID)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "rapi_session () call fails. Error\n"),
                       -1);

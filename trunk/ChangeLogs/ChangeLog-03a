@@ -1,3 +1,9 @@
+Fri Jan 28 13:57:37 2000  Fred Kuhns    <fredk@cs.wustl.edu>
+
+        * fixed QoS realted bugs in QoS_Session_Impl.cpp QoS_Session_Impl.h
+          SOCK_Dgram_Mcast.cpp.  Just added some error checking and
+          check errno after call to join_leaf.
+
 Thu Jan 27 20:25:37 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Token.cpp (shared_acquire and renew): Must decrement
