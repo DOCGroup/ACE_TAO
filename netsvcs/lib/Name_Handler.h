@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Name_Handler.h
 //
 // = AUTHOR
 //    Prashant Jain, Gerhard Lenzer, and Douglas C. Schmidt
-// 
+//
 // ============================================================================
 
 #if !defined (ACE_NAME_HANDLER_H)
@@ -22,7 +22,7 @@
 #include "ace/SString.h"
 #include "ace/Naming_Context.h"
 #include "ace/Name_Request_Reply.h"
-
+#include "ace/Singleton.h"
 
 // This helper class adds the correct default constructor to the
 // ACE_Naming_Context class so that we can use it in ACE_Singleton.
@@ -81,11 +81,11 @@ protected:
 
   virtual int recv_request (void);
   // Receive, frame, and decode the client's request.
-  
+
   virtual int dispatch (void);
   // Dispatch the appropriate operation to handle the client's
   // request.
-  
+
   virtual int send_reply (ACE_UINT32 status, ACE_UINT32 errnum = 0);
   // Create and send a reply to the client.
 
@@ -108,7 +108,7 @@ private:
 
   OPERATION op_table_[ACE_Name_Request::MAX_ENUM];
   // Table of pointers to member functions
-  
+
   struct LIST_ENTRY
   {
     LIST_OP operation_;
@@ -122,7 +122,7 @@ private:
     char *description_;
     // Name of the operation we're dispatching (used for debugging).
   };
-  
+
   LIST_ENTRY list_table_[ACE_Name_Request::MAX_LIST];
   // This is the table of pointers to functions that we use to
   // simplify the handling of list requests.
