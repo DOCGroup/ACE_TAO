@@ -1,3 +1,42 @@
+Mon Feb 14 17:03:11 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/RMCast/Acknowledge.cpp:
+	* ace/RMCast/Acknowledge.h:
+	* ace/RMCast/Agent.tar.bz2:
+	* ace/RMCast/Bits.h:
+	* ace/RMCast/Link.cpp:
+	* ace/RMCast/Link.h:
+	* ace/RMCast/Protocol.cpp:
+	* ace/RMCast/Protocol.h:
+	* ace/RMCast/RMCast.mpc:
+	* ace/RMCast/Retransmit.cpp:
+	* ace/RMCast/Retransmit.h:
+	* ace/RMCast/Simulator.cpp:
+	* ace/RMCast/Simulator.h:
+	* ace/RMCast/Socket.cpp:
+	* ace/RMCast/Socket.h:
+	* ace/RMCast/Stack.cpp:
+	* ace/RMCast/Stack.h:
+	  Moved from ace/RMCast to protocols/ace/RMCast.
+
+	* ace/TMCast/ACE_TMCast.pc.in:
+	* ace/TMCast/Export.hpp:
+	* ace/TMCast/FaultDetector.hpp:
+	* ace/TMCast/Group.cpp:
+	* ace/TMCast/Group.hpp:
+	* ace/TMCast/GroupFwd.hpp:
+	* ace/TMCast/LinkListener.hpp:
+	* ace/TMCast/MTQueue.cpp:
+	* ace/TMCast/MTQueue.hpp:
+	* ace/TMCast/Makefile.am:
+	* ace/TMCast/Messaging.hpp:
+	* ace/TMCast/Protocol.cpp:
+	* ace/TMCast/Protocol.hpp:
+	* ace/TMCast/README:
+	* ace/TMCast/TMCast.mpc:
+	* ace/TMCast/TransactionController.hpp:
+	  Moved from ace/TMCast to protocols/ace/TMCast.
+
 Mon Feb 14 21:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Global_Macros.h:
