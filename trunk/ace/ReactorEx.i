@@ -76,13 +76,34 @@ ACE_ReactorEx_Handler_Repository::invalid_handle (ACE_HANDLE handle) const
 ACE_INLINE ACE_thread_t 
 ACE_ReactorEx::owner (void)
 {
+  ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, ACE_thread_t (0));
   return this->owner_;
 }
 
 ACE_INLINE void
 ACE_ReactorEx::owner (ACE_thread_t new_owner)
 {
-  this->owner_ = new_owner;
+  {
+    ACE_GUARD (ACE_Process_Mutex, monitor, this->lock_);
+    this->new_owner_ = new_owner;
+  }
+  // Wake up all threads in WaitForMultipleObjects so that they can
+  // reconsult the new owner responsibilities
+  this->wakeup_all_threads ();
+}
+
+ACE_INLINE int
+ACE_ReactorEx::new_owner (void)
+{
+  return this->new_owner_ != ACE_thread_t (0);
+}
+
+ACE_INLINE int
+ACE_ReactorEx::change_owner (void)
+{
+  this->owner_ = this->new_owner_;
+  this->new_owner_ = ACE_thread_t (0);
+  return 0;
 }
 
 #endif /* ACE_WIN32 */

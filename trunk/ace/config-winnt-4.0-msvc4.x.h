@@ -241,4 +241,7 @@
 // Platform support for non-blocking connects is broken
 #define ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS
 
+// Platform support linebuffered streaming is broken
+#define ACE_LACKS_LINEBUFFERED_STREAMBUF
+
 #endif /* ACE_CONFIG_H */

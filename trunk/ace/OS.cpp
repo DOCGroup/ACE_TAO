@@ -1172,7 +1172,7 @@ ace_thread_adapter (void *args)
     status = (*func) (arg);  // Call thread entry point.
   }
   ACE_SEH_EXCEPT (EXCEPTION_EXECUTE_HANDLER) {
-    ACE_DEBUG ((LM_DEBUG, "(%t) Win32 structured exception exiting thread"));
+    ACE_DEBUG ((LM_DEBUG, "(%t) Win32 structured exception exiting thread\n"));
     // Here's where we might want to provide a hook to report this...
     // As it stands now, we just catch all Win32 structured exceptions
     // so that we can make sure to clean up correctly when the thread
