@@ -7,7 +7,7 @@
 ACE_RCSID(ImplRepo_Service, Repository, "$Id$")
 
 
-  
+
 // Initialize the command_line and working_dir.
 
 Server_Info::Server_Info (const ACE_TString POA_name,
@@ -31,12 +31,12 @@ Server_Info::~Server_Info ()
 {
   // Nothing
 }
-  
+
 
 // Updates information that is relevant only when an instance
 // of the server is running.
 
-void 
+void
 Server_Info::update_running_info (const ACE_TString host,
                                   const unsigned short port,
                                   const ACE_TString server_object_ior)
@@ -62,7 +62,7 @@ Server_Info::get_startup_info (ACE_TString &logical_server_name,
 
 // Returns information about a running instance.
 
-void 
+void
 Server_Info::get_running_info (ACE_TString &host,
                                unsigned short &port,
                                ACE_TString &server_object_ior)
@@ -82,14 +82,14 @@ Server_Repository::Server_Repository ()
 
 // Add a new server to the Repository
 
-int 
+int
 Server_Repository::add (const ACE_TString POA_name,
                         const ACE_TString logical_server_name,
                         const ACE_TString startup_command,
                         const ACE_TString working_dir)
 {
   Server_Info *new_server;
-  ACE_NEW_RETURN (new_server, 
+  ACE_NEW_RETURN (new_server,
                   Server_Info (POA_name, logical_server_name, startup_command, working_dir),
                   -1);
 
@@ -99,7 +99,7 @@ Server_Repository::add (const ACE_TString POA_name,
 
 // Update the associated process information.
 
-int 
+int
 Server_Repository::update (const ACE_TString POA_name,
                            const ACE_TString host,
                            const unsigned short port,
@@ -118,7 +118,7 @@ Server_Repository::update (const ACE_TString POA_name,
 
 // Returns information related to startup.
 
-int 
+int
 Server_Repository::get_startup_info (const ACE_TString POA_name,
                                      ACE_TString &logical_server_name,
                                      ACE_TString &startup_command,
@@ -133,11 +133,11 @@ Server_Repository::get_startup_info (const ACE_TString POA_name,
 
   return retval;
 }
-  
+
 
 // Returns information related to a running copy.
 
-int 
+int
 Server_Repository::get_running_info (const ACE_TString POA_name,
                                      ACE_TString &host,
                                      unsigned short &port,
@@ -154,10 +154,10 @@ Server_Repository::get_running_info (const ACE_TString POA_name,
 }
 
 
-// Checks the starting_up_ variable in the Server_Info and 
+// Checks the starting_up_ variable in the Server_Info and
 // returns the previous value or -1 if the POA_name wasn't found
 
-int 
+int
 Server_Repository::starting_up (const ACE_TString POA_name, int new_value)
 {
   Server_Info *server;
@@ -176,7 +176,7 @@ Server_Repository::starting_up (const ACE_TString POA_name, int new_value)
 
 // Same as above but does not alter the value
 
-int 
+int
 Server_Repository::starting_up (const ACE_TString POA_name)
 {
   Server_Info *server;
@@ -189,10 +189,10 @@ Server_Repository::starting_up (const ACE_TString POA_name)
   return retval;
 }
 
-  
+
 // Removes the server from the Repository.
 
-int 
+int
 Server_Repository::remove (const ACE_TString POA_name)
 {
   return this->repository_.unbind (POA_name);
@@ -214,25 +214,31 @@ Server_Repository::new_iterator ()
 
 // Returns the number of entries in the repository.
 
-size_t 
+size_t
 Server_Repository::get_repository_size ()
 {
   return this->repository_.current_size ();
 }
-  
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
 template class ACE_Hash_Map_Entry<ACE_TString, Server_Info *>;
 template class ACE_Hash_Map_Manager_Ex<ACE_TString, Server_Info *,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<ACE_TString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<ACE_TString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
-template class ACE_Equal_To<ACE_TString>;
+// The ACE_CString case is covered in TAO
+template class ACE_Equal_To<ACE_WString>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
 #pragma instantiate ACE_Hash_Map_Entry<ACE_TString, Server_Info *>;
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_TString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TString, Server_Info *,ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
-#pragma instantiate ACE_Equal_To<ACE_TString>;
+// The ACE_CString case is covered in TAO
+#pragma instantiate ACE_Equal_To<ACE_WString>;
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
