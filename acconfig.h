@@ -663,6 +663,9 @@
 /* Quantify'ing.  Defined on command line. */
 #undef ACE_HAS_QUANTIFY
 
+/* Mutexes are inherently recursive (e.g., Win32) */
+#undef ACE_HAS_RECURSIVE_MUTEXES
+
 /* Platform will recurse infinitely on thread exits from TSS cleanup
    routines (e.g., AIX) */
 #undef ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
