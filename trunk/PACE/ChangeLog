@@ -1,3 +1,9 @@
+Thu Jun 29 19:53:10 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/utility.h:
+
+	  (ENOTSUP) is not defined on win32. Added support.
+
 Thu Jun 29 19:22:46 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32
