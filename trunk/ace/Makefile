@@ -171,7 +171,7 @@ OTHER_FILES = \
   TP_Reactor \
   XtReactor \
   FlReactor \
-  TkReactor	
+  TkReactor
 
 TEMPLATE_FILES = \
            Acceptor \
@@ -458,6 +458,13 @@ ifeq ($(CHORUS),1)
     $(COMPILE-NO_DASH_G.cc) -o $@ $<
   endif # CC
 endif # CHORUS
+
+ifneq ($(GHS),)
+  ifeq ($(CPU),86)
+    $(VDIR)gethrtime.$(OBJEXT):
+	make $@ ghs=0
+  endif # 86
+endif # GHS
 
 #----------------------------------------------------------------------------
 #       Dependencies
