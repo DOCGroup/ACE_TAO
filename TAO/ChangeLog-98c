@@ -50,6 +50,9 @@ Mon Feb 23 22:40:22 1998  David L. Levine  <levine@cs.wustl.edu>
         * TAO_IDL/Makefile: removed -fPIC for g++ because it's not needed
           without shared libraries.
 
+        * TAO_IDL/Makefile: added Cleanup section, which cleans out builds
+          that were created with the nested version of the Makefile.
+
 Mon Feb 23 22:13:14 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.1.5, released Mon Feb 23 22:13:14 1998.
