@@ -73,6 +73,9 @@ public:
   const char *get_path_name (void) const;
   // Return the path name of the underlying rendezvous point.
 
+  virtual u_long hash (void) const;
+  // Computes and returns hash value.
+
   void dump (void) const;
   // Dump the state of an object.
 
