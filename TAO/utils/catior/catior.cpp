@@ -1037,6 +1037,7 @@ cat_uiop_profile (TAO_InputCDR& stream)
   return 1;
 }
 
+#if 0
 static CORBA::Boolean
 cat_sciop_profile (TAO_InputCDR& stream)
 {
@@ -1127,3 +1128,4 @@ cat_sciop_profile (TAO_InputCDR& stream)
 
   return 1;
 }
+#endif /*if 0*/

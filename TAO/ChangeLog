@@ -1,3 +1,7 @@
+Wed Feb 12 12:14:13 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* utils/catior/catior.cpp: Fixed a warning in g++ builds.
+
 Wed Feb 12 00:45:04 UTC 2003  Craig Rodrigues <crodrigu@bbn.com>
 
 	* tao/MCAST_Paser.cpp: Add improved diagnostic message when
