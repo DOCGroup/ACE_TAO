@@ -1,3 +1,10 @@
+Mon Aug 18 14:08:05 2003  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
+
+	* performance-tests/Benchmark/descriptors/test-multi-process.dat:
+	  This file contains host port locations for running components
+	  in multiple hosts/processes. Will be used as an example
+	  scenario for benchmarking experiments
+
 Mon Aug 18 12:11:55 2003  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
 
 	* performance-tests/Benchmar/Multi_Threaded/NOTE.txt:
