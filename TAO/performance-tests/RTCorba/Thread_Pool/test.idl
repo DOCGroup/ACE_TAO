@@ -4,7 +4,7 @@
 
 interface test
 {
-  void method (in unsigned long work_in_milli_seconds);
+  void method (in unsigned long work);
 
   void shutdown ();
 };
