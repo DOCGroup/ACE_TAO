@@ -1,14 +1,9 @@
 //$Id$
 
 #include "DT_Creator.h"
-#include "test.h"
 #include "ace/Arg_Shifter.h"
-
-DT_Creator::DT_Creator (void)
-{
-  DT_TEST::instance ()->dt_creator (this);
-  
-}
+#include "Thread_Task.h"
+#include "tao/ORB_Core.h"
 
 int
 DT_Creator::init (int argc, char *argv [])
@@ -54,7 +49,7 @@ DT_Creator::init (int argc, char *argv [])
 	      arg_shifter.consume_arg ();
 	    }
 	  
-          ACE_NEW_RETURN (task, 
+        ACE_NEW_RETURN (task, 
 			  Thread_Task (importance,
 				       start_time,
 				       load), -1);
@@ -67,12 +62,14 @@ DT_Creator::init (int argc, char *argv [])
 }
 
 void 
-DT_Creator::create_distributable_threads (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+DT_Creator::create_distributable_threads (CORBA::ORB_ptr orb,
+										  RTScheduling::Current_ptr current
+					  ACE_ENV_ARG_DECL)
 {
   ACE_NEW (barrier_,
 	   ACE_Barrier (this->dt_count_ + 1));
   
-  orb_ = CORBA::ORB::_duplicate (DT_TEST::instance ()->orb ());  
+  orb_ = CORBA::ORB::_duplicate (orb);  
 
   long flags;
   flags = THR_NEW_LWP | THR_JOINABLE;
@@ -80,11 +77,17 @@ DT_Creator::create_distributable_threads (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     orb_->orb_core ()->orb_params ()->scope_policy () |
     orb_->orb_core ()->orb_params ()->sched_policy ();
 
+  CORBA::Policy_var sched_param;
+    
+  
   for (int i = 0; i < this->dt_count_; i++)
     {
-      dt_list_ [i]->activate_task (DT_TEST::instance ()->current (),
+      sched_param = CORBA::Policy::_duplicate (this->sched_param (dt_list_ [i]->importance ()));
+      dt_list_ [i]->activate_task (current,
+				   sched_param.in (),
 				   flags,
-				   barrier_);
+				   barrier_
+				   ACE_ENV_ARG_PARAMETER);
     }
   
   ACE_DEBUG ((LM_DEBUG, "Waiting for tasks to synch...\n"));
@@ -98,12 +101,4 @@ DT_Creator::create_distributable_threads (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
 
 
-ACE_STATIC_SVC_DEFINE(DT_Creator,
-                      ACE_TEXT ("DT_Creator"),
-                      ACE_SVC_OBJ_T,
-                      &ACE_SVC_NAME (DT_Creator),
-                      ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-                      0)
-
-ACE_FACTORY_DEFINE (DT_Creator, DT_Creator)
 

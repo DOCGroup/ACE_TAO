@@ -86,7 +86,11 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\DT_Creator.cpp
+SOURCE=..\DT_Creator.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\FP_DT_Creator.cpp
 # End Source File
 # Begin Source File
 
@@ -102,7 +106,7 @@ SOURCE=.\test.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Thread_Task.cpp
+SOURCE=..\Thread_Task.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -110,7 +114,11 @@ SOURCE=.\Thread_Task.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\DT_Creator.h
+SOURCE=..\DT_Creator.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FP_DT_Creator.h
 # End Source File
 # Begin Source File
 
@@ -126,7 +134,7 @@ SOURCE=.\test.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Thread_Task.h
+SOURCE=..\Thread_Task.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"

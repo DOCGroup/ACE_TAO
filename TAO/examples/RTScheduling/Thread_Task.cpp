@@ -2,7 +2,7 @@
 
 #include "Thread_Task.h"
 #include "ace/Atomic_Op.h"
-#include "test.h"
+//#include "test.h"
 
 ACE_Atomic_Op<ACE_Thread_Mutex, long> thread_count = 0;
 
@@ -20,13 +20,19 @@ Thread_Task::Thread_Task (int importance,
 
 int
 Thread_Task::activate_task (RTScheduling::Current_ptr current,
+			    CORBA::Policy_ptr sched_param,
 			    long flags,
-			    ACE_Barrier* barrier)
+			    ACE_Barrier* barrier
+			    ACE_ENV_ARG_DECL)
 {
   barrier_ = barrier;
    
-  current_ = RTScheduling::Current::_narrow (current);	
+  current_ = RTScheduling::Current::_narrow (current
+					     ACE_ENV_ARG_PARAMETER);	
+  ACE_CHECK;
 
+  sched_param_ = CORBA::Policy::_duplicate (sched_param);
+  
   if (this->activate (flags,
 		      1) == -1)
     {
@@ -63,13 +69,11 @@ Thread_Task::svc (void)
 	      "After Thread_Task::svc \n"));
       
   this->barrier_->wait ();
-  FP_Scheduling::SegmentSchedulingParameterPolicy_var sched_param =
-    DT_TEST::instance ()->scheduler ()->create_segment_scheduling_parameter (importance_);
 
   const char * name = 0;
   CORBA::Policy_ptr implicit_sched_param = 0;
   this->current_->begin_scheduling_segment (name,
-					    sched_param.in (),
+					    sched_param_.in (),
 					    implicit_sched_param
 					    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -95,4 +99,9 @@ Thread_Task::svc (void)
 }
 
 
+int
+Thread_Task::importance (void)
+{
+  return this->importance_;
+}
 
