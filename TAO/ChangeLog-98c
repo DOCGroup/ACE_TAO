@@ -1,3 +1,22 @@
+Mon Jan 12 19:47:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/poa.h: 
+	* tao/poa.cpp: 
+	  Added a _get_stub() method that encapsulates code common to all
+	  _this implementations.
+
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_visitor_interface.cpp: 
+	  The _this() method implementation was changed to use the new
+	  _get_stub finally adding full support for the standard poa, some
+	  changes were required in the _tao_collocated classes and their
+	  constructors.
+
+	* TAO_IDL/be_include/be_helper.h: 
+	* TAO_IDL/be/be_helper.cpp: 
+	  Added "manipulators" to increase and decrement indentation
+	  level. 
+
 Mon Jan 12 14:55:53 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/current.h (class TAO_POA_Current_Impl): Added this as the
