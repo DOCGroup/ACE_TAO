@@ -1,7 +1,7 @@
 // $Id$
 // ===========================================================================
 /**
- * @file  SOCK_Send_Recv_Test_IPv6.cpp
+ * @file  SOCK_Send_Recv_Test_IPV6.cpp
  *
  * @brief This is a test of the <ACE_SOCK>'s various send and receive
  * methods.
