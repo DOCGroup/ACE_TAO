@@ -1,3 +1,18 @@
+Thu Feb 26 12:26:28 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Makefile.am (Bug_1576_Regression_Test):
+
+	  Added this test to the list of tests.  It was missing.  Thanks
+	  to Kevin Stacy <kevin_405@yahoo.com> for reporting the problem.
+
+	* tests/DLL_Test.cpp (dynamic_cast_test):
+
+	  Corrected spelling in error message.
+
+	* THANKS:
+
+	  Added Kevin Stacy to the hall of fame.
+
 Thu Feb 26 10:54:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Makefile:
