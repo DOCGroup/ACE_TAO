@@ -56,7 +56,7 @@ sig_atomic_t ACE_Service_Config::reconfig_occurred_ = 0;
   // = Set by command-line options.
 int ACE_Service_Config::be_a_daemon_ = 0;
 int ACE_Service_Config::no_static_svcs_ = 1;
-char* ACE_Service_Config::pid_file_name_ = 0;
+ACE_TCHAR* ACE_Service_Config::pid_file_name_ = 0;
 
 // Number of the signal used to trigger reconfiguration.
 int ACE_Service_Config::signum_ = SIGHUP;
