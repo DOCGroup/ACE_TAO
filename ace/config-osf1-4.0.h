@@ -46,9 +46,9 @@
 # define ACE_LACKS_SIGNED_CHAR
 # define DEC_CXX
 # if (__DECCXX_VER >= 60090010)
-    // DEC CXX 6.0 supports exceptions, etc., by default
+    // DEC CXX 6.0 supports exceptions, etc., by default.  Exceptions
+    // are enabled by platform_osf1_4.0.GNU.
 #   define ACE_HAS_ANSI_CASTS
-#   define ACE_HAS_EXCEPTIONS
 #   define ACE_HAS_STDCPP_STL_INCLUDES
 #   define ACE_HAS_TEMPLATE_SPECIALIZATION
 #   define ACE_HAS_TEMPLATE_TYPEDEFS
@@ -60,8 +60,8 @@
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
 
+    // Exceptions are enabled by platform_osf1_4.0_rcc.GNU.
 # define ACE_HAS_ANSI_CASTS
-# define ACE_HAS_EXCEPTIONS
 # define ACE_HAS_STDCPP_STL_INCLUDES
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
 # define ACE_HAS_TYPENAME_KEYWORD
