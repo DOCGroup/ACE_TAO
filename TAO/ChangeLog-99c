@@ -1,3 +1,27 @@
+Tue Jun  8 15:15:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/Param_Test/param_test_i.h:
+        * TAO/tests/Param_Test/param_test_i.cpp:
+	* TAO/tests/NestedUpcall/MT_Client_Test/client.h:
+	  Moved class member ORB_var orb_ up the list so 
+	  it will get destroyed after other _vars.
+
+	* tao/DynArray_i.h:
+	* tao/DynArray_i.cpp:
+	* tao/DynSequence_i.h:
+	* tao/DynSequence_i.cpp:
+	* tao/DynStruct_i.h:
+	* tao/DynStruct_i.cpp:
+	* tao/DynUnion_i.h:
+	* tao/DynUnion_i.cpp:
+	  Renamed member 'index_' as 'current_index_'
+	  just to be safe.
+
+	* TAO_IDL/be/be_visitor_root/root.cpp:
+	  Added missing case to function visit_constant().
+	  Thanks to Sridevi Subramanian <subrams@erols.com>
+	  for pointing out this problem.
+
 Tue Jun  8 15:09:35 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Callback_Quoter/Consumer_i.h (class Consumer): 
