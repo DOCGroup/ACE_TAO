@@ -1,3 +1,10 @@
+Thu Apr  8 20:12:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* */*.bor:
+
+	  Removed all the borland makefiles files from the
+	  repository. Files in include/makeinclude have not been removed.
+
 Wed Apr  7 10:37:14 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* docs/ORBEndpoint.html:
