@@ -50,7 +50,7 @@ public:
   // Creates an ACE_UNIX_Addr from a string.
 
   int set (const sockaddr_un *, int len);
-  // Creates an ACE_INET_Addr from a sockaddr_un structure.
+  // Creates an ACE_UNIX_Addr from a sockaddr_un structure.
 
   virtual void *get_addr (void) const;
   // Return a pointer to the underlying network address.
