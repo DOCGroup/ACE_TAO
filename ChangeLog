@@ -5,8 +5,8 @@ Sat Aug 23 12:55:04 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  (close, symbol, get_handle, open_dll, unload_dll):
 
 	  Only print error messages if the ACE debugging flag is set,
-	  ACE::debug() returns a non-zero value.  Thanks to Carlos for
-	  pointing out that the ACE_DLL class was printing out error
+	  i.e if ACE::debug() returns a non-zero value.  Thanks to Carlos
+	  for pointing out that the ACE_DLL class was printing out error
 	  messages without the user/application ever requesting them.
 
 Sat Aug 23 12:38:08 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
