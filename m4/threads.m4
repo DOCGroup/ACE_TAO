@@ -176,6 +176,32 @@ dnl Check if compiler accepts specific flag to enable threads
         ])
 
     fi dnl test "$ace_cv_feature_thread_flag_set" = no
+
+    if test "$ace_cv_feature_thread_flag_set" = no; then
+
+      CXXFLAGS="$CXXFLAGS -Kthread"
+      CFLAGS="$CXXFLAGS -Kthread"
+
+      ACE_CACHE_CHECK(if compiler can use -Kthread flag,
+        ace_cv_feature_has_kthread_flag,
+        [
+         ACE_CHECK_THREAD_FLAGS(
+           [
+            ace_cv_feature_has_kthread_flag=yes
+           ],
+           [
+            ace_cv_feature_has_kthread_flag=no
+           ])
+        ],
+        [
+         ace_cv_feature_thread_flag_set=yes
+        ],
+        [
+         CXXFLAGS="$save_CXXFLAGS"
+         CFLAGS="$save_CFLAGS"
+        ])
+
+    fi dnl test "$ace_cv_feature_thread_flag_set" = no
    ],
    [
     dnl Do nothing
