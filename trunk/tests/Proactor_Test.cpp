@@ -782,8 +782,13 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     else if (result.error () != 0)
       {
         ACE_Log_Priority prio;
+#if defined (ACE_WIN32)
+        if (result.error () == ERROR_OPERATION_ABORTED)
+          prio = LM_DEBUG;
+#else
         if (result.error () == ECANCELED)
           prio = LM_DEBUG;
+#endif /* ACE_WIN32 */
         else
           prio = LM_ERROR;
         ACE_Log_Msg::instance ()->errnum (result.error ());
@@ -877,8 +882,13 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
     else if (result.error () != 0)
       {
         ACE_Log_Priority prio;
+#if defined (ACE_WIN32)
+        if (result.error () == ERROR_OPERATION_ABORTED)
+          prio = LM_DEBUG;
+#else
         if (result.error () == ECANCELED)
           prio = LM_DEBUG;
+#endif /* ACE_WIN32 */
         else
           prio = LM_ERROR;
         ACE_Log_Msg::instance ()->errnum (result.error ());
@@ -1559,8 +1569,13 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
     else if (result.error () != 0)
       {
         ACE_Log_Priority prio;
+#if defined (ACE_WIN32)
+        if (result.error () == ERROR_OPERATION_ABORTED)
+          prio = LM_DEBUG;
+#else
         if (result.error () == ECANCELED)
           prio = LM_DEBUG;
+#endif /* ACE_WIN32 */
         else
           prio = LM_ERROR;
         ACE_Log_Msg::instance ()->errnum (result.error ());
@@ -1674,8 +1689,13 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     else if (result.error () != 0)
       {
         ACE_Log_Priority prio;
+#if defined (ACE_WIN32)
+        if (result.error () == ERROR_OPERATION_ABORTED)
+          prio = LM_DEBUG;
+#else
         if (result.error () == ECANCELED)
           prio = LM_DEBUG;
+#endif /* ACE_WIN32 */
         else
           prio = LM_ERROR;
         ACE_Log_Msg::instance ()->errnum (result.error ());
