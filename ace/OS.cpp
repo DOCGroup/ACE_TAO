@@ -6676,16 +6676,16 @@ exit (int status)
 
 #if defined (ACE_LACKS_STRPTIME)
 int
-ACE_OS::getnum (char *buf,
-                int *num,
-                int *bi,
-                int *fi,
-                int min,
-                int max)
+ACE_OS::strptime_getnum (char *buf,
+                         int *num,
+                         int *bi,
+                         int *fi,
+                         int min,
+                         int max)
 {
   int i = 0, tmp = 0;
 
-  while (isdigit (buf[i])) 
+  while (isdigit (buf[i]))
     {
       tmp = (tmp * 10) + (buf[i] - '0');
       if (max && (tmp > max))
@@ -6695,13 +6695,13 @@ ACE_OS::getnum (char *buf,
 
   if (tmp < min)
     return 0;
-  else if (i) 
+  else if (i)
     {
       *num = tmp;
       (*fi)++;
       *bi += i;
       return 1;
-    } 
+    }
   else
     return 0;
 }
@@ -6712,7 +6712,7 @@ ACE_OS::strptime (char *buf,
                   const char *format,
                   struct tm *tm)
 {
-#if !defined (ACE_LACKS_STRPTIME)  
+#if !defined (ACE_LACKS_STRPTIME)
   return ::strptime (buf,
                      format,
                      tm);
@@ -6721,22 +6721,22 @@ ACE_OS::strptime (char *buf,
   int wday = 0, yday = 0;
   struct tm tmp;
 
-  if (!buf || !format) 
+  if (!buf || !format)
     return 0;
 
   while (format[fi] != '\0')
     {
-      if (percent) 
+      if (percent)
         {
           percent = 0;
-          switch (format[fi]) 
+          switch (format[fi])
             {
             case '%':                        /* an escaped % */
-              if (buf[bi] == '%') 
+              if (buf[bi] == '%')
                 {
                   fi++; bi++;
-                } 
-              else 
+                }
+              else
                 return buf + bi;
               break;
 
@@ -6766,17 +6766,17 @@ ACE_OS::strptime (char *buf,
                  / * locale long format * /
                  break;
                  */
-		
+
             case 'd':                        /* day of month (1-31) */
               /* FALL THROUGH */
             case 'e':
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_mday, &bi, &fi, 1, 31)) 
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_mday, &bi, &fi, 1, 31))
                 return buf + bi;
 
               break;
 
             case 'D':                        /* %m/%d/%y */
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_mon, &bi, &fi, 1, 12)) 
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_mon, &bi, &fi, 1, 12))
                 return buf + bi;
 
               fi--;
@@ -6787,14 +6787,14 @@ ACE_OS::strptime (char *buf,
 
               bi++;
 
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_mday, &bi, &fi, 1, 31)) 
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_mday, &bi, &fi, 1, 31))
                 return buf + bi;
 
               fi--;
               if (buf[bi] != '/')
                 return buf + bi;
               bi++;
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_year, &bi, &fi, 0, 99)) 
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_year, &bi, &fi, 0, 99))
                 return buf + bi;
               if (tm->tm_year < 69)
                 tm->tm_year += 100;
@@ -6803,7 +6803,7 @@ ACE_OS::strptime (char *buf,
             case 'H':                        /* hour (0-23) */
               /* FALL THROUGH */
             case 'k':
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_hour, &bi, &fi, 0, 23)) 
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_hour, &bi, &fi, 0, 23))
                 return buf + bi;
               break;
 
@@ -6815,7 +6815,7 @@ ACE_OS::strptime (char *buf,
                  */
 
             case 'j':                        /* day of year (0-366) */
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_yday, &bi, &fi, 1, 366)) 
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_yday, &bi, &fi, 1, 366))
                 return buf + bi;
 
               tm->tm_yday--;
@@ -6823,14 +6823,14 @@ ACE_OS::strptime (char *buf,
               break;
 
             case 'm':                        /* an escaped % */
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_mon, &bi, &fi, 1, 12)) 
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_mon, &bi, &fi, 1, 12))
                 return buf + bi;
 
               tm->tm_mon--;
               break;
 
             case 'M':                        /* minute (0-59) */
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_min, &bi, &fi, 0, 59)) 
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_min, &bi, &fi, 0, 59))
                 return buf + bi;
 
               break;
@@ -6846,45 +6846,45 @@ ACE_OS::strptime (char *buf,
                  */
 
             case 'R':                        /* %H:%M */
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_hour, &bi, &fi, 0, 23)) 
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_hour, &bi, &fi, 0, 23))
                 return buf + bi;
 
               fi--;
               if (buf[bi] != ':')
                 return buf + bi;
               bi++;
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_min, &bi, &fi, 0, 59)) 
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_min, &bi, &fi, 0, 59))
                 return buf + bi;
 
               break;
 
             case 'S':                        /* seconds (0-61) */
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_sec, &bi, &fi, 0, 61)) 
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_sec, &bi, &fi, 0, 61))
                 return buf + bi;
               break;
 
             case 'T':                        /* %H:%M:%S */
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_hour, &bi, &fi, 0, 23)) 
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_hour, &bi, &fi, 0, 23))
                 return buf + bi;
 
               fi--;
               if (buf[bi] != ':')
                 return buf + bi;
               bi++;
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_min, &bi, &fi, 0, 59)) 
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_min, &bi, &fi, 0, 59))
                 return buf + bi;
 
               fi--;
               if (buf[bi] != ':')
                 return buf + bi;
               bi++;
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_sec, &bi, &fi, 0, 61)) 
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_sec, &bi, &fi, 0, 61))
                 return buf + bi;
 
               break;
 
             case 'w':                        /* day of week (0=Sun-6) */
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_wday, &bi, &fi, 0, 6)) 
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_wday, &bi, &fi, 0, 6))
                 return buf + bi;
 
               wday = 1;
@@ -6901,7 +6901,7 @@ ACE_OS::strptime (char *buf,
                  */
 
             case 'y':                        /* the year - 1900 (0-99) */
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_year, &bi, &fi, 0, 99)) 
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_year, &bi, &fi, 0, 99))
                 return buf + bi;
 
               if (tm->tm_year < 69)
@@ -6909,7 +6909,7 @@ ACE_OS::strptime (char *buf,
               break;
 
             case 'Y':                        /* the full year (1999) */
-              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_year, &bi, &fi, 0, 0)) 
+              if (!ACE_OS::strptime_getnum (buf + bi, &tm->tm_year, &bi, &fi, 0, 0))
                 return buf + bi;
 
               tm->tm_year -= 1900;
@@ -6920,35 +6920,35 @@ ACE_OS::strptime (char *buf,
               break;
             } /* switch (format[fi]) */
 
-        } 
+        }
       else
         { /* if (percent) */
-          if (format[fi] == '%') 
+          if (format[fi] == '%')
             {
               percent = 1;
               fi++;
-            } 
+            }
           else
             {
-              if (format[fi] == buf[bi]) 
+              if (format[fi] == buf[bi])
                 {
                   fi++;
                   bi++;
-                } 
+                }
               else
                 return buf + bi;
             }
         } /* if (percent) */
     } /* while (format[fi] */
 
-  if (!wday || !yday) 
+  if (!wday || !yday)
     {
       ACE_OS::memcpy (&tmp, tm, sizeof (struct tm));
-      if (mktime (&tmp) != (time_t) (-1)) 
+      if (mktime (&tmp) != (time_t) (-1))
         {
-          if (!wday) 
+          if (!wday)
             tm->tm_wday = tmp.tm_wday;
-          if (!yday) 
+          if (!yday)
             tm->tm_yday = tmp.tm_yday;
         }
     }
@@ -6956,4 +6956,3 @@ ACE_OS::strptime (char *buf,
   return buf + bi;
 #endif /* !defined (ACE_LACKS_STRPTIME) */
 }
-
