@@ -1,3 +1,10 @@
+Wed Jun  2 14:49:36 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* tao/ORB.cpp (resolve_initial_references): Raised a
+	  CORBA::ORB::InvalidName exception if the ORB is unable 
+	  to find the service name in the ORB IOR tables or among 
+	  the hard-coded service names.
+
 Wed Jun  2 13:18:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Resource_Factory.h:
