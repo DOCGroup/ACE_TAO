@@ -31,9 +31,62 @@
 
 #include "ace/Asynch_IO.h"
 #include "ace/Asynch_IO_Impl.h"
+#include "ace/Thread_Manager.h"
+#include "ace/Timer_Queue.h"
+#include "ace/Timer_List.h"
+#include "ace/Timer_Heap.h"
+#include "ace/Timer_Wheel.h"
 
 // Forward declarations.
 class ACE_Proactor_Impl;
+class ACE_Proactor_Timer_Handler;
+
+class ACE_Export ACE_Proactor_Handle_Timeout_Upcall
+{
+  // = TITLE
+  //      Functor for <ACE_Timer_Queue>.
+  //
+  // = DESCRIPTION
+  //      This class implements the functor required by the Timer
+  //      Queue to call <handle_timeout> on ACE_Handlers.
+  
+  typedef ACE_Timer_Queue_T<ACE_Handler *,
+                            ACE_Proactor_Handle_Timeout_Upcall,
+                            ACE_SYNCH_RECURSIVE_MUTEX>
+  TIMER_QUEUE;
+  // Type def for the timer queue.
+  
+  friend class ACE_Proactor;
+  // The main Proactor class has special permissions.
+
+public:
+  ACE_Proactor_Handle_Timeout_Upcall (void);
+  // Constructor.
+  
+  int timeout (TIMER_QUEUE &timer_queue,
+	       ACE_Handler *handler,
+	       const void *arg,
+	       const ACE_Time_Value &cur_time);
+  // This method is called when the timer expires.
+
+  int cancellation (TIMER_QUEUE &timer_queue,
+		    ACE_Handler *handler);
+  // This method is called when the timer is canceled.
+
+  int deletion (TIMER_QUEUE &timer_queue,
+                ACE_Handler *handler,
+                const void *arg);
+  // This method is called when the timer queue is destroyed and the
+  // timer is still contained in it.
+
+protected:
+  int proactor (ACE_Proactor &proactor);
+  // Set the proactor. This will fail, if one is already set!
+
+  ACE_Proactor *proactor_;
+  // Handle to the proactor. This is needed for posting a timer result
+  // to the Proactor's completion queue.
+};
 
 class ACE_Export ACE_Proactor
 {
@@ -44,8 +97,53 @@ class ACE_Export ACE_Proactor
   //     See the Proactor pattern description at
   //     http://www.cs.wustl.edu/~schmidt/proactor.ps.gz for more
   //     details.
+
+  // = Here are the private typedefs that the <ACE_Proactor> uses.
+
+  typedef ACE_Timer_Queue_Iterator_T<ACE_Handler *,
+    ACE_Proactor_Handle_Timeout_Upcall,
+    ACE_SYNCH_RECURSIVE_MUTEX>
+  TIMER_QUEUE_ITERATOR;
+  typedef ACE_Timer_List_T<ACE_Handler *,
+    ACE_Proactor_Handle_Timeout_Upcall,
+    ACE_SYNCH_RECURSIVE_MUTEX>
+  TIMER_LIST;
+  typedef ACE_Timer_List_Iterator_T<ACE_Handler *,
+    ACE_Proactor_Handle_Timeout_Upcall,
+    ACE_SYNCH_RECURSIVE_MUTEX>
+  TIMER_LIST_ITERATOR;
+  typedef ACE_Timer_Heap_T<ACE_Handler *,
+    ACE_Proactor_Handle_Timeout_Upcall,
+    ACE_SYNCH_RECURSIVE_MUTEX>
+  TIMER_HEAP;
+  typedef ACE_Timer_Heap_Iterator_T<ACE_Handler *,
+    ACE_Proactor_Handle_Timeout_Upcall,
+    ACE_SYNCH_RECURSIVE_MUTEX>
+  TIMER_HEAP_ITERATOR;
+  typedef ACE_Timer_Wheel_T<ACE_Handler *,
+    ACE_Proactor_Handle_Timeout_Upcall,
+    ACE_SYNCH_RECURSIVE_MUTEX>
+  TIMER_WHEEL;
+  typedef ACE_Timer_Wheel_Iterator_T<ACE_Handler *,
+    ACE_Proactor_Handle_Timeout_Upcall,
+    ACE_SYNCH_RECURSIVE_MUTEX>
+  TIMER_WHEEL_ITERATOR;
+  
+  // = Friendship.
+  
+  friend class ACE_Proactor_Timer_Handler;
+  // Timer handler runs a thread and manages the timers, on behalf of
+  // the Proactor.
+
 public:
+  typedef ACE_Timer_Queue_T<ACE_Handler *,
+    ACE_Proactor_Handle_Timeout_Upcall,
+    ACE_SYNCH_RECURSIVE_MUTEX>
+  TIMER_QUEUE;
+  // Public type.
+
   ACE_Proactor (ACE_Proactor_Impl *implementation = 0,
+                TIMER_QUEUE *tq = 0,
                 int delete_implementation = 0);
   // A do nothing constructor.
 
@@ -156,6 +254,10 @@ public:
   void number_of_threads (size_t threads);
   // Number of thread used as a parameter to CreatIoCompletionPort.
 
+  TIMER_QUEUE *timer_queue (void) const;
+  void timer_queue (TIMER_QUEUE *timer_queue);
+  // Get/Set timer queue.
+  
   virtual ACE_HANDLE get_handle (void) const;
   // Get the event handle.
   // It is a no-op in POSIX platforms and it returns
@@ -256,7 +358,15 @@ public:
                                                                                     const void *act,
                                                                                     ACE_HANDLE event,
                                                                                     int priority);
-  // Create the correct implementation class for ACE_Asynch_Transmit_File::Result.
+  // Create the correct implementation class for ACE_Asynch_Transmit_File::Result. 
+
+  virtual ACE_Asynch_Result_Impl *create_asynch_timer (ACE_Handler &handler,
+                                                       const void *act,
+                                                       const ACE_Time_Value &tv,
+                                                       ACE_HANDLE event,
+                                                       int priority = 0);
+  // Create a timer result object which can be used with the Timer
+  // mechanism of the Proactor.
 
 protected:
   virtual void implementation (ACE_Proactor_Impl *implementation);
@@ -275,6 +385,18 @@ protected:
 
   static int delete_proactor_;
   // Must delete the <proactor_> if non-0.
+  
+  ACE_Proactor_Timer_Handler *timer_handler_;
+  // Handles timeout events. 
+  
+  ACE_Thread_Manager thr_mgr_;
+  // This will manage the thread in the Timer_Handler.
+
+  TIMER_QUEUE *timer_queue_;
+  // Timer Queue.
+
+  int delete_timer_queue_;
+  // Flag on whether to delete the timer queue.
 
   static sig_atomic_t end_event_loop_;
   // Terminate the proactor event loop.
