@@ -1,3 +1,8 @@
+Tue Aug 17 06:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
+          Fixed member initialisation order warning
+
 Mon Aug 16 23:35:00 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
