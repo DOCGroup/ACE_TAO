@@ -1,3 +1,9 @@
+Tue Aug 10 11:52:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp:
+	  The timeout values were not normalized, leading to strange
+	  errors in the calls to select()
+
 Tue Aug 10 08:51:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp
