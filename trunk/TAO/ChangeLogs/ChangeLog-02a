@@ -1,3 +1,9 @@
+Fri Aug  3 07:30:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/DLL_ORB/Test_Client_Module.cpp:
+	* tests/DLL_ORB/Test_Server_Module.cpp: Added missing
+	  #includes. This should take care of the problem with g++.  
+
 Thu Aug 02 20:39:19 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Stub.h (TAO_Exception_Data):
