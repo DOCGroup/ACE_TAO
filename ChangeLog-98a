@@ -1,3 +1,9 @@
+Tue Apr 14 16:39:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ACE.cpp (ldfind): Fixed a miscalculated string size.
+	  Thanks to Jason Katz <Jason@rtswireless.com> for reporting the
+	  bug.
+
 Tue Apr 14 14:33:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Thread_Manager_Test.cpp (main): don't try to suspend/resume
