@@ -12,12 +12,11 @@
 
 #include "RTCosScheduling_ServerScheduler_i.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_unistd.h"
 
 #if !defined (__ACE_INLINE__)
 #include "RTCosScheduling_ServerScheduler_i.i"
 #endif /* __ACE_INLINE__ */
-
-
 
 #include "tao/ORB_Core.h"
 #include "tao/PortableServer/POA.h"
