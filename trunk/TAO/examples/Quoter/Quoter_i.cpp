@@ -235,8 +235,7 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
       _env_there.exception (new CosLifeCycle::NoFactory ());
       return CosLifeCycle::LifeCycleObject::_nil();
     }
-  TAO_ENDTRY;
-  ACE_NOTREACHED (return CosLifeCycle::LifeCycleObject::_nil());
+  TAO_ENDTRY_RETURN (CosLifeCycle::LifeCycleObject::_nil());
 }
 
 

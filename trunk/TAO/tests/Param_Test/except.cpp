@@ -115,9 +115,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref,
                                    " unexpected exception\n");
       TAO_RETHROW_RETURN (-1);
     }
-  TAO_ENDTRY;
-
-  ACE_NOTREACHED (return -1);
+  TAO_ENDTRY_RETURN (-1);
 }
 
 int
