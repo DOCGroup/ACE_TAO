@@ -1,3 +1,8 @@
+1998-05-02  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
+
+	* docs/releasenotes/index.html: Updated the status information for
+	PropertyService.
+
 Sat May  2 14:28:41 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init): There was a bug
