@@ -1,3 +1,10 @@
+Fri Jul  2 16:11:12 UTC 2004 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.cpp:
+	  Fixed the usage of auto_ptr to fix compile errors in the HPUX 
+	  builds. Thanks to Don Hinton for pointing out the way to fix
+	  this.
+
 Thu Jul  1 21:18:06 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
