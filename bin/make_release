@@ -760,9 +760,11 @@ sub generate_makefiles () {
     my $here = Cwd::getcwd();
 
     &ex ("cd ACE_wrappers; \
-          ../bin/mwc.pl -type vc6 -static -recurse -hierarchy -name_modifier *_Static -apply_project -relative ACE_ROOT=$here/ACE_wrappers;\
-        ../bin/mwc.pl -type vc71 -recurse -hierarchy -relative ACE_ROOT=$here/ACE_wrappers;\
-        chmod 0644 *.dsp *.dsw *.vcproj *.sln");
+          bin/mwc.pl -type vc6 -static -recurse -hierarchy -name_modifier *_Static -apply_project -relative ACE_ROOT=$here/ACE_wrappers;\
+        bin/mwc.pl -type vc71 -recurse -hierarchy -relative ACE_ROOT=$here/ACE_wrappers;\
+        find ./ -name '*.ds[p,w]' | /usr/bin/xargs chmod 0644;\
+	find ./ -name '*.vcproj' | /usr/bin/xargs chmod 0644;\
+	find ./ -name '*.sln' | /usr/bin/xargs chmod 0644");
 }
 
 sub generate_em3 () {
@@ -770,8 +772,8 @@ sub generate_em3 () {
     my $here = Cwd::getcwd();
 
   &ex ("cd ACE_wrappers; \
-      ../bin/mwc.pl -type em3 -exclude TAO -recurse -hierarchy -relative ACE_ROOT=$here/ACE_wrappers;\
-        chmod 0644 *.vcp *.vcw");
+        bin/mwc.pl -type em3 -exclude TAO -recurse -hierarchy -relative ACE_ROOT=$here/ACE_wrappers;\
+        find ./ -name '*.vc[p,w]' | /usr/bin/xargs chmod 0644");
 }
 
 ########
