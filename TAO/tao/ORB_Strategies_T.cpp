@@ -14,7 +14,7 @@ ACE_RCSID(tao, ORB_Strategies_T, "$Id$")
 template <class SH> int
 TAO_Reactive_Strategy<SH>::activate_svc_handler (SH *svc_handler, void *arg)
 {
-  ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler");
+  ACE_TRACE ("TAO_Reactive_Strategy<SH>::activate_svc_handler");
 
   ACE_Reactor *r = TAO_ORB_Core_instance ()->reactor ();
 
