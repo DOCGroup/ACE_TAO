@@ -3,6 +3,9 @@ Wed Sep 09 07:01:26 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/IIOP_Interpreter.cpp (calc_union_attr_is_var_sized_member):
           wrapped the unreachable return statement with ACE_NOTREACHED.
 
+        * tests/Cubit/TAO/MT_Cubit/Makefile: fixed dependencies, many
+          were missing a / after $(ACE_ROOT).
+
 Tue Sep  8 21:47:46 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tests/Simple/grid/Grid_i.cpp: Changed some RANGE_ERRORs
