@@ -408,6 +408,59 @@ be_sequence::gen_client_stubs (void)
       cs->decr_indent ();
       *cs << "}\n\n";
 
+      // set the length
+      cs->indent ();
+      *cs << "ACE_INLINE void" << nl;
+      *cs << this->name () << "::length (CORBA::ULong length)" << nl;
+      *cs << "{\n";
+      cs->incr_indent ();
+      if (this->max_size () == 0)
+	{
+	  // The sequence has a maximum length, check that the new
+	  // length is valid before changing anything.
+	  *cs << "if (length > this->maximum_)" << nl;
+	  *cs << "{\n";
+	  cs->incr_indent ();
+	  *cs << "// @@ throw something?" << nl;
+	  *cs << "return;" << nl;
+	  cs->decr_indent ();
+	  *cs << "}" << nl;
+	  *cs << "this->length_ = length;\n";
+	}
+      else
+	{
+	  // Reallocate the buffer.
+	  *cs << "if (length > this->maximum_)" << nl;
+	  *cs << "{\n";
+	  cs->incr_indent ();
+	  if (s->gen_code (bt, this) == -1)
+	    return -1;
+	  *cs << " *tmp = " << this->name ()
+	      << "::allocbuf (length);" << nl;
+	  *cs << "if (tmp == 0)" << nl;
+	  cs->incr_indent ();
+	  *cs << "return;\n";
+	  cs->decr_indent ();
+
+	  *cs << "for (int i = 0; i < this->length_; ++i)" << nl;
+	  *cs << "{\n";
+	  cs->incr_indent ();
+	  *cs << "tmp[i] = this->buffer_[i];\n";
+	  cs->decr_indent ();
+	  *cs << "}" << nl;
+	  *cs << "if (this->release_)\n";
+	  cs->incr_indent ();
+	  *cs << this->name () << "::freebuf (this->buffer_);\n";
+	  cs->decr_indent ();
+	  *cs << "this->buffer_ = tmp;" << nl;
+	  *cs << "this->release_ = 1;\n" << nl;
+	  *cs << "this->length_ = length;\n";
+	  cs->decr_indent ();
+	  *cs << "}\n";
+	}
+      cs->decr_indent ();
+      *cs << "}\n\n";
+
       // generate the typecode information here
       cs->indent (); // start from current indentation level
       *cs << "static const CORBA::Long _oc_" << this->flatname () << "[] =" <<
@@ -605,16 +658,6 @@ be_sequence::gen_client_inline (void)
       *ci << "{\n";
       ci->incr_indent ();
       *ci << "return this->length_;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
-
-      // set the length
-      ci->indent ();
-      *ci << "ACE_INLINE void" << nl;
-      *ci << this->name () << "::length (CORBA::ULong length)" << nl;
-      *ci << "{\n";
-      ci->incr_indent ();
-      *ci << "this->length_ = length;\n";
       ci->decr_indent ();
       *ci << "}\n\n";
 
