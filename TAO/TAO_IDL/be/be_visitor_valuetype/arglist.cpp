@@ -213,9 +213,9 @@ be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
   // if this operation node was an attribute node in disguise, we get this
   // information from the context.
   // %! use AST_Interface
-  be_valuetype *intf = this->ctx_->attribute ()
-    ? be_valuetype::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-    : be_valuetype::narrow_from_scope (op->defined_in ());
+  be_interface *intf = this->ctx_->attribute ()
+    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
+    : be_interface::narrow_from_scope (op->defined_in ());
 
   if (!intf)
     {
