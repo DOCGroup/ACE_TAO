@@ -5,6 +5,7 @@
 #include "ace/Task.h"
 #include "ace/ACE.h"
 #include "tao/debug.h"
+#include "ace/Countdown_Time.h"
 
 #if !defined(__ACE_INLINE__)
 #include "test_i.i"
@@ -46,7 +47,7 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
 			-1);
     }
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "Request in thread %t, prio = %d,"
               "exec duration = %u\n", prio, exec_duration));
 
@@ -61,7 +62,7 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
 
   ACE_Time_Value yield_count_down_time (yield_interval);
   ACE_Countdown_Time yield_count_down (&yield_count_down_time);
-  
+
   timer.start ();
   int j=0;
   while (compute_count_down_time > ACE_Time_Value::zero)
@@ -69,14 +70,14 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
       ACE::is_prime (prime_number,
 		     2,
 		     prime_number / 2);
-      
+
       ++j;
 
 #ifdef KOKYU_DSRT_LOGGING
-      if (j%1000 == 0) 
+      if (j%1000 == 0)
         {
-          ACE_DEBUG ((LM_DEBUG, 
-            "(%t|%T) loop # = %d, load = %usec\n", j, exec_duration)); 
+          ACE_DEBUG ((LM_DEBUG,
+            "(%t|%T) loop # = %d, load = %usec\n", j, exec_duration));
         }
 #endif
       if (j%1000 == 0)
@@ -84,7 +85,7 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
           ACE_Time_Value run_time = ACE_OS::gettimeofday ();
           task_stats_.sample (run_time.msec (), guid);
         }
-      
+
       compute_count_down.update ();
 
       if (enable_yield_)
@@ -92,12 +93,12 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
           yield_count_down.update ();
           if (yield_count_down_time <= ACE_Time_Value::zero)
             {
-              CORBA::Policy_var sched_param_policy = 
+              CORBA::Policy_var sched_param_policy =
                 CORBA::Policy::_duplicate (current_->
                                            scheduling_parameter(ACE_ENV_SINGLE_ARG_PARAMETER));
-              
+
               const char * name = 0;
-              
+
               CORBA::Policy_ptr implicit_sched_param = 0;
               current_->update_scheduling_segment (name,
                                                    sched_param_policy.in (),
@@ -111,12 +112,12 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
 
   timer.stop ();
   timer.elapsed_time (elapsed_time);
-  
-  ACE_DEBUG ((LM_DEBUG, 
+
+  ACE_DEBUG ((LM_DEBUG,
 	      "Request processing in thread %t done, "
-	      "prio = %d, load = %d, elapsed time = %umsec\n", 
+	      "prio = %d, load = %d, elapsed time = %umsec\n",
 	      prio, exec_duration, elapsed_time.msec () ));
-  
+
   return exec_duration;
 }
 

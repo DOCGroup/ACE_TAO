@@ -13,6 +13,8 @@
 #include "Endpoint.h"
 #include "SystemException.h"
 
+#include "ace/Countdown_Time.h"
+
 #if !defined (__ACE_INLINE__)
 # include "Profile_Transport_Resolver.inl"
 #endif /* __ACE_INLINE__ */

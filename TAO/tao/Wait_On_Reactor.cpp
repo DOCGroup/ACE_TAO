@@ -6,6 +6,7 @@
 #include "tao/Synch_Reply_Dispatcher.h"
 
 #include "ace/Reactor.h"
+#include "ace/Countdown_Time.h"
 
 ACE_RCSID (tao,
            Wait_On_Reactor,

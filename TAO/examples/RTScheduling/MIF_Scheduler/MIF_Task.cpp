@@ -2,6 +2,7 @@
 #include "MIF_Task.h"
 #include "test.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/Countdown_Time.h"
 
 MIF_Task::MIF_Task (int importance,
 		    int start_time,
@@ -49,20 +50,20 @@ MIF_Task::activate_task (RTScheduling::Current_ptr current,
 			 ACE_Time_Value* base_time
 			 ACE_ENV_ARG_DECL)
 {
-  
+
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
 		"Thread_Task::activate %d\n",
 		importance_));
-  
+
   char msg [BUFSIZ];
   ACE_OS::sprintf (msg, "Thread_Task::activate task\n");
   dt_creator_->log_msg (msg);
-   
+
   base_time_ = base_time;
 
   current_ = RTScheduling::Current::_narrow (current
-					     ACE_ENV_ARG_PARAMETER);	
+					     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   sched_param_ = CORBA::Policy::_duplicate (sched_param);
@@ -77,7 +78,7 @@ MIF_Task::activate_task (RTScheduling::Current_ptr current,
 			   ACE_TEXT ("Insufficient privilege to run this test.\n")),
 			  -1);
     }
-  
+
   post_activate ();
   return 0;
 }
@@ -87,7 +88,7 @@ MIF_Task::perform_task (void)
 {
   ACE_TRY_NEW_ENV
     {
-      
+
       char msg [BUFSIZ];
       ACE_OS::sprintf (msg, "MIF_Task::perform_task %d\n", count_);
       dt_creator_->log_msg (msg);
@@ -161,7 +162,7 @@ MIF_Task::perform_task (void)
       return -1;
     }
   ACE_ENDTRY;
-  
+
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
 		"Thread %d\n",

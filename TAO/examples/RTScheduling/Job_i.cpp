@@ -7,6 +7,7 @@
 #include "Task_Stats.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/Countdown_Time.h"
 
 Job_i::Job_i (DT_Creator* dt_creator)
   : dt_creator_ (dt_creator),
@@ -54,7 +55,7 @@ Job_i::work (CORBA::ULong work,
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   static CORBA::ULong prime_number = 9619;
-  
+
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
 		"test_i::method: %d units of work\n",
