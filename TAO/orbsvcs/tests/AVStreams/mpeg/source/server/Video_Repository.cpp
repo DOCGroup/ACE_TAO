@@ -4,12 +4,10 @@
 #include "ace/Read_Buffer.h"
 
 const char* TAO_Video_Repository::MOVIE_INFO = "Movie_Info";
-const char* TAO_Video_Repository::MOVIE_NAMES = "Movie_Names";
 
 TAO_Video_Repository::TAO_Video_Repository (const char* file_name)
   : filename_ (file_name),
     movie_info_ (0),
-    movie_names_ (0),
     num_movies_ (0),
     lastchanged_ (0)
 {
@@ -17,7 +15,6 @@ TAO_Video_Repository::TAO_Video_Repository (const char* file_name)
 
 TAO_Video_Repository::~TAO_Video_Repository (void)
 {
-  TAO_VR::Movie_Names::freebuf (this->movie_names_);
   TAO_VR::Movie_Info::freebuf (this->movie_info_);
 }
 
@@ -55,33 +52,15 @@ TAO_Video_Repository::evalDP (const CORBA::Any& extra_info,
 	    }
 	}
 
-      char* prop_name = 0;
-      extra_info >>= prop_name;
-
-      String_var prop_name_var (prop_name);
-      if (ACE_OS::strcmp (prop_name, MOVIE_NAMES) == 0)
-	{
-	  TAO_VR::Movie_Names* movie_names = 0;
-	  ACE_NEW_RETURN (movie_names,
-			  TAO_VR::Movie_Names (this->num_movies_,
-					       this->num_movies_,
-					       this->movie_names_,
-					       CORBA::B_FALSE),
-			  0);
-	  (*return_value) <<= movie_names;
-	}
-      else if (ACE_OS::strcmp (prop_name, MOVIE_INFO) == 0)
-	{
-	  TAO_VR::Movie_Info* movie_info = 0;
-	  ACE_NEW_RETURN (movie_info,
-			  TAO_VR::Movie_Info (this->num_movies_,
-					       this->num_movies_,
-					       this->movie_info_,
-					       CORBA::B_FALSE),
-			  0);
-	  
-	  (*return_value) <<= movie_info;
-	}
+      TAO_VR::Movie_Info* movie_info = 0;
+      ACE_NEW_RETURN (movie_info,
+		      TAO_VR::Movie_Info (this->num_movies_,
+					  this->num_movies_,
+					  this->movie_info_,
+					  CORBA::B_FALSE),
+		      0);
+      
+      (*return_value) <<= movie_info;
     }
 
   return return_value;
@@ -97,20 +76,17 @@ TAO_Video_Repository::parse_file (const char* database, int num_lines)
 
   ACE_DEBUG ((LM_DEBUG, "Recomputing the movie stats.\n"));
   
-  TAO_VR::Movie_Names::freebuf (this->movie_names_);
   TAO_VR::Movie_Info::freebuf (this->movie_info_);
 
-  this->movie_names_ = TAO_VR::Movie_Names::allocbuf (num_lines);
   this->movie_info_ = TAO_VR::Movie_Info::allocbuf (num_lines);
 
-  if (this->movie_names_ != 0 && this->movie_info_ != 0)
+  if (this->movie_info_ != 0)
     {
       current = ACE_OS::strtok (current, "%");
       while (current != 0)
 	{
 	  TAO_VR::Movie& movie = this->movie_info_[i];
 	  
-	  this->movie_names_[i] = CORBA::string_dup (current);
 	  movie.name_ = (const char*) current;
 	  movie.filename_ = (const char*) ACE_OS::strtok (0, delim);
 	  movie.description_ = (const char*) ACE_OS::strtok (0, delim);
@@ -148,14 +124,6 @@ export_dynamic_properties (TAO_Property_Exporter& prop_exporter,
 
   dp_dispatcher.register_handler (MOVIE_INFO, (TAO_DP_Evaluation_Handler*) this);
   prop_exporter.add_dynamic_property (MOVIE_INFO, dp_struct);
-
-  extra_info <<= MOVIE_NAMES;
-  dp_struct = dp_dispatcher.construct_dynamic_prop (MOVIE_INFO,
-						    TAO_VR::_tc_Movie_Names,
-						    extra_info);    
-
-  dp_dispatcher.register_handler (MOVIE_NAMES, (TAO_DP_Evaluation_Handler*) this);
-  prop_exporter.add_dynamic_property (MOVIE_NAMES, dp_struct);
 }
 
 int
@@ -165,16 +133,13 @@ define_properties (CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_s
 {
   CORBA::ULong num_props = prop_seq.length ();
 
-  if (num_props <= offset + 1)
-    prop_seq.length (offset + 2);
+  if (num_props <= offset)
+    prop_seq.length (offset + 1);
 
   prop_seq[offset].name = MOVIE_INFO;
   prop_seq[offset].value_type = CORBA::TypeCode::_duplicate (TAO_VR::_tc_Movie_Info);
   prop_seq[offset].mode = CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY;
-  prop_seq[offset + 1].name = MOVIE_NAMES;
-  prop_seq[offset + 1].value_type = CORBA::TypeCode::_duplicate (TAO_VR::_tc_Movie_Names);
-  prop_seq[offset + 1].mode = CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY;
 
-  return 2;
+  return 1;
 }
 

@@ -76,7 +76,8 @@ clean:
 	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
-	-/bin/rm -rf $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES))
+	-/bin/rm -rf $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES)) \
+	$(addsuffix _T.h, $(IDL_FILES)) $(addsuffix _T.i, $(IDL_FILES)) $(addsuffix _T.cpp, $(IDL_FILES))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
@@ -375,9 +376,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Server.h \
- vs.h \
- $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/Property_Info.h \
- Property_Exporter.h \
+ vs.h Property_Exporter.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Dynamic_Property.h \
@@ -388,7 +387,8 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Machine_Properties.h
+ Machine_Properties.h Video_Repository.h Video_RepositoryC.h \
+ Video_RepositoryC.i
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp server.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -683,20 +683,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Server.h \
- vs.h \
- $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/Property_Info.h \
- Property_Exporter.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Dynamic_Property.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Trader.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Attributes.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
- Machine_Properties.h
+ vs.h
 .obj/vs.o .obj/vs.so .shobj/vs.o .shobj/vs.so: vs.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Server.h \
  $(ACE_ROOT)/ace/Reactor.h \
@@ -1745,6 +1732,9 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.cpp \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.i \
+ Property_Exporter.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -467,12 +467,12 @@ AV_Server::init (int argc,
   */    
   // Invoke this once, passing in an object for each trading service
   // service type.  
-  this->resolve_trader (env);
-  TAO_CHECK_ENV_RETURN (env, -1);
-
-  // Invoke this for each offer.
-  this->export_properties (env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+  if (this->resolve_trader (env) != -1)
+    {
+      // Invoke this for each offer.
+      this->export_properties (env);
+      TAO_CHECK_ENV_RETURN (env, -1);
+    }
   
   // Register the various signal handlers with the reactor.
   result = this->signal_handler_.register_handler ();
@@ -527,7 +527,7 @@ AV_Server::export_properties (CORBA::Environment& _env)
   TAO_CHECK_ENV_RETURN_VOID (_env);
 }
 
-void
+int
 AV_Server::resolve_trader (CORBA::Environment& _env)
 {
   if (this->trader_.ptr () == 0)
@@ -541,18 +541,18 @@ AV_Server::resolve_trader (CORBA::Environment& _env)
 	{
 	  ACE_ERROR ((LM_ERROR,
 		      " (%P|%t) Unable to bootstrap to the Trading Service.\n"));
-	  return;
+	  return -1;
 	}
       
       // Narrow the lookup interface.
       ACE_DEBUG ((LM_DEBUG, "Narrowing the lookup interface.\n"));
       this->trader_ = CosTrading::Lookup::_narrow (trading_obj.in (), _env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+      TAO_CHECK_ENV_RETURN (_env, -1);
 
       CosTrading::TypeRepository_ptr obj = this->trader_->type_repos (_env);
       CosTradingRepos::ServiceTypeRepository_var str =
 	CosTradingRepos::ServiceTypeRepository::_narrow (obj, _env);
-      TAO_CHECK_ENV_RETURN_VOID (_env);
+      TAO_CHECK_ENV_RETURN (_env, -1);
 
       TAO_TRY
 	{
@@ -560,6 +560,7 @@ AV_Server::resolve_trader (CORBA::Environment& _env)
 	  CosTradingRepos::ServiceTypeRepository::TypeStruct_var
 	    type_struct = str->describe_type (SERVICE_TYPE, TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
+	  return 0;
 	}
       TAO_CATCH (CosTrading::UnknownServiceType, excp)
 	{
@@ -579,13 +580,13 @@ AV_Server::resolve_trader (CORBA::Environment& _env)
 			 prop_seq,
 			 type_name_seq,
 			 _env);
-	  TAO_CHECK_ENV_RETURN_VOID (_env);
-	  return;
+	  TAO_CHECK_ENV_RETURN (_env, -1);
+	  return 0;
 	}
       TAO_CATCHANY
 	{
 	  ACE_DEBUG ((LM_DEBUG, "Error in describe_type.\n"));
-	  TAO_RETHROW;
+	  TAO_RETHROW_RETURN (-1);
 	}
       TAO_ENDTRY;
     }
@@ -608,12 +609,15 @@ AV_Server::shutdown (void) const
 {
   TAO_TRY
     {
-      CosTrading::Register_var reg = this->trader_->register_if (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      
-      ACE_DEBUG ((LM_DEBUG, "Withdrawing offer...\n"));
-      reg->withdraw (this->offer_id_.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      if (this->trader_.ptr () != 0)
+	{
+	  CosTrading::Register_var reg = this->trader_->register_if (TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	  
+	  ACE_DEBUG ((LM_DEBUG, "Withdrawing offer...\n"));
+	  reg->withdraw (this->offer_id_.in (), TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	}
     }
   TAO_CATCHANY
     {
