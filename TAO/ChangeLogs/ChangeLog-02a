@@ -5,7 +5,7 @@ Fri Feb 22 19:07:36 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
           Need to allow up to 2*ACE_CDR::MAX_ALIGNMENT bytes of extra space in
           the message block to accommodate all rd_ptr() alignment adjustments.
 
-        * tao/TypeCodeFactory_i.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
           Pass the message block's rd_ptr(), rather than base(), to the
           CORBA_TypeCode constructor. An earlier call to ACE_CDR::consolidate()
           may have already shifted the rd_ptr, so we cannot rely on the buffer
