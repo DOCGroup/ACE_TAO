@@ -207,7 +207,7 @@ TAO_ConstantDef_i::value_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (0);
 
   void *ref = 0;
-  u_int length = 0;
+  size_t length = 0;
 
   this->repo_->config ()->get_binary_value (
                               this->section_key_,
