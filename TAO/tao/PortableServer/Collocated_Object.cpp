@@ -88,7 +88,7 @@ TAO_Collocated_Object::_is_equivalent (CORBA::Object_ptr other_obj
   ACE_THROW_SPEC (())
 {
   CORBA::Boolean equivalent =
-    this->Object::_is_equivalent (other_obj ACE_ENV_ARG_PARAMETER);
+    this->ACE_NESTED_CLASS (CORBA, Object)::_is_equivalent (other_obj ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (equivalent)
@@ -118,7 +118,7 @@ TAO_Collocated_Object::_non_existent (ACE_ENV_SINGLE_ARG_DECL)
     {
       // If the object is collocated then try locally....
       if (!this->_is_collocated ())
-        return this->Object::_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
+        return this->ACE_NESTED_CLASS (CORBA, Object)::_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       TAO_Stub *stub = this->_stubobj ();
 
@@ -170,7 +170,7 @@ TAO_Collocated_Object::_get_component (ACE_ENV_SINGLE_ARG_DECL)
 
   // If the object is collocated then try locally....
   if (!this->_is_collocated ())
-    return this->Object::_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+    return this->ACE_NESTED_CLASS (CORBA, Object)::_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   TAO_Stub *stub = this->_stubobj ();
 
@@ -213,7 +213,7 @@ TAO_Collocated_Object::_tao_QueryInterface (ptr_arith_t query_type)
       return this;
     }
 
-  return this->Object::_tao_QueryInterface (query_type);
+  return this->ACE_NESTED_CLASS (CORBA, Object)::_tao_QueryInterface (query_type);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -1,3 +1,12 @@
+Sat Feb 22 09:50:31 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/Collocated_Object.cpp (_get_component):
+	  (_is_equivalent, _tao_QueryInterface):
+
+	  Wrapped remaining CORBA::Object base class method calls with the
+	  ACE_NESTED_CLASS macro.  Addresses remaining problems in Borland
+	  C++ builds.
+
 Sat Feb 22 09:37:29 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB.h (ORB):
