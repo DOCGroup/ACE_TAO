@@ -150,6 +150,8 @@ Quoter_Generic_Factory_Server::init (int argc,
       // the Generic Factory should try to register itself to the closest 
       // Life Cycle Service is order to be called.
       
+      /* for now as long as the trading service is not ported to NT we skip this
+
       // get the Quoter_Life_Cycle_Service
       CosNaming::Name quoter_Life_Cycle_Service_Name (1);
       quoter_Life_Cycle_Service_Name.length (1);
@@ -170,10 +172,6 @@ Quoter_Generic_Factory_Server::init (int argc,
 
       CORBA::Object_var object_var = this->quoter_Generic_Factory_Impl_ptr_->_this(TAO_TRY_ENV);
 
-      // @@ necessary if you specify an ORB port not equal to 0
-      // ACE_Time_Value time_Value = 0;
-      // orb_manager_.orb()->run (&time_Value);
-      // register with the Quoter_Life_Cycle_Service
       quoter_Life_Cycle_Service_var->register_factory ("Quoter_Generic_Factory",  // name
 						      "Bryan 503",               // location
 						      "Generic Factory",         // description 
@@ -182,6 +180,8 @@ Quoter_Generic_Factory_Server::init (int argc,
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
                   "Registered the Quoter GenericFactory to the Quoter Life Cycle Service.\n"));
+
+		  */
     }
   TAO_CATCHANY
     {
