@@ -1,3 +1,48 @@
+Thu Mar 27 03:00:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_predefined_type.cpp:
+        * TAO_IDL/be/be_predefined_type.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/fe/fe_init.cpp:
+        * TAO_IDL/include/ast_predefined_type.h:
+        * tao/Adapter.cpp:
+        * tao/Adapter.h:
+        * tao/Object.cpp:
+        * tao/Object.h:
+        * tao/Object.i:
+        * tao/Objref_VarOut_T.h:
+        * tao/Sequence.cpp:
+        * tao/Sequence.h:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
+        * tao/TAO.dsp:
+        * tao/Typecode.h:
+        * tao/Typecode.i:
+        * tao/ValueBase.cpp:
+        * tao/ValueBase.h:
+        * tao/ValueBase.i:
+        * tao/Value_VarOut_T.h:
+        * tao/corba.h:
+        * tao/corbafwd.h:
+
+	  Finished templatizing of _var, _out and sequence
+	  classes, in TAO and in code generation.
+
+        * tao/Pseudo_VarOut_T.cpp:
+        * tao/Pseudo_VarOut_T.h:
+
+	  New files for the _var and _out classes for
+	  CORBA::Object and CORBA::TypeCode.
+
+        * tao/Objref_VarOut_T.inl:
+        * tao/Value_VarOut_T.inl:
+
+	  New files, empty so far.
+
 Wed Mar 26 18:23:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_component.cpp:
