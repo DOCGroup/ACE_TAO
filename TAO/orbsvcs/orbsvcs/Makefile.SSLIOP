@@ -1707,7 +1707,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.inl \
  SSLIOP/SSLIOP_X509.h \
  $(TAO_ROOT)/tao/varbase.h \
- SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h SSLIOP/SSLIOP_EVP_PKEY.inl \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h \
+ SSLIOP/SSLIOP_EVP_PKEY.inl \
  SecurityLevel2C.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -1916,7 +1917,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.inl \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
  $(TAO_ROOT)/tao/varbase.h \
- SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h SSLIOP/SSLIOP_EVP_PKEY.inl \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h \
+ SSLIOP/SSLIOP_EVP_PKEY.inl \
  SecurityLevel2C.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -2125,7 +2127,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.inl \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
  $(TAO_ROOT)/tao/varbase.h \
- SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h SSLIOP/SSLIOP_EVP_PKEY.inl \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h \
+ SSLIOP/SSLIOP_EVP_PKEY.inl \
  SecurityLevel2C.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -2530,7 +2533,8 @@ realclean: clean
  SSLIOPC.i \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_Export.h \
  SSLIOP/SSLIOP_X509.h SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h \
- SSLIOP/SSLIOP_EVP_PKEY.inl SSLIOP/SSLIOP_Credentials.inl
+ SSLIOP/SSLIOP_EVP_PKEY.inl SSLIOP/SSLIOP_Credentials.inl \
+ $(TAO_ROOT)/tao/debug.h
 
 .obj/SSLIOP_Current.o .obj/SSLIOP_Current.so .shobj/SSLIOP_Current.o .shobj/SSLIOP_Current.so: SSLIOP/SSLIOP_Current.cpp SSLIOP/SSLIOP_Current.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -4240,7 +4244,8 @@ realclean: clean
  SecurityC.i \
  SSLIOPC.i \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
- SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h SSLIOP/SSLIOP_EVP_PKEY.inl \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h \
+ SSLIOP/SSLIOP_EVP_PKEY.inl \
  SecurityLevel2C.h \
  SecurityLevel1C.h \
  SecurityLevel1C.i \
@@ -4470,7 +4475,8 @@ realclean: clean
  SecurityC.i \
  SSLIOPC.i \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
- SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h SSLIOP/SSLIOP_EVP_PKEY.inl \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h \
+ SSLIOP/SSLIOP_EVP_PKEY.inl \
  SecurityLevel2C.h \
  SecurityLevel1C.h \
  SecurityLevel1C.i \
@@ -5038,8 +5044,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
- SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h SSLIOP/SSLIOP_EVP_PKEY.inl \
- SSLIOP/SSLIOP_Credentials.inl SSLIOP/SSLIOP_Endpoint.i \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h \
+ SSLIOP/SSLIOP_EVP_PKEY.inl SSLIOP/SSLIOP_Credentials.inl \
+ SSLIOP/SSLIOP_Endpoint.i \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/Profile.h \
  $(TAO_ROOT)/tao/Tagged_Components.h \
@@ -5502,9 +5509,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Connector_Impl.inl \
  $(TAO_ROOT)/tao/Connector_Impl.cpp \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
- SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h SSLIOP/SSLIOP_EVP_PKEY.inl \
- SSLIOP/SSLIOP_Credentials.inl SSLIOP/SSLIOP_Profile.h \
- SSLIOP/SSLIOP_Endpoint.h \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h \
+ SSLIOP/SSLIOP_EVP_PKEY.inl SSLIOP/SSLIOP_Credentials.inl \
+ SSLIOP/SSLIOP_Profile.h SSLIOP/SSLIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i \
  SSLIOP/SSLIOP_Endpoint.i \
@@ -5947,8 +5954,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
- SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h SSLIOP/SSLIOP_EVP_PKEY.inl \
- SSLIOP/SSLIOP_Credentials.inl SSLIOP/SSLIOP_Endpoint.i \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h \
+ SSLIOP/SSLIOP_EVP_PKEY.inl SSLIOP/SSLIOP_Credentials.inl \
+ SSLIOP/SSLIOP_Endpoint.i \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/Profile.h \
  $(TAO_ROOT)/tao/Tagged_Components.h \
@@ -6348,8 +6356,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IIOP_Endpoint.h \
  $(TAO_ROOT)/tao/IIOP_Endpoint.i \
  SSLIOP/SSLIOP_Credentials.h SSLIOP/SSLIOP_X509.h \
- SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h SSLIOP/SSLIOP_EVP_PKEY.inl \
- SSLIOP/SSLIOP_Credentials.inl SSLIOP/SSLIOP_Endpoint.i \
+ SSLIOP/SSLIOP_X509.inl SSLIOP/SSLIOP_EVP_PKEY.h \
+ SSLIOP/SSLIOP_EVP_PKEY.inl SSLIOP/SSLIOP_Credentials.inl \
+ SSLIOP/SSLIOP_Endpoint.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
  $(TAO_ROOT)/tao/Base_Transport_Property.h \
