@@ -74,7 +74,7 @@ client (void *arg)
   // there is no more and no less.
 
   unsigned char buff[255];
-  int i;
+  unsigned int i;
   ssize_t len;
 
   // The server will verify that this data pattern gets there intact.
