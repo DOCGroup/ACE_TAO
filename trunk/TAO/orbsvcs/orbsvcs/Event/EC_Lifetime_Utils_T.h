@@ -50,15 +50,15 @@ void activate (T & obj_ref,
  * Has default and copy constructors.
  *
  */
-template <class COMMAND>
+template <class T>
 class TAO_EC_Auto_Command
 {
 public:
   TAO_EC_Auto_Command (void);
-  TAO_EC_Auto_Command (const COMMAND & command);
+  TAO_EC_Auto_Command (const T & command);
   ~TAO_EC_Auto_Command (void);
-  void set_command (const COMMAND & command);
-  void set_command (TAO_EC_Auto_Command<COMMAND> & auto_command);
+  void set_command (const T & command);
+  void set_command (TAO_EC_Auto_Command<T> & auto_command);
   void execute (void);
   void allow_command (void);
   void disallow_command (void);
@@ -68,24 +68,24 @@ private:
   TAO_EC_Auto_Command (const TAO_EC_Auto_Command &);
   TAO_EC_Auto_Command & operator=  (const TAO_EC_Auto_Command &);
 
-  COMMAND command_;
+  T command_;
   int allow_command_;
 };
 
 
 //***************************************************************************
 
-template <class TARGET>
+template <class T>
 class TAO_EC_Shutdown_Command
 {
 public:
   TAO_EC_Shutdown_Command (void);
-  TAO_EC_Shutdown_Command (TARGET target);
+  TAO_EC_Shutdown_Command (T target);
   void execute (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
 
-  TARGET target_;
+  T target_;
 };
 
 //***************************************************************************

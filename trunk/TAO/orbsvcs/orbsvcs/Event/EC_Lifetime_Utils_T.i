@@ -14,40 +14,40 @@ my_narrow_until_carlos_gets_jeff_to_fix_the_idl_compiler (
 
 //***************************************************************************
 
-template <class X>
+template <class T>
 ACE_INLINE
-TAO_EC_Auto_Command<X>::TAO_EC_Auto_Command (void)
+TAO_EC_Auto_Command<T>::TAO_EC_Auto_Command (void)
   : command_ ()
   , allow_command_ (0)
 {
 }
 
-template <class X>
+template <class T>
 ACE_INLINE
-TAO_EC_Auto_Command<X>::TAO_EC_Auto_Command (const X & command)
+TAO_EC_Auto_Command<T>::TAO_EC_Auto_Command (const T & command)
   : command_ (command)
   , allow_command_ (1)
 {
 }
 
-template <class X>
+template <class T>
 ACE_INLINE
-TAO_EC_Auto_Command<X>::~TAO_EC_Auto_Command (void)
+TAO_EC_Auto_Command<T>::~TAO_EC_Auto_Command (void)
 {
   this->execute ();
 }
 
-template <class X>
+template <class T>
 ACE_INLINE void
-TAO_EC_Auto_Command<X>::set_command (const X & command)
+TAO_EC_Auto_Command<T>::set_command (const T & command)
 {
   this->command_ = command;
   this->allow_command_ = 1;
 }
 
-template <class X>
+template <class T>
 ACE_INLINE void
-TAO_EC_Auto_Command<X>::set_command (TAO_EC_Auto_Command<X> & auto_command)
+TAO_EC_Auto_Command<T>::set_command (TAO_EC_Auto_Command<T> & auto_command)
 {
   if (this == &auto_command)
     return;
@@ -57,9 +57,9 @@ TAO_EC_Auto_Command<X>::set_command (TAO_EC_Auto_Command<X> & auto_command)
   auto_command.allow_command_ = 0;
 }
 
-template <class X>
+template <class T>
 ACE_INLINE void
-TAO_EC_Auto_Command<X>::execute (void)
+TAO_EC_Auto_Command<T>::execute (void)
 {
   if (this->allow_command_)
     {
@@ -78,16 +78,16 @@ TAO_EC_Auto_Command<X>::execute (void)
     }
 }
 
-template <class X>
+template <class T>
 ACE_INLINE void
-TAO_EC_Auto_Command<X>::allow_command (void)
+TAO_EC_Auto_Command<T>::allow_command (void)
 {
   this->allow_command_ = 1;
 }
 
-template <class X>
+template <class T>
 ACE_INLINE void
-TAO_EC_Auto_Command<X>::disallow_command (void)
+TAO_EC_Auto_Command<T>::disallow_command (void)
 {
   this->allow_command_ = 0;
 }
@@ -95,23 +95,23 @@ TAO_EC_Auto_Command<X>::disallow_command (void)
 
 //***************************************************************************
 
-template <class TARGET>
+template <class T>
 ACE_INLINE
-TAO_EC_Shutdown_Command<TARGET>::TAO_EC_Shutdown_Command (void)
+TAO_EC_Shutdown_Command<T>::TAO_EC_Shutdown_Command (void)
   : target_ ()
 {
 }
 
-template <class TARGET>
+template <class T>
 ACE_INLINE
-TAO_EC_Shutdown_Command<TARGET>::TAO_EC_Shutdown_Command (TARGET target)
+TAO_EC_Shutdown_Command<T>::TAO_EC_Shutdown_Command (T target)
   : target_ (target)
 {
 }
 
-template <class TARGET>
+template <class T>
 ACE_INLINE void
-TAO_EC_Shutdown_Command<TARGET>::execute (ACE_ENV_SINGLE_ARG_DECL)
+TAO_EC_Shutdown_Command<T>::execute (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->target_.in ())
     {
