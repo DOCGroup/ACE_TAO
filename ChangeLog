@@ -1,3 +1,12 @@
+Wed Jun  7 12:09:50 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+          Changed position-independent-code option from -PIC to -KPIC since
+          the C++ compiler recognizes either and the C compiler only
+          recognizes -KPIC.
+        * include/makeinclude/rules.local.GNU:
+          Added a compilation rule for C (i.e., .c) files.
+
 Tue Jun  6 22:32:16 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ace/OS.i:
