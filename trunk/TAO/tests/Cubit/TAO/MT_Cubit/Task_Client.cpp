@@ -146,7 +146,7 @@ Task_State::Task_State (int argc, char **argv)
 
   // thread_count_ + 1 because there is one utilization thread also
   // wanting to begin at the same time the clients begin..
-  ACE_NEW (barrier_, ACE_Barrier (thread_count_ )); //+ 1));
+  ACE_NEW (barrier_, ACE_Barrier (thread_count_ + 1));
   ACE_NEW (latency_, double [thread_count_]);
   ACE_NEW (global_jitter_array_, double *[thread_count_]);
   ACE_NEW (ave_latency_, int [thread_count_]);
