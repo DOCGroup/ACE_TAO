@@ -6883,7 +6883,7 @@ ACE_OS::gethrtime (void)
   return tb.tb_high * 1000000000L + tb.tb_low;
 #elif defined (linux)
 # if defined (ACE_HAS_PENTIUM)
-  volatile ACE_hrtime_t now;
+  ACE_hrtime_t now;
 
   // See comments about the RDTSC Pentium instruction for the ACE_WIN32
   // version of ACE_OS::gethrtime (), below.
@@ -6894,7 +6894,7 @@ ACE_OS::gethrtime (void)
 
   return now;
 # elif defined (__alpha)
-  volatile ACE_hrtime_t now;
+  ACE_hrtime_t now;
 
   // The following statement is based on code published by:
   // Mosberger, David, "How to Make Your Applications Fly, Part 1",
@@ -6906,9 +6906,8 @@ ACE_OS::gethrtime (void)
 # else
   const ACE_Time_Value now = ACE_OS::gettimeofday ();
   return now.msec () * 1000000L /* nanoseconds/millsecond */;
-# endif /* i386 || __alpha */
-#elif defined (ACE_HAS_PENTIUM)
-  // for WIN32 only.
+# endif /* ACE_HAS_PENTIUM || __alpha */
+#elif defined (ACE_WIN32) && defined (ACE_HAS_PENTIUM)
   // Issue the RDTSC assembler instruction to get the number of clock
   // ticks since system boot.  RDTSC is only available on Pentiums and
   // higher.  Thanks to Wayne Vucenic <wvucenic@netgate.net> for
