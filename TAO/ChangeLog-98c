@@ -1,3 +1,10 @@
+Tue Jun 16 14:01:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/CDR.cpp: 
+	  Fixed potential inifinite loop in buffer growth if the initial
+	  buffer size was 0. Thanks to Stuart Myles
+	  <smyles@wsj.dowjones.com> for detecting this.
+
 Tue Jun 16 10:33:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO/orbsvcs/tests/Event_Latency/Event_Latency.cpp:
