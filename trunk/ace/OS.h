@@ -7851,23 +7851,6 @@ ACE_OS_CString (ASCII_STRING).wchar_rep ()
 // Typedefs and macros for efficient ACE CDR memory address
 // boundary alignment
 
-// Type for doing arithmetic on pointers ... as elsewhere, we assume
-// that "unsigned" versions of a type are the same size as the
-// "signed" version of the same type.
-
-#if     ACE_SIZEOF_VOID_P == ACE_SIZEOF_INT
-typedef u_int ptr_arith_t;
-
-#elif   ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG
-typedef u_long ptr_arith_t;
-
-#elif   ACE_SIZEOF_VOID_P == ACE_SIZEOF_LONG_LONG
-typedef u_long long ptr_arith_t;
-
-#else
-#       error "Can't find a suitable type for doing pointer arithmetic."
-#endif /* error */
-
 // Efficiently align "value" up to "alignment", knowing that all such
 // boundaries are binary powers and that we're using two's complement
 // arithmetic.

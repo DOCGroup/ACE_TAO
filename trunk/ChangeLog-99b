@@ -1,3 +1,10 @@
+Thu Jul 08 10:25:55 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h,Basic_Types.h: added ACE_U_LongLong conversion operator
+          to ptr_arith_t.  Moved ptr_arith_t typedef from OS.h to
+          Basic_Types.h, so that it can be used by ACE_U_LongLong.
+          Thanks to Chris for helping to figure this out.
+
 Thu Jul  8 08:34:22 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Msg.cpp (log): Don't special-case the %t handling on AIX
@@ -5,26 +12,26 @@ Thu Jul  8 08:34:22 1999  Steve Huston  <shuston@riverace.com>
 
 Thu Jul  8 00:23:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Malloc_T.cpp: Updated all the methods that check 
-	  cp_ptr_ to return immediately if it's 0.  Thanks to Dieter for
- 	  suggesting this.
+        * ace/Malloc_T.cpp: Updated all the methods that check
+          cp_ptr_ to return immediately if it's 0.  Thanks to Dieter for
+          suggesting this.
 
-	* ace/Malloc.cpp (dump): Added a cast to trigger operator void
- 	  * for freep_ (which may be a smart pointer in some
- 	  configurations).
+        * ace/Malloc.cpp (dump): Added a cast to trigger operator void
+          * for freep_ (which may be a smart pointer in some
+          configurations).
 
-	* ace/Based_Pointer_Repository: Revised the implementation of
-	  this class to use the "Cheshire-Cat" technique to hide the
- 	  implementation to avoid circular #include dependencies.
+        * ace/Based_Pointer_Repository: Revised the implementation of
+          this class to use the "Cheshire-Cat" technique to hide the
+          implementation to avoid circular #include dependencies.
 
-	* ace/Token.h (ACE_Token): Clarified that the timeouts are in
-	  "absolute" time, not relative time.  Thanks to Everett Anderson
- 	  <eea1@cs.wustl.edu> for reporting this.
+        * ace/Token.h (ACE_Token): Clarified that the timeouts are in
+          "absolute" time, not relative time.  Thanks to Everett Anderson
+          <eea1@cs.wustl.edu> for reporting this.
 
-	* ace/config-win32-borland.h: Only enable 
-	  ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION if we're running on
- 	  older versions of Borland.  Thanks to Christopher Kohlhoff
- 	  <chris@kohlhoff.com> for reporting this.
+        * ace/config-win32-borland.h: Only enable
+          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION if we're running on
+          older versions of Borland.  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> for reporting this.
 
 Wed Jul 07 22:44:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
