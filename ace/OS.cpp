@@ -983,15 +983,6 @@ public:
   // or not.
 
 protected:
-  int mark_cleanup_i (void);
-  // Mark a thread for actually performing cleanup.
-
-  int check_cleanup_i (void);
-  // Check if given thread is performing cleanup.
-
-  int exit_cleanup_i (void);
-  // Indicate that a thread has finished cleanup.
-
   void dump (void);
 
   ACE_TSS_Cleanup (void);
@@ -1000,9 +991,6 @@ protected:
 private:
   ACE_TSS_TABLE table_;
   // Table of <ACE_TSS_Info>'s.
-
-  ACE_TSS_REF_TABLE ref_table_;
-  // Table of thread IDs that are performing cleanup activities.
 
   // = Static data.
   static ACE_TSS_Cleanup *instance_;
@@ -1018,24 +1006,6 @@ ACE_TSS_Cleanup::~ACE_TSS_Cleanup (void)
 {
   // Zero out the instance pointer to support lockable () accessor.
   ACE_TSS_Cleanup::instance_ = 0;
-}
-
-int
-ACE_TSS_Cleanup::mark_cleanup_i (void)
-{
-  return this->ref_table_.insert (ACE_TSS_Ref (ACE_OS::thr_self ()));
-}
-
-int
-ACE_TSS_Cleanup::check_cleanup_i (void)
-{
-  return this->ref_table_.find (ACE_TSS_Ref (ACE_OS::thr_self ()));
-}
-
-int
-ACE_TSS_Cleanup::exit_cleanup_i (void)
-{
-  return this->ref_table_.remove (ACE_TSS_Ref (ACE_OS::thr_self ()));
 }
 
 void
@@ -1060,19 +1030,6 @@ ACE_TSS_Cleanup::exit (void * /* status */)
       ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object
         (ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK);
       ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, *lock));
-
-    // Prevent recursive deletions
-
-    if (this->check_cleanup_i () == 0) // Are we already performing cleanup?
-      return;
-
-    // If we can't insert our thread_id into the list, we will not be
-    // able to detect recursive invocations for this thread. Therefore
-    // we better risk memory and key leakages, resulting also in
-    // missing close() calls as to be invoked recursively.
-
-    if (this->mark_cleanup_i () != 0) // Insert our thread_id in list
-      return;
 
     // Iterate through all the thread-specific items and free them all
     // up.
@@ -1147,9 +1104,6 @@ ACE_TSS_Cleanup::exit (void * /* status */)
 #endif /* ACE_WIN32 */
         this->table_.remove (ACE_TSS_Info (key_arr[i]));
       }
-
-    this->exit_cleanup_i (); // remove thread id from reference list.
-
 #endif /* 0 */
   }
 }
@@ -1177,8 +1131,7 @@ ACE_TSS_Cleanup::free_all_key_left (void)
 }
 
 ACE_TSS_Cleanup::ACE_TSS_Cleanup (void)
-  : table_ (ACE_DEFAULT_THREAD_KEYS, ACE_TSS_Info (0)),
-    ref_table_ ()
+  : table_ (ACE_DEFAULT_THREAD_KEYS, ACE_TSS_Info (0))
 {
 // ACE_TRACE ("ACE_TSS_Cleanup::ACE_TSS_Cleanup");
 }
@@ -1378,27 +1331,17 @@ ACE_TSS_Emulation::tss_collection_ [ACE_TSS_Emulation::ACE_TSS_THREADS_MAX] = { 
 #endif /* ACE_HAS_TSS_EMULATION */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<ACE_TSS_Info>;
-template class ACE_Node<ACE_TSS_Ref>;
-template class ACE_Unbounded_Stack<ACE_TSS_Info>;
-template class ACE_Unbounded_Stack<ACE_TSS_Ref>;
-template class ACE_Unbounded_Stack_Iterator<ACE_TSS_Info>;
-template class ACE_Unbounded_Stack_Iterator<ACE_TSS_Ref>;
 template class ACE_Array<ACE_TSS_Info>;
-template class ACE_Array<ACE_TSS_Ref>;
 template class ACE_Array_Iterator<ACE_TSS_Info>;
-template class ACE_Array_Iterator<ACE_TSS_Ref>;
+template class ACE_Node<ACE_TSS_Ref>;
+template class ACE_Unbounded_Stack<ACE_TSS_Ref>;
+template class ACE_Unbounded_Stack_Iterator<ACE_TSS_Ref>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<ACE_TSS_Info>
-#pragma instantiate ACE_Node<ACE_TSS_Ref>
-#pragma instantiate ACE_Unbounded_Stack<ACE_TSS_Info>
-#pragma instantiate ACE_Unbounded_Stack<ACE_TSS_Ref>
-#pragma instantiate ACE_Unbounded_Stack_Iterator<ACE_TSS_Info>
-#pragma instantiate ACE_Unbounded_Stack_Iterator<ACE_TSS_Ref>
 #pragma instantiate ACE_Array<ACE_TSS_Info>
-#pragma instantiate ACE_Array<ACE_TSS_Ref>
 #pragma instantiate ACE_Array_Iterator<ACE_TSS_Info>
-#pragma instantiate ACE_Array_Iterator<ACE_TSS_Ref>
+#pragma instantiate ACE_Node<ACE_TSS_Ref>
+#pragma instantiate ACE_Unbounded_Stack<ACE_TSS_Ref>
+#pragma instantiate ACE_Unbounded_Stack_Iterator<ACE_TSS_Ref>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* WIN32 || ACE_HAS_TSS_EMULATION */
