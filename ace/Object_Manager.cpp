@@ -259,7 +259,7 @@ ACE_Object_Manager::init (void)
 #     endif /* ! ACE_LACKS_ACE_SVCCONF */
 
           // Open the main thread's ACE_Log_Msg.
-          if (NULL == ACE_LOG_MSG)
+          if (0 == ACE_LOG_MSG)
             return -1;
         }
 
