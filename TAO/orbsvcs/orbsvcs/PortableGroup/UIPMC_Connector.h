@@ -74,6 +74,8 @@ protected:
   /// initialize <uipmc_properties_>.
   int init_uipmc_properties (void);
 
+  /// Cancel the passed cvs handler from the connector
+  virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
 
 protected:
 
@@ -87,14 +89,14 @@ private:
                             TAO_UIPMC_Connection_Handler *,
                             ACE_Hash < ACE_INET_Addr >,
                             ACE_Equal_To < ACE_INET_Addr >,
-                            ACE_Null_Mutex > 
+                            ACE_Null_Mutex >
     svc_handler_table_;
 
   typedef ACE_Hash_Map_Iterator_Ex < ACE_INET_Addr,
                                      TAO_UIPMC_Connection_Handler *,
                                      ACE_Hash < ACE_INET_Addr >,
                                      ACE_Equal_To < ACE_INET_Addr >,
-                                     ACE_Null_Mutex > 
+                                     ACE_Null_Mutex >
     SvcHandlerIterator;
 };
 

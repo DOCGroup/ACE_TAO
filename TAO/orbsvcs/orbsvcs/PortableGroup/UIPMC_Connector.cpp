@@ -15,8 +15,7 @@
 #include "UIPMC_Profile.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID (tao, 
-
+ACE_RCSID (tao,
            UIPMC_Connector, "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -25,9 +24,9 @@ template class ACE_NonBlocking_Connect_Handler<TAO_UIPMC_Connection_Handler>;
 
 template class ACE_Map_Entry<ACE_INET_Addr,
                              TAO_UIPMC_Connection_Handler *>;
-template class ACE_Hash_Map_Iterator_Base_Ex <ACE_INET_Addr, 
+template class ACE_Hash_Map_Iterator_Base_Ex <ACE_INET_Addr,
                                               TAO_UIPMC_Connection_Handler *,
-                                              ACE_Hash<ACE_INET_Addr>, 
+                                              ACE_Hash<ACE_INET_Addr>,
                                               ACE_Equal_To <ACE_INET_Addr>,
                                               ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<ACE_INET_Addr,
@@ -174,7 +173,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) UIPMC_Connector::connect - ")
+                    ACE_TEXT ("(%P|%t) UIPMC_Connector::make_connection, ")
                     ACE_TEXT ("new connection on HANDLE %d\n"),
                     svc_handler->get_handle ()));
    }
@@ -261,17 +260,26 @@ TAO_UIPMC_Connector::init_uipmc_properties (void)
   return 0;
 }
 
+int
+TAO_UIPMC_Connector::cancel_svc_handler (
+  TAO_Connection_Handler * svc_handler)
+{
+  ACE_UNUSED_ARG(svc_handler);
+
+  // Noop
+  return 0;
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Hash <ACE_INET_Addr>;
 template class ACE_Equal_To <ACE_INET_Addr>;
-template class ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, 
-                                       TAO_UIPMC_Connection_Handler *, 
-                                       ACE_Hash <ACE_INET_Addr>, 
-                                       ACE_Equal_To <ACE_INET_Addr>, 
+template class ACE_Hash_Map_Manager_Ex<ACE_INET_Addr,
+                                       TAO_UIPMC_Connection_Handler *,
+                                       ACE_Hash <ACE_INET_Addr>,
+                                       ACE_Equal_To <ACE_INET_Addr>,
                                        ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<ACE_INET_Addr, 
+template class ACE_Hash_Map_Entry<ACE_INET_Addr,
                                   TAO_UIPMC_Connection_Handler *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -280,7 +288,7 @@ template class ACE_Hash_Map_Entry<ACE_INET_Addr,
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, \
                                             TAO_UIPMC_Connection_Handler *, \
                                             ACE_Hash <ACE_INET_Addr>, \
-                                            ACE_Equal_To <ACE_INET_Addr>, 
+                                            ACE_Equal_To <ACE_INET_Addr>,
                                             ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<ACE_INET_Addr, \
                                        TAO_UIPMC_Connection_Handler *>
