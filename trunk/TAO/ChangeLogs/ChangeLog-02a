@@ -1,3 +1,8 @@
+Fri Sep 14 07:08:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Makefile.bor: Added Cache_Growth_Test to this
+	  Makefile. Thanks to Johnny Willemsen for pointing this out. 
+
 Thu Sep 13 13:46:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/Options.html: Changed -ORBCacheMax in the documentation to

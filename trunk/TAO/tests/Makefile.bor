@@ -19,6 +19,7 @@ DIRS = \
 	Collocation \
 	Connection_Purging \
 	Crash_On_Write \
+	Cache_Growth_Test \
 	Crashed_Callback \
         DLL_Orb \
 	DSI_Gateway \
