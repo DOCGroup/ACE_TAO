@@ -1,3 +1,10 @@
+Wed Aug  1 09:36:37 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+
+          Fixed an ACE_CHECK_RETURN in generated operation body where
+          the return type is CORBA::LongLong or CORBA::LongDouble.
+
 Wed Aug 1 8:38:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/orbconf.h: Removed the #define TAO_DOESNT_YADA_YADA as there
