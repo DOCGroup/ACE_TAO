@@ -18,7 +18,7 @@ TAO_PG_GenericFactory::TAO_PG_GenericFactory (
   : poa_ (),
     object_group_manager_ (object_group_manager),
     property_manager_ (property_manager),
-    factory_map_ (TAO_PG_MAX_NUMBER_OF_OBJECT_GROUPS),
+    factory_map_ (TAO_PG_MAX_OBJECT_GROUPS),
     next_fcid_ (0),
     lock_ ()
 {
@@ -288,6 +288,9 @@ TAO_PG_GenericFactory::delete_object_i (TAO_PG_Factory_Set & factory_set,
 void
 TAO_PG_GenericFactory::poa (PortableServer::POA_ptr p)
 {
+  ACE_ASSERT (CORBA::is_nil (this->poa_.in ())
+              && !CORBA::is_nil (p));
+
   this->poa_ = PortableServer::POA::_duplicate (p);
 }
 
@@ -462,7 +465,7 @@ TAO_PG_GenericFactory::process_criteria (
 
   PortableGroup::Value value;
 
-  name[0].id = CORBA::string_dup ("org.omg.pg.MembershipStyle");
+  name[0].id = CORBA::string_dup ("org.omg.PortableGroup.MembershipStyle");
 
   if (TAO_PG::get_property_value (name, props.in (), value)
       && (!(value >>= membership_style)
@@ -474,7 +477,7 @@ TAO_PG_GenericFactory::process_criteria (
       ACE_THROW (PortableGroup::InvalidProperty (name, value));
     }
 
-  name[0].id = CORBA::string_dup ("org.omg.pg.Factories");
+  name[0].id = CORBA::string_dup ("org.omg.PortableGroup.Factories");
   if (TAO_PG::get_property_value (name, props.in (), value)
       && !(value >>= factory_infos))
     {
@@ -483,7 +486,8 @@ TAO_PG_GenericFactory::process_criteria (
       ACE_THROW (PortableGroup::InvalidProperty (name, value));
     }
 
-  name[0].id = CORBA::string_dup ("org.omg.pg.InitialNumberMembers");
+  name[0].id =
+    CORBA::string_dup ("org.omg.PortableGroup.InitialNumberMembers");
   if (TAO_PG::get_property_value (name, props.in (), value)
       && !(value >>= initial_number_members))
     {
@@ -492,7 +496,8 @@ TAO_PG_GenericFactory::process_criteria (
       ACE_THROW (PortableGroup::InvalidProperty (name, value));
     }
 
-  name[0].id = CORBA::string_dup ("org.omg.pg.MinimumNumberMembers");
+  name[0].id =
+    CORBA::string_dup ("org.omg.PortableGroup.MinimumNumberMembers");
   if (TAO_PG::get_property_value (name, props.in (), value)
       && !(value >>= minimum_number_members))
     {

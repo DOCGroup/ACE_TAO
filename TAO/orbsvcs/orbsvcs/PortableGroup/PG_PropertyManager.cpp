@@ -14,9 +14,11 @@ TAO_PG_PropertyManager::TAO_PG_PropertyManager (
   : object_group_manager_ (object_group_manager),
     default_properties_ (),
     type_properties_ (),
-    lock_ ()
+    lock_ (),
+    property_validator_ ()
 {
 }
+
 
 void
 TAO_PG_PropertyManager::set_default_properties (
@@ -31,7 +33,7 @@ TAO_PG_PropertyManager::set_default_properties (
   // be set as part of the default properties.
   PortableGroup::Name factories;
   factories.length (1);
-  factories[0].id = CORBA::string_dup ("org.omg.pg.Factories");
+  factories[0].id = CORBA::string_dup ("org.omg.PortableGroup.Factories");
 
   CORBA::ULong len = props.length ();
   for (CORBA::ULong i = 0; i < len; ++i)
@@ -43,10 +45,15 @@ TAO_PG_PropertyManager::set_default_properties (
                                                    property.val));
     }
 
+  this->property_validator_.validate_property (props
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
   this->default_properties_ = props;
 }
+
 
 PortableGroup::Properties *
 TAO_PG_PropertyManager::get_default_properties (
@@ -68,6 +75,7 @@ TAO_PG_PropertyManager::get_default_properties (
   return props;
 }
 
+
 void
 TAO_PG_PropertyManager::remove_default_properties (
     const PortableGroup::Properties &props
@@ -87,6 +95,7 @@ TAO_PG_PropertyManager::remove_default_properties (
   ACE_CHECK;
 }
 
+
 void
 TAO_PG_PropertyManager::set_type_properties (
     const char * type_id,
@@ -96,6 +105,10 @@ TAO_PG_PropertyManager::set_type_properties (
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
 {
+  this->property_validator_.validate_property (overrides
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   CORBA::ULong num_overrides = overrides.length ();
 
   if (num_overrides == 0)
@@ -110,6 +123,7 @@ TAO_PG_PropertyManager::set_type_properties (
   PortableGroup::Properties & props = entry->int_id_;
   props = overrides;
 }
+
 
 PortableGroup::Properties *
 TAO_PG_PropertyManager::get_type_properties (
@@ -154,6 +168,7 @@ TAO_PG_PropertyManager::get_type_properties (
   return properties._retn ();
 }
 
+
 void
 TAO_PG_PropertyManager::remove_type_properties (
     const char * type_id,
@@ -180,6 +195,7 @@ TAO_PG_PropertyManager::remove_type_properties (
   ACE_CHECK;
 }
 
+
 void
 TAO_PG_PropertyManager::set_properties_dynamically (
     PortableGroup::ObjectGroup_ptr /* object_group */,
@@ -196,7 +212,8 @@ TAO_PG_PropertyManager::set_properties_dynamically (
   // allowed to be set as part of the default properties.
   PortableGroup::Name factories;
   factories.length (1);
-  factories[0].id = CORBA::string_dup ("org.omg.pg.InitialNumberMembers");
+  factories[0].id =
+    CORBA::string_dup ("org.omg.PortableGroup.InitialNumberMembers");
 
   CORBA::ULong len = props.length ();
   for (CORBA::ULong i = 0; i < len; ++i)
@@ -207,10 +224,17 @@ TAO_PG_PropertyManager::set_properties_dynamically (
         ACE_THROW (PortableGroup::InvalidProperty (property.nam,
                                                    property.val));
     }
+
+  this->property_validator_.validate_property (overrides
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // @todo Set the properties in the object group map entry.
 #endif  /* 0 */
 
   ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
+
 
 PortableGroup::Properties *
 TAO_PG_PropertyManager::get_properties (
@@ -283,6 +307,7 @@ TAO_PG_PropertyManager::get_properties (
 
   return properties._retn ();
 }
+
 
 void
 TAO_PG_PropertyManager::remove_properties (

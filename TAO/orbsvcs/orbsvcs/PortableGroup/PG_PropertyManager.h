@@ -22,9 +22,13 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "PG_Default_Property_Validator.h"
+
+#include "orbsvcs/PortableGroupS.h"
+
 #include "ace/Functor.h"
 #include "ace/Hash_Map_Manager_T.h"
-#include "orbsvcs/PortableGroupS.h"
+
 
 
 /// Forward declarations.
@@ -43,7 +47,7 @@ class TAO_PG_ObjectGroupManager;
  * TAO_PG_ObjectGroup_Map_Entry structure.  However, the
  * PropertyManager is still used to manage those properties.
  */
-class TAO_PG_PropertyManager
+class TAO_PortableGroup_Export TAO_PG_PropertyManager
   : public virtual POA_PortableGroup::PropertyManager
 {
 public:
@@ -172,6 +176,12 @@ private:
   /// Lock used to synchronize access to the default properties and
   /// the type-specific properties.
   TAO_SYNCH_MUTEX lock_;
+
+  /// The property validator.
+  /**
+   * @todo Strategize the validator, or use template policies.
+   */
+  TAO_PG_Default_Property_Validator property_validator_;
 
 };
 

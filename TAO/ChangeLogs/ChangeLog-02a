@@ -1,3 +1,79 @@
+Fri Jun 28 18:08:18 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.idl:
+
+	  Updated to better match the IDL in the current joint submission
+	  revision.
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.dsp:
+	* orbsvcs/orbsvcs/CosLoadBalancing.rc:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.inl:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_MemberLocator.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_MemberLocator.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Pull_Handler.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Pull_Handler.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp:
+
+	  Preliminary implementation of TAO's new load balancer.  It
+	  implements the current joint load balancing submission
+	  revision.  Do not use yet!  The implementation will be ready
+	  prior to the release of the forthcoming beta.
+
+	* orbsvcs/orbsvcs/PG_Default_Property_Validator.h:
+	* orbsvcs/orbsvcs/PG_Default_Property_Validator.cpp:
+	* orbsvcs/orbsvcs/PG_Null_Property_Validator.h:
+	* orbsvcs/orbsvcs/PG_Null_Property_Validator.cpp:
+
+	  New default and no-op property validation classes.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Location_Equal_To.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Location_Hash.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.h:
+
+	  Export the classes/functions in these files in MS Windows
+	  builds.  Corrects link-time errors.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp (poa):
+
+	  Assert that the cached POA reference is nil before allowing the
+	  method to continue.  This method should only be called once.
+
+	  (process_criteria):
+
+	  "org.omg.pg" -> "org.omg.PortableGroup", in accordance with
+	  recent updates to the load balancing joint submission.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp
+	  (object_group):
+
+	  New method that returns object group reference given an
+	  ObjectId.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.cpp
+	  (set_default_properties, set_properties_dynamically):
+
+	  "org.omg.pg" -> "org.omg.PortableGroup", in accordance with
+	  recent updates to the load balancing joint submission.
+
+  	  (set_default_properties, set_type_properties):
+	  (set_properties_dynamically):
+
+	  Invoke the property validator before actually setting any
+	  properties.
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_conf.h:
+
+	  Made constant names less verbose.  They were unnecessarily
+	  "wordy" before.
+
 Fri Jun 28 16:32:12 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/TypeCode.cpp:
