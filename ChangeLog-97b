@@ -1,3 +1,13 @@
+Fri Nov  7 18:53:13 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
+
+	* ace/config-netbsd.h: Added file for NetBSD 1.2G.
+
+Fri Nov  7 18:50:51 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
+
+	* ace/OS.i (msync): msync on NetBSD takes only two parameters as
+	opposed to the usual two. (It doesnt have the "flags" parameter.)
+	The ACE_HAS_BROKEN_NETBSD_MSYNC flag works around that.
+
 Fri Nov  7 16:04:35 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp: Added a missing '>' for one of the
