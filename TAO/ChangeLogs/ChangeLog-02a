@@ -1,3 +1,9 @@
+Sat Apr  6 15:27:35 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/POA/Makefile: Added the new test to the list of tests. 
+	* examples/POA/POA_BiDir/run_test.pl: Fixed the script to work
+	  right. 
+
 Sat Apr  6 12:27:36 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/POA_BiDir/Makefile:
