@@ -28,7 +28,6 @@ class TAO_Unbounded_Sequence : public TAO_Unbounded_Base_Sequence
   //   for the unbounded case.
 public:
   // = Initialization and termination methods.
-  typedef TAO_Object_Manager<T> Manager;
 
   TAO_Unbounded_Sequence (void);
   // Default constructor.
@@ -127,8 +126,6 @@ class TAO_Bounded_Sequence : public TAO_Bounded_Base_Sequence
   //   This class completes the implementation for TAO_Base_Sequence
   //   for the bounded case.
 public:
-  typedef TAO_Object_Manager<T> Manager;
-
   // = Initialization and termination methods.
   TAO_Bounded_Sequence (void);
   // Default constructor.
@@ -386,7 +383,7 @@ public:
   // the reallocation is performed. After reallocation, the release
   // flag is always set to TRUE.
 
-  Manager operator[] (CORBA::ULong index) const;
+  TAO_Object_Manager<T> operator[] (CORBA::ULong index) const;
   // read-write accessor
 
   static T **allocbuf (CORBA::ULong);
@@ -450,7 +447,7 @@ public:
   TAO_Bounded_Object_Sequence &operator= (const TAO_Bounded_Object_Sequence<T,MAX> &);
   // Assignment from another Bounded sequence.
 
-  Manager operator[] (CORBA::ULong index) const;
+  TAO_Object_Manager<T> operator[] (CORBA::ULong index) const;
   // Read-write accessor.
 
   static T **allocbuf (CORBA::ULong length);

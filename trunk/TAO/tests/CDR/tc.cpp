@@ -125,7 +125,7 @@ main (int argc, char *argv[])
 
 		ACE_DEBUG ((LM_DEBUG,
 			    "ID = '%s'\n"
-			    "%{%{% NAME = %s%$"
+			    "%{%{ NAME = %s%$"
 			    " KIND = %d%$"
 			    " LENGTH = %d"
 			    "%}%}\n",

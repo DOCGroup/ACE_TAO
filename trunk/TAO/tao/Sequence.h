@@ -250,9 +250,7 @@ class TAO_Export TAO_Unbounded_String_Sequence : public TAO_Unbounded_Base_Seque
   // constructor, an assignment operator, and a destructor.
   //
 public:
-  typedef TAO_String_Manager Manager;
-
-  // =operations for the Unbounded_ObjectSequence
+  // = Operations for the Unbounded_ObjectSequence
 
   TAO_Unbounded_String_Sequence (void);
   // {orbos/97-05-15:16.8}
@@ -323,7 +321,7 @@ public:
   // reallocation is performed. After reallocation, the release flag
   // is always set to TRUE.
 
-  Manager operator[] (CORBA::ULong index) const;
+  TAO_String_Manager operator[] (CORBA::ULong index) const;
   // read-write accessor
 
   static char* *allocbuf (CORBA::ULong);
