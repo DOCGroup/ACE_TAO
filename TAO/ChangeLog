@@ -1,3 +1,11 @@
+Tue May 27 15:17:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+
+          Removed initialization of collocation proxy broker pointer
+          from the constructor of an abstract interface, since
+          abstract interfaces do not contain such a member.
+
 Tue May 27 14:43:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynCommon.cpp:

@@ -86,12 +86,12 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
           << "TAO_Abstract_ServantBase *servant," << be_nl
           << "TAO_ORB_Core *orb_core" << be_uidt_nl
           << ")" << be_nl
-          << ": ACE_NESTED_CLASS (CORBA, AbstractBase) (" << be_nl
-          << "      objref," << be_nl
-          << "      _tao_collocated," << be_nl
-          << "      servant" << be_nl
-          << "    )," << be_uidt_nl
-          << "the"<< node->base_proxy_broker_name () << "_ (0)" << be_uidt_nl
+          << ": ACE_NESTED_CLASS (CORBA, AbstractBase) (" 
+          << be_idt << be_idt << be_idt_nl
+          << "objref," << be_nl
+          << "_tao_collocated," << be_nl
+          << "servant" << be_uidt_nl
+          << ")" << be_uidt << be_uidt << be_uidt_nl
           << "{}";
     }
   else
