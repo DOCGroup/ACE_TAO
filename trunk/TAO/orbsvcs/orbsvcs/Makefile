@@ -67,13 +67,13 @@ FILES= $(IDL_FILES) \
 	Sched/Scheduler \
 	Sched/Scheduler_Generic \
 	\
-	tmplinst
+	tmplinst-orbsvcs
 
 VPATH=.:Naming:Event:Sched:AV:Property
 
 # Compile using av=1 to compile the AVStreams stuff.
 ifdef av
-## Add the implementation files 
+## Add the implementation files
 FILES += \
 	AV/AVStreams_i \
 	Property/CosPropertyService_i \
@@ -125,7 +125,7 @@ realclean: clean
 
 #ifdef av
 #CosProperty : CosProperty_Hash.o
-#	CC -g -o $@ $(LDFLAGS) $(CPPFLAGS) CosProperty_Hash.o 
+#	CC -g -o $@ $(LDFLAGS) $(CPPFLAGS) CosProperty_Hash.o
 #endif
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
@@ -6931,7 +6931,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
  Sched/Scheduler.i Sched/Scheduler_Generic.i
-.obj/tmplinst.o .obj/tmplinst.so .shobj/tmplinst.o .shobj/tmplinst.so: tmplinst.cpp \
+.obj/tmplinst-orbsvcs.o .obj/tmplinst-orbsvcs.so .shobj/tmplinst-orbsvcs.o .shobj/tmplinst-orbsvcs.so: tmplinst-orbsvcs.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
