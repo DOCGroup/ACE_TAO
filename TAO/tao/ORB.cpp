@@ -116,6 +116,20 @@ CORBA::string_dup (const CORBA::Char *str)
   return CORBA::string_copy (str);
 }
 
+#if defined (NONNATIVE_LONGDOUBLE)
+int
+CORBA::LongDouble::operator== (CORBA::LongDouble &rhs)
+{
+  return ACE_OS::memcmp (this->ld, rhs.ld, 16) == 0;
+}
+
+int
+CORBA::LongDouble::operator!= (CORBA::LongDouble &rhs)
+{
+  return ACE_OS::memcmp (this->ld, rhs.ld, 16) != 0;
+}
+#endif /* NONNATIVE_LONGDOUBLE */
+
 CORBA_ORB::CORBA_ORB (void)
   : refcount_ (1),
     open_called_ (0),
