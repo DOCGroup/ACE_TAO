@@ -208,7 +208,7 @@ CORBA::Object::_tao_QueryInterface (ptr_arith_t type)
   if (retv)
     this->_add_ref ();
 
-  return 0;
+  return retv;
 }
 
 void
@@ -217,7 +217,8 @@ CORBA::Object::_proxy_broker (TAO_Object_Proxy_Broker *proxy_broker)
   this->proxy_broker_ = proxy_broker;
 }
 
-TAO_Object_Proxy_Broker *CORBA::Object::_proxy_broker (void)
+TAO_Object_Proxy_Broker *
+CORBA::Object::_proxy_broker (void)
 {
   return this->proxy_broker_;
 }
