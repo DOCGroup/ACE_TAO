@@ -1,3 +1,8 @@
+Mon Dec 22 04:58:28 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+          Fix "one last bug" in previous check-in.
+
 Sun Dec 21 23:07:49 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.h:
