@@ -1,3 +1,9 @@
+Wed May 17 11:53:18 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/SHMIOP_Connect.cpp: Plugged a memory leak in
+	  Server_Connection_Handler.  Thanks to Sangwoo Jin
+	  <swjinjin@sei.co.kr> for noticing this.
+
 Tue May 16 17:21:54 2000  Pradeep Gore  <pradeep@cumbia.cs.wustl.edu>
 
 	* orbsvcs/examples/Log/test/client.cpp:
