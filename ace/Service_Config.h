@@ -301,7 +301,7 @@ protected:
   // <process_directive> both call.  Returns the number of errors that
   // occurred.
 
-  static void parse_args (int, ASYS_TCHAR *argv[]);
+  static int parse_args (int, ASYS_TCHAR *argv[]);
   // Handle the command-line options intended for the
   // <ACE_Service_Config>.  Note that <argv[0]> is assumed to be the
   // program name.
@@ -326,6 +326,9 @@ private:
   static ACE_SVC_QUEUE *svc_conf_file_queue_;
   // Queue of svc.conf files specified on the command-line.
   // @@ This should probably be made to handle unicode filenames...
+
+  static int init_svc_conf_file_queue (void);
+  // Initialize the <svc_conf_file_queue_> if necessary.
 
   static sig_atomic_t reconfig_occurred_;
   // True if reconfiguration occurred.
