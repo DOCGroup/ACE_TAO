@@ -1,3 +1,16 @@
+Thu Aug  5 11:48:49 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* performance-tests/Protocols/Controller/Controller.mpc:
+
+	  Corrected library link order.  Addresses undefined reference
+	  link-time errors in static builds.
+
+	* tools/XML_Helpers/XMLHelpers.mpc (Helper_Test):
+
+	  Added missing TAO_IFR_Client library to "libs" variable.
+	  Addresses undefined reference link-time errors in static
+	  builds.
+
 Thu Aug  5 13:28:49 2004  Will Otte <wotte@dre.vanderbilt.edu>
 
 	* docs/schema/ciaopolicy.xsd:
