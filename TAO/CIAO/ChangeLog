@@ -1,3 +1,18 @@
+Mon Sep 27 22:41:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* CIDLC/ServantSourceGenerator.cpp:
+
+	  Remove calling Home_Servant_impl_Base () directly. 
+	
+	* DAnCE/ciao/Home_Servant_Impl_Base.cpp:
+	* DAnCE/ciao/Home_Servant_Impl_Base.h:
+	* ciao/Home_Servant_Impl_Base.cpp:
+	* ciao/Home_Servant_Impl_Base.h:
+
+	  Provided a default constructor with explicit keyword. This
+	  should help VC6 and Borland compilers to compile the generated
+	  servants just fine.
+
 Mon Sep 27 19:45:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* CIDLC/ServantSourceGenerator.cpp:
