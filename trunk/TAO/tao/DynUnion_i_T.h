@@ -18,28 +18,38 @@
 
 #include "tao/corba.h"
 
-// Template class functor to compare Anys in TAO_DynUnion_i 
-// constructor with an Any arg and member function from_any().
-// Some compilers won't accept these eclarations inside 
-// TAO_DynUnion_i or even at global scope in the same file.
-  
 class DU_Extractor_base
 {
+  // = TITLE
+  //    DU_Extractor_base
+  //
+  // = DESCRIPTION
+  //    Base class of template class below
+  //
 public:
   virtual 
-  CORBA::Boolean      check_match     (const CORBA_Any& inside_any,
-                                       const CORBA_Any& outside_any) = 0;
+  CORBA::Boolean check_match (const CORBA_Any& inside_any,
+                              const CORBA_Any& outside_any) = 0;
 };
 
 template <class Type>
 class DU_Extractor : public DU_Extractor_base
 {
+  // = TITLE
+  //    DU_Extractor
+  //
+  // = DESCRIPTION
+  //    Template class functor to compare Anys in TAO_DynUnion_i 
+  //    constructor with an Any arg and member function from_any().
+  //    Some compilers won't accept these eclarations inside 
+  //    TAO_DynUnion_i or even at global scope in the same file.
+  //
 public:
-  CORBA::Boolean      check_match     (const CORBA_Any& inside_any,
-                                       const CORBA_Any& outside_any);
+  CORBA::Boolean check_match (const CORBA_Any& inside_any,
+                              const CORBA_Any& outside_any);
 private:
-  Type                arg_index_, 
-                      member_index_;
+  Type arg_index_; 
+  Type member_index_;
 };
   
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
