@@ -540,7 +540,8 @@ Cubit_Client::print_stats (const char *call_name,
   if (this->call_count_ > 0 && this->error_count_ == 0)
     {
 #if defined (ACE_LACKS_FLOATING_POINT)
-      const u_int calls_per_sec = 1000 / elapsed_time.real_time;
+      const u_int calls_per_sec =
+        this->call_count_ * 1000000u / elapsed_time.real_time;
 
       ACE_DEBUG ((LM_DEBUG,
                   "\treal_time\t= %u usec, \n\t"
@@ -548,7 +549,7 @@ Cubit_Client::print_stats (const char *call_name,
                   elapsed_time.real_time < 0 ? 0 : elapsed_time.real_time,
                   calls_per_sec));
 #else  /* ! ACE_LACKS_FLOATING_POINT */
-      double tmp = 1000 / elapsed_time.real_time;
+      double tmp = this->call_count_ / elapsed_time.real_time;
 
       elapsed_time.real_time *= ACE_ONE_SECOND_IN_MSECS;
       elapsed_time.user_time *= ACE_ONE_SECOND_IN_MSECS;
