@@ -1,3 +1,9 @@
+Thu Dec 25 18:03:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/ftorbutils.mpb:
+
+	  Removed the dependancy on CosNaming.
+
 Wed Dec 24 17:10:45 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * bin/fuzz.pl:
