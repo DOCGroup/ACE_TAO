@@ -20,26 +20,28 @@
 
 ACE_RCSID(tao, Transport, "$Id$")
 
-TAO_Synch_Refcountable::TAO_Synch_Refcountable (int refcount)
+TAO_Synch_Refcountable::TAO_Synch_Refcountable (ACE_Lock *lock, int refcount)
   : ACE_Refcountable (refcount)
+  , refcount_lock_ (lock)
 {
 }
 
 TAO_Synch_Refcountable::~TAO_Synch_Refcountable (void)
 {
+  delete this->refcount_lock_;
 }
 
 int
 TAO_Synch_Refcountable::increment (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->refcount_lock_, 0);
   return ACE_Refcountable::increment ();
 }
 
 int
 TAO_Synch_Refcountable::decrement (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->refcount_lock_, 0);
   return ACE_Refcountable::decrement ();
 }
 
@@ -52,7 +54,7 @@ TAO_Synch_Refcountable::refcount (void) const
 // Constructor.
 TAO_Transport::TAO_Transport (CORBA::ULong tag,
                               TAO_ORB_Core *orb_core)
-  : TAO_Synch_Refcountable (1)
+  : TAO_Synch_Refcountable (orb_core->resource_factory ()->create_cached_connection_lock (), 1)
   , tag_ (tag)
   , orb_core_ (orb_core)
   , cache_map_entry_ (0)
