@@ -1,14 +1,17 @@
-#include "tao/orb.h"
+// $Id$
 
-#define SHOWSIZE(t) cout << "sizeof(" #t ") = " << sizeof(t) << endl;
+#include "tao/corba.h"
+
+#define SHOWSIZE(t) ACE_OS::printf ("sizeof (%s) = %u\n", #t, sizeof(t));
 
 int
-main(int argc, char* argv[])
+main (int, char*[])
 {
-  SHOWSIZE (CORBA_Short);
-  SHOWSIZE (CORBA_Long);
-  SHOWSIZE (CORBA_LongLong);
-  SHOWSIZE (CORBA_Float);
-  SHOWSIZE (CORBA_Double);
-  SHOWSIZE (CORBA_LongDouble);
+  SHOWSIZE (CORBA::Boolean);
+  SHOWSIZE (CORBA::Short);
+  SHOWSIZE (CORBA::Long);
+  SHOWSIZE (CORBA::LongLong);
+  SHOWSIZE (CORBA::Float);
+  SHOWSIZE (CORBA::Double);
+  SHOWSIZE (CORBA::LongDouble);
 }
