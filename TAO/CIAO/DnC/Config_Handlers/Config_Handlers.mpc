@@ -13,6 +13,7 @@ project (Config_Handlers) : taolib {
     Utils.cpp
     ID_Handler.cpp
     CEPE_Handler.cpp
+    DP_Handler.cpp
     ERE_Handler.cpp
     RS_Handler.cpp
     SP_Handler.cpp

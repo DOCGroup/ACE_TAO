@@ -222,6 +222,7 @@ module Deployment {
 
   struct DeploymentPlan {
     string label;
+    string UUID;
     ComponentInterfaceDescription realizes;
     MonolithicDeploymentDescriptions implementation;
     InstanceDeploymentDescriptions instance;
@@ -314,7 +315,7 @@ module Deployment {
 
   typedef sequence < DomainApplicationManager > DomainApplicationManagers;
 
-  interface ExecutionManager {
+  interface ExecutionbManager {
     DomainApplicationManager preparePlan (in DeploymentPlan plan, in boolean commitResources)
       raises (ResourceNotAvailable, PlanError, StartError);
     DomainApplicationManagers getManagers ();

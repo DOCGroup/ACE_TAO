@@ -1,3 +1,18 @@
+Thu Apr 22 21:32:39 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
+
+	* DnC/Deployment.idl:
+	  Added a "string UUID;" field to the DeploymentPlan
+	  structure. The spec shows UUID as an attribute, which serves as
+	  the unique identfier of a plan. However, the spec does not
+	  include it in the IDL nor the schema. I decided to add it for now.
+
+	* DnC/Config_Handler/DP_Handler.h:
+	* DnC/Config_Handler/DP_Handler.cpp:
+	  XML handlers for the deployment plan artifact of the Execution Model. 
+
+	* DnC/Config_Handler/Config_Handlers.mpc:
+	  Added DP_Handler.cpp
+
 Thu Apr 22 15:36:14 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/Config_Handler/Config_Handlers.mpc
