@@ -1,6 +1,4 @@
-//
 // $Id$
-//
 
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
@@ -24,19 +22,19 @@ parse_args (int argc, char *argv [])
   while ((opt = get_opt ()) != EOF)
     {
       switch (opt)
-	{
-	case 'n':
-	  service_name = get_opt.optarg;
-	  break;
-	case '?':
-	default:
-	  ACE_DEBUG ((LM_DEBUG,
-		      "Usage: %s "
-		      "-n service_name "
-		      "\n",
-		      argv[0]));
-	  return -1;
-	}
+        {
+        case 'n':
+          service_name = get_opt.optarg;
+          break;
+        case '?':
+        default:
+          ACE_DEBUG ((LM_DEBUG,
+                      "Usage: %s "
+                      "-n service_name "
+                      "\n",
+                      argv[0]));
+          return -1;
+        }
     }
 
   return 0;
@@ -47,36 +45,36 @@ int main (int argc, char *argv[])
   TAO_TRY
     {
       // Initialize ORB.
-      CORBA::ORB_var orb = 
-	CORBA::ORB_init (argc, argv, "", TAO_TRY_ENV);
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc, argv, "", TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       if (parse_args (argc, argv) != 0)
-	return 1;
+        return 1;
 
-      CORBA::Object_var poa_object = 
-	orb->resolve_initial_references("RootPOA");
+      CORBA::Object_var poa_object =
+        orb->resolve_initial_references("RootPOA");
       if (CORBA::is_nil (poa_object.in ()))
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to initialize the POA.\n"),
-			  1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize the POA.\n"),
+                          1);
 
       PortableServer::POA_var root_poa =
-	PortableServer::POA::_narrow (poa_object.in (), TAO_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       PortableServer::POAManager_var poa_manager =
-	root_poa->the_POAManager (TAO_TRY_ENV);
+        root_poa->the_POAManager (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       CORBA::Object_var naming_obj =
-	orb->resolve_initial_references ("NameService");
+        orb->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to initialize the POA.\n"),
-			  1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize the POA.\n"),
+                          1);
 
-      CosNaming::NamingContext_var naming_context = 
+      CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -84,12 +82,12 @@ int main (int argc, char *argv[])
       ACE_Config_Scheduler scheduler_impl;
       TAO_CHECK_ENV;
 
-      RtecScheduler::Scheduler_var scheduler = 
-	scheduler_impl._this (TAO_TRY_ENV);
+      RtecScheduler::Scheduler_var scheduler =
+        scheduler_impl._this (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       CORBA::String_var str =
-	orb->object_to_string (scheduler.in (), TAO_TRY_ENV);
+        orb->object_to_string (scheduler.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "The scheduler IOR is <%s>\n", str.in ()));
@@ -104,9 +102,9 @@ int main (int argc, char *argv[])
       poa_manager->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      ACE_DEBUG ((LM_DEBUG, "running scheduling service\n"));
+      ACE_DEBUG ((LM_DEBUG, "%s; running scheduling service\n", __FILE__));
       if (orb->run () == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), 1);
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), 1);
 
     }
   TAO_CATCHANY
