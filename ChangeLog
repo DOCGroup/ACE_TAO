@@ -1,3 +1,8 @@
+Mon Dec 22 17:01:39 2003  Steve Huston  <shuston@riverace.com>
+
+	* tests/Makefile.am: Removed comment on -module option for
+	  libTestOutput. Added ACE_Test and TSS_Static_Test.
+
 Mon Dec 22 14:08:41 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ACE-INSTALL.html:
