@@ -187,7 +187,7 @@ ACE_Test_Output::set_output (const char *filename, int append)
 
   char *test_dir = ACE_OS::getenv ("ACE_TEST_DIR");
 
-  if (!test_dir)
+  if (test_dir == 0)
     test_dir = "";
 
   ACE_OS::sprintf (temp, "%s%s%s%s",
