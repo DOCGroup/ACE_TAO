@@ -129,9 +129,9 @@ ACE_Token_Request::token_name (const char *token_name, const char *client_id)
   (void) ACE_OS::memcpy (token_name_, token_name, token_name_length);
   (void) ACE_OS::memcpy (client_id_, client_id, client_id_length);
 
-  // Compute size of the fixed portion of the message...
-  size_t len = sizeof this->transfer_ - sizeof this->transfer_.data_;
-  
+  // Fixed length header size
+  size_t len = ACE_TOKEN_REQUEST_HEADER_SIZE;
+
   // ... then add in the amount of the variable-sized portion. 
   len += token_name_length + client_id_length + 1;
 

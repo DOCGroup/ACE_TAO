@@ -30,6 +30,10 @@
 
 #include "ace/Time_Value.h"
 
+// Specifies the size of the fixed length portion of
+// the Transfer structure in ACE_Token_Request
+#define ACE_TOKEN_REQUEST_HEADER_SIZE 40
+
 class ACE_Export ACE_Token_Request
 {
   // = TITLE
@@ -152,9 +156,9 @@ private:
     ACE_UINT32 arg_;
     // value returned in Token_Reply::arg ();
 
-    char data_[ACE_MAXTOKENNAMELEN + ACE_MAXCLIENTIDLEN + 1];
-    // The data portion contains the <tokenName_> followed by a ':'
-    // followed by the <clientId_>.
+    char data_[ACE_MAXTOKENNAMELEN + ACE_MAXCLIENTIDLEN + 3];
+    // The data portion contains the <tokenName_> including a 0 terminator,
+    // a ':', then the <clientId> including a 0 terminator
   } transfer_;
 
   char *token_name_;
