@@ -1,0 +1,11 @@
+
+
+#################################################
+#       Kokyu Namespace Specification File        #
+#################################################
+
+
+# Entity type   Family Name     Fam ID  Entity Name     Ety ID  Description  function 1      function2
+DSTRM_EVENT	KOKYU_GROUP	1	DISPATCH_EVENT_EXECUTE	2	"Dispatcher event executed"	print_string
+
+DSTRM_EVENT	KOKYU_GROUP	1	DISPATCH_EVENT_ENQUEUE	1	"Dispatcher event enqueued"	print_string

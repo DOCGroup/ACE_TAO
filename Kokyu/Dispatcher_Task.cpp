@@ -9,6 +9,10 @@
 #include "Dispatcher_Task.i"
 #endif /* __ACE_INLINE__ */
 
+#include "kokyu_dsui_config.h"
+#include "kokyu_dsui_families.h"
+#include <dsui.h>
+
 ACE_RCSID(Kokyu, Dispatcher_Task, "$Id$")
 
 namespace 
@@ -121,7 +125,13 @@ Dispatcher_Task::svc (void)
 
       ACE_ASSERT(command != 0);
 
-      //@@DSUI - DISPATCH_COMMAND_EXECUTE event
+      //@@DSUI - DISPATCH_EVENT_EXECUTE event
+      /* Log KOKYU_GROUP_FAM event: DISPATCH_EVENT_EXECUTE
+       * ID: 0
+       * Length of string data: 0
+       * String data: NULL
+       */
+      DSUI_EVENT_LOG (KOKYU_GROUP_FAM, DISPATCH_EVENT_EXECUTE, 0, 0, NULL);
       int result = command->execute ();
 
       if (command->can_be_deleted ())
@@ -139,7 +149,20 @@ int
 Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
                           const QoSDescriptor& qos_info)
 {
-  //@@DSUI - DISPATCH_COMMAND_ENQUEUE event
+  //@@DSUI - DISPATCH_EVENT_ENQUEUE event
+  /* Log KOKYU_GROUP_FAM event: DISPATCH_EVENT_ENQUEUE
+   * ID: 0
+   * Length of string data: 0
+   * String data: NULL
+   *
+   * ID is meant to be a unique identifier for the stream of events. 
+   * So if you are tracking a command (number 504) through the system
+   * you would replace 0 with variable containing 504
+   *
+   * The string data is there in case you want to add someting to the
+   * datastream data to describe or add information to the timestamp
+   */
+  DSUI_EVENT_LOG (KOKYU_GROUP_FAM, DISPATCH_EVENT_ENQUEUE, 0, 0, NULL);
   void* buf = this->allocator_->malloc (sizeof (Dispatch_Queue_Item));
 
   if (buf == 0)
