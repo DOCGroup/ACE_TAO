@@ -1,3 +1,18 @@
+Wed Aug  7 12:39:31 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Driver.pm:
+
+          Speed up execution by changing the include path order.
+
+        * bin/MakeProjectCreator/modules/GNUWorkspaceCreator.pm:
+
+          Don't generate a for loop if there is only one project.
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Fixed a bug with the global assignments overwriting project
+          assignments.
+
 Sun Aug  4 16:47:29 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Framework_Component_DLL.cpp: Added a missing template
