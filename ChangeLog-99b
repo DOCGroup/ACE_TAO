@@ -1,5 +1,11 @@
 Wed Sep  1 00:05:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Process_Manager: Integrated the latest and greatest
+	  ACE_Process_Manager from Dave Madden <dhm@mersenne.com>.  This
+ 	  should now work relatively transparently on all OS platforms
+ 	  that support processes.  We'll be adding a new
+ 	  Process_Manager_Test.cpp shortly...
+
 	* tests/Reactor_Notify_Test.cpp: Modified this test to exercise
 	  the new user-level notification queueing in the ACE_Reactor.
 
