@@ -41,15 +41,16 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
 
 - (OCI) Parse-magic-bytes re-integration
 
-  Chris/Bala--need to coordinate.  Hopefully week of 8/30?
+  Integrated as-is on branch 'pmb_integration'; Mike Martinez will work
+  on performance optimizations beginning 10/11.
 
 - (OCI) [hopeful] Notification Service EventReliability and ConnectionReliability QoS
 
-  Dale Wilson, Ongoing.
+  Dale Wilson, Ongoing, anticipating 10/15/04.
 
 - (OCI) better compatibility with JDK orb
 
-  Dale Wilson will do this week of 8/30.
+  Done.
 
 - (JTC) Split ORB Services into stub, skeleton, and implementation libraries.
 
