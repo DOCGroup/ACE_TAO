@@ -26,7 +26,7 @@
 #include "ciao/DeploymentS.h"
 #include "CIAO_NAM_Export.h"
 #include "ciao/NodeApp_CB_Impl.h"
-#include "ciao/ImplementationInfo.h"
+#include "ImplementationInfo.h"
 
 namespace CIAO
 {
