@@ -200,7 +200,7 @@ main (int, char *[])
   return 0;
 }
 #else
-#include <stdio.h>
+#include "ace/OS_NS_stdio.h"
 int main (int, char *[])
 {
   ACE_OS::fprintf (stderr, "This feature is not supported\n");
