@@ -32,7 +32,7 @@
 #include "tao/Any_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_Messaging_ExceptionHolder[] =
 {
@@ -125,7 +125,7 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:295
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_Messaging_ReplyHandler[] =
 {
@@ -163,7 +163,7 @@ namespace Messaging
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_valuetype/any_op_cs.cpp:57
+// be\be_visitor_valuetype/any_op_cs.cpp:57
 
 template<>
 CORBA::Boolean
@@ -219,7 +219,7 @@ operator>>= (
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_cs.cpp:50
+// be\be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean

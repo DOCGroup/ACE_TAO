@@ -131,6 +131,8 @@ namespace PortableInterceptor
     // The static operations.
     static IORInterceptor_ptr _duplicate (IORInterceptor_ptr obj);
     
+    static void _tao_release (IORInterceptor_ptr obj);
+    
     static IORInterceptor_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -195,7 +197,7 @@ namespace PortableInterceptor
       )) = 0;
     
     // TAO_IDL - Generated from
-    // be\be_visitor_interface/interface_ch.cpp:208
+    // be\be_visitor_interface/interface_ch.cpp:210
     
     virtual CORBA::Boolean _is_a (
         const char *type_id
@@ -235,7 +237,7 @@ namespace TAO
 #if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR__TRAITS_CH_)
 #define _PORTABLEINTERCEPTOR_IORINTERCEPTOR__TRAITS_CH_
   
-  ACE_TEMPLATE_SPECIALIZATION
+  template<>
   struct TAO_IORInterceptor_Export Objref_Traits< ::PortableInterceptor::IORInterceptor>
   {
     static ::PortableInterceptor::IORInterceptor_ptr duplicate (

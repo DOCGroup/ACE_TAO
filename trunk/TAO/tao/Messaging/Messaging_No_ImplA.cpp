@@ -66,7 +66,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_Priority (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_Priority =
+  ::CORBA::TypeCode_ptr const _tc_Priority =
     &_tc_TAO_tc_Messaging_Priority;
 }
 
@@ -105,7 +105,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_RebindMode (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_RebindMode =
+  ::CORBA::TypeCode_ptr const _tc_RebindMode =
     &_tc_TAO_tc_Messaging_RebindMode;
 }
 
@@ -144,7 +144,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_RoutingType (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_RoutingType =
+  ::CORBA::TypeCode_ptr const _tc_RoutingType =
     &_tc_TAO_tc_Messaging_RoutingType;
 }
 
@@ -182,7 +182,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_Ordering (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_Ordering =
+  ::CORBA::TypeCode_ptr const _tc_Ordering =
     &_tc_TAO_tc_Messaging_Ordering;
 }
 
@@ -220,7 +220,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_RebindPolicy (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_RebindPolicy =
+  ::CORBA::TypeCode_ptr const _tc_RebindPolicy =
     &_tc_TAO_tc_Messaging_RebindPolicy;
 }
 
@@ -303,7 +303,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_PriorityRange (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_PriorityRange =
+  ::CORBA::TypeCode_ptr const _tc_PriorityRange =
     &_tc_TAO_tc_Messaging_PriorityRange;
 }
 
@@ -345,7 +345,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_RequestPriorityPolicy (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_RequestPriorityPolicy =
+  ::CORBA::TypeCode_ptr const _tc_RequestPriorityPolicy =
     &_tc_TAO_tc_Messaging_RequestPriorityPolicy;
 }
 
@@ -386,7 +386,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_ReplyPriorityPolicy (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_ReplyPriorityPolicy =
+  ::CORBA::TypeCode_ptr const _tc_ReplyPriorityPolicy =
     &_tc_TAO_tc_Messaging_ReplyPriorityPolicy;
 }
 
@@ -429,7 +429,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_RequestStartTimePolicy (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_RequestStartTimePolicy =
+  ::CORBA::TypeCode_ptr const _tc_RequestStartTimePolicy =
     &_tc_TAO_tc_Messaging_RequestStartTimePolicy;
 }
 
@@ -471,7 +471,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_RequestEndTimePolicy (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_RequestEndTimePolicy =
+  ::CORBA::TypeCode_ptr const _tc_RequestEndTimePolicy =
     &_tc_TAO_tc_Messaging_RequestEndTimePolicy;
 }
 
@@ -513,7 +513,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_ReplyStartTimePolicy (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_ReplyStartTimePolicy =
+  ::CORBA::TypeCode_ptr const _tc_ReplyStartTimePolicy =
     &_tc_TAO_tc_Messaging_ReplyStartTimePolicy;
 }
 
@@ -554,7 +554,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_ReplyEndTimePolicy (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_ReplyEndTimePolicy =
+  ::CORBA::TypeCode_ptr const _tc_ReplyEndTimePolicy =
     &_tc_TAO_tc_Messaging_ReplyEndTimePolicy;
 }
 
@@ -600,7 +600,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_RelativeRequestTimeoutPolicy (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_RelativeRequestTimeoutPolicy =
+  ::CORBA::TypeCode_ptr const _tc_RelativeRequestTimeoutPolicy =
     &_tc_TAO_tc_Messaging_RelativeRequestTimeoutPolicy;
 }
 
@@ -687,7 +687,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_RoutingTypeRange (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_RoutingTypeRange =
+  ::CORBA::TypeCode_ptr const _tc_RoutingTypeRange =
     &_tc_TAO_tc_Messaging_RoutingTypeRange;
 }
 
@@ -725,7 +725,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_RoutingPolicy (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_RoutingPolicy =
+  ::CORBA::TypeCode_ptr const _tc_RoutingPolicy =
     &_tc_TAO_tc_Messaging_RoutingPolicy;
 }
 
@@ -763,7 +763,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_MaxHopsPolicy (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_MaxHopsPolicy =
+  ::CORBA::TypeCode_ptr const _tc_MaxHopsPolicy =
     &_tc_TAO_tc_Messaging_MaxHopsPolicy;
 }
 
@@ -803,7 +803,7 @@ static CORBA::TypeCode _tc_TAO_tc_Messaging_QueueOrderPolicy (
 
 namespace Messaging
 {
-  ::CORBA::TypeCode_ptr _tc_QueueOrderPolicy =
+  ::CORBA::TypeCode_ptr const _tc_QueueOrderPolicy =
     &_tc_TAO_tc_Messaging_QueueOrderPolicy;
 }
 

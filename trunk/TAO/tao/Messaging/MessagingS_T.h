@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:546
+// be\be_codegen.cpp:546
 
 #ifndef _TAO_IDL_ORIG_MESSAGINGS_T_H_
 #define _TAO_IDL_ORIG_MESSAGINGS_T_H_
@@ -40,13 +40,13 @@
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_root/root_sth.cpp:116
+// be\be_visitor_root/root_sth.cpp:116
 
 namespace POA_Messaging
 {
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/tie_sh.cpp:87
+  // be\be_visitor_interface/tie_sh.cpp:87
   
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
@@ -97,7 +97,7 @@ namespace POA_Messaging
 } // module Messaging
 
 // TAO_IDL - Generated from 
-// be/be_codegen.cpp:1094
+// be\be_codegen.cpp:1094
 
 #if defined (__ACE_INLINE__)
 #include "MessagingS_T.inl"

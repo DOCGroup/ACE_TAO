@@ -62,7 +62,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTPortableServer_POA (
 
 namespace RTPortableServer
 {
-  ::CORBA::TypeCode_ptr _tc_POA =
+  ::CORBA::TypeCode_ptr const _tc_POA =
     &_tc_TAO_tc_RTPortableServer_POA;
 }
 

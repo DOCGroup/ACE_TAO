@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:66
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -55,7 +55,6 @@ namespace TAO
 
 // Traits specializations for Messaging::RebindPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RebindPolicy_ptr
 TAO::Objref_Traits<Messaging::RebindPolicy>::duplicate (
     Messaging::RebindPolicy_ptr p
@@ -64,7 +63,6 @@ TAO::Objref_Traits<Messaging::RebindPolicy>::duplicate (
   return Messaging::RebindPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::RebindPolicy>::release (
     Messaging::RebindPolicy_ptr p
@@ -73,14 +71,12 @@ TAO::Objref_Traits<Messaging::RebindPolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RebindPolicy_ptr
 TAO::Objref_Traits<Messaging::RebindPolicy>::nil (void)
 {
   return Messaging::RebindPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RebindPolicy>::marshal (
     Messaging::RebindPolicy_ptr p,
@@ -149,6 +145,12 @@ Messaging::RebindPolicy::_duplicate (RebindPolicy_ptr obj)
   return obj;
 }
 
+void
+Messaging::RebindPolicy::_tao_release (RebindPolicy_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 Messaging::RebindPolicy::_is_a (
     const char *value
@@ -211,7 +213,6 @@ Messaging::PriorityRange::_tao_any_destructor (
 
 // Traits specializations for Messaging::RequestPriorityPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RequestPriorityPolicy_ptr
 TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::duplicate (
     Messaging::RequestPriorityPolicy_ptr p
@@ -220,7 +221,6 @@ TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::duplicate (
   return Messaging::RequestPriorityPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::release (
     Messaging::RequestPriorityPolicy_ptr p
@@ -229,14 +229,12 @@ TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RequestPriorityPolicy_ptr
 TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::nil (void)
 {
   return Messaging::RequestPriorityPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::marshal (
     Messaging::RequestPriorityPolicy_ptr p,
@@ -305,6 +303,12 @@ Messaging::RequestPriorityPolicy::_duplicate (RequestPriorityPolicy_ptr obj)
   return obj;
 }
 
+void
+Messaging::RequestPriorityPolicy::_tao_release (RequestPriorityPolicy_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 Messaging::RequestPriorityPolicy::_is_a (
     const char *value
@@ -354,7 +358,6 @@ Messaging::RequestPriorityPolicy::marshal (TAO_OutputCDR &)
 
 // Traits specializations for Messaging::ReplyPriorityPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::ReplyPriorityPolicy_ptr
 TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::duplicate (
     Messaging::ReplyPriorityPolicy_ptr p
@@ -363,7 +366,6 @@ TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::duplicate (
   return Messaging::ReplyPriorityPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::release (
     Messaging::ReplyPriorityPolicy_ptr p
@@ -372,14 +374,12 @@ TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::ReplyPriorityPolicy_ptr
 TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::nil (void)
 {
   return Messaging::ReplyPriorityPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::marshal (
     Messaging::ReplyPriorityPolicy_ptr p,
@@ -448,6 +448,12 @@ Messaging::ReplyPriorityPolicy::_duplicate (ReplyPriorityPolicy_ptr obj)
   return obj;
 }
 
+void
+Messaging::ReplyPriorityPolicy::_tao_release (ReplyPriorityPolicy_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 Messaging::ReplyPriorityPolicy::_is_a (
     const char *value
@@ -497,7 +503,6 @@ Messaging::ReplyPriorityPolicy::marshal (TAO_OutputCDR &)
 
 // Traits specializations for Messaging::RequestStartTimePolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RequestStartTimePolicy_ptr
 TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::duplicate (
     Messaging::RequestStartTimePolicy_ptr p
@@ -506,7 +511,6 @@ TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::duplicate (
   return Messaging::RequestStartTimePolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::release (
     Messaging::RequestStartTimePolicy_ptr p
@@ -515,14 +519,12 @@ TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RequestStartTimePolicy_ptr
 TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::nil (void)
 {
   return Messaging::RequestStartTimePolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::marshal (
     Messaging::RequestStartTimePolicy_ptr p,
@@ -591,6 +593,12 @@ Messaging::RequestStartTimePolicy::_duplicate (RequestStartTimePolicy_ptr obj)
   return obj;
 }
 
+void
+Messaging::RequestStartTimePolicy::_tao_release (RequestStartTimePolicy_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 Messaging::RequestStartTimePolicy::_is_a (
     const char *value
@@ -640,7 +648,6 @@ Messaging::RequestStartTimePolicy::marshal (TAO_OutputCDR &)
 
 // Traits specializations for Messaging::RequestEndTimePolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RequestEndTimePolicy_ptr
 TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::duplicate (
     Messaging::RequestEndTimePolicy_ptr p
@@ -649,7 +656,6 @@ TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::duplicate (
   return Messaging::RequestEndTimePolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::release (
     Messaging::RequestEndTimePolicy_ptr p
@@ -658,14 +664,12 @@ TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RequestEndTimePolicy_ptr
 TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::nil (void)
 {
   return Messaging::RequestEndTimePolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::marshal (
     Messaging::RequestEndTimePolicy_ptr p,
@@ -734,6 +738,12 @@ Messaging::RequestEndTimePolicy::_duplicate (RequestEndTimePolicy_ptr obj)
   return obj;
 }
 
+void
+Messaging::RequestEndTimePolicy::_tao_release (RequestEndTimePolicy_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 Messaging::RequestEndTimePolicy::_is_a (
     const char *value
@@ -783,7 +793,6 @@ Messaging::RequestEndTimePolicy::marshal (TAO_OutputCDR &)
 
 // Traits specializations for Messaging::ReplyStartTimePolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::ReplyStartTimePolicy_ptr
 TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::duplicate (
     Messaging::ReplyStartTimePolicy_ptr p
@@ -792,7 +801,6 @@ TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::duplicate (
   return Messaging::ReplyStartTimePolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::release (
     Messaging::ReplyStartTimePolicy_ptr p
@@ -801,14 +809,12 @@ TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::ReplyStartTimePolicy_ptr
 TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::nil (void)
 {
   return Messaging::ReplyStartTimePolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::marshal (
     Messaging::ReplyStartTimePolicy_ptr p,
@@ -877,6 +883,12 @@ Messaging::ReplyStartTimePolicy::_duplicate (ReplyStartTimePolicy_ptr obj)
   return obj;
 }
 
+void
+Messaging::ReplyStartTimePolicy::_tao_release (ReplyStartTimePolicy_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 Messaging::ReplyStartTimePolicy::_is_a (
     const char *value
@@ -926,7 +938,6 @@ Messaging::ReplyStartTimePolicy::marshal (TAO_OutputCDR &)
 
 // Traits specializations for Messaging::ReplyEndTimePolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::ReplyEndTimePolicy_ptr
 TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::duplicate (
     Messaging::ReplyEndTimePolicy_ptr p
@@ -935,7 +946,6 @@ TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::duplicate (
   return Messaging::ReplyEndTimePolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::release (
     Messaging::ReplyEndTimePolicy_ptr p
@@ -944,14 +954,12 @@ TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::ReplyEndTimePolicy_ptr
 TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::nil (void)
 {
   return Messaging::ReplyEndTimePolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::marshal (
     Messaging::ReplyEndTimePolicy_ptr p,
@@ -1020,6 +1028,12 @@ Messaging::ReplyEndTimePolicy::_duplicate (ReplyEndTimePolicy_ptr obj)
   return obj;
 }
 
+void
+Messaging::ReplyEndTimePolicy::_tao_release (ReplyEndTimePolicy_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 Messaging::ReplyEndTimePolicy::_is_a (
     const char *value
@@ -1069,7 +1083,6 @@ Messaging::ReplyEndTimePolicy::marshal (TAO_OutputCDR &)
 
 // Traits specializations for Messaging::RelativeRequestTimeoutPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RelativeRequestTimeoutPolicy_ptr
 TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::duplicate (
     Messaging::RelativeRequestTimeoutPolicy_ptr p
@@ -1078,7 +1091,6 @@ TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::duplicate (
   return Messaging::RelativeRequestTimeoutPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::release (
     Messaging::RelativeRequestTimeoutPolicy_ptr p
@@ -1087,14 +1099,12 @@ TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RelativeRequestTimeoutPolicy_ptr
 TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::nil (void)
 {
   return Messaging::RelativeRequestTimeoutPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::marshal (
     Messaging::RelativeRequestTimeoutPolicy_ptr p,
@@ -1163,6 +1173,12 @@ Messaging::RelativeRequestTimeoutPolicy::_duplicate (RelativeRequestTimeoutPolic
   return obj;
 }
 
+void
+Messaging::RelativeRequestTimeoutPolicy::_tao_release (RelativeRequestTimeoutPolicy_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 Messaging::RelativeRequestTimeoutPolicy::_is_a (
     const char *value
@@ -1225,7 +1241,6 @@ Messaging::RoutingTypeRange::_tao_any_destructor (
 
 // Traits specializations for Messaging::RoutingPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RoutingPolicy_ptr
 TAO::Objref_Traits<Messaging::RoutingPolicy>::duplicate (
     Messaging::RoutingPolicy_ptr p
@@ -1234,7 +1249,6 @@ TAO::Objref_Traits<Messaging::RoutingPolicy>::duplicate (
   return Messaging::RoutingPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::RoutingPolicy>::release (
     Messaging::RoutingPolicy_ptr p
@@ -1243,14 +1257,12 @@ TAO::Objref_Traits<Messaging::RoutingPolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::RoutingPolicy_ptr
 TAO::Objref_Traits<Messaging::RoutingPolicy>::nil (void)
 {
   return Messaging::RoutingPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RoutingPolicy>::marshal (
     Messaging::RoutingPolicy_ptr p,
@@ -1319,6 +1331,12 @@ Messaging::RoutingPolicy::_duplicate (RoutingPolicy_ptr obj)
   return obj;
 }
 
+void
+Messaging::RoutingPolicy::_tao_release (RoutingPolicy_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 Messaging::RoutingPolicy::_is_a (
     const char *value
@@ -1368,7 +1386,6 @@ Messaging::RoutingPolicy::marshal (TAO_OutputCDR &)
 
 // Traits specializations for Messaging::MaxHopsPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::MaxHopsPolicy_ptr
 TAO::Objref_Traits<Messaging::MaxHopsPolicy>::duplicate (
     Messaging::MaxHopsPolicy_ptr p
@@ -1377,7 +1394,6 @@ TAO::Objref_Traits<Messaging::MaxHopsPolicy>::duplicate (
   return Messaging::MaxHopsPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::MaxHopsPolicy>::release (
     Messaging::MaxHopsPolicy_ptr p
@@ -1386,14 +1402,12 @@ TAO::Objref_Traits<Messaging::MaxHopsPolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::MaxHopsPolicy_ptr
 TAO::Objref_Traits<Messaging::MaxHopsPolicy>::nil (void)
 {
   return Messaging::MaxHopsPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::MaxHopsPolicy>::marshal (
     Messaging::MaxHopsPolicy_ptr p,
@@ -1462,6 +1476,12 @@ Messaging::MaxHopsPolicy::_duplicate (MaxHopsPolicy_ptr obj)
   return obj;
 }
 
+void
+Messaging::MaxHopsPolicy::_tao_release (MaxHopsPolicy_ptr obj)
+{
+  CORBA::release (obj);
+}
+
 CORBA::Boolean
 Messaging::MaxHopsPolicy::_is_a (
     const char *value
@@ -1511,7 +1531,6 @@ Messaging::MaxHopsPolicy::marshal (TAO_OutputCDR &)
 
 // Traits specializations for Messaging::QueueOrderPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::QueueOrderPolicy_ptr
 TAO::Objref_Traits<Messaging::QueueOrderPolicy>::duplicate (
     Messaging::QueueOrderPolicy_ptr p
@@ -1520,7 +1539,6 @@ TAO::Objref_Traits<Messaging::QueueOrderPolicy>::duplicate (
   return Messaging::QueueOrderPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<Messaging::QueueOrderPolicy>::release (
     Messaging::QueueOrderPolicy_ptr p
@@ -1529,14 +1547,12 @@ TAO::Objref_Traits<Messaging::QueueOrderPolicy>::release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 Messaging::QueueOrderPolicy_ptr
 TAO::Objref_Traits<Messaging::QueueOrderPolicy>::nil (void)
 {
   return Messaging::QueueOrderPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::QueueOrderPolicy>::marshal (
     Messaging::QueueOrderPolicy_ptr p,
@@ -1603,6 +1619,12 @@ Messaging::QueueOrderPolicy::_duplicate (QueueOrderPolicy_ptr obj)
     }
   
   return obj;
+}
+
+void
+Messaging::QueueOrderPolicy::_tao_release (QueueOrderPolicy_ptr obj)
+{
+  CORBA::release (obj);
 }
 
 CORBA::Boolean
@@ -1696,7 +1718,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1509
+// be\be_visitor_root/root.cpp:1619
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
