@@ -14,7 +14,7 @@
 #ifndef REPOSITORYMANAGER_IMPL_H
 #define REPOSITORYMANAGER_IMPL_H
 
-#include "DeploymentS.h"
+#include "RepositoryManagerS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,10 +34,13 @@
 namespace CIAO
 {
   class RepositoryManager_Impl
-    : public virtual PortableServer::RefCountServantBase
+    : public virtual POA_CIAO::RepositoryManagerDaemon,
+    public virtual PortableServer::RefCountServantBase
     {
 
     public:
+
+      RepositoryManager_Impl ();
       // Default constructor.
       RepositoryManager_Impl (CORBA::ORB_ptr orb,
                             PortableServer::POA_ptr poa
@@ -92,8 +95,18 @@ namespace CIAO
                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
           ACE_THROW_SPEC ((CORBA::SystemException,
                            Deployment::NoSuchName));
-    };
 
+      virtual void 
+        shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+          ACE_THROW_SPEC ((CORBA::SystemException));
+
+    protected:
+      // Cached ORB pointer
+      CORBA::ORB_var orb_;
+
+      // Cached POA pointer
+      PortableServer::POA_var poa_;
+    };
 };
 
 #include /**/ "ace/post.h"

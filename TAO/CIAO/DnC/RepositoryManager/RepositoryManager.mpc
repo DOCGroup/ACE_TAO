@@ -1,12 +1,23 @@
 // -*- MPC -*-
 // $Id$
 
-project(RepositoryManager): ciao_deployment_svnt {
-                            
+project(Repository_Manager): ciao_deployment_svnt, taoexe {
   requires += dnc
-  exename = RepositoryManager
+  exename = rep
+  idlflags += -I ../Core
+  macros   += XML_USE_PTHREADS
+  includes += $(XERCESCROOT)/include
+  libpaths += $(XERCESCROOT)/lib
+  libs     += xerces-c Config_Handlers
+
+  IDL_Files {
+    RepositoryManager.idl
+  }
 
   Source_Files {
+    RepositoryManagerC.cpp
+    RepositoryManagerS.cpp
+    Repository_Manager.cpp
     RepositoryManager_Impl.cpp
   }
 }
