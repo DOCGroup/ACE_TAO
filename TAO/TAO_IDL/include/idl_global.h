@@ -310,6 +310,12 @@ public:
   static const char *be_get_server_skeleton (String *idl_file_name);
   static const char *be_get_server_inline (String *idl_file_name);
 
+  virtual String *export_macro (void) const;
+  // returns the macro name for exporting classes in Win32 DLL.
+
+  virtual void export_macro (String *macro_name);
+  // set the macro name for export classes in Win32 DLL.
+
 private:
   // Data
   UTL_ScopeStack		*pd_scopes;		// Store scopes stack
@@ -344,6 +350,8 @@ private:
 							// Seen this include
 							// before?
   String                        *pd_idl_src_file;       // IDL source file
+
+  String *export_macro_;
 };
 
 #endif	//_IDL_IDL_GLOBAL_HH
