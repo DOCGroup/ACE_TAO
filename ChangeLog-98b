@@ -1,13 +1,13 @@
 Mon May 11 13:14:22 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* ace/RB_Tree.{cpp,h,i}: (new) Red-Black Tree data structure
-	  implementation.  A Red-Black Tree is an efficient 
-	  self-balancing binary tree that uses recoloring to
-	  minimize rotations while rebalancing on insertion or
-	  deletion of a tree node.  Items in the tree are stored
-	  according to a key provided at insertion.  This
-	  implementation is an OO rendition of the ADT described
-	  in Cormen, Leiserson, Rivest, "Introduction to Algorithms"
+        * ace/RB_Tree.{cpp,h,i}: (new) Red-Black Tree data structure
+          implementation.  A Red-Black Tree is an efficient
+          self-balancing binary tree that uses recoloring to
+          minimize rotations while rebalancing on insertion or
+          deletion of a tree node.  Items in the tree are stored
+          according to a key provided at insertion.  This
+          implementation is an OO rendition of the ADT described
+          in Cormen, Leiserson, Rivest, "Introduction to Algorithms"
           (c) 1990, MIT.
 
 Mon May 11 12:31:41 1998  Steve Huston  <shuston@riverace.com>
@@ -21,6 +21,9 @@ Mon May 11 12:31:41 1998  Steve Huston  <shuston@riverace.com>
           this problem.
 
 Mon May 11 12:27:05 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/ACE.cpp (send_n): retry if ACE::send () fails due to
+          EWOULDBLOCK.
 
         * include/makeinclude/platform_vxworks5.x_ghs.GNU: instead of
           using GNU ranlib386 after using GHS ax for i386 targets, just
