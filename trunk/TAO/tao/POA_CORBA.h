@@ -44,7 +44,9 @@
 #endif /* TAO_HAS_AMI_POLLER */
 
 #if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
 #pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -1793,7 +1795,7 @@ private:
 #endif /* ! defined TAO_HAS_MINIMUM_CORBA */
 };
 
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

@@ -35,7 +35,9 @@
 #  define TAO_EXPORT_NESTED_MACRO
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 #if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
 #pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -8537,7 +8539,7 @@ operator>> (TAO_InputCDR &, CORBA::ValueBoxDef_ptr &);
 #include "tao/InterfaceC.i"
 #endif /* defined INLINE */
 
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
