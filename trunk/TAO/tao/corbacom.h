@@ -182,35 +182,37 @@ class TAO_Export CORBA
   //    This class allows the use of CORBA::Foo, as well as CORBA_Foo
   //    for all standard types Foo.
 public:
-  // typedef void Status; // g++ doesn't like this
-  // return status of operations in a number of standard CORBA classes.
-
   enum { B_FALSE = 0, B_TRUE = 1 };
 
   typedef CORBA_Boolean Boolean;
-  typedef Boolean &Boolean_out; // out type for boolean
+  typedef Boolean &Boolean_out; 
+  // Out type for boolean.
 
   typedef u_char Octet;
-  typedef Octet  &Octet_out;  // out type for octet
+  typedef Octet  &Octet_out; 
+  // Out type for octet.
 
   typedef ACE_INT16 Short;
-  typedef Short &Short_out;   // out type for Short
+  typedef Short &Short_out;   
+  // Out type for Short.
 
   typedef ACE_UINT16 UShort;
-  typedef UShort &UShort_out; // out type for UShort
+  typedef UShort &UShort_out; 
+  // Out type for UShort.
 
-  // CORBA "Long" (and its unsigned cousin) are 32 bits.
-
+  // = CORBA "Long" (and its unsigned cousin) are 32 bits.
   typedef ACE_INT32 Long;
   typedef ACE_UINT32 ULong;
 
   // 94-9-32 Appendix A, also the OMG C++ mapping, stipulate that 64
   // bit integers are "LongLong".
-  typedef Long &Long_out; // out type for long
-  typedef ULong &ULong_out; // out type for unsigned long
+  typedef Long &Long_out; 
+  // Out type for long.
 
-  //
-  // NOTE:  those are IDL extensions, not yet standard.
+  typedef ULong &ULong_out; 
+  // Out type for unsigned long.
+
+  // = The following are IDL extensions, not yet standard.
 
   typedef ACE_UINT64 ULongLong;
 # if defined (_MSC_VER) && _MSC_VER >= 900
@@ -241,8 +243,11 @@ public:
 #   endif /* ! ACE_BIG_ENDIAN */
 # endif /* no native 64 bit integer type */
 
-  typedef LongLong &LongLong_out;  // out type for long long
-  typedef ULongLong &ULongLong_out; // out type for unsigned long long
+  typedef LongLong &LongLong_out;  
+  // Out type for long long.
+
+  typedef ULongLong &ULongLong_out; 
+  // Out type for unsigned long long.
 
 # if ACE_SIZEOF_FLOAT == 4
     typedef float Float;
@@ -276,13 +281,13 @@ public:
 #     endif /* ACE_SIZEOF_INT != 8 */
     };
 # endif /* ACE_SIZEOF_DOUBLE != 8 */
-  typedef Double &Double_out; // out type for double
+  typedef Double &Double_out; 
+  // Out type for double.
 
   // 94-9-32 Appendix A defines a 128 bit floating point "long double"
   // data type, with greatly extended precision and four more bits of
-  // exponent (compared to "double").
-  //
-  // NOTE:  that is an IDL extension, not yet standard.
+  // exponent (compared to "double").  This is an IDL extension, not
+  // yet standard.
 
 #  if   ACE_SIZEOF_LONG_DOUBLE == 16
   typedef long double LongDouble;
@@ -294,25 +299,28 @@ public:
   };
 #  endif /* ACE_SIZEOF_LONG_DOUBLE != 16 */
 
-  typedef LongDouble &LongDouble_out; // out type for long doubles
+  typedef LongDouble &LongDouble_out; 
+  // Out type for long doubles.
 
   typedef char Char;
-  typedef Char &Char_out; // out type for char
+  typedef Char &Char_out; 
+  // Out type for char.
 
   typedef CORBA_SEQUENCE<Octet> OctetSeq;
 
   typedef Char *String;
 
+  // = String memory management.
   static String string_alloc (ULong len);
   static String string_copy (const Char *);
   static String string_dup (const Char *);
   static void string_free (Char *);
 
   class TAO_Export String_var
+  {
     // = TITLE
     //   String var class. Provides automatic deallocation of storage
     //   for the string once it goes out of scope.
-  {
   public:
     String_var (void);
     // default constructor
