@@ -1,3 +1,40 @@
+Sun Dec 28 11:04:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IFR_Client/IFR_BaseC.cpp:
+	* tao/IFR_Client/IFR_BaseC.h:
+	* tao/IFR_Client/IFR_BaseC.i:
+	* tao/IFR_Client/IFR_BasicC.cpp:
+	* tao/IFR_Client/IFR_BasicC.h:
+	* tao/IFR_Client/IFR_BasicC.i:
+	* tao/IFR_Client/IFR_ComponentsC.cpp:
+	* tao/IFR_Client/IFR_ComponentsC.h:
+	* tao/IFR_Client/IFR_ComponentsC.i:
+	* tao/IFR_Client/IFR_ExtendedC.cpp:
+	* tao/IFR_Client/IFR_ExtendedC.h:
+	* tao/IFR_Client/IFR_ExtendedC.i:
+
+	  Regenerated code.
+
+	* tao/IFR_Client/diffs/IFR_Base.pidl.diff:
+	* tao/IFR_Client/diffs/IFR_BaseC.cpp.diff:
+	* tao/IFR_Client/diffs/IFR_BaseC.h.diff:
+	* tao/IFR_Client/diffs/IFR_BaseC.i.diff:
+	* tao/IFR_Client/diffs/IFR_Basic.pidl.diff:
+	* tao/IFR_Client/diffs/IFR_BasicC.cpp.diff:
+	* tao/IFR_Client/diffs/IFR_BasicC.h.diff:
+	* tao/IFR_Client/diffs/IFR_BasicC.i.diff:
+	* tao/IFR_Client/diffs/IFR_Components.pidl.diff:
+	* tao/IFR_Client/diffs/IFR_ComponentsC.cpp.diff:
+	* tao/IFR_Client/diffs/IFR_ComponentsC.h.diff:
+	* tao/IFR_Client/diffs/IFR_ComponentsC.i.diff:
+	* tao/IFR_Client/diffs/IFR_Extended.pidl.diff:
+	* tao/IFR_Client/diffs/IFR_ExtendedC.cpp.diff:
+	* tao/IFR_Client/diffs/IFR_ExtendedC.h.diff:
+	* tao/IFR_Client/diffs/IFR_ExtendedC.i.diff:
+
+	  Removed all these diffs. They don't make "any" sense for the
+	  present source base.
+
 Sun Dec 28 10:31:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Valuetype/ValueBase.cpp:

@@ -48,7 +48,6 @@ CORBA::ComponentIR::EventDef::EventDef (
     the_TAO_EventDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_EventDef_setup_collocation (_tao_collocated);
-  
 }
 
 ACE_INLINE
@@ -85,7 +84,6 @@ CORBA::ComponentIR::Container::Container (
     the_TAO_Container_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_Container_setup_collocation (_tao_collocated);
-  
 }
 
 ACE_INLINE
@@ -122,7 +120,6 @@ CORBA::ComponentIR::ModuleDef::ModuleDef (
     the_TAO_ModuleDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_ModuleDef_setup_collocation (_tao_collocated);
-  
 }
 
 ACE_INLINE
@@ -159,7 +156,6 @@ CORBA::ComponentIR::Repository::Repository (
     the_TAO_Repository_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_Repository_setup_collocation (_tao_collocated);
-  
 }
 
 ACE_INLINE
@@ -196,7 +192,6 @@ CORBA::ComponentIR::ProvidesDef::ProvidesDef (
     the_TAO_ProvidesDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_ProvidesDef_setup_collocation (_tao_collocated);
-  
 }
 
 ACE_INLINE
@@ -233,7 +228,6 @@ CORBA::ComponentIR::UsesDef::UsesDef (
     the_TAO_UsesDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_UsesDef_setup_collocation (_tao_collocated);
-  
 }
 
 ACE_INLINE
@@ -270,7 +264,6 @@ CORBA::ComponentIR::EventPortDef::EventPortDef (
     the_TAO_EventPortDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_EventPortDef_setup_collocation (_tao_collocated);
-  
 }
 
 ACE_INLINE
@@ -307,7 +300,6 @@ CORBA::ComponentIR::EmitsDef::EmitsDef (
     the_TAO_EmitsDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_EmitsDef_setup_collocation (_tao_collocated);
-  
 }
 
 ACE_INLINE
@@ -344,7 +336,6 @@ CORBA::ComponentIR::PublishesDef::PublishesDef (
     the_TAO_PublishesDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_PublishesDef_setup_collocation (_tao_collocated);
-  
 }
 
 ACE_INLINE
@@ -381,7 +372,6 @@ CORBA::ComponentIR::ConsumesDef::ConsumesDef (
     the_TAO_ConsumesDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_ConsumesDef_setup_collocation (_tao_collocated);
-  
 }
 
 ACE_INLINE
@@ -418,7 +408,6 @@ CORBA::ComponentIR::ComponentDef::ComponentDef (
     the_TAO_ComponentDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_ComponentDef_setup_collocation (_tao_collocated);
-  
 }
 
 ACE_INLINE
@@ -455,7 +444,6 @@ CORBA::ComponentIR::FactoryDef::FactoryDef (
     the_TAO_FactoryDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_FactoryDef_setup_collocation (_tao_collocated);
-  
 }
 
 ACE_INLINE
@@ -492,7 +480,6 @@ CORBA::ComponentIR::FinderDef::FinderDef (
     the_TAO_FinderDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_FinderDef_setup_collocation (_tao_collocated);
-  
 }
 
 ACE_INLINE
@@ -529,7 +516,6 @@ CORBA::ComponentIR::HomeDef::HomeDef (
     the_TAO_HomeDef_Proxy_Broker_ (0)
 {
   this->CORBA_ComponentIR_HomeDef_setup_collocation (_tao_collocated);
-  
 }
 
 ACE_INLINE
