@@ -6776,6 +6776,7 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
 #   if !defined (ACE_LACKS_PWD_REENTRANT_FUNCTIONS)
 #     if defined (ACE_HAS_PTHREADS_STD) && \
       !defined (ACE_HAS_STHREADS) || \
+      defined (HPUX_11)  || \
       defined (__USLC__) // Added by Roland Gigler for SCO UnixWare 7.
   struct passwd *result;
   int status;
@@ -9693,27 +9694,27 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 #if defined (ACE_HAS_PACE)
   ACE_UNUSED_ARG (buflen);
   ACE_OSCALL_RETURN (::pace_ctime_r (t, buf), ACE_TCHAR*, 0);
-# elif defined (ACE_HAS_REENTRANT_FUNCTIONS)
+#elif defined (ACE_HAS_REENTRANT_FUNCTIONS)
 #   if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
   ACE_TCHAR *result;
-#     if defined (DIGITAL_UNIX)
+#      if defined (DIGITAL_UNIX)
   ACE_OSCALL (::_Pctime_r (t, buf), ACE_TCHAR *, 0, result);
-#     else /* DIGITAL_UNIX */
+#      else /* DIGITAL_UNIX */
   ACE_OSCALL (::ctime_r (t, buf), ACE_TCHAR *, 0, result);
-#     endif /* DIGITAL_UNIX */
+#      endif /* DIGITAL_UNIX */
   if (result != 0)
     ::strncpy (buf, result, buflen);
   return buf;
 #   else /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 
-#     if defined (ACE_CTIME_R_RETURNS_INT)
+#      if defined (ACE_CTIME_R_RETURNS_INT)
   return (::ctime_r (t, buf, buflen) == -1 ? 0 : buf);
-#     else /* ACE_CTIME_R_RETURNS_INT */
+#      else /* ACE_CTIME_R_RETURNS_INT */
   ACE_OSCALL_RETURN (::ctime_r (t, buf, buflen), ACE_TCHAR *, 0);
-#     endif /* ACE_CTIME_R_RETURNS_INT */
+#      endif /* ACE_CTIME_R_RETURNS_INT */
 
 #   endif /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
-# else /* ACE_HAS_REENTRANT_FUNCTIONS */
+#else /* ACE_HAS_REENTRANT_FUNCTIONS */
 #   if defined(ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
    ::strncpy(buf, "ctime-return",buflen);
    return buf;
@@ -9728,8 +9729,8 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
   if (result != 0)
     ACE_OS::strncpy (buf, result, buflen);
   return buf;
-#    endif /* ACE_PSOS && !ACE_PSOS_HAS_TIME */
-# endif /* ACE_HAS_PACE */
+#   endif /* ACE_PSOS && !ACE_PSOS_HAS_TIME */
+#endif /* ACE_HAS_PACE */
 }
 #endif /* !ACE_HAS_WINCE */
 

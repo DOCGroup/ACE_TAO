@@ -248,6 +248,8 @@
 
 // Platform supports reentrant functions (all the POSIX *_r functions).
 #define ACE_HAS_REENTRANT_FUNCTIONS
+// ctime_r and asctime_r conform to POSIX.1c (2 param version)
+#define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 
 // HP-UX 11 has reentrant netdb functions.  The catch is that the old
 // functions (gethostbyname, etc.) are thread-safe and the _r versions are
