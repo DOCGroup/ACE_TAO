@@ -121,8 +121,11 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       CORBA::ULong stacksize = 0;
-      RTCORBA::Priority default_priority =
-        RTCORBA::Priority (ACE_DEFAULT_THREAD_PRIORITY);
+      // Do this wierd intermediate variable and
+      // casting to avoid a warning on HP-UX with aCC
+      CORBA::Long defp = ACE_DEFAULT_THREAD_PRIORITY;
+      RTCORBA::Priority default_priority = RTCORBA::Priority (
+                                                     (CORBA::Short)defp);
       CORBA::Boolean allow_request_buffering = 0;
       CORBA::ULong max_buffered_requests = 0;
       CORBA::ULong max_request_buffer_size = 0;

@@ -16,10 +16,13 @@ Simple_Server_i::test_method (CORBA::Long x)
 }
 
 CORBA::Long
-Simple_Server_i::test_raise (CORBA::Long)
+Simple_Server_i::test_raise (CORBA::Long x)
   ACE_THROW_SPEC ((Simple_Server::Failure))
 {
   throw Simple_Server::Failure ();
+
+  // Make HP-UX's aCC happy
+  return x;
 }
 
 void
