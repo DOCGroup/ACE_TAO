@@ -1,3 +1,9 @@
+Thu Oct  3 07:21:44 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Collocation/Collocation_Test_Stubs.bor:
+        * tests/Collocation/Diamond.bor:
+          Fixed BCB makefiles
+
 Thu Oct  3 07:08:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Log/LogNotification.h:
@@ -211,14 +217,14 @@ Sat Sep 28 22:16:50 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 	* TAO_IDL/fe/lex.yy.cpp (idl_store_pragma):
 
 	  When parsing a #pragma version directive, added a check and remove
-	  for a trailing space that the SunCC preprocessor puts there for 
+	  for a trailing space that the SunCC preprocessor puts there for
 	  some reason. This trailing space interferes with the check for a
-	  valid version number. Thanks to Andrew T. Finnell 
+	  valid version number. Thanks to Andrew T. Finnell
 	  <andrew@activesol.net> for reporting the bug.
 
 	* TAO_IDL/ast/ast_decl.cpp (compute_repoID):
 
-	  Fixed some mistakes in computing the prefix and version when 
+	  Fixed some mistakes in computing the prefix and version when
 	  computing the repository ID.
 
 Sat Sep 28 18:29:12 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
@@ -252,7 +258,7 @@ Sat Sep 28 16:18:08 2002  Ossama Othman  <ossama@uci.edu>
 Sat Sep 28 13:57:30 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tao/PortableServer/AMH_Response_Handler.h:
-	
+
 	  This seems like a 'stop-gap' fix right now due to pressure to
 	  cut the beta.  Having the PortableServer ResponseHandler class
 	  derive  from a Ref-counted Object seems to solve the problem of
@@ -261,7 +267,7 @@ Sat Sep 28 13:57:30 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 	  CORBA::Object seems to be a no-op.  Whether this is the class
 	  that should have the functionality of ref-counting is debatable.
 	  It could also be added to the client-side or server-side RH but
-	  that would require IDL-compiler changes.  
+	  that would require IDL-compiler changes.
 
 	  Ossama also raises the question of why the server-side
 	  ResponseHandler was inheriting from the client-side RH.  Though
@@ -281,13 +287,13 @@ Sat Sep 28 13:55:56 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	  The ResponseHandler 'duplicated' in the AMH_Servant was
 	  not released here after it was used.  This caused a
-	  memory-leak.  This has been fixed now along with the change in: 
+	  memory-leak.  This has been fixed now along with the change in:
 	  Sat Sep 28 13:57:30 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 Sat Sep 28 13:30:32 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 
 	* orbsvcs/examples/Log:
-	 
+
 	  Removed the folders `Client' and `test'.
 
 Sat Sep 28 13:11:22 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
@@ -301,7 +307,7 @@ Sat Sep 28 13:11:22 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 	* orbsvcs/tests/Log/Basic_Log_Test/README:
 
 	  Added the above README files to describe the Logging
-	  Service examples.	  
+	  Service examples.
 
 Sat Sep 28 01:49:01 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
@@ -320,7 +326,7 @@ Sat Sep 28 01:10:32 2002  D A Hanvey  <d.hanvey@qub.ac.uk>
 	* orbsvcs/orbsvcs/Makefile.RTEventLogAdmin:
 
 	  Files added as part of updated Logging Service.
-	
+
 Fri Sep 27 21:32:45 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
@@ -333,7 +339,7 @@ Fri Sep 27 21:07:12 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* tao/Any.cpp (operator<<): Reverted this "Thu Sep 26 17:06:11
 	  2002  Balachandran Natarajan
 	  <bala@isis-server.isis.vanderbilt.edu>"  entry. This shows up
-	  more problems than it solves. 
+	  more problems than it solves.
 
 Fri Sep 27 13:40:32 2002  Ossama Othman  <ossama@uci.edu>
 
@@ -361,7 +367,7 @@ Fri Sep 27 13:40:32 2002  Ossama Othman  <ossama@uci.edu>
 
 Fri Sep 27 11:55:18 2002  Priyanka Gontla  <pgontla@ociweb.com>
 
-	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp: 
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
 	  Fixed the throw mismatch warning.
 
 Fri Sep 27 09:49:39 2002  Ossama Othman  <ossama@uci.edu>
@@ -397,7 +403,7 @@ Thu Sep 26 18:23:11 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 	  Modified the action code for the 'typeprefix' production as follows:
 	  if the typeprefix occurs in a module and is applied to that module,
 	  we apply the prefix to the current scope instead of doing a lookup
-	  on the scope's name. In the case of a reopened module, a lookup will 
+	  on the scope's name. In the case of a reopened module, a lookup will
 	  return the previous opening, and the prefix will not be applied to
 	  the current opening. To determine if the above conditions hold, the
 	  current scope's name and the first typeprefix argument are compared.
@@ -416,7 +422,7 @@ Thu Sep 26 17:06:11 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 	  on the Any. We cannot do this if the byte orders of the CDR and
 	  the Any are different. Hence we have a conditional optimization
 	  that appends the CDR from the Any only if the byte orders are
-	  same, else it will fallback to do an interpretive marshalling. 
+	  same, else it will fallback to do an interpretive marshalling.
 
 	  Thanks to Eric Malenfant <EMalenfant@interstarinc.com> for
 	  suggesting this.
@@ -425,8 +431,8 @@ Thu Sep 26 16:07:18 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_field/field_ch.cpp:
 
-	  Added newlines and annotation for the generation of code for 
-	  sequences as members. Thanks to Bala 
+	  Added newlines and annotation for the generation of code for
+	  sequences as members. Thanks to Bala
 	  <bala@isis-server.isis.vanderbilt.edu> for pointing out the lack.
 
 Thu Sep 26 14:59:55 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
