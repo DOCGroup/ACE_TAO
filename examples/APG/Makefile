@@ -8,8 +8,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  =	Active_Objects \
-	Config \
+DIRS  =	Config \
 	Containers \
 	Logging \
 	Misc_IPC \
@@ -19,12 +18,7 @@ DIRS  =	Active_Objects \
 	Shared_Memory \
 	Signals \
 	Sockets \
-	Streams \
 	Svc_Config \
-	Threads \
-	ThreadManagement \
-	ThreadPools \
-	ThreadSafety \
 	Timers
 
 #----------------------------------------------------------------------------
@@ -39,7 +33,17 @@ include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 ifeq ($(templates),implicit)
 DIRS += Naming
 endif
-
+# The following directories needs support from the synchronization 
+# primitives in ACE. Do not attempt single threaded builds for the 
+# following
+ifeq ($(threads),1)
+DIRS += Active_Object \
+	Streams \
+	Threads \
+	ThreadManagement \
+	ThreadPools \
+	ThreadSafety 
+endif
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
