@@ -9,7 +9,8 @@ Tue Dec 29 16:24:24 1998  David L. Levine  <levine@cs.wustl.edu>
           because it makes a big mess.
 
         * bin/Hash_Map_Manager.pl,Hash_Map_Manager_Helper.csh:
-          translated/renamed Hash_Map_Manager_Helper.csh from csh to sh.
+          translated Hash_Map_Manager_Helper.csh from csh to sh.
+          Renamed Hash_Map_Manager_Helper.csh to Hash_Map_Manager_Helper.
 
 Tue Dec 29 15:09:15 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
