@@ -1,13 +1,13 @@
 // $Id$
 
 #include "ace/Service_Config.h"
+#include "ace/Logging_Strategy.h"
 #include "TS_Clerk_Handler.h"
 #include "TS_Server_Handler.h"
 #include "Client_Logging_Handler.h"
 #include "Name_Handler.h"
 #include "Token_Handler.h"
 #include "Server_Logging_Handler.h"
-#include "Logging_Strategy.h"
 
 ACE_RCSID(servers, main, "$Id$")
 
