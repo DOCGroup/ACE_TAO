@@ -4,7 +4,7 @@ Tue Mar 16 02:25:56 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  A line of code was being generated without an ending
 	  semicolon.
 
-Tue Mar 16 000:26:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+Tue Mar 16 00:26:01 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Server_Request.cpp:
 	  Used Any::_tao_get_cdr() in init_reply() instead of casting
@@ -52,6 +52,28 @@ Mon Mar 15 17:35:14 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	interface type is also treated in the same way as if it was an
 	interface type. Thus, we can treat everything as a
 	TAO_Object_Field_T<CORBA::Object>* type.
+
+Mon Mar 15 15:27:34 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/LifeCycle_Service/Life_Cycle_Service.cpp:
+        * orbsvcs/LifeCycle_Service/Life_Cycle_Service.h:
+        * orbsvcs/LifeCycle_Service/Life_Cycle_Service_i.cpp:
+        * orbsvcs/LifeCycle_Service/Life_Cycle_Service_i.h:
+          
+          Renamed to the following to have a more consistent 
+          naming scheme.
+
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.cpp:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.h:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service_i.cpp:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service_i.h:
+
+          New file names.
+
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.dsp:
+        * orbsvcs/LifeCycle_Service/Makefile:
+
+          Uses the new names.
 
 Mon Mar 15 02:27:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
