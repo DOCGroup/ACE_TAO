@@ -44,6 +44,7 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
 // Copy constructor.
 
 ACE_FILE_Addr::ACE_FILE_Addr (const ACE_FILE_Addr &sa)
+  : ACE_Addr (AF_FILE, sizeof this->filename_)
 {
   this->set (sa);
 }
