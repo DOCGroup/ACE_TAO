@@ -1,3 +1,9 @@
+Thu Apr 22 19:40:52 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h: Adjust exception thrown at out-of-memory for HP-UX, aC++.
+
+        * ace/config-hpux-10.x-hpc++.h: Add ACE_NEW_THROWS_EXCEPTIONS.
+
 Thu Apr 22 19:30:01 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Synch_T.h (class ACE_Reverse_Lock): Added an interesting
