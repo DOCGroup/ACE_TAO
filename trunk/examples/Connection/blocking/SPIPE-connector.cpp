@@ -116,8 +116,12 @@ IPC_Client::init (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "Opening %s\n", rendezvous_));
 
+  Peer_Handler *ph;
+  
+  ACE_NEW_RETURN (ph, Peer_Handler (iterations_), -1);
+
   // Connect to the peer, reusing the local addr if necessary.
-  if (this->connect (new Peer_Handler (iterations_),
+  if (this->connect (ph,
 		     ACE_SPIPE_Addr (rendezvous_),
 		     ACE_Synch_Options::defaults,
 		     *((ACE_SPIPE_Addr *) &ACE_Addr::sap_any),

@@ -194,10 +194,9 @@ main (int argc, char *argv[])
 
   // Establish the connection.
   ACE_Connector<Event_Transceiver, ACE_SOCK_CONNECTOR> connector;
-  Event_Transceiver transceiver;
+  Event_Transceiver transceiver, *tp = &transceiver;
 
-  if (connector.connect (&transceiver, 
-			 ACE_INET_Addr (port_number, host_name)) == -1)
+  if (connector.connect (tp, ACE_INET_Addr (port_number, host_name)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", host_name), 1);
 
   // Run event loop until either the event server shuts down or we get
