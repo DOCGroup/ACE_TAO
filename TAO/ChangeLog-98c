@@ -1,3 +1,41 @@
+Mon Aug 24 10:31:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* The IDL compiler support #pragma prefix
+
+	* TAO_IDL/be_include/be_decl.h: 
+	* TAO_IDL/be/be_decl.cpp: 
+	  Added method to compute the prefix based on the pragmas
+	  defined.
+	  This is used to generate the implementation repository ID.
+
+	* TAO_IDL/be/be_visitor_scope.cpp: 
+	  Added some code useful for debugging pragmas.
+
+	* TAO_IDL/Makefile: 
+	* TAO_IDL/fe/idl.ll: 
+	* TAO_IDL/fe/idl.yy: 
+	* TAO_IDL/fe/lex.yy.cpp: 
+	* TAO_IDL/fe/y.tab.cpp: 
+	* TAO_IDL/fe/y.tab.h: 
+	* TAO_IDL/include/idl_global.h: 
+	* TAO_IDL/util/utl_error.cpp: 
+	* TAO_IDL/util/utl_stack.cpp: 
+	  The pragma collection was far from perfect. Once a scope was
+	  closed the old pragmas (defined before the scope) were lost. We
+	  need to restore, in the global pragma list, the list of pragmas
+	  as defined before entering the scope. This restore must make a
+	  *copy* otherwise the list of pragmas associated with the scope
+	  are modified.
+
+	* orbsvcs/orbsvcs/AVStreams.idl: 
+	* orbsvcs/orbsvcs/CosConcurrencyControl.idl: 
+	* orbsvcs/orbsvcs/CosLifeCycle.idl: 
+	* orbsvcs/orbsvcs/CosNaming.idl: 
+	* orbsvcs/orbsvcs/CosPropertyService.idl: 
+	* orbsvcs/orbsvcs/CosTimeBase.idl: 
+	* orbsvcs/orbsvcs/CosTrading.idl: 
+	  Added the #pragma "omg.org" directive.
+
 Mon Aug 24 09:47:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/Trading_Service/Makefile: 

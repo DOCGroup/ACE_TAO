@@ -13,6 +13,8 @@
 //
 // ========================================================================
 
+#pragma prefix "omg.org"
+
 module CosTrading
 {
   // forward references to our interfaces

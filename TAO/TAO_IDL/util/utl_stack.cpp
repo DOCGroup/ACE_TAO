@@ -69,6 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 
 #include	"idl.h"
+#include "ast_decl.h"
 #include	"idl_extern.h"
 
 ACE_RCSID(util, utl_stack, "$Id$")
@@ -138,11 +139,9 @@ UTL_ScopeStack::push(UTL_Scope *el)
 void
 UTL_ScopeStack::pop()
 {
-  UTL_Scope	*s;
-
   if (pd_stack_top <= 0)
     return;
-  s = pd_stack_data[--pd_stack_top];
+  pd_stack_data[--pd_stack_top];
 }
 
 // Return top element on stack

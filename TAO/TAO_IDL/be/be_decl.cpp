@@ -38,14 +38,16 @@ be_decl::be_decl (void)
     fullname_ (0),
     flatname_ (0),
     repoID_ (0),
+    prefix_ (0),
     size_type_ (be_decl::SIZE_UNKNOWN),
     encap_len_ (-1)
 {
 }
 
 // Constructor
-be_decl::be_decl (AST_Decl::NodeType type, UTL_ScopedName *n, UTL_StrList
-                  *pragmas)
+be_decl::be_decl (AST_Decl::NodeType type,
+		  UTL_ScopedName *n,
+		  UTL_StrList *pragmas)
   : AST_Decl (type, n, pragmas),
     cli_hdr_gen_ (I_FALSE),
     cli_stub_gen_ (I_FALSE),
@@ -56,6 +58,9 @@ be_decl::be_decl (AST_Decl::NodeType type, UTL_ScopedName *n, UTL_StrList
     cli_hdr_any_op_gen_ (I_FALSE),
     cli_stub_any_op_gen_ (I_FALSE),
     fullname_ (0),
+    flatname_ (0),
+    repoID_ (0),
+    prefix_ (0),
     size_type_ (be_decl::SIZE_UNKNOWN),
     encap_len_ (-1)
 {
@@ -267,6 +272,7 @@ be_decl::compute_repoID (void)
 
       // in the first loop compute the total length
       namelen = 8; // for the prefix "IDL:" and suffix ":1.0"
+      namelen += ACE_OS::strlen (this->prefix ()) + 1;
       i = new UTL_IdListActiveIterator (this->name ());
       while (!(i->is_done ()))
         {
@@ -291,6 +297,8 @@ be_decl::compute_repoID (void)
       this->repoID_ = new char [namelen+1];
       this->repoID_[0] = '\0';
       ACE_OS::sprintf (this->repoID_, "%s", "IDL:");
+      ACE_OS::strcat (this->repoID_, this->prefix ());
+      ACE_OS::strcat (this->repoID_, "/");
       i = new UTL_IdListActiveIterator (this->name ());
       first = I_TRUE;
       second = I_FALSE;
@@ -325,6 +333,68 @@ be_decl::repoID (void)
     compute_repoID ();
 
   return this->repoID_;
+}
+
+void
+be_decl::compute_prefix ()
+{
+  const char* pragma = 0;
+  if (this->pragmas () != 0)
+    {
+      for (UTL_StrlistActiveIterator i (this->pragmas ());
+	   !i.is_done ();
+	   i.next ())
+	{
+	  const char* s = i.item ()->get_string ();
+
+	  if (ACE_OS::strncmp (s, "#pragma prefix", 14) == 0)
+	    {
+	      pragma = s;
+	    }
+	}
+    }
+
+  if (pragma != 0)
+    {
+      // Skip the space and the " also...
+      const char* tmp = pragma + 16;
+      const char* end = ACE_OS::strchr (tmp, '"');
+
+      if (end == 0)
+	{
+	  idl_global->err ()->syntax_error
+	    (IDL_GlobalData::PS_PragmaPrefixSyntax);
+	  this->prefix_ = ACE_OS::strnew ("");
+	  return;
+	}
+      int l = end - tmp;
+      this->prefix_ = new char[l+1];
+      ACE_OS::strncpy (this->prefix_, tmp, end - tmp);
+      this->prefix_[l] = 0;
+      return;
+    }
+
+  // Could not find it in the local scope, try to recurse to the top
+  // scope...
+  if (this->defined_in () == 0)
+    this->prefix_ = ACE_OS::strnew ("");
+  else
+    {
+      be_scope* scope = 
+	be_scope::narrow_from_scope (this->defined_in ());
+      if (scope == 0)
+	this->prefix_ = ACE_OS::strnew ("");
+      else
+	this->prefix_ = ACE_OS::strnew (scope->decl()->prefix ());
+    }
+}
+
+const char*
+be_decl::prefix (void)
+{
+  if (!this->prefix_)
+    compute_prefix ();
+  return this->prefix_;
 }
 
 // converts a string name into an array of 4 byte longs
@@ -397,8 +467,8 @@ be_decl::name_encap_len (void)
 {
   long slen;
 
-  slen = ACE_OS::strlen (this->local_name ()->get_string ()) + 1; // + 1 for
-                                                    // NULL terminating char
+  slen = ACE_OS::strlen (this->local_name ()->get_string ()) + 1;
+
   // the number of bytes to hold the string must be a multiple of 4 since this
   // will be represented as an array of longs
   return 4 + 4 * (slen/4 + (slen%4 ? 1:0));
