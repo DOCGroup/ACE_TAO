@@ -248,17 +248,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
         // Child process executes the command.
         int result = 0;
 
-        if (options.env_argv ()[0] == 0)
-          // command-line args
-          result = ACE_OS::execvp (options.process_name (),
-                                   options.command_line_argv ());
-        else
+        if (options.inherit_environment ())
           {
-# if defined (ghs)
-            // GreenHills 1.8.8 (for VxWorks 5.3.x) can't compile this
-            // code.  Processes aren't supported on VxWorks anyways.
-            ACE_NOTSUP_RETURN (ACE_INVALID_PID);
-# else
             // Add the new environment variables to the environment
             // context of the context before doing an <execvp>.
             for (char *const *user_env = options.env_argv ();
@@ -271,6 +262,17 @@ ACE_Process::spawn (ACE_Process_Options &options)
             // the user's supplied variables.
             result = ACE_OS::execvp (options.process_name (),
                                      options.command_line_argv ());
+          }
+        else
+          {
+#if defined (ghs)
+            // GreenHills 1.8.8 (for VxWorks 5.3.x) can't compile this
+            // code.  Processes aren't supported on VxWorks anyways.
+            ACE_NOTSUP_RETURN (ACE_INVALID_PID);
+#else
+            result = ACE_OS::execve (options.process_name (),
+                                     options.command_line_argv (),
+                                     options.env_argv ());
 # endif /* ghs */
           }
         if (result == -1)

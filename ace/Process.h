@@ -260,9 +260,9 @@ public:
   ACE_TCHAR *const *env_argv (void);
 
   // = Accessors for the standard handles.
-  ACE_HANDLE get_stdin (void);
-  ACE_HANDLE get_stdout (void);
-  ACE_HANDLE get_stderr (void);
+  ACE_HANDLE get_stdin (void) const;
+  ACE_HANDLE get_stdout (void) const;
+  ACE_HANDLE get_stderr (void) const;
 
   // = Set/get real & effective user & group id associated with user.
   int setreugid (const ACE_TCHAR* user);
@@ -270,10 +270,16 @@ public:
   void seteuid (uid_t id);
   void setrgid (uid_t id);
   void setegid (uid_t id);
-  uid_t getruid (void);
-  uid_t geteuid (void);
-  uid_t getrgid (void);
-  uid_t getegid (void);
+  uid_t getruid (void) const;
+  uid_t geteuid (void) const;
+  uid_t getrgid (void) const;
+  uid_t getegid (void) const;
+
+  /**
+   * Get/Set the inherit_environment flag.
+   */
+  int inherit_environment (void) const;
+  void inherit_environment (int);
 #endif /* ACE_WIN32 */
 protected:
 
