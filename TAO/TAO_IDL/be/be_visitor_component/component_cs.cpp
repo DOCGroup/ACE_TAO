@@ -105,7 +105,7 @@ be_visitor_component_cs::visit_component (be_component *node)
           << "TAO_OutputCDR & cdr" << be_uidt_nl
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
-          << "return p->marshal (cdr);" << be_uidt_nl
+          << "return cdr << p;" << be_uidt_nl
           << "}";
     }
 
@@ -239,7 +239,8 @@ be_visitor_component_cs::visit_component (be_component *node)
       << "}" << be_uidt_nl
       << "else" << be_idt_nl
       << "{" << be_idt_nl
-      << "return this->Object::_is_a (" << be_idt << be_idt_nl
+      << "return this->ACE_NESTED_CLASS (CORBA, Object)::_is_a ("
+      << be_idt << be_idt_nl
       << "value" << be_nl
       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
