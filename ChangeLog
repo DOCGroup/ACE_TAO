@@ -1,3 +1,12 @@
+Thu Jul  3 22:05:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/config-linux-common.h:
+        * ace/os_include/os_pthread.h:
+          Moved the ACE_HAS_PTHREAD_SETSTACK definition to os_pthread.h
+          along with all the other pthread related definitions.  This
+          should help eliminate warnings about using a the deprecated
+          function pthread_attr_setstackaddr.
+
 Thu Jul 03 17:00:47 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/MakeProjectCreator/config/ciao_client.mpb: Added "security"
