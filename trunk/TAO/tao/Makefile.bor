@@ -201,6 +201,7 @@ OBJFILES = \
 	$(OBJDIR)\TAO_Internal.obj \
 	$(OBJDIR)\TAO_Server_Request.obj \
 	$(OBJDIR)\TAO_Singleton_Manager.obj \
+	$(OBJDIR)\TSS_Resources.obj \
 	$(OBJDIR)\Tagged_Components.obj \
 	$(OBJDIR)\Tagged_Profile.obj \
 	$(OBJDIR)\Thread_Lane_Resources.obj \

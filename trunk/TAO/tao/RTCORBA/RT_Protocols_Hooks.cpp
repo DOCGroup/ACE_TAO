@@ -13,6 +13,7 @@
 #include "tao/Protocol_Factory.h"
 #include "tao/Transport_Acceptor.h"
 #include "tao/Transport_Connector.h"
+#include "tao/Policy_Set.h"
 #include "Priority_Mapping_Manager.h"
 #include "RT_Stub.h"
 #include "tao/IIOP_Transport.h"

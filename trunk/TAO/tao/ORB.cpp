@@ -25,6 +25,8 @@ ACE_RCSID (tao,
 #include "default_ports.h"
 #include "ORBInitInfo.h"
 #include "ORBInitializer_Registry.h"
+#include "TAO_Singleton_Manager.h"
+#include "Policy_Manager.h"
 
 #include "CodecFactory_ORBInitializer.h"
 

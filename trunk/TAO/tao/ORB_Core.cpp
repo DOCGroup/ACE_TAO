@@ -4,7 +4,6 @@
 #include "ORB_Core.h"
 #include "ORB_Table.h"
 
-
 #include "TAO_Internal.h"
 #include "default_client.h"
 #include "default_server.h"
@@ -34,6 +33,7 @@
 #include "Stub_Factory.h"
 #include "Thread_Lane_Resources.h"
 #include "Thread_Lane_Resources_Manager.h"
+#include "TSS_Resources.h"
 
 #include "Protocols_Hooks.h"
 #include "IORInterceptor_Adapter.h"
@@ -68,7 +68,7 @@ ACE_RCSID (tao,
 // ****************************************************************
 
 CORBA::Environment&
-TAO_default_environment ()
+TAO_default_environment (void)
 {
   return *TAO_TSS_RESOURCES::instance ()->default_environment_;
 }
@@ -140,7 +140,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     dynany_factory_ (CORBA::Object::_nil ()),
     ior_manip_factory_ (CORBA::Object::_nil ()),
     ior_table_ (CORBA::Object::_nil ()),
-    orb_ (),
+    orb_ (CORBA::ORB::_nil ()),
     root_poa_ (),
     portable_group_poa_hooks_ (0),
     orb_params_ (),
@@ -254,6 +254,8 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   delete this->transport_sync_strategy_;
 
   delete this->request_dispatcher_;
+
+  CORBA::release (this->orb_);
 }
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
@@ -1384,7 +1386,7 @@ TAO_ORB_Core::bidirectional_giop_init (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   if (this->bidir_adapter_)
-    return this->bidir_adapter_->activate (this->orb_.in (),
+    return this->bidir_adapter_->activate (this->orb_,
                                            0,
                                            0
                                            ACE_ENV_ARG_PARAMETER);
@@ -2070,7 +2072,7 @@ TAO_ORB_Core::resolve_typecodefactory_i (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW (CORBA::ORB::InvalidName ());
     }
   this->typecode_factory_ =
-    loader->create_object (this->orb_.in (), 0, 0 ACE_ENV_ARG_PARAMETER);
+    loader->create_object (this->orb_, 0, 0 ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -2088,7 +2090,7 @@ TAO_ORB_Core::resolve_dynanyfactory_i (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW (CORBA::ORB::InvalidName ());
     }
   this->dynany_factory_ =
-    loader->create_object (this->orb_.in (), 0, 0 ACE_ENV_ARG_PARAMETER);
+    loader->create_object (this->orb_, 0, 0 ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -2107,7 +2109,7 @@ TAO_ORB_Core::resolve_iormanipulation_i (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW (CORBA::ORB::InvalidName ());
     }
   this->ior_manip_factory_ =
-    loader->create_object (this->orb_.in (), 0, 0 ACE_ENV_ARG_PARAMETER);
+    loader->create_object (this->orb_, 0, 0 ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -2754,6 +2756,18 @@ TAO_ORB_Core::get_cached_policy (TAO_Cached_Policy_Type type)
 
 #endif /* (TAO_HAS_CORBA_MESSAGING == 1) */
 
+CORBA::Environment *
+TAO_ORB_Core::default_environment (void) const
+{
+  return TAO_TSS_RESOURCES::instance ()->default_environment_;
+}
+
+void
+TAO_ORB_Core::default_environment (CORBA::Environment *env)
+{
+  TAO_TSS_RESOURCES::instance ()->default_environment_ = env;
+}
+
 void
 TAO_ORB_Core::add_interceptor (
    PortableInterceptor::IORInterceptor_ptr interceptor
@@ -2871,27 +2885,6 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
 
 // ****************************************************************
 
-TAO_TSS_Resources::TAO_TSS_Resources (void)
-  :  poa_current_impl_ (0),
-     rtscheduler_current_impl_ (0),
-     rtscheduler_previous_current_impl_ (0),
-     default_environment_ (&this->tss_environment_)
-
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
-  , policy_current_ (&this->initial_policy_current_)
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
-{
-}
-
-TAO_TSS_Resources::~TAO_TSS_Resources (void)
-{
-}
-
-// ****************************************************************
-
 TAO_Export TAO_ORB_Core *
 TAO_ORB_Core_instance (void)
 {
@@ -2997,8 +2990,6 @@ template class ACE_Lock_Adapter<TAO_SYNCH_MUTEX>;
 template class ACE_Reverse_Lock<TAO_SYNCH_MUTEX>;
 template class ACE_Guard<ACE_Reverse_Lock<TAO_SYNCH_MUTEX> >;
 
-template class TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>;
-template class ACE_TSS<TAO_TSS_Resources>;
 template class ACE_TSS<TAO_ORB_Core_TSS_Resources>;
 
 template class ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
@@ -3023,8 +3014,6 @@ template class ACE_Dynamic_Service<TAO_Client_Strategy_Factory>;
 #pragma instantiate ACE_Reverse_Lock<TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_Guard<ACE_Reverse_Lock<TAO_SYNCH_MUTEX> >
 
-#pragma instantiate TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_TSS<TAO_TSS_Resources>
 #pragma instantiate ACE_TSS<TAO_ORB_Core_TSS_Resources>
 
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
@@ -3037,8 +3026,5 @@ template class ACE_Dynamic_Service<TAO_Client_Strategy_Factory>;
 
 #pragma instantiate ACE_Dynamic_Service<TAO_Server_Strategy_Factory>
 #pragma instantiate ACE_Dynamic_Service<TAO_Client_Strategy_Factory>
-
-#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux) || defined (VXWORKS))
-template TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX> * TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>::singleton_;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
