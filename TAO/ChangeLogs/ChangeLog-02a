@@ -1,3 +1,10 @@
+Fri Jan  5 18:36:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Generator_Parser.h: Included
+	  "tao/Exception.h". This is needed to fix a compile error in gcc
+	  version 2.97. Thanks to Craig Rodrigues <rodrigc@mediaone.net>
+	  for reporting this.
+
 Thu Jan  4 15:33:19 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/tmplinst.cpp:
