@@ -1,3 +1,10 @@
+Sat Nov 22 22:10:14 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
+
+	* tests/Task_Ex_Test.cpp:
+	* tests/run_test.lst:
+	* tests/tests.mpc:
+	Added test for ACE_Task_Ex
+
 Sat Nov 22 22:03:34 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
 	* ace/ace.mpc: 
