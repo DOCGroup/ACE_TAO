@@ -114,10 +114,9 @@ TAO_LB_Signal_Handler::perform_cleanup (int signum)
     {
       // Shutdown the POA.
       //
-      // Shutting down the POA will cause the LoadManager servant to
-      // be destroyed, which in turn causes its GenericFactory
-      // implementation to clean up all its resources, including the
-      // remote group members it may have created.
+      // Shutting down the POA will cause servants "owned" by the POA
+      // to be destroyed.  Servants will then have the opportunity to
+      // clean up all resources they are responsible for.
       this->poa_->destroy (1, 1
                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -133,8 +132,7 @@ TAO_LB_Signal_Handler::perform_cleanup (int signum)
                            "Caught exception");
 
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Problem during LoadManager cleanup "
-                         "initiated by signal %d.\n",
+                         "Problem during cleanup initiated by signal %d.\n",
                          signum),
                         -1);
     }
