@@ -1,3 +1,9 @@
+Thu Aug 19 16:45:05 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/security.mpb:
+
+	  Changed to inherit from orbsvcslib.
+
 Thu Aug 19 12:42:19 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * TAO/tests/MT_Client/client.cpp:
