@@ -83,7 +83,7 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
   // This is our temporary workspace.
   char buf[BUFSIZ];
 
-  int c;
+  int c = EOF;
   size_t index = 0;
   int done = 0;
   
