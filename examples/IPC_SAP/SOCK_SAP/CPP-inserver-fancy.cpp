@@ -12,6 +12,8 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
 
+#include "CPP-inserver-fancy.h"
+
 ACE_RCSID(SOCK_SAP, CPP_inserver_fancy, "$Id$")
 
 // Forward declaration.
@@ -125,40 +127,6 @@ private:
 
   virtual void print_results (void);
   // Print the results.
-};
-
-class Options
-  // = TITLE
-  //   Define the options for this test.
-{
-public:
-  Options (void);
-  // Constructor.
-
-  ~Options (void);
-  // Destructor.
-
-  int parse_args (int argc, char *argv[]);
-  // Parse the command-line arguments.
-
-  int verbose (void) const;
-  // Are we running in verbose mode?
-
-  u_short port (void) const;
-  // Port number that we are listening at.
-
-  int reply_message_len (void) const;
-  // Size of the reply message.
-
-private:
-  int verbose_;
-  // Are we running in verbose mode?
-
-  u_short port_;
-  // Port number we listen at.
-
-  size_t reply_message_len_;
-  // Size of the reply message.
 };
 
 u_short
