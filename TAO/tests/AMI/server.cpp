@@ -113,6 +113,14 @@ main (int argc, char *argv[])
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      root_poa->destroy (true,  // ethernalize objects
+ 					               false, // wait for completion
+						             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      orb->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
     }
   ACE_CATCHANY

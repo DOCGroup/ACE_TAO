@@ -299,6 +299,13 @@ main (int argc, char *argv[])
           ACE_TRY_CHECK;
         }
 
+      poa_var->destroy (true,  // ethernalize objects
+ 					              false, // wait for completion
+						            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      orb->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

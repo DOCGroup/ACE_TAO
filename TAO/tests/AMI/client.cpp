@@ -249,14 +249,19 @@ main (int argc, char *argv[])
         }
 
       // ORB loop.
-      while (orb->work_pending (ACE_TRY_ENV) && number_of_replies > 0)
+
+      while (number_of_replies > 0)
         {
+          CORBA::Boolean pending =
+            orb->work_pending(ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          orb->perform_work (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          if (pending)
+            {
+              orb->perform_work(ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
         }
-      ACE_TRY_CHECK;
 
       if (debug)
         {
@@ -271,6 +276,14 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
       //client.ami_test_var_->shutdown ();
+
+      root_poa->destroy (true,  // ethernalize objects
+ 					               false, // wait for completion
+						             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      orb->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
