@@ -657,7 +657,7 @@ template<typename T>
 TAO::Any_Dual_Impl_T<T>::Any_Dual_Impl_T (_tao_destructor destructor,
                                           CORBA::TypeCode_ptr tc,
                                           const T & val)
-  : Any_Impl (0,
+  : Any_Impl (destructor,
               tc)
 {
   ACE_NEW (this->value_,
