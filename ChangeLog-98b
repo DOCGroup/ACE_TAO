@@ -1,3 +1,11 @@
+Tue Nov 24 17:45:26 1998  Steve Huston  <shuston@riverace.com>
+
+        * netsvcs/clients/Naming/Dump_Restore/Makefile: Added a LIBS +=
+          $(ACELIB) to help this build on AIX.  Thanks to Jon Lindgren
+          <jlindgren@SLK.com> for reporting this problem.
+
+        * README: Added Jon Lindgren to the contributor's list.  Welcome, Jon!
+
 Tue Nov 24 09:34:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_chorus.GNU: added support for
