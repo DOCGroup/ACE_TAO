@@ -90,11 +90,6 @@ public:
   virtual void reset_hint (void);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_SSLIOP_Profile (const TAO_SSLIOP_Profile &pfile))
-  ACE_UNIMPLEMENTED_FUNC (TAO_SSLIOP_Profile & operator= (const TAO_SSLIOP_Profile &src))
-  // Profiles should not be copied.
-
-private:
   SSLIOP::SSL ssl_component_;
   // Cache the SSL tagged component in a decoded format. Notice that
   // we do not need to marshal this object!

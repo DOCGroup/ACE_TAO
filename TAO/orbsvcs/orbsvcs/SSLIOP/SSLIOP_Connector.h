@@ -53,7 +53,7 @@ class TAO_SSLIOP_Export TAO_SSLIOP_Connect_Creation_Strategy : public ACE_Creati
   //   Helper creation strategy
   //
   // = DESCRIPTION
-  //   Creates UIOP_Client_Connection_Handler objects but satisfies
+  //   Creates SSLIOP_Client_Connection_Handler objects but satisfies
   //   the interface required by the
   //   ACE_Creation_Strategy<TAO_SSLIOP_Client_Connection_Handler>
   //
