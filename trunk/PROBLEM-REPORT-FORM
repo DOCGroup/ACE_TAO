@@ -1,7 +1,9 @@
-[Please use the form below to submit bug reports, problem
- reports, etc., to the ACE developers and interested users.
- Send to ace-bugs@cs.wustl.edu.  Please send it as plain
- ASCII text, _not_ uuencoded or as an attachment.
+[Please use the PRF form below to submit bug reports, problem reports,
+ etc., to the ACE developers and interested users.  Send to
+ ace-bugs@cs.wustl.edu.  If you are using OCI, PrismTech, or
+ Riverace's versions of ACE do not send bugs to this mailing list, but
+ instead contact those companies for support.  Please also send your
+ PRF as plain ASCII text, _not_ uuencoded or as an attachment.
 
  We prefer that all bug reports be submitted through our bug tracking
  system.  See $ACE_ROOT/docs/usage-bugzilla.html for more information
@@ -33,8 +35,8 @@
  When including your config.h and platform_macros.GNU files as requested
  below, only include the contents if you use the recommended method of
  including the platform-specific file in your file. If you use a link
- to the platform-specific file, simply state which one - DO NOT include
- an entire platform-specific configuration file in the form.
+ to the platform-specific file, simply state which one - DO NOT
+ include an entire platform-specific configuration file in the form.
 
 8<----------8<----------8<----------8<----------8<----------8<----------8<----
 
