@@ -1,3 +1,9 @@
+Thu May  2 00:23:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Messaging/Messaging.bor: Added
+	  Connection_Timeout_Policy_i.cpp  to the list of files. This
+	  should fix Borland errors.
+
 Thu May  2 00:18:34 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Connection_Timeout/client.cpp: Grr! The piece of code that
