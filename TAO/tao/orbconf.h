@@ -188,7 +188,7 @@
 
 #if defined (ACE_HAS_EXCEPTIONS)
 # define TAO_USE_EXCEPTIONS
-#if defined (TAO_USE_EXCEPTIONS) && !defined (ACE_HAS_EXCEPTIONS)
+#elif defined (TAO_USE_EXCEPTIONS) && !defined (ACE_HAS_EXCEPTIONS)
 # error "tao/orbconf.h: You can only use exceptions in TAO if ACE supports them"
 #endif /* TAO_USE_EXCEPTIONS */
 
