@@ -1,26 +1,3 @@
-Tue Aug  1 08:28:40 2000  Chad Elliott  <elliott_c@ociweb.com>
-
-        * rules.tao.GNU
-
-          Removed references to the true executable (This didn't seem to work
-          under NT) from rules.tao.GNU.
-
-Tue Aug 01 03:11:25 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
-
-	* tests/ORB_destroy: New test for funky poa and orb destruction.
-
-	* tao/Object_Adapter.cpp (deactivate): Removed function since it
-	  was not necessary anymore.
-
-	* tao/POAManager.cpp (TAO_POA_Manager and ~TAO_POA_Manager):
-	  Removed access to <poa_manager_set>.
-
-Tue Aug  1 01:48:52 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
-
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.{h,cpp}:
-	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.{h,cpp}: 
-	  Juggled header files to fix VxWorks warnings.
-
 Mon Jul 31 22:51:47 2000  Balachandran  <bala@cs.wustl.edu>
 
         * TAO version 1.1.6 released.
