@@ -1,3 +1,10 @@
+Mon Apr  3 23:19:28 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/Makefile.bor (MAKEFILES): Include
+	  NT_Naming_Service.bor in the Makefile for BCB.  Thanks to
+ 	  Christopher Kohlhoff <chris@kohlhoff.com> and Thaddeus Olczyk
+ 	  <olczyk@interaccess.com> for this fix.
+
 Mon Apr 03 16:06:55 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * rules.TAO.GNU: default to not enabling smart proxy support.
