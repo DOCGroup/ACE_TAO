@@ -1,3 +1,9 @@
+Mon Apr 06 16:28:32 1998  Steve Huston  <shuston@riverace.com>
+
+	* examples/Service_Configurator/IPC-tests/server/svc.conf: Corrected
+	  library name to load tests from.  Thanks to Sandro Doro
+	  <XDS@necsy.it> for noticing there was a problem here.
+
 Sun Apr 05 10:20:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_lynxos.GNU: only define
