@@ -23,7 +23,7 @@ Sun May  2 00:12:40 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
         * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibList.cpp:
         * orbsvcs/tests/AVStreams/mpeg/source/mpeg_mib/mibToggle.cpp:
           Fixed compilation errors for using unsigned char * instead of
-          XmString on Sun 5.7 CC. Thanks to Bala for helping with this.
+          XmString on SunOS5.7 CC 4.2. Thanks to Bala for helping with this.
 
         * orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Globals.h:
           Fixed a redundant redinition warnings for macros nextByte and
@@ -31,11 +31,11 @@ Sun May  2 00:12:40 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
         * orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.{h,cpp}:
           Fixed void usleep to int usleep to avoid ambiguity errors on
-          Sun5.7 CC.
+          SunOS5.7 CC 4.2.
 
         * orbsvcs/tests/AVStreams/mpeg/source/server/Machine_Properties.cpp:
           Redefined xdr_void to int xdr_void (XDR *,void *) to fix
-          compilation errors on Sun 5.7 CC.
+          compilation errors on SunOS5.7 CC 4.2.
 
 Sat May  1 23:30:08 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
