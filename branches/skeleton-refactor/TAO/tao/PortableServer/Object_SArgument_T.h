@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Argument_T.h"
+#include "tao/Argument.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
