@@ -1,3 +1,8 @@
+Sun Oct 22 10:08:31 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Makefile.bor:
+          Update file names for the ACE_ components.
+
 Sun Oct 22 08:57:33 2000  David L. Levine <levine@cs.wustl.edu>
 
         * tests/test_config.h: implemented these changes to remove
