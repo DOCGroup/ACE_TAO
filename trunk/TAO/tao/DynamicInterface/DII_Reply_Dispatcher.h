@@ -16,16 +16,23 @@
 
 #ifndef TAO_DII_REPLY_DISPATCHER_H
 #define TAO_DII_REPLY_DISPATCHER_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "dynamicinterface_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "dynamicinterface_export.h"
+#include "tao/orbconf.h"
 #include "tao/Asynch_Reply_Dispatcher_Base.h"
+
+namespace CORBA
+{
+  class Request;
+  typedef Request *Request_ptr;
+}
 
 class TAO_ORB_Core;
 
@@ -68,4 +75,5 @@ private:
 };
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_REPLY_DISPATCHER_H */

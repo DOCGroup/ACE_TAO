@@ -1,5 +1,4 @@
 // This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    CDR.h
@@ -41,18 +40,26 @@
 
 #ifndef TAO_CDR_H
 #define TAO_CDR_H
-#include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include /**/ "ace/pre.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
 #include "ace/CDR_Stream.h"
 
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
+#include "tao/orbconf.h"
+
 class TAO_ORB_Core;
+
+namespace CORBA
+{
+  class Environment;
+}
 
 /**
  * @class TAO_OutputCDR
@@ -320,10 +327,6 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::Char* &x);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       CORBA::WChar* &x);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &,
-                                      const CORBA::ParameterMode &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &,
-                                      CORBA::ParameterMode &);
 #endif /* __ACE_INLINE */
 
 #include /**/ "ace/post.h"

@@ -13,9 +13,10 @@
 // ===================================================================
 #ifndef TAO_UIOP_CONNECTION_HANDLER_H
 #define TAO_UIOP_CONNECTION_HANDLER_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -30,7 +31,6 @@
 #include "ace/Acceptor.h"
 #include "ace/Reactor.h"
 #include "tao/Connection_Handler.h"
-#include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
 #include "UIOP_Transport.h"
 
@@ -133,4 +133,5 @@ private:
 #endif /* TAO_HAS_UIOP == 1 */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_UIOP_CONNECT_H */

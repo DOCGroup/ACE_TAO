@@ -15,11 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Basic_Types.h"
 
 class TAO_Endpoint;
 
@@ -43,7 +45,6 @@ class TAO_Endpoint;
 class TAO_Export TAO_Transport_Descriptor_Interface
 {
 public:
-
   /// Destructor
   virtual ~TAO_Transport_Descriptor_Interface (void);
 
@@ -65,7 +66,6 @@ public:
   void set_bidir_flag (CORBA::Boolean flag);
 
 protected:
-
   /// Default Constructor
   TAO_Transport_Descriptor_Interface (void);
 
@@ -83,7 +83,6 @@ protected:
   /// delete it when we destruct ourselves.
   CORBA::Boolean endpoint_from_heap_;
 };
-
 
 #if defined (__ACE_INLINE__)
 # include "tao/Transport_Descriptor_Interface.inl"

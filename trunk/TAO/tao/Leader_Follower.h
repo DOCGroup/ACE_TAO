@@ -15,19 +15,22 @@
 #define TAO_LEADER_FOLLOWER_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/LF_Follower.h"
-#include "tao/ORB_Core.h"
-#include "tao/New_Leader_Generator.h"
-#include "ace/Intrusive_List.h"
-#include "ace/Reverse_Lock_T.h"
+#include "ace/os_include/os_errno.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/ORB_Core.h"
+#include "tao/New_Leader_Generator.h"
+#include "tao/LF_Follower.h"
+#include "ace/Reverse_Lock_T.h"
+#include "ace/Intrusive_List.h"
+#include "ace/Intrusive_List_Node.h"
+
 class TAO_LF_Event;
 class TAO_Transport;
+// class TAO_LF_Follower;
 
 /**
  * @class TAO_Leader_Follower

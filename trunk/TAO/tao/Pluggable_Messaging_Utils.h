@@ -16,6 +16,7 @@
 
 #ifndef TAO_PLUGGABLE_MESSAGING_UTILS_H
 #define TAO_PLUGGABLE_MESSAGING_UTILS_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/IOP_IORC.h"
@@ -23,8 +24,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/CDR.h"
 
 /**
  * @class TAO_Pluggable_Reply_Params_Base
@@ -189,4 +188,5 @@ enum TAO_Pluggable_Message_Exception_Type
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /*TAO_PLUGGABLE_MESSAGING_UTILS_H*/

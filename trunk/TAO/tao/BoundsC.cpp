@@ -15,26 +15,23 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:301
 
 
 #include "BoundsC.h"
-#include "tao/Stub.h"
-#include "tao/Invocation.h"
-#include "tao/PortableInterceptor.h"
-
-#if TAO_HAS_INTERCEPTORS == 1
-#include "tao/RequestInfo_Util.h"
-#include "tao/ClientRequestInfo_i.h"
-#include "tao/ClientInterceptorAdapter.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
-
+#include "tao/Any_Dual_Impl_T.h"
+#include "tao/Typecode.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -44,7 +41,15 @@
 #include "BoundsC.i"
 #endif /* !defined INLINE */
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:59
+
+// Arg traits specializations.
+namespace TAO
+{
+};
+
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
 
 CORBA::Bounds::Bounds (void)
@@ -70,14 +75,15 @@ CORBA::Bounds::Bounds (const ::CORBA::Bounds &_tao_excp)
 CORBA::Bounds&
 CORBA::Bounds::operator= (const ::CORBA::Bounds &_tao_excp)
 {
-  this->UserException::operator= (_tao_excp);
+  this->ACE_NESTED_CLASS (CORBA, UserException)::operator= (_tao_excp);
   return *this;
 }
 
 void CORBA::Bounds::_tao_any_destructor (void *_tao_void_pointer)
 {
-  Bounds *tmp = ACE_static_cast (Bounds*, _tao_void_pointer);
-  delete tmp;
+  Bounds *_tao_tmp_pointer =
+    ACE_static_cast (Bounds*, _tao_void_pointer);
+  delete _tao_tmp_pointer;
 }
 
 CORBA::Bounds *
@@ -126,7 +132,7 @@ void CORBA::Bounds::_tao_encode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -139,7 +145,7 @@ void CORBA::Bounds::_tao_decode (
     {
       return;
     }
-  
+
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -156,16 +162,16 @@ static const CORBA::Long _oc_CORBA_Bounds[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   29,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x434f5242), 
-  ACE_NTOHL (0x412f426f), 
-  ACE_NTOHL (0x756e6473), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x6f6d672e),
+  ACE_NTOHL (0x6f72672f),
+  ACE_NTOHL (0x434f5242),
+  ACE_NTOHL (0x412f426f),
+  ACE_NTOHL (0x756e6473),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Bounds:1.0
     7,
-  ACE_NTOHL (0x426f756e), 
+  ACE_NTOHL (0x426f756e),
   ACE_NTOHL (0x64730000),  // name = Bounds
   0, // member count
   };
@@ -178,17 +184,41 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_Bounds (
     sizeof (CORBA::Bounds)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_Bounds,
-    &_tc_TAO_tc_CORBA_Bounds
-  )
-TAO_NAMESPACE_END
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr _tc_Bounds =
+    &_tc_TAO_tc_CORBA_Bounds;
+}
 
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_cs.cpp:54
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_cs.cpp:50
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<CORBA::Bounds>::demarshal_value (
+    TAO_InputCDR & cdr
+  )
+{
+  CORBA::String_var id;
+
+  if ((cdr >> id.out ()) == 0)
+    {
+      return 0;
+    }
+
+  ACE_TRY_NEW_ENV
+    {
+      this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      return 0;
+    }
+  ACE_ENDTRY;
+
+  return 1;
+}
 
 // Copying insertion.
 void operator<<= (
@@ -245,10 +275,21 @@ CORBA::Boolean operator>>= (
       );
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Dual_Impl_T<CORBA::Bounds>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Dual_Impl_T<CORBA::Bounds>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1703
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        CORBA::Bounds
+      >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        CORBA::Bounds \
+      >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

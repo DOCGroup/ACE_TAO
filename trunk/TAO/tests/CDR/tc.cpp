@@ -17,7 +17,8 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
+#include "tao/Typecode.h"
+#include "tao/ORB.h"
 #include "tao/debug.h"
 
 ACE_RCSID(CDR, tc, "$Id$")

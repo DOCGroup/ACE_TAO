@@ -1,5 +1,4 @@
 // $Id$
-
 #include "tao/Messaging/Messaging_Policy_i.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
@@ -56,7 +55,7 @@ TAO_RelativeRoundtripTimeoutPolicy::policy_type (
 void
 TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
                                           TAO_Stub *stub,
-                                          int &has_timeout,
+                                          bool &has_timeout,
                                           ACE_Time_Value &time_value)
 {
   CORBA::Policy_var policy =
@@ -66,7 +65,7 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
 
   if (CORBA::is_nil (policy.in ()))
     {
-      has_timeout = 0;
+      has_timeout = false;
       return;
     }
   ACE_TRY_NEW_ENV
@@ -85,7 +84,7 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
                       ACE_U64_TO_U32 (microseconds));
 
       // Set the flag once all operations complete successfully
-      has_timeout = 1;
+      has_timeout = true;
 
       if (TAO_debug_level > 0)
         {
@@ -215,7 +214,7 @@ TAO_Sync_Scope_Policy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
                              TAO_Stub *stub,
-                             int &has_synchronization,
+                             bool &has_synchronization,
                              Messaging::SyncScope &scope)
 {
   CORBA::Policy_var policy =
@@ -240,7 +239,7 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
                   0),
                 CORBA::COMPLETED_NO));
 
-      has_synchronization = 1;
+      has_synchronization = true;
       scope = p->synchronization (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }

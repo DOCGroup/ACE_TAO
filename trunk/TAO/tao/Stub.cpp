@@ -8,22 +8,13 @@
 // based implementation, and can neither be used by other kinds of
 // objref nor have a default implementation.
 
-#include "Endpoint.h"
 #include "Stub.h"
 #include "Profile.h"
-#include "Sequence.h"
-#include "Object.h"
-#include "Invocation.h"
-#include "Asynch_Invocation.h"
 #include "ORB_Core.h"
 #include "Client_Strategy_Factory.h"
 #include "Sync_Strategies.h"
-#include "Buffering_Constraint_Policy.h"
 #include "debug.h"
-#include "Policy_Set.h"
 #include "Policy_Manager.h"
-
-#include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Stub.i"
@@ -36,22 +27,23 @@ ACE_RCSID (tao,
 TAO_Stub::TAO_Stub (const char *repository_id,
                     const TAO_MProfile &profiles,
                     TAO_ORB_Core *orb_core)
-  : type_id (repository_id),
-    orb_core_ (orb_core),
-    orb_ (),
-    servant_orb_ (),
-    base_profiles_ ((CORBA::ULong) 0),
-    forward_profiles_ (0),
-    profile_in_use_ (0),
-    profile_lock_ptr_ (0),
-    profile_success_ (0),
-    refcount_lock_ (),
-    refcount_ (1),
+  : type_id (repository_id)
+  , orb_core_ (orb_core)
+  , orb_ ()
+  , servant_orb_ ()
+  , base_profiles_ ((CORBA::ULong) 0)
+  , forward_profiles_ (0)
+  , profile_in_use_ (0)
+  , profile_lock_ptr_ (0)
+  , profile_success_ (0)
+  , refcount_lock_ ()
+  , refcount_ (1)
 #if (TAO_HAS_CORBA_MESSAGING == 1)
-    policies_ (0),
+  , policies_ (0)
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-    ior_info_ (0),
-    forwarded_ior_info_ (0)
+  , ior_info_ (0)
+  , forwarded_ior_info_ (0)
+  , collocation_opt_ (orb_core->optimize_collocation_objects ())
 {
   if (this->orb_core_.get() == 0)
     {
@@ -61,6 +53,7 @@ TAO_Stub::TAO_Stub (const char *repository_id,
                       ACE_TEXT ("TAO: (%P|%t) TAO_Stub created with default ")
                       ACE_TEXT ("ORB core\n")));
         }
+
       this->orb_core_.reset (TAO_ORB_Core_instance ());
     }
 
@@ -605,56 +598,6 @@ TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types
                                                 ACE_ENV_ARG_PARAMETER);
 }
 
-CORBA::Boolean
-TAO_Stub::validate_connection (CORBA::PolicyList_out inconsistent_policies
-                               ACE_ENV_ARG_DECL)
-{
-  // Use Locate Request to establish connection/make sure the object
-  // is there ...
-  TAO_GIOP_Locate_Request_Invocation locate_request (this,
-                                                     this->orb_core_.get ());
-
-  locate_request.init_inconsistent_policies (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  // @@ For some combinations of RTCORBA policies, location forwarding
-  // isn't supported.  See <forward> method implementations in
-  // Invocation_Endpoint_Selectors.cpp for more information.
-  //
-  ACE_TRY
-    {
-      for (;;)
-        {
-          locate_request.start (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          int status = locate_request.invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-          // We'll get this only if the object was, in fact, forwarded.
-          if (status == TAO_INVOKE_RESTART)
-              continue;
-
-          if (status != TAO_INVOKE_OK)
-            {
-              ACE_TRY_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
-                                             CORBA::COMPLETED_YES));
-            }
-          break;
-        }
-    }
-  ACE_CATCH (CORBA::INV_POLICY, ex)
-    {
-      inconsistent_policies =
-        locate_request.get_inconsistent_policies ();
-      return 0;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
-
-  return 1;
-}
-
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 TAO_Sync_Strategy &
@@ -662,14 +605,14 @@ TAO_Stub::sync_strategy (void)
 {
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-  int has_synchronization;
+  bool has_synchronization;
   Messaging::SyncScope scope;
 
   this->orb_core_->call_sync_scope_hook (this,
                                          has_synchronization,
                                          scope);
 
-  if (has_synchronization == 1)
+  if (has_synchronization == true)
     return this->orb_core_->get_sync_strategy (this,
                                                scope);
 

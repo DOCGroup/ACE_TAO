@@ -15,10 +15,11 @@
 
 #ifndef TAO_EXCEPTION_H
 #define TAO_EXCEPTION_H
-#include /**/"ace/pre.h"
+#include /**/ "ace/pre.h"
 
-
-#include "tao/corbafwd.h"
+// Do not try removing this. If you remove this for subsetting lots of
+// things go wrong in TAO.
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,14 +30,13 @@
 #define TAO_RAISE(EXCEPTION) throw EXCEPTION
 #else
 #define TAO_RAISE(EXCEPTION)
-#endif /* TAO_HAS_EXCEPTIONS */
+#endif /* ACE_HAS_EXCEPTIONS */
 
-#include "ace/CORBA_macros.h"
 #include "ace/SStringfwd.h"
 #include "ace/iosfwd.h"
-
-#include <stdarg.h>
-#include <stdio.h>   /* For "FILE" typedef. */
+#include "ace/CORBA_macros.h"
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
 
 class ACE_Allocator;
 
@@ -53,8 +53,43 @@ class TAO_InputCDR;
 
 #endif /*__Lynx__ */
 
+// This is already done in orbconf.h. But this file is totally
+// decoupled from its contents that we have to do this here. Including
+// orbconf.h is probably going to be a overhead.
+#if defined (minor)
+#undef minor
+#endif /* minor */
+
 namespace CORBA
 {
+  class TypeCode;
+  typedef TypeCode *TypeCode_ptr;
+
+  class Environment;
+
+  class Any;
+  typedef Any *Any_ptr;
+
+  enum CompletionStatus
+  {
+    // = Completion Status for System exceptions
+
+    COMPLETED_YES,     // successful or exceptional completion
+    COMPLETED_NO,      // didn't change any state; retry is OK
+    COMPLETED_MAYBE    // can't say what happened; retry unsafe
+  };
+
+  enum exception_type
+  {
+    // = Exception type.
+
+    NO_EXCEPTION,
+    USER_EXCEPTION,
+    SYSTEM_EXCEPTION
+  };
+
+  extern TAO_Export TypeCode_ptr _tc_exception_type;
+
   /**
    * @class Exception
    *
@@ -69,15 +104,15 @@ namespace CORBA
 
   /* NOTE:
      According to the OMG CORBA C++ Mapping version 1.1, all
-	 constructors, copy constructors and assignment operators
-	 should be moved to "protected" section in class declarations
+         constructors, copy constructors and assignment operators
+         should be moved to "protected" section in class declarations
 
-	 Since the current MS Visual C++ 6.0 compiler will cause some
-	 problems to TAO's exception mechanism, so we defer doing this until
-	 we full migrate from VC 6.0 to VC 7.0 and higher version.
+         Since the current MS Visual C++ 6.0 compiler will cause some
+         problems to TAO's exception mechanism, so we defer doing this until
+         we full migrate from VC 6.0 to VC 7.0 and higher version.
 
      This later change only affect the "Exception.h" file and won't
-	 affect the "Exception.cpp" file.
+         affect the "Exception.cpp" file.
   */
 
   class TAO_Export Exception
@@ -191,7 +226,7 @@ namespace CORBA
     /// The narrow operation.
     static UserException *_downcast (CORBA::Exception *exception);
 
-	/// The const version of narrow operation
+        /// The const version of narrow operation
     static const UserException *_downcast (const CORBA::Exception *exception);
 
     virtual void _raise (void) const = 0;
@@ -215,6 +250,8 @@ namespace CORBA
     UserException (void);
   };
 
+
+
   /**
    * @class SystemException
    *
@@ -223,12 +260,12 @@ namespace CORBA
    * System exceptions are those defined in the CORBA spec; OMG-IDL
    * defines these.
    */
-  class TAO_Export SystemException : public CORBA::Exception
+  class TAO_Export SystemException : public Exception
   {
   public:
-
     /// Default constructtor
     SystemException (void);
+
 
     /// Copy constructor.
     SystemException (const SystemException &src);
@@ -240,10 +277,10 @@ namespace CORBA
     SystemException &operator= (const SystemException &src);
 
     /// Get the minor status.
-    CORBA::ULong minor (void) const;
+    ULong minor (void) const;
 
     /// Set the minor status.
-    void minor (CORBA::ULong m);
+    void minor (ULong m);
 
     /// Get the completion status.
     CORBA::CompletionStatus completed (void) const;
@@ -254,7 +291,7 @@ namespace CORBA
     /// Narrow to a SystemException.
     static SystemException *_downcast (CORBA::Exception *exception);
 
-	/// The const version of narrow operation to a SystemException
+        /// The const version of narrow operation to a SystemException
     static const SystemException *_downcast(const CORBA::Exception *exception);
 
     virtual void _raise (void) const = 0;
@@ -461,6 +498,9 @@ public:
   TAO_DONT_CATCH (void);
 };
 #endif /* TAO_DONT_CATCH_DOT_DOT_DOT */
+
+TAO_Export void operator<<= (CORBA::Any &, const CORBA::Exception &);
+TAO_Export void operator<<= (CORBA::Any &, CORBA::Exception *);
 
 #if defined (__ACE_INLINE__)
 # include "tao/Exception.i"

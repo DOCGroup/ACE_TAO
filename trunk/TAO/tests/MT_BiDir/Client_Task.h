@@ -12,7 +12,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corba.h"
+#include "tao/ORB.h"
 
 
 /// Implement a Task to run the experiments using multiple threads.

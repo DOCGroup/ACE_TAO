@@ -6,6 +6,7 @@
 #include "ace/SString.h"
 #include "ace/Manual_Event.h"
 #include "Echo_Collocated_ORBInitializer.h"
+#include "tao/ORBInitializer_Registry.h"
 
 const char *output = "test.ior";
 const char *input = "file://test.ior";

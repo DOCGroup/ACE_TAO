@@ -15,25 +15,42 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:150
 
 #ifndef _TAO_IDL_ORIG_TYPECODEFACTORYC_H_
 #define _TAO_IDL_ORIG_TYPECODEFACTORYC_H_
 
 #include /**/ "ace/pre.h"
 
-#include "tao/IFR_Client/IFR_ExtendedC.h"
+#include "tao/ORB.h"
+
+#ifndef TAO_TYPECODEFACTORY_SAFE_INCLUDE
+#error "You should not include TypeCodeFactoryC.h directly, use TypeCodeFactory_Loader.h"
+#endif /* !TAO_TYPECODEFACTORY_SAFE_INCLUDE */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "typecodefactory_export.h"
+#include "tao/CDR.h"
+#include "tao/Environment.h"
+#include "tao/Object.h"
+#include "tao/Typecode.h"
+#include "tao/Objref_VarOut_T.h"
+
+#include "tao/IFR_Client/IFR_ExtendedC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -58,55 +75,42 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root_ch.cpp:63
+
+namespace TAO
+{
+  class Collocation_Proxy_Broker;
+  
+  template<typename T> class Narrow_Utils;
+}
+
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
 
-TAO_NAMESPACE  CORBA
+namespace CORBA
 {
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:567
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:650
 
-#if !defined (_CORBA_TYPECODEFACTORY__ODDS_N_ENDS_CH_)
-#define _CORBA_TYPECODEFACTORY__ODDS_N_ENDS_CH_
+#if !defined (_CORBA_TYPECODEFACTORY__VAR_OUT_CH_)
+#define _CORBA_TYPECODEFACTORY__VAR_OUT_CH_
   
   class TypeCodeFactory;
   typedef TypeCodeFactory *TypeCodeFactory_ptr;
-  struct tao_TypeCodeFactory_life;
   
   typedef
     TAO_Objref_Var_T<
-        TypeCodeFactory,
-        tao_TypeCodeFactory_life
+        TypeCodeFactory
       >
     TypeCodeFactory_var;
   
   typedef
     TAO_Objref_Out_T<
-        TypeCodeFactory,
-        tao_TypeCodeFactory_life
+        TypeCodeFactory
       >
     TypeCodeFactory_out;
-  
-  struct TAO_TypeCodeFactory_Export tao_TypeCodeFactory_life
-  {
-    static TypeCodeFactory_ptr tao_duplicate (TypeCodeFactory_ptr);
-    static void tao_release (TypeCodeFactory_ptr);
-    static TypeCodeFactory_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        TypeCodeFactory_ptr,
-        TAO_OutputCDR &
-      );
-  };
-  
-  struct TAO_TypeCodeFactory_Export tao_TypeCodeFactory_cast
-  {
-    static TypeCodeFactory_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
 
 #endif /* end #if !defined */
   
@@ -122,17 +126,11 @@ TAO_NAMESPACE  CORBA
   public:
     typedef TypeCodeFactory_ptr _ptr_type;
     typedef TypeCodeFactory_var _var_type;
-    static int _tao_class_id;
     
     // The static operations.
     static TypeCodeFactory_ptr _duplicate (TypeCodeFactory_ptr obj);
     
     static TypeCodeFactory_ptr _narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-    
-    static TypeCodeFactory_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
@@ -395,19 +393,26 @@ TAO_NAMESPACE  CORBA
       )) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:211
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:186
     
-    virtual void *_tao_QueryInterface (ptrdiff_t type);
+    virtual CORBA::Boolean _is_a (
+        const char *type_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
     
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
   
   protected:
+    // Abstract or local interface only.
     TypeCodeFactory (void);
+    
     virtual ~TypeCodeFactory (void);
   
   private:
+    // Private and unimplemented for concrete interfaces.
     TypeCodeFactory (const TypeCodeFactory &);
+    
     void operator= (const TypeCodeFactory &);
   };
 
@@ -419,10 +424,42 @@ TAO_NAMESPACE  CORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TypeCodeFactory;
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:66
 
-}
-TAO_NAMESPACE_CLOSE // module CORBA
+} // module CORBA
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
+
+#if defined (_MSC_VER)
+
+// Traits specializations.
+namespace TAO
+{
+
+#if !defined (_CORBA_TYPECODEFACTORY__TRAITS_CH_)
+#define _CORBA_TYPECODEFACTORY__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_TypeCodeFactory_Export Objref_Traits<CORBA::TypeCodeFactory>
+  {
+    static CORBA::TypeCodeFactory_ptr tao_duplicate (
+        CORBA::TypeCodeFactory_ptr
+      );
+    static void tao_release (
+        CORBA::TypeCodeFactory_ptr
+      );
+    static CORBA::TypeCodeFactory_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        CORBA::TypeCodeFactory_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+};
+
+#endif /* _MSC_VER */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
@@ -442,7 +479,7 @@ TAO_TypeCodeFactory_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:911
 
 #if defined (__ACE_INLINE__)
 #include "TypeCodeFactoryC.inl"
@@ -457,5 +494,6 @@ TAO_TypeCodeFactory_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA
 #endif /* __BORLANDC__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* ifndef */
 

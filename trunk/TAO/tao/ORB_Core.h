@@ -13,34 +13,39 @@
 
 #ifndef TAO_ORB_CORE_H
 #define TAO_ORB_CORE_H
+
 #include /**/ "ace/pre.h"
 
-#include "corbafwd.h"
+#include "tao/Resource_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-//#include "ORB.h"
-#include "Resource_Factory.h"
-#include "params.h"
-#include "Adapter.h"
-#include "PolicyFactory_Registry.h"
-#include "Parser_Registry.h"
-#include "Service_Callbacks.h"
-#include "Fault_Tolerance_Service.h"
-#include "Cleanup_Func_Registry.h"
-#include "Object_Ref_Table.h"
-#include "ObjectKey_Table.h"
+#include "tao/Collocation_Strategy.h"
+#include "tao/params.h"
+#include "tao/Adapter.h"
+#include "tao/ORB_Constants.h"
+#include "tao/PolicyFactory_Registry.h"
+#include "tao/Parser_Registry.h"
+#include "tao/ORBInitializer_Registry.h"
+#include "tao/Service_Callbacks.h"
+#include "tao/Fault_Tolerance_Service.h"
+#include "tao/Cleanup_Func_Registry.h"
+#include "tao/Object_Ref_Table.h"
+#include "tao/ObjectKey_Table.h"
+#include "tao/Messaging_SyncScopeC.h"
+#include "tao/Object.h"
+#include "tao/Invocation_Utils.h"
 
-// Interceptor definitions.
-#include "PortableInterceptorC.h"
-#include "Interceptor_List.h"
-#include "PICurrent.h"
+#if TAO_HAS_INTERCEPTORS == 1
+# include "Interceptor_List.h"
+# include "PICurrent.h"
+#endif  /* TAO_HAS_INTERCEPTORS == 1  */
 
-#include "ace/Hash_Map_Manager_T.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Lock_Adapter_T.h"
+
 
 // Forward declarations
 class TAO_Acceptor;
@@ -59,7 +64,6 @@ class TAO_RT_ORB;
 class TAO_RT_Current;
 class TAO_MProfile;
 class TAO_Profile;
-class TAO_GIOP_Invocation;
 
 class TAO_Endpoint_Selector_Factory;
 class TAO_Message_State_Factory;
@@ -106,8 +110,22 @@ class TAO_Policy_Validator;
 namespace CORBA
 {
   class ORB_ObjectIdList;  // CORBA::ORB::ObjectIdList
+  class ORB;
+  typedef ORB *ORB_ptr;
+
+  class PolicyList;
 }
 
+namespace IOP
+{
+  class ServiceContextList;
+}
+
+namespace PortableInterceptor
+{
+  class IORInterceptor;
+  typedef IORInterceptor *IORInterceptor_ptr;
+}
 // ****************************************************************
 
 /**
@@ -136,14 +154,6 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_ORB_Core_TSS_Resources&))
 
 public:
-
-
-  /// The allocators for the output CDR streams.
-  //@{
-  ACE_Allocator *output_cdr_dblock_allocator_;
-  ACE_Allocator *output_cdr_buffer_allocator_;
-  ACE_Allocator *output_cdr_msgblock_allocator_;
-  //@}
 
   /**
    * @todo
@@ -181,9 +191,7 @@ public:
 };
 
 
-
 // ****************************************************************
-
 /**
  * @class TAO_ORB_Core
  *
@@ -282,8 +290,9 @@ public:
    * @note
    * No-Collocation is a special case of collocation.
    */
-  static int collocation_strategy (CORBA::Object_ptr object
-                                   ACE_ENV_ARG_DECL);
+  static
+  TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
+                                                  ACE_ENV_ARG_DECL);
   //@}
 
   /**
@@ -582,13 +591,13 @@ public:
    * thread and current ORB.
    */
   void call_timeout_hook (TAO_Stub *stub,
-                          int &has_timeout,
+                          bool &has_timeout,
                           ACE_Time_Value &time_value);
 
   /// Define the Timeout_Hook signature
   typedef void (*Timeout_Hook) (TAO_ORB_Core *,
                                 TAO_Stub *,
-                                int&,
+                                bool&,
                                 ACE_Time_Value&);
 
   static void set_timeout_hook (Timeout_Hook hook);
@@ -609,7 +618,7 @@ public:
    * thread and current ORB.
    */
   void connection_timeout (TAO_Stub *stub,
-                           int &has_timeout,
+                           bool &has_timeout,
                            ACE_Time_Value &time_value);
 
   /// Define the Timeout_Hook signature
@@ -623,14 +632,14 @@ public:
 
 
   void call_sync_scope_hook (TAO_Stub *stub,
-                             int &has_synchronization,
+                             bool &has_synchronization,
                              Messaging::SyncScope &scope);
 
   TAO_Sync_Strategy &get_sync_strategy (TAO_Stub *stub,
                                         Messaging::SyncScope &scope);
   typedef void (*Sync_Scope_Hook) (TAO_ORB_Core *,
                                    TAO_Stub *,
-                                   int &,
+                                   bool &,
                                    Messaging::SyncScope &);
   static void set_sync_scope_hook (Sync_Scope_Hook hook);
 
@@ -866,16 +875,19 @@ public:
   /// Raise a comm failure exception if a service is not loaded, else
   /// delegate to the service to see what the service has to do for
   /// this case.
-  int service_raise_comm_failure (TAO_GIOP_Invocation *invoke,
-                                  TAO_Profile *profile
-                                  ACE_ENV_ARG_DECL);
+  TAO::Invocation_Status service_raise_comm_failure (
+      IOP::ServiceContextList &clist,
+      TAO_Profile *profile
+      ACE_ENV_ARG_DECL);
 
   /// Raise a transient failure exception if a service is not loaded,
   /// else delegate to the service to see what the service has to do
   /// for this case.
-  int service_raise_transient_failure (TAO_GIOP_Invocation *invoke,
-                                       TAO_Profile *profile
-                                       ACE_ENV_ARG_DECL);
+  TAO::Invocation_Status service_raise_transient_failure (
+      IOP::ServiceContextList &clist,
+      TAO_Profile *profile
+      ACE_ENV_ARG_DECL);
+
   //@}
 
   /**
@@ -920,12 +932,6 @@ public:
   void add_interceptor (
     PortableInterceptor::IORInterceptor_ptr interceptor
     ACE_ENV_ARG_DECL);
-
-#if 0
-  /// NOTE: Removed during subsetting.
-  /// Return the array of IOR interceptors specific to this ORB.
-  TAO_IORInterceptor_List::TYPE &ior_interceptors (void);
-#endif /**/
 
   TAO_IORInterceptor_List *ior_interceptor_list (void);
   //@}
@@ -976,7 +982,12 @@ public:
   /// Get Code Set Manager
   TAO_Codeset_Manager *codeset_manager (void);
 
-  typedef ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex> InitRefMap;
+  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                  ACE_CString,
+                                  ACE_Hash<ACE_CString>,
+                                  ACE_Equal_To<ACE_CString>,
+                                  ACE_Null_Mutex>
+    InitRefMap;
 
   /// Return a pointer to the -ORBInitRef map.
   InitRefMap * init_ref_map (void);

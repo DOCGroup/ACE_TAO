@@ -20,9 +20,9 @@ ACE_RCSID (Messaging,
 
 
 TAO_AMI_ClientRequestInfo_i::
-TAO_AMI_ClientRequestInfo_i (TAO_GIOP_Twoway_Asynch_Invocation * invocation,
-                             CORBA::Object_ptr target)
-  : TAO_ClientRequestInfo_i (invocation, target)
+TAO_AMI_ClientRequestInfo_i (TAO_GIOP_Twoway_Asynch_Invocation * ,
+                             CORBA::Object_ptr )
+  //  : TAO_ClientRequestInfo_i (invocation, target)
 {
 }
 

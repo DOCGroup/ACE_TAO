@@ -17,17 +17,26 @@
 #define TAO_MPROFILE_H
 
 #include /**/ "ace/pre.h"
-
-#include "ace/Recursive_Thread_Mutex.h"
-#include "tao/corbafwd.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Policy_ForwardC.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
+#include "tao/orbconf.h"
+
+// Forward declarations
 class TAO_Profile;
+namespace CORBA
+{
+  class PolicyList;
+
+  class Environment;
+}
 
 typedef CORBA::ULong TAO_PHandle;
 

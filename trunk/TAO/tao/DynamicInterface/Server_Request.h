@@ -24,7 +24,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "Context.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,7 +34,6 @@
 // that registers the dynamic service object.
 #include "Dynamic_Adapter_Impl.h"
 
-#include "Context.h"
 #include "tao/TAO_Server_Request.h"
 
 namespace CORBA
@@ -111,7 +110,7 @@ namespace CORBA
     CORBA::ULong _incr_refcnt (void);
     CORBA::ULong _decr_refcnt (void);
     
-    void _tao_lazy_evaluation (int lazy_evaluation);
+    void _tao_lazy_evaluation (bool lazy_evaluation);
     // Set the lazy evaluation flag.
     
     int _tao_incoming_byte_order (void) const;
@@ -131,7 +130,7 @@ namespace CORBA
     typedef CORBA::ServerRequest_ptr _ptr_type;    
     
   private:
-    int lazy_evaluation_;
+    bool lazy_evaluation_;
     // If zero then the NVList is evaluated ASAP.
     
     CORBA::Context_ptr ctx_;

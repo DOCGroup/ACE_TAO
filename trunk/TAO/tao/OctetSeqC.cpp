@@ -26,12 +26,13 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:351
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:301
+
 
 #include "OctetSeqC.h"
 #include "ORB_Core.h"
-
-
+#include "Any_Dual_Impl_T.h"
+#include "Typecode.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -41,8 +42,16 @@
 #include "OctetSeqC.i"
 #endif /* !defined INLINE */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:59
+
+// Arg traits specializations.
+namespace TAO
+{
+};
+
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/sequence_cs.cpp:72
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:66
 
 #if !defined (_CORBA_OCTETSEQ_CS_)
 #define _CORBA_OCTETSEQ_CS_
@@ -87,62 +96,15 @@ void CORBA::OctetSeq::_tao_any_destructor (
     void * _tao_void_pointer
   )
 {
-  OctetSeq * tmp =
-    ACE_static_cast (
-        OctetSeq *,
-        _tao_void_pointer
-      );
-  delete tmp;
+  OctetSeq * _tao_tmp_pointer =
+    ACE_static_cast (OctetSeq *, _tao_void_pointer);
+  delete _tao_tmp_pointer;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class
-  TAO_FixedSeq_Var_T<
-      CORBA::OctetSeq,
-      CORBA::Octet
-    >;
-
-template class
-  TAO_Seq_Var_Base_T<
-      CORBA::OctetSeq,
-      CORBA::Octet
-    >;
-
-template class
-  TAO_Seq_Out_T<
-      CORBA::OctetSeq,
-      CORBA::OctetSeq_var,
-      CORBA::Octet
-    >;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-# pragma instantiate \
-  TAO_FixedSeq_Var_T< \
-      OctetSeq, \
-      CORBA::Octet \
-    >
-
-# pragma instantiate \
-  TAO_Seq_Var_Base_T< \
-      OctetSeq, \
-      CORBA::Octet \
-    >
-
-# pragma instantiate \
-  TAO_Seq_Out_T< \
-      OctetSeq, \
-      OctetSeq_var, \
-      CORBA::Octet \
-    >
-
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:284
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_OctetSeq[] =
 {
@@ -177,17 +139,14 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_OctetSeq (
     sizeof (CORBA::OctetSeq)
   );
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (
-    ::CORBA::TypeCode_ptr,
-    _tc_OctetSeq,
-    &_tc_TAO_tc_CORBA_OctetSeq
-  )
-TAO_NAMESPACE_END
+namespace CORBA
+{
+  ::CORBA::TypeCode_ptr _tc_OctetSeq =
+    &_tc_TAO_tc_CORBA_OctetSeq;
+}
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/any_op_cs.cpp:54
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -244,15 +203,8 @@ CORBA::Boolean operator>>= (
       );
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-  template class TAO::Any_Dual_Impl_T<CORBA::OctetSeq>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO::Any_Dual_Impl_T<CORBA::OctetSeq>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_cs.cpp:105
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:95
 
 #if !defined _TAO_CDR_OP_CORBA_OctetSeq_CPP_
 #define _TAO_CDR_OP_CORBA_OctetSeq_CPP_
@@ -344,4 +296,61 @@ CORBA::Boolean operator>> (
 }
 
 #endif /* _TAO_CDR_OP_CORBA_OctetSeq_CPP_ */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1703
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+  template class
+    TAO_FixedSeq_Var_T<
+        CORBA::OctetSeq,
+        CORBA::Octet
+      >;
+
+  template class
+    TAO_Seq_Var_Base_T<
+        CORBA::OctetSeq,
+        CORBA::Octet
+      >;
+
+  template class
+    TAO_Seq_Out_T<
+        CORBA::OctetSeq,
+        CORBA::OctetSeq_var,
+        CORBA::Octet
+      >;
+
+  template class
+    TAO::Any_Dual_Impl_T<
+        CORBA::OctetSeq
+      >;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+# pragma instantiate \
+    TAO_FixedSeq_Var_T< \
+        CORBA::OctetSeq, \
+        CORBA::Octet \
+      >
+
+# pragma instantiate \
+    TAO_Seq_Var_Base_T< \
+        CORBA::OctetSeq, \
+        CORBA::Octet \
+      >
+
+# pragma instantiate \
+    TAO_Seq_Out_T< \
+        CORBA::OctetSeq, \
+        CORBA::OctetSeq_var, \
+        CORBA::Octet \
+      >
+
+# pragma instantiate \
+    TAO::Any_Dual_Impl_T< \
+        CORBA::OctetSeq \
+      >
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 

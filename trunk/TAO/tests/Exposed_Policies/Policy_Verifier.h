@@ -26,9 +26,11 @@
 
 // -- ACE Include --
 #include "ace/Arg_Shifter.h"
+#include "ace/Log_Msg.h"
 
 // -- TAO Include --
-#include "tao/corba.h"
+#include "tao/Basic_Types.h"
+#include "tao/ORB_Constants.h"
 
 class Policy_Verifier
 {

@@ -1,7 +1,9 @@
 // -*- C++ -*-
 
-#include "tao/IOPC.h"
+#include "tao/IOP_CodecC.h"
 #include "testC.h"
+
+#include "ace/Log_Msg.h"
 
 ACE_RCSID (Codec,
 	   client,

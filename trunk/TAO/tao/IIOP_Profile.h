@@ -17,15 +17,16 @@
 
 #ifndef TAO_IIOP_PROFILE_H
 #define TAO_IIOP_PROFILE_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/Profile.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/IIOP_Endpoint.h"
-
 
 // TAO IIOP_Profile concrete Profile definitions
 /**

@@ -2,18 +2,14 @@
 
 #include "GIOP_Message_Generator_Parser_10.h"
 #include "GIOP_Utils.h"
-
 #include "GIOP_Message_Locate_Header.h"
-
 #include "operation_details.h"
-#include "CDR.h"
-#include "Any.h"
 #include "debug.h"
-#include "OctetSeqC.h"
 #include "Pluggable_Messaging_Utils.h"
 #include "TAO_Server_Request.h"
-#include "GIOP_Message_State.h"
-#include "CORBA_String.h"
+#include "ORB_Constants.h"
+
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 # include "GIOP_Message_Generator_Parser_10.inl"
@@ -39,9 +35,13 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
 
   // Write the response flags
   if (response_flags == TAO_TWOWAY_RESPONSE_FLAG)
-    msg << CORBA::Any::from_octet (1);
+    {
+      msg << CORBA::Any::from_octet (1);
+    }
   else
-    msg << CORBA::Any::from_octet (0);
+    {
+      msg << CORBA::Any::from_octet (0);
+    }
 
   // In this case we cannot recognise anything other than the Object
   // key as the address disposition variable. But we do a sanity check

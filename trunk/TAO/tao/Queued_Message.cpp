@@ -7,7 +7,9 @@
 # include "Queued_Message.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, Queued_Message, "$Id$")
+ACE_RCSID (tao, 
+           Queued_Message, 
+           "$Id$")
 
 TAO_Queued_Message::TAO_Queued_Message (ACE_Allocator *alloc,
                                         int is_heap_allocated)
@@ -27,14 +29,22 @@ TAO_Queued_Message::remove_from_list (TAO_Queued_Message *&head,
                                       TAO_Queued_Message *&tail)
 {
   if (this->prev_ != 0)
-    this->prev_->next_ = this->next_;
+    {
+      this->prev_->next_ = this->next_;
+    }
   else
-    head = this->next_;
+    {
+      head = this->next_;
+    }
 
   if (this->next_ != 0)
-    this->next_->prev_ = this->prev_;
+    {
+      this->next_->prev_ = this->prev_;
+    }
   else
-    tail = this->prev_;
+    {
+      tail = this->prev_;
+    }
 
   this->next_ = 0;
   this->prev_ = 0;

@@ -25,7 +25,6 @@
 #include /**/ "ace/pre.h"
 #include "TimeBaseC.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

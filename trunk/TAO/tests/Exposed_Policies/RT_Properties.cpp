@@ -2,6 +2,10 @@
 
 #include "RT_Properties.h"
 
+#include "tao/ORB_Constants.h"
+
+#include "ace/OS.h"
+
 ACE_RCSID (ExposedPolicies, RT_Properties, "$Id$")
 
 RT_Properties::RT_Properties (void)
@@ -32,6 +36,7 @@ RT_Properties::read_from (const char *file_name
   char string_field[256];
   int int_field;
   unsigned int i = 0;
+
   while (fscanf (fp, "%s", string_field) != EOF )
     {
       if (ACE_OS_String::strcmp (string_field, "Priority") == 0)

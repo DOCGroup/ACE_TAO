@@ -96,8 +96,8 @@ main (int argc, char *argv[])
       policy_list.length (1);
       policy_list[0] =
         orb->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
-                                   timeout_as_any
-                                   ACE_ENV_ARG_PARAMETER);
+                            timeout_as_any
+                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       policy_current->set_policy_overrides (policy_list,

@@ -11,11 +11,11 @@ Visual_i::Visual_i (CORBA::ORB_ptr orb)
   // ctor
 
 void
-Visual_i::normal (CORBA::Long arg
+Visual_i::normal (CORBA::Long 
                   ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "Visual::normal called with %d\n", arg));
+  // ACE_DEBUG ((LM_DEBUG, "Visual::normal called with %d\n", arg));
 }
 
 CORBA::Long
@@ -24,7 +24,7 @@ Visual_i::calculate (CORBA::Long one,
                      ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "Visual::calculate\n"));
+  // ACE_DEBUG ((LM_DEBUG, "Visual::calculate\n"));
   return (one + two);
 }
 
@@ -32,7 +32,7 @@ void
 Visual_i::user (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,Test_Interceptors::Silly))
 {
-  ACE_DEBUG ((LM_DEBUG, "Visual::user, throwning Silly\n"));
+  // ACE_DEBUG ((LM_DEBUG, "Visual::user, throwning Silly\n"));
   ACE_THROW (Test_Interceptors::Silly ());
 }
 
@@ -40,7 +40,7 @@ void
 Visual_i::system (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "Visual::user, throwing INV_OBJREF\n"));
+  // ACE_DEBUG ((LM_DEBUG, "Visual::user, throwing INV_OBJREF\n"));
   ACE_THROW (CORBA::INV_OBJREF ());
 }
 

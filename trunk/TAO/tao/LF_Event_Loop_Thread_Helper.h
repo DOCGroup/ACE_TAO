@@ -12,6 +12,7 @@
 
 #ifndef TAO_LF_EVENT_LOOP_THREAD_HELPER_H
 #define TAO_LF_EVENT_LOOP_THREAD_HELPER_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/LF_Strategy.h"
@@ -19,7 +20,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 /**
  * @brief Helper class to enter and exit the Leader/Followers event
@@ -59,4 +59,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_LF_EVENT_LOOP_THREAD_HELPER_H */

@@ -17,8 +17,9 @@
 
 #ifndef TAO_SCIOP_CONNECTOR_H
 #define TAO_SCIOP_CONNECTOR_H
+
 #include /**/ "ace/pre.h"
-#include "tao/corbafwd.h"
+#include "tao/orbconf.h"
 #include "ace/SOCK_SEQPACK_Connector.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -87,9 +88,9 @@ protected:
   // Transport_Connector.h
   int set_validate_endpoint (TAO_Endpoint *ep);
 
-  int make_connection (TAO_GIOP_Invocation *invocation,
-                       TAO_Transport_Descriptor_Interface *desc,
-                       ACE_Time_Value *timeout = 0);
+  TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
+                                  TAO_Transport_Descriptor_Interface &desc,
+                                  ACE_Time_Value *timeout = 0);
 
   /// More TAO_Connector methods, please check the documentation on
   /// Transport_Connector.h
@@ -127,4 +128,5 @@ private:
 
 
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_SCIOP_CONNECTOR_H */

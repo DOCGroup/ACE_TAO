@@ -40,6 +40,12 @@ public:
               idl_bool a);
   // Constructor.
 
+  virtual void seq_elem_tmplinst (idl_bool val);
+  virtual void seen_in_sequence (idl_bool val);
+  virtual void seen_in_operation (idl_bool val);
+  // Mutator overrides for be_type members. If we have been
+  // defined, we want the underlying type to be set as well.
+
   be_type *primitive_base_type (void);
   // Return the most primitive base type by traversing the chain of typedefed
   // base types.

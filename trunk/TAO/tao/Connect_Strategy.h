@@ -12,6 +12,7 @@
 
 #ifndef TAO_CONNECT_STRATEGY_H
 #define TAO_CONNECT_STRATEGY_H
+
 #include /**/ "ace/pre.h"
 
 #include "TAO_Export.h"

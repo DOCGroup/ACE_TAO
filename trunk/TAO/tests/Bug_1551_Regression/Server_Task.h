@@ -6,7 +6,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corba.h"
+#include "tao/ORB.h"
 #include "ace/Task.h"
 
 class Server_Task : public ACE_Task_Base

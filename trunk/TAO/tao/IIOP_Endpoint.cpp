@@ -2,16 +2,16 @@
 #include "IOPC.h"
 #include "debug.h"
 
+#include "ace/Log_Msg.h"
+#include "ace/Guard_T.h"
 
 ACE_RCSID (tao,
            IIOP_Endpoint,
            "$Id$")
 
-
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
-
 
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
                                       int use_dotted_decimal_addresses)

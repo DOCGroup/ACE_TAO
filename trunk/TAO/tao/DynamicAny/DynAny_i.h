@@ -1,4 +1,5 @@
 /* -*- C++ -*- */
+// $Id$
 
 //=============================================================================
 /**
@@ -22,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "DynCommon.h"
+#include "tao/LocalObject.h"
 
 #if defined (_MSC_VER)
 # if (_MSC_VER >= 1200)
@@ -59,8 +61,6 @@ public:
   static TAO_DynAny_i *_narrow (
       CORBA::Object_ptr obj
       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-  virtual void *_tao_QueryInterface (ptrdiff_t type);
 
   // = DynAny common functions not implemented in class TAO_DynCommon.
 

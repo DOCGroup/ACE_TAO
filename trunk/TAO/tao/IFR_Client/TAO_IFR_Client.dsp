@@ -165,6 +165,7 @@ SOURCE=.\IFR_BasicC.cpp
 # Begin Source File
 
 SOURCE=.\IFR_Client_Adapter_Impl.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

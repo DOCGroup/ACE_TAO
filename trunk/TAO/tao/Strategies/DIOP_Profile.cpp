@@ -1,7 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 //
 // $Id$
-
 #include "DIOP_Profile.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
@@ -11,7 +10,7 @@
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
-#include "tao/iiop_endpoints.h"
+#include "tao/IIOP_EndpointsC.h"
 
 ACE_RCSID (DIOP,
            DIOP_Profile,
@@ -372,7 +371,7 @@ TAO_DIOP_Profile::encode_endpoints (void)
   // info is transmitted using standard ProfileBody components, its
   // priority is not!
 
-  TAO_IIOPEndpointSequence endpoints;
+  TAO::IIOPEndpointSequence endpoints;
   endpoints.length (this->count_);
 
   const TAO_DIOP_Endpoint *endpoint = &this->endpoint_;
@@ -440,7 +439,7 @@ TAO_DIOP_Profile::decode_endpoints (void)
       in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
 
       // Extract endpoints sequence.
-      TAO_IIOPEndpointSequence endpoints;
+      TAO::IIOPEndpointSequence endpoints;
 
       if ((in_cdr >> endpoints) == 0)
         return -1;

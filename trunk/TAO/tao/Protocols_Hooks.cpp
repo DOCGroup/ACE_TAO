@@ -1,11 +1,11 @@
-
-
 // $Id$
 
 #include "Protocols_Hooks.h"
 #include "ace/Dynamic_Service.h"
 
-ACE_RCSID(tao, Protocols_Hooks, "$Id$")
+ACE_RCSID (tao, 
+           Protocols_Hooks, 
+           "$Id$")
 
 /// destructor
 TAO_Protocols_Hooks::~TAO_Protocols_Hooks (void)

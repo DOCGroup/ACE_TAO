@@ -4,13 +4,10 @@
 #include "tao/IIOP_Acceptor.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/MProfile.h"
-#include "tao/ORB_Core.h"
-#include "tao/Server_Strategy_Factory.h"
 #include "tao/debug.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Codeset_Manager.h"
-
-#include "ace/Auto_Ptr.h"
+#include "tao/Transport.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/IIOP_Acceptor.i"

@@ -20,6 +20,7 @@
 #include "tao/debug.h"
 #include "tao/LRU_Connection_Purging_Strategy.h"
 #include "tao/LF_Strategy_Complete.h"
+#include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
 #include "tao/StringSeqC.h"
 
@@ -33,6 +34,8 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Msg_WFMO_Reactor.h"
 #include "ace/TP_Reactor.h"
+#include "ace/Memory_Pool.h"
+#include "ace/Null_Mutex.h"
 #include "ace/Malloc.h"
 
 ACE_RCSID(Strategies, advanced_resource, "$Id$")

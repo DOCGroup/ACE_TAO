@@ -16,13 +16,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/IFR_Client_Adapter.h"
+#include "ifr_client_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ifr_client_export.h"
+#include "tao/IFR_Client_Adapter.h"
+
 #include "ace/Service_Config.h"
 
 /**
@@ -61,7 +62,7 @@ public:
     );
 
   virtual CORBA::InterfaceDef_ptr get_interface_remote (
-      const CORBA::Object_ptr target
+      CORBA::Object_ptr target
       ACE_ENV_ARG_DECL
     );
 

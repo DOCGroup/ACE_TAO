@@ -16,23 +16,18 @@
 */
 //=============================================================================
 
-
 #ifndef TAO_GIOP_SERVER_REQUEST_H
 #define TAO_GIOP_SERVER_REQUEST_H
-#include /**/ "ace/pre.h"
 
-#include "corbafwd.h"
+#include /**/ "ace/pre.h"
+#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
-
 #include "Tagged_Profile.h"
-#include "OctetSeqC.h"
 #include "Service_Context.h"
-#include "Object.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "PICurrent.h"
@@ -41,6 +36,12 @@
 class TAO_Pluggable_Messaging;
 class TAO_Transport;
 class TAO_AMH_Response_Handler;
+
+namespace CORBA
+{
+  class ORB;
+  typedef ORB *ORB_ptr;
+}
 
 /**
  * @class TAO_ServerRequest
@@ -305,4 +306,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_GIOP_SERVER_REQUEST_H */

@@ -2,6 +2,9 @@
 
 #include "interceptors.h"
 
+#include "tao/DynamicC.h"
+#include "tao/Typecode.h"
+
 ACE_RCSID (Benchmark,
            interceptors,
            "$Id$")

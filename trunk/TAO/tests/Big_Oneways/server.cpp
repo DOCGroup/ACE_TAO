@@ -96,7 +96,8 @@ main (int argc, char *argv[])
         coordinator_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      coordinator_impl->_remove_ref();
+      coordinator_impl->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       CORBA::String_var ior =
         orb->object_to_string (coordinator.in () ACE_ENV_ARG_PARAMETER);
@@ -141,7 +142,8 @@ main (int argc, char *argv[])
       Test::Session_Control_var session_control =
         session_control_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      session_control_impl->_remove_ref();
+      session_control_impl->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       Test::Session_List session_list;
       coordinator_impl->create_session_list (session_control.in (),

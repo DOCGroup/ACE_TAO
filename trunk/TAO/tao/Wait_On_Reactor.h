@@ -10,9 +10,9 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_WAIT_ON_REACTOR_H
 #define TAO_WAIT_ON_REACTOR_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/Wait_Strategy.h"
@@ -47,4 +47,5 @@ public:
 };
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_WAIT_ON_REACTOR_H */

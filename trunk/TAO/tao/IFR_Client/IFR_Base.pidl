@@ -19,7 +19,7 @@
 //
 //   The command used to generate code from this IDL file is:
 //
-//     tao_idl -Ge 1 -I.. \
+//     tao_idl -Ge 1 -GT -I.. \
 //          -Wb,export_macro=TAO_IFR_Client_Export \
 //          -Wb,export_include=ifr_client_export.h \
 //          -Wb,pre_include="ace/pre.h" \

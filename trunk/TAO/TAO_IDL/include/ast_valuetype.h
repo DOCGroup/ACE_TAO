@@ -40,6 +40,9 @@ public:
   idl_bool truncatable (void) const;
   idl_bool custom (void) const;
 
+  virtual idl_bool will_have_factory (void);
+  // Called from y.tab.cpp to set the factory decl seen bit.
+
   // Cleanup function.
   virtual void destroy (void);
 

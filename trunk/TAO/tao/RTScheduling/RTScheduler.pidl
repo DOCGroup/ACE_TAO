@@ -1,7 +1,34 @@
 //$Id$
-#include <tao/RTCORBA/RTCORBA.pidl>
-#include <tao/PortableServer/PortableServer.pidl>
-#include <tao/PortableInterceptor.pidl>
+// ================================================================
+//
+// = LIBRARY
+//   TAO_RTScheduling
+//
+// = FILENAME
+//   RTScheduling.pidl
+//
+// = DESCRIPTION
+//   Some new data types included for GIOP 1.2
+//   This file was used to generate the code in
+//   GIOP*.* The command used to generate code
+//   is:
+//
+//     tao_idl
+//        -o orig -Sa -Gp -Gd -Ge 1 -GT
+//          -Wb,export_macro=TAO_RTScheduler_Export
+//          -Wb,export_include="rtscheduler_export.h"
+//          -Wb,pre_include="ace/pre.h"
+//          -Wb,post_include="ace/post.h"
+//          -I$(TAO_ROOT)
+//          RTScheduler.pidl
+//
+// ================================================================
+#ifndef TAO_RTSCHEDULER_PIDL
+#define TAO_RTSCHEDULER_PIDL
+
+#include "tao/RTCORBA/RTCORBA.pidl"
+#include "tao/PortableServer/PortableServer.pidl"
+#include "tao/PortableInterceptor.pidl"
 
 
 module CORBA
@@ -13,7 +40,7 @@ module CORBA
     // C:    void*
     // C++:  void*
     // Java: Object
-		
+
 };
 
 module RTScheduling
@@ -29,32 +56,32 @@ module RTScheduling
 
     local interface DistributableThread
     {
-	enum DT_State
-	{
-	  ACTIVE,
-	  CANCELLED
-	};
+        enum DT_State
+        {
+          ACTIVE,
+          CANCELLED
+        };
 
         void cancel();
             // raises CORBA::OBJECT_NOT_FOUND if
             // the distributable thread is
             // not known to the scheduler
-	readonly attribute DT_State state;
+        readonly attribute DT_State state;
     };
 
-    local interface Current 
+    local interface Current
         : RTCORBA::Current
     {
         DistributableThread
             spawn
                 (in ThreadAction      start,
-		in CORBA::VoidData data,
-		in string name,
-	        in CORBA::Policy sched_param,
-      		in CORBA::Policy implicit_sched_param,
+                in CORBA::VoidData data,
+                in string name,
+                in CORBA::Policy sched_param,
+                in CORBA::Policy implicit_sched_param,
                 in unsigned long     stack_size,
                     // zero means use the O/S default
-		in RTCORBA::Priority base_priority);
+                in RTCORBA::Priority base_priority);
 
         exception UNSUPPORTED_SCHEDULING_DISCIPLINE {};
     // The scheduling_parameter argument didn't match the
@@ -97,7 +124,7 @@ module RTScheduling
             // to outmost segment name
     };
 
-    local interface ResourceManager 
+    local interface ResourceManager
         : RTCORBA::Mutex
     {
     };
@@ -120,63 +147,65 @@ module RTScheduling
              in    string         name,
              in    CORBA::Policy  scheduling_parameter);
 
-	void begin_new_scheduling_segment (in Current::IdType guid,
-				      	in string name,
-					in CORBA::Policy sched_param,
-					in CORBA::Policy implicit_sched_param)
-	raises (Current::UNSUPPORTED_SCHEDULING_DISCIPLINE);
+        void begin_new_scheduling_segment (in Current::IdType guid,
+                                        in string name,
+                                        in CORBA::Policy sched_param,
+                                        in CORBA::Policy implicit_sched_param)
+        raises (Current::UNSUPPORTED_SCHEDULING_DISCIPLINE);
 
-	void begin_nested_scheduling_segment (in Current::IdType guid,
-				      	in string name,
-					in CORBA::Policy sched_param,
-					in CORBA::Policy implicit_sched_param)
-	raises (Current::UNSUPPORTED_SCHEDULING_DISCIPLINE);
-
-
-	void update_scheduling_segment (in Current::IdType guid,
-				      	in string name,
-					in CORBA::Policy sched_param,
-					in CORBA::Policy implicit_sched_param)
-	raises (Current::UNSUPPORTED_SCHEDULING_DISCIPLINE);
-
-	void end_scheduling_segment (in Current::IdType guid,
-				      	in string name);
+        void begin_nested_scheduling_segment (in Current::IdType guid,
+                                        in string name,
+                                        in CORBA::Policy sched_param,
+                                        in CORBA::Policy implicit_sched_param)
+        raises (Current::UNSUPPORTED_SCHEDULING_DISCIPLINE);
 
 
-	void end_nested_scheduling_segment (in Current::IdType guid,
-				      	in string name,
-					in CORBA::Policy outer_sched_param);
+        void update_scheduling_segment (in Current::IdType guid,
+                                        in string name,
+                                        in CORBA::Policy sched_param,
+                                        in CORBA::Policy implicit_sched_param)
+        raises (Current::UNSUPPORTED_SCHEDULING_DISCIPLINE);
 
-	void send_request (in PortableInterceptor::ClientRequestInfo ri)
-	raises (PortableInterceptor::ForwardRequest);
+        void end_scheduling_segment (in Current::IdType guid,
+                                        in string name);
 
-	void receive_request (in PortableInterceptor::ServerRequestInfo ri,
-				out Current::IdType guid,
-			      	out string name,
-				out CORBA::Policy sched_param,
-				out CORBA::Policy implicit_sched_param)
-	raises (PortableInterceptor::ForwardRequest);
 
-	void send_reply (in PortableInterceptor::ServerRequestInfo ri);
+        void end_nested_scheduling_segment (in Current::IdType guid,
+                                        in string name,
+                                        in CORBA::Policy outer_sched_param);
 
-	void send_exception (in PortableInterceptor::ServerRequestInfo ri)
-	raises (PortableInterceptor::ForwardRequest);
+        void send_request (in PortableInterceptor::ClientRequestInfo ri)
+        raises (PortableInterceptor::ForwardRequest);
 
-	void send_other (in PortableInterceptor::ServerRequestInfo ri)
-	raises (PortableInterceptor::ForwardRequest);
+        void receive_request (in PortableInterceptor::ServerRequestInfo ri,
+                                out Current::IdType guid,
+                                out string name,
+                                out CORBA::Policy sched_param,
+                                out CORBA::Policy implicit_sched_param)
+        raises (PortableInterceptor::ForwardRequest);
 
-	void send_poll (in PortableInterceptor::ClientRequestInfo ri)
-	raises (PortableInterceptor::ForwardRequest);
-	
-	void receive_reply (in PortableInterceptor::ClientRequestInfo ri);
+        void send_reply (in PortableInterceptor::ServerRequestInfo ri);
 
-	void receive_exception (in PortableInterceptor::ClientRequestInfo ri)
-	raises (PortableInterceptor::ForwardRequest);
+        void send_exception (in PortableInterceptor::ServerRequestInfo ri)
+        raises (PortableInterceptor::ForwardRequest);
 
-	void receive_other (in PortableInterceptor::ClientRequestInfo ri)
-	raises (PortableInterceptor::ForwardRequest);
+        void send_other (in PortableInterceptor::ServerRequestInfo ri)
+        raises (PortableInterceptor::ForwardRequest);
 
-	void cancel (in Current::IdType guid);
+        void send_poll (in PortableInterceptor::ClientRequestInfo ri)
+        raises (PortableInterceptor::ForwardRequest);
+
+        void receive_reply (in PortableInterceptor::ClientRequestInfo ri);
+
+        void receive_exception (in PortableInterceptor::ClientRequestInfo ri)
+        raises (PortableInterceptor::ForwardRequest);
+
+        void receive_other (in PortableInterceptor::ClientRequestInfo ri)
+        raises (PortableInterceptor::ForwardRequest);
+
+        void cancel (in Current::IdType guid);
     };
 
 };
+
+#endif /*TAO_RTSCHEDULER_PIDL*/

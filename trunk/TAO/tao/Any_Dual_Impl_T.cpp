@@ -4,10 +4,13 @@
 #define TAO_ANY_DUAL_IMPL_T_C
 
 #include "tao/Any_Dual_Impl_T.h"
+#include "tao/Any.h"
 #include "tao/Marshal.h"
 #include "tao/CORBA_String.h"
 #include "tao/Environment.h"
+#include "tao/Exception.h"
 #include "tao/CDR.h"
+
 #include "ace/CORBA_macros.h"
 #include "ace/Auto_Ptr.h"
 
@@ -121,9 +124,6 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
           return 1;
         }
 
-      CORBA::TCKind kind = any_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
       T *empty_value = 0;
       ACE_NEW_RETURN (empty_value,
                       T,
@@ -142,10 +142,14 @@ TAO::Any_Dual_Impl_T<T>::extract (const CORBA::Any & any,
                         mb->rd_ptr () - mb->base (),
                         mb->wr_ptr () - mb->base (),
                         impl->_tao_byte_order (),
-                                                            TAO_DEF_GIOP_MAJOR,
-                                                            TAO_DEF_GIOP_MINOR);
+                        TAO_DEF_GIOP_MAJOR,
+                        TAO_DEF_GIOP_MINOR);
 
-      impl->assign_translator (kind, &cdr);
+      impl->assign_translator (any_tc,
+                               &cdr
+                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       CORBA::Boolean result = replacement->demarshal_value (cdr);
 
       if (result == 1)

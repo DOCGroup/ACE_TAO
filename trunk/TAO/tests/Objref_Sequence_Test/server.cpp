@@ -79,7 +79,7 @@ ServerServant::CreateExtra (CORBA::ULong len,
 
 void
 ServerServant::DeleteExtra (const ServerSequence &seq
-                            ACE_ENV_ARG_DECL_NOT_USED)
+                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -98,8 +98,10 @@ ServerServant::DeleteExtra (const ServerSequence &seq
         this->root_poa_->reference_to_servant (seq [cnt]);
 
       this->root_poa_->deactivate_object (oid.in ());
-      servant->_remove_ref ();
-      servant->_remove_ref ();
+      servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+      servant->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
     }
 
   ACE_DEBUG ((LM_DEBUG,

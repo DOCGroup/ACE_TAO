@@ -8,8 +8,11 @@
 
 #include "DIOP_Connection_Handler.h"
 #include "tao/debug.h"
+#include "tao/ORB_Constants.h"
 
-ACE_RCSID(tao, DIOP_Endpoint, "$Id$")
+ACE_RCSID (tao, 
+           DIOP_Endpoint, 
+           "$Id$")
 
 
 #if !defined (__ACE_INLINE__)

@@ -1,13 +1,13 @@
 // $Id$
 
-ACE_RCSID (be_visitor_operation, 
-           proxy_impl_xh, 
+ACE_RCSID (be_visitor_operation,
+           proxy_impl_xh,
            "$Id$")
 
 be_visitor_operation_proxy_impl_xh::be_visitor_operation_proxy_impl_xh (
     be_visitor_context *ctx
   )
-  : be_visitor_scope (ctx)
+  : be_visitor_operation (ctx)
 {
 }
 
@@ -23,49 +23,42 @@ int be_visitor_operation_proxy_impl_xh::visit_operation (be_operation *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << "virtual ";
+  *os << "static void" << be_nl;
 
-  // STEP I: generate the return type.
-  be_type *bt = be_type::narrow_from_decl (node->return_type ());
-
-  if (!bt)
+  // Check if we are an attribute node in disguise.
+  if (this->ctx_->attribute ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_sh::"
-                         "visit_operation - "
-                         "Bad return type\n"),
-                        -1);
+      // Now check if we are a "get" or "set" operation.
+      if (node->nmembers () == 1)
+        {
+          *os << "_set_";
+        }
+      else
+        {
+          *os << "_get_";
+        }
     }
 
-  be_visitor_context ctx (*this->ctx_);
-  be_visitor_operation_rettype oro_visitor (&ctx);
+  *os << node->local_name () << " (" << be_idt << be_idt_nl
+      << "TAO_Abstract_ServantBase *servant," << be_nl
+      << "TAO::Argument ** args," << be_nl
+      << "int num_args" << be_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << ")";
 
-  if (bt->accept (&oro_visitor) == -1)
+  if (this->gen_throw_spec (node) != 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_sh::"
-                         "visit_operation - "
-                         "codegen for return type failed\n"),
-                        -1);
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          "(%N:%l) be_visitor_operation_proxy_impl_xh::"
+          "visit_operation - "
+          "throw spec generation failed\n"
+        ),
+        -1
+      );
     }
 
-  // STEP 2: generate the operation name
-  *os << " " << node->local_name ();
-
-  // STEP 3: generate the argument list with the appropriate mapping. For these
-  // we grab a visitor that generates the parameter listing
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH);
-  be_visitor_operation_arglist oapi_visitor (&ctx);
-
-  if (node->accept (&oapi_visitor) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_sh::"
-                         "visit_operation - "
-                         "codegen for argument list failed\n"),
-                        -1);
-    }
+  *os << ";";
 
   return 0;
 }

@@ -54,17 +54,17 @@ be_visitor_obv_module::visit_module (be_module *node)
           *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
               << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-          *os << "TAO_NAMESPACE ";
+          *os << "namespace ";
 
           if (!node->is_nested ())
             {
               // We are outermost module, so prepend.
-              *os << " OBV_" << node->local_name () << be_nl;
+              *os << "OBV_" << node->local_name () << be_nl;
             }
           else
             {
               // We are inside another module.
-              *os << " " << node->local_name () << be_nl;
+              *os << node->local_name () << be_nl;
             }
 
           *os << "{" << be_idt;
@@ -81,10 +81,7 @@ be_visitor_obv_module::visit_module (be_module *node)
 
       if (this->ctx_->state () == TAO_CodeGen::TAO_MODULE_OBV_CH)
         {
-          *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-              << "// " << __FILE__ << ":" << __LINE__;
-
-          *os << be_uidt_nl << be_nl << "}TAO_NAMESPACE_CLOSE";
+          *os << be_uidt_nl << "}";
         }
     }
 
@@ -204,8 +201,6 @@ be_visitor_obv_module::visit_eventtype (be_eventtype *node)
         break;
       case TAO_CodeGen::TAO_MODULE_OBV_CI:
         {
-          // This context state is not involved in any strategies.
-//          ctx.state (TAO_CodeGen::TAO_EVENTTYPE_OBV_CI);
           be_visitor_eventtype_obv_ci visitor (&ctx);
           status = node->accept (&visitor);
           break;

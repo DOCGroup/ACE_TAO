@@ -1,15 +1,17 @@
 // $Id$
 
 #include "Any_SystemException.h"
+#include "Any.h"
 #include "CDR.h"
 #include "Exception.h"
 #include "Environment.h"
 #include "Marshal.h"
 #include "CORBA_String.h"
+#include "Typecode.h"
+
 #include "ace/Auto_Ptr.h"
-
 #include "ace/CORBA_macros.h"
-
+#include "ace/Auto_Ptr.h"
 
 ACE_RCSID (tao,
            Any_SystemException,
@@ -116,8 +118,8 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
       TAO::Any_SystemException *replacement = 0;
       ACE_NEW_RETURN (replacement,
                       TAO::Any_SystemException (destructor,
-                                          any_tc,
-                                          empty_value),
+                                                any_tc,
+                                                empty_value),
                       0);
 
       auto_ptr<TAO::Any_SystemException > replacement_safety (replacement);
@@ -130,11 +132,11 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
                         TAO_DEF_GIOP_MAJOR,
                         TAO_DEF_GIOP_MINOR);
 
-      CORBA::TCKind kind = any_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      impl->assign_translator (any_tc,
+                               &cdr
+                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
-      impl->assign_translator (kind,
-                               &cdr);
       CORBA::Boolean result = replacement->demarshal_value (cdr);
 
       if (result == 1)
@@ -142,7 +144,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
           _tao_elem = replacement->value_;
           ACE_const_cast (CORBA::Any &, any).replace (replacement);
           replacement_safety.release ();
-          return result;
+          return 1;
         }
     }
   ACE_CATCHANY
@@ -204,4 +206,3 @@ TAO::Any_SystemException::demarshal_value (TAO_InputCDR &cdr)
   ACE_ENDTRY;
   return 0;
 }
-

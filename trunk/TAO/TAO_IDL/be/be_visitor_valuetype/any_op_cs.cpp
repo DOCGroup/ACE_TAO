@@ -56,6 +56,22 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  // All template specializations must be generated before the instantiations
+  // in the operators.
+  *os << be_nl << be_nl
+      << "template<>" << be_nl
+      << "ACE_INLINE" << be_nl
+      << "CORBA::Boolean" << be_nl
+      << "TAO::Any_Impl_T<" << node->name () << ">::to_value ("
+      << be_idt <<  be_idt_nl
+      << "CORBA::ValueBase *&_tao_elem" << be_uidt_nl
+      << ") const" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "CORBA::add_ref (this->value_);" << be_nl
+      << "_tao_elem = this->value_;" << be_nl
+      << "return 1;" << be_uidt_nl
+      << "}";
+
   *os << "// Copying insertion." << be_nl
       << "void" << be_nl
       << "operator<<= (" << be_idt << be_idt_nl
@@ -98,16 +114,6 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << "_tao_elem" << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
-
-  *os << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \\"
-      << be_idt_nl
-      << "  defined (ACE_HAS_GNU_REPO)" << be_nl
-      << "template class TAO::Any_Impl_T<" << node->full_name ()
-      << ">;" << be_uidt_nl
-      << "#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)" << be_nl
-      << "#  pragma instantiate TAO::Any_Impl_T<" << node->full_name ()
-      << ">" << be_uidt_nl
-      << "#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */";
 
   node->cli_stub_any_op_gen (1);
   return 0;

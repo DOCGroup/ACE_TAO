@@ -5,7 +5,11 @@
 
 #include "RT_Stub.h"
 
-ACE_RCSID(tao, RT_TAO_Stub_Factory, "$Id$")
+#include "tao/ORB_Constants.h"
+
+ACE_RCSID (tao, 
+           RT_TAO_Stub_Factory, 
+           "$Id$")
 
 TAO_RT_Stub_Factory::~TAO_RT_Stub_Factory (void)
 {

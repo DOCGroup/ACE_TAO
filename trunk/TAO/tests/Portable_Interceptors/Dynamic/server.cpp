@@ -5,6 +5,8 @@
 #include "interceptors.h"
 #include "Echo_Server_ORBInitializer.h"
 
+#include "tao/ORBInitializer_Registry.h"
+
 ACE_RCSID (Dynamic,
            server,
            "$Id$")

@@ -1,17 +1,18 @@
 // -*- C++ -*-
 //
 // $Id$
-
 #include "tao/MProfile.h"
 #include "tao/Environment.h"
 #include "tao/Profile.h"
 #include "tao/PolicyC.h"
+#include "tao/ORB_Constants.h"
 
+#include "ace/Log_Msg.h"
+#include "ace/Guard_T.h"
 
 ACE_RCSID (tao,
            MProfile,
            "$Id$")
-
 
 #if !defined (__ACE_INLINE__)
 # include "tao/MProfile.i"

@@ -1,5 +1,4 @@
 // This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file     Bind_Dispatcher_Guard.h
@@ -11,17 +10,18 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BIND_DISPATCHER_GUARD_H
 #define TAO_BIND_DISPATCHER_GUARD_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/Basic_Types.h"
+#include "tao/TAO_Export.h"
 
 class TAO_Reply_Dispatcher;
 class TAO_Transport_Mux_Strategy;
 
-class TAO_Bind_Dispatcher_Guard
+class TAO_Export TAO_Bind_Dispatcher_Guard
 {
 public:
   TAO_Bind_Dispatcher_Guard (CORBA::ULong request_id,

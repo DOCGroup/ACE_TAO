@@ -26,7 +26,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 /**
  * @class TAO_Policy_Set
  *
@@ -129,5 +128,6 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_POLICY_SET_H */
 

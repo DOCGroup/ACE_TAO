@@ -34,9 +34,7 @@
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
-#include "tao/PortableServer/Collocated_Object.h"
-#include "tao/PortableServer/ThruPOA_Object_Proxy_Impl.h"
-#include "tao/PortableServer/Direct_Object_Proxy_Impl.h"
+
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -54,7 +52,7 @@
 
 TAO_NAMESPACE  POA_IOP
 {
-  
+
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:80
@@ -62,7 +60,7 @@ TAO_NAMESPACE  POA_IOP
 }
 TAO_NAMESPACE_CLOSE // module IOP
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1044
 
 #include "IOPS_T.h"
