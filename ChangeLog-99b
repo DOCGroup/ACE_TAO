@@ -1,3 +1,14 @@
+Tue Jun 15 15:22:53 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Added ACE_HAS_BROKEN_T_ERROR.
+
+        * ace/ATM_Addr.cpp:
+        * ace/DEV_Addr.cpp:
+        * ace/FILE_Addr.cpp:
+        * ace/INET_Addr.cpp:
+        * ace/SPIPE_Addr.cpp: Initialize base class (ACE_Addr) from alternate
+          constructors. Not always necessary, but safe, and keeps egcs quiet.
+
 Tue Jun 15 13:41:15 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Thread_Manager_Test.cpp (main): Don't call kill_grp() on
