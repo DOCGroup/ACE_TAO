@@ -772,7 +772,7 @@ supported by the DOC group, Riverace, or OCI. <P>
 
         <p>You'll also need to do:</p>
 
-        <p>setenv DYLD_LIBRARY_PATH $ACE_ROOT/ace</p>
+        <p>setenv DYLD_LIBRARY_PATH $ACE_ROOT/ace:$ACE_ROOT/lib</p>
         <p>setenv MACOSX_DEPLOYMENT_TARGET 10.2</p>
 
         <p>Currently, all ACE tests pass except Process_Mutex_Test and
@@ -1160,7 +1160,7 @@ need to do:<P>
       like the following<P>
 
       <pre><code>
-      % setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$LD_LIBRARY_PATH
+      % setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$ACE_ROOT/lib:$LD_LIBRARY_PATH
       </code></pre><P>
 
   <LI>When all this is done, hopefully all you'll need to do is type:<P>
@@ -2286,7 +2286,7 @@ Here's what you need to do:<P>
       want to do something like the following<P>
 
       <pre><code>
-      % setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$LD_LIBRARY_PATH
+      % setenv LD_LIBRARY_PATH $ACE_ROOT/ace:$ACE_ROOT/lib:$LD_LIBRARY_PATH
       </code></pre><P>
 
   <LI>By default, if the shared object library is built, the services
@@ -2338,7 +2338,7 @@ cd ../../../..
 
 # build the host side of things
 cd build/Linux_g++
-export ACE_ROOT=`pwd`; export LD_LIBRARY_PATH=`pwd`/ace:$LD_LIBRARY_PATH
+export ACE_ROOT=`pwd`; export LD_LIBRARY_PATH=`pwd`/ace:`pwd`/lib:$LD_LIBRARY_PATH
 cd ace
 make
 
@@ -2632,8 +2632,9 @@ Once this is done, then invoke the top-level Makefile with the
 </pre><P>
 
 This will establish a complete tree of links.  In addition, make sure
-you set your LD_LIBRARY_PATH to $ACE_ROOT/ace:$LD_LIBRARY_PATH on SVR4
-UNIX platforms.<P>
+you set your LD_LIBRARY_PATH to
+$ACE_ROOT/ace:$ACE_ROOT/lib:$LD_LIBRARY_PATH on SVR4 UNIX
+platforms.<P>
 
 When you do a make in the $ACE_ROOT directory you will be producing
 object code that is not stored in the same place as the original
