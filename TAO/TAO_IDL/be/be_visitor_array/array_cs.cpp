@@ -37,15 +37,14 @@ be_visitor_array_cs::~be_visitor_array_cs (void)
 
 int be_visitor_array_cs::visit_array (be_array *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-  unsigned long i;
-
   // Nothing to do if we are imported or code is already generated.
   if (node->imported () || (node->cli_stub_gen ()))
     {
       return 0;
     }
 
+  TAO_OutStream *os = this->ctx_->stream ();
+  unsigned long i;
   this->ctx_->node (node);
 
   // Retrieve the type.
@@ -356,6 +355,109 @@ int be_visitor_array_cs::visit_array (be_array *node)
         }
     }
 
-  node->cli_stub_gen (1);
+  this->gen_tmplinst (node);
+
+  node->cli_stub_gen (I_TRUE);
   return 0;
 }
+
+void
+be_visitor_array_cs::gen_tmplinst (be_array *node)
+{
+  AST_Type::SIZE_TYPE st = node->size_type ();
+  TAO_OutStream *os = this->ctx_->stream ();
+  os->gen_ifdef_AHETI ();
+
+  if (this->ctx_->tdef () != 0)
+    {
+      if (st == AST_Type::FIXED)
+        {
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl
+              << "TAO_FixedArray_Var_T<" << be_idt << be_idt_nl
+              << node->name () << "_slice," << be_nl
+              << node->fwd_helper_name () << "_life" << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
+        }
+      else
+        {
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl
+              << "TAO_VarArray_Var_T<" << be_idt << be_idt_nl
+              << node->name () << "_slice," << be_nl
+              << node->fwd_helper_name () << "_life" << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
+
+          *os << be_nl << be_nl
+              << "template class" << be_idt_nl
+              << "TAO_Array_Out_T<" << be_idt << be_idt_nl
+              << node->name () << "_var," << be_nl
+              << node->name () << "_slice," << be_nl
+              << node->fwd_helper_name () << "_life" << be_uidt_nl
+              << ">;" << be_uidt << be_uidt;
+        }
+
+      *os << be_nl << be_nl
+          << "template class" << be_idt_nl
+          << "TAO_Array_Var_Base_T<" << be_idt << be_idt_nl
+          << node->name () << "_slice," << be_nl
+          << node->fwd_helper_name () << "_life" << be_uidt_nl
+          << ">;" << be_uidt << be_uidt;
+    }
+
+  *os << be_nl << be_nl
+      << "template class" << be_idt_nl
+      << "TAO_Array_Forany_T<" << be_idt << be_idt_nl
+      << node->name () << "_slice," << be_nl
+      << node->fwd_helper_name () << "_life" << be_uidt_nl
+      << ">;" << be_uidt << be_uidt;
+
+  os->gen_elif_AHETI ();
+
+  if (this->ctx_->tdef () != 0)
+    {
+      if (st == AST_Type::FIXED)
+        {
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt << be_idt_nl
+              << "TAO_FixedArray_Var_T< \\" << be_idt << be_idt_nl
+              << node->name () << "_slice, \\" << be_nl
+              << node->fwd_helper_name () << "_life \\" << be_uidt_nl
+              << ">" << be_uidt << be_uidt << be_uidt;
+        }
+      else
+        {
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt << be_idt_nl
+              << "TAO_VarArray_Var_T< \\" << be_idt << be_idt_nl
+              << node->name () << "_slice, \\" << be_nl
+              << node->fwd_helper_name () << "_life \\" << be_uidt_nl
+              << ">" << be_uidt << be_uidt << be_uidt;
+
+          *os << be_nl << be_nl
+              << "# pragma instantiate \\" << be_idt << be_idt_nl
+              << "TAO_Array_Out_T< \\" << be_idt << be_idt_nl
+              << node->name () << "_var, \\" << be_nl
+              << node->name () << "_slice, \\" << be_nl
+              << node->fwd_helper_name () << "_life \\" << be_uidt_nl
+              << ">" << be_uidt << be_uidt << be_uidt;
+        }
+
+      *os << be_nl << be_nl
+          << "# pragma instantiate \\" << be_idt << be_idt_nl
+          << "TAO_Array_Var_Base_T< \\" << be_idt << be_idt_nl
+          << node->name () << "_slice, \\" << be_nl
+          << node->fwd_helper_name () << "_life \\" << be_uidt_nl
+          << ">" << be_uidt << be_uidt << be_uidt;
+    }
+
+  *os << be_nl << be_nl
+      << "# pragma instantiate \\" << be_idt << be_idt_nl
+      << "TAO_Array_Forany_T< \\" << be_idt << be_idt_nl
+      << node->name () << "_slice, \\" << be_nl
+      << node->fwd_helper_name () << "_life \\" << be_uidt_nl
+      << ">" << be_uidt << be_uidt << be_uidt;
+
+  os->gen_endif_AHETI ();
+}
+
