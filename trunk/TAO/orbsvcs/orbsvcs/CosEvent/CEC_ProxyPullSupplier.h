@@ -82,8 +82,7 @@ public:
                 CosEventComm::PullConsumer_ptr pull_consumer,
                 CORBA::Environment &)
       ACE_THROW_SPEC ((CORBA::SystemException,
-                       CosEventChannelAdmin::AlreadyConnected,
-                       CosEventChannelAdmin::TypeError));
+                       CosEventChannelAdmin::AlreadyConnected));
   virtual CORBA::Any * pull (CORBA::Environment &)
       ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected));
   virtual CORBA::Any * try_pull (CORBA::Boolean_out has_event,

@@ -201,8 +201,7 @@ TAO_CEC_ProxyPullSupplier::connect_pull_consumer (
       CosEventComm::PullConsumer_ptr pull_consumer,
       CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     CosEventChannelAdmin::AlreadyConnected,
-                     CosEventChannelAdmin::TypeError))
+                     CosEventChannelAdmin::AlreadyConnected))
 {
   {
     ACE_GUARD_THROW_EX (
