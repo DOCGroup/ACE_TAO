@@ -143,7 +143,7 @@ main ()
   ACE_ASSERT (reactorEx.register_handler (&simple_handler, 
 					  simple_handler.event2_.handle ()) == 0);
 
-  ACE_OS::thr_create ((ACE_THR_FUNC) worker, 0, 0, 0);
+  ACE_ASSERT (ACE_OS::thr_create ((ACE_THR_FUNC) worker, 0, 0, 0) == 0);
   
   int result = 0;
   while (!stop_test && result != -1)
