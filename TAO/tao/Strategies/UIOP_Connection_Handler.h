@@ -123,6 +123,10 @@ protected:
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
 
 private:
+  /// Perform appropriate closing
+  void handle_close_i (void);
+
+private:
 
   /// TCP configuration for this connection.
   TAO_UIOP_Properties *uiop_properties_;
