@@ -614,26 +614,6 @@ TAO_POA::activate_object_with_id_and_priority (const PortableServer::ObjectId & 
 
 #endif /* TAO_HAS_RT_CORBA */
 
-//
-// Forwarding related.
-//
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
-ACE_INLINE void
-TAO_POA::forward_object (const PortableServer::ObjectId &oid,
-                         CORBA::Object_ptr forward_to,
-                         CORBA::Environment &ACE_TRY_ENV)
-{
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD;
-
-  this->forward_object_i (oid,
-                          forward_to,
-                          ACE_TRY_ENV);
-}
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
 ACE_INLINE PortableServer::POA_ptr
 TAO_POA::the_parent (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))

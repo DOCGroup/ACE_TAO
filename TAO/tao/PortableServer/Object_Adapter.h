@@ -229,10 +229,11 @@ public:
   ~TAO_Object_Adapter (void);
   // Destructor.
 
-  void dispatch_servant (const TAO_ObjectKey &key,
-                         TAO_ServerRequest &req,
-                         void *context,
-                         CORBA_Environment &ACE_TRY_ENV);
+  int dispatch_servant (const TAO_ObjectKey &key,
+                        TAO_ServerRequest &req,
+                        void *context,
+                        CORBA::Object_out forward_to,
+                        CORBA_Environment &ACE_TRY_ENV);
 
   int locate_servant (const TAO_ObjectKey &key,
                       CORBA_Environment &ACE_TRY_ENV);
@@ -610,9 +611,10 @@ public:
     ~Servant_Upcall (void);
     // Destructor.
 
-    void prepare_for_upcall (const TAO_ObjectKey &key,
-                             const char *operation,
-                             CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+    int prepare_for_upcall (const TAO_ObjectKey &key,
+                            const char *operation,
+                            CORBA::Object_out forward_to,
+                            CORBA::Environment &ACE_TRY_ENV);
     // Locate POA and servant.
 
     TAO_POA &poa (void) const;
