@@ -1,3 +1,14 @@
+Fri Oct 18 13:21:05 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* tests/Timer_Queue_Test.cpp,
+	* examples/Reactor/Misc/test_timer_queue.cpp:
+	  Fixed these tests so that it passes dynamically allocated memory
+ 	  rather that values via the "act" parameter to
+ 	  ACE_Timer_Queue::schedule().  This ensures the test will work
+ 	  properly on strange OS platforms, such as Win64 where pointers
+ 	  and longs/ints are different sizes.  Thanks to Cristian
+ 	  Ungureanu <cristian.ungureanu@amdocs.com> for motivating this.
+
 Fri Oct 18 17:20:02 UTC 2002  Don Hinton  <dhinton@iee.org>
 
 	* ace/SOCK_Dgram_Mcast.{h,cpp}:
@@ -26,16 +37,6 @@ Fri Oct 18 11:51:44 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  using the environment variable ACE_RUNTEST_SVCCONF_EXT.  For
 	  example, you can define ACE_RUNTEST_SVCCONF_EXT to ".conf.xml"
 	  if you have built your ACE with XML-based service configurator.
-
-Fri Oct 18 10:43:40 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
-
-	* examples/Reactor/Misc/test_timer_queue.cpp (test_functionality):
-	  Fixed the test so that it passes dynamically allocated memory
- 	  rather that values via the "act" parameter to
- 	  ACE_Timer_Queue::schedule().  This ensures the test will work
- 	  properly on strange OS platforms, such as Win64 where pointers
- 	  and longs/ints are different sizes.  Thanks to Cristian
- 	  Ungureanu <cristian.ungureanu@amdocs.com> for motivating this.
 
 Fri Oct 18 11:55:33 2002  Steve Huston  <shuston@riverace.com>
 

@@ -37,10 +37,10 @@ test_functionality (ACE_Timer_Queue *tq)
 
   ACE_ASSERT (tq->is_empty ());
   ACE_ASSERT (ACE_Time_Value::zero == ACE_Time_Value (0));
-  const void *time_arg = 0;
+  const void *timer_act = 0;
 
-  ACE_NEW (time_arg, int (1));
-  int timer_id1 = tq->schedule (&eh, time_arg, ACE_OS::gettimeofday ());
+  ACE_NEW (timer_act, int (1));
+  int timer_id1 = tq->schedule (&eh, timer_act, ACE_OS::gettimeofday ());
 
   // Use timer_id outside of an assert, so that we don't get compile
   // warnings with ACE_NDEBUG about it being unused.
@@ -48,35 +48,35 @@ test_functionality (ACE_Timer_Queue *tq)
     ACE_ERROR ((LM_ERROR, "%p\n", "schedule () failed"));
   ACE_ASSERT (timer_id1 != -1);
 
-  ACE_NEW (time_arg, int (42));
-  int result = tq->schedule (&eh, time_arg, ACE_OS::gettimeofday ());
+  ACE_NEW (timer_act, int (42));
+  long result = tq->schedule (&eh, timer_act, ACE_OS::gettimeofday ());
   ACE_ASSERT (result != -1);
-  ACE_NEW (time_arg, int (42));
-  result = tq->schedule (&eh, time_arg, ACE_OS::gettimeofday ());
+  ACE_NEW (timer_act, int (42));
+  result = tq->schedule (&eh, timer_act, ACE_OS::gettimeofday ());
   ACE_ASSERT (result != -1);  
 
-  result = tq->cancel (timer_id1, &time_arg);
+  result = tq->cancel (timer_id1, &timer_act);
   ACE_ASSERT (result == 1);  
-  delete time_arg;
+  delete timer_act;
   result = tq->is_empty ();
   ACE_ASSERT (!result);
 
   result = tq->expire ();
   ACE_ASSERT (result == 2);
 
-  ACE_NEW (time_arg, int (4));
-  timer_id1 = tq->schedule (&eh, time_arg, ACE_OS::gettimeofday ());
+  ACE_NEW (timer_act, int (4));
+  timer_id1 = tq->schedule (&eh, timer_act, ACE_OS::gettimeofday ());
   ACE_ASSERT (timer_id1 != -1);
-  ACE_NEW (time_arg, int (5));
-  int timer_id2 = tq->schedule (&eh, time_arg, ACE_OS::gettimeofday ());
+  ACE_NEW (timer_act, int (5));
+  int timer_id2 = tq->schedule (&eh, timer_act, ACE_OS::gettimeofday ());
   ACE_ASSERT (timer_id2 != -1);
 
-  result = tq->cancel (timer_id1, &time_arg);
+  result = tq->cancel (timer_id1, &timer_act);
   ACE_ASSERT (result == 1);
-  delete time_arg;
-  result = tq->cancel (timer_id2, &time_arg);
+  delete timer_act;
+  result = tq->cancel (timer_id2, &timer_act);
   ACE_ASSERT (result == 1);
-  delete time_arg;
+  delete timer_act;
   result = tq->is_empty ();
   ACE_ASSERT (result == 1);
   result = tq->expire ();
