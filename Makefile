@@ -96,7 +96,8 @@ RELEASE_LIB_FILES = \
 ####       4.2, it will not be modified because it is assumed to be for a
 ####       final release.
 ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
-  TIMESTAMP = (CHANGELOG=`/pkg/gnu/bin/find -name 'ChangeLog*' -maxdepth 1 \
+  TIMESTAMP = (lynx -dump ACE-INSTALL.html > ACE-INSTALL; \
+		CHANGELOG=`/pkg/gnu/bin/find -name 'ChangeLog*' -maxdepth 1 \
                 -type f | xargs ls -1t | head -1`; export CHANGELOG; \
               if [ -z "$$CHANGELOG" ]; then echo unable to find latest ChangeLog file; exit 1; fi; \
               DATE=`/usr/bin/date +"%a %b %d %T %Y"`; export DATE; \
@@ -108,7 +109,6 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
                  if (s/(, released ).*/$$1$$date./) { \
                    ($$version = $$_) =~ s/^This is //; } \
                  END { print $$version  } ' VERSION;` export ACE_VERSION; \
-	      lynx -dump ACE-INSTALL.html > ACE-INSTALL \
               perl -i -e \
                 'BEGIN {($$message = \
                            $$ENV{"DATE"} . "  " . \
