@@ -103,7 +103,7 @@ GIOP_Message_Connectors \
 GIOP_Message_Acceptors \
 GIOP_Message_Accept_State \
 GIOP_Utils \
-GIOP_Assorted_Headers \
+GIOP_Message_Headers \
 target_specification \
 GIOP_Server_Request \
 GIOP_Message_Lite \
@@ -3174,10 +3174,10 @@ realclean:
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/target_identifier.h \
+ $(TAO_ROOT)/tao/target_specification.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
- $(TAO_ROOT)/tao/target_identifier.i
+ $(TAO_ROOT)/tao/target_specification.i
 
 .obj/Profile.o .obj/Profile.so .shobj/Profile.o .shobj/Profile.so: Profile.cpp \
  $(TAO_ROOT)/tao/Profile.h \
@@ -5000,11 +5000,11 @@ realclean:
  $(TAO_ROOT)/tao/Principal.h \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/GIOP_Server_Request.i \
- $(TAO_ROOT)/tao/GIOP_Assorted_Headers.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Headers.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/tao/GIOP_Assorted_Headers.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Headers.i \
  $(TAO_ROOT)/tao/target_specification.h \
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/GIOP_Utils.h \
@@ -5832,11 +5832,11 @@ realclean:
  $(TAO_ROOT)/tao/Principal.h \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/GIOP_Server_Request.i \
- $(TAO_ROOT)/tao/GIOP_Assorted_Headers.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Headers.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/tao/GIOP_Assorted_Headers.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Headers.i \
  $(TAO_ROOT)/tao/target_specification.h \
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/GIOP_Utils.h \
@@ -7023,11 +7023,11 @@ realclean:
  $(TAO_ROOT)/tao/Principal.h \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/GIOP_Server_Request.i \
- $(TAO_ROOT)/tao/GIOP_Assorted_Headers.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Headers.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/tao/GIOP_Assorted_Headers.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Headers.i \
  $(TAO_ROOT)/tao/target_specification.h \
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/GIOP_Utils.h \
@@ -7863,13 +7863,13 @@ realclean:
  $(TAO_ROOT)/tao/GIOP_Message_Base.h \
  $(TAO_ROOT)/tao/GIOP_Message_Base.i \
  $(TAO_ROOT)/tao/GIOP_Message_Accept_State.h \
- $(TAO_ROOT)/tao/GIOP_Assorted_Headers.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Headers.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/tao/GIOP_Assorted_Headers.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Headers.i \
  $(TAO_ROOT)/tao/GIOP_Message_Accept_State.i \
  $(TAO_ROOT)/tao/GIOP_Message_Acceptors.i \
  $(TAO_ROOT)/tao/GIOP_Message_Lite.h \
@@ -8778,11 +8778,11 @@ realclean:
  $(TAO_ROOT)/tao/Principal.h \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/GIOP_Server_Request.i \
- $(TAO_ROOT)/tao/GIOP_Assorted_Headers.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Headers.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/tao/GIOP_Assorted_Headers.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Headers.i \
  $(TAO_ROOT)/tao/target_specification.h \
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/GIOP_Utils.h \
@@ -9614,13 +9614,13 @@ realclean:
  $(TAO_ROOT)/tao/GIOP_Message_Base.h \
  $(TAO_ROOT)/tao/GIOP_Message_Base.i \
  $(TAO_ROOT)/tao/GIOP_Message_Accept_State.h \
- $(TAO_ROOT)/tao/GIOP_Assorted_Headers.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Headers.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/tao/GIOP_Assorted_Headers.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Headers.i \
  $(TAO_ROOT)/tao/GIOP_Message_Accept_State.i \
  $(TAO_ROOT)/tao/GIOP_Message_Acceptors.i \
  $(TAO_ROOT)/tao/GIOP_Message_Lite.h \
@@ -26907,13 +26907,13 @@ realclean:
  $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/GIOP_Message_Base.i \
  $(TAO_ROOT)/tao/GIOP_Message_Accept_State.h \
- $(TAO_ROOT)/tao/GIOP_Assorted_Headers.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Headers.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/tao/GIOP_Assorted_Headers.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Headers.i \
  $(TAO_ROOT)/tao/GIOP_Message_Accept_State.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/ORB.h \
@@ -27086,7 +27086,7 @@ realclean:
 .obj/GIOP_Message_Accept_State.o .obj/GIOP_Message_Accept_State.so .shobj/GIOP_Message_Accept_State.o .shobj/GIOP_Message_Accept_State.so: GIOP_Message_Accept_State.cpp \
  $(TAO_ROOT)/tao/GIOP_Message_Accept_State.h \
  $(ACE_ROOT)/ace/pre.h \
- $(TAO_ROOT)/tao/GIOP_Assorted_Headers.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Headers.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -27189,7 +27189,7 @@ realclean:
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/tao/GIOP_Assorted_Headers.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Headers.i \
  $(TAO_ROOT)/tao/GIOP_Message_Accept_State.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/GIOP_Server_Request.h \
@@ -27463,8 +27463,8 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/GIOP_Assorted_Headers.o .obj/GIOP_Assorted_Headers.so .shobj/GIOP_Assorted_Headers.o .shobj/GIOP_Assorted_Headers.so: GIOP_Assorted_Headers.cpp \
- $(TAO_ROOT)/tao/GIOP_Assorted_Headers.h \
+.obj/GIOP_Message_Headers.o .obj/GIOP_Message_Headers.so .shobj/GIOP_Message_Headers.o .shobj/GIOP_Message_Headers.so: GIOP_Message_Headers.cpp \
+ $(TAO_ROOT)/tao/GIOP_Message_Headers.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -27568,7 +27568,7 @@ realclean:
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/tao/GIOP_Assorted_Headers.i
+ $(TAO_ROOT)/tao/GIOP_Message_Headers.i
 
 .obj/target_specification.o .obj/target_specification.so .shobj/target_specification.o .shobj/target_specification.so: target_specification.cpp \
  $(TAO_ROOT)/tao/target_specification.h \
@@ -28060,11 +28060,11 @@ realclean:
  $(TAO_ROOT)/tao/Principal.h \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/GIOP_Server_Request.i \
- $(TAO_ROOT)/tao/GIOP_Assorted_Headers.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Headers.h \
  $(TAO_ROOT)/tao/GIOPC.h \
  $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/tao/GIOP_Assorted_Headers.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Headers.i \
  $(TAO_ROOT)/tao/target_specification.h \
  $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/GIOP_Utils.h \

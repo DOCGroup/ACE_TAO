@@ -18,7 +18,7 @@
 #include "ace/pre.h"
 #define TAO_GIOP_MESSAGE_ACCEPT_STATE_H
 
-#include "tao/GIOP_Assorted_Headers.h"
+#include "tao/GIOP_Message_Headers.h"
 
 
 // @@ Bala: do we want to have separate classes for the server side
