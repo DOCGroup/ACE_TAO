@@ -1,3 +1,50 @@
+Thu Aug 10 13:58:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.cpp:
+	* tao/Any.h:
+	* tao/BoundsC.cpp:
+	* tao/BoundsC.h:
+	* tao/DynAnyC.cpp:
+	* tao/Exception.cpp:
+	* tao/Exception.h:
+	* tao/IORC.cpp:
+	* tao/ImplRepoC.cpp:
+	* tao/ImplRepoC.h:
+	* tao/InconsistentTypeCodeC.cpp:
+	* tao/ORB.cpp:
+	* tao/PolicyC.cpp:
+	* tao/PolicyC.h:
+	* tao/PollableC.cpp:
+	* tao/PortableServerC.cpp:
+	* tao/PortableServerC.h:
+	* tao/RTCORBAC.cpp:
+	* tao/Typecode.cpp:
+	* tao/WrongTransactionC.cpp:
+
+	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+
+	  Changes to TAO exceptions.
+
+	  Changed the class member from TypeCode to repository id. 
+	  Also changed the base class constructors to take a
+	  repository id argument insead of a TypeCode. This will make
+	  exception construction more lightweight and help deal with
+	  the fact that local exceptions have to valid TypeCode.
+
+	  Made the _type() member function virtual, and added overrides
+	  for non-local exceptions generated from IDL files.
+
+	  Added the virtual _type() function to the named system exceptions,
+	  as well as the full complement (copying insertion, non-copying
+	  insertion, and extraction) of Any operators (required by the spec).
+
+	  Added non-copying any insertion operator for CORBA::Exception
+	  (also required by the spec).
+
+	  Thanks to Greg Hall <Greg.Hall@Australia.Boeing.com> for pointing
+	  out the need for Any operators for the named system exceptions.
+
 Thu Aug 10 11:16:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
