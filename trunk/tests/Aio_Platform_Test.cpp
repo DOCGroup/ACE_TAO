@@ -32,10 +32,11 @@ int have_asynchio (void);
 
 #if defined (ACE_HAS_AIO_CALLS)
 static ACE_HANDLE file_handle = ACE_INVALID_HANDLE;
-ACE_Message_Block mb1 (BUFSIZ + 1);
-ACE_Message_Block mb2 (BUFSIZ + 1);
-aiocb aiocb1, aiocb2;
-sigset_t completion_signal;
+static ACE_Message_Block mb1 (BUFSIZ + 1);
+static ACE_Message_Block mb2 (BUFSIZ + 1);
+static aiocb aiocb1;
+static aiocb aiocb2;
+static sigset_t completion_signal;
 
 // For testing the <aio> stuff.
 int test_aio_calls (void);
