@@ -1,3 +1,18 @@
+Mon Jun 18 15:29:38 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace.icc: Replace Obstack.cpp with Obchunk.cpp; added
+          Obchunk.h
+
+        * ace/Thread_Manager.cpp (task_all_list): Don't put duplicate
+          ACE_Task_Base pointers in the returned list.
+
+        * ace/Malloc_T.cpp (ACE_Malloc<>::ACE_Malloc (3 args): Add \n
+          to the failure ACE_ERROR statement.
+
+        * tests/Refcounted_Auto_Ptr_Test.cpp: Print the instance count
+          of the refcounted variable before asserting on it in order to
+          leave interesting info in the log if it bombs.
+
 Mon Jun 18 10:06:37 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* etc/tao_ssliop.doxygen: New configuration file for
