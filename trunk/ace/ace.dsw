@@ -3,7 +3,19 @@ Microsoft Developer Studio Workspace File, Format Version 5.00
 
 ###############################################################################
 
-Project: "ACE"=".\ace.dsp" - Package Owner=<4>
+Project: "ACE dynamic library"=.\ace_dll.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ACE static library"=.\ace_lib.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
