@@ -1,3 +1,21 @@
+Wed Jul  2 06:05:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Connection_Resolver.cpp:
+	* tao/Connection_Resolver.h:
+	* tao/Default_Endpoint_Selector_Factory.cpp:
+	* tao/Default_Endpoint_Selector_Factory.h:
+	* tao/Endpoint_Selector_Factory.h:
+	* tao/GIOP_Message_Base.cpp:
+	* tao/IIOP_Connector.cpp:
+	* tao/IIOP_Connector.h:
+	* tao/Invocation_Base.cpp:
+	* tao/Invocation_Base.h:
+	* tao/Invocation_Endpoint_Selectors.cpp:
+	* tao/Invocation_Endpoint_Selectors.h:
+	* tao/Transport_Connector.cpp:
+	* tao/Transport_Connector.h: Temporary checkto move things to my
+	  laptop. 
+
 Tue Jul  1 07:08:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Merged with the main trunk and created a branch
