@@ -448,3 +448,11 @@ void Cubit_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
   this->orb_->shutdown ();
 }
+
+
+void 
+Cubit_i::ping (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // do nothing
+}
