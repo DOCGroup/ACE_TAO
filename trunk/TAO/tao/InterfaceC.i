@@ -19032,17 +19032,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_DefinitionKind &_ta
 
 ACE_INLINE CORBA::Boolean
 operator<< (
-    TAO_OutputCDR &,
-    const CORBA_IRObject_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    CORBA_IRObject_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
     TAO_OutputCDR &strm,
     const CORBA_IRObject_ptr _tao_objref
   )
@@ -19078,47 +19067,6 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_Contained_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_Contained_ptr &
-  );
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_Repository_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_Repository_ptr &
-  );
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_Container_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_Container_ptr &
-  );
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_Contained_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_Contained_ptr &
-  );
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_Contained::Description &_tao_aggregate)
 {
@@ -19182,415 +19130,131 @@ operator>> (
   return 0;
 }
 
-ACE_INLINE CORBA::Boolean
-operator<< (
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const IR_ModuleDef_ptr
+    const IR_InterfaceDefSeq &
   );
-ACE_INLINE CORBA::Boolean
-operator>> (
+
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    IR_ModuleDef_ptr &
+    IR_InterfaceDefSeq &
   );
-ACE_INLINE CORBA::Boolean
-operator<< (
+
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const IR_ConstantDef_ptr
+    const IR_ValueDefSeq &
   );
-ACE_INLINE CORBA::Boolean
-operator>> (
+
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    IR_ConstantDef_ptr &
+    IR_ValueDefSeq &
   );
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_ComponentDefSeq &
+  );
+
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_ComponentDefSeq &
+  );
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_ProvidesDefSeq &
+  );
+
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_ProvidesDefSeq &
+  );
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_UsesDefSeq &
+  );
+
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_UsesDefSeq &
+  );
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_HomeDefSeq &
+  );
+
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_HomeDefSeq &
+  );
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_EmitsDefSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_EmitsDefSeq &
+  );
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_PublishesDefSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_PublishesDefSeq &
+  );
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_ConsumesDefSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_ConsumesDefSeq &
+  );
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_FactoryDefSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_FactoryDefSeq &
+  );
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_FinderDefSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_FinderDefSeq &
+  );
+
+CORBA::Boolean TAO_Export operator<< (
+    TAO_OutputCDR &,
+    const IR_ContainedSeq &
+  );
+CORBA::Boolean TAO_Export operator>> (
+    TAO_InputCDR &,
+    IR_ContainedSeq &
+  );
+
 ACE_INLINE CORBA::Boolean
 operator<< (
     TAO_OutputCDR &,
     const IR_IDLType_ptr
   );
+
 ACE_INLINE CORBA::Boolean
 operator>> (
     TAO_InputCDR &,
     IR_IDLType_ptr &
   );
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_StructDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_StructDef_ptr &
-  );
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_UnionDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_UnionDef_ptr &
-  );
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_EnumDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_EnumDef_ptr &
-  );
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_AliasDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_AliasDef_ptr &
-  );
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_InterfaceDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_InterfaceDef_ptr &
-  );
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_ExceptionDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_ExceptionDef_ptr &
-  );
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_NativeDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_NativeDef_ptr &
-  );
-
-#if !defined _TAO_CDR_OP_IR_InterfaceDefSeq_I_
-#define _TAO_CDR_OP_IR_InterfaceDefSeq_I_
-
-CORBA::Boolean  operator<< (
-    TAO_OutputCDR &,
-    const IR_InterfaceDefSeq &
-  );
-CORBA::Boolean  operator>> (
-    TAO_InputCDR &,
-    IR_InterfaceDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_InterfaceDefSeq_I_ */
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_ValueDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_ValueDef_ptr &
-  );
-
-#if !defined _TAO_CDR_OP_IR_ValueDefSeq_I_
-#define _TAO_CDR_OP_IR_ValueDefSeq_I_
-
-CORBA::Boolean  operator<< (
-    TAO_OutputCDR &,
-    const IR_ValueDefSeq &
-  );
-CORBA::Boolean  operator>> (
-    TAO_InputCDR &,
-    IR_ValueDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_ValueDefSeq_I_ */
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_ValueBoxDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_ValueBoxDef_ptr &
-  );
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_ComponentDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_ComponentDef_ptr &
-  );
-
-#if !defined _TAO_CDR_OP_IR_ComponentDefSeq_I_
-#define _TAO_CDR_OP_IR_ComponentDefSeq_I_
-
-CORBA::Boolean  operator<< (
-    TAO_OutputCDR &,
-    const IR_ComponentDefSeq &
-  );
-CORBA::Boolean  operator>> (
-    TAO_InputCDR &,
-    IR_ComponentDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_ComponentDefSeq_I_ */
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_ProvidesDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_ProvidesDef_ptr &
-  );
-
-#if !defined _TAO_CDR_OP_IR_ProvidesDefSeq_I_
-#define _TAO_CDR_OP_IR_ProvidesDefSeq_I_
-
-CORBA::Boolean  operator<< (
-    TAO_OutputCDR &,
-    const IR_ProvidesDefSeq &
-  );
-CORBA::Boolean  operator>> (
-    TAO_InputCDR &,
-    IR_ProvidesDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_ProvidesDefSeq_I_ */
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_UsesDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_UsesDef_ptr &
-  );
-
-#if !defined _TAO_CDR_OP_IR_UsesDefSeq_I_
-#define _TAO_CDR_OP_IR_UsesDefSeq_I_
-
-CORBA::Boolean  operator<< (
-    TAO_OutputCDR &,
-    const IR_UsesDefSeq &
-  );
-CORBA::Boolean  operator>> (
-    TAO_InputCDR &,
-    IR_UsesDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_UsesDefSeq_I_ */
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_HomeDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_HomeDef_ptr &
-  );
-
-#if !defined _TAO_CDR_OP_IR_HomeDefSeq_I_
-#define _TAO_CDR_OP_IR_HomeDefSeq_I_
-
-CORBA::Boolean  operator<< (
-    TAO_OutputCDR &,
-    const IR_HomeDefSeq &
-  );
-CORBA::Boolean  operator>> (
-    TAO_InputCDR &,
-    IR_HomeDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_HomeDefSeq_I_ */
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_EventDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_EventDef_ptr &
-  );
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_EmitsDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_EmitsDef_ptr &
-  );
-
-#if !defined _TAO_CDR_OP_IR_EmitsDefSeq_I_
-#define _TAO_CDR_OP_IR_EmitsDefSeq_I_
-
-CORBA::Boolean  operator<< (
-    TAO_OutputCDR &,
-    const IR_EmitsDefSeq &
-  );
-CORBA::Boolean  operator>> (
-    TAO_InputCDR &,
-    IR_EmitsDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_EmitsDefSeq_I_ */
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_PublishesDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_PublishesDef_ptr &
-  );
-
-#if !defined _TAO_CDR_OP_IR_PublishesDefSeq_I_
-#define _TAO_CDR_OP_IR_PublishesDefSeq_I_
-
-CORBA::Boolean  operator<< (
-    TAO_OutputCDR &,
-    const IR_PublishesDefSeq &
-  );
-CORBA::Boolean  operator>> (
-    TAO_InputCDR &,
-    IR_PublishesDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_PublishesDefSeq_I_ */
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_ConsumesDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_ConsumesDef_ptr &
-  );
-
-#if !defined _TAO_CDR_OP_IR_ConsumesDefSeq_I_
-#define _TAO_CDR_OP_IR_ConsumesDefSeq_I_
-
-CORBA::Boolean  operator<< (
-    TAO_OutputCDR &,
-    const IR_ConsumesDefSeq &
-  );
-CORBA::Boolean  operator>> (
-    TAO_InputCDR &,
-    IR_ConsumesDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_ConsumesDefSeq_I_ */
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_FactoryDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_FactoryDef_ptr &
-  );
-
-#if !defined _TAO_CDR_OP_IR_FactoryDefSeq_I_
-#define _TAO_CDR_OP_IR_FactoryDefSeq_I_
-
-CORBA::Boolean  operator<< (
-    TAO_OutputCDR &,
-    const IR_FactoryDefSeq &
-  );
-CORBA::Boolean  operator>> (
-    TAO_InputCDR &,
-    IR_FactoryDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_FactoryDefSeq_I_ */
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_FinderDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_FinderDef_ptr &
-  );
-
-#if !defined _TAO_CDR_OP_IR_FinderDefSeq_I_
-#define _TAO_CDR_OP_IR_FinderDefSeq_I_
-
-CORBA::Boolean  operator<< (
-    TAO_OutputCDR &,
-    const IR_FinderDefSeq &
-  );
-CORBA::Boolean  operator>> (
-    TAO_InputCDR &,
-    IR_FinderDefSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_FinderDefSeq_I_ */
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_PrimaryKeyDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_PrimaryKeyDef_ptr &
-  );
-
-#if !defined _TAO_CDR_OP_IR_ContainedSeq_I_
-#define _TAO_CDR_OP_IR_ContainedSeq_I_
-
-CORBA::Boolean  operator<< (
-    TAO_OutputCDR &,
-    const IR_ContainedSeq &
-  );
-CORBA::Boolean  operator>> (
-    TAO_InputCDR &,
-    IR_ContainedSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_ContainedSeq_I_ */
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_StructMember &_tao_aggregate)
 {
@@ -19618,20 +19282,14 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_StructMember &_tao_
   
 }
 
-
-#if !defined _TAO_CDR_OP_IR_StructMemberSeq_I_
-#define _TAO_CDR_OP_IR_StructMemberSeq_I_
-
-CORBA::Boolean  operator<< (
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const IR_StructMemberSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     IR_StructMemberSeq &
   );
-
-#endif /* _TAO_CDR_OP_IR_StructMemberSeq_I_ */
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_Initializer &_tao_aggregate)
 {
@@ -19657,20 +19315,14 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_Initializer &_tao_a
   
 }
 
-
-#if !defined _TAO_CDR_OP_IR_InitializerSeq_I_
-#define _TAO_CDR_OP_IR_InitializerSeq_I_
-
-CORBA::Boolean  operator<< (
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const IR_InitializerSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     IR_InitializerSeq &
   );
-
-#endif /* _TAO_CDR_OP_IR_InitializerSeq_I_ */
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_UnionMember &_tao_aggregate)
 {
@@ -19700,45 +19352,22 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_UnionMember &_tao_a
   
 }
 
-
-#if !defined _TAO_CDR_OP_IR_UnionMemberSeq_I_
-#define _TAO_CDR_OP_IR_UnionMemberSeq_I_
-
-CORBA::Boolean  operator<< (
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const IR_UnionMemberSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     IR_UnionMemberSeq &
   );
 
-#endif /* _TAO_CDR_OP_IR_UnionMemberSeq_I_ */
-
-
-#if !defined _TAO_CDR_OP_IR_EnumMemberSeq_I_
-#define _TAO_CDR_OP_IR_EnumMemberSeq_I_
-
-CORBA::Boolean  operator<< (
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const IR_EnumMemberSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     IR_EnumMemberSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_EnumMemberSeq_I_ */
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_Container_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_Container_ptr &
   );
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_Container::Description &_tao_aggregate)
@@ -19767,20 +19396,14 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_Container::Descript
   
 }
 
-
-#if !defined _TAO_CDR_OP_IR_Container_DescriptionSeq_I_
-#define _TAO_CDR_OP_IR_Container_DescriptionSeq_I_
-
-CORBA::Boolean  operator<< (
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const IR_Container::DescriptionSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     IR_Container::DescriptionSeq &
   );
-
-#endif /* _TAO_CDR_OP_IR_Container_DescriptionSeq_I_ */
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -19822,17 +19445,6 @@ operator>> (
 
 ACE_INLINE CORBA::Boolean
 operator<< (
-    TAO_OutputCDR &,
-    const IR_IDLType_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_IDLType_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
     TAO_OutputCDR &strm,
     const IR_IDLType_ptr _tao_objref
   )
@@ -19869,66 +19481,6 @@ operator>> (
   return 0;
 }
 
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_PrimitiveDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_PrimitiveDef_ptr &
-  );
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_StringDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_StringDef_ptr &
-  );
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_SequenceDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_SequenceDef_ptr &
-  );
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_ArrayDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_ArrayDef_ptr &
-  );
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_WstringDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_WstringDef_ptr &
-  );
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_FixedDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_FixedDef_ptr &
-  );
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_PrimitiveKind &_tao_enumval)
 {
   CORBA::ULong _tao_temp = _tao_enumval;
@@ -19947,17 +19499,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_PrimitiveKind &_tao
   
   return _tao_result;
 }
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_Repository_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_Repository_ptr &
-  );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -19999,17 +19540,6 @@ operator>> (
 
 ACE_INLINE CORBA::Boolean
 operator<< (
-    TAO_OutputCDR &,
-    const IR_ComponentRepository_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_ComponentRepository_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
     TAO_OutputCDR &strm,
     const IR_ComponentRepository_ptr _tao_objref
   )
@@ -20045,17 +19575,6 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_ModuleDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_ModuleDef_ptr &
-  );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -20122,17 +19641,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_ModuleDescription &
     return 0;
   
 }
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_ConstantDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_ConstantDef_ptr &
-  );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -20206,17 +19714,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_ConstantDescription
 
 ACE_INLINE CORBA::Boolean
 operator<< (
-    TAO_OutputCDR &,
-    const IR_TypedefDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_TypedefDef_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
     TAO_OutputCDR &strm,
     const IR_TypedefDef_ptr _tao_objref
   )
@@ -20285,17 +19782,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_TypeDescription &_t
 
 ACE_INLINE CORBA::Boolean
 operator<< (
-    TAO_OutputCDR &,
-    const IR_StructDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_StructDef_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
     TAO_OutputCDR &strm,
     const IR_StructDef_ptr _tao_objref
   )
@@ -20331,17 +19817,6 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_UnionDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_UnionDef_ptr &
-  );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -20383,17 +19858,6 @@ operator>> (
 
 ACE_INLINE CORBA::Boolean
 operator<< (
-    TAO_OutputCDR &,
-    const IR_EnumDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_EnumDef_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
     TAO_OutputCDR &strm,
     const IR_EnumDef_ptr _tao_objref
   )
@@ -20429,17 +19893,6 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_AliasDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_AliasDef_ptr &
-  );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -20481,17 +19934,6 @@ operator>> (
 
 ACE_INLINE CORBA::Boolean
 operator<< (
-    TAO_OutputCDR &,
-    const IR_NativeDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_NativeDef_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
     TAO_OutputCDR &strm,
     const IR_NativeDef_ptr _tao_objref
   )
@@ -20527,17 +19969,6 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_PrimitiveDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_PrimitiveDef_ptr &
-  );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -20579,17 +20010,6 @@ operator>> (
 
 ACE_INLINE CORBA::Boolean
 operator<< (
-    TAO_OutputCDR &,
-    const IR_StringDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_StringDef_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
     TAO_OutputCDR &strm,
     const IR_StringDef_ptr _tao_objref
   )
@@ -20625,17 +20045,6 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_WstringDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_WstringDef_ptr &
-  );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -20677,17 +20086,6 @@ operator>> (
 
 ACE_INLINE CORBA::Boolean
 operator<< (
-    TAO_OutputCDR &,
-    const IR_FixedDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_FixedDef_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
     TAO_OutputCDR &strm,
     const IR_FixedDef_ptr _tao_objref
   )
@@ -20723,17 +20121,6 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_SequenceDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_SequenceDef_ptr &
-  );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -20775,17 +20162,6 @@ operator>> (
 
 ACE_INLINE CORBA::Boolean
 operator<< (
-    TAO_OutputCDR &,
-    const IR_ArrayDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_ArrayDef_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
     TAO_OutputCDR &strm,
     const IR_ArrayDef_ptr _tao_objref
   )
@@ -20821,17 +20197,6 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_ExceptionDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_ExceptionDef_ptr &
-  );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -20901,35 +20266,23 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_ExceptionDescriptio
   
 }
 
-
-#if !defined _TAO_CDR_OP_IR_ExceptionDefSeq_I_
-#define _TAO_CDR_OP_IR_ExceptionDefSeq_I_
-
-CORBA::Boolean  operator<< (
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const IR_ExceptionDefSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     IR_ExceptionDefSeq &
   );
 
-#endif /* _TAO_CDR_OP_IR_ExceptionDefSeq_I_ */
-
-
-#if !defined _TAO_CDR_OP_IR_ExcDescriptionSeq_I_
-#define _TAO_CDR_OP_IR_ExcDescriptionSeq_I_
-
-CORBA::Boolean  operator<< (
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const IR_ExcDescriptionSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     IR_ExcDescriptionSeq &
   );
-
-#endif /* _TAO_CDR_OP_IR_ExcDescriptionSeq_I_ */
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IR_AttributeMode &_tao_enumval)
 {
@@ -20949,17 +20302,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_AttributeMode &_tao
   
   return _tao_result;
 }
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_AttributeDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_AttributeDef_ptr &
-  );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -21101,45 +20443,22 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_ParameterDescriptio
   
 }
 
-
-#if !defined _TAO_CDR_OP_IR_ParDescriptionSeq_I_
-#define _TAO_CDR_OP_IR_ParDescriptionSeq_I_
-
-CORBA::Boolean  operator<< (
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const IR_ParDescriptionSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     IR_ParDescriptionSeq &
   );
 
-#endif /* _TAO_CDR_OP_IR_ParDescriptionSeq_I_ */
-
-
-#if !defined _TAO_CDR_OP_IR_ContextIdSeq_I_
-#define _TAO_CDR_OP_IR_ContextIdSeq_I_
-
-CORBA::Boolean  operator<< (
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const IR_ContextIdSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     IR_ContextIdSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_ContextIdSeq_I_ */
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_OperationDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_OperationDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
@@ -21218,60 +20537,31 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_OperationDescriptio
   
 }
 
-
-#if !defined _TAO_CDR_OP_IR_RepositoryIdSeq_I_
-#define _TAO_CDR_OP_IR_RepositoryIdSeq_I_
-
-CORBA::Boolean  operator<< (
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const IR_RepositoryIdSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     IR_RepositoryIdSeq &
   );
 
-#endif /* _TAO_CDR_OP_IR_RepositoryIdSeq_I_ */
-
-
-#if !defined _TAO_CDR_OP_IR_OpDescriptionSeq_I_
-#define _TAO_CDR_OP_IR_OpDescriptionSeq_I_
-
-CORBA::Boolean  operator<< (
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const IR_OpDescriptionSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     IR_OpDescriptionSeq &
   );
 
-#endif /* _TAO_CDR_OP_IR_OpDescriptionSeq_I_ */
-
-
-#if !defined _TAO_CDR_OP_IR_AttrDescriptionSeq_I_
-#define _TAO_CDR_OP_IR_AttrDescriptionSeq_I_
-
-CORBA::Boolean  operator<< (
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const IR_AttrDescriptionSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     IR_AttrDescriptionSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_AttrDescriptionSeq_I_ */
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_InterfaceDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_InterfaceDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
@@ -21386,30 +20676,13 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_ValueMember &_tao_a
   
 }
 
-
-#if !defined _TAO_CDR_OP_IR_ValueMemberSeq_I_
-#define _TAO_CDR_OP_IR_ValueMemberSeq_I_
-
-CORBA::Boolean  operator<< (
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const IR_ValueMemberSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     IR_ValueMemberSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_ValueMemberSeq_I_ */
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_ValueMemberDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_ValueMemberDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
@@ -21449,17 +20722,6 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_ValueDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_ValueDef_ptr &
-  );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -21551,17 +20813,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_ValueDescription &_
 
 ACE_INLINE CORBA::Boolean
 operator<< (
-    TAO_OutputCDR &,
-    const IR_ValueBoxDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_ValueBoxDef_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
     TAO_OutputCDR &strm,
     const IR_ValueBoxDef_ptr _tao_objref
   )
@@ -21597,17 +20848,6 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_ProvidesDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_ProvidesDef_ptr &
-  );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -21679,17 +20919,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_ProvidesDescription
 
 ACE_INLINE CORBA::Boolean
 operator<< (
-    TAO_OutputCDR &,
-    const IR_UsesDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_UsesDef_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
     TAO_OutputCDR &strm,
     const IR_UsesDef_ptr _tao_objref
   )
@@ -21758,45 +20987,22 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_UsesDescription &_t
   
 }
 
-
-#if !defined _TAO_CDR_OP_IR_ProvidesDescSeq_I_
-#define _TAO_CDR_OP_IR_ProvidesDescSeq_I_
-
-CORBA::Boolean  operator<< (
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const IR_ProvidesDescSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     IR_ProvidesDescSeq &
   );
 
-#endif /* _TAO_CDR_OP_IR_ProvidesDescSeq_I_ */
-
-
-#if !defined _TAO_CDR_OP_IR_UsesDescSeq_I_
-#define _TAO_CDR_OP_IR_UsesDescSeq_I_
-
-CORBA::Boolean  operator<< (
+CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const IR_UsesDescSeq &
   );
-CORBA::Boolean  operator>> (
+CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     IR_UsesDescSeq &
-  );
-
-#endif /* _TAO_CDR_OP_IR_UsesDescSeq_I_ */
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_EventDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_EventDef_ptr &
   );
 
 ACE_INLINE CORBA::Boolean
@@ -21869,17 +21075,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_EventDescription &_
 
 ACE_INLINE CORBA::Boolean
 operator<< (
-    TAO_OutputCDR &,
-    const IR_EmitsDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_EmitsDef_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
     TAO_OutputCDR &strm,
     const IR_EmitsDef_ptr _tao_objref
   )
@@ -21915,17 +21110,6 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_PublishesDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_PublishesDef_ptr &
-  );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -21967,17 +21151,6 @@ operator>> (
 
 ACE_INLINE CORBA::Boolean
 operator<< (
-    TAO_OutputCDR &,
-    const IR_ConsumesDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_ConsumesDef_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
     TAO_OutputCDR &strm,
     const IR_ConsumesDef_ptr _tao_objref
   )
@@ -22013,17 +21186,6 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_ComponentDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_ComponentDef_ptr &
-  );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
@@ -22111,17 +21273,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_ComponentDescriptio
 
 ACE_INLINE CORBA::Boolean
 operator<< (
-    TAO_OutputCDR &,
-    const IR_PrimaryKeyDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_PrimaryKeyDef_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
     TAO_OutputCDR &strm,
     const IR_PrimaryKeyDef_ptr _tao_objref
   )
@@ -22190,17 +21341,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IR_PrimaryKeyDescripti
 
 ACE_INLINE CORBA::Boolean
 operator<< (
-    TAO_OutputCDR &,
-    const IR_FactoryDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_FactoryDef_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
     TAO_OutputCDR &strm,
     const IR_FactoryDef_ptr _tao_objref
   )
@@ -22239,17 +21379,6 @@ operator>> (
 
 ACE_INLINE CORBA::Boolean
 operator<< (
-    TAO_OutputCDR &,
-    const IR_FinderDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_FinderDef_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
     TAO_OutputCDR &strm,
     const IR_FinderDef_ptr _tao_objref
   )
@@ -22285,17 +21414,6 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const IR_HomeDef_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    IR_HomeDef_ptr &
-  );
 
 ACE_INLINE CORBA::Boolean
 operator<< (
