@@ -1,3 +1,15 @@
+Mon Nov 12 17:37:24 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp (create_tc_common):
+
+          Changed consolidated message block arg in type code constructor
+          call from consolidated_block.base () to
+          consolidated_block.rd_ptr (). The former would work on platforms
+          that always allocate heap memory with 8-byte alignment, but
+          not if the alignment is to a 4-byte boundary. Thanks to
+          Michael Sawczyn <msawczyn@columbus.rr.com> for reporting the
+          problem, and to Bala for help with the solution.
+
 Mon Nov 12 14:06:40 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/orbsvcs/IOR_Multicast.cpp (TAO_IOR_Multicast):
