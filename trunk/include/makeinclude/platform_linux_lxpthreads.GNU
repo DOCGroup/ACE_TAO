@@ -50,7 +50,10 @@ CCFLAGS += $(CFLAGS) $(NO_IMPLICIT_TEMPLATES)
 DCFLAGS += -g
 DLD     = $(CXX)
 LD      = $(CXX)
-LIBS    += -ldl -lpthread -lrt
+LIBS    += -ldl -lpthread
+ifeq (-DACE_HAS_AIO_CALLS,$(PLATFORM_AIO_SUPPORT))
+  LIBS += -lrt
+endif
 OCFLAGS += -O3
 PIC     = -fPIC
 AR      = ar
