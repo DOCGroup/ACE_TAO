@@ -2,18 +2,18 @@
 
 //=============================================================================
 /**
- *  @file    Alias_TypeCode.h
+ *  @file    Value_Box_TypeCode.h
  *
  *  $Id$
  *
- *  Header file for a @c tk_alias CORBA::TypeCode.
+ *  Header file for a @c tk_value_box CORBA::TypeCode.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================
 
-#ifndef TAO_ALIAS_TYPECODE_H
-#define TAO_ALIAS_TYPECODE_H
+#ifndef TAO_VALUE_BOX_TYPECODE_H
+#define TAO_VALUE_BOX_TYPECODE_H
 
 #include /**/ "ace/pre.h"
 
@@ -29,28 +29,28 @@ namespace TAO
   {
 
     /**
-     * @class Alias
+     * @class Value_Box
      *
      * @brief @c CORBA::TypeCode implementation for an OMG IDL
-     *        @c typedef.
+     *        boxed @c valuetype.
      *
      * This class implements a @c CORBA::TypeCode for an OMG IDL
-     * @c typedef.
+     * boxed @c valuetype.
      */
     template <typename StringType, class RefCountPolicy>
-    class Alias
+    class Value_Box
       : public CORBA::TypeCode,
         private RefCountPolicy
     {
     public:
 
       /// Constructor.
-      Alias (char const * id,
-             char const * name,
-             CORBA::TypeCode_ptr * tc);
+      Value_Box (char const * id,
+                 char const * name,
+                 CORBA::TypeCode_ptr * tc);
 
       /// Destructor.
-      ~Alias (void);
+      ~Value_Box (void);
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods
@@ -71,7 +71,7 @@ namespace TAO
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
        *
-       * @c tk_alias @c CORBA::TypeCode -specific template methods.
+       * @c tk_value_box @c CORBA::TypeCode -specific template methods.
        *
        * @see @c CORBA::TypeCode
        */
@@ -90,11 +90,11 @@ namespace TAO
     private:
 
       /// Base attributes for this @c TypeCode containing the
-      /// repository ID and name of the @c typedef.
+      /// repository ID and name of the boxed @c valuetype.
       Base_Attributes<StringType> attributes_;
 
       /// The @c TypeCode corresponding to the original type upon
-      /// which the IDL @c typedef was made.
+      /// which the IDL boxed @c valuetype was made.
       /**
        * A pointer to the @c CORBA::TypeCode_ptr rather than the
        * @c CORBA::TypeCode_ptr itself is stored since that address is
@@ -103,7 +103,7 @@ namespace TAO
        * compile-time, hence the indirection.
        *
        * @note This @c TypeCode is released upon destruction of this
-       *       @c TypeCode::Alias.
+       *       @c TypeCode::Value_Box.
        */
       CORBA::TypeCode_ptr * content_type_;
 
@@ -114,17 +114,17 @@ namespace TAO
 
 
 #ifdef __ACE_INLINE__
-# include "tao/Alias_TypeCode.inl"
+# include "tao/Value_Box_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
 #ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/Alias_TypeCode.cpp"
+# include "tao/Value_Box_TypeCode.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("Alias_TypeCode.cpp")
+# pragma implementation ("Value_Box_TypeCode.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_ALIAS_TYPECODE_H */
+#endif /* TAO_VALUE_BOX_TYPECODE_H */

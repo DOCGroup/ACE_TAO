@@ -37,7 +37,7 @@ namespace TAO
      * This class implements a @c CORBA::TypeCode for an OMG IDL @c
      * except.
      */
-    template <class AttrType, class RefCountPolicy>
+    template <typename StringType, class FieldArrayType, class RefCountPolicy>
     class Except
       : public Struct<AttrType, RefCountPolicy>
     {
@@ -46,7 +46,7 @@ namespace TAO
       /// Constructor.
       Except (char const * id,
               char const * name,
-              Field const * fields,
+              Field<StringType> const * fields,
               CORBA::ULong nfields);
 
     protected:

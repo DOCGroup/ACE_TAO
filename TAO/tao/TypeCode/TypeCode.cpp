@@ -204,7 +204,7 @@ TAO::unaliased_kind (CORBA::TypeCode_ptr tc
   if (tc_kind == CORBA::tk_alias)
     {
       CORBA::TypeCode_var tc_content =
-        tc_content = tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+        tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (tc_kind);
 
       // Iterate until we get to the actual unaliased type.

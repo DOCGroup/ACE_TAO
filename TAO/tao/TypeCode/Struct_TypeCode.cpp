@@ -11,10 +11,14 @@
 #endif  /* !__ACE_INLINE__ */
 
 
-template <typename StringType, class FieldArrayType, class RefCountPolicy>
+template <typename StringType,
+          class FieldArrayType,
+          CORBA::TCKind Kind,
+          class RefCountPolicy>
 bool
 TAO::TypeCode::Struct<StringType,
                       FieldArrayType,
+                      Kind,
                       RefCountPolicy>::tao_marshal (
   TAO_OutputCDR & cdr) const
 {
@@ -48,28 +52,40 @@ TAO::TypeCode::Struct<StringType,
   return true;
 }
 
-template <typename StringType, class FieldArrayType, class RefCountPolicy>
+template <typename StringType,
+          class FieldArrayType,
+          CORBA::TCKind Kind,
+          class RefCountPolicy>
 void
 TAO::TypeCode::Struct<StringType,
                       FieldArrayType,
+                      Kind,
                       RefCountPolicy>::tao_duplicate (void)
 {
   this->RefCountPolicy::add_ref (void);
 }
 
-template <typename StringType, class FieldArrayType, class RefCountPolicy>
+template <typename StringType,
+          class FieldArrayType,
+          CORBA::TCKind Kind,
+          class RefCountPolicy>
 void
 TAO::TypeCode::Struct<StringType,
                       FieldArrayType,
+                      Kind,
                       RefCountPolicy>::tao_release (void)
 {
   this->RefCountPolicy::remove_ref (void);
 }
 
-template <typename StringType, class FieldArrayType, class RefCountPolicy>
+template <typename StringType,
+          class FieldArrayType,
+          CORBA::TCKind Kind,
+          class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Struct<StringType,
                       FieldArrayType,
+                      Kind,
                       RefCountPolicy>::equal_i (
   CORBA::TypeCode_ptr tc
   ACE_ENV_ARG_DECL) const
@@ -115,10 +131,14 @@ TAO::TypeCode::Struct<StringType,
   return 1;
 }
 
-template <typename StringType, class FieldArrayType, class RefCountPolicy>
+template <typename StringType,
+          class FieldArrayType,
+          CORBA::TCKind Kind,
+          class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Struct<StringType,
                       FieldArrayType,
+                      Kind,
                       RefCountPolicy>::equivalent_i (
   CORBA::TypeCode_ptr tc
   ACE_ENV_ARG_DECL) const
@@ -186,18 +206,28 @@ TAO::TypeCode::Struct<StringType,
   return 1;
 }
 
-template <typename StringType, class FieldArrayType, class RefCountPolicy>
+template <typename StringType,
+          class FieldArrayType,
+          CORBA::TCKind Kind,
+          class RefCountPolicy>
 CORBA::TCKind
-TAO::TypeCode::Struct<StringType, FieldArrayType, RefCountPolicy>::kind_i (
+TAO::TypeCode::Struct<StringType,
+                      FieldArrayType,
+                      Kind,
+                      RefCountPolicy>::kind_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
-  return CORBA::tk_struct;
+  return Struct_Traits<Kind>::kind;
 }
 
-template <typename StringType, class FieldArrayType, class RefCountPolicy>
+template <typename StringType,
+          class FieldArrayType,
+          CORBA::TCKind Kind,
+          class RefCountPolicy>
 CORBA::TypeCode_ptr
 TAO::TypeCode::Struct<StringType,
                       FieldArrayType,
+                      Kind,
                       RefCountPolicy>::get_compact_typecode_i (
   ACE_ENV_SINGLE_ARG_DECL) const
 {
@@ -217,7 +247,7 @@ TAO::TypeCode::Struct<StringType,
 
       safe_fields.reset (fields);
 
-      static char const * empty_name = "";
+      static char const * const empty_name = "";
 
       for (CORBA::ULong i = 0; i < this->nfields_; ++i)
         {
@@ -259,9 +289,15 @@ TAO::TypeCode::Struct<StringType,
   return tc;
 }
 
-template <typename StringType, class FieldArrayType, class RefCountPolicy>
+template <typename StringType,
+          class FieldArrayType,
+          CORBA::TCKind Kind,
+          class RefCountPolicy>
 char const *
-TAO::TypeCode::Struct<StringType, FieldArrayType, RefCountPolicy>::id_i (
+TAO::TypeCode::Struct<StringType,
+                      FieldArrayType,
+                      Kind,
+                      RefCountPolicy>::id_i (
   ACE_ENV_SINGLE_ARG_DECL) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
@@ -269,9 +305,15 @@ TAO::TypeCode::Struct<StringType, FieldArrayType, RefCountPolicy>::id_i (
   return this->base_attributes_.id ();
 }
 
-template <typename StringType, class FieldArrayType, class RefCountPolicy>
+template <typename StringType,
+          class FieldArrayType,
+          CORBA::TCKind Kind,
+          class RefCountPolicy>
 char const *
-TAO::TypeCode::Struct<StringType, FieldArrayType, RefCountPolicy>::name_i (
+TAO::TypeCode::Struct<StringType,
+                      FieldArrayType,
+                      Kind,
+                      RefCountPolicy>::name_i (
   ACE_ENV_SINGLE_ARG_DECL) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
@@ -279,20 +321,28 @@ TAO::TypeCode::Struct<StringType, FieldArrayType, RefCountPolicy>::name_i (
   return this->base_attributes_.name ();
 }
 
-template <typename StringType, class FieldArrayType, class RefCountPolicy>
+template <typename StringType,
+          class FieldArrayType,
+          CORBA::TCKind Kind,
+          class RefCountPolicy>
 CORBA::ULong
 TAO::TypeCode::Struct<StringType,
                       FieldArrayType,
+                      Kind,
                       RefCountPolicy>::member_count_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   return this->nfields_;
 }
 
-template <typename StringType, class FieldArrayType, class RefCountPolicy>
+template <typename StringType,
+          class FieldArrayType,
+          CORBA::TCKind Kind,
+          class RefCountPolicy>
 char const *
 TAO::TypeCode::Struct<StringType,
                       FieldArrayType,
+                      Kind,
                       RefCountPolicy>::member_name_i (
   CORBA::ULong index
   ACE_ENV_ARG_DECL) const
@@ -305,10 +355,14 @@ TAO::TypeCode::Struct<StringType,
   return this->fields_[index].get_name ();
 }
 
-template <typename StringType, class FieldArrayType, class RefCountPolicy>
+template <typename StringType,
+          class FieldArrayType,
+          CORBA::TCKind Kind,
+          class RefCountPolicy>
 CORBA::TypeCode_ptr
 TAO::TypeCode::Struct<StringType,
                       FieldArrayType,
+                      Kind,
                       RefCountPolicy>::member_type_i (
   CORBA::ULong index
   ACE_ENV_ARG_DECL) const

@@ -17,7 +17,7 @@ namespace TAO
 {
   namespace TypeCode
   {
-    // Notice that these are all statically instantiated, nor are they
+    // Notice that these are all statically instantiated and not
     // exported.
 
     Empty_Param tc_null       (CORBA::tk_null);

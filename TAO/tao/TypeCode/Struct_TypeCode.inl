@@ -29,7 +29,7 @@ TAO::TypeCode::Struct<StringType,
 
 ACE_INLINE TAO::TypeCode::Field<CORBA::String_var> const *
 TAO::TypeCode::Struct<CORBA::String_var,
-                      ACE_Auto_Ptr_Array<Field const> >::fields (void) const
+                      ACE_Auto_Ptr_Array<Field<CORBA::String_var> const> >::fields (void) const
 {
   return this->fields_.get ();
 }
