@@ -253,8 +253,6 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
       ACE_THROW_RETURN (CosLifeCycle::NoFactory (), CosLifeCycle::LifeCycleObject::_nil());
     }
   ACE_ENDTRY;
-  
-  return CosLifeCycle::LifeCycleObject::_nil();
 }
 
 
