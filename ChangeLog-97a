@@ -7,7 +7,12 @@ Tue Jun 17 15:11:09 1997  David L. Levine  <levine@cs.wustl.edu>
 	      104631-02 "C++ 4.2: Jumbo Patch for C++ 4.2 on Solaris SPARC"
 	  is applied.  Please beware that enabling of exception handling can
 	  adversely affect peformance, even if the program doesn't use it.
-	  So, we haven't enabled it by default.
+	  So, we haven't enabled it by default.  Thanks to Chris Cleeland
+	  for suggesting not to enable it by default.
+
+	* ace/ACE.cpp (get_handle): use /dev/udp instead of /dev/ip on
+	  SVR4 machines because it has other read permission by default
+	  (on Solaris 2.x).
 
 Tue Jun 17 15:31:01 1997  Steve Huston  <shuston@riverace.com>
 
