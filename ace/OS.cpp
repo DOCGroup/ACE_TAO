@@ -4197,7 +4197,7 @@ ACE_OS::open (const char *filename,
   DWORD flags = 0;
 
   if (ACE_BIT_ENABLED (mode, _O_TEMPORARY))
-    flags |= FILE_FLAG_DELETE_ON_CLOSE;
+    flags |= FILE_FLAG_DELETE_ON_CLOSE | FILE_ATTRIBUTE_TEMPORARY;
 
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_WRITE_THROUGH))
     flags |= FILE_FLAG_WRITE_THROUGH;
@@ -4303,7 +4303,7 @@ ACE_OS::open (const wchar_t *filename,
   DWORD flags = 0;
 
   if (ACE_BIT_ENABLED (mode, _O_TEMPORARY))
-    flags |= FILE_FLAG_DELETE_ON_CLOSE;
+    flags |= FILE_FLAG_DELETE_ON_CLOSE | FILE_ATTRIBUTE_TEMPORARY;
 
   if (ACE_BIT_ENABLED (mode, FILE_FLAG_WRITE_THROUGH))
     flags |= FILE_FLAG_WRITE_THROUGH;

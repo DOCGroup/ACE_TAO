@@ -905,7 +905,7 @@ ACE::open_temp_file (const char *name, int mode, int perm)
 {
 #if defined (ACE_WIN32)
   return ACE_OS::open (name,
-                       mode | FILE_FLAG_DELETE_ON_CLOSE);
+                       mode | _O_TEMPORARY);
 #else
   // Open it.
   ACE_HANDLE handle = ACE_OS::open (name, mode, perm);
@@ -1501,7 +1501,7 @@ ACE::writev_n (ACE_HANDLE h,
       else
         {
           for (writelen += n;
-               s < iovcnt 
+               s < iovcnt
                  && n >= ACE_static_cast (ssize_t,
                                           iov[s].iov_len);
                s++)
@@ -1540,7 +1540,7 @@ ACE::sendv_n (ACE_HANDLE h,
       else
         {
           for (writelen += n;
-               s < iovcnt 
+               s < iovcnt
                  && n >= ACE_static_cast (ssize_t,
                                           iov[s].iov_len);
                s++)
