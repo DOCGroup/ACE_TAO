@@ -13,12 +13,16 @@
 // 
 // ============================================================================
 
-#if !defined j(TAO_NVLIST_H)
+#if !defined (TAO_NVLIST_H)
 #  define TAO_NVLIST_H
 
 #  include "ace/OS.h"
 
-// @@ IS it necessary to use ACE_Svc_Export on a forward decl?
+// @@ IS it necessary to use ACE_Svc_Export on a forward decl?  I
+// simply did a global replace of _EXPCLASS with ACE_Svc_Export.  I'm
+// not familiar enough with crazy MSVC nuances to know if this is
+// necessary, what it means, etc.  Perhaps Brian can shed some light
+// on the subject? --cjc
 class ACE_Svc_Export CORBA_NamedValue;
 
 void CORBA_release (CORBA_NamedValue_ptr x);
@@ -81,6 +85,7 @@ void CORBA_release (CORBA_NVList_ptr x);
 CORBA_Boolean CORBA_is_nil (CORBA_NVList_ptr x);
 
 // @@ Why is this extern "C"?
+// See prior comments...
 extern "C" const IID IID_CORBA_NVList;
 
 class ACE_Svc_Export CORBA_NVList

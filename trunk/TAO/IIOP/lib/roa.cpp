@@ -15,6 +15,8 @@
 #include "connect.h"
 #include "giop.h"
 #include "params.h"
+#include "factories.h"
+#include "orbobj.h"
 
 #include <initguid.h>
 
@@ -34,7 +36,7 @@ ROA::init (CORBA_ORB_ptr parent,
 	   CORBA_Environment& env)
 {
   env.clear ();
-  ROA_Parameters* p = ROA_PARAMS::instance();
+  TAO_OA_Parameters* p = TAO_OA_PARAMS::instance();
 
   //    ACE_MT(ACE_GUARD(ACE_Thread_Mutex, roa_mon, lock_));
 
@@ -63,8 +65,8 @@ ROA::ROA (CORBA_ORB_ptr owning_orb,
     call_count_(0),
     skeleton_(0)
 {
-  ROA_Parameters* p = ROA_PARAMS::instance();
-  ROA_Factory* f = ROA_FACTORY::instance();
+  TAO_OA_Parameters* p = TAO_OA_PARAMS::instance();
+  TAO_Server_Factory& f = owning_orb->server_factory();
 
   ACE_ASSERT(p->oa() == 0);
 
@@ -73,15 +75,15 @@ ROA::ROA (CORBA_ORB_ptr owning_orb,
   //
   if (client_acceptor_.open(p->addr(),
 			    ACE_Service_Config::reactor(),
-			    f->creation_strategy(),
-			    f->accept_strategy(),
-			    f->concurrency_strategy(),
-			    f->scheduling_strategy()) == -1)
+			    f.creation_strategy(),
+			    f.accept_strategy(),
+			    f.concurrency_strategy(),
+			    f.scheduling_strategy()) == -1)
     // XXXCJC Need to return an error somehow!!  Maybe set do_exit?
     ;
 
   client_acceptor_.acceptor().get_local_addr(addr_);
-  this->objtable_ = f->objlookup_strategy();
+  this->objtable_ = f.object_lookup_strategy();
   if (this->objtable_ != 0)
     p->oa(this);
 }
@@ -573,7 +575,7 @@ request_dispatcher (GIOP::RequestHeader& req,
 		    TAO_Dispatch_Context* helper,
 		    CORBA_Environment& env)
 {
-  ROA_Parameters* p = ROA_PARAMS::instance();
+  TAO_OA_Parameters* p = TAO_OA_PARAMS::instance();
   IIOP_ServerRequest svr_req (&request_body,
 			      p->oa()->orb (),
 			      p->oa());

@@ -28,6 +28,26 @@
 
 typedef ACE_Hash_Map_Manager<ACE_CString, TAO_Skeleton, ACE_SYNCH_RW_MUTEX> OP_MAP_MANAGER;
 
+class TAO_Operation_Table
+  // = TITLE
+  //     Abstract class for maintaining and lookup of CORBA IDL
+  //     operation names. 
+{
+public:
+  virtual int find(const CORBA_String &opname, 
+		   TAO_Skeleton &skelfunc) = 0;
+  // Uses <{opname}> to look up the skeleton function and pass it back
+  // in <{skelfunc}>.  Returns non-negative integer on success, or -1
+  // on failure.
+
+  virtual int bind (const CORBA_String &opname,
+		    const TAO_Skeleton skel_ptr) = 0;
+  // Associate the skeleton <{skel_ptr}> with an operation named
+  // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
+
+  virtual ~TAO_Operation_Table (void);
+};
+
 class TAO_Dynamic_Hash_OpTable : public TAO_Operation_Table
 // = TITLE
 // Dynamic Hashing scheme
@@ -123,7 +143,7 @@ private:
 
 // @@ Please prefix these classes with TAO_...
 
-class OpTable_Parameters
+class TAO_Operation_Table_Parameters
 {
 public:
   enum DEMUX_STRATEGY
@@ -134,29 +154,29 @@ public:
     TAO_USER_DEFINED
   };
 
-  void lookup_strategy (OpTable_Parameters::DEMUX_STRATEGY s);
-  OpTable_Parameters::DEMUX_STRATEGY lookup_strategy (void) const;
+  void lookup_strategy (DEMUX_STRATEGY s);
+  DEMUX_STRATEGY lookup_strategy (void) const;
   void concrete_strategy (TAO_Operation_Table *ot);
   TAO_Operation_Table *concrete_strategy (void);
 
-  OpTable_Parameters (void);
-  ~OpTable_Parameters (void);
+  TAO_Operation_Table_Parameters (void);
+  ~TAO_Operation_Table_Parameters (void);
 
 private:
   TAO_Operation_Table *strategy_;
-  OpTable_Parameters::DEMUX_STRATEGY type_;
+  DEMUX_STRATEGY type_;
 };
 
 typedef ACE_Singleton<OpTable_Parameters, ACE_RW_Mutex> TAO_OP_TABLE_PARAMETERS;
 
-class OpTable_Factory
+class TAO_Operation_Table_Factory
 {
 public:
   TAO_Operation_Table *opname_lookup_strategy (void);
-  OpTable_Factory (void);
-  ~OpTable_Factory (void);
+  TAO_Operation_Table_Factory (void);
+  ~TAO_Operation_Table_Factory (void);
 };
 
-typedef ACE_Singleton<OpTable_Factory, ACE_RW_Mutex> TAO_OP_TABLE_FACTORY;
+typedef ACE_Singleton<TAO_Operation_Table_Factory, ACE_RW_Mutex> TAO_OP_TABLE_FACTORY;
 
 #endif /* TAO_OPTABLE_H */

@@ -27,12 +27,12 @@
 // Forward decls.
 
 class ROA;
-class ROA_Handler;
 typedef ROA* ROA_ptr;
+class TAO_OA_Connection_Handler;
 
 // @@ Please prefix all these classes with TAO_...
 
-class ORB_Parameters
+class TAO_ORB_Parameters
 // = TITLE
 //    Parameters that are specific to the ORB.  These parameters can be
 //    for the client, the server, or for both.
@@ -41,7 +41,7 @@ public:
   // = SERVER-SIDE
 };
 
-class OA_Parameters
+class TAO_OA_Parameters
 // = TITLE
 //    Parameters specific to an Object Adapter.  By definition, this
 //    is only on the server side, since a client does not have an object
@@ -115,14 +115,24 @@ public:
   void oa (CORBA_BOA_ptr anOA);
   // Set the handle to the One True Object Adapter.
 
-  // @@ CAn you please finish documenting these methods?
   void addr (ACE_INET_Addr &addr);
+  // Set the address on which we're listening.
 
   ACE_INET_Addr addr (void);
+  // Get the address on which we're listening.
 
+  // @@ CAn you please finish documenting these methods?
   void demux_strategy (char *strategy);
-
-  ROA_Parameters::DEMUX_STRATEGY demux_strategy (void);
+  // Specify the demultiplexing strategy to be used via <{strategy}>.
+  // Valid values are one of (case matters) "linear", "dynamic_hash",
+  // "user_def", or "active_demux".  If the value is not valid, then
+  // <LINEAR> is used as a default.
+  
+  void demux_strategy (DEMUX_STRATEGY s);
+  // Specify the demultiplexing strategy to be used.
+  
+  DEMUX_STRATEGY demux_strategy (void);
+  // Return the demultiplexing strategy being used.
 
   void tablesize (CORBA_ULong tablesize);
   CORBA_ULong tablesize (void);
@@ -145,7 +155,7 @@ private:
   CORBA_BOA_ptr oa_;		
   // Pointer to One True Object Adapter
 
-  ROA_Parameters::DEMUX_STRATEGY demux_;  
+  DEMUX_STRATEGY demux_;  
   // demux strategy
 
   ACE_INET_Addr addr_;          
@@ -156,7 +166,7 @@ private:
 };
 
 // Create a type for the singleton
-typedef ACE_Singleton<OA_Parameters, ACE_Thread_Mutex> OA_PARAMS;
+typedef ACE_Singleton<TAO_OA_Parameters, ACE_Thread_Mutex> TAO_OA_PARAMS;
 
 #  if defined(__ACE_INLINE__)
 #    include "params.i"

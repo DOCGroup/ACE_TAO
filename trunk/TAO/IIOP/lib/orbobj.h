@@ -25,12 +25,20 @@
 
 #  include "ace/OS.h"
 
+#  include "factories.h"
+#  include "params.h"
+
 void CORBA_release (CORBA_ORB_ptr orb);
 CORBA_Boolean CORBA_is_nil (CORBA_ORB_ptr orb);
 
 extern const IID 		IID_CORBA_ORB;
 
-// @@ Shoudn't this be hidden within a namespace?
+// @@ Shoudn't this be hidden within a namespace?  According to the
+// spec, CORBA_ORB_init() is a valid signature for this function, as
+// is CORBA::ORB_init(), as is (I think) CORBA::ORB::init().  It *IS*
+// hidden within the CORBA namespace.  It's just that it uses the
+// underscore as the namespace separator since we don't have the
+// luxury of real C++ namespaces. --cjc
 
 // ORB initialisation, per OMG document 94-9-46.
 

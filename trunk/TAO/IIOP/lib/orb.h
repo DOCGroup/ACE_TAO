@@ -113,10 +113,12 @@ typedef void (*TAO_Skeleton)(CORBA_ServerRequest &,
 #include	"nvlist.h"
 #include	"request.h"
 #include	"svrrqst.h"
+#if 0
 #include        "boa.h"
 
 // Bootstrapping, etc
 #include	"orbobj.h"
+#endif
 
 // NOTE: stub APIs are nonportable, and must be explicitly #included
 // by code emitted from an IDL compiler.

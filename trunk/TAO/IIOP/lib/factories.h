@@ -25,12 +25,31 @@
 #  include "ace/Synch.h"
 
 #  include "params.h"
+#  include "connect.h"
+#  include "objtable.h"
 
-// Silence the compiler via a forward decl.
+class TAO_Client_Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+  // = TITLE
+  //      <Svc_Handler> used on the client side and returned
+  //      by the <TAO_Client_Factory::CONNECTOR>.
+{
+public:
+  TAO_Client_Connection_Handler(ACE_Thread_Manager* = 0);
+  // Do-nothing constructor
 
-// @@ Please rename this to TAO_Svc_Handler to protect the namespace.
+  virtual int open(void*);
+  // Initialization hook
 
-class Svc_Handler;
+  void in_use(CORBA_Boolean);
+  // Set the in-use flag.
+
+  CORBA_Boolean in_use(void);
+  // Return state of the in-use flag.
+
+private:
+  CORBA_Boolean in_use_;
+  // True value indicates that something is using this handler.
+};
 
 class TAO_Client_Factory
   // = TITLE
@@ -38,22 +57,21 @@ class TAO_Client_Factory
   //    strategies used on the client side.
 {
 public:
-  // = CLIENT-SIDE.
   typedef ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
   typedef ACE_NOOP_Creation_Strategy<Svc_Handler> NULL_CREATION_STRATEGY;
   typedef ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_RW_Thread_Mutex> CACHED_CONNECT_STRATEGY;
 
-#if 0
+#if defined(TAO_HAS_CLIENT_CONCURRENCY)
   CONCURRENCY_STRATEGY *concurrency_strategy (void);
 #endif
   
   CONNECTOR *connector (void);
+  // Return a pointer to a connector using appropriate strategies.
 
   TAO_Client_Factory (void);
   
 private:
-  // = CLIENT
-#if 0
+#if defined(TAO_HAS_CLIENT_CONCURRENCY)
   CONCURRENCY_STRATEGY *concurrency_strategy_;
 #endif
   CONNECTOR connector_;
@@ -68,10 +86,10 @@ class TAO_Server_Factory
 {
 public:
   // = SERVER-SIDE
-  typedef ACE_Creation_Strategy<ROA_Handler> CREATION_STRATEGY;
-  typedef ACE_Accept_Strategy<ROA_Handler, ACE_SOCK_ACCEPTOR> ACCEPT_STRATEGY;
-  typedef ACE_Concurrency_Strategy<ROA_Handler> CONCURRENCY_STRATEGY;
-  typedef ACE_Scheduling_Strategy<ROA_Handler> SCHEDULING_STRATEGY;
+  typedef ACE_Creation_Strategy<TAO_OA_Connection_Handler> CREATION_STRATEGY;
+  typedef ACE_Accept_Strategy<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR> ACCEPT_STRATEGY;
+  typedef ACE_Concurrency_Strategy<TAO_OA_Connection_Handler> CONCURRENCY_STRATEGY;
+  typedef ACE_Scheduling_Strategy<TAO_OA_Connection_Handler> SCHEDULING_STRATEGY;
 
   // @@ Please add comments for these methods.
 
@@ -87,8 +105,8 @@ public:
 private:
   // = COMMON
   // @@ Please add comments.
-  ACE_Thread_Strategy<ROA_Handler> threaded_strategy_;
-  ACE_Reactive_Strategy<ROA_Handler> reactive_strategy_;
+  ACE_Thread_Strategy<TAO_OA_Connection_Handler> threaded_strategy_;
+  ACE_Reactive_Strategy<TAO_OA_Connection_Handler> reactive_strategy_;
 
   // = SERVER
   CONCURRENCY_STRATEGY *concurrency_strategy_;

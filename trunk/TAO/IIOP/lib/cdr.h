@@ -161,49 +161,22 @@ struct ACE_Svc_Export CDR
   CORBA_Boolean put_short (CORBA_Short s);
   CORBA_Boolean put_long (CORBA_Long l);
   CORBA_Boolean put_longlong (const CORBA_LongLong &ll);
-
-  // @@ Please put this into the *.i file.
-  inline CORBA_Boolean put_char (CORBA_Char c)
-    { return put_byte ((char) c); }
-
-  inline CORBA_Boolean put_wchar (CORBA_WChar wc)
-    {
-      // "wchar_t" isn't always 2 bytes, such systems might need
-      // further conversion (e.g. hosts with multibyte characters
-      // native, rather than UNICODE)
-
-      return put_short ((short) wc);
-    }
-    
-  inline CORBA_Boolean put_boolean (CORBA_Boolean b)
-    { return put_byte ((char) (b != CORBA_B_FALSE)); }
-
-  inline CORBA_Boolean	put_octet (CORBA_Octet o)
-    { return put_byte ((char) o); }
-
-  inline CORBA_Boolean	put_ushort (CORBA_UShort s)
-    { return put_short ((CORBA_Short) s); }
-
-  inline CORBA_Boolean	put_ulong (CORBA_ULong l)
-    { return put_long ((CORBA_Long) l); }
-
-  inline CORBA_Boolean	put_ulonglong (const CORBA_ULongLong &ll)
-    { return put_longlong ((CORBA_LongLong &) ll); }
-				    
-  inline CORBA_Boolean	put_float (float f)
-    { return put_long (*(CORBA_Long *) &f); }
-
-  inline CORBA_Boolean	put_double (const double &d)
-    { return put_longlong (*(CORBA_LongLong *) &d); }
-
+  CORBA_Boolean put_char (CORBA_Char c);
+  CORBA_Boolean put_wchar (CORBA_WChar wc);
+  CORBA_Boolean put_boolean (CORBA_Boolean b);
+  CORBA_Boolean	put_octet (CORBA_Octet o);
+  CORBA_Boolean	put_ushort (CORBA_UShort s);
+  CORBA_Boolean	put_ulong (CORBA_ULong l);
+  CORBA_Boolean	put_ulonglong (const CORBA_ULongLong &ll);
+  CORBA_Boolean	put_float (float f);
+  CORBA_Boolean	put_double (const double &d);
   CORBA_Boolean put_longdouble (CORBA_LongDouble &ld);
 
-  static CORBA_TypeCode::traverse_status
-    encoder (CORBA_TypeCode_ptr	tc,
-	     const void *data,
-	     const void *,
-	     void *context,
-	     CORBA_Environment &env);
+  static CORBA_TypeCode::traverse_status encoder (CORBA_TypeCode_ptr tc,
+                                                  const void *data,
+                                                  const void *,
+                                                  void *context,
+                                                  CORBA_Environment &env);
   // Marshaling interpreter ... <context> really points to a <CDR>.
 
   // = DECODING SUPPORT 
@@ -216,96 +189,35 @@ struct ACE_Svc_Export CDR
   CORBA_Boolean get_short (CORBA_Short &s);
   CORBA_Boolean get_long (CORBA_Long &l);
   CORBA_Boolean get_longlong (CORBA_LongLong &ll);
-
-  // @@ These methods should be moved into the *.i file.
-
-  inline CORBA_Boolean get_char (CORBA_Char &o)
-    { return this->get_byte ((char &) o); }
-
-  inline CORBA_Boolean get_wchar (CORBA_WChar &wc)
-    {
-      short s;
-
-      // wchar_t isn't always "short"
-
-      CORBA_Boolean retval = this->get_short (s);
-      wc = s;
-      return retval;
-    }
-
-  inline CORBA_Boolean get_boolean (CORBA_Boolean &b)
-    {
-      CORBA_Char c;
-
-      //
-      // CORBA_Boolean is rarely 'char'
-      //
-      CORBA_Boolean retval = this->get_char (c);
-      b = (c == 1);
-      return retval;
-    }
-
-  inline CORBA_Boolean	get_octet (CORBA_Octet &o)
-    { return this->get_byte ((char &) o); }
-
-  inline CORBA_Boolean	get_ushort (CORBA_UShort &s)
-    { return this->get_short ((short&) s); }
-
-  inline CORBA_Boolean	get_ulong (CORBA_ULong &l)
-    { return this->get_long ((CORBA_Long &) l); }
-
-  inline CORBA_Boolean	get_ulonglong (const CORBA_ULongLong &ull)
-    { return this->get_longlong ((CORBA_LongLong &) ull); }
-
-  inline CORBA_Boolean	get_float (float &f)
-    { return this->get_long ((CORBA_Long &) f); }
-
-  inline CORBA_Boolean	get_double (double &d)
-    { return this->get_longlong ((CORBA_LongLong &) d); }
-
+  CORBA_Boolean get_char (CORBA_Char &o);
+  CORBA_Boolean get_wchar (CORBA_WChar &wc);
+  CORBA_Boolean get_boolean (CORBA_Boolean &b);
+  CORBA_Boolean	get_octet (CORBA_Octet &o);
+  CORBA_Boolean	get_ushort (CORBA_UShort &s);
+  CORBA_Boolean	get_ulong (CORBA_ULong &l);
+  CORBA_Boolean	get_ulonglong (const CORBA_ULongLong &ull);
+  CORBA_Boolean	get_float (float &f);
+  CORBA_Boolean	get_double (double &d);
   CORBA_Boolean get_longdouble (CORBA_LongDouble &ld);
 
-  static CORBA_TypeCode::traverse_status
-    decoder (CORBA_TypeCode_ptr	tc,
-	     const void *data,
-	     const void *,
-	     void *context,
-	     CORBA_Environment &env);
+  static CORBA_TypeCode::traverse_status decoder (CORBA_TypeCode_ptr tc,
+                                                  const void *data,
+                                                  const void *,
+                                                  void *context,
+                                                  CORBA_Environment &env);
   // Unmarshaling interpreter ... <context> really points to a <CDR>.
 
-  // @@ Please put this into the *.i file.
   CDR (u_char *buf = 0,
        u_int len = 0,
        int byte_order = MY_BYTE_SEX,
-       int consume_buf = 0) 
-  // Constructor ... buffer must be aligned for the strictest CDR
-  // alignment requirement, since the algorithms used here only
-  // maintain alignment with respect to &buffer [0].
-  //
-  // Yes, that complicates the grow() primitive.
-    : real_buffer (buf),
-      do_free (consume_buf),
-      do_byteswap (byte_order != MY_BYTE_SEX)
-    {
-      ptr_arith_t temp = (ptr_arith_t) buf;
+       int consume_buf = 0);
+  
 
-      temp += MAX_ALIGNMENT - 1;
-      temp &= ~((ptr_arith_t) MAX_ALIGNMENT - 1);
-      buffer = next = (u_char *) temp;
+  ~CDR (void);
 
-      remaining = len - (u_int) (buffer - real_buffer);
-      length = remaining;
-    }
-
-  ~CDR (void)
-    { if (do_free) delete real_buffer; }
-
-  void *operator new (size_t, void *_FAR p)
-    { return p; }
-  void *operator new (size_t s)
-    { return ::operator new (s); }
-  void operator delete (void *p)
-    { ::operator delete (p); }
+  void *operator new (size_t, void *_FAR p);
+  void *operator new (size_t s);
+  void operator delete (void *p);
 
   // = Used mostly when interpreting typecodes.
 
@@ -313,34 +225,20 @@ struct ACE_Svc_Export CDR
   // reported.
 
   CORBA_Boolean skip_string (void);
-  CORBA_Boolean skip_bytes (u_int nbytes)
-    {
-      if (remaining < nbytes)
-	return CORBA_B_FALSE;
-      remaining -= nbytes;
-      next += nbytes;
-      return CORBA_B_TRUE;
-    }
+  CORBA_Boolean skip_bytes (u_int nbytes);
     
-  void setup_encapsulation (u_char *buf,
-			    u_int len)
+  void setup_encapsulation (u_char *buf, u_int len);
   // Also used when interpreting typecodes, but more generally when
   // getting ready to read from encapsulations.  In such cases the
   // buffer alignment guarantees must be provided by the caller, this
   // code doesn't verify them.  These streams are "read only".
-    {
-      next = buf + 1;
-      remaining = len - 1;
-      do_byteswap = (*buf != MY_BYTE_SEX);
-      do_free = 0;
-    }
 
   CORBA_Boolean grow (size_t newlength);
   // Grow the buffer to the identified size ... if it's zero, just
   // grow it by a standard quantum (e.g. when encoding we can't know
   // in advance how big it will need to become).
 
-  size_t bytes_remaining (void) { return remaining; }
+  size_t bytes_remaining (void);
   // Some code needs to know how much is left on encode or decode
 
   // private:
@@ -367,5 +265,15 @@ struct ACE_Svc_Export CDR
   int do_byteswap;	
   // Decode ONLY.
 };
+
+// In this ONE case, we make a substantial exception to how inline
+// files are included.  Normally, we would conditionally include the
+// inline file iff __ACE_INLINE__ is defined.  But, in the original,
+// highly optimized Sun IIOP code, much of what is in the inline file
+// was here ready to be inlined at a moments notice and ALWAYS.  So,
+// in this ONE file, we defer to David Brownell's considerable prowess
+// at creating typecode interpreters as well as to the ACE convention
+// of placing inline functions into separate files.
+#  include "cdr.i"
 
 #endif /* TAO_CDR_H */

@@ -28,6 +28,28 @@
 // Dynamic Hashing scheme.
 typedef ACE_Hash_Map_Manager<ACE_CString, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX> OBJ_MAP_MANAGER;
 
+class TAO_Object_Table
+  // = TITLE
+  //     Abstract class for maintaining a mapping of CORBA object keys
+  //     to pointers to CORBA objects.
+{
+public:
+  virtual int find (const CORBA_OctetSeq &key, 
+		    CORBA_Object_ptr &obj) = 0;
+  // Find object associated with <{key}>, setting <{obj}> to the
+  // pointer and returning a non-negative integer.  If not found,
+  // <{obj}> is unchanged and the value <-1> is returned.
+
+  virtual int bind (const CORBA_OctetSeq &key, 
+		    CORBA_Object_ptr obj) = 0;
+  // Associated <{key}> with <{obj}>, returning 0 if object is
+  // registered successfully, 1 if it's already registered, and -1 if
+  // a failure occurs during registration.
+
+  virtual ~TAO_Object_Table (void);
+  // Destructor.
+};
+
 class TAO_Dynamic_Hash_ObjTable: public TAO_Object_Table
 {
 public:
@@ -85,12 +107,12 @@ private:
 };
 
 // Active Demux
-struct TAO_Active_Demux_Entry
+struct TAO_Active_Demux_ObjTable_Entry
 {
   CORBA_Object_ptr obj;
 
-  TAO_Active_Demux_Entry (void);
-  ~TAO_Active_Demux_Entry (void);
+  TAO_Active_Demux_ObjTable_Entry (void);
+  ~TAO_Active_Demux_ObjTable_Entry (void);
 };
 
 class TAO_Active_Demux_ObjTable : public TAO_Object_Table
@@ -114,7 +136,7 @@ public:
 private:
   CORBA_ULong next_;
   CORBA_ULong tablesize_;
-  TAO_Active_Demux_Entry *tbl_;
+  TAO_Active_Demux_ObjTable_Entry *tbl_;
 };
 
 #endif /* TAO_OBJTABLE_H */

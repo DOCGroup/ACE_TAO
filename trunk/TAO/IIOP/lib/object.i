@@ -67,7 +67,8 @@ TAO_Operation_Table::~TAO_Operation_Table()
 
 ACE_INLINE
 CORBA_Object::CORBA_Object (IUnknown *_jan)
-: parent_ (_jan)
+  : parent_(_jan),
+    orb_(0)
 {
   //    assert (parent != 0);
   // we removed this as it doesn't fit in our schema of things
@@ -79,6 +80,20 @@ CORBA_Object::set_parent(IUnknown *p)
 {
   this->parent_ = p;
   assert (this->parent_ != 0);
+}
+
+ACE_INLINE
+void
+CORBA_Object::orb(CORBA_ORB_ptr orb)
+{
+  orb_ = orb;
+}
+
+ACE_INLINE
+CORBA_ORB_ptr
+CORBA_Object::orb(void) const
+{
+  return orb_;
 }
 
 ACE_INLINE

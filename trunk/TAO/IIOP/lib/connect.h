@@ -22,20 +22,24 @@
 #  include "ace/Synch.h"
 #  include "ace/Svc_Handler.h"
 
-#  include "params.h"
+// Forward Decls
+class TAO_OA_Parameters;
 
-class ROA_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+class TAO_OA_Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
   // = TITLE
-  // @@ Please fill in here.
+  //    Handles requests on a single connection in a server.
+  //
+  // = NOTES
+  //    Should probably be named something like TAO_OA_Connection_Handler.
 {
 public:
   // @@ Please add comments.
-  ROA_Handler (ACE_Thread_Manager *t = ACE_Service_Config::thr_mgr ());
+  TAO_OA_Connection_Handler (ACE_Thread_Manager *t = ACE_Service_Config::thr_mgr ());
   virtual int open (void *);
   virtual int svc (void);
 
-  ROA_Parameters *params (void);
-  void params (ROA_Parameters *p);
+  TAO_OA_Parameters *params (void);
+  void params (TAO_OA_Parameters *p);
 
 protected:
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
@@ -44,10 +48,10 @@ protected:
 private:
   typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> SUPERCLASS;
 
-  ROA_Parameters *params_;
+  TAO_OA_Parameters *params_;
 };
 
-typedef ACE_Strategy_Acceptor<ROA_Handler, ACE_SOCK_ACCEPTOR> ROA_Acceptor;
+typedef ACE_Strategy_Acceptor<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR> ROA_Acceptor;
 
 #  if defined (__ACE_INLINE__)
 #    include "connect.i"

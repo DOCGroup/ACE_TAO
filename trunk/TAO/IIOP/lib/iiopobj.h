@@ -79,7 +79,10 @@ public:
 // NOTE that this uses (single) implementation inheritance to share
 // most of the basic code for an object reference.
 
-// @@ What does it mean to have an 'extern "C"' object?!
+// @@ What does it mean to have an 'extern "C"' object?!  This is so
+// that it is visible to DCOM, which is a C linkage, I believe.  This
+// is all holdover from the original DB code, and the COM integration
+// is the least understood fo any of it.
 extern "C" const IID IID_IIOP_Object;
 
 class ACE_Svc_Export IIOP_Object : public STUB_Object

@@ -126,20 +126,21 @@ TAO_Active_Demux_ObjTable::bind(const CORBA_OctetSeq &key,
 
 int
 TAO_Active_Demux_ObjTable::find(const CORBA_OctetSeq &key,
-                                CORBA_Object_ptr obj)
+                                CORBA_Object_ptr& obj)
 {
   CORBA_ULong i = ACE_OS::atoi((char *)key.buffer);
 
   ACE_ASSERT(i <= this->tablesize_);
-  return (obj->tbl_[i].obj);
+  obj = this->tbl_[i].obj;
+  return 1;
 }
 
-TAO_Active_Demux_Entry::TAO_Active_Demux_Entry()
+TAO_Active_Demux_ObjTable_Entry::TAO_Active_Demux_ObjTable_Entry()
 {
   this->obj = 0;
 }
 
-TAO_Active_Demux_Entry::~TAO_Active_Demux_Entry()
+TAO_Active_Demux_ObjTable_Entry::~TAO_Active_Demux_ObjTable_Entry()
 {
   this->obj = 0;  // cannot delete this as we do not own it
 }

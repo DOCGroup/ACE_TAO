@@ -26,31 +26,12 @@
 #  include "ace/OS.h"
 
 #  include "request.h"
+#  include "optable.h"
 
 void CORBA_release (CORBA_Object_ptr obj);
 CORBA_Boolean CORBA_is_nil (CORBA_Object_ptr obj);
 
 extern const IID IID_CORBA_Object;
-
-class TAO_Operation_Table
-  // = TITLE
-  //     Abstract class for maintaining and lookup of CORBA IDL
-  //     operation names. 
-{
-public:
-  virtual int find(const CORBA_String &opname, 
-		   TAO_Skeleton &skelfunc) = 0;
-  // Uses <{opname}> to look up the skeleton function and pass it back
-  // in <{skelfunc}>.  Returns non-negative integer on success, or -1
-  // on failure.
-
-  virtual int bind (const CORBA_String &opname,
-		    const TAO_Skeleton skel_ptr) = 0;
-  // Associate the skeleton <{skel_ptr}> with an operation named
-  // <{opname}>.  Returns -1 on failure, 0 on success, 1 on duplicate.
-
-  virtual ~TAO_Operation_Table (void);
-};
 
 class ACE_Svc_Export CORBA_Object : public IUnknown
 {
@@ -109,7 +90,7 @@ public:
   HRESULT __stdcall QueryInterface (REFIID riid,
                                     void **ppv);
 
-  CORBA_Object (IUnknown *p = NULL);
+  CORBA_Object (IUnknown *p = 0);
   virtual ~CORBA_Object (void);
 
   virtual int find (const CORBA_String &opname, 
@@ -125,6 +106,12 @@ public:
   // something more meaningful?
   virtual void *get_subclass (void);
   
+  // = ORB ASSOCIATION MAINTAINENCE
+  void orb(CORBA_ORB_ptr orb);
+  // Set the ORB with which we're associated.
+  CORBA_ORB_ptr orb(void) const;
+  // Get the ORB with which we're associated.
+
 protected:
   TAO_Operation_Table *optable_;
 
@@ -135,6 +122,10 @@ protected:
 
 private:
   IUnknown *parent_;
+  // Still confused regarding this IUnknown stuff.
+  
+  CORBA_ORB_ptr orb_;
+  // Pointer to the ORB with which this object is associated.
 
   // these two are not provided!
 

@@ -1,3 +1,54 @@
+Thu May 15 15:54:49 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* IIOP/lib/principa.h: Corrected syntax error which eliminated the
+ 	_refcount data member.
+
+	* IIOP/lib/{params,roa}.*: Updated class names to reflect ROA -->
+ 	TOA_OA pseudo-namespace change.
+
+	* IIOP/lib/orbobj.*: Updated CORBA_ORB_init() to return pointer to
+ 	new ORB singleton.
+
+	* IIOP/lib/orb.h: Commented out some include files to eliminate
+ 	wierd circular dependencies.
+
+	* IIOP/lib/optable.h: Moved TAP_Operation_Table into here.  Put
+ 	OpTable* classes into the TAO_Operation_Table* pseudo-namespace.
+
+	* IIOP/lib/objtable.*: Moved TAO_Object_Table into here.  Moved
+ 	the Entry classes out of the scope of their respective concrete
+ 	operation tables, so they're now named <concrete_table>_Entry.
+
+	* IIOP/lib/object.*: Moved TAO_Operation_Table into optable.*, and
+ 	added a data member which carries a pointer to the ORB with which
+ 	the object is associated.
+
+	* IIOP/lib/iioporb.*: Added a singleton typedef for the ORB which
+ 	is what CORBA_ORB_init() will now return.  Modified
+ 	string_to_object() so that it sets the ORB on the CORBA_Object
+ 	that it returns.
+	
+	* IIOP/lib/{iiopobj,nvlist}.h: Added some responsive commentary.
+
+	* IIOP/lib/giop.cpp: Modified connection establishment code in
+ 	GIOP::Invocation::start() to utilize the client connection manager
+ 	in the ORB.
+
+	* IIOP/lib/giop.h: Put a TAO_Client_Connection_Handler* into
+ 	GIOP::Invocation in place of the client_endpoint.
+
+	* IIOP/lib/factories.*: Updated explicit template instantiations,
+ 	added TAO_Client_Connection_Handler.
+
+	* IIOP/lib/connect.*: Renamed things--ROA_Parameters -->
+ 	TOA_OA_Parameters, ROA_Handler --> TOA_OA_Connection_Handler.
+
+	* IIOP/lib/boa.h: Moved TAO_Object_Table into objtable.*, added
+ 	comments where appropriate.
+
+	* IIOP/lib/{any,cdr,iioporb,invoke}.*: Re-formatting and creation
+ 	of inline method file.
+
 Tue May 13 21:51:22 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* Continued to update the format of the TAO source code so that it

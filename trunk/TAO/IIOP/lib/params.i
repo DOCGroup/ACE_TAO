@@ -1,5 +1,5 @@
 ACE_INLINE
-OA_Parameters::OA_Parameters()
+TAO_OA_Parameters::TAO_OA_Parameters()
   : using_threads_(0),
     thread_flags_(THR_NEW_LWP),
     context_p_(0),
@@ -11,112 +11,112 @@ OA_Parameters::OA_Parameters()
 
 ACE_INLINE
 int
-OA_Parameters::using_threads()
+TAO_OA_Parameters::using_threads()
 {
   return using_threads_;
 }
 
 ACE_INLINE
 void
-OA_Parameters::using_threads(int i)
+TAO_OA_Parameters::using_threads(int i)
 {
   using_threads_ = i;
 }
 
 ACE_INLINE
 void*
-OA_Parameters::context()
+TAO_OA_Parameters::context()
 {
   return context_p_;
 }
 
 ACE_INLINE
 void
-OA_Parameters::context(void* p)
+TAO_OA_Parameters::context(void* p)
 {
   context_p_ = p;
 }
 
 ACE_INLINE
-OA_Parameters::UpcallFunc
-OA_Parameters::upcall()
+TAO_OA_Parameters::UpcallFunc
+TAO_OA_Parameters::upcall()
 {
   return upcall_;
 }
 
 ACE_INLINE
 void
-OA_Parameters::upcall(OA_Parameters::UpcallFunc f)
+TAO_OA_Parameters::upcall(TAO_OA_Parameters::UpcallFunc f)
 {
   upcall_ = f;
 }
 
 ACE_INLINE
-OA_Parameters::ForwardFunc
-OA_Parameters::forwarder()
+TAO_OA_Parameters::ForwardFunc
+TAO_OA_Parameters::forwarder()
 {
   return forwarder_;
 }
 
 ACE_INLINE
 void
-OA_Parameters::forwarder(OA_Parameters::ForwardFunc f)
+TAO_OA_Parameters::forwarder(TAO_OA_Parameters::ForwardFunc f)
 {
   forwarder_ = f;
 }
 
 ACE_INLINE
 CORBA_BOA_ptr
-OA_Parameters::oa()
+TAO_OA_Parameters::oa()
 {
   return oa_;
 }
 
 ACE_INLINE
 void
-OA_Parameters::oa(CORBA_BOA_ptr anOA)
+TAO_OA_Parameters::oa(CORBA_BOA_ptr anOA)
 {
   oa_ = anOA;
 }
 
 ACE_INLINE
 u_int
-OA_Parameters::thread_flags()
+TAO_OA_Parameters::thread_flags()
 {
   return thread_flags_;
 }
 
 ACE_INLINE
 void
-OA_Parameters::thread_flags(u_int f)
+TAO_OA_Parameters::thread_flags(u_int f)
 {
   thread_flags_ = f;
 }
 
 ACE_INLINE
 void
-OA_Parameters::addr(ACE_INET_Addr &addr)
+TAO_OA_Parameters::addr(ACE_INET_Addr &addr)
 {
   this->addr_ = addr;
 }
 
 ACE_INLINE
 ACE_INET_Addr
-OA_Parameters::addr()
+TAO_OA_Parameters::addr()
 {
   return this->addr_;
 }
 
 ACE_INLINE
 void
-OA_Parameters::demux_strategy(DEMUX_STRATEGY strategy)
+TAO_OA_Parameters::demux_strategy(DEMUX_STRATEGY strategy)
 {
   this->demux_ = strategy;      // Trust that the value is valid!
 }
 
 ACE_INLINE
 void
-OA_Parameters::demux_strategy(char* strategy)
+TAO_OA_Parameters::demux_strategy(char* strategy)
 {
   if (!ACE_OS::strcmp(strategy, "linear"))
     {
@@ -142,22 +142,22 @@ OA_Parameters::demux_strategy(char* strategy)
 }
 
 ACE_INLINE
-OA_Parameters::DEMUX_STRATEGY
-OA_Parameters::demux_strategy()
+TAO_OA_Parameters::DEMUX_STRATEGY
+TAO_OA_Parameters::demux_strategy()
 {
   return this->demux_;
 }
 
 ACE_INLINE
 void
-OA_Parameters::tablesize(CORBA_ULong tblsize)
+TAO_OA_Parameters::tablesize(CORBA_ULong tblsize)
 {
   this->tablesize_ = tblsize;
 }
 
 ACE_INLINE
 CORBA_ULong
-OA_Parameters::tablesize()
+TAO_OA_Parameters::tablesize()
 {
   return this->tablesize_;
 }

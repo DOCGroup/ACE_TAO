@@ -51,7 +51,7 @@ public:
 
 private:
   ACE_Thread_Mutex principal_lock_;
-  u_int_refcount;
+  u_int _refcount;
 
   virtual ~CORBA_Principal (void);
 
