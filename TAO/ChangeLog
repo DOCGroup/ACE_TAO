@@ -1,3 +1,9 @@
+Wed Mar 12 09:25:34 2003  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be_include/be_codegen.h:
+
+	  Fixed a "comma at end of enumerator list" warning.
+
 Wed Mar 12 09:11:48 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/RTCORBA/RT_ORBInitializer.cpp:
