@@ -370,7 +370,7 @@ main (int argc,
         = orb->resolve_initial_references ("RootPOA");
       
       PortableServer::POA_var poa
-        = PortableServer::POA::_narrow (obj);
+        = PortableServer::POA::_narrow (obj.in ());
         
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in (),
