@@ -8,8 +8,7 @@
 static const char *ior = 0;
 static int iterations = 5;
 static int shutdown_server = 0;
-static RTCORBA::Priority default_thread_priority =
-  RTCORBA::Priority (ACE_DEFAULT_THREAD_PRIORITY);
+static RTCORBA::Priority default_thread_priority;
 
 static int
 parse_args (int argc, char **argv)
@@ -81,6 +80,10 @@ main (int argc, char **argv)
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (object.in (),
                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      default_thread_priority =
+        current->the_priority (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       object =

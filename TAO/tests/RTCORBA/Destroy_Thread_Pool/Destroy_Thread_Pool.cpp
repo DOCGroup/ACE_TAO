@@ -9,8 +9,7 @@ ACE_RCSID(Destroy_Thread_Pools, Destroy_Thread_Pools, "$Id$")
 static CORBA::ULong stacksize = 0;
 static CORBA::ULong static_threads = 1;
 static CORBA::ULong dynamic_threads = 0;
-static RTCORBA::Priority default_priority =
-  RTCORBA::Priority (ACE_DEFAULT_THREAD_PRIORITY);
+static RTCORBA::Priority default_thread_priority;
 static CORBA::Boolean allow_request_buffering = 0;
 static CORBA::Boolean allow_borrowing = 0;
 static CORBA::ULong max_buffered_requests = 0;
@@ -51,7 +50,7 @@ create_threadpool (RTCORBA::RTORB_ptr rt_orb,
     rt_orb->create_threadpool (stacksize,
                                static_threads,
                                dynamic_threads,
-                               default_priority,
+                               default_thread_priority,
                                allow_request_buffering,
                                max_buffered_requests,
                                max_request_buffer_size,
@@ -68,11 +67,11 @@ create_threadpool_with_lanes (RTCORBA::RTORB_ptr rt_orb,
   RTCORBA::ThreadpoolLanes lanes (2);
   lanes.length (2);
 
-  lanes[0].lane_priority = default_priority;
+  lanes[0].lane_priority = default_thread_priority;
   lanes[0].static_threads = static_threads;
   lanes[0].dynamic_threads = dynamic_threads;
 
-  lanes[1].lane_priority = default_priority;
+  lanes[1].lane_priority = default_thread_priority;
   lanes[1].static_threads = static_threads;
   lanes[1].dynamic_threads = dynamic_threads;
 
@@ -109,6 +108,20 @@ main (int argc, char *argv[])
       RTCORBA::RTORB_var rt_orb =
         RTCORBA::RTORB::_narrow (object.in (),
                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      object =
+        orb->resolve_initial_references ("RTCurrent",
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      RTCORBA::Current_var current =
+        RTCORBA::Current::_narrow (object.in (),
+                                   ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      default_thread_priority =
+        current->the_priority (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       int result =

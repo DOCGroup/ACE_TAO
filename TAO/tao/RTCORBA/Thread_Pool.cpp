@@ -118,7 +118,8 @@ TAO_Thread_Lane::validate_and_map_priority (CORBA::Environment &ACE_TRY_ENV)
 
   // Map CORBA priority to native priority.
   CORBA::Boolean result =
-    pm->to_native (this->lane_priority_, this->native_priority_);
+    pm->to_native (this->lane_priority_,
+                   this->native_priority_);
 
   if (!result)
     ACE_THROW (CORBA::DATA_CONVERSION ());

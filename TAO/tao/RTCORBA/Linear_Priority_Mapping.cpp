@@ -27,7 +27,8 @@ CORBA::Boolean
 TAO_Linear_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
                                         RTCORBA::NativePriority &native_priority)
 {
-  if (corba_priority < 0 || corba_priority > RTCORBA::maxPriority)
+  if (corba_priority < RTCORBA::minPriority ||
+      corba_priority > RTCORBA::maxPriority)
     return 0;
 
 #if defined (ACE_WIN32)

@@ -143,11 +143,11 @@ main (int argc, char *argv[])
                            native_priority),
                           1);
 
-      current->the_priority (desired_priority, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       for (int i = 0; i < 3; ++i)
         {
+          current->the_priority (desired_priority, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
           CORBA::Short priority =
             current->the_priority (ACE_TRY_ENV);
           ACE_TRY_CHECK;
@@ -163,9 +163,6 @@ main (int argc, char *argv[])
           ACE_TRY_CHECK;
 
           desired_priority++;
-
-          current->the_priority (desired_priority, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
         }
 
       // Shut down Server ORB.

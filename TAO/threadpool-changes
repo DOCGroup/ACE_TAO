@@ -264,7 +264,6 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	    TAO_RT_Default_Endpoint_Selector so that we are sure to
 	    take private connection into account.
 
-        * tao/RTCORBA/Direct_Priority_Mapping.cpp:
         * tao/RTCORBA/Linear_Priority_Mapping.cpp:        
         
           - Removed special code in the constructors that was added to
@@ -274,6 +273,10 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
             needed after Joe's fixes.
 
           - Changed <policy_> type from int to long.
+
+        * tao/RTCORBA/Direct_Priority_Mapping.cpp: Simplified this
+          class such that it is really direct, i.e., corba priority
+          maps verbatim to native priority and vice versa.
 
 	* tao/RTCORBA/RT_ORBInitializer.cpp (pre_init): Set the
           scheduling policy and scope policy into ORB Parameters.
@@ -883,6 +886,30 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  used by several RT tests to make sure multiple priorities
 	  are supported.
 
+        * tests/RTCORBA/Linear_Priority/client.cpp:
+        * tests/RTCORBA/Linear_Priority/server.cpp:
+
+          No need to use ACE_DEFAULT_THREAD_PRIORITY. 0 is a valid
+          CORBA priority for any range when using Linear mapping.
+
+        * tests/RTCORBA/Destroy_Thread_Pool/Destroy_Thread_Pool.cpp:
+        * tests/RTCORBA/Persistent_IOR/server.cpp:
+        * tests/RTCORBA/Policy_Combinations/client.cpp:
+        * tests/RTCORBA/Policy_Combinations/server.cpp:
+        * tests/RTCORBA/Thread_Pool/server.cpp:
+
+          Removed dependency on ACE_DEFAULT_THREAD_PRIORITY by getting
+          the main thread's priority from the RT Current.
+
+       	* tests/RTCORBA/Banded_Connections/bands.nt: 
+        * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl:
+        * tests/RTCORBA/Server_Declared/run_test.pl:
+
+          Reworked priority values for NT after the direct mapping
+          became simple.  The only valid CORBA priorities with direct
+          mapping on NT are: 0, 1, 2, and 15.  For bands, only 0, 1,
+          and 2 are counted because of the emptiness between 2 and 15.
+
 	* tests/RTCORBA/RTCORBA_tests.dsw: 
 	* tests/RTCORBA/Makefile: 
 	* tests/RTCORBA/Makefile.bor: 
@@ -940,6 +967,11 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ACE_ROOT/ace/OS.h: THR_SCOPE_PROCESS and THR_SCOPE_SYSTEM
           were not defined for NT.  Added them.
+
+        * ACE_ROOT/ace/OS.cpp: LinuxThreads do not have support for
+          PTHREAD_SCOPE_PROCESS; only PTHREAD_SCOPE_SYSTEM is
+          supported.  Therefore, PTHREAD_SCOPE_PROCESS is ignored when
+          setting the thread scheduling scope.
 
         * ACE_ROOT/bin/auto_run_tests.lst: Added new RTCORBA tests.
           Removed Minimum CORBA dependency on these tests.

@@ -26,7 +26,7 @@ print STDERR "Value is " . $^O;
 
 if ($^O eq "MSWin32") {
     $server_args =
-        "-p $iorfile1 -o $iorfile2 -a 3 -b 5";
+        "-p $iorfile1 -o $iorfile2 -a 1 -b 2";
 }
 elsif ($^O eq "dec_osf") {
     $server_args =
