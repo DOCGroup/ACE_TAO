@@ -24,7 +24,7 @@ int
 TAO_Dynamic_Hash_ObjTable::find (const CORBA_OctetSeq &key,
 				 CORBA_Object_ptr &obj)
 {
-  ACE_CString objkey ((char *) key.buffer);
+  ACE_CString objkey ((char *) key.buffer, key.length);
   return this->hash_.find (objkey, obj);
 }
 

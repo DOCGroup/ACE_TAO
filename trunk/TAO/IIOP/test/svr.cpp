@@ -10,12 +10,14 @@
 // Modified version of Cubit Example written by Sun Microsystems Inc.
 // Modified by: Brian Mendel
 
-#include	"cubit_i.h"
-#include <ace/Get_Opt.h>
+#include "ace/Get_Opt.h"
+#include "ace/Log_Msg.h"
 
 #include "corba/orb.h"
-#include	<corba/debug.h>
-#include <connect.h>
+#include "corba/debug.h"
+#include "connect.h"
+
+#include "cubit_i.h"
 
 extern void
 print_exception (const CORBA_Exception *, const char *, FILE *f=stdout);
@@ -27,7 +29,7 @@ int
 main (int    argc, char   *argv[])
 {
   CORBA_Environment	env;
-  CORBA_Object_ptr obj;
+  CORBA_Object_ptr obj = 0;
   CORBA_ORB_ptr	orb_ptr;
   CORBA_BOA_ptr   oa_ptr;
   CORBA_String	key = (CORBA_String) "key0";
@@ -55,6 +57,9 @@ main (int    argc, char   *argv[])
 
   // Initialize the Basic Object Adapter
   oa_ptr = orb_ptr->BOA_init(argc, argv, "ROA");
+  if (oa_ptr == 0)
+    ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Unable to initialize the BOA.\n"), 1);
+  
 
   // Create implementation object with user specified key
   Cubit_i_ptr  my_cubit = new Cubit_i(key);
@@ -63,14 +68,12 @@ main (int    argc, char   *argv[])
     {
       // Why are we getting the BOA_ptr from here when we've already
       // got it above?
-      CORBA_BOA_ptr oa = TAO_OA_PARAMS::instance()->oa();
       CORBA_OctetSeq	obj_key;
       obj_key.buffer = (CORBA_Octet *) key;
       obj_key.length = obj_key.maximum = ACE_OS::strlen ((char *)key);
      
-      if (oa)
-        (void) oa->find(obj_key, obj);
-     
+      if (oa_ptr->find(obj_key, obj) == -1)
+        ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Unable to locate object with key '%s', %p\n", key), 2);
      
       //
       // Stringify the objref we'll be implementing, and

@@ -16,10 +16,16 @@
 #include "method_db.i"
 #include "iiopobj.h"
 
+#if defined(CUBIT_USE_DYNAMIC_HASH)
 TAO_Dynamic_Hash_OpTable tao_cubit_optable(7);  // Dynamic Operation Table
+#else
+TAO_Linear_OpTable tao_cubit_optable(7);
+#endif
 
 _skel_Cubit::_skel_Cubit(const char* obj_name)
 {
+  const char* mn = "_skel_Cubit::_skel_Cubit()";
+  
    //  Initialize Method Database
    initialize_method_db (&tao_cubit_optable);
 
@@ -28,6 +34,14 @@ _skel_Cubit::_skel_Cubit(const char* obj_name)
    IIOP_Object *data;
 
    CORBA_BOA_ptr oa = TAO_OA_PARAMS::instance()->oa();
+   if (oa == 0)
+     {
+       // We just have to assume that oa will be good, or we have to
+       // throw an exception.  For now we "assume", but we'll
+       ACE_ERROR((LM_ERROR, "(%P|%t) %s Unable to locate a valid object adapter\n", mn));
+       return;
+     }
+   
    this->optable_ = &tao_cubit_optable;
    data = new IIOP_Object(type_id);
 
@@ -41,14 +55,16 @@ _skel_Cubit::_skel_Cubit(const char* obj_name)
    
    ACE_OS::memcpy (data->profile.object_key.buffer,
                    obj_name,
-                   data->profile.object_key.length);
+                   data->profile.object_key.length+1);
 
    this->set_parent(data);
    this->sub_ = this;
 
-   if (oa)
-      oa->bind(data->profile.object_key, this);
-   
+   if (oa->bind(data->profile.object_key, this) == -1)
+     {
+       ACE_ERROR((LM_ERROR, "(%P|%t) %s Unable to bind object to key '%s': %p\n", mn, data->profile.object_key.buffer));
+       return;
+     }
 }
 
 void
