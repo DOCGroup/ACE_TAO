@@ -84,8 +84,8 @@ ACE_Async_Timer_Queue_Adapter<TQ>::schedule (ACE_Event_Handler *eh,
 
   if (this->schedule_ualarm () == -1)
     return 0;
-  else
-    return tid;
+
+  return tid;
 }
 
 template <class TQ>
