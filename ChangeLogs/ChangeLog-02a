@@ -1,3 +1,9 @@
+Fri Apr 28 21:11:32 2000  Darrell Brunsch  <brunsch@uci.edu>
+
+        * bin/clean_dsp.pl: (added)
+
+          This script should clean out excess baggage from DSP files.
+
 Fri Apr 28 13:11:20 2000  Ossama Othman  <ossama@uci.edu>
 
 	* include/makeinclude/platform_linux_lxpthread.GNU:
