@@ -25,16 +25,6 @@
 
 ACE_RCSID(MT_Cubit, server, "$Id$")
 
-#if defined (VXWORKS) && defined (FORCE_ARGS)
-char *force_argv[]=
-{
-  "server",
-  "-s",
-  "-f",
-  "ior.txt" 
-};
-#endif /* defined (VXWORKS) && defined (FORCE_ARGS) */
-
 Server::Server (void)
   :argc_ (0),
    argv_ (0),
@@ -49,52 +39,21 @@ Server::Server (void)
 int
 Server::init (int argc, char **argv)
 {
-  // @@ Naga, can't this be abstracted away into the Globals.* files?!
-#if defined (ACE_HAS_THREADS)
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
-  if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
-#if defined (__Lynx__)
-                                              30,
-#elif defined (VXWORKS) /* ! __Lynx__ */
-                                              6,
-#elif defined (ACE_WIN32)
-                                              ACE_Sched_Params::priority_max 
-                                              (ACE_SCHED_FIFO, ACE_SCOPE_THREAD),
-#else
-                                              ACE_THR_PRI_FIFO_DEF + 25,
-#endif /* ! __Lynx__ */
-                                              ACE_SCOPE_PROCESS)) != 0)
-    {
-      if (ACE_OS::last_error () == EPERM)
-        ACE_DEBUG ((LM_MAX,
-                    "preempt: user is not superuser, "
-                    "so remain in time-sharing class\n"));
-      else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%n: ACE_OS::sched_params failed\n%a"),
-                          -1);
-    }
-#else
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "Test will not run.  This platform doesn't seem to have threads.\n"),
-                    -1);
-#endif /* ACE_HAS_THREADS */
+  int result;
+
+  result = GLOBALS::instance ()->sched_fifo_init ();
+  if (result != 0)
+    return result;
 
   this->argc_ = argc;
   this->argv_ = argv;
 
   VX_VME_INIT;
-
-#if defined (VXWORKS) && defined (FORCE_ARGS)
-  this->argc_ = 4;
-  this->argv_ = force_argv;
-#endif /* VXWORKS && FORCE_ARGS */
-
+  FORCE_ARGV (this->argc_,this->argv_);
   // Make sure we've got plenty of socket handles.  This call will use
   // the default maximum.
-   ACE::set_handle_limit ();
-
-   return 0;
+  ACE::set_handle_limit ();
+  return 0;
 }
 
 int

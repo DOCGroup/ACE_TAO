@@ -81,6 +81,32 @@ Globals::parse_args (int argc, char *argv[])
   return 0;
 }
 
+int
+Globals::sched_fifo_init (void)
+{
+  int result;
+#if defined (ACE_HAS_THREADS)
+  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  result = SCHED_PARAMS_FIFO;
+  if (result != 0)
+    {
+      if (ACE_OS::last_error () == EPERM)
+        ACE_DEBUG ((LM_MAX,
+                    "preempt: user is not superuser, "
+                    "so remain in time-sharing class\n"));
+      else
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%n: ACE_OS::sched_params failed\n%a"),
+                          -1);
+    }
+#else
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "Test will not run.  This platform doesn't seem to have threads.\n"),
+                    -1);
+#endif /* ACE_HAS_THREADS */
+  return 0;
+}
+
 MT_Priority::MT_Priority (void)
   : num_priorities_ (0),
     grain_ (0)
