@@ -84,7 +84,7 @@ public class SOCKStream
     {
       // Get the data out
       String buf = s.toString ();
-      this.oStream_.print (buf);
+      this.oStream_.print(buf);
       this.oStream_.flush ();
       return buf.length ();
     }
@@ -125,7 +125,10 @@ public class SOCKStream
     {
       String temp = this.iStream_.readLine ();
       s.append (temp);
-      return temp.length ();
+      if (temp == null) // Possible if user sends just a line feed, but        
+        return -1;      // not checking would cause a null ptr exception       
+      else                    
+        return temp.length ();  
     }
 
   /**
