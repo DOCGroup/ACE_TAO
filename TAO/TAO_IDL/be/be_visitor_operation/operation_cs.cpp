@@ -703,7 +703,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
       << "for (;;)" << be_nl
       << "{" << be_idt_nl;
 
-  *os << "ACE_TRY_ENV.clear ();" << be_nl;
+  // *os << "ACE_TRY_ENV.clear ();" << be_nl;
   *os << "_tao_call.start (ACE_TRY_ENV);\n";
   // check if there is an exception
   if (this->gen_check_exception (bt) == -1)
