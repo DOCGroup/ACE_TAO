@@ -11,8 +11,7 @@ TAO_Policy_Set::TAO_Policy_Set (TAO_Policy_Scope scope)
 ACE_INLINE CORBA::Boolean
 TAO_Policy_Set::compatible_scope (TAO_Policy_Scope policy_scope) const
 {
-  return (ACE_static_cast (unsigned int, policy_scope) &
-          ACE_static_cast (const unsigned int, this->scope_));
+  return ((unsigned int) policy_scope & (unsigned int) this->scope_);
 }
 
 ACE_INLINE CORBA::Policy *
@@ -26,4 +25,3 @@ TAO_Policy_Set::num_policies (void) const
 {
   return this->policy_list_.length();
 }
-
