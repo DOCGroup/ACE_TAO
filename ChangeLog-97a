@@ -1,3 +1,34 @@
+Sun Apr 27 22:22:14 1997    <irfan@TWOSTEP>
+
+	* ace/Proactor: The Proactor can now be registered with ReactorEx
+ 	  and both of them can be run from ReactorEx's event loop. Added a
+ 	  flag to Proactor's constructor that indicates whether the
+ 	  Proactor will be used in conjunction with ReactorEx event
+ 	  loop. Only if this flag is set will the event in the Proactor be
+ 	  used by the Asynch IO components. This will help with
+ 	  performance.
+
+	* examples/Reactor/Proactor/test_multiple_loops.cpp: Added a new
+ 	  test that shows the integration of the event loops of Proactor
+ 	  and ReactorEx.
+
+	* ace/Asynch_IO: Added an ACE_EVENT parameter to the constructors
+ 	  of classes that inherit from the OVERLAPPED structure. This way
+ 	  the Proactor's event_ can be set in the OVERLAPPED structure.
+
+	  Also changed the open methods on the Asynch IO classes to take a
+ 	  Proactor as an extra parameter.
+	
+	  Changed ACE_Handler's handle_timeout() to handle_time_out() in
+ 	  ACE_Handler. This is temporary till we decide on the argument
+ 	  about mixing the interface of ACE_Event_Handler and
+ 	  ACE_Handler. This change allows user to inherit from ACE_Handler
+ 	  and ACE_Event_Handler and use the different handle_timeout()
+ 	  method, one of which returns void and the other return an int.
+
+	* examples/Reactor/Proactor/test_timeout.cpp: This file got
+ 	  affected by the above change.
+
 Sun Apr 27 17:44:28 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Synch_T.h: Added a new macro ACE_SYNCH_RW_MUTEX to

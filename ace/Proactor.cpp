@@ -121,11 +121,19 @@ ACE_Proactor_Handle_Timeout_Upcall::operator () (TIMER_QUEUE &timer_queue,
 		       "(%t) No Proactor set in ACE_Proactor_Handle_Timeout_Upcall, no completion port to post timeout to?!@\n"),
 		      -1);
   
+  // Grab the event associated with the Proactor
+  HANDLE handle = this->proactor_->get_handle ();
+
   // Create the Asynch_Timer
   ACE_Proactor::Asynch_Timer *asynch_timer 
     = new ACE_Proactor::Asynch_Timer (*handler,
 				      act,
-				      time);
+				      time,
+				      handle);
+  // If Proactor event is valid, signal it
+  if (handle != ACE_INVALID_HANDLE || 
+      handle != 0)
+    ACE_OS::event_signal (&handle);
   
   // Post a completion
   if (::PostQueuedCompletionStatus (this->proactor_->completion_port_, // completion port
@@ -170,12 +178,14 @@ ACE_Proactor_Handle_Timeout_Upcall::proactor (ACE_Proactor &proactor)
 
 
 ACE_Proactor::ACE_Proactor (size_t number_of_threads, 
-			    Timer_Queue *tq)
+			    Timer_Queue *tq,
+			    int used_with_reactorEx_event_loop)
   : completion_port_ (0), // This *MUST* be 0, *NOT* ACE_INVALID_HANDLE!!!!
     number_of_threads_ (number_of_threads),
     timer_queue_ (0),
     delete_timer_queue_ (0),
-    timer_handler_ (0)
+    timer_handler_ (0),
+    used_with_reactorEx_event_loop_ (used_with_reactorEx_event_loop)
 {
   // create the completion port
   this->completion_port_ = ::CreateIoCompletionPort (INVALID_HANDLE_VALUE,						     
@@ -317,6 +327,39 @@ ACE_Proactor::cancel_timer (ACE_Handler &handler)
   return this->timer_queue_->cancel (&handler);
 }
 
+int
+ACE_Proactor::handle_signal (int, siginfo_t *, ucontext_t *)
+{
+  // Perform a non-blocking "poll" for all the I/O events that have
+  // completed in the I/O completion queue.
+
+  ACE_Time_Value timeout (0, 0);
+  int result;
+
+  while ((result = this->handle_events (timeout)) == 1)
+    continue;
+  
+  // If our handle_events failed, we'll report a failure to the
+  // ReactorEx.
+  return result == -1 ? -1 : 0;
+}
+
+int 
+ACE_Proactor::handle_close (ACE_HANDLE handle,
+			    ACE_Reactor_Mask close_mask)
+{
+  return this->close ();
+}
+
+ACE_HANDLE 
+ACE_Proactor::get_handle (void) const
+{
+  if (this->used_with_reactorEx_event_loop_)
+    return this->event_.handle ();
+  else
+    return 0;
+}
+  
 int 
 ACE_Proactor::handle_events (ACE_Time_Value &wait_time)
 {
@@ -478,9 +521,9 @@ ACE_Proactor::timer_queue (Timer_Queue *tq)
 
 ACE_Proactor::Asynch_Timer::Asynch_Timer (ACE_Handler &handler,
 					  const void *act,
-					  const ACE_Time_Value &tv)
-  : ACE_Asynch_Result (handler,
-		       act),
+					  const ACE_Time_Value &tv,
+					  ACE_HANDLE event)
+  : ACE_Asynch_Result (handler, act, event),
     time_ (tv)
 {
 }
@@ -491,7 +534,7 @@ ACE_Proactor::Asynch_Timer::complete (u_long bytes_transferred,
 				      const void *completion_key,
 				      u_long error)
 {
-  this->handler_.handle_timeout (this->time_, this->act ());
+  this->handler_.handle_time_out (this->time_, this->act ());
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
