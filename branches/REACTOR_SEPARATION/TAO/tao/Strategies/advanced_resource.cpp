@@ -40,13 +40,8 @@
 
 ACE_RCSID(Strategies, advanced_resource, "$Id$")
 
-ACE_TCHAR *TAO_Advanced_Resource_Factory::overloaded_resource_factory_name_ = 0;
-
 TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
 {
-    // remember the name of overloaded resource factory
-  TAO_Advanced_Resource_Factory::overloaded_resource_factory_name(
-      TAO_ORB_Core_Static_Resources::instance( )->resource_factory_name_.rep( ) );
 
   TAO_ORB_Core::set_resource_factory ("Advanced_Resource_Factory");
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_Advanced_Resource_Factory);
@@ -70,7 +65,7 @@ TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
 }
 
 TAO_Advanced_Resource_Factory::TAO_Advanced_Resource_Factory (void)
-  : reactor_type_ (TAO_REACTOR_UNDEFINED),
+  : reactor_type_ (TAO_REACTOR_TP),
     threadqueue_type_ (TAO_THREAD_QUEUE_NOT_SET),
     cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK),
     amh_response_handler_allocator_lock_type_ (TAO_ALLOCATOR_THREAD_LOCK),
@@ -91,12 +86,6 @@ TAO_Advanced_Resource_Factory::~TAO_Advanced_Resource_Factory (void)
     delete *iterator;
 
   this->protocol_factories_.reset ();
-// For some unknown reason Advanced_Resource_Feactory is destroyed the allocate_reactor_impl is called
-//  if ( overloaded_resource_factory_name_ )
-//  {
-//      ACE_OS_Memory::free( overloaded_resource_factory_name_ );
-//      overloaded_resource_factory_name_ = 0;
-//  }
 }
 
 int
@@ -115,10 +104,6 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
   }
   this->options_processed_ = 1;
 
-    // remember the name of overloaded resource factory if
-    // different from Advanced_Resource_Factory and Resource_Factory
-  TAO_Advanced_Resource_Factory::overloaded_resource_factory_name(
-      TAO_ORB_Core_Static_Resources::instance( )->resource_factory_name_.rep( ) );
 
   // If the default resource factory exists, then disable it.
   // This causes any directives for the "Resource_Factory" to
@@ -322,10 +307,6 @@ TAO_Advanced_Resource_Factory::load_default_protocols (void)
 int
 TAO_Advanced_Resource_Factory::init_protocol_factories (void)
 {
-    // remember the name of overloaded resource factory if
-    // different from Advanced_Resource_Factory and Resource_Factory
-  TAO_Advanced_Resource_Factory::overloaded_resource_factory_name(
-      TAO_ORB_Core_Static_Resources::instance( )->resource_factory_name_.rep( ) );
 
   // If the default resource factory exists, then disable it.
   // This causes any directives for the "Resource_Factory" to
@@ -649,33 +630,6 @@ TAO_Advanced_Resource_Factory::get_protocol_factories (void)
 }
 
 ACE_Reactor_Impl *
-TAO_Advanced_Resource_Factory::allocate_reactor_from_overloaded_resource_factory ( ) const
-{
-    ACE_Reactor_Impl *impl = 0;
-    if ( overloaded_resource_factory_name_ ) // an factory was overloaded
-    {
-        /// create or recall the overloaded factory
-        TAO_Default_Resource_Factory *default_resource_factory =
-            ACE_Dynamic_Service<TAO_Default_Resource_Factory>::instance( overloaded_resource_factory_name_ );
-
-        if ( default_resource_factory )
-        {
-            /// use reactor from overloaded factory
-            ACE_Reactor *reactor = default_resource_factory->get_reactor( );
-            // try to upcast ACE_Reactor to obtain implementation, if failed impl is still 0
-            if ( reactor )
-            {
-                ACE_DEBUG ( ( LM_DEBUG,
-                              ACE_TEXT("Created reactor implementation using Resource_Factory %s\n"),
-                              overloaded_resource_factory_name_ ) );
-                impl = reactor->implementation( );
-            }
-        }
-    }
-    return impl;
-}
-
-ACE_Reactor_Impl *
 TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
 {
   ACE_Reactor_Impl *impl = 0;
@@ -713,6 +667,7 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
       break;
 
+    default:
     case TAO_REACTOR_TP:
       ACE_NEW_RETURN (impl, ACE_TP_Reactor ((ACE_Sig_Handler*)0,
                                             (ACE_Timer_Queue*)0,
@@ -721,18 +676,6 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
                                               ACE_Select_Reactor_Token::FIFO :
                                               ACE_Select_Reactor_Token::LIFO),
                       0);
-      break;
-    case TAO_REACTOR_UNDEFINED:
-    default:
-        impl = allocate_reactor_from_overloaded_resource_factory ( );
-        if ( !impl ) // no reactor from overloaded resource factory? Create TP_Reactor (default)
-            ACE_NEW_RETURN (impl, ACE_TP_Reactor ((ACE_Sig_Handler*)0,
-                                                  (ACE_Timer_Queue*)0,
-                                                  this->reactor_mask_signals_,
-                                                  this->threadqueue_type_ == TAO_THREAD_QUEUE_FIFO ?
-                                                  ACE_Select_Reactor_Token::FIFO :
-                                                  ACE_Select_Reactor_Token::LIFO),
-                            0);
       break;
     }
 
@@ -930,31 +873,6 @@ TAO_Advanced_Resource_Factory::report_unsupported_error (
              ACE_TEXT(" not supported on this platform\n"),
              option_name));
 }
-
-
-void
-TAO_Advanced_Resource_Factory::overloaded_resource_factory_name( const ACE_CString &name )
-{
-    if ( name != ACE_TEXT( "" ) &&
-         name != ACE_TEXT( "Advanced_Resource_Factory" ) &&
-         name != ACE_TEXT( "Resource_Factory" ) )
-    {
-        if ( overloaded_resource_factory_name_ )
-        {
-            if ( name !=  ACE_CString( ACE_TEXT( overloaded_resource_factory_name_ ) ) )
-            {
-                ACE_ERROR ( ( LM_WARNING, "Resource factory %s overloaded by %s.\n",
-                            overloaded_resource_factory_name_, name.rep( ) ) );
-            }
-            ACE_OS_Memory::free( overloaded_resource_factory_name_ );
-        }
-        overloaded_resource_factory_name_ = ACE_OS::strdup( name.rep( ) );
-
-        ACE_DEBUG ( ( LM_DEBUG, "Advanced_Resource_Factory overloaded %s .\n",
-                            overloaded_resource_factory_name_ ) );
-    }
-}
-
 
 // ****************************************************************
 

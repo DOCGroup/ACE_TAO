@@ -32,15 +32,6 @@ public:
  * stored in thread-specific storage, stored in shared memory,
  * etc.
  *
- * Advanced_Resource_Factory may overload previous ORB::resource_factory eg. default Resource_Factory or
- * any other. In the later case Advanced_Resource_Factory tries to remember the name of the overloaded
- * Resource_Factory in order to create the reactor implementation using overloaded factory. 
- *
- * The creation of reactor from overloaded factories is handled as follows:
- * - reactor set up by ORBReactorType option turns off any other implementation,
- * - if reactor was not set up by -ORBReactorType, then Advanced_Resource_Fatory tries to
- *   allocate reactor using overloaded Resource_Factory.
- * - if the above fail, then the default ACE_TpReactor is created.
  */
 class TAO_Strategies_Export TAO_Advanced_Resource_Factory : public TAO_Default_Resource_Factory
 {
@@ -74,8 +65,6 @@ public:
     TAO_REACTOR_WFMO      = 3,
     TAO_REACTOR_MSGWFMO   = 4 ,
     TAO_REACTOR_TP        = 5,
-    /// undefined falls back into TP if there were no reactor provided by overloaded resource factory
-    TAO_REACTOR_UNDEFINED = 0
   };
 
   /// Thread queueing Strategy
@@ -107,7 +96,7 @@ public:
 
   virtual TAO_Connection_Purging_Strategy *create_purging_strategy (void);
   virtual TAO_LF_Strategy *create_lf_strategy (void);
-  static void overloaded_resource_factory_name( const ACE_CString &name );
+
 protected:
 
   /// Obtain the reactor implementation
@@ -142,13 +131,6 @@ protected:
 
   virtual int load_default_protocols (void);
 
-private:
-
-  /// create reactor from overloaded resource factory (if any), or return 0
-  ACE_Reactor_Impl *allocate_reactor_from_overloaded_resource_factory ( ) const;
-
-  /// the name of Resource_Factory overloaded by Advanced_Resource_Factory
-  static ACE_TCHAR *overloaded_resource_factory_name_;
 };
 
 #if defined (__ACE_INLINE__)

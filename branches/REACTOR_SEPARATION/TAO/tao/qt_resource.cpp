@@ -15,10 +15,10 @@ TAO_QtResource_Factory::allocate_reactor_impl (void) const
     return 0;
   if ( !reactor_impl_ )
   {
-      ACE_NEW_RETURN(reactor_impl_,
+      ACE_NEW_RETURN (reactor_impl_,
                      ACE_QtReactor (qapp_),
                      0);
-      ACE_DEBUG ( ( LM_DEBUG, "ACE_QtReactor created.\n" ) );
+      ACE_DEBUG ((LM_DEBUG, "ACE_QtReactor created.\n"));
   }
   return reactor_impl_;
 }

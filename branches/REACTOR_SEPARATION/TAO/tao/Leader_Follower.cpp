@@ -27,7 +27,7 @@ TAO_Leader_Follower::~TAO_Leader_Follower (void)
       delete follower;
     }
   // Hand the reactor back to the resource factory.
-  this->orb_core_->resource_factory ()->reclaim_reactor (this->reactor_);
+  this->orb_core_->reactor_factory ()->reclaim_reactor (this->reactor_);
   this->reactor_ = 0;
 }
 
@@ -117,7 +117,7 @@ TAO_Leader_Follower::reactor (void)
       if (this->reactor_ == 0)
         {
           this->reactor_ =
-            this->orb_core_->resource_factory ()->get_reactor ();
+            this->orb_core_->reactor_factory ()->get_reactor ();
         }
     }
   return this->reactor_;

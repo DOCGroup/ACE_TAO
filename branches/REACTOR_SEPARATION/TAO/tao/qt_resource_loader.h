@@ -36,8 +36,8 @@ class TAO_QtReactor_Export TAO_QtResource_Loader
 {
 
 public:
-    TAO_QtResource_Loader  ( QApplication *qapp = 0 );
-    virtual ~TAO_QtResource_Loader( );
+    TAO_QtResource_Loader  (QApplication *qapp=0);
+    virtual ~TAO_QtResource_Loader ();
 };
 
 #include /**/ "ace/post.h"

@@ -293,7 +293,7 @@ public:
    * No-Collocation is a special case of collocation.
    */
   static
-  TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
+TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
                                                   ACE_ENV_ARG_DECL);
   //@}
 
@@ -375,6 +375,9 @@ public:
   /// Returns pointer to the resource factory.
   TAO_Resource_Factory *resource_factory (void);
 
+  /// Returns pointer to the factory for creating reactor
+  TAO_Resource_Factory *reactor_factory (void);
+
   /// Returns pointer to the client factory.
   TAO_Client_Strategy_Factory *client_factory (void);
 
@@ -412,6 +415,9 @@ public:
   /// Sets the value of TAO_ORB_Core::resource_factory_
   static void set_resource_factory (const char *resource_factory_name);
 
+  /// Sets the value of TAO_ORB_Core::reactor_resource_factory_
+  static void set_reactor_factory (const char *reactor_resource_factory_name);
+
   /// Sets the value of TAO_ORB_Core::protocols_hooks_
   static void set_protocols_hooks (const char *protocols_hooks_name);
 
@@ -429,6 +435,9 @@ public:
 
   /// Gets the value of TAO_ORB_Core::protocols_hooks__
   TAO_Protocols_Hooks * get_protocols_hooks (void);
+
+  /// return the reactor created from reactor_factory or resource_factory
+  ACE_Reactor * get_reactor (void);
 
   /// Sets the value of TAO_ORB_Core::dynamic_adapter_name_.
   static void dynamic_adapter_name (const char *name);
@@ -459,6 +468,7 @@ public:
 
   /// Gets the value of TAO_ORB_Core::valuetype_adapter_name.
   static const char *valuetype_adapter_name (void);
+
 
   /// See if we have a collocated address, if yes, return the POA
   /// associated with the address.
@@ -1151,6 +1161,9 @@ protected:
   /// Handle to the factory for resource information..
   TAO_Resource_Factory *resource_factory_;
 
+  /// Handle to the  factory for creating reactor
+  TAO_Resource_Factory *reactor_factory_;
+
 #if 0
   /// @@todo All these need to go!
   /// The allocators for the message blocks
@@ -1398,6 +1411,15 @@ public:
    * to be "Advanced_Resource_Factory".
    */
   ACE_CString resource_factory_name_;
+
+  /**
+   * Name of the factory for creating reactor.
+   * The default value is "", which means that reactor should be created using ordinary
+   * resource factory . If this name is set, then reactor is created using this factory
+   * instead of resource_factory. If reactor_factory fails to create reactor, then
+   * resource_factor is enforced to create reactor.
+   */
+  ACE_CString reactor_factory_name_;
 
   /**
    * Name of the service object for DII request creation that needs
