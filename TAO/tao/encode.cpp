@@ -316,10 +316,8 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
       alignment = param->alignment (ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
-      // MSVC built code works with either of these, but Borland
-      // Builder needs the first one, whereas Sun compilers
-      // need the second one.
-#if defined (WIN32)
+      // Borland Builder aligns things a little differently.
+#if defined (__BORLANDC__)
       align_offset =
         (ptr_arith_t) ptr_align_binary (data, alignment)
         - (ptr_arith_t) data
