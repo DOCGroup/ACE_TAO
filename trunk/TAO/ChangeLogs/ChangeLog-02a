@@ -1,3 +1,9 @@
+Tue Apr 24 10:49:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
+
+          Removed unused argument from method visit_interface_fwd().
+
 Tue Apr 24 10:29:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/IORTable/IORTableC.cpp:
