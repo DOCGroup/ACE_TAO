@@ -57,6 +57,7 @@ BIN =	Env_Value_Test \
 	Thread_Manager_Test \
 	Thread_Mutex_Test \
 	Thread_Pool_Test \
+	Timeprobe_Test \
 	Time_Service_Test \
 	Time_Value_Test \
 	Timer_Queue_Test \
