@@ -23,7 +23,7 @@
 #include "ace/Auto_Ptr.h"
 #include "Malloc_Test.h"
 
-ACE_RCSID(tests, SV_Shared_Memory_Test, "Malloc_Test.cpp,v 4.22 1999/12/13 22:24:42 nanbor Exp")
+ACE_RCSID(tests, Malloc_Test, "Malloc_Test.cpp,v 4.22 1999/12/13 22:24:42 nanbor Exp")
 
 #if !defined (__Lynx__) && (!defined (ACE_LACKS_FORK) || defined (ACE_WIN32))
 
@@ -59,9 +59,9 @@ static const void *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
 // another base address that's 1M higher so that <ACE_Malloc> will be
 // mapped into a different address in the child's virtual memory.
 static const void *CHILD_BASE_ADDR =
-#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
        1024 * 1024 +
-#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+#endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
        ACE_DEFAULT_BASE_ADDR;
 
 // Shared memory allocator.  Hide the allocator inside this function
@@ -278,9 +278,9 @@ main (int argc, ASYS_TCHAR *[])
       init_test (PARENT_BASE_ADDR);
 
       ACE_Control_Block::print_alignment_info ();
-# if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+# if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
       ACE_PI_Control_Block::print_alignment_info ();
-# endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+# endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
       // No arguments means we're the parent process.
       ACE_Process_Options options (1);
@@ -352,7 +352,7 @@ template class ACE_Based_Pointer_Basic<long>;
 template class ACE_Based_Pointer_Basic<Long_Test>;
 template class ACE_Based_Pointer<Long_Test>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#if (ACE_HAS_POSITION_INDEPENDENT_MALLOC == 1)
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 #pragma instantiate auto_ptr< ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_PI_Control_Block> >
 #pragma instantiate ACE_Auto_Basic_Ptr< ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_PI_Control_Block> >;
 #else
