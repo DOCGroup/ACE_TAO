@@ -113,7 +113,8 @@
 #if defined (ACE_WIN32)
 #   define ACE_SIZEOF_LONG_LONG 8
     typedef unsigned __int64 ACE_UINT64;
-#elif defined (ULLONG_MAX) && ! defined (__GNUG__)
+#elif defined (ULLONG_MAX) && !defined (__GNUG__) && \
+      !defined (ACE_LACKS_LONGLONG_T)
 # if (ULLONG_MAX) == 18446744073709551615ULL
 #   define ACE_SIZEOF_LONG_LONG 8
 #   if ACE_SIZEOF_INT != 8 && ACE_SIZEOF_LONG != 8
@@ -130,7 +131,7 @@
 # else
 #   error: unsupported long long size, must be updated for this platform!
 # endif /* ULLONG_MAX */
-#elif defined (ULONGLONG_MAX)
+#elif defined (ULONGLONG_MAX) && !defined (ACE_LACKS_LONGLONG_T)
   // Irix 6.x, for example.
 # if (ULONGLONG_MAX) == 18446744073709551615ULL
 #   define ACE_SIZEOF_LONG_LONG 8
@@ -140,25 +141,9 @@
 # else
 #   error: unsupported long long size, must be updated for this platform!
 # endif /* ULLONG_MAX */
-#else /* ! ACE_WIN32 && ! ULLONG_MAX && ! ULONGLONG_MAX */
-# if defined (ACE_HAS_LONGLONG_T)
-  // Assume 8-byte long longs.  It would be better to #define
-  // ACE_HAS_LONGLONG_T to the number of bytes in a long,
-  // but we'd have to do that consistently in all config files.
-#   define ACE_SIZEOF_LONG_LONG 8
-#   if ACE_SIZEOF_INT != 8 && ACE_SIZEOF_LONG != 8
-#     if defined (sun)
-        // sun #defines u_longlong_t, maybe other platforms do also.
-        // Use it, at least with g++, so that its -pedantic doesn't
-        // complain about no ANSI C++ long long.
-        typedef u_longlong_t ACE_UINT64;
-#     else
-        // LynxOS 2.5.0 and Linux don't have u_longlong_t.
-        typedef unsigned long long ACE_UINT64;
-#     endif /* __GNUG__ && sun */
-#   endif /* ACE_SIZEOF_INT != 8 && ACE_SIZEOF_LONG != 8 */
-# else /* ! ACE_HAS_LONGLONG_T */
-
+#else /* ! ACE_WIN32 || (! ULLONG_MAX || __GNUG__) || ! ULONGLONG_MAX ||
+         ACE_LACKS_LONGLONG_T */
+# if defined (ACE_LACKS_LONGLONG_T)
     class ACE_Export ACE_U_LongLong
       // = TITLE
       //     Unsigned long long for platforms that don't have one.
@@ -192,14 +177,16 @@
       ACE_U_LongLong operator- (const ACE_U_LongLong &) const;
 
       // Note that the following take ACE_UINT32 arguments.  These are
-      // typical use cases, and easy to implement.  But, they're very
-      // limited in the ranges of values that they can handle.
+      // typical use cases, and easy to implement.  But, they limit
+      // the return values to 32 bits as well.  There are no checks
+      // for overflow.
       ACE_UINT32 operator/ (const ACE_UINT32) const;
-      // ACE_UINT32 operator% (const ACE_UINT32) const;
+      ACE_UINT32 operator% (const ACE_UINT32) const;
 
       ACE_U_LongLong &operator+= (const ACE_U_LongLong &);
-      ACE_U_LongLong &operator++ ();
       ACE_U_LongLong &operator-= (const ACE_U_LongLong &);
+      ACE_U_LongLong &operator++ ();
+      ACE_U_LongLong &operator-- ();
 
       // = Helper methods.
       void output (FILE * = stdout) const;
@@ -223,8 +210,23 @@
 #   if ACE_SIZEOF_INT != 8 && ACE_SIZEOF_LONG != 8
       typedef ACE_U_LongLong ACE_UINT64;
 #   endif /* ACE_SIZEOF_INT != 8 && ACE_SIZEOF_LONG != 8 */
-# endif /* ! ACE_HAS_LONGLONG_T */
-#endif /* ! ACE_WIN32 && ! ULLONG_MAX && ! ULONGLONG_MAX */
+# else /* ! ACE_LACKS_LONGLONG_T */
+    // Assume that the platform has 8-byte long longs.
+#   define ACE_SIZEOF_LONG_LONG 8
+#   if ACE_SIZEOF_INT != 8 && ACE_SIZEOF_LONG != 8
+#     if defined (sun)
+        // sun #defines u_longlong_t, maybe other platforms do also.
+        // Use it, at least with g++, so that its -pedantic doesn't
+        // complain about no ANSI C++ long long.
+        typedef u_longlong_t ACE_UINT64;
+#     else
+        // LynxOS 2.5.0 and Linux don't have u_longlong_t.
+        typedef unsigned long long ACE_UINT64;
+#     endif /* sun */
+#   endif /* ACE_SIZEOF_INT != 8 && ACE_SIZEOF_LONG != 8 */
+# endif /* ! ACE_LACKS_LONGLONG_T */
+#endif /* ! ACE_WIN32 || (! ULLONG_MAX || __GNUG__) || ! ULONGLONG_MAX ||
+          ACE_LACKS_LONGLONG_T */
 
 // The number of bytes in a void *.
 #define ACE_SIZEOF_VOID_P ACE_SIZEOF_LONG
