@@ -1,14 +1,27 @@
+Mon Oct  8 20:19:44 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/DLL/test_dll.cpp: There's no need to specify
+	  ACE_DLL_SUFFIX as it prevent ACE_Lib_Find to figure out the
+	  correct DLL name.
+
+	  The ACE_ERROR_RETURN macro store and reset the errno so there's
+	  no need to use dll.error() with it.  Changed to use "%p" to
+	  display the error.
+
+	  Thanks to Heping He <heping.he@riskmetrics.com> for reporting
+	  the problem.
+
 Mon Oct  8 11:15:21 2001  Angelo Corsaro  <corsaro@doc.ece.uci.edu>
 
-	* ace/RB_Tree.h (class ACE_RB_Tree_Node): 
-	* ace/RB_Tree.i: 
+	* ace/RB_Tree.h (class ACE_RB_Tree_Node):
+	* ace/RB_Tree.i:
 
 	  Changed access privilege on the operator new/delete to be
 	  public, and added assertion in those method implementation to
 	  make sure that wrong use of these method are promptly notified.
 	  This changes should fix the problem that some compiling were
-	  still having with RB_Trees. 
-		
+	  still having with RB_Trees.
+
 Sat Oct 06 23:06:41 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
@@ -73,7 +86,7 @@ Sat Oct  6 16:04:29 2001  Angelo Corsaro  <corsaro@doc.ece.uci.edu>
 	  operator are declared as private and they also have a no-op
 	  implementation. This should solve some linking error that were
 	  occurring.
-	
+
 Sat Oct  6 11:17:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Added Adrian Mercieca to the hallf of fame.
@@ -88,14 +101,14 @@ Fri Oct  5 18:16:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* ace/SString.h:
 	* ace/SString.cpp: Changes the usage of ostream to
 	  ACE_OSTREAM_TYPE. Thanks to Russ Noseworthy for letting us
-	  know. 
+	  know.
 
 Thu Oct  4 07:10:01 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/RB_Tree.*: Added support for using the "ACE_Allocator" parameters
 	  to manage memory.  Thanks to Airat A. Sadreev <airatsa@nm.ru>
  	  for reporting contributing this.
-	
+
 Wed Oct  3 07:20:06 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/RW_Process_Mutex.{h,cpp}: Added the ability to create a
@@ -128,7 +141,7 @@ Fri Oct  5 14:40:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  Douglas C. Schmidt". Looks like the patch provided by Keith
 	  Nicewarner <knicewar@erg.sri.com> is being reverted. I remember
 	  a communication from Keith which seemed to hint that this may
-	  not be required. 
+	  not be required.
 
 	  Thanks to Russ Noseworthy for suggesting this.
 
@@ -181,14 +194,14 @@ Thu Oct  4 10:14:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Thu Oct  4 06:39:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/config-sunos5.5.h: Added ACE_LACKS_MKSTEMP as SunOS 5.5 does
-	  not support mkstemp (). 
-	
+	  not support mkstemp ().
+
 	* ace/config-sunos5.6.h: Undefined ACE_LACKS_MKSTEMP as Sun 5.6
-	  and above support it. 
+	  and above support it.
 
 	  Thanks to Don Hinton <dhinton@swan.fr> for reporting this
 	  problem and Chad Elliott for testing this out on a Sun OS 5.5
-	  box. 
+	  box.
 
 Wed Oct  3 16:37:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -202,7 +215,7 @@ Wed Oct  3 15:05:43 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/CDR_Stream.cpp (read_1);
 
-          Reverted changed made in 
+          Reverted changed made in
 
           Fri Aug 17 16:56:16 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -246,9 +259,9 @@ Tue Oct  2 15:33:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Tue Oct  2 15:00:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/CDR_Stream.cpp (clone_from): Copied the GIOP major and minor
-	  versions from the incoming CDR stream. Thanks to Sunny Leung 
+	  versions from the incoming CDR stream. Thanks to Sunny Leung
 	  <sleung@opentext.com> for reporting this. This closes bugzilla
-	  #1043.  
+	  #1043.
 
 Tue Oct  2 09:45:39 2001  Steve Huston  <shuston@riverace.com>
 
@@ -258,7 +271,7 @@ Tue Oct  2 09:45:39 2001  Steve Huston  <shuston@riverace.com>
 
 Mon Oct  1 20:04:14 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* THANKS: 
+	* THANKS:
 	  Added Tushar Nair to the THANKS file.
 
 Mon Oct  1 18:06:48 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
