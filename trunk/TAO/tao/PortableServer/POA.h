@@ -514,8 +514,8 @@ public:
       ACE_ENV_ARG_DECL
     );
 
+  /// ORB Core for POA.
   TAO_ORB_Core &orb_core (void) const;
-  // ORB Core for POA.
 
   CORBA::Boolean cleanup_in_progress (void);
 
@@ -538,7 +538,7 @@ public:
   /// Accessor for the current thread policy of this POA.
   PortableServer::ThreadPolicyValue thread_policy (void) const;
 
-  ///Accessor methods to POA state.
+  /// Accessor methods to POA state.
   /**
    * The POA can be in one of HOLDING, ACTIVE, DISCARDING, INACTIVE
    * and NON_EXISTENT states.
@@ -1068,8 +1068,8 @@ public:
 
 protected:
 
+  /// POA Manager
   PortableServer::POAManager_var poa_manager_;
-  // POA Manager
 };
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

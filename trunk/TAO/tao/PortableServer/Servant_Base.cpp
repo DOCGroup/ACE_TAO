@@ -302,7 +302,7 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest &req,
       // send if it is expected and it has not already been sent
 
       // Return immediately. Do not send a reply; this is an
-      // asunchronous upcall. (unless, of course there is a system
+      // asynchronous upcall. (unless, of course there is a system
       // exception.
 
     }

@@ -65,8 +65,8 @@ public:
    * The "receive_request_service_contexts()" and "send_other()"
    * PortableInterceptor interception points are missing.
    */
-#if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
   //@{
+#if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
   /// This method implements the "starting" server side interception
   /// point. It will be used as the first interception point and it is
   /// proprietary to TAO.
