@@ -26,7 +26,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ACE_Dirent
+class ACE_Export ACE_Dirent
 {
   // = TITLE
   //   Define a portable UNIX directory-entry iterator.

@@ -1,5 +1,10 @@
 Wed Jan  5 10:09:35 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Dirent.h: Added an ACE_Export on the ACE_Dirent class.  I'm
+	  surprised this hasn't been a problem before...  Thanks to
+ 	  Dominic Williams <dom@connected-place.co.uk> for indirectly
+ 	  motivating this change.
+
 	* ace/SString.h: Updated the documentation for the various string
 	  wrapper facades to clarify that they don't perform any locking.
 	  Thanks to Jerry Jiang <javalist@21cn.com> for motivating this.
