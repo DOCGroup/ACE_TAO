@@ -287,6 +287,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
   idl_bool                      in_supports = 0;
 
   iused = 0;
+  iused_flat = 0;
   /*
    * Compute expanded flattened non-repeating list of interfaces
    * which this one inherits from
