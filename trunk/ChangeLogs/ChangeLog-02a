@@ -1,3 +1,26 @@
+Fri Jun  7 16:29:21 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Acceptor.{h cpp}:
+          (ACE_Strategy_Acceptor) Added an open () method with signature
+          that matches ACE_Acceptor::open to avoid hiding the one in
+          ACE_Acceptor, according to Forte 6. In the new open(), however,
+          the ACE_Reactor* arg is required, to make it distinguishable from
+          the existing open().  The new open forwards everything
+          to the previously-existing, more full-featured open().
+
+          Constructors and full-featured open(), added optional reuse_addr
+          arg - it's passed down to the ACE_Accept_Strategy::open method.
+
+          Removed the service_port_ member - it's not used.
+
+          (ACE_Acceptor::open): If the reactor registration fails, close
+          the peer_acceptor_ object.
+
+        * netsvcs/TS_Server_Handler.cpp (ACE_TS_Server_Acceptor::parse_args):
+        * netsvcs/Name_Handler.cpp (ACE_Name_Acceptor::parse_args):
+        * netsvcs/Server_Logging_Handler_T.cpp (ACE_Server_Logging_Acceptor_T):
+          Use a local variable for the -p port option; server_port_ is gone.
+
 Fri Jun  7 14:30:22 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Message_Queue.{h cpp} (ACE_Message_Queue_NT): Change
