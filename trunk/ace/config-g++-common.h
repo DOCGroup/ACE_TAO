@@ -15,6 +15,8 @@
 # define ACE_HAS_STDCPP_STL_INCLUDES
 # define ACE_HAS_TEMPLATE_TYPEDEFS
 # define ACE_HAS_TYPENAME_KEYWORD
+  // It has gets (), but warns about using it (on Linux) at link time.
+# define ACE_LACKS_GETS
 
 #elif __GNUC__ > 2 || ( __GNUC__ == 2 && __GNUC_MINOR__ >= 8)
   // egcs or g++ >= 2.8.0
