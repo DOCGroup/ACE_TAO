@@ -1,3 +1,377 @@
+Mon Sep  2 01:55:33 CDT 2002 Pradeep Gore <pradeep@oomworks.com>
+
+	 Added the following Real-Time Notification implementation files -
+
+	* orbsvcs/orbsvcs/NotifyExt.idl:
+	  Defines extensions to The Notification Service to support
+	  threadpools. 
+	  The threadpool parameters are passed to the set_qo method as QoS name-value pair. 
+	  For the Cos Notify, a threadpool is created as an ACE_Task object.
+	  The RT Notify maps these parameters to the RTCORBA
+	  create_threadpool API and associates the threadpool with the RTPOA.   
+
+	* orbsvcs/orbsvcs/Notify/Event_Forwarder.idl:
+	  An internal interface to context switch the event propagation
+	  from the proxyconsumer to proxysupplier. This is achieved by the
+	  caller thread invoking the <forward> method of this
+	  interface. Colocation ensures that this call is invoked in the
+	  context of the thread associated with the target object. 
+	  The Event_Forwarder extends the  
+	  CosNotifyChannelAdmin::StructuredProxyPushSupplier interface.
+
+	* orbsvcs/orbsvcs/Notify/Admin.cpp:
+	* orbsvcs/orbsvcs/Notify/Admin.h:
+	* orbsvcs/orbsvcs/Notify/Admin.inl:
+	  Base class implementation for the Notify Admin Interfaces.
+  	
+	* orbsvcs/orbsvcs/Notify/Builder.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify/Builder.h:
+	* orbsvcs/orbsvcs/Notify/Notify/Builder.inl:
+	  Builder for the EventChannelFactory, EventChannel, Admin and proxy objects.
+    
+ 	* orbsvcs/orbsvcs/Notify/Notify/Consumer.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify/Consumer.h:
+	* orbsvcs/orbsvcs/Notify/Notify/Consumer.inl: 
+	  Wrapper for the Consumer that connects to a proxy object.
+
+ 	* orbsvcs/orbsvcs/Notify/Notify/ConsumerAdmin.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify/ConsumerAdmin.h: 
+ 	* orbsvcs/orbsvcs/Notify/Notify/ConsumerAdmin.inl:
+	  Consumer Admin Implementation.
+
+	* orbsvcs/orbsvcs/Notify/Object.cpp :
+	* orbsvcs/orbsvcs/Notify/Object.h:
+	* orbsvcs/orbsvcs/Notify/Object.inl:
+	* orbsvcs/orbsvcs/Notify/Object_T.cpp:
+	* orbsvcs/orbsvcs/Notify/Object_T.h:
+	* orbsvcs/orbsvcs/Notify/Object_T.inl:
+
+	  Defines the base Notifiy Object that is used to implement the
+	  basic behavior of Notify Classes.
+	
+	* orbsvcs/orbsvcs/Notify/Notify/Container.cpp: 
+ 	* orbsvcs/orbsvcs/Notify/Notify/Container.h:
+	* orbsvcs/orbsvcs/Notify/Container.inl:
+	* orbsvcs/orbsvcs/Notify/Container_T.cpp:
+	* orbsvcs/orbsvcs/Notify/Container_T.h:
+	* orbsvcs/orbsvcs/Notify/Container_T.inl :
+	
+	  Base class for the Factory-Container objects in Notify viz. Factory, Channel and Admin objects.
+	  This class manages the lifetimes of the POA's for activating the
+	  EC objects as well as the POA for activating the Proxys.
+
+	* orbsvcs/orbsvcs/Notify/Service.h:
+	  
+	  Interface that defines a ACE_Service_Object for clients to
+	  create Notify Factories. Using this clients can obtain various
+	  types of the Notify Factory implementations. (CosNotify and
+	  Real-Time Notify).  
+	
+	* orbsvcs/orbsvcs/Notify/Notify_Service.cpp :
+	* orbsvcs/orbsvcs/Notify/Notify_Service.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Service.inl:
+
+	  Service Object that allows clients to create and manage Cos Notify
+	  Factory.
+	
+	* orbsvcs/orbsvcs/Notify/RTCORBA_Notify_Service.cpp:
+	* orbsvcs/orbsvcs/Notify/RTCORBA_Notify_Service.h :
+	* orbsvcs/orbsvcs/Notify/RTCORBA_Notify_Service.inl:
+
+	  Service Object that allows clients to create and manage the RTCORBA
+	  Notify Factory.
+
+	* orbsvcs/orbsvcs/Notify/Method_Request.cpp :
+	* orbsvcs/orbsvcs/Notify/Method_Request.h:
+	* orbsvcs/orbsvcs/Notify/Method_Request.inl :
+
+  	  Base class for command objects in the activation queue.
+	
+	* orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp :
+	* orbsvcs/orbsvcs/Notify/Method_Request_Lookup.h :
+	* orbsvcs/orbsvcs/Notify/Method_Request_Lookup.inl:
+	  
+	  Command object to lookup the consumer list in the Event_Map.
+	
+	* orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.cpp :
+	* orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.h :
+	* orbsvcs/orbsvcs/Notify/Method_Request_Shutdown.inl:
+	
+	  Command Object to signal shutdown of the activation queue.
+
+	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.h:
+	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.inl:
+
+	  Dispatch method request to push the event to the target
+	  consumer.
+	
+	* orbsvcs/orbsvcs/Notify/Event.cpp:
+	* orbsvcs/orbsvcs/Notify/Event.h:
+	* orbsvcs/orbsvcs/Notify/Event.inl:
+	  
+	  Abstract base class for all types of Notify Events.
+	
+	* orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+	* orbsvcs/orbsvcs/Notify/EventChannel.h:
+	* orbsvcs/orbsvcs/Notify/EventChannel.inl:
+
+	  EventChannel interface implementation.
+	
+	* orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp :
+	* orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+	* orbsvcs/orbsvcs/Notify/EventChannelFactory.inl :
+
+	  EventChannel Factory Interface implementation.
+	
+	* orbsvcs/orbsvcs/Notify/EventType.cpp:
+	* orbsvcs/orbsvcs/Notify/EventType.h :
+	* orbsvcs/orbsvcs/Notify/EventType.inl :
+	  
+	  Abstraction for the Notify EventType.
+	
+	* orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+	* orbsvcs/orbsvcs/Notify/EventTypeSeq.h :
+	* orbsvcs/orbsvcs/Notify/EventTypeSeq.inl:
+	
+	  Helper class to manage a sequence of EventTypes.
+
+	* orbsvcs/orbsvcs/Notify/Event_Map_T.cpp :
+	* orbsvcs/orbsvcs/Notify/Event_Map_T.h:
+	* orbsvcs/orbsvcs/Notify/Event_Map_T.inl:
+	 
+	 Template definition of the lookup data structure that maps
+	 EventTypes to recipient lists.
+
+	* orbsvcs/orbsvcs/Notify/Event_Manager.cpp:
+	* orbsvcs/orbsvcs/Notify/Event_Manager.h :
+	* orbsvcs/orbsvcs/Notify/Event_Manager.inl:
+	  
+	  An event manager that contains the supplier and consumer event
+	  maps.
+	
+	* orbsvcs/orbsvcs/Notify/Factory.cpp:
+	* orbsvcs/orbsvcs/Notify/Factory.h:
+	* orbsvcs/orbsvcs/Notify/Factory.inl:
+
+	  An interface to create Notify objects.
+	
+	* orbsvcs/orbsvcs/Notify/ID_Factory.cpp :
+	* orbsvcs/orbsvcs/Notify/ID_Factory.h:
+	* orbsvcs/orbsvcs/Notify/ID_Factory.inl:
+
+	 A Factory class for generating the ID's associated with the
+	 Notify Objects.
+
+	* orbsvcs/orbsvcs/Notify/POA_Helper.cpp :
+	* orbsvcs/orbsvcs/Notify/POA_Helper.h:
+	* orbsvcs/orbsvcs/Notify/POA_Helper.inl :
+
+	A helper class that manages the lifetime of POA objects.
+	
+	* orbsvcs/orbsvcs/Notify/Properties.cpp:
+	* orbsvcs/orbsvcs/Notify/Properties.h :
+	* orbsvcs/orbsvcs/Notify/Properties.inl:
+	  
+	  A singleton global object to access system wide parameters.
+	
+	* orbsvcs/orbsvcs/Notify/Proxy.cpp:
+	* orbsvcs/orbsvcs/Notify/Proxy.h :
+	* orbsvcs/orbsvcs/Notify/Proxy.inl:
+
+	  Base Proxy implementation.
+	
+	* orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp :
+	* orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
+	* orbsvcs/orbsvcs/Notify/ProxyConsumer.inl :
+
+	  Base ProxyConsumer implementation.
+	
+	* orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+	* orbsvcs/orbsvcs/Notify/ProxySupplier.h :
+	* orbsvcs/orbsvcs/Notify/ProxySupplier.inl:
+
+	   Base ProxySupplier implementation.
+	
+	* orbsvcs/orbsvcs/Notify/QoSAdmin.cpp:
+	* orbsvcs/orbsvcs/Notify/QoSAdmin.h :
+	* orbsvcs/orbsvcs/Notify/QoSAdmin.inl:
+
+	  A class to manage QoS properties of the event channel.
+	
+	* orbsvcs/orbsvcs/Notify/RTCORBA_Builder.cpp :
+	* orbsvcs/orbsvcs/Notify/RTCORBA_Builder.h:
+	* orbsvcs/orbsvcs/Notify/RTCORBA_Builder.inl :
+
+	  The Builder specialization for the RTCORBA aware objects in
+	  Notify.
+	
+	* orbsvcs/orbsvcs/Notify/RTCORBA_EventChannel.cpp:
+	* orbsvcs/orbsvcs/Notify/RTCORBA_EventChannel.h :
+	* orbsvcs/orbsvcs/Notify/RTCORBA_EventChannel.inl:
+
+	  The RTCORBA EventChannel.
+	
+	* orbsvcs/orbsvcs/Notify/RTCORBA_Factory.cpp :
+	* orbsvcs/orbsvcs/Notify/RTCORBA_Factory.h:
+	* orbsvcs/orbsvcs/Notify/RTCORBA_Factory.inl :
+
+	  The Factory that creates RTCORBA Objects.
+	
+	* orbsvcs/orbsvcs/Notify/RTCORBA_Properties.cpp:
+	* orbsvcs/orbsvcs/Notify/RTCORBA_Properties.h :
+	* orbsvcs/orbsvcs/Notify/RTCORBA_Properties.inl:
+
+	  RTCORBA specific properties are stored in this singleton  class.
+	
+	* orbsvcs/orbsvcs/Notify/RTCORBA_ProxyConsumer.cpp:
+	* orbsvcs/orbsvcs/Notify/RTCORBA_ProxyConsumer.h:
+	* orbsvcs/orbsvcs/Notify/RTCORBA_ProxyConsumer.inl:
+
+	 RTCORBA_ProxyConsumer extends ProxyConsumer class. It executes
+	 the consumer lookup directly.
+	
+	* orbsvcs/orbsvcs/Notify/RTCORBA_ProxySupplier.cpp :
+	* orbsvcs/orbsvcs/Notify/RTCORBA_ProxySupplier.h :
+	* orbsvcs/orbsvcs/Notify/RTCORBA_ProxySupplier.inl:
+
+	  RTCORBA_Proxy suppliers implementation that implements the
+	  Notify_Internal::Event_Forwarder::forward method.
+	
+	* orbsvcs/orbsvcs/Notify/RTCORBA_QoSAdmin.cpp :
+	* orbsvcs/orbsvcs/Notify/RTCORBA_QoSAdmin.h:
+	* orbsvcs/orbsvcs/Notify/RTCORBA_QoSAdmin.inl :
+
+	 RTCORBA specific QoS implementation.
+
+	* orbsvcs/orbsvcs/Notify/RTCORBA_POA_Helper.cpp:
+	* orbsvcs/orbsvcs/Notify/RTCORBA_POA_Helper.h:
+	* orbsvcs/orbsvcs/Notify/RTCORBA_POA_Helper.inl :
+
+	  Helper class for creating RTCORBA POA's.
+	
+	* orbsvcs/orbsvcs/Notify/Refcountable.cpp :
+	* orbsvcs/orbsvcs/Notify/Refcountable.h:
+	* orbsvcs/orbsvcs/Notify/Refcountable.inl :
+	* orbsvcs/orbsvcs/Notify/Destroy_Callback.h:
+
+	  Provides Thread-safe refounting for Notify objects.
+	  Objects that need to be notified when the count falls to zero
+	  can register a Destroy_Callback.
+		
+	* orbsvcs/orbsvcs/Notify/Supplier.cpp:
+	* orbsvcs/orbsvcs/Notify/Supplier.h:
+	* orbsvcs/orbsvcs/Notify/Supplier.inl:
+
+	 Abstraction for Suppliers that conenct to the EventChannel.
+	
+	* orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
+	* orbsvcs/orbsvcs/Notify/SupplierAdmin.h :
+	* orbsvcs/orbsvcs/Notify/SupplierAdmin.inl:
+
+	 SupplierAdmin interface implementation.
+
+	* orbsvcs/orbsvcs/Notify/Worker_Task.cpp:
+	* orbsvcs/orbsvcs/Notify/Worker_Task.h :
+	* orbsvcs/orbsvcs/Notify/Worker_Task.inl:
+
+	Defines a base Worker Task interfaces. The Worker Task executes
+	Method_Request command objects.
+
+	* orbsvcs/orbsvcs/Notify/Reactive_Task.cpp:
+	* orbsvcs/orbsvcs/Notify/Reactive_Task.h :
+	* orbsvcs/orbsvcs/Notify/Reactive_Task.inl:
+
+	  Implementation of a worker task that simply executes the
+	  supplied command object in the caller thread.
+	
+	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp :
+	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
+	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.inl :
+
+	  Implements a ThreadPool Worker Task using ACE_Task. Command
+	  objects are queued in an internal activation queue and executed
+	  by threads in the threadpool (Active Object Pattern). 
+	
+	* orbsvcs/orbsvcs/Notify/Types.cpp:
+	* orbsvcs/orbsvcs/Notify/Types.h:
+	* orbsvcs/orbsvcs/Notify/Types.inl :
+	  
+	  Definitions of common helper types in the Notify implementation.
+	
+	* orbsvcs/orbsvcs/Notify/notify_stubs_export.h :
+	* orbsvcs/orbsvcs/Notify/rt_notify_export.h :
+	  
+	  Generated export files.
+	
+	* orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushConsumer.cpp:
+	* orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushConsumer.h:
+	* orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushConsumer.inl:
+	  
+	  Implementation of RTCORBA StructuredProxyPushConsumer.
+	
+	* orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushSupplier.cpp:
+	* orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushSupplier.h:
+	* orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushSupplier.inl:
+	  
+	  Implementation of RTCORBA StructuredProxyPushSupplier.
+	
+	* orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushSupplier_Tie.cpp:
+	* orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushSupplier_Tie.h: 
+	* orbsvcs/orbsvcs/Notify/Structured/RTCORBA_StructuredProxyPushSupplier_Tie.inl:
+
+	  Tie object implementation for StructuredProxyPushSupplier that
+	  derives from Notify_Internal::Event_Forwarder.
+	
+	* orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.cpp:
+	* orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.h:
+	* orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.inl:
+	  
+	  The Structured event type implementation.
+	
+	* orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.cpp:
+	* orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.h:
+ 	* orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.inl: 
+
+	  Abstraction for a Structured PushSupplier that connects to the
+	  event channel.
+
+	* orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp:
+	* orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.h:
+	* orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.inl:
+
+	  Abstraction for a Structured PushConsumer that connects to the
+	  event channel.
+
+	* orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.cpp:
+	* orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h:
+	* orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier.inl:
+
+	  Implementation of StructuredProxyPushSupplier. This class
+	  implements the TAO_NS_Object::servant method. It is the tied
+	  object for the implementation of the CosNotify and RTNotify
+	  proxy suppliers.
+	
+	* orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier_Tie.cpp:
+	* orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier_Tie.h:
+	* orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushSupplier_Tie.inl:
+
+	  Tie object implementation for StructuredProxyPushSupplier that
+	  derives from CosNotifyChannelAdmin::StructuredProxyPushSupplier.
+	
+	* orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.cpp:
+	* orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h:
+	* orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.inl:
+
+	  Implementation of CosNotifyChannelAdmin::StructuredProxyPushConsumer
+	
+	* orbsvcs/Notify_Service/Notify_Server.cpp:
+	* orbsvcs/Notify_Service/Notify_Service.cpp:
+	* orbsvcs/Notify_Service/Notify_Service.h:
+	
+	 Driver modifed to accomodate loading of CosNotify or RTCORBA_Notify
+	 implementations via svc.conf.
+
 Thu Jul 25 14:35:36 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* performance-tests\RTCorba\Thread_Pool\server.cpp: 
