@@ -1782,7 +1782,7 @@ ACE_POSIX_SIG_Proactor::setup_signal_handler (int signal_number) const
   // SIG_DFL handler resets  SA_SIGINFO flags
   // and we will lose all information sig_info
   // At least all SunOS have such behavior
-
+#if 0
   struct sigaction reaction;
   sigemptyset (&reaction.sa_mask);   // Nothing else to mask.
   reaction.sa_flags = SA_SIGINFO;    // Realtime flag.
@@ -1795,6 +1795,7 @@ ACE_POSIX_SIG_Proactor::setup_signal_handler (int signal_number) const
                        "Error:%p\n",
                        "Proactor couldnt do sigaction for the RT SIGNAL"),
                       -1);
+#endif
   return 0;
 }
 
