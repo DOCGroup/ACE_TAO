@@ -103,7 +103,8 @@ protected:
 
   /// From ACE_POSIX_AIOCB_Proactor.
   /// Attempt to cancel running request
-  virtual int cancel_aiocb ( ACE_POSIX_Asynch_Result * result );
+  virtual int cancel_aiocb (ACE_POSIX_Asynch_Result *result);
+  virtual int cancel_aio (ACE_HANDLE handle);
 
   /// Specific Sun aiowait
   int wait_for_start (ACE_Time_Value * abstime);

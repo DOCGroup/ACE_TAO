@@ -243,11 +243,11 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
           // Create a new ofstream to direct output to the file.
           if (wipeout_logfile_)
             ACE_NEW_RETURN (output_file,
-                            ofstream (ACE_TEXT_ALWAYS_CHAR(this->filename_)),
+                            ofstream (ACE_TEXT_ALWAYS_CHAR (this->filename_)),
                             -1);
           else
             ACE_NEW_RETURN (output_file,
-                            ofstream (ACE_TEXT_ALWAYS_CHAR(this->filename_),
+                            ofstream (ACE_TEXT_ALWAYS_CHAR (this->filename_),
                                       ios::app | ios::out),
                             -1);
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */

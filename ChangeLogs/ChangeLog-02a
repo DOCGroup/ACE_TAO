@@ -1,3 +1,16 @@
+Thu Feb  8 00:34:57 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* include/makeinclude/platform_sunos5_g++.GNU: Added support for
+	  -fno-exception when exceptions=0 is given to the Makefile.
+  	  Thanks to Christian v. Mueffling <cvm@aiss.de> for reporting
+ 	  this.
+
+Wed Feb  7 23:02:46 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/SUN_Proactor.cpp: Fixed the cancel_aiocb() method and added a
+	  new overridden cancel_aio() method.  Thanks to Alexander Libman
+ 	  <Alibman@baltimore.com> for contributing this.
+
 Thu Feb  8 02:09:05 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* examples/QOS/Makefile:
@@ -39,11 +52,23 @@ Thu Feb  8 00:17:43 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 	  Added Makefile and MSVC project files.
 	  Thanks to Craig Rodrigues <crodrigu@bbn.com> for suggesting this 
 	  change and providing the patch.
-	
+
 Wed Feb  7 11:34:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Message_Queue_Test_Ex.cpp:
           Fix build problems for single threaded environments.
+
+Wed Feb  7 09:03:22 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* apps/Gateway/Gateway/Event_Channel.cpp (initiate_acceptors): Fixed
+	  incorrect if/else branching.  Thanks to Lu Yunhai
+ 	  <luyunhai@huawei.com> for reporting this.
+
+Tue Feb  6 23:43:49 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* apps/Gateway/Peer/Peer.cpp (await_events): Fixed the use of
+	  %s to be %*s since the string may not be nul terminated!  Thanks
+ 	  to Lu Yunhai <luyunhai@huawei.com> for reporting this.
 
 Tue Feb  6 20:11:28 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -97,6 +122,9 @@ Tue Feb 06 17:16:43 2001  Steve Huston  <shuston@riverace.com>
           C++ 3.6.6 at template instantiation time.
 
 Mon Feb  5 16:19:20 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/ACE.cpp: ACE_TRACE ("ACE::basename") should be ACE_TRACE ("ACE::diname").
+	  Thanks to Lu Yunhai <luyunhai@huawei.com> for reporting this.
 
         * ace/Basic_Types.h: Changed the ACE_BIG_ENDIAN and ACE_LITTLE_ENDIAN
           macros to use the form 0x0123 rather than 0123X.  Thanks to
