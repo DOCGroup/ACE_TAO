@@ -15,6 +15,10 @@ Wed Apr 30 14:17:34 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Array.cpp (ctors): reordered initializers to match declaration
 	  order.
 
+	* netsvcs/lib/Server_Logging_Handler.cpp: protect against multiple
+	  inclusion.  Thanks to Kevin Martindale <kevin_martindale@stortek.com>
+	  for reporting this problem.
+
 Wed Apr 30 08:42:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace: Added a new generic Array class, which we'll use until
