@@ -11,6 +11,18 @@ the original player read README.OGI.
 The MPEG-1 player requires X windows and hence may not work on Windows
 platforms. 
 
+Linux notes
+===========
+
+This player requires the Motif headers and libraries in order to run.
+Motif is usually not included with most Linux distributions. 
+Metrolink OpenMotif was tested for this application, and is available from:
+
+ftp://openmotif.opengroup.org/pub/openmotif/R2.1.30/binaries/metrolink/
+
+More information about OpenMotif is available at: 
+http://www.opengroup.org/openmotif/
+
 To run:
 ======
 
