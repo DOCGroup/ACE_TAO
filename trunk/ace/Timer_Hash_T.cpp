@@ -389,16 +389,17 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET>::cancel (const TYPE &type,
 
   for (i = 0; i < pos; i++)
     {
-      this->table_[timer_ids[i]->pos_]->cancel (timer_ids[i]->orig_id_, 0, dont_call);
+      this->table_[timer_ids[i]->pos_]->cancel (timer_ids[i]->orig_id_, 0, 1);
     
-      dont_call = 1; // Make sure the functor is only called on the first expiration
-
       delete timer_ids[i];
 
       --this->size_;
     }
 
   delete [] timer_ids;
+
+  if (dont_call == 0)
+     this->upcall_functor ().cancellation (*this, type);
 
   return pos;
 }

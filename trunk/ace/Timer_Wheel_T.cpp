@@ -272,10 +272,6 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::cancel (const TYPE &type,
               // Cancel it and remove it.  
 	      number_of_cancellations++;
 
-	      if (dont_call_handle_close == 0 
-		  && number_of_cancellations == 1)	  
-		this->upcall_functor ().cancellation (*this, curr->get_type ());
-	      
               // Detach it from the list
 	      ACE_Timer_Node_T<TYPE> *tempnode = curr;
 	      curr->get_prev ()->set_next (curr->get_next ());
@@ -311,7 +307,10 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::cancel (const TYPE &type,
 	    }
 	}
     }
-  
+
+  if (dont_call_handle_close == 0) 
+    this->upcall_functor ().cancellation (*this, type);
+
   return number_of_cancellations;
 }
 

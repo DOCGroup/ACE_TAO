@@ -589,16 +589,14 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, LOCK>::cancel (const TYPE &type,
 
           number_of_cancellations++;
 
-	  if (dont_call == 0
-	      && number_of_cancellations == 1)
-	    // Call the close hook.
-	    this->upcall_functor ().cancellation (*this, temp->get_type ());
-	  
           this->free_node (temp);
         }
       else
 	i++;
     }
+
+  if (dont_call == 0)
+    this->upcall_functor ().cancellation (*this, type);
 
   return number_of_cancellations;
 }
