@@ -1010,9 +1010,9 @@ definition will be necessary. Two additional lines of code will suffice--- a cal
 and either <tt>CosTrading::Lookup::_narrow</tt> or <tt>CosTrading::Register::_narrow</tt>
 depending on the field of LinkInfo.</p>
 
-<p><strong>Problem</strong>: Optimized <tt>octet</tt> sequences are broken. The trader
-uses <tt>octet</tt> sequences for the query identifier used to prevent multiple
-evaluations of the same federated query. <br>
+<p><strong>Problem</strong>: Optimized <tt>octet</tt> sequences are mysteriosly broken in
+the context of the Trading Service. The trader uses <tt>octet</tt> sequences for the query
+identifier used to prevent multiple evaluations of the same federated query. <br>
 <strong>Workaround: </strong>For federated queries to work, compile the TAO library
 without the preprocessor flag <tt>TAO_NO_COPY_OCTET_SEQUENCES</tt> defined. Edit the <tt>tao/orbconf.h</tt>
 file to accomplish this. A real solution to this problem is in the works. </p>
@@ -1021,6 +1021,11 @@ file to accomplish this. A real solution to this problem is in the works. </p>
 Trading Service itself doesn't have any memory leaks, the <tt>TypeCodes</tt> it heavily
 relies on do.<br>
 <strong>Workaround: </strong>This problem is currently being addressed.&nbsp; </p>
+
+<p><strong>Problem:</strong> g++ version 2.7.2 has link errors when compiling the Trading
+Service applications and tests; the profuse use of virtual inheritence requires explicit
+copy constructors in the base classes for g++ to link properly.<br>
+<strong>Workaround:</strong> This problem is currently being addressed.</p>
 
 <hr>
 
