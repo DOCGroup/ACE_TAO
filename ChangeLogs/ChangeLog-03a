@@ -1,3 +1,11 @@
+Fri Dec 27 19:46:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * ACEXML/apps/svcconf/Svcconf.cpp: Add a dummy entrypoint when
+          ACE_USES_CLASS_SVC_CONF == 0 on AIX 4.3. Else the AIX 4.3 linker
+          complains there are no csects or exported symbols saved at link
+          time. Thanks to Jon Wackley <jonw@mountaincable.net> for reporting
+          this problem.
+
 Fri Dec 27 17:43:29 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.h: For WinCE, only typedef ptrdiff_t for _WIN32_WCE < 400.
