@@ -1,3 +1,21 @@
+Tue Oct 26 10:47:51 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor_Impl.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor_Impl.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Completion_Handler.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Completion_Handler.h:
+          Fixed the inconsistencies in the construction of connection
+          handlers. The void* argument was removed from the base
+          connection handler ctor, this change completes propogation of
+          this removal throughout the HTIOP package. The intermediate
+          completion handler is created by the acceptor, it is required to
+          first parse the incoming HTTP request to determine if this is a
+          new client connection, or a re-establishment of a connection
+          from an earlier client. Such assessment is required since the
+          proxy issuing a request may close a connection at any time, even
+          one which "times out" waiting for the server to send a reply.
+
 Tue Oct 26 10:12:38 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/HTIOP/HTIOP_Factory.cpp:
