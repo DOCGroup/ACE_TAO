@@ -57,8 +57,8 @@ Test_Complex_Any::dii_req_invoke (CORBA::Request *req,
 }
 
 int
-Test_Complex_Any::init_parameters (Param_Test_ptr objref,
-                                   CORBA::Environment &ACE_TRY_ENV)
+Test_Complex_Any::init_parameters (Param_Test_ptr,
+                                   CORBA::Environment &)
 {
   return this->reset_parameters ();
 }
