@@ -9,7 +9,7 @@ Sat Dec 05 21:45:00 1998  David L. Levine  <levine@cs.wustl.edu>
           when ACE_DEBUG is disabled.  Thanks to Faron Dutton
           <fdutton@avxus.com> for reporting this.
 
-        * ace/Makefile (Svc_Conf_Tokens.h): escaped $Id$ string so
+        * ace/Makefile (Svc_Conf_Tokens.h): escaped $\I\d$ string so
           that it doesn't get expanding in the Makefile itself.
 
 Sat Dec  5 16:06:27 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
