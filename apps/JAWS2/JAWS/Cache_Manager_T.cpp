@@ -5,6 +5,7 @@
 
 #include "JAWS/Cache_Manager_T.h"
 #include "JAWS/Cache_Hash_T.h"
+#include "JAWS/Cache_List_T.h"
 
 class Cache_Manager;
 
