@@ -400,13 +400,6 @@ extern int cma_sigwait  (sigset_t *);
 // Disable the inclusion of RCS ids in the generated code.
 #define ACE_USE_RCSID 0
 
-// Turns off the tracing feature.
-// Setting ACE_NTRACE to 1 disables tracing.  Any other value (or if
-// ACE_TRACE is not defined) enables tracing.
-#if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 // For debugging problems in os calls (but this doesn't work too well
 // since output is not interleaved properly with output from ACE_TRACE
 //# define ACE_OS_TRACE(X) ::printf(X)

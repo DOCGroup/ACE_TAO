@@ -32,11 +32,6 @@
 #define ACE_LACKS_CLEARERR
 #endif /* ACE_MT_SAFE == 0 */
 
-// Turns off the tracing feature.
-#if !defined (ACE_NTRACE)
-# define ACE_NTRACE 1
-#endif /* ! ACE_NTRACE */
-
 // Include unistd.h to define _POSIX_C_SOURCE.
 #include <unistd.h>
 

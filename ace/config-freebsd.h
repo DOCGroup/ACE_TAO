@@ -15,7 +15,7 @@
    // Yes, we do have threads.
 #  define ACE_HAS_THREADS 1
 #else
-   // Set to 0 since that's what config-posix.h checks for. 
+   // Set to 0 since that's what config-posix.h checks for.
 #  define ACE_HAS_THREADS 0
 #endif /* ACE_MT_SAFE */
 
@@ -201,11 +201,6 @@ extern "C" { char * cuserid (char *s); }
 // Compiler/platform supports SVR4 gettimeofday() prototype
 #define ACE_HAS_SUNOS4_GETTIMEOFDAY
 // #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
-
-// Turns off the tracing feature.
-#if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
 
 #define ACE_HAS_MSG
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG

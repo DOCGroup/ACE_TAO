@@ -221,10 +221,6 @@
 
 #define ACE_PAGE_SIZE 4096
 
-#if !defined (ACE_NTRACE)
-# define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 #if !defined (ACE_PSOS)
 #define ACE_PSOS
 #endif /* ACE_PSOS */

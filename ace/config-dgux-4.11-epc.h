@@ -159,11 +159,6 @@
 // Use the poll() event demultiplexor rather than select().
 //#define ACE_USE_POLL
 
-// Turns off the tracing feature.
-#if !defined (ACE_NTRACE)
-# define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
 

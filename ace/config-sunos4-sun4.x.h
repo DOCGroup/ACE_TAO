@@ -96,10 +96,5 @@
 #define ACE_TIMER_SKEW 1000 * 10
 #endif /* ACE_TIMER_SKEW */
 
-// Turns off the tracing feature.
-#if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

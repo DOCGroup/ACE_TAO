@@ -306,12 +306,6 @@
 
 #define ACE_MALLOC_ALIGN 8
 
-// By default, tracing code is not compiled.  To compile it in, cause
-// ACE_NTRACE to not be defined, and rebuild ACE.
-#if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 #if (_XOPEN_SOURCE == 500) && !defined(_UNIX95)
 # define ACE_HAS_3_PARAM_WCSTOK
 #endif /* _XOPEN_SOURCE == 500 && !_UNIX95 */
