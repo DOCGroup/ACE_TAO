@@ -92,6 +92,10 @@ public:
     EIDL_COERCION_FAILURE,      // Coercion failure
     EIDL_SCOPE_CONFLICT,        // Between fwd declare and full declare
     EIDL_ONEWAY_CONFLICT,       // Between op decl and argument direction
+    EIDL_PREFIX_CONFLICT,       // Between prefixes at declaration and use
+    EIDL_ILLEGAL_VERSION,       // Bad number in #pragma version statement
+    EIDL_VERSION_RESET,         // Can't reset version, even to same number
+    EIDL_ID_RESET,              // Tried to set id to a different string
     EIDL_DISC_TYPE,             // Illegal discriminator type in union
     EIDL_LABEL_TYPE,            // Mismatch with discriminator type in union
     EIDL_ILLEGAL_ADD,           // Illegal add action
@@ -115,6 +119,7 @@ public:
     EIDL_RECURSIVE_TYPE,        // Illegal recursive use of type
     EIDL_NONVOID_ONEWAY,        // Non-void return type in oneway operation
     EIDL_NOT_A_TYPE,            // Not a type
+    EIDL_UNDERSCORE,            // More than one leading underscore
     EIDL_BACK_END,              // Back end error
     EIDL_OK                     // No error
   };
@@ -170,8 +175,18 @@ public:
   void coercion_error (AST_Expression *v, 
                        AST_Expression::ExprType t);
 
-  // Report a failed name lookup attempt
+  // Report a failed name lookup attempt.
   void lookup_error (UTL_ScopedName *n);
+
+  // Report an illegal #pragma version.
+  void version_number_error (char *n);
+
+  // Repost an attempt to reset the version.
+  void version_reset_error (void);
+
+  // Report an attempt to change the id once set.
+  void id_reset_error (char *o,
+                       char *n);
 
   // Report an attempt to use a forward declared interface which
   // hasn't been defined yet in an inheritance spec

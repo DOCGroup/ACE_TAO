@@ -82,79 +82,103 @@ ACE_RCSID(util, utl_err, "$Id$")
 
 // Convert an error code into a const char *
 static const char *
-error_string(UTL_Error::ErrorCode c)
+error_string (UTL_Error::ErrorCode c)
 {
-  switch (c) {
-  case UTL_Error::EIDL_OK:
-    return ACE_TEXT ("all is fine ");
-  case UTL_Error::EIDL_SYNTAX_ERROR:
-    return "";
-  case UTL_Error::EIDL_REDEF:
-    return ACE_TEXT ("illegal redefinition ");
-  case UTL_Error::EIDL_DEF_USE:
-    return ACE_TEXT ("redefinition after use, ");
-  case UTL_Error::EIDL_MULTIPLE_BRANCH:
-    return ACE_TEXT ("union with duplicate branch label ");
-  case UTL_Error::EIDL_COERCION_FAILURE:
-    return ACE_TEXT ("coercion failure ");
-  case UTL_Error::EIDL_SCOPE_CONFLICT:
-    return ACE_TEXT ("definition scope is different than fwd declare scope, ");
-  case UTL_Error::EIDL_ONEWAY_CONFLICT:
-    return ACE_TEXT ("oneway operation with OUT or INOUT parameters, ");
-  case UTL_Error::EIDL_DISC_TYPE:
-    return ACE_TEXT ("union with illegal discriminator type, ");
-  case UTL_Error::EIDL_LABEL_TYPE:
-    return ACE_TEXT ("label type incompatible with union discriminator type, ");
-  case UTL_Error::EIDL_ILLEGAL_ADD:
-    return ACE_TEXT ("illegal add operation, ");
-  case UTL_Error::EIDL_ILLEGAL_USE:
-    return ACE_TEXT ("illegal type used in expression, ");
-  case UTL_Error::EIDL_ILLEGAL_RAISES:
-    return ACE_TEXT ("error in or illegal use of raises(..) clause, ");
-  case UTL_Error::EIDL_ILLEGAL_CONTEXT:
-    return ACE_TEXT ("error in context(..) clause, ");
-  case UTL_Error::EIDL_CANT_INHERIT:
-    return ACE_TEXT ("");
-  case UTL_Error::EIDL_LOOKUP_ERROR:
-    return ACE_TEXT ("error in lookup of symbol: ");
-  case UTL_Error::EIDL_INHERIT_FWD_ERROR:
-    /* More intelligible message printed by error routine */
-    return "";
-  case UTL_Error::EIDL_CONSTANT_EXPECTED:
-    return ACE_TEXT ("constant expected: ");
-  case UTL_Error::EIDL_EVAL_ERROR:
-    return ACE_TEXT ("expression evaluation error: ");
-  case UTL_Error::EIDL_NAME_CASE_ERROR:
-    return ACE_TEXT ("identifier spellings differ only in case: ");
-  case UTL_Error::EIDL_NAME_CASE_WARNING:
-    return ACE_TEXT ("Warning - identifier spellings differ only in case: ");
-  case UTL_Error::EIDL_KEYWORD_ERROR:
-    return ACE_TEXT ("spelling differs from IDL keyword only in case: ");
-  case UTL_Error::EIDL_KEYWORD_WARNING:
-    return ACE_TEXT ("Warning - spelling differs from IDL keyword only in case: ");
-  case UTL_Error::EIDL_ENUM_VAL_EXPECTED:
-    return ACE_TEXT ("enumerator expected: ");
-  case UTL_Error::EIDL_ENUM_VAL_NOT_FOUND:
-    return ACE_TEXT ("enumerator by this name not defined: ");
-  case UTL_Error::EIDL_AMBIGUOUS:
-    return ACE_TEXT ("ambiguous definition: ");
-  case UTL_Error::EIDL_DECL_NOT_DEFINED:
-    return ACE_TEXT ("forward declared but never defined: ");
-  case UTL_Error::EIDL_FWD_DECL_LOOKUP:
-    /* More intelligible message printed by error routine */
-    return "";
-  case UTL_Error::EIDL_RECURSIVE_TYPE:
-    return ACE_TEXT ("illegal recursive use of type: ");
-  case UTL_Error::EIDL_NONVOID_ONEWAY:
-    return ACE_TEXT ("non-void return type in oneway operation: ");
-  case UTL_Error::EIDL_REDEF_SCOPE:
-    return ACE_TEXT ("redefinition inside defining scope: ");
-  case UTL_Error::EIDL_NOT_A_TYPE:
-    return ACE_TEXT ("specified symbol is not a type: ");
-  case UTL_Error::EIDL_BACK_END:
-    return ACE_TEXT ("back end: ");
+  switch (c) 
+  {
+    case UTL_Error::EIDL_OK:
+      return ACE_TEXT ("all is fine ");
+    case UTL_Error::EIDL_SYNTAX_ERROR:
+      return "";
+    case UTL_Error::EIDL_REDEF:
+      return ACE_TEXT ("illegal redefinition ");
+    case UTL_Error::EIDL_DEF_USE:
+      return ACE_TEXT ("redefinition after use, ");
+    case UTL_Error::EIDL_MULTIPLE_BRANCH:
+      return ACE_TEXT ("union with duplicate branch label ");
+    case UTL_Error::EIDL_COERCION_FAILURE:
+      return ACE_TEXT ("coercion failure ");
+    case UTL_Error::EIDL_SCOPE_CONFLICT:
+      return ACE_TEXT (
+          "definition scope is different than fwd declare scope, "
+        );
+    case UTL_Error::EIDL_ONEWAY_CONFLICT:
+      return ACE_TEXT ("oneway operation with OUT or INOUT parameters, ");
+    case UTL_Error::EIDL_PREFIX_CONFLICT:
+      return ACE_TEXT (
+          "prefix at declaration differs from prefix at definition or use, "
+        );
+    case UTL_Error::EIDL_ILLEGAL_VERSION:
+      return ACE_TEXT ("illegal version number, ");
+    case UTL_Error::EIDL_VERSION_RESET:
+      return ACE_TEXT (
+          "version already set by #pragma version or #pragma id, "
+        );
+    case UTL_Error::EIDL_ID_RESET:
+      return ACE_TEXT ("cannot reset id to a different string, ");
+    case UTL_Error::EIDL_DISC_TYPE:
+      return ACE_TEXT ("union with illegal discriminator type, ");
+    case UTL_Error::EIDL_LABEL_TYPE:
+      return ACE_TEXT (
+          "label type incompatible with union discriminator type, "
+        );
+    case UTL_Error::EIDL_ILLEGAL_ADD:
+      return ACE_TEXT ("illegal add operation, ");
+    case UTL_Error::EIDL_ILLEGAL_USE:
+      return ACE_TEXT ("illegal type used in expression, ");
+    case UTL_Error::EIDL_ILLEGAL_RAISES:
+      return ACE_TEXT ("error in or illegal use of raises(..) clause, ");
+    case UTL_Error::EIDL_ILLEGAL_CONTEXT:
+      return ACE_TEXT ("error in context(..) clause, ");
+    case UTL_Error::EIDL_CANT_INHERIT:
+      return ACE_TEXT ("");
+    case UTL_Error::EIDL_LOOKUP_ERROR:
+      return ACE_TEXT ("error in lookup of symbol: ");
+    case UTL_Error::EIDL_INHERIT_FWD_ERROR:
+      /* More intelligible message printed by error routine */
+      return "";
+    case UTL_Error::EIDL_CONSTANT_EXPECTED:
+      return ACE_TEXT ("constant expected: ");
+    case UTL_Error::EIDL_EVAL_ERROR:
+      return ACE_TEXT ("expression evaluation error: ");
+    case UTL_Error::EIDL_NAME_CASE_ERROR:
+      return ACE_TEXT ("identifier spellings differ only in case: ");
+    case UTL_Error::EIDL_NAME_CASE_WARNING:
+      return ACE_TEXT (
+          "Warning - identifier spellings differ only in case: "
+        );
+    case UTL_Error::EIDL_KEYWORD_ERROR:
+      return ACE_TEXT ("spelling differs from IDL keyword only in case: ");
+    case UTL_Error::EIDL_KEYWORD_WARNING:
+      return ACE_TEXT (
+          "Warning - spelling differs from IDL keyword only in case: "
+        );
+    case UTL_Error::EIDL_ENUM_VAL_EXPECTED:
+      return ACE_TEXT ("enumerator expected: ");
+    case UTL_Error::EIDL_ENUM_VAL_NOT_FOUND:
+      return ACE_TEXT ("enumerator by this name not defined: ");
+    case UTL_Error::EIDL_AMBIGUOUS:
+      return ACE_TEXT ("ambiguous definition: ");
+    case UTL_Error::EIDL_DECL_NOT_DEFINED:
+      return ACE_TEXT ("forward declared but never defined: ");
+    case UTL_Error::EIDL_FWD_DECL_LOOKUP:
+      /* More intelligible message printed by error routine */
+      return "";
+    case UTL_Error::EIDL_RECURSIVE_TYPE:
+      return ACE_TEXT ("illegal recursive use of type: ");
+    case UTL_Error::EIDL_NONVOID_ONEWAY:
+      return ACE_TEXT ("non-void return type in oneway operation: ");
+    case UTL_Error::EIDL_REDEF_SCOPE:
+      return ACE_TEXT ("redefinition inside defining scope: ");
+    case UTL_Error::EIDL_NOT_A_TYPE:
+      return ACE_TEXT ("specified symbol is not a type: ");
+    case UTL_Error::EIDL_UNDERSCORE:
+      return ACE_TEXT ("identifier has more than one leading underscore: ");
+    case UTL_Error::EIDL_BACK_END:
+      return ACE_TEXT ("back end: ");
   }
-  return NULL;
+
+  return 0;
 }
 
 // Print out an error message header on cerr
@@ -163,13 +187,13 @@ idl_error_header (UTL_Error::ErrorCode c,
                   long lineno, 
                   UTL_String *s)
 {
-  cerr << idl_global->prog_name()
-       << ": \""
-       << (idl_global->read_from_stdin() ? "standard input" : s->get_string())
-       << ACE_TEXT ("\", line ")
-       << ((lineno == -1) ? idl_global->lineno() : lineno)
-       << ": "
-       << error_string(c);
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("%s: \"%s\", line %d: %s"),
+              idl_global->prog_name (),
+              idl_global->read_from_stdin () ? "standard input" 
+                                             : s->get_string (),
+              lineno == -1 ? idl_global->lineno () : lineno,
+              error_string (c)));
 }
 
 // Convert the type of an AST_Expression to a char *.
@@ -242,7 +266,9 @@ parse_state_to_error_message(IDL_GlobalData::ParseState ps)
   case IDL_GlobalData::PS_ModuleSeen:
     return ACE_TEXT ("Missing module identifier following MODULE keyword");
   case IDL_GlobalData::PS_ModuleIDSeen:
-    return ACE_TEXT ("Missing '{' or illegal syntax following module identifier");
+    return ACE_TEXT (
+        "Missing '{' or illegal syntax following module identifier"
+      );
   case IDL_GlobalData::PS_ModuleSqSeen:
     return ACE_TEXT ("Illegal syntax following module '{' opener");
   case IDL_GlobalData::PS_ModuleQsSeen:
@@ -250,11 +276,15 @@ parse_state_to_error_message(IDL_GlobalData::ParseState ps)
   case IDL_GlobalData::PS_ModuleBodySeen:
     return ACE_TEXT ("Illegal syntax following module body statement(s)");
   case IDL_GlobalData::PS_InterfaceSeen:
-    return ACE_TEXT ("Missing interface identifier following INTERFACE keyword");
+    return ACE_TEXT (
+        "Missing interface identifier following INTERFACE keyword"
+      );
   case IDL_GlobalData::PS_InterfaceIDSeen:
     return ACE_TEXT ("Illegal syntax following interface identifier");
   case IDL_GlobalData::PS_InheritSpecSeen:
-    return ACE_TEXT ("Missing '{' or illegal syntax following inheritance spec");
+    return ACE_TEXT (
+        "Missing '{' or illegal syntax following inheritance spec"
+      );
   case IDL_GlobalData::PS_ForwardDeclSeen:
     return ACE_TEXT ("Missing ';' following forward interface declaration");
   case IDL_GlobalData::PS_InterfaceSqSeen:
@@ -264,7 +294,9 @@ parse_state_to_error_message(IDL_GlobalData::ParseState ps)
   case IDL_GlobalData::PS_InterfaceBodySeen:
     return ACE_TEXT ("Illegal syntax following interface body statement(s)");
   case IDL_GlobalData::PS_InheritColonSeen:
-    return ACE_TEXT ("Illegal syntax following ':' starting inheritance list");
+    return ACE_TEXT (
+        "Illegal syntax following ':' starting inheritance list"
+      );
   case IDL_GlobalData::PS_SNListCommaSeen:
     return ACE_TEXT ("Found illegal scoped name in scoped name list");
   case IDL_GlobalData::PS_ScopedNameSeen:
@@ -276,23 +308,35 @@ parse_state_to_error_message(IDL_GlobalData::ParseState ps)
   case IDL_GlobalData::PS_ConstSeen:
     return ACE_TEXT ("Missing type or illegal syntax following CONST keyword");
   case IDL_GlobalData::PS_ConstTypeSeen:
-    return ACE_TEXT ("Missing identifier or illegal syntax following const type");
+    return ACE_TEXT (
+        "Missing identifier or illegal syntax following const type"
+      );
   case IDL_GlobalData::PS_ConstIDSeen:
     return ACE_TEXT ("Missing '=' or illegal syntax after const identifier");
   case IDL_GlobalData::PS_ConstAssignSeen:
     return ACE_TEXT ("Missing value expr or illegal syntax following '='");
   case IDL_GlobalData::PS_ConstExprSeen:
-    return ACE_TEXT ("Missing ';' or illegal syntax following value expr in const");
+    return ACE_TEXT (
+        "Missing ';' or illegal syntax following value expr in const"
+      );
   case IDL_GlobalData::PS_TypedefSeen:
-    return ACE_TEXT ("Missing type or illegal syntax following TYPEDEF keyword");
+    return ACE_TEXT (
+        "Missing type or illegal syntax following TYPEDEF keyword"
+      );
   case IDL_GlobalData::PS_TypeSpecSeen:
-    return ACE_TEXT ("Missing declarators or illegal syntax following type spec");
+    return ACE_TEXT (
+        "Missing declarators or illegal syntax following type spec"
+      );
   case IDL_GlobalData::PS_DeclaratorsSeen:
-    return ACE_TEXT ("Illegal syntax following declarators in TYPEDEF declaration");
+    return ACE_TEXT (
+        "Illegal syntax following declarators in TYPEDEF declaration"
+      );
   case IDL_GlobalData::PS_StructSeen:
     return ACE_TEXT ("Missing struct identifier following STRUCT keyword");
   case IDL_GlobalData::PS_StructIDSeen:
-    return ACE_TEXT ("Missing '{' or illegal syntax following struct identifier");
+    return ACE_TEXT (
+        "Missing '{' or illegal syntax following struct identifier"
+      );
   case IDL_GlobalData::PS_StructSqSeen:
     return ACE_TEXT ("Illegal syntax following struct '{' opener");
   case IDL_GlobalData::PS_StructQsSeen:
@@ -300,7 +344,9 @@ parse_state_to_error_message(IDL_GlobalData::ParseState ps)
   case IDL_GlobalData::PS_StructBodySeen:
     return ACE_TEXT ("Illegal syntax following struct body statement(s)");
   case IDL_GlobalData::PS_MemberTypeSeen:
-    return ACE_TEXT ("Illegal syntax or missing identifier following member type");
+    return ACE_TEXT (
+        "Illegal syntax or missing identifier following member type"
+      );
   case IDL_GlobalData::PS_MemberDeclsSeen:
     return ACE_TEXT ("Illegal syntax following member declarator(s)");
   case IDL_GlobalData::PS_MemberDeclsCompleted:
@@ -322,7 +368,9 @@ parse_state_to_error_message(IDL_GlobalData::ParseState ps)
   case IDL_GlobalData::PS_UnionQsSeen:
     return ACE_TEXT ("Illegal syntax following union '}' closer");
   case IDL_GlobalData::PS_DefaultSeen:
-    return ACE_TEXT ("Illegal syntax or missing ':' following DEFAULT keyword");
+    return ACE_TEXT (
+        "Illegal syntax or missing ':' following DEFAULT keyword"
+      );
   case IDL_GlobalData::PS_UnionLabelSeen:
     return ACE_TEXT ("Illegal syntax following branch label in union");
   case IDL_GlobalData::PS_LabelColonSeen:
@@ -341,9 +389,13 @@ parse_state_to_error_message(IDL_GlobalData::ParseState ps)
   case IDL_GlobalData::PS_UnionBodySeen:
     return ACE_TEXT ("Illegal syntax following union body statement(s)");
   case IDL_GlobalData::PS_EnumSeen:
-    return ACE_TEXT ("Illegal syntax or missing identifier following ENUM keyword");
+    return ACE_TEXT (
+        "Illegal syntax or missing identifier following ENUM keyword"
+      );
   case IDL_GlobalData::PS_EnumIDSeen:
-    return ACE_TEXT ("Illegal syntax or missing '{' following enum identifier");
+    return ACE_TEXT (
+        "Illegal syntax or missing '{' following enum identifier"
+      );
   case IDL_GlobalData::PS_EnumSqSeen:
     return ACE_TEXT ("Illegal syntax following enum '{' opener");
   case IDL_GlobalData::PS_EnumQsSeen:
@@ -351,43 +403,59 @@ parse_state_to_error_message(IDL_GlobalData::ParseState ps)
   case IDL_GlobalData::PS_EnumBodySeen:
     return ACE_TEXT ("Illegal syntax following enum body statement(s)");
   case IDL_GlobalData::PS_EnumCommaSeen:
-    return ACE_TEXT ("Illegal syntax or missing identifier following ',' in enum");
+    return ACE_TEXT (
+        "Illegal syntax or missing identifier following ',' in enum");
   case IDL_GlobalData::PS_SequenceSeen:
-    return ACE_TEXT ("Illegal syntax or missing '<' following SEQUENCE keyword");
+    return ACE_TEXT ("Illegal syntax or missing '<' following SEQUENCE keyword"
+  );
   case IDL_GlobalData::PS_SequenceSqSeen:
-    return ACE_TEXT ("Illegal syntax or missing type following '<' in sequence");
+    return ACE_TEXT (
+        "Illegal syntax or missing type following '<' in sequence"
+      );
   case IDL_GlobalData::PS_SequenceQsSeen:
     return ACE_TEXT ("Illegal syntax following '>' in sequence");
   case IDL_GlobalData::PS_SequenceTypeSeen:
     return ACE_TEXT ("Illegal syntax following sequence type declaration");
   case IDL_GlobalData::PS_SequenceCommaSeen:
-    return
-      ACE_TEXT ("Illegal syntax or missing size expr following ',' in sequence");
+    return ACE_TEXT (
+        "Illegal syntax or missing size expr following ',' in sequence"
+      );
   case IDL_GlobalData::PS_SequenceExprSeen:
-    return
-      ACE_TEXT ("Illegal syntax or missing '>' following size expr in sequence");
+    return ACE_TEXT (
+        "Illegal syntax or missing '>' following size expr in sequence"
+      );
   case IDL_GlobalData::PS_StringSeen:
-    return ACE_TEXT ("Illegal syntax or missing '<' following STRING keyword");
+    return ACE_TEXT (
+        "Illegal syntax or missing '<' following STRING keyword"
+      );
   case IDL_GlobalData::PS_StringSqSeen:
-    return ACE_TEXT ("Illegal syntax or missing size expr following '<' in string");
+    return ACE_TEXT (
+        "Illegal syntax or missing size expr following '<' in string"
+      );
   case IDL_GlobalData::PS_StringQsSeen:
     return ACE_TEXT ("Illegal syntax following '>' in string");
   case IDL_GlobalData::PS_StringExprSeen:
-    return ACE_TEXT ("Illegal syntax or missing '>' after size expr in string");
+    return ACE_TEXT (
+        "Illegal syntax or missing '>' after size expr in string"
+      );
   case IDL_GlobalData::PS_StringCompleted:
     return ACE_TEXT ("Illegal syntax after string declaration");
   case IDL_GlobalData::PS_ArrayIDSeen:
-    return ACE_TEXT ("Illegal syntax or missing dimensions after array identifier");
+    return ACE_TEXT (
+        "Illegal syntax or missing dimensions after array identifier"
+      );
   case IDL_GlobalData::PS_ArrayCompleted:
     return ACE_TEXT ("Illegal syntax after array declaration");
   case IDL_GlobalData::PS_DimSqSeen:
-    return
-    ACE_TEXT ("Illegal syntax or missing size expr after '[' in array declaration");
+    return ACE_TEXT (
+        "Illegal syntax or missing size expr after '[' in array declaration"
+      );
   case IDL_GlobalData::PS_DimQsSeen:
     return ACE_TEXT ("Illegal syntax after ']' in array declaration");
   case IDL_GlobalData::PS_DimExprSeen:
-    return
-    ACE_TEXT ("Illegal syntax or missing ']' after size expr in array declaration");
+    return ACE_TEXT (
+        "Illegal syntax or missing ']' after size expr in array declaration"
+      );
   case IDL_GlobalData::PS_AttrROSeen:
     return ACE_TEXT ("Illegal syntax after READONLY keyword");
   case IDL_GlobalData::PS_AttrSeen:
@@ -399,10 +467,13 @@ parse_state_to_error_message(IDL_GlobalData::ParseState ps)
   case IDL_GlobalData::PS_AttrCompleted:
     return ACE_TEXT ("Illegal syntax after attribute declaration");
   case IDL_GlobalData::PS_ExceptSeen:
-    return
-      ACE_TEXT ("Illegal syntax or missing identifier after EXCEPTION keyword");
+    return ACE_TEXT (
+        "Illegal syntax or missing identifier after EXCEPTION keyword"
+      );
   case IDL_GlobalData::PS_ExceptIDSeen:
-    return ACE_TEXT ("Illegal syntax or missing '{' after exception identifier");
+    return ACE_TEXT (
+        "Illegal syntax or missing '{' after exception identifier"
+      );
   case IDL_GlobalData::PS_ExceptSqSeen:
     return ACE_TEXT ("Illegal syntax after exception '{' opener");
   case IDL_GlobalData::PS_ExceptQsSeen:
@@ -410,33 +481,49 @@ parse_state_to_error_message(IDL_GlobalData::ParseState ps)
   case IDL_GlobalData::PS_ExceptBodySeen:
     return ACE_TEXT ("Illegal syntax after exception body statement(s)");
   case IDL_GlobalData::PS_OpAttrSeen:
-    return ACE_TEXT ("Illegal syntax or missing type after operation attribute");
+    return ACE_TEXT (
+        "Illegal syntax or missing type after operation attribute"
+      );
   case IDL_GlobalData::PS_OpTypeSeen:
-    return ACE_TEXT ("Illegal syntax or missing identifier after operation type");
+    return ACE_TEXT (
+        "Illegal syntax or missing identifier after operation type"
+      );
   case IDL_GlobalData::PS_OpIDSeen:
-    return ACE_TEXT ("Illegal syntax or missing '(' after operation identifier");
+    return ACE_TEXT (
+        "Illegal syntax or missing '(' after operation identifier"
+      );
   case IDL_GlobalData::PS_OpParsCompleted:
     return ACE_TEXT ("Illegal syntax after operation parameter list");
   case IDL_GlobalData::PS_OpRaiseCompleted:
-    return
-      ACE_TEXT ("Illegal syntax after optional RAISES in operation declaration");
+    return ACE_TEXT (
+        "Illegal syntax after optional RAISES in operation declaration"
+      );
   case IDL_GlobalData::PS_OpContextCompleted:
-    return
-      ACE_TEXT ("Illegal syntax after optional CONTEXT in operation declaration");
+    return ACE_TEXT (
+        "Illegal syntax after optional CONTEXT in operation declaration"
+      );
   case IDL_GlobalData::PS_OpCompleted:
     return ACE_TEXT ("Illegal syntax after operation declaration");
   case IDL_GlobalData::PS_OpSqSeen:
-    return ACE_TEXT ("Illegal syntax after operation parameter list '(' opener");
+    return ACE_TEXT (
+        "Illegal syntax after operation parameter list '(' opener"
+      );
   case IDL_GlobalData::PS_OpQsSeen:
-    return ACE_TEXT ("Illegal syntax after operation parameter list ')' closer");
+    return ACE_TEXT (
+        "Illegal syntax after operation parameter list ')' closer"
+      );
   case IDL_GlobalData::PS_OpParCommaSeen:
-    return
-      ACE_TEXT ("Illegal syntax or missing direction in parameter declaration");
+    return ACE_TEXT (
+        "Illegal syntax or missing direction in parameter declaration"
+      );
   case IDL_GlobalData::PS_OpParDirSeen:
-    return ACE_TEXT ("Illegal syntax or missing type in parameter declaration");
+    return ACE_TEXT (
+        "Illegal syntax or missing type in parameter declaration"
+      );
   case IDL_GlobalData::PS_OpParTypeSeen:
-    return
-      ACE_TEXT ("Illegal syntax or missing declarator in parameter declaration");
+    return ACE_TEXT (
+        "Illegal syntax or missing declarator in parameter declaration"
+      );
   case IDL_GlobalData::PS_OpParDeclSeen:
     return ACE_TEXT ("Illegal syntax following parameter declarator");
   case IDL_GlobalData::PS_OpRaiseSeen:
@@ -452,13 +539,13 @@ parse_state_to_error_message(IDL_GlobalData::ParseState ps)
   case IDL_GlobalData::PS_OpContextQsSeen:
     return ACE_TEXT ("Illegal syntax after CONTEXT ')' closer");
   case IDL_GlobalData::PS_OpContextCommaSeen:
-    return
-      ACE_TEXT ("Illegal syntax after ',' in CONTEXT in operation declaration");
+    return ACE_TEXT (
+        "Illegal syntax after ',' in CONTEXT in operation declaration"
+      );
   case IDL_GlobalData::PS_DeclsCommaSeen:
     return ACE_TEXT ("Illegal syntax after ',' in declarators list");
   case IDL_GlobalData::PS_DeclsDeclSeen:
     return ACE_TEXT ("Illegal syntax after declarator in declarators list");
-
   case IDL_GlobalData::PS_PragmaPrefixSyntax:
     return ACE_TEXT ("Illegal syntax for #pragma prefix");
   default:
@@ -476,7 +563,9 @@ UTL_Error::syntax_error (IDL_GlobalData::ParseState ps)
   idl_error_header (EIDL_SYNTAX_ERROR,
                     idl_global->lineno (),
                     idl_global->filename ());
-  cerr << parse_state_to_error_message (ps) << "\n";
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("%s\n"),
+              parse_state_to_error_message (ps)));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
@@ -486,7 +575,8 @@ UTL_Error::error0 (UTL_Error::ErrorCode c)
   idl_error_header (c, 
                     idl_global->lineno (), 
                     idl_global->filename ());
-  cerr << "\n";
+  ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("\n")));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
@@ -495,9 +585,10 @@ UTL_Error::error1 (UTL_Error::ErrorCode c,
                    AST_Decl *d)
 {
   idl_error_header (c, 
-                    d->line (), 
-                    d->file_name ());
-  d->name ()->dump (cerr); cerr << "\n";
+                    idl_global->lineno (), 
+                    idl_global->filename ());
+  d->name ()->dump (cerr); 
+  cerr << "\n";
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
@@ -507,8 +598,8 @@ UTL_Error::error2 (UTL_Error::ErrorCode c,
                    AST_Decl *d2)
 {
   idl_error_header (c, 
-                    d1->line (), 
-                    d1->file_name ());
+                    idl_global->lineno (), 
+                    idl_global->filename ());
   d1->name ()->dump (cerr); 
   cerr << ", ";
   d2->name ()->dump (cerr); 
@@ -523,8 +614,8 @@ UTL_Error::error3 (UTL_Error::ErrorCode c,
                    AST_Decl *d3)
 {
   idl_error_header (c, 
-                    d1->line (), 
-                    d1->file_name ());
+                    idl_global->lineno (), 
+                    idl_global->filename ());
   d1->name ()->dump (cerr); 
   cerr << ", ";
   d2->name ()->dump (cerr); 
@@ -548,8 +639,8 @@ UTL_Error::warning1 (UTL_Error::ErrorCode c,
                      AST_Decl *d)
 {
   idl_error_header (c, 
-                    d->line(), 
-                    d->file_name());
+                    idl_global->lineno (), 
+                    idl_global->filename ());
   d->name ()->dump (cerr); 
   cerr << "\n";
 }
@@ -560,8 +651,8 @@ UTL_Error::warning2 (UTL_Error::ErrorCode c,
                      AST_Decl *d2)
 {
   idl_error_header (c, 
-                    d1->line (), 
-                    d1->file_name ());
+                    idl_global->lineno (), 
+                    idl_global->filename ());
   d1->name ()->dump (cerr); 
   cerr << ", ";
   d2->name ()->dump (cerr); 
@@ -575,8 +666,8 @@ UTL_Error::warning3 (UTL_Error::ErrorCode c,
                      AST_Decl *d3)
 {
   idl_error_header (c, 
-                    d1->line (), 
-                    d1->file_name ());
+                    idl_global->lineno (), 
+                    idl_global->filename ());
   d1->name ()->dump (cerr); 
   cerr << ", ";
   d2->name ()->dump (cerr); 
@@ -602,11 +693,51 @@ UTL_Error::coercion_error (AST_Expression *v,
 void
 UTL_Error::lookup_error (UTL_ScopedName *n)
 {
-  idl_error_header(EIDL_LOOKUP_ERROR,
-                   idl_global->lineno (),
-                   idl_global->filename ());
+  idl_error_header (EIDL_LOOKUP_ERROR,
+                    idl_global->lineno (),
+                    idl_global->filename ());
   n->dump (cerr);
   cerr << "\n";
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+// Report an illegal version number assignment.
+void
+UTL_Error::version_number_error (char *n)
+{
+  idl_error_header (EIDL_ILLEGAL_VERSION,
+                    idl_global->lineno (),
+                    idl_global->filename ());
+  ACE_ERROR ((LM_ERROR,
+              "%s\n",
+              n));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+// Report an attempt to set the version a second time.
+void
+UTL_Error::version_reset_error (void)
+{
+  idl_error_header (EIDL_VERSION_RESET,
+                    idl_global->lineno (),
+                    idl_global->filename ());
+  ACE_ERROR ((LM_ERROR,
+              "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+// Report a reset of the id a second time to a different string.
+void
+UTL_Error::id_reset_error (char *o,
+                           char *n)
+{
+  idl_error_header (EIDL_ID_RESET,
+                    idl_global->lineno (),
+                    idl_global->filename ());
+  ACE_ERROR ((LM_ERROR,
+              "%s, %s\n",
+              o,
+              n));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
@@ -845,8 +976,8 @@ void
 UTL_Error::not_a_type (AST_Decl *d)
 {
   idl_error_header (EIDL_NOT_A_TYPE,
-                     idl_global->lineno(),
-                   idl_global->filename());
+                    idl_global->lineno(),
+                    idl_global->filename());
   if (d == 0 || d->name () == 0)
     cerr << ACE_TEXT ("unknown symbol");
   else
