@@ -137,7 +137,7 @@
       stock_factory_poa->activate_object_with_id (oid.in (),
                                                   servant.in ());
 </PRE>
-    <P>Be carefult not to invoke <CODE>_this()</CODE> on any of these
+    <P>Be careful not to invoke <CODE>_this()</CODE> on any of these
       objects, as that would activate them in the RootPOA, ending with 
       two activations!  It is perfectly legal to activate the same
       servant multiple times in different POAs (and sometimes even in
@@ -205,23 +205,23 @@ Quoter_Stock_Factory_i::get_stock (const char *symbol)
 }
 </PRE>
 
-    <H3>Memory managment for the Stock objects</H3>
+    <H3>Memory management for the Stock objects</H3>
 
-    <P>So far we have not discussed memory managment for servants,
+    <P>So far we have not discussed memory management for servants,
       this is a good opportunity to do it because the stock objects
       are completely controlled by the POA.
       The POA provides reference counting for the Servants, you are
       <STRONG>not</STRONG> required to use reference counting, but if
-      you do most of the memory managment is extremely simple.
+      you do most of the memory management is extremely simple.
       So why is reference counting not used all the time? Because some 
       applications do not require it, for example,
       our previous simple server did not require any complex memory
-      managment as the objects where all created on the stack.
+      management as the objects where all created on the stack.
     </P>
 
     <P>To use the reference counting features in the POA you must
       override the <CODE>_add_ref()</CODE> and <CODE>_remove_ref()</CODE>
-      methods, to increase and descrease the reference count. Once the 
+      methods, to increase and decrease the reference count. Once the 
       count reaches 0 you can safely remove the object (but remember
       to start the count at 1!).
       Implementing these methods in a thread safe way is a tedious
@@ -257,7 +257,7 @@ public:
     <P>Modify the following files in the simple server as follows:
     <UL>
       <LI> <A HREF="../Server/Stock_i.h">Stock_i.h</A>:
-	Use the reference counted servant to control memory managment.
+	Use the reference counted servant to control memory management.
       </LI>
       <LI> <A HREF="../Server/Stock_Factory_i.h">Stock_Factory_i.h</A>:
 	Apply the changes described above to use a child POA with the

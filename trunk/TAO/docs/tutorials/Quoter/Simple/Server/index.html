@@ -48,7 +48,7 @@ private:
       compliant) specifications.
       Code based on the POA, and conforming to the CORBA 2.2
       specification is almost completely portable,
-      the only incompatibilities araise from the names of the
+      the only incompatibilities arise from the names of the
       generated header files and and other minors things like that.
       Those problems can be easily wrapped in helper classes, and the
       file names can be controlled through IDL compiler options in
@@ -59,7 +59,7 @@ private:
 <PRE>
 class Quoter_Stock_i : public POA_Quoter::Stock {
 public:
-  // some details ommited
+  // some details omitted
   char *symbol () throw (CORBA::SystemException);
   char *full_name () throw (CORBA::SystemException);
   CORBA::Double price () throw (CORBA::SystemException);
@@ -87,7 +87,7 @@ Quoter_Stock_i::symbol () throw (CORBA::SystemException)
       empty.
     </P>
 
-    <H4>Memory managment rules for arguments</H4>
+    <H4>Memory management rules for arguments</H4>
 
     <P>It is important to copy the strings before returning them,
       because the ORB will use <CODE>CORBA::string_free</CODE> to release
@@ -100,7 +100,7 @@ Quoter_Stock_i::symbol () throw (CORBA::SystemException)
       should always expect to own the string, in consequence the server
       implementation must always allocate a copy and return the copy,
       because the server-side must also work identically for local and
-      remote clients.  The memory managment rules in CORBA are a bit
+      remote clients.  The memory management rules in CORBA are a bit
       subtle, but there are some simple rules to follow:
       <UL>
         <LI>You must make a copy of the memory that you return, the
@@ -116,7 +116,7 @@ Quoter_Stock_i::symbol () throw (CORBA::SystemException)
         after you return.
         </LI>
       </UL>
-      The complete memory managment rules can be found in Henning and
+      The complete memory management rules can be found in Henning and
       Vinoski book or the CORBA specification.
     </P>
 
@@ -295,13 +295,13 @@ int main (int argc, char* argv[])
 
     <P>There are many details that we have left out from this server,
       such as how to terminate the event loop, how to perform servant
-      memory managment, orderly deactivation of servants and the fact
+      memory management, orderly deactivation of servants and the fact
       is that it is not very flexible.  But we have covered a number
       of other things, and more importantly we can test the client
       now!
     </P>
 
-    <H3>Exersice 1</H3>
+    <H3>Exercise 1</H3>
 
     <P>Flesh out the implementation, you don't have to do it from
       scratch, we provide you with the following files:
