@@ -1,3 +1,14 @@
+Tue Jul 03 15:45:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/SHMIOP_Transport.h:
+	* tao/Strategies/SHMIOP_Transport.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.h:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp: Fixed the protocol
+	  to work  with the latest changes.
+
+	* tao/Strategies/TAO_Strategies.dsp: Removed the
+	  GIOP_NonReactive_* files.
+
 Mon Jul 02 23:16:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Transport.cpp:
