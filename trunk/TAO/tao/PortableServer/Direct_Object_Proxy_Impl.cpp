@@ -6,6 +6,12 @@
 
 ACE_RCSID(tao, TAO_Direct_Object_Proxy_Impl, "$Id$")
 
+TAO_Direct_Object_Proxy_Impl::TAO_Direct_Object_Proxy_Impl (void)
+{
+  // No-op
+}
+
+
 TAO_Direct_Object_Proxy_Impl::~TAO_Direct_Object_Proxy_Impl (void)
 {
   // No-op
@@ -16,7 +22,7 @@ TAO_Direct_Object_Proxy_Impl::_is_a (const CORBA::Object_ptr target,
                                      const CORBA::Char *logical_type_id,
                                      CORBA_Environment &ACE_TRY_ENV )
 {
-  
+
   return target->_servant ()->_is_a (logical_type_id,
                                      ACE_TRY_ENV);
 }
@@ -33,7 +39,7 @@ TAO_Direct_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target,
     {
       if (target->_servant () != 0)
         return target->_servant ()->_non_existent (ACE_TRY_ENV);
-          
+
       // @@ Maybe we want to change this exception...
       ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);
     }

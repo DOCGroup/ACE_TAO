@@ -35,6 +35,8 @@ class TAO_Export TAO_Remote_Object_Proxy_Impl : public virtual TAO_Object_Proxy_
   //
 public:
 
+  TAO_Remote_Object_Proxy_Impl (void);
+
   virtual ~TAO_Remote_Object_Proxy_Impl (void);
 
   virtual CORBA::Boolean _is_a (const CORBA::Object_ptr target,

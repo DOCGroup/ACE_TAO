@@ -23,21 +23,31 @@ be_visitor_interface_remote_proxy_impl_cs::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   os->decr_indent (0);
-  
+
   *os << be_nl
       << "///////////////////////////////////////////////////////////////////////" << be_nl
-      << "//                Base & Remote Proxy  Implementation. " << be_nl 
+      << "//                Base & Remote Proxy  Implementation. " << be_nl
       << "//" << be_nl << be_nl;
   // Create the destructor implementation for the base
   // proxy implementation.
-  os->indent ();
+  //os->indent ();
+
+  *os << node->full_base_proxy_impl_name () << "::"
+      << node->base_proxy_impl_name () << " (void)" << be_nl
+      << "{}" << be_nl << be_nl;
+
   *os << node->full_base_proxy_impl_name () << "::~"
       << node->base_proxy_impl_name () << " (void)" << be_nl
       << "{}" << be_nl << be_nl;
 
   // Create the destructor implementation for the remote
   // proxy implementation.
-  os->indent ();
+  //  os->indent ();
+
+  *os << node->full_remote_proxy_impl_name () << "::"
+      << node->remote_proxy_impl_name () << " (void)" << be_nl
+      << "{}" << be_nl << be_nl;
+
   *os << node->full_remote_proxy_impl_name () << "::~"
       << node->remote_proxy_impl_name () << " (void)" << be_nl
       << "{}" << be_nl << be_nl;
@@ -56,10 +66,10 @@ be_visitor_interface_remote_proxy_impl_cs::visit_interface (be_interface *node)
                          "codegen for Base Proxy Broker class failed\n"),
                         -1);
     }
-  
+
   *os << be_nl
       << "//" << be_nl
-      << "//            End  Base & Remote  Proxy Implemeentation. " << be_nl 
+      << "//            End  Base & Remote  Proxy Implemeentation. " << be_nl
       << "///////////////////////////////////////////////////////////////////////"
       << be_nl << be_nl;
   return 0;
