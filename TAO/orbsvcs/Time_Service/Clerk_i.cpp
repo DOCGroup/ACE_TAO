@@ -195,8 +195,6 @@ Clerk_i::get_first_IOR (void)
   TAO_TRY
     {
       char host_name[MAXHOSTNAMELEN];
-      //char machine_clerk_name[MAXHOSTNAMELEN];
-      int index = 0;
 
       ACE_OS::hostname (host_name,
                         MAXHOSTNAMELEN);
@@ -415,24 +413,25 @@ Clerk_i::create_clerk (void)
   return 0;
 }
 
-int 
+// Check if this is the first Clerk to bind to the Naming
+// Service. If yes, then 1 is returned else 0 is returned.
+
+int
 Clerk_i::if_first_clerk (CosNaming::Name clerk_context_name)
 {
-	TAO_TRY
-	{
-		this->my_name_server_->resolve
-			 (clerk_context_name, TAO_TRY_ENV);
-		TAO_CHECK_ENV;
-	}
-	TAO_CATCH (CORBA::UserException, userex)
-	{
+  TAO_TRY
+    {
+      this->my_name_server_->resolve
+	(clerk_context_name, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCH (CORBA::UserException, userex)
+    {
       ACE_UNUSED_ARG (userex);
-	  printf("First clerk\n");
-      //TAO_TRY_ENV.print_exception ("User Exception");
       return 1;
     }
-	TAO_ENDTRY;
-	return 0;
+  TAO_ENDTRY;
+  return 0;
 }
 
 // Binds the clerk in the context ClerkContext with the name
@@ -449,44 +448,38 @@ Clerk_i::register_clerk (void)
       clerk_context_name.length (1);
       clerk_context_name[0].id = CORBA::string_dup ("ClerkContext");
 
-	  
-	  CosNaming::NamingContext_var clerk_context;
+      CosNaming::NamingContext_var clerk_context;
 
-     // if (CORBA::is_nil (this->my_name_server_->resolve
-       //                  (clerk_context_name, TAO_TRY_ENV)))
-	  if (if_first_clerk (clerk_context_name))
-            {
-              //TAO_TRY_ENV.clear ();
+      if (if_first_clerk (clerk_context_name))
+	{
+	  clerk_context = this->my_name_server_->new_context (TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
 
-              clerk_context = this->my_name_server_->new_context (TAO_TRY_ENV);
-              TAO_CHECK_ENV;
-
-              this->my_name_server_->rebind_context (clerk_context_name,
-                                                     clerk_context.in (),
-                                                     TAO_TRY_ENV);
-              TAO_CHECK_ENV;
-            }
-
-      //TAO_CHECK_ENV;
+	  this->my_name_server_->rebind_context (clerk_context_name,
+						 clerk_context.in (),
+						 TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+	}
 
       char host_name[MAXHOSTNAMELEN];
       char clerk_mc_name[MAXHOSTNAMELEN];
 
       ACE_OS::hostname (host_name,
                         MAXHOSTNAMELEN);
+
       //CosNaming::Name clerk_name (clerk_context_name);
       CosNaming::Name clerk_name;
-	  clerk_name.length (2);
+      clerk_name.length (2);
 
       ACE_OS::strcpy (clerk_mc_name, "Clerk:");
       ACE_OS::strcat (clerk_mc_name, host_name);
 
-	  clerk_name[0].id = CORBA::string_dup ("ClerkContext");
+      clerk_name[0].id = CORBA::string_dup ("ClerkContext");
       clerk_name[1].id = CORBA::string_dup (clerk_mc_name);
 
       this->my_name_server_->rebind (clerk_name,
-                                   this->time_service_clerk_.in (),
-                                   TAO_TRY_ENV);
+				     this->time_service_clerk_.in (),
+				     TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
     }
