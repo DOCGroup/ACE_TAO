@@ -1,0 +1,10 @@
+#
+# Makefile for building the Buffered_Oneways example
+#
+
+MAKEFILES = \
+	Buffered_Oneways_client.bor \
+	Buffered_Oneways_server.bor 
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+

@@ -1,0 +1,47 @@
+//
+// $Id$
+//
+
+module Test
+{
+  /// Forward declare the Process interface
+  interface Process;
+
+  /// The process factory cannot create a new process
+  exception Spawn_Failed {};
+
+  /// A factory for processes
+  /**
+   *  The client creates multiple processes using this interface, then
+   * it tries to crash the process and verify that it can work
+   * correctly in that scenario.
+   */
+  interface Process_Factory
+  {
+    /// Create a new process and return its object reference
+    Process create_new_process () raises (Spawn_Failed);
+
+    /// Empty method, used to validate the connection
+    void noop ();
+
+    /// Shutdown the process factory
+    oneway void shutdown ();
+  };
+
+  /// An interface to communicate and shutdown a process
+  interface Process
+  {
+    /// Return the process id
+    long get_process_id ();
+
+    /// Shutdown the process
+    oneway void shutdown ();
+  };
+
+  /// Used by the Process Factory to receive the IOR of newly created
+  /// processes
+  interface Startup_Callback
+  {
+    void started (in Process the_process);
+  };
+};
