@@ -1,3 +1,8 @@
+Fri Jun 11 12:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * tests/RB_Tree_Test.{cpp, h (new)}: factored out class template
+	  declaration into a .h file to make AIX C++ happy.
+
 Fri Jun 11 10:43:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5.h: properly reverted all the changes of today.
