@@ -53,12 +53,14 @@ main (int argc, char *[], char* envp[])
 
       TEST_THIS (int, "TEST_VALUE_POSITIVE", 4, 10);
       TEST_THIS (double, "TEST_VALUE_POSITIVE", -1.0, 10.2);
+      TEST_THIS (long, "TEST_VALUE_POSITIVE", 0, 10);
       TEST_THIS (unsigned long, "TEST_VALUE_POSITIVE", 0, 10);
       TEST_THIS (short, "TEST_VALUE_POSITIVE", 0, 10);
 
       TEST_THIS (int, "TEST_VALUE_NEGATIVE", 4, -10);
       TEST_THIS (double, "TEST_VALUE_NEGATIVE", -1.0, -10.2);
-      TEST_THIS (unsigned long, "TEST_VALUE_NEGATIVE", 0, -10);
+      TEST_THIS (long, "TEST_VALUE_NEGATIVE", 0, -10L);
+      TEST_THIS (unsigned long, "TEST_VALUE_NEGATIVE", 0, 0);
       TEST_THIS (short, "TEST_VALUE_NEGATIVE", 0, -10);
 
       char* defstr = "Sarah Cleeland is Two!";
