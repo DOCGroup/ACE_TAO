@@ -98,4 +98,5 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
+#include "ace/post.h"
 #endif /*TAO_CONNECTION_TIMEOUT_POLICY_I_H*/
