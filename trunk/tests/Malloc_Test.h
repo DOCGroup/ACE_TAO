@@ -36,6 +36,7 @@ struct Test_Data
   int i1_;
   int i2_;
   int i3_;
+  double d1_;
   ACE_Based_Pointer<Test_Data> next_;
   ACE_Based_Pointer<Long_Test> long_test_;
 };
