@@ -1,3 +1,26 @@
+Sun Aug 17 10:36:44 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/IFRService/IRObject_i.cpp:
+
+	  Include "TSS_Resources.h" instead of "ORB_Core.h".  The latter
+	  is overkill.
+
+	* tests/RTCORBA/check_supported_priorities.cpp:
+
+	  Include "tao/ORB.h" to pull in CORBA::ORB class declaration.
+
+	* tests/RTCORBA/Server_Protocol/server.cpp:
+
+	  Include "tao/Policy_Set.h" to pull in TAO_Policy_Set class
+	  declaration.
+
+	* tests/Two_Objects/worker.h:
+
+	  Include "tao/ORB.h" instead of "tao/ORB_Core.h" to pull in the
+	  CORBA::ORB class declaration.  The latter itself no longer
+	  includes "tao/ORB.h".  Including "tao/ORB_Core.h" was overkill
+	  anyway.
+
 Sun Aug 17 00:22:16 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/ORB_Core.h:
