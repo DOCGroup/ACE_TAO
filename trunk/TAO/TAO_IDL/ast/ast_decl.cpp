@@ -581,7 +581,7 @@ AST_Decl::destroy (void)
 
   if (this->repoID_ != 0)
     {
-      ACE_OS::free (this->repoID_);
+      delete this->repoID_;
       this->repoID_ = 0;
     }
 
