@@ -871,6 +871,9 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
 	handler->set_remote_address  (inet_addr);
       
       result = handler->get_socket ()->get_local_addr (*local_addr);
+	  	 
+	  local_addr->addr_to_string (buf, BUFSIZ);
+
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Connector::open: get_local_addr failed\n"),result);
     }
