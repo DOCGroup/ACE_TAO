@@ -128,7 +128,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "const " << local_name_prefix << node_local_name << "& rhs)";
 
   *os << be_idt_nl
-      << ":";
+      << ": TAO_Abstract_ServantBase (rhs)," << be_nl
+      << "  TAO_ServantBase (rhs)";
 
   if (this->generate_copy_ctor (node, os) == -1)
     {
@@ -140,9 +141,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
 
 
-  *os << "  TAO_Abstract_ServantBase (rhs)," << be_nl
-      << "   TAO_ServantBase (rhs)" << be_uidt_nl
-      << "{}" << be_nl << be_nl;
+  *os << be_uidt_nl 
+      << "{" << be_nl
+      << "}" << be_nl << be_nl;
 
   *os << full_skel_name << "::~"
       << local_name_prefix << node_local_name
