@@ -132,7 +132,7 @@ module Components
 
     ComponentPortDescription get_all_ports ();
 
-    attribute UUID component_UUID;
+    //attribute UUID component_UUID;
   };
 
   // @@ Enumeration and DefaultEnumeration are only for EJB to CCM
