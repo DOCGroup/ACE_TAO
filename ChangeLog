@@ -1,3 +1,11 @@
+Wed Oct 27 08:05:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * include/makeinclude/rules.local.GNU:
+
+          Fixed 'mkdir' handling for 'normal' cygwin32 and mingw32 builds
+          since 'make' here uses 'sh.exe' as shell instead of 'cmd.exe' as
+          the make for VxWorks does.
+
 Tue Oct 26 13:55:20 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ACEXML/common/StreamFactory.cpp:
