@@ -27,7 +27,7 @@ static FILE* ior_output_file = 0;
 static int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "dn:");
+  ACE_Get_Opt get_opts (argc, argv, "dno:");
   int c;
 
   while ((c = get_opts ()) != -1)
