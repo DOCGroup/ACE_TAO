@@ -1,3 +1,12 @@
+Wed Dec 27 11:11:02 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/Map_Manager/test_hash_map_manager.cpp:
+        * examples/Misc/test_trace.cpp:
+        * performance-tests/Misc/test_singleton.h:
+        * performance-tests/Misc/test_singleton.cpp:
+          Fixed problems in single threaded builds, basically I use the
+          ACE_SYNCH_* macros instead of using the class directly.
+
 Tue Dec 26 18:53:06 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/Server_Concurrency/Makefile:

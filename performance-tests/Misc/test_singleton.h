@@ -17,7 +17,7 @@ public:
   static DC_Singleton *instance (void);
 
 private:
-  static ACE_Thread_Mutex lock_;
+  static ACE_SYNCH_MUTEX lock_;
   static DC_Singleton *instance_;
 };
 
