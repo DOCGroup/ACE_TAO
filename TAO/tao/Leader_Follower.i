@@ -156,15 +156,15 @@ TAO_Leader_Follower::is_client_leader_thread (void) const
 }
 
 ACE_INLINE int
-TAO_Leader_Follower::add_follower (TAO_Follower_Node *follower_node)
+TAO_Leader_Follower::add_follower (TAO_SYNCH_CONDITION *follower_ptr)
 {
-  return this->follower_set_.insert (follower_node);
+  return this->follower_set_.insert (follower_ptr);
 }
 
 ACE_INLINE int
-TAO_Leader_Follower::remove_follower (TAO_Follower_Node *follower_node)
+TAO_Leader_Follower::remove_follower (TAO_SYNCH_CONDITION *follower_ptr)
 {
-  return this->follower_set_.remove (follower_node);
+  return this->follower_set_.remove (follower_ptr);
 }
 
 ACE_INLINE ACE_Reverse_Lock<TAO_SYNCH_MUTEX> &
@@ -177,12 +177,6 @@ ACE_INLINE int
 TAO_Leader_Follower::has_clients (void) const
 {
   return this->clients_;
-}
-
-ACE_INLINE int
-TAO_Leader_Follower::TAO_Follower_Queue::is_empty (void) const
-{
-  return this->head_ == 0;
 }
 
 ACE_INLINE
