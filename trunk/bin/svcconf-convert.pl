@@ -172,7 +172,7 @@ while (length ($_) != 0) {
           print "close module\n" if ($verbose);
       }
 
-      if (s/^\s*stream\s+dynamic\s+(\w+)\s+(\w+)\s*\*\s*(\S+):(\S+)\s*\(\s*\)(\s+(active|inactive))?(\s+"([^"]+)")?//) {
+      if (s/^\s*stream\s+dynamic\s+(\w+)\s+(\w+)\s*\*\s*(\S+):(\S+)\s*\(\s*\)(\s+(active|inactive))?(\s+"([^"]*)")?//) {
           $name = $1;
           $type = $2;
           $path = $3;
@@ -203,7 +203,7 @@ while (length ($_) != 0) {
           print "stream dynamic $name $type * $init:$path \"$param\" $state\n" if ($verbose);
       }
 
-      if (s/^\s*stream\s+static\s+(\w+)(\s+("(.+)"))?//) {
+      if (s/^\s*stream\s+static\s+(\w+)(\s+("(.*)"))?//) {
           $name = $1;
           $param = $4;
           acexml_start ("streamdef", 0);
@@ -227,7 +227,7 @@ while (length ($_) != 0) {
           print "stream $name\n" if ($verbose);
       }
 
-      if (s/^\s*dynamic\s+(\w+)\s+(\w+)\s*\*\s*(\S+):(\S+)\s*\(\s*\)(\s+(active|inactive))?(\s+"([^"]+)")?//) {
+      if (s/^\s*dynamic\s+(\w+)\s+(\w+)\s*\*\s*(\S+):(\S+)\s*\(\s*\)(\s+(active|inactive))?(\s+"([^"]*)")?//) {
           $name = $1;
           $type = $2;
           $path = $3;
@@ -256,7 +256,7 @@ while (length ($_) != 0) {
           print "dynamic $name $type * $init:$path \"$param\" $state\n" if ($verbose);
       }
 
-      if (s/^\s*static\s+(\w+)(\s+("(.+)"))?//) {
+      if (s/^\s*static\s+(\w+)(\s+("(.*)"))?//) {
           $name = $1;
           $param = $4;
           if ($param ne "") {
