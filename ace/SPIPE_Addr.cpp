@@ -120,7 +120,7 @@ ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
   ACE_OS::strcpy (this->SPIPE_addr_.rendezvous_, temp);
 #else
   this->ACE_Addr::base_set (AF_SPIPE,
-                            ACE_OS::strlen (addr) + len);
+                            ACE_OS::strlen (addr) + 1 + len);
   ACE_OS::strncpy (this->SPIPE_addr_.rendezvous_,
                    addr,
 		   sizeof this->SPIPE_addr_.rendezvous_);

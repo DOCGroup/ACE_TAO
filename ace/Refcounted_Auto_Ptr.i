@@ -5,6 +5,20 @@
 
 #include "Synch_T.h"
 
+template <class X, class ACE_LOCK> inline int
+ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::null (void) const
+{
+   ACE_GUARD_RETURN (ACE_LOCK, guard, const_cast<ACE_LOCK&>(this->lock_), 0);
+
+  return this->ptr_.get() == 0;
+}
+
+template <class X, class ACE_LOCK> inline int
+ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::null (void) const
+{
+  return this->rep_->null ();
+}
+
 template <class X, class ACE_LOCK> inline ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *
 ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::create (X *p)
 {

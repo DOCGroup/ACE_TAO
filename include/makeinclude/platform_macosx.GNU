@@ -2,6 +2,7 @@
 # platform_macosx.GNU
 # preliminary support for Mac OS X DP4, some stuff still doesn't work.
 
+
 CC              = cc
 CXX             = c++
 CFLAGS          += -Wall -Wpointer-arith -pipe
@@ -16,3 +17,4 @@ RANLIB          = ranlib
 SOEXT		= dylib
 SOFLAGS = -dynamic
 SOBUILD = -o $(VSHDIR)$*.dylib $<
+
