@@ -25,6 +25,8 @@ Thu Mar  2 21:03:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/Pollable.cpp:
 	* tao/TAOC.h:
 	* tao/TAOC.cpp:
+	* tao/TimeBaseC.h:
+	* tao/TimeBaseC.cpp:
 	  Replaced the Any operators with new versions using 
 	  compiled marshaling, and added the new CORBA 2.3 
 	  overload for the extraction operator having an rhs of
