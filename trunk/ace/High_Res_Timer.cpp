@@ -181,8 +181,6 @@ ACE_High_Res_Timer::global_scale_factor (void)
             LARGE_INTEGER freq;
             if (::QueryPerformanceFrequency (&freq))
               {
-                ACE_High_Res_Timer::global_scale_factor_status_ = 1;
-
                 // We have a high-res timer
 #             if defined (ghs)
                 ACE_UINT64 uint64_freq(freq.u.LowPart, (ACE_UINT32) freq.u.HighPart);
@@ -193,6 +191,8 @@ ACE_High_Res_Timer::global_scale_factor (void)
                   (ACE_static_cast (unsigned int,
                                     freq.QuadPart / ACE_HR_SCALE_CONVERSION));
 #             endif // (ghs)
+
+                ACE_High_Res_Timer::global_scale_factor_status_ = 1;
               }
             else
               // High-Res timers not supported
