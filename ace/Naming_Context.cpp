@@ -27,6 +27,7 @@ ACE_STATIC_SVC_DEFINE (ACE_Naming_Context,
                        ACE_Service_Type::DELETE_THIS |
                        ACE_Service_Type::DELETE_OBJ,
                        0)
+ACE_STATIC_SVC_REQUIRE (ACE_Naming_Context)
 
 // The ACE_Naming_Context static service object is now defined
 // by the ACE_Object_Manager, in Object_Manager.cpp.

@@ -11,7 +11,6 @@ Thu Nov 1 15:49:04  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  TAO applications on this platform and compiler
 	  combinations. Thanks to  Don Hinton <dhinton@gmx.net> for
 	  reporting the problem. 
-	
 
 Thu Nov  1 14:25:52 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -36,13 +35,54 @@ Thu Nov  1 10:27:21 2001  Ossama Othman  <ossama@uci.edu>
 	  the Reactor's handler repository.  Direct indexing is used for
 	  efficiency reasons.
 
-Wed Oct 31 16:45:07 2001  Ossama Othman  <ossama@uci.edu>
+Thu Nov  1 06:38:30 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/OS.h (llseek):
+	* ace/ACE.cpp: Fixed some minor formatting problems so that
+	  format_hexdump() works properly.  Thanks to Kyle Brost
+ 	  <Kyle.Brost@quest.com> for reporting this.
 
-	  Made ACE_OS::llseek() a static method, as it was originally
-	  intended to be.  Thanks to Doron Rajwan <doron@BANDWIZ.COM> for
-	  pointing out the problem.
+	* ace/config-win32.h: Include the config-cygwin32.h file when
+	  __CYGWIN32__ is enabled.  Thanks to Johnny Willemsen for
+ 	  reporting this.
+  
+	* ace/Synch.i (remove): Added some casts to make certain compilers
+	  happy?  Thanks to Guillaume Renaud <guillaume.renaud@valtech.fr>
+ 	  for reporting this.
+
+	* ace/OS.i: Updated the Win32 version of ACE_OS::llseek().  Thanks to
+	  Doron Rajwan <doron@BANDWIZ.COM> for reporting this.  
+	  
+Wed Oct 31 11:25:40 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/OS.h: The ACE_OS::llseek() method must be static!  Thanks to
+	  Doron Rajwan <doron@BANDWIZ.COM> for reporting this.
+
+Tue Oct 30 08:30:16 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/RB_Tree.cpp (operator=): Make sure to check for self-assignment
+	  in the operator=.  Thanks to Johnny Willemsen for reporting
+ 	  this.
+
+Mon Oct 29 05:23:56 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Naming_Context.{h,cpp}: Moved ACE_STATIC_SVC_REQUIRE from the
+	  .h file to the .cpp file to avoid multiple definitions.  Thanks to
+	  Boris Kaminer <boris.kaminer@orcsoftware.com> for reporting this.
+
+Sun Oct 28 10:05:32 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/config-macosx.h:
+	* include/makeincludes/platform_macosx.GNU
+	  Added new fixes to get this to work on MacOS X.  Thanks to John
+ 	  Michael Zorko <j.zorko@att.net> and Fikri Pribadi
+ 	  <fikri@ugotacall.com> for contributing this.
+
+Wed Oct 24 23:59:13 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Configuration_Import_Export.cpp: Fixed a bug where a
+	  check of a pointer was made rather than the character pointed to
+ 	  by the pointer.  Thanks to Juan Jose Comellas
+ 	  <uanjo@comellas.org> for reporting this.
 
 Tue Oct 30 22:53:57 2001  Ossama Othman  <ossama@uci.edu>
 
