@@ -1,3 +1,9 @@
+Thu Feb 10 21:57:04 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/MEM_SAP.h
+	* ace/MEM_SAP.i (set_buf_len): Removed the const'ness of argument
+	  <buf>.
+
 Thu Feb 10 14:09:56 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ace_dll.dsp:
