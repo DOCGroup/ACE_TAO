@@ -933,8 +933,8 @@ public:
                       CORBA::Environment &);
   // Unregister the consumer from the Event Service.
 
-  void push (const ACE_ES_Dispatch_Request *request,
-             CORBA::Environment &);
+  virtual void push (const ACE_ES_Dispatch_Request *request,
+		     CORBA::Environment &);
 
   RtecEventChannelAdmin::ConsumerAdmin_ptr get_ref (CORBA::Environment &);
   // Allow transformations to RtecEventChannelAdmin::ConsumerAdmin.
@@ -1197,9 +1197,9 @@ public:
   virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr obtain_push_consumer (CORBA::Environment &);
   // Factory method for push supplier proxies.
 
-  void push (ACE_Push_Supplier_Proxy *proxy,
-             const RtecEventComm::EventSet &event,
-             CORBA::Environment &);
+  virtual void push (ACE_Push_Supplier_Proxy *proxy,
+		     const RtecEventComm::EventSet &event,
+		     CORBA::Environment &);
   // The supplier module acts on behalf of the supplier proxy to
   // forward events through the channel.
 

@@ -28,7 +28,7 @@ Results::~Results (void)
 }
 
 void
-Results::print_stats (const char *call_name)
+Results::print_stats (void)
 {
   double
     avg_real_time = 0,
@@ -37,10 +37,6 @@ Results::print_stats (const char *call_name)
     cps; // calls per sec
 
   CORBA::ULong i;
-
-  ACE_DEBUG ((LM_DEBUG,
-              "********** %s *********\n",
-              call_name));
 
   if (this->error_count_ == 0)
     {

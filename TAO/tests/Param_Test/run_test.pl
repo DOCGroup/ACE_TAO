@@ -29,10 +29,10 @@ else
   $uid = getpwnam (getlogin ());
 }
 
-$port = 30001 + $uid;
+$port = 0;
 $iorfile = "theior";
 $invocation = "sii";
-$num = 1;
+$num = 5;
 $other = "";
 $debug = "";
 $type = "";

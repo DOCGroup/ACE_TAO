@@ -15,11 +15,13 @@ $iorfile = "theior";
 $sleeptime = 3;
 
 $SV = Process::Create ("server".$Process::EXE_EXT, 
-                       "-ORBport $server_port -o $iorfile -ORBobjrefstyle url");
+                       " -ORBport $server_port -o $iorfile ".
+		       " -ORBobjrefstyle url");
 
 sleep ($sleeptime);
 
-system ("client".$Process::EXE_EXT." -f $iorfile -x -ORBport $client_port");
+$status  = system ("client".$Process::EXE_EXT.
+		   " -f $iorfile -x -ORBport $client_port");
 
 if ($^O eq "MSWin32")
 {
@@ -29,3 +31,7 @@ else
 {
   system ("rm ".$iorfile);
 }
+
+$SV->Wait ();
+
+exit $status;

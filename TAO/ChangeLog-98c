@@ -1,3 +1,29 @@
+Mon Jul 27 16:55:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/NestedUpcall/MT_Client_Test/run_test.pl: 
+	* tests/NestedUpcall/Reactor/run_test.pl: 
+	* tests/NestedUpcall/Triangle_Test/run_test.pl: 
+	* tests/Simple/run_test.pl: 
+	* tests/Cubit/TAO/DII_Cubit/run_test.pl: 
+	* tests/Cubit/TAO/IDL_Cubit/run_test.pl: 
+	  Capture the client status and return it, also wait (or kill) the
+	  server before exit.
+
+	* tests/Param_Test/results.h: 
+	* tests/Param_Test/results.cpp: 
+	* tests/Param_Test/client.cpp: 
+	  Print the test name *before* attempting to run it, so the output
+	  is visible even on a crash. Also print an easy to grep message
+	  on test failure.
+
+	* tests/Param_Test/run_test.pl: 
+	  By default use ORBport 0 and run the tests 5 times (just for
+	  luck).
+
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
+	  Made the push() methods on the Supplier_Module and the
+	  Consumer_Module virtual, so users can provide their own.
+
 Mon Jul 27 1:26:44 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
       * TAO/tests/Param_Test/var_struct{.h,.cpp}: Committed my

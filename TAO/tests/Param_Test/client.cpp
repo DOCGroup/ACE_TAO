@@ -50,6 +50,10 @@ Param_Test_Client<T>::run_sii_test (void)
   CORBA::Environment env; // to track errors
   Options *opt = OPTIONS::instance (); // get the options
   const char *opname = this->test_object_->opname (); // operation
+  
+  ACE_DEBUG ((LM_DEBUG,
+              "********** %s SII *********\n",
+              opname));
 
   // Initialize call count and error count.
   this->results_.call_count (0);
@@ -106,13 +110,25 @@ Param_Test_Client<T>::run_sii_test (void)
       // reset parameters for the test.
       if (this->test_object_->reset_parameters () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) client.cpp - run_dii_test:"
+                           "(%N:%l) client.cpp - run_sii_test:"
                            "init_parameters failed for opname - %s",
                            opname), -1);
     }
 
   // print statistics
-  this->results_.print_stats (this->test_object_->opname ());
+  this->results_.print_stats ();
+  if (this->results_.error_count () != 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "********** Error running %s SII *********\n",
+		  opname));
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "********** Finished running %s SII *********\n",
+		  opname));
+    }
   return this->results_.error_count ()? -1:0;
 }
 
@@ -123,6 +139,10 @@ Param_Test_Client<T>::run_dii_test (void)
   const char *opname = this->test_object_->opname ();
   Options *opt = OPTIONS::instance ();
   CORBA::Environment env; // environment
+
+  ACE_DEBUG ((LM_DEBUG,
+              "********** %s DII *********\n",
+              opname));
 
   // initialize call count and error count
   this->results_.call_count (0);
@@ -220,7 +240,19 @@ Param_Test_Client<T>::run_dii_test (void)
     } // for loop
 
   // print statistics
-  this->results_.print_stats (opname);
+  this->results_.print_stats ();
+  if (this->results_.error_count () != 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "********** Error running %s DII *********\n",
+		  opname));
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "********** Finished running %s DII *********\n",
+		  opname));
+    }
   return this->results_.error_count ()? -1:0;
 }
 
