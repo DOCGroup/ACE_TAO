@@ -1,3 +1,8 @@
+Wed May  8 11:02:44 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/TP_Reactor_Test.cpp: Turned off full traces, only the
+	  error messages will goto the log.
+
 Wed May  8 10:58:15 2002  Alex Libman <AlexL@rumblegroup.com>
 
 	* tests/Proactor_Test.cpp: Fixed the test to work right on
