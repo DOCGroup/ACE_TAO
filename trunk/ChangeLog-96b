@@ -1,5 +1,9 @@
 Wed Jan 08 10:26:45 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/Message_Block.cpp (~ACE_Data_block): assigned 0 to
+	  allocator_strategry_ after deleting it; also, fixed template
+	  specializations (for g++) by using macros instead of class names
+
 	* ace/config-linux-lxpthreads.h:  added
 	  ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS, thanks to
 	  James CE Johnson <jcej@lads.com> for tracking down this problem
@@ -50,7 +54,7 @@ Tue Dec 31 00:11:56 1996  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 Tue Dec 31 15:06:51 1996  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Task.cpp: added comments that try to explain interaction
-          between ACE_Task_Base::svc_run () and ACE_Task_Exitinstance
+          between ACE_Task_Base::svc_run () and ACE_Task_Exit instance
 
 	* ace/Hi_Res_Timer.h: added comment to print_total () saying it
 	  should only be used for incremental timings; added defaults to
