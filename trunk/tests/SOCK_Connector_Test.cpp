@@ -46,7 +46,8 @@ host_is_up (ASYS_TCHAR hostname[])
   ACE_OS::strcpy (test_host, hostname);
 
   ACE_INET_Addr another_host ((u_short) 7, test_host);
-  const int status = con.connect (sock, another_host, 0);
+  ACE_Time_Value timeout_value (5);
+  const int status = con.connect (sock, another_host, &timeout_value);
 
   sock.close ();
   return status == 0  ?  1  :  0;
