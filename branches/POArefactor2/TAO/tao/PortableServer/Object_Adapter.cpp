@@ -245,7 +245,7 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
   CORBA::Policy_ptr thread_policy =
           TAO::Portable_Server::Policy_Creator<
             TAO::Portable_Server::ThreadPolicyFactory,
-            CORBA::Policy,
+            CORBA::Policy_ptr,
             PortableServer::ThreadPolicyValue>::create (
               "ThreadPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_ThreadPolicyFactory,
@@ -258,7 +258,7 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
   CORBA::Policy_ptr lifespan_policy =
           TAO::Portable_Server::Policy_Creator<
             TAO::Portable_Server::LifespanPolicyFactory,
-            CORBA::Policy,
+            CORBA::Policy_ptr,
             PortableServer::LifespanPolicyValue>::create (
               "LifespanPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_LifespanPolicyFactory,
@@ -270,7 +270,7 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
   CORBA::Policy_ptr id_uniqueness_policy =
           TAO::Portable_Server::Policy_Creator<
             TAO::Portable_Server::IdUniquenessPolicyFactory,
-            CORBA::Policy,
+            CORBA::Policy_ptr,
             PortableServer::IdUniquenessPolicyValue>::create (
               "IdUniquenessPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_IdUniquenessPolicyFactory,
@@ -282,7 +282,7 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
   CORBA::Policy_ptr id_assignment_policy =
           TAO::Portable_Server::Policy_Creator<
             TAO::Portable_Server::IdAssignmentPolicyFactory,
-            CORBA::Policy,
+            CORBA::Policy_ptr,
             PortableServer::IdAssignmentPolicyValue>::create (
               "IdAssignmentPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_IdAssignmentPolicyFactory,
@@ -295,7 +295,7 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
   CORBA::Policy_ptr implicit_activation_policy =
           TAO::Portable_Server::Policy_Creator<
             TAO::Portable_Server::ImplicitActivationPolicyFactory,
-            CORBA::Policy,
+            CORBA::Policy_ptr,
             PortableServer::ImplicitActivationPolicyValue>::create (
               "ImplicitActivationPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_ImplicitActivationPolicyFactory,
@@ -307,7 +307,7 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
   CORBA::Policy_ptr servant_retention_policy =
           TAO::Portable_Server::Policy_Creator<
             TAO::Portable_Server::ServantRetentionPolicyFactory,
-            CORBA::Policy,
+            CORBA::Policy_ptr,
             PortableServer::ServantRetentionPolicyValue>::create (
               "ServantRetentionPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_ServantRetentionPolicyFactory,
@@ -319,7 +319,7 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
   CORBA::Policy_ptr request_processing_policy =
           TAO::Portable_Server::Policy_Creator<
             TAO::Portable_Server::RequestProcessingPolicyFactory,
-            CORBA::Policy,
+            CORBA::Policy_ptr,
             PortableServer::RequestProcessingPolicyValue>::create (
               "RequestProcessingPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyFactory,
@@ -669,10 +669,11 @@ TAO_Object_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
   // takes a const reference and makes its own copy of the
   // policy.  (Otherwise, we'd have to allocate the policy
   // on the heap.)
+  // Implicit activation policy.
   PortableServer::ImplicitActivationPolicy_var implicit_activation_policy =
     TAO::Portable_Server::Policy_Creator<
           TAO::Portable_Server::ImplicitActivationPolicyFactory,
-          ::PortableServer::ImplicitActivationPolicy,
+          ::PortableServer::ImplicitActivationPolicy_ptr,
           ::PortableServer::ImplicitActivationPolicyValue>::create (
             "ImplicitActivationPolicyFactory",
             TAO::Portable_Server::ace_svc_desc_ImplicitActivationPolicyFactory,

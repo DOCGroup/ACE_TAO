@@ -34,7 +34,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
   if (type == ::PortableServer::THREAD_POLICY_ID)
     return TAO::Portable_Server::Policy_Creator<
             TAO::Portable_Server::ThreadPolicyFactory,
-            CORBA::Policy,
+            CORBA::Policy_ptr,
             PortableServer::ThreadPolicyValue>::create (
               "ThreadPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_ThreadPolicyFactory,
@@ -44,7 +44,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
   if (type == PortableServer::LIFESPAN_POLICY_ID)
     return TAO::Portable_Server::Policy_Creator<
             TAO::Portable_Server::LifespanPolicyFactory,
-            CORBA::Policy,
+            CORBA::Policy_ptr,
             PortableServer::LifespanPolicyValue>::create (
               "LifespanPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_LifespanPolicyFactory,
@@ -53,7 +53,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
   if (type == PortableServer::ID_UNIQUENESS_POLICY_ID)
     return TAO::Portable_Server::Policy_Creator<
             TAO::Portable_Server::IdUniquenessPolicyFactory,
-            CORBA::Policy,
+            CORBA::Policy_ptr,
             PortableServer::IdUniquenessPolicyValue>::create (
               "IdUniquenessPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_IdUniquenessPolicyFactory,
@@ -62,7 +62,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
   if (type == PortableServer::ID_ASSIGNMENT_POLICY_ID)
     return TAO::Portable_Server::Policy_Creator<
             TAO::Portable_Server::IdAssignmentPolicyFactory,
-            CORBA::Policy,
+            CORBA::Policy_ptr,
             PortableServer::IdAssignmentPolicyValue>::create (
               "IdAssignmentPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_IdAssignmentPolicyFactory,
@@ -73,7 +73,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
   if (type == PortableServer::IMPLICIT_ACTIVATION_POLICY_ID)
     return TAO::Portable_Server::Policy_Creator<
             TAO::Portable_Server::ImplicitActivationPolicyFactory,
-            CORBA::Policy,
+            CORBA::Policy_ptr,
             PortableServer::ImplicitActivationPolicyValue>::create (
               "ImplicitActivationPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_ImplicitActivationPolicyFactory,
@@ -82,7 +82,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
   if (type == PortableServer::SERVANT_RETENTION_POLICY_ID)
     return TAO::Portable_Server::Policy_Creator<
             TAO::Portable_Server::ServantRetentionPolicyFactory,
-            CORBA::Policy,
+            CORBA::Policy_ptr,
             PortableServer::ServantRetentionPolicyValue>::create (
               "ServantRetentionPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_ServantRetentionPolicyFactory,
@@ -91,7 +91,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
   if (type == PortableServer::REQUEST_PROCESSING_POLICY_ID)
     return TAO::Portable_Server::Policy_Creator<
             TAO::Portable_Server::RequestProcessingPolicyFactory,
-            CORBA::Policy,
+            CORBA::Policy_ptr,
             PortableServer::RequestProcessingPolicyValue>::create (
               "RequestProcessingPolicyFactory",
               TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyFactory,

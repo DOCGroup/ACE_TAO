@@ -32,7 +32,7 @@ namespace TAO
     {
     public:
       static
-      POLICYTYPE *create (
+      POLICYTYPE create (
         const char *factory_string,
         const ACE_Static_Svc_Descriptor &directive,
         const CORBA::Any &value ACE_ENV_ARG_DECL)
@@ -52,13 +52,13 @@ namespace TAO
           }
 
         if (policy_factory == 0)
-          return POLICYTYPE::_nil();
+          return 0;
         else
           return policy_factory->create (value ACE_ENV_ARG_PARAMETER);
       }
 
       static
-      POLICYTYPE *create (
+      POLICYTYPE create (
         const char *factory_string,
         const ACE_Static_Svc_Descriptor &directive,
         POLICYVALUETYPE value)
@@ -77,7 +77,7 @@ namespace TAO
           }
 
         if (policy_factory == 0)
-          return POLICYTYPE::_nil();
+          return 0;
         else
           return policy_factory->create (value);
       }

@@ -1,3 +1,19 @@
+Wed Oct 27 08:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Policy_Creator_T.h:
+          Return 0 in case no factory, not _nil, reduces header dependencies.
+          Don't return a POLICYTYPE *, just let the caller use the _ptr type.
+
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/PortableServer_PolicyFactory.cpp:
+        * tao/PortableServer/Object_Adapater.cpp:
+          Updated because of Policy_Creator_T change
+
+        * tao/PortableServer/POA.{h,cpp}:
+          Added some comments to member that according to me have to moved out
+          of the POA and some methods that have to be reworked to use the
+          strategies.
+
 Wed Oct 27 07:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Lifespan_Strategy.h:

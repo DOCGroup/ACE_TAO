@@ -8,19 +8,12 @@ ACE_RCSID (PortableServer,
 #include "tao/StringSeqC.h"
 
 #include "ThreadPolicyFactory.h"
-#include "ThreadPolicyC.h"
 #include "LifespanPolicyFactory.h"
-#include "LifespanPolicyC.h"
 #include "IdAssignmentPolicyFactory.h"
-#include "IdAssignmentPolicyC.h"
 #include "IdUniquenessPolicyFactory.h"
-#include "IdUniquenessPolicyC.h"
 #include "ImplicitActivationPolicyFactory.h"
-#include "ImplicitActivationPolicyC.h"
 #include "RequestProcessingPolicyFactory.h"
-#include "RequestProcessingPolicyC.h"
 #include "ServantRetentionPolicyFactory.h"
-#include "ServantRetentionPolicyC.h"
 
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/PortableServer/ORT_Adapter.h"
@@ -83,7 +76,7 @@ TAO_POA::create_thread_policy (PortableServer::ThreadPolicyValue value
 {
   return TAO::Portable_Server::Policy_Creator<
           TAO::Portable_Server::ThreadPolicyFactory,
-          ::PortableServer::ThreadPolicy,
+          ::PortableServer::ThreadPolicy_ptr,
           PortableServer::ThreadPolicyValue>::create (
             "ThreadPolicyFactory",
             TAO::Portable_Server::ace_svc_desc_ThreadPolicyFactory,
@@ -99,7 +92,7 @@ TAO_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value
 {
   return TAO::Portable_Server::Policy_Creator<
           TAO::Portable_Server::LifespanPolicyFactory,
-          ::PortableServer::LifespanPolicy,
+          ::PortableServer::LifespanPolicy_ptr,
           PortableServer::LifespanPolicyValue>::create (
             "LifespanPolicyFactory",
             TAO::Portable_Server::ace_svc_desc_LifespanPolicyFactory,
@@ -113,7 +106,7 @@ TAO_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue va
 {
   return TAO::Portable_Server::Policy_Creator<
           TAO::Portable_Server::IdUniquenessPolicyFactory,
-          ::PortableServer::IdUniquenessPolicy,
+          ::PortableServer::IdUniquenessPolicy_ptr,
           PortableServer::IdUniquenessPolicyValue>::create (
             "IdUniquenessPolicyFactory",
             TAO::Portable_Server::ace_svc_desc_IdUniquenessPolicyFactory,
@@ -127,7 +120,7 @@ TAO_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue va
 {
   return TAO::Portable_Server::Policy_Creator<
           TAO::Portable_Server::IdAssignmentPolicyFactory,
-          ::PortableServer::IdAssignmentPolicy,
+          ::PortableServer::IdAssignmentPolicy_ptr,
           ::PortableServer::IdAssignmentPolicyValue>::create (
             "IdAssignmentPolicyFactory",
             TAO::Portable_Server::ace_svc_desc_IdAssignmentPolicyFactory,
@@ -143,7 +136,7 @@ TAO_POA::create_implicit_activation_policy (PortableServer::ImplicitActivationPo
 {
   return TAO::Portable_Server::Policy_Creator<
           TAO::Portable_Server::ImplicitActivationPolicyFactory,
-          ::PortableServer::ImplicitActivationPolicy,
+          ::PortableServer::ImplicitActivationPolicy_ptr,
           ::PortableServer::ImplicitActivationPolicyValue>::create (
             "ImplicitActivationPolicyFactory",
             TAO::Portable_Server::ace_svc_desc_ImplicitActivationPolicyFactory,
@@ -157,7 +150,7 @@ TAO_POA::create_servant_retention_policy (PortableServer::ServantRetentionPolicy
 {
   return TAO::Portable_Server::Policy_Creator<
           TAO::Portable_Server::ServantRetentionPolicyFactory,
-          ::PortableServer::ServantRetentionPolicy,
+          ::PortableServer::ServantRetentionPolicy_ptr,
           ::PortableServer::ServantRetentionPolicyValue>::create (
             "ServantRetentionPolicyFactory",
             TAO::Portable_Server::ace_svc_desc_ServantRetentionPolicyFactory,
@@ -171,7 +164,7 @@ TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPoli
 {
   return TAO::Portable_Server::Policy_Creator<
           TAO::Portable_Server::RequestProcessingPolicyFactory,
-          ::PortableServer::RequestProcessingPolicy,
+          ::PortableServer::RequestProcessingPolicy_ptr,
           ::PortableServer::RequestProcessingPolicyValue>::create (
             "RequestProcessingPolicyFactory",
             TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyFactory,
@@ -1032,6 +1025,8 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
                    PortableServer::POA::ServantAlreadyActive,
                    PortableServer::POA::WrongPolicy))
 {
+/// @todo Johnny, this has to move out to the policy strategies
+
   // This operation requires the SYSTEM_ID and RETAIN policy; if not
   // present, the WrongPolicy exception is raised.
   if (!(this->cached_policies_.id_assignment () == PortableServer::SYSTEM_ID &&
@@ -1099,6 +1094,8 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
                    PortableServer::POA::ObjectAlreadyActive,
                    PortableServer::POA::WrongPolicy))
 {
+/// @todo Johnny, this has to move out to the policy strategies
+
   // This operation requires the RETAIN policy; if not present, the
   // WrongPolicy exception is raised.
   if (this->cached_policies_.servant_retention () != PortableServer::RETAIN)
@@ -1326,6 +1323,9 @@ TAO_POA::create_reference_i (const char *intf,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
+/// @todo Johnny, this has to move out to the policy strategies
+
+
   // This operation requires the SYSTEM_ID policy; if not present, the
   // WrongPolicy exception is raised.
   if (this->cached_policies_.id_assignment () != PortableServer::SYSTEM_ID)
@@ -1427,6 +1427,8 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
+/// @todo Johnny, this has to move out to the policy strategies
+
   // If the POA has the SYSTEM_ID policy and it detects that the
   // Object Id value was not generated by the system or for this POA,
   // the create_reference_with_id operation may raise the BAD_PARAM
@@ -1505,6 +1507,8 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant
                    PortableServer::POA::ServantNotActive,
                    PortableServer::POA::WrongPolicy))
 {
+/// @todo Johnny, this has to move out to the policy strategies
+
   // This operation requires the RETAIN and either the UNIQUE_ID or
   // IMPLICIT_ACTIVATION policies; or it requires the USE_DEFAULT_SERVANT
   // policy; if not present, the WrongPolicy exception is raised.
@@ -1620,6 +1624,8 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
                    PortableServer::POA::ServantNotActive,
                    PortableServer::POA::WrongPolicy))
 {
+/// @todo Johnny, this has to move out to the policy strategies
+
   // This operation requires the RETAIN and either the UNIQUE_ID or
   // IMPLICIT_ACTIVATION policies; if not present, the WrongPolicy
   // exception is raised.
@@ -1702,6 +1708,8 @@ TAO_POA::servant_to_reference_i (PortableServer::Servant servant
                    PortableServer::POA::ServantNotActive,
                    PortableServer::POA::WrongPolicy))
 {
+/// @todo Johnny, this has to move out to the policy strategies
+
   // Note: The allocation of an Object Id value and installation in
   // the Active Object Map caused by implicit activation may actually
   // be deferred until an attempt is made to externalize the

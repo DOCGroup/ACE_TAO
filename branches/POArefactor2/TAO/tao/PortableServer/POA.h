@@ -433,6 +433,7 @@ public:
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   /// Accessor for the current thread policy of this POA.
+  /// @todo Johnny, check whether this is really needed here?
   PortableServer::ThreadPolicyValue thread_policy (void) const;
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
@@ -445,6 +446,7 @@ public:
   PortableInterceptor::AdapterState get_adapter_state (
     ACE_ENV_SINGLE_ARG_DECL);
 
+  /// @todo check if we really need this method here.
   virtual void *thread_pool (void) const;
 
   virtual CORBA::Policy *server_protocol (void);
@@ -766,7 +768,7 @@ protected:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Get the ORT adapter, in case there is no adapter yet, this method will
-  /// try to create one but assumes the POA lock is already hole
+  /// try to create one but assumes the POA lock is already hold
   TAO::ORT_Adapter *ORT_adapter_i (void);
 
   TAO::ORT_Adapter_Factory *ORT_adapter_factory (void);
@@ -809,6 +811,7 @@ protected:
 
   String name_;
 
+  /// The POA Manager belonging to this POA
   TAO_POA_Manager &poa_manager_;
 
   IOP::TaggedComponentList tagged_component_;
@@ -819,8 +822,11 @@ protected:
 
   TAO_POA_Policy_Set policies_;
 
+  /// The parent of this POA, zero in case this is the Root POA
   TAO_POA *parent_;
 
+  /// @todo This has to be moved out to the retain file, is already there but some methods
+  /// in the poa still use this
   TAO_Active_Object_Map *active_object_map_;
 
   TAO_Object_Adapter::poa_name folded_name_;
@@ -843,6 +849,7 @@ protected:
 
   PortableServer::AdapterActivator_var adapter_activator_;
 
+  /// @todo Remove this and move the request processing strategy
   PortableServer::ServantBase_var default_servant_;
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
@@ -860,6 +867,7 @@ protected:
 
   ACE_Lock &lock_;
 
+  /// @todo Move the Transient strategy
   TAO::Portable_Server::Creation_Time creation_time_;
 
   TAO_ORB_Core &orb_core_;
