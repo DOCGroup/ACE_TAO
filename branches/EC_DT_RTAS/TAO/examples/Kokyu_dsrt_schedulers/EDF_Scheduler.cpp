@@ -391,6 +391,7 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
     sc_qos.guid.length (this->current_->id ()->length ());
     guid_copy (sc_qos.guid, *(this->current_->id ()));
   }
+
   sc_qos.deadline = deadline;
   sc_qos.importance = importance;
   sc_qos.task_id = task_id;
@@ -491,6 +492,7 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
     {
       //Since send_request will add an QoS for any request, why can this case happen?
       //24 hrs from now - infinity
+      ACE_DEBUG((LM_DEBUG,"Can not find sched_param information from sc\n"));
       ACE_Time_Value deadline_tv = ACE_OS::gettimeofday () + ACE_Time_Value (24*60*60,0);
       deadline = deadline_tv.sec ()*1000000 + deadline_tv.usec ()*10; //100s of nanoseconds for TimeBase::TimeT
       importance = 0;
