@@ -2,8 +2,6 @@
 project(ImR_Activator_IDL) : orbsvcslib, portableserver, messaging {
   sharedname = TAO_ImR_Activator_IDL
   dynamicflags = ACTIVATOR_IDL_BUILD_DLL
-  after       += TAO_Valuetype
-  libs        += TAO_Valuetype
   idlflags += -GH -Wb,export_macro=ActivatorIDL_Export -Wb,export_include=activator_idl_export.h
   idl_files {
     ImR_Activator.idl
@@ -17,10 +15,10 @@ project(ImR_Activator_IDL) : orbsvcslib, portableserver, messaging {
   }
 }
 
-project(ImR_Locator_IDL) : orbsvcslib, portableserver {
+project(ImR_Locator_IDL) : orbsvcslib, valuetype, portableserver {
   sharedname   = TAO_ImR_Locator_IDL
-  after       += ImR_Activator_IDL TAO_Valuetype
-  libs        += TAO_ImR_Activator_IDL TAO_Valuetype
+  after       += ImR_Activator_IDL
+  libs        += TAO_ImR_Activator_IDL
   dynamicflags = LOCATOR_IDL_BUILD_DLL
   idlflags    += -Wb,export_macro=LocatorIDL_Export -Wb,export_include=locator_idl_export.h
   idl_files {
@@ -35,7 +33,7 @@ project(ImR_Locator_IDL) : orbsvcslib, portableserver {
   }
 }
 
-project(ImR_Activator) : orbsvcslib, core, acexml, minimum_corba, portableserver {
+project(ImR_Activator) : orbsvcslib, core, acexml, minimum_corba, valuetype, portableserver {
   sharedname   = TAO_ImR_Activator
   dynamicflags = ACTIVATOR_BUILD_DLL
   after       += ImR_Activator_IDL ImR_Locator_IDL
