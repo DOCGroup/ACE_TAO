@@ -1,3 +1,10 @@
+Tue Jan 18 20:44:02 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/Object.cpp:
+	  The _non_existent() method must catch the
+	  CORBA::OBJECT_NOT_EXIST exception and return the appropriate
+	  value.
+
 Tue Jan 18 20:39:50 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile:
