@@ -1,3 +1,15 @@
+Tue Jun 30 18:55:45 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* ace/Message_Queue_T.{cpp, h}
+
+	  Added methods to ACE_Message_Queue_Factory to
+	  create an ACE_Dynamic_Message_Queue with the
+	  deadline and laxity with cleanup strategies.
+	
+	* tests/Dynamic_Priority_Test.cpp
+
+	  Added tests for the new cleanup strategy factory methods
+
 Tue Jun 30 18:03:15 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 	* ace/Message_Queue_T.{cpp, h}
