@@ -27,7 +27,7 @@ ACE_INLINE int
 ACE_Proactor::cancel_timer (ACE_Event_Handler *handler)
 {
   ACE_TRACE ("ACE_Proactor::cancel_timer");
-  return this->timer_queue_.cancel (handler);
+  return this->timer_queue_->cancel (handler);
 }
 
 ACE_INLINE int
@@ -35,7 +35,7 @@ ACE_Proactor::cancel_timer (int timer_id,
 			    const void **arg)
 {
   ACE_TRACE ("ACE_Proactor::cancel_timer");
-  return this->timer_queue_.cancel (timer_id, arg);
+  return this->timer_queue_->cancel (timer_id, arg);
 }
 
 ACE_INLINE ACE_HANDLE
@@ -43,7 +43,7 @@ ACE_Proactor::get_handle (void) const
 {
   ACE_TRACE ("ACE_Proactor::get_handle");
 
-  return this->global_handle_;
+  return this->shared_event_.handle ();
 }
 
 ACE_INLINE int
