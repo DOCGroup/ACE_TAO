@@ -1,3 +1,7 @@
+Sun Mar 19 23:52:33 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ACE.cpp: Reformatted some code.
+
 Sun Mar 19 14:30:56 2000  James CE Johnson  <jcej@mobsec.com>
 
         * docs/tutorials/002/handler.h:
