@@ -1,7 +1,0 @@
-#
-# Makefile for building the buffered_ami example
-#
-
-MAKEFILES = server.bor client.bor
-
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,9 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from ./tests/RTCORBA/Server_Protocol/server_reverse_nt.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <!--  -->
- <!--  $Id$ -->
- <!--  -->
- <static id="SHMIOP_Factory" params="-MMAPFilePrefix server_shmiop"/>
- <static id="Advanced_Resource_Factory" params="-ORBProtocolFactory SHMIOP_Factory -ORBProtocolFactory IIOP_Factory"/>
-</ACE_Svc_Conf>
