@@ -49,8 +49,10 @@ typedef UglyThing DATA;
 typedef ACE_Unbounded_Set<DATA> UNBOUNDED_SET;
 typedef ACE_Unbounded_Set_Iterator<DATA> UNBOUNDED_SET_ITERATOR;
 typedef ACE_Unbounded_Set_Const_Iterator<DATA> UNBOUNDED_SET_CONST_ITERATOR;
-typedef ACE_Array<DATA> ARRAY;
-typedef ACE_Array_Iterator<DATA> ARRAY_ITERATOR;
+
+typedef int ARRAY_DATA;
+typedef ACE_Array<ARRAY_DATA> ARRAY;
+typedef ACE_Array_Iterator<ARRAY_DATA> ARRAY_ITERATOR;
 
 void iterate_const(const UNBOUNDED_SET& set)
 {
@@ -75,16 +77,18 @@ void iterate_const(const UNBOUNDED_SET& set)
   }
 }
 
+int dummyfunc() { return 0; }
+
 int main (int, ACE_TCHAR *[])
 {
-  //  ACE_START_TEST (ACE_TEXT ("Collection_Test"));
+  ACE_START_TEST (ACE_TEXT ("Collection_Test"));
 
   deletion_func NO_DFUNC = (deletion_func)0;
   {
     UNBOUNDED_SET unbounded_set;
 
     unbounded_set.insert (UglyThing ((void*)&unbounded_set, NO_DFUNC));
-    unbounded_set.insert (UglyThing ((void*)&main, NO_DFUNC));
+    unbounded_set.insert (UglyThing ((void*)&dummyfunc, NO_DFUNC));
 
     {
       for (UNBOUNDED_SET::iterator iterator = unbounded_set.begin ();
@@ -97,7 +101,7 @@ int main (int, ACE_TCHAR *[])
     }
 
     unbounded_set.insert (UglyThing (0, NO_DFUNC));
-    unbounded_set.remove (UglyThing ((void*)&main, NO_DFUNC));
+    unbounded_set.remove (UglyThing ((void*)&dummyfunc, NO_DFUNC));
 
     {
       UNBOUNDED_SET_ITERATOR iterator (unbounded_set);
@@ -127,7 +131,6 @@ int main (int, ACE_TCHAR *[])
     iterate_const (unbounded_set);
   }
 
-#if 0
   {
     ARRAY array;
   }
@@ -168,7 +171,7 @@ int main (int, ACE_TCHAR *[])
       ARRAY_ITERATOR iterator (array1);
       while (!iterator.done ())
         {
-          DATA *data = 0;
+          ARRAY_DATA *data = 0;
           iterator.next (data);
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d\n"),
                       (*data)));
@@ -177,9 +180,9 @@ int main (int, ACE_TCHAR *[])
         }
     }
   }
-#endif
 
-  //  ACE_END_TEST;
+
+  ACE_END_TEST;
 
   return 0;
 }
@@ -194,20 +197,18 @@ template class ACE_Node<DATA>;
 #if (ACE_SIZEOF_INT != 4)
 // These might be already instantiated in ace/stats.cpp
 // (if ACE_INT32 == int)
-template class ACE_Node<DATA>;
+ptemplate class ACE_Node<DATA>;
 #endif /* ACE_SIZEOF_INT != 4 */
 
-#if 0
-template class ACE_Array<DATA>;
-template class ACE_Array_Base<DATA>;
-template class ACE_Array_Iterator<DATA>;
-#endif
+template class ACE_Array<ARRAY_DATA>;
+template class ACE_Array_Base<ARRAY_DATA>;
+template class ACE_Array_Iterator<ARRAY_DATA>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Unbounded_Set<DATA>
 #pragma instantiate ACE_Unbounded_Set_Iterator<DATA>
 #pragma instantiate ACE_Unbounded_Set_Const_Iterator<DATA>
 #pragma instantiate ACE_Node<DATA>
-#pragma instantiate ACE_Array<DATA>
-#pragma instantiate ACE_Array_Base<DATA>
-#pragma instantiate ACE_Array_Iterator<DATA>
+#pragma instantiate ACE_Array<ARRAY_DATA>
+#pragma instantiate ACE_Array_Base<ARRAY_DATA>
+#pragma instantiate ACE_Array_Iterator<ARRAY_DATA>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

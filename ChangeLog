@@ -1,3 +1,8 @@
+Fri Nov  9 11:23:01 2001  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tests/Collection_Test.cpp: Fixed up things that caused problems
+	on several platforms.  Added the ARRAY tests back in.
+
 Thu Nov  8 14:52:39 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Arg_Shifter.h: Doxygen-ized some comments.
