@@ -15,6 +15,10 @@ ACE_Notification_Strategy::notify (void)
   return 0;
 }
 
+ACE_Notification_Strategy::~ACE_Notification_Strategy (void)
+{
+}
+
 int 
 ACE_Notification_Strategy::notify (ACE_Event_Handler *,
 				   ACE_Reactor_Mask)
