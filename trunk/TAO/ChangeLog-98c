@@ -27,6 +27,9 @@ Fri May 15 11:12:26 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/orbsvcs/Makefile: re-enabled CosPropertyService_i.cpp
           build.
 
+        * Makefiles in orbsvcs and tests: removed DCFLAGS = -g.  That
+          should only be defined in the ACE platform_macros file.
+
 Fri May 15 10:42:22 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tests/POA/Makefile:
