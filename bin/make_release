@@ -297,13 +297,13 @@ sub update_version_files () {
 
   system ("$exec_prefix" .
     "perl -pi -e 's/$KIT VERSION:.*/$KIT VERSION: $version/' " .
-    "BUG-REPORT-FORM $exec_suffix");
+    "PROBLEM-REPORT-FORM $exec_suffix");
   return 1 if $? >> 8;
 
   if (! "$exec_prefix"  &&  $kit =~ /^tao/) {
     system ("$exec_prefix" .
       "perl -pi -e 's/ACE VERSION:.*/ACE VERSION: $ace_version/' " .
-      "BUG-REPORT-FORM $exec_suffix");
+      "PROBLEM-REPORT-FORM $exec_suffix");
     return 1 if $? >> 8;
 
     open (TAO_VERSION_H, "> tao/Version.h")  ||
@@ -362,12 +362,14 @@ sub update_changelog () {
 
   if ($kit =~ /^ace/) {
     system ("$cvs commit -m'$version' " .
-            "VERSION BUG-REPORT-FORM ChangeLog ace/Version.h " .
-            "&& chmod 0644 VERSION BUG-REPORT-FORM ChangeLog ace/Version.h");
+            "VERSION PROBLEM-REPORT-FORM ChangeLog ace/Version.h " .
+            "&& chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog " .
+            "ace/Version.h");
   } elsif ($kit =~ /tao/) {
-    system ("$cvs commit -m'$version' VERSION BUG-REPORT-FORM ChangeLog " .
+    system ("$cvs commit -m'$version' VERSION PROBLEM-REPORT-FORM ChangeLog " .
             "tao/Version.h " .
-            "&& chmod 0644 VERSION BUG-REPORT-FORM ChangeLog tao/Version.h");
+            "&& chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog " .
+            "tao/Version.h");
   }
   return 1 if $? >> 8;
 
