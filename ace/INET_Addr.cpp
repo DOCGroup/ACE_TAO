@@ -2,7 +2,6 @@
 
 // Defines the Internet domain address family address format.
 
-#include "ace/Functor.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
 
@@ -934,13 +933,3 @@ ACE_INET_Addr::get_ip_address (void) const
 #endif /* ACE_HAS_IPV6 */
   return ntohl (ACE_UINT32 (this->inet_addr_.in4_.sin_addr.s_addr));
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Equal_To<ACE_INET_Addr>;
-
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Equal_To<ACE_INET_Addr>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
