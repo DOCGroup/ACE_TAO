@@ -6,9 +6,13 @@ Fri Apr 20 18:21:41 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Fri Apr 20 19:37:53 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-        * ace/TP_Reactor.cpp: Added a workaround for compiling ACE on
-          Linux for the OS/390 OS.  Thanks to James Dorsey
-          <James.Dorsey@acxiom.com> for reporting this.
+	* ace/Get_Opt.h: Updated the documentation to match the constructor
+	  arguments for ACE_Get_Opt.  Thanks to Benot Desmeules
+ 	  <bdesmeules@eurekium.com> for reporting this.	
+  
+	* ace/TP_Reactor.cpp: Added a workaround for compiling ACE on 
+	  Linux for the OS/390 OS.  Thanks to James Dorsey
+ 	  <James.Dorsey@acxiom.com> for reporting this.
 
 Fri Apr 20 00:57:24 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 

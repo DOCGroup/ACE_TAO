@@ -1,6 +1,4 @@
-#
 # Makefile for building the POA On_Demand_Loading executable
-#
 
 NAME = server
 
