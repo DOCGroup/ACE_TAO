@@ -339,11 +339,11 @@ TAO_NAMESPACE PortableServer{
     static ThreadPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
     static ThreadPolicy_ptr _nil (void);
 
-#if 1                           // ongoing
+#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
     virtual ThreadPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 #else
     virtual ThreadPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ()) = 0;
-#endif
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
     virtual const char* _interface_repository_id (void) const;
   protected:
@@ -448,7 +448,11 @@ TAO_NAMESPACE PortableServer{
     static LifespanPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
     static LifespanPolicy_ptr _nil (void);
 
+#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
     virtual LifespanPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+#else
+    virtual LifespanPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ()) = 0;
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
     virtual const char* _interface_repository_id (void) const;
   protected:
@@ -553,7 +557,11 @@ TAO_NAMESPACE PortableServer{
     static IdUniquenessPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
     static IdUniquenessPolicy_ptr _nil (void);
 
+#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
     virtual IdUniquenessPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+#else
+    virtual IdUniquenessPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ()) = 0;
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
     virtual const char* _interface_repository_id (void) const;
   protected:
@@ -658,7 +666,11 @@ TAO_NAMESPACE PortableServer{
     static IdAssignmentPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
     static IdAssignmentPolicy_ptr _nil (void);
 
+#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
     virtual IdAssignmentPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+#else
+    virtual IdAssignmentPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ()) = 0;
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
     virtual const char* _interface_repository_id (void) const;
   protected:
@@ -766,7 +778,11 @@ TAO_NAMESPACE PortableServer{
     static ImplicitActivationPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
     static ImplicitActivationPolicy_ptr _nil (void);
 
+#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
     virtual ImplicitActivationPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+#else
+    virtual ImplicitActivationPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ()) = 0;
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
     virtual const char* _interface_repository_id (void) const;
   protected:
@@ -876,7 +892,11 @@ TAO_NAMESPACE PortableServer{
     static ServantRetentionPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
     static ServantRetentionPolicy_ptr _nil (void);
 
+#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
     virtual ServantRetentionPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+#else
+    virtual ServantRetentionPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ()) = 0;
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
     virtual const char* _interface_repository_id (void) const;
   protected:
@@ -987,7 +1007,11 @@ TAO_NAMESPACE PortableServer{
     static RequestProcessingPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
     static RequestProcessingPolicy_ptr _nil (void);
 
+#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
     virtual RequestProcessingPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+#else
+    virtual RequestProcessingPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ()) = 0;
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
     virtual const char* _interface_repository_id (void) const;
   protected:

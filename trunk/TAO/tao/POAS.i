@@ -14,6 +14,8 @@ ACE_INLINE
 POA_PortableServer::ThreadPolicy::~ThreadPolicy (void)
 {
 }
+
+#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 ACE_INLINE void POA_PortableServer::ThreadPolicy::copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env)
 {
   POA_CORBA::Policy_ptr impl = (POA_PortableServer::ThreadPolicy_ptr) obj;
@@ -29,6 +31,7 @@ ACE_INLINE void POA_PortableServer::ThreadPolicy::_get_policy_type_skel (CORBA::
   POA_CORBA::Policy_ptr impl = (POA_PortableServer::ThreadPolicy_ptr) obj;
   POA_CORBA::Policy::_get_policy_type_skel (req, (POA_CORBA::Policy_ptr) impl, context, env);
 }
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -37,6 +40,8 @@ ACE_INLINE
 POA_PortableServer::LifespanPolicy::~LifespanPolicy (void)
 {
 }
+
+#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 ACE_INLINE void POA_PortableServer::LifespanPolicy::copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env)
 {
   POA_CORBA::Policy_ptr impl = (POA_PortableServer::LifespanPolicy_ptr) obj;
@@ -52,11 +57,15 @@ ACE_INLINE void POA_PortableServer::LifespanPolicy::_get_policy_type_skel (CORBA
   POA_CORBA::Policy_ptr impl = (POA_PortableServer::LifespanPolicy_ptr) obj;
   POA_CORBA::Policy::_get_policy_type_skel (req, (POA_CORBA::Policy_ptr) impl, context, env);
 }
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
+
 // skeleton destructor
 ACE_INLINE
 POA_PortableServer::IdUniquenessPolicy::~IdUniquenessPolicy (void)
 {
 }
+
+#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 ACE_INLINE void POA_PortableServer::IdUniquenessPolicy::copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env)
 {
   POA_CORBA::Policy_ptr impl = (POA_PortableServer::IdUniquenessPolicy_ptr) obj;
@@ -72,11 +81,15 @@ ACE_INLINE void POA_PortableServer::IdUniquenessPolicy::_get_policy_type_skel (C
   POA_CORBA::Policy_ptr impl = (POA_PortableServer::IdUniquenessPolicy_ptr) obj;
   POA_CORBA::Policy::_get_policy_type_skel (req, (POA_CORBA::Policy_ptr) impl, context, env);
 }
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
+
 // skeleton destructor
 ACE_INLINE
 POA_PortableServer::IdAssignmentPolicy::~IdAssignmentPolicy (void)
 {
 }
+
+#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 ACE_INLINE void POA_PortableServer::IdAssignmentPolicy::copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env)
 {
   POA_CORBA::Policy_ptr impl = (POA_PortableServer::IdAssignmentPolicy_ptr) obj;
@@ -92,6 +105,7 @@ ACE_INLINE void POA_PortableServer::IdAssignmentPolicy::_get_policy_type_skel (C
   POA_CORBA::Policy_ptr impl = (POA_PortableServer::IdAssignmentPolicy_ptr) obj;
   POA_CORBA::Policy::_get_policy_type_skel (req, (POA_CORBA::Policy_ptr) impl, context, env);
 }
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
@@ -100,6 +114,8 @@ ACE_INLINE
 POA_PortableServer::ImplicitActivationPolicy::~ImplicitActivationPolicy (void)
 {
 }
+
+#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 ACE_INLINE void POA_PortableServer::ImplicitActivationPolicy::copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env)
 {
   POA_CORBA::Policy_ptr impl = (POA_PortableServer::ImplicitActivationPolicy_ptr) obj;
@@ -115,11 +131,15 @@ ACE_INLINE void POA_PortableServer::ImplicitActivationPolicy::_get_policy_type_s
   POA_CORBA::Policy_ptr impl = (POA_PortableServer::ImplicitActivationPolicy_ptr) obj;
   POA_CORBA::Policy::_get_policy_type_skel (req, (POA_CORBA::Policy_ptr) impl, context, env);
 }
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
+
 // skeleton destructor
 ACE_INLINE
 POA_PortableServer::ServantRetentionPolicy::~ServantRetentionPolicy (void)
 {
 }
+
+#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 ACE_INLINE void POA_PortableServer::ServantRetentionPolicy::copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env)
 {
   POA_CORBA::Policy_ptr impl = (POA_PortableServer::ServantRetentionPolicy_ptr) obj;
@@ -135,11 +155,15 @@ ACE_INLINE void POA_PortableServer::ServantRetentionPolicy::_get_policy_type_ske
   POA_CORBA::Policy_ptr impl = (POA_PortableServer::ServantRetentionPolicy_ptr) obj;
   POA_CORBA::Policy::_get_policy_type_skel (req, (POA_CORBA::Policy_ptr) impl, context, env);
 }
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
+
 // skeleton destructor
 ACE_INLINE
 POA_PortableServer::RequestProcessingPolicy::~RequestProcessingPolicy (void)
 {
 }
+
+#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 ACE_INLINE void POA_PortableServer::RequestProcessingPolicy::copy_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA::Environment &env)
 {
   POA_CORBA::Policy_ptr impl = (POA_PortableServer::RequestProcessingPolicy_ptr) obj;
@@ -155,6 +179,7 @@ ACE_INLINE void POA_PortableServer::RequestProcessingPolicy::_get_policy_type_sk
   POA_CORBA::Policy_ptr impl = (POA_PortableServer::RequestProcessingPolicy_ptr) obj;
   POA_CORBA::Policy::_get_policy_type_skel (req, (POA_CORBA::Policy_ptr) impl, context, env);
 }
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
