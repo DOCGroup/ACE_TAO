@@ -90,7 +90,7 @@ public:
   // Report the instance name for instantiation.
 
   int gen_base_class_name (TAO_OutStream *os,
-                           char * linebreak,
+                           const char * linebreak,
                            AST_Decl *elem_scope);
   // Common code for generating the name and parameters of our
   // template sequence base class.

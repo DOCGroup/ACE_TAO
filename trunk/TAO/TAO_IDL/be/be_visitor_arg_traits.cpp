@@ -39,7 +39,7 @@ ACE_RCSID (be,
            be_visitor_arg_traits,
            "$Id$")
 
-be_visitor_arg_traits::be_visitor_arg_traits (char *S,
+be_visitor_arg_traits::be_visitor_arg_traits (const char *S,
                                               be_visitor_context *ctx)
   : be_visitor_scope (ctx),
     S_ (ACE::strnew (S))

@@ -22,7 +22,7 @@
 class be_visitor_arg_traits : public be_visitor_scope
 {
 public:
-  be_visitor_arg_traits (char *S,
+  be_visitor_arg_traits (const char *S,
                          be_visitor_context *ctx);
 
   virtual ~be_visitor_arg_traits (void);
