@@ -1,3 +1,8 @@
+Mon Apr  2 20:01:05 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+        * orbsvcs/orbsvcs/AVStreams.idl:
+          Change comments to Doxygen format
+
 Mon Apr  2 15:24:39 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
