@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "client"=.\client.dsp - Package Owner=<4>
+Project: "Multithreaded Client"=.\client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -15,7 +15,19 @@ Package=<4>
 
 ###############################################################################
 
-Project: "server"=.\server.dsp - Package Owner=<4>
+Project: "Multithreaded Server"=.\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ORB Creation"=.\orb_creation.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
