@@ -838,13 +838,13 @@ ACE_Process_Options::pass_handle (ACE_HANDLE h)
   if (!GetVersionEx (&osvi) || osvi.dwPlatformId != VER_PLATFORM_WIN32_NT)
     {
       HANDLE dup_handle;
-      if (!DuplicateHandle (GetCurrentProcess (),
-                            ACE_static_cast (HANDLE, h),
-                            GetCurrentProcess (),
-                            &dup_handle,
-                            0,
-                            TRUE,   // Inheritable
-                            DUPLICATE_SAME_ACCESS))
+      if (!::DuplicateHandle (GetCurrentProcess (),
+                              ACE_static_cast (HANDLE, h),
+                              GetCurrentProcess (),
+                              &dup_handle,
+                              0,
+                              TRUE,   // Inheritable
+                              DUPLICATE_SAME_ACCESS))
         return -1;
       dup_handles_.set_bit (ACE_static_cast (ACE_HANDLE, dup_handle));
     }
@@ -877,4 +877,12 @@ ACE_Process_Options::passed_handles (ACE_Handle_Set &set) const
   set.reset ();
   set = this->handles_passed_;
   return 1;
+}
+
+ACE_Managed_Process::ACE_Managed_Process (void)
+{
+}
+
+ACE_Managed_Process::~ACE_Managed_Process (void)
+{
 }

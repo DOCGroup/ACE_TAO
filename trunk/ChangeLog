@@ -1,3 +1,16 @@
+Thu Aug 16 19:27:29 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process.cpp (ACE_Process_Options::pass_handle): Add
+          "::" to front of "DuplicateHandle" so the WinCE compiler
+          sees the right function.
+          Also added ctor/dtor for ACE_Managed_Process to try and fix the
+          can't find vtable error on Linux.
+
+        * ace/Process.h: Added a constructor for ACE_Managed_Process
+          to fix "can't find vtable" error on Linux.
+
+        * ace/Process.i: Moved ACE_Managed_Process dtor to .cpp file.
+
 Thu Aug 16 15:10:42 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Process.h (pass_handle): Clarify comments for this method.
