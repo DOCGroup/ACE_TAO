@@ -1,3 +1,11 @@
+Tue Apr 29 14:47:40 2003  Dave Smith  <dts@prismtechnologies.com>
+
+	* tao/IOP_IORC.h:
+	* tao/diffs/IOP_IOR.diff:
+
+          Removed clash with symbol "IOR" defined in
+          /usr/include/machine/inline.h on HPUX.
+
 Mon Apr 28 18:09:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_home.cpp:
