@@ -52,7 +52,7 @@ ACE_Service_Repository::ACE_Service_Repository (int size)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Service_Repository"));
 }
 
-/* Close down all the services */
+// Close down all the services.
 
 int
 ACE_Service_Repository::close (void)

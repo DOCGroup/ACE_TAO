@@ -109,12 +109,12 @@ $(INSMAN)/mann/% :
 	fi
 ifdef MVSLIB
 #special for MVS in order to use the .x files
-        @if test -s $(@:.so=.x) ; then \
-                echo "$(@F:.so=.x) already installed" ; \
-        else \
-                echo "Installing $(@F:.so=.x) -> $(@D)" ; \
-                ln -s $(shell pwd)/$(@F:.so=.x) $(@:.so=.x) ; \
-        fi
+	@if test -s $(@:.so=.x) ; then \
+		echo "$(@F:.so=.x) already installed" ; \
+	else \
+		echo "Installing $(@F:.so=.x) -> $(@D)" ; \
+		ln -s $(shell pwd)/$(@F:.so=.x) $(@:.so=.x) ; \
+	fi
 endif
 
 #----------------------------------------------------------------------------

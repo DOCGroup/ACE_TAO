@@ -1702,7 +1702,9 @@ extern "C" {
 #include /**/ <netinet/in.h>
 #include /**/ <arpa/inet.h>
 }
+#if !defined (ACE_LACKS_TCP_H)
 #include /**/ <netinet/tcp.h>
+#endif /* ACE_LACKS_TCP_H */
 #if defined (VXWORKS)
 #include /**/ <sys/times.h>
 #else
