@@ -397,7 +397,6 @@ static CORBA::Boolean
 catpoop (CORBA::String string,
         CORBA::Environment &env)
 {
-  CORBA::Boolean b = 0;
   if (!string || !*string)
     return 0;
 
@@ -451,10 +450,9 @@ catpoop (CORBA::String string,
   CORBA::string_free (server_name);
 
   // Read the Orbix specific marker.
-  CORBA::String marker;
   cp = ACE_OS::strchr (string, ':');
 
-  marker = CORBA::string_alloc (1 + cp - string);
+  CORBA::String marker = CORBA::string_alloc (1 + cp - string);
 
   for (cp = marker;
        *string != ':';
@@ -469,11 +467,10 @@ catpoop (CORBA::String string,
               marker));
   CORBA::string_free (marker);
 
-  // Read the IR_host.
-  CORBA::String  IR_host;
   cp = ACE_OS::strchr (string, ':');
 
-  IR_host = CORBA::string_alloc (1 + cp - string);
+  // Read the IR_host.
+  CORBA::String IR_host = CORBA::string_alloc (1 + cp - string);
 
   for (cp = IR_host;
        *string != ':';

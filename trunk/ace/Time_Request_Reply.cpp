@@ -15,8 +15,8 @@ ACE_Time_Request::ACE_Time_Request (void)
 
 // Create a ACE_Time_Request message.  
 
-ACE_Time_Request::ACE_Time_Request (ACE_UINT32 t, // Type of request.
-				    const ACE_UINT32 time,
+ACE_Time_Request::ACE_Time_Request (ACE_INT32 t, // Type of request.
+				    const ACE_INT32 time,
 				    ACE_Time_Value *timeout) // Max time waiting for request.
 {
   ACE_TRACE ("ACE_Time_Request::ACE_Time_Request");
@@ -58,7 +58,7 @@ ACE_Time_Request::size (void) const
 }
 
 // = Set/get the type of the message.
-ACE_UINT32 
+ACE_INT32 
 ACE_Time_Request::msg_type (void) const
 {
   ACE_TRACE ("ACE_Time_Request::msg_type");
@@ -66,7 +66,7 @@ ACE_Time_Request::msg_type (void) const
 }
 
 void 
-ACE_Time_Request::msg_type (ACE_UINT32 t)
+ACE_Time_Request::msg_type (ACE_INT32 t)
 {
   ACE_TRACE ("ACE_Time_Request::msg_type");
   this->transfer_.msg_type_ = t;

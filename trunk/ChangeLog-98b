@@ -1,3 +1,10 @@
+Wed Sep  2 22:52:32 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* netsvcs/lib/Name_Handler.cpp,
+	* ace/Time_Request_Reply.cpp: Fixed up yet another
+ 	  minor mismatch caused by the ACE_SUCCESS/ACE_FAILURE fixes...
+  	  Thanks to David Levine for tracking these down.
+
 Wed Sep 02 20:55:18 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.36 released.

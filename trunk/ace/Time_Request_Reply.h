@@ -46,7 +46,7 @@ public:
   ACE_Time_Request (void);
   // Default constructor.
 
-  ACE_Time_Request (ACE_UINT32 msg_type, // Type of request.
+  ACE_Time_Request (ACE_INT32 msg_type, // Type of request.
 		    const ACE_UINT32 time,
 		    ACE_Time_Value *timeout = 0); // Max time waiting for request.
   // Create a <ACE_Time_Request> message.  
@@ -59,8 +59,8 @@ public:
   ssize_t size (void) const;
   
   // = Set/get the type of the message.
-  ACE_UINT32 msg_type (void) const;
-  void msg_type (ACE_UINT32);
+  ACE_INT32 msg_type (void) const;
+  void msg_type (ACE_INT32);
 
   // = Set/get the time
   ACE_UINT32 time (void) const;
@@ -90,7 +90,7 @@ private:
 
   struct Transfer
   {
-    ACE_UINT32 msg_type_;
+    ACE_INT32 msg_type_;
     // Type of the request (i.e., <TIME_UPDATE>)
 
     ACE_UINT32 block_forever_;

@@ -86,7 +86,8 @@ protected:
   // Dispatch the appropriate operation to handle the client's
   // request.
 
-  virtual int send_reply (ACE_UINT32 status, ACE_UINT32 errnum = 0);
+  virtual int send_reply (ACE_INT32 status,
+                          ACE_UINT32 errnum = 0);
   // Create and send a reply to the client.
 
   virtual int send_request (ACE_Name_Request &);
