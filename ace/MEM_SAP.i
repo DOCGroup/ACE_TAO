@@ -42,7 +42,7 @@ ACE_MEM_SAP::release_buffer (void *buf)
 }
 
 ASYS_INLINE off_t
-ACE_MEM_SAP::set_buf_len (const void *buf, size_t n)
+ACE_MEM_SAP::set_buf_len (void *buf, size_t n)
 {
   ACE_TRACE ("ACE_MEM_SAP::set_buf_len");
   if (this->shm_malloc_ == 0)
