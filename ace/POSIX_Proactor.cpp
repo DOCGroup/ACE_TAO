@@ -316,6 +316,26 @@ ACE_POSIX_Proactor::create_asynch_accept_result (ACE_Handler &handler,
   return implementation;
 }
 
+ACE_Asynch_Connect_Result_Impl *
+ACE_POSIX_Proactor::create_asynch_connect_result (ACE_Handler &handler,
+                                                  ACE_HANDLE  connect_handle,
+                                                  const void* act,
+                                                  ACE_HANDLE event,
+                                                  int priority,
+                                                  int signal_number)
+{
+  ACE_Asynch_Connect_Result_Impl *implementation;
+  ACE_NEW_RETURN (implementation,
+                  ACE_POSIX_Asynch_Connect_Result (handler,
+                                                   connect_handle,
+                                                   act,
+                                                   event,
+                                                   priority,
+                                                   signal_number),
+                  0);
+  return implementation;
+}
+
 ACE_Asynch_Transmit_File_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_transmit_file_result (ACE_Handler &handler,
                                                         ACE_HANDLE socket,
@@ -494,7 +514,7 @@ private:
 
   ACE_Pipe pipe_;
   // Pipe for the communication between Proactor and the
-  // Asynch_Accept.
+  // Asynch_Accept/Asynch_Connect and other post_completions
 
   ACE_POSIX_Asynch_Read_Stream read_stream_;
   // To do asynch_read on the pipe.
@@ -505,7 +525,7 @@ private:
 
 ACE_AIOCB_Notify_Pipe_Manager::ACE_AIOCB_Notify_Pipe_Manager (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor)
   : posix_aiocb_proactor_ (posix_aiocb_proactor),
-    message_block_ (sizeof (ACE_POSIX_Asynch_Accept_Result *)),
+    message_block_ (sizeof (2)),
     read_stream_ (posix_aiocb_proactor)
 {
   // Open the pipe.
@@ -620,7 +640,8 @@ ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (size_t max_aio_operations)
 
   // start pseudo-asynchronous accept task
   // one per all future acceptors
-  this->accept_task_.start ();
+  this->get_asynch_pseudo_task().start ();
+
 }
 
 // Special protected constructor for ACE_SUN_Proactor
@@ -661,7 +682,8 @@ ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (size_t max_aio_operations,
 ACE_POSIX_AIOCB_Proactor::~ACE_POSIX_AIOCB_Proactor (void)
 {
   // stop asynch accept task
-  this->get_asynch_accept_task().stop ();
+  this->get_asynch_pseudo_task().stop ();
+
 
   delete_notify_manager ();
 
@@ -745,8 +767,8 @@ void ACE_POSIX_AIOCB_Proactor::check_max_aio_num ()
 void
 ACE_POSIX_AIOCB_Proactor::create_notify_manager (void)
 {
-  // Accept Handler for aio_accept. Remember! this issues a Asynch_Read
-  // on the notify pipe for doing the Asynch_Accept.
+  // Remember! this issues a Asynch_Read
+  // on the notify pipe for doing the Asynch_Accept/Connect.
 
   if (aiocb_notify_pipe_manager_ == 0)
     ACE_NEW (aiocb_notify_pipe_manager_,
@@ -939,7 +961,17 @@ ACE_POSIX_AIOCB_Proactor::create_asynch_accept (void)
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Accept (this),
                   0);
-  //was ACE_POSIX_AIOCB_Asynch_Accept (this)
+
+  return implementation;
+}
+
+ACE_Asynch_Connect_Impl *
+ACE_POSIX_AIOCB_Proactor::create_asynch_connect (void)
+{
+  ACE_Asynch_Connect_Impl *implementation = 0;
+  ACE_NEW_RETURN (implementation,
+                  ACE_POSIX_Asynch_Connect (this),
+                  0);
 
   return implementation;
 }
@@ -1485,7 +1517,7 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (size_t max_aio_operations)
   // but we should start pseudo-asynchronous accept task
   // one per all future acceptors
 
-  this->accept_task_.start ();
+  this->get_asynch_pseudo_task().start ();
   return;
 }
 
@@ -1532,14 +1564,14 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (const sigset_t signal_set,
   // but we should start pseudo-asynchronous accept task
   // one per all future acceptors
 
-  this->accept_task_.start ();
+  this->get_asynch_pseudo_task().start ();
   return;
 }
 
 ACE_POSIX_SIG_Proactor::~ACE_POSIX_SIG_Proactor (void)
 {
   // stop asynch accept task
-  this->get_asynch_accept_task().stop ();
+  this->get_asynch_pseudo_task().stop ();
 
   // @@ Enable the masked signals again.
 }

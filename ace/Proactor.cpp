@@ -772,6 +772,12 @@ ACE_Proactor::create_asynch_accept (void)
   return this->implementation ()->create_asynch_accept ();
 }
 
+ACE_Asynch_Connect_Impl *
+ACE_Proactor::create_asynch_connect (void)
+{
+  return this->implementation ()->create_asynch_connect ();
+}
+
 ACE_Asynch_Transmit_File_Impl *
 ACE_Proactor::create_asynch_transmit_file (void)
 {
@@ -937,6 +943,23 @@ ACE_Proactor::create_asynch_accept_result (ACE_Handler &handler,
                                                                event,
                                                                priority,
                                                                signal_number);
+}
+
+ACE_Asynch_Connect_Result_Impl *
+ACE_Proactor::create_asynch_connect_result (ACE_Handler &handler,
+                                            ACE_HANDLE  connect_handle,
+                                            const void* act,
+                                            ACE_HANDLE event,
+                                            int priority,
+                                            int signal_number)
+
+{
+  return this->implementation ()->create_asynch_connect_result (handler,
+                                                                connect_handle,
+                                                                act,
+                                                                event,
+                                                                priority,
+                                                                signal_number);
 }
 
 ACE_Asynch_Transmit_File_Result_Impl *

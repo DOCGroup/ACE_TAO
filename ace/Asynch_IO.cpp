@@ -661,6 +661,106 @@ ACE_Asynch_Accept::Result::implementation (void) const
   return this->implementation_;
 }
 
+
+
+// *********************************************************************
+
+ACE_Asynch_Connect::ACE_Asynch_Connect (void)
+  : implementation_ (0)
+{
+}
+
+ACE_Asynch_Connect::~ACE_Asynch_Connect (void)
+{
+}
+
+int
+ACE_Asynch_Connect::open (ACE_Handler &handler,
+                          ACE_HANDLE handle,
+                          const void *completion_key,
+                          ACE_Proactor *proactor)
+{
+  // Get a proactor for/from the user.
+  proactor = this->get_proactor (proactor, handler);
+
+  // Delete the old implementation.
+  delete this->implementation_;
+  this->implementation_ = 0;
+
+  // Now let us get the implementation initialized.
+  ACE_Asynch_Connect_Impl *implementation = proactor->create_asynch_connect ();
+  if (implementation == 0)
+    return -1;
+  
+  // Set the implementation class
+  this->implementation (implementation);
+  
+  // Call the <open> method of the base class.
+  return ACE_Asynch_Operation::open (handler,
+                                     handle,
+                                     completion_key,
+                                     proactor);
+}
+
+int
+ACE_Asynch_Connect::connect (ACE_HANDLE connect_handle,
+                             const ACE_Addr & remote_sap,
+                             const ACE_Addr & local_sap,
+                             int  reuse_addr,
+                             const void *act,
+                             int priority,
+                             int signal_number)
+{
+  return this->implementation ()->connect (connect_handle,
+                                           remote_sap,
+                                           local_sap,
+                                           reuse_addr,
+                                           act,
+                                           priority,
+                                           signal_number);
+}
+
+ACE_Asynch_Connect_Impl *
+ACE_Asynch_Connect::implementation (void)  const
+{
+  return this->implementation_;
+}
+
+void
+ACE_Asynch_Connect::implementation (ACE_Asynch_Connect_Impl *implementation)
+{
+  this->implementation_ = implementation;
+  // Set the implementation in the base class.
+  ACE_Asynch_Operation::implementation (implementation);
+}
+
+// ************************************************************
+
+ACE_Asynch_Connect::Result::Result (ACE_Asynch_Connect_Result_Impl *implementation)
+  : ACE_Asynch_Result (implementation),
+    implementation_ (implementation)
+{
+}
+
+ACE_Asynch_Connect::Result::~Result (void)
+{
+  // Proactor will delete the implementation when the <complete> call
+  // completes.
+}
+
+ACE_HANDLE
+ACE_Asynch_Connect::Result::connect_handle (void) const
+{
+  return this->implementation ()->connect_handle ();
+}
+
+
+ACE_Asynch_Connect_Result_Impl *
+ACE_Asynch_Connect::Result::implementation (void) const
+{
+  return this->implementation_;
+}
+
 // ************************************************************
 
 ACE_Asynch_Transmit_File::ACE_Asynch_Transmit_File (void)
@@ -946,6 +1046,11 @@ ACE_Handler::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result & /* result 
 
 void
 ACE_Handler::handle_accept (const ACE_Asynch_Accept::Result & /* result */)
+{
+}
+
+void
+ACE_Handler::handle_connect (const ACE_Asynch_Connect::Result & /* result */)
 {
 }
 

@@ -8,7 +8,7 @@
 #include "ace/Proactor.h"
 #include "ace/Message_Block.h"
 #include "ace/INET_Addr.h"
-#include "ace/Task_T.h"
+#include "ace/Asynch_Pseudo_Task.h"
 #include "ace/POSIX_Proactor.h"
 
 #if !defined (__ACE_INLINE__)
@@ -1120,6 +1120,7 @@ ACE_POSIX_Asynch_Write_File::proactor (void) const
 
 // *********************************************************************
 
+
 u_long
 ACE_POSIX_Asynch_Accept_Result::bytes_to_read (void) const
 {
@@ -1273,6 +1274,7 @@ ACE_POSIX_Asynch_Accept::ACE_POSIX_Asynch_Accept (ACE_POSIX_AIOCB_Proactor * pos
 ACE_POSIX_Asynch_Accept::~ACE_POSIX_Asynch_Accept (void)
 {
   this->close ();  
+  this->reactor(0); // to avoid purge_pending_notifications
 }
 
 ACE_Proactor *
@@ -1302,19 +1304,19 @@ ACE_POSIX_Asynch_Accept::open (ACE_Handler &handler,
 {
   ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::open\n"));
 
-  int result = 0;
+  int result=0;
 
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
-  // If we are already opened, we could not create a new handler
-  // without closing the previous.
+  // if we are already opened,
+  // we could not create a new handler without closing the previous
   
   if (this->flg_open_ != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT("%N:%l:ACE_POSIX_Asynch_Accept::open:")
                        ACE_LIB_TEXT("acceptor already open \n")),
                       -1);
-  
+
   result = ACE_POSIX_Asynch_Operation::open (handler,
                                              handle,
                                              completion_key,
@@ -1326,24 +1328,24 @@ ACE_POSIX_Asynch_Accept::open (ACE_Handler &handler,
 
   task_lock_count_++;
 
-  // At this moment asynch_accept_task does not know about us, so we
-  // can lock task's token with our lock_ locked.  In all other cases
-  // we should release our lock_ before calling task's methods to
-  // avoid deadlock
-  
-  ACE_POSIX_Asynch_Accept_Task & task = 
-    this->posix_proactor()->get_asynch_accept_task();
- 
-  result = task.register_acceptor (this, ACE_Event_Handler::ACCEPT_MASK);
+  // At this moment asynch_accept_task does not know about us,
+  // so we can lock task's token with our lock_ locked.
+  // In all other cases we should release our lock_ before
+  // calling task's methods to avoid deadlock
+  ACE_Asynch_Pseudo_Task & task = 
+    this->posix_proactor()->get_asynch_pseudo_task();
+
+  result = task.register_io_handler (this->get_handle(),
+                                     this,
+                                     ACE_Event_Handler::ACCEPT_MASK,
+                                     1);  // suspend after register
 
   task_lock_count_-- ;
 
   if (result < 0)
     {
-
       this->flg_open_= 0;
       this->handle_ = ACE_INVALID_HANDLE;
-
       return -1 ;
     }
 
@@ -1352,22 +1354,22 @@ ACE_POSIX_Asynch_Accept::open (ACE_Handler &handler,
 
 int
 ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
-                                  u_long bytes_to_read,
-                                  ACE_HANDLE accept_handle,
-                                  const void *act,
-                                  int priority,
-                                  int signal_number)
+                                 u_long bytes_to_read,
+                                 ACE_HANDLE accept_handle,
+                                 const void *act,
+                                 int priority,
+                                 int signal_number)
 {
-  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::accept\n") );
+  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::accept\n"));
 
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
-    if (this->flg_open_ == 0 )
+    if (this->flg_open_ == 0)
       ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT("%N:%l:ACE_POSIX_Asynch_Accept::accept")
-                       ACE_LIB_TEXT("acceptor was not opened before\n")),
-                      -1);
+                         ACE_LIB_TEXT("%N:%l:ACE_POSIX_Asynch_Accept::accept")
+                         ACE_LIB_TEXT("acceptor was not opened before\n")),
+                        -1);
 
     // Sanity check: make sure that enough space has been allocated by
     // the caller.
@@ -1380,7 +1382,7 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
     if (available_space < space_needed)
       ACE_ERROR_RETURN ((LM_ERROR, 
                          ACE_LIB_TEXT ("Buffer too small\n")),
-                         -1);
+                        -1);
 
     // Common code for both WIN and POSIX.
     // Create future Asynch_Accept_Result
@@ -1400,14 +1402,14 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
     // Enqueue result
     if (this->result_queue_.enqueue_tail (result) == -1)
       {
-         delete result;  // to avoid memory  leak
+        delete result;  // to avoid memory  leak
 
-         ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT("%N:%l:ACE_POSIX_Asynch_Accept::accept:")
-                       ACE_LIB_TEXT("enqueue accept call failed\n")),
-                      -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_LIB_TEXT("%N:%l:ACE_POSIX_Asynch_Accept::accept:")
+                           ACE_LIB_TEXT("enqueue accept call failed\n")),
+                          -1);
       }
-    
+
     if (this->result_queue_.size () > 1)
       return 0;
 
@@ -1417,10 +1419,10 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
   // If this is the only item, then it means there the set was empty
   // before. So enable the <handle> in the reactor.
 
-  ACE_POSIX_Asynch_Accept_Task & task = 
-    this->posix_proactor()->get_asynch_accept_task();
+  ACE_Asynch_Pseudo_Task & task = 
+    this->posix_proactor ()->get_asynch_pseudo_task ();
  
-  int rc_task = task.resume_acceptor (this);
+  int rc_task = task.resume_io_handler (this->get_handle());
 
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
@@ -1428,8 +1430,7 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
     task_lock_count_ --;
 
     if (rc_task == -2 && task_lock_count_ == 0)  // task is closing
-       task.unlock_finish ();
-        
+      task.unlock_finish ();
   }
 
   if (rc_task < 0)
@@ -1458,31 +1459,31 @@ ACE_POSIX_Asynch_Accept::cancel_uncompleted (int flg_notify)
   int retval = 0;
 
   for (; ; retval++)
-  {
-    ACE_POSIX_Asynch_Accept_Result* result = 0;
-
-    this->result_queue_.dequeue_head (result);
-
-    if (result == 0)
-      break;
-
-    if (this->flg_open_==0 || flg_notify == 0) //if we should not notify 
-      delete result ;                            //   we have to delete result
-    else                                         //else notify as any cancelled AIO
     {
-      // Store the new handle.
-      result->aio_fildes = ACE_INVALID_HANDLE ;
-      result->set_bytes_transferred (0);
-      result->set_error (ECANCELED);
+      ACE_POSIX_Asynch_Accept_Result* result = 0;
 
-      if (this->posix_proactor()->post_completion (result) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT("Error:(%P | %t):%p\n"),
-                    ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::")
-                    ACE_LIB_TEXT("cancel_uncompleted:<post_completion> failed")
-                 ));
+      this->result_queue_.dequeue_head (result);
+
+      if (result == 0)
+        break;
+
+      if (this->flg_open_ == 0 || flg_notify == 0) //if we should not notify 
+        delete result ;                            // we have to delete result
+      else                                 //else notify as any cancelled AIO
+        {
+          // Store the new handle.
+          result->aio_fildes = ACE_INVALID_HANDLE ;
+          result->set_bytes_transferred (0);
+          result->set_error (ECANCELED);
+
+          if (this->posix_proactor ()->post_completion (result) == -1)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_LIB_TEXT("Error:(%P | %t):%p\n"),
+                        ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::")
+                        ACE_LIB_TEXT("cancel_uncompleted:<post_completion> failed")
+                        ));
+        }
     }
-  }
   return retval;
 }
     
@@ -1497,7 +1498,7 @@ ACE_POSIX_Asynch_Accept::cancel (void)
   //return ACE_POSIX_Asynch_Operation::cancel ();
   //We delegate real cancelation to cancel_uncompleted (1)
 
-  int rc  = -1 ;  // ERRORS
+  int rc = -1 ;  // ERRORS
 
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
@@ -1511,14 +1512,14 @@ ACE_POSIX_Asynch_Accept::cancel (void)
 
     if (this->flg_open_ == 0)
        return rc ;
-    
-    task_lock_count_ ++;
+
+    task_lock_count_++;
   }
 
-  ACE_POSIX_Asynch_Accept_Task & task = 
-    this->posix_proactor()->get_asynch_accept_task();
- 
-  int rc_task = task.suspend_acceptor (this);
+  ACE_Asynch_Pseudo_Task & task =
+    this->posix_proactor ()->get_asynch_pseudo_task ();
+
+  int rc_task = task.suspend_io_handler (this->get_handle());
 
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
@@ -1527,7 +1528,6 @@ ACE_POSIX_Asynch_Accept::cancel (void)
 
     if (rc_task == -2 && task_lock_count_ == 0)  // task is closing
        task.unlock_finish ();
-        
   }
 
   return rc;
@@ -1539,7 +1539,7 @@ ACE_POSIX_Asynch_Accept::close ()
   ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::close\n"));
 
   // 1. It performs cancellation of all pending requests
-  // 2. Removes itself from Reactor (ACE_POSIX_Asynch_Accept_Task)
+  // 2. Removes itself from Reactor ( ACE_Asynch_Pseudo_Task)
   // 3. close the socket
   //
   //  Parameter flg_notify can be 
@@ -1551,7 +1551,6 @@ ACE_POSIX_Asynch_Accept::close ()
   //  Return codes : 0 - OK , 
   //                -1 - Errors
 
-
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
@@ -1562,7 +1561,7 @@ ACE_POSIX_Asynch_Accept::close ()
         if (this->handle_ != ACE_INVALID_HANDLE)
           {
             ACE_OS::closesocket (this->handle_);
-            this->handle_=ACE_INVALID_HANDLE;
+            this->handle_ = ACE_INVALID_HANDLE;
           }
         return 0;
       }
@@ -1570,10 +1569,10 @@ ACE_POSIX_Asynch_Accept::close ()
     task_lock_count_++;
   }
 
-  ACE_POSIX_Asynch_Accept_Task & task = 
-    this->posix_proactor()->get_asynch_accept_task();
+  ACE_Asynch_Pseudo_Task & task =
+    this->posix_proactor ()->get_asynch_pseudo_task ();
  
-  int rc_task = task.remove_acceptor (this);
+  int rc_task = task.remove_io_handler (this->get_handle ());
 
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
@@ -1581,15 +1580,15 @@ ACE_POSIX_Asynch_Accept::close ()
     task_lock_count_--;
 
     if (rc_task == -2 && task_lock_count_ == 0)  // task is closing
-       task.unlock_finish ();
-  
+      task.unlock_finish ();
+
     if (this->handle_ != ACE_INVALID_HANDLE)
       {
         ACE_OS::closesocket (this->handle_);
-        this->handle_=ACE_INVALID_HANDLE;
+        this->handle_ = ACE_INVALID_HANDLE;
       }
 
-    this->flg_open_=0;
+    this->flg_open_ = 0;
   }
 
   return 0;
@@ -1600,26 +1599,26 @@ ACE_POSIX_Asynch_Accept::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close
 {
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (close_mask);
-
-  ACE_TRACE(ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::handle_close\n"));
+ 
+  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::handle_close\n"));
 
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
 
   // handle_close is called only in one case :
-  //  when Asynch_accept_task is closing (i.e. proactor destructor)
+  //  when Asynch_accept_task is closing ( i.e. proactor destructor )
 
-  // In all other cases we deregister ourself with
-  // ACE_Event_Handler::DONT_CALL mask
-  
+  // In all other cases we deregister ourself
+  // with ACE_Event_Handler::DONT_CALL mask
+
   this->cancel_uncompleted (0);
 
   this->flg_open_ = 0;
 
   // it means other thread is waiting for reactor token_
-  if (task_lock_count_ > 0) 
+  if (task_lock_count_ > 0)
     {
-      ACE_POSIX_Asynch_Accept_Task & task = 
-        this->posix_proactor()->get_asynch_accept_task();
+      ACE_Asynch_Pseudo_Task & task =
+         this->posix_proactor ()->get_asynch_pseudo_task ();
 
       task.lock_finish ();
     }
@@ -1645,8 +1644,7 @@ ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT("%N:%l:(%P | %t):%p\n"),
                 ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::handle_input:")
-                ACE_LIB_TEXT(" dequeueing failed")
-             ));
+                ACE_LIB_TEXT( " dequeueing failed")));
 
   // Disable the <handle> in the reactor if no <accept>'s are pending.
 
@@ -1656,10 +1654,10 @@ ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
 
   if (this->result_queue_.size () == 0)
     {
-      ACE_POSIX_Asynch_Accept_Task & task = 
-        this->posix_proactor()->get_asynch_accept_task();
- 
-      task.suspend_acceptor (this);
+      ACE_Asynch_Pseudo_Task & task =
+        this->posix_proactor ()->get_asynch_pseudo_task ();
+
+      task.suspend_io_handler (this->get_handle());
     }
 
   // Issue <accept> now.
@@ -1668,13 +1666,11 @@ ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
 
   ACE_HANDLE new_handle = ACE_OS::accept (this->handle_, 0, 0);
 
-
   if (result == 0) // there is nobody to notify
     {
       ACE_OS::closesocket (new_handle);
       return 0;
     }
-    
 
   if (new_handle == ACE_INVALID_HANDLE)
     {
@@ -1682,8 +1678,7 @@ ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
       ACE_ERROR ((LM_ERROR,
                   ACE_LIB_TEXT("%N:%l:(%P | %t):%p\n"),
                   ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::handle_input: ")
-                  ACE_LIB_TEXT(" <accept> system call failed")
-                ));
+                  ACE_LIB_TEXT(" <accept> system call failed")));
 
       // Notify client as usual, "AIO" finished with errors
     }
@@ -1693,282 +1688,654 @@ ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
 
   // Notify the main process about this completion
   // Send the Result through the notification pipe.
-  if (this->posix_proactor()->post_completion (result) == -1)
+  if (this->posix_proactor ()->post_completion (result) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT("Error:(%P | %t):%p\n"),
                 ACE_LIB_TEXT("ACE_POSIX_Asynch_Accept::handle_input: ")
-                ACE_LIB_TEXT(" <post_completion> failed")
-              ));
-  
+                ACE_LIB_TEXT(" <post_completion> failed")));
+
   return 0;
 }
 
 // *********************************************************************
 
-ACE_POSIX_Asynch_Accept_Task::ACE_POSIX_Asynch_Accept_Task()
-  : flg_active_ (0),
-    select_reactor_(),                  // should be initialized before reactor_
-    reactor_ (& select_reactor_, 0),   // don't delete implementation
-    token_ (select_reactor_.lock()),   // we can use reactor token	
-    finish_count_(0)
+ACE_HANDLE
+ACE_POSIX_Asynch_Connect_Result::connect_handle (void) const
+{
+  return this->aio_fildes;
+}
+
+void ACE_POSIX_Asynch_Connect_Result::connect_handle (ACE_HANDLE handle)
+{
+  this->aio_fildes = handle;
+}
+
+
+ACE_POSIX_Asynch_Connect_Result::ACE_POSIX_Asynch_Connect_Result (ACE_Handler &handler,
+                                                                  ACE_HANDLE connect_handle,
+                                                                  const void* act,
+                                                                  ACE_HANDLE event,
+                                                                  int priority,
+                                                                  int signal_number)
+
+  : ACE_Asynch_Result_Impl (),
+    ACE_Asynch_Connect_Result_Impl (),
+    ACE_POSIX_Asynch_Result (handler, act, event, 0, 0, priority, signal_number)
+{
+  this->aio_fildes = connect_handle;
+  this->aio_nbytes = 0;
+}
+
+void
+ACE_POSIX_Asynch_Connect_Result::complete (u_long bytes_transferred,
+                                           int success,
+                                           const void *completion_key,
+                                           u_long error)
+{
+  // Copy the data.
+  this->bytes_transferred_ = bytes_transferred;
+  this->success_ = success;
+  this->completion_key_ = completion_key;
+  this->error_ = error;
+
+  // Create the interface result class.
+  ACE_Asynch_Connect::Result result (this);
+
+  // Call the application handler.
+  this->handler_.handle_connect (result);
+}
+
+ACE_POSIX_Asynch_Connect_Result::~ACE_POSIX_Asynch_Connect_Result (void)
 {
 }
 
-ACE_POSIX_Asynch_Accept_Task::~ACE_POSIX_Asynch_Accept_Task()
+// Base class operations. These operations are here to kill dominance
+// warnings. These methods call the base class methods.
+
+u_long
+ACE_POSIX_Asynch_Connect_Result::bytes_transferred (void) const
 {
-  stop();
+  return ACE_POSIX_Asynch_Result::bytes_transferred ();
 }
 
-int 
-ACE_POSIX_Asynch_Accept_Task::start ()
+const void *
+ACE_POSIX_Asynch_Connect_Result::act (void) const
 {
-  ACE_MT (ACE_GUARD_RETURN  (ACE_Lock, ace_mon, this->token_, -1));
+  return ACE_POSIX_Asynch_Result::act ();
+}
 
-  if (this->flg_active_)
+int
+ACE_POSIX_Asynch_Connect_Result::success (void) const
+{
+  return ACE_POSIX_Asynch_Result::success ();
+}
+
+const void *
+ACE_POSIX_Asynch_Connect_Result::completion_key (void) const
+{
+  return ACE_POSIX_Asynch_Result::completion_key ();
+}
+
+u_long
+ACE_POSIX_Asynch_Connect_Result::error (void) const
+{
+  return ACE_POSIX_Asynch_Result::error ();
+}
+
+ACE_HANDLE
+ACE_POSIX_Asynch_Connect_Result::event (void) const
+{
+  return ACE_POSIX_Asynch_Result::event ();
+}
+
+u_long
+ACE_POSIX_Asynch_Connect_Result::offset (void) const
+{
+  return ACE_POSIX_Asynch_Result::offset ();
+}
+
+u_long
+ACE_POSIX_Asynch_Connect_Result::offset_high (void) const
+{
+  return ACE_POSIX_Asynch_Result::offset_high ();
+}
+
+int
+ACE_POSIX_Asynch_Connect_Result::priority (void) const
+{
+  return ACE_POSIX_Asynch_Result::priority ();
+}
+
+int
+ACE_POSIX_Asynch_Connect_Result::signal_number (void) const
+{
+  return ACE_POSIX_Asynch_Result::signal_number ();
+}
+
+int
+ACE_POSIX_Asynch_Connect_Result::post_completion (ACE_Proactor_Impl *proactor)
+{
+  return ACE_POSIX_Asynch_Result::post_completion (proactor);
+}
+
+// *********************************************************************
+
+ACE_POSIX_Asynch_Connect::ACE_POSIX_Asynch_Connect (ACE_POSIX_AIOCB_Proactor * posix_proactor)
+  : ACE_Asynch_Operation_Impl (),
+    ACE_Asynch_Connect_Impl (),
+    ACE_POSIX_Asynch_Operation (posix_proactor),
+    flg_open_ (0),
+    task_lock_count_ (0)
+{
+}
+
+ACE_POSIX_Asynch_Connect::~ACE_POSIX_Asynch_Connect (void)
+{
+  this->close ();  
+  this->reactor(0); // to avoid purge_pending_notifications
+}
+
+ACE_Proactor *
+ACE_POSIX_Asynch_Connect::proactor (void) const
+{
+  return ACE_POSIX_Asynch_Operation::proactor ();
+}
+
+ACE_HANDLE
+ACE_POSIX_Asynch_Connect::get_handle (void) const
+{
+   
+  ACE_ASSERT (0);
+  return  ACE_INVALID_HANDLE;
+}
+
+void
+ACE_POSIX_Asynch_Connect::set_handle (ACE_HANDLE handle)
+{
+  ACE_ASSERT (0) ;
+}
+
+int
+ACE_POSIX_Asynch_Connect::open (ACE_Handler &handler,
+                                ACE_HANDLE handle,
+                                const void *completion_key,
+                                ACE_Proactor *proactor)
+{
+  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::open\n"));
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
+
+  // if we are already opened,
+  // we could not create a new handler without closing the previous
+
+  if (this->flg_open_ != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:%p\n"),
-                       ACE_LIB_TEXT ("ACE_POSIX_Asynch_Accept_Task::start already started")),
-                       -1);
+                       ACE_LIB_TEXT("%N:%l:ACE_POSIX_Asynch_Connect::open:")
+                       ACE_LIB_TEXT("connector already open \n")),
+                      -1);  
 
-  if (this->reactor_.initialized () == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:%p\n"),
-                       ACE_LIB_TEXT ("ACE_POSIX_Asynch_Accept_Task::start reactor is not initialized")),
-                       -1);
+  //int result = 
+  ACE_POSIX_Asynch_Operation::open (handler,
+                                    handle,
+                                    completion_key,
+                                    proactor);
 
+  // Ignore result as we pass ACE_INVALID_HANDLE 
+  //if (result == -1)
+  //  return result;
 
-  if (this->activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0 )
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:%p\n"),
-                       ACE_LIB_TEXT ("ACE_POSIX_Asynch_Accept_Task::start failed")),
-                       -1);
+  this->flg_open_ = 1;
 
-  this->flg_active_ = 1;
   return 0;
 }
 
-int 
-ACE_POSIX_Asynch_Accept_Task::stop ()
+int
+ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
+                                   const ACE_Addr & remote_sap,
+                                   const ACE_Addr & local_sap,
+                                   int reuse_addr,
+                                   const void *act,
+                                   int priority,
+                                   int signal_number)
 {
+  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::connect\n"));
+
   {
-    ACE_MT (ACE_GUARD_RETURN  (ACE_Lock, ace_mon, this->token_, -1));
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
-    if (this->flg_active_ == 0 )  // already stopped 
-      return 0;
+    if (this->flg_open_ == 0)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_LIB_TEXT("%N:%l:ACE_POSIX_Asynch_Connect::connect")
+                         ACE_LIB_TEXT("connector was not opened before\n")),
+                        -1);
 
-    reactor_.end_reactor_event_loop ();
+    // Common code for both WIN and POSIX.
+    // Create future Asynch_Connect_Result
+    ACE_POSIX_Asynch_Connect_Result *result = 0;
+    ACE_NEW_RETURN (result,
+                    ACE_POSIX_Asynch_Connect_Result (*this->handler_,
+                                                    connect_handle,
+                                                    act,
+                                                    this->posix_proactor ()->get_handle (),
+                                                    priority,
+                                                    signal_number),
+                  -1);
+
+    int rc = connect_i (result, 
+                        remote_sap,
+                        local_sap,
+                        reuse_addr);
+
+    // update handle
+    connect_handle = result->connect_handle ();
+
+    if (rc != 0)
+      return post_result (result, 1);
+
+    //  Enqueue result we will wait for completion
+
+    if (this->result_map_.bind (connect_handle, result) == -1)
+      {
+        ACE_ERROR  ((LM_ERROR,
+                     ACE_LIB_TEXT("%N:%l:ACE_POSIX_Asynch_Connect::connect:")
+                     ACE_LIB_TEXT("result map binding failed\n")));
+
+        result->set_error (EFAULT);
+        return post_result (result, 1);
+      }
+
+    task_lock_count_ ++;
   }
 
-  int rc = this->wait ();
+  ACE_Asynch_Pseudo_Task & task =
+    this->posix_proactor ()->get_asynch_pseudo_task ();
 
-  if  (rc != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:%p\n"),
-                       ACE_LIB_TEXT ("ACE_POSIX_Asynch_Accept_Task::stop failed")),
-                       -1);
+  int rc_task = task.register_io_handler (connect_handle,
+                                          this,
+                                          ACE_Event_Handler::CONNECT_MASK,
+                                          0);  // not to suspend after register
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
+    this->task_lock_count_ --;
+
+    int post_enable = 1;
+
+    if (rc_task == -2 && task_lock_count_ == 0)  // task is closing
+      {
+        post_enable = 0;
+        task.unlock_finish ();
+      }
+
+    if (rc_task < 0)
+      {
+        ACE_POSIX_Asynch_Connect_Result *result = 0;
+
+        this->result_map_.unbind (connect_handle, result);
+
+        if (result != 0)
+          {
+            result->set_error (EFAULT);
+
+            return post_result (result, post_enable);
+          }
+      }
+  }
+
+  return 0;
+}
+
+int ACE_POSIX_Asynch_Connect::post_result (ACE_POSIX_Asynch_Connect_Result * result,
+                                           int post_enable)
+{
+  if (this->flg_open_ != 0 && post_enable != 0)
+    {
+      if (this->posix_proactor ()->post_completion (result) == 0)
+        return 0 ;
+
+      ACE_ERROR ((LM_ERROR,
+                  ACE_LIB_TEXT("Error:(%P | %t):%p\n"),
+                  ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::post_result: ")
+                  ACE_LIB_TEXT(" <post_completion> failed")));
+    }
+
+  ACE_HANDLE handle = result->connect_handle ();
+
+  if (handle != ACE_INVALID_HANDLE)
+    ACE_OS::closesocket (handle);
+
+   delete result;
+
+   return -1;
+}
+
+//@@ New method connect_i
+//  return code :
+//   -1   errors  before  attempt to connect
+//    0   connect started
+//    1   connect finished ( may be unsuccessfully)
+
+int
+ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
+                                     const ACE_Addr & remote_sap,
+                                     const ACE_Addr & local_sap,
+                                     int  reuse_addr)
+{
+  result->set_bytes_transferred (0);
+
+  ACE_HANDLE handle = result->connect_handle ();
+
+  if (handle == ACE_INVALID_HANDLE)
+    {
+      int protocol_family = remote_sap.get_type ();
+
+      handle = ACE_OS::socket (protocol_family,
+                               SOCK_STREAM, 
+                               0);
+      // save it
+      result->connect_handle (handle);
+
+      if (handle == ACE_INVALID_HANDLE)
+        {
+          result->set_error (errno);
+
+          ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT("%N:%l:ACE_POSIX_Asynch_Connect::connect_i: ")
+                       ACE_LIB_TEXT(" ACE_OS::socket failed\n")),
+                      -1);
+        }
+
+      // Reuse the address
+      int one = 1;
+      if (protocol_family != PF_UNIX  &&
+           reuse_addr != 0 &&
+           ACE_OS::setsockopt (handle,
+                               SOL_SOCKET,
+                               SO_REUSEADDR,
+                               (const char*) &one,
+                               sizeof one) == -1 )
+        {
+          result->set_error (errno);
+
+          ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT("%N:%l:ACE_POSIX_Asynch_Connect::connect_i: ")
+                       ACE_LIB_TEXT(" ACE_OS::setsockopt failed\n")),
+                      -1);
+        }
+    }
+
+  if (local_sap != ACE_Addr::sap_any)
+    {
+      sockaddr * laddr = ACE_reinterpret_cast (sockaddr *,
+                                               local_sap.get_addr ());
+      size_t size = local_sap.get_size ();
+
+      if (ACE_OS::bind (handle, laddr, size) == -1)
+        {
+           result->set_error (errno);
+
+           ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT("%N:%l:ACE_POSIX_Asynch_Connect::connect_i: ")
+                       ACE_LIB_TEXT(" ACE_OS::bind failed\n")),
+                      -1);
+        }
+    }
+
+  // set non blocking mode 
+  if (ACE::set_flags (handle, ACE_NONBLOCK) != 0)
+    {
+      result->set_error (errno);
+
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_LIB_TEXT("%N:%l:ACE_POSIX_Asynch_Connect::connect_i: ")
+                         ACE_LIB_TEXT(" ACE::set_flags failed\n")),
+                        -1);
+    }
+
+  for (;;)
+    {
+      int rc = ACE_OS::connect (handle,
+                                ACE_reinterpret_cast (sockaddr *,
+                                                      remote_sap.get_addr ()),
+                                remote_sap.get_size ());
+      if (rc < 0)  // failure 
+        {
+          if (errno == EWOULDBLOCK || errno == EINPROGRESS)
+            return 0; // connect started
+
+          if (errno == EINTR)
+             continue;
+
+          result->set_error (errno);
+        }
+
+      return 1 ;  // connect finished 
+    }
+
+  ACE_NOTREACHED (return 0);
+}
+
+
+//@@ New method cancel_uncompleted
+// It performs cancellation of all pending requests
+//
+// Parameter flg_notify can be 
+//     0  - don't send notifications about canceled accepts
+//    !0  - notify user about canceled accepts
+//          according POSIX standards we should receive notifications
+//          on canceled AIO requests
+//
+//  Return value : number of cancelled requests
+//
+  
+int
+ACE_POSIX_Asynch_Connect::cancel_uncompleted (int flg_notify,
+                                              ACE_Handle_Set & set)
+{
+  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::cancel_uncompleted\n"));
+
+  int retval = 0;
+
+  MAP_ITERATOR  iter (result_map_);
+  MAP_ENTRY *   me = 0;
+
+  set.reset ();
+
+  for (; iter.next (me) != 0;  retval++ , iter.advance ())
+    {
+       ACE_HANDLE handle = me->ext_id_;
+       ACE_POSIX_Asynch_Connect_Result* result = me->int_id_ ;
+
+       set.set_bit (handle);
+
+       result->set_bytes_transferred (0);
+       result->set_error (ECANCELED);
+       this->post_result (result, flg_notify);
+    }
+
+  result_map_.unbind_all ();
+
+  return retval;
+}
+
+int
+ACE_POSIX_Asynch_Connect::cancel (void)
+{
+  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::cancel\n"));
+
+  //We are not really ACE_POSIX_Asynch_Operation
+  //so we could not call ::aiocancel ()
+  // or just write   
+  //return ACE_POSIX_Asynch_Operation::cancel ();
+  //We delegate real cancelation to cancel_uncompleted (1)
+
+  int rc = -1 ;  // ERRORS
+
+  ACE_Handle_Set set;
 
   {
-    ACE_MT (ACE_GUARD_RETURN  (ACE_Lock, ace_mon, this->token_, -1));
-    this->flg_active_ = 0;
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
-    if (this->reactor_.initialized ())
-      this->reactor_.close();
+    int num_cancelled = cancel_uncompleted (flg_open_, set);
 
-    while (finish_count_ > 0)
-      {
-         ace_mon.release ();
-         finish_event_.wait();
+    if (num_cancelled == 0)
+       rc = 1 ;        // AIO_ALLDONE
+    else if (num_cancelled > 0)
+       rc = 0 ;        // AIO_CANCELED
 
-         ace_mon.acquire ();
-         finish_event_.reset ();
-      }
+    if (this->flg_open_ == 0)
+       return rc ;
+
+    this->task_lock_count_++;
+  }
+
+  ACE_Asynch_Pseudo_Task & task =
+    this->posix_proactor ()->get_asynch_pseudo_task ();
+
+  int rc_task = task.remove_io_handler (set);
+
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
+
+    this->task_lock_count_--;
+
+    if (rc_task == -2 && task_lock_count_ == 0)  // task is closing
+      task.unlock_finish ();
   }
 
   return rc;
 }
 
 int
-ACE_POSIX_Asynch_Accept_Task::lock_finish ()
+ACE_POSIX_Asynch_Connect::close (void)
 {
-  ACE_MT (ACE_GUARD_RETURN  (ACE_Lock, ace_mon, this->token_, -1));
-  finish_count_ ++;
+  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::close\n"));
+
+  ACE_Handle_Set set ;
+
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
+
+    int num_cancelled = cancel_uncompleted (flg_open_, set);
+
+    if (num_cancelled == 0 || this->flg_open_ == 0)
+      {
+        this->flg_open_ = 0;
+        return 0;
+      }
+
+    this->task_lock_count_++;
+  }
+
+  ACE_Asynch_Pseudo_Task & task =
+    this->posix_proactor ()->get_asynch_pseudo_task ();
+
+  int rc_task = task.remove_io_handler (set);
+
+  {
+    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
+
+    this->task_lock_count_--;
+
+    if (rc_task == -2 && task_lock_count_ == 0)  // task is closing
+      task.unlock_finish ();
+
+    this->flg_open_ = 0;
+  }
+
   return 0;
 }
 
 int
-ACE_POSIX_Asynch_Accept_Task::unlock_finish ()
+ACE_POSIX_Asynch_Connect::handle_exception (ACE_HANDLE fd)
 {
-  ACE_MT (ACE_GUARD_RETURN  (ACE_Lock, ace_mon, this->token_, -1));
-
-  finish_count_ --;
-
-  finish_event_.signal ();
-
-  return 0;
+  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::handle_exception\n"));
+  return handle_input (fd);
 }
 
 int
-ACE_POSIX_Asynch_Accept_Task::svc ()
+ACE_POSIX_Asynch_Connect::handle_input (ACE_HANDLE fd)
 {
-  sigset_t RT_signals;
+  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::handle_input\n"));
 
-  if (sigemptyset (& RT_signals) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("Error:(%P | %t):%p\n"),
-                ACE_LIB_TEXT ("sigemptyset failed")));
+  return handle_input (fd);
+}
 
-  int member = 0;
+int
+ACE_POSIX_Asynch_Connect::handle_output (ACE_HANDLE fd)
+{
+  ACE_TRACE (ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::handle_output\n"));
 
-  for (int si = ACE_SIGRTMIN; si <= ACE_SIGRTMAX; si++)
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
+
+  ACE_POSIX_Asynch_Connect_Result* result = 0;
+
+  if (this->result_map_.unbind (fd, result) != 0) // not found 
+    return -1;
+
+  int sockerror  = 0 ;
+  int lsockerror = sizeof sockerror;
+
+  ACE_OS::getsockopt (fd,
+                      SOL_SOCKET,
+                      SO_ERROR,
+                      (char*) &sockerror,
+                      &lsockerror);
+
+  result->set_bytes_transferred (0);
+  result->set_error (sockerror);
+  this->post_result (result, this->flg_open_);
+
+  return -1;
+
+  //ACE_Asynch_Pseudo_Task & task = 
+  //       this->posix_proactor()->get_asynch_pseudo_task();
+
+  //task.remove_io_handler ( fd );
+
+  //return 0;
+}
+
+
+int 
+ACE_POSIX_Asynch_Connect::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask) 
+{
+  ACE_TRACE (ACE_LIB_TEXT ("ACE_POSIX_Asynch_Connect::handle_close\n"));
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
+
+  ACE_Asynch_Pseudo_Task &task =
+         this->posix_proactor ()->get_asynch_pseudo_task ();
+
+  if (task.is_active() == 0)  // task is closing
     {
-      member = sigismember (& RT_signals , si);
-      if (member == 1)
+      if (this->flg_open_ !=0)  // we are open
         {
-          sigaddset (& RT_signals, si);
+          this->flg_open_ = 0;
+
+          // it means other thread is waiting for reactor token_
+          if (task_lock_count_ > 0)
+            task.lock_finish ();
         }
+
+      ACE_Handle_Set set;
+      this->cancel_uncompleted (0, set);
+
+      return 0;
     }
 
-  if (ACE_OS::pthread_sigmask (SIG_BLOCK, & RT_signals, 0) != 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("Error:(%P | %t):%p\n"),
-                ACE_LIB_TEXT ("pthread_sigmask failed")));
+  // remove_io_handler() contains flag DONT_CALL
+  // so it is save
+  task.remove_io_handler (fd);      
 
+  ACE_POSIX_Asynch_Connect_Result* result = 0;
 
+  if (this->result_map_.unbind (fd, result) != 0 ) // not found 
+    return -1;
 
-  reactor_.owner (ACE_Thread::self());
-
-  reactor_.run_reactor_event_loop ();
-
-  return 0;
-}
-
-
-
-int
-ACE_POSIX_Asynch_Accept_Task::register_acceptor (ACE_POSIX_Asynch_Accept * posix_accept,
-                                                  ACE_Reactor_Mask mask)
-{
-  //  Return codes : 
-  //   0  success
-  //  -1  reactor errors
-  //  -2  task not active 
-
-  ACE_MT (ACE_GUARD_RETURN  (ACE_Lock, ace_mon, this->token_, -1));
-
-  if (this->flg_active_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:ACE_POSIX_Asynch_Accept_Task::register_acceptor \n")
-                       ACE_LIB_TEXT ("task not active \n")),
-                      -2);
-    
-  // Register the handler with the reactor.
-  int retval = this->reactor_.register_handler (posix_accept->get_handle(),
-                                                 posix_accept,
-                                                 mask);
-                                                    
-  if (retval == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:ACE_POSIX_Asynch_Accept_Task::register_acceptor \n")
-                       ACE_LIB_TEXT ("register_handler failed \n")),
-                      -1);
-
-  // Suspend the <handle> now. Enable only when the <accept> is issued
-  // by the application.
-  retval = this->reactor_.suspend_handler (posix_accept->get_handle());
-  if (retval == -1)
-    {
-      this->reactor_.remove_handler (posix_accept,
-                                      ACE_Event_Handler::ALL_EVENTS_MASK
-                                    | ACE_Event_Handler::DONT_CALL); 
- 
-      ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:ACE_POSIX_Asynch_Accept_Task::register_acceptor \n")
-                       ACE_LIB_TEXT ("suspend_handler failed \n")),
-                      -1);
-    }
-
-  return 0;
-}
-
-int
-ACE_POSIX_Asynch_Accept_Task::remove_acceptor (ACE_POSIX_Asynch_Accept * posix_accept)
-{
-  //  Return codes : 
-  //   0  success
-  //  -1  reactor errors
-  //  -2  task not active 
-
-  ACE_MT (ACE_GUARD_RETURN  (ACE_Lock, ace_mon, this->token_, -1));
-
-  if (this->flg_active_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:ACE_POSIX_Asynch_Accept_Task::remove_acceptor \n")
-                       ACE_LIB_TEXT ("task not active \n")),
-                      -2);
-    
-  int retval = this->reactor_.remove_handler (posix_accept,
-                                               ACE_Event_Handler::ALL_EVENTS_MASK
-                                             | ACE_Event_Handler::DONT_CALL); 
-  if (retval == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:ACE_POSIX_Asynch_Accept_Task::remove_acceptor \n")
-                       ACE_LIB_TEXT ("remove_handler failed \n")),
-                      -1);
-
-  return 0;
-}
-
-int
-ACE_POSIX_Asynch_Accept_Task::suspend_acceptor (ACE_POSIX_Asynch_Accept * posix_accept)
-{
-  //  Return codes : 
-  //   0  success
-  //  -1  reactor errors
-  //  -2  task not active 
-
-  ACE_MT (ACE_GUARD_RETURN  (ACE_Lock, ace_mon, this->token_, -1));
-
-  if (this->flg_active_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:ACE_POSIX_Asynch_Accept_Task::suspend_acceptor \n")
-                       ACE_LIB_TEXT ("task not active \n")),
-                      -2);
-    
-  int retval = this->reactor_.suspend_handler (posix_accept);
-
-  if (retval == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:ACE_POSIX_Asynch_Accept_Task::suspend_acceptor \n")
-                       ACE_LIB_TEXT ("suspend_handler failed \n")),
-                      -1);
-
-  return 0;
-}
-
-int
-ACE_POSIX_Asynch_Accept_Task::resume_acceptor (ACE_POSIX_Asynch_Accept * posix_accept)
-{
-  //  Return codes : 
-  //   0  success
-  //  -1  reactor errors
-  //  -2  task not active 
-
-  ACE_MT (ACE_GUARD_RETURN  (ACE_Lock, ace_mon, this->token_, -1));
-
-  if (this->flg_active_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:ACE_POSIX_Asynch_Accept_Task::resume_acceptor \n")
-                       ACE_LIB_TEXT ("task not active \n")),
-                      -2);
-    
-  int retval = this->reactor_.resume_handler (posix_accept);
-
-  if (retval == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%N:%l:ACE_POSIX_Asynch_Accept_Task::resume_acceptor \n")
-                       ACE_LIB_TEXT ("resume_handler failed \n")),
-                      -1);
+  result->set_bytes_transferred (0);
+  result->set_error (ECANCELED);
+  this->post_result (result, this->flg_open_);
 
   return 0;
 }
@@ -2302,6 +2669,7 @@ ACE_POSIX_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_S
   if (result.success () == 0)
     {
       // Failure.
+
       ACE_ERROR ((LM_ERROR,
                   "Asynch_Transmit_File failed.\n"));
 
@@ -3008,7 +3376,6 @@ ACE_POSIX_Asynch_Write_Dgram::ACE_POSIX_Asynch_Write_Dgram (ACE_POSIX_AIOCB_Proa
 {
 }
 
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Unbounded_Queue<ACE_POSIX_Asynch_Accept_Result *>;
@@ -3019,6 +3386,14 @@ template class ACE_Unbounded_Queue<ACE_POSIX_Asynch_Result *>;
 template class ACE_Node<ACE_POSIX_Asynch_Result *>;
 template class ACE_Unbounded_Queue_Iterator<ACE_POSIX_Asynch_Result *>;
 
+template class ACE_Map_Entry<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *>;
+template class ACE_Map_Manager<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Map_Const_Iterator_Base<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Map_Iterator<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Map_Const_Iterator<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>;
+template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>;
+
 #elif  defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Unbounded_Queue<ACE_POSIX_Asynch_Accept_Result *>
@@ -3028,6 +3403,15 @@ template class ACE_Unbounded_Queue_Iterator<ACE_POSIX_Asynch_Result *>;
 #pragma instantiate ACE_Unbounded_Queue<ACE_POSIX_Asynch_Result *>
 #pragma instantiate ACE_Node<ACE_POSIX_Asynch_Result *>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_POSIX_Asynch_Result *>
+
+#pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *>
+#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Map_Const_Iterator_Base<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Map_Const_Iterator<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
+
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

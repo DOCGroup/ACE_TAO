@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -9,7 +9,7 @@
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
- *  @author Alexander Libman <alibman@@ihug.com.au>
+ *  @author Alexander Libman <alibman@ihug.com.au>
  */
 //=============================================================================
 
@@ -381,6 +381,9 @@ public:
   /// Create the correct implementation class for doing Asynch_Accept.
   virtual ACE_Asynch_Accept_Impl *create_asynch_accept (void);
 
+  /// Create the correct implementation class for doing Asynch_Connect.
+  virtual ACE_Asynch_Connect_Impl *create_asynch_connect (void);
+
   /// Create the correct implementation class for doing
   /// Asynch_Transmit_File.
   virtual ACE_Asynch_Transmit_File_Impl *create_asynch_transmit_file (void);
@@ -489,6 +492,15 @@ public:
                                  int priority = 0,
                                  int signal_number = ACE_SIGRTMIN);
 
+  /// Create the correct implementation class for ACE_Asynch_Connect::Result
+  virtual ACE_Asynch_Connect_Result_Impl *
+    create_asynch_connect_result (ACE_Handler &handler,
+                                  ACE_HANDLE  connect_handle,
+                                  const void* act,
+                                  ACE_HANDLE event = ACE_INVALID_HANDLE,
+                                  int priority = 0,
+                                  int signal_number = ACE_SIGRTMIN);
+
   /// Create the correct implementation class for
   /// ACE_Asynch_Transmit_File::Result.
   virtual ACE_Asynch_Transmit_File_Result_Impl *
@@ -513,8 +525,7 @@ public:
    * Timer object with a meaningful signal number, choosing the
    * largest signal number from the signal mask of the Proactor.
    */
-  virtual ACE_Asynch_Result_Impl *create_asynch_timer (
-                                                       ACE_Handler &handler,
+  virtual ACE_Asynch_Result_Impl *create_asynch_timer (ACE_Handler &handler,
                                                        const void *act,
                                                        const ACE_Time_Value &tv,
                                                        ACE_HANDLE event = ACE_INVALID_HANDLE,

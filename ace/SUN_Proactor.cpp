@@ -24,14 +24,14 @@ ACE_SUN_Proactor::ACE_SUN_Proactor (size_t max_aio_operations)
   // we should start pseudo-asynchronous accept task
   // one per all future acceptors
 
-  this->accept_task_.start ();
+  this->get_asynch_pseudo_task ().start ();
 }
 
 // Destructor.
 ACE_SUN_Proactor::~ACE_SUN_Proactor (void)
 {
   // stop asynch accept task
-  this->get_asynch_accept_task().stop ();
+  this->get_asynch_pseudo_task ().stop ();
 
   // to provide correct virtual calls
   delete_notify_manager ();
