@@ -81,8 +81,9 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc
   CORBA::TypeCode_var unaliased_tc =
   TAO_DynAnyFactory::strip_alias (this->type_.in ()
                                   ACE_ENV_ARG_PARAMETER);
-  CORBA::Any_var first_label = unaliased_tc->member_label (this->current_position_
-                                                 ACE_ENV_ARG_PARAMETER);
+  CORBA::Any_var first_label = 
+    unaliased_tc->member_label (this->current_position_
+                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Initialize the discriminator to the label value of the first member.
@@ -91,8 +92,9 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc
                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::TypeCode_var first_type = unaliased_tc->member_type (this->current_position_
-                                                     ACE_ENV_ARG_PARAMETER);
+  CORBA::TypeCode_var first_type = 
+    unaliased_tc->member_type (this->current_position_
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Recursively initialize the member to its default value.
@@ -244,7 +246,8 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      CORBA::Long default_index = unaliased_tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Long default_index = 
+        unaliased_tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       if (default_index == -1)
@@ -256,8 +259,9 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
           CORBA::ULong index = ACE_static_cast (CORBA::ULong,
                                                 default_index);
 
-          CORBA::TypeCode_var default_tc = tc->member_type (index
-                                                            ACE_ENV_ARG_PARAMETER);
+          CORBA::TypeCode_var default_tc = 
+            tc->member_type (index
+                             ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           CORBA::Any default_any;
@@ -317,7 +321,8 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value
   CORBA::TypeCode_var tc = value->type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::TypeCode_var disc_tc = this->discriminator_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var disc_tc = 
+    this->discriminator_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Boolean equivalent = disc_tc->equivalent (tc.in ()
@@ -332,7 +337,8 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value
   CORBA::Any_var value_any = value->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::ULong length = this->type_->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong length = 
+    this->type_->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Any_var label_any;
@@ -406,7 +412,8 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value
       ACE_CHECK;
 
       // If no match, either the default member or no member is active.
-      CORBA::Long default_index = unaliased_tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Long default_index = 
+        unaliased_tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       if (default_index == -1)
@@ -453,7 +460,8 @@ TAO_DynUnion_i::set_to_default_member (ACE_ENV_SINGLE_ARG_DECL)
                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Long default_index = unaliased_tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Long default_index = 
+    unaliased_tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (default_index == -1)
@@ -504,7 +512,8 @@ TAO_DynUnion_i::set_to_no_active_member (ACE_ENV_SINGLE_ARG_DECL)
                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Long default_index = unaliased_tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Long default_index = 
+    unaliased_tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Throw an exception is there is an explicit default case or if all
@@ -515,7 +524,8 @@ TAO_DynUnion_i::set_to_no_active_member (ACE_ENV_SINGLE_ARG_DECL)
     }
   else
     {
-      CORBA::TypeCode_var disc_tc = this->discriminator_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::TypeCode_var disc_tc = 
+        this->discriminator_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       CORBA::TCKind kind = TAO_DynAnyFactory::unalias (disc_tc.in ()
@@ -524,10 +534,12 @@ TAO_DynUnion_i::set_to_no_active_member (ACE_ENV_SINGLE_ARG_DECL)
 
       if (kind == CORBA::tk_enum)
         {
-          CORBA::ULong member_count = this->type_->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+          CORBA::ULong member_count = 
+            this->type_->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
-          CORBA::ULong label_count = disc_tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+          CORBA::ULong label_count = 
+            disc_tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
           if (member_count == label_count)
@@ -571,7 +583,8 @@ TAO_DynUnion_i::discriminator_kind (ACE_ENV_SINGLE_ARG_DECL)
                         CORBA::tk_null);
     }
 
-  CORBA::TypeCode_var tc = this->discriminator_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var tc = 
+    this->discriminator_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::tk_null);
 
   CORBA::TCKind retval = TAO_DynAnyFactory::unalias (tc.in ()
@@ -667,7 +680,8 @@ TAO_DynUnion_i::member_kind (ACE_ENV_SINGLE_ARG_DECL)
                         CORBA::tk_null);
     }
 
-  CORBA::TypeCode_var tc = this->member_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var tc = 
+    this->member_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::tk_null);
 
   CORBA::TCKind retval = TAO_DynAnyFactory::unalias (tc.in ()
@@ -694,8 +708,9 @@ TAO_DynUnion_i::from_any (const CORBA::Any& any
     }
 
   CORBA::TypeCode_var tc = any.type ();
-  CORBA::Boolean equivalent = this->type_.in ()->equivalent (tc.in ()
-                                                             ACE_ENV_ARG_PARAMETER);
+  CORBA::Boolean equivalent = 
+    this->type_.in ()->equivalent (tc.in ()
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (equivalent)
@@ -735,13 +750,25 @@ TAO_DynUnion_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
   // Add the discriminator to the CDR stream.
 
-  CORBA::TypeCode_var disc_tc = this->discriminator_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var disc_tc = 
+    this->discriminator_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::Any_var disc_any = this->discriminator_->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Any_var disc_any = 
+    this->discriminator_->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   ACE_Message_Block *disc_mb = disc_any->_tao_get_cdr ();
+
+  if (disc_mb == 0)
+    {
+      ACE_NEW_RETURN (disc_mb,
+                      ACE_Message_Block,
+                      0);
+      TAO_OutputCDR out;
+      disc_any->impl ()->marshal_value (out);
+      ACE_CDR::consolidate (disc_mb, out.begin ());
+    }
 
   TAO_InputCDR disc_cdr (disc_mb,
                          disc_any->_tao_byte_order ());
@@ -754,10 +781,12 @@ TAO_DynUnion_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
   // Add the member to the CDR stream.
 
-  CORBA::TypeCode_var member_tc = this->member_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var member_tc = 
+    this->member_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::Any_var member_any = this->member_->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Any_var member_any = 
+    this->member_->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   ACE_Message_Block *member_mb = member_any->_tao_get_cdr ();

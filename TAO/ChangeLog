@@ -1,3 +1,13 @@
+Mon Nov 10 11:20:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicAny/DynUnion.cpp (to_any):
+
+          Added check for 0 message block in the Any created from the 
+          discriminator, similarly to the check applied to the Any
+          created from the active member. Thanks to Harvinder Sawhney 
+          <harvinder_sawhney@agilent.com> for reporting the problem
+          and for suggesting a fix.
+
 Mon Nov 10 11:03:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/DynamicAny/DynCommon.cpp (insert_reference):
