@@ -1,3 +1,25 @@
+Tue Oct 21 10:12:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * docs/interfacerepo/index.html:
+
+          Updated release notes with recently added IFR features.
+
+        * docs/releasenotes/orbcore.html:
+        * tao/ORB.cpp:
+        * tao/ORB.h:
+        * tao/TypeCodeFactory_Adapter.h:
+        * tao/TypeCodeFactory/README:
+        * tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h:
+
+          Propagated support for typecodes of valuetypes, 
+          components, homes, eventtypes and recursive types (already
+          added to TypeCodeFactory and used in the IFR) to the ORB.
+          Also updated TypeCodeFactory's README file and ORB
+          release notes. Thanks to Harvinder Sawhney 
+          <harvinder_sawhney@agilent.com> for pointing out the
+          oversight.
+
 Tue Oct 21 01:39:44 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h:
