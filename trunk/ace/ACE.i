@@ -325,7 +325,7 @@ ACE::strnew (const char *s)
 ASYS_INLINE wchar_t *
 ACE::strnew (const wchar_t *s)
 {
-  wchar_t *t = new wchar_t[::wcslen (s) + 1];
+  wchar_t *t = new wchar_t[ACE_OS_String::strlen (s) + 1];
   if (t == 0)
     return 0;
   else

@@ -7,13 +7,6 @@
 #if defined (ACE_HAS_WCHAR)
 
 inline
-ACE_Wide_To_Ascii::ACE_Wide_To_Ascii (const wchar_t *s) 
-  : s_ (ACE_Wide_To_Ascii::convert (s)) 
-{
-}
-
-
-inline
 ACE_Wide_To_Ascii::~ACE_Wide_To_Ascii (void) 
 { 
   delete [] this->s_; 
@@ -66,9 +59,9 @@ ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
 }
 
 
-inline 
-ACE_Ascii_To_Wide::ACE_Ascii_To_Wide (const char *s) 
-: s_ (ACE_Ascii_To_Wide::convert (s)) 
+inline
+ACE_Wide_To_Ascii::ACE_Wide_To_Ascii (const wchar_t *s) 
+  : s_ (ACE_Wide_To_Ascii::convert (s)) 
 {
 }
 
@@ -110,6 +103,14 @@ ACE_Ascii_To_Wide::convert (const char *str)
 # endif /* ACE_WIN32 */
   return wstr;
 }
+
+
+inline 
+ACE_Ascii_To_Wide::ACE_Ascii_To_Wide (const char *s) 
+: s_ (ACE_Ascii_To_Wide::convert (s)) 
+{
+}
+
 
 #endif /* ACE_HAS_WCHAR */
 

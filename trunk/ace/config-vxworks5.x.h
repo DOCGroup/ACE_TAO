@@ -163,6 +163,30 @@
 # define ACE_VXWORKS_SPARE spare4
 #endif /* ! ACE_VXWORKS_SPARE */
 
+// Some string things
+#define ACE_LACKS_WCSCAT
+#define ACE_LACKS_WCSCHR
+#define ACE_LACKS_WCSCMP
+#define ACE_LACKS_WCSCPY
+#define ACE_LACKS_WCSCSPN
+#define ACE_LACKS_WCSLEN
+#define ACE_LACKS_WCSNCAT
+#define ACE_LACKS_WCSNCMP
+#define ACE_LACKS_WCSNCPY
+#define ACE_LACKS_WCSPBRK
+#define ACE_LACKS_WCSRCHR
+#define ACE_LACKS_WCSSPN
+#define ACE_LACKS_WCSSTR
+#define ACE_LACKS_WCSTOK
+#define ACE_LACKS_TOWLOWER
+#define ACE_LACKS_ITOW
+#define ACE_LACKS_WCSICMP
+#define ACE_LACKS_WCSNICMP
+#define ACE_LACKS_WCSTOD
+#define ACE_LACKS_WCSTOL
+#define ACE_LACKS_WCSTOUL
+
+
 #if !defined (ACE_MT_SAFE)
 # define ACE_MT_SAFE 1
 #endif
