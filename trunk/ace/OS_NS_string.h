@@ -334,9 +334,9 @@ namespace ACE_OS {
    * Unlike strncpy() this function will always add a terminating '\0'
    * char if maxlen > 0.  So the user doesn't has to provide an extra
    * '\0' if the user wants a '\0' terminated dst.  The function
-   * doesn't check for a 0 <dst>, because this will give problems
-   * anyway.  When <src> is 0 an empty string is made.  We do not
-   * "touch" *<dst> if maxlen is 0.  Returns <dst>.  Care should be
+   * doesn't check for a 0 @a dst, because this will give problems
+   * anyway.  When @a src is 0 an empty string is made.  We do not
+   * "touch" * @a dst if maxlen is 0.  Returns @a dst.  Care should be
    * taken when replacing strncpy() calls, because in some cases a
    * strncpy() user is using the "not '\0' terminating" feature from
    * strncpy().  This happens most when the call to strncpy() was
@@ -355,9 +355,9 @@ namespace ACE_OS {
    * Unlike strncpy() this function will always add a terminating '\0'
    * char if maxlen > 0.  So the user doesn't has to provide an extra
    * '\0' if the user wants a '\0' terminated dst.  The function
-   * doesn't check for a 0 <dst>, because this will give problems
-   * anyway.  When <src> is 0 an empty string is made.  We do not
-   * "touch" *<dst> if maxlen is 0.  Returns <dst>.  Care should be
+   * doesn't check for a 0 @a dst, because this will give problems
+   * anyway.  When @a src is 0 an empty string is made.  We do not
+   * "touch" * @a dst if maxlen is 0.  Returns @a dst.  Care should be
    * taken when replacing strncpy() calls, because in some cases a
    * strncpy() user is using the "not '\0' terminating" feature from
    * strncpy().  This happens most when the call to strncpy() was
