@@ -86,7 +86,7 @@ int ComInitClient(int pinet_port, char * punix_port, char * patm_port)
     return -1;
   }
   size = CLIENT_FDTABLE_SIZE;
-  fdTable = (struct FdTable *)malloc(size * sizeof(*fdTable));
+  fdTable = (struct FdTable *)ACE_OS::malloc(size * sizeof(*fdTable));
   if (fdTable == NULL) {
     fprintf(stderr,
 	    "Error ComInitClient: pid %d failed to allocated fdTable space:",
@@ -955,7 +955,7 @@ int ComInitServer(int pinet_port, char * punix_port, char * patm_port)
     return -1;
   }
   size = CLIENT_FDTABLE_SIZE;
-  fdTable = (struct FdTable *)malloc(size * sizeof(*fdTable));
+  fdTable = (struct FdTable *)ACE_OS::malloc(size * sizeof(*fdTable));
   if (fdTable == NULL) {
     fprintf(stderr,
 	    "Error ComInitServer: pid %d failed to allocated fdTable space:",

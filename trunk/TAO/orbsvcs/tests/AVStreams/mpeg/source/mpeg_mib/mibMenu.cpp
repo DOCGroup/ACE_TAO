@@ -38,16 +38,16 @@ mib_Widget *mib_create_Menu(mib_Widget *parent, char *name, char *label,
   else
     mib_add_mib_Widget(temp, parent);
 
-  myres = (mib_Menu *)malloc(sizeof(mib_Menu));
+  myres = (mib_Menu *)ACE_OS::malloc(sizeof(mib_Menu));
 
   /* initialize public resources */
 
   if (mib_fill == WDEFAULT)
   {
-    temp->name = (char *)malloc(strlen(name)+1);
+    temp->name = (char *)ACE_OS::malloc(strlen(name)+1);
     strcpy(temp->name,name);
   }
-  temp->mib_class = (char *)malloc(8);
+  temp->mib_class = (char *)ACE_OS::malloc(8);
   sprintf(temp->mib_class,"Menu");
   temp->mib_class_num = MIB_MENU;
   temp->width = width;
@@ -91,10 +91,10 @@ mib_Widget *mib_create_Menu(mib_Widget *parent, char *name, char *label,
   {
     delhandler = 0;
     myres->numitems = 3;
-    myres->my_menu = (MenuItem *)malloc(sizeof(MenuItem) * (myres->numitems+1));
-    myres->items = (Widget *)malloc(sizeof(Widget) * myres->numitems);
+    myres->my_menu = (MenuItem *)ACE_OS::malloc(sizeof(MenuItem) * (myres->numitems+1));
+    myres->items = (Widget *)ACE_OS::malloc(sizeof(Widget) * myres->numitems);
     sprintf(label_temp, "Item 1");
-    myres->my_menu[0].label = (char *)malloc(strlen(label_temp)+1);
+    myres->my_menu[0].label = (char *)ACE_OS::malloc(strlen(label_temp)+1);
     strcpy(myres->my_menu[0].label,label_temp);
     myres->my_menu[0].wclass = &xmPushButtonGadgetClass;
     myres->my_menu[0].mnemonic = '1';
@@ -106,7 +106,7 @@ mib_Widget *mib_create_Menu(mib_Widget *parent, char *name, char *label,
     myres->my_menu[0].subitems = (struct _menu_item *)1;
 
     sprintf(label_temp, "Item 2");
-    myres->my_menu[1].label = (char *)malloc(strlen(label_temp)+1);
+    myres->my_menu[1].label = (char *)ACE_OS::malloc(strlen(label_temp)+1);
     strcpy(myres->my_menu[1].label,label_temp);
     myres->my_menu[1].wclass = &xmPushButtonGadgetClass;
     myres->my_menu[1].mnemonic = '2';
@@ -118,7 +118,7 @@ mib_Widget *mib_create_Menu(mib_Widget *parent, char *name, char *label,
     myres->my_menu[1].subitems = (struct _menu_item *)1;
 
     sprintf(label_temp, "Item 3");
-    myres->my_menu[2].label = (char *)malloc(strlen(label_temp)+1);
+    myres->my_menu[2].label = (char *)ACE_OS::malloc(strlen(label_temp)+1);
     strcpy(myres->my_menu[2].label,label_temp);
     myres->my_menu[2].wclass = &xmPushButtonGadgetClass;
     myres->my_menu[2].mnemonic = '2';
@@ -157,7 +157,7 @@ void mib_delete_Menu(mib_Widget *thisw)
 {
   mib_Menu *temp = (mib_Menu *)thisw->myres;
 
-  free(temp);
+  ACE_OS::free(temp);
 }
 
 void mib_save_Menu(mib_Widget *thisw, FILE *fout)
@@ -193,8 +193,8 @@ int mib_load_Menu(mib_Widget *thisw, mib_Buffer *fin)
     if (!(myres->numitems))
       return 0;
 
-    myres->my_menu = (MenuItem *)malloc(sizeof(MenuItem) * (myres->numitems+1));
-    myres->items = (Widget *)malloc(sizeof(Widget) * myres->numitems);
+    myres->my_menu = (MenuItem *)ACE_OS::malloc(sizeof(MenuItem) * (myres->numitems+1));
+    myres->items = (Widget *)ACE_OS::malloc(sizeof(Widget) * myres->numitems);
     for (count = 0; count < myres->numitems; count++)
     {
       if (!mib_read_line(fin, res, val))
@@ -203,7 +203,7 @@ int mib_load_Menu(mib_Widget *thisw, mib_Buffer *fin)
       if (vallen < 2)
 	return 0;
       val[vallen-1] = '\0';
-      myres->my_menu[count].label = (char *)malloc(vallen-1);
+      myres->my_menu[count].label = (char *)ACE_OS::malloc(vallen-1);
       sprintf(myres->my_menu[count].label, "%s", &(val[1]));
       myres->my_menu[count].wclass = &xmPushButtonGadgetClass;
       myres->my_menu[count].mnemonic = NULL;

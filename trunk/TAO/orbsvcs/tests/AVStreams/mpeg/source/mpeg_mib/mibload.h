@@ -35,6 +35,7 @@ ftp from geom.umn.edu; email: software@geom.umn.edu. */
 #include <Xm/AtomMgr.h>
 #include <Xm/Protocols.h>
 #include <Xm/MwmUtil.h>
+#include "ace/OS.h"
 
 
 /* Structure of mib_Widget */
@@ -118,7 +119,7 @@ typedef struct _menu_item {
   char        *accelerator;
   char        *accel_text;
 #ifdef __cplusplus
-  void        (*callback)(...);
+  void        (*callback)(Widget,void*,void*);
 #else
   void        (*callback)();
 #endif

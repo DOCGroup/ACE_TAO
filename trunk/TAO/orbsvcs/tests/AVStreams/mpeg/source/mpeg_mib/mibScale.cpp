@@ -37,16 +37,16 @@ mib_Widget *mib_create_Scale(mib_Widget *parent, char *name, char *orient,
   else
     mib_add_mib_Widget(temp, parent);
 
-  myres = (mib_Scale *)malloc(sizeof(mib_Scale));
+  myres = (mib_Scale *)ACE_OS::malloc(sizeof(mib_Scale));
 
   /* initialize public resources */
 
   if (mib_fill == WDEFAULT)
   {
-    temp->name = (char *)malloc(strlen(name)+1);
+    temp->name = (char *)ACE_OS::malloc(strlen(name)+1);
     strcpy(temp->name,name);
   }
-  temp->mib_class = (char *)malloc(10);
+  temp->mib_class = (char *)ACE_OS::malloc(10);
   sprintf(temp->mib_class,"Scale");
   temp->mib_class_num = MIB_SCALE;
   temp->width = width;
@@ -128,7 +128,7 @@ void mib_delete_Scale(mib_Widget *thisw)
 {
   mib_Scale *temp = (mib_Scale *)thisw->myres;
 
-  free(temp);
+  ACE_OS::free(temp);
 }
 
 void mib_save_Scale(mib_Widget *thisw, FILE *fout)

@@ -34,16 +34,16 @@ mib_Widget *mib_create_TextBox(mib_Widget *parent, char *name, char *contents,
     mib_add_backward(temp, parent);
   else
     mib_add_mib_Widget(temp, parent);
-  myres = (mib_TextBox *)malloc(sizeof(mib_TextBox));
+  myres = (mib_TextBox *)ACE_OS::malloc(sizeof(mib_TextBox));
 
   /* initialize public resources */
 
   if (mib_fill == WDEFAULT)
   {
-    temp->name = (char *)malloc(strlen(name)+1);
+    temp->name = (char *)ACE_OS::malloc(strlen(name)+1);
     strcpy(temp->name,name);
   }
-  temp->mib_class = (char *)malloc(8);
+  temp->mib_class = (char *)ACE_OS::malloc(8);
   sprintf(temp->mib_class,"TextBox");
   temp->mib_class_num = MIB_TEXTBOX;
   temp->width = width;
@@ -68,7 +68,7 @@ mib_Widget *mib_create_TextBox(mib_Widget *parent, char *name, char *contents,
   {
     if (contents != NULL)
     {
-      myres->init_contents = (char *)malloc(strlen(contents)+1);
+      myres->init_contents = (char *)ACE_OS::malloc(strlen(contents)+1);
       strcpy(myres->init_contents, contents);
     }
   }
@@ -108,7 +108,7 @@ void mib_delete_TextBox(mib_Widget *thisw)
   mib_TextBox *temp = (mib_TextBox *)thisw->myres;
 
   if (temp->init_contents != NULL)
-    free(temp->init_contents);
+    ACE_OS::free(temp->init_contents);
 }
 
 void mib_save_TextBox(mib_Widget *thisw, FILE *fout)

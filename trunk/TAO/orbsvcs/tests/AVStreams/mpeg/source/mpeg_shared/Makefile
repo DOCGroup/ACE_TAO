@@ -47,10 +47,56 @@ realclean: clean
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/com.o .obj/com.so .shobj/com.o .shobj/com.so: com.cpp ../include/common.h fileio.h routine.h com.h
-.obj/fileio.o .obj/fileio.so .shobj/fileio.o .shobj/fileio.so: fileio.cpp routine.h fileio.h
-.obj/filters.o .obj/filters.so .shobj/filters.o .shobj/filters.so: filters.cpp filters.h
-.obj/routine.o .obj/routine.so .shobj/routine.o .shobj/routine.so: routine.cpp routine.h
-.obj/sendpt.o .obj/sendpt.so .shobj/sendpt.o .shobj/sendpt.so: sendpt.cpp sendpt.h
+com.o: com.cpp ../include/common.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/OS.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/inc_user_config.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/config.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/streams.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Basic_Types.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Basic_Types.i \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/OS.i \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Trace.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Log_Msg.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Log_Record.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/ACE.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Version.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/ACE.i \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Log_Priority.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Log_Record.i fileio.h \
+ routine.h com.h
+fileio.o: fileio.cpp routine.h ../include/common.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/OS.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/inc_user_config.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/config.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/streams.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Basic_Types.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Basic_Types.i \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/OS.i \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Trace.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Log_Msg.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Log_Record.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/ACE.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Version.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/ACE.i \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Log_Priority.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Log_Record.i fileio.h
+filters.o: filters.cpp filters.h
+routine.o: routine.cpp routine.h ../include/common.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/OS.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/inc_user_config.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/config.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/streams.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Basic_Types.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Basic_Types.i \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/OS.i \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Trace.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Log_Msg.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Log_Record.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/ACE.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Version.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/ACE.i \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Log_Priority.h \
+ /home/cs/student/naga/ACE/build/Sun_C++//ace/Log_Record.i
+sendpt.o: sendpt.cpp sendpt.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

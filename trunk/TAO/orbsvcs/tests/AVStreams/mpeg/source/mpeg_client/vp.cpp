@@ -186,7 +186,7 @@ int HandleXError(Display * dpy, XErrorEvent * event)
 
 void InstallXErrorHandler()
 {
-  int HandleXError();
+  int HandleXError(Display *,XErrorEvent *);
 
   XSetErrorHandler(HandleXError);
   XFlush(display);
@@ -218,6 +218,8 @@ void DeInstallXErrorHandler()
 #ifdef SH_MEM
 int CompletionType = -1;
 #endif
+
+int XShmGetEventBase (Display*);
 
 static void 
 MakeWindow(void) 
@@ -547,7 +549,7 @@ void InitColorDisplay(char *name)
 }
 
 
-static ClearWindow(void)
+static void ClearWindow(void)
 {
   int size;
   char * data;

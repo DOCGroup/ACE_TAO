@@ -37,16 +37,16 @@ mib_Widget *mib_create_RadioBox(mib_Widget *parent, char *name, char *label,
   else
     mib_add_mib_Widget(temp, parent);
 
-  myres = (mib_RadioBox *)malloc(sizeof(mib_RadioBox));
+  myres = (mib_RadioBox *)ACE_OS::malloc(sizeof(mib_RadioBox));
 
   /* initialize public resources */
 
   if (mib_fill == WDEFAULT)
   {
-    temp->name = (char *)malloc(strlen(name)+1);
+    temp->name = (char *)ACE_OS::malloc(strlen(name)+1);
     strcpy(temp->name,name);
   }
-  temp->mib_class = (char *)malloc(9);
+  temp->mib_class = (char *)ACE_OS::malloc(9);
   sprintf(temp->mib_class,"RadioBox");
   temp->mib_class_num = MIB_RADIOBOX;
 
@@ -72,13 +72,13 @@ mib_Widget *mib_create_RadioBox(mib_Widget *parent, char *name, char *label,
   if (mib_fill == WDEFAULT)
   {
     myres->numlabel = 2;
-    myres->labels = (char **)malloc(10);
-    myres->buttons = (Widget *)malloc(sizeof(Widget) * myres->numlabel);
+    myres->labels = (char **)ACE_OS::malloc(10);
+    myres->buttons = (Widget *)ACE_OS::malloc(sizeof(Widget) * myres->numlabel);
     sprintf(label_temp, "Radio 1");
-    myres->labels[0] = (char *)malloc(strlen(label_temp)+1);
+    myres->labels[0] = (char *)ACE_OS::malloc(strlen(label_temp)+1);
     strcpy(myres->labels[0],label_temp);
     sprintf(label_temp, "Radio 2");
-    myres->labels[1] = (char *)malloc(strlen(label_temp)+1);
+    myres->labels[1] = (char *)ACE_OS::malloc(strlen(label_temp)+1);
     strcpy(myres->labels[1],label_temp);
   }
 
@@ -136,9 +136,9 @@ void mib_delete_RadioBox(mib_Widget *thisw)
   int		count;
 
   for (count=0; count < temp->numlabel; count++)
-    free(temp->labels[count]);
+    ACE_OS::free(temp->labels[count]);
 
-  free(temp);
+  ACE_OS::free(temp);
 }
 
 void mib_save_RadioBox(mib_Widget *thisw, FILE *fout)
@@ -174,8 +174,8 @@ int mib_load_RadioBox(mib_Widget *thisw, mib_Buffer *fin)
     if (!(myres->numlabel))
       return 0;
 
-    myres->labels = (char **)malloc((myres->numlabel+1)*4);
-    myres->buttons = (Widget *)malloc(sizeof(Widget)*(myres->numlabel));
+    myres->labels = (char **)ACE_OS::malloc((myres->numlabel+1)*4);
+    myres->buttons = (Widget *)ACE_OS::malloc(sizeof(Widget)*(myres->numlabel));
     for (count=0; count < myres->numlabel; count++)
     {
       if (!mib_read_line(fin, res, val))
@@ -184,7 +184,7 @@ int mib_load_RadioBox(mib_Widget *thisw, mib_Buffer *fin)
       if (vallen < 2)
 	return 0;
       val[vallen-1] = '\0';
-      myres->labels[count] = (char *)malloc(vallen-1);
+      myres->labels[count] = (char *)ACE_OS::malloc(vallen-1);
       sprintf(myres->labels[count],"%s",&(val[1]));
 
       n = 0;

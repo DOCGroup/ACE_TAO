@@ -34,6 +34,7 @@
 #include <sys/types.h>
 */
 #include "filters.h"
+#include "ace/OS.h"
 
 #define BUFSIZE 256
 #define maxval(a,b) ((a) > (b) ? (a) : (b))
@@ -45,14 +46,14 @@ static float FLOAT_MAX = (float)INT_MAX;
 AverageFilter * NewAverageFilter(int nsamples)
 {
   AverageFilter * f;
-  f = (AverageFilter *) malloc(sizeof(*f));
+  f = (AverageFilter *) ACE_OS::malloc(sizeof(*f));
   if (f == NULL)
     return NULL;
   f->type = FILTER_AVERAGE;
   f->nsamples = nsamples;
-  f->buf = (double *)malloc(nsamples * sizeof(double));
+  f->buf = (double *)ACE_OS::malloc(nsamples * sizeof(double));
   if (f->buf == NULL) {
-    free(f);
+   ACE_OS::free(f);
     return NULL;
   }
   f->count = 0;
@@ -64,11 +65,11 @@ AverageFilter * NewAverageFilter(int nsamples)
 AverageFilter * ResetAverageFilter(AverageFilter *f, int nsamples)
 {
   if (f->nsamples != nsamples) {
-    free(f->buf);
+   ACE_OS::free(f->buf);
     f->nsamples = nsamples;
-    f->buf = (double *)malloc(nsamples * sizeof(double));
+    f->buf = (double *)ACE_OS::malloc(nsamples * sizeof(double));
     if (f->buf == NULL) {
-      free(f);
+     ACE_OS::free(f);
       return NULL;
     }
   }
@@ -80,8 +81,8 @@ AverageFilter * ResetAverageFilter(AverageFilter *f, int nsamples)
 
 void FreeAverageFilter(AverageFilter * f)
 {
-  free(f->buf);
-  free(f);
+ ACE_OS::free(f->buf);
+ ACE_OS::free(f);
 }
 
 double DoAverageFilter(AverageFilter *f, double value)
@@ -104,7 +105,7 @@ double DoAverageFilter(AverageFilter *f, double value)
 LowPassFilter * NewLowPassFilter(double Rvalue)
 {
   LowPassFilter * f;
-  f = (LowPassFilter *)malloc(sizeof(*f));
+  f = (LowPassFilter *)ACE_OS::malloc(sizeof(*f));
   if (f == NULL) {
     return NULL;
   }
@@ -139,7 +140,7 @@ LowPassFilter * ResetLowPassFilter(LowPassFilter * f, double Rvalue)
 
 void FreeLowPassFilter(LowPassFilter * f)
 {
-  free(f);
+ ACE_OS::free(f);
 }
 
 double DoLowPassFilter(LowPassFilter * f, double value)
@@ -160,7 +161,7 @@ MedianFilter * NewMedianFilter(int nsamples)
 {
   int minv = 0, maxv = 1;
   MedianFilter * f;
-  f = (MedianFilter *) malloc(sizeof(*f));
+  f = (MedianFilter *) ACE_OS::malloc(sizeof(*f));
   if (f == NULL)
     return NULL;
   f->type = FILTER_MEDIAN;
@@ -168,15 +169,15 @@ MedianFilter * NewMedianFilter(int nsamples)
   f->max = maxval(maxv, minv);
   f->min = minval(maxv, minv);
   f->statsize = f->max - f->min + 1;
-  f->buf = (int *)malloc(nsamples * sizeof(int));
+  f->buf = (int *)ACE_OS::malloc(nsamples * sizeof(int));
   if (f->buf == NULL) {
-    free(f);
+   ACE_OS::free(f);
     return NULL;
   }
-  f->stat = (int *)malloc(f->statsize * sizeof(int));
+  f->stat = (int *)ACE_OS::malloc(f->statsize * sizeof(int));
   if (f->stat == NULL) {
-    free(f->buf);
-    free(f);
+   ACE_OS::free(f->buf);
+   ACE_OS::free(f);
     return NULL;
   }
   f->count = 0;
@@ -190,11 +191,11 @@ MedianFilter * NewMedianFilter(int nsamples)
 MedianFilter * ResetMedianFilter(MedianFilter * f, int nsamples)
 {
   if (f->nsamples != nsamples) {
-    free(f->buf);
+   ACE_OS::free(f->buf);
     f->nsamples = nsamples;
-    f->buf = (int *)malloc(nsamples * sizeof(int));
+    f->buf = (int *)ACE_OS::malloc(nsamples * sizeof(int));
     if (f->buf == NULL) {
-      free(f);
+     ACE_OS::free(f);
       return NULL;
     }
   }
@@ -208,9 +209,9 @@ MedianFilter * ResetMedianFilter(MedianFilter * f, int nsamples)
 
 void FreeMedianFilter(MedianFilter * f)
 {
-  free(f->buf);
-  free(f->stat);
-  free(f);
+ ACE_OS::free(f->buf);
+ ACE_OS::free(f->stat);
+ ACE_OS::free(f);
 }
 
 double DoMedianFilter(MedianFilter *f, double pvalue)
@@ -223,7 +224,7 @@ double DoMedianFilter(MedianFilter *f, double pvalue)
     int oldsize = f->statsize;
     f->max = value + 10;
     f->statsize = f->max - f->min + 1;
-    f->stat = (int *)malloc(f->statsize * sizeof(int));
+    f->stat = (int *)ACE_OS::malloc(f->statsize * sizeof(int));
     if (f->stat == NULL) {
       fprintf(stderr, "MedianFilter Failed to extend up stat to % items",
 	      f->statsize);
@@ -239,7 +240,7 @@ double DoMedianFilter(MedianFilter *f, double pvalue)
     int oldsize = f->statsize;
     f->min = value - 10;
     f->statsize = f->max - f->min + 1;
-    f->stat = (int *)malloc(f->statsize * sizeof(int));
+    f->stat = (int *)ACE_OS::malloc(f->statsize * sizeof(int));
     if (f->stat == NULL) {
       fprintf(stderr, "MedianFilter Failed to extend down stat to % items",
 	      f->statsize);

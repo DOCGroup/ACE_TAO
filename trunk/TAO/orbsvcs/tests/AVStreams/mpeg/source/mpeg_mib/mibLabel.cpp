@@ -35,16 +35,16 @@ mib_Widget *mib_create_Label(mib_Widget *parent, char *name, char *label,
   else
     mib_add_mib_Widget(temp, parent);
 
-  myres = (mib_Label *)malloc(sizeof(mib_Label));
+  myres = (mib_Label *)ACE_OS::malloc(sizeof(mib_Label));
 
   /* initialize public resources */
 
   if (mib_fill == WDEFAULT)
   {
-    temp->name = (char *)malloc(strlen(name)+1);
+    temp->name = (char *)ACE_OS::malloc(strlen(name)+1);
     strcpy(temp->name,name);
   }
-  temp->mib_class = (char *)malloc(6);
+  temp->mib_class = (char *)ACE_OS::malloc(6);
   sprintf(temp->mib_class,"Label");
   temp->mib_class_num = MIB_LABEL;
   temp->width = width;
@@ -66,7 +66,7 @@ mib_Widget *mib_create_Label(mib_Widget *parent, char *name, char *label,
 
   if (mib_fill == WDEFAULT)
   {
-    myres->label = (char *)malloc(strlen(label)+1);
+    myres->label = (char *)ACE_OS::malloc(strlen(label)+1);
     strcpy(myres->label,label);
   }
 
@@ -109,8 +109,8 @@ void mib_delete_Label(mib_Widget *thisw)
 {
   mib_Label *temp = (mib_Label *)thisw->myres;
 
-  free(temp->label);
-  free(temp);
+  ACE_OS::free(temp->label);
+  ACE_OS::free(temp);
 }
 
 void mib_save_Label(mib_Widget *thisw, FILE *fout)
@@ -140,7 +140,7 @@ int mib_load_Label(mib_Widget *thisw, mib_Buffer *fin)
     if (vallen < 2)
       return 0;
     val[vallen-1] = '\0';
-    myres->label = (char *)malloc(vallen-1);
+    myres->label = (char *)ACE_OS::malloc(vallen-1);
     sprintf(myres->label,"%s",&(val[1]));
     label_text = XmStringCreateLtoR(myres->label, XmSTRING_DEFAULT_CHARSET);
 
