@@ -18,7 +18,7 @@ ACE_Token_Request::ACE_Token_Request (void)
 {
 }
 
-// Create a ACE_Token_Request message.  
+// Create a ACE_Token_Request message.
 
 ACE_Token_Request::ACE_Token_Request (int token_type,
 				      int proxy_type,
@@ -38,7 +38,7 @@ ACE_Token_Request::ACE_Token_Request (int token_type,
   this->options (options);
 }
 
-// Encode the transfer buffer into network byte order 
+// Encode the transfer buffer into network byte order
 // so that it can be sent to the server.
 
 int
@@ -48,7 +48,7 @@ ACE_Token_Request::encode (void *&buf)
   return this->length ();
 }
 
-// Decode the transfer buffer into host byte byte order 
+// Decode the transfer buffer into host byte byte order
 // so that it can be used by the server.
 
 int
@@ -77,9 +77,9 @@ ACE_Token_Request::decode (void)
   // ':'
   // client_id_ plus '\0'
   size_t data_size = ACE_TOKEN_REQUEST_HEADER_SIZE
-                     + ACE_OS::strlen (this->token_name_) + 1 
-		     + ACE_OS::strlen (this->client_id_) + 1  
-		     + 1;	                     
+                     + ACE_OS::strlen (this->token_name_) + 1
+		     + ACE_OS::strlen (this->client_id_) + 1
+		     + 1;
 
   // Make sure the message was correctly received and framed.
   return this->length () == data_size ? 0 : -1;
@@ -91,7 +91,7 @@ void
 ACE_Token_Request::dump (void) const
 {
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("*******\nlength = %d\ntoken name = %s\nclient id = %s\n"), 
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("*******\nlength = %d\ntoken name = %s\nclient id = %s\n"),
 	     this->length (), this->token_name (), this->client_id ()));
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("type = ")));
 
@@ -126,17 +126,17 @@ ACE_Token_Request::dump (void) const
     ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("blocking forever\n")));
   else
     {
-      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("waiting for %ld secs and %ld usecs\n"), 
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("waiting for %d secs and %d usecs\n"),
 		 this->options ().timeout ().sec (), this->options ().timeout ().usec ()));
     }
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 // ************************************************************
 // ************************************************************
 // ************************************************************
 
-// Create a ACE_Token_Reply message.  
+// Create a ACE_Token_Reply message.
 
 ACE_Token_Reply::ACE_Token_Reply (void) // Type of reply.
 {
@@ -145,7 +145,7 @@ ACE_Token_Reply::ACE_Token_Reply (void) // Type of reply.
   this->length (sizeof (Transfer));
 }
 
-// Encode the transfer buffer into network byte order 
+// Encode the transfer buffer into network byte order
 // so that it can be sent to the client.
 
 int
@@ -155,7 +155,7 @@ ACE_Token_Reply::encode (void *&buf)
   return this->length ();
 }
 
-// Decode the transfer buffer into host byte order 
+// Decode the transfer buffer into host byte order
 // so that it can be used by the client.
 
 int
@@ -169,8 +169,7 @@ ACE_Token_Reply::decode (void)
 void
 ACE_Token_Reply::dump (void) const
 {
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("*******\nlength = %d\nerrnum = %d"), 
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("*******\nlength = %d\nerrnum = %d"),
 	     this->length (), this->errnum ()));
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("arg = %d"), this->arg ()));
 }
-

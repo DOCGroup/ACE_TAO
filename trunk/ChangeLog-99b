@@ -1,7 +1,20 @@
+Thu Oct 28 10:54:42 1999  Nanbor Wang  <nanbor@ace.cs.wustl.edu>
+
+        * ace/Message_Block.cpp:
+        * ace/Name_Request_Reply.cpp:
+        * ace/Time_Request_Reply.cpp:
+        * ace/Token_Request_Reply.cpp:
+          Replaced the use of %ld or %lu with %d or %u in
+          ACE_DEBUG/ACE_ERROR.
+
+        * ace/config-kcc-common.h:  Undefined
+          ACE_HAS_NONSTATIC_OBJECT_MANAGER.  Thanks to Russ Noseworthy for
+          noticing this.
+
 Thu Oct 28 10:49:51 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * ACE.dsw: This is an internal file that I last updated 
-          in 1997 (I don't think it ever got included in the 
+        * ACE.dsw: This is an internal file that I last updated
+          in 1997 (I don't think it ever got included in the
           releases).  Being out of date and not used, I removed it.
 
 Thu Oct 28 09:31:19 1999  David L. Levine  <levine@cs.wustl.edu>
