@@ -99,7 +99,7 @@ main (int argc, char *argv[])
           else
             normal_count++;
 
-          if (i % 500 == 0)
+          if (i % 100 == 0)
             ACE_DEBUG ((LM_DEBUG, "Finished iteration %d\n", i));
         }
 
