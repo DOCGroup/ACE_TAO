@@ -241,7 +241,7 @@ TAO_RT_Protocols_Hooks::get_thread_CORBA_priority (CORBA::Short &priority,
     this->get_thread_CORBA_and_native_priority (priority,
                                                 native_priority,
                                                 ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   if (result == -1)
     return result;
