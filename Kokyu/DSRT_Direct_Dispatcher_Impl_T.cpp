@@ -40,40 +40,21 @@ operator ()(const DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& item1,
 */
 template <class DSRT_Scheduler_Traits>
 DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
-DSRT_Direct_Dispatcher_Impl ()
-  :min_prio_ (ACE_Sched_Params::priority_min
-              (ACE_SCHED_FIFO,
-               ACE_SCOPE_THREAD)),
-   max_prio_ (ACE_Sched_Params::priority_max
-              (ACE_SCHED_FIFO,
-               ACE_SCOPE_THREAD)),
-   executive_prio_ (max_prio_),
-   blocked_prio_ (ACE_Sched_Params::previous_priority
-                  (ACE_SCHED_FIFO,
-                   max_prio_,
-                   ACE_SCOPE_THREAD)),
-   inactive_prio_ (min_prio_),
-   active_prio_ (ACE_Sched_Params::next_priority
-                 (ACE_SCHED_FIFO,
-                  min_prio_)),
-   curr_scheduled_thr_handle_ (0),
+DSRT_Direct_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy, 
+                         int sched_scope)
+  :DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>(sched_policy, sched_scope),
    sched_queue_modified_ (0),
-   sched_queue_modified_cond_ (sched_queue_modified_cond_lock_),
-   shutdown_flagged_ (0)
+   sched_queue_modified_cond_ (sched_queue_modified_cond_lock_)
 {
-  long flags =
-    THR_NEW_LWP |
-    THR_JOINABLE |
-    THR_BOUND |
-    THR_SCHED_FIFO;
-
   //Run scheduler thread at highest priority
-  if (this->activate (flags, 1, 0, executive_prio_) == -1)
+  if (this->activate (rt_thr_flags_, 1, 0, executive_prio_) == -1)
     {
-      flags = THR_NEW_LWP | THR_JOINABLE | THR_BOUND;
-      if (this->activate (flags) == -1)
+      ACE_ERROR ((LM_ERROR,
+                  "(%t|%T) cannot activate scheduler thread in RT mode."
+                  "Trying in non RT mode\n"));
+      if (this->activate (non_rt_thr_flags_) == -1)
         ACE_ERROR ((LM_ERROR,
-                    "EC (%P|%t) cannot activate scheduler thread\n"));
+                    "(%t|%T) cannot activate scheduler thread\n"));
     }
 }
 
@@ -87,10 +68,11 @@ init_i (const DSRT_ConfigInfo&)
 template <class DSRT_Scheduler_Traits> int
 DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
 {
-  int prio;
   ACE_hthread_t scheduler_thr_handle;
   ACE_Thread::self (scheduler_thr_handle);
 
+#ifdef KOKYU_DSRT_LOGGING
+  int prio;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("max prio=%d\n")
               ACE_TEXT ("min prio=%d\n")
@@ -101,7 +83,7 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
               active_prio_,
               inactive_prio_));
 
-  if (ACE_Thread::getprio (scheduler_thr_handle, prio) == -1)
+  if (ACE_OS::thr_getprio (scheduler_thr_handle, prio) == -1)
     {
       if (errno == ENOTSUP)
         {
@@ -118,6 +100,7 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%t): Scheduler thread prio is %d\n", prio));
+#endif /*DSRT_LOGGING*/
 
   while(1)
     {
@@ -129,38 +112,73 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
 
       while (!sched_queue_modified_)
         {
+#ifdef KOKYU_DSRT_LOGGING
           ACE_DEBUG ((LM_DEBUG,
                       "(%t): sched thread about to wait on cv\n"));
+#endif 
           sched_queue_modified_cond_.wait ();
         }
+
+#ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG, "(%t): sched thread done waiting on cv\n"));
+#endif
 
       sched_queue_modified_ = 0;
 
+      ACE_Guard<ACE_SYNCH_RECURSIVE_MUTEX> synch_lock_mon(synch_lock_);
       if (ready_queue_.current_size () <= 0)
         continue;
 
+#ifdef KOKYU_DSRT_LOGGING
+      ACE_DEBUG ((LM_DEBUG, "(%t|%T):Sched Queue contents===>\n"));
       ready_queue_.dump ();
+#endif
       DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> item_var;
       ready_queue_.most_eligible (item_var);
 
-      ACE_hthread_t most_eligible_thread = item_var->thread_handle ();
-      /*
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t): most eligible thread guid = %d\n"),
-                  item_var->guid ()));
-      */
-      if (curr_scheduled_thr_handle_ != most_eligible_thread)
+      ACE_hthread_t most_eligible_thr_handle = item_var->thread_handle ();
+
+#ifdef KOKYU_DSRT_LOGGING
+      ACE_DEBUG ((LM_DEBUG, 
+                  "(%t|%T):curr scheduled thr handle = %d\n", 
+                  curr_scheduled_thr_handle_)); 
+      ACE_DEBUG ((LM_DEBUG, 
+                  "(%t|%T):most eligible thr handle = %d \n",
+                  most_eligible_thr_handle)); 
+#endif
+
+      if (curr_scheduled_thr_handle_ != most_eligible_thr_handle)
         {
-          ACE_OS::thr_setprio (curr_scheduled_thr_handle_,
-                               inactive_prio_);
-          ACE_OS::thr_setprio (most_eligible_thread, active_prio_);
-          curr_scheduled_thr_handle_ = most_eligible_thread;
+          if (curr_scheduled_thr_handle_ != 0)
+            {
+              if (ACE_OS::thr_setprio (curr_scheduled_thr_handle_,
+                                       inactive_prio_, sched_policy_) == -1)
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("%p\n"),
+                              ACE_TEXT ("thr_setprio on curr_scheduled_thr_handle_ failed.")));
+                  ACE_DEBUG ((LM_DEBUG, "thr_handle = %d, prio = %d\n",
+                              curr_scheduled_thr_handle_, inactive_prio_));
+                }
+            }
+
+          if (ACE_OS::thr_setprio (most_eligible_thr_handle, 
+                                   active_prio_, sched_policy_) == -1)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("thr_setprio on most_eligible_thr_handle failed")));
+            }
+
+          curr_scheduled_thr_handle_ = most_eligible_thr_handle;
           curr_scheduled_guid_ = item_var->guid ();
         }
     }
 
+#ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t): sched thread exiting\n"));
+#endif
+
   return 0;
 }
 
@@ -168,28 +186,62 @@ template <class DSRT_Scheduler_Traits>
 int DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
 {
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, synch_lock_, -1);
+
+#ifdef KOKYU_DSRT_LOGGING
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%t|%T):schedule_i enter\n")); 
+#endif
+
+  DSRT_Dispatch_Item<DSRT_Scheduler_Traits>* item;
+  ACE_hthread_t thr_handle;
+  ACE_Thread::self (thr_handle);
+
+  ACE_NEW_RETURN (item,
+                  DSRT_Dispatch_Item<DSRT_Scheduler_Traits> (id, qos),
+                  -1);
+  item->thread_handle (thr_handle);
+
+  if (ready_queue_.insert (item) == -1)
+    return -1;
+
+#ifdef KOKYU_DSRT_LOGGING
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%t|%T):schedule_i after ready_q.insert\n")); 
+#endif
+  
+  if (ACE_OS::thr_setprio (thr_handle, blocked_prio_, sched_policy_) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("thr_setprio failed")));
+    }
+
+#ifdef KOKYU_DSRT_LOGGING
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%t|%T):schedule_i after thr_setprio\n")); 
+#endif
+
+  //ready_queue_.dump ();
+
   //@@ Perhaps the lock could be moved further down just before
   //setting the condition variable?
   ACE_GUARD_RETURN (cond_lock_t,
                     mon, sched_queue_modified_cond_lock_, 0);
-  if (ready_queue_.insert (id, qos) == -1)
-    return -1;
 
-  ACE_hthread_t thr_handle;
-  ACE_Thread::self (thr_handle);
-
-  if (ACE_OS::thr_setprio (thr_handle, inactive_prio_) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("thr_setprio failed")),
-                        -1);
-    }
-
-  ready_queue_.dump ();
+#ifdef KOKYU_DSRT_LOGGING
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%t|%T):schedule_i after acquiring cond lock\n")); 
+#endif
 
   sched_queue_modified_ = 1;
   sched_queue_modified_cond_.signal ();
+
+#ifdef KOKYU_DSRT_LOGGING
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%t|%T):schedule_i exit\n")); 
+#endif
+
   return 0;
 }
 
@@ -204,32 +256,49 @@ template <class DSRT_Scheduler_Traits>
 int DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 update_schedule_i (Guid_t guid, Block_Flag_t flag)
 {
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, synch_lock_, -1);
+
+#ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t): update schedule for block entered\n"));
+#endif
+
   DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> dispatch_item;
   ACE_hthread_t thr_handle;
   //@@ Perhaps the lock could be got rid of. It looks like the state
   //of this object is not getting modified here. It makes calls to
   //other methods, which already are thread-safe.
-  ACE_Guard<cond_lock_t> mon(sched_queue_modified_cond_lock_);
+  //ACE_Guard<cond_lock_t> mon(sched_queue_modified_cond_lock_);
 
   int found = this->ready_queue_.find (guid, dispatch_item);
   if (found == 0 && flag == BLOCK)
     {
       thr_handle = dispatch_item->thread_handle ();
-      ACE_OS::thr_setprio (thr_handle, blocked_prio_);
+      if (ACE_OS::thr_setprio (thr_handle, blocked_prio_, sched_policy_) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("thr_setprio failed")));
+        }
 
       //monitor released because cancel_schedule would acquire the
       //lock. Using recursive mutex creates lock up.
       //
       //@@ Need to investigate this further. Also we can consider
       //using the Thread-Safe interface pattern.
-      mon.release ();
+      //mon.release ();
       int rc = this->cancel_schedule (guid);
+
+#ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG, "(%t): update schedule for block done\n"));
+#endif
+
       return rc;
     }
 
+#ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t): update schedule for block done\n"));
+#endif
+
   return -1;
 }
 
@@ -237,13 +306,17 @@ template <class DSRT_Scheduler_Traits> int
 DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 cancel_schedule_i (Guid_t guid)
 {
-  //@@ Perhaps the lock could be moved further down?
-  ACE_GUARD_RETURN (cond_lock_t,
-                    mon, sched_queue_modified_cond_lock_, 0);
-  ready_queue_.dump ();
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, synch_lock_, -1);
+
+#ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t): about to remove guid\n"));
+#endif
+
   ready_queue_.remove (guid);
+
+#ifdef KOKYU_DSRT_LOGGING
   ready_queue_.dump ();
+#endif
 
   if (curr_scheduled_guid_ == guid)
     {
@@ -251,6 +324,8 @@ cancel_schedule_i (Guid_t guid)
       curr_scheduled_thr_handle_ = 0;
     }
 
+  ACE_GUARD_RETURN (cond_lock_t,
+                    mon, sched_queue_modified_cond_lock_, 0);
   sched_queue_modified_ = 1;
   sched_queue_modified_cond_.signal ();
   return 0;
@@ -260,8 +335,9 @@ template <class DSRT_Scheduler_Traits> int
 DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 shutdown_i ()
 {
-  ACE_Guard<cond_lock_t> mon(sched_queue_modified_cond_lock_);
   shutdown_flagged_ = 1;
+
+  ACE_Guard<cond_lock_t> mon(sched_queue_modified_cond_lock_);
   sched_queue_modified_ = 1;
   sched_queue_modified_cond_.signal ();
   // We have to wait until the scheduler executive thread shuts

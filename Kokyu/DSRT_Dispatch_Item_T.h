@@ -42,7 +42,7 @@ namespace Kokyu
     Guid_t guid_;
     DSRT_QoSDescriptor qos_;
     ACE_Time_Value insertion_time_;
-
+    
   public:
     DSRT_Dispatch_Item (Guid_t guid, const DSRT_QoSDescriptor&);
 

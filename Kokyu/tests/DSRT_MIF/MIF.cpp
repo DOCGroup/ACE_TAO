@@ -59,9 +59,10 @@ public:
     ACE_Thread::self (thr_handle);
     int prio;
 
+    ACE_DEBUG ((LM_DEBUG, "(%t|%T): task activated\n"));
     ACE_ASSERT (dispatcher_ != 0);
-    prio = dispatcher_->schedule (guid_, qos_);
     barrier_.wait ();
+    prio = dispatcher_->schedule (guid_, qos_);
 
     if (ACE_Thread::getprio (thr_handle, prio) == -1)
       {
@@ -72,10 +73,9 @@ public:
                        ));
             return 0;
           }
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("getprio failed")),
-                          -1);
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("getprio failed")));
       }
 
     ACE_DEBUG ((LM_DEBUG, "(%t) Thread prio=%d, guid=%d, qos_.importance=%d \n", prio, guid_, qos_.importance_));
@@ -162,6 +162,7 @@ template class Kokyu::DSRT_Dispatcher_Factory<mif_scheduler_traits>;
 template class Kokyu::DSRT_Dispatcher<mif_scheduler_traits>;
 template class Kokyu::DSRT_Dispatcher_Impl<mif_scheduler_traits>;
 template class Kokyu::DSRT_Direct_Dispatcher_Impl<mif_scheduler_traits>;
+template class Kokyu::DSRT_CV_Dispatcher_Impl<mif_scheduler_traits>;
 template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
 template class Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>;
 template class Kokyu::Comparator_Adapter_Generator<mif_scheduler_traits>;
@@ -192,6 +193,7 @@ template class ACE_Array_Iterator<Kokyu::ConfigInfo>;
 #pragma instantiate Kokyu::DSRT_Dispatcher<mif_scheduler_traits>
 #pragma instantiate Kokyu::DSRT_Dispatcher_Impl<mif_scheduler_traits>
 #pragma instantiate Kokyu::DSRT_Direct_Dispatcher_Impl<mif_scheduler_traits>
+#pragma instantiate Kokyu::DSRT_CV_Dispatcher_Impl<mif_scheduler_traits>
 #pragma instantiate Kokyu::DSRT_Dispatch_Item_var<mif_scheduler_traits>
 #pragma instantiate Kokyu::Comparator_Adapter_Generator<mif_scheduler_traits>
 
