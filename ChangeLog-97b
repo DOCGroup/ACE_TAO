@@ -1,3 +1,8 @@
+Fri Nov 14 10:35:59 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* examples/Reactor/Dgram: Reformatted some of the example
+	  code to make it more readable.
+
 Fri Nov 14 01:10:33 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.47, released Fri Nov 14 01:10:33 1997.

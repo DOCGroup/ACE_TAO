@@ -1,6 +1,7 @@
-// Exercise the ACE_SOCK_Dgram wrapper along with the ACE_Reactor.
 // $Id$
 
+// Exercise the ACE_SOCK_Dgram wrapper along with the ACE_Reactor.
+//
 // Typical invocation sequence is:
 //
 // % Dgram 10000 localhost 10001 &
@@ -41,12 +42,14 @@ int
 AAL_CP::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
-  ssize_t n;
   ACE_INET_Addr from_addr;
 
   ACE_DEBUG ((LM_DEBUG, "Activity occurred on handle %d!\n",
 	      ACE_SOCK_Dgram::get_handle ()));
-  if ((n = ACE_SOCK_Dgram::recv (buf, sizeof buf, from_addr)) == -1)
+
+  ssize_t n = ACE_SOCK_Dgram::recv (buf, sizeof buf, from_addr);
+
+  if (n == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "handle_input"));
   else
     ACE_DEBUG ((LM_DEBUG, "got buf = %*s\n", n, buf));
@@ -71,10 +74,10 @@ main (int argc, char *argv[])
 		       argv[0]), -1);
 
   ACE_Reactor reactor;
-  char	  buf[128];
+  char buf[BUFSIZ];
   u_short localport  = ACE_OS::atoi (argv[1]);
   u_short remoteport = ACE_OS::atoi (argv[3]);
-  char	  *remotehost = argv[2];
+  char *remotehost = argv[2];
 
   ACE_INET_Addr remote_addr (remoteport, remotehost);
   ACE_INET_Addr local_addr (localport);
@@ -117,5 +120,5 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, ".\n"));
     }
 
-  ACE_NOTREACHED(return 0);
+  ACE_NOTREACHED (return 0);
 }
