@@ -58,6 +58,7 @@ main (int, char *[])
   sigset_t x ;			// examined sigset
   int sigset [NSIG] ;		// a comparison sigset
   int i ;
+  int status = 0;		// 0 is success, else fail code
 
   // Two test signal numbers.  I choose these low value signals to
   // avoid exceeding the NSIG range.
@@ -104,9 +105,14 @@ main (int, char *[])
   siglistset(x, sigset) ;
 
   // Now testing out of bound signal
-  if (ACE_OS::sigismember (&x, NSIG) >= 0)
-    ACE_ERROR ((LM_ERROR, "Platform doesn't check for valid signal number.\n")) ;
-  ACE_ASSERT (ACE_OS::last_error() == EINVAL) ;
+  if (ACE_OS::sigismember (&x, NSIG) > 0) {
+    ACE_ERROR((LM_ERROR, "Platform doesn't check for valid signal number.\n"));
+    status = 1;
+  }
+  else if (ACE_OS::last_error() != EINVAL) {
+    ACE_ERROR((LM_ERROR, "%p.\n", "Expected status EINVAL; got"));
+    status = 1;
+  }
 
   /* Skip this test at this moment 
   // Test if platform can catch invalid sigset error
@@ -119,5 +125,5 @@ main (int, char *[])
   */
 
   ACE_END_TEST;
-  return 0;
+  return status;
 }
