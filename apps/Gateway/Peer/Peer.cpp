@@ -2,14 +2,12 @@
 
 #define ACE_BUILD_SVC_DLL
 
-#include "ace/Get_Opt.h"
 #include "ace/Service_Config.h"
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
 #include "Event.h"
 #include "Peer.h"
-
-static int verbose = 0;
+#include "Options.h"
 
 Peer_Handler::Peer_Handler (void)
   : proxy_id_ (0),
@@ -19,7 +17,7 @@ Peer_Handler::Peer_Handler (void)
   this->msg_queue ()->high_water_mark (Peer_Handler::MAX_QUEUE_SIZE);
 }
 
-// Upcall from the ACE_Acceptor::handle_input() that turns control
+// Upcall from the <ACE_Acceptor::handle_input> that turns control
 // over to our application-specific Gateway handler.
 
 int
@@ -28,8 +26,8 @@ Peer_Handler::open (void *a)
   ACE_DEBUG ((LM_DEBUG, "Gateway handler's handle = %d\n",
 	     this->peer ().get_handle ()));
 
-  // Call down to the base class to activate and register this
-  // handler.
+  // Call down to the base class to activate and register this handler
+  // with an <ACE_Reactor>.
   if (this->inherited::open (a) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
@@ -37,15 +35,16 @@ Peer_Handler::open (void *a)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "enable"), -1);
 
   char *to = ACE_OS::getenv ("TIMEOUT");
-  int timeout = to == 0 ? 100000 : ACE_OS::atoi (to);
+  ACE_Time_Value timeout (to == 0 ? Peer_Handler::DEFAULT_TIMEOUT : ACE_OS::atoi (to));
 
   // Schedule the time between disconnects.  This should really be a
   // "tunable" parameter.
-  if (ACE_Reactor::instance ()->schedule_timer (this, 0, timeout) == -1)
+  if (ACE_Reactor::instance ()->schedule_timer 
+      (this, 0, timeout) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "schedule_timer"));
 
   // If there are events left in the queue, make sure we enable the
-  // ACE_Reactor appropriately to get them sent out.
+  // <ACE_Reactor> appropriately to get them sent out.
   if (this->msg_queue ()->is_empty () == 0
       && ACE_Reactor::instance ()->schedule_wakeup
           (this, ACE_Event_Handler::WRITE_MASK) == -1)
@@ -71,8 +70,9 @@ Peer_Handler::xmit_stdin (void)
 
       Event *event = (Event *) mb->rd_ptr ();
 
-      ssize_t n = ACE_OS::read (ACE_STDIN, event->data_, sizeof event->data_);
-
+      ssize_t n = ACE_OS::read (ACE_STDIN,
+                                event->data_,
+                                sizeof event->data_);
       switch (n)
 	{
 	case 0:
@@ -81,7 +81,8 @@ Peer_Handler::xmit_stdin (void)
 	  // Take stdin out of the ACE_Reactor so we stop trying to
 	  // send events.
 	  ACE_Reactor::instance ()->remove_handler
-	    (ACE_STDIN, ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK);
+	    (ACE_STDIN,
+             ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK);
 	  mb->release ();
 	  break;
 	case -1:
@@ -90,7 +91,7 @@ Peer_Handler::xmit_stdin (void)
 	  break;
 	default:
 	  // For simplicity, we'll use our proxy id as the supplier id
-	  // (which we must store in network byte order).
+	  // (which we must store in network byte order, of course).
 	  event->header_.supplier_id_ = this->proxy_id_;
 	  event->header_.len_ = n;
 	  event->header_.priority_ = 0;
@@ -99,6 +100,7 @@ Peer_Handler::xmit_stdin (void)
 	  // Convert all the fields into network byte order.
 	  event->header_.encode ();
 
+          // Move the write pointer to the end of the event.
 	  mb->wr_ptr (sizeof (Event_Header) + n);
 
 	  if (this->put (mb) == -1)
@@ -115,34 +117,37 @@ Peer_Handler::xmit_stdin (void)
 	    }
 	}
     }
+
   return 0;
 }
 
-// Perform a non-blocking put() of event MB.  If we are unable to send
-// the entire event the remainder is re-Taskd at the *front* of the
+// Perform a non-blocking <put> of event MB.  If we are unable to send
+// the entire event the remainder is re-queue'd at the *front* of the
 // Message_Queue.
 
 int
 Peer_Handler::nonblk_put (ACE_Message_Block *mb)
 {
   // Try to send the event.  If we don't send it all (e.g., due to
-  // flow control), then re-ACE_Task the remainder at the head of the
-  // Message_Queue and ask the ACE_Reactor to inform us (via
-  // handle_output()) when it is possible to try again.
+  // flow control), then re-queue the remainder at the head of the
+  // <ACE_Message_Queue> and ask the <ACE_Reactor> to inform us (via
+  // <handle_output>) when it is possible to try again.
 
   ssize_t n;
 
   if ((n = this->send (mb)) == -1)
     return -1;
-  else if (errno == EWOULDBLOCK) // Didn't manage to send everything.
+  else if (errno == EWOULDBLOCK) 
     {
+      // We didn't manage to send everything, so requeue.
       ACE_DEBUG ((LM_DEBUG,
 		  "queueing activated on handle %d to supplier id %d\n",
 		 this->get_handle (), this->proxy_id_));
 
-      // ACE_Queue in *front* of the list to preserve order.
+      // Re-queue in *front* of the list to preserve order.
       if (this->msg_queue ()->enqueue_head
-	  (mb, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
+	  (mb,
+           (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "enqueue_head"), -1);
 
       // Tell ACE_Reactor to call us back when we can send again.
@@ -164,7 +169,6 @@ Peer_Handler::handle_output (ACE_HANDLE)
   ACE_Message_Block *mb = 0;
 
   ACE_DEBUG ((LM_DEBUG, "in handle_output\n"));
-  // The list had better not be empty, otherwise there's a bug!
 
   if (this->msg_queue ()->dequeue_head
       (mb, (ACE_Time_Value *) &ACE_Time_Value::zero) != -1)
@@ -175,22 +179,21 @@ Peer_Handler::handle_output (ACE_HANDLE)
 	  ACE_ASSERT (errno == EWOULDBLOCK);
 	  // Didn't write everything this time, come back later...
 	  break;
-
+          /* NOTREACHED */
 	case -1:
 	  // Caller is responsible for freeing a ACE_Message_Block if
 	  // failures occur.
 	  mb->release ();
 	  ACE_ERROR ((LM_ERROR, "%p\n",
 		      "transmission failure in handle_output"));
-
 	  /* FALLTHROUGH */
 	default: // Sent the whole thing.
 
 	  // If we succeed in writing the entire event (or we did not
 	  // fail due to EWOULDBLOCK) then check if there are more
-	  // events on the Message_Queue.  If there aren't, tell the
-	  // ACE_Reactor not to notify us anymore (at least until
-	  // there are new events queued up).
+	  // events on the <ACE_Message_Queue>.  If there aren't, tell
+	  // the <ACE_Reactor> not to notify us anymore (at least
+	  // until there are new events queued up).
 
 	  if (this->msg_queue ()->is_empty ())
 	    {
@@ -204,10 +207,11 @@ Peer_Handler::handle_output (ACE_HANDLE)
 		ACE_ERROR ((LM_ERROR, "%p\n", "cancel_wakeup"));
 	    }
 	}
+      return 0;
     }
   else
-    ACE_ERROR ((LM_ERROR, "%p\n", "dequeue_head"));
-  return 0;
+    // If the list is empty there's a bug!
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "dequeue_head"), 0);
 }
 
 // Send an event to a peer (may block if necessary).
@@ -249,6 +253,7 @@ Peer_Handler::send (ACE_Message_Block *mb)
       mb->release ();
       errno = 0;
     }
+
   ACE_DEBUG ((LM_DEBUG, "sent %d bytes, total bytes sent = %d\n",
 	     n, this->total_bytes_));
   return n;
@@ -404,16 +409,21 @@ Peer_Handler::await_supplier_id (void)
     {
       if (n == 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
-			   "gatewayd has closed down unexpectedly\n"), -1);
+			   "gatewayd has closed down unexpectedly\n"),
+                          -1);
       else
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   "%p, bytes received on handle %d = %d\n",
-			  "recv", this->get_handle (), n), -1);
+			  "recv",
+                           this->get_handle (),
+                           n),
+                          -1);
     }
   else
     {
       this->proxy_id_ = ntohl (this->proxy_id_);
-      ACE_DEBUG ((LM_DEBUG, "assigned proxy id %d\n",
+      ACE_DEBUG ((LM_DEBUG,
+                  "assigned proxy id %d\n",
 		  this->proxy_id_));
     }
 
@@ -424,11 +434,11 @@ Peer_Handler::await_supplier_id (void)
   ACE_OS::rewind (stdin);
 
   // Register this handler to receive test events on stdin.
-
   if (ACE::register_stdin_handler (this,
 				   ACE_Reactor::instance (),
 				   ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_stdin_handler"), -1);
+
   return 0;
 }
 
@@ -438,6 +448,7 @@ int
 Peer_Handler::await_events (void)
 {
   ACE_Message_Block *mb = 0;
+
   ssize_t n = this->recv (mb);
 
   switch (n)
@@ -465,8 +476,8 @@ Peer_Handler::await_events (void)
 		    event->header_.supplier_id_,
 		    event->header_.len_,
 		    this->total_bytes_));
-      if (verbose)
-	ACE_DEBUG ((LM_DEBUG, "data_ = %s\n", event->data_));
+        if (verbose)
+          ACE_DEBUG ((LM_DEBUG, "data_ = %s\n", event->data_));
 
 	mb->release ();
 	return 0;
@@ -477,7 +488,8 @@ Peer_Handler::await_events (void)
 // Periodically send events via ACE_Reactor timer mechanism.
 
 int
-Peer_Handler::handle_timeout (const ACE_Time_Value &, const void *)
+Peer_Handler::handle_timeout (const ACE_Time_Value &,
+                              const void *)
 {
   // Shut down the handler.
   return this->handle_close ();
@@ -500,17 +512,18 @@ Peer_Handler::handle_close (ACE_HANDLE,
       ACE_DEBUG ((LM_DEBUG, "shutting down Peer on handle %d\n",
 		 this->get_handle ()));
 
-      // Explicitly remove ourselves for ACE_STDIN (the ACE_Reactor
-      // removes this->handle ().  Note that
-      // ACE_Event_Handler::DONT_CALL instructs the ACE_Reactor *not*
-      // to call this->handle_close(), which would otherwise lead to
-      // recursion!).
+      ACE_Reactor_Mask mask = ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK;
+
+      // Explicitly remove ourselves for ACE_STDIN (the <ACE_Reactor>
+      // removes the HANDLE.  Note that <ACE_Event_Handler::DONT_CALL>
+      // instructs the ACE_Reactor *not* to call <handle_close>, which
+      // would otherwise lead to infinite recursion!).
       ACE_Reactor::instance ()->remove_handler
-	(ACE_STDIN, ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK);
+	(ACE_STDIN, mask);
 
       // Deregister this handler with the ACE_Reactor.
       if (ACE_Reactor::instance ()->remove_handler
-	  (this, ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::ALL_EVENTS_MASK) == -1)
+	  (this, mask) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "handle = %d: %p\n",
 			  this->get_handle (), "remove_handler"), -1);
 
@@ -523,11 +536,14 @@ Peer_Handler::handle_close (ACE_HANDLE,
 Peer_Acceptor::Peer_Acceptor (void)
   : addr_ (ACE_DEFAULT_PEER_SERVER_PORT)
 {
+  // This object only gets allocated once and is just recycled
+  // forever.  Thus, it acts like a Singleton.
   ACE_NEW (peer_handler_, Peer_Handler);
 }
 
-// Note how this method just passes back the pre-allocated Peer_Handler
-// instead of having the ACE_Acceptor allocate a new one each time!
+// Note how this method just passes back the pre-allocated
+// <Peer_Handler> instead of having the <ACE_Acceptor> allocate a new
+// one each time!
 
 int
 Peer_Acceptor::make_svc_handler (Peer_Handler *&sh)
@@ -539,7 +555,9 @@ Peer_Acceptor::make_svc_handler (Peer_Handler *&sh)
 int
 Peer_Acceptor::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG, "signal %S occurred\n", signum));
+  ACE_DEBUG ((LM_DEBUG,
+              "signal %S occurred\n",
+              signum));
 
   if (signum != SIGPIPE)
     // Shut down the main event loop.
@@ -584,29 +602,6 @@ Peer_Acceptor::fini (void)
   return inherited::fini ();
 }
 
-void
-Peer_Acceptor::parse_args (int argc, char *argv[])
-{
-  ACE_Get_Opt get_opt (argc, argv, "dp:v", 0);
-
-  for (int c; (c = get_opt ()) != -1; )
-    {
-      switch (c)
-	{
-	case 'p':
-	  this->addr_.set (ACE_OS::atoi (get_opt.optarg));
-	  break;
-	case 'd':
-	  break;
-	case 'v': // Verbose mode.
-	  verbose = 1;
-	  break;
-	default:
-	  break;
-	}
-    }
-}
-
 // Hook called by the explicit dynamic linking facility to initialize
 // the peer.
 
@@ -617,27 +612,32 @@ Peer_Acceptor::init (int argc, char *argv[])
 
   ACE_Sig_Set sig_set;
   sig_set.sig_add (SIGINT);
+#if !defined (ACE_WIN32)
   sig_set.sig_add (SIGQUIT);
   sig_set.sig_add (SIGPIPE);
+#endif /* ACE_WIN32 */
 
-  // Register ourselves to receive SIGINT and SIGQUIT so we can shut
-  // down gracefully via signals.
+  // Register ourselves to receive signals so we can shut down
+  // gracefully.
 
-#if defined (ACE_WIN32)
-  if (ACE_Reactor::instance ()->register_handler (SIGINT, this) == -1)
+  if (ACE_Reactor::instance ()->register_handler (sig_set,
+                                                  this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
-#else
-  if (ACE_Reactor::instance ()->register_handler (sig_set, this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
-#endif
 
-  // Call down to the Acceptor's open() method.
+  // Call down to the <Acceptor::open> method.
   if (this->inherited::open (this->addr_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "open"),
+                      -1);
   else if (this->acceptor ().get_local_addr (this->addr_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_local_addr"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "get_local_addr"),
+                      -1);
   else
-    ACE_DEBUG ((LM_DEBUG, "listening at port %d\n",
+    ACE_DEBUG ((LM_DEBUG,
+                "listening at port %d\n",
 		this->addr_.get_port_number ()));
   return 0;
 }
