@@ -482,18 +482,65 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
                                    this->timeout_),
                   -1);
 
-  if (this->ssl_acceptor_.open (addr,
-                                reactor,
-                                this->creation_strategy_,
-                                this->accept_strategy_,
-                                this->concurrency_strategy_) == -1)
+  u_short requested_port = addr.get_port_number ();
+  if (requested_port == 0)
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("\n\nTAO (%P|%t) ")
-                    ACE_TEXT ("SSLIOP_Acceptor::open_i - %p\n\n"),
-                    ACE_TEXT ("cannot open acceptor")));
-      return -1;
+      // don't care, i.e., let the OS choose an ephemeral port
+      if (this->ssl_acceptor_.open (addr,
+                                    reactor,
+                                    this->creation_strategy_,
+                                    this->accept_strategy_,
+                                    this->concurrency_strategy_) == -1)
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("\n\nTAO (%P|%t) ")
+                        ACE_TEXT ("SSLIOP_Acceptor::open_i - %p\n\n"),
+                        ACE_TEXT ("cannot open acceptor")));
+          return -1;
+        }
+    }
+  else
+    {
+      ACE_INET_Addr a(addr);
+
+      int found_a_port = 0;
+      ACE_UINT32 last_port = requested_port + this->port_span_ - 1;
+      if (last_port > ACE_MAX_DEFAULT_PORT)
+        {
+          last_port = ACE_MAX_DEFAULT_PORT;
+        }
+
+      for (ACE_UINT32 p = requested_port; p <= last_port; p++)
+        {
+          if (TAO_debug_level > 5)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor::open_i() ")
+                        ACE_TEXT ("trying to listen on port %d\n"), p));
+
+          // Now try to actually open on that port
+          a.set_port_number ((u_short)p);
+          if (this->ssl_acceptor_.open (a,
+                                        reactor,
+                                        this->creation_strategy_,
+                                        this->accept_strategy_,
+                                        this->concurrency_strategy_) != -1)
+            {
+              found_a_port = 1;
+              break;
+            }
+        }
+
+      // Now, if we couldn't locate a port, we punt
+      if (! found_a_port)
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("\n\nTAO (%P|%t) ")
+                        ACE_TEXT ("SSLIOP_Acceptor::open_i - %p\n\n"),
+                        ACE_TEXT ("cannot open acceptor")));
+          return -1;
+        }
     }
 
   ACE_INET_Addr ssl_address;
@@ -515,11 +562,11 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
   // the user if provided.
   this->ssl_component_.port = ssl_address.get_port_number ();
 
+  (void) this->ssl_acceptor_.acceptor().enable (ACE_CLOEXEC);
   // This avoids having child processes acquire the listen socket
   // thereby denying the server the opportunity to restart on a
   // well-known endpoint.  This does not affect the aberrent behavior
   // on Win32 platforms.
-  (void) this->ssl_acceptor_.acceptor ().enable (ACE_CLOEXEC);
 
   if (TAO_debug_level > 5)
     {
@@ -538,121 +585,63 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
 }
 
 int
-TAO::SSLIOP::Acceptor::parse_options (const char *str)
+TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
 {
-  if (str == 0)
-    return 0;  // No options to parse.  Not a problem.
+  //first, do the base class parser, then parse the leftovers.
+  int result = this->TAO::IIOP_SSL_Acceptor::parse_options_i(argc,argv);
+  if (result == -1)
+    return result;
 
-  // Use an option format similar to the one used for CGI scripts in
-  // HTTP URLs.
-  // e.g.:  option1=foo&option2=bar
-
-  ACE_CString options (str);
-
-  const size_t len = options.length ();
-
-  const char option_delimiter = '&';
-
-  // Count the number of options.
-
-  CORBA::ULong option_count = 1;
-  // Number of endpoints in the string  (initialized to 1).
-
-  // Only check for endpoints after the protocol specification and
-  // before the object key.
-  for (size_t i = 0; i < len; ++i)
-    if (options[i] == option_delimiter)
-      ++option_count;
-
-  // The idea behind the following loop is to split the options into
-  // (option, name) pairs.
-  // For example,
-  //    `option1=foo&option2=bar'
-  // will be parsed into:
-  //    `option1=foo'
-  //    `option2=bar'
-
-  int begin = 0;
-  int end = -1;
-
-  // @@ We should add options to set the security association options,
-  //    or are those controlled by Policies?
-  // @@ They are controlled by the SecureInvocation policies defined
-  //    in the Security Service specification.
-  for (CORBA::ULong j = 0; j < option_count; ++j)
+  // then parse out our own options.
+  int i = 0;
+  while (i < argc)
     {
-      begin += end + 1;
+      // since the base class has already iterated over the list once,
+      // it has vound any ill-formed options. Therefore we don't need
+      // to do that again here.
+      int slot = argv[i]->find ("=");
+      ACE_CString name = argv[i]->substring (0, slot);
+      ACE_CString value = argv[i]->substring (slot + 1);
 
-      if (j < option_count - 1)
-        end = options.find (option_delimiter, begin);
-      else
-        end = len - begin;  // Handle last endpoint differently
-
-      if (end == begin)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("TAO (%P|%t) Zero length")
-                           ACE_TEXT ("IIOP/SSL option.\n")),
-                          -1);
-      else if (end != ACE_CString::npos)
+      if (name == "priority")
         {
-          ACE_CString opt = options.substring (begin, end);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("TAO (%P|%t) Invalid SSLIOP endpoint format: ")
+                             ACE_TEXT ("endpoint priorities no longer supported. \n"),
+                             value.c_str ()),
+                            -1);
+        }
+      else if (ACE_OS::strcmp (name.c_str (), "ssl_port") == 0)
+        {
+          int ssl_port = ACE_OS::atoi (value.c_str ());
 
-          const int slot = opt.find ("=");
-
-          if (slot == static_cast<int> (len - 1)
-              || slot == ACE_CString::npos)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) IIOP/SSL")
-                               ACE_TEXT ("option <%s> is ")
-                               ACE_TEXT ("missing a value.\n"),
-                               opt.c_str ()),
-                              -1);
-
-          ACE_CString name = opt.substring (0, slot);
-          ACE_CString value = opt.substring (slot + 1);
-
-          if (name.length () == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "TAO (%P|%t) Zero length IIOP/SSL "
-                               "option name.\n"),
-                              -1);
-
-          if (name == "priority")
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("TAO (%P|%t) Invalid SSLIOP endpoint format: ")
-                                 ACE_TEXT ("endpoint priorities no longer supported. \n"),
-                                 value.c_str ()),
-                                -1);
-            }
-          else if (ACE_OS::strcmp (name.c_str (), "ssl_port") == 0)
-            {
-              const int ssl_port = ACE_OS::atoi (value.c_str ());
-
-              if (ssl_port >= 0 && ssl_port < 65536)
-                this->ssl_component_.port = ssl_port;
-              else
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT ("TAO (%P|%t) Invalid ")
-                                   ACE_TEXT ("IIOP/SSL endpoint ")
-                                   ACE_TEXT ("port: <%s>\n"),
-                                   value.c_str ()),
-                                  -1);
-            }
-          else if (name == "hostname_in_ior")
-            {
-              this->hostname_in_ior_ = value.rep ();
-            }
+          if (ssl_port >= 0 && ssl_port < 65536)
+            this->ssl_component_.port = ssl_port;
           else
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("TAO (%P|%t) Invalid ")
-                               ACE_TEXT ("IIOP/SSL ")
-                               ACE_TEXT ("option: <%s>\n"),
-                               name.c_str ()),
+                               ACE_TEXT ("IIOP/SSL endpoint ")
+                               ACE_TEXT ("port: <%s>\n"),
+                               value.c_str ()),
                               -1);
         }
-    }
+      else
+        {
+          // the name is not known, skip to the next option
+          i++;
+          continue;
+        }
+      // at the end, we've consumed this argument. Shift the list and
+      // put this one on the end. This technique has the effect of
+      // putting them in reverse order, but that doesn't matter, since
+      // these arguments are only whole strings.
+      argc--;
+      ACE_CString *temp = argv[i];
+      for (int j = i; j <= argc-1; j++)
+        argv[j] = argv[j+1];
+      argv[argc] = temp;
 
+    }
   return 0;
 }
 

@@ -152,6 +152,8 @@ TAO::SSLIOP::Connection_Handler::open (void *)
       // This isn't an issue when using blocking I/O.
       (void) ::SSL_set_mode (this->peer ().ssl (),
                              SSL_MODE_ENABLE_PARTIAL_WRITE);
+      (void) ::SSL_set_mode (this->peer ().ssl (),
+                             SSL_MODE_ACCEPT_MOVING_WRITE_BUFFER);
     }
 
   // Called by the <Strategy_Acceptor> when the handler is

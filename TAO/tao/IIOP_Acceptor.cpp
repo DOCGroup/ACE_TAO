@@ -800,7 +800,6 @@ TAO_IIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
   return 1;
 }
 
-
 int
 TAO_IIOP_Acceptor::parse_options (const char *str)
 {
@@ -818,15 +817,11 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
   static const char option_delimiter = '&';
 
   // Count the number of options.
+  int argc = 1;
 
-  CORBA::ULong option_count = 1;
-  // Number of endpoints in the string  (initialized to 1).
-
-  // Only check for endpoints after the protocol specification and
-  // before the object key.
   for (size_t i = 0; i < len; ++i)
     if (options[i] == option_delimiter)
-      ++option_count;
+      argc++;
 
   // The idea behind the following loop is to split the options into
   // (option, name) pairs.
@@ -836,79 +831,124 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
   //    `option1=foo'
   //    `option2=bar'
 
+  ACE_CString *argv_base = 0;
+  ACE_NEW_RETURN (argv_base, ACE_CString[argc],-1);
+  ACE_CString **argv = 0;
+  ACE_NEW_RETURN (argv, ACE_CString*[argc],-1);
+
   int begin = 0;
   int end = -1;
-
-  for (CORBA::ULong j = 0; j < option_count; ++j)
+  int result = 0;
+  for (int j = 0; j < argc; ++j)
     {
-      begin += end + 1;
+      begin = end + 1;
 
-      if (j < option_count - 1)
+      if (j < argc - 1)
         end = options.find (option_delimiter, begin);
       else
-        end = static_cast<CORBA::ULong> (len) - begin;  // Handle last
-                                                        // endpoint
-                                                        // differently.
+        end = ACE_static_cast(CORBA::ULong, len);
 
       if (end == begin)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("TAO (%P|%t) Zero length IIOP option.\n")),
-                          -1);
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) Zero length IIOP option.\n")));
+          result = -1;
+          break;
+        }
       else if (end != ACE_CString::npos)
         {
-          const ACE_CString opt = options.substring (begin, end);
-
-          const int slot = opt.find ("=");
-
-          if (slot == static_cast<int> (len - 1)
-              || slot == ACE_CString::npos)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) IIOP option <%s> is ")
-                               ACE_TEXT ("missing a value.\n"),
-                               ACE_TEXT_CHAR_TO_TCHAR (opt.c_str ())),
-                              -1);
-
-          const ACE_CString name = opt.substring (0, slot);
-          const ACE_CString value = opt.substring (slot + 1);
-
-          if (name.length () == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) Zero length IIOP ")
-                               ACE_TEXT ("option name.\n")),
-                              -1);
-
-          if (name == "priority")
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("TAO (%P|%t) Invalid IIOP endpoint format: ")
-                                 ACE_TEXT ("endpoint priorities no longer supported. \n")),
-                                -1);
-            }
-          else if (name == "portspan")
-            {
-              int range = static_cast<int> (ACE_OS::atoi (value.c_str ()));
-              // @@ What's the lower bound on the range?  zero, or one?
-              if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT ("TAO (%P|%t) Invalid IIOP endpoint ")
-                                   ACE_TEXT ("portspan: <%s>\n")
-                                   ACE_TEXT ("Valid range 1 -- %d\n"),
-                                   ACE_TEXT_CHAR_TO_TCHAR (value.c_str ()), ACE_MAX_DEFAULT_PORT),
-                                  -1);
-
-              this->port_span_ = static_cast<unsigned short> (range);
-            }
-          else if (name == "hostname_in_ior")
-            {
-              this->hostname_in_ior_ = value.rep ();
-            }
-          else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) Invalid IIOP option: <%s>\n"),
-                               ACE_TEXT_CHAR_TO_TCHAR (name.c_str ())),
-                              -1);
+          argv_base[j] = options.substring (begin, end);
+          argv[j] = &argv_base[j];
         }
     }
 
+  if (result == 0)
+    result = this->parse_options_i (argc,argv);
+
+  if (argc > 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("TAO (%P|%t) IIOP")
+                  ACE_TEXT (" endpoint has %d unknown options:\n"),
+                  argc));
+      for (int i = 0; i < argc; i++)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT("\t%s\n"),
+                    argv[i]->c_str()));
+      result = -1;
+    }
+  delete [] argv;
+  delete [] argv_base;
+  return result;
+}
+
+int
+TAO_IIOP_Acceptor::parse_options_i (int &argc,
+                                    ACE_CString **argv)
+{
+  int i = 0;
+  while (i < argc)
+    {
+      size_t len = argv[i]->length();
+      int slot = argv[i]->find ("=");
+
+      if (slot == ACE_static_cast (int, len - 1)
+          || slot == ACE_CString::npos)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("TAO (%P|%t) IIOP option <%s> is ")
+                           ACE_TEXT ("missing a value.\n"),
+                           ACE_TEXT_CHAR_TO_TCHAR(argv[i]->c_str ())),
+                          -1);
+
+      ACE_CString name = argv[i]->substring (0, slot);
+      ACE_CString value = argv[i]->substring (slot + 1);
+
+      if (name.length () == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("TAO (%P|%t) Zero length IIOP ")
+                           ACE_TEXT ("option name.\n")),
+                          -1);
+      if (name == "priority")
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("TAO (%P|%t) Invalid IIOP endpoint format: ")
+                             ACE_TEXT ("endpoint priorities no longer supported. \n"),
+                             value.c_str ()),
+                            -1);
+        }
+      else if (name == "portspan")
+        {
+          int range = ACE_static_cast (int, ACE_OS::atoi (value.c_str ()));
+          // @@ What's the lower bound on the range?  zero, or one?
+          if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("TAO (%P|%t) Invalid IIOP endpoint ")
+                               ACE_TEXT ("portspan: <%s>\n")
+                               ACE_TEXT ("Valid range 1 -- %d\n"),
+                               value.c_str (), ACE_MAX_DEFAULT_PORT),
+                              -1);
+
+          this->port_span_ = ACE_static_cast (u_short, range);
+        }
+      else if (name == "hostname_in_ior")
+        {
+          this->hostname_in_ior_ = value.rep ();
+        }
+      else
+        {
+          // the name is not known, skip to the next option
+          i++;
+          continue;
+        }
+      // at the end, we've consumed this argument. Shift the list and
+      // put this one on the end. This technique has the effect of
+      // putting them in reverse order, but that doesn't matter, since
+      // these arguments are only whole strings.
+      argc--;
+      ACE_CString *temp = argv[i];
+      for (int j = i; j <= argc-1; j++)
+        argv[j] = argv[j+1];
+      argv[argc] = temp;
+    }
   return 0;
 }
