@@ -1,0 +1,3 @@
+module TAO {
+  typedef sequence<octet> ObjectKey;
+};
