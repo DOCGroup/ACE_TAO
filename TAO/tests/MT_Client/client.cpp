@@ -109,15 +109,26 @@ main (int argc, char *argv[])
       server->shutdown (ACE_TRY_ENV);
 #endif /* 0 */
       
-      // server->test_method (ACE_TRY_ENV);
+      CORBA::Long number = 0;
 
-      CORBA::Long number = server->get_number (ACE_TRY_ENV);
+      number = server->get_number (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "get_number = %d\n",
                   number));
       
+      number = server->get_number (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      
+      ACE_DEBUG ((LM_DEBUG,
+                  "get_number = %d\n",
+                  number));
+
+      server->test_method (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+     server->shutdown (ACE_TRY_ENV);
     }
   ACE_CATCHANY
     {
