@@ -85,37 +85,31 @@ settings, resources, strategies, and factories can be specified via
 
 <UL>
 
-<!-- Bala, can you please update the discussion below to make it very -->
-<!-- clear what ORDER these three types of options processing -->
-<!-- mechanisms are run?!  This is not really clear from the following -->
-<!-- discussion... -->
-
 <LI> <B>Environment variables</B> are limited to specifying the
 interoperable object reference (IOR) and port number of TAO's Naming
-Service, Trading Service and Implementation Repository. Command-line
-options and service configurator files are more powerful since they
-can specify and modify the values of the various TAO resources,
-strategies, and factories. <P>
+Service, Trading Service and Implementation Repository. They are very
+limited in flexibility and dont provide the most important
+configuration hooks necessary to configure TAO for real-time and
+high-performance applications.<P> 
+
+<LI> <B>Command-line options</B> are passed to the ORB initialization
+factory method, <CODE>CORBA::ORB_init()</CODE>, by an application
+using the standard <i>argc, argv</i> tuple passed to the application's
+<CODE>main()</CODE>. Most of the options that can be exercised through
+environment variables can also be manipulated through command-line
+options. The command-line options are preferred over environment
+variables if there is a conflict. <p>
 
 <LI> The <B>Service Configurator</B> is a framework that can be used
 to statically and dynamically configure components into middleware and
 applications.  The information comprising the names of these
 components and their corresponding options are specified in a service
 configurator file, whose default file name is <font face="Courier
-New">svc.conf</font>. <P>
+New">svc.conf</font>. The service configurator is opened and processed
+by the ORB in <CODE>CORBA::ORB_init()</CODE>. The service configurator 
+processing is done after the command line options have been parsed.<P> 
 
-<LI> <B>Command-line options</B> are passed to the ORB initialization
-factory method, <CODE>CORBA::ORB_init()</CODE>, by an application
-using the standard <i>argc, argv</i> tuple passed to the application's
-<CODE>main()</CODE>.  In contrast, the service configuration file is
-opened and its options parsed by the <A
-href="http://www.cs.wustl.edu/~schmidt/PDF/Svc-Conf.pdf">ACE Service
-Configurator framework</A> 
-<!-- Bala, it's not really clear from this discussion the ORDER in -->
-<!-- which things are parsed.  In particular, should this say "at the -->
-<!-- end of the" rather than "during"? -->
-during the execution of
-<CODE>CORBA::ORB_init()</CODE>method.<P>
+
 </UL>
 
 <P><HR align=left width=25%><P>
@@ -244,9 +238,8 @@ We describe each of these five groups of options below.  <P>
 
 The options described below influence the behavior of the ORB's <A
 HREF="#SVC">service configurator</CODE>, 
-<!-- Bala, is the following statement correct? -->
-which is run <EM>after</EM> the command-line options have been
-processed. <P>
+which is opened and processed <EM>after</EM> the command-line options
+have been parsed. <P>
 
 <BLOCKQUOTE>
   <P>
@@ -506,6 +499,7 @@ selection within a TAO application.<P>
       <TD> <A HREF=
 <!-- Bala, should there actually be the "*checkout*" here?  That looks -->
 <!-- odd! -->
+<!-- Dr. Schmidt, not much choice. That is CGI for you ;-)-->
 "http://cvs.doc.wustl.edu/viewcvs.cgi/*checkout*/TAO/docs/ORBEndpoint.html?rev=HEAD"><CODE>-ORBTradingServicePort</CODE> <EM>portspec</EM></TD>
       <TD> <A
 http://cvs.doc.wustl.edu/viewcvs.cgi/TAO/docs/ORBEndpoint.html?rev=HEAD">Specifies to which port the Trading Service is listening on for
@@ -608,15 +602,16 @@ default components will be used.</P>
 <hr align=left width=25%>
 <h4><A name=TRF>1. Default and Advanced Resource Factories</A></h4>
 
-Many of TAO's ORB Core resources are fixed, <!-- Bala, can you please
-list some of the ones that are fixed? --> including ...  There is some
-flexibility, however, in the choice of a reactor, the selection of
-transport protocols, choice of data flushing strategy, various forms
-of connection resource management strategies and possibility of using
+Many of TAO's ORB Core resources are fixed, including the allocators for
+the incoming and outgoing data paths, and data structures for the various
+maps and lists maintained by the ORB.  There is some flexibility,
+however, in the choice of a reactor, the selection of transport
+protocols, choice of data flushing strategy, various forms of
+connection resource management strategies and possibility of using
 different IOR parsers.  The resource factories supported by TAO
 include the <CODE>Resource_Factory</CODE> and
 <CODE>Advanced_Resource_Factory</CODE>. TAO provides defaults of these
-factories, as well as the specialized resource factories described
+factories, as well as the specialized resource factories described 
 below:
 
 <BLOCKQUOTE>
