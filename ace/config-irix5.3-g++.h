@@ -15,6 +15,7 @@
 
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
+#define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
