@@ -1,3 +1,9 @@
+Mon Apr 26 14:04:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/CCM_Core.mpc:
+          CIAO_Server must link with CIAO_Container. Not doing so causes link
+          errors with Borland.
+
 Mon Apr 26 09:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DnC/Config_Handlers/Config_Handlers.mpc:
