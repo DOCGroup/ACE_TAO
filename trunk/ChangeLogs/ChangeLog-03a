@@ -1,3 +1,9 @@
+Tue Dec  4 10:07:31 2001  Steve Huston  <shuston@riverace.com>
+
+        * bin/auto_compile: Add an optional 6th command line arg that is
+          the module to check out from CVS. Defaults to ACE_wrappers so
+          it works the same as it used to without the argument.
+
 Tue Dec  4 06:59:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp: 
