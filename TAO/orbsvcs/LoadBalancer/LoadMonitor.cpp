@@ -6,6 +6,7 @@
 
 #include "tao/ORB_Core.h"
 
+#include "ace/Reactor.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_strings.h"

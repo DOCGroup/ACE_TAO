@@ -4,11 +4,11 @@
 
 #include "Activator_Options.h"
 
-#include "tao/ORB_Core.h"
-
+#include "ace/Reactor.h"
 #include "ace/ARGV.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdio.h"
 
-#include "ace/OS.h"
 
 static ACE_CString getActivatorName()
 {
@@ -386,4 +386,3 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_Strong_Bound_Pt
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, ACE_Strong_Bound_Ptr<ACE_Vector<ImplementationRepository::AMH_ActivatorResponseHandler_var>, ACE_Null_Mutex> ,ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

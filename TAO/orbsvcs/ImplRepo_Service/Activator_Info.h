@@ -2,9 +2,11 @@
 #ifndef ACTIVATOR_INFO_H
 #define ACTIVATOR_INFO_H
 
+#include "ImR_ActivatorC.h"
+
+#include "ace/SString.h"
 #include "ace/Bound_Ptr.h"
 
-#include "ImR_ActivatorC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

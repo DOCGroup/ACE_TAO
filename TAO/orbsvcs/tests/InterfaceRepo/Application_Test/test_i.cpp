@@ -3,9 +3,13 @@
 
 #include "test_i.h"
 
-ACE_RCSID (Application_Test, 
+#include "ace/SString.h"
+
+
+ACE_RCSID (Application_Test,
            test_i,
            "$Id$")
+
 
 CORBA::Boolean
 inventory_i::getCDinfo (const char * artist,
@@ -45,4 +49,3 @@ inventory_i::getCDinfo (const char * artist,
 
   return in_stock;
 }
-
