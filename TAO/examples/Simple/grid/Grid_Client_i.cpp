@@ -76,7 +76,7 @@ Grid_Client_i::run (char *name,
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-  ACE_DECALRE_NEW_CORBA_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
