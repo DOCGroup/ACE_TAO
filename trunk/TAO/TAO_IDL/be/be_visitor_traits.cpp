@@ -33,6 +33,8 @@
 #include "be_helper.h"
 #include "be_extern.h"
 
+#include "utl_identifier.h"
+
 ACE_RCSID (be,
            be_visitor_traits,
            "$Id$")
@@ -334,26 +336,54 @@ be_visitor_traits::visit_array (be_array *node)
     {
       return 0;
     }
-
+    
+  ACE_CString name_holder;
+  
+  if (node->is_nested ())
+    {
+      be_decl *parent = 
+        be_scope::narrow_from_scope (node->defined_in ())->decl ();
+      name_holder = parent->full_name ();
+      
+      name_holder += "::";
+      
+      if (!this->ctx_->alias ())
+        {
+          name_holder += "_";
+        }
+        
+      name_holder += node->local_name ()->get_string ();
+    }
+  else
+    {
+      name_holder = node->full_name ();
+    }
+  
+  const char *name = name_holder.fast_rep ();
+    
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
       << "struct " << be_global->stub_export_macro () << " Array_Traits<"
-      << node->name () << ", " << node->name () << "_slice>" << be_nl
+      << name << ", " << name
+      << "_slice>" << be_nl
       << "{" << be_idt_nl
       << "static void tao_free (" << be_idt << be_idt_nl
-      << node->name () << "_slice * _tao_slice" << be_uidt_nl
+      << name << "_slice * _tao_slice" << be_uidt_nl
       << ");" << be_uidt_nl
-      << "static " << node->name () << "_slice * tao_dup (" 
+      << "static " << name << "_slice * tao_dup (" 
       << be_idt << be_idt_nl
-      << "const " << node->name () << "_slice * _tao_slice" << be_uidt_nl
+      << "const " << name << "_slice * _tao_slice" 
+      << be_uidt_nl
       << ");" << be_uidt_nl
       << "static void tao_copy (" << be_idt << be_idt_nl
-      << node->name () << "_slice * _tao_to," << be_nl
-      << "const " << node->name () << "_slice * _tao_from" << be_uidt_nl
+      << name << "_slice * _tao_to," << be_nl
+      << "const " << name << "_slice * _tao_from" 
+      << be_uidt_nl
       << ");" << be_uidt_nl
-      << "static " << node->name () << "_slice * tao_alloc (void);" << be_uidt_nl
+      << "static " << name << "_slice * tao_alloc (void);" 
+      << be_uidt_nl
       << "};";
 
   node->cli_traits_gen (I_TRUE);
