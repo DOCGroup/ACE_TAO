@@ -6374,6 +6374,13 @@ ACE_Auto_Basic_Array_Ptr<char> (ACE_WString (WIDE_STRING).char_rep ()).get ()
 #   define ACE_NTOHL(X) X
 # endif /* ACE_LITTLE_ENDIAN */
 
+#if defined (ACE_LITTLE_ENDIAN)
+#define ACE_HTONS(x) ACE_SWAP_WORD(x)
+#define ACE_NTOHS(x) ACE_SWAP_WORD(x)
+#else
+#define ACE_HTONS(x) x
+#define ACE_NTOHS(x) x
+#endif /* ACE_LITTLE_ENDIAN */
 
 #if defined (ACE_HAS_AIO_CALLS)
   // = Giving unique ACE scoped names for some important
