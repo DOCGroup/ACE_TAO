@@ -1,3 +1,8 @@
+Wed Nov  5 17:09:05 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/OS.cpp (cleanup_tss): Rearranged how TSS'es get cleanup on
+	  Win32.  This was causing a tiny memory leak on NT.
+
 Wed Nov  5 15:03:31 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Thread_Manager.{h,cpp}:  Changed the data type of
