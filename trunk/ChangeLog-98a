@@ -110,6 +110,33 @@ Thu Mar 12 17:25:28 1998  James C Hu  <jxh@cs.wustl.edu>
 	* ACE-INSTALL.html: Added a table to Supported Platforms and
 	  Compilers.
 
+Thu Mar 12 16:28:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* Apply regular string manipulation for CE to following files:
+	  ACE.cpp ARGV.cpp Acceptor.cpp Activation_Queue.cpp
+	  Asynch_Acceptor.cpp Asynch_IO.cpp CORBA_Handler.cpp
+	  Connector.cpp Containers.cpp DEV_Addr.cpp Dynamic_Service.cpp
+	  FIFO.cpp FIFO_Recv.cpp FIFO_Recv_Msg.cpp FIFO_Send.cpp
+	  FIFO_Send_Msg.cpp FILE_Addr.cpp FILE_Connector.cpp Filecache.cpp
+	  Future.cpp Get_Opt.cpp Hash_Map_Manager.cpp LSOCK.cpp
+	  LSOCK_CODgram.cpp LSOCK_Connector.cpp LSOCK_Dgram.cpp
+	  Local_Name_Space_T.cpp Local_Tokens.cpp Local_Tokens.i
+	  Malloc_T.cpp Map_Manager.cpp Mem_Map.cpp Memory_Pool.cpp
+	  Message_Queue.cpp Module.cpp Name_Proxy.cpp
+	  Name_Request_Reply.cpp Naming_Context.cpp Obstack.cpp
+	  Parse_Node.cpp Pipe.cpp Priority_Reactor.cpp Proactor.cpp
+	  Process_Manager.cpp Read_Buffer.cpp Registry_Name_Space.cpp
+	  Remote_Name_Space.cpp Remote_Tokens.cpp SPIPE_Acceptor.cpp
+	  SV_Semaphore_Complex.cpp SV_Semaphore_Simple.cpp
+	  Select_Reactor.cpp Service_Config.cpp Service_Main.cpp
+	  Service_Manager.cpp Service_Repository.cpp Service_Types.cpp
+	  Singleton.cpp Strategies_T.cpp Stream.cpp Svc_Handler.cpp
+	  TLI.cpp TLI_Acceptor.cpp TLI_Connector.i Task_T.cpp
+	  Time_Request_Reply.cpp Timer_Queue_Adapters.cpp
+	  Token_Collection.cpp Token_Invariants.cpp Token_Manager.cpp
+	  Token_Request_Reply.cpp WFMO_Reactor.cpp WFMO_Reactor.i
+	  XtReactor.cpp.
+
 Thu Mar 12 15:37:14 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Read_Buffer.* (read): null terminate the result buffer.
