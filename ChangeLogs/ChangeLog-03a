@@ -1,3 +1,23 @@
+Fri Apr 26 11:39:22 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/examples.dsw:
+        * examples/C++NPv2/display_logfile.dsp:
+        * examples/C++NPv2/Reactor_Logging_Server.dsp:
+        * examples/C++NPv2/Select_Reactor_Logging_Server.dsp:
+        * examples/C++NPv2/TP_Reactor_Logging_Server.dsp:
+        * examples/C++NPv2/WFMO_Reactor_Logging_Server.dsp:
+          New project/workspace for the examples here so far.
+
+        * examples/C++NPv2/WFMO_Reactor_Logging_Server.cpp: Make dtor
+          public - this object is created on the stack.
+          Added constructor that accepts a ACE_Reactor * and passes it up
+          the inheritance chain.
+
+        * examples/C++NPv2/Select_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/TP_Reactor_Logging_Server.cpp: Add preprocessor
+          check to be sure that the correct C++ library is enabled on Windows.
+          Qualify "getline" call with "std::".
+
 Fri Apr 26 07:42:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IOStream_Test.cpp:
