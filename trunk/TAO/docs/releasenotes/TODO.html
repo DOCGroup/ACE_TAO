@@ -28,16 +28,6 @@
     </P>
 
     <OL>
-      <LI><P>Add compiled marshalling
-	  <BR>[STATUS] Andy is working on this.
-	</P>
-      </LI>
-
-      <LI><P>Implement the new DynAny types.
-	  <BR>[STATUS] Jeff is working on this.
-	</P>
-      </LI>
-      
       <LI><P>Implement an Implementation Repository for TAO.
 	  <BR>[STATUS] Darrell is working on this.
 	</P>
@@ -156,7 +146,29 @@
 	<P>If the arguments are not fixed size the header could be
 	  sent before, but two passes over the data will be required.
 	</P>
-      <LI>
+      </LI>
+
+      <LI><P>One GIOP 1.1 is implemented we could use fragments to
+	  minimize the buffer allocations:
+	  the buffer could be fixed size and we simply send fragments
+	  for each buffer.
+	</P>
+      </LI>
+
+      <LI><P>Demarshaling and managment of Anys could be optimized,
+	  they esentially keep a *copy* of the CDR stream,
+	  but they could just keep a reference.
+	</P>
+      </LI>
+      
+      <LI><P>Some uses of DSI can optimized also,
+	  for instance,
+	  if the application is simply going to forward the request to
+	  another object there is no need to parse the arguments in
+	  the CDR stream and decompose them in the arguments,
+	  a single *big* CDR stream can be kept.
+	</P>
+      </LI>
     </OL>
 
     <H4>New features and Bug fixes</H4>
@@ -512,20 +524,6 @@ class Foo {
 	</P>
       </LI>
 
-      <LI><P>Improve the connection recycling strategies, for
-	  instance,
-	  several strategies are possible: limit the maximum number of
-	  open sockets, probably with both HWM and LWM bounds,
-	  with different policies to choose the socket to close (LFU,
-	  MRU?);
-	  or maybe be more aggresive and recycle a socket once
-	  all the object references pointing to a server are closed.
-	  The later approach could be easily implemented if each
-	  IIOP_Object held a reference to the set of sockets opened to
-	  a certain TCP/IP address.
-	</P>
-      </LI>
-
       <LI><P>Test Any with variable sized types, such as structures
 	  that contain a string inside. Jeff reports that there is a
 	  problem when destroying Anys initialized with this types,
@@ -638,19 +636,23 @@ class Foo {
 	</P>
       </LI>
 
-  <!-- Things below this point are "big" tasks" that -->
-  <!-- could require major work -->
-
-      <LI><P>The Cached_Connector does not support any kind of
-	  recycling strategy.
-	  We should add LRU and/or similar strategies to the
-	  Cached_Connector and make them available to the user via the
-	  <CODE>svc.conf</CODE> file.
-	  Similarly we need to give the users control on the maximum
-	  number of open sockets that the ORB will hold at any point
-	  in time.
+      <LI><P>Improve the connection recycling strategies, for
+	  instance,
+	  several strategies are possible: limit the maximum number of
+	  open sockets, probably with both HWM and LWM bounds,
+	  with different policies to choose the socket to close (LFU,
+	  MRU?);
+	  or maybe be more aggresive and recycle a socket once
+	  all the object references pointing to a server are closed.
+	  The later approach could be easily implemented if each
+	  IIOP_Object held a reference to the set of sockets opened to
+	  a certain TCP/IP address.
 	</P>
       </LI>
+
+
+  <!-- Things below this point are "big" tasks" that -->
+  <!-- could require major work -->
 
       <LI><P>Add support for Smart Proxies to the ORB</P>
       </LI>
@@ -793,6 +795,20 @@ class Foo {
       <H3>Completed Tasks</H3>
 
     <OL>
+      <LI><P>Add compiled marshalling
+	  <BR>[STATUS] Andy is working on this.
+	  <BR>[DONE] The compiled marshaling code works, we still have
+	  to fine tune it a bit.
+	</P>
+      </LI>
+
+      <LI><P>Implement the new DynAny types.
+	  <BR>[STATUS] Jeff is working on this.
+	  <BR>[DONE] More testing is needed, but the basics are
+	  there.
+	</P>
+      </LI>
+      
       <LI><P><B>EC:</B>The <CODE>TAO_EC_Gateway_IIOP</CODE> class
 	  receives events from a "remote" EC and pushes them on the
 	  local EC.
