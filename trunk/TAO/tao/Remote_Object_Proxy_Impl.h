@@ -25,7 +25,7 @@
 
 #include "tao/Object_Proxy_Impl.h"
 
-class TAO_Export TAO_Remote_Object_Proxy_Impl : public TAO_Object_Proxy_Impl
+class TAO_Export TAO_Remote_Object_Proxy_Impl : public virtual TAO_Object_Proxy_Impl
 {
   // = TITLE
   //    TAO_Remote_Object_Proxy_Impl
@@ -53,4 +53,3 @@ public:
 #include "ace/post.h"
 
 #endif /* TAO_REMOTE_OBJECT_PROXY_IMPL */
-

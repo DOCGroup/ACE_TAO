@@ -1,3 +1,18 @@
+Thu Sep 21 18:29:07 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/Abstract_Servant_Base.h:
+
+	  Removed useless forward declaration of ServerRequest, which
+	  was source of compilation error on sunCC.
+
+	* tao/Remote_Object_Proxy_Impl.h:
+	* tao/PortableServer/Direct_Object_Proxy_Impl.h:
+	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.h:
+
+	  Now this class inherit virtually from <TAO_Object_Proxy_Impl>
+	  this is needed to enable domincance in the new-coming IDL
+	  generated code for proxies.
+
 Thu Sep 21 16:48:50 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/TAO_IDL_BE_DLL.dsp:
