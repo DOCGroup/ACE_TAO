@@ -1,3 +1,8 @@
+Wed Dec 05 17:13:15 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/SString.h: The concatenation oeprator needed to be
+	  exported.
+
 Wed Dec  5 19:58:42 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Logging_Strategy.cpp: Set the logger_key_ member to 0 (no key)
