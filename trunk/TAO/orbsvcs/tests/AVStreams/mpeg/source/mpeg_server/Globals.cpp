@@ -12,6 +12,13 @@ int Mpeg_Global::session_limit = SESSION_NUM;
 int Mpeg_Global::session_num = 0;
 int Mpeg_Global::rttag = 0;
 
+int Video_Timer_Global::timerHeader = 0;
+int Video_Timer_Global::timerGroup = 0;
+int Video_Timer_Global::timerFrame = 0;
+int Video_Timer_Global::timerOn = 0;
+int Video_Timer_Global::timerAdjust = 0;
+int Video_Timer_Global::preTimerVal = 0;
+
 // initialize the nasty int's, doubles and their friends
 Video_Global::Video_Global ()
 {
@@ -107,4 +114,180 @@ Video_Global::Video_Global ()
 
   frameTable = 0;
 
+  // playvideo local vars
+
+  preGroup = -1;
+  preHeader = -1;
+  preFrame = -1;
+}
+
+void
+Video_Timer_Global::StartTimer (void)
+{
+  VIDEO_SINGLETON::instance ()->addedUPF = 0;
+  VIDEO_SINGLETON::instance ()->addedSignals = 0;
+  timerAdjust = (VIDEO_SINGLETON::instance ()->VStimeAdvance * SPEEDUP_INV_SCALE) / VIDEO_SINGLETON::instance ()->currentUPF;
+  /*
+  SFprintf(stderr, "VS StartTimer(): fast-start frames %d\n",
+	  timerAdjust / SPEEDUP_INV_SCALE);
+  */
+  TimerSpeed();
+  setsignal(SIGALRM, timerHandler);
+  timerOn = 1;
+  preTimerVal = get_usec();
+  /*
+  fprintf(stderr, "VS: timer started at %d upf.\n", VIDEO_SINGLETON::instance ()->currentUPF + VIDEO_SINGLETON::instance ()->addedUPF);
+  */
+}
+
+void
+Video_Timer_Global::StopTimer (void)
+{
+  struct itimerval val;
+  setsignal(SIGALRM, SIG_IGN);
+  val.it_interval.tv_sec =  val.it_value.tv_sec = 0;
+  val.it_interval.tv_usec = val.it_value.tv_usec = 0;
+  setitimer(ITIMER_REAL, &val, NULL);
+  timerOn = 0;
+  /*
+  fprintf(stderr, "VS: timer stopped.\n");
+  */
+}
+
+void
+Video_Timer_Global::TimerSpeed (void)
+{
+  struct itimerval val;
+  int usec = VIDEO_SINGLETON::instance ()->currentUPF + VIDEO_SINGLETON::instance ()->addedUPF;
+  if (Mpeg_Global::drift_ppm) {
+    /*
+    int drift = (double)usec * (double)Mpeg_Global::drift_ppm / 1000000.0;
+    SFprintf(stderr, "Mpeg_Global::drift_ppm %d, usec %d, drift %d, new usec %d\n",
+	    Mpeg_Global::drift_ppm, usec, drift, usec - drift);
+     */
+    usec -= (int)((double)usec * (double)Mpeg_Global::drift_ppm / 1000000.0);
+  }
+  if (timerAdjust > 1)
+    usec = (int)(((double)usec * (double)(SPEEDUP_INV_SCALE - 1)) /
+		 (double)SPEEDUP_INV_SCALE);
+  val.it_interval.tv_sec =  val.it_value.tv_sec = usec / 1000000;
+  val.it_interval.tv_usec = val.it_value.tv_usec = usec % 1000000;
+  setitimer(ITIMER_REAL, &val, NULL);
+  /*
+  SFprintf(stderr,
+	  "VS TimerSpeed() at %s speed, timerAdjust %d VIDEO_SINGLETON::instance ()->addedSignals %d.\n",
+	  (timerAdjust > 1) ? "higher" : "normal", timerAdjust, VIDEO_SINGLETON::instance ()->addedSignals);
+  */
+
+}
+
+void
+Video_Timer_Global::TimerProcessing (void)
+{
+/*  
+  fprintf(stderr, "VS: timerHandler...\n");
+*/
+  if (!timerOn) {
+    return;
+  }
+  if (timerAdjust < 0)
+  {
+    timerAdjust += SPEEDUP_INV_SCALE;
+    return;
+  }
+  if (timerAdjust >0)
+  {
+    if ((--timerAdjust) == 0)
+      TimerSpeed();
+  }
+  if (VIDEO_SINGLETON::instance ()->cmd == CmdPLAY)
+  {
+    if (timerGroup == VIDEO_SINGLETON::instance ()->numG - 1 && timerFrame >= VIDEO_SINGLETON::instance ()->gopTable[timerGroup].totalFrames - 1)
+    {
+      timerFrame ++;  /* force sending of END_SEQ when PLAY VIDEO_SINGLETON::instance ()->cmd */
+      StopTimer();
+      return;
+    }
+    else
+    {
+      timerFrame ++;
+      if (timerFrame >= VIDEO_SINGLETON::instance ()->gopTable[timerGroup].totalFrames)
+      {
+        timerGroup ++;
+        timerFrame = 0;
+        timerHeader = VIDEO_SINGLETON::instance ()->gopTable[timerGroup].systemHeader;
+      }
+    }
+  }
+  else {
+    if (VIDEO_SINGLETON::instance ()->cmd == CmdFF) {
+      if (timerGroup == VIDEO_SINGLETON::instance ()->numG - 1) {
+	StopTimer();
+	return;
+      }
+      timerGroup ++;
+      timerHeader = VIDEO_SINGLETON::instance ()->gopTable[timerGroup].systemHeader;
+    }
+    else {
+      if (timerGroup == 0) {
+	StopTimer();
+	return;
+      }
+      timerGroup --;
+      timerHeader = VIDEO_SINGLETON::instance ()->gopTable[timerGroup].systemHeader;
+    }
+  }
+
+}
+
+void
+Video_Timer_Global::timerHandler (int sig)
+{
+  int val2, val3;
+  int usec = VIDEO_SINGLETON::instance ()->currentUPF + VIDEO_SINGLETON::instance ()->addedUPF;
+  
+  if (Mpeg_Global::drift_ppm) {
+    usec -= (int)((double)usec * (double)Mpeg_Global::drift_ppm / 1000000.0);
+  }
+  
+  if (timerAdjust > 1)
+    usec = (int)(((double)usec * (double)(SPEEDUP_INV_SCALE - 1)) /
+		 (double)SPEEDUP_INV_SCALE);
+  val3 = get_duration(preTimerVal, (val2 = get_usec()));
+  /*
+  if (val3 >= usec<< 1))
+    fprintf(stderr, "Slower: %d out of VIDEO_SINGLETON::instance ()->currentUPF %d.\n",
+            val3, usec);
+  else
+    fprintf(stderr, "+\n");
+  */
+  preTimerVal = val2;
+  if (val3 < 0 || val3 > 100000000)
+    val3 = usec;
+  val2 = (val3 + (usec>>1)) / usec;
+  if (val2 < 0) val2 = 0;
+  if (val2) {
+    TimerProcessing();
+    val2 --;
+  }
+  VIDEO_SINGLETON::instance ()->addedSignals += val2;
+  
+  if (VIDEO_SINGLETON::instance ()->addedSignals) {
+    val2 = timerAdjust;
+    if (timerAdjust < MAX_TIMER_ADJUST) {
+      timerAdjust += VIDEO_SINGLETON::instance ()->addedSignals * SPEEDUP_INV_SCALE;
+      if (val2 < SPEEDUP_INV_SCALE) {
+	TimerSpeed();
+      }
+    }
+    else {
+      /*
+      fprintf(stderr, "VS timerAdjust %d, VIDEO_SINGLETON::instance ()->addedSignals %d, timerFrame %d\n",
+	      timerAdjust, VIDEO_SINGLETON::instance ()->addedSignals, timerFrame);
+      */
+      for (val3 = 0; val3 < VIDEO_SINGLETON::instance ()->addedSignals; val3 ++)
+        TimerProcessing();
+    }
+    VIDEO_SINGLETON::instance ()->addedSignals = 0;
+  }
 }

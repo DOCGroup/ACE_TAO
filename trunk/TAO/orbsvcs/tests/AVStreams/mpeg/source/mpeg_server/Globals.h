@@ -49,12 +49,23 @@
 	  } \
 	}
 
+#define CheckFrameRange(pnextFrame) \
+{ if ((pnextFrame) < 0 || (pnextFrame) >= VIDEO_SINGLETON::instance ()->numF) \
+  { fprintf(stderr, "VS: %d.VIDEO_SINGLETON::instance ()->nextFrame(%d) out of range (%d).\n", VIDEO_SINGLETON::instance ()->cmd, (pnextFrame), VIDEO_SINGLETON::instance ()->numF); \
+    return 0; } }
+
+#define CheckGroupRange(pnextGroup) \
+{ if ((pnextGroup) < 0 || (pnextGroup) >= VIDEO_SINGLETON::instance ()->numG) \
+  { fprintf(stderr, "VS: %d.VIDEO_SINGLETON::instance ()->nextGroup(%d) out of range (%d).\n", VIDEO_SINGLETON::instance ()->cmd, (pnextGroup), VIDEO_SINGLETON::instance ()->numG); \
+    return 0; } }
+
 // Global definitions
 
 #include <sys/types.h>
 #include <sys/socket.h>
 #include "../include/common.h"
 #include "ace/Singleton.h"
+#include "../mpeg_shared/routine.h"
 
 class Mpeg_Global
 {
@@ -176,11 +187,30 @@ class Video_Global
     unsigned short size;
   } * frameTable;
  
-
+  int preGroup;
+  int preHeader;
+  int preFrame;
 };
 
 typedef ACE_TSS_Singleton <Video_Global, ACE_SYNCH_MUTEX> VIDEO_SINGLETON;
- 
 
+class Video_Timer_Global
+// A class that holds the static timer variables defined in the middle
+// of vs.cpp
+{
+public:
+  static int timerHeader;
+  static int timerGroup;
+  static int timerFrame;
+  static int timerOn ;
+  static int timerAdjust ;
+  static int preTimerVal ;
+  static void StartTimer (void);
+  static void StopTimer(void);
+  static void TimerSpeed(void);
+  static void TimerProcessing(void);
+  static void timerHandler (int sig);
+};
+  
 #endif /* define MPEG_GLOBAL_H */
 
