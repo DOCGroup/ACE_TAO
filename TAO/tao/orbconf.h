@@ -429,11 +429,7 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 
 // Default CORBA_MESSAGING settings
 #if !defined (TAO_HAS_CORBA_MESSAGING)
-#  if (TAO_HAS_MINIMUM_CORBA == 1)
-#    define TAO_HAS_CORBA_MESSAGING 0
-#  else
 #    define TAO_HAS_CORBA_MESSAGING 1
-#  endif  /* TAO_HAS_MINIMUM_CORBA */
 #endif  /* !TAO_HAS_CORBA_MESSAGING */
 
 // For all the policies, support is enabled by default if TAO is

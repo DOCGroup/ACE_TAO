@@ -4,6 +4,7 @@
 #include "IFR_ExtendedC.h"
 
 #include "tao/ORB_Core.h"
+#include "tao/ORB.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Stub.h"
 #include "tao/NVList.h"
@@ -142,6 +143,7 @@ TAO_IFR_Client_Adapter_Impl::get_interface_remote (
   return _tao_retval.retn ();
 }
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 void
 TAO_IFR_Client_Adapter_Impl::create_operation_list (
     CORBA::ORB_ptr orb,
@@ -151,14 +153,14 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
   )
 {
   // Create an empty NVList.
-  orb->create_list (0, 
+  orb->create_list (0,
                     result
                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Get the parameters (if any) from the OperationDef, and for each
   // parameter add a corresponding entry to the result.
-  CORBA::ParDescriptionSeq_var params = 
+  CORBA::ParDescriptionSeq_var params =
     opDef->params (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -179,6 +181,7 @@ TAO_IFR_Client_Adapter_Impl::create_operation_list (
    }
 }
 
+#endif /*TAO_HAS_MINIMUM_CORBA*/
 // *********************************************************************
 
 // Initialization and registration of dynamic service object.

@@ -30,7 +30,7 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
-ifeq ($(rt_corba),1)
+ifeq ($(minimum_corba),0)
 BIN=$(BIN_UNCHECKED)
 endif # rt_corba
 

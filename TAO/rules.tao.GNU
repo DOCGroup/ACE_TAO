@@ -57,15 +57,6 @@ TAO_DYNAMIC_LIBS=-lTAO_DynamicInterface -lTAO_Messaging
 #### Macro customization.
 ####
 ifeq ($(minimum_corba),1)
-  ifndef rt_corba
-    rt_corba = 0
-  endif # ! rt_corba
-  ifndef corba_messaging
-    corba_messaging = 0
-  endif # ! corba_messaging
-  ifndef ami
-    ami = 0
-  endif # ! ami
   ifndef interceptors
     interceptors = 0
   endif  # ! interceptors
