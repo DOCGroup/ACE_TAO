@@ -1,3 +1,8 @@
+Thu Nov 18 12:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Threads/task_three.cpp:
+          Changed ACE cast macros with the c++ versions
+
 Wed Nov 17 18:37:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 	* tests/test_config.h:
