@@ -1,27 +1,28 @@
-##----------------------------------------------------------------------------
-##       $Id$
-##
-##       Makefile.am for the TAO orbsvcs library
-##----------------------------------------------------------------------------
-
-##
 ##  Process this file with automake to create Makefile.in
-##
-
-## The number in AUTOMAKE_OPTIONS is the minimum required version automake
-## needed to process this file.
-AUTOMAKE_OPTIONS = 1.4
 
 SUBDIRS = \
-        orbsvcs \
-        Naming_Service \
-        Scheduling_Service \
-        Event_Service \
-        Dump_Schedule \
-        Concurrency_Service \
-        LifeCycle_Service \
-        Trading_Service \
-        Logging_Service \
-        tests
+        PSS \
+        TAO_Service 
 
-
+#        orbsvcs \
+#        Trading_Service \
+#        Time_Service \
+#        Scheduling_Service \
+#        Notify_Service \
+#        Naming_Service \
+#        Logging_Service \
+#        LoadBalancer \
+#        LifeCycle_Service \
+#        ImplRepo_Service \
+#        IFR_Service \
+#        Fault_Notifier \
+#        Fault_Detector \
+#        FT_ReplicationManager \
+#        FTRT_Event_Service \
+#        Event_Service \
+#        Dump_Schedule \
+#        CosEvent_Service \
+#        Concurrency_Service \
+#        performance-tests \
+#        tests \
+#        examples

@@ -1,10 +1,37 @@
+Tue Aug  3 08:05:20 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/PSS/PSDL_Datastore.cpp:
+	  Fixed TAO_PSDL_Datastore::create_index_helper() where the
+	  ACE_NEW_RETURN macro was being ab/used for placement new.
+	  This caused problems for targets w/ACE_HAS_NOTHROW_NEW.
+	  I eliminated the error checks because this function can
+	  never called with a bad buffer pointer.
+
+	* orbsvcs/TAO_Service/Makefile.am:
+	  Update, with a little help from MPC.
+
+	* orbsvcs/PSS/Makefile.am:
+	  New file.
+
+	* orbsvcs/Makefile.am:
+	  Update with current MPC generated file, but enable only
+	  PSS and TAO_Service in SUBDIRS.
+
+	* Makefile.am:
+	  Added orbsvcs to SUBDIRS.
+
+	* configure.ac:
+	  Added orbsvcs/{,PSS/,TAO_Service/}Makefile to list of
+	  config files.
+
+
 Tue Aug  3 13:47:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/AMH_Response_Handler.{h,cpp}:
           Corrected the method name for decrementing the reference count
-          from decr_refcount to _remove_ref. The AMH Response Handler is 
+          from decr_refcount to _remove_ref. The AMH Response Handler is
           derived from TAO_Local_RefCounted_Object and this defines the
-          virtual method _remove_ref, we now had two methods where the 
+          virtual method _remove_ref, we now had two methods where the
           base method didn't know anything of the allocator. By overruling
           we also get the derived _remove_ref and use the allocator
           when needed. This fixes the crashing of the AMH Sink_Server
@@ -16,7 +43,7 @@ Tue Aug  3 08:34:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/IFR_Service/be_global.cpp:
         * orbsvcs/IFR_Service/be_global.h:
         * orbsvcs/IFR_Service/be_init.cpp:
-        
+
           Changes corresponding to those in TAO_IDL_BE, made in
 
           Sun Aug  1 20:57:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
