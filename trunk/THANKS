@@ -703,7 +703,7 @@ David Digby <DWD15274@glaxowellcome.co.uk>
 Timothy Schimke <Schimke.Timothy@LittonDSD.com>
 Jim Robinson <robinson@wdg.mot.com>
 Peter Mueller <pmueller@decrc.abb.de>
-Raghu Nambiath <raghun@wipinfo.soft.net> 
+Raghu Nambiath <raghun@wipinfo.soft.net>
 Mike Gingell <mgingell@istar.ca>
 David McCann <david.mccann@alcatel.at>
 Ruediger Franke <Ruediger.Franke@decrc.abb.de>
@@ -713,6 +713,7 @@ Mike Vitalo <mvitalo@infoglide.com>
 Kirk Davies <Kirk.Davies@pobox.com>
 Arno Pernozzoli <pernozzoli@bigfoot.com>
 Trey Grubbs <t-grubbs1@raytheon.com>
+Matthias Schumann <matthias.schumann@xcc.de>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
