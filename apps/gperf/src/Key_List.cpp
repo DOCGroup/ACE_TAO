@@ -1494,12 +1494,13 @@ Key_List::dump (void)
               total_duplicates ? total_duplicates + 1 : 0,
               max_key_len));
 
-  int keysig_width = option.max_keysig_size () > ACE_OS::strlen ("keysig") 
+  u_int keysig_width = option.max_keysig_size () > ACE_OS::strlen ("keysig") 
     ? option.max_keysig_size () 
     : ACE_OS::strlen ("keysig");
 
-  int keyword_width = this->max_key_length () > ACE_OS::strlen ("keysig") 
-    ? this->max_key_length () 
+  u_int key_length = this->max_key_length ();
+  u_int keyword_width = key_length > ACE_OS::strlen ("keysig") 
+    ? key_length
     : ACE_OS::strlen ("keysig");
 
   ACE_DEBUG ((LM_DEBUG,
