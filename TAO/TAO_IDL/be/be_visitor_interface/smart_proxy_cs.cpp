@@ -66,14 +66,11 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       *os <<"TAO_"<< node->flat_name () << "_Default_Proxy_Factory::";
       *os << "TAO_"
-          << node->flat_name () << "_Default_Proxy_Factory (int register_proxy_factory)"
+          << node->flat_name () << "_Default_Proxy_Factory (int permanent)"
           << be_nl
           << "{" << be_idt_nl
-          << "if (register_proxy_factory)"<< be_idt_nl
-          << "{" << be_idt_nl
           << "TAO_" << node->flat_name ()
-          << "_PROXY_FACTORY_ADAPTER::instance ()->register_proxy_factory (this);"<< be_uidt_nl
-          << "}" << be_uidt << be_uidt_nl
+          << "_PROXY_FACTORY_ADAPTER::instance ()->register_proxy_factory (this, permanent);"<< be_uidt_nl
           << "}\n\n";
 
       os->indent ();
@@ -121,7 +118,8 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       *os << "TAO_"
           << node->flat_name () << "_Proxy_Factory_Adapter (void)" <<be_idt_nl
           << " : proxy_factory_ (0)," << be_idt_nl
-          << " delete_proxy_factory_ (0)" << be_uidt << be_uidt_nl
+          << "   one_shot_factory_ (0)," <<be_nl 
+          << "   disable_factory_ (0)"<<be_uidt << be_uidt_nl
           << "{"<< be_nl
           << "}\n\n";
 
@@ -152,6 +150,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "_Proxy_Factory_Adapter::register_proxy_factory (" << be_idt_nl
           << "TAO_" << node->flat_name ()
           << "_Default_Proxy_Factory *df," << be_idt_nl
+          << " int one_shot_factory,"<<be_nl
           << " CORBA::Environment &ACE_TRY_ENV" << be_idt_nl
           << ")" << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_idt_nl
@@ -161,7 +160,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "// Remove any existing <proxy_factory_> and replace with the new one."<<be_nl
           << "this->unregister_proxy_factory (ACE_TRY_ENV);" << be_nl
           << "this->proxy_factory_ = df;"<< be_nl
-          << "this->delete_proxy_factory_ = 0;" << be_uidt << be_uidt_nl
+          << "this->one_shot_factory_ = one_shot_factory;" << be_uidt << be_uidt_nl
           << "return 0;" << be_uidt << be_uidt_nl
           << "}\n\n";
 
@@ -181,13 +180,11 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "ACE_MT (ACE_GUARD_RETURN ("
           << "ACE_Recursive_Thread_Mutex, ace_mon," << be_idt_nl
           << "this->lock_, 0));" <<be_uidt_nl
+          << "if (this->one_shot_factory_ == 1)"<<be_idt_nl
+          << "this->disable_factory_ = 1;"<<be_uidt_nl <<be_nl
           << "if ("
-          << "this->delete_proxy_factory_ == 0 && this->proxy_factory_ != 0)" << be_idt_nl
+          << "this->one_shot_factory_ == 0 && this->proxy_factory_ != 0)" << be_idt_nl
           << "{" << be_idt_nl
-          << "// Its necessary to set <delete_proxy_factory_> to 1 to make sure that it" <<be_nl
-          << "// doesnt get into an infinite loop in <unregister_proxy_factory> as it is "<<be_nl
-          << "// invoked in the destructor of the class too."<<be_nl
-          << "this->delete_proxy_factory_ = 1;" << be_nl
           << "delete "
           << "this->proxy_factory_;" << be_nl
           << "this->proxy_factory_ = 0;" << be_uidt_nl
@@ -212,14 +209,21 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "{" << be_idt_nl
           << "ACE_MT (ACE_GUARD_RETURN ("
           << "ACE_Recursive_Thread_Mutex, ace_mon," << be_idt_nl
-          << "this->lock_, 0));" <<be_uidt_nl
+          << "this->lock_, 0));" <<be_uidt_nl<<be_nl
+          << "// To take care of those <unchecked_narrow> methods where we "<<be_nl
+          << "// want to override the smart proxy factory if there exists one."<<be_nl
+          << "if (this->disable_factory_ == 1)"<<be_idt_nl
+          << "{"<<be_idt_nl
+          << "this->disable_factory_ = 0;"<<be_nl
+          << "return proxy;"<<be_uidt_nl
+          << "}"<<be_uidt_nl<<be_nl
           << "// Verify that an <proxy_factory_> is available else make one."<<be_nl
           << "if ("
           <<"this->proxy_factory_ == 0)" << be_idt_nl
           << "ACE_NEW_RETURN ("
           << "this->proxy_factory_," << be_idt <<be_idt_nl
           << "TAO_" << node->flat_name ()
-          << "_Default_Proxy_Factory (1), "<< be_nl
+          << "_Default_Proxy_Factory (0), "<< be_nl
           << " 0);" << be_uidt_nl << be_uidt_nl << be_uidt_nl
           << "return "
           << "this->proxy_factory_->create_proxy (proxy);"
@@ -295,8 +299,8 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "// Obtain the real proxy stored in <base_proxy_>" << be_nl
           << "if (CORBA::is_nil (this->proxy_.in ()))" << be_idt_nl
           << "{" << be_idt_nl
-          << "// Necessary to do this else you are stuck in an infinte loop" <<be_nl
-          << "// creating smart proxies!" <<be_nl
+          << " // Verify whether factory is one-shot, if so disable"<<be_nl
+          << " // factory temporarily or not else remove."<<be_nl
           << "TAO_"<< node->flat_name ()
           <<"_PROXY_FACTORY_ADAPTER::instance ()->unregister_proxy_factory ();"
           << be_nl << "this->proxy_ = " << "::" << node->full_name ()
