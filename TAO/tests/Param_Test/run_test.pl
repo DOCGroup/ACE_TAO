@@ -19,13 +19,13 @@ sub run_test
 {
   my $type = shift(@_);
 
-  $SV = Process::Create (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
+  $SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
                          "$debug -ORBobjrefstyle url -ORBport $port -o ".
                          $iorfile);
   
   ACE::waitforfile ($iorfile);
 
-  system (".".$DIR_SEPARATOR."client $debug -f $iorfile  -i $invocation -t ".
+  system ($EXEPREFIX."client $debug -f $iorfile  -i $invocation -t ".
           "$type -n $num");
 
   # @@
