@@ -1,3 +1,11 @@
+Sun Aug 20 14:27:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
+	* orbsvcs/IFR_Service/InterfaceS.cpp:
+
+	  Brought the skeleton code up to date with the new
+	  portable interceptor stuff checked in by Kirthika.
+
 Sun Aug 20 11:18:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile:
