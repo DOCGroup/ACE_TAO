@@ -3,7 +3,7 @@
 #include "Thread_Task.h"
 #include "ace/Atomic_Op.h"
 
-ACE_Atomic_Op<ACE_Thread_Mutex, long> index = 0;
+ACE_Atomic_Op<ACE_Thread_Mutex, long> guid_index;
 
 RTScheduling::Current::IdType*
 Thread_Task::guids (void)
@@ -35,6 +35,7 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
 }
 
 
+int
 Thread_Task::svc (void)
 {
   ACE_TRY
@@ -58,7 +59,7 @@ Thread_Task::svc (void)
 						ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->guid_[index++] = *(this->current_->id ());
+      this->guid_[guid_index++] = *(this->current_->id ());
       
       //Start - Nested Scheduling Segment
       this->current_->begin_scheduling_segment ("Harry",
@@ -71,7 +72,7 @@ Thread_Task::svc (void)
       RTScheduling::Current::NameList* name_list = this->current_->current_scheduling_segment_names (ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      for (int i = 0; i < name_list->length ();++i)
+      for (unsigned int i = 0; i < name_list->length ();++i)
 	{
 	  ACE_DEBUG ((LM_DEBUG,
 		      "Scheduling Segment Name - %s\n",
