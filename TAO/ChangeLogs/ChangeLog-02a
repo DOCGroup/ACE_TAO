@@ -1,3 +1,11 @@
+Sun Sep 03 19:40:43 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/TAO_IDL_BE_DLL.dsp:
+	* TAO_IDL/TAO_IDL_FE_DLL.dsp:
+	* TAO_IDL/tao_idl.dsp:
+	  Go the IDL compiler to compile under Win32/Release,
+	  unfortunately it crashes at run-time.
+
 Sun Sep  3 15:35:11 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAO_IDL/Makefile.BE:
