@@ -26,7 +26,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-template <class T> class ACE_String_Base;  // Forward declaration.
+template <class CHAR> class ACE_String_Base;  // Forward declaration.
 
 typedef ACE_WCHAR_T ACE_WSTRING_TYPE;
 
