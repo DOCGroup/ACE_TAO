@@ -29,7 +29,6 @@
 
 #include "ace/Map_Manager.h"
 #include "ace/Message_Block.h"
-#include "ace/Synch.h"
 #include "ace/SString.h"
 #include "SchedEntry.h"
 #include "sched_export.h"

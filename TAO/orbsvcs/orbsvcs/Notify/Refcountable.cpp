@@ -8,6 +8,8 @@
 #include "Refcountable.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Guard_T.h"
+
 ACE_RCSID(Notify, TAO_Notify_Refcountable, "$Id$")
 
 TAO_Notify_Refcountable::TAO_Notify_Refcountable (void)

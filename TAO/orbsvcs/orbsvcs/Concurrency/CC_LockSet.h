@@ -34,12 +34,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Synch.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Thread_Mutex.h"
 #include "ace/Token.h"
 #include "ace/Unbounded_Queue.h"
 

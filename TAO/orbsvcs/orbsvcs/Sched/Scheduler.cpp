@@ -25,6 +25,8 @@
 #include "Scheduler.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Lock_Adapter_T.h"
+
 ACE_RCSID(Sched, Scheduler, "$Id$")
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -272,8 +274,6 @@ ACE_Scheduler::dispatch_configuration (const Preemption_Priority & p_priority,
 }
   // provide the thread priority and queue type for the given priority level
 
-
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Map_Entry<ACE_CString, ACE_Scheduler::RT_Info **>;

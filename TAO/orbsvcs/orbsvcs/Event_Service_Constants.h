@@ -23,8 +23,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch.h"
-
 #include "orbsvcs/Time_Utilities.h"
 
 /// This is the number of events a consumer can subscribe to.
