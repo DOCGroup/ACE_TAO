@@ -421,12 +421,13 @@ Counting_Service::handle_input (ACE_HANDLE)
     return -1;
   else
     {
+      buf[len] = '\0';
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) %d bytes of input on %d is %*s\n"),
                   bytes,
                   this->peer ().get_handle (),
                   bytes,
-                  buf));
+                  ACE_TEXT_CHAR_TO_TCHAR (buf)));
       // Read and return the current value in the file.
       if (ACE_OS::strncmp (buf,
                            "read",
