@@ -10,12 +10,12 @@ ACE_RCSID (LoadBalancing,
 
 #ifdef ACE_HAS_PTHREADS_STD
 static pthread_once_t tao_lb_once_control = PTHREAD_ONCE_INIT;
+#endif  /* ACE_HAS_PTHREADS_STD */
 
 extern "C" void tao_lb_random_init_routine (void)
 {
   ACE_OS::srand (ACE_static_cast (unsigned int, ACE_OS::time ()));
 }
-#endif  /* ACE_HAS_PTHREADS_STD */
 
 
 TAO_LB_Random::TAO_LB_Random (PortableServer::POA_ptr poa)
