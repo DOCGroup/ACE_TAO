@@ -1,6 +1,10 @@
 // -*- C++ -*-
 // $Id$
 
+#if defined (ACE_HAS_WCHAR)
+#  include "ace/OS_NS_wchar.h"
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE int
 ACE_OS::strcasecmp (const char *s, const char *t)
 {

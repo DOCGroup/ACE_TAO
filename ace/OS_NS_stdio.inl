@@ -8,6 +8,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_pwd.h"
 #include "ace/OS_NS_macros.h"
+#include "ace/OS_Memory.h"
 
 #if defined (ACE_HAS_CHARPTR_SPRINTF)
 #  define ACE_SPRINTF_ADAPTER(X) ACE_OS::strlen (X)

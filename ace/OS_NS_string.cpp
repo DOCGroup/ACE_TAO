@@ -9,6 +9,10 @@ ACE_RCSID(ace, OS_NS_string, "$Id$")
 # include "ace/OS_NS_string.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
+#if defined (ACE_HAS_WCHAR)
+#  include "ace/OS_NS_stdlib.h"
+#endif /* ACE_HAS_WCHAR */
+
 #if defined (ACE_LACKS_SYS_NERR)
 #  if defined (__rtems__)
 int sys_nerr = EWOULDBLOCK + 1;  // definitely a hack.

@@ -10,6 +10,10 @@
 
 #include "ace/Guard_T.h"
 
+#if defined (ACE_HAS_DUMP)
+#  include "ace/Log_Msg.h"
+#endif /* ACE_HAS_DUMP */
+
 ACE_RCSID(ace, Barrier, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Sub_Barrier)

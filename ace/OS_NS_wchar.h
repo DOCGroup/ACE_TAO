@@ -28,6 +28,7 @@
 #include "ace/os_include/os_wchar.h"
 #include "ace/Basic_Types.h"
 #include "ace/ACE_export.h"
+#include "ace/ace_wchar.h" // include for the time being, but this code needs to be moved.  dhinton
 
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO
