@@ -4,16 +4,16 @@ How to run the cubit example on UNIX
 server:
 -------
 
-svr [-d] -ORBhost <hostname> [-orbport <portnum>]
+% svr [-d] -ORBhost <hostname> [-orbport <portnum>]
 
-Due to some problems, it is necessary to provide the hostname
-If you don't use -d, the server will not display the IOR it is using
-and so you cannot provide this string to the client. Thus "-d" is
-necessary.
+Using -d turns on debugging messages.  It is additive, i.e., the more
+-d options provided, the more debugging you can get.  At the moment,
+only 2 levels of debugging are implemented, and more than 2 -d options
+are ignored.
 
 client:
 -------
-clnt [-d] -n <iterations> -O <IOR string displayed by server>
+% clnt [-d] -n <iterations> -O <IOR string displayed by server>
 
 
 Running the Examples
