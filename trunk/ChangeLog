@@ -1,3 +1,9 @@
+Fri Dec 13 21:12:29 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/test_config.h: Add __hpux to the conditions needed to instantiate
+          ACE_Singleton<ACE_Test_Output, ACE_Null_Mutex>::singleton_. Also see
+          Sat Nov 23 18:12:37 2002  Steve Huston  <shuston@riverace.com>
+
 Fri Dec 13 18:25:42 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: Set ACE_HAS_THREADS to 1 or 0 based on the
