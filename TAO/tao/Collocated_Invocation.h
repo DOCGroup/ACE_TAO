@@ -39,15 +39,18 @@ namespace TAO
    *
    * @brief Base class for ..
    *
+   * @NOTE: Reliable oneways are not handled properly including use of
+   *  interceptors.
    */
   class TAO_Export Collocated_Invocation : protected Invocation_Base
   {
   public:
-    Collocated_Invocation (CORBA::Object *p,
-                           TAO_Operation_Details &detail);
+    Collocated_Invocation (CORBA::Object_ptr et,
+                           CORBA::Object_ptr t,
+                           TAO_Operation_Details &detail,
+                           bool response_expected = true);
 
     Invocation_Status invoke (Collocation_Proxy_Broker *cpb,
-                              CORBA::Object *obj,
                               Collocation_Strategy strat
                               ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::Exception));

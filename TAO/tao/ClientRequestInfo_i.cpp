@@ -19,14 +19,10 @@ ACE_RCSID (TAO,
 #   include "ClientRequestInfo_i.inl"
 # endif /* !__ACE_INLINE__ */
 
-TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO::Invocation_Base *inv,
-                                                  CORBA::Object_ptr target,
-                                                  CORBA::Boolean response_expected)
+  TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO::Invocation_Base *inv)
   : invocation_ (inv),
-    target_ (target), // No need to duplicate.
     abstract_target_ (0),
     caught_exception_ (0),
-    response_expected_ (response_expected),
     reply_status_ (-1),
     rs_pi_current_ ()
 {
@@ -36,13 +32,10 @@ TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO::Invocation_Base *inv,
 TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (
     TAO::Invocation_Base *inv,
     CORBA::AbstractBase_ptr abstract_target,
-    CORBA::Boolean response_expected
-  )
+    CORBA::Boolean )
   : invocation_ (inv),
-    target_ (CORBA::Object::_nil ()),
     abstract_target_ (abstract_target), // No need to duplicate.
     caught_exception_ (0),
-    response_expected_ (response_expected),
     reply_status_ (-1),
     rs_pi_current_ ()
 {
@@ -92,7 +85,7 @@ CORBA::Object_ptr
 TAO_ClientRequestInfo_i::target (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (CORBA::is_nil (this->target_))
+  /*if (CORBA::is_nil (this->target_))
     {
 
       TAO_Valuetype_Adapter *adapter =
@@ -107,16 +100,16 @@ TAO_ClientRequestInfo_i::target (ACE_ENV_SINGLE_ARG_DECL)
         }
 
       return adapter->abstractbase_to_object (this->abstract_target_);
-    }
+      }*/
 
-  return CORBA::Object::_duplicate (this->target_);
+  return CORBA::Object::_duplicate (this->invocation_->target ());
 }
 
 CORBA::Object_ptr
 TAO_ClientRequestInfo_i::effective_target (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (this->reply_status_ == PortableInterceptor::LOCATION_FORWARD)
+  /*if (this->reply_status_ == PortableInterceptor::LOCATION_FORWARD)
     {
       // TAO_GIOP_Invocation::forward_reference() already duplicates
       // the reference before returning it so there is no need to
@@ -139,8 +132,9 @@ TAO_ClientRequestInfo_i::effective_target (ACE_ENV_SINGLE_ARG_DECL)
 
       return adapter->abstractbase_to_object (this->abstract_target_);
     }
+  */
 
-  return CORBA::Object::_duplicate (this->target_);
+  return CORBA::Object::_duplicate (this->invocation_->effective_target ());
 }
 
 IOP::TaggedProfile *
@@ -159,8 +153,11 @@ TAO_ClientRequestInfo_i::effective_profile (ACE_ENV_SINGLE_ARG_DECL)
 
   IOP::TaggedProfile_var safe_tagged_profile = tagged_profile;
 
+  TAO_Stub *stub =
+    this->invocation_->effective_target ()->_stubobj ();
+
   IOP::TaggedProfile *ep =
-    this->target_->_stubobj ()->profile_in_use ()->create_tagged_profile ();
+    stub->profile_in_use ()->create_tagged_profile ();
 
   if (ep == 0)
     {
@@ -235,8 +232,11 @@ TAO_ClientRequestInfo_i::get_effective_component (
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_Stub *stub =
+    this->invocation_->effective_target ()->_stubobj ();
+
   TAO_Tagged_Components &ecs =
-    this->target_->_stubobj ()->profile_in_use ()->tagged_components ();
+    stub->profile_in_use ()->tagged_components ();
 
   IOP::MultipleComponentProfile &components = ecs.components ();
 
@@ -280,8 +280,11 @@ TAO_ClientRequestInfo_i::get_effective_components (
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_Stub *stub =
+    this->invocation_->target ()->_stubobj ();
+
   TAO_Tagged_Components &ecs =
-    this->target_->_stubobj ()->profile_in_use ()->tagged_components ();
+    stub->profile_in_use ()->tagged_components ();
 
   IOP::MultipleComponentProfile &components = ecs.components ();
 
@@ -337,8 +340,8 @@ TAO_ClientRequestInfo_i::get_request_policy (CORBA::PolicyType type
   // @@ Do we need to look anywhere else for the request policies?
 
 #if TAO_HAS_CORBA_MESSAGING == 1
-  return this->target_->_get_policy (type
-                                      ACE_ENV_ARG_PARAMETER);
+  return this->invocation_->target ()->_get_policy (type
+                                                    ACE_ENV_ARG_PARAMETER);
 #else
   ACE_UNUSED_ARG (type);
 
@@ -497,16 +500,14 @@ CORBA::Any *
 TAO_ClientRequestInfo_i::result (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
-                                          CORBA::COMPLETED_NO),
-                    0);
+  return this->invocation_->result ();
 }
 
 CORBA::Boolean
 TAO_ClientRequestInfo_i::response_expected (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->response_expected_;
+  return this->invocation_->response_expected ();
 }
 
 Messaging::SyncScope

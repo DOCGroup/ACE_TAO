@@ -50,9 +50,7 @@ class TAO_Export TAO_ClientRequestInfo_i
 public:
 
   /// Constructor from concrete interface.
-  TAO_ClientRequestInfo_i (TAO::Invocation_Base *invocation,
-                           CORBA::Object_ptr target,
-                           CORBA::Boolean response_expected = 1);
+  TAO_ClientRequestInfo_i (TAO::Invocation_Base *invocation);
 
   //// @@ NEED TO GO.... For backward compatibility
   TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *,
@@ -248,22 +246,18 @@ protected:
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  TAO_Stub *stub (void) const;
+
 protected:
 
-  /// Pointer to the GIOP invocation object.
+  /// Pointer to the invocation object.
   TAO::Invocation_Base *invocation_;
-
-  /// Reference to the target object.
-  CORBA::Object_ptr target_;
 
   /// Reference to the abstract interface target.
   CORBA::AbstractBase_ptr abstract_target_;
 
   /// Pointer to the caught exception.
   CORBA::Exception *caught_exception_;
-
-  /// True if a two-way operation, false otherwise.
-  CORBA::Boolean response_expected_;
 
   /// Reply status for the current request.
   PortableInterceptor::ReplyStatus reply_status_;

@@ -42,8 +42,10 @@ namespace TAO
   class TAO_Export Synch_Twoway_Invocation: protected Remote_Invocation
   {
   public:
-    Synch_Twoway_Invocation (Profile_Transport_Resolver &resolver,
-                             TAO_Operation_Details &detail);
+    Synch_Twoway_Invocation (CORBA::Object_ptr otarget,
+                             Profile_Transport_Resolver &resolver,
+                             TAO_Operation_Details &detail,
+                             bool response_expected = true);
 
     Invocation_Status remote_twoway (ACE_Time_Value *max_wait_time
                                      ACE_ENV_ARG_DECL)
@@ -81,7 +83,8 @@ namespace TAO
   class TAO_Export Synch_Oneway_Invocation: protected Synch_Twoway_Invocation
   {
   public:
-    Synch_Oneway_Invocation (Profile_Transport_Resolver &resolver,
+    Synch_Oneway_Invocation (CORBA::Object_ptr otarget,
+                             Profile_Transport_Resolver &resolver,
                              TAO_Operation_Details &detail);
 
     Invocation_Status remote_oneway (ACE_Time_Value *max_wait_time

@@ -13,20 +13,22 @@ ACE_RCSID (tao,
 namespace TAO
 {
   // Need to move many methods in here to the inlined files..
-  Invocation_Base::Invocation_Base (CORBA::Object_ptr t,
+  Invocation_Base::Invocation_Base (CORBA::Object_ptr ot,
+                                    CORBA::Object_ptr t,
                                     TAO_Operation_Details &details,
                                     bool response_expected)
     : details_ (details)
     , forwarded_to_ (0)
-    , target_ (t) // @@ Do we need to increment refcount
+    , otarget_ (ot)
+    , target_ (t)
 #if TAO_HAS_INTERCEPTORS == 1
     , adapter_ (t->_stubobj ()->orb_core ()->client_request_interceptors (),
                 this)
-    , req_info_ (this,
-                t,
-                response_expected)
+    , req_info_ (this)
+    , response_expected_ (response_expected)
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
   {
+    ACE_UNUSED_ARG (response_expected);
   }
 
   Invocation_Base::~Invocation_Base (void)
@@ -78,11 +80,7 @@ namespace TAO
     return (this->forwarded_to_.in () != 0);
   }
 
-  CORBA::Octet
-  Invocation_Base::sync_scope (void) const
-  {
-    return this->details_.response_flags ();
-  }
+
 
   TAO_Service_Context &
   Invocation_Base::request_service_context (void)
@@ -94,6 +92,18 @@ namespace TAO
   Invocation_Base::reply_service_context (void)
   {
     return this->details_.reply_service_context ();
+  }
+
+  CORBA::Boolean
+  Invocation_Base::response_expected (void) const
+  {
+    return this->response_expected_;
+  }
+
+  CORBA::Object_ptr
+  Invocation_Base::target (void) const
+  {
+    return this->otarget_;
   }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -156,6 +166,18 @@ namespace TAO
                         0);
 
     return safe_result_any._retn ();
+  }
+
+  CORBA::Octet
+  Invocation_Base::sync_scope (void) const
+  {
+    return this->details_.response_flags ();
+  }
+
+  CORBA::Object_ptr
+  Invocation_Base::effective_target (void) const
+  {
+    return this->target_;
   }
 
   Invocation_Status

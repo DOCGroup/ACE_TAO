@@ -26,6 +26,8 @@
 
 . Oneways and location forwards
 
+. Oneways and collocation -- lots of issues
+
 . Bug 1476
 
 . Check for Interceptor calls..

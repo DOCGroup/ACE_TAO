@@ -106,11 +106,6 @@ namespace TAO
     /// Pointer to the GIOP invocation object for the current request.
     Invocation_Base * invocation_;
 
-    /// Reference to the invocation status obtained from and returned to
-    /// the stub.  Needed to support the
-    /// PortableInterceptor::ForwardRequest exception.
-    // int invoke_status_;
-
     /// Cache the length of the interceptor list so that we don't have
     /// to compute it at each stage of the current interception.
     const size_t len_;

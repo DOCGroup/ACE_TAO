@@ -63,18 +63,22 @@ namespace TAO
     TAO_Service_Context &request_service_context (void);
     TAO_Service_Context &reply_service_context (void);
 
-    CORBA::Octet sync_scope (void) const;
     CORBA::Object_ptr steal_forwarded_reference (void);
 
     bool is_forwarded (void) const;
 
     void reply_received (Invocation_Status s);
 
+    CORBA::Object_ptr effective_target (void) const;
+
+    CORBA::Boolean  response_expected (void) const;
+
   protected:
 
-    Invocation_Base (CORBA::Object_ptr target,
+    Invocation_Base (CORBA::Object_ptr otarget,
+                     CORBA::Object_ptr target,
                      TAO_Operation_Details &op,
-                     bool response_expected = true);
+                     bool response_expected);
 
   protected:
 
@@ -85,9 +89,9 @@ namespace TAO
 
     ACE_UNIMPLEMENTED_FUNC (Invocation_Base & operator= (const Invocation_Base &));
 
-
   private:
 
+    CORBA::Object_ptr otarget_;
     CORBA::Object_ptr target_;
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -103,6 +107,10 @@ namespace TAO
 
     CORBA::Any * result (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CORBA::Octet sync_scope (void) const;
+
+    CORBA::Object_ptr target (void) const;
 
   protected:
 
@@ -128,6 +136,8 @@ namespace TAO
     ClientRequestInterceptor_Adapter adapter_;
 
     TAO_ClientRequestInfo_i req_info_;
+
+    bool response_expected_;
 #endif /*TAO_HAS_INTERCEPTORS*/
   };
 }
