@@ -1,3 +1,10 @@
+Sat Mar 19 13:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PolicyS.cpp:
+        * tao/ImR_Client/ServerObject{C,A,S}.{h,cpp,inl}:
+        * tao/ImR_Client/ImplRepo{C,A,S}.{h,cpp,inl}:
+          Regenerated
+
 Fri Mar 18 21:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTCORBA/RT_Stub.cpp:
