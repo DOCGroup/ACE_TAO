@@ -1,3 +1,33 @@
+Wed Feb  4 12:30:43 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tao/objkeyC.h: Modified so that the namespace mapping for the
+ 	TAO module uses the alternative "underbar" mapping, i.e., rather
+ 	than TAO::ObjectKey, it's now TAO_ObjectKey.  The scoping
+ 	operation is now performed in tao.h.
+
+	* tao/tao.h: This now contains a class (used as a namespace) in
+ 	which components which *should* be in the TAO:: namespace are
+ 	typedef'd.
+
+	* tao/tao_util.*: Moved TAO_ORB_Manager into here.
+
+	* tao/stub.h: 
+	* tao/servant_base.cpp: 
+	* tao/poa.h: 
+	* tao/poa.cpp: 
+	* tao/orbobj.h: 
+	* tao/orbobj.cpp: 
+	* tao/orb_core.h: 
+	* tao/orb_core.cpp: 
+	* tao/object.h: 
+	* tao/object.cpp: 
+	* tao/iiopobj.h: 
+	* tao/iiopobj.cpp: 
+	* tao/corba.h: 
+	Changed references of TAO::ObjectKey to TAO_ObjectKey.
+
+	* tao/Makefile: Adjusted build tao_util.so rather than tao.so.
+
 Mon Feb  2 22:51:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* rules.tao.GNU (TAO_IDLFLAGS):

@@ -355,12 +355,12 @@ public:
 
   virtual ~TAO_POA (void);
 
-  virtual void dispatch_servant (const TAO::ObjectKey &key,
+  virtual void dispatch_servant (const TAO_ObjectKey &key,
                                  CORBA::ServerRequest &req,
                                  void *context,
                                  CORBA::Environment &env);
 
-  virtual int locate_servant (const TAO::ObjectKey &key,
+  virtual int locate_servant (const TAO_ObjectKey &key,
                               CORBA::Environment &env);
 
   static char name_separator (void);
@@ -457,37 +457,37 @@ protected:
 
   virtual PortableServer::ObjectId *create_object_id (void);
 
-  virtual TAO::ObjectKey *create_object_key (const PortableServer::ObjectId &id);
+  virtual TAO_ObjectKey *create_object_key (const PortableServer::ObjectId &id);
 
   virtual int is_poa_generated_id (const PortableServer::ObjectId &id);
 
-  virtual int is_poa_generated_key (const TAO::ObjectKey &key);
+  virtual int is_poa_generated_key (const TAO_ObjectKey &key);
 
-  virtual int parse_key (const TAO::ObjectKey &key,
+  virtual int parse_key (const TAO_ObjectKey &key,
                          String &poa_name,
                          PortableServer::ObjectId_out id,
                          CORBA::Boolean &persistent,
                          ACE_Time_Value &poa_creation_time);
 
-  virtual int locate_servant_i (const TAO::ObjectKey &key,
+  virtual int locate_servant_i (const TAO_ObjectKey &key,
                                 CORBA::Environment &env);
 
-  virtual PortableServer::Servant locate_poa_and_servant_i (const TAO::ObjectKey &key,
+  virtual PortableServer::Servant locate_poa_and_servant_i (const TAO_ObjectKey &key,
                                                             const char *operation,
                                                             PortableServer::ObjectId_out id,
                                                             TAO_POA *&poa_impl,
                                                             CORBA::Environment &env);
 
-  virtual TAO_POA *locate_poa_i (const TAO::ObjectKey &key,
+  virtual TAO_POA *locate_poa_i (const TAO_ObjectKey &key,
                                  PortableServer::ObjectId_out id,
                                  CORBA::Environment &env);
 
-  virtual void dispatch_servant_i (const TAO::ObjectKey &key,
+  virtual void dispatch_servant_i (const TAO_ObjectKey &key,
                                    CORBA::ServerRequest &req,
                                    void *context,
                                    CORBA::Environment &env);
 
-  virtual void pre_invoke (const TAO::ObjectKey &key,
+  virtual void pre_invoke (const TAO_ObjectKey &key,
                            const PortableServer::ObjectId &id,
                            PortableServer::Servant servant,
                            CORBA::Environment &env);
@@ -510,7 +510,7 @@ protected:
 
   static const wchar_t *ObjectId_to_const_wstring (const PortableServer::ObjectId &id);
 
-  static const char *ObjectKey_to_const_string (const TAO::ObjectKey &key);
+  static const char *ObjectKey_to_const_string (const TAO_ObjectKey &key);
 
   String name_;
 
@@ -736,10 +736,10 @@ public:
   virtual const PortableServer::ObjectId &object_id (void) const;
   // Get the object ID.
 
-  virtual void object_key (const TAO::ObjectKey &key);
+  virtual void object_key (const TAO_ObjectKey &key);
   // Set the object key.
 
-  virtual const TAO::ObjectKey &object_key (void) const;
+  virtual const TAO_ObjectKey &object_key (void) const;
   // Get the object key.
 
   virtual void servant (PortableServer::Servant servant);
@@ -770,7 +770,7 @@ private:
   const PortableServer::ObjectId *object_id_;
   // The object ID of the current context.
 
-  const TAO::ObjectKey *object_key_;
+  const TAO_ObjectKey *object_key_;
   // The object key of the current context.
 
   PortableServer::ServantLocator::Cookie cookie_;

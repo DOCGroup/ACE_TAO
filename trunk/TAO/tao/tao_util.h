@@ -35,9 +35,9 @@ public:
   // the poa_name is a user-supplied string that is used to name the
   // POA created.
       
-  CORBA::String_var activate (const char *object_name,
-                              PortableServer::Servant servant,
-                              CORBA_Environment &env);
+  CORBA::String activate (const char *object_name,
+                          PortableServer::Servant servant,
+                          CORBA_Environment &env);
   // Activate the servant with the supplied object_name
   // Call multiple times to activate multiple objects.
       

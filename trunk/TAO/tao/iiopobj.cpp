@@ -328,10 +328,10 @@ IIOP_Object::QueryInterface (REFIID riid,
 }
 
 // TAO extensions
-TAO::ObjectKey*
+TAO_ObjectKey*
 IIOP_Object::key (CORBA::Environment &)
 {
-  return new TAO::ObjectKey (this->profile.object_key);
+  return new TAO_ObjectKey (this->profile.object_key);
 }
 
 // It will usually be used by the _bind call.
