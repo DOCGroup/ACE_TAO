@@ -20,7 +20,7 @@ Options::instance (void)
 
 Options::Options (void)
   : thr_count_ (4),
-    t_flags_ (THR_DETACHED),
+    t_flags_ (0),
     high_water_mark_ (8 * 1024),
     low_water_mark_ (1024),
     message_size_ (128),
