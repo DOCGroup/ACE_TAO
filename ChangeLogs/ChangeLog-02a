@@ -1,3 +1,30 @@
+Thu Feb  8 14:11:36 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ws2tcpip.h:  [Removed]
+
+          I don't see any reason to have this file in ace; it is a system
+          header file.  And from [Bug 722], our version is out of date anyway.
+
+        * ace/OS.h:
+
+          Changed to include system version of ws2tcpip.h
+
+        * ace/Makefile.am:
+        * ace/ace-dll.icc:
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+
+          Removed references to ws2tcpip.h.
+
+        * ace/SOCK_Dgram_Mcast.cpp:
+
+          It looks like the change made on:
+          
+          Fri Jan 26 11:18:15 2001  Douglas C. Schmidt  ...
+
+          doesn't work on Win32.  Reverted back to the old scheme for Win32
+          only.  
+
 Thu Feb  8 00:34:57 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* include/makeinclude/platform_sunos5_g++.GNU: Added support for
