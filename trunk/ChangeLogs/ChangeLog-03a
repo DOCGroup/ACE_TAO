@@ -1,3 +1,8 @@
+Wed Feb  5 09:45:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_mingw32.GNU:
+          Removed desciption to MINGW_BASE.
+
 Tue Feb  4 13:13:08 2003  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/rules.lib.GNU:
