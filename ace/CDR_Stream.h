@@ -459,6 +459,11 @@ public:
   ACE_WChar_Codeset_Translator *wchar_translator (void) const;
   // Access the codeset translators. They can be nil!
 
+  size_t current_alignment (void) const;
+  // Return alignment of the wr_ptr(), with respect to the start of
+  // the CDR stream.  This is not the same as the alignment of
+  // current->wr_ptr()!
+
 private:
   ACE_OutputCDR (const ACE_OutputCDR& rhs);
   ACE_OutputCDR& operator= (const ACE_OutputCDR& rhs);
@@ -516,6 +521,20 @@ private:
 
   ACE_Message_Block *current_;
   // The current block in the chain were we are writing.
+
+  int current_is_writable_;
+  // Is the current block writable.  When we steal a buffer from the
+  // user and just chain it into the message block we are not supposed
+  // to write on it, even if it is past the start and end of the
+  // buffer.
+
+  size_t current_alignment_;
+  // The current alignment as measured from the start of the buffer.
+  // Usually this coincides with the alignment of the buffer in
+  // memory, but, when we chain another buffer this "quasi invariant"
+  // is broken.
+  // The current_alignment is used to readjust the buffer following
+  // the stolen message block.
 
   int do_byte_swap_;
   // If not zero swap bytes at writing so the created CDR stream byte

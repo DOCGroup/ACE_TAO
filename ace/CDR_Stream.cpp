@@ -131,6 +131,8 @@ ACE_OutputCDR::ACE_OutputCDR (size_t size,
              ACE_Time_Value::zero,
              ACE_Time_Value::max_time,
              data_block_allocator),
+     current_is_writable_ (1),
+     current_alignment_ (0),
      do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
      good_bit_ (1),
      memcpy_tradeoff_ (memcpy_tradeoff),
@@ -156,6 +158,8 @@ ACE_OutputCDR::ACE_OutputCDR (char *data, size_t size,
              ACE_Time_Value::zero,
              ACE_Time_Value::max_time,
              data_block_allocator),
+     current_is_writable_ (1),
+     current_alignment_ (0),
      do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
      good_bit_ (1),
      memcpy_tradeoff_ (memcpy_tradeoff),
@@ -171,6 +175,8 @@ ACE_OutputCDR::ACE_OutputCDR (ACE_Message_Block *data,
                               int byte_order,
                               size_t memcpy_tradeoff)
   :  start_ (data->data_block ()->duplicate ()),
+     current_is_writable_ (1),
+     current_alignment_ (0),
      do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
      good_bit_ (1),
      memcpy_tradeoff_ (memcpy_tradeoff),
@@ -187,7 +193,8 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
                                 size_t align,
                                 char*& buf)
 {
-  if (this->current_->cont () == 0
+  if (!this->current_is_writable_
+      || this->current_->cont () == 0
       || this->current_->cont ()->size () < size + ACE_CDR::MAX_ALIGNMENT)
     {
       // Calculate the new buffer's length; if growing for encode, we
@@ -228,7 +235,7 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
       ptr_arith_t tmpalign =
         ptr_arith_t(tmp->rd_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
       ptr_arith_t curalign =
-        ptr_arith_t(this->current_->wr_ptr ()) % ACE_CDR::MAX_ALIGNMENT;
+        ptr_arith_t(this->current_alignment_) % ACE_CDR::MAX_ALIGNMENT;
       int offset = curalign - tmpalign;
       if (offset < 0)
         offset += ACE_CDR::MAX_ALIGNMENT;
@@ -240,12 +247,9 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
       this->current_->cont (tmp);
     }
   this->current_ = this->current_->cont ();
+  this->current_is_writable_ = 1;
 
-  // Now we are ready to set buf..
-  // recompute the position....
-  buf = ptr_align_binary (this->current_->wr_ptr (), align);
-  this->current_->wr_ptr (buf + size);
-  return 0;
+  return this->adjust (size, align, buf);
 }
 
 ACE_CDR::Boolean
@@ -345,15 +349,25 @@ ACE_OutputCDR::write_octet_array_mb (const ACE_Message_Block* mb)
           continue;
         }
 
-      ACE_Message_Block* cont =
-        new ACE_Message_Block (i->data_block ()->duplicate ());
+      ACE_Message_Block* cont;
+      this->good_bit_ = 0;
+      ACE_NEW_RETURN (cont,
+                      ACE_Message_Block (i->data_block ()->duplicate ()),
+                      0);
+      this->good_bit_ = 1;
+
       if (cont != 0)
         {
-          cont->cont (this->current_->cont ());
-          this->current_->cont (cont);
-          this->current_ = cont;
+          if (this->current_->cont () != 0)
+            ACE_Message_Block::release (this->current_->cont ());
           cont->rd_ptr (i->rd_ptr ());
           cont->wr_ptr (i->wr_ptr ());
+
+          this->current_->cont (cont);
+          this->current_ = cont;
+          this->current_is_writable_ = 0;
+          this->current_alignment_ =
+            (this->current_alignment_ + cont->length ()) % ACE_CDR::MAX_ALIGNMENT;
         }
       else
         {
