@@ -1,3 +1,8 @@
+Wed Nov 26 16:09:55 UTC 2003  Don Hinton  <dhinton@dresytems.com>
+
+        * tests/IO_Stream_Test.cpp:
+          Added #include OS_NS_sys_wait.h: 
+
 Wed Nov 26 15:58:07 UTC 2003  Don Hinton  <dhinton@dresytems.com>
 
         * ace/config-WinCE.h:
