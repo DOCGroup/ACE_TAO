@@ -1,3 +1,27 @@
+Sun Feb  6 14:52:28 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Makefile.am (libACE_Demux_la_SOURCES):
+
+	  Added `QtReactor.cpp' to list of sources.
+
+	  (libACE_Other_la_SOURCES):
+
+	  Added `QoS_Session_Impl.cpp' and `QoS_Session_Factory.cpp' to
+	  the list of sources.
+
+	  (HEADER_FILES):
+
+	  Added `Min_Max.h', `QoS_Session_Impl.h' and
+	  `QoS_Session_Factory.h' to the list of headers.
+
+	  (INLINE_FILES):
+
+	  Added `QoS_Session_Impl.i' to the list of inline files.
+
+	* ace/OS.h (ACE_LOFF_T):
+
+	  HP-UX has a 64 bit offset type "off64_t."
+
 Sat Feb  5 20:49:50 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ltcf-c.sh:
@@ -28,7 +52,7 @@ Fri Feb  4 23:12:36 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 Fri Feb  4 19:29:31 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Process.h:
-        * ace/Porcess.cpp:
+        * ace/Process.cpp:
           The method command_line_argv () now returns a LPTSTR const * 
           instead of a char * const *.  This enables it to compile under
           UNICODE.  Thanks to Steve Huston for pointing this out.
@@ -74,7 +98,7 @@ Thu Feb  3 11:38:15 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  explicitly instantiate a template for ACE_Malloc_T if we've got
  	  ACE_HAS_POSITION_INDEPEDENT_MALLOC enabled.  Thanks to David
  	  Levine for reporting this.
-  
+
 Thu Feb  3 11:40:27 2000  Ossama Othman  <ossama@uci.edu>
 
 	* docs/ACE-subsets.html:
