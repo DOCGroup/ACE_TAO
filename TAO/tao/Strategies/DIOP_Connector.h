@@ -52,9 +52,7 @@ public:
   // Pluggable.h
   int open (TAO_ORB_Core *orb_core);
   int close (void);
-  int connect (TAO_GIOP_Invocation *invocation,
-               TAO_Transport_Descriptor_Interface *desc
-               ACE_ENV_ARG_DECL);
+
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
   virtual int check_prefix (const char *endpoint);
@@ -65,6 +63,9 @@ protected:
 
   /// = More TAO_Connector methods, please check the documentation on
   ///   Pluggable.h
+  int make_connect (TAO_GIOP_Invocation *invocation,
+                    TAO_Transport_Descriptor_Interface *desc);
+
   virtual TAO_Profile * make_profile (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Obtain tcp properties that must be used by this connector, i.e.,

@@ -54,6 +54,8 @@ TAO_Connector_Registry::get_connector (CORBA::ULong tag)
   return 0;
 }
 
+
+
 int
 TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
 {

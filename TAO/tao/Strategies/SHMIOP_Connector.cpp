@@ -116,9 +116,8 @@ TAO_SHMIOP_Connector::close (void)
 }
 
 int
-TAO_SHMIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
-                               TAO_Transport_Descriptor_Interface *desc
-                               ACE_ENV_ARG_DECL_NOT_USED)
+TAO_SHMIOP_Connector::make_connect (TAO_GIOP_Invocation *invocation,
+                                    TAO_Transport_Descriptor_Interface *desc)
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -163,88 +162,71 @@ TAO_SHMIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
   TAO_SHMIOP_Connection_Handler *svc_handler = 0;
   TAO_Transport *base_transport = 0;
 
-  // Check the Cache first for connections
-  // If transport found, reference count is incremented on assignment
-  if (this->orb_core ()->lane_resources ().transport_cache ().find_transport (desc,
-                                                                              base_transport) == 0)
+  if (TAO_debug_level > 2)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
+                ACE_TEXT ("making a new connection \n")));
+
+  // Purge connections (if necessary)
+  this->orb_core ()->lane_resources ().transport_cache ().purge ();
+
+  if (max_wait_time != 0)
     {
-      if (TAO_debug_level > 5)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
-                    ACE_TEXT ("got an existing transport with id %d \n"),
-                    base_transport->id ()));
+      ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
+                                       *max_wait_time);
+
+          // We obtain the transport in the <svc_handler> variable. As
+      // we know now that the connection is not available in Cache
+      // we can make a new connection
+      result = this->base_connector_.connect (svc_handler,
+                                              remote_address,
+                                              synch_options);
     }
   else
     {
-      if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
-                    ACE_TEXT ("making a new connection \n")));
+      // We obtain the transport in the <svc_handler> variable. As
+      // we know now that the connection is not available in Cache
+      // we can make a new connection
+      result = this->base_connector_.connect (svc_handler,
+                                              remote_address);
+    }
 
-      // Purge connections (if necessary)
-      this->orb_core ()->lane_resources ().transport_cache ().purge ();
+  if (TAO_debug_level > 4)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
+                ACE_TEXT ("The result is <%d> \n"), result));
 
-      // @@ This needs to change in the next round when we implement a
-      // policy that will not allow new connections when a connection
-      // is busy.
-      if (max_wait_time != 0)
+  if (result == -1)
+    {
+      char buffer [MAXNAMELEN * 2];
+      endpoint->addr_to_string (buffer,
+                                (MAXNAMELEN * 2) - 1);
+
+      // Give users a clue to the problem.
+      if (TAO_debug_level > 0)
         {
-          ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
-                                           *max_wait_time);
-
-          // We obtain the transport in the <svc_handler> variable. As
-          // we know now that the connection is not available in Cache
-          // we can make a new connection
-          result = this->base_connector_.connect (svc_handler,
-                                                  remote_address,
-                                                  synch_options);
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %s:%u, connection to ")
+                      ACE_TEXT ("%s failed (%p)\n"),
+                      __FILE__,
+                      __LINE__,
+                      buffer,
+                      ACE_TEXT ("errno")));
         }
-      else
-        {
-          // We obtain the transport in the <svc_handler> variable. As
-          // we know now that the connection is not available in Cache
-          // we can make a new connection
-          result = this->base_connector_.connect (svc_handler,
-                                                  remote_address);
-        }
+      return -1;
+    }
 
-      if (TAO_debug_level > 4)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
-                    ACE_TEXT ("The result is <%d> \n"), result));
+  base_transport = TAO_Transport::_duplicate (svc_handler->transport ());
+  // Add the handler to Cache
+  int retval =
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
+                                                                             svc_handler->transport ());
 
-      if (result == -1)
-        {
-          char buffer [MAXNAMELEN * 2];
-          endpoint->addr_to_string (buffer,
-                                    (MAXNAMELEN * 2) - 1);
-
-          // Give users a clue to the problem.
-          if (TAO_debug_level > 0)
-            {
-              ACE_DEBUG ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) %s:%u, connection to ")
-                          ACE_TEXT ("%s failed (%p)\n"),
-                          __FILE__,
-                          __LINE__,
-                          buffer,
-                          ACE_TEXT ("errno")));
-            }
-          return -1;
-        }
-
-      base_transport = TAO_Transport::_duplicate (svc_handler->transport ());
-      // Add the handler to Cache
-      int retval =
-        this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
-                                                                                 svc_handler->transport ());
-
-      if (retval != 0 && TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
-                      ACE_TEXT ("could not add the new  connection to Cache \n")));
-        }
+  if (retval != 0 && TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) SHMIOP_Connector::connect ")
+                  ACE_TEXT ("could not add the new  connection to Cache \n")));
     }
 
   // No need to _duplicate and release since base_transport
