@@ -1,5 +1,9 @@
 Sun Jan 19 11:40:10 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* ace/NT_Service.{h,cpp}: Enhanced the wait_For_service_state() so
+	  that it actually uses the wait_time parameter.  Thanks to Theo
+ 	  Landman <tlandman@justcroft.com> for contributing this.
+
 	* ace/Process_Manager.cpp (spawn): Cleanup dynamically allocated
 	  memory if the spawn() fails.  Thanks to Kobi Cohen-Arazi
  	  <kobi@mivzak.com> for this fix.
