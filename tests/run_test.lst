@@ -78,7 +78,7 @@ Reactor_Notify_Test: !ST
 Reactor_Performance_Test: !chorus
 Reactor_Timer_Test
 Reader_Writer_Test
-Recursive_Mutex_Test
+Recursive_Mutex_Test: !ST
 Refcounted_Auto_Ptr_Test
 Reverse_Lock_Test
 Semaphore_Test
