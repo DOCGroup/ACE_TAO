@@ -23,7 +23,7 @@
 extern "C" int LIB$FIND_IMAGE_SYMBOL(...);
 #endif
 
-ACE_RCSID(ace, Lib_Find, $Id$)
+ACE_RCSID(ace, Lib_Find, "$Id$")
 
 #if ! defined (ACE_PSOS_DIAB_MIPS)
 int
