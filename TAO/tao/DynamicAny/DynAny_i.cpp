@@ -62,8 +62,7 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
     case CORBA::tk_null:
       break;
     case CORBA::tk_void:
-      this->any_ = CORBA::Any (CORBA::_tc_void,
-                               0);
+      this->any_._tao_set_typecode (CORBA::_tc_void);
       break;
     case CORBA::tk_short:
       this->any_ <<= ACE_static_cast (CORBA::Short, 0);
@@ -104,8 +103,7 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
       this->any_ <<= ACE_static_cast (CORBA::Double, 0);
       break;
     case CORBA::tk_any:
-      this->any_ <<= CORBA::Any (CORBA::_tc_null,
-                                 0);
+      this->any_._tao_set_typecode (CORBA::_tc_null);
       break;
     case CORBA::tk_TypeCode:
       this->any_ <<= CORBA::_tc_null;
