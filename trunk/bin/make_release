@@ -208,6 +208,15 @@ unless ("$release_tag_files") {
 #####
 &ex ("$touch  $export_dir/DON")  &&
  die "$0: Write failures in $export_dir, access problems..\n";
+
+my $ace_root = $ENV{'ACE_ROOT'};
+
+&ex ("$touch  $ace_root/MPC/DON")  &&
+ die "$0: Read/Write failures in $ace_root/MPC/, access problems..\n";
+
+&ex ("$rm -r  $ace_root/MPC/DON")  &&
+ die "$0: Delete failures in $ace_root/MPC \n";
+
 &ex ("$rm -r $export_dir/DON $export_dir/*.gz $export_dir/*.zip $export_dir/*.bz2")  &&
  die "$0: failed to remove files in $export_dir\n";
 
@@ -798,6 +807,7 @@ sub generate_makefiles () {
     &ex ("cd ACE_wrappers; \
           bin/mwc.pl -type vc71 $mpc_option $exclude_option; \
           bin/mwc.pl -type vc6  $mpc_option $exclude_option; \
+          bin/mwc.pl -type borland  $mpc_option $exclude_option; \
           bin/mwc.pl -type vc6 $static_option; \
           bin/mwc.pl -type vc71 $static_option; \
           find ./ -name '*.ds[p,w]' | /usr/bin/xargs chmod 0644;\
