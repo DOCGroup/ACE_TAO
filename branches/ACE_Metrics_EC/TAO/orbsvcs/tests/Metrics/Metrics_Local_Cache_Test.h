@@ -22,9 +22,9 @@ public:
   TAO_Metrics_Local_Cache_Test_PushConsumer (int state = 0) : state_variable_ (state) {}
 
   virtual void push (const RtecEventComm::EventSet &,
-                     CORBA_Environment &);
+                     CORBA::Environment &);
 
-  virtual void disconnect_push_consumer (CORBA_Environment &);
+  virtual void disconnect_push_consumer (CORBA::Environment &);
 
 private:
 
@@ -43,20 +43,20 @@ public:
                                 int local_logger = 0);  // Default is not to create a local logger
   // Default Constructor.
 
-  TAO_Metrics_Local_Cache_Test (int argc, 
-                                char *argv[], 
-                                int local_monitor = 1, 
+  TAO_Metrics_Local_Cache_Test (int argc,
+                                char *argv[],
+                                int local_monitor = 1,
                                 int local_logger = 0);
   // Constructor taking command line arguments.
 
   virtual ~TAO_Metrics_Local_Cache_Test (void);
   // Destructor.
 
-  int init (int argc, 
+  int init (int argc,
             char *argv[]);
   // Initialize the Scheduling Service with the arguments.
 
-  int run (CORBA_Environment& ACE_TRY_ENV);
+  int run (CORBA::Environment& ACE_TRY_ENV);
   // Run the TAO_Metrics_Local_Cache_Test.
 
 private:
@@ -142,26 +142,27 @@ private:
   // Name of the process id output file.  Used when the logger is local.
 
   int log_output_;
-  // Whether or not to log output to file.  
+  // Whether or not to log output to file.
 
   int visualize_;
   // Whether or not visualization is activated.
 
   int local_monitor_;
-  int local_logger_; 
+  int local_logger_;
 
   static const unsigned int number_of_hrt_rates_;
   static const unsigned int number_of_srt_rates_;
-  
+
   static const unsigned long the_hrt_Rates_in_microseconds_[];
-  
+
   static const int highest_rate_group_priority_;
-  
+
   // Pointer to our local rate group info
   TAO_Rate_Group_Info ** rate_group_info_;
 
   char* master_host_name_;
   char* master_host_ip_;
+
 };
 
 

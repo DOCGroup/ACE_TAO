@@ -194,7 +194,7 @@ TAO_Remote_Metrics_Logger_Driver::init ()
 
 // Runs the TAO_Remote_Metrics_Logger_Driver.
 int
-TAO_Remote_Metrics_Logger_Driver::run (CORBA_Environment& ACE_TRY_ENV)
+TAO_Remote_Metrics_Logger_Driver::run (CORBA::Environment& ACE_TRY_ENV)
 {
   int result = 0;
   ACE_Thread_Manager orb_thread_manager;
@@ -256,9 +256,9 @@ TAO_Remote_Metrics_Logger_Driver::parse_args (int argc, char *argv[])
 
    while (arg_shifter.is_anything_left ())
    {
-      char *current_arg = 0;
+      const ACE_TCHAR *current_arg;
 
-      if ( current_arg = arg_shifter.get_the_parameter("-log_name") )
+      if ( (current_arg = arg_shifter.get_the_parameter("-log_name")) )
       {
          // Activate logging, using passed log file name.
          log_output_ = 1;
@@ -266,13 +266,13 @@ TAO_Remote_Metrics_Logger_Driver::parse_args (int argc, char *argv[])
          this->log_file_name_ = CORBA::string_dup(current_arg);
          arg_shifter.consume_arg();
       }
-      else if ( current_arg = arg_shifter.get_the_parameter("-logger_ior") )
+      else if ( (current_arg = arg_shifter.get_the_parameter("-logger_ior")) )
       {
          delete logger_ior_file_name_;
          this->logger_ior_file_name_ = CORBA::string_dup(current_arg);;
          arg_shifter.consume_arg();
       }
-      else if ( current_arg = arg_shifter.get_the_parameter("-logger_host") )
+      else if ((current_arg = arg_shifter.get_the_parameter("-logger_host")))
       {
          logger_host_name_set = 1;
 
@@ -280,7 +280,7 @@ TAO_Remote_Metrics_Logger_Driver::parse_args (int argc, char *argv[])
          this->logger_host_name_ = CORBA::string_dup(current_arg);;
          arg_shifter.consume_arg();
       }
-      else if ( current_arg = arg_shifter.get_the_parameter("-logger_ip") )
+      else if (( current_arg = arg_shifter.get_the_parameter("-logger_ip")) )
       {
          logger_host_ip_set = 1;
 

@@ -27,7 +27,7 @@ public:
   int init ();
   // Initialize the Scheduling Service with the arguments.
 
-  int run (CORBA_Environment& ACE_TRY_ENV);
+  int run (CORBA::Environment& ACE_TRY_ENV);
   // Run the TAO_Remote_Metrics_Logger_Driver.
 
   ~TAO_Remote_Metrics_Logger_Driver (void);
