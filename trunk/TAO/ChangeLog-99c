@@ -1,3 +1,13 @@
+Fri Jul  9 14:26:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_string.h:
+	* TAO_IDL/be_include/be_predefined_type.h:
+	* TAO_IDL/be/be_string.cpp:
+	* TAO_IDL/be/be_predefined_type.cpp:
+	  Added overrides for 2nd signature of overloaded
+	  compute_tc_type() virtual function in base class be_type.
+	  Averts warnings from KAI compiler.
+
 Fri Jul  9 12:59:05 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Simple/grid/Grid_i.h :
