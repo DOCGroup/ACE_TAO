@@ -1,3 +1,11 @@
+Thu May  4 17:17:32 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Accept_State.cpp: Fixed a problem with the way
+	  service context list is marshalled for DSI_Gateways in GIOP
+	  1.2. Previous version of GIOP was using a padding scheme which
+	  was not needed for GIOP 1.2. Thanks to Carlos for pointing this
+	  out. 
+		
 Thu May  4 14:53:45 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/AV/AV_Core.h:
