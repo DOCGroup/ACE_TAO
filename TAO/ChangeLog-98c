@@ -1,3 +1,19 @@
+Tue Sep 22 18:19:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/IIOP_Object.cpp: 
+	  Fixed unreachable statement warning: this was an excellent
+	  warning because the semantics were broken.
+
+	* TAO_IDL/util/utl_scope.cpp: 
+	  Removed unused variable.
+
+	* docs/releasenotes/TODO.html: 
+	  Added brief note about a (potential) EC bug.
+
+	* docs/configurations.html: 
+	  Added more documentation about the use of dotted decimal
+	  addresses to work in platforms without a DNS server.
+
 Tue Sep 22 18:03:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/Simple/chat/Client_i.h: 
