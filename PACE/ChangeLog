@@ -1,3 +1,9 @@
+Thu Jul 27 13:03:29 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/constants.h (PACE_ONE_SECOND_IN_NSECS):
+
+	  Typo!
+
 Thu Jul 27 12:33:55 2000  David L. Levine <levine@cs.wustl.edu>
 
         * README, VERSION: updated in preparation for 1.0 release.
