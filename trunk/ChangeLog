@@ -1,3 +1,8 @@
+Fri Jul 28 00:23:37 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* docs/ACE-SSL.html
+	  Updated with new information about obtaining ACE+SSL.
+
 Thu Jul 27 18:03:24 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* include/makeinclude/platform_linux_lxpthread.GNU:
