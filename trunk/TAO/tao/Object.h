@@ -67,6 +67,14 @@ public:
 
   virtual CORBA::Boolean _non_existent (CORBA::Environment &);
 
+  virtual void _create_request (const CORBA::Char *operation,
+                                CORBA::NVList_ptr arg_list,
+                                CORBA::NamedValue_ptr result,
+                                CORBA::Request_ptr &request,
+                                CORBA::Flags req_flags,
+                                CORBA::Environment &env);
+  // DII operation to create a request.
+  //
   // The mapping for create_request is split into two forms,
   // corresponding to the two usage styles described in CORBA section
   // 6.2.1.
@@ -75,31 +83,31 @@ public:
   // multi-protocol remote invocation interface as is assumed by the
   // calls above ... that's how it can have a default implementation.
 
-  virtual void _create_request (const CORBA::Char *operation,
-                                CORBA::NVList_ptr arg_list,
-                                CORBA::NamedValue_ptr result,
-                                CORBA::Request_ptr &request,
-                                CORBA::Flags req_flags,
-                                CORBA::Environment &env);
-  // DII operation to create a request
-
   virtual CORBA::Request_ptr _request (const CORBA::Char *operation,
                                        CORBA::Environment &env);
-  // DII operation to create a request
-
-  // These two rely on the representation of the object reference's
-  // private state.  Since that changes easily (when different ORB
-  // protocols are in use) there is no default implementation.
+  // DII operation to create a request.
 
   virtual CORBA::ULong _hash (CORBA::ULong maximum,
                               CORBA::Environment &env);
+  // Return a (potentially non-unique) hash value for this object.
+  // This method relies on the representation of the object
+  // reference's private state.  Since that changes easily (when
+  // different ORB protocols are in use) there is no default
+  // implementation.
 
   virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj,
                                          CORBA::Environment &env);
+  // Try to determine if this object is the same as <other_obj>.  This
+  // method relies on the representation of the object reference's
+  // private state.  Since that changes easily (when different ORB
+  // protocols are in use) there is no default implementation.
 
   // = Reference count managment.
   CORBA::ULong _incr_refcnt (void);
+  // Increment the reference count.
+
   CORBA::ULong _decr_refcnt (void);
+  // Decrement the reference count.
 
   CORBA_Object (STUB_Object *p = 0,
                 TAO_ServantBase *servant = 0,
