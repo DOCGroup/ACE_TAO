@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE ECConfiguration SYSTEM "ecconfig.dtd">
+
+<ECConfiguration>
+    
+<!-- Define the events -->
+<!-- THESE NEED TO BE THE SAME AS DEFINED IN THE CLIENT XML! -->
+<Timeout name="Subtask1.1 Timeout" >
+  <Period>200</Period> <!-- in msec -->
+  <Phase>0</Phase> <!-- in msec -->
+</Timeout>
+  
+<Event name="Subtask1.1 Trigger" > <!-- name must be unique among Events -->
+  <Period>200</Period> <!-- in msec -->
+  <Criticality value="VERY_LOW" />
+  <Importance value="VERY_LOW" />
+  <WorstExecution>50</WorstExecution> <!-- in msec -->
+  <TypicalExecution>50</TypicalExecution> <!-- in msec -->
+</Event>
+
+<Event name="Subtask1.2 Trigger" >
+  <Period>200</Period> <!-- in msec -->
+  <Criticality value="VERY_LOW" />
+  <Importance value="VERY_LOW" />
+  <WorstExecution>50</WorstExecution> <!-- in msec -->
+  <TypicalExecution>50</TypicalExecution> <!-- in msec -->
+</Event>
+
+<!-- Configure the ECs -->
+<RemoteEventChannel name="Client" >
+  <IORFile>client.ior</IORFile>
+</RemoteEventChannel>
+
+<LocalEventChannel name="Server" >
+  <SchedulingStrategy type="EDF" enableRG="true" />
+  <Consumer name="Subtask1.2 Executor" >
+    <Subscriptions>
+      <EventName>Subtask1.2 Trigger</EventName>
+    </Subscriptions>
+    <Dependants>
+      <!-- No dependents -->
+    </Dependants>
+  </Consumer>
+</LocalEventChannel>
+
+<!-- Configure the driver -->
+<TestDriver>
+  <StartCondition type="DelayAfterConnect" >
+    <Time>30000</Time> <!-- in msecs -->
+  </StartCondition>
+  <StopCondition type="Duration" >
+    <Value>300000</Value> <!-- duration in msecs -->
+  </StopCondition>
+</TestDriver>
+
+</ECConfiguration>

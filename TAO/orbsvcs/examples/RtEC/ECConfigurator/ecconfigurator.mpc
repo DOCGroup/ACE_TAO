@@ -1,0 +1,15 @@
+project(configurable_ec): orbsvcsexe, rtevent, rtsched, rtschedevent, rtkokyuevent, kokyu, acexml {
+  exename = ConfigurableEC
+  libpaths += .
+  includes += $(TAO_ROOT)/orbsvcs $(TAO_ROOT)/orbsvcs/orbsvcs
+
+  Source_Files {
+    Configurator_ParseHandler.cpp
+    Configurator_SyntaxHandler.cpp
+    SyntaxTree.cpp
+    ConfigurableEC.cpp
+  }
+
+  IDL_Files {
+  }
+}

@@ -1,0 +1,714 @@
+// $Id$
+
+//=============================================================================
+/**
+ *  @file    SyntaxTree.h
+ *
+ *  $Id$
+ *
+ *  @author Bryan Thrall <thrall@cse.wustl.edu>
+ */
+//=============================================================================
+
+
+#ifndef SYNTAXTREE_H
+#define SYNTAXTREE_H
+
+#include "SyntaxVisitor.h"
+
+#include "RtecSchedulerC.h"
+#include "ace/OS_String.h"
+
+#include <vector>
+
+// Forward decls
+class VisitableSyntax;
+class StringSyntax;
+class IntegerSyntax;
+class Driver;
+class ECConfiguration;
+class Event;
+class Criticality;
+class Importance;
+class Timeout;
+class LocalEventChannel;
+class RemoteEventChannel;
+class SchedulingStrategy;
+class Consumer;
+class Subscriptions;
+class Dependants;
+class Supplier;
+class Publications;
+class Triggers;
+class TestDriver;
+class StartCondition;
+class StopCondition;
+class EventName;
+class SupplierName;
+class TimeoutName;
+class IORFile;
+class WorstExecution;
+class TypicalExecution;
+class Period;
+class Phase;
+class Time;
+class Value;
+
+// Utility classes
+
+class VisitableSyntax
+{
+public:
+
+  //Tag for the element type
+  enum element {
+    ECCONFIGURATION = 0,
+    EVENT,
+    CRITICALITY,
+    IMPORTANCE,
+    WORSTEXECUTION,
+    TYPICALEXECUTION,
+    TIMEOUT,
+    PERIOD,
+    PHASE,
+    LOCALEVENTCHANNEL,
+    REMOTEEVENTCHANNEL,
+    SCHEDULINGSTRATEGY,
+    CONSUMER,
+    SUBSCRIPTIONS,
+    EVENTNAME,
+    DEPENDANTS,
+    SUPPLIERNAME,
+    SUPPLIER,
+    PUBLICATIONS,
+    TRIGGERS,
+    TIMEOUTNAME,
+    IORFILE,
+    TESTDRIVER,
+    STARTCONDITION,
+    TIME,
+    STOPCONDITION,
+    VALUE,
+    UNKNOWN_ELEMENT
+  };
+
+  virtual ~VisitableSyntax (void)
+  {}
+
+  virtual int visit (SyntaxVisitor* v, void* arg) = 0;
+
+  virtual element getSyntaxType (void)
+  {
+    return UNKNOWN_ELEMENT;
+  }
+};
+
+class StringSyntax: public VisitableSyntax
+{
+public:
+
+  virtual ~StringSyntax (void)
+  {}
+
+  // Value
+  ACE_CString str;
+};
+
+class IntegerSyntax: public VisitableSyntax
+{
+public:
+
+  virtual ~IntegerSyntax (void)
+  {}
+
+  // Value
+  int val;
+};
+
+class Driver: public VisitableSyntax
+{
+public:
+
+  virtual ~Driver (void)
+  {}
+
+};
+
+// Specific parse types
+
+class ECConfiguration : public VisitableSyntax
+{
+public:
+
+  virtual ~ECConfiguration (void)
+  {}
+
+  virtual element getSyntaxType (void)
+  {
+    return ECCONFIGURATION;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseECConfiguration (this,arg);
+  }
+
+  // Children
+  std::vector<Event*>              events;
+  std::vector<Timeout*>            timeouts;
+  std::vector<LocalEventChannel*>  localECs;
+  std::vector<RemoteEventChannel*> remoteECs;
+  Driver                           *driver;
+};
+
+class Event : public VisitableSyntax
+{
+public:
+
+  virtual ~Event (void)
+  {}
+
+  virtual element getSyntaxType (void)
+  {
+    return EVENT;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseEvent (this,arg);
+  }
+
+  // Children
+  Period           *period;
+  Phase            *phase;
+  Criticality      *criticality;
+  Importance       *importance;
+  WorstExecution   *worstexecution;
+  TypicalExecution *typicalexecution;
+
+  // Attributes
+  ACE_CString name;
+};
+
+class Criticality : public VisitableSyntax
+{
+public:
+
+  virtual ~Criticality (void)
+  {}
+
+  virtual element getSyntaxType (void)
+  {
+    return CRITICALITY;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseCriticality (this,arg);
+  }
+
+  // Attributes
+  RtecScheduler::Criticality_t value;
+};
+
+class Importance : public VisitableSyntax
+{
+public:
+
+  virtual ~Importance (void)
+  {}
+
+  virtual element getSyntaxType (void)
+  {
+    return IMPORTANCE;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseImportance (this,arg);
+  }
+
+  // Attributes
+  RtecScheduler::Importance_t value;
+};
+
+class Timeout : public VisitableSyntax
+{
+public:
+
+  virtual ~Timeout (void)
+  {}
+
+  virtual element getSyntaxType (void)
+  {
+    return TIMEOUT;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseTimeout (this,arg);
+  }
+
+  // Children
+  Period *period;
+  Phase  *phase;
+
+  // Attributes
+  ACE_CString name;
+};
+
+class LocalEventChannel : public VisitableSyntax
+{
+public:
+
+  virtual ~LocalEventChannel (void)
+  {}
+
+  virtual element getSyntaxType (void)
+  {
+    return LOCALEVENTCHANNEL;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseLocalEventChannel (this,arg);
+  }
+
+  // Children
+  SchedulingStrategy *schedulingstrategy;
+  std::vector<Consumer*> consumers;
+  std::vector<Supplier*> suppliers;
+
+  // Attributes
+  ACE_CString name;
+};
+
+class RemoteEventChannel : public VisitableSyntax
+{
+public:
+
+  virtual ~RemoteEventChannel (void)
+  {}
+
+  virtual element getSyntaxType (void)
+  {
+    return REMOTEEVENTCHANNEL;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseRemoteEventChannel (this,arg);
+  }
+
+  // Children
+  IORFile                *iorfile;
+  std::vector<Consumer*> consumers;
+  std::vector<Supplier*> suppliers;
+
+  // Attributes
+  ACE_CString name;
+};
+
+class SchedulingStrategy : public VisitableSyntax
+{
+public:
+
+  virtual ~SchedulingStrategy (void)
+  {}
+
+  virtual element getSyntaxType (void)
+  {
+    return SCHEDULINGSTRATEGY;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseSchedulingStrategy (this,arg);
+  }
+
+  // Attributes
+  enum { EDF,
+         MUF,
+         RMS } type;
+  bool enableRG;;
+};
+
+class Consumer : public VisitableSyntax
+{
+public:
+
+  virtual ~Consumer (void)
+  {}
+
+  virtual element getSyntaxType (void)
+  {
+    return CONSUMER;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseConsumer (this,arg);
+  }
+
+  // Children
+  Subscriptions *subscriptions;
+  Dependants *dependants;
+
+  // Attributes
+  ACE_CString name;
+};
+
+class Subscriptions : public VisitableSyntax
+{
+public:
+
+  virtual ~Subscriptions (void)
+  {}
+
+  virtual element getSyntaxType (void)
+  {
+    return SUBSCRIPTIONS;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseSubscriptions (this,arg);
+  }
+
+  // Children
+  std::vector<EventName*> eventnames;
+};
+
+class Dependants : public VisitableSyntax
+{
+public:
+
+  virtual ~Dependants (void)
+  {}
+
+  virtual element getSyntaxType (void)
+  {
+    return DEPENDANTS;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseDependants (this,arg);
+  }
+
+  // Children
+  std::vector<SupplierName*> suppliernames;
+};
+
+class Supplier : public VisitableSyntax
+{
+public:
+
+  virtual ~Supplier (void)
+  {}
+
+  virtual element getSyntaxType (void)
+  {
+    return SUPPLIER;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseSupplier (this,arg);
+  }
+
+  // Children
+  Publications *publications;
+  Triggers *triggers;
+
+  // Attributes
+  ACE_CString name;
+};
+
+class Publications : public VisitableSyntax
+{
+public:
+
+  virtual ~Publications (void)
+  {}
+
+  virtual element getSyntaxType (void)
+  {
+    return PUBLICATIONS;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parsePublications (this,arg);
+  }
+
+  // Children
+  std::vector<EventName*> eventnames;
+};
+
+class Triggers : public VisitableSyntax
+{
+public:
+
+  virtual ~Triggers (void)
+  {}
+
+  virtual element getSyntaxType (void)
+  {
+    return TRIGGERS;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseTriggers (this,arg);
+  }
+
+  // Children
+  std::vector<EventName*> eventnames;
+  std::vector<TimeoutName*> timeoutnames;
+};
+
+class TestDriver : public Driver
+{
+public:
+
+  virtual ~TestDriver (void)
+  {}
+
+  virtual element getSyntaxType (void)
+  {
+    return TESTDRIVER;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseTestDriver (this,arg);
+  }
+
+  // Children
+  StartCondition *startcondition;
+  StopCondition *stopcondition;
+};
+
+class StartCondition : public VisitableSyntax
+{
+public:
+
+  virtual ~StartCondition (void)
+  {}
+
+  virtual element getSyntaxType (void)
+  {
+    return STARTCONDITION;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseStartCondition (this,arg);
+  }
+
+  // Children
+  Time *time;
+
+  // Attributes
+  enum { GLOBALTIME,
+         DELAYAFTERSTART,
+         DELAYAFTERCONNECT } type;
+  bool master;
+};
+
+class StopCondition : public VisitableSyntax
+{
+public:
+
+  virtual ~StopCondition (void)
+  {}
+
+  virtual element getSyntaxType (void)
+  {
+    return STOPCONDITION;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseStopCondition (this,arg);
+  }
+
+  // Children
+  Value *value;
+
+  // Attributes
+  enum { DURATION,
+         EVENTNUMBER } type;
+};
+
+// String value elements
+
+class EventName : public StringSyntax
+{
+public:
+
+  virtual element getSyntaxType (void)
+  {
+    return EVENTNAME;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseEventName (this,arg);
+  }
+
+};
+
+class SupplierName : public StringSyntax
+{
+public:
+
+  virtual element getSyntaxType (void)
+  {
+    return SUPPLIERNAME;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseSupplierName (this,arg);
+  }
+
+};
+
+class TimeoutName : public StringSyntax
+{
+public:
+
+  virtual element getSyntaxType (void)
+  {
+    return TIMEOUTNAME;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseTimeoutName (this,arg);
+  }
+
+};
+
+class IORFile : public StringSyntax
+{
+public:
+
+  virtual element getSyntaxType (void)
+  {
+    return IORFILE;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseIORFile (this,arg);
+  }
+
+};
+
+// Integer value elements
+
+class WorstExecution : public IntegerSyntax
+{
+public:
+
+  virtual element getSyntaxType (void)
+  {
+    return WORSTEXECUTION;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseWorstExecution (this,arg);
+  }
+
+};
+
+class TypicalExecution : public IntegerSyntax
+{
+public:
+
+  virtual element getSyntaxType (void)
+  {
+    return TYPICALEXECUTION;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseTypicalExecution (this,arg);
+  }
+
+};
+
+class Period : public IntegerSyntax
+{
+public:
+
+  virtual element getSyntaxType (void)
+  {
+    return PERIOD;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parsePeriod (this,arg);
+  }
+
+};
+
+class Phase : public IntegerSyntax
+{
+public:
+
+  virtual element getSyntaxType (void)
+  {
+    return PHASE;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parsePhase (this,arg);
+  }
+
+};
+
+class Time : public IntegerSyntax
+{
+public:
+
+  virtual element getSyntaxType (void)
+  {
+    return TIME;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseTime (this,arg);
+  }
+
+};
+
+class Value : public IntegerSyntax
+{
+public:
+
+  virtual element getSyntaxType (void)
+  {
+    return VALUE;
+  }
+
+  virtual int visit(SyntaxVisitor* v, void* arg)
+  {
+    return v->parseValue (this,arg);
+  }
+
+};
+
+const int MAXTYPESTRINGLEN = 32;
+
+//Copies as much of the type name to the buffer as fits; buf will null-term.
+void visitableTypeToString (VisitableSyntax::element type, char *buf, int buflen);
+
+#endif //SYNTAXTREE_H
