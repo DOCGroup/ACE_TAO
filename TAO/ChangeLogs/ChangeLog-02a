@@ -1,3 +1,47 @@
+Tue Mar  6 15:40:42 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * examples/OBV/Typed_Events/Event_Types_impl.cpp:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
+        * orbsvcs/Event_Service/Event_Service.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/bin/RtEC_Based_CosEC.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/CosEvent_Utilities.cpp:
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/ProxyPushConsumer_i.cpp:
+        * orbsvcs/examples/RtEC/Schedule/Service.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp:
+        * orbsvcs/orbsvcs/Event/EC_And_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Masked_Type_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Type_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/RT_Task.cpp:
+        * orbsvcs/tests/EC_Basic/EC_Basic.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+        * orbsvcs/tests/Event/Basic/Observer.cpp:
+        * orbsvcs/tests/Event/Basic/Random.cpp:
+        * orbsvcs/tests/Event/Basic/Reconnect.cpp:
+        * orbsvcs/tests/Event/Performance/Latency_Server.cpp:
+        * orbsvcs/tests/Event/lib/Consumer.cpp:
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+        * orbsvcs/tests/Event/lib/Supplier.cpp:
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+        * performance-tests/Callback/Server_i.cpp:
+        * performance-tests/Callback/server.cpp:
+        * tests/LongWrites/client.cpp:
+        * tests/LongWrites/server.cpp:
+        * tests/Object_Loader/Test_i.cpp:
+        * tests/Timeout/client.cpp:
+          More ACE_TRY_ENV/ACE_CHECK fixes to make the Fuzz script happy.
+          Lucky for us, the Event Service changes are more a matter of
+          style than correctness.
+
 Tue Mar  6 17:35:00 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/corbafwd.h:
@@ -9,8 +53,8 @@ Tue Mar  6 17:35:00 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue Mar  6 16:11:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Handler.cpp (read_messages): Added a new method
-	  read_messages () that would avoid code duplication. 
+        * tao/GIOP_Message_Handler.cpp (read_messages): Added a new method
+          read_messages () that would avoid code duplication.
 
 Tue Mar  6 13:44:38 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -42,9 +86,9 @@ Tue Mar  6 13:44:38 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Tue Mar  6 15:54:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Handler.h: 
-	* tao/GIOP_Message_Handler.cpp:
-	* tao/GIOP_Message_Base.cpp: Did some cosmetic changes to the code.
+        * tao/GIOP_Message_Handler.h:
+        * tao/GIOP_Message_Handler.cpp:
+        * tao/GIOP_Message_Base.cpp: Did some cosmetic changes to the code.
 
 Tue Mar  6 13:06:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
@@ -53,7 +97,7 @@ Tue Mar  6 13:06:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
         * tests/AMI_Timeouts/timeout_client.cpp:
         * tests/AMI_Timeouts/timeout_i.cpp:
 
-          Cleaned up the code and pretty-printed the output of the 
+          Cleaned up the code and pretty-printed the output of the
           debug messages.
 
 Tue Mar  6 11:51:18 2001  Carlos O'Ryan  <coryan@uci.edu>

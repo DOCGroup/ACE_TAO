@@ -85,6 +85,7 @@ TAO_EC_Timeout_Filter::filter (const RtecEventComm::EventSet &event,
       && this->parent () != 0)
     {
       this->parent ()->push (event, qos_info, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
       return 1;
     }
   return 0;
@@ -99,6 +100,7 @@ TAO_EC_Timeout_Filter::filter_nocopy (RtecEventComm::EventSet &event,
       && this->parent () != 0)
     {
       this->parent ()->push_nocopy (event, qos_info, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
       return 1;
     }
   return 0;

@@ -68,6 +68,7 @@ EC_Supplier::send_event (const RtecEventComm::EventSet& event,
   ACE_hrtime_t start = ACE_OS::gethrtime ();
 
   this->consumer_proxy_->push (event, ACE_TRY_ENV);
+  ACE_CHECK;
 
   ACE_hrtime_t end = ACE_OS::gethrtime ();
   this->throughput_.sample (end - this->throughput_start_,
@@ -175,6 +176,7 @@ EC_Supplier::disconnect_push_supplier (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->driver_->supplier_disconnect (this->cookie_, ACE_TRY_ENV);
+  ACE_CHECK;
   this->consumer_proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 }

@@ -105,7 +105,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
       *os << " (int collocated)" << be_nl
           << "{" << be_idt_nl
-          << "this->" << node->flat_name () 
+          << "this->" << node->flat_name ()
           << "_setup_collocation (collocated);" << be_uidt_nl;
     }
   else
@@ -125,7 +125,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
       // Collocation setup method.
       *os << "void" << be_nl
-          << node->name () << "::" << node->flat_name () 
+          << node->name () << "::" << node->flat_name ()
           << "_setup_collocation (int collocated)" << be_nl
           << "{" << be_idt_nl
           << "if (collocated)" << be_idt_nl
@@ -152,7 +152,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
               be_interface *inherited =
                 be_interface::narrow_from_decl (node->inherits ()[i]);
 
-              *os << "this->" << inherited->flat_name () 
+              *os << "this->" << inherited->flat_name ()
                   << "_setup_collocation" << " (collocated);";
 
               if (i == n_parents - 1)
@@ -378,7 +378,9 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << node->full_base_proxy_impl_name () << " &"
       << node->full_name () << "::_proxy_impl (CORBA::Environment &ACE_TRY_ENV)" << be_nl
       << "{" << be_idt << be_nl
-      << "return this->the" << node->base_proxy_broker_name () << "_->select_proxy (this, ACE_TRY_ENV);"
+      << "return this->the"
+      << node->base_proxy_broker_name ()
+      << "_->select_proxy (this, ACE_TRY_ENV);"
       << be_uidt_nl
       << "}" << be_nl << be_nl;
   */

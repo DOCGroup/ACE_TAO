@@ -835,10 +835,11 @@ ECM_Consumer::disconnect (CORBA::Environment& ACE_TRY_ENV)
       || CORBA::is_nil (this->consumer_admin_.in ()))
     return;
 
-  this->supplier_proxy_->disconnect_push_supplier (ACE_TRY_ENV);
+  
+  RtecEventChannelAdmin::ProxyPushSupplier_var tmp =
+    this->supplier_proxy_._retn ();
+  tmp->disconnect_push_supplier (ACE_TRY_ENV);
   ACE_CHECK;
-  this->supplier_proxy_ =
-    RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 }
 
 void
@@ -956,6 +957,7 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
   if (this->event_count_ < 0)
     {
       this->driver_->federation_has_shutdown (this, ACE_TRY_ENV);
+      ACE_CHECK;
       return;
     }
   int i = this->event_count_ % this->federation_->supplier_types ();
@@ -989,10 +991,8 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
 void
 ECM_Local_Federation::consumer_push (ACE_hrtime_t,
                                      const RtecEventComm::EventSet &event,
-                                     CORBA::Environment &ACE_TRY_ENV)
+                                     CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
   if (event.length () == 0)
     {
       return;

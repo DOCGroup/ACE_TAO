@@ -121,14 +121,15 @@ ACE_RT_Task::svc (void)
          thread_priority,
          subpriority,
          preemption_priority, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 #else
       ACE_Scheduler_Factory::server ()->priority
         (this->rt_info_,
          thread_priority,
          subpriority,
          preemption_priority, ACE_TRY_ENV);
-#endif
       ACE_TRY_CHECK;
+#endif
       if (ACE_OS::thr_setprio (thread_priority) == -1)
         {
 #if defined (ACE_HAS_STHREADS)
@@ -262,12 +263,13 @@ ACE_RT_Task::open_task (const char* name)
 #if 1
       rt_info_ =
         this->scheduler_->create (tempname, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 #else
       rt_info_ =
         ACE_Scheduler_Factory::server()->create (tempname,
                                                  ACE_TRY_ENV);
-#endif
       ACE_TRY_CHECK;
+#endif
       // @@ TODO: We do no initialization of the new rt_info, the
       // caller does, this is (IMnsHO) very error prone.
     }
@@ -324,14 +326,15 @@ ACE_RT_Task::synch_threads (size_t threads)
                thread_priority,
                subpriority,
                preemption_priority, ACE_TRY_ENV);
+            ACE_TRY_CHECK;
 #else
             ACE_Scheduler_Factory::server ()->priority
               (rt_info_,
                thread_priority,
                subpriority,
                preemption_priority, ACE_TRY_ENV);
-#endif
             ACE_TRY_CHECK;
+#endif
           }
 
           ACE_DEBUG ((LM_DEBUG, "EC (%t) spawning %d threads at os thread"

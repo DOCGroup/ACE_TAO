@@ -91,7 +91,9 @@ void
 EC_Reconnect::execute_test (CORBA::Environment& ACE_TRY_ENV)
 {
   this->execute_consumer_test (ACE_TRY_ENV);
+  ACE_CHECK;
   this->execute_supplier_test (ACE_TRY_ENV);
+  ACE_CHECK;
 
   ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
   this->consumer_reconnect_.dump_results ("Reconnect/consumer", gsf);
