@@ -52,43 +52,43 @@ do_sysconf (void)
 #if defined (_SC_LISTIO_AIO_MAX)
   ACE_ERROR ((LM_ERROR,
               "Runtime value of LISTIO_AIO_MAX is %d, errno = %d\n",
-              sysconf(_SC_LISTIO_AIO_MAX),
+              ACE_OS::sysconf(_SC_LISTIO_AIO_MAX),
               errno));
 #else
   ACE_ERROR ((LM_ERROR,
               "Runtime value of AIO_LISTIO_MAX is %d, errno = %d\n",
-              sysconf(_SC_AIO_LISTIO_MAX),
+              ACE_OS::sysconf(_SC_AIO_LISTIO_MAX),
               errno));
 #endif  
   
   errno = 0;
   ACE_ERROR ((LM_ERROR,
               "Runtime value of AIO_MAX is %d, errno = %d\n",
-              sysconf (_SC_AIO_MAX),
+              ACE_OS::sysconf (_SC_AIO_MAX),
               errno));
 
   errno = 0;
   ACE_ERROR ((LM_ERROR,
               "Runtime value of _POSIX_ASYNCHRONOUS_IO is %d, errno = %d\n",
-              sysconf (_SC_ASYNCHRONOUS_IO),
+              ACE_OS::sysconf (_SC_ASYNCHRONOUS_IO),
               errno));
 
   errno = 0;
   ACE_ERROR ((LM_ERROR,
               "Runtime value of _POSIX_REALTIME_SIGNALS is %d, errno = %d\n",
-              sysconf (_SC_REALTIME_SIGNALS),
+              ACE_OS::sysconf (_SC_REALTIME_SIGNALS),
               errno));
 
   errno = 0;
   ACE_ERROR ((LM_ERROR,
               "Runtime value of RTSIG_MAX %d, Errno = %d\n",
-              sysconf (_SC_RTSIG_MAX), 
+              ACE_OS::sysconf (_SC_RTSIG_MAX), 
               errno));
   
   errno = 0;
   ACE_ERROR ((LM_ERROR,
               "Runtime value of SIGQUEUE_MAX %d, Errno = %d\n",
-              sysconf (_SC_SIGQUEUE_MAX),
+              ACE_OS::sysconf (_SC_SIGQUEUE_MAX),
               errno)); 
   return 0;
 }
