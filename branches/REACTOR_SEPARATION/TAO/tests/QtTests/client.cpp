@@ -5,8 +5,6 @@
 
 ACE_RCSID(QtTests, client, "$Id$")
 
-#if !defined (ACE_HAS_QT)
-
 int
 main (int, char *[])
 {
@@ -167,4 +165,3 @@ Client::shutdown_call (void)
   this->server_->shutdown ();
 }
 
-#endif /* ACE_HAS_QT*/

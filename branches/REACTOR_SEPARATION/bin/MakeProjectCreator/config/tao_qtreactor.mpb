@@ -1,7 +1,6 @@
 // -*- MPC -*-
 
 project : taolib, ace_qtreactor {
-  requires += qt_reactor
   after    += TAO_QtReactor
   libs     += TAO_QtReactor
 }

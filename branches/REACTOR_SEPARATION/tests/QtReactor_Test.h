@@ -3,7 +3,6 @@
 #ifndef QTREACTOR_TEST_H
 #define QTREACTOR_TEST_H
 
-#ifdef ACE_HAS_QT
 #include <qapplication.h>
 #include <qtimer.h>
 
@@ -20,7 +19,5 @@ public slots:
 private:
 	QTimer finishTimer_; //!< timer to finish the test
 };
-
-#endif /*ACE_HAS_QT*/
 
 #endif /*QTREACTOR_TEST_H*/

@@ -2,8 +2,6 @@
 
 #include "test_i.h"
 
-#if defined(ACE_HAS_QT)
-
 #if !defined(__ACE_INLINE__)
 #include "test_i.i"
 #endif /* __ACE_INLINE__ */
@@ -35,4 +33,4 @@ LCD_Display_imp::send_val (CORBA::Long val
               "The value from server is <%d> \n", val));
   emit set_value (val);
 }
-#endif /* ACE_HAS_QT */
+

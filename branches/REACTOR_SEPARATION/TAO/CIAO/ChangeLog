@@ -1,29 +1,32 @@
-Sat Dec  4 15:49:38 2004  Marek Brudka  <mbrudka@aster.pl>
+Mon Dec  6 00:39:19 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* examples/OEP/Display/NavDisplayGUI_exec/README (Module):
+	Remove reference to ACE_HAS_QT.
 
 	* examples/OEP/Display/NavDisplayGUI_exec/NavDisplayGUI.mpc (Module):
 	Removed deprecated qt_moc base project.
 
 Tue Nov 30 21:41:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* CIDLC/ServantSourceGenerator.cpp (namespace): 
+	* CIDLC/ServantSourceGenerator.cpp (namespace):
 
 	  More use of ACE_NEW_THROW_EX instead of ACE_NEW_RETURN.
 
 Tue Nov 30 21:03:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* CIDLC/ServantSourceGenerator.cpp (namespace): 
+	* CIDLC/ServantSourceGenerator.cpp (namespace):
 
 	  Another use of ACE_NEW_THROW_EX instead of ACE_NEW_RETURN.
 
 Tue Nov 30 20:39:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* CIDLC/ServantSourceGenerator.cpp (namespace): 
+	* CIDLC/ServantSourceGenerator.cpp (namespace):
 
 	  Used ACE_NEW_THROW_EX instead of ACE_NEW_RETURN.
 
 Tue Nov 30 20:22:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* CIDLC/ServantSourceGenerator.cpp (namespace): 
+	* CIDLC/ServantSourceGenerator.cpp (namespace):
 
 	  Fixes for VC6.
 

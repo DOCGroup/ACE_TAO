@@ -5,8 +5,6 @@
 
 ACE_RCSID (QtTests, server, "$Id$")
 
-#if !defined (ACE_HAS_QT)
-
 int
 main (int, char *[])
 {
@@ -152,5 +150,3 @@ main (int argc, char *argv[])
   ACE_ENDTRY;
   return 0;
 }
-
-#endif /* ACE_HAS_QT */
