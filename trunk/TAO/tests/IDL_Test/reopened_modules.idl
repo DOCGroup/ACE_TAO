@@ -19,12 +19,8 @@
 //
 // ============================================================================
 
-#include "including.idl"
-#include "included.idl"
-
 // These examples test the lookup abilities of the
-// TAO IDL compiler, with reopened and/or #included
-// modules.
+// TAO IDL compiler, with reopened modules.
 
 module A 
 {
@@ -122,10 +118,3 @@ module com
     };
 };
 
-// Uses members of a reopened module #included from
-// included.idl and including.idl
-interface gather
-{
-  void op (in Aok::Seq1Type inarg,
-           inout Aok::pug inoutarg);
-};
