@@ -250,6 +250,20 @@ Wed Oct 25 20:38:33 2000  Darrell Brunsch <brunsch@uci.edu>
           we rely on the fact that OpenSSL should be in
           DevStudio's global include and library directories.
 
+Wed Oct 25 13:20:24 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Purgable_Map_Manager_Test: Removed this deprecated test.
+	  The following files were effected:
+
+	  - Makefile.am
+	  - icc.bat
+	  - t.icc
+
+	  These files were removed:
+
+	  - Purgable_Map_Manager_Test.cpp
+	  - Purgable_Map_Manager_Test.icc	
+
 Wed Oct 25 11:24:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
         * ace/adapter/README:  (removed)
