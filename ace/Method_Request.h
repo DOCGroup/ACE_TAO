@@ -40,7 +40,7 @@ class ACE_Export ACE_Method_Request
 public:
   // = Initialization and termination methods.
   /// Constructor.
-  ACE_Method_Request (u_long priority = 0);
+  ACE_Method_Request (unsigned long priority = 0);
 
   /// Destructor.
   virtual ~ACE_Method_Request (void);
