@@ -181,6 +181,8 @@ TAO_Object_Adapter::~TAO_Object_Adapter (void)
   delete this->hint_strategy_;
   delete this->persistent_poa_name_map_;
   delete this->transient_poa_map_;
+
+  delete this->lock_;
 }
 
 /* static */
