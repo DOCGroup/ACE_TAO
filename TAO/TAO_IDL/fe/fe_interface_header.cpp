@@ -64,13 +64,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-// FE_InterfaceHeader instances are used to store information about an
-// interface header as the interface is being parsed and before the
-// AST_Interface node used to represent this interface is created.
-// Same for FE_obv_header.
+// These utility classes are used to store information about a
+// node type as the node type is being parsed and before the
+// node itself is created.
 
 #include "fe_interface_header.h"
 #include "ast_valuetype.h"
+#include "ast_component.h"
+#include "ast_home.h"
 #include "ast_module.h"
 #include "utl_namelist.h"
 #include "utl_err.h"
@@ -402,10 +403,8 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
 
       if (inh_err)
         {
-          idl_global->err ()->inheritance_error (this->pd_interface_name,
-                                                 d);
-          inh_err = 0;
-          continue;
+          idl_global->err ()->interface_expected (d);
+          break;
         }
 
       // Forward declared interface?
@@ -413,7 +412,7 @@ FE_InterfaceHeader::compile_inheritance (UTL_NameList *ifaces,
         {
           idl_global->err ()->inheritance_fwd_error (this->pd_interface_name,
                                                      i);
-          continue;
+          break;
         }
 
       if (!for_valuetype && this->pd_is_abstract && !i->is_abstract ())
@@ -507,10 +506,12 @@ FE_InterfaceHeader::n_inherits_flat (void) const
   return this->pd_n_inherits_flat;
 }
 
-FE_obv_header::FE_obv_header (UTL_ScopedName *n,
-                              UTL_NameList *inherits,
-                              UTL_NameList *supports,
-                              idl_bool truncatable)
+//************************************************************************
+
+FE_OBVHeader::FE_OBVHeader (UTL_ScopedName *n,
+                            UTL_NameList *inherits,
+                            UTL_NameList *supports,
+                            idl_bool truncatable)
   : FE_InterfaceHeader (n,
                         inherits,
                         I_FALSE,
@@ -554,42 +555,42 @@ FE_obv_header::FE_obv_header (UTL_ScopedName *n,
     }
 }
 
-FE_obv_header::~FE_obv_header (void)
+FE_OBVHeader::~FE_OBVHeader (void)
 {
 }
 
 AST_Interface **
-FE_obv_header::supports (void) const
+FE_OBVHeader::supports (void) const
 {
   return this->pd_supports;
 }
 
 long
-FE_obv_header::n_supports (void) const
+FE_OBVHeader::n_supports (void) const
 {
   return this->pd_n_supports;
 }
 
 AST_ValueType *
-FE_obv_header::inherits_concrete (void) const
+FE_OBVHeader::inherits_concrete (void) const
 {
   return this->pd_inherits_concrete;
 }
 
 AST_Interface *
-FE_obv_header::supports_concrete (void) const
+FE_OBVHeader::supports_concrete (void) const
 {
   return this->pd_supports_concrete;
 }
 
 idl_bool
-FE_obv_header::truncatable (void) const
+FE_OBVHeader::truncatable (void) const
 {
   return this->pd_truncatable;
 }
 
 void
-FE_obv_header::compile_supports (UTL_NameList *supports)
+FE_OBVHeader::compile_supports (UTL_NameList *supports)
 {
   if (supports == 0)
     {
@@ -696,7 +697,7 @@ FE_obv_header::compile_supports (UTL_NameList *supports)
 }
 
 idl_bool 
-FE_obv_header::check_concrete_supported_inheritance (AST_Interface *d)
+FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
 {
   AST_ValueType *vt = 0;
   AST_Interface *concrete = 0;
@@ -728,3 +729,228 @@ FE_obv_header::check_concrete_supported_inheritance (AST_Interface *d)
 
   return 0;
 }
+
+//************************************************************************
+
+FE_ComponentHeader::FE_ComponentHeader (UTL_ScopedName *n, 
+                                        UTL_ScopedName *base_component, 
+                                        UTL_NameList *supports,
+                                        idl_bool compile_now)
+  : FE_InterfaceHeader (n,
+                        supports,
+                        I_FALSE,
+                        I_FALSE,
+                        I_FALSE),
+    pd_base_component (0)
+{
+  // If there is a base component, look up the decl and assign our member.
+  // We also inherit its supported interfaces.
+  if (base_component != 0)
+    {
+      UTL_Scope *s = idl_global->scopes ().top_non_null ();
+      AST_Decl *d = s->lookup_by_name (base_component,
+                                       I_TRUE);
+
+      if (d == 0)
+        {
+          idl_global->err ()->lookup_error (base_component);
+        }
+      else
+        {
+          this->pd_base_component = AST_Component::narrow_from_decl (d);
+
+          if (this->pd_base_component == 0)
+            {
+              idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_USE,
+                                          d);
+            }
+          else if (!this->pd_base_component->is_defined ())
+            {
+              idl_global->err ()->inheritance_fwd_error (
+                                      this->name (),
+                                      this->pd_base_component
+                                    );
+            }
+        }
+    }
+
+  if (compile_now)
+    {
+      this->compile_inheritance (supports,
+                                 I_FALSE);
+    }
+}
+
+void
+FE_ComponentHeader::compile_inheritance (UTL_NameList *supports,
+                                         idl_bool for_valuetype)
+{
+  if (this->pd_base_component != 0)
+    {
+      UTL_NameList *base_component_name = 0;
+      ACE_NEW (base_component_name,
+               UTL_NameList (this->pd_base_component->name (),
+                             supports));
+      supports = base_component_name;
+
+      this->FE_InterfaceHeader::compile_inheritance (supports,
+                                                     for_valuetype);
+    }
+}
+
+FE_ComponentHeader::~FE_ComponentHeader (void)
+{
+}
+
+AST_Component *
+FE_ComponentHeader::base_component (void) const
+{
+  return this->pd_base_component;
+}
+
+AST_Interface **
+FE_ComponentHeader::supports (void) const
+{
+  return this->pd_inherits;
+}
+
+long 
+FE_ComponentHeader::n_supports (void) const
+{
+  return this->pd_n_inherits;
+}
+
+AST_Interface **
+FE_ComponentHeader::supports_flat (void) const
+{
+  return this->pd_inherits_flat;
+}
+
+long
+FE_ComponentHeader::n_supports_flat (void) const
+{
+  return this->pd_n_inherits_flat;
+}
+
+//************************************************************************
+
+FE_HomeHeader::FE_HomeHeader (UTL_ScopedName *n,
+                              UTL_ScopedName *base_home,
+                              UTL_NameList *supports,
+                              UTL_ScopedName *managed_component,
+                              UTL_ScopedName *primary_key)
+  : FE_ComponentHeader (n,
+                        managed_component,
+                        supports,
+                        I_FALSE),
+    pd_base_home (0),
+    pd_primary_key (0)
+{
+  UTL_Scope *s = idl_global->scopes ().top_non_null ();
+  AST_Decl *d = 0;
+
+  if (base_home != 0)
+    {
+      d = s->lookup_by_name (base_home,
+                             I_TRUE);
+
+      if (d == 0)
+        {
+          idl_global->err ()->lookup_error (base_home);
+        }
+      else
+        {
+          this->pd_base_home = AST_Home::narrow_from_decl (d);
+
+          if (this->pd_base_home == 0)
+            {
+              idl_global->err ()->inheritance_error (this->name (),
+                                                     d);
+            }
+        }
+    }
+
+  if (managed_component != 0)
+    {
+      d = s->lookup_by_name (managed_component,
+                             I_TRUE);
+
+      if (d == 0)
+        {
+          idl_global->err ()->lookup_error (managed_component);
+        }
+      else
+        {
+          this->pd_base_component = AST_Component::narrow_from_decl (d);
+
+          if (this->pd_base_component == 0)
+            {
+              idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_USE,
+                                          d);
+            }
+        }
+    }
+
+  if (primary_key != 0)
+    {
+      d = s->lookup_by_name (primary_key,
+                             I_TRUE);
+
+      if (d == 0)
+        {
+          idl_global->err ()->lookup_error (primary_key);
+        }
+      else
+        {
+          this->pd_primary_key = AST_ValueType::narrow_from_decl (d);
+
+          if (this->pd_primary_key == 0)
+            {
+              idl_global->err ()->valuetype_expected (d);
+            }
+        }
+    }
+
+  this->compile_inheritance (supports,
+                             I_FALSE);
+}
+
+void
+FE_HomeHeader::compile_inheritance (UTL_NameList *supports,
+                                    idl_bool for_valuetype)
+{
+  if (this->pd_base_home != 0)
+    {
+      UTL_NameList *base_home_name = 0;
+      ACE_NEW (base_home_name,
+               UTL_NameList (this->pd_base_home->name (),
+                             supports));
+
+      supports = base_home_name;
+      this->FE_InterfaceHeader::compile_inheritance (supports,
+                                                     for_valuetype);
+    }
+}
+
+FE_HomeHeader::~FE_HomeHeader (void)
+{
+}
+
+AST_Home *
+FE_HomeHeader::base_home (void) const
+{
+  return this->pd_base_home;
+}
+
+AST_Component *
+FE_HomeHeader::managed_component (void) const
+{
+  return this->pd_base_component;
+}
+
+AST_ValueType *
+FE_HomeHeader::primary_key (void) const
+{
+  return this->pd_primary_key;
+}
+

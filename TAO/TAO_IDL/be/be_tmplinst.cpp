@@ -17,6 +17,10 @@ template class ACE_Node <be_interface *>;
 template class ACE_Unbounded_Queue <be_interface *>;
 template class ACE_Unbounded_Queue_Iterator <be_interface *>;
 
+template class ACE_Node <AST_Interface *>;
+template class ACE_Unbounded_Queue <AST_Interface *>;
+template class ACE_Unbounded_Queue_Iterator <AST_Interface *>;
+
 template class ACE_Node<be_visitor_typecode_defn::QNode*>;
 template class ACE_Unbounded_Queue<be_visitor_typecode_defn::QNode*>;
 template class ACE_Unbounded_Queue_Iterator<be_visitor_typecode_defn::QNode*>;
@@ -34,6 +38,10 @@ template class ACE_Unbounded_Queue_Iterator <be_interface_fwd *>;
 #pragma instantiate ACE_Node <be_interface *>
 #pragma instantiate ACE_Unbounded_Queue <be_interface *>
 #pragma instantiate ACE_Unbounded_Queue_Iterator <be_interface *>
+
+#pragma instantiate ACE_Node <AST_Interface *>
+#pragma instantiate ACE_Unbounded_Queue <AST_Interface *>
+#pragma instantiate ACE_Unbounded_Queue_Iterator <AST_Interface *>
 
 #pragma instantiate ACE_Node<be_visitor_typecode_defn::QNode*>
 #pragma instantiate ACE_Unbounded_Queue<be_visitor_typecode_defn::QNode*>

@@ -88,105 +88,106 @@ be_visitor_ami_pre_proc::visit_module (be_module *node)
 int
 be_visitor_ami_pre_proc::visit_interface (be_interface *node)
 {
-  if (!node->imported () && !node->is_local ())
+  if (node->imported () || node->is_local () || node->is_abstract ())
     {
-      AST_Module *module =
-        AST_Module::narrow_from_scope (node->defined_in ());
+      return 0;
+    }
 
-      if (!module)
-      {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_ami_pre_proc::"
-                             "visit_interface - "
-                             "module is null\n"),
-                            -1);
-        }
+  AST_Module *module =
+    AST_Module::narrow_from_scope (node->defined_in ());
 
-      be_valuetype *excep_holder = this->create_exception_holder (node);
+  if (!module)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_ami_pre_proc::"
+                         "visit_interface - "
+                         "module is null\n"),
+                        -1);
+    }
 
+  be_valuetype *excep_holder = this->create_exception_holder (node);
 
-      be_interface *reply_handler = this->create_reply_handler (node,
-                                                                excep_holder);
-      if (reply_handler)
-        {
-          reply_handler->set_defined_in (node->defined_in ());
+  be_interface *reply_handler = this->create_reply_handler (node,
+                                                            excep_holder);
+  if (reply_handler)
+    {
+      reply_handler->set_defined_in (node->defined_in ());
 
-          // Insert the ami handler after the node, the
-          // exception holder will be placed between these two later.
-          module->be_add_interface (reply_handler, node);
+      // Insert the ami handler after the node, the
+      // exception holder will be placed between these two later.
+      module->be_add_interface (reply_handler, node);
 
-          // Remember from whom we were cloned
-          reply_handler->original_interface (node);
-        }
-      else
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_ami_pre_proc::"
-                             "visit_interface - "
-                             "creating the reply handler failed\n"),
-                            -1);
-        }
+      // Remember from whom we were cloned
+      reply_handler->original_interface (node);
+    }
+  else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_ami_pre_proc::"
+                         "visit_interface - "
+                         "creating the reply handler failed\n"),
+                        -1);
+    }
 
-      // Set the proper strategy.
-      be_interface_ami_strategy *bias = 0;
-      ACE_NEW_RETURN (bias,
-                      be_interface_ami_strategy (node,
-                                                 reply_handler),
+  // Set the proper strategy.
+  be_interface_ami_strategy *bias = 0;
+  ACE_NEW_RETURN (bias,
+                  be_interface_ami_strategy (node,
+                                             reply_handler),
+                  -1);
+  be_interface_strategy *old_strategy = node->set_strategy (bias);
+
+  if (old_strategy)
+    {
+      delete old_strategy;
+      old_strategy = 0;
+    }
+
+  if (excep_holder)
+    {
+      excep_holder->set_defined_in (node->defined_in ());
+      // Insert the exception holder after the original node,
+      // this way we ensure that it is *before* the
+      // ami handler, which is the way we want to have it.
+      module->be_add_interface (excep_holder, node);
+      module->set_has_nested_valuetype ();
+      // Remember from whom we were cloned.
+      excep_holder->original_interface (node);
+
+      // Set the strategy.
+      be_interface_ami_exception_holder_strategy *biaehs = 0;
+      ACE_NEW_RETURN (biaehs,
+                      be_interface_ami_exception_holder_strategy (
+                          excep_holder
+                        ),
                       -1);
-      be_interface_strategy *old_strategy = node->set_strategy (bias);
+
+      be_interface_strategy *old_strategy =
+        excep_holder->set_strategy (biaehs);
 
       if (old_strategy)
         {
           delete old_strategy;
           old_strategy = 0;
         }
-
-      if (excep_holder)
-        {
-          excep_holder->set_defined_in (node->defined_in ());
-          // Insert the exception holder after the original node,
-          // this way we ensure that it is *before* the
-          // ami handler, which is the way we want to have it.
-          module->be_add_interface (excep_holder, node);
-          module->set_has_nested_valuetype ();
-          // Remember from whom we were cloned.
-          excep_holder->original_interface (node);
-
-          // Set the strategy.
-          be_interface_ami_exception_holder_strategy *biaehs = 0;
-          ACE_NEW_RETURN (biaehs,
-                          be_interface_ami_exception_holder_strategy (
-                              excep_holder
-                            ),
-                          -1);
-
-          be_interface_strategy *old_strategy =
-            excep_holder->set_strategy (biaehs);
-
-          if (old_strategy)
-            {
-              delete old_strategy;
-              old_strategy = 0;
-            }
-        }
-      else
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_ami_pre_proc::"
-                             "visit_interface - "
-                             "creating the exception holder failed\n"),
-                            -1);
-        }
+    }
+  else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_ami_pre_proc::"
+                         "visit_interface - "
+                         "creating the exception holder failed\n"),
+                        -1);
+    }
 
 
-      if (this->visit_scope (node) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_ami_pre_proc::"
-                             "visit_interface - "
-                             "visit scope failed\n"),
-                            -1);
-        }
+  if (this->visit_scope (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_ami_pre_proc::"
+                         "visit_interface - "
+                         "visit scope failed\n"),
+                        -1);
     }
 
   return 0;
@@ -220,7 +221,7 @@ be_visitor_ami_pre_proc::visit_operation (be_operation *node)
 
       // Set the proper strategy, and store the specialized
       // marshaling and arguments operations in it.
-      be_operation_ami_sendc_strategy * boass= 0;
+      be_operation_ami_sendc_strategy * boass = 0;
       ACE_NEW_RETURN (boass,
                       be_operation_ami_sendc_strategy (node,
                                                        sendc_marshaling,
@@ -839,7 +840,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
                       0);
 
       // Add the reply handler to the argument list
-      op->add_argument_to_scope (arg);
+      op->be_add_argument (arg);
     }
 
   // Iterate over the arguments and put all the in and inout
@@ -878,7 +879,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
                                            original_arg->name ()),
                               0);
 
-              op->add_argument_to_scope (arg);
+              op->be_add_argument (arg);
             }
         } // end of while loop
     } // end of if
@@ -975,7 +976,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
                       -1);
 
       // Add the reply handler to the argument list.
-      operation->add_argument_to_scope (arg);
+      operation->be_add_argument (arg);
     }
 
   // Iterate over the arguments and put all the in and inout
@@ -1012,7 +1013,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
                                            original_arg->name ()),
                               -1);
 
-              operation->add_argument_to_scope (arg);
+              operation->be_add_argument (arg);
             }
         } // end of while loop
     } // end of if
@@ -1127,7 +1128,7 @@ be_visitor_ami_pre_proc::create_excep_operation (be_operation *node,
                   -1);
 
   operation->set_name (op_name);
-  operation->add_argument_to_scope (arg);
+  operation->be_add_argument (arg);
 
   operation->set_defined_in (reply_handler);
 
@@ -1321,7 +1322,7 @@ be_visitor_ami_pre_proc::generate_set_operation (be_attribute *node)
 
   operation->set_name (set_name);
   operation->set_defined_in (node->defined_in ());
-  operation->add_argument_to_scope (arg);
+  operation->be_add_argument (arg);
 
   return operation;
 }

@@ -161,7 +161,11 @@ public:
       UTL_ScopedName *n,
       AST_Home *base_home,
       AST_Component *managed_component,
-      AST_ValueType *primary_key
+      AST_ValueType *primary_key,
+      AST_Interface **supports,
+      long n_supports,
+      AST_Interface **supports_flat,
+      long n_supports_flat
     );
 
   // Create a node representing an exception.

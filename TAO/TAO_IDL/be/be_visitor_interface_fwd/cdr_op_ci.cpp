@@ -57,6 +57,7 @@ be_visitor_interface_fwd_cdr_op_ci::visit_interface_fwd (
 
   // generate the CDR << and >> operator declarations
   os->indent ();
+
   *os << be_global->stub_export_macro () << " CORBA::Boolean operator<< ("
       << be_idt << be_idt_nl
       << "TAO_OutputCDR &," << be_nl

@@ -41,21 +41,6 @@ ACE_RCSID (be,
 
 // Default Constructor
 be_decl::be_decl (void)
-  : cli_hdr_gen_ (I_FALSE),
-    cli_stub_gen_ (I_FALSE),
-    cli_inline_gen_ (I_FALSE),
-    srv_hdr_gen_ (I_FALSE),
-    impl_hdr_gen_ (I_FALSE),
-    srv_skel_gen_ (I_FALSE),
-    impl_skel_gen_ (I_FALSE),
-    srv_inline_gen_ (I_FALSE),
-    cli_hdr_any_op_gen_ (I_FALSE),
-    cli_stub_any_op_gen_ (I_FALSE),
-    cli_hdr_cdr_op_gen_ (I_FALSE),
-    cli_stub_cdr_op_gen_ (I_FALSE),
-    cli_inline_cdr_op_gen_ (I_FALSE),
-    cli_inline_cdr_decl_gen_ (I_FALSE),
-    flat_name_ (0)
 {
 }
 
@@ -63,21 +48,7 @@ be_decl::be_decl (void)
 be_decl::be_decl (AST_Decl::NodeType type,
                   UTL_ScopedName *n)
   : AST_Decl (type,
-              n),
-    cli_hdr_gen_ (I_FALSE),
-    cli_stub_gen_ (I_FALSE),
-    cli_inline_gen_ (I_FALSE),
-    srv_hdr_gen_ (I_FALSE),
-    impl_hdr_gen_ (I_FALSE),
-    srv_skel_gen_ (I_FALSE),
-    impl_skel_gen_ (I_FALSE),
-    srv_inline_gen_ (I_FALSE),
-    cli_hdr_any_op_gen_ (I_FALSE),
-    cli_stub_any_op_gen_ (I_FALSE),
-    cli_hdr_cdr_op_gen_ (I_FALSE),
-    cli_stub_cdr_op_gen_ (I_FALSE),
-    cli_inline_cdr_op_gen_ (I_FALSE),
-    flat_name_ (0)
+              n)
 {
 }
 
@@ -145,106 +116,6 @@ be_decl::compute_full_name  (const char *prefix,
   name = result_str.rep ();
 }
 
-
-const char*
-be_decl::flat_name (void)
-{
-  if (!this->flat_name_)
-    {
-      this->compute_flat_name ();
-    }
-
-  return this->flat_name_;
-}
-
-
-// Compute stringified flattened fully scoped name.
-void
-be_decl::compute_flat_name (void)
-{
-  if (this->flat_name_ != 0)
-    {
-      return;
-    }
-  else
-    {
-      long namelen = 0;
-      long first = I_TRUE;
-      long second = I_FALSE;
-      char *item_name = 0;
-
-      // In the first loop, compute the total length.
-      for (UTL_IdListActiveIterator i (this->name ());
-           !i.is_done ();
-           i.next ())
-        {
-          if (!first)
-            {
-              namelen += 1; // for "_"
-            }
-          else if (second)
-            {
-              first = second = I_FALSE;
-            }
-
-          // Print the identifier.
-          item_name = i.item ()->get_string ();
-          namelen += ACE_OS::strlen (item_name);
-
-          if (first)
-            {
-              if (ACE_OS::strcmp (item_name, "") != 0)
-                {
-                  // Does not start with a "".
-                  first = I_FALSE;
-                }
-              else
-                {
-                  second = I_TRUE;
-                }
-            }
-        }
-
-      ACE_NEW (this->flat_name_,
-               char[namelen + 1]);
-
-      this->flat_name_[0] = '\0';
-      first = I_TRUE;
-      second = I_FALSE;
-
-      for (UTL_IdListActiveIterator j (this->name ());
-           !j.is_done ();
-           j.next ())
-        {
-          if (!first)
-            {
-              ACE_OS::strcat (this->flat_name_, "_");
-            }
-          else if (second)
-            {
-              first = second = I_FALSE;
-            }
-
-          // Print the identifier.
-          item_name = j.item ()->get_string ();
-          ACE_OS::strcat (this->flat_name_, item_name);
-
-          if (first)
-            {
-              if (ACE_OS::strcmp (item_name, "") != 0)
-                {
-                  // Does not start with a "".
-                  first = I_FALSE;
-                }
-              else
-                {
-                  second = I_TRUE;
-                }
-            }
-        }
-    }
-}
-
 void
 be_decl::compute_flat_name  (const char *prefix,
                              const char *suffix,
@@ -310,30 +181,7 @@ be_decl::compute_flat_name  (const char *prefix,
 void
 be_decl::destroy (void)
 {
-  if (this->flat_name_ != 0)
-    {
-      delete [] this->flat_name_;
-      this->flat_name_ = 0;
-    }
-
   this->AST_Decl::destroy ();
-}
-
-idl_bool
-be_decl::is_nested (void)
-{
-  be_decl *d;
-
-  d = be_scope::narrow_from_scope (this->defined_in ())->decl ();
-
-  // If we have an outermost scope and if that scope is not that of the Root,
-  // then we are defined at some nesting level.
-  if (d != 0 && d->node_type () != AST_Decl::NT_root)
-    {
-      return I_TRUE;
-    }
-
-  return I_FALSE;
 }
 
 // Return the scope created by this node (if one exists, else NULL).
@@ -375,171 +223,6 @@ be_decl::scope (void)
      default:
         return (be_scope *)0;
    }
-}
-
-// Boolean methods to test if code was already generated.
-idl_bool
-be_decl::cli_hdr_gen (void)
-{
-  return this->cli_hdr_gen_;
-}
-
-idl_bool
-be_decl::cli_stub_gen (void)
-{
-  return this->cli_stub_gen_;
-}
-
-idl_bool
-be_decl::cli_hdr_any_op_gen (void)
-{
-  return this->cli_hdr_any_op_gen_;
-}
-
-idl_bool
-be_decl::cli_stub_any_op_gen (void)
-{
-  return this->cli_stub_any_op_gen_;
-}
-
-idl_bool
-be_decl::cli_hdr_cdr_op_gen (void)
-{
-  return this->cli_hdr_cdr_op_gen_;
-}
-
-idl_bool
-be_decl::cli_stub_cdr_op_gen (void)
-{
-  return this->cli_stub_cdr_op_gen_;
-}
-
-idl_bool
-be_decl::cli_inline_cdr_op_gen (void)
-{
-  return this->cli_inline_cdr_op_gen_;
-}
-
-idl_bool
-be_decl::cli_inline_cdr_decl_gen (void)
-{
-  return this->cli_inline_cdr_decl_gen_;
-}
-
-idl_bool
-be_decl::cli_inline_gen (void)
-{
-  return this->cli_inline_gen_;
-}
-
-idl_bool
-be_decl::srv_hdr_gen (void)
-{
-  return this->srv_hdr_gen_;
-}
-
-idl_bool
-be_decl::impl_hdr_gen (void)
-{
-  return this->impl_hdr_gen_;
-}
-
-idl_bool
-be_decl::srv_skel_gen (void)
-{
-  return this->srv_skel_gen_;
-}
-
-idl_bool
-be_decl::impl_skel_gen (void)
-{
-  return this->impl_skel_gen_;
-}
-
-idl_bool
-be_decl::srv_inline_gen (void)
-{
-  return this->srv_inline_gen_;
-}
-
-// Set the flag indicating that code generation is done.
-void
-be_decl::cli_hdr_gen (idl_bool val)
-{
-  this->cli_hdr_gen_ = val;
-}
-
-void
-be_decl::cli_stub_gen (idl_bool val)
-{
-  this->cli_stub_gen_ = val;
-}
-
-void
-be_decl::cli_hdr_any_op_gen (idl_bool val)
-{
-  this->cli_hdr_any_op_gen_ = val;
-}
-
-void
-be_decl::cli_stub_any_op_gen (idl_bool val)
-{
-  this->cli_stub_any_op_gen_ = val;
-}
-
-void
-be_decl::cli_hdr_cdr_op_gen (idl_bool val)
-{
-  this->cli_hdr_cdr_op_gen_ = val;
-}
-
-void
-be_decl::cli_stub_cdr_op_gen (idl_bool val)
-{
-  this->cli_stub_cdr_op_gen_ = val;
-}
-
-void
-be_decl::cli_inline_cdr_op_gen (idl_bool val)
-{
-  this->cli_inline_cdr_op_gen_ = val;
-}
-
-void
-be_decl::cli_inline_cdr_decl_gen (idl_bool val)
-{
-  this->cli_inline_cdr_decl_gen_ = val;
-}
-
-void
-be_decl::cli_inline_gen (idl_bool val)
-{
-  this->cli_inline_gen_ = val;
-}
-
-void
-be_decl::srv_hdr_gen (idl_bool val)
-{
-  this->srv_hdr_gen_ = val;
-}
-
-void
-be_decl::impl_hdr_gen (idl_bool val)
-{
-  this->impl_hdr_gen_ = val;
-}
-
-
-void
-be_decl::srv_skel_gen (idl_bool val)
-{
-  this->srv_skel_gen_ = val;
-}
-
-void
-be_decl::srv_inline_gen (idl_bool val)
-{
-  this->srv_inline_gen_ = val;
 }
 
 int

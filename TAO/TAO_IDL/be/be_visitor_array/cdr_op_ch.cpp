@@ -74,8 +74,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
   // Generate the CDR << and >> operator declarations.
   *os << be_global->stub_export_macro () << " CORBA::Boolean"
       << " operator<< (TAO_OutputCDR &, const ";
-  // @@ TODO: this should be done in the node, it is absurd to repeat
-  // this code all over the visitors!!!!
+
   if (!this->ctx_->tdef ())
     {
       be_scope* scope = be_scope::narrow_from_scope (node->defined_in ());

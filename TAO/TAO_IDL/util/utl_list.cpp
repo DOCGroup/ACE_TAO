@@ -72,7 +72,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //	     will cease to operate correctly if you use either multiple or
 //	     public virtual inheritance.
 
-#include	"utl_list.h"
+#include "utl_list.h"
+#include "ace/OS.h"
 
 ACE_RCSID (util, 
            utl_list, 

@@ -150,6 +150,10 @@ error_string (UTL_Error::ErrorCode c)
       return "";
     case UTL_Error::EIDL_CONSTANT_EXPECTED:
       return "constant expected: ";
+    case UTL_Error::EIDL_INTERFACE_EXPECTED:
+      return "interface expected: ";
+    case UTL_Error::EIDL_VALUETYPE_EXPECTED:
+      return "value type expected: ";
     case UTL_Error::EIDL_EVAL_ERROR:
       return "expression evaluation error: ";
     case UTL_Error::EIDL_NAME_CASE_ERROR:
@@ -251,18 +255,29 @@ exprtype_to_string (AST_Expression::ExprType t)
 static const char *
 parse_state_to_error_message (IDL_GlobalData::ParseState ps)
 {
-  switch (ps) {
+  switch (ps) 
+  {
   case IDL_GlobalData::PS_NoState:
     return "Statement cannot be parsed";
   case IDL_GlobalData::PS_TypeDeclSeen:
     return "Malformed typedef declaration";
+  case IDL_GlobalData::PS_TypeIdDeclSeen:
+    return "Malformed type id declaration";
+  case IDL_GlobalData::PS_TypePrefixDeclSeen:
+    return "Malformed type prefix declaration";
   case IDL_GlobalData::PS_ConstDeclSeen:
     return "Malformed const declaration";
   case IDL_GlobalData::PS_ExceptDeclSeen:
     return "Malformed exception declaration";
   case IDL_GlobalData::PS_InterfaceDeclSeen:
     return "Malformed interface declaration";
-  case IDL_GlobalData::PS_ValuetypeDeclSeen:
+  case IDL_GlobalData::PS_ValueTypeDeclSeen:
+    return "Malformed value type declaration";
+  case IDL_GlobalData::PS_ComponentDeclSeen:
+    return "Malformed value type declaration";
+  case IDL_GlobalData::PS_HomeDeclSeen:
+    return "Malformed home declaration";
+  case IDL_GlobalData::PS_EventDeclSeen:
     return "Malformed value type declaration";
   case IDL_GlobalData::PS_ModuleDeclSeen:
     return "Malformed module declaration";
@@ -270,6 +285,20 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Malformed attribute declaration";
   case IDL_GlobalData::PS_OpDeclSeen:
     return "Malformed operation declaration";
+  case IDL_GlobalData::PS_ProvidesDeclSeen:
+    return "Malformed provides declaration";
+  case IDL_GlobalData::PS_UsesDeclSeen:
+    return "Malformed uses declaration";
+  case IDL_GlobalData::PS_EmitsDeclSeen:
+    return "Malformed emits declaration";
+  case IDL_GlobalData::PS_PublishesDeclSeen:
+    return "Malformed publishes declaration";
+  case IDL_GlobalData::PS_ConsumesDeclSeen:
+    return "Malformed consumes declaration";
+  case IDL_GlobalData::PS_FactoryDeclSeen:
+    return "Malformed factory declaration";
+  case IDL_GlobalData::PS_FinderDeclSeen:
+    return "Malformed finder declaration";
   case IDL_GlobalData::PS_ModuleSeen:
     return "Missing module identifier following MODULE keyword";
   case IDL_GlobalData::PS_ModuleIDSeen:
@@ -280,32 +309,68 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
     return "Illegal syntax following module '}' closer";
   case IDL_GlobalData::PS_ModuleBodySeen:
     return "Illegal syntax following module body statement(s)";
-  case IDL_GlobalData::PS_InterfaceSeen:
-    return "Missing interface identifier following INTERFACE keyword";
-  case IDL_GlobalData::PS_ValuetypeSeen:
-    return "Missing interface identifier following VALUETYPE keyword";
-  case IDL_GlobalData::PS_InterfaceIDSeen:
-    return "Illegal syntax following interface identifier";
-  case IDL_GlobalData::PS_ValuetypeIDSeen:
-    return "Illegal syntax following value type identifier";
+  case IDL_GlobalData::PS_InheritColonSeen:
+    return "Illegal syntax following ':' starting inheritance list";
   case IDL_GlobalData::PS_InheritSpecSeen:
     return "Missing '{' or illegal syntax following inheritance spec";
+  case IDL_GlobalData::PS_SupportSpecSeen:
+    return "Missing '{' or illegal syntax following support spec";
+  case IDL_GlobalData::PS_ManagesSeen:
+    return "Missing component identifier following MANAGES keyword";
+  case IDL_GlobalData::PS_ManagesIDSeen:
+    return "Illegal syntax following managed component identifier";
+  case IDL_GlobalData::PS_PrimaryKeySpecSeen:
+    return "Illegal syntax following primary key spec";
+  case IDL_GlobalData::PS_InterfaceSeen:
+    return "Missing interface identifier following INTERFACE keyword";
   case IDL_GlobalData::PS_InterfaceForwardSeen:
     return "Missing ';' following forward interface declaration";
-  case IDL_GlobalData::PS_ValuetypeForwardSeen:
-    return "Missing ';' following forward value type declaration";
-  case IDL_GlobalData::PS_StructForwardSeen:
-    return "Missing ';' following forward struct declaration";
-  case IDL_GlobalData::PS_UnionForwardSeen:
-    return "Missing ';' following forward union declaration";
+  case IDL_GlobalData::PS_InterfaceIDSeen:
+    return "Missing '{' or illegal syntax following interface identifier";
   case IDL_GlobalData::PS_InterfaceSqSeen:
     return "Illegal syntax following interface '{' opener";
   case IDL_GlobalData::PS_InterfaceQsSeen:
     return "Illegal syntax following interface '}' closer";
   case IDL_GlobalData::PS_InterfaceBodySeen:
     return "Illegal syntax following interface body statement(s)";
-  case IDL_GlobalData::PS_InheritColonSeen:
-    return "Illegal syntax following ':' starting inheritance list";
+  case IDL_GlobalData::PS_ValueTypeSeen:
+    return "Missing interface identifier following VALUETYPE keyword";
+  case IDL_GlobalData::PS_ValueTypeForwardSeen:
+    return "Missing ';' following forward value type declaration";
+  case IDL_GlobalData::PS_ValueTypeIDSeen:
+    return "Missing '{' or illegal syntax following value type identifier";
+  case IDL_GlobalData::PS_ValueTypeSqSeen:
+    return "Illegal syntax following value type '{' opener";
+  case IDL_GlobalData::PS_ValueTypeQsSeen:
+    return "Illegal syntax following value type '}' closer";
+  case IDL_GlobalData::PS_ValueTypeBodySeen:
+    return "Illegal syntax following value type body statement(s)";
+  case IDL_GlobalData::PS_ComponentSeen:
+    return "Missing component identifier following COMPONENT keyword";
+  case IDL_GlobalData::PS_ComponentForwardSeen:
+    return "Missing ';' following forward component declaration";
+  case IDL_GlobalData::PS_ComponentIDSeen:
+    return "Missing '{' or illegal syntax following component identifier";
+  case IDL_GlobalData::PS_ComponentSqSeen:
+    return "Illegal syntax following component '{' opener";
+  case IDL_GlobalData::PS_ComponentQsSeen:
+    return "Illegal syntax following component '}' closer";
+  case IDL_GlobalData::PS_ComponentBodySeen:
+    return "Illegal syntax following component body statement(s)";
+  case IDL_GlobalData::PS_HomeSeen:
+    return "Missing component identifier following HOME keyword";
+  case IDL_GlobalData::PS_HomeIDSeen:
+    return "Missing '{' or illegal syntax following home identifier";
+  case IDL_GlobalData::PS_HomeSqSeen:
+    return "Illegal syntax following home '{' opener";
+  case IDL_GlobalData::PS_HomeQsSeen:
+    return "Illegal syntax following home '}' closer";
+  case IDL_GlobalData::PS_HomeBodySeen:
+    return "Illegal syntax following home body statement(s)";
+  case IDL_GlobalData::PS_StructForwardSeen:
+    return "Missing ';' following forward struct declaration";
+  case IDL_GlobalData::PS_UnionForwardSeen:
+    return "Missing ';' following forward union declaration";
   case IDL_GlobalData::PS_SNListCommaSeen:
     return "Found illegal scoped name in scoped name list";
   case IDL_GlobalData::PS_ScopedNameSeen:
@@ -855,10 +920,40 @@ UTL_Error::constant_expected (UTL_ScopedName *n,
   idl_error_header (EIDL_CONSTANT_EXPECTED,
                     d->line (),
                     d->file_name ());
-  n->dump (*ACE_DEFAULT_LOG_STREAM);;
+  n->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               " bound to "));
   d->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+// Report a situation where an interface was expected but we got
+// something else instead. This most likely is a case in a supports
+// or inheritance list.
+void 
+UTL_Error::interface_expected (AST_Decl *d)
+{
+  idl_error_header (EIDL_INTERFACE_EXPECTED,
+                    d->line (),
+                    d->file_name ());
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR,
+              "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+// Report a situation where an value type was expected but we got
+// something else instead. This most likely is a case in a primary
+// key, emits, publishes or consumes declaration.
+void 
+UTL_Error::valuetype_expected (AST_Decl *d)
+{
+  idl_error_header (EIDL_VALUETYPE_EXPECTED,
+                    d->line (),
+                    d->file_name ());
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);

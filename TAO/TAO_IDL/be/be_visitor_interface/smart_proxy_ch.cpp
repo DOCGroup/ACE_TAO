@@ -57,6 +57,9 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
           bt = node;
         }
 
+      *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
       *os << "class " << be_global->stub_export_macro ()<< " "
           << "TAO_" << node->flat_name ()
           << "_Default_Proxy_Factory" << be_nl
@@ -202,5 +205,4 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
     }
 
   return 0;
-
 }

@@ -164,9 +164,10 @@ be_visitor_operation_remote_proxy_impl_cs::visit_operation (
     {
       // Generate code that retrieves the underlying stub object and then
       // invokes do_static_call on it.
-      *os << be_nl
-          << "TAO_Stub *istub = _collocated_tao_target_->_stubobj ();"
-          << be_nl << "if (istub == 0)" << be_idt_nl;
+      *os << "TAO_Stub *istub = _collocated_tao_target_->_stubobj ();"
+          << be_nl << be_nl
+          << "if (istub == 0)" << be_idt_nl
+          << "{" << be_idt_nl;
 
       // If the stub object was bad, then we raise a system exception.
       if (this->gen_raise_exception (bt, "CORBA::INTERNAL", "") == -1)
@@ -181,7 +182,11 @@ be_visitor_operation_remote_proxy_impl_cs::visit_operation (
           );
         }
 
-      *os << be_uidt_nl << "\n";
+      *os << be_uidt;
+
+      os->indent ();
+
+      *os << "}" << be_uidt_nl << be_nl;
 
       // Do any pre marshal and invoke processing with return type. This
       // includes allocating memory, initialization.
@@ -333,6 +338,8 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
 
   os->indent ();
 
+  *os << be_nl;
+
   // Create the GIOP_Invocation and grab the outgoing CDR stream.
   switch (node->flags ())
     {
@@ -419,7 +426,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
         }
     }
 
-  *os << " _tao_ri (" << be_idt_nl
+  *os << " _tao_ri (" << be_idt << be_idt_nl
       << "&_tao_call," << be_nl
       << "_collocated_tao_target_";
 
@@ -438,7 +445,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
                         -1);
     }
 
-  *os << be_uidt_nl << ");" << be_nl;
+  *os << be_uidt_nl << ");" << be_uidt_nl;
 
   if (this->gen_check_exception (bt) == -1)
     {
@@ -450,8 +457,6 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
     }
 
   *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl;
-
-  *os << be_nl;
 
  // Prepare the request header.
   *os << be_nl << "CORBA::Short _tao_response_flag = ";
@@ -476,10 +481,10 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
   // This is done before the Invocation::start() call so that a
   // connection can be avoided if send_request() throws an exception,
   // i.e. this is an optimization.
-  *os << "_tao_vfr.send_request (" << be_idt_nl
+  *os << "_tao_vfr.send_request (" << be_idt << be_idt_nl
       << "&_tao_ri" << be_nl
       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-      << ");" << be_nl
+      << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl;
 
   // _invoke_status is potentially set (via a reference) in
@@ -539,7 +544,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
     {
       *os << be_nl
           << "TAO_OutputCDR &_tao_out = _tao_call.out_stream ();"
-          << be_nl
+          << be_nl << be_nl
           << "if (!(" << be_idt << be_idt_nl;
 
       // Marshal each in and inout argument.
@@ -558,8 +563,9 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
                             -1);
         }
 
-      *os << be_uidt_nl
-          << "))" << be_nl;
+      *os << be_nl
+          << "))" << be_uidt_nl
+          << "{" << be_idt_nl;
 
       // If marshaling fails, raise exception.
       if (this->gen_raise_interceptor_exception (bt, "CORBA::MARSHAL", "") 
@@ -572,11 +578,12 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
                             -1);
         }
 
-      *os << be_uidt_nl;
+      *os << be_uidt_nl << be_nl;
+      *os << "}" << be_uidt_nl << be_nl;
     }
   else
     {
-      *os << be_nl;
+      *os << be_nl << be_nl;
     }
 
   *os << "_invoke_status =" << be_idt_nl;
@@ -641,14 +648,14 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
   // the client (e.g. SYNC_WITH_TARGET).
   *os << "else if (_invoke_status == TAO_INVOKE_RESTART)" << be_idt_nl
       << "{" << be_idt_nl
-      << "TAO_INTERCEPTOR (" << be_idt_nl
+      << "TAO_INTERCEPTOR (" << be_idt << be_idt_nl
       << "_tao_ri.reply_status (_invoke_status);" << be_nl
-      << "_tao_vfr.receive_other (" << be_idt_nl
+      << "_tao_vfr.receive_other (" << be_idt << be_idt_nl
       << "&_tao_ri" << be_nl
       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-      << ");" << be_nl
+      << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_uidt_nl
-      << ")" << be_nl
+      << ")" << be_uidt_nl
       << be_nl
       << "continue;" << be_uidt_nl
       << "}" << be_uidt_nl
@@ -707,7 +714,9 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
       // Check if there was a user exception, else demarshal the
       // return val (if any) and parameters (if any) that came with
       // the response message.
-      *os << "TAO_InputCDR &_tao_in = _tao_call.inp_stream ();" << be_nl
+      *os << be_nl
+          << "TAO_InputCDR &_tao_in = _tao_call.inp_stream ();" 
+          << be_nl << be_nl
           << "if (!(" << be_idt << be_idt_nl;
 
       if (!this->void_return_type (bt))
@@ -812,13 +821,15 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
       if (bt->size_type () == AST_Type::VARIABLE
           || bt->base_node_type () == AST_Decl::NT_array)
         {
-          *os << " _tao_retval_info = _tao_retval._retn ();" << be_nl
+          *os << " _tao_retval_info =" << be_idt_nl
+              << "_tao_retval._retn ();" << be_uidt_nl
               << "_tao_ri.result (_tao_retval_info);" << be_nl
               << "_tao_retval = _tao_retval_info;" << be_nl;
         }
       else
         {
-          *os << " _tao_retval_info = _tao_retval;" << be_nl
+          *os << " _tao_retval_info =" << be_idt_nl
+              << "_tao_retval;" << be_uidt_nl
               << "_tao_ri.result (_tao_retval_info);" << be_nl;
         }
     }
@@ -835,10 +846,10 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
       // Invoke receive_reply() interception point.
       *os << be_nl
           << "_tao_ri.reply_status (_invoke_status);" << be_nl
-          << "_tao_vfr.receive_reply (" << be_idt_nl
+          << "_tao_vfr.receive_reply (" << be_idt << be_idt_nl
           << "&_tao_ri" << be_nl
           << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-          << ");" << be_nl;
+          << ");" << be_uidt_nl;
     }
   else if (node->flags () == AST_Operation::OP_oneway)
     {
@@ -851,9 +862,8 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
           << ");" << be_nl;
     }
 
-  *os << "ACE_TRY_CHECK;" << be_uidt_nl;
-
-  *os << be_uidt_nl
+  *os << "ACE_TRY_CHECK;"
+      << be_uidt_nl
       << "}" << be_uidt_nl;
 
   // Note that we do NOT catch the PortableInterceptor::ForwardRequest
@@ -868,10 +878,10 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
   // Update the exception field of the ClientRequestInfo.
   *os << "_tao_ri.exception (&ACE_ANY_EXCEPTION);"<< be_nl;
 
-  *os << "_tao_vfr.receive_exception (" << be_idt_nl
+  *os << "_tao_vfr.receive_exception (" << be_idt << be_idt_nl
       << "&_tao_ri" << be_nl
       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-      << ");" << be_nl
+      << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl;
 
   // The receive_exception() interception point may have thrown a
@@ -885,17 +895,21 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
 
   *os << be_nl
       << "if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION" << be_nl
-      << "    || _tao_status == PortableInterceptor::USER_EXCEPTION)"
-      << be_idt_nl;
+      << "    || _tao_status == PortableInterceptor::USER_EXCEPTION)" 
+      << be_idt_nl
+      << "{" << be_idt_nl;
 
   if (be_global->use_raw_throw ())
     {
-      *os << "throw;" << be_uidt << be_uidt_nl;
+      *os << "throw;";
     }
   else
     {
-      *os << "ACE_RE_THROW;" << be_uidt << be_uidt_nl;
+      *os << "ACE_RE_THROW;";
     }
+
+  *os << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl;
 
   *os << "}" << be_uidt_nl
       << "ACE_ENDTRY;" << be_nl;
@@ -932,12 +946,14 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
       << "if (_tao_status == PortableInterceptor::LOCATION_FORWARD" << be_nl
       << "    || _tao_status == PortableInterceptor::TRANSPORT_RETRY)"
       << be_idt_nl
-      << "continue;" << be_uidt_nl;
+      << "{" << be_idt_nl
+      << "continue;" << be_uidt_nl
+      << "}" << be_uidt_nl;
 
   *os << "\n#endif  /* TAO_HAS_INTERCEPTORS */" << be_nl;
 
   *os << be_nl << "break;" << be_uidt_nl
-      << "}" << be_uidt_nl;
+      << "}" << be_uidt_nl << be_nl;
 
   return 0;
 }
@@ -959,10 +975,11 @@ be_visitor_operation_remote_proxy_impl_cs::gen_raise_interceptor_exception (
         }
       else
         {
-          *os << "TAO_INTERCEPTOR_THROW (" << be_idt_nl
-              << excep << " (" << completion_status
-              << ")" << be_uidt_nl
-              << ");" << be_nl;
+          *os << "TAO_INTERCEPTOR_THROW (" << be_idt << be_idt_nl
+              << excep << " (" << be_idt << be_idt_nl
+              << completion_status << be_uidt_nl
+              << ")" << be_uidt << be_uidt_nl
+              << ");" << be_uidt;
         }
     }
   else
@@ -970,17 +987,21 @@ be_visitor_operation_remote_proxy_impl_cs::gen_raise_interceptor_exception (
       if (bt->size_type () == AST_Type::VARIABLE
           || bt->base_node_type () == AST_Decl::NT_array)
         {
-          *os << "TAO_INTERCEPTOR_THROW_RETURN (" << be_idt_nl
-              << excep << " (" << completion_status << ")," << be_nl
+          *os << "TAO_INTERCEPTOR_THROW_RETURN (" << be_idt << be_idt_nl
+              << excep << " (" << be_idt << be_idt_nl
+              << completion_status << be_uidt_nl
+              << ")," << be_uidt_nl
               <<  "0" << be_uidt_nl
-              << ");" << be_nl;
+              << ");" << be_uidt;
         }
       else
         {
-          *os << "TAO_INTERCEPTOR_THROW_RETURN (" << be_idt_nl
-              << excep << " (" << completion_status << ")," << be_nl
+          *os << "TAO_INTERCEPTOR_THROW_RETURN (" << be_idt << be_idt_nl
+              << excep << " (" << be_idt << be_idt_nl
+              << completion_status << be_uidt_nl
+              << ")," << be_uidt_nl
               <<  "_tao_retval" << be_uidt_nl
-              << ");" << be_nl;
+              << ");" << be_uidt;
         }
     }
 

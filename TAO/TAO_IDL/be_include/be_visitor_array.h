@@ -21,6 +21,8 @@
 #ifndef TAO_BE_VISITOR_ARRAY_H
 #define TAO_BE_VISITOR_ARRAY_H
 
+#include "idl_defines.h"
+
 #include "be_visitor_decl.h"
 #include "be_visitor_array/array.h"
 #include "be_visitor_array/array_ch.h"

@@ -132,7 +132,15 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
       os << node->local_name () << "_init ();";
     }
 
-  os << be_uidt_nl << "};" << be_nl;
+  os << be_uidt_nl << "};" << be_nl << be_nl;
+
+  ACE_CString conc (node->local_name (),
+                    0,
+                    0);
+
+  conc += "_init";
+
+  node->gen_var_defn ((char *) conc.c_str ());
 
   // Generate the endif macro.
   os.gen_endif ();

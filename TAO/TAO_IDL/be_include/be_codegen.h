@@ -3,7 +3,7 @@
 // ================================================================
 //
 // = LIBRARY
-//    TAO IDL
+//    TAO_IDL_BE
 //
 // = FILENAME
 //    be_codegen.h
@@ -22,9 +22,6 @@
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
 #include "TAO_IDL_BE_Export.h"
-
-#define NAMEBUFSIZE 1024
-// Maximum length of static buffers used to store names.
 
 class TAO_Visitor_Factory;
 class TAO_OutStream;
@@ -114,7 +111,6 @@ public:
 
       TAO_ATTRIBUTE_SMART_PROXY_CH,             // in client header
       TAO_ATTRIBUTE_SMART_PROXY_CS,             // in client source
-      TAO_ATTRIBUTE_INTERCEPTORS_CH,            // in client header
       TAO_ATTRIBUTE_INTERCEPTORS_CS,            // in client source
       TAO_ATTRIBUTE_INTERCEPTORS_SH,            // in server header
       TAO_ATTRIBUTE_INTERCEPTORS_SS,            // in server source
@@ -190,7 +186,6 @@ public:
       TAO_INTERFACE_TIE_SI,
       TAO_INTERFACE_SMART_PROXY_CH,
       TAO_INTERFACE_SMART_PROXY_CS,
-      TAO_INTERFACE_INTERCEPTORS_CH,
       TAO_INTERFACE_INTERCEPTORS_CS,
       TAO_INTERFACE_INTERCEPTORS_SH,
       TAO_INTERFACE_INTERCEPTORS_SS,

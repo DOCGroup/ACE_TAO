@@ -42,6 +42,9 @@ be_visitor_module_sh::visit_module (be_module *node)
     {
       TAO_OutStream *os = this->ctx_->stream ();
 
+      *os << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
       // Generate the skeleton class name.
 
       os->indent ();
@@ -73,6 +76,9 @@ be_visitor_module_sh::visit_module (be_module *node)
         }
 
       os->decr_indent ();
+
+      *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
       *os << "}" << be_nl << "TAO_NAMESPACE_CLOSE // module "
           << node->name () << "\n\n";

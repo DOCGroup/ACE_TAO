@@ -148,6 +148,7 @@ int be_visitor_args_request_info_arglist::visit_interface (be_interface *node)
       *os << this->type_name (node, "_out");
       break;
     }
+
   return 0;
 }
 
@@ -169,6 +170,7 @@ int be_visitor_args_request_info_arglist::visit_interface_fwd (
       *os << this->type_name (node, "_out");
       break;
     }
+
   return 0;
 }
 
@@ -188,6 +190,7 @@ int be_visitor_args_request_info_arglist::visit_native (be_native *node)
       *os << this->type_name (node) << " &";
       break;
     }
+
   return 0;
 }
 

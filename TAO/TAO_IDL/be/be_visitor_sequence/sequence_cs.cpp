@@ -65,49 +65,94 @@ be_visitor_sequence_cs::gen_base_sequence_class (be_sequence *node)
     {
     case be_sequence::MNG_OBJREF:
       if (node->unbounded ())
-        *os << "TAO_Unbounded_Object_Sequence<";
+        {
+          *os << "TAO_Unbounded_Object_Sequence<";
+        }
       else
-        *os << "TAO_Bounded_Object_Sequence<";
+        {
+          *os << "TAO_Bounded_Object_Sequence<";
+        }
+
+      break;
+    case be_sequence::MNG_ABSTRACT:
+      if (node->unbounded ())
+        {
+          *os << "TAO_Unbounded_Abstract_Sequence<";
+        }
+      else
+        {
+          *os << "TAO_Bounded_Abstract_Sequence<";
+        }
+
       break;
     case be_sequence::MNG_PSEUDO:
       if (node->unbounded ())
-        *os << "TAO_Unbounded_Pseudo_Sequence<";
+        {
+          *os << "TAO_Unbounded_Pseudo_Sequence<";
+        }
       else
-        *os << "TAO_Bounded_Pseudo_Sequence<";
+        {
+          *os << "TAO_Bounded_Pseudo_Sequence<";
+        }
+
       break;
     case be_sequence::MNG_VALUE:
       if (node->unbounded ())
-        *os << "TAO_Unbounded_Valuetype_Sequence<";
+        {
+          *os << "TAO_Unbounded_Valuetype_Sequence<";
+        }
       else
-        *os << "TAO_Bounded_Valuetype_Sequence<";
+        {
+          *os << "TAO_Bounded_Valuetype_Sequence<";
+        }
+
       break;
     case be_sequence::MNG_STRING:
       if (node->unbounded ())
-        *os << "TAO_Unbounded_String_Sequence";
+        {
+          *os << "TAO_Unbounded_String_Sequence";
+        }
       else
-        *os << "TAO_Bounded_String_Sequence";
+        {
+          *os << "TAO_Bounded_String_Sequence";
+        }
+
       break;
     case be_sequence::MNG_WSTRING:
       if (node->unbounded ())
-        *os << "TAO_Unbounded_WString_Sequence";
+        {
+          *os << "TAO_Unbounded_WString_Sequence";
+        }
       else
-        *os << "TAO_Bounded_WString_Sequence";
+        {
+          *os << "TAO_Bounded_WString_Sequence";
+        }
+
       break;
     default: // not a managed type
       if (bt->base_node_type () == AST_Decl::NT_array)
         {
           if (node->unbounded ())
-            *os << "TAO_Unbounded_Array_Sequence<";
+            {
+              *os << "TAO_Unbounded_Array_Sequence<";
+            }
           else
-            *os << "TAO_Bounded_Array_Sequence<";
+            {
+              *os << "TAO_Bounded_Array_Sequence<";
+            }
         }
       else
         {
           if (node->unbounded ())
-            *os << "TAO_Unbounded_Sequence<";
+            {
+              *os << "TAO_Unbounded_Sequence<";
+            }
           else
-            *os << "TAO_Bounded_Sequence<";
+            {
+              *os << "TAO_Bounded_Sequence<";
+            }
         }
+
       break;
     }
 
@@ -341,6 +386,7 @@ be_visitor_sequence_cs::instantiate_sequence (be_sequence *node)
     case be_sequence::MNG_PSEUDO:
     case be_sequence::MNG_OBJREF:
     case be_sequence::MNG_VALUE:
+    case be_sequence::MNG_ABSTRACT:
       if (node->unbounded ())
         {
           this->gen_unbounded_obj_sequence (node);

@@ -39,7 +39,7 @@ be_visitor_interface_ss::~be_visitor_interface_ss (void)
 int
 be_visitor_interface_ss::visit_interface (be_interface *node)
 {
-  if (node->srv_skel_gen () || node->imported ())
+  if (node->srv_skel_gen () || node->imported () || node->is_abstract ())
     {
       return 0;
     }
@@ -96,7 +96,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     }
 
   *os << "// TAO_IDL - Generated from " << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Find if we are at the top scope or inside some module,
   // pre-compute the prefix that must be added to the local name in
@@ -159,6 +159,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                          "codegen for scope failed\n"),
                         -1);
     }
+
+  *os << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate code for the _is_a skeleton.
   os->indent ();
@@ -296,8 +299,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "const char *base_id = \"IDL:org.omg/CORBA/Object:1.0\";" << be_nl
-      << "if (\n" << be_idt;
+      << "if (" << be_idt << be_idt_nl;
 
   if (node->traverse_inheritance_graph (be_interface::is_a_helper, os) == -1)
     {
@@ -308,12 +310,29 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                         -1);
     }
 
-  os->indent ();
+  *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
+      << "(char *)value," << be_nl
+      << "\"IDL:org.omg/CORBA/Object:1.0\"" << be_uidt_nl
+      << ")";
 
-  *os << "(!ACE_OS::strcmp ((char *)value, base_id)))"
-      << be_idt_nl << "return 1;" << be_uidt_nl
+  if (node->has_mixed_parentage ())
+    {
+      *os << " ||" << be_uidt_nl
+          << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
+          << "(char *)value," << be_nl
+          << "\"IDL:org.omg/CORBA/AbstractBase:1.0\"" << be_uidt_nl
+          << ")";
+    }
+      
+  *os << be_uidt << be_uidt_nl
+      << " )" << be_nl
+      << "{" << be_idt_nl
+      << "return 1;" << be_uidt_nl
+      << "}" << be_uidt_nl
       << "else" << be_idt_nl
-      << "return 0;" << be_uidt << be_uidt << be_uidt_nl
+      << "{" << be_idt_nl
+      << "return 0;" << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // the downcast method.
@@ -332,10 +351,13 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << "if (ACE_OS::strcmp (logical_type_id, "
-      << "\"IDL:omg.org/CORBA/Object:1.0\") == 0)" << be_idt_nl
+  *os << "if (ACE_OS::strcmp (logical_type_id," << be_nl
+      << "                    \"IDL:omg.org/CORBA/Object:1.0\") == 0)" 
+      << be_idt_nl
+      << "{" << be_idt_nl
       << "return ACE_static_cast(PortableServer::Servant, this);"
-      << be_uidt_nl;
+      << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl;
 
   *os << "return 0;" << be_uidt_nl
       << "}" << be_nl << be_nl;
@@ -365,34 +387,52 @@ be_visitor_interface_ss::this_method (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   // the _this () operation.
-  *os << node->full_name () << "*" << be_nl
+  *os << node->full_name () << " *" << be_nl
       << node->full_skel_name ()
       << "::_this (ACE_ENV_SINGLE_ARG_DECL)" << be_nl
-      << "{" << be_idt_nl // idt = 1
+      << "{" << be_idt_nl
       << "TAO_Stub *stub = this->_create_stub (ACE_ENV_SINGLE_ARG_PARAMETER);"
       << be_nl
       << "ACE_CHECK_RETURN (0);" << be_nl << be_nl
-      << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl << be_nl;
+      << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl;
 
   *os << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();" << be_nl
       << be_nl
       << "if (stub->servant_orb_var ()->orb_core ()->"
-      << "optimize_collocation_objects ())"
-      << be_idt_nl // idt = 2
-      << "ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);"
-      << be_uidt_nl // idt = 1
-      << "else"
-      << be_idt_nl // idt = 2
-      << "ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);"
-      << be_uidt_nl << be_nl // idt = 1
-      << "CORBA::Object_var obj = tmp;" << be_nl << be_nl;
+      << "optimize_collocation_objects ())" << be_idt_nl
+      << "{" << be_idt_nl
+      << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+      << "tmp," << be_nl
+      << "CORBA::Object (" << be_idt << be_idt_nl
+      << "stub," << be_nl
+      << "1," << be_nl
+      << "this" << be_uidt_nl
+      << ")," << be_uidt_nl
+      << "0" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
+      << "}" << be_uidt_nl
+      << "else" << be_idt_nl
+      << "{" << be_idt_nl
+      << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+      << "tmp," << be_nl
+      << "CORBA::Object (" << be_idt << be_idt_nl
+      << "stub," << be_nl
+      << "0," << be_nl
+      << "this" << be_uidt_nl
+      << ")," << be_uidt_nl
+      << "0" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl;
 
-  *os << "(void) safe_stub.release ();" << be_nl << be_nl;
-
-  *os << "return " << "::" << node->full_name ()
+  *os << "CORBA::Object_var obj = tmp;" << be_nl
+      << "(void) safe_stub.release ();" << be_nl
+      << "return " << "::" << node->full_name ()
       << "::_unchecked_narrow (obj.in ());"
-      << be_uidt_nl // idt = 0
+      << be_uidt_nl
       << "}" << be_nl;
 }
 
@@ -400,6 +440,9 @@ void
 be_visitor_interface_ss::dispatch_method (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "void " << node->full_skel_name ()
       << "::_dispatch (" << be_idt << be_idt_nl
@@ -413,7 +456,7 @@ be_visitor_interface_ss::dispatch_method (be_interface *node)
       << "                                   this" << be_nl
       << "                                   ACE_ENV_ARG_PARAMETER);"
       << be_uidt_nl;
-  *os << "}" << be_nl << be_nl;
+  *os << "}" << be_nl;
 }
 
 int
@@ -463,6 +506,9 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
                              "codegen for Base Proxy Broker class failed\n"),
                             -1);
         }
+
+      *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
       // Proxy Broker  Factory Function.
       *os << be_nl

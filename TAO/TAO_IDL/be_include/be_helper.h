@@ -108,7 +108,7 @@ public:
   // destructor.
 
   int open (const char *fname,
-            TAO_OutStream::STREAM_TYPE st=TAO_OutStream::TAO_CLI_HDR);
+            TAO_OutStream::STREAM_TYPE st = TAO_OutStream::TAO_CLI_HDR);
   // open the underlying low-level handle for output.
 
   void stream_type (TAO_OutStream::STREAM_TYPE);
@@ -120,11 +120,11 @@ public:
   FILE *file (void);
   // Return the underlying lowlevel file pointer.
 
-  int incr_indent (unsigned short flag=1);
+  int incr_indent (unsigned short flag = 1);
   // increment the indentation level and by default actually indent the output
   // accordingly
 
-  int decr_indent (unsigned short flag=1);
+  int decr_indent (unsigned short flag = 1);
   // decrease the indentation level and by default actually indent the output
   // accordingly
 
@@ -140,7 +140,8 @@ public:
   int print (const char *format, ...);
   // "printf" style variable argument print
 
-  int gen_ifdef_macro (const char *flat_name, const char *suffix=0);
+  int gen_ifdef_macro (const char *flat_name, 
+                       const char *suffix = 0);
   // generate a #if !defined, #defined macro
 
   int gen_endif (void);

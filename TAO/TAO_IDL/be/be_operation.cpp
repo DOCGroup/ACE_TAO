@@ -60,33 +60,6 @@ be_operation::~be_operation (void)
 {
 }
 
-int
-be_operation::void_return_type (void)
-{
-  be_type* type = be_type::narrow_from_decl (this->return_type ());
-
-  if (type->node_type () == AST_Decl::NT_pre_defined
-      && (be_predefined_type::narrow_from_decl (type)->pt ()
-            == AST_PredefinedType::PT_void))
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_argument *
-be_operation::add_argument_to_scope (be_argument *arg)
-{
-  this->add_to_scope (arg);
-  this->add_to_referenced (arg,
-                           0,
-                           0);
-  return arg;
-}
-
 void
 be_operation::destroy (void)
 {

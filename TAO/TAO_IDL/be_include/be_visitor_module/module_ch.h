@@ -42,7 +42,6 @@ public:
 
   virtual int visit_module (be_module *node);
   // visit module. We provide code for this method in the derived class
-
 };
 
 #endif /* _BE_VISITOR_MODULE_MODULE_CH_H_ */

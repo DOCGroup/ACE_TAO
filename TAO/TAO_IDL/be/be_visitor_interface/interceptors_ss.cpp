@@ -48,6 +48,9 @@ int be_visitor_interface_interceptors_ss::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   // Generate code for the interface definition by traversing thru the
   // elements of its scope. We depend on the front-end to have made sure
   // that only legal syntactic elements appear in our scope.

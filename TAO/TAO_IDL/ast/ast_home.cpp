@@ -22,20 +22,24 @@ AST_Home::AST_Home (void)
 AST_Home::AST_Home (UTL_ScopedName *n,
                     AST_Home *base_home,
                     AST_Component *managed_component,
-                    AST_ValueType *primary_key)
+                    AST_ValueType *primary_key,
+                    AST_Interface **supports,
+                    long n_supports,
+                    AST_Interface **supports_flat,
+                    long n_supports_flat)
   : AST_Interface (n,
-                   0,
-                   0,
-                   0,
-                   0,
-                   I_TRUE,
+                   supports,
+                   n_supports,
+                   supports_flat,
+                   n_supports_flat,
+                   I_FALSE,
                    I_FALSE),
     AST_Type (AST_Decl::NT_home,
               n),
     AST_Decl (AST_Decl::NT_home,
               n),
     UTL_Scope (AST_Decl::NT_home),
-    COMMON_Base (I_TRUE,
+    COMMON_Base (I_FALSE,
                  I_FALSE),
     pd_base_home (base_home),
     pd_managed_component (managed_component),
@@ -71,22 +75,10 @@ AST_Home::factories (void)
   return this->pd_factories;
 }
 
-void 
-AST_Home::factories (AST_Operation *d)
-{
-  this->pd_factories.enqueue_tail (d);
-}
-
 ACE_Unbounded_Queue<AST_Operation *> &
 AST_Home::finders (void)
 {
   return this->pd_finders;
-}
-
-void 
-AST_Home::finders (AST_Operation *d)
-{
-  this->pd_finders.enqueue_tail (d);
 }
 
 void

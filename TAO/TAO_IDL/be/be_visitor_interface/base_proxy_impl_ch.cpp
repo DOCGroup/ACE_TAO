@@ -25,30 +25,41 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  //  os->indent ();
-
   *os << be_nl
       << "///////////////////////////////////////////////////////////////////////" 
       << be_nl
       << "//                    Base Proxy Impl. Declaration" << be_nl
       << "//" << be_nl << be_nl;
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   // Generate Class Declaration.
   *os << "class " << be_global->stub_export_macro ()
       << " " << node->base_proxy_impl_name () << be_idt_nl
       << ": ";
 
-  if (node->n_inherits () > 0)
+  int n_parents = node->n_inherits ();
+  int has_concrete_parent = 0;
+
+  if (n_parents > 0)
     {
       *os << be_idt;
 
-      for (int i = 0; i < node->n_inherits (); i++)
+      for (int i = 0; i < n_parents; ++i)
         {
           be_interface *inherited =
             be_interface::narrow_from_decl (node->inherits ()[i]);
 
+          if (inherited->is_abstract ())
+            {
+              continue;
+            }
+
           *os << "public virtual ";
           *os << inherited->full_base_proxy_impl_name ();
+
+          has_concrete_parent = 1;
 
           if (i < node->n_inherits () - 1)
             {
@@ -58,11 +69,15 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
             }
         }
 
-      *os << be_uidt << be_uidt_nl; // idt = 0
+      if (has_concrete_parent == 1)
+        {
+          *os << be_uidt << be_uidt_nl;
+        }
     }
-  else
+
+  if (has_concrete_parent == 0)
     {
-      *os << "public virtual TAO_Object_Proxy_Impl" << be_uidt_nl;
+      *os << "public virtual TAO_Object_Proxy_Impl" << be_uidt << be_uidt_nl;
     }
 
   *os << "{" << be_nl << "public:"

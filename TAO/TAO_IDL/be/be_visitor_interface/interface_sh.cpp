@@ -39,7 +39,7 @@ be_visitor_interface_sh::~be_visitor_interface_sh (void)
 int
 be_visitor_interface_sh::visit_interface (be_interface *node)
 {
-  if (node->srv_hdr_gen () || node->imported ())
+  if (node->srv_hdr_gen () || node->imported () || node->is_abstract ())
     {
       return 0;
     }
@@ -63,11 +63,9 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
     }
 
   TAO_OutStream *os  = this->ctx_->stream ();
-  ACE_CString class_name;
-  os->indent ();
 
-  *os << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+  os->indent ();
+  ACE_CString class_name;
 
   // We shall have a POA_ prefix only if we are at the topmost level.
   if (!node->is_nested ())
@@ -80,6 +78,9 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
     {
       class_name +=  node->local_name ();
     }
+
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the skeleton class name.
   *os << "class " << class_name.c_str () << ";" << be_nl;
@@ -115,13 +116,24 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << " " << class_name.c_str () << be_idt_nl << ": " << be_idt;
 
   long n_parents = node->n_inherits ();
+  AST_Interface *parent = 0;
+  int has_concrete_parent = 0;
 
   if (n_parents > 0)
     {
       for (int i = 0; i < n_parents; ++i)
         {
+          parent = node->inherits ()[i];
+          
+          if (parent->is_abstract ())
+            {
+              continue;
+            }
+
           *os << "public virtual " << "POA_"
-              << node->inherits ()[i]->name ();
+              << parent->name ();
+
+          has_concrete_parent = 1;
 
           if (i < n_parents - 1)
             {
@@ -129,7 +141,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
             }
         }
     }
-  else
+
+  if (has_concrete_parent == 0)
     {
       // We don't inherit from another user defined object, hence our
       // base class is the ServantBase class.
@@ -202,6 +215,8 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
                          "codegen for scope failed\n"),
                         -1);
     }
+
+  *os << "\n";
 
   // Generate skeletons for operations of our base classes. These
   // skeletons just cast the pointer to the appropriate type

@@ -57,12 +57,17 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
                             -1);
         }
 
+      *os << "// TAO_IDL - Generated from " << be_nl
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
       // Default constructor.
       *os << "// Default constructor." << be_nl;
       *os << node->name () << "::" << node->local_name ()
-          << " (void)" << be_nl;
-      *os << "  : CORBA_UserException (\""
-          << node->repoID () << "\")\n";
+          << " (void)" << be_idt_nl;
+      *os << ": CORBA_UserException (" << be_idt << be_idt << be_idt_nl
+          << "\"" << node->repoID () << "\"," << be_nl
+          << "\"" << node->local_name () << "\"" << be_uidt_nl
+          << ")" << be_uidt << be_uidt << be_uidt_nl;
       *os << "{" << be_nl;
       *os << "}" << be_nl << be_nl;
 
@@ -77,9 +82,11 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       // Copy constructor.
       *os << "// Copy constructor." << be_nl;
       *os << node->name () << "::" << node->local_name () << " (const ::"
-          << node->name () << " &_tao_excp)" << be_nl;
-      *os << "  : CORBA_UserException ("
-          << "_tao_excp._id ())" << be_nl;
+          << node->name () << " &_tao_excp)" << be_idt_nl;
+      *os << ": CORBA_UserException (" << be_idt << be_idt << be_idt_nl
+          << "_tao_excp._rep_id ()," << be_nl
+          << "_tao_excp._name ()" << be_uidt_nl
+          << ")" << be_uidt << be_uidt << be_uidt_nl;
       *os << "{\n";
 
       be_visitor_context ctx (*this->ctx_);
@@ -149,7 +156,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << node->name () << "::_downcast (CORBA::Exception *exc)" << be_nl;
       *os << "{" << be_idt_nl;
       *os << "if (!ACE_OS::strcmp (\"" << node->repoID ()
-          << "\", exc->_id ()))" << be_idt_nl;
+          << "\", exc->_rep_id ()))" << be_idt_nl;
       *os << "{" << be_idt_nl;
       *os << "return ACE_dynamic_cast (" << node->local_name ()
           << " *, exc);" << be_uidt_nl;
@@ -293,8 +300,11 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
                                 -1);
             }
 
-          *os << "  : CORBA_UserException "
-              << "(\"" << node->repoID () << "\")" << be_uidt_nl;
+          *os << "  : CORBA_UserException (" 
+              << be_idt << be_idt << be_idt << be_idt_nl
+              << "\"" << node->repoID () << "\"," << be_nl
+              << "\"" << node->local_name () << "\"" << be_uidt_nl
+              << ")" << be_uidt << be_uidt << be_uidt << be_uidt_nl;
           *os << "{\n";
 
           // Assign each individual member. We need yet another state.

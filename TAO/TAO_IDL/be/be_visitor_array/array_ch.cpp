@@ -61,6 +61,10 @@ int be_visitor_array_ch::visit_array (be_array *node)
                         -1);
     }
 
+  *os << be_nl << "// TAO_IDL - Generated from " << be_nl
+               << "// " __FILE__ << ":" << __LINE__ 
+               << be_nl << be_nl;
+
   // Generate the ifdefined macro.
   os->gen_ifdef_macro (node->flat_name ());
 
@@ -214,22 +218,24 @@ int be_visitor_array_ch::visit_array (be_array *node)
     {
       // Typedefed array.
       *os << storage_class << node->nested_type_name (scope, "_slice")
-          << " *";
-      *os << node->nested_type_name (scope, "_alloc") << " (void);" << be_nl;
-      *os << storage_class << "void "
+          << " *" << be_nl;
+      *os << node->nested_type_name (scope, "_alloc") << " (void);" 
+          << be_nl << be_nl;
+      *os << storage_class << "void" << be_nl
           << node->nested_type_name (scope, "_free")
           << " (" << be_idt << be_idt_nl;
       *os << node->nested_type_name (scope, "_slice")
           << " *_tao_slice " << be_uidt_nl
-          << ");" << be_uidt_nl;
-      *os << storage_class << node->nested_type_name (scope, "_slice") << " *";
+          << ");" << be_uidt_nl << be_nl;
+      *os << storage_class << node->nested_type_name (scope, "_slice") 
+          << " *" << be_nl;
       *os << node->nested_type_name (scope, "_dup")
           << " (" << be_idt << be_idt_nl
           << "const ";
       *os << node->nested_type_name (scope, "_slice")
           << " *_tao_slice" << be_uidt_nl
-          << ");" << be_uidt_nl;
-      *os << storage_class << "void "
+          << ");" << be_uidt_nl << be_nl;
+      *os << storage_class << "void" << be_nl
           << node->nested_type_name (scope, "_copy")
           << " (" << be_idt << be_idt_nl;
       *os << node->nested_type_name (scope, "_slice") << " *_tao_to," << be_nl
@@ -242,24 +248,24 @@ int be_visitor_array_ch::visit_array (be_array *node)
     {
       // Anonymous array.
       *os << storage_class << node->nested_type_name (scope, "_slice", "_")
-          << " *";
+          << " *" << be_nl;
       *os << node->nested_type_name (scope, "_alloc", "_")
-          << " (void);" << be_nl;
-      *os << storage_class << "void "
+          << " (void);" << be_nl << be_nl;
+      *os << storage_class << "void" << be_nl
           << node->nested_type_name (scope, "_free", "_")
           << " (" << be_idt << be_idt_nl;
       *os << node->nested_type_name (scope, "_slice", "_")
           << " *_tao_slice" << be_uidt_nl
-          << ");" << be_uidt_nl;
+          << ");" << be_uidt_nl << be_nl;
       *os << storage_class << node->nested_type_name (scope, "_slice", "_")
-          << " *";
+          << " *" << be_nl;
       *os << node->nested_type_name (scope, "_dup", "_")
           << " (" << be_idt << be_idt_nl
           << "const ";
       *os << node->nested_type_name (scope, "_slice", "_")
           << " *_tao_slice" << be_uidt_nl
-          << ");" << be_uidt_nl;
-      *os << storage_class << "void "
+          << ");" << be_uidt_nl << be_nl;
+      *os << storage_class << "void" << be_nl
           << node->nested_type_name (scope, "_copy", "_")
           << " (" << be_idt << be_idt_nl;
       *os << node->nested_type_name (scope, "_slice", "_")

@@ -96,7 +96,7 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
       << be_uidt_nl << "}\n";
 
 
-  if(factory_style == FS_CONCRETE_FACTORY)
+  if (factory_style == FS_CONCRETE_FACTORY)
     {
       // generate create_for_unmarshal()
       *os << be_nl
@@ -111,6 +111,8 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
           << "return ret_val;"
           << be_uidt_nl << "}\n";
     }
+
+  *os << be_nl;
 
   return 0;
 }

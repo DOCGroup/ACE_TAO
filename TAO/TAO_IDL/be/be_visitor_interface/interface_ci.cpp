@@ -64,10 +64,30 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+
   os->gen_ifdef_macro (node->flat_name (), "");
 
-  // Generate the constructor from stub and servant.
-  node->gen_stub_ctor (os);
+  if (node->is_abstract ())
+    {
+      *os << "ACE_INLINE" << be_nl
+          << node->name () << "::" << node->local_name () 
+          << " (void)" << be_idt_nl
+          << ": CORBA_AbstractBase ()" << be_uidt_nl
+          << "{}" << be_nl << be_nl;
+
+      *os << "ACE_INLINE" << be_nl
+          << node->name () << "::" << node->local_name () 
+          << " (const " << node->local_name () << " &rhs)" << be_idt_nl
+          << ": CORBA_AbstractBase (rhs)" << be_uidt_nl
+          << "{}" << be_nl << be_nl;
+    }
+  else
+    {
+      // Generate the constructor from stub and servant.
+      node->gen_stub_ctor (os);
+    }
 
   os->gen_endif ();
 

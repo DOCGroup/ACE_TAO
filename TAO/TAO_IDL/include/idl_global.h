@@ -102,25 +102,53 @@ public:
     , PS_ExceptDeclSeen         // Seen complete exception declaration
     , PS_InterfaceDeclSeen      // Seen complete interface declaration
     , PS_ModuleDeclSeen         // Seen complete module declaration
-    , PS_ValuetypeDeclSeen      // Seen complete valuetype declaration
+    , PS_ValueTypeDeclSeen      // Seen complete valuetype declaration
+    , PS_ComponentDeclSeen      // Seen complete component declaration
+    , PS_HomeDeclSeen           // Seen complete home declaration
+    , PS_EventDeclSeen          // Seen complete eventtype declartion
     , PS_AttrDeclSeen           // Seen complete attribute declaration
     , PS_OpDeclSeen             // Seen complete operation declaration
+    , PS_ProvidesDeclSeen       // Seen complete privides declaration
+    , PS_UsesDeclSeen           // Seen complete uses declaration
+    , PS_EmitsDeclSeen          // Seen complete emits declaration
+    , PS_PublishesDeclSeen      // Seen complete publishes declaration
+    , PS_FactoryDeclSeen        // Seen complete factory declaration
+    , PS_FinderDeclSeen         // Seen complete finder declaration
+    , PS_ConsumesDeclSeen       // Seen complete subscribes declaration
     , PS_ModuleSeen             // Seen a MODULE keyword
     , PS_ModuleIDSeen           // Seen the module ID
     , PS_ModuleSqSeen           // '{' seen for module
     , PS_ModuleQsSeen           // '}' seen for module
     , PS_ModuleBodySeen         // Seen complete module body
+    , PS_InheritColonSeen       // Seen ':' in inheritance list
+    , PS_InheritSpecSeen        // Seen a complete inheritance spec
+    , PS_SupportSpecSeen        // Seen a complete supports spec
+    , PS_ManagesSeen            // Seen a MANAGES keyword
+    , PS_ManagesIDSeen          // Seen the scoped name referred to by MANAGES
+    , PS_PrimaryKeySpecSeen     // Seen a complete primary key spec
     , PS_InterfaceSeen          // Seen an INTERFACE keyword
     , PS_InterfaceIDSeen        // Seen the interface ID
-    , PS_InheritSpecSeen        // Seen a complete inheritance spec
     , PS_InterfaceForwardSeen   // Forward interface decl seen
-    , PS_ValuetypeForwardSeen   // Forward valuetype decl seen
     , PS_InterfaceSqSeen        // '{' seen for interface
     , PS_InterfaceQsSeen        // '}' seen for interface
     , PS_InterfaceBodySeen      // Seen an interface body
-    , PS_InheritColonSeen       // Seen ':' in inheritance list
-    , PS_ValuetypeSeen          // Seen a VALUETYPE keyword
-    , PS_ValuetypeIDSeen        // Seen the valuetype ID
+    , PS_ValueTypeSeen          // Seen a VALUETYPE keyword
+    , PS_ValueTypeForwardSeen   // Forward valuetype decl seen
+    , PS_ValueTypeIDSeen        // Seen the valuetype ID
+    , PS_ValueTypeSqSeen        // '{' seen for value type
+    , PS_ValueTypeQsSeen        // '}' seen for value type
+    , PS_ValueTypeBodySeen      // Seen a value type body
+    , PS_ComponentSeen          // Seen a component declaration
+    , PS_ComponentIDSeen        // Seen the component ID
+    , PS_ComponentForwardSeen   // Seen a forward declaration of a component
+    , PS_ComponentSqSeen        // '{' seen for component
+    , PS_ComponentQsSeen        // '}' seen for component
+    , PS_ComponentBodySeen      // Seen a component body
+    , PS_HomeSeen               // Seen a home declaration
+    , PS_HomeIDSeen             // Seen the home ID
+    , PS_HomeSqSeen             // '{' seen for home
+    , PS_HomeQsSeen             // '}' seen for home
+    , PS_HomeBodySeen           // Seen a home body
     , PS_SNListCommaSeen        // Seen ',' in list of scoped names
     , PS_ScopedNameSeen         // Seen a complete scoped name
     , PS_SN_IDSeen              // Seen an identifier as part of a scoped name
@@ -217,9 +245,6 @@ public:
     , PS_DeclsDeclSeen          // Seen complete decl in decls list
     , PS_NativeSeen             // Seen a native declaration
     , PS_PragmaPrefixSyntax     // Could not parse the #pragma prefix
-    , PS_EventSeen              // Seen an event declaration
-    , PS_ComponentSeen          // Seen a component declaration
-    , PS_HomeDeclSeen           // Seen a home declaration
   };
 
   // Constructor
@@ -374,6 +399,12 @@ public:
   virtual idl_bool case_diff_error (void);
   // are we strict about case-only differences or not?
 
+  virtual void nest_orb (idl_bool);
+  // Set on or off whether we are using the NEST ORB.
+
+  virtual idl_bool nest_orb (void);
+  // are we beIng used with the NEST ORB?
+
   virtual void destroy (void);
   // Cleanup function.
 
@@ -458,6 +489,9 @@ private:
   idl_bool case_diff_error_;
   // Do we report an error for indentifiers in the same scope that differ
   // only by case? or just a warning?
+
+  idl_bool nest_orb_;
+  // Is this front end being used for the NEST ORB?
 
   ACE_CString idl_flags_;
   // Concatenation of all the command line options.

@@ -21,6 +21,8 @@
 #ifndef TAO_BE_VISITOR_UNION_BRANCH_H
 #define TAO_BE_VISITOR_UNION_BRANCH_H
 
+#include "idl_defines.h"
+
 #include "be_visitor_decl.h"
 #include "be_visitor_union_branch/public_ch.h"
 #include "be_visitor_union_branch/public_ci.h"

@@ -6,6 +6,8 @@
 #ifndef TAO_BE_VISITOR_SEQUENCE_H
 #define TAO_BE_VISITOR_SEQUENCE_H
 
+#include "idl_defines.h"
+
 #include "be_visitor_decl.h"
 #include "be_visitor_sequence/sequence_ch.h"
 #include "be_visitor_sequence/sequence_ci.h"

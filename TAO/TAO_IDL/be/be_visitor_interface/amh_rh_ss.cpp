@@ -56,17 +56,17 @@ be_visitor_amh_rh_interface_ss::visit_interface (be_interface *node)
   delete [] buf;
 
   ACE_CString rh_skel_class_name_prefix (rh_skel_prefix.c_str ());
+
   if (!node->is_nested ())
     {
       // ...or the "POA_TAO_" prefix if we are in the global
       // namespace....
       rh_skel_class_name_prefix = "POA_TAO_";
     }
-  //node->compute_full_name (rh_skel_class_name_prefix.c_str(), "", buf);
+
   ACE_CString rh_skel_class_name (rh_skel_class_name_prefix);
   rh_skel_class_name += node->local_name (); 
 
-  // constructor
   *os << be_nl << "// TAO_IDL - Generated from "
       << __FILE__ << ":" << __LINE__ << be_nl;
 
@@ -90,7 +90,7 @@ be_visitor_amh_rh_interface_ss::visit_interface (be_interface *node)
   *os << "}\n\n";
 
 
-  // generate code for elements in the scope (e.g., operations)
+  // Generate code for elements in the scope (e.g., operations)
   // We'll rely on the base class (be_visitor_scope) to do the
   // right thing for us.
   if (this->visit_scope (node) == -1)

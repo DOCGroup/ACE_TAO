@@ -42,15 +42,15 @@ be_visitor_interface_tie_si::~be_visitor_interface_tie_si (void)
 int
 be_visitor_interface_tie_si::visit_interface (be_interface *node)
 {
+  if (node->srv_inline_gen () || node->imported () || node->is_abstract ())
+    {
+      return 0;
+    }
+
   TAO_OutStream *os;
   static char fulltiename [NAMEBUFSIZE];
   static char localtiename [NAMEBUFSIZE];
   static char localskelname [NAMEBUFSIZE];
-
-  if (node->srv_inline_gen () || node->imported ())
-    {
-      return 0;
-    }
 
   ACE_OS::memset (fulltiename, 
                   '\0', 
@@ -90,6 +90,9 @@ be_visitor_interface_tie_si::visit_interface (be_interface *node)
                        "%s_tie",
                        node->local_name ());
     }
+
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   if (node->is_nested ())
     {
@@ -214,6 +217,15 @@ be_visitor_interface_tie_si::method_helper (be_interface *derived,
                                             be_interface *node,
                                             TAO_OutStream *os)
 {
+  // Any methods from abstract parents have already been
+  // "added" to the derived interface scope by the overridden 
+  // visit_scope() method in be_visitor_interface, so we can skip
+  // this base interface, if it is abstract.
+  if (node->is_abstract ())
+    {
+      return 0;
+    }
+
   be_visitor_context ctx;
   ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SI);
   ctx.interface (derived);

@@ -78,7 +78,6 @@ protected:
 
   int visit_node (be_type *);
   // helper that does the common job
-
 };
 
 #endif /* _BE_VISITOR_ARRAY_ARRAY_H_*/

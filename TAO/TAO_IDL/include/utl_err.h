@@ -111,6 +111,8 @@ public:
     EIDL_INHERIT_FWD_ERROR,     // Cannot inherit from fwd decl interface
     EIDL_SUPPORTS_FWD_ERROR,    // Cannot support a fwd decl interface
     EIDL_CONSTANT_EXPECTED,     // We got something else..
+    EIDL_INTERFACE_EXPECTED,    // We got something else..
+    EIDL_VALUETYPE_EXPECTED,    // We got something else..
     EIDL_NAME_CASE_ERROR,       // Identifier spellings differ only in case
     EIDL_NAME_CASE_WARNING,     // Same as above, but only a warning
     EIDL_KEYWORD_ERROR,         // Case-insensitive clash with IDL keyword
@@ -234,6 +236,16 @@ public:
   // label did not evaluate to a constant
   void constant_expected (UTL_ScopedName *n,
                           AST_Decl *d);
+
+  // Report a situation where an interface was expected but we got
+  // something else instead. This most likely is a case in a supports
+  // or inheritance list.
+  void interface_expected (AST_Decl *d);
+
+  // Report a situation where an value type was expected but we got
+  // something else instead. This most likely is a case in a primary
+  // key, emits, publishes or consumes declaration.
+  void valuetype_expected (AST_Decl *d);
 
   // Report a situation where an enumerator was expected but we got
   // something else instead. This occurs when a union with an enum

@@ -52,17 +52,14 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
     }
   else
     {
-      TAO_OutStream *os = this->ctx_->stream ();
-
-      be_type *bt; // base type of the array
-
       if (node->cli_inline_cdr_op_gen () || node->imported ())
         {
           return 0;
         }
 
       // Retrieve the type.
-      bt = be_type::narrow_from_decl (node->base_type ());
+      be_type *bt = be_type::narrow_from_decl (node->base_type ());
+      TAO_OutStream *os = this->ctx_->stream ();
 
       if (!bt)
         {
@@ -136,8 +133,10 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
 
       //  Set the sub state as generating code for the output operator.
       this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
-      *os << "ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
-          << "const " << fname << "_forany &_tao_array)" << be_nl
+      *os << "ACE_INLINE CORBA::Boolean operator<< (" << be_idt << be_idt_nl
+          << "TAO_OutputCDR &strm," << be_nl
+          << "const " << fname << "_forany &_tao_array" << be_uidt_nl
+          << ")" << be_uidt_nl
           << "{" << be_idt_nl;
 
       if (bt->accept (this) == -1)
@@ -154,8 +153,10 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
       //  Set the sub state as generating code for the input operator.
       os->indent ();
       this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_INPUT);
-      *os << "ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, "
-          << fname << "_forany &_tao_array)" << be_nl
+      *os << "ACE_INLINE CORBA::Boolean operator>> (" << be_idt << be_idt_nl
+          << "TAO_InputCDR &strm," << be_nl
+          << fname << "_forany &_tao_array" << be_uidt_nl
+          << ")" << be_uidt_nl
           << "{" << be_idt_nl;
 
       if (bt->accept (this) == -1)
@@ -171,6 +172,7 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
 
       node->cli_inline_cdr_op_gen (1);
     }
+
   return 0;
 }
 
@@ -393,14 +395,16 @@ be_visitor_array_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
                         -1);
     }
 
+  unsigned long ndims = array->n_dims ();
+
   // Generate a product of all the dimensions. This will be the total length
   // of the "unfolded" single dimensional array.
-  for (i = 0; i < array->n_dims (); i++)
+  for (i = 0; i < ndims; ++i)
     {
       // Retrieve the ith dimension value.
       AST_Expression *expr = array->dims ()[i];
 
-      if ((expr == NULL) || ((expr != NULL) && (expr->ev () == NULL)))
+      if ((expr == 0) || ((expr != 0) && (expr->ev () == 0)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_array_cdr_op_ci::"
@@ -499,17 +503,19 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
   // Initialize a boolean variable.
   *os << "CORBA::Boolean _tao_marshal_flag = 1;" << be_nl;
 
+  unsigned long ndims = node->n_dims ();
+
   // We get here if the "type" of individual elements of the array is not a
   // primitive type. In this case, we are left with no other alternative but to
   // encode/decode element by element.
 
   // generate nested loops for as many dimensions as there are
-  for (i = 0; i < node->n_dims (); i++)
+  for (i = 0; i < ndims; ++i)
     {
       // Retrieve the ith dimension value.
       AST_Expression *expr = node->dims ()[i];
 
-      if ((expr == NULL) || ((expr != NULL) && (expr->ev () == NULL)))
+      if ((expr == 0) || ((expr != 0) && (expr->ev () == 0)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_array_cdr_op_ci::"
@@ -551,7 +557,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
           *os << "_tao_marshal_flag = (strm >> tmp);" << be_nl;
           *os << bt->name () << "_copy (_tao_array";
 
-          for (i = 0; i < node->n_dims (); i++)
+          for (i = 0; i < ndims; ++i)
             {
               *os << "[i" << i << "]";
             }
@@ -623,7 +629,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
           *os << bt->name () << "_var tmp_var ("
               << bt->name () << "_dup (_tao_array";
 
-          for (i = 0; i < node->n_dims (); i++)
+          for (i = 0; i < ndims; ++i)
             {
               *os << "[i" << i << "]";
             }
@@ -637,7 +643,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
           *os << "_tao_marshal_flag = (strm << ";
           *os << "_tao_array ";
 
-          for (i = 0; i < node->n_dims (); i++)
+          for (i = 0; i < ndims; ++i)
             {
               *os << "[i" << i << "]";
             }
@@ -694,7 +700,7 @@ be_visitor_array_cdr_op_ci::visit_node (be_type *bt)
                         -1);
     }
 
-  for (i = 0; i < node->n_dims (); i++)
+  for (i = 0; i < ndims; ++i)
     {
       // Decrement indentation as many times as the number of dimensions.
       *os << be_uidt;

@@ -2838,6 +2838,7 @@ idl_store_pragma (char *buf)
       if (new_id != 0)
         {
           d->repoID (new_id);
+          d->typeid_set (1);
         }
     }
 }

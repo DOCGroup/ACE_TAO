@@ -195,9 +195,8 @@ DRV_init (void)
 **
 ** LOGIC:
 **
-** 1. Initialize the CFE, stage 1. This builds the scope stack
 ** 2. Initialize the BE. This builds an instance of the generator
-** 3. Initialize the CFE, stage 2. This builds the global scope
+** 3. Initialize the FE. This builds the global scope
 **    and populates it with the predefined types
 ** 4. Invoke FE_yyparse
 ** 5. Check for errors from FE_yyparse. If any, exit now

@@ -69,6 +69,7 @@ be_visitor_structure_cdr_op_ci::visit_structure (be_structure *node)
 
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
+
   *os << "ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, "
       << "const " << node->name () << " &_tao_aggregate)" << be_nl
       << "{" << be_idt_nl;
@@ -78,6 +79,7 @@ be_visitor_structure_cdr_op_ci::visit_structure (be_structure *node)
     be_visitor_cdr_op_field_decl field_decl (&new_ctx);
     field_decl.visit_scope (node);
   }
+
   *os << "if (" << be_idt_nl;
 
   if (this->visit_scope (node) == -1)
@@ -88,6 +90,7 @@ be_visitor_structure_cdr_op_ci::visit_structure (be_structure *node)
                          "codegen for scope failed\n"), 
                         -1);
     }
+
   *os << be_uidt_nl << ")"
       << be_idt_nl
       << "return 1;" << be_uidt_nl
@@ -97,6 +100,7 @@ be_visitor_structure_cdr_op_ci::visit_structure (be_structure *node)
 
   // Set the substate as generating code for the input operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
+
   *os << "ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, "
       << node->name () << " &_tao_aggregate)" << be_nl
       << "{" << be_idt_nl;
@@ -106,6 +110,7 @@ be_visitor_structure_cdr_op_ci::visit_structure (be_structure *node)
     be_visitor_cdr_op_field_decl field_decl (&new_ctx);
     field_decl.visit_scope (node);
   }
+
   *os << "if (" << be_idt_nl;
 
   if (this->visit_scope (node) == -1)
@@ -116,6 +121,7 @@ be_visitor_structure_cdr_op_ci::visit_structure (be_structure *node)
                          "codegen for scope failed\n"), 
                         -1);
     }
+
   *os << be_uidt_nl << ")"
       << be_idt_nl
       << "return 1;" << be_uidt_nl
@@ -140,12 +146,12 @@ be_visitor_structure_cdr_op_ci::post_process (be_decl *bd)
         case TAO_CodeGen::TAO_CDR_OUTPUT:
         case TAO_CodeGen::TAO_CDR_INPUT:
           *os << " &&" << be_nl;
-
           break;
         case TAO_CodeGen::TAO_CDR_SCOPE:
         default:
           break;
         };
     }
+
   return 0;
 }

@@ -215,41 +215,38 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   // The static T::_tao_unmarshal method
 
   *os << "CORBA::Boolean " << node->name()
-      << "::_tao_unmarshal (TAO_InputCDR &strm, "
-      << node->local_name () <<" *&new_object)" << be_nl
+      << "::_tao_unmarshal (" << be_idt << be_idt_nl
+      << "TAO_InputCDR &strm," << be_nl
+      << node->local_name () << " *&new_object" << be_uidt_nl
+      << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "CORBA::Boolean retval = 1;" << be_nl
-      << "CORBA::ValueBase *base;   // %! should be a _var"
-      << be_nl
-      << "CORBA::ValueFactory_ptr factory;   // %! should be a _var"
-      << be_nl
-      << "if (!CORBA::ValueBase::_tao_unmarshal_pre (strm, factory, base," 
-      << be_idt_nl
-      << "      " << node->local_name ()
-      << "::_tao_obv_static_repository_id ()) )" << be_nl
+      << "CORBA::ValueBase *base = 0;" << be_nl
+      << "CORBA::ValueFactory_var factory;" << be_nl
+      << "CORBA::Boolean retval =" << be_idt_nl
+      << "CORBA::ValueBase::_tao_unmarshal_pre (" << be_idt << be_idt_nl
+      << "strm," << be_nl
+      << "factory," << be_nl
+      << "base," << be_nl
+      << node->local_name () << "::_tao_obv_static_repository_id ()" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl << be_nl
+      << "if (retval == 0 || factory.in () == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "if (factory != 0)" << be_idt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "base = factory->create_for_unmarshal ();" << be_nl << be_nl
+      << "if (base == 0)" << be_idt_nl
       << "{" << be_idt_nl
-      << "base = factory->create_for_unmarshal ();" << be_nl
-      << "factory->_remove_ref ();" << be_nl
-      << "if (base == 0)  return 0;  // %! except.?" << be_nl
-      << "//%! ACE_DEBUG ((LM_DEBUG, \"" << node->name()
-      << "::_tao_unmarshal %s\\n\", "
-      << "base->_tao_obv_repository_id () ));" << be_nl
-      << "retval = base->_tao_unmarshal_v (strm);" << be_nl
-      << "//%! ACE_DEBUG ((LM_DEBUG, \"" << node->name()
-      << "::_tao_unmarshal retval unmarshal_v is %d\\n\", "
-      << "retval));" << be_nl
-      << "if (!retval) return 0;"
-      << be_uidt_nl << "}" << be_uidt_nl
-      << "// Now base must be null or point to the unmarshaled object."
-      << be_nl
+      << "return 0;  // %! except.?" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "retval = base->_tao_unmarshal_v (strm);" << be_nl << be_nl
+      << "if (retval == 0)" << be_idt_nl
+      << "{" << be_idt_nl
+      << "return 0;" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "// Now base must be null or point to the unmarshaled object." << be_nl
       << "// Align the pointer to the right subobject." << be_nl
       << "new_object = " << node->local_name () << "::_downcast (base);" << be_nl
-      << "// %! unmarshal_post" << be_nl
-      << "return 1;" << be_uidt_nl
+      << "return retval;" << be_uidt_nl
       << "}\n" << be_nl;
 
   // Generate code for the elements of the valuetype.

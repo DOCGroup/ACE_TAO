@@ -171,9 +171,9 @@ AST_InterfaceFwd::is_defined (void)
 void
 AST_InterfaceFwd::destroy (void)
 {
-  this->pd_full_definition->destroy ();
-  delete this->pd_full_definition;
-  this->pd_full_definition = 0;
+//  this->pd_full_definition->destroy ();
+//  delete this->pd_full_definition;
+//  this->pd_full_definition = 0;
 }
 
 // Narrowing methods.

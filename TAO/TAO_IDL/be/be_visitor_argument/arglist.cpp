@@ -151,7 +151,7 @@ int be_visitor_args_arglist::visit_interface_fwd (be_interface_fwd *node)
 
 int be_visitor_args_arglist::visit_native (be_native *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   switch (this->direction ())
     {
@@ -165,6 +165,7 @@ int be_visitor_args_arglist::visit_native (be_native *node)
       *os << this->type_name (node) << " &";
       break;
     }
+
   return 0;
 }
 
@@ -245,7 +246,7 @@ int be_visitor_args_arglist::visit_predefined_type (be_predefined_type *node)
 
 int be_visitor_args_arglist::visit_sequence (be_sequence *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get the stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   switch (this->direction ())
     {
@@ -265,7 +266,7 @@ int be_visitor_args_arglist::visit_sequence (be_sequence *node)
 
 int be_visitor_args_arglist::visit_string (be_string *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get the stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   if (node->width () == (long) sizeof (char))
     {
@@ -303,7 +304,7 @@ int be_visitor_args_arglist::visit_string (be_string *node)
 
 int be_visitor_args_arglist::visit_structure (be_structure *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get the stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   switch (this->direction ())
     {
@@ -323,7 +324,7 @@ int be_visitor_args_arglist::visit_structure (be_structure *node)
 
 int be_visitor_args_arglist::visit_union (be_union *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get the stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   switch (this->direction ())
     {
@@ -361,7 +362,7 @@ int be_visitor_args_arglist::visit_typedef (be_typedef *node)
 
 int be_visitor_args_arglist::visit_valuetype (be_valuetype *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get the stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   switch (this->direction ())
     {

@@ -135,9 +135,14 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   if (this->ctx_->tdef ())
     {
       // typedefed node
-      ACE_OS::sprintf (nodename, "%s", node->full_name ());
-      ACE_OS::sprintf (fname, "%s_var", node->full_name ());
-      ACE_OS::sprintf (lname, "%s_var",
+      ACE_OS::sprintf (nodename, 
+                       "%s", 
+                       node->full_name ());
+      ACE_OS::sprintf (fname, 
+                       "%s_var", 
+                       node->full_name ());
+      ACE_OS::sprintf (lname, 
+                       "%s_var",
                        node->local_name ()->get_string ());
     }
   else
@@ -149,25 +154,38 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
         {
           be_decl *parent = 
             be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (nodename, "%s::_%s", parent->full_name (),
+          ACE_OS::sprintf (nodename, 
+                           "%s::_%s", 
+                           parent->full_name (),
                            node->local_name ()->get_string ());
-          ACE_OS::sprintf (fname, "%s::_%s_var", parent->full_name (),
+          ACE_OS::sprintf (fname,
+                           "%s::_%s_var", 
+                           parent->full_name (),
                            node->local_name ()->get_string ());
-          ACE_OS::sprintf (lname, "_%s_var",
+          ACE_OS::sprintf (lname,
+                           "_%s_var",
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (nodename, "_%s", node->full_name ());
-          ACE_OS::sprintf (fname, "_%s_var", node->full_name ());
-          ACE_OS::sprintf (lname, "_%s_var",
+          ACE_OS::sprintf (nodename,
+                           "_%s", 
+                           node->full_name ());
+          ACE_OS::sprintf (fname,
+                           "_%s_var", 
+                           node->full_name ());
+          ACE_OS::sprintf (lname,
+                           "_%s_var",
                            node->local_name ()->get_string ());
         }
     }
 
-  // generate the var implementation in the inline file
+  // Generate the var implementation in the inline file.
 
-  os->indent (); // start with whatever was our current indent level
+  os->indent ();
+
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// *************************************************************"
       << be_nl;
@@ -177,133 +195,139 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   // default constr
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname <<
-    " (void) // default constructor" << be_nl;
+    " (void)" << be_nl;
   *os << "  " << ": ptr_ (0)" << be_nl;
-  *os << "{}\n\n";
+  *os << "{}" << be_nl << be_nl;
 
   // constr from a _slice *
-  os->indent ();
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (" << nodename << "_slice *p)" << be_nl;
   *os << "  : ptr_ (p)" << be_nl;
-  *os << "{}\n\n";
+  *os << "{}" << be_nl << be_nl;
 
   // copy constructor (deep copy)
-  os->indent ();
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (const " << fname
-      << " &p) // copy constructor" << be_nl;
+      << " &p)" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "this->ptr_ = " << nodename << "_dup " << "(ACE_const_cast (const "
-      << nodename << "_slice *, p.ptr_));" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "this->ptr_ =" << be_idt_nl << nodename << "_dup " << "(" 
+      << be_idt << be_idt_nl
+      << "ACE_const_cast (" << be_idt << be_idt_nl
+      << "const "
+      << nodename << "_slice *," << be_nl
+      << "p.ptr_" << be_uidt_nl
+      << ")" << be_uidt << be_uidt_nl
+      << ");" << be_uidt << be_uidt << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   // destructor
-  os->indent ();
   *os << "ACE_INLINE" << be_nl;
-  *os << fname << "::~" << lname << " (void) // destructor" << be_nl;
+  *os << fname << "::~" << lname << " (void)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << nodename << "_free (this->ptr_);" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // assignment operator
-  os->indent ();
   *os << "ACE_INLINE " << fname << " &" << be_nl;
   *os << fname << "::operator= (" << nodename
       << "_slice *p)" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "// is what we own the same that is being assigned to us?"
+  *os << "// Is what we own the same that is being assigned to us?"
       << be_nl;
-  *os << "if (this->ptr_ != p)" << be_nl;
+  *os << "if (this->ptr_ != p)" << be_idt_nl;
   *os << "{" << be_idt_nl;
-  *os << "// delete our stuff and assume ownership of p" << be_nl;
+  *os << "// Delete our stuff and assume ownership of p." << be_nl;
   *os << nodename << "_free (this->ptr_);" << be_nl;
   *os << "this->ptr_ = p;" << be_uidt_nl;
-  *os << "}" << be_nl;
+  *os << "}" << be_uidt_nl << be_nl;
   *os << "return *this;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // assignment operator from _var
-  os->indent ();
   *os << "ACE_INLINE " << fname << " &" << be_nl;
   *os << fname << "::operator= (const " << fname
       << " &p)" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "if (this != &p)" << be_nl;
+  *os << "if (this != &p)" << be_idt_nl;
   *os << "{" << be_idt_nl;
-  *os << "// not assigning to ourselves" << be_nl;
-  *os << nodename << "_free (this->ptr_); // free old stuff" << be_nl;
-  *os << "// deep copy" << be_nl;
-  *os << "this->ptr_ = " << nodename << "_dup (ACE_const_cast (const "
-      << nodename << "_slice *, p.ptr_));" << be_uidt_nl;
-  *os << "}" << be_nl;
+  *os << nodename << "_free (this->ptr_);" << be_nl;
+  *os << "// Deep copy." << be_nl;
+  *os << "this->ptr_ =" << be_idt_nl
+      << nodename << "_dup (" << be_idt << be_idt_nl
+      << "ACE_const_cast (" << be_idt << be_idt_nl
+      << "const " << nodename << "_slice *," << be_nl\
+      << "p.ptr_" << be_uidt_nl
+      << ")" << be_uidt << be_uidt_nl
+      << ");" << be_uidt << be_uidt << be_uidt_nl;
+  *os << "}" << be_uidt_nl << be_nl;
   *os << "return *this;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // other extra methods - cast operators ()
-  os->indent ();
   *os << "ACE_INLINE " << be_nl;
   *os << fname << "::operator " << nodename
-      << "_slice * const &() const // cast" << be_nl;
+      << "_slice * const &() const" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   if (node->size_type () == AST_Type::VARIABLE)
     {
-      os->indent ();
       *os << "ACE_INLINE " << be_nl;
       *os << fname << "::operator " << nodename
           << "_slice *&() // cast " << be_nl;
       *os << "{" << be_idt_nl;
       *os << "return this->ptr_;" << be_uidt_nl;
-      *os << "}\n\n";
+      *os << "}" << be_nl << be_nl;
     }
 
   // two operator []s instead of ->
-  os->indent ();
   *os << "ACE_INLINE " << be_nl;
   *os << "const " << nodename << "_slice &" << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index) const" << be_nl;
   *os << "{" << be_nl;
 
   *os << "#if defined (ACE_HAS_BROKEN_IMPLICIT_CONST_CAST)" << be_idt_nl;
-  *os << "return ACE_const_cast (const " << nodename
-      << "_slice &, this->ptr_[index]);" << be_uidt_nl;
+  *os << "return ACE_const_cast (" << be_idt << be_idt_nl
+      << "const " << nodename
+      << "_slice &," << be_nl
+      << "this->ptr_[index]" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl;
   *os << "#else" << be_idt_nl;
   *os << "const " << nodename << "_slice &tmp = this->ptr_[index];" << be_nl;
   *os << "return tmp;" << be_uidt_nl;
   *os << "#endif /* ACE_HAS_BROKEN_IMPLICIT_CONST_CAST */" << be_nl;
 
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
-  os->indent ();
   *os << "ACE_INLINE " << be_nl;
   *os << nodename << "_slice &" << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_[index];" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // copy (in case we are a sequence element)
-  os->indent ();
   *os << "ACE_INLINE void" << be_nl;
-  *os << fname << "::copy (" << nodename << "_slice *_tao_to, "
-      << "const " << nodename << "_slice *_tao_from)" << be_nl;
+  *os << fname << "::copy (" << be_idt << be_idt_nl
+      << nodename << "_slice *_tao_to," << be_nl
+      << "const " << nodename << "_slice *_tao_from" << be_uidt_nl
+      << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
   *os << nodename << "_copy (_tao_to, _tao_from);" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // in, inout, out, and _retn
-  os->indent ();
   *os << "ACE_INLINE const " << nodename << "_slice *" << be_nl;
   *os << fname << "::in (void) const" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "return ACE_const_cast (const " << nodename
-      << "_slice *, this->ptr_);" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "return ACE_const_cast (" << be_idt << be_idt_nl
+      << "const " << nodename
+      << "_slice *," << be_nl
+      << "this->ptr_" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
-  os->indent ();
   if (node->size_type () == AST_Type::FIXED)
     {
       *os << "ACE_INLINE " << nodename << "_slice *" << be_nl;
@@ -316,28 +340,25 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << fname << "::inout (void)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
-  os->indent ();
   *os << "ACE_INLINE " << nodename << "_slice * &" << be_nl;
   *os << fname << "::out (void)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << nodename << "_free (this->ptr_);" << be_nl;
   *os << "this->ptr_ = (" << nodename << "_slice *)0;" << be_nl;
   *os << "return this->ptr_;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
-  os->indent ();
   *os << "ACE_INLINE " << nodename << "_slice *" << be_nl;
   *os << fname << "::_retn (void)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << nodename << "_slice *tmp = this->ptr_;" << be_nl;
   *os << "this->ptr_ = (" << nodename << "_slice *)0;" << be_nl;
   *os << "return tmp;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // the additional ptr () member function
-  os->indent ();
   *os << "ACE_INLINE " << nodename << "_slice *" << be_nl;
   *os << fname << "::ptr (void) const" << be_nl;
   *os << "{" << be_idt_nl;
@@ -357,15 +378,26 @@ be_visitor_array_ci::gen_out_impl (be_array *node)
   char lname [NAMEBUFSIZE];  // local names of the out class
   // save the node's local name and full name in a buffer for quick use later
   // on
-  ACE_OS::memset (nodename, '\0', NAMEBUFSIZE);
-  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (nodename, 
+                  '\0', 
+                  NAMEBUFSIZE);
+  ACE_OS::memset (fname, 
+                  '\0', 
+                  NAMEBUFSIZE);
+  ACE_OS::memset (lname, 
+                  '\0', 
+                  NAMEBUFSIZE);
   if (this->ctx_->tdef ())
     {
       // typedefed node
-      ACE_OS::sprintf (nodename, "%s", node->full_name ());
-      ACE_OS::sprintf (fname, "%s_out", node->full_name ());
-      ACE_OS::sprintf (lname, "%s_out",
+      ACE_OS::sprintf (nodename, 
+                       "%s", 
+                       node->full_name ());
+      ACE_OS::sprintf (fname,
+                       "%s_out", 
+                       node->full_name ());
+      ACE_OS::sprintf (lname,
+                       "%s_out",
                        node->local_name ()->get_string ());
     }
   else
@@ -377,42 +409,54 @@ be_visitor_array_ci::gen_out_impl (be_array *node)
         {
           be_decl *parent = 
             be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (nodename, "%s::_%s", parent->full_name (),
+          ACE_OS::sprintf (nodename,
+                           "%s::_%s", 
+                           parent->full_name (),
                            node->local_name ()->get_string ());
-          ACE_OS::sprintf (fname, "%s::_%s_out", parent->full_name (),
+          ACE_OS::sprintf (fname,
+                           "%s::_%s_out", 
+                           parent->full_name (),
                            node->local_name ()->get_string ());
-          ACE_OS::sprintf (lname, "_%s_out",
+          ACE_OS::sprintf (lname,
+                           "_%s_out",
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (nodename, "_%s", node->full_name ());
-          ACE_OS::sprintf (fname, "_%s_out", node->full_name ());
-          ACE_OS::sprintf (lname, "_%s_out",
+          ACE_OS::sprintf (nodename,
+                           "_%s", 
+                           node->full_name ());
+          ACE_OS::sprintf (fname,
+                           "_%s_out", 
+                           node->full_name ());
+          ACE_OS::sprintf (lname,
+                           "_%s_out",
                            node->local_name ()->get_string ());
         }
     }
 
-  // generate the out implementation in the inline file
+  // Generate the out implementation in the inline file.
 
-  os->indent (); // start with whatever was our current indent level
+  os->indent ();
+
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// *************************************************************"
       << be_nl;
   *os << "// Inline operations for class " << fname << be_nl;
-  *os << "// *************************************************************\n\n";
+  *os << "// *************************************************************"
+      << be_nl << be_nl;
 
-  // constr from a pointer to slice
-  os->indent ();
+  // Constructor from a pointer to slice.
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (" << nodename << "_slice *&p)" << be_nl;
   *os << "  : ptr_ (p)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "this->ptr_ = 0;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // constructor from _var &
-  os->indent ();
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (" << nodename
       << "_var &p) // constructor from _var" << be_nl;
@@ -420,19 +464,17 @@ be_visitor_array_ci::gen_out_impl (be_array *node)
   *os << "{" << be_idt_nl;
   *os << nodename << "_free (this->ptr_);" << be_nl;
   *os << "this->ptr_ = 0;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // copy constructor
-  os->indent ();
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (const " << fname
       << " &p) // copy constructor" << be_nl;
   *os << "  : ptr_ (ACE_const_cast ("
       << fname << "&,p).ptr_)" << be_nl;
-  *os << "{}\n\n";
+  *os << "{}" << be_nl << be_nl;
 
   // assignment operator from _out &
-  os->indent ();
   *os << "ACE_INLINE " << fname << " &" << be_nl;
   *os << fname << "::operator= (const " << fname
       << " &p)" << be_nl;
@@ -440,39 +482,35 @@ be_visitor_array_ci::gen_out_impl (be_array *node)
   *os << "this->ptr_ = ACE_const_cast ("
       << fname << "&,p).ptr_;" << be_nl;
   *os << "return *this;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // assignment from _var is not allowed
 
   // assignment operator from _ptr
-  os->indent ();
   *os << "ACE_INLINE " << fname << " &" << be_nl;
   *os << fname << "::operator= (" << nodename
       << "_slice *p)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "this->ptr_ = p;" << be_nl;
   *os << "return *this;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // other extra methods - cast operator ()
-  os->indent ();
   *os << "ACE_INLINE " << be_nl;
   *os << fname << "::operator " << nodename
       << "_slice *&() // cast" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // ptr function
-  os->indent ();
   *os << "ACE_INLINE " << nodename << "_slice *&" << be_nl;
   *os << fname << "::ptr (void) // ptr" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // operator [] instead of ->
-  os->indent ();
   *os << "ACE_INLINE " << nodename << "_slice &" << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index)" << be_nl;
   *os << "{" << be_idt_nl;
@@ -488,22 +526,35 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   if (node->is_local ())
     return 0;
 
-  TAO_OutStream *os = this->ctx_->stream (); // output stream
+  TAO_OutStream *os = this->ctx_->stream ();
 
   char nodename [NAMEBUFSIZE]; // node name
   char fname [NAMEBUFSIZE];  // to hold the full and
-  char lname [NAMEBUFSIZE];  // local names of the var
-  // save the node's local name and full name in a buffer for quick use later
+  char lname [NAMEBUFSIZE];  // local names of the forany
+
+  // Save the node's local name and full name in a buffer for quick use later
   // on
-  ACE_OS::memset (nodename, '\0', NAMEBUFSIZE);
-  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
-  ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (nodename, 
+                  '\0', 
+                  NAMEBUFSIZE);
+  ACE_OS::memset (fname, 
+                  '\0', 
+                  NAMEBUFSIZE);
+  ACE_OS::memset (lname, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
   if (this->ctx_->tdef ())
     {
       // typedefed node
-      ACE_OS::sprintf (nodename, "%s", node->full_name ());
-      ACE_OS::sprintf (fname, "%s_forany", node->full_name ());
-      ACE_OS::sprintf (lname, "%s_forany",
+      ACE_OS::sprintf (nodename, 
+                       "%s", 
+                       node->full_name ());
+      ACE_OS::sprintf (fname, 
+                       "%s_forany", 
+                       node->full_name ());
+      ACE_OS::sprintf (lname,
+                       "%s_forany",
                        node->local_name ()->get_string ());
     }
   else
@@ -515,18 +566,28 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
         {
           be_decl *parent = 
             be_scope::narrow_from_scope (node->defined_in ())->decl ();
-          ACE_OS::sprintf (nodename, "%s::_%s", parent->full_name (),
+          ACE_OS::sprintf (nodename, 
+                           "%s::_%s", 
+                           parent->full_name (),
                            node->local_name ()->get_string ());
-          ACE_OS::sprintf (fname, "%s::_%s_forany", parent->full_name (),
+          ACE_OS::sprintf (fname, 
+                           "%s::_%s_forany", 
+                           parent->full_name (),
                            node->local_name ()->get_string ());
-          ACE_OS::sprintf (lname, "_%s_forany",
+          ACE_OS::sprintf (lname, 
+                           "_%s_forany",
                            node->local_name ()->get_string ());
         }
       else
         {
-          ACE_OS::sprintf (nodename, "_%s", node->full_name ());
-          ACE_OS::sprintf (fname, "_%s_forany", node->full_name ());
-          ACE_OS::sprintf (lname, "_%s_forany",
+          ACE_OS::sprintf (nodename,
+                           "_%s", 
+                           node->full_name ());
+          ACE_OS::sprintf (fname,
+                           "_%s_forany", 
+                           node->full_name ());
+          ACE_OS::sprintf (lname,
+                           "_%s_forany",
                            node->local_name ()->get_string ());
         }
     }
@@ -535,101 +596,109 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
 
   os->indent (); // start with whatever was our current indent level
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   *os << "// *************************************************************"
       << be_nl;
   *os << "// Inline operations for class " << fname << be_nl;
-  *os << "// *************************************************************\n\n";
+  *os << "// *************************************************************"
+      << be_nl << be_nl;
 
   // default constr
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname <<
-    " (void) // default constructor" << be_nl;
+    " (void)" << be_nl;
   *os << "  " << ": ptr_ (0)," << be_nl;
   *os << "    nocopy_ (0)" << be_nl;
-  *os << "{}\n\n";
+  *os << "{}" << be_nl << be_nl;
 
   // constr from a _slice *
-  os->indent ();
   *os << "ACE_INLINE" << be_nl;
-  *os << fname << "::" << lname << " (" << nodename << "_slice *p, "
-      << "CORBA::Boolean nocopy)" << be_nl;
+  *os << fname << "::" << lname << " (" << be_idt << be_idt_nl
+      << nodename << "_slice *p," << be_nl
+      << "CORBA::Boolean nocopy" << be_uidt_nl
+      << ")" << be_uidt_nl;
   *os << "  : ptr_ (p)," << be_nl;
   *os << "    nocopy_ (nocopy)" << be_nl;
-  *os << "{}\n\n";
+  *os << "{}" << be_nl << be_nl;
 
   // copy constructor (deep copy)
-  os->indent ();
   *os << "ACE_INLINE" << be_nl;
-  *os << fname << "::" << lname << " (const " << fname
-      << " &p) // copy constructor" << be_nl;
+  *os << fname << "::" << lname << " (" << be_idt << be_idt_nl
+      << "const " << fname << " &p" << be_uidt_nl
+      << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
-  *os << "this->ptr_ = " << nodename << "_dup (ACE_const_cast (const "
-      << nodename << "_slice *, p.ptr_));" << be_nl;
+  *os << "this->ptr_ =" << be_idt_nl 
+      << nodename << "_dup (" << be_idt << be_idt_nl
+      << "ACE_const_cast (" << be_idt << be_idt_nl
+      << "const " << nodename << "_slice *," << be_nl
+      << "p.ptr_" << be_uidt_nl
+      << ")" << be_uidt << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl;
   *os << "this->nocopy_ = p.nocopy_;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // destructor
-  os->indent ();
   *os << "ACE_INLINE" << be_nl;
-  *os << fname << "::~" << lname << " (void) // destructor" << be_nl;
-  *os << "{" << be_nl;
-  *os << "   // don't do anything" << be_nl;
-  *os << "}\n\n";
+  *os << fname << "::~" << lname << " (void)" << be_nl;
+  *os << "{" << be_idt_nl;
+  *os << "// don't do anything" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   // assignment operator
-  os->indent ();
   *os << "ACE_INLINE " << fname << " &" << be_nl;
   *os << fname << "::operator= (" << nodename
       << "_slice *p)" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "// is what we own the same that is being assigned to us?"
+  *os << "// Is what we own the same that is being assigned to us?"
       << be_nl;
-  *os << "if (this->ptr_ != p)" << be_nl;
+  *os << "if (this->ptr_ != p)" << be_idt_nl;
   *os << "{" << be_idt_nl;
-  *os << "// delete our stuff and assume ownership of p" << be_nl;
+  *os << "// Delete our stuff and assume ownership of p." << be_nl;
   *os << nodename << "_free (this->ptr_);" << be_nl;
   *os << "this->ptr_ = p;" << be_uidt_nl;
-  *os << "}" << be_nl;
+  *os << "}" << be_uidt_nl << be_nl;
   *os << "return *this;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // assignment operator from _forany
-  os->indent ();
   *os << "ACE_INLINE " << fname << " &" << be_nl;
   *os << fname << "::operator= (const " << fname
       << " &p)" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "if (this != &p)" << be_nl;
+  *os << "if (this != &p)" << be_idt_nl;
   *os << "{" << be_idt_nl;
-  *os << "// not assigning to ourselves" << be_nl;
-  *os << nodename << "_free (this->ptr_); // free old stuff" << be_nl;
-  *os << "// deep copy" << be_nl;
-  *os << "this->ptr_ = " << nodename << "_dup (ACE_const_cast (const "
-      << nodename << "_slice *, p.ptr_));" << be_nl;
+  *os << nodename << "_free (this->ptr_);" << be_nl;
+  *os << "// Deep copy." << be_nl;
+  *os << "this->ptr_ =" << be_idt_nl
+      << nodename << "_dup (" << be_idt << be_idt_nl
+      << "ACE_const_cast (" << be_idt << be_idt_nl
+      << "const " << nodename << "_slice *," << be_nl
+      << "p.ptr_" << be_uidt_nl
+      << ")" << be_uidt << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl;
   *os << "this->nocopy_ = p.nocopy_;" << be_uidt_nl;
-  *os << "}" << be_nl;
+  *os << "}" << be_uidt_nl << be_nl;
   *os << "return *this;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // other extra methods - cast operators ()
-  os->indent ();
   *os << "ACE_INLINE " << be_nl;
   *os << fname << "::operator " << nodename
-      << "_slice * const &() const // cast" << be_nl;
+      << "_slice * const &() const" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
-  os->indent ();
   *os << "ACE_INLINE " << be_nl;
   *os << fname << "::operator " << nodename
-      << "_slice *&() // cast " << be_nl;
+      << "_slice *&()" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // two operator []s instead of ->
-  os->indent ();
   *os << "ACE_INLINE " << be_nl;
   *os << "const " << nodename << "_slice &" << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index) const" << be_nl;
@@ -639,63 +708,60 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   // not accept one, but will do it implicitly with a temporary.
   // It's only a problem with multidimensional arrays.
 #if defined (ACE_HAS_BROKEN_IMPLICIT_CONST_CAST)
-  *os << "return ACE_const_cast (const " << nodename
-      << "_slice &, this->ptr_[index]);" << be_uidt_nl;
+  *os << "return ACE_const_cast (" << be_idt << be_idt_nl
+      << "const " << nodename << "_slice &," << be_nl
+      << "this->ptr_[index]" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl;
 #else
   *os << "const " << nodename << "_slice &tmp = this->ptr_[index];" << be_nl;
   *os << "return tmp;" << be_uidt_nl;
 #endif /* ACE_HAS_BROKEN_IMPLICIT_CONST_CAST */
 
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
-  os->indent ();
   *os << "ACE_INLINE " << be_nl;
   *os << nodename << "_slice &" << be_nl;
   *os << fname << "::operator[] (CORBA::ULong index)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_[index];" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // in, inout, out, and _retn
-  os->indent ();
   *os << "ACE_INLINE const " << nodename << "_slice *" << be_nl;
   *os << fname << "::in (void) const" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "return ACE_const_cast (const " << nodename
-      << "_slice *, this->ptr_);" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "return ACE_const_cast (" << be_idt << be_idt_nl
+      << "const " << nodename << "_slice *," << be_nl
+      << "this->ptr_" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
-  os->indent ();
   *os << "ACE_INLINE " << nodename << "_slice *" << be_nl;
   *os << fname << "::inout (void)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
-  os->indent ();
   *os << "ACE_INLINE " << nodename << "_slice * &" << be_nl;
   *os << fname << "::out (void)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
-  os->indent ();
   *os << "ACE_INLINE " << nodename << "_slice *" << be_nl;
   *os << fname << "::_retn (void)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // the additional ptr () member function
-  os->indent ();
   *os << "ACE_INLINE " << nodename << "_slice *" << be_nl;
   *os << fname << "::ptr (void) const" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return this->ptr_;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "}" << be_nl << be_nl;
 
   // the additional nocopy member function
-  os->indent ();
   *os << "ACE_INLINE CORBA::Boolean" << be_nl;
   *os << fname << "::nocopy (void) const" << be_nl;
   *os << "{" << be_idt_nl;

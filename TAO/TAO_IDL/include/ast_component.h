@@ -21,11 +21,22 @@ public:
 
   virtual ~AST_Component (void);
 
+  // This also calls the base class version.
+  virtual void redefine (AST_Interface *from);
+
   // Utility data structure for a 'uses' declaration.
   struct uses_description
   {
-    AST_Interface *receptacle;
+    Identifier *id;
+    UTL_ScopedName *impl;
     idl_bool is_multiple;
+  };
+
+  // Utility data structure for all other port declarations.
+  struct port_description
+  {
+    Identifier *id;
+    UTL_ScopedName *impl;
   };
 
   // Accessors.
@@ -36,20 +47,15 @@ public:
   
   long n_supports (void) const;
 
-  ACE_Unbounded_Queue<AST_Interface *> &provides (void);
-  void provides (AST_Interface *d);
+  ACE_Unbounded_Queue<port_description> &provides (void);
 
-  ACE_Unbounded_Queue<uses_description *> &uses (void);
-  void uses (uses_description *d);
+  ACE_Unbounded_Queue<uses_description> &uses (void);
 
-  ACE_Unbounded_Queue<AST_ValueType *> &emits (void);
-  void emits (AST_ValueType *d);
+  ACE_Unbounded_Queue<port_description> &emits (void);
 
-  ACE_Unbounded_Queue<AST_ValueType *> &publishes (void);
-  void publishes (AST_ValueType *d);
+  ACE_Unbounded_Queue<port_description> &publishes (void);
 
-  ACE_Unbounded_Queue<AST_ValueType *> &consumes (void);
-  void consumes (AST_ValueType *d);
+  ACE_Unbounded_Queue<port_description> &consumes (void);
 
   // Cleanup function.
   virtual void destroy (void);
@@ -67,11 +73,11 @@ public:
 
 private:
   AST_Component *pd_base_component;
-  ACE_Unbounded_Queue<AST_Interface *> pd_provides;
-  ACE_Unbounded_Queue<uses_description *> pd_uses;
-  ACE_Unbounded_Queue<AST_ValueType *> pd_emits;
-  ACE_Unbounded_Queue<AST_ValueType *> pd_publishes;
-  ACE_Unbounded_Queue<AST_ValueType *> pd_consumes;
+  ACE_Unbounded_Queue<port_description> pd_provides;
+  ACE_Unbounded_Queue<uses_description> pd_uses;
+  ACE_Unbounded_Queue<port_description> pd_emits;
+  ACE_Unbounded_Queue<port_description> pd_publishes;
+  ACE_Unbounded_Queue<port_description> pd_consumes;
 };
 
 #endif // _AST_COMPONENT_AST_COMPONENT_HH

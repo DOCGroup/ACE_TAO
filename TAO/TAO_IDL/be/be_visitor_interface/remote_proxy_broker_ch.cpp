@@ -36,6 +36,9 @@ be_visitor_interface_remote_proxy_broker_ch::visit_interface (
       << "//                 Remote Proxy Broker Declaration " << be_nl
       << "//" << be_nl << be_nl;
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   *os << "class " << be_global->stub_export_macro () << " "
       << node->remote_proxy_broker_name () << be_idt_nl
       << ": public virtual "

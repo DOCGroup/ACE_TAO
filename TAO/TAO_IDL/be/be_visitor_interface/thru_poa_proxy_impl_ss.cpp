@@ -33,6 +33,9 @@ be_visitor_interface_thru_poa_proxy_impl_ss::visit_interface (
       << "//                 ThruPOA Proxy  Implementation\n"
       << "//\n\n";
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   // Ctor Implementation
   *os << node->full_thru_poa_proxy_impl_name () << "::"
       << node->thru_poa_proxy_impl_name () << " (void)" << be_nl

@@ -28,6 +28,7 @@
 #include "be_type.h"
 #include "be_codegen.h"
 #include "ast_interface.h"
+#include "ace/Unbounded_Queue.h"
 
 class TAO_OutStream;
 class TAO_IDL_Inheritance_Hierarchy_Worker;
@@ -309,6 +310,11 @@ public:
                            TAO_OutStream *os);
   // generate the operation table entries.
 
+  void analyze_parentage (AST_Interface **parents,
+                          long n_parents);
+  // Compute whether or not we have both abstract and concrete parents,
+  // and make a list of the abstract parents, if any.
+
   TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
                                     int is_extra_state = 0);
   // Find the next state, used to hide differences between variants of
@@ -330,6 +336,13 @@ public:
   // Returns an interface, which can be used instead.
   // Needs to get set by the strategy.
 
+  idl_bool has_mixed_parentage (void) const;
+  // Do we have both abstract and concrete parents?
+
+  ACE_Unbounded_Queue<AST_Interface *> abstract_parents_;
+  // List of all our abstract parents, and all our other ancestors
+  // that are abstract with no concrete parent in between. We must
+  // implement the operations of all these interfaces.
 private:
   void gen_gperf_input_header (TAO_OutStream *ss);
   // Output the header (type declaration and %%) to the gperf's input
@@ -365,6 +378,10 @@ private:
   void gen_linear_search_instance (const char *flat_name);
   // Create an instance of the linear search optable.
 
+  void complete_abstract_paths (AST_Interface *ai);
+  // Recursively gather all abstract ancestors we have without a concrete
+  // ancestor in between.
+
   int skel_count_;
   // Number of static skeletons in the operation table.
 
@@ -376,6 +393,11 @@ private:
   // Member for holding the strategy for generating names.
 
   be_interface *original_interface_;
+  // The original interface from which this one was created,
+  // applies only to implied IDL
+
+  idl_bool has_mixed_parentage_;
+  // Do we have both abstract and concrete parents?
 };
 
 /**

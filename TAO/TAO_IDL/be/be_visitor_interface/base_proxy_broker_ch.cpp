@@ -31,9 +31,10 @@ be_visitor_interface_base_proxy_broker_ch::visit_interface (
       << "//                 Base Proxy Broker Declaration " << be_nl
       << "//" << be_nl << be_nl;
 
-  // Generate the class declaration.
-  os->indent ();
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  // Generate the class declaration.
   *os << "class " << be_global->stub_export_macro () << " "
       << node->base_proxy_broker_name () << be_nl <<  "{" << be_nl
       << "public:"

@@ -276,11 +276,10 @@ int
 be_visitor_operation::gen_check_exception (be_type *return_type)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  os->indent ();
 
   if (return_type == 0 || this->void_return_type (return_type))
     {
-      *os << "ACE_CHECK;\n";
+      *os << "ACE_CHECK;" << be_nl;
       return 0;
     }
 
@@ -300,7 +299,7 @@ be_visitor_operation::gen_check_exception (be_type *return_type)
                         -1);
     }
 
-  *os << ");\n";
+  *os << ");" << be_nl;
   return 0;
 }
 
@@ -308,7 +307,6 @@ int
 be_visitor_operation::gen_check_interceptor_exception (be_type *return_type)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  os->indent ();
 
   if (return_type == 0 || this->void_return_type (return_type))
     {

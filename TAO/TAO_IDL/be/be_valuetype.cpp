@@ -24,6 +24,7 @@
 #include "be_extern.h"
 #include "be_helper.h"
 #include "ast_module.h"
+#include "idl_defines.h"
 
 ACE_RCSID (be, 
            be_valuetype, 
@@ -147,9 +148,14 @@ be_valuetype::full_obv_skel_name (void)
 
 // Generate the var definition.
 int
-be_valuetype::gen_var_defn (char *)
+be_valuetype::gen_var_defn (char *local_name)
 {
   char namebuf [NAMEBUFSIZE];
+
+  if (local_name == 0)
+    {
+      local_name = (char *) this->local_name ();
+    }
 
   ACE_OS::memset (namebuf,
                   '\0',
@@ -157,7 +163,7 @@ be_valuetype::gen_var_defn (char *)
 
   ACE_OS::sprintf (namebuf,
                    "%s_var",
-                   this->local_name ());
+                   local_name);
 
   TAO_OutStream *ch = tao_cg->client_header ();
 
@@ -173,8 +179,8 @@ be_valuetype::gen_var_defn (char *)
 
   // Default constructor.
   *ch << namebuf << " (void); // default constructor" << be_nl;
-  *ch << namebuf << " (" << this->local_name () << "*);" << be_nl;
-  *ch << namebuf << " (const " << this->local_name ()
+  *ch << namebuf << " (" << local_name << "*);" << be_nl;
+  *ch << namebuf << " (const " << local_name
       << "*); // (TAO extension)" << be_nl;
 
   // Copy constructor.
@@ -186,7 +192,7 @@ be_valuetype::gen_var_defn (char *)
   *ch << be_nl;
 
   // Assignment operator from a pointer.
-  *ch << namebuf << " &operator= (" << this->local_name ()
+  *ch << namebuf << " &operator= (" << local_name
       << "*);" << be_nl;
 
   // Assignment from _var.
@@ -194,32 +200,32 @@ be_valuetype::gen_var_defn (char *)
     " &);" << be_nl;
 
   // Arrow operator.
-  *ch << local_name () << "* operator-> (void) const;" << be_nl;
+  *ch << local_name << "* operator-> (void) const;" << be_nl;
 
   *ch << be_nl;
 
   // Other extra types (cast operators, [] operator, and others).
-  *ch << "operator const " << this->local_name ()
+  *ch << "operator const " << local_name
       << "* () const;" << be_nl;
-  *ch << "operator " << this->local_name () << "* ();" << be_nl;
+  *ch << "operator " << local_name << "* ();" << be_nl;
 
   *ch << "// in, inout, out, _retn " << be_nl;
   // The return types of in, out, inout, and _retn are based on the parameter
   // passing rules and the base type.
-  *ch << this->local_name () << "* in (void) const;" << be_nl;
-  *ch << this->local_name () << "* &inout (void);" << be_nl;
-  *ch << this->local_name () << "* &out (void);" << be_nl;
-  *ch << this->local_name () << "* _retn (void);" << be_nl;
+  *ch << local_name << "* in (void) const;" << be_nl;
+  *ch << local_name << "* &inout (void);" << be_nl;
+  *ch << local_name << "* &out (void);" << be_nl;
+  *ch << local_name << "* _retn (void);" << be_nl;
 
   // Generate an additional member function that returns
   // the underlying pointer.
-  *ch << this->local_name () << "* ptr (void) const;";
+  *ch << local_name << "* ptr (void) const;";
 
   *ch << be_uidt_nl << be_nl;
 
   // Private.
   *ch << "private:" << be_idt_nl;
-  *ch << this->local_name () << "* ptr_;" << be_uidt_nl;
+  *ch << local_name << "* ptr_;" << be_uidt_nl;
 
   *ch << "};" << be_nl << be_nl;
 
@@ -229,11 +235,20 @@ be_valuetype::gen_var_defn (char *)
 // Implementation of the _var class. All of these get generated in the stubs
 // file.
 int
-be_valuetype::gen_var_impl (char *,
-                            char *)
+be_valuetype::gen_var_impl (char *local_name,
+                            char *full_name)
 {
   TAO_OutStream *cs = 0;
   TAO_NL be_nl;
+
+  // Decide on the names to use.
+  // Even if one argument is 0, there is no point using the
+  // arguments. Let us then use the name in this node.
+  if (local_name == 0 || full_name == 0)
+    {
+      local_name = (char *) this->local_name ();
+      full_name = (char *) this->full_name ();
+    }
 
   // To hold the full and local _var names.
   char fname [NAMEBUFSIZE];
@@ -245,7 +260,7 @@ be_valuetype::gen_var_impl (char *,
 
   ACE_OS::sprintf (fname,
                    "%s_var",
-                   this->full_name ());
+                   full_name);
 
   ACE_OS::memset (lname,
                   '\0',
@@ -253,7 +268,7 @@ be_valuetype::gen_var_impl (char *,
 
   ACE_OS::sprintf (lname,
                    "%s_var",
-                   this->local_name ());
+                   local_name);
 
   cs = tao_cg->client_stubs ();
 
@@ -277,7 +292,7 @@ be_valuetype::gen_var_impl (char *,
   // Constructor from a pointer.
   cs->indent ();
   *cs << fname << "::" << lname << " ("
-      << this->local_name () << "* p)" << be_nl;
+      << local_name << "* p)" << be_nl;
   *cs << "  : ptr_ (p)" << be_nl;
   *cs << "{}\n\n";
 
@@ -286,9 +301,9 @@ be_valuetype::gen_var_impl (char *,
   // which reclaims amguity between T(T*) and T(const T_var &)
   cs->indent ();
   *cs << fname << "::" << lname << " (const "
-      << this->local_name () << "* p)" << be_nl;
+      << local_name << "* p)" << be_nl;
   *cs << "  : ptr_ (ACE_const_cast("
-      << this->local_name () << "*, p))" << be_nl;
+      << local_name << "*, p))" << be_nl;
   *cs << "{}\n\n";
 
   // The additional ptr () member function. This member function must be
@@ -296,7 +311,7 @@ be_valuetype::gen_var_impl (char *,
   // constructor because this inline function is used elsewhere. Hence to make
   // inlining of this function possible, we must define it before its use.
   cs->indent ();
-  *cs << this->name () << "* " << be_nl;
+  *cs << full_name << "* " << be_nl;
   *cs << fname << "::ptr (void) const" << be_nl;
   *cs << "{\n";
   cs->incr_indent ();
@@ -325,7 +340,7 @@ be_valuetype::gen_var_impl (char *,
   // Assignment operator.
   cs->indent ();
   *cs << fname << " &" << be_nl;
-  *cs << fname << "::operator= (" << this->local_name ()
+  *cs << fname << "::operator= (" << local_name
       << "* p)" << be_nl;
   *cs << "{\n";
   cs->incr_indent ();
@@ -346,7 +361,7 @@ be_valuetype::gen_var_impl (char *,
   *cs << "{\n";
   cs->incr_indent ();
   *cs << "CORBA::remove_ref (this->ptr_);" << be_nl
-      << this->local_name() << "* tmp = p.ptr ();" << be_nl
+      << local_name << "* tmp = p.ptr ();" << be_nl
       << "CORBA::add_ref (tmp);" << be_nl
       << "this->ptr_ = tmp;\n";
   cs->decr_indent ();
@@ -357,7 +372,7 @@ be_valuetype::gen_var_impl (char *,
 
   // Other extra methods - cast operator ().
   cs->indent ();
-  *cs << fname << "::operator const " << this->name ()
+  *cs << fname << "::operator const " << full_name
       << "* () const // cast" << be_nl;
   *cs << "{\n";
   cs->incr_indent ();
@@ -366,7 +381,7 @@ be_valuetype::gen_var_impl (char *,
   *cs << "}\n\n";
 
   cs->indent ();
-  *cs << fname << "::operator " << this->name ()
+  *cs << fname << "::operator " << full_name
       << "* () // cast " << be_nl;
   *cs << "{\n";
   cs->incr_indent ();
@@ -376,7 +391,7 @@ be_valuetype::gen_var_impl (char *,
 
   // operator->
   cs->indent ();
-  *cs << this->name () << "* " << be_nl;
+  *cs << full_name << "* " << be_nl;
   *cs << fname << "::operator-> (void) const" << be_nl;
   *cs << "{\n";
   cs->incr_indent ();
@@ -386,7 +401,7 @@ be_valuetype::gen_var_impl (char *,
 
   // in, inout, out, and _retn.
   cs->indent ();
-  *cs << this->name () << "*" << be_nl;
+  *cs << full_name << "*" << be_nl;
   *cs << fname << "::in (void) const" << be_nl;
   *cs << "{\n";
   cs->incr_indent ();
@@ -395,7 +410,7 @@ be_valuetype::gen_var_impl (char *,
   *cs << "}\n\n";
 
   cs->indent ();
-  *cs << this->name () << "* &" << be_nl;
+  *cs << full_name << "* &" << be_nl;
   *cs << fname << "::inout (void)" << be_nl;
   *cs << "{\n";
   cs->incr_indent ();
@@ -404,7 +419,7 @@ be_valuetype::gen_var_impl (char *,
   *cs << "}\n\n";
 
   cs->indent ();
-  *cs << this->name () << "* &" << be_nl;
+  *cs << full_name << "* &" << be_nl;
   *cs << fname << "::out (void)" << be_nl;
   *cs << "{\n";
   cs->incr_indent ();
@@ -415,12 +430,12 @@ be_valuetype::gen_var_impl (char *,
   *cs << "}\n\n";
 
   cs->indent ();
-  *cs << this->name () << "* " << be_nl;
+  *cs << full_name << "* " << be_nl;
   *cs << fname << "::_retn (void)" << be_nl;
   *cs << "{\n";
   cs->incr_indent ();
   *cs << "// yield ownership of managed obj reference" << be_nl;
-  *cs << this->local_name () << "* tmp = this->ptr_;" << be_nl;
+  *cs << local_name << "* tmp = this->ptr_;" << be_nl;
   *cs << "this->ptr_ = 0;" << be_nl;
   *cs << "return tmp;\n";
   cs->decr_indent ();
@@ -643,7 +658,8 @@ be_valuetype::gen_helper_header (char* ,
 
   os = tao_cg->client_header ();
 
-  *os << "//@@ Boris: begin experimental" << be_nl
+  *os << be_nl
+      << "//@@ Boris: begin experimental" << be_nl
       << "TAO_NAMESPACE CORBA" << be_nl
       << "{"
       << be_idt_nl

@@ -45,7 +45,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
   static char namebuf [NAMEBUFSIZE];
   static char tiename [NAMEBUFSIZE];
 
-  if (node->imported ())
+  if (node->imported () || node->is_abstract ())
     {
       return 0;
     }
@@ -86,8 +86,8 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
   // Now generate the class definition.
   os->indent ();
 
-  *os << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl << be_nl << be_nl;
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "// TIE class: Refer to CORBA v2.2, Section 20.34.4" << be_nl;
   *os << "template <class T>" << be_nl;
@@ -156,6 +156,15 @@ be_visitor_interface_tie_sh::method_helper (be_interface *,
                                             be_interface *node,
                                             TAO_OutStream *os)
 {
+  // Any methods from abstract parents have already been
+  // "added" to the derived interface scope by the overridden 
+  // visit_scope() method in be_visitor_interface, so we can skip
+  // this base interface, if it is abstract.
+  if (node->is_abstract ())
+    {
+      return 0;
+    }
+
   be_visitor_context ctx;
   ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SH);
   ctx.stream (os);

@@ -29,7 +29,7 @@ ACE_RCSID (be_visitor_enum,
 // ***************************************************************************
 
 be_visitor_enum_cdr_op_ci::be_visitor_enum_cdr_op_ci (be_visitor_context *ctx)
-  : be_visitor_scope (ctx)
+  : be_visitor_decl (ctx)
 {
 }
 

@@ -119,7 +119,14 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
     }
   else if (nt == AST_Decl::NT_interface)
     {
-      *os << "TAO_Object_Manager<";
+      if (node->base_type ()->is_abstract ())
+        {
+          *os << "TAO_Abstract_Manager<";
+        }
+      else
+        {
+          *os << "TAO_Object_Manager<";
+        }
     }
 
   *os << bt->name () << ","

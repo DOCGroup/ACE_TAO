@@ -26,6 +26,7 @@
 #include "be_extern.h"
 #include "ast_union_branch.h"
 #include "utl_identifier.h"
+#include "idl_defines.h"
 
 ACE_RCSID (be, 
            be_union, 

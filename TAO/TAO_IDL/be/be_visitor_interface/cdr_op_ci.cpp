@@ -97,7 +97,8 @@ be_visitor_interface_cdr_op_ci::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_cdr_op_ci"
                          "::visit_interface - "
-                         "codegen for scope failed\n"), -1);
+                         "codegen for scope failed\n"), 
+                        -1);
     }
 
   node->cli_inline_cdr_op_gen (1);

@@ -40,12 +40,6 @@ public:
                UTL_ScopedName *n);
   // Constructor.
 
-  const char *exprtype_to_string (void);
-  // Returns the appropriate type.
-
-  UTL_ScopedName *enum_full_name (void);
-  // If our type is enum, we have to generate the scoped name.
-
   // Visiting.
   virtual int accept (be_visitor *visitor);
 

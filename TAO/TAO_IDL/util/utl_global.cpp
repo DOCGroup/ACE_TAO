@@ -115,6 +115,7 @@ IDL_GlobalData::IDL_GlobalData (void)
     obv_support_ (I_FALSE),
     component_support_ (I_FALSE),
     case_diff_error_ (I_TRUE),
+    nest_orb_ (I_FALSE),
     idl_flags_ (""),
     last_seen_index_ (1)
 {
@@ -470,19 +471,9 @@ IDL_GlobalData::store_include_file_name (UTL_String *n)
   unsigned long i;
   long seen = this->seen_include_file_before (n);
 
-  // Check if we need to store it at all or whether we've seen it already
+  // Check if we need to store it at all or whether we've seen it already.
   if (seen)
     {
-      if (seen != this->last_seen_index_)
-        {
-          // If it's not the same as the current filename, then we have
-          // just finished with some other included file, and its
-          // (possible empty) prefix must be popped.
-          char *trash = 0;
-          idl_global->pragma_prefixes ().pop (trash);
-          delete [] trash;
-        }
-
       this->last_seen_index_ = seen;
       return;
     }
@@ -497,16 +488,22 @@ IDL_GlobalData::store_include_file_name (UTL_String *n)
       if (this->pd_n_alloced_file_names == 0)
         {
           this->pd_n_alloced_file_names = INCREMENT;
-          this->pd_include_file_names = new UTL_String *[this->pd_n_alloced_file_names];
+          ACE_NEW (this->pd_include_file_names,
+                   UTL_String *[this->pd_n_alloced_file_names]);
         }
       else
         {
           o_include_file_names = this->pd_include_file_names;
           o_n_alloced_file_names = this->pd_n_alloced_file_names;
           this->pd_n_alloced_file_names += INCREMENT;
-          this->pd_include_file_names = new UTL_String *[this->pd_n_alloced_file_names];
-          for (i = 0; i < o_n_alloced_file_names; i++)
-            this->pd_include_file_names[i] = o_include_file_names[i];
+          ACE_NEW (this->pd_include_file_names,
+                   UTL_String *[this->pd_n_alloced_file_names]);
+
+          for (i = 0; i < o_n_alloced_file_names; ++i)
+            {
+              this->pd_include_file_names[i] = o_include_file_names[i];
+            }
+
           delete [] o_include_file_names;
         }
     }
@@ -829,6 +826,18 @@ IDL_GlobalData::case_diff_error (void)
 }
 
 void
+IDL_GlobalData::nest_orb (idl_bool val)
+{
+  this->nest_orb_ = val;
+}
+
+idl_bool
+IDL_GlobalData::nest_orb (void)
+{
+  return this->nest_orb_;
+}
+
+void
 IDL_GlobalData::destroy (void)
 {
   if (this->pd_filename != 0)
@@ -1009,3 +1018,4 @@ IDL_GlobalData::string_to_scoped_name (char *s)
 
   return retval;
 }
+

@@ -81,6 +81,7 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
                              "bad primitive base type\n"),  
                             -1);
         }
+
       // Accept on this base type.
       if (bt->accept (this) == -1)
         {

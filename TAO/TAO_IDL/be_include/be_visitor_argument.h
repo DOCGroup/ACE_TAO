@@ -22,6 +22,8 @@
 #ifndef _BE_VISITOR_ARGUMENT_H
 #define _BE_VISITOR_ARGUMENT_H
 
+#include "idl_defines.h"
+
 #include "be_visitor_scope.h"
 #include "be_visitor_argument/argument.h"
 #include "be_visitor_argument/arglist.h"

@@ -63,14 +63,14 @@ be_visitor_typedef::visit_array (be_array *node)
     case TAO_CodeGen::TAO_TYPEDEF_CS:
       {
         ctx.state (TAO_CodeGen::TAO_ARRAY_CI);
-        be_visitor_array_ci visitor (&ctx);
+        be_visitor_array_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
     case TAO_CodeGen::TAO_TYPEDEF_CI:
       {
         ctx.state (TAO_CodeGen::TAO_ARRAY_CS);
-        be_visitor_array_cs visitor (&ctx);
+        be_visitor_array_ci visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
@@ -210,12 +210,6 @@ be_visitor_typedef::visit_enum (be_enum *node)
 }
 
 int
-be_visitor_typedef::visit_predefined_type (be_predefined_type *)
-{
-  return 0;
-}
-
-int
 be_visitor_typedef::visit_sequence (be_sequence *node)
 {
   // Instantiate a visitor context with a copy of our context. This info
@@ -297,66 +291,6 @@ be_visitor_typedef::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_typedef::"
                          "visit_sequence - "
-                         "failed to accept visitor\n"),  
-                        -1);
-    }
-
-  return 0;
-}
-
-int
-be_visitor_typedef::visit_string (be_string *node)
-{
-  // Instantiate a visitor context with a copy of our context. This info
-  // will be modified based on what type of node we are visiting.
-  be_visitor_context ctx (*this->ctx_);
-  ctx.node (node);
-  int status = 0;
-
-  switch (this->ctx_->state ())
-    {
-    case TAO_CodeGen::TAO_TYPEDEF_CH:
-      {
-        ctx.state (TAO_CodeGen::TAO_STRUCT_CH);
-        be_visitor_structure_ch visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_TYPEDEF_CI:
-      {
-        ctx.state (TAO_CodeGen::TAO_STRUCT_CI);
-        be_visitor_structure_ci visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_TYPEDEF_CS:
-      {
-        ctx.state (TAO_CodeGen::TAO_STRUCT_CS);
-        be_visitor_structure_cs visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CH:
-    case TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS:
-    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CH:
-    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CI:
-    case TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS:
-      return 0; // nothing to be done
-    default:
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) be_visitor_typedef::"
-                           "visit_string - "
-                           "Bad context state\n"), 
-                          -1);
-      }
-    }
-
-  if (status == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_typedef::"
-                         "visit_string - "
                          "failed to accept visitor\n"),  
                         -1);
     }

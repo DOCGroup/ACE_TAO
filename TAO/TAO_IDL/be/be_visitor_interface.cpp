@@ -73,7 +73,6 @@
 #include "be_visitor_interface/smart_proxy_ch.cpp"
 #include "be_visitor_interface/smart_proxy_cs.cpp"
 #include "be_visitor_interface/ami_interface_ch.cpp"
-#include "be_visitor_interface/interceptors_ch.cpp"
 #include "be_visitor_interface/interceptors_cs.cpp"
 #include "be_visitor_interface/interceptors_sh.cpp"
 #include "be_visitor_interface/interceptors_ss.cpp"

@@ -394,6 +394,10 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
         {
           *os << "ACE_INLINE TAO_Valuetype_Manager<";
         }
+      else if (node->base_type ()->is_abstract ())
+        {
+          *os << "ACE_INLINE TAO_Abstract_Manager<";
+        }
       else
         {
           *os << "ACE_INLINE TAO_Object_Manager<";
@@ -425,6 +429,10 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
       if (pt->node_type () == AST_Decl::NT_valuetype)
         {
           *os << "return TAO_Valuetype_Manager<";
+        }
+      else if (node->base_type ()->is_abstract ())
+        {
+          *os << "return TAO_Abstract_Manager<";
         }
       else
         {

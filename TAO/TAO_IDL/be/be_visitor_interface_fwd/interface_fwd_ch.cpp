@@ -42,12 +42,12 @@ be_visitor_interface_fwd_ch::~be_visitor_interface_fwd_ch (void)
 int
 be_visitor_interface_fwd_ch::visit_interface_fwd (be_interface_fwd *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-
   if (node->cli_hdr_gen () || node->imported ())
     {
       return 0;
     }
+
+  TAO_OutStream *os = this->ctx_->stream ();
 
   // All we do in this is generate a forward declaration of the class.
   *os << "class " << node->local_name () << ";" << be_nl;
@@ -103,6 +103,5 @@ be_visitor_interface_fwd_ch::visit_interface_fwd (be_interface_fwd *node)
   os->gen_endif ();
 
   node->cli_hdr_gen (I_TRUE);
-
   return 0;
 }

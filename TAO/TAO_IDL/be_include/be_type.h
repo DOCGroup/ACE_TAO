@@ -69,11 +69,6 @@ public:
   // are non null, it computes and returns a tc name. Else, it also
   // stores the result in a member variable.
 
-  virtual const char *nested_type_name (be_decl *d,
-                                        const char *suffix = 0,
-                                        const char *prefix = 0);
-  // Type name of a node used when generating declarations.
-
   virtual const char *nested_sp_type_name (be_decl *use_scope,
                                            const char *suffix = 0,
                                            const char *prefix = 0);
@@ -100,18 +95,8 @@ protected:
   virtual void compute_tc_name (void);
   // Computes the fully scoped typecode name.
 
-  virtual const char *nested_name (const char* local_name,
-                                   const char* full_name,
-                                   be_decl *use_scope,
-                                   const char *suffix,
-                                   const char *prefix);
-  // Type name of a node used when generating declarations.
-
   UTL_ScopedName *tc_name_;
   // Typecode name.
-
-  char *nested_type_name_;
-  // For the corresponding method.
 };
 
 #endif // end of if !defined

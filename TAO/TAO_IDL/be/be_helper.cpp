@@ -21,6 +21,7 @@
 
 #include "be_helper.h"
 #include "be_codegen.h"
+#include "idl_defines.h"
 
 ACE_RCSID (be, 
            be_helper, 

@@ -25,6 +25,7 @@
 #include "be_helper.h"
 #include "be_visitor.h"
 #include "utl_identifier.h"
+#include "idl_defines.h"
 
 ACE_RCSID (be, 
            be_array, 
@@ -169,7 +170,7 @@ be_array::gen_dimensions (TAO_OutStream *os,
       AST_Expression *expr = this->dims ()[i];
 
       // Dimension value.
-      if ((expr == NULL) || ((expr != NULL) && (expr->ev () == 0)))
+      if ((expr == 0) || ((expr != 0) && (expr->ev () == 0)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_array::"

@@ -27,6 +27,9 @@ be_visitor_interface_remote_proxy_broker_cs::visit_interface (
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+
   // Generate the class declaration.
   os->indent ();
 

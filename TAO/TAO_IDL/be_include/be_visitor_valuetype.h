@@ -18,6 +18,8 @@
 #ifndef TAO_BE_VISITOR_VALUETYPE_H
 #define TAO_BE_VISITOR_VALUETYPE_H
 
+#include "idl_defines.h"
+
 #include "be_visitor_scope.h"
 #include "be_visitor_valuetype/valuetype.h"
 #include "be_visitor_valuetype/valuetype_ch.h"

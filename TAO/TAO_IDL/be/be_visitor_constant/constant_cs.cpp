@@ -94,7 +94,18 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
               // they get assigned to their values in the impl file.
               os->indent ();
 
-              *os << "const " << node->exprtype_to_string () << " "
+              *os << "const ";
+              
+              if (node->et () == AST_Expression::EV_enum)
+                {
+                  *os << node->enum_full_name ();
+                }
+              else
+                {
+                  *os << node->exprtype_to_string ();
+                }
+               
+              *os << " "
                   << node->name () << " = " << node->constant_value ()
                   << ";\n\n";
             }

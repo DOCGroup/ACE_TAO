@@ -49,6 +49,9 @@ be_visitor_interface_cdr_op_ch::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   // Generate the CDR << and >> operator declarations.
   os->indent ();
 

@@ -70,13 +70,13 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
       return 0;
     }
 
-  // Don't generate AMH classes for imported or local interfaces
+  // Don't generate AMH classes for imported, local or abstract interfaces
   // either...
   // @@ Mayur, maybe we do want to insert the AMH node for imported
   // interfaces, not because we want to generate code for them, but
   // because the (imported-AMH-) node could be needed to generate a
   // non-imported, AMH node, for example, for a derived interface.
-  if (node->imported () || node->is_local ())
+  if (node->imported () || node->is_local () || node->is_abstract ())
     {
       return 0;
     }
@@ -320,7 +320,7 @@ be_visitor_amh_pre_proc::add_exception_reply (be_operation *node,
                   -1);
 
   argument->set_defined_in (node_excep);
-  node_excep->add_argument_to_scope (argument);
+  node_excep->be_add_argument (argument);
 
   node_excep->set_defined_in (response_handler);
   response_handler->be_add_operation (node_excep);
@@ -403,7 +403,7 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
                       -1);
 
       // Add the response handler to the argument list
-      operation->add_argument_to_scope (arg);
+      operation->be_add_argument (arg);
     }
 
   // Iterate over the arguments and put all the out and inout arguments
@@ -438,7 +438,7 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
                                        original_arg->name ()),
                           -1);
 
-          operation->add_argument_to_scope (arg);
+          operation->be_add_argument (arg);
         }
     }
 
@@ -920,7 +920,7 @@ be_visitor_amh_pre_proc::generate_set_operation (be_attribute *node)
 
   operation->set_name (set_name);
   operation->set_defined_in (node->defined_in ());
-  operation->add_argument_to_scope (arg);
+  operation->be_add_argument (arg);
 
   return operation;
 }
