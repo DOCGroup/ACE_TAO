@@ -400,7 +400,6 @@ void CIAO_Events::CosNotifyService::push_event (
   event.header.fixed_header.event_type.type_name = this->type_id_;
   event.header.fixed_header.event_name = this->source_id_;
   event.remainder_of_body <<= ev;
-  ev->_add_ref ();
 
   this->proxy_consumer_->push_structured_event (event ACE_ENV_ARG_PARAMETER);
 	ACE_CHECK;
@@ -951,7 +950,6 @@ void CIAO_Events::Events_Manager::create_notify_channel (
 {
 
   ACE_DEBUG ((LM_DEBUG, "CIAO_Events::Events_Manager::create_notify_channel\n"));
-
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory;
   CosNotifyChannelAdmin::ChannelID id;
   CosNotification::QoSProperties initial_qos;
@@ -1069,6 +1067,14 @@ CIAO_Events::CosNotifyServiceConsumer_impl::CosNotifyServiceConsumer_impl (CORBA
 
 void CIAO_Events::CosNotifyServiceConsumer_impl::push_structured_event (const CosNotification::StructuredEvent& event)
 {
+  ACE_DEBUG ((LM_DEBUG, "CIAO_Events::CosNotifyServiceConsumer_impl::push_structured_event\n"));
+  Components::EventBase * ev;
+  if (event.remainder_of_body >>= ev)
+    {
+      ev->_add_ref ();
+      this->event_consumer_->push_event (ev
+                                         ACE_ENV_ARG_PARAMETER);
+    }
 }
 
 void CIAO_Events::CosNotifyServiceConsumer_impl::disconnect_structured_push_consumer (ACE_ENV_SINGLE_ARG_DECL)

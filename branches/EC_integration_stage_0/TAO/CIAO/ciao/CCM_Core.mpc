@@ -32,6 +32,7 @@ project (CIAO_Container) : orbsvcslib, portableserver, security, iorinterceptor,
     CosPersistentState.idl
     CCM_Container.idl
     CCM_Container_Ex.idl
+	CIAO_Events.idl
   }
 
   Source_Files {
@@ -43,6 +44,9 @@ project (CIAO_Container) : orbsvcslib, portableserver, security, iorinterceptor,
     CCM_EventS.cpp
     CCM_ComponentS.cpp
     Cookies.cpp
+	CIAO_EventsS.cpp
+	CIAO_EventsC.cpp
+	CIAO_Events.cpp
   }
 }
 
