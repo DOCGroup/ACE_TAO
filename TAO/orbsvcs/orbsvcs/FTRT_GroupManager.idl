@@ -25,7 +25,7 @@ module FTRT
   interface FaultListener {
     /// called by the replica which detect the loss of connection with its
     /// predecessor to the primary
-    oneway void replica_crashed(in Location location);
+    oneway void replica_crashed(in Location the_location);
   };
 
   interface ObjectGroupManager;

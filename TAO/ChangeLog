@@ -1,9 +1,17 @@
+Fri Sep 17 15:47:14 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/FTRT_GroupManager.idl:
+        * orbsvcs/orbsvcs/PortableGroup.idl:
+          Rename arguments that match corba types in a case
+          sensitive compare.  The compiler didn't use to catch
+          these.
+
 Fri Sep 17 10:24:13 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_operation.cpp:
         * TAO_IDL/fe/idl.yy:
         * TAO_IDL/fe/y.tab.cpp:
-        
+ 
           Added code to case-compare declaration identifiers against
           references in the same scope, using the first component
           of the scoped name used in the reference. Specifically,
@@ -17,10 +25,10 @@ Fri Sep 17 10:24:13 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Sep 17 07:22:01 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
 
-	  Fixed mismatches between printf formatting directives and
-	  parameter types.
+          Fixed mismatches between printf formatting directives and
+          parameter types.
 
 Fri Sep 17 08:44:44 2004  Steve Totten  <totten_s@ociweb.com>
 
@@ -40,40 +48,40 @@ Fri Sep 17 08:44:44 2004  Steve Totten  <totten_s@ociweb.com>
 Fri Sep 17 08:21:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/Typecode.cpp:
-	* tao/Typecode.h:
-	* tao/Typecode.i:
+        * tao/Typecode.h:
+        * tao/Typecode.i:
 
-	  Reverted this change "Wed Sep  8 21:36:34 2004  Balachandran
-	  Natarajan  <bala@dre.vanderbilt.edu>". This change was causing
-	  more problems than I expected. TO start off the deep-copying of
-	  typecode seems busted. I am hesistant to spend time on this
-	  since bug 1637 reworks all of this anyway. If we don;t get 1637
-	  into the beta, I have to rethink the strategy. But the let the
-	  builds get better.
+          Reverted this change "Wed Sep  8 21:36:34 2004  Balachandran
+          Natarajan  <bala@dre.vanderbilt.edu>". This change was causing
+          more problems than I expected. TO start off the deep-copying of
+          typecode seems busted. I am hesistant to spend time on this
+          since bug 1637 reworks all of this anyway. If we don;t get 1637
+          into the beta, I have to rethink the strategy. But the let the
+          builds get better.
 
 Thu Sep 16 20:48:33 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Security/SecurityLevel1/README:
-	* orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test.idl:
-	* orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.cpp:
-	* orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.h:
-	* orbsvcs/tests/Security/SecurityLevel1/SecurityLevel1.mpc:
-	* orbsvcs/tests/Security/SecurityLevel1/ca.pem:
-	* orbsvcs/tests/Security/SecurityLevel1/client.conf:
-	* orbsvcs/tests/Security/SecurityLevel1/client.conf.xml:
-	* orbsvcs/tests/Security/SecurityLevel1/client.cpp:
-	* orbsvcs/tests/Security/SecurityLevel1/client_cert.pem:
-	* orbsvcs/tests/Security/SecurityLevel1/client_key.pem:
-	* orbsvcs/tests/Security/SecurityLevel1/run_test.pl:
-	* orbsvcs/tests/Security/SecurityLevel1/server.conf:
-	* orbsvcs/tests/Security/SecurityLevel1/server.conf.xml:
-	* orbsvcs/tests/Security/SecurityLevel1/server.cpp:
-	* orbsvcs/tests/Security/SecurityLevel1/server_cert.pem:
-	* orbsvcs/tests/Security/SecurityLevel1/server_key.pem:
+        * orbsvcs/tests/Security/SecurityLevel1/README:
+        * orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test.idl:
+        * orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.cpp:
+        * orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.h:
+        * orbsvcs/tests/Security/SecurityLevel1/SecurityLevel1.mpc:
+        * orbsvcs/tests/Security/SecurityLevel1/ca.pem:
+        * orbsvcs/tests/Security/SecurityLevel1/client.conf:
+        * orbsvcs/tests/Security/SecurityLevel1/client.conf.xml:
+        * orbsvcs/tests/Security/SecurityLevel1/client.cpp:
+        * orbsvcs/tests/Security/SecurityLevel1/client_cert.pem:
+        * orbsvcs/tests/Security/SecurityLevel1/client_key.pem:
+        * orbsvcs/tests/Security/SecurityLevel1/run_test.pl:
+        * orbsvcs/tests/Security/SecurityLevel1/server.conf:
+        * orbsvcs/tests/Security/SecurityLevel1/server.conf.xml:
+        * orbsvcs/tests/Security/SecurityLevel1/server.cpp:
+        * orbsvcs/tests/Security/SecurityLevel1/server_cert.pem:
+        * orbsvcs/tests/Security/SecurityLevel1/server_key.pem:
 
-	  Removed this test.  The SecurityLevel1 IDL module is no longer
-	  supported by TAO.  It contains a fairly useless interface.  Use
-	  the SecurityLevel3 API instead.
+          Removed this test.  The SecurityLevel1 IDL module is no longer
+          supported by TAO.  It contains a fairly useless interface.  Use
+          the SecurityLevel3 API instead.
 
 Fri Sep 17 00:11:18 2004  Olli Savia  <ops@iki.fi>
 
