@@ -33,6 +33,7 @@ TAO_Base_Sequence::~TAO_Base_Sequence (void)
 
 void TAO_Base_Sequence::_shrink_buffer (CORBA::ULong, CORBA::ULong)
 {
+
   // default is no op.
 }
 
@@ -51,27 +52,30 @@ TAO_Base_Sequence::_upcast (void *) const
   return 0;
 }
 
-void TAO_Base_Sequence::
-check_bounds(
-    char const * filename, unsigned long lineno,
-    CORBA::ULong tao_idx, CORBA::ULong tao_max) const
+void
+TAO_Base_Sequence::check_bounds (char const * filename,
+                                 unsigned long lineno,
+                                 CORBA::ULong tao_idx,
+                                 CORBA::ULong tao_max) const
 {
   // TODO use hook
-  if(tao_idx >= tao_max)
+  if (tao_idx >= tao_max)
     {
-      ACE_ERROR((LM_ERROR,
-                    "Access error in TAO_Sequence file=%s, line=%u, "
-                    "idx=%u, max=%u\n",
-                 ACE_TEXT_CHAR_TO_TCHAR (filename), lineno, tao_idx, tao_max));
+      ACE_ERROR ((LM_ERROR,
+                  "Access error in TAO_Base_Sequence file=%s, line=%u, "
+                  "idx=%u, max=%u\n",
+                  ACE_TEXT_CHAR_TO_TCHAR (filename),
+                  lineno,
+                  tao_idx,
+                  tao_max));
 
-      // @@TODO: When we have a hook setup, we can totally ignore this or
-      // even remove this.
+      // @todo When we have a hook setup, we can totally ignore this or
+      //       even remove this.
 #if defined (ACE_HAS_EXCEPTIONS)
       ACE_THROW (CORBA::BAD_PARAM ());
-      ACE_OS::abort ();
 #else
       ACE_OS::abort ();
-#endif /*ACE_HAS_EXCEPTIONS*/
+#endif /* ACE_HAS_EXCEPTIONS */
     }
 }
 
@@ -515,7 +519,7 @@ TAO_Unbounded_WString_Sequence::allocbuf (CORBA::ULong nelems)
                   CORBA::WChar * [nelems],
                   0);
 
-  for (CORBA::ULong i=0; i < nelems; ++i)
+  for (CORBA::ULong i = 0; i < nelems; ++i)
     {
       buf[i] = 0;
     }

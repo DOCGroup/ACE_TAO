@@ -295,7 +295,7 @@ TAO_LB_LeastLoaded::analyze_loads (
             {
               if (load.value > this->critical_threshold_)
                 {
-/*                        
+/*
                    ACE_DEBUG ((LM_DEBUG,
                                "%P --- ALERTING LOCATION %u\n",
                                i));
@@ -532,7 +532,6 @@ TAO_LB_LeastLoaded::init (const PortableGroup::Properties & props
   CORBA::Float per_balance_load = TAO_LB::LL_DEFAULT_PER_BALANCE_LOAD;
 
   const PortableGroup::Property * ct = 0;  // critical threshold property
-  const PortableGroup::Property * rt = 0;  // reject   threshold property
 
   const CORBA::ULong len = props.length ();
   for (CORBA::ULong i = 0; i < len; ++i)
@@ -556,8 +555,6 @@ TAO_LB_LeastLoaded::init (const PortableGroup::Properties & props
                                         reject_threshold
                                         ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
-
-          rt = &property;
         }
 
       else if (ACE_OS::strcmp (property.nam[0].id.in (),
@@ -623,7 +620,7 @@ TAO_LB_LeastLoaded::init (const PortableGroup::Properties & props
                tolerance,
                dampening,
                per_balance_load));
-*/               
+*/
 }
 
 void

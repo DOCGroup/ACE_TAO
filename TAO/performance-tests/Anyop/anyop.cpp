@@ -29,14 +29,14 @@
 #include "ace/Sample_History.h"
 #include "ace/Sched_Params.h"
 
-ACE_RCSID (Anyop, 
-           anyop, 
+ACE_RCSID (Anyop,
+           anyop,
            "$Id$")
 
 int
 main (int argc, char *argv[])
 {
-  int priority = 
+  int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
 
@@ -141,34 +141,34 @@ main (int argc, char *argv[])
 
         if (insertion == 1)
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Objref insertion test finished\n"));
           }
         else
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Objref extraction test finished\n"));
           }
 
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
         ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
         stats.dump_results ("Total", gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total", 
+        ACE_Throughput_Stats::dump_throughput ("Total",
 											                         gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
 
       ACE_DEBUG ((LM_DEBUG, "\n"));
-    
-      {   
+
+      {
         ACE_Sample_History history (n);
         ACE_hrtime_t test_start = ACE_OS::gethrtime ();
 
@@ -209,32 +209,32 @@ main (int argc, char *argv[])
 
         if (insertion == 1)
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Short insertion test finished\n"));
           }
         else
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Short extraction test finished\n"));
           }
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
         ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
         stats.dump_results ("Total", gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total", 
+        ACE_Throughput_Stats::dump_throughput ("Total",
 											                         gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
 
       ACE_DEBUG ((LM_DEBUG, "\n"));
-    
+
       {
         ACE_Sample_History history (n);
         ACE_hrtime_t test_start = ACE_OS::gethrtime ();
@@ -276,33 +276,33 @@ main (int argc, char *argv[])
 
         if (insertion == 1)
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Long insertion test finished\n"));
           }
         else
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Long extraction test finished\n"));
           }
 
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
         ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
         stats.dump_results ("Total", gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total", 
+        ACE_Throughput_Stats::dump_throughput ("Total",
 											                         gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
 
       ACE_DEBUG ((LM_DEBUG, "\n"));
-    
+
       {
         ACE_Sample_History history (n);
         ACE_hrtime_t test_start = ACE_OS::gethrtime ();
@@ -311,7 +311,7 @@ main (int argc, char *argv[])
           {
             CORBA::Any any;
             CORBA::Double i = 123;
-            
+
             if (insertion == 1)
               {
                 ACE_hrtime_t start = ACE_OS::gethrtime ();
@@ -344,33 +344,33 @@ main (int argc, char *argv[])
 
         if (insertion == 1)
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Double insertion test finished\n"));
           }
         else
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Double extraction test finished\n"));
           }
 
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
         ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
         stats.dump_results ("Total", gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total", 
+        ACE_Throughput_Stats::dump_throughput ("Total",
 											                         gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
 
       ACE_DEBUG ((LM_DEBUG, "\n"));
-    
+
       {
         Param_Test::Fixed_Struct i;
         i.l = -7;
@@ -420,33 +420,33 @@ main (int argc, char *argv[])
 
         if (insertion == 1)
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Struct copying insertion test finished\n"));
           }
         else
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Struct extraction test finished\n"));
           }
 
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
         ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
         stats.dump_results ("Total", gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total", 
+        ACE_Throughput_Stats::dump_throughput ("Total",
 											                         gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
 
       ACE_DEBUG ((LM_DEBUG, "\n"));
-    
+
       {
         ACE_Sample_History history (n);
         ACE_hrtime_t test_start = ACE_OS::gethrtime ();
@@ -497,38 +497,38 @@ main (int argc, char *argv[])
 
         if (insertion == 1)
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Struct non-copying insertion test finished\n"));
           }
         else
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Struct extraction test finished\n"));
           }
 
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
         ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
         stats.dump_results ("Total", gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total", 
+        ACE_Throughput_Stats::dump_throughput ("Total",
 											                         gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
 
       ACE_DEBUG ((LM_DEBUG, "\n"));
-    
+
       {
         CORBA::ULong len = 1024;
         Param_Test::Long_Seq i (len);
         i.length (len);
-        
+
         for (CORBA::ULong k = 0; k < len; ++k)
           {
             i[k] = 11;
@@ -573,33 +573,33 @@ main (int argc, char *argv[])
 
         if (insertion == 1)
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Sequence copying insertion test finished\n"));
           }
         else
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Sequence extraction test finished\n"));
           }
 
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
         ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
         stats.dump_results ("Total", gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total", 
+        ACE_Throughput_Stats::dump_throughput ("Total",
 											                         gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
 
       ACE_DEBUG ((LM_DEBUG, "\n"));
-    
+
       {
         CORBA::ULong len = 1024;
         ACE_Sample_History history (n);
@@ -612,7 +612,7 @@ main (int argc, char *argv[])
                             Param_Test::Long_Seq (len),
                             -1);
             i->length (len);
-            
+
             for (CORBA::ULong k = 0; k < len; ++k)
               {
                 (*i)[k] = 11;
@@ -650,33 +650,33 @@ main (int argc, char *argv[])
 
         if (insertion == 1)
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Sequence non-copying insertion test finished\n"));
           }
         else
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Sequence extraction test finished\n"));
           }
 
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
         ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
         stats.dump_results ("Total", gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total", 
+        ACE_Throughput_Stats::dump_throughput ("Total",
 											                         gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
 
       ACE_DEBUG ((LM_DEBUG, "\n"));
-    
+
       {
         ACE_Sample_History history (n);
         ACE_hrtime_t test_start = ACE_OS::gethrtime ();
@@ -724,33 +724,33 @@ main (int argc, char *argv[])
 
         if (insertion == 1)
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Any copying insertion test finished\n"));
           }
         else
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Any extraction test finished\n"));
           }
 
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
         ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
         stats.dump_results ("Total", gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total", 
+        ACE_Throughput_Stats::dump_throughput ("Total",
 											                         gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
 
       ACE_DEBUG ((LM_DEBUG, "\n"));
-    
+
       {
         ACE_Sample_History history (n);
         ACE_hrtime_t test_start = ACE_OS::gethrtime ();
@@ -801,33 +801,33 @@ main (int argc, char *argv[])
 
         if (insertion == 1)
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Any non-copying insertion test finished\n"));
           }
         else
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "Any extraction test finished\n"));
           }
 
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
         ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
         stats.dump_results ("Total", gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total", 
+        ACE_Throughput_Stats::dump_throughput ("Total",
 											                         gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
 
       ACE_DEBUG ((LM_DEBUG, "\n"));
-    
+
       {
         ACE_Sample_History history (n);
         ACE_hrtime_t test_start = ACE_OS::gethrtime ();
@@ -869,33 +869,35 @@ main (int argc, char *argv[])
 
         if (insertion == 1)
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "String insertion test finished\n"));
           }
         else
           {
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         "String extraction test finished\n"));
           }
 
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_ASSERT (result);
+
+        ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
         ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
         stats.dump_results ("Total", gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total", 
+        ACE_Throughput_Stats::dump_throughput ("Total",
 											                         gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
       }
 
       ACE_DEBUG ((LM_DEBUG, "\n"));
-    
+
       {
         ACE_Sample_History history (n);
         ACE_hrtime_t test_start = ACE_OS::gethrtime ();
@@ -917,19 +919,19 @@ main (int argc, char *argv[])
 
         ACE_hrtime_t test_end = ACE_OS::gethrtime ();
 
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "Copy test finished\n"));
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "High resolution timer calibration...."));
         ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     "done\n"));
 
         ACE_Basic_Stats stats;
         history.collect_basic_stats (stats);
         stats.dump_results ("Total", gsf);
 
-        ACE_Throughput_Stats::dump_throughput ("Total", 
+        ACE_Throughput_Stats::dump_throughput ("Total",
 											                         gsf,
                                                test_end - test_start,
                                                stats.samples_count ());
