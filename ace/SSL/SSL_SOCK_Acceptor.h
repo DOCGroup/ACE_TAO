@@ -27,7 +27,6 @@
 #include "SSL_SOCK_Stream.h"
 
 #include "ace/SOCK_Acceptor.h"
-#include "ace/Reactor.h"
 #include "ace/OS_QoS.h"
 
 /**
