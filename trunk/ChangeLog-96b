@@ -331,16 +331,6 @@ Tue Nov 26 11:27:33 1996  David L. Levine  <levine@cs.wustl.edu>
  	  ACE_Thread_Mutex.  This should fix lots of nasty run-time bugs
  	  seen with recent versions of the ACE 0.33 beta...
 
-Tue Nov 26 21:06:13 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
-
-	* ace/Pipe.cpp (open): This change relates to Win32 code only.
-  	  Removed the reuse_addr flag to acceptor.open() so that we don't
- 	  try to reuse the acceptor socket immediately. Apparently, this
- 	  causes no end of trouble on Win32 as the following connect()
- 	  call fails (randomly).  Now it should be possible to create
- 	  multiple ACE_Pipes in one process and hence create multiple
-	  Reactors also without any problems.
-
 Tue Nov 26 14:40:00 1996  David L. Levine  <levine@cs.wustl.edu>
 
 	* Log_Msg.cpp: fake out TSS on VxWorks in Log_Msg::instance()

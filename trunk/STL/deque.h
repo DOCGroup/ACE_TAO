@@ -33,11 +33,11 @@
 
 
 /*
- *Added by d:\Terris\convert.pl --begin--
+ *Added by d:\\convert.pl --begin--
  */
 namespace std {
 /*
- *Added by d:\Terris\convert.pl --end--
+ *Added by d:\\convert.pl --end--
  */
 
 template <class T> 
@@ -576,11 +576,11 @@ void deque<T>::erase(iterator first, iterator last) {
 
 
 /*
- *Added by d:\Terris\convert.pl --begin--
+ *Added by d:\\convert.pl --begin--
  */
 }
 /*
- *Added by d:\Terris\convert.pl --end--
+ *Added by d:\\convert.pl --end--
  */
 
 #endif
