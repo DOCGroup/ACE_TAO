@@ -1,4 +1,4 @@
-//$Id$
+// $Id$
 
 #ifndef SIMPLE_UTIL_C
 #define SIMPLE_UTIL_C
@@ -95,21 +95,21 @@ Server<Servant>::test_for_ins (CORBA::String_var ior)
       ACE_TRY_CHECK;
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in ());
-
-      adapter->bind (this->ins_, ior.in ());
-    }
-  ACE_CATCHANY
-    {
+        IORTable::Table::_narrow (table_object.in (),
+                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       if (CORBA::is_nil (adapter.in ()))
         {
           ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
         }
 
+      adapter->bind (this->ins_, ior.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
     }
   ACE_ENDTRY;
-
-
 
   return 0;
 }

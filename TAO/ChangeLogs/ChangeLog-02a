@@ -1,3 +1,8 @@
+Fri Mar 09 14:40:37 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/Simple/Simple_util.cpp:
+          Fixed compilation problems with the Simple examples.
+
 Fri Mar  9 14:07:06 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp:
@@ -15,7 +20,7 @@ Fri Mar  9 15:40:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
         * tests/AMI/client.cpp:
         * tests/AMI/simple_client.cpp:
         * tests/AMI/server.cpp:
-          
+
           Fixed the custom event loop and clean-up code. This fixes
           a seg fault problem Bala reported.
 
@@ -50,32 +55,32 @@ Fri Mar  9 14:27:00 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Fri Mar 09 12:54:14 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (parse): Fixed
-	  TAO_Tokenizer::parse().  It was not delimiting strings
-	  correctly.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp (parse): Fixed
+          TAO_Tokenizer::parse().  It was not delimiting strings
+          correctly.
 
-	* orbsvcs/tests/AVStreams/Simple: Made the following changes to
-	  make things run more smoothly:
+        * orbsvcs/tests/AVStreams/Simple: Made the following changes to
+          make things run more smoothly:
 
-	  - Updated README.  Added information about defaults.
+          - Updated README.  Added information about defaults.
 
-	  - ftp and server: Changed <ftp::client_mmdevice_> and
-	  <ftp::streamctrl_> and <server::mmdevice> to be dynamic and use
-	  servant reference counting to manage their lifetime. Otherwise,
-	  things will crash on exit.
+          - ftp and server: Changed <ftp::client_mmdevice_> and
+          <ftp::streamctrl_> and <server::mmdevice> to be dynamic and use
+          servant reference counting to manage their lifetime. Otherwise,
+          things will crash on exit.
 
-	  - ftp: Added defaults to all user specified parameters.
+          - ftp: Added defaults to all user specified parameters.
 
-	  - ftp: Address should default to "localhost:0".
+          - ftp: Address should default to "localhost:0".
 
-	  - ftp: Removed <Client::flowname> and <Client::frame_rate> since
-	  they are not used.
+          - ftp: Removed <Client::flowname> and <Client::frame_rate> since
+          they are not used.
 
-	  - ftp: Changed CString to use operator= rather than set() since
-	  it is more intuitive.
+          - ftp: Changed CString to use operator= rather than set() since
+          it is more intuitive.
 
-	  - ftp: <flow_spec.length> should be called *before* slot [0] is
-	  used.
+          - ftp: <flow_spec.length> should be called *before* slot [0] is
+          used.
 
 Fri Mar  9 10:30:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -97,48 +102,48 @@ Fri Mar  9 16:07:55 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Fri Mar  9 07:25:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/FaultTolerance/IOGR/Makefile: Fixed a error.
+        * orbsvcs/tests/FaultTolerance/IOGR/Makefile: Fixed a error.
 
 Fri Mar  9 07:00:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp: Fixed
-	  some usage of ACE_CHECK which were giving warnings.
+        * tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp: Fixed
+          some usage of ACE_CHECK which were giving warnings.
 
 Fri Mar  9 06:48:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/Simple_util.cpp: Fixed a typo.
+        * examples/Simple/Simple_util.cpp: Fixed a typo.
 
 Thu Mar  8 21:10:39 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/IOPC.cpp (operator>>=):
- 	* tao/MessagingC.cpp (operator>>=):
-	* tao/PortableInterceptorC.cpp (operator>>=):
+        * tao/IOPC.cpp (operator>>=):
+        * tao/MessagingC.cpp (operator>>=):
+        * tao/PortableInterceptorC.cpp (operator>>=):
 
-	  Fixed code so that ACE_TRY_CHECK is correctly called immediately
-	  after a call that uses ACE_TRY_ENV is made.
+          Fixed code so that ACE_TRY_CHECK is correctly called immediately
+          after a call that uses ACE_TRY_ENV is made.
 
 Thu Mar  8 20:44:23 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Any.h:
-	* tao/Any.cpp:
+        * tao/Any.h:
+        * tao/Any.cpp:
 
-	  Removed CORBA::Environment parameter from the constructor.  It's
-	  a really bad idea to attempt to support emulated exceptions in
-	  constructors.  In any case, the parameter wasn't used.
+          Removed CORBA::Environment parameter from the constructor.  It's
+          a really bad idea to attempt to support emulated exceptions in
+          constructors.  In any case, the parameter wasn't used.
 
-	* tao/RequestInfo_Util.cpp (make_any):
+        * tao/RequestInfo_Util.cpp (make_any):
 
-	  Removed ACE_TRY_ENV parameter from the CORBA::Any constructor
-	  call.  It is no longer part of the constructor's signature.
+          Removed ACE_TRY_ENV parameter from the CORBA::Any constructor
+          call.  It is no longer part of the constructor's signature.
 
-	* docs/INS.html:
+        * docs/INS.html:
 
-	Updated URL for the INS spec.
+        Updated URL for the INS spec.
 
 Thu Mar  8 21:34:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Asynch_Reply_Dispatcher.cpp (schedule_timer): Fixed a
-	  warning with g++.
+        * tao/Asynch_Reply_Dispatcher.cpp (schedule_timer): Fixed a
+          warning with g++.
 
 Thu Mar  8 19:02:52 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -187,20 +192,20 @@ Thu Mar  8 14:20:43 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Mar  8 12:39:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/FaultTolerance/IOGR/server.cpp (main):
-	* orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
-	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
-	* examples/Simulator/Event_Supplier/DOVE_Supplier.cpp:
-	* examples/Simulator/Event_Supplier/DOVE_Supplier.cpp:
-	* examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
-	* examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
-	* examples/Simulator/Event_Supplier/Event_Con.cpp:
-	* examples/Simulator/Event_Supplier/Event_Con.cpp:
-	* examples/Simple/Simple_util.cpp:
-	* examples/Simple/echo/Echo_i.cpp:
-	* examples/Simple/echo/Echo_i.cpp:
-	* examples/Simple/echo/Echo_i.cpp: Fixed some
-	  resolve_initial_reference fuzz errors.
+        * orbsvcs/tests/FaultTolerance/IOGR/server.cpp (main):
+        * orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
+        * orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
+        * examples/Simulator/Event_Supplier/DOVE_Supplier.cpp:
+        * examples/Simulator/Event_Supplier/DOVE_Supplier.cpp:
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
+        * examples/Simulator/Event_Supplier/DualEC_Sup.cpp:
+        * examples/Simulator/Event_Supplier/Event_Con.cpp:
+        * examples/Simulator/Event_Supplier/Event_Con.cpp:
+        * examples/Simple/Simple_util.cpp:
+        * examples/Simple/echo/Echo_i.cpp:
+        * examples/Simple/echo/Echo_i.cpp:
+        * examples/Simple/echo/Echo_i.cpp: Fixed some
+          resolve_initial_reference fuzz errors.
 
 Thu Mar  8 09:32:49 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -211,9 +216,9 @@ Thu Mar  8 09:32:49 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Thu Mar  8 11:01:45 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Oneways/Reliable/server.cpp:
-	  Added missing ACE_TRY_ENV to resolve_initial_references
-	  call.
+        * performance-tests/RTCorba/Oneways/Reliable/server.cpp:
+          Added missing ACE_TRY_ENV to resolve_initial_references
+          call.
 
 Thu Mar  8 08:34:16 2001  Carlos O'Ryan  <coryan@uci.edu>
 
