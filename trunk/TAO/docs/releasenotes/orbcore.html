@@ -34,6 +34,26 @@
 
 <b>Known issues:</b>
 <UL>
+  <li>Some CORBA objects need to have access to the ORB.  We tend to
+      use TAO_ORB_Core_instance ()->orb () to fetch the right ORB the
+      object is using.  This is most often true when implementing the
+      shutdown method which allow other process to shutdown a remote
+      ORB.  Althought this may be the "right" thing to do in TAO, it
+      is not CORBA compliant and hurts the portability of object
+      implementation.
+
+      A common way of getting around this problem is to cache the ORB
+      pointer in the object when it is created and simply use the
+      cached ORB when needed.  However, remember that there could be
+      multiple ORBs in a process and a POA may be shared by several
+      ORBs.  That means, we may not handling the object with the same
+      ORB it was created. Collocation optimization further complicated
+      the problem. 
+
+      At the moment, using TAO_ORB_Core_instance ()->orb () is the
+      only sane way to get arond the problem.  Though there may be a
+      better way.<p>
+
   <li>The acceptor on the server side doesn't get opened until calling
       CORBA_ORB::run ().  And that's when we check whether the port
       the server wants to listen on is available or not.  (Unless we
