@@ -4,7 +4,7 @@ The IDL_Cubit test for Hardpack ORB
 Compiling
 ---------
 
-setup the HARDPACK ROOT environment variables before compiling.
+setup the HARDPACK_ROOT environment variables before compiling.
 
 The following is an  example configuration for SunOS_5.5.1:
 
