@@ -1,3 +1,11 @@
+Wed Aug 11 13:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Oneway_Buffering/admin.cpp:
+        * tests/Oneway_Buffering/client.cpp:
+        * tests/Oneway_Buffering/server.cpp:
+          When catching an exception, tell whether it is in the client,
+          admin or server.
+
 Wed Aug 11 09:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.h:
