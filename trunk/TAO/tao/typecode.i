@@ -2,11 +2,11 @@ ACE_INLINE CORBA::TCKind
 CORBA_TypeCode::kind (CORBA::Environment &env) const
 {
   env.clear ();
-  return kind_;
+  return this->kind_;
 }
 
 // Returns true if the two typecodes are identical
-ACE_INLINE CORBA::Boolean 
+ACE_INLINE CORBA::Boolean
 CORBA_TypeCode::equal (const CORBA::TypeCode_ptr tc,
                        CORBA::Environment &env) const
 {
@@ -14,14 +14,15 @@ CORBA_TypeCode::equal (const CORBA::TypeCode_ptr tc,
     // simple case
     return CORBA::B_FALSE;
   else
+    // typecode kinds are same
     return this->private_equal (tc, env);
 }
 
 // just fetch the 'kind' field out of the typecode
 ACE_INLINE void *
 CORBA_TypeCode::operator new (size_t s)
-{ 
-  return ::operator new (s); 
+{
+  return ::operator new (s);
 }
 
 ACE_INLINE CORBA::TypeCode_ptr
@@ -33,29 +34,29 @@ CORBA_TypeCode::_duplicate (CORBA::TypeCode_ptr tc)
 }
 
 // returns the Repository ID
-ACE_INLINE TAO_CONST CORBA::String
+ACE_INLINE const char *
 CORBA_TypeCode::id (CORBA::Environment &env) const
 {
   env.clear ();
 
   // if already precomputed
-  if (private_state_->tc_id_known_)
-    return private_state_->tc_id_;
+  if (this->private_state_->tc_id_known_)
+    return this->private_state_->tc_id_;
   else
-    return private_id (env);
+    return this->private_id (env);
 }
 
 // returns the string name
-ACE_INLINE TAO_CONST CORBA::String
+ACE_INLINE const char *
 CORBA_TypeCode::name (CORBA::Environment &env) const
 {
   env.clear ();
 
   // if already precomputed
-  if (private_state_->tc_name_known_)
-    return private_state_->tc_name_;
+  if (this->private_state_->tc_name_known_)
+    return this->private_state_->tc_name_;
   else
-    return private_name (env);
+    return this->private_name (env);
 }
 
 // Return the number of members defined by this typecode
@@ -69,34 +70,34 @@ CORBA_TypeCode::member_count (CORBA::Environment &env) const
   env.clear ();
 
   // if already precomputed
-  if (private_state_->tc_member_count_known_)
-    return private_state_->tc_member_count_;
+  if (this->private_state_->tc_member_count_known_)
+    return this->private_state_->tc_member_count_;
   else
-    return private_member_count (env);
+    return this->private_member_count (env);
 }
 
 // calculate size of the typecode
 ACE_INLINE size_t
 CORBA_TypeCode::size (CORBA::Environment &env)
 {
-  if (private_state_->tc_size_known_)
-    return private_state_->tc_size_;
+  if (this->private_state_->tc_size_known_)
+    return this->private_state_->tc_size_;
   else
-    return private_size (env);
+    return this->private_size (env);
 }
 
 // calculate alignment requirements of the typecode
 ACE_INLINE size_t
 CORBA_TypeCode::alignment (CORBA::Environment &env)
 {
-  if (private_state_->tc_alignment_known_)
-    return private_state_->tc_alignment_;
+  if (this->private_state_->tc_alignment_known_)
+    return this->private_state_->tc_alignment_;
   else
-    return private_alignment (env);
+    return this->private_alignment (env);
 }
 
 ACE_INLINE void *
 CORBA_TypeCode::operator new (size_t, void *p)
-{ 
-  return p; 
+{
+  return p;
 }

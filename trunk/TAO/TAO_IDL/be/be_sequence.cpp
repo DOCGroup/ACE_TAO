@@ -488,6 +488,9 @@ be_sequence::gen_client_stubs (void)
 
       cg->pop ();
 
+      // generate the ifdefined macro for the sequence type
+      cs->gen_ifdef_macro (this->flatname ());
+
       // generate the methods of the sequence C++ mapping
       cg->push (TAO_CodeGen::TAO_SEQUENCE_BODY_CS);
       s = cg->make_state ();
@@ -910,6 +913,8 @@ be_sequence::gen_client_stubs (void)
 
       cg->pop ();
       this->cli_stub_gen_ = I_TRUE;
+
+      cs->gen_endif ();
     }
   return 0;
 }
@@ -967,13 +972,13 @@ be_sequence::gen_client_inline (void)
                             -1);
         }
 
+      // generate the ifdefined macro for type
+      ci->gen_ifdef_macro (this->flatname ());
+
       *ci << "// *************************************************************"
           << nl;
       *ci << "// class " << this->name () << nl;
       *ci << "// *************************************************************\n\n";
-
-      // generate the ifdefined macro for type
-      ci->gen_ifdef_macro (this->flatname ());
 
       // freebuf method
       ci->indent ();
@@ -2006,7 +2011,7 @@ be_sequence::gen_managed_type_ci (void)
   char fnamebuf [NAMEBUFSIZE];  // full name
   char lnamebuf [NAMEBUFSIZE];  // local name
   char typebuf [NAMEBUFSIZE];  // type name
-
+  char macro [NAMEBUFSIZE]; // for ifdef macro
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -2029,6 +2034,7 @@ be_sequence::gen_managed_type_ci (void)
   ACE_OS::memset (fnamebuf, '\0', NAMEBUFSIZE);
   ACE_OS::memset (lnamebuf, '\0', NAMEBUFSIZE);
   ACE_OS::memset (typebuf, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (macro, '\0', NAMEBUFSIZE);
   switch (this->managed_type ())
     {
     case be_sequence::MNG_OBJREF:
@@ -2036,6 +2042,7 @@ be_sequence::gen_managed_type_ci (void)
         ACE_OS::sprintf (fnamebuf, "%s::%s", this->fullname (), "TAO_ObjRefMngType");
         ACE_OS::sprintf (lnamebuf, "%s", "TAO_ObjRefMngType");
         ACE_OS::sprintf (typebuf, "%s_ptr", bt->fullname ());
+        ACE_OS::sprintf (macro, "%s_%s", this->flatname (), "TAO_ObjRefMngType");
       }
       break;
     case be_sequence::MNG_STRING:
@@ -2043,6 +2050,7 @@ be_sequence::gen_managed_type_ci (void)
         ACE_OS::sprintf (fnamebuf, "%s::%s", this->fullname (), "TAO_StrMngType");
         ACE_OS::sprintf (lnamebuf, "%s", "TAO_StrMngType");
         ACE_OS::sprintf (typebuf, "%s", "char *");
+        ACE_OS::sprintf (macro, "%s_%s", this->flatname (), "TAO_StrMngType");
       }
       break;
     default:
@@ -2055,6 +2063,9 @@ be_sequence::gen_managed_type_ci (void)
                           -1);
       }
     }
+
+  // generate the ifdefined macro for the managed
+  ci->gen_ifdef_macro (macro);
 
   // generate the managed type implementation in the inline file
   ci->indent (); // start with whatever was our current indent level
@@ -2185,6 +2196,7 @@ be_sequence::gen_managed_type_ci (void)
   ci->decr_indent ();
   *ci << "}\n\n";
 
+  ci->gen_endif ();
   return 0;
 }
 
@@ -2198,7 +2210,7 @@ be_sequence::gen_managed_type_cs (void)
   char fnamebuf [NAMEBUFSIZE];  // full name
   char lnamebuf [NAMEBUFSIZE];  // local name
   char typebuf [NAMEBUFSIZE];  // type name
-
+  char macro [NAMEBUFSIZE]; // for ifdef macro
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -2221,6 +2233,7 @@ be_sequence::gen_managed_type_cs (void)
   ACE_OS::memset (fnamebuf, '\0', NAMEBUFSIZE);
   ACE_OS::memset (lnamebuf, '\0', NAMEBUFSIZE);
   ACE_OS::memset (typebuf, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (macro, '\0', NAMEBUFSIZE);
   switch (this->managed_type ())
     {
     case be_sequence::MNG_OBJREF:
@@ -2228,6 +2241,7 @@ be_sequence::gen_managed_type_cs (void)
         ACE_OS::sprintf (fnamebuf, "%s::%s", this->fullname (), "TAO_ObjRefMngType");
         ACE_OS::sprintf (lnamebuf, "%s", "TAO_ObjRefMngType");
         ACE_OS::sprintf (typebuf, "%s_ptr", bt->fullname ());
+        ACE_OS::sprintf (macro, "%s_%s", this->flatname (), "TAO_ObjRefMngType");
       }
       break;
     case be_sequence::MNG_STRING:
@@ -2235,6 +2249,7 @@ be_sequence::gen_managed_type_cs (void)
         ACE_OS::sprintf (fnamebuf, "%s::%s", this->fullname (), "TAO_StrMngType");
         ACE_OS::sprintf (lnamebuf, "%s", "TAO_StrMngType");
         ACE_OS::sprintf (typebuf, "%s", "char *");
+        ACE_OS::sprintf (macro, "%s_%s", this->flatname (), "TAO_StrMngType");
       }
       break;
     default:
@@ -2247,6 +2262,9 @@ be_sequence::gen_managed_type_cs (void)
                           -1);
       }
     }
+
+  // generate the ifdefined macro for the sequence type
+  cs->gen_ifdef_macro (macro);
 
   switch (this->managed_type ())
     {
@@ -2405,6 +2423,7 @@ be_sequence::gen_managed_type_cs (void)
       break;
     }
 
+  cs->gen_endif ();
   return 0;
 }
 

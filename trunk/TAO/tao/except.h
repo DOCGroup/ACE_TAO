@@ -42,7 +42,7 @@ class TAO_Export CORBA_Exception : public TAO_IUnknown
   void operator delete (void *p)
   { ::operator delete (p); }
 
-  TAO_CONST CORBA::String id (void) const;
+  const char *id (void) const;
   TAO_CONST CORBA::TypeCode_ptr type (void) const;
 
   // = To implement the narrow method.

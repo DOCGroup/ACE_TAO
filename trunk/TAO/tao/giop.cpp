@@ -966,7 +966,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
 	     i < xlist->length;
 	     i++, tcp++)
 	  {
-	    CORBA::String xid;
+	    const char *xid;
 
 	    xid = (*tcp)->id (env);
 	    if (env.exception () != 0)
