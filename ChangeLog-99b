@@ -1,3 +1,7 @@
+Wed Jan 27 13:04:55 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE version 4.6.17 released.
+
 Wed Jan 27 12:32:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html include/makeinclude/platform_vxworks5.x_g++.GNU:
