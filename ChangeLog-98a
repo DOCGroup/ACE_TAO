@@ -1,3 +1,7 @@
+Tue Apr 14 10:10:46 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.4.41 released.
+
 Tue Apr 14 07:19:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/make_release (create_kit): ACE+TAO instead of ACE_TAO.
