@@ -280,7 +280,8 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open (void)
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *pool_name)
-  : memory_pool_ (pool_name)
+  : memory_pool_ (pool_name),
+    bad_flag_ (0)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
   if (pool_name == 0)
@@ -290,7 +291,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
                                                    ACE_DIRECTORY_SEPARATOR_CHAR)));
   this->delete_lock_ = 1;
 
-  if (this->open () == -1)
+  if ((this->bad_flag_ = this->open ()) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
@@ -300,7 +301,8 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *pool_name,
                                                               const ACE_TCHAR *lock_name,
                                                               const ACE_MEM_POOL_OPTIONS *options)
-  : memory_pool_ (pool_name, options)
+  : memory_pool_ (pool_name, options),
+    bad_flag_ (0)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
   if (lock_name != 0)
@@ -310,7 +312,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
                                                    ACE_DIRECTORY_SEPARATOR_CHAR)));
   this->delete_lock_ = 1;
 
-  if (this->open () == -1)
+  if ((this->bad_flag_ = this->open ()) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
@@ -322,18 +324,20 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
                                                               const ACE_MEM_POOL_OPTIONS *options,
                                                               ACE_LOCK *lock)
   : memory_pool_ (pool_name, options),
-    lock_ (lock)
+    lock_ (lock),
+    delete_lock_ (0),
+    bad_flag_ (0)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
 
   if (lock == 0)
     {
+      this->bad_flag_ = -1;
       errno = EINVAL;
       return;
     }
-  this->delete_lock_ = 0;
 
-  if (this->open () == -1)
+  if ((this->bad_flag_ = this->open ()) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
@@ -345,13 +349,14 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
                                                           const ACE_TCHAR *lock_name,
                                                           const void *options)
   : memory_pool_ (pool_name,
-                  (const ACE_MEM_POOL_OPTIONS *) options)
+                  (const ACE_MEM_POOL_OPTIONS *) options),
+    bad_flag_ (0)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
 
   ACE_NEW (this->lock_, ACE_LOCK (lock_name));
   this->delete_lock_ = 1;
-  if (this->open () == -1)
+  if ((this->bad_flag_ = this->open ()) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
