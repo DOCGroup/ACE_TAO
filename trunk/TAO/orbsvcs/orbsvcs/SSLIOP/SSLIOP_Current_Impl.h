@@ -45,8 +45,13 @@ public:
   /// Protected to force allocation on the heap.
   ~TAO_SSLIOP_Current_Impl (void);
 
+  /// Return the SSL peer certificate associated with the
+  /// current request as an octet sequence, i.e. a DER encoded
+  /// certificate.
+  void get_peer_certificate (SSLIOP::ASN_1_Cert *certificate);
+
   /// Return the SSL peer certificate chain associated with the
-  /// current upcall.
+  /// current request as a sequence of DER encoded certificates.
   void get_peer_certificate_chain (SSLIOP::SSL_Cert *cert_chain);
 
   /// Set the pointer to the underlying SSL session state.
