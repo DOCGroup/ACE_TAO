@@ -467,7 +467,6 @@ ACE_Reactor::cancel_timer (long timer_id,
                                                 dont_call_handle_close);
 }
 
-
 ACE_INLINE int
 ACE_Reactor::schedule_wakeup (ACE_Event_Handler *event_handler,
                               ACE_Reactor_Mask masks_to_be_added)
