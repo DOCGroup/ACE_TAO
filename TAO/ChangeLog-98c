@@ -1,3 +1,8 @@
+Wed Sep  2 18:16:32 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/Trading_Service/Trading_Service.cpp: 
+	  Removed some TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG uses.
+
 Wed Sep 02 16:59:56 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.7 released.

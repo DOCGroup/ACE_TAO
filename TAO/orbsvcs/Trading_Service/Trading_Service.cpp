@@ -236,15 +236,7 @@ Trading_Service::bootstrap_to_federation (void)
               TAO_CHECK_ENV;
 
               CosTrading::Lookup_ptr remote_lookup;
-#ifdef TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
-              CORBA::Object_var obj =
-                orb->string_to_object (link_info->target, TAO_TRY_ENV);
-              TAO_CHECK_ENV;
-              remote_lookup = CosTrading::Lookup::_narrow (obj.in (), TAO_TRY_ENV);
-              TAO_CHECK_ENV;
-#else
               remote_lookup = link_info->target.in ();
-#endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
               
               ACE_DEBUG ((LM_DEBUG, "*** Retrieving its link interface.\n"));
               CosTrading::Link_var remote_link =
@@ -308,16 +300,7 @@ Trading_Service::shutdown (void)
               TAO_CHECK_ENV;
 
               CosTrading::Lookup_ptr remote_lookup;
-#ifdef TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
-              CORBA::ORB_var orb = this->orb_manager_.orb ();
-              CORBA::Object_var obj =
-                orb->string_to_object (link_info->target, TAO_TRY_ENV);
-              TAO_CHECK_ENV;
-              remote_lookup = CosTrading::Lookup::_narrow (obj.in (), TAO_TRY_ENV);
-              TAO_CHECK_ENV;
-#else 
               remote_lookup = link_info->target.in ();
-#endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
               
               ACE_DEBUG ((LM_DEBUG, "*** Retrieving its link interface.\n"));
               CosTrading::Link_var remote_link =
