@@ -53,7 +53,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #   IORs into an IOGR and either write the IOGR to a file or register it with
 #   the Naming Service.]
 #
-#		The object group creator is also told to unregister all factories that create humans.
+#   The object group creator is also told to unregister all factories that create humans.
 #   ***Test: It does so using the unregister_factory_by_type method.
 #
 #   Three clients are started, one at a time.  Each client is given a reference
