@@ -1,3 +1,24 @@
+Fri Aug  1 20:13:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExtAttributeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtAttributeDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ExtValueDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtValueDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.h:
+        * orbsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
+
+	  Implemented CORBA::Container::create_ext_value method.
+	  Also factored out common servant code that creates IFR entries for
+	  valuetype factories, and for the exception references
+	  of operations, attributes and valuetype factories.
+
 Fri Aug  1 17:28:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Adapter.h: Forward declared CORBA::Exception.

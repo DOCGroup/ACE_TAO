@@ -53,6 +53,84 @@ TAO_IFR_Generic_Utils<T>::destroy_special (const char *section_name,
     }
 }
 
+template<typename T>
+void
+TAO_IFR_Generic_Utils<T>::set_initializers (
+    const T &initializers,
+    ACE_Configuration *config,
+    ACE_Configuration_Section_Key &key
+  )
+{
+  CORBA::ULong length = initializers.length ();
+
+  if (length == 0)
+    {
+      return;
+    }
+    
+  ACE_Configuration_Section_Key initializers_key;
+  config->open_section (key,
+                        "initializers",
+                        1,
+                        initializers_key);
+  config->set_integer_value (initializers_key,
+                             "count",
+                             length);
+
+  CORBA::ULong arg_count = 0;
+  char *arg_path = 0;
+  ACE_Configuration_Section_Key initializer_key;
+  ACE_Configuration_Section_Key params_key;
+  ACE_Configuration_Section_Key arg_key;
+
+  for (CORBA::ULong i = 0; i < length; ++i)
+    {
+      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      config->open_section (initializers_key,
+                            stringified,
+                            1,
+                            initializer_key);
+      config->set_string_value (initializer_key,
+                                "name",
+                                initializers[i].name.in ());
+
+      arg_count = initializers[i].members.length ();
+
+      if (arg_count > 0)
+        {
+          config->open_section (initializer_key,
+                                "params",
+                                1,
+                                params_key);
+          config->set_integer_value (params_key,
+                                     "count",
+                                     arg_count);
+
+          for (CORBA::ULong j = 0; j < arg_count; ++j)
+            {
+              char *stringified = 
+                TAO_IFR_Service_Utils::int_to_string (j);
+              config->open_section (params_key,
+                                    stringified,
+                                    1,
+                                    arg_key);
+              config->set_string_value (
+                  arg_key,
+                  "arg_name",
+                  initializers[i].members[j].name.in ()
+                );
+              arg_path = 
+                TAO_IFR_Service_Utils::reference_to_path (
+                    initializers[i].members[j].type_def.in ()
+                  );
+              config->set_string_value (arg_key,
+                                        "arg_path",
+                                        arg_path);
+            }
+        }
+    }
+}
+
 template<typename T_desc, typename T_impl>
 void
 TAO_IFR_Desc_Utils<T_desc,T_impl>::fill_desc_begin (

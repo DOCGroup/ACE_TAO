@@ -485,9 +485,11 @@ TAO_ValueDef_i::initializers_i (const CORBA::InitializerSeq &initializers
   this->repo_->config ()->remove_section (this->section_key_,
                                           "initializers",
                                           1);
-  TAO_IFR_Service_Utils::set_initializers (initializers,
-                                           this->repo_->config (),
-                                           this->section_key_);
+  TAO_IFR_Generic_Utils<CORBA::InitializerSeq>::set_initializers (
+      initializers,
+      this->repo_->config (),
+      this->section_key_
+    );
 }
 
 CORBA::ValueDef_ptr
