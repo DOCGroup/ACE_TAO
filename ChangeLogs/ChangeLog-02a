@@ -1,16 +1,24 @@
+Mon Oct 30 11:38:07 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * ace/Basic_Stats.cpp:
+        * ace/Basic_Stats.inl:
+        * ace/Sample_History.cpp:
+        * ace/Stats.cpp:
+          Fixed problems on platforms that lack 64-bit integers.
+
 Mon Oct 30 11:10:26 2000  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* include/makeinclude/platform_linux.GNU: 
-	* include/makeinclude/platform_chorus_ghs.GNU:
+        * include/makeinclude/platform_linux.GNU:
+        * include/makeinclude/platform_chorus_ghs.GNU:
 
-	The change to canonicalize the values used for
- 	exceptions/fast/rtti caused the default for "exceptions" on these
- 	two platforms to change from exceptions off to exceptions on.
-  	There may be others, but without access to the compiler itself
-	it's hard to tell what the default behavior is for the compiler
-	and thus set the value for exceptions/rtti/fast accordingly.
+        The change to canonicalize the values used for
+        exceptions/fast/rtti caused the default for "exceptions" on these
+        two platforms to change from exceptions off to exceptions on.
+        There may be others, but without access to the compiler itself
+        it's hard to tell what the default behavior is for the compiler
+        and thus set the value for exceptions/rtti/fast accordingly.
 
-	Thanks to Carlos O'Ryan <coryan@uci.edu> for pointing this out.
+        Thanks to Carlos O'Ryan <coryan@uci.edu> for pointing this out.
 
 Mon Oct 30 00:57:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -24,7 +32,7 @@ Sun Oct 29 23:46:54 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ace_wchar.h:
 
-          Removed the definitions for LPTSTR and LPCTSTR. They 
+          Removed the definitions for LPTSTR and LPCTSTR. They
           will need to be defined outside of ace or in config.h
           to be made available on other platforms.  Here is a
           sample block which can be added to a non-Win32 config.h:
@@ -44,7 +52,7 @@ Sun Oct 29 23:46:54 2000  Darrell Brunsch <brunsch@uci.edu>
           typedef char *LPTSTR;
           typedef char TCHAR;
           #define __TEXT(literal) literal
-          #endif 
+          #endif
 
           #define TEXT(literal) __TEXT(literal)
 

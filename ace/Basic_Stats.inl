@@ -26,9 +26,9 @@ ACE_Basic_Stats::sample (ACE_UINT64 value)
   if (this->samples_count_ == 1u)
     {
       this->min_ = value;
-      this->min_at_ = ACE_U64_TO_U32 (this->samples_count_);
+      this->min_at_ = this->samples_count_;
       this->max_ = value;
-      this->max_at_ = ACE_U64_TO_U32 (this->samples_count_);
+      this->max_at_ = this->samples_count_;
       this->sum_ = value;
 #if defined ACE_LACKS_LONGLONG_T
       this->sum2_ = value * ACE_U64_TO_U32 (value);
@@ -41,12 +41,12 @@ ACE_Basic_Stats::sample (ACE_UINT64 value)
       if (this->min_ > value)
         {
           this->min_ = value;
-          this->min_at_ = ACE_U64_TO_U32 (this->samples_count_);
+          this->min_at_ = this->samples_count_;
         }
       if (this->max_ < value)
         {
           this->max_ = value;
-          this->max_at_ = ACE_U64_TO_U32 (this->samples_count_);
+          this->max_at_ = this->samples_count_;
         }
 
       this->sum_  += value;
