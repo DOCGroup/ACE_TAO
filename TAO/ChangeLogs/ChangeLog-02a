@@ -1,3 +1,8 @@
+Mon May  8 15:25:29 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Load_Balancing_persistent/Load_Balancer_i.cpp: Fixed a
+	  compile error with single threaded builds.  
+
 Mon May  8 09:42:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/Trading/run_test.pl:
