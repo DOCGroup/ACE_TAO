@@ -2,7 +2,7 @@ project(RTEvent) : orbsvcslib, core, svc_utils, messaging, portableserver {
   sharedname   = TAO_RTEvent
   idlflags    += -Wb,export_macro=TAO_RTEvent_Export -Wb,export_include=Event/event_export.h
   dynamicflags = TAO_RTEVENT_BUILD_DLL
-  tagchecks    = RTEvent
+  tagchecks   += RTEvent
   // Add this include path for precompiled headers
   includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
 

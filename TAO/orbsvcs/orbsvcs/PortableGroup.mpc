@@ -2,7 +2,7 @@ project(PortableGroup) : orbsvcslib, core, naming, svc_utils, portableserver, me
   sharedname   = TAO_PortableGroup
   idlflags    += -Wb,export_macro=TAO_PortableGroup_Export -Wb,export_include=PortableGroup/portablegroup_export.h
   dynamicflags = TAO_PORTABLEGROUP_BUILD_DLL
-  tagchecks    = PortableGroup
+  tagchecks   += PortableGroup
 
   IDL_Files {
     miop.idl
