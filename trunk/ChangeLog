@@ -1,3 +1,8 @@
+Wed Dec 10 15:09:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/TMCast/Member/member.cpp:
+          Added missing includes
+
 Wed Dec 10 13:39:53 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.cpp:
