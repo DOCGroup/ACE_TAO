@@ -1,3 +1,12 @@
+Mon Jan  3 14:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU:
+          Previously explicit was the default for templates, changed this
+          so that we use explicit for version 4.2 and 5.3 and otherwise
+          we default to implicit. Explicit templates are not usable anymore
+          for TAO, maybe these older compilers work for ACE, but we don't
+          know.
+
 Mon Jan  3 08:02:33 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* examples/TMCast/Member:
