@@ -47,7 +47,7 @@ public:
   void handler (JAWS_IO_Handler *handler);
 
   virtual void handle (ACE_HANDLE h) = 0;
-  virtual ACE_HANDLE handle (void) = 0;
+  virtual ACE_HANDLE handle (void) const = 0;
 
   // James, please add documentation here.
 
@@ -137,7 +137,7 @@ public:
   ~JAWS_Synch_IO (void);
 
   virtual void handle (ACE_HANDLE h);
-  virtual ACE_HANDLE handle (void);
+  virtual ACE_HANDLE handle (void) const;
 
   void read (ACE_Message_Block& mb, int size);
 
@@ -181,7 +181,7 @@ public:
   ~JAWS_Asynch_IO (void);
 
   virtual void handle (ACE_HANDLE h) { ACE_Handler::handle (h); };
-  virtual ACE_HANDLE handle (void)   { return ACE_Handler::handle (); };
+  virtual ACE_HANDLE handle (void) const { return ACE_Handler::handle (); };
 
   void read (ACE_Message_Block& mb, int size);
 
