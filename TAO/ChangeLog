@@ -1,3 +1,12 @@
+Wed Sep 17 15:24:01 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/examples/Notify/ThreadPool/Supplier_Client.h:
+	* orbsvcs/examples/Notify/ThreadPool/Supplier_Client.cpp:
+
+	Renamed the <init> method to <_init>. This avoids warnings on
+	solaris regarding hiding the ACE_Shared_Object::init signature.
+
+
 Wed Sep 17 13:29:31 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/extra_core.mpb:
