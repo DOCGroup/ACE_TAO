@@ -18,6 +18,7 @@
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+#define ACE_DEFAULT_CLOSE_ALL_HANDLES 0
 
 #if defined (SCO) && !defined (MAXPATHLEN)
 #define MAXPATHLEN 1023

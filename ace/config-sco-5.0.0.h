@@ -19,6 +19,8 @@
 #define ACE_LACKS_MADVISE
 #define	ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 
+#define ACE_DEFAULT_CLOSE_ALL_HANDLES 0
+
 // Compiler doesn't support static data member templates.
 //#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
