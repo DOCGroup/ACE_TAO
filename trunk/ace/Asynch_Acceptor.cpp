@@ -31,9 +31,11 @@ ACE_Asynch_Acceptor<HANDLER>::ACE_Asynch_Acceptor (void)
 template <class HANDLER>
 ACE_Asynch_Acceptor<HANDLER>::~ACE_Asynch_Acceptor (void)
 {
+  //this->asynch_accept_.close ();
+
   // Close down the listen socket
-  if (this->listen_handle_ != ACE_INVALID_HANDLE)
-    ACE_OS::closesocket (this->listen_handle_);
+  // if (this->listen_handle_ != ACE_INVALID_HANDLE)
+  //   ACE_OS::closesocket (this->listen_handle_);
 }
 
 template <class HANDLER> int

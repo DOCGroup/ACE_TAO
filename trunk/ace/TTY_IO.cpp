@@ -4,6 +4,11 @@
 
 ACE_RCSID(ace, TTY_IO, "$Id$")
 
+ACE_TTY_IO::Serial_Params::Serial_Params (void)
+{
+  ACE_OS::memset (this, 0, sizeof *this);
+}
+
 // Interface for reading/writing serial device parameters
 
 int
