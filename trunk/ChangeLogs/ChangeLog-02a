@@ -1,3 +1,10 @@
+Fri Jan 25 09:42:12 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace_dll.dsp:
+
+	  Corrected inconsistency in the DLL minor version.  The correct
+	  minor version for the ACE 5.2 series is "2," not "1."
+
 Fri Jan 25 11:21:28 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/msvc_auto_compile.pl: Added XML into the list of auto build
