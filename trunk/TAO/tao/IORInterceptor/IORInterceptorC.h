@@ -33,10 +33,10 @@
 
 #include /**/ "ace/pre.h"
 
+
 #ifndef TAO_IORINTERCEPTOR_SAFE_INCLUDE
 #error "You should not include IORInterceptorC.h directly, use IORInterceptor.h"
 #endif /* !TAO_IORINTERCEPTOR_SAFE_INCLUDE */
-
 #include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
