@@ -10,7 +10,9 @@
 
 DIRS  = \
   EC_Latency \
-  EC_Federated_Latency
+  EC_Federated_Latency \
+  EC_Scalability \
+  EC_Federated_Scalability
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

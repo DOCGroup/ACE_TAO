@@ -11,7 +11,7 @@
 #include "Consumer.h"
 #include "Supplier.h"
 #include "Loopback.h"
-#include "ECFL_Configuration.h"
+#include "ECFS_Configuration.h"
 
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
@@ -20,19 +20,19 @@
 
 #include "ace/High_Res_Timer.h"
 
-ACE_RCSID(EC_Federated_Latency, Peer, "$Id$")
+ACE_RCSID(EC_Federated_Scalability, Peer, "$Id$")
 
-ECFL_Peer::ECFL_Peer (CORBA::ORB_ptr orb)
+ECFS_Peer::ECFS_Peer (CORBA::ORB_ptr orb)
   :  orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
-ECFL_Peer::~ECFL_Peer (void)
+ECFS_Peer::~ECFS_Peer (void)
 {
 }
 
 void
-ECFL_Peer::init (PortableServer::POA_ptr root_poa,
+ECFS_Peer::init (PortableServer::POA_ptr root_poa,
                  CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_EC_Event_Channel_Attributes attr (root_poa, root_poa);
@@ -49,14 +49,14 @@ ECFL_Peer::init (PortableServer::POA_ptr root_poa,
 }
 
 RtecEventChannelAdmin::EventChannel_ptr
-ECFL_Peer::channel (CORBA::Environment &)
+ECFS_Peer::channel (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RtecEventChannelAdmin::EventChannel::_duplicate (this->event_channel_.in ());
 }
 
 void
-ECFL_Peer::connect (RtecEventChannelAdmin::EventChannel_ptr remote_ec,
+ECFS_Peer::connect (RtecEventChannelAdmin::EventChannel_ptr remote_ec,
                     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -80,11 +80,11 @@ ECFL_Peer::connect (RtecEventChannelAdmin::EventChannel_ptr remote_ec,
 }
 
 Control::Loopback_ptr
-ECFL_Peer::setup_loopback (CORBA::Long experiment_id,
+ECFS_Peer::setup_loopback (CORBA::Long experiment_id,
                            CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  Servant_var<ECFL_Loopback> loopback (new ECFL_Loopback);
+  Servant_var<ECFS_Loopback> loopback (new ECFS_Loopback);
 
   loopback->init (experiment_id,
                   this->event_channel_.in (),
@@ -95,22 +95,29 @@ ECFL_Peer::setup_loopback (CORBA::Long experiment_id,
 }
 
 Control::Samples *
-ECFL_Peer::run_experiment (CORBA::Long experiment_id,
+ECFS_Peer::run_experiment (CORBA::Long consumer_count,
+                           CORBA::Long experiment_id,
                            CORBA::Long iterations,
                            CORBA::Long_out gsf,
                            CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  Servant_var<ECFL_Consumer> consumer (
-          new ECFL_Consumer (experiment_id,
-                             iterations)
-          );
-
-  consumer->connect (this->event_channel_.in (), ACE_TRY_ENV);
+  Servant_var<ECFS_Consumer> *consumer;
+  ACE_NEW_THROW_EX (consumer,
+                    Servant_var<ECFS_Consumer>[consumer_count],
+                    CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
+  for (int i = 0; i != consumer_count; ++i)
+    {
+      consumer[i] = 
+        Servant_var<ECFS_Consumer> (new ECFS_Consumer (experiment_id,
+                                                       iterations));
+      consumer[i]->connect (this->event_channel_.in (), ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+    }
 
-  Servant_var<ECFL_Supplier> supplier (
-          new ECFL_Supplier (experiment_id)
+  Servant_var<ECFS_Supplier> supplier (
+          new ECFS_Supplier (experiment_id)
           );
 
   supplier->connect (this->event_channel_.in (), ACE_TRY_ENV);
@@ -120,7 +127,7 @@ ECFL_Peer::run_experiment (CORBA::Long experiment_id,
 
   RtecEventComm::EventSet event (1);
   event.length (1);
-  event[0].header.type   = ECFL_START_EVENT_TYPE;
+  event[0].header.type   = ECFS_START_EVENT_TYPE;
   event[0].header.source = experiment_id;
   event[0].header.ttl    = 1;
 
@@ -136,19 +143,35 @@ ECFL_Peer::run_experiment (CORBA::Long experiment_id,
 
   supplier->disconnect (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  consumer->disconnect (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+
+  Control::Samples_var samples (new Control::Samples (iterations));
+  samples->length (iterations);
+  for (int j = 0; j != iterations; ++j)
+    samples[j] = 0;
+
+  for (int i = 0; i != consumer_count; ++i)
+    {
+      for (int j = 0; j != iterations; ++j)
+        {
+          CORBA::ULongLong sample =
+            consumer[i]->samples ()[j];
+          if (samples[j] < sample)
+            samples[j] = sample;
+        }
+      consumer[i]->disconnect (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+    }
 
   ACE_DEBUG ((LM_DEBUG, "Calibrating high res timer ...."));
   ACE_High_Res_Timer::calibrate ();
   gsf = ACE_High_Res_Timer::global_scale_factor ();
   ACE_DEBUG ((LM_DEBUG, "Done (%d)\n", gsf));
 
-  return new Control::Samples (consumer->samples ());
+  return new Control::Samples (samples);
 }
 
 void
-ECFL_Peer::shutdown (CORBA::Environment &ACE_TRY_ENV)
+ECFS_Peer::shutdown (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->event_channel_->destroy (ACE_TRY_ENV);
@@ -162,16 +185,16 @@ ECFL_Peer::shutdown (CORBA::Environment &ACE_TRY_ENV)
 
 template class Servant_var<TAO_EC_Event_Channel>;
 template class Servant_var<TAO_EC_Gateway_IIOP>;
-template class Servant_var<ECFL_Consumer>;
-template class Servant_var<ECFL_Supplier>;
-template class Servant_var<ECFL_Loopback>;
+template class Servant_var<ECFS_Consumer>;
+template class Servant_var<ECFS_Supplier>;
+template class Servant_var<ECFS_Loopback>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate Servant_var<TAO_EC_Event_Channel>
 #pragma instantiate Servant_var<TAO_EC_Gateway_IIOP>
-#pragma instantiate Servant_var<ECFL_Consumer>
-#pragma instantiate Servant_var<ECFL_Supplier>
-#pragma instantiate Servant_var<ECFL_Loopback>
+#pragma instantiate Servant_var<ECFS_Consumer>
+#pragma instantiate Servant_var<ECFS_Supplier>
+#pragma instantiate Servant_var<ECFS_Loopback>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

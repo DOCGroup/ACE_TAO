@@ -22,9 +22,10 @@
 #include "ace/Sched_Params.h"
 #include "ace/Task.h"
 
-ACE_RCSID(EC_Latency, client, "$Id$")
+ACE_RCSID(EC_Scalability, client, "$Id$")
 
 const char *ior = "file://test.ior";
+int consumer_count = 10;
 int iterations = 10000;
 int do_dump_history = 0;
 
@@ -124,18 +125,22 @@ main (int argc, char *argv [])
           return 1;
         }
 
-      ECL_Consumer *consumer_impl;
+      ECS_Consumer **consumer_impl;
       ACE_NEW_RETURN (consumer_impl,
-                      ECL_Consumer (iterations),
+                      ECS_Consumer*[consumer_count],
                       1);
-      PortableServer::ServantBase_var consumer_owner (consumer_impl);
+      for (int i = 0; i != consumer_count; ++i)
+        {
+          ACE_NEW_RETURN (consumer_impl[i],
+                          ECS_Consumer (iterations),
+                          1);
+          consumer_impl[i]->connect (ec.in (), ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
 
-      consumer_impl->connect (ec.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      ECL_Supplier *supplier_impl;
+      ECS_Supplier *supplier_impl;
       ACE_NEW_RETURN (supplier_impl,
-                      ECL_Supplier,
+                      ECS_Supplier,
                       1);
       PortableServer::ServantBase_var supplier_owner (supplier_impl);
 
@@ -144,7 +149,7 @@ main (int argc, char *argv [])
 
       ACE_DEBUG ((LM_DEBUG, "Connected consumer & supplier\n"));
 
-      ECL_Client_Task task (orb.in ());
+      ECS_Client_Task task (orb.in ());
       task.activate ();
 
       RtecEventComm::EventSet event (1);
@@ -166,8 +171,11 @@ main (int argc, char *argv [])
         }
       ACE_hrtime_t end = ACE_OS::gethrtime ();
 
-      consumer_impl->disconnect (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      for (int i = 0; i != consumer_count; ++i)
+        {
+          consumer_impl[i]->disconnect (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
       supplier_impl->disconnect (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -179,8 +187,23 @@ main (int argc, char *argv [])
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "Done (%d)\n", gsf));
 
-      ACE_Sample_History &history =
-        consumer_impl->sample_history ();
+      ACE_Sample_History history (iterations);
+      for (size_t j = 0; j != iterations; ++j)
+        {
+          ACE_UINT64 value = 0;
+          for (int i = 0; i != consumer_count; ++i)
+            {
+              ACE_Sample_History &consumer_history =
+                consumer_impl[i]->sample_history ();
+
+              ACE_UINT32 consumer_sample =
+                consumer_history.get_sample (j);
+              if (consumer_sample > value)
+                value = consumer_sample;
+            }
+          history.sample (value);
+        }
+
       if (do_dump_history)
         {
           history.dump_samples ("HISTORY", gsf);
@@ -216,7 +239,7 @@ main (int argc, char *argv [])
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "hi:k:");
+  ACE_Get_Opt get_opts (argc, argv, "hc:i:k:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -224,6 +247,10 @@ parse_args (int argc, char *argv[])
       {
       case 'h':
         do_dump_history = 1;
+        break;
+
+      case 'c':
+        consumer_count = ACE_OS::atoi (get_opts.optarg);
         break;
 
       case 'i':
@@ -239,6 +266,7 @@ parse_args (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-h (dump full sample history) "
+                           "-c <consumer_count> "
                            "-i <iterations> "
                            "-k <IOR> "
                            "\n",

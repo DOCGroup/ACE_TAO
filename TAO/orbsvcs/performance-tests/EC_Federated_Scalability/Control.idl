@@ -32,7 +32,8 @@ module Control
     Loopback setup_loopback (in long experiment_id);
 
     /// Run the test using the prescribed number of iterations
-    Samples run_experiment (in long experiment_id,
+    Samples run_experiment (in long consumer_count,
+                            in long experiment_id,
                             in long iterations,
                             out long gsf);
 

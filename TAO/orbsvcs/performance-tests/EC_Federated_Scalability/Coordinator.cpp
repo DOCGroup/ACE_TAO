@@ -12,13 +12,15 @@
 #include "ace/Sample_History.h"
 #include "ace/Basic_Stats.h"
 
-ACE_RCSID(EC_Federated_Latency, Coordinator, "$Id$")
+ACE_RCSID(EC_Federated_Scalability, Coordinator, "$Id$")
 
-ECFL_Coordinator::ECFL_Coordinator (int peers_expected,
+ECFS_Coordinator::ECFS_Coordinator (int peers_expected,
+                                    int consumer_count,
                                     int iterations,
                                     int do_dump_history,
                                     CORBA::ORB_ptr orb)
   : peers_expected_ (peers_expected)
+  , consumer_count_ (consumer_count)
   , iterations_ (iterations)
   , do_dump_history_ (do_dump_history)
   , orb_ (CORBA::ORB::_duplicate (orb))
@@ -28,13 +30,13 @@ ECFL_Coordinator::ECFL_Coordinator (int peers_expected,
   ACE_NEW (peers_, Control::Peer_var[this->peers_expected_]);
 }
 
-ECFL_Coordinator::~ECFL_Coordinator (void)
+ECFS_Coordinator::~ECFS_Coordinator (void)
 {
   delete[] this->peers_;
 }
 
 void
-ECFL_Coordinator::join (Control::Peer_ptr peer,
+ECFS_Coordinator::join (Control::Peer_ptr peer,
                         CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -74,11 +76,8 @@ ECFL_Coordinator::join (Control::Peer_ptr peer,
   ACE_NEW (loopbacks, Control::Loopback_var[this->peers_count_]);
 
   /// Run the tests
-  for (i = 0; i != this->peers_count_; ++i)
+  for (i = 0; i != 1; ++i)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "Coordinator (%P|%t) Running test for peer %d\n",
-                  i));
       CORBA::Long experiment_id = 128 + i;
 
       size_t lcount = 0;
@@ -94,13 +93,56 @@ ECFL_Coordinator::join (Control::Peer_ptr peer,
               ACE_CHECK;
             }
         }
-      CORBA::Long gsf;
-      Control::Samples_var samples =
-        this->peers_[i]->run_experiment (experiment_id,
-                                         this->iterations_,
-                                         gsf,
-                                         ACE_TRY_ENV);
-      ACE_CHECK;
+
+      for (int c = 5; c != 105; c += 5)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Coordinator (%P|%t) "
+                      "Starting (%T) test for %d consumer\n",
+                      c));
+          CORBA::Long gsf;
+          Control::Samples_var samples =
+            this->peers_[i]->run_experiment (c,
+                                             experiment_id,
+                                             this->iterations_,
+                                             gsf,
+                                             ACE_TRY_ENV);
+          ACE_CHECK;
+
+          ACE_Sample_History history (samples->length ());
+
+
+          char filename[1024];
+          ACE_OS::sprintf (filename,
+                           "ec_federated_scalability.%d.log",
+                           c);
+          FILE *output_file = ACE_OS::fopen (filename, "w");
+          if (output_file == 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "Cannot open output file %s",
+                          filename));
+            }
+          else
+            {
+              for (CORBA::ULong k = 0; k != samples->length (); ++k)
+                {
+                  history.sample (samples[k]);
+                  ACE_OS::fprintf (output_file, "HISTO: %d %lld\n",
+                                   k, samples[k] / gsf);
+                }
+              ACE_OS::fclose (output_file);
+            }
+
+          ACE_Basic_Stats stats;
+          history.collect_basic_stats (stats);
+          stats.dump_results ("Total", gsf);
+
+          //      if (this->do_dump_history_)
+          //        {
+          //          history.dump_samples ("HISTORY", gsf);
+          //        }
+        }
 
       for (j = 0; j != lcount; ++j)
         {
@@ -108,18 +150,6 @@ ECFL_Coordinator::join (Control::Peer_ptr peer,
           ACE_CHECK;
         }
 
-      ACE_Sample_History history (samples->length ());
-      for (CORBA::ULong k = 0; k != samples->length (); ++k)
-        history.sample (samples[k]);
-
-      ACE_Basic_Stats stats;
-      history.collect_basic_stats (stats);
-      stats.dump_results ("Total", gsf);
-
-      if (this->do_dump_history_)
-        {
-          history.dump_samples ("HISTORY", gsf);
-        }
 
     }
 
