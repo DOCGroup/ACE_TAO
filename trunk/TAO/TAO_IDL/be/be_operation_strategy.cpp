@@ -72,6 +72,7 @@ TAO_CodeGen::CG_STATE
 be_operation_default_strategy::next_state (TAO_CodeGen::CG_STATE current_state,
                                            int is_extra_state)
 {
+  ACE_UNUSED_ARG (is_extra_state);
   return current_state;
 }
 

@@ -123,7 +123,7 @@ be_visitor_interface_cdr_op_ch::visit_interface (be_interface *node)
                              "codegen failed - invalid state\n"), -1);
         }
 
-#endif 0
+#endif /* 0 */
       // generate the CDR << and >> operator declarations
       os->indent ();
       *os << "CORBA::Boolean " << idl_global->stub_export_macro () << be_nl
