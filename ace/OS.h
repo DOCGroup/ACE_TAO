@@ -94,21 +94,6 @@
 #   define ACE_dynamic_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)      ((TYPE<T1, T2, T3, T4, T5> &) (EXPR))
 # endif /* ACE_HAS_ANSI_CASTS */
 
-// According to ANSI C++ spec., we are not allowed to cast a
-// non-function pointer (e.g., void *) to a function pointer.
-// However, there're some circumstances that we must do that.  The
-// following macro gets around this constraint based on a compiler's
-// implementation.  Very often, if the function the pointer points to
-// takes multiple arguments which will break the macro.  In that case,
-// typedef the function pointer type.
-# if __GNUC__ == 2 && __GNUC_MINOR__ >= 91
-#   define ACE_non_function_ptr_to_function_ptr_cast(TYPE, EXPR) \
-      ((TYPE) (EXPR))
-# else
-#   define ACE_non_function_ptr_to_function_ptr_cast(TYPE, EXPR) \
-      ACE_reinterpret_cast (TYPE, EXPR)
-# endif /* __GNUC__ == 2 && __GNUC_MINOR__ >= 91 */
-
 # if !defined (ACE_CAST_CONST)
     // Sun CC 4.2, for example, requires const in reinterpret casts of
     // data members in const member functions.  But, other compilers
