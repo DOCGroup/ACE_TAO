@@ -297,8 +297,10 @@ CORBA_SystemException::_tao_errno (int errno_value)
       return TAO_ECOMM_MINOR_CODE;
     case ECONNRESET:
       return TAO_ECONNRESET_MINOR_CODE;
+#if (ENOTSUP != ENOSYS)
     case ENOTSUP:
       return TAO_ENOTSUP_MINOR_CODE;
+#endif /* ENOSYS != EFAULT */
     default:
       // Mask off bottom 7 bits and return them.
       return errno_value & 0x7F;
