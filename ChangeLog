@@ -1,9 +1,16 @@
+Wed Apr  6 19:25:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Sock_Connect.cpp:
+        * ace/OS_NS_dlfcn.inl:
+          Added fix for Pharlab. Thanks to David Hauck
+          <davidh at netacquire dot com> for supplying them
+
 Wed Apr  6 19:36:31 2005  Olli Savia  <ops@iki.fi>
 
         * include/makeinclude/platform_lynxos.GNU:
           Set static_libs_only=1 on LynxOS 3.x which does not support
-          shared libraries. 
-        
+          shared libraries.
+
 Tue Apr  5 13:41:27 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * configure.ac:
