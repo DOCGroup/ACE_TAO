@@ -161,12 +161,16 @@ public:
   virtual int open (TAO_Base_StreamEndPoint *endpoint,
                     TAO_AV_Core *av_core,
                     TAO_FlowSpec_Entry *entry,
-                    TAO_AV_Flow_Protocol_Factory *factory);
+                    TAO_AV_Flow_Protocol_Factory *factory,
+                    TAO_AV_Core::Flow_Component flow_comp =
+                        TAO_AV_Core::TAO_AV_DATA);
   
   virtual int open_default (TAO_Base_StreamEndPoint *endpoint,
                             TAO_AV_Core *av_core,
                             TAO_FlowSpec_Entry *entry,
-                            TAO_AV_Flow_Protocol_Factory *factory);
+                            TAO_AV_Flow_Protocol_Factory *factory,
+                            TAO_AV_Core::Flow_Component flow_comp =
+                                TAO_AV_Core::TAO_AV_DATA);
 
   virtual int open_i (ACE_INET_Addr *address);
 
@@ -194,7 +198,9 @@ public:
                     TAO_AV_Flow_Protocol_Factory *factory);
 
   virtual int connect (TAO_FlowSpec_Entry *entry,
-                       TAO_AV_Transport *&transport);
+                       TAO_AV_Transport *&transport,
+                       TAO_AV_Core::Flow_Component flow_comp =
+                           TAO_AV_Core::TAO_AV_DATA);
   virtual int activate_svc_handler (TAO_AV_UDP_QoS_Flow_Handler *handler);
   virtual int close (void);
 

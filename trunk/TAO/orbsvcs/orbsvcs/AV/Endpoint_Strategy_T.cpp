@@ -129,7 +129,7 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
       // Activate the mediactrl object under the root poa.
       CORBA::String_var mediactrl_ior = this->activate_with_poa (media_ctrl,
                                                                  ACE_TRY_ENV);
-      
+
       ACE_TRY_CHECK;
       if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Reactive_Strategy::activate_mediactrl , media_ctrl ior is :%s\n",
                   mediactrl_ior.in ()));
@@ -137,17 +137,20 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
 
       // Associate the media controller object reference with the vdev, as per the OMG spec
       CORBA::Any anyval;
-      CORBA::Object_var media_ctrl_obj 
+      CORBA::Object_var media_ctrl_obj
         = media_ctrl->_this (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+      media_ctrl->_remove_ref (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       anyval <<= this->orb_->object_to_string (media_ctrl_obj.in (),
                                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
-      this->vdev_->define_property ("Related_MediaCtrl",
-                                    anyval,
-                                    ACE_TRY_ENV);
+
+     this->vdev_->define_property ("Related_MediaCtrl",
+                                   anyval,
+                                   ACE_TRY_ENV);
+
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -146,12 +146,16 @@ public:
   virtual int open (TAO_Base_StreamEndPoint *endpoint,
                     TAO_AV_Core *av_core,
                     TAO_FlowSpec_Entry *entry,
-                    TAO_AV_Flow_Protocol_Factory *factory);
+                    TAO_AV_Flow_Protocol_Factory *factory,
+                    TAO_AV_Core::Flow_Component flow_component =
+                        TAO_AV_Core::TAO_AV_DATA);
 
   virtual int open_default (TAO_Base_StreamEndPoint *endpoint,
                             TAO_AV_Core *av_core,
                             TAO_FlowSpec_Entry *entry,
-                            TAO_AV_Flow_Protocol_Factory *factory);
+                            TAO_AV_Flow_Protocol_Factory *factory,
+                            TAO_AV_Core::Flow_Component flow_component =
+                                TAO_AV_Core::TAO_AV_DATA);
 
   virtual int close (void);
   virtual int make_svc_handler (TAO_AV_TCP_Flow_Handler *&handler);
@@ -197,7 +201,9 @@ public:
                     TAO_AV_Flow_Protocol_Factory *factory);
 
   virtual int connect (TAO_FlowSpec_Entry *entry,
-                       TAO_AV_Transport *&transport);
+                       TAO_AV_Transport *&transport,
+                       TAO_AV_Core::Flow_Component flow_comp =
+                           TAO_AV_Core::TAO_AV_DATA);
   virtual int close (void);
   virtual int make_svc_handler (TAO_AV_TCP_Flow_Handler *&handler);
 protected:
