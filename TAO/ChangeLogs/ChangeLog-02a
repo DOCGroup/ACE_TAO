@@ -1,3 +1,308 @@
+Mon Oct 23 02:49:25 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Interceptor_List.h:
+	* tao/Interceptor_List.inl:
+	* tao/Interceptor_List.cpp:
+
+	  Newly added sources for the containers of all supported
+	  interceptor types. 
+
+	* tao/ORBInitInfo.h:
+	* tao/ORBInitInfo.cpp:
+
+	  Newly added implementation of the
+	  PortableInterceptor::ORBInitInfo object. 
+
+	* tao/ORBInitializer_Registry.h:
+	* tao/ORBInitializer_Registry.inl:
+	* tao/ORBInitializer_Registry.cpp:
+
+	  New sources for global registry of all registered ORB
+	  initializers.  The ORB core invokes methods (pre_init and
+	  post_init) on this class.  This class then invokes the same
+	  method on all registered ORB initializers.
+
+	* tao/RT_ORBInitializer.h:
+	* tao/RT_ORBInitializer.cpp:
+	* tao/Messaging_ORBInitializer.h:
+	* tao/Messaging_ORBInitializer.cpp:
+
+	  Newly added files containing the ORBInitializers related to
+	  TAO's RTCORBA and Messaging support.
+
+	* tao/ORB.h:
+	* tao/ORB.i:
+
+	  Removed all interceptor related code.  They should have been in
+	  the TAO_ORB_Core class since code in these files is related
+	  predominantly to ORB pseudo-references, not the actaul ORB
+	  implementation (i.e. the ORB core).
+
+	* tao/ORB.cpp (ORB_init):
+
+	  Create a PortableInterceptor::ORBInitInfo object to be passed on
+	  to ORBInitializers.
+
+	  Invoke the pre_init() method on all registered ORB initializers
+	  before calling TAO_ORB_Core::init() method, and then the
+	  post_init() method on those same ORB initializers after
+	  TAO_ORB_Core::init() has been invoked.
+
+	  (create_policy):
+
+	  Attempt to obtain the policy of the given type from the policy
+	  factory registry rather than the now deprecated
+	  TAO_Service_Callbacks::service_create_policy() method.
+	  
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.i:
+	* tao/ORB_Core.cpp:
+
+	  Added support routines for registering and obtaining the
+	  interceptors, and a support routine for registering policy
+	  factories specific to the given ORB.
+
+	* tao/PortableInterceptor.h:
+	* tao/PortableInterceptor.cpp:
+
+	  Integrated support for multiple interceptors.  Each registered
+	  interceptor will now be invoked, as opposed to the single
+	  interceptor previously supported.
+
+	* tao/Service_Callbacks.h:
+	* tao/Service_Callbacks.cpp (service_create_policy):
+
+	  Added comments regarding deprecation of this method in favor of
+	  the policy factory registry support provided by the Portable
+	  Interceptor specification.  This method is still fully
+	  functional.
+
+	* tao/PolicyFactory_Registry.h:
+	* tao/PolicyFactory_Registry.cpp:
+
+	  Newly added registry containing map of policy type to policy
+	  factory.
+
+	* tao/RT_PolicyFactory.h:
+	* tao/RT_PolicyFactory.cpp:
+	* tao/Messaging_PolicyFactory.h:
+	* tao/Messaging_PolicyFactory.cpp:
+
+	  Newly added policy factory sources for real-time CORBA and
+	  Messaging related policies.
+
+	* tao/Policy_Factory.h:
+	* tao/Policy_Factory.cpp:
+
+	  Removed these files.  They have been superseded by the newly
+	  added RT_PolicyFactory.* files.
+
+	* tao/Profile.cpp (policies):
+
+	  Updated this code to use the standard ORB::create_policy ()
+	  method which now queries the newly added policy factory
+	  registry.
+
+	* tao/Request_Info.h:
+	* tao/Request_Info.cpp:
+
+	  Deprecated these files.  They have been split into client side
+	  and server side files.
+
+	* tao/ClientRequestInfo.h:
+	* tao/ClientRequestInfo.cpp:
+
+	  New files based on the client side request information class
+	  from Request_Info.*.
+
+	  (get_request_policy):
+	  Implemented this method.  Obtain the policies in effect by
+	  invoking CORBA::Object::_get_policy().
+
+	* tao/DomainC.cpp:
+	* tao/PortableServer/DomainS.cpp:
+
+	  Updated interceptor code to work with the updates in
+	  `tao/PortableInterceptor.{h,i}'.
+
+	* tao/PortableServer/ServerRequestInfo.h:
+	* tao/PortableServer/ServerRequestInfo.cpp:
+
+	  New files based on the server side request information class
+	  from Request_Info.*.
+
+	* tao/Interceptor.pidl:
+
+	  This PIDL source file has been superceded by
+	  Portable_Interceptor.pidl.  Removed.
+
+	* tao/corba.h:
+
+	  Explicitly include the appropriate interceptor RequestInfo
+	  headers when interceptor support is enabled.  Previously they
+	  were pulled in indirectly.  This was necessary to due to an
+	  inter-header depencency improvement in PortableInterceptor.h.
+
+	  Include "tao/OctetSeqC.h" to pull in the CORBA::OctetSeq
+	  declarations.
+
+	* tao/OctetSeq.pidl:
+
+	  Added instructions that describe the "proper" way to regenerate
+	  the corresponding stubs.
+
+	* tao/OctetSeq.h:
+	* tao/OctetSeq.i:
+	* tao/OctetSeq.cpp:
+
+	  Regenerated these files with the proper library export
+	  settings.
+
+	* tao/diffs/OcteqSeq.diff:
+
+	  Generated this diff against the vanilla generate OctetSeq
+	  stubs.  It was missing for some reason.
+
+	* tao/StringSeq.pidl:
+
+	  Newly added PIDL source for the CORBA::StringSeq sequence.
+
+	* tao/StringSeq.h:
+	* tao/StringSeq.inl:
+	* tao/StringSeq.cpp:
+
+	  Removed these files in favor of the below newly regenerated
+	  files since these files do not follow TAO naming conventions,
+	  and since they didn't have the proper Win32 library export
+	  linkage.
+
+	* tao/StringSeqC.h:
+	* tao/StringSeqC.i:
+	* tao/StringSeqC.cpp:
+
+	  Regenerated these files with the proper library export
+	  settings.  They replace the above StringSeq.* sources.
+
+	* tao/diffs/StringSeq.diff:
+
+	  Generated this diff against the vanilla generated StringSeq
+	  stubs.
+
+	* tao/PortableInterceptorC.h:
+
+	  Corrected signatures for some pure virtual methods.  We actually
+	  want the CORBA::Environment argument for interfaces that are not
+	  inherited by application code, e.g. code that is used internally
+	  by TAO.
+
+	* tao/diffs/PortableInterceptorC.h.diff:
+	* tao/diffs/PortableInterceptorC.i.diff:
+	* tao/diffs/PortableInterceptorC.cpp.diff:
+
+	  Removed these diffs in favor of the consolidated
+	  PortableInterceptor.diff below.  These diffs were out of date
+	  anyway.
+
+	* tao/diffs/PortableInterceptor.diff:
+
+	  Newly generated diff against the updates made to
+	  PortableInterceptorC.* to correct erroneous earlier updates.
+
+	* tao/DynamicC.cpp:
+
+	  Include `StrinqSeqC.h' instead of `StringSeq.h', in accordance
+	  with the filename newly regenerated StringSeq stubs.
+
+	* tao/diffs/Dynamic.diff:
+
+	  `StringSeq.h' is now `StringSeqC.h'.  Updated the diff to
+	  reflect that.
+
+	* tao/diffs/InterceptorC.h.diff:
+	* tao/diffs/InterceptorC.i.diff:
+	* tao/diffs/InterceptorC.cpp.diff:
+
+	  Removed these diffs.  The files they were meant to patch are no
+	  longer part of TAO.
+
+	* tao/Makefile:
+	* tao/Makefile.am:
+	* tao/Makefile.bor:
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	* tao/PortableServer/Makefile:
+	* tao/PortableServer/Makefile.bor:
+	* tao/PortableServer/TAO_PortableServer.dsp:
+	* tao/PortableServer/TAO_PortableServer_Static.dsp:
+
+	  Updated references of StringSeq to StringSeqC, corresponding to
+	  the newly regenerated CORBA::StringSeq stubs.
+
+	  Added new Portable Interceptor sources detailed above.
+
+	* TAO_IDL/be/be_visitor_interface/interceptors_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/interceptors_sh.cpp:
+
+	  Corrected spelling in generated code.
+
+	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
+
+	  Updated generated code to agree with changes made in the ORB
+	  Core (e.g. class name changes, etc).
+
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp
+	  (gen_marshal_and_invoke):
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+	  (visit_operation):
+
+	  Updated to call new interceptor related ORB core methods.
+
+	* tests/Portable_Interceptors/Dynamic/interceptors.h:
+	* tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+
+	  Corrected nesting of pragma directive so that is within the
+	  "TAO_HAS_INTERCEPTORS" block.
+
+	  Moved no-op methods within the "TAO_HAS_INTERCEPTORS" block.
+	  This fixes a compilation error recently introduced when
+	  TAO_HAS_INTERCEPTORS is defined to be zero.
+
+	  Corrected all CORBA::Environment arguments so that they
+	  correctly match the base class methods they are overriding in
+	  both the native and emulated exception case.
+
+	* tests/Portable_Interceptors/Dynamic/Echo_Client_ORBInitializer.h:
+	* tests/Portable_Interceptors/Dynamic/Echo_Client_ORBInitializer.cpp:
+	* tests/Portable_Interceptors/Dynamic/Echo_Server_ORBInitializer.h:
+	* tests/Portable_Interceptors/Dynamic/Echo_Server_ORBInitializer.cpp:
+
+	  New sources that register the request interceptors in the
+	  standard way.  Previous this test used a proprietary interface.
+	  That proprietary interface was removed in the above sets of
+	  updates.
+
+	* tests/Portable_Interceptors/Dynamic/client.cpp:
+	* tests/Portable_Interceptors/Dynamic/server.cpp:
+
+	  Updated to register the above ORBInitializers instead of making
+	  proprietary registration calls (that no longer exist).
+
+	* tests/Portable_Interceptors/Dynamic/PI_Dynamic.dsw:
+	* tests/Portable_Interceptors/Dynamic/client.dsp:
+	* tests/Portable_Interceptors/Dynamic/server.dsp:
+
+	  New MSVC workspace and project files for this test.
+
+	* tests/Portable_Interceptors/Dynamic/Makefile:
+	* tests/Portable_Interceptors/Dynamic/server.bor:
+	* tests/Portable_Interceptors/Dynamic/client.bor:
+
+	  Updated these Makefiles with the newly added ORBInitializer
+	  sources.
+
 Sat Oct 21 18:38:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/ConstantDef_i.cpp:
