@@ -81,7 +81,15 @@ Cubit_Task::svc (void)
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Cubit_Task::svc, wait on barrier\n"));
+#if defined (linux)
+      // ACE_Barrier doesn't work on Linux/glibc2 because its
+      // pthread_cond_wait appears broken:  it doesn't always catch
+      // the signal.
+      ACE_OS::thr_yield ();
+      ACE_OS::sleep (2);
+#else  /* ! linux */
       this->barrier_->wait ();
+#endif /* ! linux */
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Cubit_Task::svc, passed barrier\n"));
 
       // Handle requests for this object until we're killed, or one of
@@ -758,7 +766,7 @@ start_servants (void)
 	  ACE_ERROR ((LM_ERROR, "(%P|%t; %p\n",
 		      "low_priority_task[i]->activate"));
 	}
-      
+
       priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                                   priority,
                                                   ACE_SCOPE_THREAD);
@@ -778,7 +786,15 @@ start_servants (void)
   Cubit_Factory_Task * factory_task;
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) start_servants, wait on barrier\n"));
+#if defined (linux)
+  // ACE_Barrier doesn't work on Linux/glibc2 because its
+  // pthread_cond_wait appears broken:  it doesn't always catch
+  // the signal.
+  ACE_OS::thr_yield ();
+  ACE_OS::sleep (2);
+#else  /* ! linux */
   barrier_.wait ();
+#endif /* ! linux */
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) start_servants, passed barrier\n"));
 
   cubits[0] = high_priority_task->get_servant_ior (0);
@@ -805,6 +821,7 @@ start_servants (void)
   if (ior_f != 0)
     ACE_OS::fclose (ior_f);
 
+#if 0
   ACE_NEW_RETURN (factory_task,
                   Cubit_Factory_Task (args, "internet", cubits, num_of_objs),
                   -1);
@@ -813,7 +830,6 @@ start_servants (void)
                                               priority,
                                               ACE_SCOPE_THREAD);
 
-#if 0
   //  Make the factory low priority task an active object.
   if (factory_task->activate (THR_BOUND | ACE_SCHED_FIFO,
                           1,
@@ -824,6 +840,7 @@ start_servants (void)
                   "factory_task->activate"));
     }
 #endif
+
   return 0;
 }
 
