@@ -24,8 +24,8 @@ static const char *TAO_Transport_Timeprobe_Description[] =
     "IIOP_Transport::receive - start",
     "IIOP_Transport::receive - end",
 
-    "IIOP_Client_Transport::send_request - start",
-    "IIOP_Client_Transport::send_request - end"
+    "IIOP_Client_Transport::start_request - start",
+    "IIOP_Client_Transport::start_request - end"
   };
 
 enum
@@ -36,8 +36,8 @@ enum
     TAO_IIOP_TRANSPORT_RECEIVE_START,
     TAO_IIOP_TRANSPORT_RECEIVE_END,
 
-    TAO_IIOP_CLIENT_TRANSPORT_SEND_REQUEST_START,
-    TAO_IIOP_CLIENT_TRANSPORT_SEND_REQUEST_END
+    TAO_IIOP_CLIENT_TRANSPORT_START_REQUEST_START,
+    TAO_IIOP_CLIENT_TRANSPORT_START_REQUEST_END
   };
 
 
@@ -129,6 +129,8 @@ TAO_IIOP_Client_Transport::start_request (TAO_ORB_Core *orb_core,
                                           CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_CLIENT_TRANSPORT_START_REQUEST_START);
+
   const TAO_IIOP_Profile* profile =
     ACE_dynamic_cast(const TAO_IIOP_Profile*, pfile);
 
@@ -203,8 +205,6 @@ TAO_IIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
                                          int two_way,
                                          ACE_Time_Value *max_wait_time)
 {
-  ACE_FUNCTION_TIMEPROBE (TAO_IIOP_CLIENT_TRANSPORT_SEND_REQUEST_START);
-
   if (this->ws_->sending_request (orb_core,
                                   two_way) == -1)
     return -1;

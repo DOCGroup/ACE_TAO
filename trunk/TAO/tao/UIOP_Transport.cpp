@@ -24,8 +24,8 @@ static const char *TAO_UIOP_Transport_Timeprobe_Description[] =
     "UIOP_Transport::receive - start",
     "UIOP_Transport::receive - end",
 
-    "UIOP_Client_Transport::send_request - start",
-    "UIOP_Client_Transport::send_request - end"
+    "UIOP_Client_Transport::start_request - start",
+    "UIOP_Client_Transport::start_request - end"
   };
 
 enum
@@ -36,8 +36,8 @@ enum
     TAO_UIOP_TRANSPORT_RECEIVE_START,
     TAO_UIOP_TRANSPORT_RECEIVE_END,
 
-    TAO_UIOP_CLIENT_TRANSPORT_SEND_REQUEST_START,
-    TAO_UIOP_CLIENT_TRANSPORT_SEND_REQUEST_END
+    TAO_UIOP_CLIENT_TRANSPORT_START_REQUEST_START,
+    TAO_UIOP_CLIENT_TRANSPORT_START_REQUEST_END
   };
 
 
@@ -88,7 +88,8 @@ TAO_UIOP_Transport::handle (void)
 TAO_UIOP_Server_Transport::
     TAO_UIOP_Server_Transport (TAO_UIOP_Server_Connection_Handler *handler,
                                TAO_ORB_Core* orb_core)
-  : TAO_UIOP_Transport (handler, orb_core),
+  : TAO_UIOP_Transport (handler,
+                        orb_core),
     server_handler_ (handler),
     message_state_ (orb_core)
 {
@@ -103,8 +104,7 @@ TAO_UIOP_Server_Transport::~TAO_UIOP_Server_Transport (void)
 TAO_UIOP_Client_Transport::
     TAO_UIOP_Client_Transport (TAO_UIOP_Client_Connection_Handler *handler,
                                TAO_ORB_Core *orb_core)
-  :  TAO_UIOP_Transport (handler,
-                         orb_core),
+  :  TAO_UIOP_Transport (handler, orb_core),
      client_handler_ (handler)
 {
 }
@@ -129,6 +129,8 @@ TAO_UIOP_Client_Transport::start_request (TAO_ORB_Core *orb_core,
                                           CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_CLIENT_TRANSPORT_START_REQUEST_START);
+
   const TAO_UIOP_Profile* profile =
     ACE_dynamic_cast(const TAO_UIOP_Profile*, pfile);
 
@@ -203,8 +205,6 @@ TAO_UIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
                                          int two_way,
                                          ACE_Time_Value *max_wait_time)
 {
-  ACE_FUNCTION_TIMEPROBE (TAO_UIOP_CLIENT_TRANSPORT_SEND_REQUEST_START);
-
   if (this->ws_->sending_request (orb_core,
                                   two_way) == -1)
     return -1;
