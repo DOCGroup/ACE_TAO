@@ -1,3 +1,8 @@
+Mon Jun 26 13:31:39 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/OS_Test.cpp: Don't use the word 'fail' when the test
+          succeeds... the test scripts look for that word to mean test fail.
+
 Mon Jun 26 12:09:33 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-lynxos.h: use _POSIX_VERSION to detect the
