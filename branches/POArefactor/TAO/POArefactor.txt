@@ -1,3 +1,11 @@
+Wed Sep 22 11:4912 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/POA.i:
+        * tao/PortableServer/POA_Guard.{h,cpp}:
+        * tao/PortableServer/poa_macros.h:
+          Changed TAO_POA_Guard, to POA_Guard in the TAO namespace
+
 Wed Sep 22 10:21:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Loadable_*_Policy.{h,cpp}:
