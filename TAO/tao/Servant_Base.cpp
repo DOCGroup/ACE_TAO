@@ -346,6 +346,9 @@ TAO_Local_ServantBase::_dispatch (CORBA::ServerRequest &request,
                                   void *context,
                                   CORBA_Environment &ACE_TRY_ENV)
 {
+  ACE_UNUSED_ARG (request);
+  ACE_UNUSED_ARG (context);
+
   ACE_THROW (CORBA::BAD_OPERATION ());
 }
 

@@ -23,7 +23,7 @@ TAO_Active_Object_Map::Map_Entry::Map_Entry (void)
 size_t TAO_Active_Object_Map::system_id_size_ (0);
 
 void
-TAO_Active_Object_Map::set_system_id_size 
+TAO_Active_Object_Map::set_system_id_size
   (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters)
 {
   if (TAO_Active_Object_Map::system_id_size_ == 0)
@@ -156,8 +156,8 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
   auto_ptr<TAO_Id_Assignment_Strategy> new_id_assignment_strategy (id_assignment_strategy);
 
   TAO_Id_Hint_Strategy *id_hint_strategy = 0;
-  if ((user_id_policy 
-       || creation_parameters.allow_reactivation_of_system_ids_) 
+  if ((user_id_policy
+       || creation_parameters.allow_reactivation_of_system_ids_)
       && creation_parameters.use_active_hint_in_ids_)
     {
       ACE_NEW_THROW_EX (id_hint_strategy,
@@ -202,7 +202,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
   auto_ptr<servant_map> new_servant_map (sm);
 
   user_id_map *uim = 0;
-  if (user_id_policy 
+  if (user_id_policy
       || creation_parameters.allow_reactivation_of_system_ids_)
     {
       switch (creation_parameters.object_lookup_strategy_for_user_id_policy_)
@@ -427,6 +427,8 @@ TAO_Unique_Id_Strategy::find_system_id_using_servant (PortableServer::Servant se
 CORBA::Boolean
 TAO_Unique_Id_Strategy::remaining_activations (PortableServer::Servant servant)
 {
+  ACE_UNUSED_ARG (servant);
+
   // Since servant are always unique here, return false.
   return 0;
 }
@@ -500,6 +502,9 @@ int
 TAO_Multiple_Id_Strategy::find_user_id_using_servant (PortableServer::Servant servant,
                                                       PortableServer::ObjectId_out user_id)
 {
+  ACE_UNUSED_ARG (servant);
+  ACE_UNUSED_ARG (user_id);
+
   return -1;
 }
 
@@ -507,6 +512,9 @@ int
 TAO_Multiple_Id_Strategy::find_system_id_using_servant (PortableServer::Servant servant,
                                                         PortableServer::ObjectId_out system_id)
 {
+  ACE_UNUSED_ARG (servant);
+  ACE_UNUSED_ARG (system_id);
+
   return -1;
 }
 
@@ -586,7 +594,7 @@ TAO_Persistent_Strategy::find_servant_using_system_id_and_user_id (const Portabl
 {
   int result = this->active_object_map_->id_hint_strategy_->find (system_id,
                                                                   entry);
-  if (result == 0 
+  if (result == 0
       && user_id == entry->user_id_)
     {
       if (entry->deactivated_)
@@ -786,12 +794,16 @@ TAO_No_Hint_Strategy::recover_key (const PortableServer::ObjectId &system_id,
 int
 TAO_No_Hint_Strategy::bind (TAO_Active_Object_Map::Map_Entry &entry)
 {
+  ACE_UNUSED_ARG (entry);
+
   return 0;
 }
 
 int
 TAO_No_Hint_Strategy::unbind (TAO_Active_Object_Map::Map_Entry &entry)
 {
+  ACE_UNUSED_ARG (entry);
+
   return 0;
 }
 
@@ -799,6 +811,9 @@ int
 TAO_No_Hint_Strategy::find (const PortableServer::ObjectId &system_id,
                             TAO_Active_Object_Map::Map_Entry *&entry)
 {
+  ACE_UNUSED_ARG (system_id);
+  ACE_UNUSED_ARG (entry);
+
   return -1;
 }
 

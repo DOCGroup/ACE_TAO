@@ -44,6 +44,8 @@ TAO_Ignore_Original_Key_Adapter::encode (const PortableServer::ObjectId &origina
                                          const ACE_Active_Map_Manager_Key &active_key,
                                          PortableServer::ObjectId &modified_key)
 {
+  ACE_UNUSED_ARG (original_key);
+
   // Size of active key.
   size_t active_key_size = active_key.size ();
 

@@ -2658,7 +2658,7 @@ TAO_Thread_Policy::policy_type (CORBA::Environment &ACE_TRY_ENV)
 }
 
 PortableServer::POA_ptr
-TAO_Thread_Policy::_default_POA (CORBA::Environment &ACE_TRY_ENV)
+TAO_Thread_Policy::_default_POA (CORBA::Environment & /* ACE_TRY_ENV */)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -2733,7 +2733,7 @@ TAO_Lifespan_Policy::policy_type (CORBA::Environment &ACE_TRY_ENV)
 }
 
 PortableServer::POA_ptr
-TAO_Lifespan_Policy::_default_POA (CORBA::Environment &ACE_TRY_ENV)
+TAO_Lifespan_Policy::_default_POA (CORBA::Environment & /* ACE_TRY_ENV */)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -2806,7 +2806,7 @@ TAO_Id_Uniqueness_Policy::policy_type (CORBA::Environment &ACE_TRY_ENV)
 }
 
 PortableServer::POA_ptr
-TAO_Id_Uniqueness_Policy::_default_POA (CORBA::Environment &ACE_TRY_ENV)
+TAO_Id_Uniqueness_Policy::_default_POA (CORBA::Environment & /* ACE_TRY_ENV */)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -2879,7 +2879,7 @@ TAO_Id_Assignment_Policy::policy_type (CORBA::Environment &ACE_TRY_ENV)
 }
 
 PortableServer::POA_ptr
-TAO_Id_Assignment_Policy::_default_POA (CORBA::Environment &ACE_TRY_ENV)
+TAO_Id_Assignment_Policy::_default_POA (CORBA::Environment & /* ACE_TRY_ENV */)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -2954,7 +2954,7 @@ TAO_Implicit_Activation_Policy::policy_type (CORBA::Environment &ACE_TRY_ENV)
 }
 
 PortableServer::POA_ptr
-TAO_Implicit_Activation_Policy::_default_POA (CORBA::Environment &ACE_TRY_ENV)
+TAO_Implicit_Activation_Policy::_default_POA (CORBA::Environment & /* ACE_TRY_ENV */)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -3027,7 +3027,7 @@ TAO_Servant_Retention_Policy::policy_type (CORBA::Environment &ACE_TRY_ENV)
 }
 
 PortableServer::POA_ptr
-TAO_Servant_Retention_Policy::_default_POA (CORBA::Environment &ACE_TRY_ENV)
+TAO_Servant_Retention_Policy::_default_POA (CORBA::Environment & /* ACE_TRY_ENV */)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -3100,7 +3100,7 @@ TAO_Request_Processing_Policy::policy_type (CORBA::Environment &ACE_TRY_ENV)
 }
 
 PortableServer::POA_ptr
-TAO_Request_Processing_Policy::_default_POA (CORBA::Environment &ACE_TRY_ENV)
+TAO_Request_Processing_Policy::_default_POA (CORBA::Environment & /* ACE_TRY_ENV */)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
