@@ -1,3 +1,16 @@
+Tue Apr  3 12:44:51 UTC 2002  Don Hinton <dhinton@ieee.org>
+
+	* tao/docs/pluggable_protocols/index.html:
+	  Fixed a minor html formatting problem in the POSA1
+	  entry.
+
+	* tao/advanced_resource.{h|cpp}:
+	* tao/docs/Options.html:
+	  Added new option, -ORBReactorThreadQueue, with LIFO and
+	  FIFO arguments.  Reorganized init() to use ACE_Arg_Shifter.
+	  And added new option description to the TAO_Advanced_Resource_Factory
+	  section of Options.html.
+	
 Tue Apr  2 14:20:38 2002  Steve Totten  <totten_s@ociweb.com>
 
         Applied to following changes on behalf of Rob Martin
