@@ -86,9 +86,9 @@ namespace TAO
 
   private:
     /// Dont allow default initializations
-    ACE_UNIMPLEMENTED_FUNC (Asynch_Invocation_Adapter (void));
+    ACE_UNIMPLEMENTED_FUNC (Asynch_Invocation_Adapter (void))
 
-    ACE_UNIMPLEMENTED_FUNC (Asynch_Invocation_Adapter & operator= (const Asynch_Invocation_Adapter &));
+    ACE_UNIMPLEMENTED_FUNC (Asynch_Invocation_Adapter & operator= (const Asynch_Invocation_Adapter &))
 
   };
 } // End namespace TAO
