@@ -1,3 +1,9 @@
+Mon Jul  2 15:26:32 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-sunos5.6.h: Removed ACE_HAS_POSIX_SEM and
+	  ACE_LACKS_NAMED_POSIX_SEM.  Thanks to Glenn Popelka
+	  <gpp@gpopelka.com> for helping track this down.
+
 Mon Jul 02 11:45:57 2001  Ossama Othman  <ossama@uci.edu>
 
 	* bin/make_release:
@@ -15,7 +21,7 @@ Mon Jul  2 13:18:14 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	* Moved all the ChangeLog-* files into the new ChangeLogs
 	  directory.  Thanks to Holger P. Krekel <krekel@merlinux.de> for
  	  this suggestion.
-  
+
 Mon Jul 02 11:20:52 2001  Ossama Othman  <ossama@uci.edu>
 
 	* config.guess:
@@ -63,13 +69,13 @@ Mon Jul  2 05:40:54 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	* ace/Logging_Strategy.cpp: Enhanced the code so that it works with
 	  ACE_LACKS_IOSTREAM_TOTALLY.  Thanks to Nir Drang <nir@bandwiz.com>
 	  and Edan Ayal <edana@bandwiz.com> for reporting this.
-  
+
 	* ace/SPIPE_Addr.cpp (set): Added a "+ 1" to the computation of
 	  the size of the SPIPE_Addr to account for the trailing NUL.
   	  Thanks to Oren Zeev-Ben-Mordehai <oren@phonedo.com> for
  	  reporting this.
 
-	* ace/Refcounted_Auto_Ptr.{h,i}: Added support for a "null()" 
+	* ace/Refcounted_Auto_Ptr.{h,i}: Added support for a "null()"
 	  method to check if a refcounted auto ptr is NULL.  Thanks to
  	  Jenny Kowald <jkowald@oz.agile.tv> for reporting this.
 
@@ -84,8 +90,8 @@ Mon Jul  2 05:40:54 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 Sun Jul  1 11:49:13 2001  Alexander Libman <alexander.libman@baltimore.com>
 
         * ace: Enhanced the POSIX and Sun Proactor implementations as
-	  follows:   
-  
+	  follows:
+
           . POSIX_SIG_Proactor is now based on POSIX_AIOCB_Proactor
 
 	  . All classes ACE_POSIX_SIG_Asynch_XXXX are removed.
@@ -96,7 +102,7 @@ Sun Jul  1 11:49:13 2001  Alexander Libman <alexander.libman@baltimore.com>
 	    now calls a new virtual method: int
  	    ACE_POSIX_AIOCB_Proactor::allocate_aio_slot
  	    (ACE_POSIX_Asynch_Result *result).
-	
+
           . The strategy of free slot allocation in SIG_Proactor is
 	    a bit different from AIOCB and SUN Proactors.  The
  	    allocate_aio_slot() method is responsible for setting
@@ -125,7 +131,7 @@ Sun Jul  1 11:49:13 2001  Alexander Libman <alexander.libman@baltimore.com>
  	    OS(Sun/HP/Linux/...) and version.  We need such info for
  	    POSIX_SIG_Proactors to take into account the behavior of
  	    different OS.
-	
+
           . Delivery of simulated/"post_completed" Asynch_Results
 	    (Timers, AsynchAccept,Wakeup ...).  As both Proactors have no
  	    reliable mechanizm for delivery "post_completed" results, so
@@ -160,7 +166,7 @@ Sat Jun 30 12:44:11 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 	  support for shutting down the server when a signal occurs.
   	  Thanks to Rich Newman <RNewman@directv.com> for this
  	  enhancement.
-  
+
 Sun Jul 01 11:16:34 2001  Balachandran  <bala@cs.wustl.edu>
 
         * ACE version 5.1.18 released.
@@ -169,11 +175,11 @@ Sun Jul  1 11:03:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/generate_doxygen.pl: Removed SSLIOP from the list.
         * etc/tao_ssliop.dosxygen: Removed the file as it was creating
-	  problems for the beta.   
+	  problems for the beta.
 
 Sat Jun 30 12:44:11 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/FIFO_Send_Msg.cpp (send): Fixed another errant use of 
+	* ace/FIFO_Send_Msg.cpp (send): Fixed another errant use of
 	  putmsg().  Thanks to David Trusty <david.trusty@westwave.com>
  	  for reporting this.
 
@@ -201,12 +207,12 @@ Wed Jun 27 12:00:34 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
  	  length.  Thanks to David Trusty <david.trusty@westwave.com> for
  	  reporting this.
 
-	* ace/FIFO_Recv_Msg.i (recv): Make sure that when we use the 
+	* ace/FIFO_Recv_Msg.i (recv): Make sure that when we use the
 	  getmsg() variant of this call that we correctly return the
  	  length.  Thanks to David Trusty <david.trusty@westwave.com> for
  	  reporting this.
 
-	* ace/Log_Record.{h,cpp}: Added support for extending the 
+	* ace/Log_Record.{h,cpp}: Added support for extending the
 	  names of the types of logging requests.  Thanks to Kelly
  	  F. Hickel <kfh@mqsoftware.com> and Jonathan Reis
  	  <reis@stentor.com> for this fix.
@@ -243,7 +249,7 @@ Thu Jun 28 13:05:12 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/CDR_Stream.{h,i,cpp}:
 
-          Update to_(w)string and from_(w)string to conform to the 
+          Update to_(w)string and from_(w)string to conform to the
           latest C++ mapping (00-01-02). Extra constructors have
           been added, taking a const (w)string, and the val_
           member of from_(w)string has been made const. The constructor
@@ -267,7 +273,7 @@ Wed Jun 27 14:07:43 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
 	  Changed write_wstring() and read_wstring() to partially comply
 	  with GIOP 1.2.
-  
+
 Wed Jun 27 07:13:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/OS_TLI.inl: Fixed a compile error in Win32 builds.
