@@ -2,6 +2,8 @@ Thu Feb 26 14:02:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/tao_util.cpp (activate_under_child_poa): Instead of
  	  returning a String_var, return String_var._retn ().
+	  (activate_under_child_poa): Actually, it seems better just
+  	  use String than String_var.
 
 Thu Feb 26 13:31:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
