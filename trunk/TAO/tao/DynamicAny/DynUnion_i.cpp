@@ -164,9 +164,10 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
       in = tmp_in;
     }
     
+  TAO_InputCDR unk_in (in);
   ACE_NEW (unk,
-            TAO::Unknown_IDL_Type (disc_tc.in (),
-                                  TAO_InputCDR (in)));
+           TAO::Unknown_IDL_Type (disc_tc.in (),
+                                  unk_in));
 
   disc_any.replace (unk);
 

@@ -3,6 +3,7 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Log/Log_Constraint_Interpreter.h"
 #include "orbsvcs/Log/Log_Constraint_Visitors.h"
+#include "tao/Any_Unknown_IDL_Type.h"
 #include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID (Log,
@@ -175,23 +176,25 @@ TAO_LogRecordStore::get_storage (void)
 }
 
 size_t
-TAO_LogRecordStore::log_record_size(const DsLogAdmin::LogRecord &rec)
+TAO_LogRecordStore::log_record_size (const DsLogAdmin::LogRecord &rec)
 {
-  CORBA::TypeCode_ptr tc;
-  ACE_Message_Block *mb;
-  size_t mb_size;
+  size_t mb_size = 0;
+  TAO::Any_Impl *impl = rec.info.impl ();
   
-  // Extract the typecode and message block from the record.
-  tc = rec.info.type ();
-  mb = rec.info._tao_get_cdr ();  // TAO extension
-
-  if (mb != NULL) {
-    // Get the size of the actual data in the ACE_Message_Block.
-    mb_size = mb->length ();
-  } else {
-    mb_size = 0;
-  }
-
+  if (impl->encoded ())
+    {
+      TAO::Unknown_IDL_Type *unk =
+        dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
+        
+      mb_size = unk->_tao_get_cdr ().start ()->length ();
+    }
+  else
+    {
+      // If the Any is not encoded, it just has a stored value
+      // instead of a CDR stream, not sure what info would be
+      // useful here.
+    }
+  
   return sizeof (rec) + mb_size;
 }
 

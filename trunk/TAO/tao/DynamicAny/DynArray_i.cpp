@@ -84,9 +84,10 @@ TAO_DynArray_i::init (const CORBA::Any & any
     {
       CORBA::Any field_any;
       TAO::Unknown_IDL_Type *field_unk = 0;
+      TAO_InputCDR unk_in (cdr);
       ACE_NEW (field_unk,
                TAO::Unknown_IDL_Type (field_tc.in (),
-                                      TAO_InputCDR (cdr)));
+                                      unk_in));
       field_any.replace (field_unk);
 
       // This recursive step will call the correct constructor
@@ -452,10 +453,11 @@ TAO_DynArray_i::from_any (const CORBA::Any& any
       for (CORBA::ULong i = 0; i < arg_length; ++i)
         {
           CORBA::Any field_any;
+          TAO_InputCDR unk_in (cdr);
           TAO::Unknown_IDL_Type *field_unk = 0;
           ACE_NEW (field_unk,
                    TAO::Unknown_IDL_Type (field_tc.in (),
-                                          TAO_InputCDR (cdr)));
+                                          unk_in));
           field_any.replace (field_unk);
 
           this->da_members_[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -500,7 +502,6 @@ TAO_DynArray_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
   TAO_OutputCDR out_cdr;
   CORBA::Any_var field_any;
   size_t length = this->da_members_.size ();
-  bool type_known = false;
 
   for (size_t i = 0; i < length; ++i)
     {

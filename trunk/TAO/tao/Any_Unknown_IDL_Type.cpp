@@ -24,6 +24,7 @@ TAO::Unknown_IDL_Type::Unknown_IDL_Type (
   ACE_TRY_NEW_ENV
     {
       this->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::Exception, ex)
     {
