@@ -85,7 +85,7 @@ namespace Kokyu
     // type of dispatching queue
     Dispatching_Type_t dispatching_type_;
 
-    //allocator to be used for dynamic memory allocation. If each 
+    //allocator to be used for dynamic memory allocation. If each
     //thread gets its own memory pool, contention will be less
     ACE_Allocator *allocator_;
 
@@ -128,10 +128,10 @@ namespace Kokyu
   class Kokyu_Export Dispatch_Command
     {
     public:
-      Dispatch_Command(int dont_delete = 0, 
-                       ACE_Allocator *allocator = 0); 
+      Dispatch_Command(int dont_delete = 0,
+                       ACE_Allocator *allocator = 0);
       //dont_delete indicates whether this object needs to be deleted once processed.
-      //allocator indicates the ACE_Allocator, if any, from which this object was created. 
+      //allocator indicates the ACE_Allocator, if any, from which this object was created.
       //This same allocator has to be used for the deletion also
 
       /// Command callback
@@ -183,7 +183,7 @@ namespace Kokyu
 } //end of namespace
 
 //to satisfy ACE_Array<ConfigInfo>
-ACE_INLINE int operator != (const Kokyu::ConfigInfo& lhs, const Kokyu::ConfigInfo& rhs);
+ACE_INLINE bool operator != (const Kokyu::ConfigInfo& lhs, const Kokyu::ConfigInfo& rhs);
 
 #if defined (__ACE_INLINE__)
 #include "Kokyu_defs.i"
