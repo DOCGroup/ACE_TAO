@@ -199,7 +199,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer"
-# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer"
+# ADD LINK32 TAOs.lib aces.lib TAO_PortableServers.lib TAO_DIOPs.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\DIOP"
 
 !ENDIF 
 
@@ -656,6 +656,7 @@ BuildCmds= \
 
 # PROP BASE Ignore_Default_Tool 1
 # PROP Ignore_Default_Tool 1
+USERDEP__UDP_I="..\..\..\..\..\bin\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\UDP.idl
 InputName=UDP
@@ -695,6 +696,7 @@ BuildCmds= \
 
 # PROP BASE Ignore_Default_Tool 1
 # PROP Ignore_Default_Tool 1
+USERDEP__UDP_I="..\..\..\..\..\bin\Release\tao_idl_static.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
 InputPath=.\UDP.idl
 InputName=UDP

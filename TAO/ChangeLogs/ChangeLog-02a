@@ -1,3 +1,16 @@
+Wed May 23 09:36:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * examples/PluggableUDP/tests/Basic/client.dsp:
+        * examples/PluggableUDP/tests/Basic/server.dsp:
+        * examples/PluggableUDP/tests/Performance/client.dsp:
+        * examples/PluggableUDP/tests/Performance/server.dsp:
+        * examples/PluggableUDP/tests/SimplePerformance/client.dsp:
+        * examples/PluggableUDP/tests/SimplePerformance/server.dsp:
+          Updated static release settings to avoid using anything or
+          having any dependencies on things that aren't built in the
+          static release automatic build.  This should fix the problems
+          of not being able to find tao_idl.exe in the automatic builds.
+
 Wed May 23 09:04:35 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * Cache_Entries.cpp:
