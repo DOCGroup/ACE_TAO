@@ -1,3 +1,32 @@
+Mon Oct 28 19:18:25 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.CosNotification: 
+
+	* orbsvcs/orbsvcs/Notify/Service.h: 	
+	* orbsvcs/orbsvcs/Notify/Pending_Worker_T.h: 
+	* orbsvcs/orbsvcs/Notify/Pending_Worker_T.cpp: 	
+	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.h: 
+	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp: 	
+
+	  Added init methods with base class signatures to avoid compile
+	  warnings
+	
+	* orbsvcs/orbsvcs/Notify/EventChannelFactory.h: 
+	* orbsvcs/orbsvcs/Notify/Admin.h: 	
+	* orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp: 	
+	  
+	  Made the TAO_NS_Object_Id_Seq definition public so it can be
+	  accessed from other classes.
+
+	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp: 
+
+	  Put the pacing_interval_.value () into an ACE_Time_Value before
+	  checking with ACE_Time_Value::zero.
+
+	* orbsvcs/orbsvcs/Notify/Factory.cpp: 
+
+	  Removed duplicate template instantitaion of TAO_NS_EventType.
+
 Mon Oct 28 17:19:58 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\POA\MT_Servant_Locator\MT_Servant_Locator.cpp: Fixed
