@@ -26,7 +26,6 @@ CFG=Basic - Win32 Debug
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
-MTL=midl.exe
 RSC=rc.exe
 
 !IF  "$(CFG)" == "Basic - Win32 Release"
@@ -42,10 +41,11 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release\Basic"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GX /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /FD /c
-# ADD CPP /nologo /W3 /GX /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /FD /c /D "NDEBUG" /O2 /MD /I "../../../../../../../" /I "../../../../../../" /I "../../../../../" /I "../../lib"
+MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
+# ADD BASE CPP /nologo /W3 /GX /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../../../../../../" /I "../../../../../../" /I "../../../../../" /I "../../lib" /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /D "NDEBUG" /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 /nologo /subsystem:console /machine:I386 ../../../../../../../ace/ACE.lib ../../../../../../tao/TAO.lib ../../../../../../tao/PortableServer/TAO_PortableServer.lib ../../../../../../tao/IORTable/TAO_IORTable.lib ../../../../../orbsvcs/TAO_CosNaming.lib ../../../../../orbsvcs/TAO_RTEvent.lib ../../../../../orbsvcs/TAO_Svc_Utils.lib ../../../../../orbsvcs/TAO_CosEvent.lib ../../lib/TAO_RTEC_COSEC.lib /out:"Basic.exe" 
+# ADD LINK32 ../../../../../../../ace/ACE.lib ../../../../../../tao/TAO.lib ../../../../../../tao/PortableServer/TAO_PortableServer.lib ../../../../../../tao/IORTable/TAO_IORTable.lib ../../../../../orbsvcs/TAO_CosNaming.lib ../../../../../orbsvcs/TAO_RTEvent.lib ../../../../../orbsvcs/TAO_Svc_Utils.lib ../../../../../orbsvcs/TAO_CosEvent.lib ../../lib/TAO_RTEC_COSEC.lib ../../../../../../tao/Messaging/TAO_Messaging.lib /nologo /subsystem:console /machine:I386 /out:"Basic.exe"
 
 !ELSEIF  "$(CFG)" == "Basic - Win32 Debug"
 
@@ -68,20 +68,21 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug\Basic"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GX /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /FD /c /Gm /Zi
-# ADD CPP /nologo /W3 /GX /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /FD /c /Gm /Zi /D "_DEBUG" /Od /MDd /I "../../../../../../../" /I "../../../../../../" /I "../../../../../" /I "../../lib"
+MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../../../../../../../" /I "../../../../../../" /I "../../../../../" /I "../../lib" /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /D "_DEBUG" /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386 /debug /pdbtype:sept
-# ADD LINK32 /nologo /subsystem:console /machine:I386 /debug /pdbtype:sept ../../../../../../../ace/ACEd.lib ../../../../../../tao/TAOd.lib ../../../../../../tao/PortableServer/TAO_PortableServerd.lib ../../../../../../tao/IORTable/TAO_IORTabled.lib ../../../../../orbsvcs/TAO_CosNamingd.lib ../../../../../orbsvcs/TAO_RTEventd.lib ../../../../../orbsvcs/TAO_Svc_Utilsd.lib ../../../../../orbsvcs/TAO_CosEventd.lib ../../lib/TAO_RTEC_COSECd.lib /out:"Basic.exe" 
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 ../../../../../../../ace/ACEd.lib ../../../../../../tao/TAOd.lib ../../../../../../tao/PortableServer/TAO_PortableServerd.lib ../../../../../../tao/IORTable/TAO_IORTabled.lib ../../../../../orbsvcs/TAO_CosNamingd.lib ../../../../../orbsvcs/TAO_RTEventd.lib ../../../../../orbsvcs/TAO_Svc_Utilsd.lib ../../../../../orbsvcs/TAO_CosEventd.lib ../../lib/TAO_RTEC_COSECd.lib ../../../../../../tao/Messaging/TAO_Messagingd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
