@@ -49,7 +49,6 @@
 #include "be_visitor_exception/any_op_ch.cpp"
 #include "be_visitor_exception/any_op_cs.cpp"
 #include "be_visitor_exception/cdr_op_ch.cpp"
-#include "be_visitor_exception/cdr_op_ci.cpp"
 #include "be_visitor_exception/cdr_op_cs.cpp"
 
 ACE_RCSID (be, 

@@ -162,7 +162,6 @@ public:
       TAO_ROOT_ANY_OP_CH,
       TAO_ROOT_ANY_OP_CS,
       TAO_ROOT_CDR_OP_CH,
-      TAO_ROOT_CDR_OP_CI,
       TAO_ROOT_CDR_OP_CS,
 
       // Emitting code for sequence base type.

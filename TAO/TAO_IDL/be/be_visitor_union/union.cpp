@@ -90,12 +90,6 @@ be_visitor_union::visit_union_branch (be_union_branch *node)
         status = node->accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
-      {
-        be_visitor_union_branch_cdr_op_ci visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       {
         be_visitor_union_branch_cdr_op_cs visitor (&ctx);
@@ -120,6 +114,81 @@ be_visitor_union::visit_union_branch (be_union_branch *node)
                          "failed to accept visitor\n"),  
                         -1);
     }
+
+  return 0;
+}
+
+int
+be_visitor_union_cdr_op_cs::pre_process (be_decl *bd)
+{
+  if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_SCOPE)
+    {
+      return 0;
+    }
+
+  // Enum val nodes are added just to help check reference
+  // clashes, since an enum declared in our scope is not itself
+  // a scope.
+  if (bd->node_type () == AST_Decl::NT_enum_val)
+    {
+      return 0;
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  be_union_branch* b =
+    be_union_branch::narrow_from_decl (bd);
+
+  *os << be_nl;
+
+  for (unsigned long i = 0; i < b->label_list_length (); ++i)
+    {
+      // check if we are printing the default case
+      if (b->label (i)->label_kind () == AST_UnionLabel::UL_default)
+        {
+          *os << "default:";
+        }
+      else
+        {
+          *os << "case ";
+
+          b->gen_label_value (os, i);
+
+          *os << ":";
+        }
+
+      if (i == (b->label_list_length () - 1))
+        {
+          *os << be_idt_nl;
+        }
+      else
+        {
+          *os << be_nl;
+        }
+    }
+
+  *os << "{" << be_idt_nl;
+
+  return 0;
+}
+
+int
+be_visitor_union_cdr_op_cs::post_process (be_decl *bd)
+{
+  if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_SCOPE)
+    {
+      return 0;
+    }
+
+  if (bd->node_type () == AST_Decl::NT_enum_val)
+    {
+      return 0;
+    }
+
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << be_uidt_nl << "}" << be_nl
+      << "break;" << be_uidt;
 
   return 0;
 }

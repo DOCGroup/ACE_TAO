@@ -39,7 +39,6 @@
 #include "be_visitor_eventtype/any_op_ch.cpp"
 #include "be_visitor_eventtype/any_op_cs.cpp"
 #include "be_visitor_eventtype/cdr_op_ch.cpp"
-#include "be_visitor_eventtype/cdr_op_ci.cpp"
 #include "be_visitor_eventtype/cdr_op_cs.cpp"
 
 ACE_RCSID (be,

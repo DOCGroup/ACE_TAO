@@ -44,6 +44,9 @@ public:
 
   virtual int visit_union (be_union *node);
   // visit union
+
+  virtual int pre_process (be_decl *);
+  virtual int post_process (be_decl *);
 };
 
 #endif /* _BE_VISITOR_UNION_CDR_OP_CS_H_ */

@@ -864,20 +864,18 @@ AST_Decl::repoID (void)
 void
 AST_Decl::repoID (char *value)
 {
-  if (this->repoID_ == 0)
+  if (this->repoID_ != 0)
     {
-      this->repoID_ = value;
+      delete [] this->repoID_;
+      this->repoID_ = 0;
+    }
+    
+  this->repoID_ = value;
 
-      // Forces version to be set to the last id component.
-      delete [] this->version_;
-      this->version_ = 0;
-      (void) this->version ();
-    }
-  else if (ACE_OS::strcmp (this->repoID_, value) != 0)
-    {
-      idl_global->err ()->id_reset_error (this->repoID_,
-                                          value);
-    }
+  // Forces version to be set to the last id component.
+  delete [] this->version_;
+  this->version_ = 0;
+  (void) this->version ();
 }
 
 const char *
