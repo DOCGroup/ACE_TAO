@@ -2,7 +2,6 @@
 #define ACE_FREE_LIST_C
 
 #include "ace/Free_List.h"
-#include "ace/Synch.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Free_List.i"

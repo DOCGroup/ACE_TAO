@@ -17,6 +17,7 @@
 #define ACE_FREE_LIST_H
 
 #include "ace/OS.h"
+#include "ace/Synch_T.h"
 
 template <class T>
 class ACE_Free_List  

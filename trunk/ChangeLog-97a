@@ -1,3 +1,9 @@
+Tue Jun 17 14:02:01 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
+
+	* ace/{Free_List.h,Free_List.cpp,Timer_Queue_T.h}: Added #include
+ 	  "ace/Synch_T.h" to Free_List.h and removed related inclusion
+ 	  from Free_List.cpp and Timer_Queue_T.h.
+
 Tue Jun 17 09:41:48 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* tests/Enum_Interfaces_Test.cpp: changed name of log file to match
