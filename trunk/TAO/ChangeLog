@@ -1,3 +1,8 @@
+Sun Dec 28 11:27:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/notify_tests.GNU:
+          Added missing Id tag.
+
 Sun Dec 28 11:18:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/FT_ClientORB.bor:
