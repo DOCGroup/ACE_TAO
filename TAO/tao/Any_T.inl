@@ -30,7 +30,8 @@ TAO::Any_Array_Impl_T<T, T_forany>::marshal_value (TAO_OutputCDR &cdr)
 template<typename T, typename T_forany> ACE_INLINE CORBA::Boolean
 TAO::Any_Array_Impl_T<T, T_forany>::demarshal_value (TAO_InputCDR &cdr)
 {
-  return (cdr >> T_forany (this->value_));
+  T_forany tmp (this->value_);
+  return (cdr >> tmp);
 }
 
 template<typename T, typename T_forany> ACE_INLINE const void *
