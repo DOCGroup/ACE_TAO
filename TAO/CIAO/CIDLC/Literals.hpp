@@ -1,4 +1,10 @@
-// $Id$
+// file      : CIDLC/Literals.hpp
+// author    : Jeff Parsons <j.parsons@vanderbilt.edu>
+// cvs-id    : $Id$
+
+#ifndef LITERALS_HPP
+#define LITERALS_HPP
+
 namespace StringLiterals
 {
   static const char COPYRIGHT[] =
@@ -98,3 +104,5 @@ namespace StringLiterals
     REPO_ID
   };
 }
+
+#endif  // LITERALS_HPP

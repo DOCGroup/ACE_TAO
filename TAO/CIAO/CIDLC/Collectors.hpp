@@ -1,4 +1,7 @@
-// $Id$
+// file      : CIDLC/Collectors.hpp
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $Id$
+
 #ifndef COLLECTORS_HPP
 #define COLLECTORS_HPP
 
