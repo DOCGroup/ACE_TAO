@@ -657,7 +657,7 @@ ACE_thread_t
 ACE_Recursive_Thread_Mutex::get_thread_id (void)
 {
   // ACE_TRACE ("ACE_Recursive_Thread_Mutex::get_thread_id");
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_RECURSIVE_MUTEXES)
   // @@ The structure CriticalSection in Win32 doesn't hold the thread
   // handle of the thread that owns the lock.  However it is still not
   // clear at this point how to translate a thread handle to its
