@@ -19,7 +19,7 @@ typedef ACE_Malloc_FIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC_F
 static MALLOC *shmem_allocator = 0;
 
 // Backing store name.
-static const char backing_store[MAXPATHLEN + 1];
+static char backing_store[MAXPATHLEN + 1] = "";
 
 class Employee
 {
@@ -282,8 +282,8 @@ GUI_Handler::delete_employee (const char *name)
 void
 parse_args (int argc, char *argv[])
 {
-  if (argc > 1);
-    backing_store = argv[1];
+  if (argc > 1)
+    ACE_OS::strcpy (backing_store, argv[1]);
 }
 
 int
@@ -291,7 +291,7 @@ main (int argc, char *argv[])
 {
   parse_args (argc, argv);
 
-  if (backing_store == 0)
+  if (ACE_OS::strcmp (backing_store, "") == 0)
     {
 #if defined (ACE_DEFAULT_BACKING_STORE)
       // Create a temporary file.
@@ -304,7 +304,7 @@ main (int argc, char *argv[])
           ACE_ERROR ((LM_ERROR, 
                       "Temporary path too long, "
                       "defaulting to current directory\n"));
-          backing_store = 0;
+          backing_store[0] = 0;
         }
 
       // Add the filename to the end
