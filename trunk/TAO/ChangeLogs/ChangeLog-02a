@@ -1,3 +1,8 @@
+Sun Jan 13 21:50:22 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/TAO_Static.dsp: Added Request_Dispatcher.{cpp,h} to the
+	  file listing.
+
 Sun Jan 13 21:24:59 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/Request_Dispatcher.cpp: Fixed ACE_CHECK typo.  Thanks to
