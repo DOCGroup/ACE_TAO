@@ -24,8 +24,8 @@ Mon Jan 28 12:40:15 2002  Ossama Othman  <ossama@uci.edu>
 	* performance-tests/Latency/Thread_Pool/client.dsp:
 	* performance-tests/Latency/Thread_Pool/server.dsp:
 
-	  Updated paths accordance with the new "Latency" performance test
-	  organization.
+	  Updated paths in accordance with the new "Latency" performance
+	  test organization.
 
 Mon Jan 28 12:39:50 2002  Carlos O'Ryan  <coryan@uci.edu>
 
