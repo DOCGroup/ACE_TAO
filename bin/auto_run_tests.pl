@@ -16,7 +16,7 @@ if (!($ACE_ROOT = $ENV{ACE_ROOT})) {
 }
 
 unshift @INC, "$ACE_ROOT/bin";
-require ACEutils;
+require PerlACE::Run_Test;
 require PerlACE::ConfigList;
 
 use English;

@@ -1,3 +1,10 @@
+Fri Dec 15 10:22:42 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_run_tests.pl:
+
+          Included PerlACE::Run_Test instead of ACEUtils and 
+          ConfigList.
+
 Fri Dec 15 09:22:05 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Connection/non_blocking/Makefile:
