@@ -1,10 +1,27 @@
 /* -*- C++ -*- */
-#if !defined (LOGGER_I_H)
-#define LOGGER_I_H
+
+// ============================================================================
+//
+// $Id$
+//
+// = LIBRARY
+//    TAO services
+// 
+// = FILENAME
+//   Logger_i.h
+//
+// = AUTHOR
+//    Marina Spivak <marina@cs.wustl.edu>
+//    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+// 
+// ============================================================================
+
+#if !defined (TAO_ORBSVCS_LOGGER_I_H)
+#define TAO_ORBSVCS_LOGGER_I_H
 
 #include "orbsvcs/LoggerS.h"
 
-class Logger_Factory_i : public virtual POA_Logger_Factory
+class TAO_ORBSVCS_Export Logger_Factory_i : public virtual POA_Logger_Factory
 {
 public:
   Logger_Factory_i (void);
@@ -32,4 +49,4 @@ private:
   // logger identification
 };
 
-#endif /* LOGGER_I_H */
+#endif /* TAO_ORBSVCS_LOGGER_I_H */

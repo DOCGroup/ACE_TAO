@@ -2,7 +2,7 @@
 
 #include "ace/ACE.h"
 #include "orbsvcs/LoggerC.h"
-#include "logger_i.h"
+#include "orbsvcs/Log/Logger_i.h"
 
 Logger_ptr
 Logger_Factory_i::make_logger (const char* name,
