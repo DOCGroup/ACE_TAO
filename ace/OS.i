@@ -9542,6 +9542,14 @@ ACE_Thread_Adapter::entry_point (void)
 }
 
 #if defined (ACE_HAS_WINCE)
+
+//          **** Warning ****
+// You should not use the following functions under CE at all.
+// These functions are used to make Svc_Conf_l.cpp compile
+// under WinCE.  Most of them doesn't do what they are expected
+// to do under regular environments.
+//          **** Warning ****
+
 ACE_INLINE size_t
 fwrite (void *buf, size_t sz, size_t count, FILE *fp)
 {
@@ -9571,6 +9579,13 @@ ferror (FILE *fp)
   return 0;
 }
 
+//          **** Warning ****
+// You should not use these functions under CE at all.
+// These functions are used to make Svc_Conf_l.cpp compile
+// under WinCE.  Most of them doesn't do what they are expected
+// to do under regular environments.
+//          **** Warning ****
+
 ACE_INLINE int
 isatty (ACE_HANDLE h)
 {
@@ -9588,6 +9603,13 @@ fflush (FILE *fp)
 {
   return ACE_OS::fflush (fp);
 }
+
+//          **** Warning ****
+// You should not use these functions under CE at all.
+// These functions are used to make Svc_Conf_l.cpp compile
+// under WinCE.  Most of them doesn't do what they are expected
+// to do under regular environments.
+//          **** Warning ****
 
 ACE_INLINE void
 exit (int status)
@@ -9608,6 +9630,9 @@ putchar (int c)
   ACE_UNUSED_ARG (c);
   return c;
 }
+
+//          **** End CE Warning ****
+
 #endif /* ACE_HAS_WINCE */
 
 ACE_INLINE
