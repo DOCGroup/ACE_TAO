@@ -9,4 +9,3 @@ project(*server): orbsvcsexe, portablegroup, loadbalancing, naming, svc_utils {
 	Simple.cpp
   }
 }
-}
