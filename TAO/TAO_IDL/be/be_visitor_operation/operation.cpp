@@ -238,63 +238,113 @@ be_visitor_operation::gen_environment_var ()
 }
 
 int
-be_visitor_operation::gen_raise_exception (be_type *,
-                                           const char *excep,
-                                           const char *completion_status,
-                                           const char * /* env */)
+be_visitor_operation::gen_raise_exception (be_type *return_type,
+                                           const char *exception_name,
+                                           const char *exception_arguments)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
   os->indent ();
-
   if (be_global->use_raw_throw ())
     {
-      *os << "throw ";
+      *os << "throw "
+          << exception_name << "(" << exception_arguments << ");\n";
+      return 0;
     }
-  else
+
+  if (return_type == 0 || this->void_return_type (return_type))
     {
       *os << "ACE_THROW (";
     }
-
-  *os << excep << "(" << completion_status << ")";
-
-  if (be_global->use_raw_throw ())
-    {
-      *os << ";\n";
-    }
   else
     {
+      *os << "ACE_THROW_RETURN (";
+    }
+  *os << exception_name << " (" << exception_arguments << ")";
+
+  if (this->void_return_type (return_type))
+    {
       *os << ");\n";
+      return 0;
+    }
+  *os << "," << be_nl;
+
+  // Non-void return type....
+  be_visitor_context ctx (*this->ctx_);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
+
+  be_visitor_operation_rettype_return_cs visitor (&ctx);
+  if (return_type->accept (&visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation::"
+                         "gen_raise_exception - "
+                         "codegen for return var failed\n"),
+                        -1);
+    }
+  *os << ");\n";
+
+  return 0;
+}
+
+int
+be_visitor_operation::gen_check_exception (be_type *return_type)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  os->indent ();
+
+  if (return_type == 0 || this->void_return_type (return_type))
+    {
+      *os << "ACE_CHECK;\n";
+      return 0;
     }
 
+  // Non-void return type....
+  *os << "ACE_CHECK_RETURN (";
+  be_visitor_context ctx (*this->ctx_);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
+
+  be_visitor_operation_rettype_return_cs visitor (&ctx);
+  if (return_type->accept (&visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation::"
+                         "gen_check_exception - "
+                         "codegen for return var failed\n"),
+                        -1);
+    }
+  *os << ");\n";
+
   return 0;
 }
 
 int
-be_visitor_operation::gen_check_exception (be_type *,
-                                           const char * /* env */)
+be_visitor_operation::gen_check_interceptor_exception (be_type *return_type)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-
   os->indent ();
 
-  // Check if there is an exception.
-  *os << "ACE_CHECK;\n";
+  if (return_type == 0 || this->void_return_type (return_type))
+    {
+      *os << "TAO_INTERCEPTOR_CHECK;\n";
+      return 0;
+    }
+
+  // Non-void return type....
+  *os << "TAO_INTERCEPTOR_CHECK_RETURN (";
+  be_visitor_context ctx (*this->ctx_);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
+
+  be_visitor_operation_rettype_return_cs visitor (&ctx);
+  if (return_type->accept (&visitor) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation::"
+                         "gen_check_exception - "
+                         "codegen for return var failed\n"),
+                        -1);
+    }
+  *os << ");\n";
 
   return 0;
 }
-
-int
-be_visitor_operation::gen_check_interceptor_exception (be_type *,
-                                                       const char * /* env */)
-{
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  os->indent ();
-
-  // Check if there is an exception.
-  *os << "TAO_INTERCEPTOR_CHECK;\n";
-
-  return 0;
-}
-

@@ -794,4 +794,3 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return TAO_COMMON_VISITOR_FACTORY::instance ()->make_visitor (ctx);
     }
 }
-
