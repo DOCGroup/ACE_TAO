@@ -786,7 +786,7 @@ class TAO_Export CORBA_ORB_out
 public:
   CORBA_ORB_out (CORBA::ORB_ptr &);
   CORBA_ORB_out (CORBA_ORB_var &);
-  CORBA_ORB_out (CORBA_ORB_out &);
+  CORBA_ORB_out (const CORBA_ORB_out &);
   CORBA_ORB_out &operator= (CORBA_ORB_out &);
   CORBA_ORB_out &operator= (const CORBA_ORB_var &);
   CORBA_ORB_out &operator= (CORBA::ORB_ptr);
