@@ -20,20 +20,22 @@
 //    Phil Mesnier <mesnier_p@ociweb.com>,
 //    Zvika Ashani <zvika@aspectusvi.com>,
 //    Rich Newman <RNewman@directv.com>, and
-//    Douglas C. Schmidt <schmidt@uci.edu>
+//    Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
 //
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/OS.h"
-#include "ace/OS_String.h"
 #include "ace/Dirent.h"
 #include "ace/Dirent_Selector.h"
 #include "ace/OS_NS_sys_stat.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_String.h"
+
 
 ACE_RCSID (tests,
            Dirent_Test,
            "$Id Dirent_Test.cpp,v 4.10 2003/05/18 19:17:34 dhinton Exp$")
+
 
 #if defined (VXWORKS) || defined(CHORUS)
 #define TEST_DIR "log"
@@ -231,10 +233,10 @@ dirent_recurse_test (void)
   ACE_DEBUG ((LM_DEBUG,
               "Starting directory recursion test for %s\n",
               ACE_TEXT (TEST_DIR)));
-  
+
   if (dirent_count (ACE_TEXT (TEST_DIR),
                     total_dirs,
-                    total_files, 
+                    total_files,
                     1) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Directory recursion test failed for %s\n",

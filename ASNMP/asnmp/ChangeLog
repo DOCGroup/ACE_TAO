@@ -1,3 +1,19 @@
+Thu Apr 22 23:03:48 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* address.cpp:
+	* address.h:
+	* octet.cpp:
+	* octet.h:
+	* oid.cpp:
+	* oid.h:
+	* target.cpp:
+	* target.h:
+	* vb.cpp:
+	* vb.h:
+
+	  Changed all return types for equality, relational and logical
+	  operators to "bool", as is the norm for modern C++.
+
 Fri Aug 29 07:57:05 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* octet.cpp (to_string_hex):
