@@ -5080,6 +5080,10 @@ ACE_OS::pwrite (ACE_HANDLE handle,
   return ::pwrite (handle, buf, nbyte, offset);
 #endif /* ACE_WIN32 */  
 #else
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (nbyte);
+  ACE_UNUSED_ARG (offset);
   ACE_NOTSUP_RETURN (-1);  
 #endif /* ACE_HAD_P_READ_WRITE */
 }
@@ -5144,6 +5148,10 @@ ACE_OS::pread (ACE_HANDLE handle,
   return ::pread (handle, buf, nbyte, offset);
 #endif /* ACE_WIN32 */  
 #else
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (nbyte);
+  ACE_UNUSED_ARG (offset);
   ACE_NOTSUP_RETURN (-1);  
 #endif /* ACE_HAD_P_READ_WRITE */
 }
