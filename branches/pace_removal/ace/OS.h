@@ -136,25 +136,6 @@ typedef int key_t;
 //                                       //
 ///////////////////////////////////////////
 
-#if defined (ACE_HAS_PACE)
-# include /**/ "pace/dirent.h"
-# include /**/ "pace/fcntl.h"
-# include /**/ "pace/sys/mman.h"
-# include /**/ "pace/pthread.h"
-# include /**/ "pace/pwd.h"
-# include /**/ "pace/stdio.h"
-# include /**/ "pace/stdlib.h"
-# include /**/ "pace/sched.h"
-# include /**/ "pace/semaphore.h"
-# include /**/ "pace/signal.h"
-# include /**/ "pace/sys/stat.h"
-# include /**/ "pace/stdio.h"
-# include /**/ "pace/time.h"
-# include /**/ "pace/unistd.h"
-# include /**/ "pace/sys/utsname.h"
-# include /**/ "pace/sys/wait.h"
-#endif /* ACE_HAS_PACE */
-
 # if defined (ACE_PSOS)
 
 #   if defined (ACE_LACKS_ASSERT_MACRO)
@@ -1228,25 +1209,7 @@ typedef const struct rlimit ACE_SETRLIMIT_TYPE;
 #   define ACE_DEFAULT_THREAD_PRIORITY (-0x7fffffffL - 1L)
 # endif /* ACE_DEFAULT_THREAD_PRIORITY */
 
-# if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
-# include /**/ "pace/semaphore.h"
-#   if !defined (SEM_FAILED)
-#     define SEM_FAILED ((pace_sem_t *) -1)
-#   endif  /* !SEM_FAILED */
-
-typedef struct
-{
-  /// Pointer to semaphore handle.  This is allocated by ACE if we are
-  /// working with an unnamed POSIX semaphore or by the OS if we are
-  /// working with a named POSIX semaphore.
-  pace_sem_t *sema_;
-
-  /// Name of the semaphore (if this is non-NULL then this is a named
-  /// POSIX semaphore, else its an unnamed POSIX semaphore).
-  char *name_;
-} ACE_sema_t;
-
-# elif defined (ACE_HAS_POSIX_SEM)
+# if defined (ACE_HAS_POSIX_SEM)
 #   include /**/ <semaphore.h>
 #   if !defined (SEM_FAILED) && !defined (ACE_LACKS_NAMED_POSIX_SEM)
 #     define SEM_FAILED ((sem_t *) -1)
@@ -1263,14 +1226,14 @@ typedef struct
   /// POSIX semaphore, else its an unnamed POSIX semaphore).
   char *name_;
 
-#if defined (ACE_LACKS_NAMED_POSIX_SEM)
+#   if defined (ACE_LACKS_NAMED_POSIX_SEM)
   /// this->sema_ doesn't always get created dynamically if a platform
   /// doesn't support named posix semaphores.  We use this flag to
   /// remember if we need to delete <sema_> or not.
   int new_sema_;
-#endif /* ACE_LACKS_NAMED_POSIX_SEM */
+#   endif /* ACE_LACKS_NAMED_POSIX_SEM */
 } ACE_sema_t;
-# endif /* ACE_HAS_PACE && !ACE_WIN32 */
+# endif /* ACE_HAS_POSIX_SEM */
 
 struct cancel_state
 {
@@ -1902,32 +1865,6 @@ struct sockaddr_un {
 #     define USYNC_THREAD            0
 #     define USYNC_PROCESS           1 /* It's all global on VxWorks
                                           (without MMU option). */
-#     if defined (ACE_HAS_PACE)
-#     define ACE_PROC_PRI_FIFO_MIN  (sched_get_priority_min(SCHED_FIFO))
-#     define ACE_PROC_PRI_FIFO_MAX  (sched_get_priority_max(SCHED_FIFO))
-#     define ACE_PROC_PRI_RR_MIN    (sched_get_priority_min(SCHED_RR))
-#     define ACE_PROC_PRI_RR_MAX    (sched_get_priority_max(SCHED_RR))
-#     define ACE_PROC_PRI_OTHER_MIN (sched_get_priority_min(SCHED_OTHER))
-#     define ACE_PROC_PRI_OTHER_MAX (sched_get_priority_max(SCHED_OTHER))
-#     if !defined (ACE_THR_PRI_FIFO_MIN)
-#       define ACE_THR_PRI_FIFO_MIN  (long) ACE_PROC_PRI_FIFO_MIN
-#     endif /* !ACE_THR_PRI_FIFO_MIN */
-#     if !defined (ACE_THR_PRI_FIFO_MAX)
-#       define ACE_THR_PRI_FIFO_MAX  (long) ACE_PROC_PRI_FIFO_MAX
-#     endif /* !ACE_THR_PRI_FIFO_MAX */
-#     if !defined (ACE_THR_PRI_RR_MIN)
-#       define ACE_THR_PRI_RR_MIN    (long) ACE_PROC_PRI_RR_MIN
-#     endif /* !ACE_THR_PRI_RR_MIN */
-#     if !defined (ACE_THR_PRI_RR_MAX)
-#       define ACE_THR_PRI_RR_MAX    (long) ACE_PROC_PRI_RR_MAX
-#     endif /* !ACE_THR_PRI_RR_MAX */
-#     if !defined (ACE_THR_PRI_OTHER_MIN)
-#       define ACE_THR_PRI_OTHER_MIN (long) ACE_PROC_PRI_OTHER_MIN
-#     endif /* !ACE_THR_PRI_OTHER_MIN */
-#     if !defined (ACE_THR_PRI_OTHER_MAX)
-#       define ACE_THR_PRI_OTHER_MAX (long) ACE_PROC_PRI_OTHER_MAX
-#     endif /* !ACE_THR_PRI_OTHER_MAX */
-#     endif /* ACE_HAS_PACE */
 
 #     if !defined (ACE_DEFAULT_SYNCH_TYPE)
  // Types include these options: SEM_Q_PRIORITY, SEM_Q_FIFO,
@@ -1936,14 +1873,7 @@ struct sockaddr_un {
 #       define ACE_DEFAULT_SYNCH_TYPE SEM_Q_FIFO
 #     endif /* ! ACE_DEFAULT_SYNCH_TYPE */
 
-#     if defined (ACE_HAS_PACE)
-typedef pace_pthread_mutex_t ACE_mutex_t;
-typedef pace_pthread_mutexattr_t ACE_mutexattr_t;
-typedef pace_pthread_cond_t ACE_cond_t;
-typedef pace_pthread_condattr_t ACE_condattr_t;
-#     else
 typedef SEM_ID ACE_mutex_t;
-#     endif /* ACE_HAS_PACE */
 // Implement ACE_thread_mutex_t with ACE_mutex_t because there's just
 // one process . . .
 typedef ACE_mutex_t ACE_thread_mutex_t;
@@ -1952,23 +1882,14 @@ typedef ACE_mutex_t ACE_thread_mutex_t;
 typedef struct
 {
   /// Semaphore handle.  This is allocated by VxWorks.
-#       if defined (ACE_HAS_PACE)
-  pace_pthread_mutex_t sema_;
-#       else
   SEM_ID sema_;
-#       endif /* ACE_HAS_PACE */
 
   /// Name of the semaphore:  always NULL with VxWorks.
   char *name_;
 } ACE_sema_t;
 #     endif /* !ACE_HAS_POSIX_SEM */
-#     if defined (ACE_HAS_PACE)
-typedef pace_pthread_t ACE_thread_t;
-typedef pace_pthread_t ACE_hthread_t;
-#     else
 typedef char * ACE_thread_t;
 typedef int ACE_hthread_t;
-#     endif /* ACE_HAS_PACE */
 // Key type: the ACE TSS emulation requires the key type be unsigned,
 // for efficiency.  (Current POSIX and Solaris TSS implementations also
 // use u_int, so the ACE TSS emulation is compatible with them.)
@@ -1982,9 +1903,6 @@ typedef u_int ACE_thread_key_t;
 
 typedef CRITICAL_SECTION ACE_thread_mutex_t;
 
-#     if defined (ACE_HAS_PACE)
-typedef pace_pthread_mutex_t ACE_mutex_t;
-#     else
 typedef struct
 {
   /// Either USYNC_THREAD or USYNC_PROCESS
@@ -1995,15 +1913,11 @@ typedef struct
     CRITICAL_SECTION thr_mutex_;
   };
 } ACE_mutex_t;
-#     endif /* ACE_HAS_PACE */
 
 // Wrapper for NT Events.
 typedef HANDLE ACE_event_t;
 
-#   if !defined (ACE_HAS_PACE) || defined (ACE_WIN32)
-// This can probably get _wider_ as more types are defined in PACE.
-// ie: see above ACE_mutex_t
-
+#   if defined (ACE_WIN32)
 //@@ ACE_USES_WINCE_SEMA_SIMULATION is used to debug
 //   semaphore simulation on WinNT.  It should be
 //   changed to ACE_USES_HAS_WINCE at some later point.
@@ -2029,7 +1943,7 @@ public:
 };
 
 #     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
-#   endif /* !ACE_HAS_PACE || defined (ACE_WIN32) */
+#   endif /* defined (ACE_WIN32) */
 
 // These need to be different values, neither of which can be 0...
 #     define USYNC_THREAD 1
@@ -2056,7 +1970,7 @@ public:
 // If we're using PACE then we don't want this class (since PACE
 // takes care of it) unless we're on Windows. Win32 mutexes, semaphores,
 // and condition variables are not yet supported in PACE.
-#   if defined (ACE_LACKS_COND_T) && (!defined (ACE_HAS_PACE) || defined (ACE_WIN32))
+#   if defined (ACE_LACKS_COND_T)
 /**
  * @class ACE_cond_t
  *
@@ -2112,14 +2026,10 @@ struct ACE_OS_Export ACE_condattr_t
   int type;
 };
 
-#     if defined (ACE_HAS_PACE)
-typedef pace_pthread_mutexattr_t ACE_mutexattr_t;
-#     else
 struct ACE_OS_Export ACE_mutexattr_t
 {
   int type;
 };
-#     endif /* ACE_HAS_PACE */
 #   endif /* ACE_LACKS_COND_T */
 
 #   if defined (ACE_LACKS_RWLOCK_T) && !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
@@ -2614,15 +2524,7 @@ struct msghdr {};
 typedef int sig_atomic_t;
 # endif /* !ACE_HAS_SIG_ATOMIC_T */
 
-# if defined (ACE_HAS_PACE)
-#   if defined (ACE_HAS_LYNXOS_SIGNALS)
-typedef void (*ACE_SignalHandler)(...);
-typedef void (*ACE_SignalHandlerV)(...);
-#   else
-typedef pace_sig_pf ACE_SignalHandler;
-typedef pace_sig_pf ACE_SignalHandlerV;
-#   endif /* ACE_HAS_LYNXOS_SIGNALS */
-# elif defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
+# if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
 // Prototypes for both signal() and struct sigaction are consistent..
 #   if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" {
@@ -2670,7 +2572,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 typedef void (*ACE_SignalHandler)(int);
 #   endif /* SIG_PF */
 typedef void (*ACE_SignalHandlerV)(...);
-# endif /* ACE_HAS_PACE */
+# endif /* ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES */
 
 # if defined (BUFSIZ)
 #   define ACE_STREAMBUF_SIZE BUFSIZ
@@ -2950,19 +2852,12 @@ typedef ACE_UINT64 ACE_hrtime_t;
 // Win32 dummies to help compilation.
 
 #   if !defined (__BORLANDC__)
-#     if defined (ACE_HAS_PACE)
-typedef pace_nlink_t nlink_t;
-typedef pace_mode_t mode_t;
-typedef pace_uid_t uid_t;
-typedef pace_gid_t gid_t;
-#     else /* !ACE_HAS_PACE */
 typedef DWORD nlink_t;
 #       if !defined(__MINGW32__)
 typedef u_short mode_t;
 #       endif /* !__MINGW32__ */
 typedef long uid_t;
 typedef long gid_t;
-#     endif /* ACE_HAS_PACE */
 #   endif /* __BORLANDC__ */
 typedef char *caddr_t;
 
@@ -3751,11 +3646,9 @@ typedef fd_set ACE_FD_SET_TYPE;
 #endif
 
 # if defined (ACE_LACKS_SIGSET)
-#    if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
-typedef pace_sigset_t sigset_t;
-#    elif !defined(__MINGW32__)
+#    if !defined(__MINGW32__)
 typedef u_int sigset_t;
-#    endif /* !ACE_HAS_PACE && !__MINGW32__*/
+#    endif /* !__MINGW32__*/
 # endif /* ACE_LACKS_SIGSET */
 
 # if defined (ACE_LACKS_SIGACTION)
@@ -4091,9 +3984,6 @@ typedef const ACE_TCHAR * ACE_DL_TYPE;
 # endif /* ACE_HAS_CHARPTR_DL */
 
 # if !defined (ACE_HAS_SIGINFO_T)
-#    if defined (ACE_HAS_PACE)
-typedef pace_siginfo_t siginfo_t;
-#    else
 struct ACE_OS_Export siginfo_t
 {
   siginfo_t (ACE_HANDLE handle);
@@ -4105,7 +3995,6 @@ struct ACE_OS_Export siginfo_t
   /// Array of Win32 HANDLEs all of which have become signaled.
   ACE_HANDLE *si_handles_;
 };
-#    endif /* ACE_HAS_PACE */
 # endif /* ACE_HAS_SIGINFO_T */
 
 // Typedef for the null handler func.
@@ -4385,20 +4274,15 @@ typedef double ACE_timer_t;
 # include /**/ <syslog.h>
 # endif /* !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SYSLOG) */
 
-#if defined (ACE_HAS_SYS_FILIO_H)
+# if defined (ACE_HAS_SYS_FILIO_H)
 # include /**/ <sys/filio.h>
-#endif /* ACE_HAS_SYS_FILIO_H */
+# endif /* ACE_HAS_SYS_FILIO_H */
 
-# if defined (ACE_HAS_PACE)
-  // = typedef for the _stat data structure
-  typedef pace_stat_s ACE_stat;
-# else
-#   if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__)
+# if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__)
       typedef struct _stat ACE_stat;
-#   else
+# else
       typedef struct stat ACE_stat;
-#   endif /* ACE_WIN32 */
-# endif /* ACE_HAS_PACE */
+# endif /* ACE_WIN32 */
 
 // We need this for MVS...
 extern "C" {
@@ -4450,14 +4334,12 @@ inline long ace_timezone()
  */
 inline double ace_difftime(time_t t1, time_t t0)
 {
-# if defined (ACE_HAS_PACE)
-  return ::pace_difftime (t1, t0);
-# elif defined (ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
+# if defined (ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
   // simulate difftime ; just subtracting ; ACE_PSOS case
   return ((double)t1) - ((double)t0);
 # else
   return difftime (t1, t0);
-# endif /* ACE_HAS_PACE */
+# endif /* ACE_PSOS !ACE_PSOS_HAS_TIME */
 }
 #endif /* !ACE_LACKS_DIFFTIME */
 
@@ -6621,10 +6503,7 @@ private:
 
 # define ACE_NOOP(x)
 
-#if defined (ACE_HAS_PACE)
-#   define ACE_PTHREAD_CLEANUP_PUSH(A) pace_pthread_cleanup_push (ACE_OS::mutex_lock_cleanup, (void *) A);
-#   define ACE_PTHREAD_CLEANUP_POP(A) pace_pthread_cleanup_pop(A)
-# elif defined (ACE_HAS_THR_C_FUNC)
+# if defined (ACE_HAS_THR_C_FUNC)
 // This is necessary to work around nasty problems with MVS C++.
 extern "C" ACE_OS_Export void ace_mutex_lock_cleanup_adapter (void *args);
 #   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
@@ -6640,7 +6519,7 @@ extern "C" ACE_OS_Export void ace_mutex_lock_cleanup_adapter (void *args);
 # else
 #   define ACE_PTHREAD_CLEANUP_PUSH(A)
 #   define ACE_PTHREAD_CLEANUP_POP(A)
-# endif /* ACE_HAS_PACE */
+# endif /* ACE_HAS_THR_C_FUNC */
 
 # if !defined (ACE_DEFAULT_MUTEX_A)
 #   define ACE_DEFAULT_MUTEX_A "ACE_MUTEX"

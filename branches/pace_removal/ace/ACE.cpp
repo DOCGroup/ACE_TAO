@@ -173,9 +173,7 @@ ACE::select (int width,
 int
 ACE::terminate_process (pid_t pid)
 {
-#if defined (ACE_HAS_PACE)
-  return pace_kill (pid, 9);
-#elif defined (ACE_HAS_PHARLAP)
+#if defined (ACE_HAS_PHARLAP)
   ACE_UNUSED_ARG (pid);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32)
@@ -211,22 +209,13 @@ ACE::terminate_process (pid_t pid)
       return -1;
 #else
   return ACE_OS::kill (pid, 9);
-#endif /* ACE_HAS_PACE */
+#endif /* ACE_HAS_PHARLAP */
 }
 
 int
 ACE::process_active (pid_t pid)
 {
-#if defined (ACE_HAS_PACE)
-  int retval = pace_kill (pid, 0);
-
-  if (retval == 0)
-    return 1;
-  else if (errno == ESRCH)
-    return 0;
-  else
-    return -1;
-#elif !defined(ACE_WIN32)
+#if !defined(ACE_WIN32)
   int retval = ACE_OS::kill (pid, 0);
 
   if (retval == 0)
@@ -254,7 +243,7 @@ ACE::process_active (pid_t pid)
       ::CloseHandle (process_handle);
       return result;
     }
-#endif /* ACE_HAS_PACE */
+#endif /* !ACE_WIN32 */
 }
 
 const ACE_TCHAR *

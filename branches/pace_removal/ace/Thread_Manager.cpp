@@ -538,7 +538,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   ACE_TRACE ("ACE_Thread_Manager::spawn_i");
   ACE_hthread_t thr_handle;
 
-#if defined (VXWORKS) && ! defined (ACE_HAS_PACE)
+#if defined (VXWORKS)
   // On VxWorks, ACE_thread_t is char *.  If t_id is 0, allocate space
   // for ACE_OS::thr_create () to store the task name.  If t_id is not
   // 0, and it doesn't point to a 0 char *, then the non-zero char *
@@ -880,7 +880,7 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 #endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
   this->thr_list_.remove (td);
 
-#if defined (VXWORKS) && ! defined (ACE_HAS_PACE)
+#if defined (VXWORKS)
   // Delete the thread ID, if the ACE_Thread_Manager allocated it.
   if (tid  &&  tid[0] == ACE_THR_ID_ALLOCATED)
     {
@@ -948,9 +948,6 @@ int
 ACE_Thread_Manager::join_thr (ACE_Thread_Descriptor *td, int)
 {
   ACE_TRACE ("ACE_Thread_Manager::join_thr");
-#if defined (ACE_HAS_PACE)
-  return ACE_Thread::join (td->thr_handle_);
-#else
   int result = ACE_Thread::join (td->thr_handle_);
   if (result != 0)
     {
@@ -963,7 +960,6 @@ ACE_Thread_Manager::join_thr (ACE_Thread_Descriptor *td, int)
     }
 
   return 0;
-#endif /* ACE_HAS_PACE */
 }
 
 int
@@ -1022,7 +1018,7 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
   ACE_TRACE ("ACE_Thread_Manager::kill_thr");
 
   ACE_thread_t tid = td->thr_id_;
-#if defined (VXWORKS) && ! defined (ACE_HAS_PACE)
+#if defined (VXWORKS)
   // Skip over the ID-allocated marker, if present.
   tid += tid[0] == ACE_THR_ID_ALLOCATED  ?  1  :  0;
 #endif /* VXWORKS */
