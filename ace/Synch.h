@@ -400,6 +400,37 @@ protected:
 #endif /* ACE_WIN32 */
 };
 
+class ACE_Export ACE_Null_Semaphore
+{
+  // = TITLE
+  //     Implement a do nothing <ACE_Semaphore>, i.e., all the methods are
+  //     no ops.
+public:
+  ACE_Null_Semaphore (u_int count = 1, // By default make this unlocked.
+		       int type = USYNC_THREAD,
+		       LPCTSTR name = 0,
+		       void * = 0,
+		       int max = 0x7fffffff);
+  ~ACE_Null_Semaphore (void);
+  int remove (void);
+
+  int acquire (ACE_Time_Value &);
+  int acquire (void);
+  int tryacquire (void);
+  int release (void);
+  int release (size_t);
+  int acquire_write (void);
+  int tryacquire_write (void);
+  int acquire_read (void);
+  int tryacquire_read (void);
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+};
+
 class ACE_Export ACE_RW_Mutex
 {
   // = TITLE

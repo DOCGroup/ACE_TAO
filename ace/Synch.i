@@ -443,6 +443,87 @@ ACE_Process_Semaphore::tryacquire_write (void)
   return this->tryacquire ();
 }
 
+// Null ACE_Semaphore implementation
+
+ACE_INLINE
+ACE_Null_Semaphore::ACE_Null_Semaphore (u_int,
+					int,
+					LPCTSTR,
+					void *,
+					int)
+{
+}
+
+ACE_INLINE
+ACE_Null_Semaphore::~ACE_Null_Semaphore (void)
+{
+}
+
+ACE_INLINE int
+ACE_Null_Semaphore::remove (void)
+{
+  return 0;
+}
+
+ACE_INLINE int
+ACE_Null_Semaphore::acquire (ACE_Time_Value &)
+{
+  return 0;
+}
+
+ACE_INLINE int
+ACE_Null_Semaphore::acquire (void)
+{
+  return 0;
+}
+
+ACE_INLINE int
+ACE_Null_Semaphore::tryacquire (void)
+{
+  return 0;
+}
+
+ACE_INLINE int
+ACE_Null_Semaphore::release (size_t)
+{
+  return 0;
+}
+
+ACE_INLINE int
+ACE_Null_Semaphore::release (void)
+{
+  return 0;
+}
+
+ACE_INLINE int
+ACE_Null_Semaphore::acquire_write (void)
+{
+  return 0;
+}
+
+ACE_INLINE int
+ACE_Null_Semaphore::tryacquire_write (void)
+{
+  return 0;
+}
+
+ACE_INLINE int
+ACE_Null_Semaphore::acquire_read (void)
+{
+  return 0;
+}
+
+ACE_INLINE int
+ACE_Null_Semaphore::tryacquire_read (void)
+{
+  return 0;
+}
+
+ACE_INLINE void
+ACE_Null_Semaphore::dump (void) const
+{
+}
+
 #if defined (ACE_HAS_THREADS)
 
 ACE_INLINE const ACE_thread_mutex_t &

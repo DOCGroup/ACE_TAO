@@ -861,7 +861,7 @@ public:
   typedef ACE_Null_Mutex RECURSIVE_MUTEX;
   typedef ACE_Null_Mutex RW_MUTEX;
   typedef ACE_Null_Condition CONDITION;
-  typedef ACE_Null_Mutex SEMAPHORE;
+  typedef ACE_Null_Semaphore SEMAPHORE;
   typedef ACE_Null_Mutex NULL_SEMAPHORE;
 };
 
@@ -883,7 +883,7 @@ public:
   typedef ACE_RW_Thread_Mutex RW_MUTEX;
   typedef ACE_Condition_Thread_Mutex CONDITION;
   typedef ACE_Thread_Semaphore SEMAPHORE;
-  typedef ACE_Null_Mutex NULL_SEMAPHORE;
+  typedef ACE_Null_Semaphore NULL_SEMAPHORE;
 };
 
 #endif /* ACE_HAS_THREADS */
@@ -914,7 +914,7 @@ public:
 #define ACE_SYNCH_RW_MUTEX ACE_RW_Thread_Mutex
 #define ACE_SYNCH_CONDITION ACE_Condition_Thread_Mutex
 #define ACE_SYNCH_SEMAPHORE ACE_Thread_Semaphore
-#define ACE_SYNCH_NULL_SEMAPHORE  ACE_Null_Mutex
+#define ACE_SYNCH_NULL_SEMAPHORE  ACE_Null_Semaphore
 
 #else /* ACE_HAS_THREADS */
 
@@ -923,7 +923,7 @@ public:
 #define ACE_SYNCH_RECURSIVE_MUTEX ACE_Null_Mutex
 #define ACE_SYNCH_RW_MUTEX ACE_Null_Mutex
 #define ACE_SYNCH_CONDITION ACE_Null_Condition
-#define ACE_SYNCH_SEMAPHORE ACE_Thread_Semaphore
+#define ACE_SYNCH_SEMAPHORE ACE_Null_Semaphore
 #define ACE_SYNCH_NULL_SEMAPHORE ACE_Null_Mutex
 
 #endif /* ACE_HAS_THREADS */
