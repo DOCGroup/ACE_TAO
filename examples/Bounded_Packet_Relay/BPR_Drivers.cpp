@@ -27,38 +27,10 @@
 #define _BPR_DRIVER_CPP_
 
 #include "ace/Auto_Ptr.h"
-#include "BPR_Driver.h"
+#include "BPR_Drivers.h"
 
 ACE_RCSID(Bounded_Packet_Relay, BPR_Driver, "$Id$")
 
-// Constructor.
-
-BPR_Handler_Base (Bounded_Packet_Relay<ACE_Thread_Mutex> &relay,
-                Thread_Timer_Queue &queue)
-  : relay_ (relay),
-    queue (queue)
-{
-}
-
-// Destructor.
-
-~BPR_Handler_Base (void)
-{
-}
-
-// Helper method: clears all timers.
-
-int
-clear_all_timers (void)
-{
-  // loop through the timers in the queue, cancelling each one
-  for (ACE_Timer_Node_T <ACE_Event_Handler *> *node;
-       (node = queue_->timer_queue ().get_first ()) != 0;
-      )
-    queue_->cancel (node->get_timer_id (), 0);
-
-  return 0;
-}
 
 
 // Constructor.
@@ -66,15 +38,14 @@ clear_all_timers (void)
 Input_Device_Wrapper_Base::Input_Device_Wrapper_Base (ACE_Thread_Manager *input_task_mgr)
   : ACE_Task_Base (input_task_mgr),
     send_input_msg_cmd_ (0),
-    input_rate_ (ACE_ONE_SECOND_IN_USECS),
-    reactor_,
+    input_period_ (ACE_ONE_SECOND_IN_USECS),
     is_active_ (0)
 {
 }
 
 // Destructor.
 
-Input_Device_Wrapper_Base::Input_Device_Wrapper_Base (void)
+Input_Device_Wrapper_Base::~Input_Device_Wrapper_Base (void)
 {
   delete send_input_msg_cmd_;
 }
@@ -105,6 +76,7 @@ int
 Input_Device_Wrapper_Base::set_send_count (long count)
 {
   send_count_ = count;
+  return 0;
 }
 
 // Request that the input device stop sending messages
@@ -176,7 +148,7 @@ Input_Device_Wrapper_Base::svc (void)
       if (count > 0) 
         --count;
 
-      timeout = ACE_Time_Value (0, period_);
+      timeout = ACE_Time_Value (0, input_period_);
       reactor_.run_event_loop (timeout);
     }
 
@@ -205,10 +177,10 @@ Input_Device_Wrapper_Base::send_input_message (ACE_Message_Block *amb)
 
 // Constructor.
 
-template <class SYNCH>
-Bounded_Packet_Relay<SYNCH>::Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
-                                                   Input_Device_Wrapper_Base *input_wrapper,
-                                                   Output_Device_Wrapper_Base *output_wrapper)
+template <ACE_SYNCH_DECL>
+Bounded_Packet_Relay<ACE_SYNCH_USE>::Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
+                                                           Input_Device_Wrapper_Base *input_wrapper,
+                                                           Output_Device_Wrapper_Base *output_wrapper)
   : input_task_mgr_ (input_task_mgr),
     input_wrapper_ (input_wrapper),
     input_thread_handle_ (0),
@@ -219,7 +191,7 @@ Bounded_Packet_Relay<SYNCH>::Bounded_Packet_Relay (ACE_Thread_Manager *input_tas
     queue_lock_,
     transmission_number_ (0),
     packets_sent_ (0),
-    status_ (Bounded_Packet_Relay<SYNCH>::UN_INITIALIZED),
+    status_ (Bounded_Packet_Relay_Base::UN_INITIALIZED),
     elapsed_duration_ (0)
 {
   if (input_task_mgr_ == 0)
@@ -228,8 +200,8 @@ Bounded_Packet_Relay<SYNCH>::Bounded_Packet_Relay (ACE_Thread_Manager *input_tas
 
 // Destructor.
 
-template <class SYNCH>
-Bounded_Packet_Relay<SYNCH>::~Bounded_Packet_Relay (void)
+template <ACE_SYNCH_DECL>
+Bounded_Packet_Relay<ACE_SYNCH_USE>::~Bounded_Packet_Relay (void)
 {
   delete input_wrapper_;
   delete output_wrapper_;
@@ -237,13 +209,13 @@ Bounded_Packet_Relay<SYNCH>::~Bounded_Packet_Relay (void)
 
 // Requests output be sent to output device.
 
-template <class SYNCH> int
-Bounded_Packet_Relay<SYNCH>::send_input (void)
+template <ACE_SYNCH_DECL> int
+Bounded_Packet_Relay<ACE_SYNCH_USE>::send_input (void)
 {
-  ACE_Message_Block *item;
-
   // Don't block, return immediately if queue is empty.
-  if (queue_.dequeue_head (item, ACE_OS::gettimeofday ()) < 0)
+  ACE_Message_Block *item;
+  ACE_Time_Value now = ACE_OS::gettimeofday ();
+  if (queue_.dequeue_head (item, &now) < 0)
     return 1;
 
   // If a message block was dequeued, send it to the output device.
@@ -259,27 +231,27 @@ Bounded_Packet_Relay<SYNCH>::send_input (void)
 
 // Requests a transmission be started.
 
-template <class SYNCH> int
-Bounded_Packet_Relay<SYNCH>::start_transmission (u_long packet_count,
-                                                 u_long arrival_period,
-                                                 u_long logging_level)
+template <ACE_SYNCH_DECL> int
+Bounded_Packet_Relay<ACE_SYNCH_USE>::start_transmission (u_long packet_count,
+                                                         u_long arrival_period,
+                                                         u_long logging_level)
 {
   // Serialize access to start and end transmission calls,
   // statistics reporting calls.
-  ACE_GUARD_RETURN (SYNCH, ace_mon, this->transmission_lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->transmission_lock_, -1);
 
   // If a transmission is already in progress, just return.
   if (status_ == STARTED)
     return 1;
 
   // Update statistics for a new transmission.
-  ++transmission_number;
+  ++transmission_number_;
   packets_sent_ = 0;
   status_ = STARTED;
   transmission_start_ = ACE_OS::gettimeofday ();  
 
   // Initialize the output device.
-  if (output_wrapper_->modify_device_settings ((void *) &logging level) < 0)
+  if (output_wrapper_->modify_device_settings ((void *) &logging_level) < 0)
     {
       status_ = ERROR;
       transmission_end_ = ACE_OS::gettimeofday ();  
@@ -289,7 +261,7 @@ Bounded_Packet_Relay<SYNCH>::start_transmission (u_long packet_count,
     }
 
   // Initialize the input device.
-  if (input_wrapper_->set_input_period (u_long input_period) < 0)
+  if (input_wrapper_->set_input_period (arrival_period) < 0)
     {
       status_ = ERROR;
       transmission_end_ = ACE_OS::gettimeofday ();  
@@ -314,12 +286,12 @@ Bounded_Packet_Relay<SYNCH>::start_transmission (u_long packet_count,
 
 // Requests a transmission be ended.
 
-template <class SYNCH> int
-Bounded_Packet_Relay<SYNCH>::end_transmission (Transmission_Status status)
+template <ACE_SYNCH_DECL> int
+Bounded_Packet_Relay<ACE_SYNCH_USE>::end_transmission (Transmission_Status status)
 {
   // Serialize access to start and end transmission calls,
   // statistics reporting calls.
-  ACE_GUARD_RETURN (SYNCH, ace_mon, this->transmission_lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->transmission_lock_, -1);
 
   // If a transmission is not already in progress, just return.
   if (status_ != STARTED)
@@ -353,12 +325,12 @@ Bounded_Packet_Relay<SYNCH>::end_transmission (Transmission_Status status)
 
 // Requests a report of statistics from the last transmission.
 
-template <class SYNCH> int
-Bounded_Packet_Relay<SYNCH>::report_statistics (void)
+template <ACE_SYNCH_DECL> int
+Bounded_Packet_Relay<ACE_SYNCH_USE>::report_statistics (void)
 {
   // Serialize access to start and end transmission calls,
   // statistics reporting calls.
-  ACE_GUARD_RETURN (SYNCH, ace_mon, this->transmission_lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->transmission_lock_, -1);
 
   // If a transmission is already in progress, just return.
   if (status_ == STARTED)
@@ -417,22 +389,22 @@ Bounded_Packet_Relay<SYNCH>::report_statistics (void)
 
 // Public entry point to which to push input.
 
-template <class SYNCH> int
-Bounded_Packet_Relay<SYNCH>::receive_input (void * arg)
+template <ACE_SYNCH_DECL> int
+Bounded_Packet_Relay<ACE_SYNCH_USE>::receive_input (void * arg)
 {
   ACE_Message_Block *message = ACE_static_cast (ACE_Message_Block *,
                                                 arg);
   if (queue_.enqueue_tail (message) < 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n", 
-                       "Bounded_Packet_Relay<SYNCH>::receive_input failed"), 
+                       "Bounded_Packet_Relay<ACE_SYNCH_USE>::receive_input failed"), 
                       -1);
   return 0;
 }
 
 // Parse the input and execute the corresponding command.
 
-template <class TQ, class RECEIVER, class ACTION> int
-Bounded_Packet_Relay_Driver<TQ, RECEIVER, ACTION>::parse_commands (const char *buf)
+template <class TQ> int
+Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
 {
   int option;
 
@@ -562,8 +534,8 @@ Bounded_Packet_Relay_Driver<TQ, RECEIVER, ACTION>::parse_commands (const char *b
 
 // Runs the test.
 
-template <class TQ, class RECEIVER, class ACTION> int
-Bounded_Packet_Relay_Driver<TQ, RECEIVER, ACTION>::run (void)
+template <class TQ> int
+Bounded_Packet_Relay_Driver<TQ>::run (void)
 {
   this->init ();
 
@@ -576,8 +548,8 @@ Bounded_Packet_Relay_Driver<TQ, RECEIVER, ACTION>::run (void)
 
 // Gets the next request from the user input.
 
-template <class TQ, class RECEIVER, class ACTION> int
-Bounded_Packet_Relay_Driver<TQ, RECEIVER, ACTION>::get_next_request (void)
+template <class TQ> int
+Bounded_Packet_Relay_Driver<TQ>::get_next_request (void)
 {
   char buf[BUFSIZ];
 
@@ -597,8 +569,8 @@ Bounded_Packet_Relay_Driver<TQ, RECEIVER, ACTION>::get_next_request (void)
 
 // Reads input from the user from ACE_STDIN into the buffer specified.
 
-template <class TQ, class RECEIVER, class ACTION> ssize_t
-Bounded_Packet_Relay_Driver<TQ, RECEIVER, ACTION>::read_input (char *buf, size_t bufsiz)
+template <class TQ> ssize_t
+Bounded_Packet_Relay_Driver<TQ>::read_input (char *buf, size_t bufsiz)
 {
   ACE_OS::memset (buf, 0, bufsiz);
 

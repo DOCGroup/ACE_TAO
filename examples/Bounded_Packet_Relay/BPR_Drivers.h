@@ -31,6 +31,10 @@
 
 #include "ace/Task.h"
 
+// forward declarations
+class Input_Device_Wrapper_Base;
+class Output_Device_Wrapper_Base;
+
 class Command_Base
 {
   // = TITLE
@@ -46,38 +50,114 @@ public:
   // Invokes the method <action_> from the object <receiver_>.
 };
 
-class BPR_Handler_Base : public ACE_Event_Handler
+class Bounded_Packet_Relay_Base
 {
   // = TITLE
-  //     Base event handler class for bounded packet relay example.
+  //     Base class for the time-bounded packet relay class.
   //
   // = DESCRIPTION
-  //     The <handle_timeout> hook method calls the relay's send
-  //     method and decrements its count of messages to send.  
-  //     If there are still messages to send, it re-registers itself
-  //     with the timer queue.  Otherwise it calls the relay's end
-  //     transmission method, clears the timer queue, and then deletes "this".
+  //     This enum must go here to avoid confusing certain broken C++
+  //     compilers.
 public:
-  BPR_Handler_Base (Bounded_Packet_Relay<ACE_Thread_Mutex> &relay,
-                Thread_Timer_Queue &queue);
+
+  // = Enumerates possible status values for a transmission.
+
+  enum Transmission_Status 
+  {
+    UN_INITIALIZED,
+    STARTED,
+    COMPLETED,
+    TIMED_OUT,
+    CANCELLED,
+    ERROR
+  };
+};
+
+template <ACE_SYNCH_DECL>
+class Bounded_Packet_Relay : public Bounded_Packet_Relay_Base
+{
+  // = TITLE
+  //     This class defines a packet relay abstraction for a transmission
+  //     bounded external commands to start and end the transmission.  The
+  //     transmission may be bounded by the number of packets to send, the
+  //     dration of the transmission, or any other factors.
+  //
+  // = DESCRIPTION
+  //     The relay abstraction implemented by this class registers a callback
+  //     command with an input device wrapper, and relays input to an output
+  //     device at a pace specified in the start transmission call.
+public:
+
+  typedef int (Bounded_Packet_Relay::*ACTION) (void *);
+  // Command entry point type definition.
+
+  // = Initialization method
+
+  Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
+                        Input_Device_Wrapper_Base *input_wrapper,
+                        Output_Device_Wrapper_Base *output_wrapper);
   // Constructor.
 
-  ~BPR_Handler_Base (void);
+  virtual ~Bounded_Packet_Relay (void);
   // Destructor.
 
-  virtual int clear_all_timers (void);
-  // Helper method: clears all timers.
+  int send_input (void);
+  // Requests output be sent to output device.
 
-protected:
+  int start_transmission (u_long packet_count,
+                          u_long arrival_period,
+                          u_long logging_level);
+  // Requests a transmission be started.
 
-  Bounded_Packet_Relay<ACE_Thread_Mutex> &relay_;
-  // Stores a reference to the relay object on which to invoke
-  // the appropritate calls when the timer expires.
+  int end_transmission (Transmission_Status status);
+  // Requests a transmission be ended.
 
-  Thread_Timer_Queue &queue_;
-  // Store a reference to the timer queue, in which to re-register
-  // the send timer and handler if there are still sends to perform.
+  int report_statistics (void);
+  // Requests a report of statistics from the last transmission.
+
+  // = Command Accessible Entry Points.
+
+  int receive_input (void *);
+  // Public entry point to which to push input.
+
+private:
+  // = Concurrency Management.
+
+  ACE_Thread_Manager * input_task_mgr_;
+  // Thread manager for the input device task.
+
+  Input_Device_Wrapper_Base * input_wrapper_;
+  // Pointer to the input device wrapper.
+
+  Output_Device_Wrapper_Base * output_wrapper_;
+  // Pointer to the output device wrapper.
+
+  ACE_Message_Queue<ACE_SYNCH_USE> queue_;
+  // Queue used to buffer input messages.
+
+  ACE_SYNCH_MUTEX_T transmission_lock_;
+  // Lock for thread-safe synchronization 
+  // of transmission startup and termination.
+
+  // = Transmission Statistics
+
+  u_long transmission_number_;
+  // Number of transmissions sent.
+
+  u_long packets_sent_;
+  // Count of packets sent in the most recent transmission.
+
+  Transmission_Status status_;
+  // Status of the current or most recent transmission.
+
+  ACE_Time_Value transmission_start_;
+  // Start time of the most recent transmission.
+
+  ACE_Time_Value transmission_end_;
+  // Ending time of the most recent transmission.
+
 };
+
 
 class Input_Device_Wrapper_Base : public ACE_Task_Base
 {
@@ -179,110 +259,6 @@ public:
   // Provides an abstract interface to allow modifying device settings.
 };
 
-class Bounded_Packet_Relay_Base
-{
-  // = TITLE
-  //     Base class for the time-bounded packet relay class.
-  //
-  // = DESCRIPTION
-  //     This enum must go here to avoid confusing certain broken C++
-  //     compilers.
-public:
-  enum Transmission_Status 
-  {
-    UN_INITIALIZED,
-    STARTED,
-    COMPLETED,
-    TIMED_OUT,
-    CANCELLED,
-    ERROR
-  };
-};
-
-template <class SYNCH>
-class Bounded_Packet_Relay : public Bounded_Packet_Relay_Base
-{
-  // = TITLE
-  //     This class defines a packet relay abstraction for a transmission
-  //     bounded external commands to start and end the transmission.  The
-  //     transmission may be bounded by the number of packets to send, the
-  //     dration of the transmission, or any other factors.
-  //
-  // = DESCRIPTION
-  //     The relay abstraction implemented by this class registers a callback
-  //     command with an input device wrapper, and relays input to an output
-  //     device at a pace specified in the start transmission call.
-public:
-
-  typedef int (Bounded_Packet_Relay::*ACTION) (void *);
-  // Command entry point type definition.
-
-  // = Enumerates possible status values at the end of a transmission.
-
-  Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
-                        Input_Device_Wrapper_Base *input_wrapper,
-                        Output_Device_Wrapper_Base *output_wrapper);
-  // Constructor.
-
-  virtual ~Bounded_Packet_Relay (void);
-  // Destructor.
-
-  int send_input (void);
-  // Requests output be sent to output device.
-
-  int start_transmission (u_long packet_count,
-                          u_long arrival_period,
-                          u_long logging_level);
-  // Requests a transmission be started.
-
-  int end_transmission (Transmission_Status status);
-  // Requests a transmission be ended.
-
-  int report_statistics (void);
-  // Requests a report of statistics from the last transmission.
-
-  // = Command Accessible Entry Points.
-
-  int receive_input (void *);
-  // Public entry point to which to push input.
-
-private:
-  // = Concurrency Management.
-
-  ACE_Thread_Manager * input_task_mgr_;
-  // Thread manager for the input device task.
-
-  Input_Device_Wrapper_Base * input_wrapper_;
-  // Pointer to the input device wrapper.
-
-  Output_Device_Wrapper_Base * output_wrapper_;
-  // Pointer to the output device wrapper.
-
-  ACE_Message_Queue<SYNCH> queue_;
-  // Queue used to buffer input messages.
-
-  SYNCH transmission_lock_;
-  // Lock for thread-safe synchronization 
-  // of transmission startup and termination.
-
-  // = Transmission Statistics
-
-  u_long transmission_number_;
-  // Number of transmissions sent.
-
-  u_long packets_sent_;
-  // Count of packets sent in the most recent transmission.
-
-  Transmission_Status status_;
-  // Status of the current or most recent transmission.
-
-  ACE_Time_Value transmission_start_;
-  // Start time of the most recent transmission.
-
-  ACE_Time_Value transmission_end_;
-  // Ending time of the most recent transmission.
-
-};
 
 template <class TQ>
 class Bounded_Packet_Relay_Driver
