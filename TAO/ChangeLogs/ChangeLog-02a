@@ -1,3 +1,10 @@
+Wed Sep 13 10:43:32 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/default_resource.cpp (get_parser_names): 
+	  Modified the assignment value of number_of_names so that only the
+	  number of parsers that are instantiated correctly is assigned to
+	  it.
+	
 Tue Sep 12 17:00:58 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ior_corbaname/CORBANAME_Parser.cpp: 
