@@ -1,3 +1,8 @@
+Mon Jul 26 21:41:31 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* TAO/PROBLEM-REPORT-FORM: Changed all occurrences of ace-users
+	  to tao-users.  Thanks to David Levine for remembering this!
+
 Mon Jul 26 20:55:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* docs/configurations.html: Added thread-pool example link.
