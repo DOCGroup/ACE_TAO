@@ -257,7 +257,7 @@ Cubit_Task::initialize_orb (void)
       // Initialize the naming services
       // Init should be able to be passed the command line arguments,
       // but it isn't possible here, so use dummy values
-      if (my_name_client_.init (orb_, 0, 0) != 0)
+      if (my_name_client_.init (orb_.in (), 0, 0) != 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   " (%P|%t) Unable to initialize "
 			   "the TAO_Naming_Client. \n"),
