@@ -138,7 +138,8 @@ int
 be_exception::gen_iostream_op_hdr (TAO_OutStream *os)
 {
   *os << "# if !defined (ACE_LACKS_IOSTREAM_TOTALLY)" << be_nl << be_nl;
-  *os << "ostream& operator<< (ostream &, const "
+  *os << idl_global->stub_export_macro ();
+  *os << " ostream& operator<< (ostream &, const "
       << this->full_name () << " &);" << be_nl << be_nl;
   *os << "# endif /* ACE_LACKS_IOSTREAM_TOTALLY */" << be_nl;
 
