@@ -24,4 +24,8 @@ optimize = 0
 SONAME=
 SOVERSION=
 
+# Add --enable-auto-import to the linker flags. This will result in the
+# linker doing auto-import without giving warnings about it.
+LDFLAGS += --enable-auto-import
+
 include $(ACE_ROOT)/include/makeinclude/platform_gnuwin32_common.GNU
