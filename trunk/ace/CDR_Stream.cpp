@@ -117,6 +117,29 @@ ACE_CDR::LongDouble::operator!= (const ACE_CDR::LongDouble &rhs) const
 }
 #endif /* NONNATIVE_LONGDOUBLE */
 
+#if defined(_UNICOS)
+// placeholders to get things compiling
+ACE_CDR::Float::Float()
+{
+}
+
+ACE_CDR::Float::Float(const float & init))
+{
+}
+
+float
+ACE_CDR::Float::operator= (const ACE_CDR::Float &rhs) const
+{
+    return 0.0f;
+}
+
+int
+ACE_CDR::Float::operator!= (const ACE_CDR::Float &rhs) const
+{
+    return 0;
+}
+#endif /* _UNICOS */
+
 // ****************************************************************
 
 ACE_OutputCDR::ACE_OutputCDR (size_t size,

@@ -833,6 +833,7 @@ private:
 // *************************************************************
 class TAO_Export CORBA_NameValuePairSeq : public
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
+       || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) \
        || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq
 #else /* AHETI */
@@ -1317,6 +1318,7 @@ private:
 
 class TAO_Export CORBA_AnySeq : public
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
+       || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) \
        || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
   _TAO_Unbounded_Sequence_CORBA_AnySeq
 #else /* AHETI */

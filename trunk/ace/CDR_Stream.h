@@ -192,6 +192,12 @@ public:
   #     else  /* ACE_SIZEOF_INT != 4 */
           // Applications will probably have trouble with this.
           char f[4];
+  #       if defined(_UNICOS)
+          Float();
+          Float(const float & init);
+          float operator= (const Float &rhs) const;
+          int operator!= (const Float &rhs) const;
+  #       endif /* _UNICOS */
   #     endif /* ACE_SIZEOF_INT != 4 */
       };
   # endif /* ACE_SIZEOF_FLOAT != 4 */
