@@ -43,6 +43,8 @@ TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Security,$(findstring Security,$(TAO_ORBSVCS)))
   ifeq (SSLIOP,$(findstring SSLIOP,$(TAO_ORBSVCS)))
     BIN = $(BIN_UNCHECKED)
+    CPPFLAGS += $(PLATFORM_SSL_CPPFLAGS)
+    LDFLAGS += $(PLATFORM_SSL_LDFLAGS)
   endif #SSLIOP
 endif #Security
 
