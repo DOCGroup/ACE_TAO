@@ -171,11 +171,7 @@ TAO_Policy_Set::set_policy_overrides (const CORBA::PolicyList &policies,
 
   for (CORBA::ULong i = 0; i < plen; ++i)
     {
-      // Because MSVC 5 has a bug, we had to replace
-      // a simple CORBA::Policy_var policy = policies[i];
-      // with the following.
-      CORBA::Policy_ptr temp = policies[i];
-      CORBA::Policy_var policy = CORBA::Policy::_duplicate (temp);
+      CORBA::Policy_var policy = policies[i];
 
       if (CORBA::is_nil (policy.in ()))
         {
