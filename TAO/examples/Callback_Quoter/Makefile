@@ -20,6 +20,7 @@ PROG_SRCS = \
 	consumer.cpp \
         supplier.cpp \
 	Supplier_i.cpp \
+	Supplier_Timer_Handler.cpp\
 	notifier.cpp \
 	Notifier_Input_Handler.cpp \
 	Notifier_i.cpp \
@@ -45,6 +46,7 @@ MARKET_CLT_OBJS = \
 		NotifierC.o \
 		NotifierS.o \
 		Supplier_i.o \
+		Supplier_Timer_Handler.o \
 		supplier.o \
 		ConsumerC.o\
 		ConsumerS.o \
@@ -1585,7 +1587,8 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
- NotifierC.h ConsumerC.h ConsumerC.i NotifierC.i
+ NotifierC.h ConsumerC.h ConsumerC.i NotifierC.i \
+ Supplier_Timer_Handler.h
 .obj/Supplier_i.o .obj/Supplier_i.so .shobj/Supplier_i.o .shobj/Supplier_i.so: Supplier_i.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1843,7 +1846,8 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
- NotifierC.h ConsumerC.h ConsumerC.i NotifierC.i
+ NotifierC.h ConsumerC.h ConsumerC.i NotifierC.i \
+ Supplier_Timer_Handler.h
 .obj/notifier.o .obj/notifier.so .shobj/notifier.o .shobj/notifier.so: notifier.cpp Notifier_Input_Handler.h Notifier_i.h \
  NotifierS.h ConsumerS.h ConsumerC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -2085,7 +2089,8 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAny_i.h \
  ConsumerC.i ConsumerS_T.h ConsumerS_T.i ConsumerS_T.cpp ConsumerS.i \
  NotifierC.h NotifierC.i NotifierS_T.h NotifierS_T.i NotifierS_T.cpp \
- NotifierS.i $(TAO_ROOT)/tao/TAO.h \
+ NotifierS.i \
+ $(TAO_ROOT)/tao/TAO.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
@@ -2344,7 +2349,8 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAny_i.h \
  ConsumerC.i ConsumerS_T.h ConsumerS_T.i ConsumerS_T.cpp ConsumerS.i \
  NotifierC.h NotifierC.i NotifierS_T.h NotifierS_T.i NotifierS_T.cpp \
- NotifierS.i $(TAO_ROOT)/tao/TAO.h \
+ NotifierS.i \
+ $(TAO_ROOT)/tao/TAO.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
@@ -2602,7 +2608,8 @@ realclean: clean
  $(TAO_ROOT)/tao/DynAny_i.h \
  ConsumerC.i ConsumerS_T.h ConsumerS_T.i ConsumerS_T.cpp ConsumerS.i \
  NotifierC.h NotifierC.i NotifierS_T.h NotifierS_T.i NotifierS_T.cpp \
- NotifierS.i $(TAO_ROOT)/tao/TAO.h
+ NotifierS.i \
+ $(TAO_ROOT)/tao/TAO.h
 .obj/Consumer_i.o .obj/Consumer_i.so .shobj/Consumer_i.o .shobj/Consumer_i.so: Consumer_i.cpp Consumer_i.h ConsumerS.h ConsumerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
