@@ -237,6 +237,11 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         $vc7 = 1;
         $proj_ext = '.vcproj';
     }
+    elsif ($ARGV[0] =~ '-vc8') {    # Use VC8 project and solution files.
+        print "Using VC8 files\n" if ( $verbose );
+        $vc7 = 1; // VC8 is like VC7
+        $proj_ext = '.vcproj';
+    }
     elsif ($ARGV[0] =~ '-v') {          # verbose mode
         $verbose = 1;
     }
@@ -307,6 +312,7 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         print "-s         = Print status messages to STDERR\n";
         print "-u         = Tell MSVC to use the environment\n";
         print "-vc7       = Use MSVC 7 toolset\n";
+        print "-vc8       = Use MSVC 8 toolset\n";
         print "-name_modifier <mod> = Use MPC name_modifier to match projects\n";
         print "\n";
         print "-CORE      = Build the Core libraries\n";
