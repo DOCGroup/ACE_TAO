@@ -46,7 +46,7 @@ dnl continue any further.  The idea is to prevent automatically
 dnl generated files from being checked into the repository.  This
 dnl will prevent accidental overwrites of ACE's current Makefiles by
 dnl the automatically generated ones, for example.
-dnl ACE_CHECK_FOR_CVS_DIR
+ACE_CHECK_FOR_CVS_DIR
 
 dnl Check what platform we are running on.
 AC_CANONICAL_SYSTEM
