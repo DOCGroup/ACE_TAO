@@ -178,50 +178,6 @@ TAO_Transport::tag (void) const
   return this->tag_;
 }
 
-// Get it.
-TAO_ORB_Core *
-TAO_Transport::orb_core (void) const
-{
-  return this->orb_core_;
-}
-
-TAO_Transport_Mux_Strategy *
-TAO_Transport::tms (void) const
-{
-  return tms_;
-}
-
-// Return the Wait strategy used by the Transport.
-TAO_Wait_Strategy *
-TAO_Transport::wait_strategy (void) const
-{
-  return this->ws_;
-}
-
-// Get request id for the current invocation from the TMS object.
-CORBA::ULong
-TAO_Transport::request_id (void)
-{
-  return this->tms ()->request_id ();
-}
-
-// Bind the reply dispatcher with the TMS object.
-int
-TAO_Transport::bind_reply_dispatcher (CORBA::ULong request_id,
-                                      TAO_Reply_Dispatcher *rd)
-{
-  return this->tms_->bind_dispatcher (request_id,
-                                      rd);
-}
-
-int
-TAO_Transport::wait_for_reply (ACE_Time_Value *max_wait_time,
-                               int &reply_received)
-{
-  return this->ws_->wait (max_wait_time,
-                          reply_received);
-}
-
 // Read and handle the reply. Returns 0 when there is Short Read on
 // the connection. Returns 1 when the full reply is read and
 // handled. Returns -1 on errors.

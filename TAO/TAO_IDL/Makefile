@@ -13,7 +13,6 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 BIN     = tao_idl
-LDLIBS = -lACE
 
 VPATH=.:driver:fe:ast:util:narrow:be
 
