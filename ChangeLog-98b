@@ -1,3 +1,8 @@
+Thu Sep 17 19:27:11 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (TSS_base,some ACE_PSOS_Time_t functions):
+          removed ACE_INLINE.
+
 Thu Sep 17 18:51:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * examples/Reactor/Multicast/server.cpp:
@@ -10,21 +15,21 @@ Thu Sep 17 18:33:19 EDT 1998  James CE Johnson  <jcej@lads.com>
 
         * docs/tutorials/002/server.pp
 
-	  Added necessary templates for explicit instantiation.
-	  Thanks to Krishna Padmasola for providing the proper code
-	  and to Clinton Carr for reminding me to do it!
+          Added necessary templates for explicit instantiation.
+          Thanks to Krishna Padmasola for providing the proper code
+          and to Clinton Carr for reminding me to do it!
 
 Thu Sep 17 11:23:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS: Modified ACE_THR_FUNC so that its signature is always
- 	  void *(*)(void *).  We now have a new type called
- 	  ACE_THR_FUNC_INTERNAL that is defined for each different OS
- 	  platform, e.g., VxWorks, pSoS, et al.
+        * ace/OS: Modified ACE_THR_FUNC so that its signature is always
+          void *(*)(void *).  We now have a new type called
+          ACE_THR_FUNC_INTERNAL that is defined for each different OS
+          platform, e.g., VxWorks, pSoS, et al.
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp (run_server): Oops,
- 	  we can't use ACE_THR_FUNC here since that has a different
- 	  signature on VxWorks.  So we'll just expand this a bit.  Thanks
- 	  to Raja Ati <rati@jupiter.montereynets.com> for reporting this.
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp (run_server): Oops,
+          we can't use ACE_THR_FUNC here since that has a different
+          signature on VxWorks.  So we'll just expand this a bit.  Thanks
+          to Raja Ati <rati@jupiter.montereynets.com> for reporting this.
 
 Thu Sep 17 09:54:56 1998  David L. Levine  <levine@cs.wustl.edu>
 
