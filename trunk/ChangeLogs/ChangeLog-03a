@@ -1,3 +1,43 @@
+Mon Jul 15 15:18:33 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Configuration.{h cpp}: Changed ACE_Configuration_Value_IntId
+          data_ member to be a union with both pointer and u_int members.
+          Also, the length_ member is now size_t, not u_int.
+
+        * ace/Memory_Pool.cpp (ACE_Pagefile_Memory_Pool::map): Use
+          INVALID_HANDLE_VALUE instead of a literal 0xFFFFFFFF for call to
+          CreateFileMapping.
+
+        * ace/OS.{h i}: New method, void *atop(const char *s) converts a
+          string to void *.
+
+        * ace/OS.i (fdopen): Don't cast arg to _open_osfhandle - Microsoft
+          changed the type to something sensible.
+          (isatty): open a C run-time handle for the ACE_HANDLE.
+
+        * ace/OS.cpp (fopen): Don't cast arg to _open_osfhandle - Microsoft
+          changed the type to something sensible.
+          (unique_name): Use sprintf %p for pointer rather than casting
+          to an int.
+
+        * ace/Naming_Context.cpp (ACE_Name_Options::parse_args): Use
+          ACE_OS::atop instead of ACE_OS::atoi for converting an argument
+          to a pointer.
+
+        * ace/SOCK_Dgram.cpp (recv, send):
+        * ace/SOCK_IO.cpp (recvv): Use an int select_width
+          to pass width to select() so it can be ignored on ACE_WIN64.
+
+        * ace/SV_Semaphore_Simple.cpp (name_2_key): Disable the type cast
+          conversion warning casting ACE::crc32() to key_t... it's fine.
+
+        * ace/WIN32_Proactor.cpp (register_handle, post_completion): The
+          I/O completion port's completionKey argument is a ULONG in
+          "older" compiler/SDK versions, but was changed to a
+          ULONG_PTR (new type in newer SDK/compiler) for 64-bit
+          transition. The new type is used conditionally based on whether or
+          not we're building a 64-bit version.
+
 Mon Jul 15 09:26:17 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/SString.cpp (substring): Changed "nil" to "nill" to

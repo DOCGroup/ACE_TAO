@@ -519,7 +519,7 @@ public:
   ACE_EXPLICIT ACE_Configuration_Value_IntId (u_int integer);
 
   /// Binary constructor, takes ownership of data
-  ACE_Configuration_Value_IntId (void* data, u_int length);
+  ACE_Configuration_Value_IntId (void* data, size_t length);
 
   /// Copy ctor
   ACE_Configuration_Value_IntId (const ACE_Configuration_Value_IntId& rhs);
@@ -541,9 +541,12 @@ public:
    * not the same accross different platforms)
    * Length is only used when type_ == BINARY
    */
-  ACE_Configuration::VALUETYPE      type_;
-  void*                             data_;
-  u_int                             length_;
+  ACE_Configuration::VALUETYPE  type_;
+  union {
+    void *     ptr_;
+    u_int      int_;
+  }                             data_;
+  size_t                        length_;
 };
 
 typedef ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId,

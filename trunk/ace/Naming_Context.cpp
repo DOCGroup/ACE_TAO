@@ -640,7 +640,8 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->database (get_opt.opt_arg ());
         break;
       case 'b':
-        this->base_address (ACE_reinterpret_cast (char *, ACE_OS::atoi (get_opt.opt_arg ())));
+        this->base_address
+          (ACE_static_cast (char *, ACE_OS::atop (get_opt.opt_arg ())));
         break;
       case 'T':
         if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT ("ON")) == 0)
