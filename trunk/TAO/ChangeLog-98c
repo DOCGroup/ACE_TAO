@@ -1,6 +1,7 @@
-Wed Nov 19 09:05:36 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+Wed Nov 19 09:15:15 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* TAO version 0.0.36, released Wed Nov 19 09:05:36 1997.
+	* tao/orbobj.cpp (resolve_name_service): Made a bunch of minor
+ 	  Changes for resolving the Naming service.
 
 Wed Nov 19 08:44:12 1997  Brian Mendel <brian.r.mendel@boeing.com>
 

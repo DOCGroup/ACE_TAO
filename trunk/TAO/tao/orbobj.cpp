@@ -393,26 +393,26 @@ CORBA_ORB::resolve_name_service (void)
       ACE_INET_Addr response_addr;
       ACE_SOCK_Dgram response;
       
+      // Choose any local port, we don't really care.
       if (response.open (ACE_Addr::sap_any) == -1)
-	{
-	  ACE_ERROR ((LM_ERROR, "open failed.\n"));
-	  return CORBA_Object::_nil ();
-	}
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "open failed.\n"),
+                          CORBA_Object::_nil ());
 
-
-      // @@ check rturn code
       if (response.get_local_addr (response_addr) == -1)
-	{
-	  ACE_ERROR ((LM_ERROR, "get_local_addr failed.\n"));
-	  return CORBA_Object::_nil ();	  
-	}
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "get_local_addr failed.\n"),
+                          CORBA_Object::_nil ());
 
+      // Figure out what port to listen on for server replies.
       CORBA::Short reply_port = response_addr.get_port_number ();
 
-      ssize_t n_bytes;
+      // Send multicast of one byte, enough to wake up server.
+      ssize_t n_bytes = multicast.send ((char *) &reply_port,
+                                        sizeof reply_port)
 
       // Send multicast of one byte, enough to wake up server.
-      if ((n_bytes = multicast.send ((char *) &reply_port, sizeof reply_port)) == -1)
+      if (n_bytes == -1)
 	return CORBA_Object::_nil ();
 
       ACE_DEBUG ((LM_DEBUG, 
@@ -430,16 +430,18 @@ CORBA_ORB::resolve_name_service (void)
 			       0,
 			       &timeout);
 
-      // close endpoint for response.
+      // Close endpoint for response.
       int retval = response.close ();
 
-      if ((n_bytes == -1) || (retval == -1))
+      if (n_bytes == -1 || retval == -1)
         return CORBA_Object::_nil ();
 
       // null terminate message
       buf[n_bytes] = 0;
 
-      ACE_DEBUG ((LM_DEBUG, "Naming service resolved to ior: '%s'\n", buf));
+      ACE_DEBUG ((LM_DEBUG, 
+                  "Naming service resolved to ior: '%s'\n", 
+                  buf));
 
       // convert ior to an object reference
       CORBA::Environment env;
@@ -450,7 +452,7 @@ CORBA_ORB::resolve_name_service (void)
       if (env.exception () != 0)
 	this->name_service_ = CORBA_Object::_nil ();
 
-      // return ior.
+      // Return ior.
       return this->name_service_;
 
       ACE_NOTSUP_RETURN (CORBA_Object::_nil ());
