@@ -1,3 +1,5 @@
+// $Id$
+
 #include <sys/types.h>
 #include <stdio.h>
 #include <ctype.h>
@@ -8,8 +10,7 @@
 #include "tao_demuxC.h"
 #include "tao/debug.h"
 
-#include <iostream.h>
-#include <fstream.h>
+#include "ace/streams.h"
 
 void print_exception (const CORBA_Exception     *x,
                       const char                  *info,
@@ -27,8 +28,8 @@ options:\n\
 ";
 
 #if !defined (__cplusplus)
-typedef void (*SIG_TYP)(); 
-#endif 
+typedef void (*SIG_TYP)();
+#endif
 
 #ifdef SVR4
 void
@@ -55,17 +56,17 @@ void do_test(tao_demux_ptr *demux, int olimit, int mlimit, SendType, int iter);
 int
 main (int argc, char *argv[])
 {
-    
+
   unsigned long addr_tmp;
   unsigned short done = 0;
   int c;
-    
-  CORBA_ORB_ptr	orb_ptr;
-  CORBA_Environment	env;
-  CORBA_Object_ptr	objref;
+
+  CORBA_ORB_ptr orb_ptr;
+  CORBA_Environment     env;
+  CORBA_Object_ptr      objref;
   tao_demux_ptr        *demux;
-  unsigned		loop_count = 0;
-  int			exit_later = 0;
+  unsigned              loop_count = 0;
+  int                   exit_later = 0;
   int                   i;
   int                   ObjectLimit = 5,
     MethodLimit = 4;
@@ -77,7 +78,7 @@ main (int argc, char *argv[])
   fstream iorfile;
 
   while (!done && ((c = getopt (argc, argv, "i:l:t:m:o:")) !=
-		   -1)){
+                   -1)){
     switch(c){
     case 'i':
       iter = atoi (optarg);
@@ -93,18 +94,18 @@ main (int argc, char *argv[])
     case 't':
       switch(*optarg){
       case 'b':
-	st = BEST;
-	break;
+        st = BEST;
+        break;
       case 'w':
-	st = WORST;
-	break;
+        st = WORST;
+        break;
       case 'l':
-	st = LINEAR;
-	break;
+        st = LINEAR;
+        break;
       case 'r':
       default:
-	st = RANDOM;
-	break;
+        st = RANDOM;
+        break;
       }
       break;
     default:
@@ -204,7 +205,7 @@ void do_test(tao_demux_ptr *demux, int olimit, int mlimit, SendType st, int iter
 
   //  result << "@type xy" << endl;
   sum = 0;
-  
+
   if (st == LINEAR){
     result << " LINEAR" << endl;
 #ifdef __DEBUG__
@@ -213,18 +214,18 @@ void do_test(tao_demux_ptr *demux, int olimit, int mlimit, SendType st, int iter
     for (k=0; k < iter; k++) {
       // invoke the jth method on the ith object
       for (i=0; i < olimit; i++){
-	for (j=0; j < mlimit; j++){
-	  loop++;
-	  start = gethrtime();
-	  mtbl[j].method(demux[i]);
-	  end = gethrtime();
-	  diff = (end - start);
+        for (j=0; j < mlimit; j++){
+          loop++;
+          start = ACE_OS::gethrtime ();
+          mtbl[j].method(demux[i]);
+          end = ACE_OS::gethrtime ();
+          diff = (end - start);
 #ifdef __DEBUG__
-	  cout << "Latency for this request = " << diff/1.0e+06 << endl;
+          cout << "Latency for this request = " << diff/1.0e+06 << endl;
 #endif
-	  sum += diff;
-	  //	result << loop << "\t" << diff/1.e+06 << endl;
-	}
+          sum += diff;
+          //    result << loop << "\t" << diff/1.e+06 << endl;
+        }
       }
     }
   } else if (st == BEST){
@@ -235,18 +236,18 @@ void do_test(tao_demux_ptr *demux, int olimit, int mlimit, SendType st, int iter
     for (k=0; k < iter; k++) {
       // invoke the jth method on the ith object
       for (i=0; i < olimit; i++){
-	for (j=0; j < mlimit; j++){
-	  loop++;
-	  start = gethrtime();
-	  mtbl[0].method(demux[0]);
-	  end = gethrtime();
-	  diff = (end - start);
+        for (j=0; j < mlimit; j++){
+          loop++;
+          start = ACE_OS::gethrtime ();
+          mtbl[0].method(demux[0]);
+          end = ACE_OS::gethrtime ();
+          diff = (end - start);
 #ifdef __DEBUG__
-	  cout << "Latency for this request = " << diff/1.0e+06 << endl;
+          cout << "Latency for this request = " << diff/1.0e+06 << endl;
 #endif
-	  sum += diff;
-	  //	result << loop << "\t" << diff/1.e+06 << endl;
-	}
+          sum += diff;
+          //    result << loop << "\t" << diff/1.e+06 << endl;
+        }
       }
     }
   } else if (st == RANDOM) {
@@ -259,24 +260,24 @@ void do_test(tao_demux_ptr *demux, int olimit, int mlimit, SendType st, int iter
     long p, q;
     for (k=0; k < iter; k++) {
       for (i=0; i < olimit; i++){
-	for (j=0; j < mlimit; j++){
-	  loop++;
-	  p = lrand48() % olimit;
-	  q = lrand48() % mlimit;
-	  start = gethrtime();
+        for (j=0; j < mlimit; j++){
+          loop++;
+          p = lrand48() % olimit;
+          q = lrand48() % mlimit;
+          start = ACE_OS::gethrtime ();
 #ifdef DEBUG
-	  ACE_DEBUG ((LM_DEBUG, "Invoking op %s on object with key %s\n",
-		      mtbl[q], demux[p]->_get_name(env)));
+          ACE_DEBUG ((LM_DEBUG, "Invoking op %s on object with key %s\n",
+                      mtbl[q], demux[p]->_get_name(env)));
 #endif
-	  mtbl[q].method(demux[p]);
-	  end = gethrtime();
-	  diff = (end - start);
+          mtbl[q].method(demux[p]);
+          end = ACE_OS::gethrtime ();
+          diff = (end - start);
 #ifdef __DEBUG__
-	  cout << "Latency for this request = " << diff/1.0e+06 << endl;
+          cout << "Latency for this request = " << diff/1.0e+06 << endl;
 #endif
-	  sum += diff;
-	  //	result << loop << "\t" << diff/1.e+06 << endl;
-	}
+          sum += diff;
+          //    result << loop << "\t" << diff/1.e+06 << endl;
+        }
       }
     }
   } else if (st == WORST){
@@ -287,18 +288,18 @@ void do_test(tao_demux_ptr *demux, int olimit, int mlimit, SendType st, int iter
     // invoke the jth method on the ith object
     for (k=0; k < iter; k++) {
       for (i=0; i < olimit; i++){
-	for (j=0; j < mlimit; j++){
-	  loop++;
-	  start = gethrtime();
-	  mtbl[mlimit-1].method(demux[olimit-1]);
-	  end = gethrtime();
-	  diff = (end - start);
+        for (j=0; j < mlimit; j++){
+          loop++;
+          start = ACE_OS::gethrtime ();
+          mtbl[mlimit-1].method(demux[olimit-1]);
+          end = ACE_OS::gethrtime ();
+          diff = (end - start);
 #ifdef __DEBUG__
-	  cout << "Latency for this request = " << diff/1.0e+06  << endl;
+          cout << "Latency for this request = " << diff/1.0e+06  << endl;
 #endif
-	  sum += diff;
-	  //	result << loop << "\t" << diff/1.e+06 << endl;
-	}
+          sum += diff;
+          //    result << loop << "\t" << diff/1.e+06 << endl;
+        }
       }
     }
   }
