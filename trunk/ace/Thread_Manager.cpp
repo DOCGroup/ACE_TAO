@@ -1425,6 +1425,7 @@ ACE_Thread_Manager::join (ACE_thread_t tid)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
+#if !defined (VXWORKS)
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base> biter (this->terminated_thr_list_);
          !biter.done ();
          biter.advance ())
@@ -1444,7 +1445,8 @@ ACE_Thread_Manager::join (ACE_thread_t tid)
           return 0;
           // return immediately if we've found the thread we want to join.
         }
-    
+#endif /* !VXWORKS */
+
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
          !iter.done ();
          iter.advance ())
@@ -1464,7 +1466,7 @@ ACE_Thread_Manager::join (ACE_thread_t tid)
       return -1;
     // Didn't find the thread we want or the thread is not joinable.
   }
-  
+
   if (ACE_Thread::join (tdb.thr_handle_) == -1)
     return -1;
 
@@ -1492,10 +1494,16 @@ ACE_Thread_Manager::wait_grp (int grp_id)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
+#if !defined (VXWORKS)
     ACE_NEW_RETURN (copy_table,
-                    ACE_Thread_Descriptor_Base [this->thr_list_.size () +
-                                               this->terminated_thr_list_.size ()],
+                    ACE_Thread_Descriptor_Base [this->thr_list_.size ()
+                                               + this->terminated_thr_list_.size ()],
                     -1);
+#else
+    ACE_NEW_RETURN (copy_table,
+                    ACE_Thread_Descriptor_Base [this->thr_list_.size ()],
+                    -1);
+#endif /* VXWORKS */
 
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
          !iter.done ();
@@ -1510,6 +1518,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
           copy_table[copy_count++] = *iter.next ();
         }
 
+#if !defined (VXWORKS)
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base> biter (this->terminated_thr_list_);
          !biter.done ();
          biter.advance ())
@@ -1521,6 +1530,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
           copy_table[copy_count++] = *tdb;
           delete tdb;
         }
+#endif /* !VXWORKS */
   }
 
   // Now actually join() with all the threads in this group.
@@ -1811,10 +1821,17 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
+#if !defined (VXWORKS)
     ACE_NEW_RETURN (copy_table,
-                    ACE_Thread_Descriptor_Base [this->thr_list_.size () +
-                                                this->terminated_thr_list_.size ()],
+                    ACE_Thread_Descriptor_Base [this->thr_list_.size ()
+                                                + this->terminated_thr_list_.size ()],
                     -1);
+#else
+    ACE_NEW_RETURN (copy_table,
+                    ACE_Thread_Descriptor_Base [this->thr_list_.size ()
+                                                + this->terminated_thr_list_.size ()],],
+                    -1);
+#endif /* VXWORKS */
 
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
          !iter.done ();
@@ -1829,6 +1846,7 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
           copy_table[copy_count++] = *iter.next ();
         }
 
+#if !defined (VXWORKS)
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base> titer (this->terminated_thr_list_);
          !titer.done ();
          titer.advance ())
@@ -1839,6 +1857,7 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
           copy_table[copy_count++] = *tdb;
           delete tdb;
         }
+#endif /* VXWORKS */
   }
 
   // Now to do the actual work
