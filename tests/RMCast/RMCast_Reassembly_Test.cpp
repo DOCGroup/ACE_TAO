@@ -11,10 +11,11 @@
 // ============================================================================
 
 #include "../test_config.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_time.h"
 #include "ace/Task.h"
 #include "ace/ACE.h"
 #include "ace/RMCast/RMCast_Reassembly.h"
-#include "ace/OS_NS_time.h"
 
 ACE_RCSID(tests, RMCast_Reassembly_Test, "$Id$")
 
