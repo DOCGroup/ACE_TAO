@@ -138,22 +138,12 @@ typedef ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>
 #    define ACE_TIMEPROBE_SINGLETON_LOCK_TYPE ACE_SYNCH_MUTEX
 #  endif /* ACE_TSS_TIMEPROBES */
 
-#if defined (_MSC_VER)
-// Disable warning of using Microsoft Extension.
-#pragma warning(disable:4231)
-#endif /* _MSC_VER */
-
 typedef ACE_TIMEPROBE_SINGLETON_TYPE<ACE_TIMEPROBE_WITH_LOCKING, ACE_TIMEPROBE_SINGLETON_LOCK_TYPE>
         ACE_TIMEPROBE_SINGLETON;
 
 ACE_SINGLETON_DECLARE (ACE_TIMEPROBE_SINGLETON_TYPE, \
                        ACE_TIMEPROBE_WITH_LOCKING, \
                        ACE_TIMEPROBE_SINGLETON_LOCK_TYPE);
-
-#if defined (_MSC_VER)
-// Default back the warning of using Microsoft Extension.
-#pragma warning(default:4231)
-#endif /* _MSC_VER */
 
 #endif /* ACE_COMPILE_TIMEPROBES */
 
