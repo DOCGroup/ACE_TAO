@@ -1,3 +1,9 @@
+Tue Mar 16 15:58:07 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Service_Config.cpp (close): Don't call the
+	  ace_yy_delete_parse_buffer for now.  It is causing access
+	  violation.
+
 Tue Mar 16 15:15:00 1999 Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/ACE.{cpp, i}
