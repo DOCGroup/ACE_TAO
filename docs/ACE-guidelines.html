@@ -42,7 +42,7 @@ bgcolor="#ffffff">
         reading code.  And, it avoids mangling problems with email
         and net news.<p>
 
-	<li>Try to avoid creating files with excessively long names (45 characters).
+        <li>Try to avoid creating files with excessively long names (45 characters).
         Moreover, ensure that the names of generated files e.g. <code>MakeProjectCreator</code>,
         <code>tao_idl</code> do not also go beyond that limit. Some operating
         systems cannot handle very long file names correctly.<p>
@@ -108,15 +108,15 @@ bgcolor="#ffffff">
         termination, and non-zero otherwise.<p>
 
     <li>Avoid use of floating point types (<code>float</code> and
-	    <code>double</code>) and operations
+            <code>double</code>) and operations
         unless absolutely necessary.  Not all ACE platforms support them.
         Therefore, wherever they are used, <code>ACE_LACKS_FLOATING_POINT</code>
         conditional code must be also be used.<p>
 
     <li>Avoid including the string "<code>Error</code>" in a source
-	    code filename. GNU Make's error messages start with
-	    "<code>Error</code>".  So, it's much easier to search for
-	    errors if filenames don't contain "<code>Error</code>".<p>
+            code filename. GNU Make's error messages start with
+            "<code>Error</code>".  So, it's much easier to search for
+            errors if filenames don't contain "<code>Error</code>".<p>
 
 
     <li>Narrow interfaces are better than wide interfaces.  If there
@@ -523,7 +523,7 @@ Foo::bar ()
 
         <li>Medium sized stuff depends on how performance critical it is.
           If you know that it's in the critical path, then make it
-		inline.  When in doubt, profile the code.<p>
+                inline.  When in doubt, profile the code.<p>
       </ul>
 
     <li><code>ACE_Export</code> must be inserted between the
@@ -531,7 +531,7 @@ Foo::bar ()
         are exported from libraries, as shown in the example above.
         <strong>However</strong>, do <strong>not</strong> use
         <code>ACE_Export</code> for template classes or classes that
-	are not used out of the ACE library, for example.!<p>
+        are not used out of the ACE library, for example.!<p>
 
     <li>Mutators and accessors should be of this form:<p>
 
@@ -673,8 +673,8 @@ Foo::bar ()
         </pre><p>
 
     <li>If a cast is necessary, avoid use of C-style "sledgehammer"
-	    casts.  Use standard C++ casts
-	    (e.g. <code>static_cast&lt;int&gt; (foo)</code>) instead.<p>
+            casts.  Use standard C++ casts
+            (e.g. <code>static_cast&lt;int&gt; (foo)</code>) instead.<p>
 
     <li>In general, if instances of a class should not be copied,
         then a private copy constructor and assignment operator should
@@ -700,9 +700,9 @@ Foo::bar ()
         should be avoided for non-template classes.<p>
 
     <li>Never use <code>BOOL</code>, or similar types.
-	    (<code>ACE_CDR::Boolean</code> and
-	    <code>CORBA::Boolean</code> are acceptable).  Use the
-	    standard C++ <code>bool</code> for boolean variables, instead.<p>
+            (<code>ACE_CDR::Boolean</code> and
+            <code>CORBA::Boolean</code> are acceptable).  Use the
+            standard C++ <code>bool</code> for boolean variables, instead.<p>
 
     <li>Functions should always return -1 to indicate failure, and
         0 or greater to indicate success.<p>
@@ -741,8 +741,8 @@ Foo::bar ()
   <ul>
      <li>For ACE, use <code>ACE_TCHAR</code> instead of char for strings and <code>ACE_TEXT()</code>
          around string literals.  Exceptions are <code>char</code>
-	    arrays used for data  and strings that need to remain as 1
-	    byte characters.
+            arrays used for data  and strings that need to remain as 1
+            byte characters.
 
      <li>If you have a char string that needs to be converted to <code>ACE_TCHAR</code>,
          use the <code>ACE_TEXT_CHAR_TO_TCHAR()</code> macro.  If you have a <code>ACE_TCHAR</code>
@@ -908,9 +908,9 @@ Foo::bar ()
 
   <li>As a general rule, the only functions that should go into the
       <strong><code>ACE_OS</code></strong> namespace are ones that
-	have direct equivalents on some OS platform.  Functions that
-	are extensions should go in the
-	<strong><code>ACE</code></strong> namespace.<p>
+        have direct equivalents on some OS platform.  Functions that
+        are extensions should go in the
+        <strong><code>ACE</code></strong> namespace.<p>
 
   <li>Use the <strong><code>ACE_SYNCH_MUTEX</code></strong> macro,
       instead of using one of the specific mutexes, such as
@@ -1155,7 +1155,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 <hr><p>
   <font size=-1>
 <!-- hhmts start -->
-Last modified: Thu Jan 20 22:48:08 PST 2005
+Last modified: Thu Jan 20 22:49:50 PST 2005
 <!-- hhmts end -->
   </font><p>
 
