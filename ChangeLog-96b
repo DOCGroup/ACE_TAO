@@ -1,4 +1,26 @@
+Tue Nov 19 00:06:57 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Mutex_Test.cpp: Rewrote the Mutex_Test so that it behaves
+ 	  correctly on UNIX and Win32.  Thanks to Irfan for reporting the
+ 	  problem.
+
+	* ace/Log_Msg.cpp (sync): Somehow, the statement that updated the
+ 	  pid_ after sync() is called following a fork() got removed, so I
+ 	  put it back in.
+
+	* ace/config-sunos5.*-g++.h: Added the
+ 	  -D_REENTRANT flag to the config files for the G++ version of
+	  ACE. This fixes a nasty problem that otherwise arises when
+ 	  compiling on SunOS 5.x.  Thanks to Hanan Herzog
+ 	  <hanan@wallenda.stanford.edu> for reporting this.
+
 Mon Nov 18 00:47:27 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Added a new #define called ACE_HAS_BROKEN_CONVERSIONS
+ 	  to workaround problems with the HP/UX C++ compiler, which
+ 	  doesn't seem to be able to grok foo->operator T *().  Thanks to
+ 	  Alan Stewart <axs2@osi.com> for reporting this bug and the fix.
+  	  Also updated the config-hpux*.h files with this define.
 
 	* examples/Misc: Added a new test (test_get_opt.cpp) which
  	  exercises the ACE_Get_Opt class.

@@ -155,6 +155,7 @@ ACE_Log_Msg::sync (const char *prog_name)
       ACE_OS::free ((void *) ACE_Log_Msg::program_name_);
       ACE_Log_Msg::program_name_ = ACE_OS::strdup (prog_name);
     }
+  ACE_Log_Msg::pid_ = ACE_OS::getpid ();  
   ACE_Log_Msg::msg_off_ = 0;
 }
 

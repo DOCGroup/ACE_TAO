@@ -18,27 +18,30 @@
 // 
 // ============================================================================
 
-#include "ace/Synch.h"
+#include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
 #include "ace/Thread_Manager.h"
 #include "test_config.h"
 
 static void
-test (void)
+test (ACE_Process_Mutex *pm)
 {
-  char *name = "hello";
+  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
 
-  ACE_Process_Mutex pm (name);
+  ACE_OS::srand (ACE_OS::time (0));
 
   for (int i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) = trying to acquire\n"));
-      ACE_ASSERT (pm.acquire () == 0);
+      ACE_ASSERT (pm->acquire () == 0);
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) = acquired\n"));
 
-      ACE_OS::sleep (5);
+      // Sleep for a random amount of time between 0 and 5 seconds.
+      // Note that it's ok to use rand() here because we are running
+      // within the critical section defined by the Process_Mutex.
+      ACE_OS::sleep (ACE_OS::rand () % 5);
 
-      ACE_ASSERT (pm.release () == 0);
+      ACE_ASSERT (pm->release () == 0);
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) = released\n"));
     }
 }
@@ -47,28 +50,48 @@ static void
 spawn (void)
 {
 #if !defined (ACE_WIN32)
+  char *name = "hello";
+
   switch (ACE_OS::fork ())
     {
     case -1:
       ACE_ERROR ((LM_ERROR, "%p\n%a", "fork failed"));
       exit (-1);
-    case 0: 
-      test ();
-    default:
-      test ();
+    case 0: // In child
+      {
+	ACE_LOG_MSG->sync ("child");
+	ACE_Process_Mutex pm (name);
+	test (&pm);
+	break;
+      }
+    default: // In parent
+      {
+	ACE_Process_Mutex pm (name);
+	test (&pm);
+
+	// Allow the client to exit, then remove the Process_Mutex.
+	ACE_OS::wait ();
+
+	pm.remove ();
+	break;
+      }
     }
 #elif defined (ACE_HAS_THREADS)
-  ACE_Thread_Manager thr_mgr;
-  if (thr_mgr.spawn (ACE_THR_FUNC (test),
-		     (void *) 0,
-		     THR_NEW_LWP | THR_DETACHED) == -1)
+  ACE_Process_Mutex pm (name);
+
+  if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (test),
+					     (void *) &pm,
+					     THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
 
-  if (thr_mgr.spawn (ACE_THR_FUNC (test),
-		     (void *) 0,
-		     THR_NEW_LWP | THR_DETACHED) == -1)
+  if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (test),
+					     (void *) &pm,
+					     THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
-  thr_mgr.wait ();
+
+  // Wait for the threads to exit.
+  ACE_Service_Config::thr_mgr ()->wait ();
+
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n%a", 1));
 #endif /* ACE_HAS_THREADS */	
