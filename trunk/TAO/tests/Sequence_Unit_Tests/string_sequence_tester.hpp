@@ -176,9 +176,7 @@ struct string_sequence_tester
     tested_sequence const & y = x;
 
     character_type const * text = helper::test_string();
-    expected_calls d(tested_element_traits::duplicate_calls);
     x[4] = text;
-    BOOST_CHECK_MESSAGE(d.expect(1), d);
 
     character_type const * t = y[4];
 
