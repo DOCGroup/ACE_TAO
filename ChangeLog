@@ -1,3 +1,8 @@
+Tue Jun  1 18:31:44 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Lib_Find.cpp: Added /**/ to naked platform-specific #includes
+	  to keep eVC from complaining it can't find the files.
+
 Tue Jun  1 16:37:30 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/SOCK_Dgram_Bcast.cpp (send): Set the port number of the
