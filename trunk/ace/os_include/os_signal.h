@@ -198,11 +198,6 @@ extern "C"
 #elif defined (__Lynx__)
    // LynxOS Neutrino sets NSIG to the highest-numbered signal.
 #  define ACE_NSIG (NSIG + 1)
-#  if defined (ACE_HAS_PTHREADS_STD) /* LynxOS 3.1.0 or greater */
-     /* Though there's a pthread_sigmask man page, there isn't a
-        declaration in a system header file. */
-     int pthread_sigmask (int, const sigset_t *, sigset_t *);
-#  endif /* ACE_HAS_PTHREADS_STD */   
 #elif defined (__rtems__)
 #  define ACE_NSIG (SIGRTMAX)
 #elif defined(__BORLANDC__) && (__BORLANDC__ >= 0x600)

@@ -1,55 +1,61 @@
+Mon Oct 18 18:34:55 2004  Olli Savia  <ops@iki.fi>
+
+        * ace/os_include/os_signal.h:
+          Removed unneeded LynxOS specific pthread_sigmask
+          protoype declaration.
+        
 Fri Oct 15 18:50:19 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_Thread.cpp: In places where the old ace_result_ part of
-	  the previous incantation of ACE_OSCALL_RETURN was used, create a
-	  local 'result' variable and use that. ace_result_ is only used in
-	  the Win32 version of ACE_OSCALL_RETURN.
+        * ace/OS_NS_Thread.cpp: In places where the old ace_result_ part of
+          the previous incantation of ACE_OSCALL_RETURN was used, create a
+          local 'result' variable and use that. ace_result_ is only used in
+          the Win32 version of ACE_OSCALL_RETURN.
 
 Fri Oct 15 17:46:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* configure.ac: Added checks for the swab() variants that have:
-	  (const char*, char*, ssize_t) [SVID3 - ACE_HAS_CONST_CHAR_SWAB]
-	  and (char*, char*, ssize_t) [Windows, et al - ACE_HAS_NONCONST_SWAB].
-	  Also altered the ACE_HAS_TYPENAME test to work on Forte C++ 7.
+        * configure.ac: Added checks for the swab() variants that have:
+          (const char*, char*, ssize_t) [SVID3 - ACE_HAS_CONST_CHAR_SWAB]
+          and (char*, char*, ssize_t) [Windows, et al - ACE_HAS_NONCONST_SWAB].
+          Also altered the ACE_HAS_TYPENAME test to work on Forte C++ 7.
 
-	* m4/config_h.m4: Added ACE_HAS_CONST_CHAR_SWAB and
-	  ACE_HAS_NONCONST_SWAB.
+        * m4/config_h.m4: Added ACE_HAS_CONST_CHAR_SWAB and
+          ACE_HAS_NONCONST_SWAB.
 
-	* ace/OS_NS_unistd.inl (swab): Added code for ACE_HAS_CONST_CHAR_SWAB
-	  variant for swab() found on Solaris.
+        * ace/OS_NS_unistd.inl (swab): Added code for ACE_HAS_CONST_CHAR_SWAB
+          variant for swab() found on Solaris.
 
-	* ace/config-sunos5.5.h: Replace ACE_LACKS_SWAB with
-	  ACE_HAS_CONST_CHAR_SWAB. This was determined by running the autoconf
-	  tests. If it doesn't work uniformly, will need some feature-test
-	  tweaks.
+        * ace/config-sunos5.5.h: Replace ACE_LACKS_SWAB with
+          ACE_HAS_CONST_CHAR_SWAB. This was determined by running the autoconf
+          tests. If it doesn't work uniformly, will need some feature-test
+          tweaks.
 
 Fri Oct 15 17:33:18 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/ACE.h:
-	* ace/OS_NS_signal.h: Include config-lite.h instead of config-all.h.
-	  It drags in too much and some trips up the aC++ compiler. Not sure
-	  why... it's a tangled web.
+        * ace/ACE.h:
+        * ace/OS_NS_signal.h: Include config-lite.h instead of config-all.h.
+          It drags in too much and some trips up the aC++ compiler. Not sure
+          why... it's a tangled web.
 
-	* ace/Message_Block.h: Add #include "ace/config-lite.h" since it needs
-	  to know config settings.
+        * ace/Message_Block.h: Add #include "ace/config-lite.h" since it needs
+          to know config settings.
 
 Fri Oct 15 16:44:29 2004  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_stdlib.cpp (mkstemp_emulation): Related to:
-	  Fri Oct  8 23:13:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
-	  Only figure out a configurable limit on non-WinCE platforms. WinCE
-	  lacks too much to get fancy, so just use 127.
+          Fri Oct  8 23:13:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+          Only figure out a configurable limit on non-WinCE platforms. WinCE
+          lacks too much to get fancy, so just use 127.
 
-	* ace/Ping_Socket.cpp: Added Win32 /**/ trickery to keep MSVC from
-	  complaining about missing header files.
+        * ace/Ping_Socket.cpp: Added Win32 /**/ trickery to keep MSVC from
+          complaining about missing header files.
 
-	* ace/OS_main.{h cpp}: Use ACE_HAS_WINCE, not ACE_WINCE, as the
-	  config macro to decide on Windows CE stuff.
-	  Also, the WinCE version of ACE_Main_Base::run() takes the WinCE
-	  command line args, not argc/argv. The argc/argv conversion from
-	  the text command line is now in the .cpp file, removing the need
-	  for including ARGV.h in OS_main.h, the source of many header file
-	  loops.
+        * ace/OS_main.{h cpp}: Use ACE_HAS_WINCE, not ACE_WINCE, as the
+          config macro to decide on Windows CE stuff.
+          Also, the WinCE version of ACE_Main_Base::run() takes the WinCE
+          command line args, not argc/argv. The argc/argv conversion from
+          the text command line is now in the .cpp file, removing the need
+          for including ARGV.h in OS_main.h, the source of many header file
+          loops.
 
 Fri Oct 15 13:28:02 2004  Dale Wilson  <wilson_d@ociweb.com>
 
@@ -105,9 +111,9 @@ Fri Oct 15 10:09:34 2004  Dale Wilson  <wilson_d@ociweb.com>
         * tests/TSS_Test_Errno.h:
 
           Olli's report that TSS_Test was failing when TSS_Emulation prompted
-	  me to take a closer look at TSS_Test.  I found a number of problems,
-	  none of which was related to the TSS Emulation issue.  That will be
-	  addressed separately.
+          me to take a closer look at TSS_Test.  I found a number of problems,
+          none of which was related to the TSS Emulation issue.  That will be
+          addressed separately.
 
           The most serious problem was attempting to log a message from within
           a TSS cleanup function.  Since the log message buffer is itself a TSS
