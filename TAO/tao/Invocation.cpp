@@ -20,7 +20,9 @@ ACE_RCSID(tao, Invocation, "$Id$")
   "GIOP_Invocation::start - leave",
   "GIOP_Invocation::start - connect",
   "GIOP_Invocation::start - start_msg",
-  "GIOP_Invocation::start - request_hdr"
+  "GIOP_Invocation::start - request_hdr",
+  "GIOP_Invocation::invoke - start",
+  "GIOP_Invocation::invoke - end"
 };
 
 enum
@@ -29,7 +31,9 @@ enum
   TAO_GIOP_INVOCATION_START_LEAVE,
   TAO_GIOP_INVOCATION_START_CONNECT,
   TAO_GIOP_INVOCATION_START_START_MSG,
-  TAO_GIOP_INVOCATION_START_REQUEST_HDR
+  TAO_GIOP_INVOCATION_START_REQUEST_HDR,
+  TAO_GIOP_INVOCATION_INVOKE_START,
+  TAO_GIOP_INVOCATION_INVOKE_END
 };
 
 
@@ -284,6 +288,8 @@ TAO_GIOP_ReplyStatusType
 TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
                              CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
+
   // Send Request, return on error or if we're done
 
   TAO_Profile   *profile   = this->data_->profile_in_use ();
@@ -437,6 +443,8 @@ TAO_GIOP_ReplyStatusType
 TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
+
   TAO_Profile   *profile   = this->data_->profile_in_use ();
   TAO_Transport *transport = profile->transport ();
 
@@ -720,6 +728,8 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                                     CORBA::ULong except_count,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_FUNCTION_TIMEPROBE (TAO_GIOP_INVOCATION_INVOKE_START);
+
   TAO_Profile *profile = this->data_->profile_in_use ();
   TAO_Transport *transport = profile->transport ();
 
