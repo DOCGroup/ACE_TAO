@@ -43,7 +43,9 @@
 # include "ORB_Core.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, ORB_Core, "$Id$")
+ACE_RCSID (TAO,
+           ORB_Core,
+           "$Id$")
 
 
 // ****************************************************************
@@ -63,10 +65,6 @@ const char * TAO_ORB_Core::protocols_hooks_name_ = "Protocols_Hooks";
 const char * TAO_ORB_Core::dynamic_adapter_name_ = "Dynamic_Adapter";
 const char * TAO_ORB_Core::ifr_client_adapter_name_ = "IFR_Client_Adapter";
 
-#if (TAO_HAS_RT_CORBA == 1)
-CORBA::Object_ptr TAO_ORB_Core::priority_mapping_manager_ =
-  CORBA::Object::_nil ();
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   : protocols_hooks_ (0),
@@ -81,6 +79,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     ior_manip_factory_ (CORBA::Object::_nil ()),
     ior_table_ (CORBA::Object::_nil ()),
     orb_ (),
+    root_poa_ (CORBA::Object::_nil ()),
     orb_params_ (),
     init_ref_map_ (),
     object_ref_table_ (),
@@ -109,7 +108,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-    poa_current_ (0),
+    poa_current_ (),
     adapter_registry_ (this),
     poa_adapter_ (0),
     tm_ (),
@@ -140,8 +139,9 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     priority_protocol_selector_ (0),
     bands_protocol_selector_ (0),
     client_priority_policy_selector_ (0),
-    rt_orb_ (0),
-    rt_current_ (0),
+    rt_orb_ (),
+    rt_current_ (),
+    priority_mapping_manager_ (),
 #endif /* TAO_HAS_RT_CORBA == 1 */
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
     eager_buffering_sync_strategy_ (0),
@@ -235,9 +235,9 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  delete this->policy_manager_;
+  CORBA::release (this->policy_manager_);
   delete this->default_policies_;
-  delete this->policy_current_;
+  CORBA::release (this->policy_current_);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -252,8 +252,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   delete this->priority_protocol_selector_;
   delete this->bands_protocol_selector_;
   delete this->client_priority_policy_selector_;
-  // delete this->rt_orb_;
-  // delete this->rt_current_;
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
@@ -917,6 +915,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   this->reactor_registry_->open (this);
 
 #if (TAO_HAS_RT_CORBA == 1)
+
   this->get_protocols_hooks()->set_priority_mapping (this,
                                                      trf,
                                                      ACE_TRY_ENV);
@@ -1145,10 +1144,6 @@ TAO_ORB_Core::fini (void)
 {
   // Wait for any server threads, ignoring any failures.
   (void) this->thr_mgr ()->wait ();
-
-#if (TAO_HAS_RT_CORBA == 1)
-  CORBA::release (TAO_ORB_Core::priority_mapping_manager_);
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
   CORBA::release (this->implrepo_service_);
 
@@ -1548,8 +1543,8 @@ TAO_ORB_Core::inherit_from_parent_thread (
 CORBA::Object_ptr
 TAO_ORB_Core::root_poa (CORBA::Environment &ACE_TRY_ENV)
 {
-  if (!CORBA::is_nil (this->root_poa_.in ()))
-    return CORBA::Object::_duplicate (this->root_poa_.in ());
+  if (!CORBA::is_nil (this->root_poa_))
+    return CORBA::Object::_duplicate (this->root_poa_);
 
   TAO_Adapter_Factory *factory =
     ACE_Dynamic_Service<TAO_Adapter_Factory>::instance ("TAO_POA");
@@ -1575,12 +1570,15 @@ TAO_ORB_Core::root_poa (CORBA::Environment &ACE_TRY_ENV)
   poa_adapter->open (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
+  // @@ poa_adapter->root() is busted.  It doesn't return a
+  //    duplicate.  As such, this->root_poa_ is an Object_ptr, and is
+  //    not released by the ORB_Core.
   this->root_poa_ = poa_adapter->root ();
 
   this->adapter_registry_.insert (poa_adapter, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  return CORBA::Object::_duplicate (this->root_poa_.in ());
+  return CORBA::Object::_duplicate (this->root_poa_);
 }
 
 TAO_Adapter *
@@ -2657,21 +2655,29 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 CORBA::Object_ptr
 TAO_ORB_Core::priority_mapping_manager (void)
 {
-  return
-    CORBA::Object::_duplicate (TAO_ORB_Core::priority_mapping_manager_);
-}
-
-void
-TAO_ORB_Core::priority_mapping_manager (CORBA::Object_ptr manager)
-{
-  if (TAO_ORB_Core::priority_mapping_manager_ != manager)
+  if (CORBA::is_nil (this->priority_mapping_manager_.in ()))
     {
-      // Release the old reference before setting the new one.
-      CORBA::release (TAO_ORB_Core::priority_mapping_manager_);
+      ACE_TRY_NEW_ENV
+        {
+          this->priority_mapping_manager_ =
+            this->object_ref_table_.resolve_initial_references (
+              "PriorityMappingManager",
+              ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          if (TAO_debug_level > 1)
+            ACE_DEBUG ((LM_DEBUG,
+                        "Could not resolve "
+                        "\"PriorityMappingManager\".\n"));
 
-      TAO_ORB_Core::priority_mapping_manager_ =
-        CORBA::Object::_duplicate (manager);
+          return CORBA::Object::_nil ();
+        }
+      ACE_ENDTRY;
     }
+
+  return CORBA::Object::_duplicate (this->priority_mapping_manager_.in ());
 }
 
 CORBA::Policy *

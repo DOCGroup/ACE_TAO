@@ -12,12 +12,14 @@
 #endif /* __ACE_INLINE__ */
 
 
-ACE_RCSID(tao, Connection_Cache_Manager, "$Id$")
+ACE_RCSID (TAO,
+           Connection_Cache_Manager,
+           "$Id$")
 
 
-TAO_Connection_Cache_Manager::
-    TAO_Connection_Cache_Manager (void)
-      : cache_map_ ()
+TAO_Connection_Cache_Manager::TAO_Connection_Cache_Manager (void)
+  : cache_map_ (),
+    cache_lock_ (0)
 {
 }
 

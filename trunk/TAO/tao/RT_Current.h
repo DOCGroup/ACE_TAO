@@ -1,3 +1,4 @@
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -32,22 +33,21 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Export TAO_RT_Current :
-  public RTCORBA::Current,
-  public CORBA::LocalObject
+/**
+ * @class TAO_RT_Current
+ *
+ * @brief RTCORBA::Current interface iplementation.
+ *
+ * Allows setting/getting the priority of the current thread.
+ */
+class TAO_Export TAO_RT_Current
+  : public RTCORBA::Current,
+    public TAO_Local_RefCounted_Object
 {
-  // = TITLE
-  //   RTCORBA::Current interface iplementation.
-  //
-  // = DESCRIPTION
-  //   Allows setting/getting the priority of the current thread.
-  //
 public:
+
   /// Default constructor.
   TAO_RT_Current (TAO_ORB_Core *orb_core);
-
-  /// The destructor.
-  virtual ~TAO_RT_Current (void);
 
   virtual RTCORBA::Priority the_priority (CORBA::Environment
                                           &ACE_TRY_ENV =
@@ -61,8 +61,15 @@ public:
 
 private:
 
+  /// Protected destructor to enforce proper memory management of this
+  /// reference counted object.
+  virtual ~TAO_RT_Current (void);
+
+private:
+
   /// ORB Core that owns us.
   TAO_ORB_Core *orb_core_;
+
 };
 
 

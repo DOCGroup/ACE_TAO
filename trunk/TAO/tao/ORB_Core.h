@@ -576,10 +576,7 @@ public:
   /// Access the priority mapping manager class.  This is a TAO
   /// extension but there is no standard for setting priority mapping
   /// either.
-  //@{
   CORBA::Object_ptr priority_mapping_manager (void);
-  static void priority_mapping_manager (CORBA::Object_ptr manager);
-  //@}
 
   /// Methods for obtaining ORB implementation default values for RT
   /// policies.
@@ -856,8 +853,8 @@ public:
 
   /// Set and Get methods to indicate whether a BiDir IIOP policy has
   /// been set in the POA.
-  /// @@ At present, the value will be true even if one of the POA's
-  ///    is set with the Bi Dir GIOP policy.
+  /// @note At present, the value will be true even if one of the POA's
+  ///       is set with the Bi Dir GIOP policy.
   CORBA::Boolean bidir_giop_policy (void);
   void bidir_giop_policy (CORBA::Boolean);
 
@@ -870,8 +867,8 @@ public:
 
 protected:
 
-  /// Destructor is protected since the ORB Core should only be
-  /// allocated on the heap.
+  /// Destructor is protected since the ORB Core is a reference
+  /// counted object.
   ~TAO_ORB_Core (void);
 
   /// Initialize the guts of the ORB Core.  It is intended that this be
@@ -881,7 +878,6 @@ protected:
   /// Final termination hook, typically called by CORBA::ORB's
   /// destructor.
   int fini (void);
-
 
   /// Implement the input_cdr_*_allocator() routines using pre-fetched
   /// TSS resources.  This minimizes the number of calls to them.
@@ -975,10 +971,10 @@ protected:
    */
   CORBA::ORB_var orb_;
 
-  /// Pointer to the root POA.  It will eventually be the pointer
-  /// returned by calls to
+  /// Object reference to the root POA.  It will eventually be the
+  /// object reference returned by calls to
   ///   CORBA::ORB::resolve_initial_references ("RootPOA").
-  CORBA::Object_var root_poa_;
+  CORBA::Object_ptr root_poa_;
 
   /// Parameters used by the ORB.
   TAO_ORB_Parameters orb_params_;
@@ -1151,17 +1147,16 @@ protected:
   TAO_Protocol_Endpoint_Selector *protocol_endpoint_selector_;
   TAO_Priority_Protocol_Selector *priority_protocol_selector_;
   TAO_Bands_Protocol_Selector *bands_protocol_selector_;
-  TAO_Client_Priority_Policy_Selector
-  *client_priority_policy_selector_;
+  TAO_Client_Priority_Policy_Selector *client_priority_policy_selector_;
 
   /// Implementation of RTCORBA::RTORB interface.
-  CORBA::Object_ptr rt_orb_;
+  CORBA::Object_var rt_orb_;
 
   /// Implementation of RTCORBA::RTCurrent interface.
-  CORBA::Object_ptr rt_current_;
+  CORBA::Object_var rt_current_;
 
   /// Manager for setting priority mapping.
-  static CORBA::Object_ptr priority_mapping_manager_;
+  CORBA::Object_var priority_mapping_manager_;
 
   // RT ORB specific command line argument parsing.
   int RT_ORB_init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV);
