@@ -9,6 +9,9 @@ Thu Jan  8 21:58:18 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	free should happen automatically as the member is a String_var
 	type. In addition, String::deep_free was setting the pointer to 0.
 
+	* TAO/tao/marshal.i: In string::deep_free, commente dout the line
+	that sets the pointer to 0.
+
 	* TAO/tests/Param_Test: Added a string member field to the
 	var_struct. Also some modifications. Needs more improvement.
 
