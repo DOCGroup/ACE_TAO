@@ -18,6 +18,7 @@
 #define ACE_STATS_H
 
 #include "ace/ACE.h"
+#include "ace/Containers.h"
 
 class ACE_Export ACE_Stats_Value
 {
@@ -32,7 +33,11 @@ class ACE_Export ACE_Stats_Value
 public:
   ACE_Stats_Value (const u_int precision);
   // Constructor, which requires precision in terms of number of
-  // decimal digits.  Don't use more than 9!
+  // decimal digits.  The more variation in the data, and the greater
+  // the data values, the smaller the precision must be to avoid
+  // overflow in the standard deviation calculation.  3 might be a
+  // good value, or maybe 4.  5 will probably be too large for
+  // non-trivial data sets.
 
   u_int precision (void) const;
   // Accessor for precision.
@@ -65,9 +70,10 @@ private:
   ACE_UINT32 fractional_;
   // The fractional portion of the value.
 
-  const u_int precision_;
+  u_int precision_;
   // The number of decimal digits of precision represented by
-  // <fractional_>.
+  // <fractional_>.  Not declared const, so the only way to change it
+  // is via the assignment operator.
 
   ACE_UNIMPLEMENTED_FUNC (ACE_Stats_Value (void))
 };
@@ -84,7 +90,7 @@ class ACE_Export ACE_Stats
   //        sample value type is ACE_INT32.
   //     3) It uses 64 bit unsigned, but not 64 bit signed, quantities
   //        internally.
-  //     4) It checks for overflow of internal state variables.
+  //     4) It checks for overflow of internal state.
   //     5) It has no static variables of other than built-in types.
   //
   //     Example usage:
@@ -100,9 +106,8 @@ public:
   // Default constructor.
 
   int sample (const ACE_INT32 value);
-  // Provide a new sample.  Returns 0 on success, -1 if internal overflow.
-  // If internal overflow is reached on this or any previous call, the
-  // state is not changed.  Therefore, print_summary () can still be used.
+  // Provide a new sample.  Returns 0 on success, -1 if it fails due
+  // to running out of memory.
 
   ACE_UINT32 samples (void) const;
   // Access the number of samples provided so far.
@@ -114,13 +119,13 @@ public:
   // Value of the maximum sample provided so far.
 
   void mean (ACE_Stats_Value &mean,
-             const ACE_UINT32 scale_factor = 1) const;
+             const ACE_UINT32 scale_factor = 1);
   // Access the mean of all samples provided so far.  The fractional
   // part is to the specified number of digits.  E.g., 3 fractional
-  // digits specifies that fractional part is in thousandths.
+  // digits specifies that the fractional part is in thousandths.
 
-  void std_dev (ACE_Stats_Value &std_dev,
-                const ACE_UINT32 scale_factor = 1) const;
+  int std_dev (ACE_Stats_Value &std_dev,
+               const ACE_UINT32 scale_factor = 1);
   // Access the standard deviation, whole and fractional parts.  See
   // description of <mean> method for argument descriptions.
 
@@ -130,8 +135,7 @@ public:
   // Print summary statistics.  If scale_factor is not 1, then the
   // results are divided by it, i.e., each of the samples is scaled
   // down by it.  Returns -1 if internal overflow had been reached.
-  // The statistics will still be valid, but only for the samples
-  // received prior to the overflow.
+  // If that happens, you might retry with a smaller precision.
 
   void reset ();
   // Initialize internal state.
@@ -159,7 +163,7 @@ private:
   u_int overflow_;
   // Internal indication of whether there has been overflow.
 
-  ACE_UINT32 samples_;
+  ACE_UINT32 number_of_samples_;
   // Number of samples.
 
   ACE_INT32 min_;
@@ -168,15 +172,15 @@ private:
   ACE_INT32 max_;
   // Maximum sample value.
 
-  ACE_UINT64 sum_;
-  // Running sum.
+  ACE_Stats_Value cached_mean_;
+  // Cached mean value, because std_dev () needs to know the mean.
 
-  ACE_UINT64 sum_of_squares_;
-  // Running sum of squares.
+  ACE_Unbounded_Queue <ACE_INT32> samples_;
+  // The samples.
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Stats.i"
+# include "ace/Stats.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ! ACE_STATS_H */
