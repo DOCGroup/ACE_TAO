@@ -1,3 +1,5 @@
+// $Id$
+
 //
 // Simplified logger and Logger factory interfaces for 
 // testing of the Name Service implementation.

@@ -1,3 +1,5 @@
+// $Id$
+
 #ifndef _cubitC_h
 #define _cubitC_h
 

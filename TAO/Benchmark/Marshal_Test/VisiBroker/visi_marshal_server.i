@@ -1,3 +1,5 @@
+// $Id$
+
 // constructor
 ACE_INLINE
 Visi_Marshal_Server_Proxy::Visi_Marshal_Server_Proxy (void)

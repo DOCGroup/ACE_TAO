@@ -1,3 +1,5 @@
+// $Id$
+
 
 // AST_Native: New IDL type added by the POA spec
 

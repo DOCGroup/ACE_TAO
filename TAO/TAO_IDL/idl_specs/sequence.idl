@@ -1,3 +1,5 @@
+// $Id$
+
 typedef sequence<long,10> vec10;
 typedef sequence<char,20> c20;
 typedef sequence<c20,23> cc23;

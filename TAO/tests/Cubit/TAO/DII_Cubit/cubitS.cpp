@@ -1,3 +1,5 @@
+// $Id$
+
 // @(#)cubitS.cpp	05/14/97
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved

@@ -1,3 +1,5 @@
+// $Id$
+
 
 ACE_INLINE
 Visi_Marshal_Client_Proxy::Visi_Marshal_Client_Proxy (void)

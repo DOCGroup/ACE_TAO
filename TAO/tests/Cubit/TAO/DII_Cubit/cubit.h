@@ -1,3 +1,5 @@
+// $Id$
+
 // @(#)cubit.hh	1.1 95/09/10
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved

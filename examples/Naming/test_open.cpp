@@ -1,3 +1,5 @@
+// $Id$
+
 #include "ace/Naming_Context.h"
 
 int 
