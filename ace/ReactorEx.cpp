@@ -19,7 +19,7 @@ ACE_Wakeup_All_Threads_Handler::handle_signal (int signum,
 {
   // This will get called when <ReactorEx->wakeup_all_threads_> event
   // is signaled. There is nothing to be done here.
-  ACE_DEBUG ((LM_DEBUG, "(%t) waking up to get updated handle set info\n"));
+  //  ACE_DEBUG ((LM_DEBUG, "(%t) waking up to get updated handle set info\n"));
   return 0;
 }
 
@@ -767,7 +767,7 @@ ACE_ReactorEx_Notify::handle_signal (int signum,
 
   // This will get called when <ReactorEx->wakeup_one_thread_> event
   // is signaled.
-  ACE_DEBUG ((LM_DEBUG, "(%t) waking up to handle internal notifications\n"));
+  //  ACE_DEBUG ((LM_DEBUG, "(%t) waking up to handle internal notifications\n"));
 
   for (int i = 1; ; i++)
     {
