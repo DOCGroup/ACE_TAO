@@ -21,6 +21,10 @@
 
 #include "orbsvcs/CosTradingS.h"
 
+#if defined(_MSC_VER)
+#pragma warning (disable:4250)
+#endif /* _MSC_VER */
+
 class TAO_Lockable
 // = DESCRIPTION
 //   Class used to remove the circular dependencies between the

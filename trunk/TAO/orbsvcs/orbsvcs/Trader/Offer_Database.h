@@ -7,27 +7,26 @@
 //    orbsvcs
 // 
 // = FILENAME
-//    Service_Type_Map.h
+//    Offer_Database.h
 //
 // = AUTHOR
 //    Seth Widoff <sbw1@cs.wustl.edu>
 // 
 // ========================================================================
 
-#ifndef TAO_SERVICE_TYPE_MAP_H
-#define TAO_SERVICE_TYPE_MAP_H
+#ifndef TAO_OFFER_DATABASE_H
+#define TAO_OFFER_DATABASE_H
 
 #include "Trader.h"
-#include "ace/Map_Manager.h"
 
 class TAO_Offer_Id_Iterator;
 
 template <class LOCK_TYPE> class TAO_Service_Offer_Iterator;
 
 template <class LOCK_TYPE>
-class TAO_Service_Type_Map
+class TAO_Offer_Database
 // = DESCRIPTION
-//   The TAO_Service_Type_Map encapsulates the mapping of service
+//   The TAO_Offer_Database encapsulates the mapping of service
 //   types to those offers exported with that service types. The
 //   underlying structure is a map of maps. The first maps maps the
 //   service type name to a map of exported offers. The second map
@@ -36,14 +35,14 @@ class TAO_Service_Type_Map
 //   exported offer. In fact, when the register export interface
 //   returns a CosTrading::OfferId, it's returning no more than a
 //   simple string concatenation of these two values. In addition to
-//   all these wonderful things, the TAO_Service_Type_Map has built-in 
+//   all these wonderful things, the TAO_Offer_Database has built-in 
 //   locking, one reader/writer-style lock for modifying the top-level 
 //   map and a reader/writer-style for each of the offer
 //   maps. Needless to say the locks are acquired when the
-//   TAO_Service_Type_Map performs operations on the structures they
+//   TAO_Offer_Database performs operations on the structures they
 //   guard.
 //
-//   NOTE: TAO_Service_Type_Map needs to be parameterized by a
+//   NOTE: TAO_Offer_Database needs to be parameterized by a
 //   READER/WRITER LOCK, a RECURSIVE MUTEX, or a NULL MUTEX, not a
 //   simple binary mutex! Mutexes will cause deadlock when you try to
 //   contruct an iterator (which acquires a read lock on the map under
@@ -55,10 +54,10 @@ public:
   // Traits
   typedef TAO_Service_Offer_Iterator<LOCK_TYPE> offer_iterator;
     
-  TAO_Service_Type_Map (void);
+  TAO_Offer_Database (void);
   // No arg constructor.
 
-  ~TAO_Service_Type_Map (void);
+  ~TAO_Offer_Database (void);
   
   CosTrading::OfferId insert_offer (const char* type,
 				    const CosTrading::Offer& offer);
@@ -90,11 +89,12 @@ public:
   // Return an iterator that will traverse and return all the offer
   // ids in the service type map.
 
+ private:
+
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Service_Type_Map<LOCK_TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Service_Type_Map (const TAO_Service_Type_Map<LOCK_TYPE> &))
-  
-private:
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Offer_Database<LOCK_TYPE> &))
+    ACE_UNIMPLEMENTED_FUNC (TAO_Offer_Database (const TAO_Offer_Database<LOCK_TYPE> &))
+    
 
   class Hashable_ULong
   {
@@ -187,10 +187,10 @@ class TAO_Service_Offer_Iterator
 {
  public:
 
-  typedef TAO_Service_Type_Map<LOCK_TYPE> Service_Type_Map;
+  typedef TAO_Offer_Database<LOCK_TYPE> Offer_Database;
   
   TAO_Service_Offer_Iterator (const char* type,
-			      TAO_Service_Type_Map<LOCK_TYPE>& offer_database);
+			      TAO_Offer_Database<LOCK_TYPE>& offer_database);
   
   ~TAO_Service_Offer_Iterator (void);
   // Release all the locks acquired.
@@ -210,18 +210,18 @@ class TAO_Service_Offer_Iterator
  private:
   // Protected constructor.
 
-  TAO_Service_Type_Map<LOCK_TYPE>& stm_;
+  TAO_Offer_Database<LOCK_TYPE>& stm_;
 
-  TAO_Service_Type_Map<LOCK_TYPE>::Offer_Map_Entry* entry_;
+  TAO_Offer_Database<LOCK_TYPE>::Offer_Map_Entry* entry_;
 
-  TAO_Service_Type_Map<LOCK_TYPE>::Offer_Map::iterator* offer_iter_;
+  TAO_Offer_Database<LOCK_TYPE>::Offer_Map::iterator* offer_iter_;
   
   const char* type_;
 };
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "Service_Type_Map.cpp"
+#include "Offer_Database.cpp"
 #endif  /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* TAO_SERVICE_TYPE_MAP_H */

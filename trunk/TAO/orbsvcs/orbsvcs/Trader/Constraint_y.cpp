@@ -14,7 +14,8 @@
 //
 // ========================================================================
 
-#include "Constraint.h"
+#include "ace/OS.h"
+#include "Constraint_Interpreter.h"
 #include "Constraint_Nodes.h"
 
 //#define YYDEBUG 1
@@ -52,14 +53,6 @@
 # define TAO_MIN 288
 # define TAO_FIRST 289
 # define TAO_RANDOM 290
-
-#ifdef __STDC__
-#include <stdlib.h>
-#include <string.h>
-#else
-#include <malloc.h>
-#include <memory.h>
-#endif
 
 #ifdef __cplusplus
 

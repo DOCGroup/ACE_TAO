@@ -17,9 +17,39 @@
 #ifndef TAO_CONSTRAINT_INTERPRETER_H
 #define TAO_CONSTRAINT_INTERPRETER_H
 
-#include "Interpreter.h"
-#include "Constraint_Validator.h"
-#include "Constraint_Evaluator.h"
+#include "Constraint_Nodes.h"
+#include "Constraint_Visitors.h"
+
+  // *************************************************************
+  // TAO_Interpreter
+  // *************************************************************
+
+class TAO_Interpreter
+// = TITLE
+//      TAO_Interpreter is the superclass for all interpreters. It's
+//      build tree method invoke the yacc parser to parse a constraint 
+//      or preference string. 
+{   
+protected:
+
+  TAO_Interpreter (void) : root_ (0) {}
+
+  ~TAO_Interpreter (void);
+  
+  int build_tree (const char* preferences);
+  // Using the Yacc generated parser, construct an expression
+  // tree representing <constraints> from the tokens returned by it.
+
+  static int is_empty_string (const char* str);
+  
+  TAO_Constraint* root_;
+  // The root of the expression tree, not equal to null if build_tree
+  // successfully builds a tree from the constraints.
+};
+
+  // *************************************************************
+  // TAO_Constraint_Interpreter
+  // *************************************************************
 
 class TAO_Constraint_Interpreter : public TAO_Interpreter
 //
@@ -64,5 +94,122 @@ public:
   // Determine whether an offer fits the constraints with which the
   // tree was constructed. This method is thread safe (hopefully).
 };
+
+  // *************************************************************
+  // TAO_Preference_Interpreter
+  // *************************************************************
+
+class TAO_Preference_Interpreter : public TAO_Interpreter
+// = TITLE
+//   The TAO_Preference_Interpreter will, given a valid preference
+//   string and offers, will order the offers based on the offers'
+//   compliance with the preferences.
+//
+// = DESCRIPTION
+//   Each time the order_offer method is invoked, the
+//   TAO_Preference_Interpreter stores the offer reference in the
+//   order dictated by its evaluation of the preference string. After
+//   the TAO_Preference_Interpreter client has finished ordering all
+//   the offers, it will extract the offers in order using the
+//   remove_offer method.
+{
+public:
+
+  TAO_Preference_Interpreter(CosTradingRepos::ServiceTypeRepository::TypeStruct* ts,
+			     const char* preference,
+			     CORBA::Environment& env)
+    TAO_THROW_SPEC ((CosTrading::Lookup::IllegalPreference));
+
+  TAO_Preference_Interpreter(TAO_Constraint_Validator& validator,
+			     const char* preference,
+			     CORBA::Environment& env)
+    TAO_THROW_SPEC ((CosTrading::Lookup::IllegalPreference));
+
+  // Parse the preference string, determining first if it's
+  // valid. Throw an IllegalPreference exception if the preference
+  // doesn't conform to the BNF grammar for preferences. 
+  
+  ~TAO_Preference_Interpreter(void);
+  // Destructor
+
+  void order_offer (CosTrading::OfferId offer_id,
+		    CosTrading::Offer* offer);
+  
+  void order_offer (CosTrading::OfferId offer_id,
+		    CosTrading::Offer* offer,
+		    TAO_Constraint_Evaluator& evaluator);
+  // Evaluate the offer, and order it internally based on the results
+  // of the evaluation.
+
+  int remove_offer (CosTrading::OfferId& offer_id,
+		    CosTrading::Offer*& offer);
+  // Remove the next offer. The offer returned will be the next in the 
+  // ordering determined by the preference string. 
+
+  int num_offers(void);
+  // Return the number of offers remaining in the ordering.
+
+private:
+
+  struct Preference_Info
+  {
+    CORBA::Boolean evaluated_;
+    TAO_Literal_Constraint value_;
+    CosTrading::OfferId offer_id_;
+    CosTrading::Offer* offer_;
+  };
+  
+  typedef ACE_Unbounded_Queue<Preference_Info> Ordered_Offers; 
+  
+  Ordered_Offers offers_;
+};
+
+  // *************************************************************
+  // Ugly Lex/Yacc Stuff
+  // *************************************************************
+
+// Functions we need for parsing.
+extern int yyparse(void);
+extern void yyrestart(FILE*);
+extern int yylex(void);
+
+// Have yylex read from the constraint string, not from stdin.
+#undef YY_INPUT
+#define YY_INPUT(b, r, ms) (r = TAO_Lex_String_Input::copy_into(b, ms))
+
+#undef yyerror
+#define yyerror(x) 
+
+class TAO_Lex_String_Input
+// = TITLE
+//   Stupid hack to have Lex read from a string and not from
+//   stdin. Essentially, the interpreter needs to call yylex() until
+//   EOF, and call TAO_Lex_String_Input::reset() with the new string,
+//   prior to calling yyparse.
+{
+public:  
+
+  static void reset(char* input_string);
+  // Reset the lex input.
+  
+  static int copy_into(char* buf, int max_size);
+  // Method lex will call to read from the input string.
+  
+private:
+
+  static char* string_;
+  static char* current_;
+  static char* end_;
+  // Pointers to keep track of the input string.
+};
+
+// The union used by lex and yacc to build the Abstract Syntax Tree.
+typedef union
+{
+  TAO_Constraint* constraint_;	
+} YYSTYPE;
+
+extern YYSTYPE yylval;
+extern YYSTYPE yyval;
 
 #endif /* TAO_CONSTRAINT_INTERPRETER_H */

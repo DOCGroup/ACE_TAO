@@ -7,7 +7,7 @@
 //    orbsvcs
 // 
 // = FILENAME
-//    Register_Offer_Iterator.cpp
+//    Offer_Iterators_T.cpp
 //
 // = AUTHOR
 //    Marina Spivak <marina@cs.wustl.edu>
@@ -15,10 +15,10 @@
 //    Irfan Pyarali <irfan@cs.wustl.edu>
 // ============================================================================
 
-#if !defined (TAO_REGISTER_OFFER_ITERATOR_C)
-#define  TAO_REGISTER_OFFER_ITERATOR_C
+#if !defined (TAO_OFFER_ITERATORS_T_C)
+#define  TAO_OFFER_ITERATORS_T_C
 
-#include "Register_Offer_Iterator.h"
+#include "Offer_Iterators_T.h"
 
 template <class TRADER>
 TAO_Register_Offer_Iterator<TRADER>::
@@ -68,8 +68,8 @@ TAO_Register_Offer_Iterator<TRADER>::next_n (CORBA::ULong n,
   CORBA::ULong ret_offers = 0;
   
   // Get service type map (monitor object).
-  TRADER::Service_Type_Map &service_type_map =
-    this->trader_.service_type_map ();
+  TRADER::Offer_Database &offer_database =
+    this->trader_.offer_database ();
 
   CORBA::ULong max_possible_offers_in_sequence =
     (n <  this->offer_ids_.size ()) ? n : this->offer_ids_.size ();
@@ -90,7 +90,7 @@ TAO_Register_Offer_Iterator<TRADER>::next_n (CORBA::ULong n,
 	{
 	  CosTrading::OfferId_var offerid_var (id);
 	  CosTrading::Offer* offer =
-	    service_type_map.lookup_offer (id, TAO_TRY_ENV);
+	    offer_database.lookup_offer (id, TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 	  
 	  if (offer != 0)

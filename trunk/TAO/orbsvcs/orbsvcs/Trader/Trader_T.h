@@ -19,9 +19,8 @@
 #ifndef TAO_TRADER_H
 #define TAO_TRADER_H
 
-// ACE includes
 #include "Trader.h"
-#include "Service_Type_Map.h"
+#include "Offer_Database.h"
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 class TAO_Trader : public TAO_Trader_Base
@@ -56,7 +55,7 @@ public:
   // The desired combination of interfaces to be passed to the 
   // TAO_Trader constructor.
 
-  typedef TAO_Service_Type_Map<MAP_LOCK_TYPE> Service_Type_Map;
+  typedef TAO_Offer_Database<MAP_LOCK_TYPE> Offer_Database;
 
   TAO_Trader (Trader_Components components = LOOKUP);
   // Constructor which based on its arguments will create 
@@ -67,17 +66,17 @@ public:
   ~TAO_Trader (void);
   // destructor.
   
-  Service_Type_Map& service_type_map (void);
+  Offer_Database& offer_database (void);
   // Accessor for the structure with all the service offers.
 
   ACE_Lock &lock (void);
   // returns the trader
   
-protected:
-
+protected: 
+  
   typedef TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> TRADER_SELF;
   
-  Service_Type_Map service_type_map_; 
+  Offer_Database offer_database_; 
   // A monitor (i.e. an STL map + a lock) serving as a storage for
   // all the service offers of a trader.
   // Structure: a map (actually a monitor) of service type names to  
@@ -90,6 +89,13 @@ protected:
   enum { LOOKUP_IF, REGISTER_IF, ADMIN_IF, PROXY_IF, LINK_IF };
   
   PortableServer::ServantBase* ifs_[5];
+  
+ private:
+
+    // = Disallow these operations.
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Trader<LOCK_TYPE> &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Trader (const TAO_Trader<LOCK_TYPE> &))
+
 };
 
 template <class SEQ, class OPERAND_TYPE>
