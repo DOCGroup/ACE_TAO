@@ -204,7 +204,7 @@ TAO_PG_ObjectGroupManager::add_member_i (
                         TAO_PG_ObjectGroup_Array,
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (0);
@@ -260,7 +260,7 @@ TAO_PG_ObjectGroupManager::remove_member (
 
   // Multiple members from different object groups may reside at the
   // same location.  Iterate through the list to attempt to find a
-  // match for the exact object group. 
+  // match for the exact object group.
   size_t to_be_removed = 0;
 
   // get the position of the object group in the object_group_array
@@ -335,7 +335,7 @@ TAO_PG_ObjectGroupManager::locations_of_members (
                     PortableGroup::Locations,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
@@ -514,8 +514,8 @@ TAO_PG_ObjectGroupManager::get_object_group_ref_from_id (
                       this->lock_,
                       PortableGroup::ObjectGroup::_nil ());
 
-    if (this->object_group_map_.find (ACE_U64_TO_U32 (group_id), 
-                                      group_entry) 
+    if (this->object_group_map_.find (ACE_U64_TO_U32 (group_id),
+                                      group_entry)
          != 0)
       {
         ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (),
@@ -554,7 +554,7 @@ TAO_PG_ObjectGroupManager::create_object_group (
                     TAO_PG_ObjectGroup_Map_Entry,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
@@ -680,7 +680,7 @@ TAO_PG_ObjectGroupManager::get_properties (
                     PortableGroup::Properties,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);

@@ -108,7 +108,7 @@ TAO_LB_Component::register_orb_initializer (
                                                location),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
+                            TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
       ACE_TRY_CHECK;

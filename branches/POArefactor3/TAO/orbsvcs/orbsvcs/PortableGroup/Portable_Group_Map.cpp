@@ -57,7 +57,7 @@ TAO_Portable_Group_Map::add_groupid_objectkey_pair (
                     Map_Entry (),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
+                        TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
