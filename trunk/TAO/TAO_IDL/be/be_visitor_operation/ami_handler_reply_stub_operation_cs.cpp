@@ -114,7 +114,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
 
   *os << "," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV";
-        
+
   *os << ")" << be_uidt << be_uidt_nl;
 
   // Generate the actual code for the stub. However, if any of the argument
@@ -209,7 +209,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
   if (original->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
       be_decl *scope = be_scope::narrow_from_scope (original->defined_in ())->decl ();
-      *os << "OBV_" << scope->name() << "::" 
+      *os << "OBV_" << scope->name() << "::"
           << "_tao_" << original->compute_local_name ("AMI_", "ExceptionHolder");
     }
   else

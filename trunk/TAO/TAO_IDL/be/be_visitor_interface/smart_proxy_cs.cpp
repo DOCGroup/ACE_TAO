@@ -49,42 +49,42 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
     {
 
       TAO_OutStream *os = this->ctx_->stream ();
-      
+
       this->ctx_->node (node);
-  
+
       os->indent ();
 
       // Its necessary to take care of the nested case. The smart proxy classes
       // are in the same scope as the proxy.
       be_decl* scope = be_scope::narrow_from_scope (node->defined_in ())->decl ();
-  
+
       *os << scope->full_name ();
 
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
         *os << "::";
-  
+
       *os <<"TAO_"<< node->flat_name () << "_Default_Proxy_Factory::";
       *os << "TAO_"
           << node->flat_name () << "_Default_Proxy_Factory (int register_proxy_factory)"
-          << be_nl 
+          << be_nl
           << "{" << be_idt_nl
           << "if (register_proxy_factory)"<< be_idt_nl
           << "{" << be_idt_nl
-          << "TAO_" << node->flat_name () 
+          << "TAO_" << node->flat_name ()
           << "_PROXY_FACTORY_ADAPTER::instance ()->register_proxy_factory (this);"<< be_uidt_nl
-          << "}" << be_uidt << be_uidt_nl 
+          << "}" << be_uidt << be_uidt_nl
           << "}\n\n";
 
       os->indent ();
 
       *os << scope->full_name ();
-  
+
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
         *os << "::";
-  
-      *os << "TAO_"<< node->flat_name () 
+
+      *os << "TAO_"<< node->flat_name ()
           << "_Default_Proxy_Factory::~";
       *os <<"TAO_"
           << node->flat_name () << "_Default_Proxy_Factory (void)"
@@ -99,15 +99,15 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
         *os << "::";
-  
-      *os << "TAO_" << node->flat_name () 
-          << "_Default_Proxy_Factory::create_proxy (" << be_idt << be_idt_nl 
-          << "::" << node->full_name () 
-          << "_ptr proxy," << be_nl 
-          << "CORBA::Environment &" << be_uidt_nl 
+
+      *os << "TAO_" << node->flat_name ()
+          << "_Default_Proxy_Factory::create_proxy (" << be_idt << be_idt_nl
+          << "::" << node->full_name ()
+          << "_ptr proxy," << be_nl
+          << "CORBA::Environment &" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl
           << "{" << be_idt_nl
-          << "return proxy;" << be_uidt << be_uidt_nl 
+          << "return proxy;" << be_uidt << be_uidt_nl
           << "}\n\n";
 
       os->indent ();
@@ -116,8 +116,8 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
         *os << "::";
-  
-      *os << "TAO_" << node->flat_name () << "_Proxy_Factory_Adapter::"; 
+
+      *os << "TAO_" << node->flat_name () << "_Proxy_Factory_Adapter::";
       *os << "TAO_"
           << node->flat_name () << "_Proxy_Factory_Adapter (void)" <<be_idt_nl
           << " : proxy_factory_ (0)," << be_idt_nl
@@ -131,8 +131,8 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
         *os << "::";
-  
-      *os << "TAO_" << node->flat_name () << "_Proxy_Factory_Adapter::"; 
+
+      *os << "TAO_" << node->flat_name () << "_Proxy_Factory_Adapter::";
       *os << "~TAO_"
           << node->flat_name () << "_Proxy_Factory_Adapter (void)" <<be_nl
           << "{" << be_idt_nl
@@ -147,15 +147,15 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
-        *os << "::";  
-      *os << "TAO_" << node->flat_name () 
+        *os << "::";
+      *os << "TAO_" << node->flat_name ()
           << "_Proxy_Factory_Adapter::register_proxy_factory (" << be_idt_nl
           << "TAO_" << node->flat_name ()
           << "_Default_Proxy_Factory *df," << be_idt_nl
           << " CORBA::Environment &ACE_TRY_ENV" << be_idt_nl
           << ")" << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_idt_nl
-          << "ACE_MT (ACE_GUARD_RETURN (" 
+          << "ACE_MT (ACE_GUARD_RETURN ("
           << "ACE_Recursive_Thread_Mutex, ace_mon," << be_idt_nl
           << "this->lock_, 0));" <<be_uidt_nl
           << "// Remove any existing <proxy_factory_> and replace with the new one."<<be_nl
@@ -171,14 +171,14 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
-        *os << "::";  
- 
+        *os << "::";
+
       *os << "TAO_"<< node->flat_name ()
           << "_Proxy_Factory_Adapter::unregister_proxy_factory (" << be_idt_nl
           << "CORBA::Environment &" << be_idt_nl
           << ")" << be_uidt << be_uidt_nl
           << "{" << be_idt_nl
-          << "ACE_MT (ACE_GUARD_RETURN (" 
+          << "ACE_MT (ACE_GUARD_RETURN ("
           << "ACE_Recursive_Thread_Mutex, ace_mon," << be_idt_nl
           << "this->lock_, 0));" <<be_uidt_nl
           << "if ("
@@ -187,7 +187,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << "// Its necessary to set <delete_proxy_factory_> to 1 to make sure that it" <<be_nl
           << "// doesnt get into an infinite loop in <unregister_proxy_factory> as it is "<<be_nl
           << "// invoked in the destructor of the class too."<<be_nl
-          << "this->delete_proxy_factory_ = 1;" << be_nl     
+          << "this->delete_proxy_factory_ = 1;" << be_nl
           << "delete "
           << "this->proxy_factory_;" << be_nl
           << "this->proxy_factory_ = 0;" << be_uidt_nl
@@ -201,40 +201,40 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
-        *os << "::";  
- 
+        *os << "::";
+
       *os << "TAO_"<< node->flat_name ()
           << "_Proxy_Factory_Adapter::create_proxy (" << be_idt << be_idt_nl
-          << "::" << node->full_name () 
+          << "::" << node->full_name ()
           << "_ptr proxy," << be_nl
           << "CORBA::Environment &" << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl
           << "{" << be_idt_nl
-          << "ACE_MT (ACE_GUARD_RETURN (" 
+          << "ACE_MT (ACE_GUARD_RETURN ("
           << "ACE_Recursive_Thread_Mutex, ace_mon," << be_idt_nl
           << "this->lock_, 0));" <<be_uidt_nl
           << "// Verify that an <proxy_factory_> is available else make one."<<be_nl
-          << "if (" 
+          << "if ("
           <<"this->proxy_factory_ == 0)" << be_idt_nl
           << "ACE_NEW_RETURN ("
           << "this->proxy_factory_," << be_idt <<be_idt_nl
-          << "TAO_" << node->flat_name () 
+          << "TAO_" << node->flat_name ()
           << "_Default_Proxy_Factory (1), "<< be_nl
           << " 0);" << be_uidt_nl << be_uidt_nl << be_uidt_nl
           << "return "
           << "this->proxy_factory_->create_proxy (proxy);"
           << be_uidt << be_uidt_nl
           << "}\n\n";
-  
+
       os->indent ();
       *os << scope->full_name ();
 
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
-        *os << "::";  
- 
+        *os << "::";
+
       *os <<  "TAO_" << node->flat_name () << "_Smart_Proxy_Base::";
-      *os << "TAO_" 
+      *os << "TAO_"
           <<  node->flat_name () << "_Smart_Proxy_Base (void)" << be_uidt_nl
           << "{" << be_nl
           << "}" << be_nl << be_nl;
@@ -244,10 +244,10 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
-        *os << "::";  
- 
+        *os << "::";
+
       *os <<  "TAO_" << node->flat_name () << "_Smart_Proxy_Base::";
-      *os << "~TAO_" 
+      *os << "~TAO_"
           <<  node->flat_name () << "_Smart_Proxy_Base (void)" <<be_nl
           << "{" << be_nl
           << "}\n\n";
@@ -259,8 +259,8 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
-        *os << "::";  
-  
+        *os << "::";
+
       *os <<  "TAO_" << node->flat_name () << "_Smart_Proxy_Base::";
       *os << "_stubobj (void) const"<<be_nl
           << "{" << be_idt_nl
@@ -277,20 +277,20 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
                             -1);
         }
 
- 
+
       os->indent ();
-  
+
       *os << node->full_name() << "_ptr" << be_nl;
       *os << scope->full_name ();
-  
+
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
-        *os << "::";  
-  
+        *os << "::";
+
       *os <<  "TAO_" << node->flat_name () << "_Smart_Proxy_Base::"
 	  << "get_proxy (void)" << be_idt_nl
           << be_uidt_nl;
-  
+
       *os << "{" << be_idt_nl
           << "// Obtain the real proxy stored in <base_proxy_>" << be_nl
           << "if (CORBA::is_nil (this->proxy_.in ()))" << be_idt_nl
@@ -304,13 +304,13 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
           << be_uidt_nl << "}" << be_nl << be_nl
           << "return this->proxy_.in ();" << be_uidt_nl
           << "}" << be_nl << be_nl;
-  
+
       os->indent ();
       *os << "#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \\"
           << be_idt_nl<<"defined (ACE_HAS_GNU_REPO)"<<be_uidt_nl
           << "template class ACE_Singleton<";
       *os << scope->full_name ();
-    
+
       // Only if there exists any nesting "::" is needed!
       if (node->is_nested ())
         *os << "::";

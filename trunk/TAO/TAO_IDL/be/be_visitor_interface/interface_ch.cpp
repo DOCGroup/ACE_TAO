@@ -136,7 +136,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           // CORBA::Object class
           // Generate code that uses the macro. This is required to deal with
           // the MSVC++ insanity
-          *os << " : public virtual ACE_CORBA_1 (Object)" << be_nl;
+          *os << " : public virtual CORBA_Object" << be_nl;
         }
 
       // generate the body
@@ -159,7 +159,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "static " << node->local_name () << "_ptr "
           << "_narrow (" << be_idt << be_idt_nl
           << "CORBA::Object_ptr obj," << be_nl
-          << "CORBA::Environment &env = " << be_idt_nl
+          << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
           << "TAO_default_environment ()"
           << be_uidt << be_uidt_nl
           << ");" << be_uidt_nl;
@@ -168,7 +168,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << "static " << node->local_name () << "_ptr "
           << "_unchecked_narrow (" << be_idt << be_idt_nl
           << "CORBA::Object_ptr obj," << be_nl
-          << "CORBA::Environment &env = " << be_idt_nl
+          << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
           << "TAO_default_environment ()"
           << be_uidt << be_uidt_nl
           << ");" << be_uidt_nl;
@@ -205,7 +205,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       if (! node->is_local ())
         *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
             << "const CORBA::Char *type_id, " << be_nl
-            << "CORBA::Environment &env = " << be_idt_nl
+            << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
             << "TAO_default_environment ()"
             << be_uidt << be_uidt_nl
             << ");" << be_uidt << be_nl;
@@ -240,7 +240,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << node->local_name () << " (const " << node->local_name () << " &);"
           << be_nl
           << "void operator= (const " << node->local_name () << " &);";
-      *os << be_uidt <<be_uidt_nl;
+      *os << be_uidt_nl;
       *os << "};\n\n";
 
       be_visitor_context ctx (*this->ctx_);

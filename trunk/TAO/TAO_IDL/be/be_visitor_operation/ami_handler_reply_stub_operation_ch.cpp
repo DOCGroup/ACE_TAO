@@ -12,11 +12,11 @@
 //
 // = DESCRIPTION
 //    Visitor generating code for AMI Handler call back operation in
-//    the client header.  
+//    the client header.
 //
 // = AUTHOR
 //    Aniruddha Gokhale and Alexander Babu Arulanthu
-//    <alex@cs.wustl.edu> 
+//    <alex@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -46,7 +46,7 @@ int
 be_visitor_operation_ami_handler_reply_stub_operation_ch::visit_operation (be_operation *node)
 {
   TAO_OutStream *os; // output stream
-  
+
   os = this->ctx_->stream ();
   this->ctx_->node (node); // save the node
 
@@ -55,10 +55,10 @@ be_visitor_operation_ami_handler_reply_stub_operation_ch::visit_operation (be_op
   // operation only if there was no "native" type.
   if (!node->has_native ())
     {
-     
+
       // Indent.
       os->indent ();
-      
+
       // Next line.
       *os << be_nl
           << "static void ";
@@ -72,7 +72,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_ch::visit_operation (be_op
           else
             *os << "_get_";
         }
-      *os << node->local_name () 
+      *os << node->local_name ()
           << "_reply_stub (" << be_idt << be_idt_nl;
 
       *os << "TAO_InputCDR &_tao_reply_cdr," << be_nl
@@ -82,7 +82,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_ch::visit_operation (be_op
       *os << "," << be_nl
           << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
           << "TAO_default_environment ()" << be_uidt;
-      
+
       *os << ");"
           << be_uidt << be_nl
           << be_uidt << "\n\n";

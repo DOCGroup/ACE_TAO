@@ -12,11 +12,11 @@
 //
 // = DESCRIPTION
 //    Visitor generating code for AMI Handler call back operation in
-//    the client header.  
+//    the client header.
 //
 // = AUTHOR
 //    Aniruddha Gokhale and Alexander Babu Arulanthu
-//    <alex@cs.wustl.edu> 
+//    <alex@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -46,7 +46,7 @@ int
 be_visitor_operation_ami_exception_holder_operation_ch::visit_operation (be_operation *node)
 {
   TAO_OutStream *os; // output stream
-  
+
   os = this->ctx_->stream ();
   this->ctx_->node (node); // save the node
 
@@ -55,7 +55,7 @@ be_visitor_operation_ami_exception_holder_operation_ch::visit_operation (be_oper
   // every operation is declared virtual in the client code
   *os << be_idt << "virtual ";
 
-  // STEP I: generate the return type. Return type is simpy void. 
+  // STEP I: generate the return type. Return type is simpy void.
   *os << "void raise_";
 
   // check if we are an attribute node in disguise
@@ -66,15 +66,15 @@ be_visitor_operation_ami_exception_holder_operation_ch::visit_operation (be_oper
         *os << "set_";
       else
         *os << "get_";
-    }  
+    }
 
   // Generate the operation name.
-  *os  << node->local_name () 
+  *os  << node->local_name ()
        << " (";
-  
+
   if (!idl_global->exception_support ())
     *os << "CORBA::Environment &ACE_TRY_ENV =" << be_idt << be_idt_nl
-        << "TAO_default_environment ()" << be_uidt << be_uidt; 
+        << "TAO_default_environment ()" << be_uidt << be_uidt;
   *os << ")" << be_idt;
 
   // now generate the throw specs
@@ -86,7 +86,7 @@ be_visitor_operation_ami_exception_holder_operation_ch::visit_operation (be_oper
                          ACE_TEXT ("Failed to generate throw spec\n")),
                         -1);
     }
-       
+
   *os << ";\n" << be_uidt << be_uidt;
 
   return 0;

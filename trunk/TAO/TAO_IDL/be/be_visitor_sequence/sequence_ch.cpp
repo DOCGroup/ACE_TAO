@@ -380,7 +380,6 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   os->indent ();
   *os << "typedef " << node->local_name () << "_var _var_type;\n"
       << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n\n";
-  os->decr_indent ();
 
   // TAO provides extensions for octet sequences, first find out if
   // the base type is an octet (or an alias for octet)
@@ -396,7 +395,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 	      }
       else
 	      {
-	        predef = 
+	        predef =
             be_predefined_type::narrow_from_decl (
                 alias->primitive_base_type ()
               );

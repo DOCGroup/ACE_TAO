@@ -71,6 +71,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
       switch (this->ctx_->state ())
         {
         case TAO_CodeGen::TAO_OPERATION_ARGLIST_CH:
+        case TAO_CodeGen::TAO_LOCAL_OPERATION_ARGLIST_H:
         case TAO_CodeGen::TAO_OPERATION_ARGLIST_COLLOCATED_SH:
         case TAO_CodeGen::TAO_OPERATION_ARGLIST_SH:
           // last argument - is always CORBA::Environment
