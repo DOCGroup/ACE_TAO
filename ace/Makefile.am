@@ -191,6 +191,10 @@ libACE_Threads_la_SOURCES = \
   Process.cpp \
   Process_Manager.cpp \
   Synch.cpp \
+  Process_Semaphore.cpp \
+  Process_Mutex.cpp \
+  RW_Process_Mutex.cpp \
+  File_Lock.cpp \
   Synch_Options.cpp \
   Thread.cpp \
   Thread_Adapter.cpp \
@@ -676,6 +680,10 @@ HEADER_FILES = \
   Svc_Conf_Tokens.h \
   Svc_Handler.h \
   Synch.h \
+  Process_Semaphore.h \
+  Process_Mutex.h \
+  RW_Process_Mutex.h \
+  File_Lock.h \
   Synch_Options.h \
   Synch_T.h \
   System_Time.h \

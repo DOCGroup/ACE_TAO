@@ -19,6 +19,7 @@
 #include "test_config.h"
 #include "ace/Synch.h"
 #include "ace/Process.h"
+#include "ace/Process_Mutex.h"
 #include "ace/Get_Opt.h"
 
 ACE_RCSID(tests, Process_Mutex_Test, "$Id$")

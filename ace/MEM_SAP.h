@@ -24,6 +24,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Process_Mutex.h"
+
 class ACE_Export ACE_MEM_SAP
 {
   // = TITLE

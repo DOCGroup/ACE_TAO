@@ -32,7 +32,7 @@
 //     % Process_Strategy_Test -c PROCESS
 //
 // = AUTHOR
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu> 
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //    and Kevin Boyle <kboyle@sanwafp.com>
 //
 // ============================================================================
@@ -45,6 +45,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Strategies_T.h"
 #include "ace/Singleton.h"
+#include "ace/File_Lock.h"
 
 // Counting_Service and Options in here
 #include "Process_Strategy_Test.h"
@@ -170,7 +171,7 @@ Options::filename (void)
 }
 
 Options::Options (void)
-  : 
+  :
   // Choose to use processes by default.
 #if !defined (ACE_LACKS_FORK)
   concurrency_type_ (PROCESS)
@@ -195,12 +196,12 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
   // - 26 is for the "process_strategy_test_temp" that is appended
   if (ACE::get_temp_dir (this->filename_, MAXPATHLEN - 26) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       ACE_TEXT ("Temporary path too long\n")), 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Temporary path too long\n")),
                       -1);
 
   ACE_OS::strcat (this->filename_, ACE_TEXT ("process_strategy_test_temp"));
-  
+
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
       {
@@ -592,7 +593,7 @@ client (void *arg)
       // the call to ACE_OS::strrchr ().
       buf [bytes_read] = '\0';
 
-      size_t count = ACE_OS::atoi (ACE_OS::strrchr (ACE_TEXT_CHAR_TO_TCHAR (buf), 
+      size_t count = ACE_OS::atoi (ACE_OS::strrchr (ACE_TEXT_CHAR_TO_TCHAR (buf),
                                                     ACE_TEXT (' ')));
 
       ACE_DEBUG ((LM_DEBUG,

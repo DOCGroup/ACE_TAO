@@ -165,6 +165,10 @@ OBJFILES = \
 	$(OBJDIR)\Svc_Conf_y.obj \
 	$(OBJDIR)\Svc_Handler.obj \
 	$(OBJDIR)\Synch.obj \
+	$(OBJDIR)\Process_Semaphore.obj \
+	$(OBJDIR)\Process_Mutex.obj \
+	$(OBJDIR)\RW_Process_Mutex.obj \
+	$(OBJDIR)\File_Lock.obj \
 	$(OBJDIR)\Synch_Options.obj \
 	$(OBJDIR)\System_Time.obj \
 	$(OBJDIR)\Task.obj \

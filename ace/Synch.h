@@ -27,10 +27,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !(defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS))
-#include "ace/SV_Semaphore_Complex.h"
-#endif /* !(ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS) */
-
 // Forward declarations.
 class ACE_Time_Value;
 // template <class ACE_COND_MUTEX> class ACE_Condition;
@@ -142,112 +138,6 @@ protected:
   ACE_Lock *lock_;
 };
 
-class ACE_Export ACE_File_Lock
-{
-  // = TITLE
-  //     A wrapper around the UNIX file locking mechanism.
-  //
-  // = DESCRIPTION
-  //     Allows us to "adapt" the UNIX file locking mechanisms to work
-  //     with all of our Guard stuff...
-public:
-  ACE_File_Lock (ACE_HANDLE handle = ACE_INVALID_HANDLE);
-  // Set the <handle_> of the File_Lock to <handle>.  Note that this
-  // constructor assumes ownership of the <handle> and will close it
-  // down in <remove>.  If you want the <handle> stays open when
-  // <remove> is called make sure to call <dup> on the <handle> before
-  // closing it.
-
-  ACE_File_Lock (const ACE_TCHAR *filename, int flags, mode_t mode = 0);
-  // Open the <filename> with <flags> and <mode> and set the result to
-  // <handle_>.
-
-  int open (const ACE_TCHAR *filename, int flags, mode_t mode = 0);
-  // Open the <filename> with <flags> and <mode> and set the result to
-  // <handle_>.
-
-  ~ACE_File_Lock (void);
-  // Remove a File lock by releasing it and closing down the <handle_>.
-
-  int remove (int unlink_file = 1);
-  // Remove a File lock by releasing it and closing down the
-  // <handle_>.  If <unlink_file> is non-0 then we unlink the file.
-
-  int acquire (short whence = 0, off_t start = 0, off_t len = 1);
-  // Note, for interface uniformity with other synchronization
-  // wrappers we include the <acquire> method.  This is implemented as
-  // a write-lock to be on the safe-side...
-
-  int tryacquire (short whence = 0, off_t start = 0, off_t len = 1);
-  // Note, for interface uniformity with other synchronization
-  // wrappers we include the <tryacquire> method.  This is implemented
-  // as a write-lock to be on the safe-side...  Returns -1 on failure.
-  // If we "failed" because someone else already had the lock, <errno>
-  // is set to <EBUSY>.
-
-  int release (short whence = 0, off_t start = 0, off_t len = 1);
-  // Unlock a readers/writer lock.
-
-  int acquire_write (short whence = 0, off_t start = 0, off_t len = 1);
-  // Acquire a write lock, but block if any readers or a
-  // writer hold the lock.
-
-  int tryacquire_write (short whence = 0, off_t start = 0, off_t len = 1);
-  // Conditionally acquire a write lock (i.e., won't block).  Returns
-  // -1 on failure.  If we "failed" because someone else already had
-  // the lock, <errno> is set to <EBUSY>.
-
-  int tryacquire_write_upgrade (short whence = 0,
-                                off_t start = 0,
-                                off_t len = 1);
-  // Conditionally upgrade to a write lock (i.e., won't block).  Returns
-  // -1 on failure.  If we "failed" because someone else already had
-  // the lock, <errno> is set to <EBUSY>.
-
-  int acquire_read (short whence = 0, off_t start = 0, off_t len = 1);
-  // Acquire a read lock, but block if a writer hold the lock.
-  // Returns -1 on failure.  If we "failed" because someone else
-  // already had the lock, <errno> is set to <EBUSY>.
-
-  int tryacquire_read (short whence = 0, off_t start = 0, off_t len = 1);
-  // Conditionally acquire a read lock (i.e., won't block).  Returns
-  // -1 on failure.  If we "failed" because someone else already had
-  // the lock, <errno> is set to <EBUSY>.
-
-  ACE_HANDLE get_handle (void);
-  // Get underlying <ACE_HANDLE> for the file.
-
-  void set_handle (ACE_HANDLE);
-  // Set underlying <ACE_HANDLE>.  Note that this method assumes
-  // ownership of the <handle> and will close it down in <remove>.  If
-  // you want the <handle> to stay open when <remove> is called make
-  // sure to call <dup> on the <handle> before closing it. You are
-  // responsible for the closing the existing <handle> before
-  // overwriting it.
-
-  void dump (void) const;
-  // Dump state of the object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
-protected:
-  ACE_OS::ace_flock_t lock_;
-  // Locking structure for OS record locks.
-
-  int removed_;
-  // Keeps track of whether <remove> has been called yet to avoid
-  // multiple <remove> calls, e.g., explicitly and implicitly in the
-  // destructor.  This flag isn't protected by a lock, so make sure
-  // that you don't have multiple threads simultaneously calling
-  // <remove> on the same object, which is a bad idea anyway...
-
-private:
-  // = Prevent assignment and initialization.
-  void operator= (const ACE_File_Lock &);
-  ACE_File_Lock (const ACE_File_Lock &);
-};
-
 class ACE_Export ACE_Semaphore
 {
   // = TITLE
@@ -353,92 +243,6 @@ private:
   // = Prevent assignment and initialization.
   void operator= (const ACE_Semaphore &);
   ACE_Semaphore (const ACE_Semaphore &);
-};
-
-class ACE_Export ACE_Process_Semaphore
-{
-  // = TITLE
-  //     Wrapper for Dijkstra style general semaphores that work
-  //     across processes.
-public:
-  ACE_Process_Semaphore (u_int count = 1, // By default make this unlocked.
-                         const ACE_TCHAR *name = 0,
-                         void * = 0,
-                         int max = 0x7FFFFFFF);
-  // Initialize the semaphore, with an initial value of <count> and a
-  // maximum value of <max>.
-
-  ~ACE_Process_Semaphore (void);
-  // This method is a no-op, i.e., it doesn't remove the semaphore.
-  // If you want to remove the semaphore, you must call the <remove>
-  // method explicitly.
-
-  int remove (void);
-  // Explicitly destroy the semaphore.  Note that only one thread
-  // should call this method since it doesn't protect against race
-  // conditions.
-
-  int acquire (void);
-  // Block the thread until the semaphore count becomes greater than
-  // 0, then decrement it.
-
-  int tryacquire (void);
-  // Conditionally decrement the semaphore if count is greater than 0
-  // (i.e., won't block).  Returns -1 on failure.  If we "failed"
-  // because someone else already had the lock, <errno> is set to
-  // <EBUSY>.
-
-  int release (void);
-  // Increment the semaphore, potentially unblocking a waiting thread.
-
-  int acquire_read (void);
-  // Acquire semaphore ownership.  This calls <acquire> and is only
-  // here to make the <ACE_Process_Semaphore> interface consistent
-  // with the other synchronization APIs.
-
-  int acquire_write (void);
-  // Acquire semaphore ownership.  This calls <acquire> and is only
-  // here to make the <ACE_Process_Semaphore> interface consistent
-  // with the other synchronization APIs.
-
-  int tryacquire_read (void);
-  // Conditionally acquire semaphore (i.e., won't block).  This calls
-  // <tryacquire> and is only here to make the <ACE_Process_Semaphore>
-  // interface consistent with the other synchronization APIs.
-  // Returns -1 on failure.  If we "failed" because someone else
-  // already had the lock, <errno> is set to <EBUSY>.
-
-  int tryacquire_write (void);
-  // Conditionally acquire semaphore (i.e., won't block).  This calls
-  // <tryacquire> and is only here to make the <ACE_Process_Semaphore>
-  // interface consistent with the other synchronization APIs.
-  // Returns -1 on failure.  If we "failed" because someone else
-  // already had the lock, <errno> is set to <EBUSY>.
-
-  int tryacquire_write_upgrade (void);
-  // This is only here to make the <ACE_Process_Semaphore>
-  // interface consistent with the other synchronization APIs.
-  // Assumes the caller has already acquired the semaphore using one of
-  // the above calls, and returns 0 (success) always.
-
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
-  const ACE_sema_t &lock (void) const;
-  // Return the underlying lock.
-#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
-
-  void dump (void) const;
-  // Dump the state of an object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
-protected:
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
-  ACE_Semaphore lock_;
-#else
-  ACE_SV_Semaphore_Complex lock_;
-  // We need this to get the right semantics...
-#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
 };
 
 class ACE_Export ACE_Null_Semaphore
@@ -654,152 +458,6 @@ private:
   ACE_Mutex (const ACE_Mutex &);
 };
 
-class ACE_Export ACE_Process_Mutex
-{
-  // = TITLE
-  //     A wrapper for mutexes that can be used across processes on
-  //     the same host machine, as well as within a process, of
-  //     course.
-public:
-  ACE_Process_Mutex (const ACE_TCHAR *name = 0,
-                     void *arg = 0);
-  // Create a Process_Mutex, passing in the optional <name>.
-
-  ~ACE_Process_Mutex (void);
-
-  int remove (void);
-  // Explicitly destroy the mutex.  Note that only one thread should
-  // call this method since it doesn't protect against race
-  // conditions.
-
-  int acquire (void);
-  // Acquire lock ownership (wait on queue if necessary).
-
-  int tryacquire (void);
-  // Conditionally acquire lock (i.e., don't wait on queue).  Returns
-  // -1 on failure.  If we "failed" because someone else already had
-  // the lock, <errno> is set to <EBUSY>.
-
-  int release (void);
-  // Release lock and unblock a thread at head of queue.
-
-  int acquire_read (void);
-  // Acquire lock ownership (wait on queue if necessary).
-
-  int acquire_write (void);
-  // Acquire lock ownership (wait on queue if necessary).
-
-  int tryacquire_read (void);
-  // Conditionally acquire a lock (i.e., won't block).  Returns -1 on
-  // failure.  If we "failed" because someone else already had the
-  // lock, <errno> is set to <EBUSY>.
-
-  int tryacquire_write (void);
-  // Conditionally acquire a lock (i.e., won't block).  Returns -1 on
-  // failure.  If we "failed" because someone else already had the
-  // lock, <errno> is set to <EBUSY>.
-
-  int tryacquire_write_upgrade (void);
-  // This is only here for consistency with the other synchronization
-  // APIs and usability with Lock adapters. Assumes the caller already has
-  // acquired the mutex and returns 0 in all cases.
-
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
-  const ACE_mutex_t &lock (void) const;
-  // Return the underlying mutex.
-#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
-
-  void dump (void) const;
-  // Dump the state of an object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
-private:
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
-  ACE_Mutex lock_;
-#else
-  ACE_TCHAR name_[ACE_UNIQUE_NAME_LEN];
-  // If the user does not provide a name we generate a unique name in
-  // this buffer.
-
-  const ACE_TCHAR *unique_name (void);
-  // Create and return the unique name.
-
-  ACE_SV_Semaphore_Complex lock_;
-  // We need this to get the right semantics...
-#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
-};
-
-class ACE_Export ACE_RW_Process_Mutex
-{
-  // = TITLE
-  //     Wrapper for readers/writer locks that exist across processes.
-  //
-  // = DESCRIPTION
-  //     Note that because this class uses the
-  //     <ACE_File_Lock> as its implementation it only can be reliably
-  //     used between separate processes, rather than threads in the
-  //     same process.  This isn't a limitation of ACE, it's simply
-  //     the file lock semantics on UNIX and Win32.
-public:
-  ACE_RW_Process_Mutex (const ACE_TCHAR *name = 0,
-                        int flags = O_CREAT|O_RDWR);
-  // Create a readers/writer <Process_Mutex>, passing in the optional
-  // <name>.
-
-  ~ACE_RW_Process_Mutex (void);
-
-  int remove (void);
-  // Explicitly destroy the mutex.  Note that only one thread should
-  // call this method since it doesn't protect against race
-  // conditions.
-
-  int acquire (void);
-  // Acquire lock ownership (wait on queue if necessary).
-
-  int tryacquire (void);
-  // Conditionally acquire lock (i.e., don't wait on queue).  Returns
-  // -1 on failure.  If we "failed" because someone else already had
-  // the lock, <errno> is set to <EBUSY>.
-
-  int release (void);
-  // Release lock and unblock a thread at head of queue.
-
-  int acquire_read (void);
-  // Acquire lock ownership (wait on queue if necessary).
-
-  int acquire_write (void);
-  // Acquire lock ownership (wait on queue if necessary).
-
-  int tryacquire_read (void);
-  // Conditionally acquire a lock (i.e., won't block).  Returns -1 on
-  // failure.  If we "failed" because someone else already had the
-  // lock, <errno> is set to <EBUSY>.
-
-  int tryacquire_write (void);
-  // Conditionally acquire a lock (i.e., won't block).  Returns -1 on
-  // failure.  If we "failed" because someone else already had the
-  // lock, <errno> is set to <EBUSY>.
-
-  int tryacquire_write_upgrade (void);
-  // Attempt to upgrade a read lock to a write lock. Returns 0 on
-  // success, -1 on failure.
-
-  const ACE_File_Lock &lock (void) const;
-  // Return the underlying lock.
-
-  void dump (void) const;
-  // Dump the state of an object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
-private:
-  ACE_File_Lock lock_;
-  // We need this to get the readers/writer semantics...
-};
-
 class ACE_Export ACE_Null_Barrier
 {
   // = TITLE
@@ -909,7 +567,7 @@ class ACE_Export ACE_Null_Mutex_Guard
   //
   // = DESCRIPTION
   //     This class is obsolete and should be replaced by
-  //     ACE_Guard<ACE_Null_Mutex>. 
+  //     ACE_Guard<ACE_Null_Mutex>.
 public:
   ACE_Null_Mutex_Guard (ACE_Null_Mutex &);
   ~ACE_Null_Mutex_Guard (void);
@@ -1131,7 +789,7 @@ class ACE_Export ACE_Thread_Mutex
   //     recursive mutex.
   friend class ACE_Condition_Thread_Mutex;
 public:
-  ACE_Thread_Mutex (const ACE_TCHAR *name = 0, 
+  ACE_Thread_Mutex (const ACE_TCHAR *name = 0,
                     ACE_mutexattr_t *attributes = 0);
   // Constructor.
 
@@ -1220,7 +878,7 @@ class ACE_Export ACE_Thread_Mutex_Guard
   //
   // = DESCRIPTION
   //     This class is obsolete and should be replaced by
-  //     ACE_Guard<ACE_Thread_Mutex>. 
+  //     ACE_Guard<ACE_Thread_Mutex>.
 public:
   ACE_Thread_Mutex_Guard (ACE_Thread_Mutex &m, int block = 1);
   // Implicitly and automatically acquire the lock.
@@ -1685,6 +1343,13 @@ public:
 
 // Include the templates here.
 #include "ace/Synch_T.h"
+
+#if !defined (ACE_ONLY_LATEST_AND_GREATEST)
+# include "ace/File_Lock.h"
+# include "ace/Process_Semaphore.h"
+# include "ace/Process_Mutex.h"
+# include "ace/RW_Process_Mutex.h"
+#endif  /* ACE_ONLY_LATEST_AND_GREATEST */
 
 template <class ACE_LOCK>
 class ACE_Guard;

@@ -10,6 +10,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Synch.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Process_Mutex.h"
 #include "test_position_independent_malloc.h"
 
 ACE_RCSID(Shared_Malloc, test_multiple_mallocs, "$Id$")
