@@ -121,7 +121,7 @@ public:
   // until the relative time specified in *<timeout> elapses).
 
   virtual int dispatch_notifications (int &number_of_active_handles,
-                                      const ACE_Handle_Set &rd_mask);
+                                      ACE_Handle_Set &rd_mask);
   // Handles pending threads (if any) that are waiting to unblock the
   // <ACE_Select_Reactor>.
 
