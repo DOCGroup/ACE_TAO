@@ -138,6 +138,7 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, extra_core {
       ParameterMode.cpp
       OctetSeqA.cpp
       OctetSeqC.cpp
+      StringSeqA.cpp
       StringSeqC.cpp
       Codeset_Manager.cpp
       Codeset_Translator_Factory.cpp

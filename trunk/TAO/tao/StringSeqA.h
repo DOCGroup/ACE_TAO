@@ -33,22 +33,6 @@
 
 #include /**/ "ace/pre.h"
 
-// TAO_IDL - Generated from
-// be/be_visitor_sequence/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CORBA::StringSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA::StringSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::StringSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::StringSeq *&);
-
-// TAO_IDL - Generated from
-// be/be_visitor_sequence/any_op_ch.cpp:52
-
-TAO_Export void operator<<= (CORBA::Any &, const CORBA::WStringSeq &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, CORBA::WStringSeq*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::WStringSeq *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::WStringSeq *&);
-
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */
