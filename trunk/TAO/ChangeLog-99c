@@ -1,3 +1,8 @@
+Tue Sep  7 11:25:04 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/UDP.cpp: 
+	Removed the IP_MULTICAST_LOOP undefined error on VXWorks
+
 Tue Sep  7 11:08:11 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/orbsvcs.dsp: For some reason,

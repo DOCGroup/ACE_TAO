@@ -297,8 +297,8 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 {
   int result = -1;
   //  TAO_AV_Callback *callback = 0;  
-//   this->endpoint_->get_callback (this->flowname_.c_str (),
-//                                  callback);
+  //   this->endpoint_->get_callback (this->flowname_.c_str (),
+  //                                  callback);
   ACE_INET_Addr *local_addr;
   TAO_AV_Flow_Handler *flow_handler = 0;
   if (this->entry_->is_multicast ())
@@ -313,10 +313,12 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr)
         ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_MCast_connector::subscribe failed\n"),-1);
       // Now disable Multicast loopback.
       // @@Should we make this a policy?
+#ifdef ACE_HAS_IP_MULTICAST
       if (handler->get_mcast_socket ()->set_option (IP_MULTICAST_LOOP,
                                                     0) < 0)
         if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Acceptor::multicast loop disable failed\n"));
       // @@ This should also be policies.
+#endif /*ACE_HAS_IP_MULTICAST*/
       int bufsize = 80 * 1024;
       if (handler->get_mcast_socket ()->ACE_SOCK::set_option (SOL_SOCKET,
                                                               SO_RCVBUF,
@@ -456,10 +458,13 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
         ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_MCast_connector::open failed\n"),-1);
       // Now disable Multicast loopback.
       // @@Should we make this a policy?
+#if defined (ACE_HAS_IP_MULTICAST)
       if (handler->get_mcast_socket ()->set_option (IP_MULTICAST_LOOP,
                                                     0) < 0)
         if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Acceptor::multicast loop disable failed\n"));
       // @@ This should also be policies.
+#endif /*ACE_HAS_IP_MULTICAST*/
+
       int bufsize = 80 * 1024;
       if (handler->get_mcast_socket ()->ACE_SOCK::set_option (SOL_SOCKET,
                                                               SO_RCVBUF,
