@@ -1,3 +1,8 @@
+Fri Jun 13 13:13:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/make_release: Remeved the generation of a README file in
+	  TAO/orbsvcs. 
+
 Fri Jun 13 06:02:32 2003  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Template_Instantiations.cpp: Removed the explicit template
