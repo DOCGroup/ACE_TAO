@@ -9451,49 +9451,17 @@ ACE_OS::tzset (void)
 # endif /* ACE_HAS_PACE */
 }
 
-/**
- * @todo If ACE_TIMEZONE is defined we just return 0, this is broken
- *    but at least compiles.  AFAIK there is no way to save the old
- *    definition of a macro for later use
- */
 ACE_INLINE long
 ACE_OS::timezone (void)
 {
-# if !defined (ACE_HAS_WINCE) && !defined (VXWORKS) && !defined (ACE_PSOS) \
-&& !defined (CHORUS)
-#   if defined (ACE_WIN32)
-  return _timezone;  // For Win32.
-#   elif defined (__Lynx__) || defined (__FreeBSD__) || defined (ACE_HAS_SUNOS4_GETTIMEOFDAY)
-  long result = 0;
-  struct timeval time;
-  struct timezone zone;
-  ACE_UNUSED_ARG (result);
-  ACE_OSCALL (::gettimeofday (&time, &zone), int, -1, result);
-  return zone.tz_minuteswest * 60;
-#   else
-#     if defined(ACE_TIMEZONE)
-  return 0;
-#     else
-  return ::ace_timezone();
-#     endif /* ACE_TIMEZONE */
-#   endif
-# else
-  ACE_NOTSUP_RETURN (0);
-# endif /* !ACE_HAS_WINCE && !VXWORKS && !ACE_PSOS */
+  return ::ace_timezone ();
 }
 
 #if !defined (ACE_LACKS_DIFFTIME)
 ACE_INLINE double
 ACE_OS::difftime (time_t t1, time_t t0)
 {
-#if defined (ACE_HAS_PACE)
-  return ::pace_difftime (t1, t0);
-#elif defined (ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
-  // simulate difftime ; just subtracting ; ACE_PSOS case
-  return ((double)t1) - ((double)t0);
-#else
-  return ::ace_difftime(t1, t0);
-#endif /* ACE_HAS_PACE */
+  return ::ace_difftime (t1, t0);
 }
 #endif /* ! ACE_LACKS_DIFFTIME */
 
