@@ -1,3 +1,7 @@
+Mon Dec 29 11:37:47 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/server/Makefile: Updated dependencies.
+
 Fri Dec 26 12:05:41 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: Correctly modified the
