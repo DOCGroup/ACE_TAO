@@ -25,11 +25,11 @@ ACE_RCSID(Forwarding, Servant_Locator, "$Id$")
 
 MyFooServantLocator::MyFooServantLocator (CORBA::ORB_ptr orb_ptr,
                                           CORBA::Object_ptr forward_to_ptr)
-  : orb_var_ (CORBA::ORB::_duplicate (orb_ptr)), 
+  : orb_var_ (CORBA::ORB::_duplicate (orb_ptr)),
     counter_ (0),
+    servant_ptr_ (0),
     forward_to_var_ (CORBA::Object::_duplicate (forward_to_ptr)),
-    forwarding_ (0),  // by default do not forward
-    servant_ptr_ (0)
+    forwarding_ (0)  // by default do not forward
 {
 }
 
@@ -73,7 +73,7 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
               // cookie = servant;
             }
           // reuse the old servant
-       
+
           return this->servant_ptr_;
         }
       else
@@ -109,7 +109,7 @@ MyFooServantLocator::postinvoke (const PortableServer::ObjectId &oid,
   ACE_UNUSED_ARG (env);
 }
 
-void 
+void
 MyFooServantLocator::forward (CORBA::Environment &env)
 {
   this->forwarding_ = 1;
