@@ -18,7 +18,6 @@
 #endif /* ACE_HAS_THREADS && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 #endif /* ACE_HAS_EXPLICT_TEMPLATE_INSTANTIATION */
 
-
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 // Lock the creation of the Singleton.
 ACE_Thread_Mutex ACE_Task_Exit::ace_task_lock_;
@@ -105,8 +104,11 @@ ACE_Task_Exit::set_task (ACE_Task_Base *t)
   ACE_TRACE ("ACE_Task_Exit::set_task");
   this->t_ = t;
 
-  if (t != 0)
-    this->tc_.insert (t->thr_mgr ());
+  // @@ Can we remove this and the entire ACE_Thread_Control stuff now
+  // that we've moved it into the ACE_Thread_Manager::spawn() method?
+
+  // if (t != 0)
+  // this->tc_.insert (t->thr_mgr ());
 }
 
 // Set the thread exit status value.
@@ -276,11 +278,10 @@ ACE_Task_Base::svc_run (void *args)
 
   ACE_Task_Base *t = (ACE_Task_Base *) args;
 
-// NOTE:  this preprocessor directive should match the one in
-// above ACE_Task_Exit::instance ().
-// With the Xavier Pthreads package, the exit_hook in TSS causes
-// a seg fault.  So, this works around that by creating exit_hook
-// on the stack.
+// NOTE: this preprocessor directive should match the one in above
+// ACE_Task_Exit::instance ().  With the Xavier Pthreads package, the
+// exit_hook in TSS causes a seg fault.  So, this works around that by
+// creating exit_hook on the stack.
 #if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) && ! defined (ACE_HAS_PTHREAD_SIGMASK) && !defined (ACE_HAS_FSU_PTHEADS)
   // Obtain our thread-specific exit hook and make sure that it knows
   // how to clean us up!  Note that we never use this pointer directly
@@ -288,12 +289,12 @@ ACE_Task_Base::svc_run (void *args)
   // dereference it here and only store it as a reference.
   ACE_Task_Exit &exit_hook = *ACE_Task_Exit::instance ();
 #else
-  // Without TSS, create an ACE_Task_Exit instance.  When this
+  // Without TSS, create an <ACE_Task_Exit> instance.  When this
   // function returns, its destructor will be called because the
   // object goes out of scope.  The drawback with this appraoch is
-  // that the destructor _won't_ get called if thr_exit () is called.
-  // So, threads shouldn't exit that way.  Instead, they should
-  // return from svc ().
+  // that the destructor _won't_ get called if <thr_exit> is called.
+  // So, threads shouldn't exit that way.  Instead, they should return
+  // from <svc>.
   ACE_Task_Exit exit_hook;
 #endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE && ! ACE_HAS_PTHREAD_SIGMASK && !ACE_HAS_FSU_PTHREADS */
 

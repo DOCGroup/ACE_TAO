@@ -389,11 +389,21 @@ private:
   // Must delete the <thr_mgr_> if non-0.
 };
 
-
 class ACE_Export ACE_Thread_Control
   // = TITLE
   //     Used to keep track of a thread's activities within its entry
   //     point function.
+  //
+  // = DESCRIPTION
+  //     A <ACE_Thread_Manager> uses this class to ensure that threads
+  //     it spawns automatically register and unregister themselves
+  //     with it.
+  //
+  //     This class can be stored in thread-specific storage using the
+  //     <ACE_TSS> wrapper.  When a thread exits the
+  //     <ACE_TSS::cleanup> function deletes this object, thereby
+  //     ensuring that it gets removed from its associated
+  //     <ACE_Thread_Manager>.
 {
 public:
   ACE_Thread_Control (ACE_Thread_Manager *tm = 0, 
@@ -438,6 +448,11 @@ private:
 
   void *status_;
   // Keeps track of the exit status for the thread.
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  static ACE_Thread_Mutex ace_thread_lock_;
+  // Lock the creation of the Singleton.
+#endif /* defined (ACE_MT_SAFE) */
 };
 
 #if defined (__ACE_INLINE__)

@@ -239,6 +239,21 @@ ACE_Thread_Manager::~ACE_Thread_Manager (void)
   this->close ();
 }
 
+// Run the thread entry point for the <ACE_Thread_Adapter>.  This must
+// be an extern "C" to make certain compilers happy...
+
+extern "C" void *
+ace_thread_manager_adapter (void *args)
+{
+  ACE_Thread_Adapter *thread_args = (ACE_Thread_Adapter *) args;
+
+  // This really needs to go into TSS!
+  ACE_Thread_Control tc (thread_args->thr_mgr ());
+
+  // Invoke the user-supplied function with the args.
+  return thread_args->invoke ();
+}
+
 // Call the appropriate OS routine to spawn a thread.  Should *not* be
 // called with the lock_ held...
 
@@ -254,6 +269,11 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
 			     size_t stack_size,
 			     ACE_Task_Base *task)
 {
+  ACE_Thread_Adapter *thread_args = 0;
+#if !defined (ACE_NO_THREAD_ADAPTER)
+  ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args, ace_thread_manager_adapter), -1);
+#endif /* ACE_NO_THREAD_ADAPTER */
+
   ACE_TRACE ("ACE_Thread_Manager::spawn_i");
   ACE_thread_t thr_id;
   ACE_hthread_t thr_handle;
@@ -264,9 +284,15 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   if (t_handle == 0)
     t_handle = &thr_handle;
   
-  int result = ACE_Thread::spawn (func, args, flags, 
-				  t_id, t_handle, priority,
-				  stack, stack_size);
+  int result = ACE_Thread::spawn (func,
+				  args,
+				  flags,
+				  t_id,
+				  t_handle,
+				  priority,
+				  stack,
+				  stack_size,
+				  thread_adapter);
   if (result != 0)
     {
       // _Don't_ clobber errno here!  result is either 0 or -1, and
