@@ -227,10 +227,17 @@ main (int argc, char* argv[])
       // ****************************************************************
 
       consumer_bitmask_reject.dump_results (0, 5);
-      consumer_bitmask_accept.dump_results (200, 5);
-      consumer_bitmask_filter.dump_results (100, 5);
-      consumer_bitmask_value.dump_results (100, 5);
-      consumer_bitmask_loose.dump_results (100, 5);
+      CORBA::ULong expected =
+        first_supplier.event_count
+        + second_supplier.event_count;
+      consumer_bitmask_accept.dump_results (expected, 5);
+
+      expected = second_supplier.event_count;
+      consumer_bitmask_filter.dump_results (expected, 5);
+      expected = second_supplier.event_count;
+      consumer_bitmask_value.dump_results (expected, 5);
+      expected = second_supplier.event_count;
+      consumer_bitmask_loose.dump_results (expected, 5);
 
       orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;

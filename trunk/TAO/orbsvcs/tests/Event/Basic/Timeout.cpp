@@ -189,47 +189,9 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-      int diff = interval_consumer.event_count - 50;
-      if (diff > 5 || diff < -5)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "ERROR - Unexpected number <%d> of interval timeouts\n",
-                      interval_consumer.event_count));
-        }
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "Number of interval timeouts <%d> within margins\n",
-                      interval_consumer.event_count));
-        }
-
-      diff = conjunction_consumer.event_count - 25;
-      if (diff > 5 || diff < -5)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "ERROR - Unexpected number <%d> of conjunctions\n",
-                      conjunction_consumer.event_count));
-        }
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "Number of conjunction timeouts <%d> within margins\n",
-                      conjunction_consumer.event_count));
-        }
-
-      diff = deadline_consumer.event_count - 200;
-      if (diff > 5 || diff < -5)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "ERROR - Unexpected number <%d> of deadline timeouts\n",
-                      deadline_consumer.event_count));
-        }
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "Number of deadline timeouts <%d> within margins\n",
-                      deadline_consumer.event_count));
-        }
+      interval_consumer.dump_results (50, 5);
+      conjunction_consumer.dump_results (25, 5);
+      deadline_consumer.dump_results (200, 5);
     }
   ACE_CATCHANY
     {

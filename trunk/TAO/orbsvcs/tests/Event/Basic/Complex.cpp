@@ -216,8 +216,15 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
-      consumer_00.dump_results (100, 5);
-      consumer_01.dump_results (300, 5);
+      CORBA::ULong expected =
+        supplier_00.event_count;
+      consumer_00.dump_results (expected, 5);
+
+      expected =
+        supplier_01.event_count
+        + supplier_10.event_count
+        + supplier_11.event_count;
+      consumer_01.dump_results (expected, 5);
     }
   ACE_CATCHANY
     {
