@@ -1,5 +1,9 @@
 Thu Jan 18 12:49:53 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* tests: Moved the config_test stuff (which tests ACE_Configuration* 
+	  classes) from the examples/Configuration/ directory to the
+ 	  tests/ directory and made it a one-button test.
+
 	* ace/Future.h: Changed the order of the thread mutex and the condition
 	  variable to avoid confusion in the future regarding "order of
  	  initialization."  Thanks to Edan Ayal <edan@bandwiz.com> for

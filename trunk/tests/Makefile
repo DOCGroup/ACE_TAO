@@ -23,6 +23,7 @@ BIN =   Aio_Platform_Test \
         CDR_File_Test \
         CDR_Test \
         Collection_Test \
+	Config_Test \
         Conn_Test \
         DLList_Test \
         DLL_Test\
