@@ -208,23 +208,25 @@ main (int argc, char **argv)
       ACE_DEBUG ((LM_DEBUG, "********************************************************\n"));		
 
       // Setup a timer for the task
-      ACE_Service_Config::reactorEx ()->schedule_timer (&task,
-							(void *) i,
-							0);  
+      if (ACE_Service_Config::reactorEx ()->schedule_timer (&task,
+							    (void *) i,
+							    0) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
 
       for (int i = 0; i < number_of_handles_to_signal; i++)
-	{
-	  // Randomly select a handle to signal.
-	  task.signal (ACE_OS::rand() % number_of_handles);	  
-	}
+	// Randomly select a handle to signal.
+	task.signal (ACE_OS::rand() % number_of_handles);	  
     }
 
   // Sleep for a while
   ACE_OS::sleep (interval);
+
   // Close ReactorEx
   ACE_Service_Config::reactorEx ()->close ();
+
   // Wait for all threads to exit 
   ACE_Service_Config::thr_mgr ()->wait ();
+
   // Delete dynamic resources
   ACE_Service_Config::close_singletons ();
 

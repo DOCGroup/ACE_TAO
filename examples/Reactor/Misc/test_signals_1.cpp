@@ -70,7 +70,8 @@ main (int, char *argv[])
 
   // This just executes the reactor events until my_handler tells us
   // we are finished.
-  ACE_DEBUG ((LM_DEBUG, "starting event loop that runs until you've typed ^C a total of 10 times or ^\\ once.\n"));
+  ACE_DEBUG ((LM_DEBUG, 
+	      "starting event loop that runs until you've typed ^C a total of 10 times or ^\\ once.\n"));
 
   int result = my_config.run_reactor_event_loop ();
 

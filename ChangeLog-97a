@@ -1,3 +1,49 @@
+Sat May  3 17:38:19 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* Changed all uses of Reactor::{scheduler_timer,cancel}() and
+	  Timer_{Queue,List,Heap,Wheel}::{schedule,cancel}() to use 
+	  long rather than int.  This is important since it ensures that
+	  we can make the Timing Wheels trick of casting the
+	  Timer_Node * to long work correctly on machines that have 64
+	  bit pointers, 64 bit longs, and 32 bit ints (e.g,. DEC
+	  ALPHA).  Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
+	  pointing this out, even though he finds this solution
+	  distasteful ;-).
+
+	* netsvcs/lib/TS_Clerk_Handler.cpp (initiate_connection): I
+ 	  believe there was also a bug here -- if schedule_timer() returns
+ 	  0 that's not an error!
+
+	* apps/Gateway/Gateway/Proxy_Handler_Connector.cpp
+ 	  (initiate_connection): I believe there was a bug here -- if
+ 	  schedule_timer() returns 0 that's not an error!
+
+Sat May  3 12:14:01 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tests/IOStream_Test.cpp: Added some minor changes for DEC UNIX.
+  	  Thanks to James CE Johnson <jjohnson@lads.com> for reporting
+ 	  this.
+
+	* ace/IOStream: Added a number of minor changes for DEC UNIX.
+  	  Thanks to James CE Johnson <jjohnson@lads.com> for reporting
+ 	  this.
+
+	* ace/config-osf1-4.0.h: Added
+ 	  ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS to the config.h file.
+  	  Thanks to James CE Johnson <jjohnson@lads.com> for reporting
+ 	  this.
+
+	* ace/SString: Made the ace_string_null_string_ a static data
+ 	  member rather than an external constant.  This should control
+ 	  the name space a bit better.
+
+	* ace/SString.cpp: Fixed the ACE_CString::operator += so that it
+ 	  won't screw up if this->rep_ initially points to the
+ 	  ACE_String_null_string_.
+
+	* examples/Misc: Added a new test_set.cpp program that exercises
+ 	  the ACE_*_Set classes.
+
 Sat May 03 06:56:10 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Map_Manager.cpp (dtor): removed void return (typo).

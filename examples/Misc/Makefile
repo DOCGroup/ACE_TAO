@@ -12,6 +12,7 @@ BIN     = test_dump \
 	  test_get_opt \
 	  test_profile_timer \
 	  test_read_buffer \
+	  test_set \
 	  test_sstring \
 	  test_trace \
 	  test_XtReactor1 \

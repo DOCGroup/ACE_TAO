@@ -10,6 +10,11 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#define ACE_HAS_STRING_CLASS
+#define ACE_LACKS_LINEBUFFERED_STREAMBUF
+#define ACE_LACKS_SIGNED_CHAR
+#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
+
 #if ! defined (__ACE_INLINE__)
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
@@ -19,11 +24,6 @@
 // functionality is lost?  Platform supports <sys/procfs.h>
 //#define ACE_HAS_PROC_FS
  
-#define ACE_HAS_STRING_CLASS
-#define ACE_LACKS_IOSTREAM_FX
-#define ACE_LACKS_LINEBUFFERED_STREAMBUF
-#define ACE_LACKS_SIGNED_CHAR
-
 // Platform defines MAP_FAILED as a long constant.
 #define ACE_HAS_LONG_MAP_FAILED
  

@@ -66,24 +66,28 @@ public:
 };
 
 int
-main ()
+main (void)
 {
   Timeout_Handler handler;
 
   // Register a 2 second timer.
   ACE_Time_Value foo_tv (2);
-  ACE_Service_Config::proactor ()->schedule_timer (handler,
-						   (void *) "Foo",
-						   ACE_Time_Value::zero,
-						   foo_tv);
+  if (ACE_Service_Config::proactor ()->schedule_timer (handler,
+						       (void *) "Foo",
+						       ACE_Time_Value::zero,
+						       foo_tv) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
+
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);
-  ACE_Service_Config::proactor ()->schedule_timer (handler,
-						   (void *) "Bar",
-						   ACE_Time_Value::zero,
-						   bar_tv);
+  if (ACE_Service_Config::proactor ()->schedule_timer (handler,
+						       (void *) "Bar",
+						       ACE_Time_Value::zero,
+						       bar_tv) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
 
   Worker worker;
+
   if (worker.activate (THR_NEW_LWP, 10) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
 
