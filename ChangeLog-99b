@@ -1,16 +1,16 @@
 Wed Feb 10 23:01:16 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * ace/config-win32-common.h: Made a better effort at finding
-          out if the files are compiled against the correct run-time
-          libraries.  Now _DLL is checked to see if it is defined for
-          ACE_HAS_DLL != 0 builds, and if it is not defined for static
-          builds.  
+        * ace/config-win32-common.h: Made a better effort at finding out
+ 	  if the files are compiled against the correct run-time
+ 	  libraries.  Now _DLL is checked to see if it is defined for
+ 	  ACE_HAS_DLL != 0 builds, and if it is not defined for static
+ 	  builds.
 
           This should help diagnose the problem of not using (Debug)
-          Multithreaded DLL run-time libraries in clients that use
-          DLL versions of ace (one symptom of this mistake is errno
-          not working correctly because of one copy being defined in the
-          DLL and one in the program itself).
+ 	  Multithreaded DLL run-time libraries in clients that use DLL
+ 	  versions of ace (one symptom of this mistake is errno not
+ 	  working correctly because of one copy being defined in the DLL
+ 	  and one in the program itself).
 
 Wed Feb 10 22:19:33 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
