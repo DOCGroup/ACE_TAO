@@ -35,7 +35,6 @@ TAO_Notify_ConsumerAdmin_i::TAO_Notify_ConsumerAdmin_i (TAO_Notify_EventChannel_
    // arguments.
    channel_objects_factory_ (TAO_Notify_Factory::get_channel_objects_factory ()),
    poa_factory_ (TAO_Notify_Factory::get_poa_factory ()),
-   event_manager_objects_factory_ (TAO_Notify_Factory::get_event_manager_objects_factory ()),
    collection_factory_ (TAO_Notify_Factory::get_collection_factory ()),
    event_manager_ (event_channel->get_event_manager ()),
    event_listener_list_ (0),
@@ -43,13 +42,15 @@ TAO_Notify_ConsumerAdmin_i::TAO_Notify_ConsumerAdmin_i (TAO_Notify_EventChannel_
    filter_eval_task_ (0)
 {
   // @@ Pradeep: don't forget the this-> stuff for local variables.
+  this->event_manager_objects_factory_ = this->event_manager_->resource_factory ();
   this->event_channel_->_add_ref (); // we don't want our parent to go away!
 }
 
 // Implementation skeleton destructor
 TAO_Notify_ConsumerAdmin_i::~TAO_Notify_ConsumerAdmin_i (void)
 {
-   ACE_DEBUG ((LM_DEBUG,"in CA %d dtor\n", this->my_id_));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,"in CA %d dtor\n", this->my_id_));
 
    ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -178,6 +179,8 @@ TAO_Notify_ConsumerAdmin_i::init (CosNotifyChannelAdmin::AdminID my_id,
   ACE_CHECK;
 
   // Create the task to forward filtering/dispatching commands to:
+  // @@ think about how get rid of these 2 allocations per consumer admin.
+  // add a "get_singleton_reactive_task" to the event manager factory interface.
   this->dispatching_task_ =
     new TAO_Notify_Worker_Task ();
   /*this->event_manager_objects_factory_->create_dispatching_task (ACE_TRY_ENV);

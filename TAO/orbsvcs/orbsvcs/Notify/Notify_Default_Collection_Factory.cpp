@@ -35,7 +35,6 @@ TAO_Notify_Default_Collection_Factory::init (int /*argc*/, char* /*argv*/[])
 int
 TAO_Notify_Default_Collection_Factory::fini (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "TAO_Notify_Default_Collection_Factory::fini\n"));
   return 0;
 }
 

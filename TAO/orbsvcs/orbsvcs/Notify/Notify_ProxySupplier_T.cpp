@@ -37,7 +37,7 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::init (CosNotifyChannelAdmin::ProxyID pro
   this->lock_ = cof->create_proxy_supplier_lock (ACE_TRY_ENV);
 
   TAO_Notify_EMO_Factory* event_manager_objects_factory =
-    TAO_Notify_Factory::get_event_manager_objects_factory ();
+    event_manager_->resource_factory ();
 
   // Create the task to forward filtering/dispatching commands to:
   this->dispatching_task_ =
@@ -80,8 +80,11 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::~TAO_Notify_ProxySupplier (void)
   this->consumer_admin_->proxy_pushsupplier_destroyed (this->proxy_id_);
   consumer_admin_->_remove_ref (ACE_TRY_ENV);
 
-  delete this->dispatching_task_;
-  delete this->filter_eval_task_;
+  TAO_Notify_EMO_Factory* event_manager_objects_factory =
+    event_manager_->resource_factory ();
+
+  event_manager_objects_factory->destroy_dispatching_task (this->dispatching_task_);
+  event_manager_objects_factory->destroy_source_eval_task (this->filter_eval_task_);
 }
 
 template <class SERVANT_TYPE> CORBA::Boolean

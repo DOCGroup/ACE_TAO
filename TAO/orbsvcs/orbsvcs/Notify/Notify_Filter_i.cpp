@@ -112,8 +112,8 @@ TAO_Notify_Filter_i::add_constraints (
   ))
 {
   int constraint_length = constraint_list.length ();
-
-  ACE_DEBUG ((LM_DEBUG, "constraint_length = %d\n", constraint_length));
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "constraint_length = %d\n", constraint_length));
   // create the list that goes out.
   CosNotifyFilter::ConstraintInfoSeq* infoseq;
   ACE_NEW_THROW_EX (infoseq,

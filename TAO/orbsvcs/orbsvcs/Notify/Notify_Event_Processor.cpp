@@ -18,6 +18,7 @@ TAO_Notify_Event_Processor::TAO_Notify_Event_Processor (TAO_Notify_Event_Manager
    lookup_task_ (0),
    emo_factory_ (0)
 {
+  this->emo_factory_ = event_manager_->resource_factory ();
 }
 
 TAO_Notify_Event_Processor::~TAO_Notify_Event_Processor ()
@@ -28,9 +29,6 @@ TAO_Notify_Event_Processor::~TAO_Notify_Event_Processor ()
 void
 TAO_Notify_Event_Processor::init (CORBA::Environment& ACE_TRY_ENV)
 {
-  this->emo_factory_ =
-    TAO_Notify_Factory::get_event_manager_objects_factory ();
-
   this->lookup_task_ = this->emo_factory_->create_lookup_task (ACE_TRY_ENV);
   ACE_CHECK;
 

@@ -35,6 +35,25 @@
 // purpose of an Abstract Factory is to have a single object that
 // returns consistently configured objects....
 
+class TAO_EMO_Options // Options read by service conf.
+{
+public:
+  TAO_EMO_Options (void);
+
+  // Params read via the svc.conf
+  CORBA::Boolean mt_dispatching_;
+  CORBA::Boolean mt_source_eval_;
+  CORBA::Boolean mt_lookup_;
+  CORBA::Boolean mt_listener_eval_;
+  CORBA::Boolean asynch_updates_;
+  CORBA::Boolean alloc_task_per_proxy_;
+
+  int dispatching_threads_;
+  int source_threads_;
+  int lookup_threads_;
+  int listener_threads_;
+};
+
 class TAO_Notify_Export TAO_Notify_Default_EMO_Factory : public TAO_Notify_EMO_Factory
 {
  public:
@@ -63,19 +82,32 @@ class TAO_Notify_Export TAO_Notify_Default_EMO_Factory : public TAO_Notify_EMO_F
   virtual TAO_Notify_Worker_Task* create_lookup_task (CORBA::Environment &ACE_TRY_ENV);
   virtual TAO_Notify_Worker_Task* create_listener_eval_task ( CORBA::Environment &ACE_TRY_ENV);
   virtual TAO_Notify_Worker_Task* create_dispatching_task (CORBA::Environment &ACE_TRY_ENV);
-  virtual void print_values (void);
-protected:
-  // = Params read via the svc.conf
-  CORBA::Boolean mt_dispatching_;
-  CORBA::Boolean mt_source_eval_;
-  CORBA::Boolean mt_lookup_;
-  CORBA::Boolean mt_listener_eval_;
+  virtual TAO_Notify_Worker_Task* create_updates_task (CORBA::Environment &ACE_TRY_ENV);
 
-  int dispatching_threads_;
-  int source_threads_;
-  int lookup_threads_;
-  int listener_threads_;
+  virtual void destroy_source_eval_task (TAO_Notify_Worker_Task* task);
+  virtual void destroy_lookup_task (TAO_Notify_Worker_Task* task);
+  virtual void destroy_listener_eval_task (TAO_Notify_Worker_Task* task);
+  virtual void destroy_dispatching_task (TAO_Notify_Worker_Task* task);
+  virtual void destroy_updates_task (TAO_Notify_Worker_Task* task);
+
+  virtual void print_values (void);
+  int init_instance ();
+
+protected:
+  //= Protected Methods
+  TAO_Notify_Worker_Task* create_task (int mt, int tp_size,CORBA::Environment &ACE_TRY_ENV);
+  // Create a worker task, mt => is this a MT task, if so, tp_size is thread pool size.
+
+  int preallocate_tasks (void);
+
+  //= Data Members
+  TAO_Notify_Worker_Task* prealloc_source_eval_task_;
+  TAO_Notify_Worker_Task* prealloc_listener_eval_task_;
+  TAO_Notify_Worker_Task* prealloc_dispatching_task_;
 };
+
+// Typedef an Options Singleton.
+typedef ACE_Singleton <TAO_EMO_Options, ACE_Null_Mutex> EMO_OPTIONS;
 
 ACE_STATIC_SVC_DECLARE (TAO_Notify_Default_EMO_Factory)
 ACE_FACTORY_DECLARE (TAO_Notify,TAO_Notify_Default_EMO_Factory)
