@@ -39,6 +39,7 @@ class TAO_Resource_Factory;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
 class TAO_Connection_Cache;
+class TAO_ORB_Core_TSS_Resources;
 
 // ****************************************************************
 
@@ -111,7 +112,7 @@ public:
   TAO_Object_Adapter *object_adapter (void);
   // Get <Object Adapter>.
 
-  int inherit_from_parent_thread (TAO_ORB_Core *p);
+  int inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resources);
   // A spawned thread needs to inherit some properties/objects from
   // the spawning thread in order to serve requests.  Return 0 if
   // it successfully inherits from the parent, -1 otherwise.
