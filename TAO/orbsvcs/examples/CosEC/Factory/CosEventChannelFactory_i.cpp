@@ -160,7 +160,7 @@ TAO_CosEventChannelFactory_i::create (const char * channel_id,
 
 
       if (store_in_naming_service &&
-          this->naming_ != CosNaming::NamingContext::_nil ())
+          !CORBA::is_nil (this->naming_.in ()))
         {
           CosNaming::Name name (1);
           name.length (1);
@@ -256,7 +256,7 @@ TAO_CosEventChannelFactory_i::destroy
 
       // Remove from the naming service.
       if (unbind_from_naming_service &&
-          this->naming_ != CosNaming::NamingContext::_nil ())
+          !CORBA::is_nil (this->naming_.in ()))
         {
           CosNaming::Name name (1);
           name.length (1);
