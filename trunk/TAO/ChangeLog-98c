@@ -1,3 +1,10 @@
+
+Fri Apr 17 19:15:24 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
+
+	* tao/Any.h :
+	* tao/Any.cpp : Added static dump () method for debugging any
+	values. It prints out type and value (if the type is primitive).
+
 Fri Apr 17 15:35:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp: 

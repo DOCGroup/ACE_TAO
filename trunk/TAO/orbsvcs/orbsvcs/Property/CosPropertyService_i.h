@@ -23,72 +23,6 @@
 #include "orbsvcs/CosPropertyServiceS.h"
 #include "CosProperty_Hash.h"
 
-class TAO_ORBSVCS_Export TAO_PropertySetFactory :  public virtual POA_CosPropertyService::PropertySetFactory
-{
-  // = TITLE
-  //     Factory class for the TAO_PropertySet class objects.
-  //
-  // = DESCRIPTION
-  //     The object may be created with some predfined properties.
-public:
-  // = Initialization and termination methods.
-  TAO_PropertySetFactory (void);
-  // Constructor.
-
-  virtual ~TAO_PropertySetFactory (void);
-  // Destructor.
-  
-  virtual CosPropertyService::PropertySet_ptr 
-  create_propertyset (CORBA::Environment &env); 
-  // Returns a  new TAO_PropertySet object. 
-  
-  virtual CosPropertyService::PropertySet_ptr  
-  create_constrained_propertyset (const CosPropertyService::PropertyTypes &allowed_property_types, 
-                                  const CosPropertyService::Properties &allowed_properties,
-                                  CORBA::Environment &env);
-  // Allows a client to create a new TAO_PropertySet with specific
-  // constraints.
-  
-  virtual CosPropertyService::PropertySet_ptr 
-  create_initial_propertyset (const CosPropertyService::Properties &initial_properties,
-                              CORBA::Environment &env) ;
-  // Allows a client to create a new TAO_PropertySet with specific
-  // initial properties.
-};
-
-class TAO_ORBSVCS_Export TAO_PropertySetDefFactory : public virtual POA_CosPropertyService::PropertySetDefFactory  
-{
-  // = TITLE
-  //     Factory class for the TAO_PropertySetDef objects.
-  // 
-  // = DESCRIPTION
-  //     The object creation may be done with some predefined properties.
-public:
-  // = Initialization and termination methods.
-  TAO_PropertySetDefFactory(void); 
-  // Constructor.
-
-  virtual ~TAO_PropertySetDefFactory (void);
-  // Destructor.
-  
-  virtual CosPropertyService::PropertySetDef_ptr create_propertysetdef (CORBA::Environment &env); 
-  // Returns a new TAO_PropertySetDef object.
- 
-  virtual CosPropertyService::PropertySetDef_ptr 
-  create_constrained_propertysetdef (const CosPropertyService::PropertyTypes &allowed_property_types, 
-                                     const CosPropertyService::PropertyDefs &allowed_property_defs, 
-                                     CORBA::Environment &env);
-  // Allows a client to create a new TAO_PropertySet with specific
-  // constraints.
-  
- 
-  virtual CosPropertyService::PropertySetDef_ptr 
-  create_initial_propertysetdef (const CosPropertyService::PropertyDefs &initial_property_defs,
-                                 CORBA::Environment &env);
-  // Allows a client to create a new TAO_PropertySet with specific
-  // initial properties.
-};
-
 class TAO_ORBSVCS_Export TAO_PropertySet :  public virtual POA_CosPropertyService::PropertySet  
 {    
   // = TITLE
@@ -96,15 +30,30 @@ class TAO_ORBSVCS_Export TAO_PropertySet :  public virtual POA_CosPropertyServic
   //    checking of properties.
   //
   // = DESCRIPTION
-  //     Uses a HashTable to manage the properties. 
+  //     Uses a HashTable to manage the properties.
 public:
   friend class TAO_PropertyNamesIterator;
   friend class TAO_PropertiesIterator;
 
   // = Initialization and termination methods.
+
   TAO_PropertySet (void);
   // Default constructor. 
+
+  TAO_PropertySet (const CosPropertyService::PropertyTypes allowed_property_types,
+                   const CosPropertyService::Properties allowed_properties,
+                   CORBA::Environment &_env);
+  // Init values that the PropertySetFactory will want to specify.
   
+  TAO_PropertySet (const CosPropertyService::Properties initial_properties,
+                   CORBA::Environment &_env);
+  // PropertySetFactory needs this constructor.
+
+  TAO_PropertySet (const CosPropertyService::PropertyTypes allowed_property_types,
+                   const CORBA::ULong number_of_allowed_propertydefs,
+                   CORBA::Environment &_env);
+  // PropertySetDef's construction needs this.
+
   virtual ~TAO_PropertySet (void);
   // Destructor function.
   
@@ -171,14 +120,33 @@ protected:
   typedef ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex> 
           CosProperty_Hash_Iterator;
   // Typedefs are useful.
+
+  CORBA::Boolean is_type_allowed (CORBA::TypeCode_ptr type);
+  // Tells whether this type is allowed in this property set or no. 
   
+  CORBA::Boolean is_property_allowed (const char *name);
+  // Tells  whether this property is allowed in this property set or
+  // no. 
+
   CosProperty_Hash_Map hash_table_;
   // This Hash_Table manages storage for our properties.
   
-  
+  CosPropertyService::PropertyTypes allowed_property_types_;
+  // Stores the property types that can be allowed in this property
+  // set. 
+
+  CosPropertyService::PropertyNames allowed_property_names_;
+  // Stores the property names that are allowed in this property
+  // set. These properties will be defined with *fixed-normal* modes, by default, at 
+  // creation.
+  // If this is *not* empty, these properties will be the only
+  // properties that will exist in this property set. Nothing more
+  // can be defined.
 };
 
-class TAO_ORBSVCS_Export TAO_PropertySetDef : public virtual TAO_PropertySet
+class TAO_ORBSVCS_Export TAO_PropertySetDef
+  : public virtual POA_CosPropertyService::PropertySetDef,
+    public virtual TAO_PropertySet
 {
   // = TITLE
   //     This class implements PropertySetDef interface, which is
@@ -195,6 +163,15 @@ public:
   // = Initialization and termination methods.
   TAO_PropertySetDef (void);
   // Constructor.
+
+  TAO_PropertySetDef (const CosPropertyService::PropertyTypes allowed_property_types,
+                      const CosPropertyService::PropertyDefs allowed_property,
+                      CORBA::Environment &_env);
+  // The factory uses this constructor.
+  
+  TAO_PropertySetDef (const CosPropertyService::PropertyDefs initial_property_defs,
+                      CORBA::Environment &_env);
+  // This is also for the factory.
   
   virtual ~TAO_PropertySetDef (void);
   // Destructor.
@@ -223,7 +200,8 @@ public:
   // type is checked before the value is overwritten. The property
   // mode is also checked to be sure a new value may be written. If
   // the property does not exist, then the property is added to the
-  // PropertySet.
+  // PropertySet. If type or mode is violated, ConflictingProperty
+  // exception is thrown.
   
   virtual void define_properties_with_modes (const CosPropertyService::PropertyDefs &property_defs,
                                              CORBA::Environment &env);
@@ -238,7 +216,13 @@ public:
   virtual CORBA::Boolean get_property_modes (const CosPropertyService::PropertyNames &property_names,
                                              CosPropertyService::PropertyModes_out property_modes,
                                              CORBA::Environment &env);
-  // Batch operation for getting the property.
+  // Batch operation for getting the property. Invoke get_property_mode
+  // for each name.
+  // Return value False indicates that properties with *undefined* modes
+  // have failed due to PropertyNotFound or InvalidPropertyName exception.
+  // Returning False in case of *Nothing to retun* or New is
+  // failing. The caller has  to check the out parameter whether it is
+  // Nil or no, before doing something with it.
   
   virtual void set_property_mode (const char *property_name,
                                   CosPropertyService::PropertyModeType property_mode, 
@@ -255,8 +239,90 @@ public:
 
   virtual void set_property_modes (const CosPropertyService::PropertyModes &property_modes,
                                    CORBA::Environment &env);
-  // Batch operation for setting the property.
+  // Batch operation for setting the property. Raises
+  // MultipleExceptions.
 };
+
+class TAO_ORBSVCS_Export TAO_PropertySetFactory :  public virtual POA_CosPropertyService::PropertySetFactory
+{
+  // = TITLE
+  //     Factory class for the TAO_PropertySet class objects.
+  //
+  // = DESCRIPTION
+  //     The object may be created with some predfined properties.
+public:
+  // = Initialization and termination methods.
+
+  TAO_PropertySetFactory (void);
+  // Constructor.
+
+  virtual ~TAO_PropertySetFactory (void);
+  // Destructor.
+  
+  virtual CosPropertyService::PropertySet_ptr 
+  create_propertyset (CORBA::Environment &env); 
+  // Returns a  new TAO_PropertySet object. "The property set returned
+  // will *not* have any initial properties." 
+  
+  virtual CosPropertyService::PropertySet_ptr  
+  create_constrained_propertyset (const CosPropertyService::PropertyTypes &allowed_property_types, 
+                                  const CosPropertyService::Properties &allowed_properties,
+                                  CORBA::Environment &env);
+  // Allows a client to create a new TAO_PropertySet with specific
+  // constraints. "All the properties will have *fixed-normal* modes".
+   
+  virtual CosPropertyService::PropertySet_ptr 
+  create_initial_propertyset (const CosPropertyService::Properties &initial_properties,
+                              CORBA::Environment &env);
+  // Allows a client to create a new TAO_PropertySet with specific
+  // initial properties."All the properties will have *fixed-normal"
+  // modes". 
+
+private:
+  TAO_Unbounded_Sequence<TAO_PropertySet*> propertyset_products_;
+  // The PropertySet objects new'ed and given to the client. Let us
+  // keep track all of them so that we can delete them at the end.
+};
+
+class TAO_ORBSVCS_Export TAO_PropertySetDefFactory : public virtual POA_CosPropertyService::PropertySetDefFactory  
+{
+  // = TITLE
+  //     Factory class for the TAO_PropertySetDef objects.
+  // 
+  // = DESCRIPTION
+  //     The object creation may be done with some predefined properties.
+public:
+  // = Initialization and termination methods.
+
+  TAO_PropertySetDefFactory(void); 
+  // Constructor.
+
+  virtual ~TAO_PropertySetDefFactory (void);
+  // Destructor.
+  
+  virtual CosPropertyService::PropertySetDef_ptr create_propertysetdef (CORBA::Environment &env); 
+  // Returns a new TAO_PropertySetDef object.
+ 
+  virtual CosPropertyService::PropertySetDef_ptr 
+  create_constrained_propertysetdef (const CosPropertyService::PropertyTypes &allowed_property_types, 
+                                     const CosPropertyService::PropertyDefs &allowed_property_defs, 
+                                     CORBA::Environment &env);
+  // Allows a client to create a new TAO_PropertySetDef with specific 
+  // constraints.
+   
+  virtual CosPropertyService::PropertySetDef_ptr 
+  create_initial_propertysetdef (const CosPropertyService::PropertyDefs &initial_property_defs,
+                                 CORBA::Environment &env);
+  // Allows a client to create a new TAO_PropertySetDef with specific 
+  // initial properties.
+  
+private:
+  TAO_Unbounded_Sequence<TAO_PropertySetDef*> propertysetdef_products_;
+  // The PropertySet objects new'ed and given to the client. Let us
+  // keep track all of them so that we can delete them at the end.
+};
+
+
 
 class TAO_ORBSVCS_Export TAO_PropertyNamesIterator :  public virtual POA_CosPropertyService::PropertyNamesIterator
 {

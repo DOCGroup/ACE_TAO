@@ -65,9 +65,6 @@ public:
   CosProperty_Hash_Value (void);
   // Default constructor.
   
-  //CosProperty_Hash_Value (const CORBA::Any &any);
-  // Constructor with Any value.
-  
   CosProperty_Hash_Value (const CORBA::Any &any,
                           const CosPropertyService::PropertyModeType &mode);
   // Constructor with the property_value and the property_mode.
