@@ -32,16 +32,6 @@ public:
                      PortableServer::POA_ptr poa);
   // ctor
 
-  void is_a_impl (CORBA::ServerRequest_ptr request,
-                  CORBA::Environment &env)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  void shutdown_impl (CORBA::ServerRequest_ptr request,
-                      CORBA::Environment &env)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  void test_method_impl (CORBA::ServerRequest_ptr request,
-                         CORBA::Environment &env)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-
   // = The DynamicImplementation methods.
   virtual void invoke (CORBA::ServerRequest_ptr request,
                        CORBA::Environment &env)

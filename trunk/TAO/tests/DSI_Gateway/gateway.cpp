@@ -79,39 +79,6 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-#if 0
-      CORBA::PolicyList policies (3);
-      policies.length (3);
-
-      policies[0] =
-        root_poa->create_id_assignment_policy (PortableServer::USER_ID,
-                                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      policies[1] =
-        root_poa->create_lifespan_policy (PortableServer::PERSISTENT,
-                                          ACE_TRY_ENV);
-      policies[2] =
-        root_poa->create_servant_retention_policy (PortableServer::RETAIN,
-                                                   ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      PortableServer::POA_var child_poa =
-        root_poa->create_POA ("ChildPOA",
-                              poa_manager.in (),
-                              policies,
-                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      for (CORBA::ULong i = 0;
-           i < policies.length ();
-           ++i)
-        {
-          CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-#endif /* 0 */
-
       if (parse_args (argc, argv) != 0)
         return 1;
 
@@ -134,7 +101,6 @@ main (int argc, char *argv[])
       DSI_Simple_Server server_impl (orb.in (),
                                      target.in (),
                                      root_poa.in ());
-#if 1
       PortableServer::ObjectId_var oid =
         root_poa->activate_object (&server_impl,
                                    ACE_TRY_ENV);
@@ -144,11 +110,6 @@ main (int argc, char *argv[])
         root_poa->id_to_reference (oid.in (),
                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
-#else
-      CORBA::Object_var server =
-        server_impl._this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-#endif
 
       CORBA::String_var ior =
 	orb->object_to_string (server.in (), ACE_TRY_ENV);

@@ -242,7 +242,7 @@ public:
 
   void _tao_incoming_cdr (TAO_InputCDR &cdr,
                           int flag,
-                          int lazy_evaluation,
+                          int &lazy_evaluation,
                           CORBA::Environment &ACE_TRY_ENV);
   // Set the incoming CDR stream, this is used by TAO to perform lazy
   // evaluation of the NVList in an incoming ServerRequest.
@@ -261,6 +261,11 @@ public:
                     int flag,
                     CORBA::Environment &ACE_TRY_ENV);
   // Decode the NVList arguments from the <cdr> stream.
+
+  ptr_arith_t _tao_target_alignment (void);
+  // Return the required alignment to marshal the NVList without any
+  // re-alignment.
+  // It returns ACE_CDR::MAX_ALIGNMENT to indicate errors.
 
   // Useful for template programming.
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8

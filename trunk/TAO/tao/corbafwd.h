@@ -1722,7 +1722,13 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 
 // We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
 // define our own service context list entries.
-// #define TAO_SOME_SVC_CONTEXT_ENTRY 0x54414f00U
+
+// We insert a dummy service context in the service context list to
+// preserve the alignment in DSI based gateways, so no
+// marshaling/demarshaling is required.  This is *extremely* brittle,
+// but works.
+#define TAO_SVC_CONTEXT_ALIGN 0x54414f00U
+
 
 // This number was assigned by the OMG.  Do *NOT* change at random.
 // The ASCII representation is TA0xxxx, close enough since they only
