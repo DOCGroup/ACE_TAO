@@ -698,35 +698,10 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
                           if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
                               && env.exception () == 0)
                             {
-                              // The representation of a base
-                              // CORBA::Object is a little different.
-                              // @@ TODO maybe equivalent() is the right
-                              // method here.
-                              CORBA::Boolean is_corba_object =
-                                param->equal (CORBA::_tc_Object, env);
-                              if (env.exception () == 0)
-                                {
-                                  if (is_corba_object == 0)
-                                    {
-                                      TAO_Object_Field_T<CORBA_Object>* field =
-                                        ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
-                                                              ACE_const_cast (void *, data));
-                                      field->_downcast (object, env);
-                                      // The size of this field is different...
-                                      size = sizeof(TAO_Object_Field_T<CORBA_Object>);
-                                    }
-                                  else
-                                    {
-                                      CORBA_Object_ptr* tmp =
-                                        ACE_reinterpret_cast(CORBA_Object_ptr*,
-                                                             ACE_const_cast(void*,data));
-                                      *tmp = object;
-                                    }
-                                }
-                              else
-                                {
-                                  retval = CORBA::TypeCode::TRAVERSE_STOP;
-                                }
+                              TAO_Object_Field_T<CORBA_Object>* field =
+                                ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
+                                                      ACE_const_cast (void *, data));
+                              field->_downcast (object, env);
                             }
                         }
                         break;
