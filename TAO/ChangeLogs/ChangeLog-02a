@@ -1,3 +1,36 @@
+Sun Mar 04 08:10:04 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* Changed the following files to correctly use the
+	  CORBA::Environment parameter when calling
+	  <ORB::resolve_initial_references>.  Thanks to Ossama for
+	  pointing this out.
+
+	  Under examples/POA:
+
+	  - Adapter_Activator/server.cpp
+	  - DSI/Database_i.cpp
+	  - DSI/server.cpp
+	  - Default_Servant/File_i.cpp
+	  - Default_Servant/server.cpp
+	  - Explicit_Activation/server.cpp
+	  - FindPOA/FindPOA.cpp
+	  - Forwarding/server.cpp
+	  - Loader/Server_Manager.cpp
+	  - NewPOA/NewPOA.cpp
+	  - On_Demand_Activation/server.cpp
+	  - On_Demand_Loading/Server_Manager.cpp
+	  - Reference_Counted_Servant/server.cpp
+	  - RootPOA/RootPOA.cpp
+	  - TIE/server.cpp
+
+	  Under tests/POA:
+
+	  - Deactivation/Deactivation.cpp
+	  - Destruction/Destruction.cpp
+	  - Identity/Identity.cpp
+	  - Non_Servant_Upcalls/Non_Servant_Upcalls.cpp
+	  - wait_for_completion/wait_for_completion.cpp	
+
 Sun Mar 04 10:11:07 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Smart_Proxies/Policy/server.cpp (shutdown):
