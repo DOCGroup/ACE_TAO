@@ -1291,6 +1291,8 @@ typedef int ACE_thread_key_t;
 #undef sigaddset
 #undef sigdelset
 #undef sigismember
+
+#include <sys/regset.h>
 #endif /* SCO */
 
 // This must come after signal.h is #included.  It's to counteract
