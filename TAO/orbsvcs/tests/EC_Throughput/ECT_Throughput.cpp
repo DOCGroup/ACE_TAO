@@ -61,15 +61,15 @@ ECT_Throughput::~ECT_Throughput (void)
 int
 ECT_Throughput::run (int argc, char* argv[])
 {
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       // Calibrate the high resolution timer *before* starting the
       // test.
       ACE_High_Res_Timer::calibrate ();
 
       this->orb_ =
-        CORBA::ORB_init (argc, argv, "", TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references("RootPOA");
@@ -79,15 +79,15 @@ ECT_Throughput::run (int argc, char* argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        root_poa->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-      poa_manager->activate (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (this->parse_args (argc, argv))
         return 1;
@@ -107,7 +107,7 @@ ECT_Throughput::run (int argc, char* argv[])
                   "  supplier type count = <%d>\n"
                   "  supplier type shift = <%d>\n"
                   "  pid file name = <%s>\n"
-                  "  remote EC = <%d>\n"
+                  "  reactive EC = <%d>\n"
                   "  new EC = <%d>\n"
                   "  concurrency HWM = <%d>\n",
 
@@ -180,8 +180,8 @@ ECT_Throughput::run (int argc, char* argv[])
         runtime_infos);
 #endif
       RtecScheduler::Scheduler_var scheduler =
-        scheduler_impl._this (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        scheduler_impl._this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
 #if 0
       CORBA::Object_var naming_obj =
@@ -192,8 +192,8 @@ ECT_Throughput::run (int argc, char* argv[])
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        CosNaming::NamingContext::_narrow (naming_obj.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // This is the name we (potentially) register the Scheduling
       // Service in the Naming Service.
@@ -202,14 +202,14 @@ ECT_Throughput::run (int argc, char* argv[])
       schedule_name[0].id = CORBA::string_dup ("ScheduleService");
 
       CORBA::String_var str =
-        this->orb_->object_to_string (scheduler.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        this->orb_->object_to_string (scheduler.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "The (local) scheduler IOR is <%s>\n",
                   str.in ()));
 
       // Register the servant with the Naming Context....
-      naming_context->rebind (schedule_name, scheduler.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      naming_context->rebind (schedule_name, scheduler.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ACE_Scheduler_Factory::use_config (naming_context.in ());
 #endif /* 0 */
@@ -251,31 +251,32 @@ ECT_Throughput::run (int argc, char* argv[])
           TAO_EC_Event_Channel *ec =
             new TAO_EC_Event_Channel (attr);
 
-          ec->activate (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          ec->activate (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           auto_ptr<POA_RtecEventChannelAdmin::EventChannel> auto_ec_impl (ec);
           ec_impl = auto_ec_impl;
         }
 
       RtecEventChannelAdmin::EventChannel_var channel =
-        ec_impl->_this (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        ec_impl->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-      this->connect_consumers (scheduler.in (), channel.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->connect_consumers (scheduler.in (),
+                               channel.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "connected consumer(s)\n"));
 
       this->connect_suppliers (scheduler.in (),
                                channel.in (),
-                               TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "connected supplier(s)\n"));
 
-      this->activate_suppliers (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->activate_suppliers (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "suppliers are active\n"));
 
@@ -290,64 +291,66 @@ ECT_Throughput::run (int argc, char* argv[])
 
       this->dump_results ();
 
+      this->disconnect_consumers (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG, "consumers disconnected\n"));
+
+      this->disconnect_suppliers (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG, "suppliers disconnected\n"));
+
+      channel->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG, "channel destroyed\n"));
+
       {
         // Deactivate the EC
         PortableServer::POA_var poa =
-          ec_impl->_default_POA (TAO_TRY_ENV);
-        TAO_CHECK_ENV;
+          ec_impl->_default_POA (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
         PortableServer::ObjectId_var id =
-          poa->servant_to_id (ec_impl.get (), TAO_TRY_ENV);
-        TAO_CHECK_ENV;
-        poa->deactivate_object (id.in (), TAO_TRY_ENV);
-        TAO_CHECK_ENV;
-      }
+          poa->servant_to_id (ec_impl.get (), ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+        poa->deactivate_object (id.in (), ACE_TRY_ENV);
+        ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "EC deactivated\n"));
+        ACE_DEBUG ((LM_DEBUG, "EC deactivated\n"));
+      }
 
       {
         // Deactivate the Scheduler
         PortableServer::POA_var poa =
-          scheduler_impl._default_POA (TAO_TRY_ENV);
-        TAO_CHECK_ENV;
+          scheduler_impl._default_POA (ACE_TRY_ENV);
+        ACE_TRY_CHECK;
         PortableServer::ObjectId_var id =
-          poa->servant_to_id (&scheduler_impl, TAO_TRY_ENV);
-        TAO_CHECK_ENV;
-        poa->deactivate_object (id.in (), TAO_TRY_ENV);
-        TAO_CHECK_ENV;
+          poa->servant_to_id (&scheduler_impl, ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+        poa->deactivate_object (id.in (), ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+        
+        ACE_DEBUG ((LM_DEBUG, "scheduler deactivated\n"));
       }
-
-      ACE_DEBUG ((LM_DEBUG, "scheduler deactivated\n"));
-
-      this->disconnect_consumers (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      ACE_DEBUG ((LM_DEBUG, "consumers disconnected\n"));
-
-      this->disconnect_suppliers (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      ACE_DEBUG ((LM_DEBUG, "suppliers disconnected\n"));
-
-      channel->destroy (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      ACE_DEBUG ((LM_DEBUG, "channel destroyed\n"));
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("ECT_Throughput::run");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "ECT_Throughput::run");
     }
-  TAO_CATCHALL
+  ACE_CATCHALL
     {
       ACE_ERROR ((LM_ERROR, "non-corba exception raised\n"));
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+
   return 0;
 }
 
 void
 ECT_Throughput::shutdown_consumer (void*,
-                                   CORBA::Environment &)
+                                   CORBA::Environment &ACE_TRY_ENV)
 {
   // int ID =
   //   (ACE_reinterpret_cast(Test_Consumer**,consumer_cookie)
@@ -359,8 +362,9 @@ ECT_Throughput::shutdown_consumer (void*,
   this->active_count_--;
   if (this->active_count_ <= 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%t) shutting down the ORB\n"));
-      this->orb_->shutdown ();
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) shutting down the ORB\n"));
+      // Not needed: this->orb_->shutdown ();
     }
 }
 

@@ -57,6 +57,9 @@ TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
                                RtecEventComm::EventSet& event,
                                CORBA::Environment &ACE_TRY_ENV)
 {
+  if (this->allocator_ == 0)
+    this->allocator_ = ACE_Allocator::instance ();
+
   void* buf = this->allocator_->malloc (sizeof (TAO_EC_Push_Command));
 
   if (buf == 0)
