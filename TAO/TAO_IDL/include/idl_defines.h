@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _IDL_DEFINES_IDL_DEFINES_HH
 #define _IDL_DEFINES_IDL_DEFINES_HH
 
+#include "ace/os_include/os_limits.h"
+
 /*
  * idl_defines.hh - Defines global compiler flags
  */

@@ -1,3 +1,12 @@
+Fri Sep  3 19:01:59 2004  Olli Savia  <ops@iki.fi>
+
+        * TAO_IDL/be/be_tmplinst.cpp:
+          LynxOS 3.x needs explicit template instantiation.
+        
+        * TAO_IDL/include/idl_defines.h:
+          Added #include "ace/os_include/os_limits.h" to pick NFILES
+          on LynxOS 3.x
+
 Fri Sep  3 10:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Profile.cpp:
@@ -19,259 +28,259 @@ Fri Sep  3 08:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Sep  2 22:21:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Exception.h:
-	* tao/Exception.i:
-	* tao/Exception.cpp:
+        * tao/Exception.h:
+        * tao/Exception.i:
+        * tao/Exception.cpp:
 
-	  Moved CORBA::SystemException and CORBA::UserException related
-	  code to separate files to improve compile times.
+          Moved CORBA::SystemException and CORBA::UserException related
+          code to separate files to improve compile times.
 
-	  (Exception):
+          (Exception):
 
-	  Improved exception safety by making "id_" and "name_" attributes
-	  CORBA::String_vars instead of "char *"s.
+          Improved exception safety by making "id_" and "name_" attributes
+          CORBA::String_vars instead of "char *"s.
 
-	* tao/SystemException.h:
-	* tao/SystemException.inl:
-	* tao/SystemException.cpp:
+        * tao/SystemException.h:
+        * tao/SystemException.inl:
+        * tao/SystemException.cpp:
 
-	  Moved CORBA::SystemException class and related code to this set
-	  of files to improve compile-times of sources that don't need the
-	  declarations and definitions now in these files.
+          Moved CORBA::SystemException class and related code to this set
+          of files to improve compile-times of sources that don't need the
+          declarations and definitions now in these files.
 
-	  (SystemException):
+          (SystemException):
 
-	  Fixed problem where SystemException attributes were not
-	  initialized in the default constructor, as required by the C++
-	  mapping.
+          Fixed problem where SystemException attributes were not
+          initialized in the default constructor, as required by the C++
+          mapping.
 
-	* tao/UserException.h:
-	* tao/UserException.inl:
-	* tao/UserException.cpp:
+        * tao/UserException.h:
+        * tao/UserException.inl:
+        * tao/UserException.cpp:
 
-	  Moved CORBA::SystemException class and related code to this set
-	  of files.  This was done mostly for the sake of consistency
-	  since this is not an expensive set of sources in terms of
-	  compile times and footprint.
+          Moved CORBA::SystemException class and related code to this set
+          of files.  This was done mostly for the sake of consistency
+          since this is not an expensive set of sources in terms of
+          compile times and footprint.
 
-	* tao/Acceptor_Registry.cpp:
-	* tao/Adapter.cpp:
-	* tao/Adapter.h:
-	* tao/Any_Basic_Impl.cpp:
-	* tao/Any_Dual_Impl_T.cpp:
-	* tao/Any_Impl.cpp:
-	* tao/Any_Impl_T.cpp:
-	* tao/Any_SystemException.cpp:
-	* tao/Any_Unknown_IDL_Type.cpp:
-	* tao/BiDir_Adapter.h:
-	* tao/BoundsC.cpp:
-	* tao/Buffering_Constraint_Policy.cpp:
-	* tao/CDR.cpp:
-	* tao/CDR_Encaps_Codec.cpp:
-	* tao/CORBALOC_Parser.cpp:
-	* tao/CORBANAME_Parser.cpp:
-	* tao/ClientRequestInfo.inl:
-	* tao/ClientRequestInfo_i.inl:
-	* tao/CodecFactory.cpp:
-	* tao/CodecFactory_ORBInitializer.cpp:
-	* tao/Codeset_Manager.cpp:
-	* tao/Connector_Registry.cpp:
-	* tao/DLL_Parser.cpp:
-	* tao/Default_Stub_Factory.cpp:
-	* tao/Environment.cpp:
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Generator_Parser.h:
-	* tao/GIOP_Message_Generator_Parser_10.cpp:
-	* tao/GIOP_Message_Lite.cpp:
-	* tao/GIOP_Message_Lite.h:
-	* tao/IIOP_Connector.cpp:
-	* tao/IIOP_Profile.cpp:
-	* tao/IORInterceptor_Adapter.h:
-	* tao/IORInterceptor_Adapter_Factory.h:
-	* tao/IOR_Parser.h:
-	* tao/Interceptor_List.cpp:
-	* tao/Invocation_Base.cpp:
-	* tao/Invocation_Endpoint_Selectors.cpp:
-	* tao/LocalObject.cpp:
-	* tao/MProfile.cpp:
-	* tao/NVList.cpp:
-	* tao/ORB.cpp:
-	* tao/ORB.h:
-	* tao/ORBInitializer_Registry.cpp:
-	* tao/Object_Loader.h:
-	* tao/Object_Ref_Table.cpp:
-	* tao/Object_T.cpp:
-	* tao/PICurrent.cpp:
-	* tao/PICurrent_ORBInitializer.cpp:
-	* tao/PolicyFactory_Registry.cpp:
-	* tao/Policy_ForwardA.cpp:
-	* tao/Policy_Set.cpp:
-	* tao/PollableC.cpp:
-	* tao/Profile.cpp:
-	* tao/Profile_Transport_Resolver.cpp:
-	* tao/Profile_Transport_Resolver.h:
-	* tao/Remote_Object_Proxy_Broker.cpp:
-	* tao/RequestInfo_Util.cpp:
-	* tao/Request_Dispatcher.h:
-	* tao/Service_Callbacks.cpp:
-	* tao/Services_Activate.h:
-	* tao/Stub.cpp:
-	* tao/Synch_Invocation.cpp:
-	* tao/Synch_Invocation.h:
-	* tao/TAO_Server_Request.cpp:
-	* tao/Thread_Lane_Resources.cpp:
-	* tao/Transport_Connector.cpp:
-	* tao/TypeCodeFactory_Adapter.h:
-	* tao/Typecode_Constants.cpp:
-	* tao/WrongTransactionA.cpp:
-	* tao/WrongTransactionC.cpp:
-	* tao/append.cpp:
-	* tao/corba.h:
-	* tao/operation_details.cpp:
-	* tao/operation_details.h:
-	* tao/skip.cpp:
-	* tao/Messaging/AMH_Response_Handler.cpp:
-	* tao/PortableServer/Object_Adapter.i:
-	* tao/PortableServer/POAManager.i:
-	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/Acceptor_Registry.cpp:
+        * tao/Adapter.cpp:
+        * tao/Adapter.h:
+        * tao/Any_Basic_Impl.cpp:
+        * tao/Any_Dual_Impl_T.cpp:
+        * tao/Any_Impl.cpp:
+        * tao/Any_Impl_T.cpp:
+        * tao/Any_SystemException.cpp:
+        * tao/Any_Unknown_IDL_Type.cpp:
+        * tao/BiDir_Adapter.h:
+        * tao/BoundsC.cpp:
+        * tao/Buffering_Constraint_Policy.cpp:
+        * tao/CDR.cpp:
+        * tao/CDR_Encaps_Codec.cpp:
+        * tao/CORBALOC_Parser.cpp:
+        * tao/CORBANAME_Parser.cpp:
+        * tao/ClientRequestInfo.inl:
+        * tao/ClientRequestInfo_i.inl:
+        * tao/CodecFactory.cpp:
+        * tao/CodecFactory_ORBInitializer.cpp:
+        * tao/Codeset_Manager.cpp:
+        * tao/Connector_Registry.cpp:
+        * tao/DLL_Parser.cpp:
+        * tao/Default_Stub_Factory.cpp:
+        * tao/Environment.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Generator_Parser.h:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_Lite.h:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Profile.cpp:
+        * tao/IORInterceptor_Adapter.h:
+        * tao/IORInterceptor_Adapter_Factory.h:
+        * tao/IOR_Parser.h:
+        * tao/Interceptor_List.cpp:
+        * tao/Invocation_Base.cpp:
+        * tao/Invocation_Endpoint_Selectors.cpp:
+        * tao/LocalObject.cpp:
+        * tao/MProfile.cpp:
+        * tao/NVList.cpp:
+        * tao/ORB.cpp:
+        * tao/ORB.h:
+        * tao/ORBInitializer_Registry.cpp:
+        * tao/Object_Loader.h:
+        * tao/Object_Ref_Table.cpp:
+        * tao/Object_T.cpp:
+        * tao/PICurrent.cpp:
+        * tao/PICurrent_ORBInitializer.cpp:
+        * tao/PolicyFactory_Registry.cpp:
+        * tao/Policy_ForwardA.cpp:
+        * tao/Policy_Set.cpp:
+        * tao/PollableC.cpp:
+        * tao/Profile.cpp:
+        * tao/Profile_Transport_Resolver.cpp:
+        * tao/Profile_Transport_Resolver.h:
+        * tao/Remote_Object_Proxy_Broker.cpp:
+        * tao/RequestInfo_Util.cpp:
+        * tao/Request_Dispatcher.h:
+        * tao/Service_Callbacks.cpp:
+        * tao/Services_Activate.h:
+        * tao/Stub.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/Synch_Invocation.h:
+        * tao/TAO_Server_Request.cpp:
+        * tao/Thread_Lane_Resources.cpp:
+        * tao/Transport_Connector.cpp:
+        * tao/TypeCodeFactory_Adapter.h:
+        * tao/Typecode_Constants.cpp:
+        * tao/WrongTransactionA.cpp:
+        * tao/WrongTransactionC.cpp:
+        * tao/append.cpp:
+        * tao/corba.h:
+        * tao/operation_details.cpp:
+        * tao/operation_details.h:
+        * tao/skip.cpp:
+        * tao/Messaging/AMH_Response_Handler.cpp:
+        * tao/PortableServer/Object_Adapter.i:
+        * tao/PortableServer/POAManager.i:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
 
-	  Include "tao/SystemException.h" and/or "tao/UserException.h" to
-	  pull in CORBA::{System,User}Exception class declaration.
+          Include "tao/SystemException.h" and/or "tao/UserException.h" to
+          pull in CORBA::{System,User}Exception class declaration.
 
-	* tao/Array_VarOut_T.h:
-	* tao/Array_VarOut_T.inl:
-	* tao/Array_VarOut_T.cpp:
-	* tao/CurrentC.cpp:
-	* tao/CurrentC.h:
-	* tao/DomainC.cpp:
-	* tao/DomainC.h:
-	* tao/Fixed_Array_Argument_T.cpp:
-	* tao/IOP_CodecC.cpp:
-	* tao/IOP_CodecC.h:
-	* tao/ORBInitInfo.cpp:
-	* tao/ORBInitInfo.h:
-	* tao/Object.cpp:
-	* tao/Object.h:
-	* tao/Object_Argument_T.cpp:
-	* tao/Objref_VarOut_T.cpp:
-	* tao/Objref_VarOut_T.h:
-	* tao/PolicyC.cpp:
-	* tao/PolicyC.h:
-	* tao/Policy_ForwardC.cpp:
-	* tao/Policy_ForwardC.h:
-	* tao/PortableInterceptorC.cpp:
-	* tao/PortableInterceptorC.h:
-	* tao/Sequence_T.cpp:
-	* tao/Sequence_T.i:
-	* tao/TAOC.cpp:
-	* tao/TAOC.h:
-	* tao/Typecode.cpp:
-	* tao/Typecode.h:
-	* tao/Var_Array_Argument_T.cpp:
-	* tao/BiDir_GIOP/BiDirPolicyC.cpp:
-	* tao/BiDir_GIOP/BiDirPolicyC.h:
-	* tao/DynamicAny/DynamicAnyC.cpp:
-	* tao/DynamicAny/DynamicAnyC.h:
-	* tao/DynamicInterface/Context.cpp:
-	* tao/DynamicInterface/ExceptionList.cpp:
-	* tao/DynamicInterface/Unknown_User_Exception.cpp:
-	* tao/DynamicInterface/Unknown_User_Exception.h:
-	* tao/IFR_Client/IFR_BaseC.cpp:
-	* tao/IFR_Client/IFR_BaseC.h:
-	* tao/IFR_Client/IFR_BasicC.cpp:
-	* tao/IFR_Client/IFR_BasicC.h:
-	* tao/IFR_Client/IFR_ComponentsC.cpp:
-	* tao/IFR_Client/IFR_ComponentsC.h:
-	* tao/IFR_Client/IFR_ExtendedC.cpp:
-	* tao/IFR_Client/IFR_ExtendedC.h:
-	* tao/IORInterceptor/IORInfoC.cpp:
-	* tao/IORInterceptor/IORInfoC.h:
-	* tao/IORInterceptor/IORInterceptorC.cpp:
-	* tao/IORInterceptor/IORInterceptorC.h:
-	* tao/IORTable/IORTableC.cpp:
-	* tao/IORTable/IORTableC.h:
-	* tao/Messaging/AMH_Response_Handler.cpp:
-	* tao/Messaging/MessagingC.cpp:
-	* tao/Messaging/MessagingC.h:
-	* tao/Messaging/Messaging_No_ImplC.cpp:
-	* tao/Messaging/Messaging_No_ImplC.h:
-	* tao/Messaging/Messaging_RT_PolicyC.cpp:
-	* tao/Messaging/Messaging_RT_PolicyC.h:
-	* tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
-	* tao/Messaging/Messaging_SyncScope_PolicyC.h:
-	* tao/Messaging/TAO_ExtC.cpp:
-	* tao/Messaging/TAO_ExtC.h:
-	* tao/ObjRefTemplate/Default_ORTC.cpp:
-	* tao/ObjRefTemplate/Default_ORTC.h:
-	* tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
-	* tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
-	* tao/PortableServer/ImR_LocatorC.cpp:
-	* tao/PortableServer/ImR_LocatorC.h:
-	* tao/PortableServer/ImplRepoC.cpp:
-	* tao/PortableServer/ImplRepoC.h:
-	* tao/PortableServer/PortableServerC.cpp:
-	* tao/PortableServer/PortableServerC.h:
-	* tao/RTCORBA/RTCORBAC.cpp:
-	* tao/RTCORBA/RTCORBAC.h:
-	* tao/RTScheduling/RTSchedulerC.cpp:
-	* tao/RTScheduling/RTSchedulerC.h:
-	* tao/Valuetype/Sequence_T.cpp:
-	* tao/Valuetype/Sequence_T.inl:
-	* tao/Valuetype/ValueBase.cpp:
-	* tao/Valuetype/ValueBase.h:
-	* tao/Valuetype/ValueFactory.cpp:
-	* tao/Valuetype/ValueFactory.h:
-	* tao/Valuetype/Value_VarOut_T.cpp:
-	* tao/Valuetype/Value_VarOut_T.h:
+        * tao/Array_VarOut_T.h:
+        * tao/Array_VarOut_T.inl:
+        * tao/Array_VarOut_T.cpp:
+        * tao/CurrentC.cpp:
+        * tao/CurrentC.h:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/Fixed_Array_Argument_T.cpp:
+        * tao/IOP_CodecC.cpp:
+        * tao/IOP_CodecC.h:
+        * tao/ORBInitInfo.cpp:
+        * tao/ORBInitInfo.h:
+        * tao/Object.cpp:
+        * tao/Object.h:
+        * tao/Object_Argument_T.cpp:
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Objref_VarOut_T.h:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/Policy_ForwardC.cpp:
+        * tao/Policy_ForwardC.h:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.h:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.i:
+        * tao/TAOC.cpp:
+        * tao/TAOC.h:
+        * tao/Typecode.cpp:
+        * tao/Typecode.h:
+        * tao/Var_Array_Argument_T.cpp:
+        * tao/BiDir_GIOP/BiDirPolicyC.cpp:
+        * tao/BiDir_GIOP/BiDirPolicyC.h:
+        * tao/DynamicAny/DynamicAnyC.cpp:
+        * tao/DynamicAny/DynamicAnyC.h:
+        * tao/DynamicInterface/Context.cpp:
+        * tao/DynamicInterface/ExceptionList.cpp:
+        * tao/DynamicInterface/Unknown_User_Exception.cpp:
+        * tao/DynamicInterface/Unknown_User_Exception.h:
+        * tao/IFR_Client/IFR_BaseC.cpp:
+        * tao/IFR_Client/IFR_BaseC.h:
+        * tao/IFR_Client/IFR_BasicC.cpp:
+        * tao/IFR_Client/IFR_BasicC.h:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.h:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.h:
+        * tao/IORInterceptor/IORInfoC.cpp:
+        * tao/IORInterceptor/IORInfoC.h:
+        * tao/IORInterceptor/IORInterceptorC.cpp:
+        * tao/IORInterceptor/IORInterceptorC.h:
+        * tao/IORTable/IORTableC.cpp:
+        * tao/IORTable/IORTableC.h:
+        * tao/Messaging/AMH_Response_Handler.cpp:
+        * tao/Messaging/MessagingC.cpp:
+        * tao/Messaging/MessagingC.h:
+        * tao/Messaging/Messaging_No_ImplC.cpp:
+        * tao/Messaging/Messaging_No_ImplC.h:
+        * tao/Messaging/Messaging_RT_PolicyC.cpp:
+        * tao/Messaging/Messaging_RT_PolicyC.h:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.h:
+        * tao/Messaging/TAO_ExtC.cpp:
+        * tao/Messaging/TAO_ExtC.h:
+        * tao/ObjRefTemplate/Default_ORTC.cpp:
+        * tao/ObjRefTemplate/Default_ORTC.h:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
+        * tao/PortableServer/ImR_LocatorC.cpp:
+        * tao/PortableServer/ImR_LocatorC.h:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/PortableServer/PortableServerC.h:
+        * tao/RTCORBA/RTCORBAC.cpp:
+        * tao/RTCORBA/RTCORBAC.h:
+        * tao/RTScheduling/RTSchedulerC.cpp:
+        * tao/RTScheduling/RTSchedulerC.h:
+        * tao/Valuetype/Sequence_T.cpp:
+        * tao/Valuetype/Sequence_T.inl:
+        * tao/Valuetype/ValueBase.cpp:
+        * tao/Valuetype/ValueBase.h:
+        * tao/Valuetype/ValueFactory.cpp:
+        * tao/Valuetype/ValueFactory.h:
+        * tao/Valuetype/Value_VarOut_T.cpp:
+        * tao/Valuetype/Value_VarOut_T.h:
 
-	  Removed "tao_" prefix from methods in the TAO traits templates
-	  used in these sources.  It is redundant since the traits
-	  templates are TAO-specific, and in the TAO namespace.
+          Removed "tao_" prefix from methods in the TAO traits templates
+          used in these sources.  It is redundant since the traits
+          templates are TAO-specific, and in the TAO namespace.
 
-	* tao/ORB_Core.cpp (check_shutdown):
-	* tao/ORB_Core.i (check_shutdown):
+        * tao/ORB_Core.cpp (check_shutdown):
+        * tao/ORB_Core.i (check_shutdown):
 
-	  Uninlined this method so that we can avoid including
-	  "tao/SystemException.h" in the inline source file.
+          Uninlined this method so that we can avoid including
+          "tao/SystemException.h" in the inline source file.
 
-	* tao/tao.mpc:
+        * tao/tao.mpc:
 
-	  Added new SystemException.cpp and UserException.cpp files to the
-	  ORB_Core source list.
+          Added new SystemException.cpp and UserException.cpp files to the
+          ORB_Core source list.
 
-	* TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_codegen.cpp:
 
-	  Updated conditional Exception.h header include directive to
-	  generate include directives for tao/SystemException.h and
-	  tao/UserException.h instead.  This code is still commented out,
-	  as it was previously, and will be enabled once we reduce
-	  included headers in tao/ORB.h.
+          Updated conditional Exception.h header include directive to
+          generate include directives for tao/SystemException.h and
+          tao/UserException.h instead.  This code is still commented out,
+          as it was previously, and will be enabled once we reduce
+          included headers in tao/ORB.h.
 
-	* TAO_IDL/be/be_visitor_traits.cpp:
-	* TAO_IDL/be/be_visitor_array/array_ci.cpp:
-	* TAO_IDL/be/be_visitor_component/component_cs.cpp:
-	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
 
-	  Removed "tao_" prefix from methods in the TAO traits templates
-	  and their uses generated by TAO_IDL.  It is redundant since the
-	  traits templates are TAO-specific, and in the TAO namespace.
+          Removed "tao_" prefix from methods in the TAO traits templates
+          and their uses generated by TAO_IDL.  It is redundant since the
+          traits templates are TAO-specific, and in the TAO namespace.
 
 Thu Sep  2 14:41:42 2004  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tao/Connection_Handler.cpp (handle_input_eh): Updated to be
-	  consistent with the OCI 1.3a version.  Somehow during the merge
-	  an older version from the OCI repo got in here.  Thanks to
-	  Johnny Willemsen for spotting this.
+        * tao/Connection_Handler.cpp (handle_input_eh): Updated to be
+          consistent with the OCI 1.3a version.  Somehow during the merge
+          an older version from the OCI repo got in here.  Thanks to
+          Johnny Willemsen for spotting this.
 
-	* tao/default_client.cpp (parse_args): Changed ACE_LIB_TEXT usage
-	  to ACE_TEXT.  The merge of MT_NOUPCALL brought in uses of the
-	  ACE_LIB_TEXT macro.
+        * tao/default_client.cpp (parse_args): Changed ACE_LIB_TEXT usage
+          to ACE_TEXT.  The merge of MT_NOUPCALL brought in uses of the
+          ACE_LIB_TEXT macro.
 
 Thu Sep  2 09:41:28 2004  Dale Wilson  <wilson_d@ociweb.com>
 
