@@ -764,6 +764,15 @@ namespace
 
         names (t, defines);
       }
+      
+      os << "// CIAO-specific." << endl << endl
+         << "::CIAO::Session_Container *" << endl
+         << "_ciao_the_Container (void) const;" << endl;
+         
+      os << "static " << t.name () << "_Context *" << endl
+         << "_narrow (" << endl
+         << "::Components::SessionContext_ptr p" << endl
+         << STRS[ENV_HDR] << ");" << endl;
 
       os << "protected:" << endl
          << "// Methods that manage this component's connections"
@@ -2020,6 +2029,8 @@ ServantHeaderEmitter::generate (TranslationUnit& u)
   //
   Traversal::Defines composition_defines;
   composition.edge_traverser (composition_defines);
+  
+  module.edge_traverser (defines);
 
   //--
   Traversal::ComponentExecutor component_executor;

@@ -79,7 +79,7 @@ main (int argc, char* argv[])
 
       d.add_option (CL::OptionDescription (
                       "trace-semantic-actions",
-                      "Turn on semnatic actions tracing facility.",
+                      "Turn on semantic actions tracing facility.",
                       true));
 
       d.add_option (CL::OptionDescription (

@@ -1009,6 +1009,23 @@ namespace
 
         names (t, defines);
       }
+      
+      os << "// CIAO-specific." << endl << endl
+         << "::CIAO::Session_Container *" << endl
+         << t.name () << "_Context::"
+         << "_ciao_the_Container (void) const" << endl
+         << "{"
+         << "return this->container_;" << endl
+         << "}" << endl;
+         
+      os << t.name () << "_Context *" << endl
+         << t.name () << "_Context::_narrow (" << endl
+         << "::Components::SessionContext_ptr p" << endl
+         << STRS[ENV_SRC_NOTUSED] << ")" << endl
+         << "{"
+         << "return dynamic_cast<" << t.name () << "_Context *> (p);"
+         << endl
+         << "}" << endl;
     }
 
     virtual void
@@ -3211,6 +3228,8 @@ ServantSourceEmitter::generate (TranslationUnit& u)
   Traversal::HomeExecutor home_executor;
   composition_defines.node_traverser (component_executor);
   composition_defines.node_traverser (home_executor);
+  
+  module.edge_traverser (defines);
 
   // Layer 5
   //
