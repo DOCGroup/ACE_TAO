@@ -1,3 +1,11 @@
+Thu Jul 27 08:32:58 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* ace/OS.i
+	  Qualified two pace functions with the correct
+	  pace_ name. Added preliminary pace implementation
+	  for ACE_OS::gettimeofday. See PACE/ChangeLog for
+	  other changes relevant to ACE_OS compiled with pace.
+
 Wed Jul 26 18:08:11 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
 	* ace/Log_Record.cpp
@@ -11,7 +19,7 @@ Wed Jul 26 13:20:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
 	* ace/Cached_Connect_Strategy_T.h
 	(ACE_Bounded_Cached_Connect_Strategy): Added a typedef member
 	which I assumed wrongly would be inherited from the superclass.
-	
+
 Tue Jul 25 22:41:53 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Msg.cpp (ACE_Log_Msg::log): Replace use of C++ 'true'
