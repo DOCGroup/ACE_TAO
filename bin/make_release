@@ -12,6 +12,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # Taken from perlrun man page.
 
 use strict;
+require Cwd;
 
 my $usage="usage: $0 [-?] [-i] [-g] [-k <kit>] [-n] [-v <version>] " .
   "[-ta <ACE tag>] [-tt <TAO tag>] " .
@@ -695,9 +696,21 @@ sub generate_makefiles () {
     # are available, this needs to be updated, maybe by cycling through
     # all non-TAO directories looking for mwc (or mpc?) files.
     #
+    # The current ACE_ROOT setting is where this script started from, not
+    # the staging area we want to generate files in. So, we need to
+    # specifically set the -relative option on mwc to replace ACE_ROOT
+    # correctly in generated files.
+    #
     # Need todo a common chmod on the file lists!
-    &ex ("cd ACE_wrappers/ace;../bin/mwc.pl -type vc7 ace.mwc; ../bin/mwc.pl -type em3 ace.mwc; chmod 0644 *.vcproj *.vcp *.sln *.vcw");
-    &ex ("cd ACE_wrappers/tests;../bin/mwc.pl -type vc7 tests.mwc; ../bin/mwc.pl -type em3 tests.mwc; chmod 0644 *.vcproj *.vcp *.sln *.vcw"");
+    my $here = Cwd::getcwd();
+    &ex ("cd ACE_wrappers/ace; \
+        ../bin/mwc.pl -type vc7 -relative ACE_ROOT=$here/ACE_wrappers ace.mwc;\
+        ../bin/mwc.pl -type em3 -relative ACE_ROOT=$here/ACE_wrappers ace.mwc;\
+        chmod 0644 *.vcproj *.vcp *.sln *.vcw");
+    &ex ("cd ACE_wrappers/tests; \
+      ../bin/mwc.pl -type vc7 -relative ACE_ROOT=$here/ACE_wrappers tests.mwc;\
+      ../bin/mwc.pl -type em3 -relative ACE_ROOT=$here/ACE_wrappers tests.mwc;\
+        chmod 0644 *.vcproj *.vcp *.sln *.vcw");
   }
   if ($kit =~ /^tao/) {
     # A TAO-knowledgable person needs to decide what, if anything, is to be

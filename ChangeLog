@@ -1,3 +1,8 @@
+Sat Dec 28 23:05:51 2002  Steve Huston  <shuston@riverace.com>
+
+        * bin/make_release: Use -relative to replace ACE_ROOT with a relative
+          path in generated makefiles.
+
 Sat Dec 28 13:16:24 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_IO.cpp (recv_buf): Reverted my previous hack in:
