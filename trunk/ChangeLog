@@ -1,3 +1,10 @@
+Sun Mar  6 19:06:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Countdown_Time.{h,cpp}:
+          Removed not needed includes, removed workaround for WinCE, it is just
+          needed for ACE_Time_Value that is in Time_Value.h and removed empty
+          comment lines
+
 Sun Mar  6 19:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SSL/SSL_SOCK_Acceptor.cpp:
