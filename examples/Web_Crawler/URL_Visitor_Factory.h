@@ -21,7 +21,7 @@
 #include "Command_Processor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#define ACE_LACKS_PRAGMA_ONCE
+#pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class URL_Visitor_Factory
