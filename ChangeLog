@@ -1,3 +1,9 @@
+Tue May 20 10:54:10 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tests/Proactor_Test.cpp (open): Changed IPPROTO_TCP to
+	  ACE_IPPROTO_TCP.  Thanks to David Ohlemacher
+ 	  <ohlemacher@bbn.com> for motivating this.
+
 Tue May 20 01:50:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/Test_Output.dsp:
