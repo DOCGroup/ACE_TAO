@@ -22,7 +22,6 @@
 // $Id$
 
 #include "ace/Svc_Conf.h"
-#include "ace/OS_NS_string.h"
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 
@@ -30,6 +29,7 @@
 #include "ace/Module.h"
 #include "ace/Stream.h"
 #include "ace/Service_Types.h"
+#include "ace/OS_NS_string.h"
 
 
 ACE_RCSID (ace,
@@ -127,9 +127,9 @@ static const short ace_yyrhs[] =
 /* ACE_YYRLINE[ACE_YYN] -- source line where rule number ACE_YYN was defined. */
 static const short ace_yyrline[] =
 {
-       0,    51,    59,    63,    67,    68,    69,    70,    71,    72,
-      76,    86,    93,   100,   107,   114,   118,   118,   125,   128,
-     134,   134,   143,   147,   155,   159,   186,   199,   207,   215,
+       0,    55,    63,    67,    71,    72,    73,    74,    75,    76,
+      80,    90,    97,   104,   111,   118,   122,   122,   129,   132,
+     138,   138,   147,   151,   159,   163,   188,   201,   209,   217,
      239,   276,   280,   284,   291,   295,   299,   306,   310,   314,
      321,   322,   326,   327,   328
 };
@@ -141,50 +141,14 @@ static const short ace_yyrline[] =
 /* ACE_YYTNAME[TOKEN_NUM] -- String name of the token TOKEN_NUM. */
 static const ACE_TCHAR *const ace_yytname[] =
 {
-  ACE_LIB_TEXT ("$"),
-  ACE_LIB_TEXT ("error"),
-  ACE_LIB_TEXT ("$undefined."),
-  ACE_LIB_TEXT ("ACE_DYNAMIC"),
-  ACE_LIB_TEXT ("ACE_STATIC"),
-  ACE_LIB_TEXT ("ACE_SUSPEND"),
-  ACE_LIB_TEXT ("ACE_RESUME"),
-  ACE_LIB_TEXT ("ACE_REMOVE"),
-  ACE_LIB_TEXT ("ACE_USTREAM"),
-  ACE_LIB_TEXT ("ACE_MODULE_T",)
-  ACE_LIB_TEXT ("ACE_STREAM_T"),
-  ACE_LIB_TEXT ("ACE_SVC_OBJ_T"),
-  ACE_LIB_TEXT ("ACE_ACTIVE"),
-  ACE_LIB_TEXT ("ACE_INACTIVE",)
-  ACE_LIB_TEXT ("ACE_PATHNAME"),
-  ACE_LIB_TEXT ("ACE_IDENT"),
-  ACE_LIB_TEXT ("ACE_STRING"),
-  ACE_LIB_TEXT ("'{'"),
-  ACE_LIB_TEXT ("'}'"),
-  ACE_LIB_TEXT ("':'"),
-  ACE_LIB_TEXT ("'('"),
-  ACE_LIB_TEXT ("')'"),
-  ACE_LIB_TEXT ("'*'"),
-  ACE_LIB_TEXT ("svc_config_entries"),
-  ACE_LIB_TEXT ("svc_config_entry"),
-  ACE_LIB_TEXT ("dynamic",)
-  ACE_LIB_TEXT ("static"),
-  ACE_LIB_TEXT ("suspend"),
-  ACE_LIB_TEXT ("resume"),
-  ACE_LIB_TEXT ("remove"),
-  ACE_LIB_TEXT ("stream"),
-  ACE_LIB_TEXT ("@1"),
-  ACE_LIB_TEXT ("stream_ops",)
-  ACE_LIB_TEXT ("stream_modules"),
-  ACE_LIB_TEXT ("@2"),
-  ACE_LIB_TEXT ("module_list"),
-  ACE_LIB_TEXT ("module"),
-  ACE_LIB_TEXT ("svc_location",)
-  ACE_LIB_TEXT ("status"),
-  ACE_LIB_TEXT ("svc_initializer"),
-  ACE_LIB_TEXT ("type"),
-  ACE_LIB_TEXT ("parameters_opt"),
-  ACE_LIB_TEXT ("pathname"),
-  0
+  "$", "error", "$undefined.", "ACE_DYNAMIC", "ACE_STATIC", "ACE_SUSPEND", 
+  "ACE_RESUME", "ACE_REMOVE", "ACE_USTREAM", "ACE_MODULE_T", 
+  "ACE_STREAM_T", "ACE_SVC_OBJ_T", "ACE_ACTIVE", "ACE_INACTIVE", 
+  "ACE_PATHNAME", "ACE_IDENT", "ACE_STRING", "'{'", "'}'", "':'", "'('", 
+  "')'", "'*'", "svc_config_entries", "svc_config_entry", "dynamic", 
+  "static", "suspend", "resume", "remove", "stream", "@1", "stream_ops", 
+  "stream_modules", "@2", "module_list", "module", "svc_location", 
+  "status", "svc_initializer", "type", "parameters_opt", "pathname", 0
 };
 #endif
 
@@ -449,7 +413,7 @@ do								\
     }								\
   else								\
     { 								\
-      ace_yyerror (ACE_SVC_CONF_PARAM->yyerrno, ACE_SVC_CONF_PARAM->yylineno, ACE_LIB_TEXT ("syntax error: cannot back up"));			\
+      ace_yyerror (ACE_SVC_CONF_PARAM->yyerrno, ACE_SVC_CONF_PARAM->yylineno, "syntax error: cannot back up");			\
       ACE_YYERROR;							\
     }								\
 while (0)
@@ -564,7 +528,7 @@ ace_yystrlen (ace_yystr)
 #  else
 /* Copy ACE_YYSRC to ACE_YYDEST, returning the address of the terminating '\0' in
    ACE_YYDEST.  */
-static char *
+static ACE_TCHAR *
 #   if defined (__STDC__) || defined (__cplusplus)
 ace_yystpcpy (ACE_TCHAR *ace_yydest, const ACE_TCHAR *ace_yysrc)
 #   else
@@ -708,7 +672,7 @@ ace_yyparse (ACE_YYPARSE_PARAM_ARG)
      rule. */
   int ace_yylen;
 
-  ACE_YYDPRINTF ((stderr, ACE_LIB_TEXT ("Starting parse\n")));
+  ACE_YYDPRINTF ((stderr, "Starting parse\n"));
 
   ace_yystate = 0;
   ace_yyerrstatus = 0;
@@ -758,14 +722,14 @@ ace_yyparse (ACE_YYPARSE_PARAM_ARG)
 	ACE_YYLTYPE *ace_yyls1 = ace_yyls;
 	/* This used to be a conditional around just the two extra args,
 	   but that might be undefined if ace_yyoverflow is a macro.  */
-	ace_yyoverflow (ACE_LIB_TEXT ("parser stack overflow"),
+	ace_yyoverflow ("parser stack overflow",
 		    &ace_yyss1, ace_yysize * sizeof (*ace_yyssp),
 		    &ace_yyvs1, ace_yysize * sizeof (*ace_yyvsp),
 		    &ace_yyls1, ace_yysize * sizeof (*ace_yylsp),
 		    &ace_yystacksize);
 	ace_yyls = ace_yyls1;
 # else
-	ace_yyoverflow (ACE_LIB_TEXT ("parser stack overflow"),
+	ace_yyoverflow ("parser stack overflow",
 		    &ace_yyss1, ace_yysize * sizeof (*ace_yyssp),
 		    &ace_yyvs1, ace_yysize * sizeof (*ace_yyvsp),
 		    &ace_yystacksize);
@@ -808,14 +772,14 @@ ace_yyparse (ACE_YYPARSE_PARAM_ARG)
       ace_yylsp = ace_yyls + ace_yysize - 1;
 #endif
 
-      ACE_YYDPRINTF ((stderr, ACE_LIB_TEXT ("Stack size increased to %lu\n"),
+      ACE_YYDPRINTF ((stderr, "Stack size increased to %lu\n",
 		  (unsigned long int) ace_yystacksize));
 
       if (ace_yyssp >= ace_yyss + ace_yystacksize - 1)
 	ACE_YYABORT;
     }
 
-  ACE_YYDPRINTF ((stderr, ACE_LIB_TEXT ("Entering state %d\n"), ace_yystate));
+  ACE_YYDPRINTF ((stderr, "Entering state %d\n", ace_yystate));
 
   goto ace_yybackup;
 
@@ -842,7 +806,7 @@ ace_yybackup:
 
   if (ace_yychar == ACE_YYEMPTY)
     {
-      ACE_YYDPRINTF ((stderr, ACE_LIB_TEXT ("Reading a token: ")));
+      ACE_YYDPRINTF ((stderr, "Reading a token: "));
       ace_yychar = ACE_YYLEX;
     }
 
@@ -853,7 +817,7 @@ ace_yybackup:
       ace_yychar1 = 0;
       ace_yychar = ACE_YYEOF;		/* Don't call ACE_YYLEX any more */
 
-      ACE_YYDPRINTF ((stderr, ACE_LIB_TEXT ("Now at end of input.\n")));
+      ACE_YYDPRINTF ((stderr, "Now at end of input.\n"));
     }
   else
     {
@@ -864,14 +828,14 @@ ace_yybackup:
 	which are defined only if `ACE_YYDEBUG' is set.  */
       if (ace_yydebug)
 	{
-	  ACE_YYFPRINTF (stderr, ACE_LIB_TEXT ("Next token is %d (%s"),
+	  ACE_YYFPRINTF (stderr, "Next token is %d (%s",
 		     ace_yychar, ace_yytname[ace_yychar1]);
 	  /* Give the individual parser a way to print the precise
 	     meaning of a token, for further debugging info.  */
 # ifdef ACE_YYPRINT
 	  ACE_YYPRINT (stderr, ace_yychar, ace_yylval);
 # endif
-	  ACE_YYFPRINTF (stderr, ACE_LIB_TEXT (")\n"));
+	  ACE_YYFPRINTF (stderr, ")\n");
 	}
 #endif
     }
@@ -903,7 +867,7 @@ ace_yybackup:
     ACE_YYACCEPT;
 
   /* Shift the lookahead token.  */
-  ACE_YYDPRINTF ((stderr, ACE_LIB_TEXT ("Shifting token %d (%s), "),
+  ACE_YYDPRINTF ((stderr, "Shifting token %d (%s), ",
 	      ace_yychar, ace_yytname[ace_yychar1]));
 
   /* Discard the token being shifted unless it is eof.  */
@@ -965,13 +929,13 @@ ace_yyreduce:
     {
       int ace_yyi;
 
-      ACE_YYFPRINTF (stderr, ACE_LIB_TEXT ("Reducing via rule %d (line %d), "),
+      ACE_YYFPRINTF (stderr, "Reducing via rule %d (line %d), ",
 		 ace_yyn, ace_yyrline[ace_yyn]);
 
       /* Print the symbols being reduced, and their result.  */
       for (ace_yyi = ace_yyprhs[ace_yyn]; ace_yyrhs[ace_yyi] > 0; ace_yyi++)
-	ACE_YYFPRINTF (stderr, ACE_LIB_TEXT ("%s "), ace_yytname[ace_yyrhs[ace_yyi]]);
-      ACE_YYFPRINTF (stderr, ACE_LIB_TEXT (" -> %s\n"), ace_yytname[ace_yyr1[ace_yyn]]);
+	ACE_YYFPRINTF (stderr, "%s ", ace_yytname[ace_yyrhs[ace_yyi]]);
+      ACE_YYFPRINTF (stderr, " -> %s\n", ace_yytname[ace_yyr1[ace_yyn]]);
     }
 #endif
 
@@ -1241,10 +1205,10 @@ case 41:
   if (ace_yydebug)
     {
       short *ace_yyssp1 = ace_yyss - 1;
-      ACE_YYFPRINTF (stderr, ACE_LIB_TEXT ("state stack now"));
+      ACE_YYFPRINTF (stderr, "state stack now");
       while (ace_yyssp1 != ace_yyssp)
-	ACE_YYFPRINTF (stderr, ACE_LIB_TEXT (" %d"), *++ace_yyssp1);
-      ACE_YYFPRINTF (stderr, ACE_LIB_TEXT ("\n"));
+	ACE_YYFPRINTF (stderr, " %d", *++ace_yyssp1);
+      ACE_YYFPRINTF (stderr, "\n");
     }
 #endif
 
@@ -1293,12 +1257,12 @@ ace_yyerrlab:
 	       ace_yyx < (int) (sizeof (ace_yytname) / sizeof (ACE_TCHAR *)); ace_yyx++)
 	    if (ace_yycheck[ace_yyx + ace_yyn] == ace_yyx)
 	      ace_yysize += ace_yystrlen (ace_yytname[ace_yyx]) + 15, ace_yycount++;
-	  ace_yysize += ace_yystrlen (ACE_LIB_TEXT ("parse error, unexpected ")) + 1;
+	  ace_yysize += ace_yystrlen ("parse error, unexpected ") + 1;
 	  ace_yysize += ace_yystrlen (ace_yytname[ACE_YYTRANSLATE (ace_yychar)]);
 	  ace_yymsg = (ACE_TCHAR *) ACE_YYSTACK_ALLOC (ace_yysize);
 	  if (ace_yymsg != 0)
 	    {
-	      ACE_TCHAR *ace_yyp = ace_yystpcpy (ace_yymsg, ACE_LIB_TEXT ("parse error, unexpected "));
+	      ACE_TCHAR *ace_yyp = ace_yystpcpy (ace_yymsg, "parse error, unexpected ");
 	      ace_yyp = ace_yystpcpy (ace_yyp, ace_yytname[ACE_YYTRANSLATE (ace_yychar)]);
 
 	      if (ace_yycount < 5)
@@ -1309,7 +1273,7 @@ ace_yyerrlab:
 		       ace_yyx++)
 		    if (ace_yycheck[ace_yyx + ace_yyn] == ace_yyx)
 		      {
-			const ACE_TCHAR *ace_yyq = ! ace_yycount ? ACE_LIB_TEXT (", expecting ") : ACE_LIB_TEXT (" or ");
+			const ACE_TCHAR *ace_yyq = ! ace_yycount ? ", expecting " : " or ";
 			ace_yyp = ace_yystpcpy (ace_yyp, ace_yyq);
 			ace_yyp = ace_yystpcpy (ace_yyp, ace_yytname[ace_yyx]);
 			ace_yycount++;
@@ -1319,11 +1283,11 @@ ace_yyerrlab:
 	      ACE_YYSTACK_FREE (ace_yymsg);
 	    }
 	  else
-	    ace_yyerror (ACE_SVC_CONF_PARAM->yyerrno, ACE_SVC_CONF_PARAM->yylineno, ACE_LIB_TEXT ("parse error; also virtual memory exhausted"));
+	    ace_yyerror (ACE_SVC_CONF_PARAM->yyerrno, ACE_SVC_CONF_PARAM->yylineno, "parse error; also virtual memory exhausted");
 	}
       else
 #endif /* defined (ACE_YYERROR_VERBOSE) */
-	ace_yyerror (ACE_SVC_CONF_PARAM->yyerrno, ACE_SVC_CONF_PARAM->yylineno, ACE_LIB_TEXT ("parse error"));
+	ace_yyerror (ACE_SVC_CONF_PARAM->yyerrno, ACE_SVC_CONF_PARAM->yylineno, "parse error");
     }
   goto ace_yyerrlab1;
 
@@ -1340,7 +1304,7 @@ ace_yyerrlab1:
       /* return failure if at end of input */
       if (ace_yychar == ACE_YYEOF)
 	ACE_YYABORT;
-      ACE_YYDPRINTF ((stderr, ACE_LIB_TEXT ("Discarding token %d (%s).\n"),
+      ACE_YYDPRINTF ((stderr, "Discarding token %d (%s).\n",
 		  ace_yychar, ace_yytname[ace_yychar1]));
       ace_yychar = ACE_YYEMPTY;
     }
@@ -1386,10 +1350,10 @@ ace_yyerrpop:
   if (ace_yydebug)
     {
       short *ace_yyssp1 = ace_yyss - 1;
-      ACE_YYFPRINTF (stderr, ACE_LIB_TEXT ("Error: state stack now"));
+      ACE_YYFPRINTF (stderr, "Error: state stack now");
       while (ace_yyssp1 != ace_yyssp)
-	ACE_YYFPRINTF (stderr, ACE_LIB_TEXT (" %d"), *++ace_yyssp1);
-      ACE_YYFPRINTF (stderr, ACE_LIB_TEXT ("\n"));
+	ACE_YYFPRINTF (stderr, " %d", *++ace_yyssp1);
+      ACE_YYFPRINTF (stderr, "\n");
     }
 #endif
 
@@ -1419,7 +1383,7 @@ ace_yyerrhandle:
   if (ace_yyn == ACE_YYFINAL)
     ACE_YYACCEPT;
 
-  ACE_YYDPRINTF ((stderr, ACE_LIB_TEXT ("Shifting error token, ")));
+  ACE_YYDPRINTF ((stderr, "Shifting error token, "));
 
   *++ace_yyvsp = ace_yylval;
 #if ACE_YYLSP_NEEDED
@@ -1448,7 +1412,7 @@ ace_yyabortlab:
 | ace_yyoverflowab -- parser overflow comes here.  |
 `---------------------------------------------*/
 ace_yyoverflowlab:
-  ace_yyerror (ACE_SVC_CONF_PARAM->yyerrno, ACE_SVC_CONF_PARAM->yylineno, ACE_LIB_TEXT ("parser stack overflow"));
+  ace_yyerror (ACE_SVC_CONF_PARAM->yyerrno, ACE_SVC_CONF_PARAM->yylineno, "parser stack overflow");
   ace_yyresult = 2;
   /* Fall through.  */
 
@@ -1548,7 +1512,7 @@ ace_get_module (ACE_Static_Node *str_rec,
 // Main driver program.
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   ACE_Svc_Conf_Param param (stdin);
 

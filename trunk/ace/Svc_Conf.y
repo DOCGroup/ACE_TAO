@@ -9,6 +9,7 @@
 #include "ace/Module.h"
 #include "ace/Stream.h"
 #include "ace/Service_Types.h"
+#include "ace/OS_NS_string.h"
 
 
 ACE_RCSID (ace,
@@ -332,7 +333,7 @@ pathname
 // messages.
 
 void
-yyerror (int yyerrno, int yylineno, const ACE_TCHAR *s)
+yyerror (int yyerrno, int yylineno, const char *s)
 {
 #if defined (ACE_NLOGGING)
   ACE_UNUSED_ARG (yyerrno);

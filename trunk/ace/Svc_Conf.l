@@ -51,12 +51,12 @@ inactive	      { return token (ACE_INACTIVE); }
 "{"                   { return token ('{'); }
 "}"                   { return token ('}'); }
 {string}	      {
-                        // Remove trailing quote character (' or ")
+                        /* Remove trailing quote character (' or ") */
                         ACE_TCHAR *s = ACE_OS::strrchr (yytext, yytext[0]);
 
                         ACE_ASSERT (s != 0);
-                        // Eliminate the opening and closing double or
-                        // single quotes.
+                        /* Eliminate the opening and closing double or
+                           single quotes. */
                         *s = '\0';
 			yyleng -= 1;
                         yylval->ident_ = ACE_SVC_CONF_PARAM->obstack.copy (yytext + 1, yyleng);
