@@ -202,6 +202,8 @@ test_4 (void)
                          ACE_TEXT ("recursive acquire")),
                         1);
 
+  // Don't report a failure if the mutex doesn't offer a view of the
+  // recursion count.
   int nesting_level = mutex_.get_nesting_level ();
   if (!(nesting_level == -1 && errno == ENOTSUP) && nesting_level != i)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("test 4 nesting level %d;")
