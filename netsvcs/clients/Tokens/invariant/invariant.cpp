@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    examples
@@ -21,9 +21,9 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Token_Invariants.h"
 
-ACE_RCSID(invariant, invariant, "$Id$")
+#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 
-#if defined (ACE_HAS_THREADS)
+ACE_RCSID(invariant, invariant, "$Id$")
 
 typedef ACE_Token_Invariant_Manager ACE_TOKEN_INVARIANTS;
 
