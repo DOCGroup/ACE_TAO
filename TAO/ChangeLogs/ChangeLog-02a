@@ -1,3 +1,8 @@
+2002-01-22  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile: 
+	  Regenerated dependencies.
+
 Tue Jan 22 11:25:13 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/PortableGroup.dsp:
