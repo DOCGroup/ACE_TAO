@@ -253,7 +253,7 @@ endif
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -318,7 +318,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Log/notifylog_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/eventlog_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminS_T.i \
@@ -327,6 +327,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
@@ -353,6 +354,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/notifylog_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminS_T.i \
@@ -360,6 +362,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i
 
 .obj/Notify_Supplier.o .obj/Notify_Supplier.so .shobj/Notify_Supplier.o .shobj/Notify_Supplier.so: Notify_Supplier.cpp Notify_Supplier.h \
@@ -574,6 +577,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
@@ -607,6 +611,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Log/notifylog_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Log/eventlog_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsLogAdminC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Log/log_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
@@ -631,6 +636,7 @@ endif
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsEventLogAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/DsNotifyLogAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

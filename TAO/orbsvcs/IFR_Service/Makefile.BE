@@ -95,13 +95,15 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -232,7 +234,8 @@ realclean: clean
  ../../TAO_IDL/include/idl_global.h \
  $(ACE_ROOT)/ace/SString.h \
  $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -253,7 +256,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
  $(ACE_ROOT)/ace/Handle_Ops.h \
@@ -378,6 +382,7 @@ realclean: clean
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -437,7 +442,8 @@ realclean: clean
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- ../../TAO_IDL/include/idl_bool.h $(ACE_ROOT)/ace/OS.h \
+ ../../TAO_IDL/include/idl_bool.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -458,7 +464,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  ../../TAO_IDL/include/idl_narrow.h \
  ../../TAO_IDL/include/ast_attribute.h \
  ../../TAO_IDL/include/ast_field.h \
@@ -595,9 +602,11 @@ realclean: clean
  ../../TAO_IDL/include/utl_identifier.h \
  ../../TAO_IDL/include/utl_string.h ifr_adding_visitor.h ifr_visitor.h \
  ../../TAO_IDL/include/ast_visitor.h be_extern.h TAO_IFR_BE_Export.h \
- be_global.h $(TAO_ROOT)/tao/ORB.h \
+ be_global.h \
+ $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -655,7 +664,8 @@ realclean: clean
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- ../../TAO_IDL/include/idl_bool.h $(ACE_ROOT)/ace/OS.h \
+ ../../TAO_IDL/include/idl_bool.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -676,7 +686,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  ../../TAO_IDL/include/idl_narrow.h ../../TAO_IDL/include/utl_scope.h \
  ../../TAO_IDL/include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -762,9 +773,11 @@ realclean: clean
  ../../TAO_IDL/include/utl_identifier.h ifr_adding_visitor_exception.h \
  ifr_adding_visitor.h ifr_visitor.h \
  ../../TAO_IDL/include/ast_visitor.h be_extern.h TAO_IFR_BE_Export.h \
- be_global.h $(TAO_ROOT)/tao/ORB.h \
+ be_global.h \
+ $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -828,7 +841,8 @@ realclean: clean
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- ../../TAO_IDL/include/idl_bool.h $(ACE_ROOT)/ace/OS.h \
+ ../../TAO_IDL/include/idl_bool.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -849,7 +863,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  ../../TAO_IDL/include/idl_narrow.h \
  ../../TAO_IDL/include/ast_exception.h \
  ../../TAO_IDL/include/ast_structure.h \
@@ -938,9 +953,11 @@ realclean: clean
  ../../TAO_IDL/include/utl_string.h ifr_adding_visitor_operation.h \
  ifr_adding_visitor.h ifr_visitor.h \
  ../../TAO_IDL/include/ast_visitor.h be_extern.h TAO_IFR_BE_Export.h \
- be_global.h $(TAO_ROOT)/tao/ORB.h \
+ be_global.h \
+ $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -1006,7 +1023,8 @@ realclean: clean
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- ../../TAO_IDL/include/idl_bool.h $(ACE_ROOT)/ace/OS.h \
+ ../../TAO_IDL/include/idl_bool.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -1027,7 +1045,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  ../../TAO_IDL/include/idl_narrow.h ../../TAO_IDL/include/utl_scope.h \
  ../../TAO_IDL/include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -1112,9 +1131,11 @@ realclean: clean
  ../../TAO_IDL/include/utl_identifier.h ifr_adding_visitor_structure.h \
  ifr_adding_visitor.h ifr_visitor.h \
  ../../TAO_IDL/include/ast_visitor.h be_extern.h TAO_IFR_BE_Export.h \
- be_global.h $(TAO_ROOT)/tao/ORB.h \
+ be_global.h \
+ $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -1179,7 +1200,8 @@ realclean: clean
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- ../../TAO_IDL/include/idl_bool.h $(ACE_ROOT)/ace/OS.h \
+ ../../TAO_IDL/include/idl_bool.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -1200,7 +1222,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  ../../TAO_IDL/include/idl_narrow.h ../../TAO_IDL/include/utl_scope.h \
  ../../TAO_IDL/include/ast_expression.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -1287,9 +1310,11 @@ realclean: clean
  ../../TAO_IDL/include/utl_identifier.h ifr_adding_visitor_union.h \
  ifr_adding_visitor.h ifr_visitor.h \
  ../../TAO_IDL/include/ast_visitor.h be_extern.h TAO_IFR_BE_Export.h \
- be_global.h $(TAO_ROOT)/tao/ORB.h \
+ be_global.h \
+ $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -1350,8 +1375,9 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl be_extern.h \
- TAO_IFR_BE_Export.h be_global.h ../../TAO_IDL/include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ be_extern.h TAO_IFR_BE_Export.h be_global.h \
+ ../../TAO_IDL/include/idl_bool.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -1377,13 +1403,15 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -1517,8 +1545,9 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl be_extern.h \
- TAO_IFR_BE_Export.h be_global.h ../../TAO_IDL/include/idl_bool.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ be_extern.h TAO_IFR_BE_Export.h be_global.h \
+ ../../TAO_IDL/include/idl_bool.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -1544,13 +1573,15 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
