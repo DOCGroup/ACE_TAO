@@ -1,3 +1,11 @@
+Wed Jun  4 12:40:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/orb.idl: Removed the definition of OctetSeq from the CORBA
+	  module.  There is another definition in OctetSeq.pidl which is
+	  needed. Thanks to Gary Duzan <gduzan@bbn.com> for catching
+	  this. At this point I am not exactly sure how this missed us for
+	  almost 3 years.
+
 Wed Jun  4 13:40:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator.bor:
