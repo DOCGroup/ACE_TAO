@@ -48,7 +48,9 @@ ACE_Log_Msg_UNIX_Syslog::open (const ACE_TCHAR * /*logger_key*/)
   // the log() method, or use the system's syslog.conf file to select
   // desired level of information.
 
+#if !defined (ACE_LACKS_SETLOGMASK)
   (void) setlogmask (LOG_UPTO (LOG_DEBUG));
+#endif /* ACE_LACKS_SETLOGMASK */
 
   return 0;
 }
@@ -89,7 +91,7 @@ ACE_Log_Msg_UNIX_Syslog::log (ACE_Log_Record &log_record)
       // timestamp is duplicated (albeit a shortened version) to
       // provide a timestamp with greater precision than that provided
       // by syslog().
-      if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::VERBOSE) 
+      if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::VERBOSE)
           || ACE_BIT_ENABLED (flags, ACE_Log_Msg::VERBOSE_LITE))
         {
           ACE_TCHAR date_and_time[35];
