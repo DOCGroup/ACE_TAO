@@ -1,5 +1,4 @@
 // -*- C++ -*-
-
 #include "Framework_Component_DLL.h"
 #include "ace/Service_Config.h"
 #include "ace/OS.h"
@@ -7,8 +6,7 @@
 ACE_RCSID (tests,
            Framework_Component_DLL,
            "$Id$")
-
-
+ 
 Simple_Service::Simple_Service (void)
 {
   FRAMEWORK_COMPONENT_DLL_TRACE ("Simple_Service::Simple_Service");
@@ -20,10 +18,10 @@ Simple_Service::~Simple_Service (void)
 }
 
 const ACE_TCHAR *
-Simple_Service::dll_name (void) 
+Simple_Service::name (void) 
 {
   FRAMEWORK_COMPONENT_DLL_TRACE ("Simple_Service::dll_name");
-  return 0;
+  return ACE_TEXT ("Simple_Service");
 }
 
 /***************************************************************************/

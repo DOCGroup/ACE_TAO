@@ -110,7 +110,8 @@ public:
   int close (void);
 
   /// Get pointer to a process-wide <ACE_Framework_Repository>.
-  static ACE_Framework_Repository *instance (int size = ACE_Framework_Repository::DEFAULT_SIZE);
+  static ACE_Framework_Repository *instance 
+    (int size = ACE_Framework_Repository::DEFAULT_SIZE);
 
   /// Delete the dynamically allocated Singleton.
   static void close_singleton (void);
@@ -148,6 +149,10 @@ private:
 
   /// Actually removes the dll components, must be called with locks held.
   int remove_dll_components_i (const ACE_TCHAR *dll_name);
+
+  /// Compact component_vector_ after components have been removed__maintains
+  /// order.
+  void compact (void);
 
   /// Contains all the framework components.
   ACE_Framework_Component **component_vector_;

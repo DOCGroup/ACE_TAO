@@ -11,12 +11,10 @@
 
 ACE_RCSID(ace, Framework_Component, "$Id$")
 
-#undef ACE_TRACE
-#define ACE_TRACE(X) ACE_TRACE_IMPL(X)
-
 ACE_Framework_Component::~ACE_Framework_Component (void)
 {
   ACE_TRACE ("ACE_Framework_Component::~ACE_Framework_Component");
+
   ACE::strdelete (ACE_const_cast (ACE_TCHAR*, this->dll_name_));
   ACE::strdelete (ACE_const_cast (ACE_TCHAR*, this->name_));
 }
@@ -64,24 +62,22 @@ ACE_Framework_Repository::close (void)
     {
       // Delete components in reverse order.
       for (int i = this->current_size_ - 1; i >= 0; i--)
-        {
-          if (this->component_vector_[i])
-            {
-              ACE_Framework_Component *s = ACE_const_cast (ACE_Framework_Component *,
-                                                           this->component_vector_[i]);
-
-              this->component_vector_[i] = 0;
-              if (s)
-                s->close_singleton ();
-            }
-        }
+        if (this->component_vector_[i])
+          {
+            ACE_Framework_Component *s = 
+              ACE_const_cast (ACE_Framework_Component *,
+                              this->component_vector_[i]);
+ 
+            this->component_vector_[i] = 0;
+            if (s)
+              s->close_singleton ();
+          }
 
       delete [] this->component_vector_;
       this->component_vector_ = 0;
       this->current_size_ = 0;
     }
 
-  //ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("AFR::close: end\n")));
   return 0;
 }
 
@@ -131,11 +127,13 @@ ACE_Framework_Repository::register_component (ACE_Framework_Component *fc)
 
   // Check to see if it's already registered
   for (i = 0; i < this->current_size_; i++)
-    if (fc->this_ == this->component_vector_[i]->this_)
+    if (this->component_vector_[i] &&
+        fc->this_ == this->component_vector_[i]->this_)
       {
-        // Delete it since it's already here and component adapter was newed.
-        delete fc;
-        return 0;
+        ACE_ERROR_RETURN ((LM_ERROR, 
+                           ACE_LIB_TEXT ("AFR::register_component: error, "
+                                         "compenent already registered\n")),
+                          -1);
       }
 
   if (i < this->total_size_)
@@ -159,9 +157,9 @@ ACE_Framework_Repository::remove_component (const ACE_TCHAR *name)
     if (this->component_vector_[i] &&
         ACE_OS_String::strcmp (this->component_vector_[i]->name_, name) == 0)
       {
-        this->component_vector_[i]->close_singleton ();
         delete this->component_vector_[i];
         this->component_vector_[i] = 0;
+        this->compact ();
         return 0;
       }
 
@@ -188,19 +186,69 @@ ACE_Framework_Repository::remove_dll_components_i (const ACE_TCHAR *dll_name)
   int i;
   int retval = -1;
 
-  //ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("AFR::remove_dll_components ('%s')\n"), dll_name));
-
   for (i = 0; i < this->current_size_; i++)
     if (this->component_vector_[i] &&
         ACE_OS_String::strcmp (this->component_vector_[i]->dll_name_, dll_name) == 0)
       {
-        //ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("AFR::remove_dll_c...()\n")));
-        this->component_vector_[i]->close_singleton ();
+        ACE_DEBUG ((LM_DEBUG, 
+                    ACE_LIB_TEXT ("AFR::remove_dll_components_i (%s) "
+                                  "component \"%s\"\n"),
+                    dll_name, this->component_vector_[i]->name_));
+        delete this->component_vector_[i];
         this->component_vector_[i] = 0;
         ++retval;
       }
 
+  this->compact ();
+
   return retval == -1 ? -1 : 0;
+}
+
+void
+ACE_Framework_Repository::compact (void)
+{
+  ACE_TRACE ("ACE_Framework_Repository::compact");
+
+  int i;
+  int start_hole;
+  int end_hole;
+
+  do
+    {
+      start_hole = this->current_size_;
+      end_hole = this->current_size_;
+
+      // Find hole
+      for (i = 0; i < this->current_size_; ++i)
+        {
+          if (this->component_vector_[i] == 0)
+            {
+              if (start_hole == this->current_size_)
+                {
+                  start_hole = i;
+                  end_hole = i;
+                }
+              else
+                end_hole = i;
+            }
+          else if (end_hole != this->current_size_)
+            break;
+        }
+
+      if (start_hole != this->current_size_)
+        {
+          // move the contents and reset current_size_
+          while (end_hole + 1 < this->current_size_)
+            {
+              this->component_vector_[start_hole++] =
+                this->component_vector_[++end_hole];
+            }
+          // Since start_hole is now one past the last 
+          // active slot.
+          this->current_size_ = start_hole;
+        }
+
+    } while (start_hole != this->current_size_);
 }
 
 void
