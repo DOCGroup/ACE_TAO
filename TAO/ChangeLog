@@ -1,3 +1,8 @@
+Fri Aug  6 15:45:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
+
+        * TAO/utils/catior/catior.cpp
+          Added #include <ctype.h> required for Lynxos cross build.
+
 Fri Aug  6 08:05:25 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp (TAO_LogMgr_i): Initialize
