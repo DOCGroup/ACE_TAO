@@ -204,6 +204,7 @@ noinst_PROGRAMS = \
   SV_Shared_Memory_Test \
   Svc_Handler_Test \
   Task_Test \
+  Task_Ex_Test \
   Thread_Manager_Test \
   Thread_Mutex_Test \
   Thread_Pool_Test \
@@ -467,6 +468,8 @@ TSS_Test_SOURCES = TSS_Test.cpp \
                    TSS_Test_Errno.h
 
 Task_Test_SOURCES = Task_Test.cpp
+
+Task_Ex_Test_SOURCES = Task_Ex_Test.cpp
 
 Thread_Manager_Test_SOURCES = Thread_Manager_Test.cpp
 
