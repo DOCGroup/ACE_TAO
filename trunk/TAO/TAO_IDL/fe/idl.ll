@@ -295,8 +295,21 @@ idl_parse_line_and_file(char *buf)
   if (*h == '\0')
     idl_global->set_filename(new String("standard input"));
   else
-    idl_global->set_filename(new String(h));
+    {
+      long i;
+      long j;
 
+      // Put Microsoft-style pathnames into a canonical form.
+      for (i = 0, j = 0; h[j] != '\0'; i++, j++)
+        {
+          if (h[j] == '\\' && h[j + 1] == '\\')
+            j++;
+
+          h[i] = h[j];
+        }
+
+      idl_global->set_filename(new String(h));
+    }
   idl_global->set_in_main_file(
     (idl_global->filename()->compare(idl_global->real_filename())) ?
     I_TRUE :
