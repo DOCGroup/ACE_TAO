@@ -87,6 +87,12 @@ const CORBA::ULong TAO_TAG_UIPMC_PROFILE = 0x54414f0CU;
 /// SCIOP
 const CORBA::ULong TAO_TAG_SCIOP_PROFILE = 0x54414f0EU;
 
+/// Tandem (HP) File System Protocol
+const CORBA::ULong TAO_TAG_NSKFS_PROFILE = 0x00003039U;
+
+/// Tandem (HP) Pathsend Protocol
+const CORBA::ULong TAO_TAG_NSKPW_PROFILE = 0x0000303AU;
+
 /**
  * @name Minor Code Encoding
  *
