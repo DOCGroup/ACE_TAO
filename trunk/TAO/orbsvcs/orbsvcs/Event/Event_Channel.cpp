@@ -635,6 +635,14 @@ ACE_EventChannel::report_disconnect (u_long event)
     ACE_DEBUG ((LM_DEBUG, "(%t) Event Channel has no consumers or suppliers.\n"));
 }
 
+ACE_ES_Disjunction_Group::~ACE_ES_Disjunction_Group (void)
+{
+}
+
+ACE_ES_Conjunction_Group::~ACE_ES_Conjunction_Group (void)
+{
+}
+
 // ************************************************************
 
 ACE_ES_Subscription_Info::~ACE_ES_Subscription_Info (void)
