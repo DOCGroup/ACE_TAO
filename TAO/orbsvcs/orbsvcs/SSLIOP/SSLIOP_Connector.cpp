@@ -388,14 +388,6 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
   const ACE_INET_Addr &remote_address =
     ssl_endpoint->object_addr ();
 
-#if 0
-  ACE_DEBUG ((LM_DEBUG,
-              "********** SSLIOP_Connector -- port from addr = %u\n"
-              "********** SSLIOP_Connector -- port from ssl  = %u\n",
-              remote_address.get_port_number (),
-              ssl_component.port));
-#endif  /* 0 */
-
   // Verify that the remote ACE_INET_Addr was initialized
   // properly.  Failure can occur if hostname lookup failed when
   // initializing the remote ACE_INET_Addr.
