@@ -54,7 +54,7 @@ typedef const char *ACE_SOCKOPT_TYPE1;
 #endif /* ACE_HAS_VOIDPTR_SOCKOPT */
 
 #if (!defined (_BSD_SOURCE) && \
-    !defined (_XOPEN_SOURCE) && !defined (_XOPEN_SOURCE_EXTENDED))
+    !defined (_XOPEN_SOURCE) && !defined (_XOPEN_SOURCE_EXTENDED)) \
     || (defined (_XOPEN_SOURCE) && defined (__GNUC__))
 
 # if defined (ACE_LACKS_SETREUID_PROTOTYPE)
