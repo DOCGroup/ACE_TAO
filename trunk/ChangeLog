@@ -90,6 +90,13 @@ Mon Feb 21 12:43:41 2005  Steve Huston  <shuston@riverace.com>
 	  adjustment based on the address family in use.
 	  Close the listen_handle_ when this object is destroyed.
 
+Mon Feb 21 09:32:21 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Ping_Socket.h: Removed extraneous ',' to fix compiler warning.
+
+	* m4/config_h.m4: Added AH_TEMPLATE for ACE_LACKS_INET_ATON
+	* configure.ac: Added check for ACE_LACKS_INET_ATON.
+
 Mon Feb 21 15:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
@@ -108,7 +115,7 @@ Sun Feb 20 19:15:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 Sat Feb 19 10:32:29 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* examples/RMCast/Send_Msg/Receiver.cpp: Added explicit
-	return statements from ACE_TMAIN.
+	  return statements from ACE_TMAIN.
 
 Sat Feb 19 00:54:22 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
