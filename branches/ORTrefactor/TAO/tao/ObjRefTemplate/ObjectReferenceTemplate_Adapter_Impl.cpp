@@ -16,11 +16,13 @@ ACE_RCSID (ORT,
 #endif /* ! __ACE_INLINE__ */
 
 
-TAO_ObjectReferenceTemplate_Adapter_Impl::TAO_ObjectReferenceTemplate_Adapter_Impl()
+TAO_ObjectReferenceTemplate_Adapter_Impl::
+  TAO_ObjectReferenceTemplate_Adapter_Impl()
 {
 }
 
-TAO_ObjectReferenceTemplate_Adapter_Impl::~TAO_ObjectReferenceTemplate_Adapter_Impl (void)
+TAO_ObjectReferenceTemplate_Adapter_Impl::
+  ~TAO_ObjectReferenceTemplate_Adapter_Impl (void)
 {
 }
 

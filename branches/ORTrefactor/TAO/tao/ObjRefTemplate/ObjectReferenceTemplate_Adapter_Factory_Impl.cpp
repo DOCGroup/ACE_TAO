@@ -8,7 +8,8 @@ ACE_RCSID (ORT,
            ObjectReferenceTemplate_Adapter_Factory_Impl,
            "$Id$")
 
-TAO_ObjectReferenceTemplate_Adapter_Factory_Impl::~TAO_ObjectReferenceTemplate_Adapter_Factory_Impl (void)
+TAO_ObjectReferenceTemplate_Adapter_Factory_Impl::
+  ~TAO_ObjectReferenceTemplate_Adapter_Factory_Impl (void)
 {
 }
 
@@ -17,13 +18,13 @@ TAO_ObjectReferenceTemplate_Adapter_Factory_Impl::create (
     ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ObjectReferenceTemplate_Adapter_Impl * new_objectreferencetemplate_adapter;
-  ACE_NEW_THROW_EX (new_objectreferencetemplate_adapter,
+  TAO_ObjectReferenceTemplate_Adapter_Impl * new_ort_adapter;
+  ACE_NEW_THROW_EX (new_ort_adapter,
                     TAO_ObjectReferenceTemplate_Adapter_Impl,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  return new_objectreferencetemplate_adapter;
+  return new_ort_adapter;
 }
 
 void
