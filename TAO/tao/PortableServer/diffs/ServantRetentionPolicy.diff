@@ -1,6 +1,6 @@
---- orig/ServantRetentionPolicyC.h	2005-03-25 15:46:10.593033600 +0100
-+++ ServantRetentionPolicyC.h	2005-03-25 15:46:18.524438400 +0100
-@@ -96,6 +96,7 @@
+--- orig/ServantRetentionPolicyC.h	2005-03-31 13:47:21.555505600 +0200
++++ ServantRetentionPolicyC.h	2005-03-31 13:47:23.738644800 +0200
+@@ -78,6 +78,7 @@
      NON_RETAIN
    };
    
@@ -8,7 +8,7 @@
    typedef ServantRetentionPolicyValue &ServantRetentionPolicyValue_out;
    
    // TAO_IDL - Generated from
-@@ -225,11 +226,13 @@
+@@ -207,11 +208,13 @@
  // TAO_IDL - Generated from
  // be\be_visitor_module/module_ch.cpp:66
  
@@ -22,17 +22,17 @@
  // Traits specializations.
  namespace TAO
  {
-@@ -275,6 +278,8 @@
+@@ -257,6 +260,8 @@
  TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, PortableServer::ServantRetentionPolicyValue);
  TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ServantRetentionPolicyValue &);
  
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 +
  // TAO_IDL - Generated from
- // be\be_codegen.cpp:969
+ // be\be_codegen.cpp:947
  
---- orig/ServantRetentionPolicyC.cpp	2005-03-25 15:46:10.593033600 +0100
-+++ ServantRetentionPolicyC.cpp	2005-03-25 15:46:18.564496000 +0100
+--- orig/ServantRetentionPolicyC.cpp	2005-03-31 13:47:21.555505600 +0200
++++ ServantRetentionPolicyC.cpp	2005-03-31 13:47:23.738644800 +0200
 @@ -44,6 +44,8 @@
  // TAO_IDL - Generated from
  // be\be_visitor_arg_traits.cpp:69
@@ -48,8 +48,8 @@
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 +
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
---- orig/ServantRetentionPolicyA.cpp	2005-03-25 15:46:10.593033600 +0100
-+++ ServantRetentionPolicyA.cpp	2005-03-25 17:38:13.389940800 +0100
+--- orig/ServantRetentionPolicyA.cpp	2005-03-31 13:47:21.555505600 +0200
++++ ServantRetentionPolicyA.cpp	2005-03-31 13:47:23.738644800 +0200
 @@ -37,6 +37,8 @@
  #include "tao/Any_Impl_T.h"
  #include "tao/Any_Basic_Impl_T.h"

@@ -1,6 +1,6 @@
---- orig/ThreadPolicyC.h	2005-03-25 15:46:11.123796800 +0100
-+++ ThreadPolicyC.h	2005-03-25 15:46:18.754769600 +0100
-@@ -96,6 +96,7 @@
+--- orig/ThreadPolicyC.h	2005-03-31 13:47:21.855937600 +0200
++++ ThreadPolicyC.h	2005-03-31 13:47:23.778702400 +0200
+@@ -78,6 +78,7 @@
      SINGLE_THREAD_MODEL
    };
    
@@ -8,7 +8,7 @@
    typedef ThreadPolicyValue &ThreadPolicyValue_out;
    
    // TAO_IDL - Generated from
-@@ -225,12 +226,14 @@
+@@ -207,12 +208,14 @@
  // TAO_IDL - Generated from
  // be\be_visitor_module/module_ch.cpp:66
  
@@ -23,17 +23,17 @@
  namespace TAO
  {
  
-@@ -275,6 +278,8 @@
+@@ -257,6 +260,8 @@
  TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, PortableServer::ThreadPolicyValue);
  TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableServer::ThreadPolicyValue &);
  
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 +
  // TAO_IDL - Generated from
- // be\be_codegen.cpp:969
+ // be\be_codegen.cpp:947
  
---- orig/ThreadPolicyC.cpp	2005-03-25 15:46:11.123796800 +0100
-+++ ThreadPolicyC.cpp	2005-03-25 15:46:18.814856000 +0100
+--- orig/ThreadPolicyC.cpp	2005-03-31 13:47:21.855937600 +0200
++++ ThreadPolicyC.cpp	2005-03-31 13:47:23.778702400 +0200
 @@ -44,6 +44,8 @@
  // TAO_IDL - Generated from
  // be\be_visitor_arg_traits.cpp:69
@@ -49,8 +49,8 @@
  #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 +
 +#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
---- orig/ThreadPolicyA.cpp	2005-03-25 15:46:11.133811200 +0100
-+++ ThreadPolicyA.cpp	2005-03-25 17:41:50.912723200 +0100
+--- orig/ThreadPolicyA.cpp	2005-03-31 13:47:21.855937600 +0200
++++ ThreadPolicyA.cpp	2005-03-31 13:47:23.788716800 +0200
 @@ -37,6 +37,8 @@
  #include "tao/Any_Impl_T.h"
  #include "tao/Any_Basic_Impl_T.h"
