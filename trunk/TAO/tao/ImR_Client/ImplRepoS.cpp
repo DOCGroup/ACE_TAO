@@ -453,7 +453,7 @@ POA_ImplementationRepository::_TAO_ServerInformationIterator_Strategized_Proxy_B
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:985
+// be\be_visitor_interface/interface_ss.cpp:999
 
 TAO::Collocation_Proxy_Broker *
 ImplementationRepository__TAO_ServerInformationIterator_Proxy_Broker_Factory_function (CORBA::Object_ptr)
@@ -560,28 +560,18 @@ POA_ImplementationRepository::ServerInformationIterator::ServerInformationIterat
 POA_ImplementationRepository::ServerInformationIterator::~ServerInformationIterator (void)
 {
 }
-
-// TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:165
-
-void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
-    TAO_ServerRequest & server_request,
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class next_n_ServerInformationIterator
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline next_n_ServerInformationIterator (
       POA_ImplementationRepository::ServerInformationIterator * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -620,11 +610,24 @@ void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
     }
   
   private:
-    
     POA_ImplementationRepository::ServerInformationIterator * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+
+
+// TAO_IDL - Generated from 
+// be\be_visitor_operation/operation_ss.cpp:192
+
+void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
+    TAO_ServerRequest & server_request,
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -646,10 +649,9 @@ void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
   static size_t const nargs = 3;
   
   POA_ImplementationRepository::ServerInformationIterator * const impl =
-    static_cast<
-      POA_ImplementationRepository::ServerInformationIterator *> (servant);
-  
-  Upcall_Command command (
+    static_cast<POA_ImplementationRepository::ServerInformationIterator *> (servant);
+
+  next_n_ServerInformationIterator command (
     impl,
     server_request.operation_details (),
     args);
@@ -659,39 +661,27 @@ void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
 }
-
-// TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:165
-
-void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
-    TAO_ServerRequest & server_request,
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class destroy_ServerInformationIterator
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline destroy_ServerInformationIterator (
       POA_ImplementationRepository::ServerInformationIterator * servant)
       : servant_ (servant)
     {
@@ -705,9 +695,22 @@ void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
     }
   
   private:
-    
     POA_ImplementationRepository::ServerInformationIterator * const servant_;
   };
+  
+}
+
+
+// TAO_IDL - Generated from 
+// be\be_visitor_operation/operation_ss.cpp:192
+
+void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
+    TAO_ServerRequest & server_request,
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -725,10 +728,9 @@ void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
   static size_t const nargs = 1;
   
   POA_ImplementationRepository::ServerInformationIterator * const impl =
-    static_cast<
-      POA_ImplementationRepository::ServerInformationIterator *> (servant);
-  
-  Upcall_Command command (
+    static_cast<POA_ImplementationRepository::ServerInformationIterator *> (servant);
+
+  destroy_ServerInformationIterator command (
     impl);
   
   TAO::Upcall_Wrapper upcall_wrapper;
@@ -736,13 +738,11 @@ void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
@@ -751,24 +751,18 @@ void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
 // TAO_IDL - Generated from 
 // be\be_visitor_interface/interface_ss.cpp:169
 
-void POA_ImplementationRepository::ServerInformationIterator::_is_a_skel (
-    TAO_ServerRequest & server_request, 
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class _is_a_ServerInformationIterator_Upcall_Command
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline _is_a_ServerInformationIterator_Upcall_Command (
       POA_ImplementationRepository::ServerInformationIterator * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -800,11 +794,19 @@ void POA_ImplementationRepository::ServerInformationIterator::_is_a_skel (
     }
   
   private:
-    
     POA_ImplementationRepository::ServerInformationIterator * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+void POA_ImplementationRepository::ServerInformationIterator::_is_a_skel (
+    TAO_ServerRequest & server_request, 
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -824,10 +826,9 @@ void POA_ImplementationRepository::ServerInformationIterator::_is_a_skel (
   static size_t const nargs = 2;
   
   POA_ImplementationRepository::ServerInformationIterator * const impl =
-    static_cast<
-      POA_ImplementationRepository::ServerInformationIterator *> (servant);
+    static_cast<POA_ImplementationRepository::ServerInformationIterator *> (servant);
   
-  Upcall_Command command (
+  _is_a_ServerInformationIterator_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
@@ -837,36 +838,28 @@ void POA_ImplementationRepository::ServerInformationIterator::_is_a_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
 }
 
-void POA_ImplementationRepository::ServerInformationIterator::_non_existent_skel (
-    TAO_ServerRequest & server_request, 
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class _non_existent_ServerInformationIterator_Upcall_Command
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline _non_existent_ServerInformationIterator_Upcall_Command (
       POA_ImplementationRepository::ServerInformationIterator * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -891,11 +884,19 @@ void POA_ImplementationRepository::ServerInformationIterator::_non_existent_skel
     }
   
   private:
-    
     POA_ImplementationRepository::ServerInformationIterator * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+void POA_ImplementationRepository::ServerInformationIterator::_non_existent_skel (
+    TAO_ServerRequest & server_request, 
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -913,10 +914,9 @@ void POA_ImplementationRepository::ServerInformationIterator::_non_existent_skel
   static size_t const nargs = 1;
   
   POA_ImplementationRepository::ServerInformationIterator * const impl =
-    static_cast<
-      POA_ImplementationRepository::ServerInformationIterator *> (servant);
+    static_cast<POA_ImplementationRepository::ServerInformationIterator *> (servant);
   
-  Upcall_Command command (
+  _non_existent_ServerInformationIterator_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
@@ -926,13 +926,11 @@ void POA_ImplementationRepository::ServerInformationIterator::_non_existent_skel
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
@@ -941,7 +939,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_non_existent_skel
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_interface/interface_ss.cpp:385
+// be\be_visitor_interface/interface_ss.cpp:393
 
 
 
@@ -964,8 +962,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_interface_skel (
     }
   
   POA_ImplementationRepository::ServerInformationIterator * const impl =
-    static_cast<
-      POA_ImplementationRepository::ServerInformationIterator *> (servant);
+    static_cast<POA_ImplementationRepository::ServerInformationIterator *> (servant);
   CORBA::InterfaceDef_ptr _tao_retval = 
     impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -987,24 +984,18 @@ void POA_ImplementationRepository::ServerInformationIterator::_interface_skel (
     }
 }
 
-void POA_ImplementationRepository::ServerInformationIterator::_component_skel (
-    TAO_ServerRequest & server_request, 
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class _get_component_ServerInformationIterator_Upcall_Command
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline _get_component_ServerInformationIterator_Upcall_Command (
       POA_ImplementationRepository::ServerInformationIterator * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -1029,11 +1020,19 @@ void POA_ImplementationRepository::ServerInformationIterator::_component_skel (
     }
   
   private:
-    
     POA_ImplementationRepository::ServerInformationIterator * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+void POA_ImplementationRepository::ServerInformationIterator::_component_skel (
+    TAO_ServerRequest & server_request, 
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -1051,10 +1050,9 @@ void POA_ImplementationRepository::ServerInformationIterator::_component_skel (
   static size_t const nargs = 1;
   
   POA_ImplementationRepository::ServerInformationIterator * const impl =
-    static_cast<
-      POA_ImplementationRepository::ServerInformationIterator *> (servant);
+    static_cast<POA_ImplementationRepository::ServerInformationIterator *> (servant);
   
-  Upcall_Command command (
+  _get_component_ServerInformationIterator_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
@@ -1064,13 +1062,11 @@ void POA_ImplementationRepository::ServerInformationIterator::_component_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
@@ -1100,7 +1096,7 @@ const char* POA_ImplementationRepository::ServerInformationIterator::_interface_
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:926
+// be\be_visitor_interface/interface_ss.cpp:940
 
 void POA_ImplementationRepository::ServerInformationIterator::_dispatch (
     TAO_ServerRequest & req,
@@ -1115,7 +1111,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:877
+// be\be_visitor_interface/interface_ss.cpp:891
 
 ImplementationRepository::ServerInformationIterator *
 POA_ImplementationRepository::ServerInformationIterator::_this (ACE_ENV_SINGLE_ARG_DECL)
@@ -1336,7 +1332,7 @@ POA_ImplementationRepository::_TAO_Administration_Strategized_Proxy_Broker::disp
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:985
+// be\be_visitor_interface/interface_ss.cpp:999
 
 TAO::Collocation_Proxy_Broker *
 ImplementationRepository__TAO_Administration_Proxy_Broker_Factory_function (CORBA::Object_ptr)
@@ -1621,28 +1617,18 @@ POA_ImplementationRepository::Administration::Administration (const Administrati
 POA_ImplementationRepository::Administration::~Administration (void)
 {
 }
-
-// TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:165
-
-void POA_ImplementationRepository::Administration::activate_server_skel (
-    TAO_ServerRequest & server_request,
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class activate_server_Administration
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline activate_server_Administration (
       POA_ImplementationRepository::Administration * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -1667,11 +1653,24 @@ void POA_ImplementationRepository::Administration::activate_server_skel (
     }
   
   private:
-    
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+
+
+// TAO_IDL - Generated from 
+// be\be_visitor_operation/operation_ss.cpp:192
+
+void POA_ImplementationRepository::Administration::activate_server_skel (
+    TAO_ServerRequest & server_request,
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -1695,10 +1694,9 @@ void POA_ImplementationRepository::Administration::activate_server_skel (
   static size_t const nargs = 2;
   
   POA_ImplementationRepository::Administration * const impl =
-    static_cast<
-      POA_ImplementationRepository::Administration *> (servant);
-  
-  Upcall_Command command (
+    static_cast<POA_ImplementationRepository::Administration *> (servant);
+
+  activate_server_Administration command (
     impl,
     server_request.operation_details (),
     args);
@@ -1708,39 +1706,27 @@ void POA_ImplementationRepository::Administration::activate_server_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
 }
-
-// TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:165
-
-void POA_ImplementationRepository::Administration::register_server_skel (
-    TAO_ServerRequest & server_request,
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class register_server_Administration
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline register_server_Administration (
       POA_ImplementationRepository::Administration * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -1772,11 +1758,24 @@ void POA_ImplementationRepository::Administration::register_server_skel (
     }
   
   private:
-    
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+
+
+// TAO_IDL - Generated from 
+// be\be_visitor_operation/operation_ss.cpp:192
+
+void POA_ImplementationRepository::Administration::register_server_skel (
+    TAO_ServerRequest & server_request,
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -1802,10 +1801,9 @@ void POA_ImplementationRepository::Administration::register_server_skel (
   static size_t const nargs = 3;
   
   POA_ImplementationRepository::Administration * const impl =
-    static_cast<
-      POA_ImplementationRepository::Administration *> (servant);
-  
-  Upcall_Command command (
+    static_cast<POA_ImplementationRepository::Administration *> (servant);
+
+  register_server_Administration command (
     impl,
     server_request.operation_details (),
     args);
@@ -1815,39 +1813,27 @@ void POA_ImplementationRepository::Administration::register_server_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
 }
-
-// TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:165
-
-void POA_ImplementationRepository::Administration::reregister_server_skel (
-    TAO_ServerRequest & server_request,
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class reregister_server_Administration
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline reregister_server_Administration (
       POA_ImplementationRepository::Administration * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -1879,11 +1865,24 @@ void POA_ImplementationRepository::Administration::reregister_server_skel (
     }
   
   private:
-    
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+
+
+// TAO_IDL - Generated from 
+// be\be_visitor_operation/operation_ss.cpp:192
+
+void POA_ImplementationRepository::Administration::reregister_server_skel (
+    TAO_ServerRequest & server_request,
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -1909,10 +1908,9 @@ void POA_ImplementationRepository::Administration::reregister_server_skel (
   static size_t const nargs = 3;
   
   POA_ImplementationRepository::Administration * const impl =
-    static_cast<
-      POA_ImplementationRepository::Administration *> (servant);
-  
-  Upcall_Command command (
+    static_cast<POA_ImplementationRepository::Administration *> (servant);
+
+  reregister_server_Administration command (
     impl,
     server_request.operation_details (),
     args);
@@ -1922,39 +1920,27 @@ void POA_ImplementationRepository::Administration::reregister_server_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
 }
-
-// TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:165
-
-void POA_ImplementationRepository::Administration::remove_server_skel (
-    TAO_ServerRequest & server_request,
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class remove_server_Administration
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline remove_server_Administration (
       POA_ImplementationRepository::Administration * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -1979,11 +1965,24 @@ void POA_ImplementationRepository::Administration::remove_server_skel (
     }
   
   private:
-    
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+
+
+// TAO_IDL - Generated from 
+// be\be_visitor_operation/operation_ss.cpp:192
+
+void POA_ImplementationRepository::Administration::remove_server_skel (
+    TAO_ServerRequest & server_request,
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -2006,10 +2005,9 @@ void POA_ImplementationRepository::Administration::remove_server_skel (
   static size_t const nargs = 2;
   
   POA_ImplementationRepository::Administration * const impl =
-    static_cast<
-      POA_ImplementationRepository::Administration *> (servant);
-  
-  Upcall_Command command (
+    static_cast<POA_ImplementationRepository::Administration *> (servant);
+
+  remove_server_Administration command (
     impl,
     server_request.operation_details (),
     args);
@@ -2019,39 +2017,27 @@ void POA_ImplementationRepository::Administration::remove_server_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
 }
-
-// TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:165
-
-void POA_ImplementationRepository::Administration::shutdown_server_skel (
-    TAO_ServerRequest & server_request,
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class shutdown_server_Administration
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline shutdown_server_Administration (
       POA_ImplementationRepository::Administration * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -2076,11 +2062,24 @@ void POA_ImplementationRepository::Administration::shutdown_server_skel (
     }
   
   private:
-    
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+
+
+// TAO_IDL - Generated from 
+// be\be_visitor_operation/operation_ss.cpp:192
+
+void POA_ImplementationRepository::Administration::shutdown_server_skel (
+    TAO_ServerRequest & server_request,
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -2103,10 +2102,9 @@ void POA_ImplementationRepository::Administration::shutdown_server_skel (
   static size_t const nargs = 2;
   
   POA_ImplementationRepository::Administration * const impl =
-    static_cast<
-      POA_ImplementationRepository::Administration *> (servant);
-  
-  Upcall_Command command (
+    static_cast<POA_ImplementationRepository::Administration *> (servant);
+
+  shutdown_server_Administration command (
     impl,
     server_request.operation_details (),
     args);
@@ -2116,39 +2114,27 @@ void POA_ImplementationRepository::Administration::shutdown_server_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
 }
-
-// TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:165
-
-void POA_ImplementationRepository::Administration::server_is_running_skel (
-    TAO_ServerRequest & server_request,
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class server_is_running_Administration
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline server_is_running_Administration (
       POA_ImplementationRepository::Administration * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -2187,11 +2173,24 @@ void POA_ImplementationRepository::Administration::server_is_running_skel (
     }
   
   private:
-    
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+
+
+// TAO_IDL - Generated from 
+// be\be_visitor_operation/operation_ss.cpp:192
+
+void POA_ImplementationRepository::Administration::server_is_running_skel (
+    TAO_ServerRequest & server_request,
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -2218,10 +2217,9 @@ void POA_ImplementationRepository::Administration::server_is_running_skel (
   static size_t const nargs = 4;
   
   POA_ImplementationRepository::Administration * const impl =
-    static_cast<
-      POA_ImplementationRepository::Administration *> (servant);
-  
-  Upcall_Command command (
+    static_cast<POA_ImplementationRepository::Administration *> (servant);
+
+  server_is_running_Administration command (
     impl,
     server_request.operation_details (),
     args);
@@ -2231,39 +2229,27 @@ void POA_ImplementationRepository::Administration::server_is_running_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
 }
-
-// TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:165
-
-void POA_ImplementationRepository::Administration::server_is_shutting_down_skel (
-    TAO_ServerRequest & server_request,
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class server_is_shutting_down_Administration
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline server_is_shutting_down_Administration (
       POA_ImplementationRepository::Administration * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -2288,11 +2274,24 @@ void POA_ImplementationRepository::Administration::server_is_shutting_down_skel 
     }
   
   private:
-    
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+
+
+// TAO_IDL - Generated from 
+// be\be_visitor_operation/operation_ss.cpp:192
+
+void POA_ImplementationRepository::Administration::server_is_shutting_down_skel (
+    TAO_ServerRequest & server_request,
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -2315,10 +2314,9 @@ void POA_ImplementationRepository::Administration::server_is_shutting_down_skel 
   static size_t const nargs = 2;
   
   POA_ImplementationRepository::Administration * const impl =
-    static_cast<
-      POA_ImplementationRepository::Administration *> (servant);
-  
-  Upcall_Command command (
+    static_cast<POA_ImplementationRepository::Administration *> (servant);
+
+  server_is_shutting_down_Administration command (
     impl,
     server_request.operation_details (),
     args);
@@ -2328,39 +2326,27 @@ void POA_ImplementationRepository::Administration::server_is_shutting_down_skel 
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
 }
-
-// TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:165
-
-void POA_ImplementationRepository::Administration::find_skel (
-    TAO_ServerRequest & server_request,
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class find_Administration
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline find_Administration (
       POA_ImplementationRepository::Administration * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -2392,11 +2378,24 @@ void POA_ImplementationRepository::Administration::find_skel (
     }
   
   private:
-    
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+
+
+// TAO_IDL - Generated from 
+// be\be_visitor_operation/operation_ss.cpp:192
+
+void POA_ImplementationRepository::Administration::find_skel (
+    TAO_ServerRequest & server_request,
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -2421,10 +2420,9 @@ void POA_ImplementationRepository::Administration::find_skel (
   static size_t const nargs = 3;
   
   POA_ImplementationRepository::Administration * const impl =
-    static_cast<
-      POA_ImplementationRepository::Administration *> (servant);
-  
-  Upcall_Command command (
+    static_cast<POA_ImplementationRepository::Administration *> (servant);
+
+  find_Administration command (
     impl,
     server_request.operation_details (),
     args);
@@ -2434,39 +2432,27 @@ void POA_ImplementationRepository::Administration::find_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
 }
-
-// TAO_IDL - Generated from 
-// be\be_visitor_operation/operation_ss.cpp:165
-
-void POA_ImplementationRepository::Administration::list_skel (
-    TAO_ServerRequest & server_request,
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class list_Administration
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline list_Administration (
       POA_ImplementationRepository::Administration * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -2505,11 +2491,24 @@ void POA_ImplementationRepository::Administration::list_skel (
     }
   
   private:
-    
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+
+
+// TAO_IDL - Generated from 
+// be\be_visitor_operation/operation_ss.cpp:192
+
+void POA_ImplementationRepository::Administration::list_skel (
+    TAO_ServerRequest & server_request,
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -2533,10 +2532,9 @@ void POA_ImplementationRepository::Administration::list_skel (
   static size_t const nargs = 4;
   
   POA_ImplementationRepository::Administration * const impl =
-    static_cast<
-      POA_ImplementationRepository::Administration *> (servant);
-  
-  Upcall_Command command (
+    static_cast<POA_ImplementationRepository::Administration *> (servant);
+
+  list_Administration command (
     impl,
     server_request.operation_details (),
     args);
@@ -2546,13 +2544,11 @@ void POA_ImplementationRepository::Administration::list_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
@@ -2561,24 +2557,18 @@ void POA_ImplementationRepository::Administration::list_skel (
 // TAO_IDL - Generated from 
 // be\be_visitor_interface/interface_ss.cpp:169
 
-void POA_ImplementationRepository::Administration::_is_a_skel (
-    TAO_ServerRequest & server_request, 
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class _is_a_Administration_Upcall_Command
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline _is_a_Administration_Upcall_Command (
       POA_ImplementationRepository::Administration * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -2610,11 +2600,19 @@ void POA_ImplementationRepository::Administration::_is_a_skel (
     }
   
   private:
-    
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+void POA_ImplementationRepository::Administration::_is_a_skel (
+    TAO_ServerRequest & server_request, 
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -2634,10 +2632,9 @@ void POA_ImplementationRepository::Administration::_is_a_skel (
   static size_t const nargs = 2;
   
   POA_ImplementationRepository::Administration * const impl =
-    static_cast<
-      POA_ImplementationRepository::Administration *> (servant);
+    static_cast<POA_ImplementationRepository::Administration *> (servant);
   
-  Upcall_Command command (
+  _is_a_Administration_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
@@ -2647,36 +2644,28 @@ void POA_ImplementationRepository::Administration::_is_a_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
 }
 
-void POA_ImplementationRepository::Administration::_non_existent_skel (
-    TAO_ServerRequest & server_request, 
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class _non_existent_Administration_Upcall_Command
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline _non_existent_Administration_Upcall_Command (
       POA_ImplementationRepository::Administration * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -2701,11 +2690,19 @@ void POA_ImplementationRepository::Administration::_non_existent_skel (
     }
   
   private:
-    
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+void POA_ImplementationRepository::Administration::_non_existent_skel (
+    TAO_ServerRequest & server_request, 
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -2723,10 +2720,9 @@ void POA_ImplementationRepository::Administration::_non_existent_skel (
   static size_t const nargs = 1;
   
   POA_ImplementationRepository::Administration * const impl =
-    static_cast<
-      POA_ImplementationRepository::Administration *> (servant);
+    static_cast<POA_ImplementationRepository::Administration *> (servant);
   
-  Upcall_Command command (
+  _non_existent_Administration_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
@@ -2736,13 +2732,11 @@ void POA_ImplementationRepository::Administration::_non_existent_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
@@ -2751,7 +2745,7 @@ void POA_ImplementationRepository::Administration::_non_existent_skel (
 
 
 // TAO_IDL - Generated from 
-// be\be_visitor_interface/interface_ss.cpp:385
+// be\be_visitor_interface/interface_ss.cpp:393
 
 
 
@@ -2774,8 +2768,7 @@ void POA_ImplementationRepository::Administration::_interface_skel (
     }
   
   POA_ImplementationRepository::Administration * const impl =
-    static_cast<
-      POA_ImplementationRepository::Administration *> (servant);
+    static_cast<POA_ImplementationRepository::Administration *> (servant);
   CORBA::InterfaceDef_ptr _tao_retval = 
     impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -2797,24 +2790,18 @@ void POA_ImplementationRepository::Administration::_interface_skel (
     }
 }
 
-void POA_ImplementationRepository::Administration::_component_skel (
-    TAO_ServerRequest & server_request, 
-    void * TAO_INTERCEPTOR (servant_upcall),
-    void * servant
-    ACE_ENV_ARG_DECL
-  )
+namespace POA_ImplementationRepository
 {
   
   
   // TAO_IDL - Generated from
-  // be\be_visitor_operation/upcall_command_ss.cpp:74
+  // be\be_visitor_operation/upcall_command_ss.cpp:127
   
-  class Upcall_Command
+  class _get_component_Administration_Upcall_Command
     : public TAO::Upcall_Command
   {
   public:
-    
-    inline Upcall_Command (
+    inline _get_component_Administration_Upcall_Command (
       POA_ImplementationRepository::Administration * servant,
       TAO_Operation_Details const * operation_details,
       TAO::Argument * const args[])
@@ -2839,11 +2826,19 @@ void POA_ImplementationRepository::Administration::_component_skel (
     }
   
   private:
-    
     POA_ImplementationRepository::Administration * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
   };
+  
+}
+void POA_ImplementationRepository::Administration::_component_skel (
+    TAO_ServerRequest & server_request, 
+    void * TAO_INTERCEPTOR (servant_upcall),
+    void * servant
+    ACE_ENV_ARG_DECL
+  )
+{
   
   
 #if TAO_HAS_INTERCEPTORS == 1
@@ -2861,10 +2856,9 @@ void POA_ImplementationRepository::Administration::_component_skel (
   static size_t const nargs = 1;
   
   POA_ImplementationRepository::Administration * const impl =
-    static_cast<
-      POA_ImplementationRepository::Administration *> (servant);
+    static_cast<POA_ImplementationRepository::Administration *> (servant);
   
-  Upcall_Command command (
+  _get_component_Administration_Upcall_Command command (
     impl,
     server_request.operation_details (),
     args);
@@ -2874,13 +2868,11 @@ void POA_ImplementationRepository::Administration::_component_skel (
                          , args
                          , nargs
                          , command
-  
 #if TAO_HAS_INTERCEPTORS == 1
                          , servant_upcall
                          , exceptions
                          , nexceptions
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
@@ -2910,7 +2902,7 @@ const char* POA_ImplementationRepository::Administration::_interface_repository_
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:926
+// be\be_visitor_interface/interface_ss.cpp:940
 
 void POA_ImplementationRepository::Administration::_dispatch (
     TAO_ServerRequest & req,
@@ -2925,7 +2917,7 @@ void POA_ImplementationRepository::Administration::_dispatch (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_interface/interface_ss.cpp:877
+// be\be_visitor_interface/interface_ss.cpp:891
 
 ImplementationRepository::Administration *
 POA_ImplementationRepository::Administration::_this (ACE_ENV_SINGLE_ARG_DECL)
