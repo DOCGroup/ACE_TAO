@@ -316,15 +316,15 @@ DEFFLAGS ?=
 
 CPPFLAGS        += $(DEFFLAGS) $(INCLDIRS)
 
-# Define default extentions for IDL-generated files
+# Define default extensions for IDL-generated files
 IDL_CLIENT_HDR_EXT ?= C.h
-IDL_CLIENT_INL_EXT ?= C.i
+IDL_CLIENT_INL_EXT ?= C.inl
 IDL_CLIENT_SRC_EXT ?= C.cpp
 IDL_SERVER_HDR_EXT ?= S.h
-IDL_SERVER_INL_EXT ?= S.i
+IDL_SERVER_INL_EXT ?= S.inl
 IDL_SERVER_SRC_EXT ?= S.cpp
 IDL_SERVER_THDR_EXT ?= S_T.h
-IDL_SERVER_TINL_EXT ?= S_T.i
+IDL_SERVER_TINL_EXT ?= S_T.inl
 IDL_SERVER_TSRC_EXT ?= S_T.cpp
 
 ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
