@@ -1,3 +1,10 @@
+Mon Mar 15 22:21:26 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* server/main.cpp (main): Since we use static service in JAWS, we
+	  must open the service configure without ignoring the static
+	  svcs.  Thanks to Bill Rizzi <rizzi@softserv.com> for pointing
+	  this out.
+
 Mon Feb 01 17:04:39 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * clients/WebSTONE/conf/paths.{pl,sh}.old:
