@@ -1,3 +1,13 @@
+Fri Nov 12 21:26:58 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: without threads, added #ifndef protection for
+          all of the THR_* macros that didn't already have it.
+          And, with ACE_HAS_PRIOCNTL on sun, #include <thread.h>
+          before #including sys/rtpriocntl.h.  That ensures that
+          the THR_* macros are defined first by the system header
+          file.  Thanks to Timothy Canham <Timothy.Canham@jpl.nasa.gov>
+          for reporting this.
+
 Fri Nov 12 00:30:41 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Connector.cpp (connect_i): Since we should change <sh> only
