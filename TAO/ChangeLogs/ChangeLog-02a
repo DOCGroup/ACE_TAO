@@ -1,3 +1,13 @@
+Thu May 17 15:30:28 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/LRU_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/FIFO_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/LFU_Connection_Purging_Strategy.cpp:
+        * tao/Strategies/NULL_Connection_Purging_Strategy.cpp:
+
+          Quick (not the best) fix for warnings.  This is going to be
+          rewritten very soon anyway.
+
 Thu May 17 12:19:24 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/CDR.h: 
