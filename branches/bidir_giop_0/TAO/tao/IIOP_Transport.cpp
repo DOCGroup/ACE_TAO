@@ -455,9 +455,56 @@ TAO_IIOP_Transport::process_message (void)
     {
       TAO_Pluggable_Reply_Params param;
       if (this->messaging_object_->process_reply_message (param)  == -1)
-        return -1;
+        {
 
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) - %p\n"),
+                        ACE_TEXT ("IIOP_Transport::process_message, process_reply_message ()")));
+
+          this->messaging_object_->reset ();
+          this->tms_->connection_closed ();
+          return -1;
+        }
+
+      result =
+        this->tms_->dispatch_reply (params.request_id_,
+                                    params.reply_status_,
+                                    message_state->giop_version,
+                                    params.svc_ctx_,
+                                    message_state);
+
+  // @@ Somehow it seems dangerous to reset the state *after*
+  //    dispatching the request, what if another threads receives
+  //    another reply in the same connection?
+  //    My guess is that it works as follows:
+  //    - For the exclusive case there can be no such thread.
+  //    - The the muxed case each thread has its own message_state.
+  //    I'm pretty sure this comment is right.  Could somebody else
+  //    please look at it and confirm my guess?
+  if (result == -1)
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) : IIOP_Client_Transport::")
+                    ACE_TEXT ("handle_client_input - ")
+                    ACE_TEXT ("dispatch reply failed\n")));
+      message_state->reset ();
+      this->tms_->connection_closed ();
+      return -1;
+    }
+
+  if (result == 0)
+    {
+      message_state->reset ();
+      return 0;
+    }
+
+  // This is a NOOP for the Exclusive request case, but it actually
+  // destroys the stream in the muxed case.
+  this->tms_->destroy_message_state (message_state);
       // @@@@ Need to process replies.....
+
     }
   else if (t == TAO_PLUGGABLE_MESSAGE_MESSAGERROR)
     {
