@@ -271,11 +271,11 @@ TAO_Profile::verify_orb_configuration (CORBA::Environment &ACE_TRY_ENV)
                     ACE_TEXT ("(%P|%t) Try")
                     ACE_TEXT ("\"-ORBStdProfileComponents 1\"\n")));
 
-      // Throw an exception since some services may depend on standard
-      // profile components.  Ignoring the problem would undermine
-      // services that depend on standard profile components, so
-      // let the IORInterceptor that no further progress will be
-      // made.
+      // According to the Portable Interceptor specification, we're
+      // supposed to throw a CORBA::BAD_PARAM exception if it isn't
+      // possible to add components to the profile.
+      // @todo: We need the proper minor code as soon as the spec is
+      //        updated.
       ACE_THROW (CORBA::BAD_PARAM (
                    CORBA_SystemException::_tao_minor_code (
                       TAO_DEFAULT_MINOR_CODE,
@@ -300,10 +300,11 @@ TAO_Profile::verify_profile_version (CORBA::Environment &ACE_TRY_ENV)
                     ACE_TEXT ("(%P|%t) Try using a GIOP 1.1 or ")
                     ACE_TEXT ("greater endpoint.\n")));
 
-      // Throw an exception since some services may depend on tagged
-      // components.  Ignoring the problem would undermine services
-      // that depend on standard profile components, so let the
-      // IORInterceptor know that no further progress will be made.
+      // According to the Portable Interceptor specification, we're
+      // supposed to throw a CORBA::BAD_PARAM exception if it isn't
+      // possible to add components to the profile.
+      // @todo: We need the proper minor code as soon as the spec is
+      //        updated.
       ACE_THROW (CORBA::BAD_PARAM (
                    CORBA_SystemException::_tao_minor_code (
                      TAO_DEFAULT_MINOR_CODE,
