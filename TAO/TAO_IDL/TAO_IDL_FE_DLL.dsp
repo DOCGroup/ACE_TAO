@@ -54,6 +54,10 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
 # ADD LINK32 ace.lib /nologo /dll /debug /machine:I386 /out:"..\..\bin\TAO_IDL_FE_DLL.dll" /libpath:"..\..\ace"
+# Begin Special Build Tool
+SOURCE="$(InputPath)"
+PreLink_Cmds=if exist ..\..\bin\Release\tao_idl.exe del ..\..\bin\Release\tao_idl.exe
+# End Special Build Tool
 
 !ELSEIF  "$(CFG)" == "TAO_IDL_FE_DLL - Win32 Debug"
 
@@ -80,6 +84,10 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 aced.lib /nologo /dll /debug /machine:I386 /out:"..\..\bin\TAO_IDL_FE_DLLd.dll" /pdbtype:sept /libpath:"..\..\ace"
+# Begin Special Build Tool
+SOURCE="$(InputPath)"
+PreLink_Cmds=if exist ..\..\bin\tao_idl.exe del ..\..\bin\tao_idl.exe
+# End Special Build Tool
 
 !ENDIF 
 

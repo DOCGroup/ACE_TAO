@@ -50,6 +50,10 @@ BSC32=bscmake.exe
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo /out:"TAO_IDL_FE_LIBs.lib"
+# Begin Special Build Tool
+SOURCE="$(InputPath)"
+PreLink_Cmds=if exist ..\..\bin\Release\tao_idl_static.exe del ..\..\bin\Release\tao_idl_static.exe
+# End Special Build Tool
 
 !ELSEIF  "$(CFG)" == "TAO_IDL_FE_LIB - Win32 Static Debug"
 
@@ -63,8 +67,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "include" /I "../../" /D TAO_IDL_FE_HAS_DLL=0 /D ACE_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD  /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "include" /I "../../" /D TAO_IDL_FE_HAS_DLL=0 /D ACE_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -73,6 +77,10 @@ BSC32=bscmake.exe
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
 # ADD LIB32 /nologo /out:"TAO_IDL_FE_LIBsd.lib"
+# Begin Special Build Tool
+SOURCE="$(InputPath)"
+PreLink_Cmds=if exist ..\..\bin\tao_idl_static.exe del ..\..\bin\tao_idl_static.exe
+# End Special Build Tool
 
 !ENDIF 
 
