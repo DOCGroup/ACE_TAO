@@ -1,3 +1,15 @@
+Sat Sep 12 18:05:22 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Invocation.cpp: 
+	  Added compatibility with ORBs that return a status of
+	  SYSTEM_EXCEPTION, but are actually returning a UserException;
+	  Visibroker does this.
+
+	* tao/encode.cpp: 
+	* tao/decode.cpp: 
+	  Fixed decoding and encoding of structures that have object
+	  references as fields.
+
 Sat Sep 12 16:07:21 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* TAO-INSTALL.html: Updated the location of the MSVC project 
