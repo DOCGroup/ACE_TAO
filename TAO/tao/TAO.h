@@ -113,16 +113,26 @@ public:
   // -1 on failure.
 
   CORBA::ORB_ptr orb (void);
-  // Accessor which returns the ORB pointer.
+  // Accessor which returns the ORB pointer.  Following the normal
+  // CORBA memory management rules of return values from functions,
+  // this function duplicates the orb return value before returning
+  // it.
 
   PortableServer::POA_ptr root_poa (void);
-  // Accessor which returns the root poa
+  // Accessor which returns the root poa. Following the normal CORBA
+  // memory management rules of return values from functions, this
+  // function duplicates the poa return value before returning it.
 
   PortableServer::POA_ptr child_poa (void);
-  // Accessor which returns the child poa
+  // Accessor which returns the child poa. Following the normal CORBA
+  // memory management rules of return values from functions, this
+  // function duplicates the poa return value before returning it.
 
   PortableServer::POAManager_ptr poa_manager (void);
-  // Accessor which returns the poa manager
+  // Accessor which returns the poa manager. Following the normal
+  // CORBA memory management rules of return values from functions,
+  // this function duplicates the poa manager return value before
+  // returning it.
 
 protected:
   CORBA::ORB_var orb_;
