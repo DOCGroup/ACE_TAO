@@ -1,3 +1,9 @@
+Tue Aug 18 10:57:32 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* include/makeinclude/rules.nested.GNU: 
+	  Removed extra enter/leave messages at each directory, GNUmake
+	  does it for you.
+
 Tue Aug 18 08:15:30 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Aio_Platform_Test.cpp (do_sysconf): on VxWorks, don't
