@@ -28,8 +28,6 @@ Thread_Pool::start (int pool_size)
 int
 Thread_Pool::stop (void)
 {
-  ACE_UNUSED_ARG(flags);
-
   /* Find out how many threads are currently active */
   int counter = active_threads_.value ();
 
