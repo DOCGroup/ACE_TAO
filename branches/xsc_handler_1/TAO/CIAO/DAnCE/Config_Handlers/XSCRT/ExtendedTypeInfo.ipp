@@ -2,6 +2,16 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
+
+/*
+ *  @@HACK: Visual Studio.
+ *  I think the return value for operator== for type_info
+ *  in VC7 (perhaps others) is int when is should be bool. 
+ *  This causes a warning about converting the return value from
+ *  int to bool.
+ */
+#pragma warning( disable: 4800 )
+
 namespace XSCRT
 {
   // TypeId
@@ -13,7 +23,6 @@ namespace XSCRT
       : tid_ (&tid)
   {
   }
-
 
   inline
   bool TypeId::

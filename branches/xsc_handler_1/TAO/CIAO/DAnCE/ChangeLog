@@ -1,3 +1,10 @@
+Thu Mar 10 13:46:21 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	* XMLSchema/Types.hpp
+	* XSCRT/ExtendedTypeInfo.ipp
+
+	Updated the XSCRT runtime to the latest version to fix warnings
+	in VC7.
+	
 Thu Mar 10 10:29:32 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * Config_Handlers/BasicSP.cdp:
