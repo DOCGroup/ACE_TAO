@@ -20,8 +20,194 @@
 ACE_RCSID(ace, Message_Queue_T, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue)
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Dynamic_Message_Queue)
+ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue_Ex)
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> void
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dump (void) const
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dump");
+
+  this->queue_->dump ();
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> void
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::message_bytes (size_t new_value)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::message_bytes");
+
+  this->queue_->message_bytes (new_value);
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> void
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::message_length (size_t new_value)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::message_length");
+
+  this->queue_->message_length (new_value);
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL>
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::ACE_Message_Queue_Ex (size_t hwm,
+                                                                             size_t lwm,
+                                                                             ACE_Notification_Strategy *ns)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::ACE_Message_Queue_Ex");
+
+  ACE_NEW (this->queue_,
+           ACE_Message_Queue<ACE_SYNCH>);
+
+  if (this->open (hwm, lwm, ns) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("open")));
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL>
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::~ACE_Message_Queue_Ex (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::~ACE_Message_Queue_Ex");
+
+  delete this->queue_;
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::open (size_t hwm,
+                                                             size_t lwm,
+                                                             ACE_Notification_Strategy *ns)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::open");
+
+  return this->queue_->open ();
+}
+
+
+// Clean up the queue if we have not already done so!
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::close (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::close");
+
+  return this->queue_->close ();
+}
+
+
+// Take a look at the first item without removing it.
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::peek_dequeue_head (ACE_MESSAGE_TYPE *&first_item,
+                                                                          ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::peek_dequeue_head");
+
+  ACE_Message_Block *mb;
+
+  int cur_count = this->queue_->peek_dequeue_head (mb, timeout);
+
+  if (cur_count != -1)
+    first_item  = ACE_reinterpret_cast (ACE_MESSAGE_TYPE *, mb->base ());
+      
+  return cur_count;
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_head (ACE_MESSAGE_TYPE *new_item,
+                                                                     ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_head");
+
+  ACE_Message_Block *mb;
+
+  ACE_NEW_RETURN (mb,
+                  ACE_Message_Block ((char *) new_item,
+                                     sizeof (*new_item),
+                                     DEFUALT_PRIORITY),
+                  -1);
+
+  return this->queue_->enqueue_head (mb, timeout);
+}
+
+// Enqueue an <ACE_MESSAGE_TYPE *> into the <Message_Queue> in
+// accordance with its <msg_priority> (0 is lowest priority).  Returns
+// -1 on failure, else the number of items still on the queue.
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue (ACE_MESSAGE_TYPE *new_item,
+                                                                ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_prio");
+ 
+  return this->enqueue_prio (mb, timeout);
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_prio (ACE_MESSAGE_TYPE *new_item,
+                                                                     ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue");
+
+  ACE_Message_Block *mb;
+
+  ACE_NEW_RETURN (mb,
+                  ACE_Message_Block ((char *) new_item,
+                                     sizeof (*new_item),
+                                     DEFUALT_PRIORITY ),
+                  -1);
+
+  return this->queue_->enqueue_prio (mb, timeout);
+}
+
+// Block indefinitely waiting for an item to arrive,
+// does not ignore alerts (e.g., signals).
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_tail (ACE_MESSAGE_TYPE *new_item,
+                                                                     ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::enqueue_tail");
+
+  ACE_Message_Block *mb;
+
+  ACE_NEW_RETURN (mb,
+                  ACE_Message_Block ((char *) new_item,
+                                     sizeof (*new_item),
+                                     DEFUALT_PRIORITY),
+                  -1);
+
+  return this->queue_->enqueue_tail (mb, timeout);
+}
+
+// Remove an item from the front of the queue.  If timeout == 0 block
+// indefinitely (or until an alert occurs).  Otherwise, block for upto
+// the amount of time specified by timeout.
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_head (ACE_MESSAGE_TYPE *&first_item,
+                                                                     ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue_head");
+  
+  ACE_Message_Block *mb;
+
+  // Dequeue the message.
+  if (this->queue_->dequeue_head (mb, timeout) != -1 )
+    {
+      first_item = ACE_reinterpret_cast (ACE_MESSAGE_TYPE *, mb->base ());
+      // Delete the message block.
+      mb->release ();
+      return 0;
+    }
+  else
+    return -1;
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::notify (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::notify");
+
+  this->queue_->notify ();
+}
 
 template <ACE_SYNCH_DECL>
 ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::ACE_Message_Queue_Iterator (ACE_Message_Queue <ACE_SYNCH_USE> &q)

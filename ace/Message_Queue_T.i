@@ -154,14 +154,151 @@ ACE_Message_Queue<ACE_SYNCH_USE>::deactivated (void)
   return this->deactivated_;
 }
 
-//
+#if 0
 // The Sun Forte 6 (CC 5.1) compiler is only happy if this is in the
 // header file      (j.russell.noseworthy@objectsciences.com)
-//
-//template <ACE_SYNCH_DECL> ACE_INLINE ACE_SYNCH_MUTEX_T &
-//ACE_Message_Queue<ACE_SYNCH_USE>::lock (void)
-//{
-//  return this->lock_;
-//}
+
+template <ACE_SYNCH_DECL> ACE_INLINE ACE_SYNCH_MUTEX_T &
+ACE_Message_Queue<ACE_SYNCH_USE>::lock (void)
+{
+  return this->lock_;
+}
+#endif /* 0 */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Message_Queue_Reverse_Iterator)
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::dequeue (ACE_MESSAGE_TYPE *&first_item,
+                                                                ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::notification_strategy");
+
+  return queue_->dequeue (first_item, timeout);
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE ACE_Notification_Strategy *
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::notification_strategy (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::notification_strategy");
+
+  return queue_->notification_strategy ();
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE void
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::notification_strategy (ACE_Notification_Strategy *s)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::notification_strategy");
+
+  queue_->notification_strategy (s);
+}
+
+
+// Check if queue is empty (holds locks).
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::is_empty (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::is_empty");
+
+  return queue_->is_empty ();
+}
+
+// Check if queue is full (holds locks).
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::is_full (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::is_full");
+
+  return queue_->is_full ();
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE size_t
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::high_water_mark (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::high_water_mark");
+
+  return queue_->high_water_mark ();
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE void
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::high_water_mark (size_t hwm)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::high_water_mark");
+
+  queue_->high_water_mark (hwm);
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE size_t
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::low_water_mark (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::low_water_mark");
+
+  return queue_->low_water_mark ();
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE void
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::low_water_mark (size_t lwm)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::low_water_mark");
+
+  queue_->low_water_mark (lwm);
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE size_t
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::message_bytes (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::message_bytes");
+
+  return queue_->message_bytes ();
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE size_t
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::message_length (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::message_length");
+
+  return queue_->message_length ();
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE size_t
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::message_count (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::message_count");
+
+  return queue_->message_count ();
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::activate (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::activate");
+
+  return queue_->activate ();
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::deactivate (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::deactivate");
+
+  return queue_->deactivate ();
+}
+
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE int
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::deactivated (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::deactivated");
+
+  return queue_->deactivated ();
+}
+
+#if 0
+// The Sun Forte 6 (CC 5.1) compiler is only happy if this is in the
+// header file      (j.russell.noseworthy@objectsciences.com)
+template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL> ACE_INLINE ACE_SYNCH_MUTEX_T &
+ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE>::lock (void)
+{
+  return queue_->lock ();
+}
+#endif /* 0 */
