@@ -1,4 +1,3 @@
-// Obstack.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -31,45 +30,52 @@ ACE_Obchunk::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
+ACE_Obchunk::ACE_Obchunk (size_t size)
+  : end_ (contents_ + size),
+    cur_ (contents_),
+    next_ (0)
+{
+}
+
 class ACE_Obchunk *
 ACE_Obstack::new_chunk (void)
 {
   ACE_TRACE ("ACE_Obstack::new_chunk");
-  class ACE_Obchunk *temp = (class ACE_Obchunk *) 
-    new char[sizeof (class ACE_Obchunk) + this->size_];
 
-  if (temp == 0)
-    {
-      errno = ENOMEM;
-      return 0;
-    }
+  char *temp;
+  
+  ACE_ALLOCATOR_RETURN (temp,
+                        (char *) this->allocator_strategy_->malloc (sizeof (class ACE_Obchunk) + this->size_),
+                        0);
 
-  temp->next_ = 0;
-  temp->end_  = temp->contents_ + this->size_;
-  temp->cur_  = temp->contents_;
-
-  return temp;
+  return new (temp) ACE_Obchunk (this->size_);
 }
 
-ACE_Obstack::ACE_Obstack (int sz)
-  : size_ (sz), 
-    head_ (0)
+ACE_Obstack::ACE_Obstack (size_t size,
+                          ACE_Allocator *allocator_strategy)
+  : allocator_strategy_ (allocator_strategy),
+    size_ (size), 
+    head_ (this->new_chunk ()),
+    curr_ (head_)
 {
   ACE_TRACE ("ACE_Obstack::ACE_Obstack");
-  this->head_ = this->new_chunk ();
-  this->curr_ = this->head_;
+
+  if (this->allocator_strategy_ == 0)
+    ACE_ALLOCATOR (this->allocator_strategy_,
+                   ACE_Allocator::instance ());
 }
 
 ACE_Obstack::~ACE_Obstack (void)
 {
   ACE_TRACE ("ACE_Obstack::~ACE_Obstack");
-  class ACE_Obchunk *temp = this->head_;
+
+  ACE_Obchunk *temp = this->head_;
 
   while (temp != 0)
     {
-      class ACE_Obchunk *next = temp->next_;
+      ACE_Obchunk *next = temp->next_;
       temp->next_  = 0;
-      delete [] temp;
+      this->allocator_strategy_->free ((void *) temp);
       temp = next;
     }
 }
@@ -87,15 +93,15 @@ ACE_Obstack::copy (const char *s,
 
   if (this->curr_->cur_ + len + 1 >= this->curr_->end_)
     {
-      // Check whether we can just reuse previously allocated memory.
-
       if (this->curr_->next_ == 0)
 	{
+          // We must allocate new memory.
 	  this->curr_->next_ = this->new_chunk ();
 	  this->curr_ = this->curr_->next_;
 	}
       else
 	{
+          // We can reuse previously allocated memory.
 	  this->curr_ = this->curr_->next_;
 	  this->curr_->cur_ = this->curr_->contents_;
 	}
@@ -112,6 +118,7 @@ void
 ACE_Obstack::release (void)
 {
   ACE_TRACE ("ACE_Obstack::release");
+
   this->curr_ = this->head_;
   this->curr_->cur_ = this->curr_->contents_;
 }

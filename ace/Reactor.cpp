@@ -1,9 +1,7 @@
 // $Id$
 
 #define ACE_BUILD_DLL
-
 #include "ace/Reactor.h"
-
 #include "ace/Reactor_Impl.h"
 #include "ace/Handle_Set.h"
 #include "ace/Service_Config.h"
