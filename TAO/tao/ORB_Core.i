@@ -392,9 +392,18 @@ TAO_ORB_Core::set_tss_resource (size_t slot_id, void *ts_object)
   // If the TSS array isn't large enough, then increase its size.
   // We're guaranteed not to exceed the number of allocated slots by
   // the above check.
-  if (slot_id >= tss_resources->ts_objects_.size ()
-      && tss_resources->ts_objects_.size (slot_id + 1) != 0)
+  size_t old_size = tss_resources->ts_objects_.size ();
+  size_t new_size = slot_id + 1;
+  if (slot_id >= old_size
+      && tss_resources->ts_objects_.size (new_size) != 0)
     return -1;
+
+  // Initialize intermediate array elements to zero, since they
+  // haven't been initialized yet.  This ensures that garbage is not
+  // returned when accessing any of those elements at a later point in
+  // time.
+  for (size_t i = old_size; i < slot_id; ++i)
+    tss_resources->ts_objects_[i] = 0;
 
   tss_resources->ts_objects_[slot_id] = ts_object;
 

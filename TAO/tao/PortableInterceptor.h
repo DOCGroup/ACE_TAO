@@ -72,22 +72,50 @@ public:
 
   ~TAO_ClientRequestInterceptor_Adapter (void);
 
+  /**
+   * @name PortableInterceptor Client Side Interception Points
+   *
+   * Each of these methods corresponds to a client side interception
+   * point.  There are no "intermediate" interception points on the
+   * client side, only "starting" and "ending" interception points.
+   *
+   * @todo
+   * The "send_poll()" and "receive_other()" PortableInterceptor
+   * interception points are missing.
+   */
+  //@{
+  /// This method implements one of the "starting" client side
+  /// interception points.
   void send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
                      CORBA::Environment &);
 
+  /// This method implements one of the "ending" client side
+  /// interception point.
   void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri,
                       CORBA::Environment &);
+
+  /// This method implements one of the "ending" client side
+  /// interception point.
   void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
                           CORBA::Environment &);
+  //@}
 
 private:
 
+  /// Reference to the list of registered interceptors.
   TAO_ClientRequestInterceptor_List::TYPE &interceptors_;
-  ///< Reference to the list of registered interceptors.
 
+  /// Cache the length of the interceptor list so that we don't have
+  /// to compute it at each stage of the current interception.
   size_t len_;
-  ///< Cache the length of the interceptor list so that we don't have
-  ///< to compute it at each stage of the current interception.
+
+  /// The number of interceptors "pushed" onto the logical flow
+  /// stack.  This is used when unwinding the flow stack.
+  size_t stack_size_;
+
+  /// Flag that denotes if an ending interception point has been
+  /// called.
+  int ending_intercept_called_;
 
 };
 
@@ -107,23 +135,56 @@ public:
 
   ~TAO_ServerRequestInterceptor_Adapter (void);
 
+  /**
+   * @name PortableInterceptor Client Side Interception Points
+   *
+   * Each of these methods corresponds to a client side interception
+   * point.
+   *
+   * @todo
+   * The "receive_request_service_contexts()" and "send_other()"
+   * PortableInterceptor interception points are missing.
+   */
+  //@{
+  /**
+   * This method implements the "starting" server side interception
+   * point.
+   *
+   * @todo
+   * The "starting" server side interception point should actually be
+   * receive_request_service_contexts().  However, that interception
+   * point hasn't been implemented yet.
+   */
   void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
                         CORBA::Environment &);
 
+  /// This method implements one of the "ending" server side
+  /// interception points.
   void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
                    CORBA::Environment &);
 
+  /// This method implements one of the "ending" server side
+  /// interception points.
   void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
                        CORBA::Environment &);
+  //@}
 
 private:
 
+  /// Reference to the list of registered interceptors.
   TAO_ServerRequestInterceptor_List::TYPE &interceptors_;
-  ///< Reference to the list of registered interceptors.
 
+  /// Cache the length of the interceptor list so that we don't have
+  /// to compute it at each stage of the current interception.
   size_t len_;
-  ///< Cache the length of the interceptor list so that we don't have
-  ///< to compute it at each stage of the current interception.
+
+  /// The number of interceptors "pushed" onto the logical flow
+  /// stack.  This is used when unwinding the flow stack.
+  size_t stack_size_;
+
+  /// Flag that denotes if an ending interception point has been
+  /// called.
+  int ending_intercept_called_;
 
 };
 

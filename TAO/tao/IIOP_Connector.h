@@ -136,6 +136,9 @@ protected:
   // TCP configuration properties to be used for all
   // connections established by this connector.
 
+  CORBA::Boolean lite_flag_;
+  // Do we need to use a GIOP_Lite for sending messages?
+
 private:
 
   TAO_NULL_ACTIVATION_STRATEGY null_activation_strategy_;
@@ -147,8 +150,6 @@ private:
   TAO_IIOP_BASE_CONNECTOR base_connector_;
   // The connector initiating connection requests for IIOP.
 
-  CORBA::Boolean lite_flag_;
-  // Do we need to use a GIOP_Lite for sending messages?
 };
 
 #include "ace/post.h"

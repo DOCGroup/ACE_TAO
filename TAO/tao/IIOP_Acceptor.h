@@ -80,9 +80,13 @@ public:
 
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO_ObjectKey &key);
-private:
-  int open_i (const ACE_INET_Addr &addr);
-  // Implement the common part of the open*() methods.
+
+protected:
+
+  virtual int open_i (const ACE_INET_Addr &addr);
+  // Implement the common part of the open*() methods.  This method is
+  // virtual to allow a derived class implementation to be invoked
+  // instead.
 
   int hostname (TAO_ORB_Core *orb_core,
                 ACE_INET_Addr &addr,
@@ -111,6 +115,9 @@ private:
   // one IIOP_Profile, no matter how many acceptors there are.
 
 protected:
+
+  /// Array of ACE_INET_Addr instances, each one corresponding to a
+  /// given network interface.
   ACE_INET_Addr *addrs_;
 
   char **hosts_;
@@ -134,7 +141,11 @@ protected:
   // TCP configuration properties to be used for all
   // connections opened by this acceptor.
 
+  CORBA::Boolean lite_flag_;
+  // Should we use GIOP lite??
+
 private:
+
   TAO_IIOP_BASE_ACCEPTOR base_acceptor_;
   // the concrete acceptor, as a pointer to it's base class.
 
@@ -143,8 +154,6 @@ private:
   TAO_IIOP_ACCEPT_STRATEGY *accept_strategy_;
   // Acceptor strategies.
 
-  CORBA::Boolean lite_flag_;
-  // Should we use GIOP lite??
 };
 
 #if defined(__ACE_INLINE__)

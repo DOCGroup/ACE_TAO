@@ -43,7 +43,7 @@ template class TAO_Accept_Strategy<TAO_SSLIOP_Server_Connection_Handler, ACE_SSL
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 TAO_SSLIOP_Acceptor::TAO_SSLIOP_Acceptor (int support_no_protection)
-  : TAO_IIOP_Acceptor (),
+  : TAO_IIOP_SSL_Acceptor (),
     ssl_acceptor_ (),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
@@ -347,7 +347,7 @@ int
 TAO_SSLIOP_Acceptor::close (void)
 {
   int r = this->ssl_acceptor_.close ();
-  if (this->TAO_IIOP_Acceptor::close () != 0)
+  if (this->TAO_IIOP_SSL_Acceptor::close () != 0)
     r = -1;
 
   return r;
@@ -369,11 +369,11 @@ TAO_SSLIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   // Open the non-SSL enabled endpoints, then open the SSL enabled
   // endpoints.
-  if (this->TAO_IIOP_Acceptor::open (orb_core,
-				     major,
-				     minor,
-				     address,
-				     options) != 0)
+  if (this->TAO_IIOP_SSL_Acceptor::open (orb_core,
+                                         major,
+                                         minor,
+                                         address,
+                                         options) != 0)
     return -1;
 
   // The SSL port is set in the parse_options() method. All we have
@@ -399,10 +399,10 @@ TAO_SSLIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 
   // Open the non-SSL enabled endpoints, then open the SSL enabled
   // endpoints.
-  if (this->TAO_IIOP_Acceptor::open_default (orb_core,
-                                             major,
-                                             minor,
-                                             options) == -1)
+  if (this->TAO_IIOP_SSL_Acceptor::open_default (orb_core,
+                                                 major,
+                                                 minor,
+                                                 options) == -1)
     return -1;
 
   // Now that each network interface's hostname has been cached, open

@@ -1,4 +1,5 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
+//
 // $Id$
 
 // ============================================================================
@@ -7,11 +8,11 @@
 //    TAO_SSLIOP
 //
 // = FILENAME
-//   SSLIOP_Connect.h
+//    SSLIOP_Connect.h
 //
 // = AUTHOR
-//    Carlos O'Ryan <coryan@ece.uci.edu>
-//    Ossama Othman <ossama@ece.uci.edu>
+//    Carlos O'Ryan <coryan@uci.edu>
+//    Ossama Othman <ossama@uci.edu>
 //
 // ============================================================================
 
@@ -35,20 +36,60 @@
 #include "tao/IIOP_Connect.h"
 
 #include "SSLIOP_Transport.h"
-
-
-// Forward Decls
+#include "SSLIOP_Current_Impl.h"
+#include "orbsvcs/SSLIOPC.h"
 
 
 // ****************************************************************
 
-class TAO_SSLIOP_Export TAO_SSLIOP_Server_Connection_Handler : public TAO_SSL_SVC_HANDLER,
-                                                               public TAO_Connection_Handler
+/**
+ * @class TAO_SSLIOP_Connection_Handler
+ *
+ * @brief
+ * Class that encapsulates methods common to both the client and
+ * server side SSLIOP connection handlers.
+ */
+class TAO_SSLIOP_Export TAO_SSLIOP_Connection_Handler
+  : public TAO_SSL_SVC_HANDLER
+{
+  friend class TAO_SSL_State_Guard;
+
+public:
+
+  /// Constructor.
+  TAO_SSLIOP_Connection_Handler (ACE_Thread_Manager* t);
+
+protected:
+
+  /// Make the SSL session state available to the SSLIOP::Current
+  /// object.
+  int setup_ssl_state (TAO_ORB_Core *orb_core);
+
+  /// Teardown the SSL session state.
+  void teardown_ssl_state (void);
+
+protected:
+
+  /// Reference to the SSLIOP::Current object.
+  SSLIOP::Current_var current_;
+
+  /// The portion of the SSLIOP::Current object that is placed in
+  /// TSS.
+  TAO_SSLIOP_Current_Impl current_impl_;
+
+};
+
+// ****************************************************************
+
+class TAO_SSLIOP_Export TAO_SSLIOP_Server_Connection_Handler
+  : public TAO_Connection_Handler,
+    public TAO_SSLIOP_Connection_Handler
 {
   // = TITLE
   //   Handles requests on a single connection in a server.
 
 public:
+
   TAO_SSLIOP_Server_Connection_Handler (ACE_Thread_Manager* t = 0);
   TAO_SSLIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
                                         CORBA::Boolean flag,
@@ -120,13 +161,14 @@ protected:
 
   TAO_IIOP_Properties *tcp_properties_;
   // TCP configuration for this connection.
+
 };
 
-
-
 // ****************************************************************
-class TAO_SSLIOP_Export TAO_SSLIOP_Client_Connection_Handler : public TAO_SSL_SVC_HANDLER,
-                                                               public TAO_Connection_Handler
+
+class TAO_SSLIOP_Export TAO_SSLIOP_Client_Connection_Handler
+  : public TAO_Connection_Handler,
+    public TAO_SSLIOP_Connection_Handler
 {
   // = TITLE
   //      <Svc_Handler> used on the client side and returned by the
@@ -198,6 +240,43 @@ private:
   // Will not be called at all. As a matter of fact should not be
   // called. This is just to override the pure virtual function in the
   // TAO_Connection_Handler class
+
+};
+
+// ****************************************************************
+
+/**
+ * @class TAO_SSL_State_Guard
+ *
+ * @brief
+ * This Class that sets up TSS SSL states upon instantiation, and
+ * tears down the TSS SSL state when that instance goes out of scope.
+ *
+ * This guard is used to make TSS SSL state configuration and
+ * deconfiguration during an upcall exception safe.  Exceptions are
+ * not supposed to be propagated up to the scope this guard is used
+ * in, so this guard may be unnecessary.  However, since proper TSS
+ * SSL state configuration/deconfiguration is critical to proper
+ * security support, this guard is used to ensure that
+ * configuration/deconfiguration is exception safe.
+ */
+class TAO_SSLIOP_Export TAO_SSL_State_Guard
+{
+public:
+
+  /// Constructor that sets up the TSS SSL state.
+  TAO_SSL_State_Guard (TAO_SSLIOP_Connection_Handler *handler,
+                       TAO_ORB_Core *orb_core,
+                       int &result);
+
+  /// Destructor that tears down the TSS SSL state.
+  ~TAO_SSL_State_Guard (void);
+
+private:
+
+  /// Pointer to the connection handler currently handling the
+  /// request/upcall.
+  TAO_SSLIOP_Connection_Handler *handler_;
 };
 
 
