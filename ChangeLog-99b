@@ -1,3 +1,8 @@
+Fri Dec 17 13:27:24 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-pharlap.h: Added ACE_LACKS_TCP_NODELAY. Thanks to David
+          Hauck <davidh@realtimeint.com> for this. Fixes bugzilla #270.
+
 Fri Dec 17 11:38:09 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
 	* We just reached our 800th external contributor: Andrey
