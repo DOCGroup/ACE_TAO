@@ -1,3 +1,9 @@
+Wed Mar 28 16:27:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/Time/Client_i.cpp:
+	* orbsvcs/Time_Serive/Client_i.cpp:
+	* orbsvcs/Time_Serive/Server_i.cpp: Fixed fuzz warnings.
+
 Wed Mar 28 16:10:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Time/TAO_UTO.cpp:
