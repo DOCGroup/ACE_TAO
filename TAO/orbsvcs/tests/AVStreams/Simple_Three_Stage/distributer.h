@@ -24,12 +24,6 @@
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/Policy.h"
 
-#define AV_MAX_STREAM_COUNT 2
-// The distributer currently handles only two connections, one from
-// the sender and one from the receiver.
-
-class Distributer;
-
 class Distributer_Callback : public TAO_AV_Callback
 {
   // = TITLE
@@ -51,7 +45,7 @@ public:
   // Called when the sender has finished reading the file and wants
   // to close down the connection.
   
-  void flowname (ACE_CString);
+  void flowname (const ACE_CString &flowname);
   ACE_CString flowname (void);
   // Accessor methods to set and get the flowname corresponding
   // to the callback
@@ -108,27 +102,28 @@ public:
             CORBA::Environment &);
   // Initialize data components.
 
-  int set_protocol_object  (const char*,
-			    TAO_AV_Protocol_Object *object);
-  TAO_AV_Protocol_Object* get_protocol_object (const char*);
+  int set_sender_protocol_object  (TAO_AV_Protocol_Object *object);
+  TAO_AV_Protocol_Object* get_sender_protocol_object (void);
   // Accessor methods to set/get the protocol object of the receiver/sender
   //  process
 
   int bind_to_mmdevice (AVStreams::MMDevice_ptr &mmdevice,
-			ACE_CString mmdevice_name,
+			const ACE_CString &mmdevice_name,
 			CORBA::Environment &ACE_TRY_ENV);
   // Resolve the reference of the mmdevice from the naming service.
 
   TAO_StreamCtrl* get_receiver_streamctrl (void);
-
-  TAO_StreamCtrl* get_sender_streamctrl (void);
+  // Get the stream control of the receiver
 
   void stream_created (void);
   // Called when stream created
 
   void stream_destroyed (void);
   // Called when stream destroyed
-  
+
+  int parse_args (int argc,
+                  char **argv);
+
   int done (void);
   // Return the flag that suggests orb shutdown.
 
@@ -149,37 +144,23 @@ protected:
   AVStreams::MMDevice_var sender_mmdevice_;
   // The sender MMDevice.
 
-  TAO_AV_Protocol_Object *protocol_object_ [2];
-  
+  TAO_AV_Protocol_Object *sender_protocol_object_;
+  // The sender protocol object
+
   int count_;
   // Number of frames sent.
   
-  int argc_;
-  char **argv_;
+  ACE_CString sender_address_;
+  // Address of the  distributer host machine or a multicast address 
 
-  ACE_CString address_;
-  // Address of the  distributer host machine or a multicast address - Default is
-  // UDP multicast addess
+  ACE_CString receiver_address_;
+  // Address of the  distributer host machine or a multicast address 
   
   ACE_CString protocol_;
   // Selected protocol - default is UDP
 
-  ACE_CString sender_flowname_;
-  // The flow name of the stream set up between the 
-  // sender and the distributer.
-
-  ACE_CString receiver_flowname_;
-  // The flow name of the stream set up between the 
-  // receiver and the distributer.
-
-  TAO_StreamCtrl* sender_streamctrl_;
-  // Video stream controller for the stream between sender and distributer
-  
   TAO_StreamCtrl* receiver_streamctrl_;
   // Video stream controller for the stream between receivers and distributer
-
-  ACE_Message_Block mb;
-  // Message block into which data is read from a file and then sent.
 
   int stream_count_;
   // Number of active streams. When a stream is disconnected this 
@@ -187,6 +168,12 @@ protected:
 
   int done_;
   // Flag to indicate orb shutdown
+
+  ACE_CString host_sender_port_;
+  //Distributer sender streamendpoint port
+
+  ACE_CString host_receiver_port_;
+  //Distributer receiver streamendpoint port
 };
 
 typedef ACE_Singleton<Distributer, ACE_Null_Mutex> DISTRIBUTER;

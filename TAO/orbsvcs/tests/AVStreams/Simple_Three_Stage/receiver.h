@@ -44,7 +44,6 @@ public:
   // to close down the connection.
   int handle_destroy (void);
 
-  int handle_stop (void);
 };
 
 class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint

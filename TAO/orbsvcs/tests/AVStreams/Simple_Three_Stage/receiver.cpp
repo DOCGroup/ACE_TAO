@@ -20,8 +20,8 @@ Receiver_StreamEndPoint::get_callback (const char *,
 
 int
 Receiver_Callback::receive_frame (ACE_Message_Block *frame,
-                                    TAO_AV_frame_info *,
-                                    const ACE_Addr &)
+                                  TAO_AV_frame_info *,
+                                  const ACE_Addr &)
 {
   // Upcall from the AVStreams when there is data to be received from the
   // distributer.
@@ -53,18 +53,22 @@ Receiver_Callback::handle_destroy (void)
   // Called when the distributer requests the stream to be shutdown.
   ACE_DEBUG ((LM_DEBUG,
               "Receiver_Callback::end_stream\n"));
-  TAO_AV_CORE::instance ()->orb ()->shutdown ();
-  return 0;
-}
+  
+  ACE_TRY_NEW_ENV
+    {
+      TAO_AV_CORE::instance ()->orb ()->shutdown (0,
+                                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+			   "Receiver_Callback::handle_destroy Failed\n");
+      return -1;
+      
+    }
+  ACE_ENDTRY;
 
-
-int
-Receiver_Callback::handle_stop (void)
-{
-  // Called when the distributer requests the stream to be shutdown.
-  ACE_DEBUG ((LM_DEBUG,
-              "Receiver_Callback::end_stream\n"));
-  TAO_AV_CORE::instance ()->orb ()->shutdown ();
   return 0;
 }
 
@@ -79,8 +83,8 @@ Receiver::~Receiver (void)
 
 int
 Receiver::init (int,
-              char **,
-              CORBA::Environment &ACE_TRY_ENV)
+                char **,
+                CORBA::Environment &ACE_TRY_ENV)
 {
   // Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -94,19 +98,19 @@ Receiver::init (int,
   ACE_NEW_RETURN (this->mmdevice_,
                   TAO_MMDevice (&this->reactive_strategy_),
                   -1);
-
+  
   // Servant Reference Counting to manage lifetime
   PortableServer::ServantBase_var safe_mmdevice =
     this->mmdevice_;
   
+  CORBA::Object_var mmdevice =
+    this->mmdevice_->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN(-1);
+
   // Register the receiver mmdevice with the naming service.
   CosNaming::Name receiver_mmdevice_name (1);
   receiver_mmdevice_name.length (1);
   receiver_mmdevice_name [0].id = CORBA::string_dup ("Receiver");
-
-  CORBA::Object_var mmdevice =
-    this->mmdevice_->_this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN(-1);
 
   // Initialize the naming services
   if (this->my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
@@ -165,25 +169,6 @@ main (int argc,
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      int result =
-        parse_args (argc,
-                    argv);
-
-      if (result == -1)
-        return -1;
-
-      // Make sure we have a valid <output_file>
-      output_file = ACE_OS::fopen (output_file_name,
-                                   "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Cannot open output file %s\n",
-                           output_file_name),
-                          -1);
-
-      else ACE_DEBUG ((LM_DEBUG,
-		       "File Opened Successfull\n"));
-
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA",
                                            ACE_TRY_ENV);
@@ -207,6 +192,25 @@ main (int argc,
                                       root_poa.in (),
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      int result =
+        parse_args (argc,
+                    argv);
+
+      if (result == -1)
+        return -1;
+
+      // Make sure we have a valid <output_file>
+      output_file = ACE_OS::fopen (output_file_name,
+                                   "w");
+      if (output_file == 0)
+        ACE_ERROR_RETURN ((LM_DEBUG,
+                           "Cannot open output file %s\n",
+                           output_file_name),
+                          -1);
+
+      else ACE_DEBUG ((LM_DEBUG,
+		       "File Opened Successfull\n"));
 
       Receiver receiver;
       result =
