@@ -1,3 +1,8 @@
+Thu Oct  1 20:51:39 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp: Added trailing
+	  return statements to supress warnings from g++.
+
 Thu Oct  1 16:03:55 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/client.dsp:
@@ -14,7 +19,7 @@ Thu Oct 01 14:22:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* TAO/TAO_IDL/tao_idl.dsp:
 	* TAO/TAO_IDL/tao_idl_static.dsp: Updated project based on Andy's
 	  changes.  (by Darrell.)
-	
+
 	* TAO/TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
 	* TAO/TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
 	* TAO/TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
@@ -23,7 +28,7 @@ Thu Oct 01 14:22:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* TAO/TAO_IDL/be/be_visitor_union/any_op_cs.cpp:  Added trailing
 	  "return 0;" for generated code for operator>>= of these to avoid
 	  MSVC warnings.
-	
+
 Thu Oct  1 12:42:58 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_factory.cpp
@@ -36,10 +41,10 @@ Thu Oct  1 12:42:58 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 
 	* TAO_IDL/be/be_interpretive.cpp
 	         /be_include/be_interpretive.h:
-	
+
 	  Removed. Instead we now have the be_visitor_factor.{h, cpp} file
 	described next.
-	
+
 	* TAO_IDL/be/be_visitor_factory.cpp
 	         /be_include/be_visitor_factory.h:
 
@@ -56,7 +61,7 @@ Thu Oct  1 12:42:58 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	  approaches e.g., interface code generation, any operators,
 	  etc. Thus, the two primary factories (interpretive or compiled)
 	  will internally delegate code generation to the common factory
-	  based on the state. 
+	  based on the state.
 
 	* TAO_IDL/be/be_codegen.cpp
 	         /be_include/be_codegen.h:
@@ -78,13 +83,13 @@ Thu Oct  1 12:42:58 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	  described before, we simply hold a pointer to the abstract base
 	  factory. This is initialized to either the interpretive or
 	  compiled factory objects using the config_visitor_factory
-	  method. 
-	
+	  method.
+
 	* TAO_IDL/be_include/be.h:
 
 	  Made the necessary changes due to the addition and renaming of
 	  files described above.
-	
+
 	* TAO_IDL/be/be_produce.cpp:
 
 	  We call the config_visitor_factory method on our TAO_CODEGEN
@@ -113,7 +118,7 @@ Thu Oct  1 12:42:58 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	  marshaling, we do not need to deal with the base
 	  CORBA_Object_ptr types and do the necessary _narrow inside the
 	  stub/skel.  This is all done in the code for the <<, >>
-	  operators. 
+	  operators.
 
 	* TAO_IDL/be/be_visitor_argument/docall_cs.cpp
 					/pre_docall_cs.cpp
@@ -147,7 +152,7 @@ Thu Oct  1 12:42:58 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	  The code for <<=, and >>= now uses the TAO_TRY macros so that
 	  they can work with real C++ exceptions also.
 
-	  This is not yet done for all types since this is under testing. 
+	  This is not yet done for all types since this is under testing.
 
 	* TAO_IDL/{be, be_include}/be_visitor_enum/enum_ch.{h, cpp}
 	  TAO_IDL/{be, be_include}/be_visitor_exception/cdr_op_cs.{h, cpp}
@@ -155,18 +160,18 @@ Thu Oct  1 12:42:58 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	  TAO_IDL/{be, be_include}/be_visitor_interface/cdr_op_cs.{h, cpp}:
 	  TAO_IDL/{be, be_include}/be_visitor_operation/argument.{h, cpp}:
 	  TAO_IDL/{be, be_include}/be_visitor_union/cdr_op_cs.{h, cpp}:
-	  
+
 	  Modifications were necessary due to the change in the
 	  "post_process" signature and semantics.
 
 	* TAO_IDL/be/be_visitor_interface/interface.cpp:
 
 	  Removed some commented-out code.
-	
+
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
 
 	  The skeleton code now uses the TAO_TRY macros for seamless exception
-	  support between the real C++ exceptions and the alternate mapping. 
+	  support between the real C++ exceptions and the alternate mapping.
 
 	* TAO_IDL/be/be_visitor_operation.cpp
 	         /be_include/be_visitor_operation.h:
@@ -207,10 +212,10 @@ Thu Oct  1 12:42:58 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
 	  TAO_IDL/be_include/be_visitor_operation/rettype_vardecl_ss.h:
 
-	  Define a new class for compiled marshaling approach that 
+	  Define a new class for compiled marshaling approach that
 	  overrides the visit_interface method over its base class. This
 	  way we avoid generation of extra variables.
-	
+
 	* TAO_IDL/{be, be_include}/be_visitor_operation/operation_ch.{h,cpp}
 	  TAO_IDL/{be, be_include}/be_visitor_operation/operation_cs.{h,cpp}
 	  TAO_IDL/{be, be_include}/be_visitor_operation/operation_sh.{h,cpp}
@@ -232,7 +237,7 @@ Thu Oct  1 12:42:58 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	  "be_compiled_visitor_operation_cs" (similarly for the skeletons)
 	  that provide the implementation for the pure virtual methods
 	  called by the template method "visit_operation".
-	
+
 	* TAO_IDL/be/be_visitor_scope.cpp
 	         /be_include/be_visitor_scope.cpp:
 
@@ -256,7 +261,7 @@ Thu Oct  1 12:42:58 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 
 	  I need to check if this policy is strictly followed for all
 	  aggregate types that can have a string member.
-	
+
 	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
 
 	  For sequences of arrays, there were some weird problems using
@@ -270,7 +275,7 @@ Thu Oct  1 12:42:58 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	* TAO_IDL/Makefile:
 
 	  ran make depend.
-	
+
 	* TAO_IDL/driver/drv_args.cpp:
 
 	  ACEified the code.
@@ -290,12 +295,12 @@ Thu Oct  1 12:42:58 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 
 	* TAO_IDL/include/idl_global.h
 	         /utils/utl_global.cpp:
-	 
+
 	  Added a number of mutator and accesor methods for the newly
 	  added command line options.
 
 	* performance_tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
-	  
+
 	  Commented out the RTI and the Union tests since the CDR
 	  operators are not yet done for the unions.
 
@@ -303,13 +308,13 @@ Thu Oct  1 12:42:58 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 	  tao/ORB.{h, i}
 	  tao/Object.{h, i}
 	  tao/Typecode.{h, i}:
-	
+
 	  The parameter to the copy ctor and assignment operator of the
 	  _out class is now "const". This resolves the weird warnings we
 	  were getting about a temporary being created. We were also
 	  required to instantiate the _out type explicitly to overcome
 	  this. However, we no londer need to write this non-compliant
-	  code. 
+	  code.
 
 	* tao/CDR.i:
 
@@ -320,7 +325,7 @@ Thu Oct  1 12:42:58 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell
 
 	  Moved the inclusion of the try_macros.h before the CDR.h since
 	  we us the macros in the code
-	
+
 Thu Oct  1 11:18:35 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Simple/bank/AccountManager_i.cpp: Removed the unneeded
