@@ -159,7 +159,11 @@ CORBA_Any::operator= (const CORBA_Any &src)
       if (this->value_)
         {
           DEEP_FREE (this->type_, this->value_, 0, env);
-          delete this->value_;
+	  // @@ TODO Sometimes the top-level shouldn't be deleted, it
+	  // seems to depend on the actual data type. Until we fix
+	  // this I'm afraid we will have to leave with a memory leak
+	  // (coryan).
+          // delete this->value_;
         }
 
       if (this->type_)
