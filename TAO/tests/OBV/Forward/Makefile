@@ -62,8 +62,6 @@ TreeController$(ext) TreeNode$(ext))
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp TreeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -242,9 +240,9 @@ TreeController$(ext) TreeNode$(ext))
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- TreeBaseC.i TreeControllerC.h TreeControllerC.i TreeNodeC.h \
- TreeNodeC.i $(ACE_ROOT)/ace/Get_Opt.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i TreeBaseC.i \
+ TreeControllerC.h TreeControllerC.i TreeNodeC.h TreeNodeC.i \
+ $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -258,8 +256,6 @@ TreeController$(ext) TreeNode$(ext))
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp TreeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -438,9 +434,9 @@ TreeController$(ext) TreeNode$(ext))
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- TreeBaseC.i TreeControllerC.h TreeControllerC.i TreeNodeC.h \
- TreeNodeC.i Test_impl.h TreeControllerS.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i TreeBaseC.i \
+ TreeControllerC.h TreeControllerC.i TreeNodeC.h TreeNodeC.i \
+ Test_impl.h TreeControllerS.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -456,8 +452,7 @@ TreeController$(ext) TreeNode$(ext))
  $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
  $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
  TreeControllerS_T.h TreeControllerS_T.i TreeControllerS_T.cpp \
- TreeControllerS.i \
- $(ACE_ROOT)/ace/Get_Opt.h \
+ TreeControllerS.i $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -469,11 +464,8 @@ TreeController$(ext) TreeNode$(ext))
  $(ACE_ROOT)/ace/Get_Opt.i
 
 .obj/Test_impl.o .obj/Test_impl.so .shobj/Test_impl.o .shobj/Test_impl.so: Test_impl.cpp Test_impl.h TreeControllerS.h \
- TreeControllerC.h \
- $(TAO_ROOT)/tao/corba.h \
+ TreeControllerC.h $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -674,8 +666,6 @@ TreeController$(ext) TreeNode$(ext))
 .obj/TreeBaseC.o .obj/TreeBaseC.so .shobj/TreeBaseC.o .shobj/TreeBaseC.so: TreeBaseC.cpp TreeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -854,8 +844,7 @@ TreeController$(ext) TreeNode$(ext))
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- TreeBaseC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i TreeBaseC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
@@ -973,8 +962,6 @@ TreeController$(ext) TreeNode$(ext))
 .obj/TreeBaseS.o .obj/TreeBaseS.so .shobj/TreeBaseS.o .shobj/TreeBaseS.so: TreeBaseS.cpp TreeBaseS.h TreeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1153,8 +1140,7 @@ TreeController$(ext) TreeNode$(ext))
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- TreeBaseC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i TreeBaseC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1172,9 +1158,7 @@ TreeController$(ext) TreeNode$(ext))
  TreeBaseS_T.h TreeBaseS_T.i TreeBaseS_T.cpp TreeBaseS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -1314,8 +1298,6 @@ TreeController$(ext) TreeNode$(ext))
 .obj/TreeControllerC.o .obj/TreeControllerC.so .shobj/TreeControllerC.o .shobj/TreeControllerC.so: TreeControllerC.cpp TreeControllerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1495,8 +1477,7 @@ TreeController$(ext) TreeNode$(ext))
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- TreeControllerC.i \
- $(TAO_ROOT)/tao/Stub.h \
+ TreeControllerC.i $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -1611,11 +1592,8 @@ TreeController$(ext) TreeNode$(ext))
  $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/TreeControllerS.o .obj/TreeControllerS.so .shobj/TreeControllerS.o .shobj/TreeControllerS.so: TreeControllerS.cpp TreeControllerS.h \
- TreeControllerC.h \
- $(TAO_ROOT)/tao/corba.h \
+ TreeControllerC.h $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1814,9 +1792,7 @@ TreeController$(ext) TreeNode$(ext))
  TreeControllerS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
@@ -1956,8 +1932,6 @@ TreeController$(ext) TreeNode$(ext))
 .obj/TreeNodeC.o .obj/TreeNodeC.so .shobj/TreeNodeC.o .shobj/TreeNodeC.so: TreeNodeC.cpp TreeNodeC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2136,9 +2110,8 @@ TreeController$(ext) TreeNode$(ext))
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- TreeBaseC.h TreeBaseC.i TreeNodeC.i \
- $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i TreeBaseC.h \
+ TreeBaseC.i TreeNodeC.i $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -2255,8 +2228,6 @@ TreeController$(ext) TreeNode$(ext))
 .obj/TreeNodeS.o .obj/TreeNodeS.so .shobj/TreeNodeS.o .shobj/TreeNodeS.so: TreeNodeS.cpp TreeNodeS.h TreeBaseS.h TreeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -2435,8 +2406,7 @@ TreeController$(ext) TreeNode$(ext))
  $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i \
- TreeBaseC.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i TreeBaseC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -2455,9 +2425,7 @@ TreeController$(ext) TreeNode$(ext))
  TreeNodeC.i TreeNodeS_T.h TreeNodeS_T.i TreeNodeS_T.cpp TreeNodeS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
