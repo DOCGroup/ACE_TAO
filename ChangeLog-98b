@@ -22,6 +22,9 @@ Wed Dec 09 07:02:06 1998  David L. Levine  <levine@cs.wustl.edu>
         * performance-tests/Misc/context_switch_time.cpp: disabled
           Yield_Test on VxWorks, because it doesn't run properly there.
 
+        * ace/config-tandem.h,README: removed ACE_HAS_STRUCT_PROTOENT_DATA,
+          because it is no longer used.  Thanks to Ossama for reporting this.
+
 1998-12-09  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tests/Collection_Test.cpp: Added new test for ACE collections.
