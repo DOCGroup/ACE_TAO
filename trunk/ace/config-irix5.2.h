@@ -42,7 +42,6 @@
 #define ACE_HAS_CPLUSPLUS_HEADERS 
 #define ACE_HAS_POLL 
 #define ACE_HAS_PROC_FS 
-#define ACE_HAS_RTLD_LAZY_V 
 #define ACE_HAS_SIG_ATOMIC_T 
 #define ACE_HAS_SIGINFO_T 
 #define ACE_HAS_UCONTEXT_T 

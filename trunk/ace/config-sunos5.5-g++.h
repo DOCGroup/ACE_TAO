@@ -102,9 +102,6 @@
 // Platform supports the prusage_t struct.
 #define ACE_HAS_PRUSAGE_T
 
-// Explicit dynamic linking permits "lazy" symbol resolution.
-#define ACE_HAS_RTLD_LAZY_V
-
 // Compiler/platform defines the sig_atomic_t typedef.
 #define ACE_HAS_SIG_ATOMIC_T
 

@@ -102,9 +102,6 @@
 #define ACE_HAS_DCETHREADS
 #define ACE_HAS_THREAD_SELF
 
-// Explicit dynamic linking permits "lazy" symbol resolution
-#define ACE_HAS_RTLD_LAZY_V
-
 // Compiler/platform defines the sig_atomic_t typedef.
 #define ACE_HAS_SIG_ATOMIC_T
 

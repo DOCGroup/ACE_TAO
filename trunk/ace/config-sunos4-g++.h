@@ -83,7 +83,6 @@
 
 #define ACE_HAS_SUNOS4_SIGNAL_T
 #define ACE_HAS_CPLUSPLUS_HEADERS
-#define ACE_HAS_RTLD_LAZY_V
 #if (__GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ > 6))
 #define ACE_HAS_SYSENT_H
 #endif

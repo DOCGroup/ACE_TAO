@@ -114,7 +114,6 @@
 #define ACE_HAS_SIGINFO_T
 #define ACE_LACKS_SIGINFO_H
 #define ACE_HAS_UCONTEXT_T
-#define ACE_HAS_RTLD_LAZY_V
 #define ACE_HAS_SIZET_SOCKET_LEN
 
 // BSD 4.4 interface fixes nabbed from config-linux.h
