@@ -1,3 +1,8 @@
+Mon Nov  4 19:03:12 CST 2002 Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.CosNotification:
+	  Added missing "/" after $ACE_ROOT
+
 Mon Nov  4 14:21:18 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Bug_1020_Regression: Another test that has the capability
@@ -6,7 +11,7 @@ Mon Nov  4 14:21:18 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  clients can connect to a server. The clients crash at periodic
 	  intervals. This is a slightly improvised form of the basic
 	  test. Thanks to Carlos O'Ryan for donating this test.
-	
+
 	* tests/Bug_1020_Regression/client.cpp:
 	* tests/Bug_1020_Regression/Echo_Callback.cpp:
 	* tests/Bug_1020_Regression/Echo_Callback.h:
@@ -63,7 +68,7 @@ Mon Nov 04 11:10:14 2002  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/orbsvcs/Notify/Notify_Service.cpp:
 	  in method <init_main_thread> change argument to
 	  ACE_ENV_ARG_DECL_NOT_USED.
-	
+
 	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
 	  Added code for explicit template instantiation.
 
@@ -71,8 +76,8 @@ Mon Nov 04 10:47:41 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
 	  In <create_filter> method : Added check to include EXTENDED_TCL
-	  string as a valid constraint grammar. 
-	
+	  string as a valid constraint grammar.
+
 Sun Nov  3 19:13:49 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h
@@ -209,7 +214,7 @@ Sun Nov  3 15:59:57 2002  Ossama Othman  <ossama@uci.edu>
 
 	  (add_member_i):
 
-	  New protected underlying and non-locking implementation of the 
+	  New protected underlying and non-locking implementation of the
 	  add_member() and _tao_add_member() methods.
 
 	  (member_count):
@@ -255,14 +260,14 @@ Sat Nov  2 19:58:51 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* tests/Bug_1270_Regression/Server_Timer.cpp:
 	* tests/Bug_1270_Regression/client.cpp:
 	* tests/Bug_1270_Regression/shutdown.cpp: Fixed compile errors on
-	  platforms where exceptions have been disabled. 
-	
+	  platforms where exceptions have been disabled.
+
 	* tests/Bug_1270_Regression/run_test.pl:
 	* tests/Bug_1269_Regression/run_test.pl: Changed the cutoff times
 	  so that the tests would run without displaying errors on my
 	  box. I would love these tests to run in our daily builds. But we
 	  cannot run these, since they run for more than 75 mins on my two
-	  processor box! 
+	  processor box!
 
 Sat Nov 02 20:46:08 2002  Pradeep Gore  <pradeep@oomworks.com>
 
@@ -279,7 +284,7 @@ Sat Nov 02 18:10:44 2002  Pradeep Gore  <pradeep@oomworks.com>
 	  Inserted missing , in constructor.
 
 	* orbscvs/orbsvcs/Notify/Notify_Service.cpp:
-	  Removed ACE_DEFAULT_THREAD_PRIORITY to threadpool task. Thanks 
+	  Removed ACE_DEFAULT_THREAD_PRIORITY to threadpool task. Thanks
 	  to Bala for suggesting a fix.
 
 	* orbscvs/orbsvcs/Notify/Thread_Pool_Task.cpp:
@@ -288,19 +293,19 @@ Sat Nov 02 18:10:44 2002  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
 	  Changed code to obtain the notify service.
 
-	* orbsvcs/Logging_Service/Notify_Logging_Service/svc.conf:	  	
+	* orbsvcs/Logging_Service/Notify_Logging_Service/svc.conf:
           Modified the .conf file to use the revised Notify Service
-	  directive. 
-	  
+	  directive.
+
 Sat Nov  2 10:48:46 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Utils/Servant_Var.h:
 	* tao/Utils/Servant_Var.inl: Fixed errors in non-native exceptions
 	  build.
-	
+
 Fri Nov  1 20:12:09 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect): 
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h: Added the overloaded
 	  connect () method without the timeout. The implementation just
 	  calls the method with timeout value. It shouldnt be necessary,
@@ -329,7 +334,7 @@ Fri Nov 01 20:09:44 2002  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/tests/Notify/Basic/AdminProperties_Test.dsp:
 	  Changed the default values used when the test is run without any
 	  parameters.
-	
+
         * orbsvcs/tests/Notify/Blocking/notify.conf:
         * orbsvcs/tests/Notify/Discarding/notify.conf:
         * orbsvcs/tests/Notify/MT_Dispatching/notify_mtdispatching.conf:
@@ -376,7 +381,7 @@ Fri Nov  1 19:06:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* tao/Utils/RIR_Narrow.h:
 	* tao/Utils/Servant_Var.cpp:
 	* tao/Utils/Servant_Var.h: ACE'ified code. Made them exception
-	  safe even if native exceptions have been turned off. 
+	  safe even if native exceptions have been turned off.
 
 Fri Nov 01 14:38:15 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
