@@ -1,3 +1,8 @@
+Wed Aug 28 14:24:36 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Msg.h: Fixed Doxygenation of ACE_Log_Msg. Thanks to
+          Philip Miller <pwmiller@sarnoff.com> for reporting this.
+
 Wed Aug 28 11:21:04 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/em3vcpdll.mpt:
