@@ -123,11 +123,13 @@ public:
   /// Create an empty message.
   ACE_Message_Block (ACE_Allocator *message_block_allocator = 0);
 
-  /// Create an <ACE_Message_Block> that owns the <ACE_Data_Block> *
-  /// without copying it. If the <flags> is set to DONT_DELETE we
-  /// own't delete the ACE_Data_Block. It is left to the client's
-  /// responsibility to take care of the memory allocated for the
-  /// data_block
+  /**
+   * Create an <ACE_Message_Block> that owns the <ACE_Data_Block>
+   * without copying it. If the <flags> is set to DONT_DELETE we
+   * don't delete the ACE_Data_Block. It is left to the client's
+   * responsibility to take care of the memory allocated for the
+   * data_block
+   */
   ACE_Message_Block (ACE_Data_Block *,
                      Message_Flags flags = 0,
                      ACE_Allocator *message_block_allocator = 0);
@@ -147,22 +149,23 @@ public:
    * bytes.  The <cont> argument initializes the continuation field in
    * the <Message_Block>.  If <data> == 0 then we create and own the
    * <data>, using <allocator> to get the data if it's non-0.  If
-   * <data> != 0 we assume ownership of the <data> (and don't delete
-   * it).  If <locking_strategy> is non-0 then this is used to protect
-   * regions of code that access shared state (e.g., reference
-   * counting) from race conditions.  Note that the <size> of the
-   * <Message_Block> will be <size>, but the <length> will be 0 until
-   * <wr_ptr> is set.
-   * The <data_block_allocator> is use to allocate the data blocks
-   * while the <allocator_strategy> is used to allocate the buffers
-   * contained by those.
-   * The <message_block_allocator> is used to allocate new
-   * <Message_Block> objects when a duplicate method is called.  If
-   * a <message_block_allocator> is given, this <Message_Block> and
-   * future <Message_Block> objects created by duplicate will be free'ed
-   * into this allocator when they are released.  Note: if you use this
-   * allocator, the <Message_Block> you created should have been created
-   * using this allocator because it will be released to the same allocator.
+   * <data> != 0 we assume that we have ownership of the <data> till
+   * this object seizes to exist  (and don't delete it during
+   * destruction).  If  <locking_strategy> is non-0 then this is used
+   * to protect regions  of code that access shared state (e.g.,
+   * reference counting) from  race conditions.  Note that the <size>
+   * of the <Message_Block> will be <size>, but the <length> will be 0
+   * until <wr_ptr> is set. The <data_block_allocator> is use to
+   * allocate the data  blocks while the <allocator_strategy> is used
+   * to allocate the buffers contained by those. The
+   * <message_block_allocator> is used to allocate new <Message_Block>
+   * objects when a duplicate method  is called.  If a
+   * <message_block_allocator> is given, this <Message_Block> and
+   * future <Message_Block> objects created by duplicate will be
+   * free'ed into this allocator when they are  released.  Note: if
+   * you use this  allocator, the <Message_Block> you created should
+   * have been created using this allocator because it will be
+   * released to the same allocator.
    */
   ACE_Message_Block (size_t size,
                      ACE_Message_Type type = MB_DATA,
@@ -191,10 +194,10 @@ public:
                      size_t align);
 
   /**
-   * Create a Message Block that assumes ownership of <data> (i.e.,
-   * doesn't delete it since it didn't malloc it!).  Note that the
-   * <size> of the <Message_Block> will be <size>, but the <length>
-   * will be 0 until <wr_ptr> is set.
+   * Create a Message Block that assumes it has ownership of <data>,
+   * but in reality it doesnt (i.e., cannot delete it since it didn't
+   * malloc it!).  Note that the  <size> of the <Message_Block> will
+   * be <size>, but the <length>  will be 0 until <wr_ptr> is set.
    */
   int init (const char *data,
             size_t size = 0);
@@ -204,15 +207,15 @@ public:
    * bytes.  The <cont> argument initializes the continuation field in
    * the <Message_Block>.  If <data> == 0 then we create and own the
    * <data>, using <allocator> to get the data if it's non-0.  If
-   * <data> != 0 we assume ownership of the <data> (and don't delete
-   * it).  If <locking_strategy> is non-0 then this is used to protect
-   * regions of code that access shared state (e.g., reference
-   * counting) from race conditions.  Note that the <size> of the
-   * <Message_Block> will be <size>, but the <length> will be 0 until
-   * <wr_ptr> is set.
-   * The <data_block_allocator> is use to allocate the data blocks
-   * while the <allocator_strategy> is used to allocate the buffers
-   * contained by those.
+   * <data> != 0 we assume that we have ownership of the <data> till
+   * this object seizes to exist  (and don't delete it during
+   * destruction).  If <locking_strategy> is non-0 then this is used
+   * to protect regions of code that access shared state (e.g.,
+   * reference counting) from race conditions.  Note that the <size>
+   * of the <Message_Block> will be <size>, but the <length> will be 0
+   * until  <wr_ptr> is set. The <data_block_allocator> is use to
+   * allocate the data blocks while the <allocator_strategy> is used
+   * to allocate the buffers  contained by those.
    */
   int init (size_t size,
             ACE_Message_Type type = MB_DATA,
