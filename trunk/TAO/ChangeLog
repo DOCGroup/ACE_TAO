@@ -18,6 +18,12 @@ Mon Apr 12 13:58:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           Added valuetype dependency to generated project and makefiles.
           The absence of this dependency is a legacy from the days 
           when TAO did not support valuetypes.
+          
+        * tao/DynamicAny/DynamicAny.pidl:
+        * tao/RTCORBA/RTCORBA.pidl:
+        
+          Added include path to TAO_ROOT to the suggested IDL compiler
+          command line options for regenerating these files.
 
 Mon Apr 12 13:54:32 2004  Chad Elliott  <elliott_c@ociweb.com>
 

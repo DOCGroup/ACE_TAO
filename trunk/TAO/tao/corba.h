@@ -65,7 +65,14 @@
 #include "tao/Managed_Types.h"
 #include "tao/Object_KeyC.h"
 
-//#include "tao/Remote_Object_Proxy_Impl.h"
+// Pre-generated basic type sequences.
+#include "tao/BooleanSeqC.h"
+#include "tao/FloatSeqC.h"
+#include "tao/OctetSeqC.h"
+#include "tao/ShortSeqC.h"
+#include "tao/StringSeqC.h"
+#include "tao/ULongSeqC.h"
+#include "tao/UShortSeqC.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/PortableInterceptorC.h"
