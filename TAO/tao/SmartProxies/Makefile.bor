@@ -7,6 +7,8 @@ NAME = TAO_SmartProxies
 OBJFILES = \
 	$(OBJDIR)\Smart_Proxies.obj
 
+RESOURCE = $(OBJDIR)\SmartProxies.res
+
 !ifdef STATIC
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_SMARTPROXIES_CFLAGS)
 !else

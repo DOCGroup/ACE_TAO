@@ -24,7 +24,7 @@ OBJFILES = \
 	$(OBJDIR)\LogMgr_i.obj \
 	$(OBJDIR)\LogRecordStore.obj
 
-RESOURCE = $(OBJDIR)\orbsvcs.res
+RESOURCE = $(OBJDIR)\DsLogAdmin.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

@@ -25,7 +25,7 @@ OBJFILES = \
 	$(OBJDIR)\Persistent_Naming_Context.obj \
 	$(OBJDIR)\Transient_Naming_Context.obj
 
-RESOURCE = $(OBJDIR)\orbsvcs.res
+RESOURCE = $(OBJDIR)\CosNaming.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

@@ -9,6 +9,8 @@ OBJFILES = \
 	$(OBJDIR)\IORManip_Loader.obj \
 	$(OBJDIR)\IORManipulation.obj \
 
+RESOURCE = $(OBJDIR)\TAO_IORManip.res
+
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_IORMANIP_CFLAGS) \
 	-DTAO_IORMANIP_BUILD_DLL
 

@@ -19,7 +19,7 @@ OBJFILES = \
 	$(OBJDIR)\LifeCycleServiceC.obj \
 	$(OBJDIR)\LifeCycleServiceS.obj
 
-RESOURCE = $(OBJDIR)\orbsvcs.res
+RESOURCE = $(OBJDIR)\CosLifeCycle.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

@@ -12,7 +12,7 @@ OBJFILES = \
 	$(OBJDIR)\EC_Sched_Filter.obj \
 	$(OBJDIR)\EC_Sched_Filter_Builder.obj
 
-RESOURCE = $(OBJDIR)\orbsvcs.res
+RESOURCE = $(OBJDIR)\RTSchedEvent.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

@@ -1,4 +1,4 @@
-#include "..\Version.h"
+#include "..\..\tao\Version.h"
 
 1 VERSIONINFO
  FILEVERSION TAO_MAJOR_VERSION,TAO_MINOR_VERSION,TAO_BETA_VERSION,0
@@ -13,13 +13,13 @@ BEGIN
     BEGIN
         BLOCK "040904B0"
         BEGIN
-            VALUE "FileDescription", "BiDir_GIOP\0"
+            VALUE "FileDescription", "Security\0"
             VALUE "FileVersion", TAO_VERSION "\0"
-            VALUE "InternalName", "TAO_BiDirGIOPDLL\0"
+            VALUE "InternalName", "TAO_SecurityDLL\0"
             VALUE "LegalCopyright", "\0"
             VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "TAO_BiDirGIOP.DLL\0"
-            VALUE "ProductName", "TAO\0"
+            VALUE "OriginalFilename", "TAO_Security.DLL\0"
+            VALUE "ProductName", "ORBSVCS\0"
             VALUE "ProductVersion", TAO_VERSION "\0"
         END
     END

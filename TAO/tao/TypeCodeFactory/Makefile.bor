@@ -10,6 +10,8 @@ OBJFILES = \
 	$(OBJDIR)\TypeCodeFactory_Loader.obj \
 	$(OBJDIR)\TypeCodeFactory_Adapter_Impl.obj
 
+RESOURCE = $(OBJDIR)\TypeCodeFactory.res
+
 !ifdef STATIC
 CFLAGS = \
 	$(ACE_CFLAGS) \

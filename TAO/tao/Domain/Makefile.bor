@@ -7,6 +7,8 @@ NAME = TAO_Domain
 OBJFILES = \
 	$(OBJDIR)\DomainS.obj
 
+RESOURCE = $(OBJDIR)\TAO_Domain.res
+
 !ifdef STATIC
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_DOMAIN_CFLAGS)
 !else
