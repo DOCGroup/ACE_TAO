@@ -104,11 +104,17 @@ protected:
   EVENT_DESCRIPTIONS event_descriptions_;
   // Event Descriptions
 
+  EVENT_DESCRIPTIONS sorted_event_descriptions_;
+  // Sorted Event Descriptions
+
   ACE_Timeprobe (const ACE_Timeprobe &);
   // Not implemented.
 
-  const char *find_description (u_long i);
+  const char *find_description_i (u_long i);
   // Find description of event <i>
+
+  void sort_event_descriptions_i (void);
+  // Sort event descriptions
 
   // = Time probe record
   struct timeprobe_t
