@@ -275,6 +275,14 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
         standard <CODE>-ORBInitRef</CODE> option defined by the <A
         HREF="INS.html">Interoperable Naming Service</A>.</TD>
   </TR>
+    <TR>
+    <TD><CODE>-ORBMulticastDiscoveryEndpoint</CODE> <EM>end_point</EM></TD>
+    <TD>Specifies the endpoint that should be used for locating the
+        Naming Service through multicast. <EM>end_point</EM> is of the
+        form ip-number:port-number (e.g., "tango.cs.wustl.edu:1234" or
+        "128.252.166.57:1234"). If there is no ':' in the end_point it
+        is assumed to be a port number, with the IP address being INADDR_ANY.
+  </TR>
   <TR>
     <TD><CODE>-ORBCollocation</CODE> <EM>yes/global/per-orb/no</EM></TD>
     <TD><a name="-ORBCollocation"></a>Specifies the use of collocation
