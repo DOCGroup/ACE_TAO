@@ -1,3 +1,12 @@
+Fri Nov  3 10:48:56 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/DSI_Gateway/DSI_Gateway_Client.dsp:
+	* tests/DSI_Gateway/DSI_Gateway_Server.dsp:
+	* tests/DSI_Gateway/DSI_Gateway_Service.dsp:
+
+	  Set the parameters for compiling the IDL file in
+	  the release version of these projects.
+
 Thu Nov  2 14:44:35 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
