@@ -1,0 +1,45 @@
+#
+# $Id$
+#
+
+NAME = server
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
+
+OBJFILES = \
+	$(OBJDIR)\AnyC.obj \
+	$(OBJDIR)\AnyS.obj \
+	$(OBJDIR)\AnyS_impl.obj \
+	$(OBJDIR)\server.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_ORT_CFLAGS) \
+	$(TAO_VALUETYPE_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_ORT_LIB) \
+	$(TAO_VALUETYPE_LIB)
+
+IDLFILES = \
+        $(IDLDIR)\Any.idl
+
+CPPDIR = .
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\AnyS.cpp $(IDLDIR)\AnyC.cpp: $(IDLDIR)\Any.idl
+	$(TAO_IDL) $**

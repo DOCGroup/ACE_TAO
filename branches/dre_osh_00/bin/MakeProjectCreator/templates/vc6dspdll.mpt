@@ -1,0 +1,50 @@
+configurations  = Release Debug
+type_is_binary  = 1
+type_is_dynamic = 1
+common_defines  = WIN32 _WINDOWS
+ssl_libs        = libeay32 ssleay32
+pdb             = 1
+
+Release {
+  use_debug_libraries   = 0
+  compile_flags         = /W3 /GX /O2 /MD /Zi /GR
+  defines               = NDEBUG
+  compile_flags_removed = /YX
+  output_dir            = Release
+  intermediate_dir      = Release
+  debug_switch          =
+}
+
+Debug {
+  use_debug_libraries   = 1
+  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
+  defines               = _DEBUG
+  compile_flags_removed = /Fr /YX
+  intermediate_dir      = Debug
+  lib_modifier          = d
+}
+
+MFC Release {
+  use_debug_libraries   = 0
+  compile_flags         = /W3 /GX /O2 /MD /Zi /GR
+  defines               = NDEBUG
+  compile_flags_removed = /YX
+  output_dir            = MFC_Release
+  intermediate_dir      = MFC_Release
+  debug_switch          =
+  lib_modifier          = mfc
+  use_mfc               = 2
+}
+
+MFC Debug {
+  use_debug_libraries   = 1
+  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
+  defines               = _DEBUG
+  compile_flags_removed = /Fr /YX
+  output_dir            = MFC_Debug
+  intermediate_dir      = MFC_Debug
+  lib_modifier          = mfcd
+  use_mfc               = 2
+}
+
+conditional_include "vcpartialmacros"

@@ -1,0 +1,16 @@
+#!build
+default:
+<%if(exename)%>
+	program
+<%endif%>
+<%if(sharedname)%>
+	library
+	:cx_pch_option=automatic
+	:outputname=<%libout%>\<%sharedname%>.lib
+	:object_dir=obj
+	:cx_pch_dir=pch
+<%endif%>
+<%foreach(source_files)%>
+..\<%source_file%>
+	C++
+<%endfor%>

@@ -1,0 +1,132 @@
+# $Id$
+#
+# This is the list of run_test.pl's that need to be run by
+# auto_run_tests.pl.
+# Each line has its own test, and a test can be followed by a
+# list of configurations it does _not_ run on.
+#
+# Example: TAO\examples\foo\run_test.pl: !MINIMUM !ST
+#
+# NOTE: This file contains tests only for TAO's ORB. Please do not
+# include things like performance-tests, and examples here. 
+TAO/tests/Param_Test/run_test.pl: !MINIMUM
+TAO/tests/Param_Test/run_test_dii.pl: !MINIMUM
+TAO/tests/AMI/run_test.pl: !MINIMUM
+TAO/tests/AMI_Timeouts/run_test.pl: !MINIMUM !ST
+TAO/tests/AMH_Exceptions/run_test.pl: !MINIMUM
+TAO/tests/Collocation_Tests/run_test.pl: !ST
+TAO/tests/OctetSeq/run_test.pl
+TAO/tests/OctetSeq/run_test1.pl: !STATIC
+TAO/tests/OctetSeq/run_test2.pl: !STATIC
+TAO/tests/BiDirectional/run_test.pl: !MINIMUM !GIOP10
+TAO/tests/BiDirectional_NestedUpcall/run_test.pl: !MINIMUM !STATIC !GIOP10
+TAO/tests/Leader_Followers/run_test.pl: !ST
+TAO/tests/Leader_Followers/run_test_mt.pl: !ST
+TAO/tests/Multiple_Inheritance/run_test.pl
+TAO/tests/Bug_1269_Regression/run_test.pl: !Win32 !MINIMUM
+TAO/tests/Bug_1270_Regression/run_test.pl: !Win32 !MINIMUM
+TAO/tests/Bug_1020_Basic_Regression/run_test.pl: !Win32 !MINIMUM !ST
+TAO/tests/Bug_1020_Regression/run_test.pl: !MINIMUM !ST !Win32
+TAO/tests/Bug_1361_Regression/run_test.pl: !MINIMUM !ST !Win32
+TAO/tests/Bug_1482_Regression/run_test.pl: !MINIMUM !ST 
+TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !MINIMUM !ST 
+TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !MINIMUM !ST 
+TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM 
+TAO/tests/RTCORBA/Collocation/run_test.pl: !MINIMUM !ST 
+TAO/tests/RTCORBA/Destroy_Thread_Pool/run_test.pl: !MINIMUM !ST
+TAO/tests/RTCORBA/Explicit_Binding/run_test.pl: !MINIMUM
+TAO/tests/RTCORBA/Linear_Priority/run_test.pl: !MINIMUM !ST
+TAO/tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl: !MINIMUM !ST
+TAO/tests/RTCORBA/ORB_init/run_test.pl: !MINIMUM
+TAO/tests/RTCORBA/Persistent_IOR/run_test.pl: !MINIMUM !ST
+TAO/tests/RTCORBA/Policies/run_test.pl: !MINIMUM  !ST
+TAO/tests/RTCORBA/Policy_Combinations/run_test.pl: !MINIMUM !ST
+TAO/tests/RTCORBA/Private_Connection/run_test.pl:  !MINIMUM
+TAO/tests/RTCORBA/Profile_And_Endpoint_Selection/run_test.pl:  !MINIMUM !ST 
+TAO/tests/RTCORBA/RTMutex/run_test.pl: !MINIMUM !ST
+TAO/tests/RTCORBA/Server_Declared/run_test.pl: !MINIMUM !ST
+TAO/tests/RTCORBA/Server_Protocol/run_test.pl: !MINIMUM
+TAO/tests/RTCORBA/Thread_Pool/run_test.pl: !MINIMUM !ST
+TAO/tests/Hello/run_test.pl
+TAO/tests/Cache_Growth_Test/run_test.pl
+TAO/tests/Muxing/run_test.pl: !ST
+TAO/tests/Muxed_GIOP_Versions/run_test.pl: !ST
+TAO/tests/MT_Client/run_test.pl: !ST
+TAO/tests/MT_BiDir/run_test.pl: !ST !MINIMUM !GIOP10
+TAO/tests/File_IO/run_test.pl: !ST !MINIMUM
+TAO/tests/MT_Server/run_test.pl: !ST
+TAO/tests/No_Server_MT_Connect_Test/run_test.pl: !ST !MINIMUM
+TAO/tests/Connect_Strategy_Test/run_test.pl
+# DISABLED TAO/tests/Client_Leaks/run_test.pl: !ST !Tru64
+TAO/tests/Server_Leaks/run_test.pl
+TAO/tests/Stack_Recursion/run_test.pl: !ST
+TAO/tests/Faults/run_test.pl: !MINIMUM
+TAO/tests/Crashed_Callback/run_test.pl: !MINIMUM
+TAO/tests/Crash_On_Write/run_test.pl: !ST
+TAO/tests/Nested_Upcall_Crash/run_test.pl: !MINIMUM
+TAO/tests/NestedUpcall/Simple/run_test.pl: !ST
+TAO/tests/NestedUpcall/MT_Client_Test/run_test.pl: !ST
+TAO/tests/NestedUpcall/Triangle_Test/run_test.pl
+TAO/tests/Nested_Event_Loop/run_test.pl
+TAO/tests/POA/Identity/run_test.pl
+TAO/tests/POA/Policies/run_test.pl
+TAO/tests/POA/Excessive_Object_Deactivations/run_test.pl
+TAO/tests/POA/Persistent_ID/run_test.pl
+TAO/tests/POA/Etherealization/run_test.pl: !MINIMUM
+TAO/tests/POA/Object_Reactivation/run_test.pl: !ST
+TAO/tests/POA/POA_Destruction/run_test.pl
+TAO/tests/POA/Default_Servant/run_test.pl: !MINIMUM
+TAO/tests/POA/Single_Threaded_POA/run_test.pl: !MINIMUM !ST
+TAO/tests/POA/Non_Servant_Upcalls/run_test.pl: !SUNCC5_1
+TAO/tests/POA/MT_Servant_Locator/run_test.pl: !MINIMUM !ST
+TAO/tests/POA/Nested_Non_Servant_Upcalls/run_test.pl: !MINIMUM !ST
+TAO/tests/POA/Current/run_test.pl
+TAO/tests/POA/wait_for_completion/run_test.pl
+TAO/tests/IORManipulation/run_test.pl
+TAO/tests/Policies/run_test.pl: !MINIMUM !ST
+TAO/tests/Timeout/run_test.pl: !MINIMUM
+TAO/tests/MT_Timeout/run_test.pl: !MINIMUM !ST
+TAO/tests/Timed_Buffered_Oneways/run_test.pl: !MINIMUM
+TAO/tests/Single_Read/run_test.pl:
+TAO/tests/Connection_Timeout/run_test.pl: !MINIMUM
+TAO/tests/MProfile_Connection_Timeout/run_test.pl: !MINIMUM
+TAO/tests/Codec/run_test.pl
+TAO/tests/IDL_Test/run_test.pl
+TAO/tests/ORB_init/run_test.pl
+TAO/tests/ORB_destroy/run_test.pl
+TAO/tests/ORB_shutdown/run_test.pl
+TAO/tests/DSI_Gateway/run_test.pl: !MINIMUM
+TAO/tests/DynAny_Test/run_test.pl: !MINIMUM
+TAO/tests/Connection_Purging/run_test.pl: !ST
+TAO/tests/Server_Connection_Purging/run_test.pl: !Win32
+TAO/tests/LongUpcalls/run_test.pl: !MINIMUM
+TAO/tests/Reliable_Oneways/run_test.pl: !MINIMUM
+TAO/tests/Blocking_Sync_None/run_test.pl: !MINIMUM
+TAO/tests/Oneway_Buffering/run_message_count.pl: !MINIMUM
+TAO/tests/Oneway_Buffering/run_buffer_size.pl: !MINIMUM
+TAO/tests/Oneway_Buffering/run_timeout.pl: !MINIMUM
+TAO/tests/Oneway_Buffering/run_timeout_reactive.pl: !MINIMUM
+TAO/tests/AMI_Buffering/run_message_count.pl: !MINIMUM !ST
+TAO/tests/AMI_Buffering/run_buffer_size.pl: !MINIMUM !ST
+TAO/tests/AMI_Buffering/run_timeout.pl: !MINIMUM !ST
+TAO/tests/AMI_Buffering/run_timeout_reactive.pl: !MINIMUM !ST
+TAO/tests/Big_Oneways/run_test.pl: !ST
+TAO/tests/Big_Twoways/run_test.pl: !ST
+TAO/tests/Big_Reply/run_test.pl: !ST
+TAO/tests/Big_Request_Muxing/run_test.pl: !ST !MINIMUM
+TAO/tests/Oneways_Invoking_Twoways/run_test.pl: !ST
+TAO/tests/Queued_Message_Test/run_test.pl
+TAO/tests/DLL_ORB/run_test.pl: !STATIC
+TAO/tests/InterOp-Naming/run_test.pl: !MINIMUM
+TAO/tests/Multiple/run_test.pl: !SUNCC5_1
+TAO/tests/Exposed_Policies/run_test.pl: !MINIMUM !ST !Linux
+TAO/tests/Portable_Interceptors/Dynamic/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/tests/Portable_Interceptors/IORInterceptor/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS !GIOP10
+TAO/tests/Portable_Interceptors/ForwardRequest/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/tests/Portable_Interceptors/Service_Context_Manipulation/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/tests/Portable_Interceptors/Request_Interceptor_Flow/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/tests/Portable_Interceptors/PICurrent/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/tests/Portable_Interceptors/AMI/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/tests/ORT/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
+TAO/tests/Object_Loader/run_test.pl: !STATIC
+TAO/tests/Two_Objects/run_test.pl: !ST

@@ -1,0 +1,13 @@
+project(Objref Sequence Test Server): server {
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(Objref Sequence Test Client): client {
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+
