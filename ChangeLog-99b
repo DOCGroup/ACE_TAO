@@ -1,3 +1,20 @@
+Thu Jul  8 13:50:14 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/Reactor_Impl.h (dispatch_notifications): Changed ACE_Handle_Set
+          arg from const to non-const. Fix in ACE_Select_Reactor_Notify
+          requires the ability to change the handle set.
+
+        * ace/WFMO_Reactor.{h cpp}: Corresponding removal of 'const' from
+          ACE_WFMO_Reactor_Notify::dispatch_notifications. Signature change
+          only - the function is a no-op in this class.
+
+        * ace/Select_Reactor_Base.{h cpp}: In ACE_Select_Reactor_Notify,
+          dispatch_notifications(), remove the notify pipe's handle from the
+          dispatch handle set when handling a notification. Else it remained
+          set and dispatchng I/O handlers came back and ran through it
+          again, which artificially increased the count of dispatched
+          handlers, and left some input unhandled when it was ready.
+
 Thu Jul 08 12:35:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/test_config.h: Reorganized WinCE's macros and fix some
