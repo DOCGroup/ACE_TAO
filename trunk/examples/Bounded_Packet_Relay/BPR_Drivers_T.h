@@ -63,7 +63,6 @@ private:
   // Method that is going to be invoked.
 };
 
-
 template <ACE_SYNCH_DECL>
 class Bounded_Packet_Relay : public Bounded_Packet_Relay_Base
 {
@@ -80,7 +79,6 @@ class Bounded_Packet_Relay : public Bounded_Packet_Relay_Base
   //     input to an output device at a pace specified in the start
   //     transmission call.
 public:
-
   typedef int (Bounded_Packet_Relay<ACE_SYNCH_USE>::*ACTION) (void *);
   // Command entry point type definition.
 
@@ -154,7 +152,6 @@ private:
 
 };
 
-
 template <class TQ>
 class Bounded_Packet_Relay_Driver
 {
@@ -170,7 +167,6 @@ class Bounded_Packet_Relay_Driver
   //    override these methods if there is some logic that is specific
   //    to that implementation.
 public:
-
   Bounded_Packet_Relay_Driver (void);
   // Constructor.
 
@@ -265,7 +261,6 @@ protected:
   // Shut down the driver.
 
 private:
-
   u_long packet_count_;
   // Count of packets to send in a transmission.
 
@@ -280,7 +275,6 @@ private:
 
   u_long logging_level_;
   // Logging level.
-
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
