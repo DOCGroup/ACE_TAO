@@ -20,12 +20,11 @@ Depend : #
 HTML : #
 	[ -f hdr ] || $(MAKE) UNSHAR
 	perl ../combine *.pre
-	rm -f *.bdy
 
 SHAR : #
 	[ ! -f combine.shar ] || exit 1
-	shar -T hdr links *.pre *.pst > combine.shar
-	rm -f hdr links *.pre *.pst
+	shar -T hdr bodies *.pre *.pst > combine.shar
+	rm -f hdr bodies *.pre *.pst
 
 UNSHAR : #
 	sh combine.shar

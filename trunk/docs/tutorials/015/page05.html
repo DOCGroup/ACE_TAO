@@ -15,6 +15,8 @@
 Like the client, we want to keep the main() part of our server code as 
       simple as possible.  This is done by putting most of the work
       into the Handler object that will deal with client connections.
+From the looks of the code below, I think we've been successful in our 
+simplification.
 <HR>
 
 <PRE>
@@ -23,6 +25,7 @@ Like the client, we want to keep the main() part of our server code as
 
 <font color=blue>#include</font> "<font color=green>Server.h</font>"
 
+<font color=red>// A signal handler that will close the server object</font>
 extern "<font color=green>C</font>" void handler (int)
 {
     <font color=#008888>Server::close</font>();
@@ -30,15 +33,20 @@ extern "<font color=green>C</font>" void handler (int)
 
 int main (int, char **)
 {
+        <font color=red>// The server object that abstracts away all of difficult parts.</font>
     Server server;
 
+        <font color=red>// Attempt to open the server.  Like all good ACE-based</font>
+        <font color=red>// objects, we'll get -1 on failure.</font>
     if( server.open() == -1 )
     {
         ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>server.open()</font>"), -1);
     }
 
+        <font color=red>// Install a signal handler for ^C so that we can exit gracefully</font>
     ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
 
+        <font color=red>// Run the server's main loop until we're interrupted</font>
     if( server.run() == -1 )
     {
         ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>server.run()</font>"), -1);
@@ -47,6 +55,9 @@ int main (int, char **)
     return 0;
 }
 
+<font color=red>/* These explicit instantiations were taken from an earlier tutorial.
+   Your compiler may require others as well.
+*/</font>
 <font color=blue>#if defined</font> (<font color=purple>ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION</font>)
 template class ACE_Acceptor &lt;Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Svc_Handler&lt;ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
