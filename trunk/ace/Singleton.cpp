@@ -65,7 +65,7 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
   // Perform the Double-Check pattern...
   if (singleton == 0)
     {
-      ACE_GUARD_RETURN (LOCK, ace_mon, (ACE_Singleton<TYPE, ACE_LOCK>::singleton_lock_i ()), 0);
+      ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_Singleton<TYPE, ACE_LOCK>::singleton_lock_i ()), 0);
 
       if (singleton == 0)
         {
@@ -124,7 +124,7 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
   // Perform the Double-Check pattern...                                        
   if (singleton_ == 0)
     {
-      ACE_GUARD_RETURN (LOCK, ace_mon, ace_singleton_lock_, 0);
+      ACE_GUARD_RETURN (ACE_LOCK, ace_mon, ace_singleton_lock_, 0);
 
       if (singleton_ == 0)
         {
@@ -142,7 +142,7 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
   // Perform the Double-Check pattern...
   if (singleton_ == 0)
     {
-      ACE_GUARD_RETURN (LOCK, ace_mon, (ACE_TSS_Singleton<TYPE, ACE_LOCK>::ace_singleton_lock_), 0);
+      ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_TSS_Singleton<TYPE, ACE_LOCK>::ace_singleton_lock_), 0);
 
       if (singleton_ == 0)
         {

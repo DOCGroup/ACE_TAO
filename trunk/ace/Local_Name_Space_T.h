@@ -231,7 +231,7 @@ private:
   TCHAR context_file_[MAXPATHLEN + MAXNAMELEN];
   // Name of the file used as the backing store.
 
-  LOCK *lock_;
+  ACE_LOCK *lock_;
   // Synchronization variable.
 };
 

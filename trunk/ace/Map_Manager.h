@@ -213,7 +213,7 @@ protected:
   ACE_Allocator *allocator_;
   // Pointer to a memory allocator.
 
-  LOCK lock_; 
+  ACE_LOCK lock_; 
   // Synchronization variable for the MT_SAFE <ACE_Map_Manager>.
 
   int equal (const EXT_ID &id1, const EXT_ID &id2);
