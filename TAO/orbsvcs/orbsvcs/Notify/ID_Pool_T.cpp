@@ -1,6 +1,10 @@
 //$Id$
 #include "ID_Pool_T.h"
 
+#if !defined (__ACE_INLINE__)
+#include "ID_Pool_T.i"
+#endif /* __ACE_INLINE__ */
+
 template <class ID_TYPE> void
 ID_Pool<ID_TYPE>::put (ID_TYPE /* id */)
 {

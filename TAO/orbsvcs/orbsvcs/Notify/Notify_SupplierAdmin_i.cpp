@@ -237,7 +237,7 @@ template class ACE_Hash_Map_Iterator_Base_Ex<CosNotifyChannelAdmin::ProxyID, TAO
 template class ACE_Hash_Map_Reverse_Iterator<CosNotifyChannelAdmin::ProxyID, TAO_Notify_ProxyConsumer_i*, ACE_SYNCH_MUTEX>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyChannelAdmin::ProxyID, TAO_Notify_ProxyConsumer_i*, ACE_Hash<CosNotifyChannelAdmin::ProxyID>,ACE_Equal_To<CosNotifyChannelAdmin::ProxyID>,ACE_SYNCH_MUTEX>;
 
-template class ID_Pool<CosNotifyChannelAdmin::ProxyID>;
+//template class ID_Pool<CosNotifyChannelAdmin::ProxyID>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Hash_Map_Entry<CosNotifyChannelAdmin::ProxyID, TAO_Notify_ProxyConsumer_i*, ACE_SYNCH_MUTEX>
@@ -249,5 +249,5 @@ template class ID_Pool<CosNotifyChannelAdmin::ProxyID>;
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<CosNotifyChannelAdmin::ProxyID, TAO_Notify_ProxyConsumer_i*, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyChannelAdmin::ProxyID, TAO_Notify_ProxyConsumer_i*, ACE_Hash<CosNotifyChannelAdmin::ProxyID>,ACE_Equal_To<CosNotifyChannelAdmin::ProxyID>,ACE_SYNCH_MUTEX>
 
-#pragma instantiate ID_Pool<CosNotifyChannelAdmin::ProxyID>
+//#pragma instantiate ID_Pool<CosNotifyChannelAdmin::ProxyID>
 #endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

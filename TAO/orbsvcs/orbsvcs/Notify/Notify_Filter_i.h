@@ -156,16 +156,7 @@ virtual CosNotifyFilter::CallbackIDSeq * get_callbacks (
     CORBA::SystemException
   ));
 
-  struct Notify_Constraint_Expr{
-    // = DESCRIPTION
-    //   Structure for associating ConstraintInfo with an interpreter.
-    //
-    CosNotifyFilter::ConstraintExp constr_expr;
-    // Constraint Expression.
 
-    TAO_Notify_Constraint_Interpreter interpreter;
-    // Constraint Interpreter.
-  };
 private:
   void add_constraints_i (
     const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq,
@@ -177,6 +168,18 @@ private:
                      ));
 
 
+    struct Notify_Constraint_Expr
+    {
+      // = DESCRIPTION
+      //   Structure for associating ConstraintInfo with an interpreter.
+      //
+      CosNotifyFilter::ConstraintExp constr_expr;
+      // Constraint Expression.
+      
+      TAO_Notify_Constraint_Interpreter interpreter;
+      // Constraint Interpreter.
+    };
+  
   ID_Pool<CosNotifyFilter::ConstraintID> constraint_expr_ids_;
   // Id generator for ConstraintInfo's.
 

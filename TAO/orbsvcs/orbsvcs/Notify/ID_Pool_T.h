@@ -40,4 +40,17 @@ class ID_Pool
   ID_TYPE id_;
 };
 
+#if defined (__ACE_INLINE__)
+#include "ID_Pool_T.i"
+#endif /* __ACE_INLINE__ */
+
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#include "ID_Pool_T.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+#pragma implementation ("ID_Pool.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
+
 #endif /* ID_POOL_T_H */
