@@ -1,3 +1,8 @@
+Wed Mar 30 12:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tao/TypeCode_Non_Default_Case.cpp:
+	  Fixed fuzz error
+
 Wed Mar 30 10:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* TAO_IDL/be_include/be_visitor_typecode/alias_typecode.h:
