@@ -1,227 +1,232 @@
+Mon Aug 21 11:46:16 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * rules.tao.GNU:
+          Add comments that explain why some options are commented out.
+
 Mon Aug 21 11:53:52 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_sunsoft.cpp:
+        * TAO_IDL/be/be_sunsoft.cpp:
 
-	  Modified the print format string for an unsigned long long
-	  literal to use ACE_UINT64_FORMAT_SPECIFIER instead of "%u".
-	  If the rhs of a ulonglong constant declaration in an IDL
-	  file was an expression, we were getting uncompileable 
-	  output on Solaris and incorrect but compileable output on
-	  NT. Thanks to skelley@solers.com for reporting the bug.
+          Modified the print format string for an unsigned long long
+          literal to use ACE_UINT64_FORMAT_SPECIFIER instead of "%u".
+          If the rhs of a ulonglong constant declaration in an IDL
+          file was an expression, we were getting uncompileable
+          output on Solaris and incorrect but compileable output on
+          NT. Thanks to skelley@solers.com for reporting the bug.
 
 Mon Aug 21 11:21:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* Makefile's in orbsvcs. Updated the dependancies.
+        * Makefile's in orbsvcs. Updated the dependancies.
 
 Sun Aug 20 18:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
 
-	  Rectified the broken exception support and ACE_THROW_SPEC
-	  generation.
+          Rectified the broken exception support and ACE_THROW_SPEC
+          generation.
 
 Sun Aug 20 16:15:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/paramlist.cpp:
-	  Resolved some generation errors.
+        * TAO_IDL/be/be_visitor_argument/paramlist.cpp:
+          Resolved some generation errors.
 
-	* tests/Makefile:
-	* tests/AMI/Makefile:
+        * tests/Makefile:
+        * tests/AMI/Makefile:
         * tests/Leader_Followers/Makefile:
-	* tests/Policies/Makefile:
-	* tests/CDR/Makefile:
+        * tests/Policies/Makefile:
+        * tests/CDR/Makefile:
         * tests/LongUpcalls/Makefile:
-	* tests/Portable_Interceptors/Makefile:
+        * tests/Portable_Interceptors/Makefile:
         * tests/MProfile/Makefile:
-	* tests/QtTests/Makefile:
+        * tests/QtTests/Makefile:
         * tests/MProfile_Forwarding/Makefile:
-	* tests/Connection_Purging/Makefile:
-	* tests/MT_Client/Makefile:
+        * tests/Connection_Purging/Makefile:
+        * tests/MT_Client/Makefile:
         * tests/MT_Server/Makefile:
-	* tests/DSI_Gateway/Makefile:
-	* tests/Smart_Proxies/Makefile:
-	* tests/DynAny_Test/Makefile:
-	* tests/Multiple_Inheritance/Makefile:
-	* tests/Endpoint_Per_Priority/Makefile:
-	* tests/Explicit_Event_Loop/Makefile:
-	* tests/Native_Exceptions/Makefile:
-	* tests/Timed_Buffered_Oneways/Makefile:
+        * tests/DSI_Gateway/Makefile:
+        * tests/Smart_Proxies/Makefile:
+        * tests/DynAny_Test/Makefile:
+        * tests/Multiple_Inheritance/Makefile:
+        * tests/Endpoint_Per_Priority/Makefile:
+        * tests/Explicit_Event_Loop/Makefile:
+        * tests/Native_Exceptions/Makefile:
+        * tests/Timed_Buffered_Oneways/Makefile:
         * tests/Timeout/Makefile:
-	* tests/Exposed_Policies/Makefile:
-	* tests/Nested_Event_Loop/Makefile:
-	* tests/Xt_Stopwatch/Makefile:
-	* tests/FL_Cube/Makefile:
-	* tests/ORB_destroy/Makefile:
-	* tests/Faults/Makefile:
-	* tests/ORB_init/Makefile:
-	* tests/IDL_Test/Makefile:
-	* tests/Object_Loader/Makefile:
-	* tests/IORManipulation/Makefile:
-	* tests/OctetSeq/Makefile:
-	* tests/InterOp-Naming/Makefile:
-	* tests/Portable_Interceptors/Makefile:
-	* tests/Param_Test/Makefile:
-	* examples/Buffered_AMI/Makefile:
-	* examples/AMI/FL_Callback/Makefile:
-	* examples/Buffered_Oneways/Makefile:
-	* examples/Callback_Quoter/Makefile:
-	* examples/Event_Comm/Makefile:
-	* examples/Load_Balancing/Makefile:
-	* examples/Load_Balancing_Persistent/Makefile:
-	* examples/POA/Identity/Makefile:
-	* examples/POA/Reference_Counted_Servant/Makefile:
-	* examples/POA/DSI/Makefile:
-	* examples/POA/Loader/Makefile:
-	* examples/POA/RootPOA/Makefile:
-	* examples/POA/Default_Servant/Makefile:
-	* examples/POA/Explicit_Activation/Makefile:
-	* examples/POA/FindPOA/Makefile:
-	* examples/POA/NewPOA/Makefile:
-	* examples/POA/On_Demand_Activation/Makefile:
-	* examples/POA/TIE/Makefile:
-	* examples/POA/Forwarding/Makefile:
-	* examples/POA/On_Demand_Loading/Makefile:
-	* examples/Persistent_Grid/Makefile:
-	* examples/Quoter/Makefile:
-	* examples/Simple/bank/Makefile:
-	* examples/Simple/echo/Makefile:
-	* examples/Simple/grid/Makefile:
-	* examples/Simple/time/Makefile:
-	* examples/Simple/time-date/Makefile:
-	* examples/Simple/chat/Makefile:
-	* performance-tests/Cubit/Makefile:
-	* performance-tests/Latency/Makefile:
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Makefile:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
-	* performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
-	* performance-tests/RTCorba/Oneways/Reliable/Makefile:
-	* performance-tests/POA/Demux/Makefile:
-	* performance-tests/POA/Object_Creation_And_Registration/Makefile:
-	* performance-tests/Pluggable/Makefile:
-	* performance-tests/Thruput/TAO/Makefile:
+        * tests/Exposed_Policies/Makefile:
+        * tests/Nested_Event_Loop/Makefile:
+        * tests/Xt_Stopwatch/Makefile:
+        * tests/FL_Cube/Makefile:
+        * tests/ORB_destroy/Makefile:
+        * tests/Faults/Makefile:
+        * tests/ORB_init/Makefile:
+        * tests/IDL_Test/Makefile:
+        * tests/Object_Loader/Makefile:
+        * tests/IORManipulation/Makefile:
+        * tests/OctetSeq/Makefile:
+        * tests/InterOp-Naming/Makefile:
+        * tests/Portable_Interceptors/Makefile:
+        * tests/Param_Test/Makefile:
+        * examples/Buffered_AMI/Makefile:
+        * examples/AMI/FL_Callback/Makefile:
+        * examples/Buffered_Oneways/Makefile:
+        * examples/Callback_Quoter/Makefile:
+        * examples/Event_Comm/Makefile:
+        * examples/Load_Balancing/Makefile:
+        * examples/Load_Balancing_Persistent/Makefile:
+        * examples/POA/Identity/Makefile:
+        * examples/POA/Reference_Counted_Servant/Makefile:
+        * examples/POA/DSI/Makefile:
+        * examples/POA/Loader/Makefile:
+        * examples/POA/RootPOA/Makefile:
+        * examples/POA/Default_Servant/Makefile:
+        * examples/POA/Explicit_Activation/Makefile:
+        * examples/POA/FindPOA/Makefile:
+        * examples/POA/NewPOA/Makefile:
+        * examples/POA/On_Demand_Activation/Makefile:
+        * examples/POA/TIE/Makefile:
+        * examples/POA/Forwarding/Makefile:
+        * examples/POA/On_Demand_Loading/Makefile:
+        * examples/Persistent_Grid/Makefile:
+        * examples/Quoter/Makefile:
+        * examples/Simple/bank/Makefile:
+        * examples/Simple/echo/Makefile:
+        * examples/Simple/grid/Makefile:
+        * examples/Simple/time/Makefile:
+        * examples/Simple/time-date/Makefile:
+        * examples/Simple/chat/Makefile:
+        * performance-tests/Cubit/Makefile:
+        * performance-tests/Latency/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
+        * performance-tests/RTCorba/Oneways/Reliable/Makefile:
+        * performance-tests/POA/Demux/Makefile:
+        * performance-tests/POA/Object_Creation_And_Registration/Makefile:
+        * performance-tests/Pluggable/Makefile:
+        * performance-tests/Thruput/TAO/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Sun Aug 20 14:27:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
-	* orbsvcs/IFR_Service/InterfaceS.cpp:
+        * orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
+        * orbsvcs/IFR_Service/InterfaceS.cpp:
 
-	  Brought the skeleton code up to date with the new
-	  portable interceptor stuff checked in by Kirthika.
+          Brought the skeleton code up to date with the new
+          portable interceptor stuff checked in by Kirthika.
 
 Sun Aug 20 11:18:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile:
-	* orbsvcs/orbsvcs/Makefile.CosTrading:
-	* orbsvcs/orbsvcs/Makefile.RTSchedEvent:
-	* orbsvcs/orbsvcs/Makefile.CosConcurrency:
-	* orbsvcs/orbsvcs/Makefile.DsLogAdmin:
-	* orbsvcs/orbsvcs/Makefile.SSLIOP:
-	* orbsvcs/orbsvcs/Makefile.CosEvent:
-	* orbsvcs/orbsvcs/Makefile.ESF:
-	* orbsvcs/orbsvcs/Makefile.Security:
-	* orbsvcs/orbsvcs/Makefile.CosLifeCycle:
-	* orbsvcs/orbsvcs/Makefile.ETCL:
-	* orbsvcs/orbsvcs/Makefile.Svc_Utils:
-	* orbsvcs/orbsvcs/Makefile.CosNaming:
-	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
-	* orbsvcs/orbsvcs/Makefile.am:
-	* orbsvcs/orbsvcs/Makefile.CosNotification:
-	* orbsvcs/orbsvcs/Makefile.RTEvent:
-	* orbsvcs/orbsvcs/Makefile.av:
-	* orbsvcs/orbsvcs/Makefile.CosProperty:
-	* orbsvcs/orbsvcs/Makefile.RTOLDEvent:
-	* orbsvcs/orbsvcs/Makefile.bor:
-	* orbsvcs/orbsvcs/Makefile.CosTime:
-	* orbsvcs/orbsvcs/Makefile.RTSched:
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Makefile.CosTrading:
+        * orbsvcs/orbsvcs/Makefile.RTSchedEvent:
+        * orbsvcs/orbsvcs/Makefile.CosConcurrency:
+        * orbsvcs/orbsvcs/Makefile.DsLogAdmin:
+        * orbsvcs/orbsvcs/Makefile.SSLIOP:
+        * orbsvcs/orbsvcs/Makefile.CosEvent:
+        * orbsvcs/orbsvcs/Makefile.ESF:
+        * orbsvcs/orbsvcs/Makefile.Security:
+        * orbsvcs/orbsvcs/Makefile.CosLifeCycle:
+        * orbsvcs/orbsvcs/Makefile.ETCL:
+        * orbsvcs/orbsvcs/Makefile.Svc_Utils:
+        * orbsvcs/orbsvcs/Makefile.CosNaming:
+        * orbsvcs/orbsvcs/Makefile.LoadBalancing:
+        * orbsvcs/orbsvcs/Makefile.am:
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+        * orbsvcs/orbsvcs/Makefile.RTEvent:
+        * orbsvcs/orbsvcs/Makefile.av:
+        * orbsvcs/orbsvcs/Makefile.CosProperty:
+        * orbsvcs/orbsvcs/Makefile.RTOLDEvent:
+        * orbsvcs/orbsvcs/Makefile.bor:
+        * orbsvcs/orbsvcs/Makefile.CosTime:
+        * orbsvcs/orbsvcs/Makefile.RTSched:
 
-	  Updated the Makefile dependencies to remove the obsolete
-	  dependencies on the old Interceptor files.
+          Updated the Makefile dependencies to remove the obsolete
+          dependencies on the old Interceptor files.
 
 Sat Aug 19 21:03:48 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/RT_Policy_i.h
-	* tao/Stub.cpp
-	* tests/Exposed_Policies/client.cpp:
+        * tao/RT_Policy_i.h
+        * tao/Stub.cpp
+        * tests/Exposed_Policies/client.cpp:
 
-	  Comments/cosmetic updates.
+          Comments/cosmetic updates.
 
 Sat Aug 19 19:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp
-	* TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp
-	* TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp
-	  Added ");\n\n" here and removed it from
-	  be_visitor_operation/interceptors_arglist.cpp
-	  since else for void methods w.o. exceptions
-	  the closing bracs werent there. Thanks to Bala
-	  for discovering this bug.
-	* TAO_IDL/be/be_visitor_argument/request_info_result.cpp:
-	  Changed the predefined to not have a default case.
-	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
-	  TAO_OPERATION_INTERCEPTORS_RESULT is now in
-	  be_visitor_operation itself, also at this point
-	  now we use bt and not node as the visited type.
-	* TAO_IDL/be/be_visitor_operation/interceptors_result.cpp:
-	* TAO_IDL/be_include/be_visitor_operation/interceptors_result.h:
-	* TAO_IDL/be/be_visitor_operation.cpp:
-	* TAO_IDL/be_include/be_visitor_operation.h:
-	* TAO_IDL/be/be_visitor_factory.cpp:
-	  Added a new visitor which derives from be_visitor_decl.
+        * TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp
+        * TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp
+        * TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp
+          Added ");\n\n" here and removed it from
+          be_visitor_operation/interceptors_arglist.cpp
+          since else for void methods w.o. exceptions
+          the closing bracs werent there. Thanks to Bala
+          for discovering this bug.
+        * TAO_IDL/be/be_visitor_argument/request_info_result.cpp:
+          Changed the predefined to not have a default case.
+        * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
+          TAO_OPERATION_INTERCEPTORS_RESULT is now in
+          be_visitor_operation itself, also at this point
+          now we use bt and not node as the visited type.
+        * TAO_IDL/be/be_visitor_operation/interceptors_result.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/interceptors_result.h:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+        * TAO_IDL/be_include/be_visitor_operation.h:
+        * TAO_IDL/be/be_visitor_factory.cpp:
+          Added a new visitor which derives from be_visitor_decl.
 
 Sat Aug 19 16:40:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* docs/Smart_Proxies.html: Updated the documentation to remind
-	  users to build TAO/tao with smart_proxies=1 for a smart proxies
-	  enabled build.
+        * docs/Smart_Proxies.html: Updated the documentation to remind
+          users to build TAO/tao with smart_proxies=1 for a smart proxies
+          enabled build.
 
 Sat Aug 19 15:20:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Acceptors.cpp (process_client_locate):
-	* tao/GIOP_Message_Acceptors.h:
-	* tao/GIOP_Message_Lite.h:
-	* tao/GIOP_Message_Lite.cpp: Added a new method
-	  find_ior_in_table.
+        * tao/GIOP_Message_Acceptors.cpp (process_client_locate):
+        * tao/GIOP_Message_Acceptors.h:
+        * tao/GIOP_Message_Lite.h:
+        * tao/GIOP_Message_Lite.cpp: Added a new method
+          find_ior_in_table.
 
-	* tao/GIOP_Server_Request.cpp:
-	* tao/GIOP_Server_Request.i:
-	* tao/GIOP_Server_Request.h: Added an argument to one of the
-	  constructors that would indicate whether a reply should be sent
-	  by this class or not. Also added a inline method that would
-	  return that value. Further removed the version argument in the
-	  constructor. It is no longer needed.
+        * tao/GIOP_Server_Request.cpp:
+        * tao/GIOP_Server_Request.i:
+        * tao/GIOP_Server_Request.h: Added an argument to one of the
+          constructors that would indicate whether a reply should be sent
+          by this class or not. Also added a inline method that would
+          return that value. Further removed the version argument in the
+          constructor. It is no longer needed.
 
-	* tao/Servant_Base.cpp: Added a check to see whether the deferred
-	  reply flag is set before a reply is sent by calling the
-	  ServerRequest class.
+        * tao/Servant_Base.cpp: Added a check to see whether the deferred
+          reply flag is set before a reply is sent by calling the
+          ServerRequest class.
 
-	* tao/Servant_request.h: Added a virtual method that would return
-	  the deffered flag value.
+        * tao/Servant_request.h: Added a virtual method that would return
+          the deffered flag value.
 
-	  The whole set of changes were required to interoperate properly
-	  with other ORBs. The problem was when other ORBs sent a
-	  LocateRequest message. The LocateRequest classes after receiving
-	  the call make an upcall on to the servant. This is essentially
-	  done by calling the _non_existent () method on the servant to
-	  test whether the object is active. The existing setup processed
-	  the upcall in a fashion similar to that of a Request
-	  message. For a Request message, once the upcall is made on to
-	  the servant, the skeleton code prepares the reply and also
-	  marshalls the return value. Then the Servant_Base class sends
-	  the reply on the wire. But, for a LocateRequest message we need
-	  not do the above. We need to just make an upcall and then
-	  prepare the right reply if the call returned properly. If not we
-	  need to propagate the exception received from the upcall. To use
-	  the existing setup to make an upcall, I introduced a flag that
-	  would indicate to the Servant_Base class whether it needs to
-	  send the reply on the wire.  With this change the
-	  interoperability problem that we had with Orbix2000 and reported
-	  by Boeing should be gone.
+          The whole set of changes were required to interoperate properly
+          with other ORBs. The problem was when other ORBs sent a
+          LocateRequest message. The LocateRequest classes after receiving
+          the call make an upcall on to the servant. This is essentially
+          done by calling the _non_existent () method on the servant to
+          test whether the object is active. The existing setup processed
+          the upcall in a fashion similar to that of a Request
+          message. For a Request message, once the upcall is made on to
+          the servant, the skeleton code prepares the reply and also
+          marshalls the return value. Then the Servant_Base class sends
+          the reply on the wire. But, for a LocateRequest message we need
+          not do the above. We need to just make an upcall and then
+          prepare the right reply if the call returned properly. If not we
+          need to propagate the exception received from the upcall. To use
+          the existing setup to make an upcall, I introduced a flag that
+          would indicate to the Servant_Base class whether it needs to
+          send the reply on the wire.  With this change the
+          interoperability problem that we had with Orbix2000 and reported
+          by Boeing should be gone.
 
 
 Sat Aug 19 11:10:40 2000  Carlos O'Ryan  <coryan@uci.edu>
@@ -239,570 +244,570 @@ Sat Aug 19 11:10:40 2000  Carlos O'Ryan  <coryan@uci.edu>
         * tests/Exposed_Policies/RT_Properties.cpp:
         * tests/Exposed_Policies/client.cpp:
         * tests/Exposed_Policies/server.cpp:
-	  Made a code review for Angelo, lots of @@ comments to address.
+          Made a code review for Angelo, lots of @@ comments to address.
 
 Sat Aug 19 13:50:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
-	  Made the formal arguments to the RequestInfo constructor unique to
-	  resolve name clashing errors.
+        * TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
+          Made the formal arguments to the RequestInfo constructor unique to
+          resolve name clashing errors.
 
 Fri Aug 18 23:20:56 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/RTCORBA.pidl
-	* tao/RTCORBAC.cpp
-	* tao/RTCORBAC.h
-	* tao/RTCORBAC.i
-	* tao/RT_Policy_i.cpp
-	* tao/RT_Policy_i.h
-	* tao/diffs/RTCORBAC.cpp.diff
-	* tao/diffs/RTCORBAC.h.diff
-	* tao/diffs/RTCORBAC.i.diff:
+        * tao/RTCORBA.pidl
+        * tao/RTCORBAC.cpp
+        * tao/RTCORBAC.h
+        * tao/RTCORBAC.i
+        * tao/RT_Policy_i.cpp
+        * tao/RT_Policy_i.h
+        * tao/diffs/RTCORBAC.cpp.diff
+        * tao/diffs/RTCORBAC.h.diff
+        * tao/diffs/RTCORBAC.i.diff:
 
-	  Added idl interfaces to allow configuration of UIOP and SHMIOP
-	  protocol properties through RTCORBA's ServerProtocolPolicy
-	  and ClientProtocolPolicy.
+          Added idl interfaces to allow configuration of UIOP and SHMIOP
+          protocol properties through RTCORBA's ServerProtocolPolicy
+          and ClientProtocolPolicy.
 
-	* tao/diffs/TAOC.h.diff
-	* tao/TAO.pidl
+        * tao/diffs/TAOC.h.diff
+        * tao/TAO.pidl
 
-	  Updated comments.
+          Updated comments.
 
-	* tao/Policy_Manager.cpp (set_policy_overrides):
+        * tao/Policy_Manager.cpp (set_policy_overrides):
 
-	  Only one ServerProtocolPolicy should be included in a
+          Only one ServerProtocolPolicy should be included in a
           given PolicyList (section 4.15.2 of RTCORBA 1.0, i.e.,
           ptc/99-05-03).
 
 Fri Aug 18 19:30:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
 
-	Visitors implemented as part of the TAO_IDL to generate
-	infrastructure for Portable Interceptors:
+        Visitors implemented as part of the TAO_IDL to generate
+        infrastructure for Portable Interceptors:
 
-	* TAO_IDL/be_include/be_visitor_argument/paramlist.h
-	* TAO_IDL/be_include/be_visitor_argument/request_info_arglist.h:
-	* TAO_IDL/be_include/be_visitor_interface.h
-	* TAO_IDL/be_include/be_visitor_interface/interceptors_ch.h
-	* TAO_IDL/be_include/be_visitor_interface/interceptors_cs.h
-	* TAO_IDL/be_include/be_visitor_interface/interceptors_sh.h
-	* TAO_IDL/be_include/be_visitor_interface/interceptors_ss.h
-	* TAO_IDL/be/be_visitor_factory.cpp:
-	* TAO_IDL/be/be_visitor_interface.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface.cpp
-	* TAO_IDL/be/be_visitor_interface/interceptors_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/interceptors_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/interceptors_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/interceptors_ss.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation.cpp :
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_info_rettype.cpp
-	  A new visitor need to attach ACE_NESTED_CLASS macros needed for
-	  MSCV.
+        * TAO_IDL/be_include/be_visitor_argument/paramlist.h
+        * TAO_IDL/be_include/be_visitor_argument/request_info_arglist.h:
+        * TAO_IDL/be_include/be_visitor_interface.h
+        * TAO_IDL/be_include/be_visitor_interface/interceptors_ch.h
+        * TAO_IDL/be_include/be_visitor_interface/interceptors_cs.h
+        * TAO_IDL/be_include/be_visitor_interface/interceptors_sh.h
+        * TAO_IDL/be_include/be_visitor_interface/interceptors_ss.h
+        * TAO_IDL/be/be_visitor_factory.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface.cpp
+        * TAO_IDL/be/be_visitor_interface/interceptors_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp :
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_info_rettype.cpp
+          A new visitor need to attach ACE_NESTED_CLASS macros needed for
+          MSCV.
 
-	* TAO_IDL/be/be_visitor_argument.cpp:
-	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
-	  This one has special MSVC related nested class macro generation
-	  for sequences, structs, arrays & unions.
+        * TAO_IDL/be/be_visitor_argument.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+          This one has special MSVC related nested class macro generation
+          for sequences, structs, arrays & unions.
 
-	* TAO_IDL/be/be_visitor_argument/request_info_cs.cpp:
-	* TAO_IDL/be/be_visitor_argument/request_info_result.cpp:
-	* TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
-	* TAO_IDL/be/be_visitor_argument/request_info_ss.cpp:
-	* TAO_IDL/be/be_visitor_argument/paramlist.cpp:
-	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
-	  MSVC related changes for the constructor's formal args for the
-	  request info classes.
+        * TAO_IDL/be/be_visitor_argument/request_info_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_result.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/paramlist.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+          MSVC related changes for the constructor's formal args for the
+          request info classes.
 
-	* TAO_IDL/be/be_visitor_attribute/attribute.cpp:
-	  Most of the TAO_IDL changes are to add new visitors for
-	  generation of the nested RequestInfo classes per operation of an
-	  interface and also to be able to query the RequestInfo classes
-	  for argument list etc on demand.
+        * TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+          Most of the TAO_IDL changes are to add new visitors for
+          generation of the nested RequestInfo classes per operation of an
+          interface and also to be able to query the RequestInfo classes
+          for argument list etc on demand.
 
-	TAO/tao additions:
+        TAO/tao additions:
 
-	* tao/PortableInterceptor.{h,i,cpp}:
-	* tao/PortableInterceptorC.{h,i,cpp}:
-	* tao/DynamicC.{h,i,cpp}:
-	* tao/PortableInterceptor.pidl:
-	* tao/Dynamic.pidl:
-	* tao/IOP_N.pidl:
-	* tao/Request_Info.{h,cpp}:
-	  All the above are new Portable Interceptor related additions
-	  to TAO/tao.
+        * tao/PortableInterceptor.{h,i,cpp}:
+        * tao/PortableInterceptorC.{h,i,cpp}:
+        * tao/DynamicC.{h,i,cpp}:
+        * tao/PortableInterceptor.pidl:
+        * tao/Dynamic.pidl:
+        * tao/IOP_N.pidl:
+        * tao/Request_Info.{h,cpp}:
+          All the above are new Portable Interceptor related additions
+          to TAO/tao.
 
-	* tao/ORB.h:
-	* tao/corba.h:
-	  included PortableInterceptor.h
+        * tao/ORB.h:
+        * tao/corba.h:
+          included PortableInterceptor.h
 
-	* tao/ImplRepoC,S.cpp:
-	  commented out inclusion of PortbaleInterceptor.h
-	  And removed all interceptor invocation portions.
+        * tao/ImplRepoC,S.cpp:
+          commented out inclusion of PortbaleInterceptor.h
+          And removed all interceptor invocation portions.
 
-	* tao/InterfaceC.cpp:
-	  commented out inclusion of PortbaleInterceptor.h
-	  And removed all interceptor invocation portions.
+        * tao/InterfaceC.cpp:
+          commented out inclusion of PortbaleInterceptor.h
+          And removed all interceptor invocation portions.
 
-	* tao/FT_CORBAC.cpp:
-	  commented out inclusion of PortbaleInterceptor.h
-	  And removed all interceptor invocation portions.
+        * tao/FT_CORBAC.cpp:
+          commented out inclusion of PortbaleInterceptor.h
+          And removed all interceptor invocation portions.
 
-	* tao/FT_CORBAS.cpp:
-	  removed all interceptor invocation portions.
+        * tao/FT_CORBAS.cpp:
+          removed all interceptor invocation portions.
 
-	* tao/Policy{C,S}.cpp:
-	  Removed interceptor points from invocations.
+        * tao/Policy{C,S}.cpp:
+          Removed interceptor points from invocations.
 
-	* TAO/tao/Makefile: updated dependencies.
-	* TAO/tao/TAO.dsp:
-	* TAO/tao/TAO_Static.dsp:
-	  Updated the NT projects.
+        * TAO/tao/Makefile: updated dependencies.
+        * TAO/tao/TAO.dsp:
+        * TAO/tao/TAO_Static.dsp:
+          Updated the NT projects.
 
-	Removed the old interceptor files:
+        Removed the old interceptor files:
 
-	* TAO/tao/Interceptor.{h, i, cpp}:
-	* TAO/tao/InterceptorC.{h, i, cpp}:
-	* TAO/tao/Interceptor.pidl
-	* TAO/tests/Interceptors
-	  All the above are no longer available!
+        * TAO/tao/Interceptor.{h, i, cpp}:
+        * TAO/tao/InterceptorC.{h, i, cpp}:
+        * TAO/tao/Interceptor.pidl
+        * TAO/tests/Interceptors
+          All the above are no longer available!
 
-	The following are tests to check out how well this feature
-	performs when providing a different functionality:
+        The following are tests to check out how well this feature
+        performs when providing a different functionality:
 
-	* tests/PortableInterceptors/Dynamic/Makefile:
-	* tests/PortableInterceptors/Dynamic/Makefile.bor:
-	* tests/PortableInterceptors/Dynamic/README:
-	* tests/PortableInterceptors/Dynamic/client.bor:
-	* tests/PortableInterceptors/Dynamic/client.cpp:
-	* tests/PortableInterceptors/Dynamic/interceptors.cpp:
-	* tests/PortableInterceptors/Dynamic/interceptors.h:
-	* tests/PortableInterceptors/Dynamic/run_test.pl:
-	* tests/PortableInterceptors/Dynamic/server.bor:
-	* tests/PortableInterceptors/Dynamic/server.cpp:
-	* tests/PortableInterceptors/Dynamic/test.idl:
-	* tests/PortableInterceptors/Dynamic/test_i.cpp:
-	* tests/PortableInterceptors/Dynamic/test_i.h:
-	  This test tries out the various features provided by Module
-	  Dynamic.
+        * tests/PortableInterceptors/Dynamic/Makefile:
+        * tests/PortableInterceptors/Dynamic/Makefile.bor:
+        * tests/PortableInterceptors/Dynamic/README:
+        * tests/PortableInterceptors/Dynamic/client.bor:
+        * tests/PortableInterceptors/Dynamic/client.cpp:
+        * tests/PortableInterceptors/Dynamic/interceptors.cpp:
+        * tests/PortableInterceptors/Dynamic/interceptors.h:
+        * tests/PortableInterceptors/Dynamic/run_test.pl:
+        * tests/PortableInterceptors/Dynamic/server.bor:
+        * tests/PortableInterceptors/Dynamic/server.cpp:
+        * tests/PortableInterceptors/Dynamic/test.idl:
+        * tests/PortableInterceptors/Dynamic/test_i.cpp:
+        * tests/PortableInterceptors/Dynamic/test_i.h:
+          This test tries out the various features provided by Module
+          Dynamic.
 
-	* tests/PortableInterceptors/Service_Context_Manipulation/Makefile:
-	* tests/PortableInterceptors/Service_Context_Manipulation/Makefile.bor:
-	* tests/PortableInterceptors/Service_Context_Manipulation/README:
-	* tests/PortableInterceptors/Service_Context_Manipulation/client.bor:
-	* tests/PortableInterceptors/Service_Context_Manipulation/client.cpp:
-	* tests/PortableInterceptors/Service_Context_Manipulation/interceptors.cpp:
-	* tests/PortableInterceptors/Service_Context_Manipulation/interceptors.h:
-	* tests/PortableInterceptors/Service_Context_Manipulation/run_test.pl:
-	* tests/PortableInterceptors/Service_Context_Manipulation/server.bor:
-	* tests/PortableInterceptors/Service_Context_Manipulation/server.cpp:
-	* tests/PortableInterceptors/Service_Context_Manipulation/test.idl:
-	* tests/PortableInterceptors/Service_Context_Manipulation/test_i.cpp:
-	* tests/PortableInterceptors/Service_Context_Manipulation/test_i.h:
-	  This test plays with piggybacking data via the service context
-	  list of the invocation.
+        * tests/PortableInterceptors/Service_Context_Manipulation/Makefile:
+        * tests/PortableInterceptors/Service_Context_Manipulation/Makefile.bor:
+        * tests/PortableInterceptors/Service_Context_Manipulation/README:
+        * tests/PortableInterceptors/Service_Context_Manipulation/client.bor:
+        * tests/PortableInterceptors/Service_Context_Manipulation/client.cpp:
+        * tests/PortableInterceptors/Service_Context_Manipulation/interceptors.cpp:
+        * tests/PortableInterceptors/Service_Context_Manipulation/interceptors.h:
+        * tests/PortableInterceptors/Service_Context_Manipulation/run_test.pl:
+        * tests/PortableInterceptors/Service_Context_Manipulation/server.bor:
+        * tests/PortableInterceptors/Service_Context_Manipulation/server.cpp:
+        * tests/PortableInterceptors/Service_Context_Manipulation/test.idl:
+        * tests/PortableInterceptors/Service_Context_Manipulation/test_i.cpp:
+        * tests/PortableInterceptors/Service_Context_Manipulation/test_i.h:
+          This test plays with piggybacking data via the service context
+          list of the invocation.
 
-	* tests/PortableInterceptors/Benchmark/Makefile:
-	* tests/PortableInterceptors/Benchmark/Makefile.bor:
-	* tests/PortableInterceptors/Benchmark/README:
-	* tests/PortableInterceptors/Benchmark/client.bor:
-	* tests/PortableInterceptors/Benchmark/client.cpp:
-	* tests/PortableInterceptors/Benchmark/interceptors.cpp:
-	* tests/PortableInterceptors/Benchmark/interceptors.h:
-	* tests/PortableInterceptors/Benchmark/run_test.pl:
-	* tests/PortableInterceptors/Benchmark/server.bor:
-	* tests/PortableInterceptors/Benchmark/server.cpp:
-	* tests/PortableInterceptors/Benchmark/test.idl:
-	* tests/PortableInterceptors/Benchmark/test_i.cpp:
-	* tests/PortableInterceptors/Benchmark/test_i.h:
-	* tests/PortableInterceptors/Benchmark/marker.h:
-	* tests/PortableInterceptors/Benchmark/marker.cpp:
-	  This is a benchamrking test used and explained in
-	  http://www.cs.wustl.edu/~schmidt/PDF/COOTS-00.pdf
+        * tests/PortableInterceptors/Benchmark/Makefile:
+        * tests/PortableInterceptors/Benchmark/Makefile.bor:
+        * tests/PortableInterceptors/Benchmark/README:
+        * tests/PortableInterceptors/Benchmark/client.bor:
+        * tests/PortableInterceptors/Benchmark/client.cpp:
+        * tests/PortableInterceptors/Benchmark/interceptors.cpp:
+        * tests/PortableInterceptors/Benchmark/interceptors.h:
+        * tests/PortableInterceptors/Benchmark/run_test.pl:
+        * tests/PortableInterceptors/Benchmark/server.bor:
+        * tests/PortableInterceptors/Benchmark/server.cpp:
+        * tests/PortableInterceptors/Benchmark/test.idl:
+        * tests/PortableInterceptors/Benchmark/test_i.cpp:
+        * tests/PortableInterceptors/Benchmark/test_i.h:
+        * tests/PortableInterceptors/Benchmark/marker.h:
+        * tests/PortableInterceptors/Benchmark/marker.cpp:
+          This is a benchamrking test used and explained in
+          http://www.cs.wustl.edu/~schmidt/PDF/COOTS-00.pdf
 
-	* TAO/docs/interceptor.html:
-	  updated documentation to reflect these changes.
-	  Thanks to Nanbor for brainstorming and guidance,
-	  Jeff for help on nitty-gritty IDL bugs and Doug on helping to
-	  put all this on white paper!
+        * TAO/docs/interceptor.html:
+          updated documentation to reflect these changes.
+          Thanks to Nanbor for brainstorming and guidance,
+          Jeff for help on nitty-gritty IDL bugs and Doug on helping to
+          put all this on white paper!
 
 Fri Aug 18 17:46:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Acceptors.cpp:
-	* tao/GIOP_Message_Lite.cpp:
-	* tao/GIOP_Server_Request.cpp:
-	* tao/GIOP_Server_Request.h (TAO_GIOP_ServerRequest): Added a
-	  parameter which has a pointer to the  TAO_Transport, as one of
-	  the arguments in the constructor. One of the constructors
-	  already had this. The second did not. The second constructor is
-	  used when the TAO server receives the LocateRequest messages
-	  from a client. In that case TAO was trying to send a reply using
-	  the null transport that was causing server to core dump. But
-	  there exists one more problem with the tao_send_reply () method
-	  when a TAO server receives a LocateRequest message. This needs
-	  fixing and I need some info from Bruce Trask for that.
+        * tao/GIOP_Message_Acceptors.cpp:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Server_Request.cpp:
+        * tao/GIOP_Server_Request.h (TAO_GIOP_ServerRequest): Added a
+          parameter which has a pointer to the  TAO_Transport, as one of
+          the arguments in the constructor. One of the constructors
+          already had this. The second did not. The second constructor is
+          used when the TAO server receives the LocateRequest messages
+          from a client. In that case TAO was trying to send a reply using
+          the null transport that was causing server to core dump. But
+          there exists one more problem with the tao_send_reply () method
+          when a TAO server receives a LocateRequest message. This needs
+          fixing and I need some info from Bruce Trask for that.
 
 Fri Aug 18 15:20:50 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
-	  Corrected ACE_RCSID string.
-	* orbsvcs/tests/Notify/Basic/Makefile:
-	* orbsvcs/tests/Notify/Basic/README:
-	  Updated.
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
+          Corrected ACE_RCSID string.
+        * orbsvcs/tests/Notify/Basic/Makefile:
+        * orbsvcs/tests/Notify/Basic/README:
+          Updated.
 
-	  Added 2 new tests:
-	* orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
-	* orbsvcs/tests/Notify/Basic/IdAssignment.h:
-	  Checks if id's are assigned correctly to EC and admin objects.
+          Added 2 new tests:
+        * orbsvcs/tests/Notify/Basic/IdAssignment.cpp:
+        * orbsvcs/tests/Notify/Basic/IdAssignment.h:
+          Checks if id's are assigned correctly to EC and admin objects.
 
-	* orbsvcs/tests/Notify/Basic/LifeCycleTest.cpp:
-	* orbsvcs/tests/Notify/Basic/LifeCycleTest.h:
-	  Creates and destroys EC and admin objects.
+        * orbsvcs/tests/Notify/Basic/LifeCycleTest.cpp:
+        * orbsvcs/tests/Notify/Basic/LifeCycleTest.h:
+          Creates and destroys EC and admin objects.
 
 Fri Aug 18 15:07:51 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection.cpp:
-	  Temporarily reverted changes causing VxWorks warnings.
+        * orbsvcs/orbsvcs/Notify/Notify_Default_Collection.cpp:
+          Temporarily reverted changes causing VxWorks warnings.
 
 Fri Aug 18 13:33:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
 
-	  Added check for imported node to generation of OBV
-	  class. A valuetype from one IDL file #included in another
-	  was getting its OBV class generated in each set of
-	  generated files. Thanks to Jean-Christophe Dubois
-	  <jcd@one.com> for reporting this bug.
+          Added check for imported node to generation of OBV
+          class. A valuetype from one IDL file #included in another
+          was getting its OBV class generated in each set of
+          generated files. Thanks to Jean-Christophe Dubois
+          <jcd@one.com> for reporting this bug.
 
 Fri Aug 18 10:20:22 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
-	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.h:
-	  Removed ";" at the end of CD_DECLARE_ENTITY
-	  macros as it was raising warnings.
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.h:
+          Removed ";" at the end of CD_DECLARE_ENTITY
+          macros as it was raising warnings.
 
 Fri Aug 18 10:06:05 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
-	* orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
-	  Removed the ";" following the ACE_SVC_FACTORY_DEFINE macro.
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+          Removed the ";" following the ACE_SVC_FACTORY_DEFINE macro.
 
 Thu Aug 17 14:55:25 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Loader.cpp (init):
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp (init):
 
-	* orbsvcs/Naming_Service/Naming_Service.h (class TAO_Naming_Service):
-	* orbsvcs/Naming_Service/Naming_Service.cpp (init):
-	  Using ORB_var instead of ORB_ptr.
+        * orbsvcs/Naming_Service/Naming_Service.h (class TAO_Naming_Service):
+        * orbsvcs/Naming_Service/Naming_Service.cpp (init):
+          Using ORB_var instead of ORB_ptr.
 
 Thu Aug 17 14:07:24 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* test/Exposed_Policies/server.cpp:
-	* test/Exposed_Policies/client.cpp:
-	* test/test/Exposed_Policies/Client.dsp:
-	* test/Exposed_Policies/Server.dsp:
-	* test/Exposed_Policies/RTProperties.h:
-	* test/Exposed_Policies/RTProperties.cpp:
-	* test/Exposed_Policies/README:
-	* test/Exposed_Policies/Makefile:
-	* test/Exposed_Policies/POA.cfg
-	* test/Exposed_Policies/Object.cfg
-	  Extended the example to test the client exposed policies
-	  to read the policies from a configuration file (.cfg file).
+        * test/Exposed_Policies/server.cpp:
+        * test/Exposed_Policies/client.cpp:
+        * test/test/Exposed_Policies/Client.dsp:
+        * test/Exposed_Policies/Server.dsp:
+        * test/Exposed_Policies/RTProperties.h:
+        * test/Exposed_Policies/RTProperties.cpp:
+        * test/Exposed_Policies/README:
+        * test/Exposed_Policies/Makefile:
+        * test/Exposed_Policies/POA.cfg
+        * test/Exposed_Policies/Object.cfg
+          Extended the example to test the client exposed policies
+          to read the policies from a configuration file (.cfg file).
 
 Thu Aug 17 13:29:33 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.cpp (parse_args):
-	  Initialized the variable <i> outside the switch case block as
-	  Win32 was complaining.
+        * orbsvcs/Naming_Service/Naming_Service.cpp (parse_args):
+          Initialized the variable <i> outside the switch case block as
+          Win32 was complaining.
 
 Thu Aug 17 11:46:49 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.cpp (parse_args):
-	  Initialized the local variable <time> when declaring as it was
-	  causing a problem on some compilers.
+        * orbsvcs/Naming_Service/Naming_Service.cpp (parse_args):
+          Initialized the local variable <time> when declaring as it was
+          causing a problem on some compilers.
 
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.h   :
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp :
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.h   :
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp :
 
-	* orbsvcs/orbsvcs/Naming/Naming_Loader.h   :
-	* orbsvcs/orbsvcs/Naming/Naming_Loader.cpp :
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.h   :
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp :
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.h   :
-	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp :
-	  Added the missed exception specification ACE_THROW_SPEC (())
-	  to the create_object () method.
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.h   :
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp :
+          Added the missed exception specification ACE_THROW_SPEC (())
+          to the create_object () method.
 
 Thu Aug 17 00:04:47 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_QosAdmin_i.h:
-	  Added QoS data members.
+        * orbsvcs/orbsvcs/Notify/Notify_QosAdmin_i.h:
+          Added QoS data members.
 
-	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.cpp
-	  using ESF_Copy_On_Write_Collection instead of
-	  ESF_Immediate_Changes.
+        * orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.cpp
+          using ESF_Copy_On_Write_Collection instead of
+          ESF_Immediate_Changes.
 
-	* orbsvcs/tests/Notify/lib/Makefile:
-	  Added new files.
+        * orbsvcs/tests/Notify/lib/Makefile:
+          Added new files.
 
-	* orbsvcs/tests/Notify/lib/Notify_PushConsumer.cpp
-	* orbsvcs/tests/Notify/lib/Notify_PushConsumer.h
- 	* orbsvcs/tests/Notify/lib/Notify_PushSupplier.cpp
-	* orbsvcs/tests/Notify/lib/Notify_PushSupplier.h
- 	* orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.cpp
- 	* orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.h
- 	* orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.cpp
- 	* orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.h
-	  Corrected ref counting and deactivation code.
+        * orbsvcs/tests/Notify/lib/Notify_PushConsumer.cpp
+        * orbsvcs/tests/Notify/lib/Notify_PushConsumer.h
+        * orbsvcs/tests/Notify/lib/Notify_PushSupplier.cpp
+        * orbsvcs/tests/Notify/lib/Notify_PushSupplier.h
+        * orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.cpp
+        * orbsvcs/tests/Notify/lib/Notify_StructuredPushConsumer.h
+        * orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.cpp
+        * orbsvcs/tests/Notify/lib/Notify_StructuredPushSupplier.h
+          Corrected ref counting and deactivation code.
 
- 	* orbsvcs/tests/Notify/lib/Notify_SequencePushConsumer.cpp
-	* orbsvcs/tests/Notify/lib/Notify_SequencePushConsumer.h
- 	* orbsvcs/tests/Notify/lib/Notify_SequencePushSupplier.cpp
-	* orbsvcs/tests/Notify/lib/Notify_SequencePushSupplier.h
-	  Added Sequence consumer and supplier.
+        * orbsvcs/tests/Notify/lib/Notify_SequencePushConsumer.cpp
+        * orbsvcs/tests/Notify/lib/Notify_SequencePushConsumer.h
+        * orbsvcs/tests/Notify/lib/Notify_SequencePushSupplier.cpp
+        * orbsvcs/tests/Notify/lib/Notify_SequencePushSupplier.h
+          Added Sequence consumer and supplier.
 
-	* orbsvcs/tests/Notify/Basic/Makefile
-	* orbsvcs/tests/Notify/Basic/README
-	  Updated.
+        * orbsvcs/tests/Notify/Basic/Makefile
+        * orbsvcs/tests/Notify/Basic/README
+          Updated.
 
-	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp
-	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.h
-	  The ConnectDisconnect tests connecting/disconnecting clients to
-	  the Notify's EC.
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.h
+          The ConnectDisconnect tests connecting/disconnecting clients to
+          the Notify's EC.
 
 Wed Aug 16 15:44:54 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/Asynch_Reply_Dispatcher.cpp (TAO_Asynch_Reply_Dispatcher):
-	  Rearranged the order of the data members so they match the order
- 	  in the class declaration.  Thanks to Priyanka for reporting
- 	  this.
+        * tao/Asynch_Reply_Dispatcher.cpp (TAO_Asynch_Reply_Dispatcher):
+          Rearranged the order of the data members so they match the order
+          in the class declaration.  Thanks to Priyanka for reporting
+          this.
 
 Wed Aug 16 13:16:18 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/orbsvcs/Makefile.CosTrading (CPP_SRCS):
-	* orbsvcs/orbsvcs/Makefile.CosEvent (CPP_SRCS):
-	* orbsvcs/orbsvcs/Makefile.CosNaming (CPP_SRCS):
-	  Added entries so that the new files *_Loader.* for the
-	  respective services are also compiled.
+        * orbsvcs/orbsvcs/Makefile.CosTrading (CPP_SRCS):
+        * orbsvcs/orbsvcs/Makefile.CosEvent (CPP_SRCS):
+        * orbsvcs/orbsvcs/Makefile.CosNaming (CPP_SRCS):
+          Added entries so that the new files *_Loader.* for the
+          respective services are also compiled.
 
 Tue Aug 15 19:05:50 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/RT_Policy_i.cpp:
-	* tao/RT_Policy_i.h:
-	  Fixed minor bug in the decoding of the policy
-	  <TAO_ClientProtocolPolicy>.
+        * tao/RT_Policy_i.cpp:
+        * tao/RT_Policy_i.h:
+          Fixed minor bug in the decoding of the policy
+          <TAO_ClientProtocolPolicy>.
 
-	  Added methods for GIOP Properties encoding (i.e.
-	  _tao_encode and _tao_decode).
+          Added methods for GIOP Properties encoding (i.e.
+          _tao_encode and _tao_decode).
 
-	* tao/Stub.cpp
-	* tao/Mprofile.i
-	* tao/Profile.cpp
-	* tao/POA.cpp
-	  Removed some ACE_DEBUG used for testing some RT-CORBA
-	  features.
+        * tao/Stub.cpp
+        * tao/Mprofile.i
+        * tao/Profile.cpp
+        * tao/POA.cpp
+          Removed some ACE_DEBUG used for testing some RT-CORBA
+          features.
 
 Tue Aug 15 16:49:11 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/Asynch_Reply_Dispatcher.cpp (TAO_Asynch_Reply_Dispatcher): The
-	  message_state_ field was not initialized.  Thanks to Jeff Greif
-	  for reporting this.
+        * tao/Asynch_Reply_Dispatcher.cpp (TAO_Asynch_Reply_Dispatcher): The
+          message_state_ field was not initialized.  Thanks to Jeff Greif
+          for reporting this.
 
 Tue Aug 15 10:23:30 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp :
-	  Added a missing header file.
+        * orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp :
+          Added a missing header file.
 
-	* tests/Object_Loader/Loader.h   :
-	* tests/Object_Loader/Loader.cpp :
-	  Changed the signatur of create_object () to comply with the
-	  changes done in Object_Loader.h.
+        * tests/Object_Loader/Loader.h   :
+        * tests/Object_Loader/Loader.cpp :
+          Changed the signatur of create_object () to comply with the
+          changes done in Object_Loader.h.
 
 Tue Aug 15 09:42:13 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp :
-	  Corrected a typo.
+        * orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp :
+          Corrected a typo.
 
 Tue Aug 15 08:46:01 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/Trading_Service/Trading_Service.h :
-	  Made some minor formatting changes.
+        * orbsvcs/Trading_Service/Trading_Service.h :
+          Made some minor formatting changes.
 
 Mon Aug 14 18:25:48 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/TAO_Service/README:
-	  Modified to include the entries for Trading Service too.
+        * orbsvcs/TAO_Service/README:
+          Modified to include the entries for Trading Service too.
 
-	* orbsvcs/TAO_Service/svc.conf:
-	  Added two commented entries which can be used to load and unload
-	  the trading service.
+        * orbsvcs/TAO_Service/svc.conf:
+          Added two commented entries which can be used to load and unload
+          the trading service.
 
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp :
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.h   :
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp :
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.h   :
 
-	  Added the new interface and implementation so that the Trading
-	  Servcie can be loaded dynamically with the help of service config
-	  file. Initialization is working fine but there are problems with
-	  the unloading of the trading service (to be fixed).
+          Added the new interface and implementation so that the Trading
+          Servcie can be loaded dynamically with the help of service config
+          file. Initialization is working fine but there are problems with
+          the unloading of the trading service (to be fixed).
 
-	* orbsvcs/Trading_Service/Trading_Service.h   :
-	* orbsvcs/Trading_Service/Trading_Service.cpp :
+        * orbsvcs/Trading_Service/Trading_Service.h   :
+        * orbsvcs/Trading_Service/Trading_Service.cpp :
 
-	  Moved code around between Trading_Service.{h,cpp} and
-	  Trading_Loader.{h,cpp} so that the initialization and removal
-	  code for the Trading service is now in Trading_Loader.cpp and
-	  calls to these functions in Trading_Loader.cpp are made as
-	  necessary from Trading_Service.cpp.
+          Moved code around between Trading_Service.{h,cpp} and
+          Trading_Loader.{h,cpp} so that the initialization and removal
+          code for the Trading service is now in Trading_Loader.cpp and
+          calls to these functions in Trading_Loader.cpp are made as
+          necessary from Trading_Service.cpp.
 
 Mon Aug 14 18:07:41 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/IFR_Service/Makefile (IFR_Service):
+        * orbsvcs/IFR_Service/Makefile (IFR_Service):
 
-	  The IFR_Service depends on the TypeCodeFactory.
+          The IFR_Service depends on the TypeCodeFactory.
 
-	  (all):
+          (all):
 
-	  Don't bother explicity setting this target.  Make can figure it
-	  out on its own.
+          Don't bother explicity setting this target.  Make can figure it
+          out on its own.
 
-	* orbsvcs/IFR_Service/Makefile.TypeCodeFactory (LIBNAME, LSRC):
+        * orbsvcs/IFR_Service/Makefile.TypeCodeFactory (LIBNAME, LSRC):
 
-	  Fixed variable assignment spacing.
+          Fixed variable assignment spacing.
 
 Mon Aug 14 15:42:45 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp :
-	  Corrected a typo.
+        * orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp :
+          Corrected a typo.
 
-	* orbsvcs/IFR_Service/TCF_Loader.h   :
-	* orbsvcs/IFR_Service/TCF_Loader.cpp :
-	  Changed the signature of create_object () to go accordingly with
-	  the change in Object_Loader.h
+        * orbsvcs/IFR_Service/TCF_Loader.h   :
+        * orbsvcs/IFR_Service/TCF_Loader.cpp :
+          Changed the signature of create_object () to go accordingly with
+          the change in Object_Loader.h
 
 Mon Aug 14 12:34:28 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke):
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke):
 
-	  Store replica reference obtained from Load Balancer in an
-	  Object_var since the Load Balancer returns a duplicated
-	  reference.  This ensures that the preinvoke() implementation is
-	  exception safe.
-	  Reported by JM Strauss <jms97@club-internet.fr>
+          Store replica reference obtained from Load Balancer in an
+          Object_var since the Load Balancer returns a duplicated
+          reference.  This ensures that the preinvoke() implementation is
+          exception safe.
+          Reported by JM Strauss <jms97@club-internet.fr>
 
 Mon Aug 14 12:32:22 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.h:
-	* orbsvcs/Naming_Service/Naming_Service.cpp:
-	  Corrected some misplaced braces.
+        * orbsvcs/Naming_Service/Naming_Service.h:
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+          Corrected some misplaced braces.
 
 Mon Aug 14 10:44:34 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ChangeLog:
-	  Corrected some formatting.
+        * ChangeLog:
+          Corrected some formatting.
 
 Mon Aug 14 11:03:08 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tests/Exposed_Policies/server.cpp:
-	* tests/Exposed_Policies/client.cpp:
-	  Extended test code to test all the client exposed policies.
+        * tests/Exposed_Policies/server.cpp:
+        * tests/Exposed_Policies/client.cpp:
+          Extended test code to test all the client exposed policies.
 
-	* tao/Profile.cpp (policies):
-	  Removed some commented code.
+        * tao/Profile.cpp (policies):
+          Removed some commented code.
 
 Mon Aug 14 10:23:01 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/Stub.cpp (exposed_client_protocol):
+        * tao/Stub.cpp (exposed_client_protocol):
 
-	* tao/Stub.cpp (exposed_priority_banded_connection):
-	  Fixed "typo bug". The result was passed to the _narrow method
-	  instead of the policy that had to be narrowed.
+        * tao/Stub.cpp (exposed_priority_banded_connection):
+          Fixed "typo bug". The result was passed to the _narrow method
+          instead of the policy that had to be narrowed.
 
-	* tao/POA.cpp (client_exposed_policies):
-	  Changed <client_exposed_policies> constructor, and
-	  set the length of the policy list, (before it was
-	  just the max size in the constructor was initialized but not the
-	  size of the list).
+        * tao/POA.cpp (client_exposed_policies):
+          Changed <client_exposed_policies> constructor, and
+          set the length of the policy list, (before it was
+          just the max size in the constructor was initialized but not the
+          size of the list).
 
-	* tao/POA.cpp (client_exposed_policies):
-	  Fixed bug in the test that check wether an object
-	  priority is valid or not. The condition was reversed
-	  i.e. it was if (object_priority != TAO_INVALID_PRIORITY)
-	  instead of if (object_priority == TAO_INVALID_PRIORITY).
+        * tao/POA.cpp (client_exposed_policies):
+          Fixed bug in the test that check wether an object
+          priority is valid or not. The condition was reversed
+          i.e. it was if (object_priority != TAO_INVALID_PRIORITY)
+          instead of if (object_priority == TAO_INVALID_PRIORITY).
 
-	* tao/Stub.cpp (Stub):
-	  Added code to set the Stub pointer in the Profiles.
-	  This is needed because it is thru the stub that the
-	  profile get access to the policy list.
+        * tao/Stub.cpp (Stub):
+          Added code to set the Stub pointer in the Profiles.
+          This is needed because it is thru the stub that the
+          profile get access to the policy list.
 
-	* tao/MProfile.i (policy_list):
-	  Added policy list intialization. (The creation of
-	  the PolicyList should be guarded my multiple thread
-	  trying to invoking the method at the same time)
+        * tao/MProfile.i (policy_list):
+          Added policy list intialization. (The creation of
+          the PolicyList should be guarded my multiple thread
+          trying to invoking the method at the same time)
 
-	* tao/Profile.cpp (policies):
+        * tao/Profile.cpp (policies):
           Added byte order field in the CDR encapsualtion used to store
-	  the client exposed policies.
+          the client exposed policies.
 
           Fixed memory leak caused by a missing buffer allocation.
 
 Mon Aug 14 08:25:41 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples,
-	  tests: Added a number of new Borland makefiles.  Thanks to
- 	  Johnny Willemsen <Johnny.Willemsen@meco.nl> for contributing
- 	  these.
+        * examples,
+          tests: Added a number of new Borland makefiles.  Thanks to
+          Johnny Willemsen <Johnny.Willemsen@meco.nl> for contributing
+          these.
 
 Sun Aug 13 09:23:02 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/IOR_LookupTable.cpp (find_ior):
+        * tao/IOR_LookupTable.cpp (find_ior):
           Added the function del_ior () to remove the object name
           from the table. Thanks to JM Strauss <jms97@club-internet.fr>
-	  for reporting the errors that cropped up because of not committing
-	  these files.
+          for reporting the errors that cropped up because of not committing
+          these files.
 
 Sun Aug 13 09:07:34 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/IOR_LookupTable.h (TAO_IOR_LookupTable):
-	  Added the function del_ior () to remove the object name
-	  from the table.
+        * tao/IOR_LookupTable.h (TAO_IOR_LookupTable):
+          Added the function del_ior () to remove the object name
+          from the table.
 
 Sat Aug 12 10:26:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/ORB.h:
-	  Remove unused argc_ and argv_ fields.  The argv_
-	  declaration was baking builds on NT.
+          Remove unused argc_ and argv_ fields.  The argv_
+          declaration was baking builds on NT.
 
 Sat Aug 12 10:21:09 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
         * tao/Object_Loader.h (TAO_Object_Loader):
-	  Changed the signature of create_object so that argc and argv can
-	  also be passed.
+          Changed the signature of create_object so that argc and argv can
+          also be passed.
 
 Sat Aug 12 09:34:37 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
         * tao/ORB.h (CORBA_ORB):
-  	  Added the signature of _tao_del_from_IOR_table.
+          Added the signature of _tao_del_from_IOR_table.
 
 Fri Aug 11 12:03:41 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
         * orbsvcs/CosEvent_Service/CosEvent_Service_Native.cpp:
-	  Moved the initialization code to TAO_CEC_Event_Loader::init () and
-	  calling the same from here to avoid code repetition.
+          Moved the initialization code to TAO_CEC_Event_Loader::init () and
+          calling the same from here to avoid code repetition.
 
 Fri Aug 11 11:40:11 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
@@ -818,22 +823,22 @@ Fri Aug 11 11:40:11 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
         * orbsvcs/TAO_Service/Makefile:
         * orbsvcs/TAO_Service/README:
         * orbsvcs/TAO_Service/TAO_Service.cpp:
-	  Added a generic server which allows us to test the successful
-	  (un)loading of the services.
+          Added a generic server which allows us to test the successful
+          (un)loading of the services.
 
         * orbsvcs/TAO_Service/svc.conf:
-	  Sample svc.conf file which has commented entries to (un)load
-	  both Naming Service and Event Service.
+          Sample svc.conf file which has commented entries to (un)load
+          both Naming Service and Event Service.
 
         * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.h:
         * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
-	  This class helps (un)load the Event Service dynamically using
-	  the service config file.
+          This class helps (un)load the Event Service dynamically using
+          the service config file.
 
 
         * tao/ORB.cpp (_tao_del_from_IOR_table):
-	  A new function
-	  int _tao_del_from_IOR_table (const ACE_CString &object_id) is
+          A new function
+          int _tao_del_from_IOR_table (const ACE_CString &object_id) is
           added to remove a mapping ObjectID->IOR from the table.
 
         * orbsvcs/orbsvcs/Naming/Naming_Loader.h:
@@ -1325,7 +1330,7 @@ Sun Aug 06 16:46:31 2000  Ossama Othman  <ossama@uci.edu>
           register with the TAO_Singleton_Manager.  The
           TAO_Singleton_Manager cleans up all registered
           singletons/objects upon destruction of the last ORB reference.
-	  [Bug 386]
+          [Bug 386]
 
         * tao/DLL_ORB.cpp:
         * tao/DLL_ORB.h:
@@ -1779,7 +1784,7 @@ Mon Jul 24 01:27:53 2000  Ossama Othman  <ossama@uci.edu>
           Deregister the handle corresponding to the Connection Handler
           being shutdown from the ORB Core so that the ORB Core doesn't
           attempt to remove it from the Reactor upon ORB destruction.
-	  [Bug 386]
+          [Bug 386]
 
 Sun Jul 23 22:01:23 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
