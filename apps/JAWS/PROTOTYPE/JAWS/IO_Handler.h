@@ -106,7 +106,7 @@ public:
   virtual JAWS_IO_Handler_Factory *factory (void) = 0;
   // Returns the factory for this IO handler
 
-  virtual ACE_HANDLE handle (void) = 0;
+  virtual ACE_HANDLE handle (void) const = 0;
   // Returns the socket handle for this handler
 
   virtual void done (void) = 0;
@@ -118,7 +118,7 @@ public:
 };
 
 #if defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS)
-class JAWS_Export JAWS_Asynch_Handler : public ACE_Handler //, public ACE_Service_Handler
+class JAWS_Export JAWS_Asynch_Handler : public ACE_Service_Handler
 {
 public:
   JAWS_Asynch_Handler (void);
@@ -153,6 +153,8 @@ public:
   virtual void act (const void *act_ref);
   // Receives the ACT.
 
+  virtual ACE_HANDLE handle (void) const;
+
 private:
   JAWS_IO_Handler *ioh_;
 };
@@ -184,7 +186,7 @@ public:
   virtual void error_message_complete (void);
 
   virtual JAWS_IO_Handler_Factory *factory (void);
-  virtual ACE_HANDLE handle (void);
+  virtual ACE_HANDLE handle (void) const;
 
   virtual void done (void);
   virtual int status (void);
