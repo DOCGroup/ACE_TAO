@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 #if !defined (MPEG_GLOBAL_H)
 #define MPEG_GLOBAL_H
 
