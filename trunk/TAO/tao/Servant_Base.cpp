@@ -189,7 +189,9 @@ TAO_ServantBase::_decrement_single_threaded_poa_lock_count (void)
 }
 
 void *
-TAO_ServantBase::_create_collocated_objref (CORBA::ULong, TAO_Stub *)
+TAO_ServantBase::_create_collocated_objref (const char *,
+                                            CORBA::ULong,
+                                            TAO_Stub *)
 {
   return 0;
 }

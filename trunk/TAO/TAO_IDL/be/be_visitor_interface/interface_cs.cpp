@@ -92,24 +92,25 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << "if (obj->_is_collocated () "
       << "&& obj->_servant() != 0)" << be_idt_nl
       << "servant = obj->_servant()->_downcast (\""
-      << node->repoID () << "\");" << be_uidt_nl;
+      << "IDL:omg.org/CORBA/Object:1.0\");" << be_uidt_nl;
 
   *os << "if (servant != 0)" << be_idt_nl << "{" << be_idt_nl
     // The collocated object reference factory is not working right (yet)
-      << "// PortableServer::Servant iservant = ACE_reinterpret_cast("
-      << skel_name << "_ptr, servant);" << be_nl
-      << "// " << node->name () << "_ptr retv = ACE_reinterpret_cast (" << be_idt << be_idt_nl
-      << "// " << node->name () << "_ptr," << be_nl
-      << "// iservant->_create_collocated_objref (TAO_ORB_Core::ORB_CONTROL, stub)" << be_uidt_nl
-      << "// );" << be_uidt_nl
-      << "// if (retv != 0)" << be_idt_nl
-      << "// return retv;" << be_uidt_nl
-    // So we are still using the old way to create collocated objref.
-      << "return new " << coll_name << "(" << be_idt << be_idt_nl
-      << "ACE_reinterpret_cast(" << skel_name
-      << "_ptr, servant)," << be_nl
+      << node->name () << "_ptr retv = ACE_reinterpret_cast (" << be_idt << be_idt_nl
+      << node->name () << "_ptr," << be_nl
+      << "ACE_reinterpret_cast (" << be_idt << be_idt_nl
+      << "PortableServer::Servant," << be_nl
+      << "servant" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "->_create_collocated_objref (" << be_idt << be_idt_nl
+      << "\"" << node->repoID () << "\"," << be_nl
+      << "TAO_ORB_Core::ORB_CONTROL," << be_nl
       << "stub" << be_uidt_nl
-      << ");" << be_uidt
+      << ")" << be_uidt << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "if (retv != 0)" << be_idt_nl
+      << "return retv;" << be_uidt
+    // So we are still using the old way to create collocated objref.
       << be_uidt_nl
       << "}" << be_uidt_nl;
 

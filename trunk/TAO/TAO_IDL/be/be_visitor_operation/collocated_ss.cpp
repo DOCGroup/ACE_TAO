@@ -150,6 +150,25 @@ int be_visitor_operation_collocated_ss::visit_operation (be_operation *node)
                         -1);
     }
 
+  if (!this->void_return_type (bt))
+    {
+      os->indent ();
+      *os << "ACE_UNUSED_ARG (";
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_RETURN_CS);
+      visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor || (bt->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_collocated_cs::"
+                             "gen_check_exception - "
+                             "codegen failed\n"),
+                            -1);
+        }
+      *os << ");\n";
+    }
+
   os->indent ();
   *os <<"TAO_Object_Adapter::Servant_Upcall servant_upcall ("
       << be_idt << be_idt_nl
@@ -175,9 +194,7 @@ int be_visitor_operation_collocated_ss::visit_operation (be_operation *node)
 
   os->indent ();
 
-  if (bt->node_type () != AST_Decl::NT_pre_defined
-      || be_predefined_type::narrow_from_decl (bt)->pt ()
-      != AST_PredefinedType::PT_void)
+  if (!this->void_return_type (bt))
     {
       *os << "return ";
     }
@@ -192,9 +209,7 @@ int be_visitor_operation_collocated_ss::visit_operation (be_operation *node)
   if (this->gen_invoke (ctx, node) == -1)
     return -1;
 
-  if (bt->node_type () == AST_Decl::NT_pre_defined
-      && be_predefined_type::narrow_from_decl (bt)->pt ()
-      == AST_PredefinedType::PT_void)
+  if (this->void_return_type (bt))
     {
       os->indent ();
       *os << "return;";
@@ -203,9 +218,7 @@ int be_visitor_operation_collocated_ss::visit_operation (be_operation *node)
   *os << be_uidt_nl
       << "}" << be_uidt_nl;
 
-  if (bt->node_type () != AST_Decl::NT_pre_defined
-      || be_predefined_type::narrow_from_decl (bt)->pt ()
-      != AST_PredefinedType::PT_void)
+  if (!this->void_return_type (bt))
     {
       *os << "return ";
     }
@@ -256,9 +269,7 @@ be_visitor_operation_collocated_ss::gen_check_exception (be_type *bt)
 
   os->indent ();
   // check if there is an exception
-  if (bt->node_type () != AST_Decl::NT_pre_defined
-      || be_predefined_type::narrow_from_decl (bt)->pt ()
-      != AST_PredefinedType::PT_void)
+  if (!this->void_return_type (bt))
     {
       *os << "ACE_CHECK_RETURN (";
       // << "_tao_environment, ";
@@ -285,4 +296,17 @@ be_visitor_operation_collocated_ss::gen_check_exception (be_type *bt)
     }
 
   return 0;
+}
+
+int
+be_visitor_operation_collocated_ss::void_return_type (be_type *bt)
+{
+  // is the operation return type void?
+
+  if (bt->node_type () == AST_Decl::NT_pre_defined
+      && (be_predefined_type::narrow_from_decl (bt)->pt ()
+          == AST_PredefinedType::PT_void))
+    return 1;
+  else
+    return 0;
 }
