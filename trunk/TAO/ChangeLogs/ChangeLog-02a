@@ -1,7 +1,14 @@
+Sat Nov 18 19:00:29 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/*/Makefile
+	* tao/Makefile.bor:
+
+	  Added new file, updated dependencies.
+
 Sat Nov 18 18:11:42 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/Base_Connection_Property.cpp:
-	  
+
 	  - <is_equivalent> - changed cast be more of the most derived
 	                      type and also check for its failure.
 	  - <duplicate> - added a check for allocation failure.
@@ -28,14 +35,14 @@ Sat Nov 18 18:11:42 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	  Changed the <connect> method argument from
 	  TAO_Base_Connection_Property* to
-	  TAO_Connection_Descriptor_Interface* due to 
-	  
-   	  Sat Nov 18 12:31:37 2000  Balachandran Natarajan  <bala@cs.wustl.edu>	
+	  TAO_Connection_Descriptor_Interface* due to
+
+   	  Sat Nov 18 12:31:37 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Pluggable.cpp:
 
 	  Removed #include "tao/Base_Connection_Property.h"
-	
+
 	* tao/Connector_Registry.h (connect)
 	* tao/Connector_Registry.cpp (connect):
 
@@ -44,7 +51,7 @@ Sat Nov 18 18:11:42 2000  Marina Spivak  <marina@cs.wustl.edu>
 	  gives classes that use the registry and have more knowledge,
 	  i.e., Invocation, control over creating the right descriptor for
 	  looking up connection in Connection Cache.
-	
+
 	* tao/Invocation.cpp (start):
 
 	  Added support for RTCORBA::PrivateConnectionPolicy.
@@ -53,7 +60,7 @@ Sat Nov 18 18:11:42 2000  Marina Spivak  <marina@cs.wustl.edu>
 	* tao/TAO_Static.dsp:
 
 	  Added new files.
-	
+
 Sat Nov 18 14:24:22 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/RTCORBA/Client_Protocol/Makefile:

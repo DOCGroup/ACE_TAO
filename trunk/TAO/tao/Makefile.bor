@@ -128,6 +128,7 @@ OBJFILES = \
 	$(OBJDIR)\Principal.obj \
 	$(OBJDIR)\Priority_Mapping.obj \
 	$(OBJDIR)\Priority_Mapping_Manager.obj \
+	$(OBJDIR)\Private_Connection_Descriptor.obj \
 	$(OBJDIR)\Profile.obj \
 	$(OBJDIR)\Protocol_Factory.obj \
 	$(OBJDIR)\Reactor_Registry.obj \
