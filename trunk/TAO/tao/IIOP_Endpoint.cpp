@@ -295,7 +295,7 @@ TAO_IIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
         }
     }
 
-  if (tmp.c_str () != 0 &&
+  if (tmp.length () != 0 &&
       !oc->orb_params ()->enforce_pref_interfaces ())
     {
       TAO_Endpoint *tmp_ep = latest->duplicate ();
