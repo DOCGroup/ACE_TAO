@@ -187,6 +187,21 @@ ACE_Object_Manager::shutting_down (void)
   return ACE_Object_Manager::instance_  ?  instance_->shutting_down_i ()  :  1;
 }
 
+#if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS)
+// Instead of popping up a window for exceptions, just print something out
+LONG _stdcall ACE_UnhandledExceptionFilter (PEXCEPTION_POINTERS pExceptionInfo)
+{
+  DWORD dwExceptionCode = pExceptionInfo->ExceptionRecord->ExceptionCode;
+
+  if (dwExceptionCode == EXCEPTION_ACCESS_VIOLATION)
+    ACE_ERROR ((LM_ERROR, "\nERROR: ACCESS VIOLATION\n"));
+  else
+    ACE_ERROR ((LM_ERROR, "\nERROR: UNHANDLED EXCEPTION\n"));
+
+  return EXCEPTION_EXECUTE_HANDLER;
+}
+#endif /* ACE_DISABLE_WIN32_ERROR_WINDOWS */
+
 // Initialize an ACE_Object_Manager.  There can be instances of this object
 // other than The Instance.  This can happen if a user creates one for some
 // reason.  All objects set up their per-object information and managed
@@ -253,6 +268,17 @@ ACE_Object_Manager::init (void)
           // Initialize the main thread's TS storage.
           ACE_TSS_Emulation::tss_open (ts_storage_);
 #     endif /* ACE_HAS_TSS_EMULATION */
+
+#if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS)
+          // This will keep the ACE_Assert window
+           _CrtSetReportMode( _CRT_ERROR, _CRTDBG_MODE_FILE );
+          _CrtSetReportFile( _CRT_ERROR, _CRTDBG_FILE_STDERR );
+
+          // And this will catch all unhandled exceptions.
+          SetUnhandledExceptionFilter (&ACE_UnhandledExceptionFilter);
+#endif /* ACE_DISABLE_WIN32_ERROR_WINDOWS */
+
+
 
 #     if !defined (ACE_LACKS_ACE_SVCCONF)
           ACE_NEW_RETURN (preallocations_,

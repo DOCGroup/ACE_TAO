@@ -73,13 +73,12 @@ ACE_OS_String::strnstr (const wchar_t *s1, const wchar_t *s2, size_t len2)
 char *
 ACE_OS_String::strdup (const char *s)
 {
-  // @@ WINCE Should we provide this function on WinCE?
 #if defined (ACE_HAS_STRDUP_EMULATION)
   char *t = (char *) ACE_OS_Memory::malloc (ACE_OS_String::strlen (s) + 1);
   if (t == 0)
     return 0;
-  else
-    return ACE_OS_String::strcpy (t, s);
+
+  return ACE_OS_String::strcpy (t, s);
 #else
   return ::strdup (s);
 #endif /* ACE_HAS_STRDUP_EMULATION */
@@ -89,14 +88,17 @@ ACE_OS_String::strdup (const char *s)
 wchar_t *
 ACE_OS_String::strdup (const wchar_t *s)
 {
-#   if defined (__BORLANDC__)
+#   if defined (ACE_LACKS_WCSDUP)
   wchar_t *buffer =
     (wchar_t *) ACE_OS_Memory::malloc ((ACE_OS_String::strlen (s) + 1)
                                        * sizeof (wchar_t));
-  return ::wcscpy (buffer, s);
-#   else
+  if (buffer == 0)
+    return 0;
+
+  return ACE_OS_String::strcpy (buffer, s);
+#   else /* ACE_LACKS_WCSDUP */
   return ::wcsdup (s);
-#   endif /* __BORLANDC__ */
+#   endif /* ACE_LACKS_WCSDUP */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -600,7 +602,7 @@ ACE_OS_String::wcscat_emulation (wchar_t *destination,
   wchar_t *save = destination;
 
   for (; *destination; ++destination);
-  while (*destination++ = *source++);
+  while ((*destination++ = *source++));
   return save;
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCAT */
@@ -707,7 +709,7 @@ ACE_OS_String::wcscpy_emulation (wchar_t *destination,
 {
   wchar_t *save = destination;
 
-  for (; *destination = *source; ++source, ++destination);
+  for (; (*destination = *source); ++source, ++destination);
   return save;
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSCPY */
@@ -765,7 +767,7 @@ wchar_t *
 ACE_OS_String::wcschr_emulation (const wchar_t *string, wint_t c)
 {
   for (;*string ; ++string)
-    if (*string == c)
+    if (*string == ACE_static_cast (wchar_t, c))
       return ACE_const_cast (wchar_t *, string);
 
   return ACE_const_cast (wchar_t *, NULL);
