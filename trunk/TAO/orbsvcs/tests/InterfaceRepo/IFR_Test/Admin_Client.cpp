@@ -1397,7 +1397,7 @@ Admin_Client::union_test (CORBA::Environment &ACE_TRY_ENV)
   ACE_ASSERT (slot == 2);
 
   CORBA::String_var str;
-  const char *tmp;
+  const char *tmp = 0;
 
   for (CORBA::ULong i = 0; i < length; i++)
     {
