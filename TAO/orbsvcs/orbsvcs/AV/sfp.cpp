@@ -558,7 +558,7 @@ TAO_SFP::send_startReply (void)
 
 int
 TAO_SFP::handle_timeout (const ACE_Time_Value &/* tv */,
-                         const void *arg)
+                         const void * /* arg */)
 {
   int result;
   // Handle the timeout for timeout1 and timeout2.

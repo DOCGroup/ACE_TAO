@@ -32,7 +32,7 @@ TAO_EC_Reactive_Dispatching::shutdown (void)
 void
 TAO_EC_Reactive_Dispatching::push (TAO_EC_ProxyPushSupplier* proxy,
                                    const RtecEventComm::EventSet& event,
-                                   TAO_EC_QOS_Info& qos_info,
+                                   TAO_EC_QOS_Info&,
                                    CORBA::Environment& ACE_TRY_ENV)
 {
   proxy->reactive_push_to_consumer (event, ACE_TRY_ENV);
@@ -41,7 +41,7 @@ TAO_EC_Reactive_Dispatching::push (TAO_EC_ProxyPushSupplier* proxy,
 void
 TAO_EC_Reactive_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                           RtecEventComm::EventSet& event,
-                                          TAO_EC_QOS_Info& qos_info,
+                                          TAO_EC_QOS_Info&,
                                           CORBA::Environment& ACE_TRY_ENV)
 {
   proxy->reactive_push_to_consumer (event, ACE_TRY_ENV);

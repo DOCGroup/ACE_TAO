@@ -29,7 +29,7 @@ void
 TAO_ECG_UDP_Sender::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
                           RtecUDPAdmin::AddrServer_ptr addr_server,
                           TAO_ECG_UDP_Out_Endpoint* endpoint,
-                          CORBA::Environment &TAO_IN_ENV)
+                          CORBA::Environment &)
 {
   this->lcl_ec_ =
     RtecEventChannelAdmin::EventChannel::_duplicate (lcl_ec);
@@ -648,7 +648,7 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
                             ACE_Reactor *reactor,
                             const ACE_Time_Value &expire_interval,
                             int max_timeout,
-                            CORBA::Environment &TAO_IN_ENV)
+                            CORBA::Environment &)
 {
   this->ignore_from_ = ignore_from;
 

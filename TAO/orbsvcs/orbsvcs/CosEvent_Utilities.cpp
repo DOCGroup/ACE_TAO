@@ -31,9 +31,9 @@ CosEC_ServantBase::~CosEC_ServantBase (void)
 void
 CosEC_ServantBase::init (PortableServer::POA_ptr thispoa,
                          PortableServer::POA_ptr poa,
-                         char *eventTypeIds,
-                         char *eventSourceIds,
-                         char *source_type_pairs,
+                         char *,
+                         char *,
+                         char *,
                          CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_ASSERT (!CORBA::is_nil (thispoa));
