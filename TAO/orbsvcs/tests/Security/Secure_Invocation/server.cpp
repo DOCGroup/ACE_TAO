@@ -110,7 +110,9 @@ main (int argc, char *argv[])
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "\n"
+                  "Event loop finished.\n"));
 
       root_poa->destroy (1, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
