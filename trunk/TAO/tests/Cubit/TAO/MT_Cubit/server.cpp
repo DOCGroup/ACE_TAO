@@ -214,7 +214,7 @@ Cubit_Task::initialize_orb (void)
 
       int argc = args.argc ();
       char **argv = args.argv ();
-      
+
       // Initialize the ORB.
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
@@ -280,7 +280,7 @@ Cubit_Task::initialize_orb (void)
       // Do the argument parsing
 
       if (this->task_id_ == 0)
-        {      
+        {
           //          ACE_DEBUG ((LM_DEBUG,"parsing the arguments\n"));
           if (GLOBALS::instance ()->parse_args (argc,argv) < 0)
             return -1;
@@ -529,7 +529,7 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
   ACE_NEW_RETURN (args1,
                   char[BUFSIZ],
                   -1);
-  u_int i;
+  int i;
 
   // Create an array to hold pointers to the Cubit objects.
   CORBA::String *cubits;
@@ -539,7 +539,7 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
                   -1);
 
 
-  for (i=0;i<this->argc_;i++)
+  for (i = 0; i < this->argc_ ; i++)
     {
       if ((ACE_OS::strcmp (this->argv_[i],"-p") == 0) && (i-1 < this->argc_))
         GLOBALS::instance ()->base_port = ACE_OS::atoi (this->argv_[i+1]);
@@ -616,6 +616,7 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
   u_int number_of_priorities = 0;
   u_int grain = 0;
   u_int counter = 0;
+  u_int j;
 
   number_of_low_priority_servants = GLOBALS::instance ()->num_of_objs - 1;
 
@@ -638,7 +639,7 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
 
       // Drop the priority, so that the priority of clients will increase
       // with increasing client number.
-      for (i = 0; i < number_of_low_priority_servants; i++)
+      for (j = 0; j < number_of_low_priority_servants; j++)
         priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                         priority,
                                                         ACE_SCOPE_THREAD);
@@ -688,10 +689,10 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
       ACE_OS::strcat (low_thread_args,args);
 
       ACE_NEW_RETURN (low_priority_task [i - 1],
-                      Cubit_Task (low_thread_args, 
-				  "internet", 
-				  1, 
-				  &start_barrier, 
+                      Cubit_Task (low_thread_args,
+				  "internet",
+				  1,
+				  &start_barrier,
 				  ts,
 				  serv_thr_mgr,
 				  i),
@@ -737,8 +738,8 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
   {
     cubits[0] = high_priority_task->get_servant_ior (0);
 
-    for (i = 0; i < GLOBALS::instance ()->num_of_objs-1; ++i)
-      cubits[i + 1] = low_priority_task[i]->get_servant_ior (0);
+    for (j = 0; j < GLOBALS::instance ()->num_of_objs-1; ++j)
+      cubits[j + 1] = low_priority_task[j]->get_servant_ior (0);
 
     FILE *ior_f = 0;
 
@@ -748,15 +749,15 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
         ior_f = ACE_OS::fopen (GLOBALS::instance ()->ior_file, "w");
       }
 
-    for (i = 0; i < GLOBALS::instance ()->num_of_objs; ++i)
+    for (j = 0; j < GLOBALS::instance ()->num_of_objs; ++j)
       {
         if (ior_f != 0)
           {
             //            ACE_DEBUG ((LM_DEBUG,"(%P|%t) ior_file is open :%s",GLOBALS::instance ()->ior_file));
-            ACE_OS::fprintf (ior_f, "%s\n", cubits[i]);
+            ACE_OS::fprintf (ior_f, "%s\n", cubits[j]);
             ACE_OS::printf ("cubits[%d] ior = %s\n",
-                            i,
-                            cubits[i]);
+                            j,
+                            cubits[j]);
           }
       }
 
@@ -1208,8 +1209,10 @@ main (int argc, char *argv[])
 
   Task_State ts ( _argc, _argv);
 
-  Globals *temp_ptr = GLOBALS::instance ();
-  // dummy code to create the GLOBALS object in the global memory   instead of TSS.
+  // Dummy code to create the GLOBALS object in the global memory
+  // instead of TSS.
+  GLOBALS::instance ();
+
   Server server;
 #if defined (ACE_HAS_THREADS)
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
