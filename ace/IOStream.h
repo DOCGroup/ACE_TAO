@@ -30,7 +30,7 @@
 #include "ace/streams.h"
 
 #if defined (ACE_HAS_STRING_CLASS)
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && defined (_MSC_VER)
 typedef CString ACE_IOStream_String;
 #else
 #if !defined (ACE_HAS_STDCPP_STL_INCLUDES)
@@ -45,7 +45,7 @@ typedef std::string ACE_IOStream_String;
 typedef string ACE_IOStream_String;
 #endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 #endif /* ! ACE_HAS_STDCPP_STL_INCLUDES */
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && defined (_MSC_VER) */
 
 #if defined (__DECCXX_VER)
 # if __DECCXX_VER < 50700000
@@ -74,9 +74,9 @@ public:
   inline int operator < (const ACE_Quoted_String &s) const {
     return *(ACE_IOStream_String *) this < (ACE_IOStream_String) s;
   }
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && defined (_MSC_VER)
   inline int length (void) { return this->GetLength (); }
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && defined (_MSC_VER) */
 };
 
 #endif /* ACE_HAS_STRING_CLASS */

@@ -18,7 +18,6 @@
 #ifndef ACE_OS_H
 # define ACE_OS_H
 
-
 // This file should be a link to the platform/compiler-specific
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).
 # include "ace/inc_user_config.h"
@@ -951,8 +950,8 @@ typedef ACE_HANDLE ACE_SOCKET;
 #   define ACE_INVALID_HANDLE -1
 
 typedef ACE_HANDLE ACE_SHLIB_HANDLE;
-const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE = ACE_INVALID_HANDLE;
-const int ACE_DEFAULT_SHLIB_MODE = 0;
+#   define ACE_SHLIB_INVALID_HANDLE ACE_INVALID_HANDLE
+#   define ACE_DEFAULT_SHLIB_MODE 0
 
 #   define ACE_INVALID_SEM_KEY -1
 
@@ -1423,6 +1422,11 @@ private:  ACE_Time_Value *max_wait_time_;
 #   define ACE_TEMPLATE_SPECIALIZATION
 # endif /* ACE_HAS_STD_TEMPLATE_SPECIALIZATION */
 
+# if defined (ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION)
+#   define ACE_TEMPLATE_METHOD_SPECIALIZATION template<>
+# else
+#   define ACE_TEMPLATE_METHOD_SPECIALIZATION
+# endif /* ACE_HAS_STD_TEMPLATE_SPECIALIZATION */
 
 // The following is necessary since many C++ compilers don't support
 // typedef'd types inside of classes used as formal template
@@ -1659,10 +1663,12 @@ if (gobbler != 0) *gobbler = (ACE_Service_Object_Exterminator) _gobble_##X; retu
 
 // the following macros are for POSIX conformance.
 
-#   define S_IRWXU 00700           /* read, write, execute: owner. */
-#   define S_IRUSR 00400           /* read permission: owner. */
-#   define S_IWUSR 00200           /* write permission: owner. */
-#   define S_IXUSR 00100           /* execute permission: owner. */
+#   if !defined (ACE_HAS_USER_MODE_MASKS)
+#     define S_IRWXU 00700         /* read, write, execute: owner. */
+#     define S_IRUSR 00400         /* read permission: owner. */
+#     define S_IWUSR 00200         /* write permission: owner. */
+#     define S_IXUSR 00100         /* execute permission: owner. */
+#   endif /* ACE_HAS_USER_MODE_MASKS */
 #   define S_IRWXG 00070           /* read, write, execute: group. */
 #   define S_IRGRP 00040           /* read permission: group. */
 #   define S_IWGRP 00020           /* write permission: group. */
@@ -3075,7 +3081,14 @@ PAGE_NOCACHE  */
 #     define _O_CREAT O_CREAT
 #     define _O_EXCL  O_EXCL
 #     define _O_TRUNC O_TRUNC
-#     define _O_TEMPORARY 0x0800 // see fcntl.h
+      // 0x0800 is used for O_APPEND.  0x08 looks free.
+#     define _O_TEMPORARY 0x08 // see fcntl.h
+#     define _O_RDWR   O_RDWR
+#     define _O_WRONLY O_WRONLY
+#     define _O_RDONLY O_RDONLY
+#     define _O_APPEND O_APPEND
+#     define _O_BINARY O_BINARY
+#     define _O_TEXT   O_TEXT
 #   endif /* __BORLANDC__ */
 
 typedef OVERLAPPED ACE_OVERLAPPED;
@@ -3170,7 +3183,6 @@ struct msghdr
   int msg_accrightslen;
 };
 
-
 typedef int ACE_idtype_t;
 typedef DWORD ACE_id_t;
 #   define ACE_SELF (0)
@@ -3181,8 +3193,8 @@ typedef int ACE_pri_t;
 #     define RTLD_LAZY 1
 #   endif /* !RTLD_LAZY */
 typedef HINSTANCE ACE_SHLIB_HANDLE;
-const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE = 0;
-const int ACE_DEFAULT_SHLIB_MODE = 0;
+#   define ACE_SHLIB_INVALID_HANDLE 0
+#   define ACE_DEFAULT_SHLIB_MODE 0
 
 # elif defined (ACE_PSOS)
 
@@ -3660,11 +3672,11 @@ extern "C" {
 }
 #     endif /* ACE_HAS_DLFCN_H_BROKEN_EXTERN_C */
   typedef void *ACE_SHLIB_HANDLE;
-  const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE = 0;
+#   define ACE_SHLIB_INVALID_HANDLE 0
 #     if !defined (RTLD_LAZY)
 #       define RTLD_LAZY 1
 #     endif /* !RTLD_LAZY */
-  const int ACE_DEFAULT_SHLIB_MODE = RTLD_LAZY;
+#   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
 #   elif defined (__hpux)
 #     if defined(__GNUC__) || __cplusplus >= 199707L
 #       include /**/ <dl.h>
@@ -3672,15 +3684,15 @@ extern "C" {
 #       include /**/ <cxxdl.h>
 #     endif /* (g++ || HP aC++) vs. HP C++ */
   typedef shl_t ACE_SHLIB_HANDLE;
-  const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE = 0;
-  const int ACE_DEFAULT_SHLIB_MODE = BIND_DEFERRED;
+#   define ACE_SHLIB_INVALID_HANDLE 0
+#   define ACE_DEFAULT_SHLIB_MODE BIND_DEFERRED
 #   else
 #     if !defined(RTLD_LAZY)
 #       define RTLD_LAZY 1
 #     endif /* !RTLD_LAZY */
   typedef void *ACE_SHLIB_HANDLE;
-  const ACE_SHLIB_HANDLE ACE_SHLIB_INVALID_HANDLE = 0;
-  const int ACE_DEFAULT_SHLIB_MODE = RTLD_LAZY;
+#   define ACE_SHLIB_INVALID_HANDLE 0
+#   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
 #   endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 
 #   if defined (ACE_HAS_SOCKIO_H)
@@ -7052,6 +7064,26 @@ private:
         } \
      while (0)
 
+#   define ACE_DES_FREE_TEMPLATE3(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3) \
+     do { \
+          if (POINTER) \
+            { \
+              POINTER->~T_CLASS (); \
+              DEALLOCATOR (POINTER); \
+            } \
+        } \
+     while (0)
+
+#   define ACE_DES_FREE_TEMPLATE4(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3, T_PARAM4) \
+     do { \
+          if (POINTER) \
+            { \
+              POINTER->~T_CLASS (); \
+              DEALLOCATOR (POINTER); \
+            } \
+        } \
+     while (0)
+ 
 #   define ACE_DES_ARRAY_FREE_TEMPLATE2(POINTER,SIZE,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
      do { \
           if (POINTER) \
@@ -7096,6 +7128,8 @@ private:
 #     define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER)
 #     define ACE_DES_ARRAY_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER)
 #     define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2)
+#     define ACE_DES_FREE_TEMPLATE3(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2)
+#     define ACE_DES_FREE_TEMPLATE4(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2)
 #     define ACE_DES_ARRAY_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2)
 #   else
 #     define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
@@ -7128,6 +7162,26 @@ private:
             if (POINTER) \
               { \
                 POINTER->T_CLASS <T_PARAM1, T_PARAM2>::~T_CLASS (); \
+                DEALLOCATOR (POINTER); \
+              } \
+          } \
+       while (0)
+
+#     define ACE_DES_FREE_TEMPLATE3(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3) \
+       do { \
+            if (POINTER) \
+              { \
+                POINTER->T_CLASS <T_PARAM1, T_PARAM2, T_PARAM3>::~T_CLASS (); \
+                DEALLOCATOR (POINTER); \
+              } \
+          } \
+       while (0)
+
+#     define ACE_DES_FREE_TEMPLATE4(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3, T_PARAM4) \
+       do { \
+            if (POINTER) \
+              { \
+                POINTER->T_CLASS <T_PARAM1, T_PARAM2, T_PARAM3, T_PARAM4>::~T_CLASS (); \
                 DEALLOCATOR (POINTER); \
               } \
           } \
@@ -7175,18 +7229,33 @@ private:
   do \
     RESULT = (TYPE) X; \
   while (0)
+#   if defined (__BORLANDC__) && (__BORLANDC__ <= 0x540)
 #   define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
   do { \
     TYPE ace_result_ = (TYPE) X; \
+    do { \
+    TYPE ace_result_; \
+    TYPE ace_local_result_ = (TYPE) X; \
+    ace_result_ = ace_local_result_; \
     if (ace_result_ == FAILVALUE) \
-      errno = ::GetLastError (); \
+      ACE_OS::set_errno_to_last_error (); \
     return ace_result_; \
   } while (0)
+#   else
+#     define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
+  do { \
+    TYPE ace_result_; \
+    ace_result_ = (TYPE) X; \
+    if (ace_result_ == FAILVALUE) \
+      ACE_OS::set_errno_to_last_error (); \
+    return ace_result_; \
+  } while (0)
+#   endif /* defined (__BORLANDC__) && (__BORLANDC__ <= 0x540) */
 #   define ACE_WIN32CALL(X,TYPE,FAILVALUE,RESULT) \
   do { \
     RESULT = (TYPE) X; \
     if (RESULT == FAILVALUE) \
-      errno = ::GetLastError (); \
+      ACE_OS::set_errno_to_last_error (); \
   } while (0)
 # else
 #   define ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE) do { TYPE ace_result_ = FAILVALUE; ace_result_ = ace_result_; return OP; } while (0)

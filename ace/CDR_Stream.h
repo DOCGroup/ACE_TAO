@@ -154,7 +154,8 @@ public:
   typedef ACE_UINT32 ULong;
   typedef ACE_UINT64 ULongLong;
 
-  # if defined (_MSC_VER) && _MSC_VER >= 900
+  # if    (defined (_MSC_VER) && (_MSC_VER >= 900)) \
+          || (defined (__BORLANDC__) && (__BORLANDC__ >= 0x530))
       typedef __int64 LongLong;
   # elif ACE_SIZEOF_LONG == 8
       typedef long LongLong;
@@ -193,10 +194,10 @@ public:
           // Applications will probably have trouble with this.
           char f[4];
   #       if defined(_UNICOS)
-          Float();
-          Float(const float & init);
-          float operator= (const Float &rhs) const;
-          int operator!= (const Float &rhs) const;
+        Float (void);
+        Float (const float &init);
+        float operator= (const Float &rhs) const;
+        int operator!= (const Float &rhs) const;
   #       endif /* _UNICOS */
   #     endif /* ACE_SIZEOF_INT != 4 */
       };

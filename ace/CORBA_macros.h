@@ -318,8 +318,8 @@
      do { try { POINTER = new CONSTRUCTOR; } \
        catch (ACE_bad_alloc) { errno = ENOMEM; ACE_THROW_INT (EXCEPTION); } \
      } while (0)
-// The following ACE_NEW_THROW* macros are to be depricated soon.
-// -------------------- Start Depricated --------------------
+// The following ACE_NEW_THROW* macros are to be deprecated soon.
+// -------------------- Start Deprecated --------------------
 #   define ACE_NEW_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
      do { try { POINTER = new CONSTRUCTOR; } \
        catch (ACE_bad_alloc) { errno = ENOMEM; TAO_THROW (EXCEPTION); } \
@@ -332,7 +332,7 @@
   do { try { POINTER = new CONSTRUCTOR; } \
        catch (ACE_bad_alloc) { errno = ENOMEM; TAO_TRY_THROW (EXCEPTION); } \
      } while (0)
-// -------------------- End Depricated --------------------
+// -------------------- End Deprecated --------------------
 
 #else
 
@@ -340,8 +340,8 @@
      do { POINTER = new CONSTRUCTOR; \
        if (POINTER == 0) { errno = ENOMEM; ACE_THROW_INT (EXCEPTION); } \
      } while (0)
-// The following ACE_NEW_THROW* macros are to be depricated soon.
-// -------------------- Start Depricated --------------------
+// The following ACE_NEW_THROW* macros are to be deprecated soon.
+// -------------------- Start Deprecated --------------------
 #   define ACE_NEW_THROW(POINTER,CONSTRUCTOR,EXCEPTION) \
      do { POINTER = new CONSTRUCTOR; \
        if (POINTER == 0) { errno = ENOMEM; TAO_THROW (EXCEPTION); } \
@@ -355,7 +355,7 @@
      do { POINTER = new CONSTRUCTOR; \
        if (POINTER == 0) { errno = ENOMEM; TAO_TRY_THROW (EXCEPTION); } \
      } while (0)
-// -------------------- End Depricated --------------------
+// -------------------- End Deprecated --------------------
 
 #endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
@@ -371,15 +371,15 @@
   ACE_Write_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) ACE_THROW_INT (EXCEPTION);
 
-// The following ACE_GUARD_THROW* macros are to be depricated soon.
-// -------------------- Start Depricated --------------------
+// The following ACE_GUARD_THROW* macros are to be deprecated soon.
+// -------------------- Start Deprecated --------------------
 # define ACE_GUARD_THROW(MUTEX,OBJ,LOCK,EXCEPTION) \
   ACE_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) TAO_THROW (EXCEPTION);
 # define ACE_GUARD_THROW_RETURN(MUTEX,OBJ,LOCK,EXCEPTION,RETURN) \
   ACE_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) TAO_THROW_RETURN (EXCEPTION, RETURN);
-// -------------------- End Deprication --------------------
+// -------------------- End Deprecation --------------------
 
 // ============================================================
 

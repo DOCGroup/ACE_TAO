@@ -153,7 +153,7 @@ typedef unsigned __int64 ACE_UINT64;
 // Platform support linebuffered streaming is broken
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
-// Template specialization is supported
+// Template specialization is supported.
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 
 // No system support for replacing any previous mappings.
@@ -256,7 +256,7 @@ typedef unsigned __int64 ACE_UINT64;
         #endif /* _MT */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__)
 #if defined(ACE_HAS_DLL) && (ACE_HAS_DLL != 0)
         #if !defined(_DLL)
                 // *** DO NOT *** DO NOT *** defeat this error message
@@ -264,7 +264,7 @@ typedef unsigned __int64 ACE_UINT64;
                 #error You must link against (Debug) Multithreaded DLL run-time libraries.
         #endif /* !_DLL */
 #endif  /* ACE_HAS_DLL && ACE_HAS_DLL != 0 */
-#endif /* ACE_HAS_WINCE */
+#endif /* !ACE_HAS_WINCE && !__BORLANDC__ */
 
 // We are using STL's min and max (in algobase.h).  Therefore the
 // macros in window.h are extra
