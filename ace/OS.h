@@ -3140,7 +3140,10 @@ struct iovec
   size_t iov_len; // byte count to read/write
   char *iov_base; // data to be read/written
 
+  // WSABUF is a Winsock2-only type.
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   operator WSABUF &(void) { return *((WSABUF *) this); }
+#endif
 };
 
 struct msghdr
@@ -4770,7 +4773,7 @@ private:
 };
 
 
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 #if defined (ACE_HAS_WINSOCK2_GQOS)
 typedef SERVICETYPE ACE_SERVICE_TYPE;
 #else
@@ -4782,10 +4785,10 @@ typedef WSAPROTOCOL_INFO ACE_Protocol_Info;
 typedef u_long ACE_SERVICE_TYPE;
 typedef u_long ACE_SOCK_GROUP;
 typedef u_long ACE_Protocol_Info;
-#endif /* SERVICETYPE */
+#endif /* ACE_HAS_WINSOCK2 && ACE_HAS_WINSOCK2 != 0 */
 
 class ACE_Export ACE_Flow_Spec
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   : public FLOWSPEC
 #endif /* ACE_HAS_WINSOCK2 */
 {
@@ -4827,7 +4830,7 @@ public:
 };
 
 class ACE_Export ACE_QoS
-#if defined (ACE_HAS_WINSOCK2)
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   : public QOS
 #endif /* ACE_HAS_WINSOCK2 */
 {
