@@ -1,5 +1,15 @@
+Fri Apr 30 19:55:26 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.*:
+	* orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.*:
+	* orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.*:
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.*:
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.*:
+	modified the CosEvent Channel to use reference counted
+	servants.
+
 Fri Apr 30 19:05:32 1999  Ossama Othman  <othman@cs.wustl.edu>
-	
+
 	* tao/Server_Request.*:
 	* tao/IIOP_Server_Request.*:
 	* tao/UIOP_Server_Request.*:
@@ -7,18 +17,18 @@ Fri Apr 30 19:05:32 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  Moved IIOP specific stuff from Server_Request.* to
 	  IIOP_Server_Request.*.  Created UIOP-specific UIOP_Server_Request
 	  files based on the IIOP ones.
-	
+
 	* tao/Makefile:
 
 	  Added IIOP_Server_Request files to the Makefile and updated the
 	  dependencies.
-	
+
 	* tao/UIOP_Connect.{h,i,cpp}:
 
 	  Rough implementation of UIOP connection handlers based on the IIOP
 	  connection handlers.  Not operational yet.
-	
-	* tao/Connect.*: 
+
+	* tao/Connect.*:
 
 	  Changed all references of TAO_SVC_HANDLER to TAO_IIOP_SVC_HANDLER.
 
@@ -36,7 +46,7 @@ Fri Apr 30 18:46:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Added a couple of cases to the character constant switch
 	  that eliminated a couple of IDL compiler error messages
 	  produced from one of the test IDL files in the OMG tests.
-	  The output still looks wrong for some of the cases, but 
+	  The output still looks wrong for some of the cases, but
 	  the compiler itself produces no error messages, so the
 	  branding test should pass us on this.
 
@@ -45,12 +55,12 @@ Fri Apr 30 17:41:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/Typecode.{h,cpp}:
 	  Added a no-op parameter() function. This function has been
 	  deprecated since CORBA 1.2 and is completely gone from 2.3a,
-	  but the branding tests have it so... It just throws 
+	  but the branding tests have it so... It just throws
 	  CORBA::NO_IMPLEMENT.
 
 	  Also found twp methods, ulong_param and typecode_param, that
 	  were internal hacks to use until other member functions had
-	  been written. They were never part of the spec and not now 
+	  been written. They were never part of the spec and not now
 	  used by anything in TAO, orbsvcs, or any of the tests or
 	  examples, so they have been removed.
 
@@ -90,7 +100,7 @@ Fri Apr 30 12:42:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  ProxyPushSupplier objects.
 	  Also fixed the initialization of the default_POAs for those
 	  classes and the Admin interfaces.
-	  Added strategized locking to the 
+	  Added strategized locking to the
 
 	* tao/Context.h:
 	* tao/Context.cpp:
@@ -102,7 +112,7 @@ Fri Apr 30 12:42:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/IOR_LookupTable.cpp:
 	* tao/ORB.cpp:
-	  Protected some debug messages with TAO_debug_level. Also added a 
+	  Protected some debug messages with TAO_debug_level. Also added a
 	  few more to check the iioploc support.
 
 Fri Apr 30 11:58:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
