@@ -1,3 +1,15 @@
+Sat Jun 19 17:38:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+	  Fixed code generation for unions with generic
+	  CORBA::Object member. TAO IDL compiler classifies
+	  CORBA::Object member as a predefined type PT_pseudo,
+	  but generated code must be like that for interface.
+	  Someday we should make a special type for CORBA::Object
+	  in the IDL compiler.
+
 Sat Jun 19 17:19:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/ORB.h:
