@@ -105,11 +105,11 @@ operator>> (ACE_SOCK_IOStream & stream, qchar *buf)
   // if we don't have a quote, append until we see space
   if (c != '"')
     for (*buf++ = c; 
-	 stream.get(c) && !isspace(c); 
+	 (void *) stream.get(c) && !isspace(c); 
 	 *buf++ = c)
       continue;
   else
-    for (; stream.get(c) && c != '"'; *buf++ = c)
+    for (; (void *) stream.get(c) && c != '"'; *buf++ = c)
       if (c == '\\')
 	{
 	  stream.get(c);
