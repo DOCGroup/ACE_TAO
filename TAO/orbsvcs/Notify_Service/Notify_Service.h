@@ -123,7 +123,12 @@ protected:
   PortableServer::POA_var poa_;
   // Reference to the root poa.
 
+#if defined (TAO_NOTIFY_USE_NAMING_CONTEXT)
+  CosNaming::NamingContext_var naming_;
+#else
   CosNaming::NamingContextExt_var naming_;
+#endif /* TAO_NOTIFY_USE_NAMING_CONTEXT */
+  
   // A naming context.
 
   Worker worker_;
