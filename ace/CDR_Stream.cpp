@@ -937,7 +937,7 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
       ACE_NEW_RETURN (x,
                       ACE_CDR::WChar[1],
                       0);
-      ACE_OS::memcpy(x, "", 2);
+      x[0] = '\x00';
       return 1;
     }
 
