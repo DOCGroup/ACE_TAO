@@ -5,6 +5,7 @@
 #define _HANDLE_THR_STREAM_H
 
 #include "ace/Acceptor.h"
+#include "ace/Svc_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
