@@ -161,7 +161,7 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
 
           do
             {
-              count = ACE::recv (handle, buf, sizeof (buf));
+              count = ACE_OS::read (handle, buf, sizeof (buf));
               if (count <= 0)
                 break;
 
@@ -221,7 +221,7 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
               && ((u_long) stream.send_n (trailer, trailer_size)
                   == trailer_size))
             {
-              this->handler_->transmit_file_complete ();
+              ioh->transmit_file_complete ();
               return;
             }
           else
