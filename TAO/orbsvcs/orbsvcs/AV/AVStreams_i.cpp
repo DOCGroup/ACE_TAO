@@ -2097,7 +2097,7 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
       AVStreams::streamQoS network_qos;
       if (qos.length () > 0)
         {
-	  
+	 if (TAO_debug_level > 0) 
 	  ACE_DEBUG ((LM_DEBUG,
 		      "QoS is Specified\n"));
 	  

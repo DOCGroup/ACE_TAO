@@ -1,3 +1,10 @@
+Mon Jul 2  14:50:00 2001  Craig Rodrigues <crodrigu@bbn.com>
+ 
+        * orbsvcs/AV/AVStreams_i.cpp
+ 
+          Only display certain debug messages when higher ORB debug level
+          is specified.
+
 Mon Jul  2 13:37:45 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/fe/idl.ll:
