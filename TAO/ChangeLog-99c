@@ -1,3 +1,18 @@
+Fri May 14 23:55:47 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Request.{h,i,cpp}:
+	  Added Context_ptr member ctx_ to class CORBA_Request, along
+	  with accessor and mutator methods. Although Contexts are not
+	  implmented by TAO, these methods do not throw 
+	  CORBA::NO_IMPLEMENT. Since I didn't see any functions in
+	  CORBA_Request using environment variables, I kept to that
+	  scheme and therefore could not use ACE_THROW or related
+	  macros. The accessor simply returns the member (which is
+	  set to 0 in all constructors) and the mutator does nothing
+	  but throw away its arg. For the record, these were actually
+	  checked in a few days ago, but I neglected to make a 
+	  ChangeLog entry at the time.
+
 Fri May 14 20:27:59 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.{h,cpp}:
