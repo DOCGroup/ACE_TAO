@@ -1,3 +1,13 @@
+Tue Oct  7 10:57:48 1997  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
+
+	* ace/OS.h: 
+	  Added a prototype for pthread_setconcurrency when
+	  ACE_HAS_IRIX62_THREADS is defined. This function is undocumented
+	  but was needed by some users.
+
+	* ace/Parse_Node.cpp: 
+	  Fixed a minor sintax error.
+
 Tue Oct 07 06:58:40 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ACE version 4.3.11, released Tue Oct 07 06:58:40 1997.
@@ -6,8 +16,8 @@ Tue Oct  7 02:51:55 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* tests/TSS_Test.cpp (main): 
 	* tests/Task_Test.cpp (main): 
-	* tests/Barrier_Test.cpp (main): Removed thread_handles[] since we don't
-	  need to join the thread explicitly anymore.
+	* tests/Barrier_Test.cpp (main): Removed thread_handles[] since we
+	  don't need to join the thread explicitly anymore.
 
 	* ace/Thread_Manager.{h,cpp}:  Added an ACE_Unbounded_Quque to
 	  collect terminated threads so that we can later join the threads
