@@ -1,5 +1,10 @@
 Tue Aug 24 00:47:47 1999  Marina Spivak  <marina@cs.wustl.edu>
 
+	* TAO/examples/Load_Balancing/Makefile:
+	  Removed foreign characters that were introduced during previous
+	  commit by mistake.
+
+
 	* TAO/examples/Load_Balancing/Identity_Client.cpp
 	* TAO/examples/Load_Balancing/Identity_Server.cpp
 	* TAO/examples/Load_Balancing/Load_Balancing_Service.cpp:
