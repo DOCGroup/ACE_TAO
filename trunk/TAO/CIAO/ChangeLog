@@ -1,82 +1,114 @@
+Wed Oct 15 13:59:33 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp.m4:
+	* CCF/CCF/IDL2/SyntaxTree/Elements.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/Interface.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/Typedef.cpp:
+	* CCF/CCF/IDL2/SyntaxTree/Typedef.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/ValueType.hpp:
+	* CCF/CCF/IDL2/Traversal/Elements.cpp:
+	* CCF/CCF/CIDL/SemanticAction/Impl/HomeExecutor.hpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Component.hpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Home.hpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Include.hpp:
+	* CCF/CCF/IDL3/SyntaxTree/Component.hpp:
+	* CCF/CCF/IDL3/SyntaxTree/EventType.hpp:
+	* CCF/CCF/IDL3/SyntaxTree/Home.hpp:
+	* CCF/CCF/IDL3/Traversal/Operation.cpp: Second part of
+	  typedef-related infrastructure.
+
+	* CCF/Example/CIDL/LocalExecutorMapping/test-0.idl:
+	* CCF/Example/CIDL/LocalExecutorMapping/test-0_exec.idl.orig:
+	* CCF/Example/CIDL/LocalExecutorMapping/test-1.idl: Added a few
+	  typedef's for testing.
+	
+	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+	* CCF/Example/CIDL/LocalExecutorMapping/Makefile.alt:
+	* CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp: Some minor 
+	  clean-up's.
+
+	* CCF/Documentation/TODO: Added a few more items.
+
 Tue Oct 14 22:44:43 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/handcrafted/Hello/simple_client.cpp: 
+	* examples/handcrafted/Hello/simple_client.cpp:
 	* examples/handcrafted/Hello/client.cpp: Added the missing streams
 	  header file.
 
 Tue Oct 14 17:18:43 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* CIDLC/Makefile.alt: added alternative (to mpc) means of 
+	* CIDLC/Makefile.alt: Added alternative (to mpc) means of
 	  building CIDL compiler.
 
 Tue Oct 14 16:57:54 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CIDLC/ExecutorMappingGenerator.cpp:
-	* CIDLC/RepositoryIdGenerator.cpp: some minor clean-up's.
+	* CIDLC/RepositoryIdGenerator.cpp: Some minor clean-up's.
 
 Tue Oct 14 16:41:41 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-        * CCF/IDL2/LexicalAnalyzer.cpp:
-        * CCF/IDL2/Makefile.archive:
-        * CCF/IDL2/Parser.cpp:
-        * CCF/IDL2/Parser.hpp:
-        * CCF/IDL2/SemanticAction.hpp:
-        * CCF/IDL2/SyntaxTree.hpp:
-        * CCF/IDL2/Traversal.hpp:
-        * CCF/IDL2/SemanticAction/Factory.hpp:
-        * CCF/IDL2/SemanticAction/Typedef.hpp:
-        * CCF/IDL2/SemanticAction/Impl/Factory.hpp:
-        * CCF/IDL2/SemanticAction/Impl/Interface.hpp:
-        * CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
-        * CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
-        * CCF/IDL2/SyntaxTree/BuiltIn.hpp:
-        * CCF/IDL2/SyntaxTree/BuiltIn.hpp.m4:
-        * CCF/IDL2/SyntaxTree/Elements.cpp:
-        * CCF/IDL2/SyntaxTree/Elements.hpp:
-        * CCF/IDL2/SyntaxTree/Elements.tpp:
-        * CCF/IDL2/SyntaxTree/Interface.hpp:
-        * CCF/IDL2/SyntaxTree/Makefile.alt:
-        * CCF/IDL2/SyntaxTree/Module.hpp:
-        * CCF/IDL2/SyntaxTree/Operation.hpp:
-        * CCF/IDL2/SyntaxTree/Translation.cpp:
-        * CCF/IDL2/SyntaxTree/Translation.hpp:
-        * CCF/IDL2/SyntaxTree/TypeId.cpp:
-        * CCF/IDL2/SyntaxTree/Typedef.cpp:
-        * CCF/IDL2/SyntaxTree/Typedef.hpp:
-        * CCF/IDL2/SyntaxTree/ValueType.hpp:
-        * CCF/IDL2/Traversal/BuiltIn.hpp:
-        * CCF/IDL2/Traversal/BuiltIn.hpp.m4:
-        * CCF/IDL2/Traversal/Elements.cpp:
-        * CCF/IDL2/Traversal/Elements.hpp:
-        * CCF/IDL2/Traversal/Interface.hpp:
-        * CCF/IDL2/Traversal/Module.hpp:
-        * CCF/IDL2/Traversal/Operation.hpp:
-        * CCF/IDL2/Traversal/Translation.hpp:
-        * CCF/IDL2/Traversal/TypeId.hpp:
-        * CCF/IDL2/Traversal/Typedef.cpp:
-        * CCF/IDL2/Traversal/Typedef.hpp:
-        * CCF/IDL3/SyntaxTree/Component.hpp:
-        * CCF/IDL3/SyntaxTree/EventType.hpp:
-        * CCF/IDL3/SyntaxTree/Home.hpp:
-        * CCF/IDL3/SyntaxTree/Operation.hpp:
-        * CCF/IDL3/Traversal/Component.hpp:
-        * CCF/IDL3/Traversal/EventType.hpp:
-        * CCF/IDL3/Traversal/Home.hpp:
-        * CCF/IDL3/Traversal/Operation.hpp:
+	* CCF/IDL2/LexicalAnalyzer.cpp:
+	* CCF/IDL2/Makefile.archive:
+	* CCF/IDL2/Parser.cpp:
+	* CCF/IDL2/Parser.hpp:
+	* CCF/IDL2/SemanticAction.hpp:
+	* CCF/IDL2/SyntaxTree.hpp:
+	* CCF/IDL2/Traversal.hpp:
+	* CCF/IDL2/SemanticAction/Factory.hpp:
+	* CCF/IDL2/SemanticAction/Typedef.hpp:
+	* CCF/IDL2/SemanticAction/Impl/Factory.hpp:
+	* CCF/IDL2/SemanticAction/Impl/Interface.hpp:
+	* CCF/IDL2/SemanticAction/Impl/Typedef.cpp:
+	* CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
+	* CCF/IDL2/SyntaxTree/BuiltIn.hpp:
+	* CCF/IDL2/SyntaxTree/BuiltIn.hpp.m4:
+	* CCF/IDL2/SyntaxTree/Elements.cpp:
+	* CCF/IDL2/SyntaxTree/Elements.hpp:
+	* CCF/IDL2/SyntaxTree/Elements.tpp:
+	* CCF/IDL2/SyntaxTree/Interface.hpp:
+	* CCF/IDL2/SyntaxTree/Makefile.alt:
+	* CCF/IDL2/SyntaxTree/Module.hpp:
+	* CCF/IDL2/SyntaxTree/Operation.hpp:
+	* CCF/IDL2/SyntaxTree/Translation.cpp:
+	* CCF/IDL2/SyntaxTree/Translation.hpp:
+	* CCF/IDL2/SyntaxTree/TypeId.cpp:
+	* CCF/IDL2/SyntaxTree/Typedef.cpp:
+	* CCF/IDL2/SyntaxTree/Typedef.hpp:
+	* CCF/IDL2/SyntaxTree/ValueType.hpp:
+	* CCF/IDL2/Traversal/BuiltIn.hpp:
+	* CCF/IDL2/Traversal/BuiltIn.hpp.m4:
+	* CCF/IDL2/Traversal/Elements.cpp:
+	* CCF/IDL2/Traversal/Elements.hpp:
+	* CCF/IDL2/Traversal/Interface.hpp:
+	* CCF/IDL2/Traversal/Module.hpp:
+	* CCF/IDL2/Traversal/Operation.hpp:
+	* CCF/IDL2/Traversal/Translation.hpp:
+	* CCF/IDL2/Traversal/TypeId.hpp:
+	* CCF/IDL2/Traversal/Typedef.cpp:
+	* CCF/IDL2/Traversal/Typedef.hpp:
+	* CCF/IDL3/SyntaxTree/Component.hpp:
+	* CCF/IDL3/SyntaxTree/EventType.hpp:
+	* CCF/IDL3/SyntaxTree/Home.hpp:
+	* CCF/IDL3/SyntaxTree/Operation.hpp:
+	* CCF/IDL3/Traversal/Component.hpp:
+	* CCF/IDL3/Traversal/EventType.hpp:
+	* CCF/IDL3/Traversal/Home.hpp:
+	* CCF/IDL3/Traversal/Operation.hpp:
 	* CCF/CIDL/SyntaxTree/Composition.hpp:
-        * CCF/CIDL/SyntaxTree/HomeExecutor.hpp:
-        * CCF/CIDL/Traversal/Composition.hpp:
-        * CCF/CIDL/Traversal/HomeExecutor.hpp: First part of
+	* CCF/CIDL/SyntaxTree/HomeExecutor.hpp:
+	* CCF/CIDL/Traversal/Composition.hpp:
+	* CCF/CIDL/Traversal/HomeExecutor.hpp: First part of
 	  typedef-related infrastructure.
-
+	  
 	* CCF/CodeGenerationKit/IndentationIDL.hpp:
-        * CCF/CompilerElements/Preprocessor.hpp:
-        * Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
-        * Example/CIDL/LocalExecutorMapping/cidlc.cpp:
-        * Example/CIDL/LocalExecutorMapping/test-0.idl: some minor
+	* CCF/CompilerElements/Preprocessor.hpp:
+	* Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
+	* Example/CIDL/LocalExecutorMapping/cidlc.cpp:
+	* Example/CIDL/LocalExecutorMapping/test-0.idl: Some minor
 	  clean-up's.
 
-	* Documentation/TODO: added a few more items.
+	* Documentation/TODO: Added a few more items.
 
 Tue Oct 14 00:54:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 

@@ -29,6 +29,11 @@ namespace CCF
         }
 
       public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope);
+      public:
         virtual bool
         is_a (Introspection::TypeInfo const& ti) const;
 
@@ -38,12 +43,14 @@ namespace CCF
         virtual NodePtr
         virtual_type ();
 
-        // Type completeness
+        // Type completeness.
+        //
       public:
         virtual bool
         defined () const;
 
-        // Runtime declaration type information
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -54,6 +61,10 @@ namespace CCF
       public:
         static Introspection::TypeInfo const&
         static_type_info ();
+
+      private:
+        TypeDeclPtr
+        underlying_type ();
 
       private:
         ScopedName type_;

@@ -63,7 +63,24 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        Object (SimpleName const& name, Order const& order, ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (new Object (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -96,7 +113,24 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        ValueBase (SimpleName const& name, Order const& order, ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (new ValueBase (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -129,7 +163,24 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        Any (SimpleName const& name, Order const& order, ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (new Any (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -162,7 +213,24 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        Boolean (SimpleName const& name, Order const& order, ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (new Boolean (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -195,7 +263,24 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        Char (SimpleName const& name, Order const& order, ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (new Char (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -228,7 +313,24 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        Double (SimpleName const& name, Order const& order, ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (new Double (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -261,7 +363,24 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        Float (SimpleName const& name, Order const& order, ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (new Float (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -294,7 +413,24 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        Long (SimpleName const& name, Order const& order, ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (new Long (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -327,7 +463,24 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        LongDouble (SimpleName const& name, Order const& order, ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (new LongDouble (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -360,7 +513,24 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        LongLong (SimpleName const& name, Order const& order, ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (new LongLong (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -393,7 +563,24 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        Octet (SimpleName const& name, Order const& order, ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (new Octet (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -426,7 +613,24 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        Short (SimpleName const& name, Order const& order, ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (new Short (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -459,7 +663,24 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        String (SimpleName const& name, Order const& order, ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (new String (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -492,7 +713,24 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        UnsignedLong (SimpleName const& name, Order const& order, ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (new UnsignedLong (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -525,7 +763,24 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        UnsignedLongLong (SimpleName const& name, Order const& order, ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (new UnsignedLongLong (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -558,7 +813,24 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        UnsignedShort (SimpleName const& name, Order const& order, ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (new UnsignedShort (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -591,7 +863,24 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        Void (SimpleName const& name, Order const& order, ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (new Void (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -624,7 +913,24 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        Wchar (SimpleName const& name, Order const& order, ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (new Wchar (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()
@@ -657,7 +963,24 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Runtime declaration type information
+      protected:
+        Wstring (SimpleName const& name, Order const& order, ScopePtr const& scope)
+            : Declaration (name, order, scope)
+        {
+          type_info (static_type_info ());
+        }
+
+      public:
+        virtual TypeDeclPtr
+        clone_typedef_temporary (SimpleName const& name,
+                                 Order const& order,
+                                 ScopePtr const& scope)
+        {
+          return TypeDeclPtr (new Wstring (name, order, scope));
+        }
+
+        // Runtime declaration type information.
+        //
       public:
         virtual std::string
         declaration_class ()

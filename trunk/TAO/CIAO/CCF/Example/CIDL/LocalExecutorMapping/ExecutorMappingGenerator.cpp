@@ -232,7 +232,11 @@ namespace
       ScopedName mapping (orig.scope (), "CCM_" + orig.simple ());
 
       // Check if mapping has already been provided.
-      if (i->table ().exist (mapping)) return;
+      if (i->table ().exist (mapping))
+      {
+        return;
+      }
+
 
       // Add to the list if it's not already there.
       declarations_.add (i);

@@ -105,7 +105,7 @@ namespace CCF
               if (token_stream.size () > 1)
               {
                 IDL3::Parser parser (context_, dout_, lexer, action_factory_);
-                
+
                 IDL2::Parsing::parse (token_stream.begin (),
                                       token_stream.end (),
                                       parser.start ());
