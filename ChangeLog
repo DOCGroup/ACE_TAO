@@ -1,19 +1,35 @@
+Fri Jul 25 11:37:09 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          Added the ability to access grouped source files through the
+          template.  The grouped_source_files, grouped_header_files, etc.
+          can be used if the files are grouped in the mpc file (as they
+          currently are in ace.mpc).
+
+        * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Utilize the new template ability and remove the 'gnu_source_files'
+          and 'build' references and code.
+
 Fri Jul 25 09:17:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/performance_stats.sh:
-	* bin/generate_performance_chart.sh: Redefined the range for
-	  plotting different graphs.
+        * bin/performance_stats.sh:
+        * bin/generate_performance_chart.sh: Redefined the range for
+          plotting different graphs.
 
 Fri Jul 25 08:53:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/performance_stats.sh: Changed the path to mogrify. On
-	  flamenco.dre it is installed in /usr/local instead of
-	  /usr/bin/X11. This would break the stats pages at UCI. The pages
-	  at UCI havent been updated in a long while. Hence shouldnt be a
-	  big deal. 
+        * bin/performance_stats.sh: Changed the path to mogrify. On
+          flamenco.dre it is installed in /usr/local instead of
+          /usr/bin/X11. This would break the stats pages at UCI. The pages
+          at UCI havent been updated in a long while. Hence shouldnt be a
+          big deal.
 
-	  With this change the thumbnails shold be fine at dre pages. 
-	
+          With this change the thumbnails shold be fine at dre pages.
+
 Fri Jul 25 11:10:21 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h:
@@ -47,24 +63,24 @@ Fri Jul 25 09:34:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jul 24 17:32:51 2003  Pradeep Gore  <pradeep@oomworks.com>
 
-	* bin/tao_other_tests.lst:
+        * bin/tao_other_tests.lst:
 
-	Added:
-	$TAO_ROOT/orbsvcs/examples/Notify/Lanes/run_test.pl: !ST !MINIMUM
-	$TAO_ROOT/orbsvcs/examples/Notify/ThreadPool/run_test.pl: !ST !MINIMUM
+        Added:
+        $TAO_ROOT/orbsvcs/examples/Notify/Lanes/run_test.pl: !ST !MINIMUM
+        $TAO_ROOT/orbsvcs/examples/Notify/ThreadPool/run_test.pl: !ST !MINIMUM
 
 Thu Jul 24 16:23:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/generate_performance_chart.sh: Changed the scale to which
-	  the graph is plotted.
+        * bin/generate_performance_chart.sh: Changed the scale to which
+          the graph is plotted.
 
 Thu Jul 24 14:00:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/DEV_IO.h (recv_n):
-	* ace/DEV_IO.i: The semantics of recv_n () is now changed to have
-	  a timeout and a byte transferred variable. The interface now has
-	  the semantics asscoiated with ACE_OS::recv_n () and ACE::recv_n
-	  () calls. Thanks to Tom Phan <tom.phan@telhub.com>.
+        * ace/DEV_IO.h (recv_n):
+        * ace/DEV_IO.i: The semantics of recv_n () is now changed to have
+          a timeout and a byte transferred variable. The interface now has
+          the semantics asscoiated with ACE_OS::recv_n () and ACE::recv_n
+          () calls. Thanks to Tom Phan <tom.phan@telhub.com>.
 
 Thu Jul 24 15:01:59 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -114,21 +130,21 @@ Wed Jul 23 23:47:52 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Wed Jul 23 12:43:48 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/UUID.cpp:
+        * ace/UUID.cpp:
 
-	  Added missing ACE_RCSID macro.
+          Added missing ACE_RCSID macro.
 
-	  (UUID_node):
+          (UUID_node):
 
-	  Use UUID_node::NODE_ID_SIZE instead of the hardcoded constant
-	  "6".  Improves code maintanability.
+          Use UUID_node::NODE_ID_SIZE instead of the hardcoded constant
+          "6".  Improves code maintanability.
 
-	  (ACE_UUID):
+          (ACE_UUID):
 
-	  Corrected format specifier mismatch warnings in sscanf() call
-	  exhibited by G++ 3.2.2.  Hexadecimal format specifiers ("%x")
-	  expect the corresponding argument to be an unsigned int, not a
-	  signed int.
+          Corrected format specifier mismatch warnings in sscanf() call
+          exhibited by G++ 3.2.2.  Hexadecimal format specifiers ("%x")
+          expect the corresponding argument to be an unsigned int, not a
+          signed int.
 
 Wed Jul 23 19:35:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -157,7 +173,7 @@ Wed Jul 23 17:34:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jul 22 22:46:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/OS.h: Fixed a typo in the documentation of read_n ().
+        * ace/OS.h: Fixed a typo in the documentation of read_n ().
 
 Tue Jul 22 23:24:53 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -167,17 +183,17 @@ Tue Jul 22 23:24:53 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Jul 22 19:20:16 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* ace/ace_dll.dsp:
+        * ace/ace_dll.dsp:
 
-	  Included the UUID generator files into the project to compile on
-	  windows.
+          Included the UUID generator files into the project to compile on
+          windows.
 
-	* tests/tests.dsw:
-	* tests/UUIDTest.dsp:
+        * tests/tests.dsw:
+        * tests/UUIDTest.dsp:
 
-	  Updated tests.dsw to include the corresponding UUIDTest.dsp
-	  project for the unit test UUIDTest which tests the ACE UUID
-	  generator.
+          Updated tests.dsw to include the corresponding UUIDTest.dsp
+          project for the unit test UUIDTest which tests the ACE UUID
+          generator.
 
 Tue Jul 22 16:43:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -204,9 +220,9 @@ Tue Jul 22 14:59:59 UTC 2003 Don Hinton  <dhinton@dresystems.com>
 
 Tue Jul 22 10:29:39 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS.cpp: Fixed compile error; #elif should be #else.
-	* ace/UUID.cpp: Added #include "ace/Log_Msg.h" to pick up the necessary
-	  things for doing logging (ACE_DEBUG, etc.).
+        * ace/OS.cpp: Fixed compile error; #elif should be #else.
+        * ace/UUID.cpp: Added #include "ace/Log_Msg.h" to pick up the necessary
+          things for doing logging (ACE_DEBUG, etc.).
 
 Tue Jul 22 06:01:03 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -244,62 +260,62 @@ Mon Jul 21 22:57:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Mon Jul 21 22:52:46 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* ace/OS.h:
-	* ace/OS.cpp:
+        * ace/OS.h:
+        * ace/OS.cpp:
 
-	  Moved #include <net/if_arp.h> from OS.h to OS.cpp. This
-	  should resolve the compile errors on solaris.
+          Moved #include <net/if_arp.h> from OS.h to OS.cpp. This
+          should resolve the compile errors on solaris.
 
 Mon Jul 21 08:59:14 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace/UUID.cpp (get_systemtime):
+        * ace/UUID.cpp (get_systemtime):
 
-	  Temporary fix to get the compiles rolling again.
+          Temporary fix to get the compiles rolling again.
 
 Mon Jul 21 01:56:44 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* ace/OS.h:
-	* ace/OS.cpp:
+        * ace/OS.h:
+        * ace/OS.cpp:
 
-	  Added method getmacaddress () to get the mac address of the host
-	  for generating UUIDs
+          Added method getmacaddress () to get the mac address of the host
+          for generating UUIDs
 
-	  Added to_string () method to ACE_Thread_ID class to create a
-	  string representation of ACE_Thread_ID.
+          Added to_string () method to ACE_Thread_ID class to create a
+          string representation of ACE_Thread_ID.
 
-	* ace/config-win32-common.h:
+        * ace/config-win32-common.h:
 
-	  Included file nb30.h and library netapi32.lib required for
-	  obtaining MACaddress on windows.
+          Included file nb30.h and library netapi32.lib required for
+          obtaining MACaddress on windows.
 
-	* ace/UUID.h:
-	* ace/UUID.cpp:
-	* ace/UUID.i:
+        * ace/UUID.h:
+        * ace/UUID.cpp:
+        * ace/UUID.i:
 
-	  Files added to generate UUID (Universally Unique ID) based on
-	  expired IETF draft titled "UUIDs and GUIDs". Modifications were
-	  made to the UUID generation as defined by the specification to
-	  add thread and process ids. This was done by adding a new
-	  variant 0xc0 not defined by the specification. By default only
-	  the time variant version of the UUID as defined by the spec is
-	  generated.
+          Files added to generate UUID (Universally Unique ID) based on
+          expired IETF draft titled "UUIDs and GUIDs". Modifications were
+          made to the UUID generation as defined by the specification to
+          add thread and process ids. This was done by adding a new
+          variant 0xc0 not defined by the specification. By default only
+          the time variant version of the UUID as defined by the spec is
+          generated.
 
-	* tests/Makefile.tests:
-	* tests/UUIDTest.cpp:
+        * tests/Makefile.tests:
+        * tests/UUIDTest.cpp:
 
-	  Simple test added to verify ACE UUID generation.
+          Simple test added to verify ACE UUID generation.
 
 Sun Jul 20 14:14:46 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/NT_Service.i (ACE_NT_Service): Set dwWaitHint to 0 in the
-	  constructor.  Thanks to Emiliano Berenbaum <eberenb@yahoo.com>
- 	  for reporting this.
+        * ace/NT_Service.i (ACE_NT_Service): Set dwWaitHint to 0 in the
+          constructor.  Thanks to Emiliano Berenbaum <eberenb@yahoo.com>
+          for reporting this.
 
 Fri Jul 18 18:59:46 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ACE-INSTALL.html: Clarified that ACE+TAO no longer build with
-	  MSVC++ 5.x or earlier.  Thanks to Amol Tambe
- 	  <Amol.Tambe@ideas.com> for reporting this.
+        * ACE-INSTALL.html: Clarified that ACE+TAO no longer build with
+          MSVC++ 5.x or earlier.  Thanks to Amol Tambe
+          <Amol.Tambe@ideas.com> for reporting this.
 
 Sat Jul 19 18:38:50 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 

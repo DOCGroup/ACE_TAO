@@ -224,7 +224,7 @@ sub get_nested_value {
     my($post) = $2;
     my($base) = $self->get_value($pre);
     if (defined $base) {
-      $value = $self->{'prjc'}->get_custom_value($post, $base);
+      $value = $self->{'prjc'}->get_special_value($pre, $post, $base);
     }
   }
 
