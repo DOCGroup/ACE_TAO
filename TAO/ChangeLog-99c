@@ -1,3 +1,16 @@
+Thu Jul 29 19:14:07 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tao/Stub.cpp:
+	  Added code to do_static_call and do_dynamic_call to
+	  plug memory leaks of the 'in' part of inout
+	  parameters.
+
+	* TAO/tests/Param_Test/bd_string.cpp:
+	  Cosmetic changes.
+
+	* TAO/tests/Param_Test/ub_objref_seq.cpp:
+	  Test code was causing leak in SII and DII tests.
+
 Thu Jul 29 19:10:49 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
