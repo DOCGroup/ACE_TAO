@@ -405,8 +405,6 @@ ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP    Platform has
 ACE_HAS_PTHREAD_PROCESS_ENUM            pthread.h declares an enum with
                                         PTHREAD_PROCESS_PRIVATE and
                                         PTHREAD_PROCESS_SHARED values.
-ACE_HAS_PTHREAD_SIGMASK                 Platform has pthread_sigmask()
-                                        defined.
 ACE_HAS_PURIFY                          Purify'ing.  Set by wrapper_macros.GNU.
 ACE_HAS_QUANTIFY                        Quantify'ing.  Set by wrapper_macros.GNU.
 ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS    Platform will recurse
