@@ -82,11 +82,14 @@ CHECK =
 APPLY_NEW_TAG = tag
 
 #### The call to make_release below doesn't actually create the kit.
-#### If creating a release in /project/adaptive/ACE_wrappers/TAO, it
-#### just updates the VERSION and ChangeLog files, and tags the release.
 #### Then, make releasetao is invoked to actually create the kit.
 release: $(APPLY_NEW_TAG)
 	@cd ..  &&  $(MAKE) -s releasetao
+
+#### The call to releaseall below doesn't actually create the kit.
+#### Then, make releasetao is invoked to actually create the kit.
+releaseall: $(APPLY_NEW_TAG)
+	@cd CIAO  &&  $(MAKE) -s release REL=$(REL)
 
 tag:
 	@$(ACE_ROOT)/bin/make_release $(CHECK) -k tao -v $(REL) -u
