@@ -69,6 +69,9 @@ public:
   static ACE_URL_Addr* create_address (LPCTSTR url);
   // Create an address from a complete URL, such as "http://www/foo"
   // or "ftp://ftp.here/get_this".
+  
+  static int known_scheme (LPCTSTR url);
+  // Returns 1 if the URL scheme is recognized, 0 otherwise.
 
 protected:
   void set_url (LPTSTR url);
@@ -184,6 +187,17 @@ public:
 
   LPCTSTR get_query (void) const;
   // Get the query component in the URL
+
+  ACE_URL_Addr* create_relative_address (LPCTSTR url) const;
+  // Create an address from a (possibly) relative URL, such as
+  // "../foo.html", or "/icons/bar.gif"
+  // If the URL is absolute (like "http://www/foo" or "ftp:host/bar")
+  // it simply returns the correct ACE_URL_Addr object; but if the URL 
+  // is not absolute then it is interpreted as relative from the
+  // current address.  In that case url is just a path, if it is a
+  // relative path the new address simply concatenates the path and
+  // uses the same host:port; if it is an absolute path only the host
+  // and port are used.
 
   // = The ACE_URL methods, see the documentation above.
   virtual int string_to_addr (LPCTSTR address);

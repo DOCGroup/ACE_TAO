@@ -1,3 +1,11 @@
+Sat Jan 30 16:03:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* websvcs/lib/URL_Addr.h: 
+	* websvcs/lib/URL_Addr.cpp: 
+	  The HTTP address class can create an URL_Addr from a path
+	  relative to it.  This is useful when interpreting an address
+	  inside an HTML document.
+
 Sat Jan 30 13:34:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Connection/non_blocking/test_sock_connector.cpp (main):
