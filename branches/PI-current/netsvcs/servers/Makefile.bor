@@ -1,0 +1,9 @@
+
+NAME = main
+OBJFILES = $(OBJDIRS)\$(NAME).obj
+CFLAGS = -I$(ACE_ROOT) -I$(ACE_ROOT)\netsvcs\lib $(ACE_CFLAGS)
+LIBFILES = \
+        $(ACE_ROOT)\bin\netsvcs$(LIB_DECORATOR).lib \
+        $(ACE_ROOT)\bin\ace$(LIB_DECORATOR).lib
+!include <$(ACE_ROOT)\netsvcs\build.bor>
+

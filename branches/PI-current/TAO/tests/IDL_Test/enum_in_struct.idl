@@ -1,0 +1,43 @@
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/IDL_Test
+//
+// = FILENAME
+//    enum_in_struct.idl
+//
+// = DESCRIPTION
+//    This file contains examples of IDL code that has 
+//    caused problems in the past for the TAO IDL
+//    compiler. This test is to make sure the problems
+//    stay fixed.
+//
+// = AUTHORS
+//    Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+//
+// ============================================================================
+
+// Tests for correct parsing and code generation for
+// both named and anonymous enums in a struct.
+
+enum UnNamed
+  {
+    UNNAMED_FIRST,
+    UNNAMED_SECOND,
+    UNNAMED_THIRD
+  };
+
+struct HoldsEnum
+{
+  enum Named 
+    { 
+      NAMED_FIRST, 
+      NAMED_SECOND, 
+      NAMED_THIRD 
+    } named_enum;
+
+  UnNamed unnamed_enum;
+};
+

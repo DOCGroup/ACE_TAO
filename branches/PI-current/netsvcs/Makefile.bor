@@ -1,0 +1,26 @@
+#
+# Makefile for building the netsvcs
+#
+
+!ifdef DEBUG
+DEBUG_FLAG = -DDEBUG 
+!endif
+      
+!ifdef STATIC
+STATIC_FLAG = -DSTATIC
+!endif
+     
+!ifdef PASCAL
+PASCAL_FLAG = -DPASCAL
+!endif
+     
+FLAGS = $(DEBUG_FLAG) $(STATIC_FLAG) $(PASCAL_FLAG)
+
+all:
+        cd $(ACE_ROOT)\netsvcs\lib
+        $(MAKE) -f Makefile.bor $(FLAGS)
+        cd $(ACE_ROOT)\netsvcs\clients
+        $(MAKE) -f Makefile.bor $(FLAGS)
+        cd $(ACE_ROOT)\netsvcs\servers
+        $(MAKE) -f Makefile.bor $(FLAGS)
+
