@@ -1,28 +1,28 @@
 Thu Dec 18 15:48:03 1997    <nw1@JIG>
 
-	* ace/OS.{h,cpp} (rethrow_w32_structural_exception):  Added this
-	  function prints out an error message to indicate the occurance
-	  of structural exception and rethrow it again.  
-	  (ACE_Thread_Adapter::invoke): Rearranged try and except block
-	  for Win32 and added a finally block so when a structural
-	  exception occurs, a thread can clean it up properly, print out
-	  an error message, and rethrow the exception again. 
+        * ace/OS.{h,cpp} (rethrow_w32_structural_exception):  Added this
+          function prints out an error message to indicate the occurance
+          of structural exception and rethrow it again.  
+          (ACE_Thread_Adapter::invoke): Rearranged try and except block
+          for Win32 and added a finally block so when a structural
+          exception occurs, a thread can clean it up properly, print out
+          an error message, and rethrow the exception again. 
 
 Thu Dec 18 15:40:50 1997  James C Hu  <jxh@cs.wustl.edu>
 
-	* ace/Filecache.{cpp,h}:
-	  - debugged writing a file.
-	  - can select if mapping is desired.
+        * ace/Filecache.{cpp,h}:
+          - debugged writing a file.
+          - can select if mapping is desired.
 
-	* ace/OS.h: Added new #defines to facilitate forward declarations
-	  of ACE_Export classes.
+        * ace/OS.h: Added new #defines to facilitate forward declarations
+          of ACE_Export classes.
 
 Thu Dec 18 14:35:24 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/OS.h: The server logging daemon is implemented using TCP/IP
- 	  under Win32.  Therefore, we can simplify the creation of the
- 	  ACE_DEFAULT_LOGGER_KEY.  Thanks to Patrick J. McNerthney
- 	  <pat@thememedia.com> for reporting this problem.
+        * ace/OS.h: The server logging daemon is implemented using TCP/IP
+          under Win32.  Therefore, we can simplify the creation of the
+          ACE_DEFAULT_LOGGER_KEY.  Thanks to Patrick J. McNerthney
+          <pat@thememedia.com> for reporting this problem.
 
 Thu Dec 18 09:59:33 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -48,28 +48,30 @@ Thu Dec 18 09:59:33 1997  David L. Levine  <levine@cs.wustl.edu>
           isn't tested on Irix 6.x, etc.  Thanks to Carlos for tripping
           over this.
 
+        * ace/IOStream_T.i (eof): made the return type, int, explicit.
+
 Thu Dec 18 00:15:02 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.6, released Thu Dec 18 00:15:02 1997.
 
 Wed Dec 17 19:42:38 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* examples/IPC_SAP/SOCK_SAP: Enhanced the
- 	  CPP-{inserver,inclient}.cpp tests so that they will spawn
- 	  multiple client and server threads to perform the data transfer.
-  	  Thanks to Brian Mendel and Bryan Doerr for suggesting this.
+        * examples/IPC_SAP/SOCK_SAP: Enhanced the
+          CPP-{inserver,inclient}.cpp tests so that they will spawn
+          multiple client and server threads to perform the data transfer.
+          Thanks to Brian Mendel and Bryan Doerr for suggesting this.
 
-	* ace/OS.i: Fixed some very subtle bugs with cond_signal() and
- 	  cond_broadcast().  Thanks to Patrick J. McNerthney
- 	  <pat@thememedia.com> for reporting these and sending the fixes.
+        * ace/OS.i: Fixed some very subtle bugs with cond_signal() and
+          cond_broadcast().  Thanks to Patrick J. McNerthney
+          <pat@thememedia.com> for reporting these and sending the fixes.
 
 Wed Dec 17 19:27:06 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
-	* ACE-INSTALL.html (HREF): Added an advise not to use VC5.0 SP3.
+        * ACE-INSTALL.html (HREF): Added an advise not to use VC5.0 SP3.
 
-	* examples/OS/Process/Makefile: Removed inclusion of
-	  rules.lib.GNU. Thanks to Avi Nash <anash@RedBrick.Com> for
-	  noticing this.
+        * examples/OS/Process/Makefile: Removed inclusion of
+          rules.lib.GNU. Thanks to Avi Nash <anash@RedBrick.Com> for
+          noticing this.
 
 Tue Dec 16 22:09:42 1997  David L. Levine  <levine@cs.wustl.edu>
 
