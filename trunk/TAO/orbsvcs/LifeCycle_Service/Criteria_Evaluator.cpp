@@ -29,16 +29,17 @@ Criteria_Evaluator::~Criteria_Evaluator ()
 LifeCycleService::Criteria_Evaluator::SeqNamedValuePair *
 Criteria_Evaluator::getInitialization (CORBA::Environment &env)
 {
-  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair *sequence_ptr = 0;
+  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair_ptr sequence_ptr = 0;
 
-  const CORBA::Any_ptr any_ptr = this->getCriteriaMember ("initialization");
+  CORBA::Any * any_ptr = this->getCriteriaMember ("initialization");
 
   if (any_ptr == 0)
   {
     env.exception (new LifeCycleService::Criteria_Evaluator::NotAvailable ("No initialization member found.\n"));
     return 0;
   }
-  *any_ptr >>= sequence_ptr;
+
+  *any_ptr >>= sequence_ptr;  
 
   return sequence_ptr;
 }
