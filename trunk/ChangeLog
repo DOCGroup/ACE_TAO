@@ -1,3 +1,14 @@
+Fri Sep  3 12:34:41 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/OS_NS_sys_mman.inl:
+
+	  Removed redundant conditional used to disable madvise for WIN32
+	  systems.  Instead use ACE_LACKS_MADVISE feature test macro.
+
+	* ace/config-win32-common.h:
+
+	  Added ACE_LACKS_MADVISE definition.
+
 Fri Sep  3 15:10:22 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-aix-5.x.h: Add ACE_HAS_TIMEZONE.
@@ -12,7 +23,7 @@ Fri Sep  3 21:36:51 2004  Olli Savia  <ops@iki.fi>
           to check if explicit template instantiation is needed.
           Thanks to Johnny Willemsen for informing me about this
           macro.
-        
+
 Fri Sep  3 20:02:20 2004  Olli Savia  <ops@iki.fi>
 
         * ace/OS_NS_unistd.inl:
