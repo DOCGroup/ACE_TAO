@@ -147,7 +147,6 @@
 #define ACE_HAS_PTHREAD_SIGMASK
 #define ACE_HAS_SIGWAIT
 //#define       ACE_HAS_PTHREAD_YIELD_VOID_PTR
-//#define       ACE_HAS_YIELD_VOID_PTR
 //#define       ACE_HAS_PTHREAD_ATTR_INIT
 //#define       ACE_HAS_PTHREAD_ATTR_DESTROY
 //#define       ACE_HAS_PTHREAD_EQUAL
