@@ -1,6 +1,7 @@
 //
-// $Id$ 
+// $Id$
 //
+
 #include "Client_Task.h"
 #include "TestC.h"
 #include "ace/Stats.h"
@@ -52,7 +53,7 @@ Client_Task::svc (void)
       //Warm up the system
       for (int i=0; i < 1000; i++)
         rt->test_method (test_time);
-     
+
       /// Start for actual Measurements
       ACE_Sample_History history (niterations);
 
