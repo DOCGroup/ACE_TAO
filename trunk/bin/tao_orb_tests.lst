@@ -165,4 +165,4 @@ TAO/tests/Sequence_Unit_Tests/run_test.pl
 TAO/tests/Typedef_String_Array/run_test.pl
 TAO/tests/Bug_1535_Regression/run_test.pl: !MINIMUM
 TAO/tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl
-TAO/tests/CodeSets/simple/run_test.pl : !GIOP10
+TAO/tests/CodeSets/simple/run_test.pl : !GIOP10 !STATIC
