@@ -43,7 +43,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/writer.o .shobj/writer.so: writer.cpp \
+.obj/writer.o .shobj/writer.: writer.cpp \
  $(ACE_ROOT)/ace/DEV_Connector.h \
  $(ACE_ROOT)/ace/DEV_IO.h \
  $(ACE_ROOT)/ace/DEV.h \

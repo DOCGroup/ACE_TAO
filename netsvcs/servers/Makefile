@@ -40,7 +40,7 @@ CPPFLAGS += -I$(ACE_ROOT)/netsvcs/lib
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/main.o .shobj/main.so: main.cpp \
+.obj/main.o .shobj/main.: main.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -59,9 +59,7 @@ CPPFLAGS += -I$(ACE_ROOT)/netsvcs/lib
  $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
@@ -70,8 +68,9 @@ CPPFLAGS += -I$(ACE_ROOT)/netsvcs/lib
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
@@ -82,6 +81,8 @@ CPPFLAGS += -I$(ACE_ROOT)/netsvcs/lib
  $(ACE_ROOT)/ace/Timer_Queue.h \
  $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
@@ -102,6 +103,8 @@ CPPFLAGS += -I$(ACE_ROOT)/netsvcs/lib
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Proactor.h \
  $(ACE_ROOT)/ace/Asynch_IO.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
  $(ACE_ROOT)/ace/Timer_List.h \
  $(ACE_ROOT)/ace/Timer_List_T.h \
  $(ACE_ROOT)/ace/Timer_Heap.h \
@@ -169,12 +172,15 @@ CPPFLAGS += -I$(ACE_ROOT)/netsvcs/lib
  $(ACE_ROOT)/ace/Token_Request_Reply.h \
  $(ACE_ROOT)/ace/Token_Request_Reply.i \
  $(ACE_ROOT)/netsvcs/lib/Server_Logging_Handler.h \
+ $(ACE_ROOT)/netsvcs/lib/Log_Message_Receiver.h \
+ $(ACE_ROOT)/netsvcs/lib/Server_Logging_Handler_T.h \
  $(ACE_ROOT)/ace/TLI_Acceptor.h \
  $(ACE_ROOT)/ace/TLI.h \
  $(ACE_ROOT)/ace/TLI.i \
  $(ACE_ROOT)/ace/TLI_Stream.h \
  $(ACE_ROOT)/ace/TLI_Stream.i \
  $(ACE_ROOT)/ace/TLI_Acceptor.i \
+ $(ACE_ROOT)/netsvcs/lib/Base_Optimizer.h \
  $(ACE_ROOT)/netsvcs/lib/Logging_Strategy.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
