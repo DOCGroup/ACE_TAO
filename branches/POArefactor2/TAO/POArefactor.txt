@@ -1,3 +1,10 @@
+Fri Oct 29 10:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Request_Processing_Strategy.{h,cpp}:
+          Removed the servant_to_id method, it doesn't belong here.
+          Servant_to_id is in servant_retentium_strategy and this strategy
+          just uses get_servant from the request processing strategy.
+
 Fri Oct 29 10:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.cpp:
