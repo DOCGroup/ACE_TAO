@@ -21,6 +21,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ntsvc.h"
+#include "ace/streams.h"
 
 // Default for the -i (install) option
 #define DEFAULT_SERVICE_INIT_STARTUP     SERVICE_AUTO_START
