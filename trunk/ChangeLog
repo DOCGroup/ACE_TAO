@@ -1,3 +1,37 @@
+Tue Sep  7 16:39:28 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/MakeProjectCreator/config/dseventlogadmin.mpb
+	* bin/MakeProjectCreator/config/dsnotifylogadmin.mpb
+	* bin/MakeProjectCreator/config/lifecycle.mpb
+	* bin/MakeProjectCreator/config/notifytest.mpb
+	* bin/MakeProjectCreator/config/rtnotify.mpb
+	* bin/MakeProjectCreator/config/time.mpb
+	
+	  Update *.mpb files to reflect new libraries.  In many cases this
+	  required adding inheriting from additional base projects, as
+	  libraries were being linked in because of naming -- which was
+	  once the service implementation (and thus pulled in lots of
+	  other libraries) and is now just the Naming client stubs.
+
+	* bin/MakeProjectCreator/config/ec_use_typed_events.mpb
+	* bin/MakeProjectCreator/config/ec_use_typed_events_skel.mpb
+	* bin/MakeProjectCreator/config/event.mpb
+	* bin/MakeProjectCreator/config/event_serv.mpb
+	* bin/MakeProjectCreator/config/event_skel.mpb
+	* bin/MakeProjectCreator/config/naming.mpb
+	* bin/MakeProjectCreator/config/naming_serv.mpb
+	* bin/MakeProjectCreator/config/naming_skel.mpb
+	* bin/MakeProjectCreator/config/notification.mpb
+	* bin/MakeProjectCreator/config/notification_serv.mpb
+	* bin/MakeProjectCreator/config/notification_skel.mpb	
+	* bin/MakeProjectCreator/config/trading.mpb
+	* bin/MakeProjectCreator/config/trading_serv.mpc
+	* bin/MakeProjectCreator/config/trading_skel.mpc
+
+	  Split Event, Naming, Notification, and Trading Services into
+	  client stub, servant skeleton, and service implementation
+	  libraries.
+
 (not committed)  Steve Huston  <shuston@riverace.com>
 
 	* apps/JAWS/clients/Caching/http_handler.cpp:
