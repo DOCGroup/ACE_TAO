@@ -142,7 +142,12 @@ public:
 
   static void disable_debug_messages();
   // Clears the LM_DEBUG flag from the default priority mask used to
-  // initialise ACE_Log_Msg instances.
+  // initialize ACE_Log_Msg instances.
+
+  static void enable_debug_messages();
+  // Sets the LM_DEBUG flag in the default priority mask used to
+  // initialize ACE_Log_Msg instances.
+  
   ACE_Log_Msg (void);
   // Initialize logger.
 
