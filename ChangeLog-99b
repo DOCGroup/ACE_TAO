@@ -1,3 +1,9 @@
+Sat Apr 10 14:02:11 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Malloc[_Base]: Added a new no-op constructor for
+ 	  ACE_Allocator to hopefully work around a problem with DEC UNIX
+ 	  C++.
+
 Fri Apr 09 10:08:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU:

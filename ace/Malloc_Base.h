@@ -38,6 +38,9 @@ public:
   static void close_singleton (void);
   // Delete the dynamically allocated Singleton
 
+  ACE_Allocator (void);
+  // "No-op" constructor (needed to make certain compilers happy).
+
   virtual ~ACE_Allocator (void);
   // Virtual destructor
 
