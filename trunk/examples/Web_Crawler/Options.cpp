@@ -22,7 +22,7 @@ Options::parse_args (int argc, char *argv[])
   this->verbose_ = 0;
   this->order_ = "FIFO";
   this->port_no_ = ACE_DEFAULT_HTTP_PORT;
-  this->handle_limit_ = 64;
+  this->handle_limit_ = -1;
   // The default is to make this limit as large as possible.
   //  int handle_limit = 10;
 
