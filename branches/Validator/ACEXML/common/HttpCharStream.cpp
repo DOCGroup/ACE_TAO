@@ -214,6 +214,8 @@ ACEXML_HttpCharStream::get_url (size_t& len)
         }
     }
  end_of_headers:
+  if (b == 0)
+    return -1;
   ++b;
   // Store the address of the beginning of data. We will use it to seek to
   // beginning of the data in the URL.
