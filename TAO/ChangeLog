@@ -1,3 +1,12 @@
+Sat Dec 25 15:12:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* interop-tests/wchar/client.cpp:
+	* interop-tests/wchar/server.cpp:
+
+	  Removed ace/streams.h inclusion which seems to be triggering
+	  problems on SuSe. This exclusion should be okay as the file
+	  seems to compile fine without these inclusions.
+
 Thu Dec 23 16:35:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:

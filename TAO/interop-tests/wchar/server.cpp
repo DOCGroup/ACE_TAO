@@ -17,7 +17,6 @@
 //
 // ============================================================================
 #include "interop_wchar_i.h"
-#include "ace/streams.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
 
