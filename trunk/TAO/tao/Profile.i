@@ -7,6 +7,7 @@ TAO_Profile::TAO_Profile (CORBA::ULong tag,
                           const TAO_GIOP_Version &version)
   : version_ (version),
     are_policies_parsed_ (0),
+    stub_ (0),
     policy_list_ (0),
     tag_ (tag),
     orb_core_ (orb_core),

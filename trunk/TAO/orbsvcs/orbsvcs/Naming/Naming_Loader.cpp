@@ -37,12 +37,12 @@ TAO_Naming_Loader::init (int argc, char *argv[])
       // Initialize the ORB
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // This function call initializes the Naming Service
       CORBA::Object_var object =
         this->create_object (orb.in (), argc, argv, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
     }
   ACE_CATCHANY
     {

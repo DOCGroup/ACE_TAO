@@ -26,17 +26,28 @@ TAO_Trading_Loader::TAO_Trading_Loader (void)
     ior_output_file_ (0),
     bootstrapper_ (0)
 {
-  char *trader_name =
-    CORBA::string_alloc (MAXHOSTNAMELEN + 10);
+  char *trader_name = CORBA::string_alloc (MAXHOSTNAMELEN + 10);
 
   if (trader_name != 0)
     {
       // The trader name is the concatenation of the local host name
       // and the server's process id.
-      char host_name[MAXHOSTNAMELEN];
+      char host_name[MAXHOSTNAMELEN + 1];
       ACE_INET_Addr localhost ((u_short) 0);
-      localhost.get_host_name (host_name,
-                               MAXHOSTNAMELEN);
+      if (localhost.get_host_name (host_name,
+                                   sizeof (host_name) != 0))
+        {
+          const char *tmp = addr.get_host_addr ();
+          if (tmp == 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("\n\nTAO Trading Service (%P|%t) ")
+                        ACE_TEXT ("TAO_Trading_Loader ")
+                        ACE_TEXT ("- %p\n\n"),
+                        ACE_TEXT ("cannot determine hostname")));
+          else
+            ACE_OS::strcpy (host_name, tmp);
+        }
+
       ACE_OS::sprintf (trader_name,
                        "%s_%ld",
                        host_name,
@@ -70,7 +81,7 @@ TAO_Trading_Loader::init (int argc, char *argv[])
       this->orb_manager_.init (argc,
                                argv,
                                ACE_TRY_ENV);
-      ACE_CHECK_RETURN (-1);
+      ACE_TRY_CHECK;
 
       CORBA::ORB_var orb =
         this->orb_manager_.orb ();
@@ -84,7 +95,7 @@ TAO_Trading_Loader::init (int argc, char *argv[])
   ACE_CATCHANY
     {
       //    @@ Should we log this???
-      //      return -1;
+      return -1;
     }
   ACE_ENDTRY;
   return 0;
@@ -189,8 +200,7 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
   // Create a Trader Object and set its Service Type Repository.
   auto_ptr<TAO_Trader_Factory::TAO_TRADER> auto_trader (TAO_Trader_Factory::create_trader (argc, argv));
 
-  this->trader_ =
-    auto_trader;
+  this->trader_ = auto_trader;
 
   TAO_Support_Attributes_i &sup_attr =
     this->trader_->support_attributes ();
@@ -237,7 +247,7 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
   else
     this->init_multicast_server ();
 
-  return 0;
+  return CORBA::Object::_nil ();
 }
 
 int
@@ -251,7 +261,8 @@ TAO_Trading_Loader::bootstrap_to_federation (CORBA::Environment &ACE_TRY_ENV)
   ACE_DEBUG ((LM_DEBUG,
               "*** Bootstrapping to another Trading Service.\n"));
   CORBA::Object_var trading_obj =
-    orb->resolve_initial_references ("TradingService");
+    orb->resolve_initial_references ("TradingService", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (trading_obj.in ()))
     ACE_ERROR_RETURN ((LM_ERROR,

@@ -5,7 +5,9 @@
 #include "interceptors.h"
 #include "Echo_Client_ORBInitializer.h"
 
-ACE_RCSID(Dynamic, client, "$Id$")
+ACE_RCSID (Dynamic,
+           client,
+           "$Id$")
 
 const char *ior = "file://test.ior";
 
@@ -46,10 +48,12 @@ run_test (Test_Interceptors::Visual_ptr server,
   result = server->calculate (one,
                               two,
                               ACE_TRY_ENV);
-  ACE_DEBUG ((LM_DEBUG,
-              "result=%d\n",
-              result));
   ACE_CHECK;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "result = %d\n",
+              result));
+
 
   ACE_TRY
     {
@@ -70,7 +74,7 @@ run_test (Test_Interceptors::Visual_ptr server,
     }
   ACE_CATCH (CORBA::INV_OBJREF, sysex)
     {
-      ACE_DEBUG ((LM_DEBUG, "Caught Inv_Objref\n"));
+      ACE_DEBUG ((LM_DEBUG, "Caught CORBA::INV_OBJREF\n"));
     }
   ACE_ENDTRY;
 }
@@ -80,7 +84,6 @@ main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
-#if TAO_HAS_INTERCEPTORS == 1
       PortableInterceptor::ORBInitializer_ptr temp_initializer =
         PortableInterceptor::ORBInitializer::_nil ();
 
@@ -93,10 +96,6 @@ main (int argc, char *argv[])
       PortableInterceptor::register_orb_initializer (orb_initializer.in (),
                                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      /// Transfer ownership to the ORB.
-      (void) orb_initializer._retn ();
-#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
@@ -129,7 +128,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Caught exception:");
       return 1;
     }
   ACE_ENDTRY;

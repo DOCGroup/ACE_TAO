@@ -37,10 +37,10 @@
  *
  * @brief Simple concrete client request interceptor.
  *
- * This is a test IOR interceptor that embeds a tagged component in an
- * IOR.  That tagged component will then be verified on the client
- * side to ensure that IOR interceptor support is functioning
- * properly.
+ * This is a test client request interceptor that extracts a tagged
+ * component that should have been embedded in the server IOR by an
+ * IOR interceptor.  It displays the contents of that tagged
+ * component.
  */
 class FOO_ClientRequestInterceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
