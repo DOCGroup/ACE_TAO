@@ -173,9 +173,9 @@ TAO_CodeGen::start_client_header (const char *fname)
 
       // Some compilers don't optimize the #ifndef header include
       // protection, but do optimize based on #pragma once.
-      *this->client_header_ << "\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
+      *this->client_header_ << "\n\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
                             << "# pragma once\n"
-                            << "#endif /* ACE_LACKS_PRAGMA_ONCE */";
+                            << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
 
       // Other include files.
 
@@ -189,8 +189,6 @@ TAO_CodeGen::start_client_header (const char *fname)
       // Include the Messaging files if AMI is enabled.
       if (be_global->ami_call_back () == I_TRUE)
         {
-          *this->client_header_ << "\n\n";
-          
           // Include Messaging skeleton file.
           this->gen_standard_include (this->client_header_,
                                       "tao/Messaging/Messaging.h");
@@ -204,7 +202,7 @@ TAO_CodeGen::start_client_header (const char *fname)
       if (be_global->gen_smart_proxies () == I_TRUE)
         {
           this->gen_standard_include (this->client_header_,
-                                      "\ntao/SmartProxies/Smart_Proxies.h");
+                                      "tao/SmartProxies/Smart_Proxies.h");
         }
 
       size_t nfiles = idl_global->n_included_idl_files ();
@@ -328,14 +326,14 @@ TAO_CodeGen::start_client_stubs (const char *fname)
     {
       *this->client_stubs_ << "#include \""
                            << be_global->pch_include ()
-                           << "\"\n\n";
+                           << "\"";
     }
 
   // Generate the include statement for the client header. We just
   // need to put only the base names. Path info is not required.
-  *this->client_stubs_ << "#include \""
+  *this->client_stubs_ << "\n#include \""
                        << be_global->be_get_client_hdr_fname (1)
-                       << "\"\n\n";
+                       << "\"";
 
   this->gen_standard_include (this->client_stubs_, "tao/Stub.h");
   this->gen_standard_include (this->client_stubs_, "tao/Invocation.h");
@@ -345,26 +343,26 @@ TAO_CodeGen::start_client_stubs (const char *fname)
                               "tao/PortableInterceptor.h");
 
   // Include the Portable Interceptor related headers.
-  *this->client_stubs_ << "\n#if TAO_HAS_INTERCEPTORS == 1\n";
+  *this->client_stubs_ << "\n\n#if TAO_HAS_INTERCEPTORS == 1";
   this->gen_standard_include (this->client_stubs_,
                               "tao/RequestInfo_Util.h");
   this->gen_standard_include (this->client_stubs_,
                               "tao/ClientRequestInfo_i.h");
   this->gen_standard_include (this->client_stubs_,
                               "tao/ClientInterceptorAdapter.h");
-  *this->client_stubs_ << "#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n\n";
+  *this->client_stubs_ << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */";
 
-  *this->client_stubs_ << "#if defined (__BORLANDC__)\n"
+  *this->client_stubs_ << "\n\n#if defined (__BORLANDC__)\n"
                        << "#pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig\n"
-                       << "#endif /* __BORLANDC__ */\n\n";
+                       << "#endif /* __BORLANDC__ */";
 
   // Generate the code that includes the inline file if not included in the
   // header file.
-  *this->client_stubs_ << "#if !defined (__ACE_INLINE__)\n";
-  *this->client_stubs_ << "#include \""
+  *this->client_stubs_ << "\n\n#if !defined (__ACE_INLINE__)";
+  *this->client_stubs_ << "\n#include \""
                        << be_global->be_get_client_inline_fname (1)
-                       << "\"\n";
-  *this->client_stubs_ << "#endif /* !defined INLINE */";
+                       << "\"";
+  *this->client_stubs_ << "\n#endif /* !defined INLINE */";
 
   return 0;
 }
@@ -451,7 +449,7 @@ TAO_CodeGen::start_server_header (const char *fname)
         {
           *this->server_header_ << "#include \""
                                 << be_global->pre_include ()
-                                << "\"\n";
+                                << "\"";
         }
 
       // Include the Messaging files if AMI is enabled.
@@ -481,20 +479,20 @@ TAO_CodeGen::start_server_header (const char *fname)
           const char* server_hdr =
             BE_GlobalData::be_get_server_hdr (&idl_name_str, 1);
 
-          this->server_header_->print ("#include \"%s\"\n",
+          this->server_header_->print ("\n#include \"%s\"",
                                        server_hdr);
         }
 
       // The server header should include the client header.
-      *this->server_header_ << "#include \""
+      *this->server_header_ << "\n#include \""
                             << be_global->be_get_client_hdr_fname (1)
-                            << "\"\n\n";
+                            << "\"";
 
       // Some compilers don't optimize the #ifndef header include
       // protection, but do optimize based on #pragma once.
-      *this->server_header_ << "\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
+      *this->server_header_ << "\n\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
                             << "# pragma once\n"
-                            << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
+                            << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
 
       // Include the definitions for the PortableServer namespace,
       // this forces the application to link the POA library, a good
@@ -518,22 +516,22 @@ TAO_CodeGen::start_server_header (const char *fname)
                                       "tao/PortableServer/AMH_Response_Handler.h");
         }
 
-      *this->server_header_ << be_nl
+      *this->server_header_ << be_nl << be_nl
                             << "#if defined(_MSC_VER)\n"
                             << "#if (_MSC_VER >= 1200)\n"
                             << "#pragma warning(push)\n"
                             << "#endif /* _MSC_VER >= 1200 */\n"
-                            << "#pragma warning(disable:4250)\n";
+                            << "#pragma warning(disable:4250)";
 
       if (be_global->use_raw_throw ())
         {
-          *this->server_header_ << "#pragma warning(disable:4290)\n";
+          *this->server_header_ << "\n#pragma warning(disable:4290)";
         }
 
-      *this->server_header_ << "#endif /* _MSC_VER */\n\n";
+      *this->server_header_ << "\n#endif /* _MSC_VER */";
 
       *this->server_header_
-          << "#if defined (__BORLANDC__)\n"
+          << "\n\n#if defined (__BORLANDC__)\n"
           << "#pragma option push -w-rvl -w-rch -w-ccc -w-inl\n"
           << "#endif /* __BORLANDC__ */";
 
@@ -541,19 +539,18 @@ TAO_CodeGen::start_server_header (const char *fname)
         {
           *this->server_header_ << "\n\n#include \""
                                 << be_global->skel_export_include ()
-                                << "\"\n";
+                                << "\"";
 
           // Generate the TAO_EXPORT_MACRO macro.
-          *this->server_header_ << "#if defined (TAO_EXPORT_MACRO)\n";
+          *this->server_header_ << "\n\n#if defined (TAO_EXPORT_MACRO)\n";
           *this->server_header_ << "#undef TAO_EXPORT_MACRO\n";
           *this->server_header_ << "#endif\n";
           *this->server_header_ << "#define TAO_EXPORT_MACRO "
-                                << be_global->skel_export_macro ()
-                                << be_nl;
+                                << be_global->skel_export_macro ();
 
           // Generate export macro for nested classes.
           *this->server_header_
-            << "#if defined (TAO_EXPORT_NESTED_CLASSES)\n"
+            << "\n#if defined (TAO_EXPORT_NESTED_CLASSES)\n"
             << "#  if defined (TAO_EXPORT_NESTED_MACRO)\n"
             << "#    undef TAO_EXPORT_NESTED_MACRO\n"
             << "#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */\n"
@@ -615,10 +612,10 @@ TAO_CodeGen::start_server_template_header (const char *fname)
         {
           *this->server_template_header_ << "#include \""
                                          << be_global->pre_include ()
-                                         << "\"\n";
+                                         << "\"";
         }
 
-      *this->server_template_header_ << "#if defined(_MSC_VER)\n"
+      *this->server_template_header_ << "\n\n#if defined(_MSC_VER)\n"
                                      << "#if (_MSC_VER >= 1200)\n"
                                      << "#pragma warning(push)\n"
                                      << "#endif /* _MSC_VER >= 1200 */\n"
@@ -629,7 +626,7 @@ TAO_CodeGen::start_server_template_header (const char *fname)
           *this->server_template_header_ << "#pragma warning(disable:4290)\n";
         }
 
-      *this->server_template_header_ << "#endif /* _MSC_VER */\n\n";
+      *this->server_template_header_ << "#endif /* _MSC_VER */\n";
 
       return 0;
     }
@@ -664,7 +661,7 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
       return -1;
     }
 
-  *this->server_skeletons_ << be_nl << "// TAO_IDL - Generated from "
+  *this->server_skeletons_ << be_nl << be_nl << "// TAO_IDL - Generated from "
                            << be_nl << "// " << __FILE__ << ":" << __LINE__ 
                            << be_nl << be_nl;
 
@@ -676,7 +673,7 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
     {
       *this->server_skeletons_ << "#include \""
                                << be_global->pch_include ()
-                               << "\"\n\n";
+                               << "\"";
     }
 
   // Generate the #ifndef clause.
@@ -687,9 +684,9 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
 
   // Generate the include statement for the server header.
   *this->server_skeletons_
-    << "#include \""
+    << "\n#include \""
     << be_global->be_get_server_hdr_fname (1)
-    << "\"\n\n";
+    << "\"";
 
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/Object_Adapter.h");
@@ -709,7 +706,7 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
                               "tao/PortableInterceptor.h");
 
   // Include Portable Interceptor related headers.
-  *this->server_skeletons_ << "\n#if TAO_HAS_INTERCEPTORS == 1\n";
+  *this->server_skeletons_ << "\n#if TAO_HAS_INTERCEPTORS == 1";
   this->gen_standard_include (this->server_skeletons_,
                               "tao/RequestInfo_Util.h");
   this->gen_standard_include (this->server_skeletons_,
@@ -718,20 +715,20 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
                               "tao/PortableServer/ServerRequestInfo.h");
   this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableServer/ServerInterceptorAdapter.h");
-  *this->server_skeletons_ << "#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n\n";
+  *this->server_skeletons_ << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n";
 
   this->gen_standard_include (this->server_skeletons_,
                               "ace/Dynamic_Service.h");
 
 
 
-  *this->server_skeletons_ << "#if defined (__BORLANDC__)\n"
+  *this->server_skeletons_ << "\n\n#if defined (__BORLANDC__)\n"
                            << "#pragma option -w-rvl -w-rch -w-ccc -w-aus\n"
-                           << "#endif /* __BORLANDC__ */\n\n";
+                           << "#endif /* __BORLANDC__ */";
 
    // Generate the code that includes the inline file if not included in the
   // header file.
-  *this->server_skeletons_ << "#if !defined (__ACE_INLINE__)\n";
+  *this->server_skeletons_ << "\n\n#if !defined (__ACE_INLINE__)\n";
   *this->server_skeletons_ << "#include \""
                            << be_global->be_get_server_inline_fname (1)
                            << "\"\n";
@@ -788,16 +785,16 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
       *this->server_template_skeletons_
           << "#include \""
           << be_global->be_get_server_template_hdr_fname (1)
-          << "\"\n\n";
+          << "\"";
 
       // Generate the code that includes the inline file if not included in the
       // header file.
-      *this->server_template_skeletons_ << "#if !defined (__ACE_INLINE__)\n";
+      *this->server_template_skeletons_ << "\n\n#if !defined (__ACE_INLINE__)";
       *this->server_template_skeletons_
-          << "#include \""
+          << "\n#include \""
           << be_global->be_get_server_template_inline_fname (1)
-          << "\"\n";
-      *this->server_template_skeletons_ << "#endif /* !defined INLINE */\n\n";
+          << "\"";
+      *this->server_template_skeletons_ << "\n#endif /* !defined INLINE */\n\n";
 
       return 0;
     }
@@ -924,10 +921,10 @@ TAO_CodeGen::start_implementation_header (const char *fname)
 
       const char* server_hdr = BE_GlobalData::be_get_server_hdr_fname (1);
 
-      *this->implementation_header_<< "#include \"" << server_hdr <<"\"\n\n";
+      *this->implementation_header_<< "#include \"" << server_hdr <<"\"";
 
       *this->implementation_header_
-        << "#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
+        << "\n\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
         << "#pragma once\n"
         << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
 
@@ -1011,18 +1008,18 @@ TAO_CodeGen::end_client_header (void)
   *this->client_header_ << "#include \""
                         << be_global->be_get_client_inline_fname (1)
                         << "\"\n";
-  *this->client_header_ << "#endif /* defined INLINE */\n\n";
+  *this->client_header_ << "#endif /* defined INLINE */";
 
-  *this->client_header_ << "#if defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
+  *this->client_header_ << "\n\n#if defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
                         << "#pragma warning(pop)\n"
-                        << "#endif /* _MSC_VER */\n\n";
+                        << "#endif /* _MSC_VER */";
 
-  *this->client_header_ << "#if defined (__BORLANDC__)\n"
+  *this->client_header_ << "\n\n#if defined (__BORLANDC__)\n"
                         << "#pragma option pop\n"
-                        << "#endif /* __BORLANDC__ */\n";
+                        << "#endif /* __BORLANDC__ */";
 
   // Code to put the last #endif.
-  *this->client_header_ << "\n";
+  *this->client_header_ << "\n\n";
 
   if (be_global->post_include () != 0)
     {
@@ -1055,18 +1052,18 @@ TAO_CodeGen::end_server_header (void)
   *this->server_header_ << "#include \""
                         << be_global->be_get_server_inline_fname (1)
                         << "\"\n";
-  *this->server_header_ << "#endif /* defined INLINE */\n\n";
+  *this->server_header_ << "#endif /* defined INLINE */";
 
-  *this->server_header_ << "#if defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
+  *this->server_header_ << "\n\n#if defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
                         << "#pragma warning(pop)\n"
-                        << "#endif /* _MSC_VER */\n\n";
+                        << "#endif /* _MSC_VER */";
 
-  *this->server_header_ << "#if defined (__BORLANDC__)\n"
+  *this->server_header_ << "\n\n#if defined (__BORLANDC__)\n"
                         << "#pragma option pop\n"
-                        << "#endif /* __BORLANDC__ */\n";
+                        << "#endif /* __BORLANDC__ */";
 
   // Code to put the last #endif.
-  *this->server_header_ << "\n";
+  *this->server_header_ << "\n\n";
 
   if (be_global->post_include () != 0)
     {
@@ -1136,41 +1133,40 @@ TAO_CodeGen::end_server_template_header (void)
 {
   *this->server_template_header_ << be_nl << be_nl << "// TAO_IDL - Generated from "
                                  << be_nl << "// " 
-                                 << __FILE__ << ":" << __LINE__ 
-                                 << be_nl;
+                                 << __FILE__ << ":" << __LINE__;
 
   // Insert the code to include the inline file.
-  *this->server_template_header_ << "\n#if defined (__ACE_INLINE__)\n";
+  *this->server_template_header_ << "\n\n#if defined (__ACE_INLINE__)";
   *this->server_template_header_
-      << "#include \""
+      << "\n#include \""
       << be_global->be_get_server_template_inline_fname (1)
-      << "\"\n";
-  *this->server_template_header_ << "#endif /* defined INLINE */\n";
+      << "\"";
+  *this->server_template_header_ << "\n#endif /* defined INLINE */";
 
   // Insert the code to include the template source file.
   *this->server_template_header_
-      << "\n#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)\n";
+      << "\n\n#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)";
   *this->server_template_header_
-      << "#include \""
+      << "\n#include \""
       << be_global->be_get_server_template_skeleton_fname (1)
-      << "\"\n";
-  *this->server_template_header_ << "#endif /* defined REQUIRED SOURCE */\n";
+      << "\"";
+  *this->server_template_header_ << "\n#endif /* defined REQUIRED SOURCE */";
 
   // Insert the code to include the template pragma.
   *this->server_template_header_
-      << "\n#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)\n";
+      << "\n\n#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)";
   *this->server_template_header_
-      << "#pragma implementation (\""
+      << "#\npragma implementation (\""
       << be_global->be_get_server_template_skeleton_fname (1)
-      << "\")\n";
-  *this->server_template_header_ << "#endif /* defined REQUIRED PRAGMA */\n\n";
+      << "\")";
+  *this->server_template_header_ << "\n#endif /* defined REQUIRED PRAGMA */";
 
-  *this->server_template_header_ << "#if defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
+  *this->server_template_header_ << "#\n\nif defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
                                  << "#pragma warning(pop)\n"
-                                 << "#endif /* _MSC_VER */\n";
+                                 << "#endif /* _MSC_VER */";
 
   // Code to put the last #endif.
-  *this->server_template_header_ << "\n";
+  *this->server_template_header_ << "\n\n";
 
   if (be_global->post_include () != 0)
     {
@@ -1353,8 +1349,8 @@ TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
       end_delimiter = ">";
     }
 
-  *stream << "#include " << start_delimiter
+  *stream << "\n#include " << start_delimiter
           << included_file
-          << end_delimiter << "\n";
+          << end_delimiter;
 }
 
