@@ -39,6 +39,10 @@ namespace CIAO
    * interface as defined by the CCM spcification.  As the interface
    * implies, this is actually part of the deployment interface and is
    * used to manage the lifecycle of containers running on the server.
+   *
+   * Now the interface is not in the OMG spec anymore but I will use it as
+   * a helper interface in the new CIAO DnC implementation. Of course I have
+   * made some changes.                                    --Tao
    */
   class CIAO_SERVER_Export ComponentServer_Impl
     : public virtual POA_Components::Deployment::ComponentServer,
@@ -72,8 +76,8 @@ namespace CIAO
 
     //@@ As I have stated in the CCM_Deployment.idl
     // we don't need this member anymore since the NodeApplication
-    // has all the info we need. And the DnC framework will not
-    // contact the ComponentServer directly.   --Tao
+    // has all the info we need.
+    //                                                  --Tao
     /*
     virtual ::Components::Deployment::ServerActivator_ptr
     get_server_activator (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -117,8 +121,10 @@ namespace CIAO
 
     /// Get the cached ComponentInstallation object reference.
     /// This operation does *NOT* increase the reference count.
+    /*
     Components::Deployment::ComponentInstallation_ptr
     get_component_installation (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+    */
 
 protected:
     /// Keep a pointer to the managing ORB serving this servant.
@@ -139,7 +145,7 @@ protected:
     Components::Deployment::ComponentServer_var objref_;
 
     /// And a reference to the ServerActivator that created us.
-    Components::Deployment::ComponentInstallation_var installation_;
+    /// Components::Deployment::ComponentInstallation_var installation_;
 
     /// Synchronize access to the object set.
     TAO_SYNCH_MUTEX lock_;

@@ -66,11 +66,11 @@ namespace CIAO
 
     /// Get the containing POA.  This operation does *not*
     /// increase the reference count of the POA.
-    virtual PortableServer::POA_ptr _default_POA (void);
+    virtual PortCableServer::POA_ptr _default_POA (void);
 
     /// Initialize the container with a name.
-    int init (const Components::ConfigValues &options,
-              Components::Deployment::ComponentInstallation_ptr installation
+    int init (const Components::ConfigValues &options
+	      //,Components::Deployment::ComponentInstallation_ptr installation
               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -145,7 +145,7 @@ protected:
     Components::Deployment::ComponentServer_var comserv_;
 
     /// And a reference to the ComponentInstallation that created us.
-    Components::Deployment::ComponentInstallation_var installation_;
+    //  Components::Deployment::ComponentInstallation_var installation_;
 
     /// Synchronize access to the object set.
     TAO_SYNCH_MUTEX lock_;

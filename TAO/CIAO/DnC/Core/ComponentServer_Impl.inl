@@ -42,6 +42,7 @@ CIAO::ComponentServer_Impl::get_objref (ACE_ENV_SINGLE_ARG_DECL)
   return this->objref_.in ();
 }
 
+/*
 ACE_INLINE Components::Deployment::ComponentInstallation_ptr
 CIAO::ComponentServer_Impl::get_component_installation (ACE_ENV_SINGLE_ARG_DECL)
 {
@@ -67,3 +68,4 @@ CIAO::ComponentServer_Impl::get_component_installation (ACE_ENV_SINGLE_ARG_DECL)
 
   return this->installation_.in ();
 }
+*/

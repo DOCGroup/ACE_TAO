@@ -74,7 +74,7 @@ project (CIAO_Server) : orbsvcslib, portableserver, iorinterceptor, objreftempla
 //    CIAO_ServersS.cpp
 //    HomeRegistrarC.cpp
 //    HomeRegistrarS.cpp
-    ComponentInstallation_Impl.cpp
+//    ComponentInstallation_Impl.cpp
     ComponentServer_Impl.cpp
     Container_Base.cpp
     Container_Impl.cpp
