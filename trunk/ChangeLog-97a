@@ -1,3 +1,10 @@
+Tue Jun 24 16:38:52 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* Added Visual C++ 5.0 specific workspace (.dsw) and project (.dsp)
+	  files to both the ace and tests subdirectory.  ACE.DSW in the root
+	  directory contains all the project files, so a batch build should
+	  be able to build all the project files.
+
 Tue Jun 24 14:27:47 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* ace/Timer_{Hash,Heap,List,Wheel}_T.cpp: Changed cancel (type..)
@@ -25,8 +32,8 @@ Tue Jun 24 12:50:52 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Jun 24 00:44:30 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
 
-        * ace/SPIPE.{h,i}: Added the disable(int signum) function to
-          prevent NT from disabling an SPIPE using socket calls.
+	* ace/SPIPE.{h,i}: Added the disable(int signum) function to
+	  prevent NT from disabling an SPIPE using socket calls.
 
 Mon Jun 23 22:14:39 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
