@@ -7,7 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
 # Summarizes results from a series of runs of MT_Cubit_Test, with
 # different numbers of clients.  Example usage:
 #
-# $ for i in 1 2 5 10 15 20 25 30 35 40 45 50; do ./MT_Cubit_Test $i; done
+# $ for i in 0 1 2 5 10 15 20 25 30 35 40 45 50; do ./MT_Cubit_Test $i; done
 # $ ./summarize
 #
 # The first three lines above let this script run without specifying the
