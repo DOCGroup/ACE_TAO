@@ -1,3 +1,9 @@
+Wed Apr 23 15:03:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>1
+
+	* docs/tutorial/Quoter/AMI/Handler_i.h:
+	* docs/tutorial/Quoter/AMI/Handler_i.cpp: Fixed the code to be
+	  portable.
+
 Wed Apr 23 09:53:27 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/AMI/AMI.mpc:
@@ -138,8 +144,8 @@ Wed Apr 23 12:59:53 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           Removed obsolete -Gv option from IDL compiler command lines for
           the above tests.
 
-Wed Apr 23 07:40:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
+Wed Apr 23 07:40:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>1
+	
         * orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp: Use
           .out () instead of a .in (), which seems more meaningful.
 
