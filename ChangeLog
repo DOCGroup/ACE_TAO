@@ -1,6 +1,21 @@
+Thu Sep 20 12:16:13 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK.cpp (enable, disable):
+
+	  Removed unreachable "return" statements.  [Bug 1033]
+
+	* ace/SSL/SSL_SOCK_Stream.i (ACE_SSL_SOCK_Stream):
+	* ace/SSL/SSL_SOCK_Stream.cpp:
+
+	  Moved constructor to the ".cpp" file since to prevent inclusion
+	  of `ace/Log_Msg.h' in `SSL_SOCK_Stream.h'.  This fixes problems
+	  with some platforms needing the Log_Msg include to pull in the
+	  ACE_ERROR macros without needlessly increasing inter-header
+	  dependencies and inclusions.  [Bug 1034]
+
 Thu Sep 20 14:44:29 2001  Steve Huston  <shuston@riverace.com>
 
-        * ace/Process.cpp (ACE_Process_Options ctor): Moved acoid_zombies_
+        * ace/Process.cpp (ACE_Process_Options): Moved avoid_zombies_
           initialization outside the !Win32 section. Thanks to Johnny
           Willemsen <johnny.willemsen@meco.nl> for this fix.
 
@@ -22,7 +37,7 @@ Wed Sep 19 16:54:04 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/Containers_T.cpp:
 
-          In copy constructor for ACE_Duuble_Linked_List, added line to
+          In copy constructor for ACE_Double_Linked_List, added line to
           copy the size of the rhs to the lhs. The new list was ending
           up with a garbage value for its size.
 
