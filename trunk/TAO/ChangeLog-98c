@@ -23,8 +23,22 @@ Tue Aug 25 11:11:54 1998  David L. Levine  <levine@cs.wustl.edu>
         * orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java:
           initialize ulonglong with (0) instead of (0, 0) now.
 
-        * tests/Quoter/Makefile: added VBIN so that the executables
-          will build now.
+        * orbsvcs/Scheduling_Service/Makefile,
+          orbsvcs/Event_Service/Makefile,
+          orbsvcs/Dump_Schedule/Makefile,
+          orbsvcs/LifeCycle_Service/Makefile,
+          orbsvcs/Logging_Service/Makefile,
+          orbsvcs/tests/Logger/Makefile,
+          orbsvcs/tests/Event_Latency/Makefile,
+          orbsvcs/tests/EC_Multiple/Makefile,
+          orbsvcs/tests/EC_Throughput/Makefile,
+          orbsvcs/tests/EC_Mcast/Makefile,
+          orbsvcs/tests/EC_Custom_Marshal/Makefile,
+          tests/Quoter/Makefile:
+          replaced BUILD macro with VBIN, because that's what
+          wrapper_macros.GNU uses.  Many of the Makefile don't
+          use rules.bin.GNU (why?); it provides the same VBIN
+          definition.
 
 Tue Aug 25 11:03:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
