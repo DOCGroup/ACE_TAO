@@ -81,6 +81,12 @@ void
 CORBA_ServerRequest::arguments (CORBA::NVList_ptr &list,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
+  // arguments() must be called before either of these.
+  if (this->params_ != 0 || this->exception_ != 0)
+    {
+      ACE_THROW (CORBA::BAD_INV_ORDER (7, CORBA::COMPLETED_NO));
+    }
+
   // Save params for later use when marshaling the reply.
   this->params_ = list;
 
@@ -96,17 +102,17 @@ CORBA_ServerRequest::arguments (CORBA::NVList_ptr &list,
 }
 
 // Store the result value.  There's either an exception, or a result,
-// but not both of them.  Results (and exceptions) can be reported
+// but not both of them.  Results can be reported (at most once)
 // only after the parameter list has been provided (maybe empty).
 void
 CORBA_ServerRequest::set_result (const CORBA::Any &value,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
   // Setting a result when another result already exists or if an exception
-  // exists is an error.
-  if (this->retval_ != 0 || this->exception_ != 0)
+  // exists or before the args have been processeed is an error.
+  if (this->retval_ != 0 || this->exception_ != 0 || this->params_ == 0)
     {
-      ACE_THROW (CORBA::BAD_INV_ORDER ());
+      ACE_THROW (CORBA::BAD_INV_ORDER (8, CORBA::COMPLETED_NO));
     }
 
   ACE_NEW_THROW_EX (this->retval_,
@@ -127,9 +133,13 @@ void
 CORBA_ServerRequest::set_exception (const CORBA::Any &value,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->retval_ != 0 || this->exception_ != 0)
+  CORBA::TypeCode_var tc = value.type ();
+
+  // set_exception() can be called at any time, but the Any arg MUST
+  // contain an exception.
+  if (tc->kind () != CORBA::tk_except)
     {
-      ACE_THROW (CORBA::BAD_INV_ORDER ());
+      ACE_THROW (CORBA::BAD_PARAM (21, CORBA::COMPLETED_MAYBE));
     }
 
   ACE_NEW_THROW_EX (this->exception_,
