@@ -66,40 +66,40 @@ public:
   OctetStr& operator=( const OctetStr &octet);
   // assignment to another oid object overloaded
 
-  friend int operator==( const OctetStr &lhs, const OctetStr &rhs);
+  friend ASNMP_Export int operator==( const OctetStr &lhs, const OctetStr &rhs);
   // equivlence operator overloaded
 
-  friend int operator!=( const OctetStr &lhs, const OctetStr &rhs);
+  friend ASNMP_Export int operator!=( const OctetStr &lhs, const OctetStr &rhs);
   // not equivlence operator overloaded
 
-  friend int operator<( const OctetStr &lhs, const OctetStr &rhs);
+  friend ASNMP_Export int operator<( const OctetStr &lhs, const OctetStr &rhs);
   // less than < overloaded
 
-  friend int operator<=( const OctetStr &lhs,const OctetStr &rhs);
+  friend ASNMP_Export int operator<=( const OctetStr &lhs,const OctetStr &rhs);
   // less than <= overloaded
 
-  friend int operator>( const OctetStr &lhs, const OctetStr &rhs);
+  friend ASNMP_Export int operator>( const OctetStr &lhs, const OctetStr &rhs);
   // greater than > overloaded
 
-  friend int operator>=( const OctetStr &lhs, const OctetStr &rhs);
+  friend ASNMP_Export int operator>=( const OctetStr &lhs, const OctetStr &rhs);
   // greater than >= overloaded
 
-  friend int operator==( const OctetStr &lhs,const char *rhs);
+  friend ASNMP_Export int operator==( const OctetStr &lhs,const char *rhs);
   // equivlence operator overloaded
 
-  friend int operator!=( const OctetStr &lhs,const char  *rhs);
+  friend ASNMP_Export int operator!=( const OctetStr &lhs,const char  *rhs);
   // not equivlence operator overloaded
 
-  friend int operator<( const OctetStr &lhs,const char  *rhs);
+  friend ASNMP_Export int operator<( const OctetStr &lhs,const char  *rhs);
   // less than < operator overloaded
 
-  friend int operator<=( const OctetStr &lhs,char  *rhs);
+  friend ASNMP_Export int operator<=( const OctetStr &lhs,char  *rhs);
   // less than <= operator overloaded
 
-  friend int operator>( const OctetStr &lhs,const char  *rhs);
+  friend ASNMP_Export int operator>( const OctetStr &lhs,const char  *rhs);
   // greater than > operator overloaded
 
-  friend int operator>=( const OctetStr &lhs,const char  *rhs);
+  friend ASNMP_Export int operator>=( const OctetStr &lhs,const char  *rhs);
   // greater than >= operator overloaded
 
   OctetStr& operator+=( const char  *a);
