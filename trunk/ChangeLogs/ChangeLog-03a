@@ -1,3 +1,18 @@
+Thu Aug  1 11:13:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Malloc_Allocator.h:
+	* ace/Malloc_Allocator.cpp: Removed the declaration and definition
+	  of ACE_Malloc_Stats since they are not needed in this
+	  translation unit. 
+	
+	* ace/Malloc.h:
+	* ace/Malloc.cpp: Retained the definition if ACE_Malloc_Stats here
+	  (yes, there were two declarations) and added the definition and
+	  template instantiation for ACE_Atomic_Op used by
+	  ACE_Alloc_Stats. This should fix the erros showing up on the
+	  scoreboard explicit template builds which has
+	  ACE_HAS_MALLOC_STATS turned on. 
+
 Thu Aug  1 09:08:36 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Message_Block.h: Made the non-static duplicate() and release()

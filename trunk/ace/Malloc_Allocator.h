@@ -34,26 +34,6 @@
 #define ACE_PROCESS_MUTEX ACE_SV_Semaphore_Simple
 #endif /* ACE_HAS_THREADS */
 
-typedef ACE_Atomic_Op<ACE_PROCESS_MUTEX, int> ACE_INT;
-
-/// This keeps stats on the usage of the memory manager.
-struct ACE_Export ACE_Malloc_Stats
-{
-  ACE_Malloc_Stats (void);
-  void dump (void) const;
-
-  /// Coarse-grained unit of allocation.
-  ACE_INT nchunks_;
-
-  /// Fine-grained unit of allocation.
-  ACE_INT nblocks_;
-
-  /// Number of blocks in use
-  ACE_INT ninuse_;
-};
-#define ACE_MALLOC_STATS(X) X
-#else
-#define ACE_MALLOC_STATS(X)
 #endif /* ACE_HAS_MALLOC_STATS */
 
 /**
