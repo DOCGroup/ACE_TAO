@@ -160,6 +160,9 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::close
       // Reset size.
       this->total_size_ = 0;
 
+      // Free table memory.
+      this->allocator_->free (this->table_);
+
       // Should be done last...
       this->table_ = 0;
     }
