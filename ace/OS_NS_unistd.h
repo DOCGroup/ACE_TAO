@@ -277,6 +277,9 @@ namespace ACE_OS {
                       int substitute_env_args = 1);
 
   ACE_NAMESPACE_INLINE_FUNCTION
+  void swab (const unsigned char *src, unsigned char *dest, ssize_t n);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   long sysconf (int);
 
   // not in susv3
