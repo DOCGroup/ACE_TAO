@@ -10,6 +10,10 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
+PLATFORM_WXWINDOWS_CPPFLAGS = `wx-config --cxxflags`
+PLATFORM_WXWINDOWS_LDFLAGS  = `wx-config --ldflags`
+PLATFORM_WXWINDOWS_LIBS     = `wx-config --libs`
+
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 LDFLAGS  += -L$(TAO_ROOT)/orbsvcs
 LDLIBS	  = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO
@@ -30,6 +34,7 @@ OBJS=$(SRC:.cpp=.o)
 
 TAO_IDLFLAGS += -Ge 1
 
+
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
@@ -48,10 +53,11 @@ ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
     LDFLAGS  += $(PLATFORM_WXWINDOWS_LDFLAGS)
     LDLIBS   += $(PLATFORM_WXWINDOWS_LIBS)
   endif # wxWindows
-endif # Time
+endif # Naming
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
@@ -59,15 +65,9 @@ include $(TAO_ROOT)/taoconfig.mk
 #	Local targets
 #----------------------------------------------------------------------------
 
-wxNamingViewer: $(addprefix $(VDIR),$(OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(LDFLAGS) $(LDLIBS) $(POSTLINK)
-
 #----------------------------------------------------------------------------
 #	Dependencies
 #----------------------------------------------------------------------------
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-
-
-# IF YOU PUT ANYTHING HERE IT WILL GO AWAY

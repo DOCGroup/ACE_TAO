@@ -8,10 +8,10 @@
 WxNamingObject::WxNamingObject(
     CosNaming::Name& Name,
     CORBA::Object_ptr pObject,
-    bool Context):
-  m_Name(Name),
-  m_Object(CORBA::Object::_duplicate(pObject)),
-  m_Context(Context)
+    bool Context)
+  : m_Object(CORBA::Object::_duplicate(pObject))
+  , m_Name(Name)
+  , m_Context(Context)
 {
   // Empty
 }
@@ -31,13 +31,13 @@ WxNamingObject::~WxNamingObject()
 
 CosNaming::NamingContext_ptr WxNamingObject::NamingContext()
 {
-  return CosNaming::NamingContext::_narrow(m_Object);
+  return CosNaming::NamingContext::_narrow(m_Object.in());
 }
 
 
 CORBA::Object_ptr WxNamingObject::Object()
 {
-  return m_Object;
+  return m_Object.in();
 }
 
 
