@@ -1,3 +1,59 @@
+Wed Mar 26 18:14:21 2003  Edward Scott  <eas@prismtechnologies.com>
+
+	* orbsvcs/PSS/Makefile.parser:
+	* orbsvcs/PSS/Makefile.datastore:
+	* orbsvcs/PSS/Makefile:
+	* orbsvcs/tests/tests_svc_loader/Makefile:
+	* orbsvcs/tests/Time/Makefile:
+	* orbsvcs/tests/Security/Callback/Makefile:
+	* orbsvcs/tests/Security/Big_Request/Makefile:
+	* orbsvcs/tests/Sched_Conf/Makefile:
+	* orbsvcs/tests/Sched/Makefile:
+	* orbsvcs/tests/Property/Makefile:
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Makefile:
+	* orbsvcs/tests/Notify/lib/Makefile:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile:
+	* orbsvcs/tests/Notify/Structured_Filter/Makefile:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile:
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile:
+	* orbsvcs/tests/Notify/Ordering/Makefile:
+	* orbsvcs/tests/Notify/MT_Dispatching/Makefile:
+	* orbsvcs/tests/Notify/Discarding/Makefile:
+	* orbsvcs/tests/Notify/Blocking/Makefile:
+	* orbsvcs/tests/Notify/Basic/Makefile:
+	* orbsvcs/tests/Miop/McastHello/Makefile:
+	* orbsvcs/tests/Log/Basic_Log_Test/Makefile:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Makefile:
+	* orbsvcs/tests/Interoperable_Naming/Makefile:
+	* orbsvcs/tests/InterfaceRepo/Persistence_Test/Makefile:
+	* orbsvcs/tests/InterfaceRepo/Latency_Test/Makefile:
+	* orbsvcs/tests/InterfaceRepo/IFR_Test/Makefile:
+	* orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
+	* orbsvcs/tests/ImplRepo/NameService/Makefile:
+	* orbsvcs/tests/ImplRepo/Makefile:
+	* orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile:
+	* orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+	* orbsvcs/tests/Event/lib/Makefile:
+	* orbsvcs/tests/Event/Performance/Makefile:
+	* orbsvcs/tests/Event/Basic/Makefile:
+	* orbsvcs/tests/EC_Throughput/Makefile:
+	* orbsvcs/tests/EC_Multiple/Makefile:
+	* orbsvcs/tests/EC_Mcast/Makefile:
+	* orbsvcs/tests/EC_MT_Mcast/Makefile:
+	* orbsvcs/tests/EC_Custom_Marshal/Makefile:
+	* orbsvcs/tests/CosEvent/lib/Makefile:
+	* orbsvcs/tests/CosEvent/Basic/Makefile:
+	* orbsvcs/tests/Concurrency/Makefile:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile:
+	* orbsvcs/tests/AVStreams/Pluggable/Makefile:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile: 
+	* orbsvcs/tests/AVStreams/Multicast/Makefile: 
+
+	  Updated dependencies.
+
 Wed Mar 26 14:40:55 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 	* utils/catior/catior.cpp (cat_codeset_info): Workaround for MS
