@@ -1,4 +1,9 @@
-Sat Dec  6 13:43:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Sat Dec  6 13:27:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* TAOACE.dsw:
+	  SvcUtils is dependent on PortableServer.
+
+Sat Dec  6 12:43:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/Bug_1639_Regression/struct_client.cpp:
 	  Fixed warning
