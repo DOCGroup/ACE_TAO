@@ -1,3 +1,11 @@
+Sat Sep 21 11:57:39 2002  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/fe/idl.ll (stripped_name):
+	* TAO_IDL/fe/lex.yy.cpp (stripped_name): 
+
+	  Commented out this unused function.  Fixes a warning exhibited
+	  by g++ 3.2.
+
 Sat Sep 21 13:49:27 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableInterceptorC.cpp (_create_policy):
