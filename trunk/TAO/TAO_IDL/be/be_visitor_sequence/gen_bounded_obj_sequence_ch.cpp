@@ -106,7 +106,7 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
   int is_pseudo_object =
     nt == AST_Decl::NT_pre_defined
     && prim 
-    && prim->pt () == AST_PredefinedType::PT_object;
+    && prim->pt () == AST_PredefinedType::PT_pseudo;
 
   // operator[]
   if (is_pseudo_object)
