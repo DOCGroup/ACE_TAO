@@ -23,7 +23,13 @@
 class ACE_Export ACE_FIFO : public ACE_IPC_SAP
 {
   // = TITLE
-  //    Abstract base class for UNIX FIFOs (a.k.a. Named Pipes).
+  //    Abstract base class for UNIX FIFOs
+  //
+  // = DESCRIPTION
+  //    UNIX FIFOs are also known Named Pipes, which are totally
+  //    unrelated to Win32 Named Pipes.  If you want to use a local
+  //    IPC mechanism that will be portable to both UNIX and Win32,
+  //    take a look at the <ACE_SPIPE_*> classes.
 public:
   int open (const char *rendezvous, int flags, int perms,
             LPSECURITY_ATTRIBUTES sa = 0);
