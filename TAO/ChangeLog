@@ -1,3 +1,11 @@
+Mon Mar 14 14:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Hang_Shutdown/test_i.h:
+          Fixed fuzz error
+
+        * tests/Hang_Shutdown/Hang.mpc:
+          Added missing Id tag and use taoserve/taoclient as base projects
+
 Mon Mar 14 13:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Security/MT_IIOP_SSL/test_i.cpp:
