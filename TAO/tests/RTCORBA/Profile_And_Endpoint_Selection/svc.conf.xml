@@ -1,9 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from ./tests/RTCORBA/Profile_And_Endpoint_Selection/svc.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <!--  -->
- <!--  $Id$ -->
- <!--  -->
- <static id="SHMIOP_Factory" params="-MMAPFilePrefix server_shmiop"/>
- <static id="RT_ORB_Loader" params="-ORBPriorityMapping linear"/>
-</ACE_Svc_Conf>
