@@ -1,3 +1,8 @@
+Sun Nov 28 19:05:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Process_Manager.cpp (open): Fixed an ASYS_TEXT usage.
+	  ASYS_TEXT can not enclose several string literals.
+
 Sun Nov 28 18:09:49 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* m4/acinclude.m4 (ACE_USE_TEMP_FILE):
@@ -47,7 +52,7 @@ Sun Nov 28 17:06:00 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	  Flush the cached configuration test results to the cache file.
 	  This is mainly useful for configure script debugging purposes.
-	
+
 	* ace/Log_Msg.h (ACE_Log_Msg):
 
 	  Added additional spaces before comments describing each format
@@ -68,7 +73,7 @@ Sun Nov 28 17:06:00 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	  Removed inclusion of Log_Msg.h from Trace.cpp and included OS.h
 	  in Trace.h.  OS.h is needed for the definition of ACE_Export.
-	
+
 	* ace/config-win32-borland.h:
 	* ace/config-win32-common.h:
 
@@ -157,7 +162,7 @@ Sun Nov 28 17:06:00 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 Sun Nov 28 09:45:36 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * netsvcs/lib/Logging_Strategy.cpp: ACE_Logging_Strategy::fini () 
+        * netsvcs/lib/Logging_Strategy.cpp: ACE_Logging_Strategy::fini ()
           now returns a value.
 
 Sun Nov 28 02:41:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
