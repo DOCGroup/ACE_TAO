@@ -138,7 +138,7 @@ void
 JAWS_Server::parse_args (int argc, char *argv[])
 {
   int c;
-  int t = 1;
+  int t = 0;
 
   ACE_Get_Opt getopt (argc, argv, "t" "p:c:d:n:m:f:r:");
   while ((c = getopt ()) != -1)

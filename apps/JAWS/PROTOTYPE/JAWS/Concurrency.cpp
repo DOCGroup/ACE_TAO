@@ -169,7 +169,7 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
 
       if (result < 0)
         {
-          // definately something wrong.
+          // something wrong.
           JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, negative result");
           ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Concurrency_Base::svc_hook"));
           handler->done ();
@@ -305,9 +305,12 @@ JAWS_Thread_Per_Task::activate_hook (void)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"),
                       -1);
 
-  JAWS_Thread_ID thr_id(thr_name);
+  JAWS_Thread_ID thr_id (thr_name);
   JAWS_IO_Handler *dummy = 0;
 
+  // In the thread-per-request strategy, need to take care of the
+  // case when the waiter array is full.  Think about that problem
+  // later.
   JAWS_Waiter_Singleton::instance ()->insert (thr_id, dummy);
 
   this->thr_mgr_->resume (thr_name);
