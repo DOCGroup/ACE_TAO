@@ -15,7 +15,7 @@ $status = 0;
 
 $NS = Process::Create ("..".$DIR_SEPARATOR.
                        "..".$DIR_SEPARATOR.
-                       "Naming_Server".$DIR_SEPARATOR.
+                       "Naming_Service".$DIR_SEPARATOR.
                        "Naming_Server".$EXE_EXT,
                        " -o $NS_ior ");
 
@@ -66,5 +66,3 @@ unlink $NS_ior;
 
 # @@ Capture the errors from the processes.
 exit $status;
-
-

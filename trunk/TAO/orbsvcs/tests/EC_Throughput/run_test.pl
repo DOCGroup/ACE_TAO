@@ -40,7 +40,7 @@ $ns_ior = "NameService.ior";
 unlink $ns_ior;
 $NS = Process::Create ("..".$DIR_SEPARATOR.
                        "..".$DIR_SEPARATOR.
-                       "Naming_Server".$DIR_SEPARATOR.
+                       "Naming_Service".$DIR_SEPARATOR.
                        "Naming_Server".$EXE_EXT,
                        " -o $ns_ior ");
 
