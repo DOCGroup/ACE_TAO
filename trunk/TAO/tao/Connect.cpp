@@ -43,7 +43,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Connect_Timeprobe_Description,
 #endif /* ACE_ENABLE_TIMEPROBES */
 
 TAO_Server_Connection_Handler::TAO_Server_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_SVC_HANDLER (t?t:TAO_ORB_Core_instance()->thr_mgr (), 0, 0),
+  : TAO_SVC_HANDLER (t ? t : TAO_ORB_Core_instance()->thr_mgr (), 0, 0),
     orb_core_ (TAO_ORB_Core_instance ())
 {
 }
@@ -406,7 +406,7 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
 
       // Construct a REPLY header.
       TAO_GIOP::start_message (TAO_GIOP::Reply, output,
-             this->orb_core_);
+                               this->orb_core_);
 
       // A new try/catch block, but if something goes wrong now we
       // have no hope, just abort.
@@ -452,7 +452,7 @@ TAO_Server_Connection_Handler::send_error (CORBA::ULong request_id,
                              TAO_TRY_ENV);
               TAO_CHECK_ENV;
             }
-            // end of the forwarding code ****************************
+          // end of the forwarding code ****************************
           else
             {
               // Write the exception
@@ -552,33 +552,33 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
                                        request_id,
                                        TAO_TRY_ENV) == -1)
                 error_encountered = 1;
-          TAO_CHECK_ENV;
-          break;
+              TAO_CHECK_ENV;
+              break;
 
-        case TAO_GIOP::EndOfFile:
-          // Got a EOF
-          errno = EPIPE;
-          response_required = error_encountered = 0;
-          result = -1;
-          break;
+            case TAO_GIOP::EndOfFile:
+              // Got a EOF
+              errno = EPIPE;
+              response_required = error_encountered = 0;
+              result = -1;
+              break;
 
-          // These messages should never be sent to the server; it's an
-          // error if the peer tries.  Set the environment accordingly, as
-          // it's not yet been reported as an error.
-        case TAO_GIOP::Reply:
-        case TAO_GIOP::LocateReply:
-        case TAO_GIOP::CloseConnection:
-        default:                                    // Unknown message
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) Illegal message received by server\n"));
-          TAO_TRY_ENV.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
-          // FALLTHROUGH
+              // These messages should never be sent to the server; it's an
+              // error if the peer tries.  Set the environment accordingly, as
+              // it's not yet been reported as an error.
+            case TAO_GIOP::Reply:
+            case TAO_GIOP::LocateReply:
+            case TAO_GIOP::CloseConnection:
+            default:                                    // Unknown message
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) Illegal message received by server\n"));
+              TAO_TRY_ENV.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+              // FALLTHROUGH
 
-        case TAO_GIOP::MessageError:
-          error_encountered = 1;
-          break;
+            case TAO_GIOP::MessageError:
+              error_encountered = 1;
+              break;
+            }
         }
-      }
     }
   TAO_CATCH (CORBA_Exception, ex)
     {
@@ -603,8 +603,8 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
                   "(%P|%t) closing conn %d after fault %p\n",
                   this->peer().get_handle (),
                   "TAO_Server_ConnectionHandler::handle_input"));
-                  this->handle_close ();
-        return -1;
+      this->handle_close ();
+      return -1;
     }
   TAO_ENDTRY;
 
@@ -645,7 +645,18 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
 
 TAO_Client_Connection_Handler::TAO_Client_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_SVC_HANDLER (t == 0 ? TAO_ORB_Core_instance ()->thr_mgr () : t, 0, 0),
-    input_available_ (0),
+    expecting_response_ (0),
+    input_available_ (0)
+{
+}
+
+TAO_ST_Client_Connection_Handler::TAO_ST_Client_Connection_Handler (ACE_Thread_Manager *t)
+  : TAO_Client_Connection_Handler (t)
+{
+}
+
+TAO_MT_Client_Connection_Handler::TAO_MT_Client_Connection_Handler (ACE_Thread_Manager *t)
+  : TAO_Client_Connection_Handler (t),
     calling_thread_ (ACE_OS::NULL_thread)
 {
   this->cond_response_available_ =
@@ -653,6 +664,14 @@ TAO_Client_Connection_Handler::TAO_Client_Connection_Handler (ACE_Thread_Manager
 }
 
 TAO_Client_Connection_Handler::~TAO_Client_Connection_Handler ()
+{
+}
+
+TAO_ST_Client_Connection_Handler::~TAO_ST_Client_Connection_Handler ()
+{
+}
+
+TAO_MT_Client_Connection_Handler::~TAO_MT_Client_Connection_Handler ()
 {
   delete this->cond_response_available_;
 }
@@ -706,8 +725,144 @@ TAO_Client_Connection_Handler::open (void *)
 }
 
 int
-TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
-                                             int is_twoway)
+TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &, int)
+{
+  errno = ENOTSUP;
+  return -1;
+}
+
+int
+TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
+{
+  errno = ENOTSUP;
+  return -1;
+}
+
+int
+TAO_Client_Connection_Handler::check_unexpected_data (void)
+{
+  // We're a client, so we're not expecting to see input.  Still we
+  // better check what it is!
+  char ignored;
+  ssize_t ret = this->peer().recv (&ignored, sizeof ignored, MSG_PEEK);
+  
+  switch (ret)
+    {
+    case -1:
+      // Error...but we weren't expecting input, either...what should
+      // we do?
+      ACE_ERROR ((LM_WARNING,
+                  "Client_Connection_Handler::handle_input: closing connection on fd %d\n",
+                  this->peer().get_handle ()));
+      break;
+      
+    case 1:
+      //
+      // @@ Fix me!!
+      //
+      // This should be the close connection message.  Since we don't
+      // handle this yet, log an error, and close the connection.
+      ACE_ERROR ((LM_WARNING,
+                  "Client_Connection_Handler::handle_input received "
+                  "input while not expecting a response; closing connection on fd %d\n",
+                  this->peer().get_handle ()));
+      break;
+      
+    case 0:
+      // This is an EOF, so we will return -1 and let handle_close()
+      // take over.  As long as handle_close() calls the
+      // Svc_Handler<>::handle_close(), the socket will be shutdown
+      // properly.
+      break;
+    }
+  
+  // We're not expecting input at this time, so we'll always
+  // return -1 for now.
+  return -1;
+}
+
+int
+TAO_ST_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
+                                                int is_twoway)
+{
+  ACE_FUNCTION_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
+
+  // NOTE: Here would also be a fine place to calculate a digital
+  // signature for the message and place it into a preallocated slot
+  // in the "ServiceContext".  Similarly, this is a good spot to
+  // encrypt messages (or just the message bodies) if that's needed in
+  // this particular environment and that isn't handled by the
+  // networking infrastructure (e.g. IPSEC).
+  //
+  // We could call a template method to do all this stuff, and if the
+  // connection handler were obtained from a factory, then this could
+  // be dynamically linked in (wouldn't that be cool/freaky?)
+
+  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
+
+  // Send the request
+  int success  = (int) TAO_GIOP::send_request (this, 
+                                               stream,
+                                               orb_core);
+
+  if (!success)
+    return -1;
+
+  if (is_twoway)
+    {
+      // Set the state so that we know we're looking for a response.
+      this->expecting_response_ = 1;
+
+      // Go into a loop, waiting until it's safe to try to read
+      // something on the socket.  The handle_input() method doesn't
+      // actualy do the read, though, proper behavior based on what is
+      // read may be different if we're not using GIOP above here.
+      // So, we leave the reading of the response to the caller of
+      // this method, and simply insure that this method doesn't
+      // return until such time as doing a recv() on the socket would
+      // actually produce fruit.
+      ACE_Reactor *r = TAO_ORB_Core_instance ()->reactor ();
+
+      int ret = 0;
+
+      while (ret != -1 && ! this->input_available_)
+        ret = r->handle_events ();
+
+      this->input_available_ = 0;
+      // We can get events now, b/c we want them!
+      r->resume_handler (this);
+      // We're no longer expecting a response!
+      this->expecting_response_ = 0;
+    }
+
+  return 0;
+}
+
+
+int
+TAO_ST_Client_Connection_Handler::handle_input (ACE_HANDLE)
+{
+  int retval = 0;
+
+  if (this->expecting_response_)
+    {
+      this->input_available_ = 1;
+      // Temporarily remove ourself from notification so that if
+      // another sub event loop is in effect still waiting for its
+      // response, it doesn't spin tightly gobbling up CPU.
+      TAO_ORB_Core_instance ()->reactor ()->suspend_handler (this);
+    }
+  else
+    {
+      retval = this->check_unexpected_data ();
+    }
+
+  return retval;
+}
+
+int
+TAO_MT_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
+                                                int is_twoway)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_CLIENT_CONNECTION_HANDLER_SEND_REQUEST_START);
 
@@ -725,8 +880,10 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
   if (!is_twoway)
     {
-      int success  = (int) TAO_GIOP::send_request (this, stream,
-               orb_core);
+      // Send the request
+      int success  = (int) TAO_GIOP::send_request (this, 
+                                                   stream,
+                                                   orb_core);
 
       if (!success)
         return -1;
@@ -744,7 +901,9 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
       // remember in which thread the client connection handler was running
       this->calling_thread_ = ACE_Thread::self ();
 
-      int success = (int) TAO_GIOP::send_request (this, stream,
+      // Send the request
+      int success = (int) TAO_GIOP::send_request (this, 
+                                                  stream,
                                                   orb_core);
 
       if (!success)
@@ -754,13 +913,13 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
         }
 
       // check if there is a leader, but the leader is not us
-      if (orb_core->leader_available ()
-          && !orb_core->I_am_the_leader_thread ())
+      if (orb_core->leader_available () && 
+          !orb_core->I_am_the_leader_thread ())
         {
           // wait as long as no input is available and/or
           // no leader is available
-          while (!this->input_available_
-                 && orb_core->leader_available ())
+          while (!this->input_available_ && 
+                 orb_core->leader_available ())
             {
               if (orb_core->add_follower (this->cond_response_available_) == -1)
                 ACE_ERROR ((LM_ERROR,
@@ -838,7 +997,7 @@ TAO_Client_Connection_Handler::send_request (TAO_OutputCDR &stream,
 }
 
 int
-TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
+TAO_MT_Client_Connection_Handler::handle_input (ACE_HANDLE)
 {
   TAO_ORB_Core *orb_Core_ptr = TAO_ORB_Core_instance ();
 
@@ -859,43 +1018,7 @@ TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
                            "Failed to release the lock.\n"),
                           -1);
 
-      // We're a client, so we're not expecting to see input.  Still
-      // we better check what it is!
-      char ignored;
-      ssize_t ret;
-
-      ret = this->peer().recv_n (&ignored, sizeof ignored);
-
-      switch (ret)
-        {
-        case -1:
-          // Error...but we weren't expecting input, either...what
-          // should we do?
-          ACE_ERROR ((LM_WARNING,
-                      "Client_Connection_Handler::handle_input: closing connection on fd %d\n",
-                      this->peer().get_handle ()));
-          break;
-
-        case 1:
-          // We weren't expecting input, so what should we do with it?
-          // Log an error, and close the connection.
-          ACE_ERROR ((LM_WARNING,
-                      "Client_Connection_Handler::handle_input received "
-                      "input while not expecting a response; closing connection on fd %d\n",
-                      this->peer().get_handle ()));
-          break;
-
-        case 0:
-          // This is an EOF, so we will return -1 and let
-          // handle_close() take over.  As long as handle_close()
-          // calls the Svc_Handler<>::handle_close(), the socket will
-          // be shutdown properly.
-          break;
-        }
-
-      // We're not expecting input at this time, so we'll always
-      // return -1 for now.
-      return -1;
+      return this->check_unexpected_data ();
     }
 
   if (ACE_OS::thr_equal (this->calling_thread_, ACE_Thread::self ()))

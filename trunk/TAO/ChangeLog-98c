@@ -1,3 +1,34 @@
+Tue Sep 29 15:33:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/Explicit_Activation/run_test.pl: Added the ability
+ 	  to pass through extra command line options to the client and
+ 	  server.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf: Added
+ 	  ORBclientconnectionhandler ST and changed -ORBconcurrency
+ 	  thread-per-connection.
+
+	* tao/default_client.cpp (parse_args): Added a new option to
+ 	  TAO_Default_Client_Strategy_Factory. -ORBclientconnectionhandler
+ 	  allows the user to select the correct type of client connection
+ 	  handler creation strategy.
+	
+	* tao/ORB_Core.cpp (Pre_Allocated): Initialize the
+ 	  <cached_connect_strategy_> correctly with a creation factory
+ 	  from <TAO_ORB_CORE::instance ()->client_factory ()>.
+
+	* tao/Connect.h (TAO_ST_Client_Connection_Handler and
+ 	  TAO_MT_Client_Connection_Handler): Added new classes that
+ 	  override handle_input and send_request. The MT class uses the
+	  leader-follower scheme, while the ST class uses the old simple
+	  reactive strategy.
+
+	* tao/Client_Strategy_Factory.cpp (create_client_creation_strategy): 
+	* tao/default_client.cpp (create_client_creation_strategy): 
+
+	  Added new method to create the correct type of the client
+ 	  connection handler creation strategy.
+
 Tue Sep 29 13:23:25 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
         * TAO/docs/releasenotes/orbcore.html

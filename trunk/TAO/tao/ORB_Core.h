@@ -60,6 +60,24 @@ typedef ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>
 // Forward decl.
 class TAO_Resource_Factory;
 
+class TAO_Export TAO_ST_Connect_Creation_Strategy : public ACE_Creation_Strategy<TAO_Client_Connection_Handler>
+{
+public:
+  TAO_ST_Connect_Creation_Strategy (ACE_Thread_Manager * = 0);
+
+  virtual int make_svc_handler (TAO_Client_Connection_Handler *&sh);
+  // Makes TAO_ST_Client_Connection_Handlers
+};
+
+class TAO_Export TAO_MT_Connect_Creation_Strategy : public ACE_Creation_Strategy<TAO_Client_Connection_Handler>
+{
+public:
+  TAO_MT_Connect_Creation_Strategy (ACE_Thread_Manager * = 0);
+
+  virtual int make_svc_handler (TAO_Client_Connection_Handler *&sh);
+  // Makes TAO_MT_Client_Connection_Handlers
+};
+
 class TAO_Export TAO_ORB_Core
 {
   // = TITLE
@@ -506,6 +524,9 @@ public:
   {
     Pre_Allocated (void);
     // Constructor
+
+    ~Pre_Allocated (void);
+    // Destructor
 
     TAO_Default_Reactor r_;
     // The Reactor.

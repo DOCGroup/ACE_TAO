@@ -34,6 +34,9 @@ public:
   // create the lock for the forwarding IIOP Profile used by 
   // the TAO_GIOP_Invocation::location_forward and the 
   // TAO_GIOP_Invocation::start
+
+  virtual ACE_Creation_Strategy<TAO_Client_Connection_Handler> *create_client_creation_strategy (void);
+  // Create the correct client connection creation strategy
 };
 
 #endif /* TAO_CLIENT_STRATEGY_FACTORY_H */

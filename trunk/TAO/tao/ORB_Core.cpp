@@ -42,6 +42,33 @@ TAO_Cached_Connector_Lock::~TAO_Cached_Connector_Lock (void)
   this->lock_ = 0;
 }
 
+TAO_ST_Connect_Creation_Strategy::TAO_ST_Connect_Creation_Strategy (ACE_Thread_Manager *t)
+  : ACE_Creation_Strategy<TAO_Client_Connection_Handler> (t)
+{
+}
+
+TAO_MT_Connect_Creation_Strategy::TAO_MT_Connect_Creation_Strategy (ACE_Thread_Manager *t)
+  : ACE_Creation_Strategy<TAO_Client_Connection_Handler> (t)
+{
+}
+
+int
+TAO_ST_Connect_Creation_Strategy::make_svc_handler (TAO_Client_Connection_Handler *&sh)
+{
+  if (sh == 0)
+    ACE_NEW_RETURN (sh, TAO_ST_Client_Connection_Handler (this->thr_mgr_), -1);
+
+  return 0;
+}
+
+int
+TAO_MT_Connect_Creation_Strategy::make_svc_handler (TAO_Client_Connection_Handler *&sh)
+{
+  if (sh == 0)
+    ACE_NEW_RETURN (sh, TAO_MT_Client_Connection_Handler (this->thr_mgr_), -1);
+
+  return 0;
+}
 
 TAO_ORB_Core::TAO_ORB_Core (void)
   : reactor_ (0),
@@ -552,7 +579,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
 
-  // Open the <Strategy_Connector>.
   if (this->connector ()->open (this->reactor (),
                                 trf->get_null_creation_strategy (),
                                 trf->get_cached_connect_strategy (),
@@ -1369,10 +1395,17 @@ TAO_Resource_Factory::get_global_collocation_table (void)
 }
 
 TAO_Resource_Factory::Pre_Allocated::Pre_Allocated (void)
-  : r_ (TAO_ORB_CORE::instance ()->resource_factory ()->reactor_lock ())
+  : r_ (TAO_ORB_CORE::instance ()->resource_factory ()->reactor_lock ()),
+    cached_connect_strategy_ (TAO_ORB_CORE::instance ()->client_factory ()->create_client_creation_strategy ())
 {
   // Make sure that the thread manager does not wait for threads
   this->tm_.wait_on_exit (0);
+}
+
+TAO_Resource_Factory::Pre_Allocated::~Pre_Allocated (void)
+{
+  // Zap the creation strategy that we created earlier
+  delete this->cached_connect_strategy_.creation_strategy ();
 }
 
 // This function exists because of Win32's proclivity for expanding

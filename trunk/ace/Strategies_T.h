@@ -872,6 +872,11 @@ public:
   typedef ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *> 
           CONNECTION_MAP_ENTRY;
 
+  // = Strategy accessors
+  virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy (void) const;
+  virtual ACE_Recycling_Strategy<SVC_HANDLER> *recycling_strategy (void) const;
+  virtual ACE_Concurrency_Strategy<SVC_HANDLER> *concurrency_strategy (void) const;
+
 protected:
 
   virtual int purge_i (const void *recycling_act);
