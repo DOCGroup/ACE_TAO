@@ -1,3 +1,10 @@
+Thu Jul 12 15:10:52 2001  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc):
+
+	  Open the temporary file with the O_EXCL flag to close a symbolic
+	  link attack vulnerability.
+
 Thu Jul 12 13:31:25 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Security/EstablishTrustPolicy.h:
