@@ -132,18 +132,6 @@ MyImpl::BMClosedED_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
                   "MyImpl::BMClosedED_exec_i::ccm_activate\n"));
     }
 
-  char *argv[1];
-  argv[0] = "BMClosedED_exec";
-  int argc = sizeof (argv)/sizeof (argv[0]);
-  CORBA::ORB_var orb = CORBA::ORB_init (argc,
-		                                    argv,
-					                              ""
-					                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  CIAO_REGISTER_VALUE_FACTORY (orb.in(), 
-                               BasicSP::DataAvailable_init,
-                               BasicSP::DataAvailable);
 }
 
 void
