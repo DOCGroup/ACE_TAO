@@ -10,7 +10,15 @@ ACE_Message_Block::data_block (void) const
   return this->data_block_;
 }
 
-ACE_INLINE int 
+// This function must comes before ACE_Message_Block::reference_count
+// to avoid a g++ warning.
+ACE_INLINE int
+ACE_Data_Block::reference_count (void) const
+{
+  return reference_count_;
+}
+
+ACE_INLINE int
 ACE_Message_Block::reference_count (void) const
 {
   return data_block () ? data_block ()->reference_count () : 0;
@@ -184,7 +192,7 @@ ACE_Message_Block::msg_priority (u_long pri)
   this->priority_ = pri;
 }
 
-ACE_INLINE const ACE_Time_Value & 
+ACE_INLINE const ACE_Time_Value &
 ACE_Message_Block::msg_execution_time (void) const
 {
   ACE_TRACE ("ACE_Message_Block::msg_execution_time (void)");
@@ -192,21 +200,21 @@ ACE_Message_Block::msg_execution_time (void) const
 }
 
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_Message_Block::msg_execution_time (const ACE_Time_Value & et)
 {
   ACE_TRACE ("ACE_Message_Block::msg_execution_time (const ACE_Time_Value & et)");
   this->execution_time_ = et;
 }
 
-ACE_INLINE const ACE_Time_Value & 
+ACE_INLINE const ACE_Time_Value &
 ACE_Message_Block::msg_deadline_time (void) const
 {
   ACE_TRACE ("ACE_Message_Block::msg_deadline_time (void)");
   return this->deadline_time_;
 }
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_Message_Block::msg_deadline_time (const ACE_Time_Value & dt)
 {
   ACE_TRACE ("ACE_Message_Block::msg_deadline_time (const ACE_Time_Value & et)");
@@ -356,12 +364,6 @@ ACE_Data_Block::locking_strategy (ACE_Lock *nls)
   return ols;
 }
 
-ACE_INLINE int
-ACE_Data_Block::reference_count (void) const
-{
-  return reference_count_;
-}
-
 ACE_INLINE ACE_Lock *
 ACE_Message_Block::locking_strategy (void)
 {
@@ -383,46 +385,46 @@ ACE_Message_Block::locking_strategy (ACE_Lock *nls)
 // class ACE_Dynamic_Message_Strategy //
 ////////////////////////////////////////
 
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_Dynamic_Message_Strategy::static_bit_field_mask (void)
 {
   return static_bit_field_mask_;
 }
   // get static bit field mask
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_Dynamic_Message_Strategy::static_bit_field_mask (u_long ul)
 {
   static_bit_field_mask_ = ul;
 }
   // set static bit field mask
 
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_Dynamic_Message_Strategy::static_bit_field_shift (void)
 {
   return static_bit_field_shift_;
 }
   // get left shift value to make room for static bit field
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_Dynamic_Message_Strategy::static_bit_field_shift (u_long ul)
 {
   static_bit_field_shift_ = ul;
 }
   // set left shift value to make room for static bit field
 
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_Dynamic_Message_Strategy::dynamic_priority_max (void)
 {
   return dynamic_priority_max_;
 }
   // get maximum supported priority value
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_Dynamic_Message_Strategy::dynamic_priority_max (u_long ul)
 {
   // pending_shift_ depends on dynamic_priority_max_: for performance
-  // reasons, the value in pending_shift_ is (re)calculated only when 
+  // reasons, the value in pending_shift_ is (re)calculated only when
   // dynamic_priority_max_ is initialized or changes, and is stored
   // as a class member rather than being a derived value.
   dynamic_priority_max_ = ul;
@@ -430,24 +432,24 @@ ACE_Dynamic_Message_Strategy::dynamic_priority_max (u_long ul)
 }
   // set maximum supported priority value
 
-ACE_INLINE u_long 
+ACE_INLINE u_long
 ACE_Dynamic_Message_Strategy::dynamic_priority_offset (void)
 {
   return dynamic_priority_offset_;
 }
   // get offset for boundary between signed range and unsigned range
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_Dynamic_Message_Strategy::dynamic_priority_offset (u_long ul)
 {
 
 
-  // max_late_ and min_pending_ depend on dynamic_priority_offset_: for 
+  // max_late_ and min_pending_ depend on dynamic_priority_offset_: for
   // performance reasons, the values in max_late_ and min_pending_ are
   // (re)calculated only when dynamic_priority_offset_ is initialized
   // or changes, and are stored as a class member rather than being
   // derived each time one of their values is needed.
-  dynamic_priority_offset_ = ul;  
+  dynamic_priority_offset_ = ul;
   max_late_ = ACE_Time_Value (0, ul - 1);
   min_pending_ = ACE_Time_Value (0, ul);
 }
@@ -462,9 +464,9 @@ ACE_Dynamic_Message_Strategy::priority_status (ACE_Message_Block & mb,
   Priority_Status status = ACE_Dynamic_Message_Strategy::PENDING;
 
   // start with the passed absolute time as the message's priority, then
-  // call the polymorphic hook method to (at least partially) convert 
+  // call the polymorphic hook method to (at least partially) convert
   // the absolute time and message attributes into the message's priority
-  ACE_Time_Value priority (tv);  
+  ACE_Time_Value priority (tv);
   convert_priority (priority, mb);
 
   // if the priority is negative, the message is pending
@@ -479,14 +481,14 @@ ACE_Dynamic_Message_Strategy::priority_status (ACE_Message_Block & mb,
     }
   }
   // otherwise, if the priority is greater than the maximum late
-  // priority value that can be represented, it is beyond late 
+  // priority value that can be represented, it is beyond late
   else if (priority > max_late_)
   {
     // all messages that are beyond late are assigned lowest priority (zero)
     mb.msg_priority (0);
     return ACE_Dynamic_Message_Strategy::BEYOND_LATE;
-  }  
-  // otherwise, the message is late, but its priority is correct  
+  }
+  // otherwise, the message is late, but its priority is correct
   else
   {
     status = ACE_Dynamic_Message_Strategy::LATE;
@@ -494,7 +496,7 @@ ACE_Dynamic_Message_Strategy::priority_status (ACE_Message_Block & mb,
 
   // use (fast) bitwise operators to isolate and replace
   // the dynamic portion of the message's priority
-  mb.msg_priority((mb.msg_priority() & static_bit_field_mask_) | 
+  mb.msg_priority((mb.msg_priority() & static_bit_field_mask_) |
                   ((priority.usec () + ACE_ONE_SECOND_IN_USECS * priority.sec ()) <<
                    static_bit_field_shift_));
 
@@ -508,7 +510,7 @@ ACE_Dynamic_Message_Strategy::priority_status (ACE_Message_Block & mb,
 // class ACE_Deadline_Message_Strategy //
 /////////////////////////////////////////
 
-ACE_INLINE void 
+ACE_INLINE void
 ACE_Deadline_Message_Strategy::convert_priority (ACE_Time_Value & priority,
                                                  const ACE_Message_Block & mb)
 {
@@ -523,8 +525,8 @@ ACE_Deadline_Message_Strategy::convert_priority (ACE_Time_Value & priority,
 // class ACE_Laxity_Message_Strategy //
 ///////////////////////////////////////
 
-ACE_INLINE void 
-ACE_Laxity_Message_Strategy::convert_priority (ACE_Time_Value & priority, 
+ACE_INLINE void
+ACE_Laxity_Message_Strategy::convert_priority (ACE_Time_Value & priority,
                                                const ACE_Message_Block & mb)
 {
   // Convert absolute time passed in tv to negative
