@@ -1,6 +1,18 @@
+Sun Oct 12 18:41:01 1997  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
+
+	* tests/Priority_Reactor_Test.cpp: 
+	  Added several missing template specializations.
+
+	* ace/Priority_Reactor.cpp: 
+	  Fixed type (#pragme for #pragma).
+	  Added several missing template instantiation.
+
+	* ace/Timer_Queue_Adapters.cpp: 
+	  The includes were missing and there was a minor syntax error.
+
 Sun Oct 12 16:16:15 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
-	* tests: Addes a new test Priority_Reactor_Test.
+	* tests: Added a new test Priority_Reactor_Test.
 	  
 	* ace/Timer_Queue_Adapters.{h,i}: Added or moved the line that
 	  instructs edit mode to use on emace to the first line.  Also
