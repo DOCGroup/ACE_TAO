@@ -1,5 +1,7 @@
+
 // $Id$
 
+#include "tao/TAO.h"
 #include "Offer_Importer.h"
 
 int
@@ -7,13 +9,13 @@ main (int argc, char** argv)
 {
   TAO_TRY
     {
-      // Initialize ORB.
-      CORBA::ORB_var orb = 
-	CORBA::ORB_init (argc, argv, "internet", TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      TAO_ORB_Manager orb_manager;
 
-      CORBA::Object_var poa_object = 
-	orb->resolve_initial_references("RootPOA");
+      orb_manager.init (argc, argv, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      
+      // Initialize ORB.
+      CORBA::ORB_var orb = orb_manager.orb ();
 
       // Bootstrap to the Lookup interface.
       ACE_DEBUG ((LM_ERROR, "Bootstrap to the Lookup interface.\n"));
@@ -38,8 +40,8 @@ main (int argc, char** argv)
       offer_importer.perform_queries (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      offer_importer.perform_federated_queries (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      //      offer_importer.perform_federated_queries (TAO_TRY_ENV);
+      //      TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {

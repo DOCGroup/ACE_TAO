@@ -1,9 +1,10 @@
 // $Id$
 
+#include "tao/TAO.h"
+#include "ace/Auto_Ptr.h"
 #include "Offer_Exporter.h"
 #include "Offer_Importer.h"
 #include "Service_Type_Exporter.h"
-#include "ace/Auto_Ptr.h"
 #include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Service_Type_Repository.h"
 
@@ -12,26 +13,12 @@ main (int argc, char** argv)
 {
   TAO_TRY
     {
+      TAO_ORB_Manager orb_manager;
+      orb_manager.init (argc, argv, TAO_TRY_ENV);
+      TAO_CHECK_ENV
+
       // Initialize ORB.
-      CORBA::ORB_var orb = 
-	CORBA::ORB_init (argc, argv, "internet", TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      CORBA::Object_var poa_object = 
-	orb->resolve_initial_references("RootPOA");
-
-      if (CORBA::is_nil (poa_object.in ()))
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to initialize the POA.\n"),
-			  1);
-
-      PortableServer::POA_var root_poa =
-	PortableServer::POA::_narrow (poa_object.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
-      PortableServer::POAManager_var poa_manager =
-	root_poa->the_POAManager (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      CORBA::ORB_var orb = orb_manager.orb ();
       
       // Create a Service Type Repository and a Trader Object.
       TAO_Service_Type_Repository type_repos;
@@ -78,8 +65,7 @@ main (int argc, char** argv)
       // Run the Offer Exporter tests
       ACE_DEBUG ((LM_DEBUG, "Running the Offer Exporter tests.\n"));
       TAO_Offer_Exporter offer_exporter
-	(root_poa.ptr (),
-	 CosTrading::Register::_duplicate (trd_comp.register_if ()),
+	(CosTrading::Register::_duplicate (trd_comp.register_if ()),
 	 TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -113,9 +99,6 @@ main (int argc, char** argv)
       offer_exporter.describe_offers (TAO_TRY_ENV);
       TAO_CHECK_ENV;      
       
-      poa_manager->activate (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
       // Run the Offer Importer tests
       ACE_DEBUG ((LM_DEBUG, "Running the Offer Exporter tests.\n"));
       TAO_Offer_Importer offer_importer
@@ -123,11 +106,7 @@ main (int argc, char** argv)
       TAO_CHECK_ENV;
       
       offer_importer.perform_queries (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-      
-      // Begin trading! 
-      //if (orb->run () == -1)
-      //ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CORBA::ORB::run"), -1);
+      TAO_CHECK_ENV;      
     }
   TAO_CATCHANY
     {

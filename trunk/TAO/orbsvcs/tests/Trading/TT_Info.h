@@ -64,7 +64,9 @@ public:
   {
     NAME,
     LOCATION,
-    DESCRIPTION
+    DESCRIPTION,
+    HOST_NAME,
+    TRADER_NAME
   };
 
   static const char* REMOTE_IO_NAME;

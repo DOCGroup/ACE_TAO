@@ -23,8 +23,7 @@ class TAO_Offer_Exporter
 {
 public:
 
-  TAO_Offer_Exporter (PortableServer::POA_ptr poa,
-		      CosTrading::Register_ptr register_if,
+  TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,
 		      CORBA::Environment& env)
     TAO_THROW_SPEC ((CORBA::SystemException));
 
@@ -42,6 +41,19 @@ public:
 		     CosTrading::MissingMandatoryProperty, 
 		     CosTrading::DuplicatePropertyName));
 
+  void export_offers_to_all (CORBA::Environment& env)
+    TAO_THROW_SPEC ((CORBA::SystemException, 
+		     CosTrading::Register::InvalidObjectRef, 
+		     CosTrading::IllegalServiceType, 
+		     CosTrading::UnknownServiceType, 
+		     CosTrading::Register::InterfaceTypeMismatch, 
+		     CosTrading::IllegalPropertyName, 
+		     CosTrading::PropertyTypeMismatch, 
+		     CosTrading::ReadonlyDynamicProperty, 
+		     CosTrading::MissingMandatoryProperty, 
+		     CosTrading::DuplicatePropertyName));
+
+  
   void withdraw_offers (CORBA::Environment& env)
     TAO_THROW_SPEC ((CORBA::SystemException, 
 		     CosTrading::IllegalOfferId, 
@@ -82,6 +94,19 @@ private:
 
   void create_offers (void);
 
+  void export_to (CosTrading::Register_ptr reg,
+                  CORBA::Environment& _env)
+    TAO_THROW_SPEC ((CORBA::SystemException, 
+		     CosTrading::Register::InvalidObjectRef, 
+		     CosTrading::IllegalServiceType, 
+		     CosTrading::UnknownServiceType, 
+		     CosTrading::Register::InterfaceTypeMismatch, 
+		     CosTrading::IllegalPropertyName, 
+		     CosTrading::PropertyTypeMismatch, 
+		     CosTrading::ReadonlyDynamicProperty, 
+		     CosTrading::MissingMandatoryProperty, 
+		     CosTrading::DuplicatePropertyName));
+  
   CosTrading::Register_var register_;
   CosTrading::Admin_var admin_;
   

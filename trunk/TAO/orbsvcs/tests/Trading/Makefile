@@ -25,8 +25,9 @@ FILES   = $(IDL_FILES) \
 	  Offer_Exporter \
 	  Offer_Importer
 
-LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(STL_ROOT)/lib
-CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
+LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
+CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG) \
+	-DTAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG
 
 LSRC    = $(addsuffix .cpp,$(FILES))
 LDLIBS  = -lTTest -lorbsvcs -lTAO
@@ -724,7 +725,6 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Trader_Utils.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Trader.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Attributes.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
@@ -1181,7 +1181,6 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Dynamic_Property.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Trader.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Attributes.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
@@ -1413,7 +1412,6 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Trader_Utils.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Trader.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Trader/Attributes.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTradingS_T.i \
