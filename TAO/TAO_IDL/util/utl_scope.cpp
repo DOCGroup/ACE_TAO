@@ -1148,9 +1148,15 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
               // in the scope we started with.  
               if (scope_offset == 0)
                 {
-                  add_to_referenced (d, 
-                                     I_FALSE,
-                                     id);
+                  // If we have stripped e to the last component, then
+                  // add it - the last component of a scoped name is
+                  // the only one that counts as a reference in a scope.
+                  if (id == e->last_component ())
+                    {
+                      add_to_referenced (d, 
+                                         I_FALSE,
+                                         id);
+                    }
 
                   AST_Type *t = AST_Type::narrow_from_decl (d);
 
