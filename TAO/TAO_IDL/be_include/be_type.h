@@ -57,6 +57,7 @@ public:
   void gen_fwd_helper_name (void);
 
   const char *fwd_helper_name (void) const;
+  void fwd_helper_name (const char *name);
   // Accessor to the member.
 
   void gen_common_varout (TAO_OutStream *os);

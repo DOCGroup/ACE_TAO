@@ -372,13 +372,27 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
     default: // Not a managed type.
       {
         AST_Type::SIZE_TYPE st = elem->size_type ();
+        be_typedef *td = be_typedef::narrow_from_decl (elem);
+        AST_Decl::NodeType nt = elem->node_type ();
+
+        if (td != 0)
+          {
+            nt = td->base_node_type ();
+          }
 
         *os << "typedef" << be_idt_nl
             << (st == AST_Type::FIXED ? "TAO_FixedSeq_Var_T<" 
                                       : "TAO_VarSeq_Var_T<")
             << be_idt << be_idt_nl
             << node->local_name () << "," << be_nl
-            << elem->nested_type_name (scope) << be_uidt_nl
+            << elem->nested_type_name (scope);
+
+        if (nt == AST_Decl::NT_array)
+          {
+            *os << "_slice *";
+          }
+
+        *os << be_uidt_nl
             << ">" << be_uidt_nl
             << node->local_name () << "_var;" << be_uidt;
 
@@ -387,7 +401,14 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
             << "TAO_Seq_Out_T<" << be_idt << be_idt_nl
             << node->local_name () << "," << be_nl
             << node->local_name () << "_var," << be_nl
-            << elem->nested_type_name (scope) << be_uidt_nl
+            << elem->nested_type_name (scope);
+
+        if (nt == AST_Decl::NT_array)
+          {
+            *os << "_slice *";
+          }
+
+        *os << be_uidt_nl
             << ">" << be_uidt_nl
             << node->local_name () << "_out;" << be_uidt;
       }
