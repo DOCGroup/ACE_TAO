@@ -1,7 +1,6 @@
 // $Id$
 
-#include "ace/Timer_Heap.h"
-#include "ace/Timer_List.h"
+#include "ace/Timers.h"
 
 class Example_Handler : public ACE_Event_Handler
 {
