@@ -193,3 +193,19 @@ ACE_Sbrk_Memory_Pool::protect (void *, size_t, int)
   return 0;
 }
 #endif /* !ACE_LACKS_SBRK */
+
+#if defined (ACE_WIN32)
+
+ACE_INLINE size_t 
+ACE_Page_File_Memory_Pool::round_to_chunk_size (size_t nbytes)
+{
+  return (nbytes + DEFAULT_PFPOOL_CHUNK -1) & (~(DEFAULT_PFPOOL_CHUNK-1));
+}
+
+ACE_INLINE size_t 
+ACE_Page_File_Memory_Pool::round_to_chunk_size (size_t nbytes)
+{
+  return (nBytes + DEFAULT_PFPOOL_CHUNK -1) & (~(DEFAULT_PFPOOL_CHUNK-1));
+}
+
+#endif /* ACE_WIN32 */
