@@ -29,7 +29,6 @@
 #include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
 #include "ace/Connector.h"
-#include "ace/Strategies.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
 #include "ace/Process_Mutex.h"

@@ -10,7 +10,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Object_Manager.h"
-#include "ace/Strategies.h"
+#include "ace/Connection_Recycling_Strategy.h"
 
 #include "ace/Dynamic.h"
 

@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Douglas Schmidt <schmidt@cs.wustl.edu> and 
+ *  @author Douglas Schmidt <schmidt@cs.wustl.edu> and
  *   Irfan Pyrarli <irfan@cs.wustl.edu>
  */
 //=============================================================================
@@ -26,6 +26,7 @@ class ACE_Connection_Recycling_Strategy;
 
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
+#include "ace/Recyclable.h"
 
 /**
  * @class ACE_Svc_Handler

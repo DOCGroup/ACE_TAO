@@ -37,7 +37,6 @@
 #endif /* __GNUC__ */
 
 #include "ace/INET_Addr.h"
-#include "ace/Strategies.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Svc_Handler.h"

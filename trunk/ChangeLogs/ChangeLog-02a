@@ -1,3 +1,90 @@
+Mon Dec 10 15:39:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	Merged from my branch. This checkin actually splits classes in
+	Strategies.h to multiple files. We also remove Strategies.* files
+	from the repo.
+
+	Tue Nov 27 12:29:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+	
+	* ace/Refcountable.h: Added a #define for the inlined file.
+	
+	* examples/Reactor/Misc/test_demuxing.cpp: 
+	* examples/Timer_Queue/Reactor_Timer_Queue_Test.h:
+	* examples/Timer_Queue/main_reactor.cpp: Added  #includes 
+
+	* examples/*/Makefile:
+	* tests/Makefile: Updated dependencies
+
+	Wed Nov 21 10:44:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Cached_Accept_Conn_Test.h:
+	* tests/Cached_Conn_Test.cpp:
+	* tests/Conn_Test.cpp:
+	* tests/Message_Queue_Notifications_Test.cpp:
+	* tests/Priority_Reactor_Test.cpp:
+	* tests/Reactors_Test.cpp:
+	* tests/Service_Config_DLL.cpp: 
+	* tests/RMCast/Makefile: Fixed compilation errors.
+
+	Wed Nov 21 10:42:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Svc_Handler.cpp: 
+	* ace/Connector.h:
+	* ace/Strategies_T.h:
+	* ace/Acceptor.h:
+	* ace/Svc_Handler.h: Fixed compilation errors. 
+
+	Tue Nov 20 12:48:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Strategies.h:
+	* ace/Strategies.cpp:
+	* ace/Strategies.i: Removed from the repo as the files are being
+	  replaced with  multiple files, with one class per file. Please
+	  see below for details.  The conglomeration of all the classes in
+	  the same file made very less sense.
+
+	* ace/Connection_Recycling_Strategy.h:
+	* ace/Connection_Recycling_Strategy.cpp: Added a new file for the
+	  class ACE_Connection_Recycling_Strategy
+
+	* ace/Hashable.h:
+	* ace/Hashable.cpp:
+	* ace/Hashable.inl: New file for the class ACE_Hashable
+
+	* ace/Notification_Strategy.h:
+	* ace/Notification_Strategy.cpp:
+	* ace/Notification_Strategy.inl: New file for the class
+	  ACE_Notification_Strategy.
+
+	* ace/Reactor_Notification_Strategy.h:
+	* ace/Reactor_Notification_Strategy.cpp:
+	* ace/Reactor_Notification_Strategy.inl: New file for the class
+	  ACE_Reactor_Notification_Strategy
+
+	* ace/Recyclable.h:
+	* ace/Recyclable.cpp:
+	* ace/Recyclable.inl: New file for the class ACE_Recyclable
+
+	* ace/Refcountable.h:
+	* ace/Refcountable.cpp:
+	* ace/Refcountable.inl: New file for the class ACE_Refcountable. 
+
+	* ace/OS.h: Moved the enum ACE_Recyclable_State to Recyclable.h
+
+	* ace/Acceptor.h:
+	* ace/Caching_Utility_T.cpp: 
+	* ace/Message_Queue.h:
+	* ace/Message_Queue_T.cpp: 
+	* ace/Strategies_T.h:
+	* ace/Svc_Handler.cpp: Removed inclusion of Strategies.h. 
+		
+	* ace/Procator.cpp: #included Service_Config.h 
+
+	* ace/Makefile: Added new file and generated dependencies
+
+	* ace/SSL/Makefile:
+	* ace/RMCast/Makefile: Generated dependencies.
+
 Mon Dec 10 14:10:00 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* Makefile.bor: Added an ace_only target for Borland_wchar nightly

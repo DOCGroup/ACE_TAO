@@ -9,7 +9,7 @@
 #define ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Strategies.h"
+// #include "ace/Strategies.h"
 
 ACE_RCSID(ace, Caching_Utility_T, "$Id$")
 
@@ -54,10 +54,10 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cac
 
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
-  size_t entries_to_remove 
+  size_t entries_to_remove
     = ACE_MAX (ACE_static_cast (size_t, 1),
-               ACE_static_cast(size_t, 
-                               ACE_static_cast(double, purge_percent) 
+               ACE_static_cast(size_t,
+                               ACE_static_cast(double, purge_percent)
                                / 100 * current_map_size));
   KEY *key_to_remove = 0;
   VALUE *value_to_remove = 0;
@@ -149,18 +149,18 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
 
   // Also whether the number of entries in the cache is just one!
   // Oops! then there is no way out but exiting. So return an error.
-  //  if (current_map_size <= 1) 
+  //  if (current_map_size <= 1)
   if (current_map_size == 0)
     return 0;
 
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
-  size_t entries_to_remove 
+  size_t entries_to_remove
     = ACE_MAX (ACE_static_cast (size_t, 1),
-               ACE_static_cast(size_t, 
-                               ACE_static_cast(double, purge_percent) 
+               ACE_static_cast(size_t,
+                               ACE_static_cast(double, purge_percent)
                                / 100 * current_map_size));
-  
+
   KEY *key_to_remove = 0;
   VALUE *value_to_remove = 0;
 
@@ -275,13 +275,13 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
 
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
-  size_t entries_to_remove 
+  size_t entries_to_remove
     = ACE_MAX (ACE_static_cast (size_t, 1),
-               ACE_static_cast(size_t, 
-                               ACE_static_cast(double, purge_percent) 
+               ACE_static_cast(size_t,
+                               ACE_static_cast(double, purge_percent)
                                / 100 * available_entries));
 
-  if (entries_to_remove >= available_entries  || 
+  if (entries_to_remove >= available_entries  ||
       entries_to_remove == 0)
     entries_to_remove = available_entries - 1;
 
@@ -400,12 +400,12 @@ ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_
 
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
-  size_t entries_to_remove 
+  size_t entries_to_remove
     = ACE_MAX (ACE_static_cast (size_t, 1),
-               ACE_static_cast(size_t, 
-                               ACE_static_cast(double, purge_percent) 
+               ACE_static_cast(size_t,
+                               ACE_static_cast(double, purge_percent)
                                / 100 * current_map_size));
-  
+
   KEY *key_to_remove = 0;
   VALUE *value_to_remove = 0;
 
