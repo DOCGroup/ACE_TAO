@@ -1,3 +1,9 @@
+Fri Apr  6 08:34:15 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/make_pretty.pl:
+          Do no give out warnings for the 'nocompatwarnings' option in
+          HP-UX.
+
 Fri Apr  6 08:23:02 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Basic_Types.cpp:
@@ -10,21 +16,21 @@ Fri Apr  6 08:23:02 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Fri Apr  6 02:02:01 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h:
-	* ace/OS.i: The implementation for process semaphore on platforms
-	  lacking named POSIX semaphores was broken.  On these platforms,
-	  semaphores are allocated in MMAP file so they should never be
-	  deleted.  Added a flag <new_sema_> to remember if a semaphore
-	  can be deleted (USYNC_THREAD) or not (USYNC_PROCESS).
+        * ace/OS.h:
+        * ace/OS.i: The implementation for process semaphore on platforms
+          lacking named POSIX semaphores was broken.  On these platforms,
+          semaphores are allocated in MMAP file so they should never be
+          deleted.  Added a flag <new_sema_> to remember if a semaphore
+          can be deleted (USYNC_THREAD) or not (USYNC_PROCESS).
 
-	* ace/config-sunos5.6.h: According to the man pages, SunOS started
-	  supporting POSIX semaphores from 5.6.  Defined ACE_HAS_POSIX_SEM
-	  and ACE_LACKS_NAMED_POSIX_SEM.
+        * ace/config-sunos5.6.h: According to the man pages, SunOS started
+          supporting POSIX semaphores from 5.6.  Defined ACE_HAS_POSIX_SEM
+          and ACE_LACKS_NAMED_POSIX_SEM.
 
 Thu Apr  5 11:23:05 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* html/index.html:
-	  Add link to the new QoS library documentation.
+        * html/index.html:
+          Add link to the new QoS library documentation.
 
 Thu Apr 05 03:26:13 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -34,21 +40,21 @@ Thu Apr 05 03:26:13 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
         * examples/Synch/Synch.dsw:
         * examples/Synch/proc_sema.cpp:
         * examples/Synch/proc_sema.dsp: Added a new example to play with
-	  process semaphores.
+          process semaphores.
 
 Thu Apr 05 02:48:51 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/MEM_IO.cpp (write): My earlier change was causing the test
-	  to crash.
+        * ace/MEM_IO.cpp (write): My earlier change was causing the test
+          to crash.
 
-	* ace/MEM_Stream.h:
-	* ace/MEM_Stream.i:
-	* ace/MEM_Stream.cpp: Added a new method to inform the stream to
-	  clean up its resources when closing down.
+        * ace/MEM_Stream.h:
+        * ace/MEM_Stream.i:
+        * ace/MEM_Stream.cpp: Added a new method to inform the stream to
+          clean up its resources when closing down.
 
-	* tests/MEM_Stream_Test.cpp (handle_close): Handle_close should
-	  only inform it's peer to destroy the mmap file instead of
-	  removing the file itself.
+        * tests/MEM_Stream_Test.cpp (handle_close): Handle_close should
+          only inform it's peer to destroy the mmap file instead of
+          removing the file itself.
 
 Wed Apr  4 16:21:13 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -58,9 +64,9 @@ Wed Apr  4 16:21:13 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Wed Apr  4 12:13:52 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/MEM_IO.h: Declared ACE_INLINE_FOR_GNUC for
-	  ACE_MT_MEM_IO::Simple_Queue's constructor to eliminate a bogus
-	  warning reported by vxworks' gcc compiler.
+        * ace/MEM_IO.h: Declared ACE_INLINE_FOR_GNUC for
+          ACE_MT_MEM_IO::Simple_Queue's constructor to eliminate a bogus
+          warning reported by vxworks' gcc compiler.
 
 Wed Apr 04 07:47:48 2001  Craig Rodrigues <crodrigu@bbn.com>
 
@@ -107,58 +113,58 @@ Tue Apr 03 19:55:26 2001  Steve Huston  <shuston@riverace.com>
 
 Tue Apr 03 13:45:02 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/MEM_IO.cpp: Fixed mismatched ACE_TRACE messages.  Thanks to
-	  the all mighty fuzzmasterd for reporting this.
+        * ace/MEM_IO.cpp: Fixed mismatched ACE_TRACE messages.  Thanks to
+          the all mighty fuzzmasterd for reporting this.
 
 Tue Apr  3 11:40:42 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* examples/IPC_SAP/SSL_SAP/dummy.pem:
-	* examples/IPC_SAP/SSL_SAP/key.pem:
-	  The previous certificates expired. So, generated them
-	  again.
+        * examples/IPC_SAP/SSL_SAP/dummy.pem:
+        * examples/IPC_SAP/SSL_SAP/key.pem:
+          The previous certificates expired. So, generated them
+          again.
 
 Tue Apr 03 09:30:10 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/MEM_IO.cpp (write): Fixed a compilation error for Borland
-	  compiler.  Thanks to Johnny Willensen for reporting this.
+        * ace/MEM_IO.cpp (write): Fixed a compilation error for Borland
+          compiler.  Thanks to Johnny Willensen for reporting this.
 
 Mon Apr 02 23:41:34 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/MEM_SAP.cpp:
-	* ace/MEM_SAP.h:
-	* ace/MEM_SAP.i:
-	  Generalized the ACE_MEM_SAP class to allocate memory in the new
-	  memory wrapper class ACE_MEM_SAP_Node.
+        * ace/MEM_SAP.cpp:
+        * ace/MEM_SAP.h:
+        * ace/MEM_SAP.i:
+          Generalized the ACE_MEM_SAP class to allocate memory in the new
+          memory wrapper class ACE_MEM_SAP_Node.
 
-	* ace/MEM_IO.cpp:
-	* ace/MEM_IO.h:
-	* ace/MEM_IO.i:
-	  Separated the different signaling mechanisms into a different
-	  class in ACE_MEM_IO so it can determine the "right" signaling
-	  strategy allowed.  Currently, we implement the Reactive strategy
-	  (ACE_Reactive_MEM_IO) which uses sockets for signaling and
-	  multithreaded strategy (ACE_MT_MEM_IO) which uses semaphores for
-	  signaling.
+        * ace/MEM_IO.cpp:
+        * ace/MEM_IO.h:
+        * ace/MEM_IO.i:
+          Separated the different signaling mechanisms into a different
+          class in ACE_MEM_IO so it can determine the "right" signaling
+          strategy allowed.  Currently, we implement the Reactive strategy
+          (ACE_Reactive_MEM_IO) which uses sockets for signaling and
+          multithreaded strategy (ACE_MT_MEM_IO) which uses semaphores for
+          signaling.
 
-	* ace/MEM_Stream.cpp:
-	  Sending an empty buffer over to wake up the "other" end when we
-	  are closing down.
+        * ace/MEM_Stream.cpp:
+          Sending an empty buffer over to wake up the "other" end when we
+          are closing down.
 
-	* ace/MEM_Acceptor.cpp:
-	* ace/MEM_Acceptor.h:
-	* ace/MEM_Acceptor.i:
-	* ace/MEM_Connector.cpp:
-	* ace/MEM_Connector.h:
-	* ace/MEM_Connector.i: Added facility to specify the "preferred"
-	  signaling strategy so the acceptor and connector can negociate
-	  and agree on the best signaling mechanism to use.
+        * ace/MEM_Acceptor.cpp:
+        * ace/MEM_Acceptor.h:
+        * ace/MEM_Acceptor.i:
+        * ace/MEM_Connector.cpp:
+        * ace/MEM_Connector.h:
+        * ace/MEM_Connector.i: Added facility to specify the "preferred"
+          signaling strategy so the acceptor and connector can negociate
+          and agree on the best signaling mechanism to use.
 
-	* ace/MEM_Stream_Test.h:
-	* ace/MEM_Stream_Test.cpp:
-	  Added the test for the new MT signaling MEM_Stream transfer.
-	  This part of the test seems to be failing on system that depends
-	  on SysV semaphores (because we need more semaphore than the
-	  system can provide.)
+        * ace/MEM_Stream_Test.h:
+        * ace/MEM_Stream_Test.cpp:
+          Added the test for the new MT signaling MEM_Stream transfer.
+          This part of the test seems to be failing on system that depends
+          on SysV semaphores (because we need more semaphore than the
+          system can provide.)
 
 Mon Apr  2 15:17:13 2001  Chad Elliott  <elliott_c@ociweb.com>
 

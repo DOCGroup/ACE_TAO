@@ -119,6 +119,9 @@ sub is_warning ()
     # AIX reports a bazillion multiple defines when doing templates.
     return 3 if (m/^ld: \d+\-\d+ WARNING: Duplicate symbol:/);
 
+    # HP-UX uses 'nocompatwarnings' as an option to the compiler.
+    return 3 if (m/vnocompatwarnings/);
+
     # Look for lines that also should be color coded, but not counted
     # as warnings.
     return 2 if (/see declaration of/);
