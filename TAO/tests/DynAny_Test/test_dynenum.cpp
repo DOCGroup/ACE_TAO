@@ -74,6 +74,10 @@ Test_DynEnum::run_test (void)
       DynamicAny::DynEnum_var de1 =
         DynamicAny::DynEnum::_narrow (dp1.in ()
                                       ACE_ENV_ARG_PARAMETER);
+
+      analyzer.analyze(dp1.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       ACE_TRY_CHECK;
       de1->set_as_string ("TE_FIRST"
                           ACE_ENV_ARG_PARAMETER);
@@ -153,6 +157,24 @@ Test_DynEnum::run_test (void)
       out_any1.in () >>= te;
 
       if (te == DynAnyTests::TE_THIRD)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
+      else
+        {
+          ++this->error_count_;
+        }
+
+      ACE_DEBUG ((LM_DEBUG,
+                 "testing: equal\n"));
+
+      CORBA::Boolean equal =
+        de1->equal (de2.in ()
+                    ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (equal)
         {
           ACE_DEBUG ((LM_DEBUG,
                      "++ OK ++\n"));

@@ -1,7 +1,12 @@
+Tue Aug 26 18:56:32 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DynAny_Test/test_dynenum.cpp:
+          Test the equal operator of the DynEnum
+
 Tue Aug 26 13:34:16 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp: Fixed variable
-	  redefinition error in Win2K_MSVC6_DLL_Core build.	  
+	  redefinition error in Win2K_MSVC6_DLL_Core build.
 
 Tue Aug 26 17:59:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
