@@ -5,7 +5,7 @@
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 # TARGTYPE "Win32 (ALPHA) Console Application" 0x0603
 
-CFG=UDP Server - Win32 Alpha Debug
+CFG=UDP Server - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_Strategies.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
+# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao\PortableServer"
 
 !ELSEIF  "$(CFG)" == "UDP Server - Win32 Debug"
 

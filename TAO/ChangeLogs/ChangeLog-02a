@@ -1,3 +1,9 @@
+Tue Mar 06 10:58:15 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* examples/PluggableUDP/tests/client.dsp:
+	* examples/PluggableUDP/tests/server.dsp:
+	  Removed unnecessary libraries in Windows release builds.
+
 Tue Mar 06 08:29:28 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Collocation/Makefile.stub:
