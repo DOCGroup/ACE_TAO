@@ -217,6 +217,7 @@ public:
   // Accessors for the version_ member.
 
   idl_bool anonymous (void) const;
+  void anonymous (idl_bool val);
   // Accessors for the anonymous_ member.
 
   idl_bool typeid_set (void) const;
