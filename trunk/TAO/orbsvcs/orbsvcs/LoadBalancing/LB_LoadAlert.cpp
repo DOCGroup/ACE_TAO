@@ -28,7 +28,7 @@ TAO_LB_LoadAlert::enable_alert (CORBA::Object /* object_group */
 }
 
 void
-TAO_LB_LoadAlert::disable_alert (ACE_ENV_ARG_DECL_NOT_USED)
+TAO_LB_LoadAlert::disable_alert (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->alerted_ = 0;

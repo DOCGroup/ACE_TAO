@@ -1,3 +1,50 @@
+Tue Jul 23 12:28:08 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvsc/LoadBalancing/LB_LeastLoaded.h:
+	* orbsvcs/orbsvsc/LoadBalancing/LB_LeastLoaded.cpp:
+
+	  Added emulated exception support.
+
+	* orbsvcs/orbsvsc/LoadBalancing/LB_LoadAlert.cpp:
+
+	  Correct emulated exception macro usage error,
+	  i.e. "ACE_ENV_SINGLE_ARG_DECL" instead of "ACE_ENV_ARG_DECL".
+
+	* orbsvcs/orbsvsc/LoadBalancing/LB_LoadManager.cpp
+	  (check_strategy_proper, init_least_loaded):
+
+	  Corrected typo where loop variable was not initialized.
+
+	* orbsvcs/orbsvsc/LoadBalancing/LB_ORBInitializer.cpp:
+
+	  Correct emulated exception macro usage error,
+	  i.e. "ACE_CHECK" instead of "ACE_TRY_CHECK".
+	
+	* orbsvcs/orbsvsc/LoadBalancing/LB_Random.h:
+
+	  Moved `CosLoadBalancingC.h' include ahead of
+	  ACE_LACKS_PRAGMA_ONCE preprocessor check to make sure that macro
+	  is defined.
+
+	* orbsvcs/orbsvsc/LoadBalancing/LB_RoundRobin.cpp:
+	* orbsvcs/orbsvsc/LoadBalancing/LB_ServerRequestInterceptor.cpp:
+
+	  Corrected "unused argument" warnings.
+
+	* orbsvcs/orbsvsc/Makefile:
+
+	  Removed support for the old load balancer.  Added support for
+	  the new one.
+
+	* orbsvcs/orbsvsc/Makefile.CosLoadBalancing:
+
+	  Makefile for the new load balancer.
+	
+	* orbsvcs/orbsvsc/Makefile.CosNaming:
+	* orbsvcs/orbsvsc/Makefile.PortableGroup:
+
+	  Updated dependencies.
+
 Tue Jul 23 11:23:28 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp:

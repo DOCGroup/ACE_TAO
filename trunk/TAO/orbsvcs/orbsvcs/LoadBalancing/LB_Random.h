@@ -16,11 +16,11 @@
 
 #include "ace/pre.h"
 
+#include "orbsvcs/CosLoadBalancingC.h"
+
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "orbsvcs/CosLoadBalancingC.h"
 
 /**
  * @class TAO_LB_Random

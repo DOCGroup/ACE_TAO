@@ -1140,7 +1140,7 @@ TAO_LB_LoadManager::check_strategy_prop (
   ACE_ENV_ARG_DECL)
 {
   const CORBA::ULong len = props.length ();
-  for (CORBA::ULong i; i < len; ++i)
+  for (CORBA::ULong i = 0; i < len; ++i)
     {
       const PortableGroup::Property & property = props[i];
       if (ACE_OS::strcmp (property.nam[0].id.in (),
@@ -1193,7 +1193,7 @@ TAO_LB_LoadManager::init_least_loaded (const PortableGroup::Properties & props
           CORBA::Float per_balance_load = TAO_LB::LL_DEFAULT_PER_BALANCE_LOAD;
 
           const CORBA::ULong len = props.length ();
-          for (CORBA::ULong i; i < len; ++i)
+          for (CORBA::ULong i = 0; i < len; ++i)
             {
               const PortableGroup::Property & property = props[i];
               if (ACE_OS::strcmp (property.nam[0].id.in (),
