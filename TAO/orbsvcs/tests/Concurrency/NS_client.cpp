@@ -109,7 +109,8 @@ CosNaming_Client::resolve_name (char *c, char *n)
       name.length (2);
       name[0].id = CORBA::string_dup (c);
       name[1].id = CORBA::string_dup (n);
-      CORBA::Object_var obj = this->naming_context_->resolve (name,TAO_TRY_ENV);
+      CORBA::Object_var obj = this->naming_context_->resolve (name,
+                                                              TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       if (CORBA::is_nil (obj.in ()))
