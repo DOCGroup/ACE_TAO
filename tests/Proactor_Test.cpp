@@ -219,6 +219,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
                   ACE_TEXT ("(%t) Create Proactor Type = AIOCB\n")));
       break;
 
+#if defined(ACE_HAS_POSIX_REALTIME_SIGNALS)
     case SIG:
       ACE_NEW_RETURN (proactor_impl,
                       ACE_POSIX_SIG_Proactor (max_op),
@@ -226,6 +227,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Create Proactor Type = SIG\n")));
       break;
+#endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
 
 #  if defined (sun)
     case SUN:

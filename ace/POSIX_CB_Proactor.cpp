@@ -3,7 +3,7 @@
 
 #include "ace/POSIX_CB_Proactor.h"
 
-#if defined (ACE_HAS_AIO_CALLS) && defined (__sgi)
+#if defined (ACE_HAS_AIO_CALLS)
 
 #include "ace/Task_T.h"
 #include "ace/Log_Msg.h"
@@ -93,7 +93,7 @@ ACE_POSIX_CB_Proactor::handle_events (unsigned long milli_seconds)
     {
       ACE_POSIX_Asynch_Result * asynch_result =
           find_completed_aio (error_status,
-                              return_status,
+                              (size_t)return_status,
                               index,
                               count);
 
@@ -161,8 +161,13 @@ ACE_POSIX_CB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
 
   // setup OS notification methods for this aio
   // store index!!, not pointer in signal info
+  // need to figure out correct thing to do here when we are not on SGI
+#if defined(__sgi)
   result->aio_sigevent.sigev_notify = SIGEV_CALLBACK;
   result->aio_sigevent.sigev_func   = aio_completion_func ;
+#else
+  result->aio_sigevent.sigev_notify = SIGEV_SIGNAL;
+#endif /* __sgi */
 
 #if defined (__FreeBSD__)
   result->aio_sigevent.sigev_value.sigval_ptr = this ;
@@ -180,7 +185,7 @@ ACE_POSIX_CB_Proactor::get_result_status ( ACE_POSIX_Asynch_Result* asynch_resul
 {  
   return ACE_POSIX_AIOCB_Proactor::get_result_status (asynch_result,
                                                   error_status,
-                                                  return_status );
+                                                  (size_t)return_status );
 }
 
 int
@@ -195,4 +200,5 @@ ACE_POSIX_CB_Proactor::cancel_aio (ACE_HANDLE handle)
   return ACE_POSIX_AIOCB_Proactor::cancel_aio (handle);
 }
 
-#endif /* ACE_HAS_AIO_CALLS && __sgi */
+#endif /* ACE_HAS_AIO_CALLS */
+

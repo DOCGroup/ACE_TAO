@@ -493,6 +493,7 @@ protected:
   ACE_Unbounded_Queue<ACE_POSIX_Asynch_Result *> result_queue_;
 };
 
+#if defined(ACE_HAS_POSIX_REALTIME_SIGNALS)
 /**
  * @class ACE_POSIX_SIG_Proactor
  *
@@ -601,6 +602,9 @@ protected:
   sigset_t RT_completion_signals_;
 };
 
+
+#endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
+
 /**
  * @class ACE_POSIX_Asynch_Timer
  *
@@ -615,7 +619,9 @@ class ACE_Export ACE_POSIX_Asynch_Timer : public ACE_POSIX_Asynch_Result
   /// The factory method for this class is with the POSIX_Proactor
   /// class.
   friend class ACE_POSIX_Proactor;
+#if defined(ACE_HAS_POSIX_REALTIME_SIGNALS) 
   friend class ACE_POSIX_SIG_Proactor;
+#endif
 
 protected:
   /// Constructor.
@@ -643,5 +649,5 @@ protected:
 #include "ace/POSIX_Proactor.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* ACE_HAS_AIO_CALLS */
+#endif /* ACE_HAS_AIO_CALLS  && ACE_HAS_POSIX_REALTIME_SIGNALS */
 #endif /* ACE_POSIX_PROACTOR_H */

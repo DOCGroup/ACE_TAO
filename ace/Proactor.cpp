@@ -265,8 +265,10 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
       ACE_NEW (implementation,
                ACE_POSIX_SIG_Proactor);
   #else /* Default is to use the SIG one */
+   #if defined(ACE_HAS_POSIX_REALTIME_SIGNALS)
       ACE_NEW (implementation,
                ACE_POSIX_SIG_Proactor);
+   #endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
   #endif
 #elif (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
       // WIN_Proactor.
