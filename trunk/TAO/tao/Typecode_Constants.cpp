@@ -1747,6 +1747,7 @@ TAO_TypeCodes::init (void)
   //
   // NOTE:  this must be longword aligned!
 
+#if 0
   static const CORBA::Long _oc_svc_ctx_list [] =
   {
     // START bytes of encapsulation 0
@@ -1796,7 +1797,6 @@ TAO_TypeCodes::init (void)
     // END bytes of encapsulation 0 (sequence params)
   };
 
-#if 0
   TC_ServiceContextList =
     new CORBA::TypeCode (CORBA::tk_sequence,
                          sizeof _oc_svc_ctx_list,

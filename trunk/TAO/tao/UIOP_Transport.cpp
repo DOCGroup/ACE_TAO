@@ -262,7 +262,7 @@ TAO_UIOP_Client_Transport::handle_client_input (int /* block */,
 
   // OK, the complete message is here...
 
-  TAO_GIOP_ServiceContextList reply_ctx;
+  IOP::ServiceContextList reply_ctx;
   CORBA::ULong request_id;
   CORBA::ULong reply_status;
 
