@@ -181,17 +181,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#if !defined (ACE_HAS_BUILTIN_ATOMIC_OP)
-template class ACE_Atomic_Op<ACE_Thread_Mutex, long>;
-template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, long>;
-#endif /* !ACE_HAS_BUILTIN_ATOMIC_OP */
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#if !defined (ACE_HAS_BUILTIN_ATOMIC_OP)
-#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, long>
-#pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, long>
-#endif /* !ACE_HAS_BUILTIN_ATOMIC_OP */
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
 #pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -175,3 +175,17 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::multi_cpu_exchange_add (volatile long *va
 #endif /* _MSC_VER */
 
 #endif /* ACE_HAS_BUILTIN_ATOMIC_OP */
+
+#if defined (ACE_HAS_THREADS)
+# if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#  if !defined (ACE_HAS_BUILTIN_ATOMIC_OP)
+template class ACE_Atomic_Op<ACE_Thread_Mutex, long>;
+#  endif /* !ACE_HAS_BUILTIN_ATOMIC_OP */
+template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, long>;
+# elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#  if !defined (ACE_HAS_BUILTIN_ATOMIC_OP)
+#   pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, long>
+#  endif /* !ACE_HAS_BUILTIN_ATOMIC_OP */
+#  pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, long>
+# endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_HAS_THREADS */
