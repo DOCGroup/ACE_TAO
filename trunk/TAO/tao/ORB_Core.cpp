@@ -1568,7 +1568,6 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, TAO_POA *, ACE_Ha
 template class ACE_Guard<TAO_Collocation_Table_Lock>;
 template class ACE_Read_Guard<TAO_Collocation_Table_Lock>;
 template class ACE_Write_Guard<TAO_Collocation_Table_Lock>;
-template class ACE_Guard<ACE_SYNCH_MUTEX>;
 template class ACE_Read_Guard<ACE_SYNCH_MUTEX>;
 template class ACE_Write_Guard<ACE_SYNCH_MUTEX>;
 template class ACE_Singleton<TAO_GLOBAL_Collocation_Table, ACE_SYNCH_MUTEX>;
@@ -1627,7 +1626,6 @@ template class ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> 
 #pragma instantiate ACE_Guard<TAO_Collocation_Table_Lock>
 #pragma instantiate ACE_Read_Guard<TAO_Collocation_Table_Lock>
 #pragma instantiate ACE_Write_Guard<TAO_Collocation_Table_Lock>
-#pragma instantiate ACE_Guard<ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Read_Guard<ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Write_Guard<ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Singleton<TAO_GLOBAL_Collocation_Table, ACE_SYNCH_MUTEX>
