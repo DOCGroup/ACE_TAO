@@ -1,3 +1,32 @@
+Sat Nov  8 20:54:53 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * bin/fuzz.pl:
+          Added the following new fuzz checks:
+        
+          check_for_dependency_file:  Checks to see if the Makefile uses
+            the DEPENDENCY_FILE variable.  If it does, check to see if the
+            dependency file is in cvs.  If not, flag it as an error, since
+            the realclean target needs the dependencies to properly
+            function.
+
+          check_for_streams_include: Checks to see if ace/streams.h has
+            been included since this is an expensive and often unneeded file.
+
+          check_for_OS_h_include: Checks to see if ace/OS.h has been
+            included.  This files is maintained for backward
+            compatibility but should not be included within ACE+TAO since
+            it is expensive and often unneeded--include the OS_NS*.h files
+            instead. 
+
+          check_for_synch_include: Checks to see if ace/Synch.h or
+            ace/Synch_T.h have been included.  These files are maintained
+            for backward compitibility but should not be included within
+            ACE+TAO since they are expensive and often unneeded--include
+            the specific synch file instead, e.g., ace/Null_Mutex.h.
+
+          Added the *.mpc and *.mwc files to the check_for_id_string
+          test.
+
 Sat Nov  8 04:52:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * apps/soreduce/Library.h:
