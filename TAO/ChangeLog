@@ -1,3 +1,8 @@
+Fri Jul 26 09:26:34 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/examples/PSS/Server_i.cpp (get_status): 
+	  Fixed unused variable warning.
+	
 Fri Jul 26 09:23:53 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/examples/PSS/client.cpp (main): 
