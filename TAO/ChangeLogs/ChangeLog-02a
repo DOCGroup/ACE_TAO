@@ -1,3 +1,28 @@
+Tue Jan 15 20:24:24 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_valuetype/any_op_ch.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/any_op_cs.h:
+
+          New files that generate Any operators for value types.
+          For now, all that's generated is the TAO_Valuetype_Manager
+          template class instantiation that takes the value type
+          as its parameter. The TAO_Object_Manager template
+          instantiations for interfaces are generated along with
+          the Any operators, so the same approach is followed for
+          value types, even though Any operators for value types
+          are not yet supported.
+
+        * TAO_IDL/be/be_visitor_factory.cpp:
+        * TAO_IDL/be/be_visitor_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be_include/be_visitor_valuetype.h:
+
+          Modified files to create and call the visitors in the new
+          files above.
+
 Tue Jan 15 17:59:46 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.cpp:
