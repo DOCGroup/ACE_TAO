@@ -174,10 +174,9 @@ public:
   virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
 
   /**
-   * Returns the current reference count value.  This method is
-   * non-standard and is only here to simplify debugging.
+   * Returns the current reference count value.
    */
-  virtual long _ref_count (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
+  virtual CORBA::ULong _refcount_value (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
 protected:
 
@@ -195,7 +194,7 @@ protected:
 private:
 
   /// Reference counter.
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> ref_count_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong> ref_count_;
 };
 
 class TAO_PortableServer_Export TAO_Servant_Hash

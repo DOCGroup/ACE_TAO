@@ -331,8 +331,8 @@ TAO_RefCountServantBase::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     delete this;
 }
 
-long
-TAO_RefCountServantBase::_ref_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
+CORBA::ULong
+TAO_RefCountServantBase::_refcount_value (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
   return this->ref_count_.value ();
 }
