@@ -51,7 +51,6 @@ const ACE_TCHAR usage[] = ACE_TEXT ("usage: Message_Queue_Test_Ex <number of mes
 typedef ACE_Message_Queue_Ex<User_Class, ACE_NULL_SYNCH> QUEUE;
 
 static const int MAX_MESSAGES = 10000;
-static const int MAX_MESSAGE_SIZE = 32;
 static const char test_message[] = "ACE_Message_Queue_Ex Test Message";
 
 static int max_messages = MAX_MESSAGES;
