@@ -27,7 +27,8 @@ CPPDIR = .;..
 
 LIBFILES = \
 	$(ACE_LIB) \
-	$(ACE_RMCAST_LIB)
+	$(ACE_RMCAST_LIB) \
+        $(BINDIR)\Test_Output$(LIB_DECORATOR).lib
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
