@@ -139,6 +139,9 @@ private:
 
   int is_active_;
   // Is the supplier active in the POA?
+
+  RtecEventComm::PushSupplier_var myself_;
+  // Cache the object reference to speed up connect/disconnect calls
 };
 
 // ****************************************************************

@@ -30,6 +30,7 @@
 #define TAO_EC_SUPPLIER_FILTER_H
 
 #include "orbsvcs/RtecEventCommC.h"
+#include "EC_Worker.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,6 +39,7 @@
 class TAO_EC_ProxyPushSupplier;
 class TAO_EC_ProxyPushConsumer;
 class TAO_EC_Event_Channel;
+class TAO_EC_QOS_Info;
 
 class TAO_ORBSVCS_Export TAO_EC_Supplier_Filter
 {
@@ -96,7 +98,7 @@ public:
   // information can simply ignore the message.
 
   virtual void connected (TAO_EC_ProxyPushSupplier *supplier,
-                          CORBA::Environment &env) = 0; 
+                          CORBA::Environment &env) = 0;
   virtual void reconnected (TAO_EC_ProxyPushSupplier *supplier,
                           CORBA::Environment &env) = 0;
   virtual void disconnected (TAO_EC_ProxyPushSupplier *supplier,
@@ -116,6 +118,25 @@ public:
   virtual CORBA::ULong _decr_refcnt (void) = 0;
   // Increment and decrement the reference count, locking must be
   // provided by the user.
+};
+
+// ****************************************************************
+
+class TAO_EC_Filter_Worker : public TAO_EC_Worker<TAO_EC_ProxyPushSupplier>
+{
+public:
+  TAO_EC_Filter_Worker (RtecEventComm::EventSet &event,
+                        const TAO_EC_QOS_Info &event_info);
+
+  virtual void work (TAO_EC_ProxyPushSupplier *supplier,
+                     CORBA::Environment &ACE_TRY_ENV);
+
+private:
+  RtecEventComm::EventSet &event_;
+  // The event we push on each case, use a reference to avoid copies.
+
+  const TAO_EC_QOS_Info &event_info_;
+  // The QoS info propagated on each event.
 };
 
 #if defined (__ACE_INLINE__)

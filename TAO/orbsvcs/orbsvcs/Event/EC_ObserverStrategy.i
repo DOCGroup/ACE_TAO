@@ -45,3 +45,21 @@ TAO_EC_Basic_ObserverStrategy::
      handle_generator_ (1)
 {
 }
+
+// ****************************************************************
+
+ACE_INLINE
+TAO_EC_Accumulate_Supplier_Headers::
+    TAO_EC_Accumulate_Supplier_Headers (TAO_EC_Basic_ObserverStrategy::Headers &h)
+  : headers_ (h)
+{
+}
+
+// ****************************************************************
+
+ACE_INLINE
+TAO_EC_Accumulate_Consumer_Headers::
+    TAO_EC_Accumulate_Consumer_Headers (TAO_EC_Basic_ObserverStrategy::Headers &h)
+  : headers_ (h)
+{
+}

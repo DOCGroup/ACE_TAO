@@ -28,6 +28,12 @@ TAO_EC_SupplierControl::shutdown (void)
   return 0;
 }
 
+void
+TAO_EC_SupplierControl::supplier_not_exist (TAO_EC_ProxyPushConsumer *,
+                                            CORBA::Environment &)
+{
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)

@@ -26,7 +26,8 @@ TAO_EC_Dispatch_Command::TAO_EC_Dispatch_Command (ACE_Data_Block *data_block,
 // ****************************************************************
 
 ACE_INLINE
-TAO_EC_Shutdown_Command::TAO_EC_Shutdown_Command (ACE_Allocator *mb_allocator)
+TAO_EC_Shutdown_Task_Command::
+    TAO_EC_Shutdown_Task_Command (ACE_Allocator *mb_allocator)
   :  TAO_EC_Dispatch_Command (mb_allocator)
 {
 }
