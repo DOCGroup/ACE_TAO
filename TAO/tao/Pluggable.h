@@ -244,9 +244,6 @@ public:
                                TAO_MProfile &mprofile) = 0;
   // Create the corresponding profile for this endpoint.
 
-  virtual ACE_Event_Handler *acceptor (void) = 0;
-  // Return the ACE acceptor...
-
   virtual int is_collocated (const TAO_Profile* profile) = 0;
   // Return 1 if the <profile> has the same endpoint as the acceptor.
 
