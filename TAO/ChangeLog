@@ -3,8 +3,9 @@ Mon Aug 11 22:37:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h: Decoupled
 	  the dependency between IOGR property and other services required
-	  from the ORB. There are many use cases where one may want to use
-	  the IOGR alone instead of combing it with other ORB features. 
+	  from the FT ORB. There are many use cases where one may want to use
+	  the IOGR alone instead of combining it with other FTORB features
+	  including special service contexts.
 
 	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.cpp:
 	* orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
