@@ -1109,8 +1109,20 @@ be_interface::gen_optable_entries (be_interface *derived)
                   *os << "{\"" << d->original_local_name () << "\", &"
                       << derived->full_skel_name () << "::"
                       << d->local_name () << "_skel},\n";
-
                   derived->skel_count_++;
+
+                  if (this->strategy_->strategy_type () 
+                    == be_interface_type_strategy::AMI_HANDLER)
+                    {
+                      os->indent ();
+
+                      // we are an operation node
+                      *os << "{\"" << d->original_local_name () << "_excep\", &"
+                          << derived->full_skel_name () << "::"
+                          << d->local_name () << "_excep_skel},\n";
+
+                      derived->skel_count_++;
+                    }
                 }
               else if (d->node_type () == AST_Decl::NT_attr)
                 {
@@ -1127,6 +1139,20 @@ be_interface::gen_optable_entries (be_interface *derived)
 
                   derived->skel_count_++;
 
+                  if (this->strategy_->strategy_type () 
+                    == be_interface_type_strategy::AMI_HANDLER)
+                    {
+                      os->indent ();
+
+                      // Generate only the "get" entry if we are
+                      // readonly.
+                      *os << "{\"_get_" << d->original_local_name () << "_excep"
+                          << "\", &" << derived->full_skel_name ()
+                          << "::_get_" << d->local_name () << "_excep_skel},\n";
+
+                      derived->skel_count_++;
+                    }
+
                   attr = AST_Attribute::narrow_from_decl (d);
                   if (!attr)
                     return -1;
@@ -1139,6 +1165,16 @@ be_interface::gen_optable_entries (be_interface *derived)
                           << "\", &" << derived->full_skel_name ()
                           << "::_set_" << d->local_name () << "_skel},\n";
                       derived->skel_count_++;
+
+                      if (this->strategy_->strategy_type () 
+                        == be_interface_type_strategy::AMI_HANDLER)
+                        {
+                          os->indent (); // start from current indentation level
+                          *os << "{\"_set_" << d->original_local_name () << "_excep"
+                              << "\", &" << derived->full_skel_name ()
+                              << "::_set_" << d->local_name () << "_excep_skel},\n";
+                          derived->skel_count_++;
+                        }
                     }
                 }
               si->next ();
@@ -1182,8 +1218,20 @@ be_interface::gen_optable_entries (be_interface *derived)
                   *os << d->original_local_name () << ",\t&"
                       << derived->full_skel_name () << "::"
                       << d->local_name () << "_skel" << "\n";
-
                   derived->skel_count_++;
+
+                  if (this->strategy_->strategy_type () 
+                    == be_interface_type_strategy::AMI_HANDLER)
+                    {
+                      os->indent ();
+
+                      // We are an operation node. We use the original
+                      // operation name, not the one with _cxx_ in it.
+                      *os << d->original_local_name () << "_excep,\t&"
+                          << derived->full_skel_name () << "::"
+                          << d->local_name () << "_excep_skel" << "\n";
+                      derived->skel_count_++;
+                    }
                 }
               else if (d->node_type () == AST_Decl::NT_attr)
                 {
@@ -1198,6 +1246,18 @@ be_interface::gen_optable_entries (be_interface *derived)
                       << d->local_name () << "_skel\n";
                   derived->skel_count_++;
 
+                  if (this->strategy_->strategy_type () 
+                    == be_interface_type_strategy::AMI_HANDLER)
+                    {
+                      os->indent ();
+
+                      // Generate only the "get" entry if we are readonly
+                      *os << "_get_" << d->original_local_name () << "_excep,\t&"
+                          << derived->full_skel_name () << "::_get_"
+                          << d->local_name () << "_excep_skel\n";
+                      derived->skel_count_++;
+                    }
+
                   attr = AST_Attribute::narrow_from_decl (d);
                   if (!attr)
                     return -1;
@@ -1210,6 +1270,16 @@ be_interface::gen_optable_entries (be_interface *derived)
                           << derived->full_skel_name () << "::_set_"
                           << d->local_name () << "_skel\n";
                       derived->skel_count_++;
+
+                      if (this->strategy_->strategy_type () 
+                        == be_interface_type_strategy::AMI_HANDLER)
+                        {
+                          os->indent (); // start from current indentation level
+                          *os << "_set_" << d->original_local_name () << "_excep,\t&"
+                              << derived->full_skel_name () << "::_set_"
+                              << d->local_name () << "_excep_skel\n";
+                          derived->skel_count_++;
+                        }
                     }
                 }
               si->next ();
@@ -1995,7 +2065,8 @@ be_interface::accept (be_visitor *visitor)
 
 // ****************************************************************
 
-be_interface_type_strategy::be_interface_type_strategy (be_interface *node)
+be_interface_type_strategy::be_interface_type_strategy (be_interface *node,
+                                                        Strategy_Kind strategy_type)
   : local_name_(0),
     full_name_(0),
     flat_name_(0),
@@ -2005,7 +2076,8 @@ be_interface_type_strategy::be_interface_type_strategy (be_interface *node)
     local_coll_name_(0),
     relative_skel_name_(0),
     node_ (node),
-    cached_type_ (-1)
+    cached_type_ (-1),
+    strategy_type_ (strategy_type)
 {
 }
 
@@ -2233,22 +2305,31 @@ be_interface_type_strategy::get_out_stream_fname ()
   return idl_global->be_get_server_skeleton_fname ();
 }
 
-// ****************************************************************
-// AMI Hander Strategy
+int
+be_interface_type_strategy::strategy_type ()
+{
+  return strategy_type_;
+}
 
-be_interface_ami_handler_strategy::be_interface_ami_handler_strategy (be_interface *node)
-  : be_interface_type_strategy (node),
-    prefix_("AMI_"),
-    suffix_("_Handler")
+// ****************************************************************
+// Prefix Suffix Strategy
+
+be_interface_prefix_suffix_strategy::be_interface_prefix_suffix_strategy (be_interface *node,
+                                                                          Strategy_Kind strategy_type,
+                                                                          const char *prefix,
+                                                                          const char *suffix)
+: be_interface_type_strategy (node, strategy_type),
+  prefix_(prefix),
+  suffix_(suffix)
 {
 }
 
-be_interface_ami_handler_strategy::~be_interface_ami_handler_strategy ()
+be_interface_prefix_suffix_strategy::~be_interface_prefix_suffix_strategy ()
 {
 }
 
 const char *
-be_interface_ami_handler_strategy::full_name (void)
+be_interface_prefix_suffix_strategy::full_name (void)
 {
   if (!this->full_name_)
     this->compute_names (node_->be_decl::full_name (),
@@ -2260,7 +2341,7 @@ be_interface_ami_handler_strategy::full_name (void)
 }
 
 const char *
-be_interface_ami_handler_strategy::local_name (void)
+be_interface_prefix_suffix_strategy::local_name (void)
 {
   if (!this->local_name_)
     this->compute_names (node_->AST_Interface::local_name()->get_string (),
@@ -2272,7 +2353,7 @@ be_interface_ami_handler_strategy::local_name (void)
 }
 
 const char *
-be_interface_ami_handler_strategy::flat_name (void)
+be_interface_prefix_suffix_strategy::flat_name (void)
 {
   if (!this->flat_name_)
     node_->compute_flat_name (prefix_,
@@ -2283,7 +2364,7 @@ be_interface_ami_handler_strategy::flat_name (void)
 }
 
 const char *
-be_interface_ami_handler_strategy::repoID (void)
+be_interface_prefix_suffix_strategy::repoID (void)
 {
   if (!this->repoID_)
     node_->compute_repoID (prefix_,
@@ -2294,7 +2375,7 @@ be_interface_ami_handler_strategy::repoID (void)
 }
 
 const char *
-be_interface_ami_handler_strategy::full_skel_name (void)
+be_interface_prefix_suffix_strategy::full_skel_name (void)
 {
   if (this->full_skel_name_ == 0)
   {
@@ -2318,7 +2399,7 @@ be_interface_ami_handler_strategy::full_skel_name (void)
 
 
 const char *
-be_interface_ami_handler_strategy::full_coll_name (int type)
+be_interface_prefix_suffix_strategy::full_coll_name (int type)
 {
   this->compute_coll_names (type,
                             prefix_,
@@ -2328,7 +2409,7 @@ be_interface_ami_handler_strategy::full_coll_name (int type)
 }
 
 const char *
-be_interface_ami_handler_strategy::local_coll_name (int type)
+be_interface_prefix_suffix_strategy::local_coll_name (int type)
 {
   compute_coll_names (type,
                       prefix_,
@@ -2337,12 +2418,44 @@ be_interface_ami_handler_strategy::local_coll_name (int type)
   return this->local_coll_name_;
 }
 
+// ****************************************************************
+// AMI Hander Strategy
+
+be_interface_ami_handler_strategy::be_interface_ami_handler_strategy (be_interface *node)
+  : be_interface_prefix_suffix_strategy (node, 
+                                         AMI_HANDLER,
+                                         "AMI_",
+                                         "Handler")
+{
+}
+
+be_interface_ami_handler_strategy::~be_interface_ami_handler_strategy ()
+{
+}
+
+
+// ****************************************************************
+// AMI Exception Holder Strategy
+
+be_interface_ami_exception_holder_strategy::be_interface_ami_exception_holder_strategy (be_interface *node)
+  : be_interface_prefix_suffix_strategy (node, 
+                                         AMI_EXCEPTION_HOLDER,
+                                         "AMI_",
+                                         "ExceptionHolder")
+
+{
+}
+
+be_interface_ami_exception_holder_strategy::~be_interface_ami_exception_holder_strategy ()
+{
+}
+
 
 // ****************************************************************
 // Default Strategy
 
 be_interface_default_strategy::be_interface_default_strategy (be_interface *node)
-  : be_interface_type_strategy (node)
+  : be_interface_type_strategy (node, DEFAULT)
 {
 }
 
