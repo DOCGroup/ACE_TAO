@@ -1,3 +1,7 @@
+Fri Dec 22 15:18:49 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace-dll.icc: Added Basic_Stats.{h cpp} to build clean.
+
 Fri Dec 22 14:00:41 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/config-all.h: On HP-UX 11, when figuring ACE_bad_alloc exception
