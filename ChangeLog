@@ -1,3 +1,10 @@
+Sun Aug 24 20:21:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ASNMP/asnmp/octet.cpp:
+        * ASNMP/asnmp/ctr64.cpp:
+          Explicitly initialized base class in copy constructors to
+          quash warning.
+
 Sun Aug 24 19:04:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ASNMP/agent/agent_impl.cpp:
@@ -29,7 +36,7 @@ Sun Aug 24 19:04:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * ASNMP/asnmp/gauge.cpp:
         * ASNMP/asnmp/integer.cpp:
         * ASNMP/asnmp/timetick.cpp:
-          Explicitly initialized base class in the copy constructor to
+          Explicitly initialized base class in copy constructors to
           quash warning.
 
         * ASNMP/asnmp/transaction.cpp:

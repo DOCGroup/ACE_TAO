@@ -122,7 +122,7 @@ void OctetStr::set_data( const SmiBYTE* string, long size)
 
 //============[ constructor using another octet object ]==============
 OctetStr::OctetStr ( const OctetStr &octet):
-  output_buffer(0), validity(1)
+  SnmpSyntax (octet), output_buffer(0), validity(1)
 {
   init_octet_smi(smival);
    // check for zero len case
