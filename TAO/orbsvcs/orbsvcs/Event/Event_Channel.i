@@ -29,7 +29,7 @@ ACE_Push_Supplier_Proxy::qos (void)
   return qos_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Push_Supplier_Proxy::operator== (const RtecEventComm::EventSourceID rhs)
 {
   // Pointer comparison is fine for now.
@@ -120,7 +120,7 @@ operator += (TAO_EC_Event_Array &dest,
   dest[length] = item;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 operator == (const RtecEventComm::Event &event1,
              const RtecEventComm::Event &event2)
 {
@@ -128,24 +128,24 @@ operator == (const RtecEventComm::Event &event1,
   if ((event1.header.source != 0)
       && (event2.header.source != 0)
       && (event1.header.source != event2.header.source))
-    return 0;
+    return false;
 
   // Check if the types are equal.  ACE_ES_EVENT_ANY is a wildcard.
   if ((event1.header.type != ACE_ES_EVENT_ANY) &&
       (event2.header.type != ACE_ES_EVENT_ANY) &&
       (event1.header.type != event2.header.type))
-    return 0;
+    return false;
 
-  return 1;
+  return true;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 operator != (const TAO_EC_Event& rhs, const TAO_EC_Event& lhs)
 {
   if (rhs.empty () && lhs.empty ())
-    return 1;
+    return true;
   if (rhs.empty () || lhs.empty ())
-    return 0;
+    return false;
   return ! (rhs.event () == lhs.event ());
 }
 

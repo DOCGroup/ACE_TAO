@@ -366,7 +366,7 @@ MMDevice_Map_Hash_Key::~MMDevice_Map_Hash_Key (void)
   CORBA::release (this->mmdevice_);
 }
 
-int
+bool
 MMDevice_Map_Hash_Key::operator == (const MMDevice_Map_Hash_Key &hash_key) const
 {
   CORBA::Boolean result = 0;
@@ -374,42 +374,51 @@ MMDevice_Map_Hash_Key::operator == (const MMDevice_Map_Hash_Key &hash_key) const
   ACE_TRY
     {
       result =
-        this->mmdevice_->_is_equivalent (hash_key.mmdevice_ ACE_ENV_ARG_PARAMETER);
+        this->mmdevice_->_is_equivalent (hash_key.mmdevice_
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "MMDevice_Map_Hash_Key::operator == ");
-      return 0;
+      return false;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
+
   return result;
 }
 
-int
+bool
 operator < (const MMDevice_Map_Hash_Key &left,
             const MMDevice_Map_Hash_Key &right)
 {
-  int result = 0;
+  bool result = false;
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      CORBA::ULong left_hash = left.mmdevice_->_hash (left.hash_maximum_
-                                                      ACE_ENV_ARG_PARAMETER);
+      const CORBA::ULong left_hash =
+        left.mmdevice_->_hash (left.hash_maximum_
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      CORBA::ULong right_hash = right.mmdevice_->_hash (right.hash_maximum_
-                                                        ACE_ENV_ARG_PARAMETER);
+
+      const CORBA::ULong right_hash =
+        right.mmdevice_->_hash (right.hash_maximum_
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
       result = left_hash < right_hash;
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "operator < for MMDevice_Map_Hash_Key");
-      return 0;
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "operator < for MMDevice_Map_Hash_Key");
+      return false;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
+
   return result;
 }
 
@@ -913,14 +922,14 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
           // Full profile, and we want to call bind() instead
           // of connect() on the the streamctrl
           if( a_party->is_property_defined("Flows") &&
-              b_party->is_property_defined("Flows") ) 
+              b_party->is_property_defined("Flows") )
 	  {
               if (TAO_debug_level > 0) {
 		ACE_DEBUG ((LM_DEBUG, "(%N,%l) Full profile, invoking bind()\n"));
 	      }
 
               // It is full profile
-              // we have feps in the sep then dont call connect 
+              // we have feps in the sep then dont call connect
 	      // instead call bind on the streamctrl.
               this->bind (this->sep_a_.in (),
                           this->sep_b_.in (),
@@ -2132,25 +2141,25 @@ TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &flow_spec
 {
   CORBA::Any_var vdev_any = this->get_property_value ("Related_VDev"
                                                       ACE_ENV_ARG_PARAMETER);
-  
+
   AVStreams::VDev_ptr vdev;
 
   vdev_any.in() >>= vdev;
   CORBA::Any_var mc_any = vdev->get_property_value ("Related_MediaCtrl"
 						    ACE_ENV_ARG_PARAMETER);
-  
+
   // The Related_MediaCtrl property was inserted as a CORBA::Object, so we
   // must extract it as the same type.
   CORBA::Object_var obj;
   mc_any.in() >>= CORBA::Any::to_object( obj.out() );
 
-  AVStreams::MediaControl_var media_ctrl = 
+  AVStreams::MediaControl_var media_ctrl =
 	  AVStreams::MediaControl::_narrow( obj.in() );
 
   // deactivate the associated vdev and media ctrl
 
   if ( !CORBA::is_nil( vdev ) )
-  {		  
+  {
     PortableServer::ServantBase_var vdev_servant =
         TAO_AV_CORE::instance()->poa()->reference_to_servant ( vdev );
     TAO_AV_Core::deactivate_servant (vdev_servant.in());
@@ -2237,7 +2246,7 @@ TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &flow_spec
             if (entry->protocol_object ())
               {
                 entry->protocol_object ()->stop ();
-                
+
                 ACE_CString control_flowname =
                     TAO_AV_Core::get_control_flowname (entry->flowname ());
                 TAO_AV_CORE::instance()->remove_connector(entry->flowname());
@@ -2779,7 +2788,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
                   // Narrow it to FlowProducer.
                   AVStreams::FlowProducer_var producer;
 		  producer = AVStreams::FlowProducer::_narrow (flow_endpoint.in() ACE_ENV_ARG_PARAMETER);
-		  //   
+		  //
                   ACE_TRY_CHECK_EX (narrow);
                   // Else narrow succeeeded.
                   if (!CORBA::is_nil (producer.in ()))
@@ -3482,7 +3491,7 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
                       ACE_TRY_CHECK_EX (flowconnection);
                     }
                 }
-	      ACE_CATCH(AVStreams::noSuchFlow, nsf) 
+	      ACE_CATCH(AVStreams::noSuchFlow, nsf)
 	        {
                           TAO_FlowConnection *flowConnection;
                           ACE_NEW_RETURN (flowConnection,

@@ -26,13 +26,13 @@ public:
   typedef ACE_RB_Tree_Iterator<PROXY *,
                                int,
                                ACE_Less_Than<PROXY*>,
-                               ACE_Null_Mutex> 
+                               ACE_Null_Mutex>
     Implementation;
 
   TAO_ESF_Proxy_RB_Tree_Iterator (const Implementation &i);
 
-  int operator == (const TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> &rhs) const;
-  int operator != (const TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> &rhs) const;
+  bool operator == (const TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> &rhs) const;
+  bool operator != (const TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> &rhs) const;
   TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>& operator++ (void);
   TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> operator++ (int);
   PROXY *operator *(void);

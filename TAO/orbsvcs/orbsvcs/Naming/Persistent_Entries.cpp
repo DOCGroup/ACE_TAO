@@ -85,14 +85,14 @@ TAO_Persistent_ExtId::operator= (const TAO_Persistent_ExtId &rhs)
   kind_ = rhs.kind_;
 }
 
-int
+bool
 TAO_Persistent_ExtId::operator== (const TAO_Persistent_ExtId &rhs) const
 {
   return (ACE_OS::strcmp (id_, rhs.id_) == 0)
     && (ACE_OS::strcmp (kind_, rhs.kind_) == 0);
 }
 
-int
+bool
 TAO_Persistent_ExtId::operator!= (const TAO_Persistent_ExtId &rhs) const
 {
   return (ACE_OS::strcmp (id_, rhs.id_) != 0)
@@ -184,13 +184,13 @@ TAO_Persistent_Index_ExtId::operator= (const TAO_Persistent_Index_ExtId &rhs)
   poa_id_ = rhs.poa_id_;
 }
 
-int
+bool
 TAO_Persistent_Index_ExtId::operator== (const TAO_Persistent_Index_ExtId &rhs) const
 {
   return (ACE_OS::strcmp (poa_id_, rhs.poa_id_) == 0);
 }
 
-int
+bool
 TAO_Persistent_Index_ExtId::operator!= (const TAO_Persistent_Index_ExtId &rhs) const
 {
   return (ACE_OS::strcmp (poa_id_, rhs.poa_id_) != 0);

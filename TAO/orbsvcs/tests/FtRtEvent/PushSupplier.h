@@ -58,6 +58,6 @@ private:
   ReactorTask reactor_task_;
   RtecEventChannelAdmin::ProxyPushConsumer_var consumer_;
   PushSupplier_impl(const PushSupplier_impl&);
-  void operator==(const PushSupplier_impl&);
+  bool operator==(const PushSupplier_impl&);
 };
 #endif

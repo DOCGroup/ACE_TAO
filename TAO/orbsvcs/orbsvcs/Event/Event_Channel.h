@@ -70,8 +70,9 @@ void operator += (TAO_EC_Event_Array &dest,
  * Compare two events.  The Event Channel must compare events
  * (actually event headers) for equality.
  */
-ACE_INLINE int operator == (const RtecEventComm::Event &event1,
-                            const RtecEventComm::Event &event2);
+ACE_INLINE bool
+operator == (const RtecEventComm::Event &event1,
+             const RtecEventComm::Event &event2);
 
 // ************************************************************
 
@@ -80,7 +81,7 @@ ACE_INLINE int operator == (const RtecEventComm::Event &event1,
  * ACE_Array<TAO_EC_Event>.
  */
 ACE_INLINE
-int operator != (const TAO_EC_Event &rhs, const TAO_EC_Event &lhs);
+bool operator != (const TAO_EC_Event &rhs, const TAO_EC_Event &lhs);
 
 // ************************************************************
 
@@ -1378,7 +1379,7 @@ public:
   RtecEventChannelAdmin::SupplierQOS &qos (void);
 
   /// Is this object a proxy for -rhs-.  Simple pointer comparison for now.
-  int operator== (const RtecEventComm::EventSourceID rhs);
+  bool operator== (const RtecEventComm::EventSourceID rhs);
 
   /// Returns underlying supplier object ref.
   RtecEventComm::EventSourceID source_id (void);

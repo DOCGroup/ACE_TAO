@@ -1,3 +1,47 @@
+Fri Apr 23 20:28:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/PSS/PSDL_String.cpp:
+	* orbsvcs/PSS/PSDL_String.h:
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
+	* orbsvcs/orbsvcs/AV/sfp.cpp:
+	* orbsvcs/orbsvcs/AV/sfp.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.h:
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.i:
+	* orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
+	* orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h:
+	* orbsvcs/orbsvcs/Event/Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/Event_Channel.i:
+	* orbsvcs/orbsvcs/Naming/Entries.cpp:
+	* orbsvcs/orbsvcs/Naming/Entries.h:
+	* orbsvcs/orbsvcs/Naming/Naming_Service_Container.cpp:
+	* orbsvcs/orbsvcs/Naming/Naming_Service_Container.h:
+	* orbsvcs/orbsvcs/Naming/Persistent_Entries.cpp:
+	* orbsvcs/orbsvcs/Naming/Persistent_Entries.h:
+	* orbsvcs/orbsvcs/Notify/EventType.cpp:
+	* orbsvcs/orbsvcs/Notify/EventType.h:
+	* orbsvcs/orbsvcs/Notify/Property_Boolean.h:
+	* orbsvcs/orbsvcs/Notify/Property_Boolean.inl:
+	* orbsvcs/orbsvcs/Notify/Property_T.h:
+	* orbsvcs/orbsvcs/Notify/Property_T.inl:
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp:
+	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.h:
+	* orbsvcs/orbsvcs/Sched/SchedEntry.h:
+	* orbsvcs/orbsvcs/Sched/SchedEntry.i:
+	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.h:
+	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.cpp:
+	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.h:
+	* orbsvcs/orbsvcs/Trader/Trader.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader.h:
+	* orbsvcs/tests/FtRtEvent/PushConsumer.h:
+	* orbsvcs/tests/FtRtEvent/PushSupplier.h:
+
+	  Changed return types for equality, relational and logical
+	  operators to "bool", as is the norm for modern C++.
+
 Fri Apr 23 15:16:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_component/component_cs.cpp:

@@ -476,16 +476,17 @@ typedef ACE_Unbounded_Queue<char*> TAO_String_Queue;
 
 // = Helpful operators.
 
-int
+bool
 operator> (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
            const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &r);
 
-int
+bool
 operator< (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
            const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &r);
 
-int operator== (const CosTrading::Admin::OctetSeq& left,
-                const CosTrading::Admin::OctetSeq& right);
+bool
+operator== (const CosTrading::Admin::OctetSeq& left,
+            const CosTrading::Admin::OctetSeq& right);
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)

@@ -49,10 +49,10 @@ public:
   ~TAO_Notify_PropertyBase_T ();
 
   /// Equality comparison operator.
-  int operator== (const TYPE &rhs) const;
+  bool operator== (const TYPE &rhs) const;
 
   /// Inequality comparison operator.
-  int operator!= (const TYPE &rhs) const;
+  bool operator!= (const TYPE &rhs) const;
 
   /// Populate the Property Sequence with this valid value.
   void get (CosNotification::PropertySeq& prop_seq);

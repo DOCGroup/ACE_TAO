@@ -25,13 +25,13 @@ TAO_String_Hash_Key::TAO_String_Hash_Key (const CORBA::String_var &src)
 {
 }
 
-int
+bool
 TAO_String_Hash_Key::operator == (const TAO_String_Hash_Key &hash_key) const
 {
   return ACE_OS::strcmp (this->in (), hash_key.in ()) == 0;
 }
 
-int
+bool
 operator < (const TAO_String_Hash_Key &left,
             const TAO_String_Hash_Key &right)
 {

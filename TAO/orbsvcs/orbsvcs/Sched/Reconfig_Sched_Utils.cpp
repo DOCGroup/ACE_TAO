@@ -122,7 +122,7 @@ TAO_RT_Info_Ex::reset (u_long reset_flags)
 {
   // IMPORTANT: among the input arguments, we only reset the period ...
   // TBD - if execution times etc. can be selected as well, then reset those, e.g.,
-  // 
+  //
   // criticality = RtecScheduler::VERY_LOW_CRITICALITY;
   // worst_case_execution_time = 0;
   // typical_execution_time = 0;
@@ -214,15 +214,15 @@ void
 TAO_RT_Info_Tuple::operator = (const RtecScheduler::RT_Info &info)
 {
   ACE_static_cast (TAO_RT_Info_Ex, *this) = info;
-}  
+}
 
 
 // Less-than comparison operator: orders tuples by ascending rate (descending period).
 
-int
+bool
 TAO_RT_Info_Tuple::operator < (const TAO_RT_Info_Tuple &t)
 {
-  return (this->period > t.period) ? 1 : 0;
+  return (this->period > t.period) ? true : false;
 }
 
 

@@ -266,35 +266,35 @@ class TAO_Trading_Export TAO_Literal_Constraint : public TAO_Constraint
 
   // = Comparison operators.
 
-  friend int
+  friend bool
     operator< (const TAO_Literal_Constraint& left,
                const TAO_Literal_Constraint& right);
 
-  friend int
+  friend bool
     operator<= (const TAO_Literal_Constraint& left,
                 const TAO_Literal_Constraint& right);
 
-  friend int
+  friend bool
     operator> (const TAO_Literal_Constraint& left,
                const TAO_Literal_Constraint& right);
 
-  friend int
+  friend bool
     operator>= (const TAO_Literal_Constraint& left,
                 const TAO_Literal_Constraint& right);
 
-  friend int
+  friend bool
     operator== (const TAO_Literal_Constraint& left,
                 const TAO_Literal_Constraint& right);
 
-  friend int
+  friend bool
     operator!= (const TAO_Literal_Constraint& left,
                 const TAO_Literal_Constraint& right);
 
-  friend int
+  friend bool
     operator== (double left,
                 const TAO_Literal_Constraint& right);
 
-  friend int
+  friend bool
     operator== (const TAO_String_Manager& left,
                 const TAO_Literal_Constraint& right);
 

@@ -10,8 +10,8 @@
 #include "EventType.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Notify, 
-           TAO_Notify_EventType, 
+ACE_RCSID (Notify,
+           TAO_Notify_EventType,
            "$Id$")
 
 TAO_Notify_EventType
@@ -94,22 +94,22 @@ TAO_Notify_EventType::operator=(const TAO_Notify_EventType& event_type)
   return *this;
 }
 
-int
+bool
 TAO_Notify_EventType::operator==(const TAO_Notify_EventType& event_type) const
 {
   if (this->hash () != event_type.hash ())
-    return 0;
+    return false;
   else // compare the strings
     return (ACE_OS::strcmp (this->event_type_.type_name, event_type.event_type_.type_name) == 0  &&
             ACE_OS::strcmp (this->event_type_.domain_name, event_type.event_type_.domain_name) == 0
            );
 }
 
-int
+bool
 TAO_Notify_EventType::operator!=(const TAO_Notify_EventType& event_type) const
 {
   if (this->hash () != event_type.hash ())
-    return 1;
+    return true;
   else // compare the strings
     return (ACE_OS::strcmp (this->event_type_.type_name, event_type.event_type_.type_name) != 0  ||
             ACE_OS::strcmp (this->event_type_.domain_name, event_type.event_type_.domain_name) != 0
@@ -134,8 +134,8 @@ TAO_Notify_EventType::is_special (void) const
 void
 TAO_Notify_EventType::dump (void) const
 {
-  ACE_DEBUG ((LM_DEBUG, 
-              "(%s,%s)", 
-              this->event_type_.domain_name.in (), 
+  ACE_DEBUG ((LM_DEBUG,
+              "(%s,%s)",
+              this->event_type_.domain_name.in (),
               this->event_type_.type_name.in ()));
 }

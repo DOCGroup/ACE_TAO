@@ -1,5 +1,4 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
 // ============================================================================
 /**
@@ -8,7 +7,6 @@
  *  $Id$
  *
  *  @author  Nagarajan Surendran <naga@cs.wustl.edu>
- *
  */
 // ============================================================================
 
@@ -45,8 +43,8 @@ public:
     {}
   flowProtocol::fragment fragment_info_;
   ACE_Message_Block *data_;
-  friend int operator< (const TAO_SFP_Fragment_Node& left,
-                        const TAO_SFP_Fragment_Node& right);
+  friend bool operator< (const TAO_SFP_Fragment_Node& left,
+                         const TAO_SFP_Fragment_Node& right);
 };
 
 /**
@@ -233,7 +231,7 @@ public:
 
   virtual int send_frame (const char*buf,
                           size_t len);
-  
+
   virtual int destroy (void);
   virtual int set_policies (const TAO_AV_PolicyList &policies);
 

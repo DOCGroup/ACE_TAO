@@ -1,3 +1,4 @@
+// -*- C++
 
 //=============================================================================
 /**
@@ -5,7 +6,8 @@
  *
  *  $Id$
  *
- *  @author Sumedh Mungee <sumedh@cs.wustl.edu> Nagarajan Surendran <naga@cs.wustl.edu>
+ *  @author Sumedh Mungee <sumedh@cs.wustl.edu>
+ *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */
 //=============================================================================
 
@@ -207,11 +209,11 @@ public:
   ~MMDevice_Map_Hash_Key (void);
 
   /// operator== needed by  ACE_Hash_Map_Manager.
-  int operator == (const MMDevice_Map_Hash_Key &hash_key) const;
+  bool operator == (const MMDevice_Map_Hash_Key &hash_key) const;
 
   /// operator== needed by  ACE_Hash_Map_Manager.
-  friend int operator < (const MMDevice_Map_Hash_Key &left,
-                         const MMDevice_Map_Hash_Key &right);
+  friend bool operator < (const MMDevice_Map_Hash_Key &left,
+                          const MMDevice_Map_Hash_Key &right);
 
   /// hash function for this mmdevice.
   u_long hash (void) const;

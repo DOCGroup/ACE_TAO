@@ -311,7 +311,7 @@ Dispatch_Entry_Link::~Dispatch_Entry_Link ()
 }
   // dtor
 
-ACE_INLINE int
+ACE_INLINE bool
 Dispatch_Entry_Link::operator < (const Dispatch_Entry_Link &d) const
 {
   return (this->dispatch_entry_ < d.dispatch_entry_);
@@ -409,10 +409,10 @@ TimeLine_Entry::prev (TimeLine_Entry *t)
 }
 
 
-ACE_INLINE int
+ACE_INLINE bool
 TimeLine_Entry::operator < (const TimeLine_Entry &t) const
 {
-  return (start_ < t.start_) ? 1 : 0;
+  return (start_ < t.start_) ? true : false;
 }
   // comparison operator
 
@@ -435,9 +435,9 @@ TimeLine_Entry_Link::entry () const
 }
   // accessor for the underlying entry
 
-ACE_INLINE int
+ACE_INLINE bool
 TimeLine_Entry_Link::operator < (const TimeLine_Entry_Link &l) const
 {
-  return (entry_ < l.entry_) ? 1 : 0;
+  return (entry_ < l.entry_) ? true : false;
 }
   // comparison operator

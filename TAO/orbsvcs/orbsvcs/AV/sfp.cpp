@@ -7,7 +7,7 @@
 #include "ace/OS_NS_strings.h"
 
 // default arguments to pass to use for the ORB
-const char *TAO_SFP_Base::TAO_SFP_ORB_ARGUMENTS = "-ORBobjrefstyle URL";
+const char *TAO_SFP_Base::TAO_SFP_ORB_ARGUMENTS = "-ORBObjRefStyle URL";
 
 // SFP magic numbers
 const char *TAO_SFP_Base::TAO_SFP_MAGIC_NUMBER = "=SFP";
@@ -31,7 +31,7 @@ u_int TAO_SFP_Base::start_len;
 u_int TAO_SFP_Base::credit_len;
 u_int TAO_SFP_Base::fragment_len;
 
-int
+bool
 operator< (const TAO_SFP_Fragment_Node& left,
            const TAO_SFP_Fragment_Node& right)
 {
