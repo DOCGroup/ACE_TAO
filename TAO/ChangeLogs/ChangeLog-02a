@@ -1,65 +1,88 @@
+Wed Aug 30 13:46:01 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * rules.tao.GNU:
+          Define macros for the libraries required by a pure TAO client
+          (TAO_CLNT_LIBS) and a TAO server (TAO_SRVR_LIBS)
+
+        * tests/*/Makefile:
+        * orbsvcs/orbsvcs/Makefile.*:
+          Update Makefiles to link against the PortableServer library only
+          when required. They use the macros defined in rules.tao.GNU
+
+        * tests/DynAny_Test/data.cpp:
+        * tests/DynAny_Test/driver.cpp:
+        * tests/Leader_Followers/client.cpp:
+        * tests/MProfile_Forwarding/Servant_Locator.h:
+        * tests/Portable_Interceptors/Benchmark/test_i.cpp:
+        * tests/Portable_Interceptors/Benchmark/test_i.h:
+        * tests/Timed_Buffered_Oneways/client.cpp:
+        * orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
+          Add missing header files for the new PortableServer library.
+          Change tao/TAO.h for tao/PortableServer/ORB_Manager.h
+
 Tue Aug 29 22:50:14 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* Move the POA to a separate library, using the Service
-	  Configurator to decouple the ORB from its factory.
+        * Move the POA to a separate library, using the Service
+          Configurator to decouple the ORB from its factory.
 
         * tao/Adapter.h:
         * tao/Adapter.i:
         * tao/Adapter.cpp:
-	  Define the interfaces used to dynamically load adapters into the
-	  ORB.
+          Define the interfaces used to dynamically load adapters into the
+          ORB.
 
         * tao/Acceptor_Filter.h:
         * tao/Acceptor_Filter.i:
         * tao/Acceptor_Filter.cpp:
-	  When creating an object reference an adapter may pass down a
-	  filter to reject some of the acceptors, for example, the RT POA
-	  creates a filter based on user supplied policies to remove some
-	  of the endpoints.
+          When creating an object reference an adapter may pass down a
+          filter to reject some of the acceptors, for example, the RT POA
+          creates a filter based on user supplied policies to remove some
+          of the endpoints.
 
         * tao/ORB.h:
         * tao/ORB.cpp:
         * tao/ORB_Core.h:
         * tao/ORB_Core.i:
         * tao/ORB_Core.cpp:
-	  The ORB no longer contains or creates the TAO_Object_Adapter
-	  class or the root poa.  Instead it maintains an Adapter
-	  Registry, that is expected to be dynamically initialized as more
-	  adapters are added to the ORB.
-	  When resolving RootPOA the ORB uses the Service Configurator to
-	  find a factory that creates the POA adapter, that adapter is
-	  then inserted into the registry and used from then on.
-	  When a request is received it is dispatched to the target
-	  adapter through the registry, to speed up things a bit adapters
-	  are stored in "priority order", the POA should have the highest
-	  priority.
-	  NOTE: why do we need a registry?  Things like the IOR table and
-	  adapters for multicast protocols (where an activation may
-	  contain the multicast group) should be easier to implement with
-	  an adapter in place.
+          The ORB no longer contains or creates the TAO_Object_Adapter
+          class or the root poa.  Instead it maintains an Adapter
+          Registry, that is expected to be dynamically initialized as more
+          adapters are added to the ORB.
+          When resolving RootPOA the ORB uses the Service Configurator to
+          find a factory that creates the POA adapter, that adapter is
+          then inserted into the registry and used from then on.
+          When a request is received it is dispatched to the target
+          adapter through the registry, to speed up things a bit adapters
+          are stored in "priority order", the POA should have the highest
+          priority.
+          NOTE: why do we need a registry?  Things like the IOR table and
+          adapters for multicast protocols (where an activation may
+          contain the multicast group) should be easier to implement with
+          an adapter in place.
 
         * tao/Acceptor_Registry.h:
         * tao/Acceptor_Registry.cpp:
-	  User the Acceptor_Filter instead of a POA pointer to select what
-	  endpoints are added into an object reference.
+          User the Acceptor_Filter instead of a POA pointer to select what
+          endpoints are added into an object reference.
 
         * tao/Domain.pidl:
         * tao/DomainC.h:
         * tao/DomainC.i:
         * tao/DomainC.cpp:
-	  Regenerated the files.  The old versions still had the S.cpp and
-	  C.cpp files coupled to implement collocation.
+          Regenerated the files.  The old versions still had the S.cpp and
+          C.cpp files coupled to implement collocation.
 
         * tao/GIOP_Message_Acceptors.h:
         * tao/GIOP_Message_Acceptors.cpp:
         * tao/GIOP_Message_Lite.h:
         * tao/GIOP_Message_Lite.cpp:
-	  Use the ORB and the Adapter Registry to dispatch requests.
+          Use the ORB and the Adapter Registry to dispatch requests.
 
         * tao/GIOP_Server_Request.h:
         * tao/GIOP_Server_Request.cpp:
-	  Remove the objref() method, it was not used anywhere (not in a
-	  meaningful way), and it was introducing too much coupling.
+          Remove the objref() method, it was not used anywhere (not in a
+          meaningful way), and it was introducing too much coupling.
 
         * tao/IIOP_Profile.h:
         * tao/IIOP_Profile.cpp:
@@ -67,17 +90,17 @@ Tue Aug 29 22:50:14 2000  Carlos O'Ryan  <coryan@uci.edu>
         * tao/UIOP_Profile.cpp:
         * tao/Object_KeyC.h:
         * tao/Object_KeyC.cpp:
-	  Move encode_string_to_sequence() and decode_string_to_sequence()
-	  from the TAO_POA class to the ObjectKey class.
+          Move encode_string_to_sequence() and decode_string_to_sequence()
+          from the TAO_POA class to the ObjectKey class.
 
         * tao/Object.h:
         * tao/Object.i:
         * tao/Object.cpp:
         * tao/LocalObject.cpp:
-	  CORBA_Object no longer keeps a pointer to the servant.  A new
-	  derived class (TAO_Collocated_Object) does that.
-	  The POA creates TAO_Collocated_Object instances whenever
-	  collocation is in place.
+          CORBA_Object no longer keeps a pointer to the servant.  A new
+          derived class (TAO_Collocated_Object) does that.
+          The POA creates TAO_Collocated_Object instances whenever
+          collocation is in place.
 
         * tao/InterfaceC.h:
         * tao/InterfaceC.i:
@@ -97,12 +120,12 @@ Tue Aug 29 22:50:14 2000  Carlos O'Ryan  <coryan@uci.edu>
         * tao/Typecode.h:
         * tao/FT_CORBAC.h:
         * tao/FT_CORBAC.i:
-	  Only include the header files available in the main TAO library,
-	  some headers where included without any need for it.
-	  
+          Only include the header files available in the main TAO library,
+          some headers where included without any need for it.
+
         * tao/corba.h:
-	  Removed a ton of includes that were not needed now that the POA
-	  is decoupled.
+          Removed a ton of includes that were not needed now that the POA
+          is decoupled.
 
         * tao/PortableServer/Makefile:
         * tao/PortableServer/Active_Object_Map.h:
@@ -163,48 +186,48 @@ Tue Aug 29 22:50:14 2000  Carlos O'Ryan  <coryan@uci.edu>
         * tao/PortableServer/Servant_Base.i:
         * tao/PortableServer/Servant_Base.cpp:
         * tao/PortableServer/poa_macros.h:
-	  Move all the POA related classes to a new subdirectory.
+          Move all the POA related classes to a new subdirectory.
 
         * tao/Exception.cpp:
         * tao/DynamicAny/DynamicAny.h:
-	  Cosmetic fixes
+          Cosmetic fixes
 
         * rules.tao.GNU:
-	  Define macros that contain the list of libraries required by TAO
-	  clients and TAO servers.
+          Define macros that contain the list of libraries required by TAO
+          clients and TAO servers.
 
         * TAO_IDL/be/be_codegen.cpp:
-	  The skeleton files include special header files from the
-	  PortableServer library.
+          The skeleton files include special header files from the
+          PortableServer library.
 
         * TAO_IDL/be/be_visitor_interface/direct_collocated_sh.cpp:
         * TAO_IDL/be/be_visitor_interface/direct_collocated_ss.cpp:
-	  The classes for direct collocation inherit from
-	  TAO_Collocated_Object, because CORBA_Object no longer contains a
-	  servant pointer.
+          The classes for direct collocation inherit from
+          TAO_Collocated_Object, because CORBA_Object no longer contains a
+          servant pointer.
 
         * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
         * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
         * TAO_IDL/be/be_visitor_interface/thru_poa_collocated_ss.cpp:
         * TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp:
         * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
-	  Remove the use of Servant_Base from the regular interfaces.
-	  The TAO_Object_Adapter::Servant_Upcall class is initialized
-	  using an ORB_Code* instead of a Object_Adapter& because the
-	  latter is harder to obtain now (to make the POA pluggable).
-	  The code to find an Object_Adapter was moved into the
-	  Servant_Upcall class, which seems a more appropriate place
-	  anyway.
+          Remove the use of Servant_Base from the regular interfaces.
+          The TAO_Object_Adapter::Servant_Upcall class is initialized
+          using an ORB_Code* instead of a Object_Adapter& because the
+          latter is harder to obtain now (to make the POA pluggable).
+          The code to find an Object_Adapter was moved into the
+          Servant_Upcall class, which seems a more appropriate place
+          anyway.
 
         * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	  Use the TAO_Collocated_Interface to create collocated objects
+          Use the TAO_Collocated_Interface to create collocated objects
 
         * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-	  Fixed indentation in the generated code
+          Fixed indentation in the generated code
 
         * TAO_IDL/tao_idl.cpp:
         * TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp:
-	  Cosmetic fixes
+          Cosmetic fixes
 
         * examples/Callback_Quoter/Consumer_Handler.h:
         * examples/Callback_Quoter/Notifier_Input_Handler.h:
@@ -289,124 +312,124 @@ Tue Aug 29 22:50:14 2000  Carlos O'Ryan  <coryan@uci.edu>
         * tests/NestedUpcall/Triangle_Test/server_B.h:
         * tests/ORB_destroy/ORB_destroy.cpp:
         * utils/nslist/nslist.cpp:
-	  Change all the includes that were related to the POA.
-	
+          Change all the includes that were related to the POA.
+
         * */Makefile:
-	  Update all the dependencies, more of these will follow. 
+          Update all the dependencies, more of these will follow.
 
 Tue Aug 29 20:28:30 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Notify/Notify_Listeners.h: 
+        * orbsvcs/orbsvcs/Notify/Notify_Listeners.h:
 
-	The QoS properties of "Order Policy" and "Discard Policy" can be set 
-	per proxy.To accomodate this we now have an ACE_Task per proxy.
-	The TAO_Notify_Event_Processor asks each event listener and source
-	for the task object to send commands to.
+        The QoS properties of "Order Policy" and "Discard Policy" can be set
+        per proxy.To accomodate this we now have an ACE_Task per proxy.
+        The TAO_Notify_Event_Processor asks each event listener and source
+        for the task object to send commands to.
 
-	TAO_Notify_Event_Listener:
-	+  virtual TAO_Notify_Worker_Task* filter_eval_task (void) = 0;
-	+  virtual TAO_Notify_Worker_Task* event_dispatch_task (void) = 0;
+        TAO_Notify_Event_Listener:
+        +  virtual TAO_Notify_Worker_Task* filter_eval_task (void) = 0;
+        +  virtual TAO_Notify_Worker_Task* event_dispatch_task (void) = 0;
 
-	TAO_Notify_Event_Source:
-	+  virtual TAO_Notify_Worker_Task* filter_eval_task (void) = 0;
-	
-	* orbsvcs/orbsvcs/Notify/Notify_Command.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Command.i: 
-	Constructor takes TAO_Notify_Event* parameter.
-		
-	* orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp: 
-	* orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.h:
-	As per the last code review, Carlos pointed out that id recycling
-	is probably an overkill because the id range is till MAX_LONG. 
-	Therefore, id recycling is removed.
-	
-	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp: 
-	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.h:
-	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp 
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp: 
-	* orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp: 
-	Removed .put and .next calls to TAO_Notify_ID_Pool class.
-	
-	* orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.cpp: 
-	make Copy_On_Write the default collection.
-		
-	* orbsvcs/orbsvcs/Notify/Notify_Worker_Task.cpp: 
-	* orbsvcs/orbsvcs/Notify/Notify_Worker_Task.h: 
-	* orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.h: 
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager_Objects_Factory.h: 
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.cpp: 
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.i: 
-	changes because Worker_Task does not use TAO_Notify_Event_Manager* 
-	
-	* orbsvcs/orbsvcs/Notify/Notify_Event.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Event.h: 
-	* orbsvcs/orbsvcs/Notify/Notify_Event.i: 
-	Added per event QoS properties and accessors for them.
-		
-	* orbsvcs/orbsvcs/Notify/Notify_Listener_Filter_Eval_Command.cpp: 
-	* orbsvcs/orbsvcs/Notify/Notify_Listener_Filter_Eval_Command.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Dispatch_Command.cpp: 
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Dispatch_Command.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Lookup_Command.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Lookup_Command.h: 
-	* orbsvcs/orbsvcs/Notify/Notify_Source_Filter_Eval_Command.cpp: 
-	* orbsvcs/orbsvcs/Notify/Notify_Source_Filter_Eval_Command.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Update_Dispatch_Command.cpp: 
-	* orbsvcs/orbsvcs/Notify/Notify_Update_Dispatch_Command.h:
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Processor.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Processor.h: 
-	All Command objects modified to callback Event_Processor after
-	eecuting command. Also, all command objects allocation is done here.
+        TAO_Notify_Event_Source:
+        +  virtual TAO_Notify_Worker_Task* filter_eval_task (void) = 0;
 
-	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.h: 
-	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.h: 
-	Added per proxy task creation.
-	
-	* orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h: 
-	Added code to populate QoS properties.
-	
-	* orbsvcs/orbsvcs/Makefile.CosNotification:
-	updated dependencies, Notify will not build on older versions of
-	g++ - yields perplexing compilation outputs with certain template 
-	usages in ESF. 
-	
-	* orbsvcs/tests/Notify/Basic/Makefile:
-	* orbsvcs/tests/Notify/Basic/README: 
-	* orbsvcs/tests/Notify/Basic/Events_Test.cpp:
-	* orbsvcs/tests/Notify/Basic/Events_Test.h: 
-	Added test (under construction) to check if basic event transfer
-	succeeds.
+        * orbsvcs/orbsvcs/Notify/Notify_Command.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Command.i:
+        Constructor takes TAO_Notify_Event* parameter.
 
-	* orbsvcs/examples/Notify/Filter/Filter.cpp:
-	* orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
-	fix for http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=626
+        * orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.h:
+        As per the last code review, Carlos pointed out that id recycling
+        is probably an overkill because the id range is till MAX_LONG.
+        Therefore, id recycling is removed.
+
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp:
+        Removed .put and .next calls to TAO_Notify_ID_Pool class.
+
+        * orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.cpp:
+        make Copy_On_Write the default collection.
+
+        * orbsvcs/orbsvcs/Notify/Notify_Worker_Task.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Worker_Task.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Manager_Objects_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Manager.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Manager.i:
+        changes because Worker_Task does not use TAO_Notify_Event_Manager*
+
+        * orbsvcs/orbsvcs/Notify/Notify_Event.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Event.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Event.i:
+        Added per event QoS properties and accessors for them.
+
+        * orbsvcs/orbsvcs/Notify/Notify_Listener_Filter_Eval_Command.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Listener_Filter_Eval_Command.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Dispatch_Command.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Dispatch_Command.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Lookup_Command.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Lookup_Command.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Source_Filter_Eval_Command.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Source_Filter_Eval_Command.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Update_Dispatch_Command.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Update_Dispatch_Command.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Processor.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Event_Processor.h:
+        All Command objects modified to callback Event_Processor after
+        eecuting command. Also, all command objects allocation is done here.
+
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.h:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.h:
+        Added per proxy task creation.
+
+        * orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h:
+        Added code to populate QoS properties.
+
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
+        updated dependencies, Notify will not build on older versions of
+        g++ - yields perplexing compilation outputs with certain template
+        usages in ESF.
+
+        * orbsvcs/tests/Notify/Basic/Makefile:
+        * orbsvcs/tests/Notify/Basic/README:
+        * orbsvcs/tests/Notify/Basic/Events_Test.cpp:
+        * orbsvcs/tests/Notify/Basic/Events_Test.h:
+        Added test (under construction) to check if basic event transfer
+        succeeds.
+
+        * orbsvcs/examples/Notify/Filter/Filter.cpp:
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
+        fix for http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=626
 
 Tue Aug 29 20:09:44 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/RT_Policies.cpp:
-	* tao/RT_Policies.h:
+        * tao/RT_Policies.cpp:
+        * tao/RT_Policies.h:
 
-	  Added support for CDR encoding/decoding of TAO specific 
-	  Protocol Properties <TAO_Unix_Domain_Properties>
-	  and <TAO_SMEM_Properties>.
+          Added support for CDR encoding/decoding of TAO specific
+          Protocol Properties <TAO_Unix_Domain_Properties>
+          and <TAO_SMEM_Properties>.
 
 Tue Aug 29 19:15:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Portable_Interceptors/Benchmark/interceptors.cpp:
-	  Added dynamic casts for RequestInfo class when they needed to
-	  access TAO specific exception related methods.
-	
+        * tests/Portable_Interceptors/Benchmark/interceptors.cpp:
+          Added dynamic casts for RequestInfo class when they needed to
+          access TAO specific exception related methods.
+
 Tue Aug 29 15:09:55 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* examples/Simple/time-date/Makefile: 
-	  Updated dependencies.
+        * examples/Simple/time-date/Makefile:
+          Updated dependencies.
 
 Tue Aug 29 14:32:25 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -414,69 +437,69 @@ Tue Aug 29 14:32:25 2000  Carlos O'Ryan  <coryan@uci.edu>
         * orbsvcs/orbsvcs/Makefile.LoadBalancing:
         * orbsvcs/orbsvcs/Makefile.CosConcurrency:
         * orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
-	  Update dependencies.
+          Update dependencies.
 
         * examples/Load_Balancing_persistent/Identity_Server.cpp:
-	  Removed unused CORBA_Dyn_Any_var variable.
+          Removed unused CORBA_Dyn_Any_var variable.
 
 Tue Aug 29 01:26:06 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/RTCORBA/Server_Protocol/client.dsp
-	* tests/RTCORBA/Client_Propagated/client.dsp
-	* tests/RTCORBA/Server_Protocol/server.dsp
-	* tests/RTCORBA/Client_Propagated/server.dsp:
+        * tests/RTCORBA/Server_Protocol/client.dsp
+        * tests/RTCORBA/Client_Propagated/client.dsp
+        * tests/RTCORBA/Server_Protocol/server.dsp
+        * tests/RTCORBA/Client_Propagated/server.dsp:
 
-	  Changed project names, so they are more descriptive when
-	  included into big workspaces.
+          Changed project names, so they are more descriptive when
+          included into big workspaces.
 
-	* tests/RTCORBA/RTCORBA_tests.dsw:
+        * tests/RTCORBA/RTCORBA_tests.dsw:
 
-	  Added workspace for RTCORBA tests.
-	
-	* tests/RTCORBA/Server_Protocol/Makefile
-	* tests/RTCORBA/Client_Propagated/Makefile:
+          Added workspace for RTCORBA tests.
 
-	  Updated dependencies.
+        * tests/RTCORBA/Server_Protocol/Makefile
+        * tests/RTCORBA/Client_Propagated/Makefile:
 
-	* tests/RTCORBA/Server_Protocol/client.cpp
-	* tests/RTCORBA/Server_Protocol/server.cpp
-	* tests/RTCORBA/Client_Propagated/client.cpp
-	* tests/RTCORBA/Client_Propagated/server.cpp:
+          Updated dependencies.
 
-	  Fixed ifdef typo.
+        * tests/RTCORBA/Server_Protocol/client.cpp
+        * tests/RTCORBA/Server_Protocol/server.cpp
+        * tests/RTCORBA/Client_Propagated/client.cpp
+        * tests/RTCORBA/Client_Propagated/server.cpp:
+
+          Fixed ifdef typo.
 
 Mon Aug 28 22:46:02 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/Makefile
-	* tests/Makefile.bor:
+        * tests/Makefile
+        * tests/Makefile.bor:
 
-	  Modified to include RTCORBA subdirectory.
+          Modified to include RTCORBA subdirectory.
 
-	* tests/RTCORBA/Makefile
-	* tests/RTCORBA/Makefile.bor:
+        * tests/RTCORBA/Makefile
+        * tests/RTCORBA/Makefile.bor:
 
-	  Added.
+          Added.
 
-	* tests/RTCORBA/Server_Protocol/client.cpp
-	* tests/RTCORBA/Server_Protocol/server.cpp
-	* tests/RTCORBA/Client_Propagated/client.cpp
-	* tests/RTCORBA/Client_Propagated/server.cpp:
+        * tests/RTCORBA/Server_Protocol/client.cpp
+        * tests/RTCORBA/Server_Protocol/server.cpp
+        * tests/RTCORBA/Client_Propagated/client.cpp
+        * tests/RTCORBA/Client_Propagated/server.cpp:
 
-	  Added TAO_HAS_RT_CORBA == 1 guards.
+          Added TAO_HAS_RT_CORBA == 1 guards.
 
 Mon Aug 28 22:14:51 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tests/README
-	* tests/RTCORBA/README:
+        * tests/README
+        * tests/RTCORBA/README:
 
-	  Include info on new RTCORBA tests.
+          Include info on new RTCORBA tests.
 
 Mon Aug 28 21:32:40 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/Protocol_Factory.cpp:
+        * tao/Protocol_Factory.cpp:
 
-	  Removed extranneous ACE_INLINE that was left from copy/paste
-	  routine.
+          Removed extranneous ACE_INLINE that was left from copy/paste
+          routine.
 
 Mon Aug 28 19:09:11 2000  Carlos O'Ryan  <coryan@uci.edu>
 
