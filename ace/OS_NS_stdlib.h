@@ -144,30 +144,27 @@ namespace ACE_OS {
   extern ACE_Export
   void *malloc (size_t);
 
+#if !defined (ACE_LACKS_MKSTEMP)
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_HANDLE mkstemp (char *s);
+  ACE_HANDLE mkstemp (char *t);
 
 #  if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_HANDLE mkstemp (wchar_t *s);
+  ACE_HANDLE mkstemp (wchar_t *t);
 #  endif /* ACE_HAS_WCHAR */
-
-#if defined (ACE_LACKS_MKSTEMP)
-  extern ACE_Export
-  ACE_HANDLE mkstemp_emulation (ACE_TCHAR * s);
-#endif /* ACE_LACKS_MKSTEMP */
+#endif /* !ACE_LACKS_MKSTEMP */
 
 #if !defined (ACE_LACKS_MKTEMP)
   ACE_NAMESPACE_INLINE_FUNCTION
-  char *mktemp (char *s);
+  char *mktemp (char *t);
 
 #  if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
-  wchar_t *mktemp (wchar_t *s);
+  wchar_t *mktemp (wchar_t *t);
 #  endif /* ACE_HAS_WCHAR */
 #else
   extern ACE_Export
-  ACE_TCHAR *mktemp (ACE_TCHAR *s);
+  ACE_TCHAR *mktemp (ACE_TCHAR *t);
 #endif /* !ACE_LACKS_MSTEMP */
 
   ACE_NAMESPACE_INLINE_FUNCTION

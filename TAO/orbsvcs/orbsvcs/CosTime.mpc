@@ -18,7 +18,4 @@ project(CosTime) : orbsvcslib, core, portableserver {
       Time
     }
   }
-
-  Template_Files {
-  }
 }

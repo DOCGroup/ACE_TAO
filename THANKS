@@ -870,7 +870,7 @@ Pierre Oberson <oberson at nagra-kudelski dot ch>
 Chris Uzdavinis <chris at atdesk dot com>
 Ishay Green <ishaygreen at hotmail dot com>
 Andrey Nechypurenko <andreynech at yahoo dot com>
-Charlie Duke <cduke at fvc dot com>
+Charlie Duke <cduke at cuseeme dot com>
 Jonathan Luellen <jluellen at scires dot com>
 Andrew Psaltis <apsaltis at mho dot net>
 Erik Jones <ej at pcslink dot com>
@@ -922,7 +922,7 @@ Rich Seibel <seibel_r at ociweb dot com>
 Jim Scheller <csoftware at iname dot com>
 Bob Bouterse <BBouterse at escient dot com>
 Sandeep Adwankar <adwankar at rsch dot comm dot mot dot com>
-W Craig Trader <ct7 at vitelinc dot com>
+W dot  Craig Trader <ct7 at vitelinc dot com>
 Bruce McIntosh <Bruce dot McIntosh at boeing dot com>
 Natarajan Kalpathy <Natarajan_Kalpathy at mw dot 3com dot com>
 David O'Farrell <eeidofl at eei dot ericsson dot se>
@@ -1267,7 +1267,7 @@ Victor Pitchouc <pitchouc at tlsoft dot ru>
 Srikanth Vedire <srvedire at yahoo dot com>
 J Shane Culpepper <pepper at channelogics dot com>
 Steffen Hieber <Steffen dot Hieber at erl9 dot siemens dot de>
-Craig L. Ching <cching at mqsoftware dot com>
+Craig L dot  Ching <cching at mqsoftware dot com>
 Ben Howard <Ben_Howard at raytheon dot com>
 Rich Newman <RNewman at directv dot com>
 Kelly F dot  Hickel <kfh at mqsoftware dot com>
@@ -1894,7 +1894,7 @@ J. Abelardo Gutierrez <jabelardo at cantv dot net>
 Roger Sala <Roger dot Sala at gd-ais dot com>
 Raz Ben-Yehuda <raz dot b at corigin dot com>
 Geo Sebastian <geosebastian at onmobile dot com>
-Simon Massey <simon dot massey at prismtechnologies dot com>
+Simon Massey <simon dot massey a tprismtechnologies dot com>
 Rich Shapiro <rshapiro at bbn dot com>
 Ramiro Morales <rm0 at gmx dot net>
 Andrew Athan <aathan-ace-bugs-1524 at cloakmail dot com>
@@ -1904,13 +1904,6 @@ Rick Robinson <rick at oyarsa dot com>
 John D. Robertson <john at rrci dot com>
 Paul Lew <paullew at cisco dot com>
 Eider Oliveira <eider at oliveira dot gmail at com>
-Jeff Jones <jjones at zonetrading dot com>
-Jean-Christophe Cota <jean-christophe dot cota at eurocontrol dot int>
-Paul <paul at reeder dot cs>
-Vincent Newsum <Newsum at fel dot tno dot nl>
-Vasili Goutas <vasili at goutas dot de>
-Iliyan Jeliazkov  <jeliazkov_i at ociweb dot com>
-Shlomi Yaakobovich <Shlomi at exanet dot com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

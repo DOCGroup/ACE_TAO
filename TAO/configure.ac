@@ -171,6 +171,7 @@ dnl created first.
 AC_CONFIG_FILES([
   tao-config
   tao-config.1
+  taoConf.sh
   Makefile
   TAO_IDL/Makefile
   tao/Makefile

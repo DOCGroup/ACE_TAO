@@ -42,8 +42,7 @@ TAO_Policy_Manager::set_policy_overrides (
 }
 
 ACE_INLINE CORBA::Policy_ptr
-TAO_Policy_Manager::get_cached_policy (TAO_Cached_Policy_Type type
-                                       ACE_ENV_ARG_DECL)
+TAO_Policy_Manager::get_cached_policy (TAO_Cached_Policy_Type type)
 {
 
   // @@ Previous code used a "double-checked locking hack" to check
@@ -53,8 +52,7 @@ TAO_Policy_Manager::get_cached_policy (TAO_Cached_Policy_Type type
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
 
-  return this->impl_.get_cached_policy (type
-                                        ACE_ENV_ARG_PARAMETER);
+  return this->impl_.get_cached_policy (type);
 }
 
 
@@ -81,11 +79,9 @@ TAO_Policy_Current_Impl::get_policy (
 }
 
 ACE_INLINE CORBA::Policy_ptr
-TAO_Policy_Current_Impl::get_cached_policy (TAO_Cached_Policy_Type type
-                                            ACE_ENV_ARG_DECL)
+TAO_Policy_Current_Impl::get_cached_policy (TAO_Cached_Policy_Type type)
 {
-  return this->manager_impl_.get_cached_policy (type
-                                                ACE_ENV_ARG_PARAMETER);
+  return this->manager_impl_.get_cached_policy (type);
 }
 
 // ****************************************************************
@@ -125,11 +121,9 @@ TAO_Policy_Current::set_policy_overrides (const CORBA::PolicyList & policies,
 }
 
 ACE_INLINE CORBA::Policy_ptr
-TAO_Policy_Current::get_cached_policy (TAO_Cached_Policy_Type type
-                                       ACE_ENV_ARG_DECL)
+TAO_Policy_Current::get_cached_policy (TAO_Cached_Policy_Type type)
 {
   TAO_Policy_Current_Impl &impl = this->implementation ();
 
-  return impl.get_cached_policy (type
-                                 ACE_ENV_ARG_PARAMETER);
+  return impl.get_cached_policy (type);
 }

@@ -39,7 +39,6 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-#include "ace/OS_main.h"
 #include "asnmp/address.h"
 #include "test_config.h"
 
@@ -533,9 +532,9 @@ static void TestUdpAddress()
 }
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+main (int, char *[])
 {
-  ACE_START_TEST (ACE_TEXT ("Address_Test"));
+  ACE_START_TEST ("Address_Test");
 
   TestGenAddr();
   TestIpAddress();

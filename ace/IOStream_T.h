@@ -58,17 +58,17 @@ public:
 
   virtual ssize_t recv (char *buf,
                         ssize_t len,
-                        ACE_Time_Value *tv = 0);
+                        ACE_Time_Value *tv = NULL);
 
   virtual ssize_t recv (char *buf,
                         ssize_t len,
                         int flags,
-                        ACE_Time_Value * tv = 0);
+                        ACE_Time_Value * tv = NULL);
 
   virtual ssize_t recv_n (char *buf,
                           ssize_t len,
                           int flags = 0,
-                          ACE_Time_Value *tv = 0);
+                          ACE_Time_Value *tv = NULL);
 
 protected:
   virtual ACE_HANDLE get_handle (void);
@@ -262,15 +262,15 @@ public:
   ssize_t send_n (char *buf, ssize_t len);
   ssize_t recv  (char *buf,
                  ssize_t len,
-                 ACE_Time_Value *tv = 0);
+                 ACE_Time_Value *tv = NULL);
   ssize_t recv (char *buf,
                 ssize_t len,
                 int flags,
-                ACE_Time_Value *tv = 0);
+                ACE_Time_Value *tv = NULL);
   ssize_t recv_n (char *buf,
                   ssize_t len,
                   int flags = 0,
-                  ACE_Time_Value *tv = 0);
+                  ACE_Time_Value *tv = NULL);
   int get_remote_addr (ACE_INET_Addr &addr) const;
 
 protected:

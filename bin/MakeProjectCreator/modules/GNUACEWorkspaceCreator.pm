@@ -20,12 +20,6 @@ use vars qw(@ISA);
 @ISA = qw(WorkspaceCreator);
 
 # ************************************************************
-# Data Section
-# ************************************************************
-
-my($base) = 'GNUmakefile';
-
-# ************************************************************
 # Subroutine Section
 # ************************************************************
 
@@ -37,7 +31,7 @@ sub generate_implicit_project_dependencies {
 
 sub workspace_file_name {
   my($self) = shift;
-  return $self->get_modified_workspace_name($base, '');
+  return $self->get_modified_workspace_name('GNUmakefile', '');
 }
 
 
@@ -65,8 +59,7 @@ sub pre_workspace {
             "# $0 @ARGV", $crlf,
             '#', $crlf,
             '#-------------------------------------------------------------------------', $crlf,
-            'MAKEFILE = ', $self->get_modified_workspace_name($base, '', 1),
-            $crlf;
+            'MAKEFILE = ', $self->get_current_output_name(), $crlf;
 }
 
 
@@ -169,13 +162,10 @@ sub write_comps {
       }
     }
     print $fh $crlf,
-              'REMAINING_TARGETS := ',
-              '$(subst all, , $(TARGETS_NESTED:.nested=)) $(CUSTOM_TARGETS)',
-              $crlf;
+              "REMAINING_TARGETS := \$(subst all, , \$(TARGETS_NESTED:.nested=))$crlf",
   }
   else {
-    print $fh 'REMAINING_TARGETS := $(TARGETS_NESTED:.nested=) ',
-              '$(CUSTOM_TARGETS)', $crlf;
+    print $fh "REMAINING_TARGETS := \$(TARGETS_NESTED:.nested=)$crlf",
   }
 
   ## Print out the remaing targets.

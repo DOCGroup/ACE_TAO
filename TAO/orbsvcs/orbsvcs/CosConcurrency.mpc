@@ -20,7 +20,4 @@ project(CosConcurrency) : orbsvcslib, core, portableserver {
       Concurrency
     }
   }
-
-  Template_Files {
-  }
 }

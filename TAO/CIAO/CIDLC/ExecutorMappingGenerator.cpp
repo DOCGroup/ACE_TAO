@@ -1640,8 +1640,7 @@ generate (CommandLine const& cl,
     string suffix (cl.get_value ("lem-file-suffix", "E.idl"));
 
     string expr (cl.get_value (
-                   "lem-file-regex",
-                   "/(\\.(idl|cidl|cdl))?$/" + suffix + "/"));
+                   "lem-file-regex", "/(\\.(idl|cidl))?$/" + suffix + "/"));
 
     string lem_file_name (regex::perl_s (file_name, expr));
 

@@ -179,10 +179,10 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   char *fgets (char *buf, int size, FILE *fp);
 
-# if defined (ACE_HAS_WCHAR) && !defined(ACE_LACKS_FGETWS)
+# if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *fgets (wchar_t *buf, int size, FILE *fp);
-# endif /* ACE_HAS_WCHAR && !ACE_LACKS_FGETWS */
+# endif /* ACE_HAS_WCHAR */
 
   //@{ @name A set of wrappers for file locks.
 
@@ -302,11 +302,11 @@ namespace ACE_OS {
   int fputs (const char *s,
              FILE *stream);
 
-# if defined (ACE_HAS_WCHAR) && !defined(ACE_LACKS_FPUTWS)
+# if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int fputs (const wchar_t *s,
              FILE *stream);
-# endif /* ACE_HAS_WCHAR && !ACE_LACKS_FPUTWS */
+#endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   size_t fread (void *ptr,

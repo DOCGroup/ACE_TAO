@@ -37,7 +37,6 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-#include "ace/OS_main.h"
 #include "asnmp/gauge.h"
 #include "test_config.h"
 
@@ -122,9 +121,9 @@ TestGuage (void)
 }
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+main (int, char *[])
 {
-  ACE_START_TEST (ACE_TEXT ("Gauge_Test"));
+  ACE_START_TEST ("Guage_Test");
 
   TestGuage();
 

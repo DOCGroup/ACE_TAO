@@ -276,10 +276,10 @@ namespace
   {
     AttributeEmitter (Context& c, T& scope)
       : EmitterBase (c),
-        scope_ (scope),
         write_type_name_emitter_ (c.os ()),
         read_type_name_emitter_ (c.os ()),
-        return_emitter_ (c.os ())
+        return_emitter_ (c.os ()),
+        scope_ (scope)
     {
       write_belongs_.node_traverser (write_type_name_emitter_);
       read_belongs_.node_traverser (read_type_name_emitter_);
@@ -336,9 +336,9 @@ namespace
   {
     ReadOnlyAttributeEmitter (Context& c, T& scope)
       : EmitterBase (c),
-        scope_ (scope),
         read_type_name_emitter_ (c.os ()),
-        return_emitter_ (c.os ())
+        return_emitter_ (c.os ()),
+        scope_ (scope)
     {
       read_belongs_.node_traverser (read_type_name_emitter_);
       return_belongs_.node_traverser (return_emitter_);
@@ -781,7 +781,7 @@ namespace
     }
 
     virtual void
-    post (Type&)
+    post (Type& t)
     {
     }
   };
@@ -826,7 +826,7 @@ namespace
     }
 
     virtual void
-    returns (SemanticGraph::HomeFactory&)
+    returns (SemanticGraph::HomeFactory& hf)
     {
       os << STRS[COMP_EC] << "_ptr" << endl;
     }
@@ -920,7 +920,7 @@ namespace
     }
 
     virtual void
-    returns (SemanticGraph::HomeFinder&)
+    returns (SemanticGraph::HomeFinder& hf)
     {
       os << STRS[COMP_EC] << "_ptr" << endl;
     }
@@ -1274,7 +1274,7 @@ ExecImplSourceEmitter::ExecImplSourceEmitter (std::ostream& os_,
 {}
 
 void
-ExecImplSourceEmitter::pre (TranslationUnit&)
+ExecImplSourceEmitter::pre (TranslationUnit& u)
 {
   os << COPYRIGHT;
 
@@ -1289,7 +1289,7 @@ ExecImplSourceEmitter::pre (TranslationUnit&)
                                       "_exec.h");
 
   file_name = regex::perl_s (file_name,
-                             "/(\\.(idl|cidl|cdl))?$/"
+                             "/(\\.(idl|cidl))?$/"
                              + file_suffix
                              + "/");
 
@@ -1364,7 +1364,7 @@ ExecImplSourceEmitter::generate (TranslationUnit& u)
 }
 
 void
-ExecImplSourceEmitter::post (TranslationUnit&)
+ExecImplSourceEmitter::post (TranslationUnit& u)
 {
 }
 

@@ -16,7 +16,6 @@
 #include "CCF/IDL3/SemanticAction/Impl/Emits.hpp"
 #include "CCF/IDL3/SemanticAction/Impl/Consumes.hpp"
 #include "CCF/IDL3/SemanticAction/Impl/EventType.hpp"
-#include "CCF/IDL3/SemanticAction/Impl/EventTypeFactory.hpp"
 #include "CCF/IDL3/SemanticAction/Impl/Home.hpp"
 #include "CCF/IDL3/SemanticAction/Impl/HomeFactory.hpp"
 #include "CCF/IDL3/SemanticAction/Impl/HomeFinder.hpp"
@@ -61,13 +60,6 @@ namespace CCF
           {
             return event_type_;
           }
-
-          virtual EventTypeFactory&
-          event_type_factory ()
-          {
-            return event_type_factory_;
-          }
-
 
           virtual SemanticAction::Home&
           home ()
@@ -117,7 +109,6 @@ namespace CCF
           Consumes consumes_;
           Emits emits_;
           EventType event_type_;
-          EventTypeFactory event_type_factory_;
           Home home_;
           HomeFactory home_factory_;
           HomeFinder home_finder_;

@@ -21,6 +21,7 @@
 // Compiler-specific configuration.
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
+# undef ACE_HAS_TEMPLATE_SPECIALIZATION
 
 // We have to explicitly instantiate static template members
 # define ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION
@@ -36,19 +37,18 @@
 // An explicit check for Tornado 2.1, which had very limited release.
 // See include/makeinclude/platform_vxworks5.x_g++.GNU for details
 // on version conventions used by ACE for VxWorks.
-# if defined (ACE_VXWORKS)
-#   if ACE_VXWORKS == 0x542
-      // Older versions of Tornado accidentally omitted math routines from
-      // the link library to support long long arithmetic. These could be
-      // found and used from another library in the distro.
-      // Recent versions of Tornado include these symbols, so we no longer
-      // have a problem.
-#     define ACE_LACKS_LONGLONG_T
-#     define ACE_LACKS_CLEARERR
-#   elif ACE_VXWORKS >= 0x542
-#     define ACE_LACKS_AUTO_PTR
-#   endif /* ACE_VXWORKS == 0x542 */
-# endif /* ACE_VXWORKS */
+# if defined (ACE_VXWORKS) && ACE_VXWORKS == 0x542
+    // Older versions of Tornado accidentally omitted math routines from
+    // the link library to support long long arithmetic. These could be
+    // found and used from another library in the distro.
+    // Recent versions of Tornado include these symbols, so we no longer
+    // have a problem.
+#   define ACE_LACKS_LONGLONG_T
+#   define ACE_LACKS_CLEARERR
+    // This is for inofficial(!) gcc2.96 shipped with Tornado2.1.0 for
+    // Hitachi SuperH platform.
+#   define ACE_LACKS_AUTO_PTR
+# endif /* ACE_VXWORKS == 0x542 */
 
 #elif defined (ghs)
   // Processor type, if necessary.  Green Hills defines "ppc".
@@ -99,9 +99,6 @@
 
 // OS-specific configuration
 
-#define ACE_LACKS_REALPATH
-#define ACE_HAS_NONCONST_SWAB
-#define ACE_HAS_NONCONST_READV
 #define ACE_LACKS_UNIX_SYSLOG
 #define ACE_HAS_MUTEX_TIMEOUTS
 #define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 32768
@@ -118,7 +115,6 @@
 #define ACE_HAS_DLL 0
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 #define ACE_HAS_MSG
-#define ACE_HAS_NONCONST_READV
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 #define ACE_HAS_POSIX_NONBLOCK
@@ -157,7 +153,6 @@
 #define ACE_LACKS_PWD_FUNCTIONS
 #define ACE_LACKS_READDIR_R
 #define ACE_LACKS_READLINK
-#define ACE_LACKS_REALPATH
 #define ACE_LACKS_RLIMIT
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_SBRK
@@ -237,7 +232,6 @@
 #define ACE_LACKS_WCSTOL
 #define ACE_LACKS_WCSTOUL
 #define ACE_LACKS_WCSDUP
-#define ACE_LACKS_SYMLINKS
 
 #if !defined (ACE_MT_SAFE)
 # define ACE_MT_SAFE 1

@@ -22,16 +22,10 @@ TAO_UIPMC_Wait_Never::register_handler (void)
   return -1;
 }
 
-bool
-TAO_UIPMC_Wait_Never::non_blocking (void) const
+int
+TAO_UIPMC_Wait_Never::non_blocking (void)
 {
-  return true;
-}
-
-bool
-TAO_UIPMC_Wait_Never::can_process_upcalls (void) const
-{
-  return false;
+  return 1;
 }
 
 int

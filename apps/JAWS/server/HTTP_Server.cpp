@@ -34,12 +34,13 @@ public:
 };
 
 void
-HTTP_Server::parse_args (int argc, ACE_TCHAR *argv[])
+HTTP_Server::parse_args (int argc,
+			 char *argv[])
 {
   int c;
   int thr_strategy = 0;
   int io_strategy = 0;
-  const ACE_TCHAR *prog = argc > 0 ? argv[0] : ACE_TEXT ("HTTP_Server");
+  const char *prog = argc > 0 ? argv[0] : "HTTP_Server";
 
   // Set some defaults
   this->port_ = 0;
@@ -47,7 +48,7 @@ HTTP_Server::parse_args (int argc, ACE_TCHAR *argv[])
   this->backlog_ = 0;
   this->throttle_ = 0;
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:n:t:i:b:"));
+  ACE_Get_Opt get_opt (argc, argv, "p:n:t:i:b:");
 
   while ((c = get_opt ()) != -1)
     switch (c)
@@ -62,36 +63,36 @@ HTTP_Server::parse_args (int argc, ACE_TCHAR *argv[])
 	// POOL        -> thread pool
 	// PER_REQUEST -> thread per request
 	// THROTTLE    -> thread per request with throttling
-        if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("POOL")) == 0)
+        if (ACE_OS::strcmp (get_opt.opt_arg (), "POOL") == 0)
           thr_strategy = JAWS::JAWS_POOL;
-        else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("PER_REQUEST")) == 0)
+        else if (ACE_OS::strcmp (get_opt.opt_arg (), "PER_REQUEST") == 0)
           {
             thr_strategy = JAWS::JAWS_PER_REQUEST;
             this->throttle_ = 0;
           }
-        else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("THROTTLE")) == 0)
+        else if (ACE_OS::strcmp (get_opt.opt_arg (), "THROTTLE") == 0)
           {
             thr_strategy = JAWS::JAWS_PER_REQUEST;
             this->throttle_ = 1;
           }
 	break;
       case 'f':
-        if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("THR_BOUND")) == 0)
+        if (ACE_OS::strcmp (get_opt.opt_arg (), "THR_BOUND") == 0)
           {
             // What happened here?
           }
-        else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("THR_DAEMON")) == 0)
+        else if (ACE_OS::strcmp (get_opt.opt_arg (), "THR_DAEMON") == 0)
           {
           }
-        else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("THR_DETACHED")) == 0)
+        else if (ACE_OS::strcmp (get_opt.opt_arg (), "THR_DETACHED") == 0)
           {
           }
       case 'i':
 	// SYNCH  -> synchronous I/O
 	// ASYNCH -> asynchronous I/O
-        if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("SYNCH")) == 0)
+        if (ACE_OS::strcmp (get_opt.opt_arg (), "SYNCH") == 0)
           io_strategy = JAWS::JAWS_SYNCH;
-        else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("ASYNCH")) == 0)
+        else if (ACE_OS::strcmp (get_opt.opt_arg (), "ASYNCH") == 0)
           io_strategy = JAWS::JAWS_ASYNCH;
 	break;
       case 'b':
@@ -114,13 +115,12 @@ HTTP_Server::parse_args (int argc, ACE_TCHAR *argv[])
 
   ACE_UNUSED_ARG (prog);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("in HTTP_Server::init, %s port = %d, ")
-              ACE_TEXT ("number of threads = %d\n"),
+              "in HTTP_Server::init, %s port = %d, number of threads = %d\n",
               prog, this->port_, this->threads_));
 }
 
 int
-HTTP_Server::init (int argc, ACE_TCHAR *argv[])
+HTTP_Server::init (int argc, char *argv[])
   // Document this function
 {
   // Ignore signals generated when a connection is broken unexpectedly.
@@ -161,8 +161,7 @@ HTTP_Server::synch_thread_pool (void)
   // Main thread opens the acceptor
   if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1,
                             PF_INET, this->backlog_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("HTTP_Acceptor::open")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::open"), -1);
 
   // Create a pool of threads to handle incoming connections.
   Synch_Thread_Pool_Task t (this->acceptor_, this->tm_, this->threads_);
@@ -178,8 +177,7 @@ Synch_Thread_Pool_Task::Synch_Thread_Pool_Task (HTTP_Acceptor &acceptor,
     acceptor_ (acceptor)
 {
   if (this->activate (THR_DETACHED | THR_NEW_LWP, threads) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                ACE_TEXT ("Synch_Thread_Pool_Task::open")));
+    ACE_ERROR ((LM_ERROR, "%p\n", "Synch_Thread_Pool_Task::open"));
 }
 
 int
@@ -194,8 +192,7 @@ Synch_Thread_Pool_Task::svc (void)
 
       // Lock in this accept.  When it returns, we have a connection.
       if (this->acceptor_.accept (stream) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"),
-                           ACE_TEXT ("HTTP_Acceptor::accept")), -1);
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::accept"), -1);
 
       ACE_Message_Block *mb;
       ACE_NEW_RETURN (mb,
@@ -210,7 +207,7 @@ Synch_Thread_Pool_Task::svc (void)
 
       mb->release ();
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT (" (%t) in Synch_Thread_Pool_Task::svc, recycling\n")));
+                  " (%t) in Synch_Thread_Pool_Task::svc, recycling\n"));
     }
 
   ACE_NOTREACHED(return 0);
@@ -225,8 +222,7 @@ HTTP_Server::thread_per_request (void)
   // Main thread opens the acceptor
   if (this->acceptor_.open (ACE_INET_Addr (this->port_), 1,
                             PF_INET, this->backlog_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("HTTP_Acceptor::open")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::open"), -1);
 
   ACE_SOCK_Stream stream;
 
@@ -237,8 +233,7 @@ HTTP_Server::thread_per_request (void)
   for (;;)
     {
       if (this->acceptor_.accept (stream) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("HTTP_Acceptor::accept")), -1);
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::accept"), -1);
 
       Thread_Per_Request_Task *t;
       // Pass grp_id as a constructor param instead of into open.
@@ -249,8 +244,8 @@ HTTP_Server::thread_per_request (void)
 
 
       if (t->open () != 0)
-	ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("Thread_Per_Request_Task::open")),
+	ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n", "Thread_Per_Request_Task::open"),
                           -1);
 
       // Throttling is not allowing too many threads to run away.
@@ -291,8 +286,7 @@ Thread_Per_Request_Task::open (void *)
                              1, 0, -1, this->grp_id_, 0);
 
   if (status == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("Thread_Per_Request_Task::open")),
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Thread_Per_Request_Task::open"),
                       -1);
   return 0;
 }
@@ -314,7 +308,7 @@ int
 Thread_Per_Request_Task::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      ACE_TEXT (" (%t) Thread_Per_Request_Task::svc, dying\n")));
+	      " (%t) Thread_Per_Request_Task::svc, dying\n"));
   delete this;
   return 0;
 }
@@ -348,8 +342,8 @@ HTTP_Server::asynch_thread_pool (void)
   // asynchronous I/O request to the OS.
   if (acceptor.open (ACE_INET_Addr (this->port_),
 		     HTTP_Handler::MAX_REQUEST_SIZE + 1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE_Asynch_Acceptor::open")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n",
+                       "ACE_Asynch_Acceptor::open"), -1);
 
   // Create the thread pool.
   // Register threads with the proactor and thread manager.
@@ -373,8 +367,7 @@ Asynch_Thread_Pool_Task::Asynch_Thread_Pool_Task (ACE_Proactor &proactor,
     proactor_ (proactor)
 {
   if (this->activate () == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                ACE_TEXT ("Asynch_Thread_Pool_Task::open")));
+    ACE_ERROR ((LM_ERROR, "%p\n", "Asynch_Thread_Pool_Task::open"));
 }
 
 int
@@ -382,8 +375,7 @@ Asynch_Thread_Pool_Task::svc (void)
 {
   for (;;)
     if (this->proactor_.handle_events () == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("ACE_Proactor::handle_events")),
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Proactor::handle_events"),
                         -1);
 
   return 0;
@@ -395,7 +387,7 @@ Asynch_Thread_Pool_Task::svc (void)
 ACE_SVC_FACTORY_DEFINE (HTTP_Server)
 
 // Define the object that describes the service.
-ACE_STATIC_SVC_DEFINE (HTTP_Server, ACE_TEXT ("HTTP_Server"), ACE_SVC_OBJ_T,
+ACE_STATIC_SVC_DEFINE (HTTP_Server, "HTTP_Server", ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (HTTP_Server),
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ, 0)

@@ -15,7 +15,8 @@ ACE_BUILDDIR = $(top_builddir)
 noinst_PROGRAMS = main
 
 main_CPPFLAGS = \
-  -I$(ACE_ROOT) \
+  -I$(top_builddir) \
+  -I$(top_srcdir) \
   -I$(ACE_BUILDDIR) \
   -I$(ACE_ROOT)/netsvcs/lib
 
@@ -23,8 +24,7 @@ main_SOURCES = \
   main.cpp
 
 main_LDADD = \
- $(ACE_BUILDDIR)/netsvcs/lib/libnetsvcs.la \
- $(ACE_BUILDDIR)/ace/libACE.la
+ $(top_builddir)/netsvcs/lib/libnetsvcs.la $(top_builddir)/ace/libACE.la
 
 ## Clean up template repositories, etc.
 clean-local:

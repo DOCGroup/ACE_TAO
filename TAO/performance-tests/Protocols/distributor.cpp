@@ -188,11 +188,11 @@ test_i::start_test (CORBA::Long session_id,
 
     test_protocol_setup:
 
-      ACE_TRY_EX (B1)
+      ACE_TRY
 	{
 	  // Send a message to ensure that the connection is setup.
 	  this->receiver_->oneway_sync (ACE_ENV_SINGLE_ARG_PARAMETER);
-	  ACE_TRY_CHECK_EX (B1);
+	  ACE_TRY_CHECK;
 
 	  goto test_protocol_success;
 	}
@@ -231,7 +231,7 @@ test_i::start_test (CORBA::Long session_id,
 
     base_protocol_setup:
 
-      ACE_TRY_EX (B2)
+      ACE_TRY
 	{
 	  // Let the server know what to expect..
 	  this->receiver_->start_test (session_id,
@@ -240,7 +240,7 @@ test_i::start_test (CORBA::Long session_id,
 				       message_size,
 				       iterations
 				       ACE_ENV_ARG_PARAMETER);
-	  ACE_TRY_CHECK_EX (B2);
+	  ACE_TRY_CHECK;
 
 	  goto base_protocol_success;
 	}

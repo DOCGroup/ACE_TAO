@@ -164,7 +164,6 @@ Leader_Follower_Task::svc (void)
         while (leader_available)
           {
             int result = this->synch_.condition_.wait ();
-            
             if (result == -1)
               {
                 ACE_ERROR_RETURN ((LM_ERROR,
@@ -290,7 +289,6 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result = parse_args (argc, argv);
-  
   if (result != 0)
     {
       return result;
@@ -306,8 +304,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   Leader_Follower_Task *[number_of_threads],
                   -1);
 
+
+
+
   int priority =
     ACE_Sched_Params::priority_max (ACE_SCHED_FIFO);
+
 
   long flags = THR_SCOPE_PROCESS;
 
@@ -363,9 +365,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   test_timer.elapsed_time (elapsed_time);
 
   double elapsed_time_per_invocation =
-    static_cast<double> (
-        ACE_UINT64_DBLCAST_ADAPTER (elapsed_time / number_of_messages)
-      );
+    ACE_UINT64_DBLCAST_ADAPTER (elapsed_time / number_of_messages);
+
+  /*ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) Throughput is [%f] \n",
+              elapsed_time_per_invocation));*/
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Throughput is [%f] \n",
@@ -379,7 +383,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   i, leader_followers[i]->processed ()));
       delete leader_followers[i];
     }
-    
   delete[] leader_followers;
 
   return result;

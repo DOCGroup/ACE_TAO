@@ -79,9 +79,7 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies
   // specified in the RTCORBA::ServerProtocolPolicy.  This ensure we
   // will be able to create non-nil object references.
   CORBA::Policy_var protocol =
-    policies.get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    policies.get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
 
   RTCORBA::ServerProtocolPolicy_var server_protocol_policy =
     RTCORBA::ServerProtocolPolicy::_narrow (protocol.in ()
@@ -130,9 +128,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
     TAO_POA_Cached_Policies::NOT_SPECIFIED;
 
   CORBA::Policy_var policy =
-    policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
 
   RTCORBA::PriorityModelPolicy_var priority_model =
     RTCORBA::PriorityModelPolicy::_narrow (policy.in ()
@@ -170,9 +166,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
     }
 
   policy =
-    policies.get_cached_policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    policies.get_cached_policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
 
   RTCORBA::PriorityBandedConnectionPolicy_var priority_bands
     = RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy.in ()
@@ -345,10 +339,7 @@ TAO_POA_RT_Policy_Validator::validate_lifespan (TAO_Policy_Set &policies
   if (this->thread_pool_ != 0)
     {
       CORBA::Policy_var policy =
-        policies.get_cached_policy (TAO_CACHED_POLICY_LIFESPAN
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
+        policies.get_cached_policy (TAO_CACHED_POLICY_LIFESPAN);
       PortableServer::LifespanPolicy_var lifespan_policy =
         PortableServer::LifespanPolicy::_narrow (policy.in ()
                                                  ACE_ENV_ARG_PARAMETER);
@@ -371,19 +362,14 @@ TAO_POA_RT_Policy_Validator::merge_policies_impl (TAO_Policy_Set &policies
 {
   // Check if the user has specified the priority model policy.
   CORBA::Policy_var priority_model =
-    policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
 
   if (CORBA::is_nil (priority_model.in ()))
     {
       // If not, check if the priority model policy has been specified
       // at the ORB level.
       priority_model =
-        this->orb_core_.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
+        this->orb_core_.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
       if (!CORBA::is_nil (priority_model.in ()))
         {
           // If so, we'll use that policy.
@@ -394,20 +380,14 @@ TAO_POA_RT_Policy_Validator::merge_policies_impl (TAO_Policy_Set &policies
 
   // Check if the user has specified the server protocol policy.
   CORBA::Policy_var server_protocol =
-    policies.get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    policies.get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
 
   if (CORBA::is_nil (server_protocol.in ()))
     {
       // If not, check if the server protocol policy has been
       // specified at the ORB level.
       server_protocol =
-        this->orb_core_.get_cached_policy (
-          TAO_CACHED_POLICY_RT_SERVER_PROTOCOL
-          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
+        this->orb_core_.get_cached_policy (TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
       if (!CORBA::is_nil (server_protocol.in ()))
         {
           // If so, we'll use that policy.
@@ -418,19 +398,14 @@ TAO_POA_RT_Policy_Validator::merge_policies_impl (TAO_Policy_Set &policies
 
   // Check if the user has specified the thread pool policy.
   CORBA::Policy_var thread_pool =
-    policies.get_cached_policy (TAO_CACHED_POLICY_THREADPOOL
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+    policies.get_cached_policy (TAO_CACHED_POLICY_THREADPOOL);
 
   if (CORBA::is_nil (thread_pool.in ()))
     {
       // If not, check if the thread pool policy has been specified at
       // the ORB level.
       thread_pool =
-        this->orb_core_.get_cached_policy (TAO_CACHED_POLICY_THREADPOOL
-                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
+        this->orb_core_.get_cached_policy (TAO_CACHED_POLICY_THREADPOOL);
       if (!CORBA::is_nil (thread_pool.in ()))
         {
           // If so, we'll use that policy.
@@ -447,9 +422,7 @@ TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
                                                   ACE_ENV_ARG_DECL)
 {
   CORBA::Policy_var policy =
-    policies.get_cached_policy (TAO_CACHED_POLICY_THREADPOOL
-                                ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+    policies.get_cached_policy (TAO_CACHED_POLICY_THREADPOOL);
 
   RTCORBA::ThreadpoolPolicy_var thread_pool_policy =
     RTCORBA::ThreadpoolPolicy::_narrow (policy.in ()

@@ -64,8 +64,6 @@ project (CIAO_DnC_Container) : orbsvcslib, portableserver, security, valuetype, 
 project(Deployment_stub) : taolib_with_idl, valuetype, ifr_client {
   sharedname   =  CIAO_Deployment_stub
   after        += CIAO_DnC_Client
- 
-  libs += CIAO_DnC_Client
 
   idlflags     += -Wb,stub_export_macro=Deployment_stub_Export
   idlflags     += -Wb,stub_export_include=Deployment_stub_export.h
@@ -132,10 +130,8 @@ project (CIAO_DnC_Server) : orbsvcslib, portableserver, valuetype, ifr_client, u
   Source_Files {
     Container_Base.cpp
     NodeApplication_Impl.cpp
-    Context_Impl_Base.cpp
-    Home_Servant_Impl_Base.cpp
-    Servant_Impl_Base.cpp
     Server_init.cpp
+    Servant_Impl_Base.cpp
     Servant_Activator.cpp
     Port_Activator.cpp
     StandardConfigurator_Impl.cpp
@@ -144,13 +140,11 @@ project (CIAO_DnC_Server) : orbsvcslib, portableserver, valuetype, ifr_client, u
   Header_Files {
     CIAO_Server_Export.h
     CIAO_common.h
+    StandardConfigurator_Impl.h
   }
 
   Template_Files {
-    Context_Impl_T.cpp
-    Home_Servant_Impl_T.cpp
     Servant_Impl_T.cpp
-    Servant_Activator_T.cpp
   }
 }
 

@@ -20,7 +20,4 @@ project(CosProperty) : orbsvcslib, core, portableserver {
       Property
     }
   }
-
-  Template_Files {
-  }
 }

@@ -52,7 +52,8 @@ namespace TAO
     /// Constructor.
     IIOP_SSL_Connection_Handler (ACE_Thread_Manager* t = 0);
     IIOP_SSL_Connection_Handler (TAO_ORB_Core *orb_core,
-                                 CORBA::Boolean flag);
+                                 CORBA::Boolean flag,
+                                 void *arg);
 
     /// Destructor.
     ~IIOP_SSL_Connection_Handler (void);

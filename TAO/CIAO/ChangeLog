@@ -1,490 +1,3 @@
-Sun Oct 03 09:38:03 2004  Nanbor Wang  <nanbor@cse.wustl.edu>
-
-	* DAnCE/Config_Handlers/XSCRT/Elements.hpp:
-	* DAnCE/Config_Handlers/XSCRT/ExtendedTypeInfo.hpp:
-	* DAnCE/Config_Handlers/XSCRT/Parser.hpp:
-	* DAnCE/Config_Handlers/XSCRT/Traversal.hpp:
-	* DAnCE/Config_Handlers/XSCRT/XMLSchema.hpp:
-	* DAnCE/Config_Handlers/pcd.hpp:
-	* DAnCE/Config_Handlers/iad.hpp:
-	* DAnCE/Config_Handlers/cpd.hpp:
-	* DAnCE/Config_Handlers/cid.hpp:
-	* DAnCE/Config_Handlers/cdp.hpp:
-	* DAnCE/Config_Handlers/cdd.hpp:
-	* DAnCE/Config_Handlers/Deployment.hpp:
-	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp:
-	* DAnCE/Config_Handlers/ccd.hpp:
-	* DAnCE/Config_Handlers/toplevel.hpp: Change to include XSCRT
-	  headers as "user libraries" instead of <system libraries>.
-
-Sun Oct 03 09:18:05 2004  Nanbor Wang  <nanbor@cse.wustl.edu>
-
-	* DAnCE/tests/Config_Handlers/handler_test.mpb: Changed to use the
-	  xerces base project that Johnny added.  The base project
-	  correctly uses lit_libs to include xerces.
-
-Thu Sep 30 14:49:23 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * CIDLC/ExecImplHeaderGenerator.cpp:
-        * CIDLC/ExecImplSourceGenerator.cpp:
-        * CIDLC/ServantHeaderGenerator.cpp:
-
-          Removed identifiers of unused args.
-
-        * CIDLC/RepositoryIdGenerator.cpp:
-
-          Extended generator to compute repo ids for
-          homes and components.
-
-        * CIDLC/DescriptorGenerator.cpp:
-
-          Changed code to use the context value set by the expanded
-          repo id generator and removed code to compute repo id
-          in this generator.
-
-Thu Sep 30 11:03:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * CIDLC/ExecImplGenerator.cpp:
-        * CIDLC/ExecImplHeaderGenerator.cpp:
-        * CIDLC/ExecImplSourceGenerator.cpp:
-        * CIDLC/ExecutorMappingGenerator.cpp:
-        * CIDLC/ServantGenerator.cpp:
-        * CIDLC/ServantHeaderGenerator.cpp:
-        * CIDLC/ServantSourceGenerator.cpp:
-
-          Added handling of file extension .cdl, as found in
-          spec documents.
-
-Thu Sep 30 09:16:52 2004  Nanbor Wang  <nanbor_a_txcorp_._com>
-
-	* CCF/Config.rules: Added new definitions to actually add the
-	  boost and utility related directives into compiler/linker
-	  flags.
-
-Thu Sep 30 09:55:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/Config_Handlers/DnC_Dump_T.h:
-          Fixed fuzz error
-
-Wed Sep 29 17:30:25 2004  Irfan Pyarali  <irfan@oomworks.com>
-
-	* performance-tests/Protocols:
-
-	  - Minor changes were made to the Sender to in lieu of some
-	  interface changes.
-
-	  - run_test.pl was changed so that a simple version of the test
-	  can be executed.
-
-	* performance-tests/Protocols/Sender/Sender.mpc:
-	* performance-tests/Protocols/Receiver/Receiver.mpc:
-
-	  Removed "dummy" label so that it is included in nightly builds.
-
-	* performance-tests/Protocols/descriptors/CIAO_Installation_Data.ini:
-	* performance-tests/Protocols/Sender/Sender.mpc:
-	* performance-tests/Protocols/descriptors/Receiver.csd:
-	* performance-tests/Protocols/descriptors/Receiver.ssd:
-	* performance-tests/Protocols/descriptors/Sender.csd:
-	* performance-tests/Protocols/descriptors/Sender.ssd:
-
-	  Sender_* was changed to Protocols_Sender_* and Receiver_* was
-	  changed to Protocols_Receiver_*.
-
-	* performance-tests/Protocols/Sender/Sender_exec.cpp:
-	* performance-tests/Protocols/Sender/Sender.mpc:
-
-	  Custom_Network_Priority_Mapping.cpp was included directly.  If
-	  listed as a source file that is not in the current directory,
-	  mpc mucks the object file location.
-
-	* performance-tests/Protocols/descriptors/Receiver.csd:
-	* performance-tests/Protocols/descriptors/Receiver.ssd:
-	* performance-tests/Protocols/descriptors/Sender.csd:
-	* performance-tests/Protocols/descriptors/Sender.ssd:
-
-	  Hello was changed to Protocols.
-
-	* tests/RTCCM/DiffServ/descriptors/CIAO_Installation_Data.ini:
-	* tests/RTCCM/DiffServ/Sender/Sender.mpc:
-	* tests/RTCCM/DiffServ/descriptors/Receiver.csd:
-	* tests/RTCCM/DiffServ/descriptors/Receiver.ssd:
-	* tests/RTCCM/DiffServ/descriptors/Sender.csd:
-	* tests/RTCCM/DiffServ/descriptors/Sender.ssd:
-
-	  Sender_* was changed to DiffServ_Sender_* and Receiver_* was
-	  changed to DiffServ_Receiver_*.
-
-	* tests/RTCCM/DiffServ/Sender/Sender_exec.cpp:
-	* tests/RTCCM/DiffServ/Sender/Sender.mpc:
-
-	  Custom_Network_Priority_Mapping.cpp was included directly.  If
-	  listed as a source file that is not in the current directory,
-	  mpc mucks the object file location.
-
-	* tests/RTCCM/DiffServ/descriptors/Receiver.csd:
-	* tests/RTCCM/DiffServ/descriptors/Receiver.ssd:
-	* tests/RTCCM/DiffServ/descriptors/Sender.csd:
-	* tests/RTCCM/DiffServ/descriptors/Sender.ssd:
-
-	  Hello was changed to DiffServ.
-
-	* tests/RTCCM/DiffServ/Controller/Controller.mpc:
-
-	  "requires" directive was incorrect.  Correct directive is
-	  "after".
-
-Wed Sep 29 19:20:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* DAnCE/examples/BasicSP/BMClosedED/BMClosedED_svnt.cpp:
-	* DAnCE/examples/BasicSP/EC/EC_svnt.cpp:
-	* DAnCE/examples/BasicSP/EC/EC_svnt.h:
-
-	  Removed them from the main trunk.
-
-Wed Sep 29 14:39:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	  The dump function was too complicated not compiling on many
-	  platforms cleanly. This effort is to simplify the dump functions
-	  so that we can compile on many platforms.
-
-	* DAnCE/Config_Handlers/DnC_Dump.cpp:
-	* DAnCE/Config_Handlers/DnC_Dump.h:
-
-	  Moved template functions out of the class.
-
-	* DAnCE/Config_Handlers/DnC_Dump_T.cpp:
-	* DAnCE/Config_Handlers/DnC_Dump_T.h:
-
-	  New files for the template functions.
-
-	* DAnCE/Config_Handlers/Dump_Obj.cpp:
-	* DAnCE/Config_Handlers/Dump_Obj.h:
-
-	  Utility functions have been moved here.
-
- 	* DAnCE/Config_Handlers/Config_Handlers.mpc:
-	  New files added to the build.
-
-Wed Sep 29 07:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ciao/Servant_Activator.h:
-        * DAnCE/ciao/Servant_Activator.h:
-          Added missing prama pop
-
-Wed Sep 29 07:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/Config_Handlers/Utils.h:
-          Added missing include of ace/post.h
-
-Mon Sep 27 17:57:08 2004  Krishnakumar B  <kitty@dre.vanderbilt.edu>
-
-        * DAnCE/examples/BasicSP/BasicSP.mpc:
-        * DAnCE/examples/BasicSP/BMClosedED/BMClosedED.mpc:
-        * DAnCE/examples/BasicSP/BMDevice/BMDevice.mpc:
-        * DAnCE/examples/BasicSP/BMDisplay/BMDisplay.mpc:
-        * DAnCE/examples/BasicSP/EC/EC.mpc:
-
-          Fixed the MPC files to refer to the version of DAnCE libraries
-          instead of the old CIAO libraries.
-
-Mon Sep 27 22:41:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
- 	* CIDLC/ServantSourceGenerator.cpp:
-
-	  Remove calling Home_Servant_impl_Base () directly.
-
-	* DAnCE/ciao/Home_Servant_Impl_Base.cpp:
-	* DAnCE/ciao/Home_Servant_Impl_Base.h:
-	* ciao/Home_Servant_Impl_Base.cpp:
-	* ciao/Home_Servant_Impl_Base.h:
-
-	  Provided a default constructor with explicit keyword. This
-	  should help VC6 and Borland compilers to compile the generated
-	  servants just fine.
-
-Mon Sep 27 19:45:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
- 	* CIDLC/ServantSourceGenerator.cpp:
-
-	  Remove calling Context_Impl_Base () and Servant_Impl_Base ()
-	  directly.
-
-	* DAnCE/ciao/Context_Impl_Base.cpp:
-	* DAnCE/ciao/Context_Impl_Base.h:
-	* DAnCE/ciao/Servant_Impl_Base.cpp:
-	* DAnCE/ciao/Servant_Impl_Base.h:
-	* ciao/Context_Impl_Base.cpp:
-	* ciao/Context_Impl_Base.h:
-	* ciao/Servant_Impl_Base.cpp:
-	* ciao/Servant_Impl_Base.h:
-
-	  Added a explicit default constructor so that they are not called
-	  implicitly when derived classes are instantiated.
-
-	* DAnCE/DomainApplicationManager/Deployment_Configuration.h:
-
-	  Checking in the change mentioned before just now, since it
-	  fell trhough the cracks.
-
-Mon Sep 27 15:41:20 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
- 	* DAnCE/DomainApplicationManager/Deployment_Configuration.h:
-
-	  Export the class out for Win32 builds.
-
-	* DAnCE/ExecutionManager/ExecutionManager.mpc:
-
-	  Removed a strange character frm the mpc file.
-
-Mon Sep 27 15:26:46 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
- 	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
-	* DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.h:
-
-	  Added a new exception specification to correct an error in BCB6
-	  builds.
-
-	* DAnCE/ciao/CCM_Core.mpc:
-
-	  Deployment_stub should link with CIAO_DnC_Client.
-
-Mon Sep 27 12:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/RepositoryManager/RepositoryManager.mpc:
-        * DAnCE/Config_Handlers/Config_Handlers.mpc:
-          Instead of adding all xerces stuff to the project itself, inherit
-          from the new xerces base project
-
-Mon Sep 27 12:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/NodeManager/NodeDaemon.mpc:
-          Instead of adding ifr_client to libs, use the
-          corresponding base projects
-
-Mon Sep 27 11:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/Config_Handlers/Config_Handlers.mpc:
-        * DAnCE/DomainApplicationManager/DomainApplicationManager.mpc:
-        * DAnCE/ExecutionManager/ExecutionManager.mpc:
-          Instead of adding the valuetype and ifr_client to libs, use the
-          corresponding base projects
-
-Mon Sep 27 08:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/examples/BasicSP/EC/EC_exec.cpp:
-          Added missing ACE_TRY_CHECK
-
-Mon Sep 27 08:03:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ciao/Context_Impl_Base.cpp:
-          Use false instead of FALSE.
-
-Wed Sep 22 17:46:14 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * CIDLC/ServantSourceGenerator.cpp:
-
-          Removed unused parameter identifiers and fixed the order of some
-          class member initializations.
-
-Tue Sep 21 13:28:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * docs/value_factory_registration.html:
-
-          New documentation file, describing the behavior of the CIDL
-          compiler with respect to automatic generation of code to
-          register valuetype factories for eventtypes referenced by
-          'consumes' declarations in a component.
-
-Tue Sep 21 13:04:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * CIDLC/ServantGenerator.cpp:
-        * CIDLC/ServantSourceGenerator.cpp:
-
-          Added code to check an eventtype used as an event consumer
-          in a component for the presence of an operation or
-          factory. If either is found, code generation for registering
-          the associated _init class with the container's ORB is skipped.
-          Also added command line option to toggle off generation of
-          the factory registration in all cases. Thanks to
-          Vasili Goutas <vasili@goutas.de> for the posting to the ciao-users
-          mailing list that prompted us to make the CIDL compiler
-          smarter and more friendly with regard to this feature.
-
-Tue Sep 21 13:00:33 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * CCF/CCF/IDL3/IDL3.vcproj:
-
-          Added new files create by Boris for eventtype factory support.
-
-        * CCF/CCF/IDL3/SemanticGraph/EventType.cpp:
-
-          Fixed search-and-replace error in EventTypeFactory constructor
-          that had it inheriting from itself.
-
-Tue Sep 21 11:08:20 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
-
-	* CCF/CCF/IDL2/SemanticGraph/ValueType.cpp:
-	* CCF/CCF/IDL2/SemanticGraph/ValueType.hpp:
-	* CCF/CCF/IDL2/Traversal/ValueType.hpp:
-	* CCF/CCF/IDL3/Parser.cpp:
-	* CCF/CCF/IDL3/Parser.hpp:
-	* CCF/CCF/IDL3/SemanticAction.hpp:
-	* CCF/CCF/IDL3/SemanticAction/EventTypeFactory.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Factory.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/EventTypeFactory.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/EventTypeFactory.hpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Factory.cpp:
-	* CCF/CCF/IDL3/SemanticAction/Impl/Factory.hpp:
-	* CCF/CCF/IDL3/SemanticGraph/EventType.cpp:
-	* CCF/CCF/IDL3/SemanticGraph/EventType.hpp:
-	* CCF/CCF/IDL3/Traversal/EventType.hpp:
-
-	  Added support for eventtype factories.
-
-Tue Sep 21 07:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/ciao/Context_Impl_Base.cpp:
-          Use false instead of FALSE.
-
-Mon Sep 20 18:47:47 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
- 	* DAnCE/Config_Handlers/Config_Handlers.mpc:
-
-	  Use lit_libs for xercesc as suggested by Chad Elliott.
-
-	* performance-tests/Protocols/Sender/Sender.idl:
-
-	  Fixed the IDL to compile with the latest changes to IDL
-	  compiler.
-
-Mon Sep 20 18:43:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc:
-          Added strategies as base project
-
-Mon Sep 20 11:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/ciao/StandardConfigurator_Impl.h:
-          Removed not needed qualifier, and fixed incorrect Id tag
-
-Sun Sep 19 19:12:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* DAnCE/ciao/Deployment.idl:
-
-	  Fixed variable name that differ by case from the data type.
-
-Fri Sep 17 16:46:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * CIDLC/CIDLC.sln:
-
-          Added the 5 projects from CCF.sln so the CIDL compiler can be
-          built from scratch in a single MSVC 7.1 Solution.
-
-Fri Sep 17 08:27:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
- 	* DAnCE/ciao/Context_Impl_Base.cpp:
-	* ciao/Context_Impl_Base.cpp:
-
-	  Use false instead of FALSE. This should fix compile errors in
-	  debian full reactor builds.
-
-Fri Sep 17 13:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc:
-          Use ciao_server as base
-
-Thu Sep 16 10:15:04 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * DAnCE/ciao/Servant_Impl_Base.h:
-
-          Added inheritance to Servant_Impl_Base of
-          POA_Components::CCMObject to bring it in sync with the
-          version in regular CIAO/ciao.
-
-        * DAnCE/ciao/Servant_Impl_T.h:
-
-          Made inheritance of Servant_Impl_Base virtual, to bring it
-          in sync with the version in regular CIAO/ciao.
-
-Thu Sep 16 08:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * DAnCE/ciao/Servant_Activator.cpp:
-        * CIAO/ciao/Servant_Activator.cpp:
-          Fixed compile errors in Borland build
-
-Tue Sep 14 20:43:31 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * ciao/Context_Impl_Base.h:
-        * DAnCE/ciao/Context_Impl_Base.h:
-
-          Moved a sufficiently substantial included file above the
-          #pragma once directive, so that some compilers will not
-          complain that it's obsolete.
-
-Tue Sep 14 15:02:24 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-        * DAnCE/ciao/Context_Impl_Base.cpp:
-        * DAnCE/ciao/Context_Impl_Base.h:
-        * DAnCE/ciao/Context_Impl_T.cpp:
-        * DAnCE/ciao/Context_Impl_T.h:
-        * DAnCE/ciao/Home_Servant_Impl_Base.cpp:
-        * DAnCE/ciao/Home_Servant_Impl_Base.h:
-        * DAnCE/ciao/Home_Servant_Impl_T.cpp:
-        * DAnCE/ciao/Home_Servant_Impl_T.h:
-        * ciao/Context_Impl_Base.cpp:
-        * ciao/Context_Impl_Base.h:
-        * ciao/Context_Impl_T.cpp:
-        * ciao/Context_Impl_T.h:
-        * ciao/Home_Servant_Impl_Base.cpp:
-        * ciao/Home_Servant_Impl_Base.h:
-        * ciao/Home_Servant_Impl_T.cpp:
-        * ciao/Home_Servant_Impl_T.h:
-
-          New files, duplicated in CIAO/ciao and
-          CIAO/DAnCE/ciao, containing base classes
-          for the CIDL-compiler-generated context
-          and home servant classes. A template class
-          sits in the hierarchy between the generated
-          class and its skeleton base class (in the
-          case of the home servant) or its executor
-          base (in the case of the context). The
-          template class also inherits from a
-          non-template class which is used to hold
-          members and operations not using any template
-          parameters.
-
-        * CIDLC/ServantHeaderGenerator.cpp:
-        * CIDLC/ServantSourceGenerator.cpp:
-        * DAnCE/ciao/CCM_Core.mpc:
-        * DAnCE/ciao/Servant_Impl_Base.cpp:
-        * DAnCE/ciao/Servant_Impl_Base.h:
-        * DAnCE/ciao/Servant_Impl_T.cpp:
-        * DAnCE/ciao/Servant_Impl_T.h:
-        * ciao/CCM_Core.mpc:
-        * ciao/Servant_Impl_Base.cpp:
-        * ciao/Servant_Impl_Base.h:
-        * ciao/Servant_Impl_T.cpp:
-        * ciao/Servant_Impl_T.h:
-
-	  Modified existing files to correspond with the
-          new files described above and:
-
-	  - Added implementations for the component servant
-            operations provide_facet(), get_named_facets(),
-	    get_consumer() and get_named_consumers().
-
-	  - Added inheritance of CCMObject to the non-template
-	    base class, to enable operations in the template
- 	    base class, which used no template parameters but
- 	    which were there only to be in the inheritance
-	    hierarchy from skeleton to generated servant, to
-	    be moved to the non-template base class, and
-	    thus not be reinstantiated with every new type.
-
-	  - Moved operations from generated code to one of
-	    the two base classes.
-
 Mon Sep 13 13:18:33 2004  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * RepositoryManager/Update_Plan.h
@@ -498,8 +11,8 @@ Mon Sep 13 13:18:33 2004  Gan Deng  <gan.deng@vanderbilt.edu>
         * examples/BasicSP/BMDisplay/BMDisplay.mpc
         * examples/BasicSP/EC/EC.mpc
 
-          Changed the output stub, servant, and executor library names
-          for all the components in BasicSP example. The reason is
+          Changed the output stub, servant, and executor library names 
+          for all the components in BasicSP example. The reason is 
           becasue all the DnC descriptors are tightly coupled with the
           output library names. I might come back switch this change
           back since this will conflict with the BasicSP example in
@@ -544,11 +57,11 @@ Mon Sep 13 04:20:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  Removed iorinterceptor and objreftemplate from CIAO_DnC_Server
 	  project. No reason to believe that they need thes. This should
 	  hopefully remove the warnings in our daily builds.
-
+	
 	* examples/Hello/Sender/Sender_exec.cpp:
 
-	  Added a simple debug statement.
-
+	  Added a simple debug statement. 
+	
 	* performance-tests/Benchmark/Benchmark.mpc:
 
 	  Tried fixing the link errors on the scoreboard.
@@ -567,7 +80,7 @@ Mon Sep 13 03:50:08 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* DAnCE/ciao/Servant_Activator.h:
 
 	  Replicated changes to DAnCE. DAnCE testing hasn't been completed
-	  yet.
+	  yet. 
 
 Sun Sep 12 22:10:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -575,7 +88,7 @@ Sun Sep 12 22:10:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* CIDLC/ServantSourceGenerator.cpp:
 
 	  Changes to the CIDL which uses the servant and port activators
-	  checked in now.
+	  checked in now. 
 
 Mon Sep 13 03:00:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -588,7 +101,7 @@ Mon Sep 13 03:00:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         component applications the same activation semantics with DAnCE.
 
 	This checkin addresses old CIAO. DAnCE and CIDLC changes will come
-        in soon.
+        in soon. 
 
 	* ciao/Servant_Activator.cpp:
 	* ciao/Servant_Activator.h:
@@ -596,7 +109,7 @@ Mon Sep 13 03:00:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  New files for facet and consumer activations. We now have a
 	  seperate servant activator for facet and consumer ports. The
 	  servant activator acts like a factory activating the right port
-	  activators which can create the right servant for every port.
+	  activators which can create the right servant for every port. 
 
 	* ciao/Port_Activator.cpp:
 	* ciao/Port_Activator.h:
@@ -604,18 +117,18 @@ Mon Sep 13 03:00:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* ciao/Port_Activator_T.h:
 
 	  Concrete port activators for every port.
-
+	
 	* ciao/CCM_Core.mpc:
 
 	  Added the new files for building.
-
+	
 	* ciao/Container_Base.cpp:
 	* ciao/Container_Base.h:
 	* ciao/Container_Base.inl:
 
 	  Changes to the Container to use the above servant activator. The
 	  continer creates the servant activator and sets that in the POA
-	  meant for facet and consumers.
+	  meant for facet and consumers. 
 
 Fri Sep 10 23:08:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -658,38 +171,38 @@ Sat Sep 11 03:22:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* DAnCE/ciao/Container_Base.h:
 	* DAnCE/ciao/Container_Base.inl:
 
-	  Made a few changes. They are
+	  Made a few changes. They are 
 
 	  . Added a second POA into the container. One of the POA's will
 	    host the component and the other POA will host the facet and
 	    consumer servants. Obviously the two POA's have different sets
 	    of policies. The new POA is primarily targeted to activate
-	    facet and consumer servants on demand.
+	    facet and consumer servants on demand. 
 
 	  . Renamed the accessor to the ORB and POA. Made them const
-            methods
+            methods 
 
-	  . Improved documentation and a number of costeic changes.
-
-
+	  . Improved documentation and a number of costeic changes. 
+	  
+	  
  	* DAnCE/RepositoryManager/Repository_Manager.cpp:
 	* DAnCE/RepositoryManager/Update_Plan.cpp:
 	* DAnCE/RepositoryManager/Update_Plan.h:
 
 	  BUnch of cosmetic changes to be conformant with ACE+TAI coding
-	  guidelines.
-
+	  guidelines. 
+	
 	* DAnCE/ciao/Servant_Impl_Base.cpp:
 	* DAnCE/ciao/Servant_Impl_T.cpp:
 	* ciao/Servant_Impl_Base.cpp:
 	* ciao/Servant_Impl_T.cpp:
 
 	  Fixed simple compilation errors and warnings.
-
+	
 Thu Sep  9 17:07:59 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL3/Events/Abstract/Abstract.idl:
-
+        
           Uncommented IDL testing multiple inheritance of eventtypes.
 
 Thu Sep  9 10:30:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -697,7 +210,7 @@ Thu Sep  9 10:30:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * DAnCE/ciao/Container_Base.cpp:
         * DAnCE/ciao/Container_Base.h:
         * ciao/Container_Base.cpp:
-
+          
           Added generate_reference() method to DAnCE version of
           Container_Base, and fixed ACE_CHECK macro mistake in
           both versions.
@@ -706,7 +219,7 @@ Wed Sep  8 11:52:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/ciao/Servant_Impl_Base.h:
         * DAnCE/ciao/Servant_Impl_Base.cpp:
-
+        
           Updated files with changes made to the corresponding files
           in regular CIAO/ciao.
 

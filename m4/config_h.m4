@@ -189,6 +189,7 @@ AH_TEMPLATE([ACE_HAS_DLL],[Build ACE using the frigging PC DLL nonsense...])
 AH_TEMPLATE([ACE_HAS_STRICT],[Use the STRICT compilation mode on Win32.])
 
 AH_TEMPLATE([CYGWIN32], [GNU Win32 environement])
+AH_TEMPLATE([ACE_HAS_CYGWIN32_SOCKET_H],[Platform has cygwin32 socket.h.])
 
 
 dnl ACE internals
@@ -821,7 +822,7 @@ AH_TEMPLATE([ACE_HAS_VERBOSE_NOTSUP],
    origin of ACE_NOTSUP.])
 
 AH_TEMPLATE([ACE_HAS_VOIDPTR_GETTIMEOFDAY],
-[Platform/compiler supports void * as second parameter to
+[Platform/compiler supports void * as second parameter to 
    gettimeofday() and has a prototype.])
 
 AH_TEMPLATE([ACE_HAS_VOIDPTR_MMAP],[Platform requires void * for mmap().])
@@ -1145,12 +1146,6 @@ AH_TEMPLATE([ACE_USE_POLL],
 [The OS/platform supports the poll() event demultiplexor])
 
 AH_TEMPLATE([ACE_POLL_IS_BROKEN],[Platform has broken poll()])
-
-AH_TEMPLATE([ACE_HAS_EVENT_POLL],[Platform (Linux) supports event poll 
-  interface.])
-
-AH_TEMPLATE([ACE_HAS_DEV_POLL],[Platform (Linux) supports /dev/poll character
-  device.])
 
 AH_TEMPLATE([ACE_USES_ASM_SYMBOL_IN_DLSYM],
 [Platform uses assembly symbols instead of C symbols in dlsym()])

@@ -10,9 +10,8 @@ project(*Lib) : acelib {
 }
 
 project(*test) : aceexe {
-  exename = test
-  after  += *Lib
-  libs   += Export_Lib
+  after += *Lib
+  libs  += Export_Lib
   Source_Files {
     test.cpp
   }

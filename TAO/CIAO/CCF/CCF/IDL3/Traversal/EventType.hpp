@@ -6,8 +6,6 @@
 #define CCF_IDL3_TRAVERSAL_EVENT_TYPE_HPP
 
 #include "CCF/IDL3/SemanticGraph/EventType.hpp"
-
-#include "CCF/IDL2/Traversal/Operation.hpp"
 #include "CCF/IDL3/Traversal/Elements.hpp"
 
 namespace CCF
@@ -42,7 +40,7 @@ namespace CCF
 
         virtual void
         inherits_none (T&);
-
+        
         virtual void
         supports (T&, EdgeDispatcherBase&);
 
@@ -57,7 +55,7 @@ namespace CCF
 
         virtual void
         supports_none (T&);
-
+        
         virtual void
         post (T&);
 
@@ -77,10 +75,6 @@ namespace CCF
       typedef
       EventTypeTemplate<SemanticGraph::ConcreteEventType>
       ConcreteEventType;
-
-      typedef
-      OperationTemplate<SemanticGraph::EventTypeFactory>
-      EventTypeFactory;
     }
   }
 }

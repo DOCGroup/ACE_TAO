@@ -29,12 +29,6 @@
 #  define ACE_HAS_PTHREADS_UNIX98_EXT
 #endif /* _XOPEN_SOURCE - 0 >= 500 */
 
-#if defined (__USE_POSIX199309)
-#  if !defined (ACE_HAS_CLOCK_GETTIME)
-#    define ACE_HAS_CLOCK_GETTIME
-#  endif
-#endif
-
 // First the machine specific part
 
 #if defined (__alpha)
@@ -341,12 +335,9 @@
 
 #define ACE_SIZEOF_WCHAR 4
 
-#define ACE_LACKS_GETIPNODEBYADDR
-#define ACE_LACKS_GETIPNODEBYNAME
+#include /**/ "ace/post.h"
 
 // Enables use of POSIX termios struct
 #define ACE_USES_NEW_TERMIOS
-
-#include /**/ "ace/post.h"
 
 #endif /* ACE_LINUX_COMMON_H */

@@ -149,7 +149,7 @@ public:
    * Create and return a TCPProtocolProperties instance with the specified
    * parameters.
    */
-  RTCORBA::TCPProtocolProperties_ptr
+  virtual RTCORBA::TCPProtocolProperties_ptr
   create_tcp_protocol_properties (
                                   CORBA::Long send_buffer_size,
                                   CORBA::Long recv_buffer_size,
@@ -160,43 +160,6 @@ public:
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException ));
 
-  RTCORBA::UnixDomainProtocolProperties_ptr 
-  create_unix_domain_protocol_properties (
-                                          CORBA::Long send_buffer_size,
-                                          CORBA::Long recv_buffer_size
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-    
-  RTCORBA::SharedMemoryProtocolProperties_ptr 
-  create_shared_memory_protocol_properties (
-                                            CORBA::Long send_buffer_size,
-                                            CORBA::Long recv_buffer_size,
-                                            CORBA::Boolean keep_alive,
-                                            CORBA::Boolean dont_route,
-                                            CORBA::Boolean no_delay,
-                                            CORBA::Long preallocate_buffer_size,
-                                            const char *mmap_filename,
-                                            const char *mmap_lockname
-                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-    
-  RTCORBA::UserDatagramProtocolProperties_ptr 
-  create_user_datagram_protocol_properties (
-                                            CORBA::Boolean enable_network_priority
-                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-      
-  RTCORBA::StreamControlProtocolProperties_ptr 
-  create_stream_control_protocol_properties (
-                                             CORBA::Long send_buffer_size,
-                                             CORBA::Long recv_buffer_size,
-                                             CORBA::Boolean keep_alive,
-                                             CORBA::Boolean dont_route,
-                                             CORBA::Boolean no_delay,
-                                             CORBA::Boolean enable_network_priority
-                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-    
   /// Create a RTCORBA threadpool to manage a set of threads without lanes.
   virtual RTCORBA::ThreadpoolId
   create_threadpool (CORBA::ULong stacksize,
@@ -280,11 +243,8 @@ public:
                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Reference to our creating ORB Core.
-  TAO_ORB_Core *orb_core (void) const;
-
   /// Get the Thread Pool Manager.
-  TAO_Thread_Pool_Manager &tp_manager (void) const;
+  TAO_Thread_Pool_Manager &tp_manager (void);
 
   /**
    * This method changes the scheduling policy of the calling thread
@@ -308,7 +268,7 @@ protected:
   /// reference counted object.
   virtual ~TAO_RT_ORB (void);
 
-  /// Reference to our creating ORB Core.
+  /// Reference to our creating ORB.
   TAO_ORB_Core *orb_core_;
 
   /// mutex_mgr_ manages the names associated with named mutexes.

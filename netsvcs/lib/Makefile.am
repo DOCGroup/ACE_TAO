@@ -8,13 +8,15 @@
 ## MPC Command:
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
 
+ACE_BUILDDIR = $(top_builddir)
+
 ## Makefile.netsvcs.am 
 noinst_LTLIBRARIES = libnetsvcs.la
 
 libnetsvcs_la_CPPFLAGS = \
   -I$(top_builddir) \
   -I$(top_srcdir) \
-  -I$(top_srcdir) \
+  -I$(ACE_BUILDDIR) \
   -DACE_NETSVCS_BUILD_DLL
 
 libnetsvcs_la_SOURCES = \
@@ -26,9 +28,6 @@ libnetsvcs_la_SOURCES = \
   TS_Clerk_Handler.cpp \
   TS_Server_Handler.cpp \
   Token_Handler.cpp
-
-libnetsvcs_la_LDFLAGS = \
- -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
 
 libnetsvcs_la_LIBADD = \
  $(top_builddir)/ace/libACE.la

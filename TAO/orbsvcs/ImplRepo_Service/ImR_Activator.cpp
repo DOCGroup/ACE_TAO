@@ -6,14 +6,15 @@
 #include "Activator_NT_Service.h"
 
 int
-run_standalone (Options& opts)
+run_standalone (void)
 {
   ImR_Activator_i server;
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      int status = server.init (opts ACE_ENV_ARG_PARAMETER);
+      // Initialize the ImR_Activator_i server.
+      int status = server.init (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (status == -1)
@@ -26,9 +27,8 @@ run_standalone (Options& opts)
           server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          // End the server after its work is done.
-          status = server.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          // We should only get here if the shutdown_repo operation has
+          // been called. That operation saves the Activator's state.  
 
           if (status == -1)
             return 1;
@@ -60,7 +60,11 @@ int
 run_service (void)
 {
 #if defined (ACE_WIN32)
-  SERVICE::instance()->name (IMR_ACTIVATOR_SERVICE_NAME, IMR_ACTIVATOR_DISPLAY_NAME);
+  // @todo: Update me
+
+  // If we get here, we either run the app in debug mode (-d) or are
+  // being called from the service manager to start the service.
+
   ACE_NT_SERVICE_RUN (service, SERVICE::instance (), ret);
 
   if (ret == 0)
@@ -72,106 +76,18 @@ run_service (void)
 #endif /* ACE_WIN32 */
 }
 
-/**
- * Executes the various commands that are useful for a NT service.  Right
- * now these include 'install' and 'remove'.  Others, such as 'start' and
- * 'stop' can be added, but the 'net' program in Windows already handles
- * these commands.
- */
-static int
-run_service_command (Options& opts)
-{
-  if (opts.service_command() == Options::SC_NONE) 
-    return 0;
-
-#if defined (ACE_WIN32)
-  SERVICE::instance()->name (IMR_ACTIVATOR_SERVICE_NAME, IMR_ACTIVATOR_DISPLAY_NAME);
-
-  if (opts.service_command() == Options::SC_INSTALL ||
-    opts.service_command() == Options::SC_INSTALL_NO_LOCATOR)
-    {
-      const DWORD MAX_PATH_LENGTH = 4096;
-      char pathname[MAX_PATH_LENGTH]; 
-
-      DWORD length = ACE_TEXT_GetModuleFileName(NULL, pathname, MAX_PATH_LENGTH);
-      if (length == 0 || length >= MAX_PATH_LENGTH - sizeof(" -s"))
-        {
-          ACE_ERROR ((LM_ERROR, "Error: Could not get module file name\n"));
-          return -1;
-        }
-
-      // Append the command used for running the implrepo as a service
-      ACE_OS::strcat (pathname, ACE_TEXT (" -s"));
-      int ret = -1;
-      if (opts.service_command() == Options::SC_INSTALL) 
-      {
-        const char* DEPENDS_ON = "TAOIMRLocator"; // Must match Locator_NT_Service.h
-
-        ret =  SERVICE::instance ()->insert (SERVICE_DEMAND_START,
-                                            SERVICE_ERROR_NORMAL,
-                                            pathname,
-                                            0, // group
-                                            0, // tag
-                                            DEPENDS_ON
-                                            );
-      }
-      else
-      {
-        ret =  SERVICE::instance ()->insert (SERVICE_DEMAND_START,
-                                            SERVICE_ERROR_NORMAL,
-                                            pathname);
-      }
-      if (ret != -1) {
-        ACE_DEBUG ((LM_DEBUG, "ImR Activator: Service installed.\n"));
-        opts.save_registry_options();
-      } else {
-        ACE_ERROR((LM_ERROR, "Error: Failed to install service.\n"));
-      }
-      if (ret == 0) 
-        return 1;
-    }
-  else if (opts.service_command() == Options::SC_REMOVE)
-    {
-      int ret = SERVICE::instance ()->remove ();
-      ACE_DEBUG ((LM_DEBUG, "ImR Activator: Service removed.\n"));
-      if (ret == 0) 
-        return 1; // If successfull, then we don't want to continue.
-    }
-  else 
-  {
-    ACE_ERROR ((LM_ERROR, "Error: Unknown service command :%d \n", 
-      opts.service_command()));
-    return -1;
-  }
-
-  return -1;
-
-#else /* ACE_WIN32 */
-  ACE_ERROR ((LM_ERROR, "NT Service not supported on this platform"));
-  return -1;
-#endif /* ACE_WIN32 */
-}
-
 int
 main (int argc, char *argv[])
 {
-  Options opts;
+  int result = OPTIONS::instance ()->init (argc, argv);
 
-  int result = opts.init (argc, argv);
   if (result < 0)
-    return 1;  // Error
+    return 1;  // Error parsing args
   else if (result > 0)
     return 0;  // No error, but we should exit anyway.
 
-  result = run_service_command(opts);
-  if (result < 0)
-    return 1;  // Error
-  else if (result > 0)
-    return 0;  // No error, but we should exit anyway.
+  if (OPTIONS::instance()->service())
+    return run_service ();
 
-  if (opts.service())
-    return run_service();
-
-  return run_standalone (opts);
+  return run_standalone ();
 }
-

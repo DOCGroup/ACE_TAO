@@ -8,7 +8,6 @@
 // the use of these reusable components reduces the reliance on global
 // variables, as compared with the bounded_buffer.C example.
 
-#include "ace/OS_main.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
@@ -92,8 +91,8 @@ Common_Task::open (void *)
 {
   if (this->activate (THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn")),
+                       "%p\n",
+                       "spawn"),
                       -1);
   return 0;
 }
@@ -102,7 +101,7 @@ int
 Common_Task::close (u_long exit_status)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) thread is exiting with status %d in module %s\n"),
+              "(%t) thread is exiting with status %d in module %s\n",
               exit_status,
               this->name ()));
 
@@ -143,8 +142,8 @@ Producer::svc (void)
 
           if (this->put_next (mb) == -1)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%t) %p\n"),
-                        ACE_TEXT ("put_next")));
+                        "(%t) %p\n",
+                        "put_next"));
 	  break;
         }
 
@@ -158,8 +157,8 @@ Producer::svc (void)
 
 	  if (this->put_next (mb) == -1)
 	    ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%t) %p\n"),
-                        ACE_TEXT ("put_next")));
+                        "(%t) %p\n",
+                        "put_next"));
 	}
     }
 
@@ -215,22 +214,13 @@ Consumer::svc (void)
 
   if (result == -1 && errno == EWOULDBLOCK)
     ACE_ERROR ((LM_ERROR,
-		ACE_TEXT ("(%t) %p\n%a"),
-		ACE_TEXT ("timed out waiting for message"),
+		"(%t) %p\n%a",
+		"timed out waiting for message",
 		1));
   return 0;
 }
 
 // The filter prepends a line number in front of each line.
-#if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
-#  if defined (ACE_WIN64)
-#    define FMTSTR  "%I64u: %s"
-#  else
-#    define FMTSTR  "%u: %s"
-#  endif /* ACE_WIN64 */
-#else
-#  define FMTSTR  "%u: %ls"
-#endif /* ACE_WIN32 || !ACE_USES_WCHAR */
 
 int
 Filter::put (ACE_Message_Block *mb,
@@ -253,7 +243,7 @@ Filter::put (ACE_Message_Block *mb,
 
       // Prepend the line count in front of the buffer.
       ACE_OS::sprintf (mb->rd_ptr (),
-                       FMTSTR,
+                       ACE_SIZE_T_FORMAT_SPECIFIER": %s", 
                        this->count_++,
                        buf);
       return this->put_next (mb, tv);
@@ -263,7 +253,7 @@ Filter::put (ACE_Message_Block *mb,
 // Main driver function.
 
 int 
-ACE_TMAIN (int, ACE_TCHAR *argv[])
+main (int, char *argv[])
 {
   ACE_Service_Config daemon (argv[0]);
 
@@ -275,15 +265,15 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
   MT_Module *cm; 
 
   ACE_NEW_RETURN (cm,
-                  MT_Module (ACE_TEXT ("Consumer"),
+                  MT_Module ("Consumer",
                              new Consumer),
                   -1);
   ACE_NEW_RETURN (fm,
-                  MT_Module (ACE_TEXT ("Filter"),
+                  MT_Module ("Filter",
                              new Filter),
                   -1);
   ACE_NEW_RETURN (pm,
-                  MT_Module (ACE_TEXT ("Producer"),
+                  MT_Module ("Producer",
                              new Producer),
                   -1);
 
@@ -292,18 +282,18 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
 
   if (stream.push (cm) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("push")),
+                       "%p\n",
+                       "push"),
                       1);
   else if (stream.push (fm) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("push")),
+                       "%p\n",
+                       "push"),
                       1);
   else if (stream.push (pm) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("push")),
+                       "%p\n",
+                       "push"),
                       1);
   // Barrier synchronization: wait for the threads to exit, then exit
   // ourselves.
@@ -315,7 +305,7 @@ int
 main (int, char *[])
 {
   ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("threads not supported on this platform\n")));
+              "threads not supported on this platform\n"));
   return 0;
 }
 #endif /* ACE_HAS_THREADS */

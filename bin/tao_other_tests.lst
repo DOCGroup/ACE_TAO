@@ -1,4 +1,3 @@
-
 # $Id$
 #
 # This is the list of run_test.pl's that need to be run by
@@ -30,7 +29,6 @@ TAO/performance-tests/Sequence_Latency/Deferred/run_test.pl: !MINIMUM
 TAO/performance-tests/Throughput/run_test.pl
 TAO/performance-tests/POA/Object_Creation_And_Registration/run_test.pl
 TAO/performance-tests/RTCorba/Oneways/Reliable/run_test.pl: !MINIMUM
-TAO/performance-tests/Protocols/run_test.pl
 TAO/examples/POA/Adapter_Activator/run_test.pl: !MINIMUM !SUNCC5_1
 TAO/examples/POA/POA_BiDir/run_test.pl: !MINIMUM !DISABLE_BIDIR
 TAO/examples/POA/DSI/run_test.pl: !MINIMUM
@@ -78,8 +76,6 @@ TAO/orbsvcs/tests/EC_MT_Mcast/run_test.pl:!ST !MINIMUM !STATIC
 TAO/orbsvcs/tests/ImplRepo/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/ImplRepo/NameService/run_test.pl: SANDBOX
 TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl: !MINIMUM
-TAO/orbsvcs/tests/ImplRepo/scale/run_test.pl: !MINIMUM
-TAO/orbsvcs/examples/ImR/Combined_Service/run_test.pl: !MINIMUM !STATIC
 TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.reactive.conf: !ST !NO_MESSAGING !STATIC
 TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.mt.conf: !ST !NOTIFY !NO_MESSAGING
 TAO/orbsvcs/tests/Notify/Basic/run_test.pl notify.rt.conf: !ST !MINIMUM
@@ -109,6 +105,7 @@ TAO/orbsvcs/tests/Security/Callback/run_test.pl: SSL !STATIC
 TAO/orbsvcs/tests/Security/MT_SSLIOP/run_test.pl: !ST SSL !STATIC
 TAO/orbsvcs/tests/Security/MT_IIOP_SSL/run_test.pl: !ST SSL !STATIC
 TAO/orbsvcs/tests/Security/Secure_Invocation/run_test.pl: SSL !STATIC
+TAO/orbsvcs/tests/Security/SecurityLevel1/run_test.pl: SSL !STATIC
 TAO/orbsvcs/tests/Security/Crash_Test/run_test.pl: SSL !STATIC
 TAO/orbsvcs/tests/Miop/McastHello/run_test.pl: !MINIMUM !STATIC !SUNCC5_1
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
@@ -120,3 +117,4 @@ TAO/examples/RTScheduling/Fixed_Priority_Scheduler/run_test.pl: !MINIMUM !DISABL
 TAO/examples/RTScheduling/MIF_Scheduler/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS !STATIC !ST
 TAO/examples/ior_corbaloc/run_test.pl
 TAO/utils/nslist/run_test.pl: !ST !SUNCC5_1
+

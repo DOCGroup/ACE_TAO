@@ -428,6 +428,12 @@ AS_IF([test "$ac_cv_header_dirent_dirent_h" = yes ||
 dnl Check for sys/wait.h Posix.1 compliance
 AC_HEADER_SYS_WAIT
 
+AS_IF([test "$ac_cv_cygwin" = yes],
+  [
+   AC_CHECK_HEADER([cygwin32/socket.h],
+                   [AC_DEFINE([ACE_HAS_CYGWIN32_SOCKET_H])],)
+  ],[])
+
 AC_CHECK_HEADER([dlfcn.h],
   [
    dnl We already checked for dlopen in the previous library checks however,
@@ -3188,10 +3194,6 @@ ACE_CHECK_LACKS_FUNCS(fgetwc fcntl fsync)
 
 ACE_CHECK_LACKS_FUNCS(gethostent)
 
-ACE_CHECK_LACKS_FUNCS(getipnodebyaddr)
-
-ACE_CHECK_LACKS_FUNCS(getipnodebyname)
-
 ACE_CHECK_HAS_FUNCS(getifaddrs)
 
 ACE_CHECK_HAS_FUNCS(itoa)
@@ -3373,44 +3375,6 @@ AC_CHECK_FUNC([poll],
         ])
      ],[AC_DEFINE([ACE_POLL_IS_BROKEN])],)
   ],)
-
-case "$host" in
-  *linux*)
-    dnl Linux Event Poll
-    ACE_CACHE_CHECK([for epoll_create],
-     [ace_cv_linux_event_poll],
-     [
-      AC_LINK_IFELSE([
-      AC_LANG_PROGRAM([
-#include <sys/epoll.h>
-#include <linux/version.h>
-#if LINUX_VERSION_CODE < KERNEL_VERSION (2,5,45)
-#  error Disabling Linux epoll support.  Kernel used in C library is too old.
-#  error Linux kernel 2.5.45 or better is required.
-#endif  /* LINUX_VERSION_CODE < KERNEL_VERSION (2,5,45) */
-       ],
-       [
-int const ACE_NUM_DESCRIPTORS = 10;
-(void) epoll_create (ACE_NUM_DESCRIPTORS);
-       ])
-      ],
-      [
-       ace_cv_linux_event_poll=yes
-      ],
-      [
-       ace_cv_linux_event_poll=no
-      ])
-     ],
-     [
-      AC_DEFINE([ACE_HAS_EVENT_POLL])
-     ],
-     [])
-    ;;
-  *)
-    dnl /dev/poll character device
-    dnl TODO add test
-    ;;
-esac
 
 AC_CHECK_FUNC([gethrtime],
   [
@@ -3638,7 +3602,7 @@ ACE_CHECK_LACKS_FUNCS(sbrk)
 
 ACE_CHECK_HAS_FUNCS(vfwprintf vswprintf)
 
-ACE_CHECK_LACKS_FUNCS(fgetws fputws itow towlower towupper wcscat wcschr wcscmp wcscpy wcscspn wcsdup wcsicmp wcslen wcsncat wcsncmp wcsncpy wcsnicmp wcspbrk wcsrchr wcsspn wcsstr wcstod wcstok wcstol wcstoul)
+ACE_CHECK_LACKS_FUNCS(itow towlower towupper wcscat wcschr wcscmp wcscpy wcscspn wcsdup wcsicmp wcslen wcsncat wcsncmp wcsncpy wcsnicmp wcspbrk wcsrchr wcsspn wcsstr wcstod wcstok wcstol wcstoul)
 
 if test "$ac_cv_func_wcstok" = yes; then
 dnl The wcstok() function varies with standards. Check which one we have.
@@ -7243,12 +7207,12 @@ dnl   tests/Makefile
 AC_CONFIG_FILES([
   ace-config
   ace-config.1
+  aceConf.sh
   Makefile
   ace/Makefile
   ace/RMCast/Makefile
   ace/QoS/Makefile
   ace/SSL/Makefile
-  ace/TMCast/Makefile
   apps/Makefile
   apps/gperf/Makefile
   apps/gperf/src/Makefile
@@ -7268,28 +7232,10 @@ AC_CONFIG_FILES([
   netsvcs/clients/Tokens/rw_lock/Makefile
   netsvcs/servers/Makefile
   tests/Makefile
-  tests/RMCast/Makefile
   tests/SSL/Makefile
-  ACEXML/Makefile
-  ACEXML/apps/Makefile
-  ACEXML/apps/svcconf/Makefile
-  ACEXML/common/Makefile
-  ACEXML/examples/Makefile
-  ACEXML/examples/SAXPrint/Makefile
-  ACEXML/parser/Makefile
-  ACEXML/parser/parser/Makefile
-  ACEXML/tests/Makefile
-  Kokyu/Makefile
-  Kokyu/tests/Makefile
-  Kokyu/tests/DSRT_MIF/Makefile
-  Kokyu/tests/EDF/Makefile
-  Kokyu/tests/FIFO/Makefile
 ])
 
 dnl Configure subdirectories if they are present.
-AM_CONDITIONAL([BUILD_KOKYU],
-               [test -d $srcdir/Kokyu])
-
 if test -d $srcdir/TAO -a X$ace_user_with_tao = Xyes; then
   AC_CONFIG_SUBDIRS([TAO])
 fi

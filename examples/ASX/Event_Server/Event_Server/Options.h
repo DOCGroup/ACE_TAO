@@ -20,7 +20,7 @@ public:
   static Options *instance (void);
   // Singleton access point.
 
-  void parse_args (int argc, ACE_TCHAR *argv[]);
+  void parse_args (int argc, char *argv[]);
   // Parse the command-line arguments and set the options.
 
   // = Timer management.

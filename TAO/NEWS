@@ -1,25 +1,14 @@
-PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
-===========================================================================
+PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
+====================================================
 
 - (Johnny/Ossama) Bug 1420-Protocols in Transport Cache not amenable for
   strict policy enforcement
 
 - (Johnny/Ossama) Location Forwarding fixes
 
-- (Johnny/Ossama) POA refactoring/modularization
-
-  . ONGOING - ETA 10/10
-
-- (JTC/Ossama) autoconf support for TAO
-
-  . ONGOING - ETA unknown
-
-PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
-============================================
-
 - (Ossama) Typecode overhaul
 
-  . ONGOING - ETA 9/21
+  . ONGOING - ETA 8/31
 
 - (Ossama) Remainder of CSIv2 code that didn't make it into TAO 1.4.2
 
@@ -27,7 +16,15 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
 
 - (Ossama/Jeff) Skeleton refactoring
 
-  . ONGOING - ETA 10/30
+  . TO BE STARTED - 9/1
+
+- (Johnny/Ossama) POA refactoring/modularization
+
+  . ONGOING - ETA unknown
+
+- (JTC/Ossama) autoconf support for TAO
+
+  . ONGOING - ETA unknown
 
 - (Bala) Implementation Repository enhancements
 
@@ -53,7 +50,8 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
 
 - (JTC) Split ORB Services into stub, skeleton, and implementation libraries.
 
-  Naming, Trading, Event, Notification, and Logging Services have commited.
+  Naming, Trading, Event, and Notification Services ready to commit 
+  as soon as library naming issues are resolved.
 
 - (OCI) Install common utilities (tao_imr, tao_ifr, nslist, nsadd,
   nsdel, NamingViewer) in $ACE_ROOT/bin.

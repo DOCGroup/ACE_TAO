@@ -16,10 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/IORTable/IORTable.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+#include "tao/LocalObject.h"
 
 class ImR_Locator_i;
 
@@ -31,18 +28,22 @@ class ImR_Locator_i;
  * This class provides a callback for the IORTable to call when it needs
  * to dynamically receive a IOR to forward in response to an INS request.
  */
-class INS_Locator : public virtual IORTable::Locator
+class INS_Locator : public virtual IORTable::Locator,
+                    public virtual TAO_Local_RefCounted_Object
 {
 public:
-  INS_Locator (ImR_Locator_i& loc);
+  /// Constructor
+  INS_Locator (ImR_Locator_i* loc);
 
   /// Locate the appropriate IOR.
-  char* locate (const char *object_key ACE_ENV_ARG_DECL)
+  char * locate (const char *object_key ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound));
 
 private:
-  ImR_Locator_i& imr_locator_;
+
+  ImR_Locator_i* imr_locator_;
+
 };
 
 #include /**/ "ace/post.h"
-#endif
+#endif 

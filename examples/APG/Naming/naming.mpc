@@ -19,7 +19,7 @@ project(Netlocal Reader) : aceexe {
 }
 
 project(Nodelocal) : aceexe {
-  exename = Nodelocal
+  exename = Netlocal
   Source_Files {
     Nodelocal.cpp
     Temperature_Monitor.cpp

@@ -332,6 +332,7 @@ IDL_SERVER_TSRC_EXT ?= S_T.cpp
 ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
   INCLDIRS        += -I$(ACE_ROOT)
 endif
+INSBIN          ?= $(ACE_ROOT)/bin
 INSINC          ?= $(ACE_ROOT)/ace
 INSLIB          ?= $(ACE_ROOT)/lib
 INSMAN          ?= $(ACE_ROOT)/man

@@ -87,30 +87,6 @@ TAO_IDL = <%tao_idl%>
 TAO_IDLFLAGS = <%tao_idlflags%>
 <%endif%>
 
-<%if(exename)%>
-<%if(install)%>
-INSBIN ?= <%install%>
-<%endif%>
-ifeq ($(INSBIN),.)
-  ifeq ($(PWD),)
-    PWD=$(shell pwd)
-  endif
-  INSBIN = $(PWD)
-endif
-OUTPUT_DIRECTORY = $(INSBIN)
-<%else%>
-<%if(dllout || libout)%>
-INSLIB ?= <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
-<%endif%>
-ifeq ($(INSLIB),.)
-  ifeq ($(PWD),)
-    PWD=$(shell pwd)
-  endif
-  INSLIB = $(PWD)
-endif
-OUTPUT_DIRECTORY = $(INSLIB)
-<%endif%>
-
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ## We don't need the ACELIB setting from wrapper_macros.GNU
 ACELIB =
@@ -129,12 +105,23 @@ all: $(TEMPINCDIR)
 
 endif
 
-ifneq ($(OUTPUT_DIRECTORY),)
+<%if(exename)%>
+INSBIN ?= <%if(install)%><%install%><%else%>.<%endif%>
+OUTPUT_DIRECTORY = $(INSBIN)
+<%else%>
+INSLIB ?= <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
+ifeq ($(INSLIB),.)
+  ifeq ($(PWD),)
+    PWD=$(shell pwd)
+  endif
+  INSLIB = $(PWD)
+endif
+OUTPUT_DIRECTORY = $(INSLIB)
+<%endif%>
 all: $(OUTPUT_DIRECTORY)
 
 $(OUTPUT_DIRECTORY):
 	-@mkdir -p "$(OUTPUT_DIRECTORY)"
-endif
 
 <%if(sharedname || staticname || exename)%>
 <%if(libs && libpaths)%>
@@ -300,13 +287,11 @@ LSRC   = $(addsuffix .cpp, $(FILES))
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-<%if(exename)%>
+<%if(install && exename)%>
 
-ifneq ($(OUTPUT_DIRECTORY),)
 ifneq ($(OUTPUT_DIRECTORY),.)
   INSTALL = $(VBIN:%=$(INSBIN)/%)
   CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%)
-endif
 endif
 
 <%endif%>
@@ -427,16 +412,10 @@ endif
 <%endfor%>
 <%foreach(custom_type->input_file->output_files)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>/<%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%fornotlast(" ")%><%endfor%>: <%custom_type->input_file%><%if(custom_type->dependent)%> <%custom_type->command%>$(EXEEXT)<%endif%>
 	<%custom_type->command%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> $@<%endif%>
-<%if(flag_overrides(custom_type->input_file, postcommand))%>
-<%foreach(custom_type->input_file->output_files)%>
-	<%flag_overrides(custom_type->input_file, postcommand)%>
-<%endfor%>
-<%else%>
 <%if(custom_type->postcommand)%>
 <%foreach(custom_type->input_file->output_files)%>
-	<%custom_type->postcommand%>
+	<%custom_type->postcommand()%>
 <%endfor%>
-<%endif%>
 <%endif%>
 <%if(pch_header)%>
 <%if(custom_type->pch_postrule)%>

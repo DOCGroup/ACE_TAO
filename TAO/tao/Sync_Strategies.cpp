@@ -66,7 +66,7 @@ TAO_Eager_Buffering_Sync_Strategy::buffering_constraints_reached (
   must_flush = 0;
   set_timer = 0;
 
-  CORBA::Policy_var bcp_policy = stub->get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
+  CORBA::Policy_var bcp_policy = stub->buffering_constraint ();
   TAO::BufferingConstraintPolicy_var bcp =
     TAO::BufferingConstraintPolicy::_narrow (bcp_policy.in());
 

@@ -14,7 +14,4 @@ project(IFRService) : orbsvcslib, core, typecodefactory, svc_utils, iortable, mi
       IFRService
     }
   }
-
-  Template_Files {
-  }
 }

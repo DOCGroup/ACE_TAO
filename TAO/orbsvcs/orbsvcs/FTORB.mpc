@@ -24,9 +24,6 @@ project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver, minimum_corba
       FaultTolerance/FT_IOGR_Property.cpp
     }
   }
-
-  Template_Files {
-  }
 }
 
 project(FT_ClientORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup {
@@ -52,9 +49,6 @@ project(FT_ClientORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup {
        FaultTolerance/FT_Service_Callbacks.cpp
     }
   }
-
-  Template_Files {
-  }
 }
 
 project(FT_ServerORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup {
@@ -75,8 +69,5 @@ project(FT_ServerORB) : orbsvcslib, ftorbutils, core, messaging, portablegroup {
        PortableGroup_Simple_DSC.cpp
        FaultTolerance/FT_ServerService_Activate.cpp
     }
-  }
-
-  Template_Files {
   }
 }

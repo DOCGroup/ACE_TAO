@@ -306,8 +306,6 @@ module CosNotifyChannelAdmin
       raises(CosEventChannelAdmin::AlreadyConnected);
   };
 
-#ifdef TAO_HAS_NOTIFY_PULL_INTERFACES
-
   /**
    * @interface ProxyPullSupplier
    *
@@ -535,7 +533,6 @@ module CosNotifyChannelAdmin
     void resume_connection()
       raises(ConnectionAlreadyActive, NotConnected);
   };
-#endif /* TAO_HAS_NOTIFY_PULL_INTERFACES */
 
   /**
    * @interface ProxyPushSupplier

@@ -76,12 +76,6 @@ void ServantGenerator::options (CL::Description& d)
                   "Replace default servant export include file "
                   "with provided file.",
                   true));
-  d.add_option (CL::OptionDescription (
-                  "suppress-register-factory",
-                  "",
-                  "Suppress generation of code to register eventtype "
-                  "factories for event sinks.",
-                  true));
 }
 
 
@@ -171,7 +165,7 @@ ServantGenerator::configure_stream (string const& suffix_option,
                                         default_suffix);
     string file_expr =
       cl_.get_value (regex_option,
-                     "/(\\.(idl|cidl|cdl))?$/" + file_suffix + "/");
+                     "/(\\.(idl|cidl))?$/" + file_suffix + "/");
 
     string file_name = regex::perl_s (file_name_, file_expr);
 

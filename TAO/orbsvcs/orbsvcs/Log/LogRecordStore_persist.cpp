@@ -1,9 +1,8 @@
-#include "orbsvcs/orbsvcs/Log/LogRecordStore_persist.h"
+#include "orbsvcs/Log/LogRecordStore_persist.h"
 
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
-#include "orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h"
-#include "orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.h"
-#include "ace/OS_NS_sys_time.h"
+#include "orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Log/Log_Constraint_Interpreter.h"
+#include "orbsvcs/Log/Log_Constraint_Visitors.h"
 
 ACE_RCSID (Log,
            LogRecordStore_persist,
@@ -31,7 +30,7 @@ TAO_LogRecordStore::~TAO_LogRecordStore (void)
 
 int
 TAO_LogRecordStore::open (void)
-{
+{ 
   // Open the persistent store supplying a filename.
   sprintf (this->file_name_, "%s.%d", PERSISTENT_LOG_FILE_NAME, logid_);
 
@@ -160,7 +159,7 @@ TAO_LogRecordStore::remove (DsLogAdmin::RecordId id)
 int
 TAO_LogRecordStore::purge_old_records (void)
 {
-  CORBA::ULongLong num_records_to_purge = this->num_records_ * 5U / 100U;
+  CORBA::ULongLong num_records_to_purge =  (this->num_records_) * ( (CORBA::ULongLong) 5 / (CORBA::ULongLong)100 );
 
   if (num_records_to_purge < 1)
     num_records_to_purge = 1;
@@ -170,23 +169,24 @@ TAO_LogRecordStore::purge_old_records (void)
   CORBA::ULong count = 0; // count of matches found.
 
   if (num_records_to_purge > 0 )
+  {
+    for (CORBA::ULong i = 0; i < num_records_to_purge; ++i)
     {
-      for (CORBA::ULongLong i = 0; i < num_records_to_purge; ++i)
+        if (iter.next (hash_entry) == -1 || iter.advance () == -1)
         {
-          if (iter.next (hash_entry) == -1 || iter.advance () == -1)
-            break;
-
-          if (this->remove (hash_entry->int_id_.id) == 0)
-            count++;
+          break;
         }
-    }
 
+        if (this->remove (hash_entry->int_id_.id) == 0)
+          count++;
+    }
+  }
   return count;
 }
 
 
 
-TAO_LogRecordStore::LOG_RECORD_STORE &
+TAO_LogRecordStore::LOG_RECORD_STORE&
 TAO_LogRecordStore::get_storage (void)
 {
   return rec_hash_;
@@ -206,6 +206,7 @@ template class ACE_Hash_Map_Iterator_Base_Ex<DsLogAdmin::RecordId, DsLogAdmin::L
 template class ACE_Hash_Map_Reverse_Iterator<DsLogAdmin::RecordId,DsLogAdmin::LogRecord,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<DsLogAdmin::RecordId, DsLogAdmin::LogRecord, ACE_Hash<DsLogAdmin::RecordId>,
   ACE_Equal_To<DsLogAdmin::RecordId>, ACE_Null_Mutex>;
+template class ACE_Equal_To<DsLogAdmin::RecordId>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -221,5 +222,6 @@ ACE_Equal_To<DsLogAdmin::RecordId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<DsLogAdmin::RecordId,DsLogAdmin::LogRecord,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<DsLogAdmin::RecordId, DsLogAdmin::LogRecord, ACE_Hash<DsLogAdmin::RecordId>,
 ACE_Equal_To<DsLogAdmin::RecordId>, ACE_Null_Mutex>
+#pragma instantiate ACE_Equal_To<DsLogAdmin::RecordId>
 
 #endif /* ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA */

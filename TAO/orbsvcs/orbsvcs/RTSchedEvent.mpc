@@ -19,7 +19,4 @@ project(RTSchedEvent) : orbsvcslib, core, rtevent, rtsched {
       Event/EC_Sched_Filter_Builder.cpp
     }
   }
-
-  Template_Files {
-  }
 }

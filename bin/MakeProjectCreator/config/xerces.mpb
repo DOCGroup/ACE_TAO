@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project {
-  includes += $(XERCESCROOT)/include
-  lit_libs += xerces-c
-  macros   += XML_USE_PTHREADS
-  libpaths += $(XERCESCROOT)/lib
-}
