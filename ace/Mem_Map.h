@@ -89,6 +89,9 @@ public:
   // Open the file without mapping it.
 
   int close (void);
+  // Close down the <handle_> if necessary and unmap the mapping.
+
+  int close_handle (void);
   // Close down the <handle_> if necessary.
 
   int operator () (void *&addr);
