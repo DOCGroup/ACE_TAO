@@ -130,7 +130,7 @@ TAO_Marshal_Primitive::deep_free (CORBA::TypeCode_ptr  tc,
 
   // @@EXC@@ Don't know how to print the following debug info.
   //         Anyhow, currently, tc->kind won't throw any exception.
-  // dmsg ("TAO_Marshal_Primitive::deep_free detected error");
+  // ACE_DEBUG ((LM_DEBUG,"TAO_Marshal_Primitive::deep_free detected error"));
   TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
 
   switch (my_kind)
@@ -183,7 +183,7 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
 
   // @@EXC@@ Don't know how to print out this error message using
   //         the TAO_CHECK... macro.  Is it necessary?
-  // dmsg ("TAO_Marshal_Struct::deep_free detected error");
+  // ACE_DEBUG((LM_DEBUG,"TAO_Marshal_Struct::deep_free detected error"));
   TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
 
   for (int i = 0; i < member_count && retval ==
@@ -194,7 +194,7 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
 
       // @@EXC@@ Don't know how to print out this error message using
       //         the TAO_CHECK... macro.   Is it necessary?
-      // dmsg ("TAO_Marshal_Struct::deep_free detected error");
+      // ACE_DEBUG ((LM_DEBUG,"TAO_Marshal_Struct::deep_free detected error"));
       TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
 
       // get the size of the field
@@ -202,7 +202,7 @@ TAO_Marshal_Struct::deep_free (CORBA::TypeCode_ptr  tc,
 
       // @@EXC@@ Don't know how to print out this error message using
       //         the TAO_CHECK... macro.   Is it necessary?
-      // dmsg ("TAO_Marshal_Struct::deep_free detected error");
+      // ACE_DEBUG ((LM_DEBUG,"TAO_Marshal_Struct::deep_free detected error"));
       TAO_CHECK_ENV_RETURN (env, CORBA::TypeCode::TRAVERSE_STOP);
 
       switch (param->kind_)

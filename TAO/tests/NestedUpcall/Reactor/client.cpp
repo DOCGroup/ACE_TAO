@@ -134,9 +134,9 @@ NestedUpCalls_Client::run (void)
       TAO_CHECK_ENV;
 
       if (this->shutdown_)
-          {
-                  dexc (this->env_, "server, please ACE_OS::exit");
-      }
+        {
+          this->env_.print_exception ("server, please ACE_OS::exit");
+        }
     }
   TAO_CATCHANY
     {

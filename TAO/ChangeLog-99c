@@ -1,5 +1,15 @@
 Mon Feb  8 17:09:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* tao/debug.h: 
+	* tao/debug.cpp: 
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp: 
+	* tao/ORB_Core.cpp: 
+	* tao/Stub.cpp: 
+	* tao/deep_free.cpp: 
+	* tests/NestedUpcall/Reactor/client.cpp: 
+	  Removed all the references to dmsg(), dmsg1(), dexc() and
+	  similar debugging macros, that's what we have ACE_DEBUG() for!!
+
 	* performance-tests/Thruput/TAO/client.cpp: 
 	* tests/Multiple_Inheritance/server.cpp: 
 	  Another couple of files that relied on "tao/corba.h" to include
