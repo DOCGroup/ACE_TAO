@@ -1,5 +1,10 @@
 Tue Oct 14 17:13:46 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/Process.h: Put the ACE_Process copy constructor and
+	  assignment operator in the private part of the class to disallow
+ 	  copying.  Thanks to Adam Fanello <yahoo@fanello.net> for
+ 	  reporting this.
+
 	* ace/OS.cpp: Added patches to support PHARLAP.  Thanks 
 	  to Ira Burton <imburton@micron.com> for supplying these.
 

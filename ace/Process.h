@@ -415,6 +415,10 @@ protected:
   /// Pathname for the process. Relative path or absolute path or just
   /// the program name.
   ACE_TCHAR process_name_[MAXPATHLEN + 1];
+
+  // = Disallow copying and assignment since we don't support this (yet).
+  ACE_UNIMPLEMENTED_FUNC (ACE_Process (const ACE_Process &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Process &))
 };
 
 //class ACE_Process_Manager;
