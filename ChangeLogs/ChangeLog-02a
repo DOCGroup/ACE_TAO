@@ -1,3 +1,9 @@
+Tue Apr 18 15:18:53 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Containers_T.cpp (copy_nodes): Added a call to the 
+	  allocator->malloc() rather than new.  Thanks to Umar Syyid
+ 	  <usyyid@hns.com> for reporting this.
+
 Tue Apr 18 14:06:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* ace/CDR_Stream.cpp:
