@@ -1946,21 +1946,33 @@ TAO_ORB_Core::set_default_policies (void)
       switch (protocol_type)
         {
         case TAO_TAG_IIOP_PROFILE:
-          ACE_NEW_RETURN (protocols[i].transport_protocol_properties,
-                          TAO_TCP_Properties,
-                          -1);
+          {
+            TAO_TCP_Properties *properties;
+            ACE_NEW_RETURN (properties,
+                            TAO_TCP_Properties,
+                            -1);
+            protocols[i].transport_protocol_properties = properties;
+          }
           break;
 
         case TAO_TAG_UIOP_PROFILE:
-          ACE_NEW_RETURN (protocols[i].transport_protocol_properties,
-                          TAO_Unix_Domain_Properties,
-                          -1);
+          {
+            TAO_Unix_Domain_Properties *properties;
+            ACE_NEW_RETURN (properties,
+                            TAO_Unix_Domain_Properties,
+                            -1);
+            protocols[i].transport_protocol_properties = properties;
+          }
           break;
 
         case TAO_TAG_SHMEM_PROFILE:
-          ACE_NEW_RETURN (protocols[i].transport_protocol_properties,
-                          TAO_SMEM_Properties,
-                          -1);
+          {
+            TAO_SMEM_Properties *properties;
+            ACE_NEW_RETURN (properties,
+                            TAO_SMEM_Properties,
+                            -1);
+            protocols[i].transport_protocol_properties = properties;
+          }
           break;
 
         default:
