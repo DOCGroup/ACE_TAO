@@ -161,7 +161,7 @@ AMI_Primary_Replication_Strategy::replicate_request(
    if (!success) { // replication failed, transaction depth too high
      for (size_t i =0; i < num_backups; ++i)  {
        ACE_TRY_EX(block2) {
-         (backups[i]->*rollback)(oid ACE_ENV_ARG_PARAMETER);
+         (backups[i].in()->*rollback)(oid ACE_ENV_ARG_PARAMETER);
          ACE_TRY_CHECK_EX(block2);
        }
        ACE_CATCHALL {

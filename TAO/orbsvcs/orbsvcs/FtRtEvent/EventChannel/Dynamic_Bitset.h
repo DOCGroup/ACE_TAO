@@ -29,6 +29,7 @@ class Dynamic_Bitset
 public:
   class reference {
   public:
+    typedef Dynamic_Bitset::size_type size_type;
     reference(Dynamic_Bitset* bitset, size_type bit);
     reference operator = (bool val);
     operator bool () const;
