@@ -647,6 +647,8 @@ Cubit_Client::init (int argc, char **argv)
   // <Cubit_Factory> pointer.  However, we do it so that we can
   // explicitly test the _narrow function.
   this->factory_ = Cubit_Factory::_narrow (this->objref_, this->env_);
+  //CORBA::release (this->objref_);
+  this->objref_->Release ();
 
   if (this->factory_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,

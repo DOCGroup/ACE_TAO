@@ -542,7 +542,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
   if (profiles == 0)
     {
       *(CORBA::Object_ptr *) data = CORBA::Object::_nil ();
-      delete type_hint;
+      CORBA::string_free (type_hint);
     }
   else
     {
@@ -578,7 +578,10 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
           stream->next += (u_int) tmp;
           stream->remaining -= (u_int) tmp;
 
+          // @@ (CJC) Does IIOP_Object duplicate 'type_hint' below so that
+          // we can safely free it?  It does now!
           objdata = new IIOP_Object (type_hint);
+          CORBA::string_free (type_hint);
 
           IIOP::Profile     *profile = &objdata->profile;
 
@@ -946,7 +949,7 @@ TAO_Marshal_String::decode (CORBA::TypeCode_ptr,
   continue_decoding = stream->get_ulong (len);
   // note that the encoded length is 1 more than the length of the string
   // because it also accounts for the terminating NULL character
-  *((CORBA::String *) data) = str = new CORBA::Char [(size_t) (len)];
+  *((CORBA::String *) data) = str = CORBA::string_alloc (len - 1);
 
   if (len != 0)
     {
@@ -1009,6 +1012,7 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                   bounds = seq->length;
                   // allocate a buffer to hold the sequence
                   seq->buffer = new CORBA::Octet [size *(size_t) seq->maximum];
+                  // @@ Who will free this memory?
                   value = (char *) seq->buffer;
                   switch (tc2->kind_)
                     {
