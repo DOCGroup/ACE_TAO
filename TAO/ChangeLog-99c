@@ -1,3 +1,18 @@
+Fri Dec 24 23:55:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/Smart_Proxies/On_Demand/client.cpp:
+	* tests/Smart_Proxies/On_Demand/server.cpp:
+	* tests/Smart_Proxies/On_Demand/Smart_Proxy_Impl.{h, cpp}:
+	* tests/Smart_Proxies/On_Demand/Smart_Test_Factory.{h, cpp}:
+	* tests/Smart_Proxies/On_Demand/README:
+	* tests/Smart_Proxies/On_Demand/Makefile:
+	* tests/Smart_Proxies/On_Demand/run_test.pl:
+	* tests/Smart_Proxies/On_Demand/svc.conf:
+	* tests/Smart_Proxies/On_Demand/test.idl:
+
+	This test extends the Smart Proxy test and provides on demand
+	activation of the smart proxy using the svc.conf file.
+	
 Fri Dec 24 12:28:00 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Simulator/Event_Supplier/DualEC_Sup.cpp (shutdown):
