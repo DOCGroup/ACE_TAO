@@ -574,7 +574,8 @@ ACE_OS::fstat (ACE_HANDLE handle, ACE_stat *stp)
       stp->st_nlink = ACE_static_cast (short, fdata.nNumberOfLinks);
       stp->st_dev = stp->st_rdev = 0; // No equivalent conversion.
       stp->st_mode = S_IXOTH | S_IROTH |
-        (fdata.dwFileAttributes & FILE_ATTRIBUTE_READONLY ? 0 : S_IWOTH);
+        (fdata.dwFileAttributes & FILE_ATTRIBUTE_READONLY ? 0 : S_IWOTH) |
+        (fdata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ? S_IFDIR : S_IFREG);
     }
   return 0;
 # else /* 1 */
