@@ -5,7 +5,6 @@
 #include "ace/Read_Buffer.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
-#include "orbsvcs/FtRtEvent/Utils/ScopeGuard.h"
 #include "orbsvcs/FtRtEvent/Utils/UUID.h"
 
 ACE_RCSID (Factory_Service,
@@ -38,23 +37,16 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
 {
 
   ACE_DEBUG((LM_DEBUG,"EventChannelFactory_i::create_object\n"));
+  FILE* file;
+  char *id=0, *prog=0;
 
-  FILE* file = fopen(conf_file, "r");
+  ACE_TRY {
+
+  file = fopen(conf_file, "r");
   if (file == NULL)
     ACE_THROW_RETURN(FT::NoFactory(), CORBA::Object::_nil());
 
-  ScopeGuard file_guard = MakeGuard(fclose, file);
-  ACE_UNUSED_ARG(file_guard);
-
-  char *id=0, *prog=0;
   ACE_Read_Buffer read_buf(file);
-  ScopeGuard id_guard = MakeObjGuard(* ACE_Allocator::instance(),
-    &ACE_Allocator::free, id);
-  ACE_UNUSED_ARG(id_guard);
-
-  ScopeGuard prog_guard = MakeObjGuard(* ACE_Allocator::instance(),
-    &ACE_Allocator::free, prog);
-  ACE_UNUSED_ARG(prog_guard);
 
   while ((id = read_buf.read(' ')) != NULL &&
     (prog = read_buf.read('\n')) != NULL) {
@@ -63,8 +55,17 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
         return create_process(prog, the_criteria, factory_creation_id);
       }
     }
+  }
+  ACE_CATCHALL {
+    if (file) fclose(file);
+    if (id) ACE_Allocator::instance()->free(id);
+    if (prog) ACE_Allocator::instance()->free(prog);
+    ACE_RE_THROW;
+  }
+  ACE_ENDTRY;
+  ACE_CHECK;
 
-    ACE_THROW_RETURN(FT::ObjectNotCreated(), CORBA::Object::_nil());
+  ACE_THROW_RETURN(FT::ObjectNotCreated(), CORBA::Object::_nil());
 }
 
 void EventChannelFactory_i::delete_object (
