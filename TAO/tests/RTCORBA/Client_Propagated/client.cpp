@@ -69,7 +69,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       RTCORBA::PriorityModelPolicy_var priority_policy =
-        RTCORBA::PriorityModelPolicy::_narrow (policy, ACE_TRY_ENV);
+        RTCORBA::PriorityModelPolicy::_narrow (policy.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (priority_policy.in ()))
