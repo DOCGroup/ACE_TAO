@@ -1,3 +1,16 @@
+Fri Mar  7 09:34:06 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp: The check for
+          codeset errors were calling the inputCDR's exception generator when
+          the OutputCDR was used.
+
+        * tao/Codeset_Translator_Factory_T.h: Removed the TAO_Export
+          modifier from the template declaration. Some of the MSCV builds
+          were complaining about it, and it looks like the other templates
+          in TAO don't export when their base classes do. I referred to
+          the Sequence_T source for comparison.
+
 Fri Mar  7 07:17:02 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:

@@ -16,7 +16,7 @@
 #include "tao/Codeset_Translator_Factory.h"
 
 template<class NCS_TO_TCS>
-class TAO_Export TAO_Codeset_Translator_Factory_T
+class TAO_Codeset_Translator_Factory_T
 : public TAO_Codeset_Translator_Factory
 {
 public:

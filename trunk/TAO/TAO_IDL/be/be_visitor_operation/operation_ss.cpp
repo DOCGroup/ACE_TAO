@@ -733,7 +733,7 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
 
   // If marshaling fails, raise exception (codesetting has minor codes)
   *os << "{" << be_idt_nl << be_nl
-      << "TAO_InputCDR::throw_skel_exception (errno ACE_ENV_ARG_PARAMETER);" << be_nl
+      << "TAO_OutputCDR::throw_skel_exception (errno ACE_ENV_ARG_PARAMETER);" << be_nl
       << "ACE_CHECK;" << be_uidt_nl
       << "}" << be_nl;
 
