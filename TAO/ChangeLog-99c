@@ -1,3 +1,8 @@
+Tue Aug 24 11:03:56 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/Makefile:
+	  The IDL compiler did not compile due to outdated dependencies.
+
 Tue Aug 24 09:49:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/examples/Load_Balancing/client.dsp:
