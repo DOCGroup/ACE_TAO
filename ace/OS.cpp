@@ -213,7 +213,7 @@ ACE_OS::gethrtime (void)
   // potentially being used without being initialized, but the
   // assembly code insures that they ARE initialized.  So, that
   // warning can be ignored.
-  unsigned long least, most;
+  volatile unsigned long least, most;
 
   asm ("rdtsc");
   asm ("movl %eax, -4(%ebp)");  // least
