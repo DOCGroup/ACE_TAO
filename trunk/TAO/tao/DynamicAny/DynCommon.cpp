@@ -1420,14 +1420,14 @@ TAO_DynCommon::get_any (ACE_ENV_SINGLE_ARG_DECL)
     }
   else
     {
-      CORBA::Any_ptr tmp = 0;
+      const CORBA::Any *tmp = 0;
 
       ACE_NEW_THROW_EX (tmp,
                         CORBA::Any,
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
-      CORBA::Any_var val = tmp;
+      CORBA::Any_var val = ACE_const_cast (CORBA::Any *, tmp);
 
       if ((this->any_ >>= tmp) == 0)
         {
