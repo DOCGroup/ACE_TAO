@@ -47,7 +47,7 @@ ACE_Name_Node::ACE_Name_Node (const char *name,
     next_ (next)
 {
   ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
-  ACE_OS::strcpy (this->name_.addr (), name);
+  ACE_OS::strcpy (ACE_POINTER_CAST (this->name_), name);
 }
 
 ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)
@@ -59,7 +59,7 @@ ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)
 const char *
 ACE_Name_Node::name (void) const
 {
-  return this->name_.addr ();
+  return ACE_POINTER_CAST (this->name_);
 }
 
 void
