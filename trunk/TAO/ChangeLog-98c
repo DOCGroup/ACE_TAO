@@ -1,18 +1,5 @@
 Tue Sep 29 11:08:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.i: 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	  Use the new abstractions in the Timer_Module to schedule and
-	  cancel timers.
-
-	* orbsvcs/orbsvcs/Event/Module_Factory.h: 
-	* orbsvcs/orbsvcs/Event/Module_Factory.cpp: 
-	  Added methods to create the new module.
-
 	* orbsvcs/orbsvcs/Makefile: 
 	* orbsvcs/orbsvcs/Event/Timer_Module.h: 
 	* orbsvcs/orbsvcs/Event/Timer_Module.i: 
@@ -28,6 +15,19 @@ Tue Sep 29 11:08:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  to dispatch all the timers.
 	  In the future we plan to implement the timers using the
 	  Thread_Timer_Queue_Adapter or a similar mechanism.
+
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.h: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.i: 
+	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	  Use the new abstractions in the Timer_Module to schedule and
+	  cancel timers.
+
+	* orbsvcs/orbsvcs/Event/Module_Factory.h: 
+	* orbsvcs/orbsvcs/Event/Module_Factory.cpp: 
+	  Added methods to create the new module.
 
 	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
 	  Some experimental changes to test the new single threaded module
