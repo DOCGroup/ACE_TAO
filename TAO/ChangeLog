@@ -1,3 +1,24 @@
+Sat Dec  6 18:25:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* performance-tests/Latency/DII/client.dsp:
+	* performance-tests/Latency/DII/server.dsp:
+	* performance-tests/Latency/Deferred/client.dsp:
+	* performance-tests/Latency/Deferred/server.dsp:
+	* performance-tests/Latency/AMI/client.dsp:
+	* performance-tests/Latency/AMI/server.dsp:
+	* performance-tests/Latency/AMH/Single_Threaded/client.dsp:
+	* performance-tests/Latency/AMH/Single_Threaded/server.dsp:
+	* performance-tests/Latency/DSI/client.dsp:
+	* performance-tests/Latency/DSI/server.dsp:
+	* performance-tests/Latency/Single_Threaded/client.dsp:
+	* performance-tests/Latency/Single_Threaded/server.dsp:
+	* performance-tests/Cubit/TAO/MT_Cubit/client.dsp:
+	* performance-tests/Cubit/TAO/MT_Cubit/server.dsp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/client.dsp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/server.dsp:
+	  Another set of fixes in the release configuration.
+
 Sat Dec  6 18:01:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Object_Adapter.cpp:
