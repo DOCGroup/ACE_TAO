@@ -1,3 +1,10 @@
+Fri Sep 24 10:21:38 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * performance-tests/Server_Concurrrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp:
+        
+          Replaced ACE_UINT64_DBLCAST_ADAPTER, which doesn't satisfy
+          the stricter MSVC 7.1, with static_cast<double>.
+
 Fri Sep 24 10:55:34 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-linux-common.h: If __USE_POSIX199309 is defined from
