@@ -2,92 +2,106 @@ $Id$
 
 This is a unit test for RTCORBA::ClientProtocolPolicy.
 
+Description: 
+---------
+This test consists of five mini-tests, each exercising
+ClientProtocolPolicy in a different configuration:
+
+1. Invoke an operation on the object that had ClientProtocolPolicy set
+   on the server side.  Make sure the protocol dictated by the policy is
+   used for communication.
+
+2. Set ORB-level ClientProtocolPolicy override on the client ORB, and
+   invoke an operation on an object that had ClientProtocolPolicy set
+   on the server side.  Should receive CORBA::INV_POLICY exception
+   since the policy is set on both client and server sides.
+
+3. Set ORB-level ClientProtocolPolicy override on the client ORB, and
+   invoke an operation on an object that did *not* have
+   ClientProtocolPolicy set on the server side.  Make sure the
+   protocol dictated by the policy override is used for communication.
+
+4. Set ClientProtocolPolicy override on the Current level in the
+   client ORB, and invoke an operation on an object that did *not*
+   have ClientProtocolPolicy set on the server.  The override value is
+   a sequence of protocols none of which are available in the server
+   ORB.  Should receive CORBA::INV_POLICY exception since none of the
+   protocols specified in the policy are available for communication.
+
+5. Set ClientProtocolPolicy override on the Current level in the
+   client ORB, and invoke an operation on an object that did *not*
+   have ClientProtocolPolicy set on the server.  The override value is
+   a sequence of two protocols, in which the first protocol isn't
+   available in the server ORB, and the second protocol is available
+   in both client and server ORBs.  Make sure the second protocol
+   specified in the override is used for communication.
+
+
 Scenario:
---------
-The server first prints out its ORB default Server Protocol policy.
-If the <-p> command line option was specified, a child POA is created
-and configured with Server Protocol Policy containing a single
-protocol specified with <-p> (see options section below).
-The object is registered with child POA if one was created (root poa
-otherwise) and the server waits for requests.
-The client obtains server IOR and makes a single incocation, causing
-server process to shut down its orb and exit.
+
+The server creates two objects: one with ClientProtocolPolicy set and
+the other one without the policy being set.  The value of the
+ClientProtocolPolicy is a single protocol specified using server
+command-line option (see Options section below).  The client obtains
+two object references and uses them to run five tests decribed
+above. Finally, the client invokes <shutdown> method on the server to
+terminate the processes.
 
 To run (on Unix):
 -------
-$./server [-o <ior_file> -p <profile_id>]
-$./client [-k <ior>]
+$./server [-s <ior_output_file1> -c <ior_output_file2> -p <profile_id>]
+$./client [-s <ior1> -c <ior2> -p <profile_id>] -ORBdebuglevel 1
 
 
 Options:
 --------
          Server:
 
--o <ior_output_file>   Default: test.ior
-                       Filename for output of server's IOR.
+-s <ior_output_file1>   Default: test1.ior
+                        Filename for output of IOR for the object that
+                        had ClientProtocolPolicy set on the server.
 
--p <profile_id>        Default: none.
-                       The POA with which the object will be
-                       registered will be configured with Server
-                       Protocol Policy cotaining a single protocol -
-                       the one identified by <profile_id>.  If this
-                       option is not present, then the POA is not
-                       configured with Server Protocol Policy and ORB
-                       default is used.
+-c <ior_output_file2>   Default: test2.ior
+                        Filename for output of IOR for the object that
+                        did not have ClientProtocolPolicy set on the
+                        server. 
+
+-p <profile_id>         Default: 0 (IIOP)
+                        Protocol used as a ClientProtocolPolicy value
+                        for one of the server's objects.
 
          Client:
 
--k <server_ior>        Default: file://test.ior
-                       Server's IOR
+-s <ior_output_file1>   Default: file://test1.ior
+                        IOR for the object that had
+                        ClientProtocolPolicy set on the server. 
+
+-c <ior_output_file2>   Default: file://test2.ior
+                        IOR for the object that did not have
+                        ClientProtocolPolicy set on the server. 
+
+-p <profile_id>         Default: 0 (IIOP)
+                        Protocol used as a ClientProtocolPolicy value
+                        on the client.
+
+-ORBdebuglevel 1        Recommended ORB option for the client in order to see
+                        which protocols are being used in each
+                        mini-test for client-server communication.
+                        
+
 
 Expected output:
 ----------------
-Expected output varies with the configurations used to run the test.
-General guidelines:
+Test 1: invocation should succeed using the protocol specified with
+        <-p> option to the server. 
+Tests 2 and 4: should produce INV_POLICY exception.
+Tests 3 and 5: invocation should succeed using the protocol specified
+               with <-p> option to the client.
 
-1) ORB default ServerProtocolPolicy must contain all the protocols
-   that were loaded in the order they were loaded.  This can be
-   manipulated through the use of service config files (see run_test.pl)
-
-2) Run client with -ORBdebuglevel 1 to see which protocol is used for
-   communication.  Make sure it is the same protocol that was
-   specified with <-p> or the first available from orb default server
-   protocol policy if <-p> wasn't specified (see run_test.pl for
-   sample options)
-
-3) See OMG Real-Time CORBA specification and TAO's Real-Time CORBA
-   documentation for more information.
+Below is the expected output from run_test.pl on a Unix platform. See
+run_test.pl for command-line options used for client and server.
+NOTE: expected output differs on windows due to uiop not being
+available.
 
 
-Sample Run/Output (on Unix):
-----------------
-* Server:
 
-$./server -ORBendpoint iiop:// -ORBendpoint uiop:// -ORBendpoint \
-shmiop:// -p 1413566210
-
-ORB default for ServerProtocolPolicy contains 3 protocols:
-  Protocol 0: IOP::ProfileId = 0
-     Properties:
-      send_buffer_size = 65536
-      receive_buffer_size = 65536
-      no_delay = 1
-  Protocol 1: IOP::ProfileId = 1413566208
-     Properties:
-      send_buffer_size = 65536
-      receive_buffer_size = 65536
-  Protocol 2: IOP::ProfileId = 1413566210
-
-Activated as <IOR:000000000000000d49444c3a546573743a312e30000000000000000154414f020000008000010200000000116163652e63732e777573746c2e6564750000cbef0000002314010f004e535439b59013000388560000000100000001000000000000000100000001000000000300000000000000080000000054414f000000000100000014000000000001000100000000000101090000000054414f000000000400000000>
-
-Received request to shut down the ORB
-Server ORB event loop finished
-
-
-* Client (in a separate window):
-
-$./client -ORBdebuglevel 1
-TAO (20145|1) Loaded default protocol <IIOP_Factory>
-TAO (20145|1) Loaded default protocol <UIOP_Factory>
-TAO (20145|1) Loaded default protocol <SHMIOP_Factory>
-TAO (20145|1) SHMIOP connection to server <127.0.0.1:52207> on 8
