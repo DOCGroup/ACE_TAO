@@ -186,8 +186,8 @@ TAO_Naming_Context::to_string (const CosNaming::Name &n,
   // Length of the return string
   CORBA::ULong len = 0;
 
-  CORBA::ULong i = 0;
-  for (; i < n.length (); ++i)
+  CORBA::ULong i;
+  for (i=0; i < n.length (); ++i)
     {
       const char *id = n[i].id.in ();
 
@@ -214,7 +214,7 @@ TAO_Naming_Context::to_string (const CosNaming::Name &n,
   char *k = str_name;
 
   // Stringify the name
-  for (i = 0; i < n.length (); i++)
+  for (i=0; i < n.length (); ++i)
     {
 
       // Stringify Id
