@@ -1,3 +1,12 @@
+Sat Mar  7 11:59:27 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tao/orb_core.cpp (get_root_poa): Changed this from being a
+ 	macro-implemented method to a hand-implemented method.  This is
+ 	necessary b/c the location of its resource is keyed not off
+ 	resource_source_ but rathe off poa_source_, and there's no macro
+ 	avaialble for that.  Thanks to John Geiss <jtgb@eci-esyst.com> for
+ 	reporting the bug that led to this fix!
+
 Sat Mar 07 08:29:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/orb_core.cpp (TAO_Default_Reactor ctor and dtor): removed
