@@ -1,3 +1,13 @@
+Thu Nov 25 09:53:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.h:
+
+	  Pass argc and argv to parse_args() method instead of stashing
+	  them away in local instance variables before calling ORB_init.
+	  This allows us to pass ORB options (-ORBInitRef, etc.) on the
+	  command line.
+
 Thu Nov 25 09:15:39 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/examples/Log/Event/Log_Event.mpc:
