@@ -1,3 +1,12 @@
+Fri May  9 10:42:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+
+          In Any_var assignment operator from Any_var, added a
+          check for a null rhs ptr_ member. Thanks to 
+          Huang-Ming Huang <hh1@cs.wustl.edu> for discovering
+          the problem.
+
 Fri May  9 08:32:16 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/ORT/ORT.mpc:
