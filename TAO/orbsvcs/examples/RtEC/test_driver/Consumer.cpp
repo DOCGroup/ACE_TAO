@@ -191,7 +191,6 @@ Consumer::push (const RtecEventComm::EventSet& events
                   "Consumer (%P|%t) no events\n"));
       return;
     }
-  /*
   int prio = -1;
   ACE_hthread_t handle;
   ACE_Thread::self(handle);
@@ -199,7 +198,6 @@ Consumer::push (const RtecEventComm::EventSet& events
   //ACE_thread_t tid = ACE_Thread::self();
   ACE_DEBUG ((LM_DEBUG, "Consumer #%d @%d (%P|%t) we received event type %d\n",
               this->_consumer_id,prio,events[0].header.type));
-  */
 
   //@BT INSTRUMENT with event ID: EVENT_WORK_START Measure time
   //when work triggered by event starts.
