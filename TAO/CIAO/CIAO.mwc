@@ -3,5 +3,5 @@
 
 workspace {
   ciao
-  tools/tools.mwc
+  tools
 }
