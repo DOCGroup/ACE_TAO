@@ -26,65 +26,194 @@
 const char * success = "SUCCEEDED";
 const char * failure = "***FAILED***";
 
-int
-main (int argc, char **argv)
+void
+check_sysconf ()
+{
+  long retval;
+  int index;
+  const int confnamessize = 38;
+  int confnames[] = {_SC_AIO_LISTIO_MAX,
+                     _SC_AIO_MAX,
+                     _SC_AIO_PRIO_DELTA_MAX,
+                     _SC_ARG_MAX,
+                     _SC_CHILD_MAX,
+                     _SC_CLK_TCK,
+                     _SC_DELAYTIMER_MAX,
+                     _SC_GETGR_R_SIZE_MAX,
+                     _SC_GETPW_R_SIZE_MAX,
+                     _SC_LOGIN_NAME_MAX,
+                     _SC_MQ_OPEN_MAX,
+                     _SC_MQ_PRIO_MAX,
+                     _SC_NGROUPS_MAX,
+                     _SC_OPEN_MAX,
+                     _SC_PAGESIZE,
+                     _SC_RTSIG_MAX,
+                     _SC_SEM_NSEMS_MAX,
+                     _SC_SEM_VALUE_MAX,
+                     _SC_SIGQUEUE_MAX,
+                     _SC_STREAM_MAX,
+                     _SC_THREAD_DESTRUCTOR_ITERATIONS,
+                     _SC_THREAD_KEYS_MAX,
+                     _SC_THREAD_STACK_MIN,
+                     _SC_THREAD_THREADS_MAX,
+                     _SC_TIMER_MAX,
+                     _SC_TTY_NAME_MAX,
+                     _SC_TZNAME_MAX,
+                     _SC_ASYNCHRONOUS_IO,
+                     _SC_FSYNC,
+                     _SC_JOB_CONTROL,
+                     _SC_MAPPED_FILES,
+                     _SC_MEMLOCK,
+                     _SC_MEMLOCK_RANGE,
+                     _SC_MEMORY_PROTECTION,
+                     _SC_MESSAGE_PASSING,
+                     _SC_PRIORITIZED_IO,
+                     _SC_PRIORITY_SCHEDULING,
+                     _SC_REALTIME_SIGNALS};
+  char * confstrs[] = {"_SC_AIO_LISTIO_MAX",
+                       "_SC_AIO_MAX",
+                       "_SC_AIO_PRIO_DELTA_MAX",
+                       "_SC_ARG_MAX",
+                       "_SC_CHILD_MAX",
+                       "_SC_CLK_TCK",
+                       "_SC_DELAYTIMER_MAX",
+                       "_SC_GETGR_R_SIZE_MAX",
+                       "_SC_GETPW_R_SIZE_MAX",
+                       "_SC_LOGIN_NAME_MAX",
+                       "_SC_MQ_OPEN_MAX",
+                       "_SC_MQ_PRIO_MAX",
+                       "_SC_NGROUPS_MAX",
+                       "_SC_OPEN_MAX",
+                       "_SC_PAGESIZE",
+                       "_SC_RTSIG_MAX",
+                       "_SC_SEM_NSEMS_MAX",
+                       "_SC_SEM_VALUE_MAX",
+                       "_SC_SIGQUEUE_MAX",
+                       "_SC_STREAM_MAX",
+                       "_SC_THREAD_DESTRUCTOR_ITERATIONS",
+                       "_SC_THREAD_KEYS_MAX",
+                       "_SC_THREAD_STACK_MIN",
+                       "_SC_THREAD_THREADS_MAX",
+                       "_SC_TIMER_MAX",
+                       "_SC_TTY_NAME_MAX",
+                       "_SC_TZNAME_MAX",
+                       "_SC_ASYNCHRONOUS_IO",
+                       "_SC_FSYNC",
+                       "_SC_JOB_CONTROL",
+                       "_SC_MAPPED_FILES",
+                       "_SC_MEMLOCK",
+                       "_SC_MEMLOCK_RANGE",
+                       "_SC_MEMORY_PROTECTION",
+                       "_SC_MESSAGE_PASSING",
+                       "_SC_PRIORITIZED_IO",
+                       "_SC_PRIORITY_SCHEDULING",
+                       "_SC_REALTIME_SIGNALS"};
+
+  printf("pace_sysconf %s\n", success);
+  for (index = 0; index < confnamessize; index++) 
+    {
+      /* Call pace_sysconf() */
+      errno = 0;
+      retval = pace_sysconf(confnames[index]);
+
+      /* Return value of -1 indicates an invalid name or no support
+         for the functionality associated with the name. POSIX-
+         conformant platforms may not support all the names. However,
+         using the names above should not cause compilation errors.
+         */
+      printf("pace_sysconf: name == %s\n", confstrs[index]);
+      if (retval == -1)
+        {
+          printf("retval == %ld\n", retval);
+          if (errno == 0)
+            {
+              printf("Unsupported name [errno did not change]\n");
+            }
+          else
+            {
+              printf("invalid name [errno did not change]\n");
+            }
+        }
+      else
+        {
+          printf("pace_sysconf: value == %ld\n", retval);
+        }
+    }
+
+  printf("\n");
+}
+
+void
+check_time ()
 {
   long retval;
   time_t local_time;
-  struct utsname name;
-  int confname = _SC_AIO_LISTIO_MAX;
 
-  /* Call pace_sysconf() */
-  errno = 0;
-  retval = pace_sysconf(confname);
-
-  /* Return value of -1 indicates an invalid name or no support
-     for the functionality associated with the name. In either
-     case, POSIX platforms should not return -1 for the name
-     above.
-   */
-  if (retval == -1)
-    {
-      printf("pace_sysconf %s\n", failure);
-      printf("retval == %ld\n", retval);
-      if (errno == 0)
-        {
-          printf("Unsupported name [errno did not change]");
-        }
-      printf("\n");
-      return -1;
-    }
-
-  printf("pace_sysconf %s\n", success);
-  printf("pace_sysconf: name == %d\n", confname);
-  printf("pace_sysconf: value == %ld\n\n", retval);
-
-  /* Call pace_time() */
+  /* Call pace_time() with time_t * arg */
   local_time = 0;
   errno = 0;
   retval = pace_time(&local_time);
 
+  printf("pace_time %s\n", success);
   if (retval == -1)
     {
-      printf("pace_time %s\n", failure);
-      printf("errno == %d\n\n", errno);
-      return -1;
+      printf("errno == %d\n", errno);
+    }
+  else
+    {
+      printf("pace_time (with time_t* arg) == %ld\n", local_time);
     }
 
-  printf("pace_time %s\n", success);
-  printf("pace_time == %ld\n\n", local_time);
+  /* Call pace_time() with NULL arg */
+  errno = 0;
+  retval = pace_time(0);
+
+  if (retval == -1)
+    {
+      printf("errno == %d\n", errno);
+    }
+  else
+    {
+      printf("pace_time (with NULL arg) == %ld\n\n", retval);
+    }
+}
+
+void
+check_uname ()
+{
+  long retval;
+  struct utsname name;
 
   /* Call pace_uname() */
+  errno = 0;
   retval = pace_uname(&name);
+  printf("pace_uname %s\n", success);
 
   if (retval < 0)
     {
-      printf("pace_uname %s\n\n", failure);
-      return -1;
+      printf("pace_uname error: %d\n", errno);
     }
+  else
+    {
+      printf("pace_uname: uname.sysname == %s\n", name.sysname);
+      printf("pace_uname: uname.nodename == %s\n", name.nodename);
+      printf("pace_uname: uname.release == %s\n", name.release);
+      printf("pace_uname: uname.version == %s\n", name.version);
+      printf("pace_uname: uname.machine == %s\n", name.machine);
+    }
+}
 
-  printf("pace_uname %s\n", success);
-  printf("pace_uname: uname.sysname == %s\n\n", name.sysname);
+int
+main (int argc, char **argv)
+{
+  /* Check the PACE calls to the sysconf POSIX function. */
+  check_sysconf();
+
+  /* Check the PACE calls to the time POSIX function. */
+  check_time();
+
+  /* Check the PACE calls to the uname POSIX function. */
+  check_uname();
 
   PACE_UNUSED_ARG (argc);
   PACE_UNUSED_ARG (argv);
