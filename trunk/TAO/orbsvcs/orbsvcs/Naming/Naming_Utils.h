@@ -23,8 +23,8 @@
 
 #include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Naming/CosNaming_i.h"
-#include "orbsvcs/Naming/Ior_Multicast.h"
+#include "CosNaming_i.h"
+#include "Ior_Multicast.h"
 
 class TAO_Naming_Server
 {

@@ -3,7 +3,7 @@
 #include "ace/streams.h"
 
 #include "orbsvcs/Naming/CosNaming_i.h"
-#include "Naming_Service.h"
+#include "Ior_Multicast.h"
 
 // This is a startup for the naming server.
 // This is used for testing of the Naming Service.
