@@ -25,9 +25,6 @@ Fri Aug 18 23:20:56 2000  Marina Spivak  <marina@cs.wustl.edu>
           given PolicyList (section 4.15.2 of RTCORBA 1.0, i.e.,
           ptc/99-05-03).
 
-
-
-
 Fri Aug 18 19:30:00 2000  Kirthika  Parameswaran  <kirthika@cs.wustl.edu>
 	Visitors implemented as part of the TAO_IDL to generate
 	infrastructure for Portable Interceptors:
