@@ -2,14 +2,15 @@
 
 ACE_INLINE
 TAO_GIOP_RequestHeader::TAO_GIOP_RequestHeader (void)
-  : request_id(0),
-    response_expected(CORBA::B_FALSE)
+  : request_id (0),
+    response_expected (CORBA::B_FALSE)
 {}
 
 // Initialize the request header from <msg>, setting <env> for errors.
 
 ACE_INLINE CORBA::Boolean
-TAO_GIOP_RequestHeader::init (CDR &msg, CORBA::Environment &env)
+TAO_GIOP_RequestHeader::init (CDR &msg,
+                              CORBA::Environment &env)
 {
   CORBA::Boolean hdr_status;
 
@@ -82,5 +83,5 @@ TAO_GIOP_Invocation::put_param (CORBA::TypeCode_ptr tc,
                                 void *value, 
                                 CORBA::Environment &env)
 {
-  (void) this->stream.encode_ (tc, value, 0, env);
+  (void) this->stream_.encode (tc, value, 0, env);
 }

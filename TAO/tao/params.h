@@ -26,7 +26,7 @@
 
 // Forward decls.
 
-class TAO_OA_Connection_Handler;
+class TAO_Server_Connection_Handler;
 
 // This is a quick hack to avoid having to unravel the intracacies of
 // the all the hairy order interdepencies that currently exist in TAO.
