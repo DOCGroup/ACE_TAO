@@ -292,7 +292,7 @@ private:
   CORBA::ULong my_request_id;
 
   u_char buffer [CDR::DEFAULT_BUFSIZE];
-  CDR stream;
+  CDR stream_;
 
   TAO_Client_Connection_Handler* handler_;
   // The handler for the client's connection.
@@ -331,15 +331,20 @@ typedef void (*TAO_GIOP_RequestHandler) (TAO_GIOP_RequestHeader &,
                                          CDR *,
                                          void *,
                                          CORBA::Environment &);
-
 class TAO_GIOP
-// Only put static methods within this scope
+  // = TITLE
+  // 
+  //
+  // = DESCRIPTION
+  //   Only put static methods within this scope
 {
 public:
   // = Close a connection, first sending GIOP::CloseConnection
-  static void close_connection (TAO_Client_Connection_Handler *&handle, void *ctx);
+  static void close_connection (TAO_Client_Connection_Handler *&handle,
+                                void *ctx);
 
-  static CORBA::Boolean start_message (TAO_GIOP_MsgType t, CDR &msg);
+  static CORBA::Boolean start_message (TAO_GIOP_MsgType t,
+                                       CDR &msg);
   // Build the header for a message of type <t> into stream <msg>.
   
 #if 0
@@ -348,17 +353,16 @@ public:
                                TAO_GIOP_RequestHandler handle_request,
                                void *context,
                                CORBA::Environment &env);
-#endif  
+#endif /* 0 */
 
-  static CORBA::Boolean send_message (CDR &stream, 
-                                      TAO_Client_Connection_Handler *&handler);
+  static CORBA::Boolean send_request (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *&handler,
+                                      CDR &stream);
+  // Send message, returns TRUE if success, else FALSE.
 
-  // = Reads message, returns message type from header.
-
-  static TAO_GIOP_MsgType read_message (TAO_Client_Connection_Handler *&handler, 
+  static TAO_GIOP_MsgType recv_request (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> *&handler,
                                         CDR &msg, 
                                         CORBA::Environment &env);
-
+  // Reads message, returns message type from header.
   
   static void make_error (CDR &msg, ...);
   // Construct a message containing an error so that it can be sent as

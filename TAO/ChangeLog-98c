@@ -1,3 +1,25 @@
+Wed Oct 29 18:55:57 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tao/giop: Added "_"'s to the data members in
+ 	TAO_GIOP_Invocation.
+
+	* tao/giop (send_request): Swaped the order of the parameters for
+ 	send_request() so that it would be consistent with recv_request.
+
+	* tao/{connect,giop}: Changed read_message() to recv_request(),
+ 	and send_message() to send_request() since these things really
+ 	work on GIOP requests.
+
+	* tao/{connect,giop}: Changed read_message() to recv_message(),
+ 	which is more like other parts of ACE.
+
+	* tao/connect.cpp: Fixed the calls to read_message() and
+ 	send_message() so that they don't try to modify "this."
+
+	* tao/giop: Changed the send_message() and read_message() in the
+ 	TAO_GIOP class to take ACE_Svc_Handler<ACE_SOCK_STREAM,
+ 	ACE_NULL_SYNCH> rather than TAO_Client_Connection_Handler.
+
 Wed Oct 29 17:53:12 1997    <irfan@CHA-CHA>
 
 	* tao: Added TAO_HAS_TSS_ORB_CORE to tao and Cubit NT makefiles.
