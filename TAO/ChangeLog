@@ -1,3 +1,12 @@
+Thu May 29 14:30:57 UTC 2003  Gary Duzan <gduzan@bbn.com>
+                              Craig Rodrigues  <crodrigu@bbn.com>
+
+	* rules.tao.GNU: 
+	  Replace several rules for building stub/skeleton files from an
+	  idl file with a single straightforward rule. The intermediate
+	  rules could cause problems with false dependencies when the
+	  generated files have slightly different timestamps.
+
 Thu May 29 14:55:15 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 	* tao/tao.mpc:
