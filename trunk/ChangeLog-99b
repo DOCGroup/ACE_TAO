@@ -12,6 +12,8 @@ Sun May 16 19:54:10 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	<ACE_POSIX_Asynch_Result *> so that we dont have to do any
 	casting. 
 	* ace/Proactor.cpp (ACE_Proactor): Indentation.
+	* examples/Reactor/Proactor/post_completions.cpp: Added template
+	pragma's. 
 
 Sun May 16 18:35:59 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
