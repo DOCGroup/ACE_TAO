@@ -1,3 +1,7 @@
+Thu Jun 24 17:48:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/releasenotes/TODO.html (pseudo-object): Added a todo item
+
 Thu Jun 24 19:41:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Any.cpp:
