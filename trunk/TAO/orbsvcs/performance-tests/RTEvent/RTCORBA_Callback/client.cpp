@@ -10,7 +10,6 @@
 #include "Client_Options.h"
 #include "Implicit_Deactivator.h"
 #include "Shutdown.h"
-#include "Auto_Functor.h"
 #include "ORB_Task.h"
 #include "ORB_Task_Activator.h"
 
@@ -18,6 +17,7 @@
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/Messaging/Messaging.h"
+#include "ace/Auto_Functor.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Basic_Stats.h"
@@ -93,7 +93,7 @@ public:
                                                   ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    Auto_Functor<Test::Session,Shutdown<Test::Session> > auto_shutdown (session.in ());
+    ACE_Utils::Auto_Functor<Test::Session,Shutdown<Test::Session> > auto_shutdown (session.in ());
 
     for (int i = 0; i != this->iterations_; ++i)
       {
@@ -158,7 +158,7 @@ public:
                                                   ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    Auto_Functor<Test::Session,Shutdown<Test::Session> > auto_shutdown (session.in ());
+    ACE_Utils::Auto_Functor<Test::Session,Shutdown<Test::Session> > auto_shutdown (session.in ());
 
     for (;;)
       {

@@ -10,7 +10,7 @@
 
 #include /**/ "event_export.h"
 #include "EC_Event_Channel_Base.h"
-#include "tao/Auto_Functor.h"
+#include "ace/Auto_Functor.h"
 
 /**
  * @struct TAO_EC_Channel_Destroyer_Functor
@@ -32,7 +32,7 @@ struct TAO_RTEvent_Export TAO_EC_Channel_Destroyer_Functor
  * @brief Helper class to destroy event channel.
  *
  */
-typedef TAO::Utils::Auto_Functor<
+typedef ACE_Utils::Auto_Functor<
             TAO_EC_Event_Channel_Base,
             TAO_EC_Channel_Destroyer_Functor>
         TAO_EC_Channel_Destroyer;

@@ -18,7 +18,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/ORB.h"
-#include "tao/Auto_Functor.h"
+#include "ace/Auto_Functor.h"
 
 namespace TAO
 {
@@ -45,7 +45,7 @@ namespace TAO
      * @brief Helper class to destroy an ORB.
      *
      */
-    typedef Auto_Functor<
+    typedef ACE_Utils::Auto_Functor<
       CORBA::ORB,
       ORB_Destroyer_Functor>
     ORB_Destroyer;

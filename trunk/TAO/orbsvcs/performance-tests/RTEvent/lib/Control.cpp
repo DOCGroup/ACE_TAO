@@ -9,7 +9,6 @@
 #include "Control.h"
 #include "ORB_Shutdown.h"
 #include "Shutdown.h"
-#include "Auto_Functor.h"
 #include "Auto_Disconnect.h"
 
 #include "orbsvcs/orbsvcs/Event_Service_Constants.h"
@@ -61,10 +60,10 @@ Control::join (Federated_Test::Peer_ptr peer
   }
 
   /// Automatically shutdown the ORB
-  Auto_Functor<CORBA::ORB,ORB_Shutdown> orb_shutdown (this->orb_.in ());
+  ACE_Utils::Auto_Functor<CORBA::ORB,ORB_Shutdown> orb_shutdown (this->orb_.in ());
 
   /// Automatically shutdown the peers
-  typedef Auto_Functor<Federated_Test::Peer,Shutdown<Federated_Test::Peer> > Peer_Shutdown;
+  typedef ACE_Utils::Auto_Functor<Federated_Test::Peer,Shutdown<Federated_Test::Peer> > Peer_Shutdown;
   ACE_Auto_Basic_Array_Ptr<Peer_Shutdown> peer_shutdown (
       new Peer_Shutdown[this->peers_count_]
       );
@@ -72,7 +71,7 @@ Control::join (Federated_Test::Peer_ptr peer
   size_t i;
   for (i = 0; i != this->peers_count_; ++i)
     {
-      peer_shutdown[i] = this->peers_[i].in ();
+      peer_shutdown[i].reset(this->peers_[i].in());
     }
 
   ACE_DEBUG ((LM_DEBUG,

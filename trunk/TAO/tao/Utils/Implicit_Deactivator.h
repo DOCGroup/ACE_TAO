@@ -19,7 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/PortableServer.h"
-#include "tao/Auto_Functor.h"
+#include "ace/Auto_Functor.h"
 
 
 namespace TAO
@@ -47,7 +47,7 @@ namespace TAO
      * @brief Helper class to deactivate implicitly activated servants.
      *
      */
-    typedef Auto_Functor<
+    typedef ACE_Utils::Auto_Functor<
       PortableServer::ServantBase,
       Implicit_Deactivation_Functor>
     Implicit_Deactivator;
