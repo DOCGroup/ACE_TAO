@@ -1,4 +1,4 @@
-project(CosNaming) : orbsvcslib, core, svc_utils, iortable {
+project(CosNaming) : orbsvcslib, core, messaging, svc_utils, iortable {
   sharedname   = TAO_CosNaming
   idlflags    += -Wb,export_macro=TAO_Naming_Export -Wb,export_include=Naming/naming_export.h
   dynamicflags = TAO_NAMING_BUILD_DLL
