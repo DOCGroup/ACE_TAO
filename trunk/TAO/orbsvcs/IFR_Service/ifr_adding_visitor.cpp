@@ -2029,21 +2029,50 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
 
       if (be_global->ifr_scopes ().top (current_scope) == 0)
         {
-          CORBA::ExtInterfaceDef_var iface =
-            CORBA::ExtInterfaceDef::_narrow (current_scope
-                                             ACE_ENV_ARG_PARAMETER);
+          CORBA::DefinitionKind kind = 
+            current_scope->def_kind (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          CORBA::ExtAttributeDef_var new_def =
-            iface->create_ext_attribute (node->repoID (),
-                                         node->local_name ()->get_string (),
-                                         node->version (),
-                                         this->ir_current_.in (),
-                                         mode,
-                                         get_exceptions,
-                                         set_exceptions
-                                         ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          if (kind == CORBA::dk_Interface || kind == CORBA::dk_Component)
+            {
+              CORBA::ExtInterfaceDef_var iface =
+                CORBA::ExtInterfaceDef::_narrow (current_scope
+                                                 ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+
+              CORBA::ExtAttributeDef_var new_def =
+                iface->create_ext_attribute (
+                    node->repoID (),
+                    node->local_name ()->get_string (),
+                    node->version (),
+                    this->ir_current_.in (),
+                    mode,
+                    get_exceptions,
+                    set_exceptions
+                    ACE_ENV_ARG_PARAMETER
+                  );
+              ACE_TRY_CHECK;
+            }
+          else
+            {
+              CORBA::ExtValueDef_var value =
+                CORBA::ExtValueDef::_narrow (current_scope
+                                             ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+
+              CORBA::ExtAttributeDef_var new_def =
+                value->create_ext_attribute (
+                    node->repoID (),
+                    node->local_name ()->get_string (),
+                    node->version (),
+                    this->ir_current_.in (),
+                    mode,
+                    get_exceptions,
+                    set_exceptions
+                    ACE_ENV_ARG_PARAMETER
+                  );
+              ACE_TRY_CHECK;
+            }
         }
       else
         {
@@ -2792,61 +2821,121 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node
 {
   CORBA::ULong n_parents = ACE_static_cast (CORBA::ULong,
                                             node->n_inherits ());
-
-  CORBA::InterfaceDefSeq bases (n_parents);
-  bases.length (n_parents);
-  CORBA::Contained_var result;
-
   AST_Interface **parents = node->inherits ();
+  CORBA::Contained_var result;
+  CORBA::AbstractInterfaceDefSeq abs_bases;
+  CORBA::InterfaceDefSeq bases;
 
-  // Construct a list of the parents.
-  for (CORBA::ULong i = 0; i < n_parents; ++i)
+  if (node->is_abstract ())
     {
-      result =
-        be_global->repository ()->lookup_id (parents[i]->repoID ()
-                                             ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
+      abs_bases.length (n_parents);
 
-      // If we got to visit_interface() from a forward declared interface,
-      // this node may not yet be in the repository.
-      if (CORBA::is_nil (result.in ()))
+      // Construct a list of the parents.
+      for (CORBA::ULong i = 0; i < n_parents; ++i)
         {
-          int status = this->create_interface_def (parents[i]
-                                                   ACE_ENV_ARG_PARAMETER);
+          result =
+            be_global->repository ()->lookup_id (parents[i]->repoID ()
+                                                 ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
 
-          if (status != 0)
+          // If we got to visit_interface() from a forward declared interface,
+          // this node may not yet be in the repository.
+          if (CORBA::is_nil (result.in ()))
+            {
+              int status = this->create_interface_def (parents[i]
+                                                       ACE_ENV_ARG_PARAMETER);
+
+              if (status != 0)
+                {
+                  ACE_ERROR_RETURN ((
+                      LM_ERROR,
+                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                      ACE_TEXT ("create_interface_def -")
+                      ACE_TEXT (" parent interfacedef creation failed\n")
+                    ),
+                    -1
+                  );
+                }
+            
+              bases[i] = 
+                CORBA::AbstractInterfaceDef::_narrow (this->ir_current_.in ()
+                                                      ACE_ENV_ARG_PARAMETER);    
+              ACE_CHECK_RETURN (-1);
+            }
+          else
+            {
+              bases[i] = 
+                CORBA::AbstractInterfaceDef::_narrow (result.in ()
+                                                      ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK_RETURN (-1);
+            }
+
+          if (CORBA::is_nil (bases[i].in ()))
             {
               ACE_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
                   ACE_TEXT ("create_interface_def -")
-                  ACE_TEXT (" parent interfacedef creation failed\n")
+                  ACE_TEXT (" CORBA::InterfaceDef::_narrow failed\n")
                 ),
                 -1
               );
             }
-            
-          bases[i] = CORBA::InterfaceDef::_narrow (this->ir_current_.in ()
-                                                   ACE_ENV_ARG_PARAMETER);    
-          ACE_CHECK_RETURN (-1);
         }
-      else
-        {
-          bases[i] = CORBA::InterfaceDef::_narrow (result.in ()
-                                                   ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (-1);
-        }
+    }
+  else
+    {
+      bases.length (n_parents);
 
-      if (CORBA::is_nil (bases[i].in ()))
+      // Construct a list of the parents.
+      for (CORBA::ULong i = 0; i < n_parents; ++i)
         {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
-              ACE_TEXT ("create_interface_def -")
-              ACE_TEXT (" CORBA::InterfaceDef::_narrow failed\n")
-            ),
-            -1
-          );
+          result =
+            be_global->repository ()->lookup_id (parents[i]->repoID ()
+                                                 ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
+
+          // If we got to visit_interface() from a forward declared interface,
+          // this node may not yet be in the repository.
+          if (CORBA::is_nil (result.in ()))
+            {
+              int status = this->create_interface_def (parents[i]
+                                                       ACE_ENV_ARG_PARAMETER);
+
+              if (status != 0)
+                {
+                  ACE_ERROR_RETURN ((
+                      LM_ERROR,
+                      ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                      ACE_TEXT ("create_interface_def -")
+                      ACE_TEXT (" parent interfacedef creation failed\n")
+                    ),
+                    -1
+                  );
+                }
+            
+              bases[i] = CORBA::InterfaceDef::_narrow (this->ir_current_.in ()
+                                                       ACE_ENV_ARG_PARAMETER);    
+              ACE_CHECK_RETURN (-1);
+            }
+          else
+            {
+              bases[i] = CORBA::InterfaceDef::_narrow (result.in ()
+                                                       ACE_ENV_ARG_PARAMETER);
+              ACE_CHECK_RETURN (-1);
+            }
+
+          if (CORBA::is_nil (bases[i].in ()))
+            {
+              ACE_ERROR_RETURN ((
+                  LM_ERROR,
+                  ACE_TEXT ("(%N:%l) ifr_adding_visitor::")
+                  ACE_TEXT ("create_interface_def -")
+                  ACE_TEXT (" CORBA::InterfaceDef::_narrow failed\n")
+                ),
+                -1
+              );
+            }
         }
     }
 
@@ -2865,6 +2954,17 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node
                                node->local_name ()->get_string (),
                                node->version (),
                                bases
+                               ACE_ENV_ARG_PARAMETER
+                             );
+        }
+      else if (node->is_abstract ())
+        {
+          new_def =
+            current_scope->create_abstract_interface (
+                               node->repoID (),
+                               node->local_name ()->get_string (),
+                               node->version (),
+                               abs_bases
                                ACE_ENV_ARG_PARAMETER
                              );
         }
@@ -3666,10 +3766,17 @@ ifr_adding_visitor::fill_abstract_base_values (CORBA::ValueDefSeq &result,
       AST_Interface **list = node->inherits ();
       CORBA::ULong u_length = ACE_static_cast (CORBA::ULong,
                                                s_length);
-      result.length (u_length);
+      idl_bool first_abs = list[0]->is_abstract ();
+      result.length (first_abs ? u_length : u_length - 1);
+      AST_ValueType *base_vt = 0;
 
       for (CORBA::ULong i = 0; i < u_length; ++i)
         {
+          if (i == 0 && ! list[i]->is_abstract ())
+            {
+              continue;
+            }
+
           holder = 
             be_global->repository ()->lookup_id (
                                           list[i]->repoID ()

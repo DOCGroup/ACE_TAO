@@ -1,3 +1,17 @@
+Mon Aug  4 000:09:26 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/IFRService/ExtValueDef_i.h:
+        * orbsvcs/IFRService/InterfaceAttrExtension_i.cpp:
+        * orbsvcs/IFRService/Repository_i.cpp:
+        * orbsvcs/IFRService/Repository_i.h:
+        * orbsvcs/IFRService/ValueDef_i.cpp:
+        * tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
+        * tests/InterfaceRepo/IDL3_Test/idl3_client.h:
+        * tests/InterfaceRepo/IDL3_Test/test.idl:
+
+	  Debugging and testing of IFR's support of valuetypes.
+
 Thu Aug  4 21:59:32 2003  Ossama Othman <ossama@dre.vanderbilt.edu>
 
 	* tao/corbafwd.i (string_alloc, wstring_alloc):

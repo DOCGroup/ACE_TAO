@@ -296,7 +296,7 @@ TAO_InterfaceAttrExtension_i::create_ext_attribute_i (
 
   TAO_IFR_Service_Utils::set_exceptions (this->repo_->config (),
                                          new_key,
-                                         "set_excepts",
+                                         "put_excepts",
                                          set_exceptions);
 
   // Create the object reference.
