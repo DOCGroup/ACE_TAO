@@ -186,9 +186,9 @@ class TAO_PortableServer_Export TAO_ServerRequestInfo
   CORBA::Any result_val_;
   CORBA::OctetSeq_var object_id_;
   CORBA::OctetSeq_var adapter_id_;
-  CORBA::Any any_exception_;
   CORBA::Exception *caught_exception_;
 
+  PortableInterceptor::ReplyStatus reply_status_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

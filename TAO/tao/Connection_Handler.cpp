@@ -53,6 +53,18 @@ TAO_Connection_Handler::make_idle (void)
     this->orb_core_->connection_cache ().make_idle (this->cache_map_entry_);
 }
 
+int
+TAO_Connection_Handler::recache_handler (TAO_Connection_Descriptor_Interface *desc)
+{
+  // First purge our entry
+  this->orb_core_->connection_cache ().purge_entry (this->cache_map_entry_);
+
+  // Then add ourselves to the cache
+  return this->orb_core_->connection_cache ().cache_handler (desc,
+                                                             this);
+}
+
+
 
 int
 TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,

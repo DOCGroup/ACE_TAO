@@ -114,7 +114,7 @@ TAO_IIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
   // any
   if (this->orb_core ()->bidir_giop_policy ())
     {
-      desc->set_bidir_flag (1);
+      //desc->set_bidir_flag (1);
     }
 
   // Check the Cache first for connections

@@ -200,7 +200,6 @@ TAO_Connection_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
                                       new_entry);
   if (retval == 0)
     {
-
       new_entry->int_id_.
         recycle_state (ACE_RECYCLABLE_IDLE_AND_PURGABLE);
 
