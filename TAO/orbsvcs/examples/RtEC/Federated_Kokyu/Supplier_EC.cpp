@@ -213,7 +213,8 @@ main (int argc, char* argv[])
 
   //@BT
   //DSTRM_EVENT(MAIN_GROUP_FAM, START,1,0,NULL);
-  ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t START at %u\n",ACE_OS::gettimeofday().msec()));
+  ACE_Time_Value now(ACE_OS::gettimeofday());
+  ACE_OS::printf("Supplier_EC START at %isec %iusec\n",now.sec(),now.usec());
   DSTRM_EVENT(MAIN_GROUP_FAM, START,0,0,NULL);
 
   ACE_DECLARE_NEW_CORBA_ENV;
