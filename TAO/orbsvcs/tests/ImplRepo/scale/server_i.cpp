@@ -4,6 +4,7 @@
 
 #include "tao/IORTable/IORTable.h"
 #include "tao/PortableServer/PS_CurrentC.h"
+#include "tao/ImR_Client/ImR_Client_Adapter_Impl.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
