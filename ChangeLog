@@ -1,3 +1,26 @@
+Thu Jan 27 18:48:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ARGV.cpp:
+        * ace/Condition_Recursive_Thread_Mutex.cpp:
+        * ace/Condition_Thread_Mutex.cpp:
+        * ace/Dump.cpp:
+        * ace/Event.cpp:
+        * ace/Filecache.cpp:
+        * ace/Message_Block.cpp:
+        * ace/OS_NS_sys_socket.cpp:
+        * ace/Service_Object.cpp:
+        * ace/Service_Types.cpp:
+          Replaced c-style cast with C++ casts
+
+        * ace/Name_Proxy.cpp:
+        * ace/Naming_Context.cpp:
+          Added missing members to initialisation list
+
+        * ace/Name_Proxy.h:
+        * ace/Name_Request_Reply.h:
+          Added private assignment operator and copy constructor
+          to prevent copying.
+
 Wed Jan 26 12:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ICMP_Socket.{h,cpp}:
