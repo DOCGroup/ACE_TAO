@@ -63,9 +63,12 @@ Test_Var_Struct::init_parameters (Param_Test_ptr ,
   // get some sequence length (not more than 10)
   CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
 
-  // set the length of the sequence
+  this->in_.dbl = 3.14159;
   this->in_.dummy1 = gen->gen_string ();
+  this->in_.boole = gen->gen_short () % 2;
   this->in_.dummy2 = gen->gen_string ();
+  this->in_.shrt = gen->gen_short ();
+  // set the length of the sequence
   this->in_.seq.length (len);
   // now set each individual element
   for (CORBA::ULong i=0; i < this->in_.seq.length (); i++)
@@ -178,12 +181,21 @@ CORBA::Boolean
 Test_Var_Struct::check_validity (void)
 {
   CORBA::Boolean flag = 0;
-  if ((!ACE_OS::strcmp (this->in_.dummy1, this->inout_->dummy1)) &&
+  if (this->in_.dbl == this->inout_->dbl &&
+      this->in_.dbl == this->out_->dbl &&
+      this->in_.dbl == this->ret_->dbl &&
+      (!ACE_OS::strcmp (this->in_.dummy1, this->inout_->dummy1)) &&
       (!ACE_OS::strcmp (this->in_.dummy1, this->out_->dummy1)) &&
       (!ACE_OS::strcmp (this->in_.dummy1, this->ret_->dummy1)) &&
+      this->in_.boole == this->inout_->boole &&
+      this->in_.boole == this->out_->boole &&
+      this->in_.boole == this->ret_->boole &&
       (!ACE_OS::strcmp (this->in_.dummy2, this->inout_->dummy2)) &&
       (!ACE_OS::strcmp (this->in_.dummy2, this->out_->dummy2)) &&
       (!ACE_OS::strcmp (this->in_.dummy2, this->ret_->dummy2)) &&
+      this->in_.shrt == this->inout_->shrt &&
+      this->in_.shrt == this->out_->shrt &&
+      this->in_.shrt == this->ret_->shrt &&
       (this->in_.seq.length () == this->inout_->seq.length ()) &&
       (this->in_.seq.length () == this->out_->seq.length ()) &&
       (this->in_.seq.length () == this->ret_->seq.length ()))
