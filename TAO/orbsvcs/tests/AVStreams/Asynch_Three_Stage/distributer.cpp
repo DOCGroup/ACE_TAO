@@ -90,9 +90,6 @@ Distributer_Receiver_Callback::handle_destroy (void)
       ACE_DEBUG ((LM_DEBUG,
                   "Distributer_Callback::end_stream\n"));
 
-      DISTRIBUTER::instance ()->connection_manager ().destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
       // We can close down now.
       DISTRIBUTER::instance ()->done (1);
     }
@@ -198,9 +195,6 @@ Distributer::init (int argc,
                   TAO_MMDevice (&this->receiver_endpoint_strategy_),
                   -1);
 
-  // Servant Reference Counting to manage lifetime
-  PortableServer::ServantBase_var safe_receiver_mmdevice =
-    this->distributer_receiver_mmdevice_;
 
   AVStreams::MMDevice_var distributer_receiver_mmdevice =
     this->distributer_receiver_mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
