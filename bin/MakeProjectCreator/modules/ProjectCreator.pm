@@ -215,7 +215,9 @@ sub parse_line {
         ## Copy each value from global_assign into assign
         if (!$self->{'reading_global'}) {
           foreach my $key (keys %{$self->{'global_assign'}}) {
-            $self->{'assign'}->{$key} = $self->{'global_assign'}->{$key};
+            if (!defined $self->{'assign'}->{$key}) {
+              $self->{'assign'}->{$key} = $self->{'global_assign'}->{$key};
+            }
           }
         }
       }
