@@ -1,16 +1,29 @@
+Mon Jun 26 16:04:53 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tao/Messaging_Policy_i.h:
+        * tao/Messaging_Policy_i.cpp: Local interfaces should also inherit
+          from CORBA::LocalObject.  Since we also use general CORBA
+          reference counting to manage memory of objects, also added
+          implementations for <_add_ref> and <_remove_ref> for local
+          interface implementations in this file.
+
+          There are more local objects that don't inherit from
+          CORBA::LocalObject and implement <_add_ref> and <_remove_ref>
+          which I will fix later on.
+
 Mon Jun 26 15:15:28 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/IORC.h:
-	* tao/IORC.i:
-	* tao/IORC.cpp:
-	* tao/diffs/IORC.h.diff:
-	* tao/diffs/IORC.cpp.diff:
+        * tao/IORC.h:
+        * tao/IORC.i:
+        * tao/IORC.cpp:
+        * tao/diffs/IORC.h.diff:
+        * tao/diffs/IORC.cpp.diff:
 
-	  Regenerated files from IOR.pidl and added diff files.
-	  Reason for regeneration was that the Any >>= operator
-	  and the CDR >> operator changed for object
-	  references, and these files were not regenerated at that
-	  time.
+          Regenerated files from IOR.pidl and added diff files.
+          Reason for regeneration was that the Any >>= operator
+          and the CDR >> operator changed for object
+          references, and these files were not regenerated at that
+          time.
 
 Mon Jun 26 15:06:20 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -24,340 +37,340 @@ Mon Jun 26 15:06:20 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Mon Jun 26 12:44:40 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Acceptor_Registry.cpp.h:
-	* tao/Acceptor_Registry.cpp (open):
+        * tao/Acceptor_Registry.cpp.h:
+        * tao/Acceptor_Registry.cpp (open):
 
-	  Split this overly large method into several small helper
-	  methods: extract_endpoint_options(), extract_endpoint_version(),
-	  open_i().
+          Split this overly large method into several small helper
+          methods: extract_endpoint_options(), extract_endpoint_version(),
+          open_i().
 
-	  (extract_endpoint_options):
+          (extract_endpoint_options):
 
-	  Helper method that extracts endpoint-specific options from the
-	  endpoint string provided on the command line.
+          Helper method that extracts endpoint-specific options from the
+          endpoint string provided on the command line.
 
-	  (extract_endpoint_version):
+          (extract_endpoint_version):
 
-	  Helper method that extracts desired endpoint/protocol version
-	  from the endpoint string provided on the command line.
+          Helper method that extracts desired endpoint/protocol version
+          from the endpoint string provided on the command line.
 
-	  (open_i):
+          (open_i):
 
-	  Helper method that iterates over all addresses in an endpoint,
-	  and creates acceptors for each one.
+          Helper method that iterates over all addresses in an endpoint,
+          and creates acceptors for each one.
 
-	  (open_default):
+          (open_default):
 
-	  The following:
+          The following:
 
-		-ORBEndpoint iiop://1.1@
+                -ORBEndpoint iiop://1.1@
 
-	  now works as expected, i.e. this forces TAO to open an IIOP 1.1
-	  endpoint, instead of the 1.2 default.  [Bug 463]
+          now works as expected, i.e. this forces TAO to open an IIOP 1.1
+          endpoint, instead of the 1.2 default.  [Bug 463]
 
-	* tao/Pluggable.h (open_default):
+        * tao/Pluggable.h (open_default):
 
-	  Added major/minor version arguments to make it possible to pass
-	  desired protocol version this method.  [Bug 463]
+          Added major/minor version arguments to make it possible to pass
+          desired protocol version this method.  [Bug 463]
 
-	* tao/IIOP_Acceptor.h (open_default):
-	* tao/IIOP_Acceptor.cpp (open_default)
-	* tao/SHMIOP_Acceptor.h (open_default):
-	* tao/SHMIOP_Acceptor.cpp (open_default)
-	* tao/SHMIOP_Acceptor.h (open_default):
-	* tao/SHMIOP_Acceptor.cpp (open_default):
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h (open_default):
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (open_default):
+        * tao/IIOP_Acceptor.h (open_default):
+        * tao/IIOP_Acceptor.cpp (open_default)
+        * tao/SHMIOP_Acceptor.h (open_default):
+        * tao/SHMIOP_Acceptor.cpp (open_default)
+        * tao/SHMIOP_Acceptor.h (open_default):
+        * tao/SHMIOP_Acceptor.cpp (open_default):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h (open_default):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (open_default):
 
-	  Updated to accept and use major/minor protocol version.
-	  [Bug 463]
+          Updated to accept and use major/minor protocol version.
+          [Bug 463]
 
-	* tao/POA.cpp:
+        * tao/POA.cpp:
 
-	  Removed inclusion of "tao/Acceptor_Registry.cpp."  It wasn't
-	  needed.
+          Removed inclusion of "tao/Acceptor_Registry.cpp."  It wasn't
+          needed.
 
-	* tao/Pluggable.cpp:
+        * tao/Pluggable.cpp:
 
-	  Removed inclusion of "tao/Stub.h" and "tao/Reply_Dispatcher.h."
-	  They weren't needed.
+          Removed inclusion of "tao/Stub.h" and "tao/Reply_Dispatcher.h."
+          They weren't needed.
 
-	* tao/Makefile:
+        * tao/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
-	* docs/ORBEndpoint.html:
+        * docs/ORBEndpoint.html:
 
-	  Added examples that illustrate to specify a default endpoint
-	  with a desired version.
+          Added examples that illustrate to specify a default endpoint
+          with a desired version.
 
 Sat Jun 24 20:15:47 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* examples/Load_Balancing/README:
+        * examples/Load_Balancing/README:
 
-	  This file was empty.  Populated with relevant info.
+          This file was empty.  Populated with relevant info.
 
 Sat Jun 24 17:22:36 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/POA.h:
+        * tao/POA.h:
 
-	  Added #if (TAO_HAS_RT_CORBA == 1) protection to the
-	  Priority_Model_Processing friend declaration.
+          Added #if (TAO_HAS_RT_CORBA == 1) protection to the
+          Priority_Model_Processing friend declaration.
 
-	* tao/Object_Adapter.cpp (pre_invoke):
+        * tao/Object_Adapter.cpp (pre_invoke):
 
-	  Fixed Borland warning about comparing signed and unsigned
-	  types.
+          Fixed Borland warning about comparing signed and unsigned
+          types.
 
 Fri Jun 23 23:26:09 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/Object_Adapter.cpp (pre_invoke):
+        * tao/Object_Adapter.cpp (pre_invoke):
 
-	  Modified the method to check for TAO_INVALID_PRIORITY before
-	  proceeding with the processing.
+          Modified the method to check for TAO_INVALID_PRIORITY before
+          proceeding with the processing.
 
 Fri Jun 23 22:21:31 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* tao/GIOP_Message_Acceptors.h
-	* tao/GIOP_Message_Acceptors.cpp
-	* tao/GIOP_Message_Lite.cpp
-	* tao/GIOP_Message_Lite.h:
+        * tao/GIOP_Message_Acceptors.h
+        * tao/GIOP_Message_Acceptors.cpp
+        * tao/GIOP_Message_Lite.cpp
+        * tao/GIOP_Message_Lite.h:
 
-	  Added IOP::ServiceContextList parameter to the
-	  <send_reply_exception> method (in lite and non-lite versions).
-	  This service context is sent back in the reply.
+          Added IOP::ServiceContextList parameter to the
+          <send_reply_exception> method (in lite and non-lite versions).
+          This service context is sent back in the reply.
 
-	  Modified <TAO_GIOP_Message_Acceptors::process_client_request> to
-	  send back the same ServiceContextList we received in the
-	  request.  This is needed for RTCORBA::CLIENT_PROPAGATED priority
-	  model.
+          Modified <TAO_GIOP_Message_Acceptors::process_client_request> to
+          send back the same ServiceContextList we received in the
+          request.  This is needed for RTCORBA::CLIENT_PROPAGATED priority
+          model.
 
-	* tao/GIOP_Server_Request.cpp (send_no_exception_reply):
+        * tao/GIOP_Server_Request.cpp (send_no_exception_reply):
 
-	  Send back the same ServiceContextList we received in the
-	  request.  This is needed for RTCORBA::CLIENT_PROPAGATED priority
-	  model.
+          Send back the same ServiceContextList we received in the
+          request.  This is needed for RTCORBA::CLIENT_PROPAGATED priority
+          model.
 
-	* tao/Invocation.cpp:
+        * tao/Invocation.cpp:
 
-	  Added comments and error checking for cdr operations in
-	  TAO_GIOP_Invocation::start.
+          Added comments and error checking for cdr operations in
+          TAO_GIOP_Invocation::start.
 
-	* tao/Object_Adapter.cpp
-	* tao/Object_Adapter.h
-	* tao/Object_Adapter.i:
+        * tao/Object_Adapter.cpp
+        * tao/Object_Adapter.h
+        * tao/Object_Adapter.i:
 
-	  Added new helper class, Priority_Model_Processing.  This class
-	  encapsulates processing necessary for RTCORBA::CLIENT_PROPAGATED
-	  priority model.  The destructor of this class is magic: it
-	  resets the priority of the current back to its original value if
-	  normal reset method, i.e., <post_invoke> isn't reached,
-	  e.g., due to an exception.
+          Added new helper class, Priority_Model_Processing.  This class
+          encapsulates processing necessary for RTCORBA::CLIENT_PROPAGATED
+          priority model.  The destructor of this class is magic: it
+          resets the priority of the current back to its original value if
+          normal reset method, i.e., <post_invoke> isn't reached,
+          e.g., due to an exception.
 
-	  Modified Object_Adapter::dispatch_servant to use
-	  Priority_Model_Processing.  Now TAO supports
-	  RTCORBA::CLIENT_PROPAGATED priority model.
+          Modified Object_Adapter::dispatch_servant to use
+          Priority_Model_Processing.  Now TAO supports
+          RTCORBA::CLIENT_PROPAGATED priority model.
 
-	* tao/POA.h:
+        * tao/POA.h:
 
-	  Made Priority_Model_Processing class mentioned above friend of
-	  TAO_POA, so that it can access its policies.
+          Made Priority_Model_Processing class mentioned above friend of
+          TAO_POA, so that it can access its policies.
 
 Fri Jun 23 21:17:29 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (send): The
-	  following change:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (send): The
+          following change:
 
-	  Fri Jun 02 02:23:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+          Fri Jun 02 02:23:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	  did not get propogated to the SSL code.  Thanks to Ossama for
-	  pointing this out.
+          did not get propogated to the SSL code.  Thanks to Ossama for
+          pointing this out.
 
 Fri Jun 23 14:32:33 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Connectors.cpp: Initialised the reserved field
-	  to zero. Thanks to James Megquier <jmegq@bbn.com> for pointing
-	  this out.
+        * tao/GIOP_Message_Connectors.cpp: Initialised the reserved field
+          to zero. Thanks to James Megquier <jmegq@bbn.com> for pointing
+          this out.
 
 Fri Jun 23 12:08:51 2000  Ossama Othman  <ossama@uci.edu>
 
-	* examples/Content_Server/AMI_Iterator/Iterator_Handler.cpp
-	  (destroy):
-	* examples/Content_Server/AMI_Observer/Push_Iterator_Handler.h
-	  (deactivate):
+        * examples/Content_Server/AMI_Iterator/Iterator_Handler.cpp
+          (destroy):
+        * examples/Content_Server/AMI_Observer/Push_Iterator_Handler.h
+          (deactivate):
 
-	  Added missing throw spec.  This fixes compile-time errors when
-	  native exception support is enabled.
+          Added missing throw spec.  This fixes compile-time errors when
+          native exception support is enabled.
 
-	* examples/Content_Server/AMI_Observer/Callback_i.h:
+        * examples/Content_Server/AMI_Observer/Callback_i.h:
 
-	  Added dummy friend declaration to quiet down a warning due to
-	  the fact the destructor is private.
+          Added dummy friend declaration to quiet down a warning due to
+          the fact the destructor is private.
 
 Wed Jun 21 17:15:44 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Makefile:
 
-	  Added support for SSLIOP pluggable protocol and Security Service
-	  library.
+          Added support for SSLIOP pluggable protocol and Security Service
+          library.
 
-	* orbsvcs/orbsvcs/Makefile.SSLIOP:
-	* orbsvcs/orbsvcs/Makefile.Security:
-	* orbsvcs/orbsvcs/SECIOP.idl:
-	* orbsvcs/orbsvcs/SSLIOP.idl:
-	* orbsvcs/orbsvcs/Security.idl:
-	* orbsvcs/orbsvcs/SecurityAdmin.idl:
-	* orbsvcs/orbsvcs/SecurityLevel1.idl:
-	* orbsvcs/orbsvcs/SecurityLevel2.idl:
-	* orbsvcs/orbsvcs/SecurityReplaceable.idl:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Export.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
-	* orbsvcs/orbsvcs/Security/security_export.h:
+        * orbsvcs/orbsvcs/Makefile.SSLIOP:
+        * orbsvcs/orbsvcs/Makefile.Security:
+        * orbsvcs/orbsvcs/SECIOP.idl:
+        * orbsvcs/orbsvcs/SSLIOP.idl:
+        * orbsvcs/orbsvcs/Security.idl:
+        * orbsvcs/orbsvcs/SecurityAdmin.idl:
+        * orbsvcs/orbsvcs/SecurityLevel1.idl:
+        * orbsvcs/orbsvcs/SecurityLevel2.idl:
+        * orbsvcs/orbsvcs/SecurityReplaceable.idl:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Export.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+        * orbsvcs/orbsvcs/Security/security_export.h:
 
-	  Added Security Service related files.
+          Added Security Service related files.
 
 Wed Jun 21 18:35:51 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/Time_Service/Clerk_i.cpp (Clerk_i): Set the
-	  timer_value_usecs_ field to 0.  Thanks to Sandro Doro
- 	  <doro.s@flashnet.it> for reporting this.
+        * orbsvcs/Time_Service/Clerk_i.cpp (Clerk_i): Set the
+          timer_value_usecs_ field to 0.  Thanks to Sandro Doro
+          <doro.s@flashnet.it> for reporting this.
 
-	* tao/POA.cpp (key_to_object): Minor stylistic enhancements.
+        * tao/POA.cpp (key_to_object): Minor stylistic enhancements.
 
 Wed Jun 21 15:51:10 2000  Ossama Othman  <ossama@uci.edu>
 
-	* examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
-	* examples/Content_Server/SMI_Iterator/Content_Iterator_i.h:
-	* examples/Content_Server/SMI_Iterator/Iterator_Factory_i.cpp:
-	* examples/Content_Server/SMI_Iterator/Iterator_Factory_i.h:
-	* examples/Content_Server/SMI_Iterator/Web_Server.idl:
-	* examples/Content_Server/SMI_Iterator/client.cpp:
-	* examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:
-	* examples/Content_Server/AMI_Iterator/Content_Iterator_i.h:
-	* examples/Content_Server/AMI_Iterator/Iterator_Factory_i.cpp:
-	* examples/Content_Server/AMI_Iterator/Iterator_Factory_i.h:
-	* examples/Content_Server/AMI_Iterator/Iterator_Handler.h:
-	* examples/Content_Server/AMI_Iterator/client.cpp:
-	* examples/Content_Server/AMI_Iterator/server.cpp:
-	* examples/Content_Server/AMI_Observer/Callback_Handler.cpp:
-	* examples/Content_Server/AMI_Observer/Callback_Handler.h:
-	* examples/Content_Server/AMI_Observer/Callback_i.cpp:
-	* examples/Content_Server/AMI_Observer/Callback_i.h:
-	* examples/Content_Server/AMI_Observer/Makefile:
-	* examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.cpp:
-	* examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.h:
-	* examples/Content_Server/AMI_Observer/Push_Iterator_Handler.cpp:
-	* examples/Content_Server/AMI_Observer/Push_Iterator_Handler.h:
-	* examples/Content_Server/AMI_Observer/client.cpp:
-	* examples/Content_Server/AMI_Observer/server.cpp:
+        * examples/Content_Server/SMI_Iterator/Content_Iterator_i.cpp:
+        * examples/Content_Server/SMI_Iterator/Content_Iterator_i.h:
+        * examples/Content_Server/SMI_Iterator/Iterator_Factory_i.cpp:
+        * examples/Content_Server/SMI_Iterator/Iterator_Factory_i.h:
+        * examples/Content_Server/SMI_Iterator/Web_Server.idl:
+        * examples/Content_Server/SMI_Iterator/client.cpp:
+        * examples/Content_Server/AMI_Iterator/Content_Iterator_i.cpp:
+        * examples/Content_Server/AMI_Iterator/Content_Iterator_i.h:
+        * examples/Content_Server/AMI_Iterator/Iterator_Factory_i.cpp:
+        * examples/Content_Server/AMI_Iterator/Iterator_Factory_i.h:
+        * examples/Content_Server/AMI_Iterator/Iterator_Handler.h:
+        * examples/Content_Server/AMI_Iterator/client.cpp:
+        * examples/Content_Server/AMI_Iterator/server.cpp:
+        * examples/Content_Server/AMI_Observer/Callback_Handler.cpp:
+        * examples/Content_Server/AMI_Observer/Callback_Handler.h:
+        * examples/Content_Server/AMI_Observer/Callback_i.cpp:
+        * examples/Content_Server/AMI_Observer/Callback_i.h:
+        * examples/Content_Server/AMI_Observer/Makefile:
+        * examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.cpp:
+        * examples/Content_Server/AMI_Observer/Push_Iterator_Factory_i.h:
+        * examples/Content_Server/AMI_Observer/Push_Iterator_Handler.cpp:
+        * examples/Content_Server/AMI_Observer/Push_Iterator_Handler.h:
+        * examples/Content_Server/AMI_Observer/client.cpp:
+        * examples/Content_Server/AMI_Observer/server.cpp:
 
-	  Further changes to make the examples conform to the ACE/TAO
-	  style guidelines.  Thanks to Doug for providing lots of useful
-	  feedback!
+          Further changes to make the examples conform to the ACE/TAO
+          style guidelines.  Thanks to Doug for providing lots of useful
+          feedback!
 
-	* examples/Content_Server/AMI_Observer/Callback.cpp:
-	* examples/Content_Server/AMI_Observer/Callback.h:
+        * examples/Content_Server/AMI_Observer/Callback.cpp:
+        * examples/Content_Server/AMI_Observer/Callback.h:
 
-	  Renamed these files to "Callback_i.{cpp,h}" to match the name of
-	  the class inside these files.
+          Renamed these files to "Callback_i.{cpp,h}" to match the name of
+          the class inside these files.
 
-	* examples/Content_Server/AMI_Observer/README:
+        * examples/Content_Server/AMI_Observer/README:
 
-	  Added description of how the AMI_Observer example is designed,
-	  and how it works.
+          Added description of how the AMI_Observer example is designed,
+          and how it works.
 
 Wed Jun 21 13:19:47 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.ll:
-	* TAO_IDL/fe/lex.yy.cpp:
-	* TAO_IDL/fe/lex.yy.cpp.diff:
-	  Added a regular expression to the lexer. Phil Mesnier
-	  <mesnier_p@ociweb.com> is porting TAO to Unixware 7.1
-	  using the UDK (unixware dev kit) CC compiler, and its
-	  preprocessor is outputting a #file "...." directive
-	  that the IDL compiler lexer doesn't recognize. We now
-	  recognize the directive, and ignore it.
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+          Added a regular expression to the lexer. Phil Mesnier
+          <mesnier_p@ociweb.com> is porting TAO to Unixware 7.1
+          using the UDK (unixware dev kit) CC compiler, and its
+          preprocessor is outputting a #file "...." directive
+          that the IDL compiler lexer doesn't recognize. We now
+          recognize the directive, and ignore it.
 
 Wed Jun 21 04:54:18 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/FT_CORBA.pidl: Deleted the file from the tao library. Looks
-	  like the whole file in $TAO_ROOT/tao may not be the right
-	  place.
+        * tao/FT_CORBA.pidl: Deleted the file from the tao library. Looks
+          like the whole file in $TAO_ROOT/tao may not be the right
+          place.
 
 Tue Jun 20 18:08:11 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/tests/Interoperable_Naming/Makefile :
-	* orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
-	* orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.h:
-	* orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.cpp:
-	* orbsvcs/tests/Interoperable_Naming/server.cpp:
+        * orbsvcs/tests/Interoperable_Naming/Makefile :
+        * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
+        * orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.h:
+        * orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.cpp:
+        * orbsvcs/tests/Interoperable_Naming/server.cpp:
 
-	  The test doesnot need server implementation. So, removed
-	server.cpp, Iterator_Factory_i.{h,cpp}. Made changes in Makefile
-	and ncontext_client_i.cpp to reflect this.
+          The test doesnot need server implementation. So, removed
+        server.cpp, Iterator_Factory_i.{h,cpp}. Made changes in Makefile
+        and ncontext_client_i.cpp to reflect this.
 
 Mon Jun 19 17:14:25 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/orbsvcs/CosNaming.idl:
-	* orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h:
-	* orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
+        * orbsvcs/orbsvcs/CosNaming.idl:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.cpp:
 
-	  Added the CosNaming::NamingContextExt interface to the
-	CosNaming.idl file. And made the corresonding changes to the base
-	class too. This interface has four methods:
-	to_string (), to_name (), to_url () and resolve_str ().
+          Added the CosNaming::NamingContextExt interface to the
+        CosNaming.idl file. And made the corresonding changes to the base
+        class too. This interface has four methods:
+        to_string (), to_name (), to_url () and resolve_str ().
 
-	These changes are in accordance with the following CORBA spec:
-	Document orbos/98-10-11 (Interoperable Naming Joint Revised Submission)
-      	Joint Submission by BEA Systems, DSTC, IONA, and Inprise
+        These changes are in accordance with the following CORBA spec:
+        Document orbos/98-10-11 (Interoperable Naming Joint Revised Submission)
+        Joint Submission by BEA Systems, DSTC, IONA, and Inprise
 
-	* orbsvcs/tests/Makefile:
-	* orbsvcs/tests/Interoperable_Naming/Makefile:
-	* orbsvcs/tests/Interoperable_Naming/Web_Server.idl:
-	* orbsvcs/tests/Interoperable_Naming/README:
-	* orbsvcs/tests/Interoperable_Naming/run_test.pl:
-	* orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.cpp:
-	* orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.h:
-	* orbsvcs/tests/Interoperable_Naming/server.cpp:
-	* orbsvcs/tests/Interoperable_Naming/client.cpp:
-	* orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.h:
-	* orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
+        * orbsvcs/tests/Makefile:
+        * orbsvcs/tests/Interoperable_Naming/Makefile:
+        * orbsvcs/tests/Interoperable_Naming/Web_Server.idl:
+        * orbsvcs/tests/Interoperable_Naming/README:
+        * orbsvcs/tests/Interoperable_Naming/run_test.pl:
+        * orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.cpp:
+        * orbsvcs/tests/Interoperable_Naming/Iterator_Factory_i.h:
+        * orbsvcs/tests/Interoperable_Naming/server.cpp:
+        * orbsvcs/tests/Interoperable_Naming/client.cpp:
+        * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.h:
+        * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
 
-	  Added a test to show the functionality of the
-	  CosNaming::NamingContextExt interface in the Interoperable
-	  Naming Service. This test converts a name into its stringified
-	  form <to_name>, then uses this stringified name to resolve its
-	  naming context <resolve_str> , then converts this stringified
-	  name back to the unstringified form <to_string>. It also forms a
-	  iiopname url string given the address of a random naming context
-	  and the name of an object in that naming context <to_url>.
+          Added a test to show the functionality of the
+          CosNaming::NamingContextExt interface in the Interoperable
+          Naming Service. This test converts a name into its stringified
+          form <to_name>, then uses this stringified name to resolve its
+          naming context <resolve_str> , then converts this stringified
+          name back to the unstringified form <to_string>. It also forms a
+          iiopname url string given the address of a random naming context
+          and the name of an object in that naming context <to_url>.
 
 
 Tue Jun 20 15:07:30 2000  Ossama Othman  <ossama@uci.edu>
 
-	* examples/Content_Server/SMI_Iterator/Makefile (TAO_IDLFLAGS):
-	* examples/Content_Server/AMI_Iterator/Makefile (TAO_IDLFLAGS):
-	* examples/Content_Server/AMI_Observer/Makefile (TAO_IDLFLAGS):
+        * examples/Content_Server/SMI_Iterator/Makefile (TAO_IDLFLAGS):
+        * examples/Content_Server/AMI_Iterator/Makefile (TAO_IDLFLAGS):
+        * examples/Content_Server/AMI_Observer/Makefile (TAO_IDLFLAGS):
 
-	  Added "-Ge 1" TAO IDL compiler flag so that a CORBA Environment
-	  variable argument is added to each method.  This fixes a compile
-	  error that occured when native exception support was enabled.
+          Added "-Ge 1" TAO IDL compiler flag so that a CORBA Environment
+          variable argument is added to each method.  This fixes a compile
+          error that occured when native exception support was enabled.
 
-	* docs/compiler.html:
+        * docs/compiler.html:
 
-	  Added missing description of "-GC" flag.  It causes stubs with
-	  AMI support to be generated.
+          Added missing description of "-GC" flag.  It causes stubs with
+          AMI support to be generated.
 
 Tue Jun 20 15:03:07 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Content_Server/AMI_Observer: Fixed some more style
-	  issues.
+        * examples/Content_Server/AMI_Observer: Fixed some more style
+          issues.
 
 Tue Jun 20 10:44:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 
