@@ -33,7 +33,7 @@
 
 ACE_RCSID (tests,
            Dirent_Test,
-           "Dirent_Test.cpp,v 4.10 2003/05/18 19:17:34 dhinton Exp")
+           "$Id Dirent_Test.cpp,v 4.10 2003/05/18 19:17:34 dhinton Exp$")
 
 #if defined (VXWORKS) || defined(CHORUS)
 #define TEST_DIR "log"

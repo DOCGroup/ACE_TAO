@@ -1,3 +1,8 @@
+Tue Mar  2 23:12:17 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * tests/Dirent_Test.cpp:
+          Fixed the CVS Id tag.
+
 Tue Mar  2 22:58:40 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
