@@ -4,6 +4,9 @@ Tue Dec 15 14:45:49 1998  David L. Levine  <levine@cs.wustl.edu>
           Thanks to Christian v. Mueffling <cvm@aiss.de> for reporting
           this.
 
+        * docs/ACE-guidelines.html: added Doug's warning about side effects
+          in ACE_DEBUG statements.
+
 Tue Dec 15 14:43:47 1998  Ossama Othman  <ossama@debian.org>
 
         * ace/OS.{h,i},README: added lstat() and readlink() methods.
