@@ -1,3 +1,8 @@
+Wed Dec 09 18:03:58 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Reactor/WFMO_Reactor/test_network_events.cpp (main):
+	  Removed global variables and cleaned up some minor things.
+
 Wed Dec 09 07:02:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * README, VERSION: expanded mention of BUG-REPORT-FORM.
