@@ -1,3 +1,9 @@
+Tue Nov 30 11:31:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Exception.h: Added TAO_Export to the exception streaming
+	  operator.  Thanks to Mirko Brandner <mbrandner@yahoo.com> for
+	  reporting this.
+
 Tue Nov 30 00:49:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/tutorials/Quoter/AMI/index.html:
