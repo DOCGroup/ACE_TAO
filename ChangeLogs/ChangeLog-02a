@@ -1,3 +1,12 @@
+Sat Apr 27 08:59:56 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Process.i: If getpid() is ACE_INVALID_HANDLE, don't call
+	  ACE::terminate_process() or ACE_OS::kill() since
+ 	  ACE_INVALID_HANDLE is -1 on UNIX, which causes all sorts of
+ 	  problems due to the fact that -1 terminates the whole session
+ 	  group!  Thanks to Olivier Brunet <o.brunet@free.fr> for
+ 	  reporting this.
+
 Sat Apr 27 15:28:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Reactor/Proactor/test_proactor.cpp:

@@ -47,14 +47,19 @@ ACE_Process::wait (ACE_exitcode *status,
 ACE_INLINE int
 ACE_Process::kill (int signum)
 {
-  return ACE_OS::kill (this->getpid (),
-                       signum);
+  if (this->getpid () != -1)
+    return ACE_OS::kill (this->getpid (), signum);
+  else
+    return -1;
 }
 
 ACE_INLINE int
 ACE_Process::terminate (void)
 {
-  return ACE::terminate_process (this->getpid ());
+  if (this->getpid () != -1)
+    return ACE::terminate_process (this->getpid ());
+  else
+    return -1;
 }
 
 ACE_INLINE int
