@@ -22,6 +22,7 @@
 // Must specialize templates due to G++'s lame parameterized type
 // support...
 #define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
+#define ACE_HAS_TEMPLATE_SPECIALIZATION
 
 // Compiler's template mechanism must see source code (i.e., .C
 // files).

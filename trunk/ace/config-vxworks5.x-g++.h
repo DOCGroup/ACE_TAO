@@ -74,6 +74,7 @@
 #define ACE_MT_SAFE
 #define ACE_NEEDS_SYSTIME_H
 #define ACE_TEMPLATES_REQUIRE_SOURCE
+#define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
 
 // Defines the page size of the system.
