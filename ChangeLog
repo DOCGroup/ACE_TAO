@@ -1,3 +1,9 @@
+Mon Jun 21 09:17:56 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/OS_NS_Thread.cpp (thr_create): Only try to close down the
+ 	  tmp_handle if it's not NULL.  Thanks to chdommreis@t-online.de
+ 	  for reporting this and providing a fix.  This fixes bugid 1859.
+
 Mon Jun 21 11:56:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.pl:
