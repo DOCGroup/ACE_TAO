@@ -408,7 +408,7 @@ template <class T> void *
 ACE_Future<T>::operator new (size_t)
 {
 #if defined(ACE_NEW_THROWS_EXCEPTIONS) && defined(ACE_HAS_EXCEPTIONS)
-  throw ACE_bad_alloc;
+  throw ACE_bad_alloc ();
 #else
   void* gcc_will_complain_if_literal_0_is_returned = 0;
   return gcc_will_complain_if_literal_0_is_returned;
