@@ -300,7 +300,12 @@ ACE_MMAP_Memory_Pool::map_file (off_t map_size)
                        this->base_addr_,
                        0,
                        this->sa_) == -1
-      || this->base_addr_ != 0 && this->mmap_.addr () != this->base_addr_)
+      || this->base_addr_ != 0
+#ifdef ACE_HAS_WINCE
+      && this->mmap_.addr () == 0)  // WinCE does not allow users to specify alloc addr.
+#else
+      && this->mmap_.addr () != this->base_addr_)
+#endif  // ACE_HAS_WINCE
     {
 #if 0
       ACE_ERROR ((LM_ERROR,
