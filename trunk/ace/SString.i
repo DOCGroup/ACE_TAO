@@ -18,6 +18,13 @@ ACE_NS_WString::ACE_NS_WString (const ACE_WSTRING_TYPE *s,
 }
 
 ACE_INLINE
+ACE_NS_WString::ACE_NS_WString (const ACE_WSTRING_TYPE *s,
+                                ACE_Allocator *alloc)
+  : ACE_WString (s, alloc)
+{
+}
+
+ACE_INLINE
 ACE_NS_WString::ACE_NS_WString (size_t len, ACE_Allocator *alloc)
   : ACE_WString (len, alloc)
 {

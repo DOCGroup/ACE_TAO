@@ -1,12 +1,24 @@
+Thu Dec 06 14:06:22 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Config_Test.cpp: The string literals used to initialize
+	  ACE_TString need to be enclosed in an ACE_TEXT macro.
+
+	* ace/Registry_Name_Space.h:
+	* ace/Registry_Name_Space.cpp: Changed ACE_WString to
+	  ACE_NS_WString.  I missed these last time.
+
+	* ace/SString.i: Added an ACE_NS_WString constructor that I
+	  missed.
+
 Thu Dec  6 11:19:18 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h: 
+	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h:
 	* performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.h:
-	  Fixed warnings in gcc 3.0.2 
+	  Fixed warnings in gcc 3.0.2
 
 Thu Dec  6 11:15:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h: 
+	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h:
 	* performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.h:
 	  Fixed Fuzz errors in these files.
 
