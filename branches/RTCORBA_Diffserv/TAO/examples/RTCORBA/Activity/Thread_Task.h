@@ -40,6 +40,8 @@ class activity_Export Thread_Task : public Periodic_Task
 
   /// task svc
   virtual int svc (void);
+
+  void change_network_priority (void);
 };
 
 #endif /* THREAD_TASK_H */

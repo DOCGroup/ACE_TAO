@@ -78,9 +78,10 @@ where,
 -Phase <phase> = The phase to start at (uS)
 -Iter <iterations> = Number of Periods to exec.
 -Load <load_weight> = a load factor passed to the job that varies its processing.
+-Diffserv <0 | 1> = Set/Unset the CORBA Priority Mapping to Diffserv
 
 e.g.
--ThreadTask -JobName job_10 -Priority 10 -Period 1 -ExecTime 10000 -Phase 0 -Iter 20 -Load 1000 
+-ThreadTask -JobName job_10 -Priority 10 -Period 1 -ExecTime 10000 -Phase 0 -Iter 20 -Load 1000 -Diffserv 1
 
 specifes a Thread Task in which,
 JobName = job_10
@@ -90,6 +91,7 @@ JobName = job_10
 -Phase = 0uS
 -Iter = 20 iterations
 -Load = 1000 
+-Diffserv = 1 (this implies that all data packets sent will have the diffserv codepoint sent in them )
 
 3. Running the example
 ----------------------
@@ -99,7 +101,7 @@ e.g. ./Naming_Service -o naming_ior
   
 b). Start one or more instances of ./activity depending on the test configuration that you have designed.
 
-e.g. ./activity -ORBInitRef NamingService=file://naming_ior -ORBSvcConf svc.conf.whatever -ORBDebugLevel 1
+e.g. ./activity -ORBInitRef NameService=file://naming_ior -ORBSvcConf svc.conf.whatever -ORBDebugLevel 1
 
 c) once all the instances exit, the test will generate data files: <job_name>.dat 
 
