@@ -170,16 +170,12 @@
 #  define ACE_LACKS_SIGINFO_H
 #endif /* ACE_AIX_VERS >= 402 */
 #if (ACE_AIX_VERS >= 403)
-#  define ACE_HAS_SIGTIMEDWAIT
 // it may exist in earlier revs, but I'm not sure and I don't have a
 // system to validate
 #  define ACE_HAS_P_READ_WRITE
 #endif /* ACE_AIX_VERS >= 403 */
 
 #define ACE_HAS_SIGWAIT
-#if (ACE_AIX_VERS >= 403)
-#  define ACE_HAS_SIGTIMEDWAIT
-#endif /* ACE_AIX_VERS >= 403 */
 #define ACE_HAS_SIN_LEN
 #define ACE_HAS_STRBUF_T
 
