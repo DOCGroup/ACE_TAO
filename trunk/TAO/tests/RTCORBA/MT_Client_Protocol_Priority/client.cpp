@@ -223,7 +223,7 @@ Task::svc (void)
                           -1);
 
       // Spawn two worker threads.
-      ACE_Barrier barrier (2);
+      ACE_Barrier thread_barrier (2);
       int flags  =
         THR_NEW_LWP |
         THR_JOINABLE |
@@ -233,7 +233,7 @@ Task::svc (void)
       Worker_Thread worker1 (this->orb_.in (),
                              server.in (),
                              protocol1,
-                             &barrier);
+                             &thread_barrier);
 
       CORBA::Short native_priority1 = 0;
       if (pm->to_native (priority1, native_priority1) == 0)
@@ -253,7 +253,7 @@ Task::svc (void)
       Worker_Thread worker2 (this->orb_.in (),
                              server.in (),
                              protocol2,
-                             &barrier);
+                             &thread_barrier);
 
       CORBA::Short native_priority2 = 0;
       if (pm->to_native (priority2, native_priority2) == 0)
@@ -363,11 +363,11 @@ main (int argc, char *argv[])
 Worker_Thread::Worker_Thread (CORBA::ORB_ptr orb,
                               Test_ptr server,
                               CORBA::ULong protocol_type,
-                              ACE_Barrier *barrier)
+                              ACE_Barrier *thread_barrier)
   : orb_ (orb),
     server_ (server),
     protocol_type_ (protocol_type),
-    synchronizer_ (barrier)
+    synchronizer_ (thread_barrier)
 {
 }
 
