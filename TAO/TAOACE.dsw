@@ -641,6 +641,12 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name ObjRefTemplate
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -848,6 +854,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Valuetype
     End Project Dependency

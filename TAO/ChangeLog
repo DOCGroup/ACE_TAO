@@ -1,3 +1,9 @@
+Mon May  5 08:32:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAOACE.dsw:
+
+          Updated dependencies.
+
 Mon May  5 10:30:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Content_Server/SMI_Iterator/server.bor:
