@@ -162,7 +162,9 @@ Wed Jun 23 12:33:31 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 Wed Jun 23 11:32:29 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-  * /TAO/tests/InterOp-Naming/INS_i.cpp : Fixed a warning for an unused argument.
+	* /TAO/tests/InterOp-Naming/INS_i.cpp:
+	
+	  Fixed a warning for an unused argument.
 
 Wed Jun 23 10:09:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
