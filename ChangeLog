@@ -1,3 +1,8 @@
+Tue May 18 08:00:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * Kokyu/tests/DSRT_MIF/MIF.cpp:
+          Fix for unicode builds
+
 Tue May 18 06:20:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Time_Value.cpp:
