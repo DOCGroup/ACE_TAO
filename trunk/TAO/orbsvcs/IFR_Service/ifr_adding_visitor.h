@@ -37,7 +37,8 @@ class ifr_adding_visitor : public ifr_visitor
   //    to the Interface Repository.
   //
 public:
-  ifr_adding_visitor (AST_Decl *scope);
+  ifr_adding_visitor (AST_Decl *scope,
+                      CORBA::Boolean in_reopened = 0);
   // Constructor.
 
   virtual ~ifr_adding_visitor (void);
@@ -137,6 +138,9 @@ protected:
 
   AST_Decl *scope_;
   // Store the node whose scope (if any) we will be visiting.
+
+  CORBA::Boolean in_reopened_;
+  // Are we traversing the scope of a reopened module? 
 };
 
 #endif /* TAO_IFR_ADDING_VISITOR_H */

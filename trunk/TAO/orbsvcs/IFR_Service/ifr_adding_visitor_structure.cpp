@@ -39,12 +39,9 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
     }
 
   AST_Structure *s = AST_Structure::narrow_from_scope (node);
-
   CORBA::ULong nfields = ACE_static_cast (CORBA::ULong,
                                           s->nfields ());
-
   this->members_.length (nfields);
-
   AST_Field **f = 0;
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -66,7 +63,6 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
             }
 
           AST_Type *ft = (*f)->field_type ();
-
           idl_bool defined_here = ft->is_child (this->scope_);
 
           // If the struct member is defined in the struct, we have to
