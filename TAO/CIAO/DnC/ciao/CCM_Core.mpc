@@ -80,7 +80,7 @@ project (CIAO_Server) : orbsvcslib, portableserver, iorinterceptor, objreftempla
     CIAO_Server_Export.h
     CIAO_common.h
   }
-  
+
   Template_Files {
     Servant_Impl_T.cpp
   }
@@ -94,10 +94,13 @@ project(Deployment_stub) : taolib_with_idl, valuetype , ciao_server_dnc {
 
   IDL_Files {
      Deployment.idl
+     NodeApplication_CallBack.idl 
   }
 
   Source_Files {
     DeploymentC.cpp
+    NodeApplication_CallBackC.cpp
+    NodeApplication_CallBackS.cpp
   }
 }
 
@@ -110,12 +113,9 @@ project(Deployment_svnt) : taolib_with_idl, portableserver, ciao_server_dnc {
   idlflags     +=  -Wb,export_macro=Deployment_svnt_Export -Wb,export_include=Deployment_svnt_export.h
 
   IDL_Files {
-    NodeApplication_CallBack.idl
   }
 
   Source_Files {
-    NodeApplication_CallBackC.cpp
-    NodeApplication_CallBackS.cpp
     NodeApp_CB_Impl.cpp
     DeploymentS.cpp
   }
