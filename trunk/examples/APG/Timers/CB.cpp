@@ -28,10 +28,13 @@ int CB::handle_timeout (const ACE_Time_Value &,
 
       // New interval is 10 ms.
       ACE_Time_Value interval (0L, 1000L); 
-      ACE_ASSERT (Timer::instance ()->reset_interval
-                    (timerID_, interval) != -1);
-
-      ACE_UNUSED_ARG (interval);
+      int status = Timer::instance ()->reset_interval
+                                         (timerID_, interval);
+#if defined (ACE_NDEBUG)
+      ACE_UNUSED_ARG (status);
+#else
+      ACE_ASSERT (status != -1);
+#endif
     }
 
   if (count_++ == 10)
