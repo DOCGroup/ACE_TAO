@@ -95,9 +95,9 @@ public:
   static void *new_Event (size_t);
   static void delete_Event (void *);
 
-  typedef ACE_Singleton<ACE_ES_Dispatch_Request_Allocator,ACE_Null_Mutex> Dispatch_Request_;
-  typedef ACE_Singleton<ACE_ES_Event_Container_Allocator,ACE_Null_Mutex> Event_Container_;
-  typedef ACE_Singleton<ACE_ES_Event_Allocator,ACE_Null_Mutex> Event_;
+  typedef ACE_Singleton<ACE_ES_Dispatch_Request_Allocator,ACE_SYNCH_MUTEX> Dispatch_Request_;
+  typedef ACE_Singleton<ACE_ES_Event_Container_Allocator,ACE_SYNCH_MUTEX> Event_Container_;
+  typedef ACE_Singleton<ACE_ES_Event_Allocator,ACE_SYNCH_MUTEX> Event_;
 };
 
 #if defined (__ACE_INLINE__)

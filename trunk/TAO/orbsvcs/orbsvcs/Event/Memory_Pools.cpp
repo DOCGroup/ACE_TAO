@@ -27,16 +27,16 @@ ACE_ES_Memory_Pools::thr_init (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 // For ACE_ES_Memory_Pools.
-template class ACE_Singleton<ACE_ES_Dispatch_Request_Allocator,ACE_Null_Mutex>;
-template class ACE_Singleton<ACE_ES_Event_Container_Allocator,ACE_Null_Mutex>;
-template class ACE_Singleton<ACE_ES_Event_Allocator,ACE_Null_Mutex>;
+template class ACE_Singleton<ACE_ES_Dispatch_Request_Allocator,ACE_SYNCH_MUTEX>;
+template class ACE_Singleton<ACE_ES_Event_Container_Allocator,ACE_SYNCH_MUTEX>;
+template class ACE_Singleton<ACE_ES_Event_Allocator,ACE_SYNCH_MUTEX>;
 // template class ACE_TSS<ACE_ES_Event_Container_Allocator>;
 // template class ACE_TSS<ACE_ES_Dispatch_Request_Allocator>;
 // template class ACE_TSS<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_MEMORY_POOL_MUTEX> >;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<ACE_ES_Dispatch_Request_Allocator,ACE_Null_Mutex>
-#pragma instantiate ACE_Singleton<ACE_ES_Event_Container_Allocator,ACE_Null_Mutex>
-#pragma instantiate ACE_Singleton<ACE_ES_Event_Allocator,ACE_Null_Mutex>
+#pragma instantiate ACE_Singleton<ACE_ES_Dispatch_Request_Allocator,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Singleton<ACE_ES_Event_Container_Allocator,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Singleton<ACE_ES_Event_Allocator,ACE_SYNCH_MUTEX>
 // #pragma instantiate ACE_TSS<ACE_ES_Event_Container_Allocator>
 // #pragma instantiate ACE_TSS<ACE_ES_Dispatch_Request_Allocator>
 // #pragma instantiate ACE_TSS<ACE_Malloc<ACE_Local_Memory_Pool, ACE_Local_Memory_Pool_Options, ACE_MEMORY_POOL_MUTEX> >
