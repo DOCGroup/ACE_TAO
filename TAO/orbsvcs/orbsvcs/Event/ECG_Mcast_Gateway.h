@@ -18,7 +18,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ECG_Defaults.h"
-#include "orbsvcs/Event/event_export.h"
+#include /**/ "event_export.h"
 #include "ECG_UDP_Receiver.h"
 #include "ECG_UDP_Out_Endpoint.h"
 #include "ace/Service_Object.h"

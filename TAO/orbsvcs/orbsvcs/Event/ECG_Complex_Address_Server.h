@@ -12,7 +12,7 @@
 #define TAO_ECG_COMPLEX_ADDRESS_SERVER_H
 #include /**/ "ace/pre.h"
 
-#include "event_export.h"
+#include /**/ "event_export.h"
 
 #include "orbsvcs/RtecUDPAdminS.h"
 #include "ace/Hash_Map_Manager_T.h"

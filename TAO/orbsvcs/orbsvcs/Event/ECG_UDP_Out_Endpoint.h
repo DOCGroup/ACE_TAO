@@ -12,7 +12,7 @@
 #define TAO_ECG_UDP_OUT_ENDPOINT_H
 #include /**/ "ace/pre.h"
 
-#include "event_export.h"
+#include /**/ "event_export.h"
 #include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

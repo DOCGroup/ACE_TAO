@@ -17,7 +17,7 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecBaseC.h"
-#include "event_export.h"
+#include /**/ "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

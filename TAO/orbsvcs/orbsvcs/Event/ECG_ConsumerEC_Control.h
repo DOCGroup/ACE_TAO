@@ -12,7 +12,7 @@
 #define TAO_ECG_ConsumerEC_Control_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/event_export.h"
+#include /**/ "event_export.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

@@ -16,7 +16,7 @@
 #define TAO_EC_GATEWAY_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/event_export.h"
+#include /**/ "event_export.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecEventCommS.h"
 

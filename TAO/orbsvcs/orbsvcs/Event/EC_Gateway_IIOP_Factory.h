@@ -12,7 +12,7 @@
 #define TAO_EC_GATEWAY_IIOP_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/event_export.h"
+#include /**/ "event_export.h"
 #include "ace/Service_Config.h"
 #include "ace/Time_Value.h"
 #include "ace/Service_Object.h"
