@@ -703,7 +703,7 @@ be_generator::create_expr (long l,
 }
 
 AST_Expression *
-be_generator::create_expr (unsigned long l)
+be_generator::create_expr (ACE_UINT64 l)
 {
   be_expression *retval = 0;
   ACE_NEW_RETURN (retval,

@@ -58,7 +58,7 @@ be_expression::be_expression (long l,
 {
 }
 
-be_expression::be_expression (unsigned long l)
+be_expression::be_expression (ACE_UINT64 l)
   : AST_Expression (l)
 {
 }

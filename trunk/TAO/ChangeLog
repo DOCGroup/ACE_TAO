@@ -1,3 +1,24 @@
+Mon Jul 21 15:58:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/be/be_expression.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be_include/be_expression.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/include/ast_generator.h:
+
+	  Fixed a bug where unsigned long long constants were
+	  truncated if the literal rhs was greater than
+`	  ULONG_MAX. Thanks to Scott Clarke <sclarke@ideorlando.org>
+	  for reporting the bug.
+
 Mon Jul 21 19:33:24 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/orbsvcs.html:

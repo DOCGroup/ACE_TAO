@@ -285,6 +285,8 @@ public:
 
   virtual AST_Expression *create_expr (unsigned long v);
 
+  virtual AST_Expression *create_expr (ACE_UINT64 v);
+
   virtual AST_Expression *create_expr (UTL_String *s);
 
   virtual AST_Expression *create_expr (char *s);

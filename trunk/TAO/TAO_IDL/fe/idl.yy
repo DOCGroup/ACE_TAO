@@ -152,7 +152,7 @@ AST_Decl *tao_enum_constant_decl = 0;
   FE_Declarator                 *deval;         /* Declarator value     */
   idl_bool                      bval;           /* Boolean value        */
   long                          ival;           /* Long value           */
-  unsigned long                 uival;          /* Unsigned long value  */
+  ACE_UINT64                    uival;          /* Unsigned long value  */
   double                        dval;           /* Double value         */
   float                         fval;           /* Float value          */
   char                          cval;           /* Char value           */
