@@ -147,7 +147,7 @@ dirent_count (const ACE_TCHAR *dir_path,
                        "chdir: %p\n",
                        dir_path),
                       -1);
-  ACE_Dirent dir (ACE_TEST ("."));
+  ACE_Dirent dir (ACE_TEXT ("."));
 
   int entry_count = 0;
 
@@ -171,7 +171,7 @@ dirent_count (const ACE_TCHAR *dir_path,
 
       switch (stat_buf.st_mode & S_IFMT)
         {
-        case S_IFREG: // Either a regular file or an executable. 
+        case S_IFREG: // Either a regular file or an executable.
           file_count++;
           break;
 
