@@ -14,6 +14,9 @@ Tue Dec 02 06:16:39 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-linux-kcc.h: commented out ACE_TEMPLATES_REQUIRE_SOURCE.
           Thanks to Ben Eng <ben@jetpen.com> for this update.
 
+        * ace/Profile_Timer.cpp (elapsed_time): changed
+          ACE_ONE_SECOND_IN_USECS to ACE_ONE_SECOND_IN_NSECS.
+
         * include/makeinclude/platform_chorus.GNU: added CHORUS = 1,
           for use by individual Makefiles.
 
