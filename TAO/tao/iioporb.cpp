@@ -208,7 +208,10 @@ iiop_string_to_object (CORBA::String string,
   // gets thoroughly excercised/debugged!  Without a typeID, the
   // _narrow will be required to make an expensive remote "is_a" call.
 
-  IIOP_Object *data = new IIOP_Object ((char *) 0); // null type ID
+  IIOP_Object *data;
+
+  // null type ID.
+  ACE_NEW_RETURN (data, IIOP_Object ((char *) 0), 0);
 
   // Remove the "N.N//" prefix, and verify the version's one
   // that we accept
@@ -292,8 +295,7 @@ iiop_string_to_object (CORBA::String string,
 
   // Strip out hex escapes and adjust the key's length appropriately.
 
-  while ((cp = ACE_OS::strchr ((char *)data->profile.object_key.buffer, '\\'))
-         != 0)
+  while ((cp = ACE_OS::strchr ((char *) data->profile.object_key.buffer, '\\')) != 0)
     {
       *cp = (CORBA::Char) (ACE::hex2byte ((char) cp [1]) << 4);
       *cp |= (CORBA::Char) ACE::hex2byte ((char) cp [2]);
@@ -324,9 +326,13 @@ IIOP_ORB::string_to_object (const CORBA::String str,
   CORBA::Object_ptr obj = 0;
 
   // Use the prefix code to choose which destringify algorithm to use.
-  if (ACE_OS::strncmp ((char *)str, iiop_prefix, sizeof iiop_prefix - 1) == 0)
+  if (ACE_OS::strncmp ((char *)str,
+                       iiop_prefix, sizeof iiop_prefix - 1) == 0)
     obj = iiop_string_to_object (str + sizeof iiop_prefix - 1, env);
-  else if (ACE_OS::strncmp ((char *)str, ior_prefix, sizeof ior_prefix - 1) == 0)
+
+  else if (ACE_OS::strncmp ((char *)str,
+                            ior_prefix,
+                            sizeof ior_prefix - 1) == 0)
     obj = ior_string_to_object (str + sizeof ior_prefix - 1, env);
 
   // Return the object
