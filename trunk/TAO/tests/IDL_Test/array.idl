@@ -72,4 +72,12 @@ module ABCModule
 typedef octet oa1[22];
 typedef octet oa2[22];
 
+// This should generate unique _var and _forany types, but
+// also generate TAO_String_Manager as the element type for both.
+module string_array
+{
+  typedef string ArrayOfString[15];
+  typedef string MyString;
+  typedef MyString ArrayOfMyString[15];
+};
 
