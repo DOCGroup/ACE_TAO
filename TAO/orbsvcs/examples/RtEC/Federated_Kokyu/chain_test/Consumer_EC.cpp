@@ -161,95 +161,6 @@ public:
   {
     ACE_Time_Value tv;
 
-    // *************************************************************
-    // Create Supplier, intialize its RT_Info structures, and
-    // connnect to the event channel....
-    /*
-    //// SUPPLIER 3 ////
-    Supplier * supplier_impl3;
-    ACE_NEW(supplier_impl3,
-            Supplier(4));
-    tv.set(3,0); //period
-    add_supplier(supplier_impl3,
-                 "supplier3",
-                 ACE_ES_EVENT_UNDEFINED+3
-                 ACE_ENV_ARG_PARAMETER
-                 );
-    ACE_CHECK;
-
-    // *************************************************************
-    // Create a consumer, intialize its RT_Info structures, and
-    // connnect to the event channel....
-
-    Timeout_Consumer * timeout_consumer_impl3;
-    ACE_NEW(timeout_consumer_impl3,
-            Timeout_Consumer(supplier_impl3));
-
-    Supplier_Timeout_Handler * timeout_handler_impl3;
-    ACE_NEW(timeout_handler_impl3,
-            Supplier_Timeout_Handler(supplier_impl3));
-    Once_Handler * task3_trigger;
-    ACE_NEW(task3_trigger,
-            Once_Handler);
-    tv.set(3,0); //period
-    RtEventChannelAdmin::SchedInfo info;
-    info.criticality = RtecScheduler::LOW_CRITICALITY;
-    info.period = time_val_to_period (tv);
-    info.importance = RtecScheduler::LOW_IMPORTANCE;
-    info.threads = 0;
-    info.info_type = RtecScheduler::OPERATION;
-
-    task3_trigger->init(orb->orb_core()->reactor(),
-                        timeout_handler_impl3,
-                        tv
-                        );
-
-    task3_trigger->init(this,
-                        supplier_impl3,
-                        timeout_consumer_impl3,
-                        "supplier3_timeout_consumer",
-                        tv,
-                        info.criticality,
-                        info.importance
-                        );
-
-    once_ = task3_trigger;
-    //need specify period, criticality, importance for supplier_impl3, since timeout not yet registered
-    RtecScheduler::Scheduler_ptr sched = this->scheduler();
-    sched->set (supplier_impl3->rt_info(),
-                info.criticality,
-                info.wc_time,
-                info.typical_time,
-                info.cached_time,
-                info.period,
-                info.importance,
-                info.quantum,
-                info.threads,
-                info.info_type
-                ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-
-    //// CONSUMER 2_2 ////
-    Consumer * consumer_impl2_2;
-    ACE_NEW(consumer_impl2_2,
-            Consumer);
-
-    tv.set(2,0);
-    consumer_impl2_2->setWorkTime(tv);
-    consumer_impl2_2->handler(once_); //trigger Task3 on first event!
-    //consumer's rate will NOT get propagated from the supplier
-    //because supplier is Gateway, so need to specify a period here.
-    tv.set(6,0); //period
-    add_consumer(consumer_impl2_2,
-                 "consumer2_2",
-                 tv,
-                 ACE_ES_EVENT_UNDEFINED+2,
-                 RtecScheduler::VERY_HIGH_CRITICALITY,
-                 RtecScheduler::VERY_HIGH_IMPORTANCE
-                 ACE_ENV_ARG_PARAMETER
-                 );
-    ACE_CHECK;
-    */
     //// CONSUMER 3 ////
     Consumer * consumer_impl3;
     ACE_NEW(consumer_impl3,
@@ -262,7 +173,7 @@ public:
     add_consumer(consumer_impl3,
                  "consumer3",
                  tv,
-                 ACE_ES_EVENT_UNDEFINED+3,
+                 ACE_ES_EVENT_UNDEFINED+2,
                  RtecScheduler::VERY_HIGH_CRITICALITY,
                  RtecScheduler::VERY_HIGH_IMPORTANCE
                  ACE_ENV_ARG_PARAMETER
@@ -381,7 +292,7 @@ main (int argc, char* argv[])
 #else
       EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance());
 #endif //ACE_HAS_DSUI
-      ACE_Time_Value ticker (125);
+      ACE_Time_Value ticker (300);
       long timer_id = rt.reactor()->schedule_timer(e_limit,0, ticker);
       if (timer_id < 0)
         {

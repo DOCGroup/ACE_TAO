@@ -78,7 +78,7 @@ public:
                    consumer_event_channel.in(),
                    supplier_scheduler.in(),
                    consumer_scheduler.in(),
-                   "gateway2", "gateway3"
+                   "gateway2b", "gateway3"
                    ACE_ENV_ARG_PARAMETER);
 
       ACE_CHECK;
@@ -101,9 +101,11 @@ public:
 
       consumer_ec->start(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
+
+      ACE_DEBUG((LM_DEBUG,"Gateway Initialized\n"));
   }
 
-  virtual void start (ACE_ENV_SINGLE_ARG_DECL)
+  virtual void set_up_supp_and_cons (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException
         , RtecScheduler::UNKNOWN_TASK
@@ -112,64 +114,7 @@ public:
       ))
   {
     ACE_Time_Value tv;
-    /*
-    Supplier *supplier_impl1;
-    Timeout_Consumer *timeout_consumer_impl1;
-    ACE_NEW(supplier_impl1,
-            Supplier(1));
-    ACE_NEW(timeout_consumer_impl1,
-            Timeout_Consumer(supplier_impl1));
-    tv.set(4,0); //period
-    add_supplier_with_timeout(supplier_impl1,
-                              "supplier1",
-                              ACE_ES_EVENT_UNDEFINED,
-                              timeout_consumer_impl1,
-                              "supplier1_timeout_consumer",
-                              tv,
-                              RtecScheduler::VERY_LOW_CRITICALITY,
-                              RtecScheduler::VERY_LOW_IMPORTANCE
-                              ACE_ENV_ARG_PARAMETER
-                              );
-    ACE_CHECK;
 
-    Supplier *supplier_impl2_1;
-    ACE_NEW(supplier_impl2_1,
-            Supplier(2));
-    Timeout_Consumer * timeout_consumer_impl2_1;
-    ACE_NEW(timeout_consumer_impl2_1,
-            Timeout_Consumer(supplier_impl2_1));
-    tv.set (6, 0); //Period
-    add_supplier_with_timeout(supplier_impl2_1,
-                              "supplier2_1",
-                              ACE_ES_EVENT_UNDEFINED+1,
-                              timeout_consumer_impl2_1,
-                              "supplier2_1_timeout_consumer",
-                              tv,
-                              RtecScheduler::VERY_HIGH_CRITICALITY,
-                              RtecScheduler::VERY_HIGH_IMPORTANCE
-                              ACE_ENV_ARG_PARAMETER
-                              );
-    ACE_CHECK;
-
-    Consumer * consumer_impl1_2;
-    ACE_NEW(consumer_impl1_2,
-            Consumer);
-
-    tv.set(1,0);
-    consumer_impl1_2->setWorkTime(tv);
-    //consumer's rate won't get propagated from the remote supplier
-    //so need to specify a period here.
-    tv.set(4,0); //Period
-    add_consumer(consumer_impl1_2, //deleted in destructor
-                 "consumer1_2",
-                 tv,
-                 ACE_ES_EVENT_UNDEFINED,
-                 RtecScheduler::VERY_LOW_CRITICALITY,
-                 RtecScheduler::VERY_LOW_IMPORTANCE
-                 ACE_ENV_ARG_PARAMETER
-                 );
-    ACE_CHECK;
-    */
     Supplier *supplier_impl1_3;
     ACE_NEW(supplier_impl1_3,
             Supplier(3));
@@ -195,8 +140,8 @@ public:
                                );
     ACE_CHECK;
 
-    Kokyu_EC::start(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
+    //Kokyu_EC::start(ACE_ENV_SINGLE_ARG_PARAMETER);
+    //ACE_CHECK;
   }
 };
 
@@ -263,7 +208,6 @@ main (int argc, char* argv[])
                                poa.in(),
                                "file://consumer_ec.ior" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
       // ****************************************************************
       RtEventChannelAdmin::RtSchedEventChannel_var supplier_ec_ior =
         supplier_ec._this(ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -282,6 +226,8 @@ main (int argc, char* argv[])
       int prio = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO);
       ACE_OS::thr_setprio (thr_handle, prio);
 
+      supplier_ec.set_up_supp_and_cons(ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
       supplier_ec.start(ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -298,7 +244,7 @@ main (int argc, char* argv[])
 #else
       EC_Event_Limit* e_limit = new EC_Event_Limit (TAO_ORB_Core_instance());
 #endif //ACE_HAS_DSUI
-      ACE_Time_Value ticker (120);
+      ACE_Time_Value ticker (305);
       //orb->orb_core()->reactor()->schedule_timer(e_limit,0, ticker);
       long timer_id = rt.reactor()->schedule_timer(e_limit,0,ticker);
       if (timer_id < 0)
