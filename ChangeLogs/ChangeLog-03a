@@ -1,3 +1,8 @@
+Thu Aug 01 15:24:32 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_Thread_Adapter.h:
+          Fixed incorrected doxygen @file command.
+
 Thu Aug 01 14:52:44 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
