@@ -1,3 +1,12 @@
+Mon Aug 23 08:46:37 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Object_Manager.{h,cpp}: replaced the use of
+          ACE_Unbounded_Queue<ACE_Cleanup_Info> with a new
+          ACE_Cleanup_Info_Node private helper class.  The reduces
+          the size of libACE by over 4 Kb, and is the first step
+          towards moving the Object_Manager's atexit () support to
+          OS. [Bug 246]
+
 Mon Aug 23 07:28:02 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/run_tests.check: changed "starting" to "Starting",

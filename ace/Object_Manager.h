@@ -35,7 +35,7 @@ class ACE_Sig_Set;
   class ACE_RW_Thread_Mutex;
 #endif /* ACE_MT_SAFE */
 
-template <class T> class ACE_Unbounded_Queue;
+class ACE_Cleanup_Info_Node;
 template <class T> class ACE_Cleanup_Adapter;
 
 
@@ -294,8 +294,10 @@ public:
   // Accesses a default signal set used in ACE_Sig_Guard methods.
 
 private:
-  ACE_Unbounded_Queue<ACE_Cleanup_Info> *registered_objects_;
-  // Keeps track of all registered objects.
+  ACE_Cleanup_Info_Node *registered_objects_;
+  // Keeps track of all registered objects.  The last node is only
+  // used to terminate the list (it doesn't contain a valid
+  // ACE_Cleanup_Info).
 
   ACE_Object_Manager_Preallocations *preallocations_;
   // Preallocated objects collection.
