@@ -61,6 +61,7 @@ ACE_HAS_NONCONST_GETBY			Platform uses non-const char * in calls to gethostbyadd
 ACE_HAS_NONCONST_SELECT_TIMEVAL		Platform's select() uses non-const timeval* (only found on Linux right now)
 ACE_HAS_OLD_MALLOC			Compiler/platform uses old malloc()/free() prototypes (ugh)
 ACE_HAS_ONEARG_SIGWAIT			sigwait() takes only one argument.
+ACE_HAS_ONLY_SCHED_OTHER                Platform, e.g., Solaris 2.5, only supports SCHED_OTHER POSIX scheduling policy.
 ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R	Uses ctime_r & asctime_r with only two parameters vs. three.
 ACE_HAS_ORBIX				Platform has Orbix CORBA implementation
 ACE_HAS_OSF_TIMOD_H			Platform supports the OSF TLI timod STREAMS module

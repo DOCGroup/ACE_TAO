@@ -153,6 +153,8 @@
 // Platform supports POSIX pthreads *and* Solaris threads!
 #define ACE_HAS_STHREADS
 #define ACE_HAS_PTHREADS
+// . . . but only supports SCHED_OTHER scheduling policy
+#define ACE_HAS_ONLY_SCHED_OTHER
 
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE

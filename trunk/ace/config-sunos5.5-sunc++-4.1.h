@@ -144,6 +144,8 @@
 // Platform supports POSIX pthreads *and* Solaris threads!
 #define ACE_HAS_STHREADS
 #define ACE_HAS_PTHREADS
+// . . . but only supports SCHED_OTHER scheduling policy
+#define ACE_HAS_ONLY_SCHED_OTHER
 #define ACE_HAS_SIGWAIT
 #define ACE_LACKS_CONDATTR_PSHARED
 
