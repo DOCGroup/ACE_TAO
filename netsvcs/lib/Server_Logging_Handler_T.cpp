@@ -44,7 +44,7 @@ template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR> int
 ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::handle_input (ACE_HANDLE)
 {
   int result = this->handle_logging_record ();
-  return result > 0 ? result : -1;
+  return result > 0 ? 0 : -1;
 }
 
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR> const char *
@@ -56,7 +56,6 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ho
   return this->host_name_.fast_rep ();
 #endif /* ! ACE_HAS_BROKEN_HPUX_TEMPLATES && ! __GNUG__ */
 }
-
 
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR> int
 ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::handle_logging_record (void)
@@ -75,12 +74,17 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
     {
     default:
     case -1:
-      ACE_ERROR_RETURN ((LM_ERROR, "%p at host %s\n",
-                         "server logger", this->host_name ()), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p at host %s\n",
+                         "server logger",
+                         this->host_name ()),
+                        -1);
       /* NOTREACHED */
     case 0:
-      ACE_ERROR_RETURN ((LM_ERROR, "closing log daemon at host %s\n",
-                         this->host_name ()), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "closing log daemon at host %s\n",
+                         this->host_name ()),
+                        -1);
       /* NOTREACHED */
     case sizeof length:
       {
@@ -92,19 +96,21 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
         u_long count = ++this->request_count_;
         ACE_DEBUG ((LM_DEBUG,
                     "request count = %d, length = %d\n",
-                    count, length));
+                    count,
+                    length));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
         // Perform the actual <recv> this time.
-        ssize_t n = this->peer ().recv_n ((void *) &lp, length);
-
+        ssize_t n = this->peer ().recv_n ((void *) &lp,
+                                          length);
         if (n != length)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "%d != %d, %p at host %s\n",
                              n,
                              length,
                              "server logger",
-                             this->host_name ()), -1);
+                             this->host_name ()),
+                            -1);
         /* NOTREACHED */
 
         lp.decode ();
@@ -114,12 +120,17 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
             // Send the log record to the log message receiver for
             // processing.
             ostream *orig_ostream = ACE_Log_Msg::instance ()->msg_ostream ();
-            receiver ().log_record (this->host_name (), lp);
-            receiver ().log_output (this->host_name (), lp, orig_ostream);
+            receiver ().log_record (this->host_name (),
+                                    lp);
+            receiver ().log_output (this->host_name (),
+                                    lp,
+                                    orig_ostream);
           }
         else
-          ACE_ERROR ((LM_ERROR, "error, lp.length = %d, n = %d\n",
-                      lp.length (), n));
+          ACE_ERROR ((LM_ERROR,
+                      "error, lp.length = %d, n = %d\n",
+                      lp.length (),
+                      n));
         return n;
       }
     }
@@ -136,13 +147,18 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::op
 {
   // Shut off non-blocking IO if it was enabled...
   if (this->peer ().disable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "disable"), -1);
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "disable"),
+                      -1);
   ACE_PEER_STREAM_ADDR client_addr;
 
   // Determine the address of the client and display it.
   if (this->peer ().get_remote_addr (client_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_remote_addr"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "get_remote_addr"),
+                      -1);
 
 #if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
   this->receiver_.m_ = ACE_CString (client_addr.get_host_name (),
@@ -153,8 +169,10 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::op
 #endif /* ! ACE_HAS_BROKEN_HPUX_TEMPLATES && ! __GNUG__ */
 
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) accepted connection from host %s on fd %d\n",
-              client_addr.get_host_name (), this->peer ().get_handle ()));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) accepted connection from host %s on fd %d\n",
+              client_addr.get_host_name (),
+              this->peer ().get_handle ()));
 
   return 0;
 }
@@ -195,11 +213,13 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::init (int argc, char *argv[])
                   ACE_Reactor::instance (),
                   0, 0, 0,
                   &this->scheduling_strategy(),
-                  "Logging Server", "ACE logging service") == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%n: %p on port %d\n",
+                  "Logging Server",
+                  "ACE logging service") == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%n: %p on port %d\n",
                        "acceptor::open failed",
-                       this->service_addr_.get_port_number ()), -1);
-
+                       this->service_addr_.get_port_number ()),
+                      -1);
   // Ignore SIGPIPE so that each <SVC_HANDLER> can handle this on its
   // own.
   ACE_Sig_Action sig (ACE_SignalHandler (SIG_IGN), SIGPIPE);
@@ -209,8 +229,10 @@ ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::init (int argc, char *argv[])
 
   // Figure out what port we're really bound to.
   if (this->acceptor ().get_local_addr (server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_local_addr"), -1);
-
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "get_local_addr"),
+                      -1);
   ACE_DEBUG ((LM_DEBUG,
               "starting up Logging Server at port %d on handle %d\n",
              server_addr.get_port_number (),
@@ -309,7 +331,10 @@ ACE_Thr_Server_Logging_Handler<LMR>::open (void *)
   // client.  Note that this implicitly uses the
   // ACE_Thread_Manager::instance () to control all the threads.
   if (this->activate (THR_BOUND | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "spawn"),
+                      -1);
   return 0;
 }
 
