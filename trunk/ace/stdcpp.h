@@ -22,10 +22,10 @@
 #if !defined (ACE_STDCPP_H)
 #define ACE_STDCPP_H
 
-#if !defined (ACE_CONFIG_H)
-#define ACE_CONFIG_H
+#if !defined (ACE_USER_CONFIG_H)
+#define ACE_USER_CONFIG_H
 #include "ace/config.h"
-#endif /* ACE_CONFIG_H */
+#endif /* ACE_USER_CONFIG_H */
 
 #if !defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 # if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
