@@ -121,15 +121,15 @@ count_files (void)
     {
       if (i == 0)
         ACE_OS::sprintf (backup_ct,
-                         "%s",
+                         ACE_TEXT ("%s"),
                          file_name);
       else
         ACE_OS::sprintf (backup_ct,
-                         "%s.%d",
+                         ACE_TEXT ("%s.%d"),
                          file_name,
                          i);
 
-      stream = ACE_OS::fopen (backup_ct, "r");
+      stream = ACE_OS::fopen (backup_ct, ACE_TEXT ("r"));
       if (stream == 0)
         error = 1;
       else
@@ -167,7 +167,7 @@ count_files (void)
 
 // get the file statistics
 static int
-get_statistic (char *f_name)
+get_statistic (ACE_TCHAR *f_name)
 {
   ACE_stat buf;
   int result;
@@ -177,7 +177,7 @@ get_statistic (char *f_name)
 
   // Check if statistics are valid:
   if (result != 0)
-    ACE_OS::perror ("\nProblem getting information");
+    ACE_OS::perror (ACE_TEXT ("\nProblem getting information"));
   else
     {
       // Output some of the statistics:
@@ -287,11 +287,11 @@ remove_files (void)
 }
 
 static int
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Specifications:\n")));
-  ACE_Get_Opt get_opt (argc, argv, "s:i:m:f:n:o");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("s:i:m:f:n:o"));
   int c;
 
   while ((c = get_opt ()) != EOF)
@@ -304,13 +304,13 @@ parse_args (int argc, char *argv[])
                       file_name));
           break;
         case 'i':
-          interval_time = atoi (get_opt.optarg);
+          interval_time = ACE_OS::atoi (get_opt.optarg);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Interval time (s): %d\n"),
                       interval_time));
           break;
         case 'm':
-          max_size_files = atoi (get_opt.optarg);
+          max_size_files = ACE_OS::atoi (get_opt.optarg);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Maximum size (KB): %d\n"),
                       max_size_files));
@@ -321,7 +321,7 @@ parse_args (int argc, char *argv[])
                       get_opt.optarg));
           break;
         case 'n':
-          max_num_files = atoi (get_opt.optarg);
+          max_num_files = ACE_OS::atoi (get_opt.optarg);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Maximum files number: %d\n"),
                       max_num_files));
@@ -350,7 +350,7 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int main (int argc, char *argv [])
+int main (int argc, ACE_TCHAR *argv [])
 {
   ACE_START_TEST (ACE_TEXT ("Logging_Strategy_Test"));
 
@@ -373,8 +373,8 @@ int main (int argc, char *argv [])
   else
     {
       l_argv[0] = argv[0];
-      l_argv[1] = (char *) ACE_TEXT ("-sfoo");
-      l_argv[2] = (char *) ACE_TEXT ("-o");
+      l_argv[1] = (ACE_TCHAR *) ACE_TEXT ("-sfoo");
+      l_argv[2] = (ACE_TCHAR *) ACE_TEXT ("-o");
       l_argv[3] = 0;
 
       if (parse_args (3, l_argv) == -1)
@@ -386,16 +386,16 @@ int main (int argc, char *argv [])
     }
 
   ACE_TCHAR arg_str[250];
-  sprintf (arg_str,
-           "dynamic Logger Service_Object *ACE:_make_ACE_Logging_Strategy() \"");
+  ACE_OS::sprintf (arg_str,
+                   ACE_TEXT ("dynamic Logger Service_Object *ACE:_make_ACE_Logging_Strategy() \""));
 
   for (int i = 1; i < argc; i++)
     {
       ACE_OS_String::strcat (arg_str, argv[i]);
-      ACE_OS_String::strcat (arg_str, " ");
+      ACE_OS_String::strcat (arg_str, ACE_TEXT (" "));
     }
 
-  ACE_OS_String::strcat (arg_str, "\"");
+  ACE_OS_String::strcat (arg_str, ACE_TEXT ("\""));
 
   if (ACE_Service_Config::process_directive (arg_str) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
