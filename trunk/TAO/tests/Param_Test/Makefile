@@ -12,10 +12,6 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-override TAO_IDLFLAGS += -hc Cli.h -hs Ser.h -hT Ser_T.h \
-			 -cs Cli.cpp -ci Cli.i \
-			 -ss Ser.cpp -sT Ser_T.cpp  -si Ser.i -st Ser_T.i
-
 LDLIBS   = -lTAO
 LDFLAGS += -L$(TAO_ROOT)/tao
 
@@ -92,6 +88,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 #include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
+override TAO_IDLFLAGS += -hc Cli.h -hs Ser.h -hT Ser_T.h \
+			 -cs Cli.cpp -ci Cli.i \
+			 -ss Ser.cpp -sT Ser_T.cpp  -si Ser.i -st Ser_T.i
 
 TSS_ORB_FLAG = #-DTAO_HAS_TSS_ORBCORE
 CPPFLAGS += -I$(TAO_ROOT) $(TSS_ORB_FLAG)
