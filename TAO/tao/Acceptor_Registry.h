@@ -65,7 +65,9 @@ public:
   ~TAO_Acceptor_Registry (void);
   //  Default destructor.
 
-  int open (TAO_ORB_Core *orb_core);
+  int open (TAO_ORB_Core *orb_core,
+            CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Initialize all registered acceptors.  Return -1 on error.
 
   int close_all (void);
@@ -88,11 +90,13 @@ public:
   TAO_AcceptorSetItor end (void);
 
 private:
-  int open_default (TAO_ORB_Core *orb_core);
+  int open_default (TAO_ORB_Core *orb_core,
+                    const char *options);
   // Create a default acceptor for all loaded protocols.
 
   int open_default (TAO_ORB_Core *orb_core,
-                    TAO_ProtocolFactorySetItor &factory);
+                    TAO_ProtocolFactorySetItor &factory,
+                    const char *options);
   // Create a default acceptor using the specified protocol factory.
 
 private:

@@ -215,9 +215,9 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   int skip_service_config_open = 0;
 
   // Use dotted decimal addresses
-  // @@ This option will be treated as a suggestion to each loaded protocol to
-  // @@ use a character representation for the numeric address, otherwise
-  // @@ use a logical name. fredk
+  // @@ This option will be treated as a suggestion to each loaded
+  //    protocol to use a character representation for the numeric
+  //    address, otherwise use a logical name. fredk
 #if defined (TAO_USE_DOTTED_DECIMAL_ADDRESSES)
   int dotted_decimal_addresses = 1;
 #else
@@ -980,6 +980,10 @@ TAO_ORB_Core::init (int &argc, char *argv[])
     this->connector_registry ()->preconnect (this,
                                              this->orb_params ()->preconnects ());
 
+  // When reinitializing an ORB that has been shutdown, make sure that
+  // it is no longer flagged as being shutdown.
+  this->has_shutdown_ = 0;
+
   return 0;
 }
 
@@ -1363,8 +1367,8 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
                                   const char *type_id,
                                   CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->open () == -1)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+  (void) this->open (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
 
   CORBA::String id = 0;
 
@@ -1438,8 +1442,18 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int break_on_timeouts)
 
   // This method should only be called by servers, so now we set up
   // for listening!
-  if (this->open () == -1)
-    return -1;
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      (void) this->open (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      return -1;
+    }
+  ACE_ENDTRY;
 
   int result = 1;
   // 1 to detect that nothing went wrong
@@ -1511,7 +1525,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
   // to deactivate will be the same as the similarly named parameter
   // of ORB::shutdown.
   this->object_adapter ()->deactivate (wait_for_completion,
-                                                  ACE_TRY_ENV);
+                                       ACE_TRY_ENV);
   ACE_CHECK;
 
   // Set the shutdown flag
@@ -1554,10 +1568,22 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
     tm->wait ();
 }
 
+void
+TAO_ORB_Core::destroy (CORBA_Environment &ACE_TRY_ENV)
+{
+  // This method is currently unimplemented.
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+
+  // Shutdown the ORB and block until the shutdown is complete.
+  // this->shutdown (1, ACE_TRY_ENV);
+}
+
 // Set up listening endpoints.
 
 int
-TAO_ORB_Core::open (void)
+TAO_ORB_Core::open (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC (CORBA::SystemException)
 {
   // Double check pattern
   if (this->open_called_ == 1)
@@ -1571,9 +1597,10 @@ TAO_ORB_Core::open (void)
   TAO_Acceptor_Registry *ar = this->acceptor_registry ();
   // get a reference to the acceptor_registry!
 
-  if (ar->open (this) == -1)
-    // Need to return an error somehow!!  Maybe set do_exit?
-    return -1;
+  (void) ar->open (this, ACE_TRY_ENV);
+  // Need to return an error somehow!!  Maybe set do_exit?
+
+  ACE_CHECK_RETURN (-1);
 
   this->open_called_ = 1;
 
