@@ -209,10 +209,12 @@ IIOP_ORB::string_to_object (const char *str,
   CORBA::Object_ptr obj = 0;
 
   // Use the prefix code to choose which destringify algorithm to use.
+  const size_t iiop_prefix_len =
+    ACE_OS::strlen (TAO_IIOP_Profile::prefix ());
   if (ACE_OS::strncmp (str,
                        TAO_IIOP_Profile::prefix (),
-                       sizeof TAO_IIOP_Profile::prefix () - 1) == 0)
-    obj = iiop_string_to_object (str + sizeof TAO_IIOP_Profile::prefix () - 1, env);
+                       iiop_prefix_len) == 0)
+    obj = iiop_string_to_object (str + iiop_prefix_len, env);
 
   else if (ACE_OS::strncmp (str,
                             ior_prefix,
