@@ -446,7 +446,7 @@ CORBA_DomainManagerList_var::operator CORBA_DomainManagerList &() const// cast
   return *this->ptr_;
 }
 
-ACE_INLINE TAO_Object_Manager<CORBA_DomainManager> 
+ACE_INLINE TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var> 
 CORBA_DomainManagerList_var::operator[] (CORBA::ULong slot)
 {
   return this->ptr_->operator[] (slot);
@@ -543,7 +543,7 @@ CORBA_DomainManagerList_out::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE TAO_Object_Manager<CORBA_DomainManager> 
+ACE_INLINE TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var> 
 CORBA_DomainManagerList_out::operator[] (CORBA::ULong slot)
 {
   return this->ptr_->operator[] (slot);

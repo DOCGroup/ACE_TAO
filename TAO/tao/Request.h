@@ -248,7 +248,7 @@ private:
 };
 
 // Make sure you instantiate this in Request.cpp
-class CORBA_ORB_RequestSeq : public TAO_Unbounded_Pseudo_Sequence<CORBA_Request>
+class CORBA_ORB_RequestSeq : public TAO_Unbounded_Pseudo_Sequence<CORBA_Request,CORBA_Request_var>
 {
 public:
 // Helpful with template programming.

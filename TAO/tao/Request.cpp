@@ -156,13 +156,13 @@ CORBA_Request::poll_response (CORBA::Environment &ACE_TRY_ENV)
 
 //  constructor.
 CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (CORBA::ULong max)
-  : TAO_Unbounded_Pseudo_Sequence <CORBA_Request> (max)
+  : TAO_Unbounded_Pseudo_Sequence <CORBA_Request,CORBA_Request_var> (max)
 {
   // no-op
 }
 
 CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (const CORBA_ORB_RequestSeq &rhs)
-  : TAO_Unbounded_Pseudo_Sequence <CORBA_Request> (rhs)
+  : TAO_Unbounded_Pseudo_Sequence <CORBA_Request,CORBA_Request_var> (rhs)
 {
   // no-op
 }
@@ -171,7 +171,7 @@ CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (CORBA::ULong max,
                                             CORBA::ULong length,
                                             CORBA_Request **data,
                                             CORBA::Boolean release)
-  : TAO_Unbounded_Pseudo_Sequence <CORBA_Request> (max,
+  : TAO_Unbounded_Pseudo_Sequence <CORBA_Request,CORBA_Request_var> (max,
                                                    length,
                                                    data,
                                                    release)
@@ -400,11 +400,11 @@ CORBA_ORB_RequestSeq::replace (CORBA::ULong max,
 */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class TAO_Unbounded_Pseudo_Sequence<CORBA_Request>;
-template class TAO_Object_Manager<CORBA_Request>;
+template class TAO_Unbounded_Pseudo_Sequence<CORBA_Request,CORBA_Request_var>;
+template class TAO_Object_Manager<CORBA_Request,CORBA_Request_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Unbounded_Pseudo_Sequence<CORBA_Request>
-#pragma instantiate TAO_Object_Manager<CORBA_Request>
+#pragma instantiate TAO_Unbounded_Pseudo_Sequence<CORBA_Request,CORBA_Request_var>
+#pragma instantiate TAO_Object_Manager<CORBA_Request,CORBA_Request_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
