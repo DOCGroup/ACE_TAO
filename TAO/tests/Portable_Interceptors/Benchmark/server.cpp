@@ -4,7 +4,11 @@
 #include "Server_ORBInitializer.h"
 #include "Interceptor_Type.h"
 #include "interceptors.h"
+
+#include "tao/ORBInitializer_Registry.h"
+
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Benchmark, server, "$Id$")
 

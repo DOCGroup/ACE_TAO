@@ -16,6 +16,7 @@
 #define ACE_CONDITION_T_H
 #include /**/ "ace/pre.h"
 
+#include "ace/OS_NS_Thread.h"
 #include "ace/Lock.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -23,6 +24,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_THREADS) /* ACE platform supports some form of threading. */
+
+class ACE_Time_Value;
 
 /**
  * @class ACE_Condition

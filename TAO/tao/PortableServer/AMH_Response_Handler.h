@@ -19,7 +19,9 @@
 #include "tao/Service_Context.h"
 #include "tao/CDR.h"
 #include "tao/LocalObject.h"
-#include "ace/Synch_T.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -165,7 +167,7 @@ private:
   //    The lighter-weight form (using a state variable
 
   /// Mutex to ensure the AMH-RH method call is thread-safe.
-  TAO_SYNCH_MUTEX mutex_;
+  ACE_SYNCH_MUTEX mutex_;
 };
 
 #endif /* TAO_AMH_RESPONSE_HANDLER_H */

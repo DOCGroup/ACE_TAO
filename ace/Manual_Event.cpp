@@ -1,5 +1,7 @@
 // $Id$
 
+#include "ace/Manual_Event.h"
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Manual_Event.inl"
 #endif /* __ACE_INLINE__ */
@@ -41,14 +43,3 @@ ACE_Manual_Event::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Auto_Event::ACE_Auto_Event (int initial_state,
-                                int type,
-                                const char *name,
-                                void *arg)
-  : ACE_Event (0,
-               initial_state,
-               type,
-               ACE_TEXT_CHAR_TO_TCHAR (name),
-               arg)
-{
-}

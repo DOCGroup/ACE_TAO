@@ -18,6 +18,8 @@
 
 #include "testS.h"
 
+#include "tao/PortableInterceptorC.h"
+
 /**
  * @class test_i
  *

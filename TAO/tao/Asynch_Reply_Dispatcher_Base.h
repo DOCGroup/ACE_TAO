@@ -12,47 +12,78 @@
 
 #ifndef TAO_ASYNCH_REPLY_DISPATCHER_BASE_H
 #define TAO_ASYNCH_REPLY_DISPATCHER_BASE_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "tao/Reply_Dispatcher.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Transport.h"
-#include "tao/Reply_Dispatcher.h"
+#include "tao/IOP_IORC.h"
 
 class TAO_Pluggable_Reply_Params;
 class TAO_ORB_Core ;
+class ACE_Time_Value;
+class TAO_Transport;
+class ACE_Lock;
 
-/// Base class for TAO_Asynch_Reply_Dispatcher and
-/// TAO_DII_Deferred_Reply_Dispatcher
-class TAO_Export TAO_Asynch_Reply_Dispatcher_Base : public TAO_Reply_Dispatcher
+/**
+ * @class TAO_Asynch_Reply_Dispatcher_Base
+ *
+ * @brief Base class for TAO_Asynch_Reply_Dispatcher and
+ *  TAO_DII_Deferred_Reply_Dispatcher
+ */
+
+class TAO_Export TAO_Asynch_Reply_Dispatcher_Base
+  : public TAO_Reply_Dispatcher
 {
 public:
   /// Default constructor.
   TAO_Asynch_Reply_Dispatcher_Base (TAO_ORB_Core *orb_core);
 
-  /// Destructor.
-  virtual ~TAO_Asynch_Reply_Dispatcher_Base (void);
-
   /// Sets the transport for this invocation.
   void transport (TAO_Transport *t);
 
   // = The Reply Dispatcher methods
-  virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
+  virtual int dispatch_reply (TAO_Pluggable_Reply_Params &) = 0;
 
-  // virtual TAO_GIOP_Message_State *message_state (void);
+  virtual void connection_closed (void) = 0;
 
-  virtual void connection_closed (void);
-
-    /// Inform that the reply timed out
-  virtual void reply_timed_out (void);
+  /// Inform that the reply timed out
+  virtual void reply_timed_out (void) = 0;
 
   /// Install the timeout handler
-  virtual long schedule_timer (CORBA::ULong request_id,
-                               const ACE_Time_Value &max_wait_time);
+  virtual long schedule_timer (CORBA::ULong ,
+                               const ACE_Time_Value &
+                               ACE_ENV_ARG_DECL)= 0;
+
+  /// Mutators for refcount
+  long incr_refcount (void);
+  long decr_refcount (void);
+
+  /// A helper method that can be used by the sublcasses
+  /**
+   * The semantics of this helper method needs careful attention. A
+   * call to this method will do the following
+   *
+   *   - If the reply has already been dispatched, the return value
+   *     will be false to signify not to try.
+   *
+   *   - If the reply has not been dispatched, this method will set
+   *     the flag to be true and return a true value to signify that
+   *     the caller thread can go ahead and dispatch reply.
+   *
+   * Why are we clumping everything in one method. Answer is we need
+   * atomicity?
+   */
+  bool try_dispatch_reply (void);
+
+protected:
+
+  /// Destructor.
+  virtual ~TAO_Asynch_Reply_Dispatcher_Base (void);
 
 protected:
   /// The service context list.
@@ -67,7 +98,7 @@ protected:
   /// The buffer that is used to initialise the data block
   char buf_[ACE_CDR::DEFAULT_BUFSIZE];
 
-  /// datablock that is created on the stack to initialise the CDR
+  /// Datablock that is created on the stack to initialise the CDR
   /// stream underneath.
   ACE_Data_Block db_;
 
@@ -77,7 +108,43 @@ protected:
 
   /// This invocation is using this transport, may change...
   TAO_Transport *transport_;
+
+private:
+  /// Lock to protect recount and <is_reply_dispatched_> flag.
+  ACE_Lock *lock_;
+
+  /// Refcount paraphernalia for this class
+  long refcount_;
+
+  /// Has the reply been dispatched?
+  bool is_reply_dispatched_;
 };
+
+namespace TAO
+{
+  /**
+   * @class ARDB_Refcount_Functor
+   *
+   * @brief Functor for refcounting of Asynch_Reply_Dispatcher_Base
+   *
+   * This is used to safely handle the destruction of
+   * Asynch_Reply_Dispatcher_Base objects which are created on the
+   * heap. We cannot use auto_ptr <> since it calls delete on the
+   * pointer, and calling delete on Asynch_Reply_Dispatcher_Base *
+   * will not work. Hence this functor will be used with Auto_Functor
+   * class to handle the memory safely.
+   *
+   * @todo Ideally, this class can be a generic class. But that
+   * requires quite a bit of cleanup within TAO to be more useful.
+   */
+  class TAO_Export ARDB_Refcount_Functor
+  {
+  public:
+    void operator() (TAO_Asynch_Reply_Dispatcher_Base *ardb)
+      ACE_THROW_SPEC (());
+  };
+
+}
 
 #if defined (__ACE_INLINE__)
 #include "tao/Asynch_Reply_Dispatcher_Base.i"

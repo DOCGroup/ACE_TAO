@@ -30,6 +30,7 @@
 //## end module.includes
 
 #include "old_event_export.h"
+#include "ace/OS_NS_sys_select.h"
 
 class TAO_RTOLDEvent_Export ACE_ES_Fast_Reactor : public ACE_ES_FAST_REACTOR_BASE
 {

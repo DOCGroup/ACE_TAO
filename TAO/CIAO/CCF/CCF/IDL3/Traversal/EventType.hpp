@@ -5,8 +5,8 @@
 #ifndef CCF_IDL3_TRAVERSAL_EVENT_TYPE_HPP
 #define CCF_IDL3_TRAVERSAL_EVENT_TYPE_HPP
 
-#include "CCF/IDL2/Traversal/Elements.hpp"
-#include "CCF/IDL3/SyntaxTree/EventType.hpp"
+#include "CCF/IDL3/SemanticGraph/EventType.hpp"
+#include "CCF/IDL3/Traversal/Elements.hpp"
 
 namespace CCF
 {
@@ -14,40 +14,71 @@ namespace CCF
   {
     namespace Traversal
     {
-      //
-      //
-      //
-      struct ConcreteEventTypeDef : IDL2::Traversal::ScopeTraverser
+      template <typename T>
+      struct EventTypeTemplate : ScopeTemplate<T>
       {
-        typedef
-        SyntaxTree::ConcreteEventTypeDefPtr
-        NodePtr;
-
-        ConcreteEventTypeDef ()
-        {
-          map (typeid (SyntaxTree::ConcreteEventTypeDef), this);
-        }
+        virtual void
+        traverse (T&);
 
         virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (n->dynamic_type<SyntaxTree::ConcreteEventTypeDef> ());
-        }
+        pre (T&);
 
         virtual void
-        traverse (NodePtr const&);
+        name (T&);
 
         virtual void
-        pre (NodePtr const&);
+        inherits (T&, EdgeDispatcherBase&);
 
         virtual void
-        scope (NodePtr const&);
+        inherits (T&);
 
         virtual void
-        post (NodePtr const&);
+        inherits_pre (T&);
+
+        virtual void
+        inherits_post (T&);
+
+        virtual void
+        inherits_none (T&);
+        
+        virtual void
+        supports (T&, EdgeDispatcherBase&);
+
+        virtual void
+        supports (T&);
+
+        virtual void
+        supports_pre (T&);
+
+        virtual void
+        supports_post (T&);
+
+        virtual void
+        supports_none (T&);
+        
+        virtual void
+        post (T&);
+
+        virtual void
+        comma (T&);
       };
+
+
+      typedef
+      EventTypeTemplate<SemanticGraph::EventType>
+      EventType;
+
+      typedef
+      EventTypeTemplate<SemanticGraph::AbstractEventType>
+      AbstractEventType;
+
+      typedef
+      EventTypeTemplate<SemanticGraph::ConcreteEventType>
+      ConcreteEventType;
     }
   }
 }
+
+#include "CCF/IDL3/Traversal/EventType.tpp"
 
 #endif  // CCF_IDL3_TRAVERSAL_EVENT_TYPE_HPP

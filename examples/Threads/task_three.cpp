@@ -11,10 +11,16 @@
 //      ACE_LOG_MSG->msg_ostream (out_stream);
 //    }
 
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_main.h"
 #include "ace/Reactor.h"
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
+#include "ace/Signal.h"
 
 ACE_RCSID(Threads, task_three, "$Id$")
 

@@ -6,7 +6,8 @@
 #define CCF_IDL2_TRAVERSAL_MODULE_HPP
 
 #include "CCF/IDL2/Traversal/Elements.hpp"
-#include "CCF/IDL2/SyntaxTree/Module.hpp"
+
+#include "CCF/IDL2/SemanticGraph/Module.hpp"
 
 namespace CCF
 {
@@ -14,37 +15,31 @@ namespace CCF
   {
     namespace Traversal
     {
-      //
-      //
-      //
-      struct Module : ScopeTraverser
+      struct Module : ScopeTemplate<SemanticGraph::Module>
       {
-        typedef
-        SyntaxTree::ModulePtr
-        NodePtr;
-
-        Module ()
+        virtual void
+        traverse (Type& m)
         {
-          map (typeid (SyntaxTree::Module), this);
+          pre (m);
+          name (m);
+          names (m);
+          post (m);
         }
 
         virtual void
-        traverse (SyntaxTree::NodePtr const& n)
+        pre (Type&)
         {
-          traverse (n->dynamic_type<SyntaxTree::Module> ());
         }
 
         virtual void
-        traverse (NodePtr const&);
+        name (Type&)
+        {
+        }
 
         virtual void
-        pre (NodePtr const&);
-
-        virtual void
-        scope (NodePtr const&);
-
-        virtual void
-        post (NodePtr const&);
+        post (Type&)
+        {
+        }
       };
     }
   }

@@ -7,6 +7,7 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
+#include "ace/Signal.h"
 
 ACE_RCSID(Misc, test_signals_1, "$Id$")
 

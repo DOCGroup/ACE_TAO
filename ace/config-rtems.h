@@ -73,6 +73,7 @@
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_PROCESS_ENUM
 #define ACE_HAS_REENTRANT_FUNCTIONS
+#define ACE_HAS_SIGACTION_CONSTP2
 #define ACE_HAS_SIGINFO_T
 #define ACE_HAS_SIGSUSPEND
 #define ACE_HAS_SSIZE_T
@@ -95,8 +96,6 @@
 #define ACE_LACKS_MPROTECT
 #define ACE_LACKS_MSYNC
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
-/* #define ACE_LACKS_POSIX_PROTOTYPES */
-  // ... for System V functions like shared memory and message queues
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 #define ACE_LACKS_READDIR_R
 #define ACE_LACKS_READLINK
@@ -111,8 +110,6 @@
 #define ACE_LACKS_SETREUID_PROTOTYPE
 #define ACE_LACKS_SETREGID
 #define ACE_LACKS_SETREGID_PROTOTYPE
-#define ACE_LACKS_SOME_POSIX_PROTOTYPES
-  // ... for System V functions like shared memory and message queues
 #define ACE_LACKS_NATIVE_STRPTIME
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SI_ADDR

@@ -11,6 +11,8 @@
 
 #include "Adapter_Activator.h"
 
+#include "ace/Log_Msg.h"
+
 ImR_Adapter_Activator::ImR_Adapter_Activator (
   PortableServer::ServantLocator_ptr servant
 )  

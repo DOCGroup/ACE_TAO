@@ -15,6 +15,12 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
@@ -26,6 +32,7 @@
 #define _TAO_IDL_ORIG_OBJECTIDLISTC_H_
 
 #include /**/ "ace/pre.h"
+
 #include "tao/Sequence.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -61,7 +68,7 @@
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
 
-TAO_NAMESPACE  CORBA
+namespace CORBA
 {
 
   // TAO_IDL - Generated from
@@ -77,7 +84,10 @@ TAO_NAMESPACE  CORBA
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ORB_ObjectId;
 
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:75
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ch.cpp:101
+
+#if !defined (_CORBA_ORB_OBJECTIDLIST_CH_)
+#define _CORBA_ORB_OBJECTIDLIST_CH_
 
   class ORB_ObjectIdList;
 
@@ -106,7 +116,7 @@ TAO_NAMESPACE  CORBA
     ORB_ObjectIdList (
         CORBA::ULong max,
         CORBA::ULong length,
-        char * *buffer,
+        char ** buffer,
         CORBA::Boolean release = 0
       );
     ORB_ObjectIdList (const ORB_ObjectIdList &);
@@ -115,16 +125,25 @@ TAO_NAMESPACE  CORBA
     typedef ORB_ObjectIdList_var _var_type;
   };
 
+#endif /* end #if !defined */
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
 
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ORB_ObjectIdList;
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:66
 
+} // module CORBA
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_traits.cpp:48
+
+// Traits specializations.
+namespace TAO
+{
 }
-TAO_NAMESPACE_CLOSE // module CORBA
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
@@ -132,7 +151,7 @@ TAO_NAMESPACE_CLOSE // module CORBA
 #ifndef __ACE_INLINE__
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:57
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ch.cpp:70
 
 #if !defined _TAO_CDR_OP_CORBA_ORB_ObjectIdList_H_
 #define _TAO_CDR_OP_CORBA_ORB_ObjectIdList_H_
@@ -154,7 +173,7 @@ TAO_Export CORBA::Boolean operator>> (
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1018
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:969
 
 #if defined (__ACE_INLINE__)
 #include "ObjectIdListC.i"
@@ -170,3 +189,4 @@ TAO_Export CORBA::Boolean operator>> (
 
 #include /**/ "ace/post.h"
 #endif /* ifndef */
+

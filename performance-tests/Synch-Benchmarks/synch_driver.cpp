@@ -5,7 +5,6 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Service_Repository.h"
-#include "ace/Synch.h"
 #include "Synch_Lib/Benchmark_Base.h"
 
 ACE_RCSID(Synch_Benchmarks, synch_driver, "$Id$")

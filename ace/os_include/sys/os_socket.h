@@ -141,12 +141,80 @@ extern "C"
 #  define ACE_PROTOCOL_FAMILY_INET PF_INET
 #endif /* ACE_HAS_IPV6 */
 
+#if defined (ACE_HAS_SOCKLEN_T)
+#  if defined (__hpux)
+  /*
+  ** HP-UX supplies the socklen_t type unless some feature set less than
+  ** _XOPEN_SOURCE_EXTENDED is specifically requested. However, it only
+  ** actually uses the socklen_t type in supplied socket functions if
+  ** _XOPEN_SOURCE_EXTENDED is specifically requested. So, for example,
+  ** the compile options ACE usually uses (includes -mt) cause _HPUX_SOURCE
+  ** to be set, which sets _INCLUDE_XOPEN_SOURCE_EXTENDED (causing socklen_t
+  ** to be defined) but _not_ _XOPEN_SOURCE_EXTENDED (causing socket functions
+  ** to use int, not socklen_t). React to this situation here...
+  */
+#    if defined (_XOPEN_SOURCE_EXTENDED)
+typedef socklen_t ACE_SOCKET_LEN;
+#    else
+typedef int ACE_SOCKET_LEN;
+#    endif /* _XOPEN_SOURCE_EXTENDED */
+#  else
+typedef socklen_t ACE_SOCKET_LEN;
+#  endif /* __hpux */
+#elif defined (ACE_HAS_SIZET_SOCKET_LEN)
+typedef size_t ACE_SOCKET_LEN;
+#else
+typedef int ACE_SOCKET_LEN;
+#endif /* ACE_HAS_SIZET_SOCKET_LEN */
+
 #if defined (ACE_HAS_LKSCTP)
 extern "C"
 {
 #include /**/ <netinet/sctp.h>
 }
 #endif /* ACE_HAS_LKSCTP */
+
+# if defined (ACE_LACKS_TIMEDWAIT_PROTOTYPES)
+
+  ssize_t recv_timedwait (ACE_HANDLE handle,
+                          char *buf,
+                          int len,
+                          int flags,
+                          struct timespec *timeout);
+
+  ssize_t recvmsg_timedwait (ACE_HANDLE handle,
+                             struct msghdr *msg,
+                             int flags,
+                             struct timespec *timeout);
+
+  ssize_t recvfrom_timedwait (ACE_HANDLE handle,
+                              char *buf,
+                              int len,
+                              int flags,
+                              struct sockaddr *addr,
+                              int *addrlen,
+                              struct timespec *timeout);
+
+  ssize_t send_timedwait (ACE_HANDLE handle,
+                          const char *buf,
+                          int len,
+                          int flags,
+                          struct timespec *timeout);
+
+  ssize_t sendmsg_timedwait (ACE_HANDLE handle,
+                             ACE_SENDMSG_TYPE *msg,
+                             int flags,
+                             struct timespec *timeout);
+
+  ssize_t sendto_timedwait (ACE_HANDLE handle,
+                            const char *buf,
+                            int len,
+                            int flags,
+                            const struct sockaddr *addr,
+                            int addrlen,
+                            struct timespec *timeout);
+
+# endif /* ACE_LACKS_TIMEDWAIT_PROTOTYPES */
 
 #ifdef __cplusplus
 }

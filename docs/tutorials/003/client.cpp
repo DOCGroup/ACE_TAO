@@ -4,6 +4,8 @@
   ACE_SOCK_Connector.  */
 #include "ace/Log_Msg.h"
 #include "ace/SOCK_Connector.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdio.h"
 
 /* Unlike the previous two tutorials, we're going to allow the user to
   provide command line options this time.  Still, we need defaults in

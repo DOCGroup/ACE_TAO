@@ -16,7 +16,7 @@
 
 #ifndef CIAO_RTCONFIG_MANAGER_H
 #define CIAO_RTCONFIG_MANAGER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -25,8 +25,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/RTCORBA/RTCORBA.h"
-#include "../XML_Helpers/RTConfigurationC.h"
+#include "tools/XML_Helpers/RTConfigurationC.h"
 #include "ace/Null_Mutex.h"
+#include "ace/Functor.h"
+#include "ace/Hash_Map_Manager_T.h"
 
 namespace CIAO
 {
@@ -157,5 +159,5 @@ namespace CIAO
 # include "RTConfig_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* CIAO_RTCONFIG_MANAGER_H */

@@ -21,6 +21,7 @@
 #include "rtportableserver_export.h"
 
 #include "tao/PortableServer/Object_Adapter.h"
+#include "tao/orbconf.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
@@ -46,4 +47,5 @@ ACE_FACTORY_DECLARE (TAO_RTPortableServer, TAO_RT_Object_Adapter_Factory)
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_RT_OBJECT_ADAPTER_FACTORY_H */

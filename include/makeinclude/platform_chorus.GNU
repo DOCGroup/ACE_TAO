@@ -69,7 +69,10 @@ endif
 ifeq ($(exceptions),1)
 else  # ! exceptions
   CCFLAGS += -fno-exceptions
-endif # ! exceptions     
+endif # ! exceptions
+
+# Chorus doesn't have rwho
+rwho = 0
 
 #DCFLAGS         += -gstabs+
 INCLDIRS        += -I$(INC_DIR)/posix                   \
@@ -103,8 +106,8 @@ POSTLINK= -r $(CLASSIXDIR)/lib/CC/libC.a $(CLASSIXDIR)/lib/classix/libcx.u.a; \
         $(RM) $@.ct.s;					\
         $(LD) $(LDOPTIONS) -e _start -o $@ $(MERGEDIR)/lib/crt/crth.u.o $(MERGEDIR)/lib/crt/crt0.o $(MERGEDIR)/lib/crt/crti.o $@.xp.o $@.ct.o $(MERGEDIR)/lib/crt/crtn.o -dn -T $(MERGEDIR)/src/act/slots/act_u.ld;	\
         $(RM) $@.xp.o;					\
-        $(RM) $@.ct.o   
-	
+        $(RM) $@.ct.o
+
 
 OCFLAGS         += -O
 PIC             = -fPIC

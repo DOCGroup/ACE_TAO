@@ -18,10 +18,13 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/Synch.h"
+#include "ace/Thread_Semaphore.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_time.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(tests, Semaphore_Test, "$Id$")
 
@@ -41,7 +44,7 @@ static int test_result = 0;
 
 // Semaphore used in the tests.  Start it "locked" (i.e., its initial
 // count is 0).
-static ACE_Thread_Semaphore s (0);
+static ACE_Thread_Semaphore s ((unsigned int) 0);
 
 // Default number of iterations.
 static int n_iterations = 10;

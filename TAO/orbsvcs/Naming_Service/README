@@ -20,6 +20,7 @@ The following describes how to run the TAO Naming Service.
                          [-f persitence_file_name]
                          [-b base_address]
 			 [-m (1=enable multicast responses,0=disable(default)]
+			 [-z time]
 
 2. Optional Command-line Arguments
 
@@ -68,6 +69,13 @@ The following describes how to run the TAO Naming Service.
 		behavior is for the Naming Service to NOT RESPOND to
 		such multicast queries (use the Interoperable Naming
 		Service bootstrap options instead).
+
+        -z time
+                A relative round trip timeout value (in seconds) that
+                the service should wait for when trying to progress an
+                operation through a federated naming context before
+                timing out and throwing a 'Cannot proceed' exception
+                to the client. If no value is set this will never occur.
 
 3. Environment Variables
 

@@ -1,24 +1,12 @@
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     ValueBase.cpp
-//
-// = AUTHOR
-//     Torsten Kuepper <kuepper2@lfa.uni-wuppertal.de>
-//
-// ============================================================================
-
 #include "ValueBase.h"
-#include "tao/CDR.h"
+#include "ValueFactory.h"
+
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
-#include "ValueFactory.h"
 #include "tao/debug.h"
+#include "tao/Typecode.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ValueBase.inl"
@@ -28,15 +16,8 @@ ACE_RCSID (tao,
            ValueBase,
            "$Id$")
 
-namespace CORBA
-{
-  // These valuetype-related type codes are set to 0 here for linking,
-  // then initialized for real in the Value_Adapter_Impl constructor,
-  // which is called at library load time.
-  TypeCode_ptr _tc_ValueBase = TypeCode::_nil ();
-  TypeCode_ptr _tc_Visibility = TypeCode::_nil ();
-  TypeCode_ptr _tc_ValueModifier = TypeCode::_nil ();
-}
+
+
 
 // Static operations in namespace CORBA.
 
@@ -56,20 +37,6 @@ CORBA::remove_ref (CORBA::ValueBase *val)
     {
       val->_remove_ref ();
     }
-}
-
-// ===========================================================
-
-void
-CORBA::tao_ValueBase_life::tao_add_ref (ValueBase *p)
-{
-  CORBA::add_ref (p);
-}
-
-void
-CORBA::tao_ValueBase_life::tao_remove_ref (ValueBase *p)
-{
-  CORBA::remove_ref (p);
 }
 
 // ***********************************************************************
@@ -242,7 +209,7 @@ CORBA::Boolean
 CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
                                       CORBA::ValueFactory &factory,
                                       CORBA::ValueBase *&valuetype,
-                                      const char * const /* repo_id */)
+                                      const char * const repo_id)
 { // %! dont leak on error case !
   // %! postconditions
   CORBA::Boolean retval = 1;
@@ -290,14 +257,6 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
   //    from the <value-tag>, then use the repository id parameter
   //    (it _must_ be right).
 
-  CORBA::String_var repo_id_stream;
-
-  // It would be more efficient not to copy the string %!)
-  if (strm.read_string (repo_id_stream.inout ()) == 0)
-    {
-      return 0;
-    }
-
   TAO_ORB_Core *orb_core = strm.orb_core ();
 
   if (orb_core == 0)
@@ -312,7 +271,22 @@ CORBA::ValueBase::_tao_unmarshal_pre (TAO_InputCDR &strm,
         }
     }
 
-  factory = orb_core->orb ()->lookup_value_factory (repo_id_stream.in ());
+  if (TAO_OBV_GIOP_Flags::has_no_type_info (value_tag))
+  {
+     factory = orb_core->orb ()->lookup_value_factory (repo_id);
+  }
+  else
+  {
+     CORBA::String_var repo_id_stream;
+
+     // It would be more efficient not to copy the string %!)
+     if (strm.read_string (repo_id_stream.inout ()) == 0)
+     {
+        return 0;
+     }
+
+     factory = orb_core->orb ()->lookup_value_factory (repo_id_stream.in ());
+  }
 
   if (factory == 0) // %! except.!
     {
@@ -345,6 +319,101 @@ CORBA::ValueBase::_tao_unmarshal_post (TAO_InputCDR &)
   return retval;
 }
 
+
+// ================== Typecode initializations ==================
+static const CORBA::Long _oc_CORBA_ValueBase[] =
+  {
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    32,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f5661),
+    ACE_NTOHL (0x6c756542),
+    ACE_NTOHL (0x6173653a),
+    ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ValueBase:1.0
+    10,
+    ACE_NTOHL (0x56616c75),
+    ACE_NTOHL (0x65426173),
+    ACE_NTOHL (0x65000000),  // name = ValueBase
+    0, // value modifier
+    CORBA::tk_null, // no stateful base valuetype
+    0, // member count
+  };
+
+
+static const CORBA::Long _oc_CORBA_Visibility[] =
+  {
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    33,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f5669),
+    ACE_NTOHL (0x73696269),
+    ACE_NTOHL (0x6c697479),
+    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Visibility:1.0
+    11,
+    ACE_NTOHL (0x56697369),
+    ACE_NTOHL (0x62696c69),
+    ACE_NTOHL (0x74790000),  // name = Visibility
+    CORBA::tk_short,
+  };
+
+
+static const CORBA::Long _oc_CORBA_ValueModifier[] =
+  {
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    36,
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x434f5242),
+    ACE_NTOHL (0x412f5661),
+    ACE_NTOHL (0x6c75654d),
+    ACE_NTOHL (0x6f646966),
+    ACE_NTOHL (0x6965723a),
+    ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ValueModifier:1.0
+    14,
+    ACE_NTOHL (0x56616c75),
+    ACE_NTOHL (0x654d6f64),
+    ACE_NTOHL (0x69666965),
+    ACE_NTOHL (0x72000000),  // name = ValueModifier
+    CORBA::tk_short,
+  };
+
+namespace CORBA
+{
+  static TypeCode _tao_valuetype_tk_val_tmp (CORBA::tk_value,
+                   sizeof (_oc_CORBA_ValueBase),
+                   (char *) &_oc_CORBA_ValueBase,
+                   0,
+                   sizeof (CORBA::ValueBase));
+
+
+  TypeCode_ptr _tc_ValueBase = &_tao_valuetype_tk_val_tmp;
+
+  static TypeCode _tao_valuetype_tk_vis_tmp (CORBA::tk_alias,
+                   sizeof (_oc_CORBA_Visibility),
+                   (char *) &_oc_CORBA_Visibility,
+                   0,
+                   sizeof (CORBA::Visibility));
+
+  TypeCode_ptr _tc_Visibility =
+  &_tao_valuetype_tk_vis_tmp;
+
+  static TypeCode _tao_valuetype_tk_vm_tmp (CORBA::tk_alias,
+                   sizeof (_oc_CORBA_ValueModifier),
+                   (char *) &_oc_CORBA_ValueModifier,
+                   0,
+                   sizeof (CORBA::ValueModifier));
+
+  TypeCode_ptr _tc_ValueModifier =
+  &_tao_valuetype_tk_vm_tmp;
+}
 
 // member functions for CORBA::DefaultValueRefCountBase ============
 
@@ -382,8 +451,8 @@ CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase (void)
 void
 CORBA::DefaultValueRefCountBase::_tao_add_ref (void)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX, 
-             guard, 
+  ACE_GUARD (TAO_SYNCH_MUTEX,
+             guard,
              this->_tao_reference_count_lock_);
 
   ++this->_tao_reference_count_;
@@ -393,8 +462,8 @@ void
 CORBA::DefaultValueRefCountBase::_tao_remove_ref (void)
 {
   {
-    ACE_GUARD (TAO_SYNCH_MUTEX, 
-               guard, 
+    ACE_GUARD (TAO_SYNCH_MUTEX,
+               guard,
                this->_tao_reference_count_lock_);
 
     --this->_tao_reference_count_;
@@ -456,3 +525,27 @@ operator>> (TAO_InputCDR &strm,
                                            _tao_valuetype);
 }
 
+// =============== Template Specializations =====================
+namespace TAO
+{
+  void
+  Value_Traits<CORBA::ValueBase>::tao_add_ref (
+      CORBA::ValueBase *p)
+  {
+    CORBA::add_ref (p);
+  }
+
+  void
+  Value_Traits<CORBA::ValueBase>::tao_remove_ref (
+      CORBA::ValueBase * p)
+  {
+    CORBA::remove_ref (p);
+  }
+
+  void
+  Value_Traits<CORBA::ValueBase>::tao_release (
+      CORBA::ValueBase * p)
+  {
+    CORBA::remove_ref (p);
+  }
+}

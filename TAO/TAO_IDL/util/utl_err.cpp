@@ -77,16 +77,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_union.h"
 #include "ast_union_label.h"
 #include "idl_defines.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
 ACE_RCSID (util, 
            utl_err, 
            "$Id$")
-
-#if defined (ACE_GCC_HONORS_STD_NAMESPACE) \
-             && (ACE_GCC_HONORS_STD_NAMESPACE == 1)
-using std::cerr;
-#endif
 
 // Convert an error code into a const char *
 static const char *

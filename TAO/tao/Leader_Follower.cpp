@@ -1,14 +1,12 @@
 // $Id$
 
 #include "tao/Leader_Follower.h"
-#include "tao/Resource_Factory.h"
-#include "tao/LF_Follower.h"
 #include "tao/LF_Follower_Auto_Ptr.h"
 #include "tao/LF_Follower_Auto_Adder.h"
-#include "tao/LF_Event.h"
 #include "tao/LF_Event_Binder.h"
 #include "tao/debug.h"
 #include "tao/Transport.h"
+#include "ace/OS_NS_sys_time.h"
 
 #include "ace/Reactor.h"
 
@@ -16,7 +14,9 @@
 # include "tao/Leader_Follower.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, Leader_Follower, "$Id$")
+ACE_RCSID (tao, 
+           Leader_Follower, 
+           "$Id$")
 
 TAO_Leader_Follower::~TAO_Leader_Follower (void)
 {

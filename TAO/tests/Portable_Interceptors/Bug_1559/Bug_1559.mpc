@@ -1,5 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Server): taoserver {
-  libpaths += ../../../../ace,../../../tao,../../../tao/PortableServer,../../../tao/Valuetype,../../../tao/ObjRefTemplate,../../../tao/IORInterceptor
   requires += interceptors
   Source_Files {
     test_i.cpp
@@ -10,7 +12,6 @@ project(*Server): taoserver {
 }
 
 project(*Client): taoclient {
-  libpaths += ../../../../ace,../../../tao,../../../tao/PortableServer,../../../tao/Valuetype,../../../tao/ObjRefTemplate,../../../tao/IORInterceptor
   requires += interceptors
   Source_Files {
     testC.cpp

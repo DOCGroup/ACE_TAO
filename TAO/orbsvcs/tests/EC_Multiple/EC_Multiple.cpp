@@ -20,6 +20,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
+#include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_strings.h"
 
 #if defined (sun)
 # include <sys/lwp.h> /* for _lwp_self */

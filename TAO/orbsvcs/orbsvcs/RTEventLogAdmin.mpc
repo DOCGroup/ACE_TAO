@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(RTEventLogAdmin) : orbsvcslib, core, etcl, trading, iortable, naming, \
     svc_utils, dynamicany, rtevent, rtsched, portableserver, dslogadmin {
   sharedname   = TAO_RTEventLogAdmin

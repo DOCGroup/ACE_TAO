@@ -24,14 +24,21 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
 #include "ace/SString.h"
+
+#include "tao/Basic_Types.h"
 
 typedef unsigned short TAO_Literal_Type;
 #define TAO_UNKNOWN 999
 
 class TAO_ETCL_Constraint_Visitor;
 class TAO_String_Manager;
+
+namespace CORBA
+{
+  class Any;
+  typedef Any *Any_ptr;
+}
 
 class TAO_ETCL_Export TAO_ETCL_Constraint
 {

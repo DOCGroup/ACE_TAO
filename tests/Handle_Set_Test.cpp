@@ -19,6 +19,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Handle_Set.h"
 #include "ace/Containers.h"

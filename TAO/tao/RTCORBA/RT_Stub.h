@@ -16,12 +16,14 @@
 #define TAO_RT_STUB_H_
 
 #include /**/ "ace/pre.h"
-#include "tao/corbafwd.h"
+
+#include "tao/orbconf.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/Stub.h"
 #include "rtcorba_export.h"
+
+#include "tao/Stub.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -156,4 +158,5 @@ private:
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_RT_STUB_FACTORY_H_ */

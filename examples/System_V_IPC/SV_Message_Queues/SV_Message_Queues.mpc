@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*MQ Client) : aceexe {
   exename = mqclient
   Source_Files {

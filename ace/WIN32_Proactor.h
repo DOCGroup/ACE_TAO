@@ -27,7 +27,6 @@
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
 // WIN32 implementation of the Proactor.
 
-#include "ace/OS.h"
 #include "ace/WIN32_Asynch_IO.h"
 #include "ace/Event_Handler.h"
 

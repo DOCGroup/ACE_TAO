@@ -25,7 +25,8 @@
 #include "ace/Functor.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Containers_T.h"
-#include "ace/Synch.h"
+#include "ace/Null_Mutex.h"
+
 
 typedef ACE_Hash_Map_Entry<ACEXML_String,
                            ACEXML_String> ACEXML_NS_CONTEXT_ENTRY;

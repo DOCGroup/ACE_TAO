@@ -25,7 +25,8 @@
 
 #if __GNUC__ > 2  ||  ( __GNUC__ == 2 && __GNUC_MINOR__ >= 95)
 # define ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION
-#endif 
+# define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+#endif
 
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1
 # define ACE_USES_OLD_IOSTREAMS
@@ -47,12 +48,6 @@
     // used with older versions.
 #   define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 # endif /* __GNUC__ >= 2.91 */
-
-# if (defined (VXWORKS) && __GNUC__ == 2 && __GNUC_MINOR__ == 96)
-// This is for inofficial(!) gcc2.96 shipped with Tornado2.1.0 for
-// Hitachi SuperH platform.
-# define ACE_LACKS_AUTO_PTR
-# endif /* (defined (VXWORKS) && __GNUC__ == 2 && __GNUC_MINOR__ == 96) */
 
 #if __GNUC__ > 2 || ( __GNUC__ == 2 && __GNUC_MINOR__ >= 97 )
         // gcc 2.97 and higher use libstdc++-v3 and require

@@ -4,6 +4,7 @@
 #define ACE_LOCK_ADAPTER_T_C
 
 #include "ace/Lock_Adapter_T.h"
+#include "ace/OS_Memory.h" // for ACE_NEW
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

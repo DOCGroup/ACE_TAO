@@ -19,6 +19,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/WFMO_Reactor.h"
@@ -208,8 +209,8 @@ test_reactor_upcall (ACE_Reactor &reactor)
   data_message.type_ =
     Message::DATA;
   data_message.size_ =
-    ACE_OS_String::strlen (message);
-  ACE_OS_String::strcpy (data_message.data_, message);
+    ACE_OS::strlen (message);
+  ACE_OS::strcpy (data_message.data_, message);
 
   // Send in three pieces because the struct members may not be adjacent
   // in memory.

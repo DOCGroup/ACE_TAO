@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Global_Macros.h"
-#include "ace/OS.h"  // for ACE_thread_key_t
+#include "ace/OS_NS_Thread.h"
 
 /**
  * @class ACE_Guard

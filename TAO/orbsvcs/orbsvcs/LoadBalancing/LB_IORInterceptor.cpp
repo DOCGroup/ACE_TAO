@@ -3,12 +3,11 @@
 #include "LB_LoadAlert.h"
 
 #include "tao/debug.h"
-
+#include "tao/ORB_Constants.h"
 
 ACE_RCSID (LoadBalancing,
            LB_IORInterceptor,
            "$Id$")
-
 
 TAO_LB_IORInterceptor::TAO_LB_IORInterceptor (
   const CORBA::StringSeq & object_groups,

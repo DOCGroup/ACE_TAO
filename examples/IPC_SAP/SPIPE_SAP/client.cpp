@@ -1,8 +1,11 @@
 // $Id$
 
+#include "ace/OS_main.h"
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Connector.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(SPIPE_SAP, client, "$Id$")
 

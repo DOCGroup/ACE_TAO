@@ -131,8 +131,6 @@ public:
       return (TAO_SSLIOP_Current_ptr)0;
     }
 
-  virtual void *_tao_QueryInterface (ptrdiff_t type);
-
   virtual const char* _interface_repository_id (void) const;
   //@}
 

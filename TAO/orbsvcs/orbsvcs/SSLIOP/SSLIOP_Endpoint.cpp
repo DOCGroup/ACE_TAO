@@ -165,15 +165,30 @@ TAO_SSLIOP_Endpoint::duplicate (void)
 CORBA::ULong
 TAO_SSLIOP_Endpoint::hash (void)
 {
-  return
-    this->iiop_endpoint_->hash ()
-    + this->ssl_component_.port
-    + this->qop_
-    + this->trust_.trust_in_target
-    + this->trust_.trust_in_client
-    + (CORBA::is_nil (this->credentials_.in ())
-       ? 0
-       : this->credentials_->hash ());
+  if (this->hash_val_ != 0)
+    return this->hash_val_;
+
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      guard,
+                      this->addr_lookup_lock_,
+                      this->hash_val_);
+    // .. DCL
+    if (this->hash_val_ != 0)
+      return this->hash_val_;
+
+    this->hash_val_ =
+      this->iiop_endpoint_->hash ()
+      + this->ssl_component_.port
+      + this->qop_
+      + this->trust_.trust_in_target
+      + this->trust_.trust_in_client
+      + (CORBA::is_nil (this->credentials_.in ())
+         ? 0
+         : this->credentials_->hash ());
+  }
+
+  return this->hash_val_;
 }
 
 

@@ -3,6 +3,7 @@
 #
 
 DIRS = \
+        Abstract_Interface \
         AMH_Exceptions \
         AMH_Oneway \
         AMI \
@@ -22,6 +23,9 @@ DIRS = \
         Bug_1270_Regression \
         Bug_1482_Regression \
 	Bug_1551_Regression \
+	Bug_1568_Regression \
+	Bug_1670_Regression \
+	Bug_1693_Test \
 	CDR \
 	Client_Leaks \
 	Codec \

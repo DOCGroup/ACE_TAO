@@ -24,6 +24,8 @@
 
 #include "orbsvcs/SecurityReplaceableC.h"
 
+#include "tao/LocalObject.h"
+
 #include "ace/Array_Base.h"
 
 class TAO_PrincipalAuthenticator;
@@ -119,17 +121,10 @@ public:
   typedef TAO_PrincipalAuthenticator_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static int _tao_class_id;
-
   // The static operations.
   static TAO_PrincipalAuthenticator_ptr _duplicate (TAO_PrincipalAuthenticator_ptr obj);
 
   static TAO_PrincipalAuthenticator_ptr _narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    );
-
-  static TAO_PrincipalAuthenticator_ptr _unchecked_narrow (
       CORBA::Object_ptr obj
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
@@ -139,7 +134,6 @@ public:
       return (TAO_PrincipalAuthenticator_ptr)0;
     }
 
-  virtual void *_tao_QueryInterface (ptrdiff_t type);
   virtual const char* _interface_repository_id (void) const;
   //@}
 

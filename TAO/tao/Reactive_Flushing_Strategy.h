@@ -12,6 +12,7 @@
 
 #ifndef TAO_REACTIVE_FLUSHING_STRATEGY_H
 #define TAO_REACTIVE_FLUSHING_STRATEGY_H
+
 #include /**/ "ace/pre.h"
 
 #include "Flushing_Strategy.h"
@@ -37,4 +38,5 @@ public:
 };
 
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_REACTIVE_FLUSHING_STRATEGY_H */

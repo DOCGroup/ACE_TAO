@@ -15,6 +15,7 @@
 #include "ace/Auto_Ptr.h"
 #include "Transient_Naming_Context.h"
 #include "Bindings_Iterator_T.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Naming, Transient_Naming_Context, "$Id$")
 

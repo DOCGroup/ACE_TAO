@@ -19,6 +19,7 @@
 #include "orbsvcs/SecurityLevel2C.h"
 
 class Foo_i : public virtual POA_Foo::Bar
+            , public virtual PortableServer::RefCountServantBase
 {
 public:
 

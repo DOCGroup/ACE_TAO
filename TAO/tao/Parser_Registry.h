@@ -17,7 +17,9 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/TAO_Export.h"
+
+#include "ace/os_include/os_stddef.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,7 +27,6 @@
 
 // Forward declarations.
 class TAO_ORB_Core;
-
 class TAO_IOR_Parser;
 
 /**
@@ -81,4 +82,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_PARSER_REGISTRY_H */

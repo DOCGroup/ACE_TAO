@@ -14,14 +14,17 @@
 
 #ifndef TAO_RT_PROTOCOLS_HOOKS_H
 #define TAO_RT_PROTOCOLS_HOOKS_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/Protocols_Hooks.h"
+#include "tao/orbconf.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "Priority_Mapping_Manager.h"
 #include "Network_Priority_Mapping_Manager.h"
+
+#include "tao/Protocols_Hooks.h"
 
 #include "ace/Service_Config.h"
 

@@ -1,6 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/RW_Thread_Mutex.h"
+
 template <class ACE_LOCK> ACE_INLINE int
 ACE_Guard<ACE_LOCK>::acquire (void)
 {

@@ -43,6 +43,9 @@
 #include "asnmp/address.h" // class def for addresses
 #include "asnmp/wpdu.h"    // adapter to cmu_library / wire protocol
 #include "asnmp/transaction.h" // synchronous transaction processor
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_time.h"
 
 ACE_RCSID(asnmp, snmp, "$Id$")
 

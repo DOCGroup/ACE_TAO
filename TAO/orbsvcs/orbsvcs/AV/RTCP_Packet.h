@@ -5,7 +5,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/Basic_Types.h"
 
 /**
  * @struct RTCP_Common_Header

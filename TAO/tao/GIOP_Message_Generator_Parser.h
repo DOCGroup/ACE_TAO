@@ -12,16 +12,15 @@
 
 #ifndef TAO_GIOP_MESSAGE_GENERATOR_PARSER_H
 #define TAO_GIOP_MESSAGE_GENERATOR_PARSER_H
-#include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include /**/ "ace/pre.h"
+#include "ace/Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Exception.h"
-#include "ace/Global_Macros.h"
 
 class TAO_Operation_Details;
 class TAO_Target_Specification;

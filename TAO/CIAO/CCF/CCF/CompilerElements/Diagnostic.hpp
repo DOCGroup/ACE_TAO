@@ -11,6 +11,8 @@
 
 #include "CCF/CompilerElements/ExH.hpp"
 
+//@@ Should be inside CCF namespace
+
 namespace Diagnostic
 {
   //
@@ -133,7 +135,7 @@ namespace Diagnostic
     Stream&
     operator<< (Record const& msg)
     {
-      std::cout << msg.file () << ":" << msg.line () << ": "
+      std::cerr << msg.file () << ":" << msg.line () << ": "
                 << msg.description () << std::endl;
 
       switch (msg.type ())

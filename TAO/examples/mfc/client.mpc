@@ -1,19 +1,7 @@
-project(MFC client): namingexe {
-  exename = client
+// -*- MPC -*-
+// $Id$
 
-  verbatim(gnuace, top) {
-    ifneq ($(MAKE),)
-    include $(ACE_ROOT)/include/makeinclude/macros.GNU
-    TARGETS_NESTED := $(TARGETS_NESTED:.nested=)
-    $(TARGETS_NESTED):
-    "	@echo This will only build on Windows"
-    else
-  }
-
-  verbatim(gnuace, bottom) {
-    endif
-  }
-
+project(MFC client): namingexe, mfc {
   Source_Files {
     w32_testC.cpp
     client.cpp

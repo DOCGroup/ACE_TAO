@@ -15,6 +15,7 @@
 #include "ace/SString.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
 char *config_filename_ = 0;
 char *output_ior_filename_ = 0;
@@ -82,7 +83,8 @@ main (int argc, char *argv[])
     {
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv
+                                            argv,
+                                            ""
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -129,7 +131,7 @@ main (int argc, char *argv[])
                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      obj = poa->id_to_reference (cs_oid
+      obj = poa->id_to_reference (cs_oid.in ()
                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -179,7 +181,7 @@ main (int argc, char *argv[])
                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      obj = poa->id_to_reference (as_oid
+      obj = poa->id_to_reference (as_oid.in ()
                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

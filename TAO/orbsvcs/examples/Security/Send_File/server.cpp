@@ -2,6 +2,8 @@
 
 #include "ace/Get_Opt.h"
 #include "test_i.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Send_File, server, "$Id$")
 

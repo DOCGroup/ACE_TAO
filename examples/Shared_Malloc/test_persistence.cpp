@@ -6,8 +6,12 @@
 // This examples uses scanf to read user inputs from stdin into fixed
 // sized buffers.  This may cause buffers to overrun.
 
+#include "ace/OS_NS_string.h"
 #include "ace/Malloc.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/Null_Mutex.h"
 
 ACE_RCSID(Shared_Malloc, test_persistence, "$Id$")

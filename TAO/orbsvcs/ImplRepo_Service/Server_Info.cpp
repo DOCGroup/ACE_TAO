@@ -13,7 +13,7 @@ Server_Info::Server_Info (
     const ImplementationRepository::EnvironmentList environment_vars,
     const ACE_CString working_dir,
     const ImplementationRepository::ActivationMode activation)
-  : starting_up_ (0),
+  : starting_up_ (false),
     logical_server_name_ (logical_server_name),
     POA_name_ (POA_name),
     startup_command_ (startup_command),
@@ -23,7 +23,6 @@ Server_Info::Server_Info (
     server_object_ior_ (""),
     activation_ (activation)
 {
-  // Initialize the command_line and working_dir.
 }
 
 
@@ -40,7 +39,7 @@ Server_Info::update_running_info (const ACE_CString location,
 {
   this->location_ = location;
   this->server_object_ior_ = server_object_ior;
-  this->starting_up_ = 0;
+  this->starting_up_ = false;
 }
 
 
@@ -52,7 +51,6 @@ Server_Info::get_startup_info (
     ACE_CString &working_dir,
     ImplementationRepository::ActivationMode &activation)
 {
-  // Returns startup information.
   logical_server_name = this->logical_server_name_;
   startup_command = this->startup_command_;
   environment_vars = this->environment_vars_;
@@ -64,7 +62,6 @@ void
 Server_Info::get_running_info (ACE_CString &location,
                                ACE_CString &server_object_ior)
 {
-  // Returns information about a running instance.
   location = this->location_;
   server_object_ior = this->server_object_ior_;
 }

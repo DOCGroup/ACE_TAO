@@ -4,6 +4,9 @@
 #include "UnionDef_i.h"
 #include "Repository_i.h"
 #include "IFR_Service_Utils.h"
+
+#include "tao/Any_Unknown_IDL_Type.h"
+
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (IFRService, 

@@ -213,8 +213,21 @@
 #   define ACE_LOCALHOST ACE_LIB_TEXT ("localhost")
 # endif
 
+// This specification for an IPv6 localhost should work on all platforms
+// supporting IPv6
+# if defined (ACE_HAS_IPV6)
+#   if !defined (ACE_IPV6_LOCALHOST)
+#     define ACE_IPV6_LOCALHOST ACE_LIB_TEXT ("::1")
+#   endif /* ACE_IPV6_LOCALHOST*/
+#endif /* ACE_HAS_IPV6 */
+
+
 # if !defined (ACE_DEFAULT_SERVER_HOST)
-#   define ACE_DEFAULT_SERVER_HOST ACE_LOCALHOST
+#   if defined (ACE_HAS_IPV6)
+#     define ACE_DEFAULT_SERVER_HOST ACE_IPV6_LOCALHOST
+#   else /*ACE_HAS_IPV6*/
+#     define ACE_DEFAULT_SERVER_HOST ACE_LOCALHOST
+#   endif /*ACE_HAS_IPV6*/
 # endif /* ACE_DEFAULT_SERVER_HOST */
 
 // Default shared memory key
@@ -326,13 +339,7 @@
 // A simple free list which doen't allocate/deallocate elements.
 # define ACE_PURE_FREE_LIST 2
 
-# if defined (INTEGRITY)
-# define ACE_MAX_USERID 32
-# endif
-
 # if defined (ACE_WIN32)
-
-#define ACE_MAX_USERID 32
 
 // This is necessary to work around bugs with Win32 non-blocking
 // connects...
@@ -522,6 +529,16 @@ const unsigned int ACE_CONNECTOR_HANDLER_MAP_SIZE = 16;
 
 #define ACE_DEFAULT_LOCALNAME ACE_LIB_TEXT (ACE_DEFAULT_LOCALNAME_A)
 #define ACE_DEFAULT_GLOBALNAME ACE_LIB_TEXT (ACE_DEFAULT_GLOBALNAME_A)
+
+# if defined (ACE_WIN32)
+    // The "null" device on Win32.
+#   define ACE_DEV_NULL "nul"
+#   define ACE_SYSCALL_FAILED 0xFFFFFFFF
+# else /* !ACE_WIN32 */
+    // The "null" device on UNIX.
+#   define ACE_DEV_NULL "/dev/null"
+#   define ACE_SYSCALL_FAILED -1
+# endif /* ACE_WIN32 */
 
 #include /**/ "ace/post.h"
 #endif /*ACE_DEFAULT_CONSTANTS_H*/

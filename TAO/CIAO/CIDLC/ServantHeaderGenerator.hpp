@@ -1,55 +1,39 @@
-// $Id$
+// file      : CIDLC/ServantHeaderGenerator.hpp
+// author    : Jeff Parsons <j.parsons@vanderbilt.edu>
+// cvs-id    : $Id$
+
 #ifndef SERVANT_HEADER_GENERATOR_HPP
 #define SERVANT_HEADER_GENERATOR_HPP
 
 #include "CCF/CodeGenerationKit/CommandLine.hpp"
 
-#include "Collectors.hpp"
-
-#include "CCF/CIDL/SyntaxTree.hpp"
+#include "CCF/CIDL/SemanticGraph.hpp"
 #include "CCF/CIDL/Traversal.hpp"
 
-// HeaderEmitterBase is a base class that holds the ostream member
-// common to every other class in this file.
-//
-class HeaderEmitterBase
-{
-protected:
-  HeaderEmitterBase (std::ostream&);
-
-  std::ostream& os;
-};
-
-// Emitter generates the servant source mapping for declarations collected
-// by Collectors. Note that the original structure of modules is preserved.
-//
-
 class ServantHeaderEmitter
-  : public HeaderEmitterBase,
-    public CCF::CIDL::Traversal::TranslationUnit,
-    public CCF::CIDL::Traversal::UnconstrainedInterfaceDef
 {
 public:
   ServantHeaderEmitter (std::ostream& os_,
                         CommandLine const& cl,
                         string export_macro,
-                        Declarations const& declarations);
-
-
-  virtual void
-  pre (CCF::CIDL::SyntaxTree::TranslationUnitPtr const& u);
+                        fs::path const& file);
+                        
+  virtual ~ServantHeaderEmitter () {}
 
   virtual void
-  generate (CCF::CIDL::SyntaxTree::TranslationUnitPtr const& u);
+  pre (CCF::CIDL::SemanticGraph::TranslationUnit& u);
 
   virtual void
-  post (CCF::CIDL::SyntaxTree::TranslationUnitPtr const& u);
+  generate (CCF::CIDL::SemanticGraph::TranslationUnit& u);
+
+  virtual void
+  post (CCF::CIDL::SemanticGraph::TranslationUnit& u);
 
 private:
+  std::ostream& os;
   CommandLine const& cl_;
   std::string export_macro_;
-
-  Declarations const& declarations_;
+  fs::path file_;
 };
 
 

@@ -5,6 +5,7 @@
 #include "MCast.h"
 
 #include "tao/debug.h"
+#include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
 #include "UDP.i"
@@ -683,7 +684,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                           char buf [BUFSIZ];
                           ACE_CString addr_str (local_addr->get_host_name ());
                           addr_str += ":";
-                          addr_str += ACE_OS_String::itoa (local_addr->get_port_number () + 1, buf, 10);
+                          addr_str += ACE_OS::itoa (local_addr->get_port_number () + 1, buf, 10);
                           ACE_NEW_RETURN (local_control_addr,
                                           ACE_INET_Addr (addr_str.c_str ()),
                                           -1);

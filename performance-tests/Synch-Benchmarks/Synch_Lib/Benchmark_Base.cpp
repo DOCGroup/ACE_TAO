@@ -1,6 +1,9 @@
 // $Id$
 
+#if !defined (SYNCHLIB_BUILD_DLL)
 #define  SYNCHLIB_BUILD_DLL
+#endif /* SYNCHLIB_BUILD_DLL */
+
 #include "Benchmark_Base.h"
 
 ACE_RCSID(Synch_Benchmarks, Benchmark_Base, "$Id$")

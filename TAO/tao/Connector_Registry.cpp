@@ -2,15 +2,13 @@
 //
 // $Id$
 
-#include "tao/Connector_Registry.h"
-#include "tao/ORB_Core.h"
-#include "tao/Profile.h"
-#include "tao/Transport_Connector.h"
-#include "tao/Protocol_Factory.h"
-#include "tao/Endpoint.h"
-#include "tao/Environment.h"
-#include "tao/debug.h"
-#include "tao/Transport_Descriptor_Interface.h"
+#include "Connector_Registry.h"
+#include "ORB_Core.h"
+#include "Profile.h"
+#include "Transport_Connector.h"
+#include "Protocol_Factory.h"
+#include "debug.h"
+#include "ORB_Constants.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Connector_Registry.i"
@@ -122,27 +120,6 @@ TAO_Connector_Registry::close_all (void)
   this->size_ = 0;
 
   return 0;
-}
-
-int
-TAO_Connector_Registry::connect (TAO_GIOP_Invocation *invocation,
-                                 TAO_Transport_Descriptor_Interface *desc
-                                 ACE_ENV_ARG_DECL)
-{
-  TAO_Endpoint *endpoint = desc->endpoint ();
-  if (endpoint == 0)
-    return -1;
-
-  // Find the appropriate connector object.
-  TAO_Connector *connector =
-    this->get_connector (endpoint->tag ());
-
-  if (connector == 0)
-      return -1;
-
-  return connector->connect (invocation,
-                             desc
-                              ACE_ENV_ARG_PARAMETER);
 }
 
 int

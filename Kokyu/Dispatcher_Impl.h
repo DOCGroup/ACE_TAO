@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
+#include "kokyu_export.h"
 
 namespace Kokyu
 {
@@ -33,7 +33,7 @@ namespace Kokyu
    * for different EC dispatcher implementations. This is an
    * abstract base class and cannot be instantiated.
    */
-  class Dispatcher_Impl
+  class Kokyu_Export Dispatcher_Impl
   {
   public:
     /// Configure the dispatcher.

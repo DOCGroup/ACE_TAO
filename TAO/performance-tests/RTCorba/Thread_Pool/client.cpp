@@ -8,6 +8,7 @@
 #include "ace/Array_Base.h"
 #include "ace/Task.h"
 #include "tao/ORB_Core.h"
+#include "tao/debug.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "testC.h"

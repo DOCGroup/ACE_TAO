@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Naming_Service.h"
+#include "ace/OS_main.h"
 
 // Driver function for the TAO Naming Service.
 

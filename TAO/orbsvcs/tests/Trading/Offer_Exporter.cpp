@@ -2,6 +2,7 @@
 
 #include "Offer_Exporter.h"
 #include "ace/INET_Addr.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Trading, Offer_Exporter, "$Id$")
 

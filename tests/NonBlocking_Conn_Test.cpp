@@ -22,9 +22,8 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "NonBlocking_Conn_Test.h"
 #include "ace/Connector.h"
-#include "ace/Svc_Handler.h"
-#include "ace/SOCK_Stream.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Select_Reactor.h"
 #include "ace/TP_Reactor.h"
@@ -34,30 +33,6 @@
 static int test_select_reactor = 1;
 static int test_tp_reactor = 1;
 static int test_wfmo_reactor = 1;
-
-class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-{
-public:
-
-  enum Connection_Status
-    {
-      SUCCEEDED,
-      FAILED
-    };
-
-  Svc_Handler (void);
-
-  void connection_status (Connection_Status &status,
-                          int &completion_counter);
-
-  int open (void *);
-
-  int handle_close (ACE_HANDLE handle,
-                    ACE_Reactor_Mask mask);
-
-  Connection_Status *status_;
-  int *completion_counter_;
-};
 
 Svc_Handler::Svc_Handler (void)
   : status_ (0),

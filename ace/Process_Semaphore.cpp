@@ -7,6 +7,8 @@
 #include "ace/Process_Semaphore.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/ACE.h"
+
 ACE_RCSID(ace, Process_Semaphore, "$Id$")
 
 void
@@ -77,6 +79,21 @@ ACE_Process_Semaphore::release (void)
 {
 // ACE_TRACE ("ACE_Process_Semaphore::release");
   return this->lock_.release ();
+}
+
+/*****************************************************************************/
+
+ACE_Process_Semaphore *
+ACE_Malloc_Lock_Adapter_T<ACE_Process_Semaphore>::operator () (const ACE_TCHAR *name)
+{
+  ACE_Process_Semaphore *p = 0;
+  if (name == 0)
+    ACE_NEW_RETURN (p, ACE_Process_Semaphore (1, name), 0);
+  else
+    ACE_NEW_RETURN (p, ACE_Process_Semaphore (1, ACE::basename (name,
+                                                                ACE_DIRECTORY_SEPARATOR_CHAR)),
+                    0);
+  return p;
 }
 
 //

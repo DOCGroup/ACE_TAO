@@ -6,6 +6,7 @@
 
 #include "ZlibCompressor.h"
 #include "ace/SOCK_Stream.h"
+#include "ace/OS_NS_string.h"
 
 #include <zlib.h>
 
@@ -34,7 +35,7 @@ int ZlibCompressor::send(ACE_Message_Block *message,
     // Other libraries/algorithms may have their own quirks.
 
     int err;
-    int mlen = strlen(message->rd_ptr())+1;
+    int mlen = ACE_OS::strlen(message->rd_ptr())+1;
     zstream_.next_in   = (Bytef*)message->rd_ptr();
     zstream_.avail_in  = (uInt) mlen;
     zstream_.avail_out = (uInt) 5 * message->size();

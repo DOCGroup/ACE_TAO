@@ -3,6 +3,8 @@
 
 // FIFO_Recv_Msg.i
 
+#include "ace/Min_Max.h"
+
 ASYS_INLINE ssize_t
 ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
 {

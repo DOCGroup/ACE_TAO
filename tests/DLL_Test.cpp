@@ -27,7 +27,9 @@ ACE_RCSID(tests, DLL_Test, "$Id$")
 
 #if defined (ACE_WIN32) && defined (_MSC_VER) && defined (_DEBUG)
 # define OBJ_SUFFIX ACE_TEXT ("d") ACE_DLL_SUFFIX
-#else /* ACE_WIN32 && _MSC_VER && _DEBUG */
+#elif defined (ACE_WIN32) && defined (__BORLANDC__)
+# define OBJ_SUFFIX ACE_LD_DECORATOR_STR ACE_DLL_SUFFIX
+#else
 # define OBJ_SUFFIX ACE_DLL_SUFFIX
 #endif /* ACE_WIN32 && && _MSC_VER && _DEBUG */
 
@@ -117,13 +119,15 @@ int basic_test (ACE_DLL &dll)
   // Allocate and free a string allocated via malloc in a different dll.
   ACE_TCHAR *malloc_str = my_hello->malloc_info ();
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Result for malloc_info(): %s\n"), malloc_str));
-  ACE_OS_Memory::free (malloc_str);
+  ACE_OS::free (malloc_str);
 
   return 0;
 }
 
 int dynamic_cast_test (ACE_DLL &dll)
 {
+
+#if !defined (ACE_LACKS_RTTI)
   Child child;
   child.test();
 
@@ -142,14 +146,18 @@ int dynamic_cast_test (ACE_DLL &dll)
                        dll.error ()),
                       -1);
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("before %x %x\n"), 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("before %x %x\n"),
               &child,  dynamic_cast<Child*>( parent )));
 
   if (pfnAcquire( &child ) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("dyanmic_cast failed.\n")), -1);
+#else
+  ACE_UNUSED_ARG (dll);
+#endif /* !ACE_LACKS_RTTI */
 
   return 0;
 }
+
 
 int
 run_main (int, ACE_TCHAR *[])

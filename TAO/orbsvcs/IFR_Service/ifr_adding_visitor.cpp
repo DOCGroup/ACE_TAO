@@ -876,6 +876,9 @@ ifr_adding_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
 
           CORBA::Container_ptr current_scope =
             CORBA::Container::_nil ();
+            
+          CORBA::Boolean abstract = 
+            ACE_static_cast (CORBA::Boolean, v->is_abstract ());
 
           if (be_global->ifr_scopes ().top (current_scope) == 0)
             {
@@ -885,7 +888,7 @@ ifr_adding_visitor::visit_valuetype_fwd (AST_ValueTypeFwd *node)
                                    v->local_name ()->get_string (),
                                    v->version (),
                                    0, // 'custom' not handled yet
-                                   v->is_abstract (),
+                                   abstract,
                                    CORBA::ValueDef::_nil (),
                                    0, // 'truncatable' not handled yet
                                    abstract_bases,
@@ -1588,6 +1591,9 @@ ifr_adding_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
                                                    ACE_ENV_ARG_PARAMETER
                                                  );
               ACE_TRY_CHECK;
+              
+              CORBA::Boolean abstract =
+                ACE_static_cast (CORBA::Boolean, v->is_abstract ());
 
               this->ir_current_ =
                 ccm_scope->create_event (
@@ -1595,7 +1601,7 @@ ifr_adding_visitor::visit_eventtype_fwd (AST_EventTypeFwd *node)
                                v->local_name ()->get_string (),
                                v->version (),
                                0, // 'custom' not handled yet
-                               v->is_abstract (),
+                               abstract,
                                CORBA::ValueDef::_nil (),
                                0, // 'truncatable' not handled yet
                                abstract_bases,

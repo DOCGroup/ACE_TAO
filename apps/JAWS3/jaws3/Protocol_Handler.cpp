@@ -1,6 +1,8 @@
 // $Id$
 
+#ifndef JAWS_BUILD_DLL
 #define JAWS_BUILD_DLL
+#endif
 
 #include "jaws3/Protocol_Handler.h"
 #include "jaws3/Concurrency.h"

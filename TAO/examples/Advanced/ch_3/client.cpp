@@ -20,7 +20,10 @@
 // ============================================================================
 
 #include "timeC.h"
-#include <iomanip.h>
+#include <iomanip>
+#include <iostream>
+
+using namespace std;
 
 // The following header is #included automatically by ACE+TAO.
 // Therefore, they don't need to be included explicitly.

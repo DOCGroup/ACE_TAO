@@ -15,20 +15,13 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      //
-      //
-      //
-      class Composition : public virtual Scope
+      struct Composition : Scope
       {
-      public:
         struct Category
         {
           enum Value
           {
-            ENTITY = 0,
-            PROCESS,
-            SERVICE,
-            SESSION
+            entity , process, service, session
           };
 
           friend std::ostream&

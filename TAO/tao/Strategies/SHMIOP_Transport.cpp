@@ -211,7 +211,7 @@ TAO_SHMIOP_Transport::send_request (TAO_Stub *stub,
     return -1;
   this->first_request_sent();
 
-  return this->idle_after_send ();
+  return 0;
 }
 
 int

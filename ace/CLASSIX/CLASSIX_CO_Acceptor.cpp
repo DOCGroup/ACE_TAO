@@ -7,8 +7,6 @@
 #include "CLASSIX_CO_Acceptor.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#include "ace/Synch.h"
-
 ACE_ALLOC_HOOK_DEFINE (ACE_CLASSIX_CO_Acceptor)
 
 // General purpose routine for performing server  creation.

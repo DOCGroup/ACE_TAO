@@ -15,6 +15,12 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
@@ -35,7 +41,7 @@ ACE_INLINE void POA_CORBA::ConstructionPolicy::_get_policy_type_skel (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+// be/be_interface.cpp:1941
 
 ACE_INLINE void POA_CORBA::ConstructionPolicy::copy_skel (
     TAO_ServerRequest &req,
@@ -54,7 +60,7 @@ ACE_INLINE void POA_CORBA::ConstructionPolicy::copy_skel (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+// be/be_interface.cpp:1941
 
 ACE_INLINE void POA_CORBA::ConstructionPolicy::destroy_skel (
     TAO_ServerRequest &req,
@@ -72,3 +78,139 @@ ACE_INLINE void POA_CORBA::ConstructionPolicy::destroy_skel (
     );
 }
 
+// TAO_IDL - Generated from
+// be/be_interface.cpp:1244
+
+ACE_INLINE void
+POA_CORBA::_TAO_ConstructionPolicy_ThruPOA_Proxy_Impl::_get_policy_type (
+    TAO_Abstract_ServantBase *servant,
+    TAO::Argument ** args,
+    int num_args
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  POA_CORBA::_TAO_Policy_ThruPOA_Proxy_Impl::_get_policy_type (
+      servant,
+      args,
+      num_args
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+
+// TAO_IDL - Generated from
+// be/be_interface.cpp:1244
+
+ACE_INLINE void
+POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::_get_policy_type (
+    TAO_Abstract_ServantBase *servant,
+    TAO::Argument ** args,
+    int num_args
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::_get_policy_type (
+      servant,
+      args,
+      num_args
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+
+// TAO_IDL - Generated from
+// be/be_interface.cpp:1244
+
+ACE_INLINE void
+POA_CORBA::_TAO_ConstructionPolicy_ThruPOA_Proxy_Impl::copy (
+    TAO_Abstract_ServantBase *servant,
+    TAO::Argument ** args,
+    int num_args
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  POA_CORBA::_TAO_Policy_ThruPOA_Proxy_Impl::copy (
+      servant,
+      args,
+      num_args
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+
+// TAO_IDL - Generated from
+// be/be_interface.cpp:1244
+
+ACE_INLINE void
+POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::copy (
+    TAO_Abstract_ServantBase *servant,
+    TAO::Argument ** args,
+    int num_args
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::copy (
+      servant,
+      args,
+      num_args
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+
+// TAO_IDL - Generated from
+// be/be_interface.cpp:1244
+
+ACE_INLINE void
+POA_CORBA::_TAO_ConstructionPolicy_ThruPOA_Proxy_Impl::destroy (
+    TAO_Abstract_ServantBase *servant,
+    TAO::Argument ** args,
+    int num_args
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  POA_CORBA::_TAO_Policy_ThruPOA_Proxy_Impl::destroy (
+      servant,
+      args,
+      num_args
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+
+// TAO_IDL - Generated from
+// be/be_interface.cpp:1244
+
+ACE_INLINE void
+POA_CORBA::_TAO_ConstructionPolicy_Direct_Proxy_Impl::destroy (
+    TAO_Abstract_ServantBase *servant,
+    TAO::Argument ** args,
+    int num_args
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::destroy (
+      servant,
+      args,
+      num_args
+      ACE_ENV_ARG_PARAMETER
+    );
+}

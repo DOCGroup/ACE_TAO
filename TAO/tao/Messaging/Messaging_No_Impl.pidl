@@ -13,11 +13,11 @@
  * The command used to generate code from this file is:
  *
  *   tao_idl
- *        -o orig -Gp -Gd -Ge 1
+ *        -o orig -Gp -Gd -Ge 1 -GT
  *        -Wb,export_macro=TAO_Messaging_Export
  *        -Wb,export_include=messaging_export.h
  *        -Wb,pre_include="ace/pre.h"
- *        -Wb,post_include="ace/post.h"
+ *        -Wb,post_include="ace/post.h" -I$(TAO_ROOT)
  *        Messaging_No_Impl.pidl
  *
  * after the file is generated a patch must be applied:
@@ -38,9 +38,9 @@
 #ifndef TAO_MESSAGING_NO_IMPL_PIDL
 #define TAO_MESSAGING_NO_IMPL_PIDL
 
-#include <TimeBase.pidl>
-#include <Policy.pidl>
-#include <Pollable.pidl>
+#include "tao/TimeBase.pidl"
+#include "tao/Policy.pidl"
+#include "tao/Pollable.pidl"
 
 
 #pragma prefix "omg.org"
@@ -137,36 +137,6 @@ module Messaging
   local interface QueueOrderPolicy : CORBA::Policy {
     readonly attribute Ordering allowed_orders;
   };
-
-#if 0
-  //
-  // Base value for the Polling model
-  //
-
-#if defined(NO_VALUE)
-  local interface Poller : CORBA::Pollable {
-    readonly attribute Object  operation_target;
-    readonly attribute string  operation_name;
-
-    attribute ReplyHandler     associated_handler;
-    readonly attribute boolean is_from_poller;
-
-    readonly attribute Object  target;
-    readonly attribute string  op_name;
-  };
-#else
-  valuetype Poller supports CORBA::Pollable {
-    readonly attribute Object  operation_target;
-    readonly attribute string  operation_name;
-
-    attribute ReplyHandler     associated_handler;
-    readonly attribute boolean is_from_poller;
-
-    public Object                     target;
-    public string                     op_name;
-  };
-#endif
-#endif /* 0 */
 };
 
 #endif /*TAO_MESSAGING_NO_IMPL_PIDL*/

@@ -48,6 +48,12 @@ public:
   virtual ~be_interface_fwd (void);
   // Destructor.
 
+  virtual void seq_elem_tmplinst (idl_bool val);
+  virtual void seen_in_sequence (idl_bool val);
+  virtual void seen_in_operation (idl_bool val);
+  // Mutator overrides for be_type members. If we have been
+  // defined, we want the full definition to be set as well.
+
   virtual void destroy (void);
   // Cleanup function.
 

@@ -20,15 +20,15 @@ endif
 
 %.tgt0:
 ifeq ($(KEEP_GOING),1)
-	-@$(MAKE) -f Makefile.mif_server -C . $(*);
-else
-	@$(MAKE) -f Makefile.mif_server -C . $(*);
-endif
-%.tgt1:
-ifeq ($(KEEP_GOING),1)
 	-@$(MAKE) -f Makefile.mif_client -C . $(*);
 else
 	@$(MAKE) -f Makefile.mif_client -C . $(*);
+endif
+%.tgt1: %.tgt0
+ifeq ($(KEEP_GOING),1)
+	-@$(MAKE) -f Makefile.mif_server -C . $(*);
+else
+	@$(MAKE) -f Makefile.mif_server -C . $(*);
 endif
 
 

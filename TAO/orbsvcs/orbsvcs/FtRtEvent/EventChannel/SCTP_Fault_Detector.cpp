@@ -1,7 +1,11 @@
 // $Id$
 
+#if (TAO_HAS_SCIOP == 1)
+
 #include "FTEC_Fault_Listener.h"
 #include "SCTP_Fault_Detector.h"
+
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (EventChannel,
            SCTP_Fault_Detector,
@@ -65,14 +69,14 @@ inline void SCTP_Connector::set_heart_beat(int hb)
 }
 
 
-STCP_Fault_Detector::~STCP_Fault_Detector()
+SCTP_Fault_Detector::~SCTP_Fault_Detector()
 {
 }
 
 
-int STCP_Fault_Detector::parse_conf(int argc, char** argv)
+int SCTP_Fault_Detector::parse_conf(int argc, char** argv)
 {
-  ACE_TRACE ("STCP_Fault_Detector::parse_conf");
+  ACE_TRACE ("SCTP_Fault_Detector::parse_conf");
 
   for (int curarg = 0; curarg < argc; curarg++)
     if (ACE_OS::strcasecmp (argv[curarg],
@@ -84,3 +88,6 @@ int STCP_Fault_Detector::parse_conf(int argc, char** argv)
     }
   return 0;
 }
+
+#endif /* ACE_HAS_SCTP == 1 */
+

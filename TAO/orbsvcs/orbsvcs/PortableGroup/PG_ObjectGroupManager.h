@@ -16,6 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
+#include "portablegroup_export.h"
 #include "orbsvcs/PortableGroupS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -138,6 +139,18 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound,
                      PortableGroup::MemberNotFound));
+  /**
+   * TAO-specific extension.
+   * Return the ObjectGroup reference for the given ObjectGroupId.
+   */
+   virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
+        PortableGroup::ObjectGroupId group_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , PortableGroup::ObjectGroupNotFound
+      ));
 
   //@}
 
@@ -252,6 +265,11 @@ protected:
    * hash map entry is associated with a given a location.
    */
   CORBA::Boolean member_already_present (
+    const TAO_PG_ObjectGroup_Array & groups,
+    TAO_PG_ObjectGroup_Map_Entry * group_entry);
+
+  /// get the position of the object_group_map_entry
+  size_t get_object_group_position (
     const TAO_PG_ObjectGroup_Array & groups,
     TAO_PG_ObjectGroup_Map_Entry * group_entry);
 

@@ -5,8 +5,8 @@
 #ifndef CCF_CIDL_TRAVERSAL_COMPOSITION_HPP
 #define CCF_CIDL_TRAVERSAL_COMPOSITION_HPP
 
-#include "CCF/IDL2/Traversal/Elements.hpp"
-#include "CCF/CIDL/SyntaxTree/Composition.hpp"
+#include "CCF/CIDL/SemanticGraph/Composition.hpp"
+#include "CCF/CIDL/Traversal/Elements.hpp"
 
 namespace CCF
 {
@@ -14,40 +14,47 @@ namespace CCF
   {
     namespace Traversal
     {
-      //
-      //
-      //
-      struct Composition : IDL2::Traversal::ScopeTraverser
+      template <typename T>
+      struct CompositionTemplate : ScopeTemplate<T>
       {
-        typedef
-        SyntaxTree::CompositionPtr
-        NodePtr;
-
-        Composition ()
-        {
-          map (typeid (SyntaxTree::Composition), this);
-        }
+        virtual void
+        traverse (T&);
 
         virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (n->dynamic_type<SyntaxTree::Composition> ());
-        }
+        pre (T&);
 
         virtual void
-        traverse (NodePtr const&);
+        name (T&);
 
         virtual void
-        pre (NodePtr const&);
-
-        virtual void
-        scope (NodePtr const&);
-
-        virtual void
-        post (NodePtr const&);
+        post (T&);
       };
+
+
+      typedef
+      CompositionTemplate <SemanticGraph::Composition>
+      Composition;
+
+      typedef
+      CompositionTemplate <SemanticGraph::EntityComposition>
+      EntityComposition;
+
+      typedef
+      CompositionTemplate <SemanticGraph::ProcessComposition>
+      ProcessComposition;
+
+      typedef
+      CompositionTemplate <SemanticGraph::ServiceComposition>
+      ServiceComposition;
+
+
+      typedef
+      CompositionTemplate <SemanticGraph::SessionComposition>
+      SessionComposition;
     }
   }
 }
+
+#include "CCF/CIDL/Traversal/Composition.tpp"
 
 #endif  // CCF_CIDL_TRAVERSAL_COMPOSITION_HPP

@@ -2,11 +2,13 @@
 // $Id$
 
 #include "ace/FILE_IO.h"
-#include "ace/Log_Msg.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/FILE_IO.i"
 #endif
+
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_sys_stat.h"
 
 ACE_RCSID(ace, FILE_IO, "$Id$")
 

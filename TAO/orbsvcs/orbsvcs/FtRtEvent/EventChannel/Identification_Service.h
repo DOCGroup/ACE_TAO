@@ -14,9 +14,9 @@
 #define IDENTIFICATION_SERVICE_H
 
 #include "ace/Service_Object.h"
-#include "PortableServer/PortableServerC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/FTRTC.h"
+#include "orbsvcs/FtRtecEventCommC.h"
 #include "ftrtec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -38,16 +38,16 @@ namespace FTRTEC
 
     int init(int argc, ACE_TCHAR* argv[]);
 
-    const PortableServer::ObjectId& object_id() const;
+    const FtRtecEventComm::ObjectId& object_id() const;
     const CosNaming::Name& name() const;
   private:
-    PortableServer::ObjectId object_id_;
+    FtRtecEventComm::ObjectId object_id_;
     CosNaming::Name name_;
   };
 
 
   ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FTRTEC, Identification_Service)
-  ACE_STATIC_SVC_REQUIRE(Identification_Service);
+  ACE_STATIC_SVC_REQUIRE(Identification_Service)
   ACE_FACTORY_DECLARE (TAO_FTRTEC, Identification_Service)
 }
 

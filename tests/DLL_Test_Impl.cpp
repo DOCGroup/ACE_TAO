@@ -20,6 +20,7 @@
 #include "ace/ACE.h"
 #include "ace/OS_Errno.h"
 #include "ace/svc_export.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (tests,
            DLL_Test_Impl,
@@ -51,7 +52,7 @@ Hello_Impl::new_info (void)
 ACE_TCHAR *
 Hello_Impl::malloc_info (void)
 {
-  return ACE_OS_String::strdup (ACE_TEXT ("Hello_Impl::new_info() allocated by ACE_OS_Memory::malloc()"));
+  return ACE_OS::strdup (ACE_TEXT ("Hello_Impl::new_info() allocated by ACE_OS::malloc()"));
 }
 
 void *
@@ -107,9 +108,11 @@ public:
 
 static Static_Constructor_Test the_instance;
 
+#if !defined (ACE_LACKS_RTTI)
 // Test dynamic cast
 extern "C" ACE_Svc_Export int
 dynamic_cast_test (Parent *target)
 {
    return target == dynamic_cast<Child*>( target )? 0 : -1;
 }  
+#endif /* !ACE_LACKS_RTTI */

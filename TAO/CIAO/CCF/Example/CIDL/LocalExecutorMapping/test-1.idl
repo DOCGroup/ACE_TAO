@@ -3,7 +3,7 @@
 // cvs-id    : $Id$
 
 #include <Components.idl>
-include "test-0.idl";
+#include "test-0.idl"
 
 module M1
 {
@@ -13,7 +13,8 @@ module M1
   component C1 
   {
     provides M::I i;
-  };  
+    readonly attribute long l;
+  };
   
   home H1 manages C1
   {

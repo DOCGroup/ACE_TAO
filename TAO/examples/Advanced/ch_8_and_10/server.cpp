@@ -92,7 +92,9 @@ void
 Thermometer_impl::
 set_loc(const char * loc)
 {
-    assert(ICP_set(m_anum, "location", loc) == 0);
+    long result = 0;
+    result = ICP_set(m_anum, "location", loc);
+    assert (result == 0);
 }
 
 // Constructor.
@@ -166,7 +168,7 @@ location(const char * loc) throw(CORBA::SystemException)
 {
     set_loc(loc);
 }
-    
+
 //----------------------------------------------------------------
 
 // Helper function to get a thermostat's nominal temperature.
@@ -199,7 +201,7 @@ throw(CCS::Thermostat::BadTemp)
                 &old_temp, sizeof(old_temp)
            ) == 0
     );
-    
+
     // Now set the nominal temperature to the new value.
     if (ICP_set(m_anum, "nominal_temp", &new_temp) != 0) {
 
@@ -380,7 +382,7 @@ throw(CORBA::SystemException)
                         m_assets.begin(), m_assets.end(),
                         StrFinder(sc, search_str)
                     );
-            
+
             // While there are matches...
             while (where != m_assets.end()) {
                 if (num_found == 0) {

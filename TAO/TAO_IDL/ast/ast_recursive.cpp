@@ -82,10 +82,40 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_union.h"
 #include "utl_stack.h"
 #include "global_extern.h"
+#include "nr_extern.h"
 
 ACE_RCSID (ast, 
            ast_recursive, 
            "$Id$")
+
+idl_bool
+AST_illegal_interface_recursion (AST_Decl *t)
+{
+  // Can't be 0 since we know we have an interface or valuetype.
+  AST_Decl *d = 0;
+
+  // If we encounter the argument in an enclosing scope, it's illegal.
+  for (UTL_ScopeStackActiveIterator i (idl_global->scopes ());
+       !i.is_done ();
+       i.next ())
+    {
+      d = ScopeAsDecl (i.item ());
+      
+      // Exceptions cannot be recursive, but may contain a reference
+      // to the interface they are defined in.
+      if (d->node_type () == AST_Decl::NT_except)
+        {
+          return I_FALSE;
+        }
+      
+      if (d == t)
+        {
+          return I_TRUE;
+        }
+    }
+
+  return I_FALSE;
+}
 
 idl_bool
 AST_illegal_recursive_type (AST_Decl *t)
@@ -94,11 +124,28 @@ AST_illegal_recursive_type (AST_Decl *t)
     {
       return I_FALSE;
     }
-
-  // We only care about structs and unions.
-  if (t->node_type () != AST_Decl::NT_struct
-      && t->node_type () != AST_Decl::NT_union)
+  
+  AST_Decl::NodeType nt;
+  AST_Type *ut = AST_Type::narrow_from_decl (t);
+  
+  if (ut != 0)
     {
+      ut = ut->unaliased_type ();
+      nt = ut->node_type ();
+    }
+  else
+    {
+      nt = t->node_type ();
+    }
+    
+  if (nt == AST_Decl::NT_interface)
+    {
+      // Check for interface->struct/union->....->interface nesting.
+      return AST_illegal_interface_recursion (t);
+    }
+  else if (nt != AST_Decl::NT_struct && nt != AST_Decl::NT_union)
+    {
+      // Structs and unions fall through to the check below.
       return I_FALSE;	// NOT ILLEGAL.
     }
 

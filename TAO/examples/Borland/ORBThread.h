@@ -3,8 +3,7 @@
 #ifndef ORBThreadH
 #define ORBThreadH
 //---------------------------------------------------------------------------
-#include <Classes.hpp>
-#include <tao/corba.h>
+#include <tao/ORB.h>
 //---------------------------------------------------------------------------
 class PACKAGE TORBThread : public TThread
 {

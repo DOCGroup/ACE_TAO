@@ -26,6 +26,9 @@
 
 #if defined (ACE_HAS_THREADS)
 
+#include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Condition_Recursive_Thread_Mutex.h"
+
 // Forward decl.
 template <class T> class ACE_Future_Holder;
 template <class T> class ACE_Future_Observer;

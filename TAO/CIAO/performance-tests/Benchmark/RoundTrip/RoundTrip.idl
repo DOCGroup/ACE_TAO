@@ -12,6 +12,7 @@
 #define CIAO_ROUNDTRIP_IDL
 
 #include "../Benchmark.idl"
+#include <Components.idl>
 
 module Benchmark
 {

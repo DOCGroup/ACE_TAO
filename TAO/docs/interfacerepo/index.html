@@ -23,7 +23,7 @@
 
 Point of contact: <a href="mailto: parsons@cs.wustl.edu">Jeff Parsons</a>
 
-<p>Last Update: April 26, 2002 </p>
+<p>Last Update: October 21, 2003 </p>
 </center>
 
 
@@ -40,7 +40,7 @@ object and invoke requests using the DII.
 
 <ul>
 
-  <li><p>Fully compliant with OMG 2.4.2 spec.</p>
+  <li><p>Fully compliant with OMG 3.0 spec.</p>
   </li>
 
   <li><p>Fully compatible with CorbaScript.</p>
@@ -91,18 +91,6 @@ code.</li><p>
 
 <li> Add support for recursive structs and unions to the IFR, and for
 their typecodes to the TypeCodeFactory.</li><p>
-
-<li> When Object By Value is fully supported in TAO (support is rudimentary at
-present), implement methods for classes ValueDef and ValueMemberDef in the IFR,
-and implement create_value_tc in TypeCodeFactory.</li><p>
-
-<li> When component support is added to TAO, implement methods for ComponentDef,
-ComponentRepository and related classes in the IFR, and create_component_tc and
-create_home_tc in TypeCodeFactory.</li><p>
-
-<li> Try alternate methods of creating object references from repository entries,
-other than the servant locator method used at present. An particularly interesting
-possibility is to use a generic servant with perfect hashing to look up the operations.</li><p>
 
 <li> Add capability to resize the hash maps that provide low-level storage for the IFR, when the hash map resize feature is added to ACE.</li><p>
 
@@ -209,5 +197,15 @@ tao_ifr -ORBInitRef InterfaceRepository=corbaloc:iiop:[hostname]:[port]/Interfac
 <li> A command line option -Si has been added to tao_ifr which suppresses processing of included IDL files. The default is to process them. </li><p>
 
 <li> tao_ifr can now process multiple IDL files per execution portably on all supported platforms. File names and command line options may occur in any order on the command line.</li><p>
+
+<li> Underlying mechanism of access to the IFR has been changed from servant
+     locator (where a servant is created and destroyed for each access
+     invocation) to default servant (where persistent servants and their
+     associated POAs are created at IFR startup and destroyed at shutdown).
+     </li><p>
+
+<li> IFR now supports valuetypes, components, homes and eventtypes. A test 
+     for this support has been added in TAO/orbsvcs/tests/InterfaceRepo/IDL3_Test.
+     </li><p>
 
 </ul>

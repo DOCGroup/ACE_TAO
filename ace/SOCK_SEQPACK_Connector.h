@@ -275,7 +275,7 @@ public:
   int reset_new_handle (ACE_HANDLE handle);
 
   // = Meta-type info
-  typedef ACE_INET_Addr PEER_ADDR;
+  typedef ACE_Multihomed_INET_Addr PEER_ADDR;
   typedef ACE_SOCK_SEQPACK_Association PEER_STREAM;
 
   /// Dump the state of an object.

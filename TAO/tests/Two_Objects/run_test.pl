@@ -12,7 +12,7 @@ $iorfile = PerlACE::LocalFile ("test.ior");
 unlink $iorfile;
 $status = 0;
 
-$SV = new PerlACE::Process ("server", "-o $iorfile -t 30 -l 100000");
+$SV = new PerlACE::Process ("server", "-o $iorfile -t 10 -l 100000");
 $CL = new PerlACE::Process ("client", " -r file://$iorfile");
 
 $SV->Spawn ();

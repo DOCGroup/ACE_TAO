@@ -36,7 +36,7 @@ unlink $pfile;
 ################################################################################
 ## Start the implementation Repository Locator
 
-$IMR_LOCATOR->Arguments ("-o $imr_locator_ior -d ");
+$IMR_LOCATOR->Arguments ("-o $imr_locator_ior ");
 $IMR_LOCATOR->Spawn ();
 
 if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {
@@ -132,7 +132,7 @@ unlink $imr_activator_ior;
 ################################################################################
 ## Restart the Implementation Repository in locked mode.
 
-$IMR_LOCATOR->Arguments ("-o $imr_locator_ior -d ");
+$IMR_LOCATOR->Arguments ("-o $imr_locator_ior ");
 $IMR_LOCATOR->Spawn ();
 
 if (PerlACE::waitforfile_timed ($imr_locator_ior, 10) == -1) {

@@ -12,14 +12,18 @@
 
 DIRS  = CDR \
 	AMH_Exceptions \
+	Abstract_Interface \
 	Codec \
         BiDirectional \
 	BiDirectional_NestedUpcall \
 	Bug_1269_Regression \
+	Bug_1693_Test \
 	Bug_1270_Regression \
 	Bug_1020_Regression \
 	Bug_1361_Regression \
 	Bug_1020_Basic_Regression \
+	Bug_1568_Regression \
+	Bug_1670_Regression \
 	Bug_1482_Regression \
 	Bug_1551_Regression \
 	Collocation_Tests \
@@ -100,6 +104,7 @@ DIRS  = CDR \
 	Two_Objects \
 	Nested_Upcall_Crash \
 	RTScheduling \
+	Servant_To_Reference_Test \
 	UNKNOWN_Exception
 
 ifndef TAO_ROOT

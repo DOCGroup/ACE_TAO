@@ -98,6 +98,7 @@ RB_Tree_Test
 Reactor_Dispatch_Order_Test
 Reactor_Exceptions_Test
 Reactor_Notify_Test: !ST
+Reactor_Notification_Queue_Test
 Reactor_Performance_Test: !chorus
 Reactor_Registration_Test
 Reactor_Timer_Test
@@ -122,7 +123,9 @@ Simple_Message_Block_Test: !chorus
 Svc_Handler_Test
 TP_Reactor_Test: ALL
 TSS_Test
+TSS_Static_Test
 Task_Test
+Task_Ex_Test
 Thread_Manager_Test: !Unicos
 Thread_Mutex_Test: !chorus
 Thread_Pool_Reactor_Resume_Test: OTHER !ST
@@ -141,3 +144,11 @@ Unbounded_Set_Test_Ex
 Upgradable_RW_Test: !chorus
 Vector_Test
 WFMO_Reactor_Test
+INET_Addr_Test_IPV6
+Max_Default_Port_Test_IPV6
+Multicast_Test_IPV6
+Multihomed_INET_Addr_Test_IPV6
+Proactor_Test_IPV6
+SOCK_Send_Recv_Test_IPV6
+SOCK_Dgram_Test
+SOCK_Test_IPv6

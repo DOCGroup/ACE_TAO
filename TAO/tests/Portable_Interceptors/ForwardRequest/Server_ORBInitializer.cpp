@@ -10,6 +10,8 @@ ACE_RCSID (ForwardRequest,
 
 #include "Server_Request_Interceptor.h"
 
+#include "tao/ORB_Constants.h"
+
 Server_ORBInitializer::Server_ORBInitializer (void)
   : server_interceptor_ ()
 {

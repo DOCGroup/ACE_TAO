@@ -23,14 +23,21 @@ class McastHello
 public:
   /// Constructor
   McastHello (CORBA::ORB_ptr orb,
-              int instance,
-              CORBA::Boolean &status);
+              int instance);
 
   // = The skeleton methods
   virtual void send_forty_two (CORBA::Long forty_two ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  /// Return whether all test requests have been received successfully.
+  CORBA::Boolean get_status ();
+
+  // Silence the builds
+  void send_large_octet_array (const Test::Octets & 
+                               ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -41,8 +48,11 @@ private:
   /// The instance number. (Useful when debugging multiple servants)
   int instance_;
 
-  /// Keep track of the status of what events that we've received.
-  CORBA::Boolean &status_;
+  /// Track the success/failure of the small request.
+  CORBA::Boolean small_request_status_;
+
+  /// Track the success/failure of the large request.
+  CORBA::Boolean large_request_status_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

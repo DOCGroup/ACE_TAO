@@ -1,6 +1,9 @@
 // $Id$
 
 #include "ace/Configuration_Import_Export.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_ctype.h"
+#include "ace/OS_NS_string.h"
 
 ACE_Config_ImpExp_Base::ACE_Config_ImpExp_Base (ACE_Configuration& config)
   : config_ (config)
@@ -34,11 +37,34 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
   if (!in)
     return -1;
 
-  // @@ XXX - change this to a dynamic buffer
-  ACE_TCHAR buffer[4096];
+  u_int buffer_size = 4096;
+  u_int read_pos = 0;
+  ACE_TCHAR *buffer;
+  ACE_NEW_RETURN (buffer, ACE_TCHAR[buffer_size], -1);
   ACE_Configuration_Section_Key section;
-  while (ACE_OS::fgets (buffer, 4096, in))
+  ACE_TCHAR *end = 0;
+
+  while (ACE_OS::fgets (buffer+read_pos, buffer_size - read_pos, in))
     {
+      // Check if we got all the line.
+      end = ACE_OS::strrchr (buffer + read_pos,
+                             ACE_LIB_TEXT ('\n')); // look for end of line
+      if (!end) // we havn't reach the end of the line yet
+        {
+          // allocate a new buffer - double size the previous one
+          ACE_TCHAR *temp_buffer;
+          ACE_NEW_RETURN (temp_buffer, ACE_TCHAR[buffer_size * 2], -1);
+
+          // copy the beginnning of the line
+          ACE_OS::memcpy (temp_buffer, buffer, buffer_size);
+          read_pos = buffer_size - 1;
+          buffer_size *= 2;
+          delete [] buffer;
+          buffer = temp_buffer;
+          continue;
+        }
+      read_pos = 0;
+
       // Check for a comment
       if (buffer[0] == ACE_LIB_TEXT (';') || buffer[0] == ACE_LIB_TEXT ('#'))
         continue;
@@ -46,10 +72,11 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
       if (buffer[0] == ACE_LIB_TEXT ('['))
         {
           // We have a new section here, strip out the section name
-          ACE_TCHAR* end = ACE_OS::strrchr (buffer, ACE_LIB_TEXT (']'));
+          end = ACE_OS::strrchr (buffer, ACE_LIB_TEXT (']'));
           if (!end)
             {
               ACE_OS::fclose (in);
+              delete [] buffer;
               return -3;
             }
           *end = 0;
@@ -57,6 +84,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           if (config_.expand_path (config_.root_section (), buffer + 1, section, 1))
             {
               ACE_OS::fclose (in);
+              delete [] buffer;
               return -3;
             }
           continue;
@@ -65,7 +93,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
       if (buffer[0] == ACE_LIB_TEXT ('"'))
         {
           // we have a value
-          ACE_TCHAR* end = ACE_OS::strchr (buffer+1, '"');
+          end = ACE_OS::strchr (buffer+1, '"');
           if (!end)  // no closing quote, not a value so just skip it
             continue;
 
@@ -85,6 +113,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
               if (config_.set_string_value (section, name, end))
                 {
                   ACE_OS::fclose (in);
+                  delete [] buffer;
                   return -4;
                 }
             }
@@ -96,6 +125,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
               if (config_.set_integer_value (section, name, value))
                 {
                   ACE_OS::fclose (in);
+                  delete [] buffer;
                   return -4;
                 }
             }
@@ -125,6 +155,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
                 {
                   ACE_OS::fclose (in);
                   delete [] data;
+                  delete [] buffer;
                   return -4;
                 }
               else
@@ -142,10 +173,11 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           // processing a file in the old format.
           // Try and process the line as such and if it fails,
           // return an error
-          int rc;
-          if ((rc = process_previous_line_format (buffer, section)) != 0)
+          int rc = process_previous_line_format (buffer, section);
+          if (rc != 0)
             {
               ACE_OS::fclose (in);
+              delete [] buffer;
               return rc;
             }
         }             // end if maybe old format
@@ -154,10 +186,12 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
   if (ferror (in))
     {
       ACE_OS::fclose (in);
+      delete [] buffer;
       return -1;
     }
 
   ACE_OS::fclose (in);
+  delete [] buffer;
   return 0;
 }
 
@@ -306,7 +340,7 @@ ACE_Registry_ImpExp::process_previous_line_format (ACE_TCHAR* buffer,
                                                    ACE_Configuration_Section_Key& section)
 {
   // Chop any cr/lf at the end of the line.
-  ACE_TCHAR *endp = ACE_OS_String::strpbrk (buffer, ACE_LIB_TEXT ("\r\n"));
+  ACE_TCHAR *endp = ACE_OS::strpbrk (buffer, ACE_LIB_TEXT ("\r\n"));
   if (endp != 0)
     *endp = '\0';
 
@@ -597,15 +631,15 @@ ACE_Ini_ImpExp::squish (ACE_TCHAR *src)
     return 0;
 
   // Start at the end and work backwards over all whitespace.
-  for (cp = src + ACE_OS_String::strlen (src) - 1;
+  for (cp = src + ACE_OS::strlen (src) - 1;
        cp != src;
        --cp)
-    if (!ACE_OS_String::ace_isspace (*cp))
+    if (!ACE_OS::ace_isspace (*cp))
       break;
   cp[1] = '\0';          // Chop trailing whitespace
 
   // Now start at the beginning and move over all whitespace.
-  for (cp = src; ACE_OS_String::ace_isspace (*cp); ++cp)
+  for (cp = src; ACE_OS::ace_isspace (*cp); ++cp)
     continue;
 
   return cp;

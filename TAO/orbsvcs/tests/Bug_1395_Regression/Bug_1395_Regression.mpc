@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Server): taoserver {
   Source_Files {
     Test_i.cpp

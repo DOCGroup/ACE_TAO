@@ -19,6 +19,8 @@
 
 // IDL generated header
 #include "simpleS.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
 

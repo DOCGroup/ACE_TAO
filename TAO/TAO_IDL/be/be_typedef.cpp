@@ -56,6 +56,34 @@ be_typedef::be_typedef (AST_Type *bt,
     be_type (AST_Decl::NT_typedef,
              n)
 {
+  AST_Type *pbt = this->primitive_base_type ();
+  AST_Decl::NodeType nt = pbt->node_type ();
+
+  if (nt == AST_Decl::NT_sequence)
+    {
+      pbt->anonymous (I_FALSE);
+    }
+}
+
+void
+be_typedef::seq_elem_tmplinst (idl_bool val)
+{
+  this->be_type::seq_elem_tmplinst (val);
+  this->primitive_base_type ()->seq_elem_tmplinst (val);
+}
+
+void
+be_typedef::seen_in_sequence (idl_bool val)
+{
+  this->be_type::seen_in_sequence (val);
+  this->primitive_base_type ()->seen_in_sequence (val);
+}
+
+void
+be_typedef::seen_in_operation (idl_bool val)
+{
+  this->be_type::seen_in_operation (val);
+  this->primitive_base_type ()->seen_in_operation (val);
 }
 
 // Given a typedef node, traverse the chain of base types until they are no

@@ -4,8 +4,15 @@
 ACE_INLINE
 TAO_Endpoint::TAO_Endpoint (CORBA::ULong tag,
                             CORBA::Short priority)
-  : tag_ (tag),
-    priority_ (priority)
+  : addr_lookup_lock_ ()
+  // @@Would be a tragedy if the hash value of this endpoint is 0, in
+  // which  case this optimizaton wouldn't work. We can get around
+  // that using a bool. But we don't want to increase the runtime
+  // memory
+  , hash_val_ (0)
+  , tag_ (tag)
+  , priority_ (priority)
+
 {
 }
 

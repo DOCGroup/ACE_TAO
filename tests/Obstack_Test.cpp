@@ -16,7 +16,7 @@
 //
 // ============================================================================
 
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Obstack.h"
 #include "ace/Log_Msg.h"
 #include "test_config.h"
@@ -35,7 +35,7 @@ int run_main (int, ACE_TCHAR *[])
   const ACE_TCHAR str2[] = ACE_TEXT ("It's fleece was white as snow; but....");
   ACE_Obstack_T<ACE_TCHAR> stack (sizeof (str1) + 1);
 
-  for (size_t i = 0; i < ACE_OS_String::strlen (str1); i++)
+  for (size_t i = 0; i < ACE_OS::strlen (str1); i++)
     stack.grow_fast (str1[i]);
 
   ACE_TCHAR *str = stack.freeze ();
@@ -45,7 +45,7 @@ int run_main (int, ACE_TCHAR *[])
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("freeze failed!\n")));
       ++errors;
     }
-  else if (ACE_OS_String::strcmp (str, str1) != 0)
+  else if (ACE_OS::strcmp (str, str1) != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT("Lost first string; expected: %s, have: %s\n"),
@@ -53,7 +53,7 @@ int run_main (int, ACE_TCHAR *[])
       ++errors;
     }
 
-  for (size_t j = 0; j < ACE_OS_String::strlen (str2); ++j)
+  for (size_t j = 0; j < ACE_OS::strlen (str2); ++j)
     stack.grow (str2[j]);
 
   ACE_TCHAR* temp = stack.freeze();
@@ -71,7 +71,7 @@ int run_main (int, ACE_TCHAR *[])
     ++errors;
     }
 
-  for (size_t k = 0; k < ACE_OS_String::strlen (str1); ++k)
+  for (size_t k = 0; k < ACE_OS::strlen (str1); ++k)
     stack.grow (str1[k]);
 
   ACE_TCHAR* tmp = stack.freeze ();
@@ -80,7 +80,7 @@ int run_main (int, ACE_TCHAR *[])
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("freeze failed!\n")));
     ++errors;
   }
-  else if (ACE_OS_String::strcmp (tmp, str1) != 0)
+  else if (ACE_OS::strcmp (tmp, str1) != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Lost third string; expected: %s, have: %s\n"),
@@ -90,7 +90,7 @@ int run_main (int, ACE_TCHAR *[])
 
   stack.unwind (temp);
 
-  for (size_t l = 0; l < ACE_OS_String::strlen (str2); ++l)
+  for (size_t l = 0; l < ACE_OS::strlen (str2); ++l)
     stack.grow (str2[l]);
 
   temp = stack.freeze();

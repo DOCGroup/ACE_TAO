@@ -30,53 +30,41 @@ RSC=rc.exe
 
 !IF  "$(CFG)" == "CC_client - Win32 Release"
 
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "Release"
-# PROP BASE Intermediate_Dir "Release"
-# PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "Release"
-# PROP Intermediate_Dir "Release"
+# PROP Intermediate_Dir "Release\CC_client"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\..\..\\" /I "..\..\..\..\\" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\..\orbsvcs" /I "..\..\.." /I "..\..\..\tao" /I "..\..\..\.." /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409 /d "NDEBUG"
-# ADD RSC /l 0x409 /d "NDEBUG"
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409 /i "..\..\..\orbsvcs" /i "..\..\.." /i "..\..\..\tao" /i "..\..\..\.." /d "NDEBUG"
 BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_IORTable.lib TAO_CosNaming.lib TAO_CosConcurrency.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\orbsvcs" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\IORTable" /libpath:"..\..\..\..\ace"
+# ADD BASE LINK32 /machine:IX86
+# ADD LINK32 advapi32.lib user32.lib TAO_CosNaming.lib TAO_Svc_Utils.lib TAO_IORTable.lib TAO_CosConcurrency.lib TAO_PortableServer.lib TAO_IORInterceptor.lib TAO_Valuetype.lib TAO_ObjRefTemplate.lib TAO.lib ACE.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\lib" /libpath:"..\..\..\tao\IORTable" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\Valuetype" /libpath:"..\..\..\tao\IORInterceptor" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\orbsvcs\orbsvcs" /version:1.3.4
+# SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "CC_client - Win32 Debug"
 
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "Debug"
-# PROP BASE Intermediate_Dir "Debug"
-# PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
-# PROP Intermediate_Dir "Debug"
+# PROP Output_Dir "."
+# PROP Intermediate_Dir "Debug\CC_client"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /I "..\..\..\\" /I "..\..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D TAO_ORBSVCS_HAS_DLL=1 /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Gy /I "..\..\..\orbsvcs" /I "..\..\.." /I "..\..\..\tao" /I "..\..\..\.." /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
+# ADD BASE RSC /l 0x409
+# ADD RSC /l 0x409 /i "..\..\..\orbsvcs" /i "..\..\.." /i "..\..\..\tao" /i "..\..\..\.." /d "_DEBUG"
 BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib TAOd.lib TAO_PortableServerd.lib TAO_IORTabled.lib TAO_CosNamingd.lib TAO_CosConcurrencyd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\orbsvcs" /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\IORTable" /libpath:"..\..\..\..\ace"
+# ADD BASE LINK32 /machine:IX86
+# ADD LINK32 advapi32.lib user32.lib TAO_CosNamingd.lib TAO_Svc_Utilsd.lib TAO_IORTabled.lib TAO_CosConcurrencyd.lib TAO_PortableServerd.lib TAO_IORInterceptord.lib TAO_Valuetyped.lib TAO_ObjRefTemplated.lib TAOd.lib ACEd.lib /nologo /subsystem:console /incremental:no /debug /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\tao\PortableServer" /libpath:"..\..\..\tao\Valuetype" /libpath:"..\..\..\tao\IORInterceptor" /libpath:"..\..\..\tao\ObjrefTemplate" /libpath:"..\..\..\tao\IORTable" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs" /version:1.3.4
+# SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
 
@@ -84,61 +72,77 @@ LINK32=link.exe
 
 # Name "CC_client - Win32 Release"
 # Name "CC_client - Win32 Debug"
+# Begin Group "Source Files"
+
+# PROP Default_Filter "cpp;cxx;c"
 # Begin Source File
 
-SOURCE=.\CC_client.cpp
+SOURCE=".\CC_client.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=.\CC_client.h
+SOURCE=".\CC_command.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=.\CC_command.cpp
+SOURCE=".\CC_command.tab.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=.\CC_command.h
+SOURCE=".\CC_naming_service.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=.\CC_command.tab.cpp
+SOURCE=".\CC_test_utils.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=.\CC_command.tab.h
+SOURCE=".\CC_tests.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=.\CC_naming_service.cpp
+SOURCE=".\lex.CC_command.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=.\CC_naming_service.h
+SOURCE=".\tmplinst.cpp"
+# End Source File
+# End Group
+# Begin Group "Header Files"
+
+# PROP Default_Filter "h;hpp;hxx;hh"
+# Begin Source File
+
+SOURCE=".\CC_client.h"
 # End Source File
 # Begin Source File
 
-SOURCE=.\CC_test_utils.cpp
+SOURCE=".\CC_command.h"
 # End Source File
 # Begin Source File
 
-SOURCE=.\CC_test_utils.h
+SOURCE=".\CC_command.tab.h"
 # End Source File
 # Begin Source File
 
-SOURCE=.\CC_tests.cpp
+SOURCE=".\CC_naming_service.h"
 # End Source File
 # Begin Source File
 
-SOURCE=.\CC_tests.h
+SOURCE=".\CC_test_utils.h"
 # End Source File
 # Begin Source File
 
-SOURCE=.\lex.CC_command.cpp
+SOURCE=".\CC_tests.h"
 # End Source File
+# End Group
+# Begin Group "Documentation"
+
+# PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\tmplinst.cpp
+SOURCE=".\README"
 # End Source File
+# End Group
 # End Target
 # End Project

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS_NS_string.h"
 #include "Event_Analyzer.h"
 
 ACE_RCSID(UPIPE_Event_Server, Event_Analyzer, "$Id$")

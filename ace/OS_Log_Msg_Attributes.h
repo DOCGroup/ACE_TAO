@@ -10,18 +10,17 @@
  */
 //=============================================================================
 
+#include "ace/config-all.h"
 
 #ifndef ACE_OS_LOG_MSG_ATTRIBUTES_H
 #define ACE_OS_LOG_MSG_ATTRIBUTES_H
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_Export.h"
+#include "ace/ACE_export.h"
 #include "ace/os_include/os_stdio.h"
 #include "ace/iosfwd.h"
 
@@ -35,7 +34,7 @@
  * The contents of the class must be made available to the OS layer,
  * because they are part of the thread descriptor.
  */
-class ACE_OS_Export ACE_OS_Log_Msg_Attributes
+class ACE_Export ACE_OS_Log_Msg_Attributes
 {
 public:
   /// Constructor

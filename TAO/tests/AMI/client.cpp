@@ -21,8 +21,8 @@
 #include "ace/Task.h"
 #include "ami_testS.h"
 
-ACE_RCSID (AMI, 
-           client, 
+ACE_RCSID (AMI,
+           client,
            "$Id$")
 
 const char *ior = "file://test.ior";
@@ -168,6 +168,22 @@ public:
                   "Callback method <set_yadda_excep> called: \n"));
     };
   ~Handler (void) {};
+
+  void inout_arg_test (
+      const char *
+      ACE_ENV_ARG_DECL_NOT_USED
+      )
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    ACE_DEBUG ((LM_DEBUG,
+                "Callback method <set_yadda_excep> called: \n"));
+  }
+
+  void inout_arg_test_excep (A::AMI_AMI_TestExceptionHolder *
+                             ACE_ENV_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+  }
 };
 
 // ReplyHandler.

@@ -15,12 +15,18 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:443
+// be/be_codegen.cpp:390
 
 #ifndef _TAO_IDL_ORIG_MESSAGINGS_H_
 #define _TAO_IDL_ORIG_MESSAGINGS_H_
@@ -32,11 +38,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Collocation_Proxy_Broker.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
-#include "tao/PortableServer/Collocated_Object.h"
-#include "tao/PortableServer/ThruPOA_Object_Proxy_Impl.h"
-#include "tao/PortableServer/Direct_Object_Proxy_Impl.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -50,12 +54,14 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:49
+// be/be_visitor_module/module_sh.cpp:49
 
-TAO_NAMESPACE  POA_Messaging
+namespace POA_Messaging
 {
+  
+  
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:86
+  // be/be_visitor_interface/interface_sh.cpp:90
   
   class ReplyHandler;
   typedef ReplyHandler *ReplyHandler_ptr;
@@ -71,6 +77,11 @@ TAO_NAMESPACE  POA_Messaging
     ReplyHandler (void);
   
   public:
+    // Useful for template programming.
+    typedef ::Messaging::ReplyHandler _stub_type;
+    typedef ::Messaging::ReplyHandler_ptr _stub_ptr_type;
+    typedef ::Messaging::ReplyHandler_var _stub_var_type;
+    
     ReplyHandler (const ReplyHandler& rhs);
     virtual ~ReplyHandler (void);
     
@@ -122,48 +133,45 @@ TAO_NAMESPACE  POA_Messaging
       );
     
     virtual const char* _interface_repository_id (void) const;
-  };  
+  };
   
   ///////////////////////////////////////////////////////////////////////
   //               Strategized Proxy Broker Declaration 
   //
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+  // be/be_visitor_interface/strategized_proxy_broker_sh.cpp:36
   
-  class TAO_Messaging_Export _TAO_ReplyHandler_Strategized_Proxy_Broker : public virtual ::Messaging::_TAO_ReplyHandler_Proxy_Broker
+  class TAO_Messaging_Export _TAO_ReplyHandler_Strategized_Proxy_Broker
+    : public virtual TAO::Collocation_Proxy_Broker
   {
   public: 
     _TAO_ReplyHandler_Strategized_Proxy_Broker (void);
     
     virtual ~_TAO_ReplyHandler_Strategized_Proxy_Broker (void);
     
-    virtual ::Messaging::_TAO_ReplyHandler_Proxy_Impl &select_proxy (
-      ::Messaging::ReplyHandler *object
-      ACE_ENV_ARG_DECL
-    );
-  
-  private:
-    // Helper methods that takes care to create the proxy
-    // as soon as their use is necessary.
-    void create_proxy (
-      int collocation_strategy
-      ACE_ENV_ARG_DECL
-    );
+    TAO::Collocation_Strategy
+    get_strategy (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL
+      )
+      ACE_THROW_SPEC ((CORBA::SystemException));
     
-    // Caches the proxy implementations. The proxy implementation
-    // are totally stateless, and those can be shared by all the
-    // instances of a given IDL interface type.
-    ::Messaging::_TAO_ReplyHandler_Proxy_Impl
-    *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
+    void
+    dispatch (
+        CORBA::Object_ptr obj,
+        CORBA::Object_out forward_obj,
+        TAO::Argument ** args,
+        int num_args,
+        const char * op,
+        size_t op_len,
+        TAO::Collocation_Strategy strategy
+        ACE_ENV_ARG_DECL
+      )
+      ACE_THROW_SPEC ((CORBA::Exception));
     
-    TAO_SYNCH_MUTEX mutex_;
-    // This funxtion is used to get an handle to the unique instance
-    // of the Strategized Proxy Broker that is available for a given
-    // interface.
-  
-  public:
-    static _TAO_ReplyHandler_Strategized_Proxy_Broker *the_TAO_ReplyHandler_Strategized_Proxy_Broker (void);
+    static _TAO_ReplyHandler_Strategized_Proxy_Broker *
+    the_TAO_ReplyHandler_Strategized_Proxy_Broker (void);
   };
   
   //
@@ -172,38 +180,38 @@ TAO_NAMESPACE  POA_Messaging
   
   
   ///////////////////////////////////////////////////////////////////////
-  //                    ThruPOA  Impl. Declaration
+  //                    ThruPOA Proxy Impl. Declaration
   //
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+  // be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
   
-  class TAO_Messaging_Export _TAO_ReplyHandler_ThruPOA_Proxy_Impl : 
-    public virtual ::Messaging::_TAO_ReplyHandler_Proxy_Impl,
-    public virtual TAO_ThruPOA_Object_Proxy_Impl
-  {
-  public:
-    _TAO_ReplyHandler_ThruPOA_Proxy_Impl (void);
-    
-    virtual ~_TAO_ReplyHandler_ThruPOA_Proxy_Impl (void) {}
-  };
+  class TAO_Messaging_Export _TAO_ReplyHandler_ThruPOA_Proxy_Impl
+{
+public:
+  _TAO_ReplyHandler_ThruPOA_Proxy_Impl (void);
   
-  //
-  //                ThruPOA  Proxy Impl. Declaration
-  ///////////////////////////////////////////////////////////////////////
+  virtual ~_TAO_ReplyHandler_ThruPOA_Proxy_Impl (void) {}
+};
+
+//
+//                ThruPOA  Proxy Impl. Declaration
+///////////////////////////////////////////////////////////////////////
+
+// TAO_IDL - Generated from 
+// be/be_visitor_interface/direct_proxy_impl_sh.cpp:31
+
 ///////////////////////////////////////////////////////////////////////
 //                    Direct  Impl. Declaration
 //
 
-class TAO_Messaging_Export _TAO_ReplyHandler_Direct_Proxy_Impl : 
-  public virtual Messaging::_TAO_ReplyHandler_Proxy_Impl,
-  public virtual TAO_Direct_Object_Proxy_Impl
+class TAO_Messaging_Export _TAO_ReplyHandler_Direct_Proxy_Impl
 {
 public:
   _TAO_ReplyHandler_Direct_Proxy_Impl (void);
   
-  virtual ~_TAO_ReplyHandler_Direct_Proxy_Impl (void) {}};
-
+  virtual ~_TAO_ReplyHandler_Direct_Proxy_Impl (void) {}
+};
 
 //
 //                Direct  Proxy Impl. Declaration
@@ -212,13 +220,12 @@ public:
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:80
+// be/be_visitor_module/module_sh.cpp:80
 
-}
-TAO_NAMESPACE_CLOSE // module Messaging
+} // module Messaging
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1044
+// be/be_codegen.cpp:946
 
 #include "MessagingS_T.h"
 

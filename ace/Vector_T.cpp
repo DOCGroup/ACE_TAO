@@ -55,16 +55,32 @@ void ACE_Vector<T, DEFAULT_SIZE>::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
+// Compare this vector with <s> for equality.
+template <class T, size_t DEFAULT_SIZE> int
+ACE_Vector<T, DEFAULT_SIZE>::operator== (const ACE_Vector<T, DEFAULT_SIZE> &s) const
+{
+  if (this == &s)
+    return 1;
+  else if (this->size () != s.size ())
+    return 0;
+
+  for (size_t slot = 0; slot < s.size (); slot++)
+    if ((*this)[slot] != s[slot])
+      return 0;
+
+  return 1;
+}
+
 #if 0
 template<class T>
 int compare(const ACE_Vector<T>& v1,
-	     const ACE_Vector<T>& v2,
-             const size_t from_ndx,
-	     const size_t to_ndx)
+            const ACE_Vector<T>& v2,
+            const size_t from_ndx,
+            const size_t to_ndx)
 {
   size_t last1 = v1.size () - 1;
   size_t last2 = v2.size () - 1;
-  if(last1 < from_ndx || last1 < to_ndx)
+  if (last1 < from_ndx || last1 < to_ndx)
     {
       return false;
     }
@@ -94,9 +110,9 @@ int compare(const ACE_Vector<T>& v1,
 
 template<class T>
 int partial_compare(const ACE_Vector<T>& v1,
-		     const ACE_Vector<T>& v2,
-                     const size_t from_ndx,
-		     const size_t to_ndx)
+		    const ACE_Vector<T>& v2,
+		    const size_t from_ndx,
+		    const size_t to_ndx)
 {
   size_t last1 = v1.size () - 1;
   size_t last2 = v2.size () - 1;
@@ -123,5 +139,24 @@ int partial_compare(const ACE_Vector<T>& v1,
   return true;
 }
 #endif
+
+// ****************************************************************
+
+template <class T, size_t DEFAULT_SIZE> int
+ACE_Vector_Iterator<T, DEFAULT_SIZE>::next (T *&item)
+{
+  // ACE_TRACE ("ACE_Vector_Iterator<T>::next");
+
+  if (this->done ())
+    {
+      item = 0;
+      return 0;
+    }
+  else
+    {
+      item = &vector_[current_];
+      return 1;
+    }
+}
 
 #endif /* ACE_VECTOR_T_C */

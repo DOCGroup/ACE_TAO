@@ -18,10 +18,12 @@
 // ==========================================================================
 
 #include "test_config.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Stream.h"
+#include "ace/OS_NS_sys_utsname.h"
+#include "ace/OS_NS_netdb.h"
 
 ACE_RCSID(tests, SOCK_Connector_Test, "SOCK_Connector_Test.cpp,v 4.34 2000/04/23 21:29:17 brunsch Exp")
 

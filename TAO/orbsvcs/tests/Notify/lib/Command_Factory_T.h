@@ -13,13 +13,12 @@
 #define TAO_COMMAND_FACTORY_T_H
 #include /**/ "ace/pre.h"
 
-#include "notify_test_export.h"
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Config.h"
 #include "ace/Service_Object.h"
 #include "Command_Factory.h"
 
@@ -36,7 +35,7 @@ class TAO_Notify_Tests_Command;
 #undef COMMAND
 #endif
 template <class COMMAND>
-class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Command_Factory_T : public TAO_Notify_Tests_Command_Factory, public ACE_Service_Object
+class TAO_Notify_Tests_Command_Factory_T : public TAO_Notify_Tests_Command_Factory, public ACE_Service_Object
 {
 public:
   /// Constuctor

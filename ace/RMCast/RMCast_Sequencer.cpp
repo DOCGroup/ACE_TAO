@@ -8,6 +8,8 @@
 # include "RMCast_Sequencer.i"
 #endif /* ! __ACE_INLINE__ */
 
+#include "ace/Guard_T.h"
+
 ACE_RCSID(ace, RMCast_Sequencer, "$Id$")
 
 ACE_RMCast_Sequencer::~ACE_RMCast_Sequencer (void)

@@ -15,7 +15,6 @@ ACE_RCSID(ace, Asynch_Acceptor, "$Id$")
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
 // This only works on platforms that support async i/o.
 
-#include "ace/OS.h"
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
 #include "ace/INET_Addr.h"
@@ -96,7 +95,9 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
   static ACE_INET_Addr sa (ACE_sap_any_cast (const ACE_INET_Addr &));
 
   if (address == sa &&
-      ACE_Sock_Connect::bind_port (this->listen_handle_) == -1)
+      ACE_Sock_Connect::bind_port (this->listen_handle_,
+	                           INADDR_ANY,
+				   address.get_type()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("%p\n"),
                        ACE_LIB_TEXT ("ACE::bind_port")),

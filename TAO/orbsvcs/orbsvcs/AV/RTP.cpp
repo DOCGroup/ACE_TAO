@@ -39,6 +39,8 @@
 #include "Nil.h"
 
 #include "tao/debug.h"
+#include "ace/OS_NS_arpa_inet.h"
+#include "ace/OS_NS_strings.h"
 
 // RTP_Packet
 

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "RT_Transport_Descriptor.h"
+#include "ace/OS_Memory.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "RT_Transport_Descriptor.inl"

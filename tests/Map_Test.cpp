@@ -21,7 +21,6 @@
 #include "Map_Test.h"
 #include "ace/Map_T.h"
 #include "ace/Profile_Timer.h"
-#include "ace/Synch.h"
 
 ACE_RCSID(tests, Map_Test, "$Id$")
 

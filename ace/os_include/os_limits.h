@@ -101,6 +101,24 @@ extern "C"
 #  define PIPE_BUF 5120
 #endif /* PIPE_BUF */
 
+#if defined (ACE_HAS_POSIX_REALTIME_SIGNALS)
+  // = Giving unique ACE scoped names for some important
+  // RTSignal-Related constants. Becuase sometimes, different
+  // platforms use different names for these constants.
+
+  // Number of realtime signals provided in the system.
+  // _POSIX_RTSIG_MAX is the upper limit on the number of real time
+  // signals supported in a posix-4 compliant system.
+#  if defined (_POSIX_RTSIG_MAX)
+#    define ACE_RTSIG_MAX _POSIX_RTSIG_MAX
+#  else /* not _POSIX_RTSIG_MAX */
+  // POSIX-4 compilant system has to provide atleast 8 RT signals.
+  // @@ Make sure the platform does *not* define this constant with
+  // some other name. If yes, use that instead of 8.
+#     define ACE_RTSIG_MAX 8
+#  endif /* _POSIX_RTSIG_MAX */
+#endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

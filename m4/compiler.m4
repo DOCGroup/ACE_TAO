@@ -1,11 +1,11 @@
 dnl -------------------------------------------------------------------------
 dnl       $Id$
-dnl 
+dnl
 dnl       compiler.m4
 dnl
 dnl       ACE M4 include file which contains ACE specific M4 macros
 dnl       that set/determine compiler configurations for ACE.
-dnl 
+dnl
 dnl -------------------------------------------------------------------------
 
 dnl  Copyright (C) 1998, 1999, 2003  Ossama Othman
@@ -14,7 +14,7 @@ dnl  All Rights Reserved
 dnl
 dnl This library is free software; you can redistribute it and/or
 dnl modify it under the current ACE distribution terms.
-dnl 
+dnl
 dnl This library is distributed in the hope that it will be useful,
 dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
 dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
@@ -27,7 +27,7 @@ dnl ACE_SET_COMPILER_FLAGS
 dnl Usage: ACE_SET_COMPILER_FLAGS
 AC_DEFUN([ACE_SET_COMPILER_FLAGS],
 [
-dnl  AC_BEFORE([$0], [AM_PROG_LIBTOOL])
+dnl  AC_BEFORE([$0], [AC_PROG_LIBTOOL])
 
  dnl Make sure we know what C++ compiler and preprocessor we have!
  AC_REQUIRE([AC_PROG_CXX])
@@ -39,9 +39,7 @@ dnl  AC_BEFORE([$0], [AM_PROG_LIBTOOL])
 
  if test "$GXX" = yes; then
 dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
-changequote(, )dnl
-   if $CXX --version | $EGREP -v '^2\.[0-7]' > /dev/null; then
-changequote([, ])dnl
+   if $CXX --version | $EGREP -v '^2\.[[0-7]]' > /dev/null; then
      :  # Do nothing
    else
      AC_DEFINE([ACE_HAS_GNUG_PRE_2_8])
@@ -72,7 +70,7 @@ changequote([, ])dnl
  dnl    ACE_CPPFLAGS
  dnl              - General C++ preprocessor flags the configure
  dnl                script should set before CPPFLAGS to allow the
- dnl                user override them.
+ dnl                user to override them.
  dnl    WERROR    - Compiler flag that converts warnings to errors
 
  if test "$GXX" = yes; then
@@ -112,6 +110,10 @@ changequote([, ])dnl
            [
             CXXFLAGS="$CXXFLAGS -qflag=w:w"
            ])
+         if test "$ace_user_enable_rtti" = yes; then
+           CXXFLAGS="$CXXFLAGS -qrtti"
+         fi
+
          ;;
      esac
      ;;
@@ -171,7 +173,7 @@ changequote([, ])dnl
    *freebsd*)
      case "$CXX" in
        *)
-         if test "$GXX" = yes; then       
+         if test "$GXX" = yes; then
            CXXFLAGS="$CXXFLAGS"
            ACE_CXXFLAGS="$ACE_CXXFLAGS -w -fno-strict-prototypes"
            DCXXFLAGS=""
@@ -202,7 +204,12 @@ changequote([, ])dnl
          OCXXFLAGS=""
          ;;
        aCC)
-         CXXFLAGS="$CXXFLAGS"
+         CFLAGS = "${CFLAGS:-} -Ae"
+         # -AA has been available since aC++ x.27 (2001?) - if using a
+         # compiler without this support, must --enable_stdcpplib=no.
+         if test "$ace_user_enable_stdcpplib" = yes; then
+           CXXFLAGS="$CXXFLAGS -AA"
+         fi
          # Warning 930 is spurious when new(std::nothrow) is
          # used. Reported to HP as support call 3201224717. (Steve
          # Huston, 23-Nov-2002)
@@ -222,11 +229,11 @@ changequote([, ])dnl
          OCXXFLAGS="-O"
          # Warning 67: Invalid pragma name -- needed for
          # ACE_LACKS_PRAGMA_ONCE
-         WERROR="+We67"
+         WERROR="+We67 +p"
 
          # If exception support is explicitly disabled, tell the
          # compiler.  This is not recommended since the run-time
-         # library can throw exceptions. 
+         # library can throw exceptions.
          if test "$ace_user_enable_exceptions" != yes; then
            ACE_CXXFLAGS="$ACE_CXXFLAGS +noeh"
          fi
@@ -303,12 +310,17 @@ changequote([, ])dnl
            CXXFLAGS="$CXXFLAGS -features=castop"
            if test "$ace_user_enable_rtti" = yes; then
              CXXFLAGS="$CXXFLAGS -features=rtti"
-           fi 
+           fi
          fi
 
          dnl Sun C++ 5.0 weirdness
          if (CC -V 2>&1 | $EGREP 'Compilers 5\.0' > /dev/null); then
-           CXXFLAGS="$CXXFLAGS -library=iostream,no%Cstd -instances=explicit"
+           if test "$ace_user_enable_stdcpplib" = yes; then
+             CXXFLAGS="$CXXFLAGS -library=Cstd"
+           else
+             CXXFLAGS="$CXXFLAGS -library=iostream,no%Cstd"
+             AC_DEFINE([ACE_USES_OLD_IOSTREAMS])
+           fi
 
            dnl Inlining appears to cause link problems with early
            dnl releases of CC 5.0.
@@ -318,6 +330,11 @@ changequote([, ])dnl
              dnl See /opt/SUNWspro_5.0/SC5.0/include/CC/stdcomp.h.
              ACE_CPPFLAGS="$ACE_CPPFLAGS -D_RWSTD_NO_EXCEPTIONS"
            fi
+
+	   CXXFLAGS="$CXXFLAGS -instances=explicit"
+	 else
+           CXXFLAGS="$CXXFLAGS -library=iostream"
+           AC_DEFINE([ACE_USES_OLD_IOSTREAMS])           
          fi
 
          CXXFLAGS="$CXXFLAGS"

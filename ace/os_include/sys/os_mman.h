@@ -76,9 +76,35 @@ PAGE_NOACCESS
 PAGE_NOCACHE  */
 #endif /* !ACE_LACKS_SYS_MMAN_H && !ACE_WIN32*/
 
+# if !defined (ACE_MAP_PRIVATE)
+#   define ACE_MAP_PRIVATE MAP_PRIVATE
+# endif /* ! ACE_MAP_PRIVATE */
+
+# if !defined (ACE_MAP_SHARED)
+#   define ACE_MAP_SHARED MAP_SHARED
+# endif /* ! ACE_MAP_SHARED */
+
+# if !defined (ACE_MAP_FIXED)
+#   define ACE_MAP_FIXED MAP_FIXED
+# endif /* ! ACE_MAP_FIXED */
+
+# if !defined (MAP_FAILED) || defined (ACE_HAS_BROKEN_MAP_FAILED)
+#   undef MAP_FAILED
+#   define MAP_FAILED ((void *) -1)
+# elif defined (ACE_HAS_LONG_MAP_FAILED)
+#   undef MAP_FAILED
+#   define MAP_FAILED ((void *) -1L)
+# endif /* !MAP_FAILED || ACE_HAS_BROKEN_MAP_FAILED */
+
 #if !defined (PROT_RDWR)
 #  define PROT_RDWR (PROT_READ|PROT_WRITE)
 #endif /* PROT_RDWR */
+
+# if defined (ACE_WIN32)
+    // Needed to map calls to NT transparently.
+#   define MS_ASYNC 0
+#   define MS_INVALIDATE 0
+# endif /* ACE_WIN32 */
 
 # if !defined (MS_SYNC)
 #   define MS_SYNC 0x0

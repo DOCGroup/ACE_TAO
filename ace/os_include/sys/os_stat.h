@@ -27,7 +27,7 @@
 #include "ace/os_include/sys/os_types.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-#  include <direct.h>
+#  include /**/ <direct.h>
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
 
 // This collides with phile.h on PSOS
@@ -76,6 +76,8 @@ extern "C"
 #endif /* ACE_LACKS_MODE_MASKS */
 
 #if defined (ACE_HAS_WINCE)
+#  include "ace/Time_Value.h"
+
    struct stat
    {
       /// always 0 on Windows platforms

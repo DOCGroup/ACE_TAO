@@ -89,16 +89,6 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
                              "gen_anonymous_base_type failed\n"),
                             -1);
         }
-/*
-      if (bt->accept (this) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_sequence_cdr_op_cs::"
-                             "visit_sequence - "
-                             "Base type codegen failed\n"),
-                            -1);
-        }
-*/
     }
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
@@ -847,15 +837,10 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
             }
           else
             {
-              AST_Decl *parent = ScopeAsDecl (bt->defined_in ());
-
-              if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
-                {
-                  *os << parent->name () << "::";
-                }
-
-              *os << "tao_" << bt->local_name () << "_life::tao_marshal ("
-                  << "_tao_sequence[i].in (), strm);" << be_uidt;
+              *os << "TAO::Objref_Traits<" << bt->name () << ">::tao_marshal ("
+                  << be_idt << be_idt_nl
+                  << "_tao_sequence[i].in (), strm" << be_uidt_nl
+                  << ");" << be_uidt << be_uidt;
             }
 
           break;

@@ -148,7 +148,7 @@ TAO_IOR_Manipulation_impl::add_profiles (
 
 CORBA::Object_ptr
 TAO_IOR_Manipulation_impl::remove_profiles (
-    CORBA::Object_ptr ior1,
+    CORBA::Object_ptr group,
     CORBA::Object_ptr ior2
     ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
@@ -160,14 +160,14 @@ TAO_IOR_Manipulation_impl::remove_profiles (
 {
   // First verify they are the same type!
   CORBA::String_var id =
-    CORBA::string_dup (ior1->_stubobj ()->type_id.in ());
+    CORBA::string_dup (group->_stubobj ()->type_id.in ());
   if (id.in () && ior2->_stubobj ()->type_id.in () &&
       ACE_OS::strcmp (id.in (), ior2->_stubobj ()->type_id.in ()))
     ACE_THROW_RETURN (TAO_IOP::Invalid_IOR (),
                       CORBA::Object::_nil ());
 
-  // Since we are removing from ior1 ...
-  CORBA::ULong count = ior1->_stubobj ()->base_profiles ().profile_count ();
+  // Since we are removing from group ...
+  CORBA::ULong count = group->_stubobj ()->base_profiles ().profile_count ();
 
   // make sure we have some profiles
   if (count == 0 ||
@@ -178,7 +178,7 @@ TAO_IOR_Manipulation_impl::remove_profiles (
   // initialize with estimated pfile count.
   TAO_MProfile Diff_Profiles (count);
 
-  auto_ptr<TAO_MProfile> tmp_pfiles (ior1->_stubobj ()->make_profiles ());
+  auto_ptr<TAO_MProfile> tmp_pfiles (group->_stubobj ()->make_profiles ());
   if (Diff_Profiles.add_profiles (tmp_pfiles.get ()) < 0)
     ACE_THROW_RETURN (TAO_IOP::Invalid_IOR (),
                       CORBA::Object::_nil ());
@@ -232,54 +232,55 @@ TAO_IOR_Manipulation_impl::remove_profiles (
 CORBA::Boolean
 TAO_IOR_Manipulation_impl::set_property (
     TAO_IOP::TAO_IOR_Property_ptr prop,
-    CORBA::Object_ptr ior
+    CORBA::Object_ptr group
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_IOP::Invalid_IOR,
                    TAO_IOP::Duplicate))
 {
   // make sure we have some profiles
-  if (ior->_stubobj ()->base_profiles ().profile_count () == 0)
+  if (group->_stubobj ()->base_profiles ().profile_count () == 0)
     ACE_THROW_RETURN (TAO_IOP::Invalid_IOR (),
                       0);
 
   // Call the implementation object to
-  return prop->set_property (ior
+  return prop->set_property (group
                              ACE_ENV_ARG_PARAMETER);
 }
 
+//@@ note awkward argument order
 CORBA::Boolean
 TAO_IOR_Manipulation_impl::set_primary (
     TAO_IOP::TAO_IOR_Property_ptr prop,
-    CORBA::Object_ptr ior1,
-    CORBA::Object_ptr ior2
+    CORBA::Object_ptr new_primary,
+    CORBA::Object_ptr group
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_IOP::Invalid_IOR,
                    TAO_IOP::Duplicate,
                    TAO_IOP::MultiProfileList))
 {
-  // make sure we have some profiles in IOR2
-  if (ior2->_stubobj ()->base_profiles ().profile_count () == 0)
+  // make sure we have some profiles in GROUP
+  if (group->_stubobj ()->base_profiles ().profile_count () == 0)
     ACE_THROW_RETURN (TAO_IOP::Invalid_IOR (),
                       0);
 
-  // Make sure we have only one profile in IOR1
+  // Make sure we have only one profile in new_primary
   // @@ Will fail if the object has been
-  /*if (ior1->_stubobj ()->base_profiles ().profile_count () > 1)
+  /*if (new_primary->_stubobj ()->base_profiles ().profile_count () > 1)
     ACE_THROW_RETURN (TAO_IOP::MultiProfileList (),
     0);*/
 
   // Call the callback object to do the rest of the processing.
-  return prop->set_primary (ior1,
-                            ior2
+  return prop->set_primary (new_primary,
+                            group
                             ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object_ptr
 TAO_IOR_Manipulation_impl::get_primary (
       TAO_IOP::TAO_IOR_Property_ptr prop,
-      CORBA::Object_ptr ior
+      CORBA::Object_ptr group
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
@@ -288,35 +289,35 @@ TAO_IOR_Manipulation_impl::get_primary (
     ))
 {
   // make sure we have some profiles in IOR
-  if (ior->_stubobj ()->base_profiles ().profile_count () == 0)
+  if (group->_stubobj ()->base_profiles ().profile_count () == 0)
     ACE_THROW_RETURN (TAO_IOP::NotFound (), 0);
   // @@ Bala: this was throwing TAO_IOP::Invalid_IOR, but it was not
   // in the throw spec, that will result in a CORBA::UNKNOWN at
   // run-time (if it does not crash).  Any idea about what is going on
   // here?
 
-  return prop->get_primary (ior
+  return prop->get_primary (group
                             ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Boolean
 TAO_IOR_Manipulation_impl::is_primary_set (
     TAO_IOP::TAO_IOR_Property_ptr prop,
-    CORBA::Object_ptr ior
+    CORBA::Object_ptr group
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return prop->is_primary_set (ior ACE_ENV_ARG_PARAMETER);
+  return prop->is_primary_set (group ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Boolean
 TAO_IOR_Manipulation_impl:: remove_primary_tag (
     TAO_IOP::TAO_IOR_Property_ptr prop,
-    CORBA::Object_ptr ior
+    CORBA::Object_ptr group
     ACE_ENV_ARG_DECL)
-	ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return prop->remove_primary_tag (ior ACE_ENV_ARG_PARAMETER);
+  return prop->remove_primary_tag (group ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::ULong
@@ -352,13 +353,13 @@ TAO_IOR_Manipulation_impl::is_in_ior (
 
 CORBA::ULong
 TAO_IOR_Manipulation_impl::get_profile_count (
-    CORBA::Object_ptr ior
+    CORBA::Object_ptr group
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    TAO_IOP::EmptyProfileList))
 {
   CORBA::ULong count;
-  count = ior->_stubobj ()->base_profiles ().profile_count ();
+  count = group->_stubobj ()->base_profiles ().profile_count ();
 
   if (count == 0)
     ACE_THROW_RETURN (TAO_IOP::EmptyProfileList (),

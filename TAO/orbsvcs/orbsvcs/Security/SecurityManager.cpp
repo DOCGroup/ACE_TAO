@@ -9,6 +9,8 @@ ACE_RCSID (Security,
 
 #include "PrincipalAuthenticator.h"
 
+#include "tao/ORB_Constants.h"
+
 
 TAO_SecurityManager::TAO_SecurityManager (void)
   : lock_ (),

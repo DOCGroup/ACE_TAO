@@ -6,7 +6,8 @@
 #define CCF_IDL2_TRAVERSAL_TYPE_ID_HPP
 
 #include "CCF/IDL2/Traversal/Elements.hpp"
-#include "CCF/IDL2/SyntaxTree/TypeId.hpp"
+
+#include "CCF/IDL2/SemanticGraph/TypeId.hpp"
 
 namespace CCF
 {
@@ -14,59 +15,17 @@ namespace CCF
   {
     namespace Traversal
     {
+      // Typeid and typeprefix are two idiotic constructs of IDL.
+      // They normally should not result in any directly generated
+      // code so only minimal (and most generic) support is provided.
       //
-      //
-      //
-      struct TypeId : Traverser
+
+      struct TypeId : Node<SemanticGraph::TypeId>
       {
-        typedef
-        SyntaxTree::TypeIdPtr
-        NodePtr;
-
-        TypeId ()
-        {
-          map (typeid (SyntaxTree::TypeId), this);
-        }
-
-        virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (n->dynamic_type<SyntaxTree::TypeId> ());
-        }
-
-        virtual void
-        traverse (NodePtr const& n)
-        {
-          delegate (n);
-        }
       };
 
-
-      //
-      //
-      //
-      struct TypePrefix : Traverser
+      struct TypePrefix : Node<SemanticGraph::TypePrefix>
       {
-        typedef
-        SyntaxTree::TypePrefixPtr
-        NodePtr;
-
-        TypePrefix ()
-        {
-          map (typeid (SyntaxTree::TypePrefix), this);
-        }
-
-        virtual void
-        traverse (SyntaxTree::NodePtr const& n)
-        {
-          traverse (n->dynamic_type<SyntaxTree::TypePrefix> ());
-        }
-
-        virtual void
-        traverse (NodePtr const& n)
-        {
-          delegate (n);
-        }
       };
     }
   }

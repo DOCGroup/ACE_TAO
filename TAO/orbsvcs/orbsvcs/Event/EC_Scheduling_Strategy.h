@@ -14,6 +14,7 @@
 
 #ifndef TAO_EC_SCHEDULING_STRATEGY_H
 #define TAO_EC_SCHEDULING_STRATEGY_H
+
 #include /**/ "ace/pre.h"
 
 #include /**/ "event_export.h"
@@ -67,4 +68,5 @@ public:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_EC_SCHEDULING_STRATEGY_H */

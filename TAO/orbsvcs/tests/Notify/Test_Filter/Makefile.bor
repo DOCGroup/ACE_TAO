@@ -38,6 +38,7 @@ LIBFILES = \
 	TAO_IORTable$(LIB_DECORATOR).lib \
 	TAO_DynamicAny$(LIB_DECORATOR).lib \
 	TAO_PortableServer$(LIB_DECORATOR).lib \
+   TAO_Valuetype$(LIB_DECORATOR).lib \
 	TAO$(LIB_DECORATOR).lib \
 	ACE$(LIB_DECORATOR).lib \
 	$(EXTERNAL_LIBS)

@@ -37,12 +37,15 @@
 #include "be_factory.h"
 #include "be_sequence.h"
 #include "be_visitor.h"
+#include "ast_structure_fwd.h"
+#include "ast_string.h"
 #include "utl_identifier.h"
+#include "global_extern.h"
 #include "ace/Log_Msg.h"
 #include "ace/String_Base.h"
 
-ACE_RCSID (be, 
-           be_decl, 
+ACE_RCSID (be,
+           be_decl,
            "$Id$")
 
 // Default Constructor
@@ -62,7 +65,31 @@ be_decl::be_decl (void)
     cli_hdr_cdr_op_gen_ (I_FALSE),
     cli_stub_cdr_op_gen_ (I_FALSE),
     cli_inline_cdr_op_gen_ (I_FALSE),
-    cli_inline_cdr_decl_gen_ (I_FALSE)
+    cli_inline_cdr_decl_gen_ (I_FALSE),
+    cli_traits_gen_ (I_FALSE),
+    cli_arg_traits_gen_ (I_FALSE),
+    srv_arg_traits_gen_ (I_FALSE),
+    srv_sarg_traits_gen_ (I_FALSE),
+    cli_tmpl_class_gen_ (I_FALSE),
+    cli_pragma_inst_gen_ (I_FALSE),
+    cli_inarg_tmpl_class_gen_ (I_FALSE),
+    cli_inarg_pragma_inst_gen_ (I_FALSE),
+    cli_inoutarg_tmpl_class_gen_ (I_FALSE),
+    cli_inoutarg_pragma_inst_gen_ (I_FALSE),
+    cli_outarg_tmpl_class_gen_ (I_FALSE),
+    cli_outarg_pragma_inst_gen_ (I_FALSE),
+    cli_retarg_tmpl_class_gen_ (I_FALSE),
+    cli_retarg_pragma_inst_gen_ (I_FALSE),
+    srv_tmpl_class_gen_ (I_FALSE),
+    srv_pragma_inst_gen_ (I_FALSE),
+    srv_inarg_tmpl_class_gen_ (I_FALSE),
+    srv_inarg_pragma_inst_gen_ (I_FALSE),
+    srv_inoutarg_tmpl_class_gen_ (I_FALSE),
+    srv_inoutarg_pragma_inst_gen_ (I_FALSE),
+    srv_outarg_tmpl_class_gen_ (I_FALSE),
+    srv_outarg_pragma_inst_gen_ (I_FALSE),
+    srv_retarg_tmpl_class_gen_ (I_FALSE),
+    srv_retarg_pragma_inst_gen_ (I_FALSE)
 {
 }
 
@@ -85,7 +112,31 @@ be_decl::be_decl (AST_Decl::NodeType type,
     cli_hdr_cdr_op_gen_ (I_FALSE),
     cli_stub_cdr_op_gen_ (I_FALSE),
     cli_inline_cdr_op_gen_ (I_FALSE),
-    cli_inline_cdr_decl_gen_ (I_FALSE)
+    cli_inline_cdr_decl_gen_ (I_FALSE),
+    cli_traits_gen_ (I_FALSE),
+    cli_arg_traits_gen_ (I_FALSE),
+    srv_arg_traits_gen_ (I_FALSE),
+    srv_sarg_traits_gen_ (I_FALSE),
+    cli_tmpl_class_gen_ (I_FALSE),
+    cli_pragma_inst_gen_ (I_FALSE),
+    cli_inarg_tmpl_class_gen_ (I_FALSE),
+    cli_inarg_pragma_inst_gen_ (I_FALSE),
+    cli_inoutarg_tmpl_class_gen_ (I_FALSE),
+    cli_inoutarg_pragma_inst_gen_ (I_FALSE),
+    cli_outarg_tmpl_class_gen_ (I_FALSE),
+    cli_outarg_pragma_inst_gen_ (I_FALSE),
+    cli_retarg_tmpl_class_gen_ (I_FALSE),
+    cli_retarg_pragma_inst_gen_ (I_FALSE),
+    srv_tmpl_class_gen_ (I_FALSE),
+    srv_pragma_inst_gen_ (I_FALSE),
+    srv_inarg_tmpl_class_gen_ (I_FALSE),
+    srv_inarg_pragma_inst_gen_ (I_FALSE),
+    srv_inoutarg_tmpl_class_gen_ (I_FALSE),
+    srv_inoutarg_pragma_inst_gen_ (I_FALSE),
+    srv_outarg_tmpl_class_gen_ (I_FALSE),
+    srv_outarg_pragma_inst_gen_ (I_FALSE),
+    srv_retarg_tmpl_class_gen_ (I_FALSE),
+    srv_retarg_pragma_inst_gen_ (I_FALSE)
 {
 }
 
@@ -100,11 +151,12 @@ be_decl::compute_full_name  (const char *prefix,
                              char *&name)
 {
   if (prefix == 0 || suffix == 0)
-    return;
+    {
+      return;
+    }
 
   ACE_CString prefix_str (prefix);
   ACE_CString suffix_str (suffix);
-
   ACE_CString result_str;
 
   // Get parent.
@@ -124,12 +176,14 @@ be_decl::compute_full_name  (const char *prefix,
   else
     {
       // Get scope name.
-      be_decl *parent = be_scope::narrow_from_scope (this->defined_in ())->decl ();
+      be_decl *parent = 
+        be_scope::narrow_from_scope (this->defined_in ())->decl ();
+
       if (parent == 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) be_decl::"
-                      "compute_flat_name - "
+                      "compute_full_name - "
                       "scope name is nil\n"));
         }
 
@@ -138,7 +192,9 @@ be_decl::compute_full_name  (const char *prefix,
 
       // _
       if (ACE_OS::strcmp (parent->full_name (), "") != 0)
-        result_str += ACE_CString ("::");
+        {
+          result_str += ACE_CString ("::");
+        }
 
       // Prefix.
       result_str += prefix_str;
@@ -150,7 +206,7 @@ be_decl::compute_full_name  (const char *prefix,
       result_str += suffix_str;
     }
 
-  name = result_str.rep ();
+  name = ACE_OS::strdup (result_str.fast_rep ());
 }
 
 void
@@ -320,6 +376,150 @@ be_decl::cli_inline_cdr_decl_gen (void)
 }
 
 idl_bool
+be_decl::cli_traits_gen (void)
+{
+  return this->cli_traits_gen_;
+}
+
+idl_bool
+be_decl::cli_arg_traits_gen (void)
+{
+  return this->cli_arg_traits_gen_;
+}
+
+idl_bool
+be_decl::srv_arg_traits_gen (void)
+{
+  return this->srv_arg_traits_gen_;
+}
+
+idl_bool
+be_decl::srv_sarg_traits_gen (void)
+{
+  return this->srv_sarg_traits_gen_;
+}
+
+idl_bool
+be_decl::cli_tmpl_class_gen (void)
+{
+  return this->cli_tmpl_class_gen_;
+}
+
+idl_bool
+be_decl::cli_pragma_inst_gen (void)
+{
+  return this->cli_pragma_inst_gen_;
+}
+
+idl_bool
+be_decl::cli_inarg_tmpl_class_gen (void)
+{
+  return this->cli_inarg_tmpl_class_gen_;
+}
+
+idl_bool
+be_decl::cli_inarg_pragma_inst_gen (void)
+{
+  return this->cli_inarg_pragma_inst_gen_;
+}
+
+idl_bool
+be_decl::cli_inoutarg_tmpl_class_gen (void)
+{
+  return this->cli_inoutarg_tmpl_class_gen_;
+}
+
+idl_bool
+be_decl::cli_inoutarg_pragma_inst_gen (void)
+{
+  return this->cli_inoutarg_pragma_inst_gen_;
+}
+
+idl_bool
+be_decl::cli_outarg_tmpl_class_gen (void)
+{
+  return this->cli_outarg_tmpl_class_gen_;
+}
+
+idl_bool
+be_decl::cli_outarg_pragma_inst_gen (void)
+{
+  return this->cli_outarg_pragma_inst_gen_;
+}
+
+idl_bool
+be_decl::cli_retarg_tmpl_class_gen (void)
+{
+  return this->cli_retarg_tmpl_class_gen_;
+}
+
+idl_bool
+be_decl::cli_retarg_pragma_inst_gen (void)
+{
+  return this->cli_retarg_tmpl_class_gen_;
+}
+
+idl_bool
+be_decl::srv_tmpl_class_gen (void)
+{
+  return this->srv_tmpl_class_gen_;
+}
+
+idl_bool
+be_decl::srv_pragma_inst_gen (void)
+{
+  return this->srv_pragma_inst_gen_;
+}
+
+idl_bool
+be_decl::srv_inarg_tmpl_class_gen (void)
+{
+  return this->srv_inarg_tmpl_class_gen_;
+}
+
+idl_bool
+be_decl::srv_inarg_pragma_inst_gen (void)
+{
+  return this->srv_inarg_pragma_inst_gen_;
+}
+
+idl_bool
+be_decl::srv_inoutarg_tmpl_class_gen (void)
+{
+  return this->srv_inoutarg_tmpl_class_gen_;
+}
+
+idl_bool
+be_decl::srv_inoutarg_pragma_inst_gen (void)
+{
+  return this->srv_inoutarg_pragma_inst_gen_;
+}
+
+idl_bool
+be_decl::srv_outarg_tmpl_class_gen (void)
+{
+  return this->srv_outarg_tmpl_class_gen_;
+}
+
+idl_bool
+be_decl::srv_outarg_pragma_inst_gen (void)
+{
+  return this->srv_outarg_pragma_inst_gen_;
+}
+
+idl_bool
+be_decl::srv_retarg_tmpl_class_gen (void)
+{
+  return this->srv_retarg_tmpl_class_gen_;
+}
+
+idl_bool
+be_decl::srv_retarg_pragma_inst_gen (void)
+{
+  return this->cli_retarg_pragma_inst_gen_;
+}
+
+idl_bool
 be_decl::cli_inline_gen (void)
 {
   return this->cli_inline_gen_;
@@ -411,6 +611,150 @@ be_decl::cli_inline_gen (idl_bool val)
 }
 
 void
+be_decl::cli_traits_gen (idl_bool val)
+{
+  this->cli_traits_gen_ = val;
+}
+
+void
+be_decl::cli_arg_traits_gen (idl_bool val)
+{
+  this->cli_arg_traits_gen_ = val;
+}
+
+void
+be_decl::srv_arg_traits_gen (idl_bool val)
+{
+  this->srv_arg_traits_gen_ = val;
+}
+
+void
+be_decl::srv_sarg_traits_gen (idl_bool val)
+{
+  this->srv_sarg_traits_gen_ = val;
+}
+
+void
+be_decl::cli_tmpl_class_gen (idl_bool val)
+{
+  this->cli_tmpl_class_gen_ = val;
+}
+
+void
+be_decl::cli_pragma_inst_gen (idl_bool val)
+{
+  this->cli_pragma_inst_gen_ = val;
+}
+
+void
+be_decl::cli_inarg_tmpl_class_gen (idl_bool val)
+{
+  this->cli_inarg_tmpl_class_gen_ = val;
+}
+
+void
+be_decl::cli_inarg_pragma_inst_gen (idl_bool val)
+{
+  this->cli_inarg_pragma_inst_gen_ = val;
+}
+
+void
+be_decl::cli_inoutarg_tmpl_class_gen (idl_bool val)
+{
+  this->cli_inoutarg_tmpl_class_gen_ = val;
+}
+
+void
+be_decl::cli_inoutarg_pragma_inst_gen (idl_bool val)
+{
+  this->cli_inoutarg_pragma_inst_gen_ = val;
+}
+
+void
+be_decl::cli_outarg_tmpl_class_gen (idl_bool val)
+{
+  this->cli_outarg_tmpl_class_gen_ = val;
+}
+
+void
+be_decl::cli_outarg_pragma_inst_gen (idl_bool val)
+{
+  this->cli_outarg_pragma_inst_gen_ = val;
+}
+
+void
+be_decl::cli_retarg_tmpl_class_gen (idl_bool val)
+{
+  this->cli_retarg_tmpl_class_gen_ = val;
+}
+
+void
+be_decl::cli_retarg_pragma_inst_gen (idl_bool val)
+{
+  this->cli_retarg_pragma_inst_gen_ = val;
+}
+
+void
+be_decl::srv_tmpl_class_gen (idl_bool val)
+{
+  this->srv_tmpl_class_gen_ = val;
+}
+
+void
+be_decl::srv_pragma_inst_gen (idl_bool val)
+{
+  this->srv_pragma_inst_gen_ = val;
+}
+
+void
+be_decl::srv_inarg_tmpl_class_gen (idl_bool val)
+{
+  this->srv_inarg_tmpl_class_gen_ = val;
+}
+
+void
+be_decl::srv_inarg_pragma_inst_gen (idl_bool val)
+{
+  this->srv_inarg_pragma_inst_gen_ = val;
+}
+
+void
+be_decl::srv_inoutarg_tmpl_class_gen (idl_bool val)
+{
+  this->srv_inoutarg_tmpl_class_gen_ = val;
+}
+
+void
+be_decl::srv_inoutarg_pragma_inst_gen (idl_bool val)
+{
+  this->srv_inoutarg_pragma_inst_gen_ = val;
+}
+
+void
+be_decl::srv_outarg_tmpl_class_gen (idl_bool val)
+{
+  this->srv_outarg_tmpl_class_gen_ = val;
+}
+
+void
+be_decl::srv_outarg_pragma_inst_gen (idl_bool val)
+{
+  this->srv_outarg_pragma_inst_gen_ = val;
+}
+
+void
+be_decl::srv_retarg_tmpl_class_gen (idl_bool val)
+{
+  this->srv_retarg_tmpl_class_gen_ = val;
+}
+
+void
+be_decl::srv_retarg_pragma_inst_gen (idl_bool val)
+{
+  this->srv_retarg_pragma_inst_gen_ = val;
+}
+
+void
 be_decl::srv_hdr_gen (idl_bool val)
 {
   this->srv_hdr_gen_ = val;
@@ -439,6 +783,134 @@ int
 be_decl::accept (be_visitor *visitor)
 {
   return visitor->visit_decl (this);
+}
+
+void
+be_decl::set_arg_seen_bit (be_type *bt)
+{
+  if (bt == 0)
+    {
+      return;
+    }
+
+  switch (bt->node_type ())
+    {
+      case NT_typedef:
+        {
+          AST_Typedef *td = AST_Typedef::narrow_from_decl (bt);
+          this->set_arg_seen_bit (
+                    be_type::narrow_from_decl (td->primitive_base_type ())
+                  );
+          break;
+        }
+      case NT_interface:
+      case NT_interface_fwd:
+      case NT_valuetype:
+      case NT_valuetype_fwd:
+      case NT_component:
+      case NT_component_fwd:
+      case NT_home:
+      case NT_eventtype:
+      case NT_eventtype_fwd:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.object_arg_seen_);
+        break;
+      case NT_union:
+      case NT_struct:
+        if (bt->size_type () == AST_Type::FIXED)
+          {
+            ACE_SET_BITS (idl_global->decls_seen_info_,
+                          idl_global->decls_seen_masks.fixed_size_arg_seen_);
+          }
+        else
+          {
+            ACE_SET_BITS (idl_global->decls_seen_info_,
+                          idl_global->decls_seen_masks.var_size_arg_seen_);
+          }
+
+        break;
+      case NT_struct_fwd:
+      case NT_union_fwd:
+        {
+          AST_StructureFwd *fwd = AST_StructureFwd::narrow_from_decl (bt);
+          be_type *fd = be_type::narrow_from_decl (fwd->full_definition ());
+          this->set_arg_seen_bit (fd);
+          break;
+        }
+      case NT_enum:
+      case NT_enum_val:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.basic_arg_seen_);
+        break;
+      case NT_string:
+      case NT_wstring:
+        {
+          AST_String *str = AST_String::narrow_from_decl (bt);
+
+          if (str->max_size ()->ev ()->u.ulval == 0)
+            {
+              ACE_SET_BITS (idl_global->decls_seen_info_,
+                            idl_global->decls_seen_masks.ub_string_arg_seen_);
+            }
+          else
+            {
+              ACE_SET_BITS (idl_global->decls_seen_info_,
+                            idl_global->decls_seen_masks.bd_string_arg_seen_);
+            }
+
+          break;
+        }
+      case NT_array:
+        if (bt->size_type () == AST_Type::FIXED)
+          {
+            ACE_SET_BITS (idl_global->decls_seen_info_,
+                          idl_global->decls_seen_masks.fixed_array_arg_seen_);
+          }
+        else
+          {
+            ACE_SET_BITS (idl_global->decls_seen_info_,
+                          idl_global->decls_seen_masks.var_array_arg_seen_);
+          }
+
+        break;
+      case NT_sequence:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.var_size_arg_seen_);
+        break;
+      case NT_pre_defined:
+        {
+          AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (bt);
+
+          switch (pdt->pt ())
+            {
+              case AST_PredefinedType::PT_object:
+              case AST_PredefinedType::PT_pseudo:
+              case AST_PredefinedType::PT_value:
+                ACE_SET_BITS (idl_global->decls_seen_info_,
+                              idl_global->decls_seen_masks.object_arg_seen_);
+                break;
+              case AST_PredefinedType::PT_any:
+                ACE_SET_BITS (idl_global->decls_seen_info_,
+                              idl_global->decls_seen_masks.var_size_arg_seen_);
+                break;
+              case AST_PredefinedType::PT_char:
+              case AST_PredefinedType::PT_wchar:
+              case AST_PredefinedType::PT_octet:
+              case AST_PredefinedType::PT_boolean:
+                ACE_SET_BITS (
+                    idl_global->decls_seen_info_,
+                    idl_global->decls_seen_masks.special_basic_arg_seen_
+                  );
+                break;
+             default:
+                ACE_SET_BITS (idl_global->decls_seen_info_,
+                              idl_global->decls_seen_masks.basic_arg_seen_);
+                break;
+            }
+        }
+      default:
+        break;
+    }
 }
 
 // Narrowing methods.

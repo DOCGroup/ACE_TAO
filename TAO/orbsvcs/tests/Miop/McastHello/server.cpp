@@ -2,13 +2,19 @@
 
 #include "McastHello.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (McastHello,
            server,
            "$Id$")
 
 static const char *ior_output_file = "test.ior";
-static const char *group_ior = "corbaloc:miop:1.0@1.0-TestDomain-1/225.1.1.225:1234";
+
+// Use a multicast address in the administrative "site local" range, 239.255.0.0 to
+// 239.255.255.255.  The range 224.255.0.0 to 238.255.255.255 should also be valid
+// too.
+//static const char *group_ior = "corbaloc:miop:1.0@1.0-TestDomain-1/239.255.0.1:16000";
+static const char *group_ior = "corbaloc:miop:1.0@1.0-TestDomain-1/224.1.239.2:1234";
 
 int
 parse_args (int argc, char *argv[])
@@ -92,8 +98,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Create and activate an instance of our servant.
-      CORBA::Boolean servant0_status = 0;
-      McastHello server_impl (orb.in (), 0, servant0_status);
+      McastHello server_impl (orb.in (), 0);
 
       root_poa->activate_object_with_id (id.in (),
                                          &server_impl
@@ -116,7 +121,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Validate that our servants got the right requests.
-      if (servant0_status == 0)
+      if (server_impl.get_status () == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Multicast Servant did not receive expected requests!"),
                           1);

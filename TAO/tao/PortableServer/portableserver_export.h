@@ -9,6 +9,8 @@
 
 #include "ace/config-all.h"
 
+#include "tao/Objref_VarOut_T.h"
+
 #if defined (TAO_AS_STATIC_LIBS)
 #  if !defined (TAO_PORTABLESERVER_HAS_DLL)
 #    define TAO_PORTABLESERVER_HAS_DLL 0

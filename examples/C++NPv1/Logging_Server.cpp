@@ -10,6 +10,8 @@
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Stream.h"
 #include "Logging_Server.h"
+#include "ace/OS_NS_string.h"
+#include "ace/os_include/os_netdb.h"
 
 int Logging_Server::run (int argc, char *argv[])
 {
@@ -56,10 +58,10 @@ int Logging_Server::make_log_file (ACE_FILE_IO &logging_file,
     ACE_INET_Addr logging_peer_addr;
     logging_peer->get_remote_addr (logging_peer_addr);
     logging_peer_addr.get_host_name (filename, MAXHOSTNAMELEN);
-    strcat (filename, ".log");
+    ACE_OS::strcat (filename, ".log");
   }
   else
-    strcpy (filename, "logging_server.log");
+    ACE_OS::strcpy (filename, "logging_server.log");
 
   ACE_FILE_Connector connector;
   return connector.connect (logging_file,

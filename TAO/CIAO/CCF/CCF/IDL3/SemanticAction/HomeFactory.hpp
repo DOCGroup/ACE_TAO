@@ -13,22 +13,17 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      //
-      //
-      //
-      class HomeFactory
+      struct HomeFactory
       {
-      public:
-
         virtual void
-        begin (SimpleIdentifierPtr const& id) = 0;
+        name (SimpleIdentifierPtr const& id) = 0;
 
         virtual void
         parameter (IdentifierPtr const& type,
                    SimpleIdentifierPtr const& name) = 0;
 
         virtual void
-        end () = 0;
+        raises (IdentifierPtr const& id) = 0;
       };
     }
   }

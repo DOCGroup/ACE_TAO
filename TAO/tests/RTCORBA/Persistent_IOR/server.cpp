@@ -3,6 +3,8 @@
 #include "ace/Get_Opt.h"
 #include "testS.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 
 class test_i :
   public POA_test,

@@ -59,26 +59,21 @@ be_visitor_operation_interceptors_arglist::visit_operation (
     {
       switch (this->ctx_->state ())
         {
-        case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH:
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH:
-        case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS:
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST:
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_SS:
           break;
-        case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS:
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS:
           {
             *os << be_nl << "ACE_ENV_ARG_PARAMETER";
             break;
           }
-        case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CS:
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SS:
           {
            // Last argument - is always CORBA::Environment.
             *os << be_nl << "ACE_ENV_ARG_DECL_NOT_USED";
             break;
           }
-        case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CH:
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SH:
             {
               // @@ Do it for all cases i.e arg count > = 0
@@ -124,10 +119,6 @@ be_visitor_operation_interceptors_arglist::pre_process (be_decl *bd)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CH:
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CS:
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS:
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SH:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SS:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_SS:
@@ -139,7 +130,6 @@ be_visitor_operation_interceptors_arglist::pre_process (be_decl *bd)
         *os << ",";
         break;
       }
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH:
       break;
@@ -210,32 +200,10 @@ be_visitor_operation_interceptors_arglist::visit_argument (be_argument *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CH:
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CS:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SH:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SS:
       {
         be_visitor_args_request_info_arglist visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH:
-      {
-        be_visitor_args_request_info_ch visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS:
-      {
-        ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_ARGLIST_CS);
-        be_visitor_args_request_info_cs visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS:
-      {
-        ctx.state (TAO_CodeGen::TAO_ARGUMENT_INTERCEPTORS_INFO_ARGLIST_CS);
-        be_visitor_args_request_info_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
@@ -309,13 +277,8 @@ be_visitor_operation_interceptors_arglist::post_process (be_decl *bd)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST:
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CH:
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS:
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CS:
-    case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SH:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_SS:
     case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SS:

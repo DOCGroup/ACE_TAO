@@ -13,15 +13,8 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      //
-      //
-      //
-      class TypeId
+      struct TypeId
       {
-      public:
-        virtual
-        ~TypeId () throw () {}
-
         virtual void
         begin (IdentifierPtr const& name, StringLiteralPtr const& id) = 0;
 
@@ -29,15 +22,9 @@ namespace CCF
         end () = 0;
       };
 
-      //
-      //
-      //
-      class TypePrefix
+      
+      struct TypePrefix
       {
-      public:
-        virtual
-        ~TypePrefix () throw () {}
-
         virtual void
         begin (IdentifierPtr const& name, StringLiteralPtr const& prefix) = 0;
 

@@ -23,10 +23,9 @@
 #include <algorithm>
 #include "icp.h"
 #include <orbsvcs/CosNamingC.h>
-#include <strstream.h>
-
-// #include <iostream.h>
-// #include <fstream.h>
+#include <strstream>
+#include <iostream>
+#include <fstream>
 
 const char * Controller_oid = "Controller";
 
@@ -40,7 +39,7 @@ resolve_init (CORBA::ORB_ptr orb, const char * id)
   try {
     obj = orb->resolve_initial_references (id);
   }
-  catch (const CORBA::ORB::InvalidName & e) {
+  catch (const CORBA::ORB::InvalidName &) {
     throw;
   }
   catch (const CORBA::Exception & e) {

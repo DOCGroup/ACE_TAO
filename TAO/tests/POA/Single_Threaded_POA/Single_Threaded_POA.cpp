@@ -21,6 +21,7 @@
 
 #include "testS.h"
 #include "ace/Task.h"
+#include "ace/OS_NS_unistd.h"
 
 class test_i : public virtual POA_test
 {

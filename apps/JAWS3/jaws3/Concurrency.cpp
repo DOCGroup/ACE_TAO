@@ -1,11 +1,13 @@
 // $Id$
 
-#include "ace/OS.h"
 #include "ace/Message_Block.h"
 #include "ace/Singleton.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Null_Mutex.h"
 
+#ifndef JAWS_BUILD_DLL
 #define JAWS_BUILD_DLL
+#endif
 
 #include "jaws3/Concurrency.h"
 #include "jaws3/TPOOL_Concurrency.h"
@@ -41,7 +43,6 @@ JAWS_Concurrency_Impl::svc (void)
 }
 
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION
 JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
 ::JAWS_Concurrency_Bridge (JAWS_Concurrency_Impl *impl)
   : impl_ (impl)
@@ -67,7 +68,7 @@ JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
 }
 
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION int
+int
 JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
 ::putq (JAWS_Protocol_Handler *ph)
 {
@@ -75,7 +76,7 @@ JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
 }
   
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION int
+int
 JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
 ::getq (JAWS_Protocol_Handler *&ph)
 {
@@ -83,7 +84,7 @@ JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
 }
 
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION void
+void
 JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>::shutdown (void)
 {
   ACE_Message_Block *empty_mb = JAWS_Empty_Message_Block::instance ();

@@ -20,12 +20,10 @@ use NMakeDependencyWriter;
 # ************************************************************
 
 sub create {
-  my($type) = shift;
-
   switch: {
-    $type eq 'gnu'   && do { return new GNUDependencyWriter(); };
-    $type eq 'nmake' && do { return new NMakeDependencyWriter(); };
-    print STDERR "WARNING: Invalid dependency writer type: $type\n";
+    $_[0] eq 'gnu'   && do { return new GNUDependencyWriter(); };
+    $_[0] eq 'nmake' && do { return new NMakeDependencyWriter(); };
+    print STDERR "WARNING: Invalid dependency writer type: $_[0]\n";
   }
 
   return new DependencyWriter();

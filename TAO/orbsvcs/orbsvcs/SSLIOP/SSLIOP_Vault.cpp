@@ -11,6 +11,7 @@ ACE_RCSID (TAO_SSLIOP,
 #include "SSLIOP_Credentials.h"
 
 #include "tao/debug.h"
+#include "tao/ORB_Constants.h"
 
 #include "ace/SSL/SSL_Context.h"
 

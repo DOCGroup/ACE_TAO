@@ -15,31 +15,19 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
-
-#if !defined _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_Octet_I_
-#define _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_Octet_I_
-
-CORBA::Boolean TAO_Export operator<< (
-    TAO_OutputCDR &,
-    const Messaging::PolicyValue::_tao_seq_Octet &
-  );
-
-CORBA::Boolean TAO_Export operator>> (
-    TAO_InputCDR &,
-    Messaging::PolicyValue::_tao_seq_Octet &
-  );
-
-#endif /* _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_Octet_I_ */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -47,17 +35,9 @@ CORBA::Boolean operator<< (
     const Messaging::PolicyValue &_tao_aggregate
   )
 {
-  if (
+  return
     (strm << _tao_aggregate.ptype) &&
-    (strm << _tao_aggregate.pvalue)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm << _tao_aggregate.pvalue);
 }
 
 ACE_INLINE
@@ -66,21 +46,13 @@ CORBA::Boolean operator>> (
     Messaging::PolicyValue &_tao_aggregate
   )
 {
-  if (
+  return
     (strm >> _tao_aggregate.ptype) &&
-    (strm >> _tao_aggregate.pvalue)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm >> _tao_aggregate.pvalue);
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_Messaging_PolicyValueSeq_I_
 #define _TAO_CDR_OP_Messaging_PolicyValueSeq_I_

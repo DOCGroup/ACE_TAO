@@ -160,21 +160,9 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_OPERATION_ARG_PRE_INVOKE_CS:
-      {
-        be_visitor_args_pre_invoke_cs visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
     case TAO_CodeGen::TAO_OPERATION_ARG_INVOKE_CS:
       {
         be_visitor_args_invoke_cs visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_OPERATION_ARG_POST_INVOKE_CS:
-      {
-        be_visitor_args_post_invoke_cs visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }

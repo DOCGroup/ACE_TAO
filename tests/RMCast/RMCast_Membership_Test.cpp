@@ -14,7 +14,7 @@
 #include "ace/RMCast/RMCast_Proxy.h"
 #include "ace/RMCast/RMCast_Membership.h"
 #include "ace/ACE.h"
-
+#include "ace/OS_NS_time.h"
 #include "ace/Task.h"
 
 ACE_RCSID(tests, RMCast_Membership_Test, "$Id$")

@@ -3,6 +3,8 @@
 #include "Set_Update_Interceptor.h"
 #include "orbsvcs/FTRTC.h"
 #include "Request_Context_Repository.h"
+#include "tao/IOP_IORA.h"
+#include "../Utils/Log.h"
 
 ACE_RCSID (EventChannel,
            Set_Update_Intercetpor,
@@ -47,6 +49,7 @@ TAO_Set_Update_Interceptor::send_request (
                                       ACE_THROW_SPEC ((CORBA::SystemException,
                                       PortableInterceptor::ForwardRequest))
 {
+  FTRTEC_TRACE("TAO_Set_Update_Interceptor::send_request");
   CORBA::String_var operation = ri->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -58,14 +61,14 @@ TAO_Set_Update_Interceptor::send_request (
 
       IOP::ServiceContext* sc;
 
-      if ((*a >>= sc) ==0)
+      if ((a.in() >>= sc) ==0)
         return;
 
       ri->add_request_service_context (*sc, 0 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       FTRT::TransactionDepth transaction_depth =
-        Request_Context_Repository().get_transaction_depth(ri);
+        Request_Context_Repository().get_transaction_depth(ri ACE_ENV_ARG_PARAMETER);
       TAO_OutputCDR cdr;
       ACE_Message_Block mb;
 
@@ -92,7 +95,7 @@ TAO_Set_Update_Interceptor::send_request (
       FTRT::SequenceNumber sequence_number =
         Request_Context_Repository().get_sequence_number(ri ACE_ENV_ARG_PARAMETER);
 
-      ACE_DEBUG((LM_DEBUG, "send_request : sequence_number = %d\n", sequence_number));
+      TAO_FTRTEC::Log(3, "send_request : sequence_number = %d\n", sequence_number);
       if (sequence_number != 0) {
         if (!(cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
           ACE_THROW (CORBA::MARSHAL ());
@@ -112,10 +115,11 @@ TAO_Set_Update_Interceptor::send_request (
 void
 TAO_Set_Update_Interceptor::receive_reply (
   PortableInterceptor::ClientRequestInfo_ptr ri
-  ACE_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_UNUSED_ARG(ri);
+  FTRTEC_TRACE("TAO_Set_Update_Interceptor::receive_reply");
 }
 
 void
@@ -125,14 +129,16 @@ TAO_Set_Update_Interceptor::receive_other (
                                        ACE_THROW_SPEC ((CORBA::SystemException,
                                        PortableInterceptor::ForwardRequest))
 {
+  FTRTEC_TRACE("TAO_Set_Update_Interceptor::receive_other");
 }
 
 void
 TAO_Set_Update_Interceptor::receive_exception (
   PortableInterceptor::ClientRequestInfo_ptr ri
-  ACE_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
   PortableInterceptor::ForwardRequest))
 {
+  FTRTEC_TRACE("TAO_Set_Update_Interceptor::receive_exception");
   ACE_UNUSED_ARG(ri);
 }

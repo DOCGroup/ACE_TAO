@@ -88,7 +88,7 @@ public:
 
   virtual ~AST_Sequence (void);
 
-  virtual idl_bool in_recursion (AST_Type *node = 0);
+  virtual idl_bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Are we or the node represented by node involved in recursion.
 
   // Data Accessors.

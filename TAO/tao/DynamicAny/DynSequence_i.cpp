@@ -4,6 +4,7 @@
 #include "DynSequence_i.h"
 #include "DynAnyFactory.h"
 #include "tao/Marshal.h"
+#include "tao/Any_Unknown_IDL_Type.h"
 
 ACE_RCSID (DynamicAny,
            DynSequence_i,
@@ -50,6 +51,7 @@ TAO_DynSequence_i::init (const CORBA::Any& any
 
   // Get the CDR stream of the argument.
   ACE_Message_Block *mb = any._tao_get_cdr ();
+  bool type_known = false;
 
   if (mb == 0)
     {
@@ -58,10 +60,16 @@ TAO_DynSequence_i::init (const CORBA::Any& any
       TAO_OutputCDR out;
       any.impl ()->marshal_value (out);
       ACE_CDR::consolidate (mb, out.begin ());
+      type_known = true;
     }
 
   TAO_InputCDR cdr (mb,
                     any._tao_byte_order ());
+
+  if (type_known)
+    {
+      mb->release ();
+    }
 
   CORBA::ULong length;
 
@@ -128,39 +136,15 @@ TAO_DynSequence_i::init (CORBA::TypeCode_ptr tc
 // ****************************************************************
 
 TAO_DynSequence_i *
-TAO_DynSequence_i::_narrow (CORBA::Object_ptr obj
+TAO_DynSequence_i::_narrow (CORBA::Object_ptr _tao_objref
                             ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if (CORBA::is_nil (obj))
+  if (CORBA::is_nil (_tao_objref))
     {
       return 0;
     }
 
-  return ACE_reinterpret_cast (
-             TAO_DynSequence_i*,
-             obj->_tao_QueryInterface (
-                      ACE_reinterpret_cast (
-                          ptrdiff_t,
-                          &TAO_DynSequence_i::_narrow
-                        )
-                    )
-           );
-}
-
-void*
-TAO_DynSequence_i::_tao_QueryInterface (ptrdiff_t type)
-{
-  ptrdiff_t mytype =
-    ACE_reinterpret_cast (ptrdiff_t,
-                          &TAO_DynSequence_i::_narrow);
-  if (type == mytype)
-    {
-      this->_add_ref ();
-      return this;
-    }
-
-  return
-    this->ACE_NESTED_CLASS (DynamicAny, DynSequence::_tao_QueryInterface) (type);
+  return dynamic_cast<TAO_DynSequence_i *> (_tao_objref);
 }
 
 // ****************************************************************
@@ -185,7 +169,8 @@ TAO_DynSequence_i::get_element_type (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   // Return the content type.
-  CORBA::TypeCode_ptr retval = element_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_ptr retval = 
+    element_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return retval;
@@ -502,7 +487,8 @@ TAO_DynSequence_i::set_elements_as_dyn_any (
       this->da_members_.size (length);
     }
 
-  CORBA::TypeCode_var element_type = this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var element_type = 
+    this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::TypeCode_var val_type;
@@ -527,7 +513,8 @@ TAO_DynSequence_i::set_elements_as_dyn_any (
               ACE_CHECK;
             }
 
-          this->da_members_[i] = values[i]->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
+          this->da_members_[i] = 
+            values[i]->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
         }
       else
@@ -570,14 +557,16 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any
     }
 
   CORBA::TypeCode_var tc = any.type ();
-  CORBA::Boolean equivalent = this->type_.in ()->equivalent (tc.in ()
-                                                             ACE_ENV_ARG_PARAMETER);
+  CORBA::Boolean equivalent = 
+    this->type_.in ()->equivalent (tc.in ()
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (equivalent)
     {
       // Get the CDR stream of the argument.
       ACE_Message_Block *mb = any._tao_get_cdr ();
+      bool type_known = false;
 
       if (mb == 0)
         {
@@ -586,10 +575,16 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any
           TAO_OutputCDR out;
           any.impl ()->marshal_value (out);
           ACE_CDR::consolidate (mb, out.begin ());
+          type_known = true;
         }
 
       TAO_InputCDR cdr (mb,
                         any._tao_byte_order ());
+
+      if (type_known)
+        {
+          mb->release ();
+        }
 
       CORBA::ULong arg_length;
 
@@ -679,6 +674,8 @@ TAO_DynSequence_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
     this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
+  bool type_known = false;
+
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)
     {
       // Recursive step
@@ -696,10 +693,17 @@ TAO_DynSequence_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
           TAO_OutputCDR out;
           field_any->impl ()->marshal_value (out);
           ACE_CDR::consolidate (field_mb, out.begin ());
+          type_known = true;
         }
 
       TAO_InputCDR field_cdr (field_mb,
                               field_any->_tao_byte_order ());
+
+      if (type_known)
+        {
+          field_mb->release ();
+          type_known = false;
+        }
 
       (void) TAO_Marshal_Object::perform_append (field_tc.in (),
                                                  &field_cdr,
@@ -749,6 +753,11 @@ TAO_DynSequence_i::equal (DynamicAny::DynAny_ptr rhs
   ACE_CHECK_RETURN (0);
 
   if (!equivalent)
+    {
+      return 0;
+    }
+
+  if (rhs->component_count () != this->component_count_)
     {
       return 0;
     }

@@ -1,5 +1,6 @@
 #include "ace/Arg_Shifter.h"
-#include "ace/OS_String.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_strings.h"
 #include "ace/OS_Errno.h"
 #include "ace/OS_Memory.h"
 
@@ -113,14 +114,14 @@ ACE_Arg_Shifter::cur_arg_strncasecmp (const ACE_TCHAR *flag)
   // Check for a current argument
   if (this->is_anything_left())
     {
-      size_t flag_length = ACE_OS_String::strlen (flag);
+      size_t flag_length = ACE_OS::strlen (flag);
 
       // Check for presence of the flag
-      if (ACE_OS_String::strncasecmp(this->temp_[current_index_],
-                                     flag,
-                                     flag_length) == 0)
+      if (ACE_OS::strncasecmp(this->temp_[current_index_],
+                              flag,
+                              flag_length) == 0)
 	{
-	  if (ACE_OS_String::strlen(temp_[current_index_]) ==
+	  if (ACE_OS::strlen(temp_[current_index_]) ==
 	      flag_length)
 	    {
 	      // match and lengths are equal
@@ -129,7 +130,7 @@ ACE_Arg_Shifter::cur_arg_strncasecmp (const ACE_TCHAR *flag)
 	  else
 	    {
 	      // matches, with more info to boot!
-              size_t remaining = ACE_OS_String::strspn
+              size_t remaining = ACE_OS::strspn
                 (this->temp_[current_index_] + flag_length,
 		 ACE_LIB_TEXT (" ")) + flag_length;
               return ACE_static_cast (int, remaining);

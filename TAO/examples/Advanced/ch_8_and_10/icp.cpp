@@ -26,6 +26,8 @@
 //#include    <stdlib.h>
 #include    "icp.h"
 
+using namespace std;
+
 //----------------------------------------------------------------
 
 enum DeviceType { thermometer, thermostat };
@@ -73,7 +75,7 @@ ICP_online(unsigned long id)
     StateMap::iterator pos = dstate.find(id);
     if (pos != dstate.end())
         return -1;                          // Already exists
-    
+
     // Fill in state.
     DeviceState ds;
     ds.type = (id % 2) ? thermometer : thermostat;
@@ -123,7 +125,11 @@ static
 short
 vary_temp(short temp)
 {
+#if defined (__BORLANDC__) || defined (_MSC_VER)
+    long r = rand() % 50;
+#else
     long r = lrand48() % 50;
+#endif
     long delta;
     if (r < 5)
         delta = 3;
@@ -133,7 +139,11 @@ vary_temp(short temp)
         delta = 1;
     else
         delta = 0;
+#if defined (__BORLANDC__) || defined (_MSC_VER)
+    if (rand() % 2)
+#else
     if (lrand48() % 2)
+#endif
         delta = -delta;
     return temp + delta;
 }
@@ -167,7 +177,7 @@ private:
 // actual_temp() is a helper function to determine the actual
 // temperature returned by a particular thermometer or thermostat.
 // The pos argument indicates the device.
-// 
+//
 // The function locates all thermostats that are in the same room
 // as the device denoted by pos and computes the average of all
 // the thermostats' nominal temperatures. (If no thermostats are
@@ -245,7 +255,7 @@ ICP_get(
             return -1;                      // Must be thermostat
         memcpy(
             value, &pos->second.nominal_temp,
-            min(len, sizeof(pos->second.nominal_temp))
+            std::min(len, sizeof(pos->second.nominal_temp))
         );
     } else if (strcmp(attr, "temperature") == 0) {
         short temp = actual_temp(pos);
@@ -286,7 +296,7 @@ ICP_set(unsigned long id, const char * attr, const void * value)
             (const char *)value, MAXSTR - 1
         );
     } else if (strcmp(attr, "nominal_temp") == 0) {
-        if (pos->second.type != thermostat) 
+        if (pos->second.type != thermostat)
             return -1;                      // Must be thermostat
         short temp;
         memcpy(&temp, value, sizeof(temp));

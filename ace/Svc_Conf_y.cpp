@@ -22,6 +22,7 @@
 // $Id$
 
 #include "ace/Svc_Conf.h"
+#include "ace/OS_NS_string.h"
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 

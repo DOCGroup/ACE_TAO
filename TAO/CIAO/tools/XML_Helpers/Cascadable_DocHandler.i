@@ -26,8 +26,8 @@ CIAO::XMLHelpers::Cascadable_DocHandler::setDocumentLocator (ACEXML_Locator * lo
 
 ACE_INLINE void
 CIAO::XMLHelpers::Cascadable_DocHandler::error (ACEXML_SAXParseException & ex
-                                                ACEXML_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((ACEXML_SAXException))
+                                                ACEXML_ENV_ARG_DECL)
+   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   this->print_warning (ACE_TEXT ("Error"),
                        ex
@@ -36,7 +36,7 @@ CIAO::XMLHelpers::Cascadable_DocHandler::error (ACEXML_SAXParseException & ex
 
 ACE_INLINE void
 CIAO::XMLHelpers::Cascadable_DocHandler::fatalError (ACEXML_SAXParseException & ex
-                                                     ACEXML_ENV_ARG_DECL_NOT_USED)
+                                                     ACEXML_ENV_ARG_DECL)
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   this->print_warning (ACE_TEXT ("Fatal Error"),
@@ -46,7 +46,7 @@ CIAO::XMLHelpers::Cascadable_DocHandler::fatalError (ACEXML_SAXParseException & 
 
 ACE_INLINE void
 CIAO::XMLHelpers::Cascadable_DocHandler::warning (ACEXML_SAXParseException & ex
-                                                  ACEXML_ENV_ARG_DECL_NOT_USED)
+                                                  ACEXML_ENV_ARG_DECL)
       ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   this->print_warning (ACE_TEXT ("Warning"),

@@ -8,13 +8,18 @@
 
 #include "DIOP_Connection_Handler.h"
 #include "tao/debug.h"
+#include "tao/ORB_Constants.h"
 
-ACE_RCSID(tao, DIOP_Endpoint, "$Id$")
+ACE_RCSID (tao,
+           DIOP_Endpoint,
+           "$Id$")
 
 
 #if !defined (__ACE_INLINE__)
 # include "DIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/os_include/os_netdb.h"
 
 TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const ACE_INET_Addr &addr,
                                       int use_dotted_decimal_addresses)
@@ -172,7 +177,23 @@ TAO_DIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 CORBA::ULong
 TAO_DIOP_Endpoint::hash (void)
 {
-  return ACE::hash_pjw (this->host ()) + this->port ();
+  if (this->hash_val_ != 0)
+    return this->hash_val_;
+
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      guard,
+                      this->addr_lookup_lock_,
+                      this->hash_val_);
+    // .. DCL
+    if (this->hash_val_ != 0)
+      return this->hash_val_;
+
+    this->hash_val_ =
+      ACE::hash_pjw (this->host ()) + this->port ();
+  }
+
+  return this->hash_val_;
 }
 
 const ACE_INET_Addr &

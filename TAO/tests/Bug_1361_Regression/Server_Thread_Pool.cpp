@@ -137,6 +137,7 @@ Thread_Pool::svc (void)
               // keep calling until get an exception
               while (true)
                 {
+#if 0
                   if (0)
                     {
                       Test::Payload pload (10);
@@ -148,6 +149,7 @@ Thread_Pool::svc (void)
 
                     }
                   else
+#endif /*if 0*/
                     {
                       Test::Payload_var pout;
                       echo->echo_payload_out (pout.out()

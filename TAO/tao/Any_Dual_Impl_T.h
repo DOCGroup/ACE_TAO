@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Any.h"
+#include "tao/Any_Impl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -50,7 +50,7 @@ namespace TAO
                         _tao_destructor,
                         CORBA::TypeCode_ptr,
                         T * const);
-    static void insert_copy (CORBA::Any &, 
+    static void insert_copy (CORBA::Any &,
                              _tao_destructor destructor,
                              CORBA::TypeCode_ptr,
                              const T &);
@@ -68,9 +68,11 @@ namespace TAO
     virtual void free_value (void);
 
   protected:
+    void value (const T &);
+
     T * value_;
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 # include "tao/Any_Dual_Impl_T.inl"

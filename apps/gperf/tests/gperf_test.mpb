@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project: aceexe {
   after += gperf
   Define_Custom(GPERF) {

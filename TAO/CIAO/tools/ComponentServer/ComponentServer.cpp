@@ -64,7 +64,8 @@ main (int argc, char *argv[])
     {
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv
+                                            argv,
+                                            ""
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -154,7 +155,7 @@ main (int argc, char *argv[])
         }
 
       comserv_servant->set_objref (activator.in (),
-                                   config,
+                                   config.in (),
                                    comserv_obj.in ()
                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;

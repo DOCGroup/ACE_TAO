@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 
 // ============================================================================
 //
@@ -18,9 +17,11 @@
 //
 // ============================================================================
 
-
 #include "Codeset_Translator_Factory.h"
-#include <ace/CDR_Stream.h>
+
+ACE_RCSID (tao,
+           Codeset_Translator_Factory,
+           "$Id$")
 
 TAO_Codeset_Translator_Factory::TAO_Codeset_Translator_Factory ()
 {
@@ -33,31 +34,43 @@ TAO_Codeset_Translator_Factory::~TAO_Codeset_Translator_Factory ()
 }
 
 int
-TAO_Codeset_Translator_Factory::init (int , ACE_TCHAR ** )
+TAO_Codeset_Translator_Factory::init (int , ACE_TCHAR **)
 {
   return 0;
 }
 
 void
-TAO_Codeset_Translator_Factory::assign_i (TAO_InputCDR *cdr, ACE_Char_Codeset_Translator *trans) const
+TAO_Codeset_Translator_Factory::assign_i (
+    TAO_InputCDR *cdr, 
+    ACE_Char_Codeset_Translator *trans
+  ) const
 {
   cdr->char_translator(trans);
 }
 
 void
-TAO_Codeset_Translator_Factory::assign_i (TAO_OutputCDR *cdr, ACE_Char_Codeset_Translator *trans) const
+TAO_Codeset_Translator_Factory::assign_i (
+    TAO_OutputCDR *cdr, 
+    ACE_Char_Codeset_Translator *trans
+  ) const
 {
   cdr->char_translator(trans);
 }
 
 void
-TAO_Codeset_Translator_Factory::assign_i (TAO_InputCDR *cdr, ACE_WChar_Codeset_Translator *trans) const
+TAO_Codeset_Translator_Factory::assign_i (
+    TAO_InputCDR *cdr, 
+    ACE_WChar_Codeset_Translator *trans
+  ) const
 {
   cdr->wchar_translator(trans);
 }
 
 void
-TAO_Codeset_Translator_Factory::assign_i (TAO_OutputCDR *cdr, ACE_WChar_Codeset_Translator *trans) const
+TAO_Codeset_Translator_Factory::assign_i (
+    TAO_OutputCDR *cdr, 
+    ACE_WChar_Codeset_Translator *trans
+  ) const
 {
   cdr->wchar_translator(trans);
 }

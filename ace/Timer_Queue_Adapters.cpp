@@ -15,6 +15,9 @@ ACE_RCSID(ace, Timer_Queue_Adapters, "$Id$")
 #  include "ace/Timer_Queue_Adapters.i"
 # endif /* __ACE_INLINE__ */
 
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_time.h"
+
 template <class TQ> TQ &
 ACE_Async_Timer_Queue_Adapter<TQ>::timer_queue (void)
 {

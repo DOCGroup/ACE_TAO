@@ -14,7 +14,7 @@ namespace CCF
     class LexicalAnalyzer : public virtual IDL2::LexicalAnalyzer
     {
     public:
-      LexicalAnalyzer (TokenStream<char>& is);
+      LexicalAnalyzer (CompilerElements::TokenStream<Char>& is);
     };
   }
 }

@@ -64,13 +64,6 @@ public:
   // = helper
   virtual int post_process (be_decl *);
   // stuff to output after every member of the scope is handled
-
-  virtual const char *compute_operation_name (be_operation *node);
-  // Compute the servant operation name to invoke.  Notice that
-  // this method _does_ include the double-quotes.
-
-private:
-  char *operation_name_;
 };
 
 #endif /* _BE_VISITOR_OPERATION_OPERATION_SS_H_ */

@@ -11,6 +11,7 @@
 
 #ifndef TAO_Notify_BUFFERING_STRATEGY_H
 #define TAO_Notify_BUFFERING_STRATEGY_H
+
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -19,9 +20,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include "ace/Message_Queue.h"
+
 #include "orbsvcs/TimeBaseC.h"
+
 #include "Property.h"
 #include "Property_T.h"
 #include "AdminProperties.h"
@@ -41,7 +43,11 @@ class TAO_Notify_Export TAO_Notify_Buffering_Strategy
 {
 public:
   /// Constuctor
-  TAO_Notify_Buffering_Strategy (TAO_Notify_Message_Queue& msg_queue, TAO_Notify_AdminProperties_var& admin_properties, CORBA::Long batch_size);
+  TAO_Notify_Buffering_Strategy (
+      TAO_Notify_Message_Queue& msg_queue, 
+       TAO_Notify_AdminProperties_var& admin_properties, 
+       CORBA::Long batch_size
+     );
 
   /// Destructor
   ~TAO_Notify_Buffering_Strategy ();
@@ -59,7 +65,8 @@ public:
 
   /// Dequeue batch. This method will block for <abstime> if non-zero or else blocks till an item is available.
   /// Return -1 on error or if nothing is available, else the number of items actually dequeued (1).
-  int dequeue (TAO_Notify_Method_Request* &method_request, const ACE_Time_Value *abstime);
+  int dequeue (TAO_Notify_Method_Request* &method_request, 
+               const ACE_Time_Value *abstime);
 
   /// Shutdown
   void shutdown (void);
@@ -134,4 +141,5 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_Notify_BUFFERING_STRATEGY_H */

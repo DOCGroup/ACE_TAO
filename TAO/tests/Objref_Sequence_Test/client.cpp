@@ -94,7 +94,7 @@ main (int argc, char *argv [])
                 Server::_duplicate (vAddition [iCount]);
             };
 
-          vAddition = NULL;
+          vAddition = 0;
 
           if (iStep * 5 > iSize)
             {

@@ -1,10 +1,13 @@
 // $Id$
 
 #include "airplane_i.h"
-#include "tao/corba.h"
-#include "tao/debug.h"
 
-ACE_RCSID(ImplRepo, airplane_i, "$Id$")
+#include "tao/debug.h"
+#include "ace/OS_NS_time.h"
+
+ACE_RCSID (ImplRepo, 
+           airplane_i, 
+           "$Id$")
 
 // Constructor
 

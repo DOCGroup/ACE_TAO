@@ -5,12 +5,16 @@
 // Listens to multicast address for client log messages.  Prints
 // Mbits/sec received from client.
 
+#include "ace/OS_main.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/Reactor.h"
 #include "ace/Log_Msg.h"
 #include "Log_Wrapper.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/os_include/os_netdb.h"
 
 ACE_RCSID(Multicast, server, "$Id$")
 

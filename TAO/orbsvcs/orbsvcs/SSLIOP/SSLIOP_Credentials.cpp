@@ -2,6 +2,8 @@
 
 #include "SSLIOP_Credentials.h"
 
+#include "tao/ORB_Constants.h"
+
 ACE_RCSID (TAO_SSLIOP,
            SSLIOP_Credentials,
            "$Id$")
@@ -416,31 +418,10 @@ TAO_SSLIOP_Credentials::hash (void) const
 
 TAO_SSLIOP_Credentials_ptr
 TAO_SSLIOP_Credentials::_narrow (CORBA::Object_ptr obj
-                                 ACE_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL_NOT_USED)
 {
-  return TAO_SSLIOP_Credentials::_unchecked_narrow (obj
-                                                    ACE_ENV_ARG_PARAMETER);
-}
-
-TAO_SSLIOP_Credentials_ptr
-TAO_SSLIOP_Credentials::_unchecked_narrow (CORBA::Object_ptr obj
-                                           ACE_ENV_ARG_DECL_NOT_USED)
-{
-  if (CORBA::is_nil (obj))
-    return TAO_SSLIOP_Credentials::_nil ();
-  return
-        ACE_reinterpret_cast
-          (
-            TAO_SSLIOP_Credentials_ptr,
-              obj->_tao_QueryInterface
-                (
-                  ACE_reinterpret_cast
-                    (
-                      ptrdiff_t,
-                      &TAO_SSLIOP_Credentials::_tao_class_id
-                    )
-                )
-          );
+  return  TAO_SSLIOP_Credentials::_duplicate (
+              dynamic_cast<TAO_SSLIOP_Credentials *> (obj));
 }
 
 TAO_SSLIOP_Credentials_ptr
@@ -450,35 +431,6 @@ TAO_SSLIOP_Credentials::_duplicate (TAO_SSLIOP_Credentials_ptr obj)
     obj->_add_ref ();
 
   return obj;
-}
-
-void *
-TAO_SSLIOP_Credentials::_tao_QueryInterface (ptrdiff_t type)
-{
-  void *retv = 0;
-  if (type == ACE_reinterpret_cast
-    (ptrdiff_t,
-      &TAO_SSLIOP_Credentials::_tao_class_id))
-    retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast
-    (ptrdiff_t,
-      &::SecurityLevel2::Credentials::_tao_class_id))
-    retv = ACE_reinterpret_cast
-      (
-        void *,
-        ACE_static_cast
-          (
-            SecurityLevel2::Credentials_ptr,
-            this
-          )
-      );
-  else if (type == ACE_reinterpret_cast (ptrdiff_t, &CORBA::Object::_tao_class_id))
-    retv = ACE_reinterpret_cast (void *,
-      ACE_static_cast (CORBA::Object_ptr, this));
-
-  if (retv)
-    this->_add_ref ();
-  return retv;
 }
 
 // -----------------------------------------------------------

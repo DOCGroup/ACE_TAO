@@ -11,7 +11,9 @@ endif
 ifeq (,$(optimize))
   optimize = 0
 endif
-
+ifeq (,$(versioned_so))
+  versioned_so = 0
+endif
 with_ld = macosx
 
 CC              = gcc
@@ -21,7 +23,7 @@ CFLAGS          += -Wall -Wpointer-arith -Wno-long-double -pipe -I/sw/include
 DCFLAGS         += -g
 DLD             = libtool
 LD              = $(CXX)
-LDFLAGS		+= -L/sw/lib
+LDFLAGS		+= -L/sw/lib -flat_namespace -undefined warning
 LIBS            += -lcc_dynamic -lstdc++ -lSystem
 
 ## dlcompat package (not part of base Darwin) is needed for dlopen().
@@ -36,9 +38,8 @@ RANLIB          = ranlib
 SOEXT		= dylib
 SOFLAGS += -dynamic
 SOBUILD = -o $(VSHDIR)$*.dylib $<
-SONAME=
 
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
+# Test for template instantiation, add to SOFLAGS if versioned_so set, 
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU

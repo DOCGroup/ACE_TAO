@@ -3,7 +3,7 @@
 
 // Return flags currently associated with handle.
 
-#include "ace/OS.h"
+#include "ace/OS_NS_fcntl.h"
 
 ASYS_INLINE int
 ACE_Flag_Manip::get_flags (ACE_HANDLE handle)

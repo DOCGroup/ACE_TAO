@@ -1,11 +1,14 @@
-project(*server): taoserver {
+// -*- MPC -*-
+// $Id$
+
+project(*server): taoexe, portableserver {
   Source_Files {
     Memory_Growth.cpp
     server.cpp
   }
 }
 
-project(*client): taoclient {
+project(*client): taoexe {
   Source_Files {
     TestC.cpp
     client.cpp

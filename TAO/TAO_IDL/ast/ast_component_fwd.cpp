@@ -3,7 +3,6 @@
 #include "ast_component_fwd.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
-#include "ace/streams.h"
 
 ACE_RCSID( ast, 
            ast_component_fwd, 
@@ -40,7 +39,7 @@ AST_ComponentFwd::~AST_ComponentFwd (void)
 void
 AST_ComponentFwd::dump (ACE_OSTREAM_TYPE &o)
 {
-  o << "component ";
+  this->dump_i (o, "component ");
 
   this->local_name ()->dump (o);
 }

@@ -1,3 +1,7 @@
+#
+# $Id$
+#
+
 NAME = test
 
 OBJFILES = $(OBJDIR)\$(NAME).obj

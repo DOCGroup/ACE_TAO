@@ -3,11 +3,11 @@
 
 project(RTCosScheduling_Server): rtcosscheduling, rt_server, orbsvcsexe {
   requires += interceptors
-  after    += commonlib
-  libs     += testSched_Common
+  after += commonlib
+  libs += testSched_Common
   libpaths += .
-  exename   = server
-
+  exename = server
+  comps = 
   Source_Files {
     Object1_i.cpp
     server.cpp
@@ -17,13 +17,13 @@ project(RTCosScheduling_Server): rtcosscheduling, rt_server, orbsvcsexe {
 }
 
 project(RTCosScheduling_Client): rtcosscheduling, rt_client, orbsvcsexe {
-  after    += commonlib
-  after    += RTCosScheduling_Server
+  after += commonlib
+  after += RTCosScheduling_Server
   requires += interceptors
-  libs     += testSched_Common
+  libs += testSched_Common
   libpaths += .
-  exename   = client
-
+  exename = client
+  comps = 
   Source_Files {
     client.cpp
   }

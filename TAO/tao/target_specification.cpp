@@ -7,4 +7,6 @@
 #include "target_specification.i"
 #endif /* !defined INLINE */
 
-ACE_RCSID(tao, target_specification, "$Id$")
+ACE_RCSID (tao, 
+           target_specification, 
+           "$Id$")

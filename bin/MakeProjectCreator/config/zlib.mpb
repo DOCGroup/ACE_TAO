@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 feature(zlib) {
   includes += $(ZLIB_ROOT)/include
   libpaths += $(ZLIB_ROOT)/lib

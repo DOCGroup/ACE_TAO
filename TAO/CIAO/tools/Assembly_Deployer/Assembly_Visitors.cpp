@@ -3,6 +3,8 @@
 #include "Assembly_Visitors.h"
 #include "../XML_Helpers/XML_Utils.h"
 
+#include "ace/OS_NS_stdio.h"
+
 #if !defined (__ACE_INLINE__)
 # include "Assembly_Visitors.inl"
 #endif /* __ACE_INLINE__ */

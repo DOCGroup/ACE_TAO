@@ -12,6 +12,8 @@
 //=============================================================================
 
 #include "ace/Codeset_Registry.h"
+#include "ace/OS_Memory.h"
+#include "ace/OS_NS_string.h"
 
 // $Id$
 
@@ -19,7 +21,7 @@
 #include "ace/Codeset_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Codeset_Registry, "$Id$");
+ACE_RCSID(ace, Codeset_Registry, "$Id$")
 
 
 int

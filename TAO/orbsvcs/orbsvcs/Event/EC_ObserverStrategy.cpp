@@ -7,7 +7,6 @@
 #include "EC_ConsumerAdmin.h"
 #include "EC_SupplierAdmin.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "ace/Synch.h"
 #include "ace/Auto_Ptr.h"
 
 #if ! defined (__ACE_INLINE__)

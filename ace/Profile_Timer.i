@@ -1,6 +1,10 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_sys_resource.h"
+#include "ace/Global_Macros.h"
+
 #if (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32)
 
 #  if defined (ACE_HAS_PRUSAGE_T)

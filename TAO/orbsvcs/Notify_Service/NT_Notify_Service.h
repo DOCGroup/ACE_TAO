@@ -71,7 +71,7 @@ private:
   friend class ACE_Singleton<TAO_NT_Notify_Service, MUTEX>;
 };
 
-typedef ACE_Singleton<TAO_NT_Notify_Service, ACE_Mutex> SERVICE;
+typedef ACE_Singleton<TAO_NT_Notify_Service, TAO_NT_Notify_Service::MUTEX> SERVICE;
 
 #endif /* ACE_WIN32 */
 #endif /* TAO_NT_NOTIFY_SERVER_H */

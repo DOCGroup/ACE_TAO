@@ -1,8 +1,11 @@
+// -*- MPC -*-
+// $Id$
+
 project : qt-min {
   Define_Custom(MOC) {
     automatic        = 0
-    command          = $(ACE_ROOT)/bin/pch_cmd.pl -t -o
-    commandflags     = -c $(QTDIR)/bin/moc
+    command          = perl
+    commandflags     = $(ACE_ROOT)/bin/pch_cmd.pl -t -o -c $(QTDIR)/bin/moc
     output_option    = -o
     pch_option       = -p
     inputext         = .h

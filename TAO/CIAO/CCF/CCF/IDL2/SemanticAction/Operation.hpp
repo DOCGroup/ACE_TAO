@@ -15,24 +15,27 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      //
-      //
-      //
-      class Operation
+      struct Operation
       {
-      public:
+        virtual void
+        one_way () = 0;
 
         virtual void
-        begin (IdentifierPtr const& type_id,
-               SimpleIdentifierPtr const& name_id) = 0;
+        two_way () = 0;
+
+        virtual void
+        type (IdentifierPtr const& id) = 0;
+
+        virtual void
+        name (SimpleIdentifierPtr const& id) = 0;
 
         struct Direction
         {
           enum Value
           {
-            IN = 0,
-            OUT,
-            INOUT
+            in = 0,
+            out,
+            inout
           };
 
           friend std::ostream&
@@ -45,7 +48,7 @@ namespace CCF
                    SimpleIdentifierPtr const& name_id) = 0;
 
         virtual void
-        end () = 0;
+        raises (IdentifierPtr const& id) = 0;
       };
     }
   }

@@ -18,6 +18,8 @@
 #define _MULTICAST_MANAGER_H
 
 #include "global.h"
+#include "ace/os_include/netinet/os_in.h"
+#include "ace/os_include/os_netdb.h"
 
 class Host_Elem
 {

@@ -12,14 +12,15 @@
 
 #ifndef TAO_TRANSPORT_TIMER_H
 #define TAO_TRANSPORT_TIMER_H
-#include /**/ "ace/pre.h"
 
-#include "TAO_Export.h"
+#include /**/ "ace/pre.h"
 #include "ace/Event_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "TAO_Export.h"
 
 class TAO_Transport;
 
@@ -51,4 +52,5 @@ private:
 };
 
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_TRANSPORT_TIMER_H */

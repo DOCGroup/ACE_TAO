@@ -2,8 +2,12 @@
 
 #include "ace/SV_Message_Queue.h"
 #include "test.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/Malloc.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(SV_Message_Queues, MQ_Client, "$Id$")
 

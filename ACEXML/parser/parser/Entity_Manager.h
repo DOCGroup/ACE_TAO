@@ -23,7 +23,7 @@
 
 #include "ACEXML/common/XML_Types.h"
 #include "ace/Hash_Map_Manager.h"
-#include "ace/Synch.h"
+#include "ace/Null_Mutex.h"
 
 typedef ACE_Hash_Map_Entry<ACEXML_String,
                            ACEXML_String> ACEXML_ENTITY_ENTRY;
@@ -86,7 +86,9 @@ public:
   int reset (void);
 
 private:
-  ACEXML_ENTITIES_MANAGER entities_;
+  ACEXML_ENTITIES_MANAGER* entities_;
+  bool init_;
+
 };
 
 #if defined (__ACEXML_INLINE__)

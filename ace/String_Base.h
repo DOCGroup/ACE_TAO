@@ -23,9 +23,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Global_Macros.h"
-#include "ace/OS_String.h"
-#include "ace/OS_Memory.h"
-
 
 // Forward decl.
 class ACE_Allocator;

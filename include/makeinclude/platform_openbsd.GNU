@@ -48,9 +48,10 @@ endif # threads
 # Setting the internal name and version of shared libraries isn't supported
 # by OpenBSD.  In fact, the -h option gives an error and interestingly
 # enough, the -soname option doesn't but just ignores its parameter.
-SONAME =
+# This tells platform_g++_common.GNU not to add these link options.
+with_ld = openbsd
 
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
+# Test for template instantiation, add to SOFLAGS if versioned_so set, 
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU

@@ -14,23 +14,34 @@ ACE_INLINE int
 TAO_Tagged_Components::get_orb_type (CORBA::ULong& orb_type) const
 {
   if (this->orb_type_set_ == 1)
-    orb_type = this->orb_type_;
+    {
+      orb_type = this->orb_type_;
+    }
+
   return this->orb_type_set_;
 }
 
 ACE_INLINE int
-TAO_Tagged_Components::get_code_sets (const CONV_FRAME::CodeSetComponentInfo* &ci) const
+TAO_Tagged_Components::get_code_sets (
+  const CONV_FRAME::CodeSetComponentInfo* &ci) const
 {
   if (this->code_sets_set_ == 1)
-    ci = &this->code_sets_;
+    {
+      ci = &this->code_sets_;
+    }
+
   return this->code_sets_set_;
 }
 
 ACE_INLINE int
-TAO_Tagged_Components::get_code_sets (CONV_FRAME::CodeSetComponentInfo &ci) const
+TAO_Tagged_Components::get_code_sets (
+  CONV_FRAME::CodeSetComponentInfo &ci) const
 {
   if (this->code_sets_set_ == 1)
-    ci = this->code_sets_;
+    {
+      ci = this->code_sets_;
+    }
+
   return this->code_sets_set_;
 }
 

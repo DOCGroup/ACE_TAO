@@ -13,17 +13,13 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      //
-      //
-      //
-      class Include
+      struct Include
       {
-      public:
-        virtual
-        ~Include () throw () {}
+        virtual void
+        quote (StringLiteralPtr const& sl) = 0;
 
         virtual void
-        begin (StringLiteralPtr const& sl) = 0;
+        bracket (StringLiteralPtr const& sl) = 0;
 
         virtual void
         end () = 0;

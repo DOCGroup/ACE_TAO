@@ -8,16 +8,26 @@ include $(root)/Bootstrap.rules
 
 $(call include, $(root)/Config.rules)
 
-$(call include, $(UTILITY_ROOT)/BuildRules/Object.pre.rules)
+$(call include, $(UTILITY_BUILD_RULES)/Object.pre.rules)
 
-cxx_translation_units := BuiltIn.cpp     \
-                         Elements.cpp    \
-                         Interface.cpp   \
-                         Module.cpp      \
-                         Operation.cpp   \
-                         Translation.cpp
+cxx_translation_units := Attribute.cpp    \
+                         Elements.cpp     \
+                         Enum.cpp         \
+                         Exception.cpp    \
+                         Fundamental.cpp  \
+                         Interface.cpp    \
+                         Member.cpp       \
+                         Module.cpp       \
+                         Native.cpp       \
+                         Operation.cpp    \
+                         Sequence.cpp     \
+                         Struct.cpp       \
+                         Translation.cpp  \
+                         TypeId.cpp       \
+                         Union.cpp        \
+                         ValueType.cpp
 
 
-CXX_PREPROCESS_FLAGS  += -I$(root) -I$(UTILITY_ROOT) -I$(BOOST_ROOT)
+CXX_PREPROCESS_FLAGS  += -I$(root) $(UTILITY_CPP_FLAGS) $(BOOST_CPP_FLAGS)
 
-$(call include, $(UTILITY_ROOT)/BuildRules/Object.post.rules)
+$(call include, $(UTILITY_BUILD_RULES)/Object.post.rules)

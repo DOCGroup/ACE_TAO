@@ -15,6 +15,12 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
@@ -248,6 +254,38 @@ POA_CORBA::Contained_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
+::CORBA::DefinitionKind POA_CORBA::Contained_tie<T>::def_kind  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->def_kind (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::Contained_tie<T>::destroy  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->destroy (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
 char * POA_CORBA::Contained_tie<T>::id  (
     ACE_ENV_SINGLE_ARG_DECL
   )
@@ -432,38 +470,6 @@ void POA_CORBA::Contained_tie<T>::move  (
   );
 }
 
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::CORBA::DefinitionKind POA_CORBA::Contained_tie<T>::def_kind  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->def_kind (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-void POA_CORBA::Contained_tie<T>::destroy  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  this->ptr_->destroy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from
@@ -559,6 +565,38 @@ POA_CORBA::Container_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
     }
   
   return this->Container::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::DefinitionKind POA_CORBA::Container_tie<T>::def_kind  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->def_kind (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::Container_tie<T>::destroy  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->destroy (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
 }
 
 // TAO_IDL - Generated from 
@@ -1005,38 +1043,6 @@ template <class T> ACE_INLINE
   );
 }
 
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::CORBA::DefinitionKind POA_CORBA::Container_tie<T>::def_kind  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->def_kind (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-void POA_CORBA::Container_tie<T>::destroy  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  this->ptr_->destroy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // TAO_IDL - Generated from
@@ -1138,22 +1144,6 @@ POA_CORBA::IDLType_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
-CORBA::TypeCode_ptr POA_CORBA::IDLType_tie<T>::type  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->type (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::IDLType_tie<T>::def_kind  (
     ACE_ENV_SINGLE_ARG_DECL
   )
@@ -1178,6 +1168,22 @@ void POA_CORBA::IDLType_tie<T>::destroy  (
   ))
 {
   this->ptr_->destroy (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+CORBA::TypeCode_ptr POA_CORBA::IDLType_tie<T>::type  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->type (
     ACE_ENV_SINGLE_ARG_PARAMETER
   );
 }
@@ -1277,6 +1283,38 @@ POA_CORBA::TypedefDef_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
     }
   
   return this->TypedefDef::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+::CORBA::DefinitionKind POA_CORBA::TypedefDef_tie<T>::def_kind  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->def_kind (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
+void POA_CORBA::TypedefDef_tie<T>::destroy  (
+    ACE_ENV_SINGLE_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->ptr_->destroy (
+    ACE_ENV_SINGLE_ARG_PARAMETER
+  );
 }
 
 // TAO_IDL - Generated from 
@@ -1483,38 +1521,5 @@ CORBA::TypeCode_ptr POA_CORBA::TypedefDef_tie<T>::type  (
   );
 }
 
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-::CORBA::DefinitionKind POA_CORBA::TypedefDef_tie<T>::def_kind  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  return this->ptr_->def_kind (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
-
-template <class T> ACE_INLINE
-void POA_CORBA::TypedefDef_tie<T>::destroy  (
-    ACE_ENV_SINGLE_ARG_DECL
-  )
-  ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
-{
-  this->ptr_->destroy (
-    ACE_ENV_SINGLE_ARG_PARAMETER
-  );
-}
-
 #endif /* ACE_HAS_USING_KEYWORD */
-
 

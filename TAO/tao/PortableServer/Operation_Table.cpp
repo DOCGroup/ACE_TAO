@@ -4,7 +4,9 @@
 #include "tao/Timeprobe.h"
 #include "tao/ORB.h"
 
-ACE_RCSID(tao, Operation_Table, "$Id$")
+ACE_RCSID(PortableServer,
+          Operation_Table,
+          "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -65,13 +67,19 @@ TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry
 {
   // Iterate thru each entry in the database and bind the operation
   // name to its corresponding skeleton.
-
   for (CORBA::ULong i = 0; i < dbsize; i++)
-    // @@ (ASG): what happens if bind fails ???
-    if (this->bind (db[i].opname_, db[i].skel_ptr_) == -1)
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("bind failed")));
+    {
+      TAO::Operation_Skeletons s;
+      s.skel_ptr_ = db[i].skel_ptr_;
+      s.thruPOA_skel_ptr_ = db[i].thruPOA_skel_ptr_;
+      s.direct_skel_ptr_ = db[i].direct_skel_ptr_;
+
+      // @@ (ASG): what happens if bind fails ???
+      if (this->bind (db[i].opname_, s) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) %p\n"),
+                    ACE_TEXT ("bind failed")));
+    }
 }
 
 TAO_Dynamic_Hash_OpTable::~TAO_Dynamic_Hash_OpTable (void)
@@ -89,31 +97,69 @@ TAO_Dynamic_Hash_OpTable::~TAO_Dynamic_Hash_OpTable (void)
       // memory.
       CORBA::string_free ((char *) entry->ext_id_);
       entry->ext_id_ = 0;
-
-      // We do not own this. So we just set it to 0.
-      entry->int_id_ = 0;
     }
 }
 
 int
 TAO_Dynamic_Hash_OpTable::bind (const char *opname,
-                                const TAO_Skeleton skel_ptr)
+                                const TAO::Operation_Skeletons skel_ptr)
 {
-  return this->hash_.bind (CORBA::string_dup (opname), skel_ptr);
+  return this->hash_.bind (CORBA::string_dup (opname),
+                           skel_ptr);
 }
 
 int
 TAO_Dynamic_Hash_OpTable::find (const char *opname,
                                 TAO_Skeleton& skel_ptr,
-                                const unsigned int length)
+                                const unsigned int )
 {
-  ACE_UNUSED_ARG (length);
   ACE_FUNCTION_TIMEPROBE (TAO_DYNAMIC_HASH_OPTABLE_FIND_START);
+  TAO::Operation_Skeletons s;
 
-  return this->hash_.find ((const char *)opname, skel_ptr);
+  int retval =
+    this->hash_.find ((const char *)opname,
+                      s);
+
+  if (retval != -1)
+    {
+      skel_ptr = s.skel_ptr_;
+    }
+
+  return retval;
 }
 
-// Linear search strategy
+int
+TAO_Dynamic_Hash_OpTable::find (const char *opname,
+                                TAO_Collocated_Skeleton& skel_ptr,
+                                TAO::Collocation_Strategy s,
+                                const unsigned int )
+{
+  ACE_FUNCTION_TIMEPROBE (TAO_DYNAMIC_HASH_OPTABLE_FIND_START);
+
+  TAO::Operation_Skeletons skel;
+
+  int retval =
+    this->hash_.find ((const char *)opname, skel);
+
+  if (retval != -1)
+    {
+      switch (s)
+        {
+        case TAO::TAO_CS_THRU_POA_STRATEGY:
+          skel_ptr = skel.thruPOA_skel_ptr_;
+          break;
+        case TAO::TAO_CS_DIRECT_STRATEGY:
+          skel_ptr = skel.direct_skel_ptr_;
+          break;
+        default:
+          return -1;
+        }
+    }
+
+  return retval;
+}
+
+/***************************************************************/
 
 TAO_Linear_Search_OpTable::TAO_Linear_Search_OpTable (void)
 {
@@ -124,20 +170,17 @@ TAO_Linear_Search_OpTable::~TAO_Linear_Search_OpTable (void)
 }
 
 int
-TAO_Linear_Search_OpTable::bind (const char *opname,
-                                 const TAO_Skeleton skel_ptr)
+TAO_Linear_Search_OpTable::bind (const char *,
+                                 const TAO::Operation_Skeletons )
 {
-  ACE_UNUSED_ARG (opname);
-  ACE_UNUSED_ARG (skel_ptr);
   return 0;
 }
 
 int
 TAO_Linear_Search_OpTable::find (const char *opname,
                                  TAO_Skeleton& skelfunc,
-                                 const unsigned int length)
+                                 const unsigned int )
 {
-  ACE_UNUSED_ARG (length);
   ACE_FUNCTION_TIMEPROBE (TAO_LINEAR_SEARCH_OPTABLE_FIND_START);
 
   const TAO_operation_db_entry *entry = lookup (opname);
@@ -152,7 +195,37 @@ TAO_Linear_Search_OpTable::find (const char *opname,
   return 0;
 }
 
-// Active Demux search strategy
+
+int
+TAO_Linear_Search_OpTable::find (const char *opname,
+                                 TAO_Collocated_Skeleton &skelfunc,
+                                 TAO::Collocation_Strategy st,
+                                 const unsigned int )
+{
+  ACE_FUNCTION_TIMEPROBE (TAO_LINEAR_SEARCH_OPTABLE_FIND_START);
+
+  const TAO_operation_db_entry *entry = lookup (opname);
+  if (entry == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("TAO_Linear_Search_Table:find failed\n")),
+                      -1);
+
+  switch (st)
+    {
+    case TAO::TAO_CS_THRU_POA_STRATEGY:
+      skelfunc = entry->thruPOA_skel_ptr_;
+      break;
+    case TAO::TAO_CS_DIRECT_STRATEGY:
+      skelfunc = entry->direct_skel_ptr_;
+      break;
+    default:
+      return -1;
+    }
+
+  return 0;
+}
+
+/*********************************************************************/
 TAO_Active_Demux_OpTable::TAO_Active_Demux_OpTable (const
                                                     TAO_operation_db_entry *db,
                                                     CORBA::ULong dbsize)
@@ -167,8 +240,15 @@ TAO_Active_Demux_OpTable::TAO_Active_Demux_OpTable (const
   // database and bind the operation name to its corresponding
   // skeleton.
   for (CORBA::ULong i=0; i < dbsize; i++)
-    // @@ (ASG): what happens if bind fails ???
-    (void) this->bind (db[i].opname_, db[i].skel_ptr_);
+    {
+      TAO::Operation_Skeletons s;
+      s.skel_ptr_ = db[i].skel_ptr_;
+      s.thruPOA_skel_ptr_ = db[i].thruPOA_skel_ptr_;
+      s.direct_skel_ptr_ = db[i].direct_skel_ptr_;
+
+      // @@ (ASG): what happens if bind fails ???
+      (void) this->bind (db[i].opname_, s);
+    }
 }
 
 TAO_Active_Demux_OpTable::~TAO_Active_Demux_OpTable (void)
@@ -178,18 +258,18 @@ TAO_Active_Demux_OpTable::~TAO_Active_Demux_OpTable (void)
 
 int
 TAO_Active_Demux_OpTable::bind (const char *opname,
-                                const TAO_Skeleton skel_ptr)
+                                const TAO::Operation_Skeletons skel_ptr)
 {
   CORBA::ULong i = ACE_OS::atoi (opname);
 
   if (i < this->tablesize_)
     {
-      if (this->tbl_[i].skel_ptr_ != 0)
+      if (this->tbl_[i].op_skel_ptr_.skel_ptr_ != 0)
         // overwriting previous one
         return 1;
       else
         {
-          this->tbl_[i].skel_ptr_ = skel_ptr;
+          this->tbl_[i].op_skel_ptr_ = skel_ptr;
           return 0;
         }
     }
@@ -199,29 +279,53 @@ TAO_Active_Demux_OpTable::bind (const char *opname,
 int
 TAO_Active_Demux_OpTable::find (const char *opname,
                                 TAO_Skeleton& skel_ptr,
-                                const unsigned int length)
+                                const unsigned int )
 {
-  ACE_UNUSED_ARG (length);
-
   ACE_FUNCTION_TIMEPROBE (TAO_ACTIVE_DEMUX_OPTABLE_FIND_START);
 
   CORBA::ULong i = ACE_OS::atoi (opname);
 
   ACE_ASSERT (i < this->tablesize_);
-  skel_ptr = this->tbl_[i].skel_ptr_;
+  skel_ptr = this->tbl_[i].op_skel_ptr_.skel_ptr_;
   return 0; //success
 }
 
+
+int
+TAO_Active_Demux_OpTable::find (const char *opname,
+                                TAO_Collocated_Skeleton& skel_ptr,
+                                TAO::Collocation_Strategy st,
+                                const unsigned int )
+{
+  ACE_FUNCTION_TIMEPROBE (TAO_ACTIVE_DEMUX_OPTABLE_FIND_START);
+
+  CORBA::ULong i = ACE_OS::atoi (opname);
+
+  ACE_ASSERT (i < this->tablesize_);
+
+  switch (st)
+    {
+    case TAO::TAO_CS_THRU_POA_STRATEGY:
+      skel_ptr = this->tbl_[i].op_skel_ptr_.thruPOA_skel_ptr_;
+      break;
+    case TAO::TAO_CS_DIRECT_STRATEGY:
+      skel_ptr = this->tbl_[i].op_skel_ptr_.direct_skel_ptr_;
+      break;
+    default:
+      return -1;
+   }
+
+  return 0; //success
+}
 TAO_Active_Demux_OpTable_Entry::TAO_Active_Demux_OpTable_Entry (void)
 {
-  this->skel_ptr_ = 0;
 }
 
 TAO_Active_Demux_OpTable_Entry::~TAO_Active_Demux_OpTable_Entry (void)
 {
-  this->skel_ptr_ = 0;  // cannot delete this as we do not own it
 }
 
+/**************************************************/
 // Do nothing constructor.
 TAO_Perfect_Hash_OpTable::TAO_Perfect_Hash_OpTable (void)
 {
@@ -231,10 +335,6 @@ TAO_Perfect_Hash_OpTable::TAO_Perfect_Hash_OpTable (void)
 TAO_Perfect_Hash_OpTable::~TAO_Perfect_Hash_OpTable (void)
 {
 }
-
-// Uses <{opname}> to look up the skeleton function and pass it back
-// in <{skelfunc}>.  Returns non-negative integer on success, or -1 on
-// failure.
 
 int
 TAO_Perfect_Hash_OpTable::find (const char *opname,
@@ -262,27 +362,55 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
 }
 
 int
-TAO_Perfect_Hash_OpTable::bind (const char *opname,
-                                const TAO_Skeleton skel_ptr)
+TAO_Perfect_Hash_OpTable::find (const char *opname,
+                                TAO_Collocated_Skeleton &skelfunc,
+                                TAO::Collocation_Strategy st,
+                                const unsigned int length)
 {
-  ACE_UNUSED_ARG (opname);
-  ACE_UNUSED_ARG (skel_ptr);
+  ACE_FUNCTION_TIMEPROBE (TAO_PERFECT_HASH_OPTABLE_FIND_START);
+
+  const TAO_operation_db_entry *entry = lookup (opname,
+                                                length);
+  if (entry == 0)
+    {
+      skelfunc = 0; // insure that somebody can't call a wrong function!
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("TAO_Perfect_Hash_OpTable:find for ")
+                         ACE_TEXT ("operation '%s' (length=%d) failed\n"),
+                         opname ? opname : "<null string>", length),
+                        -1);
+    }
+
+  switch (st)
+    {
+    case TAO::TAO_CS_THRU_POA_STRATEGY:
+      skelfunc = entry->thruPOA_skel_ptr_;
+      break;
+    case TAO::TAO_CS_DIRECT_STRATEGY:
+      skelfunc = entry->direct_skel_ptr_;
+      break;
+    default:
+      return -1;
+    }
+
   return 0;
 }
 
-// Do nothing constructor.
+int
+TAO_Perfect_Hash_OpTable::bind (const char *,
+                                const TAO::Operation_Skeletons)
+{
+  return 0;
+}
+
+/*****************************************************************/
 TAO_Binary_Search_OpTable::TAO_Binary_Search_OpTable (void)
 {
 }
 
-// Do nothing destrctor.
 TAO_Binary_Search_OpTable::~TAO_Binary_Search_OpTable (void)
 {
 }
-
-// Uses <{opname}> to look up the skeleton function and pass it back
-// in <{skelfunc}>.  Returns non-negative integer on success, or -1 on
-// failure.
 
 int
 TAO_Binary_Search_OpTable::find (const char *opname,
@@ -303,16 +431,45 @@ TAO_Binary_Search_OpTable::find (const char *opname,
   return 0;
 }
 
+
 int
-TAO_Binary_Search_OpTable::bind (const char *opname,
-                                const TAO_Skeleton skel_ptr)
+TAO_Binary_Search_OpTable::find (const char *opname,
+                                 TAO_Collocated_Skeleton &skelfunc,
+                                 TAO::Collocation_Strategy st,
+                                 const unsigned int /* length */)
 {
-  ACE_UNUSED_ARG (opname);
-  ACE_UNUSED_ARG (skel_ptr);
+  ACE_FUNCTION_TIMEPROBE (TAO_BINARY_SEARCH_OPTABLE_FIND_START);
+
+  const TAO_operation_db_entry *entry = lookup (opname);
+
+  if (entry == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("TAO_Binary_Search_Table:find failed\n")),
+                      -1);
+
+  switch (st)
+    {
+    case TAO::TAO_CS_THRU_POA_STRATEGY:
+      skelfunc = entry->thruPOA_skel_ptr_;
+      break;
+    case TAO::TAO_CS_DIRECT_STRATEGY:
+      skelfunc = entry->direct_skel_ptr_;
+      break;
+    default:
+      return -1;
+    }
+
   return 0;
 }
 
-// constructor
+int
+TAO_Binary_Search_OpTable::bind (const char *,
+                                const TAO::Operation_Skeletons )
+{
+  return 0;
+}
+
+/******************************************************************/
 TAO_Operation_Table_Parameters::TAO_Operation_Table_Parameters (void)
   : strategy_ (0),
     type_ (TAO_Operation_Table_Parameters::TAO_DYNAMIC_HASH) // default
@@ -344,7 +501,8 @@ TAO_Operation_Table_Parameters::concrete_strategy (TAO_Operation_Table *ot)
 }
 
 // return the concrete strategy
-TAO_Operation_Table* TAO_Operation_Table_Parameters::concrete_strategy (void)
+TAO_Operation_Table*
+TAO_Operation_Table_Parameters::concrete_strategy (void)
 {
   return this->strategy_;
 }
@@ -366,26 +524,50 @@ TAO_Operation_Table_Factory::opname_lookup_strategy (void)
   return p->concrete_strategy ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Iterator_Base_Ex<const char *, TAO_Skeleton, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<const char *, TAO_Skeleton, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *, TAO_Skeleton, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<const char *, TAO_Skeleton, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Entry<const char *, TAO_Skeleton>;
-template class TAO_Singleton<TAO_Operation_Table_Parameters, TAO_SYNCH_RECURSIVE_MUTEX>;
-#elif defined (ACE_HAS_GNU_REPO)
-// This is necessary with g++ 2.91.66 to avoid a couple of strange
-// unresolved ACE_Hash_Map_Entry symbols.  (Strange because c++filt
-// can't demangle them.)
-template class ACE_Hash_Map_Entry<char const *, void (*)(CORBA_ServerRequest &, void *, void * ACE_ENV_ARG_DECL_NOT_USED)>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const char *, TAO_Skeleton, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<const char *, TAO_Skeleton, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const char *, TAO_Skeleton, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<const char *, TAO_Skeleton, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Entry<const char *, TAO_Skeleton>
-#pragma instantiate TAO_Singleton<TAO_Operation_Table_Parameters, TAO_SYNCH_RECURSIVE_MUTEX>
+/**************************************************************/
+TAO::Operation_Skeletons::Operation_Skeletons (void)
+  : skel_ptr_ (0)
+    , thruPOA_skel_ptr_ (0)
+    , direct_skel_ptr_ (0)
+{
+}
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Hash_Map_Iterator_Base_Ex<const char *,
+                                             TAO::Operation_Skeletons,
+                                             ACE_Hash<const char *>,
+                                             ACE_Equal_To<const char *>,
+                                             ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<const char *,
+                                        TAO::Operation_Skeletons,
+                                        ACE_Hash<const char *>,
+                                        ACE_Equal_To<const char *>,
+                                        ACE_Null_Mutex>;
+
+template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *,
+                                                TAO::Operation_Skeletons,
+                                                ACE_Hash<const char *>,
+                                                ACE_Equal_To<const char *>,
+                                                ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<const char *,
+                                       TAO::Operation_Skeletons,
+                                       ACE_Hash<const char *>,
+                                       ACE_Equal_To<const char *>,
+                                       ACE_Null_Mutex>;
+template class ACE_Hash_Map_Entry<const char *,
+                                  TAO::Operation_Skeletons>;
+
+template class TAO_Singleton<TAO_Operation_Table_Parameters,
+                             TAO_SYNCH_RECURSIVE_MUTEX>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const char *, TAO::OPeration_Skeletons, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<const char *, TAO::OPeration_Skeletons, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const char *, TAO::OPeration_Skeletons, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<const char *, TAO::OPeration_Skeletons, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<const char *, TAO::OPeration_Skeletons>
+#pragma instantiate TAO_Singleton<TAO_Operation_Table_Parameters, TAO_SYNCH_RECURSIVE_MUTEX>
 #elif defined (__GNUC__) && defined (__hpux)
 template class TAO_Singleton<TAO_Operation_Table_Parameters,TAO_SYNCH_RECURSIVE_MUTEX>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

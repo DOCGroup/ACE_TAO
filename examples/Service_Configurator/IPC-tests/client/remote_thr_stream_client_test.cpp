@@ -2,6 +2,9 @@
 
 // Test program for the INET ACE_TLI-SAPs...
 
+#include "ace/OS_main.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Mem_Map.h"
 #include "ace/TLI_Connector.h"
 #include "ace/INET_Addr.h"

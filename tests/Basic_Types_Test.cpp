@@ -36,7 +36,7 @@
 #endif /* ! ACE_HAS_MINIMAL_ACE_OS */
 
 #include "ace/Basic_Types.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(tests, Basic_Types_Test, "$Id$")
 

@@ -28,6 +28,9 @@
 
 #include "orbsvcs/ETCL/ETCL_Constraint_Visitor.h"
 #include "orbsvcs/DsLogAdminC.h"
+
+#include "tao/Typecode.h"
+
 #include "log_export.h"
 
 class TAO_ETCL_Constraint;
@@ -108,7 +111,7 @@ private:
   property_lookup_;
 
   /// The result of a non_boolean operation.
-  ACE_Unbounded_Queue <TAO_ETCL_Literal_Constraint> queue_;
+  ACE_Unbounded_Queue<TAO_ETCL_Literal_Constraint> queue_;
 
   /// Holder for a value found in property_lookup_ or for a
   /// nested type within that value.

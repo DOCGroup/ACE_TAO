@@ -9,6 +9,8 @@
 #include "DynSequence_i.h"
 #include "DynStruct_i.h"
 #include "DynUnion_i.h"
+#include "tao/Any_Unknown_IDL_Type.h"
+#include "ace/OS_NS_wchar.h"
 
 ACE_RCSID (DynamicAny,
            DynCommon,
@@ -92,7 +94,8 @@ TAO_DynCommon::insert_boolean (CORBA::Boolean value
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       cc->insert_boolean (value
@@ -125,7 +128,8 @@ TAO_DynCommon::insert_octet (CORBA::Octet value
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       cc->insert_octet (value
@@ -158,7 +162,8 @@ TAO_DynCommon::insert_char (CORBA::Char value
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       cc->insert_char (value
@@ -191,7 +196,8 @@ TAO_DynCommon::insert_short (CORBA::Short value
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       cc->insert_short (value
@@ -224,7 +230,8 @@ TAO_DynCommon::insert_ushort (CORBA::UShort value
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       cc->insert_ushort (value
@@ -257,7 +264,8 @@ TAO_DynCommon::insert_long (CORBA::Long value
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       cc->insert_long (value
@@ -290,7 +298,8 @@ TAO_DynCommon::insert_ulong (CORBA::ULong value
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       cc->insert_ulong (value
@@ -323,7 +332,8 @@ TAO_DynCommon::insert_float (CORBA::Float value
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       cc->insert_float (value
@@ -356,7 +366,8 @@ TAO_DynCommon::insert_double (CORBA::Double value
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       cc->insert_double (value
@@ -389,7 +400,8 @@ TAO_DynCommon::insert_string (const char * value
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       cc->insert_string (value
@@ -403,7 +415,8 @@ TAO_DynCommon::insert_string (const char * value
                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      CORBA::TCKind kind = unaliased_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::TCKind kind = 
+        unaliased_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       if (kind != CORBA::tk_string)
@@ -411,7 +424,8 @@ TAO_DynCommon::insert_string (const char * value
           ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
         }
 
-      CORBA::ULong bound = unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::ULong bound = 
+        unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       if (bound > 0 && bound < ACE_OS::strlen (value))
@@ -441,7 +455,8 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       cc->insert_reference (value
@@ -451,8 +466,9 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value
   else
     {
       CORBA::Boolean good_type = 1;
-      CORBA::TCKind kind = TAO_DynAnyFactory::unalias (this->type_.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
+      CORBA::TCKind kind = 
+        TAO_DynAnyFactory::unalias (this->type_.in ()
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (kind != CORBA::tk_objref)
@@ -465,7 +481,8 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value
 
           if (ACE_OS::strcmp (value_id, "IDL:omg.org/CORBA/Object:1.0") != 0)
             {
-              const char *my_id = this->type_->id (ACE_ENV_SINGLE_ARG_PARAMETER);
+              const char *my_id = 
+                this->type_->id (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK;
 
               if (ACE_OS::strcmp (value_id, my_id) != 0)
@@ -480,7 +497,19 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value
       if (good_type)
         {
           TAO_OutputCDR cdr;
-          value->marshal (cdr);
+
+          if (CORBA::is_nil (value))
+            {
+              // Empty type hint, no profile.
+              cdr.write_ulong (1);
+              cdr.write_char ('\0');
+              cdr.write_ulong (0);
+            }
+          else
+            {
+              value->marshal (cdr);
+            }
+
           TAO::Unknown_IDL_Type *unk = 0;
           ACE_NEW (unk,
                    TAO::Unknown_IDL_Type (this->type_.in (),
@@ -511,7 +540,8 @@ TAO_DynCommon::insert_typecode (CORBA::TypeCode_ptr value
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       cc->insert_typecode (value
@@ -544,7 +574,8 @@ TAO_DynCommon::insert_longlong (CORBA::LongLong value
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       cc->insert_longlong (value
@@ -577,7 +608,8 @@ TAO_DynCommon::insert_ulonglong (CORBA::ULongLong value
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       cc->insert_ulonglong (value
@@ -610,7 +642,8 @@ TAO_DynCommon::insert_longdouble (CORBA::LongDouble value
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       cc->insert_longdouble (value
@@ -643,7 +676,8 @@ TAO_DynCommon::insert_wchar (CORBA::WChar value
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       cc->insert_wchar (value
@@ -676,7 +710,8 @@ TAO_DynCommon::insert_wstring (const CORBA::WChar * value
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       cc->insert_wstring (value
@@ -720,7 +755,8 @@ TAO_DynCommon::insert_any (const CORBA::Any &value
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       cc->insert_any (value
@@ -791,7 +827,8 @@ TAO_DynCommon::get_boolean (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return cc->get_boolean (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -826,7 +863,8 @@ TAO_DynCommon::get_octet (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return cc->get_octet (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -861,7 +899,8 @@ TAO_DynCommon::get_char (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return cc->get_char (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -896,7 +935,8 @@ TAO_DynCommon::get_short (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return cc->get_short (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -931,7 +971,8 @@ TAO_DynCommon::get_ushort (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return cc->get_ushort (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -966,7 +1007,8 @@ TAO_DynCommon::get_long (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return cc->get_long (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1001,7 +1043,8 @@ TAO_DynCommon::get_ulong (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return cc->get_ulong (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1036,7 +1079,8 @@ TAO_DynCommon::get_float (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return cc->get_float (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1071,7 +1115,8 @@ TAO_DynCommon::get_double (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return cc->get_double (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1106,7 +1151,8 @@ TAO_DynCommon::get_string (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return cc->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1118,7 +1164,8 @@ TAO_DynCommon::get_string (ACE_ENV_SINGLE_ARG_DECL)
                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      CORBA::TCKind kind = unaliased_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::TCKind kind = 
+        unaliased_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (kind != CORBA::tk_string)
@@ -1129,7 +1176,8 @@ TAO_DynCommon::get_string (ACE_ENV_SINGLE_ARG_DECL)
 
       char *retval = 0;
 
-      CORBA::ULong bound = unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::ULong bound = 
+        unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // We will have caught a type mismatch above, so if this fails,
@@ -1160,7 +1208,8 @@ TAO_DynCommon::get_reference (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
       return cc->get_reference (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1195,7 +1244,8 @@ TAO_DynCommon::get_typecode (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return cc->get_typecode (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1232,7 +1282,8 @@ TAO_DynCommon::get_longlong (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (retval);
 
       return cc->get_longlong (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1267,7 +1318,7 @@ TAO_DynCommon::get_ulonglong (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = 
+      DynamicAny::DynAny_var cc =
         this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (retval);
 
@@ -1303,7 +1354,8 @@ TAO_DynCommon::get_longdouble (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (retval);
 
       return cc->get_longdouble (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1336,7 +1388,8 @@ TAO_DynCommon::get_wchar (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return cc->get_wchar (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1371,7 +1424,8 @@ TAO_DynCommon::get_wstring (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return cc->get_wstring (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1388,7 +1442,8 @@ TAO_DynCommon::get_wstring (ACE_ENV_SINGLE_ARG_DECL)
 
       CORBA::WChar *retval = 0;
 
-      CORBA::ULong bound = unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::ULong bound = 
+        unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       (void) (this->any_ >>= CORBA::Any::to_wstring (retval,
@@ -1414,7 +1469,8 @@ TAO_DynCommon::get_any (ACE_ENV_SINGLE_ARG_DECL)
 
   if (this->has_components_)
     {
-      DynamicAny::DynAny_var cc = this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+      DynamicAny::DynAny_var cc = 
+        this->check_component (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return cc->get_any (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1607,8 +1663,9 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
   {
     case CORBA::tk_array:
       {
-        TAO_DynArray_i *tmp = TAO_DynArray_i::_narrow (component
-                                                       ACE_ENV_ARG_PARAMETER);
+        TAO_DynArray_i *tmp = 
+          TAO_DynArray_i::_narrow (component
+                                   ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
 
         if (destroying)
@@ -1620,7 +1677,6 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
-        tmp->_remove_ref ();
         break;
       }
     case CORBA::tk_enum:
@@ -1638,13 +1694,13 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
-        tmp->_remove_ref ();
         break;
       }
     case CORBA::tk_sequence:
       {
-        TAO_DynSequence_i *tmp = TAO_DynSequence_i::_narrow (component
-                                                             ACE_ENV_ARG_PARAMETER);
+        TAO_DynSequence_i *tmp = 
+          TAO_DynSequence_i::_narrow (component
+                                      ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
 
         if (destroying)
@@ -1656,13 +1712,13 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
-        tmp->_remove_ref ();
         break;
       }
     case CORBA::tk_struct:
       {
-        TAO_DynStruct_i *tmp = TAO_DynStruct_i::_narrow (component
-                                                         ACE_ENV_ARG_PARAMETER);
+        TAO_DynStruct_i *tmp = 
+          TAO_DynStruct_i::_narrow (component
+                                    ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
 
         if (destroying)
@@ -1674,13 +1730,13 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
-        tmp->_remove_ref ();
         break;
       }
     case CORBA::tk_union:
       {
-        TAO_DynUnion_i *tmp = TAO_DynUnion_i::_narrow (component
-                                                       ACE_ENV_ARG_PARAMETER);
+        TAO_DynUnion_i *tmp = 
+          TAO_DynUnion_i::_narrow (component
+                                   ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
 
         if (destroying)
@@ -1692,7 +1748,6 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
-        tmp->_remove_ref ();
         break;
       }
     case CORBA::tk_fixed:
@@ -1714,7 +1769,6 @@ TAO_DynCommon::set_flag (DynamicAny::DynAny_ptr component,
             tmp->ref_to_component_ = 1;
           }
 
-        tmp->_remove_ref ();
         break;
       }
   }
@@ -1734,7 +1788,8 @@ TAO_DynCommon::check_component (ACE_ENV_SINGLE_ARG_DECL)
                         DynamicAny::DynAny::_nil ());
     }
 
-  DynamicAny::DynAny_var cc = this->current_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+  DynamicAny::DynAny_var cc = 
+    this->current_component (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (DynamicAny::DynAny::_nil ());
 
   CORBA::TypeCode_var tc = cc->type (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1770,8 +1825,9 @@ TAO_DynCommon::check_type (CORBA::TypeCode_ptr tc
       DynamicAny::DynAny::TypeMismatch
     ))
 {
-  CORBA::Boolean equivalent = this->type_->equivalent (tc
-                                                       ACE_ENV_ARG_PARAMETER);
+  CORBA::Boolean equivalent = 
+    this->type_->equivalent (tc
+                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!equivalent)

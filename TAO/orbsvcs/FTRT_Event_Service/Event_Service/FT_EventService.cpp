@@ -10,6 +10,13 @@
 #include "orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTRTEC_ServiceActivate.h"
+#include "ace/OS_main.h"
+
+#include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
+#include "orbsvcs/FtRtEvent/Utils/Log.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
+#include "Crash_Injector.h"
+#include <fstream>
 
 ACE_RCSID (Event_Service,
            FT_EventService,
@@ -18,6 +25,7 @@ ACE_RCSID (Event_Service,
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  TAO_EC_Default_Factory::init_svcs ();
   FT_EventService event_service;
   return event_service.run (argc, argv);
 }
@@ -25,8 +33,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 FT_EventService::FT_EventService()
 : global_scheduler_(0)
 , sched_impl_(0)
-, membership_(TAO_FTEC_Event_Channel::NONE)
-, num_threads_(1)
+, membership_(TAO_FTEC_Event_Channel::UNSPECIFIED)
 , task_(orb_)
 {
 }
@@ -85,7 +92,12 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
       CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    setup_scheduler(naming_context.in() ACE_ENV_ARG_PARAMETER);
+    RtecScheduler::Scheduler_var scheduler =
+
+      setup_scheduler(naming_context.in()
+
+                      ACE_ENV_ARG_PARAMETER);
+
     ACE_CHECK_RETURN(-1);
 
 
@@ -94,27 +106,44 @@ FT_EventService::run(int argc, ACE_TCHAR* argv[])
 
     // Activate the Event channel implementation
 
-    TAO_FTEC_Event_Channel ec(orb_, root_poa);
+    TAO_FTEC_Event_Channel ec(orb_, root_poa, scheduler);
 
     FtRtecEventChannelAdmin::EventChannel_var ec_ior =
       ec.activate(membership_
-        ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    if (report_factory(orb_.in(), ec_ior.in())==-1)
+    if (report_factory(orb_.in(), ec_ior.in() )==-1)
       return -1;
 
-    orb_->run(ACE_ENV_SINGLE_ARG_PARAMETER);
+    if (ior_file_.length()) {
+      std::ofstream file(ior_file_.c_str());
+      CORBA::String_var my_ior_string = orb_->object_to_string(ec_ior.in()
+        ACE_ENV_ARG_PARAMETER);
+      file << my_ior_string.in();
+    }
+
+    Crash_Injector* injector = Crash_Injector::instance();
+
+    while (injector ==0 || !injector->work_done() ) {
+      if (orb_->work_pending(ACE_ENV_SINGLE_ARG_PARAMETER))
+
+            orb_->perform_work(ACE_ENV_SINGLE_ARG_PARAMETER);
+    }
+
+    orb_->shutdown(0 ACE_ENV_ARG_PARAMETER);
+
+    ACE_TRY_CHECK;
   }
   ACE_CATCHANY
   {
     ACE_PRINT_EXCEPTION(ACE_ANY_EXCEPTION, "A CORBA Exception occurred.");
+    return -1;
   }
   ACE_ENDTRY;
 
-  ACE_CHECK_RETURN(-1);
 
-  ACE_Thread_Manager::instance()->wait();
+//  ACE_Thread_Manager::instance()->wait();
   return 0;
 }
 
@@ -124,7 +153,7 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
   /// get the membership from the environment variable
   char* member = ACE_OS::getenv("FTEC_MEMBERSHIP");
 
-  membership_ = TAO_FTEC_Event_Channel::NONE;
+  membership_ = TAO_FTEC_Event_Channel::UNSPECIFIED;
 
   if (member) {
     if (ACE_OS::strcasecmp(member, "PRIMARY")==0) {
@@ -135,24 +164,18 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
     }
   }
 
-  char* n_threads = ACE_OS::getenv("FTEC_NUM_THREAD");
-
-  this->num_threads_ = 1;
-  if (n_threads)
-    this->num_threads_ = ACE_OS::atoi(n_threads);
-
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("jn:ps:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:jo:ps:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
   {
     switch (opt)
     {
+    case 'd':
+      TAO_FTRTEC::Log::level(ACE_OS::atoi(get_opt.opt_arg ()));
+      break;
     case 'j':
       this->membership_ = TAO_FTEC_Event_Channel::BACKUP;
-      break;
-    case 'n':
-      this->num_threads_ = ACE_OS::atoi(get_opt.opt_arg ());
       break;
     case 'p':
       this->membership_ = TAO_FTEC_Event_Channel::PRIMARY;
@@ -179,11 +202,14 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
         this->global_scheduler_ = 0;
       }
       break;
-
+    case 'o':
+      ior_file_ = get_opt.opt_arg ();
+      break;
     case '?':
     default:
       ACE_DEBUG ((LM_DEBUG,
         ACE_LIB_TEXT("Usage: %s \n")
+        ACE_LIB_TEXT("  -d debug level\n")
         ACE_LIB_TEXT("  -j join the object group\n")
         ACE_LIB_TEXT("  -p set as primary\n")
         ACE_LIB_TEXT("  -s <global|local> \n")
@@ -193,15 +219,12 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
     }
   }
 
-  if (this->num_threads_ < 1)
-    ACE_ERROR_RETURN((LM_ERROR, "Invalid number of threads specified\n"), -1);
-
   return 0;
 }
 
-void
+RtecScheduler::Scheduler_var
 FT_EventService::setup_scheduler(CosNaming::NamingContext_ptr naming_context
-                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                 ACE_ENV_ARG_DECL)
 {
     RtecScheduler::Scheduler_var scheduler;
     if (CORBA::is_nil(naming_context)) {
@@ -210,7 +233,7 @@ FT_EventService::setup_scheduler(CosNaming::NamingContext_ptr naming_context
             CORBA::NO_MEMORY());
 
         scheduler = this->sched_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        ACE_CHECK_RETURN(scheduler);
 
         if (ACE_Scheduler_Factory::server(scheduler.in()) == -1)
             ACE_ERROR((LM_ERROR,"Unable to install scheduler\n"));
@@ -234,31 +257,33 @@ FT_EventService::setup_scheduler(CosNaming::NamingContext_ptr naming_context
                     CORBA::NO_MEMORY());
 
                 scheduler = this->sched_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-                ACE_CHECK;
+                ACE_CHECK_RETURN(scheduler);
 
                 // Register the servant with the Naming Context....
                 naming_context->rebind (schedule_name, scheduler.in ()
                     ACE_ENV_ARG_PARAMETER);
-                ACE_CHECK;
+                ACE_CHECK_RETURN(scheduler);
             }
             else
             {
                 CORBA::Object_var tmp =
                     naming_context->resolve (schedule_name ACE_ENV_ARG_PARAMETER);
-                ACE_CHECK;
+                ACE_CHECK_RETURN(scheduler);
 
                 scheduler = RtecScheduler::Scheduler::_narrow (tmp.in ()
                     ACE_ENV_ARG_PARAMETER);
-                ACE_CHECK;
+                ACE_CHECK_RETURN(scheduler);
             }
         }
     }
+    return scheduler;
 }
 
 int
 FT_EventService::report_factory(CORBA::ORB_ptr orb,
                    FtRtecEventChannelAdmin::EventChannel_ptr ec)
 {
+  ACE_TRY_NEW_ENV {
     char* addr = ACE_OS::getenv("EventChannelFactoryAddr");
 
     if (addr != NULL) {
@@ -283,13 +308,19 @@ FT_EventService::report_factory(CORBA::ORB_ptr orb,
 
       stream.close();
     }
-    return 0;
+  }
+  ACE_CATCHALL {
+    return -1;
+  }
+  ACE_ENDTRY;
+  return 0;
 }
 
 void FT_EventService::become_primary()
 {
-  if (this->num_threads_ > 1) {
-    task_.activate(THR_NEW_LWP | THR_JOINABLE, num_threads_-1);
+  int threads = FTRTEC::Replication_Service::instance()->threads();
+  if ( threads > 1) {
+    task_.activate(THR_NEW_LWP | THR_JOINABLE, threads-1);
   }
 }
 

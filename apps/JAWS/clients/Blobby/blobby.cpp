@@ -23,6 +23,7 @@
 //============================================================================
 
 #include "Options.h"
+#include "ace/OS_main.h"
 
 ACE_RCSID(Blobby, blobby, "$Id$")
 

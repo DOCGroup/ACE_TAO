@@ -93,7 +93,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_indenter.h"
 #include "global_extern.h"
 #include "nr_extern.h"
-#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_interface, 
@@ -366,6 +365,16 @@ AST_Interface::fe_add_field (AST_Field *t)
   this->add_to_referenced (t,
                            I_FALSE,
                            t->local_name ());
+
+  AST_Type *ft = t->field_type ();
+  UTL_ScopedName *mru = ft->last_referenced_as ();
+
+  if (mru != 0)
+    {
+      this->add_to_referenced (ft,
+                               I_FALSE,
+                               mru->first_component ());
+    }
 
   return t;
 }
@@ -991,21 +1000,21 @@ AST_Interface::dump (ACE_OSTREAM_TYPE &o)
 {
   if (this->is_abstract ())
     {
-      o << "abstract ";
+      this->dump_i (o, "abstract ");
     }
   else if (this->is_local ())
     {
-      o << "local ";
+      this->dump_i (o, "local ");
     }
 
-  o << "interface ";
+  this->dump_i (o, "interface ");
 
   this->local_name ()->dump (o);
-  o << " ";
+  this->dump_i (o, " ");
 
   if (this->pd_n_inherits > 0)
     {
-      o << ": ";
+      this->dump_i (o, ": ");
 
       for (long i = 0; i < this->pd_n_inherits; ++i)
         {
@@ -1013,17 +1022,17 @@ AST_Interface::dump (ACE_OSTREAM_TYPE &o)
 
           if (i < this->pd_n_inherits - 1)
             {
-              o << ", ";
+              this->dump_i (o, ", ");
             }
         }
     }
 
-  o << " {\n";
+  this->dump_i (o, " {\n");
 
   UTL_Scope::dump (o);
   idl_global->indent ()->skip_to (o);
 
-  o << "}";
+  this->dump_i (o, "}");
 }
 
 // This serves for interfaces, valuetypes, components and eventtypes.
@@ -1331,6 +1340,18 @@ long
 AST_Interface::n_inherits_flat (void) const
 {
   return pd_n_inherits_flat;
+}
+
+ACE_Unbounded_Queue<AST_Interface *> &
+AST_Interface::get_insert_queue (void)
+{
+  return this->insert_queue;
+}
+
+ACE_Unbounded_Queue<AST_Interface *> &
+AST_Interface::get_del_queue (void)
+{
+  return this->del_queue;
 }
 
 idl_bool

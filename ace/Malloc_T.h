@@ -15,15 +15,15 @@
 #define ACE_MALLOC_T_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/Malloc.h"               /* Need ACE_Control_Block */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Malloc.h"               /* Need ACE_Control_Block */
 #include "ace/Malloc_Allocator.h"
 #include "ace/Free_List.h"
+#include "ace/Guard_T.h"
 
 /**
  * @class ACE_Cached_Mem_Pool_Node
@@ -70,6 +70,11 @@ private:
  * fixed-sized classes.  Notice that the <code>sizeof (TYPE)</code>
  * must be greater than or equal to <code> sizeof (void*) </code> for
  * this to work properly.
+ *
+ * This class can be configured flexibly with different types of
+ * ACE_LOCK strategies that support the @a ACE_Thread_Mutex, 
+ * @a ACE_Thread_Semaphore, @a ACE_Process_Mutex, and @a 
+ * ACE_Process_Semaphore constructor API.   
  *
  * @sa ACE_Dynamic_Cached_Allocator
  */
@@ -128,6 +133,10 @@ private:
  * fixed-size chunks.  Notice that the <code>chunk_size</code>
  * must be greater than or equal to <code> sizeof (void*) </code> for
  * this to work properly.
+ *
+ * This class can be configured flexibly with different types of
+ * ACE_LOCK strategies that support the @a ACE_Thread_Mutex and @a 
+ * ACE_Process_Mutex constructor API.   
  *
  * @sa ACE_Cached_Allocator
  */
@@ -400,7 +409,8 @@ class ACE_Malloc_FIFO_Iterator_T;
  *
  * This class can be configured flexibly with different
  * MEMORY_POOL strategies and different types of ACE_LOCK
- * strategies.
+ * strategies that support the @a ACE_Thread_Mutex and @a
+ * ACE_Process_Mutex constructor API.   
  */
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 class ACE_Malloc_T
@@ -641,10 +651,38 @@ private:
   int bad_flag_;
 };
 
+/*****************************************************************************/
+
+/**
+ * @class ACE_Malloc_Lock_Adapter_T
+ *
+ * @brief Template functor adapter for lock strategies used with ACE_Malloc_T.
+ *
+ * This class acts as a factory for lock strategies that have various ctor
+ * signatures.  If the lock strategy's ctor takes an ACE_TCHAR* as the first
+ * and only required parameter, it will just work.  Otherwise use template
+ * specialization to create a version that matches the lock strategy's ctor
+ * signature.  See ACE_Process_Semaphore and ACE_Thread_Semaphore for
+ * examples.
+ * 
+ */
+template <class ACE_LOCK>
+class ACE_Malloc_Lock_Adapter_T
+{
+public:
+  ACE_LOCK * operator () (const ACE_TCHAR *name);
+};
+
+/*****************************************************************************/
+
 /**
  * @class ACE_Malloc_LIFO_Iterator_T
  *
  * @brief LIFO iterator for names stored in Malloc'd memory.
+ *
+ * This class can be configured flexibly with different types of
+ * ACE_LOCK strategies that support the @a ACE_Thread_Mutex and @a 
+ * ACE_Process_Mutex constructor API.   
  *
  * Does not support deletions while iteration is occurring.
  */
@@ -709,6 +747,10 @@ private:
  * @class ACE_Malloc_FIFO_Iterator_T
  *
  * @brief FIFO iterator for names stored in Malloc'd memory.
+ *
+ * This class can be configured flexibly with different types of
+ * ACE_LOCK strategies that support the @a ACE_Thread_Mutex and @a 
+ * ACE_Process_Mutex constructor API.   
  *
  * Does not support deletions while iteration is occurring.
  */

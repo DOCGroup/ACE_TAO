@@ -16,18 +16,15 @@
 #define ACE_NULL_BARRIER_H
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+// All methods in this class are inline, so there is no
+// need to import or export on Windows. -- CAE 12/18/2003
 
 /**
  * @class ACE_Null_Barrier
  *
  * @brief Implements "NULL barrier synchronization".
  */
-class ACE_Export ACE_Null_Barrier
+class ACE_Null_Barrier
 {
 public:
   /// Initialize the barrier to synchronize <count> threads.

@@ -6,9 +6,8 @@
 #ifndef __CPP_INCLIENT_H
 #define __CPP_INCLIENT_H
 
-#include "ace/OS.h"
 #include "ace/SOCK_Stream.h"
-#include "ace/Synch.h"
+#include "ace/Barrier.h"
 
 class Options
   // = TITLE

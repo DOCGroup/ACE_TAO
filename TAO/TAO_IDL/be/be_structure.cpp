@@ -24,9 +24,11 @@
 #include "be_helper.h"
 #include "be_visitor.h"
 #include "be_extern.h"
+
 #include "ast_field.h"
 #include "utl_identifier.h"
 #include "idl_defines.h"
+#include "global_extern.h"
 
 ACE_RCSID (be, 
            be_structure, 
@@ -66,6 +68,11 @@ be_structure::be_structure (UTL_ScopedName *n,
     be_type (AST_Decl::NT_struct,
              n)
 {
+  if (!this->imported ())
+    {
+      ACE_SET_BITS (idl_global->decls_seen_info_,
+                    idl_global->decls_seen_masks.aggregate_seen_);
+    }
 }
 
 void

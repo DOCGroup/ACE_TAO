@@ -1,15 +1,80 @@
+// @file wxSelectNSDialog.cpp
+//
+// @author Charlie Frasch  <cfrasch@atdesk.com>
+//
 // $Id$
-// wxSelectNSDialog.cpp
 
 #include "pch.h"
 #include "wxSelectNSDialog.h"
 
 #include "ace/Configuration.h"
+#include "wx/sizer.h"
 #include "wxAddNameServerDlg.h"
 #include "wxAutoDialog.h"
 #include "wxNamingViewer.h"
 
+namespace  // anonymous
+{
+  void create_dialog_components( wxDialog* dialog)
+    {
+      wxBoxSizer *topsizer = new wxBoxSizer( wxVERTICAL);
 
+      topsizer->Add(
+                    new wxListBox(
+                                  dialog,
+                                  IDC_SERVERS,
+                                  wxDefaultPosition,
+                                  wxDefaultSize,
+                                  0,
+                                  0,
+                                  wxLB_SINGLE, 
+                                  wxDefaultValidator,
+                                  "serversList" 
+                                  ),
+                    1,
+                    wxEXPAND | wxALL,
+                    5);
+ 
+      wxBoxSizer *button_sizer = new wxBoxSizer( wxHORIZONTAL );
+      {
+        wxButton* okButton = new wxButton( dialog, wxID_OK, "OK" );
+        okButton->SetName( "okButton");
+        button_sizer->Add(
+                          okButton,
+                          0,
+                          wxALL,
+                          5);
+      }
+      button_sizer->Add(
+                        new wxButton( dialog, IDC_DEFAULT, "Default" ),
+                        0,
+                        wxALL,
+                        5);
+      button_sizer->Add(
+                        new wxButton( dialog, IDC_ADD, "Add" ),
+                        0,
+                        wxALL,
+                        5);
+      button_sizer->Add(
+                        new wxButton( dialog, IDC_REMOVE, "Remove" ),
+                        0,
+                        wxALL,
+                        5);
+      button_sizer->Add(
+                        new wxButton( dialog, wxID_CANCEL, "Cancel" ),
+                        0,
+                        wxALL,
+                        5);
+ 
+      topsizer->Add(
+                    button_sizer,
+                    0,
+                    wxALIGN_CENTER);
+ 
+      dialog->SetSizer( topsizer);
+      topsizer->SetSizeHints( dialog);
+    }
+};  // anonymous
 
 BEGIN_EVENT_TABLE( WxSelectNSDialog, wxDialog)
   EVT_BUTTON( IDC_ADD, WxSelectNSDialog::onAdd)
@@ -21,11 +86,26 @@ BEGIN_EVENT_TABLE( WxSelectNSDialog, wxDialog)
 END_EVENT_TABLE()
 
 
-WxSelectNSDialog::WxSelectNSDialog( wxWindow* parent):
-  wxDialog(),
-  config( 0)
+WxSelectNSDialog::WxSelectNSDialog( wxWindow* parent)
+#if defined(wxUSE_RESOURCES) && (wxUSE_RESOURCES == 1)
+  : wxDialog()
+#else
+  : wxDialog(
+      parent,
+      IDD_SELECT_NS,
+      "Select Naming Service",
+      wxDefaultPosition,
+      wxSize(181,94),
+      wxRAISED_BORDER | wxCAPTION | wxTHICK_FRAME | wxSYSTEM_MENU,
+      "selectNS")
+#endif  // defined(wxUSE_RESOURCES) && (wxUSE_RESOURCES == 1)
+  , config( 0)
 {
+#if defined(wxUSE_RESOURCES) && (wxUSE_RESOURCES == 1)
   LoadFromResource( parent, "selectNS");
+#else
+  create_dialog_components( this);
+#endif  // defined(wxUSE_RESOURCES) && (wxUSE_RESOURCES == 1)
   servers = static_cast<wxListBox*>( wxFindWindowByName(
       "serversList",
       this));
@@ -100,6 +180,8 @@ void WxSelectNSDialog::onDefault( wxCommandEvent& WXUNUSED(event))
 
 void WxSelectNSDialog::onInitDialog( wxInitDialogEvent& event)
 {
+  ACE_UNUSED_ARG( event);
+
   wxButton* ctrl = static_cast<wxButton*>( wxFindWindowByName(
       "okButton",
       this));
@@ -111,6 +193,8 @@ void WxSelectNSDialog::onInitDialog( wxInitDialogEvent& event)
 
 void WxSelectNSDialog::onLeftDClick( wxMouseEvent& event)
 {
+  ACE_UNUSED_ARG( event);
+
   int index = servers->GetSelection();
   // I don't think index will ever be -1!
   assert( index != -1);
@@ -127,7 +211,7 @@ void WxSelectNSDialog::onOK( wxCommandEvent& WXUNUSED(event))
 
     wxMessageBox(
         "You must select a server or cancel",
-       "Error",
+        "Error",
         wxOK | wxICON_EXCLAMATION);
     return;
   }

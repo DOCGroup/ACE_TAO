@@ -8,9 +8,11 @@
 #include "tao/Object_KeyC.h"
 #include "tao/Tagged_Components.h"
 #include <algorithm>
-#include "../Utils/resolve_init.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "GroupInfoPublisher.h"
+#include "../Utils/resolve_init.h"
+#include "../Utils/Log.h"
+#include "../Utils/Safe_InputCDR.h"
 
 ACE_RCSID (EventChannel,
            IOGR_Maker,
@@ -18,19 +20,21 @@ ACE_RCSID (EventChannel,
 
 
 static IOGR_Maker* maker;
+static CORBA::ORB_ptr orb;
 
 IOGR_Maker::IOGR_Maker()
 {
 }
 
 void
-IOGR_Maker::init(CORBA::ORB_ptr orb
-                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+IOGR_Maker::init(CORBA::ORB_ptr the_orb
+                 ACE_ENV_ARG_DECL)
 {
+    orb = the_orb;
     iorm_ = resolve_init<TAO_IOP::TAO_IOR_Manipulation>(orb,
                                                         TAO_OBJID_IORMANIPULATION
                                                         ACE_ENV_ARG_PARAMETER);
-    ft_tag_component_.ft_domain_id = "ft_eventchannel";
+    ft_tag_component_.group_domain_id = "ft_eventchannel";
     ft_tag_component_.object_group_id = 0;
     ft_tag_component_.object_group_ref_version = 0;
     maker = this;
@@ -45,7 +49,7 @@ IOGR_Maker::instance()
 
 CORBA::Object_ptr
 IOGR_Maker::merge_iors(const TAO_IOP::TAO_IOR_Manipulation::IORList& list
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                       ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var obj;
   if (list.length() != 1)
@@ -58,8 +62,16 @@ IOGR_Maker::merge_iors(const TAO_IOP::TAO_IOR_Manipulation::IORList& list
 
 CORBA::Object_ptr
 IOGR_Maker::make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList& list
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                      ACE_ENV_ARG_DECL)
 {
+  if (TAO_FTRTEC::Log::level() > 3)
+  {
+    for (unsigned i = 0; i < list.length(); ++i) {
+      CORBA::String_var str = orb->object_to_string(list[i].in() ACE_ENV_ARG_PARAMETER);
+      ACE_DEBUG((LM_DEBUG, "merging ior [%d] = %s\n", i, str.in()));
+    }
+  }
+
   CORBA::Object_var obj = merge_iors(list ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(CORBA::Object::_nil());
 
@@ -67,6 +79,13 @@ IOGR_Maker::make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList& list
                      ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN(CORBA::Object::_nil());
+
+  if (TAO_FTRTEC::Log::level() > 3)
+  {
+    CORBA::String_var str = orb->object_to_string(obj.in() ACE_ENV_ARG_PARAMETER);
+    ACE_DEBUG((LM_DEBUG, "new IOGR = %s\n", str.in()));
+  }
+
   return obj._retn();
 }
 
@@ -91,14 +110,14 @@ void replace_key(char* ior, char* end_ior,
 
 CORBA::Object_ptr
 IOGR_Maker::forge_iogr(CORBA::Object_ptr obj
-                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                       ACE_ENV_ARG_DECL)
 {
   CORBA::Object_var merged;
   // make a copy of the object
   FtRtecEventChannelAdmin::EventChannel_var successor
     = GroupInfoPublisher::instance()->successor();
   if (! CORBA::is_nil(successor.in())) {
-    TAO::ObjectKey_var newkey = obj->_key();
+    TAO::ObjectKey_var newkey = obj->_key(ACE_ENV_SINGLE_ARG_PARAMETER);
 
     CORBA::Object_var new_base = ior_replace_key(successor.in(), newkey.in()
                                                  ACE_ENV_ARG_PARAMETER);
@@ -150,7 +169,7 @@ IOGR_Maker::forge_iogr(CORBA::Object_ptr obj
 CORBA::Object_ptr
 IOGR_Maker::ior_replace_key(CORBA::Object_ptr obj,
                             const TAO::ObjectKey& key
-                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                            ACE_ENV_ARG_DECL)
 {
     TAO_OutputCDR out_cdr;
     if (!(out_cdr << obj))
@@ -196,7 +215,7 @@ IOGR_Maker::copy_ft_group_component(CORBA::Object_ptr ior)
           // Grab the object group version
           // @@ NOTE: This involves an allocation and a dellocation. This is
           // really bad.
-          TAO_InputCDR cdr (
+          Safe_InputCDR cdr (
             ACE_reinterpret_cast (const char*,
                                   tagged_components.component_data.get_buffer ()),
             tagged_components.component_data.length ());
@@ -217,7 +236,7 @@ IOGR_Maker::copy_ft_group_component(CORBA::Object_ptr ior)
 void
 IOGR_Maker::set_ft_domain_id(const char* domain_id)
 {
-  ft_tag_component_.ft_domain_id = domain_id;
+  ft_tag_component_.group_domain_id = domain_id;
 }
 
 void
@@ -235,7 +254,7 @@ IOGR_Maker::set_ref_version(CORBA::ULong version)
 CORBA::ULong
 IOGR_Maker::increment_ref_version()
 {
-  ACE_DEBUG((LM_DEBUG, "new object_group_ref_version = %d\n", ft_tag_component_.object_group_ref_version+1));
+  TAO_FTRTEC::Log(1, "new object_group_ref_version = %d\n", ft_tag_component_.object_group_ref_version+1);
   return ++ft_tag_component_.object_group_ref_version;
 }
 
@@ -248,7 +267,7 @@ IOGR_Maker::get_ref_version() const
 
 void
 IOGR_Maker::set_tag_components(CORBA::Object_ptr merged, CORBA::Object_ptr primary
-                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                               ACE_ENV_ARG_DECL)
 {
     // set the primary
     TAO_FT_IOGR_Property prop (ft_tag_component_);

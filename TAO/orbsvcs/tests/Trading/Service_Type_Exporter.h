@@ -17,8 +17,9 @@
 #define TAO_SERVICE_TYPE_EXPORTER_H
 
 #include "TT_Info.h"
+#include "ttest_export.h"
 
-class TAO_Service_Type_Exporter
+class TAO_TTest_Export TAO_Service_Type_Exporter
 {
 public:
 

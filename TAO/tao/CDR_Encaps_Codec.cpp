@@ -2,13 +2,17 @@
 //
 // $Id$
 
+#include "CDR_Encaps_Codec.h"
+
 #include "CDR.h"
 #include "OctetSeqC.h"
 #include "Any.h"
+#include "Any_Impl.h"
 #include "Typecode.h"
 #include "Marshal.h"
-
-#include "CDR_Encaps_Codec.h"
+#include "Any_Unknown_IDL_Type.h"
+#include "ORB_Constants.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (TAO_CodecFactory,
            CDR_Encaps_Codec,
@@ -73,7 +77,7 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
            i = i->cont ())
         {
           size_t len = i->length ();
-          ACE_OS_String::memcpy (buf, i->rd_ptr (), len);
+          ACE_OS::memcpy (buf, i->rd_ptr (), len);
           buf += len;
         }
 
@@ -214,9 +218,9 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
            i = i->cont ())
         {
           size_t len = i->length ();
-          ACE_OS_String::memcpy (buf,
-                                 i->rd_ptr (),
-                                 len);
+          ACE_OS::memcpy (buf,
+                          i->rd_ptr (),
+                          len);
           buf += len;
         }
 
@@ -290,7 +294,7 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
       char *begin = cdr.rd_ptr ();
 
       // Skip over the next argument.
-      CORBA::TypeCode::traverse_status status =
+      TAO::traverse_status status =
         TAO_Marshal_Object::perform_skip (tc,
                                           &cdr
                                           ACE_ENV_ARG_PARAMETER);
@@ -298,7 +302,7 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
                              //    IOP::Codec::TypeMismatch exception
                              //    here if this fails?
 
-      if (status == CORBA::TypeCode::TRAVERSE_CONTINUE)
+      if (status == TAO::TRAVERSE_CONTINUE)
         {
           // This will be the end of the new message block.
           char *end = cdr.rd_ptr ();

@@ -24,7 +24,6 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Connector.h"
 #include "ace/Svc_Handler.h"
-#include "ace/Synch_T.h"
 #include "ACEXML/common/XML_Types.h"
 
 typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> Svc_Handler;

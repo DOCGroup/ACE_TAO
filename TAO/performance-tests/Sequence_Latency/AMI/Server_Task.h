@@ -6,7 +6,7 @@
 #define SERVER_TASK_H
 #include /**/ "ace/pre.h"
 
-#include "tao/corba.h"
+#include "tao/ORB.h"
 #include "ace/Task.h"
 
 /// Implement a simple ACE_Task to run the ORB event loop

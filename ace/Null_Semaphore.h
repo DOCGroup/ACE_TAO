@@ -16,13 +16,13 @@
 #define ACE_NULL_SEMAPHORE_H
 #include /**/ "ace/pre.h"
 
-#include "ace/ACE_export.h"
+// All methods in this class are inline, so there is no
+// need to import or export on Windows. -- CAE 12/18/2003
+#include "ace/os_include/os_errno.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/os_include/os_errno.h"
 
 class ACE_Time_Value;
 
@@ -44,7 +44,7 @@ class ACE_Time_Value;
  * consistent with the behavior of the threaded case where a timeout
  * occurs before the state or condition is changed.
  */
-class ACE_Export ACE_Null_Semaphore
+class ACE_Null_Semaphore
 {
 public:
   ACE_Null_Semaphore (unsigned int = 1,

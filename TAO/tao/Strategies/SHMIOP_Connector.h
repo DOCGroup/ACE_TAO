@@ -16,9 +16,10 @@
 
 #ifndef TAO_SHMIOP_CONNECTOR_H
 #define TAO_SHMIOP_CONNECTOR_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -96,9 +97,9 @@ protected:
   //@{
   int set_validate_endpoint (TAO_Endpoint *endpoint);
 
-  int make_connection (TAO_GIOP_Invocation *invocation,
-                       TAO_Transport_Descriptor_Interface *desc,
-                       ACE_Time_Value *timeout = 0);
+  TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
+                                  TAO_Transport_Descriptor_Interface &desc,
+                                  ACE_Time_Value *timeout = 0);
 
   virtual TAO_Profile *make_profile (ACE_ENV_SINGLE_ARG_DECL);
   //@}
@@ -126,4 +127,5 @@ private:
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_SHMIOP_CONNECTOR_H */

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Throughput): eventperftestexe {
   exename   = Throughput
   Source_Files {

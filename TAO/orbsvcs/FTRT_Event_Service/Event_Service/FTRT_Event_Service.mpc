@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(FTRT_Event_Service) : orbsvcsexe,  rtschedevent, ftrtevent, ftorbutils {
   exename = ftrt_eventservice
   includes += $(TAO_ROOT)/orbsvcs $(TAO_ROOT)/orbsvcs/FtRtEvent/Utils $(TAO_ROOT)/orbsvcs/FtRtEvent/EventChannel

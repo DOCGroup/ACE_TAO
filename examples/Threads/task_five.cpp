@@ -18,8 +18,10 @@
 // ============================================================================
 
 
+#include "ace/OS_main.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Task.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Threads, task_five, "$Id$")
 

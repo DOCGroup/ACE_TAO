@@ -1,3 +1,6 @@
+#
+# $Id$
+#
 
 NAME = rw_locks
 OBJFILES = $(OBJDIR)\$(NAME).obj

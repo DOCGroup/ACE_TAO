@@ -9,9 +9,10 @@
 #include "tao/Protocols_Hooks.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Transport_Cache_Manager.h"
-#include "tao/Invocation.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Connect_Strategy.h"
+#include "ace/OS_NS_strings.h"
+
 ACE_RCSID(Strategies,
           UIOP_Connector,
           "$Id$")
@@ -133,21 +134,21 @@ TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
    return 0;
 }
 
-int
-TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
-                                     TAO_Transport_Descriptor_Interface *desc,
+TAO_Transport *
+TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
+                                     TAO_Transport_Descriptor_Interface &desc,
                                      ACE_Time_Value *max_wait_time)
 {
   if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
-                  ACE_TEXT ("looking for UIOP connection.\n")));
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
+                ACE_TEXT ("looking for UIOP connection.\n")));
 
   TAO_UIOP_Endpoint *uiop_endpoint =
-    this->remote_endpoint (desc->endpoint ());
+    this->remote_endpoint (desc.endpoint ());
 
   if (uiop_endpoint == 0)
-    return -1;
+    return 0;
 
   const ACE_UNIX_Addr &remote_address =
     uiop_endpoint->object_addr ();
@@ -286,7 +287,7 @@ TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                       ACE_TEXT ("errno")));
         }
 
-      return -1;
+      return 0;
     }
 
   // At this point, the connection has be successfully connected.
@@ -297,7 +298,7 @@ TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
 
   // Add the handler to Cache
   int retval =
-    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&desc,
                                                                              transport);
   // Failure in adding to cache.
   if (retval != 0)
@@ -312,7 +313,7 @@ TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                       ACE_TEXT ("could not add the new connection to Cache \n")));
         }
 
-      return -1;
+      return 0;
     }
 
   // If the wait strategy wants us to be registered with the reactor
@@ -336,16 +337,12 @@ TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                       "could not register the new connection in the reactor\n"));
         }
 
-      return -1;
+      return 0;
     }
 
-  // Handover the transport pointer to the Invocation class.
-  TAO_Transport *&invocation_transport =
-    invocation->transport ();
-  invocation_transport = transport;
-
-  return 0;
+  return transport;
 }
+
 
 TAO_Profile *
 TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)

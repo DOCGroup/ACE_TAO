@@ -1,18 +1,5 @@
 // $Id$
 
-// This test program illustrates how the <ACE_Task> synchronization
-// mechanisms work in conjunction with the <ACE_Thread_Manager>.  If
-// the <manual> flag is set input comes from stdin until the user
-// enters a return -- otherwise, the input is generated automatically.
-// All worker threads shutdown when they receive a message block of
-// length 0.
-//
-// This code is original based on a test program written by Karlheinz
-// Dorn <Karlheinz.Dorn@med.siemens.de>.  It was modified to utilize
-// more ACE features by Doug Schmidt <schmidt@cs.wustl.edu>.
-
-#include "ace/OS.h"
-#include "ace/Synch_T.h"
 #include "ace/Task_T.h"
 #include "ace/Service_Config.h"
 

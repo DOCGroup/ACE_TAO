@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../../../.." /I "../../../../" /I "../../.." /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../../../../.." /I "../../../../" /I "../../.." /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO_FT_ORB.lib TAO_IORManip.lib ace.lib TAO.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\IORManipulation" /libpath:"..\..\..\orbsvcs"
+# ADD LINK32 TAO_FTORB_Utils.lib TAO_Messaging.lib TAO_IORInterceptor.lib TAO_ObjRefTemplate.lib TAO_Valuetype.lib TAO_FT_ClientORB.lib TAO_FT_ServerORB.lib TAO_IORManip.lib ace.lib TAO.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\IORManipulation" /libpath:"..\..\..\..\tao\Messaging" /libpath:"..\..\..\..\tao\ObjRefTemplate" /libpath:"..\..\..\..\tao\IORInterceptor" /libpath:"..\..\..\..\tao\Valuetype" /libpath:"..\..\..\orbsvcs"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "ForwardRequest Server - Win32 Debug"
@@ -68,7 +68,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../../../../.." /I "../../../../" /I "../../.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../../../../.." /I "../../../../" /I "../../.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -77,7 +77,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_FT_ORBd.lib TAO_IORManipd.lib aced.lib TAOd.lib TAO_PortableServerd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\IORManipulation" /libpath:"..\..\..\orbsvcs"
+# ADD LINK32 TAO_FTORB_Utilsd.lib TAO_FT_ClientORBd.lib TAO_FT_ServerORBd.lib TAO_IORManipd.lib aced.lib TAOd.lib TAO_PortableServerd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\IORManipulation" /libpath:"..\..\..\orbsvcs"
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
@@ -89,6 +89,10 @@ LINK32=link.exe
 # Begin Group "Source Files"
 
 # PROP Default_Filter ".cpp"
+# Begin Source File
+
+SOURCE=..\..\..\orbsvcs\PortableGroup_Simple_DSC.cpp
+# End Source File
 # Begin Source File
 
 SOURCE=.\server.cpp
@@ -149,7 +153,7 @@ SOURCE=.\test.idl
 !IF  "$(CFG)" == "ForwardRequest Server - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TEST_="..\..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__TEST_="..\..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\test.idl
 InputName=test
@@ -187,7 +191,7 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "ForwardRequest Server - Win32 Debug"
 
-USERDEP__TEST_="..\..\..\..\bin\tao_idl.exe"	
+USERDEP__TEST_="..\..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\test.idl
 InputName=test

@@ -374,7 +374,6 @@
 // gethostbyname_r, getservbyname_r).
 //ACE_LACKS_PARAM_H                     Platform lacks <sys/param.h> (e.g.,
 //MVS)
-//ACE_LACKS_POSIX_PROTOTYPES                    Platform lacks POSIX prototypes for
 //certain System V functions like shared memory and message queues.
 //ACE_LACKS_RECVMSG                     Platform lacks recvmsg() (e.g., Linux)
 //ACE_LACKS_RWLOCK_T                    Platform lacks readers/writer locks.

@@ -26,7 +26,8 @@ use vars qw(@ISA);
 my(@statekeys) = ('global', 'include', 'template', 'ti',
                   'dynamic', 'static', 'relative', 'addtemp',
                   'addproj', 'progress', 'toplevel', 'baseprojs',
-                  'feature_file', 'hierarchy',
+                  'feature_file', 'hierarchy', 'name_modifier',
+                  'apply_project',
                  );
 
 my(%all_written) = ();
@@ -51,30 +52,35 @@ sub new {
   my($baseprojs) = shift;
   my($feature)   = shift;
   my($hierarchy) = shift;
+  my($nmodifier) = shift;
+  my($applypj)   = shift;
   my($type)      = shift;
   my($self)      = Parser::new($class, $inc);
 
-  $self->{'relative'}       = $relative;
-  $self->{'template'}       = $template;
-  $self->{'ti'}             = $ti;
-  $self->{'global'}         = $global;
-  $self->{'grammar_type'}   = $type;
-  $self->{'type_check'}     = $type . '_defined';
-  $self->{'global_read'}    = 0;
-  $self->{'current_input'}  = '';
-  $self->{'progress'}       = $progress;
-  $self->{'addtemp'}        = $addtemp;
-  $self->{'addproj'}        = $addproj;
-  $self->{'toplevel'}       = $toplevel;
-  $self->{'files_written'}  = [];
-  $self->{'reading_global'} = 0;
-  $self->{'global_assign'}  = {};
-  $self->{'assign'}         = {};
-  $self->{'baseprojs'}      = $baseprojs;
-  $self->{'dynamic'}        = $dynamic;
-  $self->{'static'}         = $static;
-  $self->{'feature_file'}   = $feature;
-  $self->{'hierarchy'}      = $hierarchy;
+  $self->{'relative'}        = $relative;
+  $self->{'template'}        = $template;
+  $self->{'ti'}              = $ti;
+  $self->{'global'}          = $global;
+  $self->{'grammar_type'}    = $type;
+  $self->{'type_check'}      = $type . '_defined';
+  $self->{'global_read'}     = 0;
+  $self->{'current_input'}   = '';
+  $self->{'progress'}        = $progress;
+  $self->{'addtemp'}         = $addtemp;
+  $self->{'addproj'}         = $addproj;
+  $self->{'toplevel'}        = $toplevel;
+  $self->{'files_written'}   = [];
+  $self->{'reading_global'}  = 0;
+  $self->{'global_assign'}   = {};
+  $self->{'assign'}          = {};
+  $self->{'baseprojs'}       = $baseprojs;
+  $self->{'dynamic'}         = $dynamic;
+  $self->{'static'}          = $static;
+  $self->{'feature_file'}    = $feature;
+  $self->{'hierarchy'}       = $hierarchy;
+  $self->{'name_modifier'}   = $nmodifier;
+  $self->{'apply_project'}   = $applypj;
+  $self->{'convert_slashes'} = $self->convert_slashes();
 
   return $self;
 }
@@ -314,7 +320,7 @@ sub parse_scope {
     $flags = {};
   }
 
-  while($_ = $fh->getline()) {
+  while(<$fh>) {
     my($line) = $self->strip_line($_);
 
     if ($line eq '') {
@@ -367,27 +373,35 @@ sub base_directory {
 
 
 sub generate_default_file_list {
-  my($self)  = shift;
-  my($dir)   = shift;
-  my($dh)    = new FileHandle();
-  my(@files) = ();
-
-  if (!defined $dir) {
-    $dir = '.';
-  }
+  my($self)    = shift;
+  my($dir)     = shift;
+  my($exclude) = shift;
+  my($dh)      = new FileHandle();
+  my(@files)   = ();
 
   if (opendir($dh, $dir)) {
-    @files = grep(!/^\.\.?$/, readdir($dh));
-    if ($self->sort_files()) {
-      @files = sort { $self->file_sorter($a, $b) } @files;
+    my($need_dir) = ($dir ne '.');
+    foreach my $file (grep(!/^\.\.?$/, readdir($dh))) {
+      my($skip) = 0;
+      ## Prefix each file name with the directory only if it's not '.'
+      my($full) = ($need_dir ? "$dir/" : '') . $file;
+
+      if (defined $$exclude[0]) {
+        foreach my $exc (@$exclude) {
+          if ($full eq $exc) {
+            $skip = 1;
+            last;
+          }
+        }
+      }
+
+      if (!$skip) {
+        push(@files, $full);
+      }
     }
 
-    ## Prefix each file name with the directory
-    ## only if it's not .
-    if ($dir ne '.') {
-      for(my $i = 0; $i <= $#files; $i++) {
-        $files[$i] = "$dir/$files[$i]";
-      }
+    if ($self->sort_files()) {
+      @files = sort { $self->file_sorter($a, $b) } @files;
     }
 
     closedir($dh);
@@ -433,6 +447,11 @@ sub add_file_written {
             "$self->{'grammar_type'} with a duplicate name.\n";
       last;
     }
+    elsif (lc($written) eq lc($file)) {
+      print "WARNING: $file has been overwritten by a " .
+            "$self->{'grammar_type'} with different casing: $written.\n";
+      last;
+    }
   }
   push(@{$self->{'files_written'}}, $file);
 
@@ -441,20 +460,38 @@ sub add_file_written {
 
 
 sub extension_recursive_input_list {
-  my($self)  = shift;
-  my($dir)   = shift;
-  my($ext)   = shift;
-  my($fh)    = new FileHandle();
-  my(@files) = ();
+  my($self)    = shift;
+  my($dir)     = shift;
+  my($exclude) = shift;
+  my($ext)     = shift;
+  my($fh)      = new FileHandle();
+  my(@files)   = ();
 
   if (opendir($fh, $dir)) {
     foreach my $file (grep(!/^\.\.?$/, readdir($fh))) {
+      my($skip) = 0;
       my($full) = ($dir ne '.' ? "$dir/" : '') . $file;
-      if (-d $full) {
-        push(@files, $self->extension_recursive_input_list($full, $ext));
+
+      ## Check for command line exclusions
+      if (defined $$exclude[0]) {
+        foreach my $exc (@$exclude) {
+          if ($full eq $exc) {
+            $skip = 1;
+            last;
+          }
+        }
       }
-      elsif ($full =~ /$ext$/) {
-        push(@files, $full);
+
+      ## If we are not skipping this directory or file, then check it out
+      if (!$skip) {
+        if (-d $full) {
+          push(@files, $self->extension_recursive_input_list($full,
+                                                             $exclude,
+                                                             $ext));
+        }
+        elsif ($full =~ /$ext$/) {
+          push(@files, $full);
+        }
       }
     }
     closedir($fh);
@@ -468,7 +505,7 @@ sub modify_assignment_value {
   my($self)  = shift;
   my($value) = shift;
 
-  if ($self->convert_slashes()) {
+  if ($self->{'convert_slashes'}) {
     $value = $self->slash_to_backslash($value);
   }
   return $value;
@@ -512,11 +549,10 @@ sub process_assignment_add {
   my($name)   = shift;
   my($value)  = shift;
   my($assign) = shift;
-  my($order)  = shift;
-  my($nval)   = $self->get_assignment($name, $assign);
+  my($nval)   = $self->get_assignment_for_modification($name, $assign);
 
   if (defined $nval) {
-    if ($order) {
+    if ($self->preserve_assignment_order($name)) {
       $nval .= " $value";
     }
     else {
@@ -536,17 +572,22 @@ sub process_assignment_sub {
   my($name)   = shift;
   my($value)  = shift;
   my($assign) = shift;
-  my($nval)   = $self->get_assignment($name, $assign);
+  my($nval)   = $self->get_assignment_for_modification($name, $assign);
 
   if (defined $nval) {
-    my($parts) = $self->create_array($nval);
-    $nval = '';
-    foreach my $part (@$parts) {
-      if ($part ne $value && $part ne '') {
-        $nval .= "$part ";
-      }
+    ## Remove double quotes if there are any
+    $value =~ s/^\"(.*)\"$/$1/;
+
+    ## Escape any regular expression special characters
+    $value = $self->escape_regex_special($value);
+
+    if ($nval =~ /$value/) {
+      ## Search for the first occurrence and remove it
+      $nval =~ s/$value//;
+
+      ## Reset the value
+      $self->process_assignment($name, $nval, $assign);
     }
-    $self->process_assignment($name, $nval, $assign);
   }
 }
 
@@ -570,6 +611,7 @@ sub fill_type_name {
     ## by a space.  This value could be a space separated list.
     $name =~ s/_$//;
     $name =~ s/_\s/ /g;
+    $name =~ s/\s_/ /g;
 
     ## If any one word is capitalized then capitalize each word
     if ($name =~ /[A-Z][0-9a-z_]+/) {
@@ -717,6 +759,15 @@ sub get_assignment {
 }
 
 
+sub get_assignment_for_modification {
+  my($self)   = shift;
+  my($name)   = shift;
+  my($assign) = shift;
+
+  return $self->get_assignment($name, $assign);
+}
+
+
 sub get_baseprojs {
   my($self) = shift;
   return $self->{'baseprojs'};
@@ -746,9 +797,34 @@ sub get_hierarchy {
   return $self->{'hierarchy'};
 }
 
+
+sub get_name_modifier {
+  my($self) = shift;
+  return $self->{'name_modifier'};
+}
+
+
+sub get_apply_project {
+  my($self) = shift;
+  return $self->{'apply_project'};
+}
+
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************
+
+sub preserve_assignment_order {
+  #my($self) = shift;
+  #my($name) = shift;
+  return 1;
+}
+
+
+sub compare_output {
+  #my($self) = shift;
+  return 0;
+}
+
 
 sub handle_scoped_end {
   #my($self)  = shift;

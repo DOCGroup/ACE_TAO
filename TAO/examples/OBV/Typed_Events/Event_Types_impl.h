@@ -3,7 +3,10 @@
 
 #if !defined (EVENT_TYPES_IMPL_H)
 #define EVENT_TYPES_IMPL_H
+
 #include "Event_TypesC.h"
+
+#include "tao/Valuetype/ValueFactory.h"
 
 // Event hierarchy implementation classes ======================
 

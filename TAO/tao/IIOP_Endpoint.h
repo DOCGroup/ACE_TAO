@@ -17,16 +17,14 @@
 #define TAO_IIOP_ENDPOINT_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/Endpoint.h"
+#include "ace/INET_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Endpoint.h"
 #include "tao/CORBA_String.h"
-#include "ace/INET_Addr.h"
-
 
 class TAO_IIOP_Connection_Handler;
 
@@ -110,6 +108,11 @@ private:
   int set (const ACE_INET_Addr &addr,
            int use_dotted_decimal_addresses);
 
+  /// Helper method for object_addr () call.
+  void object_addr_i (void) const;
+
+private:
+
   /// String representing the host name.
   CORBA::String_var host_;
 
@@ -121,7 +124,7 @@ private:
   mutable ACE_INET_Addr object_addr_;
 
   /// Flag to indicate if the address has been resolved and set.
-  mutable int object_addr_set_;
+  mutable bool object_addr_set_;
 
   /// IIOP Endpoints can be stringed into a list.  Return the next
   /// endpoint in the list, if any.

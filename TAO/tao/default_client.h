@@ -13,15 +13,15 @@
 
 #ifndef TAO_DEFAULT_CLIENT_H
 #define TAO_DEFAULT_CLIENT_H
-#include /**/ "ace/pre.h"
 
-#include "tao/Client_Strategy_Factory.h"
+#include /**/ "ace/pre.h"
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Config.h"
+#include "tao/Client_Strategy_Factory.h"
 
 /**
  * @class TAO_Default_Client_Strategy_Factory
@@ -31,7 +31,8 @@
  * options so that everything operates as if there were no
  * dynamically-linkable strategies.
  */
-class TAO_Export TAO_Default_Client_Strategy_Factory : public TAO_Client_Strategy_Factory
+class TAO_Export TAO_Default_Client_Strategy_Factory 
+  : public TAO_Client_Strategy_Factory
 {
 public:
   // = Initialization and termination methods.

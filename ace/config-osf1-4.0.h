@@ -22,15 +22,15 @@
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-/*clearerr is not defined when _REENTRANT is not defined*/
-#if ACE_MT_SAFE == 0
-#define ACE_LACKS_CLEARERR
-#endif /* ACE_MT_SAFE == 0 */
-
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
 # define ACE_MT_SAFE 1
 #endif /* ! ACE_MT_SAFE */
+
+/*clearerr is not defined when _REENTRANT is not defined*/
+#if ACE_MT_SAFE == 0
+#define ACE_LACKS_CLEARERR
+#endif /* ACE_MT_SAFE == 0 */
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
@@ -125,9 +125,9 @@
 # define ACE_LACKS_SYSV_MSQ_PROTOS
 #endif /* _POSIX_C_SOURCE < 199506L */
 
+#define ACE_SIZEOF_LONG 8
+
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
-// NOTE: ACE_HAS_64BIT_LONGS is deprecated.  Instead, use ACE_SIZEOF_LONG == 8.
-#define ACE_HAS_64BIT_LONGS
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 #define ACE_HAS_BROKEN_SETRLIMIT
 #define ACE_HAS_BROKEN_T_ERROR
@@ -170,7 +170,7 @@
 #define ACE_LACKS_THREAD_STACK_ADDR
 #endif  /* ACE_MT_SAFE != 0 */
 #define ACE_HAS_TIUSER_H
-#define ACE_HAS_TLI
+#define ACE_HAS_XTI
 #define ACE_HAS_TLI_PROTOTYPES
 #define ACE_HAS_UALARM
 #define ACE_HAS_UCONTEXT_T

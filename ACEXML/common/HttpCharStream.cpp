@@ -3,6 +3,8 @@
 #include "ace/ACE.h"
 #include "ace/ace_wchar.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 #include "ACEXML/common/HttpCharStream.h"
 #include "ACEXML/common/Encoding.h"
 
@@ -25,6 +27,7 @@ ACEXML_HttpCharStream::ACEXML_HttpCharStream (void)
     stream_(0),
     connector_(0),
     size_(0),
+    data_offset_ (0),
     encoding_ (0)
 {
 
@@ -77,7 +80,7 @@ ACEXML_HttpCharStream::open (const ACEXML_Char *url)
   }
 
   this->size_ = ACE_static_cast (off_t, len);
-  return 0;
+  return this->determine_encoding();
 }
 
 // The FSM was taken from the implementation of http_get and that falls
@@ -237,14 +240,12 @@ ACEXML_HttpCharStream::get_url (size_t& len)
   // Move the pointer to the beginning of the file store.
   this->stream_->rewind();
 
-  off_t data_offset = data_beg - this->stream_->recv();
+  this->data_offset_ = data_beg - this->stream_->recv();
   // Forward to the beginning of data.
-  if (this->stream_->seek (data_offset, SEEK_SET) == -1)
+  if (this->stream_->seek (this->data_offset_, SEEK_SET) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%s: %m",
                        "Error in seeking to beginning of data"), -1);
 
-  if (this->determine_encoding() == -1)
-    return -1;
   return status;
 }
 
@@ -305,6 +306,7 @@ ACEXML_HttpCharStream::close (void)
   this->connector_ = 0;
 
   this->size_ = 0;
+  this->data_offset_ = 0;
 
   delete[] this->encoding_;
   this->encoding_ = 0;
@@ -329,6 +331,8 @@ ACEXML_HttpCharStream::determine_encoding (void)
     return -1;
   else
     {
+      if (this->encoding_)
+        delete [] this->encoding_;
       this->encoding_ = ACE::strnew (temp);
       //   ACE_DEBUG ((LM_DEBUG, "URI's encoding is %s\n", this->encoding_));
     }
@@ -352,6 +356,11 @@ ACEXML_HttpCharStream::rewind (void)
   if (this->stream_ == 0)
     return;
   this->stream_->rewind();
+
+  // Forward to the beginning of data.
+  if (this->stream_->seek (this->data_offset_, SEEK_SET) == -1)
+    ACE_ERROR ((LM_ERROR, "%s: %m", "Error in seeking to beginning of data"));
+  this->determine_encoding();
 }
 
 const ACEXML_Char*

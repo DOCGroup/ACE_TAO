@@ -2,6 +2,9 @@
 
 #include "ior-handler.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_stdlib.h"
 
 IorHandler::IorHandler (void)
 {
@@ -556,7 +559,7 @@ IorHandler::getIdlInterface (char *typeId, int *validTypeId)
       return ((char *)typeId);
     }
 
-  char *readStart = strchr(typeId, ':');
+  char *readStart = ACE_OS::strchr(typeId, ':');
 
   if (readStart == NULL)
     {
@@ -566,7 +569,7 @@ IorHandler::getIdlInterface (char *typeId, int *validTypeId)
     }
 
 
-  char *readEnd = strrchr (typeId, ':');
+  char *readEnd = ACE_OS::strrchr (typeId, ':');
 
   if (readEnd == NULL)
     {

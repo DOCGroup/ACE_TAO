@@ -37,7 +37,7 @@ sub project_file_name {
     $name = $self->project_name();
   }
 
-  return "ghs/$name.bld";
+  return $self->get_modified_project_file_name("ghs/$name", '.bld');
 }
 
 

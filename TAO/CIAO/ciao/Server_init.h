@@ -13,12 +13,17 @@
 #define CIAO_SERVER_INIT_H
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
 #include "CIAO_Server_Export.h"
 
 #if !defined ACE_LACKS_PRAGMA_ONCE
 #pragma once
 #endif /* ! ACE_LACKS_PRAGMA_ONCE */
+
+namespace CORBA
+{
+  class ORB;
+  typedef ORB *ORB_ptr;
+}
 
 namespace CIAO
 {

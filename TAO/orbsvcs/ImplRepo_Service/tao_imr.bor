@@ -1,6 +1,8 @@
 #
+# $Id$
+#
 # Makefile for building the tao_imr executable
-# 
+#
 
 !ifndef MINIMUM_CORBA
 NAME = tao_imr
@@ -20,7 +22,7 @@ CFLAGS = \
 	$(TAO_VALUETYPE_CFLAGS) \
 	$(TAO_IORINTERCEPTOR_CFLAGS) \
 	$(TAO_ORT_CFLAGS)
-        
+
 LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB) \

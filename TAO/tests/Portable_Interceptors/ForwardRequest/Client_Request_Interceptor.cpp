@@ -3,6 +3,8 @@
 #include "Client_Request_Interceptor.h"
 #include "testC.h"
 
+#include "ace/Log_Msg.h"
+
 ACE_RCSID (ForwardRequest,
            Client_Request_Interceptor,
            "$Id$")
@@ -121,12 +123,15 @@ Client_Request_Interceptor::receive_other (
     ri->response_expected (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
+  // Oneway
+  if (!response_expected)
+    return;
+
   PortableInterceptor::ReplyStatus reply_status =
     ri->reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (!response_expected   // A one-way or asynchronous request.
-      || reply_status == PortableInterceptor::TRANSPORT_RETRY)  // A retry.
+  if (reply_status == PortableInterceptor::TRANSPORT_RETRY)
     return;
 
   // If we get this far then we should have received a

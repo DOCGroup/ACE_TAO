@@ -12,7 +12,7 @@
 
 #ifndef TAO_FTEC_SUPPLIERADMIN_H
 #define TAO_FTEC_SUPPLIERADMIN_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "FTEC_ProxyConsumer.h"
 #include "FT_ProxyAdmin_T.h"
@@ -30,7 +30,7 @@ class TAO_FTEC_Event_Channel_Impl;
 
 namespace FtRtecEventChannelAdmin {
   struct SupplierAdminState;
-};
+}
 /**
  * @class TAO_FTEC_SupplierAdmin
  *
@@ -72,5 +72,5 @@ public:
   void disconnect(RtecEventChannelAdmin::ProxyPushConsumer_ptr obj);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_FTEC_SUPPLIERADMIN_H */

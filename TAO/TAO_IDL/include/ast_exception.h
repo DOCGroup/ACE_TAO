@@ -88,7 +88,7 @@ public:
 
   virtual ~AST_Exception (void);
 
-  virtual idl_bool in_recursion (AST_Type *node = 0);
+  virtual idl_bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Check if we or the parameter node is in recursion.
 
   // Narrowing

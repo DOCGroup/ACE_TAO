@@ -17,9 +17,8 @@
 //=============================================================================
 
 #include "test_config.h"
-#include "ace/Task.h"
-#include "ace/Activation_Queue.h"
-#include "ace/Bound_Ptr.h"
+#include "ace/Null_Mutex.h"
+#include "Bound_Ptr_Test.h"
 
 ACE_RCSID (tests, Bound_Ptr_Test, "Bound_Ptr_Test.cpp,v 4.8 2000/04/23 04:43:58 brunsch Exp")
 
@@ -157,17 +156,6 @@ template class ACE_Bound_Ptr_Counter<ACE_Null_Mutex>;
 #pragma instantiate ACE_Bound_Ptr_Counter<ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-struct Printer
-{
-  Printer (const char *message);
-  ~Printer (void) ;
-
-  void print (void);
-
-  const char *message_;
-  static size_t instance_count_;
-};
-
 size_t Printer::instance_count_ = 0;
 
 Printer::Printer (const char *message)
@@ -194,51 +182,6 @@ Printer::print (void)
 }
 
 #if defined (ACE_HAS_THREADS)
-
-typedef ACE_Strong_Bound_Ptr<Printer, ACE_Thread_Mutex> Printer_var;
-
-/**
- * @class Scheduler
- *
- * @brief The scheduler for the Active Object.
- *
- * This class also plays the role of the Proxy and the Servant
- * in the Active Object pattern.  Naturally, these roles could
- * be split apart from the Scheduler.
- */
-class Scheduler : public ACE_Task<ACE_SYNCH>
-{
-
-  friend class Method_Request_print;
-  friend class Method_Request_end;
-public:
-  // = Initialization and termination methods.
-  /// Constructor.
-  Scheduler (Scheduler * = 0);
-
-  /// Initializer.
-  virtual int open (void *args = 0);
-
-  /// Terminator.
-  virtual int close (u_long flags = 0);
-
-  /// Destructor.
-  virtual ~Scheduler (void);
-
-  // = These methods are part of the Active Object Proxy interface.
-  void print (Printer_var &printer);
-  void end (void);
-
-protected:
-  /// Runs the Scheduler's event loop, which dequeues <Method_Requests>
-  /// and dispatches them.
-  virtual int svc (void);
-
-private:
-  // = These are the <Scheduler> implementation details.
-  ACE_Activation_Queue activation_queue_;
-  Scheduler *scheduler_;
-};
 
 /**
  * @class Method_Request_print

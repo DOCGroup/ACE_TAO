@@ -3,6 +3,9 @@
 #if !defined (ACE_HANDLE_THR_STREAM_C)
 #define ACE_HANDLE_THR_STREAM_C
 
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
 #include "ace/INET_Addr.h"
 #include "ace/TLI_Acceptor.h"
@@ -15,6 +18,8 @@ ACE_RCSID(server, Handle_Thr_Stream, "$Id$")
 #if !defined (__ACE_INLINE__)
 #include "Handle_Thr_Stream.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/OS_NS_time.h"
 
 // Shorthand names.
 #define SVH SVC_HANDLER

@@ -3,6 +3,8 @@
 
 // Shared_Memory_SV.i
 
+#include "ace/Global_Macros.h"
+
 ACE_INLINE int 	       
 ACE_Shared_Memory_SV::open (key_t id, 
 			    int length, 

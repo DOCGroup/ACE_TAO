@@ -16,6 +16,7 @@
 
 #ifndef TAO_ORBCONF_H
 #define TAO_ORBCONF_H
+
 #include /**/ "ace/pre.h"
 
 // "ace/OS.h" is overkill.  "ace/Basic_Types.h" is enough.  In
@@ -23,6 +24,8 @@
 #include "ace/Basic_Types.h"
 #include "ace/Global_Macros.h"
 #include "ace/Synch_Traits.h"
+
+#define TAO_INVALID_PRIORITY -1
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -143,6 +146,25 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #define TAO_MAXBUFSIZE 1024
 #endif /* TAO_MAXBUFSIZE */
 
+/*!
+
+  The number of times the transport will try to re-read before
+  returning control to the reactor when it has an uncompleted
+  message (see TAO_Transport::handle_input()).
+
+  The idea behind re-reading is that more data may have arrived
+  while the transport was busy deciding what to do with the bytes
+  it got, so we should probably try to re-read.
+
+  This value shouldn't be too large, lest the transport starve
+  out other transports while trying to complete its message.
+
+  When choosing a value, think of the type of this as 'unsigned int'.
+ */
+#if !defined(TAO_MAX_TRANSPORT_REREAD_ATTEMPTS)
+#define TAO_MAX_TRANSPORT_REREAD_ATTEMPTS 2
+#endif
+
 // This controls the alignment for TAO structs.  It supports built-in
 // types up to and including 16 bytes (128 bits) in size.
 #if !defined (TAO_MAXIMUM_NATIVE_TYPE_SIZE)
@@ -171,8 +193,6 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 
 // This definition theoretically is not required. Just leaving it here
 // for backward compatibility
-#define TAO_NAMESPACE namespace
-#define TAO_NAMESPACE_CLOSE
 #define TAO_NAMESPACE_STORAGE_CLASS extern TAO_EXPORT_MACRO
 #define TAO_NAMESPACE_BEGIN(NS)  namespace NS {
 #define TAO_NAMESPACE_END  }
@@ -428,11 +448,7 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 
 // Default CORBA_MESSAGING settings
 #if !defined (TAO_HAS_CORBA_MESSAGING)
-#  if (TAO_HAS_MINIMUM_CORBA == 1)
-#    define TAO_HAS_CORBA_MESSAGING 0
-#  else
 #    define TAO_HAS_CORBA_MESSAGING 1
-#  endif  /* TAO_HAS_MINIMUM_CORBA */
 #endif  /* !TAO_HAS_CORBA_MESSAGING */
 
 // For all the policies, support is enabled by default if TAO is
@@ -730,7 +746,6 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 //  #define TAO_RT_SERVER_PROTOCOL_POLICY_TYPE 0x54410004
 //  #define TAO_RT_CLIENT_PROTOCOL_POLICY_TYPE 0x54410005
 
-
 #define TAO_RT_PRIORITY_MODEL_POLICY_TYPE 40
 #define TAO_RT_THREADPOOL_POLICY_TYPE 41
 #define TAO_RT_SERVER_PROTOCOL_POLICY_TYPE 42
@@ -849,5 +864,10 @@ enum TAO_Policy_Scope
 #  define TAO_USE_LAZY_RESOURCE_USAGE_STRATEGY 0
 #endif /* TAO_USE_LAZY_RESOURCE_USAGE_STRATEGY*/
 
+#if !defined (TAO_USE_LOCAL_MEMORY_POOL)
+#  define TAO_USE_LOCAL_MEMORY_POOL 1
+#endif /* TAO_USE_LOCAL_MEMORY_POOL */
+
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_ORBCONF_H */

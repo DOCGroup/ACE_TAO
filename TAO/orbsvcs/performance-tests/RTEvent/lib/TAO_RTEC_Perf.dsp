@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\.." /I "..\..\..\.." /I "..\..\..\..\.." /D EC_Test_HAS_DLL=1 /D "TAO_RTEC_PERF_BUILD_DLL" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "..\..\.." /I "..\..\..\.." /I "..\..\..\..\.." /D EC_Test_HAS_DLL=1 /D "TAO_RTEC_PERF_BUILD_DLL" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /o "NUL" /win32
@@ -54,7 +54,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_Svc_Utils.lib TAO_RTEvent.lib TAO_RTCORBAEvent.lib TAO_Messaging.lib TAO_RTCORBA.lib TAO_RTPortableServer.lib /nologo /subsystem:windows /dll /machine:I386 /out:"..\..\..\..\..\bin\RTECPerf.dll" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\RTCORBA" /libpath:"..\..\..\..\tao\RTPortableServer" /libpath:"..\..\..\..\tao\Messaging" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_Valuetype.lib TAO_Svc_Utils.lib TAO_RTEvent.lib TAO_RTCORBAEvent.lib TAO_Messaging.lib TAO_RTCORBA.lib TAO_RTPortableServer.lib /nologo /subsystem:windows /dll /machine:I386 /out:"..\..\..\..\..\bin\RTECPerf.dll" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\RTCORBA" /libpath:"..\..\..\..\tao\RTPortableServer" /libpath:"..\..\..\..\tao\Messaging" /libpath:"..\..\..\..\tao\Valuetype" /libpath:"..\..\..\..\..\ace"
+# SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "RTECPerf DLL - Win32 Debug"
 
@@ -70,7 +71,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\.." /I "..\..\..\.." /I "..\..\..\..\.." /D EC_Test_HAS_DLL=1 /D "TAO_RTEC_PERF_BUILD_DLL" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "..\..\.." /I "..\..\..\.." /I "..\..\..\..\.." /D EC_Test_HAS_DLL=1 /D "TAO_RTEC_PERF_BUILD_DLL" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o "NUL" /win32
@@ -81,7 +82,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib TAOd.lib TAO_PortableServerd.lib TAO_Svc_Utilsd.lib TAO_RTEventd.lib TAO_RTCORBAEventd.lib TAO_Messagingd.lib TAO_RTCORBAd.lib TAO_RTPortableServerd.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\..\..\..\bin\RTECPerfd.dll" /pdbtype:sept /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\RTCORBA" /libpath:"..\..\..\..\tao\RTPortableServer" /libpath:"..\..\..\..\tao\Messaging" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 aced.lib TAOd.lib TAO_PortableServerd.lib TAO_Valuetyped.lib TAO_Svc_Utilsd.lib TAO_RTEventd.lib TAO_RTCORBAEventd.lib TAO_Messagingd.lib TAO_RTCORBAd.lib TAO_RTPortableServerd.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"..\..\..\..\..\bin\RTECPerfd.dll" /pdbtype:sept /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\tao\RTCORBA" /libpath:"..\..\..\..\tao\RTPortableServer" /libpath:"..\..\..\..\tao\Messaging" /libpath:"..\..\..\..\tao\Valuetype" /libpath:"..\..\..\..\..\ace"
+# SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
 

@@ -1,2 +1,5 @@
-project: server, orbsvcsexe, rtevent {
+// -*- MPC -*-
+// $Id$
+
+project: orbsvcsexe, rtevent, portableserver {
 }

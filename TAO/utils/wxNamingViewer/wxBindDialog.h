@@ -13,7 +13,7 @@ class WxBindDialog:
 public:
   WxBindDialog( bool isContext, CORBA::ORB_ptr orb, wxWindow* parent);
 
-  CORBA::Object_ptr getObject() {return object;};
+  CORBA::Object_ptr getObject() {return object.in();};
   CosNaming::Name& getName() {return name;};
 
 private:

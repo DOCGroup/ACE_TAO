@@ -46,11 +46,11 @@ module CosLifeCycle
   typedef Object _Factory;
   typedef sequence <_Factory> Factories;
 
-  typedef struct NVP 
+  struct NameValuePair
   {
     CosNaming::Istring name; 
     any value; 
-  } NameValuePair;
+  };
 
   typedef sequence <NameValuePair> Criteria;
   

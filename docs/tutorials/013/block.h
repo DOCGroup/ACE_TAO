@@ -10,9 +10,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch.h"
 #include "mld.h"
 #include "work.h"
+#include "ace/Lock_Adapter_T.h"
+#include "ace/Mutex.h"
 
 /*
    In this Tutorial, we derive from ACE_Data_Block for our special data.  With

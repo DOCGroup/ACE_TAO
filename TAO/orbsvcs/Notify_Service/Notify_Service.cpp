@@ -73,6 +73,9 @@ int
 TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
                           ACE_ENV_ARG_DECL)
 {
+  if (this->parse_args(argc, argv) != 0)
+    return -1;
+
   // initalize the ORB.
   if (this->init_ORB (argc, argv
                       ACE_ENV_ARG_PARAMETER) != 0)
@@ -94,9 +97,6 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
   this->notify_service_->init (this->orb_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  if (this->parse_args(argc, argv) != 0)
-    return -1;
-
   if (this->nthreads_ > 0) // we have chosen to run in a thread pool.
     {
       ACE_DEBUG ((LM_DEBUG, "Running %d server threads\n", this->nthreads_));
@@ -108,14 +108,15 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR *argv[]
         THR_JOINABLE |
         this->orb_->orb_core ()->orb_params ()->thread_creation_flags ();
 
-      int priority = ACE_Sched_Params::priority_min (this->orb_->orb_core ()->orb_params ()->sched_policy ()
-                                                     , this->orb_->orb_core ()->orb_params ()->scope_policy ());
+      int priority = ACE_Sched_Params::priority_min (this->orb_->orb_core ()->orb_params ()->sched_policy (),
+                                                     this->orb_->orb_core ()->orb_params ()->scope_policy ());
 
       if (worker_.activate (flags,
                             this->nthreads_, 0, priority) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot activate client threads\n"), -1);
     }
+
   // Check first if the naming service
   if (this->use_name_svc_)
     {
@@ -353,7 +354,7 @@ TAO_Notify_Service_Driver::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR *argv[])
+TAO_Notify_Service_Driver::parse_args (int &argc, ACE_TCHAR *argv[])
 {
     ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -470,7 +471,7 @@ Worker::svc (void)
       return -1;
     }
 
-  ACE_DEBUG ((LM_ERROR, "Activated Worker Thread to run the ORB @ priority:%d \n", priority));
+  ACE_DEBUG ((LM_DEBUG, "Activated Worker Thread to run the ORB @ priority:%d \n", priority));
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

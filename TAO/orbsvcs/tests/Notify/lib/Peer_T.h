@@ -13,8 +13,6 @@
 #define TAO_Notify_Tests_PEER_T_H
 #include /**/ "ace/pre.h"
 
-#include "notify_test_export.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -29,7 +27,7 @@
  *
  */
 template <class Peer_Traits>
-class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Peer_T : public TAO_Notify_Tests_Peer, public Peer_Traits::SKELETON, public PortableServer::RefCountServantBase
+class TAO_Notify_Tests_Peer_T : public TAO_Notify_Tests_Peer, public Peer_Traits::SKELETON, public PortableServer::RefCountServantBase
 {
   typedef ACE_TYPENAME Peer_Traits::Admin_Traits Admin_Traits;
   typedef ACE_TYPENAME Peer_Traits::Admin_Ext_Traits Admin_Ext_Traits;

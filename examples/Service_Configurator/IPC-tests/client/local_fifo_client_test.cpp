@@ -3,6 +3,7 @@
 // Send a file through ACE_FIFO communication channel by
 // breaking it (the file) into pieces.
 
+#include "ace/OS_main.h"
 #include "ace/Mem_Map.h"
 #include "ace/FIFO_Send_Msg.h"
 #include "ace/Get_Opt.h"

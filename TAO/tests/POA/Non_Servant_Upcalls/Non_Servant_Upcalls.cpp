@@ -114,7 +114,8 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       // Give ownership to POA.
-      servant1->_remove_ref ();
+      servant1->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var id2 =
         root_poa->activate_object (servant2
@@ -122,7 +123,8 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       // Give ownership to POA.
-      servant2->_remove_ref ();
+      servant2->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       root_poa->deactivate_object (id2.in ()
                                    ACE_ENV_ARG_PARAMETER);

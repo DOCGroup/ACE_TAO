@@ -20,7 +20,13 @@
 # include "SHMIOP_Connection_Handler.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(Strategies, SHMIOP_Connection_Handler, "$Id$")
+#include "ace/os_include/netinet/os_tcp.h"
+#include "ace/os_include/os_netdb.h"
+#include "ace/os_include/netinet/os_tcp.h"
+
+ACE_RCSID (Strategies, 
+	   SHMIOP_Connection_Handler, 
+	   "$Id$")
 
 TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_SHMIOP_SVC_HANDLER (t, 0 , 0),

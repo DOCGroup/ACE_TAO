@@ -20,7 +20,6 @@
 #define TIMEOUT_I_H
 
 #include "ace/High_Res_Timer.h"
-#include "tao/corba.h"
 
 #include "timeoutS.h"
 

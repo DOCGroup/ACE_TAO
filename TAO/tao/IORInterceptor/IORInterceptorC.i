@@ -26,19 +26,3 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
-
-#if !defined (_PORTABLEINTERCEPTOR_IORINFO___CI_)
-#define _PORTABLEINTERCEPTOR_IORINFO___CI_
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
-
-#if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR___CI_)
-#define _PORTABLEINTERCEPTOR_IORINTERCEPTOR___CI_
-
-#endif /* end #if !defined */
-

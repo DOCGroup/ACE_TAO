@@ -1,3 +1,6 @@
-project(IOGRTest): taoserver, orbsvcsexe, iormanip, ftorb {
+// -*- MPC -*-
+// $Id$
+
+project(IOGRTest): taoserver, orbsvcsexe, iormanip, ftorb, messaging {
   exename  = IOGRTest
 }

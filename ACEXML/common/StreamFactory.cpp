@@ -1,5 +1,7 @@
 // $Id$
 
+#include "ace/OS_NS_string.h"
+
 #include "ACEXML/common/StreamFactory.h"
 #include "ACEXML/common/FileCharStream.h"
 #include "ACEXML/common/HttpCharStream.h"

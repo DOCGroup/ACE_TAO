@@ -42,7 +42,7 @@ DCFLAGS         += +K0 -g
 endif
 LD              = $(CC)
 DLD             = $(CC)
-LIBS            += -lpthread -lmach -lexc -ltli -lrt -lm
+LIBS            += -lpthread -lmach -lexc -lxti  -lrt -lm
 OCFLAGS         += +K3 -O
 PIC             =
 AR              = $(CC)

@@ -1,11 +1,19 @@
 //$Id$
-#include "ace/OS.h"
-#include "ace/Log_Msg.h"
+
 #include "ace/UUID.h"
+#include "ace/Guard_T.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/UUID.inl"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_netdb.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/ACE.h"
 
 ACE_RCSID (ace,
            UUID,
@@ -71,7 +79,7 @@ namespace ACE_Utils
     node_release_ = 1;
 
 
-    if (uuid_string.length() < NIL_UUID.to_string()->length())
+    if (uuid_string.length() < NIL_UUID.to_string ()->length ())
       {
         ACE_DEBUG ((LM_DEBUG,
                     "%N ACE_UUID::UUID - "
@@ -80,10 +88,10 @@ namespace ACE_Utils
       }
 
     /// Special case for the nil UUID.
-    if (uuid_string == *NIL_UUID.to_string())
+    if (uuid_string == *NIL_UUID.to_string ())
       {
         bool copy_constructor_not_supported = false;
-        ACE_ASSERT(copy_constructor_not_supported);
+        ACE_ASSERT (copy_constructor_not_supported);
         //*this = NIL_UUID;
         ACE_UNUSED_ARG (copy_constructor_not_supported);
         return;
@@ -99,58 +107,62 @@ namespace ACE_Utils
 
     if (uuid_string.length() == NIL_UUID.to_string()->length())
       {
-        // This might seem quite strange this being in ACE, but it seems to
-        // be a bit difficult to write a facade for ::sscanf because some
-        // compilers dont support vsscanf, including MSVC. It appears that
-        // most platforms support sscanf though so we need to use it
-        // directly.
-        int nScanned = ::sscanf(uuid_string.c_str(),
-                              "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x",
-                              &timeLow,
-                              &timeMid,
-                              &timeHiAndVersion,
-                              &clockSeqHiAndReserved,
-                              &clockSeqLow,
-                              &node[0],
-                              &node[1],
-                              &node[2],
-                              &node[3],
-                              &node[4],
-                              &node[5]
-                              );
-      if (nScanned != 11)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "UUID::UUID - "
-                      "IllegalArgument(invalid string representation)"));
-          return;
-        }
-    }
-  else
-    {
-      int nScanned = ::sscanf(uuid_string.c_str(),
-                              "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x-%s",
-                              &timeLow,
-                              &timeMid,
-                              &timeHiAndVersion,
-                              &clockSeqHiAndReserved,
-                              &clockSeqLow,
-                              &node[0],
-                              &node[1],
-                              &node[2],
-                              &node[3],
-                              &node[4],
-                              &node[5],
-                              thr_pid_buf
-                              );
-      if (nScanned != 12)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "ACE_UUID::ACE_UUID - "
-                      "IllegalArgument(invalid string representation)"));
-          return;
-        }
-    }
+        // This might seem quite strange this being in ACE, but it
+        // seems to be a bit difficult to write a facade for ::sscanf
+        // because some compilers dont support vsscanf, including
+        // MSVC. It appears that most platforms support sscanf though
+        // so we need to use it directly.
+        const int nScanned =
+          ::sscanf(uuid_string.c_str(),
+                   "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x",
+                   &timeLow,
+                   &timeMid,
+                   &timeHiAndVersion,
+                   &clockSeqHiAndReserved,
+                   &clockSeqLow,
+                   &node[0],
+                   &node[1],
+                   &node[2],
+                   &node[3],
+                   &node[4],
+                   &node[5]
+                   );
+
+        if (nScanned != 11)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "UUID::UUID - "
+                        "IllegalArgument(invalid string representation)"));
+            return;
+          }
+      }
+    else
+      {
+        const int nScanned =
+          ::sscanf (uuid_string.c_str(),
+                    "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x-%s",
+                    &timeLow,
+                    &timeMid,
+                    &timeHiAndVersion,
+                    &clockSeqHiAndReserved,
+                    &clockSeqLow,
+                    &node[0],
+                    &node[1],
+                    &node[2],
+                    &node[3],
+                    &node[4],
+                    &node[5],
+                    thr_pid_buf
+                    );
+
+        if (nScanned != 12)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "ACE_UUID::ACE_UUID - "
+                        "IllegalArgument(invalid string representation)"));
+            return;
+          }
+      }
 
     this->timeLow_ = ACE_static_cast (ACE_UINT32, timeLow);
     this->timeMid_ = ACE_static_cast (ACE_UINT16, timeMid);
@@ -227,54 +239,55 @@ namespace ACE_Utils
         char *buf;
 
         if ((thr_id_.length () != 0) && (pid_.length () != 0))
-        {
-          UUID_STRING_LENGTH += 2; //for '-'
-          ACE_NEW_RETURN (buf,
-                          char[UUID_STRING_LENGTH + 1],
-                          0);
-
-          ACE_OS::sprintf(buf,
-                          "%8.8x-%4.4x-%4.4x-%2.2x%2.2x-%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x-%s-%s",
-                          this->timeLow_,
-                          this->timeMid_,
-                          this->timeHiAndVersion_,
-                          this->clockSeqHiAndReserved_,
-                          this->clockSeqLow_,
-                          (this->node_->nodeID ()) [0],
-                          (this->node_->nodeID ()) [1],
-                          (this->node_->nodeID ()) [2],
-                          (this->node_->nodeID ()) [3],
-                          (this->node_->nodeID ()) [4],
-                          (this->node_->nodeID ()) [5],
-                          thr_id_.c_str (),
-                          pid_.c_str ()
-                          );
-        }
-        else
           {
+            UUID_STRING_LENGTH += 2; //for '-'
             ACE_NEW_RETURN (buf,
                             char[UUID_STRING_LENGTH + 1],
                             0);
 
             ACE_OS::sprintf(buf,
-                            "%8.8x-%4.4x-%4.4x-%2.2x%2.2x-%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x",
+                            "%8.8x-%4.4x-%4.4x-%2.2x%2.2x-%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x-%s-%s",
                             this->timeLow_,
                             this->timeMid_,
                             this->timeHiAndVersion_,
                             this->clockSeqHiAndReserved_,
                             this->clockSeqLow_,
                             (this->node_->nodeID ()) [0],
-                          (this->node_->nodeID ()) [1],
+                            (this->node_->nodeID ()) [1],
                             (this->node_->nodeID ()) [2],
                             (this->node_->nodeID ()) [3],
                             (this->node_->nodeID ()) [4],
-                            (this->node_->nodeID ()) [5]
+                            (this->node_->nodeID ()) [5],
+                            thr_id_.c_str (),
+                            pid_.c_str ()
                             );
           }
+        else
+          {
+            ACE_NEW_RETURN (buf,
+                            char[UUID_STRING_LENGTH + 1],
+                            0);
+
+            ACE_OS::sprintf (buf,
+                             "%8.8x-%4.4x-%4.4x-%2.2x%2.2x-%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x",
+                             this->timeLow_,
+                             this->timeMid_,
+                             this->timeHiAndVersion_,
+                             this->clockSeqHiAndReserved_,
+                             this->clockSeqLow_,
+                             (this->node_->nodeID ()) [0],
+                             (this->node_->nodeID ()) [1],
+                             (this->node_->nodeID ()) [2],
+                             (this->node_->nodeID ()) [3],
+                             (this->node_->nodeID ()) [4],
+                             (this->node_->nodeID ()) [5]
+                             );
+          }
+
         ACE_NEW_RETURN (this->as_string_,
                         ACE_CString (buf, UUID_STRING_LENGTH),
                         0);
-        delete buf;
+        delete [] buf;
       }
 
     return as_string_;
@@ -284,7 +297,7 @@ namespace ACE_Utils
     : timeLast_ (0)
   {
     ACE_NEW (lock_,
-           ACE_SYNCH_MUTEX);
+             ACE_SYNCH_MUTEX);
     destroy_lock_ = 1;
   }
 
@@ -304,14 +317,14 @@ namespace ACE_Utils
     UUID_node::NodeID nodeID;
     if (result != -1)
       {
-        ACE_DEBUG ((LM_DEBUG,
-                    "%02X-%02X-%02X-%02X-%02X-%02X\n",
-                    macaddress.node [0],
-                    macaddress.node [1],
-                    macaddress.node [2],
-                    macaddress.node [3],
-                    macaddress.node [4],
-                    macaddress.node [5]));
+//         ACE_DEBUG ((LM_DEBUG,
+//                     "%02X-%02X-%02X-%02X-%02X-%02X\n",
+//                     macaddress.node [0],
+//                     macaddress.node [1],
+//                     macaddress.node [2],
+//                     macaddress.node [3],
+//                     macaddress.node [4],
+//                     macaddress.node [5]));
 
         ACE_OS::memcpy (&nodeID,
                         macaddress.node,
@@ -466,7 +479,7 @@ namespace ACE_Utils
     return prev_lock;
   }
 
-};
+}
 
 
 
@@ -474,4 +487,7 @@ namespace ACE_Utils
 template class ACE_Singleton <ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton <ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX>
+#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux))
+template ACE_Singleton<ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX> *
+  ACE_Singleton<ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -22,12 +22,14 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/Synch.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/Synch_Traits.h"
 #include "ace/Task.h"
 #include "ace/Pipe.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
+#include "ace/Thread_Semaphore.h"
 
 ACE_RCSID(tests, Reactor_Notify_Test, "$Id$")
 
@@ -99,7 +101,7 @@ Supplier_Task::release (void)
 
 Supplier_Task::Supplier_Task (int disable_notify_pipe,
                               const ACE_Time_Value &tv)
-  : waiter_ (0), // Make semaphore "locked" by default.
+  : waiter_ ((unsigned int) 0), // Make semaphore "locked" by default.
     disable_notify_pipe_ (disable_notify_pipe),
     long_timeout_ (tv.sec () == LONG_TIMEOUT)
 {

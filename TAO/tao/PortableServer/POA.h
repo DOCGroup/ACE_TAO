@@ -51,7 +51,10 @@
 #include "ace/Array_Base.h"
 
 // Locking
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
 
 // OctetSeq
 #include "tao/OctetSeqC.h"
@@ -138,7 +141,7 @@ namespace PortableInterceptor
 {
   class IORInfo;
   typedef IORInfo *IORInfo_ptr;
-};
+}
 
 /**
  * @class TAO_POA
@@ -799,6 +802,12 @@ protected:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::ObjectNotActive,
                      PortableServer::POA::WrongAdapter,
+                     PortableServer::POA::WrongPolicy));
+
+  CORBA::Object_ptr servant_to_reference_i (PortableServer::Servant p_servant
+                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POA::ServantNotActive,
                      PortableServer::POA::WrongPolicy));
 
   PortableServer::Servant id_to_servant_i (const PortableServer::ObjectId &oid

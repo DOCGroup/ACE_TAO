@@ -11,31 +11,46 @@
 
 #ifndef PUSHCONSUMERIMPL_H
 #define PUSHCONSUMERIMPL_H
-
+#include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
+#include <vector>
+
+struct Options;
 
 class PushConsumer_impl :
-public virtual POA_RtecEventComm::PushConsumer
+  public virtual POA_RtecEventComm::PushConsumer
 {
 public:
-  PushConsumer_impl(CORBA::ORB_ptr orb);
+  PushConsumer_impl();
 
-    virtual void push (
-        const RtecEventComm::EventSet & data
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+  int init(CORBA::ORB_ptr orb,
+    RtecEventChannelAdmin::EventChannel_ptr,
+    const Options& options ACE_ENV_ARG_DECL);
 
-    virtual void disconnect_push_consumer (
-        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      ));
+  virtual void push (
+    const RtecEventComm::EventSet & data
+    ACE_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((
+    CORBA::SystemException
+    ));
+
+  virtual void disconnect_push_consumer (
+    ACE_ENV_SINGLE_ARG_DECL
+    )
+    ACE_THROW_SPEC ((
+    CORBA::SystemException
+    ));
+
 private:
+  void output_result();
   CORBA::ORB_var orb_;
+  int num_iterations_;
+  int num_events_to_end_;
+  int num_events_recevied_;
+  RtecEventChannelAdmin::ProxyPushSupplier_var supplier_;
+  std::vector<int> run_times_;
+
   PushConsumer_impl(const PushConsumer_impl&);
   void operator==(const PushConsumer_impl&);
 };

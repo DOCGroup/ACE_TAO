@@ -21,13 +21,14 @@
 #  debug            Enable debugging; see DCFLAGS and DCCFLAGS.
 #  exceptions       Enable exception handling (not supported by all platforms).
 #  include_env      Enable usage of CORBA::Environment parameters that is
-#                     compatible with TAO versions before 1.2.2.  Default:
-#                     disabled.  Has no effect when building with exceptions=0
+#                   compatible with TAO versions before 1.2.2.  Default:
+#                   disabled.  Has no effect when building with exceptions=0
 #  minimum_corba    Enable minimumCORBA support.  (Documented here, but
-#                     implemented in TAO/rules.TAO.GNU.)
+#                   implemented in TAO/rules.TAO.GNU.)
 #  fast             Enable -fast option, e.g., with Sun C++.
 #  inline           Enable ACE inlining.  Some platforms enable inlining by
-#                     default, others do not.
+#                   default, others do not. If platform_macros.GNU does not
+#                   set this, inline is enabled.
 #  templates	    Type of template instantiation to perform. Can be one of
 # 		    automatic, used, explicit. Defaults to automatic if the
 #                   platform/compiler combination supports it, otherwise is
@@ -38,14 +39,16 @@
 #  purify           Purify all executables.  purify must be in user's PATH!
 #  quantify         Quantify all executables.  quantify must be in user's PATH!
 #  repo             Use GNU template repository (g++ with repo patches and
-#                     egcs only).
+#                   egcs only).
 #  rtti             Enable run-time type identification.  On some platforms,
-#                     it is enabled by default, so this is ignored.
+#                   it is enabled by default, so this is ignored.
 #  shared_libs      Build shared libraries. Ignored if static_libs_only is set.
 #  static_libs      Build static libraries. Ignored if shared_libs_only is set.
 #  shared_libs_only Only build shared libraries.  Ignored if no SHLIBs are
-#                     specified by the Makefile, as in performance-tests/Misc.
+#                   specified by the Makefile, as in performance-tests/Misc.
 #  static_libs_only Only build static libraries.
+#  static_link      Link only static libs to executables, e.g., uses "-static"
+#                   flag with the GNU ld linker.
 #  threads          Build with thread support.
 #  xt_reactor       Build the XtReactor.
 #  fl_reactor       Build the FlReactor.
@@ -54,19 +57,27 @@
 #  gtk_reactor      Build the GtkReactor.
 #  ssl              Build with OpenSSL support.
 #  rapi             Build with RAPI
-#  split            Build the library by first splitting up the ACE source to several
-#                   files, with one object code entity for each source file. This allows
-#                   an application that is linked with ACE to extract _exactly_ what it
-#                   needs from the library, resulting in a smaller executable.
+#  rwho             Build with rwho, this results in building apps/drwho
+#  pipes            Build with pipe support, resulting in adding -pipe to the
+#                   compiler options.
+#  split            Build the library by first splitting up the ACE source
+#                   to several files, with one object code entity for each
+#                   source file. This allows an application that is linked
+#                   with ACE to extract _exactly_ what it needs from the
+#                   library, resulting in a smaller executable.
 #                   Setting this to 1 overrides debug to 0.
 #  sctp             Build support for TAO SCIOP and for ACE SCTP
 #                   wrapper-facades. The sctp macro should be set to a string
-#                   value representing a particular SCTP implementation. 
+#                   value representing a particular SCTP implementation.
 #                   Recognized values include: openss7
 #
-#  versioned_so     Add versioning to libraries.  Defaults to 1 (true), and
-#                   can be turned off by passing versioned_so=0 to make.  Note
-#                   that setting it in platform_macros.GNU has no effect.
+#  versioned_so     Add versioning to libraries.  Defaults to 1 (true). If 0,
+#                   no version number is appended to shared library names.
+#                   If versioned_so is 1 (enabled), the SOVERSION make
+#                   variable can also be set to specify the version info
+#                   to append to the name - it should have a leading '.' -
+#                   else it defaults to .ACE_MAJOR.ACE_MINOR.ACE_BETA.
+#  wfmo             Build with wfmo support (Win32 only)
 #
 #  Usually, users do not need to be concerned with make targets.
 #  Just enter "make" on the command line to build.  A few notable
@@ -83,19 +94,19 @@
 #
 #  Variable     Description
 #  --------     -----------
-#  ACE_HAS_GNUG_PRE_2_8 CXX includes "g++", and the g++ version is
-#                       prior to 2.8.0.  This is automatically determined
-#                       below, but can be overridden in the user's
-#                       platform_macros.GNU or environment.  Three values
-#                       are supported:
-#                         1 for g++ < 2.8.0,
-#                         0 for g++ >= 2.8.0 or egcs,
-#                         undefined for non-g++ compilers.
+#  ACE_HAS_GNUG_PRE_2_8 CXX
+#               includes "g++", and the g++ version is prior to 2.8.0.  This is
+#               automatically determined below, but can be overridden in the
+#               user's platform_macros.GNU or environment.  Three values are
+#               supported: 1 for g++ < 2.8.0, 0 for g++ >= 2.8.0 or egcs,
+#               undefined for non-g++ compilers.
 #  ARFLAGS      Flags for the archive utility (ar)
 #  CC           C compiler command
 #  CXX          C++ compiler command
+#  RC           Resource compiler command
 #  COMPILE.c    Flags for compiling with C
 #  COMPILE.cc   Flags for compiling with C++
+#  COMPILE.rc   Flags for compiling with the resource compiler
 #  CPPFLAGS     C pre-processor flags
 #  CFLAGS       C compilation flags
 #  CCFLAGS      C++ compilation flags
@@ -105,8 +116,9 @@
 #  DLD          Name of dynamic linker
 #  LD           Name of linker
 #  IDL          Name of the CORBA IDL compiler
-#  TEMPLATES_FLAG Flag to pass to the compiler to control the instantiation of
-# 		  templates.
+#  TEMPLATES_FLAG
+#               Flag to pass to the compiler to control the instantiation of
+# 		templates.
 #  INSBIN       Binary (executable) installation directory
 #  INSINC       Include file installation directory
 #  INSMAN       Manpage installation directory
@@ -119,18 +131,30 @@
 #  OCCFLAGS     Optimizing C++ compilation flags
 #  PCFLAGS      C compilation flags for profiling
 #  PCCFLAGS     C++ compilation flags for profiling
-#  PLATFORM_XT_CPPFLAGS   Platform CPP options for X11 (some require -I...)
-#  PLATFORM_XT_LDFLAGS    Platform LD options for X11 (some require -L...)
-#  PLATFORM_XT_LIBS       Platform libraries require with X11
-#  PLATFORM_SSL_CPPFLAGS   Platform CPP options for OpenSSL (may need -I...)
-#  PLATFORM_SSL_LDFLAGS    Platform LD options for OpenSSL (may need -L...)
-#  PLATFORM_SSL_LIBS       Platform libraries required with OpenSSL
-#  PLATFORM_RAPI_CPPFLAGS   Platform CPP options for RAPI
-#  PLATFORM_RAPI_LDFLAGS    Platform LD options for RAPI
-#  PLATFORM_RAPI_LIBS       Platform libraries required with RAPI
-#  PLATFORM_SCTP_CPPFLAGS   Platform CPP options required for SCTP
-#  PLATFORM_SCTP_LDFLAGS    Platform LD options required for SCTP
-#  PLATFORM_SCTP_LIBS       Platform libraries required for SCTP
+#  PLATFORM_XT_CPPFLAGS
+#               Platform CPP options for X11 (some require -I...)
+#  PLATFORM_XT_LDFLAGS
+#               Platform LD options for X11 (some require -L...)
+#  PLATFORM_XT_LIBS
+#               Platform libraries require with X11
+#  PLATFORM_SSL_CPPFLAGS
+#               Platform CPP options for OpenSSL (may need -I...)
+#  PLATFORM_SSL_LDFLAGS
+#               Platform LD options for OpenSSL (may need -L...)
+#  PLATFORM_SSL_LIBS
+#               Platform libraries required with OpenSSL
+#  PLATFORM_RAPI_CPPFLAGS
+#               Platform CPP options for RAPI
+#  PLATFORM_RAPI_LDFLAGS
+#               Platform LD options for RAPI
+#  PLATFORM_RAPI_LIBS
+#               Platform libraries required with RAPI
+#  PLATFORM_SCTP_CPPFLAGS
+#               Platform CPP options required for SCTP
+#  PLATFORM_SCTP_LDFLAGS
+#               Platform LD options required for SCTP
+#  PLATFORM_SCTP_LIBS
+#               Platform libraries required for SCTP
 #  PRELINK      Executable to precede linking, such as quantify
 #  PURELINK     If set, contains purify executable as well as all options
 #  PURE_CACHE_BASE_DIR
@@ -155,51 +179,104 @@
 #      (link to the appropriate platform-specific config file).
 #----------------------------------------------------------------------------
 
+# Set the cleanup targets.  These targets are used by realclean even if
+# the component isn't being built, i.e., the decision to build it was based
+# on components built in another makefile and written a file (that might no
+# longer be available) and accessed by $(ACE_ROOT)/bin/ace_components.
+#
+# If a component should always be built, just use the normal BIN, LIB, or
+# SHLIB variables.  If it's dependent on a component, use the BIN2 or
+# BIN_UNCHECKED variety, then assign that to BIN if the required component
+# is available.
+#
+# If you want to include multiple targets in a single Makefile, you must
+# create your own targets, e.g., server and client.  In this case, assign
+# them to BIN, or BIN_UNCHECKED if they depend on other components, do not
+# include rules.bin.GNU.  That way they will still get cleaned up.
+BIN_UNCHECKED ?=
+CLEANUP_BIN ?=
+ifdef BIN
+  CLEANUP_BIN = $(BIN)
+endif # !BIN
+ifdef BIN2
+  CLEANUP_BIN += $(BIN2)
+endif # !BIN2
+ifneq ($(BIN_UNCHECKED),)
+  CLEANUP_BIN += $(BIN_UNCHECKED)
+endif # !BIN_UNCHECKED
+
+LIB_UNCHECKED ?=
+CLEANUP_LIB ?=
+ifdef LIB
+  CLEANUP_LIB = $(LIB)
+endif # !LIB
+ifdef LIB2
+  CLEANUP_LIB += $(LIB2)
+endif # !LIB2
+ifneq ($(LIB_UNCHECKED),)
+  CLEANUP_LIB = $(LIB_UNCHECKED)
+endif # !LIB_UNCHECKED
+
+SHLIB_UNCHECKED ?=
+CLEANUP_SHLIB ?=
+ifdef SHLIB
+  CLEANUP_SHLIB = $(SHLIB)
+endif # !SHLIB
+ifdef SHLIB2
+  CLEANUP_SHLIB += $(SHLIB2)
+endif # SHLIB2
+ifneq ($(SHLIB_UNCHECKED),)
+  CLEANUP_SHLIB += $(SHLIB_UNCHECKED)
+endif # ! SHLIB_UNCHECKED
+
+SHLIBA_UNCHECKED ?=
+CLEANUP_SHLIBA ?=
+ifdef SHLIBA
+  CLEANUP_SHLIBA = $(SHLIBA)
+endif # SHLIBA
+ifdef SHLIBA2
+  CLEANUP_SHLIBA = $(SHLIBA2)
+endif # SHLIB2A
+ifneq ($(SHLIBA_UNCHECKED),)
+  CLEANUP_SHLIBA = $(SHLIBA_UNCHECKED)
+endif # SHLIBA_UNCHECKED
+
 #### Default to building shared libraries only.  Set it here to give the
 #### platform a chance to override.
-ifeq ($(shared_libs),)
+ifndef shared_libs
   shared_libs = 1
 endif # shared_libs
-ifeq ($(static_libs),)
+ifndef static_libs
   static_libs = 0
 endif # static_libs
-
-#### Defined versioned_so = 1 if your platform requires version number
-#### be appended after so library.
-ifeq ($(versioned_so),)
-  versioned_so = 1
-endif
 
 #### The system has X Windows and we want to include the XtReactor in
 #### the library
 xt_reactor = 0
 
-ifndef PACE_ROOT
-  PACE_ROOT = $(ACE_ROOT)/PACE
-endif # PACE_ROOT
+#### Set up the build ACE version in case the platform_macros.GNU wants it.
+ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+ACE_BETA_VERSION := $(shell awk '/ACE_BETA_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
 
-ifeq ($(versioned_so),1)
-  # Turn on symbol versioning. The scheme that we follow is to allow
-  # applications dependent on libraries, with same version numbers (major,
-  # minor and beta) to run, but applications with dependencies on libraries
-  # with different minor or major or beta versions to fail.
-  #
-  ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
-  ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
-  ACE_BETA_VERSION := $(shell awk '/ACE_BETA_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+PACE_ROOT ?= $(ACE_ROOT)/PACE
 
-  # Version number of the libraries
-  #
-  SOVERSION = .$(ACE_MAJOR_VERSION).$(ACE_MINOR_VERSION).$(ACE_BETA_VERSION)
-
-  # Name that will be written into the dynamic library
-  #
-  SONAME = $(SHLIB).$(ACE_MAJOR_VERSION).$(ACE_MINOR_VERSION).$(ACE_BETA_VERSION)
-endif
+# Define some variables to silence warnings
+SHR_FILTER ?=
 
 # Include this before the below variables to make it possible for
 # platform_macros.GNU to set default values for them.
 include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+
+# Define some variables to silence warnings
+GHS ?=
+CHORUS ?=
+AIX_TEMPLATE_HACK ?=
+
+# $(ACE_PLATFORM_CONFIG) is used in dependency rules and corresponds to the
+# platform dependent config-*.h file included in config.h, and can be set
+# in your platform_*.GNU file or platform_macros.GNU.
+ACE_PLATFORM_CONFIG ?= config.h
 
 ifeq ($(threads),0)
   ifneq ($(findstring -DACE_MT_SAFE=0,$(CPPFLAGS)),-DACE_MT_SAFE=0)
@@ -208,76 +285,57 @@ ifeq ($(threads),0)
 endif # threads
 
 ####
-#### Defaults are exceptions off (0), fast off (0), and rtti off (0)
+#### Defaults are exceptions off (0), fast off (0), rtti off (0), and
+#### versioned_so on (1).
 ####
-ifndef exceptions
-  exceptions = 0
-endif
+exceptions ?= 0
 
-ifndef fast
-  fast = 0
-endif
+fast ?= 0
 
 # @@@ Should this really be the default?  Or should we let the
 # compiler choose?
-ifndef rtti
-  rtti = 0
+rtti ?= 0
+
+ifeq (,$(versioned_so))
+  versioned_so = 1
 endif
+SOVERSION ?=
+SONAME ?=
 
 #----------------------------------------------------------------------------
 #      Platform-independent macro definitions
 #----------------------------------------------------------------------------
 
+INCLDIRS ?=
+DEFFLAGS ?=
+
 CPPFLAGS        += $(DEFFLAGS) $(INCLDIRS)
 
 # Define default extentions for IDL-generated files
-ifeq ($(IDL_CLIENT_HDR_EXT),)
-IDL_CLIENT_HDR_EXT = C.h
-endif
-ifeq ($(IDL_CLIENT_INL_EXT),)
-IDL_CLIENT_INL_EXT = C.i
-endif
-ifeq ($(IDL_CLIENT_SRC_EXT),)
-IDL_CLIENT_SRC_EXT = C.cpp
-endif
-ifeq ($(IDL_SERVER_HDR_EXT),)
-IDL_SERVER_HDR_EXT = S.h
-endif
-ifeq ($(IDL_SERVER_INL_EXT),)
-IDL_SERVER_INL_EXT = S.i
-endif
-ifeq ($(IDL_SERVER_SRC_EXT),)
-IDL_SERVER_SRC_EXT = S.cpp
-endif
-ifeq ($(IDL_SERVER_THDR_EXT),)
-IDL_SERVER_THDR_EXT = S_T.h
-endif
-ifeq ($(IDL_SERVER_TINL_EXT),)
-IDL_SERVER_TINL_EXT = S_T.i
-endif
-ifeq ($(IDL_SERVER_TSRC_EXT),)
-IDL_SERVER_TSRC_EXT = S_T.cpp
-endif
+IDL_CLIENT_HDR_EXT ?= C.h
+IDL_CLIENT_INL_EXT ?= C.i
+IDL_CLIENT_SRC_EXT ?= C.cpp
+IDL_SERVER_HDR_EXT ?= S.h
+IDL_SERVER_INL_EXT ?= S.i
+IDL_SERVER_SRC_EXT ?= S.cpp
+IDL_SERVER_THDR_EXT ?= S_T.h
+IDL_SERVER_TINL_EXT ?= S_T.i
+IDL_SERVER_TSRC_EXT ?= S_T.cpp
 
 ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
   INCLDIRS        += -I$(ACE_ROOT)
 endif
-ifndef INSBIN
-  INSBIN          = $(ACE_ROOT)/bin
-endif
-ifndef INSINC
-  INSINC          = $(ACE_ROOT)/ace
-endif
-ifndef INSLIB
-  INSLIB          = $(ACE_ROOT)/ace
-endif
-ifndef INSMAN
-  INSMAN          = $(ACE_ROOT)/man
-endif
+INSBIN          ?= $(ACE_ROOT)/bin
+INSINC          ?= $(ACE_ROOT)/ace
+INSLIB          ?= $(ACE_ROOT)/ace
+INSMAN          ?= $(ACE_ROOT)/man
+
 ifeq (,$(findstring -L$(ACE_ROOT)/ace,$(LDFLAGS)))
   LDFLAGS         += -L$(ACE_ROOT)/ace -L./
 endif
-LEX             = flex
+LEX             ?= flex
+
+EXEEXT ?=
 
 ifndef COMSPEC
   ifdef ComSpec
@@ -300,20 +358,14 @@ PCCFLAGS        += #### set in platform_macros.GNU file, e.g., -p
 VAR             =
 
 # Let users override the default VDIR directories
-ifndef VDIR
-VDIR            = .obj/
-endif # VDIR
-ifndef VSHDIR
-  VSHDIR        = .shobj/
-endif # VSHDIR
+VDIR          ?= .obj/
+VSHDIR        ?= .shobj/
 
-ifndef ACELIB
-  ACELIB = -lACE
-endif
+ACELIB ?= -lACE
 
 # NOTE: VLDLIBS is defined below, in case it is overridden for static-
 #       or shared-only builds.
-YACC            = bison
+YACC          ?= bison
 
 
 
@@ -330,33 +382,13 @@ ifeq ($(findstring g++,$(CXX)),g++)
   endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # g++
 
-ifndef OBJDIRS
-  OBJDIRS = $(VDIR)
-endif # OBJDIRS
+OBJEXT ?= o
+SOEXT ?= so
+LIBEXT ?= a
 
-ifndef OBJEXT
-  OBJEXT=o
-endif
-
-ifndef SOEXT
-  SOEXT=so
-endif
-
-ifndef LIBEXT
-  LIBEXT=a
-endif
-
-ifndef CC_OUTPUT_FLAG
-  CC_OUTPUT_FLAG = -o
-endif # CC_OUTPUT_FLAG
-
-ifndef SO_OUTPUT_FLAG
-  SO_OUTPUT_FLAG = -o
-endif # SO_OUTPUT_FLAG
-
-ifndef LINK_OUTPUT_FLAG
-  LINK_OUTPUT_FLAG = -o
-endif # LINK_OUTPUT_FLAG
+CC_OUTPUT_FLAG ?= -o
+SO_OUTPUT_FLAG ?= -o
+LINK_OUTPUT_FLAG ?= -o
 
 #----------------------------------------------------------------------------
 #      make flags
@@ -371,6 +403,7 @@ ifneq ($(optimize),)
   CCFLAGS += $(OCCFLAGS)
 endif # optimize
 
+split ?= 0
 ifeq ($(split),0)
   override split =
 endif # split
@@ -411,8 +444,10 @@ ifneq ($(xt_reactor),)
   CPPFLAGS += -DACE_HAS_XT $(PLATFORM_XT_CPPFLAGS)
   LIBS += $(PLATFORM_XT_LIBS)
   LDFLAGS += $(PLATFORM_XT_LDFLAGS)
+  ACE_MAKE_OPTIONS += xt_reactor
 endif # xt_reactor
 
+fl_reactor ?=
 ifeq ($(fl_reactor),0)
   override fl_reactor =
 endif # fl_reactor
@@ -423,8 +458,10 @@ ifneq ($(fl_reactor),)
   CPPFLAGS += -DACE_HAS_FL $(PLATFORM_FL_CPPFLAGS)
   LIBS += $(PLATFORM_FL_LIBS)
   LDFLAGS += $(PLATFORM_FL_LDFLAGS)
+  ACE_MAKE_OPTIONS += rl_reactor
 endif # fl_reactor
 
+tk_reactor ?=
 ifeq ($(tk_reactor),0)
   override tk_reactor =
 endif # tk_reactor
@@ -434,8 +471,10 @@ ifneq ($(tk_reactor),)
   CPPFLAGS += -DACE_HAS_TK $(PLATFORM_TK_CPPFLAGS)
   LIBS += $(PLATFORM_TK_LIBS)
   LDFLAGS += $(PLATFORM_TK_LDFLAGS)
+  ACE_MAKE_OPTIONS += tk_reactor
 endif # tk_reactor
 
+qt_reactor ?=
 ifeq ($(qt_reactor),0)
   override qt_reactor =
 endif # qt_reactor
@@ -445,14 +484,17 @@ ifneq ($(qt_reactor),)
   CPPFLAGS += -DACE_HAS_QT $(PLATFORM_QT_CPPFLAGS)
   LIBS += $(PLATFORM_QT_LIBS)
   LDFLAGS += $(PLATFORM_QT_LDFLAGS)
+  ACE_MAKE_OPTIONS += qt_reactor
 endif # qt_reactor
 
+QTDIR ?=
 ifneq ($(QTDIR),)
   MOC = ${QTDIR}/bin/moc
 else
   MOC = moc
 endif
 
+gtk_reactor ?=
 ifeq ($(gtk_reactor),0)
   override gtk_reactor =
 endif # gtk_reactor
@@ -462,8 +504,10 @@ ifneq ($(gtk_reactor),)
   CPPFLAGS += -DACE_HAS_GTK $(PLATFORM_GTK_CPPFLAGS)
   LIBS += $(PLATFORM_GTK_LIBS)
   LDFLAGS += $(PLATFORM_GTK_LDFLAGS)
+  ACE_MAKE_OPTIONS += gtk_reactor
 endif # gtk_reactor
 
+rapi ?=
 ifeq ($(rapi),0)
      override rapi =
 endif #rapi
@@ -472,15 +516,23 @@ ifneq ($(rapi),)
   CPPFLAGS += -DACE_HAS_RAPI $(PLATFORM_RAPI_CPPFLAGS)
   LIBS += $(PLATFORM_RAPI_LIBS)
   LDFLAGS += $(PLATFORM_RAPI_LDFLAGS)
+  ACE_MAKE_OPTIONS += rapi
 endif # rapi
+
+sctp ?=
+ifeq ($(sctp),0)
+     override sctp =
+endif #rapi
 
 # if any sctp implementation is present then add
 ifneq ($(sctp),)
  CPPFLAGS += -DACE_HAS_SCTP $(PLATFORM_SCTP_CPPFLAGS)
  LDFLAGS  += $(PLATFORM_SCTP_LDFLAGS)
  LIBS     += $(PLATFORM_SCTP_LIBS)
+  ACE_MAKE_OPTIONS += sctp
 endif
 
+ace_with_gl ?=
 ifeq ($(ace_with_gl),0)
   override ace_with_gl =
 endif # ace_with_gl
@@ -490,8 +542,10 @@ ifneq ($(ace_with_gl),)
   CPPFLAGS += $(PLATFORM_GL_CPPFLAGS)
   LIBS += $(PLATFORM_GL_LIBS)
   LDFLAGS += $(PLATFORM_GL_LDFLAGS)
+  ACE_MAKE_OPTIONS += ace_with_gl
 endif # ace_with_gl
 
+ace_with_x11 ?=
 ifeq ($(ace_with_x11),0)
   override ace_with_x11 =
 endif # ace_with_x11
@@ -500,11 +554,15 @@ ifneq ($(ace_with_x11),)
   CPPFLAGS += $(PLATFORM_X11_CPPFLAGS)
   LIBS += $(PLATFORM_X11_LIBS)
   LDFLAGS += $(PLATFORM_X11_LDFLAGS)
+  ACE_MAKE_OPTIONS += ace_with_x11
 endif # ace_with_x11
 
+ssl ?=
 ifeq ($(ssl),0)
   override ssl =
-endif # ssl
+else
+  ACE_MAKE_OPTIONS += ssl
+endif
 
 ifeq ($(exceptions),0)
   ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
@@ -517,6 +575,9 @@ ifeq ($(exceptions),0)
   endif # ! ACE_HAS_GNUG_PRE_2_8
 else  # exceptions
   CPPFLAGS += -DACE_HAS_EXCEPTIONS
+  ifndef include_env
+    include_env ?=
+  endif
   ifeq ($(include_env),1)
     CPPFLAGS += -DACE_ENV_BKWD_COMPAT
   endif
@@ -531,8 +592,10 @@ else  # exceptions
 #    CCFLAGS += -Wno-uninitialized
 #  endif # g++ > 2.8.0
   endif # ! ACE_HAS_GNUG_PRE_2_8
+  ACE_MAKE_OPTIONS += exceptions
 endif # exceptions
 
+profile ?=
 ifeq ($(profile),0)
   override profile =
 endif # profile
@@ -542,6 +605,7 @@ ifneq ($(profile),)
   CCFLAGS += $(PCCFLAGS)
 endif # profile
 
+inline ?= 1
 ifeq ($(inline),0)
   CPPFLAGS += -DACE_NO_INLINE
 else
@@ -557,9 +621,12 @@ ifeq ($(static_libs),0)
   override static_libs =
 endif # static_libs
 
+shared_libs_only ?=
 ifeq ($(shared_libs_only),0)
   override shared_libs_only =
 endif # shared_libs_only
+
+static_libs_only ?=
 ifeq ($(static_libs_only),0)
   override static_libs_only =
 endif # static_libs_only
@@ -577,37 +644,19 @@ ifdef shared_libs
   ifndef static_libs
     override shared_libs_only = 1
   endif
+  ACE_MAKE_OPTIONS += shared_libs
 endif
 
 ifdef static_libs
   ifndef shared_libs
     override static_libs_only = 1
   endif
+  ACE_MAKE_OPTIONS += static_libs
 endif
 
-#### We need to set VBIN here, because it's used in the BUILD
-#### definitions below.
-VBIN = $(BIN:%=%$(VAR))
+ACE_SHLIBS ?=
 
 ifdef shared_libs
-  ifdef static_libs
-    #### Build both shared and static libs.
-    BUILD  = $(VSHLIB) $(SHLIBA) $(VLIB) $(VBIN)
-  else # ! static_libs
-    #### Build shared libs only.
-    ifeq ($(SHLIB),)
-      #### Makefile only specifies static libs, so only build static libs.
-      BUILD         = $(VLIB) $(VBIN)
-    else # ! SHLIB
-      #### Don't build static libs.
-      BUILD         = $(VSHLIB) $(SHLIBA) $(VBIN)
-      LIB           =
-      ifndef VXWORKS
-        VDIR        = $(VSHDIR)
-      endif # ! VXWORKS
-    endif # ! SHLIB
-  endif # ! static_libs
-
   ifdef SHLIBA
     LDLIBS := $(LDLIBS:-l%=-l%shr)
     ACE_SHLIBS := $(ACE_SHLIBS:-l%=-l%shr)
@@ -615,17 +664,13 @@ ifdef shared_libs
 else # ! shared_libs
   ifdef static_libs
     #### Don't build shared libs.
-    BUILD           = $(VLIB) $(VBIN)
     PIC             =
     SHLIB           =
     SOEXT           = o
     VSHDIR          = $(VDIR)
     VLDLIBS         = $(LDLIBS:%.so=%.o)
-  else # ! static_libs
-    #### Don't build any libs.
-    BUILD           = $(VBIN)
-  endif # ! static_libs
-endif # ! shared_libs
+  endif # static_libs
+endif # shared_libs
 
 ifdef kylix
   LDLIBS := $(LDLIBS:-l%=lib%.$(SOEXT))
@@ -636,6 +681,7 @@ endif # kylix
 
 VLDLIBS = $(LDLIBS) $(ACELIB) $(LIBS)
 
+probe ?=
 ifeq ($(probe),0)
   override probe =
 endif # probe
@@ -644,14 +690,15 @@ ifeq ($(probe),1)
     CPPFLAGS += -DACE_COMPILE_TIMEPROBES
 endif # probe
 
+purify ?=
 ifeq ($(purify),0)
   override purify =
 endif # purify
 
+ifdef purify
 PURE_CACHE_BASE_DIR = /tmp/purifycache
 PURE_CACHE_DIR = $(PURE_CACHE_BASE_DIR)-$(LOGNAME)-$(notdir $(CXX) )
 
-ifdef purify
   #### Pick up Purify directory from the users PATH.
   ACE_PURIFY_DIR := \
     $(shell type purify | sed -e 's/.* is //' -e 's%/purify$$%%')
@@ -665,6 +712,7 @@ ifdef purify
   CPPFLAGS += -DACE_HAS_PURIFY -I$(ACE_PURIFY_DIR)
 endif # purify
 
+quantify ?=
 ifeq ($(quantify),0)
   override quantify =
 endif # quantify
@@ -686,6 +734,7 @@ ifdef quantify
   endif # sparc
 endif # quantify
 
+repo ?=
 ifeq ($(repo),0)
   override repo =
 endif # repo
@@ -698,13 +747,56 @@ ifdef repo
 #  ace_lib_prelink := 1
 endif # repo
 
+# If pipes is not set, we default to 0
+pipes ?= 0
+
+# If pipes is set to 1 then add the compiler flag -pipe. This uses pipe instead
+# of intermediate files. This can be disabled by setting pipes to 0 in the
+# platform_macros.GNU file.
+ifeq ($(pipes),1)
+   CFLAGS += -pipe
+endif # pipes
+
+# RMCast is turned on by default
+rmcast ?= 1
+ifeq ($(rmcast),1)
+  ACE_MAKE_OPTIONS += rmcast
+endif
+
+# If not explicitly is set that we don't have rwho, assume we have it.
+rwho ?= 1
+
+# If not explicitly is set that we don't have stlport, assume we 
+# don't have it.
+stlport ?= 0
+ifeq ($(stlport),1)
+  CPPFLAGS += -DACE_HAS_STLPORT $(PLATFORM_STLPORT_CPPFLAGS)
+  LDFLAGS  += $(PLATFORM_STLPORT_LDFLAGS)
+  LIBS     += $(PLATFORM_STLPORT_LIBS)
+endif
+
+
+# If not explicitly is set that we have wfmo, assume we don't have it.
+ifndef wfmo
+  wfmo = 0
+endif
 
 #----------------------------------------------------------------------------
 #      Conditional macro definitions
 #----------------------------------------------------------------------------
 
+PTDIRS ?=
+PRELINK ?=
+POSTLINK ?=
+PURELINK ?=
+TEMPLATES_FLAG ?=
+MVCMD ?=
+
 COMPILE.c       = $(CC) $(CFLAGS) $(CPPFLAGS) -c
 COMPILE.cc      = $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) -c
+RC ?=
+
+COMPILE.rc      = $(RC)
 COMPILE-NO_DASH_G.cc = `echo $(COMPILE.cc) | sed 's/-g //'`
 # 960905 Marius Kjeldahl <marius@funcom.com>
 # Added the line below to be used for compiling executable shared objects

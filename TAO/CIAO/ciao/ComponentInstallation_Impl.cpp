@@ -185,7 +185,8 @@ CIAO::ComponentInstallation_Impl::get_implementation (const char * implUUID
   if (this->installation_->get_string_value (section,
                                              implUUID,
                                              retstr) != 0)
-    ACE_THROW (Components::Deployment::UnknownImplId ());
+    ACE_THROW_RETURN (Components::Deployment::UnknownImplId (),
+                      0);
 
   return CORBA::string_dup (retstr.fast_rep ());
 }

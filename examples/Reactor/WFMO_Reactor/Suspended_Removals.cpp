@@ -18,13 +18,12 @@
 //
 // ============================================================================
 
-#include "ace/OS.h"
+#include "ace/OS_main.h"
 
 #if defined (ACE_WIN32)
 
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
-#include "ace/Synch.h"
 
 ACE_RCSID(WFMO_Reactor, Suspended_Removals, "$Id$")
 

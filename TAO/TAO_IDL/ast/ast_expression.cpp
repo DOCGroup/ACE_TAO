@@ -74,6 +74,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 #include "utl_string.h"
 #include "nr_extern.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
 ACE_RCSID (ast,

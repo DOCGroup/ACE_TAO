@@ -10,8 +10,8 @@
 */
 //=============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           amh_ss, 
+ACE_RCSID (be_visitor_interface,
+           amh_ss,
            "$Id$")
 
 be_visitor_amh_interface_ss::be_visitor_amh_interface_ss (
@@ -66,10 +66,10 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
     this->generate_full_skel_name (node);
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
-  *os << non_amh_name.c_str() << "*" << be_nl
+  *os << non_amh_name.c_str () << "*" << be_nl
       << full_skel_name
       << "::_this (ACE_ENV_SINGLE_ARG_DECL)" << be_nl
       << "{" << be_idt_nl
@@ -81,16 +81,41 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
       << be_nl
       << "if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())"
       << be_idt_nl
-      << "ACE_NEW_RETURN (tmp, CORBA::Object (stub, 1, this), 0);"
-      << be_uidt_nl
+      << "{" << be_idt_nl
+      << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+      << "tmp," << be_nl
+      << "CORBA::Object (stub, 1, this)," << be_nl
+      << "0" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
+      << "}" << be_uidt_nl
       << "else"
       << be_idt_nl
-      << "ACE_NEW_RETURN (tmp, CORBA::Object (stub, 0, this), 0);"
-      << be_uidt_nl << be_nl
+      << "{" << be_idt_nl
+      << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+      << "tmp," << be_nl
+      << "CORBA::Object (stub, 0, this)," << be_nl
+      << "0" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
       << "CORBA::Object_var obj = tmp;" << be_nl << be_nl;
 
-  *os << "return " << "::" << non_amh_name.c_str() << "::_unchecked_narrow (obj.in ());"
-      << be_uidt_nl
+  *os << "typedef ::" << node->name () << " STUB_SCOPED_NAME;" << be_nl
+      << "return" << be_idt_nl;
+
+  if (!node->is_abstract ())
+    {
+      *os << "TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (";
+    }
+  else
+    {
+      *os << "TAO::AbstractBase_Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (";
+    }
+  *os << be_idt << be_idt_nl
+      << "obj.in ()," << be_nl
+      << node->flat_client_enclosing_scope ()
+      << node->base_proxy_broker_name ()
+      << "_Factory_function_pointer" << be_uidt_nl
+      << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
 }
@@ -104,7 +129,7 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
     this->generate_full_skel_name (node);
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl 
+  *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   *os << "void" << be_nl
@@ -122,6 +147,14 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
       << ");" << be_uidt << be_uidt_nl
       << "}";
 }
+
+void
+be_visitor_amh_interface_ss::generate_send_reply (TAO_OutStream * os)
+{
+  *os << be_nl << be_nl 
+      << "_tao_server_request.tao_send_reply ();";
+}
+
 
 int
 be_visitor_amh_interface_ss::generate_amh_classes (be_interface *)
@@ -184,6 +217,20 @@ int
 be_visitor_amh_interface_ss::generate_downcast_implementation (be_interface *node,
                                                                TAO_OutStream *os)
 {
+  // Make sure the queues are empty.
+  node->get_insert_queue ().reset ();
+  node->get_del_queue ().reset ();
+
+
+  // Insert ourselves in the queue.
+  if (node->get_insert_queue ().enqueue_tail (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_interface::traverse_inheritance_graph - "
+                         "error generating entries\n"),
+                        -1);
+    }
+
   TAO_IDL_Downcast_Implementation_Worker worker;
   return node->traverse_inheritance_graph (worker, os);
 }
@@ -213,20 +260,37 @@ emit (be_interface *derived,
       be_interface *base)
 {
   if (derived == base)
-    return 0;
+    {
+      return 0;
+    }
 
-  // @@ This whole thing would be more efficient if we could pass the
-  // ACE_CString to compute_full_name, after all it uses that
-  // internally.
-  ACE_CString amh_name ("POA_");
+  *os << "," << be_idt_nl;
 
-  // @@ The following code is *NOT* exception-safe.
-  char *buf = 0;
-  base->compute_full_name ("AMH_", "", buf);
-  amh_name += buf;
-  delete[] buf;
+  if (base->is_nested ())
+    {
+      be_decl *scope;
+      scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
 
-  *os << amh_name.c_str () << " (rhs)," << be_nl;
+      *os << "ACE_NESTED_CLASS (POA_" << scope->name () << ", AMH_"
+          << base->local_name () << ") (rhs)";
+    }
+  else
+    {
+      // @@ This whole thing would be more efficient if we could pass the
+      // ACE_CString to compute_full_name, after all it uses that
+      // internally.
+      ACE_CString amh_name ("POA_");
+
+      // @@ The following code is *NOT* exception-safe.
+      char *buf = 0;
+      base->compute_full_name ("AMH_", "", buf);
+      amh_name += buf;
+      delete[] buf;
+
+      *os << amh_name.c_str () << " (rhs)";
+    }
+
+  *os << be_uidt;
 
   return 0;
 }
@@ -235,6 +299,20 @@ int
 be_visitor_amh_interface_ss::generate_copy_ctor (be_interface *node,
                                                  TAO_OutStream *os)
 {
+  // Make sure the queues are empty.
+  node->get_insert_queue ().reset ();
+  node->get_del_queue ().reset ();
+
+
+  // Insert ourselves in the queue.
+  if (node->get_insert_queue ().enqueue_tail (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_interface::traverse_inheritance_graph - "
+                         "error generating entries\n"),
+                        -1);
+    }
+
   TAO_IDL_Copy_Ctor_Worker worker;
   return node->traverse_inheritance_graph (worker, os);
 }

@@ -1,9 +1,13 @@
 #include "LB_CPU_Monitor.h"
 
+#include "tao/ORB_Constants.h"
+#include "ace/OS_NS_time.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/os_include/os_netdb.h"
+
 #if defined (ACE_HAS_SYS_LOADAVG_H)
 # include <sys/loadavg.h>
 #endif /* ACE_HAS_SYS_LOADAVG_H */
-
 
 ACE_RCSID (LoadBalancing,
            LB_CPU_Monitor,
@@ -42,10 +46,9 @@ TAO_LB_CPU_Monitor::TAO_LB_CPU_Monitor (const char * location_id,
   else
     {
       this->location_[0].id = CORBA::string_dup (location_id);
-      this->location_[0].kind =
-        (location_kind == 0
-         ? CORBA::string_dup ("User Specified")
-         : CORBA::string_dup (location_kind));
+
+      if (location_kind != 0)
+        this->location_[0].kind = CORBA::string_dup (location_kind);
     }
 }
 
@@ -130,11 +133,7 @@ TAO_LB_CPU_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
 
 # else
 
-#   if defined (ACE_HAS_SYS_LOADAVG_H)
   const int samples = ::getloadavg (loadavg, 1);
-#   else
-  const int samples = 0;
-#   endif /* ACE_HAS_SYS_LOADAVG_H */
 
 # endif  /* linux
             && ((__GLIBC__ == 2 && __GLIBC_MINOR__ < 2)

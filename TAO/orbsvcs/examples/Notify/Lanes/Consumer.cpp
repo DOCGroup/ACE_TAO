@@ -2,7 +2,10 @@
 
 #include "Consumer.h"
 
-ACE_RCSID (Notify, TAO_Notify_Lanes_Consumer, "$Id$")
+ACE_RCSID (Notify,
+           TAO_Notify_Lanes_Consumer,
+           "$Id$")
+
 
 TAO_Notify_Lanes_Consumer::TAO_Notify_Lanes_Consumer (TAO_Notify_ORB_Objects& orb_objects)
   : orb_objects_ (orb_objects)

@@ -11,6 +11,7 @@
 
 #ifndef TAO_Notify_PROPERTYSEQ_H
 #define TAO_Notify_PROPERTYSEQ_H
+
 #include /**/ "ace/pre.h"
 
 #include "notify_export.h"
@@ -20,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosNotificationC.h"
+
 #include "ace/Hash_Map_Manager.h"
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"
@@ -60,4 +62,5 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_Notify_PROPERTYSEQ_H */

@@ -1,2 +1,5 @@
-project : taoserver, orbsvcsexe, naming {
+// -*- MPC -*-
+// $Id$
+
+project : orbsvcsexe, naming {
 }

@@ -33,13 +33,15 @@ ACE_RCSID (tests,
 #include "ace/SOCK_Stream.h"
 #include "ace/Object_Manager.h"
 #include "ace/Get_Opt.h"
-#include "ace/streams.h"
 
 #include "ace/Proactor.h"
 #include "ace/Asynch_Acceptor.h"
 #include "ace/Asynch_Connector.h"
 #include "ace/Task.h"
 #include "ace/Thread_Semaphore.h"
+#include "ace/OS_NS_signal.h"
+#include "ace/OS_NS_errno.h"
+#include "ace/os_include/netinet/os_tcp.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
@@ -154,7 +156,10 @@ disable_signal (int sigmin, int sigmax)
 class MyTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  MyTask (void): lock_ (), sem_ (0), proactor_(0) {}
+  MyTask (void):
+    lock_ (),
+    sem_ ((unsigned int) 0),
+    proactor_(0) {}
 
   virtual ~MyTask()
     {

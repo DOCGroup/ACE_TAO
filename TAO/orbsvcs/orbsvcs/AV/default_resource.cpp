@@ -4,6 +4,7 @@
 
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
+#include "ace/OS_NS_strings.h"
 
 TAO_AV_Default_Resource_Factory::TAO_AV_Default_Resource_Factory (void)
 {

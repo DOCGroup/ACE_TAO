@@ -13,6 +13,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_AS_STATIC_LIBS)
+# if !defined (JAWS_HAS_DLL)
+#   define JAWS_HAS_DLL 0
+# endif /* ! ACE_HAS_DLL */
+#else
+# if !defined (JAWS_HAS_DLL)
+#   define JAWS_HAS_DLL 1
+# endif /* ! ACE_HAS_DLL */
+#endif /* ACE_AS_STATIC_LIB */
+
 #if defined (JAWS_HAS_DLL)
 #  if (JAWS_HAS_DLL == 1)
 #    if defined (JAWS_BUILD_DLL)

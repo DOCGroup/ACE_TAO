@@ -5,6 +5,7 @@
 #include "BS_Client.h"
 #include "ace/Log_Msg.h"
 #include "ace/Null_Mutex.h"
+#include "ace/OS_NS_string.h"
 
 BS_Client::BS_Client (void)
 {

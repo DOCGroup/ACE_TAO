@@ -11,11 +11,11 @@
 
 #ifndef TAO_Notify_ORB_RUN_TASK_H
 #define TAO_Notify_ORB_RUN_TASK_H
+
 #include /**/ "ace/pre.h"
+#include "ace/Task.h"
 
 #include "ORB_Objects.h"
-#include "ace/Task.h"
-#include "tao/corba.h"
 
 /**
  * @class TAO_Notify_ORB_Run_Task

@@ -21,6 +21,7 @@
 #include "ace/SString.h"
 #include "ace/Synch.h"
 #include "ace/Containers.h"
+#include "ace/Null_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

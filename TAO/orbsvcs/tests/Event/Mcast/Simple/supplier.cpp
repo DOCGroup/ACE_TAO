@@ -4,6 +4,7 @@
 #include "orbsvcs/orbsvcs/Event_Utilities.h"
 #include "orbsvcs/orbsvcs/RtecEventCommC.h"
 #include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
+#include "ace/Log_Msg.h"
 
 void
 send_events (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer

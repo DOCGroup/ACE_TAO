@@ -17,7 +17,7 @@
 #include "Cubit_i.h"
 #include "RTI_IO.h"
 
-#include "tao/corba.h"
+#include "tao/ORB_Constants.h"
 #include "tao/debug.h"
 #include "tao/Timeprobe.h"
 

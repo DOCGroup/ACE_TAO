@@ -1,22 +1,19 @@
-project(nsadd): namingexe {
-  exename = nsadd
+// -*- MPC -*-
+// $Id$
 
+project(nsadd): namingexe {
   Source_Files {
     nsadd.cpp
   }
 }
 
 project(nsdel): namingexe {
-  exename = nsdel
-
   Source_Files {
     nsdel.cpp
   }
 }
 
 project(nslist): namingexe {
-  exename = nslist
-
   Source_Files {
     nslist.cpp
   }

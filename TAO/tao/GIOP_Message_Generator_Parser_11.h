@@ -12,14 +12,14 @@
 
 #ifndef TAO_GIOP_MESSAGE_GENERATOR_PARSER_11_H
 #define TAO_GIOP_MESSAGE_GENERATOR_PARSER_11_H
-#include /**/ "ace/pre.h"
-#include "tao/GIOP_Message_Generator_Parser_10.h"
 
+#include /**/ "ace/pre.h"
+
+#include "tao/GIOP_Message_Generator_Parser_10.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 /**
  * @class TAO_GIOP_Message_Generator_Parser_11
@@ -40,7 +40,6 @@ public:
   virtual CORBA::Octet minor_version (void);
 
 };
-
 
 #if defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Generator_Parser_11.inl"

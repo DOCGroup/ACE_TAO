@@ -11,6 +11,7 @@
 
 #ifndef TAO_Notify_ANYEVENT_H
 #define TAO_Notify_ANYEVENT_H
+
 #include /**/ "ace/pre.h"
 
 #include "../notify_export.h"
@@ -21,6 +22,7 @@
 
 #include "../Event.h"
 #include "../EventType.h"
+
 #include "orbsvcs/CosNotificationC.h"
 
 class TAO_Notify_Consumer;
@@ -102,4 +104,5 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_Notify_ANYEVENT_H */

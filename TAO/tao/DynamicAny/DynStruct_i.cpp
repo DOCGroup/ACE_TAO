@@ -4,6 +4,7 @@
 #include "DynStruct_i.h"
 #include "DynAnyFactory.h"
 #include "tao/Marshal.h"
+#include "tao/Any_Unknown_IDL_Type.h"
 
 ACE_RCSID (DynamicAny,
            DynStruct_i,
@@ -50,12 +51,12 @@ void
 TAO_DynStruct_i::init (const CORBA::Any& any
                        ACE_ENV_ARG_DECL)
 {
-  CORBA::TypeCode_var tc = any.type ();
-  this->check_typecode (tc.in ()
+  CORBA::TypeCode_ptr tc = any._tao_get_typecode ();
+  this->check_typecode (tc
                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->type_ = tc;
+  this->type_ = CORBA::TypeCode::_duplicate (tc);
 
   this->set_from_any (any
                       ACE_ENV_ARG_PARAMETER);
@@ -71,11 +72,12 @@ TAO_DynStruct_i::set_from_any (const CORBA::Any & any
 {
   // member_type() does not work with aliased type codes.
   CORBA::TypeCode_var unaliased_tc =
-    TAO_DynAnyFactory::strip_alias (any.type ()
+    TAO_DynAnyFactory::strip_alias (any._tao_get_typecode ()
                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::ULong numfields = unaliased_tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong numfields = 
+    unaliased_tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Resize the array.
@@ -85,6 +87,7 @@ TAO_DynStruct_i::set_from_any (const CORBA::Any & any
 
   // Get the CDR stream of the argument.
   ACE_Message_Block *mb = any._tao_get_cdr ();
+  bool type_known = false;
 
   if (mb == 0)
     {
@@ -93,13 +96,19 @@ TAO_DynStruct_i::set_from_any (const CORBA::Any & any
       TAO_OutputCDR out;
       any.impl ()->marshal_value (out);
       ACE_CDR::consolidate (mb, out.begin ());
+      type_known = true;
     }
 
   TAO_InputCDR cdr (mb,
                     any._tao_byte_order ());
 
+  if (type_known)
+    {
+      mb->release ();
+    }
+
   // If we have an exception type, unmarshal the repository ID.
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (any.type ()
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (any._tao_get_typecode ()
                                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -155,7 +164,7 @@ TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc
                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->component_count_ = 
+  this->component_count_ =
     unaliased_tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -173,8 +182,9 @@ TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc
       ACE_CHECK;
 
       // Recursively initialize each member.
-      this->da_members_[i] = TAO_DynAnyFactory::make_dyn_any (mtype.in ()
-                                                              ACE_ENV_ARG_PARAMETER);
+      this->da_members_[i] = 
+        TAO_DynAnyFactory::make_dyn_any (mtype.in ()
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -182,39 +192,15 @@ TAO_DynStruct_i::init (CORBA::TypeCode_ptr tc
 // ****************************************************************
 
 TAO_DynStruct_i *
-TAO_DynStruct_i::_narrow (CORBA::Object_ptr obj
+TAO_DynStruct_i::_narrow (CORBA::Object_ptr _tao_objref
                           ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if (CORBA::is_nil (obj))
+  if (CORBA::is_nil (_tao_objref))
     {
       return 0;
     }
 
-  return ACE_reinterpret_cast (
-             TAO_DynStruct_i*,
-             obj->_tao_QueryInterface (
-                      ACE_reinterpret_cast (
-                          ptrdiff_t,
-                          &TAO_DynStruct_i::_narrow
-                        )
-                    )
-           );
-}
-
-void*
-TAO_DynStruct_i::_tao_QueryInterface (ptrdiff_t type)
-{
-  ptrdiff_t mytype =
-    ACE_reinterpret_cast (ptrdiff_t,
-                          &TAO_DynStruct_i::_narrow);
-  if (type == mytype)
-    {
-      this->_add_ref ();
-      return this;
-    }
-
-  return
-    this->ACE_NESTED_CLASS (DynamicAny, DynStruct::_tao_QueryInterface) (type);
+  return dynamic_cast<TAO_DynStruct_i *> (_tao_objref);
 }
 
 // ****************************************************************
@@ -328,9 +314,9 @@ TAO_DynStruct_i::get_members (ACE_ENV_SINGLE_ARG_DECL)
   DynamicAny::NameValuePairSeq_var safe_retval = members;
   CORBA::Any_var temp;
   CORBA::TypeCode_var unaliased_tc;
-  
+
   if (this->type_->kind_ == CORBA::tk_alias)
-    { 
+    {
       unaliased_tc =
         TAO_DynAnyFactory::strip_alias (this->type_.in ()
                                         ACE_ENV_ARG_PARAMETER);
@@ -524,7 +510,8 @@ TAO_DynStruct_i::set_members_as_dyn_any (
       this->da_members_[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      this->da_members_[i] = values[i].value->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      this->da_members_[i] = 
+        values[i].value->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -548,14 +535,16 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any
     }
 
   CORBA::TypeCode_var tc = any.type ();
-  CORBA::Boolean equivalent = this->type_->equivalent (tc.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
+  CORBA::Boolean equivalent = 
+    this->type_->equivalent (tc.in ()
+                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (equivalent)
     {
       // Get the CDR stream of the argument.
       ACE_Message_Block* mb = any._tao_get_cdr ();
+      bool type_known = false;
 
       if (mb == 0)
         {
@@ -564,14 +553,21 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any
           TAO_OutputCDR out;
           any.impl ()->marshal_value (out);
           ACE_CDR::consolidate (mb, out.begin ());
+          type_known = true;
         }
 
       TAO_InputCDR cdr (mb,
                         any._tao_byte_order ());
 
+      if (type_known)
+        {
+          mb->release ();
+        }
+
       // If we have an exception type, unmarshal the repository ID.
-      CORBA::TCKind kind = TAO_DynAnyFactory::unalias (this->type_.in ()
-                                                       ACE_ENV_ARG_PARAMETER);
+      CORBA::TCKind kind = 
+        TAO_DynAnyFactory::unalias (this->type_.in ()
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (kind == CORBA::tk_except)
@@ -581,7 +577,7 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any
         }
 
       CORBA::TypeCode_var field_tc;
-      CORBA::TypeCode_var unaliased = 
+      CORBA::TypeCode_var unaliased =
         this->type_.in ()->unalias (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
@@ -646,13 +642,17 @@ TAO_DynStruct_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
       out_cdr << this->type_->id ();
     }
 
+  bool type_known = false;
+
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)
     {
-      CORBA::TypeCode_var field_tc = this->da_members_[i]->type (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::TypeCode_var field_tc = 
+        this->da_members_[i]->type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // Recursive step.
-      CORBA::Any_var field_any = this->da_members_[i]->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Any_var field_any = 
+        this->da_members_[i]->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       ACE_Message_Block *field_mb = field_any->_tao_get_cdr ();
@@ -665,10 +665,17 @@ TAO_DynStruct_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
           TAO_OutputCDR out;
           field_any->impl ()->marshal_value (out);
           ACE_CDR::consolidate (field_mb, out.begin ());
+          type_known = true;
         }
 
       TAO_InputCDR field_cdr (field_mb,
                               field_any->_tao_byte_order ());
+
+      if (type_known)
+        {
+          field_mb->release ();
+          type_known = false;
+        }
 
       (void) TAO_Marshal_Object::perform_append (field_tc.in (),
                                                  &field_cdr,

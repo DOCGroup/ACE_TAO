@@ -20,7 +20,9 @@
 //
 // ============================================================================
 
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+
 #include "ace/FILE_Connector.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg_Callback.h"
@@ -516,9 +518,17 @@ test_format_specs (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l1:%l\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l2:%5l\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l3N1:%0*l,%.7N\n"), 4));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%*ISTART INDENTING %{\n"), 4));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%IONE%{\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%ITWO%{\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%ITHREE\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%}%ITWO\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%}%IONE\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%}%IENDINDENTING\n")));
+  errno = ENOENT;
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%m %p\n"), ACE_TEXT("perror")));
   return 0;
 #endif
-
 }
 
 // Main function.

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(Assembly_Manager): ciao_server, acexml, iortable, rtcorba {
 
   libs += CIAO_XML_Helpers

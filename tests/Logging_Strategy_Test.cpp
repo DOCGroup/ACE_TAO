@@ -32,7 +32,10 @@
 //
 //==========================================================================
 
-#include "ace/OS.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_stat.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
@@ -46,6 +49,7 @@
 #include "ace/Auto_Ptr.cpp"
 #include "ace/Get_Opt.h"
 #include "test_config.h"
+#include "ace/OS_NS_time.h"
 
 ACE_RCSID(tests, Logging_Strategy_Test, "$Id$")
 
@@ -450,7 +454,7 @@ int run_main (int argc, ACE_TCHAR *argv [])
   // though, and you may activate the logging strategy as described in
   // the non-DLL section below under DLL environments as well.
 
-#if !defined (ACE_HAS_STATIC_LIBS) && \
+#if !defined (ACE_AS_STATIC_LIBS) && \
   (defined (ACE_WIN32) || defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || \
    defined (__hpux))
 
@@ -463,11 +467,11 @@ int run_main (int argc, ACE_TCHAR *argv [])
 
   for (int i = 1; i < argc; i++)
     {
-      ACE_OS_String::strcat (arg_str, argv[i]);
-      ACE_OS_String::strcat (arg_str, ACE_TEXT (" "));
+      ACE_OS::strcat (arg_str, argv[i]);
+      ACE_OS::strcat (arg_str, ACE_TEXT (" "));
     }
 
-  ACE_OS_String::strcat (arg_str, ACE_TEXT ("\""));
+  ACE_OS::strcat (arg_str, ACE_TEXT ("\""));
 
   if (ACE_Service_Config::process_directive (arg_str) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -487,7 +491,7 @@ int run_main (int argc, ACE_TCHAR *argv [])
        ((LM_ERROR,
          "Error initializing the ACE_Logging_Strategy.\n"),
                        1);
-#endif /* !ACE_HAS_STATIC_LIBS && (ACE_WIN32 ||
+#endif /* !ACE_AS_STATIC_LIBS && (ACE_WIN32 ||
           ACE_HAS_SVR4_DYNAMIC_LINKING || __hpux) */
 
   // launch a new Thread

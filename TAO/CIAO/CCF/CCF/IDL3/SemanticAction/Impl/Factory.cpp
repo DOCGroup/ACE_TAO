@@ -12,8 +12,26 @@ namespace CCF
     {
       namespace Impl
       {
+        Factory::
+        Factory (CompilerElements::Context& context,
+                 Diagnostic::Stream& dout,
+                 SemanticGraph::TranslationUnit& tu)
+            : IDL2::SemanticAction::Impl::Factory (context, dout, tu),
+
+              component_ (ctx_),
+              consumes_ (ctx_),
+              emits_ (ctx_),
+              event_type_ (ctx_),
+              home_ (ctx_),
+              home_factory_ (ctx_),
+              home_finder_ (ctx_),
+              include_ (ctx_, context, dout, *this),
+              provides_ (ctx_),
+              publishes_ (ctx_),
+              uses_ (ctx_)
+        {
+        }
       }
     }
   }
 }
-

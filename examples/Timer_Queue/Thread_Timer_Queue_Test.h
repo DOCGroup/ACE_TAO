@@ -29,6 +29,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Null_Mutex.h"
 #include "ace/Timer_Heap_T.h"
 #include "ace/Timer_Queue_Adapters.h"
 #include "ace/svc_export.h"

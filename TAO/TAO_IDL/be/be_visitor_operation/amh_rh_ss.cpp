@@ -219,7 +219,8 @@ be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
                             -1);
         }
 
-      *os << be_uidt_nl << "))" << be_nl;
+      *os << be_uidt_nl << "))" << be_nl
+          << "{" << be_idt_nl;
 
       // If marshaling fails, raise exception.
       if (this->gen_raise_exception (0,
@@ -231,7 +232,8 @@ be_visitor_amh_rh_operation_ss::marshal_params (be_operation *node)
                             -1);
         }
 
-      *os << be_uidt_nl;
+      *os << be_uidt_nl
+          << "}" << be_uidt_nl;
     }
 
   return 0;

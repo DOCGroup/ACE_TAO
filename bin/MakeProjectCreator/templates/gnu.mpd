@@ -10,16 +10,25 @@
 #
 #----------------------------------------------------------------------------
 <%marker(top)%>
-MAKEFILE        = <%project_file%>
-DEPENDENCY_FILE = .depend.<%project_file%>
+MAKEFILE         = <%project_file%>
+DEPENDENCY_FILE  = .depend.<%project_file%>
 <%if(exename)%>
-BIN_UNCHECKED   = <%exename%>
+BIN_UNCHECKED    = <%exename%>
 <%endif%>
 <%if(staticname)%>
-LIB             = lib<%staticname%>.a
+
+## LIB may be set to empty later on in this file
+LIB_UNCHECKED    = lib<%staticname%>.a
+LIB              = $(LIB_UNCHECKED)
+<%if(!sharedname)%>
+static_libs_only = 1
+<%endif%>
 <%endif%>
 <%if(sharedname)%>
-SHLIB           = lib<%sharedname%>.$(SOEXT)
+
+## SHLIB may be set to empty later on in this file
+SHLIB_UNCHECKED  = lib<%sharedname%>.$(SOEXT)
+SHLIB            = $(SHLIB_UNCHECKED)
 <%endif%>
 <%if(tao)%>
 
@@ -65,6 +74,13 @@ FILES = \
 <%endfor%>
 
 <%endif%>
+<%if(resource_files)%>
+RESOURCES += \
+<%foreach(resource_files)%>
+  <%resource_file%><%fornotlast(" \\")%>
+<%endfor%>
+
+<%endif%>
 <%vpath%>
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -92,12 +108,18 @@ TEMPINCDIR := $(TEMPINCDIR)/<%project_name%>
 
 all: $(TEMPINCDIR)
 
-$(TEMPINCDIR):
-	@-test -d $(TEMPINCDIR) || mkdir -p $(TEMPINCDIR) $(ACE_NUL_STDERR)
-
 endif
-<%if(!exename)%>
+<%if(exename)%>
+OUTPUT_DIRECTORY = <%if(install)%><%install%><%else%>.<%endif%>
+<%else%>
+OUTPUT_DIRECTORY = <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
+<%endif%>
+all: $(OUTPUT_DIRECTORY)
 
+$(OUTPUT_DIRECTORY):
+	-@mkdir -p "$(OUTPUT_DIRECTORY)"
+
+<%if(!exename)%>
 <%if(compname)%>
 CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components <%compname%>)
 <%endif%>
@@ -240,10 +262,14 @@ else
 endif
 <%endfor%>
 
-OBJS   = $(addsuffix .o, <%notdirfiles%>)
+OBJS   = $(addsuffix .o, $(notdir $(FILES)))
 SRC    = $(addsuffix .cpp, $(FILES))
 <%endif%>
-<%if(sharedname)%>
+ifneq (,$(RC))
+  FILES += $(RESOURCES)
+endif
+
+<%if(sharedname || staticname)%>
 LSRC   = $(addsuffix .cpp, $(FILES))
 <%endif%>
 <%if(!comps)%>
@@ -275,10 +301,22 @@ ifeq ($(<%require%>),1)
 <%foreach(avoids)%>
 ifneq ($(<%avoid%>),1)
 <%endfor%>
+<%if(sharedname)%>
+ifneq ($(SHLIB),)
+<%endif%>
+<%if(staticname)%>
+ifneq ($(LIB),)
+<%endif%>
 <%foreach(comps)%>
 ifeq (<%comp%>, $(findstring <%comp%>, $(CURRENT_COMPONENTS)))
 <%endfor%>
   BUILD += <%grouped_source_files->component_name%>
+<%if(staticname)%>
+endif
+<%endif%>
+<%if(sharedname)%>
+endif
+<%endif%>
 <%foreach(comps avoids requires)%>
 endif
 <%endfor%>
@@ -302,7 +340,7 @@ all: idl_stubs
 
 # This rule forces make to run the idl_stubs
 # target before building any of the source files.
-<%source_files%>: idl_stubs
+FORCED_IDL_STUBS = <%source_files%>
 <%if(exename)%>
 endif
 <%else%>
@@ -326,16 +364,22 @@ INSTALL_CHECK = <%install%>
 ifeq ($(INSTALL_CHECK),)
   INSTALL = $(INSTALL_CHECK)
 else
+ifneq ($(INSTALL_CHECK),.)
 <%if(exename)%>
   INSBIN  = $(INSTALL_CHECK)
   INSTALL = $(VBIN:%=$(INSBIN)/%$(EXEEXT))
+  CLEANUP_INSTALL += $(CLEANUP_BIN:%=$(INSBIN)/%$(EXEEXT))
 <%endif%>
+endif
 endif
 <%else%>
 <%if(!exename)%>
 
 INSTALL_CHECK = <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
 ifeq ($(INSTALL_CHECK),.)
+  ifeq ($(PWD),)
+    PWD=$(shell pwd)
+  endif
   INSLIB = $(PWD)
 else
   INSLIB  = $(INSTALL_CHECK)
@@ -343,7 +387,7 @@ endif
 <%endif%>
 
 <%endif%>
-<%if(sharedname)%>
+<%if(sharedname || staticname)%>
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 <%endif%>
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
@@ -356,13 +400,6 @@ CPPFLAGS     +=<%foreach(includes)%> -I<%include%><%endfor%>
 <%endif%>
 <%if(macros)%>
 CPPFLAGS     +=<%foreach(macros)%> -D<%macro%><%endfor%>
-<%endif%>
-<%if(idlpreprocessor)%>
-ifeq ($(TAO_IDL_PREPROCESSOR),)
-  CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\"$(strip $(CXX))\"
-else
-  CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\"$(subst \,\,$(TAO_IDL_PREPROCESSOR))\"
-endif
 <%endif%>
 <%if(dynamicflags)%>
 ifeq ($(shared_libs),1)
@@ -414,10 +451,11 @@ avoid_warning:
 <%if(custom_types)%>
 <%foreach(custom_types)%>
 <%if(custom_types->libpath)%>
-LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):<%custom_type->libpath%>
-SHLIB_PATH      := $(SHLIB_PATH):<%custom_type->libpath%>
-LIBPATH         := $(LIBPATH):<%custom_type->libpath%>
-PATH            := $(PATH):<%custom_type->libpath%>
+DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):<%custom_type->libpath%>
+LD_LIBRARY_PATH   := $(LD_LIBRARY_PATH):<%custom_type->libpath%>
+SHLIB_PATH        := $(SHLIB_PATH):<%custom_type->libpath%>
+LIBPATH           := $(LIBPATH):<%custom_type->libpath%>
+PATH              := $(PATH):<%custom_type->libpath%>
 
 <%endif%>
 <%foreach(custom_type->input_files)%>
@@ -437,23 +475,23 @@ all: $(GENERATED_DIRTY)
 endif
 
 <%endif%>
-<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>:
-	-@mkdir -p "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>"
-
 <%comptarget%>
 <%if(idl_files)%>
 
-ADDITIONAL_IDL_TARGETS =
 <%foreach(idl_files)%>
 <%if(flag_overrides(idl_file, idlgendir))%>
-ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.h
+ADDITIONAL_IDL_TARGETS += <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.h
+FORCED_IDL_STUBS := $(FORCED_IDL_STUBS:<%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.cpp=)
+FORCED_IDL_STUBS := $(FORCED_IDL_STUBS:<%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>S.cpp=)
 GENERATED_DIRTY += $(foreach ext, $(IDL_EXT), <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>$(ext))
 <%comment(The S.cpp was removed to avoid yet another problem with parallelism.  It doesn't seem necessary since you can't get the S.cpp without the C.cpp)%>
 <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.h <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.cpp: <%idl_file%>
 	$(TAO_IDL) -o <%flag_overrides(idl_file, idlgendir)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> <%idl_file%>
 <%else%>
 <%if(idlgendir)%>
-ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%idlgendir%>/<%basenoextension(idl_file)%>C.h
+ADDITIONAL_IDL_TARGETS += <%idlgendir%>/<%basenoextension(idl_file)%>C.h
+FORCED_IDL_STUBS := $(FORCED_IDL_STUBS:<%idlgendir%>/<%basenoextension(idl_file)%>C.cpp=)
+FORCED_IDL_STUBS := $(FORCED_IDL_STUBS:<%idlgendir%>/<%basenoextension(idl_file)%>S.cpp=)
 GENERATED_DIRTY += $(foreach ext, $(IDL_EXT), <%idlgendir%>/<%basenoextension(idl_file)%>$(ext))
 <%comment(The S.cpp was removed to avoid yet another problem with parallelism.  It doesn't seem necessary since you can't get the S.cpp without the C.cpp)%>
 <%idlgendir%>/<%basenoextension(idl_file)%>C.h <%idlgendir%>/<%basenoextension(idl_file)%>C.cpp: <%idl_file%>
@@ -461,12 +499,16 @@ GENERATED_DIRTY += $(foreach ext, $(IDL_EXT), <%idlgendir%>/<%basenoextension(id
 <%else%>
 # IDL File Directory: <%dirname(idl_file)%>
 <%if(dirname_found)%>
-ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%noextension(idl_file)%>C.h
+ADDITIONAL_IDL_TARGETS += <%noextension(idl_file)%>C.h
+FORCED_IDL_STUBS := $(FORCED_IDL_STUBS:<%dirname(idl_file)%>/<%noextension(idl_file)%>C.cpp=)
+FORCED_IDL_STUBS := $(FORCED_IDL_STUBS:<%dirname(idl_file)%>/<%noextension(idl_file)%>S.cpp=)
 <%comment(The S.cpp was removed to avoid yet another problem with parallelism.  It doesn't seem necessary since you can't get the S.cpp without the C.cpp)%>
-<%noextension(idl_file)%>C.h <%noextension(idl_file)%>C.cpp: <%idl_file%>
+<%dirname(idl_file)%>/<%noextension(idl_file)%>C.h <%dirname(idl_file)%>/<%noextension(idl_file)%>C.cpp: <%idl_file%>
 	$(TAO_IDL) -o <%dirname(idl_file)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> <%idl_file%>
 <%else%>
 <%if(flag_overrides(idl_file, idlflags))%>
+FORCED_IDL_STUBS := $(FORCED_IDL_STUBS:<%noextension(idl_file)%>C.cpp=)
+FORCED_IDL_STUBS := $(FORCED_IDL_STUBS:<%noextension(idl_file)%>S.cpp=)
 <%comment(The S.cpp was removed to avoid yet another problem with parallelism.  It doesn't seem necessary since you can't get the S.cpp without the C.cpp)%>
 <%noextension(idl_file)%>C.h <%noextension(idl_file)%>C.cpp: <%idl_file%>
 	$(TAO_IDL) <%flag_overrides(idl_file, idlflags)%> <%idl_file%>
@@ -478,6 +520,10 @@ ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%noextension(idl_file)%>C.h
 
 ifneq ($(ADDITIONAL_IDL_TARGETS),)
 idl_stubs: $(ADDITIONAL_IDL_TARGETS)
+endif
+
+ifneq ($(FORCED_IDL_STUBS),)
+$(FORCED_IDL_STUBS): idl_stubs
 endif
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))

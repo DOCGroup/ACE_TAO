@@ -16,14 +16,12 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
-
+#include "tao/PortableInterceptorC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -35,10 +33,10 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "fault_tol_export.h"
+#include "FT_ServerORB_export.h"
 
 /// Policy factory for all FTCORBA related policies.
-class TAO_FT_Export TAO_FT_ServerPolicyFactory :
+class TAO_FT_ServerORB_Export TAO_FT_ServerPolicyFactory :
   public PortableInterceptor::PolicyFactory,
   public TAO_Local_RefCounted_Object
 {

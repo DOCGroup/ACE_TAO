@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_Dirent.h"
+#include "ace/OS_NS_dirent.h"
 
 /**
  * @class ACE_Dirent

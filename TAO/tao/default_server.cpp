@@ -6,10 +6,11 @@
 # include "tao/default_client.i"
 #endif /* ! __ACE_INLINE__ */
 
+#include "ace/OS_NS_strings.h"
+
 ACE_RCSID (tao,
            default_server,
            "$Id$")
-
 
 TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory (void)
   : activate_server_connections_ (0),

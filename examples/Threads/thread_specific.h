@@ -2,6 +2,9 @@
 
 #ifndef ACE_THREAD_SPECIFIC_H
 
+#include "ace/Guard_T.h"
+#include "ace/Thread_Mutex.h"
+
 // Define a class that will be stored in thread-specific data.  Note
 // that as far as this class is concerned it's just a regular C++
 // class.  The ACE_TSS wrapper transparently ensures that objects of

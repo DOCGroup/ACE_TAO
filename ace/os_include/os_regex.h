@@ -30,6 +30,10 @@
 # include /**/ <regex.h>
 #endif /* !ACE_LACKS_REGEX_H */
 
+#if defined (ACE_HAS_REGEX)
+#  include /**/ <regexpr.h>
+#endif /* ACE_HAS_REGEX */
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"

@@ -18,8 +18,9 @@
 
 #include "TT_Info.h"
 #include "Simple_Dynamic.h"
+#include "ttest_export.h"
 
-class TAO_Offer_Exporter
+class TAO_TTest_Export TAO_Offer_Exporter
 {
 public:
 

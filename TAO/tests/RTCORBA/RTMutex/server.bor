@@ -1,5 +1,7 @@
 #
-# Makefile for building the Server_Protocol server
+# $Id$
+#
+# Makefile for building the RTMutex server
 #
 
 NAME = server

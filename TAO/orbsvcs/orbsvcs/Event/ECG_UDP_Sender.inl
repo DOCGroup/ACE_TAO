@@ -1,4 +1,7 @@
+/* -*- C++ -*- */
 // $Id$
+
+#include "ace/Null_Mutex.h"
 
 ACE_INLINE TAO_EC_Servant_Var<TAO_ECG_UDP_Sender>
 TAO_ECG_UDP_Sender::create (CORBA::Boolean crc)

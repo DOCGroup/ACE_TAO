@@ -17,9 +17,9 @@
 
 #ifndef _CC_LOCKSETFACTORY_H
 #define _CC_LOCKSETFACTORY_H
+
 #include /**/ "ace/pre.h"
 
-// #include "tao/corba.h"
 #include "orbsvcs/CosConcurrencyControlS.h"
 #include "concurrency_export.h"
 
@@ -33,7 +33,8 @@
  * file for detailed descriptions apart from the comments in
  * this file.
  */
-class TAO_Concurrency_Export CC_LockSetFactory : public POA_CosConcurrencyControl::LockSetFactory
+class TAO_Concurrency_Export CC_LockSetFactory 
+  : public POA_CosConcurrencyControl::LockSetFactory
 {
 public:
 
@@ -59,4 +60,5 @@ private:
 };
 
 #include /**/ "ace/post.h"
+
 #endif /* _CC_LOCKSETFACTORY_H */

@@ -1,6 +1,8 @@
 /* $Id$ */
 
 #include "JAWS/Headers.h"
+#include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_string.h"
 
 // Header Data
 

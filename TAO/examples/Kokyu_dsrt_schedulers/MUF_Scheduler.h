@@ -7,6 +7,7 @@
 #include "MUF_SchedulingC.h"
 #include "Kokyu_dsrt.h"
 #include "Kokyu_dsrt_schedulers_export.h"
+#include "tao/LocalObject.h"
 
 struct MUF_Scheduler_Traits
 {

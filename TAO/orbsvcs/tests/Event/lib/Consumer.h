@@ -21,6 +21,7 @@
 
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
+#include "ace/OS_NS_time.h"
 
 /**
  * @class EC_Consumer

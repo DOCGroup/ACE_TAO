@@ -27,7 +27,6 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Auto_Ptr.h"
-#include "ace/Synch.h"
 #include "ace/Atomic_Op.h"
 
 ACE_RCSID(tests, Notify_Performance_Test, "$Id$")

@@ -3,6 +3,7 @@
 
 #include "Condition_i.h"
 #include "ace/Task.h"
+#include "ace/OS_NS_unistd.h"
 
 /* In order to test our Condition we'll derive from ACE_Task<> so that
    we can have several threads accessing the condition variable

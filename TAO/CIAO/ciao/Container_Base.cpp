@@ -2,6 +2,7 @@
 
 #include "Container_Base.h"
 #include "ace/DLL.h"
+#include "ace/OS_NS_stdio.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Container_Base.inl"
@@ -32,7 +33,7 @@ CIAO::Container::_ciao_the_ORB ()
 
 ///////////////////////////////////////////////////////////////
 
-ACE_Atomic_Op <ACE_Thread_Mutex, long>
+ACE_Atomic_Op <ACE_SYNCH_MUTEX, long>
 CIAO::Session_Container::serial_number_ (0);
 
 CIAO::Session_Container::Session_Container (CORBA::ORB_ptr o)
@@ -205,7 +206,7 @@ CIAO::Session_Container::ciao_install_home (const char *exe_dll_name,
 
 void
 CIAO::Session_Container::ciao_uninstall_home (Components::CCMHome_ptr homeref
-                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->uninstall (homeref

@@ -2,7 +2,7 @@
 //
 // $Id$
 //
-
+#if 0
 ACE_INLINE
 TAO_GIOP_DII_Invocation::TAO_GIOP_DII_Invocation (TAO_Stub *data,
                                                   const char *operation,
@@ -46,3 +46,4 @@ TAO_GIOP_DII_Deferred_Invocation::TAO_GIOP_DII_Deferred_Invocation (
            TAO_DII_Deferred_Reply_Dispatcher (req,
                                               orb_core));
 }
+#endif /*if 0*/

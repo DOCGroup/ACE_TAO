@@ -28,6 +28,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/WFMO_Reactor.h"
@@ -36,6 +37,8 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Auto_Event.h"
+#include "ace/OS_NS_signal.h"
+#include "ace/OS_NS_time.h"
 
 ACE_RCSID(tests, MT_Reference_Counted_Event_Handler_Test, "$Id$")
 

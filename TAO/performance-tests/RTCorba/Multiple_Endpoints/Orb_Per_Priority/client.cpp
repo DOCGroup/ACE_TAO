@@ -10,6 +10,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 #include "ace/Barrier.h"
+#include "ace/OS_NS_errno.h"
 
 ACE_RCSID(Latency, client, "$Id$")
 

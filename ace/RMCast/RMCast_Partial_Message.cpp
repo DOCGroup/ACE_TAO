@@ -1,6 +1,7 @@
 // $Id$
 
 #include "RMCast_Partial_Message.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
 #include "RMCast_Partial_Message.i"

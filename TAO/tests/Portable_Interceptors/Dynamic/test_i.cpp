@@ -13,11 +13,13 @@ Visual_i::Visual_i (CORBA::ORB_ptr orb)
   // ctor
 
 void
-Visual_i::normal (CORBA::Long arg
+Visual_i::normal (CORBA::Long arg,
+                  CORBA::String_out msg
                   ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::normal called with %d\n", arg));
+  msg = CORBA::string_dup ("DO_NOT_INSULT_MY_INTELLIGENCE");
 }
 
 CORBA::Long

@@ -29,10 +29,10 @@
 
 #include "ace/Map_Manager.h"
 #include "ace/Message_Block.h"
-#include "ace/Synch.h"
 #include "ace/SString.h"
 #include "SchedEntry.h"
 #include "sched_export.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 class TAO_RTSched_Export ACE_DynScheduler
   // = TITLE

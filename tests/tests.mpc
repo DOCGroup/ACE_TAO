@@ -1,3 +1,6 @@
+//  -*- MPC -*-
+// $Id$
+
 project(Test_Output) : acelib {
   sharedname = Test_Output
   dynamicflags = TEST_OUTPUT_BUILD_DLL
@@ -56,7 +59,7 @@ project(Service Config DLL) : acelib {
   }
 }
 
-project(ACE INIT Test) : acetest {
+project(ACE Init Test) : acetest {
   Source_Files {
     ACE_Init_Test.cpp
   }
@@ -605,6 +608,13 @@ project(Reactor Notify Test) : acetest {
   }
 }
 
+project(Reactor Notification Queue Test) : acetest {
+  exename = Reactor_Notification_Queue_Test
+  Source_Files {
+    Reactor_Notification_Queue_Test.cpp
+  }
+}
+
 project(Reactor Dispatch Order Test) : acetest {
   exename = Reactor_Dispatch_Order_Test
   Source_Files {
@@ -703,6 +713,13 @@ project(SOCK Test) : acetest {
   }
 }
 
+project(SOCK Dgram Test) : acetest {
+  exename = SOCK_Dgram_Test
+    Source_Files {
+      SOCK_Dgram_Test.cpp
+  }
+}
+
 project(SOCK Connector Test) : acetest {
   exename = SOCK_Connector_Test
   Source_Files {
@@ -749,6 +766,13 @@ project(Task Test) : acetest {
   exename = Task_Test
   Source_Files {
     Task_Test.cpp
+  }
+}
+
+project(Task_Ex Test) : acetest {
+  exename = Task_Ex_Test
+  Source_Files {
+    Task_Ex_Test.cpp
   }
 }
 
@@ -819,6 +843,13 @@ project(TSS Test) : acetest {
   exename = TSS_Test
   Source_Files {
     TSS_Test.cpp
+  }
+}
+
+project(TSS Static Test) : acetest {
+  exename = TSS_Static_Test
+  Source_Files {
+    TSS_Static_Test.cpp
   }
 }
 
@@ -1031,9 +1062,58 @@ project(Reactor Registration Test) : acetest {
   }
 }
 
-project(UUID Test) : acetest {
+project(UUIDTest) : acetest {
   exename = UUIDTest
   Source_Files {
     UUIDTest.cpp
+  }
+}
+
+project(INET Addr Test IPV6) : acetest {
+  exename = INET_Addr_Test_IPV6
+  Source_Files {
+  INET_Addr_Test_IPV6.cpp
+  }
+}
+
+project(Max Default Port Test IPV6) : acetest {
+  exename = Max_Default_Port_Test_IPV6
+  Source_Files {
+  Max_Default_Port_Test_IPV6.cpp
+  }
+}
+
+project(Multicast Test IPV6) : acetest {
+  exename = Multicast_Test_IPV6
+  Source_Files {
+  Multicast_Test_IPV6.cpp
+  }
+}
+
+project(Multihomed INET Addr Test IPV6) : acetest {
+  exename =   Multihomed_INET_Addr_Test_IPV6
+  Source_Files {
+  Multihomed_INET_Addr_Test_IPV6.cpp
+  }
+}
+
+project(Proactor Test IPV6) : acetest {
+  exename =  Proactor_Test_IPV6
+  Source_Files {
+   Proactor_Test_IPV6.cpp
+  }
+}
+
+project(SOCK Send Recv Test IPV6) : acetest {
+  exename = SOCK_Send_Recv_Test_IPV6
+  Source_Files {
+  SOCK_Send_Recv_Test_IPV6.cpp
+  }
+}
+
+project(SOCK Test IPv6) : acetest {
+  exename = SOCK_Test_IPv6
+  Source_Files {
+  SOCK_Test_IPv6.cpp
   }
 }

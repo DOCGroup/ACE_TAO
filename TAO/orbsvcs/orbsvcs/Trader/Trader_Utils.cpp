@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Trader_Utils.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(Trader, Trader_Utils, "$Id$")
 

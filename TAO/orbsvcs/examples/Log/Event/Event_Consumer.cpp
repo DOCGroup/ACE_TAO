@@ -1,5 +1,6 @@
 #include "Event_Consumer.h"
 #include "orbsvcs/CosEventChannelAdminS.h"
+#include "ace/OS_main.h"
 
 ACE_RCSID (Event,
            Event_Consumer,

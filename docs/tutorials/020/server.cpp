@@ -4,6 +4,7 @@
 #include "mmap.h"
 
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_unistd.h"
 
 int
 main (int, char *[])

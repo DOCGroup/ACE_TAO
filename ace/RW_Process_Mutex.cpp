@@ -10,6 +10,8 @@ ACE_RCSID(ace, RW_Process_Mutex, "$Id$")
 #include "ace/RW_Process_Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Malloc_T.h"
+
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Process_Mutex)
 
 const ACE_TCHAR *
@@ -53,9 +55,11 @@ ACE_RW_Process_Mutex::dump (void) const
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 // template class ACE_Guard<ACE_RW_Process_Mutex>;
+template class ACE_Malloc_Lock_Adapter_T<ACE_RW_Process_Mutex>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 // #pragma instantiate ACE_Guard<ACE_RW_Process_Mutex>
+#pragma instantiate ACE_Malloc_Lock_Adapter_T<ACE_RW_Process_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

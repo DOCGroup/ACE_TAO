@@ -38,6 +38,7 @@
 
 #include "Cached_Accept_Conn_Test.h"
 
+#include "ace/OS_NS_string.h"
 #include "ace/Get_Opt.h"
 
 #if defined(_MSC_VER)

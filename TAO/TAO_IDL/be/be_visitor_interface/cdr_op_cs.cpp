@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_interface, 
-           cdr_op_cs, 
+ACE_RCSID (be_visitor_interface,
+           cdr_op_cs,
            "$Id$")
 
 be_visitor_interface_cdr_op_cs::be_visitor_interface_cdr_op_cs (
@@ -96,8 +96,6 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << node->full_name () << "_ptr &_tao_objref" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
-  *os << "ACE_TRY_NEW_ENV" << be_nl
-      << "{" << be_idt_nl;
 
   if (node->is_abstract ())
     {
@@ -117,49 +115,30 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
+      << "typedef ::" << node->name () << " RHS_SCOPED_NAME;"
+      << be_nl << be_nl
       << "// Narrow to the right type." << be_nl;
 
-  if (node->is_abstract ())
+  *os << "_tao_objref =" << be_idt_nl;
+
+  if (!node->is_abstract ())
     {
-      *os << "if (obj->_is_objref ())" << be_idt_nl
-          << "{" << be_idt_nl
-          << "_tao_objref =" << be_idt_nl
-          << node->full_name () << "::_unchecked_narrow ("
-          << be_idt << be_idt_nl
-          << "obj.in ()" << be_nl
-          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-          << ");" << be_uidt << be_uidt << be_uidt_nl
-          << "}" << be_uidt_nl
-          << "else" << be_idt_nl
-          << "{" << be_idt_nl
-          << "_tao_objref =" << be_idt_nl
-          << node->full_name () << "::_unchecked_narrow ("
-          << be_idt << be_idt_nl
-          << "obj._retn ()" << be_nl
-          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-          << ");" << be_uidt << be_uidt << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl;
+      *os << "TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (";
     }
   else
     {
-      *os << "_tao_objref =" << be_idt_nl
-          << node->full_name () << "::_unchecked_narrow ("
-          << be_idt << be_idt_nl
-          << "obj.in ()" << be_nl
-          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl;
+      *os << "TAO::AbstractBase_Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (";
     }
 
-  *os << "ACE_TRY_CHECK;" << be_nl;
-  *os << "return 1;" << be_uidt_nl;
-  *os << "}" << be_nl
-      << "ACE_CATCHANY" << be_nl
-      << "{" << be_idt_nl
-      << "// do nothing" << be_uidt_nl
-      << "}" << be_nl
-      << "ACE_ENDTRY;" << be_nl
-      << "return 0;" << be_uidt_nl;
-  *os << "}";
+  *os << be_idt << be_idt_nl
+      << "obj.in ()," << be_nl
+      << node->flat_client_enclosing_scope ()
+      << node->base_proxy_broker_name ()
+      << "_Factory_function_pointer" << be_uidt_nl
+      << ");" << be_uidt_nl << be_uidt_nl;
+
+  *os << "return 1;" << be_uidt_nl
+      << "}";
 
   node->cli_stub_cdr_op_gen (1);
   return 0;

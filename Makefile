@@ -29,6 +29,7 @@ CLONE   = Makefile \
           ace \
           apps \
           bin \
+          lib \
           etc \
           examples \
           include \
@@ -73,15 +74,44 @@ CORE_DIRS= \
 	TAO/orbsvcs/orbsvcs \
 	TAO/orbsvcs/Naming_Service
 
-.PHONY: Core reverseclean
+CIAO_CORE_DIRS= \
+        ace \
+        apps/gperf/src \
+	ACEXML \
+	Kokyu \
+        TAO/tao \
+        TAO/TAO_IDL \
+        TAO/orbsvcs/orbsvcs \
+        TAO/orbsvcs/Naming_Service \
+        TAO/CIAO/ciao \
+        TAO/CIAO/tools
+
+CIAO_MPC_DIRS= \
+	TAO/CIAO/ciao \
+	TAO/CIAO/tools
+
+.PHONY: CIAO_Core MPC_Make Core reverseclean
 Core:
 	@for dir in $(CORE_DIRS); \
 	do \
 		$(MAKE) -C $$dir; \
 	done
 
+CIAO_Core: MPC_Make
+	@for dir in $(CIAO_CORE_DIRS); \
+	do \
+		$(MAKE) -C $$dir; \
+	done
+
+MPC_Make:
+	@for dir in $(CIAO_MPC_DIRS); \
+	do \
+		cd $(ACE_ROOT)/$$dir && $(ACE_ROOT)/bin/mwc.pl; \
+	done
+	cd $(ACE_ROOT)
+
 reverseclean:
-	@$(ACE_ROOT)/bin/reverse_clean $(DIRS)
+	@$(ACE_ROOT)/bin/reverse_clean $(MAKE) $(DIRS)
 
 #### NOTE:  The following comments describe how to create kits.
 ####        It's intended for use by ACE+TAO developers and
@@ -123,6 +153,7 @@ reverseclean:
 #### make release ACE_TAG='-ta ACE-5_0_1' APPLY_NEW_TAG= \
 ####   INSTALL_KIT= ZIP_FILES=-z
 
+
 CONTROLLED_FILES = \
         ACE-INSTALL.html \
         ACE-install.sh \
@@ -145,6 +176,8 @@ CONTROLLED_FILES = \
         aceConf.sh.in \
         apps \
         bin \
+	configure.ac \
+        lib \
         docs \
         etc \
         examples \
@@ -162,14 +195,22 @@ RELEASE_FILES = \
         ACE_wrappers/ACE-INSTALL \
         ACE_wrappers/man
 
+AUTOCONF_RELEASE_FILES = \
+	$(RELEASE_FILES) \
+	ACE_wrappers/Makefile.in \
+	ACE_wrappers/configure \
+	ACE_wrappers/aclocal.m4 \
+	ACE_wrappers/aux_config
+
 ALL_RELEASE_FILES = \
-        $(RELEASE_FILES) \
+	$(RELEASE_FILES) \
         ACE_wrappers/TAO
 
 RELEASE_LIB_FILES = \
         ACE_wrappers/VERSION \
         ACE_wrappers/ace \
         ACE_wrappers/bin \
+        ACE_wrappers/lib \
         ACE_wrappers/etc \
         ACE_wrappers/include \
         ACE_wrappers/m4 \
@@ -241,6 +282,9 @@ show_controlled_files:
 
 show_release_files:
 	@echo $(RELEASE_FILES)
+
+show_autoconf_release_files:
+	@echo $(AUTOCONF_RELEASE_FILES)
 
 show_release_lib_files:
 	@echo $(RELEASE_LIB_FILES)

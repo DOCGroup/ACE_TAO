@@ -1,3 +1,5 @@
+# -*- Makefile -*-
+
 #----------------------------------------------------------------------------
 #
 #       $Id$
@@ -19,12 +21,12 @@ endif
 
 TAO_IDL_DEP = $(TAO_IDL)$(EXEEXT)
 
-ifndef COMSPEC
-  ifdef ComSpec
-    #### ACE+TAO use COMSPEC, but ComSpec is defined.
-    COMSPEC = $(ComSpec)
-  endif # ComSpec
-endif # ! COMPSPEC
+ifeq (,$(findstring -L$(TAO_ROOT)/tao,$(LDFLAGS)))
+  LDFLAGS += -L$(TAO_ROOT)/tao
+endif
+ifeq (,$(findstring -I$(TAO_ROOT),$(INCLDIRS)))
+  INCLDIRS += -I$(TAO_ROOT)
+endif
 
 ifdef COMSPEC
   #### Assume we're on a WIN32 host.
@@ -49,25 +51,22 @@ RT_TAO_SRVR_LIBS=-lTAO_RTPortableServer -lTAO_PortableServer -lTAO_IORIntercepto
 TAO_CLNT_LIBS= $(TAO_BASE_LIBS)
 TAO_CLNT_VT_LIBS=-lTAO_Valuetype $(TAO_CLNT_LIBS)
 RT_TAO_CLNT_LIBS= $(RT_TAO_BASE_LIBS)
-TAO_DYNAMIC_LIBS=-lTAO_DynamicInterface
+TAO_DYNAMIC_LIBS=-lTAO_DynamicInterface -lTAO_Messaging
 
 ####
 #### Macro customization.
 ####
+security ?= 1
+ifeq ($(security),1)
+  ACE_MAKE_OPTIONS += security
+endif # security
+
 ifeq ($(minimum_corba),1)
-  ifndef rt_corba
-    rt_corba = 0
-  endif # ! rt_corba
-  ifndef corba_messaging
-    corba_messaging = 0
-  endif # ! corba_messaging
-  ifndef ami
-    ami = 0
-  endif # ! ami
   ifndef interceptors
     interceptors = 0
   endif  # ! interceptors
   CPPFLAGS += -DTAO_HAS_MINIMUM_CORBA=1
+  ACE_MAKE_OPTIONS += minimum_corba
 else  # minimum_corba
   override minimum_corba = 0
 endif # minimum_corba
@@ -76,6 +75,7 @@ ifeq ($(ami),0)
   CPPFLAGS += -DTAO_HAS_AMI=0
 else
   override ami = 1
+  ACE_MAKE_OPTIONS += ami
   # The following line is not needed,
   # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_AMI=1
@@ -94,6 +94,7 @@ else  # ami_poller
   # The following line is not needed,
   # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_AMI_POLLER=1
+  ACE_MAKE_OPTIONS += ami_poller
 endif # ami_poller
 
 ifeq ($(ami_callback),0)
@@ -103,7 +104,19 @@ else  # ami_callback
   # The following line is not needed,
   # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_AMI_CALLBACK=1
+  ACE_MAKE_OPTIONS += ami_callback
 endif # ami_callback
+
+ifeq ($(corba_messaging),0)
+  rt_corba = 0
+  CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING=0
+else  # corba_messaging
+  override corba_messaging = 1
+  # The following line is not needed,
+  # the $TAO_ROOT/tao/orbconf.h file defines it by default
+  # CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING=1
+  ACE_MAKE_OPTIONS += corba_messaging
+endif # corba_messaging
 
 ifeq ($(rt_corba),0)
   CPPFLAGS += -DTAO_HAS_RT_CORBA=0
@@ -112,16 +125,8 @@ else  # rt_corba
   # The following line is not needed,
   # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_RT_CORBA=1
+  ACE_MAKE_OPTIONS += rt_corba
 endif # rt_corba
-
-ifeq ($(corba_messaging),0)
-  CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING=0
-else  # corba_messaging
-  override corba_messaging = 1
-  # The following line is not needed,
-  # the $TAO_ROOT/tao/orbconf.h file defines it by default
-  # CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING=1
-endif # corba_messaging
 
 ifeq ($(interceptors),0)
   CPPFLAGS += -DTAO_HAS_INTERCEPTORS=0
@@ -130,9 +135,11 @@ else  # interceptors
   # The following line is not needed,
   # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_INTERCEPTORS=1
+  ACE_MAKE_OPTIONS += interceptors
 endif # interceptors
 
 ifeq (1,$(CROSS-COMPILE))
+  ACE_MAKE_OPTIONS += cross_compile
 else
 endif # ! CROSS-COMPILE
 
@@ -169,6 +176,12 @@ CPPFLAGS += \
 	$(TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE) \
 	$(TAO_LACKS_EVENT_CHANNEL_TIMESTAMPS)
 
+# MPC currently defines IDL_SRC in each generated Makefile, so don't redefine it in that case.
+ifndef IDL_SRC
+  IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext)))
+endif
+IDL_OBJS = $(IDL_SRC:%.cpp=%.$(OBJEXT))
+
 ####
 #### Build rules.
 ####
@@ -180,11 +193,14 @@ IDL_EXT=$(IDL_CLIENT_HDR_EXT) $(IDL_EXT_MINUS)
 IDL_EXT2_MINUS=Cli.i Cli.cpp Ser.h Ser.i Ser.cpp Ser_T.h Ser_T.i Ser_T.cpp
 IDL_EXT2=Cli.h $(IDL_EXT2_MINUS)
 
-.SUFFIXES: $(IDL_EXT)
+# Don't remove the IDL stubs if make is interupted.
+.PRECIOUS: $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
 
+# This rule makes all the IDL stub files dependent on the client header
+# which has it's own rule below that invokes the idl compiler.
 $(foreach ext, $(IDL_EXT_MINUS), %$(ext)): %$(IDL_CLIENT_HDR_EXT)
 	@
-
+# Invoke the idl compiler to create the client header
 ifneq ($(tao_dont_use_idl_make_rule),1)
 %C.h: %.idl $(TAO_IDL_DEP)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $<
@@ -198,7 +214,6 @@ ifneq ($(tao_dont_use_idl_make_rule),1)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $<
 endif
 
-
 # Turn on symbol versioning. The scheme that we follow is to allow
 # applications dependent on libraries, with same version numbers (major,
 # minor and beta) to run, but applications with dependencies on libraries
@@ -209,12 +224,16 @@ TAO_MINOR_VERSION := $(shell awk '/TAO_MINOR_VERSION/ { print $$3}' ${TAO_ROOT}/
 TAO_BETA_VERSION := $(shell awk '/TAO_BETA_VERSION/ { print $$3}' ${TAO_ROOT}/tao/Version.h)
 # Version number of the libraries
 #
-ifneq ($(SOVERSION),)
-  SOVERSION = .$(TAO_MAJOR_VERSION).$(TAO_MINOR_VERSION).$(TAO_BETA_VERSION)
-endif
+ifeq ($(versioned_so),1)
+  # Only set SOVERSION for TAO if versioning is turned on and SOVERION is
+  # blank, which gives users to ability to override it.
+  ifeq ($(SOVERSION),)
+    SOVERSION = .$(TAO_MAJOR_VERSION).$(TAO_MINOR_VERSION).$(TAO_BETA_VERSION)
+  endif # SOVERSION
 
-# Name that will be written into the dynamic library
-#
-ifneq ($(SONAME),)
-SONAME = $(SHLIB).$(TAO_MAJOR_VERSION).$(TAO_MINOR_VERSION).$(TAO_BETA_VERSION)
-endif
+  # Name that will be written into the dynamic library
+  #
+  ifneq ($(SONAME),)
+    SONAME = $(SHLIB).$(TAO_MAJOR_VERSION).$(TAO_MINOR_VERSION).$(TAO_BETA_VERSION)
+  endif # SONAME
+endif # versioned_so

@@ -15,7 +15,8 @@
 
 #ifndef STOPWATCH_H
 #define STOPWATCH_H
-#include "tao/corba.h"
+#include /**/ "ace/pre.h"
+#include "tao/ORB_Constants.h"
 
 #if defined (ACE_HAS_XT)
 
@@ -49,4 +50,5 @@ private:
 
 #endif /*ACE_HAS_XT*/
 
+#include /**/ "ace/post.h"
 #endif /* STOPWATCH_H */

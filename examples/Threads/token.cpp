@@ -2,8 +2,10 @@
 
 // Test out the ACE Token class.
 
+#include "ace/OS_main.h"
 #include "ace/Token.h"
 #include "ace/Task.h"
+#include "ace/OS_NS_time.h"
 
 ACE_RCSID(Threads, token, "$Id$")
 

@@ -132,10 +132,14 @@ public:
    * @a ip_addr.  If @a encode is non-zero then the port number and IP address
    * are converted into network byte order, otherwise they are assumed to be
    * in network byte order already and are passed straight through.
+   *
+   * If <map> is non-zero and IPv6 support has been compiled in,
+   * then this address will be set to the IPv4-mapped IPv6 address of it.
    */
   int set (u_short port_number,
            ACE_UINT32 ip_addr = INADDR_ANY,
-           int encode = 1);
+           int encode = 1,
+           int map = 0);
 
   /// Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
   /// <port_name>, the remote <host_name>, and the <protocol>.
@@ -189,6 +193,9 @@ public:
   /// Set a pointer to the address.
   virtual void set_addr (void *, int len);
 
+  /// Set a pointer to the address.
+  virtual void set_addr (void *, int len, int map);
+
   /**
    * Transform the current <ACE_INET_Addr> address into string format.
    * If <ipaddr_format> is non-0 this produces "ip-number:port-number"
@@ -233,10 +240,22 @@ public:
    * byte order, otherwise it is assumed to be in network byte order
    * already and are passed straight through.  The size of the address
    * is specified in the <len> parameter.
+   * If <map> is non-zero, IPv6 support has been compiled in, and
+   * <ip_addr> is an IPv4 address, then this address is set to the IPv4-mapped
+   * IPv6 address of it.
    */
   int set_address (const char *ip_addr,
                    int len,
-                   int encode = 1);
+                   int encode = 1,
+                   int map = 0);
+
+#if defined (__linux__) && defined (ACE_HAS_IPV6)
+  /**
+   * Sets the interface that should be used for this address. This only has
+   * an effect when the address is link local, otherwise it does nothing.
+   */
+  int set_interface (const char *intf_name);
+#endif /* __linux__ && ACE_HAS_IPV6 */
 
   /// Return the port number, converting it into host byte-order.
   u_short get_port_number (void) const;

@@ -5,6 +5,7 @@
 
 #include "ace/Sched_Params.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_string.h"
 #include "tao/corba.h"
 
 #include "orbsvcs/CosNamingC.h"

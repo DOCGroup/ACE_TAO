@@ -22,24 +22,13 @@ namespace CCF
         //
         //
         //
-        class Factory : public virtual CIDL::SemanticAction::Factory,
-                        public virtual IDL3::SemanticAction::Impl::Factory
+        struct Factory : virtual CIDL::SemanticAction::Factory,
+                         virtual IDL3::SemanticAction::Impl::Factory
         {
-        public:
-          virtual
-          ~Factory () throw () {}
-
           Factory (CompilerElements::Context& context,
                    Diagnostic::Stream& dout,
-                   SyntaxTree::TranslationRegionPtr const& r)
-              : IDL2::SemanticAction::Impl::Factory (context, dout, r),
-                IDL3::SemanticAction::Impl::Factory (context, dout, r),
-                trace_ (context.get ("cidl::semantic-action::trace", false)),
-                composition_ (trace_, scope_),
-                home_executor_ (trace_, scope_)
-          {
-          }
-        public:
+                   SemanticGraph::TranslationUnit& tu);
+
           virtual SemanticAction::Composition&
           composition ()
           {
@@ -53,7 +42,6 @@ namespace CCF
           }
 
         private:
-          bool trace_;
           Composition composition_;
           HomeExecutor home_executor_;
         };

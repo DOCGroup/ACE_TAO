@@ -17,9 +17,10 @@
 
 #ifndef TAO_DIOP_PROFILE_H
 #define TAO_DIOP_PROFILE_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/orbconf.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
@@ -28,8 +29,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 #include "DIOP_Endpoint.h"
-
-#include "ace/Synch.h"
 
 
 // TAO DIOP_Profile concrete Profile definitions
@@ -80,8 +79,7 @@ public:
   virtual char * to_string (ACE_ENV_SINGLE_ARG_DECL);
   virtual int encode_endpoints (void);
   virtual TAO_Endpoint *endpoint (void);
-  virtual CORBA::ULong endpoint_count (void);
-  virtual CORBA::Boolean is_equivalent (const TAO_Profile *other_profile);
+  virtual CORBA::ULong endpoint_count (void) const;
   virtual CORBA::ULong hash (CORBA::ULong max
                              ACE_ENV_ARG_DECL);
   /**
@@ -99,6 +97,7 @@ protected:
                                ACE_ENV_ARG_DECL);
   virtual void create_profile_body (TAO_OutputCDR &cdr) const;
   virtual int decode_endpoints (void);
+  virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);
 
 protected:
 
@@ -130,4 +129,5 @@ protected:
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 
 #include /**/ "ace/post.h"
+
 #endif  /* TAO_DIOP_PROFILE_H */

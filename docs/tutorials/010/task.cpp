@@ -2,6 +2,7 @@
 
 #include "task.h"
 #include "block.h"
+#include "ace/OS_NS_unistd.h"
 
 /* Set our housekeeping pointer to NULL and tell the user we exist.  */
 Task::Task (size_t n_threads)

@@ -2,6 +2,7 @@
 
 #include "Payload_Receiver.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Big_Request_Muxing, server, "$Id$")
 

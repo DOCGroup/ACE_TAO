@@ -22,6 +22,13 @@
 
 typedef Dynamic_Bitset bit_vector;
 
+/**
+ * @class Update_Manager
+ *
+ * @brief Manages the set_update() requests to the replicas for in AMI replication strategy.
+ *        Once the primary get the first n replies from the backup replicas and n >=
+ *        transaction_depth, it will signal the event specified in the constructor.
+ */
 
 class Update_Manager
 {

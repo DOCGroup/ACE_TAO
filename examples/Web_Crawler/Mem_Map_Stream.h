@@ -30,7 +30,6 @@
 #include "ace/Connector.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Strategies_T.h"
-#include "ace/Synch_T.h"
 
 class Mem_Map_Stream
 {

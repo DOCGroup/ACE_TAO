@@ -6,6 +6,7 @@
    source file.  We let it worry about the "real work".  */
 
 #include "client_acceptor.h"
+#include "ace/Signal.h"
 
 /* As before, we create a simple signal handler that will set our
    finished flag.  There are, of course, more elegant ways to handle

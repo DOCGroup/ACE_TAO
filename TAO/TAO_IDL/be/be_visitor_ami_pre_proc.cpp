@@ -409,6 +409,7 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                   0);
 
   excep_holder->set_name (excep_holder_name);
+  excep_holder->seen_in_operation (I_TRUE);
 
   // Now our customized valuetype is created, we have to
   // add now the operations and attributes to the scope.
@@ -831,10 +832,12 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
             {
               // Create the argument.
               be_argument *arg = 0;
+              UTL_ScopedName arg_name (original_arg->local_name (), 
+                                       0);
               ACE_NEW_RETURN (arg,
                               be_argument (AST_Argument::dir_IN,
                                            original_arg->field_type (),
-                                           original_arg->name ()),
+                                           &arg_name),
                               0);
 
               op->be_add_argument (arg);

@@ -15,9 +15,9 @@
 #include "ace/Log_Record.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
-#include "ace/Synch.h"
 #include "Logging_Server.h"
 #include "Logging_Handler.h"
+#include "ace/Null_Mutex.h"
 
 typedef ACE_Hash_Map_Manager<ACE_HANDLE,
                              ACE_FILE_IO *,

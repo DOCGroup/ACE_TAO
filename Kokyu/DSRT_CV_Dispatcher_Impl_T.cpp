@@ -73,9 +73,9 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
                            this->blocked_prio_, 
                            this->sched_policy_) == -1)
     {
-      ACE_ERROR ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
-                  ACE_TEXT ("thr_setprio failed")));
+                  ACE_TEXT ("thr_setprio failed")), -1);
     }
 
   ACE_NEW_RETURN (item,

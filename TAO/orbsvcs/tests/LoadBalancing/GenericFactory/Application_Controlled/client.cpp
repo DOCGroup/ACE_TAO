@@ -59,14 +59,17 @@ main (int argc, char *argv[])
                              "Nil Test::Basic reference <%s>\n",
                              ior),
                             1);
-        }
+	}
 
-      CORBA::String_var the_string =
-        basic->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      for (int i = 0; i < 5; i++)
+        {
+          CORBA::String_var the_string =
+            basic->get_string (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
-                  the_string.in ()));
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Client request handled by object at <%s>\n",
+                      the_string.in ()));
+	}
 
       basic->remove_member (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

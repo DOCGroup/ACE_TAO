@@ -4,7 +4,6 @@
 #ifndef JAWS_CACHE_HASH_T_H
 #define JAWS_CACHE_HASH_T_H
 
-#include "ace/OS.h"
 #include "JAWS/Cache_Object.h"
 
 // Forward declaration

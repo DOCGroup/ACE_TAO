@@ -49,7 +49,7 @@ option
 <%foreach(includes)%>
          incl(searchPath, '<%include%>'),
 <%endfor%>
-<%if(sharedname)%>
+<%if(sharedname || staticname)%>
          link(exportAll),
 <%endif%>
          link(linkwithsharedlib),
@@ -60,11 +60,11 @@ option
          link(debug)
          {
             if $__TOS_WIN__ {
-               target type ( <%if(type_is_dynamic)%>shr<%endif%><%if(type_is_static)%>lib<%endif%><%if(type_is_binary)%>exe<%endif%> ) '<%if(type_is_dynamic)%>shr.o<%endif%><%if(type_is_static)%>lib<%sharedname%>.a<%endif%><%if(type_is_binary)%><%exename%><%endif%>'
+               target type ( <%if(type_is_dynamic)%>shr<%endif%><%if(type_is_static)%>lib<%endif%><%if(type_is_binary)%>exe<%endif%> ) '<%if(type_is_dynamic)%>shr.o<%endif%><%if(type_is_static)%>lib<%staticname%>.a<%endif%><%if(type_is_binary)%><%exename%><%endif%>'
                {
                        option macros(global)
                        {
-<%if(sharedname)%>
+<%if(sharedname || staticname)%>
                              source type(hpp) 'wchar.h'
                              source type(hpp) 'wcstr.h'
 <%endif%>
@@ -103,7 +103,7 @@ option
                }
             }
             if $__TOS_AIX__ {
-               target type ( <%if(type_is_dynamic)%>shr<%endif%><%if(type_is_static)%>lib<%endif%><%if(type_is_binary)%>exe<%endif%> ) '<%if(type_is_dynamic)%>shr.o<%endif%><%if(type_is_static)%>lib<%sharedname%>.a<%endif%><%if(type_is_binary)%><%exename%><%endif%>'
+               target type ( <%if(type_is_dynamic)%>shr<%endif%><%if(type_is_static)%>lib<%endif%><%if(type_is_binary)%>exe<%endif%> ) '<%if(type_is_dynamic)%>shr.o<%endif%><%if(type_is_static)%>lib<%staticname%>.a<%endif%><%if(type_is_binary)%><%exename%><%endif%>'
                {
                        run after sources("shr.o") targets ("lib<%sharedname%>.a") "ar -r -u lib<%sharedname%>.a shr.o", "rm -rf shr.o"
                        run cleanup "rm -rf lib<%sharedname%>.a shr.o"

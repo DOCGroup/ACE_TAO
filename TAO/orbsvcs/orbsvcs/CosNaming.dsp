@@ -45,7 +45,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CosNaming_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_NAMING_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../" /I "../../" /I "../../../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_NAMING_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -56,7 +56,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 TAO_Svc_Utils.lib TAO_IORTable.lib TAO_PortableServer.lib TAO.lib ace.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosNaming.dll" /libpath:"..\..\tao\IORTable" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_Svc_Utils.lib TAO_IORTable.lib TAO_PortableServer.lib TAO.lib ace.lib TAO_Messaging.lib TAO_Valuetype.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosNaming.dll" /libpath:"..\..\tao\IORTable" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\Valuetype"
 
 !ELSEIF  "$(CFG)" == "CosNaming - Win32 Debug"
 
@@ -72,7 +72,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "CosNaming_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR- /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_NAMING_BUILD_DLL" /D "TAO_ORBSVCS_HAS_NAMING" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_NAMING_BUILD_DLL" /D "TAO_ORBSVCS_HAS_NAMING" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -83,7 +83,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_Svc_Utilsd.lib TAO_IORTabled.lib TAO_PortableServerd.lib TAOd.lib aced.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosNamingd.dll" /pdbtype:sept /libpath:"..\..\tao\IORTable" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAO_Svc_Utilsd.lib TAO_IORTabled.lib TAO_PortableServerd.lib TAOd.lib aced.lib TAO_Messagingd.lib TAO_Valuetyped.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosNamingd.dll" /pdbtype:sept /libpath:"..\..\tao\IORTable" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\Valuetype"
 # SUBTRACT LINK32 /profile
 
 !ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Release"
@@ -102,7 +102,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_NAMING_BUILD_DLL" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_NAMING_BUILD_DLL" /D ACE_HAS_MFC=1 /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../" /I "../../" /I "../../../" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "TAO_NAMING_BUILD_DLL" /D ACE_HAS_MFC=1 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -113,7 +113,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib TAO_Svc_Utils.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosNaming.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 acemfc.lib TAOmfc.lib TAO_Svc_Utilsmfc.lib TAO_PortableServermfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosNamingmfc.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 acemfc.lib TAOmfc.lib TAO_Svc_Utilsmfc.lib TAO_PortableServermfc.lib TAO_Messagingmfc.lib TAO_Valuetypemfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_CosNamingmfc.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\Valuetype"
 
 !ELSEIF  "$(CFG)" == "CosNaming - Win32 mfc Debug"
 
@@ -131,7 +131,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_NAMING_BUILD_DLL" /D "TAO_ORBSVCS_HAS_NAMING" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_NAMING_BUILD_DLL" /D "TAO_ORBSVCS_HAS_NAMING" /D ACE_HAS_MFC=1 /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_NAMING_BUILD_DLL" /D "TAO_ORBSVCS_HAS_NAMING" /D ACE_HAS_MFC=1 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -143,7 +143,7 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 TAOd.lib aced.lib TAO_Svc_Utilsd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosNamingd.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # SUBTRACT BASE LINK32 /profile
-# ADD LINK32 TAOmfcd.lib acemfcd.lib TAO_Svc_Utilsmfcd.lib TAO_PortableServermfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosNamingmfcd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAOmfcd.lib acemfcd.lib TAO_Svc_Utilsmfcd.lib TAO_PortableServermfcd.lib TAO_Messagingmfcd.lib TAO_Valuetypemfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_CosNamingmfcd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\tao\Messaging" /libpath:"..\..\tao\Valuetype"
 # SUBTRACT LINK32 /profile
 
 !ENDIF 
@@ -253,6 +253,10 @@ SOURCE=.\Naming\Hash_Naming_Context.h
 # Begin Source File
 
 SOURCE=.\Naming\Naming_Context_Interface.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\naming_export.h
 # End Source File
 # Begin Source File
 

@@ -6,7 +6,6 @@
 #define HELLOWORLD_H
 #include /**/ "ace/pre.h"
 
-#include "tao/corba.h"
 #include "TestS.h"
 
 #if defined (_MSC_VER)

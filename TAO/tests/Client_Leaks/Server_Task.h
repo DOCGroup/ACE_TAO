@@ -6,7 +6,7 @@
 #define CLIENT_LEAKS_SERVER_TASK_H
 #include /**/ "ace/pre.h"
 
-#include "tao/corba.h"
+#include "tao/ORB.h"
 #include "ace/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

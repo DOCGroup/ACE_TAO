@@ -1,15 +1,19 @@
 // $Id$
 
 #include "CORBANAME_Parser.h"
-#include "Invocation.h"
-#include "Stub.h"
+#include "ORB.h"
+#include "Object.h"
+#include "UB_String_Arguments.h"
+#include "Invocation_Adapter.h"
 #include "debug.h"
 
 #if !defined(__ACE_INLINE__)
 #include "CORBANAME_Parser.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, CORBANAME_Parser, "$Id$")
+ACE_RCSID (tao, 
+           CORBANAME_Parser, 
+           "$Id$")
 
 TAO_CORBANAME_Parser::~TAO_CORBANAME_Parser (void)
 {
@@ -32,95 +36,26 @@ parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
                                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::Object_ptr _tao_retval = CORBA::Object::_nil ();
+  TAO::Arg_Traits<CORBA::Object>::ret_val _tao_retval;
+  TAO::Arg_Traits<CORBA::Char *>::in_arg_val _tao_id (key_string.c_str ());
 
-  CORBA::Object_var _tao_safe_retval (_tao_retval);
+  TAO::Argument *_tao_signature [] =
+      {
+        &_tao_retval,
+        &_tao_id
+      };
 
-  TAO_Stub *istub = naming_context->_stubobj ();
-  if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+  TAO::Invocation_Adapter tao_call (naming_context,
+                                    _tao_signature,
+                                    2,
+                                    "resolve_str",
+                                    11,
+                                    0);
 
-  TAO_GIOP_Twoway_Invocation _tao_call (
-      istub,
-      "resolve_str",
-      11,
-      1,
-      istub->orb_core ()
-    );
+  tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (_tao_retval.excp ());
 
-  for (;;)
-    {
-      _tao_call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
-
-      _tao_call.prepare_header (
-          ACE_static_cast (CORBA::Octet, _tao_response_flag)
-           ACE_ENV_ARG_PARAMETER
-        );
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-      TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
-      if (!(
-            (_tao_out << key_string.c_str ())
-          ))
-        ACE_THROW_RETURN (
-            CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
-            CORBA::Object::_nil ()
-          );
-
-      int _invoke_status = 0;
-      ACE_TRY
-        {
-          _invoke_status = _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK (CORBA::Object::_nil ());
-        }
-      ACE_CATCH (CORBA::UNKNOWN, ex)
-        {
-          ACE_UNUSED_ARG (ex);
-
-          ACE_THROW_RETURN (
-              CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
-                                CORBA::COMPLETED_YES),
-              CORBA::Object::_nil ()
-            );
-        }
-      ACE_ENDTRY;
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        {
-          _tao_call.restart_flag (1);
-          continue;
-        }
-      if (_invoke_status != TAO_INVOKE_OK)
-        {
-          // @@ Is there any way we can reach this point?  Any
-          //    USER_EXCEPTION response will be caught by the UNKNOWN
-          //    catch block above.  Any SYSTEM_EXCEPTION response will
-          //    be simply raised, and any RESTART is handled
-          //    already...  leave this here "just in case".
-          ACE_THROW_RETURN (
-              CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
-                                CORBA::COMPLETED_YES),
-              CORBA::Object::_nil ()
-            );
-        }
-      TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
-      if (!(
-            (_tao_in >> _tao_safe_retval.inout ())
-          ))
-        {
-          ACE_THROW_RETURN (
-              CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
-              CORBA::Object::_nil ()
-            );
-        }
-      break;
-    }
-
-  return _tao_safe_retval._retn ();
+  return _tao_retval.retn ();
 }
 
 CORBA::Object_ptr

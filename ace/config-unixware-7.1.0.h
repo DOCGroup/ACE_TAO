@@ -330,10 +330,6 @@
 /* Platform lacks madvise() (e.g., Linux) */
 #define ACE_LACKS_MADVISE 1
 
-/* Platform lacks POSIX prototypes for certain System V functions like shared
-   memory and message queues. */
-#define ACE_LACKS_SOME_POSIX_PROTOTYPES 1
-
 /* Platform lacks pri_t (e.g., Tandem NonStop UNIX). */
 #define ACE_LACKS_PRI_T 1
 

@@ -23,9 +23,10 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_sys_time.h"
 #include "ace/ACE.h"
 #include "ace/Task.h"
-#include "ace/Synch.h"
 #include "ace/Message_Queue.h"
 #include "ace/Future.h"
 #include "ace/Method_Request.h"

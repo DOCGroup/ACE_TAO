@@ -76,7 +76,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_visitor.h"
 #include "ast_generator.h"
 #include "nr_extern.h"
-#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_constant, 
@@ -195,11 +194,13 @@ AST_Constant::~AST_Constant (void)
 void
 AST_Constant::dump (ACE_OSTREAM_TYPE &o)
 {
-  o << "const " << this->exprtype_to_string () << " ";
+  this->dump_i (o, "const ");
+  this->dump_i (o, this->exprtype_to_string ());
+  this->dump_i (o, " ");
 
   this->local_name ()->dump (o);
 
-  o << " = ";
+  this->dump_i (o, " = ");
 
   this->pd_constant_value->dump (o);
 }

@@ -1,18 +1,19 @@
-# file      : CCF/CIDL/SemanticAction/Makefile.alt
+# file      : CCF/IDL3/Makefile.alt
 # author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 # cvs-id    : $Id$
 
-root = ../../..
+root := ../../..
 
 include $(root)/Bootstrap.rules
 
 $(call include, $(root)/Config.rules)
 
-$(call include, $(UTILITY_ROOT)/BuildRules/Object.pre.rules)
+$(call include, $(UTILITY_BUILD_RULES)/Recursion.pre.rules)
 
-cxx_translation_units := Composition.cpp
+target_makefile_list  := Makefile.object.alt
+target_directory_list := Impl
+default_makefile_name := Makefile.alt
 
 
-CXX_PREPROCESS_FLAGS  += -I$(root) -I$(UTILITY_ROOT) -I$(BOOST_ROOT)
+$(call include, $(UTILITY_BUILD_RULES)/Recursion.post.rules)
 
-$(call include, $(UTILITY_ROOT)/BuildRules/Object.post.rules)

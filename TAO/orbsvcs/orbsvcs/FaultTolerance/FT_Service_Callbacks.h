@@ -14,7 +14,7 @@
 #define TAO_FT_CALLBACKS_H
 #include /**/ "ace/pre.h"
 
-#include "fault_tol_export.h"
+#include "FT_ClientORB_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,7 +36,7 @@ class TAO_ORB_Core;
  * An implementation of the service callbacks that allows the
  * loading of the FT ORB level library in to the ORB
  */
-class TAO_FT_Export TAO_FT_Service_Callbacks : public TAO_Service_Callbacks
+class TAO_FT_ClientORB_Export TAO_FT_Service_Callbacks : public TAO_Service_Callbacks
 {
 public:
   /// Constructor
@@ -58,15 +58,15 @@ public:
 
   /// Check whether we need to raise an exception or go for a
   /// reinvocaton.
-  virtual int raise_comm_failure (
-      TAO_GIOP_Invocation *invoke,
+  virtual TAO::Invocation_Status raise_comm_failure (
+      IOP::ServiceContextList &clist,
       TAO_Profile *profile
       ACE_ENV_ARG_DECL);
 
   /// Check whether we need to raise an exception or go for a
   /// reinvocaton.
-  virtual int raise_transient_failure (
-      TAO_GIOP_Invocation *invoke,
+  virtual TAO::Invocation_Status raise_transient_failure (
+      IOP::ServiceContextList &clist,
       TAO_Profile *profile
       ACE_ENV_ARG_DECL);
 
@@ -82,6 +82,7 @@ private:
   TAO_ORB_Core *orb_core_;
 
   /// Mutex to protect access to the profile that gets passed along
+  /// @@ Lock needs to be removed...
   ACE_Lock* profile_lock_;
 
   /**

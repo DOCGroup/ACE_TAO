@@ -9,12 +9,10 @@
 #include <map>
 #include <deque>
 #include <locale>
-#include <cctype>
 #include <string>
-#include <istream>
 
 #include "CCF/CompilerElements/TokenStream.hpp"
-
+#include "CCF/CompilerElements/PreprocessorToken.hpp"
 #include "CCF/IDL2/Token.hpp"
 
 namespace CCF
@@ -25,106 +23,67 @@ namespace CCF
     //
     //
 
-    class LexicalAnalyzer : public TokenStream<TokenPtr>
+    class LexicalAnalyzer : public CompilerElements::TokenStream<TokenPtr>
     {
     public:
       virtual
       ~LexicalAnalyzer () throw () {}
 
     public:
-      LexicalAnalyzer (TokenStream<char>& is);
+
+      typedef
+      CompilerElements::CPP::Token
+      Char;
+
+      typedef
+      std::deque<Char>
+      CharBuffer;
+
+      LexicalAnalyzer (CompilerElements::TokenStream<Char>& is);
 
       virtual TokenPtr
       next ();
 
     protected:
-      typedef
-      TokenStream<char>::int_type
-      int_type;
+      virtual Char
+      skip_space (Char c);
 
-      typedef
-      TokenStream<char>::char_type
-      char_type;
+      virtual TokenPtr
+      identifier (Char c);
 
-      typedef
-      TokenStream<char>::traits
-      traits;
+      virtual bool
+      punctuation (Char c, TokenPtr& token);
 
-      struct Char
-      {
-        Char (int_type c, unsigned long line)
-            : c_ (c), line_ (line)
-        {
-        }
+      virtual bool
+      operator_ (Char c, TokenPtr& token);
 
-      public:
-        bool
-        is_eof () const
-        {
-          return !traits::not_eof (c_);
-        }
+      virtual bool
+      character_literal (Char c, TokenPtr& token);
 
-        bool
-        is_alpha (std::locale const& l) const
-        {
-          return std::isalpha (char_ (), l);
-        }
+      virtual bool
+      string_literal (Char c, TokenPtr& token);
 
-        bool
-        is_alnum (std::locale const& l) const
-        {
-          return std::isalnum (char_ (), l);
-        }
+      virtual std::string
+      string_literal_trailer ();
 
-        bool
-        is_space (std::locale const& l) const
-        {
-          return std::isspace (char_ (), l);
-        }
+      virtual bool
+      integer_literal (Char c, TokenPtr& token);
 
-      public:
-        char_type
-        char_ () const
-        {
-          return traits::to_char_type (c_);
-        }
+      // Literal scanners.
+      //
+      //
+      class Format {};
+      class Boundary {};
 
-        unsigned long
-        line () const
-        {
-          return line_;
-        }
+      std::pair<char, std::size_t>
+      scan_char (char const* s) throw (Format);
 
-      public:
-        friend bool
-        operator== (Char const& a, char b)
-        {
-          return !a.is_eof () && a.char_ () == b;
-        }
+      std::string
+      scan_string (std::string const& s) throw (Format);
 
-        friend bool
-        operator== (char a, Char const& b)
-        {
-          return b == a;
-        }
-
-        friend bool
-        operator!= (Char const& a, char b)
-        {
-          return a.is_eof () || a.char_ () != b;
-        }
-
-        friend bool
-        operator!= (char a, Char const& b)
-        {
-          return b != a;
-        }
-
-      private:
-        int_type c_;
-        unsigned long line_;
-      };
-
+      unsigned long long
+      scan_integer (std::string const& s, unsigned short base)
+        throw (Format, Boundary);
 
     protected:
       virtual Char
@@ -139,28 +98,56 @@ namespace CCF
       virtual void
       ret (Char const& c);
 
-      /*
-      char_type
-      to_char_type (int_type i);
-      */
+    protected:
+      // Character utility functions.
+      //
+      bool
+      is_alpha (char c) const
+      {
+        return std::isalpha (c, loc_);
+      }
 
-      virtual void
-      cxx_comment (Char c);
+      bool
+      is_oct_digit (char c) const
+      {
+        return std::isdigit (c, loc_) && c != '8' && c != '9';
+      }
 
-      virtual void
-      c_comment (Char c);
+      bool
+      is_dec_digit (char c) const
+      {
+        return std::isdigit (c, loc_);
+      }
 
-      virtual Char
-      skip_space (Char c);
+      bool
+      is_hex_digit (char c) const
+      {
+        return std::isxdigit (c, loc_);
+      }
 
-      virtual TokenPtr
-      identifier (Char c);
+      bool
+      is_alnum (char c) const
+      {
+        return std::isalnum (c, loc_);
+      }
 
-      virtual bool
-      string_literal (Char c, TokenPtr& token);
+      bool
+      is_space (char c) const
+      {
+        return std::isspace (c, loc_);
+      }
 
-      virtual bool
-      punctuation (Char c, TokenPtr& token);
+      bool
+      is_eos (Char const& c) const
+      {
+        return c == Char::eos;
+      }
+
+      char
+      to_upper (char c) const
+      {
+        return std::toupper (c, loc_);
+      }
 
     protected:
       typedef
@@ -187,14 +174,10 @@ namespace CCF
       PunctuationTable;
 
       typedef
-      std::deque<Char>
-      CharBuffer;
+      std::set<std::string>
+      OperatorTable;
 
     protected:
-
-      Char
-      get_from_stream ();
-
       bool
       read_simple_identifier (std::string& lexeme, CharBuffer& buf);
 
@@ -205,19 +188,14 @@ namespace CCF
     protected:
       std::locale loc_;
 
-      TokenStream<char>& is_;
+      CompilerElements::TokenStream<Char>& is_;
+
+      CharBuffer ibuffer_;
 
       KeywordTable keyword_table_;
       IdentifierTreeNode identifier_tree_;
       PunctuationTable punctuation_table_;
-
-      // line numbering mechanism
-      bool after_nl;
-      unsigned long line_;
-
-      // look ahead mechanism
-
-      CharBuffer buffer_;
+      OperatorTable operator_table_;
     };
   }
 }

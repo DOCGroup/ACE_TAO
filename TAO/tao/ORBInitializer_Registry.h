@@ -14,15 +14,37 @@
 #define TAO_ORB_INITIALIZER_REGISTRY_H
 
 #include /**/ "ace/pre.h"
-
-#include "ace/config-all.h"
+#include "ace/Array_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PortableInterceptorC.h"
-#include "ace/Array_Base.h"
+#include "CORBA_methods.h"
+#include "Objref_VarOut_T.h"
+#include "Environment.h"
+
+namespace PortableInterceptor
+{
+  class ORBInitializer;
+  typedef ORBInitializer *ORBInitializer_ptr;
+
+  typedef
+    TAO_Objref_Var_T<
+        ORBInitializer
+      >
+    ORBInitializer_var;
+
+  class ORBInitInfo;
+  typedef ORBInitInfo *ORBInitInfo_ptr;
+
+  /// Register an ORBInitializer with the global ORBInitializer
+  /// table.
+  TAO_Export void register_orb_initializer (
+      ORBInitializer_ptr init
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    );
+}
 
 /**
  * @class TAO_ORBInitializer_Registry
@@ -43,13 +65,13 @@ class TAO_ORBInitializer_Registry
   friend void PortableInterceptor::register_orb_initializer (
                   PortableInterceptor::ORBInitializer_ptr init
                   ACE_ENV_ARG_DECL);
+
   friend CORBA::ORB_ptr CORBA::ORB_init (int &,
                                          char *argv[],
                                          const char *,
                                          CORBA::Environment &);
 
 public:
-
   /// Only allow this class to be instantiated as a singleton
   /// instance, so declare the constructor as protected.
   /**
@@ -59,7 +81,6 @@ public:
   TAO_ORBInitializer_Registry (void);
 
 protected:
-
   /// Register an ORBInitializer with the underlying ORBInitializer
   /// array.
   void register_orb_initializer (
@@ -80,7 +101,6 @@ protected:
   static TAO_ORBInitializer_Registry *instance (void);
 
 private:
-
   /// Prevent copying
   ACE_UNIMPLEMENTED_FUNC (
     TAO_ORBInitializer_Registry (const TAO_ORBInitializer_Registry &))
@@ -90,7 +110,6 @@ private:
 
   /// Dynamic array containing registered ORBInitializers.
   ACE_Array_Base<PortableInterceptor::ORBInitializer_var> initializers_;
-
 };
 
 #include /**/ "ace/post.h"

@@ -22,7 +22,7 @@
 #define ACE_TESTS_UPGRADABLE_RW_TEST_H
 
 #include "test_config.h"
-#include "ace/Synch.h"
+#include "ace/Barrier.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

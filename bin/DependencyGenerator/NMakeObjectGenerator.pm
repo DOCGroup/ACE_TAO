@@ -21,9 +21,7 @@ use vars qw(@ISA);
 # ************************************************************
 
 sub process {
-  my($self) = shift;
-  my($file) = shift;
-  return $file;
+  return $_[1];
 }
 
 

@@ -21,6 +21,9 @@
 #include "ace/Handle_Set.h"
 #include "ace/Pipe.h"
 #include "ace/Log_Msg.h"
+#include "ace/Time_Value.h"
+#include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_sys_select.h"
 
 ACE_RCSID(Misc, test_early_timeouts, "$Id$")
 

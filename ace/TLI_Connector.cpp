@@ -1,9 +1,7 @@
 // TLI_Connector.cpp
 // $Id$
 
-#include "ace/Handle_Set.h"
 #include "ace/TLI_Connector.h"
-#include "ace/ACE.h"
 
 ACE_RCSID(ace, TLI_Connector, "$Id$")
 
@@ -12,6 +10,10 @@ ACE_RCSID(ace, TLI_Connector, "$Id$")
 #if !defined (__ACE_INLINE__)
 #include "ace/TLI_Connector.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Handle_Set.h"
+#include "ace/ACE.h"
+#include "ace/OS_NS_string.h"
 
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI_Connector)
 
@@ -221,18 +223,18 @@ ACE_TLI_Connector::complete (ACE_TLI_Stream &new_stream,
     {
       if (remote_sap != 0)
         {
-#if defined (ACE_HAS_SVR4_TLI)
+#if defined (ACE_HAS_XTI) || defined (ACE_HAS_SVR4_TLI)
           struct netbuf name;
 
           name.maxlen = remote_sap->get_size ();
           name.buf    = (char *) remote_sap->get_addr ();
 
-          if (ACE_OS::ioctl (new_stream.get_handle (),
-                             TI_GETPEERNAME,
-                             &name) == -1)
+          if (ACE_OS::t_getname (new_stream.get_handle (),
+                                 &name,
+                                 REMOTENAME) == -1)
 #else /* SunOS4 */
           if (0)
-#endif /* ACE_HAS_SVR4_TLI */
+#endif /* ACE_HAS_XTI || ACE_HAS_SVR4_TLI */
             {
               new_stream.close ();
               return -1;

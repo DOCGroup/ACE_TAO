@@ -10,6 +10,8 @@
 
 
 #include "GPlot_File.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdio.h"
 
 #if !defined (__ACE_INLINE__)
 #include "GPlot_File.i"

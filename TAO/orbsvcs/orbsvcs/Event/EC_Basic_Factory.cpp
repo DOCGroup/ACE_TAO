@@ -14,6 +14,7 @@
 #include "EC_Reactive_ConsumerControl.h"
 #include "EC_Reactive_SupplierControl.h"
 #include "EC_Event_Channel_Base.h" // @@ MSVC 6 bug
+
 #include "orbsvcs/ESF/ESF_Proxy_List.h"
 #include "orbsvcs/ESF/ESF_Delayed_Changes.h"
 
@@ -23,7 +24,9 @@
 #include "EC_Basic_Factory.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, EC_Basic_Factory, "$Id$")
+ACE_RCSID (Event, 
+           EC_Basic_Factory, 
+           "$Id$")
 
 TAO_EC_Basic_Factory::TAO_EC_Basic_Factory (void)
 {

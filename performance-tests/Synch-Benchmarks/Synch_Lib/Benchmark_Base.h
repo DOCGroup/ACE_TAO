@@ -13,10 +13,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 # include "ace/Service_Repository.h"
-# include "ace/Synch.h"
 # include "ace/Service_Types.h"
 # include "ace/Atomic_Op.h"
 # include "export_mac.h"
+# include "ace/TSS_T.h"
 
 # if defined (ACE_HAS_THREADS)
 

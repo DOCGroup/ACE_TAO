@@ -6,6 +6,9 @@
 #include "Options.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_strings.h"
+#include "ace/os_include/os_fcntl.h"
 
 ACE_RCSID(Gateway, Options, "$Id$")
 

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*demuxing) : aceexe {
   exename = demuxing
   Source_Files {

@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //   Douglas C. Schmidt <schmidt@cs.wustl.edu>
-//    
+//
 // ============================================================================
 
 #ifndef TIME_DATE_CLIENT_I_H
@@ -23,7 +23,7 @@
 #include "../Simple_util.h"
 #include "Time_DateC.h"
 
-class Time_Date_Client_i 
+class Time_Date_Client_i
 {
   // = TITLE
   //   Time_Date_Client interface adapter.

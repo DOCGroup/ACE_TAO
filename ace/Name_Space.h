@@ -13,6 +13,7 @@
 
 #ifndef ACE_NAME_SPACE_H
 #define ACE_NAME_SPACE_H
+
 #include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
@@ -23,7 +24,6 @@
 
 #include "ace/SString.h"
 #include "ace/Unbounded_Set.h"
-#include "ace/Name_Proxy.h"
 
 typedef ACE_Unbounded_Set<ACE_NS_WString> ACE_WSTRING_SET;
 
@@ -158,4 +158,5 @@ public:
 };
 
 #include /**/ "ace/post.h"
+
 #endif /* ACE_NAME_SPACE_H */

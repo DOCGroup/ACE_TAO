@@ -13,6 +13,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/SOCK_CODgram.h"
 #include "ace/INET_Addr.h"
+#include "ace/OS_NS_string.h"
 
 #define IPDSFIELD_DSCP_DEFAULT  0x00
 #define IPDSFIELD_DSCP_CS1      0x08

@@ -36,7 +36,7 @@ namespace CCF
       {
         o << lexeme ();
       }
-      
+
     public:
       std::string
       lexeme () const
@@ -125,6 +125,26 @@ namespace CCF
     //
     //
     //
+    class Operator : public Token
+    {
+    public:
+      Operator (std::string lexeme, unsigned long line)
+          : Token (lexeme, line)
+      {
+      }
+
+      virtual
+      ~Operator () throw () {}
+    };
+
+    typedef
+    ReferenceCounting::StrictPtr<Operator>
+    OperatorPtr;
+
+
+    //
+    //
+    //
     class Identifier : public Token
     {
     public:
@@ -137,7 +157,7 @@ namespace CCF
     typedef
     ReferenceCounting::StrictPtr<Identifier>
     IdentifierPtr;
-    
+
 
     //
     //
@@ -154,7 +174,7 @@ namespace CCF
     typedef
     ReferenceCounting::StrictPtr<SimpleIdentifier>
     SimpleIdentifierPtr;
-    
+
 
     //
     //
@@ -176,20 +196,147 @@ namespace CCF
     //
     //
     //
-    class StringLiteral : public Token
+    class Literal : public Token
     {
     public:
-      StringLiteral (std::string lexeme, unsigned long line)
+      Literal (std::string lexeme, unsigned long line)
           : Token (lexeme, line)
       {
+      }
+    };
+
+    typedef
+    ReferenceCounting::StrictPtr<Literal>
+    LiteralPtr;
+
+
+    //
+    //
+    //
+    class BooleanLiteral : public Literal
+    {
+    public:
+      BooleanLiteral (std::string lexeme, unsigned long line)
+          : Literal (lexeme, line)
+      {
+      }
+
+      bool
+      value () const
+      {
+        return lexeme () == "TRUE";
       }
 
       virtual void
       print (std::ostream& o)
       {
-        o << '\"' << lexeme () << '\"';
-      }      
-      
+        o << lexeme ();
+      }
+    };
+
+    typedef
+    ReferenceCounting::StrictPtr<BooleanLiteral>
+    BooleanLiteralPtr;
+
+
+    //
+    //
+    //
+    class CharacterLiteral : public Literal
+    {
+    public:
+      CharacterLiteral (char c, std::string lexeme, unsigned long line)
+          : Literal (lexeme, line), c_ (c)
+      {
+      }
+
+      char
+      value () const
+      {
+        return c_;
+      }
+
+      virtual void
+      print (std::ostream& o)
+      {
+        //@@ todo
+        o << lexeme ();
+      }
+
+    private:
+      char c_;
+    };
+
+    typedef
+    ReferenceCounting::StrictPtr<CharacterLiteral>
+    CharacterLiteralPtr;
+
+
+    //
+    //
+    //
+    class IntegerLiteral : public Literal
+    {
+    public:
+      IntegerLiteral (unsigned long long value,
+                      std::string lexeme,
+                      unsigned long line)
+          : Literal (lexeme, line), value_ (value)
+      {
+      }
+
+      unsigned long long
+      value () const
+      {
+        return value_;
+      }
+
+      virtual void
+      print (std::ostream& o)
+      {
+        o << lexeme ();
+      }
+
+    private:
+      unsigned long long value_;
+    };
+
+    typedef
+    ReferenceCounting::StrictPtr<IntegerLiteral>
+    IntegerLiteralPtr;
+
+
+    //
+    //
+    //
+    class StringLiteral : public Literal
+    {
+    public:
+      virtual
+      ~StringLiteral () throw () {}
+
+      StringLiteral (std::string const& value,
+                     std::string const& lexeme,
+                     unsigned long line)
+          : Literal (lexeme, line), value_ (value)
+      {
+      }
+
+      std::string
+      value () const
+      {
+        return value_;
+      }
+
+      virtual void
+      print (std::ostream& o)
+      {
+        //@@ todo
+        o << lexeme ();
+      }
+
+    private:
+      std::string value_;
     };
 
     typedef

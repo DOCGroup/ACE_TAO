@@ -1,3 +1,6 @@
+#
+# $Id$
+#
 
 NAME = manual
 OBJFILES = $(OBJDIR)\$(NAME).obj

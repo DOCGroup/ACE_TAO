@@ -23,8 +23,15 @@ ACE_RCSID(tests, Vector_Test, "$Id$")
 #include "ace/Vector_T.h"
 
 typedef size_t DATA;
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x564)
+// Borland C++ Builder 6 and earlier don't handle the second template
+// argument correctly. We have to pass it explicitly
+typedef ACE_Vector<DATA, ACE_VECTOR_DEFAULT_SIZE> VECTOR;
+typedef ACE_Vector<DATA, ACE_VECTOR_DEFAULT_SIZE>::Iterator ITERATOR;
+#else
 typedef ACE_Vector<DATA> VECTOR;
 typedef ACE_Vector<DATA>::Iterator ITERATOR;
+#endif
 
 const size_t TOP = 100;
 const size_t LEFT = 10;
@@ -47,6 +54,25 @@ int run_main (int, ACE_TCHAR *[])
 
   for (i = 0; i < TOP; ++i)
     ACE_ASSERT (vector[i] == i);
+
+  // Test to be sure the iterator gets the correct count and entries.
+  ITERATOR iter (vector);
+  DATA *p_item = 0 ;
+  size_t iter_count = 0;
+  while (!iter.done ())
+    {
+      if (iter.next (p_item) == 0)
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Fail to get value on iter pass %d\n"),
+                    iter_count));
+      if (*p_item != iter_count)
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Iter pass %d got %d\n"),
+                    iter_count, *p_item));
+      iter_count++;
+      iter.advance();
+    }
+  if (iter_count != TOP)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Iterated %d elements; expected %d\n"),
+                iter_count, TOP));
 
   for (i = 0; i < (TOP - LEFT); ++i)
     vector.pop_back ();
@@ -91,6 +117,17 @@ int run_main (int, ACE_TCHAR *[])
 	      ACE_TEXT ("Size: %d\n"),
 	      vector.size ()));
 
+  VECTOR v1;
+  VECTOR v2;
+  v1.push_back (1);
+  v2.push_back (1);
+  v1.push_back (2);
+  v2.push_back (2);
+  if (v1 != v2)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Inequality test failed!\n")));
+  if (!(v1 == v2))
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Equality test failed!\n")));
+
   ACE_END_TEST;
 
   return 0;
@@ -98,11 +135,13 @@ int run_main (int, ACE_TCHAR *[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Vector<DATA>;
+template class ACE_Vector_Iterator<DATA>;
 template class ACE_Array<DATA>;
 template class ACE_Array_Base<DATA>;
 template class ACE_Array_Iterator<DATA>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Vector<DATA>
+#pragma instantiate ACE_Vector_Iterator<DATA>
 #pragma instantiate ACE_Array<DATA>
 #pragma instantiate ACE_Array_Base<DATA>
 #pragma instantiate ACE_Array_Iterator<DATA>

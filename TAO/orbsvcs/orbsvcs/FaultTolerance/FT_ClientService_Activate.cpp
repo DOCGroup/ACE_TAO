@@ -66,7 +66,7 @@ TAO_FT_ClientService_Activate::Initializer (void)
   return 0;
 }
 
-ACE_FACTORY_DEFINE (TAO_FT,TAO_FT_ClientService_Activate)
+ACE_FACTORY_DEFINE (TAO_FT_ClientORB,TAO_FT_ClientService_Activate)
 
 ACE_STATIC_SVC_DEFINE (TAO_FT_ClientService_Activate,
                        ACE_TEXT ("FT_ClientService_Activate"),

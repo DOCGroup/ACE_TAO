@@ -40,14 +40,23 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/ACE_export.h"
-#include "ace/OS.h"
 #include "ace/Malloc_Allocator.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/* Enable ACE Timeprobes */
+#if defined (ACE_ENABLE_TIMEPROBES)
+  #if !defined (ACE_COMPILE_TIMEPROBES)
+    #define ACE_COMPILE_TIMEPROBES
+  #endif /* ACE_COMPILE_TIMEPROBES */
+#endif /* ACE_ENABLE_TIMEPROBES */
+
 #if defined (ACE_COMPILE_TIMEPROBES)
+
+#include "ace/OS_NS_time.h"
+#include "ace/OS_NS_Thread.h"
 
 /**
  * @class ACE_Event_Descriptions

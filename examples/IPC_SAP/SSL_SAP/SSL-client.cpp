@@ -11,7 +11,6 @@
 #include "ace/Singleton.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
-#include "ace/Synch.h"
 
 #include "ace/SSL/SSL_SOCK_Connector.h"
 

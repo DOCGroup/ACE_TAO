@@ -32,7 +32,13 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
 #include "ace/Process_Mutex.h"
+#include "ace/Signal.h"
 #include "Conn_Test.h"
+#include "ace/Barrier.h"
+#include "ace/OS_NS_signal.h"
+#include "ace/OS_NS_sys_select.h"
+#include "ace/OS_NS_sys_wait.h"
+#include "ace/os_include/os_netdb.h"
 
 ACE_RCSID(tests, Conn_Test, "$Id$")
 
@@ -47,14 +53,18 @@ static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 //
 #if defined (ACE_LACKS_FORK)
 #  if defined (ACE_HAS_THREADS)
+#    include "ace/Thread_Mutex.h"
      typedef ACE_Thread_Mutex ACCEPTOR_LOCKING;
 #  else
+#    include "ace/Null_Mutex.h"
      typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
 #  endif /* ACE_HAS_THREADS */
 #else
 #  if defined (ACE_HAS_THREAD_SAFE_ACCEPT)
+#    include "ace/Null_Mutex.h"
      typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
 #  else
+#    include "ace/Process_Mutex.h"
      typedef ACE_Process_Mutex ACCEPTOR_LOCKING;
 #  endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
 #endif /* ACE_LACKS_FORK */

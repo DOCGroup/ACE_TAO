@@ -1,6 +1,7 @@
 
 // $Id$
 
+#include "ace/OS_NS_stdio.h"
 #include "TestS.h"
 
 const int num_calls = 10; // total calls client si going to make
@@ -44,7 +45,7 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_OS::sleep (1);
-  ACE_DEBUG ((LM_DEBUG, "Recieved Timestamp # %d \n", calls_received)); 
+  ACE_DEBUG ((LM_DEBUG, "Recieved Timestamp # %d \n", calls_received));
   calls_received++;
 
   ACE_UNUSED_ARG (send_time);

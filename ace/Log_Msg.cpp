@@ -11,13 +11,20 @@
 
 #include "ace/ACE.h"
 #include "ace/Thread_Manager.h"
-#include "ace/OS.h"
+#include "ace/Guard_T.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_wchar.h"
+#include "ace/OS_NS_signal.h"
 
-#if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
-# include "ace/Object_Manager.h"
+#if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE != 0)
+# include "ace/Object_Manager_Base.h"
 #endif /* ! ACE_MT_SAFE */
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+// FUZZ: disable check_for_streams_include
 # include "ace/streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
@@ -32,6 +39,14 @@
 ACE_RCSID(ace, Log_Msg, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
+
+// only used here...  dhinton
+#if defined (ACE_HAS_SYS_SIGLIST)
+# if !defined (_sys_siglist)
+#   define _sys_siglist sys_siglist
+# endif /* !defined (sys_siglist) */
+//extern char **_sys_siglist;
+#endif /* ACE_HAS_SYS_SIGLIST */
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   int ACE_Log_Msg::key_created_ = 0;
@@ -617,7 +632,8 @@ ACE_Log_Msg::ACE_Log_Msg (void)
     tracing_enabled_ (1), // On by default?
     delete_ostream_(0),
     thr_desc_ (0),
-    priority_mask_ (default_priority_mask_)
+    priority_mask_ (default_priority_mask_),
+    timestamp_ (0)
 {
   // ACE_TRACE ("ACE_Log_Msg::ACE_Log_Msg");
 
@@ -633,6 +649,20 @@ ACE_Log_Msg::ACE_Log_Msg (void)
                                                 ACE_Log_Msg::thr_desc_hook);
 
   this->conditional_values_.is_set_ = 0;
+
+  char *timestamp = ACE_OS::getenv ("ACE_LOG_TIMESTAMP");
+  if (timestamp != 0)
+    {
+      // If variable is set or is set to date tag so we print date and time.
+      if (ACE_OS::strcmp (timestamp, "TIME") == 0)
+        {
+          this->timestamp_ = 1;
+        }
+      else if (ACE_OS::strcmp (timestamp, "DATE") == 0)
+        {
+          this->timestamp_ = 2;
+        }
+    }
 }
 
 ACE_Log_Msg::~ACE_Log_Msg (void)
@@ -767,12 +797,19 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
       if (status == -1)
         ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR);
       else
-        ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER);
+        {
+          if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::LOGGER))
+            ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER);
+          if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::SYSLOG))
+            ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG);
+        }
     }
-  else if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER))
+  else if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER) ||
+           ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG))
     {
       // If we are closing down logger, redirect logging to stderr.
       ACE_CLR_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER);
+      ACE_CLR_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG);
       ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR);
     }
 
@@ -984,6 +1021,29 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
         }
     }
 
+  if (timestamp_ > 0)
+  {
+     ACE_TCHAR day_and_time[35];
+     const ACE_TCHAR *s;
+     if (timestamp_ == 1)
+     {
+        // Print just the time
+        s = ACE::timestamp (day_and_time, sizeof day_and_time, 1);
+     }
+     else
+     {
+        // Print time and date
+        ACE::timestamp (day_and_time, sizeof day_and_time);
+        s = day_and_time;
+     }
+
+     for (; bspace > 1 && (*bp = *s) != '\0'; s++, bspace--)
+        bp++;
+
+     *bp++ = '|';
+     bspace--;
+  }
+
   while (*format_str != '\0' && bspace > 0)
     {
       // Copy input to output until we encounter a %, however a
@@ -1026,6 +1086,8 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
           fp = format;
           *fp++ = *format_str++;   // Copy in the %
 
+          // Initialization to satisfy VC6
+          int tmp_indent = 0;
           // Work through the format string to copy in the format
           // from the caller. While it's going across, extract ints
           // for '*' width/precision values from the argument list.
@@ -1165,11 +1227,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         if (can_check)
                           this_len = ACE_OS::snprintf
                             (bp, bspace, format, va_arg (argp, ACE_TCHAR *),
-                             ACE_TEXT_CHAR_TO_TCHAR (ACE_OS_String::strerror (errno)));
+                             ACE_TEXT_CHAR_TO_TCHAR (ACE_OS::strerror (errno)));
                         else
                           this_len = ACE_OS::sprintf
                             (bp, format, va_arg (argp, ACE_TCHAR *),
-                             ACE_TEXT_CHAR_TO_TCHAR (ACE_OS_String::strerror (errno)));
+                             ACE_TEXT_CHAR_TO_TCHAR (ACE_OS::strerror (errno)));
                       }
                     else
 #endif /* !ACE_HAS_WINCE */
@@ -1275,10 +1337,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         if (can_check)
                           this_len = ACE_OS::snprintf
                             (bp, bspace, format,
-                             ACE_OS_String::strerror (errno));
+                             ACE_TEXT_CHAR_TO_TCHAR (ACE_OS::strerror (errno)));
                         else
                           this_len = ACE_OS::sprintf
-                            (bp, format, ACE_OS_String::strerror (errno));
+                            (bp, format,
+                             ACE_TEXT_CHAR_TO_TCHAR (ACE_OS::strerror (errno)));
                       }
                     else
                       {
@@ -1381,12 +1444,19 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #if defined (ACE_HAS_TRACE)
                   if (0 == wp)
                     wp = ACE_Trace::get_nesting_indent ();
+#else
+                  if (0 == wp)
+                    wp = 4;
 #endif /* ACE_HAS_TRACE */
                   wp *= this->trace_depth_;
                   if (ACE_static_cast (size_t, wp) > bspace)
                     wp = ACE_static_cast (int, bspace);
-                  ACE_OS::memset (bp, ' ', wp);
-                  bp += wp;
+
+                  for (tmp_indent = wp;
+                       tmp_indent;
+                       tmp_indent--)
+                    *bp++ = ' ';
+
                   *bp = '\0';
                   bspace -= ACE_static_cast (size_t, wp);
                   skip_nul_locate = 1;
@@ -1548,7 +1618,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   else
                     this_len = ACE_OS::sprintf (bp, format,
                                                 pthread_getunique_np (&t_id));
-#  elif defined (ACE_MVS)
+#  elif defined (ACE_MVS) || defined (ACE_TANDEM_T1248_PTHREADS)
                   // MVS's pthread_t is a struct... yuck. So use the ACE 5.0
                   // code for it.
                   ACE_OS::strcpy (fp, ACE_LIB_TEXT ("u"));
@@ -2002,6 +2072,7 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
                           stderr);
 
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::CUSTOM) ||
+          ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG) ||
           ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER))
         {
           // Be sure that there is a message_queue_, with multiple threads.
@@ -2009,8 +2080,8 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
         }
 
 
-      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
-                           ACE_Log_Msg::LOGGER))
+      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER) ||
+          ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG))
         {
           result =
             ACE_Log_Msg_Manager::log_backend_->log (log_record);
@@ -2059,7 +2130,7 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
   // 58 for the HEXDUMP header;
 
   ACE_TCHAR *msg_buf;
-  const size_t text_sz = text ? ACE_OS_String::strlen(text) : 0;
+  const size_t text_sz = text ? ACE_OS::strlen(text) : 0;
   ACE_NEW_RETURN (msg_buf,
                   ACE_TCHAR[text_sz + 58],
                  -1);
@@ -2235,7 +2306,7 @@ ACE_Log_Msg::inc (void)
 int
 ACE_Log_Msg::dec (void)
 {
-  return --this->trace_depth_;
+  return this->trace_depth_ == 0 ? 0 : --this->trace_depth_;
 }
 
 int

@@ -13,15 +13,8 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      //
-      //
-      //
-      class Publishes
+      struct Publishes
       {
-      public:
-        virtual
-        ~Publishes () throw () {}
-
         virtual void
         type (IdentifierPtr const& id) = 0;
 

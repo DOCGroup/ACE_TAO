@@ -16,14 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/MProfile.h"
-#include "tao/ORB.h"
 #include "tao/ORB_Core_Auto_Ptr.h"
 
 #if defined (HPUX) && defined (IOR)
@@ -32,17 +31,14 @@
 # undef IOR
 #endif /* HPUX && IOR */
 
-
 // Forward declarations.
 class TAO_RelativeRoundtripTimeoutPolicy;
 class TAO_Client_Priority_Policy;
 class TAO_Sync_Scope_Policy;
 class TAO_Buffering_Constraint_Policy;
-
 class TAO_Sync_Strategy;
 class TAO_GIOP_Invocation;
 class TAO_Policy_Set;
-
 class TAO_Profile;
 
 /// Forward declaration for ObjectKey
@@ -50,29 +46,6 @@ namespace TAO
 {
   class ObjectKey;
 }
-// Function pointer returning a pointer to CORBA::Exception. This is used to
-// describe the allocator for user-defined exceptions that are used internally
-// by the interpreter.
-typedef CORBA::Exception* (*TAO_Exception_Alloc) (void);
-
-/**
- * @struct TAO_Exception_Data
- *
- * @brief Description of a single exception.
- *
- * The interpreter needs a way to allocate memory to hold the exception
- * that was raised by the stub. This data structure provides the typecode
- * for the exception as well as a static function pointer that
- * does the job of memory allocation.
- */
-struct TAO_Exception_Data
-{
-  /// Repository id of the exception.
-  const char *id;
-
-  /// The allocator for this exception.
-  TAO_Exception_Alloc alloc;
-};
 
 /**
  * @class TAO_Stub
@@ -111,10 +84,6 @@ public:
 
   virtual CORBA::PolicyList * get_policy_overrides (
     const CORBA::PolicyTypeSeq & types
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-  CORBA::Boolean validate_connection (
-    CORBA::PolicyList_out inconsistent_policies
     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
@@ -322,6 +291,12 @@ public:
    */
   void destroy (void);
 
+  /// Return the cached value from the ORB_Core.
+  /**
+   * This flag indicates whether the stub code should make use of the
+   * collocation opportunities that are available to the ORB.
+   */
+  CORBA::Boolean optimize_collocation_objects (void) const;
 protected:
 
   /// Destructor is to be called only through _decr_refcnt() to
@@ -432,6 +407,14 @@ protected:
   /// Forwarded IOR info
   IOP::IOR *forwarded_ior_info_;
 
+  /// TRUE if we want to take advantage of collocation optimization in
+  /// this ORB.
+  /**
+   * This should be the same value as cached in the ORB_Core. The
+   * reason for caching this helps our generated code, notably the
+   * stubs to be decoubled from ORB_Core. Please do not move it away.
+   */
+  const CORBA::Boolean collocation_opt_;
 };
 
 // Define a TAO_Stub auto_ptr class.
@@ -444,7 +427,6 @@ protected:
 class TAO_Export TAO_Stub_Auto_Ptr
 {
 public:
-
   // = Initialization and termination methods.
   /* explicit */ TAO_Stub_Auto_Ptr (TAO_Stub *p = 0);
   TAO_Stub_Auto_Ptr (TAO_Stub_Auto_Ptr &ap);
@@ -459,7 +441,6 @@ public:
   TAO_Stub *operator-> () const;
 
 protected:
-
   TAO_Stub *p_;
 
 };

@@ -1,3 +1,5 @@
+#-*- Makefile -*-
+
 #----------------------------------------------------------------------------
 #	$Id$
 #
@@ -11,6 +13,7 @@ TARGETS_LOCAL  = \
 	optimize.local \
 	install.local \
 	deinstall.local \
+	clean_idl_stubs.local \
 	clean.local \
 	realclean.local \
 	clobber.local \

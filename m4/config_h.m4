@@ -27,8 +27,6 @@ AC_DEFUN([ACE_PREP_CONFIG_HEADER],
 [
 dnl Text to be placed at the top of the `ace/config.h' header.
 AH_TOP([
-// -*- C++ -*-
-
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
@@ -38,10 +36,24 @@ AH_TOP([
 ])
 
 dnl Text to be placed at the bottom of the `ace/config.h' header.
+dnl
+dnl @note Do not remove the "] [" between the words "Local Variables".
+dnl       The generated Emacs "Local Variables" block will not contain
+dnl       those characters.  They are merely interpreted by M4 as two
+dnl       concatenated text blocks.  This is necessary to prevent
+dnl       Emacs from inadvertently applying the "Local Variables"
+dnl       block to be placed in the generated "config.h" header to
+dnl       this Autoconf/M4 file.
 AH_BOTTOM([
 
 
 #endif  /* ACE_CONFIG_H */
+
+
+// Local] [Variables:
+// mode:C++
+// End:
+
 ])
 
 
@@ -399,9 +411,6 @@ AH_TEMPLATE([ACE_HAS_BROKEN_WRITEV],
 [OS/compiler omits the const from the iovec parameter in the
 writev() prototype.])
 
-AH_TEMPLATE([ACE_HAS_BROKEN_XTI_MACROS],
-[OS header files have some problems with XTI (HP/UX 11).])
-
 AH_TEMPLATE([ACE_HAS_BSTRING],
 [Platform has <bstring.h> (which contains bzero() prototype)])
 
@@ -418,6 +427,9 @@ AH_TEMPLATE([ACE_HAS_CHARPTR_SPRINTF],
 
 AH_TEMPLATE([ACE_HAS_CLOCK_GETTIME],
 [Platform supports POSIX 1.b clock_gettime()])
+
+AH_TEMPLATE([ACE_HAS_CONFLICTING_XTI_MACROS],
+[OS header files have some problems with XTI (HP/UX 11).])
 
 AH_TEMPLATE([ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES],
 [Prototypes for both signal() and struct sigaction are consistent.])
@@ -505,14 +517,6 @@ AH_TEMPLATE([ACE_HAS_LONG_MAP_FAILED],
 AH_TEMPLATE([ACE_HAS_MALLOC_STATS], [Enabled malloc statistics collection.])
 
 AH_TEMPLATE([ACE_HAS_MEMCHR],[Use native implementation of memchr().])
-
-AH_TEMPLATE([ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION],
-[Avoid #including ace/streams.h in OS.h.  Users must include
-   ace/streams.h, <iostream>, or <iostream.h> explicitly in their code.
-   Some platforms, such as g++/VxWorks, have trouble compiling templates
-   and iostreams header because of static variables in the stream
-   headers.  This flag will also avoid extra compilation and runtime
-   overheads on some platforms.])
 
 AH_TEMPLATE([ACE_USES_OLD_IOSTREAMS],
 [Some files, such as ace/streams.h, want to include new style C++
@@ -628,6 +632,9 @@ AH_TEMPLATE([ACE_HAS_RECURSIVE_MUTEXES],
 AH_TEMPLATE([ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS],
 [Platform will recurse infinitely on thread exits from TSS cleanup
    routines (e.g., AIX)])
+
+AH_TEMPLATE([ACE_HAS_SIGACTION_CONSTP2],
+[Platform's sigaction() function takes const sigaction* as 2nd parameter])
 
 AH_TEMPLATE([ACE_HAS_REENTRANT_FUNCTIONS],
 [Platform supports reentrant functions (i.e., all the POSIX *_r
@@ -1091,14 +1098,6 @@ AH_TEMPLATE([ACE_LACKS_RLIMIT],
 AH_TEMPLATE([ACE_LACKS_RLIMIT_PROTOTYPE],
 [Platform/compiler lacks {get,set}rlimit() prototypes (e.g., Tandem)])
 
-AH_TEMPLATE([ACE_LACKS_POSIX_PROTOTYPES],
-[Platform lacks POSIX prototypes for certain System V functions like
-   shared memory and message queues.])
-
-AH_TEMPLATE([ACE_LACKS_SOME_POSIX_PROTOTYPES],
-[Platform lacks POSIX prototypes for certain System V functions like
-   shared memory and message queues.])
-
 AH_TEMPLATE([ACE_LACKS_PLACEMENT_OPERATOR_NEW],
 [Compiler doesn't support placement operator new(size_t, void *).])
 
@@ -1204,6 +1203,9 @@ AH_TEMPLATE([ACE_LACKS_STRCASECMP],
 AH_TEMPLATE([ACE_LACKS_STRRECVFD],[Platform doesn't define struct strrecvfd.])
 
 AH_TEMPLATE([ACE_LACKS_SYSCALL],[Platform doesn't have syscall() prototype])
+
+AH_TEMPLATE([ACE_LACKS_SYS_SELECT_H],
+[Platform lacks <sys/select.h> header file])
 
 AH_TEMPLATE([ACE_LACKS_SYS_TYPES_H],[Platform lacks <sys/types.h> header file])
 

@@ -37,9 +37,57 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#if !defined (WNOHANG)
-#  define WNOHANG 0100
-#endif /* !WNOHANG */
+  // Wrapping around wait status <wstat> macros for platforms that
+  // lack them.
+
+# if !defined (WCOREDUMP)
+#   define WCOREDUMP(stat) 0
+# endif /* WCOREDUMP */
+
+# if !defined (WNOHANG)
+#   define WNOHANG 0100
+# endif /* !WNOHANG */
+
+  // If the value of WIFEXITED(stat) is non-zero, this macro evaluates
+  // to the exit code that the child process exit(3C), or the value
+  // that the child process returned from main.  Peaceful exit code is
+  // 0.
+# if !defined (WEXITSTATUS)
+#   define WEXITSTATUS(stat) stat
+# endif /* WEXITSTATUS */
+
+# if !defined (WIFCONTINUED)
+#   define WIFCONTINUED(stat) 0
+# endif /* WIFCONTINUED */
+
+  // Evaluates to a non-zero value if status was returned for a child
+  // process that terminated normally.  0 means status wasn't
+  // returned.
+# if !defined (WIFEXITED)
+#   define WIFEXITED(stat) 1
+# endif /* WIFEXITED */
+
+  // Evaluates to a non-zero value if status was returned for a child
+  // process that terminated due to the receipt of a signal.  0 means
+  // status wasnt returned.
+# if !defined (WIFSIGNALED)
+#   define WIFSIGNALED(stat) 0
+# endif /* WIFSIGNALED */
+
+# if !defined (WIFSTOPPED)
+#   define WIFSTOPPED(stat) 0
+# endif /* WIFSTOPPED */
+
+# if !defined (WSTOPSIG)
+#   define WSTOPSIG(stat) 0
+# endif /* WSTOPSIG */
+
+  // If the value of  WIFSIGNALED(stat)  is non-zero,  this macro
+  // evaluates to the number of the signal that  caused  the
+  // termination of the child process.
+# if !defined (WTERMSIG)
+#   define WTERMSIG(stat) 0
+# endif /* WTERMSIG */
 
 #ifdef __cplusplus
 }

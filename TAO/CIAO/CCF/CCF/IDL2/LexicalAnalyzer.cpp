@@ -4,36 +4,59 @@
 
 #include "CCF/IDL2/LexicalAnalyzer.hpp"
 
+#include <stdlib.h> // strtol
 #include <iostream>
+
+using std::cerr;
+using std::endl;
+using std::string;
+using std::pair;
+using std::size_t;
 
 namespace CCF
 {
   namespace IDL2
   {
     LexicalAnalyzer::
-    LexicalAnalyzer (TokenStream<char>& is)
-        : loc_ ("C"),
-          is_ (is),
-          after_nl (true),
-          line_ (0)
+    LexicalAnalyzer (CompilerElements::TokenStream<Char>& is)
+        : loc_ ("C"), is_ (is)
     {
       // Keywords (alphabetic order).
       //
 
-      keyword_table_.insert ("abstract"  );
-      keyword_table_.insert ("attribute" );
-      keyword_table_.insert ("factory"   );
-      keyword_table_.insert ("in"        );
-      keyword_table_.insert ("include"   );
-      keyword_table_.insert ("inout"     );
-      keyword_table_.insert ("interface" );
-      keyword_table_.insert ("local"     );
-      keyword_table_.insert ("module"    );
-      keyword_table_.insert ("out"       );
-      keyword_table_.insert ("sinclude"  );
-      keyword_table_.insert ("supports"  );
-      keyword_table_.insert ("typeid"    );
-      keyword_table_.insert ("typeprefix");
+      keyword_table_.insert ("abstract"   );
+      keyword_table_.insert ("attribute"  );
+      keyword_table_.insert ("__binclude" );
+      keyword_table_.insert ("case"       );
+      keyword_table_.insert ("const"      );
+      keyword_table_.insert ("custom"     );
+      keyword_table_.insert ("default"    );
+      keyword_table_.insert ("exception"  );
+      keyword_table_.insert ("enum"       );
+      keyword_table_.insert ("factory"    );
+      keyword_table_.insert ("in"         );
+      keyword_table_.insert ("inout"      );
+      keyword_table_.insert ("interface"  );
+      keyword_table_.insert ("__qinclude" );
+      keyword_table_.insert ("local"      );
+      keyword_table_.insert ("module"     );
+      keyword_table_.insert ("native"     );
+      keyword_table_.insert ("oneway"     );
+      keyword_table_.insert ("out"        );
+      keyword_table_.insert ("private"    );
+      keyword_table_.insert ("public"     );
+      keyword_table_.insert ("raises"     );
+      keyword_table_.insert ("readonly"   );
+      keyword_table_.insert ("sequence"   );
+      keyword_table_.insert ("struct"     );
+      keyword_table_.insert ("supports"   );
+      keyword_table_.insert ("switch"     );
+      keyword_table_.insert ("truncatable");
+      keyword_table_.insert ("typedef"    );
+      keyword_table_.insert ("typeid"     );
+      keyword_table_.insert ("typeprefix" );
+      keyword_table_.insert ("union"      );
+      keyword_table_.insert ("valuetype"  );
 
       // Identifiers (alphabetic order).
       //
@@ -83,208 +106,153 @@ namespace CCF
       punctuation_table_.insert ("}");
       punctuation_table_.insert ("(");
       punctuation_table_.insert (")");
+      punctuation_table_.insert ("<");
+      punctuation_table_.insert (">");
       punctuation_table_.insert (";");
-    }
 
-    LexicalAnalyzer::Char LexicalAnalyzer::
-    get_from_stream ()
-    {
-      int_type i = is_.next ();
-
-      if (after_nl)
-      {
-        after_nl = false;
-        line_++;
-      }
-
-      if (i == '\n') after_nl = true;
-
-      return Char (i, line_);
+      // operators
+      //
+      operator_table_.insert ("+");  // add
+      operator_table_.insert ("&");  // and
+      operator_table_.insert ("~");  // com
+      operator_table_.insert ("/");  // div
+      operator_table_.insert ("=");  // eq
+      operator_table_.insert ("<<"); // lsh
+      operator_table_.insert ("*");  // mul
+      operator_table_.insert ("|");  // or
+      operator_table_.insert ("%");  // rem
+      operator_table_.insert ("-");  // sub
+      operator_table_.insert (">>"); // rsh
+      operator_table_.insert ("^");  // xor
     }
 
 
     LexicalAnalyzer::Char LexicalAnalyzer::
     get ()
     {
-      if (!buffer_.empty ())
+      if (!ibuffer_.empty ())
       {
-        Char c = buffer_.front ();
-        buffer_.pop_front ();
+        Char c = ibuffer_.front ();
+        ibuffer_.pop_front ();
         return c;
       }
       else
       {
-        return get_from_stream ();
+        return is_.next ();
       }
     }
 
     LexicalAnalyzer::Char LexicalAnalyzer::
     peek ()
     {
-      if (buffer_.empty ())
+      if (ibuffer_.empty ())
       {
-        buffer_.push_back (get_from_stream ());
+        ibuffer_.push_back (is_.next ());
       }
 
-      return buffer_.front ();
+      return ibuffer_.front ();
     }
 
     LexicalAnalyzer::Char LexicalAnalyzer::
     peek_more ()
     {
-      if (buffer_.size () < 2)
+      while (ibuffer_.size () < 2)
       {
-        buffer_.push_back (get_from_stream ());
+        ibuffer_.push_back (is_.next ());
       }
 
-      return buffer_.at (1);
+      return ibuffer_.at (1);
     }
 
     void LexicalAnalyzer::
     ret (Char const& c)
     {
-      buffer_.push_front (c);
+      ibuffer_.push_front (c);
     }
+
 
     TokenPtr LexicalAnalyzer::
     next ()
     {
-      Char c = skip_space (get ());
+      while (true) // Recovery loop.
+      {
+        Char c = skip_space (get ());
 
-      if (c.is_eof ()) return TokenPtr (new EndOfStream (c.line ()));
+        if (is_eos (c)) return TokenPtr (new EndOfStream (0));
 
-      if (c.is_alpha (loc_)
-          || c == '_'
-          || (c == ':' && peek () == ':')) return identifier (c);
+        TokenPtr token;
 
-      TokenPtr token;
+        if (character_literal (c, token)) return token;
 
-      if (string_literal (c, token)) return token;
+        if (string_literal (c, token)) return token;
 
-      if (punctuation (c, token)) return token;
+        if (integer_literal (c, token)) return token;
+
+        // Check for identifier after literals  because it can be
+        // triggered by wide string prefix (L"...").
+        //
+        if (is_alpha (c) || c == '_' || (c == ':' && peek () == ':'))
+        {
+          return identifier (c);
+        }
+
+        // Check for punctuation after identifier because ':' in
+        // scoped name will trigger.
+        //
+        if (operator_ (c, token)) return token;
+
+        if (punctuation (c, token)) return token;
+
+        cerr << c.line () << ": error: unable to derive any token "
+             << "from \'" << c << "\'" << endl;
 
 
-      std::cerr << c.line () << ": error: unable to derive any token "
-                << "from \'" << c.char_ () << "\'" << std::endl;
-
-      //@@ I should return something special here. Perhaps error recovery
-      //   should happen.
-      return TokenPtr (new EndOfStream (c.line ()));
+        //Do some primitive error recovery.
+        //
+        while (c != ';')
+        {
+          c = skip_space (get ());
+          if (is_eos (c)) return TokenPtr (new EndOfStream (0));
+        }
+      }
     }
 
     LexicalAnalyzer::Char LexicalAnalyzer::
     skip_space (Char c)
     {
-      bool first (true);
+      while (!is_eos (c) && is_space (c)) c = get ();
 
-      while (true)
-      {
-        if (!first) c = get ();
-        else first = false;
-
-        if (c.is_eof ()) return c;
-
-        // Handling spaces
-        if (c.is_space (loc_)) continue;
-
-        // Handling C++ comments
-        if (c == '/' && peek () == '/')
-        {
-          cxx_comment (c);
-          continue;
-        }
-
-        // Handling C comments
-        if (c == '/' && peek () == '*')
-        {
-          c_comment (c);
-          continue;
-        }
-
-        return c;
-      }
-    }
-
-
-    void LexicalAnalyzer::
-    cxx_comment (Char c)
-    {
-      while (c != '\n')
-      {
-        c = get ();
-
-        if (c.is_eof ())
-        {
-          std::cerr << "warning: no new line at the end of file"
-                    << std::endl;
-
-          //@@ I wonder if it's ok to call get () again  after getting eof.
-          //@@ no, it's not: std::istream throws exception (when enabled) on
-          //   second attempt.
-          break;
-        }
-      }
-    }
-
-    void LexicalAnalyzer::
-    c_comment (Char c)
-    {
-      get (); // get '*'
-
-      do
-      {
-        c = get ();
-
-        if (c.is_eof ())
-        {
-          std::cerr << "error: end of file before C-style comment finished"
-                    << std::endl;
-          return;
-
-          //@@ I wonder if it's ok to call get () again  after getting eof.
-          //   No, it is not.
-        }
-
-        //std::cerr << "lexer: c_comment: read character \'" << c << "\'"
-        //          << std::endl;
-      }
-      while (c != '*' || peek () != '/');
-
-      //std::cerr << "lexer: c_comment: finished C-comment \'" << c
-      //          << "\',\'" << to_char_type (peek ())
-      //          << "\'" << std::endl;
-
-      get (); // get '/'
+      return c;
     }
 
     bool LexicalAnalyzer::
-    read_simple_identifier (std::string& lexeme, CharBuffer& buf)
+    read_simple_identifier (string& lexeme, CharBuffer& buf)
     {
       Char c = skip_space (get ());
 
       buf.push_back (c);
 
-      if (c.is_eof ()) return false;
+      if (is_eos (c)) return false;
 
-      if (c.is_alpha (loc_) || c == '_')
+      if (is_alpha (c) || c == '_')
       {
-        lexeme += c.char_ ();
+        lexeme += c;
 
         while (true)
         {
           c = peek ();
 
-          if (c.is_eof ())
+          if (is_eos (c))
           {
-            std::cerr << "warning: no new line at the end of file"
-                      << std::endl;
+            cerr << "warning: no new line at the end of file" << endl;
             break;
           }
 
-          if (c.is_alnum (loc_) || c == '_')
+          if (is_alnum (c) || c == '_')
           {
-            buf.push_back (get ());
-            lexeme += c.char_ ();
+            get ();
+            buf.push_back (c);
+            lexeme += c;
             continue;
           }
 
@@ -297,14 +265,14 @@ namespace CCF
       return false;
     }
 
+
     bool LexicalAnalyzer::
-    traverse_identifier_tree (std::string& lexeme,
-                              IdentifierTreeNode const& node)
+    traverse_identifier_tree (string& lexeme, IdentifierTreeNode const& node)
     {
       if (node.map_.empty ()) return true;
 
       CharBuffer buf;
-      std::string part;
+      string part;
 
       if (read_simple_identifier (part, buf))
       {
@@ -334,72 +302,72 @@ namespace CCF
 
 
     TokenPtr LexicalAnalyzer::
-    identifier (Char first)
+    identifier (Char c)
     {
-      Char c (first);
+      unsigned long line (c.line ());
 
-      std::string lexeme;
+      string lexeme;
 
       enum
       {
-        SIMPLE,
-        SCOPED,
-        OTHER
-      } type = SIMPLE;
+        simple,
+        scoped,
+        other
+      } type = simple;
 
       if (c == ':')
       {
-        if((c = get ()) != ':')
+        //@@ not checking for eos here
+        if ((c = get ()) != ':')
         {
-          std::cerr << "error: " << c.line () << ": \':\' expected."
-                    << std::endl;
+          cerr << "error: " << c.line () << ": \':\' expected."
+               << endl;
 
-          return TokenPtr (new EndOfStream (c.line ()));
+          return TokenPtr (new EndOfStream (0));
           //@@ error handling is lame for lexical analyzer.
         }
 
         lexeme = "::";
-        type = SCOPED;
+        type = scoped;
         c = get ();
       }
 
       // First caracter of an identifier.
       //
-      if (c.is_eof ())
+      if (is_eos (c))
       {
-        std::cerr << "error: invalid identifier" << std::endl;
-        return TokenPtr (new EndOfStream (c.line ()));
+        cerr << "error: invalid identifier" << endl;
+        return TokenPtr (new EndOfStream (0));
       }
 
-      if (c.is_alpha (loc_) || c == '_')
+      if (is_alpha (c) || c == '_')
       {
-        lexeme += c.char_ ();
+        lexeme += c;
       }
       else
       {
-        std::cerr << "error: invalid identifier" << std::endl;
-        return TokenPtr (new EndOfStream (c.line ()));
+        cerr << "error: invalid identifier" << endl;
+        return TokenPtr (new EndOfStream (0));
       }
 
       while (true)
       {
         c = peek ();
 
-        if (c.is_eof ())
+        if (is_eos (c))
         {
-          std::cerr << "warning: no new line at the end of file"
-                    << std::endl;
+          cerr << "warning: no new line at the end of file" << endl;
           break;
         }
 
-        // std::cerr << "lexer::identifier: peeking on \'" << c.char_ ()
+        // cerr << "lexer::identifier: peeking on \'" << c.char_ ()
         //          << "\'; current lexeme \'" << lexeme << "\'"
-        //          << std::endl;
+        //          << endl;
 
-        if (c.is_alnum (loc_) || c == '_')
+        if (is_alnum (c) || c == '_')
         {
           get ();
-          lexeme += c.char_ ();
+          lexeme += c;
           continue;
         }
 
@@ -408,17 +376,17 @@ namespace CCF
           get ();
           get ();
           lexeme += "::";
-          if (type == SIMPLE) type = OTHER;
+          if (type == simple) type = other;
           continue;
         }
 
         break;
       }
 
-      //std::cerr << "lexer: found identifier with lexeme \'"
-      //          << lexeme << "\'" << std::endl;
+      //cerr << "lexer: found identifier with lexeme \'"
+      //          << lexeme << "\'" << endl;
 
-      if (type == SIMPLE)
+      if (type == simple)
       {
         // Check if it's a keyword.
         {
@@ -426,7 +394,7 @@ namespace CCF
 
           if (i != keyword_table_.end ())
           {
-            return TokenPtr (new Keyword (*i, first.line ()));
+            return TokenPtr (new Keyword (*i, line));
           }
         }
 
@@ -442,7 +410,7 @@ namespace CCF
             if (traverse_identifier_tree (lexeme, i->second))
             {
               return TokenPtr (
-                new SimpleIdentifier (lexeme, first.line ()));
+                new SimpleIdentifier (lexeme, line));
             }
             else
             {
@@ -451,23 +419,32 @@ namespace CCF
           }
         }
 
+        // Check if it is a boolean literal.
+        //
+        if (lexeme == "TRUE" || lexeme == "FALSE")
+        {
+          return TokenPtr (new BooleanLiteral (lexeme, line));
+        }
+
         // Default to SimpleIdentifier.
         //
-        return TokenPtr (new SimpleIdentifier (lexeme, line_));
+        return TokenPtr (new SimpleIdentifier (lexeme, line));
       }
-      else if (type == SCOPED)
+      else if (type == scoped)
       {
-        return TokenPtr (new ScopedIdentifier (lexeme, first.line ()));
+        return TokenPtr (new ScopedIdentifier (lexeme, line));
       }
-      else //type == OTHER
+      else //type == other
       {
-        return TokenPtr (new Identifier (lexeme, first.line ()));
+        return TokenPtr (new Identifier (lexeme, line));
       }
     }
 
     bool LexicalAnalyzer::
     punctuation (Char c, TokenPtr& token)
     {
+      unsigned long line (c.line ());
+
       PunctuationTable::const_iterator i = punctuation_table_.begin ();
 
       while (true)
@@ -476,22 +453,251 @@ namespace CCF
 
         if (i == punctuation_table_.end ()) return false;
 
-        // if it's a two-character punctuation
-        if (i->size () == 2)
+        if (i->size () == 2) // two-character punctuation
         {
-          //@@ this code is broken.
-          abort ();
+          Char pc (peek ());
 
-          if ((*i)[1] != peek ())
+          if (!is_eos (pc) && (*i)[1] == pc)
           {
-            // move on to the next candidate
+            get ();
+          }
+          else
+          {
+            // Move on to the next candidate.
+            //
             ++i;
             continue;
           }
         }
 
-        token = TokenPtr (new Punctuation (*i, c.line ()));;
+        token = TokenPtr (new Punctuation (*i, line));
         return true;
+      }
+    }
+
+    bool LexicalAnalyzer::
+    operator_ (Char c, TokenPtr& token)
+    {
+      unsigned long line (c.line ());
+
+      OperatorTable::const_iterator i = operator_table_.begin ();
+
+      while (true)
+      {
+        for (;i != operator_table_.end () && (*i)[0] != c; ++i);
+
+        if (i == operator_table_.end ()) return false;
+
+        if (i->size () == 2) // two-character operator
+        {
+          Char pc (peek ());
+
+          if (!is_eos (pc) && (*i)[1] == pc)
+          {
+            get ();
+          }
+          else
+          {
+            // Move on to the next candidate.
+            //
+            ++i;
+            continue;
+          }
+        }
+
+        token = TokenPtr (new Operator (*i, line));
+        return true;
+      }
+    }
+
+    pair<char, size_t> LexicalAnalyzer::
+    scan_char (char const* s) throw (Format)
+    {
+      if (*s == '\0')
+      {
+        throw Format ();
+      }
+      else if (*s != '\\')
+      {
+        return pair<char, size_t> (*s, 1);
+      }
+      else
+      {
+        // Expected size is 2.
+        //
+        pair<char, size_t> r ('\0', 2);
+
+        switch (*++s)
+        {
+        case 'n':
+          r.first = '\n';
+          break;
+
+        case 't':
+          r.first = '\t';
+          break;
+
+        case 'v':
+          r.first = '\v';
+          break;
+
+        case 'b':
+          r.first = '\b';
+          break;
+
+        case 'r':
+          r.first = '\r';
+          break;
+
+        case 'f':
+          r.first = '\f';
+          break;
+
+        case 'a':
+          r.first = '\a';
+          break;
+
+        case '\\':
+          r.first = '\\';
+          break;
+
+        case '?':
+          r.first = '\?';
+          break;
+
+        case '\'':
+          r.first = '\'';
+          break;
+
+        case '"':
+          r.first = '\"';
+          break;
+
+        case 'x':
+          {
+            // hex
+
+            char c (*++s);
+
+            if(is_hex_digit (c))
+            {
+              // Maximum 2 digits.
+              //
+              string holder (s, 2);
+
+              char* end;
+
+              // Cannot fail. -1 < v < 256.
+              //
+              long v (strtol(holder.c_str (), &end, 16));
+
+              r.first = static_cast<char> (v);
+              r.second = 2 + end - holder.c_str ();
+            }
+            else
+            {
+              throw Format ();
+            }
+            break;
+          }
+
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+          {
+            // Maximum 3 digits.
+            //
+            string holder (s, 3);
+
+            char* end;
+
+            // Cannot fail.
+            //
+            long v (strtol(holder.c_str (), &end, 8));
+
+            if (v < 0 || v > 255) throw Format ();
+
+            r.first = static_cast<char> (v);
+            r.second = 1 + end - holder.c_str ();
+
+            break;
+          }
+        default:
+          {
+            throw Format ();
+          }
+        }
+
+        return r;
+
+      }
+    }
+
+    string LexicalAnalyzer::
+    scan_string (string const& s) throw (Format)
+    {
+      string r;
+
+      char const* p = s.c_str ();
+
+      while (*p != '\0')
+      {
+        pair<char, size_t> c (scan_char (p));
+
+        if (c.first == '\0') throw Format ();
+
+        r += c.first;
+        p += c.second;
+      }
+
+      return r;
+    }
+
+
+    bool LexicalAnalyzer::
+    character_literal (Char c, TokenPtr& token)
+    {
+      if (c != '\'') return false;
+
+      unsigned long line (c.line ());
+      string lexeme;
+
+      Char prev (c);
+
+      while (true)
+      {
+        c = get ();
+
+        if (is_eos (c))
+        {
+          cerr << "error: end of file while reading character literal"
+               << endl;
+          break;
+        }
+
+        if (c == '\'' && prev != '\\') break;
+
+        lexeme += c;
+        prev = c;
+      }
+
+      try
+      {
+        pair<char, size_t> r (scan_char (lexeme.c_str ()));
+        if (r.second != lexeme.size ()) throw Format ();
+
+        token = TokenPtr (new CharacterLiteral (r.first, lexeme, line));
+        return true;
+      }
+      catch (Format const&)
+      {
+        cerr << "error: invalid character literal format" << endl;
+        return false;
       }
     }
 
@@ -500,25 +706,234 @@ namespace CCF
     {
       if (c != '\"') return false;
 
-      std::string lexeme;
+      unsigned long line (c.line ());
+      string lexeme;
+      string value;
+
+      try
+      {
+        while (true)
+        {
+          string r (string_literal_trailer ());
+          value += scan_string (r);
+          lexeme += '\"' + r + '\"';
+
+          // Check if there are more strings.
+          //
+
+          c = skip_space (get ());
+
+          if (c != '\"')
+          {
+            ret (c); // put it back
+            break;
+          }
+
+
+          // Add single space as a string separator.
+          //
+          lexeme += " ";
+        }
+
+        // cerr << "string literal: <" << lexeme << ">/<" << value << ">"
+        //      << endl;
+
+        token = TokenPtr (new StringLiteral (value, lexeme, line));
+        return true;
+      }
+      catch (Format const&)
+      {
+        cerr << "error: invalid string literal format" << endl;
+        return false;
+      }
+    }
+
+    string LexicalAnalyzer::
+    string_literal_trailer ()
+    {
+      string r;
+
+      Char prev ('\"', 0);
 
       while (true)
       {
         Char c = get ();
 
-        if (c.is_eof ())
+        if (is_eos (c))
         {
-          std::cerr << "warning: end of file while reading string literal"
-                    << std::endl;
+          cerr << "error: end of file while reading string literal" << endl;
           break;
         }
 
-        if (c == '\"') break;
-        else lexeme += c.char_ ();
+        if (c == '\"' && prev != '\\') break;
+
+        r += c;
+        prev = c;
       }
 
-      token = TokenPtr (new StringLiteral (lexeme, c.line ()));
-      return true;
+      return r;
+    }
+
+    unsigned long long LexicalAnalyzer::
+    scan_integer (string const& s, unsigned short base)
+      throw (Format, Boundary)
+    {
+      unsigned long long const max (~0ULL);
+      unsigned long long bound (max / base);
+
+
+      char const* p (s.c_str ());
+
+      // Skip leading 0 if any.
+      //
+      while (*p != '\0' && *p == '0') ++p;
+
+
+      unsigned long long result (0);
+
+      while(*p != '\0')
+      {
+        unsigned short digit;
+
+        char c (to_upper (*p));
+
+        if (is_dec_digit (c))
+        {
+          digit = c - '0';
+        }
+        else if (is_hex_digit (c))
+        {
+          digit = c - 'A' + 10;
+        }
+        else
+        {
+          throw Format ();
+        }
+
+        if (digit > base) throw Format ();
+
+        if (result > bound)
+        {
+          // cerr << "boundary: base: " << base << "; bound: " << std::hex
+          //     << bound << "; result: " << std::hex << result << endl;
+
+          throw Boundary ();
+        }
+
+
+        result *= base;
+        result += digit;
+
+        ++p;
+      }
+
+      return result;
+    }
+
+    //@@ need to return unparsed characters for recovery (like in
+    //   integer_literal).
+    //
+    bool LexicalAnalyzer::
+    integer_literal (Char c, TokenPtr& token)
+    {
+      try
+      {
+        if (!is_dec_digit (c)) return false;
+
+        unsigned long line (c.line ());
+
+        ret (c); // Temporarily return the character.
+
+        string lexeme, number;
+
+        unsigned short base (10); // assume 10
+
+        // Determine base and get rid of its identifications.
+        //
+        //
+        if (c == '0')
+        {
+          lexeme += c;
+
+          get ();
+
+          Char pc (peek ());
+
+          if (!is_eos (pc))
+          {
+            if (pc == 'x' || pc == 'X')
+            {
+              get ();
+              base = 16;
+              lexeme += pc;
+
+              c = peek ();
+            }
+            else
+            {
+              base = 8;
+              if (!is_oct_digit (pc))
+              {
+                number += c; // this is needed to handle single 0
+              }
+
+              c = pc;
+            }
+          }
+          else
+          {
+            number += c; // this is needed to handle single 0
+          }
+        }
+
+        while (true)
+        {
+          // Make sure c is a legal character.
+          //
+
+          if (is_eos (c)) break;
+
+          if (base == 8 && !is_oct_digit (c))
+          {
+            break;
+          }
+          else if (base == 10 && !is_dec_digit (c))
+          {
+            break;
+          }
+          else if (!is_hex_digit (c))
+          {
+            break;
+          }
+
+          get ();
+
+          lexeme += c;
+          number += c;
+
+          c = peek ();
+        }
+
+        if (number.empty ()) throw Format ();
+
+        unsigned long long value (scan_integer (number, base));
+
+        //cerr << "integer literal: <" << lexeme << ">/<" << number << ">/<"
+        //     << value << ">" << endl;
+
+        token = TokenPtr (new IntegerLiteral (value, lexeme, line));
+        return true;
+      }
+      catch (Format const&)
+      {
+        cerr << "error: invalid integer literal format" << endl;
+        return false;
+      }
+      catch (Boundary const&)
+      {
+        cerr << "error: integer literal is too big" << endl;
+        return false;
+      }
     }
   }
 }

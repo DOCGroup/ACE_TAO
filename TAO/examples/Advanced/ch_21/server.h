@@ -29,10 +29,12 @@
 #include <set>
 #include <list>
 #include <map>
-// #include <assert.h>
+#include <assert.h>
 // #include <corba/poaS.h>
 
 #include "CCSS.h"
+
+using namespace std;
 
 class Controller_impl;
 

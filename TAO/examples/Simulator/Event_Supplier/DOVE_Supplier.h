@@ -19,7 +19,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corba.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/Event_Utilities.h"

@@ -382,6 +382,19 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference
                                        ACE_ENV_ARG_PARAMETER);
 }
 
+ACE_INLINE CORBA::Object_ptr
+TAO_POA::servant_to_reference (PortableServer::Servant servant
+                               ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::ServantNotActive,
+                   PortableServer::POA::WrongPolicy))
+{
+  TAO_POA_GUARD_RETURN (CORBA::Object::_nil ());
+
+  return this->servant_to_reference_i (servant
+                                       ACE_ENV_ARG_PARAMETER);
+}
+
 ACE_INLINE PortableServer::Servant
 TAO_POA::id_to_servant (const PortableServer::ObjectId &oid
                         ACE_ENV_ARG_DECL)

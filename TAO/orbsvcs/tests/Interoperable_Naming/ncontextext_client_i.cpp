@@ -23,6 +23,8 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+
+// FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
 // Constructor

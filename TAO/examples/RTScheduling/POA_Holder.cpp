@@ -1,6 +1,7 @@
 //$Id$
 #include "POA_Holder.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/Log_Msg.h"
 #include "tao/debug.h"
 
 POA_Holder::POA_Holder (void)

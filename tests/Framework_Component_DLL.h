@@ -22,8 +22,8 @@
 
 #include "Framework_Component_DLL_Export.h"
 #include "ace/Log_Msg.h"
-#include "ace/Synch_T.h"
 #include "ace/Singleton.h"
+#include "ace/Synch_Traits.h"
 
 /// This  we will use to test the ACE_Framework_Repository
 class Simple_Service

@@ -1,14 +1,15 @@
+// $Id$
 project(*notify perf Structured Supplier): notifytest {
+  avoids += minimum_corba
   exename = Structured_Supplier
-
   Source_Files {
     Structured_Supplier.cpp
   }
 }
 
 project(*notify perf Structured Consumer): notifytest {
+  avoids += minimum_corba
   exename = Structured_Consumer
-
   Source_Files {
     goC.cpp
     common.cpp
@@ -18,16 +19,16 @@ project(*notify perf Structured Consumer): notifytest {
 }
 
 project(*notify perf Sequence Supplier): notifytest {
+  avoids += minimum_corba
   exename = Sequence_Supplier
-
   Source_Files {
     Sequence_Supplier.cpp
   }
 }
 
 project(*notify perf Sequence Consumer): notifytest {
+  avoids += minimum_corba
   exename = Sequence_Consumer
-
   Source_Files {
     goC.cpp
     common.cpp

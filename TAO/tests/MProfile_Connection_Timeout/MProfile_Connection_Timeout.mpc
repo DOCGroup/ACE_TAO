@@ -1,11 +1,14 @@
-project(*Server): taoserver, messaging, iormanip {
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoexe, portableserver, messaging, iormanip {
   Source_Files {
     test_i.cpp
     server.cpp
   }
 }
 
-project(*Client): taoclient, messaging, iormanip {
+project(*Client): taoexe, messaging, iormanip {
   Source_Files {
     testC.cpp
     client.cpp

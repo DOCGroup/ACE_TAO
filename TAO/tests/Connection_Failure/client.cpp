@@ -2,6 +2,8 @@
 
 #include "testC.h"
 
+#include "ace/Log_Msg.h"
+
 ACE_RCSID(Connection_Failure, client, "$Id$")
 
 const char *ior =
@@ -23,11 +25,6 @@ main (int argc, char *argv[])
       // First connection happens here..
       test::_narrow (tmp.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
-      // Should not reach here.
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "_narrow() succeeded to non-existent object when it should not have...\n"),
-                        -1);
     }
   ACE_CATCH (CORBA::TRANSIENT, transient_exception)
     {
@@ -40,6 +37,6 @@ main (int argc, char *argv[])
 
   // Should not reach here.
   ACE_ERROR_RETURN ((LM_ERROR,
-                     "This test should not reach this code...\n"),
-                    -1);
+                     "_narrow() succeeded to non-existent object when it should not have...\n"),
+                     -1);
 }

@@ -12,6 +12,7 @@
 
 #ifndef TAO_LF_CONNECT_STRATEGY_H
 #define TAO_LF_CONNECT_STRATEGY_H
+
 #include /**/ "ace/pre.h"
 
 #include "Connect_Strategy.h"
@@ -52,6 +53,6 @@ public:
 
 };
 
-
 #include /**/ "ace/post.h"
+
 #endif /*TAO_LF_CONNECT_STRATEGY_H*/

@@ -1,5 +1,7 @@
 #
-# Makefile for building the Faults test executables
+# $Id$
+#
+# Makefile for building the Thread_Pool test executables
 #
 
 MAKEFILES = server.bor client.bor

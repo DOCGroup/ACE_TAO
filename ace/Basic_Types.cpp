@@ -1,4 +1,4 @@
-#include "ace/OS.h"
+#include "ace/Basic_Types.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Basic_Types.i"
@@ -12,7 +12,10 @@ ACE_RCSID (ace,
 
 #if defined (ACE_LACKS_LONGLONG_T)
 # include "ace/Log_Msg.h"
+# include "ace/OS_NS_stdio.h"
+# include "ace/OS_NS_string.h"
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+// FUZZ: disable check_for_streams_include
 #  include "ace/streams.h"
 # endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 

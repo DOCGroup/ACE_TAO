@@ -13,6 +13,7 @@
 DIRS  = Any \
         Factory \
         Forward \
+	Collocated \
         TC_Alignment
 
 

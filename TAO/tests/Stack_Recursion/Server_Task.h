@@ -5,7 +5,7 @@
 #ifndef STACK_RECURSION_SERVER_TASK_H
 #define STACK_RECUSRION_SERVER_TASK_H
 #include /**/ "ace/pre.h"
-#include "tao/corba.h"
+#include "tao/ORB.h"
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

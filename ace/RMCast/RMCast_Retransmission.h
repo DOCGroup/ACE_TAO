@@ -21,7 +21,6 @@
 #include "RMCast_Module.h"
 #include "RMCast_Copy_On_Write.h"
 #include "ace/RB_Tree.h"
-#include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

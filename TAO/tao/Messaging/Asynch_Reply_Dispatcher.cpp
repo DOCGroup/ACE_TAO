@@ -8,13 +8,14 @@
 #include "tao/ORB_Core.h"
 #include "tao/Transport.h"
 
+#include "ace/CORBA_macros.h"
+
 #if !defined (__ACE_INLINE__)
 #include "Asynch_Reply_Dispatcher.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Messaging, Asynch_Reply_Dispatcher, "$Id$")
 
-#if (TAO_HAS_AMI_CALLBACK == 1)
 
 // Constructor.
 TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
@@ -22,10 +23,10 @@ TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
     Messaging::ReplyHandler_ptr reply_handler,
     TAO_ORB_Core *orb_core
   )
-  :TAO_Asynch_Reply_Dispatcher_Base (orb_core),
-   reply_handler_skel_ (reply_handler_skel),
-   reply_handler_ (Messaging::ReplyHandler::_duplicate (reply_handler)),
-   timeout_handler_ (this, orb_core->reactor ())
+  :TAO_Asynch_Reply_Dispatcher_Base (orb_core)
+  , reply_handler_skel_ (reply_handler_skel)
+  , reply_handler_ (Messaging::ReplyHandler::_duplicate (reply_handler))
+  , timeout_handler_ (0)
 {
 }
 
@@ -40,17 +41,45 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
     TAO_Pluggable_Reply_Params &params
   )
 {
-  // AMI Timeout Handling Begin
+  if (params.input_cdr_ == 0)
+    return -1;
 
-  timeout_handler_.cancel ();
+  bool cont_dispatch =
+    this->try_dispatch_reply ();
 
-  // AMI Timeout Handling End
+  if (this->timeout_handler_)
+    {
+      // If we had registered timeout handlers just cancel them and
+      // loose ownership of the handlers
+      this->timeout_handler_->cancel ();
+      this->timeout_handler_->remove_reference ();
+      this->timeout_handler_ = 0;
+      // AMI Timeout Handling End
+    }
+
+  // A simple protocol that we follow. If the timeout had been handled
+  // by another thread, the last refcount for us will be held by the
+  // timeout handler. Hence the above call to remove_reference () will
+  // delete us. We then have to rely on the status of our stack
+  // variable to exit safely.
+  if (!cont_dispatch)
+    return 0;
 
   this->reply_status_ = params.reply_status_;
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
   ACE_Data_Block *db =
-    this->reply_cdr_.clone_from (params.input_cdr_);
+    this->reply_cdr_.clone_from (*params.input_cdr_);
+
+  if (db == 0)
+    {
+      if (TAO_debug_level > 2)
+        ACE_ERROR ((
+          LM_ERROR,
+          "TAO (%P|%t) - Asynch_Reply_Dispatcher::dispatch_reply ",
+          "clone_from failed \n"));
+      return -1;
+    }
 
   // See whether we need to delete the data block by checking the
   // flags. We cannot be happy that we initally allocated the
@@ -72,9 +101,11 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
   if (TAO_debug_level >= 4)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P | %t):TAO_Asynch_Reply_Dispatcher::")
-                  ACE_TEXT ("dispatch_reply:\n")));
+                  ACE_TEXT ("TAO_Messaging (%P|%t) - Asynch_Reply_Dispatcher::")
+                  ACE_TEXT ("dispatch_reply\n")));
     }
+
+
 
   CORBA::ULong reply_error = TAO_AMI_REPLY_NOT_OK;
   switch (this->reply_status_)
@@ -118,9 +149,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (
       ACE_ENDTRY;
     }
 
-  // This was dynamically allocated. Now the job is done. Commit
-  // suicide here.
-  delete this;
+  this->decr_refcount ();
 
   return 1;
 }
@@ -130,11 +159,27 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
 {
   ACE_TRY_NEW_ENV
     {
-      // AMI Timeout Handling Begin
+      bool cont_dispatch =
+        this->try_dispatch_reply ();
 
-      timeout_handler_.cancel ();
+      if (this->timeout_handler_)
+        {
+          // If we had registered timeout handlers just cancel them and
+          // loose ownership of the handlers
+          this->timeout_handler_->cancel ();
+          this->timeout_handler_->remove_reference ();
+          this->timeout_handler_ = 0;
+        }
 
       // AMI Timeout Handling End
+
+      // A simple protocol that we follow. If the timeout had been handled
+      // by another thread, the last refcount for us will be held by the
+      // timeout handler. Hence the above call to remove_reference () will
+      // delete us. We then have to rely on the status of our stack
+      // variable to exit safely.
+      if (!cont_dispatch)
+        return;
 
       // Generate a fake exception....
       CORBA::COMM_FAILURE comm_failure (0, CORBA::COMPLETED_MAYBE);
@@ -168,8 +213,7 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
     }
   ACE_ENDTRY;
 
-  // Commit suicide.
-  delete this;
+  (void) this->decr_refcount ();
 }
 
 // AMI Timeout Handling Begin
@@ -177,18 +221,27 @@ TAO_Asynch_Reply_Dispatcher::connection_closed (void)
 void
 TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
     {
       // Generate a fake exception....
       CORBA::TIMEOUT timeout_failure (
-        CORBA::SystemException::_tao_minor_code (TAO_TIMEOUT_SEND_MINOR_CODE,
-                                                 errno),
-         CORBA::COMPLETED_NO);
+        CORBA::SystemException::_tao_minor_code (
+            TAO_TIMEOUT_RECV_MINOR_CODE,
+            errno),
+         CORBA::COMPLETED_MAYBE);
 
       TAO_OutputCDR out_cdr;
 
       timeout_failure._tao_encode (out_cdr ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      // This is okay here... Everything relies on our refcount being
+      // held by the timeout handler, whose refcount in turn is held
+      // by the reactor.
+      if (!this->try_dispatch_reply ())
+        return;
 
       // Turn into an output CDR
       TAO_InputCDR cdr (out_cdr);
@@ -212,21 +265,28 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
 
     }
   ACE_ENDTRY;
+  ACE_CHECK;
 
-  // This was dynamically allocated. Now the job is done. Commit
-  // suicide here.
-  delete this;
+  (void) this->decr_refcount ();
 }
 
 long
 TAO_Asynch_Reply_Dispatcher::schedule_timer (CORBA::ULong request_id,
-                                             const ACE_Time_Value &max_wait_time)
+                                             const ACE_Time_Value &max_wait_time
+                                             ACE_ENV_ARG_DECL)
 {
-  return this->timeout_handler_.schedule_timer (this->transport_->tms (),
-                                                request_id,
-                                                max_wait_time);
+  if (this->timeout_handler_ == 0)
+    {
+      // @@ Need to use the pool for this..
+      ACE_NEW_THROW_EX (this->timeout_handler_,
+                        TAO_Asynch_Timeout_Handler (
+                          this,
+                          this->transport_->orb_core ()->reactor ()),
+                        CORBA::NO_MEMORY ());
+    }
+
+  return this->timeout_handler_->schedule_timer (
+      this->transport_->tms (),
+      request_id,
+      max_wait_time);
 }
-
-// AMI Timeout Handling End
-
-#endif /* TAO_HAS_AMI_CALLBACK == 1 */

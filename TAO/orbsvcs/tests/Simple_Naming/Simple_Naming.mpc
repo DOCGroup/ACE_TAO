@@ -1,6 +1,7 @@
-project(*Client) : namingexe {
-  exename  = client
+// -*- MPC -*-
+// $Id$
 
+project(*Client) : namingexe {
   Source_Files {
     client.cpp
   }

@@ -47,7 +47,7 @@ RSC=rc.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "../../" /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /W3 /GX /Zi /O2 /I "../../" /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /Zi /O2 /I "../../" /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -78,7 +78,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../../" /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../../" /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /Gy /I "../../" /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -105,7 +105,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /MD /W3 /GX /Zi /O2 /I "../../" /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /Zi /O2 /I "../../" /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -133,7 +133,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../../" /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /Gy /I "../../" /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -180,8 +180,20 @@ SOURCE=.\Any.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Any_Basic_Impl.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Impl.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Any_SystemException.cpp
 # ADD CPP /GR
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Unknown_IDL_Type.cpp
 # End Source File
 # Begin Source File
 
@@ -189,7 +201,7 @@ SOURCE=.\append.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Asynch_Invocation.cpp
+SOURCE=.\Argument.cpp
 # End Source File
 # Begin Source File
 
@@ -202,6 +214,14 @@ SOURCE=.\Asynch_Reply_Dispatcher_Base.cpp
 # Begin Source File
 
 SOURCE=.\Base_Transport_Property.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Arguments.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_SArguments.cpp
 # End Source File
 # Begin Source File
 
@@ -218,6 +238,10 @@ SOURCE=.\Block_Flushing_Strategy.cpp
 # Begin Source File
 
 SOURCE=.\Blocked_Connect_Strategy.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\BoundsA.cpp
 # End Source File
 # Begin Source File
 
@@ -250,15 +274,15 @@ SOURCE=.\Client_Strategy_Factory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ClientInterceptorAdapter.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\ClientRequestInfo.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\ClientRequestInfo_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ClientRequestInterceptor_Adapter.cpp
 # End Source File
 # Begin Source File
 
@@ -275,6 +299,10 @@ SOURCE=.\Codeset_Manager.cpp
 # Begin Source File
 
 SOURCE=.\Codeset_Translator_Factory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Collocated_Invocation.cpp
 # End Source File
 # Begin Source File
 
@@ -298,6 +326,10 @@ SOURCE=.\Connector_Registry.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\CONV_FRAMEA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\CONV_FRAMEC.cpp
 # ADD CPP /GR
 # End Source File
@@ -307,15 +339,15 @@ SOURCE=.\CORBA_String.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\corbafwd.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\CORBALOC_Parser.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\CORBANAME_Parser.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CurrentA.cpp
 # End Source File
 # Begin Source File
 
@@ -368,12 +400,28 @@ SOURCE=.\DLL_Parser.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DomainA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\DomainC.cpp
 # ADD CPP /GR
 # End Source File
 # Begin Source File
 
 SOURCE=.\Dynamic_Adapter.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Dynamic_ParameterA.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Dynamic_ParameterC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\DynamicA.cpp
 # End Source File
 # Begin Source File
 
@@ -463,6 +511,10 @@ SOURCE=.\GIOP_Utils.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOPA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOPC.cpp
 # ADD CPP /GR
 # End Source File
@@ -488,7 +540,11 @@ SOURCE=.\IIOP_Endpoint.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\iiop_endpoints.cpp
+SOURCE=.\IIOP_EndpointsA.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_EndpointsC.cpp
 # End Source File
 # Begin Source File
 
@@ -521,7 +577,11 @@ SOURCE=.\Interceptor_List.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Invocation.cpp
+SOURCE=.\Invocation_Adapter.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Invocation_Base.cpp
 # End Source File
 # Begin Source File
 
@@ -529,8 +589,16 @@ SOURCE=.\Invocation_Endpoint_Selectors.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IOP_CodecA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\IOP_CodecC.cpp
 # ADD CPP /GR
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOP_IORA.cpp
 # End Source File
 # Begin Source File
 
@@ -609,6 +677,15 @@ SOURCE=.\LF_Strategy_Complete.cpp
 # Begin Source File
 
 SOURCE=.\LocalObject.cpp
+# ADD CPP /GR
+# End Source File
+# Begin Source File
+
+SOURCE=.\LocateRequest_Invocation.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LocateRequest_Invocation_Adapter.cpp
 # End Source File
 # Begin Source File
 
@@ -625,6 +702,10 @@ SOURCE=.\Marshal.cpp
 # Begin Source File
 
 SOURCE=.\MCAST_Parser.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Messaging_PolicyValueA.cpp
 # End Source File
 # Begin Source File
 
@@ -683,6 +764,10 @@ SOURCE=.\ObjectKey_Table.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\OctetSeqA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\OctetSeqC.cpp
 # ADD CPP /GR
 # End Source File
@@ -713,6 +798,11 @@ SOURCE=.\ORBInitializer_Registry.cpp
 # Begin Source File
 
 SOURCE=.\ORBInitInfo.cpp
+# ADD CPP /GR
+# End Source File
+# Begin Source File
+
+SOURCE=.\ParameterMode.cpp
 # End Source File
 # Begin Source File
 
@@ -744,6 +834,10 @@ SOURCE=.\Pluggable_Messaging_Utils.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Policy_ForwardA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Policy_ForwardC.cpp
 # ADD CPP /GR
 # End Source File
@@ -761,6 +855,10 @@ SOURCE=.\Policy_Validator.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\PolicyA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\PolicyC.cpp
 # ADD CPP /GR
 # End Source File
@@ -772,6 +870,10 @@ SOURCE=.\PolicyFactory_Registry.cpp
 
 SOURCE=.\PollableC.cpp
 # ADD CPP /GR
+# End Source File
+# Begin Source File
+
+SOURCE=.\PortableInterceptorA.cpp
 # End Source File
 # Begin Source File
 
@@ -789,6 +891,10 @@ SOURCE=.\Principal.cpp
 # Begin Source File
 
 SOURCE=.\Profile.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Profile_Transport_Resolver.cpp
 # End Source File
 # Begin Source File
 
@@ -816,11 +922,11 @@ SOURCE=.\Refcounted_ObjectKey.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Remote_Object_Proxy_Broker.cpp
+SOURCE=.\Remote_Invocation.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Remote_Object_Proxy_Impl.cpp
+SOURCE=.\Remote_Object_Proxy_Broker.cpp
 # End Source File
 # Begin Source File
 
@@ -864,12 +970,28 @@ SOURCE=.\Services_Activate.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ServicesA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ServicesC.cpp
 # ADD CPP /GR
 # End Source File
 # Begin Source File
 
 SOURCE=.\skip.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_Arguments.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_SArguments.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\StringSeqA.cpp
 # End Source File
 # Begin Source File
 
@@ -887,6 +1009,10 @@ SOURCE=.\Stub_Factory.cpp
 # Begin Source File
 
 SOURCE=.\Sync_Strategies.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Synch_Invocation.cpp
 # End Source File
 # Begin Source File
 
@@ -922,6 +1048,10 @@ SOURCE=.\TAO_Singleton_Manager.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\TAOA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\TAOC.cpp
 # ADD CPP /GR
 # End Source File
@@ -943,8 +1073,16 @@ SOURCE=.\Thread_Per_Connection_Handler.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\TimeBaseA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\TimeBaseC.cpp
 # ADD CPP /GR
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeBaseS.cpp
 # End Source File
 # Begin Source File
 
@@ -992,6 +1130,14 @@ SOURCE=.\TypeCodeFactory_Adapter.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\UB_String_Arguments.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_SArguments.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Valuetype_Adapter.cpp
 # End Source File
 # Begin Source File
@@ -1012,6 +1158,10 @@ SOURCE=.\Wait_Strategy.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\WrongTransactionA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\WrongTransactionC.cpp
 # ADD CPP /GR
 # End Source File
@@ -1026,6 +1176,10 @@ SOURCE=.\Abstract_Servant_Base.h
 # Begin Source File
 
 SOURCE=.\Acceptor_Filter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Acceptor_Impl.h
 # End Source File
 # Begin Source File
 
@@ -1045,6 +1199,10 @@ SOURCE=.\Any_Array_Impl_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Any_Basic_Impl.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Any_Basic_Impl_T.h
 # End Source File
 # Begin Source File
@@ -1053,11 +1211,11 @@ SOURCE=.\Any_Dual_Impl_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Any_Impl_T.h
+SOURCE=.\Any_Impl.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Any_Special_Basic_Impl_T.h
+SOURCE=.\Any_Impl_T.h
 # End Source File
 # Begin Source File
 
@@ -1069,15 +1227,19 @@ SOURCE=.\Any_SystemException.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\arg_shifter.h
+SOURCE=.\Any_Unknown_IDL_Type.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Arg_Traits_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Argument.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Array_VarOut_T.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Asynch_Invocation.h
 # End Source File
 # Begin Source File
 
@@ -1090,6 +1252,34 @@ SOURCE=.\Asynch_Reply_Dispatcher_Base.h
 # Begin Source File
 
 SOURCE=.\Base_Transport_Property.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Arguments.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_SArgument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_SArguments.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Types.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BD_String_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BD_String_SArgument_T.h
 # End Source File
 # Begin Source File
 
@@ -1106,6 +1296,10 @@ SOURCE=.\Block_Flushing_Strategy.h
 # Begin Source File
 
 SOURCE=.\Blocked_Connect_Strategy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BoundsA.h
 # End Source File
 # Begin Source File
 
@@ -1137,15 +1331,15 @@ SOURCE=.\Client_Strategy_Factory.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ClientInterceptorAdapter.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\ClientRequestInfo.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\ClientRequestInfo_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ClientRequestInterceptor_Adapter.h
 # End Source File
 # Begin Source File
 
@@ -1165,7 +1359,19 @@ SOURCE=.\Codeset_Translator_Factory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Collocated_Invocation.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Collocation_Proxy_Broker.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Collocation_Resolver.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Collocation_Strategy.h
 # End Source File
 # Begin Source File
 
@@ -1181,7 +1387,15 @@ SOURCE=.\Connection_Purging_Strategy.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Connector_Impl.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connector_Registry.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CONV_FRAMEA.h
 # End Source File
 # Begin Source File
 
@@ -1190,6 +1404,10 @@ SOURCE=.\CONV_FRAMEC.h
 # Begin Source File
 
 SOURCE=.\corba.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CORBA_methods.h
 # End Source File
 # Begin Source File
 
@@ -1206,6 +1424,10 @@ SOURCE=.\CORBALOC_Parser.h
 # Begin Source File
 
 SOURCE=.\CORBANAME_Parser.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CurrentA.h
 # End Source File
 # Begin Source File
 
@@ -1253,10 +1475,6 @@ SOURCE=.\Default_Thread_Lane_Resources_Manager.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Direct_Priority_Mapping.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\DLL_ORB.h
 # End Source File
 # Begin Source File
@@ -1265,11 +1483,27 @@ SOURCE=.\DLL_Parser.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\DomainA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\DomainC.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\Dynamic_Adapter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Dynamic_ParameterA.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Dynamic_ParameterC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DynamicA.h
 # End Source File
 # Begin Source File
 
@@ -1309,11 +1543,23 @@ SOURCE=.\FILE_Parser.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Flushing_Strategy.h
+SOURCE=.\Fixed_Array_Argument_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\giop.h
+SOURCE=.\Fixed_Array_SArgument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Size_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Size_SArgument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
@@ -1361,6 +1607,10 @@ SOURCE=.\GIOP_Utils.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\GIOPA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\GIOPC.h
 # End Source File
 # Begin Source File
@@ -1385,7 +1635,11 @@ SOURCE=.\IIOP_Endpoint.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\iiop_endpoints.h
+SOURCE=.\IIOP_EndpointsA.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_EndpointsC.h
 # End Source File
 # Begin Source File
 
@@ -1405,6 +1659,10 @@ SOURCE=.\IIOP_Transport.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IIOPA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IIOPC.h
 # End Source File
 # Begin Source File
@@ -1417,7 +1675,11 @@ SOURCE=.\Interceptor_List.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Invocation.h
+SOURCE=.\Invocation_Adapter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Invocation_Base.h
 # End Source File
 # Begin Source File
 
@@ -1425,7 +1687,19 @@ SOURCE=.\Invocation_Endpoint_Selectors.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Invocation_Utils.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOP_CodecA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IOP_CodecC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IOP_IORA.h
 # End Source File
 # Begin Source File
 
@@ -1434,14 +1708,6 @@ SOURCE=.\IOP_IORC.h
 # Begin Source File
 
 SOURCE=.\IOPC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ior_corbaloc_export.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ior_corbaname_export.h
 # End Source File
 # Begin Source File
 
@@ -1509,11 +1775,15 @@ SOURCE=.\LF_Strategy_Complete.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Linear_Priority_Mapping.h
+SOURCE=.\LocalObject.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\LocalObject.h
+SOURCE=.\LocateRequest_Invocation.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LocateRequest_Invocation_Adapter.h
 # End Source File
 # Begin Source File
 
@@ -1530,6 +1800,10 @@ SOURCE=.\Marshal.h
 # Begin Source File
 
 SOURCE=.\MCAST_Parser.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Messaging_PolicyValueA.h
 # End Source File
 # Begin Source File
 
@@ -1557,6 +1831,10 @@ SOURCE=.\object.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Object_Argument_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Object_KeyC.h
 # End Source File
 # Begin Source File
@@ -1577,6 +1855,14 @@ SOURCE=.\Object_Ref_Table.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Object_SArgument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\objectid.h
 # End Source File
 # Begin Source File
@@ -1593,6 +1879,14 @@ SOURCE=.\Objref_VarOut_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\OBV_Constants.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OctetSeqA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\OctetSeqC.h
 # End Source File
 # Begin Source File
@@ -1602,6 +1896,10 @@ SOURCE=.\operation_details.h
 # Begin Source File
 
 SOURCE=.\orb.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ORB_Constants.h
 # End Source File
 # Begin Source File
 
@@ -1626,6 +1924,10 @@ SOURCE=.\ORBInitializer_Registry.h
 # Begin Source File
 
 SOURCE=.\ORBInitInfo.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ParameterMode.h
 # End Source File
 # Begin Source File
 
@@ -1657,6 +1959,10 @@ SOURCE=.\Pluggable_Messaging_Utils.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Policy_ForwardA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Policy_ForwardC.h
 # End Source File
 # Begin Source File
@@ -1670,6 +1976,10 @@ SOURCE=.\Policy_Set.h
 # Begin Source File
 
 SOURCE=.\Policy_Validator.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PolicyA.h
 # End Source File
 # Begin Source File
 
@@ -1689,6 +1999,10 @@ SOURCE=.\PortableInterceptor.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\PortableInterceptorA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\PortableInterceptorC.h
 # End Source File
 # Begin Source File
@@ -1698,6 +2012,10 @@ SOURCE=.\Principal.h
 # Begin Source File
 
 SOURCE=.\Profile.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Profile_Transport_Resolver.h
 # End Source File
 # Begin Source File
 
@@ -1729,11 +2047,11 @@ SOURCE=.\Refcounted_ObjectKey.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Remote_Object_Proxy_Broker.h
+SOURCE=.\Remote_Invocation.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Remote_Object_Proxy_Impl.h
+SOURCE=.\Remote_Object_Proxy_Broker.h
 # End Source File
 # Begin Source File
 
@@ -1754,14 +2072,6 @@ SOURCE=.\Resource_Factory.h
 # Begin Source File
 
 SOURCE=.\Resume_Handle.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SArgument.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SArgument_T.h
 # End Source File
 # Begin Source File
 
@@ -1797,11 +2107,31 @@ SOURCE=.\Services_Activate.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ServicesA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ServicesC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\singletons.h
+SOURCE=.\Special_Basic_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_Arguments.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_SArgument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_SArguments.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\StringSeqA.h
 # End Source File
 # Begin Source File
 
@@ -1818,6 +2148,10 @@ SOURCE=.\Stub_Factory.h
 # Begin Source File
 
 SOURCE=.\Sync_Strategies.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Synch_Invocation.h
 # End Source File
 # Begin Source File
 
@@ -1857,11 +2191,19 @@ SOURCE=.\TAO_Singleton_Manager.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\TAOA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\TAOC.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\target_specification.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TC_Constants_Forward.h
 # End Source File
 # Begin Source File
 
@@ -1877,7 +2219,19 @@ SOURCE=.\Thread_Per_Connection_Handler.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\TimeBaseA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\TimeBaseC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeBaseS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeBaseS_T.h
 # End Source File
 # Begin Source File
 
@@ -1913,10 +2267,6 @@ SOURCE=.\Transport_Timer.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\try_macros.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\TSS_Resources.h
 # End Source File
 # Begin Source File
@@ -1925,11 +2275,47 @@ SOURCE=.\typecode.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Typecode_Constants.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\TypeCodeFactory_Adapter.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\UB_String_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_Arguments.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_SArgument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_SArguments.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Valuetype_Adapter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Array_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Array_SArgument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Size_Argument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Size_SArgument_T.h
 # End Source File
 # Begin Source File
 
@@ -1957,6 +2343,10 @@ SOURCE=.\Wait_Strategy.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\WrongTransactionA.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\WrongTransactionC.h
 # End Source File
 # End Group
@@ -1966,6 +2356,10 @@ SOURCE=.\WrongTransactionC.h
 # Begin Source File
 
 SOURCE=.\Acceptor_Filter.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Acceptor_Impl.i
 # End Source File
 # Begin Source File
 
@@ -1997,10 +2391,6 @@ SOURCE=.\Any_Impl_T.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\Any_Special_Basic_Impl_T.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\Any_Special_Impl_T.inl
 # End Source File
 # Begin Source File
@@ -2009,15 +2399,27 @@ SOURCE=.\Array_VarOut_T.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\Asynch_Invocation.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Asynch_Reply_Dispatcher_Base.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\Base_Transport_Property.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_SArgument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\BD_String_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\BD_String_SArgument_T.inl
 # End Source File
 # Begin Source File
 
@@ -2045,11 +2447,11 @@ SOURCE=.\Cleanup_Func_Registry.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\ClientInterceptorAdapter.inl
+SOURCE=.\ClientRequestInfo_i.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\ClientRequestInfo_i.inl
+SOURCE=.\ClientRequestInterceptor_Adapter.inl
 # End Source File
 # Begin Source File
 
@@ -2065,15 +2467,15 @@ SOURCE=.\Connection_Purging_Strategy.inl
 # End Source File
 # Begin Source File
 
+SOURCE=.\Connector_Impl.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\CONV_FRAMEC.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\CORBA_String.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\corbafwd.i
 # End Source File
 # Begin Source File
 
@@ -2125,6 +2527,14 @@ SOURCE=.\DomainC.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Dynamic_ParameterC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Dynamic_ParameterC.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\DynamicC.i
 # End Source File
 # Begin Source File
@@ -2146,6 +2556,22 @@ SOURCE=.\Fault_Tolerance_Service.i
 # Begin Source File
 
 SOURCE=.\FILE_Parser.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Array_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Array_SArgument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Size_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Size_SArgument_T.inl
 # End Source File
 # Begin Source File
 
@@ -2213,7 +2639,11 @@ SOURCE=.\IIOP_Endpoint.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\iiop_endpoints.i
+SOURCE=.\IIOP_EndpointsC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_EndpointsC.inl
 # End Source File
 # Begin Source File
 
@@ -2237,7 +2667,7 @@ SOURCE=.\Interceptor_List.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\Invocation.i
+SOURCE=.\Invocation_Base.inl
 # End Source File
 # Begin Source File
 
@@ -2337,11 +2767,19 @@ SOURCE=.\object.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Object_Argument_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Object_KeyC.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\Object_Loader.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_SArgument_T.inl
 # End Source File
 # Begin Source File
 
@@ -2437,6 +2875,10 @@ SOURCE=.\Profile.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Profile_Transport_Resolver.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\Pseudo_VarOut_T.inl
 # End Source File
 # Begin Source File
@@ -2482,6 +2924,14 @@ SOURCE=.\Service_Context.inl
 # Begin Source File
 
 SOURCE=.\ServicesC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_SArgument_T.inl
 # End Source File
 # Begin Source File
 
@@ -2541,6 +2991,14 @@ SOURCE=.\TimeBaseC.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\TimeBaseS.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeBaseS_T.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Transport.inl
 # End Source File
 # Begin Source File
@@ -2565,6 +3023,30 @@ SOURCE=.\typecode.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\UB_String_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_SArgument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Array_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Array_SArgument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Size_Argument_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Size_SArgument_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\VarOut_T.inl
 # End Source File
 # End Group
@@ -2579,6 +3061,11 @@ SOURCE=.\tao.rc
 # Begin Group "Template Files"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\Acceptor_Impl.cpp
+# PROP Exclude_From_Build 1
+# End Source File
 # Begin Source File
 
 SOURCE=.\Any_Array_Impl_T.cpp
@@ -2601,11 +3088,6 @@ SOURCE=.\Any_Impl_T.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Any_Special_Basic_Impl_T.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=.\Any_Special_Impl_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
@@ -2616,7 +3098,67 @@ SOURCE=.\Array_VarOut_T.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Basic_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\BD_String_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\BD_String_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=.\Codeset_Translator_Factory_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connector_Impl.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Array_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Array_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Size_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Fixed_Size_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
@@ -2642,6 +3184,51 @@ SOURCE=.\Seq_Var_T.cpp
 # Begin Source File
 
 SOURCE=.\Sequence_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Special_Basic_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\TimeBaseS_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\UB_String_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Array_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Array_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Size_Argument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Var_Size_SArgument_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File

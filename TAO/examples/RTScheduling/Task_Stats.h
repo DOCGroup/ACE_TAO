@@ -13,7 +13,7 @@
 #ifndef TASK_STATS_H
 #define TASK_STATS_H
 
-#include "ace/OS.h"
+#include "ace/OS_NS_time.h"
 #include "ace/Singleton.h"
 #include "tao/orbconf.h"
 #include "tao/debug.h"

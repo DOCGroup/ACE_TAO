@@ -1,4 +1,7 @@
-project : event, etcl, dynamicany {
+// -*- MPC -*-
+// $Id$
+
+project : etcl, dynamicany, portableserver {
   after     += CosNotification
   libs      += TAO_CosNotification
   comps     += Notify

@@ -12,6 +12,7 @@
 
 #ifndef TAO_INCOMING_MESSAGE_QUEUE_H
 #define TAO_INCOMING_MESSAGE_QUEUE_H
+
 #include /**/ "ace/pre.h"
 
 #include "Pluggable_Messaging_Utils.h"

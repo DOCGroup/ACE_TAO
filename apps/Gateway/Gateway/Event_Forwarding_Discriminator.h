@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch.h"
+#include "ace/Null_Mutex.h"
 #include "Event.h"
 #include "Consumer_Dispatch_Set.h"
 

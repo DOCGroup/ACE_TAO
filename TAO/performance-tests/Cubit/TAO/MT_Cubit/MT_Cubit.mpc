@@ -1,4 +1,7 @@
-project(*server): taoserver, strategies {
+// -*- MPC -*-
+// $Id$
+
+project(*server): taoexe, portableserver, strategies {
   Source_Files {
     tmplinst.cpp
     Timer.cpp
@@ -9,9 +12,7 @@ project(*server): taoserver, strategies {
   }
 }
 
-project(*client): taoserver, strategies {
-  exename = client
-
+project(*client): taoexe, portableserver, strategies {
   Source_Files {
     tmplinst.cpp
     Timer.cpp
@@ -21,5 +22,8 @@ project(*client): taoserver, strategies {
     Util_Thread.cpp
     Task_Client.cpp
     client.cpp
+  }
+  verbatim(gnuace, local) {
+    LDLIBS += $(MATHLIB)
   }
 }

@@ -1,5 +1,7 @@
-project: taoserver, namingexe, rtsched {
-  exename  = Sched_Conf
+// -*- MPC -*-
+// $Id$
+
+project: namingexe, rtsched {
   Source_Files {
     Sched_Conf.cpp
   }

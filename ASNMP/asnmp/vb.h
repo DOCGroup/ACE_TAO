@@ -37,7 +37,7 @@
 =====================================================================*/
 
 //----[ external calls ]----------------------------------------------
-#include "ace/OS.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -95,7 +95,7 @@ public:
   Vb& operator=( const Vb &vb);
   // assignment to another Vb object overloaded
 
-  friend int operator==( const Vb &lhs, const Vb &rhs);
+  friend ASNMP_Export int operator==( const Vb &lhs, const Vb &rhs);
   // equivlence operator overloaded
 
   //-----[ set oid / get oid part]------------------------------------------
@@ -172,7 +172,7 @@ public:
   // return the current syntax
   // Or.. if a V2 VB exception is present then return the exception value
 
-  friend void set_exception_status( Vb *vb, const SmiUINT32 status);
+  friend ASNMP_Export void set_exception_status( Vb *vb, const SmiUINT32 status);
   // set the exception status
 
   const char *to_string();

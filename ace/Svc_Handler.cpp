@@ -9,6 +9,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/OS_NS_sys_time.h"
 #include "ace/Object_Manager.h"
 #include "ace/Connection_Recycling_Strategy.h"
 

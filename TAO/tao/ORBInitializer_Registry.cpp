@@ -1,17 +1,14 @@
 #include "ORBInitializer_Registry.h"
+#include "PortableInterceptorC.h"
 #include "ORB.h"
-#include "TAO_Singleton_Manager.h"
 #include "TAO_Singleton.h"
-#include "ace/Object_Manager.h"
-
+#include "ORB_Constants.h"
 
 ACE_RCSID (tao,
            ORBInitializer_Registry,
            "$Id$")
 
-
 // ****************************************************************
-
 
 void
 PortableInterceptor::register_orb_initializer (

@@ -24,9 +24,9 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/OS_NS_string.h"
 #include "ace/ACE.h"
 #include "ace/Task.h"
-#include "ace/Synch.h"
 #include "ace/Message_Queue.h"
 #include "ace/Future.h"
 #include "ace/Future_Set.h"
@@ -34,6 +34,7 @@
 #include "ace/Activation_Queue.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Atomic_Op.h"
+#include "ace/Null_Mutex.h"
 
 ACE_RCSID(tests, Future_Set_Test, "$Id$")
 

@@ -1,14 +1,16 @@
 // $Id$
 
 #include "EC_Reactive_Timeout_Generator.h"
-#include "tao/corba.h"
+
 #include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Reactive_Timeout_Generator.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Event, EC_Reactive_Timeout_Generator, "$Id$")
+ACE_RCSID (Event, 
+           EC_Reactive_Timeout_Generator, 
+           "$Id$")
 
 TAO_EC_Reactive_Timeout_Generator::
       TAO_EC_Reactive_Timeout_Generator (ACE_Reactor *reactor)

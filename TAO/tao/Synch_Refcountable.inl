@@ -1,5 +1,8 @@
 // -*- C++ -*-
 //$Id$
+
+#include "ace/Guard_T.h"
+
 ACE_INLINE int
 TAO_Synch_Refcountable::increment (void)
 {

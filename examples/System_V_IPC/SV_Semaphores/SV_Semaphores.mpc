@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*1) : aceexe {
   exename = sem1
   Source_Files {

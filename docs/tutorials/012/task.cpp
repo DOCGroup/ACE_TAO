@@ -4,6 +4,8 @@
 #include "task.h"
 #include "block.h"
 #include "work.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 
 /*
   Boring default constructor.  Be sure our barrier_ is initialized in
@@ -109,7 +111,7 @@ int Task::svc (void)
      */
     const char *cp = message_block->rd_ptr ();
      // Don't forget to skip the NULL we inserted
-    message_block->rd_ptr (strlen (cp) + 1);
+    message_block->rd_ptr (ACE_OS::strlen (cp) + 1);
 
      /*
        Get the Unit_Of_Work pointer out of our specialized

@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SERVER_INTERCEPTOR_ADAPTER_H
 #define TAO_SERVER_INTERCEPTOR_ADAPTER_H
 
@@ -66,9 +65,24 @@ public:
    * The "receive_request_service_contexts()" and "send_other()"
    * PortableInterceptor interception points are missing.
    */
+#if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
   //@{
   /// This method implements the "starting" server side interception
-  /// point.
+  /// point. It will be used as the first interception point and it is
+  /// proprietary to TAO.
+  /// @@ Will go away once Bug 1369 is fixed
+  void tao_ft_interception_point (
+    TAO_ServerRequestInfo *ri ,
+    CORBA::OctetSeq_out oc
+    ACE_ENV_ARG_DECL);
+#endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
+
+  /// This method implements the "intermediate" server side interception
+  /// point if the above #ifdef is set to 1 and a starting intercetion
+  /// point if it is not set to 1.
+  /// @@ NOTE: This method should have been the "starting"
+  /// interception point according to the interceptor spec. This will
+  /// be fixed once Bug 1369 is completely done.
   void receive_request_service_contexts (
     TAO_ServerRequestInfo * ri
     ACE_ENV_ARG_DECL);

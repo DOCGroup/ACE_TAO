@@ -115,7 +115,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
               << node->full_obv_skel_name () 
               << "::_add_ref (void)" << be_nl
               << "{" << be_idt_nl
-              << "this->DefaultValueRefCountBase::_add_ref ();"
+              << "this->ACE_NESTED_CLASS (CORBA,DefaultValueRefCountBase)::_add_ref ();"
               << be_uidt_nl
               << "}" << be_nl;
 
@@ -123,7 +123,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
               << node->full_obv_skel_name () 
               << "::_remove_ref (void)" << be_nl
               << "{" << be_idt_nl
-              << "this->DefaultValueRefCountBase::_remove_ref ();"
+              << "this->ACE_NESTED_CLASS (CORBA,DefaultValueRefCountBase)::_remove_ref ();"
               << be_uidt_nl
               << "}";
         }

@@ -4,6 +4,7 @@
 #include "ACEXML/common/Encoding.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
 
 ACEXML_StrCharStream::ACEXML_StrCharStream (void)
   : start_ (0), ptr_ (0), end_ (0), encoding_ (0), name_ (0)
@@ -25,7 +26,7 @@ ACEXML_StrCharStream::open (const ACEXML_Char *str, const ACEXML_Char* name)
       && (this->name_ = ACE::strnew (name)) != 0)
     {
       this->ptr_ = this->start_;
-      this->end_ = this->start_ + ACE_OS_String::strlen (this->start_);
+      this->end_ = this->start_ + ACE_OS::strlen (this->start_);
       return this->determine_encoding();
     }
   return -1;                // Invalid string passed.
@@ -66,6 +67,8 @@ ACEXML_StrCharStream::determine_encoding (void)
     return -1;
   else
     {
+      if (this->encoding_)
+        delete [] this->encoding_;
       this->encoding_ = ACE::strnew (temp);
       // ACE_DEBUG ((LM_DEBUG, "String's encoding is %s\n", this->encoding_));
     }
@@ -76,6 +79,7 @@ void
 ACEXML_StrCharStream::rewind (void)
 {
   this->ptr_ = this->start_;
+  this->determine_encoding();
 }
 
 int
@@ -97,7 +101,7 @@ ACEXML_StrCharStream::read (ACEXML_Char *str, size_t len)
     {
       if (len * sizeof (ACEXML_Char) > (size_t) (this->end_ - this->ptr_))
         len = this->end_ - this->ptr_;
-      ACE_OS_String::strncpy (str, this->ptr_, len);
+      ACE_OS::strncpy (str, this->ptr_, len);
       this->ptr_ += len;
       return ACE_static_cast (int, len);
     }

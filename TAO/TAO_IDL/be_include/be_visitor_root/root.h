@@ -103,6 +103,12 @@ public:
 
   virtual int init (void);
   // will be overridden by derived classes that set the appropriate context
+
+private:
+  int gen_explicit_tmplinst (be_root *,
+                             TAO_OutStream *);
+  // Generate guarded explicit template instantiations, for those platforms
+  // that require them.
 };
 
 #endif /* _BE_VISITOR_ROOT_ROOT_H_ */

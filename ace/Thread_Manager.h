@@ -29,6 +29,7 @@
 #include "ace/Singleton.h"
 #include "ace/Log_Msg.h"
 #include "ace/Synch_Traits.h"
+#include "ace/Basic_Types.h"
 
 // The following macros control how a Thread Manager manages a pool of
 // Thread_Descriptor.  Currently, the default behavior is not to

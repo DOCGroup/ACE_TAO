@@ -1,4 +1,8 @@
+#
+# $Id$
+#
 # Makefile for building the TAO_RT_Notification library with Borland C++ Builder
+#
 
 NAME = TAO_RT_Notification
 

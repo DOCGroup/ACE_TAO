@@ -26,6 +26,7 @@
 #include "../Consumer.h"
 #include "../AdminProperties.h"
 #include "Batch_Buffering_Strategy.h"
+#include "ace/Null_Condition.h"
 
 class TAO_Notify_ProxySupplier;
 class TAO_Notify_QoSProperties;

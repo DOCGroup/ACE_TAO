@@ -3,8 +3,11 @@
 #include "tao/orbconf.h"
 #include "Custom_Network_Priority_Mapping.h"
 #include "tao/debug.h"
+#include "ace/Log_Msg.h"
 
-ACE_RCSID(Strategies, Custom_Network_Priority_Mapping, "$Id$")
+ACE_RCSID (Strategies, 
+           Custom_Network_Priority_Mapping, 
+           "$Id$")
 
 #define IPDSFIELD_DSCP_DEFAULT  0x00
 #define IPDSFIELD_DSCP_CS1      0x08
@@ -52,7 +55,7 @@ static int dscp [] =
     IPDSFIELD_DSCP_AF41    ,
     IPDSFIELD_DSCP_AF42    ,
     IPDSFIELD_DSCP_AF43    ,
-    IPDSFIELD_DSCP_EF      
+    IPDSFIELD_DSCP_EF
   };
 
 /*
@@ -87,7 +90,7 @@ TAO_Custom_Network_Priority_Mapping::TAO_Custom_Network_Priority_Mapping (void)
 {
   this->min_ = 0; //ACE_Sched_Params::priority_min (this->policy_);
   this->max_ = 32767; //ACE_Sched_Params::priority_max (this->policy_);
-  
+
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
 		"Min = %d\n Max = %d\n",

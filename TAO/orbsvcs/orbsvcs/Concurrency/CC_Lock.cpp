@@ -18,9 +18,11 @@
 // ============================================================================
 
 #include "CC_Lock.h"
-#include "tao/corba.h"
+#include "ace/Log_Msg.h"
 
-ACE_RCSID(Concurrency, CC_Lock, "$Id$")
+ACE_RCSID (Concurrency, 
+           CC_Lock, 
+           "$Id$")
 
 CC_Lock::CC_Lock (void)
   : mode_ (CosConcurrencyControl::intention_read),

@@ -21,7 +21,7 @@
 // Enable tracing
 #define ACE_NTRACE 0
 
-#include "ace/OS.h"
+#include "ace/OS_main.h"
 #include "ace/Signal.h"
 #include "ace/Task.h"
 

@@ -1,3 +1,6 @@
-project(EC_Multiple): rteventexe, rtoldevent, rtschedevent, naming, iortable, messaging, corba_messaging {
+// -*- MPC -*-
+// $Id$
+
+project(EC_Multiple): rteventexe, rtoldevent, rtschedevent, naming, iortable, messaging {
   exename  = EC_Multiple
 }

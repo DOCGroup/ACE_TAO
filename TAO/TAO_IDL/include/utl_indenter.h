@@ -67,14 +67,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_INDENTER_UTL_INDENTER_HH
 #define _UTL_INDENTER_UTL_INDENTER_HH
 
-#include "ace/OS.h"
-
-// Needed to recognize ACE_OSTREAM_TYPE, and for BCB it's
-// not included in ace/OS.h, so we include it here.
-#if defined (__BORLANDC__)
-# include "ace/streams.h"
-#endif
-
+#include "ace/iosfwd.h"
 
 // Utility class for control of indentation level during dumping
 // May also be useful for BEs that want to produce nicely formatted

@@ -9,7 +9,7 @@
 
 #include "ace/config-all.h"
 
-#if defined (AS_STATIC_LIBS)
+#if defined (TAO_AS_STATIC_LIBS)
 #  if !defined (IBM1047_ISO8859_HAS_DLL)
 #    define IBM1047_ISO8859_HAS_DLL 0
 #  endif /* ! IBM1047_ISO8859_HAS_DLL */

@@ -1,4 +1,7 @@
-project(*Supplier): notify, rtcorba, rtnotify {
+// -*- MPC -*-
+// $Id$
+
+project(*Supplier): notify, rtcorba, rtnotify, minimum_corba, naming {
   exename = Supplier
   Source_Files {
     Supplier.cpp
@@ -8,7 +11,7 @@ project(*Supplier): notify, rtcorba, rtnotify {
   }
 }
 
-project(*Consumer): notifytest, rtcorba, rtnotify {
+project(*Consumer): notifytest, rtcorba, rtnotify, minimum_corba {
   exename = Consumer
   Source_Files {
     Consumer.cpp

@@ -1,9 +1,13 @@
 // -*- C++ -*-
 
 #include "ace/Get_Opt.h"
+
 #include "test_i.h"
 #include "Server_ORBInitializer.h"
 #include "Server_Request_Interceptor.h"
+
+#include "tao/ORBInitializer_Registry.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID (ForwardRequest,
            server,
@@ -59,6 +63,7 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+#if TAO_HAS_INTERCEPTORS == 1
       Server_ORBInitializer *temp_initializer = 0;
       ACE_NEW_RETURN (temp_initializer,
                       Server_ORBInitializer,
@@ -69,6 +74,7 @@ main (int argc, char *argv[])
       PortableInterceptor::register_orb_initializer (orb_initializer.in ()
                                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "Server ORB" ACE_ENV_ARG_PARAMETER);
@@ -155,6 +161,7 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+#if TAO_HAS_INTERCEPTORS == 1
       // Set the forward references in the server request interceptor.
       PortableInterceptor::ServerRequestInterceptor_var
         server_interceptor = temp_initializer->server_interceptor ();
@@ -174,6 +181,7 @@ main (int argc, char *argv[])
                                        obj2.in ()
                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
       // Write each IOR to a file.
 

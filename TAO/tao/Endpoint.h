@@ -13,19 +13,19 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_ENDPOINT_H
 #define TAO_ENDPOINT_H
-#include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include /**/ "ace/pre.h"
+#include "ace/Thread_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Thread_Mutex.h"
-
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
+#include "tao/orbconf.h"
 
 /**
  * @class TAO_Endpoint
@@ -105,6 +105,9 @@ protected:
    *       ORB_Core which is not available here.
    */
   mutable TAO_SYNCH_MUTEX addr_lookup_lock_;
+
+  /// Cache the hash value
+  CORBA::ULong hash_val_;
 
 private:
 

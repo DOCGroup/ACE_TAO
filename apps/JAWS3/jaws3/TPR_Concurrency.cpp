@@ -3,7 +3,9 @@
 #include "ace/OS.h"
 #include "ace/Message_Block.h"
 
+#ifndef JAWS_BUILD_DLL
 #define JAWS_BUILD_DLL
+#endif 
 
 #include "jaws3/Concurrency.h"
 #include "jaws3/TPR_Concurrency.h"

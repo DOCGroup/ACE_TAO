@@ -5,7 +5,7 @@
 #ifndef CCF_CIDL_SEMANTIC_ACTION_IMPL_COMPOSITION_HPP
 #define CCF_CIDL_SEMANTIC_ACTION_IMPL_COMPOSITION_HPP
 
-#include "CCF/CIDL/SyntaxTree/Composition.hpp"
+#include "CCF/CIDL/SemanticGraph/Composition.hpp"
 #include "CCF/CIDL/SemanticAction/Composition.hpp"
 #include "CCF/CIDL/SemanticAction/Impl/Elements.hpp"
 
@@ -17,74 +17,22 @@ namespace CCF
     {
       namespace Impl
       {
-        //
-        //
-        //
-        class Composition :
-          public virtual SemanticAction::Composition,
-          public virtual ScopeBase<SyntaxTree::CompositionPtr>
+        struct Composition : SemanticAction::Composition,
+                             ScopeBase<SemanticGraph::Composition>
         {
-        public:
-          virtual
-          ~Composition () throw () {}
-
-          Composition (bool trace, SyntaxTree::ScopePtr& scope)
-              : ScopeBase<SyntaxTree::CompositionPtr> (scope),
-                trace_ (trace)
-          {
-          }
+          Composition (Context& c);
 
           virtual void
-          begin (SimpleIdentifierPtr const& id, Category::Value c)
-          {
-            if (trace_) cerr << "composition " << c << " " << id << endl;
-
-            SyntaxTree::SimpleName name (id->lexeme ());
-
-            SyntaxTree::Composition::Category::Value category =
-              SyntaxTree::Composition::Category::SESSION;
-
-            if (c == Category::ENTITY)
-            {
-              category = SyntaxTree::Composition::Category::ENTITY;
-            }
-            else if (c == Category::PROCESS)
-            {
-              category = SyntaxTree::Composition::Category::PROCESS;
-            }
-            else if (c == Category::SERVICE)
-            {
-              category = SyntaxTree::Composition::Category::SERVICE;
-            }
-
-            SyntaxTree::CompositionPtr cp (
-              new SyntaxTree::Composition (name, category, scope_));
-
-            scope_->insert (cp);
-            push (cp);
-          }
+          begin (SimpleIdentifierPtr const& id, Category::Value c);
 
           virtual void
-          open_scope ()
-          {
-            scope_ = top ();
-          }
+          open_scope ();
 
           virtual void
-          close_scope ()
-          {
-            scope_ = scope_->scope ();
-          }
+          close_scope ();
 
           virtual void
-          end ()
-          {
-            pop ();
-            if (trace_) cerr << "end" << endl;
-          }
-          
-        private:
-          bool trace_;
+          end ();
         };
       }
     }

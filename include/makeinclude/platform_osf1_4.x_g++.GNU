@@ -29,7 +29,7 @@ CFLAGS          += -D_REENTRANT
 DCFLAGS         += -g
 LD              = $(CXX)
 DLD             = $(CXX)
-LIBS            += -lpthread -lmach -lexc -ltli -lrt
+LIBS            += -lpthread -lmach -lexc -lxti -lrt
 OCFLAGS         += -O3
 PIC             = -fpic
 ARFLAGS         = cruvZ
@@ -40,7 +40,7 @@ SOFLAGS         += -shared $(CPPFLAGS) $(ACELIB)
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB          = @true
 
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
+# Test for template instantiation, add to SOFLAGS if SONAME set,
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU

@@ -4,9 +4,7 @@
 #define TAO_SUPPORTS_TEST_IMPL_H
 
 #include "Supports_TestS.h"
-#include "ace/Synch.h"
 #include "ace/Get_Opt.h"
-#include "ace/streams.h"
 
 /**
  * \class node_impl
@@ -43,11 +41,10 @@ class node_init_impl : public Supports_Test::Node_init
   
  public:
   
-  virtual Supports_Test::Node * create (ACE_ENV_SINGLE_ARG_DECL)
+  virtual Supports_Test::Node * create (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
   
-  virtual CORBA::ValueBase * create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ValueBase * create_for_unmarshal (void);
   
 };
 
@@ -83,11 +80,10 @@ class vt_graph_init_impl :
   
  public:
   
-  virtual Supports_Test::vt_graph * create (ACE_ENV_SINGLE_ARG_DECL)
+  virtual Supports_Test::vt_graph * create (void)
     ACE_THROW_SPEC ((CORBA::SystemException));
 	
-  virtual CORBA::ValueBase * create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::ValueBase * create_for_unmarshal (void);
   
 };
 

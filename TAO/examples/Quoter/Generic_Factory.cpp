@@ -13,11 +13,13 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
-#include "orbsvcs/LifeCycleServiceC.h"
 #include "Generic_Factory.h"
 
-ACE_RCSID(Quoter, Generic_Factory, "$Id$")
+#include "orbsvcs/LifeCycleServiceC.h"
+
+ACE_RCSID (Quoter, 
+           Generic_Factory, 
+           "$Id$")
 
 Quoter_Generic_Factory_Server::Quoter_Generic_Factory_Server (void)
 : use_LifeCycle_Service_ (0),

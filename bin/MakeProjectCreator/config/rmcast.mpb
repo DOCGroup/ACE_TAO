@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project : acelib {
   requires += rmcast
   after    += RMCast

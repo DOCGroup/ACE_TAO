@@ -19,9 +19,10 @@
 // ============================================================================
 
 #include "testC.h"
-#include "tao/corba.h"
 #include "tao/debug.h"
+#include "tao/Any.h"
 #include "tao/Stub.h"
+#include "tao/Object_T.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
@@ -95,8 +96,8 @@ main (int argc, char *argv[])
         ACE_TRY_CHECK;
 
         Param_Test_var param_test =
-          Param_Test::_unchecked_narrow (obj.in ()
-                                         ACE_ENV_ARG_PARAMETER);
+	  TAO::Narrow_Utils<Param_Test>::unchecked_narrow (obj.in (),
+			                                   0);
         ACE_TRY_CHECK;
         TAO_Stub *stub = param_test->_stubobj ();
         stub->type_id = CORBA::string_dup ("IDL:Param_Test:1.0");

@@ -17,18 +17,22 @@
 //      Jason Cohen, Lockheed Martin ATL <jcohen@atl.lmco.com>
 //
 // ============================================================================
+// FUZZ: disable check_for_streams_include
 
 #include "ace/Codeset_Registry.h"
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
-#include "tao/corba.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/Messaging_PolicyValueC.h"
 #include "tao/Messaging/Messaging_RT_PolicyC.h"
 #include "tao/Messaging/Messaging_SyncScope_PolicyC.h"
 #include "tao/Messaging/Messaging_No_ImplC.h"
 #include "tao/RTCORBA/RTCORBA.h"
-#include "tao/iiop_endpoints.h"
+#include "tao/Typecode.h"
+#include "tao/Marshal.h"
+#include "tao/ORB_Constants.h"
+#include "tao/Transport_Acceptor.h"
+#include "tao/IIOP_EndpointsC.h"
 
 
 static CORBA::Boolean
@@ -200,7 +204,7 @@ catior (char* str
     {
       ACE_DEBUG ((LM_DEBUG,
                   "cannot read type id\n"));
-      return CORBA::TypeCode::TRAVERSE_STOP;
+      return TAO::TRAVERSE_STOP;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -228,7 +232,7 @@ catior (char* str
     {
       ACE_DEBUG ((LM_DEBUG,
                   "cannot read the profile count\n"));
-      return CORBA::TypeCode::TRAVERSE_STOP;
+      return TAO::TRAVERSE_STOP;
     }
 
   CORBA::ULong profile_counter = 0;
@@ -239,7 +243,7 @@ catior (char* str
 
   // No profiles means a NIL objref.
   if (profiles == 0)
-    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+    return TAO::TRAVERSE_CONTINUE;
   else
     while (profiles-- != 0)
       {
@@ -430,7 +434,7 @@ catpoop (char* string
 int
 main (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "f:n:");
+  ACE_Get_Opt get_opt (argc, argv, "f:");
 
   ACE_DECLARE_NEW_CORBA_ENV;
   CORBA::ORB_var orb_var =  CORBA::ORB_init (argc, argv, "TAO" ACE_ENV_ARG_PARAMETER);
@@ -441,15 +445,6 @@ main (int argc, char *argv[])
     {
       switch (opt)
         {
-        case 'n':
-          //  Read the CosName from the NamingService convert the
-          //  object_ptr to a CORBA::String_var via the call to
-          //  object_to_string.
-          ACE_DEBUG ((LM_DEBUG,
-                      "opening a connection to the NamingService\n"
-                      "resolving the CosName %s\n",
-                      get_opt.opt_arg ()));
-          break;
         case 'f':
           {
             //  Read the file into a CORBA::String_var.
@@ -544,7 +539,6 @@ main (int argc, char *argv[])
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Usage: %s "
                              "-f filename "
-                             "-n CosName "
                              "\n"
                              "Reads an IOR "
                              "and dumps the contents to stdout "
@@ -593,7 +587,7 @@ cat_tao_tag_endpoints (TAO_InputCDR& stream) {
   TAO_InputCDR stream2 (stream, length);
   stream.skip_bytes(length);
 
-  TAO_IIOPEndpointSequence epseq;
+  TAO::IIOPEndpointSequence epseq;
   stream2 >> epseq;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -616,6 +610,37 @@ cat_tao_tag_endpoints (TAO_InputCDR& stream) {
   return 1;
 }
 
+static CORBA::Boolean
+cat_tag_group (TAO_InputCDR& stream) {
+/*
+ID is 27
+Component Value len:   36
+Component Value as hex:
+01 01 00 cd 0f 00 00 00 64 65 66 61 75 6c 74 2d
+64 6f 6d 61 69 6e 00 cd 01 00 00 00 00 00 00 00
+02 00 00 00
+The Component Value as string:
+ ...-....default-domain.-............
+*/
+
+#if 1
+  cat_octet_seq ("TAG_GROUP", stream);
+#else
+  CORBA::Octet version_major;
+  if (stream.read_octet(version_major) == 0)
+  {
+    return 1;
+  }
+
+  CORBA::Octet version_minor;
+  if (stream.read_octet(version_minor) == 0)
+  {
+    return 1;
+  }
+
+#endif
+  return 1;
+}
 
 static CORBA::Boolean
 cat_tag_policies (TAO_InputCDR& stream) {
@@ -957,6 +982,16 @@ cat_tagged_components (TAO_InputCDR& stream)
         ACE_DEBUG ((LM_DEBUG,"%d (TAG_POLICIES)\n", tag));
         ACE_DEBUG ((LM_DEBUG, "%{%{"));
         cat_tag_policies(stream);
+        ACE_DEBUG ((LM_DEBUG, "%}%}"));
+      } else if (tag == IOP::TAG_FT_GROUP) {  //@@ PortableGroup will rename this TAG_GROUP
+        ACE_DEBUG ((LM_DEBUG,"%d (TAG_GROUP)\n", tag));
+        ACE_DEBUG ((LM_DEBUG, "%{%{"));
+        cat_tag_group (stream);
+        ACE_DEBUG ((LM_DEBUG, "%}%}"));
+      } else if (tag == IOP::TAG_FT_PRIMARY) {   //@@ PortableGroup will rename this TAG_PRIMARY
+        ACE_DEBUG ((LM_DEBUG,"%d (TAG_PRIMARY)\n", tag));
+        ACE_DEBUG ((LM_DEBUG, "%{%{"));
+        cat_octet_seq ("TAG_PRIMARY", stream);
         ACE_DEBUG ((LM_DEBUG, "%}%}"));
       } else {
         ACE_DEBUG ((LM_DEBUG,"%d\n", tag));

@@ -19,8 +19,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_argument, 
-           marshal_ss, 
+ACE_RCSID (be_visitor_argument,
+           marshal_ss,
            "$Id$")
 
 
@@ -826,6 +826,3 @@ be_visitor_args_marshal_ss::visit_home (
 {
   return this->visit_interface (node);
 }
-
-
-

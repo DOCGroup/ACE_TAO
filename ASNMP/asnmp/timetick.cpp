@@ -32,6 +32,7 @@
 =====================================================================*/
 
 #include "asnmp/timetick.h"            // include header file for timetick class
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(asnmp, timetick, "$Id$")
 

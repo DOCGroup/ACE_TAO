@@ -2,7 +2,12 @@
 
 #include "FT_ServerRequest_Interceptor.h"
 #include "tao/IOP_IORC.h"
+#include "tao/ORB_Constants.h"
+#include "tao/DynamicC.h"
+#include "tao/Typecode.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (FaultTolerance,
            FT_ServerRequest_Interceptor,
@@ -27,14 +32,13 @@ namespace TAO
   FT_ServerRequest_Interceptor::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    return CORBA::string_dup ("FT_ServerRequest_Interceptor");
+    return CORBA::string_dup ("TAO_FT_ServerRequest_Interceptor");
   }
 
   void
   FT_ServerRequest_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    delete this;
   }
 
   void
@@ -124,7 +128,7 @@ namespace TAO
       const IOP::ServiceContext &svc
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
-		     PortableInterceptor::ForwardRequest))
+                     PortableInterceptor::ForwardRequest))
   {
     TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
                                             svc.context_data.get_buffer ()

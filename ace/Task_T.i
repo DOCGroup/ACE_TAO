@@ -3,6 +3,8 @@
 
 // Task_T.i
 
+#include "ace/os_include/os_assert.h"
+
 template <ACE_SYNCH_DECL> ACE_INLINE void
 ACE_Task<ACE_SYNCH_USE>::water_marks (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd, 
 				    size_t wm_size)

@@ -23,6 +23,9 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#include "tao/LocalObject.h"
+#include "FT_ClientORB_export.h"
+
 /**
  * @class TAO_FT_Request_Duration_Policy
  *
@@ -38,7 +41,7 @@
  * to keep trying to connect to server object groups under certain
  * conditions.
  */
-class TAO_FT_Export TAO_FT_Request_Duration_Policy 
+class TAO_FT_ClientORB_Export TAO_FT_Request_Duration_Policy
   : public FT::RequestDurationPolicy,
     public TAO_Local_RefCounted_Object
 {
@@ -91,7 +94,7 @@ private:
  * If this  policy is set, it enables the client ORB to send
  * heartbeats to the server ORB over the open connections.
  */
-class TAO_FT_Export TAO_FT_Heart_Beat_Policy
+class TAO_FT_ClientORB_Export TAO_FT_Heart_Beat_Policy
   : public FT::HeartbeatPolicy,
     public TAO_Local_RefCounted_Object
 {

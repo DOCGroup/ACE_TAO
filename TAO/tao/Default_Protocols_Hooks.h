@@ -15,15 +15,13 @@
 #define TAO_DEFAULT_PROTOCOLS_HOOKS_H
 
 #include /**/ "ace/pre.h"
-
-#include "Protocols_Hooks.h"
-
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Config.h"
+#include "tao/Protocols_Hooks.h"
 
 class TAO_POA;
 
@@ -64,10 +62,12 @@ public:
                                    CORBA::Boolean restart
                                    ACE_ENV_ARG_DECL);
 
-  virtual void add_rt_service_context_hook (TAO_Service_Context &service_context,
-                                            CORBA::Policy *model_policy,
-                                            CORBA::Short &client_priority
-                                            ACE_ENV_ARG_DECL);
+  virtual void add_rt_service_context_hook (
+      TAO_Service_Context &service_context,
+      CORBA::Policy *model_policy,
+      CORBA::Short &client_priority
+      ACE_ENV_ARG_DECL
+    );
 
   virtual void get_selector_hook (CORBA::Policy *model_policy,
                                   CORBA::Boolean
@@ -86,9 +86,11 @@ public:
   virtual int get_thread_native_priority (CORBA::Short &
                                           ACE_ENV_ARG_DECL_NOT_USED);
 
-  virtual int get_thread_CORBA_and_native_priority (CORBA::Short &,
-                                                    CORBA::Short &
-                                                    ACE_ENV_ARG_DECL_NOT_USED);
+  virtual int get_thread_CORBA_and_native_priority (
+      CORBA::Short &,
+      CORBA::Short &
+      ACE_ENV_ARG_DECL_NOT_USED
+    );
 
   virtual int set_thread_CORBA_priority (CORBA::Short
                                          ACE_ENV_ARG_DECL_NOT_USED);
@@ -98,8 +100,10 @@ public:
 
   virtual int set_default_policies (ACE_ENV_SINGLE_ARG_DECL);
 
-  virtual int set_default_server_protocol_policy (TAO_Acceptor_Registry &acceptor_registry
-                                                  ACE_ENV_ARG_DECL);
+  virtual int set_default_server_protocol_policy (
+      TAO_Acceptor_Registry &acceptor_registry
+      ACE_ENV_ARG_DECL
+    );
 
 };
 

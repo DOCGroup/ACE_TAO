@@ -1,5 +1,7 @@
 #
-# Makefile for building the Server_Protocol client
+# $Id$
+#
+# Makefile for building the Banded_Connections client
 #
 
 NAME = client

@@ -1,4 +1,6 @@
 #
+# $Id$
+#
 # Makefile for building	the TAO	ORB Services libraries
 #
 
@@ -21,10 +23,13 @@ MAKEFILES = \
    CosLifeCycle.bor \
    CosTime.bor \
    DsLogAdmin.bor \
-   FT_ORB.bor \
-   FaultTolerance.bor \
    PortableGroup.bor \
-	CosLoadBalancing.bor \
-   IFRService.bor
+   FTORB_Utils.bor \
+   FT_ServerORB.bor \
+   FT_ClientORB.bor \
+   FaultTolerance.bor \
+   CosLoadBalancing.bor \
+   IFRService.bor \
+   RTCosScheduling.bor
 
 !include <$(ACE_ROOT)/include/makeinclude/recurse.bor>

@@ -35,22 +35,14 @@ ACE_TLI_Stream::get_remote_addr (ACE_Addr &sa) const
 {
   ACE_TRACE ("ACE_TLI_Stream::get_remote_addr");
 
-#if defined (ACE_HAS_SVR4_TLI)
   struct netbuf name;
   name.maxlen = sa.get_size ();
   name.buf = (char *) sa.get_addr ();
 
-  // if (ACE_OS::t_getname (this->get_handle (), &name, REMOTENAME) == -1)
-  if (ACE_OS::ioctl (this->get_handle (),
-                     TI_GETPEERNAME,
-                     &name) == -1)
+  if (ACE_OS::t_getname (this->get_handle (), &name, REMOTENAME) == -1)
     return -1;
   else
     return 0;
-#else /* SunOS4 */
-  ACE_UNUSED_ARG (sa);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_SVR4_TLI */
 }
 
 // Send a release and then await the release from the other side.

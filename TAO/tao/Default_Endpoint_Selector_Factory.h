@@ -14,17 +14,17 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_DEFAULT_ENDPOINT_SELECTOR_FACTORY_H
 #define TAO_DEFAULT_ENDPOINT_SELECTOR_FACTORY_H
-#include /**/ "ace/pre.h"
 
-#include "tao/Endpoint_Selector_Factory.h"
+#include /**/ "ace/pre.h"
 #include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Endpoint_Selector_Factory.h"
 
 // Forward references
 class TAO_Default_Endpoint_Selector;
@@ -60,13 +60,11 @@ public:
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.
   virtual TAO_Invocation_Endpoint_Selector *get_selector (
-                             TAO_GIOP_Invocation *invocation
-                             ACE_ENV_ARG_DECL);
+                             ACE_ENV_SINGLE_ARG_DECL);
 
 protected:
   /// The possible endpoint selector strategies that can be
   /// returned by this factory
-
   TAO_Default_Endpoint_Selector *default_endpoint_selector_;
 };
 

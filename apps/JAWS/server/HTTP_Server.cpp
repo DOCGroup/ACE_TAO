@@ -1,11 +1,14 @@
 // $Id$
 
+#ifndef ACE_BUILD_SVC_DLL
 #define ACE_BUILD_SVC_DLL
+#endif /* ACE_BUILD_SVC_DLL */
 
 #include "ace/Get_Opt.h"
 #include "ace/Asynch_Acceptor.h"
 #include "ace/LOCK_SOCK_Acceptor.h"
 #include "ace/Proactor.h"
+#include "ace/Signal.h"
 
 #include "IO.h"
 #include "HTTP_Server.h"

@@ -178,5 +178,5 @@ CIAO::ComponentServer_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
 {
   // @@ Need to remove all containers/homes/components.
 
-  this->orb_->shutdown (ACE_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }

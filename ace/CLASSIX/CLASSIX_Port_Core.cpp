@@ -20,7 +20,6 @@
 #include "ace/CLASSIX/CLASSIX_Port_Core.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Synch_T.h"
 #include "ace/CLASSIX/CLASSIX_OS.h"
 /* ------------------------------------------------------------------------- */
 

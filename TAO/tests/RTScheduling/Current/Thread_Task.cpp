@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Thread_Task.h"
+#include "ace/OS_NS_errno.h"
 
 int
 Thread_Task::activate_task (CORBA::ORB_ptr orb,
@@ -148,7 +149,7 @@ Thread_Task::svc (void)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "%s\n",
-                        CORBA::string_dup ((*segment_name_list) [i])));
+                        (*segment_name_list)[i].in ()));
           }
       }
 

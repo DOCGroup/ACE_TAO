@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*Server): strategies, rt_server {
   Source_Files {
     server.cpp

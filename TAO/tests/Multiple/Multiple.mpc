@@ -1,4 +1,7 @@
-project(*Server): taoserver {
+// -*- MPC -*-
+// $Id$
+
+project(*Server): taoexe, portableserver {
   idlflags += -Gd
 
   Source_Files {
@@ -8,8 +11,7 @@ project(*Server): taoserver {
   }
 }
 
-project(*Client): taoserver {
-  exename   = client
+project(*Client): taoexe, portableserver {
   idlflags += -Gd
 
   Source_Files {

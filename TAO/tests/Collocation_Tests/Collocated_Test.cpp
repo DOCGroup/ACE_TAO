@@ -8,7 +8,7 @@
 
 const char *output = "test.ior";
 const char *input = "file://test.ior";
-static int named_orbs = 0;
+// static int named_orbs = 0;
 ACE_CString server_orb;
 ACE_CString client_orb;
 int
@@ -27,7 +27,7 @@ parse_args (int argc, char *argv[])
         input = get_opts.opt_arg ();
         break;
       case 'n':
-        named_orbs = 1;
+        // named_orbs = 1;
         server_orb.set ("server_orb");
         client_orb.set ("client_orb");
         break;

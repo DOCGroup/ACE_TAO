@@ -1,6 +1,7 @@
 // QoS_Session_Impl.cpp
 // $Id$
 
+#include "ace/OS_NS_arpa_inet.h"
 #include "ace/SOCK.h"
 #include "QoS_Manager.h"
 #include "QoS_Session_Impl.h"

@@ -14,6 +14,7 @@
 
 #ifndef TAO_EC_REACTIVE_TIMEOUT_GENERATOR_H
 #define TAO_EC_REACTIVE_TIMEOUT_GENERATOR_H
+
 #include /**/ "ace/pre.h"
 
 #include "EC_Timeout_Generator.h"
@@ -31,7 +32,8 @@
  * Implements the Timeout_Generator using an ACE_Reactor. Usually
  * the same reactor that is used by the ORB where the EC runs.
  */
-class TAO_RTEvent_Export TAO_EC_Reactive_Timeout_Generator : public TAO_EC_Timeout_Generator
+class TAO_RTEvent_Export TAO_EC_Reactive_Timeout_Generator 
+  : public TAO_EC_Timeout_Generator
 {
 public:
   /// Constructor.
@@ -63,4 +65,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_EC_REACTIVE_TIMEOUT_GENERATOR_H */

@@ -1,6 +1,7 @@
 //$Id$
 
 #include "../lib/Driver.h"
+#include "ace/OS_main.h"
 
 int
 ACE_TMAIN (int argc, char *argv[])

@@ -14,7 +14,7 @@
 #define ACE_MEMORY_POOLS_H
 #include /**/ "ace/pre.h"
 
-#include "ace/Synch.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,6 +23,8 @@
 #include "Event_Channel.h"
 #include "Dispatching_Modules.h"
 #include "ace/Malloc.h"
+#include "ace/Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
 
 // ************************************************************
 

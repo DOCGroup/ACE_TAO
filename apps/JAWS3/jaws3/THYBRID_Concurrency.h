@@ -4,6 +4,8 @@
 #ifndef JAWS_THYBRID_CONCURRENCY_H
 #define JAWS_THYBRID_CONCURRENCY_H
 
+#include "ace/Atomic_Op.h"
+
 #include "jaws3/Concurrency.h"
 
 class JAWS_Export JAWS_THYBRID_Concurrency : public JAWS_Concurrency_Impl

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "test_i.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(Timed_Buffered_Oneways, test_i, "$Id$")
 

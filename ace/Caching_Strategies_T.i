@@ -3,6 +3,8 @@
 
 //////////////////////////////////////////////////////////////////////////////////
 
+#include "ace/OS_Memory.h"
+
 template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE
 ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::ACE_Caching_Strategy_Adapter (IMPLEMENTATION *implementation,
                                                                                                          int delete_implementation)

@@ -5,7 +5,6 @@
 #include "ace/Read_Buffer.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
-#include "orbsvcs/FtRtEvent/Utils/ScopeGuard.h"
 #include "orbsvcs/FtRtEvent/Utils/UUID.h"
 
 ACE_RCSID (Factory_Service,
@@ -23,57 +22,59 @@ EventChannelFactory_i::EventChannelFactory_i(const char* conf_filename, CORBA::O
 
 CORBA::Object_ptr EventChannelFactory_i::create_object (
   const char * type_id,
-  const FT::Criteria & the_criteria,
-  FT::GenericFactory::FactoryCreationId_out factory_creation_id
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS
+  const PortableGroup::Criteria & the_criteria,
+  PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
+  ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
   CORBA::SystemException
-  , FT::NoFactory
-  , FT::ObjectNotCreated
-  , FT::InvalidCriteria
-  , FT::InvalidProperty
-  , FT::CannotMeetCriteria
+  , PortableGroup::NoFactory
+  , PortableGroup::ObjectNotCreated
+  , PortableGroup::InvalidCriteria
+  , PortableGroup::InvalidProperty
+  , PortableGroup::CannotMeetCriteria
   ))
 {
 
   ACE_DEBUG((LM_DEBUG,"EventChannelFactory_i::create_object\n"));
+  FILE* file = 0;
+  char *id_str=0, *prog=0;
 
-  FILE* file = fopen(conf_file, "r");
-  if (file == NULL)
-    ACE_THROW_RETURN(FT::NoFactory(), CORBA::Object::_nil());
+  ACE_TRY {
 
-  ScopeGuard file_guard = MakeGuard(fclose, file);
-  ACE_UNUSED_ARG(file_guard);
+    file = fopen(conf_file, "r");
+    if (file == 0)
+      ACE_TRY_THROW (PortableGroup::NoFactory());
 
-  char *id=0, *prog=0;
-  ACE_Read_Buffer read_buf(file);
-  ScopeGuard id_guard = MakeObjGuard(* ACE_Allocator::instance(),
-    &ACE_Allocator::free, id);
-  ACE_UNUSED_ARG(id_guard);
+    ACE_Read_Buffer read_buf(file);
 
-  ScopeGuard prog_guard = MakeObjGuard(* ACE_Allocator::instance(),
-    &ACE_Allocator::free, prog);
-  ACE_UNUSED_ARG(prog_guard);
-
-  while ((id = read_buf.read(' ')) != NULL &&
-    (prog = read_buf.read('\n')) != NULL) {
-      id[strlen(id)-1] = '\0';
-      if (strcmp(id, type_id) == 0) {
-        return create_process(prog, the_criteria, factory_creation_id);
+    while ((id_str = read_buf.read(' ')) != 0 &&
+      (prog = read_buf.read('\n')) != 0) {
+        id_str[strlen(id_str)-1] = '\0';
+        if (strcmp(id_str, type_id) == 0) {
+          return create_process(prog, the_criteria, factory_creation_id);
       }
     }
+  }
+  ACE_CATCHALL {
+    if (file) fclose(file);
+    if (id_str) ACE_Allocator::instance()->free(id_str);
+    if (prog) ACE_Allocator::instance()->free(prog);
+    ACE_RE_THROW;
+  }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN(CORBA::Object::_nil());
 
-    ACE_THROW_RETURN(FT::ObjectNotCreated(), CORBA::Object::_nil());
+    ACE_THROW_RETURN(PortableGroup::ObjectNotCreated(), CORBA::Object::_nil());
 }
 
 void EventChannelFactory_i::delete_object (
-  const FT::GenericFactory::FactoryCreationId & factory_creation_id
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS
+  const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
+  ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((
   CORBA::SystemException
-  , FT::ObjectNotFound
+  , PortableGroup::ObjectNotFound
   ))
 {
   ACE_TRACE("EventChannelFactory_i::delete_object");
@@ -88,17 +89,17 @@ void EventChannelFactory_i::delete_object (
 
 CORBA::Object_ptr EventChannelFactory_i::create_process (
   char * process_str,
-  const FT::Criteria & the_criteria,
-  FT::GenericFactory::FactoryCreationId_out factory_creation_id)
+  const PortableGroup::Criteria & the_criteria,
+  PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id)
 {
-  ACE_TRACE("EventChannelFactory_i::create_prcess");
+  ACE_TRACE("EventChannelFactory_i::create_process");
 
   CORBA::Object_ptr result = CORBA::Object::_nil();
 
   // fill the factory_creation_id
 
   ACE_NEW_RETURN(factory_creation_id,
-    FT::GenericFactory::FactoryCreationId,
+    PortableGroup::GenericFactory::FactoryCreationId,
     CORBA::Object::_nil());
   *factory_creation_id <<= (CORBA::ULong) ++id;
 
@@ -131,12 +132,12 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
     const CosNaming::Name& name = the_criteria[i].nam;
     if (name.length() > 0) {
       const char* val;
-      const char* id = name[0].id.in();
+      const char* id_str = name[0].id.in();
       the_criteria[i].val >>= val;
-      if (id[0] != '-') // environment variable
-        options.setenv(id, "%s", val);
+      if (id_str[0] != '-') // environment variable
+        options.setenv(id_str, "%s", val);
       else {// command line option
-        ACE_OS::sprintf(buf, " %s %s", id, val);
+        ACE_OS::sprintf(buf, " %s %s", id_str, val);
         str += buf;
       }
     }
@@ -165,37 +166,38 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   ACE_SOCK_Stream stream;
 
   ACE_DEBUG((LM_DEBUG, "accepting connection from event channel\n"));
-  if (acceptor.accept(stream, &client_addr, &timeout) != -1)
-  {
-    ACE_DEBUG((LM_DEBUG, "Factory Connect established with %s:%d\n",
-      client_addr.get_host_name(), client_addr.get_port_number() ));
-
-    // receive the ior string from the created object
-
-    char ior[5000] = {'0'};
-    int n = 0;
-    int byteRead=0;
-    while ((n = stream.recv(ior+byteRead, 5000-byteRead)))  {
-      byteRead += n;
-    }
-
-    if (strlen(ior)  ==0)
-      return result;
+  if (acceptor.accept(stream, &client_addr, &timeout) == -1)
+     ACE_ERROR_RETURN((LM_ERROR, "accept fail\n"), 0);
 
 
-    CORBA::Object_var result = orb->string_to_object(ior
+  ACE_DEBUG((LM_DEBUG, "Factory Connect established with %s:%d\n",
+    client_addr.get_host_name(), client_addr.get_port_number() ));
+
+  // receive the ior string from the created object
+
+  char ior[5000] = {'0'};
+  int n = 0;
+  int byteRead=0;
+  while ((n = stream.recv(ior+byteRead, 5000-byteRead)))  {
+    byteRead += n;
+  }
+
+  if (strlen(ior)  ==0)
+    return result;
+
+  ACE_TRY_NEW_ENV {
+    CORBA::Object_var result  = orb->string_to_object(ior
       ACE_ENV_ARG_PARAMETER);
-
-    ACE_CHECK_RETURN(result);
+    ACE_TRY_CHECK;
 
     if (objects.bind(id, result) ==0){
       return result._retn();
     }
   }
-  else {
-    ACE_DEBUG((LM_DEBUG,"accept fail\n"));
+  ACE_CATCHALL {
   }
+  ACE_ENDTRY;
 
-  return result;
+  return 0;
 }
 

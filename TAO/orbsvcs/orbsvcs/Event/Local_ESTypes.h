@@ -19,9 +19,8 @@
 
 #ifndef ACE_LOCAL_ESTYPES_H
 #define ACE_LOCAL_ESTYPES_H
-#include /**/ "ace/pre.h"
 
-#include "tao/corba.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/Event_Service_Constants.h"
 
@@ -45,4 +44,5 @@ typedef RtecEventComm::Event RtecEventComm_Event;
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* ACE_LOCAL_ESTYPES_H */
