@@ -22,6 +22,7 @@ ACE_RCSID (tao,
            GIOP_Message_Base,
            "$Id$")
 
+namespace { enum { GIOP_HEADER_ALIGNMENT_OFFSET = 4 } ; }
 
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                                               size_t /*input_cdr_size*/)
@@ -331,11 +332,52 @@ TAO_GIOP_Message_Base::message_type (
   return TAO_PLUGGABLE_MESSAGE_MESSAGERROR;
 }
 
+
 int
 TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                                                 TAO_Queued_Data *qd)
-
 {
+  if( TAO_debug_level > 3) {
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("TAO (%P|%t) - Transport[%d], ")
+                ACE_TEXT("TAO_GIOP_Message_Base::process_request_message: ")
+                ACE_TEXT("entered with chained data: %s, refcount: %d, total length: %d, ")
+                ACE_TEXT("base: %x should be aligned to %d bytes.\n"),
+                transport->id (),
+                ((qd->msg_block_->cont()==0)? ACE_TEXT("no"): ACE_TEXT("yes")),
+                qd->msg_block_->data_block()->reference_count(),
+                qd->msg_block_->total_length(),
+                reinterpret_cast<int>(qd->msg_block_->rd_ptr()),
+                // ACE_CDR::LONG_ALIGN
+                ACE_CDR::MAX_ALIGNMENT
+              ));
+  }
+
+#define DEBUG_PMB_CODE
+#ifdef DEBUG_PMB_CODE
+  if( qd == 0) {
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("TAO (%P|%t) - Transport[%d], "),
+                ACE_TEXT("TAO_GIOP_Message_Base::process_request_message: "),
+                ACE_TEXT("entered with chain: %d, refcount: %d?\n"),
+                transport->id (), (qd->msg_block_->cont()?"yes":"no"), qd->msg_block_->data_block()->reference_count() ));
+
+  } else if( qd->msg_block_ == 0) {
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("TAO (%P|%t) - Transport[%d], "),
+                ACE_TEXT("TAO_GIOP_Message_Base::process_request_message: "),
+                ACE_TEXT("NULL CHAIN after processing!"),
+                transport->id () )) ;
+
+  } else if( qd->msg_block_->data_block()->reference_count() == 0) {
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("TAO (%P|%t) - Transport[%d], "),
+                ACE_TEXT("TAO_GIOP_Message_Base::process_request_message: "),
+                ACE_TEXT("UNREFERENCED DATA BLOCK before processing!"),
+                transport->id () )) ;
+  }
+#endif // DEBUG_PMB_CODE
+
   // Set the upcall thread
   this->orb_core_->lf_strategy ().set_upcall_thread (this->orb_core_->leader_follower ());
 
@@ -378,10 +420,12 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   size_t rd_pos = qd->msg_block_->rd_ptr () - qd->msg_block_->base ();
   size_t wr_pos = qd->msg_block_->wr_ptr () - qd->msg_block_->base ();
 // We are now eliding the header before calling this method.
-//rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
+#ifdef BOGUS
+rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
+#endif // BOGUS
 
-  if (TAO_debug_level > 0)
-    qd->dump_msg ("recv") ;
+  if (TAO_debug_level >= 10)
+    qd->dump_msg ("request message") ;
 
 
   // Create a input CDR stream.
@@ -397,10 +441,91 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                           qd->major_version_,
                           qd->minor_version_,
                           this->orb_core_);
+  if( TAO_debug_level > 3) {
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("TAO (%P|%t) - Transport[%d], ")
+                ACE_TEXT("TAO_GIOP_Message_Base::process_request_message: ")
+                ACE_TEXT("consolidated, refcount: %d, total length: %d\n"),
+                transport->id (),
+                input_cdr.start()->data_block()->reference_count(),
+                input_cdr.start()->total_length()
+              ));
+  }
 
 #else // MIKE_SEZ_COPYIT
+TAO_InputCDR* real_cdr = 0 ; 
+  if( qd->msg_block_->cont() == 0
+    && ((reinterpret_cast<int>(qd->msg_block_->rd_ptr()) % ACE_CDR::MAX_ALIGNMENT) == GIOP_HEADER_ALIGNMENT_OFFSET)
+    ) {
+    //
+    // The message block is not chained, use the data block directly.
+    // Indicate the read and write pointers since we are likely to only
+    // be using a portion of the underlying buffer.
+    //
+    ACE_NEW_RETURN(
+      real_cdr,
+      TAO_InputCDR(qd->msg_block_->data_block ()->duplicate(),
+                   qd->msg_block_->self_flags (),
+                   rd_pos,
+                   wr_pos,
+                   qd->byte_order_,
+                   qd->major_version_,
+                   qd->minor_version_,
+                   this->orb_core_
+      ),
+      -1
+    ) ;
 
-  TAO_InputCDR input_cdr (qd->msg_block_->data_block (),
+  } else {
+    //
+    // Prepend a stack buffer with enough data to ensure correct
+    // alignment of the data.
+    //
+    char buffer[ GIOP_HEADER_ALIGNMENT_OFFSET + ACE_CDR::MAX_ALIGNMENT] ;
+    ACE_Message_Block header_proxy( buffer, GIOP_HEADER_ALIGNMENT_OFFSET) ;
+    ACE_CDR::mb_align( &header_proxy) ;
+    header_proxy.wr_ptr( GIOP_HEADER_ALIGNMENT_OFFSET) ;
+    header_proxy.cont( qd->msg_block_) ;
+
+    //
+    // The message block is chained or misaligned, consolidate the whole
+    // thing by copying, since the data conversion expects a single
+    // contiguous buffer.
+    //
+    ACE_NEW_RETURN(
+      real_cdr,
+      TAO_InputCDR( &header_proxy,
+                    qd->byte_order_,
+                    qd->major_version_,
+                    qd->minor_version_,
+                    this->orb_core_
+      ),
+      -1
+    ) ;
+    if( TAO_debug_level > 3) {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("TAO (%P|%t) - Transport[%d], ")
+                  ACE_TEXT("TAO_GIOP_Message_Base::process_request_message: ")
+                  ACE_TEXT("consolidated, refcount: %d, total length: %d\n"),
+                  transport->id (),
+                  real_cdr->start()->data_block()->reference_count(),
+                  real_cdr->start()->total_length()
+                ));
+    }
+
+    //
+    // Skip the empty header alignment bytes.
+    //
+    real_cdr->skip_bytes( GIOP_HEADER_ALIGNMENT_OFFSET) ;
+  }
+
+  TAO_InputCDR& input_cdr = *real_cdr ;
+
+#endif // MIKE_SEZ_COPYIT
+
+#ifdef DO_NOT_COMPILE
+
+  TAO_InputCDR input_cdr (qd->msg_block_->data_block ()->duplicate(),
                           qd->msg_block_->self_flags (),
                           rd_pos,
                           wr_pos,
@@ -422,7 +547,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
     input_cdr.reset( qd->msg_block_, qd->byte_order_) ;
   }
 
-#endif // MIKE_SEZ_COPYIT
+#endif // DO_NOT_COMPILE
 
   transport->assign_translators(&input_cdr,&output);
 
@@ -452,6 +577,11 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
     default:
       return -1;
     }
+
+#ifndef MIKE_SEZ_COPYIT
+  delete real_cdr ;
+#endif // MIKE_SEZ_COPYIT
+
 }
 
 int
@@ -459,6 +589,21 @@ TAO_GIOP_Message_Base::process_reply_message (
     TAO_Pluggable_Reply_Params &params,
     TAO_Queued_Data *qd)
 {
+  if( TAO_debug_level > 3) {
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("TAO (%P|%t) - ")
+                ACE_TEXT("TAO_GIOP_Message_Base::process_reply_message: ")
+                ACE_TEXT("entered with chained data: %s, refcount: %d, total length: %d, ")
+                ACE_TEXT("base: %x should be aligned to %d bytes.\n"),
+                ((qd->msg_block_->cont()==0)? ACE_TEXT("no"): ACE_TEXT("yes")),
+                qd->msg_block_->data_block()->reference_count(),
+                qd->msg_block_->total_length(),
+                reinterpret_cast<int>(qd->msg_block_->rd_ptr()),
+                // ACE_CDR::LONG_ALIGN
+                ACE_CDR::MAX_ALIGNMENT
+              ));
+  }
+
   // Get a parser for us
   TAO_GIOP_Message_Generator_Parser *generator_parser = 0;
 
@@ -473,8 +618,8 @@ TAO_GIOP_Message_Base::process_reply_message (
 // We are now eliding the header before calling this method.
 //rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
-  if (TAO_debug_level > 0)
-    qd->dump_msg ("recv");
+  if (TAO_debug_level >= 10)
+    qd->dump_msg ("reply message");
 
 #ifdef MIKE_SEZ_COPYIT
   //
@@ -490,7 +635,79 @@ TAO_GIOP_Message_Base::process_reply_message (
 
 #else // MIKE_SEZ_COPYIT
 
-  TAO_InputCDR input_cdr (qd->msg_block_->data_block (),
+  TAO_InputCDR* real_cdr = 0 ;
+
+  if( (qd->msg_block_->cont() == 0)
+    && ((reinterpret_cast<int>(qd->msg_block_->rd_ptr()) % ACE_CDR::MAX_ALIGNMENT) == GIOP_HEADER_ALIGNMENT_OFFSET)
+    ) {
+    //
+    // The message block is not chained, use the data block directly.
+    // Indicate the read and write pointers since we are likely to only
+    // be using a portion of the underlying buffer.
+    //
+    ACE_NEW_RETURN(
+      real_cdr,
+      TAO_InputCDR(qd->msg_block_->data_block ()->duplicate(),
+                   qd->msg_block_->self_flags (),
+                   rd_pos,
+                   wr_pos,
+                   qd->byte_order_,
+                   qd->major_version_,
+                   qd->minor_version_,
+                   this->orb_core_
+      ),
+      -1
+    ) ;
+
+  } else {
+    //
+    // Prepend a stack buffer with enough data to ensure correct
+    // alignment of the data.
+    //
+    char buffer[ GIOP_HEADER_ALIGNMENT_OFFSET + ACE_CDR::MAX_ALIGNMENT] ;
+    ACE_Message_Block header_proxy( buffer, GIOP_HEADER_ALIGNMENT_OFFSET) ;
+    ACE_CDR::mb_align( &header_proxy) ;
+    header_proxy.wr_ptr( GIOP_HEADER_ALIGNMENT_OFFSET) ;
+    header_proxy.cont( qd->msg_block_) ;
+
+    //
+    // The message block is chained, consolidate the whole thing by
+    // copying, since the data conversion expects a single contiguous
+    // buffer.
+    //
+    ACE_NEW_RETURN(
+      real_cdr,
+      TAO_InputCDR( &header_proxy,
+                    qd->byte_order_,
+                    qd->major_version_,
+                    qd->minor_version_,
+                    this->orb_core_
+      ),
+      -1
+    ) ;
+    if( TAO_debug_level > 3) {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("TAO (%P|%t) - ")
+                  ACE_TEXT("TAO_GIOP_Message_Base::process_reply_message: ")
+                  ACE_TEXT("consolidated, refcount: %d, total length: %d\n"),
+                  real_cdr->start()->data_block()->reference_count(),
+                  real_cdr->start()->total_length()
+                ));
+    }
+
+    //
+    // Skip the empty header alignment bytes.
+    //
+    real_cdr->skip_bytes( GIOP_HEADER_ALIGNMENT_OFFSET) ;
+  }
+
+  TAO_InputCDR& input_cdr = *real_cdr ;
+
+#endif // MIKE_SEZ_COPYIT
+
+#ifdef DO_NOT_COMPILE
+
+  TAO_InputCDR input_cdr (qd->msg_block_->data_block ()->duplicate(),
                           qd->msg_block_->self_flags (),
                           rd_pos,
                           wr_pos,
@@ -506,12 +723,13 @@ TAO_GIOP_Message_Base::process_reply_message (
     // buffer.
     //
     // NOTE: This may leak the previous flavor, so we may need to manage
-    //       that if we pursue this change.
+    //       that if we pursue this change.  Do we need to reset the
+    //       pointers here as well?
     //
     input_cdr.reset( qd->msg_block_, qd->byte_order_) ;
   }
 
-#endif // MIKE_SEZ_COPYIT
+#endif // DO_NOT_COMPILE
 
 
   // We know we have some reply message. Check whether it is a
@@ -540,6 +758,15 @@ TAO_GIOP_Message_Base::process_reply_message (
       retval = -1;
     }
 
+  if( TAO_debug_level > 3) {
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("TAO (%P|%t) - ")
+                ACE_TEXT("TAO_GIOP_Message_Base::process_reply_message: ")
+                ACE_TEXT("parsed reply, return value: %d\n"),
+                retval
+              ));
+  }
+
   if (retval == -1)
     return retval;
 
@@ -547,6 +774,15 @@ TAO_GIOP_Message_Base::process_reply_message (
 
   retval =
     params.transport_->tms ()->dispatch_reply (params);
+
+  if( TAO_debug_level > 3) {
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT("TAO (%P|%t) - ")
+                ACE_TEXT("TAO_GIOP_Message_Base::process_reply_message: ")
+                ACE_TEXT("dispatched reply, return value: %d\n"),
+                retval
+              ));
+  }
 
   if (retval == -1)
     {
@@ -558,6 +794,10 @@ TAO_GIOP_Message_Base::process_reply_message (
                     "dispatch reply failed\n",
                     params.transport_->id ()));
     }
+
+#ifndef MIKE_SEZ_COPYIT
+  delete real_cdr ;
+#endif // MIKE_SEZ_COPYIT
 
   return retval;
 }
@@ -662,6 +902,14 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
       parse_error =
         parser->parse_request_header (request);
 
+if (parse_error != 0)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT("TAO (%P|%t) - TAO_GIOP_Message_Base::process_request, ")
+              ACE_TEXT("ERROR parsing request header.\n")
+            ));
+}
+
       TAO_Codeset_Manager *csm = request.orb_core()->codeset_manager();
       if (csm)
         csm->process_service_context(request);
@@ -677,6 +925,14 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
 
       CORBA::Object_var forward_to;
 
+if (TAO_debug_level > 3)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT("TAO (%P|%t) - TAO_GIOP_Message_Base::process_request, ")
+              ACE_TEXT("dispatching request.\n")
+            ));
+}
+
       // Do this before the reply is sent.
       this->orb_core_->request_dispatcher ()->dispatch (
           this->orb_core_,
@@ -684,6 +940,14 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
           forward_to
           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+if (TAO_debug_level > 3)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT("TAO (%P|%t) - TAO_GIOP_Message_Base::process_request, ")
+              ACE_TEXT("returned from dispatching request.\n")
+            ));
+}
 
       if (!CORBA::is_nil (forward_to.in ()))
         {
@@ -858,6 +1122,14 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
       int parse_error =
         parser->parse_locate_header (locate_request);
 
+if (parse_error != 0)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
+              ACE_TEXT("ERROR parsing locate request header.\n")
+            ));
+}
+
       if (parse_error != 0)
         {
           ACE_TRY_THROW (CORBA::MARSHAL (0,
@@ -886,6 +1158,14 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
                                         transport,
                                         this->orb_core_,
                                         parse_error);
+
+if (parse_error != 0)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT("TAO (%P|%t) - TAO_GIOP_Message_Base::process_locate_request, ")
+              ACE_TEXT("ERROR creating server request.\n")
+            ));
+}
 
       if (parse_error != 0)
         {

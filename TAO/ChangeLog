@@ -1,3 +1,42 @@
+Wed Dec  1 13:06:29 2004  Mike Martinez  <martinez_m@ociweb.com>
+
+        * tao/GIOP_Message_Base.cpp ( process_request, process_locate_request):
+          
+          Added new diagnostics.
+
+        * tao/GIOP_Message_Base.cpp ( process_request_message, process_reply_message):
+          
+          Added new diagnostics.  Added check for alignment with respect
+          to original header instead of message data after GIOP header.
+          When re-aligning, force the intial offset to correspond to the
+          presence of the GIOP header.
+
+        * tao/GIOP_Message_State.cpp( take_values_from_message_block):
+
+          Remove peek at request ID from request header parsing.
+
+        * tao/GIOP_Message_State.h (read_ulong, read4):
+        * tao/GIOP_Message_State.inl (read_ulong, read4):
+        * tao/GIOP_Message_State.cpp (read_ulong, read4):
+
+          Moved implementation of read_ulong into static read4 and
+          inlined read_ulong.
+
+        * tao/Transport.cpp( handle_input):
+          
+          Aligned read buffer before use.
+          Cleaned up and added diagnostic messages.  Conditional debug
+          code.  Removed some dead code.
+
+        * tao/Transport.cpp( enqueue_incoming_message):
+          
+          Peek at request Id to initialize TAO_Queued_Data object.
+
+        * tao/Transport.cpp( parse_queue_head, process_parsed_messages):
+          
+          Cleaned up diagnostics, added more conditions to diagnostic
+          generation.
+
 Mon Nov 15 13:45:20 2004  Mike Martinez  <martinez_m@ociweb.com>
 
         * tao/GIOP_Message_Base.cpp:
@@ -24,27 +63,27 @@ Mon Nov 15 13:45:20 2004  Mike Martinez  <martinez_m@ociweb.com>
 
         * tao/Transport.cpp (process_queue_head):
         * tao/Transport.cpp (process_parsed_messages):
-	
-	  Added more diagnostic messages.
-	
+
+          Added more diagnostic messages.
+
         * tao/Transport.cpp (enqueue_incoming_message):
 
-     	  Removed header skip read pointer adjustments.  Also removed
+          Removed header skip read pointer adjustments.  Also removed
           message block consolidation since a chained message is now
           being passed to the protocol methods for processing.
 
-	* tao/Transport.cpp (handle_input):
+        * tao/Transport.cpp (handle_input):
 
           Modified to use a different processing algorithm.  This will
-	  allocate a large buffer and read directly into this buffer.  The
-	  buffer is managed by an ACE_Data_Block.  Processing of messages
-	  in the buffer is performed by creating ACE_Message_Block objects
-	  pointing into the buffer and referencing each message header and
-	  message data segment in the buffer.  Message blocks are chained
-	  if messages span single buffers as well.  Header data is parsed
-	  and elided from the message data chain before being enqueued for
-	  further processing.  As much data as possible is read and
-	  processed from the handle before yielding to the reactor.
+          allocate a large buffer and read directly into this buffer.  The
+          buffer is managed by an ACE_Data_Block.  Processing of messages
+          in the buffer is performed by creating ACE_Message_Block objects
+          pointing into the buffer and referencing each message header and
+          message data segment in the buffer.  Message blocks are chained
+          if messages span single buffers as well.  Header data is parsed
+          and elided from the message data chain before being enqueued for
+          further processing.  As much data as possible is read and
+          processed from the handle before yielding to the reactor.
 
 Thu Sep 23 19:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -58,268 +97,268 @@ Thu Sep 23 19:49:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Sep 23 17:48:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Sequence_Unit_Tests/string_sequence_element.hpp:
-	* tests/Sequence_Unit_Tests/string_traits_base.hpp:
+        * tests/Sequence_Unit_Tests/string_sequence_element.hpp:
+        * tests/Sequence_Unit_Tests/string_traits_base.hpp:
 
-	  Left a couple of coments for Carlos.
+          Left a couple of coments for Carlos.
 
 Wed Sep 22 21:39:48 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
-	  Add test for freebuf(), this motivated the changes below.
-	  Add test for to verify that index checking works.
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+          Add test for freebuf(), this motivated the changes below.
+          Add test for to verify that index checking works.
 
-	* tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
-	  Enable the implementation of allocbuf() and freebuf().
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
+          Enable the implementation of allocbuf() and freebuf().
 
-	* tests/Sequence_Unit_Tests/allocation_traits.hpp:
-	  Because freebuf() has such crazy requirements for sequences of
-	  reference-like types I had to implement special allocators for
-	  those types.  Basically they decorate the normal allocators and
-	  call the ::release_range() and ::zero_range() traits in the
-	  element type.
+        * tests/Sequence_Unit_Tests/allocation_traits.hpp:
+          Because freebuf() has such crazy requirements for sequences of
+          reference-like types I had to implement special allocators for
+          those types.  Basically they decorate the normal allocators and
+          call the ::release_range() and ::zero_range() traits in the
+          element type.
 
-	* tests/Sequence_Unit_Tests/generic_sequence.hpp:
-	  Improved the documentation.
-	  Moved the zeroing-out of buffers to the allocation traits.
+        * tests/Sequence_Unit_Tests/generic_sequence.hpp:
+          Improved the documentation.
+          Moved the zeroing-out of buffers to the allocation traits.
 
-	* tests/Sequence_Unit_Tests/string_traits.hpp:
-	  Add trait to release all the strings in a (buffer) range.
+        * tests/Sequence_Unit_Tests/string_traits.hpp:
+          Add trait to release all the strings in a (buffer) range.
 
 Wed Sep 22 20:41:44 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
-	* tests/Sequence_Unit_Tests/Unbounded_Simple_Types.cpp:
-	  To avoid compilation warnings on Tru64_Compaq_C++ we do not use
-	  explicit template intantiation, instead we just use all the
-	  functions.
+        * tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
+        * tests/Sequence_Unit_Tests/Unbounded_Simple_Types.cpp:
+          To avoid compilation warnings on Tru64_Compaq_C++ we do not use
+          explicit template intantiation, instead we just use all the
+          functions.
 
 Wed Sep 22 20:25:12 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* tests/Sequence_Unit_Tests/string_sequence_element.hpp:
-	  Implement the type returned by the non-const operator[] in
-	  string sequences.  A lot of the evilness of string sequences is
-	  encapsulated here.
+        * tests/Sequence_Unit_Tests/string_sequence_element.hpp:
+          Implement the type returned by the non-const operator[] in
+          string sequences.  A lot of the evilness of string sequences is
+          encapsulated here.
 
-	* tests/Sequence_Unit_Tests/run_test.pl:
-	* tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
-	* tests/Sequence_Unit_Tests/string_sequence_element_ut.cpp:
-	  Unit test for the previous class.
+        * tests/Sequence_Unit_Tests/run_test.pl:
+        * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+        * tests/Sequence_Unit_Tests/string_sequence_element_ut.cpp:
+          Unit test for the previous class.
 
-	* tests/Sequence_Unit_Tests/string_traits_base.hpp:
-	  Add missing #include for the string manager types.
+        * tests/Sequence_Unit_Tests/string_traits_base.hpp:
+          Add missing #include for the string manager types.
 
-	* tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
-	  Implement the non-const operator[] to return a
-	  string_sequence_element<charT>.
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
+          Implement the non-const operator[] to return a
+          string_sequence_element<charT>.
 
-	* tests/Sequence_Unit_Tests/run_test.pl:
-	* tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
-	  Add more tests for copy constructors.
-	  Test the non-cost operator[] for sequences.
-	  Move the add_all() function to the end, easier to add tests that
-	  way.
+        * tests/Sequence_Unit_Tests/run_test.pl:
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+          Add more tests for copy constructors.
+          Test the non-cost operator[] for sequences.
+          Move the add_all() function to the end, easier to add tests that
+          way.
 
 Tue Sep 21 22:11:10 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
-	  New file, this will implement (obviously enough) unbounded
-	  sequences of strings.  The implementation is incomplete, but
-	  enough is there to show the main ideas and start the cycle:
-	  write test -> get test to compile + fail -> get test to pass
-	  -> rinse and repeat.
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence.hpp:
+          New file, this will implement (obviously enough) unbounded
+          sequences of strings.  The implementation is incomplete, but
+          enough is there to show the main ideas and start the cycle:
+          write test -> get test to compile + fail -> get test to pass
+          -> rinse and repeat.
 
-	* tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
-	* tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
-	  Initial unit test for unbounded string sequences.
+        * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+        * tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
+          Initial unit test for unbounded string sequences.
 
-	* tests/Sequence_Unit_Tests/testing_counters.hpp:
-	  Helper classes to implement some common testing idioms, namely,
-	  count how many times a function is called and raise an exception
-	  after a prescribed number of calls.
+        * tests/Sequence_Unit_Tests/testing_counters.hpp:
+          Helper classes to implement some common testing idioms, namely,
+          count how many times a function is called and raise an exception
+          after a prescribed number of calls.
 
-	* tests/Sequence_Unit_Tests/string_traits.hpp:
-	  Implement the element manipulation traits for strings (and wide
-	  strings.)
+        * tests/Sequence_Unit_Tests/string_traits.hpp:
+          Implement the element manipulation traits for strings (and wide
+          strings.)
 
-	* tests/Sequence_Unit_Tests/string_traits_base.hpp:
-	  Isolate most of the string element manipulation traits from the
-	  silly CORBA names for string vs. wstring functions.  Apparently
-	  they forgot that C++ has overloading.
+        * tests/Sequence_Unit_Tests/string_traits_base.hpp:
+          Isolate most of the string element manipulation traits from the
+          silly CORBA names for string vs. wstring functions.  Apparently
+          they forgot that C++ has overloading.
 
-	* tests/Sequence_Unit_Tests/testing_string_traits.hpp:
-	  More helper classes to write unit tests related to string
-	  sequences.
+        * tests/Sequence_Unit_Tests/testing_string_traits.hpp:
+          More helper classes to write unit tests related to string
+          sequences.
 
-	* tests/Sequence_Unit_Tests/testing_allocation_traits.hpp:
-	* tests/Sequence_Unit_Tests/value_sequence_tester.hpp:
-	* tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
-	* tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
-	  Refactored the code to use the testing_counters.hpp helpers.
+        * tests/Sequence_Unit_Tests/testing_allocation_traits.hpp:
+        * tests/Sequence_Unit_Tests/value_sequence_tester.hpp:
+        * tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+        * tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
+          Refactored the code to use the testing_counters.hpp helpers.
 
-	* tests/Sequence_Unit_Tests/testing_allocation_traits_ut.cpp:
-	  Wrote a unit test for the allocation traits used in testing.
-	  Normally I would not "test the test" but the helpers in
-	  testing_counters.hpp made it desirable to have this extra layer
-	  of checking.
+        * tests/Sequence_Unit_Tests/testing_allocation_traits_ut.cpp:
+          Wrote a unit test for the allocation traits used in testing.
+          Normally I would not "test the test" but the helpers in
+          testing_counters.hpp made it desirable to have this extra layer
+          of checking.
 
 Tue Sep 21 20:15:01 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* tests/Sequence_Unit_Tests/generic_sequence.hpp:
-	  Refactor the code to decompose the problem a little better.
-	  Basically it all boils down to creating
+        * tests/Sequence_Unit_Tests/generic_sequence.hpp:
+          Refactor the code to decompose the problem a little better.
+          Basically it all boils down to creating
 
-	  1) A set of traits to handle buffer allocation.  This
-	     encapsulates the bounded vs. unbounded aspect of a sequence.
+          1) A set of traits to handle buffer allocation.  This
+             encapsulates the bounded vs. unbounded aspect of a sequence.
 
-	  2) Another set trait to handle element initialization,
-	     copying and destruction.  This encapsulates the value
-	     vs. reference aspect of a sequence.
+          2) Another set trait to handle element initialization,
+             copying and destruction.  This encapsulates the value
+             vs. reference aspect of a sequence.
 
           In the process I created smaller files to hold each class.
-	  The traits have an extra <bool> template parameter, whose
-	  motivation would hopefully become clear in a second.
+          The traits have an extra <bool> template parameter, whose
+          motivation would hopefully become clear in a second.
 
-	* tests/Sequence_Unit_Tests/bounded_value_sequence.hpp:
-	  Move the implementation of bounded sequences of by-value types
-	  to this file.
+        * tests/Sequence_Unit_Tests/bounded_value_sequence.hpp:
+          Move the implementation of bounded sequences of by-value types
+          to this file.
 
-	* tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
-	  Unit test for bounded_value_sequence.
+        * tests/Sequence_Unit_Tests/bounded_value_sequence_ut.cpp:
+          Unit test for bounded_value_sequence.
 
-	* tests/Sequence_Unit_Tests/unbounded_value_sequence.hpp:
-	  Move the implementation of unbounded sequences of by-value types
-	  to this file.
+        * tests/Sequence_Unit_Tests/unbounded_value_sequence.hpp:
+          Move the implementation of unbounded sequences of by-value types
+          to this file.
 
-	* tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
-	  Unit test for unbounded_value_sequence.
+        * tests/Sequence_Unit_Tests/unbounded_value_sequence_ut.cpp:
+          Unit test for unbounded_value_sequence.
 
-	* tests/Sequence_Unit_Tests/value_sequence_tester.hpp:
-	  Refactor common code shared by bounded_value_sequence_ut.cpp and
-	  unbounded_value_sequence_ut.cpp
+        * tests/Sequence_Unit_Tests/value_sequence_tester.hpp:
+          Refactor common code shared by bounded_value_sequence_ut.cpp and
+          unbounded_value_sequence_ut.cpp
 
-	* tests/Sequence_Unit_Tests/testing_allocation_traits.hpp:
-	  Specialize the allocation traits in a form suitable for
-	  testing.  The unit tests make the traits raise exceptions in
-	  certain tests, and they can count how many times certain
-	  functions are called.
+        * tests/Sequence_Unit_Tests/testing_allocation_traits.hpp:
+          Specialize the allocation traits in a form suitable for
+          testing.  The unit tests make the traits raise exceptions in
+          certain tests, and they can count how many times certain
+          functions are called.
 
-	* tests/Sequence_Unit_Tests/testing_range_checking.hpp:
-	  Specializes the range_checking traits to raise an exception when
-	  an out-of-range access is attempted.
+        * tests/Sequence_Unit_Tests/testing_range_checking.hpp:
+          Specializes the range_checking traits to raise an exception when
+          an out-of-range access is attempted.
 
-	* tests/Sequence_Unit_Tests/testing_exception.hpp:
-	  Exception raised by the testing traits.
+        * tests/Sequence_Unit_Tests/testing_exception.hpp:
+          Exception raised by the testing traits.
 
-	* tests/Sequence_Unit_Tests/allocation_traits.hpp:
-	  New file, implements the allocation traits for bounded and
-	  unbounded sequences.
+        * tests/Sequence_Unit_Tests/allocation_traits.hpp:
+          New file, implements the allocation traits for bounded and
+          unbounded sequences.
 
-	* tests/Sequence_Unit_Tests/value_traits.hpp:
-	  Implement the element manipulation traits for by-value types.
+        * tests/Sequence_Unit_Tests/value_traits.hpp:
+          Implement the element manipulation traits for by-value types.
 
-	* tests/Sequence_Unit_Tests/range_checking.hpp:
-	  New file, implements yet another trait to control what are the
-	  effects of accessing an index out of range.  The default
-	  implementation is a no-op, but applications can specialize the
-	  class to throw exceptions, call abort, phone your mom and call
-	  you names, whatever.
+        * tests/Sequence_Unit_Tests/range_checking.hpp:
+          New file, implements yet another trait to control what are the
+          effects of accessing an index out of range.  The default
+          implementation is a no-op, but applications can specialize the
+          class to throw exceptions, call abort, phone your mom and call
+          you names, whatever.
 
-	* tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
-	* tests/Sequence_Unit_Tests/run_test.pl:
-	  Removed some projects, add new ones.
+        * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+        * tests/Sequence_Unit_Tests/run_test.pl:
+          Removed some projects, add new ones.
 
-	* tests/Sequence_Unit_Tests/Bounded_Primitive_Types.cpp:
-	* tests/Sequence_Unit_Tests/Unbounded_Primitive_Types.cpp:
-	  Removed, replaced by {bounded,unbounded}_value_sequence_ut.cpp
+        * tests/Sequence_Unit_Tests/Bounded_Primitive_Types.cpp:
+        * tests/Sequence_Unit_Tests/Unbounded_Primitive_Types.cpp:
+          Removed, replaced by {bounded,unbounded}_value_sequence_ut.cpp
 
-	* tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
-	* tests/Sequence_Unit_Tests/Unbounded_Simple_Types.cpp:
-	  Updated to use TAO::{bounded,unbounded}_value_sequence
-	  vs. TAO::{bounded,unbounded}_sequence.
+        * tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
+        * tests/Sequence_Unit_Tests/Unbounded_Simple_Types.cpp:
+          Updated to use TAO::{bounded,unbounded}_value_sequence
+          vs. TAO::{bounded,unbounded}_sequence.
 
-	* tests/Sequence_Unit_Tests/sequence.hpp:
-	  Removed, replaced by {bounded,unbounded}_value_sequence.hpp
+        * tests/Sequence_Unit_Tests/sequence.hpp:
+          Removed, replaced by {bounded,unbounded}_value_sequence.hpp
 
-	* tests/Sequence_Unit_Tests/sequence_traits.hpp:
-	  Removed, the traits have been broken up in multiple files.
+        * tests/Sequence_Unit_Tests/sequence_traits.hpp:
+          Removed, the traits have been broken up in multiple files.
 
 Tue Sep 21 20:31:43 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.cpp:
-	* orbsvcs/orbsvcs/Log/LogRecordStore_persist.h:
-	* orbsvcs/orbsvcs/Log/PersistStore.cpp:
+        * orbsvcs/orbsvcs/Log/LogRecordStore_persist.cpp:
+        * orbsvcs/orbsvcs/Log/LogRecordStore_persist.h:
+        * orbsvcs/orbsvcs/Log/PersistStore.cpp:
 
-	  Applied patches to Logging service provided by
-	  Thomas Girard <thomas dot g dot girard at free.fr>.
+          Applied patches to Logging service provided by
+          Thomas Girard <thomas dot g dot girard at free.fr>.
 
 Tue Sep 21 07:19:29 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Updated.
+          Updated.
 
 Mon Sep 20 07:00:15 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
-	* tests/Sequence_Unit_Tests/Unbounded_Simple_Types.cpp:
-	  Use the argc/argv prototype for main, apparently the ACE
-	  renaming of main() does not work for the other standard
-	  prototype for main().
+        * tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
+        * tests/Sequence_Unit_Tests/Unbounded_Simple_Types.cpp:
+          Use the argc/argv prototype for main, apparently the ACE
+          renaming of main() does not work for the other standard
+          prototype for main().
 
 Sun Sep 19 14:19:06 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* tests/Sequence_Unit_Tests/README:
-	* tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
-	  Unit tests for the CORBA sequence classes, we are currently
-	  replacing the implementation of CORBA sequence in TAO.  In good
-	  TDD form I am writing the tests first, and adding them to this
-	  directory.
-	  The initial implementations will also reside in this directory
-	  but the plan is to move them to the library once all the
-	  portability bugs are cleaned up.
-	  If you are interested in TDD you may want to check the code to
-	  see how I managed to test exceptions in operator new[] without
-	  introducing run-time overhead.  Likewise, the user can configure
-	  the range checking functions in CORBA sequences.
+        * tests/Sequence_Unit_Tests/README:
+        * tests/Sequence_Unit_Tests/Sequence_Unit_Tests.mpc:
+          Unit tests for the CORBA sequence classes, we are currently
+          replacing the implementation of CORBA sequence in TAO.  In good
+          TDD form I am writing the tests first, and adding them to this
+          directory.
+          The initial implementations will also reside in this directory
+          but the plan is to move them to the library once all the
+          portability bugs are cleaned up.
+          If you are interested in TDD you may want to check the code to
+          see how I managed to test exceptions in operator new[] without
+          introducing run-time overhead.  Likewise, the user can configure
+          the range checking functions in CORBA sequences.
 
-	* tests/Sequence_Unit_Tests/sequence_traits.hpp:
-	  Define trait class templates to implement sequences.  These
-	  traits can be partially of fully specialized by the user to
-	  modify the default behavior.
+        * tests/Sequence_Unit_Tests/sequence_traits.hpp:
+          Define trait class templates to implement sequences.  These
+          traits can be partially of fully specialized by the user to
+          modify the default behavior.
 
-	* tests/Sequence_Unit_Tests/generic_sequence.hpp:
-	  Generic sequence implementation, currently implements bounded
-	  and unbounded sequences of self-managed types, but I expect to
-	  implement all sequences using a single class.  The variations
-	  between all the different sequence types will be factored out to
-	  trait classes.
+        * tests/Sequence_Unit_Tests/generic_sequence.hpp:
+          Generic sequence implementation, currently implements bounded
+          and unbounded sequences of self-managed types, but I expect to
+          implement all sequences using a single class.  The variations
+          between all the different sequence types will be factored out to
+          trait classes.
 
-	* tests/Sequence_Unit_Tests/sequence.hpp:
-	  The interface for unbounded and bounded sequences of
-	  self-managed types.
+        * tests/Sequence_Unit_Tests/sequence.hpp:
+          The interface for unbounded and bounded sequences of
+          self-managed types.
 
-	* tests/Sequence_Unit_Tests/Bounded_Primitive_Types.cpp:
-	* tests/Sequence_Unit_Tests/Unbounded_Primitive_Types.cpp:
-	  Unit tests for bounded and unbounded sequences.  They are based
-	  on the boost unit test framework, so they only compile if boost
-	  is configured.
+        * tests/Sequence_Unit_Tests/Bounded_Primitive_Types.cpp:
+        * tests/Sequence_Unit_Tests/Unbounded_Primitive_Types.cpp:
+          Unit tests for bounded and unbounded sequences.  They are based
+          on the boost unit test framework, so they only compile if boost
+          is configured.
 
-	* tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
-	* tests/Sequence_Unit_Tests/Unbounded_Simple_Types.cpp:
-	  Smoke test (basic compilation) for sequences of self-managed
-	  types.  They compile on all platforms.
+        * tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
+        * tests/Sequence_Unit_Tests/Unbounded_Simple_Types.cpp:
+          Smoke test (basic compilation) for sequences of self-managed
+          types.  They compile on all platforms.
 
-	* tests/Sequence_Unit_Tests/run_test.pl:
-	  Run all the tests.
+        * tests/Sequence_Unit_Tests/run_test.pl:
+          Run all the tests.
 
 Sat Sep 18 19:32:55 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbavcs/orbsvcs/DsLogAdmin.idl:
+        * orbavcs/orbsvcs/DsLogAdmin.idl:
 
-	  Changed to include "tao/TimeBase.pidl" instead of "TimeBase.idl"
-	  to avoid adding an otherwise unnecessary dependency on svc_utils
-	  project.
+          Changed to include "tao/TimeBase.pidl" instead of "TimeBase.idl"
+          to avoid adding an otherwise unnecessary dependency on svc_utils
+          project.
 
 Sat Sep 18 17:16:23 2004  Olli Savia  <ops@iki.fi>
 
