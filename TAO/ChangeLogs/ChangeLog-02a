@@ -1,33 +1,34 @@
 Wed Dec 26 02:57:48 2001  Mayur Deshpande  <mayur@ics.uci.edu>
 
-    * tao/TAO_AMH_Response_handler.h:
-    * tao/TAO_AMH_Response_handler.cpp:
-      The base Responsehandler class from which all IDL-generated
-      skeleton ResponseHandler classes derive.  This class stores
-      various information (initialised from Server_Request) that
-      is later used to send the response back to the client.  This
-      base class also has the functionality that enforces the 'Call-Once'
-      semantics of AMH calls.
+	* tao/TAO_AMH_Response_handler.h:
+	* tao/TAO_AMH_Response_handler.cpp:
+          The base Responsehandler class from which all IDL-generated
+          skeleton ResponseHandler classes derive.  This class stores
+          various information (initialised from Server_Request) that
+          is later used to send the response back to the client.  This
+          base class also has the functionality that enforces the 'Call-Once'
+          semantics of AMH calls.
 
-    * tao/PortableServer/Servant_Base.cpp:
-    * tao/PortableServer/Servant_Base.h:
-      Added asynchronous_upcall_dispatch() needed for AMH.
-      Also changed synchronous_upcall_dispatch() in keeping with
-      the new TAO Environment scheme.
+	* tao/PortableServer/Servant_Base.cpp:
+	* tao/PortableServer/Servant_Base.h:
+          Added asynchronous_upcall_dispatch() needed for AMH.
+          Also changed synchronous_upcall_dispatch() in keeping with
+          the new TAO Environment scheme.
 
-    * tao/TAO_Server_Request.cpp:
-    * tao/TAO_Server_Request.h:
-    * tao/TAO_Server_Request.i:
-      Added a method that creates a AMH_Response_Handler from a
-      Server_Request since the Server_Request has all the information
-      we need to store in a Response_Handler,
+	* tao/TAO_Server_Request.cpp:
+	* tao/TAO_Server_Request.h:
+	* tao/TAO_Server_Request.i:
+          Added a method that creates a AMH_Response_Handler from a
+          Server_Request since the Server_Request has all the information
+          we need to store in a Response_Handler,
 
 Wed Dec 26 02:16:33 2001  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO_IDL/be/be_operation_strategy.cpp:
-    * TAO_IDL/be/be_operation_strategy.cpp be_include/be_codegen.h:
-    * TAO_IDL/be_include/be_operation_strategy.h:
-    * TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
+	* TAO_IDL/be/be_operation_strategy.cpp 
+	* TAO_IDL/be_include/be_codegen.h:
+	* TAO_IDL/be_include/be_operation_strategy.h:
+	* TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
 	  Nuked training white-spaces and carriage returns
 
 Tue Dec 25 22:48:32 2001  Carlos O'Ryan  <coryan@uci.edu>
