@@ -1,5 +1,36 @@
-Fri Apr 11 10:46:56 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+Fri Apr 11 13:49:04 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/OS.h: VxWorks changes only:  added taskHookLib.h.  Thanks
+	  to Dave Mayerhoefer <mayerhoefer@svappl36.mdc.com> for reporting
+	  that.  Also rearranged the VxWorks #includes and such a bit.
+
+	* ace/Log_Msg.cpp (atexit): VxWorks changes only:  added cast
+	  of spare1 to ACE_Log_Msg *.  Thanks to Dave Mayerhoefer
+	  <mayerhoefer@svappl36.mdc.com> for reporting that.  Also,
+	  in exists () and instance (), replaced double indirection
+	  of the ACE_Log_Msg instance with indirection through a pointer
+	  reference.
+
+	* ace/High_Res_Timer.{h,i}: removed supported () because
+	  ACE_OS::gettimeofday () is used if a high-res timer isn't available.
+
+	* ace/OS.i (thr_sigsetmask),config-sunos5.4-*.h: swapped order of
+	  #ifdefs to that ACE_LACKS_PTHREAD_THR_SIGSETMASK is checked before
+	  ACE_HAS_STHREADS.  Added that #define to all SunOS 5.4 configs.
+	  Thanks to Joey Zhu <joey.zhu@wcom.com> for reporting this.
+
+	* ace/Token_Request_Reply.cpp (ctor): added a initializations to 0
+	  of requeue_position_, notify_, and arg_.  With this change, all
+	  of the ACE tests run without any Purify access anomalies!
+	  (There are still some memory leaks, though.)
+
+	* include/makeinclude/rules.local.GNU: added -DMAKEDEPEND to
+	  invocation of g++dep.  This allows users to get proper
+	  dependencies if they have conditional #includes in their code.
+	  They can added #if defined (MAKEDEPEND) as necessary to make
+	  sure that all headers are seen by g++dep.
+
+Fri Apr 11 10:46:56 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 	
 	* config-linux*.h: Added ACE_HAS_IP_MULTICAST as the default for
  	  all Linux configurations.  If you're a 1.x user, or you didn't
