@@ -12,7 +12,9 @@ ACE_RCSID(TAO, Buffering_Constraint_Policy, "$Id$")
 #endif /* __ACE_INLINE__ */
 
 TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO::BufferingConstraint &buffering_constraint)
-  : buffering_constraint_ (buffering_constraint)
+  : TAO::BufferingConstraintPolicy (),
+    TAO_Local_RefCounted_Object (),
+    buffering_constraint_ (buffering_constraint)
 {
 }
 

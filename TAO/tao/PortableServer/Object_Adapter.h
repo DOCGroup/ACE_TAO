@@ -328,6 +328,9 @@ public:
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
                                                       const TAO_MProfile &);
 
+  virtual CORBA::Long initialize_collocated_object (TAO_Stub *,
+                                                    CORBA::Object_ptr);
+
 protected:
 
   int locate_servant_i (const TAO::ObjectKey &key
@@ -823,6 +826,13 @@ public:
   /// Pointer to the non-servant upcall in progress.  If no non-servant
   /// upcall is in progress, this pointer is zero.
   Non_Servant_Upcall *non_servant_upcall_in_progress (void) const;
+
+private:
+
+  /// Helper method to get collocated servant
+  TAO_ServantBase *get_collocated_servant (TAO_Stub *stub,
+                                           const TAO_MProfile &mp
+                                           ACE_ENV_ARG_DECL);
 
 private:
 

@@ -104,10 +104,6 @@ public:
   int cdr_allocator_source (void);
 
   // = Resource Retrieval
-#if 0
-  // @@@todo: Need to go at a later date
-  virtual int use_tss_resources (void) const;
-#endif /*if 0*/
   virtual int use_locked_data_blocks (void) const;
   virtual ACE_Reactor *get_reactor (void);
   virtual void reclaim_reactor (ACE_Reactor *);
@@ -130,13 +126,15 @@ public:
   virtual int purge_percentage (void) const;
   virtual int max_muxed_connections (void) const;
   virtual ACE_Lock *create_cached_connection_lock (void);
+  virtual ACE_Lock *create_corba_object_lock (void);
   virtual int locked_transport_cache (void);
   virtual TAO_Flushing_Strategy *create_flushing_strategy (void);
   virtual TAO_Connection_Purging_Strategy *create_purging_strategy (void);
+  virtual TAO_Resource_Factory::Resource_Usage
+  TAO_Default_Resource_Factory::resource_usage_strategy (void) const;
   virtual TAO_LF_Strategy *create_lf_strategy (void);
 
   virtual void disable_factory (void);
-
   //@}
 
 protected:
@@ -222,6 +220,9 @@ private:
   /// Type of lock used by the cached connector.
   Lock_Type cached_connection_lock_type_;
 
+  /// Type of lock used by the corba object.
+  Lock_Type corba_object_lock_type_;
+
   enum Flushing_Strategy_Type
   {
     TAO_LEADER_FOLLOWER_FLUSHING,
@@ -233,6 +234,9 @@ private:
   int flushing_strategy_type_;
 
   TAO_Codeset_Manager *codeset_manager_;
+
+  /// Resource usage strategy
+  Resource_Usage resource_usage_strategy_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -24,10 +24,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
-
+#include "tao/CORBA_String.h"
 #include "strategies_export.h"
-
-#include "tao/ORB.h"
 
 #include "ace/INET_Addr.h"
 #include "ace/MEM_Addr.h"
