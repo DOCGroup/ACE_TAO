@@ -1,3 +1,22 @@
+Tue Sep 12 01:36:57 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tao/orbconf.h: Added macros TAO_ENV_SINGLE_ARG_DECL and friends
+          to be used in case when an environment variable is the only
+          argument.
+
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.h:
+        * tao/Request_Info.cpp:
+        * tao/Request_Info.h:
+        * tao/PortableServer/DomainS.cpp:
+        * tao/PortableServer/DomainS.h: Changed the CORBA environment
+          variable declarations in <arguments>, <exceptions>, and <result>
+          methods of RequestInfo to be compiled optionally.  This fixed
+          the compilation problem in Portable Interceptor when compiling
+          with native exception support.
+
 Mon Sep 11 19:45:00 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAOACE.dsw:
