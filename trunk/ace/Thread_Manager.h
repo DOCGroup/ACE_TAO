@@ -16,6 +16,7 @@
 
 #include "ace/Thread.h"
 #include "ace/Thread_Adapter.h"
+#include "ace/Thread_Exit.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -387,6 +388,9 @@ class ACE_Export ACE_Thread_Manager
 {
 public:
   friend class ACE_Thread_Control;
+
+  // Allow ACE_THread_Exit to register the global TSS instance object.
+  friend class ACE_Thread_Exit;
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
   friend class ACE_Thread_Descriptor;
 #endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
@@ -1030,6 +1034,9 @@ protected:
   /// Register a thread as terminated and put it into the <terminated_thr_list_>.
   int register_as_terminated (ACE_Thread_Descriptor *td);
 
+  /// Setting the static ACE_TSS_TYPE (ACE_Thread_Exit) *thr_exit_ pointer.
+  static int set_thr_exit (ACE_TSS_TYPE (ACE_Thread_Exit) *ptr);
+
   /**
    * Keeping a list of thread descriptors within the thread manager.
    * Double-linked list enables us to cache the entries in TSS
@@ -1071,6 +1078,9 @@ private:
 
   /// Must delete the <thr_mgr_> if non-0.
   static int delete_thr_mgr_;
+
+  /// Global ACE_TSS (ACE_Thread_Exit) object ptr.
+  static ACE_TSS_TYPE (ACE_Thread_Exit) *thr_exit_;
 #endif /* ! defined (ACE_THREAD_MANAGER_LACKS_STATICS) */
 };
 
