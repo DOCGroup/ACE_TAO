@@ -998,7 +998,6 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
   // buffer (this can be optimized away by changing other code...).
   log_record.msg_data (this->msg ());
 
-
   // Write the <log_record> to the appropriate location.
   ssize_t result = this->log (log_record, abort_prog);
 
