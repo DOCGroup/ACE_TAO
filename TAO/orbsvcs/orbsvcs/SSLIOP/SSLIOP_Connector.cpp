@@ -16,7 +16,7 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Stub.h"
 #include "tao/Transport_Connector.h"
-#include "tao/Connect_Strategy.h"
+#include "tao/Blocked_Connect_Strategy.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (TAO_SSLIOP,
@@ -27,7 +27,7 @@ ACE_RCSID (TAO_SSLIOP,
 
 template class TAO_Connect_Concurrency_Strategy<TAO_SSLIOP_Connection_Handler>;
 template class TAO_Connect_Creation_Strategy<TAO_SSLIOP_Connection_Handler>;
-template class ACE_SSL_Strategy_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
+template class ACE_Strategy_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
 template class ACE_Connect_Strategy<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
 template class ACE_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
 template class ACE_Svc_Tuple<TAO_SSLIOP_Connection_Handler>;
@@ -43,7 +43,7 @@ template class ACE_Auto_Basic_Ptr<TAO_SSLIOP_Connection_Handler>;
 
 #pragma instantiate TAO_Connect_Concurrency_Strategy<TAO_SSLIOP_Connection_Handler>
 #pragma instantiate TAO_Connect_Creation_Strategy<TAO_SSLIOP_Connection_Handler>
-#pragma instantiate ACE_SSL_Strategy_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
+#pragma instantiate ACE_Strategy_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
 #pragma instantiate ACE_Connect_Strategy<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
 #pragma instantiate ACE_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
 
@@ -72,6 +72,14 @@ TAO_SSLIOP_Connector::TAO_SSLIOP_Connector (Security::QOP qop)
 int
 TAO_SSLIOP_Connector::open (TAO_ORB_Core *orb_core)
 {
+  // Since the ACE_Strategy_Connector (and ACE_Connector) cannot
+  // handle non-blocking connections with protocols that have more
+  // than once handshake, such as SSL, force blocking connections for
+  // SSLIOP.  This deficiency will be addressed soon.
+  ACE_NEW_RETURN (this->active_connect_strategy_,
+                  TAO_Blocked_Connect_Strategy (orb_core),
+                  -1);
+
   if (this->TAO_IIOP_SSL_Connector::open (orb_core) == -1)
     return -1;
 
@@ -88,7 +96,8 @@ TAO_SSLIOP_Connector::open (TAO_ORB_Core *orb_core)
                       (orb_core->thr_mgr (),
                        orb_core,
                        &(this->handler_state_),
-                       this->lite_flag_),
+                       0 /* Forcibly disable TAO's GIOPlite feature.
+                            It introduces a security hole. */),
                   -1);
 
   // Our activation strategy
