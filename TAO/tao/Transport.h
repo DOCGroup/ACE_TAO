@@ -133,7 +133,7 @@ protected:
  * - A per-transport 'send strategy' to choose between blocking on
  *   write, blocking on the reactor or blockin on leader/follower.
  * - A per-message 'waiting object'
- * - A per-meessage timeout
+ * - A per-message timeout
  *
  * The Transport object provides a single method to send messages
  * (send_message ()).
@@ -144,15 +144,35 @@ protected:
  * process the incoming GIOP message as quickly and efficiently as
  * possible. There are other forces that needs to be given due
  * consideration. They are
- *  - Multiple threads should read from the same handle
+ *  - Multiple threads should  be able to tarverse along the same data
+ *    path but should not be able to read from the same handle at the
+ *    same time ie. the handle should not be shared between threads at
+ *    any instant.
  *  - Reads on the handle could give one or more messages.
  *  - Minimise locking and copying overhead when trying to attack the
  *    above.
+ *
  * <H3> Parsing messages (GIOP) & processing the message:</H3>
  *
  * The messages should be checked for validity and the right
- * information should be sent to the higher layer for processing.
+ * information should be sent to the higher layer for processing. The
+ * process of doing a sanity check and preparing the messages for the
+ * higher layers of the ORB are done by the messaging protocol.
  *
+ * <H3> Design forces and Challenges </H3>
+ *
+ * To keep things as efficient as possible for medium sized requests,
+ * it would be good to minimise data copying and locking along the
+ * incoming path ie. from the time of reading the data from the handle
+ * to the application. We achieve this by creating a buffer on stack
+ * and reading the data from the handle into the buffer. We then pass
+ * the same data block (the buffer is encapsulated into a data block)
+ * to the higher layers of the ORB. The problems stem from the
+ * following
+ *  (a) Data is bigger than the buffer that we have on stack
+ *  (b) Transports like TCP do not guarentee availability of the whole
+ *      chunk of data in one shot. Data could trickle in byte by byte.
+ *  (c) Single read gives multiple messages
  *
  *
  * <B>See Also:</B>
@@ -468,8 +488,6 @@ public:
                                        TAO_OutputCDR &msg);
 
   /// Callback to read incoming data
-  /// @@ Bala: Change documentation here.... They dont make sense
-  /// anymore
   /**
    * The ACE_Event_Handler adapter invokes this method as part of its
    * handle_input() operation.
@@ -488,7 +506,6 @@ public:
    * @param block Is deprecated and ignored.
    *
    */
-  // @@ lockme
   virtual int handle_input_i (TAO_Resume_Handle &rh,
                               ACE_Time_Value *max_wait_time = 0,
                               int block = 0);
@@ -569,8 +586,9 @@ protected:
   virtual void transition_handler_state_i (void) = 0;
 
 
-  /// @@ Bala: Documentation
-
+  /// Called by the handle_input_i  (). This method is used to parse
+  /// message just read. It also decides whether the message
+  // @@Bala: Documentation???
   int parse_consolidate_messages (ACE_Message_Block &bl,
                                   TAO_Resume_Handle &rh,
                                   ACE_Time_Value *time);

@@ -81,12 +81,6 @@ protected:
                           size_t len,
                           const ACE_Time_Value *s = 0);
 
-  /// Read and process the message from the connection. The processing
-  /// of the message is done by delegating the work to the underlying
-  /// messaging object
-  virtual int read_process_message (ACE_Time_Value *max_time_value = 0,
-                                    int block =0);
-
   virtual int register_handler_i (void);
 
   /// Method to do whatever it needs to do when the connection
@@ -112,11 +106,6 @@ public:
                               CORBA::Octet minor);
 
   //@}
-
-private:
-
-  /// Process the message that we have read
-  int process_message (void);
 
 private:
 
