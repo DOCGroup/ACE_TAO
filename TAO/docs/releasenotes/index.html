@@ -305,13 +305,98 @@ extra pass over the internal representation of the IDL file has to be done.&nbsp
 <br><!--#include virtual="orbcore.html" -->
 <hr>
 <h3>
+
 <a NAME="pp"></a>Pluggable Protocols</h3>
-Point of contact: <a href="mailto:fredk@cs.wustl.edu">Fred Kuhns</a>
-<p>Current Status:
-<p>Known Issues:
-<p>Critical Work:
-<p>Future Work:
+Point of contact: <a href="mailto:fredk@cs.wustl.edu">Fred Kuhns</a> <P>
+
+A primary goal of the pluggable protocol effort is to identify logical
+communication oriented layers, abstract out common features, define
+general interfaces and provide necessary mechanisms for implementing
+different concrete messaging and transport protocols.  This way
+disparate networking technologies or environments may transparently be
+supported, each with it's own set of requirements and strategies.  For
+example, if the ORB is communicating over a system bus such as PCI or
+VME then the full weight of GIOP is not needed.  A simpler, optimized
+messaging and transport protocol can be defined and implemented.
+Similarly, it would be relatively straight forward to add support for a
+new transport protocol which uses native ATM as the underlying network
+terchnology.  In all these cases the ORB core's interface to the messaging 
+layer will remain the same.
+<P>
+There will be several stages of the development proccess: basic pluggable transport
+protocols framework, support multiple profiles, add example transport protocols and
+refine framework, add support for pluggable messaging protocols.
+<P>
+<ul>
+<li> Basic  pluggable transport protocols framework:
+Addition of several bridge classes which decouple the transport specific
+details from the rest of the ORB.  This way, the details of how messages
+are communicated at the transport layer are isolated in a few classes.
+In some ways this has led to the restructuring of the ORB core in
+terms of how it sends and receives requests.  There is now the concept
+of communication layers: Object (references, method invications etc), 
+Messaging, Transport and Network.  The Object layer is just the usual 
+stubs and skeletons.  
+<P>
+The common interfaces have been defined in the new
+abstract classes TAO_Connector, TAO_Acceptor, TAO_Profile and
+TAO_Transport.  Two new mechanisms for keeping track of supported
+transport protocols is the TAO_Connector_Registry and
+TAO_Acceptor_Registry.
+<P>
+<li> Multiple Profile - Required plus will provide a coll means to implement
+unique bridging strategies.
 <p>
+<li>Example Transport protocols- The first planned example will be using UNIX domain
+sockets.  Other interesting transport protocols would be for ATM, Buses (VME or PCI),
+shared memory, and UDP/IP.
+<p>
+<li>Pluggable messaging protocols - Add support for alternate protocols to GIOP.  In
+particular it would be interesting to explore lightweight protocols using shared memory
+and system busses like PCI or VME.
+</ul>
+<P>
+<P>
+<p>Current Status: <p>
+<ul>
+<li>
+initial prototype of the basic framework to support pluggable
+transport protocols has been compiled, linked and tested against an
+older version of TAO (1 week old :).  The tests MT_Cubit,
+Multiple_Inheritance, CDR and EC_Throughput were run successfully.
+<li>
+The basic framework does not include support for multiple profiles and 
+the Acceptor registry.  What it does do is separate the transport specific 
+processing from the rest of the ORB.  
+<P>
+</ul>
+<p>Known Issues:<p>
+<ul>
+<li>The ORB Core's resource factory needs to be enhanced to support the dynamic
+allocation of resources for different transport protocols.
+</ul>
+<p>Critical Work:<p>
+<ul>
+<li> Adding support for multiple profiles.
+<p>
+</ul>
+<p>Future Work: <p>
+<ul>
+<li> Immediate plans are to bring my workspace up to date with the repository
+and verify all still works.  This will be followed by performing a suite 
+of tests to compare performance of with the unmodified TAO distribution. 
+Also extensicve testing using purify and quantify.
+<p>
+<li>In parallel I will work on adding support for multiple profiles and an
+acceptor registry class.  The acceptor registry will both keep track
+of all acceptors and be responsible for creating a list of profiles for
+new object references (essentially the IOR).
+<p>
+<li>Long term work will include adding support for pluggable messaging protocols as well as
+transport protocols.  This way we can develop optimal messaging and transport protocols
+for a given platform.  
+<p>
+</ul>
 <hr>
 <h3>
 <a NAME="poa"></a>Portable Object Adapter</h3>
