@@ -1,3 +1,8 @@
+Fri Oct 18 19:37:20 GMT 2002  Craig Rodrigues  <crodrigu@bbn.com>
+	
+	* ace/config-macosx.h: Define ACE_HAS_NONSTATIC_OBJECT_MANAGER
+	  for gperf.
+
 Fri Oct 18 14:52:37 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/Reactor_Logging_Server.cpp:
