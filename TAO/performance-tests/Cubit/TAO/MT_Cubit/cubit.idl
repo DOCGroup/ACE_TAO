@@ -1,6 +1,3 @@
-// @@ Sumedh, please figure out how to remove this file and share it
-// between the client and server.
-
 interface Cubit 
 {
   octet	cube_octet (in octet o);
@@ -21,6 +18,6 @@ interface Cubit
 
 interface Cubit_Factory 
 { 
-  Cubit create_cubit (in short priority);
+  string create_cubit (in unsigned short index);
 };
 

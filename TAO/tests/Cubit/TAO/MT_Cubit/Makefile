@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS     =  -lTAO -lm
+LDLIBS     =  -lTAO -lorbsvcs -lm -lposix4
 
 IDL_SRC	= cubitC.cpp cubitS.cpp
 PROG_SRCS = server.cpp \
@@ -61,8 +61,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #CXX := purify $(CXX)
 ##DCFLAGS = -g
 OCFLAGS =
-LDFLAGS += -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat
+LDFLAGS += -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs
+CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/tao/compat
 
 .PRECIOUS: cubitC.h cubitC.i cubitC.cpp cubitS.h cubitS.i cubitS.cpp 
 
