@@ -459,10 +459,6 @@ CORBA::Policy_ptr
 TAO_Stub::get_policy (CORBA::PolicyType type
                       ACE_ENV_ARG_DECL)
 {
-
-  if (this->policies_ == 0)
-    return CORBA::Policy::_nil ();
-
   // Some policies can only be set locally on the client, while others
   // can only be exported in the IOR by the server, and yet others can
   // be set by both by client and server.  Furthermore, reconciliation
