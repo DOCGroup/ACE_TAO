@@ -5,6 +5,23 @@ Mon Nov 09 21:31:56 1998  David L. Levine  <levine@cs.wustl.edu>
           ace/Process.cpp, that's necessary on g++/Solaris86
           without ACE_HAS_NONSTATIC_OBJECT_MANAGER.
 
+        * tests/Atomic_Op_Test.cpp,Barrier_Test.cpp,Buffer_Stream_Test.cpp,
+          Future_Test.cpp,IOStream_Test.cpp,MT_Reactor_Timer_Test.cpp,
+          Map_Manager_Test.cpp,Message_Block_Test.cpp,
+          Message_Queue_Notifications_Test.cpp,Notify_Performance_Test.cpp,
+          Pipe_Test.cpp,Priority_Buffer_Test.cpp,Priority_Task_Test.cpp,
+          Process_Mutex_Test.cpp,Reactor_Exceptions_Test.cpp,
+          Reactor_Notify_Test.cpp,Reactor_Performance_Test.cpp,
+          Reactors_Test.cpp,Reader_Writer_Test.cpp,SPIPE_Test.cpp,
+          SV_Shared_Memory_Test.cpp,Semaphore_Test.cpp,TSS_Test.cpp,
+          Task_Test.cpp,Thread_Manager_Test.cpp,Thread_Mutex_Test.cpp,
+          Thread_Pool_Reactor_Test.cpp,Thread_Pool_Test.cpp,
+          Tokens_Test.cpp,UPIPE_SAP_Test.cpp,Upgradable_RW_Test.cpp,
+          XtReactor_Test.cpp:
+          changed Log_Priority of "not supported" messages to LM_INFO.
+          Hopefully, it will help avoid confusion, especially among
+          new ACE users.
+
 Mon Nov  9 02:52:11 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Signal.cpp: handle_close() wasn't being called when
