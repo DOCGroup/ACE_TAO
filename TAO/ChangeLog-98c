@@ -3,7 +3,8 @@ Tue Aug 11 13:51:00 1998  Carlos O'Ryan  <coryan@CHA-CHA>
 	* TAO_IDL/driver/drv_preproc.cpp:
 	   Under Win32 we need to convert backslashes into double
 	   backslashes before printing the file name in the #line
-	   directive, otherwise the C++ preprocessor gets confused.
+	   directive, otherwise the C++ preprocessor gets confused. Thanks
+	   to John Geiss <jtgb@eci-esyst.com> for reporting this problem.
 
 Tue Aug 11 13:47:53 1998  David L. Levine  <levine@cs.wustl.edu>
 
