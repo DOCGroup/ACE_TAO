@@ -222,4 +222,5 @@ class ImR_Locator_i : public virtual POA_ImplementationRepository::Locator
   ImR_Adapter_Activator *activator_;
 };
 
+#include "ace/post.h"
 #endif /* IMR_LOCATOR_I_H */
