@@ -260,8 +260,11 @@ DRV_parse_args (long ac, char **av)
               else
                 {
                   // I expect 'c' or 's' or 'T' after this.
-                  cerr << GTDEVEL ("Incomplete Flag : ")
-                       << av[i];
+                  ACE_ERROR ((
+                      LM_ERROR,
+                      ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                      av[i]
+                    ));
                   ACE_OS::exit (99);
                 }
               break;
@@ -288,8 +291,11 @@ DRV_parse_args (long ac, char **av)
               else
                 {
                   // I expect 's' or 'i' after 'c'.
-                  cerr << GTDEVEL("Incomplete Flag : ")
-                       << av[i];
+                  ACE_ERROR ((
+                      LM_ERROR,
+                      ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                      av[i]
+                    ));
                   ACE_OS::exit (99);
                 }
               break;
@@ -337,8 +343,11 @@ DRV_parse_args (long ac, char **av)
               else
                 {
                   // I expect 's' or 'T' or 'i' or 't' after 's'.
-                  cerr << GTDEVEL ("Incomplete Flag : ")
-                       << av[i];
+                  ACE_ERROR ((
+                      LM_ERROR,
+                      ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                      av[i]
+                    ));
                   ACE_OS::exit (99);
                 }
               break;
@@ -357,8 +366,9 @@ DRV_parse_args (long ac, char **av)
                 cg->lookup_strategy (TAO_CodeGen::TAO_LINEAR_SEARCH);
               else
                 ACE_ERROR ((LM_ERROR,
-                            "%s: unknown operation lookup <%s>\n",
-                            av[0], av[i+1]));
+                            ACE_TEXT ("%s: unknown operation lookup <%s>\n"),
+                            av[0], 
+                            av[i+1]));
               i++;
               break;
 
@@ -370,9 +380,12 @@ DRV_parse_args (long ac, char **av)
               else if (av[i][2] == 'n')
                 idl_global->changing_standard_include_files (0);
               else
-                ACE_ERROR ((LM_ERROR,
-                            "%s: unknown -i modifier <%c>\n",
-                            av[0], av[i][2]));
+                  ACE_ERROR ((
+                      LM_ERROR,
+                      ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                      av[i]
+                    ));
+                  ACE_OS::exit (99);
               break;
 
               // Path for the perfect hash generator(gperf) program. Default
@@ -406,16 +419,20 @@ DRV_parse_args (long ac, char **av)
                 {
                   if (i < ac - 1)
                     {
-                      buffer = new char[ACE_OS::strlen (av[i]) + ACE_OS::strlen (av[i + 1]) + 2];
+                      buffer = new char[ACE_OS::strlen (av[i]) 
+                                        + ACE_OS::strlen (av[i + 1]) 
+                                        + 2];
                       ACE_OS::sprintf (buffer, "%s%s", av[i], av[i+1]);
                       DRV_cpp_putarg (buffer);
                       i++;
                     }
                   else
                     {
-                      cerr << GTDEVEL ("IDL: missing argument after '")
-                           << av[i]
-                           << GTDEVEL ("' flag\n");
+                      ACE_ERROR ((
+                          LM_ERROR,
+                          ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                          av[i]
+                        ));
                       ACE_OS::exit (99);
                     }
                 }
@@ -443,9 +460,11 @@ DRV_parse_args (long ac, char **av)
                     }
                   else
                     {
-                      cerr << GTDEVEL ("IDL: missing argument after '")
-                           << av[i]
-                           << GTDEVEL ("' flag\n");
+                      ACE_ERROR ((
+                          LM_ERROR,
+                          ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                          av[i]
+                        ));
                       ACE_OS::exit (99);
                     }
                 }
@@ -477,9 +496,11 @@ DRV_parse_args (long ac, char **av)
                     }
                   else
                     {
-                      cerr << GTDEVEL ("IDL: missing argument after '")
-                           << av[i]
-                           << GTDEVEL ("' flag\n");
+                      ACE_ERROR ((
+                          LM_ERROR,
+                          ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                          av[i]
+                        ));
                       ACE_OS::exit (99);
                     }
                 }
@@ -509,9 +530,11 @@ DRV_parse_args (long ac, char **av)
                     }
                   else
                     {
-                      cerr << GTDEVEL("IDL: missing argument after '")
-                           << av[i]
-                           << GTDEVEL("' flag\n");
+                      ACE_ERROR ((
+                          LM_ERROR,
+                          ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                          av[i]
+                        ));
                       ACE_OS::exit (99);
                     }
                 }
@@ -577,9 +600,11 @@ DRV_parse_args (long ac, char **av)
                 }
               else
                 {
-                  cerr << GTDEVEL("IDL: missing argument after '")
-                       << av[i]
-                       << GTDEVEL("' flag\n");
+                  ACE_ERROR ((
+                      LM_ERROR,
+                      ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                      av[i]
+                    ));
                   ACE_OS::exit (99);
                 }
               break;
@@ -597,9 +622,11 @@ DRV_parse_args (long ac, char **av)
                 }
               else
                 {
-                  cerr << GTDEVEL("IDL: missing argument after '")
-                       << av[i]
-                       << GTDEVEL("' flag\n");
+                  ACE_ERROR ((
+                      LM_ERROR,
+                      ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                      av[i]
+                    ));
                   ACE_OS::exit (99);
                 }
               break;
@@ -646,7 +673,8 @@ DRV_parse_args (long ac, char **av)
                   // enable OBV (Valuetype) support
                   idl_global->obv_support (1);
 #             else /* IDL_HAS_VALUETYPE */
-                  cerr << GTDEVEL("IDL: -Gv (Valuetype) not compiled in\n");
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("IDL: -Gv (Valuetype) not compiled in\n");
                   ACE_OS::exit (99);
 #             endif /* IDL_HAS_VALUETYPE */
                 }
@@ -691,24 +719,33 @@ DRV_parse_args (long ac, char **av)
                         }
                       else if (isalpha(av[k][j+3] ))
                         {
-                          cerr << GTDEVEL ("IDL: Illegal option '") << av[i] << "'\n";
-                          idl_global->set_compile_flags (idl_global->compile_flags () |
-                                                     IDL_CF_ONLY_USAGE);
+                          ACE_ERROR ((
+                              LM_ERROR,
+                              ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                              av[i]
+                            ));
+                          idl_global->set_compile_flags (idl_global->compile_flags ()
+                                                         | IDL_CF_ONLY_USAGE);
                         }
                     }
                 }
               else
                 {
-
-                  cerr << GTDEVEL("IDL: missing argument after '")
-                       << av[i]
-                       << GTDEVEL("' flag\n");
+                  ACE_ERROR ((
+                      LM_ERROR,
+                      ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                      av[i]
+                    ));
                   ACE_OS::exit (99);
                 }
               break;
 
             default:
-              cerr << GTDEVEL ("IDL: Illegal option '") << av[i] << "'\n";
+              ACE_ERROR ((
+                  LM_ERROR,
+                  ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                  av[i]
+                ));
               idl_global->set_compile_flags (idl_global->compile_flags () |
                                              IDL_CF_ONLY_USAGE);
               break;
