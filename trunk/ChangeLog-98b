@@ -2,8 +2,9 @@ Mon Oct 19 11:47:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (readPPCTimeBase): wrapped each line in "".
           Otherwise, the C++ compiler on MVS complains unterminated
-          strings.  Thanks to Chuck Gehr <GehrCR@louisville.stortek.com>
-          for reporting this.
+          strings.  Even though it isn't supposed to see this code :-/
+          Thanks to Chuck Gehr <GehrCR@louisville.stortek.com> for
+          reporting this.
 
 Mon Oct 19 11:13:00 1998 Chris Gill  <cdgill@cs.wustl.edu>
 
