@@ -62,4 +62,11 @@ typedef unsigned long long uint64_t;
 #undef ACE_HAS_LIMITED_SELECT
 #endif /* ACE_HAS_LIMITED_SELECT */
 
+#if defined (__sparcv9)
+#define ERRMAX 256 /* Needed for following define */
+#define ACE_LACKS_SYS_NERR
+#define _LP64
+#define ACE_SIZEOF_LONG 8 /* Needed to circumvent compiler bug #4294969 */
+#endif /* __sparcv9 */
+
 #endif /* ACE_CONFIG_H */
