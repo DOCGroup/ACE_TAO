@@ -1,3 +1,9 @@
+Fri Jan  2 11:56:04 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Makefile:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Makefile.bor:
+        Added a new sub-directory Manage_Object_Group to be compiled.
+
 Fri Jan  2 11:37:09 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         *
