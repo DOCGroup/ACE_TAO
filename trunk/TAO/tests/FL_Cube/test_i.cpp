@@ -5,10 +5,6 @@
 #if defined(ACE_HAS_FL)
 #include <GL/gl.h>
 
-#if !defined(__ACE_INLINE__)
-#include "test_i.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(FL_Cube, test_i, "$Id$")
 
 Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb,

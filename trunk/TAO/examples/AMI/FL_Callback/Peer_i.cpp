@@ -2,10 +2,6 @@
 
 #include "Peer_i.h"
 
-#if !defined(__ACE_INLINE__)
-#include "Peer_i.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(FL_Callback, Peer_i, "$Id$")
 
 Peer_Handler_i::Peer_Handler_i (Peer_i *peer)
