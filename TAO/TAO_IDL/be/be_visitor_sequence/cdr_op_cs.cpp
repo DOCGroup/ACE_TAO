@@ -39,8 +39,7 @@ int
 be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
 {
   if (node->cli_stub_cdr_op_gen ()
-      || node->imported ()
-      || node->is_local ())
+      || node->imported ())
     {
       return 0;
     }
@@ -113,79 +112,98 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
 
   *os << "CORBA::Boolean operator>> (" << be_idt << be_idt_nl
-      << "TAO_InputCDR &strm," << be_nl
-      << node->name () << " &_tao_sequence" << be_uidt_nl
+      << "TAO_InputCDR &";
+      
+  if (! bt->is_local ())
+    {
+      *os << "strm";
+    }
+    
+  *os << "," << be_nl
+      << node->name () << " &";
+      
+  if (! bt->is_local ())
+    {
+      *os << "_tao_sequence";
+    }
+    
+  *os << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
-  // First retrieve the length and adjust the sequence length accordingly.
-  *os << "CORBA::ULong _tao_seq_len;" << be_nl << be_nl;
-  *os << "if (strm >> _tao_seq_len)" << be_idt_nl
-      << "{" << be_idt_nl;
 
-  // Add a sanity check for the length of a sequence.
-  *os << "// Add a check to the length of the sequence" << be_nl;
-  *os << "// to make sure it does not exceed the length" << be_nl;
-  *os << "// of the stream. (See bug 58.)" << be_nl;
-  *os << "if (_tao_seq_len > strm.length ())" << be_idt_nl
-      << "{" << be_idt_nl;
-  *os << "return 0;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl;
-
-  // Now check if the length does not exceed the maximum. We do this only
-  // for bounded sequences
-  AST_Expression *expr = node->max_size ();
-
-  if (expr == 0 || (expr != 0 && expr->ev () == 0))
+  if (! bt->is_local ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_cdr_op_cs::"
-                         "visit_sequence - "
-                         "bad sequence dimension\n"),
-                        -1);
-    }
+      // First retrieve the length and adjust the sequence length accordingly.
+      *os << "CORBA::ULong _tao_seq_len;" << be_nl << be_nl;
+      *os << "if (strm >> _tao_seq_len)" << be_idt_nl
+          << "{" << be_idt_nl;
 
-  if (expr->ev ()->et == AST_Expression::EV_ulong)
-    {
+      // Add a sanity check for the length of a sequence.
+      *os << "// Add a check to the length of the sequence" << be_nl;
+      *os << "// to make sure it does not exceed the length" << be_nl;
+      *os << "// of the stream. (See bug 58.)" << be_nl;
+      *os << "if (_tao_seq_len > strm.length ())" << be_idt_nl
+          << "{" << be_idt_nl;
+      *os << "return 0;" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
+
+      // Now check if the length does not exceed the maximum. We do this only
+      // for bounded sequences
+      AST_Expression *expr = node->max_size ();
+
+      if (expr == 0 || (expr != 0 && expr->ev () == 0))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_sequence_cdr_op_cs::"
+                             "visit_sequence - "
+                             "bad sequence dimension\n"),
+                            -1);
+        }
+
+      if (expr->ev ()->et == AST_Expression::EV_ulong)
+        {
+          if (expr->ev ()->u.ulval > 0)
+            {
+              // We are dealing with a bounded sequence. Check if we are within
+              // bounds.
+              *os << "if (_tao_seq_len <= _tao_sequence.maximum ())" << be_idt_nl
+                  << "{" << be_idt_nl;
+            }
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_sequence_cdr_op_cs::"
+                             "visit_sequence - "
+                             "bad sequence dimension value\n"),
+                            -1);
+        }
+
+      *os << "// Set the length of the sequence." << be_nl
+          << "_tao_sequence.length (_tao_seq_len);" << be_nl << be_nl;
+
+      // Now we do a check for the sequence length to be non zero.
+      // If length is 0 we return true.
+      *os << "// If length is 0 we return true." << be_nl;
+      *os << "if (0 >= _tao_seq_len) " << be_idt_nl
+          << "{" << be_idt_nl;
+      *os << "return 1;" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl;
+
+      *os << "// Retrieve all the elements." << be_nl;
+
+      this->visit_node (bt);
+
       if (expr->ev ()->u.ulval > 0)
         {
-          // We are dealing with a bounded sequence. Check if we are within
-          // bounds.
-          *os << "if (_tao_seq_len <= _tao_sequence.maximum ())" << be_idt_nl
-              << "{" << be_idt_nl;
+          // We are dealing with a bounded sequence.
+          *os << be_nl << "}" << be_uidt << be_uidt;
         }
-    }
-  else
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_sequence_cdr_op_cs::"
-                         "visit_sequence - "
-                         "bad sequence dimension value\n"),
-                        -1);
+
+      *os << be_nl << "}" << be_uidt_nl << be_nl;
     }
 
-  *os << "// Set the length of the sequence." << be_nl
-      << "_tao_sequence.length (_tao_seq_len);" << be_nl << be_nl;
-
-  // Now we do a check for the sequence length to be non zero.
-  // If length is 0 we return true.
-  *os << "// If length is 0 we return true." << be_nl;
-  *os << "if (0 >= _tao_seq_len) " << be_idt_nl
-      << "{" << be_idt_nl;
-  *os << "return 1;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl;
-
-  *os << "// Retrieve all the elements." << be_nl;
-
-  this->visit_node (bt);
-
-  if (expr->ev ()->u.ulval > 0)
-    {
-      // We are dealing with a bounded sequence.
-      *os << be_nl << "}" << be_uidt << be_uidt;
-    }
-
-  *os << be_nl << "}" << be_uidt_nl << be_nl
-      << "return 0;" << be_uidt_nl
+  *os << "return 0;" << be_uidt_nl
       << "}";
 
   *os << be_nl << be_nl
@@ -636,8 +654,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
         case AST_Decl::NT_interface_fwd:
         case AST_Decl::NT_valuetype:
         case AST_Decl::NT_valuetype_fwd:
-          *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ());"
-              << be_uidt_nl;
+          *os << "_tao_marshal_flag = (strm >> _tao_sequence[i].out ());";
 
           break;
         case AST_Decl::NT_pre_defined:
