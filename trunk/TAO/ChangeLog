@@ -1,3 +1,16 @@
+Fri Feb 13 10:21:15 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp:
+        
+          Added a check to replace a call to the virtual marshal()
+          method with the underlying CDR stream operator, for
+          abstract interface members of an aggregate type. The
+          virtual method is to catch attempts to marshal local
+          interfaces. However, abstract interfaces cannot be local,
+          and they have the wrong base class for the virtual method's
+          signature anyway. Thanks to Jiang Wei <sdjiangwei@sina.com>
+          for reporting the problem. This fix closes [BUGID:1742].
+
 Fri Feb 13 07:24:47 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/examples/RtEC/Schedule/RtEC_Schedule.mpc:
