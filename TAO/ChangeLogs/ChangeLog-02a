@@ -1,3 +1,8 @@
+Thu Dec 27 22:02:03 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp:
+	  Fixed formatting problems. MSVC was not recognizing the .dsp file.
+
 Thu Dec 27 08:34:54 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* tao/TAO_AMH_Response_Handler.cpp: 
