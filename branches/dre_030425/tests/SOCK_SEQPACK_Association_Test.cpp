@@ -31,7 +31,7 @@
 
 void dump_names(const ACE_SOCK_SEQPACK_Association& assoc);
 
-int main (int argc, ACE_TCHAR *argv[])
+int run_main (int argc, ACE_TCHAR *argv[])
 {
   int status = 0;     // Innocent until proven guilty
 

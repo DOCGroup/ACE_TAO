@@ -22,7 +22,7 @@
         .data 				:
 	.sdabase 			:
         .sdata 				:
-# .datachecksum MUST be the last section of the data portion of the 
+# .datachecksum MUST be the last section of the data portion of the
 # data/read/write segment (i.e., it must come before the BSS sections).
 	.datachecksum			:
         .sbss 				:

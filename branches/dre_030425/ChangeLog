@@ -1,3 +1,74 @@
+Sat May 17 19:31:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Codecs.h:
+        * ace/Unbounded_Set.inl:
+        * ace/Unbounded_Set_Ex.inl:
+          Added include of ace/Global_Macros.h:
+
+        * tests/Makefile:
+        * tests/Makefile.libs:
+        * tests/Makefile.tests:
+        * tests/Makefile.dirs:
+          Added new files, Makefile.libs, Makefile.tests, and
+          Makefile.dirs, and moved the contents of Makefile to these
+          files.  This allows us to create a new libTest_Output that all
+          the tests depend on.
+
+        * tests/test_config.h:
+        * tests/Test_Output.cpp:
+          Moved the Test_Output class impementation into it's own cpp so
+          it can be built into libTest_Output.  This helps speed up
+          compilation by reducing dependencies and allowing the class to
+          be compiled a single time instead of once for each test.
+
+        * tests/*.cpp:
+        * tests/Main.cpp:
+          Moved ACE_TMAIN to a new file, Main.cpp, and changed all main
+          and ACE_TMAIN instances to run_main.  This helps obviate the
+          need to include OS.h, needed by ACE_TMAIN, in every test, thus
+          speeding up compilation and reducing dependencies.
+
+        * tests/ACE_Test.cpp:
+          Only include ace/ACE.h when ACE_WIN32 is defined.
+
+        * tests/Aio_Platform_Test.cpp:
+          Remove include of ace/Log_Msg.h.
+
+        * tests/Basic_Types_Test.cpp:
+          Replace include of ace/OS.h with ace/config-all.h.
+
+        * tests/Bound_Ptr_Test.cpp:
+          Remove includes of ace/ACE.h, ace/Synch.h, ace/Message_Queue.h,
+          and ace/Method_Request.h.
+
+        * tests/CDR_Array_Test.cpp:
+        * tests/Codecs_Test.cpp:
+        * tests/Mem_Map_Test.cpp:
+        * tests/MM_Shared_Memory_Test.cpp:
+        * tests/MT_Reactor_Timer_Test.cpp:
+        * tests/Object_Manager_Test.cpp:
+        * tests/Token_Strategy_Test.cpp:
+          Add include of ACE.h.
+
+        * tests/Env_Value_Test.cpp:
+          Don't pass envp[].
+
+        * tests/Get_Opt_Test.cpp:
+          Removed include of OS.h:
+
+        * tests/Reverse_Lock_Test.cpp:
+          Added include of ace/Synch.h.
+
+        * tests/Timeprobe_Test.cpp:
+          Added include of ace/Singleton.h.
+
+        * tests/RMCast/Makefile:
+          Added -LTest_Output to LDLIBS.
+
+        * tests/RMCast/RMCast_Fragment_Test.cpp:
+        * tests/RMCast/RMCast_Membership_Test.cpp:
+          Added include of ace/ACE.h.
+
 Fri Apr 25 08:12:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_auto_compile.pl:

@@ -100,7 +100,7 @@ u_int
 intervals [] = {0, 1, 10, 100, 1000, 10000, 100000, 1000000, 4000000}; /*usec*/
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("High_Res_Timer_Test"));
 

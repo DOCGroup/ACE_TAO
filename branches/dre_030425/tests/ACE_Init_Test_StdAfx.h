@@ -30,9 +30,9 @@
 #define VC_EXTRALEAN		
 
 // MFC core and standard components
-#include <afxwin.h>         
+#include <afxwin.h>
 // MFC extensions
-#include <afxext.h>         
+#include <afxext.h>
 #ifndef _AFX_NO_AFXCMN_SUPPORT
 // MFC support for Windows Common Controls
 #include <afxcmn.h>			

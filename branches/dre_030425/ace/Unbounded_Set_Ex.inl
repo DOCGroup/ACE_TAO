@@ -1,6 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/Global_Macros.h"
+
 template <class T> ACE_INLINE int
 ACE_Unbounded_Set_Ex<T>::is_empty (void) const
 {

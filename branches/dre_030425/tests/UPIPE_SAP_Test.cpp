@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //    Gerhard Lenzer <Gerhard.Lenzer@med.siemens.de>,
-//    Douglas C. Schmidt <schmidt@cs.wustl.edu>, and 
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>, and
 //    Prashant Jain <pjain@cs.wustl.edu>
 //
 // ============================================================================
@@ -140,7 +140,7 @@ acceptor (void *args)
 #endif /* ACE_HAS_THREADS && defined ACE_HAS_STREAM_PIPES || (ACE_WIN32&&NT4)*/
 
 int
-ACE_TMAIN (int, ACE_TCHAR *[])
+run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("UPIPE_SAP_Test"));
 

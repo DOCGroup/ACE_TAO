@@ -35,13 +35,13 @@ typedef ACE_Array<char> KEY;
 
 class Key_Generator
 {
-  // = TITLE  
+  // = TITLE
   //     Defines a key generator.
   //
   // = DESCRIPTION
   //     This class is used in adapters of maps that do not produce keys.
 public:
-  
+
   Key_Generator (void)
     : counter_ (0)
     {
@@ -62,12 +62,12 @@ public:
       ACE_OS::memcpy (&key[original_size],
                       &++this->counter_,
                       sizeof this->counter_);
-      
+
       // Success.
       return 0;
     }
 
-private:  
+private:
   u_long counter_;
 };
 
@@ -77,17 +77,17 @@ public:
   u_long operator () (const KEY &key) const
     {
       // Recover system generated part of key.
-      u_long value;            
+      u_long value;
       size_t counter_key_size = sizeof (u_long);
 
       // Copy system key from user key.
       ACE_OS::memcpy (&value,
                       &key[key.size () - counter_key_size],
-                      sizeof value);      
-      
+                      sizeof value);
+
       // Return the system key value as the hash value.
       return value;
-    } 
+    }
 };
 
 class Key_Adapter
@@ -119,7 +119,7 @@ public:
               ACE_Active_Map_Manager_Key &active_key)
     {
       // Read the active key data from the back of the key.
-      size_t active_key_size = active_key.size ();      
+      size_t active_key_size = active_key.size ();
       size_t original_size = modified_key.size () - active_key_size;
 
       // Read off value of index and generation.
@@ -134,7 +134,7 @@ public:
     {
       // Read the original user key data from the front of the
       // modified key.
-      size_t active_key_size = ACE_Active_Map_Manager_Key::size ();      
+      size_t active_key_size = ACE_Active_Map_Manager_Key::size ();
 
       // Copy all the data.
       original_key = modified_key;
