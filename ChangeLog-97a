@@ -1,3 +1,12 @@
+Tue Jun 10 16:02:52 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ace/SString.{h,cpp}: Changed the parameters in CString::substring()
+	  and WString::substring().  Removed const and changed length to a
+	  ssize_t because of signed/unsigned comparison warnings.
+
+	* ace/ACE.cpp: Changed a loop variable in get_ip_interfaces() to 
+	  a size_t because of a signed/unsigned comparison warning.
+
 Tue Jun 10 12:47:49 1997    <irfan@TWOSTEP>
 
 	* ace/SString.cpp (operator = and operator +=): There were two
