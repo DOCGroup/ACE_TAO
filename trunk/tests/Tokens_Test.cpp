@@ -38,7 +38,7 @@
 
 typedef ACE_Token_Invariant_Manager TOKEN_INVARIANTS;
 
-static const char *server_host = "localhost";
+static const char *server_host = ACE_DEFAULT_SERVER_HOST;
 static const int server_port = 23456;
 
 struct Test_Params

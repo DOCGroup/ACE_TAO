@@ -316,22 +316,101 @@ ACE_Object_Manager::get_singleton_lock (ACE_Null_Mutex *&lock)
         }
 
       if (ACE_Object_Manager_singleton_null_lock != 0)
-        {
-          lock = &ACE_Object_Manager_singleton_null_lock->object ();
-        }
+        lock = &ACE_Object_Manager_singleton_null_lock->object ();
     }
   else
-    {
-      // Use the Object_Manager's preallocated lock.
-      lock = ACE_Managed_Object<ACE_Null_Mutex>::get_preallocated_object
-        (ACE_Object_Manager::ACE_SINGLETON_NULL_LOCK);
-    }
+    // Use the Object_Manager's preallocated lock.
+    lock = ACE_Managed_Object<ACE_Null_Mutex>::get_preallocated_object
+      (ACE_Object_Manager::ACE_SINGLETON_NULL_LOCK);
 
   return 0;
 }
 
 int
 ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
+{
+  if (lock == 0)
+    {
+      if (ACE_Object_Manager::starting_up () ||
+          ACE_Object_Manager::shutting_down ())
+        {
+          // The Object_Manager and its internal lock have not been
+          // constructed yet.  Therefore, the program is single-
+          // threaded at this point.  Or, the ACE_Object_Manager
+          // instance has been destroyed, so the internal lock is not
+          // available.  Either way, we can not use double-checked
+          // locking.
+
+          ACE_NEW_RETURN (lock, ACE_Thread_Mutex, -1);
+
+          // Add the new lock to the array of locks to be deleted
+          // at program termination.
+          if (ACE_Object_Manager_singleton_thread_locks == 0)
+            {
+              // Create the array, then insert the new lock.
+              ACE_NEW_RETURN (ACE_Object_Manager_singleton_thread_locks,
+                              ACE_Array<ACE_Thread_Mutex *> (
+                                (size_t) 1,
+                                (ACE_Thread_Mutex *) 0),
+                              -1);
+              (*ACE_Object_Manager_singleton_thread_locks)[0] = lock;
+            }
+          else
+            {
+              // Grow the array, then insert the new lock.
+
+              // Copy the array pointer.
+              ACE_Array<ACE_Thread_Mutex *> *tmp =
+                ACE_Object_Manager_singleton_thread_locks;
+
+              // Create a new array with one more slot than the current one.
+              ACE_NEW_RETURN (ACE_Object_Manager_singleton_thread_locks,
+                              ACE_Array<ACE_Thread_Mutex *> (
+                                tmp->size () + (size_t) 1,
+                                (ACE_Thread_Mutex *) 0),
+                              -1);
+
+              // Copy the old array to the new array.
+              for (u_int i = 0; i < tmp->size (); ++i)
+                (*ACE_Object_Manager_singleton_thread_locks)[i] = (*tmp) [i];
+
+              // Insert the new lock at the end of the array.
+              (*ACE_Object_Manager_singleton_thread_locks)[tmp->size ()] =
+                lock;
+
+              delete tmp;
+            }
+        }
+      else
+        {
+          // Allocate a new lock, but use double-checked locking to
+          // ensure that only one thread allocates it.
+          ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
+                                    ace_mon,
+                                    *ACE_Object_Manager::instance ()->lock_,
+                                    -1));
+
+          if (lock == 0)
+            {
+              ACE_Cleanup_Adapter<ACE_Thread_Mutex> *lock_adapter;
+              ACE_NEW_RETURN (lock_adapter,
+                              ACE_Cleanup_Adapter<ACE_Thread_Mutex>,
+                              -1);
+              lock = &lock_adapter->object ();
+
+              // Register the lock for destruction at program termination.
+              // This call will cause us to grab the ACE_Object_Manager lock_
+              // again; that's why it is a recursive lock.
+              ACE_Object_Manager::at_exit (lock_adapter);
+            }
+        }
+    }
+
+  return 0;
+}
+
+int
+ACE_Object_Manager::get_singleton_lock (ACE_Mutex *&lock)
 {
   if (lock == 0)
     {
@@ -437,17 +516,13 @@ ACE_Object_Manager::get_singleton_lock (ACE_Recursive_Thread_Mutex *&lock)
         }
 
       if (ACE_Object_Manager_singleton_recursive_lock != 0)
-        {
-          lock = &ACE_Object_Manager_singleton_recursive_lock->object ();
-        }
+        lock = &ACE_Object_Manager_singleton_recursive_lock->object ();
     }
   else
-    {
-      // Use the Object_Manager's preallocated lock.
-      lock = ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::
-        get_preallocated_object (ACE_Object_Manager::
-                                 ACE_SINGLETON_RECURSIVE_THREAD_LOCK);
-    }
+    // Use the Object_Manager's preallocated lock.
+    lock = ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::
+    get_preallocated_object (ACE_Object_Manager::
+                             ACE_SINGLETON_RECURSIVE_THREAD_LOCK);
 
   return 0;
 }

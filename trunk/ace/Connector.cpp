@@ -401,26 +401,25 @@ ACE_Connector<SH, PR_CO_2>::connect_n (size_t n,
                                        char failed_svc_handlers[],
 				       const ACE_Synch_Options &synch_options)
 {
-  int    status = 0;	// Set to -1 if an error occurs
-  size_t i;
+  int result = 0;
 
-  for (i = 0; i < n; i++)
+  for (size_t i = 0; i < n; i++)
     {
       if (this->connect (sh[i], remote_addrs[i], synch_options) == -1
           && !(synch_options[ACE_Synch_Options::USE_REACTOR]
                && errno == EWOULDBLOCK))
         {
-	  status = -1;
+          result = -1;
           if (failed_svc_handlers != 0)
             // Mark this entry as having failed.
             failed_svc_handlers[i] = 1;
         }
-        else if (failed_svc_handlers != 0)
-          // Mark this entry as having succeeded.
-          failed_svc_handlers[i] = 0;
+      else if (failed_svc_handlers != 0)
+        // Mark this entry as having succeeded.
+        failed_svc_handlers[i] = 0;
     }
 
-  return status;
+  return result;
 }
 
 // Cancel a <svc_handler> that was started asynchronously.

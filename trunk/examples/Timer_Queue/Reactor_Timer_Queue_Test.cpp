@@ -159,23 +159,23 @@ Reactor_Timer_Queue_Test_Driver::display_menu (void)
 int 
 Reactor_Timer_Queue_Test_Driver::init (void)
 {
-  typedef Command<Input_Handler, Input_Handler::ACTION> COMMAND;
+  typedef Command<Input_Handler, Input_Handler::ACTION> CMD;
 
   // initialize <Command>s with their corresponding <Input_Handler>  methods.
   ACE_NEW_RETURN (schedule_cmd_, 
-		  COMMAND (thandler_, &Input_Handler::schedule_timer),
+		  CMD (thandler_, &Input_Handler::schedule_timer),
 		  -1);
   
   ACE_NEW_RETURN (cancel_cmd_,
-		  COMMAND (thandler_, &Input_Handler::cancel_timer),
+		  CMD (thandler_, &Input_Handler::cancel_timer),
 		  -1);
 
   ACE_NEW_RETURN (list_cmd_,
-		  COMMAND (thandler_, &Input_Handler::list_timer),
+		  CMD (thandler_, &Input_Handler::list_timer),
 		  -1);
 
   ACE_NEW_RETURN (shutdown_cmd_,
-		  COMMAND (thandler_, &Input_Handler::shutdown_timer),
+		  CMD (thandler_, &Input_Handler::shutdown_timer),
 		  -1);
 
   ACE_Reactor::instance ()->set_timer_queue (&timer_queue_);

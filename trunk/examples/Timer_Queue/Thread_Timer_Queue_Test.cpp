@@ -217,24 +217,24 @@ Thread_Timer_Queue_Test_Driver::display_menu (void)
 int
 Thread_Timer_Queue_Test_Driver::init (void)
 {
-  typedef Command<Input_Task, Input_Task::ACTION> COMMAND;
+  typedef Command<Input_Task, Input_Task::ACTION> CMD;
 
   // initialize the <Command> objects with their corresponding
   // methods from <Input_Task>
   ACE_NEW_RETURN (schedule_cmd_,
-                  COMMAND (input_task_, &Input_Task::add_timer),
+                  CMD (input_task_, &Input_Task::add_timer),
                   -1);
 
   ACE_NEW_RETURN (cancel_cmd_,
-                  COMMAND (input_task_, &Input_Task::cancel_timer),
+                  CMD (input_task_, &Input_Task::cancel_timer),
                   -1);
 
   ACE_NEW_RETURN (list_cmd_,
-                  COMMAND (input_task_, &Input_Task::list_timer),
+                  CMD (input_task_, &Input_Task::list_timer),
                   -1);
 
   ACE_NEW_RETURN (shutdown_cmd_,
-                  COMMAND (input_task_, &Input_Task::shutdown_timer),
+                  CMD (input_task_, &Input_Task::shutdown_timer),
                   -1);
 
   if (this->input_task_.activate () == -1)

@@ -248,21 +248,27 @@ public:
   // = The <get_singleton_lock> accessors are for internal use by ACE_Singleton _only_.
 
   static int get_singleton_lock (ACE_Null_Mutex *&);
-  // Accesses a null lock to be used for construction of
-  // ACE_Singletons.  Returns 0, and the lock in the argument, on
+  // Accesses an <ACE_Null_Mutex> to be used for construction of
+  // <ACE_Singletons>.  Returns 0, and the lock in the argument, on
   // success; returns -1 on failure.  The argument is ignored -- it is
   // only used for overload resolution.
 
   static int get_singleton_lock (ACE_Thread_Mutex *&);
-  // Accesses a non-recursive lock to be used for construction of
-  // ACE_Singletons.  Returns 0, and the lock in the argument, on
+  // Accesses a non-recursive <ACE_Thread_Mutex> to be used for
+  // construction of <ACE_Singletons>.  Returns 0, and the lock in the
+  // argument, on success; returns -1 on failure.  The argument is
+  // ignored -- it is only used for overload resolution.
+
+  static int get_singleton_lock (ACE_Mutex *&);
+  // Accesses a non-recursive <ACE_Mutex> to be used for construction
+  // of <ACE_Singletons>.  Returns 0, and the lock in the argument, on
   // success; returns -1 on failure.  The argument is ignored -- it is
   // only used for overload resolution.
 
   static int get_singleton_lock (ACE_Recursive_Thread_Mutex *&);
-  // Accesses a recursive lock to be used for construction of
-  // ACE_Singletons.  Returns 0, and the lock in the argument, on
-  // success; returns -1 on failure.
+  // Accesses a recursive <ACE_Recursive_Thread_Mutex> to be used for
+  // construction of <ACE_Singletons>.  Returns 0, and the lock in the
+  // argument, on success; returns -1 on failure.
 
   static int get_singleton_lock (ACE_RW_Thread_Mutex *&);
   // Accesses a readers/writers lock to be used for construction of

@@ -264,7 +264,7 @@ main (int argc, char *argv[])
 	      server_addr.get_port_number ()));
 
   ACE_INET_Addr connection_addr (server_addr.get_port_number (),
-				 "localhost");
+				 ACE_DEFAULT_SERVER_HOST);
       
   int i;
 
