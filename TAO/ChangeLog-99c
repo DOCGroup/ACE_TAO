@@ -1,3 +1,51 @@
+Sun Dec 12 15:32:27 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/params.h:
+	* tao/params.i:
+	* tao/params.cpp:
+
+	  Changed endpoint container to ACE_Unbounded_Queue to allow
+	  -ORBEndpoint command line options such as the following to work
+	  as expected:
+		-ORBEndpoint 'iiop://;iiop://'
+	  This change will allow multiple default endpoints to be created
+	  easily.  [Bug 369]
+
+	  Note that this change does not increase TAO's footprint because
+	  an ACE_Unbounded_Queue of the same type already exists in ACE.
+
+	* tao/Acceptor_Registy.h:
+	* tao/Acceptor_Registy.i:
+	* tao/Acceptor_Registy.cpp:
+	* tao/Connector_Registry.h:
+	* tao/Connector_Registry.cpp:
+
+	  Changed underlying TAO_Acceptor container from an
+	  ACE_Unbounded_Set to a simple array.  These changes reduce the
+	  pluggable protocol framework footprint because three container
+	  related template instantiations were removed in the process.
+
+	  Removed included headers that weren't needed for anything.
+
+	* tao/Connector_Registry.i:
+
+	  Added this file.  It contains the same iterator style begin/end
+	  methods that the TAO_Acceptor_Registry uses.
+
+	* tao/Pool_Per_Endpoint.cpp (run):
+	* orbsvcs/orbsvcs/IR_Helper.cpp (notify_startup):
+
+	  The acceptor set iterator typedef in `tao/Acceptor_Registry.h'
+	  was changed to "TAO_AcceptorSetIterator."
+
+	* tao/Makefile:
+
+	  Updated dependencies.
+
+	* tao/Makefile.am (INLINE_FILES):
+
+	  Added Connector_Registry.i to the list of inline files.
+
 Sat Dec 12 15:15:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tao/Acceptor_Registry.cpp:
@@ -52,7 +100,7 @@ Sat Dec 12 15:15:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 Sat Dec 11 21:34:40 1999  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
-	  Fixed the template instantiation
+	  Fixed the template instantiation.
 
 Sat Dec 11 18:56:24 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
