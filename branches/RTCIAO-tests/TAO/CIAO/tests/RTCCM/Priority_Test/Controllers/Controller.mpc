@@ -58,6 +58,25 @@ project(Priority_Test_Controller_exec) : ciao_component {
   }
 }
 
+project(Priority_Test_Rate_Controller_exec) : ciao_component {
+  after   += Priority_Test_Controller_svnt
+  sharedname = Rate_Controller_exec
+  libs      += Controller_stub Controller_svnt Priority_Test_stub Priority_Test_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=CONTROLLER_EXEC_Export -Wb,export_include=Controller_exec_export.h
+  dynamicflags   = CONTROLLER_EXEC_BUILD_DLL
+
+  IDL_Files {
+    ControllerEI.idl
+  }
+
+  Source_Files {
+    ControllerEIC.cpp
+    Rate_Controller.cpp
+    Pulser.cpp
+  }
+}
+
 project (*client) : ciao_client {
   exename = client
   after += Priority_Test_Controller_stub

@@ -10,12 +10,13 @@
 #include "ace/streams.h"
 
 char *controller_ior_ = 0;
+int ctrl_off = 0;
 long work = 80;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:w:");
+  ACE_Get_Opt get_opts (argc, argv, "k:fw:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -24,6 +25,10 @@ parse_args (int argc, char *argv[])
 
       case 'k':
         controller_ior_ = get_opts.opt_arg ();
+        break;
+
+      case 'f':                 // Turn off controller
+        ctrl_off = 1;
         break;
 
       case 'w':
@@ -36,12 +41,13 @@ parse_args (int argc, char *argv[])
                            "usage:  %s\n"
                            "-k <Controller IOR>\n"
                            "-w <work amount>\n"
+                           "-f: Turn off Controller\n"
                            "\n",
                            argv [0]),
                           -1);
       }
 
-  if (controller_ior_ == 0)
+  if (controller_ior_ == 0 && ctrl_off == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Please provide controller IOR\n"),
                       -1);
@@ -73,8 +79,11 @@ main (int argc, char *argv[])
       if (CORBA::is_nil (ctrlr.in ()))
         ACE_ERROR_RETURN ((LM_ERROR, "Unable to acquire 'Controller' objref\n"), -1);
 
-      ctrlr->start (work
-                    ACE_ENV_ARG_PARAMETER);
+      if (ctrl_off != 0)
+        ctrlr->stop (ACE_ENV_SINGLE_ARG_PARAMETER);
+      else
+        ctrlr->start (work
+                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
