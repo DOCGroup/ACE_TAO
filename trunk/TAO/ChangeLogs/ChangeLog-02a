@@ -1,3 +1,16 @@
+Tue Feb 27 12:21:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Connector.cpp: Moved the template instantiations to the
+	  top of the file as this was creating problem with SunCC
+	  5.0. Thanks to Christian Mueffling <cvm@aiss.de> for reporting
+	  this. 
+
+	* tao/UIOP_Connector.cpp:
+	* tao/SHMIOP_Connector.cpp: 
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp: Added the same
+	  fix for these protocols too.
+
 Tue Feb 27 12:17:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/Any.cpp:
