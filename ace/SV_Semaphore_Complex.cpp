@@ -3,6 +3,7 @@
 
 #include "ace/SV_Semaphore_Complex.h"
 #include "ace/Log_Msg.h"
+#include "ace/os_include/sys/sem.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SV_Semaphore_Complex.i"

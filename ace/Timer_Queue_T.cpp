@@ -19,6 +19,13 @@
 
 ACE_RCSID(ace, Timer_Queue_T, "$Id$")
 
+// This fudge factor can be overriden for timers that need it, such as on
+// Solaris, by defining the ACE_TIMER_SKEW symbol in the appropriate config
+// header.
+#if !defined (ACE_TIMER_SKEW)
+#  define ACE_TIMER_SKEW 0
+#endif /* ACE_TIMER_SKEW */
+
 template <class TYPE> void
 ACE_Timer_Node_T<TYPE>::dump (void) const
 {

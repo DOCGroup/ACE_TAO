@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    wchar.h
+ *  @file    os_wchar.h
  *
  *  wide-character handling
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_WCHAR_H
-#define ACE_OS_INCLUDE_WCHAR_H
+#ifndef ACE_OS_INCLUDE_OS_WCHAR_H
+#define ACE_OS_INCLUDE_OS_WCHAR_H
 
 #include "ace/pre.h"
 
@@ -32,8 +32,18 @@
 #include "ace/os_include/ctype.h"
 
 #if !defined (ACE_LACKS_WCHAR_H)
-# include /**/ <wchar.h>
+#  include /**/ <wchar.h>
 #endif /* !ACE_LACKS_WCHAR_H */
 
+// Place all additions (especially function declarations) within extern "C" {}
+#ifdef __cplusplus
+extern "C"
+{
+#endif /* __cplusplus */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_WCHAR_H */
+#endif /* ACE_OS_INCLUDE_OS_WCHAR_H */

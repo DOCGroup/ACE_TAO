@@ -2,19 +2,19 @@
 
 //=============================================================================
 /**
- *  @file    wctype.h
+ *  @file    os_wctype.h
  *
  *  wide-character classification and mapping utilities
  *
  *  $Id$
  *
- *  @author Don Hinton <dhinton@ieee.org>
+ *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
 //=============================================================================
 
-#ifndef ACE_OS_INCLUDE_WCTYPE_H
-#define ACE_OS_INCLUDE_WCTYPE_H
+#ifndef ACE_OS_INCLUDE_OS_WCTYPE_H
+#define ACE_OS_INCLUDE_OS_WCTYPE_H
 
 #include "ace/pre.h"
 
@@ -28,8 +28,18 @@
 #include "ace/os_include/wchar.h"
 
 #if !defined (ACE_LACKS_WCTYPE_H)
-# include /**/ <wctype.h>
+#  include /**/ <wctype.h>
 #endif /* !ACE_LACKS_WCTYPE_H */
 
+// Place all additions (especially function declarations) within extern "C" {}
+#ifdef __cplusplus
+extern "C"
+{
+#endif /* __cplusplus */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
 #include "ace/post.h"
-#endif /* ACE_OS_INCLUDE_WCTYPE_H */
+#endif /* ACE_OS_INCLUDE_OS_WCTYPE_H */

@@ -12,5 +12,13 @@
 
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 
+#define ACE_LACKS_INTTYPES_H
+#define ACE_LACKS_STDINT_H
+#define ACE_LACKS_STROPTS_H
+#define ACE_LACKS_SYS_IPC_H
+#define ACE_LACKS_SYS_MSG_H
+#define ACE_LACKS_SYS_SEM_H
+#define ACE_LACKS_UCONTEXT_H
+
 #include "ace/post.h"
 #endif /* ACE_CONFIG_CYGWIN32_H */
