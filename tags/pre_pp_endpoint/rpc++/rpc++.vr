@@ -1,0 +1,13 @@
+\entry {Xdr::Xchar}{3}{\code {Xdr::Xchar}}
+\entry {Xdr::Xshort}{3}{\code {Xdr::Xshort}}
+\entry {Xdr::Xint}{4}{\code {Xdr::Xint}}
+\entry {Xdr::Xlong}{4}{\code {Xdr::Xlong}}
+\entry {Xdr::Xuchar}{4}{\code {Xdr::Xuchar}}
+\entry {Xdr::Xushort}{4}{\code {Xdr::Xushort}}
+\entry {Xdr::Xulong}{4}{\code {Xdr::Xulong}}
+\entry {Xdr::Xfloat}{4}{\code {Xdr::Xfloat}}
+\entry {Xdr::Xdouble}{4}{\code {Xdr::Xdouble}}
+\entry {Xdr::Xenum{\_}t}{4}{\code {Xdr::Xenum{\_}t}}
+\entry {Xdr::Xbool{\_}t}{4}{\code {Xdr::Xbool{\_}t}}
+\entry {Xdr::Xvoid}{4}{\code {Xdr::Xvoid}}
+\entry {Xdr::Xnull}{4}{\code {Xdr::Xnull}}
