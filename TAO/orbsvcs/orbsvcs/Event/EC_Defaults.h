@@ -29,16 +29,33 @@
 #ifndef TAO_EC_DEFAULTS_H
 #define TAO_EC_DEFAULTS_H
 
+// Any of the definitions below can be overriden in the config.h file
+// or the compilation line.
 
 // Control consumer and supplier reconnections
-#define TAO_EC_DEFAULT_CONSUMER_RECONNECT 0
+#ifndef  TAO_EC_DEFAULT_CONSUMER_RECONNECT
+# define TAO_EC_DEFAULT_CONSUMER_RECONNECT 0
+#endif /*  TAO_EC_DEFAULT_CONSUMER_RECONNECT */
+
+#ifndef TAO_EC_DEFAULT_SUPPLIER_RECONNECT
 #define TAO_EC_DEFAULT_SUPPLIER_RECONNECT 0
+#endif /* TAO_EC_DEFAULT_SUPPLIER_RECONNECT */
+
+// Control callbacks when proxies are disconnected
+#ifndef TAO_EC_DEFAULT_DISCONNECT_CALLBACKS
+# define TAO_EC_DEFAULT_DISCONNECT_CALLBACKS 0
+#endif /* TAO_EC_DEFAULT_DISCONNECT_CALLBACKS */
 
 // Control the maximum degree of concurrency tolerated by the EC, some
 // kind of limit is required to avoid starvation of delayed write
 // operations.
-#define TAO_EC_DEFAULT_BUSY_HWM 1024
-#define TAO_EC_DEFAULT_MAX_WRITE_DELAY 2048
+#ifndef TAO_EC_DEFAULT_BUSY_HWM
+# define TAO_EC_DEFAULT_BUSY_HWM 1024
+#endif /* TAO_EC_DEFAULT_BUSY_HWM */
+
+#ifndef TAO_EC_DEFAULT_MAX_WRITE_DELAY
+# define TAO_EC_DEFAULT_MAX_WRITE_DELAY 2048
+#endif /* TAO_EC_DEFAULT_MAX_WRITE_DELAY */
 
 // The defaults for the default factory.
 // The TAO_EC_Default_Factory is a run-time configurable factory for
@@ -46,16 +63,48 @@
 // specify what strategies should the factory produce.
 // This macros control the default values for those strategies.
 //
-#define TAO_EC_DEFAULT_DISPATCHING 0         /* reactive */
-#define TAO_EC_DEFAULT_CONSUMER_FILTER 1     /* type, disj. conj. timers */
-#define TAO_EC_DEFAULT_SUPPLIER_FILTER 1     /* per supplier */
-#define TAO_EC_DEFAULT_TIMEOUT 0             /* reactive */
-#define TAO_EC_DEFAULT_OBSERVER 0            /* null */
-#define TAO_EC_DEFAULT_SCHEDULING 0          /* null */
-#define TAO_EC_DEFAULT_SUPPLIER_SET 1        /* delayed MT-safe */
-#define TAO_EC_DEFAULT_CONSUMER_LOCK 1       /* thread */
-#define TAO_EC_DEFAULT_SUPPLIER_LOCK 1       /* thread */
-#define TAO_EC_DEFAULT_CONSUMER_ADMIN_LOCK 1 /* thread */
-#define TAO_EC_DEFAULT_SUPPLIER_ADMIN_LOCK 1 /* thread */
+#ifndef TAO_EC_DEFAULT_DISPATCHING
+# define TAO_EC_DEFAULT_DISPATCHING 0         /* reactive */
+#endif /* TAO_EC_DEFAULT_DISPATCHING */
+
+#ifndef TAO_EC_DEFAULT_CONSUMER_FILTER
+# define TAO_EC_DEFAULT_CONSUMER_FILTER 1     /* type, disj. conj. timers */
+#endif /* TAO_EC_DEFAULT_CONSUMER_FILTER */
+
+#ifndef TAO_EC_DEFAULT_SUPPLIER_FILTER
+# define TAO_EC_DEFAULT_SUPPLIER_FILTER 1     /* per supplier */
+#endif /* TAO_EC_DEFAULT_SUPPLIER_FILTER */
+
+#ifndef TAO_EC_DEFAULT_TIMEOUT
+# define TAO_EC_DEFAULT_TIMEOUT 0             /* reactive */
+#endif /* TAO_EC_DEFAULT_TIMEOUT */
+
+#ifndef TAO_EC_DEFAULT_OBSERVER
+# define TAO_EC_DEFAULT_OBSERVER 0            /* null */
+#endif /* TAO_EC_DEFAULT_OBSERVER */
+
+#ifndef TAO_EC_DEFAULT_SCHEDULING
+# define TAO_EC_DEFAULT_SCHEDULING 0          /* null */
+#endif /* TAO_EC_DEFAULT_SCHEDULING */
+
+#ifndef TAO_EC_DEFAULT_SUPPLIER_SET
+# define TAO_EC_DEFAULT_SUPPLIER_SET 1        /* delayed MT-safe */
+#endif /* TAO_EC_DEFAULT_SUPPLIER_SET */
+
+#ifndef TAO_EC_DEFAULT_CONSUMER_LOCK
+# define TAO_EC_DEFAULT_CONSUMER_LOCK 1       /* thread */
+#endif /* TAO_EC_DEFAULT_CONSUMER_LOCK */
+
+#ifndef TAO_EC_DEFAULT_SUPPLIER_LOCK
+# define TAO_EC_DEFAULT_SUPPLIER_LOCK 1       /* thread */
+#endif /* TAO_EC_DEFAULT_SUPPLIER_LOCK */
+
+#ifndef TAO_EC_DEFAULT_CONSUMER_ADMIN_LOCK
+# define TAO_EC_DEFAULT_CONSUMER_ADMIN_LOCK 1 /* thread */
+#endif /* TAO_EC_DEFAULT_CONSUMER_ADMIN_LOCK */
+
+#ifndef TAO_EC_DEFAULT_SUPPLIER_ADMIN_LOCK
+# define TAO_EC_DEFAULT_SUPPLIER_ADMIN_LOCK 1 /* thread */
+#endif /* TAO_EC_DEFAULT_SUPPLIER_ADMIN_LOCK */
 
 #endif /* TAO_EC_DEFAULTS_H */

@@ -66,6 +66,15 @@ public:
   int supplier_reconnect;
   // Can consumers or suppliers invoke connect_push_* multiple times?
 
+  int disconnect_callbacks;
+  // It not zero the event channel will send disconnect callbacks when 
+  // a disconnect method is called on a Proxy.  In other words, if a
+  // consumer calls disconnect_push_supplier() on its proxy the EC
+  // will invoke disconnect_push_consumer() on the consumer.  A
+  // similar thing is done for suppliers.
+  // It is a matter of debate what the spec requires for the regular
+  // event service.
+
   int busy_hwm;
   int max_write_delay;
   // Flags for the Consumer Admin
@@ -194,6 +203,10 @@ public:
   int supplier_reconnect (void) const;
   // Can the suppliers reconnect to the EC?
 
+  int disconnect_callbacks (void) const;
+  // Should we send callback disconnect messages when a proxy is
+  // disconnected by the client
+
   RtecScheduler::Scheduler_ptr scheduler (void);
   // Obtain the scheduler, the user must release
 
@@ -278,6 +291,9 @@ private:
   int consumer_reconnect_;
   int supplier_reconnect_;
   // Consumer/Supplier reconnection flags
+
+  int disconnect_callbacks_;
+  // If not zero we send callbacks when a proxy is disconnected
 
   int busy_hwm_;
   int max_write_delay_;

@@ -25,6 +25,7 @@ TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attr,
     own_factory_ (own_factory),
     consumer_reconnect_ (attr.consumer_reconnect),
     supplier_reconnect_ (attr.supplier_reconnect),
+    disconnect_callbacks_ (attr.disconnect_callbacks),
     busy_hwm_ (attr.busy_hwm),
     max_write_delay_ (attr.max_write_delay)
 {

@@ -19,7 +19,8 @@ BIN2 =   Reconnect \
 	BCast \
 	Timeout \
 	Wildcard \
-	Negation
+	Negation \
+	Disconnect
 
 #### If the orbsvcs library wasn't built with all components, don't
 #### try to build certain tests.
