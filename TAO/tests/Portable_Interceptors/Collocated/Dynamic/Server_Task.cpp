@@ -49,7 +49,7 @@ Server_Task::svc (void)
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Visual_i * server_impl;
+      Visual_i * server_impl = 0;
       ACE_NEW_RETURN (server_impl, Visual_i (sorb_.in ()), 1);
 
       PortableServer::ObjectId_var id =

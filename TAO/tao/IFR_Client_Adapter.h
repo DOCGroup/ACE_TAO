@@ -63,8 +63,6 @@ namespace CORBA
 class TAO_Export TAO_IFR_Client_Adapter : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_IFR_Client_Adapter (void);
-
   virtual CORBA::Boolean interfacedef_cdr_insert (
       TAO_OutputCDR &cdr,
       CORBA::InterfaceDef_ptr object_type
