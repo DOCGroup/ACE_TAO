@@ -1,3 +1,16 @@
+Thu Jan 28 15:26:49 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * tao/examples/Simple/grid/client.dsp:
+        * tao/examples/Simple/grid/server.dsp:
+        * tao/examples/Simple/time/client.dsp:
+        * tao/examples/Simple/time/server.dsp:
+        * tao/examples/Simple/time/client_static.dsp:
+        * tao/examples/Simple/time/server_static.dsp:
+          Updated to work with Bala's changes.
+
+        * tao/examples/Simple/Time_Client_i.cpp:
+          Added TAO_CHECK_ENV after using TAO_TRY_ENV in several spots.
+
 Thu Jan 28 11:32:11 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/IIOP_ORB.cpp (string_to_object): Checked if the <str> passed
