@@ -113,6 +113,15 @@ ACE_THR_FUNC_RETURN producer (void *arg)
   return 0;
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Task_Ex <ACE_MT_SYNCH, User_Defined_Msg>;
+template class ACE_Message_Queue_Ex <User_Defined_Msg, ACE_MT_SYNCH>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Task_Ex <ACE_MT_SYNCH, User_Defined_Msg>
+#pragma instantiate ACE_Message_Queue_Ex <User_Defined_Msg, ACE_MT_SYNCH>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+
 #endif /* ACE_HAS_THREADS */
 
 int
