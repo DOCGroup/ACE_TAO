@@ -1,16 +1,12 @@
-//=============================================================================
 /**
- *  @file   Notify_Resource_Manager.h
+ * @file Notify_Listeners.h
  *
- *  $Id$
+ * $Id$
  *
  * Internal "observer" interfaces for Notify.
  *
- *
- *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ * @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_NOTIFY_LISTENERS_H
 #define TAO_NOTIFY_LISTENERS_H
