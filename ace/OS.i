@@ -123,14 +123,14 @@ ACE_Time_Value::operator timeval () const
 // Returns a pointer to the object as a timeval.
 
 ACE_INLINE
-ACE_Time_Value::operator timeval * () const
+ACE_Time_Value::operator const timeval * () const
 {
   // ACE_TRACE ("ACE_Time_Value::operator timeval");
 ACE_INLINE
 ACE_Time_Value::operator timeval * () const
 {
   // ACE_TRACE ("ACE_Time_Value::operator timeval");
-  return ACE_const_cast (timeval *, &this->tv_);
+  return (timeval *) &this->tv_;
 }
 
 ACE_INLINE void
