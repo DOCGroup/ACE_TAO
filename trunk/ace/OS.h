@@ -3022,8 +3022,8 @@ public:
    * <ACE_OS::read> call, which uses the <read> system call on UNIX
    * and the <ReadFile> call on Win32). If errors occur, -1 is
    * returned.  If EOF occurs, 0 is returned.  Whatever data has been
-   * transmitted will be returned to the caller through
-   * <bytes_transferred>.
+   * read will be returned to the caller through<bytes_transferred>.
+   *
    */
   static ssize_t read_n (ACE_HANDLE handle,
                          void *buf,
