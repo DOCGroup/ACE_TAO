@@ -1,3 +1,9 @@
+Fri Jul 16 16:37:31 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ChangeLog: "Do not look at lazer pointer with remaining eye".  Thanks to 
+	  Russ Noseworthy <j.russell.noseworthy@objectsciences.com> for
+ 	  this deep thought ;-)
+
 Fri Jul 16 07:27:56 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tests/Makefile.am:
