@@ -38,3 +38,9 @@ TAO_NS_Event::translate (const CosNotification::StructuredEvent& notification, C
 {
   any <<= notification;   // is the typecode set by this operation or do we need to set it explicity.
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Auto_Basic_Ptr<TAO_NS_Event>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_NS_Event>
+#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
