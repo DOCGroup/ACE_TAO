@@ -17,7 +17,7 @@ TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (NativeCosEvent,$(findstring NativeCosEvent,$(TAO_ORBSVCS)))
   LIB = $(LIB2)
   SHLIB = $(SHLIB2)
-endif # Event2
+endif # NativeCosEvent
 
 ACE_SHLIBS = -lTAO_CosEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO -lACE
 LDLIBS  = -lTAO_CosEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
