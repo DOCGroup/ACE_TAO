@@ -14,6 +14,10 @@
 #define ACE_LACKS_INLINE_FUNCTIONS
 #endif /* SH3 && _DEBUG */
 
+#if !defined (ACE_DEFAULT_SERVER_HOST)
+# define ACE_DEFAULT_SERVER_HOST L"localhost"
+#endif /* ACE_DEFAULT_SERVER_HOST */
+
 // @@ Need to remap every function that uses any of these flags to
 //    Win32 API.  These are for ANSI styled function and are not
 //    available on WinCE.

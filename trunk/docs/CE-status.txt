@@ -185,27 +185,31 @@
       * You are all done.
         
    [Legend:] X - test working properly
-             . - work pending
+             F - compile but doesn't work correctly.
+             C - compilation trouble
+             . - work pending (deferred)
              N - Not supported by CE
 
-    [ ] Aio_Platform_Test
+    [N] Aio_Platform_Test
     [X] Atomic_Op_Test
     [X] Barrier_Test
     [X] Basic_Types_Test
-    [ ] Buffer_Stream_Test
-    [ ] Conn_Test
-    [ ] Enum_Interfaces_Test
+    [F] Buffer_Stream_Test
+    [F] Conn_Test
+    [X] Enum_Interfaces_Test
+          Sort of working right.  (Report get_ip_interface error ;-)
     [N] Env_Value_Test
-    [ ] Future_Test
-    [ ] Handle_Set_Test
-    [ ] Hash_Map_Manager_Test
-    [ ] IOStream_Test
+    [.] Future_Test
+    [X] Handle_Set_Test
+    [X] Hash_Map_Manager_Test
+    [N] IOStream_Test
     [ ] MM_Shared_Memory_Test
     [ ] MT_Reactor_Timer_Test
     [ ] MT_SOCK_Test
     [X] Map_Manager_Test
     [ ] Mem_Map_Test
-    [ ] Message_Block_Test
+    [X] Message_Block_Test
+           inline functions in auto-generated ctors.
     [ ] Message_Queue_Notifications_Test
     [ ] Message_Queue_Test
     [ ] Naming_Test
@@ -221,7 +225,8 @@
     [ ] Reactor_Notify_Test
     [ ] Reactor_Performance_Test
     [ ] Reactor_Timer_Test
-    [ ] Reactors_Test
+    [F] Reactors_Test
+           Hang after done_count reaches 0.  Reactors were not shutting down.
     [ ] Reader_Writer_Test
     [ ] Recursive_Mutex_Test
     [ ] SOCK_Connector_Test
@@ -235,8 +240,9 @@
     [ ] Simple_Message_Block_Test
     [ ] TSS_Test
     [ ] Task_Test
-    [ ] Thread_Manager_Test
-    [ ] Thread_Mutex_Test
+    [F] Thread_Manager_Test
+           Doesn't terminate (no ending string)
+    [X] Thread_Mutex_Test
     [ ] Thread_Pool_Test
     [ ] Time_Service_Test
     [ ] Time_Value_Test
