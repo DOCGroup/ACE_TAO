@@ -1,3 +1,9 @@
+Tue Dec  1 10:12:57 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Typecode.cpp: 
+	  The size for a TypeCode field was not computed properly (it
+	  should be sizeof(TypeCode_ptr)).
+
 Tue Dec 01 10:16:02 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO version 0.2.42 released.
