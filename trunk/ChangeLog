@@ -1,3 +1,40 @@
+Thu Nov 15 08:26:57 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/*.cpp: Changed all remaining uses of ACE_TEXT to ACE_LIB_TEXT
+	  to be consistent...  Thanks to Johnny Willemsen for reporting
+	  the inconsistencies and for Darrell Brunsch for clarifying what
+	  the right behavior should be.
+
+Wed Nov 14 07:43:20 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* docs/ACE-guidelines.html: Updated the guidelines to explain
+	  the use of ACE_TCHAR for the argv parameter to main().  Thanks
+ 	  to Johnny Willemsen for reporting this.
+
+	* ace/OS_Dirent.inl (opendir): Replace char * const cast with
+	  ACE_TCHAR * const cast.  Thanks to Nick Pratt for reporting
+ 	  this.
+
+	* tests/Upgradable_RW_Test.cpp (main): Fixed the test to avoid
+	  dividing by 0 and also initialized all pointers to NULL.  Thanks
+ 	  to Johnny Willemsen for reporting this.  Thanks fixes BudID 650.
+
+Tue Nov 13 15:25:04 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/ACE.h (ACE): Clarified what the time_len parameter is used for.
+	  Thanks to Tompa <safdsfd@adsffda.com> for reporting this.
+
+Sun Nov 11 09:50:52 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Naming_Context.cpp (info): Added an ACE_UNUSED_ARG to 
+	  silence warning about "length" parameter and changed buf from
+ 	  char to ACE_TCHAR.  Thanks to Johnny Willemsen for reporting
+ 	  this.
+
+	* tests/Aio_Platform_Test.cpp: The argv parameter of main() should
+	  be ACE_TCHAR rather than char.  Thanks to Johnny Willemsen for
+ 	  reporting this.
+
 Thu Nov 15 15:43:20 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/Naming_Context.cpp (info): Wrapped sprintf() arguments with
@@ -42,10 +79,10 @@ Tue Nov 13 15:04:15 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Tue Nov 13 11:46:11 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tests/Collection_Test.cpp (iterate_const): Fixed ACE_DEBUG print
-	statements that were accessing the element of the unbounded set as
-	an int rather than an UglyThing.  Thanks to Ossama for pointing
-	this out.
+	* tests/Collection_Test.cpp (iterate_const): Fixed ACE_DEBUG print 
+	  statements that were accessing the element of the unbounded set
+ 	  as an int rather than an UglyThing.  Thanks to Ossama for
+ 	  pointing this out.
 
 Mon Nov 12 11:41:35 2001  Ossama Othman  <ossama@uci.edu>
 

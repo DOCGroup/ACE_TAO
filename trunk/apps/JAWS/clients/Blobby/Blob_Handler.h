@@ -47,7 +47,10 @@ public:
   ACE_Blob_Handler (void);
   // Null constructor, insures that it works properly with Connector
 
-  ACE_Blob_Handler (ACE_Message_Block *mb, size_t length, size_t offset, char *filename);
+  ACE_Blob_Handler (ACE_Message_Block *mb,
+                    size_t length,
+                    size_t offset,
+                    ACE_TCHAR *filename);
   // Always use this constructor to make Blob_Handlers
 
   int byte_count (void);
@@ -68,7 +71,7 @@ protected:
   ACE_Message_Block *mb_;
   size_t length_;
   size_t offset_;
-  char *filename_;
+  ACE_TCHAR *filename_;
   int bytecount_;
   enum
   {
@@ -84,7 +87,7 @@ public:
   ACE_Blob_Reader (ACE_Message_Block *mb,
                    size_t length,
                    size_t offset,
-                   char *filename,
+                   ACE_TCHAR *filename,
                    const char *request_prefix = "GET",
                    const char *request_suffix = "HTTP/1.0\r\n\r\n");
 
@@ -101,7 +104,7 @@ public:
   ACE_Blob_Writer (ACE_Message_Block *mb,
                    size_t length,
                    size_t offset,
-                   char *filename,
+                   ACE_TCHAR *filename,
                    const char *request_prefix = "PUT",
                    const char *request_suffix = "HTTP/1.0\nContent-length:");
 

@@ -963,8 +963,8 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
           else
             { 
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("ACE::get_ip_interface failed\n"),
-                                 ACE_TEXT ("Couldnt get the IP Address\n")), 
+                                 ACE_LIB_TEXT ("ACE::get_ip_interface failed\n"),
+                                 ACE_LIB_TEXT ("Couldnt get the IP Address\n")), 
                                  -1);
             }
           ++count;

@@ -295,7 +295,7 @@ ACE_Registry_ImpExp::process_previous_line_format (ACE_TCHAR* buffer,
                                                    ACE_Configuration_Section_Key& section)
 {
   // Chop any cr/lf at the end of the line.
-  ACE_TCHAR *endp = ACE_OS_String::strpbrk (buffer, ACE_TEXT ("\r\n"));
+  ACE_TCHAR *endp = ACE_OS_String::strpbrk (buffer, ACE_LIB_TEXT ("\r\n"));
   if (endp != 0)
     *endp = '\0';
 

@@ -21,9 +21,9 @@ Options::instance (void)
 }
 
 void
-Options::parse_args (int argc, char *argv[])
+Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "rwh:p:f:l:o:d");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("rwh:p:f:l:o:d"));
 
   int c;
 

@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    ATM_Addr.h
@@ -8,7 +7,6 @@
  *  @author Joe Hoffert <joeh@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_ATM_ADDR_H
 #define ACE_ATM_ADDR_H
@@ -56,11 +54,11 @@ public:
 
   // = Initialization methods.
   /// Default constructor.
-  ACE_ATM_Addr (unsigned char selector = DEFAULT_SELECTOR);
+  ACE_ATM_Addr (u_char selector = DEFAULT_SELECTOR);
 
   /// Copy constructor.
   ACE_ATM_Addr (const ACE_ATM_Addr &,
-                unsigned char selector = DEFAULT_SELECTOR);
+                u_char selector = DEFAULT_SELECTOR);
 
   /**
    * Creates an <ACE_ATM_Addr> from an ATMSAPAddress structure. This
@@ -68,7 +66,7 @@ public:
    * vendors are supported.
    */
   ACE_ATM_Addr (const ATM_Addr *,
-                unsigned char selector = DEFAULT_SELECTOR);
+                u_char selector = DEFAULT_SELECTOR);
 
   /**
    * Initializes an <ACE_ATM_Addr> from the <sap> which can be
@@ -77,7 +75,7 @@ public:
    * (e.g., "frisbee.cs.wustl.edu").
    */
   ACE_ATM_Addr (const ACE_TCHAR sap[],
-                unsigned char selector = DEFAULT_SELECTOR);
+                u_char selector = DEFAULT_SELECTOR);
 
   /// Default dtor.
   ~ACE_ATM_Addr (void);
@@ -85,11 +83,11 @@ public:
   // = Initialization methods (useful after object construction).
   /// Default initialization for non-address values (e.g.,
   /// t_atm_sap_addr.SVE_tag_addr, t_atm_sap_addr.SVE_tag_selector)
-  void init (unsigned char selector = DEFAULT_SELECTOR);
+  void init (u_char selector = DEFAULT_SELECTOR);
 
   /// Initializes from another <ACE_ATM_Addr>.
   int set (const ACE_ATM_Addr &,
-           unsigned char selector = DEFAULT_SELECTOR);
+           u_char selector = DEFAULT_SELECTOR);
 
   /**
    * Initializes an <ACE_ATM_Addr> from an ATMSAPAddress/sockaddr_atm
@@ -97,7 +95,7 @@ public:
    * change when other vendors are supported.
    */
   int set (const ATM_Addr *,
-           unsigned char selector = DEFAULT_SELECTOR);
+           u_char selector = DEFAULT_SELECTOR);
 
   /**
    * Initializes an <ACE_ATM_Addr> from the <sap> which can be
@@ -106,7 +104,7 @@ public:
    * (e.g., "frisbee.cs.wustl.edu").
    */
   int set (const ACE_TCHAR sap[],
-           unsigned char selector = DEFAULT_SELECTOR);
+           u_char selector = DEFAULT_SELECTOR);
 
   /**
    * Initializes an <ACE_ATM_Addr> from the <sap> which can be
@@ -142,10 +140,10 @@ public:
   virtual void set_addr (void *, int);
 
   /// Return the selector for network address.
-  unsigned char get_selector (void) const;
+  u_char get_selector (void) const;
 
   /// Set the selector for the network address.
-  void set_selector (unsigned char);
+  void set_selector (u_char);
 
   /**
    * Compare two addresses for equality.  The addresses are considered

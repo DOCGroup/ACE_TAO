@@ -36,7 +36,7 @@ public:
   static Options *instance (void);
   // Returns the singleton instance
 
-  void parse_args (int argc, char *argv[]);
+  void parse_args (int argc, ACE_TCHAR *argv[]);
   // parses commandline arguments
 
   char *hostname_;
@@ -45,7 +45,7 @@ public:
   u_short port_;
   // Port number to use
 
-  char *filename_;
+  ACE_TCHAR *filename_;
   // Filename to upload/download
 
   int length_;

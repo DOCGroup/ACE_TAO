@@ -49,8 +49,8 @@ public:
   ACE_Blob (void);
   ~ACE_Blob (void);
 
-  int open (char *filename,
-            const char *hostname =  ACE_DEFAULT_SERVER_HOST ,
+  int open (ACE_TCHAR *filename,
+            const ACE_TCHAR *hostname =  ACE_DEFAULT_SERVER_HOST ,
             u_short port = 80);
   // initializes the class with the given filename, hostname and port.
   // it should be called with the filename, before any read/write calls
@@ -76,7 +76,7 @@ private:
   ACE_INET_Addr inet_addr_;
   // store the internet address of the server
 
-  char *filename_;
+  ACE_TCHAR *filename_;
   // The filename
 
   ACE_Connector<ACE_Blob_Handler, ACE_SOCK_CONNECTOR> connector_;

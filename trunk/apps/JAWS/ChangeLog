@@ -1,3 +1,12 @@
+Wed Nov 14 16:21:46 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* clients/Blobby/Blob.{h,cpp},
+	* clients/Blobby/Blob_Handler.{h,cpp},
+	* clients/Blobby/blobby.{h,cpp},
+	* clients/Blobby/Options.{h,cpp}:
+	  Fixed the code to be Unicode-compliant.  Thanks to Johnny
+ 	  Willemsen for contributing this.
+
 Fri Aug 24 18:39:39 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* server/HTTP_Response.cpp (normal_response),

@@ -55,7 +55,7 @@ bgcolor="#ffffff">
         always be declared with arguments, <em>e.g.</em>,
         <pre>
         int
-        main (int argc, char *argv[])
+        main (int argc, ACE_TCHAR *argv[])
         {
           [...]
 
@@ -67,7 +67,7 @@ bgcolor="#ffffff">
         arguments, don't declare them, <em>e.g.</em>,
         <pre>
         int
-        main (int, char *[])
+        main (int, ACE_TCHAR *[])
         {
           [...]
 
@@ -75,10 +75,10 @@ bgcolor="#ffffff">
         }
         </pre><p>
 
-        Please declare the second argument as <code>char *[]</code>
-        instead of <code>char **</code>.  Ancient versions of MSC
-        complained about <code>char **</code>; I've never seen a
-        C++ compiler complain about <code>char *[]</code>.<p>
+        Please declare the second argument as <code>ACE_TCHAR *[]</code>
+        instead of <code>ACE_TCHAR **</code> or <code>char *[]</CODE>.  Ancient versions of MSC
+        complained about <code>ACE_TCHAR **</code> and <code>char
+        *[]</CODE> is not Unicode-compliant.<p>
 
         <code>main</code> must also return 0 on successful
         termination, and non-zero otherwise.<p>

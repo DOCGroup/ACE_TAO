@@ -17,13 +17,12 @@ ACE_Blob::~ACE_Blob (void)
 // initialize address and filename. No network i/o in open
 
 int
-ACE_Blob::open (char *filename, const char *hostname , u_short port)
+ACE_Blob::open (ACE_TCHAR *filename, const ACE_TCHAR *hostname , u_short port)
 {
-  filename_ = ACE_OS::strdup(filename);
+  filename_ = ACE_OS_String::strdup (filename);
   inet_addr_.set (port, hostname);
   return 0;
 }
-
 
 // read from connection length bytes from offset, into Message block
 
