@@ -1,3 +1,12 @@
+Wed Jun 30 11:28:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynArray_i.cpp:
+	* tao/DynEnum_i.cpp:
+	* tao/DynSequence_i.cpp:
+	* tao/DynStruct_i.cpp:
+	* tao/DynUnion_i.cpp:
+	  Fixed warnings related to CORBA::LongLong.
+
 Wed Jun 30 11:27:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/NestedUpcall/MT_Client_Test/client.cpp:
