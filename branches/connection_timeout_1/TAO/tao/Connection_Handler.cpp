@@ -26,6 +26,7 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
    pending_upcall_lock_ (0)
 
 {
+  // NOTE: Why should the refcount be
   // @@todo: We need to have a distinct option/ method in the resource
   // factory for this and TAO_Transport.
   this->pending_upcall_lock_ =

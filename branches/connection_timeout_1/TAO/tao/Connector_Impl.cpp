@@ -38,6 +38,12 @@ TAO_Connect_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
                                  this->lite_flag_,
                                  this->arg_),
                     -1);
+
+  // Add a reference count. Why is this needed? We need this to make
+  // sure that the connector doesnt delete this handler when we are
+  // waiting for non-blocking connects to complete.
+  sh->incr_refcount ();
+
   return 0;
 }
 

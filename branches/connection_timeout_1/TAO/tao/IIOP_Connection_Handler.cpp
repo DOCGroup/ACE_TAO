@@ -194,7 +194,6 @@ int
 TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                                            ACE_Reactor_Mask rm)
 {
-  ACE_OS::abort ();
   // @@ Alex: we need to figure out if the transport decides to close
   //    us or something else.  If it is something else (for example
   //    the cached connector trying to make room for other
@@ -229,7 +228,7 @@ TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
 
   // If the upcall count is zero start the cleanup.
   if (upcalls == 0)
-    this->handle_close_i ();
+    this->decr_refcount ();
 
   return 0;
 }
@@ -265,13 +264,6 @@ TAO_IIOP_Connection_Handler::handle_close_i (void)
   // TAO_Transport::release ().
   this->transport (0);
 
-  // Decrement the refcount for automatic memory management
-  this->decr_refcount ();
-}
-
-void
-TAO_IIOP_Connection_Handler::shutdown_object (void)
-{
   // Follow usual Reactor-style lifecycle semantics and commit
   // suicide.
   this->destroy ();
@@ -376,11 +368,11 @@ TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE)
 
   if (upcalls == 0)
     {
-      this->handle_close_i ();
+      this->decr_refcount ();
 
-      // As we have already performed the handle closing we dont want
-      // to return a  -1. Doing so would make the reactor call
-      // handle_close () which could be harmful.
+      // As we have already performed the handle closing (indirectly)
+      // we dont want to return a  -1. Doing so would make the reactor
+      // call handle_close () which could be harmful.
       retval = 0;
     }
   else if (upcalls < 0)
