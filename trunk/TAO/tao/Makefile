@@ -190,7 +190,9 @@ ORB_CORE_FILES += \
   Context \
   Request \
   Services \
-  NVList
+  NVList \
+  TAOC \
+  TAOS
 
 DYNAMIC_ANY_FILES += \
   DynAnyC \
@@ -208,9 +210,6 @@ INTERFACE_REPO_FILES += \
 
 endif # minimum_corba
 
-# TAOC and TAOS should be moved outside the corba_messaging scope once
-# more classes have been added to the TAO module.
-
 ifeq ($(corba_messaging),1)
 
 ORB_CORE_FILES += \
@@ -218,8 +217,6 @@ ORB_CORE_FILES += \
   MessagingS \
   Policy_Manager \
   Messaging_Policy_i \
-  TAOC \
-  TAOS \
   Client_Priority_Policy \
   Buffering_Constraint_Policy
 

@@ -1,3 +1,9 @@
+Tue Dec 28 14:13:18 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Makefile (ORB_CORE_FILES): Moved TAOC and TAOS from the
+	  corba messaging section to the general section.  These files now
+	  contain more code than what simply belongs to corba messaging.
+
 Tue Dec 28 09:31:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile,orbsvcs/Trading/Makefile,
