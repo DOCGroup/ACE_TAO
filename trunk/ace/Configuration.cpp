@@ -1172,7 +1172,8 @@ ACE_Configuration_Section_Key_Heap::~ACE_Configuration_Section_Key_Heap ()
 ACE_Configuration_Heap::ACE_Configuration_Heap (void)
   : allocator_ (0),
     index_ (0),
-    default_map_size_ (0)
+    default_map_size_ (0),
+    persistent_(0)
 {
   ACE_Configuration_Section_Key_Heap *temp = 0;
 
@@ -1183,8 +1184,11 @@ ACE_Configuration_Heap::ACE_Configuration_Heap (void)
 ACE_Configuration_Heap::~ACE_Configuration_Heap (void)
 {
   if (allocator_)
+  {
     allocator_->sync ();
-
+    if(!persistent_)
+      allocator_->remove();
+  }
   delete allocator_;
 }
 
@@ -1198,6 +1202,7 @@ ACE_Configuration_Heap::open (int default_map_size)
   ACE_NEW_RETURN (this->allocator_,
                   HEAP_ALLOCATOR (),
                   -1);
+  persistent_ = 0;
   return create_index ();
 }
 
@@ -1207,6 +1212,7 @@ ACE_Configuration_Heap::open (const ACE_TCHAR* file_name,
                               void* base_address,
                               int default_map_size)
 {
+  persistent_ = 1;
   default_map_size_ = default_map_size;
 
   // Make sure that the file name is of the legal length.

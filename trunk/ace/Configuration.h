@@ -6,13 +6,22 @@
  *
  *  $Id$
  *
- *  @author Chris Hafey <chris@stentorsoft.com>
+ *  @author Chris Hafey <chafey@stentor.com>
  *
  *  The ACE configuration API provides a portable abstraction for
  *  program configuration.  The API supports a tree based hierarchy
  *  of configuration sections.  Each section contains other sections
  *  or values.  Values may contain string, unsigned integer and
  *  binary data.
+ *
+ * @todo
+ *  - Redo the import/export mechanism to support different file formats
+ *  - Add locking for thread safety.
+ *  - Need to investigate what happens if memory mapped file gets mapped to
+ *    a location different than it was created with.
+ *  - Add dynamic buffer when importing.  currently it will not allow
+ *    importing of values greater than a fixed ammount (4096 bytes)
+ *  - Replace unsigned int with a type that is fixed accross platforms.
  *
  */
 //=============================================================================
@@ -50,13 +59,6 @@
  * Implementations subclass this base class to represent a
  * section key.
  *
- * @todo
- *  - Add locking for thread safety.
- *  - Need to investigate what happens if memory mapped file gets mapped to
- *    a location different than it was created with.
- *  - Add dynamic buffer when importing.  currently it will not allow
- *    importing of values greater than a fixed ammount (4096 bytes)
- *  - Replace unsigned int with a type that is fixed accross platforms.
  *
  */
 class ACE_Export ACE_Section_Key_Internal
@@ -247,13 +249,21 @@ public:
                    ACE_Configuration_Section_Key& key_out,
                    int create = 1);
 
+
   /// Exports the configuration database to filename.  If <filename> is
-  /// alredy present, it is overwritten.
+  /// alredy present, it is overwritten. * See note below
   virtual int export_config (const ACE_TCHAR* filename);
 
   /// Imports the configuration database from filename.  Any existing
-  /// data is not removed.
+  /// data is not removed. * See note below
   virtual int import_config (const ACE_TCHAR* filename);
+
+  // Note - The above import/export routines have the following bugs/limitations
+  //   1) Strings with embedded newlines cause the import to fail
+  //   2) Strings with embedded quotes " cause the import to fail
+  //   3) Importing/exporting for values in the root section does not work
+  // If you are interested in working on this, please let me know and we can
+  // discuss the details.  chafey@stentor.com
 
 protected:
   /// Default ctor
@@ -722,6 +732,7 @@ private:
   ACE_Allocator *allocator_;
   SECTION_MAP *index_;
   int default_map_size_;
+  int persistent_;
 };
 
 #include "ace/post.h"
