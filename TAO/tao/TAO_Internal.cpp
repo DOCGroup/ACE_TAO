@@ -92,6 +92,13 @@ TAO_Internal::open_services (int &argc,
       if (TAO_Internal::server_strategy_args_ != 0)
         ACE_Service_Config::process_directive (TAO_Internal::server_strategy_args_);
 
+      // Loads TypeCodeFactory DLL dynamically if
+      // resolve_initial_references ("TypeCodeFactory") is called in
+      // the application code (and if the DLL has been built).
+      ACE_Service_Config::process_directive (
+          "dynamic TypeCodeFactory Service_Object * TypeCodeFactory_DLL:_make_TCF_Loader()"
+        );
+
       return result;
     }
   else
