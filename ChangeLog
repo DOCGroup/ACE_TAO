@@ -1,3 +1,8 @@
+Fri Mar 29 17:35:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Proactor.h: Doxygen-ize some comments; correct the
+          close() comment (no I/O completion port is known at this level).
+
 Fri Mar 29 13:40:00 2002  Si Mong Park  <spark@ociweb.com>
 
         * ace/OS.h:
