@@ -309,8 +309,7 @@ be_visitor_interface::visit_enum (be_enum *node)
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
     case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
-      return 0; // nothing to be done
-#if 0
+
     case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SH:
     case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SS:
     case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_CH:
@@ -321,7 +320,8 @@ be_visitor_interface::visit_enum (be_enum *node)
     case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_INTERFACE_CH:
     case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_INTERFACE_CI:
     case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_INTERFACE_CS:
-#endif /* 0 */
+      return 0; // nothing to be done
+
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -405,8 +405,7 @@ be_visitor_interface::visit_exception (be_exception *node)
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
     case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
-      return 0; // nothing to be done
-#if 0
+
     case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SH:
     case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SS:
     case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_CH:
@@ -417,7 +416,8 @@ be_visitor_interface::visit_exception (be_exception *node)
     case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_INTERFACE_CH:
     case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_INTERFACE_CI:
     case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_INTERFACE_CS:
-#endif /* 0 */
+      return 0; // nothing to be done
+
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -1000,8 +1000,7 @@ be_visitor_interface::visit_typedef (be_typedef *node)
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
     case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
-      return 0; // nothing to be done
-#if 0
+
     case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SH:
     case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SS:
     case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_CH:
@@ -1012,7 +1011,8 @@ be_visitor_interface::visit_typedef (be_typedef *node)
     case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_INTERFACE_CH:
     case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_INTERFACE_CI:
     case TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_INTERFACE_CS:
-#endif /* 0 */
+      return 0; // nothing to be done
+
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
