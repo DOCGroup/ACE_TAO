@@ -43,7 +43,10 @@
 
 // Default constructor.
 CORBA::WrongTransaction::WrongTransaction (void)
-  : CORBA_UserException ("IDL:omg.org/CORBA/WrongTransaction:1.0")
+  : CORBA_UserException (
+        "IDL:omg.org/CORBA/WrongTransaction:1.0",
+        "WrongTransaction"
+      )
 {
 }
 
@@ -54,7 +57,10 @@ CORBA::WrongTransaction::~WrongTransaction (void)
 
 // Copy constructor.
 CORBA::WrongTransaction::WrongTransaction (const ::CORBA::WrongTransaction &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -75,7 +81,7 @@ void CORBA::WrongTransaction::_tao_any_destructor (void *_tao_void_pointer)
 CORBA::WrongTransaction *
 CORBA::WrongTransaction::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/WrongTransaction:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/WrongTransaction:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (WrongTransaction *, exc);
     }

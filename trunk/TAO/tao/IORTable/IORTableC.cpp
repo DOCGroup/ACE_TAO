@@ -41,7 +41,10 @@
 
 // Default constructor.
 IORTable::AlreadyBound::AlreadyBound (void)
-  : CORBA_UserException ("IDL:IORTable/AlreadyBound:1.0")
+  : CORBA_UserException (
+        "IDL:IORTable/AlreadyBound:1.0",
+        "AlreadyBound"
+      )
 {
 }
 
@@ -52,7 +55,10 @@ IORTable::AlreadyBound::~AlreadyBound (void)
 
 // Copy constructor.
 IORTable::AlreadyBound::AlreadyBound (const ::IORTable::AlreadyBound &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -73,7 +79,7 @@ void IORTable::AlreadyBound::_tao_any_destructor (void *_tao_void_pointer)
 IORTable::AlreadyBound *
 IORTable::AlreadyBound::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:IORTable/AlreadyBound:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:IORTable/AlreadyBound:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (AlreadyBound *, exc);
     }
@@ -135,7 +141,10 @@ void IORTable::AlreadyBound::_tao_decode (
 
 // Default constructor.
 IORTable::NotFound::NotFound (void)
-  : CORBA_UserException ("IDL:IORTable/NotFound:1.0")
+  : CORBA_UserException (
+        "IDL:IORTable/NotFound:1.0",
+        "NotFound"
+      )
 {
 }
 
@@ -146,7 +155,10 @@ IORTable::NotFound::~NotFound (void)
 
 // Copy constructor.
 IORTable::NotFound::NotFound (const ::IORTable::NotFound &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (
+        _tao_excp._rep_id (),
+        _tao_excp._name ()
+      )
 {
 }
 
@@ -167,7 +179,7 @@ void IORTable::NotFound::_tao_any_destructor (void *_tao_void_pointer)
 IORTable::NotFound *
 IORTable::NotFound::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:IORTable/NotFound:1.0", exc->_id ()))
+  if (!ACE_OS::strcmp ("IDL:IORTable/NotFound:1.0", exc->_rep_id ()))
     {
       return ACE_dynamic_cast (NotFound *, exc);
     }
