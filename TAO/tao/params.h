@@ -49,13 +49,13 @@ class ACE_Svc_Export TAO_ORB_Parameters
   // compiler error at ace/Svc_Handler.cpp:46, of all places.
 {
 public:
-  TAO_LOCAL_INLINE TAO_ORB_Parameters (void);
-  // Constructor
+  TAO_ORB_Parameters (void);
+  // Constructor.
   
-  TAO_LOCAL_INLINE ~TAO_ORB_Parameters (void);
-  // Destructor
+  ~TAO_ORB_Parameters (void);
+  // Destructor.
   
-  TAO_LOCAL_INLINE void addr (const ACE_INET_Addr &addr);
+  void addr (const ACE_INET_Addr &addr);
   // Set the address on which we're listening.
 
   const ACE_INET_Addr &addr (void);

@@ -64,19 +64,4 @@ TAO_OA_Parameters::userdef_lookup_strategy (void)
   return ot_;
 }
 
-ACE_INLINE
-TAO_ORB_Parameters::TAO_ORB_Parameters (void)
-  : name_service_ior_ (0)
-{
-}
 
-ACE_INLINE
-TAO_ORB_Parameters::~TAO_ORB_Parameters (void)
-{
-}
-
-ACE_INLINE void
-TAO_ORB_Parameters::addr (const ACE_INET_Addr &addr)
-{
-  this->addr_ = addr;
-}
