@@ -51,5 +51,9 @@ PAGE_NOACCESS
 PAGE_NOCACHE  */
 #endif /* ACE_WIN32 */
 
+#if !defined (PROT_RDWR)
+#  define PROT_RDWR (PROT_READ|PROT_WRITE)
+#endif /* PROT_RDWR */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SYS_MMAN_H */

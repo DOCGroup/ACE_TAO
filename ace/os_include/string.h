@@ -34,5 +34,16 @@
 extern "C" char *strtok_r (char *s, const char *delim, char **save_ptr);
 #endif  /* ACE_LACKS_STRTOK_R_PROTOTYPE */
 
+#if defined (__BORLANDC__)
+#  define _stricmp stricmp
+#  define _strnicmp strnicmp
+#endif /* __BORLANDC__ */
+
+#if defined (ACE_HAS_CHARPTR_SPRINTF)
+#  define ACE_SPRINTF_ADAPTER(X) ::strlen (X)
+#else
+#  define ACE_SPRINTF_ADAPTER(X) X
+#endif /* ACE_HAS_CHARPTR_SPRINTF */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_STRING_H */

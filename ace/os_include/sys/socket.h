@@ -75,5 +75,17 @@ struct msghdr
 };
 #endif /* ACE_WIN32 */
 
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+   // Control message size to pass a file descriptor.
+#  define ACE_BSD_CONTROL_MSG_LEN sizeof (struct cmsghdr) + sizeof (ACE_HANDLE)
+#  if defined (ACE_LACKS_CMSG_DATA_MACRO)
+#    if defined (ACE_LACKS_CMSG_DATA_MEMBER)
+#      define CMSG_DATA(cmsg) ((unsigned char *) ((struct cmsghdr *) (cmsg) + 1))
+#    else
+#      define CMSG_DATA(cmsg) ((cmsg)->cmsg_data)
+#    endif /* ACE_LACKS_CMSG_DATA_MEMBER */
+#  endif /* ACE_LACKS_CMSG_DATA_MACRO */
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SYS_SOCKET_H */

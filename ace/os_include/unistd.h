@@ -72,5 +72,20 @@ extern "C" ACE_LOFF_T llseek (int fd, ACE_LOFF_T offset, int whence);
 # endif
 #endif  /* _LARGEFILE64_SOURCE */
 
+#if !defined (_SC_AIO_MAX)
+#define _SC_AIO_MAX 1
+#endif /* _SC_AIO_MAX */
+
+#if defined (__BORLANDC__)
+#  include "ace/os_include/fcntl.h"
+#  define _chdir chdir
+#  undef _access
+#  define _access access
+#  if (__BORLANDC__ <= 0x540)
+#    define _getcwd getcwd
+#  endif
+#  define _isatty isatty
+#endif /* __BORLANDC__ */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_UNISTD_H */

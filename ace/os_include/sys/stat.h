@@ -95,6 +95,13 @@ struct stat
 };
 #endif /* ACE_HAS_WINCE */
 
+#if defined (__BORLANDC__)
+#  if (__BORLANDC__ <= 0x540)
+#    define _stat stat
+#  endif
+#  define _umask umask
+#  define _fstat fstat
+#endif /* __BORLANDC__ */
 
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SYS_STAT_H */
