@@ -34,7 +34,7 @@ static void *
 supplier (void *)
 {
   ACE_UPIPE_Stream s_stream;
-  ACE_UPIPE_Addr c_addr ("pattern");
+  ACE_UPIPE_Addr c_addr (ACE_TEXT("pattern"));
 
   ACE_UPIPE_Connector con;
 
@@ -71,7 +71,7 @@ static void *
 consumer (void *)
 {
   ACE_UPIPE_Stream c_stream;
-  ACE_UPIPE_Addr serv_addr ("pattern");
+  ACE_UPIPE_Addr serv_addr (ACE_TEXT("pattern"));
 
   // Accept will wait up to 4 seconds
   ACE_UPIPE_Acceptor acc (serv_addr);

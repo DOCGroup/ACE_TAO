@@ -26,7 +26,7 @@ ACE_RCSID(UPIPE_SAP, ex1, "$Id$")
 #if defined (ACE_HAS_THREADS)
 
 // Global pattern
-static ACE_UPIPE_Addr addr ("pattern");
+static ACE_UPIPE_Addr addr (ACE_TEXT("pattern"));
 
 // peer1 thread entry point.
 
@@ -156,7 +156,7 @@ peer2 (void *)
 }
 
 int
-main (int, char *[])
+main (int, ACE_TCHAR *[])
 {
   // Spawn a peer2 thread.
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (peer2),
@@ -172,7 +172,7 @@ main (int, char *[])
 }
 #else
 int
-main (int, char *[])
+main (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "threads not supported on this platform\n"),
