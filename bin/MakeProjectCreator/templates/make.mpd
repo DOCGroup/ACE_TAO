@@ -41,6 +41,9 @@ OBJS          =<%foreach(source_files)%> <%noextension(source_file)%>.o<%endfor%
 <%if(includes)%>
 CPPFLAGS     +=<%foreach(includes)%> -I<%include%><%endfor%>
 <%endif%>
+<%if(macros)%>
+CPPFLAGS     +=<%foreach(macros)%> -D<%macro%><%endfor%>
+<%endif%>
 <%if(libpaths)%>
 LDFLAGS      +=<%foreach(libpaths)%> -L<%libpath%><%endfor%>
 <%endif%>

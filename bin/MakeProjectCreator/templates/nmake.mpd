@@ -51,7 +51,7 @@ INTDIR=<%intermediate_dir%>\<%noextension(project_file)%>
 ALL : <%if(idl_files)%>IDL_STUBS <%endif%><%if(exename)%><%if(install)%>"$(INSTALLDIR)" <%endif%><%endif%>"<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"<%foreach(custom_types)%><%foreach(custom_type->input_files)%><%foreach(custom_type->input_file->output_files)%> "<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%basename(custom_type->input_file->output_file)%><%else%>.\<%custom_type->input_file->output_file%><%endif%>"<%endfor%><%endfor%><%endfor%>
 
 DEPEND :
-	perl <%depgen("$(ACE_ROOT)\\bin\\depgen.pl")%><%foreach(includes)%> -I"<%include%>"<%endfor%><%foreach(defines cpu_defines common_defines)%> -D<%define%>=1<%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%> -D<%dllflag%>=1<%endfor%><%endif%><%if(zzip)%><%foreach(zzip_defines)%> -D<%zzip_define%>=1<%endfor%> -I"$(ZZIP_ROOT)\include" <%endif%><%if(need_libflags)%><%foreach(libflags)%> -D<%libflag%>=1<%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%> -D<%pch_define%>=1<%endfor%><%endif%> -f "<%noextension(project_file)%>.dep"<%foreach(source_files)%> <%source_file%><%endfor%>
+	perl <%depgen("$(ACE_ROOT)\\bin\\depgen.pl")%><%foreach(includes)%> -I"<%include%>"<%endfor%><%foreach(defines cpu_defines common_defines macros)%> -D<%define%><%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%> -D<%dllflag%><%endfor%><%endif%><%if(zzip)%><%foreach(zzip_defines)%> -D<%zzip_define%><%endfor%> -I"$(ZZIP_ROOT)\include" <%endif%><%if(need_libflags)%><%foreach(libflags)%> -D<%libflag%><%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%> -D<%pch_define%><%endfor%><%endif%> -f "<%noextension(project_file)%>.dep"<%foreach(source_files)%> <%source_file%><%endfor%>
 
 <%if(idl_files)%>
 IDL_STUBS :<%foreach(idl_files)%> "<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%dirname(idl_file)%><%endif%><%endif%>\<%basenoextension(idl_file)%>C.cpp"<%endfor%>
@@ -110,7 +110,7 @@ REALCLEAN : CLEAN
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 CPP=cl.exe
-CPP_PROJ=/nologo <%if(add_compile)%><%add_compile%> <%endif%><%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines cpu_defines common_defines)%>/D <%define%>=1 <%endfor%><%if(zzip)%><%foreach(zzip_defines)%> /D <%zzip_define%>=1<%endfor%> /I "$(ZZIP_ROOT)\include" <%endif%><%if(type_is_dynamic)%><%foreach(dllflags)%>/D <%dllflag%>=1 <%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%>/D <%libflag%>=1 <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%>=1 <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"$(INTDIR)\<%noextension(pch_header)%>.pch" <%endif%>/Fo"<%fo_flag("$(INTDIR)\\\\")%>" /Fd"<%fd_flag("$(INTDIR)\\\\")%>" /FD /c
+CPP_PROJ=/nologo <%if(add_compile)%><%add_compile%> <%endif%><%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines cpu_defines common_defines macros)%>/D <%define%> <%endfor%><%if(zzip)%><%foreach(zzip_defines)%> /D <%zzip_define%><%endfor%> /I "$(ZZIP_ROOT)\include" <%endif%><%if(type_is_dynamic)%><%foreach(dllflags)%>/D <%dllflag%> <%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%>/D <%libflag%> <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%> <%endfor%><%if(pch_source)%>/Yu<%else%>/YX<%endif%>"<%pch_header%>" /Fp"$(INTDIR)\<%noextension(pch_header)%>.pch" <%endif%>/Fo"<%fo_flag("$(INTDIR)\\\\")%>" /Fd"<%fd_flag("$(INTDIR)\\\\")%>" /FD /c
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -144,7 +144,7 @@ CPP_PROJ=/nologo <%if(add_compile)%><%add_compile%> <%endif%><%compile_flags%> <
 
 RSC=rc.exe
 <%foreach(resource_files)%>
-RSC_PROJ=/l 0x409 /fo"$(INTDIR)\<%basenoextension(resource_file)%>.res"<%foreach(defines cpu_defines)%> /d <%define%>=1<%endfor%><%foreach(includes)%> /i "<%include%>"<%endfor%>
+RSC_PROJ=/l 0x409 /fo"$(INTDIR)\<%basenoextension(resource_file)%>.res"<%foreach(defines cpu_defines macros)%> /d <%define%><%endfor%><%foreach(includes)%> /i "<%include%>"<%endfor%>
 <%endfor%>
 BSC32=bscmake.exe
 <%if(sharedname)%>
@@ -199,7 +199,7 @@ SOURCE=.\<%pch_source%>
 <%foreach(configurations)%>
 !<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%platform%> <%configuration%>"
 
-CPP_SWITCHES=/nologo <%if(add_compile)%><%add_compile%> <%endif%><%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines cpu_defines common_defines)%>/D <%define%>=1 <%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%>/D <%dllflag%>=1 <%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%>/D <%libflag%>=1 <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%>=1 <%endfor%>/Fp"$(INTDIR)\<%noextension(pch_header)%>.pch" /Yc"<%pch_header%>" <%endif%>/Fo"<%fo_flag%>" /Fd"<%fd_flag%>" /FD /c
+CPP_SWITCHES=/nologo <%if(add_compile)%><%add_compile%> <%endif%><%compile_flags%> <%foreach(includes)%>/I "<%include%>" <%endfor%><%foreach(defines cpu_defines common_defines macros)%>/D <%define%> <%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%>/D <%dllflag%> <%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%>/D <%libflag%> <%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%>/D <%pch_define%> <%endfor%>/Fp"$(INTDIR)\<%noextension(pch_header)%>.pch" /Yc"<%pch_header%>" <%endif%>/Fo"<%fo_flag%>" /Fd"<%fd_flag%>" /FD /c
 
 "$(INTDIR)\<%basenoextension(pch_source)%>.obj"	"$(INTDIR)\<%noextension(pch_header)%>.pch" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
