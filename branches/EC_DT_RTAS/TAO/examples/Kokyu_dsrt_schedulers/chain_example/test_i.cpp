@@ -74,7 +74,6 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
               "Request in thread %t, prio = %d,"
               "exec duration = %u\n", prio, exec_duration));
 
-/*
 
   static CORBA::ULong prime_number = 9619899;
 
@@ -137,7 +136,6 @@ Simple_Server_i::test_method (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
 
   timer.stop ();
   timer.elapsed_time (elapsed_time);
-*/
   
   ACE_DEBUG ((LM_DEBUG, 
 	      "Request processing in thread %t done, "
