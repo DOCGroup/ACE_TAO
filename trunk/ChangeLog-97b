@@ -1,3 +1,8 @@
+Wed Oct 15 07:21:05 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* tests/TSS_Test.cpp (worker): convert void *c to long if
+	  ACE_HAS_64BIT_LONGS to avoid DEC cxx compiler warning.
+
 Wed Oct 15 01:48:36 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Containers.{h,i,cpp}: 
