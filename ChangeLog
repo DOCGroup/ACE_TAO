@@ -1,3 +1,10 @@
+Wed Mar  3 07:42:54 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/StringProcessor.pm:
+
+          Rewrote my optimization from Tue Mar  2 12:28:09 2004 such that
+          escaped double quotes are preserved.
+
 Wed Mar  3 07:08:11 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
