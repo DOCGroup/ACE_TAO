@@ -81,18 +81,25 @@ endif
 # Set the appropriate preprocessor defs for threading based on OS version
 # and specified compiler options.
 ifeq ($(threads),1)
-  THR_DEFS = -DACE_HAS_THREADS -D_REENTRANT
+  THR_DEFS = -DACE_HAS_THREADS
 
-  # Different for v2 vs. v1 C++ library selection.
-  ifeq (1,$(stdcpplib))
-    THR_DEFS += -D_RWSTD_MULTI_THREAD
+  # x.30 was the first version offering -mt. So, if it's a .2x version,
+  # set the defs by hand; anything else, use -mt. This leaves out .1x
+  # versions, which should be no problem at this point.
+  ifeq (,$(filter 2%,$(CXXMINORVERS)))
+    THR_DEFS += -mt
   else
-    THR_DEFS += -DRWSTD_MULTI_THREAD -D_THREAD_SAFE
-  endif
+    # Different for v2 vs. v1 C++ library selection.
+    ifeq (1,$(stdcpplib))
+      THR_DEFS += -D_RWSTD_MULTI_THREAD
+    else
+      THR_DEFS += -DRWSTD_MULTI_THREAD -D_THREAD_SAFE
+    endif
 
-  # For HP-UX 11.x, choose kernel threads over CMA (user) threads.
-  ifeq ($(word 2,$(HPVERS_WORDS)), 11)
-    THR_DEFS += -D_POSIX_C_SOURCE=199506L
+    # For HP-UX 11.x, choose kernel threads over CMA (user) threads.
+    ifeq ($(word 2,$(HPVERS_WORDS)), 11)
+      THR_DEFS += -D_POSIX_C_SOURCE=199506L
+    endif
   endif
 else
   THR_DEFS = -DACE_HAS_THREADS=0
@@ -208,21 +215,23 @@ endif
 #
 ifeq ($(word 2,$(HPVERS_WORDS)), 11)
 
-#11.x:
-ifeq ($(threads),1)
-## -L./ must directly preceed the system libraries for 64-bit builds
-## with aCC 3.27.  Without this change, libpthread.sl can not be found.
-LIBS		+= -L./ -lxti -lpthread -lrt -ldld
-else
-LIBS		+= -lxti -lrt -ldld
-endif
+  #11.x:
+  ifeq ($(threads),1)
+    # If -mt is in CPPLAGS, we don't need to add anything to LIBS; -mt does it.
+    ifeq ($(findstring -mt,$(CPPFLAGS)),)
+      ## -L./ must directly preceed the system libraries for 64-bit builds
+      ## with aCC 3.27.  Without this change, libpthread.sl can not be found.
+      LIBS += -L./ -lpthread
+    endif
+  endif
+  LIBS		+= -lxti -lrt -ldld
 
 else
 
-# 10.x:
-LIBS		+= -lxti -ldld
-ifeq ($(threads),1)
-LIBS		+= -lcma
-endif
+  # 10.x:
+  LIBS		+= -lxti -ldld
+  ifeq ($(threads),1)
+    LIBS		+= -lcma
+  endif
 
 endif
