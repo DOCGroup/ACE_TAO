@@ -19,9 +19,8 @@ DIRS = \
   IORManipulation \
   IORTable \
   Strategies \
-  SmartProxies \
-  RTCORBA \
-  RTPortableServer
+  SmartProxies
+
 
 # These are headers for things which are exported and must be
 # installed.  (Currently not used).
@@ -270,7 +269,6 @@ TEMPLATE_FILES = \
   GIOPS_T \
   IOPS_T \
   PollableS_T \
-  RTCORBAS_T \
   Sequence_T \
   TAOS_T \
   TAO_Singleton \
@@ -302,6 +300,11 @@ ORB_CORE_FILES += \
 endif # minimum_corba
 
 ifeq ($(corba_messaging),1)
+
+DIRS += \
+  RTCORBA \
+  RTPortableServer
+
 
 ORB_CORE_FILES += \
   MessagingC \

@@ -7,19 +7,21 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-MAKEFILE = Makefile
-LIBNAME  = libTAO_RTPortableServer
-LIB      = $(LIBNAME).a
-SHLIB    = $(LIBNAME).$(SOEXT)
-
-ACE_SHLIBS = -lTAO -lACE -lTAO_RTCORBA
-
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(corba_messaging),1)
+
+MAKEFILE = Makefile
+LIBNAME  = libTAO_RTPortableServer
+LIB      = $(LIBNAME).a
+SHLIB    = $(LIBNAME).$(SOEXT)
+
+ACE_SHLIBS = -lTAO -lACE -lTAO_RTCORBA
 
 CPP_SRCS += \
   RTPortableServer \
@@ -38,6 +40,8 @@ FILES = $(CPP_SRCS)
 DEFS  = $(addsuffix .h,$(FILES))
 LSRC  = $(addsuffix .cpp,$(FILES))
 
+endif # corba_messaging
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
@@ -48,9 +52,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 #       Local targets (and local hacks)
 #----------------------------------------------------------------------------
+ifeq ($(corba_messaging),1)
 
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)
+
+else
+# Dummy Target
+all:
+
+endif # corba_messaging
 
 #----------------------------------------------------------------------------
 #       Dependencies

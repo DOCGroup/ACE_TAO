@@ -1,3 +1,11 @@
+Thu Jun 14 14:18:34 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/Makefile: 
+	* tao/RTCORBA/Makefile: 
+	* tao/RTPortableServer/Makefile:
+	  Added guard to avoid building the RTCORBA related libraries when
+	  CORBA	Messaging is not enabled.
+
 Thu Jun 14 13:43:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_field/field_ch.cpp:
