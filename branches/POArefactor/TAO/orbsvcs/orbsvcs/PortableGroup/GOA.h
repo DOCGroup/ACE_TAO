@@ -22,8 +22,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/POA.h"
+#include "portablegroup_export.h"
 
-#include "GOAC.h"
+#include "orbsvcs/PortableGroupC.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -34,15 +35,18 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+class TAO_Profile;
+class TAO_PortableGroup_Acceptor_Registry;
+
 /**
  * @class TAO_GOA
  *
- * @brief Implementation of the PortableServer::POA interface.
+ * @brief Implementation of the PortableGroup::GOA interface.
  *
- * Implementation of the PortableServer::POA interface.
+ * Implementation of the PortableGroup::GOA interface.
  */
-class TAO_PortableServer_Export TAO_GOA :
-    public virtual PortableServer::GOA,
+class TAO_PortableGroup_Export TAO_GOA :
+    public virtual PortableGroup::GOA,
     public virtual TAO_POA
 {
 public:
@@ -55,17 +59,17 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
-      PortableServer::NotAGroupObject
+      PortableGroup::NotAGroupObject
     ));
 
 
-  virtual PortableServer::IDs * reference_to_ids (
+  virtual PortableGroup::IDs * reference_to_ids (
       CORBA::Object_ptr the_ref
       ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
-      PortableServer::NotAGroupObject
+      PortableGroup::NotAGroupObject
     ));
 
   virtual void associate_reference_with_id (
@@ -75,7 +79,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
-      PortableServer::NotAGroupObject
+      PortableGroup::NotAGroupObject
     ));
 
   virtual void disassociate_reference_with_id (
@@ -85,7 +89,7 @@ public:
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
-      PortableServer::NotAGroupObject
+      PortableGroup::NotAGroupObject
     ));
   //@}
 
@@ -272,6 +276,9 @@ public:
 
   virtual ~TAO_GOA (void);
 
+    // Used to force the initialization of the code.
+    static int Initializer (void);
+
 protected:
 
   /// Template method for creating new POA's of this type.
@@ -284,8 +291,50 @@ protected:
                             TAO_ORB_Core &orb_core,
                             TAO_Object_Adapter *object_adapter
                             ACE_ENV_ARG_DECL);
-};
 
+  int find_group_component (const CORBA::Object_ptr the_ref,
+                            PortableGroup::TagGroupTaggedComponent &group);
+
+  int find_group_component_in_profile (
+      const TAO_Profile* profile,
+      PortableGroup::TagGroupTaggedComponent &group
+    );
+
+  int create_group_acceptors (
+      CORBA::Object_ptr the_ref,
+      TAO_PortableGroup_Acceptor_Registry &acceptor_registry,
+      TAO_ORB_Core &orb_core
+      ACE_ENV_ARG_DECL
+    );
+
+  /// Helper function to associate group references with
+  /// object references.
+  void associate_group_with_ref (
+        CORBA::Object_ptr group_ref,
+        CORBA::Object_ptr obj_ref
+        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       PortableGroup::NotAGroupObject));
+};
+/*
+ACE_STATIC_SVC_DECLARE (TAO_GOA)
+ACE_FACTORY_DECLARE (TAO_PortableGroup, TAO_GOA)
+
+#if defined (ACE_HAS_BROKEN_STATIC_CONSTRUCTORS)
+
+typedef int (*TAO_Module_Initializer) (void);
+
+static TAO_Module_Initializer
+  TAO_Requires_GOA_Initializer =
+    &TAO_GOA::Initializer;
+
+  #else
+
+  static int
+  TAO_Requires_GOA_Initializer =
+    TAO_GOA::Initializer ();
+
+  #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
 // ****************************************************************
 

@@ -1,58 +1,63 @@
 #include "GOA.h"
 
-ACE_RCSID (PortableServer,
+ACE_RCSID (PortableGroup,
            GOA,
            "$Id$")
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
-
-#include "Default_Acceptor_Filter.h"
-#include "PortableGroup_Hooks.h"
+#include "tao/Stub.h"
+#include "tao/Tagged_Components.h"
+#include "tao/Profile.h"
+#include "tao/CDR.h"
 
 #include "ace/Auto_Ptr.h"
+
+#include "PortableGroup_Acceptor_Registry.h"
+#include "PortableGroup_Request_Dispatcher.h"
 
 PortableServer::ObjectId *
 TAO_GOA::create_id_for_reference (CORBA::Object_ptr the_ref
                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
-      PortableServer::NotAGroupObject
+      PortableGroup::NotAGroupObject
     ))
 {
-  TAO_POA_PortableGroup_Hooks *hooks = this->orb_core_.portable_group_poa_hooks ();
-  if (hooks == 0)
-    {
-      ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
-    }
+  // Get the RepositoryId from the Group reference so
+  // we know what kind of reference to make.
+  const char* repository_id = the_ref->_stubobj ()->type_id.in ();
 
-  PortableServer::ObjectId *obj_id =
-    hooks->create_id_for_reference (*this, the_ref ACE_ENV_ARG_PARAMETER);
+  // Create a temporary object reference and then get the
+  // ObjectId out of it.
+  CORBA::Object_var obj_ref = this->create_reference (repository_id
+                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return obj_id;
+  PortableServer::ObjectId_var obj_id = this->reference_to_id (obj_ref.in ()
+                                                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  // Associate the object reference with the group reference.
+  this->associate_group_with_ref (the_ref,
+                                  obj_ref.in ()
+                                  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return obj_id._retn ();
 }
 
-PortableServer::IDs *
+PortableGroup::IDs *
 TAO_GOA::reference_to_ids (CORBA::Object_ptr the_ref
-                           ACE_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
-      PortableServer::NotAGroupObject
+      PortableGroup::NotAGroupObject
     ))
 {
-  TAO_POA_PortableGroup_Hooks *hooks = this->orb_core_.portable_group_poa_hooks ();
-  if (hooks == 0)
-    {
-      ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                        0);
-    }
+  ACE_UNUSED_ARG (the_ref);
 
-  PortableServer::IDs *id_list =
-    hooks->reference_to_ids (*this, the_ref ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  return id_list;
+  return 0;
 }
 
 void
@@ -61,36 +66,34 @@ TAO_GOA::associate_reference_with_id (CORBA::Object_ptr ref,
                                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
-      PortableServer::NotAGroupObject
+      PortableGroup::NotAGroupObject
     ))
 {
-  TAO_POA_PortableGroup_Hooks *hooks = this->orb_core_.portable_group_poa_hooks ();
-  if (hooks == 0)
-    {
-      ACE_THROW (CORBA::NO_IMPLEMENT ());
-    }
+  // Create a reference for the specified ObjectId, since
+  // it is much easier to extract the object key from the
+  // reference.
+  CORBA::Object_var obj_ref = this->id_to_reference (oid
+                                                     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-  hooks->associate_reference_with_id (*this, ref, oid ACE_ENV_ARG_PARAMETER);
+  // Associate the object reference with the group reference.
+  this->associate_group_with_ref (ref,
+                                  obj_ref.in ()
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 TAO_GOA::disassociate_reference_with_id (CORBA::Object_ptr ref,
                                          const PortableServer::ObjectId & oid
-                                         ACE_ENV_ARG_DECL)
+                                         ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
-      PortableServer::NotAGroupObject
+      PortableGroup::NotAGroupObject
     ))
 {
-  TAO_POA_PortableGroup_Hooks *hooks = this->orb_core_.portable_group_poa_hooks ();
-  if (hooks == 0)
-    {
-      ACE_THROW (CORBA::NO_IMPLEMENT ());
-    }
-
-  hooks->disassociate_reference_with_id (*this, ref, oid ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_UNUSED_ARG (ref);
+  ACE_UNUSED_ARG (oid);
 }
 
 
@@ -560,6 +563,165 @@ TAO_GOA::id (ACE_ENV_SINGLE_ARG_DECL)
 {
   return this->TAO_POA::id (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+int
+TAO_GOA::find_group_component (const CORBA::Object_ptr the_ref,
+                               PortableGroup::TagGroupTaggedComponent &group)
+{
+  const TAO_MProfile& profiles = the_ref->_stubobj ()->base_profiles ();
+  const TAO_Profile* profile;
+  CORBA::ULong slot;
+
+  // Iterate through the tagged profiles, and
+  // create acceptors for the multicast ones.
+  slot = 0;
+  while ((profile = profiles.get_profile (slot)))
+    {
+      if (this->find_group_component_in_profile (profile, group) == 0)
+        return 0;
+
+      ++slot;
+    }
+
+  // Not found.
+  return -1;
+}
+
+int
+TAO_GOA::find_group_component_in_profile (const TAO_Profile* profile,
+                                          PortableGroup::TagGroupTaggedComponent &group)
+{
+  // Iterate through the tagged components looking for
+  // group tag.
+  const TAO_Tagged_Components& components = profile->tagged_components ();
+
+  IOP::TaggedComponent tagged_component;
+  tagged_component.tag = IOP::TAG_GROUP;
+
+  // Try to find it.
+  if (components.get_component (tagged_component) == 0)
+    return -1;
+
+  // Found it.
+  const CORBA::Octet *buf =
+    tagged_component.component_data.get_buffer ();
+
+  TAO_InputCDR in_cdr (ACE_reinterpret_cast (const char*, buf),
+                       tagged_component.component_data.length ());
+
+  // Extract the Byte Order.
+  CORBA::Boolean byte_order;
+  if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+    return -1;
+  in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
+
+  if ((in_cdr >> group) == 0)
+    return -1;
+
+  return 0;
+}
+
+int
+TAO_GOA::create_group_acceptors (CORBA::Object_ptr the_ref,
+                                 TAO_PortableGroup_Acceptor_Registry &acceptor_registry,
+                                 TAO_ORB_Core &orb_core
+                                 ACE_ENV_ARG_DECL)
+{
+  const TAO_MProfile& profiles = the_ref->_stubobj ()->base_profiles ();
+  const TAO_Profile* profile;
+  CORBA::ULong slot;
+  int num = 0;
+
+  // Iterate through the tagged profiles, and
+  // create acceptors for the multicast ones.
+  slot = 0;
+  while ((profile = profiles.get_profile (slot)))
+    {
+      if (profile->supports_multicast ())
+        {
+          acceptor_registry.open (profile,
+                                  orb_core
+                                  ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
+          ++num;
+        }
+
+      ++slot;
+    }
+
+  // Return the number of acceptors registered.
+  return num;
+}
+
+void
+TAO_GOA::associate_group_with_ref (
+      CORBA::Object_ptr group_ref,
+      CORBA::Object_ptr obj_ref
+      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableGroup::NotAGroupObject))
+{
+  // Find the Group Component so that we can extract the Group ID.
+  PortableGroup::TagGroupTaggedComponent *tmp_group_id;
+  ACE_NEW_THROW_EX (tmp_group_id,
+                    PortableGroup::TagGroupTaggedComponent,
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK;
+
+  PortableGroup::TagGroupTaggedComponent_var group_id = tmp_group_id;
+
+  if (this->find_group_component (group_ref, group_id.inout ()) != 0)
+    {
+      // Group component wasn't found.  The group reference
+      // that was passed in must be bogus.
+      ACE_THROW (PortableGroup::NotAGroupObject ());
+    }
+
+  PortableGroup_Request_Dispatcher *rd =
+    dynamic_cast <PortableGroup_Request_Dispatcher*>(
+      this->orb_core_.request_dispatcher());
+
+  // Create the acceptors necessary to receive requests for the
+  // specified group reference.
+  this->create_group_acceptors (group_ref,
+                                rd->acceptor_registry_,
+                                this->orb_core_
+                                ACE_ENV_ARG_PARAMETER);
+
+  ACE_CHECK;
+
+
+  // Add a mapping from GroupId to Object key in the PortableGroup
+  const TAO::ObjectKey &key =
+    obj_ref->_stubobj ()->profile_in_use ()->object_key ();
+  rd->group_map_.add_groupid_objectkey_pair (group_id._retn (),
+                                             key
+                                             ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+}
+
+/*
+int
+TAO_GOA::Initializer (void)
+{
+  TAO_ORB_Core::set_poa_factory ("TAO_GOA", "dynamic TAO_POA Service_Object * TAO_PortableServer:_make_TAO_Object_Adapter_Factory()"
+    );
+}
+
+ACE_STATIC_SVC_DEFINE (
+  TAO_GOA,
+  ACE_TEXT ("TAO_GOA"),
+  ACE_SVC_OBJ_T,
+  &ACE_SVC_NAME (TAO_GOA),
+  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+  0)
+
+ACE_FACTORY_DEFINE (TAO_PortableGroup, TAO_GOA)*/
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

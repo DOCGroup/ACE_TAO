@@ -3,11 +3,12 @@
 // $Id$
 
 #include "PortableGroup_Loader.h"
+#include "PG_Object_Adapter_Factory.h"
 #include "PortableGroup_ORBInitializer.h"
 #include "tao/ORB_Core.h"
 
-ACE_RCSID (PortableGroup, 
-           PortableGroup_Loader, 
+ACE_RCSID (PortableGroup,
+           PortableGroup_Loader,
            "$Id$")
 
 TAO_PortableGroup_Loader::TAO_PortableGroup_Loader (void)
@@ -58,6 +59,8 @@ TAO_PortableGroup_Loader::Initializer (void)
 {
   ACE_Service_Config::static_svcs ()->
     insert (&ace_svc_desc_TAO_PortableGroup_Loader);
+
+  ACE_Service_Config::process_directive (ace_svc_desc_TAO_PG_Object_Adapter_Factory);
 
   return 0;
 }

@@ -17,7 +17,7 @@ ACE_RCSID (PortableGroup,
 #include "tao/debug.h"
 
 #include "PortableGroup_Request_Dispatcher.h"
-#include "POA_Hooks.h"
+//#include "POA_Hooks.h"
 
 TAO_PortableGroup_ORBInitializer::TAO_PortableGroup_ORBInitializer ()
 {
@@ -60,7 +60,7 @@ TAO_PortableGroup_ORBInitializer::pre_init (
 
   tao_info->orb_core ()->request_dispatcher (rd);
 
-  // Create and save the hooks for the POA.
+/*  // Create and save the hooks for the POA.
   TAO_POA_PortableGroup_Hooks *poa_hooks;
   ACE_NEW_THROW_EX (poa_hooks,
                     TAO_POA_Hooks (*rd),
@@ -70,7 +70,7 @@ TAO_PortableGroup_ORBInitializer::pre_init (
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK;
-  tao_info->orb_core ()->portable_group_poa_hooks (poa_hooks);
+  tao_info->orb_core ()->portable_group_poa_hooks (poa_hooks);*/
 }
 
 void
