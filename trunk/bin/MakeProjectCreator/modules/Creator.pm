@@ -504,10 +504,16 @@ sub process_assignment_add {
   my($name)   = shift;
   my($value)  = shift;
   my($assign) = shift;
+  my($order)  = shift;
   my($nval)   = $self->get_assignment($name, $assign);
 
   if (defined $nval) {
-    $nval = "$value $nval";
+    if ($order) {
+      $nval .= " $value";
+    }
+    else {
+      $nval = "$value $nval";
+    }
   }
   else {
     $nval = $value;

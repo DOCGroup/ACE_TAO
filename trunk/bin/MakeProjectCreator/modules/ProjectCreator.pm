@@ -454,6 +454,7 @@ sub parse_scoped_assignment {
   my($name)   = shift;
   my($value)  = shift;
   my($flags)  = shift;
+  my($order)  = shift;
   my($over)   = {};
   my($status) = 0;
 
@@ -475,8 +476,7 @@ sub parse_scoped_assignment {
     }
 
     if ($type eq 'assignment') {
-      $self->process_assignment($name,
-                                $value, $flags);
+      $self->process_assignment($name, $value, $flags);
     }
     elsif ($type eq 'assign_add') {
       ## If there is no value in $$flags, then we need to get
@@ -485,8 +485,7 @@ sub parse_scoped_assignment {
         my($outer) = $self->get_assignment($name);
         $self->process_assignment($name, $outer, $flags);
       }
-      $self->process_assignment_add($name,
-                                    $value, $flags);
+      $self->process_assignment_add($name, $value, $flags, $order);
     }
     elsif ($type eq 'assign_sub') {
       ## If there is no value in $$flags, then we need to get
@@ -495,8 +494,7 @@ sub parse_scoped_assignment {
         my($outer) = $self->get_assignment($name);
         $self->process_assignment($name, $outer, $flags);
       }
-      $self->process_assignment_sub($name,
-                                    $value, $flags);
+      $self->process_assignment_sub($name, $value, $flags);
     }
   }
   return $status;
@@ -515,6 +513,17 @@ sub parse_components {
   my($order)   = 0;
   my($set)     = 0;
   my(%flags)   = ();
+  my($custom)  = defined $self->{'generated_exts'}->{$tag};
+
+  if ($custom) {
+    ## For the custom scoped assignments, we want to put a copy of
+    ## the original custom defined values in our flags associative array.
+    foreach my $key (keys %custom) {
+      if (defined $self->{'generated_exts'}->{$tag}->{$key}) {
+        $flags{$key} = $self->{'generated_exts'}->{$tag}->{$key};
+      }
+    }
+  }
 
   if (defined $self->{$tag}) {
     $names = $self->{$tag};
@@ -577,7 +586,8 @@ sub parse_components {
       my(@values) = ();
       ## If this returns true, then we've found an assignment
       if ($self->parse_assignment($line, \@values)) {
-        $status = $self->parse_scoped_assignment($tag, @values, \%flags);
+        $status = $self->parse_scoped_assignment($tag, @values,
+                                                 \%flags, $custom);
         if (!$status) {
           last;
         }
