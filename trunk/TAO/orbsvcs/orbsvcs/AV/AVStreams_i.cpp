@@ -35,7 +35,7 @@ void
 TAO_Basic_StreamCtrl::stop (const AVStreams::flowSpec &the_spec,  
                             CORBA::Environment &env)
 {
-  if (CORBA::is_nil (stream_endpoint_a_.in ()))
+  if (CORBA::is_nil (this->stream_endpoint_a_.in ()))
     return;
 
   // Make the upcall into the application
