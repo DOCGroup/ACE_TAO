@@ -1,3 +1,19 @@
+Wed Nov 26 12:22:46 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+          LInux build errors/warnings.
+          Feedback from code review:
+           accessor methods all named get* or set*
+           ACE::OS as necessary
+           Extend internals check to additional methods.
+           Document why PG_Object_Group::set_primary can't throw FT:PrimaryNotSet
+
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.cpp:
+          Fix Solaris build problem -- redundant template instantiation.
+
 Wed Nov 26 10:38:01 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
