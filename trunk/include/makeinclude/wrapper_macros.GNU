@@ -163,6 +163,56 @@
 #      (link to the appropriate platform-specific config file).
 #----------------------------------------------------------------------------
 
+
+# Set the cleanup targets
+ifeq ($(CLEANUP_BIN),)
+  ifneq ($(BIN),)
+    CLEANUP_BIN = $(BIN)
+  else
+    ifneq ($(BIN2),)
+      CLEANUP_BIN = $(BIN2)
+    else
+      CLEANUP_BIN = $(BIN_UNCHECKED)
+    endif
+  endif
+endif
+
+ifeq ($(CLEANUP_LIB),)
+  ifneq ($(LIB),)
+    CLEANUP_LIB = $(LIB)
+  else
+    ifneq ($(LIB2),)
+      CLEANUP_LIB = $(LIB2)
+    else
+      CLEANUP_LIB = $(LIB_UNCHECKED)
+    endif
+  endif
+endif
+
+ifeq ($(CLEANUP_SHLIB),)
+  ifneq ($(SHLIB),)
+    CLEANUP_SHLIB = $(SHLIB)
+  else
+    ifneq ($(SHLIB2),)
+      CLEANUP_SHLIB = $(SHLIB2)
+    else
+      CLEANUP_SHLIB = $(SHLIB_UNCHECKED)
+    endif
+  endif
+endif
+
+ifeq ($(CLEANUP_SHLIBA),)
+  ifneq ($(SHLIBA),)
+    CLEANUP_SHLIBA = $(SHLIBA)
+  else
+    ifneq ($(SHLIBA2),)
+      CLEANUP_SHLIBA = $(SHLIBA2)
+    else
+      CLEANUP_SHLIBA = $(SHLIBA_UNCHECKED)
+    endif
+  endif
+endif
+
 #### Default to building shared libraries only.  Set it here to give the
 #### platform a chance to override.
 ifeq ($(shared_libs),)
@@ -188,6 +238,13 @@ endif # PACE_ROOT
 # Include this before the below variables to make it possible for
 # platform_macros.GNU to set default values for them.
 include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+
+# $(ACE_PLATFORM_CONFIG) is used in dependency rules and corresponds to the
+# platform dependent config-*.h file included in config.h, and can be set
+# in your platform_*.GNU file or platform_macros.GNU.
+ifndef ACE_PLATFORM_CONFIG
+  ACE_PLATFORM_CONFIG = config.h
+endif
 
 ifeq ($(threads),0)
   ifneq ($(findstring -DACE_MT_SAFE=0,$(CPPFLAGS)),-DACE_MT_SAFE=0)
@@ -340,10 +397,6 @@ ifeq ($(findstring g++,$(CXX)),g++)
 	  >/dev/null; then echo 1; else echo 0; fi)
   endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # g++
-
-ifndef OBJDIRS
-  OBJDIRS = $(VDIR)
-endif # OBJDIRS
 
 ifndef OBJEXT
   OBJEXT=o
@@ -616,24 +669,26 @@ endif
 #### definitions below.
 VBIN = $(BIN:%=%$(VAR))
 
+# These rules are here for backward compatibility, but are overwritten by the
+# new all_in_one.GNU file.
 ifdef shared_libs
   ifdef static_libs
     #### Build both shared and static libs.
-    BUILD  = $(VSHLIB) $(SHLIBA) $(VLIB) $(VBIN)
+    BUILD  = $(IDL_SRC) $(VSHLIB) $(SHLIBA) $(VLIB) $(VBIN)
   else # ! static_libs
     #### Build shared libs only.
     ifeq ($(SHLIB),)
       #### Makefile only specifies static libs, so only build static libs.
-      BUILD         = $(VLIB) $(VBIN)
+      BUILD         =  $(IDL_SRC) $(VLIB) $(VBIN)
     else # ! SHLIB
       #### Don't build static libs.
-      BUILD         = $(VSHLIB) $(SHLIBA) $(VBIN)
+      BUILD         =  $(IDL_SRC) $(VSHLIB) $(SHLIBA) $(VBIN)
       LIB           =
-      ifndef VXWORKS
-        VDIR        = $(VSHDIR)
-      endif # ! VXWORKS
-    endif # ! SHLIB
-  endif # ! static_libs
+#      ifndef VXWORKS
+#        VDIR        =  $(VSHDIR)
+#      endif # ! VXWORKS
+    endif # SHLIB
+  endif # static_libs
 
   ifdef SHLIBA
     LDLIBS := $(LDLIBS:-l%=-l%shr)
@@ -642,7 +697,7 @@ ifdef shared_libs
 else # ! shared_libs
   ifdef static_libs
     #### Don't build shared libs.
-    BUILD           = $(VLIB) $(VBIN)
+    BUILD           =  $(IDL_SRC) $(VLIB) $(VBIN)
     PIC             =
     SHLIB           =
     SOEXT           = o
@@ -650,9 +705,9 @@ else # ! shared_libs
     VLDLIBS         = $(LDLIBS:%.so=%.o)
   else # ! static_libs
     #### Don't build any libs.
-    BUILD           = $(VBIN)
-  endif # ! static_libs
-endif # ! shared_libs
+    BUILD           =  $(IDL_SRC) $(VBIN)
+  endif # static_libs
+endif # shared_libs
 
 ifdef kylix
   LDLIBS := $(LDLIBS:-l%=lib%.$(SOEXT))
@@ -781,52 +836,3 @@ else
 endif # LINK.cc.override
 
 SOLINK.cc = $(PRELINK) $(DLD) $(SOFLAGS)
-
-# Set the cleanup targets
-ifeq ($(CLEANUP_BIN),)
-  ifneq ($(BIN),)
-    CLEANUP_BIN = $(BIN)
-  else
-    ifneq ($(BIN2),)
-      CLEANUP_BIN = $(BIN2)
-    else
-      CLEANUP_BIN = $(BIN_UNCHECKED)
-    endif
-  endif
-endif
-
-ifeq ($(CLEANUP_LIB),)
-  ifneq ($(LIB),)
-    CLEANUP_LIB = $(LIB)
-  else
-    ifneq ($(LIB2),)
-      CLEANUP_LIB = $(LIB2)
-    else
-      CLEANUP_LIB = $(LIB_UNCHECKED)
-    endif
-  endif
-endif
-
-ifeq ($(CLEANUP_SHLIB),)
-  ifneq ($(SHLIB),)
-    CLEANUP_SHLIB = $(SHLIB)
-  else
-    ifneq ($(SHLIB2),)
-      CLEANUP_SHLIB = $(SHLIB2)
-    else
-      CLEANUP_SHLIB = $(SHLIB_UNCHECKED)
-    endif
-  endif
-endif
-
-ifeq ($(CLEANUP_SHLIBA),)
-  ifneq ($(SHLIBA),)
-    CLEANUP_SHLIBA = $(SHLIBA)
-  else
-    ifneq ($(SHLIBA2),)
-      CLEANUP_SHLIBA = $(SHLIBA2)
-    else
-      CLEANUP_SHLIBA = $(SHLIBA2_UNCHECKED)
-    endif
-  endif
-endif

@@ -13,17 +13,16 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 IDL_FILES = corbaname
-IDL_SRC = corbanameC corbanameS
 
 LDLIBS = -lTAO_CosNaming -lTAO_Svc_Utils $(TAO_SRVR_LIBS)
 
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 BIN = server client
 
-SRC = $(addsuffix .cpp, $(BIN) $(IDL_SRC) status_i ior_corbaname_client_i)
+SRC = $(addsuffix .cpp, $(BIN) status_i ior_corbaname_client_i) $(IDL_SRC)
 
-SERVER_OBJS = $(addsuffix .o, server status_i $(IDL_SRC))
-CLIENT_OBJS = $(addsuffix .o, client ior_corbaname_client_i status_i $(IDL_SRC))
+SERVER_OBJS = $(addsuffix .o, server status_i) $(IDL_SRC:%.cpp=%.o)
+CLIENT_OBJS = $(addsuffix .o, client ior_corbaname_client_i status_i) $(IDL_SRC:%.cpp=%.o)
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------

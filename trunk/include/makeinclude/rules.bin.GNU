@@ -1,3 +1,5 @@
+# -*- Makefile -*-
+
 #----------------------------------------------------------------------------
 #       $Id$
 #
@@ -6,7 +8,10 @@
 #       Requires GNU make
 #----------------------------------------------------------------------------
 
-VOBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(SRC)))))
+VOBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(SRC))))) 
+
+# Needed for depend.
+PSRC += $(addsuffix .cpp, $(CLEANUP_BIN))
 
 ifeq ($(CHORUSLINK),true)
 $(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)

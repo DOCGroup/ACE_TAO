@@ -20,24 +20,22 @@ SHLIB   = $(LIBNAME).$(SOEXT)
 LIB     = $(LIBNAME).a
 
 IDL_FILES = test
-IDL_SRC = testC testS
 
-SHLIB_SRC = $(IDL_SRC) Smart_Test_Factory Smart_Proxy_Impl
+SHLIB_SRC = $(IDL_SRC) Smart_Test_Factory.cpp Smart_Proxy_Impl.cpp
 
-CLIENT_FILES = $(IDL_SRC) client
-CLIENT_SRCS = $(addsuffix .cpp, $(CLIENT_FILES))
+CLIENT_FILES = client
+CLIENT_SRCS = $(addsuffix .cpp, $(CLIENT_FILES)) $(IDL_SRC) 
 #CLIENT_OBJS = $(addprefix $(VDIR),$(addsuffix .o,$(CLIENT_FILES)))
 CLIENT_OBJS = $(addsuffix .o,$(CLIENT_FILES))
 
-SERVER_FILES = $(IDL_SRC) server
-SERVER_SRCS = $(addsuffix .cpp, $(SERVER_FILES))
+SERVER_FILES = server
+SERVER_SRCS = $(addsuffix .cpp, $(SERVER_FILES)) $(IDL_SRC) 
 #SERVER_OBJS = $(addprefix $(VDIR),$(addsuffix .o,$(SERVER_FILES)))
 SERVER_OBJS = $(addsuffix .o,$(SERVER_FILES))
 
 BIN = client server
-LSRC = $(addsuffix .cpp,$(SHLIB_SRC))
-LOBJ = $(addsuffix .o,$(SHLIB_SRC))
-PSRC = $(addsuffix .cpp,$(BIN))
+LSRC = $(SHLIB_SRC)
+#PSRC = $(addsuffix .cpp,$(BIN))
 
 TAO_IDLFLAGS += -Ge 1 -Gsp
 #----------------------------------------------------------------------------

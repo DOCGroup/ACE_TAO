@@ -22,12 +22,10 @@ LIB = libQuoter_Common.a
 SHLIB = libQuoter_Common.$(SOEXT)
 
 IDL_FILES = Quoter
-IDL_SRC = QuoterC QuoterS
 
 ACE_SHLIBS = -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO -lACE
 LDLIBS = -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO
-SRCS = $(IDL_SRC)
-LSRC = $(addsuffix .cpp,$(IDL_SRC) )
+LSRC = $(IDL_SRC)
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -48,11 +46,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 LDFLAGS  += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
-
-.PRECIOUS: $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
-
-realclean: clean
-	-$(RM) $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

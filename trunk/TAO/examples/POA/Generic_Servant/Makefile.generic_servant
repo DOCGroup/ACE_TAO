@@ -1,3 +1,5 @@
+# -*- Makefile -*-
+
 #----------------------------------------------------------------------------
 #
 # $Id$
@@ -25,13 +27,12 @@ SHLIB = libGeneric_Servant.$(SOEXT)
 LIB = libGeneric_Servant.a
 
 IDL_FILES = test
-IDL_SRC = testC testS
 
-SHLIB_SRC = $(IDL_SRC) test_i
+SHLIB_SRC =  test_i
 
 ACE_SHLIBS = -lTAO_PortableServer -lTAO -lACE
-LSRC = $(addsuffix .cpp,$(SHLIB_SRC))
-LOBJ = $(addsuffix .o,$(SHLIB_SRC))
+LSRC = $(addsuffix .cpp,$(SHLIB_SRC)) $(IDL_SRC)
+LOBJ = $(addsuffix .o,$(SHLIB_SRC)) $(IDL_SRC:.cpp=.o)
 PSRC = $(addsuffix .cpp,$(BIN))
 
 #----------------------------------------------------------------------------
