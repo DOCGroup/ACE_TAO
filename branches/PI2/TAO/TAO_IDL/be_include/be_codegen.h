@@ -273,7 +273,6 @@ public:
     TAO_OPERATION_INTERCEPTORS_PARAMLIST,   // create the paramlist on demand
     TAO_OPERATION_INTERCEPTORS_RESULT,   // create the result on demand
     TAO_OPERATION_INTERCEPTORS_EXCEPTLIST,   // create the exceptionlist on demand
-    TAO_OPERATION_INTERCEPTORS_EXCEPTION_ID,   // create the exception id
     TAO_OPERATION_INTERCEPTORS_ARGLIST_SH,   // private member list list for request info
     TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH,   // private member list list for request info
     TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS,   // arglist for request info obj instantiation
