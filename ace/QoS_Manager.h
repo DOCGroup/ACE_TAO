@@ -18,11 +18,12 @@
 #define ACE_QOS_MANAGER_H
 #include "ace/pre.h"
 
+#include "ace/Addr.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Addr.h"
 #include "ace/IPC_SAP.h"
 #include "ace/Containers_T.h"
 
