@@ -354,7 +354,7 @@ TAO_PG_ObjectGroupManager::create_object_group (
                       guard,
                       this->lock_,
                       0);
-    
+
     if (this->object_group_map_.bind (oid, group_entry) != 0)
       ACE_THROW_RETURN (PortableGroup::ObjectNotCreated (),
                         PortableGroup::ObjectGroup::_nil ());

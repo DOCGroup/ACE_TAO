@@ -724,7 +724,9 @@ TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid
   // Prefer custom load balancing strategies over built-in ones.
   PortableGroup::Value value;
   CosLoadBalancing::Strategy_var balancing_strategy;
-  const char * built_in;  // Name of built-in Strategy
+  CosLoadBalancing::StrategyInfo * built_in;  // Built-in Strategy
+                                              // information.
+
   if ((TAO_PG::get_property_value (this->custom_balancing_strategy_name_,
                                    properties.in (),
                                    value)
@@ -740,7 +742,10 @@ TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid
                                        value)
            && (value >>= built_in))
     {
-      balancing_strategy = this->built_in_strategy (built_in);
+      balancing_strategy = this->built_in_strategy (built_in
+                                                    ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
       if (!CORBA::is_nil (balancing_strategy.in ()))
         {
           return balancing_strategy->next_member (object_group.in (),
@@ -909,15 +914,20 @@ TAO_LB_LoadManager::init (ACE_Reactor * reactor,
 }
 
 CosLoadBalancing::Strategy_ptr
-TAO_LB_LoadManager::built_in_strategy (const char * strategy)
+TAO_LB_LoadManager::built_in_strategy (CosLoadBalancing::StrategyInfo * info
+                                       ACE_ENV_ARG_DECL)
 {
-  ACE_ASSERT (strategy != 0);
+  ACE_ASSERT (info != 0);
 
-  CosLoadBalancing::Strategy_ptr s;
+  const char * name = info->name.in ();
+  const PortableGroup::Properties & props = info->props;
+
+  CosLoadBalancing::Strategy_ptr strategy =
+    CosLoadBalancing::Strategy::_nil ();
 
   // @todo We should probably shove this code into a factory.
 
-  if (ACE_OS::strcmp ("RoundRobin", strategy) == 0)
+  if (ACE_OS::strcmp ("RoundRobin", name) == 0)
     {
       // Double-checked locking
       if (this->round_robin_ == 0)
@@ -929,16 +939,17 @@ TAO_LB_LoadManager::built_in_strategy (const char * strategy)
 
           if (this->round_robin_ == 0)
             {
-              ACE_NEW_RETURN (this->round_robin_,
-                              TAO_LB_RoundRobin,
-                              CosLoadBalancing::Strategy::_nil ());
+              ACE_NEW_THROW_EX (this->round_robin_,
+                                TAO_LB_RoundRobin,
+                                CORBA::NO_MEMORY ());
+              ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
             }
         }
 
-      s = this->round_robin_;
+      strategy = this->round_robin_;
     }
 
-  else if (ACE_OS::strcmp ("Random", strategy) == 0)
+  else if (ACE_OS::strcmp ("Random", name) == 0)
     {
       // Double-checked locking
       if (this->random_ == 0)
@@ -950,35 +961,23 @@ TAO_LB_LoadManager::built_in_strategy (const char * strategy)
 
           if (this->random_ == 0)
             {
-              ACE_NEW_RETURN (this->random_,
-                              TAO_LB_Random,
-                              CosLoadBalancing::Strategy::_nil ());
+              ACE_NEW_THROW_EX (this->random_,
+                                TAO_LB_Random,
+                                CORBA::NO_MEMORY ());
+              ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
             }
         }
 
-      s = this->random_;
+      strategy = this->random_;
     }
 
-  else if (ACE_OS::strcmp ("LeastLoaded", strategy) == 0)
+  else if (ACE_OS::strcmp ("LeastLoaded", name) == 0)
     {
-      // Double-checked locking
-      if (this->least_loaded_ == 0)
-        {
-          ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                            guard,
-                            this->lock_,
-                            0);
+      this->init_least_loaded (props
+                               ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CosLoadBalancing::Strategy::_nil ());
 
-          if (this->least_loaded_ == 0)
-            {
-              // Use default "LeastLoaded" properties.
-              ACE_NEW_RETURN (this->least_loaded_,
-                              TAO_LB_LeastLoaded,
-                              CosLoadBalancing::Strategy::_nil ());
-            }
-        }
-
-      s = this->least_loaded_;
+      strategy = this->least_loaded_;
     }
 
   else
@@ -994,9 +993,9 @@ TAO_LB_LoadManager::built_in_strategy (const char * strategy)
       return CosLoadBalancing::Strategy::_nil ();
     }
 
-  ACE_ASSERT (!CORBA::is_nil (s));
+  ACE_ASSERT (!CORBA::is_nil (strategy));
 
-  return CosLoadBalancing::Strategy::_duplicate (s);
+  return CosLoadBalancing::Strategy::_duplicate (strategy);
 }
 
 void
