@@ -1,3 +1,12 @@
+Fri Sep  1 16:39:19 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * orbsvcs/Logging_Service/Makefile:
+        * orbsvcs/tests/Interoperable_Naming/Makefile:
+          Add missing TAO_PortableServer library
+
+        * orbsvcs/tests/EC_Custom_Marshal/Makefile:
+          Update dependencies
+
 Fri Sep 01 13:47:33 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAOACE.dsw:
