@@ -375,9 +375,16 @@ Log_i::query_i (const char *constraint,
       if (interpreter.evaluate (evaluator) == 1)
       {
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %Q, Time = %Q\n",
+          #if defined (ACE_LACKS_LONGLONG_T)
+               ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %Q, Time = %Q\n",
+                      ACE_U64_TO_U32 (hash_entry->int_id_.id),
+                      ACE_U64_TO_U32 (hash_entry->int_id_.time)));
+
+          #else
+               ACE_DEBUG ((LM_DEBUG,"Matched constraint! d = %Q, Time = %Q\n",
                       hash_entry->int_id_.id,
                       hash_entry->int_id_.time));
+          #endif
 
         (*rec_list)[count] = hash_entry->int_id_;
         // copy the log record.
@@ -445,8 +452,13 @@ Log_i::retrieve (DsLogAdmin::TimeT from_time,
   char constraint[32];
   char uint64_formating[32];
 
-  ACE_OS::sprintf (uint64_formating,
+  #if defined (ACE_LACKS_LONGLONG_T)
+         ACE_OS::sprintf (uint64_formating,
+                   ACE_UINT64_FORMAT_SPECIFIER, ACE_U64_TO_U32 (from_time));
+  #else
+         ACE_OS::sprintf (uint64_formating,
                    ACE_UINT64_FORMAT_SPECIFIER, from_time);
+  #endif
 
   if (how_many >= 0)
     ACE_OS::sprintf (constraint, "time >= %s", uint64_formating);
