@@ -286,6 +286,9 @@ ACE_Object_Manager_singleton_null_lock = 0;
 static ACE_Array<ACE_Thread_Mutex *> *
 ACE_Object_Manager_singleton_thread_locks = 0;
 
+static ACE_Array<ACE_Mutex *> *
+ACE_Object_Manager_singleton_mutex_locks = 0;
+
 static ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex> *
 ACE_Object_Manager_singleton_recursive_lock = 0;
 
@@ -424,41 +427,41 @@ ACE_Object_Manager::get_singleton_lock (ACE_Mutex *&lock)
           // available.  Either way, we can not use double-checked
           // locking.
 
-          ACE_NEW_RETURN (lock, ACE_Thread_Mutex, -1);
+          ACE_NEW_RETURN (lock, ACE_Mutex, -1);
 
           // Add the new lock to the array of locks to be deleted
           // at program termination.
-          if (ACE_Object_Manager_singleton_thread_locks == 0)
+          if (ACE_Object_Manager_singleton_mutex_locks == 0)
             {
               // Create the array, then insert the new lock.
-              ACE_NEW_RETURN (ACE_Object_Manager_singleton_thread_locks,
-                              ACE_Array<ACE_Thread_Mutex *> (
+              ACE_NEW_RETURN (ACE_Object_Manager_singleton_mutex_locks,
+                              ACE_Array<ACE_Mutex *> (
                                 (size_t) 1,
-                                (ACE_Thread_Mutex *) 0),
+                                (ACE_Mutex *) 0),
                               -1);
-              (*ACE_Object_Manager_singleton_thread_locks)[0] = lock;
+              (*ACE_Object_Manager_singleton_mutex_locks)[0] = lock;
             }
           else
             {
               // Grow the array, then insert the new lock.
 
               // Copy the array pointer.
-              ACE_Array<ACE_Thread_Mutex *> *tmp =
-                ACE_Object_Manager_singleton_thread_locks;
+              ACE_Array<ACE_Mutex *> *tmp =
+                ACE_Object_Manager_singleton_mutex_locks;
 
               // Create a new array with one more slot than the current one.
-              ACE_NEW_RETURN (ACE_Object_Manager_singleton_thread_locks,
-                              ACE_Array<ACE_Thread_Mutex *> (
+              ACE_NEW_RETURN (ACE_Object_Manager_singleton_mutex_locks,
+                              ACE_Array<ACE_Mutex *> (
                                 tmp->size () + (size_t) 1,
-                                (ACE_Thread_Mutex *) 0),
+                                (ACE_Mutex *) 0),
                               -1);
 
               // Copy the old array to the new array.
               for (u_int i = 0; i < tmp->size (); ++i)
-                (*ACE_Object_Manager_singleton_thread_locks)[i] = (*tmp) [i];
+                (*ACE_Object_Manager_singleton_mutex_locks)[i] = (*tmp) [i];
 
               // Insert the new lock at the end of the array.
-              (*ACE_Object_Manager_singleton_thread_locks)[tmp->size ()] =
+              (*ACE_Object_Manager_singleton_mutex_locks)[tmp->size ()] =
                 lock;
 
               delete tmp;
@@ -475,9 +478,9 @@ ACE_Object_Manager::get_singleton_lock (ACE_Mutex *&lock)
 
           if (lock == 0)
             {
-              ACE_Cleanup_Adapter<ACE_Thread_Mutex> *lock_adapter;
+              ACE_Cleanup_Adapter<ACE_Mutex> *lock_adapter;
               ACE_NEW_RETURN (lock_adapter,
-                              ACE_Cleanup_Adapter<ACE_Thread_Mutex>,
+                              ACE_Cleanup_Adapter<ACE_Mutex>,
                               -1);
               lock = &lock_adapter->object ();
 
@@ -505,15 +508,13 @@ ACE_Object_Manager::get_singleton_lock (ACE_Recursive_Thread_Mutex *&lock)
       // for interface compatibility, though there should be no
       // contention on it.
       if (ACE_Object_Manager_singleton_recursive_lock == 0)
-        {
-          ACE_NEW_RETURN (ACE_Object_Manager_singleton_recursive_lock,
-                          ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>,
-                          -1);
+        ACE_NEW_RETURN (ACE_Object_Manager_singleton_recursive_lock,
+                        ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>,
+                        -1);
 
-          // Can't register with the ACE_Object_Manager here!  The
-          // lock's declaration is visible to the ACE_Object_Manager
-          // destructor, so it will clean it up as a special case.
-        }
+      // Can't register with the ACE_Object_Manager here!  The
+      // lock's declaration is visible to the ACE_Object_Manager
+      // destructor, so it will clean it up as a special case.
 
       if (ACE_Object_Manager_singleton_recursive_lock != 0)
         lock = &ACE_Object_Manager_singleton_recursive_lock->object ();
@@ -630,14 +631,10 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
          registered_objects_->dequeue_head (info) != -1)
     {
       if (info.cleanup_hook_ == (ACE_CLEANUP_FUNC) ace_cleanup_destroyer)
-        {
-          // The object is an ACE_Cleanup.
-          ace_cleanup_destroyer ((ACE_Cleanup *) info.object_, info.param_);
-        }
+        // The object is an ACE_Cleanup.
+        ace_cleanup_destroyer ((ACE_Cleanup *) info.object_, info.param_);
       else
-        {
-          (*info.cleanup_hook_) (info.object_, info.param_);
-        }
+        (*info.cleanup_hook_) (info.object_, info.param_);
     }
 
   // Close and delete all ACE library services and singletons.
@@ -655,8 +652,7 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   delete ace_service_config_sig_handler;
   ace_service_config_sig_handler = 0;
 
-  ACE_MT (delete lock_;
-          lock_ = 0);
+  ACE_MT (delete lock_; lock_ = 0);
 
   delete registered_objects_;
   registered_objects_ = 0;
@@ -668,50 +664,53 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   // Hooks for deletion of preallocated objects and arrays provided by
   // application.
   ACE_APPLICATION_PREALLOCATED_ARRAY_DELETIONS
-  ACE_APPLICATION_PREALLOCATED_OBJECT_DELETIONS
+    ACE_APPLICATION_PREALLOCATED_OBJECT_DELETIONS
 
-  // Cleanup the dynamically preallocated arrays.
-  // (none)
+    // Cleanup the dynamically preallocated arrays.
+    // (none)
 
-  // Cleanup the dynamically preallocated objects.
-  ACE_DELETE_PREALLOCATED_OBJECT (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_LOCK)
+    // Cleanup the dynamically preallocated objects.
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_SYNCH_RW_MUTEX, ACE_FILECACHE_LOCK)
 #if defined (ACE_HAS_THREADS)
-  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
-                                  ACE_STATIC_OBJECT_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
+                                    ACE_STATIC_OBJECT_LOCK)
 #endif /* ACE_HAS_THREADS */
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_LOG_MSG_INSTANCE_LOCK)
-  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_MT_CORBA_HANDLER_LOCK)
-  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_DUMP_LOCK)
-  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_OS_MONITOR_LOCK)
-  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
-                                  ACE_SIG_HANDLER_LOCK)
-  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Null_Mutex, ACE_SINGLETON_NULL_LOCK)
-  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
-                                  ACE_SINGLETON_RECURSIVE_THREAD_LOCK)
-  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_SVC_HANDLER_LOCK)
-  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_THREAD_EXIT_LOCK)
-  ACE_DELETE_PREALLOCATED_OBJECT (ACE_TOKEN_CONST::MUTEX,
-                                  ACE_TOKEN_MANAGER_CREATION_LOCK)
-  ACE_DELETE_PREALLOCATED_OBJECT (ACE_TOKEN_CONST::MUTEX,
-                                  ACE_TOKEN_INVARIANTS_CREATION_LOCK)
-  ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
-                                  ACE_TSS_CLEANUP_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_LOG_MSG_INSTANCE_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_MT_CORBA_HANDLER_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_DUMP_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_OS_MONITOR_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
+                                    ACE_SIG_HANDLER_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_Null_Mutex, ACE_SINGLETON_NULL_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
+                                    ACE_SINGLETON_RECURSIVE_THREAD_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_SVC_HANDLER_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_Thread_Mutex, ACE_THREAD_EXIT_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_TOKEN_CONST::MUTEX,
+                                    ACE_TOKEN_MANAGER_CREATION_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_TOKEN_CONST::MUTEX,
+                                    ACE_TOKEN_INVARIANTS_CREATION_LOCK)
+    ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
+                                    ACE_TSS_CLEANUP_LOCK)
 # endif /* ACE_MT_SAFE */
 #endif /* ! ACE_HAS_STATIC_PREALLOCATION */
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-delete ACE_Object_Manager_singleton_null_lock;
-ACE_Object_Manager_singleton_null_lock = 0;
+  delete ACE_Object_Manager_singleton_null_lock;
+  ACE_Object_Manager_singleton_null_lock = 0;
 
-delete ACE_Object_Manager_singleton_thread_locks;
-ACE_Object_Manager_singleton_thread_locks = 0;
+  delete ACE_Object_Manager_singleton_thread_locks;
+  ACE_Object_Manager_singleton_thread_locks = 0;
 
-delete ACE_Object_Manager_singleton_recursive_lock;
-ACE_Object_Manager_singleton_recursive_lock = 0;
+  delete ACE_Object_Manager_singleton_mutex_locks;
+  ACE_Object_Manager_singleton_mutex_locks = 0;
 
-delete ACE_Object_Manager_singleton_rw_locks;
-ACE_Object_Manager_singleton_rw_locks = 0;
+  delete ACE_Object_Manager_singleton_recursive_lock;
+  ACE_Object_Manager_singleton_recursive_lock = 0;
+
+  delete ACE_Object_Manager_singleton_rw_locks;
+  ACE_Object_Manager_singleton_rw_locks = 0;
 #endif /* ACE_MT_SAFE */
 
 #if defined (ACE_HAS_THREADS)
@@ -775,24 +774,20 @@ ACE_Static_Object_Lock::instance (void)
       // Allocate a lock to use, for interface compatibility, though
       // there should be no contention on it.
       if (ACE_Static_Object_Lock_lock == 0)
-        {
-          ACE_NEW_RETURN (ACE_Static_Object_Lock_lock,
-                          ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>,
-                          0);
+        ACE_NEW_RETURN (ACE_Static_Object_Lock_lock,
+                        ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>,
+                        0);
 
-          // Can't register with the ACE_Object_Manager here!  The
-          // lock's declaration is visible to the ACE_Object_Manager
-          // destructor, so it will clean it up as a special case.
-        }
+      // Can't register with the ACE_Object_Manager here!  The
+      // lock's declaration is visible to the ACE_Object_Manager
+      // destructor, so it will clean it up as a special case.
 
       return &ACE_Static_Object_Lock_lock->object ();
     }
   else
-    {
-      // Return the preallocated ACE_STATIC_OBJECT_LOCK.
-      return ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::
-        get_preallocated_object(ACE_Object_Manager::ACE_STATIC_OBJECT_LOCK);
-    }
+    // Return the preallocated ACE_STATIC_OBJECT_LOCK.
+    return ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object 
+      (ACE_Object_Manager::ACE_STATIC_OBJECT_LOCK);
 }
 
 void
@@ -806,6 +801,7 @@ ACE_Static_Object_Lock::cleanup_lock (void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
     template class ACE_Array<ACE_Thread_Mutex *>;
+    template class ACE_Array<ACE_Mutex *>;
     template class ACE_Array<ACE_RW_Thread_Mutex *>;
     template class ACE_Cleanup_Adapter<ACE_Null_Mutex>;
     template class ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>;
@@ -822,6 +818,7 @@ template class ACE_Node<ACE_Cleanup_Info>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #   pragma instantiate ACE_Array<ACE_Thread_Mutex *>
+#   pragma instantiate ACE_Array<ACE_Mutex *>
 #   pragma instantiate ACE_Array<ACE_RW_Thread_Mutex *>
 #   pragma instantiate ACE_Cleanup_Adapter<ACE_Null_Mutex>
 #   pragma instantiate ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>

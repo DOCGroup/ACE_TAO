@@ -20,6 +20,7 @@
 #include "ace/OS.h"
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  class ACE_Mutex;
   class ACE_Null_Mutex;
   class ACE_Thread_Mutex;
   class ACE_Recursive_Thread_Mutex;
@@ -271,9 +272,9 @@ public:
   // argument, on success; returns -1 on failure.
 
   static int get_singleton_lock (ACE_RW_Thread_Mutex *&);
-  // Accesses a readers/writers lock to be used for construction of
-  // ACE_Singletons.  Returns 0, and the lock in the argument, on
-  // success; returns -1 on failure.
+  // Accesses a readers/writer <ACE_RW_Thread_Mutex> to be used for
+  // construction of <ACE_Singletons>.  Returns 0, and the lock in the
+  // argument, on success; returns -1 on failure.
 
 private:
 

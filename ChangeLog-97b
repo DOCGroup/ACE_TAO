@@ -1,16 +1,8 @@
-Thu Nov 06 18:30:42 1997  Steve Huston  <shuston@riverace.com>
-
-	* ace/Addr.(h i), DEV_Addr.(h i), FILE_Addr.(h i), INET_Addr.(h cpp),
-	  SPIPE_Addr.(h i), UNIX_Addr.(h i): Changed the operators == and !=
-	  to be non-virtual, and to accept the 'sap' argument as its own
-	  type (not ACE_Addr for all of them).  The implementations of the
-	  operators compare type-specific data without having to check
-	  the inherited type member.  Thanks to Steve Coy <stevec@magna.com.au>
-	  and Irfan and Nanbor for a huge amount of work on these changes.
-	  *** NOTE - there is still some SOCK_Connector problems related to
-	  these changes on HP-UX.  The hunt continues.
-
 Thu Nov  6 19:40:41 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Object_Manager: Added support for
+ 	  get_singleton_lock(ACE_Mutex *).  Thanks to Arturo Montes
+ 	  <mitosys@colomsat.net.co> for reporting this.
 
 	* ace/Connector.cpp: If connect_n() fails make sure to return -1.
   	  Thanks to Stephen Coy <stevec@magna.com.au> for pointing out the
@@ -29,19 +21,30 @@ Thu Nov  6 19:40:41 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  conflict with the HP/YUX compiler.  Thanks to Sandro Doro
  	  <doros@aureus.sublink.org> for reporting this.
 
-Thu Nov 06 19:55:35 1997    <irfan@TWOSTEP>
-
-	* ace/Synch_T.h: Fixed all the ACE_SYNCH_* defines.  Thanks to
- 	  Matthias Kerkhoff <make@cs.tu-berlin.de> for pointing the
- 	  problems.
-
 Thu Nov 06 18:30:42 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/Addr.(h i), DEV_Addr.(h i), FILE_Addr.(h i), INET_Addr.(h
+ 	  cpp), SPIPE_Addr.(h i), UNIX_Addr.(h i): Changed the operators
+ 	  == and != to be non-virtual, and to accept the 'sap' argument as
+ 	  its own type (not ACE_Addr for all of them).  The
+ 	  implementations of the operators compare type-specific data
+ 	  without having to check the inherited type member.  Thanks to
+ 	  Steve Coy <stevec@magna.com.au> and Irfan and Nanbor for a huge
+ 	  amount of work on these changes.  *** NOTE - there is still some
+ 	  SOCK_Connector problems related to these changes on HP-UX.  The
+ 	  hunt continues.
 
 	* ace/Connector.cpp (connect_n): return -1 if any of the connect
 	  attempts fail.
 
 	* tests/Reactor_Performance_Test.cpp: Don't crash if any of the
 	  client's connect attempts fail.
+
+Thu Nov 06 19:55:35 1997    <irfan@TWOSTEP>
+
+	* ace/Synch_T.h: Fixed all the ACE_SYNCH_* defines.  Thanks to
+ 	  Matthias Kerkhoff <make@cs.tu-berlin.de> for pointing the
+ 	  problems.
 
 Thu Nov  6 16:51:36 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
