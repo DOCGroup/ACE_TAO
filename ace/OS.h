@@ -2683,7 +2683,9 @@ protected:
 typedef unsigned int size_t;
 #endif
 
-#   include /**/ <new.h>
+#   if !defined (ACE_LACKS_NEW_H)
+#     include /**/ <new.h>
+#   endif /* ! ACE_LACKS_NEW_H */
 
 #   if !defined (ACE_PSOS_DIAB_MIPS)  &&  !defined (VXWORKS)
 #   define ACE_DONT_INCLUDE_ACE_SIGNAL_H
@@ -3547,15 +3549,15 @@ extern "C"
 #     undef queue
 #   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
 
-#   if defined(VXWORKS) && defined(ghs)
-// Works around a lack of proper prototypes for these functions on VxWorks
-unsigned long inet_addr(const char *);
-char    *inet_ntoa(const struct in_addr);
-struct  in_addr inet_makeaddr(const int, const int);
-unsigned long inet_network(const char *);
-#   else
+#   if defined (VXWORKS)
+      // Work around a lack of ANSI prototypes for these functions on VxWorks.
+      unsigned long  inet_addr (const char *);
+      char           *inet_ntoa (const struct in_addr);
+      struct in_addr inet_makeaddr (const int, const int);
+      unsigned long  inet_network (const char *);
+#   else  /* ! VXWORKS */
 #     include /**/ <arpa/inet.h>
-#   endif /* VXWORKS && ghs */
+#   endif /* ! VXWORKS */
 }
 #   if !defined (ACE_LACKS_TCP_H)
 #     include /**/ <netinet/tcp.h>
