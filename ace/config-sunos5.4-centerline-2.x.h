@@ -103,9 +103,6 @@
 // Andreas Ueltschi tells me this is a good thing...
 #define ACE_HAS_SVR5_GETTIMEOFDAY
 
-// Compiler/platform supports poll().
-#define ACE_HAS_SVR4_POLL
-
 // Compiler/platform supports SVR4 signal typedef.
 #define ACE_HAS_SVR4_SIGNAL_T
 
