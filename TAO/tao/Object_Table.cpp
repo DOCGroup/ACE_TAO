@@ -115,13 +115,17 @@ TAO_Dynamic_Hash_ObjTable::unbind (const PortableServer::ObjectId &id,
 }
 
 TAO_Dynamic_Hash_ObjTable::TAO_Dynamic_Hash_ObjTable (CORBA::ULong size)
-  : hash_map_ (size == 0 ? TAO_Object_Table_Impl::DEFAULT_TABLE_SIZE : size)
+  : hash_map_ (size == 0 ?
+      ACE_static_cast (size_t, TAO_Object_Table_Impl::DEFAULT_TABLE_SIZE) :
+      size)
 {
 }
 
 TAO_Linear_ObjTable::TAO_Linear_ObjTable (CORBA::ULong size)
   : next_ (0),
-    tablesize_ (size == 0 ? TAO_Object_Table_Impl::DEFAULT_TABLE_SIZE : size)
+    tablesize_ (size == 0 ?
+      ACE_static_cast (size_t, TAO_Object_Table_Impl::DEFAULT_TABLE_SIZE) :
+      size)
 {
   ACE_NEW (table_, TAO_Object_Table_Entry[this->tablesize_]);
 }
@@ -281,8 +285,8 @@ TAO_Active_Demux_ObjTable::unbind (const PortableServer::ObjectId &id,
   CORBA::ULong generation = 0;
   int result = this->parse_object_id (id, index, generation);
 
-  if (result != 0 
-      || index > this->tablesize_ 
+  if (result != 0
+      || index > this->tablesize_
       || this->table_[index].generation_ != generation)
     return -1;
 
@@ -302,10 +306,10 @@ TAO_Active_Demux_ObjTable::create_object_id (PortableServer::Servant servant,
   id_data[TAO_Active_Demux_ObjTable::INDEX_FIELD] = index;
 
   // Increment generation count.
-  id_data[TAO_Active_Demux_ObjTable::GENERATION_FIELD] = 
+  id_data[TAO_Active_Demux_ObjTable::GENERATION_FIELD] =
     ++this->table_[index].generation_;
-  
-  // Move next along if index is not reused 
+
+  // Move next along if index is not reused
   if (index == this->next_)
     this->next_++;
 
@@ -317,8 +321,8 @@ TAO_Active_Demux_ObjTable::create_object_id (PortableServer::Servant servant,
 
   id->length (TAO_POA::MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX);
 
-  ACE_OS::memcpy (id->get_buffer (), 
-                  &id_data, 
+  ACE_OS::memcpy (id->get_buffer (),
+                  &id_data,
                   TAO_POA::MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX);
 
   // Set the new values
