@@ -159,7 +159,7 @@ main (int argc, char *argv[])
       // it is save to delete the client, because the client was actually
       // the one calling orb->shutdown () triggering the end of the ORB
       // event loop.
-            delete client;
+      delete client;
 
     }
   ACE_CATCHANY

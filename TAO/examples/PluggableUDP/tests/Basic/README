@@ -12,7 +12,7 @@ To start the test do the following:
 
   client -k file://ior_file -ORBEndpoint diop://:1305
 
- or just run the Perl Script
+or just run the Perl Script
 
   run_test.pl
 
@@ -24,31 +24,3 @@ The CORBA object implemenation checks the request ID for sequential
 ordering. If a request arrives out of order, it will note it - on
 client as well as on server side.
 
-Persistent IOR test:
-
-  - In order to be able to restart the server transparently to the
-    client, the server needs to use persistent IORs.
-
-    The port on which the server is listening should stay the same,
-    this can be achieved by e.g. "-ORBEndpoint diop://:1233"
-
-
-DIOP Installation and Implemenation:
-
-  Please see the $TAO_ROOT/examples/PluggableUDP/DIOP/README file for
-  more information.
-
-
-Appendix:
-
- The client understands the following options:
-                           -d
-                           -k <ior>
-                           -t <timeout in ms>
-                           -i <iterations>
-
-Comments, Suggestions, or Feedback:
-
-  mailto:Michael.Kircher@mchp.siemens.de or,
-  mailto:John.Mackenzie.extern@icn.siemens.de or,
-  mailto:fhunleth@cs.wustl.edu
