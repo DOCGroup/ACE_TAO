@@ -1,3 +1,9 @@
+Wed Sep 13 15:08:23 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/examples/Security/Makefile:
+
+	  Added this top-level Security example Makefile.
+
 Wed Sep 13 15:17:45 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/request_info_result.cpp:
