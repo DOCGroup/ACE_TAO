@@ -1,5 +1,8 @@
 Mon Dec  3 16:27:08 2001  Carlos O'Ryan  <coryan@uci.edu>
 
+	* performance-tests/Makefile.bor:
+	  Fixed comments.
+
 	* tests/Hello/server.cpp:
 	  Fixed comments
 
