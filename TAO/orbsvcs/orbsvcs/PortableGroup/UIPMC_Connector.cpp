@@ -65,6 +65,9 @@ TAO_UIPMC_Connector::open (TAO_ORB_Core *orb_core)
 {
   this->orb_core (orb_core);
 
+  // For the sake of uniformity do
+  this->create_connect_strategy ();
+
   // @@ Michael: We do not use traditional connection management.
 
   return 0;
