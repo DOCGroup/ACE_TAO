@@ -32,23 +32,23 @@ ttcp_sequence_i::start_timer (void)
   ::prep_timer ();
 }
 
-void 
+void
 ttcp_sequence_i::stop_timer (void)
 {
   (void) ::read_timer (stats, sizeof (stats));
-	::nbytes = this->nbytes_;
-	::PrintStats();
-	// reset
-	this->nbytes_ = 0;
-	numCalls = 0;
-#if defined (USE_QUANTIFY)
+        ::nbytes = this->nbytes_;
+        ::PrintStats();
+        // reset
+        this->nbytes_ = 0;
+        numCalls = 0;
+#if defined (ACE_HAS_QUANTIFY)
     quantify_stop_recording_data();
     ACE_Service_Config::end_reactor_event_loop();
-    cerr << "*********** just before exiting " << endl;
+    ACE_OS::fprintf (stderr, "*********** just before exiting\n");
 #endif
-#if defined (USE_PURIFY)
+#if defined (ACE_HAS_PURIFY)
     ACE_Service_Config::end_reactor_event_loop();
-    cerr << "*********** just before exiting " << endl;
+    ACE_OS::fprintf (stderr, "*********** just before exiting\n");
 #endif
 }
 
@@ -96,12 +96,3 @@ ttcp_sequence_i::sendStructSeq(const ttcp_sequence::StructSeq& ttcp_seq)
   //    cout << "Bytes received so far = " << this->nbytes_ << endl;
 #endif
 }
-
-
-
-
-
-
-
-
-

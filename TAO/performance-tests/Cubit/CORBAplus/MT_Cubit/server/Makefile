@@ -42,17 +42,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 LDFLAGS += -L$(PBHOME)/lib
 CPPFLAGS += -I$(PBHOME)/include
 
-#CXX := purify $(CXX)
-
 $(IDL_SRC): cubit.idl
-	$(PBHOME)/bin/idlc cubit.idl 
+	$(PBHOME)/bin/idlc cubit.idl
 	-/bin/mv cubit.C cubit.cpp
 	-/bin/mv cubit_s.C cubit_s.cpp
 
 svr:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(PBHOME)/lib/iiop_s.o $(VLDLIBS) $(POSTLINK)
 
-clean:	
+clean:
 	-/bin/rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
