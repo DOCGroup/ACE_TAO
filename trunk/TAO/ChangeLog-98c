@@ -1,3 +1,10 @@
+Thu Oct  1 16:03:55 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/client.dsp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/server.dsp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
+	  Removed orbsvcs reference.
+
 Thu Oct 01 14:22:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/CDR.i (operator<<): Changed to use TAO_CHECK_ENV for Any,
