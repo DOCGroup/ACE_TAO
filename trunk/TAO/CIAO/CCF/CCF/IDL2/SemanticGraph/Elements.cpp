@@ -198,6 +198,25 @@ namespace CCF
       static_type_info () { return nameable_; }
 
 
+      // Extends
+      //
+      //
+      namespace
+      {
+        TypeInfo
+        extends_init_ ()
+        {
+          TypeInfo ti (typeid (Extends));
+          ti.add_base (Access::PUBLIC, true, Edge::static_type_info ());
+          return ti;
+        }
+
+        TypeInfo extends_ (extends_init_ ());
+      }
+
+      TypeInfo const& Extends::
+      static_type_info () { return extends_; }
+      
       // Scope
       //
       //
@@ -217,24 +236,35 @@ namespace CCF
 
         NamesIteratorPair pair (find (first));
 
-        if (name.simple ()) // last name
+        if (pair.first != pair.second) // Found something.
         {
-          for (NamesIterator n (pair.first); n != pair.second; ++n)
+          if (name.simple ()) // last name
           {
-            result.insert (&((**n).named ()));
+            for (NamesIterator n (pair.first); n != pair.second; ++n)
+            {
+              result.insert (&((**n).named ()));
+            }
+          }
+          else
+          {
+            Name rest (name.begin () + 1, name.end ());
+
+            for (NamesIterator n (pair.first); n != pair.second; ++n)
+            {
+              Nameable& node ((**n).named ());
+              if (Scope* s = dynamic_cast<Scope*> (&node))
+              {
+                s->lookup (rest, result);
+              }
+            }
           }
         }
-        else
+        else // Try scopes that we are an extension of.
         {
-          Name rest (name.begin () + 1, name.end ());
-
-          for (NamesIterator n (pair.first); n != pair.second; ++n)
+          for (ExtendsIterator i (extends_begin ()), e (extends_end ());
+               i != e; ++i)
           {
-            Nameable& node ((**n).named ());
-            if (Scope* s = dynamic_cast<Scope*> (&node))
-            {
-              s->lookup (rest, result);
-            }
+            (**i).extendee ().lookup (name, result);
           }
         }
       }

@@ -1,8 +1,19 @@
+Tue Jan  6 17:26:33 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/IDL2/SemanticAction/Impl/Interface.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/Elements.cpp:
+	* CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Component.cpp:
+	* CCF/CCF/IDL3/SemanticAction/Impl/Home.cpp:
+
+	  Added support for lookup in inherited/supported
+	  scopes.
+
 Tue Jan  6 11:35:27 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.hpp:
         * CIDLC/ServantSourceGenerator.hpp:
-        
+
           Added virtual destructors to classes ServantHeaderEmitter and
           ServantSourceEmitter to eliminate warnings on g++ 3.3.
 
@@ -10,12 +21,12 @@ Tue Jan  6 11:23:29 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/OEP/BasicSP/EC/client.cpp:
         * examples/OEP/BasicSP/EC/controller.cpp:
-        
+
           Replaced occurrences of cerr with ACE_ERROR_RETURN.
-        
+
         * examples/OEP/Display/GPS/GPS_exec.cpp:
         * examples/OEP/Display/GPS/GPS_tracing_exec.cpp:
-        
+
           Added #include of ace/OS_NS_time.h.
 
 Tue Jan  6 10:16:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -31,11 +42,11 @@ Mon Jan  5 21:38:53 2004  Boris Kolpackov  <boris@kolpackov.net>
 
 	  Fixed uninitialized variable bug that resulted in generation
 	  of unused modules.
-	
+
 	* CCF/Example/CIDL/LocalExecutorMapping/test-0.idl:
 
 	  Added unused module to the test case.
-	
+
 	* CIDLC/cidlc.cpp:
 
 	  Cosmetic chnages.
