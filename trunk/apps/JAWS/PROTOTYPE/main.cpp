@@ -37,7 +37,7 @@ main (int argc, char *argv[])
 
   HTTP_Read.next (&HTTP_Parse);
   HTTP_Parse.next (&HTTP_Write);
-  HTTP_Write.next (JAWS_Pipeline_Done_Task_Singleton::instance ());
+  // HTTP_Write.next (JAWS_Pipeline_Done_Task_Singleton::instance ());
 
   if (server.open (&HTTP_Read) == -1)
     ACE_DEBUG ((LM_DEBUG, "JAWS: Error openning server\n"));
