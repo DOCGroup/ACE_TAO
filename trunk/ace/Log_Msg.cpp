@@ -121,7 +121,7 @@ void
 ACE_Log_Msg_Manager::atexit (WIND_TCB *tcb)
 {
   // The task is exiting, so its ACE_Log_Msg instance.
-  delete tcb->spare1;
+  delete (ACE_Log_Msg *) tcb->spare1;
 
   // Ugly, ugly, but don't know a better way.
   delete ACE_Log_Msg_Manager::lock_;
@@ -195,12 +195,12 @@ ACE_Log_Msg::exists (void)
   // are required here since this is within our thread context.  This
   // assumes that the sizeof the spare1 field is the same size as a
   // pointer; it is (it's an int) in VxWorks 5.2-5.3.
-  ACE_Log_Msg **tss_log_msg = (ACE_Log_Msg **) &taskIdCurrent->spare1;
+  ACE_Log_Msg *&tss_log_msg = (ACE_Log_Msg *&) taskIdCurrent->spare1;
 
   // Check to see if this is the first time in for this thread.  This
   // assumes that the spare1 field in the task control block is
   // initialized to 0, which holds true for VxWorks 5.2-5.3.
-  return (*(int **) tss_log_msg == 0);
+  return (tss_log_msg == 0);
 #elif !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 #error "Platform must support thread-specific storage if threads are used..."
 #else
@@ -227,12 +227,12 @@ ACE_Log_Msg::instance (void)
   // are required here since this is within our thread context.  This
   // assumes that the sizeof the spare1 field is the same size as a
   // pointer; it is (it's an int) in VxWorks 5.2-5.3.
-  ACE_Log_Msg **tss_log_msg = (ACE_Log_Msg **) &taskIdCurrent->spare1;
+  ACE_Log_Msg *&tss_log_msg = (ACE_Log_Msg *&) taskIdCurrent->spare1;
 
   // Check to see if this is the first time in for this thread.  This
   // assumes that the spare1 field in the task control block is
   // initialized to 0, which holds true for VxWorks 5.2-5.3.
-  if (*(int **) tss_log_msg == 0)
+  if (tss_log_msg == 0)
     {
       // Allocate the Singleton lock.  Note that this isn't
       // thread-safe.
@@ -243,10 +243,10 @@ ACE_Log_Msg::instance (void)
 
       // Allocate memory off the heap and store it in a pointer in
       // thread-specific storage, i.e., in the task control block.
-      ACE_NEW_RETURN_I (*tss_log_msg, ACE_Log_Msg, 0);
+      ACE_NEW_RETURN_I (tss_log_msg, ACE_Log_Msg, 0);
     }
 
-  return *tss_log_msg;
+  return tss_log_msg;
 #elif !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 #error "Platform must support thread-specific storage if threads are used..."
 #else
