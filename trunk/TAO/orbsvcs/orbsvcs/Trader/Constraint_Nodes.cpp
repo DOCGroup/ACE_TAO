@@ -868,7 +868,7 @@ operator- (const TAO_Literal_Constraint& operand)
       break;
     case TAO_UNSIGNED:
       {
-	CORBA::Long result = - (CORBA::ULong)operand;
+	CORBA::Long result = - (CORBA::Long)((CORBA::ULong)operand);
 	return TAO_Literal_Constraint((CORBA::ULong)result);
       }
       break;
