@@ -72,7 +72,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
   if (options.env_argv ()[0] == 0)
     // command-line args
     this->child_id_ = ACE_OS::execvp (options.command_line_argv ()[0],
-				      options.command_line_argv ());
+                                      options.command_line_argv ());
   else
     {
       // Added the new environment variables.
@@ -92,7 +92,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
             result = ACE_OS::execve (options.command_line_argv ()[0],
                                      options.command_line_argv (),
                                      options.env_argv ());
-#endif 
+#endif
 
   return this->child_id_;
 #else /* ACE_WIN32 */
@@ -131,7 +131,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
           ACE_OS::chdir (options.working_directory ());
 
         // Child process executes the command.
-        int result;
+        int result = 0;
 
         if (options.env_argv ()[0] == 0)
           // command-line args
@@ -146,7 +146,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
             ACE_NOTSUP_RETURN (-1);
 #else
             // Added the new environment variables.
-            for (char **user_env = options.env_argv ();
+            for (char *const *user_env = options.env_argv ();
                  *user_env != 0;
                  user_env++)
               ACE_OS::putenv (*user_env);
