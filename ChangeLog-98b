@@ -1,3 +1,18 @@
+Fri Aug 21 09:25:21 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Moved several #ifdefs from Profile_Timer.h into OS.h
+ 	  to clean up the code.
+
+	* ace/Profile_Timer.h: Cleaned up the class definition to make the
+ 	  OSE tool happy.  Thanks to Doug Anderson <doug@clark.net> for
+ 	  reporting this.
+
+	* etc: Moved the ACE-subsets.html file into $ACE_ROOT/etc.
+
+	* ace/Synch_Options.h: Fixed a typo that was giving the OSE tool
+ 	  fits!  Thanks to Doug Anderson <doug@clark.net> for reporting
+ 	  this.
+
 Fri Aug 21 03:41:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/OS/Process/process.cpp:

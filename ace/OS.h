@@ -9,11 +9,6 @@
 // = FILENAME
 //   OS.h
 //
-// = DESCRIPTION
-//   This file and its associated OS.i and OS.cpp files are the primary
-//   point of portability for ACE.  Once you get this file ported to a
-//   new platform, then pretty much everything else comes for "free."
-//
 // = AUTHOR
 //   Doug Schmidt <schmidt@cs.wustl.edu>, Jesper S. M|ller
 //   <stophph@diku.dk>, and a cast of thousands...
@@ -26,6 +21,12 @@
 // This file should be a link to the platform/compiler-specific
 // configuration file (e.g., config-sunos5-sunc++-4.x.h).
 # include "ace/inc_user_config.h"
+
+#if defined (ACE_LACKS_FLOATING_POINT)
+typedef ACE_UINT32 ACE_timer_t;
+#else
+typedef double ACE_timer_t;
+#endif /* ACE_LACKS_FLOATING_POINT */
 
 # if defined (ACE_HAS_MOSTLY_UNICODE_APIS) && !defined (UNICODE)
 #   error UNICODE must be defined when using ACE_HAS_MOSTLY_UNICODE_APIS, check your compiler document on how to enable UNICODE.
@@ -1008,13 +1009,12 @@ class ACE_Export ACE_Time_Value
   //     Operations on "timeval" structures.
   //
   // = DESCRIPTION
-  //     This class centralizes all the time-related processing in
-  //     ACE.  These timers are typically used in conjunction with
-  //     lower-level OS mechanisms like <select>, <poll>, or
-  //     <cond_timedwait>.  ACE_Time_Value help make the use of these
-  //     mechanisms portable across OS platforms,
+  //     This class centralizes all the time related processing in
+  //     ACE.  These timers are typically used in conjunction with OS
+  //     mechanisms like <select>, <poll>, or <cond_timedwait>.
+  //     <ACE_Time_Value> makes the use of these mechanisms portable
+  //     across OS platforms,
 public:
-
   // = Useful constants.
 
   static const ACE_Time_Value zero;
@@ -4078,43 +4078,50 @@ private:
   // destructor and has no friends.
 };
 
+#if defined (ACE_HAS_PRUSAGE_T)
+    typedef prusage_t ACE_Rusage;
+#elif defined (ACE_HAS_GETRUSAGE)
+    typedef rusage ACE_Rusage;
+#endif /* ACE_HAS_PRUSAGE_T */
+
 class ACE_Export ACE_OS
 {
   // = TITLE
-  //     This class defines an operating system independent
-  //     programming API that shields developers from non-portable
-  //     aspects of writing efficient system programs on Win32, POSIX,
-  //     and other versions of UNIX.  If you are porting ACE to a new
-  //     platform, this is the place to focus your attention.  Please
-  //     see the README file in this directory for complete
-  //     information on the meaning of the various macros.
+  //     This class defines an OS independent programming API that
+  //     shields developers from nonportable aspects of writing
+  //     efficient system programs on Win32, POSIX and other versions
+  //     of UNIX, and various real-time operating systems.
   //
   // = DESCRIPTION
-  //     This class encapsulates all the differences between various
-  //     versions of UNIX and WIN32!  The other components in
-  //     ACE are programmed to use only the methods in this class,
-  //     which makes it *much* easier to move ACE to a new platform.
-  //     The methods in this class also automatically restart when
-  //     interrupts occur during system calls (assuming that the
-  //     <ACE_Log_Msg::restart> flag is enabled).
+  //     This class encapsulates the differences between various OS
+  //     platforms.  When porting ACE to a new platform, this class is
+  //     the place to focus on.  Once this file is ported to a new
+  //     platform, pretty much everything else comes for "free."  See
+  //     <www.cs.wustl.edu/~schmidt/ACE_wrappers/etc/ACE-porting.html>
+  //     for instructions on porting ACE.  Please see the README file
+  //     in this directory for complete information on the meaning of
+  //     the various macros.
   ACE_CLASS_IS_NAMESPACE (ACE_OS);
-
 public:
 
+# if defined (CHORUS)
+  // We must format this code as follows to avoid confusing OSE.
   enum ACE_HRTimer_Op
     {
-# if defined (CHORUS)
       ACE_HRTIMER_START = K_BSTART,
       ACE_HRTIMER_INCR = K_BPOINT,
       ACE_HRTIMER_STOP = K_BSTOP,
       ACE_HRTIMER_GETTIME = 0xFFFF
+    };
 # else  /* ! CHORUS */
+  enum ACE_HRTimer_Op
+    {
       ACE_HRTIMER_START = 0x0,  // Only use these if you can stand
       ACE_HRTIMER_INCR = 0x1,   // for interrupts to be disabled during
       ACE_HRTIMER_STOP = 0x2,   // the timed interval!!!!
       ACE_HRTIMER_GETTIME = 0xFFFF
-# endif /* ! CHORUS */
     };
+# endif /* ! CHORUS */
 
   class ace_flock_t
   {
@@ -4137,8 +4144,8 @@ public:
     // Handle to the underlying file.
   };
 
-  // = Default Win32 Security Attributes definition.
 #if defined (ACE_WIN32)
+  // = Default Win32 Security Attributes definition.
   static LPSECURITY_ATTRIBUTES default_win32_security_attributes (LPSECURITY_ATTRIBUTES);
 #endif /* ACE_WIN32 */
 
