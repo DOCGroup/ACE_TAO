@@ -321,7 +321,6 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
 CORBA_Any &
 CORBA_Any::operator= (const CORBA_Any &src)
 {  
-
   if (this == &src)
     {
       this->AddRef ();
@@ -345,8 +344,6 @@ CORBA_Any::operator= (const CORBA_Any &src)
   size = type_->size (env);           // XXX check error status
   value_ = (char *) calloc (1, size);
 
-
-
 #if 0
   (void) type_->traverse (src.value_,
                           value_,
@@ -356,9 +353,8 @@ CORBA_Any::operator= (const CORBA_Any &src)
 #endif /* replaced by our optimizations */
 
   (void) DEEP_COPY (type_, src.value_, value_, env);
+  return *this;
 }
-
-
 
 // Helper routine for "Any" destructor.
 //
