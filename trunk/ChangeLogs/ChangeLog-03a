@@ -1,3 +1,14 @@
+Sat Jan 27 00:37:26 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.i:
+
+	  - (mutex_lock): Windows code must use relative time since that
+	  is what WaitForSingleObject() expects.  Also, fixed extra
+	  "return" before ACE_NOTSUP_RETURN.
+
+	  - (thread_mutex_lock): Made thread_mutex_lock() with timeout
+	  close to the thread_mutex_lock() without timeouts.
+
 Fri Jan 26 21:53:45 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/OS.h:
