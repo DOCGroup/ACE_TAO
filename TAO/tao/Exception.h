@@ -36,6 +36,8 @@
 #define TAO_RAISE(EXCEPTION)
 #endif /* TAO_HAS_EXCEPTIONS */
 
+#include "ace/SString.h"
+
 class CORBA_Any;
 class TAO_OutputCDR;
 class TAO_InputCDR;
@@ -87,7 +89,7 @@ public:
   // Print the exception <ex> to output determined by <f>.  This
   // function is not CORBA compliant.
 
-  ACE_CString _info (void) const;
+  virtual ACE_CString _info (void) const = 0;
   // Returns a string containing information about the exception. This
   // function is not CORBA compliant.
 
@@ -157,6 +159,10 @@ public:
   virtual int _is_a (const char *interface_id) const;
   // Used for narrowing
 
+  virtual ACE_CString _info (void) const;
+  // Returns a string containing information about the exception. This
+  // function is not CORBA compliant.
+
   //protected:
   CORBA_UserException (void);
   // Default constructor.
@@ -209,7 +215,7 @@ public:
   // Print the system exception <ex> to output determined by f.  This
   // function is not CORBA compliant.
 
-  ACE_CString _info (void) const;
+  virtual ACE_CString _info (void) const;
   // Returns a string containing information about the exception. This
   // function is not CORBA compliant.
 

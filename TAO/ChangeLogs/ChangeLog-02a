@@ -1,3 +1,82 @@
+Tue Oct 24 23:40:33 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/PortableServer/Object_Adapter.h (TAO_Object_Adapter): 
+
+	  - Two essential changes were required while preparing for
+	  servant upcalls: (a) Increasing <poa->outstanding_requests_> now
+	  happens before we start looking for the servant.  This change is
+	  necessary because otherwise a servant manager may decide to
+	  shutdown the ORB or destroy the calling POA.  This change makes
+	  sure that POA/Object_Adapter are not destroyed before the upcall
+	  cycle completes.  Now poa_cleanup() is called every time
+	  <poa->outstanding_requests_> is increased.
+
+	  The other change is to check if a non-servant upcall is in
+	  progress after calling the servant and before changing the
+	  POA/servant related reference counts.  If a non-servant upcall
+	  is in progress, wait for it to complete; unless of course, the
+	  thread making the non-servant upcall is this thread.
+
+	  - Non_Servant_Upcall now knows for which POA it was setup.  This
+	  change allows the prevention of the destruction of the calling
+	  POA while the non-servant upcall is in progress.  Now at the end
+	  of the non-servant upcall, we check if the POA needs to be
+	  cleaned up.
+
+	  - non_servant_upcall_in_progress() now returns a pointer to the
+	  non-servant upcall in progress.  If no non-servant upcall is in
+	  progress, this pointer is zero.
+
+	* tao/PortableServer/POA:
+	 
+	  - (complete_destruction_i): Mark that we are no longer awaiting
+	  destruction.  This helps avoid infinite calls to
+	  complete_destruction_i() when using Non_Servant_Upcall while
+	  cleaning up the adapter activator, servant activator, servant
+	  locator and the default servant.
+
+	  - (destroy_i): Only call complete_destruction_i() if there are
+	  no outstanding requests and that we are not in a non-servant
+	  upcall or if we are in a non-servant upcall, make sure we are
+	  the POA related to the non-servant upcall.
+
+	* tao/PortableServer/POA.i (TAO_POA_Guard): Waiting for
+	  non-servant upcalls to complete must happen before the POA state
+	  is checked.
+
+	* tao: <TAO_Default_Resource_Factory::parser_names> should be char
+	  * and not const char *.  You could make it char * const but not
+	  const char *. Changes were required to:
+
+	  - tao/Parser_Registry.cpp
+	  - tao/Resource_Factory.cpp
+	  - tao/Resource_Factory.h
+	  - tao/default_resource.cpp
+	  - tao/default_resource.h
+	  
+	  Also, the memory managment for <parser_names> needed fixing.
+	  <parser_names> needed to be deleted.  The elements of
+	  <parser_names> needed to be initialized, consistently duplicated
+	  and eventually freed.
+
+	* tao/Adapter.cpp (close): The destruction of the individual
+	  adapters was missing.  Plus the adapter destruction was
+	  happening in close().  It should really happen in the destructor
+	  because close() is too early to destroy the adapters since
+	  upcalls may still be in progress when ORB::shutdown() is called
+	  which will call close().
+
+	* tao/Exception: Made the _info() method virtual in the Exception
+	  class and added an implementation for the UserException and
+	  SystemException.  This also removed the requirement to upcast in
+	  the CORBA_Exception::_info() method.
+
+	* examples/POA/Forwarding: Revamped and simplified this example.
+	  Removed the POA approach for forwarding since it is not
+	  standard.  Also, changed the example to use the servant
+	  activator instead of the servant locator since the activator is
+	  more appropriate here.
+
 Tue Oct 24 13:36:05 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PolicyFactory_Registry.h:

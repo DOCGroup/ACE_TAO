@@ -143,7 +143,19 @@ TAO_Object_Adapter::orb_core (void) const
   return this->orb_core_;
 }
 
+ACE_INLINE TAO_Object_Adapter::Non_Servant_Upcall *
+TAO_Object_Adapter::non_servant_upcall_in_progress (void) const
+{
+  return this->non_servant_upcall_in_progress_;
+}
+
 // ****************************************************************
+
+ACE_INLINE TAO_POA &
+TAO_Object_Adapter::Non_Servant_Upcall::poa (void) const
+{
+  return this->poa_;
+}
 
 ACE_INLINE TAO_POA &
 TAO_Object_Adapter::Servant_Upcall::poa (void) const

@@ -17,11 +17,11 @@ LDLIBS = -lTAO
 IDL_FILES = Foo
 IDL_SRC = FooC.cpp FooS.cpp
 PROG_SRCS =	$(IDL_SRC) server.cpp client.cpp \
-		MyFooServant.cpp Servant_Locator.cpp
+		MyFooServant.cpp Servant_Activator.cpp
 
 LSRC = $(PROG_SRCS)
 
-SVR_OBJS = FooC.o FooS.o server.o MyFooServant.o Servant_Locator.o
+SVR_OBJS = FooC.o FooS.o server.o MyFooServant.o Servant_Activator.o
 CLT_OBJS = FooC.o FooS.o client.o
 
 BIN_UNCHECKED = server client
@@ -1051,7 +1051,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Servant_Base.i \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- FooS_T.h FooS_T.i FooS_T.cpp FooS.i Servant_Locator.h
+ FooS_T.h FooS_T.i FooS_T.cpp FooS.i Servant_Activator.h
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(TAO_ROOT)/tao/corba.h \
@@ -1721,9 +1721,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
- FooS_T.h FooS_T.i FooS_T.cpp FooS.i Servant_Locator.h
+ FooS_T.h FooS_T.i FooS_T.cpp FooS.i Servant_Activator.h
 
-.obj/Servant_Locator.o .obj/Servant_Locator.so .shobj/Servant_Locator.o .shobj/Servant_Locator.so: Servant_Locator.cpp Servant_Locator.h \
+.obj/Servant_Activator.o .obj/Servant_Activator.so .shobj/Servant_Activator.o .shobj/Servant_Activator.so: Servant_Activator.cpp Servant_Activator.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
