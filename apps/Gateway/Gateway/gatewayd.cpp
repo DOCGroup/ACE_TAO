@@ -19,15 +19,18 @@
 // ============================================================================
 
 #include "ace/Service_Config.h"
+#include "ace/Service_Object.h"
 #include "ace/Log_Msg.h"
 #include "Gateway.h"
 
-ACE_RCSID(Gateway, gatewayd, "$Id$")
+ACE_RCSID (Gateway,
+           gatewayd,
+           "$Id$")
 
 int
 main (int argc, char *argv[])
 {
-  if (ACE_OS::access (ACE_DEFAULT_SVC_CONF, F_OK) != 0) 
+  if (ACE_OS::access (ACE_DEFAULT_SVC_CONF, F_OK) != 0)
     {
       // Use static linking.
       ACE_Service_Object_Ptr sp = ACE_SVC_INVOKE (Gateway);
@@ -46,9 +49,9 @@ main (int argc, char *argv[])
       // Destructor of <ACE_Service_Object_Ptr> automagically call
       // <fini>.
     }
-  else 
+  else
     {
-      if (ACE_Service_Config::open (argc, argv) == -1) 
+      if (ACE_Service_Config::open (argc, argv) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "open"),
