@@ -1,3 +1,138 @@
+2002-09-28  D A Hanvey  <dhanvey@qub.ac.uk>
+
+	* Branch qubdhanvey01 merged.
+	ChangeLogTag: Sat Sep 28 11:54:50 2002  D A Hanvey <d.hanvey@qub.ac.uk>
+
+2002-09-28  D A Hanvey  <dhanvey@qub.ac.uk>
+
+	* orbsvcs/orbsvcs/Makefile.DsEventLogAdmin
+	* orbsvcs/orbsvcs/Makefile.DsNotifyLogAdmin
+	* orbsvcs/orbsvcs/Makefile.RTEventLogAdmin
+	ChangeLogTag: Sat Sep 28 11:51:23 2002  D A Hanvey <d.hanvey@qub.ac.uk>
+
+2002-09-28  parsons  <parsons@SNS060100>
+
+	* TAO_IDL/be/be_codegen.cpp, ChangeLog:
+	ChangeLogTag: Sat Sep 28 01:49:01 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp, TAO_IDL/be/be_visitor_valuetype_fwd/cdr_op_ci.cpp, ChangeLog:
+	ChangeLogTag: Fri Sep 27 21:32:45 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+2002-09-28  bala  <bala@SNS060100>
+
+	* ChangeLog, tao/Any.cpp:
+	ChangeLogTag: Fri Sep 27 21:07:12 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+2002-09-27  ossama  <ossama@SNS060100>
+
+	* orbsvcs/LoadBalancer/LoadManager.dsp, orbsvcs/LoadBalancer/LoadManager_Static.dsp, ChangeLog, orbsvcs/LoadBalancer/LoadManager.bor, orbsvcs/LoadBalancer/LoadManager.cpp, orbsvcs/LoadBalancer/Makefile.LoadManager, orbsvcs/LoadBalancer/Makefile.LoadMonitor, orbsvcs/LoadBalancer/Signal_Handler.cpp, orbsvcs/LoadBalancer/Signal_Handler.h:
+	ChangeLogTag:Fri Sep 27 13:40:32 2002  Ossama Othman  <ossama@uci.edu>
+
+2002-09-27  pgontla  <pgontla@SNS060100>
+
+	* ChangeLog, orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+	ChangeLogTag: Fri Sep 27 11:55:18 2002  Priyanka Gontla  <pgontla@ociweb.com>
+
+2002-09-27  ossama  <ossama@SNS060100>
+
+	* ChangeLog, docs/releasenotes/index.html:
+	ChangeLogTag:Fri Sep 27 09:49:39 2002  Ossama Othman  <ossama@uci.edu>
+
+2002-09-27  bala  <bala@SNS060100>
+
+	* ChangeLog, tao/BiDir_GIOP/BiDirGIOP.cpp, tao/BiDir_GIOP/BiDirGIOP.h:
+	ChangeLogTag: Thu Sep 26 21:49:16 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+2002-09-27  ossama  <ossama@SNS060100>
+
+	* ChangeLog, TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	ChangeLogTag:Thu Sep 26 17:38:30 2002  Ossama Othman  <ossama@uci.edu>
+
+2002-09-26  parsons  <parsons@SNS060100>
+
+	* ChangeLog, TAO_IDL/be/be_visitor_module/module_ch.cpp, TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp, TAO_IDL/fe/idl.yy, TAO_IDL/fe/y.tab.cpp, TAO_IDL/util/utl_idlist.cpp:
+	ChangeLogTag: Thu Sep 26 18:23:11 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+2002-09-26  bala  <bala@SNS060100>
+
+	* ChangeLog, tao/Any.cpp:
+	ChangeLogTag: Thu Sep 26 17:06:11 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+
+2002-09-26  parsons  <parsons@SNS060100>
+
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp, ChangeLog:
+	ChangeLogTag: Thu Sep 26 16:07:18 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+2002-09-26  ossama  <ossama@SNS060100>
+
+	* ChangeLog: *** empty log message ***
+
+2002-09-26  parsons  <parsons@SNS060100>
+
+	* TAO_IDL/be/be_visitor_root/root.cpp, ChangeLog:
+	ChangeLogTag: Thu Sep 26 14:59:55 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+2002-09-26  ossama  <ossama@SNS060100>
+
+	* TAO_IDL/Makefile.BE, TAO_IDL/Makefile.EXE, TAO_IDL/Makefile.FE:
+	Updated dependencies
+
+	* ChangeLog, tao/Dynamic.pidl, tao/ObjectReferenceTemplate.pidl, tao/PortableInterceptor.pidl:
+	ChangeLogTag:Thu Sep 26 12:41:51 2002  Ossama Othman  <ossama@uci.edu>
+
+2002-09-26  bala  <bala@SNS060100>
+
+	* ChangeLog, tao/Transport.cpp:
+	ChangeLogTag: Thu Sep 26 13:50:26 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+2002-09-26  parsons  <parsons@SNS060100>
+
+	* orbsvcs/IFR_Service/ifr_visitor.cpp, orbsvcs/IFR_Service/ifr_visitor.h, TAO_IDL/ast/ast_decl.cpp, TAO_IDL/be/be_codegen.cpp, TAO_IDL/be/be_visitor_field/field_ch.cpp, TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ch.cpp, TAO_IDL/be/be_visitor_module/module_sh.cpp, TAO_IDL/be/be_visitor_root/root.cpp, TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp, TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp, ChangeLog:
+	ChangeLogTag: Thu Sep 26 13:11:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+2002-09-26  ossama  <ossama@SNS060100>
+
+	* ChangeLog, orbsvcs/orbsvcs/CosLoadBalancing.idl:
+	ChangeLogTag:Thu Sep 26 09:30:02 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.bor, orbsvcs/orbsvcs/CosLoadBalancing.dsp, orbsvcs/orbsvcs/CosLoadBalancing_Static.dsp, orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp, orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp, ChangeLog:
+	ChangeLogTag:Thu Sep 26 09:25:19 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ChangeLog: *** empty log message ***
+
+	* ChangeLog, orbsvcs/orbsvcs/LoadBalancing/LB_Location_Index_Map.cpp, orbsvcs/orbsvcs/LoadBalancing/LB_Location_Index_Map.h, orbsvcs/orbsvcs/LoadBalancing/LB_RoundRobin.cpp, orbsvcs/orbsvcs/LoadBalancing/LB_RoundRobin.h, orbsvcs/orbsvcs/Makefile.CosLoadBalancing:
+	ChangeLogTag:Thu Sep 26 09:14:22 2002  Ossama Othman  <ossama@uci.edu>
+
+2002-09-26  coryan  <coryan@SNS060100>
+
+	* tao/Connection_Handler.h, tao/Connection_Handler.inl, ChangeLog:
+	Thu Sep 26 11:55:05 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+2002-09-26  jwillemsen  <jwillemsen@SNS060100>
+
+	* ChangeLog, tao/RTPortableServer/RT_Acceptor_Filters.h, tao/Abstract_Servant_Base.h, tao/Object.h, tao/TAO_Internal.h, orbsvcs/orbsvcs/ESF/ESF_Busy_Lock.h:
+	ChangeLogTag: Thu Sep 26 05:32:45 UTC 2002 Johnny Willemsen <jwillemsen@remedy.nl>
+
+2002-09-26  parsons  <parsons@SNS060100>
+
+	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp, TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp, TAO_IDL/be_include/be_visitor_interface/smart_proxy_ch.h, TAO_IDL/be_include/be_visitor_interface/smart_proxy_cs.h, ChangeLog:
+	ChangeLogTag: Wed Sep 25 19:02:21 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+2002-09-25  parsons  <parsons@SNS060100>
+
+	* TAO_IDL/fe/fe_tmplinst.cpp, ChangeLog:
+	ChangeLogTag: Wed Sep 25 18:50:37 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+2002-09-25  coryan  <coryan@SNS060100>
+
+	* ChangeLog, orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp, tao/Strategies/DIOP_Connector.cpp:
+	Wed Sep 25 17:17:49 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+2002-09-25  parsons  <parsons@SNS060100>
+
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp, TAO_IDL/be/be_visitor_structure/structure_ch.cpp, ChangeLog:
+	ChangeLogTag: Wed Sep 25 17:58:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
 2002-09-26  ossama  <ossama@SNS060100>
 
 	* CosLoadBalancing.idl:
