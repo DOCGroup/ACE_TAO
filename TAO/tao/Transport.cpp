@@ -2209,7 +2209,7 @@ TAO_Transport::transport_cache_manager (void)
 }
 
 
-ACE_INLINE void
+void
 TAO_Transport::assign_translators (TAO_InputCDR *inp, TAO_OutputCDR *outp)
 {
   if (this->char_translator_)
