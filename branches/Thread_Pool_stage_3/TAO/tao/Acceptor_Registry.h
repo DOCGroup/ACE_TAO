@@ -64,6 +64,8 @@ public:
 
   /// Initialize all registered acceptors.  Return -1 on error.
   int open (TAO_ORB_Core *orb_core,
+            ACE_Reactor *reactor,
+            int ignore_address,
             CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -72,15 +74,6 @@ public:
 
   /// Returns the total number of endpoints in all of its acceptors.
   size_t endpoint_count (void);
-
-  /**
-   * Use <filter> to populate <mprofile> object with profiles.
-   * Different filters implement different strategies for selection
-   * of endpoints to be included into <mprofile>.
-   */
-  int make_mprofile (const TAO_ObjectKey& object_key,
-                     TAO_MProfile &mprofile,
-                     TAO_Acceptor_Filter *filter);
 
   /// Check if there is at least one profile in <mprofile> that
   /// corresponds to a collocated object.
@@ -97,10 +90,12 @@ private:
 
   /// Create a default acceptor for all loaded protocols.
   int open_default (TAO_ORB_Core *orb_core,
+                    ACE_Reactor *reactor,
                     const char *options);
 
   /// Create a default acceptor using the specified protocol factory.
   int open_default (TAO_ORB_Core *orb_core,
+                    ACE_Reactor *reactor,
                     int major,
                     int minor,
                     TAO_ProtocolFactorySetItor &factory,
@@ -120,8 +115,10 @@ private:
   /// Iterator through addrs in the string <iop>, and create an
   /// acceptor for each one.
   int open_i (TAO_ORB_Core *orb_core,
+              ACE_Reactor *reactor,
               ACE_CString &address,
               TAO_ProtocolFactorySetItor &factory,
+              int ignore_address,
               CORBA::Environment &ACE_TRY_ENV);
 
 private:

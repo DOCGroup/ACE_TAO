@@ -6,6 +6,7 @@
 #include "tao/IIOP_Acceptor.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/Acceptor_Registry.h"
+#include "tao/Thread_Lane_Resources.h"
 #include "tao/operation_details.h"
 #include "tao/Timeprobe.h"
 #include "tao/CDR.h"
@@ -257,17 +258,16 @@ void
 TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
 {
   // Get a handle to the acceptor registry
-  TAO_Acceptor_Registry * ar =
-    this->orb_core ()->acceptor_registry ();
-
+  TAO_Acceptor_Registry &ar =
+    this->orb_core ()->lane_resources ().acceptor_registry ();
 
   // Get the first acceptor in the registry
-  TAO_AcceptorSetIterator acceptor = ar->begin ();
+  TAO_AcceptorSetIterator acceptor = ar.begin ();
 
   IIOP::ListenPointList listen_point_list;
 
   for (;
-       acceptor != ar->end ();
+       acceptor != ar.end ();
        acceptor++)
     {
       // Check whether it is a IIOP acceptor

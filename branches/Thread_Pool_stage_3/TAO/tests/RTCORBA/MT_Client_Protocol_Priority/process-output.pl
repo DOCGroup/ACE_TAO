@@ -42,7 +42,7 @@ else
 }
 
 $thread_priority_pattern =
-    "original thread priority = requested priority =";
+    "RTCORBA::CLIENT_PROPAGATED processing using default thread pool";
 
 $iiop_requests = 0;
 $shmiop_requests = 0;
@@ -89,11 +89,11 @@ while ($line = <DATA>)
     if ($line =~ /$thread_priority_pattern/
         and $threads_finished == 0)
     {
-        if ($words[10] == $priority1)
+        if ($words[@words - 1] == $priority1)
         {
             ++$priority1_requests;
         }
-        elsif ($words[10] == $priority2)
+        elsif ($words[@words - 1] == $priority2)
         {
             ++$priority2_requests;
         }

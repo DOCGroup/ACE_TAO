@@ -43,7 +43,7 @@ class TAO_Export TAO_Endpoint
 public:
   /// Constructor.
   TAO_Endpoint (CORBA::ULong tag,
-                CORBA::Short priority = -1);
+                CORBA::Short priority = TAO_INVALID_PRIORITY);
 
   /// Destructor.
   virtual ~TAO_Endpoint (void);

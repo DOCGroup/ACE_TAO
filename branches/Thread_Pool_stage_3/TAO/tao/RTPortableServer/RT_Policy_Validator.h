@@ -25,16 +25,25 @@
 #include "tao/PortableServer/Policy_Validator.h"
 
 class TAO_ORB_Core;
+class TAO_Acceptor_Registry;
+class TAO_Thread_Pool;
 
 class TAO_RTPortableServer_Export TAO_POA_RT_Policy_Validator
   : public TAO_POA_Policy_Validator
 {
 public:
   /// Constructor.
-  TAO_POA_RT_Policy_Validator (TAO_ORB_Core *orb_core);
+  TAO_POA_RT_Policy_Validator (TAO_ORB_Core &orb_core);
 
   /// Destructor.
   ~TAO_POA_RT_Policy_Validator (void);
+
+  static TAO_Thread_Pool *extract_thread_pool (TAO_ORB_Core &orb_core,
+                                               TAO_Policy_Set &policies,
+                                               CORBA::Environment &ACE_TRY_ENV);
+
+  static TAO_Acceptor_Registry *extract_acceptor_registry (TAO_ORB_Core &orb_core,
+                                                           TAO_Thread_Pool *thread_pool);
 
 protected:
 
@@ -43,8 +52,12 @@ protected:
    * are consistent and legal.  Throw an appropriate exception
    * if that is not the case.
    */
-  virtual void validate_impl (TAO_Policy_Set &policies,
-                              CORBA::Environment &ACE_TRY_ENV);
+  void validate_impl (TAO_Policy_Set &policies,
+                      CORBA::Environment &ACE_TRY_ENV);
+
+  /// Add/merge policies.
+  void merge_policies_impl (TAO_Policy_Set &policies,
+                            CORBA::Environment &ACE_TRY_ENV);
 
   /**
    * Return whether the specified policy type is legal for the
@@ -61,12 +74,19 @@ private:
   void validate_priorities (TAO_Policy_Set &policies,
                             CORBA::Environment &ACE_TRY_ENV);
 
+  void validate_thread_pool (TAO_Policy_Set &policies,
+                             CORBA::Environment &ACE_TRY_ENV);
 
-private:
-  TAO_ORB_Core *orb_core_;
+  void validate_lifespan (TAO_Policy_Set &policies,
+                          CORBA::Environment &ACE_TRY_ENV);
+
+  TAO_Acceptor_Registry *acceptor_registry (void);
+
+  TAO_Acceptor_Registry *acceptor_registry_;
+
+  TAO_Thread_Pool *thread_pool_;
+
 };
 
 #include "ace/post.h"
 #endif /* TAO_RT_POLICY_VALIDATOR_H_ */
-
-

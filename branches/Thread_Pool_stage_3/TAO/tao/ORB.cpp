@@ -1,7 +1,5 @@
 // $Id$
 
-
-
 #include "ORB.h"
 #include "ORB_Table.h"
 #include "Connector_Registry.h"
@@ -67,11 +65,7 @@ using std::set_unexpected;
 # include "ORB.i"
 #endif /* ! __ACE_INLINE__ */
 
-
-
 ACE_RCSID(tao, ORB, "$Id$")
-
-
 
 static const char ior_prefix [] = "IOR:";
 
@@ -972,7 +966,7 @@ CORBA_ORB::resolve_service (MCAST_SERVICEID mcast_service_id,
    this->string_to_object (service_ior.c_str (),
                            ACE_TRY_ENV);
  ACE_CHECK_RETURN (CORBA_Object::_nil ());
- 
+
  // Return ior.
  return return_value._retn ();
 }
@@ -1072,23 +1066,6 @@ CORBA_ORB::list_initial_services (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK_RETURN (0);
 
   return this->orb_core ()->list_initial_references (ACE_TRY_ENV);
-}
-
-TAO_Stub *
-CORBA_ORB::create_stub_object (const TAO_ObjectKey &key,
-                               const char *type_id,
-                               CORBA::PolicyList *policy_list,
-                               TAO_Acceptor_Filter *filter,
-                               CORBA::Environment &ACE_TRY_ENV)
-{
-  this->check_shutdown (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  return this->orb_core_->create_stub_object (key,
-                                              type_id,
-                                              policy_list,
-                                              filter,
-                                              ACE_TRY_ENV);
 }
 
 void
@@ -1264,7 +1241,7 @@ CORBA::ORB_init (int &argc,
                  const char *orbid,
                  CORBA_Environment &ACE_TRY_ENV)
 {
-  
+
   // Using ACE_Static_Object_Lock::instance() precludes <ORB_init>
   // from being called within a static object CTOR.
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, guard,
@@ -1747,7 +1724,6 @@ CORBA_ORB::url_ior_string_to_object (const char* str,
   // Now make the TAO_Stub.
   TAO_Stub *data = this->orb_core_->create_stub ((char *) 0,
                                                  mprofile,
-                                                 this->orb_core_,
                                                  ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 

@@ -15,6 +15,7 @@
 
 #include "tao/LF_Follower.h"
 #include "tao/ORB_Core.h"
+#include "tao/New_Leader_Generator.h"
 #include "ace/Intrusive_List.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -22,12 +23,14 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_LF_Event;
+class TAO_New_Leader_Generator;
 
 class TAO_Export TAO_Leader_Follower
 {
 public:
   /// Constructor
-  TAO_Leader_Follower (TAO_ORB_Core *orb_core);
+  TAO_Leader_Follower (TAO_ORB_Core *orb_core,
+                       TAO_New_Leader_Generator *new_leader_generator = 0);
 
   /// Destructor
   ~TAO_Leader_Follower (void);
@@ -155,6 +158,9 @@ public:
   /// Accesor to the reactor
   ACE_Reactor *reactor (void);
 
+  /// Called when we are out of leaders.
+  void no_leaders_available (void);
+
 private:
   /// Shortcut to obtain the TSS resources of the orb core.
   TAO_ORB_Core_TSS_Resources *get_tss_resources (void) const;
@@ -225,6 +231,10 @@ private:
   /// Condition variable for server threads waiting for the client
   /// leader to complete.
   TAO_SYNCH_CONDITION event_loop_threads_condition_;
+
+  /// Leader/Follower class uses this method to notify the system that
+  /// we are out of leaders.
+  TAO_New_Leader_Generator *new_leader_generator_;
 };
 
 class TAO_Export TAO_LF_Client_Thread_Helper

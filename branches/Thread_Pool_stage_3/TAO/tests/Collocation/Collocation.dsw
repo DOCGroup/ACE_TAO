@@ -3,18 +3,6 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "Coll_Test_Stubs DLL"=.\Coll_Test_Stubs.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "Collocation"=.\Collocation.dsp - Package Owner=<4>
 
 Package=<5>
@@ -24,16 +12,13 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name Diamond
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name Diamond DLL
+    Project_Dep_Name Collocation Diamond DLL
     End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "Diamond DLL"=.\Diamond.dsp - Package Owner=<4>
+Project: "Collocation Diamond DLL"=.\Diamond.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -42,8 +27,20 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name Coll_Test_Stubs DLL
+    Project_Dep_Name Collocation Test Stubs DLL
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Collocation Test Stubs DLL"=.\Collocation_Test_Stubs.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################

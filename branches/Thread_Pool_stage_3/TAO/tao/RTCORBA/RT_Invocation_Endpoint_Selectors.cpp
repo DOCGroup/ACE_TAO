@@ -21,6 +21,54 @@ ACE_RCSID(tao, RT_Invocation_Endpoint_Selectors, "$Id$")
 
 // ****************************************************************
 
+void
+TAO_RT_Default_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation *invocation,
+                                                   CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_RT_Stub *rt_stub =
+    ACE_dynamic_cast (TAO_RT_Stub *,
+                      invocation->stub ());
+
+  do
+    {
+      invocation->profile (invocation->stub ()->profile_in_use ());
+      invocation->endpoint (invocation->profile ()->endpoint ());
+
+      // If known endpoint, select it.
+      if (invocation->endpoint () != 0)
+        {
+          int status;
+          if (rt_stub->private_connection ())
+            {
+              TAO_Private_Transport_Descriptor private_desc (invocation->endpoint (),
+                                                             ACE_reinterpret_cast (long, invocation->stub ()));
+
+              status = invocation->perform_call (private_desc, ACE_TRY_ENV);
+              ACE_CHECK;
+            }
+          else
+            {
+              TAO_Base_Transport_Property default_desc (invocation->endpoint ());
+
+              status = invocation->perform_call (default_desc, ACE_TRY_ENV);
+              ACE_CHECK;
+            }
+
+          // Check if the invocation has completed.
+          if (status == 1)
+            return;
+        }
+    }
+  while (invocation->stub ()->next_profile_retry () != 0);
+
+  // If we get here, we completely failed to find an endpoint selector
+  // that we know how to use, so throw an exception.
+  ACE_THROW (CORBA::TRANSIENT (TAO_OMG_VMCID | 2,
+                               CORBA::COMPLETED_NO));
+}
+
+// ****************************************************************
+
 TAO_Priority_Endpoint_Selector::~TAO_Priority_Endpoint_Selector (void)
 {
 }
