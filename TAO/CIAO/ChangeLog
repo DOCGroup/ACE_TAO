@@ -1,3 +1,10 @@
+Tue Jul 08 07:11:23 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/Daemon/README: Fixed discrepancy in document.  The
+	  IOR-Table entry for daemon interface should be "CIAO-Daemon"
+	  instead of "CIAODaemon".  Thanks to Roland Schimmack
+	  <SC@ProCom.de> for reporting this.
+
 Sun Jul 06 21:40:39 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	  There are two major changes in this entry.
