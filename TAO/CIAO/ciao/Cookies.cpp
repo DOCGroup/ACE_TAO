@@ -58,7 +58,7 @@ CIAO::Map_Key_Cookie_init::create_for_unmarshal (void)
 }
 
 ::CORBA::OctetSeq *
-CIAO::Map_Key_Cookie::get_cookie (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::Map_Key_Cookie::get_cookie (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return &this->cookieValue ();
 }
