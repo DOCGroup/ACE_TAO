@@ -1609,8 +1609,19 @@ TAO_Root_POA::id_to_servant_i (const PortableServer::ObjectId &id
                    PortableServer::POA::ObjectNotActive,
                    PortableServer::POA::WrongPolicy))
 {
-  return this->active_policy_strategies_.servant_retention_strategy()->
+  return this->active_policy_strategies_.request_processing_strategy()->
     id_to_servant (id ACE_ENV_ARG_PARAMETER);
+}
+
+PortableServer::Servant
+TAO_Root_POA::user_id_to_servant_i (const PortableServer::ObjectId &id
+                                    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::ObjectNotActive,
+                   PortableServer::POA::WrongPolicy))
+{
+  return this->active_policy_strategies_.servant_retention_strategy()->
+    user_id_to_servant (id ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object_ptr

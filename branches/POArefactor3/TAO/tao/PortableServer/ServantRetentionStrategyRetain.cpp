@@ -202,7 +202,7 @@ namespace TAO
     }
 
     PortableServer::Servant
-    ServantRetentionStrategyRetain::id_to_servant (
+    ServantRetentionStrategyRetain::user_id_to_servant (
       const PortableServer::ObjectId &id
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
@@ -221,10 +221,8 @@ namespace TAO
 
       if (servant == 0)
         {
-          servant = this->ServantRetentionStrategyNonRetain::id_to_servant (
-            id
-            ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+          ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
+                            0);
         }
 
       return servant;

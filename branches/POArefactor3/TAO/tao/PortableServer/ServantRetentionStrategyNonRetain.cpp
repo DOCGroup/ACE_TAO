@@ -88,48 +88,15 @@ namespace TAO
     }
 
     PortableServer::Servant
-    ServantRetentionStrategyNonRetain::id_to_servant (
+    ServantRetentionStrategyNonRetain::user_id_to_servant (
       const PortableServer::ObjectId &/*id*/
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::ObjectNotActive,
                          PortableServer::POA::WrongPolicy))
     {
-      // Get the default servant, in case we have a not correct request_processing
-      // strategy we will get an exception
-      PortableServer::Servant servant = 0;
-
-      servant = this->poa_->get_servant_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      if (servant != 0)
-        {
-          // ATTENTION: Trick locking here, see class header for details
-          Non_Servant_Upcall non_servant_upcall (*this->poa_);
-          ACE_UNUSED_ARG (non_servant_upcall);
-
-          // The POA invokes _add_ref once on the Servant before returning
-          // it. If the application uses reference counting, the caller of
-          // id_to_servant is responsible for invoking _remove_ref once on
-          // the returned Servant when it is finished with it. A
-          // conforming caller need not invoke _remove_ref on the returned
-          // Servant if the type of the Servant uses the default reference
-          // counting inherited from ServantBase.
-          servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
-
-          return servant;
-        }
-      else
-        {
-          /*
-           * If using default servant request processing strategy but
-           * no default servant is available, we will raise the
-           * ObjectNotActive system exception.
-           */
-          ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
-                            0);
-        }
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        0);
     }
 
     CORBA::Object_ptr

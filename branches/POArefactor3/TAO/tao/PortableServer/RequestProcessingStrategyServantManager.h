@@ -54,6 +54,13 @@ namespace TAO
         const PortableServer::ObjectId &system_id
         ACE_ENV_ARG_DECL);
 
+      virtual PortableServer::Servant id_to_servant (
+        const PortableServer::ObjectId &id
+        ACE_ENV_ARG_DECL)
+          ACE_THROW_SPEC ((CORBA::SystemException,
+                           PortableServer::POA::ObjectNotActive,
+                           PortableServer::POA::WrongPolicy));
+
       virtual PortableServer::ObjectId *servant_to_id (
         PortableServer::Servant servant
         ACE_ENV_ARG_DECL)

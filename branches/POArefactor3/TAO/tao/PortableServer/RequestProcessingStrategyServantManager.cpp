@@ -79,6 +79,17 @@ namespace TAO
       return this->poa_->servant_to_user_id (servant ACE_ENV_ARG_PARAMETER);
     }
 
+    PortableServer::Servant
+    RequestProcessingStrategyServantManager::id_to_servant (
+      const PortableServer::ObjectId &id
+      ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableServer::POA::ObjectNotActive,
+                         PortableServer::POA::WrongPolicy))
+    {
+      return this->poa_->user_id_to_servant_i (id ACE_ENV_ARG_PARAMETER);
+    }
+
     ::PortableServer::RequestProcessingPolicyValue
     RequestProcessingStrategyServantManager::type() const
     {

@@ -90,7 +90,7 @@ namespace TAO
                            PortableServer::POA::WrongAdapter,
                            PortableServer::POA::WrongPolicy)) = 0;
 
-      virtual PortableServer::Servant id_to_servant (
+      virtual PortableServer::Servant user_id_to_servant (
         const PortableServer::ObjectId &id
         ACE_ENV_ARG_DECL)
           ACE_THROW_SPEC ((CORBA::SystemException,

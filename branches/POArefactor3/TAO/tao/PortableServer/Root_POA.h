@@ -263,10 +263,6 @@ public:
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-  PortableServer::Servant get_servant_i (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::POA::WrongPolicy));
-
   PortableServer::ObjectId *activate_object (PortableServer::Servant p_servant
                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -554,6 +550,12 @@ public:
 
   int delete_child (const String &child);
 
+  PortableServer::Servant user_id_to_servant_i (const PortableServer::ObjectId &oid
+                                                ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POA::ObjectNotActive,
+                     PortableServer::POA::WrongPolicy));
+
 protected:
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -656,6 +658,10 @@ protected:
                                 TAO_Acceptor_Filter *filter,
                                 TAO_Acceptor_Registry &acceptor_registry
                                 ACE_ENV_ARG_DECL);
+
+  PortableServer::Servant get_servant_i (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableServer::POA::WrongPolicy));
 
 protected:
   void activate_object_with_id_i (const PortableServer::ObjectId &id,
