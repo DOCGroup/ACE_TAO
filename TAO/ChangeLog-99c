@@ -1,3 +1,63 @@
+Thu May 27 11:55:55 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
+	  Small fixes to the quantify code.
+
+Wed May 26 22:28:18 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* TAO: Patched a bunch of NT project files:
+
+          - examples/TAO_Examples.dsw
+          - examples/Callback_Quoter/Consumer.dsp
+          - examples/Callback_Quoter/Notifier.dsp
+          - examples/Callback_Quoter/Supplier.dsp
+          - examples/Event_Comm/Consumer.dsp
+          - examples/Event_Comm/Event_Comm.dsw
+          - examples/Event_Comm/Notifier.dsp
+          - examples/Event_Comm/Supplier.dsp
+          - examples/OBV/Typed_Events/client.dsp
+          - examples/OBV/Typed_Events/server.dsp
+          - examples/POA/DSI/client.dsp
+          - examples/POA/DSI/server.dsp
+          - examples/POA/Default_Servant/client.dsp
+          - examples/POA/Default_Servant/server.dsp
+          - examples/POA/Forwarding/client.dsp
+          - examples/POA/Forwarding/server.dsp
+          - examples/POA/Generic_Servant/client.dsp
+          - examples/POA/Generic_Servant/server.dsp
+          - examples/POA/Identity/Identity.dsp
+          - examples/POA/TIE/client.dsp
+          - examples/POA/TIE/server.dsp
+          - examples/Quoter/Factory_Finder.dsp
+          - examples/Quoter/Generic_Factory.dsp
+          - examples/Quoter/client.dsp
+          - examples/Quoter/server.dsp
+          - examples/Simple/bank/client.dsp
+          - examples/Simple/bank/server.dsp
+          - examples/Simple/chat/client.dsp
+          - examples/Simple/chat/server.dsp
+          - examples/Simple/echo/client.dsp
+          - examples/Simple/echo/server.dsp
+          - examples/Simple/grid/client.dsp
+          - examples/Simple/grid/server.dsp
+          - examples/Simple/time/client.dsp
+          - examples/Simple/time/server.dsp
+          - examples/Simple/time-date/Time_Date.idl
+          - examples/Simple/time-date/Time_Date_Client_i.cpp
+          - examples/Simple/time-date/Time_Date_Client_i.h
+          - examples/Simple/time-date/Time_Date_i.cpp
+          - examples/Simple/time-date/Time_Date_i.h
+          - examples/Simple/time-date/client.dsp
+          - examples/Simple/time-date/client_static.dsp
+          - examples/Simple/time-date/server.dsp
+          - examples/Simple/time-date/server_static.dsp
+          - examples/Simple/time-date/time_date.dsw
+          - performance-tests/TAO_Perf_Tests.dsw
+          - performance-tests/POA/Object_Creation_And_Registration/registration.dsp
+          - performance-tests/Pluggable/Pluggable.dsw
+          - performance-tests/Pluggable/client.dsp
+          - performance-tests/Pluggable/server.dsp
+
 Thu May 27 10:05:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Managed_Types.i:
@@ -64,15 +124,15 @@ Wed May 26 21:40:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tests/Param_Test/run_test.pl:
 	  Removed all uses of -ORBobjrefstyle and -ORBport from the
 	  run_test.pl scripts.
-	 
+
 	* performance-tests/Cubit/TAO/MT_Cubit/client.cpp:
 	  Changed the deprecated -ORBport and -ORBhost options for a
 	  -ORBendpoint option.
 
-	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp: 
-	  Added little methods to wrap around Quantify vs. Visual Quantify 
+	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
+	  Added little methods to wrap around Quantify vs. Visual Quantify
 	  calls.
-	
+
 Wed May 26 20:44:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Pluggable.h:
@@ -153,7 +213,7 @@ Wed May 26 18:51:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  is loaded by default but no endpoints are created unless an
 	  explicit -ORBendpoint option is used.
 
-	* Most of these changes where implemented by Fred Kuhns and Ossama 
+	* Most of these changes where implemented by Fred Kuhns and Ossama
 	  Othman. I am simply the humble CVS merger
 
 	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
@@ -169,7 +229,7 @@ Wed May 26 18:51:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Wed May 26 17:37:40 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* tao/ORB.cpp : Used delete [] in resolve_initial_references ()
- 	  instead of delete. Changed the signatures of add/find IORs in 
+ 	  instead of delete. Changed the signatures of add/find IORs in
 	  the IOR table to use consts.
 	* tao/ORB.h : Changed the function declarations for the above.
 	* tao/IOR_LookupTable.cpp : Removed the private members ObjectID
