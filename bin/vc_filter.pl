@@ -26,13 +26,13 @@ open (fp, "$fname");
 
 print $header ;
 
-while ($line = <fp>)
+restart: while ($line = <fp>)
 {
     print "$new_build_b $line $new_build_e<BR>" if ($line =~/^--------------------Configuration:/);
 
-    if ($line =~/^[A-Z_a-z0-9.]+ - [0-9]+ error\(s\), +[0-9]+ warning\(s\)/)
+    if ($line =~ /(^[A-Z_a-z0-9.]+ - [0-9]+ error\(s\), +[0-9]+ warning\(s\))|(LNK4089)/)
     {
-        if ($line =~/0 error\(s\), 0 warning\(s\)/)
+        if ($line =~ /(0 error\(s\), 0 warning\(s\))|(LNK4089)/)
         {
             print "$kosher_b $line $kosher_e<BR>";
         }
@@ -40,6 +40,7 @@ while ($line = <fp>)
         {
             print "$in_sin_b $line $in_sin_e<BR>";
         }
+        next restart;
     }
 
     print "$in_sin_b $line $in_sin_e<BR>"
