@@ -135,7 +135,7 @@ TAO_Basic_StreamCtrl::set_FPStatus (const AVStreams::flowSpec &/* the_spec */,
                                     CORBA::Environment &/* ACE_TRY_ENV */)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::noSuchFlow,
-                   AVStreams::notSupported))
+                   AVStreams::FPError))
 
 {
 }
@@ -759,7 +759,7 @@ TAO_Server_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr ini
                                                AVStreams::flowSpec &the_spec,
                                                CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   AVStreams::streamOpFailed,
+                   AVStreams::streamOpDenied,
                    AVStreams::noSuchFlow,
                    AVStreams::QoSRequestFailed,
                    AVStreams::FPError))
@@ -885,7 +885,7 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr initiator,
                                         AVStreams::flowSpec &the_spec,
                                         CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   AVStreams::streamOpFailed,
+                   AVStreams::streamOpDenied,
                    AVStreams::noSuchFlow,
                    AVStreams::QoSRequestFailed,
                    AVStreams::FPError))
