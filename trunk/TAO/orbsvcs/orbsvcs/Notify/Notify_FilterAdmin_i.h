@@ -23,7 +23,7 @@
 #include "orbsvcs/orbsvcs/CosNotifyFilterS.h"
 #include "orbsvcs/orbsvcs/Notify/ID_Pool_T.h"
 
-class  TAO_Notify_FilterAdmin_i :
+class TAO_ORBSVCS_Export TAO_Notify_FilterAdmin_i :
 public virtual POA_CosNotifyFilter::FilterAdmin
 {
   // = TITLE

@@ -34,7 +34,7 @@ class TAO_Notify_ConsumerAdmin_i;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Notify_ProxySupplier_i :
+class TAO_ORBSVCS_Export TAO_Notify_ProxySupplier_i :
 public virtual POA_CosNotifyChannelAdmin::ProxySupplier,
 public virtual TAO_Notify_QoSAdmin_i,
 public virtual TAO_Notify_FilterAdmin_i,

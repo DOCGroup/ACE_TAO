@@ -21,7 +21,7 @@
 
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
 
-class TAO_Notify_StructuredPushConsumer : public POA_CosNotifyComm::StructuredPushConsumer
+class TAO_ORBSVCS_Export TAO_Notify_StructuredPushConsumer : public POA_CosNotifyComm::StructuredPushConsumer
 {
   // = TITLE
   //   Notify_StructuredPushConsumer

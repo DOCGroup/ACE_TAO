@@ -25,7 +25,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class  TAO_NotifyPublish_i :
+class TAO_ORBSVCS_Export TAO_NotifyPublish_i :
 public virtual POA_CosNotifyComm::NotifyPublish
 {
 public:

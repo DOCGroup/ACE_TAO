@@ -30,7 +30,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Notify_StructuredProxyPushConsumer_i :
+class TAO_ORBSVCS_Export TAO_Notify_StructuredProxyPushConsumer_i :
 public virtual POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer,
   public virtual TAO_Notify_ProxyConsumer_i,
   public virtual TAO_NotifyPublish_i

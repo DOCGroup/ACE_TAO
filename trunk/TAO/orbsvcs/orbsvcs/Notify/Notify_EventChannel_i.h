@@ -42,7 +42,7 @@ class TAO_Notify_SupplierAdmin_i;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class  TAO_Notify_EventChannel_i :
+class TAO_ORBSVCS_Export TAO_Notify_EventChannel_i :
 public virtual POA_CosNotifyChannelAdmin::EventChannel,
 public virtual TAO_Notify_QoSAdmin_i
 {
@@ -187,9 +187,9 @@ virtual void set_admin (
  protected:
   TAO_Notify_EventChannelFactory_i& my_factory_;
   // The factory that created us.
-  
+
   typedef ID_Pool<CosNotifyChannelAdmin::AdminID> IDGEN;
-  
+
   IDGEN consumer_admin_ids;
   // Id generator for consumer admins.
 
