@@ -91,7 +91,7 @@ TAO_PortableServer_PolicyFactory::create_policy (
             PortableServer::ServantRetentionPolicyValue>::create (
               "ServantRetentionPolicyFactory",
               ACE_TEXT("dynamic ServantRetentionPolicyFactory Service_Object *")
-              ACE_TEXT("TAO_PortableServer:_make_ServantRetentionPolicyFactory()"),
+              ACE_TEXT("TAO_PortableServer:_make_ServantRetentionPolicyFactoryImpl()"),
               value ACE_ENV_ARG_PARAMETER);
 
   if (type == PortableServer::REQUEST_PROCESSING_POLICY_ID)

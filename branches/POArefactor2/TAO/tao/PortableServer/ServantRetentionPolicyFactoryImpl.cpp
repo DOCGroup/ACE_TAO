@@ -1,11 +1,11 @@
 // $Id$
 
-#include "ServantRetentionPolicyFactory.h"
+#include "ServantRetentionPolicyFactoryImpl.h"
 #include "ace/Dynamic_Service.h"
 #include "ServantRetentionPolicy.h"
 
 ACE_RCSID (PortableServer,
-           ServantRetentionPolicyFactory,
+           ServantRetentionPolicyFactoryImpl,
            "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -14,12 +14,12 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ServantRetentionPolicyFactory::~ServantRetentionPolicyFactory (void)
+    ServantRetentionPolicyFactoryImpl::~ServantRetentionPolicyFactoryImpl (void)
     {
     }
 
     ::PortableServer::ServantRetentionPolicy_ptr
-    ServantRetentionPolicyFactory::create (
+    ServantRetentionPolicyFactoryImpl::create (
       ::PortableServer::ServantRetentionPolicyValue value)
     {
       ServantRetentionPolicy* policy = 0;
@@ -34,7 +34,7 @@ namespace TAO
     }
 
     ::PortableServer::ServantRetentionPolicy_ptr
-    ServantRetentionPolicyFactory::create (
+    ServantRetentionPolicyFactoryImpl::create (
       const CORBA::Any &value
       ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::PolicyError))
@@ -52,23 +52,23 @@ namespace TAO
     }
 
     ACE_STATIC_SVC_DEFINE (
-        ServantRetentionPolicyFactory,
-        ACE_TEXT ("ServantRetentionPolicyFactory"),
+        ServantRetentionPolicyFactoryImpl,
+        ACE_TEXT ("ServantRetentionPolicyFactoryImpl"),
         ACE_SVC_OBJ_T,
-        &ACE_SVC_NAME (ServantRetentionPolicyFactory),
+        &ACE_SVC_NAME (ServantRetentionPolicyFactoryImpl),
         ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
         0
       )
 
-    ACE_FACTORY_DEFINE (TAO_PortableServer, ServantRetentionPolicyFactory)
+    ACE_FACTORY_DEFINE (TAO_PortableServer, ServantRetentionPolicyFactoryImpl)
 
     #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-    template class ACE_Dynamic_Service<ServantRetentionPolicyFactory>;
+    template class ACE_Dynamic_Service<ServantRetentionPolicyFactoryImpl>;
 
     #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-    #pragma instantiate ACE_Dynamic_Service<ServantRetentionPolicyFactory>
+    #pragma instantiate ACE_Dynamic_Service<ServantRetentionPolicyFactoryImpl>
 
     #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }

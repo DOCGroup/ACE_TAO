@@ -316,7 +316,7 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
             PortableServer::ServantRetentionPolicyValue>::create (
               "ServantRetentionPolicyFactory",
               ACE_TEXT("dynamic ServantRetentionPolicyFactory Service_Object *")
-              ACE_TEXT("TAO_PortableServer:_make_ServantRetentionPolicyFactory()"),
+              ACE_TEXT("TAO_PortableServer:_make_ServantRetentionPolicyFactoryImpl()"),
               PortableServer::RETAIN);
   policies.merge_policy (servant_retention_policy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;

@@ -158,7 +158,7 @@ TAO_POA::create_servant_retention_policy (PortableServer::ServantRetentionPolicy
           ::PortableServer::ServantRetentionPolicyValue>::create (
             "ServantRetentionPolicyFactory",
             ACE_TEXT("dynamic ServantRetentionPolicyFactory Service_Object *")
-            ACE_TEXT("TAO_PortableServer:_make_ServantRetentionPolicyFactory()"),
+            ACE_TEXT("TAO_PortableServer:_make_ServantRetentionPolicyFactoryImpl()"),
             value);
 }
 
