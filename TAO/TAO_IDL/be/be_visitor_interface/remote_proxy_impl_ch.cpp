@@ -57,6 +57,10 @@ be_visitor_interface_remote_proxy_impl_ch::visit_interface (be_interface *node)
   *os << be_uidt_nl;
   *os << "{" << be_nl << "public:" << be_idt_nl;
 
+  // Constructor Declaration.
+  *os << node->remote_proxy_impl_name () << " (void);"
+      << be_nl  << be_nl;
+
   // Destructor Declaration.
   *os << "virtual ~" << node->remote_proxy_impl_name () << " (void);"
       << be_nl  << be_nl;

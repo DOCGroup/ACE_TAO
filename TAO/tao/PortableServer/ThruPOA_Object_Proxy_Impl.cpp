@@ -9,7 +9,13 @@
 
 ACE_RCSID(tao, TAO_ThruPOA_Object_Proxy_Impl, "$Id$")
 
-  TAO_ThruPOA_Object_Proxy_Impl::~TAO_ThruPOA_Object_Proxy_Impl (void)
+TAO_ThruPOA_Object_Proxy_Impl::TAO_ThruPOA_Object_Proxy_Impl (void)
+{
+  // No-op
+}
+
+
+TAO_ThruPOA_Object_Proxy_Impl::~TAO_ThruPOA_Object_Proxy_Impl (void)
 {
   // No-op
 }

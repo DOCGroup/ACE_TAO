@@ -43,6 +43,8 @@ class TAO_PortableServer_Export TAO_ThruPOA_Object_Proxy_Impl : public virtual T
   //    This class implements the ThruPOA proxy for the CORBA::Object class.
 public:
 
+  TAO_ThruPOA_Object_Proxy_Impl (void);
+
   virtual ~TAO_ThruPOA_Object_Proxy_Impl (void);
 
   virtual CORBA::Boolean _is_a (const CORBA::Object_ptr target,

@@ -44,6 +44,8 @@ class TAO_PortableServer_Export TAO_Direct_Object_Proxy_Impl : public virtual TA
   //     class.
 public:
 
+  TAO_Direct_Object_Proxy_Impl (void);
+
   virtual ~TAO_Direct_Object_Proxy_Impl (void);
 
   virtual CORBA::Boolean _is_a (const CORBA::Object_ptr target,

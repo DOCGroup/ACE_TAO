@@ -39,10 +39,10 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (be_interface 
       << "public: " << be_idt_nl;
 
   // Constructor
-  *os << node->strategized_proxy_broker_name () << " (void);\n" << be_nl;
+  *os << node->strategized_proxy_broker_name () << " (void);" << be_nl << be_nl;
 
   // Destructor
-  *os << "virtual ~" << node->strategized_proxy_broker_name () << " (void);\n" << be_nl;
+  *os << "virtual ~" << node->strategized_proxy_broker_name () << " (void);" << be_nl << be_nl;
 
   // Accessor Method
   *os << "virtual " << "::" << node->full_base_proxy_impl_name () << " &" << "select_proxy (" << be_idt_nl;
