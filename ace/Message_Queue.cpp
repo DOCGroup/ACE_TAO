@@ -47,7 +47,8 @@ ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::advance (void)
 {
   ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
 
-  this->curr_ = this->curr_->next ();
+  if (this->curr_)
+    this->curr_ = this->curr_->next ();
   return this->curr_ != 0;
 }
 
@@ -92,7 +93,8 @@ ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::advance (void)
 {
   ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
 
-  this->curr_ = this->curr_->prev ();
+  if (this->curr_)
+    this->curr_ = this->curr_->prev ();
   return this->curr_ != 0;
 }
 
