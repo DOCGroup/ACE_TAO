@@ -1,13 +1,17 @@
+Fri Nov  7 02:08:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/ImplRepo_Service/Server_Repository.cpp:
+          Changed use of cerr to ACE_ERROR_RETURN.
+
+        * performance_tests/Cubit/TAO/MT_Cubit/Timer.h:
+          Removed #include of OS.h.
+
 Thu Nov  6 17:58:21 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
-        *
-          orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Basic.cpp:
-        *
-          orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/client.cpp:
-        *
-          orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl:
-        *
-          orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Basic.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/client.cpp:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.cpp:
 
         Changed the application controlled membership test.
         The test uses the Random load balancing strategy built in TAO
