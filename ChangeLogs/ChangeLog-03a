@@ -1,3 +1,32 @@
+Sat Nov  2 17:44:00 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/Select_Reactor_Base.h:
+	* ace/Select_Reactor_Base.cpp: Fixed a subtle bug in the
+	  Select_Reactor. The following were performed during the bind ()  
+	  operation, which binds a handle with interested mask to an
+	  event_handler, 
+
+	  - The new masks were added to the existing wait_set
+	  - and the new masks were also removed from the suspend_set. 
+
+	  Though the above steps were fine, there exists a possibility
+	  when the reactor could land up with a state when the handle
+	  could be both in the wait_set and suspend_set. If suppose a
+	  handle is initially registered for READ and EXCEPTION with the
+	  reactor and then suspended. If the user calls register_handler
+	  () to register the same handle for READ and WRITE, things could
+	  go totally bizzare. 
+	 
+	  The present fix does the following
+
+	  - If the handle is suspended, the masks are added to the
+	    suspend_set 
+	  - else the masks are added to the wait_set and the flag that
+	    indicates state changes within the reactor is set to 1.
+
+	  Thanks to Irfan Pyarali<irfan@oomworks.com> who reported this
+	  problem.
+
 Fri Nov  1 07:35:10 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/auto_run_tests.lst: Added the new
