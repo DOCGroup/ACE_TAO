@@ -1,3 +1,9 @@
+Wed Sep 20 14:51:27 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Basic_Types.h: Added #include <sys/types.h> after the other
+          system-type includes to be sure u_long is defined. <stdlib.h>
+          doesn't pick it up, at least on Solaris 8.
+
 Wed Sep 20 11:44:46 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tests/run_test.pl:
