@@ -1,37 +1,43 @@
+Sun Oct 11 08:19:33 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-linux-common.h: re-enabled msg_* undefs and defines,
+          but for libc5 (non-glibc) only.  Thanks to JM Strauss
+          <jms97@club-internet.fr> for verifying that they're needed.
+
 Sat Oct 10 18:30:02 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Synch_T: Added a process condition abstraction for Chorus
- 	  that is based on a condition variable stored in shared memory.
-  	  Thanks Alberto Villarica <Alberto.Villarica.rav@nt.com> for
- 	  this.
+        * ace/Synch_T: Added a process condition abstraction for Chorus
+          that is based on a condition variable stored in shared memory.
+          Thanks Alberto Villarica <Alberto.Villarica.rav@nt.com> for
+          this.
 
-	* ace/Synch: Added a process mutex abstraction for Chorus that is
- 	  based on a mutex stored in shared memory.  Thanks Alberto
- 	  Villarica <Alberto.Villarica.rav@nt.com> for this.
+        * ace/Synch: Added a process mutex abstraction for Chorus that is
+          based on a mutex stored in shared memory.  Thanks Alberto
+          Villarica <Alberto.Villarica.rav@nt.com> for this.
 
-	* ace/config-chorus.h: Updated the config file for Chorus.  Thanks
- 	  Alberto Villarica <Alberto.Villarica.rav@nt.com> for this.
+        * ace/config-chorus.h: Updated the config file for Chorus.  Thanks
+          Alberto Villarica <Alberto.Villarica.rav@nt.com> for this.
 
-	* ace/OS.i: Added rudimentary flock support for Chorus.  Thanks
- 	  Alberto Villarica <Alberto.Villarica.rav@nt.com> for this.
+        * ace/OS.i: Added rudimentary flock support for Chorus.  Thanks
+          Alberto Villarica <Alberto.Villarica.rav@nt.com> for this.
 
-	* ace/OS.i: Added exec*() support for Chorus.  Thanks Alberto
- 	  Villarica <Alberto.Villarica.rav@nt.com> for this.
+        * ace/OS.i: Added exec*() support for Chorus.  Thanks Alberto
+          Villarica <Alberto.Villarica.rav@nt.com> for this.
 
-	* ace/config-chorus.h: Added #include of file <am/wait.h>.
+        * ace/config-chorus.h: Added #include of file <am/wait.h>.
 
-	* ace/Local_Name_Space_T.cpp (create_manager_i): Added a special
- 	  case for CHORUS so that we use a base address of 0.  Thanks to
- 	  Alberto Villarica <Alberto.Villarica.rav@nt.com> for reporting
- 	  this.
+        * ace/Local_Name_Space_T.cpp (create_manager_i): Added a special
+          case for CHORUS so that we use a base address of 0.  Thanks to
+          Alberto Villarica <Alberto.Villarica.rav@nt.com> for reporting
+          this.
 
-	* ace/Local_Name_Space_T.cpp (create_manager_i): Don't use
- 	  ACE_OS::access() if the platform lacks it.  Thanks to Alberto
- 	  Villarica <Alberto.Villarica.rav@nt.com> for reporting this.
+        * ace/Local_Name_Space_T.cpp (create_manager_i): Don't use
+          ACE_OS::access() if the platform lacks it.  Thanks to Alberto
+          Villarica <Alberto.Villarica.rav@nt.com> for reporting this.
 
 Sat Oct 10 18:33:06 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* tests/Aio_Platform_Test.cpp: Comments.
+        * tests/Aio_Platform_Test.cpp: Comments.
 
 Sat Oct 10 17:42:18 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -39,34 +45,34 @@ Sat Oct 10 17:42:18 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sat Oct 10 16:44:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Service_Repository.cpp: Improved the documentation and added
- 	  some new ACE_const_casts.  Thanks to Eric Palantir
- 	  <palantir@net56.net> for motivating this.
+        * ace/Service_Repository.cpp: Improved the documentation and added
+          some new ACE_const_casts.  Thanks to Eric Palantir
+          <palantir@net56.net> for motivating this.
 
-	* ace/Service_Config.cpp (open): The logger key should be set to
- 	  the static logger key only if the key supplied is EQUAL with the
- 	  default logger key.  Thanks to Eric Palantir
- 	  <palantir@net56.net> for reporting this.
+        * ace/Service_Config.cpp (open): The logger key should be set to
+          the static logger key only if the key supplied is EQUAL with the
+          default logger key.  Thanks to Eric Palantir
+          <palantir@net56.net> for reporting this.
 
 Sat Oct 10 16:28:00 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Synch.h: 
-	* ace/Synch.i: 
-	* ace/Synch.cpp: 
-	  The ACE_Process_Mutex class was allocating one of its members
- 	  from the heap, thus it could not be placed in shared memory.
-  	  The problem was that the member required the creation of a
- 	  unique name if the user did not provide one; making the buffer
- 	  for this unique name a member of ACE_Process_Mutex allowed us to
- 	  initialize the lock_ member while still allocating it as a
- 	  member of the class.  Thanks to Bob McWhirter
- 	  <bob@netwrench.com> for helping to track this down.
+        * ace/Synch.h:
+        * ace/Synch.i:
+        * ace/Synch.cpp:
+          The ACE_Process_Mutex class was allocating one of its members
+          from the heap, thus it could not be placed in shared memory.
+          The problem was that the member required the creation of a
+          unique name if the user did not provide one; making the buffer
+          for this unique name a member of ACE_Process_Mutex allowed us to
+          initialize the lock_ member while still allocating it as a
+          member of the class.  Thanks to Bob McWhirter
+          <bob@netwrench.com> for helping to track this down.
 
 Sat Oct 10 12:45:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Malloc_T.h: Added a documentation entry for class
- 	  ACE_Cached_Allocator.  Thanks to Erik Koerber
-	  <erik.koerber@siemens.at> for reporting this.
+        * ace/Malloc_T.h: Added a documentation entry for class
+          ACE_Cached_Allocator.  Thanks to Erik Koerber
+          <erik.koerber@siemens.at> for reporting this.
 
 Sat Oct 10 00:40:05 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -74,20 +80,20 @@ Sat Oct 10 00:40:05 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Oct 09 23:47:42 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Mem_Map.cpp (map_it): Fixed the setting of length_ again.
-	  Hopefully, it will be right this time.
+        * ace/Mem_Map.cpp (map_it): Fixed the setting of length_ again.
+          Hopefully, it will be right this time.
 
 Fri Oct  9 15:37:26 PDT 1998  James Hu  <jxh@entera.com>
 
-	* ace/Mem_Map.cpp: Protect against assigning 0 to length_.  This
-	  was causing JAWS to fail.
+        * ace/Mem_Map.cpp: Protect against assigning 0 to length_.  This
+          was causing JAWS to fail.
 
 Fri Oct  9 16:59:26 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* examples/IPC_SAP/SOCK_SAP/run_test: 
-	* examples/IPC_SAP/SOCK_SAP/summarize:
-		Fixed the scripts to print the results correctly.Fixed
-	comments and usage.
+        * examples/IPC_SAP/SOCK_SAP/run_test:
+        * examples/IPC_SAP/SOCK_SAP/summarize:
+                Fixed the scripts to print the results correctly.Fixed
+        comments and usage.
 
 Fri Oct 09 16:35:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -95,7 +101,7 @@ Fri Oct 09 16:35:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
           ace/ace_dll.dsp
           examples/Bounded_Packet_Relay/Thread_Bounded_Packet_Relay.{cpp, h}:
           Fixes for deferred callbacks in the BPR example on NT.
-	
+
 Fri Oct 09 11:59:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/wrapper_macros.GNU: removed RM override
