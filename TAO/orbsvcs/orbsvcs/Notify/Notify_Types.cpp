@@ -25,8 +25,10 @@ TAO_Notify_EventType::TAO_Notify_EventType (const char* domain_name, const char*
 TAO_Notify_EventType::TAO_Notify_EventType (const CosNotification::EventType& event_type)
 {
   // @@ Check it these dups are indeed required.
-  this->event_type_.type_name = CORBA::string_dup (event_type.type_name.in ());
-  this->event_type_.domain_name = CORBA::string_dup (event_type.domain_name.in ());
+  this->event_type_.type_name = event_type.type_name.in ();
+  //CORBA::string_dup (event_type.type_name.in ());
+  this->event_type_.domain_name = event_type.domain_name.in ();
+  // CORBA::string_dup (event_type.domain_name.in ());
   this->recompute_hash ();
 }
 
@@ -72,14 +74,24 @@ CORBA::Boolean
 TAO_Notify_EventType::is_special (void) const
 {
   if ((event_type_.domain_name == 0 ||
+       ACE_OS::strcmp (event_type_.domain_name, "") == 0 ||
        ACE_OS::strcmp (event_type_.domain_name, "*") == 0) &&
       (event_type_.type_name == 0 ||
+       ACE_OS::strcmp (event_type_.domain_name, "") == 0 ||
        ACE_OS::strcmp (event_type_.type_name, "*") == 0 ||
        ACE_OS::strcmp (event_type_.type_name, "%ALL") == 0))
     return 1;
   else
     return 0;
 }
+
+const CosNotification::EventType&
+TAO_Notify_EventType::get_native (void) const
+{
+  return event_type_;
+}
+
+// = Any Event Type.
 
 TAO_Notify_Any::TAO_Notify_Any (void)
 {
@@ -88,6 +100,9 @@ TAO_Notify_Any::TAO_Notify_Any (void)
 
 TAO_Notify_Any::TAO_Notify_Any (const CORBA::Any & data)
   :data_ ((CORBA::Any*)&data)
+  // Note: This appears like we're casting away const correctness
+  //       but this class still respects it via the is_owner flag.
+  //
 {
   is_owner_ = 0;
 }
@@ -274,7 +289,7 @@ EVENTTYPE_LIST::populate (CosNotification::EventTypeSeq& event_type_seq)
 
   CORBA::ULong i = 0;
   for (iter.first (); iter.next (event_type); iter.advance (), ++i)
-    event_type_seq[i] = event_type->event_type_;
+    event_type_seq[i] = event_type->get_native ();
 }
 
 void
