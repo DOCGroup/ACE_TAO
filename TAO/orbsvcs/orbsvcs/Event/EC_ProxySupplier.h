@@ -104,8 +104,16 @@ public:
 
   void push_to_consumer (const RtecEventComm::EventSet &event,
                          CORBA::Environment &env);
-  // Pushes to the consumer, verifies that it is connected and that it 
+  void reactive_push_to_consumer (const RtecEventComm::EventSet &event,
+                                  CORBA::Environment &env);
+  // Pushes to the consumer, verifies that it is connected and that it
   // is not suspended.
+
+  void push_timeout (TAO_EC_Filter* timeout_filter,
+                     const RtecEventComm::EventSet &event,
+                     TAO_EC_QOS_Info& qos_info,
+                     CORBA::Environment &env);
+  // Callback from the timeout filters
 
   // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
   virtual void connect_push_consumer (

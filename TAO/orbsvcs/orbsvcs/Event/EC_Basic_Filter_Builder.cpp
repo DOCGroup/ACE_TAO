@@ -18,17 +18,19 @@ TAO_EC_Basic_Filter_Builder::~TAO_EC_Basic_Filter_Builder (void)
 }
 
 TAO_EC_Filter*
-TAO_EC_Basic_Filter_Builder::
-    build (RtecEventChannelAdmin::ConsumerQOS& qos) const
+TAO_EC_Basic_Filter_Builder::build (
+    TAO_EC_ProxyPushSupplier *supplier,
+    RtecEventChannelAdmin::ConsumerQOS& qos) const
 {
   CORBA::ULong pos = 0;
-  return this->recursive_build (qos, pos);
+  return this->recursive_build (supplier, qos, pos);
 }
 
 TAO_EC_Filter*
-TAO_EC_Basic_Filter_Builder::
-    recursive_build (RtecEventChannelAdmin::ConsumerQOS& qos,
-                     CORBA::ULong& pos) const
+TAO_EC_Basic_Filter_Builder:: recursive_build (
+    TAO_EC_ProxyPushSupplier *supplier,
+    RtecEventChannelAdmin::ConsumerQOS& qos,
+    CORBA::ULong& pos) const
 {
   const RtecEventComm::Event& e = qos.dependencies[pos].event;
   if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR)
@@ -40,7 +42,7 @@ TAO_EC_Basic_Filter_Builder::
       ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
       for (CORBA::ULong i = 0; i != n; ++i)
         {
-          children[i] = this->recursive_build (qos, pos);
+          children[i] = this->recursive_build (supplier, qos, pos);
           pos++;
         }
       return new TAO_EC_Conjunction_Filter (children, n);
@@ -54,7 +56,7 @@ TAO_EC_Basic_Filter_Builder::
       ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
       for (CORBA::ULong i = 0; i != n; ++i)
         {
-          children[i] = this->recursive_build (qos, pos);
+          children[i] = this->recursive_build (supplier, qos, pos);
           pos++;
         }
       return new TAO_EC_Disjunction_Filter (children, n);
@@ -66,6 +68,7 @@ TAO_EC_Basic_Filter_Builder::
       pos++;
       TAO_EC_QOS_Info qos_info;
       return new TAO_EC_Timeout_Filter (this->event_channel_,
+                                        supplier,
                                         qos_info,
                                         e.header.type,
                                         e.header.creation_time);

@@ -115,7 +115,8 @@ TAO_EC_ProxyPushSupplier::connect_push_consumer (
     this->qos_ = qos;
 
     this->child_ =
-      this->event_channel_->filter_builder ()->build (this->qos_);
+      this->event_channel_->filter_builder ()->build (this,
+                                                      this->qos_);
     this->adopt_child (this->child_);
   }
 
@@ -228,18 +229,63 @@ void
 TAO_EC_ProxyPushSupplier::push_to_consumer (const RtecEventComm::EventSet& event,
                                             CORBA::Environment& ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (
+  RtecEventComm::PushConsumer_var consumer;
+  {
+    ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
             RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-  ACE_CHECK;
+    ACE_CHECK;
 
+    if (this->is_connected_i () == 0)
+      return; // TAO_THROW (RtecEventComm::Disconnected ());????
+
+    if (this->suspended_ != 0)
+      return;
+
+    consumer =
+      RtecEventComm::PushConsumer::_duplicate (this->consumer_.in ());
+  }
+
+  consumer->push (event, ACE_TRY_ENV);
+}
+
+void
+TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
+    const RtecEventComm::EventSet& event,
+    CORBA::Environment& ACE_TRY_ENV)
+{
   if (this->is_connected_i () == 0)
     return; // TAO_THROW (RtecEventComm::Disconnected ());????
 
   if (this->suspended_ != 0)
     return;
 
-  this->consumer_->push (event, ACE_TRY_ENV);
+  RtecEventComm::PushConsumer_var consumer =
+    RtecEventComm::PushConsumer::_duplicate (this->consumer_.in ());
+  {
+    ACE_Reverse_Lock<ACE_Lock> reverse_lock (*this->lock_);
+
+    ACE_GUARD_THROW_EX (
+            ACE_Reverse_Lock<ACE_Lock>, ace_mon, reverse_lock,
+            RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+    ACE_CHECK;
+    consumer->push (event, ACE_TRY_ENV);
+  }
+}
+
+void
+TAO_EC_ProxyPushSupplier::push_timeout (
+    TAO_EC_Filter* timeout_filter,
+    const RtecEventComm::EventSet &event,
+    TAO_EC_QOS_Info& qos_info,
+    CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_GUARD_THROW_EX (
+          ACE_Lock, ace_mon, *this->lock_,
+          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+  ACE_CHECK;
+
+  timeout_filter->push (event, qos_info, ACE_TRY_ENV);
 }
 
 void
@@ -266,3 +312,13 @@ TAO_EC_ProxyPushSupplier::can_match (
 
   return this->child_->can_match (header);
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_Reverse_Lock<ACE_Lock>;
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Reverse_Lock<ACE_Lock>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -35,7 +35,7 @@ TAO_EC_Reactive_Dispatching::push (TAO_EC_ProxyPushSupplier* proxy,
                                    TAO_EC_QOS_Info& qos_info,
                                    CORBA::Environment& ACE_TRY_ENV)
 {
-  proxy->push_to_consumer (event, ACE_TRY_ENV);
+  proxy->reactive_push_to_consumer (event, ACE_TRY_ENV);
 }
 
 void
@@ -44,5 +44,5 @@ TAO_EC_Reactive_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                           TAO_EC_QOS_Info& qos_info,
                                           CORBA::Environment& ACE_TRY_ENV)
 {
-  proxy->push_to_consumer (event, ACE_TRY_ENV);
+  proxy->reactive_push_to_consumer (event, ACE_TRY_ENV);
 }

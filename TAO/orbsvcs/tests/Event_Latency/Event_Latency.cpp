@@ -174,12 +174,11 @@ Latency_Consumer::push (const RtecEventComm::EventSet &events,
   // ACE_DEBUG ((LM_DEBUG, "Latency_Consumer:push - "));
   ACE_TIMEPROBE (EVENT_LATENCY_PUSH_EVENT_TO_CONSUMER);
 
+  // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
   if (events.length () == 0)
     {
-      // ACE_DEBUG ((LM_DEBUG, "no events\n"));
       return;
     }
-  // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
 
 #if defined (ACE_HAS_QUANTIFY)
   // If measuring jitter, just Quantify the supplier-consumer path.
@@ -544,13 +543,11 @@ Latency_Supplier::push (const RtecEventComm::EventSet &events,
   // ACE_DEBUG ((LM_DEBUG, "Latency_Supplier::push - "));
   ACE_UNUSED_ARG (TAO_IN_ENV);
 
+  // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
   if (events.length () == 0)
     {
-      // ACE_DEBUG ((LM_DEBUG, "no events\n"));
       return;
     }
-
-  // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
 
   for (CORBA::ULong i = 0; i < events.length (); ++i)
     {
