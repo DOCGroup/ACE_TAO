@@ -98,7 +98,8 @@ public:
     LOCATION,
     DESCRIPTION,
     HOST_NAME,
-    TRADER_NAME
+    TRADER_NAME,
+    MISCELLANEOUS
   };
 
   static const char* REMOTE_IO_NAME;

@@ -23,6 +23,7 @@ class TAO_Service_Type_Exporter
 public:
 
   TAO_Service_Type_Exporter (CosTrading::Lookup_ptr lookup_if,
+                             CORBA::Boolean verbose,
                              CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException));
   
@@ -101,6 +102,9 @@ private:
 		   const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct) const;
   // Dump the contents of a service type description to standard
   // output. 
+
+  CORBA::Boolean verbose_;
+  // True if the user want profuse output.
   
   CosTrading::Lookup_var lookup_;
   // A reference to the lookup interface of the trading service
