@@ -64,7 +64,7 @@ private:
 
   RT_Properties *rt_object_properties_;
   RT_Properties *rt_poa_properties_;
-
+  unsigned int priority_bands_;
   Counter_var base_object_;
   Counter_var overridden_object_;
 

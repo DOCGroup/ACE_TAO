@@ -5,6 +5,7 @@ ACE_RCSID (tao, Policy_Verifier, "$Id$")
 #if (TAO_HAS_RT_CORBA == 1)
 
 Policy_Verifier::Policy_Verifier (void)
+  : priority_bands_ (0)
 {
   ACE_OS_String::strcpy (this->base_object_ref_,
                          "file://");
@@ -42,6 +43,9 @@ Policy_Verifier::init (int argc,
 
               ACE_OS_String::strcat (this->base_object_ref_,
                                      this->rt_poa_properties_->ior_source ());
+
+              this->priority_bands_ = this->rt_poa_properties_->priority_bands ().length ();
+
             }
           else if ((arg = arg_shifter.get_the_parameter ("-ObjectConfigFile")))
             {
@@ -179,7 +183,7 @@ Policy_Verifier::verify_reference (Counter_ptr object,
               RTCORBA::PriorityBands_var pb =
                 priority_banded_policy->priority_bands ();
               unsigned int band_num = pb->length ();
-              if (band_num != rt_properties->priority_bands ().length ())
+              if (band_num != this->priority_bands_)
                 ACE_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("Mismatching Number of Priority Bands!\n")));
 
