@@ -43,7 +43,7 @@ TAO_FT_ServerService_Activate::Initializer (void)
   return 0;
 }
 
-ACE_FACTORY_DEFINE (TAO_FT,TAO_FT_ServerService_Activate)
+ACE_FACTORY_DEFINE (TAO_FT_ServerORB,TAO_FT_ServerService_Activate)
 
 ACE_STATIC_SVC_DEFINE (TAO_FT_ServerService_Activate,
                        ACE_TEXT ("FT_ServerService_Activate"),

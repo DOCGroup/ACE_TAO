@@ -1,3 +1,32 @@
+Mon Nov 17 16:31:39 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientORBInitializer.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientORB_export.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicyFactory.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientService_Activate.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientService_Activate.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ORB_Utils_export.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerORBInitializer.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerORB_export.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicyFactory.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicy_i.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerService_Activate.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerService_Activate.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+        * orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h:
+          Add new export files for FT_ORB_Utils, FT_ServerORB, and FT_ClientORB.
+
+        * orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.h:
+          Build error: TAO_SYNCH_MUTEX undefined.  Add included to define it.
+
 Mon Nov 17 21:43:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Trading/Trading.mpc:
@@ -25,72 +54,72 @@ Mon Nov 17 10:04:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sun Nov 16 22:47:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Synch_Invocation.cpp:
+        * tao/Synch_Invocation.cpp:
 
-	  Fixed a compile error due to wrong exception macro usage.
+          Fixed a compile error due to wrong exception macro usage.
 
 Sun Nov 16 18:04:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/operation_details.i:
 
-	  Removed 'return' from the last line of two methods returning void.
+          Removed 'return' from the last line of two methods returning void.
 
 Sun Nov 16 16:49:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
-	* tao/ORB_Core.cpp:
-	* tao/Synch_Invocation.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Synch_Invocation.cpp:
 
-	  Fix for [BUG 1384]. Please see
+          Fix for [BUG 1384]. Please see
 
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1384
+          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1384
 
-	  for details. The crux of the problem is whether the FTORB
-	  infrastructure should do a reinvocation when it receives a
-	  TRANSIENT over the wire. Opinions were widely different on
-	  this. We finally took the opinion of Jon Biggar who said this
-	  was okay.
+          for details. The crux of the problem is whether the FTORB
+          infrastructure should do a reinvocation when it receives a
+          TRANSIENT over the wire. Opinions were widely different on
+          this. We finally took the opinion of Jon Biggar who said this
+          was okay.
 
 Sun Nov 16 12:40:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
+        * tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
 
-	  In receive_request_service_context (), return if we receive a
-	  shutdown call. If not the test will not shutdwon cleanly.
+          In receive_request_service_context (), return if we receive a
+          shutdown call. If not the test will not shutdwon cleanly.
 
 Sun Nov 16 12:32:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * tao/operation_details.h:
-	* tao/operation_details.i:
+        * tao/operation_details.i:
 
-	  Added two new methods reset_request_service_info () and
-	  reset_reply_service_info () which resets the buffer within the
-	  underlying service context list.
+          Added two new methods reset_request_service_info () and
+          reset_reply_service_info () which resets the buffer within the
+          underlying service context list.
 
-	* tao/Invocation_Adapter.cpp:
+        * tao/Invocation_Adapter.cpp:
 
-	  If the call on a traget object returned a
-	  TAO::TAO_INVOKE_RESTART, reset the buffer of the service context
-	  list cached within the operation_details before restarting the
-	  invocation on a new target. This should fix [BUG1559].
+          If the call on a traget object returned a
+          TAO::TAO_INVOKE_RESTART, reset the buffer of the service context
+          list cached within the operation_details before restarting the
+          invocation on a new target. This should fix [BUG1559].
 
-	* tao/Sequence.cpp:
-	* tao/Sequence.h:
-	* tao/Sequence_T.cpp:
+        * tao/Sequence.cpp:
+        * tao/Sequence.h:
+        * tao/Sequence_T.cpp:
 
-	  The _dellocate_buffer () implementations just released the
-	  buffer and set the buffer to be null. The length_, release_ and
-	  maximum_ (not for bounded sequences) need to be reset too. If
-	  not the following code fragment could crash
+          The _dellocate_buffer () implementations just released the
+          buffer and set the buffer to be null. The length_, release_ and
+          maximum_ (not for bounded sequences) need to be reset too. If
+          not the following code fragment could crash
 
-	  some_sequence._deallocate_buffer ();
-	  some_sequence[i].something ();
+          some_sequence._deallocate_buffer ();
+          some_sequence[i].something ();
 
-	* tao/Synch_Invocation.cpp:
-	* tao/Synch_Invocation.h:
+        * tao/Synch_Invocation.cpp:
+        * tao/Synch_Invocation.h:
 
-	  Cosmetic fixes like adding more comments, adding preconditions
-	  and postconditions for a few calls etc.
+          Cosmetic fixes like adding more comments, adding preconditions
+          and postconditions for a few calls etc.
 
 Sun Nov 16 18:33:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -110,67 +139,67 @@ Sun Nov 16 18:33:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sun Nov 16 10:03:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/TAO.dsp:
+        * tao/TAO.dsp:
 
-	  Added the new generated files into the project.
+          Added the new generated files into the project.
 
 Sun Nov 16 09:46:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Dynamic.pidl:
-	* tao/Messaging_PolicyValue.pidl:
-	* tao/Policy_Forward.pidl:
-	* tao/OctetSeq.pidl:
-	* tao/Services.pidl:
-	* tao/StringSeq.pidl:
-	* tao/TAO.pidl:
+        * tao/Dynamic.pidl:
+        * tao/Messaging_PolicyValue.pidl:
+        * tao/Policy_Forward.pidl:
+        * tao/OctetSeq.pidl:
+        * tao/Services.pidl:
+        * tao/StringSeq.pidl:
+        * tao/TAO.pidl:
 
-	  Added the new option to needed to regenerate code.
+          Added the new option to needed to regenerate code.
 
         * tao/DynamicA.cpp:
-	* tao/DynamicA.h:
-	* tao/Messaging_PolicyValueA.cpp:
-	* tao/Messaging_PolicyValueA.h:
-	* tao/OctetSeqA.cpp:
-	* tao/OctetSeqA.h:
-	* tao/Policy_ForwardA.cpp:
-	* tao/Policy_ForwardA.h:
-	* tao/ServicesA.cpp:
-	* tao/ServicesA.h:
-	* tao/StringSeqA.cpp:
-	* tao/StringSeqA.h:
+        * tao/DynamicA.h:
+        * tao/Messaging_PolicyValueA.cpp:
+        * tao/Messaging_PolicyValueA.h:
+        * tao/OctetSeqA.cpp:
+        * tao/OctetSeqA.h:
+        * tao/Policy_ForwardA.cpp:
+        * tao/Policy_ForwardA.h:
+        * tao/ServicesA.cpp:
+        * tao/ServicesA.h:
+        * tao/StringSeqA.cpp:
+        * tao/StringSeqA.h:
 
-	  New files that have the Any operators declared and defined
-	  elsewhere.
+          New files that have the Any operators declared and defined
+          elsewhere.
 
-	* tao/DynamicC.cpp:
-	* tao/DynamicC.h:
-	* tao/Messaging_PolicyValueC.cpp:
-	* tao/Messaging_PolicyValueC.i:
-	* tao/OctetSeqC.cpp:
-	* tao/OctetSeqC.i:
-	* tao/Policy_ForwardC.cpp:
-	* tao/Policy_ForwardC.i:
-	* tao/ServicesC.cpp:
-	* tao/ServicesC.i:
-	* tao/StringSeqC.cpp:
-	* tao/StringSeqC.h:
-	* tao/StringSeqC.i:
+        * tao/DynamicC.cpp:
+        * tao/DynamicC.h:
+        * tao/Messaging_PolicyValueC.cpp:
+        * tao/Messaging_PolicyValueC.i:
+        * tao/OctetSeqC.cpp:
+        * tao/OctetSeqC.i:
+        * tao/Policy_ForwardC.cpp:
+        * tao/Policy_ForwardC.i:
+        * tao/ServicesC.cpp:
+        * tao/ServicesC.i:
+        * tao/StringSeqC.cpp:
+        * tao/StringSeqC.h:
+        * tao/StringSeqC.i:
 
-	  Regenerated code since the Any operators have been moved from
-	  the above files.
+          Regenerated code since the Any operators have been moved from
+          the above files.
 
-	* tao/Makefile.bor:
-	* tao/Makefile.tao:
-	* tao/tao.mpc:
+        * tao/Makefile.bor:
+        * tao/Makefile.tao:
+        * tao/tao.mpc:
 
-	  Added the new files which has the Any operators for
-	  compilation.
+          Added the new files which has the Any operators for
+          compilation.
 
 Sun Nov 16 13:23:42 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/ImplRepo_Service/ImplRepo.bor:
-	* orbsvcs/ImplRepo_Service/ImR_Activator.bor:
-	  Fixed these BCB makefiles
+        * orbsvcs/ImplRepo_Service/ImplRepo.bor:
+        * orbsvcs/ImplRepo_Service/ImR_Activator.bor:
+          Fixed these BCB makefiles
 
 Sat Nov 15 16:18:29 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -191,7 +220,7 @@ Sat Nov 15 14:33:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Nov 14 15:04:53 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/AMI/FL_Callback/peer.cpp:
+        * examples/AMI/FL_Callback/peer.cpp:
           Added #include ace/OS_NS_errno.h
 
 Fri Nov 14 04:53:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
@@ -224,10 +253,10 @@ Fri Nov 14 02:28:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Thu Nov 13 21:02:31 2003  Carlos O'Ryan  <coryan@atdesk.com>
 
-	* tao/Queued_Message.cpp:
-	  Made the remove_from_list() operation safe if called multiple
-	  times.  This fixes:
-	    http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1614
+        * tao/Queued_Message.cpp:
+          Made the remove_from_list() operation safe if called multiple
+          times.  This fixes:
+            http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1614
 
 Fri Nov 14 00:26:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -615,15 +644,15 @@ Wed Nov 12 07:40:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue Nov 11 16:54:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Security/Callback/server.cpp:
+        * orbsvcs/tests/Security/Callback/server.cpp:
 
-	  Fixed compile errors with g++.
+          Fixed compile errors with g++.
 
 Tue Nov 11 14:54:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/DynamicInterface/Request.cpp:
+        * tao/DynamicInterface/Request.cpp:
 
-	  Fixed a compile error due to wrong environment variable usage.
+          Fixed a compile error due to wrong environment variable usage.
 
 Tue Nov 11 11:43:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -810,24 +839,24 @@ Mon Nov 10 13:19:01 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Nov 10 18:09:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tests/AMI/server.cpp:
-	* tests/AMI_Buffering/admin.cpp:
-	* tests/AMI_Buffering/server.cpp:
-	* tests/Crashed_Callback/server.cpp:
-	* tests/OBV/Any/server.cpp:
-	* tests/OBV/Factory/server.cpp:
-	* tests/OBV/Forward/server.cpp:
-	* tests/OBV/TC_Alignment/server.cpp:
-	  Added #include ace/OS_NS_stdio.h to get ACE_OS::fclose/fopen/fprintf.
+        * tests/AMI/server.cpp:
+        * tests/AMI_Buffering/admin.cpp:
+        * tests/AMI_Buffering/server.cpp:
+        * tests/Crashed_Callback/server.cpp:
+        * tests/OBV/Any/server.cpp:
+        * tests/OBV/Factory/server.cpp:
+        * tests/OBV/Forward/server.cpp:
+        * tests/OBV/TC_Alignment/server.cpp:
+          Added #include ace/OS_NS_stdio.h to get ACE_OS::fclose/fopen/fprintf.
 
-	* tests/ORT/ServerRequestInterceptor.cpp:
-	  Added #include ace/OS_NS_string.h to get ACE_OS::strcmp
+        * tests/ORT/ServerRequestInterceptor.cpp:
+          Added #include ace/OS_NS_string.h to get ACE_OS::strcmp
 
-	* tests/Connection_Timeout/client.bor:
-	* tests/MT_Timeout/client.bor:
-	* tests/Oneway_Buffering/client.bor:
-	* tests/Nested_Upcall_Crash/scavenger.bor:
-	  Added ValueType library
+        * tests/Connection_Timeout/client.bor:
+        * tests/MT_Timeout/client.bor:
+        * tests/Oneway_Buffering/client.bor:
+        * tests/Nested_Upcall_Crash/scavenger.bor:
+          Added ValueType library
 
 Mon Nov 10 11:33:34 2003  Justin Michel <michel_j@ociweb.com>
 
@@ -969,130 +998,130 @@ Mon Nov 10 11:03:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Nov 10 16:59:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* examples/Buffered_AMI/server.cpp:
-	* examples/OBV/Simple_util.cpp:
-	* examples/POA/On_Demand_Loading/Server_Manager.cpp:
-	* tests/AMH_Exceptions/server.cpp:
-	* tests/AMH_Oneway/server.cpp:
-	  Added #include ace/OS_NS_stdio.h to get ACE_OS::fclose/fopen/fprintf.
-	  This fixes compile problems with the BCB6 compiler
+        * examples/Buffered_AMI/server.cpp:
+        * examples/OBV/Simple_util.cpp:
+        * examples/POA/On_Demand_Loading/Server_Manager.cpp:
+        * tests/AMH_Exceptions/server.cpp:
+        * tests/AMH_Oneway/server.cpp:
+          Added #include ace/OS_NS_stdio.h to get ACE_OS::fclose/fopen/fprintf.
+          This fixes compile problems with the BCB6 compiler
 
 Mon Nov 10 16:49:45 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/Time_Service/Clerk_i.cpp:
-	  Added #include ace/os_include/os_netdb.h to get MAXHOSTNAMELEN
+        * orbsvcs/Time_Service/Clerk_i.cpp:
+          Added #include ace/os_include/os_netdb.h to get MAXHOSTNAMELEN
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp:
-	  Added #include ace/OS_NS_stdio.h to get ACE_OS::sprintf
-	  Added #include ace/os_include/os_netdb.h to get MAXHOSTNAMELEN
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp:
+          Added #include ace/OS_NS_stdio.h to get ACE_OS::sprintf
+          Added #include ace/os_include/os_netdb.h to get MAXHOSTNAMELEN
 
 Mon Nov 10 16:41:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
-	  Added #include ace/OS_NS_stdio.h to get ACE_OS::sprintf
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
+          Added #include ace/OS_NS_stdio.h to get ACE_OS::sprintf
 
 Mon Nov 10 16:06:09 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/Event/Fast_Reactor.h:
-	  Added #include ace/OS_NS_sys_select.h to get ACE_OS::select
+        * orbsvcs/orbsvcs/Event/Fast_Reactor.h:
+          Added #include ace/OS_NS_sys_select.h to get ACE_OS::select
 
 Mon Nov 10 16:01:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* TAO_IDL/util/utl_indenter.cpp:
-	  Changed order of includes to get this file compiling with BCB6
+        * TAO_IDL/util/utl_indenter.cpp:
+          Changed order of includes to get this file compiling with BCB6
 
 Mon Nov 10 07:18:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/PortableServer/ImR_ActivatorC.cpp:
+        * tao/PortableServer/ImR_ActivatorC.cpp:
 
-	  Not sure why this file is there. Anyway, just removed the vague
-	  includes that it has.
+          Not sure why this file is there. Anyway, just removed the vague
+          includes that it has.
 
 Sun Nov  9 23:23:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Remote_Object_Proxy_Impl.cpp:
-	* tao/Remote_Object_Proxy_Impl.h:
+        * tao/Remote_Object_Proxy_Impl.cpp:
+        * tao/Remote_Object_Proxy_Impl.h:
 
-	  More retirements.
+          More retirements.
 
-	* tao/Makefile*: Updated dependencies.
+        * tao/Makefile*: Updated dependencies.
 
 Sun Nov  9 23:06:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Asynch_Invocation.cpp:
-	* tao/Asynch_Invocation.h:
-	* tao/Asynch_Invocation.i:
-	* tao/ClientInterceptorAdapter.cpp:
-	* tao/ClientInterceptorAdapter.h:
-	* tao/ClientInterceptorAdapter.inl:
-	* tao/Invocation.cpp:
-	* tao/Invocation.h:
-	* tao/Invocation.i:
+        * tao/Asynch_Invocation.cpp:
+        * tao/Asynch_Invocation.h:
+        * tao/Asynch_Invocation.i:
+        * tao/ClientInterceptorAdapter.cpp:
+        * tao/ClientInterceptorAdapter.h:
+        * tao/ClientInterceptorAdapter.inl:
+        * tao/Invocation.cpp:
+        * tao/Invocation.h:
+        * tao/Invocation.i:
 
-	  Their service for our mankind is over. Time to remove them and
-	  go on with others.
+          Their service for our mankind is over. Time to remove them and
+          go on with others.
 
 Sun Nov  9 17:33:06 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* tests/Timeout/client.cpp (send_echo): Added a comment to
-	  explain what the orb->run() call does.  Thanks to Vladimir
- 	  Naylov <vladimir@monosphere.com> for reporting this.
+        * tests/Timeout/client.cpp (send_echo): Added a comment to
+          explain what the orb->run() call does.  Thanks to Vladimir
+          Naylov <vladimir@monosphere.com> for reporting this.
 
 Mon Nov 10 08:14:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/TAO.dsp:
+        * tao/TAO.dsp:
 
-	* tao/Makefile.bor:
+        * tao/Makefile.bor:
 
-  	  Added the new generated files into the project.
+          Added the new generated files into the project.
 
 
 Sun Nov  9 19:19:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/tao.mpc:
+        * tao/tao.mpc:
 
-	  Added the new generated files into the list of source files.
+          Added the new generated files into the list of source files.
 
 Sun Nov  9 19:12:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IOP_CodecA.cpp
-	* tao/IOP_CodecA.h:
-	* tao/IOP_IORA.cpp:
-	* tao/IOP_IORA.h:
-	* tao/PolicyA.cpp:
-	* tao/PolicyA.h:
-	* tao/PortableInterceptorA.cpp:
-	* tao/PortableInterceptorA.h:
+        * tao/IOP_CodecA.cpp
+        * tao/IOP_CodecA.h:
+        * tao/IOP_IORA.cpp:
+        * tao/IOP_IORA.h:
+        * tao/PolicyA.cpp:
+        * tao/PolicyA.h:
+        * tao/PortableInterceptorA.cpp:
+        * tao/PortableInterceptorA.h:
 
-	  New files that were created using the new IDL compiler
-	  option, that puts the Any operators in a seperate file.  This
-	  is just a test. If this gives good wins, we can go ahead fix all
-	  the generated code in $TAO_ROOT/tao to maintain the Any's in a
-	  seperate file. This can be used by the application by just
-	  including the header.
+          New files that were created using the new IDL compiler
+          option, that puts the Any operators in a seperate file.  This
+          is just a test. If this gives good wins, we can go ahead fix all
+          the generated code in $TAO_ROOT/tao to maintain the Any's in a
+          seperate file. This can be used by the application by just
+          including the header.
 
-	* tao/IOP_CodecC.cpp:
-	* tao/IOP_CodecC.i:
-	* tao/IOP_IOR.pidl
-	* tao/IOP_IORC.cpp:
-	* tao/IOP_IORC.i:
-	* tao/Makefile.tao:
-	* tao/Policy.pidl:
-	* tao/PolicyC.cpp:
-	* tao/PolicyC.i:
-	* tao/PortableInterceptor.pidl:
-	* tao/PortableInterceptorC.cpp:
-	* tao/PortableInterceptorC.i:
+        * tao/IOP_CodecC.cpp:
+        * tao/IOP_CodecC.i:
+        * tao/IOP_IOR.pidl
+        * tao/IOP_IORC.cpp:
+        * tao/IOP_IORC.i:
+        * tao/Makefile.tao:
+        * tao/Policy.pidl:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.i:
+        * tao/PortableInterceptor.pidl:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.i:
 
-	  Regenerated the code to keep the Any operators away. We will
-	  update the diffss and such if we are damn sure that this is
-	  going to give us wins.
+          Regenerated the code to keep the Any operators away. We will
+          update the diffss and such if we are damn sure that this is
+          going to give us wins.
 
 Sun Nov  9 18:09:07 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Makefile.RTCosScheduling:
+        * orbsvcs/orbsvcs/Makefile.RTCosScheduling:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Sun Nov  9 17:57:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1112,42 +1141,42 @@ Sun Nov  9 17:57:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Sun Nov  9 17:57:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Synch_Refcountable.h:
-	* tao/tao.mpc:
-	* tao/BiDir_GIOP/BiDir_GIOP.mpc:
-	* tao/Domain/Domain.mpc:
-	* tao/DynamicAny/DynamicAny.mpc:
-	* tao/DynamicInterface/DynamicInterface.mpc:
-	* tao/IFR_Client/IFR_Client.mpc:
-	* tao/IORInterceptor/IORInterceptor.mpc:
-	* tao/IORManipulation/IORManipulation.mpc:
-	* tao/IORTable/IORTable.mpc:
-	* tao/Messaging/Messaging.mpc:
-	* tao/ObjRefTemplate/ObjRefTemplate.mpc:
-	* tao/PortableServer/AMH_Response_Handler.h:
-	* tao/PortableServer/POA.h:
-	* tao/PortableServer/PortableServer.mpc:
-	* tao/RTCORBA/RTCORBA.mpc:
-	* tao/RTPortableServer/RTPortableServer.mpc:
-	* tao/RTScheduling/RTScheduler.mpc:
-	* tao/SmartProxies/SmartProxies.mpc:
-	* tao/Strategies/DIOP_Profile.h:
-	* tao/Strategies/DIOP_Transport.h:
-	* tao/Strategies/SCIOP_Transport.h:
-	* tao/Strategies/SHMIOP_Profile.h:
-	* tao/Strategies/Strategies.mpc:
-	* tao/Strategies/UIOP_Profile.h:
-	* tao/Strategies/UIOP_Transport.h:
-	* tao/TypeCodeFactory/TypeCodeFactory.mpc:
-	* tao/Valuetype/ValueBase.h:
-	* tao/Valuetype/ValueFactory.cpp:
-	* tao/Valuetype/ValueFactory.h:
-	* tao/Valuetype/Valuetype.mpc:
-	* tests/Bug_1361_Regression/Server_Thread_Pool.h:
-	* tests/OBV/Supports/Supports_Test_impl.cpp:
-	* tests/OBV/Supports/Supports_Test_impl.h:
+        * tao/Synch_Refcountable.h:
+        * tao/tao.mpc:
+        * tao/BiDir_GIOP/BiDir_GIOP.mpc:
+        * tao/Domain/Domain.mpc:
+        * tao/DynamicAny/DynamicAny.mpc:
+        * tao/DynamicInterface/DynamicInterface.mpc:
+        * tao/IFR_Client/IFR_Client.mpc:
+        * tao/IORInterceptor/IORInterceptor.mpc:
+        * tao/IORManipulation/IORManipulation.mpc:
+        * tao/IORTable/IORTable.mpc:
+        * tao/Messaging/Messaging.mpc:
+        * tao/ObjRefTemplate/ObjRefTemplate.mpc:
+        * tao/PortableServer/AMH_Response_Handler.h:
+        * tao/PortableServer/POA.h:
+        * tao/PortableServer/PortableServer.mpc:
+        * tao/RTCORBA/RTCORBA.mpc:
+        * tao/RTPortableServer/RTPortableServer.mpc:
+        * tao/RTScheduling/RTScheduler.mpc:
+        * tao/SmartProxies/SmartProxies.mpc:
+        * tao/Strategies/DIOP_Profile.h:
+        * tao/Strategies/DIOP_Transport.h:
+        * tao/Strategies/SCIOP_Transport.h:
+        * tao/Strategies/SHMIOP_Profile.h:
+        * tao/Strategies/Strategies.mpc:
+        * tao/Strategies/UIOP_Profile.h:
+        * tao/Strategies/UIOP_Transport.h:
+        * tao/TypeCodeFactory/TypeCodeFactory.mpc:
+        * tao/Valuetype/ValueBase.h:
+        * tao/Valuetype/ValueFactory.cpp:
+        * tao/Valuetype/ValueFactory.h:
+        * tao/Valuetype/Valuetype.mpc:
+        * tests/Bug_1361_Regression/Server_Thread_Pool.h:
+        * tests/OBV/Supports/Supports_Test_impl.cpp:
+        * tests/OBV/Supports/Supports_Test_impl.h:
 
-	  Fixed fuzz errors.
+          Fixed fuzz errors.
 
 Sun Nov  9 22:12:29 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -1189,126 +1218,126 @@ Sun Nov  9 16:32:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sun Nov  9 11:19:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IORInterceptor/IORInterceptor.mpc:
-	* tao/IORInterceptor/Makefile:
-	* tao/IORInterceptor/Makefile.bor:
+        * tao/IORInterceptor/IORInterceptor.mpc:
+        * tao/IORInterceptor/Makefile:
+        * tao/IORInterceptor/Makefile.bor:
 
-	  IORInterceptor needs Valuetype and ORT libraries to build fine.
+          IORInterceptor needs Valuetype and ORT libraries to build fine.
 
 Sun Nov  9 14:39:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tao/DynamicInterface/Makefile.bor:
-	  Added Messaging library
+        * tao/DynamicInterface/Makefile.bor:
+          Added Messaging library
 
 Sun Nov  9 08:35:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/DynamicInterface/DynamicInterface.mpc:
+        * tao/DynamicInterface/DynamicInterface.mpc:
 
-	  Fixed the MPC file to use the messaging library. Thanks to
-	  Johnny for reminding me.
+          Fixed the MPC file to use the messaging library. Thanks to
+          Johnny for reminding me.
 
 Sun Nov  9 08:18:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
 
-	  Fixed a unused variable warning in _is_a () for abstract
-	  interfaces.
+          Fixed a unused variable warning in _is_a () for abstract
+          interfaces.
 
 Sun Nov  9 08:06:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Sun Nov  9 08:03:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/MProfile/client.cpp:
+        * tests/MProfile/client.cpp:
 
-	  Fixed a unused variable warning.
+          Fixed a unused variable warning.
 
 Sun Nov  9 07:53:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Messaging/Messaging_No_ImplC.h:
-	* tao/Messaging/Messaging_RT_PolicyC.h:
-	* tao/Messaging/Messaging_SyncScope_PolicyC.h:
-	* tao/Messaging/TAO_ExtC.h:
+        * tao/Messaging/Messaging_No_ImplC.h:
+        * tao/Messaging/Messaging_RT_PolicyC.h:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.h:
+        * tao/Messaging/TAO_ExtC.h:
 
-	  Fixed post.h inclusions in the above files. Looks like they got
-	  missed during regeneration. Thanks to Johnny for poitning this
-	  out.
+          Fixed post.h inclusions in the above files. Looks like they got
+          missed during regeneration. Thanks to Johnny for poitning this
+          out.
 
 Sun Nov  9 13:41:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* tao/IORInterceptor/Makefile.bor:
-	  Added valuetype lib to lin with
+        * tao/IORInterceptor/Makefile.bor:
+          Added valuetype lib to lin with
 
 Sat Nov  8 23:58:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/File_IO/client.cpp
-	* tests/IDL_Test/main.cpp
-	* tests/MProfile/client.cpp:
-	* tests/MT_BiDir/Sender_i.cpp:
-	* tests/Multiple_Inheritance/client.cpp
-	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Server_Task.cpp:
-	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/test_i.cpp:
-	* tests/Two_Objects/server.cpp:
-	* tao/corbafwd.h:
-	* utils/catior/catior.cpp:
-	* utils/catior/catior.mpc:
+        * tests/File_IO/client.cpp
+        * tests/IDL_Test/main.cpp
+        * tests/MProfile/client.cpp:
+        * tests/MT_BiDir/Sender_i.cpp:
+        * tests/Multiple_Inheritance/client.cpp
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Server_Task.cpp:
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/test_i.cpp:
+        * tests/Two_Objects/server.cpp:
+        * tao/corbafwd.h:
+        * utils/catior/catior.cpp:
+        * utils/catior/catior.mpc:
 
-	  Fixed fuzz errors.
+          Fixed fuzz errors.
 
 Sun Nov  9 05:53:59 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
-	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.h:
           Fixed typo.
 
 Sat Nov  8 23:36:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h:
-	* orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h:
+        * orbsvcs/orbsvcs/Notify/Event_Map_Entry_T.h:
 
-	  #included "tao/ORB_Constants.h" and "ace/CORBA_macros.h"
+          #included "tao/ORB_Constants.h" and "ace/CORBA_macros.h"
 
 Sat Nov  8 23:19:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/examples/Security/Send_File/Makefile:
+        * orbsvcs/examples/Security/Send_File/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
 
-	  #included tao/NVList.h
+          #included tao/NVList.h
 
 Sat Nov  8 22:31:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/examples/RtEC/Schedule/Makefile:
+        * orbsvcs/examples/RtEC/Schedule/Makefile:
 
-	  Do not build if RTOLDEvent is not built.
+          Do not build if RTOLDEvent is not built.
 
 Sat Nov  8 22:23:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests/Latency/Deferred/Makefile:
-	* orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
+        * performance-tests/Latency/Deferred/Makefile:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
 
-	  Fixed the Makefiles so that these don't build when
-	  corba_messaging is turned off.
+          Fixed the Makefiles so that these don't build when
+          corba_messaging is turned off.
 
 Sat Nov  8 22:19:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.inl:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.h:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.inl:
 
-	  Regenerated code.
+          Regenerated code.
 
-	* tao/TypeCodeFactory/diffs/TypeCodeFactoryC.cpp.diff:
-	* tao/TypeCodeFactory/diffs/TypeCodeFactoryC.h.diff:
-	* tao/TypeCodeFactory/diffs/TypeCodeFactoryC.inl.diff:
+        * tao/TypeCodeFactory/diffs/TypeCodeFactoryC.cpp.diff:
+        * tao/TypeCodeFactory/diffs/TypeCodeFactoryC.h.diff:
+        * tao/TypeCodeFactory/diffs/TypeCodeFactoryC.inl.diff:
 
-	  Diff files that are no longer necessary.
+          Diff files that are no longer necessary.
 
 Sun Nov  9 04:08:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -1317,37 +1346,37 @@ Sun Nov  9 04:08:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sat Nov  8 22:06:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/diffs/TAO.diff:
+        * tao/diffs/TAO.diff:
 
-	  Placed the diffs in a single file.
+          Placed the diffs in a single file.
 
-	* tao/diffs/TAOC.cpp.diff:
-	* tao/diffs/TAOC.h.diff:
-	* tao/diffs/TAOC.i.diff:
+        * tao/diffs/TAOC.cpp.diff:
+        * tao/diffs/TAOC.h.diff:
+        * tao/diffs/TAOC.i.diff:
 
-	  Removed the diffs placed in the above files.
+          Removed the diffs placed in the above files.
 
 Sat Nov  8 22:00:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Acceptor_Impl.cpp:
+        * tao/Acceptor_Impl.cpp:
 
           #included debug.h. This should fix compilation errorson HPUX.
 
-	* tao/IIOP_Connection_Handler.cpp:
-	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
 
-	  #included os_include/netinet/os_tcp.h to get the declaration of
-	  TCP_NODELAY on HPUX.
+          #included os_include/netinet/os_tcp.h to get the declaration of
+          TCP_NODELAY on HPUX.
 
-	* tao/TAO.pidl:
+        * tao/TAO.pidl:
 
-	  Improved comments in the file.
+          Improved comments in the file.
 
-	* tao/TAOC.cpp:
-	* tao/TAOC.h:
-	* tao/TAOC.i:
+        * tao/TAOC.cpp:
+        * tao/TAOC.h:
+        * tao/TAOC.i:
 
-	  Regenerated the code to fix warnings in HPUX and Solaris.
+          Regenerated the code to fix warnings in HPUX and Solaris.
 
 Sat Nov  8 17:51:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -1369,90 +1398,90 @@ Sat Nov  8 05:40:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Fri Nov 7 21:12:37 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/README:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/README:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp:
 
-	  Replaced the recording of frame rate with the recording of
-	  inter-frame arrival time. This does not use the
-	  ACE_Countdown_Time class and hence does not use the incorrect
-	  restart method on that class. This should fix the compile
-	  errors.
+          Replaced the recording of frame rate with the recording of
+          inter-frame arrival time. This does not use the
+          ACE_Countdown_Time class and hence does not use the incorrect
+          restart method on that class. This should fix the compile
+          errors.
 
 Fri Nov  7 20:11:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/Time_Service/Server_i.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
-	* orbsvcs//orbsvcs/Trader/Trading_Loader.cpp:
+        * orbsvcs/Time_Service/Server_i.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+        * orbsvcs//orbsvcs/Trader/Trading_Loader.cpp:
 
-	  #included "ace/os_include/os_netdb.h" to fix compile errors on
-	  Solaris 7 builds.
+          #included "ace/os_include/os_netdb.h" to fix compile errors on
+          Solaris 7 builds.
 
 Fri Nov  7 19:40:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests//Latency/AMI/run_test.pl:
-	* performance-tests//Latency/DSI/run_test.pl:
-	* performance-tests//Latency/Single_Threaded/default_configuration.pl:
-	* performance-tests//Latency/Single_Threaded/run_test.pl:
-	* performance-tests//Latency/Thread_Per_Connection/run_test.pl:
-	* performance-tests//Latency/Thread_Pool/run_test.pl:
+        * performance-tests//Latency/AMI/run_test.pl:
+        * performance-tests//Latency/DSI/run_test.pl:
+        * performance-tests//Latency/Single_Threaded/default_configuration.pl:
+        * performance-tests//Latency/Single_Threaded/run_test.pl:
+        * performance-tests//Latency/Thread_Per_Connection/run_test.pl:
+        * performance-tests//Latency/Thread_Pool/run_test.pl:
 
-	  More fixes for the number of iterations.
+          More fixes for the number of iterations.
 
 Fri Nov  7 19:25:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests//Latency/AMI/run_test.pl:
-	* performance-tests//Latency/DSI/run_test.pl:
-	* performance-tests//Latency/Single_Threaded/default_configuration.pl:
-	* performance-tests//Latency/Single_Threaded/run_test.pl:
-	* performance-tests//Latency/Thread_Per_Connection/run_test.pl:
-	* performance-tests//Latency/Thread_Pool/run_test.pl:
+        * performance-tests//Latency/AMI/run_test.pl:
+        * performance-tests//Latency/DSI/run_test.pl:
+        * performance-tests//Latency/Single_Threaded/default_configuration.pl:
+        * performance-tests//Latency/Single_Threaded/run_test.pl:
+        * performance-tests//Latency/Thread_Per_Connection/run_test.pl:
+        * performance-tests//Latency/Thread_Pool/run_test.pl:
 
-	  Fixed the number of iterations so that our tests run
-	  longer. They run for a short time exhibiting jitters in our
-	  daily builds.
+          Fixed the number of iterations so that our tests run
+          longer. They run for a short time exhibiting jitters in our
+          daily builds.
 
 Fri Nov  7 18:40:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Security/Big_Request/Makefile:
-	* orbsvcs/tests/Security/Callback/Makefile:
-	* orbsvcs/tests/Security/Crash_Test/Makefile:
-	* orbsvcs/tests/Security/MT_IIOP_SSL/Makefile:
-	* orbsvcs/tests/Security/MT_SSLIOP/Makefile:
-	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
-	* orbsvcs/tests/Security/SecurityLevel1/Makefile:
+        * orbsvcs/tests/Security/Big_Request/Makefile:
+        * orbsvcs/tests/Security/Callback/Makefile:
+        * orbsvcs/tests/Security/Crash_Test/Makefile:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/Makefile:
+        * orbsvcs/tests/Security/MT_SSLIOP/Makefile:
+        * orbsvcs/tests/Security/Secure_Invocation/Makefile:
+        * orbsvcs/tests/Security/SecurityLevel1/Makefile:
 
-	  Fixed the dependencies.
+          Fixed the dependencies.
 
 Fri Nov  7 16:37:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Object_KeyC.cpp:
-	* tao/Object_KeyC.h:
+        * tao/Object_KeyC.cpp:
+        * tao/Object_KeyC.h:
 
-	  Added another static method, demarshal_key (), which works more
-	  or less like extraction operator >>, but with a difference. We
-	  don't check for locked_data_blocks () within the resource
-	  factory while trying to extract the key.
+          Added another static method, demarshal_key (), which works more
+          or less like extraction operator >>, but with a difference. We
+          don't check for locked_data_blocks () within the resource
+          factory while trying to extract the key.
 
-	  Why do we need all this? Please see bugzilla entry [BUGID 1616]
-	  for details. To make the long story short, under certain
-	  configurations (ie. when we set the locks on the buffer
-	  allocator to null), we tend to copy the object key. Further we
-	  tend to make copies over and over again when writing the GIOP
-	  header.
+          Why do we need all this? Please see bugzilla entry [BUGID 1616]
+          for details. To make the long story short, under certain
+          configurations (ie. when we set the locks on the buffer
+          allocator to null), we tend to copy the object key. Further we
+          tend to make copies over and over again when writing the GIOP
+          header.
 
-	  This new method, by not checking for the locked datablocks
-	  circumvents the copying for single threaded builds. We have to
-	  wait and see how much of an improvement does this get us.
+          This new method, by not checking for the locked datablocks
+          circumvents the copying for single threaded builds. We have to
+          wait and see how much of an improvement does this get us.
 
-	  There is some code duplication between this method and the new
-	  static method. This is okay. The extraction operators are
-	  generated by the IDL compiler. Trying to share code would make
-	  the maintenance of this generated code a nightmare.
+          There is some code duplication between this method and the new
+          static method. This is okay. The extraction operators are
+          generated by the IDL compiler. Trying to share code would make
+          the maintenance of this generated code a nightmare.
 
-	* tao/Profile.cpp:
+        * tao/Profile.cpp:
 
-	  Use the new method added instead of the extraction operator.
+          Use the new method added instead of the extraction operator.
 
 Fri Nov  7 21:44:59 UTC 2003  Edward R. Mulholland  <emulholl@atl.lmco.com>
 
@@ -1606,7 +1635,7 @@ Thu Nov  6 22:32:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           transport instead of the ORB_Core.
 
 
-	  This fixes [BUG 1615]
+          This fixes [BUG 1615]
 
 Fri Nov  7 02:08:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 

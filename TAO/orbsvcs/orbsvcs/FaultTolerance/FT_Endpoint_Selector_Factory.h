@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "fault_tol_export.h"
+#include "FT_ClientORB_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,7 +38,7 @@ class TAO_FT_Invocation_Endpoint_Selector;
  * right factory
  */
 
-class TAO_FT_Export TAO_FT_Endpoint_Selector_Factory
+class TAO_FT_ClientORB_Export TAO_FT_Endpoint_Selector_Factory
   : public TAO_Endpoint_Selector_Factory
 {
 public:
@@ -64,9 +64,9 @@ private:
   TAO_SYNCH_MUTEX mutex_;
 };
 
-//extern TAO_FT_Export ACE_Static_Svc_Descriptor ace_svc_desc_TAO_FT_Endpoint_Selector_Factory;
-ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FT, TAO_FT_Endpoint_Selector_Factory)
-ACE_FACTORY_DECLARE (TAO_FT, TAO_FT_Endpoint_Selector_Factory)
+//extern TAO_FT_ClientORB_Export ACE_Static_Svc_Descriptor ace_svc_desc_TAO_FT_Endpoint_Selector_Factory;
+ACE_STATIC_SVC_DECLARE_EXPORT (TAO_FT_ClientORB, TAO_FT_Endpoint_Selector_Factory)
+ACE_FACTORY_DECLARE (TAO_FT_ClientORB, TAO_FT_Endpoint_Selector_Factory)
 
 #include /**/ "ace/post.h"
 

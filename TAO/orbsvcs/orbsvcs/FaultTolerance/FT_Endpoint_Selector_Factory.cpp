@@ -50,4 +50,4 @@ ACE_STATIC_SVC_DEFINE (TAO_FT_Endpoint_Selector_Factory,
                        &ACE_SVC_NAME (TAO_FT_Endpoint_Selector_Factory),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
-ACE_FACTORY_DEFINE (TAO_FT, TAO_FT_Endpoint_Selector_Factory)
+ACE_FACTORY_DEFINE (TAO_FT_ClientORB, TAO_FT_Endpoint_Selector_Factory)

@@ -19,7 +19,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "fault_tol_export.h"
+#include "FT_ClientORB_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -43,7 +43,7 @@ class TAO_Profile;
  *
  */
 
-class TAO_FT_Export TAO_FT_Invocation_Endpoint_Selector :
+class TAO_FT_ClientORB_Export TAO_FT_Invocation_Endpoint_Selector :
   public TAO_Default_Endpoint_Selector
 {
 
