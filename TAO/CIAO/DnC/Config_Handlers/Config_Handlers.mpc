@@ -11,6 +11,8 @@ project (Config_Handlers) : taolib {
   libs     += xerces-c
 
   Source_Files {
+    Any_Handler.cpp
+    DT_Handler.cpp
     ACD_Handler.cpp
     ADD_Handler.cpp
     APM_Handler.cpp

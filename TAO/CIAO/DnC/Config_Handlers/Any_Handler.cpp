@@ -30,11 +30,16 @@ CIAO::Config_Handler::Any_Handler::process_Any (DOMNodeIterator * iter,
   // Get name of the current element
   XStr name (node->getNodeName ());
 
+  // Initialize the ORB so that CORBA::Any will work
+  int argc = 0;
+  char ** argv = 0;
+  CORBA::ORB_ptr orb = CORBA::ORB_init (argc, argv, "");
+
   if (name == XStr (ACE_TEXT ("type")))
     {
       // Process DataType
       ::CORBA::TypeCode * type = 0;
-      DT_Handler::process_DataType (iter, type);
+      DT_Handler::process_DataType (iter, type, orb);
 
       //Switch on the type of the BasicType
       switch (type->kind ())
@@ -47,7 +52,7 @@ CIAO::Config_Handler::Any_Handler::process_Any (DOMNodeIterator * iter,
           CIAO::Config_Handler::Any_Handler::validate_ValueNode (iter,
                                                                  "short");
           // Process the short value
-          any_obj <<= ACE_static_cast(CORBA::Short, 
+          any_obj <<= ACE_static_cast(CORBA::Short,
                                       Utils::parse_long (iter));
           break;
 
@@ -60,8 +65,8 @@ CIAO::Config_Handler::Any_Handler::process_Any (DOMNodeIterator * iter,
           CIAO::Config_Handler::Any_Handler::validate_ValueNode (iter,
                                                                  "ushort");
           // Process the ushort value
-          any_obj <<= ACE_static_cast (CORBA::UShort, 
-                                       Utils::parse_ulong (iter)); 
+          any_obj <<= ACE_static_cast (CORBA::UShort,
+                                       Utils::parse_ulong (iter));
           break;
 
         case CORBA::tk_long:
@@ -72,8 +77,8 @@ CIAO::Config_Handler::Any_Handler::process_Any (DOMNodeIterator * iter,
           CIAO::Config_Handler::Any_Handler::validate_ValueNode (iter,
                                                                  "long");
           // Process the long value
-          any_obj <<= ACE_static_cast (CORBA::Long, 
-                                       Utils::parse_long (iter)); 
+          any_obj <<= ACE_static_cast (CORBA::Long,
+                                       Utils::parse_long (iter));
           break;
 
         case CORBA::tk_ulong:
@@ -84,7 +89,7 @@ CIAO::Config_Handler::Any_Handler::process_Any (DOMNodeIterator * iter,
           CIAO::Config_Handler::Any_Handler::validate_ValueNode (iter,
                                                                  "ulong");
           // Process the ulong value
-          any_obj <<= ACE_static_cast (CORBA::ULong, 
+          any_obj <<= ACE_static_cast (CORBA::ULong,
                                        Utils::parse_long (iter));
           break;
 
@@ -96,8 +101,8 @@ CIAO::Config_Handler::Any_Handler::process_Any (DOMNodeIterator * iter,
           CIAO::Config_Handler::Any_Handler::validate_ValueNode (iter,
                                                                  "float");
           // Process the float value
-          any_obj <<= ACE_static_cast (CORBA::Float, 
-                                       Utils::parse_float (iter)); 
+          any_obj <<= ACE_static_cast (CORBA::Float,
+                                       Utils::parse_float (iter));
           break;
 
         case CORBA::tk_double:
@@ -108,8 +113,8 @@ CIAO::Config_Handler::Any_Handler::process_Any (DOMNodeIterator * iter,
           CIAO::Config_Handler::Any_Handler::validate_ValueNode (iter,
                                                                  "double");
           // Process the double value
-          any_obj <<= ACE_static_cast (CORBA::Double, 
-                                       Utils::parse_double (iter)); 
+          any_obj <<= ACE_static_cast (CORBA::Double,
+                                       Utils::parse_double (iter));
           break;
 
         case CORBA::tk_boolean:
@@ -167,7 +172,7 @@ CIAO::Config_Handler::Any_Handler::process_Any (DOMNodeIterator * iter,
           any_obj <<= ACE_static_cast (CORBA::LongLong,
                                        Utils::parse_long (iter));
           break;
-          
+
         case CORBA::tk_ulonglong:
           // Check if next node is a <value> node
           CIAO::Config_Handler::Any_Handler::validate_ValueNode (iter,
@@ -177,7 +182,7 @@ CIAO::Config_Handler::Any_Handler::process_Any (DOMNodeIterator * iter,
                                                                  "ulonglong");
           // Process the longlong value
           any_obj <<= ACE_static_cast (CORBA::ULongLong,
-                                       Utils::parse_ulong (iter)); 
+                                       Utils::parse_ulong (iter));
           break;
 
         case CORBA::tk_longdouble:
@@ -187,7 +192,7 @@ CIAO::Config_Handler::Any_Handler::process_Any (DOMNodeIterator * iter,
           // Check if the next node is a <short> node
           CIAO::Config_Handler::Any_Handler::validate_ValueNode (iter,
                                                                  "longdouble");
-          // Process the longlong value -- Create a scope to define the 
+          // Process the longlong value -- Create a scope to define the
           // lifetime for the ret_val object created within the case statement.
           {
 #if ACE_SIZEOF_LONG_DOUBLE == 16
@@ -214,4 +219,7 @@ CIAO::Config_Handler::Any_Handler::process_Any (DOMNodeIterator * iter,
                          Any element mismatch expected <type>"));
       ACE_THROW (CORBA::INTERNAL ());
     }
+
+    // Release ORB resource
+    CORBA::release (orb);
 }
