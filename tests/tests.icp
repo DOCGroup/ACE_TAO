@@ -26,6 +26,10 @@ subproject Basic_Types_Test icc "Basic_Types_Test.icc", ics "Basic_Types_Test.ic
 {
 }
 
+subproject Bound_Ptr_Test icc "Bound_Ptr_Test.icc", ics "Bound_Ptr_Test.ics"
+{
+}
+
 subproject Buffer_Stream_Test icc "Buffer_Stream_Test.icc", ics "Buffer_Stream_Test.ics"
 {
 }
@@ -283,6 +287,14 @@ subproject Refcounted_Auto_Ptr_Test icc "Refcounted_Auto_Ptr_Test.icc", ics "Ref
 }
 
 subproject Reverse_Lock_Test icc "Reverse_Lock_Test.icc", ics "Reverse_Lock_Test.ics"
+{
+}
+
+subproject Service_Config_Test icc "Service_Config_Test.icc", ics "Service_Config_Test.ics"
+{
+}
+
+subproject libService_Config_DLL icc "libService_Config_DLL.icc", ics "libService_Config_DLL.ics"
 {
 }
 
