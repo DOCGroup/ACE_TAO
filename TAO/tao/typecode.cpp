@@ -2485,7 +2485,7 @@ CORBA::TypeCode::private_alignment (CORBA::Environment &env)
 
   stream.setup_encapsulation (buffer_, (size_t) length_);
 
-  (void) TAO_IIOP_Interpreter::table_[kind_].calc (&stream, alignment, env);
+  (void) TAO_IIOP_Interpreter::table_[kind_].calc_ (&stream, alignment, env);
   private_state_->tc_alignment_known_ = CORBA::B_TRUE;
   private_state_->tc_alignment_ = alignment;
   return alignment;
