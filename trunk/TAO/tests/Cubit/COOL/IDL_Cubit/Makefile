@@ -46,7 +46,7 @@ else
   LDLIBS += -lOrb-mt $(MATHLIB)
 endif
 
-VLDLIBS = $(LDLIBS:%=%$(VAR)) $(ACELIB) $(LIBS)
+VLDLIBS := $(LDLIBS:%=%$(VAR)) $(ACELIB) $(LIBS)
 
 #----------------------------------------------------------------------------
 #	Local targets
