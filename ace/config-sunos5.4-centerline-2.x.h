@@ -107,6 +107,9 @@
 // Compiler/platform supports SVR4 signal typedef.
 #define ACE_HAS_SVR4_SIGNAL_T
 
+// Platform lacks pthread_sigaction
+#define ACE_LACKS_PTHREAD_THR_SIGSETMASK
+
 // Compiler/platform supports SVR4 ACE_TLI (in particular, T_GETNAME stuff)...
 #define ACE_HAS_SVR4_TLI
 
