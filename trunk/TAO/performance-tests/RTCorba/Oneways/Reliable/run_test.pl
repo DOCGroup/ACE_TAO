@@ -13,6 +13,7 @@ $iterations = 4000;
 $bufsize = 4000;
 $nagle = "";
 $type = "";
+$shutdown = "";
 $all = 1;
 $other = "";
 
@@ -29,10 +30,14 @@ sub run_test
     $nagle = "";
   }
 
+  if ($all == 0) {
+    $shutdown = "-x";
+  }
+
   print STDERR "\n***************** STARTING TEST ******************\n";
 
   $CL = Process::Create ($EXEPREFIX."client".$EXE_EXT,
-                         "$nagle -t $type -i $iterations -m $bufsize");
+                         "$nagle -t $type -i $iterations -m $bufsize $shutdown");
 
   $client = $CL->TimedWait (60);
   if ($client == -1) {
