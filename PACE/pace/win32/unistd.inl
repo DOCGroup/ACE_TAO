@@ -74,7 +74,7 @@ PACE_INLINE
 int
 pace_close (PACE_HANDLE fildes)
 {
-  return win32_close (fildes);
+  return pace_win32_close (fildes);
 }
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
@@ -83,7 +83,7 @@ PACE_INLINE
 PACE_HANDLE
 pace_dup (PACE_HANDLE fildes)
 {
-  return win32_dup (fildes);
+  return pace_win32_dup (fildes);
 }
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
@@ -179,7 +179,7 @@ PACE_INLINE
 int
 pace_ftruncate (PACE_HANDLE fildes, pace_off_t length)
 {
-  return win32_ftruncate (fildes, length);
+  return pace_win32_ftruncate (fildes, length);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
@@ -314,7 +314,7 @@ PACE_INLINE
 pace_off_t
 pace_lseek (PACE_HANDLE fildes, pace_off_t offset, int whence)
 {
-  return win32_lseek (fildes, offset, whence);
+  return pace_win32_lseek (fildes, offset, whence);
 }
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
@@ -350,7 +350,7 @@ pace_pipe (PACE_HANDLE fildes[2])
 
 #if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
-ssize_t
+pace_ssize_t
 pace_read (PACE_HANDLE fildes, void * buf, size_t nbyte)
 {
   PACE_UNUSED_ARG (fildes);
@@ -487,9 +487,9 @@ pace_unlink (const char * path)
 
 #if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
-ssize_t
+pace_ssize_t
 pace_write (PACE_HANDLE fildes, const void * buf, size_t nbyte)
 {
-  return win32_write (fildes, buf, nbyte);
+  return pace_win32_write (fildes, buf, nbyte);
 }
 #endif /* PACE_HAS_POSIX_DI_UOF */
