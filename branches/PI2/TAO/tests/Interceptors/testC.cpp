@@ -47,7 +47,7 @@ Test_Interceptors::Silly::operator= (const ::Test_Interceptors::Silly &_tao_excp
 
 // narrow
 Test_Interceptors::Silly *
-Test_Interceptors::Silly::_downcast (CORBA::Exception *exc)
+Test_Interceptors::Silly::_narrow (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:Test_Interceptors/Silly:1.0", exc->_id ())) // same type
     return ACE_dynamic_cast (Silly *, exc);
@@ -101,29 +101,6 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (Test_Interceptors)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Silly, &_tc_TAO_tc_Test_Interceptors_Silly)
 TAO_NAMESPACE_END
-
-#if (TAO_HAS_INTERCEPTORS == 1)
-// Every method of Visual will have a request info counterpart 
-
-Test_Interceptors::ClientRequest_Info_normal::ClientRequest_Info_normal (char * operation,
-                                                                         IOP::ServiceContextList &service_context_list,               
-                                                                         CORBA::Object * target,
-                                                                         CORBA::Long &arg, // argument to <normal>
-                                                                         CORBA::Environment &)
-  : ClientRequest_Info (operation, service_context_list, target),
-    arg_ (arg)
-{
-}
-
-Dynamic::ParameterList * 
-Test_Interceptors::ClientRequest_Info_normal::arguments (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // Need to create the list on demand
-  return 0;
-}
-#endif /* TAO_HAS_INTERCEPTORS */
-
 void Test_Interceptors::Visual::_tao_any_destructor (void *x)
 {
   Visual *tmp = ACE_static_cast (Visual*,x);
@@ -225,41 +202,36 @@ void Test_Interceptors::Visual::normal (
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
     ACE_CHECK;
-
-    CORBA::String_var name ("normal");
-    // us e<< this->compute_operation_name (node) for above
-    ClientRequest_Info_normal ri (ACE_const_cast (char *,
-                                                  name.in()),
-                                  _tao_call.service_info (), 
-                                  (CORBA::Object_ptr) this, 
-                                  arg);
-    
-    /*    CORBA::NVList_var _tao_interceptor_args;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
     if (_tao_vfr.valid ())
       {
         istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
         ACE_CHECK;
       }
-    */
-      ACE_TRY
+
+    ACE_TRY
       {
 #endif /* TAO_HAS_INTERCEPTORS */
 
-              for (;;)
+      for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
         TAO_INTERCEPTOR (
-            _tao_vfr.send_request (
-              &ri,
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "normal",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
                 ACE_TRY_ENV
               )
-              );
-          TAO_INTERCEPTOR_CHECK;
-
-          cout << "send_request done"<<endl;
-
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
@@ -280,15 +252,9 @@ void Test_Interceptors::Visual::normal (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-
-        ClientRequest_Info_normal ri_next (ACE_const_cast (char *,
-                                                           name.in()),
-                                           _tao_call.service_info (), 
-                                           (CORBA::Object_ptr) this,
-                                           arg);
         
         TAO_INTERCEPTOR (
-                         /*            _tao_vfr.postinvoke (
+            _tao_vfr.postinvoke (
                 _tao_call.request_id (),
                 1,
                 this,
@@ -297,32 +263,28 @@ void Test_Interceptors::Visual::normal (
                 _tao_interceptor_args.inout (),
                 _tao_cookies,
                 ACE_TRY_ENV
-                )*/
-        
-              _tao_vfr.receive_reply (&ri_next, ACE_TRY_ENV)
+              )
           );
         TAO_INTERCEPTOR_CHECK;
-        cout << "receive_reply done"<<endl;
         break;
         
       }
-    #if (TAO_HAS_INTERCEPTORS == 1)
+#if (TAO_HAS_INTERCEPTORS == 1)
       
     }
   ACE_CATCHANY
-{/*
+    {
       _tao_vfr.exception_occurred (
-                                   /*  _tao_call.request_id (),
+          _tao_call.request_id (),
           1,
           this,
           "normal",
           _tao_cookies,
           ACE_TRY_ENV
-          );
- _tao_vfr.receive_exception (ri, ACE_TRY_ENV);
- ACE_RETHROW;*/
+        );
+      ACE_RETHROW;
     }
- ACE_ENDTRY;
+  ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
 
@@ -351,7 +313,7 @@ void Test_Interceptors::Visual::nothing (
       istub->orb_core ()
     );
 
-  /*#if (TAO_HAS_INTERCEPTORS == 1)
+#if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
     ACE_CHECK;
@@ -367,7 +329,7 @@ void Test_Interceptors::Visual::nothing (
       {
 #endif /* TAO_HAS_INTERCEPTORS */
 
-  /*  for (;;)
+      for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
@@ -467,7 +429,7 @@ void Test_Interceptors::Visual::user (
       istub->orb_core ()
     );
 
-  /*#if (TAO_HAS_INTERCEPTORS == 1)
+#if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
     ACE_CHECK;
@@ -483,7 +445,7 @@ void Test_Interceptors::Visual::user (
       {
 #endif /* TAO_HAS_INTERCEPTORS */
 
-  /*      for (;;)
+      for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
@@ -577,7 +539,7 @@ void Test_Interceptors::Visual::system (
       istub->orb_core ()
     );
 
-  /*#if (TAO_HAS_INTERCEPTORS == 1)
+#if (TAO_HAS_INTERCEPTORS == 1)
     TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
     ACE_CHECK;
@@ -593,7 +555,7 @@ void Test_Interceptors::Visual::system (
       {
 #endif /* TAO_HAS_INTERCEPTORS */
 
-  /*      for (;;)
+      for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
@@ -687,8 +649,8 @@ void Test_Interceptors::Visual::shutdown (
       istub->orb_core ()
     );
 
-  /*#if (TAO_HAS_INTERCEPTORS == 1)
-     TAO_ClientRequestInterceptor_Adapter
+#if (TAO_HAS_INTERCEPTORS == 1)
+    TAO_ClientRequestInterceptor_Adapter
       _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
     ACE_CHECK;
     PortableInterceptor::Cookies _tao_cookies;
@@ -703,7 +665,7 @@ void Test_Interceptors::Visual::shutdown (
       {
 #endif /* TAO_HAS_INTERCEPTORS */
 
-  /*      for (;;)
+      for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
@@ -804,168 +766,359 @@ const char* Test_Interceptors::Visual::_interface_repository_id (void) const
   return "IDL:Test_Interceptors/Visual:1.0";
 }
 
-static const CORBA::Long _oc_Test_Interceptors_Visual[] =
+Test_Interceptors::TAO_Test_Interceptors_Visual_Default_Proxy_Factory::TAO_Test_Interceptors_Visual_Default_Proxy_Factory (int register_proxy_factory)
 {
-  TAO_ENCAP_BYTE_ORDER, // byte order
-  33, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x54657374), ACE_NTOHL (0x5f496e74), ACE_NTOHL (0x65726365), ACE_NTOHL (0x70746f72), ACE_NTOHL (0x732f5669), ACE_NTOHL (0x7375616c), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:Test_Interceptors/Visual:1.0
-  7, ACE_NTOHL (0x56697375), ACE_NTOHL (0x616c0000),  // name = Visual
+  if (register_proxy_factory)
+    {
+      TAO_Test_Interceptors_Visual_PROXY_FACTORY_ADAPTER::instance ()->register_proxy_factory (this);
+    }
+}
+
+Test_Interceptors::TAO_Test_Interceptors_Visual_Default_Proxy_Factory::~TAO_Test_Interceptors_Visual_Default_Proxy_Factory (void)
+{
+}
+
+Test_Interceptors::Visual_ptr
+Test_Interceptors::TAO_Test_Interceptors_Visual_Default_Proxy_Factory::create_proxy (
+    ::Test_Interceptors::Visual_ptr proxy,
+    CORBA::Environment &
+  )
+{
+  return proxy;
+}
+
+Test_Interceptors::TAO_Test_Interceptors_Visual_Proxy_Factory_Adapter::TAO_Test_Interceptors_Visual_Proxy_Factory_Adapter (void)
+   : proxy_factory_ (0),
+     delete_proxy_factory_ (0)
+{
+}
+
+Test_Interceptors::TAO_Test_Interceptors_Visual_Proxy_Factory_Adapter::~TAO_Test_Interceptors_Visual_Proxy_Factory_Adapter (void)
+{
+  // Making sure the factory which the adapter has is destroyed with it.
+  if (this->proxy_factory_ != 0)
+    delete this->proxy_factory_;
+}
+
+int
+Test_Interceptors::TAO_Test_Interceptors_Visual_Proxy_Factory_Adapter::register_proxy_factory (
+  TAO_Test_Interceptors_Visual_Default_Proxy_Factory *df,
+     CORBA::Environment &ACE_TRY_ENV
+      )
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+    this->lock_, 0));
+  // Remove any existing <proxy_factory_> and replace with the new one.
+  this->unregister_proxy_factory (ACE_TRY_ENV);
+  this->proxy_factory_ = df;
+  this->delete_proxy_factory_ = 0;
+return 0;
+}
+
+int
+Test_Interceptors::TAO_Test_Interceptors_Visual_Proxy_Factory_Adapter::unregister_proxy_factory (
+  CORBA::Environment &
+    )
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+    this->lock_, 0));
+  if (this->delete_proxy_factory_ == 0 && this->proxy_factory_ != 0)
+    {
+      // Its necessary to set <delete_proxy_factory_> to 1 to make sure that it
+      // doesnt get into an infinite loop in <unregister_proxy_factory> as it is 
+      // invoked in the destructor of the class too.
+      this->delete_proxy_factory_ = 1;
+      delete this->proxy_factory_;
+      this->proxy_factory_ = 0;
+    }
+return 0;
+}
+
+Test_Interceptors::Visual_ptr
+Test_Interceptors::TAO_Test_Interceptors_Visual_Proxy_Factory_Adapter::create_proxy (
+    ::Test_Interceptors::Visual_ptr proxy,
+    CORBA::Environment &
+  )
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+    this->lock_, 0));
+  // Verify that an <proxy_factory_> is available else make one.
+  if (this->proxy_factory_ == 0)
+    ACE_NEW_RETURN (this->proxy_factory_,
+        TAO_Test_Interceptors_Visual_Default_Proxy_Factory (1), 
+         0);
+      
+    
+  return this->proxy_factory_->create_proxy (proxy);
+}
+
+Test_Interceptors::TAO_Test_Interceptors_Visual_Smart_Proxy_Base::TAO_Test_Interceptors_Visual_Smart_Proxy_Base (void)
+{
+}
+
+Test_Interceptors::TAO_Test_Interceptors_Visual_Smart_Proxy_Base::~TAO_Test_Interceptors_Visual_Smart_Proxy_Base (void)
+{
+}
+
+TAO_Stub *
+Test_Interceptors::TAO_Test_Interceptors_Visual_Smart_Proxy_Base::_stubobj (void) const
+{
+  return this->base_proxy_->_stubobj ();
+}
+
+void Test_Interceptors::TAO_Test_Interceptors_Visual_Smart_Proxy_Base::normal  (
+    CORBA::Long arg,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->get_proxy ()->normal (
+      arg,
+      ACE_TRY_ENV
+    );
+
+}
+
+void Test_Interceptors::TAO_Test_Interceptors_Visual_Smart_Proxy_Base::nothing  (
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->get_proxy ()->nothing (
+      ACE_TRY_ENV
+    );
+
+}
+
+void Test_Interceptors::TAO_Test_Interceptors_Visual_Smart_Proxy_Base::user  (
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    Test_Interceptors::Silly
+  ))
+{
+  this->get_proxy ()->user (
+      ACE_TRY_ENV
+    );
+
+}
+
+void Test_Interceptors::TAO_Test_Interceptors_Visual_Smart_Proxy_Base::system  (
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->get_proxy ()->system (
+      ACE_TRY_ENV
+    );
+
+}
+
+void Test_Interceptors::TAO_Test_Interceptors_Visual_Smart_Proxy_Base::shutdown  (
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  this->get_proxy ()->shutdown (
+      ACE_TRY_ENV
+    );
+
+}
+
+Test_Interceptors::Visual_ptr
+Test_Interceptors::TAO_Test_Interceptors_Visual_Smart_Proxy_Base::get_proxy (void)
+  
+{
+  // Obtain the real proxy stored in <base_proxy_>
+  if (CORBA::is_nil (this->proxy_.in ()))
+    {
+      // Necessary to do this else you are stuck in an infinte loop
+      // creating smart proxies!
+      TAO_Test_Interceptors_Visual_PROXY_FACTORY_ADAPTER::instance ()->unregister_proxy_factory ();
+      this->proxy_ = ::Test_Interceptors::Visual::_unchecked_narrow (this->base_proxy_.in ());
+    }
+    
+    return this->proxy_.in ();
+  }
+  
+    #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
+    defined (ACE_HAS_GNU_REPO)
+  template class ACE_Singleton<Test_Interceptors::TAO_Test_Interceptors_Visual_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+  #pragma instantiate ACE_Singleton<Test_Interceptors::TAO_Test_Interceptors_Visual_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+  #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+  
+    static const CORBA::Long _oc_Test_Interceptors_Visual[] =
+  {
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    33, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x54657374), ACE_NTOHL (0x5f496e74), ACE_NTOHL (0x65726365), ACE_NTOHL (0x70746f72), ACE_NTOHL (0x732f5669), ACE_NTOHL (0x7375616c), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0x0),  // repository ID = IDL:Test_Interceptors/Visual:1.0
+    7, ACE_NTOHL (0x56697375), ACE_NTOHL (0x616c0000),  // name = Visual
 };
-static CORBA::TypeCode _tc_TAO_tc_Test_Interceptors_Visual (CORBA::tk_objref, sizeof (_oc_Test_Interceptors_Visual), (char *) &_oc_Test_Interceptors_Visual, 0, sizeof (Test_Interceptors::Visual));
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (Test_Interceptors)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Visual, &_tc_TAO_tc_Test_Interceptors_Visual)
-TAO_NAMESPACE_END
-void operator<<= (CORBA::Any &_tao_any, const Test_Interceptors::Silly &_tao_elem) // copying
-{
-  TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      Test_Interceptors::_tc_Silly,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
-    );
-}
+  static CORBA::TypeCode _tc_TAO_tc_Test_Interceptors_Visual (CORBA::tk_objref, sizeof (_oc_Test_Interceptors_Visual), (char *) &_oc_Test_Interceptors_Visual, 0, sizeof (Test_Interceptors::Visual));
+  TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+  TAO_NAMESPACE_BEGIN (Test_Interceptors)
+  TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Visual, &_tc_TAO_tc_Test_Interceptors_Visual)
+  TAO_NAMESPACE_END
+    void operator<<= (CORBA::Any &_tao_any, const Test_Interceptors::Silly &_tao_elem) // copying
+  {
+    TAO_OutputCDR stream;
+    stream << _tao_elem;
+    _tao_any._tao_replace (
+        Test_Interceptors::_tc_Silly,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin ()
+      );
+  }
 
-void operator<<= (CORBA::Any &_tao_any, Test_Interceptors::Silly *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      Test_Interceptors::_tc_Silly,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      Test_Interceptors::Silly::_tao_any_destructor
-    );
-}
+  void operator<<= (CORBA::Any &_tao_any, Test_Interceptors::Silly *_tao_elem) // non copying
+  {
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+    _tao_any._tao_replace (
+        Test_Interceptors::_tc_Silly,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_elem,
+        Test_Interceptors::Silly::_tao_any_destructor
+      );
+  }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Test_Interceptors::Silly *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(
-      const Test_Interceptors::Silly*&,
-      _tao_elem
-    );
-}
+  CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Test_Interceptors::Silly *&_tao_elem)
+  {
+    return _tao_any >>= ACE_const_cast(
+        const Test_Interceptors::Silly*&,
+        _tao_elem
+      );
+  }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Test_Interceptors::Silly *&_tao_elem)
-{
-  _tao_elem = 0;
-  ACE_TRY_NEW_ENV
   {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (Test_Interceptors::_tc_Silly, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
+    _tao_elem = 0;
+    ACE_TRY_NEW_ENV
     {
-      _tao_elem = (Test_Interceptors::Silly *)_tao_any.value ();
-      return 1;
-    }
-    else
-    {
-      Test_Interceptors::Silly *tmp;
-      ACE_NEW_RETURN (tmp, Test_Interceptors::Silly, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      CORBA::String_var interface_repository_id;
-      if (!(stream >> interface_repository_id.out ()))
-        return 0;
-      if (ACE_OS::strcmp (
-          interface_repository_id.in (),
-          "IDL:Test_Interceptors/Silly:1.0"))
-        return 0;
-      if (stream >> *tmp)
+      CORBA::TypeCode_var type = _tao_any.type ();
+      if (!type->equivalent (Test_Interceptors::_tc_Silly, ACE_TRY_ENV)) // not equal
+        {
+          return 0;
+        }
+      ACE_TRY_CHECK;
+      if (_tao_any.any_owns_data ())
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            Test_Interceptors::_tc_Silly,
-            1,
-            tmp,
-            Test_Interceptors::Silly::_tao_any_destructor
-          );
-        _tao_elem = tmp;
+        _tao_elem = (Test_Interceptors::Silly *)_tao_any.value ();
         return 1;
       }
       else
       {
-        delete tmp;
+        Test_Interceptors::Silly *tmp;
+        ACE_NEW_RETURN (tmp, Test_Interceptors::Silly, 0);
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        CORBA::String_var interface_repository_id;
+        if (!(stream >> interface_repository_id.out ()))
+          return 0;
+        if (ACE_OS::strcmp (
+            interface_repository_id.in (),
+            "IDL:Test_Interceptors/Silly:1.0"))
+          return 0;
+        if (stream >> *tmp)
+        {
+          ((CORBA::Any *)&_tao_any)->_tao_replace (
+              Test_Interceptors::_tc_Silly,
+              1,
+              tmp,
+              Test_Interceptors::Silly::_tao_any_destructor
+            );
+          _tao_elem = tmp;
+          return 1;
+        }
+        else
+        {
+          delete tmp;
+        }
       }
     }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-Test_Interceptors::Visual_ptr (*_TAO_collocation_Test_Interceptors_Visual_Stub_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
-void operator<<= (CORBA::Any &_tao_any, Test_Interceptors::Visual_ptr _tao_elem)
-{
-  TAO_OutputCDR stream;
-  if (stream << _tao_elem)
-  {
-    _tao_any._tao_replace (
-        Test_Interceptors::_tc_Visual, 
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        Test_Interceptors::Visual::_duplicate (_tao_elem),
-        Test_Interceptors::Visual::_tao_any_destructor
-      );
-  }
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Test_Interceptors::Visual_ptr &_tao_elem)
-{
-  ACE_TRY_NEW_ENV
-  {
-    _tao_elem = Test_Interceptors::Visual::_nil ();
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (Test_Interceptors::_tc_Visual, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    TAO_InputCDR stream (
-        _tao_any._tao_get_cdr (),
-        _tao_any._tao_byte_order ()
-      );
-    CORBA::Object_var _tao_obj_var;
-    if (stream >> _tao_obj_var.out ())
+    ACE_CATCHANY
     {
-      _tao_elem = Test_Interceptors::Visual::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      
-      ((CORBA::Any *)&_tao_any)->_tao_replace (
-          Test_Interceptors::_tc_Visual,
+    }
+    ACE_ENDTRY;
+    return 0;
+  }
+
+  Test_Interceptors::Visual_ptr (*_TAO_collocation_Test_Interceptors_Visual_Stub_Factory_function_pointer) (
+      CORBA::Object_ptr obj
+    ) = 0;
+    void operator<<= (CORBA::Any &_tao_any, Test_Interceptors::Visual_ptr _tao_elem)
+  {
+    TAO_OutputCDR stream;
+    if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          Test_Interceptors::_tc_Visual, 
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
           1,
-          _tao_elem,
+          Test_Interceptors::Visual::_duplicate (_tao_elem),
           Test_Interceptors::Visual::_tao_any_destructor
         );
-      return 1;
     }
   }
-  ACE_CATCHANY
+
+  CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Test_Interceptors::Visual_ptr &_tao_elem)
   {
+    ACE_TRY_NEW_ENV
+    {
+      _tao_elem = Test_Interceptors::Visual::_nil ();
+      CORBA::TypeCode_var type = _tao_any.type ();
+      if (!type->equivalent (Test_Interceptors::_tc_Visual, ACE_TRY_ENV)) // not equal
+        {
+          return 0;
+        }
+      ACE_TRY_CHECK;
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      CORBA::Object_var _tao_obj_var;
+      if (stream >> _tao_obj_var.out ())
+      {
+        _tao_elem = Test_Interceptors::Visual::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+        
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            Test_Interceptors::_tc_Visual,
+            1,
+            _tao_elem,
+            Test_Interceptors::Visual::_tao_any_destructor
+          );
+        return 1;
+      }
+    }
+    ACE_CATCHANY
+    {
+      _tao_elem = Test_Interceptors::Visual::_nil ();
+      return 0;
+    }
+    ACE_ENDTRY;
     _tao_elem = Test_Interceptors::Visual::_nil ();
     return 0;
   }
-  ACE_ENDTRY;
-  _tao_elem = Test_Interceptors::Visual::_nil ();
-  return 0;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
-    defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Manager<Test_Interceptors::Visual,Test_Interceptors::Visual_var>;
-  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  #  pragma instantiate TAO_Object_Manager<Test_Interceptors::Visual,Test_Interceptors::Visual_var>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+      defined (ACE_HAS_GNU_REPO)
+      template class TAO_Object_Manager<Test_Interceptors::Visual,Test_Interceptors::Visual_var>;
+    #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+    #  pragma instantiate TAO_Object_Manager<Test_Interceptors::Visual,Test_Interceptors::Visual_var>
+  #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
