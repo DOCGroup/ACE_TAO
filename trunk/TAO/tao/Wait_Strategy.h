@@ -92,10 +92,26 @@ public:
   virtual void connection_closed (int &reply_received_flag,
                                   TAO_SYNCH_CONDITION*);
 
+  /// Get/Set method for the flag
+  int is_registered (void);
+  void is_registered (int flag);
+
 protected:
   /// Transport object.
   TAO_Transport *transport_;
+
+  /// Flag to indicate whether the service handler that created the
+  /// above transport has been registered with the reactor or not. The
+  /// default is 0.
+  /// @@ Would this flag be a duplication of the one in the Connection
+  /// @@ Handler ?
+  int is_registered_;
 };
+
+
+#if defined (__ACE_INLINE__)
+# include "Wait_Strategy.inl"
+#endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
 #endif /* TAO_WAIT_STRATEGY_H */

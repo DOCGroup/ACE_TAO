@@ -1,3 +1,25 @@
+Tue Apr 10 20:47:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Wait_Strategy.h:
+	* tao/Wait_Strategy.cpp:
+	* tao/Wait_Strategy.inl: Added a flag is_registered_. This flag
+	  indicates whether the connection handler that created this
+	  object through the transport has been registered with the
+	  reactor or not.
+
+	* tao/Wait_On_Reactor.cpp:
+	* tao/Wait_On_Leader_Follower.cpp: Make a check
+	  to see whether the connection handler has been registered with
+	  the reactor before going ahead and calling the register_handler
+	  (). This should remove a lock along the critical path.
+
+	* tao/IIOP_Transport.cpp:
+	* tao/Strategies/SHMIOP_Transport.cpp:
+	* tao/Strategies/UIOP_Transport.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+	* examples/PluggableUDP/DIOP/DIOP_Transport.cpp: Set the flag in
+	  the wait strategy before registering the handler with reactor.
+
 Tue Apr 10 19:57:38 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* tao/OctetSeqC.cpp:
