@@ -28,6 +28,10 @@ DIRS  =	ASX \
 	Threads \
 	Timer_Queue
 
+ifneq ($(rmcast),0)
+  DIRS += RMCast
+endif # rmcast
+
 # Makefiles TBD:
 #	ttcp
 #       CORBA

@@ -302,7 +302,7 @@ ifeq ($(ssl),1)
   DIRS += SSL
 endif # ssl
 
-ifeq ($(rmcast),1)
+ifneq ($(rmcast),0)
   DIRS += RMCast
 endif # rmcast
 
