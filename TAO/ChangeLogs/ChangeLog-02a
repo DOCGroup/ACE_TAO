@@ -1,37 +1,43 @@
+Fri Jun 09 10:55:33 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp
+          (visit_operation): removed extraneous ; after closing } for
+          the function.
+
 Fri Jun 09 02:34:07 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POA.cpp (ObjectId_to_wstring): The implementation of this
-	  method was quite busted.  The correct implementation now creates
-	  the right size wstring and correctly null terminates it.  Thanks
-	  to emalenfant@interstarinc.com for reporting this bug and
-	  providing a fix.  This fixes bug 588.
+        * tao/POA.cpp (ObjectId_to_wstring): The implementation of this
+          method was quite busted.  The correct implementation now creates
+          the right size wstring and correctly null terminates it.  Thanks
+          to emalenfant@interstarinc.com for reporting this bug and
+          providing a fix.  This fixes bug 588.
 
 Thu Jun  8 20:48:46 2000  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.h:
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h:
-	* orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.h:
-	* orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
-	* orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.h:
+        * orbsvcs/orbsvcs/LoadBalancing/DSI_ForwardingProxy.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_Strategy.h:
+        * orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.h:
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+        * orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.h:
 
-	  Added missing "ace/pre.h" and "ace/post.h" includes.
+          Added missing "ace/pre.h" and "ace/post.h" includes.
 
-	* orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancing_export.h:
 
-	  Regenerated this file, since the script that generates these
-	  types of headers was updated to add some macros to those
-	  headers.
+          Regenerated this file, since the script that generates these
+          types of headers was updated to add some macros to those
+          headers.
 
-	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
+        * orbsvcs/orbsvcs/Makefile.LoadBalancing:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Thu Jun  8 20:23:58 2000  Ossama Othman  <ossama@uci.edu>
 
-	* docs/releasenotes/index.html:
+        * docs/releasenotes/index.html:
 
-	  Added release notes for TAO's new Load Balancer.
+          Added release notes for TAO's new Load Balancer.
 
 Thu Jun  8 19:09:31 2000  Darrell Brunsch <brunsch@uci.edu>
 
