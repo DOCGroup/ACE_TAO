@@ -1,0 +1,41 @@
+#!/bin/csh -f
+# All ATM tests: 64k socket Queue Size
+#
+# Arguments:
+#   $1  <Test_Name> 
+#   $2  <ior_file> 
+
+# if ($#argv < 2) then
+# 	echo "Usage: run_client <Test_Name> <obj_reference_From_Server>"
+# 	exit 1
+# endif
+
+#if the directory $1 <TEST_NAME> doesn't exist create it
+if (!(-d ./results/REMOTE/$1)) then
+  chdir ./results/REMOTE
+  mkdir $1
+  chdir ../../
+endif
+
+#shorts
+run_test 67108864 128 ./results/REMOTE/$1/sun-iiop.atm1.64 s $2
+sleep 5		      
+# longs		      
+run_test 67108864 128 ./results/REMOTE/$1/sun-iiop.atm1.64 l $2
+sleep 5		      
+# octets	      
+run_test 67108864 128 ./results/REMOTE/$1/sun-iiop.atm1.64 o $2
+sleep 5		      
+# doubles	      
+run_test 67108864 128 ./results/REMOTE/$1/sun-iiop.atm1.64 d $2
+sleep 5		      
+# chars		      
+run_test 67108864 128 ./results/REMOTE/$1/sun-iiop.atm1.64 c $2
+sleep 5	      
+# structures	      
+run_test 67108864 128 ./results/REMOTE/$1/sun-iiop.atm1.64 S $2
+sleep 5		      
+#Composite Structs   
+run_test 67108864 128 ./results/REMOTE/$1/sun-iiop.atm1.64 C $2
+sleep 5
+

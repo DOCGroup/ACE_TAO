@@ -1,0 +1,6 @@
+// $Id$
+
+interface test
+{
+  void deactivate_self ();
+};

@@ -1,0 +1,117 @@
+		TTCP Benchmark README file
+
+This directory contains a modified version of the TTCP benchmark that
+uses the TAO ORB. TTCP is used to measure the throughput of COOL
+for sending different data types. This code tests sequences of short,
+long, octet, char, double, and richly-typed data such as a struct.
+
+Organization
+------------
+
+client.cpp		Client main program
+server.cpp		Server main program
+ttcp.cpp		Client & Server side stub
+ttcp.H                  Client & Server side stub header file
+sk_ttcp.C               Server skeleton implementation file
+sk_ttcp.H               Server skeleton implementation header file
+ttcp_i.cpp		Implementation of the interface
+ttcp_i.h		Header for the implementation
+utils.cpp		Utilities to calculate throughput
+ttcp_decl.h		Common declarations
+
+Results
+-------
+Throughput results are displayed on stdout.
+
+Running the test
+-----------------
+   Server
+   ------
+     Usage: 
+        server [COOL options] [Common options] 
+
+ 	[COOL options] ** these are required **
+ 	   cool-tcp://<THIS_HOSTNAME>:<THIS_HOST_PORT> -cool-tcp -cool-iiop
+ 		   
+ 	   THIS_HOSTNAME : the name of the host that the server will be running on.  This is useful 
+ 		   if you want to specifya different interface (e.g. ATM, 100Mbit Ethernet)
+   
+ 	   THIS_HOST_PORT: is the port number at which the server will start the high
+ 		   priority servant. The low priority servant will be created at
+ 		   (THIS_HOST_PORT+1).
+   
+ 	[Common options]:
+ 	   -l ##   length of bufs read from or written to network (default 8192)
+ 	   -v      verbose: print more statistics
+ 	   -d ##   set debug level 
+ 	   -f X    format for rate: k,K = kilo{bit,byte}; m,M = mega; g,G = giga
+ 	   -L ##   Output file name to store results
+   
+     Example:
+
+        server cool-tcp://tango.cs.wustl.edu:3000 -cool-tcp -cool-iiop -d 1
+
+     The Output might look like this:
+	stringified obj reference = IOR:000000000000001649444C3A747463705F73657175656E63653A312E3000000000000002000000000000004900010000000000103132382E3235322E3136352E313430000BB80000000000290000000001000000010000001C0073193B00000002EFFFED98000000000000000A80FCA58C00000BB8000000434F4F4C000000290000000001000000010000001C0073193B00000002EFFFED98000000000000000A80FCA58C00000BB8
+	Entering boa->run ().
+
+
+   Client
+   ------
+     
+     Usage: 
+	client -cool-tcp -cool-iiop [Common options] 
+
+   	[Common options]:
+   	   -l ##   length of bufs read from or written to network (default 8192)
+   	   -v      verbose: print more statistics
+   	   -d ##   debug level
+   	   -f X    format for rate: k,K = kilo{bit,byte}; m,M = mega; g,G = giga
+   	   -h ##   Remote host to send data to
+   	   -p ##   Port number"
+   	   -S ##   Total Data Size to be sent
+   	   -L ##   Output file name to store results
+   	   -q <type> Send Sequence: Enumeration for various data types:
+   		   s = short, l = long,  d = double, c = char
+   		   o = octet, S = BinStruct 
+   
+     Example:
+
+            # The following example will send 10Mb of data, using a megabyte rate, 
+              in 1024 byte chunks, to host tango.cs.wustl.edu, to port 3000, and will send shorts
+            
+            client -cool-tcp -cool-iiop -S 10240000 -f m -l 1024 -h tango.cs.wustl.edu -p 3000 -q s
+            
+     The Output might look like this:
+
+            Composed IOR string as: cool-tcp://tango.cs.wustl.edu:3000
+            data size = 10240000, buflen = 1024, nbuf = 10000
+            ttcp-t: 10240000 bytes in 2.81 real seconds = 27.82 Mbit/sec +++
+            ttcp-t: 10000 Server Method calls, msec/call = 0.29, calls/sec = 3561.29
+            ttcp-r: 10236928 bytes in 2.81 real seconds = 3560.03 KB/sec +++
+            ttcp-r: 9993 Server Method calls, msec/call = 0.29, calls/sec = 3558.60
+            ttcp-t: 176224.1user -1.-2674sys 0:02real 6261769% 0i+0d 101622maxrss -268440216+-277460652pf 10002+458757csw
+            ttcp-r: -268441649.-103user 728.0sys 0:02real -194852% 0i+0d 420maxrss -280679408+0pf -268441576+-277738728csw
+            
+
+Compiling
+---------
+
+Setup the CHORUS COOL environment variables before compiling, the
+following is an example.  You would typically want this in the shells'
+resource file (e.g. .cshrc.mine).  The example provided is for a C
+shell.
+
+   setenv CHORUS_ROOT /project/doc/miniCOOL/minicool.r4.3/solaris2.5-CC-mt
+   set path = ($path /project/doc/miniCOOL/minicool.r4.3/solaris2.5-CC-mt/bin)
+   setenv LD_LIBRARY_PATH /project/doc/miniCOOL/minicool.r4.3/solaris2.5-CC-mt/lib:$LD_LIBRARY_PATH
+   setenv MANPATH /project/doc/miniCOOL/minicool.r4.3/solaris2.5-CC-mt/man:$MANPATH
+ 
+Makefiles are provided. Use make to compile.
+
+You can either run the server in the background in the same window as
+the client or open a separate window for the client and server.
+
+
+-Sergio Flores-Gaitan
+(sergio@cs.wustl.edu)
