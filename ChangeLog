@@ -1,3 +1,11 @@
+Thu Jul 24 14:23:44 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Future.{h,cpp}: Removed the operator new/delete/& so
+	  that ACE_Future can be stored in STL containers (e.g.,
+ 	  sets/maps/etc.).  Thanks to Felix Wyss <FelixW@inin.com>,
+ 	  Patrick Bennett <Patrick.Bennett@inin.com>, and Johnny Tucker
+ 	  for helping with this.
+
 Fri Jul 25 17:32:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/os_include/os_dlfcn.h:
@@ -54,7 +62,6 @@ Fri Jul 25 11:10:21 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Makefile.bor:
           Added UUID
-
         * ace/UUID.h:
           Fixed compile error with Borland
 

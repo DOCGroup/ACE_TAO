@@ -356,14 +356,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  /// Do not allow new operator.
-  void *operator new (size_t nbytes);
-
-  /// Do not allow delete operator
-  void operator delete (void *);
-
-  /// Do not allow address-of operator.
-  void operator & ();
 
   // the ACE_Future_Rep
   /// Protect operations on the <Future>.
