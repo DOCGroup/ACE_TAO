@@ -18,11 +18,6 @@
 #define TAO_FT_IOGR_PROPERTY_H
 #include /**/ "ace/pre.h"
 
-#ifndef TAO_FT_SERVICE_SAFE_INCLUDE
-#error "You should not include FT_IOGR_Property.h use FT_Service_Activate.h"
-#endif /* !TAO_FT_SERVICE_SAFE_INCLUDE */
-
-
 #include "tao/LocalObject.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
