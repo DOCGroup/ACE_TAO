@@ -1,3 +1,16 @@
+Sun May 09 11:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/Makefile
+          examples/Connection/non_blocking/Makefile
+          examples/IPC_SAP/SPIPE_SAP/Makefile
+          examples/IPC_SAP/TLI_SAP/Makefile
+          examples/Reactor/Misc/Makefile
+          examples/Service_Configurator/IPC-tests/client/Makefile
+          examples/Service_Configurator/IPC-tests/server/Makefile
+          netsvcs/lib/Makefile
+          netsvcs/servers/Makefile
+          tests/Makefile: ran make depend after adding new RB_Tree interface.
+
 Sat May 08 19:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.{cpp, h, i}
