@@ -2452,12 +2452,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
            }
 #       else
          {
-#         if defined (ACE_HAS_STHREADS)
+#         if defined (sun)
            // Solaris POSIX only allows priorities > 0 to
            // ::pthread_attr_setschedparam.  If a priority of 0 was
            // requested, set the thread priority after creating it, below.
            if (priority > 0)
-#         endif /* STHREADS */
+#         endif /* sun */
              {
 #         if defined (ACE_HAS_PTHREADS_DRAFT4) || defined (ACE_HAS_PTHREADS_DRAFT6)
                result = ::pthread_attr_setprio (&attr,
@@ -2611,71 +2611,73 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   if (result != -1)
     *thr_handle = *thr_id;
 
-#     if defined (ACE_HAS_STHREADS)
-  // If the priority is 0, then we might have to set it now because we
-  // couldn't set it with ::pthread_attr_setschedparam, as noted
-  // above.  This doesn't provide strictly correct behavior, because
-  // the thread was created (above) with the priority of its parent.
-  // (That applies regardless of the inherit_sched attribute: if it
-  // was PTHREAD_INHERIT_SCHED, then it certainly inherited its
-  // parent's priority.  If it was PTHREAD_EXPLICIT_SCHED, then "attr"
-  // was initialized by the Solaris ::pthread_attr_init () to contain
-  // NULL for the priority, which indicated to Solaris
-  // ::pthread_create () to inherit the parent priority.)
-  if (priority == 0)
-    {
-      // Check the priority of this thread, which is the parent of the
-      // newly created thread.  If it is 0, then the newly created
-      // thread will have inherited the priority of 0, so there's no
-      // need to explicitly set it.
-      struct sched_param sparam;
-      int policy = 0;
-      ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_getschedparam (thr_self (),
-                                                             &policy,
-                                                             &sparam),
-                                    result), int,
-                  -1, result);
+#     if defined (sun)
+        // If the priority is 0, then we might have to set it now
+        // because we couldn't set it with
+        // ::pthread_attr_setschedparam, as noted above.  This doesn't
+        // provide strictly correct behavior, because the thread was
+        // created (above) with the priority of its parent.  (That
+        // applies regardless of the inherit_sched attribute: if it
+        // was PTHREAD_INHERIT_SCHED, then it certainly inherited its
+        // parent's priority.  If it was PTHREAD_EXPLICIT_SCHED, then
+        // "attr" was initialized by the Solaris ::pthread_attr_init
+        // () to contain NULL for the priority, which indicated to
+        // Solaris ::pthread_create () to inherit the parent
+        // priority.)
+        if (priority == 0)
+          {
+            // Check the priority of this thread, which is the parent
+            // of the newly created thread.  If it is 0, then the
+            // newly created thread will have inherited the priority
+            // of 0, so there's no need to explicitly set it.
+            struct sched_param sparam;
+            int policy = 0;
+            ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_getschedparam (thr_self (),
+                                                                   &policy,
+                                                                   &sparam),
+                                          result), int,
+                        -1, result);
 
-      if (sparam.sched_priority != 0)
-        {
-          ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
-          // The memset to 0 sets the priority to 0, so we don't need
-          // to explicitly set sparam.sched_priority.
+            if (sparam.sched_priority != 0)
+              {
+                ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
+                // The memset to 0 sets the priority to 0, so we don't need
+                // to explicitly set sparam.sched_priority.
 
-          // The only policy supported by by Solaris, thru version 2.6,
-          // is SCHED_OTHER, so that's hard-coded below.
-          ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (
-                                                 *thr_id,
-                                                 SCHED_OTHER,
-                                                 &sparam),
-                                               result),
-                             int, -1);
-        }
-    }
+                // The only policy supported by by Solaris, thru version 2.6,
+                // is SCHED_OTHER, so that's hard-coded below.
+                ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (
+                                                        *thr_id,
+                                                        SCHED_OTHER,
+                                                        &sparam),
+                                                     result),
+                                   int, -1);
+              }
+          }
 
 #       if defined (ACE_NEEDS_LWP_PRIO_SET)
 #         if 0
-  // It would be useful if we could make this work.  But, it requires
-  // a mechanism for determining the ID of an LWP to which another
-  // thread is bound.  Is there a way to do that?  Instead, just rely
-  // on the code in ACE_Thread_Adapter::invoke () to set the LWP
-  // priority.
+            // It would be useful if we could make this work.  But, it
+            // requires a mechanism for determining the ID of an LWP
+            // to which another thread is bound.  Is there a way to do
+            // that?  Instead, just rely on the code in
+            // ACE_Thread_Adapter::invoke () to set the LWP priority.
 
-  // If the thread is bound, then set the priority on its LWP.
-  if (ACE_BIT_ENABLED (flags, THR_BOUND))
-    {
-      ACE_Sched_Params sched_params (ACE_BIT_ENABLED (flags, THR_SCHED_FIFO) ||
-                                     ACE_BIT_ENABLED (flags, THR_SCHED_RR)  ?
-                                       ACE_SCHED_FIFO  : ACE_SCHED_OTHER,
-                                     priority);
-      result = ACE_OS::lwp_setparams (sched_params,
+            // If the thread is bound, then set the priority on its LWP.
+            if (ACE_BIT_ENABLED (flags, THR_BOUND))
+              {
+                ACE_Sched_Params sched_params (ACE_BIT_ENABLED (flags,
+                  THR_SCHED_FIFO) || ACE_BIT_ENABLED (flags,
+                  THR_SCHED_RR)  ?  ACE_SCHED_FIFO  :ACE_SCHED_OTHER,
+                                               priority);
+                result = ACE_OS::lwp_setparams (sched_params,
                                       /* ? How do we find the ID of the LWP
                                            to which *thr_id is bound? */);
-    }
+              }
 #         endif /* 0 */
 #       endif /* ACE_NEEDS_LWP_PRIO_SET */
 
-#     endif /* ACE_HAS_STHREADS */
+#     endif /* sun */
   return result;
 #   elif defined (ACE_HAS_STHREADS)
   int result;
