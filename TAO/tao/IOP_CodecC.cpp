@@ -34,6 +34,7 @@
 #include "tao/Any_Impl_T.h"
 #include "tao/Any_Dual_Impl_T.h"
 #include "tao/Fixed_Size_Argument_T.h"
+#include "tao/Var_Size_Argument_T.h"
 #include "tao/Typecode.h"
 
 #if defined (__BORLANDC__)

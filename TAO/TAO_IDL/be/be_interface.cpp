@@ -98,7 +98,12 @@ be_interface::be_interface (UTL_ScopedName *n,
   ACE_NEW (this->strategy_,
            be_interface_default_strategy (this));
 
-  if (this->is_defined () && !this->imported ())
+  if (this->imported () || this->node_type () == AST_Decl::NT_valuetype)
+    {
+      return ;
+    }
+
+  if (this->is_defined ())
     {
       // Set the flag that says we have a interface in this IDL file.
       ACE_SET_BITS (idl_global->decls_seen_info_,
@@ -123,6 +128,12 @@ be_interface::be_interface (UTL_ScopedName *n,
           ACE_SET_BITS (idl_global->decls_seen_info_,
                         idl_global->decls_seen_masks.non_local_iface_seen_);
         }
+    }
+  else
+    {
+      // Forward declared non-defined interface. Still gets a _var decl.
+      ACE_SET_BITS (idl_global->decls_seen_info_,
+                    idl_global->decls_seen_masks.fwd_iface_seen_);
     }
 }
 

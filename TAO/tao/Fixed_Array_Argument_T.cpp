@@ -4,6 +4,7 @@
 #define TAO_FIXED_ARRAY_ARGUMENT_T_C
 
 #include "tao/Fixed_Array_Argument_T.h"
+#include "tao/Dynamic_ParameterC.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Fixed_Array_Argument_T.inl"

@@ -88,6 +88,12 @@ be_sequence::be_sequence (AST_Expression *v,
   // Always the case.
   this->has_constructor (I_TRUE);
 
+  // Don't want to set any bits below for imported nodes.
+  if (this->imported ())
+    {
+      return;
+    }
+
   // This one gets set for all sequences, in addition to any specialized
   // one that may get set below.
   ACE_SET_BITS (idl_global->decls_seen_info_,

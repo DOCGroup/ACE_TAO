@@ -449,6 +449,7 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
 
   if (node->imported ())
     {
+      this->this_mode_generated (node, I_TRUE);
       return 0;
     }
 
@@ -590,6 +591,12 @@ be_visitor_tmplinst_cs::visit_enum (be_enum *node)
           << ">" << this->suffix_;
 
       os->gen_endif ();
+    }
+
+  if (node->imported ())
+    {
+      this->this_mode_generated (node, I_TRUE);
+      return 0;
     }
 
   if (be_global->any_support ())

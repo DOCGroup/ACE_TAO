@@ -749,6 +749,17 @@ value_concrete_decl :
 //      '}'
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeQsSeen);
 
+          AST_ValueType *vt = 
+            AST_ValueType::narrow_from_scope (
+                idl_global->scopes ().top_non_null ()
+              );
+
+          if (vt->will_have_factory ())
+            {
+              ACE_SET_BITS (idl_global->decls_seen_info_,
+                            idl_global->decls_seen_masks.valuefactory_seen_);
+            }
+
           /*
            * Done with this value type - pop it off the scopes stack
            */

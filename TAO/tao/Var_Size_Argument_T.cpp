@@ -4,6 +4,7 @@
 #define TAO_VAR_SIZE_ARGUMENT_T_C
 
 #include "tao/Var_Size_Argument_T.h"
+#include "tao/Dynamic_ParameterC.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Var_Size_Argument_T.inl"
