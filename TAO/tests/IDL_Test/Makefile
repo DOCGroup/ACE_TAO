@@ -22,6 +22,7 @@ IDL_ALWAYS =	anonymous		\
                 full                    \
                 fwd                     \
 		generic_object		\
+                gperf                   \
 		included		\
 		including		\
 		interface		\
