@@ -13,10 +13,10 @@ Server_i::~Server_i (void)
 }
 
 char *
-Server_i::get_status (ACE_ENV_SINGLE_ARG_DECL)
+Server_i::get_status (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char *status = "active";
-  
+
   return CORBA::string_dup (status);
 }
