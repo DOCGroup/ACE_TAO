@@ -6,8 +6,8 @@
 
 ACE_INLINE
 CORBA::Object::Object (int)
-  : is_collocated_ (0),
-    servant_ (0),
+  : servant_ (0),
+    is_collocated_ (0),
     is_local_ (1),
     proxy_broker_ (0),
     is_evaluated_ (1),

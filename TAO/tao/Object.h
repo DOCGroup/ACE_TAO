@@ -55,9 +55,13 @@ namespace CORBA
     /// Destructor.
     virtual ~Object (void);
 
-    /// Address of this variable used in _unchecked_narrow().
-    static int _tao_class_id;
-
+    /**
+     * @name Spec defined methods
+     *
+     * These methods are defined here since they are required by the
+     * CORBA  spec in a form specified by the C++ mapping.
+     */
+    //@{
     /// Increment the ref count.
     static CORBA::Object_ptr _duplicate (CORBA::Object_ptr obj);
 
@@ -70,15 +74,6 @@ namespace CORBA
                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
     static CORBA::Object_ptr _unchecked_narrow (Object_ptr obj
                                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-    /// Used in the implementation of CORBA::Any
-    static void _tao_any_destructor (void*);
-
-    /// Uninlined part of the now-inlined CORBA::is_nil().
-    static CORBA::Boolean is_nil_i (CORBA::Object_ptr obj);
-
-    /// Helper function for reading contents of an IOR
-    static void tao_object_initialize (Object *);
 
     // These calls correspond to over-the-wire operations, or at least
     // do so in many common cases.  The normal implementation assumes a
@@ -94,13 +89,26 @@ namespace CORBA
     /// implementation method and does no remote invocations!
     virtual const char* _interface_repository_id (void) const;
 
-    /// Is this object collocated with the servant?
-    virtual CORBA::Boolean _is_collocated (void) const;
 
-    /// Is this a local object?
-    virtual CORBA::Boolean _is_local (void) const;
+    /**
+     * Return a (potentially non-unique) hash value for this object.
+     * This method relies on the representation of the object
+     * reference's private state.  Since that changes easily (when
+     * different ORB protocols are in use) there is no default
+     * implementation.
+     */
+    virtual CORBA::ULong _hash (CORBA::ULong maximum
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-    virtual TAO_Abstract_ServantBase *_servant (void) const;
+    /**
+     * Try to determine if this object is the same as other_obj.  This
+     * method relies on the representation of the object reference's
+     * private state.  Since that changes easily (when different ORB
+     * protocols are in use) there is no default implementation.
+     */
+    virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj
+                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC (());
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
@@ -160,8 +168,7 @@ namespace CORBA
     CORBA::Policy_ptr _get_policy (CORBA::PolicyType type
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-    CORBA::Policy_ptr _get_client_policy (CORBA::PolicyType type
-                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
     CORBA::Object_ptr _set_policy_overrides (
       const CORBA::PolicyList & policies,
@@ -179,47 +186,6 @@ namespace CORBA
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
     /**
-     * Return a (potentially non-unique) hash value for this object.
-     * This method relies on the representation of the object
-     * reference's private state.  Since that changes easily (when
-     * different ORB protocols are in use) there is no default
-     * implementation.
-     */
-    virtual CORBA::ULong _hash (CORBA::ULong maximum
-                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
-    /**
-     * Try to determine if this object is the same as other_obj.  This
-     * method relies on the representation of the object reference's
-     * private state.  Since that changes easily (when different ORB
-     * protocols are in use) there is no default implementation.
-     */
-    virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj
-                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC (());
-
-    /// Return the object key as an out parameter.  Caller should release
-    /// return value when finished with it.
-    virtual TAO_ObjectKey *_key (ACE_ENV_SINGLE_ARG_DECL);
-
-    /**
-     * Return a reference to the object key of profile in-use.
-     * If there's no in-use profile, then the program will
-     * probably crash.  This method does not create a new copy.
-     */
-    // virtual const TAO_ObjectKey &_object_key (void);
-
-    /// Downcasting this object pointer to some other derived class.
-    /// This QueryInterface stuff only work for local object.
-    virtual void * _tao_QueryInterface (ptr_arith_t type);
-
-    // Useful for template programming.
-#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
-    typedef Object_ptr _ptr_type;
-    typedef Object_var _var_type;
-#endif /* __GNUC__ */
-
-    /**
      * @name Reference Count Managment
      *
      * These are the standard CORBA object reference count manipulations
@@ -232,6 +198,58 @@ namespace CORBA
     /// Decrement the reference count.
     virtual void _remove_ref (void);
     //@}
+
+    // Useful for template programming.
+#if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef Object_ptr _ptr_type;
+    typedef Object_var _var_type;
+#endif /* __GNUC__ */
+
+    //@} End of CORBA specific methods
+
+
+    /**
+     * @name Methods that are TAO specific.
+     *
+     * These methods are defined here as helper functions to be used
+     * by other parts of TAO. Theoretically they shold all start with
+     * tao_. But we have deviated from that principle.
+     */
+
+    //@{
+    /// Address of this variable used in _unchecked_narrow().
+    static int _tao_class_id;
+
+    virtual TAO_Abstract_ServantBase *_servant (void) const;
+
+    /// Is this object collocated with the servant?
+    virtual CORBA::Boolean _is_collocated (void) const;
+
+    /// Is this a local object?
+    virtual CORBA::Boolean _is_local (void) const;
+
+    /// Used in the implementation of CORBA::Any
+    static void _tao_any_destructor (void*);
+
+    /// Uninlined part of the now-inlined CORBA::is_nil().
+    static CORBA::Boolean is_nil_i (CORBA::Object_ptr obj);
+
+    /// Helper function for reading contents of an IOR
+    static void tao_object_initialize (Object *);
+
+    /// Return the object key as an out parameter.  Caller should release
+    /// return value when finished with it.
+    virtual TAO_ObjectKey *_key (ACE_ENV_SINGLE_ARG_DECL);
+
+    /// Downcasting this object pointer to some other derived class.
+    /// This QueryInterface stuff only work for local object.
+    virtual void * _tao_QueryInterface (ptr_arith_t type);
+
+#if (TAO_HAS_CORBA_MESSAGING == 1)
+
+    CORBA::Policy_ptr _get_client_policy (CORBA::PolicyType type
+                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+#endif /*TAO_HAS_CORBA_MESSAGING*/
 
     /// Constructor
     Object (TAO_Stub *p,
@@ -277,6 +295,8 @@ namespace CORBA
 
     const IOP::IOR &ior (void) const;
 
+    //@} End of TAO-specific methods..
+
   protected:
 
     /// Initializing a local object.
@@ -290,12 +310,14 @@ namespace CORBA
 
   protected:
 
+    /// Servant pointer.  It is 0 except for collocated objects.
+    TAO_Abstract_ServantBase *servant_;
+
+  private:
+
     /// Flag to indicate collocation.  It is 0 except for collocated
     /// objects.
     CORBA::Boolean is_collocated_;
-
-    /// Servant pointer.  It is 0 except for collocated objects.
-    TAO_Abstract_ServantBase *servant_;
 
     /// Specify whether this is a local object or not.
     CORBA::Boolean is_local_;
@@ -303,8 +325,6 @@ namespace CORBA
     /// Pointer to the Proxy Broker i.e. the instance that takes care of
     /// getting the right proxy for performing a given call.
     TAO_Object_Proxy_Broker *proxy_broker_;
-
-  private:
 
     /// Flag to indicate whether the IOP::IOR has been evaluated fully.
     Boolean is_evaluated_;

@@ -77,7 +77,8 @@ TAO_Collocated_Object::_is_a (const CORBA::Char *logical_type_id
 
   // Direct collocation strategy is used.
   if (this->servant_ != 0)
-    return this->servant_->_is_a (logical_type_id ACE_ENV_ARG_PARAMETER);
+    return this->_servant ()->_is_a (logical_type_id
+                                     ACE_ENV_ARG_PARAMETER);
 
   // @@ Maybe we want to change this exception...
   ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);
