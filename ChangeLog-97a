@@ -1,3 +1,21 @@
+Mon Apr 28 18:35:39 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ace/Timer_Wheel: added a new strategy for Timer Queues, one 
+	  based on a hash table of ordered lists.  
+		
+	  These files were added:
+	
+	  - ace/Timer_Wheel.h
+	  - ace/Timer_Wheel_T.h
+	  - ace/Timer_Wheel_T.cpp
+	
+	  These files were also changed to accomodate Timer Wheel
+	  
+	  - ace/Timer_Queue.cpp 
+	  - ace/Timer_Queue_T.h
+	  - ace/Timer_Queue_T.cpp
+	  - tests/Timer_Queue_Test.cpp 
+
 Mon Apr 28 17:32:04 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp: Added
@@ -5765,3 +5783,5 @@ Wed Jan  1 00:10:47 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* Happy new year!  Let's start a new ChangeLog to celebrate the
 	  new year.
+
+	
