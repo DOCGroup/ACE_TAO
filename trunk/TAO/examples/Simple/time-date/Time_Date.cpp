@@ -36,10 +36,10 @@ DLL_ORB::svc (void)
 int 
 DLL_ORB::init (int argc, char *argv[])
 {
-   ACE_TRY_NEW_ENV 
-   {
+  ACE_TRY_NEW_ENV 
+    {
       ACE_DEBUG ((LM_DEBUG,
-                 "\n\tInitialize ORB\n\n"));
+                  "\n\tInitialize ORB\n\n"));
 
       // Initialize the ORB.
       this->orb_manager_.init (argc,
@@ -47,16 +47,16 @@ DLL_ORB::init (int argc, char *argv[])
                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-       // Become an Active Object so that the ORB
-       // will execute in a separate thread.
-       return this->activate ();
-     }
-   ACE_CATCHANY
-     {
-       ACE_TRY_ENV.print_exception ("DLL_ORB::init");
-       return -1;
-     }
-   ACE_ENDTRY;
+      // Become an Active Object so that the ORB
+      // will execute in a separate thread.
+      return this->activate ();
+    }
+  ACE_CATCHANY
+    {
+      ACE_TRY_ENV.print_exception ("DLL_ORB::init");
+      return -1;
+    }
+  ACE_ENDTRY;
 }
 
 int 
@@ -86,7 +86,7 @@ Time_Date_Servant::parse_args (int argc, char *argv[])
                              "Unable to open %s for writing: %p\n",
                              get_opts.optarg), -1);
         break;
-             // Find the ORB in the Service Repository.
+        // Find the ORB in the Service Repository.
       case 'n':
         this->orb_ = get_opts.optarg;
         break;
@@ -108,40 +108,42 @@ Time_Date_Servant::parse_args (int argc, char *argv[])
 int 
 Time_Date_Servant::init (int argc, char *argv[])
 {
-   ACE_TRY_NEW_ENV 
-   {
+  ACE_TRY_NEW_ENV 
+    {
       ACE_DEBUG ((LM_DEBUG,
-                 "\n\tTime_Date servant\n\n"));
+                  "\n\tTime_Date servant\n\n"));
 
       this->parse_args (argc, argv);
  
-      DLL_ORB *orb = ACE_Dynamic_Service<DLL_ORB>::instance (this->orb_);
+      DLL_ORB *orb =
+        ACE_Dynamic_Service<DLL_ORB>::instance (this->orb_);
+
       if (orb == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "can't find %s in the Service Repository\n",
                            this->orb_),
-                           -1);
+                          -1);
  
       CORBA::String_var str = orb->orb_manager_.activate (&servant_, 
                                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
  
       if (this->ior_output_file_)
-	      {
-	        ACE_OS::fprintf (this->ior_output_file_,
-			                     "%s",
-			                     str.in ());
-	        ACE_OS::fclose (this->ior_output_file_);
-	      }
+        {
+          ACE_OS::fprintf (this->ior_output_file_,
+                           "%s",
+                           str.in ());
+          ACE_OS::fclose (this->ior_output_file_);
+        }
 
-     }
-   ACE_CATCHANY
-     {
-       ACE_TRY_ENV.print_exception ("DLL_ORB::init");
-       return -1;
-     }
-   ACE_ENDTRY;
-   return 0;
+    }
+  ACE_CATCHANY
+    {
+      ACE_TRY_ENV.print_exception ("DLL_ORB::init");
+      return -1;
+    }
+  ACE_ENDTRY;
+  return 0;
 }
 
 // The following Factory is used by the <ACE_Service_Config> and

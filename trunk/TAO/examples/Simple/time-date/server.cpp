@@ -10,9 +10,9 @@
 //
 // = DESCRIPTION
 //   This directory contains an example that illustrates how the ACE
-//   Service Configurator can dynamically configure an ORB from a
-//   svc.conf file.  
-//g
+//   Service Configurator can dynamically configure an ORB and its
+//   servants from a svc.conf file.
+//
 // = AUTHOR
 //    Doug Schmidt <schmidt@cs.wustl.edu>
 //
@@ -33,7 +33,6 @@ main (int argc, ASYS_TCHAR *argv[])
 
   // Run forever, performing the configured services until we
   // shutdown.
-
   ACE_Reactor::run_event_loop ();
   return 0;
 }
