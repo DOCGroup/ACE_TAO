@@ -1,3 +1,11 @@
+Sat Mar 18 17:51:13 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/examples/Quoter/client.cpp (init_naming_service):
+          changed _ptr's to *'s.
+
+        * orbsvcs/examples/Quoter/Quoter_i.cpp (copy):
+          changed _ptr's to *'s.
+
 Sat Mar 18 17:45:32 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/Trading/Offer_Exporter.cpp (grab_offerids):

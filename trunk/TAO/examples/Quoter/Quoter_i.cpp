@@ -173,7 +173,7 @@ CosLifeCycle::LifeCycleObject::_nil ();
 
       // Find an appropriate factory over there.
       exception_message = "While trying to find a factory.\n";
-      CosLifeCycle::Factories_ptr factories_ptr =
+      CosLifeCycle::Factories *factories_ptr =
         there->find_factories (factoryKey, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
