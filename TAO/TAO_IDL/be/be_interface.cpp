@@ -1099,9 +1099,9 @@ be_interface::gen_operation_table (const char *flat_name,
         this->skel_count_++;
 
         os->indent ();
-        *os << "_interface, &"
+        *os << "{\"_interface\", &"
             << skeleton_class_name
-            << "::_interface_skel\n";
+            << "::_interface_skel}\n";
         this->skel_count_++;
 
         os->decr_indent ();
@@ -1213,7 +1213,7 @@ be_interface::gen_operation_table (const char *flat_name,
 
         // Generate the skeleton for the is_a method.
         os->indent ();
-        *os << "_is_a" << ", &"
+        *os << "_is_a, &"
             << skeleton_class_name
             << "::_is_a_skel\n";
         this->skel_count_++;
