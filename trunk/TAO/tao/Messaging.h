@@ -56,7 +56,7 @@ struct TAO_Exception_Data;
  * @brief Define helper functions for the CORBA Messaging
  * implementation in TAO.
  */
-namespace TAO_Export TAO_Messaging_Helper
+namespace TAO_Messaging_Helper
 {
   /// Implement the code shared by all the ExceptionHolder::raise_*()
   /// operations
