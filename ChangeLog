@@ -1,3 +1,8 @@
+Tue Mar  5 12:24:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Auto_IncDec_T.h:
+          Corrected typing error in comment
+
 Mon Mar  4 19:59:31 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Process_Strategy_Test.h: Added #include "ace/Strategies_T.h"
@@ -34,7 +39,7 @@ Mon Mar 04 11:20:45 2002  Carlos O'Ryan  <coryan@uci.edu>
 	  class Foo : private ACE_Copy_Disabled
 
 	  Isn't that cool?
-	  
+
 	* ace/Makefile:
 	* ace/Makefile.am:
 	* ace/Makefile.bor:
