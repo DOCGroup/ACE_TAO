@@ -23,7 +23,7 @@
 #include "tao/corbafwd.h"
 #include "tao/Pluggable.h"
 
-// @@ Fred, this definitions are of very little use, can you make them 
+// @@ Fred, this definitions are of very little use, can you make them
 //    local to the Profile class so we don't pollute the global
 //    namespace
 typedef TAO_Profile *TAO_Profile_ptr;

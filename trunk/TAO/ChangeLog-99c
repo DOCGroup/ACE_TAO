@@ -1,3 +1,15 @@
+Wed May 12 13:35:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/MProfile.h:
+	* tao/MProfile.cpp:
+	  Fixed warnings
+
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+	  I forgot to fix the TAO_Stub constructors in this file.
+
+	* orbsvcs/ImplRepo_Service/Makefile:
+	  Updated dependencies
+
 Wed May 12 12:14:41 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* COPYING: 
