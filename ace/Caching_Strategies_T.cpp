@@ -121,17 +121,6 @@ ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTI
                                                        this->purge_percent_);
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> int
-ACE_LRU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::clear_cache (CONTAINER &container,
-                                                                                                    unsigned int &total_container_entries)
-{
-
-  return this->caching_strategy_utility_->clear_cache (container,
-                                                       this->cleanup_strategy_,
-                                                       this->purge_percent_,
-                                                       total_container_entries);
-}
-
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY>
@@ -224,15 +213,6 @@ ACE_LFU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTI
                                                        this->purge_percent_);
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> int
-ACE_LFU_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::clear_cache (CONTAINER &container,
-                                                                                                    unsigned int &total_container_entries)
-{
-  return this->caching_strategy_utility_->clear_cache (container,
-                                                       this->cleanup_strategy_,
-                                                       this->purge_percent_,
-                                                       total_container_entries);
-}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -327,16 +307,6 @@ ACE_FIFO_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UT
                                                        this->purge_percent_);
 }
 
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> int
-ACE_FIFO_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::clear_cache (CONTAINER &container,
-                                                                                                    unsigned int &total_container_entries)
-{
-  return this->caching_strategy_utility_->clear_cache (container,
-                                                       this->cleanup_strategy_,
-                                                       this->purge_percent_,
-                                                       total_container_entries);
-}
-
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -375,16 +345,6 @@ template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHIN
 ACE_Null_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::clear_cache (CONTAINER &container)
 {
   ACE_UNUSED_ARG (container);
-
-  return 0;
-}
-
-template<class KEY, class VALUE, class CONTAINER, class ATTRIBUTES, class CACHING_STRATEGY_UTILITY> int
-ACE_Null_Caching_Strategy<KEY, VALUE, CONTAINER, ATTRIBUTES, CACHING_STRATEGY_UTILITY>::clear_cache (CONTAINER &container,
-                                                                                                     unsigned int &total_container_entries)
-{
-  ACE_UNUSED_ARG (container);
-  ACE_UNUSED_ARG (total_container_entries);
 
   return 0;
 }
