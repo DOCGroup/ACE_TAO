@@ -1,3 +1,8 @@
+Fri Jan 19 08:55:45 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/Leader_Follower.cpp:
+	  Add missing #include for "ace/Reactor.h".
+
 Fri Jan 19 08:22:34 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/ORB.cpp:
