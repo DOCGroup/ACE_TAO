@@ -1,3 +1,8 @@
+Fri Aug 21 11:57:57 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* src/Options.cpp (operator): Fixed '%e' to be '%r' to come up to
+ 	  speed with ACE changes.
+
 Sat Aug 15 07:59:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * src/gperf.cpp (main): added ACE_UNUSED_ARGS for argc and
