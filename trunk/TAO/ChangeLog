@@ -1,3 +1,26 @@
+Sun Jul 07 21:56:23 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.h:
+	* tao/Transport.cpp:
+	* tao/Transport.inl: Did a few cosmetic changes. 
+
+	  - Removed the TAO_Synch_Refcountable class and moved that to a
+	  new file. 
+	  - Rearranged the methods in cpp and inl files, so that the
+	  methods specific for the input path and output path are grouped
+	  together. Just did this to improve readability. 
+	  - Added a new method by name transport_cache_manager () which
+	  returns the reference to transport cache manager from the ORB. 
+
+	* tao/Synch_Refcountable.{h,cpp,inl}: Added this new file which
+	  contains the class TAO_Synch_Refcountable.
+	
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp: Added the new files to the project
+	  workspace. 
+
+	* tao/Incoming_Mesage_Queue.h: Fixed an erroneous comment. 
+
 Sun Jul  7 18:53:54 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/fe/fe_tmplinst.cpp:

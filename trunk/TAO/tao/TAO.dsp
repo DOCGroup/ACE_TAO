@@ -831,6 +831,10 @@ SOURCE=.\Synch_Queued_Message.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Synch_Refcountable.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Synch_Reply_Dispatcher.cpp
 # End Source File
 # Begin Source File
@@ -1659,6 +1663,10 @@ SOURCE=.\Synch_Queued_Message.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Synch_Refcountable.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Synch_Reply_Dispatcher.h
 # End Source File
 # Begin Source File
@@ -2260,6 +2268,10 @@ SOURCE=.\stub.i
 # Begin Source File
 
 SOURCE=.\Sync_Strategies.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Synch_Refcountable.inl
 # End Source File
 # Begin Source File
 
