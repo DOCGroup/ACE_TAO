@@ -1,3 +1,23 @@
+Wed Apr 21 22:35:07 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handler/Config_Handlers.mpc:
+          Modified the mpc file to include handlers that compile as a test
+        * DnC/Config_Handler/ID_Handler.h:
+        * DnC/Config_Handler/ID_Handler.cpp:
+        * DnC/Config_Handler/CEPE_Handler.h:
+        * DnC/Config_Handler/CEPE_Handler.cpp:
+        * DnC/Config_Handler/RS_Handler.h:
+        * DnC/Config_Handler/RS_Handler.cpp:
+        * DnC/Config_Handler/SP_Handler.h:
+        * DnC/Config_Handler/SP_Handler.cpp:
+        * DnC/Config_Handler/Utils.h:
+        * DnC/Config_Handler/Utils.cpp:
+        * DnC/Config_Handler/Any_Handler.h:
+          Handlers for common elements; each handler handles a separate
+          type
+        * DnC/Config_Handler/Config_Handler_export.h:
+          Export files for all the handlers
+
 Wed Apr 21 22:27:34 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/Deployment.mpc:

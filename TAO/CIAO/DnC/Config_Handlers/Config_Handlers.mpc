@@ -10,10 +10,11 @@ project (Config_Handlers) : taolib {
   libs     += xerces-c
 
   Source_Files {
-     ACD_Handler.cpp
-     APM_Handler.cpp
-     MID_Handler.cpp
-     SPE_Handler.cpp
-     XercesString.cpp
+    Utils.cpp
+    ID_Handler.cpp
+    CEPE_Handler.cpp
+    ERE_Handler.cpp
+    RS_Handler.cpp
+    SP_Handler.cpp
   }
 }
