@@ -1,3 +1,19 @@
+Thu Jan 22 19:00:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/os_include/os_signal.h:
+
+          This patch fixes redeclaration of pthread_sigmask
+	  function which showe up RH 9 systems with glibc
+	  2.3. pthread_sigmask declaration is now protected by a guard
+	  which will be defined in the platform configuration file. Thanks
+	  to Olli Savia for providing the patch.
+	
+	* ace/config-linux-common.h:
+
+	  A fix similar to this fix "Wed Jan 21 13:38:11 UTC 2004  Johnny 
+	  Willemsen  <jwillemsen@remedy.nl>", but added
+	  ACE_HAS_PTHREAD_SIGMASK_PROTO within the block for glib 2.3.
+
 Thu Jan 22 19:02:31 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/ThreadPools/Task_ThreadPool.cpp: Use 0, not NULL, to
