@@ -22,6 +22,12 @@ use vars qw(@ISA);
 # Subroutine Section
 # ************************************************************
 
+sub dollar_special {
+  #my($self) = shift;
+  return 1;
+}
+
+
 sub fill_value {
   my($self)  = shift;
   my($name)  = shift;
