@@ -14,24 +14,117 @@
 <P>
 <HR WIDTH="100%">
 <P>
-We'll go back to our tradition of looking at main() first.  The only
-change here from our "normal" thread pool is the ability to specify
-the number of subtasks for the pool.  (Each subtask is another thread
-pool in the chain.  I suppose I should have named that better...)
-I've still got the custom Message_Block so that, at this level, we
-don't even know about custom Data_Blocks.
+Let's look now at the changes to our ACE_Message_Block derivative and
+the new ACE_Data_Block derivative.
+<P>
+The important thing to remember is that the data block (not the
+message block) is reference counted.  When you instantiate a new
+ACE_Message_Block, it will create one or more ACE_Data_Block objects
+to contain the data you need.  Optionally, you can provide it with a
+pointer to a data block.
+<P>
+When you finish with a message block, you should use the release()
+method to make it go away.  Do not ever <em>delete</em> an instance of
+a message block!  When you invoke release(), the message block will
+invoke release() on the data block(s) it contains.  If the block's
+reference count goes to zero as a result then the block will <em>delete</em>
+itself.
+<P>
+To increment the reference count of a data block, use the
+duplicate() method of the message block (or blocks) to get a new
+message block referencing the same data block.  This is very efficient 
+since the actual data is not copied.
 <P>
 <HR WIDTH="100%">
 <PRE>
+/*
+  In this Tutorial, we derive from ACE_Data_Block for our special
+  data.  With the possiblilty that our Task object may forward the
+  unit of work on to another thread pool, we have to make sure that
+  the data object doesn't go out of scope unexpectedly.  An
+  ACE_Message_Block will be deleted as soon as it's release() method
+  is called but the ACE_Data_Blocks it uses are reference counted and
+  only delete when the last reference release()es the block.  We use
+  that trait to simply our object memory management.
+ */
+class Data_Block : public ACE_Data_Block
+{
+public:
+    typedef ACE_Data_Block inherited;
+
+        // Create a data block with a unit of work to be done
+    Data_Block( Unit_Of_Work * _data );
+    
+    ~Data_Block(void);
+
+        // Returns the work pointer
+    Unit_Of_Work * data(void);
+    
+protected:
+    Unit_Of_Work * data_;
+    MLD;    // Our memory leak detector
+
+        // The ACE_Data_Block allows us to choose a locking strategy
+        // for making the reference counting thread-safe.  The
+        // ACE_Lock_Adaptor&lt;&gt; template adapts the interface of a
+        // number of lock objects so that the ACE_Message_Block will
+        // have an interface it can use.
+    class Lock : public ACE_Lock_Adapter&lt;ACE_Mutex&gt;
+    {
+    public:
+        typedef ACE_Lock_Adapter&lt;ACE_Mutex&gt; inherited;
+
+        Lock(void);
+        ~Lock(void);
+
+            // When the Data_Block is destroyed, the Message_Block is
+            // holding a lock with this object.  If we were to destroy 
+            // the Lock with the Data_Block, we would have a
+            // segfault.  Instead, the Data_Block invokes destroy() to 
+            // mark the object as un-needed so that when the
+            // Message_Block invokes release() to drop the lock, the
+            // Lock can delete itself.
+        int destroy(void);
+        int release(void);
+    protected:
+        int destroy_;
+        MLD;
+    };
+};
+
+/*
+  This simple derivative of ACE_Message_Block will construct our
+  Data_Block object to contain a unit of work.
+ */
+class Message_Block : public ACE_Message_Block
+{
+public:
+    typedef ACE_Message_Block inherited;
+    
+    Message_Block( void );
+    Message_Block( Unit_Of_Work * _data );
+    
+    ~Message_Block( void );
+
+protected:
+    MLD;
+};
 </PRE>
 <HR WIDTH="100%">
 <P>
-Nothing really surprising here...  Just remember that your total
-number of threads is ( ( 1 + subtasks ) * threads ).  You probably
-don't want to get too carried away with that!
+One of the most difficult parts of this to get right was the Lock
+object.  I didn't even have it in the beginning but I soon realized
+that the reference counts were getting weird.  A little careful
+reading of the comments and the source informed me that some sort of
+locking is necessary to keep the counter sane.  The simplest thing at
+that point was to use the ACE_Lock_Adaptor&lt;&gt; to adapt ACE_Mutex
+appropriately.  The next trick was to ensure that the lock object was
+destroyed at the proper time to prevent both memory leaks and core
+dumps.  The finaly product may be a little bit intimidating at first
+but it's really quite simple once you understand the motivation.
 <P>
 <HR WIDTH="100%">
-<CENTER>[<A HREF="..">Tutorial Index</A>] [<A HREF="page04.html">Continue
+<CENTER>[<A HREF="..">Tutorial Index</A>] [<A HREF="page05.html">Continue
 This Tutorial</A>]</CENTER>
 
 </BODY>

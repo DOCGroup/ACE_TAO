@@ -52,7 +52,7 @@ int run_test (int iterations, int threads, int subtasks)
     delete task;
 
         // Ask our memory leak detector if things are OK
-    if( MLD_COUNTER->value() != 0 )
+    if( MLD_COUNTER != 0 )
     {
       	ACE_DEBUG ((LM_DEBUG, "(%P|%t) Memory Leak!\n"));
     }
@@ -75,3 +75,12 @@ int main (int argc, char *argv[])
 
     exit (0);
 }
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Guard<ACE_Mutex>;
+template class ACE_Lock_Adapter<ACE_Mutex>;
+template class ACE_Atomic_Op<ACE_Mutex, int>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Guard<ACE_Mutex>;
+#pragma instantiate ACE_Lock_Adapter<ACE_Mutex>;
+#pragma instantiate ACE_Atomic_Op<ACE_Mutex, int>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
