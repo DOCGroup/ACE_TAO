@@ -1,80 +1,86 @@
+Wed May 20 10:42:12 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-mvs.h: enabled ACE_LACKS_CONDATTR_PSHARED and
+          ACE_LACKS_MUTEXATTR_PSHARED.  Thanks to Chuck Gehr
+          <GehrCR@LOUISVILLE.STORTEK.COM> for advising on this.
+
 Tue May 19 10:05:07 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/SString.cpp (strlen): Renamed ACE_WString::wstrlen to
- 	  ACE_WString::strlen.
+        * ace/SString.cpp (strlen): Renamed ACE_WString::wstrlen to
+          ACE_WString::strlen.
 
-	* ace/SString.i: Reordered functions to make g++ happy.
+        * ace/SString.i: Reordered functions to make g++ happy.
 
-	* ace/ACE.cpp (hash_pjw): Changed ACE_OS::strlen to
- 	  ACE_WString::strlen.
+        * ace/ACE.cpp (hash_pjw): Changed ACE_OS::strlen to
+          ACE_WString::strlen.
 
 Tue May 19 09:52:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/config-irix6.x-g++.h: 
-	* ace/config-irix6.x-sgic++-nothreads.h: 
-	* ace/config-irix6.x-sgic++.h: 
-	  Added ACE_LACKS_MUTEXATTR_PSHARED
+        * ace/config-irix6.x-g++.h:
+        * ace/config-irix6.x-sgic++-nothreads.h:
+        * ace/config-irix6.x-sgic++.h:
+          Added ACE_LACKS_MUTEXATTR_PSHARED
 
 Mon May 18 16:37:36 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/SString.h (ACE_CString): Added the ability to hold on to
- 	  user supplied character strings without having to make a copy.
+        * ace/SString.h (ACE_CString): Added the ability to hold on to
+          user supplied character strings without having to make a copy.
 
-	* ace/OS.h (ACE_OS): Added implementations for strrchr, strnchr,
- 	  strnstr, and strstr.
-	
-	* ace/ACE.cpp (hash_pjw): Added new versions of these that work
- 	  with user specified string length.
+        * ace/OS.h (ACE_OS): Added implementations for strrchr, strnchr,
+          strnstr, and strstr.
+        
+        * ace/ACE.cpp (hash_pjw): Added new versions of these that work
+          with user specified string length.
 
 Mon May 18 12:24:40 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
         * ace/config-*.h: Commented out most of the
- 	  ACE_LACKS_CONDATTR_PSHARED so we can see what platforms really
- 	  DON'T support this...
+          ACE_LACKS_CONDATTR_PSHARED so we can see what platforms really
+          DON'T support this...
 
-	* ace/OS.i (mutex_init): Added support for
- 	  pthread_mutexattr_setpshared() so we can initialize POSIX
- 	  pthreads process-wide mutexes.  Thanks to Ki-hyun Yoon
- 	  <abird@nextware.co.kr> for suggesting this.
+        * ace/OS.i (mutex_init): Added support for
+          pthread_mutexattr_setpshared() so we can initialize POSIX
+          pthreads process-wide mutexes.  Thanks to Ki-hyun Yoon
+          <abird@nextware.co.kr> for suggesting this.
 
-  	* ace/config-sunos5.6.h: Added an #define for
- 	  ACE_THREAD_POSIX_SEM.  Thanks to Ki-hyun Yoon
- 	  <abird@nextware.co.kr> for reporting this.
+        * ace/config-sunos5.6.h: Added an #define for
+          ACE_THREAD_POSIX_SEM.  Thanks to Ki-hyun Yoon
+          <abird@nextware.co.kr> for reporting this.
 
-	* ace/config-sunos5*.h: Removed the ACE_LACKS_RWLOCK_T stuff since
- 	  it's unnecessary.  Thanks to Chris Lahey for reminding me of
- 	  this...
+        * ace/config-sunos5*.h: Removed the ACE_LACKS_RWLOCK_T stuff since
+          it's unnecessary.  Thanks to Chris Lahey for reminding me of
+          this...
 
 Mon May 18 13:48:14 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Synch.i: Added #ifdef (ACE_HAS_THREADS) to make it compile
- 	  on non-threaded platforms.
+        * ace/Synch.i: Added #ifdef (ACE_HAS_THREADS) to make it compile
+          on non-threaded platforms.
 
 Mon May 18 12:31:32 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* ace/Service_Config.{h,i,cpp}: Added an accessor debug() for
-	  external access to the <debug_> variable.  More debug messages
-	  check this before displaying.
+        * ace/Service_Config.{h,i,cpp}: Added an accessor debug() for
+          external access to the <debug_> variable.  More debug messages
+          check this before displaying.
 
-	* ace/Parse_Node.cpp: Checks Service_Config's debug flag before
-	  outputting debug messages.
+        * ace/Parse_Node.cpp: Checks Service_Config's debug flag before
+          outputting debug messages.
 
 Sun May 17 23:14:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Wince/*.dsp: Disabled precompiled headers.  They ate up
-	  all my disk space.
+        * tests/Wince/*.dsp: Disabled precompiled headers.  They ate up
+          all my disk space.
 
-	* ace/Service_Config.cpp: <process_directive> takes a string of
-	  type ASYS_TCHAR.  Use ACE_WIDE_STRING to do the conversion.
+        * ace/Service_Config.cpp: <process_directive> takes a string of
+          type ASYS_TCHAR.  Use ACE_WIDE_STRING to do the conversion.
 
-	* ace/Log_Msg.{h,cpp} (ACE_ASSERT): Use unicode in ACE_ASSERT.
-	  (log): Don't exit the program for now.  Exiting program here
-	  destroys all debugging message in the window.
-	
-	* tests/Reader_Writer_Test.cpp: Reduced the number of iterations
-	  on WinCE.
+        * ace/Log_Msg.{h,cpp} (ACE_ASSERT): Use unicode in ACE_ASSERT.
+          (log): Don't exit the program for now.  Exiting program here
+          destroys all debugging message in the window.
+        
+        * tests/Reader_Writer_Test.cpp: Reduced the number of iterations
+          on WinCE.
 
-	* ace/OS.i: Added ACE_OS::time () implementation for CE.
+        * ace/OS.i: Added ACE_OS::time () implementation for CE.
 
 Sun May 17 21:45:07 1998  David L. Levine  <levine@cs.wustl.edu>
 
