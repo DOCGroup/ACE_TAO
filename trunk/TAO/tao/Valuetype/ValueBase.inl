@@ -1,4 +1,4 @@
-// This may not look like C++, but it's really -*- C++ -*-
+// -*- C++ -*-
 //
 // $Id$
 
@@ -69,4 +69,3 @@ TAO_OBV_GIOP_Flags::is_end_tag (CORBA::ULong tag)
 {
   return (0x80000000L < tag  && tag <= 0xFFFFFFFFL);
 }
-

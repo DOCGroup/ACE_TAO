@@ -1,21 +1,3 @@
-// $Id$
-
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//      UIOP_Acceptor.cpp
-//
-// = DESCRIPTION
-//
-// = AUTHOR
-//     Fred Kuhns <fredk@cs.wustl.edu> and
-//     Ossama Othman <othman@cs.wustl.edu>
-//
-// ============================================================================
-
 #include "UIOP_Acceptor.h"
 
 #if TAO_HAS_UIOP == 1
@@ -28,9 +10,14 @@
 #include "tao/Protocols_Hooks.h"
 #include "tao/Codeset_Manager.h"
 
-ACE_RCSID (Strategies, 
-           UIOP_Acceptor, 
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+
+
+ACE_RCSID (Strategies,
+           UIOP_Acceptor,
            "$Id$")
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -6,9 +6,13 @@
 # include "tao/params.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/OS_NS_Thread.h"
+
+
 ACE_RCSID (tao,
            params,
            "$Id$")
+
 
 TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   : endpoints_list_ (),

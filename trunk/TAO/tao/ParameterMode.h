@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  This enum is used only in the IDL structs Dynamic::Parameter and 
+ *  This enum is used only in the IDL structs Dynamic::Parameter and
  *  CORBA::ParameterDescription.
  *
  *  @author  Jeff Parsons
@@ -39,10 +39,10 @@ namespace CORBA
     };
 }
 
-TAO_Export CORBA::Boolean 
+TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR &, const CORBA::ParameterMode &);
 
-TAO_Export CORBA::Boolean 
+TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, CORBA::ParameterMode &);
 
 #include /**/ "ace/post.h"

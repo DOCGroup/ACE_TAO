@@ -1,6 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
-
 #include "tao/IIOP_Acceptor.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/MProfile.h"
@@ -8,16 +5,21 @@
 #include "tao/Protocols_Hooks.h"
 #include "tao/Codeset_Manager.h"
 #include "tao/Transport.h"
+#include "tao/ORB_Core.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/IIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Auto_Ptr.h"
+#include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
+
 
 ACE_RCSID(tao,
           IIOP_Acceptor,
           "$Id$")
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

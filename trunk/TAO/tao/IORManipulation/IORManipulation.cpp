@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #include "IORManipulation.h"
 
 #include "tao/MProfile.h"
@@ -8,8 +6,10 @@
 #include "tao/ORB_Core.h"
 
 #include "ace/Auto_Ptr.h"
+#include "ace/OS_NS_string.h"
 
-ACE_RCSID (tao,
+
+ACE_RCSID (IORManipulation,
            IORManipulation,
            "$Id$")
 

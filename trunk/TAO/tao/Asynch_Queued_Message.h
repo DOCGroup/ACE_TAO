@@ -81,7 +81,7 @@ protected:
                              ACE_Allocator *alloc = 0);
 private:
   /// The number of bytes in the buffer
-  size_t size_;
+  const size_t size_;
 
   /// The offset in the buffer
   /**

@@ -6,19 +6,22 @@
 #include "ace/os_include/sys/os_uio.h"
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
+#include "ace/Malloc_Base.h"
+
 
 ACE_RCSID (tao,
            Asynch_Queued_Message,
            "$Id$")
 
-TAO_Asynch_Queued_Message::
-    TAO_Asynch_Queued_Message (const ACE_Message_Block *contents,
-                               ACE_Allocator *alloc,
-                               int is_heap_allocated)
+
+TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
+  const ACE_Message_Block *contents,
+  ACE_Allocator *alloc,
+  int is_heap_allocated)
   : TAO_Queued_Message (alloc, is_heap_allocated)
+  , size_ (contents->total_length ())
   , offset_ (0)
 {
-  this->size_ = contents->total_length ();
   // @@ Use a pool for these guys!!
   ACE_NEW (this->buffer_, char[this->size_]);
 
@@ -47,7 +50,7 @@ TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (char *buf,
 TAO_Asynch_Queued_Message::~TAO_Asynch_Queued_Message (void)
 {
   // @@ Use a pool for these guys!
-  delete[] this->buffer_;
+  delete [] this->buffer_;
 }
 
 size_t
@@ -106,7 +109,7 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
 
   // Just allocate and copy data that needs to be sent, no point
   // copying the whole buffer.
-  size_t sz = this->size_ - this->offset_;
+  const size_t sz = this->size_ - this->offset_;
 
   ACE_NEW_RETURN (buf,
                   char[sz],

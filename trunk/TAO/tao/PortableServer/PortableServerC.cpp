@@ -52,6 +52,8 @@
 #include "PortableServerC.i"
 #endif /* !defined INLINE */
 
+#include "ace/OS_NS_string.h"
+
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:59
 

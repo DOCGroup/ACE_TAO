@@ -1,11 +1,5 @@
 // "$Id$"
 
-#include "ace/Dynamic_Service.h"
-#include "ace/Arg_Shifter.h"
-#include "ace/Reactor.h"
-#include "ace/Argv_Type_Converter.h"
-#include "ace/OS_NS_strings.h"
-
 #include "ORB.h"
 
 ACE_RCSID (tao,
@@ -40,6 +34,16 @@ ACE_RCSID (tao,
 #if !defined (__ACE_INLINE__)
 # include "ORB.i"
 #endif /* ! __ACE_INLINE__ */
+
+#include "ace/Dynamic_Service.h"
+#include "ace/Arg_Shifter.h"
+#include "ace/Reactor.h"
+#include "ace/Argv_Type_Converter.h"
+#include "ace/ACE.h"
+#include "ace/Static_Object_Lock.h"
+#include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_string.h"
+
 
 static const char ior_prefix[] = "IOR:";
 

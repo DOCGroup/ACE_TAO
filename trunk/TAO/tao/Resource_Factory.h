@@ -224,8 +224,8 @@ public:
   virtual void disable_factory (void) = 0;
 
   /// Return the resource usage strategy.
-  virtual 
-  TAO_Resource_Factory::Resource_Usage 
+  virtual
+  TAO_Resource_Factory::Resource_Usage
   resource_usage_strategy (void) const = 0;
 
 protected:

@@ -9139,6 +9139,7 @@ realclean:
 
 .obj/ObjectIdListC.o .obj/ObjectIdListC.so .shobj/ObjectIdListC.o .shobj/ObjectIdListC.so: ObjectIdListC.cpp ObjectIdListC.h \
   $(ACE_ROOT)/ace/pre.h \
+  Sequence_T.h \
   Sequence.h \
   $(ACE_ROOT)/ace/CORBA_macros.h \
   $(ACE_ROOT)/ace/config-all.h \
@@ -9182,7 +9183,6 @@ realclean:
   $(ACE_ROOT)/ace/Synch_Traits.h \
   $(ACE_ROOT)/ace/Lock.h \
   default_environment.h \
-  Sequence_T.h \
   Objref_VarOut_T.h \
   varbase.h \
   Objref_VarOut_T.cpp \
@@ -9199,12 +9199,7 @@ realclean:
   $(ACE_ROOT)/ace/OS_Memory.h \
   $(ACE_ROOT)/ace/OS_NS_stdlib.h \
   Sequence_T.i \
-  Seq_Var_T.h \
-  Seq_Var_T.cpp \
-  Seq_Var_T.inl \
-  Seq_Out_T.h \
-  Seq_Out_T.cpp \
-  Seq_Out_T.inl CDR.h \
+  CDR.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -9213,7 +9208,14 @@ realclean:
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/Malloc_Base.h \
   $(ACE_ROOT)/ace/os_include/sys/os_mman.h \
-  $(ACE_ROOT)/ace/Message_Block_T.i Typecode.h \
+  $(ACE_ROOT)/ace/Message_Block_T.i \
+  Seq_Var_T.h \
+  Seq_Var_T.cpp \
+  Seq_Var_T.inl \
+  Seq_Out_T.h \
+  Seq_Out_T.cpp \
+  Seq_Out_T.inl \
+  Typecode.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
@@ -12317,7 +12319,8 @@ realclean:
   Seq_Var_T.inl \
   Seq_Out_T.h \
   Seq_Out_T.cpp \
-  Seq_Out_T.inl ORB_Core.h \
+  Seq_Out_T.inl \
+  ORB_Core.h \
   Resource_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
@@ -12449,15 +12452,19 @@ realclean:
   Any.h \
   Arg_Traits_T.h \
   Object_Argument_T.inl \
-  Interceptor_List.h PortableInterceptorC.h PI_ForwardC.h OctetSeqC.h \
-  StringSeqC.h IOP_CodecC.h \
+  Interceptor_List.h \
+  PortableInterceptorC.h \
+  PI_ForwardC.h \
+  StringSeqC.h \
+  IOP_CodecC.h \
   ORB.h \
   PolicyC.h \
   CurrentC.h \
   OBV_Constants.h \
   Typecode.h \
   TC_Constants_Forward.h \
-  PICurrent.h orbconf.h Any.h LocalObject.h Object.h \
+  PICurrent.h \
+  LocalObject.h \
   $(ACE_ROOT)/ace/Thread_Manager.h \
   $(ACE_ROOT)/ace/Thread.h \
   $(ACE_ROOT)/ace/Thread_Adapter.h \
@@ -15178,13 +15185,6 @@ realclean:
   Seq_Out_T.cpp \
   Seq_Out_T.inl \
   StringSeqC.h \
-  Messaging_SyncScopeC.h \
-  IOP_CodecC.h \
-  ORB.h \
-  Exception.h \
-  objectid.h \
-  PolicyC.h \
-  CurrentC.h \
   Object.h \
   IOP_IORC.h \
   VarOut_T.h \
@@ -15197,6 +15197,13 @@ realclean:
   Dynamic_ParameterC.h \
   ParameterMode.h \
   Object_Argument_T.inl \
+  Messaging_SyncScopeC.h \
+  IOP_CodecC.h \
+  ORB.h \
+  Exception.h \
+  objectid.h \
+  PolicyC.h \
+  CurrentC.h \
   OBV_Constants.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
@@ -15567,13 +15574,6 @@ realclean:
   Seq_Out_T.h \
   Seq_Out_T.cpp \
   Seq_Out_T.inl StringSeqC.h \
-  Messaging_SyncScopeC.h \
-  IOP_CodecC.h \
-  ORB.h \
-  Exception.h \
-  objectid.h \
-  PolicyC.h \
-  CurrentC.h \
   Object.h \
   IOP_IORC.h \
   OctetSeqC.h \
@@ -15589,6 +15589,13 @@ realclean:
   Any.h \
   Arg_Traits_T.h \
   Object_Argument_T.inl \
+  Messaging_SyncScopeC.h \
+  IOP_CodecC.h \
+  ORB.h \
+  Exception.h \
+  objectid.h \
+  PolicyC.h \
+  CurrentC.h \
   OBV_Constants.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
@@ -15813,7 +15820,8 @@ realclean:
   Seq_Out_T.h \
   Seq_Out_T.cpp \
   Seq_Out_T.inl StringSeqC.h \
-  Typecode.h $(ACE_ROOT)/ace/Thread_Mutex.h \
+  Typecode.h \
+  $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
   $(ACE_ROOT)/ace/os_include/os_pthread.h \
   $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
@@ -15938,13 +15946,6 @@ realclean:
   Seq_Out_T.h \
   Seq_Out_T.cpp \
   Seq_Out_T.inl StringSeqC.h \
-  Messaging_SyncScopeC.h \
-  IOP_CodecC.h \
-  ORB.h \
-  Exception.h \
-  objectid.h \
-  PolicyC.h \
-  CurrentC.h \
   Object.h \
   IOP_IORC.h \
   OctetSeqC.h \
@@ -15960,6 +15961,13 @@ realclean:
   Any.h \
   Arg_Traits_T.h \
   Object_Argument_T.inl \
+  Messaging_SyncScopeC.h \
+  IOP_CodecC.h \
+  ORB.h \
+  Exception.h \
+  objectid.h \
+  PolicyC.h \
+  CurrentC.h \
   OBV_Constants.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
@@ -16075,13 +16083,6 @@ realclean:
   Seq_Out_T.h \
   Seq_Out_T.cpp \
   Seq_Out_T.inl StringSeqC.h \
-  Messaging_SyncScopeC.h \
-  IOP_CodecC.h \
-  ORB.h \
-  Exception.h \
-  objectid.h \
-  PolicyC.h \
-  CurrentC.h \
   Object.h \
   IOP_IORC.h \
   OctetSeqC.h \
@@ -16097,6 +16098,13 @@ realclean:
   Any.h \
   Arg_Traits_T.h \
   Object_Argument_T.inl \
+  Messaging_SyncScopeC.h \
+  IOP_CodecC.h \
+  ORB.h \
+  Exception.h \
+  objectid.h \
+  PolicyC.h \
+  CurrentC.h \
   OBV_Constants.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
@@ -16227,13 +16235,6 @@ realclean:
   Seq_Out_T.h \
   Seq_Out_T.cpp \
   Seq_Out_T.inl StringSeqC.h \
-  Messaging_SyncScopeC.h \
-  IOP_CodecC.h \
-  ORB.h \
-  Exception.h \
-  objectid.h \
-  PolicyC.h \
-  CurrentC.h \
   Object.h \
   IOP_IORC.h \
   OctetSeqC.h \
@@ -16248,6 +16249,13 @@ realclean:
   ParameterMode.h \
   Any.h \
   Object_Argument_T.inl \
+  Messaging_SyncScopeC.h \
+  IOP_CodecC.h \
+  ORB.h \
+  Exception.h \
+  objectid.h \
+  PolicyC.h \
+  CurrentC.h \
   OBV_Constants.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
@@ -16495,6 +16503,7 @@ realclean:
   Arg_Traits_T.h \
   Object_Argument_T.inl \
   PortableInterceptorC.h PI_ForwardC.h OctetSeqC.h StringSeqC.h \
+  Object.h \
   Messaging_SyncScopeC.h \
   IOP_CodecC.h \
   ORB.h \
@@ -16502,7 +16511,6 @@ realclean:
   objectid.h \
   PolicyC.h \
   CurrentC.h \
-  Object.h \
   OBV_Constants.h \
   $(ACE_ROOT)/ace/Guard_T.h \
   $(ACE_ROOT)/ace/Guard_T.cpp \
@@ -16720,13 +16728,6 @@ realclean:
   Seq_Out_T.h \
   Seq_Out_T.cpp \
   Seq_Out_T.inl StringSeqC.h \
-  Messaging_SyncScopeC.h \
-  IOP_CodecC.h \
-  ORB.h \
-  Exception.h \
-  objectid.h \
-  PolicyC.h \
-  CurrentC.h \
   Object.h \
   IOP_IORC.h \
   OctetSeqC.h \
@@ -16741,6 +16742,13 @@ realclean:
   ParameterMode.h \
   Any.h \
   Object_Argument_T.inl \
+  Messaging_SyncScopeC.h \
+  IOP_CodecC.h \
+  ORB.h \
+  Exception.h \
+  objectid.h \
+  PolicyC.h \
+  CurrentC.h \
   OBV_Constants.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
@@ -29958,13 +29966,6 @@ realclean:
   Seq_Out_T.cpp \
   Seq_Out_T.inl \
   StringSeqC.h \
-  Messaging_SyncScopeC.h \
-  IOP_CodecC.h \
-  ORB.h \
-  Exception.h \
-  objectid.h \
-  PolicyC.h \
-  CurrentC.h \
   Object.h \
   IOP_IORC.h \
   VarOut_T.h \
@@ -29979,6 +29980,13 @@ realclean:
   Any.h \
   Arg_Traits_T.h \
   Object_Argument_T.inl \
+  Messaging_SyncScopeC.h \
+  IOP_CodecC.h \
+  ORB.h \
+  Exception.h \
+  objectid.h \
+  PolicyC.h \
+  CurrentC.h \
   OBV_Constants.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
@@ -30327,13 +30335,6 @@ realclean:
   Seq_Out_T.h \
   Seq_Out_T.cpp \
   Seq_Out_T.inl StringSeqC.h \
-  Messaging_SyncScopeC.h \
-  IOP_CodecC.h \
-  ORB.h \
-  Exception.h \
-  objectid.h \
-  PolicyC.h \
-  CurrentC.h \
   Object.h \
   IOP_IORC.h \
   OctetSeqC.h \
@@ -30349,6 +30350,13 @@ realclean:
   Any.h \
   Arg_Traits_T.h \
   Object_Argument_T.inl \
+  Messaging_SyncScopeC.h \
+  IOP_CodecC.h \
+  ORB.h \
+  Exception.h \
+  objectid.h \
+  PolicyC.h \
+  CurrentC.h \
   OBV_Constants.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
@@ -30574,13 +30582,6 @@ realclean:
   Seq_Out_T.h \
   Seq_Out_T.cpp \
   Seq_Out_T.inl StringSeqC.h \
-  Messaging_SyncScopeC.h \
-  IOP_CodecC.h \
-  ORB.h \
-  Exception.h \
-  objectid.h \
-  PolicyC.h \
-  CurrentC.h \
   Object.h \
   IOP_IORC.h \
   OctetSeqC.h \
@@ -30596,6 +30597,13 @@ realclean:
   Any.h \
   Arg_Traits_T.h \
   Object_Argument_T.inl \
+  Messaging_SyncScopeC.h \
+  IOP_CodecC.h \
+  ORB.h \
+  Exception.h \
+  objectid.h \
+  PolicyC.h \
+  CurrentC.h \
   OBV_Constants.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \
@@ -30779,13 +30787,6 @@ realclean:
   Seq_Out_T.h \
   Seq_Out_T.cpp \
   Seq_Out_T.inl StringSeqC.h \
-  Messaging_SyncScopeC.h \
-  IOP_CodecC.h \
-  ORB.h \
-  Exception.h \
-  objectid.h \
-  PolicyC.h \
-  CurrentC.h \
   Object.h \
   IOP_IORC.h \
   OctetSeqC.h \
@@ -30801,6 +30802,13 @@ realclean:
   Any.h \
   Arg_Traits_T.h \
   Object_Argument_T.inl \
+  Messaging_SyncScopeC.h \
+  IOP_CodecC.h \
+  ORB.h \
+  Exception.h \
+  objectid.h \
+  PolicyC.h \
+  CurrentC.h \
   OBV_Constants.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   Typecode.h \
@@ -31773,13 +31781,6 @@ realclean:
   Seq_Out_T.h \
   Seq_Out_T.cpp \
   Seq_Out_T.inl StringSeqC.h \
-  Messaging_SyncScopeC.h \
-  IOP_CodecC.h \
-  ORB.h \
-  Exception.h \
-  objectid.h \
-  PolicyC.h \
-  CurrentC.h \
   Object.h \
   IOP_IORC.h \
   OctetSeqC.h \
@@ -31795,6 +31796,13 @@ realclean:
   Any.h \
   Arg_Traits_T.h \
   Object_Argument_T.inl \
+  Messaging_SyncScopeC.h \
+  IOP_CodecC.h \
+  ORB.h \
+  Exception.h \
+  objectid.h \
+  PolicyC.h \
+  CurrentC.h \
   OBV_Constants.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
   $(ACE_ROOT)/ace/OS_NS_Thread.h \

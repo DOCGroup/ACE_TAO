@@ -20,6 +20,7 @@
 #include "tao/debug.h"
 
 #include "ace/Dynamic_Service.h"
+#include "ace/OS_NS_string.h"
 
 
 ACE_RCSID (RTCORBA,
@@ -27,9 +28,9 @@ ACE_RCSID (RTCORBA,
            "$Id$")
 
 
-TAO_RT_Protocols_Hooks::Client_Protocols_Hook 
+TAO_RT_Protocols_Hooks::Client_Protocols_Hook
   TAO_RT_Protocols_Hooks::client_protocols_hook_ = 0;
-TAO_RT_Protocols_Hooks::Server_Protocols_Hook 
+TAO_RT_Protocols_Hooks::Server_Protocols_Hook
   TAO_RT_Protocols_Hooks::server_protocols_hook_ = 0;
 
 TAO_RT_Protocols_Hooks::TAO_RT_Protocols_Hooks (void)
@@ -224,25 +225,25 @@ TAO_RT_Protocols_Hooks::update_client_protocol_properties (
                       );
                   ACE_TRY_CHECK;
 
-                  int send_buffer_size =
+                  const int send_buffer_size =
                     tcp_properties->send_buffer_size (
                                         ACE_ENV_SINGLE_ARG_PARAMETER
                                       );
                   ACE_TRY_CHECK;
 
-                  int recv_buffer_size =
+                  const int recv_buffer_size =
                     tcp_properties->recv_buffer_size (
                                         ACE_ENV_SINGLE_ARG_PARAMETER
                                       );
                   ACE_TRY_CHECK;
 
-                  int no_delay = 
+                  const int no_delay =
                     tcp_properties->no_delay (
                                         ACE_ENV_SINGLE_ARG_PARAMETER
                                       );
                   ACE_TRY_CHECK;
 
-                  int enable_network_priority =
+                  const int enable_network_priority =
                     tcp_properties->enable_network_priority (
                                         ACE_ENV_SINGLE_ARG_PARAMETER
                                       );
@@ -343,25 +344,25 @@ TAO_RT_Protocols_Hooks::update_server_protocol_properties (
                       );
                   ACE_TRY_CHECK;
 
-                  int send_buffer_size =
+                  const int send_buffer_size =
                     tcp_properties->send_buffer_size (
                                         ACE_ENV_SINGLE_ARG_PARAMETER
                                       );
                   ACE_TRY_CHECK;
 
-                  int recv_buffer_size =
+                  const int recv_buffer_size =
                     tcp_properties->recv_buffer_size (
                                         ACE_ENV_SINGLE_ARG_PARAMETER
                                       );
                   ACE_TRY_CHECK;
 
-                  int no_delay = 
+                  const int no_delay =
                     tcp_properties->no_delay (
                                         ACE_ENV_SINGLE_ARG_PARAMETER
                                       );
                   ACE_TRY_CHECK;
 
-                  int enable_network_priority =
+                  const int enable_network_priority =
                     tcp_properties->enable_network_priority (
                                         ACE_ENV_SINGLE_ARG_PARAMETER
                                       );
@@ -413,7 +414,7 @@ TAO_RT_Protocols_Hooks::get_dscp_codepoint (void)
       RTCORBA::NetworkPriorityMapping *pm =
         this->network_mapping_manager_->mapping ();
 
-      CORBA::Short priority =
+      const CORBA::Short priority =
         this->current_->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -472,7 +473,7 @@ TAO_RT_Protocols_Hooks::rt_service_context (
           ACE_CHECK;
 
           CORBA::Short client_priority;
-          int status = 
+          int status =
             this->get_thread_CORBA_priority (client_priority
                                              ACE_ENV_ARG_PARAMETER);
           if (status == -1)
@@ -689,13 +690,13 @@ TAO_RT_Protocols_Hooks::set_thread_native_priority (
   ACE_hthread_t current;
   ACE_Thread::self (current);
 
-  if (ACE_Thread::setprio (current, native_priority) == -1) 
+  if (ACE_Thread::setprio (current, native_priority) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, 
+      ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_LIB_TEXT ("(%N,%l) Error setting thread ")
-                         ACE_LIB_TEXT ("priority to %d, errno %d %m\n"), 
-                         native_priority, 
-                         errno ), 
+                         ACE_LIB_TEXT ("priority to %d, errno %d %m\n"),
+                         native_priority,
+                         errno ),
                        -1);
     }
 
@@ -833,7 +834,7 @@ ACE_STATIC_SVC_DEFINE (TAO_RT_Protocols_Hooks,
                        ACE_TEXT ("RT_Protocols_Hooks"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_RT_Protocols_Hooks),
-                       ACE_Service_Type::DELETE_THIS 
+                       ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
   ACE_FACTORY_DEFINE (TAO_RTCORBA, TAO_RT_Protocols_Hooks)

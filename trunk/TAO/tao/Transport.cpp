@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // $Id$
 
 #include "Transport.h"
@@ -19,13 +18,18 @@
 #include "Resume_Handle.h"
 #include "Codeset_Manager.h"
 #include "Codeset_Translator_Factory.h"
-#include "ace/OS_NS_sys_time.h"
+#include "debug.h"
 
+#include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/Reactor.h"
+#include "ace/os_include/sys/os_uio.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "Transport.inl"
 #endif /* __ACE_INLINE__ */
+
 
 ACE_RCSID (tao,
            Transport,
@@ -351,7 +355,7 @@ TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
                                            size_t &bytes_transferred,
                                            ACE_Time_Value *)
 {
-  size_t total_length = mb->total_length ();
+  const size_t total_length = mb->total_length ();
 
   // We are going to block, so there is no need to clone
   // the message block.
@@ -990,7 +994,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
   // to send first:
   int try_sending_first = 1;
 
-  int queue_empty = (this->head_ == 0);
+  const int queue_empty = (this->head_ == 0);
 
   if (!queue_empty)
     {
@@ -1011,7 +1015,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
       size_t byte_count = 0;
       // ... in this case we must try to send the message first ...
 
-      size_t total_length = message_block->total_length ();
+      const size_t total_length = message_block->total_length ();
 
       if (TAO_debug_level > 6)
         {
@@ -1102,7 +1106,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
   // ... if the queue is full we need to activate the output on the
   // queue ...
   int must_flush = 0;
-  int constraints_reached =
+  const int constraints_reached =
     this->check_buffering_constraints_i (stub,
                                          must_flush);
 
@@ -1290,7 +1294,7 @@ TAO_Transport::parse_consolidate_messages (ACE_Message_Block &block,
     }
 
   // Check whether we have a complete message for processing
-  ssize_t missing_data = this->missing_data (block);
+  const ssize_t missing_data = this->missing_data (block);
 
 
   if (missing_data < 0)
@@ -1381,7 +1385,7 @@ TAO_Transport::consolidate_message (ACE_Message_Block &incoming,
   // Calculate the actual length of the load that we are supposed to
   // read which is equal to the <missing_data> + length of the buffer
   // that we have..
-  size_t payload = missing_data + incoming.size ();
+  const size_t payload = missing_data + incoming.size ();
 
   // Grow the buffer to the size of the message
   ACE_CDR::grow (&incoming,
@@ -1551,7 +1555,7 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
   // If the queue did not have a complete message put this piece of
   // message in the queue. We know it did not have a complete
   // message. That is why we are here.
-  size_t n =
+  const size_t n =
     this->incoming_message_queue_.copy_tail (incoming);
 
   if (TAO_debug_level > 6)
@@ -1586,9 +1590,9 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
       // We may have to parse & consolidate. This part of the message
       // doesn't seem to be part of the last message in the queue (as
       // the copy () hasn't taken away this message).
-      int retval = this->parse_consolidate_messages (incoming,
-                                                     rh,
-                                                     max_wait_time);
+      const int retval = this->parse_consolidate_messages (incoming,
+                                                           rh,
+                                                           max_wait_time);
 
       // If there is an error return
       if (retval == -1)
@@ -1618,8 +1622,8 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
 
           // Check whether the message was fragmented and try to consolidate
           // the fragments..
-          if (qd->more_fragments_ ||
-              (qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_FRAGMENT))
+          if (qd->more_fragments_
+              || (qd->msg_type_ == TAO_PLUGGABLE_MESSAGE_FRAGMENT))
             {
               return this->consolidate_fragments (qd, rh);
             }
@@ -1655,9 +1659,9 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
 
       // Try to do a read again. If we have some luck it would be
       // great..
-      ssize_t n = this->recv (qd->msg_block_->wr_ptr (),
-                              missing_data,
-                              max_wait_time);
+      const ssize_t n = this->recv (qd->msg_block_->wr_ptr (),
+                                    missing_data,
+                                    max_wait_time);
 
       if (TAO_debug_level > 5)
         {
@@ -1776,7 +1780,7 @@ TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,
                                         TAO_Resume_Handle &rh)
 {
   // Get the <message_type> that we have received
-  TAO_Pluggable_Message_Type t =  qd->msg_type_;
+  const TAO_Pluggable_Message_Type t = qd->msg_type_;
 
   // int result = 0;
 
@@ -1891,7 +1895,6 @@ TAO_Transport::make_queued_data (ACE_Message_Block &incoming)
                             incoming.length ());
     }
 
-
   return qd;
 }
 
@@ -1932,8 +1935,8 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
                           this->id ()));
 
             }
-          int retval =
-            this->notify_reactor ();
+
+          const int retval = this->notify_reactor ();
 
           if (retval == 1)
             {
@@ -1989,8 +1992,8 @@ TAO_Transport::notify_reactor (void)
 
 
   // Send a notification to the reactor...
-  int retval = reactor->notify (eh,
-                                ACE_Event_Handler::READ_MASK);
+  const int retval = reactor->notify (eh,
+                                      ACE_Event_Handler::READ_MASK);
 
   if (retval < 0 && TAO_debug_level > 2)
     {

@@ -7,9 +7,16 @@
 
 #include "UIOP_Acceptor.h"
 #include "UIOP_Connector.h"
+
+#include "tao/ORB_Constants.h"
+
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID(Strategies, UIOP_Factory, "$Id$")
+
+ACE_RCSID (Strategies,
+           UIOP_Factory,
+           "$Id$")
+
 
 static const char prefix_[] = "uiop";
 

@@ -1,6 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
-
 #include "SHMIOP_Profile.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
@@ -11,6 +8,9 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/IIOP_EndpointsC.h"
+
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (Strategies,
            SHMIOP_Profile,

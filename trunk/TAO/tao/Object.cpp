@@ -18,14 +18,17 @@
 #include "Remote_Object_Proxy_Broker.h"
 
 #include "ace/Dynamic_Service.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Object.i"
 #endif /* ! __ACE_INLINE__ */
 
+
 ACE_RCSID (tao,
            Object,
            "$Id$")
+
 
 CORBA::Object::~Object (void)
 {

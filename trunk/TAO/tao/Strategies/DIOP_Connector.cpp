@@ -13,11 +13,12 @@
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_string.h"
 
 #include "DIOP_Profile.h"
 
 
-ACE_RCSID (DIOP,
+ACE_RCSID (Strategies,
            DIOP_Connector,
            "$Id$")
 

@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -56,7 +56,7 @@ public:
   virtual void destroy_interceptors (
       ACE_ENV_SINGLE_ARG_DECL
       )
-  ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+  ACE_THROW_SPEC (()) = 0;
 
   virtual TAO_IORInterceptor_List *interceptor_list (void)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;

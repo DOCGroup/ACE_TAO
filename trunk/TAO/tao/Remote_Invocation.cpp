@@ -15,11 +15,10 @@ ACE_RCSID (tao,
 namespace TAO
 {
   Remote_Invocation::Remote_Invocation (
-      CORBA::Object_ptr otarget,
-      Profile_Transport_Resolver &resolver,
-      TAO_Operation_Details &detail,
-      bool response_expected)
-
+    CORBA::Object_ptr otarget,
+    Profile_Transport_Resolver &resolver,
+    TAO_Operation_Details &detail,
+    bool response_expected)
     : Invocation_Base (otarget,
                        resolver.object (),
                        resolver.stub (),
@@ -48,8 +47,7 @@ namespace TAO
      * Mega hack for RTCORBA END
      */
 
-    TAO_Profile *pfile =
-      this->resolver_.profile ();
+    TAO_Profile *pfile = this->resolver_.profile ();
 
     // Set the target specification mode
     switch (pfile->addressing_mode ())
@@ -75,7 +73,7 @@ namespace TAO
       // index that we need.
       CORBA::ULong index = 0;
       IOP::IOR *ior_info = 0;
-      int retval =
+      const int retval =
         this->resolver_.stub ()->create_ior_info (ior_info,
                                                   index
                                                   ACE_ENV_ARG_PARAMETER);
@@ -137,7 +135,7 @@ namespace TAO
                                    ACE_Time_Value *max_wait_time
                                    ACE_ENV_ARG_DECL)
   {
-    int retval =
+    const int retval =
       this->resolver_.transport ()->send_request (
         this->resolver_.stub (),
         this->resolver_.stub ()->orb_core (),
@@ -150,13 +148,13 @@ namespace TAO
         if (errno == ETIME)
           {
             // We sent a message already and we haven't gotten a
-            // reply.  Just throw YIMMEOUT with *COMPLETED_MAYBE*.
+            // reply.  Just throw TIMEOUT with *COMPLETED_MAYBE*.
             ACE_THROW_RETURN (
                 CORBA::TIMEOUT (
                     CORBA::SystemException::_tao_minor_code (
                         TAO_TIMEOUT_SEND_MINOR_CODE,
                         errno
-                      ),
+                        ),
                     CORBA::COMPLETED_MAYBE
                     ),
                 TAO_INVOKE_FAILURE

@@ -1,23 +1,13 @@
-/* -*- C++ -*- */
-
-// $Id$
-// =================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    IORManip_Loader.cpp
-//
-// = AUTHOR
-//    Bala Natarajan <bala@cs.wustl.edu>
-//
-// =================================================================
-
 #include "IORManip_Loader.h"
 #include "IORManipulation.h"
 
-ACE_RCSID(IORManip, IORManip, "$Id$")
+#include "ace/Log_Msg.h"
+
+
+ACE_RCSID (IORManipulation,
+           IORManip_Loader,
+           "$Id$")
+
 
 TAO_IORManip_Loader::TAO_IORManip_Loader (void)
 {

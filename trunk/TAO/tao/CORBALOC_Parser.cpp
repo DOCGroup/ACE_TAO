@@ -4,14 +4,17 @@
 #include "Connector_Registry.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
 #include "CORBALOC_Parser.i"
 #endif /* __ACE_INLINE__ */
 
+
 ACE_RCSID (tao,
            CORBALOC_Parser,
            "$Id$")
+
 
 TAO_CORBALOC_Parser::~TAO_CORBALOC_Parser (void)
 {

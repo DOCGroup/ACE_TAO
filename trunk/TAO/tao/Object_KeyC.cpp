@@ -40,6 +40,10 @@
 #include "Object_KeyC.i"
 #endif /* !defined INLINE */
 
+#include "ace/ACE.h"
+#include "ace/OS_NS_string.h"
+
+
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:64
 

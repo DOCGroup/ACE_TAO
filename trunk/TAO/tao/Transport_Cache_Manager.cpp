@@ -10,9 +10,13 @@
 # include "tao/Transport_Cache_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO,
+#include "ace/ACE.h"
+
+
+ACE_RCSID (tao,
            Transport_Cache_Manager,
            "$Id$")
+
 
 TAO_Transport_Cache_Manager::TAO_Transport_Cache_Manager (TAO_ORB_Core &orb_core)
   : percent_ (orb_core.resource_factory ()->purge_percentage ()),
@@ -467,7 +471,7 @@ TAO_Transport_Cache_Manager::purge (void)
               {
                 sorted_set[i]->int_id_.recycle_state (ACE_RECYCLABLE_BUSY);
 
-                TAO_Transport* transport = 
+                TAO_Transport* transport =
                   sorted_set[i]->int_id_.transport ();
                 transport->add_reference ();
 

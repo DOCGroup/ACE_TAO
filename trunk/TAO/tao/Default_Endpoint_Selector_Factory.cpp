@@ -4,9 +4,13 @@
 #include "tao/Default_Endpoint_Selector_Factory.h"
 #include "tao/Invocation_Endpoint_Selectors.h"
 
+#include "ace/Log_Msg.h"
+
+
 ACE_RCSID (tao,
            Default_Endpoint_Selector_Factory,
            "$Id$")
+
 
 TAO_Default_Endpoint_Selector_Factory::TAO_Default_Endpoint_Selector_Factory (void)
 {

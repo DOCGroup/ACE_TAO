@@ -16,13 +16,17 @@
 #include "tao/Any_Unknown_IDL_Type.h"
 #include "tao/Profile_Transport_Resolver.h"
 
+#include "ace/OS_NS_string.h"
+
 #if !defined (__ACE_INLINE__)
 # include "DII_Invocation.inl"
 #endif /* ! __ACE_INLINE__ */
 
+
 ACE_RCSID (DynamicInterface,
            DII_Invocation,
            "$Id$")
+
 
 namespace TAO
 {

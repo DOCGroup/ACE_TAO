@@ -2,10 +2,13 @@
 #include "debug.h"
 
 #include "ace/Log_Msg.h"
+#include "ace/Malloc_Base.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "Incoming_Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
+
 
 ACE_RCSID (tao,
            Incoming_Message_Queue,

@@ -20,6 +20,7 @@ ACE_RCSID (tao,
            Invocation_Adapter,
            "$Id$")
 
+
 namespace TAO
 {
   void
@@ -80,7 +81,7 @@ namespace TAO
       {
         // This is a second test of the target to determine whether it
         // is really collocated or not.
-        Collocation_Strategy strat =
+        const Collocation_Strategy strat =
           this->cpb_->get_strategy (effective_target
                                     ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
@@ -170,7 +171,7 @@ namespace TAO
             if (TAO_debug_level > 2)
               {
                 ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Invocation_Adapter::invoke_collocated, ")
+                  ACE_TEXT ("TAO (%P|%t) - Invocation_Adapter::invoke_remote, ")
                   ACE_TEXT ("handling forwarded locations \n")));
               }
           }
@@ -201,7 +202,7 @@ namespace TAO
                             TAO_DEFAULT_MINOR_CODE,
                             EINVAL),
                           CORBA::COMPLETED_NO),
-                        0);
+                        stub);
 
     return stub;
   }

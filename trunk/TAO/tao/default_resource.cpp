@@ -17,7 +17,9 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Malloc.h"
 #include "ace/Codeset_Registry.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/default_resource.i"
@@ -55,19 +57,19 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
 
 TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory (void)
 {
-  TAO_ProtocolFactorySetItor end = this->protocol_factories_.end ();
+  const TAO_ProtocolFactorySetItor end = this->protocol_factories_.end ();
 
   for (TAO_ProtocolFactorySetItor iterator =
          this->protocol_factories_.begin ();
        iterator != end;
        ++iterator)
-    delete *iterator;
+    {
+      delete *iterator;
+    }
 
   this->protocol_factories_.reset ();
 
-  for (int i = 0;
-       i < this->parser_names_count_;
-       ++i)
+  for (int i = 0; i < this->parser_names_count_; ++i)
     CORBA::string_free (this->parser_names_[i]);
 
   delete [] this->parser_names_;
@@ -84,7 +86,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
   // print a warning and exit because any options
   // are useless
   if (this->factory_disabled_) {
-    ACE_DEBUG ((LM_DEBUG,
+    ACE_DEBUG ((LM_WARNING,
                 ACE_LIB_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ignored\n")
                 ACE_LIB_TEXT ("Default Resource Factory is disabled\n")));
     return 0;
@@ -1002,24 +1004,25 @@ TAO_Default_Resource_Factory::disable_factory (void)
   this->factory_disabled_ = 1;
   if (this->options_processed_)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_DEBUG ((LM_WARNING,
                   ACE_LIB_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ignored\n")
                   ACE_LIB_TEXT ("Default Resource Factory is disabled\n")));
     }
 }
 
 TAO_Codeset_Manager *
-TAO_Default_Resource_Factory::get_codeset_manager()
+TAO_Default_Resource_Factory::get_codeset_manager (void)
 {
   if (this->codeset_manager_ == 0)
     {
       ACE_NEW_RETURN (this->codeset_manager_, TAO_Codeset_Manager, 0);
     }
+
   return this->codeset_manager_;
 }
 
 TAO_Resource_Factory::Resource_Usage
-TAO_Default_Resource_Factory::resource_usage_strategy (void)const
+TAO_Default_Resource_Factory::resource_usage_strategy (void) const
 {
   return this->resource_usage_strategy_;
 }

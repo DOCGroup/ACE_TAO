@@ -10,9 +10,13 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
+#include "ace/OS_NS_stdio.h"
+
+
 ACE_RCSID (Strategies,
            SHMIOP_Endpoint,
            "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 # include "SHMIOP_Endpoint.i"

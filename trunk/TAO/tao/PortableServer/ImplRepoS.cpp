@@ -58,6 +58,7 @@
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include "ace/Dynamic_Service.h"
+#include "ace/OS_NS_string.h"
 #include "ace/config-all.h"
 
 #if defined (__BORLANDC__)

@@ -8,6 +8,7 @@
  */
 
 #include "IOR_Table_Impl.h"
+#include "ace/Guard_T.h"
 
 
 ACE_RCSID (IORTable,

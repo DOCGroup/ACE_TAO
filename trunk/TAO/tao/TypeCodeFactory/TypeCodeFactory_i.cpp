@@ -9,10 +9,13 @@
 #include "ace/Containers_T.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
+#include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (TypeCodeFactory,
            TypeCodeFactory_i,
            "$Id$")
+
 
 TAO_TypeCodeFactory_i::TAO_TypeCodeFactory_i (void)
 {
@@ -537,8 +540,8 @@ TAO_TypeCodeFactory_i::create_recursive_tc (
                   CORBA::TypeCode::_nil ());
   list->enqueue_tail (initial_offset);
   char *str = CORBA::string_dup (id);
-  int status = map->bind (str, list);
-                          
+  const int status = map->bind (str, list);
+
   if (status != 0)
     {
       CORBA::string_free (str);
@@ -1648,11 +1651,11 @@ TAO_TypeCodeFactory_i::update_map (
         {
           char *str = CORBA::string_dup (member_id);
           int status = offset_map->bind (str, offset_list);
-          
+
           if (status != 0)
             {
               CORBA::string_free (str);
-              
+
               if (propagating_recursion)
                 {
                   delete offset_list;

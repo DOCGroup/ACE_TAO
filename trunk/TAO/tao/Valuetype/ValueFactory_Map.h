@@ -16,15 +16,19 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TAO_Singleton.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/TAO_Singleton.h"
+
 #include "valuetype_export.h"
 
 #include "ace/Hash_Map_Manager_T.h"
+#include "ace/RW_Thread_Mutex.h"
+
 
 namespace CORBA
 {
@@ -47,12 +51,12 @@ public:
    * Returns -1 on failure, 0 on success and 1 if a previous factory
    * is found (and returned in factory).
    */
-  int rebind (const char *repo_id, 
+  int rebind (const char *repo_id,
               CORBA::ValueFactory &factory);
 
   /// Removes entry for repo_id from the map and sets factory to
   /// the tied one.
-  int unbind (const char *repo_id, 
+  int unbind (const char *repo_id,
               CORBA::ValueFactory &factory);
 
   /**
@@ -60,7 +64,7 @@ public:
    * Invokes _add_ref () on the factory if found.
    * Returns -1 on failure and 0 on success.
    */
-  int find (const char *repo_id, 
+  int find (const char *repo_id,
             CORBA::ValueFactory &factory);
 
   void dump (void);

@@ -7,14 +7,18 @@
 #include "ORB_Constants.h"
 
 #include "ace/Dynamic_Service.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
 #include "DLL_Parser.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           DLL_Parser, 
+
+ACE_RCSID (tao,
+           DLL_Parser,
            "$Id$")
+
 
 TAO_DLL_Parser::~TAO_DLL_Parser (void)
 {

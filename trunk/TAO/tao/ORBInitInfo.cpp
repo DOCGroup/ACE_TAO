@@ -17,6 +17,8 @@ ACE_RCSID (TAO,
 #include "ORBInitInfo.inl"
 #endif /* defined INLINE */
 
+#include "ace/OS_NS_string.h"
+
 // Traits specializations for TAO_ORBInitInfo.
 
 TAO_ORBInitInfo_ptr
@@ -292,8 +294,8 @@ TAO_ORBInitInfo::allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup
 
   size_t slot_id = 0;
 
-  int result = this->orb_core_->add_tss_cleanup_func (cleanup,
-                                                      slot_id);
+  const int result = this->orb_core_->add_tss_cleanup_func (cleanup,
+                                                            slot_id);
 
   if (result != 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (

@@ -1,14 +1,16 @@
 // $Id$
 
-#ifndef TAO_VALUE_VAROUT_T_C
-#define TAO_VALUE_VAROUT_T_C
+#ifndef TAO_VALUE_VAROUT_T_CPP
+#define TAO_VALUE_VAROUT_T_CPP
 
-#include "Value_VarOut_T.h"
-#include "tao/CORBA_methods.h"
+#include "tao/Valuetype/Value_VarOut_T.h"
+#include "tao/Valuetype/Value_CORBA_methods.h"
 
-ACE_RCSID (tao,
+
+ACE_RCSID (Valuetype,
            Value_VarOut_T,
            "$Id$")
+
 
 template<typename T>
 void
@@ -213,4 +215,4 @@ TAO_Value_Out_T<T>::operator-> (void)
   return this->ptr_;
 }
 
-#endif /* TAO_VALUE_VAROUT_T_C */
+#endif /* TAO_VALUE_VAROUT_T_CPP */

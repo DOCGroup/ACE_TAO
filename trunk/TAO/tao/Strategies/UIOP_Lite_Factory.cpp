@@ -1,16 +1,20 @@
-// -*- C++ -*-
-// $Id$
-
 #include "UIOP_Lite_Factory.h"
 
 #if TAO_HAS_UIOP == 1
 
 #include "UIOP_Acceptor.h"
 #include "UIOP_Connector.h"
+
+#include "tao/ORB_Constants.h"
+
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_strings.h"
 
-ACE_RCSID(Strategies, UIOP_Lite_Factory, "$Id$")
+
+ACE_RCSID (Strategies,
+           UIOP_Lite_Factory,
+           "$Id$")
+
 
 static const char prefix_[] = "uiop";
 

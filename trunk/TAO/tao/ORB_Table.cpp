@@ -6,6 +6,8 @@
 # include "ORB_Table.inl"
 #endif /* ! __ACE_INLINE__ */
 
+#include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (tao,
            ORB_Table,
@@ -18,8 +20,8 @@ TAO_ORB_Table::TAO_ORB_Table (void)
   : first_orb_not_default_ (0),
     table_ (TAO_DEFAULT_ORB_TABLE_SIZE),
     first_orb_ (0),
-    orbs_( 0 ),
-    num_orbs_( 0 )
+    orbs_ (0),
+    num_orbs_ (0)
 {
 }
 
@@ -79,8 +81,8 @@ TAO_ORB_Table::bind (const char *orb_id,
       // reference count on it.
       (void) orb_core->_incr_refcnt ();
 
-      // This is not the first ORB .. but if the current default 
-      // ORB decided not to be the default and there is more than 
+      // This is not the first ORB .. but if the current default
+      // ORB decided not to be the default and there is more than
       // one orb then set this orb to be the default ORB.
       if ((this->first_orb_ != 0)
           && (this->first_orb_not_default_))
@@ -185,7 +187,7 @@ TAO_ORB_Table::not_default (const char *orb_id)
     }
 }
 
-/// Accessor to the underlying table_ 
+/// Accessor to the underlying table_
 ACE_Hash_Map_Manager_Ex<const char *,TAO_ORB_Core *,ACE_Hash<const char *>,ACE_Equal_To<const char *>,ACE_Null_Mutex> *
 TAO_ORB_Table::table (void)
 {

@@ -11,6 +11,7 @@
 //=============================================================================
 #ifndef TAO_INVOCATION_ADAPTER_H
 #define TAO_INVOCATION_ADAPTER_H
+
 #include /**/ "ace/pre.h"
 
 #include "ace/Global_Macros.h"
@@ -87,7 +88,7 @@ namespace TAO
      *
      * @param operation The name of the operation being invoked.
      *
-     * @param ope_len Number of charecters in the operation name. This
+     * @param op_len Number of charecters in the operation name. This
      * is an optimization which helps us to avoid calling strlen ()
      * while creating a message format.
      *
@@ -135,7 +136,7 @@ namespace TAO
      * returns with a location forwarded reply, this method takes care
      * of forwarding the request to the new target.
      *
-     * @NOTE: At this point of time the object that is created for
+     * @note At this point of time the object that is created for
      * making collocated invocations is too coarse grained to handle
      * different messaging and invocation policies. This need to
      * change in the future. Please take a look at the documentation
@@ -248,20 +249,20 @@ namespace TAO
     /**
      * This includes the return values too
      */
-    int number_args_;
+    const int number_args_;
 
     /// Name of the operation.
     const char *operation_;
 
     /// String length of the operation name.
-    int op_len_;
+    const int op_len_;
 
     /// Collocation proxy broker for this operation.
     Collocation_Proxy_Broker *cpb_;
 
     /// The invocation type and mode.
-    Invocation_Type type_;
-    Invocation_Mode mode_;
+    const Invocation_Type type_;
+    const Invocation_Mode mode_;
 
   private:
     /// Dont allow default initializations
@@ -277,4 +278,5 @@ namespace TAO
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /*TAO_INVOCATION_ADAPTER_H*/

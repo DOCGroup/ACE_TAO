@@ -56,6 +56,9 @@ namespace CORBA
   class OperationDef;
   typedef OperationDef *OperationDef_ptr;
 
+  class ExceptionList;
+  typedef ExceptionList *ExceptionList_ptr;
+
   /**
    * @name ORB Initialization
    *
@@ -93,6 +96,9 @@ namespace CORBA
 
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (TypeCode_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION void release (TypeCode_ptr);
+
+  TAO_NAMESPACE_INLINE_FUNCTION void release (ExceptionList_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ExceptionList_ptr);
 }
 
 #include /**/ "ace/post.h"
