@@ -673,13 +673,10 @@ TAO_AV_UDP_QoS_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
 int
 TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 {
-<<<<<<< QoS_UDP.cpp
+
   ACE_DECLARE_NEW_CORBA_ENV;
   int result = 0;
-=======
-  ACE_DECLARE_NEW_CORBA_ENV;
-  int result = -1;
->>>>>>> 1.2
+
   //  TAO_AV_Callback *callback = 0;  
   //   this->endpoint_->get_callback (this->flowname_.c_str (),
   //                                  callback);
@@ -697,7 +694,7 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
   
       
   AVStreams::QoS qos;
-<<<<<<< QoS_UDP.cpp
+
   int qos_available = this->endpoint_->qos ().get_flow_qos (this->flowname_.c_str (), 
 							    qos);
 
@@ -705,59 +702,10 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
   ACE_NEW_RETURN (handler,
 		  TAO_AV_UDP_QoS_Flow_Handler,
 		  -1);
-=======
-  this->endpoint_->qos ().get_flow_qos (this->flowname_.c_str (), 
-					qos);
-  
-  ACE_Flow_Spec *ace_flow_spec;
-  ACE_NEW_RETURN (ace_flow_spec,
-                  ACE_Flow_Spec,
-                  -1);
 
-  TAO_AV_UDP_QoS_Flow_Handler* handler;
-  ACE_NEW_RETURN (handler,
-                  TAO_AV_UDP_QoS_Flow_Handler,
-                  -1);
->>>>>>> 1.2
   
   TAO_AV_Flow_Handler *flow_handler = 0;
   flow_handler = handler;
-  
-<<<<<<< QoS_UDP.cpp
-=======
-  handler->translate (qos.QoSParams, 
-		      ace_flow_spec);
-  
-  ACE_QoS* ace_qos;
-  
-  ACE_NEW_RETURN (ace_qos,
-                  ACE_QoS,
-                  -1);
-
-  Fill_ACE_QoS fill_ace_qos;
-
-  if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_PRODUCER)
-    {
-      if (fill_ace_qos.fill_simplex_sender_qos (*ace_qos,
-                                                ace_flow_spec) !=0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to fill simplex sender qos\n"),
-                          -1);
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    "Filled up the Sender QoS parameters\n"));
-    }
-  else if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_CONSUMER)
-    {
-      if (fill_ace_qos.fill_simplex_receiver_qos (*ace_qos,
-                                                  ace_flow_spec) !=0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to fill simplex receiver qos\n"),
-                          -1);
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    "Filled up the Receiver QoS parameters\n"));
->>>>>>> 1.2
       
   // Create a QoS Session Factory.
   ACE_QoS_Session_Factory session_factory;
@@ -898,7 +846,7 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
                                                         flow_handler,
                                                         flow_handler->transport ());
   flow_handler->protocol_object (object);
-<<<<<<< QoS_UDP.cpp
+
   AVStreams::Negotiator_ptr negotiator;
   
   ACE_TRY_EX (negotiator)
@@ -917,17 +865,7 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 		  "Negotiator Not Found \n"));
     }
   ACE_ENDTRY;
-=======
-  AVStreams::Negotiator_ptr negotiator;
-  
-  CORBA::Any_ptr negotiator_any =
-    this->endpoint_->get_property_value ("Negotiator",
-					 ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-  
-  *negotiator_any >>= negotiator;
-  handler->negotiator (negotiator);
->>>>>>> 1.2
+
   //  callback->protocol_object (object);
   //   this->endpoint_->set_protocol_object (this->flowname_.c_str (),
   //                                         object);
