@@ -22,7 +22,7 @@
 class test_i : public POA_test
 {
 public:
-  void method (CORBA::Environment &ACE_TRY_ENV)
+  void method (CORBA::Environment & /*ACE_TRY_ENV*/)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
@@ -37,7 +37,7 @@ class test_i_with_reference_counting : public virtual PortableServer::RefCountSe
                                        public virtual POA_test
 {
 public:
-  void method (CORBA::Environment &ACE_TRY_ENV)
+  void method (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
   }
