@@ -1,3 +1,20 @@
+Fri Apr 25 20:55:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        Please direct all immediate build issues to jcohen@atl.lmco.com
+        if problems occur as a result of this check in.  Thank you.
+
+        * ace/SOCK_Connector.h
+        * ace/SOCK_SEQPACK_Connector.h
+
+        Added comments to recently added 'protocol'
+        parameter for Doxygen.
+
+        * performance-tests/SCTP/SOCK_SEQPACK_clt.cpp
+        * performance-tests/SCTP/SOCK_STREAM_clt.cpp
+
+        Removed extraneous math.h and stdio.h references, which
+        was causing a header conflict on AIX/64.
+
 Fri Apr 25 15:15:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
         Please direct all immediate build issues to jcohen@atl.lmco.com
