@@ -1,3 +1,8 @@
+Mon Mar  5 07:35:35 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile:
+	  Fixed library name.
+
 Mon Mar  5 08:03:03 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/Makefile.bor
