@@ -102,7 +102,8 @@ IFR_DII_Client::parse_args (int argc,
 void
 IFR_DII_Client::find_interface_def (TAO_ENV_SINGLE_ARG_DECL)
 {
-  this->target_def_ = this->target_->_get_interface (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->target_def_ = 
+    this->target_->_get_interface (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
@@ -138,7 +139,7 @@ IFR_DII_Client::lookup_interface_def (TAO_ENV_SINGLE_ARG_DECL)
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       candidate =
-        CORBA::Container::_narrow (candidates[i]
+        CORBA::Container::_narrow (candidates[i].in ()
                                    TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
@@ -188,11 +189,12 @@ IFR_DII_Client::get_operation_def (TAO_ENV_SINGLE_ARG_DECL)
   // What operation(s) does this interface contain?
   CORBA::ContainedSeq_var operations =
     this->target_def_->contents (CORBA::dk_Operation,
-                                 1
+                                 0  // Do not exclude inherited operations.
                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::ULong n_operations = operations->length ();
+  CORBA::String_var op_name;
 
   // The length is 1 in this case, but in general, it could
   // be any length.
@@ -204,9 +206,11 @@ IFR_DII_Client::get_operation_def (TAO_ENV_SINGLE_ARG_DECL)
       if (!ACE_OS::strcmp (op_name.in (), this->op_name.in ()))
         {
           this->op_ =
-            CORBA::OperationDef::_narrow (operations[i]
+            CORBA::OperationDef::_narrow (operations[i].in ()
                                           TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
+
+          break;
         }
     }
 }
@@ -238,20 +242,20 @@ IFR_DII_Client::create_dii_request (TAO_ENV_SINGLE_ARG_DECL)
       {
         case CORBA::PARAM_IN:
           if (params[i].type->kind () == CORBA::tk_string
-              && ACE_OS::strcmp (params[i].name, "artist") == 0)
+              && ACE_OS::strcmp (params[i].name.in (), "artist") == 0)
             {
               // The servant will match the substring 'Beatles'.
-              this->req_->add_in_arg (params[i].name) <<= "the Beatles";
+              this->req_->add_in_arg (params[i].name.in ()) <<= "the Beatles";
             }
 
           break;
         case CORBA::PARAM_INOUT:
           if (params[i].type->kind () == CORBA::tk_string
-              && ACE_OS::strcmp (params[i].name, "title") == 0)
+              && ACE_OS::strcmp (params[i].name.in (), "title") == 0)
             {
               // This isn't the exact title, but the servant will find the
               // partial match, and return the full, correct title.
-              this->req_->add_inout_arg (params[i].name) <<= "Sgt. Pepper's";
+              this->req_->add_inout_arg (params[i].name.in ()) <<= "Sgt. Pepper's";
             }
 
           break;
@@ -261,12 +265,12 @@ IFR_DII_Client::create_dii_request (TAO_ENV_SINGLE_ARG_DECL)
             // cases where it does, this is an alternative method of
             // adding an OUT argument without initializing it.
             if (params[i].type->kind () == CORBA::tk_float
-                && ACE_OS::strcmp (params[i].name, "price") == 0)
+                && ACE_OS::strcmp (params[i].name.in (), "price") == 0)
               {
                 CORBA::Any any (CORBA::_tc_float);
 
                 // The servant will return 0.0 if the title is not found.
-                this->req_->arguments ()->add_value (params[i].name,
+                this->req_->arguments ()->add_value (params[i].name.in (),
                                                      any,
                                                      CORBA::ARG_OUT
                                                      TAO_ENV_ARG_PARAMETER);
