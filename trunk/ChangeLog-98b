@@ -1,3 +1,11 @@
+Thu Sep 17 22:44:17 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp: If the client
+ 	  doesn't connect to the server, make sure to shut down the test
+ 	  gracefully, rather than getting a segfault.  Thanks to
+ 	  Margherita Vittone Wiersma <vittone@fndaub.fnal.gov> for
+ 	  reporting this.
+
 Thu Sep 17 22:33:00 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
         * docs/tutorials/index.html

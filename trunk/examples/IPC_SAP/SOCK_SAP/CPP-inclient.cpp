@@ -231,7 +231,7 @@ Options::parse_args (int argc, char *argv[])
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) usage: %n [-2] [-h <host>] [-i iterations] [-m message-size] [-p <port>] [-q <quit string>] [-s] [-t <threads>] [-T <sleep_time>]"),
+                           "(%P|%t) usage: %n [-2] [-h <host>] [-i iterations] [-m message-size] [-p <port>] [-q <quit string>] [-s] [-t <threads>] [-T <sleep_time>]\n"),
                           -1);
       }
 
@@ -314,6 +314,9 @@ Options::oneway_client_test (void *)
   // Add 1 to the port to trigger the oneway test!
   char *request = options->shared_client_test (options->port () + 1,
                                                cli_stream);
+  if (request == 0)
+    return 0;
+
   // This variable is allocated off the stack to obviate the need for
   // locking.
   size_t iteration = 0;
@@ -363,6 +366,8 @@ Options::twoway_client_test (void *)
 
   char *request = options->shared_client_test (options->port (),
                                                cli_stream);
+  if (request == 0)
+    return 0;
 
   // This variable is allocated off the stack to obviate the need for
   // locking.
