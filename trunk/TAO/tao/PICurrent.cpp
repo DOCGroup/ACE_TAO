@@ -238,6 +238,8 @@ TAO_PICurrent_Impl::copy (TAO_PICurrent_Impl &rhs, CORBA::Boolean deep_copy)
       this->lc_slot_table_ = &rhs.slot_table ();  // Shallow copy
 
       this->pi_peer_ = &rhs;
+
+      this->dirty_ = 1;
     }
 }
 
