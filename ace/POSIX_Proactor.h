@@ -26,7 +26,6 @@
 #include "ace/Free_List.h"
 #include "ace/Pipe.h"
 #include "ace/POSIX_Asynch_IO.h"
-#include "ace/Unbounded_Queue.h"
 
 #define ACE_AIO_MAX_SIZE     2048
 #define ACE_AIO_DEFAULT_SIZE 1024
@@ -77,7 +76,8 @@ public:
     OS_HPUX     = 0x0400,          // HPUX family
     OS_HPUX_11  = OS_HPUX | 0x0001,
     OS_LINUX    = 0x0800,          // Linux family
-    OS_FREEBSD  = 0x1000           // FreeBSD family
+    OS_FREEBSD  = 0x1000,          // FreeBSD family
+    OS_IRIX     = 0x2000           // SGI IRIX family
   };
 
   virtual Proactor_Type  get_impl_type (void);
@@ -244,6 +244,7 @@ protected:
 
 // Forward declarations.
 class ACE_AIOCB_Notify_Pipe_Manager;
+class ACE_POSIX_Accept_Task;
 
 /**
  * @class ACE_POSIX_AIOCB_Proactor
@@ -260,12 +261,10 @@ class ACE_Export ACE_POSIX_AIOCB_Proactor : public ACE_POSIX_Proactor
 
   /// This class does the registering of Asynch Operations with the
   /// Proactor which is necessary in the AIOCB strategy.
-  friend class ACE_POSIX_AIOCB_Asynch_Operation;
+  friend class ACE_POSIX_Asynch_Operation;
+  friend class ACE_POSIX_Asynch_Accept;
 
-  // friend class ACE_POSIX_AIOCB_Asynch_Accept_Handler; For
-  // <Asynch_Accept> operation class, this helper class takes care of
-  // doing the <Asynch_Accept>.
-
+  
 public:
   /// Constructor defines max number asynchronous operations
   /// which can be started at the same time
@@ -335,6 +334,9 @@ protected:
   ACE_POSIX_AIOCB_Proactor (size_t nmaxop, 
                             ACE_POSIX_Proactor::Proactor_Type ptype);
 
+  /// Task to process pseudo-asynchronous accept
+  ACE_POSIX_Asynch_Accept_Task &get_asynch_accept_task (void);
+
   /// Call these methods from derived class when virtual table is
   /// built.
   void create_notify_manager (void);
@@ -369,10 +371,10 @@ protected:
   virtual int start_aio (ACE_POSIX_Asynch_Result *result);
 
   /// Start deferred AIO if necessary
-  int start_deferred_aio();
+  int start_deferred_aio (void);
 
   /// Cancel running or deferred AIO
-  virtual int cancel_aiocb ( ACE_POSIX_Asynch_Result * result );
+  virtual int cancel_aiocb (ACE_POSIX_Asynch_Result * result);
 
   /// Extract the results of aio.
   ACE_POSIX_Asynch_Result *find_completed_aio (int &error_status,
@@ -386,7 +388,7 @@ protected:
 
   /// Notify queue of "post_completed" ACE_POSIX_Asynch_Results
   /// called from post_completion method
-  virtual int notify_completion ( int sig_num );
+  virtual int notify_completion (int sig_num);
 
   /// Put "post_completed" result into the internal queue
   int  putq_result (ACE_POSIX_Asynch_Result *result);
@@ -433,6 +435,9 @@ protected:
 
   /// Queue which keeps "post_completed" ACE_POSIX_Asynch_Result's
   ACE_Unbounded_Queue<ACE_POSIX_Asynch_Result *> result_queue_;
+
+  /// Task to process pseudo-asynchronous accept
+  ACE_POSIX_Asynch_Accept_Task  accept_task_;
 };
 
 /**
@@ -538,7 +543,7 @@ protected:
 
   /// Notify queue of "post_completed" ACE_POSIX_Asynch_Results
   /// called from post_completion method
-  virtual int notify_completion ( int sig_num );
+  virtual int notify_completion (int sig_num);
 
   sigset_t RT_completion_signals_;
 };
@@ -553,7 +558,6 @@ protected:
  */
 class ACE_Export ACE_POSIX_Asynch_Timer : public ACE_POSIX_Asynch_Result
 {
-
   /// The factory method for this class is with the POSIX_Proactor
   /// class.
   friend class ACE_POSIX_Proactor;

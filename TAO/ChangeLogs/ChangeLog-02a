@@ -1,3 +1,10 @@
+Thu Mar 28 06:46:55 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/README: Corrected the README to say
+	  that SERVICE_DEMAND_START is the proper default option if only
+ 	  -i is specified.  Thanks to Whitney Kew
+ 	  <Whitney.Kew@Invensys.com> for reporting this.
+
 Wed Mar 27 17:51:19 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/fe/fe_declarator.cpp (compose):

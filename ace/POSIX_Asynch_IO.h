@@ -30,6 +30,9 @@
 
 #include "ace/Asynch_IO_Impl.h"
 #include "ace/Reactor.h"
+#include "ace/Select_Reactor.h"
+#include "ace/Unbounded_Queue.h"
+#include "ace/Task.h"
 
 // Forward declarations
 class ACE_POSIX_SIG_Proactor;
@@ -140,9 +143,9 @@ protected:
 /**
  * @class ACE_POSIX_Asynch_Operation
  *
- * @brief This class abstracts out the common things needed for
- * implementing <Asynch_Operation> for POSIX platforms. Specific
- * implementations such as <POSIX_AIOCB_Asynch_Operation> 
+ * @brief This class implements <ACE_Asynch_Operation> for all
+ * implementations of Proactor (AIOCB, SIG, SUN)
+ * Specific future implementations
  * can derive from this class.
  */
 class ACE_Export ACE_POSIX_Asynch_Operation : public virtual ACE_Asynch_Operation_Impl
@@ -170,42 +173,15 @@ public:
   /// Return the underlying proactor.
   ACE_Proactor* proactor (void) const;
 
-protected:
-  /// No op contructor.
-  ACE_POSIX_Asynch_Operation (void);
-
-  /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Operation (void);
-
-  /// Proactor that this Asynch IO will be registered with.
-  ACE_Proactor *proactor_;
-
-  /// Handler that will receive the callback.
-  ACE_Handler *handler_;
-
-  /// I/O handle used for reading.
-  ACE_HANDLE handle_;
-};
-
-/**
- * @class ACE_POSIX_AIOCB_Asynch_Operation
- *
- * @brief This class implements <ACE_Asynch_Operation> for <AIOCB>
- * (Asynchronous I/O Control Blocks) based implementation of
- * Proactor.
- */
-class ACE_Export ACE_POSIX_AIOCB_Asynch_Operation : public virtual ACE_POSIX_Asynch_Operation
-{
-public:
   /// Return the underlying Proactor implementation.
-  ACE_POSIX_AIOCB_Proactor *posix_proactor (void) const;
+  ACE_POSIX_AIOCB_Proactor * posix_proactor (void) const;
 
 protected:
   /// Contructor.
-  ACE_POSIX_AIOCB_Asynch_Operation (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
+  ACE_POSIX_Asynch_Operation (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
 
   /// Destructor.
-  virtual ~ACE_POSIX_AIOCB_Asynch_Operation (void);
+  virtual ~ACE_POSIX_Asynch_Operation (void);
 
   /// This is the method which does the real work to start aio
   /// and should be used instead of shared_read/shared_write
@@ -228,6 +204,15 @@ protected:
    * directly.
    */
   ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor_;
+
+  /// Proactor that this Asynch IO will be registered with.
+  ACE_Proactor *proactor_;
+
+  /// Handler that will receive the callback.
+  ACE_Handler *handler_;
+
+  /// I/O handle used for reading.
+  ACE_HANDLE handle_;
 };
 
 /**
@@ -241,7 +226,7 @@ class ACE_Export ACE_POSIX_Asynch_Read_Stream_Result : public virtual ACE_Asynch
 {
 
   /// Factory classes willl have special permissions.
-  friend class ACE_POSIX_AIOCB_Asynch_Read_Stream;
+  friend class ACE_POSIX_Asynch_Read_Stream;
 
   /// The Proactor constructs the Result class for faking results.
   friend class ACE_POSIX_Proactor;
@@ -341,18 +326,18 @@ protected:
 };
 
 /**
- * @class ACE_POSIX_AIOCB_Asynch_Read_Stream
+ * @class ACE_POSIX_Asynch_Read_Stream
  *
- * This class implements <ACE_Asynch_Read_Stream> for <AIOCB>
- * (Asynchronous I/O Control Blocks) based implementation of Proactor.
+ * This class implements <ACE_Asynch_Read_Stream> for all POSIX
+ * based implementation of Proactor.
  *
  */
-class ACE_Export ACE_POSIX_AIOCB_Asynch_Read_Stream : public virtual ACE_Asynch_Read_Stream_Impl,
-                                                      public ACE_POSIX_AIOCB_Asynch_Operation
+class ACE_Export ACE_POSIX_Asynch_Read_Stream : public virtual ACE_Asynch_Read_Stream_Impl,
+                                                public ACE_POSIX_Asynch_Operation
 {
 public:
   /// Constructor.
-  ACE_POSIX_AIOCB_Asynch_Read_Stream (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
+  ACE_POSIX_Asynch_Read_Stream (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
 
   /// This starts off an asynchronous read.  Upto <bytes_to_read> will
   /// be read and stored in the <message_block>.
@@ -363,7 +348,7 @@ public:
             int signal_number = 0);
 
   /// Destructor.
-  virtual ~ACE_POSIX_AIOCB_Asynch_Read_Stream (void);
+  virtual ~ACE_POSIX_Asynch_Read_Stream (void);
 
   // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
   //   methods are defined here to avoid dominace warnings. They route
@@ -405,7 +390,7 @@ class ACE_Export ACE_POSIX_Asynch_Write_Stream_Result : public virtual ACE_Async
                                                         public ACE_POSIX_Asynch_Result
 {
   /// Factory classes will have special privilages.
-  friend class ACE_POSIX_AIOCB_Asynch_Write_Stream;
+  friend class ACE_POSIX_Asynch_Write_Stream;
 
   /// The Proactor constructs the Result class for faking results.
   friend class ACE_POSIX_Proactor;
@@ -506,18 +491,17 @@ protected:
 };
 
 /**
- * @class ACE_POSIX_AIOCB_Asynch_Write_Stream
+ * @class ACE_POSIX_Asynch_Write_Stream
  *
- * @brief This class implements <ACE_Asynch_Write_Stream> for <AIOCB>
- *     (Asynchronous I/O Control Blocks) based implementation of
- *      Proactor.
+ * @brief This class implements <ACE_Asynch_Write_Stream> for 
+ *  all POSIX implementations of   Proactor.
  */
-class ACE_Export ACE_POSIX_AIOCB_Asynch_Write_Stream : public virtual ACE_Asynch_Write_Stream_Impl,
-                                                       public ACE_POSIX_AIOCB_Asynch_Operation
+class ACE_Export ACE_POSIX_Asynch_Write_Stream : public virtual ACE_Asynch_Write_Stream_Impl,
+                                                 public ACE_POSIX_Asynch_Operation
 {
 public:
   /// Constructor.
-  ACE_POSIX_AIOCB_Asynch_Write_Stream (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
+  ACE_POSIX_Asynch_Write_Stream (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
 
   /// This starts off an asynchronous write.  Upto <bytes_to_write>
   /// will be written from the <message_block>.
@@ -528,7 +512,7 @@ public:
              int signal_number = 0);
 
   /// Destructor.
-  virtual ~ACE_POSIX_AIOCB_Asynch_Write_Stream (void);
+  virtual ~ACE_POSIX_Asynch_Write_Stream (void);
 
   // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
   //   methods are defined here to avoid dominace warnings. They route
@@ -564,7 +548,7 @@ class ACE_Export ACE_POSIX_Asynch_Read_File_Result : public virtual ACE_Asynch_R
                                                      public ACE_POSIX_Asynch_Read_Stream_Result
 {
   /// Factory classes willl have special permissions.
-  friend class ACE_POSIX_AIOCB_Asynch_Read_File;
+  friend class ACE_POSIX_Asynch_Read_File;
 
   /// The Proactor constructs the Result class for faking results.
   friend class ACE_POSIX_Proactor;
@@ -662,12 +646,11 @@ protected:
 };
 
 /**
- * @class ACE_POSIX_AIOCB_Asynch_Read_File
+ * @class ACE_POSIX_Asynch_Read_File
  *
  * @brief This class is a factory for starting off asynchronous reads
  *     on a file. This class implements <ACE_Asynch_Read_File> for
- *     <AIOCB> (Asynchronous I/O Control Blocks) based implementation
- *     of Proactor.
+ *     all POSIX implementations of Proactor.
  *
  *     Once <open> is called, multiple asynchronous <read>s can
  *     started using this class.  A <ACE_Asynch_Read_File::Result>
@@ -678,13 +661,13 @@ protected:
  *     This class differs slightly from <ACE_Asynch_Read_Stream> as it
  *     allows the user to specify an offset for the read.
  */
-class ACE_Export ACE_POSIX_AIOCB_Asynch_Read_File : public virtual ACE_Asynch_Read_File_Impl,
-                                                    public ACE_POSIX_AIOCB_Asynch_Read_Stream
+class ACE_Export ACE_POSIX_Asynch_Read_File : public virtual ACE_Asynch_Read_File_Impl,
+                                              public ACE_POSIX_Asynch_Read_Stream
 {
 
 public:
   /// Constructor.
-  ACE_POSIX_AIOCB_Asynch_Read_File (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
+  ACE_POSIX_Asynch_Read_File (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
 
   /**
    * This starts off an asynchronous read.  Upto <bytes_to_read> will
@@ -700,7 +683,7 @@ public:
             int signal_number = 0);
 
   /// Destructor.
-  virtual ~ACE_POSIX_AIOCB_Asynch_Read_File (void);
+  virtual ~ACE_POSIX_Asynch_Read_File (void);
 
 
   // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
@@ -727,9 +710,9 @@ public:
 
 private:
   /**
-   * This belongs to ACE_POSIX_AIOCB_Asynch_Read_Stream. We have
+   * This belongs to ACE_POSIX_Asynch_Read_Stream. We have
    * defined this here to avoid compiler warnings and forward the
-   * method to <ACE_POSIX_AIOCB_Asynch_Read_Stream::read>.
+   * method to <ACE_POSIX_Asynch_Read_Stream::read>.
    */
   int read (ACE_Message_Block &message_block,
             u_long bytes_to_read,
@@ -760,7 +743,7 @@ class ACE_Export ACE_POSIX_Asynch_Write_File_Result : public virtual ACE_Asynch_
                                                       public ACE_POSIX_Asynch_Write_Stream_Result
 {
   /// Factory classes will have special permissions.
-  friend class ACE_POSIX_AIOCB_Asynch_Write_File;
+  friend class ACE_POSIX_Asynch_Write_File;
 
   /// The Proactor constructs the Result class for faking results.
   friend class ACE_POSIX_Proactor;
@@ -857,7 +840,7 @@ protected:
 };
 
 /**
- * @class ACE_POSIX_AIOCB_Asynch_Write_File
+ * @class ACE_POSIX_Asynch_Write_File
  *
  *     This class provides concrete implementation for
  *     <ACE_Asynch_Write_File> for POSIX platforms where the
@@ -865,12 +848,12 @@ protected:
  *     Control Blocks).
  *
  */
-class ACE_Export ACE_POSIX_AIOCB_Asynch_Write_File : public virtual ACE_Asynch_Write_File_Impl,
-                                                     public ACE_POSIX_AIOCB_Asynch_Write_Stream
+class ACE_Export ACE_POSIX_Asynch_Write_File : public virtual ACE_Asynch_Write_File_Impl,
+                                               public ACE_POSIX_Asynch_Write_Stream
 {
 public:
   /// Constructor.
-  ACE_POSIX_AIOCB_Asynch_Write_File (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
+  ACE_POSIX_Asynch_Write_File (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
 
   /**
    * This starts off an asynchronous write.  Upto <bytes_to_write>
@@ -886,7 +869,7 @@ public:
              int signal_number = 0);
 
   /// Destructor.
-  virtual ~ACE_POSIX_AIOCB_Asynch_Write_File (void);
+  virtual ~ACE_POSIX_Asynch_Write_File (void);
 
   // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
   //   methods are defined here to avoid dominace warnings. They route
@@ -912,9 +895,9 @@ public:
 
 private:
   /**
-   * This <write> belongs to ACE_POSIX_AIOCB_Asynch_Write_Stream. We
+   * This <write> belongs to ACE_POSIX_Asynch_Write_Stream. We
    * have put this here to avoid compiler warnings. We forward this
-   * method call to the <ACE_POSIX_AIOCB_Asynch_Write_Stream::write>
+   * method call to the <ACE_POSIX_Asynch_Write_Stream::write>
    * one.
    */
   int write (ACE_Message_Block &message_block,
@@ -1046,13 +1029,6 @@ protected:
   // I/O handle for the new connection.
 };
 
-/**
- * @class ACE_POSIX_Asynch_Accept_Handler
- *
- * Forward declaration. This class is defined the in the cpp file,
- * since this is internal  to the implementation.
- */
-class ACE_POSIX_Asynch_Accept_Handler;
 
 /**
  * @class ACE_POSIX_Asynch_Accept
@@ -1060,14 +1036,25 @@ class ACE_POSIX_Asynch_Accept_Handler;
  */
 class ACE_Export ACE_POSIX_Asynch_Accept :
   public virtual ACE_Asynch_Accept_Impl,
-  public ACE_POSIX_Asynch_Operation
+  public ACE_POSIX_Asynch_Operation,
+  public ACE_Event_Handler
 {
 public:
-  /// Constructor.
-  ACE_POSIX_Asynch_Accept (ACE_POSIX_Proactor * posix_proactor);
+  // = TITLE
+  //     For the POSIX implementation this class is common
+  //     for all Proactors (AIOCB/SIG/SUN)
+  //
+  // = DESCRIPTION
 
-  /**
-   * This <open> belongs to ACE_AIOCB_Asynch_Operation. We forward
+
+  /// Constructor.
+  ACE_POSIX_Asynch_Accept (ACE_POSIX_AIOCB_Proactor * posix_aiocb_proactor);
+
+  /// Destructor.
+  virtual ~ACE_POSIX_Asynch_Accept (void);
+
+ /**
+   * This <open> belongs to ACE_POSIX_Asynch_Operation. We forward
    * this call to that method. We have put this here to avoid the
    * compiler warnings.
    */
@@ -1094,13 +1081,7 @@ public:
               int priority,
               int signal_number = 0);
 
-  /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Accept (void);
-
-  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
-  //   methods are defined here to avoid dominace warnings. They route
-  //   the call to the ACE_POSIX_Asynch_Operation base class.
-
+ 
   /**
   *  Cancel all pending pseudo-asynchronus requests
   *  Behavior as usual AIO request
@@ -1109,35 +1090,103 @@ public:
   
   /**
   *  Close performs cancellation of all pending requests
-  *  Parameter flg_notify can be 
-  *    0  - don't send notifications about canceled accepts
-  *    1  - notify user about canceled accepts
-  *         according POSIX standards we should receive notifications
-  *         on canceled AIO requests
+  *  and closure the listen handle
   */
-  int close ( int flg_notify);
+  int close (void);
 
+  /// virtual from ACE_Event_Hanlder
+  ACE_HANDLE get_handle (void) const;
 
+  /// virtual from ACE_Event_Hanlder
+  void set_handle (ACE_HANDLE handle);
+
+  /// virtual from ACE_Event_Hanlder
+  /// Called when accept event comes up on <listen_hanlde>
+  int handle_input (ACE_HANDLE handle);
+
+  /// virtual from ACE_Event_Hanlder
+  int handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask) ;
+
+  // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
+  //   methods are defined here to avoid dominace warnings. They route
+  //   the call to the ACE_POSIX_Asynch_Operation base class.
   /// Return the underlying proactor.
   ACE_Proactor* proactor (void) const;
 
+
 private:
-  /// The thread function that does handle events.
-  static void* thread_function  (void* reactor);
+  int cancel_uncompleted (int flg_notify);
+  // flg_notify points whether or not we should send notification about
+  // canceled accepts
+  //  Parameter flg_notify can be 
+  //    0  - don't send notifications about canceled accepts
+  //    1  - notify user about canceled accepts
+  //         according POSIX standards we should receive notifications
+  //         on canceled AIO requests
+ 
+  int flg_open_ ;
+  /// 1 - Accept is registered in ACE_POSIX_Asynch_Accept_Task
+  /// 0 - Aceept is deregisted in ACE_POSIX_Asynch_Accept_Task
 
-  /// Reactor to wait on the <listen_handle>.
-  ACE_Reactor reactor_;
 
-  /// The Event Handler to do handle_input.
-  ACE_POSIX_Asynch_Accept_Handler* accept_handler_;
+  /// to prevent ACE_POSIX_Asynch_Accept_Task from deletion
+  /// while we make a call to the ACE_POSIX_Asynch_Accept_Task 
+  /// This is extra cost !!!
+  /// we could avoid them if all applications will follow the rule:
+  /// Proactor should be deleted only after deletion all
+  ///  AsynchOperation objects connected with it 
+  int  task_lock_count_;
 
-  /// group id for the thread that we create for accepts
-  int grp_id_ ;
+  ACE_Unbounded_Queue<ACE_POSIX_Asynch_Accept_Result*> result_queue_;
+  // Queue of Result pointers that correspond to all the <accept>'s
+  // pending.
 
-  /// POSIX Proactor implementation
-  ACE_POSIX_Proactor * posix_proactor_;
+  ACE_SYNCH_MUTEX lock_;
+  // The lock to protect the  result queue which is shared. The queue
+  // is updated by main thread in the register function call and
+  // through the auxillary thread  in the deregister fun. So let us
+  // mutex it.
 };
 
+/**
+ * @class ACE_POSIX_Asynch_Accept_Task
+ *
+ */
+class ACE_Export ACE_POSIX_Asynch_Accept_Task : public ACE_Task<ACE_MT_SYNCH>
+{
+   friend class ACE_POSIX_Asynch_Accept;
+public:
+
+  ACE_POSIX_Asynch_Accept_Task (void);
+  virtual ~ACE_POSIX_Asynch_Accept_Task (void);
+
+  int start (void);
+  int stop (void);
+
+  virtual int svc (void);
+
+  int register_acceptor (ACE_POSIX_Asynch_Accept *posix_accept,
+                         ACE_Reactor_Mask mask);
+  int remove_acceptor (ACE_POSIX_Asynch_Accept *posix_accept);
+  int resume_acceptor (ACE_POSIX_Asynch_Accept *posix_accept);
+  int suspend_acceptor (ACE_POSIX_Asynch_Accept *posix_accept);
+
+protected:
+  int lock_finish (void);
+  int unlock_finish (void);
+
+  int flg_active_ ;
+
+  ACE_Select_Reactor select_reactor_;  
+  // should be initialized before reactor_
+
+  ACE_Reactor reactor_;
+
+  ACE_Lock &token_;
+
+  int finish_count_;
+  ACE_Manual_Event finish_event_;
+};
 
 /**
  * @class ACE_POSIX_Asynch_Transmit_File_Result
@@ -1153,12 +1202,11 @@ class ACE_Export ACE_POSIX_Asynch_Transmit_File_Result : public virtual ACE_Asyn
                                                          public ACE_POSIX_Asynch_Result
 {
   /// Factory classes willl have special permissions.
-  friend class ACE_POSIX_AIOCB_Asynch_Transmit_File;
+  friend class ACE_POSIX_Asynch_Transmit_File;
 
   /// Handlers do all the job.
   friend class ACE_POSIX_Asynch_Transmit_Handler;
-  friend class ACE_POSIX_AIOCB_Asynch_Transmit_Handler;
-
+ 
   /// The Proactor constructs the Result class for faking results.
   friend class ACE_POSIX_Proactor;
 
@@ -1282,17 +1330,17 @@ protected:
 };
 
 /**
- * @class ACE_POSIX_AIOCB_Asynch_Transmit_File
+ * @class ACE_POSIX_Asynch_Transmit_File
  *
  * @brief Implementation for transmit_file will make use of
- *     POSIX_AIOCB_Asynch_Transmit_Handler.
+ *     POSIX_Asynch_Transmit_Handler.
  */
-class ACE_Export ACE_POSIX_AIOCB_Asynch_Transmit_File : public virtual ACE_Asynch_Transmit_File_Impl,
-                                                        public ACE_POSIX_AIOCB_Asynch_Operation
+class ACE_Export ACE_POSIX_Asynch_Transmit_File : public virtual ACE_Asynch_Transmit_File_Impl,
+                                                  public ACE_POSIX_Asynch_Operation
 {
 public:
   /// Constructor.
-  ACE_POSIX_AIOCB_Asynch_Transmit_File (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
+  ACE_POSIX_Asynch_Transmit_File (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
 
   /**
    * This starts off an asynchronous transmit file. The <file> is a
@@ -1317,7 +1365,7 @@ public:
                      int signal_number = 0);
 
   /// Destructor.
-  virtual ~ACE_POSIX_AIOCB_Asynch_Transmit_File (void);
+  virtual ~ACE_POSIX_Asynch_Transmit_File (void);
 
   // = Methods belong to ACE_POSIX_Asynch_Operation base class. These
   //   methods are defined here to avoid dominace warnings. They route
@@ -1344,7 +1392,7 @@ public:
 
 
 /**
- * @class ACE_POSIX_AIOCB_Asynch_Read_Dgram
+ * @class ACE_POSIX_Asynch_Read_Dgram
  *
  * @brief This class is a factory for starting off asynchronous reads
  *     on a UDP socket.
@@ -1356,13 +1404,13 @@ public:
  *     callback.
  *
  */
-class ACE_Export ACE_POSIX_AIOCB_Asynch_Read_Dgram : public virtual ACE_Asynch_Read_Dgram_Impl,
-                                                     public ACE_POSIX_AIOCB_Asynch_Operation
+class ACE_Export ACE_POSIX_Asynch_Read_Dgram : public virtual ACE_Asynch_Read_Dgram_Impl,
+                                               public ACE_POSIX_Asynch_Operation
 {
 public:
   /// Constructor.
-  ACE_POSIX_AIOCB_Asynch_Read_Dgram (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
-  virtual ~ACE_POSIX_AIOCB_Asynch_Read_Dgram (void);
+  ACE_POSIX_Asynch_Read_Dgram (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
+  virtual ~ACE_POSIX_Asynch_Read_Dgram (void);
 
   /** This starts off an asynchronous read.  Upto
    * <message_block->total_size()> will be read and stored in the
@@ -1388,9 +1436,9 @@ public:
                         int priority,
                         int signal_number);
 
-  // Methods belong to ACE_POSIX_AIOCB_Asynch_Operation base class. These
+  // Methods belong to ACE_POSIX_Asynch_Operation base class. These
   // methods are defined here to avoid VC++ warnings. They route the
-  // call to the ACE_POSIX_AIOCB_Asynch_Operation base class.
+  // call to the ACE_POSIX_Asynch_Operation base class.
 
   /**
    * Initializes the factory with information which will be used with
@@ -1415,7 +1463,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_POSIX_AIOCB_Asynch_Read_Dgram (void);
+  ACE_POSIX_Asynch_Read_Dgram (void);
 };
 
 /**
@@ -1428,7 +1476,7 @@ class ACE_Export ACE_POSIX_Asynch_Write_Dgram_Result : public virtual ACE_Asynch
                                                        public ACE_POSIX_Asynch_Result
 {
   /// Factory classes willl have special permissions.
-  friend class ACE_POSIX_AIOCB_Asynch_Write_Dgram;
+  friend class ACE_POSIX_Asynch_Write_Dgram;
   
   /// Proactor class has special permission.
   friend class ACE_POSIX_Proactor;
@@ -1526,7 +1574,7 @@ protected:
   };
 
 /**
- * @class ACE_POSIX_AIOCB_Asynch_Write_Dgram
+ * @class ACE_POSIX_Asynch_Write_Dgram
  *
  * @brief This class is a factory for starting off asynchronous writes
  *    on a UDP socket.
@@ -1538,13 +1586,13 @@ protected:
  *     write completes through the
  *     <ACE_Handler::handle_write_stream> callback.
  */
-class ACE_Export ACE_POSIX_AIOCB_Asynch_Write_Dgram : public virtual ACE_Asynch_Write_Dgram_Impl,
-                                                public ACE_POSIX_AIOCB_Asynch_Operation
+class ACE_Export ACE_POSIX_Asynch_Write_Dgram : public virtual ACE_Asynch_Write_Dgram_Impl,
+                                                public ACE_POSIX_Asynch_Operation
 {
 public:
   /// Constructor.
-  ACE_POSIX_AIOCB_Asynch_Write_Dgram (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
-  virtual ~ACE_POSIX_AIOCB_Asynch_Write_Dgram (void);
+  ACE_POSIX_Asynch_Write_Dgram (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
+  virtual ~ACE_POSIX_Asynch_Write_Dgram (void);
 
   /** This starts off an asynchronous send.  Upto
    * <message_block->total_length()> will be sent.  <message_block>'s 
@@ -1570,10 +1618,10 @@ public:
                         int priority,
                         int signal_number);
   
-  // = Methods belonging to <ACE_POSIX_AIOCB_Asynch_Operation> base class.
+  // = Methods belonging to <ACE_POSIX_Asynch_Operation> base class.
 
   // These methods are defined here to avoid VC++ warnings. They route
-  // the call to the <ACE_POSIX_AIOCB_Asynch_Operation> base class.
+  // the call to the <ACE_POSIX_Asynch_Operation> base class.
 
   /**
    * Initializes the factory with information which will be used with
@@ -1598,7 +1646,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_POSIX_AIOCB_Asynch_Write_Dgram (void);
+  ACE_POSIX_Asynch_Write_Dgram (void);
 };
 
 
@@ -1615,7 +1663,7 @@ class ACE_Export ACE_POSIX_Asynch_Read_Dgram_Result : public virtual ACE_Asynch_
 {
 
   /// Factory classes will have special permissions.
-  friend class ACE_POSIX_AIOCB_Asynch_Read_Dgram;
+  friend class ACE_POSIX_Asynch_Read_Dgram;
 
   /// Proactor class has special permission.
   friend class ACE_POSIX_Proactor;
@@ -1631,7 +1679,7 @@ public:
   /// The address of where the packet came from
   int remote_address (ACE_Addr& addr) const;
 
-  sockaddr *saddr () const;
+  sockaddr *saddr (void) const;
 
   /// The flags used in the read
   int flags (void) const;

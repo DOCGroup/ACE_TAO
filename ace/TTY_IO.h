@@ -48,6 +48,8 @@ public:
 
   struct Serial_Params
   {
+    Serial_Params (void);
+
     // Common params
     int baudrate;
     int parityenb;
