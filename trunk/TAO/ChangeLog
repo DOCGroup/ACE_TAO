@@ -1,3 +1,9 @@
+Tue Jul 22 18:05:09 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\Connection_Failure\Connection_Failure.mpc: 
+
+	  No need to include messaging.
+
 2003-07-22  Jaiganesh Balasubramanian  <jai@equus.dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
