@@ -35,9 +35,10 @@ $status = 0;
 
 sub name_server
 {
-    my $args = "@_ "."-ORBnameserviceport $ns_multicast_port -o $iorfile";
+    my $args = "@_ "."-ORBNameServicePort $ns_multicast_port -o $iorfile -m 1";
     my $prog = "../../Naming_Service/Naming_Service";
 
+    print "$prog $args\n";
     $NS = new PerlACE::Process ($prog, $args);
 
     unlink $iorfile;
@@ -56,6 +57,7 @@ sub client
     my $args = "@_"." ";
     my $prog = "client";
 
+    print "$prog $args\n";
     $CL = new PerlACE::Process ($prog, $args);
 
     $client = $CL->SpawnWaitKill (60);
@@ -68,7 +70,7 @@ sub client
 
 # Options for all simple tests recognized by the 'client' program.
 @opts = ("-s -ORBInitRef NameService=file://$iorfile",
-         "-s -ORBnameserviceport $ns_multicast_port",
+         "-s -ORBNameServicePort $ns_multicast_port",
          "-t -ORBInitRef NameService=file://$iorfile",
          "-i -ORBInitRef NameService=file://$iorfile",
          "-e -ORBInitRef NameService=file://$iorfile",

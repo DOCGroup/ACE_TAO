@@ -1,3 +1,10 @@
+Fri Jun  1 11:45:00 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+
+          Add -m 1 flag to enable multicast discovery of Naming Service.
+          Other minor cleanups.
+
 Fri Jun  1 09:22:25 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/IDL_Test/interface.idl:
