@@ -1,3 +1,14 @@
+Mon Mar 28 23:55:22 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/DynamicInterface/Context.cpp:
+	* tao/DynamicInterface/DII_Arguments.cpp:
+	* tao/DynamicInterface/DII_Invocation.cpp:
+	* tao/DynamicInterface/ExceptionList.cpp:
+	* tao/DynamicInterface/Server_Request.cpp:
+	* tao/DynamicInterface/Unknown_User_Exception.cpp:
+
+	  Updated to use new TAO TypeCode headers.
+
 Mon Mar 28 22:49:58 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Alias_TypeCode.h:

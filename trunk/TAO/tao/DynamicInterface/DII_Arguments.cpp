@@ -6,7 +6,6 @@
 #include "tao/Any_Impl.h"
 #include "tao/Exception.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
 #include "tao/DynamicC.h"
 
 ACE_RCSID (DynamicInterface,
