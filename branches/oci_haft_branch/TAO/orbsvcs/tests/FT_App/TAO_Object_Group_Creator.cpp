@@ -23,7 +23,6 @@
 TAO::Object_Group_Creator::Object_Group_Creator ()
   : registry_filename_(0)
   , registry_(0)
-  , iogr_group_id_(0)
 {
 }
 
