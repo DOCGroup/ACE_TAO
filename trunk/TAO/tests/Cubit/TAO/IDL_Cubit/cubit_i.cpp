@@ -22,13 +22,13 @@ Cubit_Factory_i::Cubit_Factory_i (const char *key, int numobjs)
   : POA_Cubit_Factory (key)
 {
   // Create implementation object with user specified key.
-
+  
   this->numobjs_ = numobjs;
   this->my_cubit_ = new Cubit_i_ptr [this->numobjs_];
 
   static char obj_str [MAXNAMELEN];
 
-  for (int i = 0; i < this->numobjs_; i++)
+  for (u_int i = 0; i < this->numobjs_; i++)
     {
       ACE_OS::memset (obj_str, '\0', MAXNAMELEN);
       ACE_OS::sprintf (obj_str, "key%d", i);
@@ -165,6 +165,9 @@ Cubit_i::cube_union (const Cubit::oneof &values,
 
 void Cubit_i::please_exit (CORBA::Environment &env)
 {
+  // Macro to avoid "warning: unused parameter" type warning.
+  ACE_UNUSED_ARG (env);
+  
   dmsg ("I've been asked to shut down...");
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
   dexc (env, "please_exit, shutdown");
