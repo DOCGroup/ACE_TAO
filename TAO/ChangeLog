@@ -1,3 +1,19 @@
+Sun Jun 20 18:34:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Typecode_Constants.cpp:	
+		  
+	  Removed all the use of stupid namespace macros. Moved TC_opaque
+	  and TC_completion_status inside the TAO namespace. They are
+	  proprietary to TAO and shouldn't have been in the global
+	  namespace in the first place. 
+	
+ 	* tao/Exception.cpp:
+	* tao/Marshal.h:
+	* tao/append.cpp:
+
+	  Added TAO namespace scoping to the extern declarations in these
+	  places for the typecodes mentioned above. 
+	
 Sun Jun 20 12:45:36 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/Advanced/ch_3/Advanced_ch_3.mpc:
