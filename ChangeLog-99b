@@ -1,3 +1,11 @@
+Sun Jun  6 18:05:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Process.h:
+	* ace/Process.cpp:
+	  Added const-correct version of the command_line() method, in the 
+	  future we should remove the non-const version, but I don't feel
+	  like breaking an interface today.
+
 Sun Jun 06 09:08:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * PROBLEM-REPORT-FORM: added requests to not send
