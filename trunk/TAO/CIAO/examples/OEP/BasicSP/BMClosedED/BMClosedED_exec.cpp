@@ -57,9 +57,10 @@ MyImpl::BMClosedED_exec_i::push_in_avail (BasicSP::DataAvailable *
   ACE_CHECK;
 
   if (CIAO::debug_level () > 0)
+
     ACE_DEBUG ((LM_DEBUG,
                 "BMClosedED - Display data is [%s] \n",
-                str));
+                str.in ()));
 
   if (ACE_OS::strcmp (str, "BM DEVICE DATA") == 0)
     {
@@ -123,7 +124,7 @@ MyImpl::BMClosedED_exec_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL)
   char *argv[1] = { "BMClosedED_exec"};
 
   int argc = sizeof(argv)/sizeof(argv[0]);
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+  CORBA::ORB_var orb = CORBA::ORB_init (argc,
 		                        argv,
 					""
 					ACE_ENV_ARG_PARAMETER);
@@ -146,7 +147,7 @@ MyImpl::BMClosedED_exec_i::ccm_passivate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  if (CIAO::debug_level () > 0)
+  //  if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::BMClosedED_exec_i::ccm_passivate\n"));
 }
 
@@ -155,7 +156,7 @@ MyImpl::BMClosedED_exec_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
-  if (CIAO::debug_level () > 0)
+  //  if (CIAO::debug_level () > 0)
     ACE_DEBUG ((LM_DEBUG, "MyImpl::BMClosedED_exec_i::ccm_remove\n"));
 }
 
