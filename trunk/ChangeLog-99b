@@ -1,3 +1,19 @@
+Thu Apr 29 19:48:25 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/OS.{h,i} (ACE_OS): 
+
+	  More IPv6 support.  Added support for the new IPv4/IPv6
+	  inet_ntop() and inet_pton() calls.  If ACE_HAS_IP6 is not
+	  defined, these calls will use IPv4 implementations (see
+	  Stevens' book "UNIX Network Programming - Volume I") and
+	  return an error if a family other than AF_INET is passed to
+	  them.
+
+	* ace/OS.h:
+
+	  Define INET_ADDRSTRLEN and INET6_ADDRSTRLEN if they don't
+	  get defined after including <netinet/in.h>.
+
 Thu Apr 29 18:32:43 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/README:
