@@ -1,3 +1,21 @@
+Mon Aug 28 17:28:45 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* test/Exposed_Policies/Policy_Tester.h:
+	* test/Exposed_Policies/Policy_Tester.cpp:
+	* test/Exposed_Policies/Policy_Verifier.h:
+	* test/Exposed_Policies/Policy_Verifier.cpp:
+	* test/Exposed_Policies/RT_Properties.h:
+	* test/Exposed_Policies/RT_Properties.cpp:
+	* test/Exposed_Policies/client.cpp:
+	* test/Exposed_Policies/server.cpp
+	* test/Exposed_Policies/Server.dsp
+	* test/Exposed_Policies/Client.dsp
+	* test/Exposed_Policies/README
+	
+	  Extended sample to auto-check if the policies embedded
+	  in the IOR are the same that were specified in the
+	  config files.
+
 Mon Aug 28 14:05:36 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
