@@ -1,3 +1,10 @@
+Fri Sep  3 12:41:36 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Object_KeyC.cpp:
+        
+          Fixed hand-crafted code to compile when
+          TAO_NO_COPY_OCTET_SEQUENCES is defined as 0.
+
 Fri Sep  3 10:17:32 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
