@@ -299,14 +299,8 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
       // to calculate size and alignment.
 
       assert (temp <= UINT_MAX);
-      CORBA::ULong byte_order;
-      if (stream->read_ulong (byte_order) != CORBA::B_TRUE)
-	{
-          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-          return 0;
-	}
 
-      TAO_InputCDR nested (*stream, temp - 4);
+      TAO_InputCDR nested (*stream, temp);
 
       if (nested.good_bit () == 0)
         {
@@ -325,7 +319,7 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
       // Check for garbage at end of parameter lists, or other cases
       // where parameters and the size allocated to them don't jive.
 
-      stream->skip_bytes (temp - 4);
+      stream->skip_bytes (temp);
       if (stream->rd_ptr () != nested.rd_ptr ())
         {
           env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
