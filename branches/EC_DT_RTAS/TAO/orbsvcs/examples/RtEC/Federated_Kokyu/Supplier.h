@@ -53,6 +53,8 @@ public:
 
   void set_consumer_proxy(const RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy);
 
+  const RtecEventComm::EventSourceID get_id(void) const;
+
 private:
   RtecEventComm::EventSourceID id_;
   RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy_;

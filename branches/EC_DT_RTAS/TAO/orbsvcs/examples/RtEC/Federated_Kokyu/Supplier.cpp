@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Supplier.h"
+#include "ace/Time_Value.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/RtecEventCommC.h"
@@ -29,7 +30,7 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
 {
   RtecEventComm::EventSet event (1);
   event.length (1);
-  event[0].header.type   = ACE_ES_EVENT_UNDEFINED;
+  event[0].header.type   = ACE_ES_EVENT_UNDEFINED + id_ - 1;
   event[0].header.source = id_;
   event[0].header.ttl    = 1;
 
@@ -37,19 +38,18 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   event[0].header.eid.id = oid.id;
   event[0].header.eid.tid = oid.tid;
 
-  if (id_ != 1)
-    {
-      event[0].header.type   = ACE_ES_EVENT_UNDEFINED + 1;
-    }
-
   //@BT INSTRUMENT with event ID: EVENT_PUSH Measure time
   //when event is pushed by client.
 
   //DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 1, 0, NULL);
+  ACE_Time_Value tv = ACE_OS::gettimeofday();
+  ACE_DEBUG((LM_DEBUG,"Supplier (id %d) in thread %t ONE_WAY_CALL_START at %u\n",this->id_,tv.msec()));
   DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
 
   consumer_proxy_->push (event ACE_ENV_ARG_PARAMETER);
   //DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, m_id, 0, NULL);
+  tv = ACE_OS::gettimeofday();
+  ACE_DEBUG((LM_DEBUG,"Supplier (id %d) in thread %t ONE_WAY_CALL_DONE at %u\n",this->id_,tv.msec()));
   DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
 }
 
@@ -57,6 +57,12 @@ void
 Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+}
+
+const RtecEventComm::EventSourceID
+Supplier::get_id(void) const
+{
+  return this->id_;
 }
 
 Timeout_Consumer::Timeout_Consumer (Supplier* supplier)
@@ -81,6 +87,9 @@ Timeout_Consumer::push (const RtecEventComm::EventSet& events
   //timeout occurs to trigger event push. Roughly equivalent to the
   //scheduling segments started for each one-way call of the DTs.
   //DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 1, 0,NULL);
+  ACE_Time_Value tv = ACE_OS::gettimeofday();
+  ACE_DEBUG((LM_DEBUG,"Timeout_Consumer (for Supplier id %d) in thread %t BEGIN_SCHED_SEGMENT (timeout occurred) at %u\n",
+             this->supplier_impl_->get_id(),tv.msec()));
   Kokyu::Object_Counter::object_id oid;
   oid.id = events[0].header.eid.id;
   oid.tid = events[0].header.eid.tid;
@@ -90,6 +99,9 @@ Timeout_Consumer::push (const RtecEventComm::EventSet& events
 
   //@BT: Finished handling the timeout.
   //DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 1, 0, NULL);
+  tv = ACE_OS::gettimeofday();
+  ACE_DEBUG((LM_DEBUG,"Timeout_Consumer (for Supplier id %d) in thread %t END_SCHED_SEGMENT (timeout occurred) at %u\n",
+             this->supplier_impl_->get_id(),tv.msec()));
   DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
 }
 
