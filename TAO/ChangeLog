@@ -28,7 +28,7 @@ Fri Mar 28 17:09:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 	  Templatized _var and _out classes in
 	  DynamicInterface, added conditional explicit
-	  template instantiations, and update project
+	  template instantiations, and updated project
 	  settings.
 
 Fri Mar 28 000:58:31 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
