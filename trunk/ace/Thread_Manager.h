@@ -121,7 +121,8 @@ class ACE_Export ACE_Thread_Manager
 friend class ACE_Thread_Control;
 public:
   // = Initialization and termination methods.
-  ACE_Thread_Manager (void);
+  ACE_Thread_Manager (size_t size = 0);
+  // <size> is currently unused.
   virtual ~ACE_Thread_Manager (void);
 
   static ACE_Thread_Manager *instance (void);
@@ -133,6 +134,9 @@ public:
 
   static void close_singleton (void);
   // Delete the dynamically allocated Singleton
+
+  int open (size_t size = 0);
+  // No-op.  Currently unused.
 
   int close (void);		
   // Release all resources.
