@@ -214,14 +214,16 @@ releasetao:
 	@$(ACE_ROOT)/bin/make_release -k ace+tao $(ACE_TAG) $(TAO_TAG) \
          $(INSTALL_KIT) $(GENERATE_MAN_PAGES) $(ZIP_FILES) $(CHECK)
 
+#### The following target is for use by the CIAO Makefile.  It should not
+#### be called directly from the command line.  The releaseciao target
+#### creates the combined ACE+TAO+CIAO kit.
+releaseciao:
+	@$(ACE_ROOT)/bin/make_release -k ace+tao+ciao $(ACE_TAG) $(TAO_TAG) $(CIAO_TAG) \
+         $(INSTALL_KIT) $(GENERATE_MAN_PAGES) $(ZIP_FILES) $(CHECK)
+
 #### The releaseall target:
-####   1) Creates the ACE kit.
-####   2) Updates the TAO release (VERSION, ChangeLog, and tag) by
-####      recursively invoking make release in the TAO directory.
-####      The make then recursively invokes make releasetao in this
-####      directory to create the combined ACE-TAO kit.
 releaseall: $(APPLY_NEW_TAG)
-	@cd TAO  &&  $(MAKE) -s release REL=$(REL)
+	@cd TAO  &&  $(MAKE) -s releaseall REL=$(REL)
 
 .PHONY: show_controlled_files show_release_files show_release_lib_files
 .PHONY: show_release_tag_files
