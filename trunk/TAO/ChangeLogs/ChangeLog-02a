@@ -1,16 +1,23 @@
+Wed Mar 15 09:36:46 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Simple/time/README: reverted the note added by
+          Tue Mar 14 14:37:58 2000  David L. Levine  <levine@cs.wustl.edu>,
+          because the following two changes of Jeff and Nanbor solved
+          the problem.
+
 Tue Mar 14 17:48:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/POAC.h:
-	* tao/POAC.i:
-	  #if !defined guards around PortableServer::ForwardRequest
-	  and its Any and CDR operators were not consistent. Thanks
-	  to Darrell for pointing this out.
+        * tao/POAC.h:
+        * tao/POAC.i:
+          #if !defined guards around PortableServer::ForwardRequest
+          and its Any and CDR operators were not consistent. Thanks
+          to Darrell for pointing this out.
 
 Tue Mar 14 16:26:27 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/POAC.cpp: The typecode for _tc_Current was not properly
-	  defined using TAO_NAMESPACE_blah macros.  Applied those macros.
-	  Thanks to Pradeep and Darrell for noticing this.
+        * tao/POAC.cpp: The typecode for _tc_Current was not properly
+          defined using TAO_NAMESPACE_blah macros.  Applied those macros.
+          Thanks to Pradeep and Darrell for noticing this.
 
 Tue Mar 14 14:37:58 2000  David L. Levine  <levine@cs.wustl.edu>
 
