@@ -1,3 +1,9 @@
+Thu May 02 07:15:31 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/IO_Cntl_Msg.h:
+
+	  Inlude OS.h to pull in size_t typedef.
+
 Thu May  2 07:50:29 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/Web_Crawler/URL_Addr.h:
