@@ -1,0 +1,176 @@
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
+
+# $Id$
+#
+# Reviews build logs and reports problems, via stdout or mail.
+
+use strict;
+
+my $usage = "$0 [-l log directory] [-m mail recipient(s)] " .
+            "[-p purify output] [-u URL prefix]\n";
+
+####
+#### Configuration parameters.
+####
+my $subject = 'ACE+TAO build results';
+my $find = -e '/pkg/gnu/bin/find'  ?  '/pkg/gnu/bin/find'  :  'find';
+my $mail = "mail -s '$subject'";
+
+my $ostype = $ENV{'OSTYPE'}  ||  `/bin/uname -s`;
+if ("$ostype" =~ /(solaris)|(SunOS)/i) {
+  #### $mail = "/pkg/mh/bin/mhmail -subject '$subject'";
+  $mail = "/usr/bin/mailx -s '$subject'";
+}
+
+$ENV{'LD_LIBRARY_PATH'} = '/opt/SUNWspro_5.0/dt/lib:/usr/openwin/lib:' .
+  '/usr/lib:/project/danzon/pkg/egcs/lib:' unless $ENV{'LD_LIBRARY_PATH'};
+$ENV{'TMPDIR'} = '/tmp';
+$ENV{'USER'} = $ENV{'LOGNAME'};
+
+my $log_directory = '/project/danzontmp/levine/build-logs/';
+my $mail_recipients = '';
+my $purify = '';
+my $urlprefix = '';
+
+####
+#### Process command line args.
+####
+while ($#ARGV >= $[) {
+  if ($ARGV[0] eq '-l') {
+    if ($ARGV[1] =~ /^[^-]/) {
+      $log_directory = $ARGV[1];
+      shift;
+    } else {
+      print STDERR "$0:  must provide argument for -l option\n";
+      die $usage;
+    }
+  } elsif ($ARGV[0] eq '-m') {
+    if ($ARGV[1] =~ /^[\w@\.]+$/) {
+      $mail_recipients = $ARGV[1];
+      shift;
+    } else {
+      print STDERR "$0:  must provide argument for -m option\n";
+      die $usage;
+    }
+  } elsif ($ARGV[0] eq '-p') {
+    if ($ARGV[1] !~ /^-/) {
+      $purify = $ARGV[1];
+      shift;
+    } else {
+      print STDERR "$0:  must provide argument for -p option\n";
+      die $usage;
+    }
+  } elsif ($ARGV[0] eq '-u') {
+    if ($ARGV[1] !~ /^-/) {
+      $urlprefix = $ARGV[1];
+      shift;
+    } else {
+      print STDERR "$0:  must provide argument for -u option\n";
+      die $usage;
+    }
+  } elsif ($ARGV[0] eq '-?') {
+    print "$usage";
+    exit;
+  } else {
+    print "$0: unknown arg: $ARGV[0]\n";
+    print "$usage";
+    exit 1;
+  }
+  shift;
+}
+
+
+####
+#### Find the log files.
+####
+chdir $log_directory  ||
+  die "$0: unable to cd to \"$log_directory\"\n";
+
+(my $log_files = (`$find . -name '*.log' -daystart -ctime 0 -print | sort`)) =~
+  tr [\n] [ ];
+$log_files =~ s%\./(make)%$1%g;  #### Remove leading ./ from each filename.
+
+
+####
+#### Grep the log files for problems.
+####
+my $line_count = 0;
+my @output = ();
+open (EGREP, "egrep -n \'Error|errors|[^a]Stop|No rule to make|\(undefined symb\)|[Ww]arn|not exist|core dumped|: #[0-9]|cxx:\' $log_files /dev/null |")  ||
+  die "$0: unable to open egrep\n";
+while (<EGREP>) {
+  push @output, $_ unless /calls, 0 errors$/  ||
+                          /Found non-pic R_SPARC/  ||
+                          /Purify engine: Error: .* Ignoring it\.$/;
+  ++$line_count;
+  last if $line_count > 2000;
+}
+close EGREP;
+
+
+####
+#### Check a Purify output file for bad things.
+####
+if ("$purify") {
+  my $found_anomaly = 0;
+
+  open (PURIFY, "$purify")  ||
+    die "$0: unable to open $purify\n";
+  while (<PURIFY>) {
+    if (/^[A-Z][A-Z][A-Z]:/) {
+      unless ($found_anomaly) {
+        push @output, "\n";
+        push @output, "Purify detected anomalies!!!!\n";
+        push @output, "See $purify:\n";
+        $found_anomaly = 1;
+      }
+
+      push @output, $_;
+    }
+  }
+  close PURIFY;
+}
+
+
+####
+#### Produce output, if there were any problems.
+####
+if ($#output == -1) {
+  push @output, "No problems to report.\n";
+}
+
+{
+  my $tmp_file;
+
+  if ("$mail_recipients") {
+    $tmp_file = "/tmp/check_build_logs.$$";
+    open (MAIL, "> $tmp_file")  ||
+      die "$0: unable to open $tmp_file\n";
+    select MAIL;
+  }
+
+  print "This is an automatically generated message.\n\n"
+    if "$mail_recipients";
+  print "Log files are in $log_directory\n";
+
+  if ("$urlprefix") {
+    #### Print URL for each log file, using $urlprefix.
+    print "They are also available at:\n";
+
+    foreach my $log (split /\s+/, $log_files) {
+      print "  $urlprefix$log\n";
+    }
+  }
+
+  print "\n";
+  print @output;
+
+  if ("$mail_recipients") {
+    close MAIL;
+    system ("$mail $mail_recipients < $tmp_file")  &&
+      warn "$0: $mail $mail_recipients failed with status $?\n";
+    unlink $tmp_file;
+  }
+}
