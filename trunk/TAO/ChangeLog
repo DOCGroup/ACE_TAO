@@ -1,3 +1,8 @@
+Mon Aug  9 09:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Buffer_Allocator_T.h:
+          Added missing access control specifier public for the base class
+
 Sat Aug  7 23:06:41 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
