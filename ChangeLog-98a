@@ -28,6 +28,9 @@ Tue Dec 02 06:16:39 1997  David L. Levine  <levine@cs.wustl.edu>
           ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
           instantiation because it's in ace/System_Time.cpp.
 
+        * ace/config-lynxos.h: removed ACE_HAS_UALARM, because LynxOS
+          apparently doesn't.
+
 Tue Dec 02 00:18:04 1997    <irfan@TWOSTEP>
 
         * ace/Memory_Pool.cpp (handle_signal): If guess_on_fault_ is true,
