@@ -68,7 +68,7 @@ main (int argc, char **argv)
     }
 
   for (CORBA::ULong i = 0;
-       i < policies.length () && env.exception == 0;
+       i < policies.length () && env.exception () == 0;
        ++i)
     {
       PortableServer::Policy_ptr policy = policies[i];
