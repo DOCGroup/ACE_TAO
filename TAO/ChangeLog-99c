@@ -1,3 +1,13 @@
+Mon Aug 16 16:20:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_string.cpp:
+	* TAO_IDL/be/be_string.cpp:
+	  Mods to constructors to use new enum val NT_wstring where
+	  appropriate.
+
+	* TAO_IDL/be/be_generator.cpp:
+	  Changed use of ACE_OS::WChar to ACE_CDR::WChar.
+
 Mon Aug 16 14:53:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/sequence.h:
