@@ -1,3 +1,8 @@
+Sun Sep 26 19:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+          Added valuetype base of ImR_Activator_Service
+
 Sun Sep 26 11:13:12 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Sequence_Unit_Tests/unbounded_string_sequence_ut.cpp:
