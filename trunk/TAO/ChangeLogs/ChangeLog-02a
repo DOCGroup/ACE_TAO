@@ -1,3 +1,23 @@
+Thu Dec  6 11:05:14 2001  Justin Michel  <michel_j@ociweb.com>
+
+        * TAO/tests/TAO_Tests.dsw
+        * TAO/tests/ORB_init/Makefile
+        * TAO/tests/ORB_init/ORB_init.dsw
+        * TAO/tests/ORB_init/makefile.bor
+        * TAO/tests/ORB_init/Portspan/Makefile
+        * TAO/tests/ORB_init/Portspan/README
+        * TAO/tests/ORB_init/Portspan/portspan.dsp
+        * TAO/tests/ORB_init/Portspan/portspan.dsw
+        * TAO/tests/ORB_init/Portspan/run_test.pl
+        * TAO/tests/ORB_init/Portspan/server.cpp
+        * TAO/tests/ORB_init/Portspan/simple.idl
+        * TAO/tests/ior_corbaloc/IOR CorbaLoc Client.dsp
+        * TAO/tests/ior_corbaloc/IOR CorbaLoc Server.dsp
+        * TAO/tests/ior_corbaloc/IOR CorbaName Client.dsp
+
+          Added the Portspan test that was originally added to 1.1a. 
+          Added Visual C++ project files for the tao ior_corbaloc test.
+
 Thu Dec  6 10:30:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Smart_Proxies/On_Demand/Makefile: Updated dependencies.  

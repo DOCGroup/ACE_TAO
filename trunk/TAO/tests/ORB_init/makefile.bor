@@ -3,6 +3,9 @@
 # Makefile for building the ORB_init test
 # 
 
+DIRS = \
+        Portspan
+
 NAME = ORB_init
   
 OBJFILES = \
