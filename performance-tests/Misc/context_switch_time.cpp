@@ -650,12 +650,6 @@ get_options (int argc, char *argv [])
 int
 main (int argc, char *argv [])
 {
-  if (ACE_High_Res_Timer::supported () == 0)
-    {
-      ACE_OS::fprintf (stderr, "%s: high-resolution time is not supported "
-                               "by ACE on this platform.\n", argv[0]);
-    }
-
   if (get_options (argc, argv)) ACE_OS::exit (-1);
 
   if (ACE_OS::sched_params (
