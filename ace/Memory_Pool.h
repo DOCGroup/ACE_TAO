@@ -46,6 +46,8 @@ public:
   ACE_Sbrk_Memory_Pool (LPCTSTR backing_store_name = 0, 
 			const OPTIONS *options = 0);
   // Initialize the pool.
+  
+  virtual ~ACE_Sbrk_Memory_Pool (void);
 
   // = Implementor operations.
   virtual void *init_acquire (size_t nbytes, 
@@ -135,6 +137,8 @@ public:
 			  const OPTIONS *options = 0);
   // Initialize the pool.
 
+  virtual ~ACE_Shared_Memory_Pool (void);
+
   virtual void *init_acquire (size_t nbytes, 
 			      size_t &rounded_bytes, 
 			      int &first_time);
@@ -214,11 +218,13 @@ protected:
   key_t base_shm_key_;
   // Base shared memory key for the segment.
 
-  int find_seg (const void*const searchPtr,
-		off_t &offset, size_t &counter);
+  virtual int find_seg (const void *const searchPtr,
+                        off_t &offset, 
+                        size_t &counter);
   // find the segment that contains the searchPtr
 
-  virtual int in_use (off_t &offset, size_t &counter);
+  virtual int in_use (off_t &offset, 
+                      size_t &counter);
   // Determine how much memory is currently in use.
 
   ACE_Sig_Handler signal_handler_;
@@ -252,7 +258,9 @@ public:
   ACE_Local_Memory_Pool (LPCTSTR backing_store_name = 0,
 			 const OPTIONS *options = 0);
   // Initialize the pool.
-
+  
+  virtual ~ACE_Local_Memory_Pool (void);
+  
   virtual void *init_acquire (size_t nbytes, 
 			      size_t &rounded_bytes, 
 			      int &first_time);
@@ -356,6 +364,8 @@ public:
   ACE_MMAP_Memory_Pool (LPCTSTR backing_store_name = 0,
 			const OPTIONS *options = 0);
   // Initialize the pool.
+
+  virtual ~ACE_MMAP_Memory_Pool (void);
 
   virtual void *init_acquire (size_t nbytes, 
 			      size_t &rounded_bytes, 
@@ -472,7 +482,9 @@ public:
   ACE_Lite_MMAP_Memory_Pool (LPCTSTR backing_store_name = 0,
 			     const OPTIONS *options = 0);
   // Initialize the pool.
-
+  
+  virtual ~ACE_Lite_MMAP_Memory_Pool (void);
+  
   virtual int sync (ssize_t len = -1, int flags = MS_SYNC);
   // Overwrite the default sync behavior with no-op
 
