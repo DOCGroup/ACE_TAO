@@ -3871,6 +3871,7 @@ public:
                    char *expbuf);
 
   // = A set of wrappers for non-UNICODE string operations.
+  static int tolower (int c);
   static int strcasecmp (const char *s,
                          const char *t);
   static int strncasecmp (const char *s,
@@ -3920,6 +3921,7 @@ public:
 
 #if defined (ACE_HAS_UNICODE)
   // = A set of wrappers for UNICODE string operations.
+  static wint_t tolower (wint_t c);
   static wchar_t *strcat (wchar_t *s,
                           const wchar_t *t);
   static wchar_t *strchr (const wchar_t *s,

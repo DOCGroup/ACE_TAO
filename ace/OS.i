@@ -1033,6 +1033,13 @@ ACE_OS::strcpy (char *s, const char *t)
   return ::strcpy (s, t);
 }
 
+ACE_INLINE int
+ACE_OS::tolower (int c)
+{
+  // ACE_TRACE ("ACE_OS::tolower");
+  return ::tolower (c);
+}
+
 ACE_INLINE char *
 ACE_OS::strpbrk (const char *s1, const char *s2)
 {
@@ -1086,9 +1093,9 @@ ACE_OS::strcasecmp (const char *s, const char *t)
        for (;
             *s != '\0' && *t != '\0';
             ++s; ++t)
-         if (tolower (*s) != tolower (*t))
+         if (ACE_OS::tolower (*s) != ACE_OS::tolower (*t))
            {
-             result = ((tolower (*s) < tolower (*t)) ? -1 : 1);
+             result = ((ACE_OS::tolower (*s) < ACE_OS::tolower (*t)) ? -1 : 1);
              break;
            }
      }
@@ -1116,9 +1123,9 @@ ACE_OS::strncasecmp (const char *s, const char *t, size_t len)
 
   while (*s != '\0' && *t != '\0' && len != 0)
     {
-      if (tolower (*s) != tolower (*t))
+      if (ACE_OS::tolower (*s) != ACE_OS::tolower (*t))
         {
-          result = ((tolower (*s) < tolower (*t)) ? -1 : 1);
+          result = ((ACE_OS::tolower (*s) < ACE_OS::tolower (*t)) ? -1 : 1);
           break;
         }
 
@@ -7356,7 +7363,6 @@ ACE_OS::strpbrk (const wchar_t *s, const wchar_t *t)
   return ::wcspbrk (s, t);
 }
 
-
 ACE_INLINE wchar_t *
 ACE_OS::strcat (wchar_t *s, const wchar_t *t)
 {
@@ -7382,11 +7388,7 @@ ACE_INLINE int
 ACE_OS::strcmp (const wchar_t *s, const wchar_t *t)
 {
   // ACE_TRACE ("ACE_OS::strcmp");
-#if !defined (ACE_WIN32)
-  return ::wscmp (s, t);
-#else
   return ::wcscmp (s, t);
-#endif /* ACE_WIN32 */
 }
 
 ACE_INLINE wchar_t *
@@ -7396,13 +7398,42 @@ ACE_OS::strcpy (wchar_t *s, const wchar_t *t)
   return ::wcscpy (s, t);
 }
 
+ACE_INLINE wint_t
+ACE_OS::tolower (wint_t c)
+{
+  // ACE_TRACE ("ACE_OS::tolower");
+  return ::towlower (c);
+}
+
 ACE_INLINE int
 ACE_OS::strcasecmp (const wchar_t *s, const wchar_t *t)
 {
   // ACE_TRACE ("ACE_OS::strcasecmp");
+
 #if !defined (ACE_WIN32)
-  return ::wcscmp (s, t);
-#else
+  // Handles most of what the BSD version does, but does not indicate
+  // lexicographic ordering if the strings are unequal.  Just
+  // indicates equal (ignoring case) by return value == 0, else not
+  // equal.
+  int result = 0;
+
+  if (ACE_OS::strlen (s) != ACE_OS::strlen (t))
+    result = 1;
+   else
+     {
+       for (;
+            *s != '\0' && *t != '\0';
+            ++s; ++t)
+         if (ACE_OS::tolower (*s) != ACE_OS::tolower (*t))
+           {
+             result = ((ACE_OS::tolower (*s) < ACE_OS::tolower (*t)) ? -1 : 1);
+             break;
+           }
+     }
+
+   return result; // == 0 for match, else 1
+
+#else /* ACE_WIN32 */
   return ::_wcsicmp (s, t);
 #endif /* ACE_WIN32 */
 }
@@ -7411,9 +7442,29 @@ ACE_INLINE int
 ACE_OS::strncasecmp (const wchar_t *s, const wchar_t *t, size_t len)
 {
   // ACE_TRACE ("ACE_OS::strcasecmp");
+
 #if !defined (ACE_WIN32)
-  return ::wcsncmp (s, t, len);
-#else
+  // Handles most of what the BSD version does, but does not indicate
+  // lexicographic ordering if the strings are unequal.  Just
+  // indicates equal (ignoring case) by return value == 0, else not
+  // equal.
+  int result = 0;
+
+  while (*s != '\0' && *t != '\0' && len != 0)
+    {
+      if (ACE_OS::tolower (*s) != ACE_OS::tolower (*t))
+        {
+          result = ((ACE_OS::tolower (*s) < ACE_OS::tolower (*t)) ? -1 : 1);
+          break;
+        }
+
+      ++s; ++t; --len;
+    }
+  }
+
+  return result; // == 0 for match, else 1
+
+#else /* ACE_WIN32 */
   return ::_wcsnicmp (s, t, len);
 #endif /* ACE_WIN32 */
 }
@@ -7422,11 +7473,7 @@ ACE_INLINE int
 ACE_OS::strncmp (const wchar_t *s, const wchar_t *t, size_t len)
 {
   // ACE_TRACE ("ACE_OS::strncmp");
-#if !defined (ACE_WIN32)
-  return ::wsncmp (s, t, len);
-#else
   return ::wcsncmp (s, t, len);
-#endif /* ACE_WIN32 */
 }
 
 ACE_INLINE size_t
