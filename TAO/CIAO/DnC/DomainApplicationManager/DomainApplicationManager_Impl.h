@@ -8,6 +8,7 @@
  *  Deployment::DomainApplicationManager.
  *
  *  @author Gan Deng <gan.deng@vanderbilt.edu>
+ *  @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
  */
 //=====================================================================
 
@@ -22,8 +23,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "Core/Object_Set_T.h"
-#include "Core/DeploymentS.h"
+#include "Object_Set_T.h"
+#include "DeploymentS.h"
 
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
@@ -37,7 +38,7 @@ namespace CIAO
    *
    * @brief A servant for the Deployment::DomainApplicationManager interface.
    * The DomainApplicationManager is responsible for deploying an application
-   * on the domain level, i.e. across nodes. It specializes the ApplicationManager 
+   * on the domain level, i.e. across nodes. It specializes the ApplicationManager
    * abstract interface.
    */
   //class CIAO_DOMAINAPPLICATIONMANAGER_Export DomainApplicationManager_Impl
@@ -48,10 +49,10 @@ namespace CIAO
   public:
     /// Constructor
     DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
-				                           PortableServer::POA_ptr poa,
+                                   PortableServer::POA_ptr poa,
                                    Deployment::TargetManager_ptr manager,
-                                   Deployment::DeploymentPlan & plan,
-                                   const char * deployment_file);
+                                   const Deployment::DeploymentPlan &plan,
+                                   char * deployment_file);
 
     /// Destructor
     virtual ~DomainApplicationManager_Impl (void);
@@ -61,10 +62,10 @@ namespace CIAO
      *
      *============================================================*/
     /**
-     * Initialize the DomainApplicationManager. 
+     * Initialize the DomainApplicationManager.
      * (1) Set the total number of child plans.
      * (2) Set the list of NodeManager names, which is an array of strings.
-     *     The <node_manager_names> is a pointer to an array of ACE_CString 
+     *     The <node_manager_names> is a pointer to an array of ACE_CString
      *     objets, which is allocated by the caller and deallocated by the
      *     DomainApplicationManager destructor.
      * (3) Check the validity of the deployment plan and the deployment
@@ -72,7 +73,7 @@ namespace CIAO
      * (4) Call split_plan () member function.
      * (5) Invoke all the preparePlan () operations on all the corresponding
      *     NodeManagers with child plans.
-     *     
+     *
      *
      * @@ What else do we need to initialize here?
      */
@@ -81,33 +82,44 @@ namespace CIAO
                        Deployment::StartError,
                        Deployment::PlanError));
 
+    /**
+     * set_uuid method on the DomainApplicationManager assigns the
+     * UUID of the associated plan to this Manager. This helps in
+     * reverse lookup operations such as given a manager, obtaining
+     * the UUID associated. The get_uuid method is used in this case.
+     */
+    void set_uuid (const char * uuid);
+    const char * get_uuid ();
+
     /*===========================================================
      * Below are operations from the DomainApplicationManager
      *
      *============================================================*/
 
-    /** 
-     * Executes the application, but does not start it yet. Users can optionally provide
-     * launch-time configuration properties to override properties that are part of the
-     * plan. Raises the InvalidProperty exception if a configuration property 
-     * is invalid. Raises the StartError exception if an error occurs
-     * during launching. Raises the ResourceNotAvailable exception if the
-     * commitResources parameter to the prepare operation of the
-     * ExecutionManager was true, if late resource allocation is used, and 
-     * one of the requested resources is not available.
+    /**
+     * Executes the application, but does not start it yet. Users can
+     * optionally provide launch-time configuration properties to
+     * override properties that are part of the plan. Raises the
+     * InvalidProperty exception if a configuration property is
+     * invalid. Raises the StartError exception if an error occurs
+     * during launching. Raises the ResourceNotAvailable exception if
+     * the commitResources parameter to the prepare operation of the
+     * ExecutionManager was true, if late resource allocation is used,
+     * and one of the requested resources is not available.
      */
-    virtual void startLaunch (const ::Deployment::Properties & configProperty,
-                              ::CORBA::Boolean start
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void
+      startLaunch (const ::Deployment::Properties & configProperty,
+                   ::CORBA::Boolean start
+                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Deployment::ResourceNotAvailable,
                        ::Deployment::StartError,
                        ::Deployment::InvalidProperty));
 
-    /** 
+    /**
      * The second step in launching an application in the domain-level.
-     * If the start parameter is true, the application is started as well. 
-     * Raises the StartError exception if launching or starting the application 
+     * If the start parameter is true, the application is started as well.
+     * Raises the StartError exception if launching or starting the application
      * fails.
      */
     virtual void finishLaunch (::CORBA::Boolean start
@@ -116,19 +128,26 @@ namespace CIAO
                        ::Deployment::StartError));
 
     /**
-     * Starts the application. Raises the StartError exception if starting the 
+     * Starts the application. Raises the StartError exception if starting the
      * application fails.
      */
     virtual void start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Deployment::StartError));
 
+    virtual ::Deployment::Applications *
+      getApplications (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+                       )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+
     /**
-     * Terminates a running application. Raises the StopError exception if an error
-     * occurs during termination. Raises the InvalidReference exception if the appliction
-     * referen is unknown.
+     * Terminates a running application. Raises the StopError
+     * exception if an error occurs during termination. Raises the
+     * InvalidReference exception if the appliction referen is
+     * unknown.
      */
-    virtual void destroyApplication (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual void destroyApplication ()
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Deployment::StopError));
 
@@ -141,7 +160,7 @@ namespace CIAO
   protected:
     /**
      * Parse the global deployment plan, get the total number of
-     * child plans included in the global plan, and get the list of 
+     * child plans included in the global plan, and get the list of
      * names of NodeManagers for each child plan.
      */
     bool get_plan_info (void);
@@ -153,7 +172,7 @@ namespace CIAO
     bool check_validity (void);
 
     /**
-     * Split the global (domain-level) deployment plan to a set of 
+     * Split the global (domain-level) deployment plan to a set of
      * local (node-level) deployment plans. The set of local plans
      * are cached in the ACE hash map member variable.
      */
@@ -180,7 +199,7 @@ namespace CIAO
 
     /// Cached deployment plan for the particular domain.
     /// The plan will be initialized when init is called.
-    Deployment::DeploymentPlan & plan_;
+    const Deployment::DeploymentPlan & plan_;
 
     /// Cached child plans.
     //Deployment::DeploymentPlan * child_plan_;
@@ -207,7 +226,10 @@ namespace CIAO
     /// Deployment Configuration info, which contains the deployment topology.
     Deployment_Configuration deployment_config_;
 
-    /// Maintain a list of NodeApplicationManager references, each of which 
+    /// UUID from the Plan
+    CORBA::String_var uuid_;
+
+    /// Maintain a list of NodeApplicationManager references, each of which
     /// is returned by calling the preparePlan() method on the corresponding
     /// NodeManager object.
     /// @@ Use Object_Set_T help class?

@@ -1,0 +1,22 @@
+// -*- MPC -*-
+// $Id$
+
+project(Execution_Manager): ciao_deployment_svnt, ciao_server, iortable, naming {
+  requires += dnc
+  exename = Execution_Manager
+  after += DomainApplicationManager
+  includes += $(CIAO_ROOT)/DnC/DomainApplicationManager
+  libs += DomainApplicationManager
+  idlflags += -I ../Core
+
+  IDL_Files {
+    ExecutionManager.idl
+  }
+
+  Source_Files {
+    ExecutionManagerC.cpp
+    ExecutionManagerS.cpp
+    Execution_Manager.cpp
+    ExecutionManager_Impl.cpp
+  }
+}
