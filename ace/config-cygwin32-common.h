@@ -18,6 +18,10 @@
 # define FD_SETSIZE 1024
 #endif
 
+#if !defined (ACE_IOV_MAX)
+# define ACE_IOV_MAX 64
+#endif /* ACE_IOV_MAX */
+
 #define ACE_LACKS_UNIX_DOMAIN_SOCKETS
 #define ACE_LACKS_SYSV_MSG_H
 #define ACE_HAS_SIG_MACROS
